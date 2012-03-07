@@ -95,8 +95,9 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 
 					final String previousText = getUiReference().getText();
 					//linux impl of swt has event.end = -1 in some cases
-					final int endIndex = event.end >= 0 ? event.end : 0;
-					final String newText = previousText.substring(0, event.start)
+					final int startIndex = Math.max(0, event.start);
+					final int endIndex = Math.max(0, event.end);
+					final String newText = previousText.substring(0, startIndex)
 						+ newEnteredText
 						+ previousText.substring(endIndex);
 
