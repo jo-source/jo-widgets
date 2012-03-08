@@ -31,6 +31,7 @@ import java.util.Date;
 
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.image.IconsSmall;
+import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.ICheckBox;
@@ -57,6 +58,10 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.common.widgets.controller.IInputListener;
+import org.jowidgets.examples.common.demo.DemoMenuProvider;
+import org.jowidgets.examples.common.demo.DemoTreeComposite;
+import org.jowidgets.examples.common.icons.DemoIconsInitializer;
+import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public class HelloWorldApplication implements IApplication {
@@ -67,6 +72,7 @@ public class HelloWorldApplication implements IApplication {
 
 	@Override
 	public void start(final IApplicationLifecycle lifecycle) {
+		DemoIconsInitializer.initialize();
 		final IFrameBluePrint frameBp = BPF.frame().setTitle("Hello World").setBackgroundColor(Colors.WHITE);
 		frameBp.setSize(new Dimension(800, 600));
 		frameBp.setPosition(new Position(500, 100));
@@ -75,6 +81,7 @@ public class HelloWorldApplication implements IApplication {
 		final ILabelBluePrint label3Bp = BPF.label().setText("Sonstiges: ");
 		final IButtonBluePrint buttonSubmitBp = BPF.button().setText("Submit").setEnabled(false).setToolTipText("Submit");
 		final IButtonBluePrint buttonClearBp = BPF.button().setText("Clear").setToolTipText("Clear");
+		final IButtonBluePrint buttonPopBp = BPF.button().setText("Pop UP").setToolTipText("Pop UP");
 		final IFrame rootFrame = Toolkit.createRootFrame(frameBp, lifecycle);
 		final ITextFieldBluePrint textfieldBp = BPF.textField().setMaxLength(20).setBorder(false);
 		final ITextFieldBluePrint textfield2Bp = BPF.textField();
@@ -85,12 +92,16 @@ public class HelloWorldApplication implements IApplication {
 		final IToggleButtonBluePrint toogleButtonBp = BPF.toggleButton().setText("Toggle me");
 		final IInputFieldBluePrint<Date> inputFieldDateBp = BPF.inputFieldDate();
 		final IInputFieldBluePrint<Integer> inputFieldIntegerNumberBp = BPF.inputFieldIntegerNumber();
-		final IProgressBarBluePrint progressBarBp = BPF.progressBar(1, 100);
-		final IDialogBluePrint dialogBP = BPF.dialog().setSize(new Dimension(100, 100)).setDecorated(false);
-
+		final IProgressBarBluePrint progressBarBp = BPF.progressBar(0, 100);
+		final IDialogBluePrint dialogBP = BPF.dialog().setSize(new Dimension(200, 400)).setDecorated(false);
 		final IFrame childWindow = rootFrame.createChildWindow(dialogBP);
+		new DemoTreeComposite(childWindow);
 		rootFrame.setLayout(Toolkit.getLayoutFactoryProvider().migLayoutBuilder().constraints("insets 10 10 10 10").columnConstraints(
 				"[grow][grow]").rowConstraints("[]20[]20[]20[]20[]20[]").build());
+		rootFrame.setPopupMenu(createPopMenu2());
+		final DemoMenuProvider menuProvider = new DemoMenuProvider(false);
+
+		rootFrame.getMenuBarModel().addMenu(menuProvider.getMenuModel());
 		final ILabel label1 = rootFrame.add(labelBp, "cell 0 0");
 		final ILabel label2 = rootFrame.add(label2Bp, "cell 0 1");
 		final ILabel label3 = rootFrame.add(label3Bp, "cell 0 2");
@@ -105,8 +116,9 @@ public class HelloWorldApplication implements IApplication {
 		rootFrame.add(toogleButtonBp, "cell 1 5");
 		rootFrame.add(inputFieldIntegerNumberBp, "cell 1 6, growx, h 0::");
 		final IProgressBar progressBar = rootFrame.add(progressBarBp, "cell 0 7");
+		final IButton buttonPop = rootFrame.add(buttonPopBp);
 		progressBar.setPreferredSize(new Dimension(300, 10));
-
+		progressBar.setProgress(80);
 		checkbox.addInputListener(new IInputListener() {
 
 			@Override
@@ -180,6 +192,13 @@ public class HelloWorldApplication implements IApplication {
 					+ "\n"
 					+ textfield3.getText();
 				textarea.setText(tmp);
+			}
+		});
+
+		buttonPop.addActionListener(new IActionListener() {
+
+			@Override
+			public void actionPerformed() {
 				childWindow.setVisible(true);
 			}
 		});
@@ -202,5 +221,22 @@ public class HelloWorldApplication implements IApplication {
 		textfield.addFocusListener(listener);
 		textfield2.addFocusListener(listener);
 		rootFrame.setVisible(true);
+	}
+
+	private IMenuModel createPopMenu2() {
+		final IMenuModel menuModel = new MenuModel(MenuModel.builder("Menu1").setMnemonic('n'));
+		menuModel.addCheckedItem("A");
+
+		final IMenuModel subMenu = menuModel.addItem(MenuModel.builder("Sub menu 1").setMnemonic('e'));
+		subMenu.addActionItem("Sub item1");
+		subMenu.addActionItem("Sub item2");
+
+		final IMenuModel subMenu2 = subMenu.addItem(MenuModel.builder("Sub menu 2").setMnemonic('n'));
+		subMenu2.addActionItem("Sub2 item1");
+		subMenu2.addActionItem("Sub2 item2");
+		subMenu2.addActionItem("Sub2 item3");
+		subMenu2.addActionItem("Sub2 item4");
+
+		return menuModel;
 	}
 }

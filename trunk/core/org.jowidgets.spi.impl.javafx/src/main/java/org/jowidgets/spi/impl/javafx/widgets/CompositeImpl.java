@@ -55,12 +55,10 @@ import org.jowidgets.spi.widgets.ICompositeSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public class CompositeImpl implements ICompositeSpi {
-	private final Pane pane;
 	private final JavafxContainer containerDelegate;
 
 	public CompositeImpl(final IGenericWidgetFactory factory, final ICompositeSetupCommon setup) {
-		pane = new Pane();
-		containerDelegate = new JavafxContainer(factory, pane);
+		containerDelegate = new JavafxContainer(factory, new Pane());
 	}
 
 	@Override

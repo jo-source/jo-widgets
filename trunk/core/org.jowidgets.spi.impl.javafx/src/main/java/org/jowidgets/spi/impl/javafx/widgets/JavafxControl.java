@@ -245,4 +245,8 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 		return new Dimension((int) getUiReference().getMaxWidth(), (int) getUiReference().getMaxHeight());
 	}
 
+	protected JavafxComponent getComponentDelegate() {
+		return componentDelegate;
+	}
+
 }

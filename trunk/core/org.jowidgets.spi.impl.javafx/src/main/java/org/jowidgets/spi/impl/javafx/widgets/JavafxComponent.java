@@ -91,7 +91,7 @@ public class JavafxComponent implements IComponentSpi {
 			@Override
 			public void handle(final MouseEvent event) {
 				if (MouseEvent.impl_getPopupTrigger(event)) {
-					popupDetectionObservable.firePopupDetected(new Position((int) event.getX(), (int) event.getY()));
+					popupDetectionObservable.firePopupDetected(new Position((int) event.getScreenX(), (int) event.getScreenY()));
 				}
 			}
 		});
@@ -102,7 +102,7 @@ public class JavafxComponent implements IComponentSpi {
 			@Override
 			public void handle(final MouseEvent event) {
 				if (MouseEvent.impl_getPopupTrigger(event)) {
-					popupDetectionObservable.firePopupDetected(new Position((int) event.getX(), (int) event.getY()));
+					popupDetectionObservable.firePopupDetected(new Position((int) event.getScreenX(), (int) event.getScreenY()));
 				}
 			}
 		});
@@ -380,8 +380,7 @@ public class JavafxComponent implements IComponentSpi {
 
 	@Override
 	public IPopupMenuSpi createPopupMenu() {
-		// TODO DB Auto-generated method stub
-		return null;
+		return new PopupMenuImpl(getUiReference());
 	}
 
 }

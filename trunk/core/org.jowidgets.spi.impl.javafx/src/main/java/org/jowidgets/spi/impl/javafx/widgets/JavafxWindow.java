@@ -154,8 +154,7 @@ public class JavafxWindow implements IWindowSpi {
 
 	@Override
 	public IPopupMenuSpi createPopupMenu() {
-		// TODO DB Auto-generated method stub
-		return null;
+		return new PopupMenuImpl(getUiReference());
 	}
 
 	@Override

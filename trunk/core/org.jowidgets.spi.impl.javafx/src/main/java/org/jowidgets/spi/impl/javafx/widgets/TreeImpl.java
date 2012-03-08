@@ -42,9 +42,10 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.spi.impl.controller.TreeSelectionObservableSpi;
 import org.jowidgets.spi.impl.javafx.widgets.base.TreeNodeRenderer;
@@ -85,11 +86,22 @@ public class TreeImpl extends JavafxControl implements ITreeSpi {
 			}
 		});
 
-		getUiReference().setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+		getUiReference().setOnMouseReleased(new EventHandler<MouseEvent>() {
+			@SuppressWarnings("deprecation")
 			@Override
-			public void handle(final ContextMenuEvent event) {
-				//TODO DB find a way to fire the correct node
-				//final Position position = new Position((int) event.getX(), (int) event.getY());
+			public void handle(final MouseEvent event) {
+				//TODO http://javafx-jira.kenai.com/browse/RT-20123
+				//and find a way to select the correct item at position
+				if (MouseEvent.impl_getPopupTrigger(event)) {
+					final Position position = new Position((int) event.getScreenX(), (int) event.getScreenY());
+
+					if (getUiReference().getSelectionModel().getSelectedItem() != null) {
+						nodes.get(getUiReference().getSelectionModel().getSelectedItem()).firePopupDetected(position);
+					}
+					else {
+						getComponentDelegate().getPopupDetectionObservable().firePopupDetected(position);
+					}
+				}
 
 			}
 		});
