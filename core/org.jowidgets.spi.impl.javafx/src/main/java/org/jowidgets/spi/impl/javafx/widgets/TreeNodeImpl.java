@@ -62,7 +62,7 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 		this.node = node;
 		this.popupDetectionListeners = new HashSet<IPopupDetectionListener>();
 
-		node.expandedProperty().addListener(new ChangeListener<Boolean>() {
+		this.node.expandedProperty().addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(
 				final ObservableValue<? extends Boolean> paramObservableValue,
@@ -71,6 +71,7 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 				parentTree.getNodeMap().get(node).fireExpandedChanged(newValue);
 			}
 		});
+
 	}
 
 	@Override
@@ -198,8 +199,7 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 
 	@Override
 	public IPopupMenuSpi createPopupMenu() {
-		// TODO DB Auto-generated method stub
-		return null;
+		return new PopupMenuImpl(parentTree.getUiReference());
 	}
 
 	protected void firePopupDetected(final Position position) {

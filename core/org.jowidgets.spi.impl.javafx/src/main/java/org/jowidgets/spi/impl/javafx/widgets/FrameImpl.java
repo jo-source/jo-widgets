@@ -32,7 +32,9 @@ import java.util.List;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuBar;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import org.jowidgets.common.types.Dimension;
@@ -64,7 +66,11 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 
 	@Override
 	public IMenuBarSpi createMenuBar() {
-		return null;
+		final MenuBar bar = new MenuBar();
+		final VBox box = new VBox();
+		box.getChildren().add(bar);
+		((Pane) getUiReference().getScene().getRoot()).getChildren().add(0, box);
+		return new MenuBarImpl(bar);
 	}
 
 	@Override
