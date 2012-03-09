@@ -65,34 +65,38 @@
 			</extension>
 		</extensions>
 
-		<plugins>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.9.1</version>
-				<configuration>
-					<configLocation>org/jowidgets/checkstyle/JoWidgetsCheckstyle.xml</configLocation>
-					<suppressionsLocation>org/jowidgets/checkstyle/SuppressionFilter.xml</suppressionsLocation>
-					<suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>verify</phase>
-						<goals>
-							<goal>checkstyle</goal>
-						</goals>
-					</execution>
-				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>org.jowidgets</groupId>
-						<artifactId>org.jowidgets.checkstyle</artifactId>
-						<version>${project.version}</version>
-					</dependency>
-				</dependencies>
-			</plugin>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-checkstyle-plugin</artifactId>
+					<version>2.9.1</version>
+					<configuration>
+						<configLocation>org/jowidgets/checkstyle/JoWidgetsCheckstyle.xml</configLocation>
+						<suppressionsLocation>org/jowidgets/checkstyle/SuppressionFilter.xml</suppressionsLocation>
+						<suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+					</configuration>
+					<executions>
+						<execution>
+							<phase>verify</phase>
+							<goals>
+								<goal>checkstyle</goal>
+							</goals>
+						</execution>
+					</executions>
+					<dependencies>
+						<dependency>
+							<groupId>org.jowidgets</groupId>
+							<artifactId>org.jowidgets.checkstyle</artifactId>
+							<version>${project.version}</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		
+		<plugins>
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
