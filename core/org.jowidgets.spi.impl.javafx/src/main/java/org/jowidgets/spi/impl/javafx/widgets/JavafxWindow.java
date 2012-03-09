@@ -31,6 +31,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -100,9 +101,7 @@ public class JavafxWindow implements IWindowSpi {
 					windowObservableDelegate.fireWindowDeiconified();
 				}
 			}
-
 		});
-
 	}
 
 	@Override
@@ -112,7 +111,11 @@ public class JavafxWindow implements IWindowSpi {
 
 	@Override
 	public void pack() {
-		// TODO DB Auto-generated method stub
+		// TODO DB calculate size 
+		// https://forums.oracle.com/forums/thread.jspa?messageID=10174045
+		final FlowPane tmpPane = new FlowPane();
+		tmpPane.getChildren().addAll(getUiReference().getScene().getRoot().getChildrenUnmodifiable());
+		getUiReference().getScene().setRoot(tmpPane);
 	}
 
 	@Override
@@ -228,7 +231,9 @@ public class JavafxWindow implements IWindowSpi {
 
 	@Override
 	public Dimension getSize() {
-		return new Dimension((int) getUiReference().getWidth(), (int) getUiReference().getHeight());
+		return new Dimension(
+			getUiReference().widthProperty().getValue().intValue(),
+			getUiReference().heightProperty().getValue().intValue());
 	}
 
 	@Override

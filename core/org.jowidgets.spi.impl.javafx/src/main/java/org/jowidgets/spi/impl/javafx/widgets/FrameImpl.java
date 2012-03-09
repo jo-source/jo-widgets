@@ -31,6 +31,7 @@ package org.jowidgets.spi.impl.javafx.widgets;
 import java.util.List;
 
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.Pane;
@@ -59,6 +60,10 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 		getUiReference().setResizable(setup.isResizable());
 	}
 
+	public FrameImpl(final IGenericWidgetFactory factory, final Stage stage) {
+		super(factory, stage, true);
+	}
+
 	@Override
 	public Stage getUiReference() {
 		return super.getUiReference();
@@ -66,10 +71,12 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 
 	@Override
 	public IMenuBarSpi createMenuBar() {
+		//TODO DB VBox workaround could pose a problem
 		final MenuBar bar = new MenuBar();
-		final VBox box = new VBox();
-		box.getChildren().add(bar);
-		((Pane) getUiReference().getScene().getRoot()).getChildren().add(0, box);
+		final Parent oldRoot = getUiReference().getScene().getRoot();
+		final VBox newRoot = new VBox();
+		newRoot.getChildren().addAll(bar, oldRoot);
+		getUiReference().getScene().setRoot(newRoot);
 		return new MenuBarImpl(bar);
 	}
 
