@@ -17,5 +17,14 @@
 		<module>../org.jowidgets.examples.swt</module>
 		<module>../org.jowidgets.examples.rwt</module>
 	</modules>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>
