@@ -27,6 +27,9 @@
  */
 package org.jowidgets.spi.impl.javafx;
 
+import javafx.stage.Stage;
+import javafx.stage.Window;
+
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.impl.javafx.widgets.ButtonImpl;
@@ -36,6 +39,7 @@ import org.jowidgets.spi.impl.javafx.widgets.DialogImpl;
 import org.jowidgets.spi.impl.javafx.widgets.FrameImpl;
 import org.jowidgets.spi.impl.javafx.widgets.IconImpl;
 import org.jowidgets.spi.impl.javafx.widgets.ProgressBarImpl;
+import org.jowidgets.spi.impl.javafx.widgets.SeparatorImpl;
 import org.jowidgets.spi.impl.javafx.widgets.TextAreaImpl;
 import org.jowidgets.spi.impl.javafx.widgets.TextFieldImpl;
 import org.jowidgets.spi.impl.javafx.widgets.TextLabelImpl;
@@ -90,14 +94,17 @@ public final class JavafxWidgetFactory implements IWidgetFactorySpi {
 
 	@Override
 	public boolean isConvertibleToFrame(final Object uiReference) {
-		throw new UnsupportedOperationException();
+		return uiReference instanceof Window;
 	}
 
 	@Override
 	public IFrameSpi createFrame(final IGenericWidgetFactory factory, final Object uiReference) {
 		Assert.paramNotNull(factory, "factory");
 		Assert.paramNotNull(uiReference, "uiReference");
-		throw new UnsupportedOperationException();
+		if (uiReference instanceof Stage) {
+			return new FrameImpl(factory, (Stage) uiReference);
+		}
+		throw new IllegalArgumentException("UiReference must be instanceof of '" + Stage.class.getName() + "'");
 	}
 
 	@Override
@@ -181,7 +188,7 @@ public final class JavafxWidgetFactory implements IWidgetFactorySpi {
 
 	@Override
 	public IControlSpi createSeparator(final Object parentUiReference, final ISeparatorSetupSpi setup) {
-		throw new UnsupportedOperationException();
+		return new SeparatorImpl(setup);
 	}
 
 	@Override

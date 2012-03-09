@@ -135,13 +135,13 @@ public class SubMenuImpl implements ISubMenuSpi {
 
 	@Override
 	public void setEnabled(final boolean enabled) {
-		// TODO Auto-generated method stub
+		// TODO DB Auto-generated method stub
 
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
+		// TODO DB Auto-generated method stub
 		return false;
 	}
 }

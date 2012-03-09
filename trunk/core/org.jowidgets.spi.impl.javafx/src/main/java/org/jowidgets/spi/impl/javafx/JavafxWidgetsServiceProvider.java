@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2012, David Bauknecht
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,12 @@
 
 package org.jowidgets.spi.impl.javafx;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
@@ -89,14 +94,31 @@ public class JavafxWidgetsServiceProvider implements IWidgetsServiceProvider {
 		return new JavafxApplicationRunner();
 	}
 
+	//TODO DB change this if JavaFX provides a better way
 	@Override
 	public Object getActiveWindowUiReference() {
-		throw new UnsupportedOperationException();
+		for (@SuppressWarnings("deprecation")
+		final Iterator<Window> windowsIterator = Stage.impl_getWindows(); windowsIterator.hasNext();) {
+			final Window window = windowsIterator.next();
+			if (window.isShowing() && window instanceof Stage) {
+				return window;
+			}
+		}
+		return null;
 	}
 
+	//TODO DB change this if JavaFX provides a better way
 	@Override
 	public List<Object> getAllWindowsUiReference() {
-		throw new UnsupportedOperationException();
+		final List<Object> result = new LinkedList<Object>();
+		for (@SuppressWarnings("deprecation")
+		final Iterator<Window> windowsIterator = Stage.impl_getWindows(); windowsIterator.hasNext();) {
+			final Window window = windowsIterator.next();
+			if (window instanceof Stage) {
+				result.add(window);
+			}
+		}
+		return result;
 	}
 
 	@Override

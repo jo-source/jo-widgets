@@ -90,7 +90,7 @@ public class TreeImpl extends JavafxControl implements ITreeSpi {
 			@SuppressWarnings("deprecation")
 			@Override
 			public void handle(final MouseEvent event) {
-				//TODO http://javafx-jira.kenai.com/browse/RT-20123
+				//TODO DB http://javafx-jira.kenai.com/browse/RT-20123
 				//and find a way to select the correct item at position
 				if (MouseEvent.impl_getPopupTrigger(event)) {
 					final Position position = new Position((int) event.getScreenX(), (int) event.getScreenY());
