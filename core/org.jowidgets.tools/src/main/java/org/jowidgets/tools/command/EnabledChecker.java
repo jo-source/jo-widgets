@@ -28,7 +28,8 @@
 
 package org.jowidgets.tools.command;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.api.command.EnabledState;
@@ -44,7 +45,7 @@ public class EnabledChecker implements IEnabledChecker {
 	private IEnabledState enabledState;
 
 	public EnabledChecker() {
-		this.changeListeners = new HashSet<IChangeListener>();
+		this.changeListeners = new LinkedHashSet<IChangeListener>();
 		this.enabledState = EnabledState.ENABLED;
 	}
 
@@ -75,7 +76,7 @@ public class EnabledChecker implements IEnabledChecker {
 	}
 
 	public final void fireEnabledStateChanged() {
-		for (final IChangeListener listener : changeListeners) {
+		for (final IChangeListener listener : new LinkedList<IChangeListener>(changeListeners)) {
 			listener.changed();
 		}
 	}
