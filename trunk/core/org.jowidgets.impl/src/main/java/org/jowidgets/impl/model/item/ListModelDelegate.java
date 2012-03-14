@@ -375,8 +375,13 @@ class ListModelDelegate {
 			if (child != item && NullCompatibleEquivalence.equals(item.getId(), child.getId())) {
 				throw new IllegalArgumentException("Invalid item ID: The item '"
 					+ item
-					+ "' has the same id as the child '"
+					+ "' has the same id ("
+					+ item.getId()
+					+ ") as the child '"
 					+ child
+					+ " ("
+					+ child.getId()
+					+ ")"
 					+ " of their parent menu '"
 					+ this
 					+ "'.");
