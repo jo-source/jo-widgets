@@ -43,14 +43,14 @@ import org.jowidgets.util.IProvider;
 public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaSpi, IProvider<Boolean> {
 
 	private final TextArea textArea;
-	private final StyleUtil styleUtil;
+	private final StyleDelegate styleUtil;
 	private boolean programmaticChange;
 
 	public TextAreaImpl(final ITextAreaSetupSpi setup) {
 		super(new ScrollPane());
 		getUiReference().setContent(new InputModifierTextArea());
 
-		styleUtil = new StyleUtil(getUiReference().getContent());
+		styleUtil = new StyleDelegate(getUiReference().getContent());
 		textArea = (TextArea) getUiReference().getContent();
 		textArea.setWrapText(setup.isLineWrap());
 		getUiReference().fitToWidthProperty().set(true);

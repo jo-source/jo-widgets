@@ -30,22 +30,35 @@ package org.jowidgets.spi.impl.javafx.widgets.base;
 
 import java.util.Map;
 
+import javafx.event.EventHandler;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
+import javafx.scene.input.ContextMenuEvent;
 
-import org.jowidgets.spi.impl.javafx.widgets.StyleUtil;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.spi.impl.javafx.widgets.StyleDelegate;
 import org.jowidgets.spi.impl.javafx.widgets.TreeNodeImpl;
 
 public class TreeNodeRenderer extends TreeCell<String> {
 
-	private final StyleUtil styleUtil;
+	private final StyleDelegate styleUtil;
 	private final Map<TreeItem<String>, TreeNodeImpl> nodes;
 
 	public TreeNodeRenderer(final Map<TreeItem<String>, TreeNodeImpl> nodes) {
 		this.nodes = nodes;
-		styleUtil = new StyleUtil(this);
+		styleUtil = new StyleDelegate(this);
+		this.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
 
+			@Override
+			public void handle(final ContextMenuEvent event) {
+				final Position position = new Position((int) event.getScreenX(), (int) event.getScreenY());
+				if (getTreeItem() != null) {
+					nodes.get(getTreeItem()).firePopupDetected(position);
+				}
+			}
+
+		});
 	}
 
 	@Override

@@ -57,13 +57,13 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 	}
 
 	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return componentDelegate.createPopupMenu();
+	public Control getUiReference() {
+		return control;
 	}
 
 	@Override
-	public Control getUiReference() {
-		return control;
+	public IPopupMenuSpi createPopupMenu() {
+		return componentDelegate.createPopupMenu();
 	}
 
 	@Override

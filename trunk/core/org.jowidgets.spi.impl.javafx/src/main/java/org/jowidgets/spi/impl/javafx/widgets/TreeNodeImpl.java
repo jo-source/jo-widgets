@@ -55,19 +55,21 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 	private IColorConstant colorValueForeground;
 	private IColorConstant colorValueBackground;
 
-	public TreeNodeImpl(final TreeImpl parentTree, final TreeItem<String> node) {
+	public TreeNodeImpl(final TreeImpl parenttree, final TreeItem<String> node) {
 		super();
-		Assert.paramNotNull(parentTree, "parentTree");
-		this.parentTree = parentTree;
+		Assert.paramNotNull(parenttree, "parentTree");
+		this.parentTree = parenttree;
 		this.node = node;
 		this.popupDetectionListeners = new HashSet<IPopupDetectionListener>();
 
 		this.node.expandedProperty().addListener(new ChangeListener<Boolean>() {
+
 			@Override
 			public void changed(
 				final ObservableValue<? extends Boolean> paramObservableValue,
 				final Boolean oldValue,
 				final Boolean newValue) {
+
 				parentTree.getNodeMap().get(node).fireExpandedChanged(newValue);
 			}
 		});
@@ -108,7 +110,7 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 	@Override
 	public void setIcon(final IImageConstant icon) {
 		if (icon != null) {
-			getUiReference().setGraphic(JavafxImageRegistry.getInstance().getImageHandle(icon).getImage());
+			getUiReference().setGraphic(JavafxImageRegistry.getInstance().getImage(icon));
 		}
 		else {
 			getUiReference().setGraphic(null);
@@ -202,7 +204,7 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 		return new PopupMenuImpl(parentTree.getUiReference());
 	}
 
-	protected void firePopupDetected(final Position position) {
+	public void firePopupDetected(final Position position) {
 		for (final IPopupDetectionListener listener : popupDetectionListeners) {
 			listener.popupDetected(position);
 		}

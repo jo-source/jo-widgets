@@ -30,7 +30,7 @@ package org.jowidgets.spi.impl.javafx.image;
 
 import java.net.URL;
 
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
 import org.jowidgets.common.image.IImageHandle;
 import org.jowidgets.common.image.IImageHandleFactory;
@@ -40,7 +40,7 @@ public class JavafxImageHandleFactory implements IImageHandleFactory {
 
 	@Override
 	public IImageHandle createImageHandle(final URL url) {
-		return new ImageHandle<ImageView>(new JavafxImageFactory(url));
+		return new ImageHandle<Image>(new JavafxImageFactory(url));
 	}
 
 }

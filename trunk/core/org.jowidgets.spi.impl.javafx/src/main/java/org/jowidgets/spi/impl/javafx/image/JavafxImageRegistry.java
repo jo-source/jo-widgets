@@ -27,6 +27,7 @@
  */
 package org.jowidgets.spi.impl.javafx.image;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import org.jowidgets.common.image.IImageConstant;
@@ -44,17 +45,17 @@ public final class JavafxImageRegistry extends ImageRegistry {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public synchronized ImageHandle<ImageView> getImageHandle(final IImageConstant key) {
-		return (ImageHandle<ImageView>) super.getImageHandle(key);
+	public synchronized ImageHandle<Image> getImageHandle(final IImageConstant key) {
+		return (ImageHandle<Image>) super.getImageHandle(key);
 	}
 
 	public synchronized ImageView getImage(final IImageConstant key) {
 		if (key == null) {
 			return null;
 		}
-		final ImageHandle<ImageView> imageHandle = getImageHandle(key);
+		final ImageHandle<Image> imageHandle = getImageHandle(key);
 		if (imageHandle != null) {
-			return imageHandle.getImage();
+			return new ImageView(imageHandle.getImage());
 		}
 		else {
 			throw new IllegalArgumentException("No icon found for the image constant '" + key + "'");

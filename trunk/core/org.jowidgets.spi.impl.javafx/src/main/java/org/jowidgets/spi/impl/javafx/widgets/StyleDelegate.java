@@ -33,7 +33,7 @@ import javafx.scene.Node;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.spi.impl.javafx.util.ColorCSSConverter;
 
-public final class StyleUtil {
+public final class StyleDelegate {
 	private String fontColorCSS = "";
 	private String backgroundColorCSS = "-fx-background-color: #ffffff;";
 	private String fontSizeCSS = "";
@@ -41,7 +41,7 @@ public final class StyleUtil {
 	private String borderCSS = "";
 	private final Node node;
 
-	public StyleUtil(final Node node) {
+	public StyleDelegate(final Node node) {
 		this.node = node;
 	}
 

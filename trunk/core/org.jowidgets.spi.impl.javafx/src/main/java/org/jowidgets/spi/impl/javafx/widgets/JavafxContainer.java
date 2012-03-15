@@ -70,7 +70,12 @@ public class JavafxContainer implements IContainerSpi {
 	public JavafxContainer(final IGenericWidgetFactory factory, final Pane pane) {
 		this.pane = pane;
 		this.factory = factory;
-		componentDelegate = new JavafxComponent(pane);
+		componentDelegate = new JavafxComponent(this.pane);
+	}
+
+	@Override
+	public Pane getUiReference() {
+		return (Pane) componentDelegate.getUiReference();
 	}
 
 	@Override
@@ -79,14 +84,8 @@ public class JavafxContainer implements IContainerSpi {
 	}
 
 	@Override
-	public Pane getUiReference() {
-		return pane;
-	}
-
-	@Override
 	public void setEnabled(final boolean enabled) {
 		getUiReference().disableProperty().setValue(enabled);
-
 	}
 
 	@Override
@@ -118,7 +117,6 @@ public class JavafxContainer implements IContainerSpi {
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
 		componentDelegate.setBackgroundColor(colorValue);
-
 	}
 
 	@Override
@@ -134,13 +132,11 @@ public class JavafxContainer implements IContainerSpi {
 	@Override
 	public void setCursor(final Cursor cursor) {
 		getUiReference().setCursor(CursorConvert.convert(cursor));
-
 	}
 
 	@Override
 	public void setVisible(final boolean visible) {
 		getUiReference().setVisible(visible);
-
 	}
 
 	@Override
@@ -171,43 +167,36 @@ public class JavafxContainer implements IContainerSpi {
 	@Override
 	public void addComponentListener(final IComponentListener componentListener) {
 		componentDelegate.addComponentListener(componentListener);
-
 	}
 
 	@Override
 	public void removeComponentListener(final IComponentListener componentListener) {
 		componentDelegate.removeComponentListener(componentListener);
-
 	}
 
 	@Override
 	public void addFocusListener(final IFocusListener listener) {
 		componentDelegate.addFocusListener(listener);
-
 	}
 
 	@Override
 	public void removeFocusListener(final IFocusListener listener) {
 		componentDelegate.removeFocusListener(listener);
-
 	}
 
 	@Override
 	public void addKeyListener(final IKeyListener listener) {
 		componentDelegate.addKeyListener(listener);
-
 	}
 
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
 		componentDelegate.removeKeyListener(listener);
-
 	}
 
 	@Override
 	public void addMouseListener(final IMouseListener listener) {
 		componentDelegate.addMouseListener(listener);
-
 	}
 
 	@Override
@@ -223,12 +212,17 @@ public class JavafxContainer implements IContainerSpi {
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
 		componentDelegate.removePopupDetectionListener(listener);
-
 	}
 
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
 		Assert.paramNotNull(layoutDescriptor, "layout");
+		//TODO DB refactor this
+		final Parent parent = pane.getParent();
+		if (parent instanceof Pane) {
+			((Pane) parent).getChildren().remove(pane);
+		}
+		final Object userData = pane.getUserData();
 		if (layoutDescriptor instanceof MigLayoutDescriptor) {
 			final MigLayoutDescriptor migLayoutManager = (MigLayoutDescriptor) layoutDescriptor;
 			pane = new MigPane(
@@ -238,15 +232,25 @@ public class JavafxContainer implements IContainerSpi {
 			componentDelegate = new JavafxComponent(pane);
 		}
 		else if (layoutDescriptor instanceof ILayouter) {
-			pane = new LayoutManagerImpl((ILayouter) layoutDescriptor);
-			setLayoutConstraints(this, layoutDescriptor);
-			componentDelegate = new JavafxComponent(pane);
+			if (pane instanceof LayoutManagerImpl) {
+				((LayoutManagerImpl) pane).setLayouter((ILayouter) layoutDescriptor);
+			}
+			else {
+				pane = new LayoutManagerImpl((ILayouter) layoutDescriptor);
+				setLayoutConstraints(this, layoutDescriptor);
+				componentDelegate = new JavafxComponent(pane);
+			}
 		}
 		else {
 			throw new IllegalArgumentException("Layout Descriptor of type '"
 				+ layoutDescriptor.getClass().getName()
 				+ "' is not supported");
 		}
+		if (parent instanceof Pane) {
+
+			((Pane) parent).getChildren().add(pane);
+		}
+		pane.setUserData(userData);
 	}
 
 	@Override
@@ -257,13 +261,11 @@ public class JavafxContainer implements IContainerSpi {
 	@Override
 	public void layoutEnd() {
 		getUiReference().layout();
-
 	}
 
 	@Override
 	public void removeAll() {
 		getUiReference().getChildren().clear();
-
 	}
 
 	@Override
@@ -296,7 +298,7 @@ public class JavafxContainer implements IContainerSpi {
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
 		final WIDGET_TYPE result = factory.create(getUiReference(), descriptor);
-		addToContainer((Node) result.getUiReference(), layoutConstraints);
+		addToContainer((Node) result.getUiReference(), layoutConstraints, index);
 		setLayoutConstraints(result, layoutConstraints);
 		return result;
 	}
@@ -308,17 +310,22 @@ public class JavafxContainer implements IContainerSpi {
 		final Object layoutConstraints) {
 		final ICustomWidgetFactory customWidgetFactory = createCustomWidgetFactory();
 		final WIDGET_TYPE result = creator.create(customWidgetFactory);
-		addToContainer((Node) result.getUiReference(), layoutConstraints);
+		addToContainer((Node) result.getUiReference(), layoutConstraints, index);
 		setLayoutConstraints(result, layoutConstraints);
 		return result;
 	}
 
-	private void addToContainer(final Node result, final Object layoutConstraints) {
+	private void addToContainer(final Node result, final Object layoutConstraints, final Integer index) {
 		if (getUiReference() instanceof MigPane) {
 			((MigPane) getUiReference()).add(result, "" + layoutConstraints);
 		}
 		else {
-			getUiReference().getChildren().add(result);
+			if (index != null) {
+				getUiReference().getChildren().add(index, result);
+			}
+			else {
+				getUiReference().getChildren().add(result);
+			}
 		}
 	}
 

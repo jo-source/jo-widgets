@@ -31,7 +31,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -52,25 +52,22 @@ import org.jowidgets.common.widgets.controller.IWindowListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.controller.WindowObservable;
-import org.jowidgets.spi.impl.javafx.layout.LayoutManagerImpl;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.IWindowSpi;
 
 public class JavafxWindow implements IWindowSpi {
 
 	private final Stage stage;
+	private final Pane pane;
 	private final WindowObservable windowObservableDelegate;
 	private final JavafxContainer containerDelegate;
-	private final LayoutManagerImpl pane;
-	private final Scene scene;
 	private final IGenericWidgetFactory factory;
 
 	public JavafxWindow(final IGenericWidgetFactory factory, final Stage stage, final boolean closeable) {
 		this.factory = factory;
 		this.stage = stage;
-		pane = new LayoutManagerImpl();
-		scene = new Scene(pane);
-		stage.setScene(scene);
+		this.pane = new Pane();
+		this.stage.setScene(new Scene(pane));
 		this.windowObservableDelegate = new WindowObservable();
 		final EventHandler<WindowEvent> handler = new EventHandler<WindowEvent>() {
 
@@ -89,7 +86,6 @@ public class JavafxWindow implements IWindowSpi {
 		};
 
 		getUiReference().addEventHandler(WindowEvent.ANY, handler);
-		containerDelegate = new JavafxContainer(factory, (LayoutManagerImpl) stage.getScene().getRoot());
 		getUiReference().iconifiedProperty().addListener(new ChangeListener<Boolean>() {
 
 			@Override
@@ -102,6 +98,12 @@ public class JavafxWindow implements IWindowSpi {
 				}
 			}
 		});
+		containerDelegate = new JavafxContainer(factory, pane);
+	}
+
+	@Override
+	public Stage getUiReference() {
+		return stage;
 	}
 
 	@Override
@@ -113,9 +115,7 @@ public class JavafxWindow implements IWindowSpi {
 	public void pack() {
 		// TODO DB calculate size 
 		// https://forums.oracle.com/forums/thread.jspa?messageID=10174045
-		final FlowPane tmpPane = new FlowPane();
-		tmpPane.getChildren().addAll(getUiReference().getScene().getRoot().getChildrenUnmodifiable());
-		getUiReference().getScene().setRoot(tmpPane);
+
 	}
 
 	@Override
@@ -137,11 +137,6 @@ public class JavafxWindow implements IWindowSpi {
 	public <WIDGET_TYPE extends IDisplayCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor) {
 		return factory.create(getUiReference(), descriptor);
-	}
-
-	@Override
-	public Stage getUiReference() {
-		return stage;
 	}
 
 	@Override
@@ -256,64 +251,54 @@ public class JavafxWindow implements IWindowSpi {
 	@Override
 	public void addComponentListener(final IComponentListener componentListener) {
 		containerDelegate.addComponentListener(componentListener);
-
 	}
 
 	@Override
 	public void removeComponentListener(final IComponentListener componentListener) {
 		containerDelegate.removeComponentListener(componentListener);
-
 	}
 
 	@Override
 	public void addFocusListener(final IFocusListener listener) {
 		containerDelegate.addFocusListener(listener);
-
 	}
 
 	@Override
 	public void removeFocusListener(final IFocusListener listener) {
 		containerDelegate.removeFocusListener(listener);
-
 	}
 
 	@Override
 	public void addKeyListener(final IKeyListener listener) {
 		containerDelegate.addKeyListener(listener);
-
 	}
 
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
 		containerDelegate.removeKeyListener(listener);
-
 	}
 
 	@Override
 	public void addMouseListener(final IMouseListener listener) {
 		containerDelegate.addMouseListener(listener);
-
 	}
 
 	@Override
 	public void removeMouseListener(final IMouseListener listener) {
 		containerDelegate.removeMouseListener(listener);
-
 	}
 
 	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
 		containerDelegate.addPopupDetectionListener(listener);
-
 	}
 
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
 		containerDelegate.removePopupDetectionListener(listener);
-
 	}
 
-	JavafxContainer getContainerDelegate() {
+	protected final JavafxContainer getContainerDelegate() {
 		return containerDelegate;
 	}
 

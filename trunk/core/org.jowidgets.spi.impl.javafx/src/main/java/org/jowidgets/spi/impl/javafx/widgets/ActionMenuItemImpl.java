@@ -31,10 +31,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.MenuItem;
 
-import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.spi.impl.controller.ActionObservable;
-import org.jowidgets.spi.impl.javafx.image.JavafxImageRegistry;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 
 public class ActionMenuItemImpl extends MenuItemImpl implements IActionMenuItemSpi {
@@ -57,11 +55,6 @@ public class ActionMenuItemImpl extends MenuItemImpl implements IActionMenuItemS
 			}
 		});
 
-	}
-
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		getUiReference().setGraphic(JavafxImageRegistry.getInstance().getImage(icon));
 	}
 
 	@Override

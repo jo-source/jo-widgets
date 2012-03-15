@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.javafx.widgets;
 
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Control;
+import javafx.scene.control.ToolBar;
 import javafx.stage.Stage;
 
 import org.jowidgets.common.types.Position;
@@ -129,10 +130,11 @@ public class PopupMenuImpl implements IPopupMenuSpi {
 
 	@Override
 	public void show(final Position position) {
-
-		if (parent instanceof Control) {
-			((Control) parent).setContextMenu(getUiReference());
+		if (parent instanceof ToolBar) {
 			getUiReference().show((Control) parent, position.getX(), position.getY());
+		}
+		else if (parent instanceof Control) {
+			((Control) parent).setContextMenu(getUiReference());
 		}
 		else if (parent instanceof Stage) {
 			getUiReference().show((Stage) parent, position.getX(), position.getY());

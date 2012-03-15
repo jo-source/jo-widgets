@@ -139,7 +139,6 @@ public class CompositeImpl implements ICompositeSpi {
 	@Override
 	public void setSize(final Dimension size) {
 		containerDelegate.setSize(size);
-
 		for (final Node node : getUiReference().getChildren()) {
 			if (((Control) node).getPrefWidth() == -1d || ((Control) node).getPrefHeight() == -1d) {
 				((Control) node).setMaxSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
