@@ -44,6 +44,7 @@ import org.jowidgets.spi.impl.javafx.widgets.TextAreaImpl;
 import org.jowidgets.spi.impl.javafx.widgets.TextFieldImpl;
 import org.jowidgets.spi.impl.javafx.widgets.TextLabelImpl;
 import org.jowidgets.spi.impl.javafx.widgets.ToggleButtonImpl;
+import org.jowidgets.spi.impl.javafx.widgets.ToolBarImpl;
 import org.jowidgets.spi.impl.javafx.widgets.TreeImpl;
 import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
@@ -221,7 +222,7 @@ public final class JavafxWidgetFactory implements IWidgetFactorySpi {
 		final IGenericWidgetFactory factory,
 		final Object parentUiReference,
 		final IToolBarSetupSpi setup) {
-		throw new UnsupportedOperationException();
+		return new ToolBarImpl(factory, setup);
 	}
 
 	@Override
