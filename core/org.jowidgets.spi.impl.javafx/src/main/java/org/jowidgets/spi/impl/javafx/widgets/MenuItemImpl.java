@@ -76,7 +76,12 @@ public class MenuItemImpl implements IMenuItemSpi {
 
 	private String assignMnemonictoText(final String text) {
 		if (mnemonic != Character.UNASSIGNED) {
-			text.replaceFirst("" + mnemonic, "_" + mnemonic);
+			if (Character.isUpperCase(mnemonic)) {
+				//TODO DB replace always first also if it is uppercase
+				final char mnemonicTmp = Character.toUpperCase(this.mnemonic);
+				return text.replaceFirst("" + mnemonicTmp, "_" + mnemonicTmp);
+			}
+			return text.replaceFirst("" + mnemonic, "_" + mnemonic);
 		}
 		return text;
 	}
@@ -97,7 +102,6 @@ public class MenuItemImpl implements IMenuItemSpi {
 	}
 
 	private KeyCodeCombination getKeyCodeCombination(final Accelerator accelerator) {
-		//TODO DB check this
 		if (accelerator.getVirtualKey() != null) {
 
 			final KeyCode code = VirtualKeyConvert.convert(accelerator.getVirtualKey());
@@ -109,7 +113,12 @@ public class MenuItemImpl implements IMenuItemSpi {
 			}
 			return new KeyCodeCombination(code, ModifierConvert.convert(accelerator.getModifier().get(0)));
 		}
-		return null;
+		else {
+			return new KeyCodeCombination(
+				KeyCode.getKeyCode(accelerator.getCharacter().toString()),
+				ModifierConvert.convert(accelerator.getModifier().get(0)));
+		}
+
 	}
 
 	@Override

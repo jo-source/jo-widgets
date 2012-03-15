@@ -46,8 +46,7 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
-import org.jowidgets.common.widgets.layout.ILayouter;
-import org.jowidgets.spi.impl.javafx.layout.LayoutManagerImpl;
+import org.jowidgets.spi.impl.javafx.image.JavafxImageRegistry;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
 import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
@@ -58,6 +57,9 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 		super(factory, new Stage(), setup.isCloseable());
 		getUiReference().setTitle(setup.getTitle());
 		getUiReference().setResizable(setup.isResizable());
+		if (setup.getIcon() != null) {
+			getUiReference().getIcons().add(JavafxImageRegistry.getInstance().getImageHandle(setup.getIcon()).getImage());
+		}
 	}
 
 	public FrameImpl(final IGenericWidgetFactory factory, final Stage stage) {
@@ -109,26 +111,22 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 	@Override
 	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
 		throw new UnsupportedOperationException();
-
 	}
 
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		if (layoutDescriptor != null) {
-			((LayoutManagerImpl) getUiReference().getScene().getRoot()).setLayouter((ILayouter) layoutDescriptor);
-		}
+		getContainerDelegate().setLayout(layoutDescriptor);
+		getUiReference().getScene().setRoot(getContainerDelegate().getUiReference());
 	}
 
 	@Override
 	public void layoutBegin() {
 		throw new UnsupportedOperationException();
-
 	}
 
 	@Override
 	public void layoutEnd() {
 		getUiReference().getScene().getRoot().layout();
-
 	}
 
 	@Override

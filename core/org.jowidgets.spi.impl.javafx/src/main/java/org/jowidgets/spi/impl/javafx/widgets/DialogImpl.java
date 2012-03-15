@@ -30,8 +30,11 @@ package org.jowidgets.spi.impl.javafx.widgets;
 import java.util.List;
 
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuBar;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -45,8 +48,6 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
-import org.jowidgets.common.widgets.layout.ILayouter;
-import org.jowidgets.spi.impl.javafx.layout.LayoutManagerImpl;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
 import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
@@ -64,7 +65,7 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 		getUiReference().initOwner((Window) parentUiReference);
 
 		if (!setup.isDecorated()) {
-			getUiReference().initStyle(StageStyle.UTILITY);
+			getUiReference().initStyle(StageStyle.UNDECORATED);
 		}
 
 	}
@@ -80,11 +81,6 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 	}
 
 	@Override
-	public void setVisible(final boolean visible) {
-		getUiReference().show();
-	}
-
-	@Override
 	public void setTitle(final String title) {
 		getUiReference().setTitle(title);
 	}
@@ -95,9 +91,7 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 		final Insets insets = paneTmp.getInsets();
 		final int x = (int) insets.getLeft();
 		final int y = (int) insets.getTop();
-		final Dimension size = new Dimension(
-			(int) getUiReference().getScene().getWidth(),
-			(int) getUiReference().getScene().getHeight());
+		final Dimension size = new Dimension((int) paneTmp.getWidth(), (int) paneTmp.getHeight());
 		final int width = (int) (size.getWidth() - insets.getLeft() - insets.getRight());
 		final int height = (int) (size.getHeight() - insets.getTop() - insets.getBottom());
 		return new Rectangle(x, y, width, height);
@@ -146,38 +140,37 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 	@Override
 	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
 		throw new UnsupportedOperationException();
-
 	}
 
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		if (layoutDescriptor != null && layoutDescriptor instanceof ILayouter) {
-			((LayoutManagerImpl) getUiReference().getScene().getRoot()).setLayouter((ILayouter) layoutDescriptor);
-		}
+		getContainerDelegate().setLayout(layoutDescriptor);
+		getUiReference().getScene().setRoot(getContainerDelegate().getUiReference());
 	}
 
 	@Override
 	public void layoutBegin() {
 		throw new UnsupportedOperationException();
-
 	}
 
 	@Override
 	public void layoutEnd() {
 		throw new UnsupportedOperationException();
-
 	}
 
 	@Override
 	public void removeAll() {
 		((Pane) getUiReference().getScene().getRoot()).getChildren().clear();
-
 	}
 
 	@Override
 	public IMenuBarSpi createMenuBar() {
-		// TODO DB Auto-generated method stub
-		return null;
+		final MenuBar bar = new MenuBar();
+		final Parent oldRoot = getUiReference().getScene().getRoot();
+		final VBox newRoot = new VBox();
+		newRoot.getChildren().addAll(bar, oldRoot);
+		getUiReference().getScene().setRoot(newRoot);
+		return new MenuBarImpl(bar);
 	}
 
 }

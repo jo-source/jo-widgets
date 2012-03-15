@@ -44,7 +44,7 @@ public class IconImpl extends JavafxControl implements IIconSpi {
 	@Override
 	public void setIcon(final IImageConstant icon) {
 		if (icon != null) {
-			getUiReference().setGraphic(JavafxImageRegistry.getInstance().getImageHandle(icon).getImage());
+			getUiReference().setGraphic(JavafxImageRegistry.getInstance().getImage(icon));
 		}
 		else {
 			getUiReference().setGraphic(null);

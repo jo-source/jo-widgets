@@ -46,7 +46,7 @@ import org.jowidgets.util.IProvider;
 
 public class TextFieldImpl extends AbstractTextInputControl implements ITextControlSpi, IProvider<Boolean> {
 
-	private final StyleUtil styleUtil;
+	private final StyleDelegate styleUtil;
 
 	private boolean programmaticChange;
 
@@ -87,7 +87,7 @@ public class TextFieldImpl extends AbstractTextInputControl implements ITextCont
 			});
 		}
 
-		styleUtil = new StyleUtil(getUiReference());
+		styleUtil = new StyleDelegate(getUiReference());
 		if (!setup.hasBorder()) {
 			styleUtil.setNoBorder();
 		}

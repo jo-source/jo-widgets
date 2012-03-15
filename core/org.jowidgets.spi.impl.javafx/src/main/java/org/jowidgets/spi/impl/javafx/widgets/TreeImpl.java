@@ -42,7 +42,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.util.Callback;
 
 import org.jowidgets.common.types.Position;
@@ -86,23 +86,13 @@ public class TreeImpl extends JavafxControl implements ITreeSpi {
 			}
 		});
 
-		getUiReference().setOnMouseReleased(new EventHandler<MouseEvent>() {
-			@SuppressWarnings("deprecation")
+		getUiReference().setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
 			@Override
-			public void handle(final MouseEvent event) {
-				//TODO DB http://javafx-jira.kenai.com/browse/RT-20123
-				//and find a way to select the correct item at position
-				if (MouseEvent.impl_getPopupTrigger(event)) {
-					final Position position = new Position((int) event.getScreenX(), (int) event.getScreenY());
-
-					if (getUiReference().getSelectionModel().getSelectedItem() != null) {
-						nodes.get(getUiReference().getSelectionModel().getSelectedItem()).firePopupDetected(position);
-					}
-					else {
-						getComponentDelegate().getPopupDetectionObservable().firePopupDetected(position);
-					}
+			public void handle(final ContextMenuEvent event) {
+				final Position position = new Position((int) event.getScreenX(), (int) event.getScreenY());
+				if (getUiReference().getSelectionModel().getSelectedItem() == null) {
+					getComponentDelegate().getPopupDetectionObservable().firePopupDetected(position);
 				}
-
 			}
 		});
 	}
@@ -119,13 +109,17 @@ public class TreeImpl extends JavafxControl implements ITreeSpi {
 
 		for (final TreeItem<String> wasSelected : lastSelection) {
 			if (!newSelection.contains(wasSelected)) {
-				nodes.get(wasSelected).fireSelectionChanged(false);
+				if (wasSelected != null) {
+					nodes.get(wasSelected).fireSelectionChanged(false);
+				}
 			}
 		}
 
 		for (final TreeItem<String> isSelected : newSelection) {
 			if (!lastSelection.contains(isSelected)) {
-				nodes.get(isSelected).fireSelectionChanged(true);
+				if (isSelected != null) {
+					nodes.get(isSelected).fireSelectionChanged(true);
+				}
 			}
 		}
 

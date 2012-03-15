@@ -30,12 +30,11 @@ package org.jowidgets.spi.impl.javafx.image;
 import java.net.URL;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import org.jowidgets.spi.impl.image.IImageFactory;
 import org.jowidgets.util.Assert;
 
-public class JavafxImageFactory implements IImageFactory<ImageView> {
+public class JavafxImageFactory implements IImageFactory<Image> {
 
 	private final URL url;
 
@@ -45,9 +44,9 @@ public class JavafxImageFactory implements IImageFactory<ImageView> {
 	}
 
 	@Override
-	public ImageView createImage() {
+	public Image createImage() {
 		try {
-			return new ImageView(new Image(this.url.toString()));
+			return new Image(this.url.toString());
 		}
 		catch (final Exception e) {
 			throw new RuntimeException(e);

@@ -72,7 +72,7 @@ public class JavafxComponent implements IComponentSpi {
 	private final ComponentObservable componentObservable;
 	private final EventHandler<KeyEvent> keyListener;
 
-	private final StyleUtil styleDelegate;
+	private final StyleDelegate styleDelegate;
 
 	private EventHandler<MouseEvent> mouseListener;
 
@@ -82,30 +82,20 @@ public class JavafxComponent implements IComponentSpi {
 		this.focusObservable = new FocusObservable();
 		this.mouseObservable = new MouseObservable();
 		this.componentObservable = new ComponentObservable();
-		this.styleDelegate = new StyleUtil(this.node);
+		this.styleDelegate = new StyleDelegate(this.node);
 
-		node.setOnMousePressed(new EventHandler<MouseEvent>() {
-
+		mouseListener = new EventHandler<MouseEvent>() {
 			//TODO DB find a better way
 			@SuppressWarnings("deprecation")
 			@Override
 			public void handle(final MouseEvent event) {
-				if (MouseEvent.impl_getPopupTrigger(event)) {
+				if (MouseEvent.impl_getPopupTrigger(event)
+					&& (event.getEventType() == MouseEvent.MOUSE_PRESSED || event.getEventType() == MouseEvent.MOUSE_RELEASED)) {
 					popupDetectionObservable.firePopupDetected(new Position((int) event.getScreenX(), (int) event.getScreenY()));
 				}
 			}
-		});
-
-		node.setOnMouseReleased(new EventHandler<MouseEvent>() {
-
-			@SuppressWarnings("deprecation")
-			@Override
-			public void handle(final MouseEvent event) {
-				if (MouseEvent.impl_getPopupTrigger(event)) {
-					popupDetectionObservable.firePopupDetected(new Position((int) event.getScreenX(), (int) event.getScreenY()));
-				}
-			}
-		});
+		};
+		node.addEventHandler(MouseEvent.ANY, mouseListener);
 
 		getUiReference().setOnDragDone(new EventHandler<DragEvent>() {
 
@@ -227,7 +217,7 @@ public class JavafxComponent implements IComponentSpi {
 	protected void setMouseListener(final EventHandler<MouseEvent> mouseListener) {
 		getUiReference().removeEventHandler(MouseEvent.ANY, this.mouseListener);
 		this.mouseListener = mouseListener;
-		getUiReference().addEventFilter(MouseEvent.ANY, mouseListener);
+		getUiReference().addEventHandler(MouseEvent.ANY, this.mouseListener);
 	}
 
 	@Override
