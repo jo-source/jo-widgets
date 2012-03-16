@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.javafx.widgets;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
+import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToolBar;
 
@@ -107,7 +108,7 @@ public class ToolBarImpl extends JavafxControl implements IToolBarSpi {
 
 	@Override
 	public IToolBarPopupButtonSpi addToolBarPopupButton(final Integer index) {
-		final Button button = new Button();
+		final SplitMenuButton button = new SplitMenuButton();
 		if (index != null) {
 			getUiReference().getItems().add(index.intValue(), button);
 		}

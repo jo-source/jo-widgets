@@ -76,12 +76,12 @@ public class MenuItemImpl implements IMenuItemSpi {
 
 	private String assignMnemonictoText(final String text) {
 		if (mnemonic != Character.UNASSIGNED) {
-			if (Character.isUpperCase(mnemonic)) {
-				//TODO DB replace always first also if it is uppercase
-				final char mnemonicTmp = Character.toUpperCase(this.mnemonic);
-				return text.replaceFirst("" + mnemonicTmp, "_" + mnemonicTmp);
+			final char[] charArray = text.toCharArray();
+			for (int i = 0; i < charArray.length; i++) {
+				if (charArray[i] == mnemonic || Character.toLowerCase(charArray[i]) == mnemonic) {
+					return text.replaceFirst("" + charArray[i], "_" + charArray[i]);
+				}
 			}
-			return text.replaceFirst("" + mnemonic, "_" + mnemonic);
 		}
 		return text;
 	}

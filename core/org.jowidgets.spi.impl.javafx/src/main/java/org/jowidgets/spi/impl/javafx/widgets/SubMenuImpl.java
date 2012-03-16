@@ -135,13 +135,12 @@ public class SubMenuImpl implements ISubMenuSpi {
 
 	@Override
 	public void setEnabled(final boolean enabled) {
-		// TODO DB Auto-generated method stub
+		getUiReference().setDisable(!enabled);
 
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO DB Auto-generated method stub
-		return false;
+		return !getUiReference().isDisable();
 	}
 }

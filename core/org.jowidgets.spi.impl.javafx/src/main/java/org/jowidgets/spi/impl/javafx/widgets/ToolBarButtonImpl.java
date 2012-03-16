@@ -50,7 +50,6 @@ public class ToolBarButtonImpl extends ToolBarItemImpl implements IToolBarButton
 				actionObservable.fireActionPerformed();
 			}
 		});
-
 	}
 
 	@Override

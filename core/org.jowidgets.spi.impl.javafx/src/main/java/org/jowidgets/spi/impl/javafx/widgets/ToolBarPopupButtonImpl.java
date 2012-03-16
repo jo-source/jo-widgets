@@ -28,36 +28,45 @@
 
 package org.jowidgets.spi.impl.javafx.widgets;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
+import javafx.scene.control.SplitMenuButton;
 import javafx.scene.input.MouseEvent;
 
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
+import org.jowidgets.spi.impl.controller.ActionObservable;
 import org.jowidgets.spi.impl.controller.PopupDetectionObservable;
 import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 
-public class ToolBarPopupButtonImpl extends ToolBarButtonImpl implements IToolBarPopupButtonSpi {
+public class ToolBarPopupButtonImpl extends ToolBarItemImpl implements IToolBarPopupButtonSpi {
 
 	private final PopupDetectionObservable popupDetectionObservable;
+	private final ActionObservable actionObservable;
 
-	public ToolBarPopupButtonImpl(final Button button) {
+	public ToolBarPopupButtonImpl(final SplitMenuButton button) {
 		super(button);
 		this.popupDetectionObservable = new PopupDetectionObservable();
+		this.actionObservable = new ActionObservable();
 		getUiReference().setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(final MouseEvent event) {
-				popupDetectionObservable.firePopupDetected((new Position((int) event.getScreenX(), (int) event.getScreenY()
-					+ (int) getUiReference().getHeight())));
-
+				popupDetectionObservable.firePopupDetected((new Position((int) event.getScreenX(), (int) event.getScreenY())));
 			}
 		});
 
+		getUiReference().setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(final ActionEvent event) {
+				actionObservable.fireActionPerformed();
+			}
+		});
 	}
 
 	@Override
-	public Button getUiReference() {
-		return (Button) super.getUiReference();
+	public SplitMenuButton getUiReference() {
+		return (SplitMenuButton) super.getUiReference();
 	}
 
 	@Override
@@ -68,6 +77,16 @@ public class ToolBarPopupButtonImpl extends ToolBarButtonImpl implements IToolBa
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
 		popupDetectionObservable.removePopupDetectionListener(listener);
+	}
+
+	@Override
+	public void addActionListener(final IActionListener actionListener) {
+		actionObservable.addActionListener(actionListener);
+	}
+
+	@Override
+	public void removeActionListener(final IActionListener actionListener) {
+		actionObservable.removeActionListener(actionListener);
 	}
 
 }
