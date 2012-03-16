@@ -74,9 +74,11 @@ public class JavafxComponent implements IComponentSpi {
 
 	private final StyleDelegate styleDelegate;
 
-	private EventHandler<MouseEvent> mouseListener;
-
 	public JavafxComponent(final Node node) {
+		this(node, true);
+	}
+
+	public JavafxComponent(final Node node, final boolean triggerPopupDetection) {
 		this.node = node;
 		this.popupDetectionObservable = new PopupDetectionObservable();
 		this.focusObservable = new FocusObservable();
@@ -84,18 +86,23 @@ public class JavafxComponent implements IComponentSpi {
 		this.componentObservable = new ComponentObservable();
 		this.styleDelegate = new StyleDelegate(this.node);
 
-		mouseListener = new EventHandler<MouseEvent>() {
-			//TODO DB find a better way
-			@SuppressWarnings("deprecation")
-			@Override
-			public void handle(final MouseEvent event) {
-				if (MouseEvent.impl_getPopupTrigger(event)
-					&& (event.getEventType() == MouseEvent.MOUSE_PRESSED || event.getEventType() == MouseEvent.MOUSE_RELEASED)) {
-					popupDetectionObservable.firePopupDetected(new Position((int) event.getScreenX(), (int) event.getScreenY()));
+		if (triggerPopupDetection) {
+
+			final EventHandler<MouseEvent> mouseListener = new EventHandler<MouseEvent>() {
+				//TODO DB find a better way
+				@SuppressWarnings("deprecation")
+				@Override
+				public void handle(final MouseEvent event) {
+					if (MouseEvent.impl_getPopupTrigger(event)
+						&& (event.getEventType() == MouseEvent.MOUSE_PRESSED || event.getEventType() == MouseEvent.MOUSE_RELEASED)) {
+						popupDetectionObservable.firePopupDetected(new Position(
+							(int) event.getScreenX(),
+							(int) event.getScreenY()));
+					}
 				}
-			}
-		};
-		node.addEventHandler(MouseEvent.ANY, mouseListener);
+			};
+			node.addEventHandler(MouseEvent.ANY, mouseListener);
+		}
 
 		getUiReference().setOnDragDone(new EventHandler<DragEvent>() {
 
@@ -212,12 +219,6 @@ public class JavafxComponent implements IComponentSpi {
 
 	protected PopupDetectionObservable getPopupDetectionObservable() {
 		return popupDetectionObservable;
-	}
-
-	protected void setMouseListener(final EventHandler<MouseEvent> mouseListener) {
-		getUiReference().removeEventHandler(MouseEvent.ANY, this.mouseListener);
-		this.mouseListener = mouseListener;
-		getUiReference().addEventHandler(MouseEvent.ANY, this.mouseListener);
 	}
 
 	@Override
