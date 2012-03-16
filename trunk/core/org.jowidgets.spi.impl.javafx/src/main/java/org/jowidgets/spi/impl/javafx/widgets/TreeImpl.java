@@ -36,16 +36,13 @@ import java.util.Map;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.scene.control.Control;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.scene.input.ContextMenuEvent;
 import javafx.util.Callback;
 
-import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.spi.impl.controller.TreeSelectionObservableSpi;
 import org.jowidgets.spi.impl.javafx.widgets.base.TreeNodeRenderer;
@@ -62,7 +59,7 @@ public class TreeImpl extends JavafxControl implements ITreeSpi {
 	private List<TreeItem<String>> lastSelection;
 
 	public TreeImpl(final ITreeSetupSpi setup) {
-		super(createControl(setup));
+		super(createControl(setup), false);
 		treeObservable = new TreeSelectionObservableSpi();
 		javaFXRoot = getUiReference().getRoot();
 		rootNodeSpi = new TreeNodeImpl(this, javaFXRoot);
@@ -72,7 +69,7 @@ public class TreeImpl extends JavafxControl implements ITreeSpi {
 		getUiReference().setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
 			@Override
 			public TreeCell<String> call(final TreeView<String> p) {
-				return new TreeNodeRenderer(nodes);
+				return new TreeNodeRenderer(nodes, getPopupDetectionObservable());
 			}
 		});
 
@@ -83,16 +80,6 @@ public class TreeImpl extends JavafxControl implements ITreeSpi {
 				final Object oldValue,
 				final Object newValue) {
 				fireSelectionChange();
-			}
-		});
-
-		getUiReference().setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
-			@Override
-			public void handle(final ContextMenuEvent event) {
-				final Position position = new Position((int) event.getScreenX(), (int) event.getScreenY());
-				if (getUiReference().getSelectionModel().getSelectedItem() == null) {
-					getComponentDelegate().getPopupDetectionObservable().firePopupDetected(position);
-				}
 			}
 		});
 	}

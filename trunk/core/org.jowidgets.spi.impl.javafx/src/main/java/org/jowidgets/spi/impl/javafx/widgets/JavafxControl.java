@@ -41,6 +41,7 @@ import org.jowidgets.common.widgets.controller.IKeyListener;
 import org.jowidgets.common.widgets.controller.IMouseListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.spi.impl.controller.ActionObservable;
+import org.jowidgets.spi.impl.controller.PopupDetectionObservable;
 import org.jowidgets.spi.impl.javafx.util.CursorConvert;
 import org.jowidgets.spi.widgets.IControlSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
@@ -52,8 +53,12 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 	private final JavafxComponent componentDelegate;
 
 	public JavafxControl(final Control control) {
+		this(control, true);
+	}
+
+	public JavafxControl(final Control control, final boolean triggerPopupDetection) {
 		this.control = control;
-		componentDelegate = new JavafxComponent(control);
+		componentDelegate = new JavafxComponent(control, triggerPopupDetection);
 	}
 
 	@Override
@@ -245,8 +250,8 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 		return new Dimension((int) getUiReference().getMaxWidth(), (int) getUiReference().getMaxHeight());
 	}
 
-	protected JavafxComponent getComponentDelegate() {
-		return componentDelegate;
+	protected PopupDetectionObservable getPopupDetectionObservable() {
+		return componentDelegate.getPopupDetectionObservable();
 	}
 
 }

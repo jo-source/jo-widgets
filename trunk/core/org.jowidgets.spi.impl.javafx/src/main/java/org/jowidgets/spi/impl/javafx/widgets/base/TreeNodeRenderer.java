@@ -37,6 +37,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.input.ContextMenuEvent;
 
 import org.jowidgets.common.types.Position;
+import org.jowidgets.spi.impl.controller.PopupDetectionObservable;
 import org.jowidgets.spi.impl.javafx.widgets.StyleDelegate;
 import org.jowidgets.spi.impl.javafx.widgets.TreeNodeImpl;
 
@@ -45,7 +46,9 @@ public class TreeNodeRenderer extends TreeCell<String> {
 	private final StyleDelegate styleUtil;
 	private final Map<TreeItem<String>, TreeNodeImpl> nodes;
 
-	public TreeNodeRenderer(final Map<TreeItem<String>, TreeNodeImpl> nodes) {
+	public TreeNodeRenderer(
+		final Map<TreeItem<String>, TreeNodeImpl> nodes,
+		final PopupDetectionObservable popupDetectionObservable) {
 		this.nodes = nodes;
 		styleUtil = new StyleDelegate(this);
 		this.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
@@ -55,6 +58,9 @@ public class TreeNodeRenderer extends TreeCell<String> {
 				final Position position = new Position((int) event.getScreenX(), (int) event.getScreenY());
 				if (getTreeItem() != null) {
 					nodes.get(getTreeItem()).firePopupDetected(position);
+				}
+				else {
+					popupDetectionObservable.firePopupDetected(position);
 				}
 			}
 
