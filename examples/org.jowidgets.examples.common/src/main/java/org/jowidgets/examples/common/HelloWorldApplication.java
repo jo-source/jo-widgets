@@ -93,15 +93,13 @@ public class HelloWorldApplication implements IApplication {
 		final IInputFieldBluePrint<Date> inputFieldDateBp = BPF.inputFieldDate();
 		final IInputFieldBluePrint<Integer> inputFieldIntegerNumberBp = BPF.inputFieldIntegerNumber();
 		final IProgressBarBluePrint progressBarBp = BPF.progressBar(0, 100);
-		final IDialogBluePrint dialogBP = BPF.dialog().setSize(new Dimension(200, 400)).setDecorated(false);
+		final IDialogBluePrint dialogBP = BPF.dialog().setSize(new Dimension(200, 400)).setDecorated(true);
 		final IFrame childWindow = rootFrame.createChildWindow(dialogBP);
 		new DemoTreeComposite(childWindow);
 		rootFrame.setLayout(Toolkit.getLayoutFactoryProvider().migLayoutBuilder().constraints("insets 10 10 10 10").columnConstraints(
 				"[grow][grow]").rowConstraints("[]20[]20[]20[]20[]20[]").build());
 		rootFrame.setPopupMenu(createPopMenu2());
 		final DemoMenuProvider menuProvider = new DemoMenuProvider(false);
-
-		rootFrame.getMenuBarModel().addMenu(menuProvider.getMenuModel());
 		final ILabel label1 = rootFrame.add(labelBp, "cell 0 0");
 		final ILabel label2 = rootFrame.add(label2Bp, "cell 0 1");
 		final ILabel label3 = rootFrame.add(label3Bp, "cell 0 2");
@@ -117,6 +115,8 @@ public class HelloWorldApplication implements IApplication {
 		rootFrame.add(inputFieldIntegerNumberBp, "cell 1 6, growx, h 0::");
 		final IProgressBar progressBar = rootFrame.add(progressBarBp, "cell 0 7");
 		final IButton buttonPop = rootFrame.add(buttonPopBp);
+		rootFrame.getMenuBarModel().addMenu(menuProvider.getMenuModel());
+		rootFrame.add(BPF.toolBar(), "north, w 0::, wrap").setModel(menuProvider.getToolBarModel());
 		progressBar.setPreferredSize(new Dimension(300, 10));
 		progressBar.setProgress(80);
 		checkbox.addInputListener(new IInputListener() {
