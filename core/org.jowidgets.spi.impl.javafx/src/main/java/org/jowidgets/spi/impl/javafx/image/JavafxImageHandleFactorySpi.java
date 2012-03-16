@@ -28,7 +28,7 @@
 
 package org.jowidgets.spi.impl.javafx.image;
 
-import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.image.IImageHandle;
@@ -38,6 +38,7 @@ import org.jowidgets.spi.impl.image.ImageHandle;
 
 public class JavafxImageHandleFactorySpi extends JavafxImageHandleFactory implements IImageHandleFactorySpi {
 
+	@SuppressWarnings("unused")
 	private final JavafxImageRegistry javafxImageRegistry;
 
 	public JavafxImageHandleFactorySpi(final JavafxImageRegistry javafxImageRegistry) {
@@ -47,9 +48,9 @@ public class JavafxImageHandleFactorySpi extends JavafxImageHandleFactory implem
 
 	@Override
 	public IImageHandle infoIcon() {
-		return new ImageHandle<ImageView>(new IImageFactory<ImageView>() {
+		return new ImageHandle<Image>(new IImageFactory<Image>() {
 			@Override
-			public ImageView createImage() {
+			public Image createImage() {
 				return null;
 			}
 		});
@@ -57,9 +58,9 @@ public class JavafxImageHandleFactorySpi extends JavafxImageHandleFactory implem
 
 	@Override
 	public IImageHandle questionIcon() {
-		return new ImageHandle<ImageView>(new IImageFactory<ImageView>() {
+		return new ImageHandle<Image>(new IImageFactory<Image>() {
 			@Override
-			public ImageView createImage() {
+			public Image createImage() {
 				return null;
 			}
 		});
@@ -67,9 +68,9 @@ public class JavafxImageHandleFactorySpi extends JavafxImageHandleFactory implem
 
 	@Override
 	public IImageHandle warningIcon() {
-		return new ImageHandle<ImageView>(new IImageFactory<ImageView>() {
+		return new ImageHandle<Image>(new IImageFactory<Image>() {
 			@Override
-			public ImageView createImage() {
+			public Image createImage() {
 				return null;
 			}
 		});
@@ -77,9 +78,9 @@ public class JavafxImageHandleFactorySpi extends JavafxImageHandleFactory implem
 
 	@Override
 	public IImageHandle errorIcon() {
-		return new ImageHandle<ImageView>(new IImageFactory<ImageView>() {
+		return new ImageHandle<Image>(new IImageFactory<Image>() {
 			@Override
-			public ImageView createImage() {
+			public Image createImage() {
 				return null;
 			}
 		});
@@ -87,14 +88,10 @@ public class JavafxImageHandleFactorySpi extends JavafxImageHandleFactory implem
 
 	@Override
 	public IImageHandle createImageHandle(final IImageConstant imageConstant, final int width, final int height) {
-		return new ImageHandle<ImageView>(new IImageFactory<ImageView>() {
+		return new ImageHandle<Image>(new IImageFactory<Image>() {
 			@Override
-			public ImageView createImage() {
-				final ImageView templateImage = javafxImageRegistry.getImage(imageConstant);
-				templateImage.setScaleX(width);
-				templateImage.setScaleY(height);
-				templateImage.setSmooth(true);
-				return templateImage;
+			public Image createImage() {
+				return null;
 			}
 		});
 	}

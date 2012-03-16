@@ -223,6 +223,7 @@ public class JavafxContainer implements IContainerSpi {
 			((Pane) parent).getChildren().remove(pane);
 		}
 		final Object userData = pane.getUserData();
+
 		if (layoutDescriptor instanceof MigLayoutDescriptor) {
 			final MigLayoutDescriptor migLayoutManager = (MigLayoutDescriptor) layoutDescriptor;
 			pane = new MigPane(
