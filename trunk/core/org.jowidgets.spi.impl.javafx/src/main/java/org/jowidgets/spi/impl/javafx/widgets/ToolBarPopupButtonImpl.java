@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.javafx.widgets;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.input.MouseEvent;
 
@@ -62,6 +63,8 @@ public class ToolBarPopupButtonImpl extends ToolBarItemImpl implements IToolBarP
 				actionObservable.fireActionPerformed();
 			}
 		});
+		getUiReference().getItems().add(new MenuItem("aafdsf sdfdsf dsf"));
+
 	}
 
 	@Override

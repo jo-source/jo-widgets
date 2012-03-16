@@ -34,11 +34,14 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.impl.javafx.widgets.ButtonImpl;
 import org.jowidgets.spi.impl.javafx.widgets.CheckBoxImpl;
+import org.jowidgets.spi.impl.javafx.widgets.ComboBoxImpl;
+import org.jowidgets.spi.impl.javafx.widgets.ComboBoxSelectionImpl;
 import org.jowidgets.spi.impl.javafx.widgets.CompositeImpl;
 import org.jowidgets.spi.impl.javafx.widgets.DialogImpl;
 import org.jowidgets.spi.impl.javafx.widgets.FrameImpl;
 import org.jowidgets.spi.impl.javafx.widgets.IconImpl;
 import org.jowidgets.spi.impl.javafx.widgets.ProgressBarImpl;
+import org.jowidgets.spi.impl.javafx.widgets.ScrollCompositeImpl;
 import org.jowidgets.spi.impl.javafx.widgets.SeparatorImpl;
 import org.jowidgets.spi.impl.javafx.widgets.TextAreaImpl;
 import org.jowidgets.spi.impl.javafx.widgets.TextFieldImpl;
@@ -151,7 +154,7 @@ public final class JavafxWidgetFactory implements IWidgetFactorySpi {
 		final IGenericWidgetFactory factory,
 		final Object parentUiReference,
 		final IScrollCompositeSetupSpi setup) {
-		throw new UnsupportedOperationException();
+		return new ScrollCompositeImpl(factory, setup);
 	}
 
 	@Override
@@ -204,12 +207,12 @@ public final class JavafxWidgetFactory implements IWidgetFactorySpi {
 
 	@Override
 	public IComboBoxSelectionSpi createComboBoxSelection(final Object parentUiReference, final IComboBoxSelectionSetupSpi setup) {
-		throw new UnsupportedOperationException();
+		return new ComboBoxSelectionImpl(setup);
 	}
 
 	@Override
 	public IComboBoxSpi createComboBox(final Object parentUiReference, final IComboBoxSetupSpi setup) {
-		throw new UnsupportedOperationException();
+		return new ComboBoxImpl(setup);
 	}
 
 	@Override
