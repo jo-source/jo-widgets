@@ -32,6 +32,7 @@ import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.ISplitComposite;
 import org.jowidgets.api.widgets.ITabFolder;
+import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.common.types.Dimension;
@@ -165,6 +166,9 @@ class JoMigComponentWrapper implements IComponentWrapper {
 	@Override
 	public final IContainerWrapper getParent() {
 		if (component.getParent() == null) {
+			return null;
+		}
+		else if (component.getParent() instanceof IToolBar) {
 			return null;
 		}
 		else if (component.getParent() instanceof IContainer) {

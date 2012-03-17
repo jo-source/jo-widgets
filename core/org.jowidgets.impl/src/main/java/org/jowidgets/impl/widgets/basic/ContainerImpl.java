@@ -35,6 +35,8 @@ import org.jowidgets.api.controller.IContainerRegistry;
 import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.controller.IListenerFactory;
 import org.jowidgets.api.layout.ILayoutFactory;
+import org.jowidgets.api.layout.miglayout.IMigLayoutFactoryBuilder;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
@@ -47,7 +49,9 @@ import org.jowidgets.common.widgets.controller.IMouseListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
+import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.ILayouter;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.base.delegate.ComponentDelegate;
 import org.jowidgets.impl.base.delegate.ContainerDelegate;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
@@ -55,6 +59,7 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.LayoutSettingsInvo
 import org.jowidgets.impl.widgets.common.wrapper.AbstractContainerSpiWrapper;
 import org.jowidgets.spi.widgets.IContainerSpi;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.EmptyCheck;
 
 public class ContainerImpl extends AbstractContainerSpiWrapper implements IContainer {
 
@@ -105,6 +110,31 @@ public class ContainerImpl extends AbstractContainerSpiWrapper implements IConta
 	@Override
 	public IPopupMenu createPopupMenu() {
 		return containerDelegate.createPopupMenu();
+	}
+
+	@Override
+	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
+		Assert.paramNotNull(layoutDescriptor, "layoutDescriptor");
+		if (!Toolkit.hasSpiMigLayoutSupport() && layoutDescriptor instanceof MigLayoutDescriptor) {
+			final IMigLayoutFactoryBuilder migLayoutBuilder = Toolkit.getLayoutFactoryProvider().migLayoutBuilder();
+			final MigLayoutDescriptor migLayoutDescriptor = (MigLayoutDescriptor) layoutDescriptor;
+			final String lc = migLayoutDescriptor.getLayoutConstraints();
+			final String rc = migLayoutDescriptor.getRowConstraints();
+			final String cc = migLayoutDescriptor.getColumnConstraints();
+			if (!EmptyCheck.isEmpty(lc)) {
+				migLayoutBuilder.constraints(lc);
+			}
+			if (!EmptyCheck.isEmpty(rc)) {
+				migLayoutBuilder.rowConstraints(rc);
+			}
+			if (!EmptyCheck.isEmpty(cc)) {
+				migLayoutBuilder.columnConstraints(cc);
+			}
+			super.setLayout(migLayoutBuilder.build().create(this));
+		}
+		else {
+			super.setLayout(layoutDescriptor);
+		}
 	}
 
 	@Override

@@ -98,6 +98,7 @@ public class DefaultToolkit implements IToolkit {
 	private final IQuestionPane questionPane;
 	private final ILoginPane loginPane;
 	private final IWidgetUtils widgetUtils;
+	private final boolean spiMigLayoutSupport;
 
 	private IWaitAnimationProcessor waitAnimationProcessor;
 	private IUiThreadAccess uiThreadAccess;
@@ -121,6 +122,7 @@ public class DefaultToolkit implements IToolkit {
 		this.questionPane = new QuestionPaneImpl(genericWidgetFactory, bluePrintFactory, windowProvider);
 		this.loginPane = new LoginPaneImpl(genericWidgetFactory, bluePrintFactory, windowProvider);
 		this.widgetUtils = new WidgetUtils();
+		this.spiMigLayoutSupport = toolkitSpi.getWidgetFactory().hasMigLayoutSupport();
 
 		final IImageRegistry imageRegistry = toolkitSpi.getImageRegistry();
 		final IImageHandleFactorySpi imageHandleFactory = toolkitSpi.getImageHandleFactory();
@@ -151,6 +153,11 @@ public class DefaultToolkit implements IToolkit {
 	@Override
 	public <VALUE_TYPE> VALUE_TYPE getValue(final ITypedKey<VALUE_TYPE> key) {
 		return (VALUE_TYPE) values.get(key);
+	}
+
+	@Override
+	public boolean hasSpiMigLayoutSupport() {
+		return spiMigLayoutSupport;
 	}
 
 	@Override

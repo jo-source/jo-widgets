@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.common.widgets.ButtonImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.CheckBoxImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.ComboBoxImpl;
@@ -100,6 +101,11 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 
 	public SwtWidgetFactory() {
 		super();
+	}
+
+	@Override
+	public boolean hasMigLayoutSupport() {
+		return SwtOptions.hasNativeMigLayout();
 	}
 
 	@Override

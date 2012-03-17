@@ -34,6 +34,7 @@ public final class SwingOptions {
 	private static boolean internalFramesForTabFolders = false;
 	private static boolean joWidgetsTabLayout = false;
 	private static boolean wrapTabLayout = false;
+	private static boolean nativeMigLayout = true;
 
 	private SwingOptions() {}
 
@@ -67,6 +68,14 @@ public final class SwingOptions {
 
 	public static boolean isWrapTapLayout() {
 		return SwingOptions.wrapTabLayout;
+	}
+
+	public static boolean hasNativeMigLayout() {
+		return nativeMigLayout;
+	}
+
+	public static void setNativeMigLayout(final boolean useNativeMigLayout) {
+		SwingOptions.nativeMigLayout = useNativeMigLayout;
 	}
 
 }

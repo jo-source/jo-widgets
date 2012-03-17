@@ -105,6 +105,8 @@ public interface IToolkit {
 
 	IUiThreadAccess getUiThreadAccess();
 
+	boolean hasSpiMigLayoutSupport();
+
 	IWaitAnimationProcessor getWaitAnimationProcessor();
 
 	IWidgetUtils getWidgetUtils();

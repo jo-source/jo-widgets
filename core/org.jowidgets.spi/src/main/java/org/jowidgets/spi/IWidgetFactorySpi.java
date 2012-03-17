@@ -72,6 +72,8 @@ import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
 
 public interface IWidgetFactorySpi {
 
+	boolean hasMigLayoutSupport();
+
 	//create widgets from ui-reference
 
 	boolean isConvertibleToFrame(Object uiReference);
