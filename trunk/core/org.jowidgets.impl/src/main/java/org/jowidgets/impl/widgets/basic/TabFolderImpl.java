@@ -304,10 +304,11 @@ public class TabFolderImpl extends AbstractTabFolderSpiWrapper implements ITabFo
 		int height = 0;
 		for (final TabItemImpl item : items) {
 			final Dimension minSize = item.getMinSize();
-			width = Math.max(width, minSize.getWidth());
-			height = Math.max(height, minSize.getHeight());
+			if (minSize != null) {
+				width = Math.max(width, minSize.getWidth());
+				height = Math.max(height, minSize.getHeight());
+			}
 		}
-
 		return getWidget().computeDecoratedSize(new Dimension(width, height));
 	}
 
@@ -317,10 +318,11 @@ public class TabFolderImpl extends AbstractTabFolderSpiWrapper implements ITabFo
 		int height = 0;
 		for (final TabItemImpl item : items) {
 			final Dimension prefSize = item.getPreferredSize();
-			width = Math.max(width, prefSize.getWidth());
-			height = Math.max(height, prefSize.getHeight());
+			if (prefSize != null) {
+				width = Math.max(width, prefSize.getWidth());
+				height = Math.max(height, prefSize.getHeight());
+			}
 		}
-
 		return getWidget().computeDecoratedSize(new Dimension(width, height));
 	}
 

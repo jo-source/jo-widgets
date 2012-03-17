@@ -102,6 +102,10 @@ public final class Toolkit {
 		return getInstance().getValue(key);
 	}
 
+	public static boolean hasSpiMigLayoutSupport() {
+		return getInstance().hasSpiMigLayoutSupport();
+	}
+
 	public static IImageRegistry getImageRegistry() {
 		return getInstance().getImageRegistry();
 	}

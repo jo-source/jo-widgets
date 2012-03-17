@@ -33,6 +33,7 @@ public final class SwtOptions {
 	private static boolean inputVerification = true;
 	private static boolean classicTabs = false;
 	private static SplitlayoutMode splitLayoutMode = SplitlayoutMode.ON_MOUSE_MOVE;
+	private static boolean nativeMigLayout = true;
 
 	private SwtOptions() {}
 
@@ -58,6 +59,14 @@ public final class SwtOptions {
 
 	public static void setInputVerification(final boolean inputVerification) {
 		SwtOptions.inputVerification = inputVerification;
+	}
+
+	public static boolean hasNativeMigLayout() {
+		return nativeMigLayout;
+	}
+
+	public static void setNativeMigLayout(final boolean nativeMigLayout) {
+		SwtOptions.nativeMigLayout = nativeMigLayout;
 	}
 
 }

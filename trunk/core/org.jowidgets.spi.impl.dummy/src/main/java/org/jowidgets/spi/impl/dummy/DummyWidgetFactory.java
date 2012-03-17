@@ -105,6 +105,11 @@ public final class DummyWidgetFactory implements IWidgetFactorySpi {
 	}
 
 	@Override
+	public boolean hasMigLayoutSupport() {
+		return false;
+	}
+
+	@Override
 	public boolean isConvertibleToFrame(final Object uiReference) {
 		return uiReference instanceof UIDWindow;
 	}

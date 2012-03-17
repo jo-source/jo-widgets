@@ -112,6 +112,11 @@ public final class SwingWidgetFactory implements IWidgetFactorySpi {
 	}
 
 	@Override
+	public boolean hasMigLayoutSupport() {
+		return SwingOptions.hasNativeMigLayout();
+	}
+
+	@Override
 	public boolean isConvertibleToFrame(final Object uiReference) {
 		return uiReference instanceof Window;
 	}
