@@ -28,7 +28,6 @@
 
 package org.jowidgets.addons.widgets.browser.api;
 
-
 public interface IMainBrowser extends IBrowser {
 
 	String getUrl();
@@ -60,7 +59,5 @@ public interface IMainBrowser extends IBrowser {
 	void addDocumentListener(IBrowserDocumentListener listener);
 
 	void removeDocumentListener(IBrowserDocumentListener listener);
-
-	//TODO MG - HRW discuss and complete interface
 
 }
