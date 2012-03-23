@@ -159,4 +159,14 @@ public class TreeContainerDelegate implements ITreeContainer {
 		}
 	}
 
+	@Override
+	public int getLevel() {
+		if (parentNode == null) {
+			return 0;
+		}
+		else {
+			return parentNode.getLevel() + 1;
+		}
+	}
+
 }

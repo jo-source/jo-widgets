@@ -265,6 +265,11 @@ public class TreeImpl extends AbstractControlSpiWrapper implements ITree {
 		treeContainerDelegate.setAllChildrenExpanded(expanded);
 	}
 
+	@Override
+	public int getLevel() {
+		return treeContainerDelegate.getLevel();
+	}
+
 	public void registerNode(final TreeNodeImpl node) {
 		nodes.put(node.getWidget(), node);
 	}

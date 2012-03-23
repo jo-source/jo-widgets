@@ -260,6 +260,11 @@ public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
 	}
 
 	@Override
+	public int getLevel() {
+		return treeContainerDelegate.getLevel();
+	}
+
+	@Override
 	public boolean isLeaf() {
 		return getChildren().size() == 0;
 	}
