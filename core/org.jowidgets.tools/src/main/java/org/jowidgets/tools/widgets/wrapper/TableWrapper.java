@@ -33,6 +33,7 @@ import java.util.List;
 
 import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Interval;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TablePackPolicy;
 import org.jowidgets.common.widgets.controller.ITableCellEditorListener;
@@ -141,6 +142,11 @@ public class TableWrapper extends ControlWrapper implements ITable {
 	@Override
 	public boolean isColumnPopupDetectionSupported() {
 		return getWidget().isColumnPopupDetectionSupported();
+	}
+
+	@Override
+	public Interval<Integer> getVisibleRows() {
+		return getWidget().getVisibleRows();
 	}
 
 	@Override

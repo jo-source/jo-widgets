@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Interval;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TablePackPolicy;
 import org.jowidgets.common.widgets.controller.ITableCellEditorObservable;
@@ -79,5 +80,14 @@ public interface ITableCommon extends
 	void pack(int columnIndex, TablePackPolicy policy);
 
 	boolean isColumnPopupDetectionSupported();
+
+	/**
+	 * Gets the interval of the visible rows (visible in viewport).
+	 * 
+	 * Remark: If the table is empty or now row is visible, the left and the right boundary is null.
+	 * 
+	 * @return The interval of the visible rows
+	 */
+	Interval<Integer> getVisibleRows();
 
 }

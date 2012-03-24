@@ -81,6 +81,7 @@ import org.jowidgets.common.model.ITableDataModelListener;
 import org.jowidgets.common.model.ITableDataModelObservable;
 import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Interval;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.MouseButton;
 import org.jowidgets.common.types.Position;
@@ -538,6 +539,21 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	@Override
 	public boolean isColumnPopupDetectionSupported() {
 		return true;
+	}
+
+	@Override
+	public Interval<Integer> getVisibleRows() {
+		if (dataModel.getRowCount() > 0) {
+			final Rectangle visibleRect = table.getVisibleRect();
+			if (visibleRect.height >= table.getRowHeight() - 1) {
+				final Point firstPoint = new Point(0, visibleRect.y);
+				final Point secondPoint = new Point(0, visibleRect.y + visibleRect.height - 1);
+				final int leftBoundary = table.rowAtPoint(firstPoint);
+				final int rightBoundary = table.rowAtPoint(secondPoint);
+				return new Interval<Integer>(leftBoundary, rightBoundary);
+			}
+		}
+		return new Interval<Integer>(null, null);
 	}
 
 	@Override
