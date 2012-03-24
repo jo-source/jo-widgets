@@ -62,7 +62,7 @@ public final class Interval<NUMBER_TYPE extends Number> {
 		return leftOpen;
 	}
 
-	NUMBER_TYPE getRightBoundary() {
+	public NUMBER_TYPE getRightBoundary() {
 		return rightBoundary;
 	}
 
