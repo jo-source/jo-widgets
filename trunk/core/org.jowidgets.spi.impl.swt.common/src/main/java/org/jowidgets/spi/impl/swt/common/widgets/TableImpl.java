@@ -78,6 +78,7 @@ import org.jowidgets.common.model.ITableDataModelListener;
 import org.jowidgets.common.model.ITableDataModelObservable;
 import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Interval;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.MouseButton;
@@ -514,6 +515,22 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			isColumnPopupDetectionSupported = determineIfColumnPopupDetectionIsSupported();
 		}
 		return isColumnPopupDetectionSupported.booleanValue();
+	}
+
+	@Override
+	public Interval<Integer> getVisibleRows() {
+		final int rowCount = dataModel.getRowCount();
+		if (rowCount > 0) {
+			final int leftBoundary = table.getTopIndex();
+			final Dimension cellSize = getCellSize(leftBoundary, 0);
+			final Rectangle clientArea = table.getClientArea();
+			if (clientArea.height >= cellSize.getHeight()) {
+				final int visibleRows = (clientArea.height / cellSize.getHeight());
+				final int rigthBoundary = Math.min(rowCount - 1, leftBoundary + visibleRows);
+				return new Interval<Integer>(leftBoundary, rigthBoundary);
+			}
+		}
+		return new Interval<Integer>(null, null);
 	}
 
 	private boolean determineIfColumnPopupDetectionIsSupported() {

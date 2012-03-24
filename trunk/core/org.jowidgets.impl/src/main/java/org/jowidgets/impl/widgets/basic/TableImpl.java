@@ -40,6 +40,7 @@ import org.jowidgets.api.widgets.descriptor.ITableDescriptor;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.common.types.Interval;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TablePackPolicy;
 import org.jowidgets.common.widgets.controller.ITableCellEditEvent;
@@ -321,6 +322,11 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 	@Override
 	public boolean isColumnPopupDetectionSupported() {
 		return getWidget().isColumnPopupDetectionSupported();
+	}
+
+	@Override
+	public Interval<Integer> getVisibleRows() {
+		return getWidget().getVisibleRows();
 	}
 
 	@Override
