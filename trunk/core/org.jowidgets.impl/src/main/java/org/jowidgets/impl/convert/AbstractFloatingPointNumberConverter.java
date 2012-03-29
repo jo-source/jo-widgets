@@ -100,7 +100,7 @@ abstract class AbstractFloatingPointNumberConverter<NUMBER_TYPE extends Number> 
 
 	@Override
 	public String getAcceptingRegExp() {
-		//TODO MG this wont't work correctly with decimal separators
+		//TODO WH this wont't work correctly with decimal separators
 		final String decimalSeparatorRegEx;
 		if (isSpecialChar(decimalFormat.getDecimalFormatSymbols().getDecimalSeparator())) {
 			decimalSeparatorRegEx = "\\" + decimalFormat.getDecimalFormatSymbols().getDecimalSeparator();
