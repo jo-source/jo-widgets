@@ -47,14 +47,17 @@ public final class ColorCSSConverter {
 	}
 
 	public static String colorToCSS(final IColorConstant color) {
-		final String colorString = Integer.toHexString(0x100 | color.getDefaultValue().getRed()).substring(1)
-			+ ""
-			+ Integer.toHexString(0x100 | color.getDefaultValue().getGreen()).substring(1)
-			+ ""
-			+ Integer.toHexString(0x100 | color.getDefaultValue().getBlue()).substring(1);
+		if (color != null) {
 
-		return colorString;
+			final String colorString = Integer.toHexString(0x100 | color.getDefaultValue().getRed()).substring(1)
+				+ ""
+				+ Integer.toHexString(0x100 | color.getDefaultValue().getGreen()).substring(1)
+				+ ""
+				+ Integer.toHexString(0x100 | color.getDefaultValue().getBlue()).substring(1);
 
+			return colorString;
+		}
+		return "";
 	}
 
 }

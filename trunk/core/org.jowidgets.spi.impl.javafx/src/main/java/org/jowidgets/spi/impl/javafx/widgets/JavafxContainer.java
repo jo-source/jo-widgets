@@ -33,6 +33,7 @@ import java.util.List;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
 import org.jowidgets.common.color.IColorConstant;
@@ -64,13 +65,11 @@ import org.tbee.javafx.scene.layout.MigPane;
 public class JavafxContainer implements IContainerSpi {
 
 	private final IGenericWidgetFactory factory;
-	private Pane pane;
-	private JavafxComponent componentDelegate;
+	private final JavafxComponent componentDelegate;
 
 	public JavafxContainer(final IGenericWidgetFactory factory, final Pane pane) {
-		this.pane = pane;
 		this.factory = factory;
-		componentDelegate = new JavafxComponent(this.pane);
+		componentDelegate = new JavafxComponent(pane);
 	}
 
 	@Override
@@ -85,12 +84,12 @@ public class JavafxContainer implements IContainerSpi {
 
 	@Override
 	public void setEnabled(final boolean enabled) {
-		getUiReference().disableProperty().setValue(enabled);
+		getUiReference().setDisable(!enabled);
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return getUiReference().disableProperty().getValue();
+		return !getUiReference().isDisable();
 	}
 
 	@Override
@@ -106,7 +105,7 @@ public class JavafxContainer implements IContainerSpi {
 	@Override
 	public boolean requestFocus() {
 		getUiReference().requestFocus();
-		return getUiReference().focusedProperty().getValue();
+		return getUiReference().isFocused();
 	}
 
 	@Override
@@ -217,47 +216,56 @@ public class JavafxContainer implements IContainerSpi {
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
 		Assert.paramNotNull(layoutDescriptor, "layout");
-		//TODO DB refactor this
+		Pane pane = getUiReference();
+		final Object userData = pane.getUserData();
 		final Parent parent = pane.getParent();
-		if (parent instanceof Pane) {
+		final Scene scene = pane.getScene();
+		int index = 0;
+
+		if (parent != null) {
+			index = findIndexInParent(pane);
 			((Pane) parent).getChildren().remove(pane);
 		}
-		final Object userData = pane.getUserData();
 
-		if (layoutDescriptor instanceof MigLayoutDescriptor) {
+		if (layoutDescriptor instanceof ILayouter) {
+			pane = new LayoutManagerImpl((ILayouter) layoutDescriptor);
+		}
+		else if (layoutDescriptor instanceof MigLayoutDescriptor) {
 			final MigLayoutDescriptor migLayoutManager = (MigLayoutDescriptor) layoutDescriptor;
 			pane = new MigPane(
 				migLayoutManager.getLayoutConstraints(),
 				migLayoutManager.getColumnConstraints(),
 				migLayoutManager.getRowConstraints());
-			componentDelegate = new JavafxComponent(pane);
-		}
-		else if (layoutDescriptor instanceof ILayouter) {
-			if (pane instanceof LayoutManagerImpl) {
-				((LayoutManagerImpl) pane).setLayouter((ILayouter) layoutDescriptor);
-			}
-			else {
-				pane = new LayoutManagerImpl((ILayouter) layoutDescriptor);
-				setLayoutConstraints(this, layoutDescriptor);
-				componentDelegate = new JavafxComponent(pane);
-			}
 		}
 		else {
 			throw new IllegalArgumentException("Layout Descriptor of type '"
 				+ layoutDescriptor.getClass().getName()
 				+ "' is not supported");
 		}
-		if (parent instanceof Pane) {
-
-			((Pane) parent).getChildren().add(pane);
-		}
 		pane.setUserData(userData);
+		if (parent != null && index >= 0) {
+			((Pane) parent).getChildren().add(index, pane);
+		}
+		//if it was root add it again
+		else if (scene != null) {
+			scene.setRoot(pane);
+		}
+		componentDelegate.setComponent(pane);
+	}
+
+	private int findIndexInParent(final Pane pane) {
+		if (pane.getParent() != null) {
+			for (final Node node : pane.getParent().getChildrenUnmodifiable()) {
+				if (node == pane) {
+					return pane.getParent().getChildrenUnmodifiable().indexOf(pane);
+				}
+			}
+		}
+		return -1;
 	}
 
 	@Override
-	public void layoutBegin() {
-		// TODO DB Auto-generated method stub
-	}
+	public void layoutBegin() {}
 
 	@Override
 	public void layoutEnd() {
@@ -271,7 +279,7 @@ public class JavafxContainer implements IContainerSpi {
 
 	@Override
 	public Rectangle getClientArea() {
-		final Insets insets = getUiReference().getInsets();
+		final Insets insets = getUiReference().getPadding();
 		final int x = (int) insets.getLeft();
 		final int y = (int) insets.getTop();
 		final Dimension size = getSize();
@@ -284,8 +292,7 @@ public class JavafxContainer implements IContainerSpi {
 	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
 		int width = clientAreaSize.getWidth();
 		int height = clientAreaSize.getHeight();
-		final Pane paneTmp = (Pane) getUiReference().getScene().getRoot();
-		final Insets insets = paneTmp.getInsets();
+		final Insets insets = getUiReference().getPadding();
 		if (insets != null) {
 			width = (int) (width + insets.getLeft() + insets.getRight());
 			height = (int) (height + insets.getTop() + insets.getBottom());

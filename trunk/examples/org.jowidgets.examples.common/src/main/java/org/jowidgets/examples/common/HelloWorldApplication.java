@@ -38,6 +38,7 @@ import org.jowidgets.api.widgets.ICheckBox;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.ILabel;
 import org.jowidgets.api.widgets.IProgressBar;
+import org.jowidgets.api.widgets.IScrollComposite;
 import org.jowidgets.api.widgets.ITextArea;
 import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
@@ -58,6 +59,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.common.widgets.controller.IInputListener;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.examples.common.demo.DemoMenuProvider;
 import org.jowidgets.examples.common.demo.DemoTreeComposite;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
@@ -95,10 +97,15 @@ public class HelloWorldApplication implements IApplication {
 		final IProgressBarBluePrint progressBarBp = BPF.progressBar(0, 100);
 		final IDialogBluePrint dialogBP = BPF.dialog().setSize(new Dimension(200, 400)).setDecorated(true);
 		final IFrame childWindow = rootFrame.createChildWindow(dialogBP);
+
 		new DemoTreeComposite(childWindow);
 		rootFrame.setLayout(Toolkit.getLayoutFactoryProvider().migLayoutBuilder().constraints("insets 10 10 10 10").columnConstraints(
 				"[grow][grow]").rowConstraints("[]20[]20[]20[]20[]20[]").build());
 		rootFrame.setPopupMenu(createPopMenu2());
+		final IScrollComposite scrollComposite = rootFrame.add(BPF.scrollComposite(), "south,growx, growy, w 0::, h 0::");
+		scrollComposite.setLayout(new MigLayoutDescriptor("[grow]", ""));
+		scrollComposite.add(BPF.button(), "wrap");
+		scrollComposite.add(BPF.button(), "wrap");
 		final DemoMenuProvider menuProvider = new DemoMenuProvider(false);
 		final ILabel label1 = rootFrame.add(labelBp, "cell 0 0");
 		final ILabel label2 = rootFrame.add(label2Bp, "cell 0 1");

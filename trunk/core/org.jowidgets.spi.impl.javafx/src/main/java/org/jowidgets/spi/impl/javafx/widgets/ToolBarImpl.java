@@ -55,7 +55,6 @@ public class ToolBarImpl extends JavafxControl implements IToolBarSpi {
 	public ToolBarImpl(final IGenericWidgetFactory factory, final IToolBarSetupSpi setup) {
 		super(new ToolBar());
 		this.factory = factory;
-
 		if (Orientation.HORIZONTAL == setup.getOrientation()) {
 			getUiReference().setOrientation(javafx.geometry.Orientation.HORIZONTAL);
 		}

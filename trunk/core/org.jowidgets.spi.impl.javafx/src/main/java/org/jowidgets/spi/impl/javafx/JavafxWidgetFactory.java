@@ -27,8 +27,10 @@
  */
 package org.jowidgets.spi.impl.javafx;
 
+import java.awt.Container;
+
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
@@ -37,12 +39,15 @@ import org.jowidgets.spi.impl.javafx.widgets.CheckBoxImpl;
 import org.jowidgets.spi.impl.javafx.widgets.ComboBoxImpl;
 import org.jowidgets.spi.impl.javafx.widgets.ComboBoxSelectionImpl;
 import org.jowidgets.spi.impl.javafx.widgets.CompositeImpl;
+import org.jowidgets.spi.impl.javafx.widgets.CompositeWrapper;
 import org.jowidgets.spi.impl.javafx.widgets.DialogImpl;
 import org.jowidgets.spi.impl.javafx.widgets.FrameImpl;
 import org.jowidgets.spi.impl.javafx.widgets.IconImpl;
 import org.jowidgets.spi.impl.javafx.widgets.ProgressBarImpl;
 import org.jowidgets.spi.impl.javafx.widgets.ScrollCompositeImpl;
 import org.jowidgets.spi.impl.javafx.widgets.SeparatorImpl;
+import org.jowidgets.spi.impl.javafx.widgets.SplitCompositeImpl;
+import org.jowidgets.spi.impl.javafx.widgets.TabFolderImpl;
 import org.jowidgets.spi.impl.javafx.widgets.TextAreaImpl;
 import org.jowidgets.spi.impl.javafx.widgets.TextFieldImpl;
 import org.jowidgets.spi.impl.javafx.widgets.TextLabelImpl;
@@ -98,12 +103,12 @@ public final class JavafxWidgetFactory implements IWidgetFactorySpi {
 
 	@Override
 	public boolean hasMigLayoutSupport() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isConvertibleToFrame(final Object uiReference) {
-		return uiReference instanceof Window;
+		return uiReference instanceof Stage;
 	}
 
 	@Override
@@ -125,7 +130,11 @@ public final class JavafxWidgetFactory implements IWidgetFactorySpi {
 	public ICompositeSpi createComposite(final IGenericWidgetFactory factory, final Object uiReference) {
 		Assert.paramNotNull(factory, "factory");
 		Assert.paramNotNull(uiReference, "uiReference");
-		throw new UnsupportedOperationException();
+		if (uiReference instanceof Container) {
+			return new CompositeWrapper(factory, (Pane) uiReference);
+		}
+		throw new IllegalArgumentException("UiReference must be instanceof of '" + Pane.class.getName() + "'");
+
 	}
 
 	@Override
@@ -167,7 +176,7 @@ public final class JavafxWidgetFactory implements IWidgetFactorySpi {
 		final IGenericWidgetFactory factory,
 		final Object parentUiReference,
 		final ISplitCompositeSetupSpi setup) {
-		throw new UnsupportedOperationException();
+		return new SplitCompositeImpl(factory, setup);
 	}
 
 	@Override
@@ -238,8 +247,7 @@ public final class JavafxWidgetFactory implements IWidgetFactorySpi {
 		final IGenericWidgetFactory factory,
 		final Object parentUiReference,
 		final ITabFolderSetupSpi setup) {
-
-		throw new UnsupportedOperationException();
+		return new TabFolderImpl(factory, setup);
 	}
 
 	@Override

@@ -51,6 +51,7 @@ import org.jowidgets.common.widgets.descriptor.setup.ICompositeSetupCommon;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.spi.impl.javafx.layout.LayoutManagerImpl;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
@@ -58,7 +59,11 @@ public class CompositeImpl implements ICompositeSpi {
 	private final JavafxContainer containerDelegate;
 
 	public CompositeImpl(final IGenericWidgetFactory factory, final ICompositeSetupCommon setup) {
-		containerDelegate = new JavafxContainer(factory, new Pane());
+		containerDelegate = new JavafxContainer(factory, new LayoutManagerImpl());
+	}
+
+	public CompositeImpl(final IGenericWidgetFactory factory, final Pane uiReference) {
+		containerDelegate = new JavafxContainer(factory, uiReference);
 	}
 
 	@Override
@@ -140,8 +145,11 @@ public class CompositeImpl implements ICompositeSpi {
 	public void setSize(final Dimension size) {
 		containerDelegate.setSize(size);
 		for (final Node node : getUiReference().getChildren()) {
-			if (((Control) node).getPrefWidth() == -1d || ((Control) node).getPrefHeight() == -1d) {
-				((Control) node).setMaxSize(Integer.MAX_VALUE, Integer.MAX_VALUE);
+			if (node instanceof Control) {
+				if (((Control) node).getPrefWidth() == -1d || ((Control) node).getPrefHeight() == -1d) {
+					getUiReference().setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+					((Control) node).setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+				}
 			}
 		}
 	}
@@ -229,20 +237,29 @@ public class CompositeImpl implements ICompositeSpi {
 
 	@Override
 	public Dimension getMinSize() {
-		return new Dimension((int) getUiReference().minHeight(Pane.USE_COMPUTED_SIZE), (int) getUiReference().minHeight(
-				Pane.USE_COMPUTED_SIZE));
+		return new Dimension(
+			new Double(getUiReference().getMinWidth()).intValue(),
+			new Double(getUiReference().getMinHeight()).intValue());
+		//		return new Dimension((int) getUiReference().minWidth(Control.USE_COMPUTED_SIZE), (int) getUiReference().minHeight(
+		//				Control.USE_COMPUTED_SIZE));
 	}
 
 	@Override
 	public Dimension getPreferredSize() {
-		return new Dimension((int) getUiReference().prefWidth(Pane.USE_COMPUTED_SIZE), (int) getUiReference().prefHeight(
-				Pane.USE_COMPUTED_SIZE));
+		return new Dimension(
+			new Double(getUiReference().getPrefWidth()).intValue(),
+			new Double(getUiReference().getPrefHeight()).intValue());
+		//		return new Dimension((int) getUiReference().prefWidth(Control.USE_COMPUTED_SIZE), (int) getUiReference().prefHeight(
+		//				Control.USE_COMPUTED_SIZE));
 	}
 
 	@Override
 	public Dimension getMaxSize() {
-		return new Dimension((int) getUiReference().maxHeight(Pane.USE_COMPUTED_SIZE), (int) getUiReference().maxHeight(
-				Pane.USE_COMPUTED_SIZE));
+		return new Dimension(
+			new Double(getUiReference().getMaxWidth()).intValue(),
+			new Double(getUiReference().getMaxHeight()).intValue());
+		//		return new Dimension((int) getUiReference().maxWidth(Control.USE_COMPUTED_SIZE), (int) getUiReference().maxHeight(
+		//				Control.USE_COMPUTED_SIZE));
 	}
 
 	@Override
@@ -251,7 +268,6 @@ public class CompositeImpl implements ICompositeSpi {
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
 		return containerDelegate.add(index, descriptor, layoutConstraints);
-
 	}
 
 	@Override

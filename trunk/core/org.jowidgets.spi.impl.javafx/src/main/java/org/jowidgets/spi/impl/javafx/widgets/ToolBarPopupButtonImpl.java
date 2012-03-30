@@ -28,11 +28,12 @@
 
 package org.jowidgets.spi.impl.javafx.widgets;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.MenuItem;
+import javafx.geometry.Bounds;
 import javafx.scene.control.SplitMenuButton;
-import javafx.scene.input.MouseEvent;
 
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IActionListener;
@@ -50,21 +51,25 @@ public class ToolBarPopupButtonImpl extends ToolBarItemImpl implements IToolBarP
 		super(button);
 		this.popupDetectionObservable = new PopupDetectionObservable();
 		this.actionObservable = new ActionObservable();
-		getUiReference().setOnMousePressed(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(final MouseEvent event) {
-				popupDetectionObservable.firePopupDetected((new Position((int) event.getScreenX(), (int) event.getScreenY())));
-			}
-		});
-
 		getUiReference().setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(final ActionEvent event) {
 				actionObservable.fireActionPerformed();
 			}
 		});
-		getUiReference().getItems().add(new MenuItem("aafdsf sdfdsf dsf"));
 
+		getUiReference().showingProperty().addListener(new InvalidationListener() {
+			@Override
+			public void invalidated(final Observable paramObservable) {
+				final Bounds bounds = button.localToScene(button.getBoundsInLocal());
+				final double posX = bounds.getMinX() + button.getScene().getX() + button.getScene().getWindow().getX();
+				final double posY = bounds.getMinY()
+					+ button.getScene().getY()
+					+ button.getScene().getWindow().getY()
+					+ bounds.getHeight();
+				popupDetectionObservable.firePopupDetected(new Position((int) posX, (int) posY));
+			}
+		});
 	}
 
 	@Override

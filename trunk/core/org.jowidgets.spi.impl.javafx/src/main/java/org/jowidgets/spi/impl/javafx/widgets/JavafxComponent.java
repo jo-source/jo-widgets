@@ -63,7 +63,7 @@ import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public class JavafxComponent implements IComponentSpi {
 
-	private final Node node;
+	private Node node;
 
 	private final PopupDetectionObservable popupDetectionObservable;
 	private final FocusObservable focusObservable;
@@ -297,15 +297,14 @@ public class JavafxComponent implements IComponentSpi {
 
 	@Override
 	public Dimension getSize() {
-		// TODO DB Auto-generated method stub
-		return null;
+		return new Dimension(
+			(int) getUiReference().getLayoutBounds().getWidth(),
+			(int) getUiReference().getLayoutBounds().getHeight());
 	}
 
 	@Override
 	public void setSize(final Dimension size) {
-		getUiReference().setManaged(false);
 		getUiReference().resize(size.getWidth(), size.getHeight());
-
 	}
 
 	@Override
@@ -372,6 +371,10 @@ public class JavafxComponent implements IComponentSpi {
 	@Override
 	public IPopupMenuSpi createPopupMenu() {
 		return new PopupMenuImpl(getUiReference());
+	}
+
+	protected void setComponent(final Node node) {
+		this.node = node;
 	}
 
 }

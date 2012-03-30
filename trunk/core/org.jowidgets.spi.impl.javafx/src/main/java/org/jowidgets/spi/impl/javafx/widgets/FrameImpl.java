@@ -116,7 +116,6 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
 		getContainerDelegate().setLayout(layoutDescriptor);
-		getUiReference().getScene().setRoot(getContainerDelegate().getUiReference());
 	}
 
 	@Override
@@ -137,7 +136,7 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 	@Override
 	public Rectangle getClientArea() {
 		final Pane paneTmp = (Pane) getUiReference().getScene().getRoot();
-		final Insets insets = paneTmp.getInsets();
+		final Insets insets = paneTmp.getPadding();
 		final int x = (int) insets.getLeft();
 		final int y = (int) insets.getTop();
 		final Dimension size = new Dimension(
@@ -145,6 +144,7 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 			(int) getUiReference().getScene().getHeight());
 		final int width = (int) (size.getWidth() - insets.getLeft() - insets.getRight());
 		final int height = (int) (size.getHeight() - insets.getTop() - insets.getBottom());
+
 		return new Rectangle(x, y, width, height);
 	}
 
@@ -153,7 +153,7 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 		int width = clientAreaSize.getWidth();
 		int height = clientAreaSize.getHeight();
 		final Pane paneTmp = (Pane) getUiReference().getScene().getRoot();
-		final Insets insets = paneTmp.getInsets();
+		final Insets insets = paneTmp.getPadding();
 		if (insets != null) {
 			width = (int) (width + insets.getLeft() + insets.getRight());
 			height = (int) (height + insets.getTop() + insets.getBottom());
