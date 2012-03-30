@@ -59,14 +59,13 @@ import org.jowidgets.spi.impl.controller.TabItemObservableSpi;
 import org.jowidgets.spi.impl.javafx.image.JavafxImageRegistry;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.ITabItemSpi;
-import org.tbee.javafx.scene.layout.MigPane;
 
 public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
 	private final JavafxContainer javafxContainer;
 	private final PopupDetectionObservable tabPopupDetectionObservable;
 	private final HashSet<PopupMenuImpl> tabPopupMenus;
-	private final MigPane tabContentContainer;
+	private final Pane tabContentContainer;
 	private final Tab tab;
 	private TabPane parentTabbedPane;
 	private boolean detached;
@@ -89,9 +88,9 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 		this.tabPopupDetectionObservable = new PopupDetectionObservable();
 		this.tabPopupMenus = new HashSet<PopupMenuImpl>();
 
-		this.tabContentContainer = new MigPane("", "[]", "[]");
 		this.tab = new Tab();
-		javafxContainer = new JavafxContainer(genericWidgetFactory, tabContentContainer);
+		javafxContainer = new JavafxContainer(genericWidgetFactory);
+		this.tabContentContainer = javafxContainer.getUiReference();
 		tab.setContent(tabContentContainer);
 
 		if (index != null) {

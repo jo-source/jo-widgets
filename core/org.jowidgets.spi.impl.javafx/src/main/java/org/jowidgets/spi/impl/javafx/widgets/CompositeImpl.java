@@ -51,7 +51,6 @@ import org.jowidgets.common.widgets.descriptor.setup.ICompositeSetupCommon;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
-import org.jowidgets.spi.impl.javafx.layout.LayoutManagerImpl;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
@@ -59,7 +58,7 @@ public class CompositeImpl implements ICompositeSpi {
 	private final JavafxContainer containerDelegate;
 
 	public CompositeImpl(final IGenericWidgetFactory factory, final ICompositeSetupCommon setup) {
-		containerDelegate = new JavafxContainer(factory, new LayoutManagerImpl());
+		containerDelegate = new JavafxContainer(factory);
 	}
 
 	public CompositeImpl(final IGenericWidgetFactory factory, final Pane uiReference) {

@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.javafx.widgets;
 
 import java.util.List;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -55,17 +56,22 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.spi.impl.javafx.layout.LayoutManagerImpl;
+import org.jowidgets.spi.impl.javafx.layout.LayoutPane;
 import org.jowidgets.spi.impl.javafx.util.CursorConvert;
 import org.jowidgets.spi.widgets.IContainerSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.IFactory;
 import org.tbee.javafx.scene.layout.MigPane;
 
 public class JavafxContainer implements IContainerSpi {
 
 	private final IGenericWidgetFactory factory;
 	private final JavafxComponent componentDelegate;
+
+	public JavafxContainer(final IGenericWidgetFactory factory) {
+		this(factory, new LayoutPane());
+	}
 
 	public JavafxContainer(final IGenericWidgetFactory factory, final Pane pane) {
 		this.factory = factory;
@@ -216,10 +222,35 @@ public class JavafxContainer implements IContainerSpi {
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
 		Assert.paramNotNull(layoutDescriptor, "layout");
-		Pane pane = getUiReference();
+
+		if (layoutDescriptor instanceof ILayouter) {
+			final ILayouter layouter = (ILayouter) layoutDescriptor;
+			final Pane pane = getUiReference();
+			if (pane instanceof LayoutPane) {
+				((LayoutPane) pane).setLayouter(layouter);
+			}
+			else {
+				createNewPane(new LayoutPaneFactory(layouter));
+			}
+		}
+		else if (layoutDescriptor instanceof MigLayoutDescriptor) {
+			final MigLayoutDescriptor migLayoutManager = (MigLayoutDescriptor) layoutDescriptor;
+			createNewPane(new MigLayoutPaneFactory(migLayoutManager));
+		}
+		else {
+			throw new IllegalArgumentException("Layout Descriptor of type '"
+				+ layoutDescriptor.getClass().getName()
+				+ "' is not supported");
+		}
+	}
+
+	private void createNewPane(final IFactory<Pane> paneFactory) {
+
+		final Pane pane = getUiReference();
 		final Object userData = pane.getUserData();
 		final Parent parent = pane.getParent();
 		final Scene scene = pane.getScene();
+		final ObservableList<Node> children = pane.getChildren();
 		int index = 0;
 
 		if (parent != null) {
@@ -227,30 +258,19 @@ public class JavafxContainer implements IContainerSpi {
 			((Pane) parent).getChildren().remove(pane);
 		}
 
-		if (layoutDescriptor instanceof ILayouter) {
-			pane = new LayoutManagerImpl((ILayouter) layoutDescriptor);
-		}
-		else if (layoutDescriptor instanceof MigLayoutDescriptor) {
-			final MigLayoutDescriptor migLayoutManager = (MigLayoutDescriptor) layoutDescriptor;
-			pane = new MigPane(
-				migLayoutManager.getLayoutConstraints(),
-				migLayoutManager.getColumnConstraints(),
-				migLayoutManager.getRowConstraints());
-		}
-		else {
-			throw new IllegalArgumentException("Layout Descriptor of type '"
-				+ layoutDescriptor.getClass().getName()
-				+ "' is not supported");
-		}
-		pane.setUserData(userData);
+		//delegate creation of the new pane
+		final Pane newPane = paneFactory.create();
+
+		newPane.setUserData(userData);
 		if (parent != null && index >= 0) {
-			((Pane) parent).getChildren().add(index, pane);
+			((Pane) parent).getChildren().add(index, newPane);
 		}
 		//if it was root add it again
 		else if (scene != null) {
-			scene.setRoot(pane);
+			scene.setRoot(newPane);
 		}
-		componentDelegate.setComponent(pane);
+		newPane.getChildren().addAll(children);
+		componentDelegate.setComponent(newPane);
 	}
 
 	private int findIndexInParent(final Pane pane) {
@@ -370,6 +390,39 @@ public class JavafxContainer implements IContainerSpi {
 				+ "' excpected, but '"
 				+ object.getClass().getName()
 				+ "' found.");
+		}
+	}
+
+	private final class LayoutPaneFactory implements IFactory<Pane> {
+
+		private final ILayouter layouter;
+
+		private LayoutPaneFactory(final ILayouter layouter) {
+			this.layouter = layouter;
+		}
+
+		@Override
+		public Pane create() {
+			final LayoutPane result = new LayoutPane();
+			result.setLayouter(layouter);
+			return result;
+		}
+	}
+
+	private final class MigLayoutPaneFactory implements IFactory<Pane> {
+
+		private final MigLayoutDescriptor descriptor;
+
+		private MigLayoutPaneFactory(final MigLayoutDescriptor descriptor) {
+			this.descriptor = descriptor;
+		}
+
+		@Override
+		public Pane create() {
+			return new MigPane(
+				descriptor.getLayoutConstraints(),
+				descriptor.getColumnConstraints(),
+				descriptor.getRowConstraints());
 		}
 	}
 

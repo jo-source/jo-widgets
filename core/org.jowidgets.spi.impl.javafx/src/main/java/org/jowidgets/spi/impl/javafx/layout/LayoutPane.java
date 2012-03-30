@@ -26,60 +26,37 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.javafx.widgets;
+package org.jowidgets.spi.impl.javafx.layout;
 
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Pane;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Position;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
-import org.jowidgets.spi.widgets.IToolBarContainerItemSpi;
-import org.tbee.javafx.scene.layout.MigPane;
+import org.jowidgets.common.widgets.layout.ILayouter;
+import org.jowidgets.util.Assert;
 
-public class ToolBarContainerItemImpl extends JavafxContainer implements IToolBarContainerItemSpi {
+public class LayoutPane extends Pane {
 
-	public ToolBarContainerItemImpl(final IGenericWidgetFactory factory, final Pane pane) {
-		super(factory, pane);
-		pane.setStyle("-fx-alignment: baseline-center;");
+	private ILayouter layouter;
+
+	public LayoutPane(final ILayouter layouter) {
+		Assert.paramNotNull(layouter, "layouter");
+		this.layouter = layouter;
+	}
+
+	public LayoutPane() {
+		this.layouter = null;
+	}
+
+	public ILayouter getLayouter() {
+		return layouter;
+	}
+
+	public void setLayouter(final ILayouter layouter) {
+		Assert.paramNotNull(layouter, "layouter");
+		this.layouter = layouter;
 	}
 
 	@Override
-	public MigPane getUiReference() {
-		return (MigPane) super.getUiReference();
-	}
-
-	@Override
-	public void setText(final String text) {}
-
-	@Override
-	public void setToolTipText(final String text) {
-		final Tooltip tool = new Tooltip(text);
-		if (text == null || text.isEmpty()) {
-			Tooltip.uninstall(getUiReference(), tool);
-		}
-		else {
-			Tooltip.install(getUiReference(), tool);
-		}
-	}
-
-	@Override
-	public void setIcon(final IImageConstant icon) {}
-
-	@Override
-	public Position getPosition() {
-		return new Position((int) getUiReference().getLayoutX(), (int) getUiReference().getLayoutY());
-	}
-
-	@Override
-	public Dimension getSize() {
-		return new Dimension((int) getUiReference().getWidth(), (int) getUiReference().getHeight());
-	}
-
-	@Override
-	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		//TODO DB nothing to do?
+	protected void layoutChildren() {
+		layouter.layout();
 	}
 }
