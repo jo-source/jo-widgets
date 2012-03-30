@@ -56,7 +56,6 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 
 	public DialogImpl(final IGenericWidgetFactory factory, final Object parentUiReference, final IDialogSetupSpi setup) {
 		super(factory, new Stage(), setup.isCloseable());
-
 		getUiReference().setTitle(setup.getTitle());
 		getUiReference().setResizable(setup.isResizable());
 		if (setup.isModal()) {
@@ -145,7 +144,6 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
 		getContainerDelegate().setLayout(layoutDescriptor);
-		getUiReference().getScene().setRoot(getContainerDelegate().getUiReference());
 	}
 
 	@Override
@@ -172,5 +170,4 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 		getUiReference().getScene().setRoot(newRoot);
 		return new MenuBarImpl(bar);
 	}
-
 }

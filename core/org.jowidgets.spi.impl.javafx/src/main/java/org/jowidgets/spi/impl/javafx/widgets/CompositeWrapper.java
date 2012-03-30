@@ -26,29 +26,21 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.javafx.layout;
+package org.jowidgets.spi.impl.javafx.widgets;
 
 import javafx.scene.layout.Pane;
 
-import org.jowidgets.common.widgets.layout.ILayouter;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
-public class LayoutManagerImpl extends Pane {
+public class CompositeWrapper extends CompositeImpl {
 
-	private final ILayouter layouter;
-
-	public LayoutManagerImpl(final ILayouter layoutDescriptor) {
-		this.layouter = layoutDescriptor;
-	}
-
-	public LayoutManagerImpl() {
-		this.layouter = null;
+	public CompositeWrapper(final IGenericWidgetFactory factory, final Pane uiReference) {
+		super(factory, uiReference);
 	}
 
 	@Override
-	protected void layoutChildren() {
-		setNeedsLayout(true);
-		if (layouter != null) {
-			layouter.layout();
-		}
+	public Pane getUiReference() {
+		return super.getUiReference();
 	}
+
 }

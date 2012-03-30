@@ -49,7 +49,6 @@ import org.jowidgets.util.Assert;
 
 public class JavafxControl extends ActionObservable implements IControlSpi {
 
-	private final Control control;
 	private final JavafxComponent componentDelegate;
 
 	public JavafxControl(final Control control) {
@@ -57,13 +56,12 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 	}
 
 	public JavafxControl(final Control control, final boolean triggerPopupDetection) {
-		this.control = control;
 		componentDelegate = new JavafxComponent(control, triggerPopupDetection);
 	}
 
 	@Override
 	public Control getUiReference() {
-		return control;
+		return (Control) componentDelegate.getUiReference();
 	}
 
 	@Override
@@ -94,12 +92,8 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 	@Override
 	public boolean requestFocus() {
 		getUiReference().requestFocus();
-		if (getUiReference().isFocused()) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return getUiReference().isFocused();
+
 	}
 
 	@Override
@@ -140,14 +134,13 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 	@Override
 	public Dimension getSize() {
 		return new Dimension(
-			getUiReference().widthProperty().getValue().intValue(),
-			getUiReference().heightProperty().getValue().intValue());
+			(int) getUiReference().getLayoutBounds().getWidth(),
+			(int) getUiReference().getLayoutBounds().getHeight());
 	}
 
 	@Override
 	public void setSize(final Dimension size) {
 		Assert.paramNotNull(size, "size");
-		getUiReference().setManaged(false);
 		getUiReference().resize(size.getWidth(), size.getHeight());
 	}
 
@@ -158,8 +151,7 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 
 	@Override
 	public void setPosition(final Position position) {
-		getUiReference().setLayoutX(position.getX());
-		getUiReference().setLayoutY(position.getY());
+		getUiReference().relocate(position.getX(), position.getY());
 	}
 
 	@Override
@@ -236,7 +228,8 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 
 	@Override
 	public Dimension getMinSize() {
-		return new Dimension((int) getUiReference().getMinWidth(), (int) getUiReference().getMinHeight());
+		return new Dimension((int) getUiReference().minWidth(Control.USE_COMPUTED_SIZE), (int) getUiReference().minHeight(
+				Control.USE_COMPUTED_SIZE));
 	}
 
 	@Override
@@ -247,7 +240,8 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 
 	@Override
 	public Dimension getMaxSize() {
-		return new Dimension((int) getUiReference().getMaxWidth(), (int) getUiReference().getMaxHeight());
+		return new Dimension((int) getUiReference().maxWidth(Control.USE_COMPUTED_SIZE), (int) getUiReference().maxHeight(
+				Control.USE_COMPUTED_SIZE));
 	}
 
 	protected PopupDetectionObservable getPopupDetectionObservable() {

@@ -32,6 +32,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -123,7 +125,8 @@ public class JavafxWidgetsServiceProvider implements IWidgetsServiceProvider {
 
 	@Override
 	public Position toScreen(final Position localPosition, final IComponentCommon component) {
-		throw new UnsupportedOperationException();
+		final Point2D point = ((Node) component.getUiReference()).localToParent(localPosition.getX(), localPosition.getY());
+		return new Position((int) point.getX(), (int) point.getY());
 	}
 
 	@Override
