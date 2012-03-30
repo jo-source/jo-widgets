@@ -103,7 +103,7 @@ public final class JavafxWidgetFactory implements IWidgetFactorySpi {
 
 	@Override
 	public boolean hasMigLayoutSupport() {
-		return true;
+		return false;
 	}
 
 	@Override

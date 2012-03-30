@@ -57,14 +57,12 @@ import org.jowidgets.common.widgets.controller.IWindowListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.controller.WindowObservable;
-import org.jowidgets.spi.impl.javafx.layout.LayoutManagerImpl;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.IWindowSpi;
 
 public class JavafxWindow implements IWindowSpi {
 
 	private final Stage stage;
-	private final Pane pane;
 	private final WindowObservable windowObservableDelegate;
 	private final JavafxContainer containerDelegate;
 	private final IGenericWidgetFactory factory;
@@ -72,8 +70,8 @@ public class JavafxWindow implements IWindowSpi {
 	public JavafxWindow(final IGenericWidgetFactory factory, final Stage stage, final boolean closeable) {
 		this.factory = factory;
 		this.stage = stage;
-		this.pane = new LayoutManagerImpl();
-		this.stage.setScene(new Scene(pane));
+		this.containerDelegate = new JavafxContainer(factory);
+		this.stage.setScene(new Scene(containerDelegate.getUiReference()));
 		this.windowObservableDelegate = new WindowObservable();
 		final EventHandler<WindowEvent> handler = new EventHandler<WindowEvent>() {
 
@@ -104,7 +102,6 @@ public class JavafxWindow implements IWindowSpi {
 				}
 			}
 		});
-		containerDelegate = new JavafxContainer(factory, pane);
 	}
 
 	@Override

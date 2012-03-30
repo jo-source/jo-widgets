@@ -44,9 +44,6 @@ public class SplitCompositeImpl extends JavafxControl implements ISplitComposite
 	private final JavafxContainer first;
 	private final JavafxContainer second;
 
-	private final Pane firstPanel;
-	private final Pane secondPanel;
-
 	private final int dividerSize;
 	private final Orientation orientation;
 
@@ -58,15 +55,12 @@ public class SplitCompositeImpl extends JavafxControl implements ISplitComposite
 		this.dividerSize = setup.getDividerSize();
 		this.orientation = setup.getOrientation();
 
-		this.firstPanel = new Pane();
-		this.secondPanel = new Pane();
-
-		first = new JavafxContainer(factory, firstPanel);
-		second = new JavafxContainer(factory, secondPanel);
+		first = new JavafxContainer2(factory, getUiReference());
+		second = new JavafxContainer2(factory, getUiReference());
+		getUiReference().getItems().addAll(first.getUiReference(), second.getUiReference());
 
 		first.setLayout(setup.getFirstLayout());
 		second.setLayout(setup.getSecondLayout());
-		getUiReference().getItems().addAll(first.getUiReference(), second.getUiReference());
 
 	}
 
@@ -82,8 +76,8 @@ public class SplitCompositeImpl extends JavafxControl implements ISplitComposite
 
 	@Override
 	public void setMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
-		setMinSize(firstPanel, firstMinSize, false);
-		setMinSize(secondPanel, secondMinSize, true);
+		setMinSize(first.getUiReference(), firstMinSize, false);
+		setMinSize(second.getUiReference(), secondMinSize, true);
 	}
 
 	private void setMinSize(final Pane pane, final Dimension minSize, final boolean second) {

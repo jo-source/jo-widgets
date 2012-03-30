@@ -26,29 +26,26 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.javafx.layout;
+package org.jowidgets.spi.impl.javafx.widgets;
 
-import javafx.scene.layout.Pane;
+import javafx.scene.control.SplitPane;
 
-import org.jowidgets.common.widgets.layout.ILayouter;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
-public class LayoutManagerImpl extends Pane {
+public class JavafxContainer2 extends JavafxContainer {
 
-	private final ILayouter layouter;
+	private final SplitPane splitPane;
 
-	public LayoutManagerImpl(final ILayouter layoutDescriptor) {
-		this.layouter = layoutDescriptor;
-	}
-
-	public LayoutManagerImpl() {
-		this.layouter = null;
+	public JavafxContainer2(final IGenericWidgetFactory factory, final SplitPane splitPane) {
+		super(factory);
+		this.splitPane = splitPane;
 	}
 
 	@Override
-	protected void layoutChildren() {
-		setNeedsLayout(true);
-		if (layouter != null) {
-			layouter.layout();
-		}
+	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
+		final int index = splitPane.getItems().indexOf(getUiReference());
+		super.setLayout(layoutDescriptor);
+		splitPane.getItems().add(index, getUiReference());
 	}
 }

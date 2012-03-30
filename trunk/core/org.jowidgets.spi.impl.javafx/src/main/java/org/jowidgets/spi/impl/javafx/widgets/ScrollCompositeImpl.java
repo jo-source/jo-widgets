@@ -32,7 +32,6 @@ import java.util.List;
 
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.layout.Pane;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
@@ -62,7 +61,7 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 
 		final ScrollPane scrollPane = new ScrollPane();
 		this.outerContainer = new JavafxControl(scrollPane);
-		this.innerContainer = new JavafxContainer(factory, new Pane());
+		this.innerContainer = new JavafxContainer(factory);
 		if (!setup.isAlwaysShowBars()) {
 			scrollPane.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
 			scrollPane.setHbarPolicy(ScrollBarPolicy.AS_NEEDED);
