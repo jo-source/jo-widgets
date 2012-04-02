@@ -166,6 +166,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	private boolean columnMoveOccured;
 	private boolean setWidthInvokedOnModel;
 	private boolean editable;
+	private boolean programmaticClearSelection;
 
 	public TableImpl(final ITableSetupSpi setup) {
 		super(new JScrollPane(new JTable()));
@@ -508,18 +509,21 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	public void setSelection(final List<Integer> selection) {
 		if (!getSelection().equals(selection)) {
 			final ListSelectionModel selectionModel = table.getSelectionModel();
-			selectionModel.clearSelection();
-			if (selection != null && selection.size() != 0) {
+
+			if (selection != null && selection.size() > 0) {
+				programmaticClearSelection = true;
+				selectionModel.clearSelection();
+				programmaticClearSelection = false;
 				for (int i = 0; i < selection.size(); i++) {
-					if (i < selection.size() - 1) {
-						selectionModel.setValueIsAdjusting(true);
-					}
-					else {
+					if (i == selection.size() - 1) {
 						selectionModel.setValueIsAdjusting(false);
 					}
 					final int selectionIndex = selection.get(i);
 					selectionModel.addSelectionInterval(selectionIndex, selectionIndex);
 				}
+			}
+			else {
+				selectionModel.clearSelection();
 			}
 		}
 	}
@@ -824,7 +828,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	final class TableSelectionListener implements ListSelectionListener {
 		@Override
 		public void valueChanged(final ListSelectionEvent e) {
-			if (!e.getValueIsAdjusting()) {
+			if (!e.getValueIsAdjusting() && !programmaticClearSelection) {
 				dataModel.setSelection(getSelection());
 				tableSelectionObservable.fireSelectionChanged();
 			}
