@@ -29,6 +29,7 @@
 package org.jowidgets.tools.controller;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.common.model.ITableDataModelListener;
@@ -53,31 +54,31 @@ public class TableDataModelObservable implements ITableDataModelObservable {
 	}
 
 	public void fireRowsAdded(final int[] rowIndices) {
-		for (final ITableDataModelListener listener : listeners) {
+		for (final ITableDataModelListener listener : new LinkedList<ITableDataModelListener>(listeners)) {
 			listener.rowsAdded(rowIndices);
 		}
 	}
 
 	public void fireRowsRemoved(final int[] rowIndices) {
-		for (final ITableDataModelListener listener : listeners) {
+		for (final ITableDataModelListener listener : new LinkedList<ITableDataModelListener>(listeners)) {
 			listener.rowsRemoved(rowIndices);
 		}
 	}
 
 	public void fireRowsChanged(final int[] rowIndices) {
-		for (final ITableDataModelListener listener : listeners) {
+		for (final ITableDataModelListener listener : new LinkedList<ITableDataModelListener>(listeners)) {
 			listener.rowsChanged(rowIndices);
 		}
 	}
 
 	public void fireDataChanged() {
-		for (final ITableDataModelListener listener : listeners) {
+		for (final ITableDataModelListener listener : new LinkedList<ITableDataModelListener>(listeners)) {
 			listener.dataChanged();
 		}
 	}
 
 	public void fireSelectionChanged() {
-		for (final ITableDataModelListener listener : listeners) {
+		for (final ITableDataModelListener listener : new LinkedList<ITableDataModelListener>(listeners)) {
 			listener.selectionChanged();
 		}
 	}
