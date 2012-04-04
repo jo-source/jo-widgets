@@ -31,7 +31,6 @@ import java.text.DecimalFormat;
 import java.text.ParsePosition;
 
 import org.jowidgets.api.convert.IConverter;
-import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.tools.converter.AbstractConverter;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
@@ -83,9 +82,7 @@ abstract class AbstractFloatingPointNumberConverter<NUMBER_TYPE extends Number> 
 					decimalFormat.parse(input, pos);
 					if (pos.getIndex() < input.length()) {
 						if (formatHint != null) {
-							return ValidationResult.error(Toolkit.getMessageReplacer().replace(
-									"Must have the format '%1'",
-									formatHint));
+							return ValidationResult.error(formatHint);
 						}
 						else {
 							//TODO i18n
@@ -100,20 +97,61 @@ abstract class AbstractFloatingPointNumberConverter<NUMBER_TYPE extends Number> 
 
 	@Override
 	public String getAcceptingRegExp() {
-		//TODO WH this wont't work correctly with decimal separators
 		final String decimalSeparatorRegEx;
+		final String groupingSeparatorRegEx;
+		int groupingSizeRegEx;
+		final int groupingSizeRegExMinusOne;
+
+		// Check, if the decimal separator is a special Char, add \\ to the char
 		if (isSpecialChar(decimalFormat.getDecimalFormatSymbols().getDecimalSeparator())) {
 			decimalSeparatorRegEx = "\\" + decimalFormat.getDecimalFormatSymbols().getDecimalSeparator();
 		}
 		else {
 			decimalSeparatorRegEx = String.valueOf(decimalFormat.getDecimalFormatSymbols().getDecimalSeparator());
 		}
-		return "-?([0-9]*([0-9]" + decimalSeparatorRegEx + "[0-9]*)?)";
+
+		// Check, if the grouping separator is a special Char, add \\ to the char
+		if (isSpecialChar(decimalFormat.getDecimalFormatSymbols().getGroupingSeparator())) {
+			groupingSeparatorRegEx = "\\" + decimalFormat.getDecimalFormatSymbols().getGroupingSeparator();
+		}
+		else {
+			groupingSeparatorRegEx = String.valueOf(decimalFormat.getDecimalFormatSymbols().getGroupingSeparator());
+		}
+
+		// Set the grouping size for the regular expression, if it is set in the decimal Format
+		if (decimalFormat.isGroupingUsed()) {
+			groupingSizeRegEx = decimalFormat.getGroupingSize();
+		}
+		else {
+			groupingSizeRegEx = 3;
+		}
+
+		// Set the grouping size minus one. Is needed for the regular expression
+		groupingSizeRegExMinusOne = groupingSizeRegEx - 1;
+
+		// Accept double numbers and a grouping separator if it is set
+		return "-?(([0-9]?[0-9]"
+			+ groupingSeparatorRegEx
+			+ "?)?"
+			+ "([0-9]{"
+			+ groupingSizeRegEx
+			+ "}"
+			+ groupingSeparatorRegEx
+			+ "?)*"
+			+ "((([0-9]{0,"
+			+ groupingSizeRegExMinusOne
+			+ "})?)|"
+			+ "([0-9]{"
+			+ groupingSizeRegEx
+			+ "})?((?<=[0-9])"
+			+ decimalSeparatorRegEx
+			+ "[0-9]*)))";
+
 	}
 
-	// TODO NM add more special chars... externalize method?
 	private boolean isSpecialChar(final char c) {
-		if (c == '.') {
+		// 160 = ' ' (france) ( alt 255) , 46 = '.' 
+		if (c == 160 | c == 46) {
 			return true;
 		}
 		return false;
