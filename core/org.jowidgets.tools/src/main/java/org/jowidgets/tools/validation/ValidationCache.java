@@ -28,7 +28,8 @@
 
 package org.jowidgets.tools.validation;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.util.Assert;
@@ -46,7 +47,7 @@ public class ValidationCache implements IValidateable {
 
 	public ValidationCache(final IValidationResultCreator validationResultCreator) {
 		Assert.paramNotNull(validationResultCreator, "validationResultCreator");
-		this.validationConditionListener = new HashSet<IValidationConditionListener>();
+		this.validationConditionListener = new LinkedHashSet<IValidationConditionListener>();
 		this.validationResultCreator = validationResultCreator;
 		this.chacheDirty = true;
 	}
@@ -56,7 +57,8 @@ public class ValidationCache implements IValidateable {
 	 */
 	public final void setDirty() {
 		this.chacheDirty = true;
-		for (final IValidationConditionListener listener : validationConditionListener) {
+		for (final IValidationConditionListener listener : new LinkedList<IValidationConditionListener>(
+			validationConditionListener)) {
 			listener.validationConditionsChanged();
 		}
 	}
