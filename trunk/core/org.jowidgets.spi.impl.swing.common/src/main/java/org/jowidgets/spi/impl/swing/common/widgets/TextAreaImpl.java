@@ -27,12 +27,15 @@
  */
 package org.jowidgets.spi.impl.swing.common.widgets;
 
+import java.awt.Font;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.UIManager;
+import javax.swing.plaf.FontUIResource;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.InputChangeEventPolicy;
@@ -49,6 +52,18 @@ import org.jowidgets.spi.widgets.setup.ITextAreaSetupSpi;
 public class TextAreaImpl extends AbstractInputControl implements ITextAreaSpi {
 
 	private final JTextArea textArea;
+
+	static {
+		final FontUIResource fontResource = (FontUIResource) UIManager.get("TextArea.font");
+		final int defaultFontSize;
+		if (fontResource != null) {
+			defaultFontSize = fontResource.getSize();
+		}
+		else {
+			defaultFontSize = 12;
+		}
+		UIManager.put("TextArea.font", new FontUIResource(new Font(Font.SANS_SERIF, Font.PLAIN, defaultFontSize)));
+	}
 
 	public TextAreaImpl(final ITextAreaSetupSpi setup) {
 		super(new JScrollPane(new JTextArea()));
