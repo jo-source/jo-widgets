@@ -66,7 +66,6 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 		if (!setup.isDecorated()) {
 			getUiReference().initStyle(StageStyle.UNDECORATED);
 		}
-
 	}
 
 	@Override
@@ -120,7 +119,9 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 		final Integer index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
-		return getContainerDelegate().add(index, descriptor, layoutConstraints);
+		final WIDGET_TYPE widget = getContainerDelegate().add(index, descriptor, layoutConstraints);
+		getUiReference().sizeToScene();
+		return widget;
 	}
 
 	@Override
@@ -128,7 +129,9 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 		final Integer index,
 		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
-		return getContainerDelegate().add(index, creator, layoutConstraints);
+		final WIDGET_TYPE widget = getContainerDelegate().add(index, creator, layoutConstraints);
+		getUiReference().sizeToScene();
+		return widget;
 	}
 
 	@Override
@@ -148,12 +151,12 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 
 	@Override
 	public void layoutBegin() {
-		throw new UnsupportedOperationException();
+		getUiReference().getScene().getRoot().layout();
 	}
 
 	@Override
 	public void layoutEnd() {
-		throw new UnsupportedOperationException();
+		getUiReference().getScene().getRoot().layout();
 	}
 
 	@Override

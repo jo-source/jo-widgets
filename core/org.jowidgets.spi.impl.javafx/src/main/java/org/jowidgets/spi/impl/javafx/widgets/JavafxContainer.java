@@ -151,7 +151,10 @@ public class JavafxContainer implements IContainerSpi {
 
 	@Override
 	public Dimension getSize() {
-		return new Dimension((int) getUiReference().getWidth(), (int) getUiReference().getHeight());
+		return new Dimension(
+			(int) getUiReference().getLayoutBounds().getWidth(),
+			(int) getUiReference().getLayoutBounds().getHeight());
+
 	}
 
 	@Override
@@ -269,7 +272,14 @@ public class JavafxContainer implements IContainerSpi {
 		else if (scene != null) {
 			scene.setRoot(newPane);
 		}
-		newPane.getChildren().addAll(children);
+		if (newPane instanceof MigPane) {
+			for (final Node node : children) {
+				((MigPane) newPane).add(node, (String) node.getUserData());
+			}
+		}
+		else {
+			newPane.getChildren().addAll(children);
+		}
 		componentDelegate.setComponent(newPane);
 	}
 
@@ -289,6 +299,7 @@ public class JavafxContainer implements IContainerSpi {
 
 	@Override
 	public void layoutEnd() {
+		getUiReference().requestLayout();
 		getUiReference().layout();
 	}
 
@@ -299,7 +310,7 @@ public class JavafxContainer implements IContainerSpi {
 
 	@Override
 	public Rectangle getClientArea() {
-		final Insets insets = getUiReference().getPadding();
+		final Insets insets = getUiReference().getInsets();
 		final int x = (int) insets.getLeft();
 		final int y = (int) insets.getTop();
 		final Dimension size = getSize();
@@ -345,7 +356,7 @@ public class JavafxContainer implements IContainerSpi {
 
 	private void addToContainer(final Node result, final Object layoutConstraints, final Integer index) {
 		if (getUiReference() instanceof MigPane) {
-			((MigPane) getUiReference()).add(result, "" + layoutConstraints);
+			((MigPane) getUiReference()).add(result, (String) layoutConstraints);
 		}
 		else {
 			if (index != null) {

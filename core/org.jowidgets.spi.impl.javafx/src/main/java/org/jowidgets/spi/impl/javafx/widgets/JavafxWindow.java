@@ -33,7 +33,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Control;
-import javafx.scene.control.SplitPane;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -131,14 +131,13 @@ public class JavafxWindow implements IWindowSpi {
 
 	@Override
 	public void pack() {
-		// TODO DB ugly thing to get size of stage before showing
+		//		 final TODO DB ugly final thing to get final size of stage final before showing
 		if (!getUiReference().isShowing()) {
 			getUiReference().setOpacity(0);
 			getUiReference().show();
 			getUiReference().close();
 			getUiReference().setOpacity(1);
 		}
-
 	}
 
 	@Override
@@ -242,6 +241,7 @@ public class JavafxWindow implements IWindowSpi {
 			getUiReference().hide();
 		}
 		//CHECKSTYLE:OFF
+		System.out.println(getUiReference().getWidth() + " " + getUiReference().getHeight());
 		for (final Node node : getUiReference().getScene().getRoot().getChildrenUnmodifiable()) {
 			sysoutTemp(node);
 			if (node instanceof Pane) {
@@ -302,7 +302,6 @@ public class JavafxWindow implements IWindowSpi {
 					}
 					System.out.println("*** Ende ***");
 				}
-
 			}
 
 		}
@@ -421,8 +420,13 @@ public class JavafxWindow implements IWindowSpi {
 			if (node instanceof TabPane) {
 				System.out.println(((TabPane) node).getTabs());
 			}
-			if (node instanceof SplitPane) {
-				System.out.println(((SplitPane) node).getItems());
+			if (node instanceof ScrollPane) {
+				if (((ScrollPane) node).getContent() instanceof Pane) {
+
+					System.out.println(new Dimension(
+						(int) ((Pane) ((ScrollPane) node).getContent()).getPrefWidth(),
+						(int) ((Pane) ((ScrollPane) node).getContent()).getPrefHeight()));
+				}
 			}
 			System.out.println("-------------------------------------");
 		}

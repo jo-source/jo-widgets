@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.javafx.widgets;
 import javafx.scene.control.Label;
 
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.spi.impl.javafx.image.JavafxImageRegistry;
 import org.jowidgets.spi.widgets.IIconSpi;
 import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
@@ -54,5 +55,10 @@ public class IconImpl extends JavafxControl implements IIconSpi {
 	@Override
 	public Label getUiReference() {
 		return (Label) super.getUiReference();
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		return new Dimension(150, 20);
 	}
 }
