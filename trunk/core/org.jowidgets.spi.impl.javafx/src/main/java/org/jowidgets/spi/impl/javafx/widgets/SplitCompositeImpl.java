@@ -55,8 +55,8 @@ public class SplitCompositeImpl extends JavafxControl implements ISplitComposite
 		this.dividerSize = setup.getDividerSize();
 		this.orientation = setup.getOrientation();
 
-		first = new JavafxContainer2(factory, getUiReference());
-		second = new JavafxContainer2(factory, getUiReference());
+		first = new JavafxSplitContainer(factory, getUiReference());
+		second = new JavafxSplitContainer(factory, getUiReference());
 		getUiReference().getItems().addAll(first.getUiReference(), second.getUiReference());
 
 		first.setLayout(setup.getFirstLayout());

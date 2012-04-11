@@ -61,6 +61,10 @@ public class CompositeImpl implements ICompositeSpi {
 		containerDelegate = new JavafxContainer(factory);
 	}
 
+	public CompositeImpl(final IGenericWidgetFactory factory) {
+		containerDelegate = new JavafxContainer(factory);
+	}
+
 	public CompositeImpl(final IGenericWidgetFactory factory, final Pane uiReference) {
 		containerDelegate = new JavafxContainer(factory, uiReference);
 	}
@@ -236,29 +240,20 @@ public class CompositeImpl implements ICompositeSpi {
 
 	@Override
 	public Dimension getMinSize() {
-		return new Dimension(
-			new Double(getUiReference().getMinWidth()).intValue(),
-			new Double(getUiReference().getMinHeight()).intValue());
-		//		return new Dimension((int) getUiReference().minWidth(Control.USE_COMPUTED_SIZE), (int) getUiReference().minHeight(
-		//				Control.USE_COMPUTED_SIZE));
+		return new Dimension((int) getUiReference().minWidth(Pane.USE_COMPUTED_SIZE), (int) getUiReference().minHeight(
+				Pane.USE_COMPUTED_SIZE));
 	}
 
 	@Override
 	public Dimension getPreferredSize() {
-		return new Dimension(
-			new Double(getUiReference().getPrefWidth()).intValue(),
-			new Double(getUiReference().getPrefHeight()).intValue());
-		//		return new Dimension((int) getUiReference().prefWidth(Control.USE_COMPUTED_SIZE), (int) getUiReference().prefHeight(
-		//				Control.USE_COMPUTED_SIZE));
+		return new Dimension((int) getUiReference().prefWidth(Pane.USE_COMPUTED_SIZE), (int) getUiReference().prefHeight(
+				Pane.USE_COMPUTED_SIZE));
 	}
 
 	@Override
 	public Dimension getMaxSize() {
-		return new Dimension(
-			new Double(getUiReference().getMaxWidth()).intValue(),
-			new Double(getUiReference().getMaxHeight()).intValue());
-		//		return new Dimension((int) getUiReference().maxWidth(Control.USE_COMPUTED_SIZE), (int) getUiReference().maxHeight(
-		//				Control.USE_COMPUTED_SIZE));
+		return new Dimension((int) getUiReference().maxWidth(Pane.USE_COMPUTED_SIZE), (int) getUiReference().maxHeight(
+				Pane.USE_COMPUTED_SIZE));
 	}
 
 	@Override

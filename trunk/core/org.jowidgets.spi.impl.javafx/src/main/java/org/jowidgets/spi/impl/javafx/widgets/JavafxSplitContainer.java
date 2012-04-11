@@ -33,11 +33,11 @@ import javafx.scene.control.SplitPane;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
-public class JavafxContainer2 extends JavafxContainer {
+public class JavafxSplitContainer extends JavafxContainer {
 
 	private final SplitPane splitPane;
 
-	public JavafxContainer2(final IGenericWidgetFactory factory, final SplitPane splitPane) {
+	public JavafxSplitContainer(final IGenericWidgetFactory factory, final SplitPane splitPane) {
 		super(factory);
 		this.splitPane = splitPane;
 	}
@@ -45,6 +45,7 @@ public class JavafxContainer2 extends JavafxContainer {
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
 		final int index = splitPane.getItems().indexOf(getUiReference());
+		splitPane.getItems().remove(getUiReference());
 		super.setLayout(layoutDescriptor);
 		splitPane.getItems().add(index, getUiReference());
 	}

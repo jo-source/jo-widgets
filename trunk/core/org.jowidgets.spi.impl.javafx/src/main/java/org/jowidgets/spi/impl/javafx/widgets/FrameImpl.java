@@ -92,7 +92,8 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 		final Integer index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
-		return getContainerDelegate().add(index, descriptor, layoutConstraints);
+		final WIDGET_TYPE widget = getContainerDelegate().add(index, descriptor, layoutConstraints);
+		return widget;
 	}
 
 	@Override
@@ -100,7 +101,8 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 		final Integer index,
 		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
-		return getContainerDelegate().add(index, creator, layoutConstraints);
+		final WIDGET_TYPE widget = getContainerDelegate().add(index, creator, layoutConstraints);
+		return widget;
 	}
 
 	@Override
@@ -120,7 +122,7 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 
 	@Override
 	public void layoutBegin() {
-		throw new UnsupportedOperationException();
+		getUiReference().getScene().getRoot().layout();
 	}
 
 	@Override
@@ -136,7 +138,7 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 	@Override
 	public Rectangle getClientArea() {
 		final Pane paneTmp = (Pane) getUiReference().getScene().getRoot();
-		final Insets insets = paneTmp.getPadding();
+		final Insets insets = paneTmp.getInsets();
 		final int x = (int) insets.getLeft();
 		final int y = (int) insets.getTop();
 		final Dimension size = new Dimension(
@@ -144,7 +146,6 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 			(int) getUiReference().getScene().getHeight());
 		final int width = (int) (size.getWidth() - insets.getLeft() - insets.getRight());
 		final int height = (int) (size.getHeight() - insets.getTop() - insets.getBottom());
-
 		return new Rectangle(x, y, width, height);
 	}
 
@@ -153,7 +154,7 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 		int width = clientAreaSize.getWidth();
 		int height = clientAreaSize.getHeight();
 		final Pane paneTmp = (Pane) getUiReference().getScene().getRoot();
-		final Insets insets = paneTmp.getPadding();
+		final Insets insets = paneTmp.getInsets();
 		if (insets != null) {
 			width = (int) (width + insets.getLeft() + insets.getRight());
 			height = (int) (height + insets.getTop() + insets.getBottom());

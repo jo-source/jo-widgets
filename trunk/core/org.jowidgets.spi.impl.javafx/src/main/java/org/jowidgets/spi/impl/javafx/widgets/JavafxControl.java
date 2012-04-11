@@ -28,7 +28,11 @@
 
 package org.jowidgets.spi.impl.javafx.widgets;
 
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Control;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
 
 import org.jowidgets.common.color.IColorConstant;
@@ -151,7 +155,8 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 
 	@Override
 	public void setPosition(final Position position) {
-		getUiReference().relocate(position.getX(), position.getY());
+		getUiReference().setLayoutX(position.getX());
+		getUiReference().setLayoutY(position.getY());
 	}
 
 	@Override
@@ -240,6 +245,18 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 
 	@Override
 	public Dimension getMaxSize() {
+		if (getUiReference() instanceof Button) {
+			return new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
+		}
+		if (getUiReference() instanceof ToggleButton) {
+			return new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
+		}
+		if (getUiReference() instanceof CheckBox) {
+			return new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
+		}
+		if (getUiReference() instanceof ChoiceBox) {
+			return new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
+		}
 		return new Dimension((int) getUiReference().maxWidth(Control.USE_COMPUTED_SIZE), (int) getUiReference().maxHeight(
 				Control.USE_COMPUTED_SIZE));
 	}

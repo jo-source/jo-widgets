@@ -80,7 +80,7 @@ public class TreeNodeRenderer extends TreeCell<String> {
 				styleUtil.setForegroundColor(node.getForegroundColor());
 			}
 
-			if (!(node.getToolTipText().isEmpty())) {
+			if (node.getToolTipText() != null && (!(node.getToolTipText().isEmpty()))) {
 				Tooltip.install(this, new Tooltip(node.getToolTipText()));
 			}
 			else {
