@@ -31,6 +31,7 @@ package org.jowidgets.tools.widgets.blueprint;
 import java.text.DateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
@@ -456,5 +457,146 @@ public final class BPF {
 	public static <ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
 		final IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>> descriptor) {
 		return Toolkit.getBluePrintFactory().collectionInputDialog(descriptor);
+	}
+
+	public static IFrameBluePrint frame(final String title) {
+		return Toolkit.getBluePrintFactory().frame(title);
+	}
+
+	public static IFrameBluePrint frame(final String title, final IImageConstant icon) {
+		return Toolkit.getBluePrintFactory().frame(title, icon);
+	}
+
+	public static IDialogBluePrint dialog(final String title) {
+		return Toolkit.getBluePrintFactory().dialog(title);
+	}
+
+	public static IDialogBluePrint dialog(final String title, final IImageConstant icon) {
+		return Toolkit.getBluePrintFactory().dialog(title, icon);
+	}
+
+	public static ICompositeBluePrint compositeWithBorder() {
+		return Toolkit.getBluePrintFactory().compositeWithBorder();
+	}
+
+	public static ICompositeBluePrint composite(final String borderTitle) {
+		return Toolkit.getBluePrintFactory().composite(borderTitle);
+	}
+
+	public static IScrollCompositeBluePrint scrollCompositeWithBorder() {
+		return Toolkit.getBluePrintFactory().scrollCompositeWithBorder();
+	}
+
+	public static IScrollCompositeBluePrint scrollComposite(final String borderTitle) {
+		return Toolkit.getBluePrintFactory().scrollComposite(borderTitle);
+	}
+
+	public static ISplitCompositeBluePrint splitHorizontal() {
+		return Toolkit.getBluePrintFactory().splitHorizontal();
+	}
+
+	public static ISplitCompositeBluePrint splitVertical() {
+		return Toolkit.getBluePrintFactory().splitVertical();
+	}
+
+	public static IButtonBluePrint button(final String text) {
+		return Toolkit.getBluePrintFactory().button(text);
+	}
+
+	public static IButtonBluePrint button(final String text, final String toolTipText) {
+		return Toolkit.getBluePrintFactory().button(text, toolTipText);
+	}
+
+	public static IIconBluePrint icon(final IImageConstant icon) {
+		return Toolkit.getBluePrintFactory().icon(icon);
+	}
+
+	public static ITextLabelBluePrint textLabel(final String text) {
+		return Toolkit.getBluePrintFactory().textLabel(text);
+	}
+
+	public static ITextLabelBluePrint textLabel(final String text, final String tooltipText) {
+		return Toolkit.getBluePrintFactory().textLabel(text, tooltipText);
+	}
+
+	public static IComboBoxBluePrint<String> comboBox() {
+		return Toolkit.getBluePrintFactory().comboBox();
+	}
+
+	public static IComboBoxBluePrint<String> comboBox(final String... elements) {
+		return Toolkit.getBluePrintFactory().comboBox(elements);
+	}
+
+	public static IComboBoxBluePrint<String> comboBox(final List<String> elements) {
+		return Toolkit.getBluePrintFactory().comboBox(elements);
+	}
+
+	public static IComboBoxBluePrint<String> comboBoxString() {
+		return Toolkit.getBluePrintFactory().comboBoxString();
+	}
+
+	public static IComboBoxBluePrint<Long> comboBoxLongNumber() {
+		return Toolkit.getBluePrintFactory().comboBoxLongNumber();
+	}
+
+	public static IComboBoxBluePrint<Integer> comboBoxIntegerNumber() {
+		return Toolkit.getBluePrintFactory().comboBoxIntegerNumber();
+	}
+
+	public static IComboBoxBluePrint<Short> comboBoxShortNumber() {
+		return Toolkit.getBluePrintFactory().comboBoxShortNumber();
+	}
+
+	public static IComboBoxSelectionBluePrint<String> comboBoxSelection() {
+		return Toolkit.getBluePrintFactory().comboBoxSelection();
+	}
+
+	public static IComboBoxSelectionBluePrint<String> comboBoxSelection(final String... elements) {
+		return Toolkit.getBluePrintFactory().comboBoxSelection(elements);
+	}
+
+	public static IComboBoxSelectionBluePrint<String> comboBoxSelection(final List<String> elements) {
+		return Toolkit.getBluePrintFactory().comboBoxSelection(elements);
+	}
+
+	public static <ENUM_TYPE extends Enum<?>> IComboBoxSelectionBluePrint<ENUM_TYPE> comboBoxSelection(
+		final ENUM_TYPE... enumValues) {
+		return Toolkit.getBluePrintFactory().comboBoxSelection(enumValues);
+	}
+
+	public static IComboBoxSelectionBluePrint<String> comboBoxSelectionString() {
+		return Toolkit.getBluePrintFactory().comboBoxSelectionString();
+	}
+
+	public static IComboBoxSelectionBluePrint<Long> comboBoxSelectionLongNumber() {
+		return Toolkit.getBluePrintFactory().comboBoxSelectionLongNumber();
+	}
+
+	public static IComboBoxSelectionBluePrint<Integer> comboBoxSelectionIntegerNumber() {
+		return Toolkit.getBluePrintFactory().comboBoxSelectionIntegerNumber();
+	}
+
+	public static IComboBoxSelectionBluePrint<Short> comboBoxSelectionShortNumber() {
+		return Toolkit.getBluePrintFactory().comboBoxSelectionShortNumber();
+	}
+
+	public static IActionMenuItemBluePrint menuItem(final String text) {
+		return Toolkit.getBluePrintFactory().menuItem(text);
+	}
+
+	public static IRadioMenuItemBluePrint radioMenuItem(final String text) {
+		return Toolkit.getBluePrintFactory().radioMenuItem(text);
+	}
+
+	public static ICheckedMenuItemBluePrint checkedMenuItem(final String text) {
+		return Toolkit.getBluePrintFactory().checkedMenuItem(text);
+	}
+
+	public static ISubMenuBluePrint subMenu(final String text) {
+		return Toolkit.getBluePrintFactory().subMenu(text);
+	}
+
+	public static IMainMenuBluePrint mainMenu(final String text) {
+		return Toolkit.getBluePrintFactory().mainMenu(text);
 	}
 }

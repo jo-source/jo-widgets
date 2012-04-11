@@ -66,7 +66,7 @@ class CommandActionImpl implements ICommandAction, IActionChangeObservable {
 
 	private IExceptionHandler exceptionHandler;
 
-	public CommandActionImpl(
+	CommandActionImpl(
 		final String text,
 		final String toolTipText,
 		final IImageConstant icon,
