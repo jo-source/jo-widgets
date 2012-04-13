@@ -52,9 +52,15 @@ public final class MigLayoutFactoryBuilder implements IMigLayoutFactoryBuilder {
 	@Override
 	public IMigLayoutFactoryBuilder descriptor(final MigLayoutDescriptor descriptor) {
 		Assert.paramNotNull(descriptor, "descriptor");
-		constraints(descriptor.getLayoutConstraints());
-		rowConstraints(descriptor.getRowConstraints());
-		columnConstraints(descriptor.getColumnConstraints());
+		if (descriptor.getLayoutConstraints() != null) {
+			constraints(descriptor.getLayoutConstraints());
+		}
+		if (descriptor.getRowConstraints() != null) {
+			rowConstraints(descriptor.getRowConstraints());
+		}
+		if (descriptor.getColumnConstraints() != null) {
+			columnConstraints(descriptor.getColumnConstraints());
+		}
 		return this;
 	}
 

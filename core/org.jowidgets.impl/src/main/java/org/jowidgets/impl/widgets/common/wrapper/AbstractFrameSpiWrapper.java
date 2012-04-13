@@ -28,11 +28,15 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
+import org.jowidgets.api.layout.miglayout.IMigLayoutFactoryBuilder;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IFrameCommon;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.ILayouter;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.util.Assert;
 
@@ -51,6 +55,18 @@ public abstract class AbstractFrameSpiWrapper extends AbstractWindowSpiWrapper i
 
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
+		Assert.paramNotNull(layoutDescriptor, "layoutDescriptor");
+		if (!Toolkit.hasSpiMigLayoutSupport() && layoutDescriptor instanceof MigLayoutDescriptor && this instanceof IContainer) {
+			final IMigLayoutFactoryBuilder migLayoutBuilder = Toolkit.getLayoutFactoryProvider().migLayoutBuilder();
+			migLayoutBuilder.descriptor((MigLayoutDescriptor) layoutDescriptor);
+			setLayoutImpl(migLayoutBuilder.build().create((IContainer) this));
+		}
+		else {
+			setLayoutImpl(layoutDescriptor);
+		}
+	}
+
+	private void setLayoutImpl(final ILayoutDescriptor layoutDescriptor) {
 		Assert.paramNotNull(layoutDescriptor, "layoutDescriptor");
 		if (layoutDescriptor instanceof ILayouter) {
 			this.layouter = (ILayouter) layoutDescriptor;
