@@ -59,7 +59,6 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.LayoutSettingsInvo
 import org.jowidgets.impl.widgets.common.wrapper.AbstractContainerSpiWrapper;
 import org.jowidgets.spi.widgets.IContainerSpi;
 import org.jowidgets.util.Assert;
-import org.jowidgets.util.EmptyCheck;
 
 public class ContainerImpl extends AbstractContainerSpiWrapper implements IContainer {
 
@@ -117,19 +116,7 @@ public class ContainerImpl extends AbstractContainerSpiWrapper implements IConta
 		Assert.paramNotNull(layoutDescriptor, "layoutDescriptor");
 		if (!Toolkit.hasSpiMigLayoutSupport() && layoutDescriptor instanceof MigLayoutDescriptor) {
 			final IMigLayoutFactoryBuilder migLayoutBuilder = Toolkit.getLayoutFactoryProvider().migLayoutBuilder();
-			final MigLayoutDescriptor migLayoutDescriptor = (MigLayoutDescriptor) layoutDescriptor;
-			final String lc = migLayoutDescriptor.getLayoutConstraints();
-			final String rc = migLayoutDescriptor.getRowConstraints();
-			final String cc = migLayoutDescriptor.getColumnConstraints();
-			if (!EmptyCheck.isEmpty(lc)) {
-				migLayoutBuilder.constraints(lc);
-			}
-			if (!EmptyCheck.isEmpty(rc)) {
-				migLayoutBuilder.rowConstraints(rc);
-			}
-			if (!EmptyCheck.isEmpty(cc)) {
-				migLayoutBuilder.columnConstraints(cc);
-			}
+			migLayoutBuilder.descriptor((MigLayoutDescriptor) layoutDescriptor);
 			super.setLayout(migLayoutBuilder.build().create(this));
 		}
 		else {
