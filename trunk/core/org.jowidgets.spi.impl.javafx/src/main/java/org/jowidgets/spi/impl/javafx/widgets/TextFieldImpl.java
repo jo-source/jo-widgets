@@ -121,7 +121,9 @@ public class TextFieldImpl extends AbstractTextInputControl implements ITextCont
 
 	@Override
 	public Dimension getMinSize() {
-		return getPreferredSize();
+		final Dimension minSize = super.getMinSize();
+		final Dimension prefSize = super.getPreferredSize();
+		return new Dimension(minSize.getWidth(), prefSize.getHeight());
 	}
 
 	@Override
