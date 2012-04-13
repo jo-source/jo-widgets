@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.javafx.widgets;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.spi.impl.javafx.util.AlignmentConvert;
 import org.jowidgets.spi.impl.javafx.util.FontProvider;
@@ -73,11 +74,12 @@ public class TextLabelImpl extends JavafxControl implements ITextLabelSpi {
 	}
 
 	@Override
-	public void setText(String text) {
-		//allow line breaks by using html
-		if (text != null && text.contains("\n")) {
-			text = "<html>" + text.replace("\n", "<br>") + "</html>";
-		}
+	public Dimension getMinSize() {
+		return getPreferredSize();
+	}
+
+	@Override
+	public void setText(final String text) {
 		getUiReference().setText(text);
 	}
 }

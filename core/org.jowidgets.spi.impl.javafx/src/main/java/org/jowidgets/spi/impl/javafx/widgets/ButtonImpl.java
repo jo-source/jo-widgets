@@ -36,6 +36,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.text.Font;
 
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.spi.impl.javafx.image.JavafxImageRegistry;
 import org.jowidgets.spi.impl.javafx.util.FontProvider;
@@ -106,4 +107,8 @@ public class ButtonImpl extends AbstractActionControl implements IButtonSpi {
 		return !getUiReference().isDisabled();
 	}
 
+	@Override
+	public Dimension getMinSize() {
+		return getPreferredSize();
+	}
 }

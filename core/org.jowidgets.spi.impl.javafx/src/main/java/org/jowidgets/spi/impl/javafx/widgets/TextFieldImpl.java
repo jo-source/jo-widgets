@@ -34,6 +34,7 @@ import javafx.scene.control.TextField;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.mask.TextMaskMode;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.InputChangeEventPolicy;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.spi.impl.javafx.widgets.util.IInputModfierField;
@@ -116,6 +117,11 @@ public class TextFieldImpl extends AbstractTextInputControl implements ITextCont
 	public void setEditable(final boolean editable) {
 		getUiReference().setEditable(editable);
 
+	}
+
+	@Override
+	public Dimension getMinSize() {
+		return getPreferredSize();
 	}
 
 	@Override

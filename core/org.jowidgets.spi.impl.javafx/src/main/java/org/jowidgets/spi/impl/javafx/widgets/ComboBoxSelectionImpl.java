@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.javafx.widgets;
 
 import javafx.scene.control.Label;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
@@ -64,5 +65,10 @@ public class ComboBoxSelectionImpl extends JavafxControl implements IComboBoxSel
 
 	@Override
 	public void setElements(final String[] elements) {}
+
+	@Override
+	public Dimension getMinSize() {
+		return getPreferredSize();
+	}
 
 }

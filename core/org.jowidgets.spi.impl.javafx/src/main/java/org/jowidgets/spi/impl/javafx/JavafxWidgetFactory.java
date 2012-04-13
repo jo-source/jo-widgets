@@ -104,7 +104,7 @@ public final class JavafxWidgetFactory implements IWidgetFactorySpi {
 	@Override
 	public boolean hasMigLayoutSupport() {
 		//false intern // true MigPane
-		return true;
+		return false;
 	}
 
 	@Override

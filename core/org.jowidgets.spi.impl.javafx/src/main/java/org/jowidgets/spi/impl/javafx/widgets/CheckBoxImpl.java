@@ -59,6 +59,7 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.scene.control.CheckBox;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.spi.impl.javafx.util.FontProvider;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
@@ -82,7 +83,7 @@ public class CheckBoxImpl extends AbstractInputControl implements ICheckBoxSpi {
 			}
 		});
 
-		//TODO Style with CSS
+		//TODO DB Style with CSS
 		//getUiReference().setBackground(null);
 		//avoid that checkbox have a border on the left or right side
 		//getUiReference().setBorder(BorderFactory.createEmptyBorder(2, 0, 2, 0));
@@ -129,4 +130,8 @@ public class CheckBoxImpl extends AbstractInputControl implements ICheckBoxSpi {
 		getUiReference().setSelected(selected);
 	}
 
+	@Override
+	public Dimension getMinSize() {
+		return getPreferredSize();
+	}
 }
