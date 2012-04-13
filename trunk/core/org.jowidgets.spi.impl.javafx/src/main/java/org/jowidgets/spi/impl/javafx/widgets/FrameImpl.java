@@ -107,7 +107,7 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 
 	@Override
 	public boolean remove(final IControlCommon control) {
-		return ((Pane) getUiReference().getScene().getRoot()).getChildren().remove(control.getUiReference());
+		return getContainerDelegate().remove(control);
 	}
 
 	@Override
@@ -121,18 +121,16 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 	}
 
 	@Override
-	public void layoutBegin() {
-		getUiReference().getScene().getRoot().layout();
-	}
+	public void layoutBegin() {}
 
 	@Override
 	public void layoutEnd() {
-		getUiReference().getScene().getRoot().layout();
+		getContainerDelegate().layoutEnd();
 	}
 
 	@Override
 	public void removeAll() {
-		((Pane) getUiReference().getScene().getRoot()).getChildren().clear();
+		getContainerDelegate().removeAll();
 	}
 
 	@Override

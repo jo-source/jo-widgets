@@ -62,7 +62,11 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 		final ScrollPane scrollPane = new ScrollPane();
 		this.outerContainer = new JavafxControl(scrollPane);
 		this.innerContainer = new JavafxContainer(factory);
-		if (!setup.isAlwaysShowBars()) {
+		if (setup.isAlwaysShowBars()) {
+			scrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+			scrollPane.setHbarPolicy(ScrollBarPolicy.ALWAYS);
+		}
+		else {
 			scrollPane.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
 			scrollPane.setHbarPolicy(ScrollBarPolicy.AS_NEEDED);
 		}
@@ -74,6 +78,7 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 		}
 		scrollPane.setFitToHeight(true);
 		scrollPane.setFitToWidth(true);
+
 		scrollPane.setContent(innerContainer.getUiReference());
 		scrollPane.setFocusTraversable(false);
 	}

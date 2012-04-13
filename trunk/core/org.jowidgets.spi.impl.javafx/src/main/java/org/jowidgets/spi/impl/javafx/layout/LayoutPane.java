@@ -59,4 +59,34 @@ public class LayoutPane extends Pane {
 	protected void layoutChildren() {
 		layouter.layout();
 	}
+
+	@Override
+	protected double computeMinWidth(final double paramDouble) {
+		return layouter.getMinSize().getWidth();
+	}
+
+	@Override
+	protected double computeMinHeight(final double paramDouble) {
+		return layouter.getMinSize().getHeight();
+	}
+
+	@Override
+	protected double computePrefHeight(final double paramDouble) {
+		return layouter.getPreferredSize().getHeight();
+	}
+
+	@Override
+	protected double computePrefWidth(final double paramDouble) {
+		return layouter.getPreferredSize().getWidth();
+	}
+
+	@Override
+	protected double computeMaxHeight(final double paramDouble) {
+		return layouter.getMaxSize().getHeight();
+	}
+
+	@Override
+	protected double computeMaxWidth(final double paramDouble) {
+		return layouter.getMaxSize().getWidth();
+	}
 }
