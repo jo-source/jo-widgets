@@ -14,6 +14,36 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.addons.icons.silkicons</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.addons.map.common</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.addons.widgets.browser.api</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.api</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.api.test</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.common</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.examples.common</artifactId>
 			<version>${jo-widgets.version}</version>
 		</dependency>
@@ -23,22 +53,76 @@
 			<version>${jo-widgets.version}</version>
 		</dependency>
 		<dependency>
-            <groupId>org.jowidgets</groupId>
-            <artifactId>org.jowidgets.workbench.tools</artifactId>
-            <version>${jo-widgets.version}</version>
-        </dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.spi</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
 		<dependency>
-            <groupId>org.jowidgets</groupId>
-            <artifactId>org.jowidgets.workbench.toolkit.api</artifactId>
-            <version>${jo-widgets.version}</version>
-        </dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.spi.impl.common</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.spi.impl.swt</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.test.api</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.test.common</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.test.spi</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.tools</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.util</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.validation</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.workbench.api</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.workbench.impl</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.workbench.toolkit.api</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.workbench.tools</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.spi.impl.swt.common</artifactId>
 			<version>${jo-widgets.version}</version>
 		</dependency>
 	</dependencies>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -65,6 +149,18 @@
 									<groupId>org.easymock</groupId>
 									<artifactId>easymock</artifactId>
 									<version>3.0</version>
+									<outputDirectory>${basedir}</outputDirectory>
+								</artifactItem>
+								<artifactItem>
+									<groupId>de.micromata.jak</groupId>
+									<artifactId>JavaAPIforKml</artifactId>
+									<version>2.2.0</version>
+									<outputDirectory>${basedir}</outputDirectory>
+								</artifactItem>
+								<artifactItem>
+									<groupId>commons-lang</groupId>
+									<artifactId>commons-lang</artifactId>
+									<version>2.6</version>
 									<outputDirectory>${basedir}</outputDirectory>
 								</artifactItem>
 							</artifactItems>

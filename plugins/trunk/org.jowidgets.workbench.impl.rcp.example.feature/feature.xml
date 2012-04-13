@@ -21,14 +21,35 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.jowidgets.spi"
+         id="org.jowidgets.addons.icons.silkicons"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.jowidgets.impl"
+         id="org.jowidgets.addons.map.common"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.jowidgets.addons.widgets.browser.api"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.jowidgets.api"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.jowidgets.api.test"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -42,7 +63,21 @@
          unpack="false"/>
 
    <plugin
-         id="org.jowidgets.workbench.api"
+         id="org.jowidgets.examples.common"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.jowidgets.impl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.jowidgets.spi"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -57,48 +92,6 @@
 
    <plugin
          id="org.jowidgets.spi.impl.swt"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.jowidgets.workbench.impl.rcp.example"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.jowidgets.api"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.jowidgets.tools"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.jowidgets.workbench.impl.rcp"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.jowidgets.examples.common"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.jowidgets.api.test"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -126,19 +119,42 @@
          unpack="false"/>
 
    <plugin
-         id="org.junit4"
+         id="org.jowidgets.tools"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="0.0.0"
+         unpack="false"/>
 
    <plugin
-         id="org.junit"
+         id="org.jowidgets.util"
          download-size="0"
          install-size="0"
-         version="0.0.0"/>
+         version="0.0.0"
+         unpack="false"/>
 
    <plugin
-         id="org.hamcrest.core"
+         id="org.jowidgets.validation"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.jowidgets.workbench.api"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.jowidgets.workbench.impl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.jowidgets.workbench.impl.rcp"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -159,14 +175,34 @@
          unpack="false"/>
 
    <plugin
-         id="org.jowidgets.util"
+         id="org.jowidgets.workbench.impl.rcp.example"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.jowidgets.validation"
+         id="org.jowidgets.spi.impl.swt.common"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.junit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.hamcrest.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.commons.io"
          download-size="0"
          install-size="0"
          version="0.0.0"

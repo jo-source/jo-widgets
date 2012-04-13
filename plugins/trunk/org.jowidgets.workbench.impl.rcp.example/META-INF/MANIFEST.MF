@@ -17,9 +17,13 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.6.0",
  org.jowidgets.spi.impl.swt.common,
  org.jowidgets.examples.common
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-ClassPath: miglayout-3.7.3.1-swt.jar,
+Bundle-ClassPath: .,
+ commons-lang-2.6.jar,
+ JavaAPIforKml-2.2.0.jar,
  easymock-3.0.jar,
- .
-Export-Package: net.miginfocom.layout,
+ miglayout-3.7.3.1-swt.jar
+Export-Package: de.micromata.opengis.kml.v_2_2_0,
+ net.miginfocom.layout,
  net.miginfocom.swt,
+ org.apache.commons.lang;version="2.6",
  org.easymock;version="3.0.0"

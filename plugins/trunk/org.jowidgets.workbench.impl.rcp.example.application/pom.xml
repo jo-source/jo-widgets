@@ -14,17 +14,32 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.workbench.api</artifactId>
+			<artifactId>org.jowidgets.addons.icons.silkicons</artifactId>
 			<version>${jo-widgets.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.tools</artifactId>
+			<artifactId>org.jowidgets.addons.map.common</artifactId>
 			<version>${jo-widgets.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.spi.impl.swt.common</artifactId>
+			<artifactId>org.jowidgets.addons.widgets.browser.api</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.api</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.api.test</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.common</artifactId>
 			<version>${jo-widgets.version}</version>
 		</dependency>
 		<dependency>
@@ -39,7 +54,27 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.spi</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.spi.impl.common</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.spi.impl.swt</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.test.api</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.test.common</artifactId>
 			<version>${jo-widgets.version}</version>
 		</dependency>
 		<dependency>
@@ -49,14 +84,44 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.api.test</artifactId>
+			<artifactId>org.jowidgets.tools</artifactId>
 			<version>${jo-widgets.version}</version>
 		</dependency>
 		<dependency>
-            <groupId>org.jowidgets</groupId>
-            <artifactId>org.jowidgets.workbench.toolkit.api</artifactId>
-            <version>${jo-widgets.version}</version>
-        </dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.util</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.validation</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.workbench.api</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.workbench.impl</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.workbench.toolkit.api</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.workbench.tools</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.spi.impl.swt.common</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
 	</dependencies>
 	
 </project>

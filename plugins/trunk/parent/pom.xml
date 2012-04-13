@@ -27,8 +27,8 @@
 	<properties>
 		<java.version>1.6</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<tycho.version>0.12.0</tycho.version>
-		<jo-widgets.version>0.8.0-SNAPSHOT</jo-widgets.version>
+		<tycho.version>0.14.1</tycho.version>
+		<jo-widgets.version>0.11.0-SNAPSHOT</jo-widgets.version>
 	</properties>
 
 	<modules>
