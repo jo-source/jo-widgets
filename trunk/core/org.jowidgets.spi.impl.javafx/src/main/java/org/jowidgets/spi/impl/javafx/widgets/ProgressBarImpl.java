@@ -29,6 +29,7 @@ package org.jowidgets.spi.impl.javafx.widgets;
 
 import javafx.scene.control.ProgressBar;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.spi.widgets.IProgressBarSpi;
 import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 
@@ -69,5 +70,10 @@ public class ProgressBarImpl extends JavafxControl implements IProgressBarSpi {
 			getUiReference().setProgress(value);
 		}
 
+	}
+
+	@Override
+	public Dimension getMinSize() {
+		return getPreferredSize();
 	}
 }
