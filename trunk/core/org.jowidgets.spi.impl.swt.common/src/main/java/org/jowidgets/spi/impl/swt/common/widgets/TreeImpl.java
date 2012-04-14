@@ -195,6 +195,12 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi {
 	public void removeNode(final int index) {
 		final TreeItem child = getUiReference().getItem(index);
 		if (child != null) {
+			if (isNodeSelected(child)) {
+				final TreeNodeImpl treeNode = items.get(child);
+				if (treeNode != null) {
+					setSelected(treeNode, false);
+				}
+			}
 			unRegisterItem(child);
 			child.dispose();
 		}
@@ -312,6 +318,15 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi {
 			getUiReference().setSelection(newSelection);
 			fireSelectionChange(newSelection);
 		}
+	}
+
+	private boolean isNodeSelected(final TreeItem item) {
+		for (final TreeItem selectedItem : getUiReference().getSelection()) {
+			if (selectedItem == item) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	protected void registerItem(final TreeItem item, final TreeNodeImpl treeNodeImpl) {
