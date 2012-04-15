@@ -86,4 +86,22 @@ public final class Assert {
 		}
 	}
 
+	public static void paramInBounds(final long rightBoundary, final long value, final String name) {
+		paramInBounds(0, rightBoundary, value, name);
+	}
+
+	public static void paramInBounds(final long leftBoundary, final long rightBoundary, final long value, final String name) {
+		if (value < leftBoundary || value > rightBoundary) {
+			throw new IndexOutOfBoundsException("The parameter '"
+				+ name
+				+ "' must be between '"
+				+ leftBoundary
+				+ "' and '"
+				+ rightBoundary
+				+ "' but is '"
+				+ value
+				+ "'.");
+		}
+	}
+
 }

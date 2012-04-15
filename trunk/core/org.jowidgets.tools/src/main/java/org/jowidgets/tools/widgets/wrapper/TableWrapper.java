@@ -135,8 +135,18 @@ public class TableWrapper extends ControlWrapper implements ITable {
 	}
 
 	@Override
-	public void showSelection() {
-		getWidget().showSelection();
+	public void scrollToSelection() {
+		getWidget().scrollToSelection();
+	}
+
+	@Override
+	public void scrollToEnd() {
+		getWidget().scrollToEnd();
+	}
+
+	@Override
+	public void scrollToRow(final int rowIndex) {
+		getWidget().scrollToRow(rowIndex);
 	}
 
 	@Override

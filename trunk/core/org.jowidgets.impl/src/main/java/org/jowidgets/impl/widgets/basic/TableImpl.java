@@ -61,6 +61,7 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvok
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractControlSpiWrapper;
 import org.jowidgets.spi.widgets.ITableSpi;
+import org.jowidgets.util.EmptyCheck;
 
 public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 
@@ -315,8 +316,23 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 	}
 
 	@Override
-	public void showSelection() {
-		getWidget().showSelection();
+	public void scrollToSelection() {
+		final ArrayList<Integer> selection = getSelection();
+		if (!EmptyCheck.isEmpty(selection)) {
+			scrollToRow(selection.iterator().next());
+		}
+	}
+
+	@Override
+	public void scrollToEnd() {
+		if (getRowCount() > 0) {
+			scrollToRow(getRowCount() - 1);
+		}
+	}
+
+	@Override
+	public void scrollToRow(final int rowIndex) {
+		getWidget().scrollToRow(rowIndex);
 	}
 
 	@Override
