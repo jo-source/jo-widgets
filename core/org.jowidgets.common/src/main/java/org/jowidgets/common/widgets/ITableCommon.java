@@ -73,7 +73,13 @@ public interface ITableCommon extends
 
 	void setSelection(List<Integer> selection);
 
-	void showSelection();
+	/**
+	 * Scrolls the viewport to the given row, if the row is not shown in the viewport.
+	 * If the given row is already visible in the viewport, nothing happens.
+	 * 
+	 * @param rowIndex The row to scroll to
+	 */
+	void scrollToRow(int rowIndex);
 
 	void pack(TablePackPolicy policy);
 

@@ -46,6 +46,22 @@ public interface ITable extends IControl, ITableCommon {
 
 	void moveColumn(int oldViewIndex, int newViewIndex);
 
+	/**
+	 * Scrolls the viewport to the first selected row.
+	 * If nothing is selected or the first selected row is already visible, nothing happens.
+	 * 
+	 * @see ITableCommon#scrollToRow(int)
+	 */
+	void scrollToSelection();
+
+	/**
+	 * Scrolls the viewport to the last row.
+	 * If the table is empty, nothing happens.
+	 * 
+	 * @see ITableCommon#scrollToRow(int)
+	 */
+	void scrollToEnd();
+
 	void resetColumnPermutation();
 
 }

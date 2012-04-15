@@ -112,6 +112,7 @@ import org.jowidgets.spi.impl.swt.common.util.MouseUtil;
 import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
 import org.jowidgets.util.ArrayUtils;
+import org.jowidgets.util.Assert;
 import org.jowidgets.util.EmptyCheck;
 
 public class TableImpl extends SwtControl implements ITableSpi {
@@ -502,11 +503,9 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	}
 
 	@Override
-	public void showSelection() {
-		final int selectionIndex = table.getSelectionIndex();
-		if (selectionIndex != -1) {
-			table.showItem(table.getItem(selectionIndex));
-		}
+	public void scrollToRow(final int rowIndex) {
+		Assert.paramInBounds(table.getItemCount() - 1, rowIndex, "rowIndex");
+		table.showItem(table.getItem(rowIndex));
 	}
 
 	@Override

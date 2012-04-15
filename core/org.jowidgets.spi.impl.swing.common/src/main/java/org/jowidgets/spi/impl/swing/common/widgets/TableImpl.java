@@ -529,14 +529,12 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	}
 
 	@Override
-	public void showSelection() {
-		final int selectedRow = table.getSelectedRow();
-		if (selectedRow != -1) {
-			final Rectangle rectangle = table.getCellRect(selectedRow, 0, false);
-			final Rectangle visibleRectangle = table.getVisibleRect();
-			if (!visibleRectangle.contains(rectangle)) {
-				table.scrollRectToVisible(rectangle);
-			}
+	public void scrollToRow(final int rowIndex) {
+		Assert.paramInBounds(table.getRowCount() - 1, rowIndex, "rowIndex");
+		final Rectangle rectangle = table.getCellRect(rowIndex, 0, false);
+		final Rectangle visibleRectangle = table.getVisibleRect();
+		if (!visibleRectangle.contains(rectangle)) {
+			table.scrollRectToVisible(rectangle);
 		}
 	}
 
