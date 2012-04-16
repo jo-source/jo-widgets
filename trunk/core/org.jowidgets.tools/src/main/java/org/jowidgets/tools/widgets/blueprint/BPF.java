@@ -580,6 +580,10 @@ public final class BPF {
 		return Toolkit.getBluePrintFactory().comboBoxSelectionShortNumber();
 	}
 
+	public static IComboBoxSelectionBluePrint<Boolean> comboBoxSelectionBoolean() {
+		return Toolkit.getBluePrintFactory().comboBoxSelectionBoolean();
+	}
+
 	public static IActionMenuItemBluePrint menuItem(final String text) {
 		return Toolkit.getBluePrintFactory().menuItem(text);
 	}

@@ -116,6 +116,8 @@ public interface IBasicBluePrintFactory extends IBasicSimpleBluePrintFactory {
 
 	IComboBoxSelectionBluePrint<Short> comboBoxSelectionShortNumber();
 
+	IComboBoxSelectionBluePrint<Boolean> comboBoxSelectionBoolean();
+
 	IActionMenuItemBluePrint menuItem(String text);
 
 	IRadioMenuItemBluePrint radioMenuItem(String text);

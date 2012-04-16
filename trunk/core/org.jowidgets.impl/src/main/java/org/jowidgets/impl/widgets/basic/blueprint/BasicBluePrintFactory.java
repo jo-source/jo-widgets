@@ -218,6 +218,13 @@ public class BasicBluePrintFactory extends BasicSimpleBluePrintFactory implement
 	}
 
 	@Override
+	public IComboBoxSelectionBluePrint<Boolean> comboBoxSelectionBoolean() {
+		final IComboBoxSelectionBluePrint<Boolean> result = comboBoxSelection(Toolkit.getConverterProvider().boolLong());
+		result.setElements(Boolean.TRUE, Boolean.FALSE);
+		return result;
+	}
+
+	@Override
 	public final IScrollCompositeBluePrint scrollCompositeWithBorder() {
 		return scrollComposite().setBorder();
 	}
