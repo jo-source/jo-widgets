@@ -384,6 +384,11 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	}
 
 	@Override
+	public IComboBoxSelectionBluePrint<Boolean> comboBoxSelectionBoolean() {
+		return bluePrintFactory.comboBoxSelectionBoolean();
+	}
+
+	@Override
 	public <WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IComponentSetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
 		final Class<BLUE_PRINT_TYPE> bluePrintType) {
 		return bluePrintFactory.bluePrint(bluePrintType);
