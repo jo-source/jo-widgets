@@ -32,7 +32,9 @@ import java.awt.Component;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
@@ -50,10 +52,12 @@ public class FileChooserImpl implements IFileChooserSpi {
 	private final JFileChooser fileChooser;
 	private final Component parent;
 	private final FileChooserType fileChooserType;
+	private final Map<FileFilter, IFileChooserFilter> filterMap;
 
 	public FileChooserImpl(final Object parentUiReference, final IFileChooserSetupSpi setup) {
 		this.parent = (Component) parentUiReference;
 		this.fileChooserType = setup.getType();
+		this.filterMap = new HashMap<FileFilter, IFileChooserFilter>();
 		this.fileChooser = new JFileChooser();
 
 		if (setup.getTitle() != null) {
@@ -108,6 +112,7 @@ public class FileChooserImpl implements IFileChooserSpi {
 				if (firstFileFilter == null) {
 					firstFileFilter = fileFilter;
 				}
+				filterMap.put(fileFilter, filter);
 			}
 
 			fileChooser.setFileFilter(firstFileFilter);
@@ -153,6 +158,17 @@ public class FileChooserImpl implements IFileChooserSpi {
 		}
 		else {
 			return Collections.singletonList(fileChooser.getSelectedFile());
+		}
+	}
+
+	@Override
+	public IFileChooserFilter getSelectedFilter() {
+		final FileFilter fileFilter = fileChooser.getFileFilter();
+		if (fileFilter != null) {
+			return filterMap.get(fileFilter);
+		}
+		else {
+			return null;
 		}
 	}
 

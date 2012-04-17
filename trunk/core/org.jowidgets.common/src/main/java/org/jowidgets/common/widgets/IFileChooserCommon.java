@@ -32,6 +32,7 @@ import java.io.File;
 import java.util.List;
 
 import org.jowidgets.common.types.DialogResult;
+import org.jowidgets.common.types.IFileChooserFilter;
 
 public interface IFileChooserCommon extends IDisplayCommon {
 
@@ -56,5 +57,12 @@ public interface IFileChooserCommon extends IDisplayCommon {
 	 * @return The files that was selected by the user or an empty list.
 	 */
 	List<File> getSelectedFiles();
+
+	/**
+	 * Gets the filter that was selected by the user
+	 * 
+	 * @return The selected filter or null
+	 */
+	IFileChooserFilter getSelectedFilter();
 
 }
