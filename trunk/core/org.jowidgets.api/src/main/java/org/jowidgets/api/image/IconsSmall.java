@@ -67,6 +67,8 @@ public enum IconsSmall implements IImageConstant {
 
 	EDIT,
 
+	FOLDER,
+
 	FILTER,
 	FILTER_INCLUDING,
 	FILTER_EXCLUDING,
