@@ -35,6 +35,7 @@ import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.widgets.IFileChooser;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.common.types.DialogResult;
+import org.jowidgets.common.types.IFileChooserFilter;
 import org.jowidgets.impl.base.delegate.DisplayDelegate;
 import org.jowidgets.impl.widgets.WidgetCheck;
 import org.jowidgets.impl.widgets.common.wrapper.WidgetSpiWrapper;
@@ -100,6 +101,11 @@ public class FileChooserImpl extends WidgetSpiWrapper implements IFileChooser {
 	@Override
 	public List<File> getSelectedFiles() {
 		return getWidget().getSelectedFiles();
+	}
+
+	@Override
+	public IFileChooserFilter getSelectedFilter() {
+		return getWidget().getSelectedFilter();
 	}
 
 }

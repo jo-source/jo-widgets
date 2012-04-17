@@ -29,6 +29,7 @@
 package org.jowidgets.spi.impl.swt.common.widgets;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -47,6 +48,7 @@ public class FileChooserImpl implements IFileChooserSpi {
 	private static final String WILD_CARD = "*.";
 
 	private final FileDialog fileDialog;
+	private final ArrayList<IFileChooserFilter> filterList;
 
 	public FileChooserImpl(final Object parentUiReference, final IFileChooserSetupSpi setup) {
 		fileDialog = new FileDialog((Shell) parentUiReference, getStyle(setup));
@@ -54,8 +56,8 @@ public class FileChooserImpl implements IFileChooserSpi {
 			fileDialog.setText(setup.getTitle());
 		}
 
-		final List<IFileChooserFilter> filterList = setup.getFilterList();
-		if (filterList != null) {
+		if (setup.getFilterList() != null) {
+			this.filterList = new ArrayList<IFileChooserFilter>(setup.getFilterList());
 			final String[] filterNames = new String[filterList.size()];
 			final String[] filterExtensions = new String[filterList.size()];
 
@@ -75,6 +77,9 @@ public class FileChooserImpl implements IFileChooserSpi {
 
 			fileDialog.setFilterNames(filterNames);
 			fileDialog.setFilterExtensions(filterExtensions);
+		}
+		else {
+			this.filterList = new ArrayList<IFileChooserFilter>();
 		}
 	}
 
@@ -114,6 +119,17 @@ public class FileChooserImpl implements IFileChooserSpi {
 			}
 		}
 		return result;
+	}
+
+	@Override
+	public IFileChooserFilter getSelectedFilter() {
+		final int filterIndex = fileDialog.getFilterIndex();
+		if (filterIndex != -1) {
+			return filterList.get(filterIndex);
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override

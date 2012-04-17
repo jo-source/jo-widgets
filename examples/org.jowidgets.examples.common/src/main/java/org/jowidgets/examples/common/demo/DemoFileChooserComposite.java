@@ -115,11 +115,18 @@ public final class DemoFileChooserComposite {
 			fileChooser.setSelectedFile(new File("C:/projects/jo-widgets"));
 			final DialogResult result = fileChooser.open();
 			if (result == DialogResult.OK) {
-				//CHECKSTYLE:OFF
+
 				for (final File file : fileChooser.getSelectedFiles()) {
+					//CHECKSTYLE:OFF
 					System.out.println(file.getAbsolutePath());
+					//CHECKSTYLE:ON
 				}
-				//CHECKSTYLE:ON
+				final IFileChooserFilter selectedFilter = fileChooser.getSelectedFilter();
+				if (selectedFilter != null) {
+					//CHECKSTYLE:OFF
+					System.out.println("FILTER: " + selectedFilter.getFilterName());
+					//CHECKSTYLE:ON
+				}
 			}
 		}
 		else {
