@@ -114,6 +114,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 			@Override
 			public void inputChanged() {
 				removeLinientValue();
+				getWidget().setToolTipText(objectStringConverter.getDescription(getValue()));
 				inputObservable.fireInputChanged();
 				validationCache.setDirty();
 			}
@@ -142,6 +143,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 		removeLinientValue();
 		if (value == null) {
 			comboBoxSelectionWidgetSpi.setSelectedIndex(-1);
+			comboBoxSelectionWidgetSpi.setToolTipText(null);
 		}
 		else {
 			final int indexOfContent = elements.indexOf(value);
@@ -154,6 +156,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 			else {
 				throw new IllegalArgumentException("Value '" + value + "' is not a element of this combo box");
 			}
+			comboBoxSelectionWidgetSpi.setToolTipText(objectStringConverter.getDescription(value));
 		}
 	}
 

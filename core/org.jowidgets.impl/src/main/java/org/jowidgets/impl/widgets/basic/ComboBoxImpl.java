@@ -110,6 +110,7 @@ public class ComboBoxImpl<VALUE_TYPE> extends ComboBoxSelectionImpl<VALUE_TYPE> 
 		getWidget().addInputListener(new IInputListener() {
 			@Override
 			public void inputChanged() {
+				getWidget().setToolTipText(objectStringConverter.getDescription(getValue()));
 				inputObservable.fireInputChanged();
 				validationCache.setDirty();
 			}
