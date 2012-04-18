@@ -91,7 +91,7 @@ public class FileChooserImpl implements IFileChooserSpi {
 	@Override
 	public void setSelectedFile(final File file) {
 		Assert.paramNotNull(file, "file");
-		fileDialog.setFilterPath(file.getAbsolutePath());
+		fileDialog.setFileName(file.getAbsolutePath());
 	}
 
 	@Override
