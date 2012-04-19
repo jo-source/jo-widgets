@@ -42,8 +42,9 @@ public abstract class AbstractSingleUseBuilder<RESULT_TYPE> {
 
 	public final RESULT_TYPE build() {
 		checkExhausted();
+		final RESULT_TYPE result = doBuild();
 		exhausted = true;
-		return doBuild();
+		return result;
 	}
 
 }
