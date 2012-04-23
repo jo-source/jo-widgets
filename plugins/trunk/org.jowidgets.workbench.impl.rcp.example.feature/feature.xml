@@ -2,7 +2,7 @@
 <feature
       id="org.jowidgets.workbench.impl.rcp.example.feature"
       label="org.jowidgets.workbench.impl.rcp.example.feature"
-      version="0.4.0.qualifier">
+      version="0.12.0.qualifier">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -43,13 +43,6 @@
 
    <plugin
          id="org.jowidgets.api"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.jowidgets.api.test"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -183,26 +176,6 @@
 
    <plugin
          id="org.jowidgets.spi.impl.swt.common"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.junit"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.hamcrest.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.commons.io"
          download-size="0"
          install-size="0"
          version="0.0.0"
