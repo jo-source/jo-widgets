@@ -29,6 +29,9 @@
 package org.jowidgets.util;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 public final class ArrayUtils {
 
@@ -69,6 +72,17 @@ public final class ArrayUtils {
 		for (final Integer integer : collection) {
 			result[index] = integer.intValue();
 			index++;
+		}
+		return result;
+	}
+
+	public static <TYPE> Set<TYPE> toSet(final TYPE[] array) {
+		if (array == null) {
+			return Collections.emptySet();
+		}
+		final Set<TYPE> result = new HashSet<TYPE>();
+		for (int i = 0; i < array.length; i++) {
+			result.add(array[i]);
 		}
 		return result;
 	}
