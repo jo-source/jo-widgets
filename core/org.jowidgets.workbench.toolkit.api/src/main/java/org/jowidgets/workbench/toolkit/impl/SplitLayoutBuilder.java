@@ -47,6 +47,7 @@ final class SplitLayoutBuilder implements ISplitLayoutBuilder {
 	SplitLayoutBuilder() {
 		super();
 		this.weight = 0.5;
+		this.orientation = Orientation.VERTICAL;
 	}
 
 	@Override
