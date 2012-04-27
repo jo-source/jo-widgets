@@ -31,6 +31,7 @@ package org.jowidgets.spi.impl.javafx.widgets;
 import javafx.scene.Node;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.spi.impl.javafx.util.ColorCSSConverter;
 
 public final class StyleDelegate {
@@ -39,6 +40,7 @@ public final class StyleDelegate {
 	private String fontSizeCSS = "";
 	private String fontNameCSS = "";
 	private String borderCSS = "";
+	private String markupCSS = "";
 	private final Node node;
 
 	public StyleDelegate(final Node node) {
@@ -52,6 +54,20 @@ public final class StyleDelegate {
 
 	public void setBackgroundColor(final IColorConstant colorValue) {
 		backgroundColorCSS = "-fx-background-color: #" + ColorCSSConverter.colorToCSS(colorValue) + ";\n";
+		setStyle();
+	}
+
+	public void setMarkup(final Markup newMarkup) {
+		if (Markup.DEFAULT.equals(newMarkup)) {
+			markupCSS = "-fx-font-style: normal";
+		}
+		else if (Markup.STRONG.equals(newMarkup)) {
+			markupCSS = "-fx-font-style: italic;\n";
+		}
+		else if (Markup.EMPHASIZED.equals(newMarkup)) {
+			markupCSS = "-fx-font-style: bold;\n";
+		}
+
 		setStyle();
 	}
 
@@ -84,7 +100,7 @@ public final class StyleDelegate {
 	}
 
 	public void setStyle() {
-		node.setStyle(fontNameCSS + fontSizeCSS + borderCSS + backgroundColorCSS + fontColorCSS);
+		node.setStyle(fontNameCSS + fontSizeCSS + borderCSS + backgroundColorCSS + fontColorCSS + markupCSS);
 	}
 
 }

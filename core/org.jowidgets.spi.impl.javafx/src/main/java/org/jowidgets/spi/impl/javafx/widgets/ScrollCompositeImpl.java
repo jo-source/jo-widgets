@@ -52,7 +52,6 @@ import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 
-//TODO DB implement IScrollCompositeSpi
 public class ScrollCompositeImpl implements IScrollCompositeSpi {
 	private final JavafxControl outerContainer;
 	private final JavafxContainer innerContainer;

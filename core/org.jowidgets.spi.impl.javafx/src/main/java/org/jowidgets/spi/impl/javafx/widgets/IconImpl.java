@@ -62,4 +62,9 @@ public class IconImpl extends JavafxControl implements IIconSpi {
 		return getPreferredSize();
 	}
 
+	@Override
+	public Dimension getMaxSize() {
+		return getPreferredSize();
+	}
+
 }

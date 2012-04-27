@@ -111,4 +111,9 @@ public class ButtonImpl extends AbstractActionControl implements IButtonSpi {
 	public Dimension getMinSize() {
 		return getPreferredSize();
 	}
+
+	@Override
+	public Dimension getMaxSize() {
+		return new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
+	}
 }

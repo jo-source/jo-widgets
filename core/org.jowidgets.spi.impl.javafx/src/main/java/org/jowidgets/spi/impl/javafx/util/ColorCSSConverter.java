@@ -38,10 +38,10 @@ public final class ColorCSSConverter {
 	}
 
 	public static IColorConstant cssToColor(final String csscode) {
-		final String hex = csscode.substring(csscode.indexOf("#"), csscode.indexOf(";"));
-		final int r = Integer.valueOf(hex.substring(0, 1));
-		final int g = Integer.valueOf(hex.substring(2, 3));
-		final int b = Integer.valueOf(hex.substring(4, 5));
+		final String hex = csscode.substring(csscode.indexOf("#") + 1, csscode.indexOf(";"));
+		final int r = Integer.parseInt(hex.substring(0, 1), 16);
+		final int g = Integer.parseInt(hex.substring(2, 3), 16);
+		final int b = Integer.parseInt(hex.substring(4, 5), 16);
 
 		return new ColorValue(r, g, b);
 	}
