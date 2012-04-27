@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.javafx.layout;
 
 import javafx.scene.layout.Pane;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.util.Assert;
 
@@ -43,7 +44,7 @@ public class LayoutPane extends Pane {
 	}
 
 	public LayoutPane() {
-		this.layouter = null;
+		this(new DummyLayouter());
 	}
 
 	public ILayouter getLayouter() {
@@ -88,5 +89,28 @@ public class LayoutPane extends Pane {
 	@Override
 	protected double computeMaxWidth(final double paramDouble) {
 		return layouter.getMaxSize().getWidth();
+	}
+
+	private static final class DummyLayouter implements ILayouter {
+		@Override
+		public void layout() {}
+
+		@Override
+		public void invalidate() {}
+
+		@Override
+		public Dimension getPreferredSize() {
+			return new Dimension(10, 10);
+		}
+
+		@Override
+		public Dimension getMinSize() {
+			return new Dimension(0, 0);
+		}
+
+		@Override
+		public Dimension getMaxSize() {
+			return new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
+		}
 	}
 }

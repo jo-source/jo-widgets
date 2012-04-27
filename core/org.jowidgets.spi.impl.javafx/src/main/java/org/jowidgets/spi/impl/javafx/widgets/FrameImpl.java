@@ -30,16 +30,13 @@ package org.jowidgets.spi.impl.javafx.widgets;
 
 import java.util.List;
 
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
@@ -131,33 +128,6 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 	@Override
 	public void removeAll() {
 		getContainerDelegate().removeAll();
-	}
-
-	@Override
-	public Rectangle getClientArea() {
-		final Pane paneTmp = (Pane) getUiReference().getScene().getRoot();
-		final Insets insets = paneTmp.getInsets();
-		final int x = (int) insets.getLeft();
-		final int y = (int) insets.getTop();
-		final Dimension size = new Dimension(
-			(int) getUiReference().getScene().getWidth(),
-			(int) getUiReference().getScene().getHeight());
-		final int width = (int) (size.getWidth() - insets.getLeft() - insets.getRight());
-		final int height = (int) (size.getHeight() - insets.getTop() - insets.getBottom());
-		return new Rectangle(x, y, width, height);
-	}
-
-	@Override
-	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
-		int width = clientAreaSize.getWidth();
-		int height = clientAreaSize.getHeight();
-		final Pane paneTmp = (Pane) getUiReference().getScene().getRoot();
-		final Insets insets = paneTmp.getInsets();
-		if (insets != null) {
-			width = (int) (width + insets.getLeft() + insets.getRight());
-			height = (int) (height + insets.getTop() + insets.getBottom());
-		}
-		return new Dimension(width, height);
 	}
 
 	@Override

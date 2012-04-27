@@ -36,7 +36,7 @@ import org.jowidgets.spi.impl.javafx.util.ColorCSSConverter;
 
 public final class StyleDelegate {
 	private String fontColorCSS = "";
-	private String backgroundColorCSS = "-fx-background-color: #ffffff;";
+	private String backgroundColorCSS = "";
 	private String fontSizeCSS = "";
 	private String fontNameCSS = "";
 	private String borderCSS = "";
@@ -59,13 +59,13 @@ public final class StyleDelegate {
 
 	public void setMarkup(final Markup newMarkup) {
 		if (Markup.DEFAULT.equals(newMarkup)) {
-			markupCSS = "-fx-font-style: normal";
+			markupCSS = "-fx-font-style: normal;\n -fx-font-weight: normal;\n";
 		}
 		else if (Markup.STRONG.equals(newMarkup)) {
-			markupCSS = "-fx-font-style: italic;\n";
+			markupCSS = "-fx-font-style: normal;\n -fx-font-weight: bold;\n";
 		}
 		else if (Markup.EMPHASIZED.equals(newMarkup)) {
-			markupCSS = "-fx-font-style: bold;\n";
+			markupCSS = "-fx-font-style: italic;\n -fx-font-weight: normal;\n";
 		}
 
 		setStyle();
@@ -80,7 +80,7 @@ public final class StyleDelegate {
 	}
 
 	public void setFontSize(final int size) {
-		fontSizeCSS = "-fx-font-size: " + size + ";\n";
+		fontSizeCSS = "-fx-font-size: " + size * 100 / 72 + "pt;\n";
 		setStyle();
 	}
 

@@ -247,5 +247,5 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 	protected PopupDetectionObservable getPopupDetectionObservable() {
 		return componentDelegate.getPopupDetectionObservable();
 	}
-	
+
 }
