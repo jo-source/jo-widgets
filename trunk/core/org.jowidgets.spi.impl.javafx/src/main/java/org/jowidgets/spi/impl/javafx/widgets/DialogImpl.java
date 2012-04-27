@@ -120,7 +120,6 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
 		final WIDGET_TYPE widget = getContainerDelegate().add(index, descriptor, layoutConstraints);
-		getUiReference().sizeToScene();
 		return widget;
 	}
 
@@ -130,7 +129,6 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
 		final WIDGET_TYPE widget = getContainerDelegate().add(index, creator, layoutConstraints);
-		getUiReference().sizeToScene();
 		return widget;
 	}
 

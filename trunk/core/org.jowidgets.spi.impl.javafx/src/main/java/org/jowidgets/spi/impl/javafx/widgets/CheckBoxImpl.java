@@ -134,4 +134,9 @@ public class CheckBoxImpl extends AbstractInputControl implements ICheckBoxSpi {
 	public Dimension getMinSize() {
 		return getPreferredSize();
 	}
+
+	@Override
+	public Dimension getMaxSize() {
+		return new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
+	}
 }

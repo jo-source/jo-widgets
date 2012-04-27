@@ -33,6 +33,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToolBar;
+import javafx.scene.layout.Region;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
@@ -54,6 +55,7 @@ public class ToolBarImpl extends JavafxControl implements IToolBarSpi {
 
 	public ToolBarImpl(final IGenericWidgetFactory factory, final IToolBarSetupSpi setup) {
 		super(new ToolBar());
+
 		this.factory = factory;
 		if (Orientation.HORIZONTAL == setup.getOrientation()) {
 			getUiReference().setOrientation(javafx.geometry.Orientation.HORIZONTAL);
@@ -176,4 +178,18 @@ public class ToolBarImpl extends JavafxControl implements IToolBarSpi {
 
 	}
 
+	@Override
+	public Dimension getMaxSize() {
+		return new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		return new Dimension(Integer.MAX_VALUE, (int) getUiReference().prefHeight(Region.USE_COMPUTED_SIZE));
+	}
+
+	@Override
+	public Dimension getMinSize() {
+		return new Dimension(Integer.MAX_VALUE, (int) getUiReference().minHeight(Region.USE_COMPUTED_SIZE));
+	}
 }

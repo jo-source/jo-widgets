@@ -134,8 +134,13 @@ public class TextFieldImpl extends AbstractTextInputControl implements ITextCont
 	@Override
 	public void setText(final String text) {
 		programmaticChange = true;
-		getUiReference().setText(text);
+		if (text != null) {
+			getUiReference().setText(text);
+		}
 		programmaticChange = false;
+		if (!getUiReference().isFocused()) {
+			fireInputChanged(getText());
+		}
 	}
 
 	@Override

@@ -32,6 +32,7 @@ import javafx.beans.Observable;
 import javafx.scene.control.ToggleButton;
 
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.spi.impl.javafx.image.JavafxImageRegistry;
 import org.jowidgets.spi.impl.javafx.util.FontProvider;
@@ -106,6 +107,11 @@ public class ToggleButtonImpl extends AbstractInputControl implements IToggleBut
 		else {
 			getUiReference().setGraphic(null);
 		}
+	}
+
+	@Override
+	public Dimension getMaxSize() {
+		return new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
 	}
 
 }

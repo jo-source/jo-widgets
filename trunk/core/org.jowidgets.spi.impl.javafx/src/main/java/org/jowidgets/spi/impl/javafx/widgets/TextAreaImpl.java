@@ -121,7 +121,7 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 
 	@Override
 	public void setMarkup(final Markup markup) {
-		throw new UnsupportedOperationException();
+		styleUtil.setMarkup(markup);
 	}
 
 	@Override
