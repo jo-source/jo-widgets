@@ -323,7 +323,7 @@ public class JavafxContainer implements IContainerSpi {
 	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
 		int width = clientAreaSize.getWidth();
 		int height = clientAreaSize.getHeight();
-		final Insets insets = getUiReference().getPadding();
+		final Insets insets = getUiReference().getInsets();
 		if (insets != null) {
 			width = (int) (width + insets.getLeft() + insets.getRight());
 			height = (int) (height + insets.getTop() + insets.getBottom());

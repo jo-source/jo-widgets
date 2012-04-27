@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.javafx.widgets;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Control;
@@ -102,11 +103,44 @@ public class JavafxWindow implements IWindowSpi {
 				}
 			}
 		});
+
 	}
 
 	@Override
 	public Stage getUiReference() {
 		return stage;
+	}
+
+	public Rectangle getClientArea() {
+		final Pane paneTmp = (Pane) getUiReference().getScene().getRoot();
+		final Insets insets = paneTmp.getInsets();
+		final int x = (int) insets.getLeft();
+		final int y = (int) insets.getTop();
+		final Dimension size = new Dimension(
+			(int) getUiReference().getScene().getWidth(),
+			(int) getUiReference().getScene().getHeight());
+		final int width = (int) (size.getWidth() - insets.getLeft() - insets.getRight());
+		final int height = (int) (size.getHeight() - insets.getTop() - insets.getBottom());
+
+		return new Rectangle(x, y, width, height);
+	}
+
+	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+		int width = clientAreaSize.getWidth();
+		int height = clientAreaSize.getHeight();
+		final Pane paneTmp = (Pane) getUiReference().getScene().getRoot();
+		final Insets insets = paneTmp.getInsets();
+		if (insets != null) {
+			width = (int) (width + insets.getLeft() + insets.getRight());
+			height = (int) (height + insets.getTop() + insets.getBottom());
+		}
+
+		final Rectangle currentClientArea = getClientArea();
+
+		width = (int) (width + stage.getWidth() - currentClientArea.getWidth());
+		height = (int) (height + stage.getHeight() - currentClientArea.getHeight());
+
+		return new Dimension(width, height);
 	}
 
 	@Override
@@ -131,7 +165,7 @@ public class JavafxWindow implements IWindowSpi {
 
 	@Override
 	public void pack() {
-		//		 final TODO DB ugly final thing to get final size of stage final before showing
+		//		  TODO DB workaround thing to get size of stage before showing
 		if (!getUiReference().isShowing()) {
 			getUiReference().setOpacity(0);
 			getUiReference().show();
@@ -411,12 +445,12 @@ public class JavafxWindow implements IWindowSpi {
 					(int) ((Control) node).prefWidth(Control.USE_PREF_SIZE),
 					(int) ((Control) node).prefHeight(Control.USE_PREF_SIZE)));
 			System.out.println("Node: " + node + ", Size : " + ((Control) node).getWidth() + " " + ((Control) node).getHeight());
-			System.out.println("Node: "
-				+ node
-				+ ", Skin : "
-				+ ((Control) node).getSkin().getSkinnable()
-				+ " node "
-				+ ((Control) node).getSkin().getNode().getLayoutBounds());
+			//			System.out.println("Node: "
+			//				+ node
+			//				+ ", Skin : "
+			//				+ ((Control) node).getSkin().getSkinnable()
+			//				+ " node "
+			//				+ ((Control) node).getSkin().getNode().getLayoutBounds());
 			if (node instanceof TabPane) {
 				System.out.println(((TabPane) node).getTabs());
 			}
