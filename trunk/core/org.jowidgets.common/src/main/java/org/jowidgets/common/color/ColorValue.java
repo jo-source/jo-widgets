@@ -98,4 +98,9 @@ public final class ColorValue implements IColorConstant {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "ColorValue [red=" + red + ", green=" + green + ", blue=" + blue + "]";
+	}
+
 }
