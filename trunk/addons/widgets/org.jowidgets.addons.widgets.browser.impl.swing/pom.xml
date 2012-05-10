@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.addons.widgets.parent</artifactId>
-		<version>0.12.0</version>
+		<version>0.13.0-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
@@ -15,19 +15,19 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.tools</artifactId>
-			<version>0.12.0</version>
+			<version>0.13.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId> org.jowidgets.addons.bridge.awt.swt</artifactId>
-			<version>0.12.0</version>
+			<version>0.13.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.addons.widgets.browser.impl.swt.common</artifactId>
-			<version>0.12.0</version>
+			<version>0.13.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
