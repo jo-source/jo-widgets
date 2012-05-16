@@ -7,10 +7,10 @@
 	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.addons.icons.silkicons.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.addons.map.common.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.addons.widgets.browser.api.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.api.jar" sourcepath="/org.jowidgets.api"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.api.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.api.test.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.common.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.examples.common.jar" sourcepath="/org.jowidgets.examples.common"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.examples.common.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.impl.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.spi.impl.common.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.spi.impl.swt.common.jar"/>
