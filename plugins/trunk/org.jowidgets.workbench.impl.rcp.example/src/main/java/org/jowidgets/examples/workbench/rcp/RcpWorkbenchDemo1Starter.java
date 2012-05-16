@@ -32,7 +32,10 @@ import java.io.File;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.swt.widgets.Display;
+import org.jowidgets.addons.map.common.widget.IMapWidgetBlueprint;
+import org.jowidgets.addons.map.swt.SwtGoogleEarthWidgetFactory;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.examples.common.map.MapDemoApplication;
 import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1Factory;
 import org.jowidgets.impl.toolkit.DefaultToolkitProvider;
 import org.jowidgets.spi.impl.swt.common.SwtWidgetsServiceProvider;
@@ -45,6 +48,12 @@ public class RcpWorkbenchDemo1Starter implements IApplication {
 		if (!Toolkit.isInitialized()) {
 			Toolkit.initialize(new DefaultToolkitProvider(new SwtWidgetsServiceProvider(Display.getDefault())));
 		}
+
+		// TODO REFACTOR : ToolkitInterceptorHolder Implementation  
+		Toolkit.getWidgetFactory().register(
+				IMapWidgetBlueprint.class,
+				new SwtGoogleEarthWidgetFactory(MapDemoApplication.API_KEY));
+
 		final String configFilePath = System.getProperty("user.home") + File.separator + getClass().getName() + ".config";
 		new WorkbenchRunner().run(new WorkbenchDemo1Factory(), new FileConfigService(configFilePath));
 		return IApplication.EXIT_OK;

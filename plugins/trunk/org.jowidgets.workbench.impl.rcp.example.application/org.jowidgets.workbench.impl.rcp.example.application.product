@@ -10,6 +10,8 @@
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
 
+   <windowImages/>
+
    <launcher>
       <solaris/>
       <win useIco="false">
@@ -27,5 +29,15 @@
       <feature id="org.jowidgets.workbench.impl.rcp.example.feature"/>
    </features>
 
+   <configurations>
+      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="1" />
+      <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
+      <plugin id="org.eclipse.update.configurator" autoStart="true" startLevel="3" />
+      <plugin id="org.jowidgets.workbench.impl.rcp" autoStart="true" startLevel="5" />
+      <plugin id="org.jowidgets.workbench.impl.rcp.example" autoStart="true" startLevel="6" />
+      <plugin id="org.jowidgets.workbench.impl.rcp.libs" autoStart="true" startLevel="4" />
+   </configurations>
 
 </product>
