@@ -37,7 +37,12 @@ Bundle-ClassPath: .,
  lib/commons-lang.jar,
  lib/slf4j-api.jar,
  lib/slf4j-simple.jar,
- lib/log4j-over-slf4j.jar
+ lib/log4j-over-slf4j.jar,
+ lib/activation.jar,
+ lib/jaxb-api.jar,
+ lib/jaxb-impl.jar,
+ lib/jaxb-xjc.jar,
+ lib/stax-api.jar
 Import-Package: org.osgi.framework
 Bundle-ActivationPolicy: lazy
 Eclipse-BuddyPolicy: registered,

@@ -131,16 +131,8 @@
 			<version>2.2.0</version>
 			<exclusions>
 				<exclusion>
-					<groupId>com.sun.xml.bind</groupId>
-					<artifactId>jaxb-impl</artifactId>
-				</exclusion>
-				<exclusion>
 					<groupId>xmlunit</groupId>
 					<artifactId>xmlunit</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>com.sun.xml.bind</groupId>
-					<artifactId>jaxb-xjc</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
