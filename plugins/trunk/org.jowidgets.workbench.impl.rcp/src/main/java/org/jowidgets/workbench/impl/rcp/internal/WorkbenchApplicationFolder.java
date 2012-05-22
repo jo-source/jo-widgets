@@ -55,6 +55,7 @@ import org.eclipse.ui.IWorkbenchPreferenceConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.IWorkbenchThemeConstants;
 import org.eclipse.ui.themes.ITheme;
+import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.workbench.api.IComponent;
 import org.jowidgets.workbench.api.IWorkbench;
@@ -81,6 +82,8 @@ public final class WorkbenchApplicationFolder extends Composite {
 			| SWT.BORDER
 			| (workbench.getApplicationsCloseable() ? SWT.CLOSE : SWT.NONE));
 		tabFolder.setUnselectedCloseVisible(false);
+		tabFolder.setSimple(SwtOptions.hasClassicTabs());
+
 		setFont();
 		setTabHeight();
 
