@@ -11,4 +11,107 @@
 	<name>org.jowidgets.workbench.impl.rcp.example</name>
 	<packaging>eclipse-plugin</packaging>
 
+	<dependencies>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.examples.common</artifactId>
+			<version>${jo-widgets.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>${basedir}/lib</directory>
+							<includes>
+								<include>*.*</include>
+							</includes>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-jars</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<excludeTransitive>true</excludeTransitive>
+							<overWriteReleases>true</overWriteReleases>
+							<overWriteSnapshots>true</overWriteSnapshots>
+							<outputDirectory>${basedir}/lib</outputDirectory>
+							<includeScope>runtime</includeScope>
+							<excludeScope>provided,test</excludeScope>
+							<stripVersion>true</stripVersion>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>development</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-clean-plugin</artifactId>
+						<configuration>
+							<filesets>
+								<fileset>
+									<directory>lib/sources</directory>
+									<includes>
+										<include>*.*</include>
+									</includes>
+
+									<followSymlinks>false</followSymlinks>
+								</fileset>
+							</filesets>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-dependency-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>copy-dependencies-sources</id>
+								<phase>validate</phase>
+								<goals>
+									<goal>copy-dependencies</goal>
+								</goals>
+								<configuration>
+									<excludeTransitive>true</excludeTransitive>
+									<classifier>sources</classifier>
+									<overWrite>true</overWrite>
+									<outputDirectory>${basedir}/lib/sources</outputDirectory>
+									<overWriteReleases>true</overWriteReleases>
+									<overWriteSnapshots>true</overWriteSnapshots>
+									<excludeScope>provided</excludeScope>
+									<failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
+									<stripVersion>true</stripVersion>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 </project>

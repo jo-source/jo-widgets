@@ -9,4 +9,5 @@ Require-Bundle: org.jowidgets.workbench.impl.rcp,
  org.eclipse.core.runtime;bundle-version="3.6.0",
  org.jowidgets.workbench.impl.rcp.libs;bundle-version="[0.13.0,1.0.0)"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-ClassPath: .
+Bundle-ClassPath: .,
+ lib/org.jowidgets.examples.common.jar
