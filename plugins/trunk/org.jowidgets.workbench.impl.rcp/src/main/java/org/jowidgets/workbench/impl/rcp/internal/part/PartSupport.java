@@ -214,10 +214,9 @@ public final class PartSupport {
 
 		final String viewId;
 
-		if (view instanceof RcpView) {
-			viewId = view.getId();
+		if (isRCPView(view)) {
+			viewId = filterId(view.getId());
 		}
-
 		else {
 			if (view.getScope() == ViewScope.WORKBENCH) {
 				viewId = view.getId();
@@ -238,18 +237,13 @@ public final class PartSupport {
 			viewLayoutContextMap.put(viewId, new ViewLayoutContext(view, componentContext, folderContext));
 		}
 
-		return new SingleViewContainerContext(
-			viewId,
-			folderLayout.getViewsCloseable(),
-			view.isDetachable(),
-			view instanceof RcpView);
+		return new SingleViewContainerContext(viewId, folderLayout.getViewsCloseable(), view.isDetachable(), isRCPView(view));
 	}
 
 	public void showView(final IViewLayout viewLayout, final ComponentContext componentContext, final IFolderContext folderContext) {
 		final String viewId = viewLayout.getId();
-
 		try {
-			if (viewLayout instanceof RcpView) {
+			if (isRCPView(viewLayout)) {
 				showRcpView(viewId);
 				return;
 			}
@@ -266,6 +260,22 @@ public final class PartSupport {
 		catch (final PartInitException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	private boolean isRCPView(final IViewLayout view) {
+		boolean result = false;
+		if (view instanceof RcpView) {
+			result = true;
+		}
+		// TODO: Quickhack --> better check view registry for containedness of viewId
+		else if (view.getId().contains("rcp://")) {
+			result = true;
+		}
+		return result;
+	}
+
+	private String filterId(final String id) {
+		return id.replace("rcp://", "");
 	}
 
 	private void showRcpView(final String viewId) throws PartInitException {
