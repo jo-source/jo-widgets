@@ -31,7 +31,7 @@
 				<artifactId>maven-bundle-plugin</artifactId>
 				<configuration>
 					<instructions>
-						<Require-Bundle>org.jowidgets.addons.swt</Require-Bundle>
+						<Require-Bundle>org.jowidgets.spi.impl.swt.addons</Require-Bundle>
 					</instructions>
 				</configuration>
 			</plugin>
