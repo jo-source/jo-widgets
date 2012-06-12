@@ -28,6 +28,7 @@
 package org.jowidgets.spi.impl.bridge.swt.awt.common.awt;
 
 import java.awt.Canvas;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.HierarchyEvent;
 import java.awt.event.HierarchyListener;
@@ -42,8 +43,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.spi.impl.swing.common.widgets.SwingControl;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.FutureValue;
-import org.jowidgets.util.IFutureValueCallback;
 import org.jowidgets.util.IFutureValue;
+import org.jowidgets.util.IFutureValueCallback;
 
 class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 
@@ -59,7 +60,10 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 		final Container parentSwtContainer = (Container) parentUiReference;
 		if (!parentSwtContainer.isDisplayable()) {
 			synchronized (parentSwtContainer.getTreeLock()) {
-				SwingUtilities.getRoot(parentSwtContainer).addNotify();
+				final Component root = SwingUtilities.getRoot(parentSwtContainer);
+				if (root != null) {
+					root.addNotify();
+				}
 			}
 		}
 
@@ -68,7 +72,9 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 		final HierarchyListener hierarchyListener = new HierarchyListener() {
 			@Override
 			public void hierarchyChanged(final HierarchyEvent e) {
-				if (getUiReference().getParent() != null && !compositeFuture.isInitialized()) {
+				if (getUiReference().getParent() != null
+					&& !compositeFuture.isInitialized()
+					&& parentSwtContainer.isDisplayable()) {
 					final Display currentDisplay = Display.getCurrent();
 					if (currentDisplay != null) {
 						final Shell shell = SWT_AWT.new_Shell(currentDisplay, getUiReference());
