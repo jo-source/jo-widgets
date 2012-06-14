@@ -28,15 +28,16 @@
 
 package org.jowidgets.addons.widgets.browser.api;
 
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
+import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface IBrowserBluePrint extends IBrowserSetupBuilder<IBrowserBluePrint>, IWidgetDescriptor<IBrowser> {
+public interface IBrowserSetupBuilder<INSTANCE_TYPE extends IBrowserSetupBuilder<?>> extends
+		IComponentSetup,
+		IComponentSetupBuilder<INSTANCE_TYPE> {
 
-	@Override
-	IBrowserBluePrint setBorder(boolean border);
+	INSTANCE_TYPE setBorder(boolean border);
 
-	@Override
 	@Mandatory
 	boolean hasBorder();
 }

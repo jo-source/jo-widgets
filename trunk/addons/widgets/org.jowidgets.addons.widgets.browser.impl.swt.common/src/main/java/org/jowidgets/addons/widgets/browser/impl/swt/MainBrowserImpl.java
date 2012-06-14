@@ -39,9 +39,9 @@ import org.eclipse.swt.browser.TitleEvent;
 import org.eclipse.swt.browser.TitleListener;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.addons.widgets.browser.api.IBrowserDocumentListener;
+import org.jowidgets.addons.widgets.browser.api.IBrowserSetupBuilder;
 import org.jowidgets.addons.widgets.browser.api.IMainBrowser;
 import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.IFutureValue;
 
@@ -51,7 +51,7 @@ final class MainBrowserImpl extends BrowserImpl implements IMainBrowser {
 
 	private Boolean javaScriptEnabled;
 
-	MainBrowserImpl(final IControl control, final IFutureValue<Composite> swtComposite, final IComponentSetup setup) {
+	MainBrowserImpl(final IControl control, final IFutureValue<Composite> swtComposite, final IBrowserSetupBuilder<?> setup) {
 		super(control, swtComposite, setup);
 		this.documentListeners = new LinkedHashSet<IBrowserDocumentListener>();
 	}

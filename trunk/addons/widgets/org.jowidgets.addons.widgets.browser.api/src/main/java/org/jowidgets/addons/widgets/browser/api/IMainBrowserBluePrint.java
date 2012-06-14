@@ -28,13 +28,8 @@
 
 package org.jowidgets.addons.widgets.browser.api;
 
-import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
-import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public interface IMainBrowserBluePrint extends
-		IComponentSetup,
-		IComponentSetupBuilder<IMainBrowserBluePrint>,
-		IWidgetDescriptor<IMainBrowser> {
+public interface IMainBrowserBluePrint extends IBrowserSetupBuilder<IMainBrowserBluePrint>, IWidgetDescriptor<IMainBrowser> {
 
 }
