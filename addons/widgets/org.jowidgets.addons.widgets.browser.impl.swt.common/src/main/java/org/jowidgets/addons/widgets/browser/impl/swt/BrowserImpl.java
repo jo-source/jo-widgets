@@ -50,15 +50,15 @@ import org.jowidgets.addons.widgets.browser.api.IBrowserFunctionHandle;
 import org.jowidgets.addons.widgets.browser.api.IBrowserLocationEvent;
 import org.jowidgets.addons.widgets.browser.api.IBrowserLocationListener;
 import org.jowidgets.addons.widgets.browser.api.IBrowserProgressListener;
+import org.jowidgets.addons.widgets.browser.api.IBrowserSetupBuilder;
 import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.spi.impl.swt.common.color.ColorCache;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.Assert;
-import org.jowidgets.util.IFutureValueCallback;
 import org.jowidgets.util.IFutureValue;
+import org.jowidgets.util.IFutureValueCallback;
 import org.jowidgets.util.Tuple;
 
 class BrowserImpl extends ControlWrapper implements IBrowser {
@@ -72,13 +72,16 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 
 	private final Map<String, Tuple<IBrowserFunction, BrowserFunctionHandle>> browserFunctions;
 
+	private final boolean border;
+
 	private Browser swtBrowser;
 	private String url;
 	private String html;
 
-	BrowserImpl(final IControl control, final IFutureValue<Composite> swtComposite, final IComponentSetup setup) {
+	BrowserImpl(final IControl control, final IFutureValue<Composite> swtComposite, final IBrowserSetupBuilder<?> setup) {
 		super(control);
 
+		this.border = setup.hasBorder();
 		this.initialVisiblityState = setup.isVisible();
 		this.initialBackgroundColor = setup.getBackgroundColor();
 		this.initialForegroundColor = setup.getForegroundColor();
@@ -103,9 +106,17 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 	}
 
 	Browser createSwtBrowser(final Composite swtComposite) {
+		final Composite content;
+		if (border) {
+			swtComposite.setLayout(new FillLayout());
+			content = new Composite(swtComposite, SWT.BORDER);
+		}
+		else {
+			content = swtComposite;
+		}
 
-		swtComposite.setLayout(new FillLayout());
-		final Browser result = new Browser(swtComposite, SWT.NONE);
+		content.setLayout(new FillLayout());
+		final Browser result = new Browser(content, SWT.NONE);
 
 		if (initialVisiblityState != null) {
 			setVisible(initialVisiblityState.booleanValue());
