@@ -48,6 +48,7 @@ import org.jowidgets.spi.impl.javafx.widgets.ScrollCompositeImpl;
 import org.jowidgets.spi.impl.javafx.widgets.SeparatorImpl;
 import org.jowidgets.spi.impl.javafx.widgets.SplitCompositeImpl;
 import org.jowidgets.spi.impl.javafx.widgets.TabFolderImpl;
+import org.jowidgets.spi.impl.javafx.widgets.TableImpl;
 import org.jowidgets.spi.impl.javafx.widgets.TextAreaImpl;
 import org.jowidgets.spi.impl.javafx.widgets.TextFieldImpl;
 import org.jowidgets.spi.impl.javafx.widgets.TextLabelImpl;
@@ -258,7 +259,7 @@ public final class JavafxWidgetFactory implements IWidgetFactorySpi {
 
 	@Override
 	public ITableSpi createTable(final Object parentUiReference, final ITableSetupSpi setup) {
-		throw new UnsupportedOperationException();
+		return new TableImpl(setup);
 	}
 
 }

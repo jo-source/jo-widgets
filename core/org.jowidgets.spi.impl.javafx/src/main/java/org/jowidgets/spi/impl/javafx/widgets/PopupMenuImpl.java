@@ -32,6 +32,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Control;
+import javafx.scene.control.TableView;
 import javafx.scene.control.ToolBar;
 import javafx.stage.Stage;
 
@@ -68,6 +69,20 @@ public class PopupMenuImpl implements IPopupMenuSpi {
 				}
 			}
 		});
+
+		getUiReference().focusedProperty().addListener(new ChangeListener<Boolean>() {
+
+			@Override
+			public void changed(
+				final ObservableValue<? extends Boolean> observableValue,
+				final Boolean oldValue,
+				final Boolean newValue) {
+				if (!newValue) {
+					getUiReference().hide();
+				}
+			}
+		});
+		getUiReference().setAutoHide(true);
 	}
 
 	@Override
@@ -147,19 +162,18 @@ public class PopupMenuImpl implements IPopupMenuSpi {
 
 	@Override
 	public void show(final Position position) {
-		if (!getUiReference().isShowing()) {
-			if (parent instanceof ToolBar) {
-				getUiReference().show((Control) parent, position.getX(), position.getY());
-			}
-			else if (parent instanceof Control) {
-				((Control) parent).setContextMenu(getUiReference());
-			}
-			else if (parent instanceof Stage) {
-				getUiReference().show((Stage) parent, position.getX(), position.getY());
-			}
+		getUiReference().hide();
+		if (parent instanceof ToolBar) {
+			getUiReference().show((Control) parent, position.getX(), position.getY());
 		}
-		else {
-			getUiReference().hide();
+		else if (parent instanceof TableView) {
+			getUiReference().show((TableView<?>) parent, position.getX(), position.getY());
+		}
+		else if (parent instanceof Control) {
+			((Control) parent).setContextMenu(getUiReference());
+		}
+		else if (parent instanceof Stage) {
+			getUiReference().show((Stage) parent, position.getX(), position.getY());
 		}
 	}
 }
