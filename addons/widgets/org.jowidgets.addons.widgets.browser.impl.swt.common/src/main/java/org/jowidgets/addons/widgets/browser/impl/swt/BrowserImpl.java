@@ -57,8 +57,9 @@ import org.jowidgets.spi.impl.swt.common.color.ColorCache;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.Assert;
-import org.jowidgets.util.IFutureValue;
-import org.jowidgets.util.IFutureValueCallback;
+import org.jowidgets.util.IMutableValue;
+import org.jowidgets.util.IMutableValueListener;
+import org.jowidgets.util.IValueChangedEvent;
 import org.jowidgets.util.Tuple;
 
 class BrowserImpl extends ControlWrapper implements IBrowser {
@@ -78,7 +79,7 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 	private String url;
 	private String html;
 
-	BrowserImpl(final IControl control, final IFutureValue<Composite> swtComposite, final IBrowserSetupBuilder<?> setup) {
+	BrowserImpl(final IControl control, final IMutableValue<Composite> swtCompositeValue, final IBrowserSetupBuilder<?> setup) {
 		super(control);
 
 		this.border = setup.hasBorder();
@@ -90,17 +91,28 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 		this.progressListeners = new LinkedHashSet<IBrowserProgressListener>();
 		this.browserFunctions = new LinkedHashMap<String, Tuple<IBrowserFunction, BrowserFunctionHandle>>();
 
-		swtComposite.addFutureCallback(new IFutureValueCallback<Composite>() {
+		swtCompositeValue.addMutableValueListener(new IMutableValueListener<Composite>() {
 			@Override
-			public void initialized(final Composite value) {
-				swtBrowser = createSwtBrowser(value);
+			public void changed(final IValueChangedEvent<Composite> event) {
+				swtCompositeChanged(event.getSource());
 			}
 		});
+
+		swtCompositeChanged(swtCompositeValue);
+	}
+
+	private void swtCompositeChanged(final IMutableValue<Composite> swtCompositeValue) {
+		if (swtCompositeValue.getValue() != null) {
+			swtBrowser = createSwtBrowser(swtCompositeValue.getValue());
+		}
+		else {
+			swtBrowser = null;
+		}
 	}
 
 	final Browser getSwtBrowser() {
 		if (swtBrowser == null) {
-			throw new IllegalStateException("The browser was not yet initialized.");
+			throw new IllegalStateException("The browser is not initialized.");
 		}
 		return swtBrowser;
 	}
@@ -146,7 +158,6 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 				handle.setBrowserFunction(browserFunction);
 			}
 		}
-		browserFunctions.clear();
 
 		if (url != null) {
 			result.setUrl(url);
@@ -160,23 +171,19 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 
 	@Override
 	public final void setUrl(final String url) {
+		this.html = null;
+		this.url = url;
 		if (isInitialized()) {
 			getSwtBrowser().setUrl(url);
-		}
-		else {
-			this.html = null;
-			this.url = url;
 		}
 	}
 
 	@Override
 	public final void setHtml(final String html) {
+		this.url = null;
+		this.html = html;
 		if (isInitialized()) {
 			getSwtBrowser().setText(html);
-		}
-		else {
-			this.url = null;
-			this.html = html;
 		}
 	}
 
@@ -196,17 +203,18 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 	public IBrowserFunctionHandle createBrowserFunction(final String functionName, final IBrowserFunction function) {
 		Assert.paramNotEmpty(functionName, "functionName");
 		Assert.paramNotNull(function, "function");
+
+		final BrowserFunctionHandle functionHandle = new BrowserFunctionHandle(functionName);
+		Tuple<IBrowserFunction, BrowserFunctionHandle> tuple;
+		tuple = new Tuple<IBrowserFunction, BrowserFunctionHandle>(function, functionHandle);
+		browserFunctions.put(functionName, tuple);
+
 		if (isInitialized()) {
 			final BrowserFunction browserFunction = new BrowserFunctionAdapter(getSwtBrowser(), functionName, function);
-			return new BrowserFunctionHandle(functionName, browserFunction);
+			functionHandle.setBrowserFunction(browserFunction);
 		}
-		else {
-			final BrowserFunctionHandle functionHandle = new BrowserFunctionHandle(functionName);
-			Tuple<IBrowserFunction, BrowserFunctionHandle> tuple;
-			tuple = new Tuple<IBrowserFunction, BrowserFunctionHandle>(function, functionHandle);
-			browserFunctions.put(functionName, tuple);
-			return functionHandle;
-		}
+
+		return functionHandle;
 	}
 
 	@Override
@@ -335,6 +343,7 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 
 		private BrowserFunctionHandle(final String functionName, final BrowserFunction browserFunction) {
 			this.functionName = functionName;
+			this.browserFunction = browserFunction;
 		}
 
 		private void setBrowserFunction(final BrowserFunction browserFunction) {

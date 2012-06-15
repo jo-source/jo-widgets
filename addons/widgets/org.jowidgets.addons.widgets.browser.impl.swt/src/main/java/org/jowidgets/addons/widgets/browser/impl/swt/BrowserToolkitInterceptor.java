@@ -29,6 +29,7 @@
 package org.jowidgets.addons.widgets.browser.impl.swt;
 
 import org.jowidgets.addons.widgets.browser.api.IBrowserBluePrint;
+import org.jowidgets.addons.widgets.browser.api.IBrowserSetupBuilder;
 import org.jowidgets.addons.widgets.browser.api.IMainBrowserBluePrint;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.IToolkitInterceptor;
@@ -41,6 +42,6 @@ final class BrowserToolkitInterceptor implements IToolkitInterceptor {
 		final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
 		widgetFactory.register(IBrowserBluePrint.class, new BrowserFactory());
 		widgetFactory.register(IMainBrowserBluePrint.class, new MainBrowserFactory());
+		toolkit.getBluePrintFactory().addDefaultsInitializer(IBrowserSetupBuilder.class, new BrowserDefaults());
 	}
-
 }

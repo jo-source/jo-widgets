@@ -30,7 +30,7 @@ package org.jowidgets.addons.bridge.awt.swt;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.impl.widgets.basic.ControlImpl;
 import org.jowidgets.spi.impl.bridge.swt.awt.common.awt.IAwtSwtControlSpi;
-import org.jowidgets.util.IFutureValue;
+import org.jowidgets.util.IMutableValue;
 
 class AwtSwtControlImpl extends ControlImpl implements IAwtSwtControl {
 
@@ -44,7 +44,7 @@ class AwtSwtControlImpl extends ControlImpl implements IAwtSwtControl {
 	}
 
 	@Override
-	public IFutureValue<Composite> getSwtComposite() {
+	public IMutableValue<Composite> getSwtComposite() {
 		return getWidget().getSwtComposite();
 	}
 

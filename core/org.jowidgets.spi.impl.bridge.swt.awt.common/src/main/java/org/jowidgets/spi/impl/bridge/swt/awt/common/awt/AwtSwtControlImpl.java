@@ -28,7 +28,6 @@
 package org.jowidgets.spi.impl.bridge.swt.awt.common.awt;
 
 import java.awt.Canvas;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.HierarchyEvent;
 import java.awt.event.HierarchyListener;
@@ -36,70 +35,65 @@ import java.awt.event.HierarchyListener;
 import javax.swing.SwingUtilities;
 
 import org.eclipse.swt.awt.SWT_AWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.spi.impl.swing.common.widgets.SwingControl;
 import org.jowidgets.util.Assert;
-import org.jowidgets.util.FutureValue;
-import org.jowidgets.util.IFutureValue;
-import org.jowidgets.util.IFutureValueCallback;
+import org.jowidgets.util.IMutableValue;
+import org.jowidgets.util.MutableValue;
 
 class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 
-	private final FutureValue<Composite> compositeFuture;
+	private final MutableValue<Composite> mutableValue;
 
 	public AwtSwtControlImpl(final Object parentUiReference) {
 		super(new Canvas());
+
 		if (!SwingUtilities.isEventDispatchThread()) {
 			throw new IllegalArgumentException("The AwtSwtControl must be created in the event dispatching thread of swing");
 		}
 
 		Assert.paramHasType(parentUiReference, Container.class, "parentUiReference");
-		final Container parentSwtContainer = (Container) parentUiReference;
-		if (!parentSwtContainer.isDisplayable()) {
-			synchronized (parentSwtContainer.getTreeLock()) {
-				final Component root = SwingUtilities.getRoot(parentSwtContainer);
-				if (root != null) {
-					root.addNotify();
-				}
-			}
-		}
 
-		this.compositeFuture = new FutureValue<Composite>();
+		this.mutableValue = new MutableValue<Composite>();
 
 		final HierarchyListener hierarchyListener = new HierarchyListener() {
 			@Override
 			public void hierarchyChanged(final HierarchyEvent e) {
-				if (getUiReference().getParent() != null
-					&& !compositeFuture.isInitialized()
-					&& parentSwtContainer.isDisplayable()) {
-					final Display currentDisplay = Display.getCurrent();
-					if (currentDisplay != null) {
-						final Shell shell = SWT_AWT.new_Shell(currentDisplay, getUiReference());
-						shell.setLayout(new FillLayout());
-						compositeFuture.initialize(shell);
-					}
-					else {
-						throw new IllegalStateException("This thread has no swt display. "
-							+ "To ensure that the awt event dispatching thread has a display, e.g. the class "
-							+ "'"
-							+ "BridgedSwtAwtApplicationRunner"
-							+ "' could be used, or, if no application "
-							+ "runner should be used, use the single ui thread pattern implemented there.");
-					}
+				if (mutableValue.getValue() == null && getUiReference().getParent() != null && getUiReference().isDisplayable()) {
+					initialize();
 				}
 			}
 		};
 
 		getUiReference().addHierarchyListener(hierarchyListener);
-		this.compositeFuture.addFutureCallback(new IFutureValueCallback<Composite>() {
-			@Override
-			public void initialized(final Composite value) {
-				getUiReference().removeHierarchyListener(hierarchyListener);
-			}
-		});
+	}
+
+	private void initialize() {
+		final Display currentDisplay = Display.getCurrent();
+		if (currentDisplay != null) {
+			final Shell shell = SWT_AWT.new_Shell(currentDisplay, getUiReference());
+			shell.setLayout(new FillLayout());
+			shell.addDisposeListener(new DisposeListener() {
+				@Override
+				public void widgetDisposed(final DisposeEvent e) {
+					mutableValue.setValue(null);
+				}
+			});
+			mutableValue.setValue(shell);
+		}
+		else {
+			throw new IllegalStateException("This thread has no swt display. "
+				+ "To ensure that the awt event dispatching thread has a display, e.g. the class "
+				+ "'"
+				+ "BridgedSwtAwtApplicationRunner"
+				+ "' could be used, or, if no application "
+				+ "runner should be used, use the single ui thread pattern implemented there.");
+		}
 	}
 
 	@Override
@@ -108,8 +102,8 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 	}
 
 	@Override
-	public IFutureValue<Composite> getSwtComposite() {
-		return compositeFuture;
+	public IMutableValue<Composite> getSwtComposite() {
+		return mutableValue;
 	}
 
 }
