@@ -43,7 +43,7 @@ import org.jowidgets.addons.widgets.browser.api.IBrowserSetupBuilder;
 import org.jowidgets.addons.widgets.browser.api.IMainBrowser;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.util.Assert;
-import org.jowidgets.util.IFutureValue;
+import org.jowidgets.util.IMutableValue;
 
 final class MainBrowserImpl extends BrowserImpl implements IMainBrowser {
 
@@ -51,7 +51,7 @@ final class MainBrowserImpl extends BrowserImpl implements IMainBrowser {
 
 	private Boolean javaScriptEnabled;
 
-	MainBrowserImpl(final IControl control, final IFutureValue<Composite> swtComposite, final IBrowserSetupBuilder<?> setup) {
+	MainBrowserImpl(final IControl control, final IMutableValue<Composite> swtComposite, final IBrowserSetupBuilder<?> setup) {
 		super(control, swtComposite, setup);
 		this.documentListeners = new LinkedHashSet<IBrowserDocumentListener>();
 	}
@@ -104,11 +104,10 @@ final class MainBrowserImpl extends BrowserImpl implements IMainBrowser {
 
 	@Override
 	public void setJavascriptEnabled(final boolean enabled) {
+		javaScriptEnabled = Boolean.valueOf(enabled);
+
 		if (isInitialized()) {
 			getSwtBrowser().setJavascriptEnabled(enabled);
-		}
-		else {
-			javaScriptEnabled = Boolean.valueOf(enabled);
 		}
 	}
 

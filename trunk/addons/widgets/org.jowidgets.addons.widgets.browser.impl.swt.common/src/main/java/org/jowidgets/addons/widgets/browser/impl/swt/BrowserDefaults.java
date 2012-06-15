@@ -26,30 +26,15 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.bridge.awt.swt;
+package org.jowidgets.addons.widgets.browser.impl.swt;
 
-import org.eclipse.swt.widgets.Composite;
-import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.util.IMutableValue;
+import org.jowidgets.addons.widgets.browser.api.IBrowserSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
-public interface IAwtSwtControl extends IControl {
+public final class BrowserDefaults implements IDefaultInitializer<IBrowserSetupBuilder<?>> {
 
-	/**
-	 * The swt composite is a mutable value.
-	 * 
-	 * Remark: Users of this control must considers the following behavior :
-	 * 
-	 * The initial value may be null and mutates later to a composite, because the swt awt bridge needs a peer
-	 * to work. This peer will eventually be created e.g. at pack or set visible of any parent.
-	 * 
-	 * The implemented AwtSwtControl may be disposed, if any parent ancestor swing panel will be removed from its parent.
-	 * Then the mutable value mutates (changes) to null.
-	 * 
-	 * If the holding swing panel will be reattached to another parent,
-	 * the mutable value mutates back to a NEW composite instance.
-	 * 
-	 * @return The mutable swt composite
-	 */
-	IMutableValue<Composite> getSwtComposite();
-
+	@Override
+	public void initialize(final IBrowserSetupBuilder<?> setup) {
+		setup.setBorder(false);
+	}
 }
