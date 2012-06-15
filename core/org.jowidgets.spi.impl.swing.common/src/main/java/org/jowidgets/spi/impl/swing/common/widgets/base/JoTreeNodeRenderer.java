@@ -28,6 +28,7 @@
 
 package org.jowidgets.spi.impl.swing.common.widgets.base;
 
+import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JTree;
@@ -72,6 +73,9 @@ public class JoTreeNodeRenderer extends DefaultTreeCellRenderer {
 
 			if (!selected && joTreeNode.getForegroundColor() != null) {
 				setForeground(ColorConvert.convert(joTreeNode.getForegroundColor()));
+			}
+			else if (selected) {
+				setForeground(Color.WHITE);
 			}
 			else {
 				setForeground(null);
