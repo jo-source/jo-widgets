@@ -31,11 +31,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Control;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TabPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
@@ -267,79 +263,12 @@ public class JavafxWindow implements IWindowSpi {
 
 	@Override
 	public void setVisible(final boolean visible) {
-
 		if (visible) {
 			getUiReference().show();
 		}
 		else {
 			getUiReference().hide();
 		}
-		//CHECKSTYLE:OFF
-		System.out.println(getUiReference().getWidth() + " " + getUiReference().getHeight());
-		for (final Node node : getUiReference().getScene().getRoot().getChildrenUnmodifiable()) {
-			sysoutTemp(node);
-			if (node instanceof Pane) {
-				System.out.println("Pane: " + node + " has folgende");
-				for (final Node node2 : ((Pane) node).getChildren()) {
-					sysoutTemp(node2);
-					if (node2 instanceof Pane) {
-						System.out.println("Pane: " + node2 + " has folgende");
-						for (final Node node3 : ((Pane) node2).getChildren()) {
-							sysoutTemp(node3);
-							if (node3 instanceof Pane) {
-								System.out.println("Pane: " + node3 + " has folgende");
-								for (final Node node4 : ((Pane) node3).getChildren()) {
-									sysoutTemp(node4);
-									if (node4 instanceof Pane) {
-										System.out.println("Pane: " + node4 + " has folgende");
-										for (final Node node5 : ((Pane) node4).getChildren()) {
-											sysoutTemp(node5);
-											if (node5 instanceof Pane) {
-												System.out.println("Pane: " + node5 + " has folgende");
-												for (final Node node6 : ((Pane) node5).getChildren()) {
-													sysoutTemp(node6);
-													if (node6 instanceof Pane) {
-														System.out.println("Pane: " + node6 + " has folgende");
-														for (final Node node7 : ((Pane) node6).getChildren()) {
-															sysoutTemp(node7);
-															if (node7 instanceof Pane) {
-																System.out.println("Pane: " + node7 + " has folgende");
-																for (final Node node8 : ((Pane) node7).getChildren()) {
-																	sysoutTemp(node8);
-																	if (node8 instanceof Pane) {
-																		System.out.println("Pane: " + node8 + " has folgende");
-																		for (final Node node9 : ((Pane) node8).getChildren()) {
-																			sysoutTemp(node9);
-																			if (node9 instanceof Pane) {
-
-																			}
-																			System.out.println("*** Ende ***");
-																		}
-																	}
-																	System.out.println("*** Ende ***");
-																}
-															}
-															System.out.println("*** Ende ***");
-														}
-													}
-													System.out.println("*** Ende ***");
-												}
-											}
-											System.out.println("*** Ende ***");
-										}
-									}
-									System.out.println("*** Ende ***");
-								}
-							}
-							System.out.println("*** Ende ***");
-						}
-					}
-					System.out.println("*** Ende ***");
-				}
-			}
-
-		}
-		//CHECKSTYLE:ON
 	}
 
 	@Override
@@ -423,70 +352,4 @@ public class JavafxWindow implements IWindowSpi {
 		return containerDelegate;
 	}
 
-	private void sysoutTemp(final Node node) {
-		//CHECKSTYLE:OFF
-		if (node instanceof Control) {
-			System.out.println("Node: "
-				+ node
-				+ ", Max : "
-				+ new Dimension(
-					(int) ((Control) node).maxWidth(Control.USE_PREF_SIZE),
-					(int) ((Control) node).maxHeight(Control.USE_PREF_SIZE)));
-			System.out.println("Node: "
-				+ node
-				+ ", Min : "
-				+ new Dimension(
-					(int) ((Control) node).minWidth(Control.USE_PREF_SIZE),
-					(int) ((Control) node).minHeight(Control.USE_PREF_SIZE)));
-			System.out.println("Node: "
-				+ node
-				+ ", Pref : "
-				+ new Dimension(
-					(int) ((Control) node).prefWidth(Control.USE_PREF_SIZE),
-					(int) ((Control) node).prefHeight(Control.USE_PREF_SIZE)));
-			System.out.println("Node: " + node + ", Size : " + ((Control) node).getWidth() + " " + ((Control) node).getHeight());
-			//			System.out.println("Node: "
-			//				+ node
-			//				+ ", Skin : "
-			//				+ ((Control) node).getSkin().getSkinnable()
-			//				+ " node "
-			//				+ ((Control) node).getSkin().getNode().getLayoutBounds());
-			if (node instanceof TabPane) {
-				System.out.println(((TabPane) node).getTabs());
-			}
-			if (node instanceof ScrollPane) {
-				if (((ScrollPane) node).getContent() instanceof Pane) {
-
-					System.out.println(new Dimension(
-						(int) ((Pane) ((ScrollPane) node).getContent()).getPrefWidth(),
-						(int) ((Pane) ((ScrollPane) node).getContent()).getPrefHeight()));
-				}
-			}
-			System.out.println("-------------------------------------");
-		}
-		if (node instanceof Pane) {
-			System.out.println("Pane: "
-				+ node
-				+ ", Max : "
-				+ new Dimension(
-					(int) ((Pane) node).maxWidth(Control.USE_PREF_SIZE),
-					(int) ((Pane) node).maxHeight(Control.USE_PREF_SIZE)));
-			System.out.println("Pane: "
-				+ node
-				+ ", Min : "
-				+ new Dimension(
-					(int) ((Pane) node).minWidth(Control.USE_PREF_SIZE),
-					(int) ((Pane) node).minHeight(Control.USE_PREF_SIZE)));
-			System.out.println("Pane: "
-				+ node
-				+ ", Pref : "
-				+ new Dimension(
-					(int) ((Pane) node).prefWidth(Control.USE_PREF_SIZE),
-					(int) ((Pane) node).prefHeight(Control.USE_PREF_SIZE)));
-			System.out.println("Pane: " + node + ", Size : " + ((Pane) node).getWidth() + " " + ((Pane) node).getHeight());
-			System.out.println("-------------------------------------");
-
-		}
-		//CHECKSTYLE:ON
-	}
 }
