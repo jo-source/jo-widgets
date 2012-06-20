@@ -29,23 +29,78 @@
 package org.jowidgets.spi.impl.javafx.widgets.base;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
 import javafx.beans.InvalidationListener;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 
-import org.jowidgets.common.model.ITableCell;
+import org.jowidgets.common.model.ITableColumnModelSpi;
 import org.jowidgets.common.model.ITableDataModel;
+import org.jowidgets.common.model.ITableDataModelListener;
+import org.jowidgets.common.model.ITableDataModelObservable;
 
-public class VirtualList implements ObservableList<ITableCell> {
+public class VirtualList implements ObservableList<JoTableRow> {
+
+	private final Map<Integer, JoTableRow> rows;
 
 	private final ITableDataModel dataModel;
+	private final ITableColumnModelSpi columnModel;
 
-	public VirtualList(final ITableDataModel dataModel) {
+	private final TableView table;
+
+	public VirtualList(final ITableDataModel dataModel, final ITableColumnModelSpi columnModel, final TableView table) {
 		this.dataModel = dataModel;
+		this.columnModel = columnModel;
+		this.table = table;
+		this.rows = new HashMap<Integer, JoTableRow>();
+
+		final ITableDataModelObservable dataModelObservable = dataModel.getTableDataModelObservable();
+		if (dataModelObservable != null) {
+			final ITableDataModelListener tableModelListener = new ITableDataModelListener() {
+
+				@Override
+				public void selectionChanged() {
+					// TODO DB implement selection change
+				}
+
+				@Override
+				public void rowsRemoved(final int[] rowIndices) {
+					//TODO DB implement better
+					dataChanged();
+				}
+
+				@Override
+				public void rowsChanged(final int[] rowIndices) {
+					//TODO DB implement better
+					dataChanged();
+				}
+
+				@Override
+				public void rowsAdded(final int[] rowIndices) {
+					//TODO DB implement better
+					dataChanged();
+				}
+
+				@Override
+				public void dataChanged() {
+					rows.clear();
+					//fire invalidation and change events
+					setList();
+				}
+			};
+			dataModelObservable.addDataModelListener(tableModelListener);
+		}
+	}
+
+	protected void setList() {
+		table.getItems().clear();
+		table.setItems(this);
 	}
 
 	@Override
@@ -55,10 +110,7 @@ public class VirtualList implements ObservableList<ITableCell> {
 
 	@Override
 	public boolean isEmpty() {
-		if (dataModel.getRowCount() == 0) {
-			return true;
-		}
-		return false;
+		return dataModel.getRowCount() == 0;
 	}
 
 	@Override
@@ -68,15 +120,17 @@ public class VirtualList implements ObservableList<ITableCell> {
 	}
 
 	@Override
-	public Iterator<ITableCell> iterator() {
-		// TODO DB Auto-generated method stub
-		return null;
+	public Iterator<JoTableRow> iterator() {
+		return new VLIterator(this);
 	}
 
 	@Override
 	public Object[] toArray() {
-		// TODO DB Auto-generated method stub
-		return null;
+		final Object[] array = new Object[dataModel.getRowCount()];
+		for (int j = 0; j < array.length; j++) {
+			array[j] = dataModel.getCell(j, 0);
+		}
+		return array;
 	}
 
 	@Override
@@ -86,7 +140,7 @@ public class VirtualList implements ObservableList<ITableCell> {
 	}
 
 	@Override
-	public boolean add(final ITableCell e) {
+	public boolean add(final JoTableRow e) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -102,12 +156,12 @@ public class VirtualList implements ObservableList<ITableCell> {
 	}
 
 	@Override
-	public boolean addAll(final Collection<? extends ITableCell> c) {
+	public boolean addAll(final Collection<? extends JoTableRow> c) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean addAll(final int index, final Collection<? extends ITableCell> c) {
+	public boolean addAll(final int index, final Collection<? extends JoTableRow> c) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -128,32 +182,29 @@ public class VirtualList implements ObservableList<ITableCell> {
 	}
 
 	@Override
-	public ITableCell get(final int index) {
-		// TODO DB Auto-generated method stub
-		//		final Data data = new Data(dataModel.getCell(index, columnIndex));
-		//		if (columnIndex < columnModel.getColumnCount() - 1) {
-		//			columnIndex++;
-		//		}
-		//		else {
-		//			columnIndex = 0;
-		//		}
-		//		return data;
-		return dataModel.getCell(0, 0);
+	public JoTableRow get(final int rowIndex) {
+		final Integer rowIndexWrapper = Integer.valueOf(rowIndex);
+		JoTableRow result = rows.get(rowIndexWrapper);
+		if (result == null) {
+			result = new JoTableRow(dataModel, rowIndex);
+			rows.put(rowIndexWrapper, result);
+		}
+		return result;
 	}
 
 	@Override
-	public ITableCell set(final int index, final ITableCell element) {
+	public JoTableRow set(final int index, final JoTableRow element) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void add(final int index, final ITableCell element) {
+	public void add(final int index, final JoTableRow element) {
 		throw new UnsupportedOperationException();
 
 	}
 
 	@Override
-	public ITableCell remove(final int index) {
+	public JoTableRow remove(final int index) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -170,19 +221,19 @@ public class VirtualList implements ObservableList<ITableCell> {
 	}
 
 	@Override
-	public ListIterator<ITableCell> listIterator() {
+	public ListIterator<JoTableRow> listIterator() {
 		// TODO DB Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ListIterator<ITableCell> listIterator(final int index) {
+	public ListIterator<JoTableRow> listIterator(final int index) {
 		// TODO DB Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<ITableCell> subList(final int fromIndex, final int toIndex) {
+	public List<JoTableRow> subList(final int fromIndex, final int toIndex) {
 		// TODO DB Auto-generated method stub
 		return null;
 	}
@@ -200,39 +251,39 @@ public class VirtualList implements ObservableList<ITableCell> {
 	}
 
 	@Override
-	public void addListener(final ListChangeListener<? super ITableCell> paramListChangeListener) {
+	public void addListener(final ListChangeListener<? super JoTableRow> paramListChangeListener) {
 		// TODO DB Auto-generated method stub
 
 	}
 
 	@Override
-	public void removeListener(final ListChangeListener<? super ITableCell> paramListChangeListener) {
+	public void removeListener(final ListChangeListener<? super JoTableRow> paramListChangeListener) {
 		// TODO DB Auto-generated method stub
 
 	}
 
 	@Override
-	public boolean addAll(final ITableCell... paramArrayOfE) {
+	public boolean addAll(final JoTableRow... paramArrayOfE) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean setAll(final ITableCell... paramArrayOfE) {
+	public boolean setAll(final JoTableRow... paramArrayOfE) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean setAll(final Collection<? extends ITableCell> paramCollection) {
+	public boolean setAll(final Collection<? extends JoTableRow> paramCollection) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean removeAll(final ITableCell... paramArrayOfE) {
+	public boolean removeAll(final JoTableRow... paramArrayOfE) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public boolean retainAll(final ITableCell... paramArrayOfE) {
+	public boolean retainAll(final JoTableRow... paramArrayOfE) {
 		// TODO DB Auto-generated method stub
 		return false;
 	}
@@ -240,6 +291,35 @@ public class VirtualList implements ObservableList<ITableCell> {
 	@Override
 	public void remove(final int paramInt1, final int paramInt2) {
 		throw new UnsupportedOperationException();
+	}
+
+	private class VLIterator implements Iterator<JoTableRow> {
+		private final VirtualList list;
+		int index = 0;
+
+		public VLIterator(final VirtualList list) {
+			this.list = list;
+
+		}
+
+		@Override
+		public boolean hasNext() {
+			return list.get(index) != null;
+		}
+
+		@Override
+		public JoTableRow next() {
+			final JoTableRow joTableRow = list.get(index);
+			index++;
+			return joTableRow;
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+
+		}
+
 	}
 
 }

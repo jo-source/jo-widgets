@@ -32,19 +32,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 import org.jowidgets.common.model.ITableCell;
@@ -64,35 +69,50 @@ import org.jowidgets.common.widgets.controller.ITableCellPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITableColumnListener;
 import org.jowidgets.common.widgets.controller.ITableColumnPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITableSelectionListener;
+import org.jowidgets.spi.impl.controller.TableCellEditEvent;
+import org.jowidgets.spi.impl.controller.TableCellEditorObservable;
+import org.jowidgets.spi.impl.controller.TableCellObservable;
+import org.jowidgets.spi.impl.controller.TableCellPopupDetectionObservable;
+import org.jowidgets.spi.impl.controller.TableCellPopupEvent;
 import org.jowidgets.spi.impl.controller.TableColumnObservable;
 import org.jowidgets.spi.impl.controller.TableColumnPopupDetectionObservable;
 import org.jowidgets.spi.impl.controller.TableColumnPopupEvent;
 import org.jowidgets.spi.impl.controller.TableColumnResizeEvent;
 import org.jowidgets.spi.impl.controller.TableSelectionObservable;
+import org.jowidgets.spi.impl.javafx.widgets.base.JoCell;
+import org.jowidgets.spi.impl.javafx.widgets.base.JoTableRow;
 import org.jowidgets.spi.impl.javafx.widgets.base.VirtualList;
 import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
 
 import com.sun.javafx.scene.control.skin.TableColumnHeader;
 
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class TableImpl extends JavafxControl implements ITableSpi {
 
 	private final ITableDataModel dataModel;
 	private final ITableColumnModelSpi columnModel;
 	private final boolean columnsResizeable;
+
 	private final TableSelectionListener tableSelectionListener;
 	private final TableSelectionObservable tableSelectionObservable;
 	private final TableColumnPopupDetectionObservable tableColumnPopupDetectionObservable;
 	private final TableColumnModelListener tableColumnModelListener;
 	private final TableColumnObservable tableColumnObservable;
+	private final TableCellEditorObservable tableCellEditorObservable;
+	private final TableCellPopupDetectionObservable tableCellPopupDetectionObservable;
+	private final TableCellObservable tableCellObservable;
 
 	public TableImpl(final ITableSetupSpi setup) {
-		super(new TableView<ITableCell>(), false);
+		super(new TableView(), false);
 		this.tableSelectionListener = new TableSelectionListener();
 		this.tableSelectionObservable = new TableSelectionObservable();
 		this.tableColumnPopupDetectionObservable = new TableColumnPopupDetectionObservable();
 		this.tableColumnModelListener = new TableColumnModelListener();
 		this.tableColumnObservable = new TableColumnObservable();
+		this.tableCellEditorObservable = new TableCellEditorObservable();
+		this.tableCellPopupDetectionObservable = new TableCellPopupDetectionObservable();
+		this.tableCellObservable = new TableCellObservable();
 
 		if (setup.getSelectionPolicy() == TableSelectionPolicy.MULTI_ROW_SELECTION) {
 			getUiReference().getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -108,15 +128,14 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 		}
 		dataModel = setup.getDataModel();
 		columnModel = setup.getColumnModel();
-		columnsResizeable = setup.getColumnsResizeable();
-		getUiReference().setRowFactory(new TableRowFactory());
 
+		columnsResizeable = setup.getColumnsResizeable();
+		getUiReference().setItems(new VirtualList(dataModel, columnModel, getUiReference()));
 	}
 
-	@SuppressWarnings({"unchecked"})
 	@Override
-	public TableView<ITableCell> getUiReference() {
-		return (TableView<ITableCell>) super.getUiReference();
+	public TableView getUiReference() {
+		return (TableView) super.getUiReference();
 	}
 
 	@Override
@@ -126,7 +145,6 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 
 	@Override
 	public void resetFromModel() {
-
 		getUiReference().getColumns().clear();
 
 		final ITableColumnModelObservable columnModelObservable = columnModel.getTableColumnModelObservable();
@@ -142,10 +160,8 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 		if (columnModelObservable != null) {
 			columnModelObservable.addColumnModelListener(tableColumnModelListener);
 		}
+
 		getUiReference().getSelectionModel().getSelectedCells().addListener(tableSelectionListener);
-
-		getUiReference().setItems(new VirtualList(dataModel));
-
 	}
 
 	@Override
@@ -166,7 +182,6 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 			}
 		}
 
-		@SuppressWarnings("unchecked")
 		final TableColumn<ITableCell, Object> tableColumn = (TableColumn<ITableCell, Object>) getUiReference().getColumns().get(
 				columnIndex);
 		final double width = tableColumn.getWidth();
@@ -176,8 +191,12 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 
 	@Override
 	public ArrayList<Integer> getColumnPermutation() {
-		// TODO DB Auto-generated method stub
-		return null;
+		final ArrayList<Integer> result = new ArrayList<Integer>();
+		final ObservableList<TableColumn<ITableCell, ?>> javafxColumns = getUiReference().getColumns();
+		for (int i = 0; i < javafxColumns.size(); i++) {
+			result.add(Integer.valueOf(javafxColumns.indexOf(javafxColumns.get(i))));
+		}
+		return result;
 	}
 
 	@Override
@@ -195,7 +214,14 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 
 	@Override
 	public void setSelection(final List<Integer> selection) {
-		// TODO DB Auto-generated method stub
+		getUiReference().getSelectionModel().clearSelection();
+
+		final int[] indices = new int[selection.size()];
+
+		for (int i = 0; i < selection.size(); i++) {
+			indices[i] = selection.get(i);
+		}
+		getUiReference().getSelectionModel().selectIndices(-1, indices);
 	}
 
 	@Override
@@ -217,8 +243,7 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 
 	@Override
 	public boolean isColumnPopupDetectionSupported() {
-		// TODO DB Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
@@ -240,13 +265,13 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 
 	@Override
 	public void addTableCellListener(final ITableCellListener listener) {
-		// TODO DB Auto-generated method stub
+		tableCellObservable.addTableCellListener(listener);
 
 	}
 
 	@Override
 	public void removeTableCellListener(final ITableCellListener listener) {
-		// TODO DB Auto-generated method stub
+		tableCellObservable.removeTableCellListener(listener);
 
 	}
 
@@ -264,14 +289,12 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 
 	@Override
 	public void addTableCellEditorListener(final ITableCellEditorListener listener) {
-		// TODO DB Auto-generated method stub
-
+		tableCellEditorObservable.addTableCellEditorListener(listener);
 	}
 
 	@Override
 	public void removeTableCellEditorListener(final ITableCellEditorListener listener) {
-		// TODO DB Auto-generated method stub
-
+		tableCellEditorObservable.removeTableCellEditorListener(listener);
 	}
 
 	@Override
@@ -319,39 +342,33 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 		}
 	}
 
-	class TableRowFactory implements Callback<TableView<ITableCell>, TableRow<ITableCell>> {
+	class TableCellFactory implements Callback<TableColumn, TableCell> {
 
 		@Override
-		public TableRow<ITableCell> call(final TableView<ITableCell> paramP) {
-			final TableRow<ITableCell> row = new TableRow<ITableCell>() {
+		public TableCell call(final TableColumn column) {
+
+			final JoCell joCell = new JoCell(tableCellObservable);
+
+			final ContextMenu contextMenu = new ContextMenu(new MenuItem()) {
+
 				@Override
-				protected void updateItem(final ITableCell item, final boolean isEmpty) {
+				public void show(final Node node, final double x, final double y) {
 
-				};
-			};
-			return row;
-		}
-	}
-
-	class TableCellFactory implements Callback<TableColumn<ITableCell, Object>, TableCell<ITableCell, Object>> {
-
-		@Override
-		public TableCell<ITableCell, Object> call(final TableColumn<ITableCell, Object> column) {
-
-			final TableCell<ITableCell, Object> cell = new TableCell<ITableCell, Object>() {
-				@Override
-				protected void updateItem(final Object item, final boolean isEmpty) {
-					super.updateItem(item, isEmpty);
-					final ITableCell joCell = dataModel.getCell(getIndex(), getUiReference().getColumns().indexOf(column));
-					setText(joCell.getText());
+					final int index = getUiReference().getColumns().indexOf(((JoCell) node).getTableColumn());
+					if (index < columnModel.getColumnCount()) {
+						tableCellPopupDetectionObservable.firePopupDetected(new TableCellPopupEvent(
+							joCell.getIndex(),
+							getUiReference().getColumns().indexOf(column),
+							new Position((int) x, (int) y)));
+					}
 				}
-			};
 
-			return cell;
+			};
+			joCell.setContextMenu(contextMenu);
+			return joCell;
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
 	final class TableSelectionListener implements ListChangeListener<TablePosition> {
 
 		@Override
@@ -392,13 +409,29 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 	}
 
 	private void addColumn(final int externalIndex, final ITableColumnSpi joColumn) {
-		final TableColumn<ITableCell, Object> tableColumn = new TableColumn<ITableCell, Object>(joColumn.getText());
-		tableColumn.setCellValueFactory(new PropertyValueFactory<ITableCell, Object>("data"));
+		final TableColumn tableColumn = new TableColumn(joColumn.getText());
 		tableColumn.setResizable(columnsResizeable);
+		tableColumn.setSortable(false);
+
 		setColumnData(tableColumn, joColumn);
 		getUiReference().getColumns().add(externalIndex, tableColumn);
 
 		tableColumn.setCellFactory(new TableCellFactory());
+		tableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<JoTableRow, Object>, ObservableValue<Object>>() {
+
+			@Override
+			public ObservableValue call(final CellDataFeatures<JoTableRow, Object> pFeature) {
+				final JoTableRow data = pFeature.getValue();
+				if (data == null) {
+					return new SimpleStringProperty("");
+				}
+				else {
+					return new SimpleObjectProperty(data);
+				}
+			}
+
+		});
+
 		final ContextMenu contextMenu = new ContextMenu(new MenuItem()) {
 
 			@Override
@@ -426,5 +459,17 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 						tableColumn), newValue.intValue()));
 			}
 		});
+
+		tableColumn.setOnEditCommit(new EventHandler<CellEditEvent>() {
+			//TODO DB test this
+			@Override
+			public void handle(final CellEditEvent event) {
+				final int row = event.getTablePosition().getRow();
+				final int column = event.getTablePosition().getColumn();
+				final JoTableRow newValue = (JoTableRow) event.getNewValue();
+				tableCellEditorObservable.fireEditFinished(new TableCellEditEvent(row, column, newValue.getCell(column).getText()));
+			}
+		});
+
 	}
 }

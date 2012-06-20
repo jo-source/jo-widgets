@@ -53,8 +53,11 @@ public final class StyleDelegate {
 	}
 
 	public void setBackgroundColor(final IColorConstant colorValue) {
-		backgroundColorCSS = "-fx-background-color: #" + ColorCSSConverter.colorToCSS(colorValue) + ";\n";
-		setStyle();
+		final String colorToCSS = ColorCSSConverter.colorToCSS(colorValue);
+		if (!colorToCSS.isEmpty()) {
+			backgroundColorCSS = "-fx-background-color: #" + ColorCSSConverter.colorToCSS(colorValue) + ";\n";
+			setStyle();
+		}
 	}
 
 	public void setMarkup(final Markup newMarkup) {
