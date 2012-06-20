@@ -59,8 +59,9 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 		if (setup.isModal()) {
 			getUiReference().initModality(Modality.WINDOW_MODAL);
 		}
-		getUiReference().initOwner((Window) parentUiReference);
-
+		if (parentUiReference != null) {
+			getUiReference().initOwner((Window) parentUiReference);
+		}
 		if (!setup.isDecorated()) {
 			getUiReference().initStyle(StageStyle.UNDECORATED);
 		}
