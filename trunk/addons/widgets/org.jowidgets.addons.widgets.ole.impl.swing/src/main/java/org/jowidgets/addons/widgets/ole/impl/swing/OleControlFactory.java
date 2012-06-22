@@ -40,7 +40,7 @@ final class OleControlFactory implements IWidgetFactory<IOleControl, IOleControl
 	@Override
 	public IOleControl create(final Object parentUiReference, final IOleControlBluePrint bluePrint) {
 		final IAwtSwtControl awtSwtControl = AwtSwtControlFactory.getInstance().createAwtSwtControl(parentUiReference);
-		return SwtOleControlFactory.createBrowser(awtSwtControl, awtSwtControl.getSwtComposite(), bluePrint);
+		return SwtOleControlFactory.createOleControl(awtSwtControl, awtSwtControl.getSwtComposite(), bluePrint);
 	}
 
 }
