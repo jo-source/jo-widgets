@@ -31,14 +31,14 @@ package org.jowidgets.addons.widgets.ole.impl.swing;
 import org.jowidgets.addons.bridge.awt.swt.AwtSwtControlFactory;
 import org.jowidgets.addons.bridge.awt.swt.IAwtSwtControl;
 import org.jowidgets.addons.widgets.ole.api.IOleControl;
-import org.jowidgets.addons.widgets.ole.api.IOleBluePrint;
+import org.jowidgets.addons.widgets.ole.api.IOleControlBluePrint;
 import org.jowidgets.addons.widgets.ole.impl.swt.SwtOleControlFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 
-final class OleControlFactory implements IWidgetFactory<IOleControl, IOleBluePrint> {
+final class OleControlFactory implements IWidgetFactory<IOleControl, IOleControlBluePrint> {
 
 	@Override
-	public IOleControl create(final Object parentUiReference, final IOleBluePrint bluePrint) {
+	public IOleControl create(final Object parentUiReference, final IOleControlBluePrint bluePrint) {
 		final IAwtSwtControl awtSwtControl = AwtSwtControlFactory.getInstance().createAwtSwtControl(parentUiReference);
 		return SwtOleControlFactory.createBrowser(awtSwtControl, awtSwtControl.getSwtComposite(), bluePrint);
 	}

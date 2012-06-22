@@ -28,8 +28,11 @@
 
 package org.jowidgets.addons.widgets.ole.api;
 
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
+import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
 
-public interface IOleBluePrint extends IOleSetupBuilder<IOleBluePrint>, IWidgetDescriptor<IOleControl> {
+public interface IOleControlSetupBuilder<INSTANCE_TYPE extends IOleControlSetupBuilder<?>> extends
+		IComponentSetup,
+		IComponentSetupBuilder<INSTANCE_TYPE> {
 
 }

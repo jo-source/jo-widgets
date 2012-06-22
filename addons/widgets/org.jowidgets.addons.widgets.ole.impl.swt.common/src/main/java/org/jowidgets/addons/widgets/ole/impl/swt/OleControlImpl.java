@@ -33,7 +33,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.jowidgets.addons.widgets.ole.api.IOleControl;
-import org.jowidgets.addons.widgets.ole.api.IOleSetupBuilder;
+import org.jowidgets.addons.widgets.ole.api.IOleControlSetupBuilder;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.spi.impl.swt.common.color.ColorCache;
@@ -51,7 +51,7 @@ class OleControlImpl extends ControlWrapper implements IOleControl {
 	@SuppressWarnings("unused")
 	private Composite swtOleFrame;
 
-	OleControlImpl(final IControl control, final IMutableValue<Composite> swtCompositeValue, final IOleSetupBuilder<?> setup) {
+	OleControlImpl(final IControl control, final IMutableValue<Composite> swtCompositeValue, final IOleControlSetupBuilder<?> setup) {
 		super(control);
 
 		this.initialVisiblityState = setup.isVisible();

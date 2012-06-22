@@ -28,7 +28,7 @@
 
 package org.jowidgets.addons.widgets.ole.impl.swt;
 
-import org.jowidgets.addons.widgets.ole.api.IOleBluePrint;
+import org.jowidgets.addons.widgets.ole.api.IOleControlBluePrint;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.IToolkitInterceptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
@@ -38,6 +38,6 @@ final class OleToolkitInterceptor implements IToolkitInterceptor {
 	@Override
 	public void onToolkitCreate(final IToolkit toolkit) {
 		final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
-		widgetFactory.register(IOleBluePrint.class, new OleControlFactory());
+		widgetFactory.register(IOleControlBluePrint.class, new OleControlFactory());
 	}
 }

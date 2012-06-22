@@ -29,7 +29,7 @@
 package org.jowidgets.addons.widgets.ole.impl.swt;
 
 import org.eclipse.swt.widgets.Composite;
-import org.jowidgets.addons.widgets.ole.api.IOleBluePrint;
+import org.jowidgets.addons.widgets.ole.api.IOleControlBluePrint;
 import org.jowidgets.addons.widgets.ole.api.IOleControl;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.util.IMutableValue;
@@ -39,14 +39,14 @@ public final class SwtOleControlFactory {
 
 	private SwtOleControlFactory() {}
 
-	public static IOleControl createBrowser(final IControl control, final Composite swtComposite, final IOleBluePrint bluePrint) {
+	public static IOleControl createBrowser(final IControl control, final Composite swtComposite, final IOleControlBluePrint bluePrint) {
 		return createBrowser(control, new MutableValue<Composite>(swtComposite), bluePrint);
 	}
 
 	public static IOleControl createBrowser(
 		final IControl control,
 		final IMutableValue<Composite> swtComposite,
-		final IOleBluePrint bluePrint) {
+		final IOleControlBluePrint bluePrint) {
 		return new OleControlImpl(control, swtComposite, bluePrint);
 	}
 
