@@ -30,17 +30,17 @@ package org.jowidgets.addons.widgets.ole.impl.swt;
 
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.addons.widgets.ole.api.IOleControl;
-import org.jowidgets.addons.widgets.ole.api.IOleBluePrint;
+import org.jowidgets.addons.widgets.ole.api.IOleControlBluePrint;
 import org.jowidgets.addons.widgets.ole.impl.swt.SwtOleControlFactory;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 
-final class OleControlFactory implements IWidgetFactory<IOleControl, IOleBluePrint> {
+final class OleControlFactory implements IWidgetFactory<IOleControl, IOleControlBluePrint> {
 
 	@Override
-	public IOleControl create(final Object parentUiReference, final IOleBluePrint bluePrint) {
+	public IOleControl create(final Object parentUiReference, final IOleControlBluePrint bluePrint) {
 		final IComposite composite = Toolkit.getWidgetFactory().create(parentUiReference, BPF.composite());
 		if (composite.getUiReference() instanceof Composite) {
 			return SwtOleControlFactory.createBrowser(composite, (Composite) composite.getUiReference(), bluePrint);

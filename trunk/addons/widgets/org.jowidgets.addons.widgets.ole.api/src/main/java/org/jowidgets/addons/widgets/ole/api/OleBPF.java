@@ -34,8 +34,8 @@ public final class OleBPF {
 
 	private OleBPF() {}
 
-	public static IOleBluePrint oleControl() {
-		return Toolkit.getBluePrintFactory().bluePrint(IOleBluePrint.class);
+	public static IOleControlBluePrint oleControl() {
+		return Toolkit.getBluePrintFactory().bluePrint(IOleControlBluePrint.class);
 	}
 
 }
