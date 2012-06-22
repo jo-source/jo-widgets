@@ -38,7 +38,6 @@ import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.widgets.controller.IKeyEvent;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 import org.jowidgets.tools.controller.KeyAdapter;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.widgets.blueprint.BPF;
@@ -52,8 +51,7 @@ public final class OleControlDemoApplication implements IApplication {
 	}
 
 	public void start() {
-		DemoIconsInitializer.initialize();
-		Toolkit.getInstance().getApplicationRunner().run(this);
+		Toolkit.getApplicationRunner().run(this);
 	}
 
 	@Override
