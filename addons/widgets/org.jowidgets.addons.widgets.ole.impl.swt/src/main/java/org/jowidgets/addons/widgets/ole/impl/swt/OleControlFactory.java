@@ -43,7 +43,7 @@ final class OleControlFactory implements IWidgetFactory<IOleControl, IOleControl
 	public IOleControl create(final Object parentUiReference, final IOleControlBluePrint bluePrint) {
 		final IComposite composite = Toolkit.getWidgetFactory().create(parentUiReference, BPF.composite());
 		if (composite.getUiReference() instanceof Composite) {
-			return SwtOleControlFactory.createBrowser(composite, (Composite) composite.getUiReference(), bluePrint);
+			return SwtOleControlFactory.createOleControl(composite, (Composite) composite.getUiReference(), bluePrint);
 		}
 		else {
 			throw new IllegalArgumentException("The given composite must be an swt composite");

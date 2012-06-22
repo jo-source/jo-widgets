@@ -39,11 +39,11 @@ public final class SwtOleControlFactory {
 
 	private SwtOleControlFactory() {}
 
-	public static IOleControl createBrowser(final IControl control, final Composite swtComposite, final IOleControlBluePrint bluePrint) {
-		return createBrowser(control, new MutableValue<Composite>(swtComposite), bluePrint);
+	public static IOleControl createOleControl(final IControl control, final Composite swtComposite, final IOleControlBluePrint bluePrint) {
+		return createOleControl(control, new MutableValue<Composite>(swtComposite), bluePrint);
 	}
 
-	public static IOleControl createBrowser(
+	public static IOleControl createOleControl(
 		final IControl control,
 		final IMutableValue<Composite> swtComposite,
 		final IOleControlBluePrint bluePrint) {
