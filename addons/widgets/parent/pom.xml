@@ -12,10 +12,17 @@
 	</parent>
 
 	<modules>
+	    <!-- Browser -->
 		<module>../org.jowidgets.addons.widgets.browser.api</module>
 		<module>../org.jowidgets.addons.widgets.browser.impl.swt.common</module>
 		<module>../org.jowidgets.addons.widgets.browser.impl.swt</module>
 		<module>../org.jowidgets.addons.widgets.browser.impl.swing</module>
+		
+		 <!-- OLE -->
+		<module>../org.jowidgets.addons.widgets.ole.api</module>
+		<module>../org.jowidgets.addons.widgets.ole.impl.swt.common</module>
+		<module>../org.jowidgets.addons.widgets.ole.impl.swt</module>
+		<module>../org.jowidgets.addons.widgets.ole.impl.swing</module>
 	</modules>
 
 </project>
