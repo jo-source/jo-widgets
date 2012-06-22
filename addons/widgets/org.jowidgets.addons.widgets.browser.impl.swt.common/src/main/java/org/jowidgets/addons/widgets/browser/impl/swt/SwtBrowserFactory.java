@@ -45,13 +45,6 @@ public final class SwtBrowserFactory {
 		return createBrowser(control, new MutableValue<Composite>(swtComposite), bluePrint);
 	}
 
-	public static IBrowser createBrowser(
-		final IControl control,
-		final IMutableValue<Composite> swtComposite,
-		final IBrowserBluePrint bluePrint) {
-		return new BrowserImpl(control, swtComposite, bluePrint);
-	}
-
 	public static IMainBrowser createMainBrowser(
 		final IControl control,
 		final Composite swtComposite,
@@ -64,6 +57,13 @@ public final class SwtBrowserFactory {
 		final IMutableValue<Composite> swtComposite,
 		final IMainBrowserBluePrint bluePrint) {
 		return new MainBrowserImpl(control, swtComposite, bluePrint);
+	}
+
+	public static IBrowser createBrowser(
+		final IControl control,
+		final IMutableValue<Composite> swtComposite,
+		final IBrowserBluePrint bluePrint) {
+		return new BrowserImpl(control, swtComposite, bluePrint);
 	}
 
 }

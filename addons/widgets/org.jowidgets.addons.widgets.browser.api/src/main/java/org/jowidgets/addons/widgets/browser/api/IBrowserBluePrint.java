@@ -29,14 +29,7 @@
 package org.jowidgets.addons.widgets.browser.api;
 
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IBrowserBluePrint extends IBrowserSetupBuilder<IBrowserBluePrint>, IWidgetDescriptor<IBrowser> {
 
-	@Override
-	IBrowserBluePrint setBorder(boolean border);
-
-	@Override
-	@Mandatory
-	boolean hasBorder();
 }
