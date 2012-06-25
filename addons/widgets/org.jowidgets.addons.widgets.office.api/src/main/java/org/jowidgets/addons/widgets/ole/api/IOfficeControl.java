@@ -41,9 +41,9 @@ public interface IOfficeControl extends IControl {
 
 	void openDocument(File file);
 
-	void saveDocument(File outputStream);
-
 	void openDocument(InputStream inputStream);
+
+	void saveDocument(File outputStream);
 
 	void saveDocument(OutputStream outputStream);
 
