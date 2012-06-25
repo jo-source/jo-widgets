@@ -87,6 +87,7 @@ public class TreeNodeRenderer extends TreeCell<String> {
 				Tooltip.uninstall(this, new Tooltip(node.getToolTipText()));
 			}
 			setText(item);
+			setGraphic(getTreeItem().getGraphic());
 		}
 		super.updateItem(item, empty);
 	}

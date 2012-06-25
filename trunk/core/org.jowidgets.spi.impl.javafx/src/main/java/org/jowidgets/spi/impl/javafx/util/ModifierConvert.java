@@ -27,6 +27,8 @@
  */
 package org.jowidgets.spi.impl.javafx.util;
 
+import java.util.List;
+
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination.Modifier;
 
@@ -52,6 +54,16 @@ public final class ModifierConvert {
 			throw new IllegalArgumentException("Modifier '" + modifier + "' is unknown");
 		}
 
+	}
+
+	public static Modifier[] convert(final List<org.jowidgets.common.types.Modifier> modifiers) {
+		final Modifier[] modifierArry = new Modifier[modifiers.size()];
+		int i = 0;
+		for (final org.jowidgets.common.types.Modifier modifier : modifiers) {
+			modifierArry[i] = convert(modifier);
+			i++;
+		}
+		return modifierArry;
 	}
 
 }

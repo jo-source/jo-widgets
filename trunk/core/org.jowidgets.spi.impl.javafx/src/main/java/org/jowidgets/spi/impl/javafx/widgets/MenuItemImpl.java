@@ -28,8 +28,9 @@
 package org.jowidgets.spi.impl.javafx.widgets;
 
 import javafx.scene.control.MenuItem;
-import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCharacterCombination;
 import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
@@ -101,22 +102,15 @@ public class MenuItemImpl implements IMenuItemSpi {
 		getUiReference().setAccelerator(getKeyCodeCombination(accelerator));
 	}
 
-	private KeyCodeCombination getKeyCodeCombination(final Accelerator accelerator) {
-		if (accelerator.getVirtualKey() != null) {
-
-			final KeyCode code = VirtualKeyConvert.convert(accelerator.getVirtualKey());
-			if (accelerator.getModifier().size() == 2) {
-				return new KeyCodeCombination(
-					code,
-					ModifierConvert.convert(accelerator.getModifier().get(0)),
-					ModifierConvert.convert(accelerator.getModifier().get(1)));
-			}
-			return new KeyCodeCombination(code, ModifierConvert.convert(accelerator.getModifier().get(0)));
+	private KeyCombination getKeyCodeCombination(final Accelerator accelerator) {
+		final Character character = accelerator.getCharacter();
+		if (character != null) {
+			return new KeyCharacterCombination(character.toString(), ModifierConvert.convert(accelerator.getModifier()));
 		}
 		else {
 			return new KeyCodeCombination(
-				KeyCode.getKeyCode(accelerator.getCharacter().toString()),
-				ModifierConvert.convert(accelerator.getModifier().get(0)));
+				VirtualKeyConvert.convert(accelerator.getVirtualKey()),
+				ModifierConvert.convert(accelerator.getModifier()));
 		}
 
 	}
