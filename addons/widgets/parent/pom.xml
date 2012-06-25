@@ -23,6 +23,10 @@
 		<module>../org.jowidgets.addons.widgets.ole.impl.swt.common</module>
 		<module>../org.jowidgets.addons.widgets.ole.impl.swt</module>
 		<module>../org.jowidgets.addons.widgets.ole.impl.swing</module>
+		
+		<!-- Office -->
+		<module>../org.jowidgets.addons.widgets.office.api</module>
+		<module>../org.jowidgets.addons.widgets.office.impl.ole</module>
 	</modules>
 
 </project>
