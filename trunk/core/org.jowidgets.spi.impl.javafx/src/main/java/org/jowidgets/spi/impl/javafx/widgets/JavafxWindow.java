@@ -74,7 +74,14 @@ public class JavafxWindow implements IWindowSpi {
 
 			@Override
 			public void handle(final WindowEvent event) {
-				if (event.getEventType() == WindowEvent.WINDOW_CLOSE_REQUEST) {
+
+				if (event.getEventType() == WindowEvent.WINDOW_HIDING) {
+					final boolean veto = windowObservableDelegate.fireWindowClosing();
+					if (!veto && closeable) {
+						setVisible(false);
+					}
+				}
+				else if (event.getEventType() == WindowEvent.WINDOW_CLOSE_REQUEST) {
 					windowObservableDelegate.fireWindowClosing();
 				}
 				else if (event.getEventType() == WindowEvent.WINDOW_SHOWN) {
@@ -161,7 +168,7 @@ public class JavafxWindow implements IWindowSpi {
 
 	@Override
 	public void pack() {
-		//		  TODO DB workaround thing to get size of stage before showing
+		// TODO DB workaround thing to get size of stage before showing
 		if (!getUiReference().isShowing()) {
 			getUiReference().setOpacity(0);
 			getUiReference().show();
@@ -172,7 +179,7 @@ public class JavafxWindow implements IWindowSpi {
 
 	@Override
 	public void dispose() {
-		// TODO DB Auto-generated method stub
+		getUiReference().hide();
 	}
 
 	@Override
@@ -263,7 +270,12 @@ public class JavafxWindow implements IWindowSpi {
 
 	@Override
 	public void setVisible(final boolean visible) {
-		if (visible) {
+		final boolean wasVisible = isVisible();
+		if (wasVisible && !visible) {
+			getUiReference().hide();
+			windowObservableDelegate.fireWindowClosed();
+		}
+		else if (visible) {
 			getUiReference().show();
 		}
 		else {
@@ -350,6 +362,10 @@ public class JavafxWindow implements IWindowSpi {
 
 	protected final JavafxContainer getContainerDelegate() {
 		return containerDelegate;
+	}
+
+	protected final WindowObservable getWindowObservable() {
+		return windowObservableDelegate;
 	}
 
 }
