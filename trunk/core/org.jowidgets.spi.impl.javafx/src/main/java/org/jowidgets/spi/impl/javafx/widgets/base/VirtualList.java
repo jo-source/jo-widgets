@@ -50,13 +50,11 @@ public class VirtualList implements ObservableList<JoTableRow> {
 	private final Map<Integer, JoTableRow> rows;
 
 	private final ITableDataModel dataModel;
-	private final ITableColumnModelSpi columnModel;
 
-	private final TableView table;
+	private final TableView<JoTableRow> table;
 
-	public VirtualList(final ITableDataModel dataModel, final ITableColumnModelSpi columnModel, final TableView table) {
+	public VirtualList(final ITableDataModel dataModel, final ITableColumnModelSpi columnModel, final TableView<JoTableRow> table) {
 		this.dataModel = dataModel;
-		this.columnModel = columnModel;
 		this.table = table;
 		this.rows = new HashMap<Integer, JoTableRow>();
 
@@ -99,7 +97,7 @@ public class VirtualList implements ObservableList<JoTableRow> {
 	}
 
 	protected void setList() {
-		table.getItems().clear();
+		//		table.getItems().clear();
 		table.setItems(this);
 	}
 
@@ -178,7 +176,7 @@ public class VirtualList implements ObservableList<JoTableRow> {
 
 	@Override
 	public void clear() {
-		throw new UnsupportedOperationException();
+
 	}
 
 	@Override
@@ -295,7 +293,7 @@ public class VirtualList implements ObservableList<JoTableRow> {
 
 	private class VLIterator implements Iterator<JoTableRow> {
 		private final VirtualList list;
-		int index = 0;
+		private int index = 0;
 
 		public VLIterator(final VirtualList list) {
 			this.list = list;
