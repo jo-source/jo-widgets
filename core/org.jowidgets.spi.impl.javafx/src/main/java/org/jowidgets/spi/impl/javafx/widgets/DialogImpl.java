@@ -57,7 +57,7 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 		getUiReference().setTitle(setup.getTitle());
 		getUiReference().setResizable(setup.isResizable());
 		if (setup.isModal()) {
-			getUiReference().initModality(Modality.WINDOW_MODAL);
+			getUiReference().initModality(Modality.APPLICATION_MODAL);
 		}
 		if (parentUiReference != null) {
 			getUiReference().initOwner((Window) parentUiReference);
@@ -74,7 +74,9 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 
 	@Override
 	public void setDefaultButton(final IButtonCommon button) {
-		((Button) button.getUiReference()).setDefaultButton(true);
+		if (button != null) {
+			((Button) button.getUiReference()).setDefaultButton(true);
+		}
 	}
 
 	@Override
@@ -144,5 +146,20 @@ public class DialogImpl extends JavafxWindow implements IFrameSpi {
 		newRoot.getChildren().addAll(bar, oldRoot);
 		getUiReference().getScene().setRoot(newRoot);
 		return new MenuBarImpl(bar);
+	}
+
+	@Override
+	public void setVisible(final boolean visible) {
+		final boolean wasVisible = isVisible();
+		if (wasVisible && !visible) {
+			getUiReference().hide();
+			getWindowObservable().fireWindowClosed();
+		}
+		else if (visible) {
+			getUiReference().showAndWait();
+		}
+		else {
+			getUiReference().hide();
+		}
 	}
 }

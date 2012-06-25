@@ -45,14 +45,17 @@ public class JavafxThreadAccess implements IUiThreadAccessCommon {
 	@Override
 	public void invokeAndWait(final Runnable runnable) throws InterruptedException {
 		Assert.paramNotNull(runnable, "runnable");
-
 		final CountDownLatch latch = new CountDownLatch(1);
 
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
-				runnable.run();
-				latch.countDown();
+				try {
+					runnable.run();
+				}
+				finally {
+					latch.countDown();
+				}
 			}
 		});
 
