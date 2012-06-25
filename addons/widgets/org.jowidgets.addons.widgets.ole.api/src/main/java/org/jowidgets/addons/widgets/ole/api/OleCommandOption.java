@@ -28,11 +28,11 @@
 
 package org.jowidgets.addons.widgets.ole.api;
 
-import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.util.IMutableValue;
+public enum OleCommandOption {
 
-public interface IOleControl extends IControl {
-
-	IMutableValue<IOleContext> getContext();
+	DODEFAULT,
+	PROMPTUSER,
+	DONTPROMPTUSER,
+	SHOWHELP;
 
 }

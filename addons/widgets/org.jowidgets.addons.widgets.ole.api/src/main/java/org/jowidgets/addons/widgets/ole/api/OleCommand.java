@@ -28,11 +28,15 @@
 
 package org.jowidgets.addons.widgets.ole.api;
 
-import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.util.IMutableValue;
+public enum OleCommand {
 
-public interface IOleControl extends IControl {
+	OPEN,
+	NEW,
+	SAVE,
+	SAVEAS,
+	SAVECOPYAS,
+	PRINT;
 
-	IMutableValue<IOleContext> getContext();
+	//TODO WH add other commands
 
 }

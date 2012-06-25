@@ -28,11 +28,10 @@
 
 package org.jowidgets.addons.widgets.ole.api;
 
-import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.util.IMutableValue;
+public interface IInvocationParameter {
 
-public interface IOleControl extends IControl {
+	Object getParameter();
 
-	IMutableValue<IOleContext> getContext();
+	String getParameterName();
 
 }
