@@ -71,6 +71,7 @@ import org.jowidgets.common.widgets.controller.ITableColumnPopupDetectionListene
 import org.jowidgets.common.widgets.controller.ITableSelectionListener;
 import org.jowidgets.spi.impl.controller.TableCellEditEvent;
 import org.jowidgets.spi.impl.controller.TableCellEditorObservable;
+import org.jowidgets.spi.impl.controller.TableCellEvent;
 import org.jowidgets.spi.impl.controller.TableCellObservable;
 import org.jowidgets.spi.impl.controller.TableCellPopupDetectionObservable;
 import org.jowidgets.spi.impl.controller.TableCellPopupEvent;
@@ -102,6 +103,8 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 	private final TableCellEditorObservable tableCellEditorObservable;
 	private final TableCellPopupDetectionObservable tableCellPopupDetectionObservable;
 	private final TableCellObservable tableCellObservable;
+	private final boolean hasBorder;
+	private final StyleDelegate styleDelegate;
 
 	public TableImpl(final ITableSetupSpi setup) {
 		super(new TableView(), false);
@@ -113,6 +116,8 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 		this.tableCellEditorObservable = new TableCellEditorObservable();
 		this.tableCellPopupDetectionObservable = new TableCellPopupDetectionObservable();
 		this.tableCellObservable = new TableCellObservable();
+
+		styleDelegate = new StyleDelegate(getUiReference());
 
 		if (setup.getSelectionPolicy() == TableSelectionPolicy.MULTI_ROW_SELECTION) {
 			getUiReference().getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -126,6 +131,13 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 		else {
 			throw new IllegalArgumentException("SelectionPolicy '" + setup.getSelectionPolicy() + "' is not known");
 		}
+
+		this.hasBorder = setup.hasBorder();
+
+		if (!hasBorder) {
+			styleDelegate.setNoBorder();
+		}
+
 		dataModel = setup.getDataModel();
 		columnModel = setup.getColumnModel();
 
@@ -160,7 +172,7 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 		if (columnModelObservable != null) {
 			columnModelObservable.addColumnModelListener(tableColumnModelListener);
 		}
-
+		getUiReference().setItems(new VirtualList(dataModel, columnModel, getUiReference()));
 		getUiReference().getSelectionModel().getSelectedCells().addListener(tableSelectionListener);
 	}
 
@@ -461,13 +473,22 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 		});
 
 		tableColumn.setOnEditCommit(new EventHandler<CellEditEvent>() {
-			//TODO DB test this
 			@Override
 			public void handle(final CellEditEvent event) {
 				final int row = event.getTablePosition().getRow();
 				final int column = event.getTablePosition().getColumn();
-				final JoTableRow newValue = (JoTableRow) event.getNewValue();
-				tableCellEditorObservable.fireEditFinished(new TableCellEditEvent(row, column, newValue.getCell(column).getText()));
+				final String newValue = (String) event.getNewValue();
+				tableCellEditorObservable.fireEditFinished(new TableCellEditEvent(row, column, newValue));
+			}
+		});
+
+		tableColumn.setOnEditCancel(new EventHandler<CellEditEvent>() {
+
+			@Override
+			public void handle(final CellEditEvent event) {
+				final int currentRow = event.getTablePosition().getRow();
+				final int currentColumn = getUiReference().getColumns().indexOf(tableColumn);
+				tableCellEditorObservable.fireEditCanceled(new TableCellEvent(currentRow, currentColumn));
 			}
 		});
 

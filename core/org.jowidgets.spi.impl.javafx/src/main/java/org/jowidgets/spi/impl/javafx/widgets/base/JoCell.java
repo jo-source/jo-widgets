@@ -57,11 +57,10 @@ public class JoCell extends TableCell<ITableCell, Object> {
 	@Override
 	public void startEdit() {
 		super.startEdit();
+		if (isEmpty()) {
+			return;
+		}
 		if (getCell(getItem()).isEditable()) {
-
-			if (isEmpty()) {
-				return;
-			}
 
 			if (textField == null) {
 				createTextField();
@@ -79,15 +78,33 @@ public class JoCell extends TableCell<ITableCell, Object> {
 	@Override
 	public void updateItem(final Object item, final boolean empty) {
 		super.updateItem(item, empty);
-		if (item != null) {
 
-			if (!isEmpty()) {
+		if (empty) {
+			setText(null);
+			setGraphic(null);
+		}
+		else {
+			if (isEditing()) {
 				if (textField != null) {
-					textField.setText(getCell(item).getText());
+					textField.setText(toString(item));
 				}
-
-				setText(getCell(item).getText());
+				setText(null);
+				setGraphic(textField);
 			}
+			else {
+				setText(toString(item));
+				setGraphic(null);
+			}
+		}
+
+	}
+
+	private String toString(final Object item) {
+		if (item instanceof String) {
+			return (String) item;
+		}
+		else {
+			return getCell(item).getText();
 		}
 
 	}
@@ -101,9 +118,14 @@ public class JoCell extends TableCell<ITableCell, Object> {
 			@Override
 			public void handle(final KeyEvent event) {
 				if (event.getCode() == KeyCode.ENTER) {
-					commitEdit(getItem());
+					commitEdit(textField.getText());
 					setContentDisplay(ContentDisplay.TEXT_ONLY);
 				}
+				else if (event.getCode() == KeyCode.ESCAPE) {
+					cancelEdit();
+					setContentDisplay(ContentDisplay.TEXT_ONLY);
+				}
+
 			}
 		});
 	}
