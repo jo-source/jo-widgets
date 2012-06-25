@@ -28,35 +28,28 @@
 
 package org.jowidgets.addons.widgets.ole.impl.swt;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
+import org.jowidgets.addons.widgets.ole.api.IOleContext;
 import org.jowidgets.addons.widgets.ole.api.IOleControl;
 import org.jowidgets.addons.widgets.ole.api.IOleControlSetupBuilder;
 import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.spi.impl.swt.common.color.ColorCache;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.IMutableValue;
 import org.jowidgets.util.IMutableValueListener;
 import org.jowidgets.util.IValueChangedEvent;
+import org.jowidgets.util.MutableValue;
 
 class OleControlImpl extends ControlWrapper implements IOleControl {
 
-	private final Boolean initialVisiblityState;
-	private final IColorConstant initialBackgroundColor;
-	private final IColorConstant initialForegroundColor;
+	private final MutableValue<IOleContext> context;
 
-	@SuppressWarnings("unused")
-	private Composite swtOleFrame;
-
-	OleControlImpl(final IControl control, final IMutableValue<Composite> swtCompositeValue, final IOleControlSetupBuilder<?> setup) {
+	OleControlImpl(
+		final IControl control,
+		final IMutableValue<Composite> swtCompositeValue,
+		final IOleControlSetupBuilder<?> setup) {
 		super(control);
 
-		this.initialVisiblityState = setup.isVisible();
-		this.initialBackgroundColor = setup.getBackgroundColor();
-		this.initialForegroundColor = setup.getForegroundColor();
+		this.context = new MutableValue<IOleContext>();
 
 		swtCompositeValue.addMutableValueListener(new IMutableValueListener<Composite>() {
 			@Override
@@ -70,37 +63,16 @@ class OleControlImpl extends ControlWrapper implements IOleControl {
 
 	private void swtCompositeChanged(final IMutableValue<Composite> swtCompositeValue) {
 		if (swtCompositeValue.getValue() != null) {
-			swtOleFrame = createOleFrame(swtCompositeValue.getValue());
+			context.setValue(new OleContextImpl(swtCompositeValue.getValue()));
 		}
 		else {
-			swtOleFrame = null;
+			context.setValue(null);
 		}
 	}
 
-	Composite createOleFrame(final Composite swtComposite) {
-
-		swtComposite.setLayout(new FillLayout());
-
-		//TODO create the ole stuff here BEGIN
-		final Composite result = new Composite(swtComposite, SWT.NONE);
-		result.setLayout(new FillLayout());
-		final Label label = new Label(result, SWT.NONE);
-		label.setText("TODO implement OLE control");
-		//TODO create the ole stuff here END
-
-		if (initialVisiblityState != null) {
-			setVisible(initialVisiblityState.booleanValue());
-		}
-
-		if (initialBackgroundColor != null) {
-			result.setBackground(ColorCache.getInstance().getColor(initialBackgroundColor));
-		}
-
-		if (initialForegroundColor != null) {
-			result.setForeground(ColorCache.getInstance().getColor(initialForegroundColor));
-		}
-
-		return result;
+	@Override
+	public IMutableValue<IOleContext> getContext() {
+		return context;
 	}
 
 }

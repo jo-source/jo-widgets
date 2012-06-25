@@ -28,11 +28,33 @@
 
 package org.jowidgets.addons.widgets.ole.api;
 
-import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.util.IMutableValue;
+public final class InvocationParameter {
 
-public interface IOleControl extends IControl {
+	private InvocationParameter() {}
 
-	IMutableValue<IOleContext> getContext();
+	public static IInvocationParameter create(final String parameterName, final Object parameter) {
+		return new InvocationParameterImpl(parameterName, parameter);
+	}
 
+	private static class InvocationParameterImpl implements IInvocationParameter {
+
+		private final String parameterName;
+		private final Object parameter;
+
+		public InvocationParameterImpl(final String parameterName, final Object parameter) {
+			this.parameterName = parameterName;
+			this.parameter = parameter;
+		}
+
+		@Override
+		public Object getParameter() {
+			return parameter;
+		}
+
+		@Override
+		public String getParameterName() {
+			return parameterName;
+		}
+
+	}
 }
