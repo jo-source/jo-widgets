@@ -48,14 +48,17 @@ public final class StyleDelegate {
 	}
 
 	public void setForegroundColor(final IColorConstant colorValue) {
-		fontColorCSS = "-fx-text-fill: #" + ColorCSSConverter.colorToCSS(colorValue) + ";\n";
-		setStyle();
+		final String colorToCSS = ColorCSSConverter.colorToCSS(colorValue);
+		if (!colorToCSS.isEmpty()) {
+			fontColorCSS = "-fx-text-fill: #" + colorToCSS + ";\n";
+			setStyle();
+		}
 	}
 
 	public void setBackgroundColor(final IColorConstant colorValue) {
 		final String colorToCSS = ColorCSSConverter.colorToCSS(colorValue);
 		if (!colorToCSS.isEmpty()) {
-			backgroundColorCSS = "-fx-background-color: #" + ColorCSSConverter.colorToCSS(colorValue) + ";\n";
+			backgroundColorCSS = "-fx-background-color: #" + colorToCSS + ";\n";
 			setStyle();
 		}
 	}
