@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann, waheckma
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,32 +26,20 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.office.impl.ole;
+package org.jowidgets.addons.widgets.ole.document.api;
 
-import org.jowidgets.addons.widgets.office.api.IOfficeControl;
-import org.jowidgets.addons.widgets.office.api.IOfficeControlSetupBuilder;
-import org.jowidgets.addons.widgets.ole.document.api.IOleDocument;
-import org.jowidgets.addons.widgets.ole.document.tools.OleDocumentWrapper;
-import org.jowidgets.util.event.IChangeListener;
+import org.jowidgets.api.toolkit.Toolkit;
 
-class OfficeControlImpl extends OleDocumentWrapper implements IOfficeControl {
+public final class OleDocumentBPF {
 
-	@SuppressWarnings("unused")
-	private final IOleDocument oleDocument;
+	private OleDocumentBPF() {}
 
-	public OfficeControlImpl(final IOleDocument oleDocument, final IOfficeControlSetupBuilder<?> setup) {
-		super(oleDocument);
-		this.oleDocument = oleDocument;
+	public static IOleDocumentBluePrint document() {
+		return Toolkit.getBluePrintFactory().bluePrint(IOleDocumentBluePrint.class);
 	}
 
-	@Override
-	public void setToolbarVisible(final boolean visible) {
-
-	}
-
-	@Override
-	public void addDocumentChangeListener(final IChangeListener changeListener) {
-
+	public static IOleDocumentBluePrint document(final String progId) {
+		return document().setProgId(progId);
 	}
 
 }

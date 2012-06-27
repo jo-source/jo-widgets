@@ -26,20 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.ole.api;
+package org.jowidgets.addons.widgets.ole.document.impl;
 
-import java.io.File;
+import org.jowidgets.api.toolkit.IToolkitInterceptor;
+import org.jowidgets.tools.toolkit.AbstractToolkitInterceptorHolder;
 
-import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
-import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
-import org.jowidgets.util.IFactory;
+public final class OleDocumentToolkitInterceptorHolder extends AbstractToolkitInterceptorHolder {
 
-public interface IOfficeControlSetupBuilder<INSTANCE_TYPE extends IOfficeControlSetupBuilder<?>> extends
-		IComponentSetup,
-		IComponentSetupBuilder<INSTANCE_TYPE> {
-
-	INSTANCE_TYPE setTempFileFactory(IFactory<File> factory);
-
-	IFactory<File> getTempFileFactory();
+	@Override
+	protected IToolkitInterceptor createToolkitInterceptor() {
+		return new OleDocumentToolkitInterceptor();
+	}
 
 }

@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.ole.api;
+package org.jowidgets.addons.widgets.office.api;
 
 import org.jowidgets.api.toolkit.Toolkit;
 

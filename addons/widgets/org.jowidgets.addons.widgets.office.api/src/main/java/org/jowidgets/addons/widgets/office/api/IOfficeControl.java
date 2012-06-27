@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2012, grossmann, waheckma
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,10 +26,15 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.ole.api;
+package org.jowidgets.addons.widgets.office.api;
 
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.addons.widgets.ole.document.api.IOleDocument;
+import org.jowidgets.util.event.IChangeListener;
 
-public interface IOfficeTextBluePrint extends IOfficeControlSetupBuilder<IOfficeTextBluePrint>, IWidgetDescriptor<IOfficeControl> {
+public interface IOfficeControl extends IOleDocument {
+
+	void setToolbarVisible(boolean visible);
+
+	void addDocumentChangeListener(IChangeListener changeListener);
 
 }

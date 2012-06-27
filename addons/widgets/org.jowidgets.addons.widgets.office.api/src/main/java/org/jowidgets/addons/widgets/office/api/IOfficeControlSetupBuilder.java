@@ -26,10 +26,20 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.ole.api;
+package org.jowidgets.addons.widgets.office.api;
 
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import java.io.File;
 
-public interface IOfficeTableCalculationBluePrint extends IOfficeControlSetupBuilder<IOfficeTableCalculationBluePrint>, IWidgetDescriptor<IOfficeControl> {
+import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
+import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
+import org.jowidgets.util.IFactory;
+
+public interface IOfficeControlSetupBuilder<INSTANCE_TYPE extends IOfficeControlSetupBuilder<?>> extends
+		IComponentSetup,
+		IComponentSetupBuilder<INSTANCE_TYPE> {
+
+	INSTANCE_TYPE setTempFileFactory(IFactory<File> factory);
+
+	IFactory<File> getTempFileFactory();
 
 }

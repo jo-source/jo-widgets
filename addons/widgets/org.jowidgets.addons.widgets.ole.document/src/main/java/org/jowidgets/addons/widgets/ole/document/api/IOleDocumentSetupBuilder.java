@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann, waheckma
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,32 +26,26 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.office.impl.ole;
+package org.jowidgets.addons.widgets.ole.document.api;
 
-import org.jowidgets.addons.widgets.office.api.IOfficeControl;
-import org.jowidgets.addons.widgets.office.api.IOfficeControlSetupBuilder;
-import org.jowidgets.addons.widgets.ole.document.api.IOleDocument;
-import org.jowidgets.addons.widgets.ole.document.tools.OleDocumentWrapper;
-import org.jowidgets.util.event.IChangeListener;
+import java.io.File;
 
-class OfficeControlImpl extends OleDocumentWrapper implements IOfficeControl {
+import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
+import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
+import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
+import org.jowidgets.util.IFactory;
 
-	@SuppressWarnings("unused")
-	private final IOleDocument oleDocument;
+public interface IOleDocumentSetupBuilder<INSTANCE_TYPE extends IOleDocumentSetupBuilder<?>> extends
+		IComponentSetup,
+		IComponentSetupBuilder<INSTANCE_TYPE> {
 
-	public OfficeControlImpl(final IOleDocument oleDocument, final IOfficeControlSetupBuilder<?> setup) {
-		super(oleDocument);
-		this.oleDocument = oleDocument;
-	}
+	INSTANCE_TYPE setTempFileFactory(IFactory<File> factory);
 
-	@Override
-	public void setToolbarVisible(final boolean visible) {
+	INSTANCE_TYPE setProgId(String progId);
 
-	}
+	IFactory<File> getTempFileFactory();
 
-	@Override
-	public void addDocumentChangeListener(final IChangeListener changeListener) {
-
-	}
+	@Mandatory
+	String getProgId();
 
 }

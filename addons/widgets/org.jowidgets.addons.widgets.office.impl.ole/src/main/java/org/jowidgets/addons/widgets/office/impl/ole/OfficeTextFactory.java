@@ -28,10 +28,11 @@
 
 package org.jowidgets.addons.widgets.office.impl.ole;
 
-import org.jowidgets.addons.widgets.ole.api.IOfficeControl;
-import org.jowidgets.addons.widgets.ole.api.IOfficeTextBluePrint;
-import org.jowidgets.addons.widgets.ole.api.IOleControl;
-import org.jowidgets.addons.widgets.ole.api.OleBPF;
+import org.jowidgets.addons.widgets.office.api.IOfficeControl;
+import org.jowidgets.addons.widgets.office.api.IOfficeTextBluePrint;
+import org.jowidgets.addons.widgets.ole.document.api.IOleDocument;
+import org.jowidgets.addons.widgets.ole.document.api.IOleDocumentBluePrint;
+import org.jowidgets.addons.widgets.ole.document.api.OleDocumentBPF;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 
@@ -39,8 +40,10 @@ final class OfficeTextFactory implements IWidgetFactory<IOfficeControl, IOfficeT
 
 	@Override
 	public IOfficeControl create(final Object parentUiReference, final IOfficeTextBluePrint bluePrint) {
-		final IOleControl oleControl = Toolkit.getWidgetFactory().create(parentUiReference, OleBPF.oleControl());
-		return new OfficeTextImpl(oleControl, bluePrint);
+		final IOleDocumentBluePrint documentBp = OleDocumentBPF.document("Word.Document");
+		documentBp.setSetup(bluePrint);
+		final IOleDocument document = Toolkit.getWidgetFactory().create(parentUiReference, documentBp);
+		return new OfficeControlImpl(document, bluePrint);
 	}
 
 }

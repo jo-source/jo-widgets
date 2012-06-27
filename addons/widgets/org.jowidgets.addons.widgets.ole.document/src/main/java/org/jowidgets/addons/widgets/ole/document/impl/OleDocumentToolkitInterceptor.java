@@ -26,16 +26,19 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.office.impl.ole;
+package org.jowidgets.addons.widgets.ole.document.impl;
 
-import org.jowidgets.addons.widgets.ole.api.IOfficeControl;
-import org.jowidgets.addons.widgets.ole.api.IOfficeTextBluePrint;
-import org.jowidgets.addons.widgets.ole.api.IOleControl;
+import org.jowidgets.addons.widgets.ole.document.api.IOleDocumentBluePrint;
+import org.jowidgets.api.toolkit.IToolkit;
+import org.jowidgets.api.toolkit.IToolkitInterceptor;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
-final class OfficeTextImpl extends OfficeControlImpl implements IOfficeControl {
+final class OleDocumentToolkitInterceptor implements IToolkitInterceptor {
 
-	public OfficeTextImpl(final IOleControl oleControl, final IOfficeTextBluePrint bluePrint) {
-		super(oleControl, bluePrint, "Word.Document");
+	@Override
+	public void onToolkitCreate(final IToolkit toolkit) {
+		final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
+		widgetFactory.register(IOleDocumentBluePrint.class, new OleDocumentFactory());
 	}
 
 }

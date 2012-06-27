@@ -30,8 +30,8 @@ package org.jowidgets.examples.common.office;
 
 import java.io.File;
 
-import org.jowidgets.addons.widgets.ole.api.IOfficeControl;
-import org.jowidgets.addons.widgets.ole.api.OfficeBPF;
+import org.jowidgets.addons.widgets.office.api.IOfficeControl;
+import org.jowidgets.addons.widgets.office.api.OfficeBPF;
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrame;

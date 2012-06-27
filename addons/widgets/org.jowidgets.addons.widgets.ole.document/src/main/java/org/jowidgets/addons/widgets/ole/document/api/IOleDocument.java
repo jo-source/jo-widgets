@@ -26,32 +26,30 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.office.impl.ole;
+package org.jowidgets.addons.widgets.ole.document.api;
 
-import org.jowidgets.addons.widgets.office.api.IOfficeControl;
-import org.jowidgets.addons.widgets.office.api.IOfficeControlSetupBuilder;
-import org.jowidgets.addons.widgets.ole.document.api.IOleDocument;
-import org.jowidgets.addons.widgets.ole.document.tools.OleDocumentWrapper;
-import org.jowidgets.util.event.IChangeListener;
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
 
-class OfficeControlImpl extends OleDocumentWrapper implements IOfficeControl {
+import org.jowidgets.addons.widgets.ole.api.IOleContext;
+import org.jowidgets.api.widgets.IControl;
+import org.jowidgets.util.IMutableValue;
 
-	@SuppressWarnings("unused")
-	private final IOleDocument oleDocument;
+public interface IOleDocument extends IControl {
 
-	public OfficeControlImpl(final IOleDocument oleDocument, final IOfficeControlSetupBuilder<?> setup) {
-		super(oleDocument);
-		this.oleDocument = oleDocument;
-	}
+	void openNewDocument();
 
-	@Override
-	public void setToolbarVisible(final boolean visible) {
+	void openDocument(File file);
 
-	}
+	void openDocument(InputStream inputStream);
 
-	@Override
-	public void addDocumentChangeListener(final IChangeListener changeListener) {
+	boolean saveDocument(File file, Boolean includeOleInfo);
 
-	}
+	void saveDocument(OutputStream outputStream);
+
+	boolean isDirty();
+
+	IMutableValue<IOleContext> getContext();
 
 }

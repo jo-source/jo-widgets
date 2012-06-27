@@ -28,10 +28,11 @@
 
 package org.jowidgets.addons.widgets.office.impl.ole;
 
-import org.jowidgets.addons.widgets.ole.api.IOfficeControl;
-import org.jowidgets.addons.widgets.ole.api.IOfficeTableCalculationBluePrint;
-import org.jowidgets.addons.widgets.ole.api.IOleControl;
-import org.jowidgets.addons.widgets.ole.api.OleBPF;
+import org.jowidgets.addons.widgets.office.api.IOfficeControl;
+import org.jowidgets.addons.widgets.office.api.IOfficeTableCalculationBluePrint;
+import org.jowidgets.addons.widgets.ole.document.api.IOleDocument;
+import org.jowidgets.addons.widgets.ole.document.api.IOleDocumentBluePrint;
+import org.jowidgets.addons.widgets.ole.document.api.OleDocumentBPF;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 
@@ -39,8 +40,10 @@ final class OfficeTableCalculationFactory implements IWidgetFactory<IOfficeContr
 
 	@Override
 	public IOfficeControl create(final Object parentUiReference, final IOfficeTableCalculationBluePrint bluePrint) {
-		final IOleControl oleControl = Toolkit.getWidgetFactory().create(parentUiReference, OleBPF.oleControl());
-		return new OfficeTableCalculationImpl(oleControl, bluePrint);
+		final IOleDocumentBluePrint documentBp = OleDocumentBPF.document("Excel.Sheet");
+		documentBp.setSetup(bluePrint);
+		final IOleDocument document = Toolkit.getWidgetFactory().create(parentUiReference, documentBp);
+		return new OfficeControlImpl(document, bluePrint);
 	}
 
 }
