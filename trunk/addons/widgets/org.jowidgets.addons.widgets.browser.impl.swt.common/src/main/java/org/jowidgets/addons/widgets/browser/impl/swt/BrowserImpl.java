@@ -170,7 +170,10 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 	}
 
 	@Override
-	public final void setUrl(final String url) {
+	public final void setUrl(String url) {
+		if (url == null) {
+			url = "";
+		}
 		this.html = null;
 		this.url = url;
 		if (isInitialized()) {
@@ -180,7 +183,10 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 	}
 
 	@Override
-	public final void setHtml(final String html) {
+	public final void setHtml(String html) {
+		if (html == null) {
+			html = "";
+		}
 		this.url = null;
 		this.html = html;
 		if (isInitialized()) {
