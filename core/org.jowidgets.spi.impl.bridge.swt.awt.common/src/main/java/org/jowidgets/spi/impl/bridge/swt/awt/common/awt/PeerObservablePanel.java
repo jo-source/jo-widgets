@@ -29,6 +29,7 @@
 package org.jowidgets.spi.impl.bridge.swt.awt.common.awt;
 
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import javax.swing.JPanel;
@@ -68,13 +69,13 @@ class PeerObservablePanel extends JPanel {
 	}
 
 	private void fireAfterPeerAdd() {
-		for (final IPeerListener peerListener : peerListeners) {
+		for (final IPeerListener peerListener : new LinkedList<IPeerListener>(peerListeners)) {
 			peerListener.afterPeerAdd();
 		}
 	}
 
 	private void fireBeforePeerRemove() {
-		for (final IPeerListener peerListener : peerListeners) {
+		for (final IPeerListener peerListener : new LinkedList<IPeerListener>(peerListeners)) {
 			peerListener.beforePeerRemove();
 		}
 	}
