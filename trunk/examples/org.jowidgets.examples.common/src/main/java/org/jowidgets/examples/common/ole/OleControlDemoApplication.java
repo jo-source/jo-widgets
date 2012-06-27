@@ -107,7 +107,7 @@ public final class OleControlDemoApplication implements IApplication {
 	private void onUrlChange(final IMutableValue<IOleContext> contextValue, final ITextControl urlField) {
 		final IOleContext context = contextValue.getValue();
 		if (context != null) {
-			context.invoke("Navigate", InvocationParameter.create("URL", urlField.getText()));
+			context.getAutomation().invoke("Navigate", InvocationParameter.create("URL", urlField.getText()));
 		}
 	}
 }

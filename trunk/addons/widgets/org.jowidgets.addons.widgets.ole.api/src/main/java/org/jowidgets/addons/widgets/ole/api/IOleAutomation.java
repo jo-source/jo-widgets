@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann, waheckma
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,26 +28,10 @@
 
 package org.jowidgets.addons.widgets.ole.api;
 
-import java.io.File;
+public interface IOleAutomation {
 
-public interface IOleContext {
+	Object invoke(String methodName, IInvocationParameter... parameter);
 
-	void setDocument(String progId);
-
-	void setDocument(String progId, File file);
-
-	void setDocument(File file);
-
-	boolean saveCurrentDocument(File file, boolean includeOleInfo);
-
-	void clearDocument();
-
-	boolean isDirty();
-
-	//TODO WH add listener stuff
-
-	void execute(OleCommand command, Object in, OleCommandOption... options);
-
-	IOleAutomation getAutomation();
+	boolean setProperty(String propertyName, Object... parameter);
 
 }

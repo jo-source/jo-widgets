@@ -44,6 +44,7 @@ import org.eclipse.swt.ole.win32.OleFrame;
 import org.eclipse.swt.ole.win32.Variant;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.addons.widgets.ole.api.IInvocationParameter;
+import org.jowidgets.addons.widgets.ole.api.IOleAutomation;
 import org.jowidgets.addons.widgets.ole.api.IOleContext;
 import org.jowidgets.addons.widgets.ole.api.OleCommand;
 import org.jowidgets.addons.widgets.ole.api.OleCommandOption;
@@ -55,33 +56,11 @@ class OleContextImpl implements IOleContext {
 
 	private OleControlSite oleControlSiteLazy;
 
-	private OleAutomation oleAutomationLazy;
+	private OleAutomationImpl oleAutomationLazy;
 
 	OleContextImpl(final Composite swtComposite) {
 		swtComposite.setLayout(new FillLayout());
 		this.oleFrame = new OleFrame(swtComposite, SWT.NONE);
-	}
-
-	@Override
-	public Object invoke(final String methodName, final IInvocationParameter... parameters) {
-		Assert.paramNotEmpty(methodName, "methodName");
-		Assert.paramNotNull(parameters, "parameters");
-
-		final OleAutomation oleAutomation = getOleAutomation();
-
-		final String[] parameterNames = new String[parameters.length];
-		final Variant[] variants = new Variant[parameters.length];
-		int index = 0;
-		for (final IInvocationParameter parameter : parameters) {
-			parameterNames[index] = parameter.getParameterName();
-			variants[index] = createVariant(parameter.getParameter());
-			index++;
-		}
-
-		final int[] paramterNamesIds = oleAutomation.getIDsOfNames(parameterNames);
-		final int[] methodNameIds = oleAutomation.getIDsOfNames(new String[] {methodName});
-
-		return getVariantResult(oleAutomation.invoke(methodNameIds[0], variants, paramterNamesIds));
 	}
 
 	@Override
@@ -125,7 +104,9 @@ class OleContextImpl implements IOleContext {
 
 	@Override
 	public void clearDocument() {
-		oleAutomationLazy.dispose();
+		if (oleAutomationLazy != null) {
+			oleAutomationLazy.dispose();
+		}
 		getOleControlSite().dispose();
 		oleControlSiteLazy = null;
 		oleAutomationLazy = null;
@@ -144,9 +125,10 @@ class OleContextImpl implements IOleContext {
 		return false;
 	}
 
-	private OleAutomation getOleAutomation() {
+	@Override
+	public IOleAutomation getAutomation() {
 		if (oleAutomationLazy == null) {
-			oleAutomationLazy = new OleAutomation(getOleControlSite());
+			oleAutomationLazy = new OleAutomationImpl(new OleAutomation(getOleControlSite()));
 		}
 		return oleAutomationLazy;
 	}
@@ -319,6 +301,61 @@ class OleContextImpl implements IOleContext {
 		else {
 			throw new IllegalArgumentException("parameter type '" + object.getClass().getName() + "' is not supported");
 		}
+	}
+
+	private final class OleAutomationImpl implements IOleAutomation {
+
+		private final OleAutomation oleAutomation;
+
+		public OleAutomationImpl(final OleAutomation oleAutomation) {
+			this.oleAutomation = oleAutomation;
+		}
+
+		@Override
+		public Object invoke(final String methodName, final IInvocationParameter... parameters) {
+			Assert.paramNotEmpty(methodName, "methodName");
+			Assert.paramNotNull(parameters, "parameters");
+
+			final String[] parameterNames = new String[parameters.length];
+			final Variant[] variants = new Variant[parameters.length];
+			int index = 0;
+			for (final IInvocationParameter parameter : parameters) {
+				parameterNames[index] = parameter.getParameterName();
+				variants[index] = createVariant(parameter.getParameter());
+				index++;
+			}
+
+			final int[] paramterNamesIds = oleAutomation.getIDsOfNames(parameterNames);
+			final int[] methodNameIds = oleAutomation.getIDsOfNames(new String[] {methodName});
+
+			return getVariantResult(oleAutomation.invoke(methodNameIds[0], variants, paramterNamesIds));
+		}
+
+		@Override
+		public boolean setProperty(final String propertyName, final Object... parameters) {
+			Assert.paramNotEmpty(parameters, "parameters");
+			final int[] propertyNameIds = oleAutomation.getIDsOfNames(new String[] {propertyName});
+			if (propertyNameIds != null && propertyNameIds.length == 1) {
+				if (parameters.length > 1) {
+					final Variant[] variants = new Variant[parameters.length];
+					for (int i = 0; i < parameters.length; i++) {
+						variants[i] = createVariant(parameters[i]);
+					}
+					return oleAutomation.setProperty(propertyNameIds[0], variants);
+				}
+				else {
+					return oleAutomation.setProperty(propertyNameIds[0], createVariant(parameters[0]));
+				}
+			}
+			else {
+				return false;
+			}
+		}
+
+		public void dispose() {
+			oleAutomation.dispose();
+		}
+
 	}
 
 }
