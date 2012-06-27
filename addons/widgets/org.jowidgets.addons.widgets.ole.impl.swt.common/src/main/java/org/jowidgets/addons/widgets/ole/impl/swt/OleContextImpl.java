@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2012, grossmann, waheckma
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -34,6 +34,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.internal.ole.win32.IDispatch;
+import org.eclipse.swt.internal.ole.win32.IUnknown;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.ole.win32.OLE;
 import org.eclipse.swt.ole.win32.OleAutomation;
@@ -52,6 +54,7 @@ class OleContextImpl implements IOleContext {
 	private final OleFrame oleFrame;
 
 	private OleControlSite oleControlSiteLazy;
+
 	private OleAutomation oleAutomationLazy;
 
 	OleContextImpl(final Composite swtComposite) {
@@ -129,8 +132,8 @@ class OleContextImpl implements IOleContext {
 	}
 
 	@Override
-	public void saveCurrentDocumet(final File file, final boolean includeOleInfo) {
-		getOleControlSite().save(file, includeOleInfo);
+	public boolean saveCurrentDocument(final File file, final boolean includeOleInfo) {
+		return getOleControlSite().save(file, includeOleInfo);
 	}
 
 	@Override
@@ -182,7 +185,90 @@ class OleContextImpl implements IOleContext {
 		else if (command == OleCommand.NEW) {
 			return OLE.OLECMDID_NEW;
 		}
-		//TODO WH handle other commands
+		else if (command == OleCommand.SAVE) {
+			return OLE.OLECMDID_SAVE;
+		}
+		else if (command == OleCommand.SAVEAS) {
+			return OLE.OLECMDID_SAVEAS;
+		}
+		else if (command == OleCommand.SAVECOPYAS) {
+			return OLE.OLECMDID_SAVECOPYAS;
+		}
+		else if (command == OleCommand.PRINT) {
+			return OLE.OLECMDID_PRINT;
+		}
+		else if (command == OleCommand.PRINTPREVIEW) {
+			return OLE.OLECMDID_PRINTPREVIEW;
+		}
+		else if (command == OleCommand.PAGESETUP) {
+			return OLE.OLECMDID_PAGESETUP;
+		}
+		else if (command == OleCommand.SPELL) {
+			return OLE.OLECMDID_SPELL;
+		}
+		else if (command == OleCommand.PROPERTIES) {
+			return OLE.OLECMDID_PROPERTIES;
+		}
+		else if (command == OleCommand.CUT) {
+			return OLE.OLECMDID_CUT;
+		}
+		else if (command == OleCommand.COPY) {
+			return OLE.OLECMDID_COPY;
+		}
+		else if (command == OleCommand.PASTE) {
+			return OLE.OLECMDID_PASTE;
+		}
+		else if (command == OleCommand.PASTERSPECIAL) {
+			return OLE.OLECMDID_PASTESPECIAL;
+		}
+		else if (command == OleCommand.UNDO) {
+			return OLE.OLECMDID_UNDO;
+		}
+		else if (command == OleCommand.REDO) {
+			return OLE.OLECMDID_REDO;
+		}
+		else if (command == OleCommand.SELECTALL) {
+			return OLE.OLECMDID_SELECTALL;
+		}
+		else if (command == OleCommand.CLEARSELECTION) {
+			return OLE.OLECMDID_CLEARSELECTION;
+		}
+		else if (command == OleCommand.ZOOM) {
+			return OLE.OLECMDID_ZOOM;
+		}
+		else if (command == OleCommand.GETZOOMRANGE) {
+			return OLE.OLECMDID_GETZOOMRANGE;
+		}
+		else if (command == OleCommand.UPDATECOMMANDS) {
+			return OLE.OLECMDID_UPDATECOMMANDS;
+		}
+		else if (command == OleCommand.REFRESH) {
+			return OLE.OLECMDID_REFRESH;
+		}
+		else if (command == OleCommand.STOP) {
+			return OLE.OLECMDID_STOP;
+		}
+		else if (command == OleCommand.HIDETOOLBARS) {
+			return OLE.OLECMDID_HIDETOOLBARS;
+		}
+		else if (command == OleCommand.SETPROGRESSMAX) {
+			return OLE.OLECMDID_SETPROGRESSMAX;
+		}
+		else if (command == OleCommand.SETPROGRESSPOS) {
+			return OLE.OLECMDID_SETPROGRESSPOS;
+		}
+		else if (command == OleCommand.SETPROGRESSTEXT) {
+			return OLE.OLECMDID_SETPROGRESSTEXT;
+		}
+		else if (command == OleCommand.SETTITLE) {
+			return OLE.OLECMDID_SETTITLE;
+		}
+		else if (command == OleCommand.SETDOWNLOADSTATE) {
+			return OLE.OLECMDID_SETDOWNLOADSTATE;
+		}
+		else if (command == OleCommand.STOPDOWNLOAD) {
+			return OLE.OLECMDID_STOPDOWNLOAD;
+		}
 		else {
 			throw new IllegalArgumentException("Command '" + command + "' is not supported.");
 		}
@@ -212,10 +298,24 @@ class OleContextImpl implements IOleContext {
 		else if (object instanceof Float) {
 			return new Variant(((Float) object).floatValue());
 		}
+		else if (object instanceof Short) {
+			return new Variant(((Short) object).shortValue());
+		}
 		else if (object instanceof Boolean) {
 			return new Variant(((Boolean) object).booleanValue());
 		}
-		//TODO WH support all relevant types of vairant
+		else if (object instanceof Byte) {
+			return new Variant(((Byte) object).byteValue());
+		}
+		else if (object instanceof Character) {
+			return new Variant(((Character) object).charValue());
+		}
+		else if (object instanceof IDispatch) {
+			return new Variant(((IDispatch) object));
+		}
+		else if (object instanceof IUnknown) {
+			return new Variant(((IUnknown) object));
+		}
 		else {
 			throw new IllegalArgumentException("parameter type '" + object.getClass().getName() + "' is not supported");
 		}

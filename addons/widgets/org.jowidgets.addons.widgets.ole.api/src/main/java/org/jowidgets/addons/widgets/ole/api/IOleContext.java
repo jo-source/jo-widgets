@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2012, grossmann, waheckma
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -38,7 +38,7 @@ public interface IOleContext {
 
 	void setDocument(File file);
 
-	void saveCurrentDocumet(File file, boolean includeOleInfo);
+	boolean saveCurrentDocument(File file, boolean includeOleInfo);
 
 	void clearDocument();
 

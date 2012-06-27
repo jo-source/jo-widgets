@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2012, grossmann, waheckma
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -43,13 +43,13 @@ public interface IOfficeControl extends IControl {
 
 	void openDocument(InputStream inputStream);
 
-	void saveDocument(File outputStream);
+	boolean saveDocument(File file, Boolean includeOleInfo);
 
 	void saveDocument(OutputStream outputStream);
 
 	void setToolbarVisible(boolean visible);
 
-	void isDirty();
+	boolean isDirty();
 
 	void addDocumentChangeListener(IChangeListener changeListener);
 

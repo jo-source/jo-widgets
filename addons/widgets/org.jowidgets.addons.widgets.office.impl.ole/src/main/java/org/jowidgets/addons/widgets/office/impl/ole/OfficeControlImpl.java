@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2012, grossmann, waheckma
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -29,6 +29,8 @@
 package org.jowidgets.addons.widgets.office.impl.ole;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
@@ -56,6 +58,7 @@ class OfficeControlImpl extends ControlWrapper implements IOfficeControl {
 		super(oleControl);
 		this.progId = progId;
 		this.mutableOleContext = oleControl.getContext();
+
 		if (setup.getTempFileFactory() != null) {
 			tempFileFactory = setup.getTempFileFactory();
 		}
@@ -68,15 +71,17 @@ class OfficeControlImpl extends ControlWrapper implements IOfficeControl {
 				oleContextChanged(event);
 			}
 		});
+
 		oleContextChanged(null);
 	}
 
 	private void oleContextChanged(final IValueChangedEvent<IOleContext> event) {
 		final IOleContext oleContext = mutableOleContext.getValue();
 		if (oleContext != null) {
-			if (tempDocumentStateFile != null) {
+			if (tempDocumentStateFile != null && tempDocumentStateFile.exists()) {
 				oleContext.setDocument(progId, tempDocumentStateFile);
-				//TODO WH delete tempFile
+				tempDocumentStateFile.delete();
+				tempDocumentStateFile = null;
 			}
 			else {
 				oleContext.setDocument(progId);
@@ -84,9 +89,11 @@ class OfficeControlImpl extends ControlWrapper implements IOfficeControl {
 		}
 		else if (event != null) {
 			final IOleContext oldContext = event.getOldValue();
+
 			if (oldContext != null) {
 				tempDocumentStateFile = tempFileFactory.create();
-				oldContext.saveCurrentDocumet(tempDocumentStateFile, true);
+				oldContext.saveCurrentDocument(tempDocumentStateFile, false);
+
 			}
 		}
 	}
@@ -98,27 +105,76 @@ class OfficeControlImpl extends ControlWrapper implements IOfficeControl {
 
 	@Override
 	public void openNewDocument() {
-
+		if (mutableOleContext.getValue() != null) {
+			mutableOleContext.getValue().setDocument(progId);
+		}
+		else {
+			throw new RuntimeException("Ole Context is null");
+		}
 	}
 
 	@Override
 	public void openDocument(final File file) {
-
+		if (mutableOleContext.getValue() != null) {
+			mutableOleContext.getValue().setDocument(file);
+		}
+		else {
+			throw new RuntimeException("Ole Context is null");
+		}
 	}
 
 	@Override
-	public void saveDocument(final File file) {
+	public boolean saveDocument(final File file, final Boolean includeOleInfo) {
 
+		if (mutableOleContext.getValue() != null) {
+			return mutableOleContext.getValue().saveCurrentDocument(file, includeOleInfo);
+		}
+		else {
+			throw new RuntimeException("Ole Context is null");
+		}
 	}
 
 	@Override
 	public void openDocument(final InputStream inputStream) {
+		try {
+			final File tempFile = tempFileFactory.create();
 
+			if (tempFile != null) {
+				final OutputStream out = new FileOutputStream(tempFile);
+
+				final byte buf[] = new byte[1024];
+				int length;
+				while ((length = inputStream.read(buf)) > 0) {
+					out.write(buf, 0, length);
+				}
+				out.close();
+				inputStream.close();
+				openDocument(tempFile);
+
+				if (!(tempFile.delete())) {
+					throw new IOException("Could not delete temp file: " + tempFile.getAbsolutePath());
+				}
+			}
+		}
+		catch (final IOException e) {
+			throw new RuntimeException("Open Document failed: " + e);
+		}
 	}
 
 	@Override
-	public void saveDocument(final OutputStream outputStream) {
+	public void saveDocument(OutputStream outputStream) {
 
+		try {
+			final File tempFile = tempFileFactory.create();
+			saveDocument(tempFile, true);
+			outputStream = new FileOutputStream(tempFile);
+			if (!(tempFile.delete())) {
+				throw new IOException("Could not delete temp file: " + tempFile.getAbsolutePath());
+			}
+		}
+		catch (final IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override
@@ -127,8 +183,13 @@ class OfficeControlImpl extends ControlWrapper implements IOfficeControl {
 	}
 
 	@Override
-	public void isDirty() {
-
+	public boolean isDirty() {
+		if (mutableOleContext.getValue() != null) {
+			return mutableOleContext.getValue().isDirty();
+		}
+		else {
+			throw new RuntimeException("Ole Context is null");
+		}
 	}
 
 	@Override
@@ -139,8 +200,25 @@ class OfficeControlImpl extends ControlWrapper implements IOfficeControl {
 	private final class DefaultTempFileFactory implements IFactory<File> {
 		@Override
 		public File create() {
-			//TODO WH write file to user temp
-			return new File(UUID.randomUUID().toString());
+			File temp = null;
+
+			try {
+
+				temp = File.createTempFile("OleTempFile", UUID.randomUUID().toString() + ".doc");
+			}
+			catch (final IOException e) {
+				throw new RuntimeException(e);
+			}
+			return temp;
 		}
+	}
+
+	@Override
+	public void dispose() {
+		if (tempDocumentStateFile != null) {
+			tempDocumentStateFile.delete();
+		}
+
+		super.dispose();
 	}
 }

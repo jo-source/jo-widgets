@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2012, grossmann, waheckma
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -35,8 +35,30 @@ public enum OleCommand {
 	SAVE,
 	SAVEAS,
 	SAVECOPYAS,
-	PRINT;
-
-	//TODO WH add other commands
+	PRINT,
+	PRINTPREVIEW,
+	PAGESETUP,
+	SPELL,
+	PROPERTIES,
+	CUT,
+	COPY,
+	PASTE,
+	PASTERSPECIAL,
+	UNDO,
+	REDO,
+	SELECTALL,
+	CLEARSELECTION,
+	ZOOM,
+	GETZOOMRANGE,
+	UPDATECOMMANDS,
+	REFRESH,
+	STOP,
+	HIDETOOLBARS,
+	SETPROGRESSMAX,
+	SETPROGRESSPOS,
+	SETPROGRESSTEXT,
+	SETTITLE,
+	SETDOWNLOADSTATE,
+	STOPDOWNLOAD;
 
 }
