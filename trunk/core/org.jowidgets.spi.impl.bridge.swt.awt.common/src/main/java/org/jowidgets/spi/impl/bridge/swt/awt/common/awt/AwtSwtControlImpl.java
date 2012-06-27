@@ -27,11 +27,12 @@
  */
 package org.jowidgets.spi.impl.bridge.swt.awt.common.awt;
 
+import java.awt.BorderLayout;
 import java.awt.Canvas;
-import java.awt.Container;
 import java.awt.event.HierarchyEvent;
 import java.awt.event.HierarchyListener;
 
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import org.eclipse.swt.awt.SWT_AWT;
@@ -42,7 +43,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.spi.impl.swing.common.widgets.SwingControl;
-import org.jowidgets.util.Assert;
 import org.jowidgets.util.IMutableValue;
 import org.jowidgets.util.MutableValue;
 
@@ -51,13 +51,12 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 	private final MutableValue<Composite> mutableValue;
 
 	public AwtSwtControlImpl(final Object parentUiReference) {
-		super(new Canvas());
-
+		super(new JPanel());
 		if (!SwingUtilities.isEventDispatchThread()) {
 			throw new IllegalArgumentException("The AwtSwtControl must be created in the event dispatching thread of swing");
 		}
 
-		Assert.paramHasType(parentUiReference, Container.class, "parentUiReference");
+		getUiReference().setLayout(new BorderLayout());
 
 		this.mutableValue = new MutableValue<Composite>();
 
@@ -76,7 +75,10 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 	private void initialize() {
 		final Display currentDisplay = Display.getCurrent();
 		if (currentDisplay != null) {
-			final Shell shell = SWT_AWT.new_Shell(currentDisplay, getUiReference());
+			final Canvas canvas = new Canvas();
+			getUiReference().removeAll();
+			getUiReference().add(BorderLayout.CENTER, canvas);
+			final Shell shell = SWT_AWT.new_Shell(currentDisplay, canvas);
 			shell.setLayout(new FillLayout());
 			shell.addDisposeListener(new DisposeListener() {
 				@Override
@@ -97,8 +99,8 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 	}
 
 	@Override
-	public Canvas getUiReference() {
-		return (Canvas) super.getUiReference();
+	public JPanel getUiReference() {
+		return (JPanel) super.getUiReference();
 	}
 
 	@Override

@@ -162,7 +162,7 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 		if (url != null) {
 			result.setUrl(url);
 		}
-		if (html != null) {
+		else if (html != null) {
 			result.setText(html);
 		}
 
@@ -174,6 +174,7 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 		this.html = null;
 		this.url = url;
 		if (isInitialized()) {
+			getSwtBrowser().setText("");
 			getSwtBrowser().setUrl(url);
 		}
 	}
@@ -183,6 +184,7 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 		this.url = null;
 		this.html = html;
 		if (isInitialized()) {
+			getSwtBrowser().setUrl("");
 			getSwtBrowser().setText(html);
 		}
 	}
