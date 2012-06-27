@@ -28,8 +28,8 @@
 
 package org.jowidgets.addons.widgets.office.impl.ole;
 
-import org.jowidgets.addons.widgets.ole.api.IOfficeTableCalculationBluePrint;
-import org.jowidgets.addons.widgets.ole.api.IOfficeTextBluePrint;
+import org.jowidgets.addons.widgets.office.api.IOfficeTableCalculationBluePrint;
+import org.jowidgets.addons.widgets.office.api.IOfficeTextBluePrint;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.IToolkitInterceptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;

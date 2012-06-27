@@ -26,32 +26,64 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.office.impl.ole;
+package org.jowidgets.addons.widgets.ole.document.tools;
 
-import org.jowidgets.addons.widgets.office.api.IOfficeControl;
-import org.jowidgets.addons.widgets.office.api.IOfficeControlSetupBuilder;
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import org.jowidgets.addons.widgets.ole.api.IOleContext;
 import org.jowidgets.addons.widgets.ole.document.api.IOleDocument;
-import org.jowidgets.addons.widgets.ole.document.tools.OleDocumentWrapper;
-import org.jowidgets.util.event.IChangeListener;
+import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
+import org.jowidgets.util.IMutableValue;
 
-class OfficeControlImpl extends OleDocumentWrapper implements IOfficeControl {
+public class OleDocumentWrapper extends ControlWrapper implements IOleDocument {
 
-	@SuppressWarnings("unused")
 	private final IOleDocument oleDocument;
 
-	public OfficeControlImpl(final IOleDocument oleDocument, final IOfficeControlSetupBuilder<?> setup) {
+	public OleDocumentWrapper(final IOleDocument oleDocument) {
 		super(oleDocument);
 		this.oleDocument = oleDocument;
 	}
 
 	@Override
-	public void setToolbarVisible(final boolean visible) {
-
+	protected IOleDocument getWidget() {
+		return (IOleDocument) super.getWidget();
 	}
 
 	@Override
-	public void addDocumentChangeListener(final IChangeListener changeListener) {
+	public void openNewDocument() {
+		oleDocument.openNewDocument();
+	}
 
+	@Override
+	public void openDocument(final File file) {
+		oleDocument.openDocument(file);
+	}
+
+	@Override
+	public boolean saveDocument(final File file, final Boolean includeOleInfo) {
+		return oleDocument.saveDocument(file, includeOleInfo);
+	}
+
+	@Override
+	public void openDocument(final InputStream inputStream) {
+		oleDocument.openDocument(inputStream);
+	}
+
+	@Override
+	public void saveDocument(final OutputStream outputStream) {
+		oleDocument.saveDocument(outputStream);
+	}
+
+	@Override
+	public boolean isDirty() {
+		return oleDocument.isDirty();
+	}
+
+	@Override
+	public IMutableValue<IOleContext> getContext() {
+		return oleDocument.getContext();
 	}
 
 }

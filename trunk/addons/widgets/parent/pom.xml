@@ -20,6 +20,7 @@
 		
 		 <!-- OLE -->
 		<module>../org.jowidgets.addons.widgets.ole.api</module>
+		<module>../org.jowidgets.addons.widgets.ole.document</module>
 		<module>../org.jowidgets.addons.widgets.ole.impl.swt.common</module>
 		<module>../org.jowidgets.addons.widgets.ole.impl.swt</module>
 		<module>../org.jowidgets.addons.widgets.ole.impl.swing</module>

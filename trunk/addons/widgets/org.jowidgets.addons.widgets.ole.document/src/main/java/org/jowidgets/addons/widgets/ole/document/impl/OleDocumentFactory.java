@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann, waheckma
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,31 +26,21 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.ole.api;
+package org.jowidgets.addons.widgets.ole.document.impl;
 
-import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
+import org.jowidgets.addons.widgets.ole.api.IOleControl;
+import org.jowidgets.addons.widgets.ole.api.OleBPF;
+import org.jowidgets.addons.widgets.ole.document.api.IOleDocument;
+import org.jowidgets.addons.widgets.ole.document.api.IOleDocumentBluePrint;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.common.widgets.factory.IWidgetFactory;
 
-import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.util.event.IChangeListener;
+final class OleDocumentFactory implements IWidgetFactory<IOleDocument, IOleDocumentBluePrint> {
 
-public interface IOfficeControl extends IControl {
-
-	void openNewDocument();
-
-	void openDocument(File file);
-
-	void openDocument(InputStream inputStream);
-
-	boolean saveDocument(File file, Boolean includeOleInfo);
-
-	void saveDocument(OutputStream outputStream);
-
-	void setToolbarVisible(boolean visible);
-
-	boolean isDirty();
-
-	void addDocumentChangeListener(IChangeListener changeListener);
+	@Override
+	public IOleDocument create(final Object parentUiReference, final IOleDocumentBluePrint bluePrint) {
+		final IOleControl oleControl = Toolkit.getWidgetFactory().create(parentUiReference, OleBPF.oleControl());
+		return new OleDocumentImpl(oleControl, bluePrint);
+	}
 
 }

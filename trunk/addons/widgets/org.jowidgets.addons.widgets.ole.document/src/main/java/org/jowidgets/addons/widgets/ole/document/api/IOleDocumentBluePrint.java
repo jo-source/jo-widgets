@@ -26,16 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.office.impl.ole;
+package org.jowidgets.addons.widgets.ole.document.api;
 
-import org.jowidgets.addons.widgets.ole.api.IOfficeControl;
-import org.jowidgets.addons.widgets.ole.api.IOfficeControlSetupBuilder;
-import org.jowidgets.addons.widgets.ole.api.IOleControl;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-final class OfficeTableCalculationImpl extends OfficeControlImpl implements IOfficeControl {
-
-	public OfficeTableCalculationImpl(final IOleControl oleControl, final IOfficeControlSetupBuilder<?> setup) {
-		super(oleControl, setup, "Excel.Sheet");
-	}
+public interface IOleDocumentBluePrint extends IOleDocumentSetupBuilder<IOleDocumentBluePrint>, IWidgetDescriptor<IOleDocument> {
 
 }
