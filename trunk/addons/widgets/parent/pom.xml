@@ -28,6 +28,11 @@
 		<!-- Office -->
 		<module>../org.jowidgets.addons.widgets.office.api</module>
 		<module>../org.jowidgets.addons.widgets.office.impl.ole</module>
+		
+		<!-- Mediaplayer -->
+		<module>../org.jowidgets.addons.widgets.mediaplayer.api</module>	
+		<module>../org.jowidgets.addons.widgets.mediaplayer.impl.ole</module>
+		
 	</modules>
 
 </project>
