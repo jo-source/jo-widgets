@@ -32,16 +32,14 @@ import java.awt.Canvas;
 import java.awt.event.HierarchyEvent;
 import java.awt.event.HierarchyListener;
 
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import org.eclipse.swt.awt.SWT_AWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.jowidgets.spi.impl.bridge.swt.awt.common.awt.PeerObservablePanel.IPeerListener;
 import org.jowidgets.spi.impl.swing.common.widgets.SwingControl;
 import org.jowidgets.util.IMutableValue;
 import org.jowidgets.util.MutableValue;
@@ -51,25 +49,37 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 	private final MutableValue<Composite> mutableValue;
 
 	public AwtSwtControlImpl(final Object parentUiReference) {
-		super(new JPanel());
+		super(new PeerObservablePanel());
+
 		if (!SwingUtilities.isEventDispatchThread()) {
 			throw new IllegalArgumentException("The AwtSwtControl must be created in the event dispatching thread of swing");
 		}
 
-		getUiReference().setLayout(new BorderLayout());
-
 		this.mutableValue = new MutableValue<Composite>();
+		getUiReference().setLayout(new BorderLayout());
+		getUiReference().addPeerListener(new IPeerListener() {
 
-		final HierarchyListener hierarchyListener = new HierarchyListener() {
+			@Override
+			public void afterPeerAdd() {
+				//If initialize will be invoked here, there is a flicker artifact
+				//that will not occur if initialize will be invoked in the 
+				//HierarchyListener
+			}
+
+			@Override
+			public void beforePeerRemove() {
+				mutableValue.setValue(null);
+			}
+
+		});
+		getUiReference().addHierarchyListener(new HierarchyListener() {
 			@Override
 			public void hierarchyChanged(final HierarchyEvent e) {
-				if (mutableValue.getValue() == null && getUiReference().getParent() != null && getUiReference().isDisplayable()) {
+				if (mutableValue.getValue() == null && getUiReference().isDisplayable()) {
 					initialize();
 				}
 			}
-		};
-
-		getUiReference().addHierarchyListener(hierarchyListener);
+		});
 	}
 
 	private void initialize() {
@@ -80,12 +90,6 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 			getUiReference().add(BorderLayout.CENTER, canvas);
 			final Shell shell = SWT_AWT.new_Shell(currentDisplay, canvas);
 			shell.setLayout(new FillLayout());
-			shell.addDisposeListener(new DisposeListener() {
-				@Override
-				public void widgetDisposed(final DisposeEvent e) {
-					mutableValue.setValue(null);
-				}
-			});
 			mutableValue.setValue(shell);
 		}
 		else {
@@ -99,8 +103,8 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 	}
 
 	@Override
-	public JPanel getUiReference() {
-		return (JPanel) super.getUiReference();
+	public PeerObservablePanel getUiReference() {
+		return (PeerObservablePanel) super.getUiReference();
 	}
 
 	@Override
