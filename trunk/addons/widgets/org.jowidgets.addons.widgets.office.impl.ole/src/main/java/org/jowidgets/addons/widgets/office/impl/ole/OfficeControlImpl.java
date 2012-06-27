@@ -92,7 +92,7 @@ class OfficeControlImpl extends ControlWrapper implements IOfficeControl {
 
 			if (oldContext != null) {
 				tempDocumentStateFile = tempFileFactory.create();
-				oldContext.saveCurrentDocument(tempDocumentStateFile, false);
+				oldContext.saveCurrentDocument(tempDocumentStateFile, true);
 
 			}
 		}
