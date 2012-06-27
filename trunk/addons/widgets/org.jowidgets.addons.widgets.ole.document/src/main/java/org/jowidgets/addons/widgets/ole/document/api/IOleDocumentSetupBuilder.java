@@ -32,7 +32,6 @@ import java.io.File;
 
 import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 import org.jowidgets.util.IFactory;
 
 public interface IOleDocumentSetupBuilder<INSTANCE_TYPE extends IOleDocumentSetupBuilder<?>> extends
@@ -45,7 +44,6 @@ public interface IOleDocumentSetupBuilder<INSTANCE_TYPE extends IOleDocumentSetu
 
 	IFactory<File> getTempFileFactory();
 
-	@Mandatory
 	String getProgId();
 
 }
