@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann, waheckma
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -43,6 +43,7 @@ import org.jowidgets.util.IValueChangedEvent;
 
 class MediaPlayerImpl extends ControlWrapper implements IMediaPlayer {
 
+	private static final String PROPERTY_URL = "URL";
 	private static final String WM_PLAYER_PROG_ID = "WMPlayer.OCX";
 
 	private final IMutableValue<IOleContext> mutableOleContext;
@@ -82,10 +83,11 @@ class MediaPlayerImpl extends ControlWrapper implements IMediaPlayer {
 
 	@Override
 	public void open(final String filename) {
+		Assert.paramNotNull(filename, "filename");
 		this.filename = filename;
 		final IOleContext oleContext = mutableOleContext.getValue();
 		if (oleContext != null) {
-			oleContext.getAutomation().setProperty("URL", filename);
+			oleContext.getAutomation().setProperty(PROPERTY_URL, filename);
 		}
 	}
 
