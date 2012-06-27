@@ -142,7 +142,7 @@ class OfficeControlImpl extends ControlWrapper implements IOfficeControl {
 			if (tempFile != null) {
 				final OutputStream out = new FileOutputStream(tempFile);
 
-				final byte buf[] = new byte[1024];
+				final byte[] buf = new byte[1024];
 				int length;
 				while ((length = inputStream.read(buf)) > 0) {
 					out.write(buf, 0, length);
