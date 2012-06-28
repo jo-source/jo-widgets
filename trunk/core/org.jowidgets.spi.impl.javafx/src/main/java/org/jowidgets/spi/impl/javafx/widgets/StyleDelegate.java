@@ -59,6 +59,7 @@ public final class StyleDelegate {
 		final String colorToCSS = ColorCSSConverter.colorToCSS(colorValue);
 		if (!colorToCSS.isEmpty()) {
 			backgroundColorCSS = "-fx-background-color: #" + colorToCSS + ";\n";
+			borderCSS = "-fx-border-color: #d0d0d0;\n";
 			setStyle();
 		}
 	}

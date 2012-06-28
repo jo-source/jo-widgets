@@ -175,9 +175,7 @@ public class VirtualList implements ObservableList<JoTableRow> {
 	}
 
 	@Override
-	public void clear() {
-
-	}
+	public void clear() {}
 
 	@Override
 	public JoTableRow get(final int rowIndex) {

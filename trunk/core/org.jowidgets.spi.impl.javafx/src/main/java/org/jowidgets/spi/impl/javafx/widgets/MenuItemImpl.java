@@ -61,7 +61,12 @@ public class MenuItemImpl implements IMenuItemSpi {
 
 	@Override
 	public void setIcon(final IImageConstant icon) {
-		getUiReference().setGraphic(JavafxImageRegistry.getInstance().getImage(icon));
+		if (icon != null) {
+			getUiReference().setGraphic(JavafxImageRegistry.getInstance().getImage(icon));
+		}
+		else {
+			getUiReference().setGraphic(null);
+		}
 	}
 
 	@Override

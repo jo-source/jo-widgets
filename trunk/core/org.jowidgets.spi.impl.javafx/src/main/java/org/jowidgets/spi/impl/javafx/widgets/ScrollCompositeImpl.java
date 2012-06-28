@@ -79,7 +79,7 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 		scrollPane.setFitToWidth(true);
 
 		scrollPane.setContent(innerContainer.getUiReference());
-		scrollPane.setFocusTraversable(false);
+		scrollPane.setStyle("-fx-background-color: #FFFFFF;\n");
 	}
 
 	@Override
@@ -95,7 +95,10 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 
 	@Override
 	public Rectangle getClientArea() {
-		return innerContainer.getClientArea();
+		final Rectangle clientArea = innerContainer.getClientArea();
+		final int width = clientArea.getWidth() - 5;
+		final int height = clientArea.getHeight() - 5;
+		return new Rectangle(clientArea.getX(), clientArea.getY(), width, height);
 	}
 
 	@Override
@@ -294,11 +297,12 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 
 	@Override
 	public void layoutBegin() {
-		innerContainer.layoutBegin();
+
 	}
 
 	@Override
 	public void layoutEnd() {
+		getUiReference().layout();
 		innerContainer.layoutEnd();
 	}
 
