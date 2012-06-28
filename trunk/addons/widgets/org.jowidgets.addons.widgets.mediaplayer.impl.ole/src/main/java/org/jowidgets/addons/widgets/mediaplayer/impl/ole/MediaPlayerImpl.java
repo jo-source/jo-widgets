@@ -30,6 +30,7 @@ package org.jowidgets.addons.widgets.mediaplayer.impl.ole;
 
 import java.io.File;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 
 import org.jowidgets.addons.widgets.mediaplayer.api.IMediaPlayer;
 import org.jowidgets.addons.widgets.mediaplayer.api.IMediaPlayerSetupBuilder;
@@ -94,7 +95,12 @@ class MediaPlayerImpl extends ControlWrapper implements IMediaPlayer {
 	@Override
 	public void open(final File file) {
 		Assert.paramNotNull(file, "file");
-		open(file.getAbsolutePath());
+		try {
+			open(file.toURI().toURL().toString());
+		}
+		catch (final MalformedURLException e) {
+			throw new RuntimeException("Can not resolve file url", e);
+		}
 	}
 
 	@Override
