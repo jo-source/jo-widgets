@@ -27,9 +27,14 @@
  */
 package org.jowidgets.spi.impl.javafx.widgets;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Menu;
+import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.ToggleGroup;
 
 import org.jowidgets.common.widgets.controller.IMenuListener;
 import org.jowidgets.spi.impl.controller.MenuObservable;
@@ -44,8 +49,14 @@ public class MainMenuImpl implements IMainMenuSpi {
 	private final MenuItemImpl menuItemDelegate;
 	private final MenuObservable menuObservable;
 
+	private final List<JoJavafxButtonGroup> radioGroups;
+
 	public MainMenuImpl() {
-		this.menuItemDelegate = new MenuItemImpl(new Menu(""));
+		this(new Menu());
+	}
+
+	public MainMenuImpl(final Menu menu) {
+		this.menuItemDelegate = new MenuItemImpl(menu);
 		this.menuObservable = new MenuObservable();
 		getUiReference().showingProperty().addListener(new ChangeListener<Boolean>() {
 
@@ -62,6 +73,9 @@ public class MainMenuImpl implements IMainMenuSpi {
 				}
 			}
 		});
+
+		this.radioGroups = new ArrayList<JoJavafxButtonGroup>();
+		this.radioGroups.add(new JoJavafxButtonGroup(null, new ToggleGroup()));
 	}
 
 	@Override
@@ -119,7 +133,10 @@ public class MainMenuImpl implements IMainMenuSpi {
 
 	@Override
 	public ISelectableMenuItemSpi addRadioItem(final Integer index) {
-		final RadioMenuItemImpl result = new RadioMenuItemImpl();
+		final RadioMenuItem radioItem = new RadioMenuItem("");
+		final ToggleGroup radioGroup = findRadioGroup(index);
+		radioItem.setToggleGroup(radioGroup);
+		final RadioMenuItemImpl result = new RadioMenuItemImpl(radioItem);
 		addItem(index, result);
 		return result;
 	}
@@ -134,6 +151,7 @@ public class MainMenuImpl implements IMainMenuSpi {
 	@Override
 	public IMenuItemSpi addSeparator(final Integer index) {
 		final SeparatorMenuItemImpl result = new SeparatorMenuItemImpl();
+		radioGroups.add(new JoJavafxButtonGroup(result, new ToggleGroup()));
 		addItem(index, result);
 		return result;
 	}
@@ -146,5 +164,58 @@ public class MainMenuImpl implements IMainMenuSpi {
 	@Override
 	public boolean isEnabled() {
 		return !getUiReference().isDisable();
+	}
+
+	private ToggleGroup findRadioGroup(final Integer index) {
+		final int safeIndex;
+		if (index != null) {
+			safeIndex = index.intValue();
+		}
+		else {
+			safeIndex = getUiReference().getItems().size();
+		}
+		ToggleGroup result = radioGroups.get(0).getButtonGroup();
+
+		if (radioGroups.size() != 1) {
+			for (final JoJavafxButtonGroup joButtonGroup : radioGroups) {
+				final SeparatorMenuItemImpl separator = joButtonGroup.getSeparator();
+				if (separator == null) {
+					continue;
+				}
+				int componentIndex = 0;
+				final int componentCount = getUiReference().getItems().size();
+				for (int i = 0; i < componentCount; i++) {
+					if (getUiReference().getItems().get(i) == separator.getUiReference()) {
+						componentIndex = i;
+						break;
+					}
+				}
+				if (componentIndex >= safeIndex) {
+					break;
+				}
+				result = joButtonGroup.getButtonGroup();
+			}
+		}
+		return result;
+	}
+
+	private static class JoJavafxButtonGroup {
+
+		private final SeparatorMenuItemImpl separator;
+
+		private final ToggleGroup buttonGroup;
+
+		public JoJavafxButtonGroup(final SeparatorMenuItemImpl separator, final ToggleGroup buttonGroup) {
+			this.separator = separator;
+			this.buttonGroup = buttonGroup;
+		}
+
+		protected SeparatorMenuItemImpl getSeparator() {
+			return separator;
+		}
+
+		protected ToggleGroup getButtonGroup() {
+			return buttonGroup;
+		}
 	}
 }

@@ -30,33 +30,20 @@ package org.jowidgets.spi.impl.javafx.widgets;
 import javafx.scene.control.Menu;
 
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.controller.IMenuListener;
-import org.jowidgets.spi.impl.controller.MenuObservable;
-import org.jowidgets.spi.widgets.IActionMenuItemSpi;
-import org.jowidgets.spi.widgets.IMenuItemSpi;
-import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 import org.jowidgets.spi.widgets.ISubMenuSpi;
 
-public class SubMenuImpl implements ISubMenuSpi {
+public class SubMenuImpl extends MainMenuImpl implements ISubMenuSpi {
 
 	private final MenuItemImpl menuItemDelegate;
-	private final Menu menu;
-	private final MenuObservable menuObservable;
 
 	public SubMenuImpl() {
-		menu = new Menu("");
+		super(new Menu());
 		this.menuItemDelegate = new MenuItemImpl(getUiReference());
-		menuObservable = new MenuObservable();
 	}
 
 	@Override
 	public Menu getUiReference() {
-		return menu;
-	}
-
-	@Override
-	public void setText(final String text) {
-		menuItemDelegate.setText(text);
+		return super.getUiReference();
 	}
 
 	@Override
@@ -69,78 +56,4 @@ public class SubMenuImpl implements ISubMenuSpi {
 		menuItemDelegate.setIcon(icon);
 	}
 
-	@Override
-	public void setMnemonic(final char mnemonic) {
-		menuItemDelegate.setMnemonic(mnemonic);
-	}
-
-	@Override
-	public void addMenuListener(final IMenuListener listener) {
-		menuObservable.addMenuListener(listener);
-	}
-
-	@Override
-	public void removeMenuListener(final IMenuListener listener) {
-		menuObservable.removeMenuListener(listener);
-	}
-
-	@Override
-	public void remove(final int index) {
-		getUiReference().getItems().remove(index);
-	}
-
-	private void addItem(final Integer index, final MenuItemImpl item) {
-		if (index != null) {
-			getUiReference().getItems().add(index.intValue(), item.getUiReference());
-		}
-		else {
-			getUiReference().getItems().add(item.getUiReference());
-		}
-	}
-
-	@Override
-	public IActionMenuItemSpi addActionItem(final Integer index) {
-		final ActionMenuItemImpl result = new ActionMenuItemImpl();
-		addItem(index, result);
-		return result;
-	}
-
-	@Override
-	public ISelectableMenuItemSpi addCheckedItem(final Integer index) {
-		final CheckedMenuItimImpl result = new CheckedMenuItimImpl();
-		addItem(index, result);
-		return result;
-	}
-
-	@Override
-	public ISelectableMenuItemSpi addRadioItem(final Integer index) {
-		final RadioMenuItemImpl result = new RadioMenuItemImpl();
-		addItem(index, result);
-		return result;
-	}
-
-	@Override
-	public ISubMenuSpi addSubMenu(final Integer index) {
-		final SubMenuImpl result = new SubMenuImpl();
-		getUiReference().getItems().add(index.intValue(), result.getUiReference());
-		return result;
-	}
-
-	@Override
-	public IMenuItemSpi addSeparator(final Integer index) {
-		final SeparatorMenuItemImpl result = new SeparatorMenuItemImpl();
-		addItem(index, result);
-		return result;
-	}
-
-	@Override
-	public void setEnabled(final boolean enabled) {
-		getUiReference().setDisable(!enabled);
-
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return !getUiReference().isDisable();
-	}
 }

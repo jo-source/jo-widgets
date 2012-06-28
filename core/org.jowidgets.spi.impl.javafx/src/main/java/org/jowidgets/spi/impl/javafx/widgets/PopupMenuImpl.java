@@ -28,11 +28,16 @@
 
 package org.jowidgets.spi.impl.javafx.widgets;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Control;
-import javafx.scene.control.TableView;
+import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.ToolBar;
 import javafx.stage.Stage;
 
@@ -49,6 +54,7 @@ public class PopupMenuImpl implements IPopupMenuSpi {
 	private final ContextMenu contextMenu;
 	private final Object parent;
 	private final MenuObservable menuObservable;
+	private final List<JoJavafxButtonGroup> radioGroups;
 
 	public PopupMenuImpl(final Object parent) {
 		contextMenu = new ContextMenu();
@@ -70,18 +76,8 @@ public class PopupMenuImpl implements IPopupMenuSpi {
 			}
 		});
 
-		getUiReference().focusedProperty().addListener(new ChangeListener<Boolean>() {
-
-			@Override
-			public void changed(
-				final ObservableValue<? extends Boolean> observableValue,
-				final Boolean oldValue,
-				final Boolean newValue) {
-				if (!newValue) {
-					getUiReference().hide();
-				}
-			}
-		});
+		this.radioGroups = new ArrayList<JoJavafxButtonGroup>();
+		this.radioGroups.add(new JoJavafxButtonGroup(null, new ToggleGroup()));
 		getUiReference().setAutoHide(true);
 	}
 
@@ -120,7 +116,10 @@ public class PopupMenuImpl implements IPopupMenuSpi {
 
 	@Override
 	public ISelectableMenuItemSpi addRadioItem(final Integer index) {
-		final RadioMenuItemImpl result = new RadioMenuItemImpl();
+		final RadioMenuItem radioItem = new RadioMenuItem("");
+		final ToggleGroup radioGroup = findRadioGroup(index);
+		radioItem.setToggleGroup(radioGroup);
+		final RadioMenuItemImpl result = new RadioMenuItemImpl(radioItem);
 		addItem(index, result);
 		return result;
 	}
@@ -166,8 +165,8 @@ public class PopupMenuImpl implements IPopupMenuSpi {
 		if (parent instanceof ToolBar) {
 			getUiReference().show((Control) parent, position.getX(), position.getY());
 		}
-		else if (parent instanceof TableView) {
-			getUiReference().show((TableView<?>) parent, position.getX(), position.getY());
+		else if (parent instanceof TableColumn) {
+			((TableColumn<?, ?>) parent).setContextMenu(getUiReference());
 		}
 		else if (parent instanceof Control) {
 			((Control) parent).setContextMenu(getUiReference());
@@ -176,4 +175,58 @@ public class PopupMenuImpl implements IPopupMenuSpi {
 			getUiReference().show((Stage) parent, position.getX(), position.getY());
 		}
 	}
+
+	private ToggleGroup findRadioGroup(final Integer index) {
+		final int safeIndex;
+		if (index != null) {
+			safeIndex = index.intValue();
+		}
+		else {
+			safeIndex = getUiReference().getItems().size();
+		}
+		ToggleGroup result = radioGroups.get(0).getButtonGroup();
+
+		if (radioGroups.size() != 1) {
+			for (final JoJavafxButtonGroup joButtonGroup : radioGroups) {
+				final SeparatorMenuItemImpl separator = joButtonGroup.getSeparator();
+				if (separator == null) {
+					continue;
+				}
+				int componentIndex = 0;
+				final int componentCount = getUiReference().getItems().size();
+				for (int i = 0; i < componentCount; i++) {
+					if (getUiReference().getItems().get(i) == separator.getUiReference()) {
+						componentIndex = i;
+						break;
+					}
+				}
+				if (componentIndex >= safeIndex) {
+					break;
+				}
+				result = joButtonGroup.getButtonGroup();
+			}
+		}
+		return result;
+	}
+
+	private static class JoJavafxButtonGroup {
+
+		private final SeparatorMenuItemImpl separator;
+
+		private final ToggleGroup buttonGroup;
+
+		public JoJavafxButtonGroup(final SeparatorMenuItemImpl separator, final ToggleGroup buttonGroup) {
+			this.separator = separator;
+			this.buttonGroup = buttonGroup;
+		}
+
+		protected SeparatorMenuItemImpl getSeparator() {
+			return separator;
+		}
+
+		protected ToggleGroup getButtonGroup() {
+			return buttonGroup;
+		}
+	}
+
 }

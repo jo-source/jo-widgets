@@ -40,7 +40,12 @@ public class RadioMenuItemImpl extends MenuItemImpl implements ISelectableMenuIt
 	private final ItemStateObservable itemStateObservable;
 
 	public RadioMenuItemImpl() {
-		super(new RadioMenuItem(""));
+		this(new RadioMenuItem(""));
+
+	}
+
+	public RadioMenuItemImpl(final RadioMenuItem radioItem) {
+		super(radioItem);
 		this.itemStateObservable = new ItemStateObservable();
 
 		getUiReference().selectedProperty().addListener(new InvalidationListener() {

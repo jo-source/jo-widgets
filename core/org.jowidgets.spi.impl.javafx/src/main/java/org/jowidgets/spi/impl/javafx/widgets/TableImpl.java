@@ -50,6 +50,7 @@ import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.util.Callback;
 
 import org.jowidgets.common.model.ITableCell;
@@ -58,6 +59,7 @@ import org.jowidgets.common.model.ITableColumnModelObservable;
 import org.jowidgets.common.model.ITableColumnModelSpi;
 import org.jowidgets.common.model.ITableColumnSpi;
 import org.jowidgets.common.model.ITableDataModel;
+import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Interval;
 import org.jowidgets.common.types.Position;
@@ -80,9 +82,11 @@ import org.jowidgets.spi.impl.controller.TableColumnPopupDetectionObservable;
 import org.jowidgets.spi.impl.controller.TableColumnPopupEvent;
 import org.jowidgets.spi.impl.controller.TableColumnResizeEvent;
 import org.jowidgets.spi.impl.controller.TableSelectionObservable;
+import org.jowidgets.spi.impl.javafx.util.AlignmentConvert;
 import org.jowidgets.spi.impl.javafx.widgets.base.JoCell;
 import org.jowidgets.spi.impl.javafx.widgets.base.JoTableRow;
 import org.jowidgets.spi.impl.javafx.widgets.base.VirtualList;
+import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
 
@@ -104,7 +108,9 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 	private final TableCellPopupDetectionObservable tableCellPopupDetectionObservable;
 	private final TableCellObservable tableCellObservable;
 	private final boolean hasBorder;
+	private boolean setWidthInvokedOnModel;
 	private final StyleDelegate styleDelegate;
+	private int popupIndex;
 
 	public TableImpl(final ITableSetupSpi setup) {
 		super(new TableView(), false);
@@ -133,16 +139,27 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 		}
 
 		this.hasBorder = setup.hasBorder();
-
+		this.setWidthInvokedOnModel = false;
 		if (!hasBorder) {
 			styleDelegate.setNoBorder();
 		}
 
 		dataModel = setup.getDataModel();
 		columnModel = setup.getColumnModel();
-
 		columnsResizeable = setup.getColumnsResizeable();
+
 		getUiReference().setItems(new VirtualList(dataModel, columnModel, getUiReference()));
+
+		getUiReference().setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+
+			@Override
+			public void handle(final ContextMenuEvent event) {
+				final Position position = new Position((int) event.getScreenX(), (int) event.getScreenY());
+				tableColumnPopupDetectionObservable.firePopupDetected(new TableColumnPopupEvent(0, position));
+
+			}
+
+		});
 	}
 
 	@Override
@@ -174,6 +191,7 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 		}
 		getUiReference().setItems(new VirtualList(dataModel, columnModel, getUiReference()));
 		getUiReference().getSelectionModel().getSelectedCells().addListener(tableSelectionListener);
+
 	}
 
 	@Override
@@ -255,11 +273,13 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 
 	@Override
 	public boolean isColumnPopupDetectionSupported() {
-		return true;
+		// TODO DB Auto-generated method stub
+		return false;
 	}
 
 	@Override
 	public Interval<Integer> getVisibleRows() {
+		// TODO DB Auto-generated method stub
 		return null;
 	}
 
@@ -289,14 +309,12 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 
 	@Override
 	public void addTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
-		// TODO DB Auto-generated method stub
-
+		tableCellPopupDetectionObservable.addTableCellPopupDetectionListener(listener);
 	}
 
 	@Override
 	public void removeTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
-		// TODO DB Auto-generated method stub
-
+		tableCellPopupDetectionObservable.removeTableCellPopupDetectionListener(listener);
 	}
 
 	@Override
@@ -333,6 +351,92 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 
 	}
 
+	@Override
+	public IPopupMenuSpi createPopupMenu() {
+		if (popupIndex == -1) {
+			return new PopupMenuImpl(getUiReference());
+		}
+		return new PopupMenuImpl(getUiReference().getColumns().get(popupIndex));
+	}
+
+	private void addColumn(final int externalIndex, final ITableColumnSpi joColumn) {
+		final TableColumn tableColumn = new TableColumn(joColumn.getText());
+		tableColumn.setResizable(columnsResizeable);
+		tableColumn.setSortable(false);
+
+		setColumnData(tableColumn, joColumn);
+		getUiReference().getColumns().add(externalIndex, tableColumn);
+
+		tableColumn.setCellFactory(new TableCellFactory());
+		tableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<JoTableRow, Object>, ObservableValue<Object>>() {
+
+			@Override
+			public ObservableValue call(final CellDataFeatures<JoTableRow, Object> pFeature) {
+				final JoTableRow data = pFeature.getValue();
+				if (data == null) {
+					return new SimpleStringProperty("");
+				}
+				else {
+					return new SimpleObjectProperty(data);
+				}
+			}
+
+		});
+
+		final ContextMenu contextMenu = new ContextMenu(new MenuItem()) {
+
+			@Override
+			public void show(final Node node, final double x, final double y) {
+				final int index = getUiReference().getColumns().indexOf(((TableColumnHeader) node).getTableColumn());
+				popupIndex = index;
+				if (index < columnModel.getColumnCount()) {
+					tableColumnPopupDetectionObservable.firePopupDetected(new TableColumnPopupEvent(index, new Position(
+						(int) x,
+						(int) y)));
+				}
+			}
+
+		};
+
+		tableColumn.setContextMenu(contextMenu);
+
+		tableColumn.widthProperty().addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(
+				final ObservableValue<? extends Number> observableValue,
+				final Number oldValue,
+				final Number newValue) {
+				setWidthInvokedOnModel = true;
+				columnModel.getColumn(getUiReference().getColumns().indexOf(tableColumn)).setWidth(newValue.intValue());
+				setWidthInvokedOnModel = false;
+				tableColumnObservable.fireColumnResized(new TableColumnResizeEvent(getUiReference().getColumns().indexOf(
+						tableColumn), newValue.intValue()));
+			}
+		});
+
+		tableColumn.setOnEditCommit(new EventHandler<CellEditEvent>() {
+			@Override
+			public void handle(final CellEditEvent event) {
+				final int row = event.getTablePosition().getRow();
+				final int column = event.getTablePosition().getColumn();
+				final String newValue = (String) event.getNewValue();
+				tableCellEditorObservable.fireEditFinished(new TableCellEditEvent(row, column, newValue));
+			}
+		});
+
+		tableColumn.setOnEditCancel(new EventHandler<CellEditEvent>() {
+
+			@Override
+			public void handle(final CellEditEvent event) {
+				final int currentRow = event.getTablePosition().getRow();
+				final int currentColumn = getUiReference().getColumns().indexOf(tableColumn);
+				tableCellEditorObservable.fireEditCanceled(new TableCellEvent(currentRow, currentColumn));
+			}
+		});
+
+	}
+
 	private void setColumnData(final TableColumn<ITableCell, Object> tableColumn, final ITableColumnSpi joColumn) {
 		final String text = joColumn.getText();
 
@@ -354,30 +458,33 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 		}
 	}
 
-	class TableCellFactory implements Callback<TableColumn, TableCell> {
+	final class TableCellFactory implements Callback<TableColumn, TableCell> {
 
 		@Override
 		public TableCell call(final TableColumn column) {
-
 			final JoCell joCell = new JoCell(tableCellObservable);
-
-			final ContextMenu contextMenu = new ContextMenu(new MenuItem()) {
+			joCell.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
 
 				@Override
-				public void show(final Node node, final double x, final double y) {
-
-					final int index = getUiReference().getColumns().indexOf(((JoCell) node).getTableColumn());
-					if (index < columnModel.getColumnCount()) {
+				public void handle(final ContextMenuEvent event) {
+					final Position position = new Position((int) event.getScreenX(), (int) event.getScreenY());
+					if (joCell.getItem() != null) {
+						final int columnIndex = getUiReference().getColumns().indexOf(joCell.getTableColumn());
+						popupIndex = -1;
 						tableCellPopupDetectionObservable.firePopupDetected(new TableCellPopupEvent(
 							joCell.getIndex(),
-							getUiReference().getColumns().indexOf(column),
-							new Position((int) x, (int) y)));
+							columnIndex,
+							position));
 					}
 				}
 
-			};
-			joCell.setContextMenu(contextMenu);
+			});
+			final AlignmentHorizontal alignment = columnModel.getColumn(getUiReference().getColumns().indexOf(column)).getAlignment();
+			if (alignment != null) {
+				joCell.setAlignment(AlignmentConvert.convertPosAlignment(alignment));
+			}
 			return joCell;
+
 		}
 	}
 
@@ -414,83 +521,17 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 
 		@Override
 		public void columnsChanged(final int[] columnIndices) {
-			// TODO DB Auto-generated method stub
-
+			if (!setWidthInvokedOnModel) {
+				for (int i = 0; i < columnIndices.length; i++) {
+					final int columnIndex = columnIndices[i];
+					final int viewWidth = (int) ((TableColumn) getUiReference().getColumns().get(columnIndex)).getWidth();
+					final int modelWidth = columnModel.getColumn(columnIndex).getWidth();
+					if (viewWidth != modelWidth) {
+						((TableColumn) getUiReference().getColumns().get(columnIndex)).setPrefWidth(modelWidth);
+					}
+				}
+			}
 		}
-
 	}
 
-	private void addColumn(final int externalIndex, final ITableColumnSpi joColumn) {
-		final TableColumn tableColumn = new TableColumn(joColumn.getText());
-		tableColumn.setResizable(columnsResizeable);
-		tableColumn.setSortable(false);
-
-		setColumnData(tableColumn, joColumn);
-		getUiReference().getColumns().add(externalIndex, tableColumn);
-
-		tableColumn.setCellFactory(new TableCellFactory());
-		tableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<JoTableRow, Object>, ObservableValue<Object>>() {
-
-			@Override
-			public ObservableValue call(final CellDataFeatures<JoTableRow, Object> pFeature) {
-				final JoTableRow data = pFeature.getValue();
-				if (data == null) {
-					return new SimpleStringProperty("");
-				}
-				else {
-					return new SimpleObjectProperty(data);
-				}
-			}
-
-		});
-
-		final ContextMenu contextMenu = new ContextMenu(new MenuItem()) {
-
-			@Override
-			public void show(final Node node, final double x, final double y) {
-				final int index = getUiReference().getColumns().indexOf(((TableColumnHeader) node).getTableColumn());
-				if (index < columnModel.getColumnCount()) {
-					tableColumnPopupDetectionObservable.firePopupDetected(new TableColumnPopupEvent(index, new Position(
-						(int) x,
-						(int) y)));
-				}
-			}
-
-		};
-		tableColumn.setContextMenu(contextMenu);
-
-		tableColumn.widthProperty().addListener(new ChangeListener<Number>() {
-
-			@Override
-			public void changed(
-				final ObservableValue<? extends Number> observableValue,
-				final Number oldValue,
-				final Number newValue) {
-				columnModel.getColumn(getUiReference().getColumns().indexOf(tableColumn)).setWidth(newValue.intValue());
-				tableColumnObservable.fireColumnResized(new TableColumnResizeEvent(getUiReference().getColumns().indexOf(
-						tableColumn), newValue.intValue()));
-			}
-		});
-
-		tableColumn.setOnEditCommit(new EventHandler<CellEditEvent>() {
-			@Override
-			public void handle(final CellEditEvent event) {
-				final int row = event.getTablePosition().getRow();
-				final int column = event.getTablePosition().getColumn();
-				final String newValue = (String) event.getNewValue();
-				tableCellEditorObservable.fireEditFinished(new TableCellEditEvent(row, column, newValue));
-			}
-		});
-
-		tableColumn.setOnEditCancel(new EventHandler<CellEditEvent>() {
-
-			@Override
-			public void handle(final CellEditEvent event) {
-				final int currentRow = event.getTablePosition().getRow();
-				final int currentColumn = getUiReference().getColumns().indexOf(tableColumn);
-				tableCellEditorObservable.fireEditCanceled(new TableCellEvent(currentRow, currentColumn));
-			}
-		});
-
-	}
 }
