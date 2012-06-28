@@ -33,6 +33,9 @@
 		<module>../org.jowidgets.addons.widgets.mediaplayer.api</module>	
 		<module>../org.jowidgets.addons.widgets.mediaplayer.impl.ole</module>
 		
+		<!-- PDF Reader -->
+		<module>../org.jowidgets.addons.widgets.pdf.api</module>	
+		<module>../org.jowidgets.addons.widgets.pdf.impl.browser</module>
 	</modules>
 
 </project>
