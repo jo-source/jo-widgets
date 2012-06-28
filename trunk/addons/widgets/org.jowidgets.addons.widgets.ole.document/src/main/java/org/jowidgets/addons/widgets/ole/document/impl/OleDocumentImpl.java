@@ -150,7 +150,7 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 					out.write(buf, 0, length);
 				}
 				out.close();
-				inputStream.close();
+
 				openDocument(tempFile);
 
 				if (!(tempFile.delete())) {

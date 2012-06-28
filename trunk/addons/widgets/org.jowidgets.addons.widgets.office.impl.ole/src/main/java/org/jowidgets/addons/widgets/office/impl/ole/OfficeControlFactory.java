@@ -36,11 +36,17 @@ import org.jowidgets.addons.widgets.ole.document.api.OleDocumentBPF;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 
-final class OfficeTextFactory implements IWidgetFactory<IOfficeControl, IOfficeTextBluePrint> {
+final class OfficeControlFactory implements IWidgetFactory<IOfficeControl, IOfficeTextBluePrint> {
+
+	private final String progId;
+
+	OfficeControlFactory(final String progId) {
+		this.progId = progId;
+	}
 
 	@Override
 	public IOfficeControl create(final Object parentUiReference, final IOfficeTextBluePrint bluePrint) {
-		final IOleDocumentBluePrint documentBp = OleDocumentBPF.document("Word.Document");
+		final IOleDocumentBluePrint documentBp = OleDocumentBPF.document(progId);
 		documentBp.setSetup(bluePrint);
 		final IOleDocument document = Toolkit.getWidgetFactory().create(parentUiReference, documentBp);
 		return new OfficeControlImpl(document, bluePrint);
