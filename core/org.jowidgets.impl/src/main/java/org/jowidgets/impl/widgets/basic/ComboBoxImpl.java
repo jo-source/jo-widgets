@@ -172,7 +172,10 @@ public class ComboBoxImpl<VALUE_TYPE> extends ComboBoxSelectionImpl<VALUE_TYPE> 
 
 	@Override
 	public VALUE_TYPE getValue() {
-		return stringObjectConverter.convertToObject(getWidget().getText());
+		if (stringObjectConverter != null) {
+			return stringObjectConverter.convertToObject(getWidget().getText());
+		}
+		return null;
 	}
 
 	@Override
