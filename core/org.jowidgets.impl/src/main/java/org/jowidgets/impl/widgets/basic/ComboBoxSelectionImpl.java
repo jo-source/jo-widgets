@@ -293,7 +293,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 			addLenientValue(lenientValue);
 			removeLenient = false;
 		}
-		else if (lenient && previousSelectionPolicy && newSelectionIndex == -1) {
+		else if (lenient && oldValue != null && previousSelectionPolicy && newSelectionIndex == -1) {
 			addLenientValue(oldValue);
 			removeLenient = false;
 		}
