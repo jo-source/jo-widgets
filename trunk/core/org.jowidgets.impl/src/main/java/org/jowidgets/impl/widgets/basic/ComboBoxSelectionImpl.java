@@ -51,7 +51,9 @@ import org.jowidgets.tools.validation.CompoundValidator;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.EmptyCheck;
 import org.jowidgets.util.EmptyCompatibleEquivalence;
+import org.jowidgets.util.NullCompatibleEquivalence;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
@@ -69,6 +71,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 	private final ControlDelegate controlDelegate;
 	private final CompoundValidator<VALUE_TYPE> compoundValidator;
 	private final InputObservable inputObservable;
+	private final IInputListener inputListener;
 
 	private VALUE_TYPE lastUnmodifiedValue;
 	private VALUE_TYPE lenientValue;
@@ -89,12 +92,6 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
 
-		setElements(setup.getElements());
-
-		if (setup.getValue() != null) {
-			setValue(setup.getValue());
-		}
-
 		this.controlDelegate = new ControlDelegate(comboBoxSelectionWidgetSpi, this);
 		this.compoundValidator = new CompoundValidator<VALUE_TYPE>();
 
@@ -110,17 +107,30 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 			}
 		});
 
-		getWidget().addInputListener(new IInputListener() {
+		this.inputListener = new IInputListener() {
 			@Override
 			public void inputChanged() {
-				removeLinientValue();
-				getWidget().setToolTipText(objectStringConverter.getDescription(getValue()));
-				inputObservable.fireInputChanged();
-				validationCache.setDirty();
+				onInputChanged(true);
 			}
-		});
+		};
+		getWidget().addInputListener(inputListener);
+
+		setElements(setup.getElements());
+
+		if (setup.getValue() != null) {
+			setValue(setup.getValue());
+		}
 
 		resetModificationState();
+	}
+
+	private void onInputChanged(final boolean removeLenient) {
+		if (removeLenient) {
+			removeLinientValue();
+		}
+		getWidget().setToolTipText(objectStringConverter.getDescription(getValue()));
+		inputObservable.fireInputChanged();
+		validationCache.setDirty();
 	}
 
 	@Override
@@ -166,7 +176,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 		for (int i = 0; i < spiElements.length; i++) {
 			newSpiElements[i] = spiElements[i];
 		}
-		newSpiElements[spiElements.length] = "* " + objectStringConverter.convertToString(value);
+		newSpiElements[spiElements.length] = addLenientDecoration(objectStringConverter.convertToString(value));
 		comboBoxSelectionWidgetSpi.setElements(newSpiElements);
 		comboBoxSelectionWidgetSpi.setSelectedIndex(spiElements.length);
 		this.lenientValue = value;
@@ -189,6 +199,22 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 				comboBoxSelectionWidgetSpi.setSelectedIndex(oldIndex);
 			}
 		}
+	}
+
+	private String addLenientDecoration(final String string) {
+		if (string != null) {
+			return "* " + string;
+		}
+		else {
+			return "* ";
+		}
+	}
+
+	private String removeLenientDecoration(final String string) {
+		if (string != null && string.length() >= 2) {
+			return string.substring(2);
+		}
+		return string;
 	}
 
 	@Override
@@ -220,13 +246,22 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 
 		Assert.paramNotNull(newElements, "newElements");
 
+		final VALUE_TYPE oldValue = getValue();
+		boolean removeLenient = true;
+
+		setRedrawEnabled(false);
+		getWidget().removeInputListener(inputListener);
+
 		//determine the last selected string
 		String lastSelectedString = null;
 		final int lastSelectedIndex = comboBoxSelectionWidgetSpi.getSelectedIndex();
 		if (comboBoxSelectionWidgetSpi.getElements() != null
 			&& lastSelectedIndex >= 0
-			&& lastSelectedIndex < comboBoxSelectionWidgetSpi.getElements().length - 1) {
+			&& lastSelectedIndex < comboBoxSelectionWidgetSpi.getElements().length) {
 			lastSelectedString = comboBoxSelectionWidgetSpi.getElements()[lastSelectedIndex];
+		}
+		if (!EmptyCheck.isEmpty(lastSelectedString) && NullCompatibleEquivalence.equals(oldValue, lenientValue)) {
+			lastSelectedString = removeLenientDecoration(lastSelectedString);
 		}
 
 		//set the new elements
@@ -246,6 +281,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 			index++;
 		}
 		comboBoxSelectionWidgetSpi.setElements(spiElements);
+		final boolean previousSelectionPolicy = isPreviousSelectionPolicy();
 
 		//do auto selection
 		if (AutoSelectionPolicy.FIRST_ELEMENT == autoSelectionPolicy && spiElements.length > 0) {
@@ -253,6 +289,14 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 		}
 		else if (AutoSelectionPolicy.LAST_ELEMENT == autoSelectionPolicy && spiElements.length > 0) {
 			comboBoxSelectionWidgetSpi.setSelectedIndex(spiElements.length - 1);
+		}
+		else if (lenientValue != null && previousSelectionPolicy && newSelectionIndex == -1) {
+			addLenientValue(lenientValue);
+			removeLenient = false;
+		}
+		else if (lenient && previousSelectionPolicy && newSelectionIndex == -1) {
+			addLenientValue(oldValue);
+			removeLenient = false;
 		}
 		else if (AutoSelectionPolicy.PREVIOUS_SELECTED == autoSelectionPolicy && spiElements.length > 0) {
 			if (newSelectionIndex != -1) {
@@ -285,6 +329,24 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 				+ AutoSelectionPolicy.class.getSimpleName()
 				+ "' is not known");
 		}
+
+		if (removeLenient) {
+			removeLinientValue();
+		}
+
+		getWidget().addInputListener(inputListener);
+		setRedrawEnabled(true);
+
+		final VALUE_TYPE newValue = getValue();
+		if (!NullCompatibleEquivalence.equals(oldValue, newValue)) {
+			onInputChanged(false);
+		}
+	}
+
+	private boolean isPreviousSelectionPolicy() {
+		return autoSelectionPolicy == AutoSelectionPolicy.PREVIOUS_SELECTED
+			|| autoSelectionPolicy == AutoSelectionPolicy.PREVIOUS_SELECTED_OR_FIRST
+			|| autoSelectionPolicy == AutoSelectionPolicy.PREVIOUS_SELECTED_OR_LAST;
 	}
 
 	protected IObjectStringConverter<VALUE_TYPE> getObjectStringConverter() {
