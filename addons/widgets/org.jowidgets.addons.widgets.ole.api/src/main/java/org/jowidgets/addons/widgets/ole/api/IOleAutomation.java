@@ -34,4 +34,8 @@ public interface IOleAutomation {
 
 	boolean setProperty(String propertyName, Object... parameter);
 
+	Object getProperty(String propertyName);
+
+	void dispose();
+
 }

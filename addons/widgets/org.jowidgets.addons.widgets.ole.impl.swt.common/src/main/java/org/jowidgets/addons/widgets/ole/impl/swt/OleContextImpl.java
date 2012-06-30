@@ -257,10 +257,31 @@ class OleContextImpl implements IOleContext {
 	}
 
 	private Object getVariantResult(final Variant variant) {
-		//TODO MG get Object result for type
-		//if (variant != null) {
-		//	short type = variant.getType();			
-		//}
+		if (variant == null) {
+			return null;
+		}
+		else if (OLE.VT_BOOL == variant.getType()) {
+			return variant.getBoolean();
+		}
+		else if (OLE.VT_R4 == variant.getType()) {
+			return variant.getFloat();
+		}
+		else if (OLE.VT_R8 == variant.getType()) {
+			return variant.getInt();
+		}
+		else if (OLE.VT_I2 == variant.getType()) {
+			return variant.getShort();
+		}
+		else if (OLE.VT_BSTR == variant.getType()) {
+			return variant.getString();
+		}
+		else if (OLE.VT_BSTR == variant.getType()) {
+			return variant.getString();
+		}
+		else if (OLE.VT_DISPATCH == variant.getType()) {
+			//TODO MG dispose this, when context will be disposed
+			return new OleAutomationImpl(variant.getAutomation());
+		}
 		return variant;
 	}
 
@@ -352,6 +373,18 @@ class OleContextImpl implements IOleContext {
 			}
 		}
 
+		@Override
+		public Object getProperty(final String propertyName) {
+			final int[] propertyNameIds = oleAutomation.getIDsOfNames(new String[] {propertyName});
+			if (propertyNameIds != null && propertyNameIds.length == 1) {
+				return getVariantResult(oleAutomation.getProperty(propertyNameIds[0]));
+			}
+			else {
+				throw new IllegalArgumentException("Property name '" + propertyName + "' is unknown");
+			}
+		}
+
+		@Override
 		public void dispose() {
 			oleAutomation.dispose();
 		}
