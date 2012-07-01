@@ -28,21 +28,21 @@
 
 package org.jowidgets.addons.widgets.ole.document.api;
 
-import java.io.File;
-
 import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
-import org.jowidgets.util.IFactory;
+import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
+import org.jowidgets.util.io.ITempFileFactory;
 
 public interface IOleDocumentSetupBuilder<INSTANCE_TYPE extends IOleDocumentSetupBuilder<?>> extends
 		IComponentSetup,
 		IComponentSetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setTempFileFactory(IFactory<File> factory);
+	INSTANCE_TYPE setTempFileFactory(ITempFileFactory factory);
 
 	INSTANCE_TYPE setProgId(String progId);
 
-	IFactory<File> getTempFileFactory();
+	@Mandatory
+	ITempFileFactory getTempFileFactory();
 
 	String getProgId();
 

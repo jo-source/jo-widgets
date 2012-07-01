@@ -26,20 +26,20 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.pdf.api;
+package org.jowidgets.util.io;
 
-import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
-import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
-import org.jowidgets.util.io.ITempFileFactory;
+import java.io.File;
 
-public interface IPdfReaderSetupBuilder<INSTANCE_TYPE extends IPdfReaderSetupBuilder<?>> extends
-		IComponentSetup,
-		IComponentSetupBuilder<INSTANCE_TYPE> {
+public interface ITempFileFactory {
 
-	INSTANCE_TYPE setTempFileFactory(ITempFileFactory factory);
-
-	@Mandatory
-	ITempFileFactory getTempFileFactory();
+	/**
+	 * Creates an empty existing unique file in an temp directory.
+	 * 
+	 * @param filenamePrefix The filenames prefix
+	 * @param filenameSuffix The filenames suffix (e.g.: '.xml', '.html', ...). If suffix is null, .tmp will be used
+	 * 
+	 * @return The created file
+	 */
+	File create(String filenamePrefix, String filenameSuffix);
 
 }

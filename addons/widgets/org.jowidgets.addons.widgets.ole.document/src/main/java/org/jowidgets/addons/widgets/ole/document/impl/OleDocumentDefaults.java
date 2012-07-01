@@ -26,20 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.pdf.api;
+package org.jowidgets.addons.widgets.ole.document.impl;
 
-import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
-import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
-import org.jowidgets.util.io.ITempFileFactory;
+import org.jowidgets.addons.widgets.ole.document.api.IOleDocumentSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.util.io.DefaultTempFileFactory;
 
-public interface IPdfReaderSetupBuilder<INSTANCE_TYPE extends IPdfReaderSetupBuilder<?>> extends
-		IComponentSetup,
-		IComponentSetupBuilder<INSTANCE_TYPE> {
+public final class OleDocumentDefaults implements IDefaultInitializer<IOleDocumentSetupBuilder<?>> {
 
-	INSTANCE_TYPE setTempFileFactory(ITempFileFactory factory);
-
-	@Mandatory
-	ITempFileFactory getTempFileFactory();
-
+	@Override
+	public void initialize(final IOleDocumentSetupBuilder<?> setup) {
+		setup.setTempFileFactory(new DefaultTempFileFactory());
+	}
 }

@@ -37,7 +37,7 @@ public interface IMediaPlayer extends IControl {
 
 	void clear();
 
-	void open(String filename);
+	void open(String url);
 
 	void open(File file);
 

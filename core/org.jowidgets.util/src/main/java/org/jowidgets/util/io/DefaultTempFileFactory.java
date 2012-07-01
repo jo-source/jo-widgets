@@ -26,20 +26,21 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.pdf.api;
+package org.jowidgets.util.io;
 
-import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
-import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
-import org.jowidgets.util.io.ITempFileFactory;
+import java.io.File;
+import java.io.IOException;
 
-public interface IPdfReaderSetupBuilder<INSTANCE_TYPE extends IPdfReaderSetupBuilder<?>> extends
-		IComponentSetup,
-		IComponentSetupBuilder<INSTANCE_TYPE> {
+public final class DefaultTempFileFactory implements ITempFileFactory {
 
-	INSTANCE_TYPE setTempFileFactory(ITempFileFactory factory);
-
-	@Mandatory
-	ITempFileFactory getTempFileFactory();
+	@Override
+	public File create(final String filenamePrefix, final String filenameSuffix) {
+		try {
+			return File.createTempFile(filenamePrefix, filenameSuffix);
+		}
+		catch (final IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 }
