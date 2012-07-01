@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.addons.parent</artifactId>
-		<version>0.13.0-SNAPSHOT</version>
+		<version>0.13.0</version>
 		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 
