@@ -26,21 +26,35 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.mediaplayer.impl.ole;
+package org.jowidgets.util.io;
 
-import org.jowidgets.addons.widgets.mediaplayer.api.IMediaPlayerBluePrint;
-import org.jowidgets.addons.widgets.mediaplayer.api.IMediaPlayerSetupBuilder;
-import org.jowidgets.api.toolkit.IToolkit;
-import org.jowidgets.api.toolkit.IToolkitInterceptor;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
-final class MediaplayerToolkitInterceptor implements IToolkitInterceptor {
+import org.jowidgets.util.Assert;
 
-	@Override
-	public void onToolkitCreate(final IToolkit toolkit) {
-		final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
-		widgetFactory.register(IMediaPlayerBluePrint.class, new MediaPlayerFactory());
-		toolkit.getBluePrintFactory().addDefaultsInitializer(IMediaPlayerSetupBuilder.class, new MediaPlayerDefaults());
+public final class FileUtils {
+
+	private FileUtils() {}
+
+	public static void inputStreamToFile(final InputStream inputStream, final File file) {
+		Assert.paramNotNull(inputStream, "inputStream");
+		Assert.paramNotNull(file, "file");
+		try {
+			final OutputStream os = new FileOutputStream(file);
+			final byte[] buffer = new byte[1024];
+			int length;
+			while ((length = inputStream.read(buffer)) > 0) {
+				os.write(buffer, 0, length);
+			}
+			os.close();
+		}
+		catch (final Exception e) {
+			throw new RuntimeException(e);
+		}
+
 	}
 
 }

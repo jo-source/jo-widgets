@@ -42,6 +42,8 @@ import org.jowidgets.util.Assert;
 import org.jowidgets.util.IMutableValue;
 import org.jowidgets.util.IMutableValueListener;
 import org.jowidgets.util.IValueChangedEvent;
+import org.jowidgets.util.io.FileUtils;
+import org.jowidgets.util.io.ITempFileFactory;
 
 class MediaPlayerImpl extends ControlWrapper implements IMediaPlayer {
 
@@ -52,12 +54,15 @@ class MediaPlayerImpl extends ControlWrapper implements IMediaPlayer {
 	private static final String WM_PLAYER_PROG_ID = "WMPlayer.OCX";
 
 	private final IMutableValue<IOleContext> mutableOleContext;
+	private final ITempFileFactory tempFileFactory;
 
 	private String url;
+	private File tmpFile;
 
 	public MediaPlayerImpl(final IOleControl oleControl, final IMediaPlayerSetupBuilder<?> setup) {
 		super(oleControl);
 		this.mutableOleContext = oleControl.getContext();
+		this.tempFileFactory = setup.getTempFileFactory();
 		oleControl.getContext().addMutableValueListener(new IMutableValueListener<IOleContext>() {
 			@Override
 			public void changed(final IValueChangedEvent<IOleContext> event) {
@@ -94,6 +99,7 @@ class MediaPlayerImpl extends ControlWrapper implements IMediaPlayer {
 			oleContext.setDocument(WM_PLAYER_PROG_ID);
 			controls.dispose();
 		}
+		deleteTempFile();
 	}
 
 	@Override
@@ -119,13 +125,25 @@ class MediaPlayerImpl extends ControlWrapper implements IMediaPlayer {
 
 	@Override
 	public void open(final InputStream inputStream) {
-		//TODO MG implement this with help of a temp file
+		Assert.paramNotNull(inputStream, "inputStream");
+		deleteTempFile();
+		final File tmp = tempFileFactory.create("MediaPlayerTemp", ".wmv");
+		FileUtils.inputStreamToFile(inputStream, tmp);
+		open(tmp);
+		tmpFile = tmp;
 	}
 
 	@Override
 	public void dispose() {
-		super.dispose();
 		url = null;
+		deleteTempFile();
+		super.dispose();
+	}
+
+	private void deleteTempFile() {
+		if (tmpFile != null) {
+			tmpFile.delete();
+		}
 	}
 
 }
