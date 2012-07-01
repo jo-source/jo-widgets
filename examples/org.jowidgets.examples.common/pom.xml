@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.examples.parent</artifactId>
-		<version>0.13.0-SNAPSHOT</version>
+		<version>0.13.0</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
@@ -14,53 +14,53 @@
 	    <dependency>
             <groupId>org.jowidgets</groupId>
             <artifactId>org.jowidgets.addons.icons.silkicons</artifactId>
-            <version>0.13.0-SNAPSHOT</version>
+            <version>0.13.0</version>
         </dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.tools</artifactId>
-			<version>0.13.0-SNAPSHOT</version>
+			<version>0.13.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.workbench.tools</artifactId>
-			<version>0.13.0-SNAPSHOT</version>
+			<version>0.13.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.addons.map.common</artifactId>
-			<version>0.13.0-SNAPSHOT</version>
+			<version>0.13.0</version>
 		</dependency>
 		<dependency>
             <groupId>org.jowidgets</groupId>
             <artifactId>org.jowidgets.addons.widgets.browser.api</artifactId>
-            <version>0.13.0-SNAPSHOT</version>
+            <version>0.13.0</version>
         </dependency>
 		<dependency>
             <groupId>org.jowidgets</groupId>
             <artifactId>org.jowidgets.addons.widgets.ole.api</artifactId>
-            <version>0.13.0-SNAPSHOT</version>
+            <version>0.13.0</version>
         </dependency>
         <dependency>
             <groupId>org.jowidgets</groupId>
             <artifactId>org.jowidgets.addons.widgets.office.api</artifactId>
-            <version>0.13.0-SNAPSHOT</version>
+            <version>0.13.0</version>
         </dependency>
         <dependency>
             <groupId>org.jowidgets</groupId>
             <artifactId>org.jowidgets.addons.widgets.office.impl.ole</artifactId>
-            <version>0.13.0-SNAPSHOT</version>
+            <version>0.13.0</version>
         </dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.impl</artifactId>
-			<version>0.13.0-SNAPSHOT</version>
+			<version>0.13.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.spi.impl.dummy</artifactId>
-			<version>0.13.0-SNAPSHOT</version>
+			<version>0.13.0</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
