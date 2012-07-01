@@ -29,6 +29,7 @@
 package org.jowidgets.addons.widgets.ole.document.impl;
 
 import org.jowidgets.addons.widgets.ole.document.api.IOleDocumentBluePrint;
+import org.jowidgets.addons.widgets.ole.document.api.IOleDocumentSetupBuilder;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.IToolkitInterceptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
@@ -39,6 +40,7 @@ final class OleDocumentToolkitInterceptor implements IToolkitInterceptor {
 	public void onToolkitCreate(final IToolkit toolkit) {
 		final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
 		widgetFactory.register(IOleDocumentBluePrint.class, new OleDocumentFactory());
+		toolkit.getBluePrintFactory().addDefaultsInitializer(IOleDocumentSetupBuilder.class, new OleDocumentDefaults());
 	}
 
 }

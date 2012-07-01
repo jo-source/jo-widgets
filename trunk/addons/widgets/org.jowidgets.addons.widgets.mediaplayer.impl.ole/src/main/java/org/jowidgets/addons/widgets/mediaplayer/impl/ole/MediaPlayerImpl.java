@@ -53,7 +53,7 @@ class MediaPlayerImpl extends ControlWrapper implements IMediaPlayer {
 
 	private final IMutableValue<IOleContext> mutableOleContext;
 
-	private String filename;
+	private String url;
 
 	public MediaPlayerImpl(final IOleControl oleControl, final IMediaPlayerSetupBuilder<?> setup) {
 		super(oleControl);
@@ -71,8 +71,8 @@ class MediaPlayerImpl extends ControlWrapper implements IMediaPlayer {
 		final IOleContext oleContext = mutableOleContext.getValue();
 		if (oleContext != null) {
 			oleContext.setDocument(WM_PLAYER_PROG_ID);
-			if (filename != null) {
-				open(filename);
+			if (url != null) {
+				open(url);
 			}
 		}
 		else if (event != null && event.getOldValue() != null) {
@@ -85,7 +85,7 @@ class MediaPlayerImpl extends ControlWrapper implements IMediaPlayer {
 
 	@Override
 	public void clear() {
-		filename = null;
+		url = null;
 		final IOleContext oleContext = mutableOleContext.getValue();
 		if (oleContext != null) {
 			final IOleAutomation controls = (IOleAutomation) oleContext.getAutomation().getProperty("controls");
@@ -97,12 +97,12 @@ class MediaPlayerImpl extends ControlWrapper implements IMediaPlayer {
 	}
 
 	@Override
-	public void open(final String filename) {
-		Assert.paramNotNull(filename, "filename");
-		this.filename = filename;
+	public void open(final String url) {
+		Assert.paramNotNull(url, "url");
+		this.url = url;
 		final IOleContext oleContext = mutableOleContext.getValue();
 		if (oleContext != null) {
-			oleContext.getAutomation().setProperty(PROPERTY_URL, filename);
+			oleContext.getAutomation().setProperty(PROPERTY_URL, url);
 		}
 	}
 
@@ -125,7 +125,7 @@ class MediaPlayerImpl extends ControlWrapper implements IMediaPlayer {
 	@Override
 	public void dispose() {
 		super.dispose();
-		filename = null;
+		url = null;
 	}
 
 }
