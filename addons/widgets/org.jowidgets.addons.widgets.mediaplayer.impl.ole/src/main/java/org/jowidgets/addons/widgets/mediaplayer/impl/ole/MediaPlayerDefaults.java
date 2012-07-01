@@ -28,19 +28,14 @@
 
 package org.jowidgets.addons.widgets.mediaplayer.impl.ole;
 
-import org.jowidgets.addons.widgets.mediaplayer.api.IMediaPlayerBluePrint;
 import org.jowidgets.addons.widgets.mediaplayer.api.IMediaPlayerSetupBuilder;
-import org.jowidgets.api.toolkit.IToolkit;
-import org.jowidgets.api.toolkit.IToolkitInterceptor;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.util.io.DefaultTempFileFactory;
 
-final class MediaplayerToolkitInterceptor implements IToolkitInterceptor {
+public final class MediaPlayerDefaults implements IDefaultInitializer<IMediaPlayerSetupBuilder<?>> {
 
 	@Override
-	public void onToolkitCreate(final IToolkit toolkit) {
-		final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
-		widgetFactory.register(IMediaPlayerBluePrint.class, new MediaPlayerFactory());
-		toolkit.getBluePrintFactory().addDefaultsInitializer(IMediaPlayerSetupBuilder.class, new MediaPlayerDefaults());
+	public void initialize(final IMediaPlayerSetupBuilder<?> setup) {
+		setup.setTempFileFactory(new DefaultTempFileFactory());
 	}
-
 }
