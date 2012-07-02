@@ -29,10 +29,12 @@
 package org.jowidgets.addons.widgets.ole.document.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.channels.FileChannel;
 
 import org.jowidgets.addons.widgets.ole.api.IOleContext;
 import org.jowidgets.addons.widgets.ole.api.IOleControl;
@@ -43,13 +45,14 @@ import org.jowidgets.util.Assert;
 import org.jowidgets.util.IMutableValue;
 import org.jowidgets.util.IMutableValueListener;
 import org.jowidgets.util.IValueChangedEvent;
+import org.jowidgets.util.io.DefaultTempFileFactory;
 import org.jowidgets.util.io.ITempFileFactory;
 
 class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 
 	private final String progId;
 	private final IMutableValue<IOleContext> mutableOleContext;
-	private final ITempFileFactory tempFileFactory;
+	private ITempFileFactory tempFileFactory;
 
 	private File tempDocumentStateFile;
 
@@ -94,7 +97,6 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 			if (oldContext != null) {
 				tempDocumentStateFile = createTempFile();
 				oldContext.saveCurrentDocument(tempDocumentStateFile, true);
-
 			}
 		}
 	}
@@ -103,6 +105,12 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 	public void openNewDocument() {
 		if (mutableOleContext.getValue() != null && progId != null) {
 			mutableOleContext.getValue().setDocument(progId);
+		}
+		else {
+			if (tempDocumentStateFile != null && tempDocumentStateFile.exists()) {
+				tempDocumentStateFile.delete();
+				tempDocumentStateFile = null;
+			}
 		}
 	}
 
@@ -117,17 +125,26 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 			}
 		}
 		else {
-			throw new RuntimeException("Ole Context is null");
+			if (tempDocumentStateFile == null || !tempDocumentStateFile.exists()) {
+				copy(file, tempDocumentStateFile);
+			}
 		}
 	}
 
 	@Override
 	public boolean saveDocument(final File file, final Boolean includeOleInfo) {
+
 		if (mutableOleContext.getValue() != null) {
 			return mutableOleContext.getValue().saveCurrentDocument(file, includeOleInfo);
 		}
 		else {
-			throw new RuntimeException("Ole Context is null");
+			if (tempDocumentStateFile != null && tempDocumentStateFile.exists()) {
+				copy(tempDocumentStateFile, file);
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
 	}
 
@@ -196,7 +213,26 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 	}
 
 	private File createTempFile() {
+
+		if (tempFileFactory == null) {
+			tempFileFactory = new DefaultTempFileFactory();
+		}
 		return tempFileFactory.create("OleDocumentTemp", ".doc");
 	}
 
+	public static void copy(final File source, final File target) {
+
+		FileChannel sourceChannel = null;
+		FileChannel targetChannel = null;
+		try {
+			sourceChannel = new FileInputStream(source).getChannel();
+			targetChannel = new FileOutputStream(target).getChannel();
+			targetChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
+			targetChannel.close();
+			sourceChannel.close();
+		}
+		catch (final IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }
