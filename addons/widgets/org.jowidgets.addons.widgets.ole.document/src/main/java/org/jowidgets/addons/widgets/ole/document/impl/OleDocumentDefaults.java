@@ -28,8 +28,11 @@
 
 package org.jowidgets.addons.widgets.ole.document.impl;
 
+import java.util.concurrent.Executors;
+
 import org.jowidgets.addons.widgets.ole.document.api.IOleDocumentSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.util.concurrent.DaemonThreadFactory;
 import org.jowidgets.util.io.DefaultTempFileFactory;
 
 public final class OleDocumentDefaults implements IDefaultInitializer<IOleDocumentSetupBuilder<?>> {
@@ -37,5 +40,6 @@ public final class OleDocumentDefaults implements IDefaultInitializer<IOleDocume
 	@Override
 	public void initialize(final IOleDocumentSetupBuilder<?> setup) {
 		setup.setTempFileFactory(new DefaultTempFileFactory());
+		setup.setAsyncLoadExecutor(Executors.newSingleThreadExecutor(new DaemonThreadFactory()));
 	}
 }

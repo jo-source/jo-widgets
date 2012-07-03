@@ -28,6 +28,8 @@
 
 package org.jowidgets.addons.widgets.ole.document.api;
 
+import java.util.concurrent.Executor;
+
 import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
@@ -41,8 +43,13 @@ public interface IOleDocumentSetupBuilder<INSTANCE_TYPE extends IOleDocumentSetu
 
 	INSTANCE_TYPE setProgId(String progId);
 
+	INSTANCE_TYPE setAsyncLoadExecutor(Executor executor);
+
 	@Mandatory
 	ITempFileFactory getTempFileFactory();
+
+	@Mandatory
+	Executor getAsyncLoadExecutor();
 
 	String getProgId();
 
