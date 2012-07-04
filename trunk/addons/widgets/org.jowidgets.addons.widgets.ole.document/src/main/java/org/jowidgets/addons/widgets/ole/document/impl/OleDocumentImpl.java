@@ -41,6 +41,8 @@ import org.jowidgets.addons.widgets.ole.api.IOleContext;
 import org.jowidgets.addons.widgets.ole.api.IOleControl;
 import org.jowidgets.addons.widgets.ole.document.api.IOleDocument;
 import org.jowidgets.addons.widgets.ole.document.api.IOleDocumentSetupBuilder;
+import org.jowidgets.api.threads.IUiThreadAccess;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.IMutableValue;
@@ -148,25 +150,36 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 	@Override
 	public void openDocument(final InputStream inputStream) {
 		final File tempFile = createTempFile();
+		final IUiThreadAccess access = Toolkit.getUiThreadAccess();
+		executor.execute(new Runnable() {
+			@Override
+			public void run() {
+				try {
 
-		try {
+					if (tempFile != null) {
+						final OutputStream out = new FileOutputStream(tempFile);
 
-			if (tempFile != null) {
-				final OutputStream out = new FileOutputStream(tempFile);
+						final byte[] buf = new byte[1024];
+						int length;
+						while ((length = inputStream.read(buf)) > 0) {
+							out.write(buf, 0, length);
+						}
+						out.close();
+						access.invokeLater(new Runnable() {
+							@Override
+							public void run() {
+								openDocument(tempFile);
+								tempFile.delete();
 
-				final byte[] buf = new byte[1024];
-				int length;
-				while ((length = inputStream.read(buf)) > 0) {
-					out.write(buf, 0, length);
+							}
+						});
+					}
 				}
-				out.close();
-				openDocument(tempFile);
-				tempFile.delete();
+				catch (final IOException e) {
+					throw new RuntimeException("Open Document failed: " + e);
+				}
 			}
-		}
-		catch (final IOException e) {
-			throw new RuntimeException("Open Document failed: " + e);
-		}
+		});
 
 	}
 
