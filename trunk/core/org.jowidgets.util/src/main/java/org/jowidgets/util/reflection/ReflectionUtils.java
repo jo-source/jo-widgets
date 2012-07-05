@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,42 +26,43 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util.event;
+package org.jowidgets.util.reflection;
 
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.IIterationCallback;
 
-public class ChangeObservable implements IChangeObservable {
+public final class ReflectionUtils {
 
-	private final Set<IChangeListener> listeners;
+	private ReflectionUtils() {}
 
-	public ChangeObservable() {
-		this.listeners = new LinkedHashSet<IChangeListener>();
+	/**
+	 * Iterates over all classes and interfaces in the type hierarchy of this type (including this type).
+	 * Each class or interface will only be iterated once
+	 * 
+	 * @param type The type to iterate over
+	 * @param callback The callback
+	 */
+	public static void iterateHierarchy(final Class<?> type, final IIterationCallback<Class<?>> callback) {
+		Assert.paramNotNull(type, "type");
+		Assert.paramNotNull(callback, "callback");
+		iterateHierarchy(new HashSet<Class<?>>(), type, callback);
 	}
 
-	@Override
-	public final void addChangeListener(final IChangeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
-
-	@Override
-	public final void removeChangeListener(final IChangeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
-
-	public final void fireChangedEvent() {
-		for (final IChangeListener listener : new LinkedList<IChangeListener>(listeners)) {
-			listener.changed();
+	private static void iterateHierarchy(
+		final Set<Class<?>> visited,
+		final Class<?> type,
+		final IIterationCallback<Class<?>> callback) {
+		if (type != null && !visited.contains(type)) {
+			callback.next(type);
+			visited.add(type);
+			iterateHierarchy(visited, type.getSuperclass(), callback);
+			for (final Class<?> implemented : type.getInterfaces()) {
+				iterateHierarchy(visited, implemented, callback);
+			}
 		}
-	}
-
-	public final void dispose() {
-		listeners.clear();
 	}
 
 }
