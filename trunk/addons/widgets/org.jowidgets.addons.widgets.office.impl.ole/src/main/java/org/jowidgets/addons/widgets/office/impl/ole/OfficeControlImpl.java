@@ -32,6 +32,7 @@ import org.jowidgets.addons.widgets.office.api.IOfficeControl;
 import org.jowidgets.addons.widgets.office.api.IOfficeControlSetupBuilder;
 import org.jowidgets.addons.widgets.ole.document.api.IOleDocument;
 import org.jowidgets.addons.widgets.ole.document.tools.OleDocumentWrapper;
+import org.jowidgets.util.event.ChangeObservable;
 import org.jowidgets.util.event.IChangeListener;
 
 class OfficeControlImpl extends OleDocumentWrapper implements IOfficeControl {
@@ -39,9 +40,12 @@ class OfficeControlImpl extends OleDocumentWrapper implements IOfficeControl {
 	@SuppressWarnings("unused")
 	private final IOleDocument oleDocument;
 
+	private final ChangeObservable changeObservable;
+
 	public OfficeControlImpl(final IOleDocument oleDocument, final IOfficeControlSetupBuilder<?> setup) {
 		super(oleDocument);
 		this.oleDocument = oleDocument;
+		this.changeObservable = new ChangeObservable();
 	}
 
 	@Override
@@ -51,7 +55,7 @@ class OfficeControlImpl extends OleDocumentWrapper implements IOfficeControl {
 
 	@Override
 	public void addDocumentChangeListener(final IChangeListener changeListener) {
-
+		changeObservable.addChangeListener(changeListener);
 	}
 
 }
