@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,42 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util.event;
+package org.jowidgets.util;
 
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.Set;
+public interface IFunction<RESULT_TYPE, ARGUMENT_TYPE> {
 
-import org.jowidgets.util.Assert;
-
-public class ChangeObservable implements IChangeObservable {
-
-	private final Set<IChangeListener> listeners;
-
-	public ChangeObservable() {
-		this.listeners = new LinkedHashSet<IChangeListener>();
-	}
-
-	@Override
-	public final void addChangeListener(final IChangeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
-
-	@Override
-	public final void removeChangeListener(final IChangeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
-
-	public final void fireChangedEvent() {
-		for (final IChangeListener listener : new LinkedList<IChangeListener>(listeners)) {
-			listener.changed();
-		}
-	}
-
-	public final void dispose() {
-		listeners.clear();
-	}
+	RESULT_TYPE invoke(ARGUMENT_TYPE argument);
 
 }
