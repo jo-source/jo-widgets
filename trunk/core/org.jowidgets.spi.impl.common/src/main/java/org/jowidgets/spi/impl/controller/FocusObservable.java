@@ -28,40 +28,43 @@
 
 package org.jowidgets.spi.impl.controller;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.common.widgets.controller.IFocusObservable;
+import org.jowidgets.util.Assert;
 
 public class FocusObservable implements IFocusObservable {
 
 	private final Set<IFocusListener> listeners;
 
 	public FocusObservable() {
-		this.listeners = new HashSet<IFocusListener>();
+		this.listeners = new LinkedHashSet<IFocusListener>();
 	}
 
 	@Override
 	public final void addFocusListener(final IFocusListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
 	public final void removeFocusListener(final IFocusListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
 	public final void focusGained() {
-		for (final IFocusListener listener : listeners) {
+		for (final IFocusListener listener : new LinkedList<IFocusListener>(listeners)) {
 			listener.focusGained();
 		}
 	}
 
 	public final void focusLost() {
-		for (final IFocusListener listener : listeners) {
+		for (final IFocusListener listener : new LinkedList<IFocusListener>(listeners)) {
 			listener.focusLost();
 		}
 	}
-
 }

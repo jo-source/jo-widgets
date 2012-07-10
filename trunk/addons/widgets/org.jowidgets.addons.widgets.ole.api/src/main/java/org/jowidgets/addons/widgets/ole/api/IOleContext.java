@@ -44,7 +44,7 @@ public interface IOleContext {
 
 	boolean isDirty();
 
-	//TODO WH add listener stuff
+	//TODO MG add listener stuff
 
 	void execute(OleCommand command, Object in, OleCommandOption... options);
 

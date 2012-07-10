@@ -33,6 +33,8 @@ import org.jowidgets.addons.widgets.ole.api.IOleContext;
 import org.jowidgets.addons.widgets.ole.api.IOleControl;
 import org.jowidgets.addons.widgets.ole.api.IOleControlSetupBuilder;
 import org.jowidgets.api.widgets.IControl;
+import org.jowidgets.common.widgets.controller.IFocusListener;
+import org.jowidgets.spi.impl.controller.FocusObservable;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.IMutableValue;
 import org.jowidgets.util.IMutableValueListener;
@@ -42,6 +44,8 @@ import org.jowidgets.util.MutableValue;
 class OleControlImpl extends ControlWrapper implements IOleControl {
 
 	private final MutableValue<IOleContext> context;
+	private final FocusObservable focusObservable;
+	private final FocusListenerDelegate focusListenerDelegate;
 
 	OleControlImpl(
 		final IControl control,
@@ -50,6 +54,8 @@ class OleControlImpl extends ControlWrapper implements IOleControl {
 		super(control);
 
 		this.context = new MutableValue<IOleContext>();
+		this.focusObservable = new FocusObservable();
+		this.focusListenerDelegate = new FocusListenerDelegate();
 
 		swtCompositeValue.addMutableValueListener(new IMutableValueListener<Composite>() {
 			@Override
@@ -63,7 +69,9 @@ class OleControlImpl extends ControlWrapper implements IOleControl {
 
 	private void swtCompositeChanged(final IMutableValue<Composite> swtCompositeValue) {
 		if (swtCompositeValue.getValue() != null) {
-			context.setValue(new OleContextImpl(swtCompositeValue.getValue()));
+			final OleContextImpl oleContext = new OleContextImpl(swtCompositeValue.getValue());
+			oleContext.addFocusListener(focusListenerDelegate);
+			context.setValue(oleContext);
 		}
 		else {
 			context.setValue(null);
@@ -74,5 +82,27 @@ class OleControlImpl extends ControlWrapper implements IOleControl {
 	public IMutableValue<IOleContext> getContext() {
 		return context;
 	}
+
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		focusObservable.addFocusListener(listener);
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		focusObservable.removeFocusListener(listener);
+	}
+
+	private final class FocusListenerDelegate implements IFocusListener {
+		@Override
+		public void focusLost() {
+			focusObservable.focusLost();
+		}
+
+		@Override
+		public void focusGained() {
+			focusObservable.focusGained();
+		}
+	};
 
 }

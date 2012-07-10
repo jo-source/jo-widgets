@@ -31,9 +31,12 @@ package org.jowidgets.addons.widgets.ole.impl.swt;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.internal.ole.win32.IDispatch;
 import org.eclipse.swt.internal.ole.win32.IUnknown;
 import org.eclipse.swt.layout.FillLayout;
@@ -48,11 +51,14 @@ import org.jowidgets.addons.widgets.ole.api.IOleAutomation;
 import org.jowidgets.addons.widgets.ole.api.IOleContext;
 import org.jowidgets.addons.widgets.ole.api.OleCommand;
 import org.jowidgets.addons.widgets.ole.api.OleCommandOption;
+import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.util.Assert;
 
 class OleContextImpl implements IOleContext {
 
 	private final OleFrame oleFrame;
+	private final Set<IFocusListener> focusListeners;
+	private final FocusListenerAdapter focusListenerAdapter;
 
 	private OleControlSite oleControlSiteLazy;
 
@@ -61,6 +67,8 @@ class OleContextImpl implements IOleContext {
 	OleContextImpl(final Composite swtComposite) {
 		swtComposite.setLayout(new FillLayout());
 		this.oleFrame = new OleFrame(swtComposite, SWT.NONE);
+		this.focusListeners = new LinkedHashSet<IFocusListener>();
+		this.focusListenerAdapter = new FocusListenerAdapter();
 	}
 
 	@Override
@@ -98,6 +106,7 @@ class OleContextImpl implements IOleContext {
 			oleControlSiteLazy = new OleControlSite(oleFrame, SWT.NONE, file);
 		}
 		if (oleControlSiteLazy != null) {
+			oleControlSiteLazy.addFocusListener(focusListenerAdapter);
 			oleControlSiteLazy.doVerb(OLE.OLEIVERB_INPLACEACTIVATE);
 		}
 	}
@@ -131,6 +140,10 @@ class OleContextImpl implements IOleContext {
 			oleAutomationLazy = new OleAutomationImpl(new OleAutomation(getOleControlSite()));
 		}
 		return oleAutomationLazy;
+	}
+
+	void addFocusListener(final IFocusListener listener) {
+		focusListeners.add(listener);
 	}
 
 	private OleControlSite getOleControlSite() {
@@ -387,6 +400,24 @@ class OleContextImpl implements IOleContext {
 		@Override
 		public void dispose() {
 			oleAutomation.dispose();
+		}
+
+	}
+
+	private final class FocusListenerAdapter implements FocusListener {
+
+		@Override
+		public void focusLost(final FocusEvent e) {
+			for (final IFocusListener listener : focusListeners) {
+				listener.focusLost();
+			}
+		}
+
+		@Override
+		public void focusGained(final FocusEvent e) {
+			for (final IFocusListener listener : focusListeners) {
+				listener.focusGained();
+			}
 		}
 
 	}
