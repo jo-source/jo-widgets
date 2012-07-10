@@ -210,8 +210,8 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 	}
 
 	@Override
-	public IMutableValue<IOleContext> getContext() {
-		return getWidget().getContext();
+	public IOleControl getOleControl() {
+		return getWidget();
 	}
 
 	public void writeOutputStream(final OutputStream outputStream, final File tempFile) {
@@ -260,5 +260,6 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 		catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
+
 	}
 }

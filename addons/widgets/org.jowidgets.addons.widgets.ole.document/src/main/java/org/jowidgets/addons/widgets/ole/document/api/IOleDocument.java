@@ -32,9 +32,8 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.jowidgets.addons.widgets.ole.api.IOleContext;
+import org.jowidgets.addons.widgets.ole.api.IOleControl;
 import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.util.IMutableValue;
 
 public interface IOleDocument extends IControl {
 
@@ -50,6 +49,6 @@ public interface IOleDocument extends IControl {
 
 	boolean isDirty();
 
-	IMutableValue<IOleContext> getContext();
+	IOleControl getOleControl();
 
 }

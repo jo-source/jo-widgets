@@ -32,10 +32,9 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.jowidgets.addons.widgets.ole.api.IOleContext;
+import org.jowidgets.addons.widgets.ole.api.IOleControl;
 import org.jowidgets.addons.widgets.ole.document.api.IOleDocument;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
-import org.jowidgets.util.IMutableValue;
 
 public class OleDocumentWrapper extends ControlWrapper implements IOleDocument {
 
@@ -82,8 +81,8 @@ public class OleDocumentWrapper extends ControlWrapper implements IOleDocument {
 	}
 
 	@Override
-	public IMutableValue<IOleContext> getContext() {
-		return oleDocument.getContext();
+	public IOleControl getOleControl() {
+		return oleDocument.getOleControl();
 	}
 
 }

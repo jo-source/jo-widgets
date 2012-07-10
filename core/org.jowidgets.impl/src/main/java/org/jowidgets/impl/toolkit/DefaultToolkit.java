@@ -289,12 +289,13 @@ public class DefaultToolkit implements IToolkit {
 	public IFrame createRootFrame(final IFrameDescriptor descriptor, final IApplicationLifecycle lifecycle) {
 		final IFrame result = genericWidgetFactory.create(descriptor);
 		result.addWindowListener(new WindowAdapter() {
-
 			@Override
 			public void windowClosed() {
+				if (!result.isDisposed()) {
+					result.dispose();
+				}
 				lifecycle.finish();
 			}
-
 		});
 		return result;
 	}
