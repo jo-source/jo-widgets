@@ -42,6 +42,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.spi.widgets.IWindowSpi;
+import org.jowidgets.tools.controller.WindowAdapter;
 
 public class WindowDelegate {
 
@@ -78,6 +79,17 @@ public class WindowDelegate {
 
 		if (setup.getPosition() != null) {
 			setPosition(setup.getPosition());
+		}
+
+		if (setup.getAutoDispose()) {
+			windowSpi.addWindowListener(new WindowAdapter() {
+				@Override
+				public void windowClosed() {
+					if (!window.isDisposed()) {
+						window.dispose();
+					}
+				}
+			});
 		}
 	}
 

@@ -33,6 +33,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
@@ -64,7 +65,15 @@ public class WindowProvider {
 					//If a WindowWidget wraps another WindowWidget it will be assumed, 
 					//that the newer window wraps the previous window with the same ui reference.
 					//From now, the wrapping window will returned for the active window
-					uiReferenceToWindow.put(windowWidget.getUiReference(), windowWidget);
+					final Object uiReference = windowWidget.getUiReference();
+					uiReferenceToWindow.put(uiReference, windowWidget);
+
+					windowWidget.addDisposeListener(new IDisposeListener() {
+						@Override
+						public void onDispose() {
+							uiReferenceToWindow.remove(uiReference);
+						}
+					});
 				}
 
 			}
