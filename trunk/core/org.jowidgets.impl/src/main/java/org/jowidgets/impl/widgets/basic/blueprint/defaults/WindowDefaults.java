@@ -40,6 +40,7 @@ public class WindowDefaults implements IDefaultInitializer<ITitledWindowSetupBui
 		builder.setAutoPackPolicy(AutoPackPolicy.ONCE);
 		builder.setAutoPositionCorrectionPolicy(AutoPositionCorrectionPolicy.ONCE);
 		builder.setAutoCenterPolicy(AutoCenterPolicy.ONCE);
+		builder.setAutoDispose(false);
 	}
 
 }

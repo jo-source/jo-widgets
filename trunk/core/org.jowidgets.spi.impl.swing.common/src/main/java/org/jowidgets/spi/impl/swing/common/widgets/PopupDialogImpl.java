@@ -78,11 +78,6 @@ public class PopupDialogImpl extends SwingWindow implements IPopupDialogSpi {
 	}
 
 	@Override
-	public void setVisible(final boolean visible) {
-		getUiReference().setVisible(visible);
-	}
-
-	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
 		getUiReference().getContentPane().setBackground(ColorConvert.convert(colorValue));
 		super.setBackgroundColor(colorValue);

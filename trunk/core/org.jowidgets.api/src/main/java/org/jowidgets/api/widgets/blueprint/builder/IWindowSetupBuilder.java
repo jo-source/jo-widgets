@@ -54,4 +54,13 @@ public interface IWindowSetupBuilder<INSTANCE_TYPE extends IWindowSetupBuilder<?
 
 	INSTANCE_TYPE setPosition(Position position);
 
+	/**
+	 * If auto dispose is set, the window will be disposed, when it was closed.
+	 * 
+	 * @param autoDispose True if window should be automatically disposed, false otherwise
+	 * 
+	 * @return This builder
+	 */
+	INSTANCE_TYPE setAutoDispose(boolean autoDispose);
+
 }

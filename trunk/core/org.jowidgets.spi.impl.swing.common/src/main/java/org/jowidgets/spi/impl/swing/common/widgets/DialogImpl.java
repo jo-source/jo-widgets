@@ -98,11 +98,6 @@ public class DialogImpl extends SwingWindow implements IFrameSpi {
 	}
 
 	@Override
-	public void setVisible(final boolean visible) {
-		getUiReference().setVisible(visible);
-	}
-
-	@Override
 	public void setTitle(final String title) {
 		getUiReference().setTitle(title);
 	}
