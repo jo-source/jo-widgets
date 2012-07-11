@@ -58,4 +58,9 @@ class OfficeControlImpl extends OleDocumentWrapper implements IOfficeControl {
 		changeObservable.addChangeListener(changeListener);
 	}
 
+	@Override
+	public void removeDocumentChangeListener(final IChangeListener changeListener) {
+		changeObservable.removeChangeListener(changeListener);
+	}
+
 }
