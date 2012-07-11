@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2012, David Bauknecht
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,42 +28,211 @@
 
 package org.jowidgets.spi.impl.javafx.widgets;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
+import javafx.scene.control.ComboBox;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+
+import org.jowidgets.common.mask.TextMaskMode;
+import org.jowidgets.common.types.InputChangeEventPolicy;
 import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.verify.IInputVerifier;
+import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
+import org.jowidgets.spi.impl.verify.InputVerifierHelper;
+import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
+import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
 
-public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi {
+public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelectionSpi, IComboBoxSpi {
 
-	public ComboBoxImpl(final IComboBoxSetupSpi setup) {
-		super(setup);
+	private final StyleDelegate styleDelegate;
+	private final boolean isAutoCompletionMode;
+	private final boolean isSelectionMode;
+	private IInputVerifier inputVerifier;
+
+	public ComboBoxImpl(final IComboBoxSelectionSetupSpi setup) {
+		super(new ComboBox<String>());
+		styleDelegate = new StyleDelegate(getUiReference());
+
+		this.isAutoCompletionMode = setup.isAutoCompletion();
+		this.isSelectionMode = !(setup instanceof IComboBoxSetupSpi);
+		final boolean hasEditor = isAutoCompletionMode || !isSelectionMode;
+		final IInputVerifier maskVerifier;
+		String initialText = null;
+
+		if (setup instanceof IComboBoxSetupSpi) {
+			final IComboBoxSetupSpi comboBoxSetup = (IComboBoxSetupSpi) setup;
+
+			maskVerifier = TextMaskVerifierFactory.create(this, comboBoxSetup.getMask());
+			inputVerifier = InputVerifierHelper.getInputVerifier(maskVerifier, comboBoxSetup);
+
+			if (comboBoxSetup.getMask() != null && TextMaskMode.FULL_MASK == comboBoxSetup.getMask().getMode()) {
+				initialText = comboBoxSetup.getMask().getPlaceholder();
+			}
+
+		}
+
+		if (hasEditor) {
+			getUiReference().setEditable(true);
+			setTexFieldProperties(inputVerifier);
+			if (initialText != null) {
+				setText(initialText);
+			}
+		}
+
+		if (setup.getInputChangeEventPolicy() == InputChangeEventPolicy.ANY_CHANGE) {
+			getUiReference().getEditor().setOnKeyReleased(new EventHandler<KeyEvent>() {
+				@Override
+				public void handle(final KeyEvent event) {
+					fireInputChanged();
+				}
+			});
+
+			getUiReference().getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+
+				@Override
+				public void changed(
+					final ObservableValue<? extends String> observableValue,
+					final String oldValue,
+					final String newValue) {
+					if (newValue != null) {
+						if (!newValue.equals(oldValue)) {
+							fireInputChanged();
+						}
+					}
+				}
+			});
+		}
+		else if (setup.getInputChangeEventPolicy() == InputChangeEventPolicy.EDIT_FINISHED) {
+			getUiReference().focusedProperty().addListener(new ChangeListener<Boolean>() {
+				@Override
+				public void changed(
+					final ObservableValue<? extends Boolean> paramObservableValue,
+					final Boolean oldValue,
+					final Boolean newValue) {
+					fireInputChanged();
+				}
+			});
+		}
+
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ComboBox<String> getUiReference() {
+		return (ComboBox<String>) super.getUiReference();
+	}
+
+	@Override
+	public void setEditable(final boolean editable) {
+		getUiReference().setEditable(editable);
 	}
 
 	@Override
 	public String getText() {
-		return null;
+		return getUiReference().getValue();
 	}
 
 	@Override
-	public void setText(final String text) {}
+	public void setText(final String text) {
+		getUiReference().setValue(text);
+
+	}
 
 	@Override
-	public void setFontSize(final int size) {}
+	public void setFontSize(final int size) {
+		styleDelegate.setFontSize(size);
+
+	}
 
 	@Override
-	public void setFontName(final String fontName) {}
+	public void setFontName(final String fontName) {
+		styleDelegate.setFontName(fontName);
+
+	}
 
 	@Override
-	public void setMarkup(final Markup markup) {}
+	public void setMarkup(final Markup markup) {
+		styleDelegate.setMarkup(markup);
+
+	}
 
 	@Override
-	public void setSelection(final int start, final int end) {}
+	public void setSelection(final int start, final int end) {
+		getUiReference().getEditor().selectRange(start, end);
+	}
 
 	@Override
-	public void setCaretPosition(final int pos) {}
+	public void setCaretPosition(final int pos) {
+		getUiReference().getEditor().positionCaret(pos);
+	}
 
 	@Override
 	public int getCaretPosition() {
-		return 0;
+		return getUiReference().getEditor().getCaretPosition();
 	}
 
+	@Override
+	public int getSelectedIndex() {
+		return getUiReference().getSelectionModel().getSelectedIndex();
+	}
+
+	@Override
+	public void setSelectedIndex(final int index) {
+		getUiReference().getSelectionModel().select(index);
+
+	}
+
+	@Override
+	public String[] getElements() {
+		final ObservableList<String> items = getUiReference().getItems();
+		final String[] elements = new String[items.size()];
+		for (int i = 0; i < items.size(); i++) {
+			elements[i] = items.get(i);
+		}
+
+		return elements;
+	}
+
+	@Override
+	public void setElements(final String[] elements) {
+		final ObservableList<String> list = FXCollections.observableArrayList();
+		for (int i = 0; i < elements.length; i++) {
+			list.add(elements[i]);
+		}
+		getUiReference().setItems(list);
+	}
+
+	private void fireInputChanged() {
+		super.fireInputChanged(getUiReference().getSelectionModel().getSelectedItem());
+	}
+
+	private void setTexFieldProperties(final IInputVerifier inputVerifier) {
+		getUiReference().getEditor().setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(final KeyEvent event) {
+				if (event.getCode() != KeyCode.BACK_SPACE) {
+
+					final ObservableList<String> items = getUiReference().getItems();
+					String text = getUiReference().getEditor().getText();
+					text = text + event.getText();
+					for (final String string : items) {
+						if (string.regionMatches(0, text, 0, text.length()) && text.length() > 2) {
+							getUiReference().getSelectionModel().select(string);
+							getUiReference().getEditor().positionCaret(text.length());
+						}
+					}
+				}
+				event.consume();
+			}
+
+		});
+
+	}
 }

@@ -99,18 +99,21 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 	private final ITableColumnModelSpi columnModel;
 	private final boolean columnsResizeable;
 
-	private final TableSelectionListener tableSelectionListener;
-	private final TableSelectionObservable tableSelectionObservable;
-	private final TableColumnPopupDetectionObservable tableColumnPopupDetectionObservable;
-	private final TableColumnModelListener tableColumnModelListener;
-	private final TableColumnObservable tableColumnObservable;
-	private final TableCellEditorObservable tableCellEditorObservable;
-	private final TableCellPopupDetectionObservable tableCellPopupDetectionObservable;
 	private final TableCellObservable tableCellObservable;
+	private final TableCellPopupDetectionObservable tableCellPopupDetectionObservable;
+	private final TableColumnPopupDetectionObservable tableColumnPopupDetectionObservable;
+	private final TableColumnObservable tableColumnObservable;
+	private final TableSelectionObservable tableSelectionObservable;
+	private final TableCellEditorObservable tableCellEditorObservable;
+
+	private final TableSelectionListener tableSelectionListener;
+	private final TableColumnModelListener tableColumnModelListener;
+
 	private final boolean hasBorder;
 	private boolean setWidthInvokedOnModel;
 	private final StyleDelegate styleDelegate;
 	private int popupIndex;
+	private ObservableList<? extends TableColumn> permutationList;
 
 	public TableImpl(final ITableSetupSpi setup) {
 		super(new TableView(), false);
@@ -158,8 +161,16 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 				tableColumnPopupDetectionObservable.firePopupDetected(new TableColumnPopupEvent(0, position));
 
 			}
+		});
+		getUiReference().getColumns().addListener(new ListChangeListener<TableColumn>() {
+
+			@Override
+			public void onChanged(final Change<? extends TableColumn> change) {
+
+			}
 
 		});
+
 	}
 
 	@Override
@@ -181,11 +192,12 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 			columnModelObservable.removeColumnModelListener(tableColumnModelListener);
 		}
 
-		for (int i = 0; i < columnModel.getColumnCount(); i++) {
-
-			final ITableColumnSpi column = columnModel.getColumn(i);
-			addColumn(i, column);
+		for (int columnIndex = 0; columnIndex < columnModel.getColumnCount(); columnIndex++) {
+			final ITableColumnSpi column = columnModel.getColumn(columnIndex);
+			final TableColumn columnfx = addColumn(columnIndex, column);
+			getUiReference().getColumns().add(columnIndex, columnfx);
 		}
+		permutationList = getUiReference().getColumns();
 		if (columnModelObservable != null) {
 			columnModelObservable.addColumnModelListener(tableColumnModelListener);
 		}
@@ -224,7 +236,7 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 		final ArrayList<Integer> result = new ArrayList<Integer>();
 		final ObservableList<TableColumn<ITableCell, ?>> javafxColumns = getUiReference().getColumns();
 		for (int i = 0; i < javafxColumns.size(); i++) {
-			result.add(Integer.valueOf(javafxColumns.indexOf(javafxColumns.get(i))));
+			result.add(Integer.valueOf(permutationList.indexOf(javafxColumns.get(i))));
 		}
 		return result;
 	}
@@ -330,13 +342,11 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 	@Override
 	public void addTableColumnListener(final ITableColumnListener listener) {
 		tableColumnObservable.addTableColumnListener(listener);
-
 	}
 
 	@Override
 	public void removeTableColumnListener(final ITableColumnListener listener) {
 		tableColumnObservable.removeTableColumnListener(listener);
-
 	}
 
 	@Override
@@ -359,13 +369,12 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 		return new PopupMenuImpl(getUiReference().getColumns().get(popupIndex));
 	}
 
-	private void addColumn(final int externalIndex, final ITableColumnSpi joColumn) {
+	private TableColumn addColumn(final int externalIndex, final ITableColumnSpi joColumn) {
 		final TableColumn tableColumn = new TableColumn(joColumn.getText());
 		tableColumn.setResizable(columnsResizeable);
 		tableColumn.setSortable(false);
 
 		setColumnData(tableColumn, joColumn);
-		getUiReference().getColumns().add(externalIndex, tableColumn);
 
 		tableColumn.setCellFactory(new TableCellFactory());
 		tableColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<JoTableRow, Object>, ObservableValue<Object>>() {
@@ -435,11 +444,12 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 			}
 		});
 
+		return tableColumn;
+
 	}
 
 	private void setColumnData(final TableColumn<ITableCell, Object> tableColumn, final ITableColumnSpi joColumn) {
 		final String text = joColumn.getText();
-
 		if (text != null) {
 			tableColumn.setText(text);
 		}

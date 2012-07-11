@@ -146,7 +146,9 @@ public class JavafxControl extends ActionObservable implements IControlSpi {
 
 	@Override
 	public Position getPosition() {
-		return new Position((int) getUiReference().getLayoutX(), (int) getUiReference().getLayoutY());
+		return new Position(
+			(int) getUiReference().getLayoutBounds().getMinX(),
+			(int) getUiReference().getLayoutBounds().getMinY());
 	}
 
 	@Override

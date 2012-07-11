@@ -161,7 +161,6 @@ public class PopupMenuImpl implements IPopupMenuSpi {
 
 	@Override
 	public void show(final Position position) {
-		getUiReference().hide();
 		if (parent instanceof ToolBar) {
 			getUiReference().show((Control) parent, position.getX(), position.getY());
 		}

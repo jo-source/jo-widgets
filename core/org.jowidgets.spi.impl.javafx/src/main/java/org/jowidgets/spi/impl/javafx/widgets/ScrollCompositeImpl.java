@@ -30,6 +30,8 @@ package org.jowidgets.spi.impl.javafx.widgets;
 
 import java.util.List;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 
@@ -75,11 +77,17 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 		if (!setup.hasVerticalBar()) {
 			scrollPane.setVbarPolicy(ScrollBarPolicy.NEVER);
 		}
-		scrollPane.setFitToHeight(true);
 		scrollPane.setFitToWidth(true);
-
 		scrollPane.setContent(innerContainer.getUiReference());
 		scrollPane.setStyle("-fx-background-color: #FFFFFF;\n");
+
+		innerContainer.getUiReference().widthProperty().addListener(new InvalidationListener() {
+
+			@Override
+			public void invalidated(final Observable paramObservable) {
+				scrollPane.layout();
+			}
+		});
 	}
 
 	@Override

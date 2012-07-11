@@ -96,7 +96,7 @@ public class TreeImpl extends JavafxControl implements ITreeSpi {
 
 		for (final TreeItem<String> wasSelected : lastSelection) {
 			if (!newSelection.contains(wasSelected)) {
-				if (wasSelected != null) {
+				if (wasSelected != null && nodes.get(wasSelected) != null) {
 					nodes.get(wasSelected).fireSelectionChanged(false);
 				}
 			}
