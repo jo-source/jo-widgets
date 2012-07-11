@@ -134,7 +134,10 @@ public class TextFieldImpl extends AbstractTextInputControl implements ITextCont
 	@Override
 	public void setText(final String text) {
 		programmaticChange = true;
-		if (text != null) {
+		if (text == null) {
+			getUiReference().setText("");
+		}
+		else {
 			getUiReference().setText(text);
 		}
 		programmaticChange = false;
@@ -170,7 +173,7 @@ public class TextFieldImpl extends AbstractTextInputControl implements ITextCont
 
 	@Override
 	public void setMarkup(final Markup markup) {
-
+		styleUtil.setMarkup(markup);
 	}
 
 	@Override

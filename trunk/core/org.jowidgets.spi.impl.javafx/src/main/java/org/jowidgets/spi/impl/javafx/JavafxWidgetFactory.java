@@ -37,7 +37,6 @@ import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.impl.javafx.widgets.ButtonImpl;
 import org.jowidgets.spi.impl.javafx.widgets.CheckBoxImpl;
 import org.jowidgets.spi.impl.javafx.widgets.ComboBoxImpl;
-import org.jowidgets.spi.impl.javafx.widgets.ComboBoxSelectionImpl;
 import org.jowidgets.spi.impl.javafx.widgets.CompositeImpl;
 import org.jowidgets.spi.impl.javafx.widgets.CompositeWrapper;
 import org.jowidgets.spi.impl.javafx.widgets.DialogImpl;
@@ -223,7 +222,7 @@ public final class JavafxWidgetFactory implements IWidgetFactorySpi {
 
 	@Override
 	public IComboBoxSelectionSpi createComboBoxSelection(final Object parentUiReference, final IComboBoxSelectionSetupSpi setup) {
-		return new ComboBoxSelectionImpl(setup);
+		return new ComboBoxImpl(setup);
 	}
 
 	@Override

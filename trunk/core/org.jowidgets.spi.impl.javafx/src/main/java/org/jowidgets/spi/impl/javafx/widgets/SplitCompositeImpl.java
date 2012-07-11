@@ -28,6 +28,8 @@
 
 package org.jowidgets.spi.impl.javafx.widgets;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.SplitPaneBuilder;
 import javafx.scene.layout.Pane;
@@ -58,9 +60,23 @@ public class SplitCompositeImpl extends JavafxControl implements ISplitComposite
 		first = new JavafxSplitContainer(factory, getUiReference());
 		second = new JavafxSplitContainer(factory, getUiReference());
 		getUiReference().getItems().addAll(first.getUiReference(), second.getUiReference());
-
 		first.setLayout(setup.getFirstLayout());
 		second.setLayout(setup.getSecondLayout());
+
+		getUiReference().widthProperty().addListener(new InvalidationListener() {
+
+			@Override
+			public void invalidated(final Observable paramObservable) {
+				getUiReference().setDividerPosition(0, setup.getWeight());
+			}
+		});
+		getUiReference().heightProperty().addListener(new InvalidationListener() {
+
+			@Override
+			public void invalidated(final Observable paramObservable) {
+				getUiReference().setDividerPosition(0, setup.getWeight());
+			}
+		});
 
 	}
 
