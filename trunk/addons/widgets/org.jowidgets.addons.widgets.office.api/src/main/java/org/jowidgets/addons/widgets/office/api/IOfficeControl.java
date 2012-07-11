@@ -37,4 +37,6 @@ public interface IOfficeControl extends IOleDocument {
 
 	void addDocumentChangeListener(IChangeListener changeListener);
 
+	void removeDocumentChangeListener(IChangeListener changeListener);
+
 }
