@@ -282,17 +282,17 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 
 	@Override
 	public void pack(final int columnIndex, final TablePackPolicy policy) {
-		getWidget().pack(columnIndex, policy);
+		getWidget().pack(modelSpiAdapter.convertModelToView(columnIndex), policy);
 	}
 
 	@Override
 	public Position getCellPosition(final int rowIndex, final int columnIndex) {
-		return getWidget().getCellPosition(rowIndex, columnIndex);
+		return getWidget().getCellPosition(rowIndex, modelSpiAdapter.convertModelToView(columnIndex));
 	}
 
 	@Override
 	public Dimension getCellSize(final int rowIndex, final int columnIndex) {
-		return getWidget().getCellSize(rowIndex, columnIndex);
+		return getWidget().getCellSize(rowIndex, modelSpiAdapter.convertModelToView(columnIndex));
 	}
 
 	@Override

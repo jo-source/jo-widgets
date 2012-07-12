@@ -56,9 +56,8 @@ class TableColumnPopupDetectionObservableSpiAdapter implements ITableColumnPopup
 
 	public void firePopupDetected(final ITableColumnPopupEvent event, final TableModelSpiAdapter modelSpiAdapter) {
 		if (!listeners.isEmpty()) {
-			final ITableColumnPopupEvent decoratedEvent = new TableColumnPopupEvent(
-				modelSpiAdapter.convertViewToModel(event.getColumnIndex()),
-				event.getPosition());
+			final int convertedIndex = modelSpiAdapter.convertViewToModel(event.getColumnIndex());
+			final ITableColumnPopupEvent decoratedEvent = new TableColumnPopupEvent(convertedIndex, event.getPosition());
 			for (final ITableColumnPopupDetectionListener listener : listeners) {
 				listener.popupDetected(decoratedEvent);
 			}
