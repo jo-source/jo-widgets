@@ -61,7 +61,6 @@ class OleContextImpl implements IOleContext {
 	private final FocusListenerAdapter focusListenerAdapter;
 
 	private OleControlSite oleControlSiteLazy;
-
 	private OleAutomationImpl oleAutomationLazy;
 
 	OleContextImpl(final Composite swtComposite) {
@@ -130,8 +129,17 @@ class OleContextImpl implements IOleContext {
 	public boolean isDirty() {
 		if (oleControlSiteLazy != null) {
 			return oleControlSiteLazy.isDirty();
+
 		}
 		return false;
+	}
+
+	@Override
+	public boolean isDisposed() {
+		if (oleControlSiteLazy != null) {
+			return oleControlSiteLazy.isDisposed();
+		}
+		return true;
 	}
 
 	@Override
@@ -280,6 +288,9 @@ class OleContextImpl implements IOleContext {
 			return variant.getFloat();
 		}
 		else if (OLE.VT_R8 == variant.getType()) {
+			return variant.getDouble();
+		}
+		else if (OLE.VT_I4 == variant.getType()) {
 			return variant.getInt();
 		}
 		else if (OLE.VT_I2 == variant.getType()) {
@@ -398,6 +409,33 @@ class OleContextImpl implements IOleContext {
 		}
 
 		@Override
+		public Object getProperty(final String propertyName, final Object... parameters) {
+
+			final int[] propertyNameIds = oleAutomation.getIDsOfNames(new String[] {propertyName});
+
+			if (propertyNameIds != null && propertyNameIds.length == 1) {
+
+				if (parameters.length > 1) {
+					final Variant[] variants = new Variant[parameters.length];
+					for (int i = 0; i < parameters.length; i++) {
+						variants[i] = createVariant(parameters[i]);
+					}
+					return getVariantResult(oleAutomation.getProperty(propertyNameIds[0], variants));
+
+				}
+				else {
+					return getVariantResult(oleAutomation.getProperty(
+							propertyNameIds[0],
+							new Variant[] {createVariant(parameters[0])}));
+				}
+			}
+			else {
+				throw new IllegalArgumentException("Property name '" + propertyName + "' is unknown");
+			}
+
+		}
+
+		@Override
 		public void dispose() {
 			oleAutomation.dispose();
 		}
@@ -418,6 +456,13 @@ class OleContextImpl implements IOleContext {
 			for (final IFocusListener listener : focusListeners) {
 				listener.focusGained();
 			}
+		}
+	}
+
+	@Override
+	public void dispose() {
+		if (oleControlSiteLazy != null) {
+			oleControlSiteLazy.dispose();
 		}
 
 	}
