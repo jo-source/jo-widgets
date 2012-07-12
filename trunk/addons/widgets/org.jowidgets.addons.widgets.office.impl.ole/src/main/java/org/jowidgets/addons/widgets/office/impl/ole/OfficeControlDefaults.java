@@ -26,26 +26,15 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.office.api;
+package org.jowidgets.addons.widgets.office.impl.ole;
 
-import java.io.File;
+import org.jowidgets.addons.widgets.office.api.IOfficeControlSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
-import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
-import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
-import org.jowidgets.util.IFactory;
+public final class OfficeControlDefaults implements IDefaultInitializer<IOfficeControlSetupBuilder<?>> {
 
-public interface IOfficeControlSetupBuilder<INSTANCE_TYPE extends IOfficeControlSetupBuilder<?>> extends
-		IComponentSetup,
-		IComponentSetupBuilder<INSTANCE_TYPE> {
-
-	INSTANCE_TYPE setToolbarVisible(boolean visible);
-
-	INSTANCE_TYPE setTempFileFactory(IFactory<File> factory);
-
-	IFactory<File> getTempFileFactory();
-
-	@Mandatory
-	boolean getToolbarVisible();
-
+	@Override
+	public void initialize(final IOfficeControlSetupBuilder<?> setup) {
+		setup.setToolbarVisible(true);
+	}
 }

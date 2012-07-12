@@ -28,6 +28,7 @@
 
 package org.jowidgets.addons.widgets.office.impl.ole;
 
+import org.jowidgets.addons.widgets.office.api.IOfficeControlSetupBuilder;
 import org.jowidgets.addons.widgets.office.api.IOfficeTableCalculationBluePrint;
 import org.jowidgets.addons.widgets.office.api.IOfficeTextBluePrint;
 import org.jowidgets.api.toolkit.IToolkit;
@@ -39,8 +40,10 @@ final class OfficeToolkitInterceptor implements IToolkitInterceptor {
 	@Override
 	public void onToolkitCreate(final IToolkit toolkit) {
 		final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
+
 		widgetFactory.register(IOfficeTextBluePrint.class, new OfficeControlFactory("Word.Document"));
 		widgetFactory.register(IOfficeTableCalculationBluePrint.class, new OfficeControlFactory("Excel.Sheet"));
-	}
 
+		toolkit.getBluePrintFactory().addDefaultsInitializer(IOfficeControlSetupBuilder.class, new OfficeControlDefaults());
+	}
 }
