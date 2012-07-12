@@ -246,6 +246,10 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 		return viewToModel[columnIndex];
 	}
 
+	int convertModelToView(final int columnIndex) {
+		return modelToView[columnIndex];
+	}
+
 	private ArrayList<Integer> createTableColumnPermutation() {
 		final ArrayList<Integer> result = new ArrayList<Integer>(viewToModel.length);
 		for (int i = 0; i < currentColumnPermutation.size(); i++) {
