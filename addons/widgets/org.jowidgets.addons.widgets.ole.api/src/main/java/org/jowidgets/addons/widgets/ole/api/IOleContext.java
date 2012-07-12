@@ -44,6 +44,10 @@ public interface IOleContext {
 
 	boolean isDirty();
 
+	boolean isDisposed();
+
+	void dispose();
+
 	//TODO MG add listener stuff
 
 	void execute(OleCommand command, Object in, OleCommandOption... options);

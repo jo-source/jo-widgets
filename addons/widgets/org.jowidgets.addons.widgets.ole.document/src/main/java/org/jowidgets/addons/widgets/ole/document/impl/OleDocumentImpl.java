@@ -59,6 +59,8 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 	private final Executor executor;
 
 	private File tempDocumentStateFile;
+	private File tempOpenStateFile;
+	private File tempSaveStateFile;
 
 	public OleDocumentImpl(final IOleControl oleControl, final IOleDocumentSetupBuilder<?> setup) {
 		super(oleControl);
@@ -89,7 +91,6 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 		if (oleContext != null) {
 			if (tempDocumentStateFile != null && tempDocumentStateFile.exists()) {
 				oleContext.setDocument(progId, tempDocumentStateFile);
-				clearTempDocumentStateFile();
 			}
 			else {
 				oleContext.setDocument(progId);
@@ -98,8 +99,10 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 		else if (event != null) {
 			final IOleContext oldContext = event.getOldValue();
 
-			if (oldContext != null) {
-				tempDocumentStateFile = createTempFile();
+			if (oldContext != null && !oldContext.isDisposed()) {
+				if (tempDocumentStateFile == null) {
+					tempDocumentStateFile = createTempFile();
+				}
 				oldContext.saveCurrentDocument(tempDocumentStateFile, true);
 			}
 		}
@@ -111,24 +114,7 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 			mutableOleContext.getValue().setDocument(progId);
 		}
 		else {
-			clearTempDocumentStateFile();
-		}
-	}
-
-	@Override
-	public void openDocument(final File file) {
-		if (mutableOleContext.getValue() != null) {
-			if (progId != null) {
-				mutableOleContext.getValue().setDocument(progId, file);
-			}
-			else {
-				mutableOleContext.getValue().setDocument(file);
-			}
-		}
-		else {
-			clearTempDocumentStateFile();
-			tempDocumentStateFile = createTempFile();
-			copy(file, tempDocumentStateFile);
+			clearTempFileState(tempDocumentStateFile);
 		}
 	}
 
@@ -148,17 +134,51 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 	}
 
 	@Override
+	public void saveDocument(final OutputStream outputStream) {
+		if (tempSaveStateFile == null) {
+			tempSaveStateFile = createTempFile();
+		}
+
+		saveDocument(tempSaveStateFile, true);
+		executor.execute(new Runnable() {
+			@Override
+			public void run() {
+				writeOutputStream(outputStream, tempSaveStateFile);
+			}
+		});
+	}
+
+	@Override
+	public void openDocument(final File file) {
+		if (mutableOleContext.getValue() != null) {
+			if (progId != null) {
+				mutableOleContext.getValue().setDocument(progId, file);
+			}
+			else {
+				mutableOleContext.getValue().setDocument(file);
+			}
+		}
+		else {
+			if (tempDocumentStateFile == null) {
+				tempDocumentStateFile = createTempFile();
+			}
+			copy(file, tempDocumentStateFile);
+		}
+	}
+
+	@Override
 	public void openDocument(final InputStream inputStream) {
-		final File tempFile = createTempFile();
+		if (tempOpenStateFile == null) {
+			tempOpenStateFile = createTempFile();
+		}
+
 		final IUiThreadAccess access = Toolkit.getUiThreadAccess();
 		executor.execute(new Runnable() {
 			@Override
 			public void run() {
 				try {
-
-					if (tempFile != null) {
-						final OutputStream out = new FileOutputStream(tempFile);
-
+					if (tempOpenStateFile != null) {
+						final OutputStream out = new FileOutputStream(tempOpenStateFile);
 						final byte[] buf = new byte[1024];
 						int length;
 						while ((length = inputStream.read(buf)) > 0) {
@@ -168,9 +188,7 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 						access.invokeLater(new Runnable() {
 							@Override
 							public void run() {
-								openDocument(tempFile);
-								tempFile.delete();
-
+								openDocument(tempOpenStateFile);
 							}
 						});
 					}
@@ -180,24 +198,16 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 				}
 			}
 		});
-
-	}
-
-	@Override
-	public void saveDocument(final OutputStream outputStream) {
-		final File tempFile = createTempFile();
-		saveDocument(tempFile, true);
-		executor.execute(new Runnable() {
-			@Override
-			public void run() {
-				writeOutputStream(outputStream, tempFile);
-			}
-		});
 	}
 
 	@Override
 	public void dispose() {
-		clearTempDocumentStateFile();
+		clearTempFileState(tempDocumentStateFile);
+		clearTempFileState(tempOpenStateFile);
+		clearTempFileState(tempSaveStateFile);
+		if (mutableOleContext.getValue() != null) {
+			mutableOleContext.getValue().dispose();
+		}
 		super.dispose();
 	}
 
@@ -209,14 +219,8 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 		return false;
 	}
 
-	@Override
-	public IOleControl getOleControl() {
-		return getWidget();
-	}
-
 	public void writeOutputStream(final OutputStream outputStream, final File tempFile) {
 		try {
-
 			final InputStream inputStream = new FileInputStream(tempFile);
 			final byte[] buf = new byte[1024];
 			int length;
@@ -228,22 +232,23 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 		catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
-		tempFile.delete();
 	}
 
-	private void clearTempDocumentStateFile() {
-		if (tempDocumentStateFile != null && tempDocumentStateFile.exists()) {
-			tempDocumentStateFile.delete();
-			tempDocumentStateFile = null;
+	private void clearTempFileState(File tempFile) {
+		if (tempFile != null && tempFile.exists()) {
+			if (!tempFile.delete()) {
+				throw new RuntimeException(" Tempfile coud not be deleted");
+			}
+			tempFile = null;
 		}
 	}
 
 	private File createTempFile() {
-
 		if (tempFileFactory == null) {
 			tempFileFactory = new DefaultTempFileFactory();
 		}
 		return tempFileFactory.create("OleDocumentTemp", ".doc");
+
 	}
 
 	public static void copy(final File source, final File target) {
@@ -254,12 +259,33 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 			sourceChannel = new FileInputStream(source).getChannel();
 			targetChannel = new FileOutputStream(target).getChannel();
 			targetChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
-			targetChannel.close();
-			sourceChannel.close();
 		}
 		catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
+		finally {
+			try {
+				if (targetChannel != null) {
+					targetChannel.close();
+				}
+			}
+			catch (final IOException e) {
+				throw new RuntimeException(e);
+			}
 
+			try {
+				if (sourceChannel != null) {
+					sourceChannel.close();
+				}
+			}
+			catch (final IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
+	}
+
+	@Override
+	public IOleControl getOleControl() {
+		return getWidget();
 	}
 }
