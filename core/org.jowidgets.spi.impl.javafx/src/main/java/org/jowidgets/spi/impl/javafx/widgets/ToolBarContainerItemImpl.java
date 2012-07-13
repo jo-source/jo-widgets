@@ -30,12 +30,15 @@ package org.jowidgets.spi.impl.javafx.widgets;
 
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Pane;
+import net.miginfocom.layout.AC;
+import net.miginfocom.layout.LC;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.spi.widgets.IToolBarContainerItemSpi;
 import org.tbee.javafx.scene.layout.MigPane;
 
@@ -80,6 +83,15 @@ public class ToolBarContainerItemImpl extends JavafxContainer implements IToolBa
 
 	@Override
 	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		//TODO DB nothing to do?
+		if (layoutDescriptor instanceof MigLayoutDescriptor) {
+			final MigLayoutDescriptor des = (MigLayoutDescriptor) layoutDescriptor;
+			final MigPane migPane = new MigPane(des.getLayoutConstraints(), des.getColumnConstraints(), des.getRowConstraints());
+			final LC layoutConstraints = migPane.getLayoutConstraints();
+			final AC columnConstraints = migPane.getColumnConstraints();
+			final AC rowConstraints = migPane.getRowConstraints();
+			getUiReference().setLayoutConstraints(layoutConstraints);
+			getUiReference().setColumnConstraints(columnConstraints);
+			getUiReference().setRowConstraints(rowConstraints);
+		}
 	}
 }

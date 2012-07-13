@@ -252,12 +252,8 @@ public class JavafxComponent implements IComponentSpi {
 	@Override
 	public boolean requestFocus() {
 		getUiReference().requestFocus();
-		if (getUiReference().isFocused()) {
-			return true;
-		}
 
-		return false;
-
+		return getUiReference().isFocused();
 	}
 
 	@Override

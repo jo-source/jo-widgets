@@ -90,12 +90,12 @@ public class JavafxContainer implements IContainerSpi {
 
 	@Override
 	public void setEnabled(final boolean enabled) {
-		getUiReference().setDisable(!enabled);
+		componentDelegate.setEnabled(enabled);
 	}
 
 	@Override
 	public boolean isEnabled() {
-		return !getUiReference().isDisable();
+		return componentDelegate.isEnabled();
 	}
 
 	@Override
@@ -110,8 +110,7 @@ public class JavafxContainer implements IContainerSpi {
 
 	@Override
 	public boolean requestFocus() {
-		getUiReference().requestFocus();
-		return getUiReference().isFocused();
+		return componentDelegate.requestFocus();
 	}
 
 	@Override
@@ -386,7 +385,6 @@ public class JavafxContainer implements IContainerSpi {
 	@Override
 	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
 		// TODO DB Auto-generated method stub
-
 	}
 
 	private void setLayoutConstraints(final IWidgetCommon widget, final Object layoutConstraints) {
