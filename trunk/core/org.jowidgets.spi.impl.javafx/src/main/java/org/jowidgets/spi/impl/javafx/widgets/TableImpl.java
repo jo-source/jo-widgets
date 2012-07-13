@@ -40,9 +40,8 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.Skin;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -51,6 +50,8 @@ import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
 import org.jowidgets.common.model.ITableCell;
@@ -69,6 +70,7 @@ import org.jowidgets.common.widgets.controller.ITableCellEditorListener;
 import org.jowidgets.common.widgets.controller.ITableCellListener;
 import org.jowidgets.common.widgets.controller.ITableCellPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITableColumnListener;
+import org.jowidgets.common.widgets.controller.ITableColumnMouseEvent;
 import org.jowidgets.common.widgets.controller.ITableColumnPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITableSelectionListener;
 import org.jowidgets.spi.impl.controller.TableCellEditEvent;
@@ -77,12 +79,15 @@ import org.jowidgets.spi.impl.controller.TableCellEvent;
 import org.jowidgets.spi.impl.controller.TableCellObservable;
 import org.jowidgets.spi.impl.controller.TableCellPopupDetectionObservable;
 import org.jowidgets.spi.impl.controller.TableCellPopupEvent;
+import org.jowidgets.spi.impl.controller.TableColumnMouseEvent;
 import org.jowidgets.spi.impl.controller.TableColumnObservable;
 import org.jowidgets.spi.impl.controller.TableColumnPopupDetectionObservable;
 import org.jowidgets.spi.impl.controller.TableColumnPopupEvent;
 import org.jowidgets.spi.impl.controller.TableColumnResizeEvent;
 import org.jowidgets.spi.impl.controller.TableSelectionObservable;
+import org.jowidgets.spi.impl.javafx.image.JavafxImageRegistry;
 import org.jowidgets.spi.impl.javafx.util.AlignmentConvert;
+import org.jowidgets.spi.impl.javafx.util.MouseUtil;
 import org.jowidgets.spi.impl.javafx.widgets.base.JoCell;
 import org.jowidgets.spi.impl.javafx.widgets.base.JoTableRow;
 import org.jowidgets.spi.impl.javafx.widgets.base.VirtualList;
@@ -153,22 +158,38 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 
 		getUiReference().setItems(new VirtualList(dataModel, columnModel, getUiReference()));
 
-		getUiReference().setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+		getUiReference().skinProperty().addListener(new ChangeListener<Skin>() {
 
 			@Override
-			public void handle(final ContextMenuEvent event) {
-				final Position position = new Position((int) event.getScreenX(), (int) event.getScreenY());
-				tableColumnPopupDetectionObservable.firePopupDetected(new TableColumnPopupEvent(0, position));
+			public void changed(final ObservableValue<? extends Skin> arg0, final Skin oldValue, final Skin newValue) {
+				if (newValue != null) {
+					for (final Node header : getUiReference().lookupAll(".column-header")) {
+						if (header != null) {
+							header.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+								@Override
+								public void handle(final MouseEvent event) {
+									final TableColumn tableColumn = ((TableColumnHeader) header).getTableColumn();
+									final int columnIndex = getUiReference().getColumns().indexOf(tableColumn);
 
+									if (event.getButton() == MouseButton.PRIMARY) {
+										final ITableColumnMouseEvent mouseEvent = new TableColumnMouseEvent(
+											columnIndex,
+											MouseUtil.getModifier(event));
+										tableColumnObservable.fireMouseClicked(mouseEvent);
+									}
+									else if (event.getButton() == MouseButton.SECONDARY) {
+										final Position position = new Position((int) event.getScreenX(), (int) event.getScreenY());
+										tableColumnPopupDetectionObservable.firePopupDetected(new TableColumnPopupEvent(
+											columnIndex,
+											position));
+									}
+								}
+							});
+						}
+					}
+					getUiReference().skinProperty().removeListener(this);
+				}
 			}
-		});
-		getUiReference().getColumns().addListener(new ListChangeListener<TableColumn>() {
-
-			@Override
-			public void onChanged(final Change<? extends TableColumn> change) {
-
-			}
-
 		});
 
 	}
@@ -392,23 +413,6 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 
 		});
 
-		final ContextMenu contextMenu = new ContextMenu(new MenuItem()) {
-
-			@Override
-			public void show(final Node node, final double x, final double y) {
-				final int index = getUiReference().getColumns().indexOf(((TableColumnHeader) node).getTableColumn());
-				popupIndex = index;
-				if (index < columnModel.getColumnCount()) {
-					tableColumnPopupDetectionObservable.firePopupDetected(new TableColumnPopupEvent(index, new Position(
-						(int) x,
-						(int) y)));
-				}
-			}
-
-		};
-
-		tableColumn.setContextMenu(contextMenu);
-
 		tableColumn.widthProperty().addListener(new ChangeListener<Number>() {
 
 			@Override
@@ -466,6 +470,7 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 				tableColumn.setPrefWidth(100);
 			}
 		}
+
 	}
 
 	final class TableCellFactory implements Callback<TableColumn, TableCell> {
@@ -489,9 +494,16 @@ public class TableImpl extends JavafxControl implements ITableSpi {
 				}
 
 			});
-			final AlignmentHorizontal alignment = columnModel.getColumn(getUiReference().getColumns().indexOf(column)).getAlignment();
+			final ITableColumnSpi joColumn = columnModel.getColumn(getUiReference().getColumns().indexOf(column));
+			final AlignmentHorizontal alignment = joColumn.getAlignment();
 			if (alignment != null) {
 				joCell.setAlignment(AlignmentConvert.convertPosAlignment(alignment));
+			}
+			if (joColumn.getIcon() != null) {
+				column.setGraphic(JavafxImageRegistry.getInstance().getImage(joColumn.getIcon()));
+			}
+			else {
+				column.setGraphic(null);
 			}
 			return joCell;
 

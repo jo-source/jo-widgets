@@ -34,15 +34,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.ComboBox;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.common.types.InputChangeEventPolicy;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.verify.IInputVerifier;
-import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
-import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
@@ -53,7 +49,6 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 	private final StyleDelegate styleDelegate;
 	private final boolean isAutoCompletionMode;
 	private final boolean isSelectionMode;
-	private IInputVerifier inputVerifier;
 
 	public ComboBoxImpl(final IComboBoxSelectionSetupSpi setup) {
 		super(new ComboBox<String>());
@@ -62,14 +57,10 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 		this.isAutoCompletionMode = setup.isAutoCompletion();
 		this.isSelectionMode = !(setup instanceof IComboBoxSetupSpi);
 		final boolean hasEditor = isAutoCompletionMode || !isSelectionMode;
-		final IInputVerifier maskVerifier;
 		String initialText = null;
 
 		if (setup instanceof IComboBoxSetupSpi) {
 			final IComboBoxSetupSpi comboBoxSetup = (IComboBoxSetupSpi) setup;
-
-			maskVerifier = TextMaskVerifierFactory.create(this, comboBoxSetup.getMask());
-			inputVerifier = InputVerifierHelper.getInputVerifier(maskVerifier, comboBoxSetup);
 
 			if (comboBoxSetup.getMask() != null && TextMaskMode.FULL_MASK == comboBoxSetup.getMask().getMode()) {
 				initialText = comboBoxSetup.getMask().getPlaceholder();
@@ -79,7 +70,6 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 
 		if (hasEditor) {
 			getUiReference().setEditable(true);
-			setTexFieldProperties(inputVerifier);
 			if (initialText != null) {
 				setText(initialText);
 			}
@@ -210,29 +200,5 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 
 	private void fireInputChanged() {
 		super.fireInputChanged(getUiReference().getSelectionModel().getSelectedItem());
-	}
-
-	private void setTexFieldProperties(final IInputVerifier inputVerifier) {
-		getUiReference().getEditor().setOnKeyPressed(new EventHandler<KeyEvent>() {
-
-			@Override
-			public void handle(final KeyEvent event) {
-				if (event.getCode() != KeyCode.BACK_SPACE) {
-
-					final ObservableList<String> items = getUiReference().getItems();
-					String text = getUiReference().getEditor().getText();
-					text = text + event.getText();
-					for (final String string : items) {
-						if (string.regionMatches(0, text, 0, text.length()) && text.length() > 2) {
-							getUiReference().getSelectionModel().select(string);
-							getUiReference().getEditor().positionCaret(text.length());
-						}
-					}
-				}
-				event.consume();
-			}
-
-		});
-
 	}
 }

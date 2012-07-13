@@ -29,6 +29,7 @@
 package org.jowidgets.spi.impl.javafx.widgets;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javafx.beans.value.ChangeListener;
@@ -40,6 +41,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.ToolBar;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IMenuListener;
@@ -161,11 +163,20 @@ public class PopupMenuImpl implements IPopupMenuSpi {
 
 	@Override
 	public void show(final Position position) {
+		for (@SuppressWarnings("deprecation")
+		final Iterator<Window> windowsIterator = Window.impl_getWindows(); windowsIterator.hasNext();) {
+			final Window window = windowsIterator.next();
+			if (window instanceof ContextMenu) {
+				window.hide();
+				break;
+			}
+		}
+
 		if (parent instanceof ToolBar) {
 			getUiReference().show((Control) parent, position.getX(), position.getY());
 		}
 		else if (parent instanceof TableColumn) {
-			((TableColumn<?, ?>) parent).setContextMenu(getUiReference());
+			getUiReference().show(((TableColumn<?, ?>) parent).getTableView(), position.getX(), position.getY());
 		}
 		else if (parent instanceof Control) {
 			((Control) parent).setContextMenu(getUiReference());
