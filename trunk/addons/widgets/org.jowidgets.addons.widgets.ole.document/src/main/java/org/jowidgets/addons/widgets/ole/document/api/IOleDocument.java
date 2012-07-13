@@ -34,12 +34,17 @@ import java.io.OutputStream;
 
 import org.jowidgets.addons.widgets.ole.api.IOleControl;
 import org.jowidgets.api.widgets.IControl;
+import org.jowidgets.util.event.IChangeListener;
 
 public interface IOleDocument extends IControl {
 
 	void openNewDocument();
 
 	void openDocument(File file);
+
+	void addDocumentChangeListener(IChangeListener changeListener);
+
+	void removeDocumentChangeListener(IChangeListener changeListener);
 
 	void openDocument(InputStream inputStream);
 

@@ -52,7 +52,7 @@ import org.jowidgets.util.event.IChangeListener;
 class OfficeControlImpl extends OleDocumentWrapper implements IOfficeControl {
 
 	private final IOleDocument oleDocument;
-	private final ChangeObservable changeObservable;
+	private final ChangeObservable dirtyStateChangeObservable;
 	private boolean currentDirtyState;
 	private boolean newDirtyState;
 	private final ScheduledExecutorService executorService;
@@ -63,13 +63,15 @@ class OfficeControlImpl extends OleDocumentWrapper implements IOfficeControl {
 	public OfficeControlImpl(final IOleDocument oleDocument, final IOfficeControlSetupBuilder<?> setup) {
 		super(oleDocument);
 		this.oleDocument = oleDocument;
-		this.changeObservable = new ChangeObservable();
+		this.dirtyStateChangeObservable = new ChangeObservable();
 		this.executorService = Executors.newScheduledThreadPool(1, new DaemonThreadFactory());
 		this.toolbarVisible = setup.getToolbarVisible();
+		setToolbarVisibility();
 		this.running = new AtomicBoolean(false);
 		if (oleDocument != null) {
 			oleDocument.getOleControl().addFocusListener(new DirtyListener());
 			oleDocument.getOleControl().getContext().addMutableValueListener(new ContextListener());
+			oleDocument.addDocumentChangeListener(new DocumenChangetListener());
 		}
 	}
 
@@ -93,7 +95,6 @@ class OfficeControlImpl extends OleDocumentWrapper implements IOfficeControl {
 				}
 			}
 		}
-
 	}
 
 	@Override
@@ -105,8 +106,13 @@ class OfficeControlImpl extends OleDocumentWrapper implements IOfficeControl {
 	}
 
 	@Override
-	public void addDocumentChangeListener(final IChangeListener changeListener) {
-		changeObservable.addChangeListener(changeListener);
+	public void addDirtyStateListener(final IChangeListener changeListener) {
+		dirtyStateChangeObservable.addChangeListener(changeListener);
+	}
+
+	@Override
+	public void removeDirtyStateListener(final IChangeListener changeListener) {
+		dirtyStateChangeObservable.removeChangeListener(changeListener);
 	}
 
 	private class DirtyListener implements IFocusListener {
@@ -146,7 +152,7 @@ class OfficeControlImpl extends OleDocumentWrapper implements IOfficeControl {
 
 				if (currentDirtyState != newDirtyState) {
 					currentDirtyState = newDirtyState;
-					changeObservable.fireChangedEvent();
+					dirtyStateChangeObservable.fireChangedEvent();
 				}
 				if (!running.get()) {
 					scheduleAtFixedRate.cancel(true);
@@ -163,9 +169,12 @@ class OfficeControlImpl extends OleDocumentWrapper implements IOfficeControl {
 		}
 	}
 
-	@Override
-	public void removeDocumentChangeListener(final IChangeListener changeListener) {
-		changeObservable.removeChangeListener(changeListener);
+	private class DocumenChangetListener implements IChangeListener {
+
+		@Override
+		public void changed() {
+			setToolbarVisibility();
+		}
 	}
 
 }
