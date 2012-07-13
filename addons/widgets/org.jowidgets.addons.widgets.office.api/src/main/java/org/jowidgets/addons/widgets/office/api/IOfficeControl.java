@@ -35,8 +35,8 @@ public interface IOfficeControl extends IOleDocument {
 
 	void setToolbarVisible(boolean visible);
 
-	void addDocumentChangeListener(IChangeListener changeListener);
+	void addDirtyStateListener(IChangeListener changeListener);
 
-	void removeDocumentChangeListener(IChangeListener changeListener);
+	void removeDirtyStateListener(IChangeListener changeListener);
 
 }

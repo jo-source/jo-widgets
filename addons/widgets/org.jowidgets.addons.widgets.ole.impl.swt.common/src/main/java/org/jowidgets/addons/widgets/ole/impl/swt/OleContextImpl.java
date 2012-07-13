@@ -59,7 +59,6 @@ class OleContextImpl implements IOleContext {
 	private final OleFrame oleFrame;
 	private final Set<IFocusListener> focusListeners;
 	private final FocusListenerAdapter focusListenerAdapter;
-
 	private OleControlSite oleControlSiteLazy;
 	private OleAutomationImpl oleAutomationLazy;
 
@@ -93,7 +92,7 @@ class OleContextImpl implements IOleContext {
 	@Override
 	public void setDocument(final String progId, final File file) {
 		if (oleControlSiteLazy != null) {
-			oleControlSiteLazy.dispose();
+			clearDocument();
 		}
 		if (progId != null && file != null) {
 			oleControlSiteLazy = new OleControlSite(oleFrame, SWT.NONE, progId, file);
@@ -348,6 +347,34 @@ class OleContextImpl implements IOleContext {
 		}
 	}
 
+	private final class FocusListenerAdapter implements FocusListener {
+
+		@Override
+		public void focusLost(final FocusEvent e) {
+			for (final IFocusListener listener : focusListeners) {
+				listener.focusLost();
+			}
+		}
+
+		@Override
+		public void focusGained(final FocusEvent e) {
+			for (final IFocusListener listener : focusListeners) {
+				listener.focusGained();
+			}
+		}
+	}
+
+	@Override
+	public void dispose() {
+		if (oleControlSiteLazy != null) {
+			oleControlSiteLazy.dispose();
+			if (oleAutomationLazy != null) {
+				oleAutomationLazy.dispose();
+			}
+		}
+
+	}
+
 	private final class OleAutomationImpl implements IOleAutomation {
 
 		private final OleAutomation oleAutomation;
@@ -437,34 +464,10 @@ class OleContextImpl implements IOleContext {
 
 		@Override
 		public void dispose() {
-			oleAutomation.dispose();
-		}
-
-	}
-
-	private final class FocusListenerAdapter implements FocusListener {
-
-		@Override
-		public void focusLost(final FocusEvent e) {
-			for (final IFocusListener listener : focusListeners) {
-				listener.focusLost();
+			if (oleAutomation != null) {
+				oleAutomation.dispose();
 			}
 		}
-
-		@Override
-		public void focusGained(final FocusEvent e) {
-			for (final IFocusListener listener : focusListeners) {
-				listener.focusGained();
-			}
-		}
-	}
-
-	@Override
-	public void dispose() {
-		if (oleControlSiteLazy != null) {
-			oleControlSiteLazy.dispose();
-		}
-
 	}
 
 }

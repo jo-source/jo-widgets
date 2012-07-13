@@ -35,6 +35,7 @@ import java.io.OutputStream;
 import org.jowidgets.addons.widgets.ole.api.IOleControl;
 import org.jowidgets.addons.widgets.ole.document.api.IOleDocument;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
+import org.jowidgets.util.event.IChangeListener;
 
 public class OleDocumentWrapper extends ControlWrapper implements IOleDocument {
 
@@ -83,6 +84,16 @@ public class OleDocumentWrapper extends ControlWrapper implements IOleDocument {
 	@Override
 	public IOleControl getOleControl() {
 		return oleDocument.getOleControl();
+	}
+
+	@Override
+	public void addDocumentChangeListener(final IChangeListener changeListener) {
+		oleDocument.addDocumentChangeListener(changeListener);
+	}
+
+	@Override
+	public void removeDocumentChangeListener(final IChangeListener changeListener) {
+		oleDocument.removeDocumentChangeListener(changeListener);
 	}
 
 }

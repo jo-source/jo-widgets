@@ -48,6 +48,8 @@ import org.jowidgets.util.Assert;
 import org.jowidgets.util.IMutableValue;
 import org.jowidgets.util.IMutableValueListener;
 import org.jowidgets.util.IValueChangedEvent;
+import org.jowidgets.util.event.ChangeObservable;
+import org.jowidgets.util.event.IChangeListener;
 import org.jowidgets.util.io.DefaultTempFileFactory;
 import org.jowidgets.util.io.ITempFileFactory;
 
@@ -57,6 +59,7 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 	private final IMutableValue<IOleContext> mutableOleContext;
 	private ITempFileFactory tempFileFactory;
 	private final Executor executor;
+	private final ChangeObservable documentChangeObservable;
 
 	private File tempDocumentStateFile;
 	private File tempOpenStateFile;
@@ -70,6 +73,7 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 		this.progId = setup.getProgId();
 		this.mutableOleContext = oleControl.getContext();
 		this.tempFileFactory = setup.getTempFileFactory();
+		this.documentChangeObservable = new ChangeObservable();
 
 		mutableOleContext.addMutableValueListener(new IMutableValueListener<IOleContext>() {
 			@Override
@@ -109,16 +113,6 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 	}
 
 	@Override
-	public void openNewDocument() {
-		if (mutableOleContext.getValue() != null && progId != null) {
-			mutableOleContext.getValue().setDocument(progId);
-		}
-		else {
-			clearTempFileState(tempDocumentStateFile);
-		}
-	}
-
-	@Override
 	public boolean saveDocument(final File file, final Boolean includeOleInfo) {
 
 		if (mutableOleContext.getValue() != null) {
@@ -149,13 +143,27 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 	}
 
 	@Override
+	public void openNewDocument() {
+		if (mutableOleContext.getValue() != null && progId != null) {
+			mutableOleContext.getValue().setDocument(progId);
+			documentChangeObservable.fireChangedEvent();
+		}
+		else {
+			clearTempFileState(tempDocumentStateFile);
+		}
+	}
+
+	@Override
 	public void openDocument(final File file) {
 		if (mutableOleContext.getValue() != null) {
 			if (progId != null) {
 				mutableOleContext.getValue().setDocument(progId, file);
+				documentChangeObservable.fireChangedEvent();
+
 			}
 			else {
 				mutableOleContext.getValue().setDocument(file);
+				documentChangeObservable.fireChangedEvent();
 			}
 		}
 		else {
@@ -287,5 +295,16 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 	@Override
 	public IOleControl getOleControl() {
 		return getWidget();
+	}
+
+	@Override
+	public void addDocumentChangeListener(final IChangeListener changeListener) {
+		documentChangeObservable.addChangeListener(changeListener);
+	}
+
+	@Override
+	public void removeDocumentChangeListener(final IChangeListener changeListener) {
+		documentChangeObservable.removeChangeListener(changeListener);
+
 	}
 }
