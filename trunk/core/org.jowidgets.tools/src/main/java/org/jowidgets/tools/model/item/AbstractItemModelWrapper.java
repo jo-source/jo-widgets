@@ -128,6 +128,16 @@ abstract class AbstractItemModelWrapper implements IItemModel {
 	}
 
 	@Override
+	public void setVisible(final boolean visible) {
+		itemModel.setVisible(visible);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return itemModel.isVisible();
+	}
+
+	@Override
 	public final void addItemModelListener(final IItemModelListener listener) {
 		itemModel.addItemModelListener(listener);
 	}

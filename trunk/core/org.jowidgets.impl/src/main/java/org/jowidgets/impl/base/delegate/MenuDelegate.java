@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.base.delegate;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,6 +36,8 @@ import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.ICheckedItemModel;
+import org.jowidgets.api.model.item.IItemModel;
+import org.jowidgets.api.model.item.IItemModelListener;
 import org.jowidgets.api.model.item.IMenuItemModel;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IRadioItemModel;
@@ -78,6 +81,8 @@ public class MenuDelegate extends DisposableDelegate {
 	private final ItemModelBindingDelegate itemDelegate;
 	private final List<IMenuItem> children;
 	private final IListModelListener listModelListener;
+	private final IItemModelListener itemModelListener;
+	private final ModelViewIndexConverter<IItemModel> modelViewConverter;
 
 	private IMenuModel model;
 	private boolean onRemoveByDispose;
@@ -90,23 +95,46 @@ public class MenuDelegate extends DisposableDelegate {
 		Assert.paramNotNull(menu, "menu");
 		Assert.paramNotNull(menuSpi, "menuSpi");
 
-		this.children = new LinkedList<IMenuItem>();
+		this.children = new ArrayList<IMenuItem>();
 		this.menu = menu;
 		this.menuSpi = menuSpi;
 		this.itemDelegate = itemDelegate;
 		this.onRemoveByDispose = false;
 
+		this.modelViewConverter = new ModelViewIndexConverter<IItemModel>();
+
 		this.listModelListener = new ListModelAdapter() {
 
 			@Override
 			public void afterChildRemoved(final int index) {
-				removeItem(index);
+				final IMenuItemModel childModel = model.getChildren().get(index);
+				final int viewIndex = modelViewConverter.removeModel(childModel, index);
+				childModel.removeItemModelListener(itemModelListener);
+				if (viewIndex != -1) {
+					removeItem(viewIndex);
+				}
 			}
 
 			@Override
 			public void afterChildAdded(final int index) {
 				final IMenuItemModel addedModel = getModel().getChildren().get(index);
 				addChild(index, addedModel);
+			}
+		};
+
+		this.itemModelListener = new IItemModelListener() {
+			@Override
+			public void itemChanged(final IItemModel item) {
+				final boolean visible = item.isVisible();
+				final int viewIndex = modelViewConverter.markVisibility(item, visible);
+				if (viewIndex != -1) {
+					if (visible) {
+						addChildToView(viewIndex, (IMenuItemModel) item);
+					}
+					else {
+						removeItem(viewIndex);
+					}
+				}
 			}
 		};
 
@@ -226,22 +254,31 @@ public class MenuDelegate extends DisposableDelegate {
 		model.addListModelListener(listModelListener);
 	}
 
-	private void addChild(final int index, final IMenuItemModel model) {
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		if (model instanceof IRadioItemModel) {
-			addMenuItemInternal(index, bpf.radioMenuItem()).setModel(model);
-		}
-		else if (model instanceof ICheckedItemModel) {
-			addMenuItemInternal(index, bpf.checkedMenuItem()).setModel(model);
-		}
-		else if (model instanceof IActionItemModel) {
-			addMenuItemInternal(index, bpf.menuItem()).setModel(model);
-		}
-		else if (model instanceof IMenuModel) {
-			addMenuItemInternal(index, bpf.subMenu()).setModel(model);
-		}
-		else if (model instanceof ISeparatorItemModel) {
-			addMenuItemInternal(index, bpf.menuSeparator()).setModel(model);
+	private void addChild(final int modelIndex, final IMenuItemModel model) {
+		final int viewIndex = modelViewConverter.addModel(model, model.isVisible(), modelIndex);
+		addChildToView(viewIndex, model);
+
+		model.addItemModelListener(itemModelListener);
+	}
+
+	private void addChildToView(final int viewIndex, final IMenuItemModel model) {
+		if (viewIndex != -1) {
+			final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+			if (model instanceof IRadioItemModel) {
+				addMenuItemInternal(viewIndex, bpf.radioMenuItem()).setModel(model);
+			}
+			else if (model instanceof ICheckedItemModel) {
+				addMenuItemInternal(viewIndex, bpf.checkedMenuItem()).setModel(model);
+			}
+			else if (model instanceof IActionItemModel) {
+				addMenuItemInternal(viewIndex, bpf.menuItem()).setModel(model);
+			}
+			else if (model instanceof IMenuModel) {
+				addMenuItemInternal(viewIndex, bpf.subMenu()).setModel(model);
+			}
+			else if (model instanceof ISeparatorItemModel) {
+				addMenuItemInternal(viewIndex, bpf.menuSeparator()).setModel(model);
+			}
 		}
 	}
 
@@ -292,13 +329,19 @@ public class MenuDelegate extends DisposableDelegate {
 	}
 
 	public void setModel(final IMenuModel model) {
+		modelViewConverter.clear();
 		if (this.model != null) {
 			this.model.removeListModelListener(listModelListener);
+			for (final IItemModel child : model.getChildren()) {
+				child.removeItemModelListener(itemModelListener);
+			}
 			removeAll();
 		}
 		this.model = model;
+		int childModelIndex = 0;
 		for (final IMenuItemModel childModel : model.getChildren()) {
-			addChild(children.size(), childModel);
+			addChild(childModelIndex, childModel);
+			childModelIndex++;
 		}
 
 		model.addListModelListener(listModelListener);
@@ -308,6 +351,9 @@ public class MenuDelegate extends DisposableDelegate {
 	public void dispose() {
 		if (!isDisposed()) {
 			this.model.removeListModelListener(listModelListener);
+			for (final IItemModel child : model.getChildren()) {
+				child.removeItemModelListener(itemModelListener);
+			}
 			if (menu.getParent() instanceof IMenu
 				&& menu.getParent() != null
 				&& ((IMenu) menu.getParent()).getChildren().contains(menu)
@@ -337,6 +383,7 @@ public class MenuDelegate extends DisposableDelegate {
 				}
 				super.dispose();
 			}
+			modelViewConverter.dispose();
 		}
 	}
 }

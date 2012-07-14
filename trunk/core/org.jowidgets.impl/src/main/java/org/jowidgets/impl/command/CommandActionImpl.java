@@ -29,6 +29,7 @@
 package org.jowidgets.impl.command;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.api.command.EnabledState;
@@ -263,25 +264,25 @@ class CommandActionImpl implements ICommandAction, IActionChangeObservable {
 	}
 
 	private void fireTextChanged() {
-		for (final IActionChangeListener listener : actionChangeListeners) {
+		for (final IActionChangeListener listener : new LinkedList<IActionChangeListener>(actionChangeListeners)) {
 			listener.textChanged();
 		}
 	}
 
 	private void fireToolTipTextChanged() {
-		for (final IActionChangeListener listener : actionChangeListeners) {
+		for (final IActionChangeListener listener : new LinkedList<IActionChangeListener>(actionChangeListeners)) {
 			listener.toolTipTextChanged();
 		}
 	}
 
 	private void fireIconChanged() {
-		for (final IActionChangeListener listener : actionChangeListeners) {
+		for (final IActionChangeListener listener : new LinkedList<IActionChangeListener>(actionChangeListeners)) {
 			listener.iconChanged();
 		}
 	}
 
 	private void fireEnabledChanged() {
-		for (final IActionChangeListener listener : actionChangeListeners) {
+		for (final IActionChangeListener listener : new LinkedList<IActionChangeListener>(actionChangeListeners)) {
 			listener.enabledChanged();
 		}
 	}

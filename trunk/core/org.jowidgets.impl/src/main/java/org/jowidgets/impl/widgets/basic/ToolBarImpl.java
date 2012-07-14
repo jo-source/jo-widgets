@@ -39,6 +39,8 @@ import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.api.model.item.IContainerItemModel;
+import org.jowidgets.api.model.item.IItemModel;
+import org.jowidgets.api.model.item.IItemModelListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IPopupActionItemModel;
 import org.jowidgets.api.model.item.ISeparatorItemModel;
@@ -66,6 +68,7 @@ import org.jowidgets.api.widgets.descriptor.setup.IItemSetup;
 import org.jowidgets.api.widgets.descriptor.setup.IToolBarSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
+import org.jowidgets.impl.base.delegate.ModelViewIndexConverter;
 import org.jowidgets.impl.event.ListItemObservable;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
@@ -84,6 +87,8 @@ public class ToolBarImpl extends AbstractToolBarSpiWrapper implements IToolBar, 
 	private final ControlDelegate controlDelegate;
 	private final List<IToolBarItem> children;
 	private final IListModelListener listModelListener;
+	private final IItemModelListener itemModelListener;
+	private final ModelViewIndexConverter<IItemModel> modelViewConverter;
 	private final ListItemObservable itemObs;
 	private IToolBarModel model;
 
@@ -97,10 +102,18 @@ public class ToolBarImpl extends AbstractToolBarSpiWrapper implements IToolBar, 
 		ColorSettingsInvoker.setColors(setup, this);
 
 		this.itemObs = new ListItemObservable();
+		this.modelViewConverter = new ModelViewIndexConverter<IItemModel>();
+
 		this.listModelListener = new ListModelAdapter() {
 
 			@Override
 			public void afterChildRemoved(final int index) {
+				final IToolBarItemModel childModel = model.getItems().get(index);
+				final int viewIndex = modelViewConverter.removeModel(childModel, index);
+				childModel.removeItemModelListener(itemModelListener);
+				if (viewIndex != -1) {
+					remove(viewIndex);
+				}
 				remove(index);
 				pack();
 			}
@@ -108,8 +121,24 @@ public class ToolBarImpl extends AbstractToolBarSpiWrapper implements IToolBar, 
 			@Override
 			public void afterChildAdded(final int index) {
 				final IToolBarItemModel addedModel = getModel().getItems().get(index);
-				addMenuModel(index, addedModel);
+				addChild(index, addedModel);
 				pack();
+			}
+		};
+
+		this.itemModelListener = new IItemModelListener() {
+			@Override
+			public void itemChanged(final IItemModel item) {
+				final boolean visible = item.isVisible();
+				final int viewIndex = modelViewConverter.markVisibility(item, visible);
+				if (viewIndex != -1) {
+					if (visible) {
+						addChildToView(viewIndex, (IToolBarItemModel) item);
+					}
+					else {
+						remove(viewIndex);
+					}
+				}
 			}
 		};
 
@@ -118,13 +147,19 @@ public class ToolBarImpl extends AbstractToolBarSpiWrapper implements IToolBar, 
 
 	@Override
 	public void setModel(final IToolBarModel model) {
+		modelViewConverter.clear();
 		if (this.model != null) {
+			for (final IItemModel child : model.getItems()) {
+				child.removeItemModelListener(itemModelListener);
+			}
 			this.model.removeListModelListener(listModelListener);
 			removeAll();
 		}
 		this.model = model;
+		int childModelIndex = 0;
 		for (final IToolBarItemModel childModel : model.getItems()) {
-			addMenuModel(children.size(), childModel);
+			addChild(childModelIndex, childModel);
+			childModelIndex++;
 		}
 		model.addListModelListener(listModelListener);
 		pack();
@@ -168,6 +203,11 @@ public class ToolBarImpl extends AbstractToolBarSpiWrapper implements IToolBar, 
 	@Override
 	public void dispose() {
 		if (!isDisposed()) {
+			this.model.removeListModelListener(listModelListener);
+			for (final IItemModel child : model.getItems()) {
+				child.removeItemModelListener(itemModelListener);
+			}
+
 			final List<IToolBarItem> childrenCopy = new LinkedList<IToolBarItem>(children);
 			//clear the children to avoid that children will be removed
 			//unnecessarily from its parent toolbar on dispose invocation
@@ -176,6 +216,7 @@ public class ToolBarImpl extends AbstractToolBarSpiWrapper implements IToolBar, 
 				child.dispose();
 			}
 			controlDelegate.dispose();
+			modelViewConverter.dispose();
 		}
 
 	}
@@ -331,29 +372,37 @@ public class ToolBarImpl extends AbstractToolBarSpiWrapper implements IToolBar, 
 		return result;
 	}
 
-	private void addMenuModel(final int index, final IToolBarItemModel model) {
+	private void addChild(final int modelIndex, final IToolBarItemModel model) {
+		final int viewIndex = modelViewConverter.addModel(model, model.isVisible(), modelIndex);
+		addChildToView(viewIndex, model);
+		model.addItemModelListener(itemModelListener);
+	}
+
+	private void addChildToView(final int viewIndex, final IToolBarItemModel model) {
 		Assert.paramNotNull(model, "model");
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		if (model instanceof IActionItemModel) {
-			addItemInternal(index, bpf.toolBarButton()).setModel(model);
-		}
-		else if (model instanceof ICheckedItemModel) {
-			addItemInternal(index, bpf.toolBarToggleButton()).setModel(model);
-		}
-		else if (model instanceof IPopupActionItemModel) {
-			addItemInternal(index, bpf.toolBarPopupButton()).setModel(model);
-		}
-		else if (model instanceof IContainerItemModel) {
-			addItemInternal(index, bpf.toolBarContainerItem()).setModel(model);
-		}
-		else if (model instanceof ISeparatorItemModel) {
-			addItemInternal(index, bpf.toolBarSeparator()).setModel(model);
-		}
-		else if (model instanceof IMenuModel) {
-			addItemInternal(index, bpf.toolBarMenu()).setModel(model);
-		}
-		else {
-			throw new IllegalArgumentException("Model of type '" + model.getClass().getName() + "' is not supported.");
+		if (viewIndex != -1) {
+			final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+			if (model instanceof IActionItemModel) {
+				addItemInternal(viewIndex, bpf.toolBarButton()).setModel(model);
+			}
+			else if (model instanceof ICheckedItemModel) {
+				addItemInternal(viewIndex, bpf.toolBarToggleButton()).setModel(model);
+			}
+			else if (model instanceof IPopupActionItemModel) {
+				addItemInternal(viewIndex, bpf.toolBarPopupButton()).setModel(model);
+			}
+			else if (model instanceof IContainerItemModel) {
+				addItemInternal(viewIndex, bpf.toolBarContainerItem()).setModel(model);
+			}
+			else if (model instanceof ISeparatorItemModel) {
+				addItemInternal(viewIndex, bpf.toolBarSeparator()).setModel(model);
+			}
+			else if (model instanceof IMenuModel) {
+				addItemInternal(viewIndex, bpf.toolBarMenu()).setModel(model);
+			}
+			else {
+				throw new IllegalArgumentException("Model of type '" + model.getClass().getName() + "' is not supported.");
+			}
 		}
 	}
 

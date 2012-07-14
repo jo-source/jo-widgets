@@ -50,6 +50,7 @@ class ItemModelImpl implements IItemModel {
 	private Accelerator accelerator;
 	private Character mnemonic;
 	private boolean enabled;
+	private boolean visible;
 
 	protected ItemModelImpl() {
 		this(null, null, null, null, null, null, true);
@@ -78,6 +79,7 @@ class ItemModelImpl implements IItemModel {
 		this.accelerator = accelerator;
 		this.mnemonic = mnemonic;
 		this.enabled = enabled;
+		this.visible = true;
 	}
 
 	@Override
@@ -95,6 +97,7 @@ class ItemModelImpl implements IItemModel {
 		this.accelerator = source.getAccelerator();
 		this.mnemonic = source.getMnemonic();
 		this.enabled = source.isEnabled();
+		this.visible = source.isVisible();
 	}
 
 	@Override
@@ -182,6 +185,17 @@ class ItemModelImpl implements IItemModel {
 	public void setEnabled(final boolean enabled) {
 		this.enabled = enabled;
 		fireItemChanged();
+	}
+
+	@Override
+	public void setVisible(final boolean visible) {
+		this.visible = visible;
+		fireItemChanged();
+	}
+
+	@Override
+	public boolean isVisible() {
+		return visible;
 	}
 
 	@Override
