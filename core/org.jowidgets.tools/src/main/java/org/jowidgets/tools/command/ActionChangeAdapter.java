@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,56 +26,22 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.model.item;
+package org.jowidgets.tools.command;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Accelerator;
-import org.jowidgets.common.types.Modifier;
+import org.jowidgets.api.command.IActionChangeListener;
 
-public interface IItemModel extends IItemModelObservable {
+public class ActionChangeAdapter implements IActionChangeListener {
 
-	String getId();
+	@Override
+	public void textChanged() {}
 
-	String getText();
+	@Override
+	public void toolTipTextChanged() {}
 
-	String getToolTipText();
+	@Override
+	public void iconChanged() {}
 
-	IImageConstant getIcon();
-
-	Accelerator getAccelerator();
-
-	Character getMnemonic();
-
-	boolean isEnabled();
-
-	void setId(String id);
-
-	void setText(final String text);
-
-	void setToolTipText(String toolTipText);
-
-	void setIcon(IImageConstant icon);
-
-	void setAccelerator(Accelerator accelerator);
-
-	void setAccelerator(final char key, final Modifier... modifier);
-
-	void setMnemonic(Character mnemonic);
-
-	void setMnemonic(char mnemonic);
-
-	void setEnabled(boolean enabled);
-
-	void setVisible(boolean visible);
-
-	boolean isVisible();
-
-	/**
-	 * Makes a deep copy of the item and its children.
-	 * Registered listeners on items won't be copied.
-	 * 
-	 * @return A new instance that is a clone of this instance
-	 */
-	IItemModel createCopy();
+	@Override
+	public void enabledChanged() {}
 
 }

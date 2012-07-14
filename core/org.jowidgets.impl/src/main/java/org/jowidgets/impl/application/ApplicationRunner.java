@@ -49,8 +49,12 @@ public class ApplicationRunner implements IApplicationRunner {
 	@Override
 	public void run(final IApplication application) {
 		if (!running.getAndSet(true)) {
-			applicationRunner.run(application);
-			running.set(false);
+			try {
+				applicationRunner.run(application);
+			}
+			finally {
+				running.set(false);
+			}
 		}
 		else {
 			throw new IllegalStateException("Application runner already running");

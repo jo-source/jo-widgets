@@ -221,4 +221,9 @@ public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IAct
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "ActionMenuItemImpl [action=" + action + ", getText()=" + getText() + "]";
+	}
+
 }
