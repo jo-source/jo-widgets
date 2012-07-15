@@ -44,7 +44,8 @@ public class ActionItemModelBuilder extends AbstractActionItemModelBuilder<IActi
 			getAccelerator(),
 			getMnemonic(),
 			isEnabled(),
-			getAction());
+			getAction(),
+			getVisibilityAspect());
 	}
 
 }

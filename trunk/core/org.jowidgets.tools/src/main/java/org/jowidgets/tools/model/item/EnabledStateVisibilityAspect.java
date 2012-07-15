@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,37 +26,32 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.model.item;
+package org.jowidgets.tools.model.item;
 
 import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.model.item.IActionItemModel;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.api.model.item.IActionItemVisibilityAspect;
+import org.jowidgets.util.priority.IPriorityValue;
+import org.jowidgets.util.priority.LowHighPriority;
+import org.jowidgets.util.priority.PriorityValue;
 
-class ActionItemModelImpl extends AbstractActionItemModelImpl implements IActionItemModel {
+public final class EnabledStateVisibilityAspect implements IActionItemVisibilityAspect {
 
-	protected ActionItemModelImpl() {
-		this(null, null, null, null, null, null, true, null, null);
-	}
-
-	protected ActionItemModelImpl(
-		final String id,
-		final String text,
-		final String toolTipText,
-		final IImageConstant icon,
-		final Accelerator accelerator,
-		final Character mnemonic,
-		final boolean enabled,
-		final IAction action,
-		final ActionItemVisibilityAspectComposite visibilityAspect) {
-		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled, action, visibilityAspect);
+	@Override
+	public IPriorityValue<Boolean, LowHighPriority> getVisibility(final IAction action) {
+		if (action != null) {
+			final boolean enabled = action.isEnabled();
+			if (!enabled) {
+				return new PriorityValue<Boolean, LowHighPriority>(Boolean.FALSE, LowHighPriority.HIGH);
+			}
+			else {
+				return new PriorityValue<Boolean, LowHighPriority>(Boolean.TRUE, LowHighPriority.LOW);
+			}
+		}
+		return null;
 	}
 
 	@Override
-	public IActionItemModel createCopy() {
-		final ActionItemModelImpl result = new ActionItemModelImpl();
-		result.setContent(this);
-		return result;
+	public RequestContext getRequestContext() {
+		return RequestContext.ACTION_AND_ENABLED_STATE;
 	}
-
 }

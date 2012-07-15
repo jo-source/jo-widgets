@@ -49,7 +49,8 @@ public class PopupActionItemModelBuilder extends
 			getMnemonic(),
 			isEnabled(),
 			getAction(),
-			popupMenu);
+			popupMenu,
+			getVisibilityAspect());
 	}
 
 	@Override

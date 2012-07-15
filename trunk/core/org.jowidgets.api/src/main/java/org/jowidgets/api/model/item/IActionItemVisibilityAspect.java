@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,37 +26,40 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.model.item;
+package org.jowidgets.api.model.item;
 
 import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.model.item.IActionItemModel;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.util.priority.IPriorityValue;
+import org.jowidgets.util.priority.LowHighPriority;
 
-class ActionItemModelImpl extends AbstractActionItemModelImpl implements IActionItemModel {
+public interface IActionItemVisibilityAspect {
 
-	protected ActionItemModelImpl() {
-		this(null, null, null, null, null, null, true, null, null);
+	/**
+	 * Gets a visibility suggestion.
+	 * 
+	 * @param action The current action
+	 * 
+	 * @return A prioritizes visibility suggestion or null
+	 */
+	IPriorityValue<Boolean, LowHighPriority> getVisibility(IAction action);
+
+	/**
+	 * Determines when the aspect should be requested
+	 * 
+	 * @return The request context, never null
+	 */
+	RequestContext getRequestContext();
+
+	public enum RequestContext {
+
+		/**
+		 * The aspect will be requested on model construction and when the action changed (e.g. by setAction()).
+		 */
+		ACTION,
+
+		/**
+		 * The aspect will be requested in the same manner than 'ACTION' and additionally on any change of the enabled state
+		 */
+		ACTION_AND_ENABLED_STATE;
 	}
-
-	protected ActionItemModelImpl(
-		final String id,
-		final String text,
-		final String toolTipText,
-		final IImageConstant icon,
-		final Accelerator accelerator,
-		final Character mnemonic,
-		final boolean enabled,
-		final IAction action,
-		final ActionItemVisibilityAspectComposite visibilityAspect) {
-		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled, action, visibilityAspect);
-	}
-
-	@Override
-	public IActionItemModel createCopy() {
-		final ActionItemModelImpl result = new ActionItemModelImpl();
-		result.setContent(this);
-		return result;
-	}
-
 }

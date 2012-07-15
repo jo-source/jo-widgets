@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,37 +26,18 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.model.item;
+package org.jowidgets.util.priority;
 
-import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.model.item.IActionItemModel;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Accelerator;
+public interface IPriorityValue<VALUE_TYPE, PRIORITY_TYPE extends Comparable<PRIORITY_TYPE>> {
 
-class ActionItemModelImpl extends AbstractActionItemModelImpl implements IActionItemModel {
+	/**
+	 * @return The value, may be null
+	 */
+	VALUE_TYPE getValue();
 
-	protected ActionItemModelImpl() {
-		this(null, null, null, null, null, null, true, null, null);
-	}
-
-	protected ActionItemModelImpl(
-		final String id,
-		final String text,
-		final String toolTipText,
-		final IImageConstant icon,
-		final Accelerator accelerator,
-		final Character mnemonic,
-		final boolean enabled,
-		final IAction action,
-		final ActionItemVisibilityAspectComposite visibilityAspect) {
-		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled, action, visibilityAspect);
-	}
-
-	@Override
-	public IActionItemModel createCopy() {
-		final ActionItemModelImpl result = new ActionItemModelImpl();
-		result.setContent(this);
-		return result;
-	}
+	/**
+	 * @return The priority, may be null. The priority of null is the lowest priority.
+	 */
+	PRIORITY_TYPE getPriority();
 
 }
