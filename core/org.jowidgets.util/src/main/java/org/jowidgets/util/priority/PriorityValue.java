@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,59 +26,75 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.model.item;
+package org.jowidgets.util.priority;
 
-import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.model.item.IMenuModel;
-import org.jowidgets.api.model.item.IPopupActionItemModel;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Accelerator;
+import org.jowidgets.util.Assert;
 
-class PopupActionItemModelImpl extends AbstractActionItemModelImpl implements IPopupActionItemModel {
+public final class PriorityValue<VALUE_TYPE, PRIORITY_TYPE extends Comparable<PRIORITY_TYPE>> implements
+		IPriorityValue<VALUE_TYPE, PRIORITY_TYPE> {
 
-	private IMenuModel popupMenu;
+	private final VALUE_TYPE value;
+	private final PRIORITY_TYPE priority;
 
-	protected PopupActionItemModelImpl() {
-		this(null, null, null, null, null, null, true, null, null, null);
-	}
-
-	protected PopupActionItemModelImpl(
-		final String id,
-		final String text,
-		final String toolTipText,
-		final IImageConstant icon,
-		final Accelerator accelerator,
-		final Character mnemonic,
-		final boolean enabled,
-		final IAction action,
-		final IMenuModel popupMenu,
-		final ActionItemVisibilityAspectComposite visibilityAspect) {
-		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled, action, visibilityAspect);
-
-		this.popupMenu = popupMenu;
+	public PriorityValue(final VALUE_TYPE value, final PRIORITY_TYPE priority) {
+		Assert.paramNotNull(priority, "priority");
+		this.value = value;
+		this.priority = priority;
 	}
 
 	@Override
-	public IPopupActionItemModel createCopy() {
-		final PopupActionItemModelImpl result = new PopupActionItemModelImpl();
-		result.setContent(this);
+	public VALUE_TYPE getValue() {
+		return value;
+	}
+
+	@Override
+	public PRIORITY_TYPE getPriority() {
+		return priority;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((priority == null) ? 0 : priority.hashCode());
+		result = prime * result + ((value == null) ? 0 : value.hashCode());
 		return result;
 	}
 
-	protected void setContent(final PopupActionItemModelImpl source) {
-		super.setContent(source);
-		this.popupMenu = source.getPopupMenu();
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof PriorityValue)) {
+			return false;
+		}
+		final IPriorityValue<?, ?> other = (IPriorityValue<?, ?>) obj;
+		if (priority == null) {
+			if (other.getPriority() != null) {
+				return false;
+			}
+		}
+		else if (!priority.equals(other.getPriority())) {
+			return false;
+		}
+		if (value == null) {
+			if (other.getValue() != null) {
+				return false;
+			}
+		}
+		else if (!value.equals(other.getValue())) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override
-	public void setPopupMenu(final IMenuModel popupMenu) {
-		this.popupMenu = popupMenu;
-		fireItemChanged();
-	}
-
-	@Override
-	public IMenuModel getPopupMenu() {
-		return popupMenu;
+	public String toString() {
+		return "PriorityValue [value=" + value + ", priority=" + priority + "]";
 	}
 
 }

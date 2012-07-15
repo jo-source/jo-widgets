@@ -189,8 +189,15 @@ class ItemModelImpl implements IItemModel {
 
 	@Override
 	public void setVisible(final boolean visible) {
+		setVisibleImpl(visible, true);
+	}
+
+	void setVisibleImpl(final boolean visible, final boolean fireEvent) {
+		final boolean oldVisible = visible;
 		this.visible = visible;
-		fireItemChanged();
+		if (fireEvent && oldVisible != visible) {
+			fireItemChanged();
+		}
 	}
 
 	@Override

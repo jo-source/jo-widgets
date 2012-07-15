@@ -32,23 +32,33 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.command.IActionChangeListener;
+import org.jowidgets.api.command.IActionChangeObservable;
+import org.jowidgets.api.model.item.ActionItemVisibilityAspectPlugin;
+import org.jowidgets.api.model.item.IActionItemVisibilityAspect.RequestContext;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.widgets.controller.IActionListener;
+import org.jowidgets.tools.command.ActionChangeAdapter;
 import org.jowidgets.tools.controller.ActionObservable;
 import org.jowidgets.util.IDecorator;
+import org.jowidgets.util.priority.IPriorityValue;
+import org.jowidgets.util.priority.LowHighPriority;
+import org.jowidgets.util.priority.PrioritizedResultCreator;
 
 abstract class AbstractActionItemModelImpl extends ItemModelImpl {
 
 	private final ActionObservable actionObservable;
 	private final List<IDecorator<IAction>> decorators;
+	private final IActionChangeListener actionChangeListener;
+	private final ActionItemVisibilityAspectComposite visibilityAspect;
 
 	private IAction action;
 	private IAction decoratedAction;
 	private boolean decoratorsDirty;
 
 	protected AbstractActionItemModelImpl() {
-		this(null, null, null, null, null, null, true, null);
+		this(null, null, null, null, null, null, true, null, null);
 	}
 
 	protected AbstractActionItemModelImpl(
@@ -59,7 +69,8 @@ abstract class AbstractActionItemModelImpl extends ItemModelImpl {
 		final Accelerator accelerator,
 		final Character mnemonic,
 		final boolean enabled,
-		final IAction action) {
+		final IAction action,
+		final ActionItemVisibilityAspectComposite visibilityAspect) {
 		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled);
 
 		this.decorators = new LinkedList<IDecorator<IAction>>();
@@ -67,11 +78,24 @@ abstract class AbstractActionItemModelImpl extends ItemModelImpl {
 		this.action = action;
 		this.decoratedAction = action;
 		this.decoratorsDirty = false;
+		this.visibilityAspect = visibilityAspect;
+		this.actionChangeListener = new ActionChangeAdapter() {
+			@Override
+			public void enabledChanged() {
+				final boolean oldVisible = isVisible();
+				setVisibilityFromAspects(RequestContext.ACTION_AND_ENABLED_STATE);
+				if (oldVisible != isVisible()) {
+					fireItemChanged();
+				}
+			}
+		};
+
+		setActionImpl(action);
 	}
 
 	protected void setContent(final AbstractActionItemModelImpl source) {
 		super.setContent(source);
-		this.action = source.getAction();
+		setActionImpl(source.getAction());
 	}
 
 	public IAction getAction() {
@@ -93,8 +117,45 @@ abstract class AbstractActionItemModelImpl extends ItemModelImpl {
 	}
 
 	public void setAction(final IAction action) {
-		this.action = action;
+		setActionImpl(action);
 		fireItemChanged();
+	}
+
+	private void setActionImpl(final IAction action) {
+		if (this.action != null) {
+			final IActionChangeObservable actionChangeObservable = this.action.getActionChangeObservable();
+			if (actionChangeObservable != null) {
+				actionChangeObservable.removeActionChangeListener(actionChangeListener);
+			}
+		}
+		if (action != null) {
+			final IActionChangeObservable actionChangeObservable = action.getActionChangeObservable();
+			if (actionChangeObservable != null) {
+				actionChangeObservable.addActionChangeListener(actionChangeListener);
+			}
+		}
+		this.action = action;
+		setVisibilityFromAspects(RequestContext.ACTION);
+	}
+
+	private void setVisibilityFromAspects(final RequestContext requestContext) {
+		final PrioritizedResultCreator<Boolean, LowHighPriority> resultCreator;
+		resultCreator = new PrioritizedResultCreator<Boolean, LowHighPriority>(LowHighPriority.HIGH);
+
+		if (visibilityAspect != null) {
+			resultCreator.addResult(visibilityAspect.getVisibility(getAction(), requestContext));
+		}
+		if (!resultCreator.hasMaxPrio()) {
+			resultCreator.addResult(ActionItemVisibilityAspectPlugin.getVisibility(getAction(), requestContext));
+		}
+
+		final IPriorityValue<Boolean, LowHighPriority> visibility = resultCreator.getResult();
+		if (visibility != null) {
+			final Boolean visibiliyValue = visibility.getValue();
+			if (visibiliyValue != null) {
+				setVisibleImpl(visibiliyValue.booleanValue(), false);
+			}
+		}
 	}
 
 	public void addDecorator(final IDecorator<IAction> decorator) {

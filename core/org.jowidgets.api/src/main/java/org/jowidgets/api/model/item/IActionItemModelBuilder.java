@@ -34,4 +34,6 @@ public interface IActionItemModelBuilder extends IItemModelBuilder<IActionItemMo
 
 	IActionItemModelBuilder setAction(IAction action);
 
+	IActionItemModelBuilder addVisibilityAspect(IActionItemVisibilityAspect visibilityAspect);
+
 }

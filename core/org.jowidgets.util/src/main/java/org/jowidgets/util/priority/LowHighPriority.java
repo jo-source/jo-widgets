@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,37 +26,11 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.model.item;
+package org.jowidgets.util.priority;
 
-import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.model.item.IActionItemModel;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Accelerator;
+public enum LowHighPriority implements Comparable<LowHighPriority> {
 
-class ActionItemModelImpl extends AbstractActionItemModelImpl implements IActionItemModel {
-
-	protected ActionItemModelImpl() {
-		this(null, null, null, null, null, null, true, null, null);
-	}
-
-	protected ActionItemModelImpl(
-		final String id,
-		final String text,
-		final String toolTipText,
-		final IImageConstant icon,
-		final Accelerator accelerator,
-		final Character mnemonic,
-		final boolean enabled,
-		final IAction action,
-		final ActionItemVisibilityAspectComposite visibilityAspect) {
-		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled, action, visibilityAspect);
-	}
-
-	@Override
-	public IActionItemModel createCopy() {
-		final ActionItemModelImpl result = new ActionItemModelImpl();
-		result.setContent(this);
-		return result;
-	}
+	LOW,
+	HIGH;
 
 }
