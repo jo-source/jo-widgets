@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann, waheckma
+ * Copyright (c) 2012, waheckma
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,30 +26,30 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.ole.api;
+package org.jowidgets.addons.widgets.office.impl.ole;
 
-import java.io.File;
+import org.jowidgets.addons.widgets.office.api.IOfficeControl;
+import org.jowidgets.addons.widgets.office.api.IOfficeTableCalculationBluePrint;
+import org.jowidgets.addons.widgets.ole.document.api.IOleDocument;
+import org.jowidgets.addons.widgets.ole.document.api.IOleDocumentBluePrint;
+import org.jowidgets.addons.widgets.ole.document.api.OleDocumentBPF;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.common.widgets.factory.IWidgetFactory;
 
-public interface IOleContext {
+public class OfficeTableCalculationControlFactory implements IWidgetFactory<IOfficeControl, IOfficeTableCalculationBluePrint> {
 
-	void setDocument(String progId);
+	private final String progId;
 
-	void setDocument(String progId, File file);
+	OfficeTableCalculationControlFactory(final String progId) {
+		this.progId = progId;
+	}
 
-	void setDocument(File file);
-
-	boolean saveCurrentDocument(File file, boolean includeOleInfo);
-
-	void clearDocument();
-
-	boolean isDirty();
-
-	boolean isDisposed();
-
-	//TODO MG add listener stuff
-
-	void execute(OleCommand command, Object in, OleCommandOption... options);
-
-	IOleAutomation getAutomation();
+	@Override
+	public IOfficeControl create(final Object parentUiReference, final IOfficeTableCalculationBluePrint bluePrint) {
+		final IOleDocumentBluePrint documentBp = OleDocumentBPF.document(progId);
+		documentBp.setSetup(bluePrint);
+		final IOleDocument document = Toolkit.getWidgetFactory().create(parentUiReference, documentBp);
+		return new OfficeControlImpl(document, bluePrint);
+	}
 
 }

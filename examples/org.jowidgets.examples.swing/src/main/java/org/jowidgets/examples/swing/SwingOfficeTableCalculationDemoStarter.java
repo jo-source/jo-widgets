@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann, waheckma
+ * Copyright (c) 2012, waheckma
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,30 +26,22 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.ole.api;
+package org.jowidgets.examples.swing;
 
-import java.io.File;
+import javax.swing.UIManager;
 
-public interface IOleContext {
+import org.jowidgets.addons.bridge.awt.swt.AwtSwtToolkitProviderFactory;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.examples.common.office.OfficeTableCalculationDemoApplication;
 
-	void setDocument(String progId);
+public final class SwingOfficeTableCalculationDemoStarter {
 
-	void setDocument(String progId, File file);
+	private SwingOfficeTableCalculationDemoStarter() {}
 
-	void setDocument(File file);
-
-	boolean saveCurrentDocument(File file, boolean includeOleInfo);
-
-	void clearDocument();
-
-	boolean isDirty();
-
-	boolean isDisposed();
-
-	//TODO MG add listener stuff
-
-	void execute(OleCommand command, Object in, OleCommandOption... options);
-
-	IOleAutomation getAutomation();
+	public static void main(final String[] args) throws Exception {
+		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		Toolkit.initialize(AwtSwtToolkitProviderFactory.create());
+		new OfficeTableCalculationDemoApplication("Swing office table calculation demo").start();
+	}
 
 }

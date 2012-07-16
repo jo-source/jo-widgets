@@ -36,11 +36,11 @@ import org.jowidgets.addons.widgets.ole.document.api.OleDocumentBPF;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 
-final class OfficeControlFactory implements IWidgetFactory<IOfficeControl, IOfficeTextBluePrint> {
+final class OfficeTextControlFactory implements IWidgetFactory<IOfficeControl, IOfficeTextBluePrint> {
 
 	private final String progId;
 
-	OfficeControlFactory(final String progId) {
+	OfficeTextControlFactory(final String progId) {
 		this.progId = progId;
 	}
 

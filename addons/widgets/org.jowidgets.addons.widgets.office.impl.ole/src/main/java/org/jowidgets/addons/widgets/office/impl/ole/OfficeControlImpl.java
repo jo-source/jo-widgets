@@ -147,13 +147,13 @@ class OfficeControlImpl extends OleDocumentWrapper implements IOfficeControl {
 						else {
 							running.set(false);
 						}
+						if (currentDirtyState != newDirtyState) {
+							currentDirtyState = newDirtyState;
+							dirtyStateChangeObservable.fireChangedEvent();
+						}
 					}
 				});
 
-				if (currentDirtyState != newDirtyState) {
-					currentDirtyState = newDirtyState;
-					dirtyStateChangeObservable.fireChangedEvent();
-				}
 				if (!running.get()) {
 					scheduleAtFixedRate.cancel(true);
 				}

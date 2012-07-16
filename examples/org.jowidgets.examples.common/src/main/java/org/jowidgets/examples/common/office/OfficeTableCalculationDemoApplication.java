@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann, waheckma
+ * Copyright (c) 2012, waheckma
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -61,12 +61,12 @@ import org.jowidgets.tools.types.FileChooserFilter;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 import org.jowidgets.util.event.IChangeListener;
 
-public final class OfficeTextDemoApplication implements IApplication {
+public class OfficeTableCalculationDemoApplication implements IApplication {
 
 	private final String title;
 	private IButton saveFileButton;
 
-	public OfficeTextDemoApplication(final String title) {
+	public OfficeTableCalculationDemoApplication(final String title) {
 		this.title = title;
 	}
 
@@ -84,10 +84,13 @@ public final class OfficeTextDemoApplication implements IApplication {
 		frame.setSize(1024, 768);
 		frame.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "[][]0[grow, 0::]0"));
 
+		//add buttons
 		saveFileButton = frame.add(
 				BPF.button("", "Allows to save a file, with a fileselector").setIcon(SilkIcons.DISK).setEnabled(false),
 				"split 3");
-		//add buttons
+
+		setSaveFileButtonEnable(false);
+
 		final IButton openFileButton = frame.add(BPF.button("", "Allows to open a file, with a fileselector").setIcon(
 				SilkIcons.FOLDER));
 
@@ -95,12 +98,14 @@ public final class OfficeTextDemoApplication implements IApplication {
 		frame.add(BPF.separator(), "growx, h 0::, wrap");
 
 		//add ole content
-		final IOfficeControl officeControl = frame.add(OfficeBPF.text().setToolbarVisible(false), "span,growx,height 1000");
+		final IOfficeControl officeControl = frame.add(
+				OfficeBPF.tableCalculation().setToolbarVisible(true),
+				"span,growx,height 1000");
 
 		officeControl.addDirtyStateListener(new IChangeListener() {
 			@Override
 			public void changed() {
-				setSaveFileButtonEnable(officeControl.getOleControl().getContext().getValue().isDirty());
+				setSaveFileButtonEnable(true);
 			}
 		});
 
@@ -149,25 +154,19 @@ public final class OfficeTextDemoApplication implements IApplication {
 		frame.setVisible(true);
 	}
 
-	private void setSaveFileButtonEnable(final boolean value) {
-		if (saveFileButton != null) {
-			saveFileButton.setEnabled(value);
-		}
-	}
-
 	private String openFileChooser(final FileChooserType type, final String title) {
 		if (Toolkit.getSupportedWidgets().hasFileChooser()) {
 			final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
 			final List<IFileChooserFilter> filterList = new LinkedList<IFileChooserFilter>();
-			filterList.add(new FileChooserFilter("Word Files (*.doc, *.docx)", "doc", "docx"));
+			filterList.add(new FileChooserFilter("Excel Files (*.xls, *.xlsx)", "xls", "xlsx"));
 			final IFileChooserBluePrint fileChooserBp = bpf.fileChooser(type).setFilterList(filterList).setTitle(title);
 			final IFileChooser fileChooser = Toolkit.getActiveWindow().createChildWindow(fileChooserBp);
 			final DialogResult result = fileChooser.open();
 			if (result == DialogResult.OK) {
 				String path = fileChooser.getSelectedFiles().get(0).toString();
-				if (!path.toLowerCase().endsWith(".doc") && !path.toLowerCase().endsWith(".docx")) {
-					path += ".doc";
+				if (!path.toLowerCase().endsWith(".xls") && !path.toLowerCase().endsWith(".xlsx")) {
+					path += ".xls";
 				}
 				return path;
 			}
@@ -176,6 +175,12 @@ public final class OfficeTextDemoApplication implements IApplication {
 			Toolkit.getMessagePane().showInfo("File chooser is not supported by the spi implementation");
 		}
 		return null;
+	}
+
+	private void setSaveFileButtonEnable(final boolean value) {
+		if (saveFileButton != null) {
+			saveFileButton.setEnabled(value);
+		}
 	}
 
 	private static void initializeSilkIcons() {
