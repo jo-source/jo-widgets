@@ -57,10 +57,9 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 
 	private final String progId;
 	private final IMutableValue<IOleContext> mutableOleContext;
-	private ITempFileFactory tempFileFactory;
 	private final Executor executor;
 	private final ChangeObservable documentChangeObservable;
-
+	private ITempFileFactory tempFileFactory;
 	private File tempDocumentStateFile;
 	private File tempOpenStateFile;
 	private File tempSaveStateFile;
@@ -92,12 +91,15 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 
 	private void oleContextChanged(final IValueChangedEvent<IOleContext> event) {
 		final IOleContext oleContext = mutableOleContext.getValue();
+
 		if (oleContext != null) {
-			if (tempDocumentStateFile != null && tempDocumentStateFile.exists()) {
-				oleContext.setDocument(progId, tempDocumentStateFile);
-			}
-			else {
-				oleContext.setDocument(progId);
+			if (progId != null) {
+				if (tempDocumentStateFile != null && tempDocumentStateFile.exists()) {
+					oleContext.setDocument(progId, tempDocumentStateFile);
+				}
+				else {
+					oleContext.setDocument(progId);
+				}
 			}
 		}
 		else if (event != null) {
@@ -146,11 +148,11 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 	public void openNewDocument() {
 		if (mutableOleContext.getValue() != null && progId != null) {
 			mutableOleContext.getValue().setDocument(progId);
-			documentChangeObservable.fireChangedEvent();
 		}
 		else {
 			clearTempFileState(tempDocumentStateFile);
 		}
+		documentChangeObservable.fireChangedEvent();
 	}
 
 	@Override
@@ -158,12 +160,9 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 		if (mutableOleContext.getValue() != null) {
 			if (progId != null) {
 				mutableOleContext.getValue().setDocument(progId, file);
-				documentChangeObservable.fireChangedEvent();
-
 			}
 			else {
 				mutableOleContext.getValue().setDocument(file);
-				documentChangeObservable.fireChangedEvent();
 			}
 		}
 		else {
@@ -172,6 +171,7 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 			}
 			copy(file, tempDocumentStateFile);
 		}
+		documentChangeObservable.fireChangedEvent();
 	}
 
 	@Override
@@ -213,9 +213,6 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 		clearTempFileState(tempDocumentStateFile);
 		clearTempFileState(tempOpenStateFile);
 		clearTempFileState(tempSaveStateFile);
-		if (mutableOleContext.getValue() != null) {
-			mutableOleContext.getValue().dispose();
-		}
 		super.dispose();
 	}
 
@@ -245,7 +242,7 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 	private void clearTempFileState(File tempFile) {
 		if (tempFile != null && tempFile.exists()) {
 			if (!tempFile.delete()) {
-				throw new RuntimeException(" Tempfile coud not be deleted");
+				throw new RuntimeException(" Tempfile could not be deleted");
 			}
 			tempFile = null;
 		}

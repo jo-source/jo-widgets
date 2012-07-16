@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann, waheckma
+ * Copyright (c) 2012, waheckma
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,30 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.ole.api;
+package org.jowidgets.examples.swt;
 
-import java.io.File;
+import org.jowidgets.examples.common.office.OfficeTableCalculationDemoApplication;
 
-public interface IOleContext {
+public final class SwtOfficeTableCalculationDemoStarter {
 
-	void setDocument(String progId);
+	private SwtOfficeTableCalculationDemoStarter() {}
 
-	void setDocument(String progId, File file);
-
-	void setDocument(File file);
-
-	boolean saveCurrentDocument(File file, boolean includeOleInfo);
-
-	void clearDocument();
-
-	boolean isDirty();
-
-	boolean isDisposed();
-
-	//TODO MG add listener stuff
-
-	void execute(OleCommand command, Object in, OleCommandOption... options);
-
-	IOleAutomation getAutomation();
+	public static void main(final String[] args) throws Exception {
+		new OfficeTableCalculationDemoApplication("Swt office text Demo").start();
+	}
 
 }

@@ -364,17 +364,6 @@ class OleContextImpl implements IOleContext {
 		}
 	}
 
-	@Override
-	public void dispose() {
-		if (oleControlSiteLazy != null) {
-			oleControlSiteLazy.dispose();
-			if (oleAutomationLazy != null) {
-				oleAutomationLazy.dispose();
-			}
-		}
-
-	}
-
 	private final class OleAutomationImpl implements IOleAutomation {
 
 		private final OleAutomation oleAutomation;
@@ -425,24 +414,17 @@ class OleContextImpl implements IOleContext {
 		}
 
 		@Override
-		public Object getProperty(final String propertyName) {
-			final int[] propertyNameIds = oleAutomation.getIDsOfNames(new String[] {propertyName});
-			if (propertyNameIds != null && propertyNameIds.length == 1) {
-				return getVariantResult(oleAutomation.getProperty(propertyNameIds[0]));
-			}
-			else {
-				throw new IllegalArgumentException("Property name '" + propertyName + "' is unknown");
-			}
-		}
-
-		@Override
 		public Object getProperty(final String propertyName, final Object... parameters) {
 
 			final int[] propertyNameIds = oleAutomation.getIDsOfNames(new String[] {propertyName});
 
 			if (propertyNameIds != null && propertyNameIds.length == 1) {
 
-				if (parameters.length > 1) {
+				if (parameters == null || parameters.length == 0) {
+
+					return getVariantResult(oleAutomation.getProperty(propertyNameIds[0]));
+				}
+				else if (parameters.length > 1) {
 					final Variant[] variants = new Variant[parameters.length];
 					for (int i = 0; i < parameters.length; i++) {
 						variants[i] = createVariant(parameters[i]);
