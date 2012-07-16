@@ -193,9 +193,8 @@ class ItemModelImpl implements IItemModel {
 	}
 
 	void setVisibleImpl(final boolean visible, final boolean fireEvent) {
-		final boolean oldVisible = visible;
 		this.visible = visible;
-		if (fireEvent && oldVisible != visible) {
+		if (fireEvent) {
 			fireItemChanged();
 		}
 	}
