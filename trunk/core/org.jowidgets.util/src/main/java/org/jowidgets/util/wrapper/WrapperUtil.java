@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,74 +26,34 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.command;
+package org.jowidgets.util.wrapper;
 
-import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.command.IActionChangeObservable;
-import org.jowidgets.api.command.IExceptionHandler;
-import org.jowidgets.api.command.IExecutionContext;
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.util.Assert;
-import org.jowidgets.util.wrapper.IWrapper;
 
-public class ActionWrapper implements IAction, IWrapper<IAction> {
+public final class WrapperUtil {
 
-	private final IAction action;
+	private WrapperUtil() {}
 
-	public ActionWrapper(final IAction action) {
-		Assert.paramNotNull(action, "action");
-		this.action = action;
+	/**
+	 * Try to cast an object to an type. If the object implements the {@link IWrapper} interface,
+	 * the cast will also be be tried on the unwrapped object (recursively).
+	 * 
+	 * @param object The object to cast, may be null
+	 * @param type The type to cast into, not null
+	 * 
+	 * @return The casted object or null, if neither the object itself can be casted nor the unwrapped objects
+	 */
+	@SuppressWarnings("unchecked")
+	public static <TYPE> TYPE tryToCast(final Object object, final Class<TYPE> type) {
+		Assert.paramNotNull(type, "type");
+		if (object != null) {
+			if (type.isAssignableFrom(object.getClass())) {
+				return (TYPE) object;
+			}
+			else if (object instanceof IWrapper<?>) {
+				return tryToCast(((IWrapper<?>) object).unwrap(), type);
+			}
+		}
+		return null;
 	}
-
-	@Override
-	public String getText() {
-		return action.getText();
-	}
-
-	@Override
-	public String getToolTipText() {
-		return action.getToolTipText();
-	}
-
-	@Override
-	public IImageConstant getIcon() {
-		return action.getIcon();
-	}
-
-	@Override
-	public Character getMnemonic() {
-		return action.getMnemonic();
-	}
-
-	@Override
-	public Accelerator getAccelerator() {
-		return action.getAccelerator();
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return action.isEnabled();
-	}
-
-	@Override
-	public void execute(final IExecutionContext actionEvent) throws Exception {
-		action.execute(actionEvent);
-	}
-
-	@Override
-	public IExceptionHandler getExceptionHandler() {
-		return action.getExceptionHandler();
-	}
-
-	@Override
-	public IActionChangeObservable getActionChangeObservable() {
-		return action.getActionChangeObservable();
-	}
-
-	@Override
-	public IAction unwrap() {
-		return action;
-	}
-
 }
