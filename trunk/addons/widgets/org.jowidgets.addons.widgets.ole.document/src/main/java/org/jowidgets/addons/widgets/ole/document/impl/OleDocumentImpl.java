@@ -81,22 +81,25 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 
 	private void oleContextChanged(final IValueChangedEvent<IOleContext> event) {
 		final IOleContext oleContext = mutableOleContext.getValue();
-
 		if (oleContext != null) {
-			//TODO WH null prog ids must be supported
-			if (progId != null) {
-				if (tempDocumentStateFile != null && tempDocumentStateFile.exists()) {
+			if (tempDocumentStateFile != null && tempDocumentStateFile.exists()) {
+				if (progId != null) {
 					oleContext.setDocument(progId, tempDocumentStateFile);
 				}
 				else {
-					oleContext.setDocument(progId);
+					oleContext.setDocument(tempDocumentStateFile);
 				}
+			}
+			else if (progId != null) {
+				oleContext.setDocument(progId);
+			}
+			else {
+				oleContext.clearDocument();
 			}
 		}
 		else if (event != null) {
 			final IOleContext oldContext = event.getOldValue();
-
-			if (oldContext != null && !oldContext.isDisposed()) {
+			if (oldContext != null && !oldContext.isDisposed() && !isDisposed()) {
 				if (tempDocumentStateFile == null) {
 					tempDocumentStateFile = createTempFile();
 				}
@@ -157,8 +160,14 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 	@Override
 	public void openNewDocument() {
 		deleteTempDocumentStateFile();
-		if (mutableOleContext.getValue() != null && progId != null) {
-			mutableOleContext.getValue().setDocument(progId);
+		final IOleContext oleContext = mutableOleContext.getValue();
+		if (oleContext != null) {
+			if (progId != null) {
+				oleContext.setDocument(progId);
+			}
+			else {
+				oleContext.clearDocument();
+			}
 		}
 		documentChangeObservable.fireChangedEvent();
 	}
@@ -236,6 +245,10 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 
 	}
 
+	private File createTempFile() {
+		return tempFileFactory.create("OleDocumentTemp", "");
+	}
+
 	private void deleteTempDocumentStateFile() {
 		deleteFile(tempDocumentStateFile);
 		tempDocumentStateFile = null;
@@ -249,8 +262,4 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 		}
 	}
 
-	private File createTempFile() {
-		return tempFileFactory.create("OleDocumentTemp", ".doc");
-
-	}
 }
