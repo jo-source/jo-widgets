@@ -30,11 +30,11 @@ package org.jowidgets.addons.widgets.ole.api;
 
 public interface IOleAutomation {
 
-	Object invoke(String methodName, IInvocationParameter... parameter);
+	<RESULT_TYPE> RESULT_TYPE invoke(String methodName, IInvocationParameter... parameter);
 
 	boolean setProperty(String propertyName, Object... parameter);
 
-	Object getProperty(String propertyName, Object... parameter);
+	<RESULT_TYPE> RESULT_TYPE getProperty(String propertyName, Object... parameter);
 
 	void dispose();
 

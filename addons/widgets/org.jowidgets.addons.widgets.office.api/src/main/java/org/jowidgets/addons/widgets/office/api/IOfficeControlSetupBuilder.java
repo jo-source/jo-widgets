@@ -38,7 +38,12 @@ public interface IOfficeControlSetupBuilder<INSTANCE_TYPE extends IOfficeControl
 
 	INSTANCE_TYPE setToolbarVisible(boolean visible);
 
+	INSTANCE_TYPE setDirtyCheckIntervalMs(int interval);
+
 	@Mandatory
 	boolean getToolbarVisible();
+
+	@Mandatory
+	int getDirtyCheckIntervalMs();
 
 }

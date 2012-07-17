@@ -33,8 +33,6 @@ import org.jowidgets.util.event.IChangeListener;
 
 public interface IOfficeControl extends IOleDocument {
 
-	void setToolbarVisible(boolean visible);
-
 	void addDirtyStateListener(IChangeListener changeListener);
 
 	void removeDirtyStateListener(IChangeListener changeListener);

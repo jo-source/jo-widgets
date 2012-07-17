@@ -36,17 +36,11 @@ import org.jowidgets.addons.widgets.ole.document.api.OleDocumentBPF;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 
-public class OfficeTableCalculationControlFactory implements IWidgetFactory<IOfficeControl, IOfficeTableCalculationBluePrint> {
-
-	private final String progId;
-
-	OfficeTableCalculationControlFactory(final String progId) {
-		this.progId = progId;
-	}
+final class OfficeTableCalculationControlFactory implements IWidgetFactory<IOfficeControl, IOfficeTableCalculationBluePrint> {
 
 	@Override
 	public IOfficeControl create(final Object parentUiReference, final IOfficeTableCalculationBluePrint bluePrint) {
-		final IOleDocumentBluePrint documentBp = OleDocumentBPF.document(progId);
+		final IOleDocumentBluePrint documentBp = OleDocumentBPF.document("Excel.Sheet");
 		documentBp.setSetup(bluePrint);
 		final IOleDocument document = Toolkit.getWidgetFactory().create(parentUiReference, documentBp);
 		return new OfficeControlImpl(document, bluePrint);
