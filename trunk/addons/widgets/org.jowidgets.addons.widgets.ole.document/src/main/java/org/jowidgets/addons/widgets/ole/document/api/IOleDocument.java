@@ -48,9 +48,9 @@ public interface IOleDocument extends IControl {
 
 	void openDocument(InputStream inputStream);
 
-	boolean saveDocument(File file, Boolean includeOleInfo);
+	boolean saveDocument(File file, boolean includeOleInfo);
 
-	void saveDocument(OutputStream outputStream);
+	boolean saveDocument(OutputStream outputStream);
 
 	boolean isDirty();
 

@@ -29,20 +29,13 @@
 package org.jowidgets.addons.widgets.ole.document.impl;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.channels.FileChannel;
-import java.util.concurrent.Executor;
 
 import org.jowidgets.addons.widgets.ole.api.IOleContext;
 import org.jowidgets.addons.widgets.ole.api.IOleControl;
 import org.jowidgets.addons.widgets.ole.document.api.IOleDocument;
 import org.jowidgets.addons.widgets.ole.document.api.IOleDocumentSetupBuilder;
-import org.jowidgets.api.threads.IUiThreadAccess;
-import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.IMutableValue;
@@ -50,25 +43,22 @@ import org.jowidgets.util.IMutableValueListener;
 import org.jowidgets.util.IValueChangedEvent;
 import org.jowidgets.util.event.ChangeObservable;
 import org.jowidgets.util.event.IChangeListener;
-import org.jowidgets.util.io.DefaultTempFileFactory;
+import org.jowidgets.util.io.FileUtils;
 import org.jowidgets.util.io.ITempFileFactory;
 
 class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 
 	private final String progId;
 	private final IMutableValue<IOleContext> mutableOleContext;
-	private final Executor executor;
 	private final ChangeObservable documentChangeObservable;
-	private ITempFileFactory tempFileFactory;
+	private final ITempFileFactory tempFileFactory;
 	private File tempDocumentStateFile;
-	private File tempOpenStateFile;
-	private File tempSaveStateFile;
 
 	public OleDocumentImpl(final IOleControl oleControl, final IOleDocumentSetupBuilder<?> setup) {
 		super(oleControl);
+		Assert.paramNotNull(setup.getTempFileFactory(), "setup.getTempFileFactory()");
 		Assert.paramNotNull(setup.getProgId(), "setup.getProgId()");
 
-		this.executor = setup.getAsyncLoadExecutor();
 		this.progId = setup.getProgId();
 		this.mutableOleContext = oleControl.getContext();
 		this.tempFileFactory = setup.getTempFileFactory();
@@ -93,6 +83,7 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 		final IOleContext oleContext = mutableOleContext.getValue();
 
 		if (oleContext != null) {
+			//TODO WH null prog ids must be supported
 			if (progId != null) {
 				if (tempDocumentStateFile != null && tempDocumentStateFile.exists()) {
 					oleContext.setDocument(progId, tempDocumentStateFile);
@@ -115,14 +106,14 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 	}
 
 	@Override
-	public boolean saveDocument(final File file, final Boolean includeOleInfo) {
-
+	public boolean saveDocument(final File file, final boolean includeOleInfo) {
+		Assert.paramNotNull(file, "file");
 		if (mutableOleContext.getValue() != null) {
 			return mutableOleContext.getValue().saveCurrentDocument(file, includeOleInfo);
 		}
 		else {
 			if (tempDocumentStateFile != null && tempDocumentStateFile.exists()) {
-				copy(tempDocumentStateFile, file);
+				FileUtils.copyFile(tempDocumentStateFile, file);
 				return true;
 			}
 			return false;
@@ -130,163 +121,103 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 	}
 
 	@Override
-	public void saveDocument(final OutputStream outputStream) {
-		if (tempSaveStateFile == null) {
-			tempSaveStateFile = createTempFile();
+	public boolean saveDocument(final OutputStream outputStream) {
+		Assert.paramNotNull(outputStream, "outputStream");
+		final IOleContext oleContext = mutableOleContext.getValue();
+		if (oleContext != null) {
+			return saveDocumentWithContext(outputStream, oleContext);
 		}
-
-		saveDocument(tempSaveStateFile, true);
-		executor.execute(new Runnable() {
-			@Override
-			public void run() {
-				writeOutputStream(outputStream, tempSaveStateFile);
+		else {
+			if (tempDocumentStateFile != null && tempDocumentStateFile.exists()) {
+				FileUtils.fileToOutputStream(tempDocumentStateFile, outputStream);
+				return true;
 			}
-		});
+			return false;
+		}
+	}
+
+	private boolean saveDocumentWithContext(final OutputStream outputStream, final IOleContext oleContext) {
+		File tempFile = null;
+		try {
+			tempFile = createTempFile();
+			final boolean saved = oleContext.saveCurrentDocument(tempFile, true);
+			if (saved) {
+				FileUtils.fileToOutputStream(tempFile, outputStream);
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		finally {
+			deleteFile(tempFile);
+		}
 	}
 
 	@Override
 	public void openNewDocument() {
+		deleteTempDocumentStateFile();
 		if (mutableOleContext.getValue() != null && progId != null) {
 			mutableOleContext.getValue().setDocument(progId);
-		}
-		else {
-			clearTempFileState(tempDocumentStateFile);
 		}
 		documentChangeObservable.fireChangedEvent();
 	}
 
 	@Override
 	public void openDocument(final File file) {
-		if (mutableOleContext.getValue() != null) {
+		Assert.paramNotNull(file, "file");
+		deleteTempDocumentStateFile();
+		final IOleContext oleContext = mutableOleContext.getValue();
+		if (oleContext != null) {
 			if (progId != null) {
-				mutableOleContext.getValue().setDocument(progId, file);
+				oleContext.setDocument(progId, file);
 			}
 			else {
-				mutableOleContext.getValue().setDocument(file);
+				oleContext.setDocument(file);
 			}
 		}
 		else {
-			if (tempDocumentStateFile == null) {
-				tempDocumentStateFile = createTempFile();
-			}
-			copy(file, tempDocumentStateFile);
+			tempDocumentStateFile = createTempFile();
+			FileUtils.copyFile(file, tempDocumentStateFile);
 		}
 		documentChangeObservable.fireChangedEvent();
 	}
 
 	@Override
 	public void openDocument(final InputStream inputStream) {
-		if (tempOpenStateFile == null) {
-			tempOpenStateFile = createTempFile();
-		}
-
-		final IUiThreadAccess access = Toolkit.getUiThreadAccess();
-		executor.execute(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					if (tempOpenStateFile != null) {
-						final OutputStream out = new FileOutputStream(tempOpenStateFile);
-						final byte[] buf = new byte[1024];
-						int length;
-						while ((length = inputStream.read(buf)) > 0) {
-							out.write(buf, 0, length);
-						}
-						out.close();
-						access.invokeLater(new Runnable() {
-							@Override
-							public void run() {
-								openDocument(tempOpenStateFile);
-							}
-						});
-					}
-				}
-				catch (final IOException e) {
-					throw new RuntimeException("Open Document failed: " + e);
-				}
+		Assert.paramNotNull(inputStream, "inputStream");
+		deleteFile(tempDocumentStateFile);
+		final IOleContext oleContext = mutableOleContext.getValue();
+		if (oleContext != null) {
+			File tempFile = null;
+			try {
+				tempFile = createTempFile();
+				FileUtils.inputStreamToFile(inputStream, tempFile);
+				openDocument(tempFile);
 			}
-		});
+			finally {
+				deleteFile(tempFile);
+			}
+		}
+		else {
+			tempDocumentStateFile = createTempFile();
+			FileUtils.inputStreamToFile(inputStream, tempDocumentStateFile);
+		}
 	}
 
 	@Override
 	public void dispose() {
-		clearTempFileState(tempDocumentStateFile);
-		clearTempFileState(tempOpenStateFile);
-		clearTempFileState(tempSaveStateFile);
+		deleteFile(tempDocumentStateFile);
 		super.dispose();
 	}
 
 	@Override
 	public boolean isDirty() {
-		if (mutableOleContext.getValue() != null) {
-			return mutableOleContext.getValue().isDirty();
+		final IOleContext oleContext = mutableOleContext.getValue();
+		if (oleContext != null) {
+			return oleContext.isDirty();
 		}
 		return false;
-	}
-
-	public void writeOutputStream(final OutputStream outputStream, final File tempFile) {
-		try {
-			final InputStream inputStream = new FileInputStream(tempFile);
-			final byte[] buf = new byte[1024];
-			int length;
-			while ((length = inputStream.read(buf)) > 0) {
-				outputStream.write(buf, 0, length);
-			}
-			inputStream.close();
-		}
-		catch (final IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	private void clearTempFileState(File tempFile) {
-		if (tempFile != null && tempFile.exists()) {
-			if (!tempFile.delete()) {
-				throw new RuntimeException(" Tempfile could not be deleted");
-			}
-			tempFile = null;
-		}
-	}
-
-	private File createTempFile() {
-		if (tempFileFactory == null) {
-			tempFileFactory = new DefaultTempFileFactory();
-		}
-		return tempFileFactory.create("OleDocumentTemp", ".doc");
-
-	}
-
-	public static void copy(final File source, final File target) {
-
-		FileChannel sourceChannel = null;
-		FileChannel targetChannel = null;
-		try {
-			sourceChannel = new FileInputStream(source).getChannel();
-			targetChannel = new FileOutputStream(target).getChannel();
-			targetChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
-		}
-		catch (final IOException e) {
-			throw new RuntimeException(e);
-		}
-		finally {
-			try {
-				if (targetChannel != null) {
-					targetChannel.close();
-				}
-			}
-			catch (final IOException e) {
-				throw new RuntimeException(e);
-			}
-
-			try {
-				if (sourceChannel != null) {
-					sourceChannel.close();
-				}
-			}
-			catch (final IOException e) {
-				throw new RuntimeException(e);
-			}
-		}
 	}
 
 	@Override
@@ -302,6 +233,24 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 	@Override
 	public void removeDocumentChangeListener(final IChangeListener changeListener) {
 		documentChangeObservable.removeChangeListener(changeListener);
+
+	}
+
+	private void deleteTempDocumentStateFile() {
+		deleteFile(tempDocumentStateFile);
+		tempDocumentStateFile = null;
+	}
+
+	private static void deleteFile(final File file) {
+		if (file != null && file.exists()) {
+			if (!file.delete()) {
+				throw new RuntimeException("Tempfile could not be deleted");
+			}
+		}
+	}
+
+	private File createTempFile() {
+		return tempFileFactory.create("OleDocumentTemp", ".doc");
 
 	}
 }

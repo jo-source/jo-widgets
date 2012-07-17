@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2012, grossmann, WHeckmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,10 +28,14 @@
 
 package org.jowidgets.util.io;
 
+import java.io.Closeable;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.channels.FileChannel;
 
 import org.jowidgets.util.Assert;
 
@@ -42,19 +46,80 @@ public final class FileUtils {
 	public static void inputStreamToFile(final InputStream inputStream, final File file) {
 		Assert.paramNotNull(inputStream, "inputStream");
 		Assert.paramNotNull(file, "file");
+
+		OutputStream outputStream = null;
 		try {
-			final OutputStream os = new FileOutputStream(file);
-			final byte[] buffer = new byte[1024];
-			int length;
-			while ((length = inputStream.read(buffer)) > 0) {
-				os.write(buffer, 0, length);
-			}
-			os.close();
+			outputStream = new FileOutputStream(file);
+			inputStreamToOutputStream(inputStream, outputStream);
 		}
 		catch (final Exception e) {
 			throw new RuntimeException(e);
 		}
+		finally {
+			tryCloseSilent(outputStream);
+		}
 
+	}
+
+	public static void fileToOutputStream(final File file, final OutputStream outputStream) {
+		Assert.paramNotNull(file, "file");
+		Assert.paramNotNull(outputStream, "outputStream");
+
+		InputStream inputStream = null;
+		try {
+			inputStream = new FileInputStream(file);
+			inputStreamToOutputStream(inputStream, outputStream);
+		}
+		catch (final Exception e) {
+			throw new RuntimeException(e);
+		}
+		finally {
+			tryCloseSilent(inputStream);
+		}
+	}
+
+	public static void inputStreamToOutputStream(final InputStream inputStream, final OutputStream outputStream) {
+		try {
+			final byte[] buf = new byte[1024];
+			int length;
+			while ((length = inputStream.read(buf)) > 0) {
+				outputStream.write(buf, 0, length);
+			}
+		}
+		catch (final Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static void copyFile(final File source, final File target) {
+		Assert.paramNotNull(source, "source");
+		Assert.paramNotNull(target, "target");
+
+		FileChannel sourceChannel = null;
+		FileChannel targetChannel = null;
+		try {
+			sourceChannel = new FileInputStream(source).getChannel();
+			targetChannel = new FileOutputStream(target).getChannel();
+			targetChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
+		}
+		catch (final IOException e) {
+			throw new RuntimeException(e);
+		}
+		finally {
+			tryCloseSilent(sourceChannel);
+			tryCloseSilent(targetChannel);
+		}
+	}
+
+	public static void tryCloseSilent(final Closeable closeable) {
+		try {
+			if (closeable != null) {
+				closeable.close();
+			}
+		}
+		catch (final IOException e) {
+			//do silent
+		}
 	}
 
 }
