@@ -62,7 +62,7 @@ public class OleDocumentWrapper extends ControlWrapper implements IOleDocument {
 	}
 
 	@Override
-	public boolean saveDocument(final File file, final Boolean includeOleInfo) {
+	public boolean saveDocument(final File file, final boolean includeOleInfo) {
 		return oleDocument.saveDocument(file, includeOleInfo);
 	}
 
@@ -72,8 +72,8 @@ public class OleDocumentWrapper extends ControlWrapper implements IOleDocument {
 	}
 
 	@Override
-	public void saveDocument(final OutputStream outputStream) {
-		oleDocument.saveDocument(outputStream);
+	public boolean saveDocument(final OutputStream outputStream) {
+		return oleDocument.saveDocument(outputStream);
 	}
 
 	@Override
