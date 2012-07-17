@@ -31,10 +31,11 @@ package org.jowidgets.addons.widgets.office.impl.ole;
 import org.jowidgets.addons.widgets.office.api.IOfficeControlSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
-public final class OfficeControlDefaults implements IDefaultInitializer<IOfficeControlSetupBuilder<?>> {
+final class OfficeControlDefaults implements IDefaultInitializer<IOfficeControlSetupBuilder<?>> {
 
 	@Override
 	public void initialize(final IOfficeControlSetupBuilder<?> setup) {
 		setup.setToolbarVisible(true);
+		setup.setDirtyCheckIntervalMs(500);
 	}
 }

@@ -52,7 +52,9 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 	private final IMutableValue<IOleContext> mutableOleContext;
 	private final ChangeObservable documentChangeObservable;
 	private final ITempFileFactory tempFileFactory;
+
 	private File tempDocumentStateFile;
+	private Boolean lastDirtyState;
 
 	public OleDocumentImpl(final IOleControl oleControl, final IOleDocumentSetupBuilder<?> setup) {
 		super(oleControl);
@@ -100,17 +102,20 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 		else if (event != null) {
 			final IOleContext oldContext = event.getOldValue();
 			if (oldContext != null && !oldContext.isDisposed() && !isDisposed()) {
+				lastDirtyState = oldContext.isDirty();
 				if (tempDocumentStateFile == null) {
 					tempDocumentStateFile = createTempFile();
 				}
 				oldContext.saveCurrentDocument(tempDocumentStateFile, true);
 			}
 		}
+		documentChangeObservable.fireChangedEvent();
 	}
 
 	@Override
 	public boolean saveDocument(final File file, final boolean includeOleInfo) {
 		Assert.paramNotNull(file, "file");
+		lastDirtyState = null;
 		if (mutableOleContext.getValue() != null) {
 			return mutableOleContext.getValue().saveCurrentDocument(file, includeOleInfo);
 		}
@@ -126,6 +131,7 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 	@Override
 	public boolean saveDocument(final OutputStream outputStream) {
 		Assert.paramNotNull(outputStream, "outputStream");
+		lastDirtyState = null;
 		final IOleContext oleContext = mutableOleContext.getValue();
 		if (oleContext != null) {
 			return saveDocumentWithContext(outputStream, oleContext);
@@ -159,7 +165,7 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 
 	@Override
 	public void openNewDocument() {
-		deleteTempDocumentStateFile();
+		deleteTempState();
 		final IOleContext oleContext = mutableOleContext.getValue();
 		if (oleContext != null) {
 			if (progId != null) {
@@ -175,7 +181,7 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 	@Override
 	public void openDocument(final File file) {
 		Assert.paramNotNull(file, "file");
-		deleteTempDocumentStateFile();
+		deleteTempState();
 		final IOleContext oleContext = mutableOleContext.getValue();
 		if (oleContext != null) {
 			if (progId != null) {
@@ -184,12 +190,12 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 			else {
 				oleContext.setDocument(file);
 			}
+			documentChangeObservable.fireChangedEvent();
 		}
 		else {
 			tempDocumentStateFile = createTempFile();
 			FileUtils.copyFile(file, tempDocumentStateFile);
 		}
-		documentChangeObservable.fireChangedEvent();
 	}
 
 	@Override
@@ -224,9 +230,20 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 	public boolean isDirty() {
 		final IOleContext oleContext = mutableOleContext.getValue();
 		if (oleContext != null) {
-			return oleContext.isDirty();
+			return oleContext.isDirty() || getLastDirtyState();
 		}
-		return false;
+		else {
+			return getLastDirtyState();
+		}
+	}
+
+	private boolean getLastDirtyState() {
+		if (lastDirtyState != null) {
+			return lastDirtyState.booleanValue();
+		}
+		else {
+			return false;
+		}
 	}
 
 	@Override
@@ -249,9 +266,10 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 		return tempFileFactory.create("OleDocumentTemp", "");
 	}
 
-	private void deleteTempDocumentStateFile() {
+	private void deleteTempState() {
 		deleteFile(tempDocumentStateFile);
 		tempDocumentStateFile = null;
+		lastDirtyState = null;
 	}
 
 	private static void deleteFile(final File file) {

@@ -61,12 +61,14 @@ class OleContextImpl implements IOleContext {
 	private final FocusListenerAdapter focusListenerAdapter;
 	private OleControlSite oleControlSiteLazy;
 	private OleAutomationImpl oleAutomationLazy;
+	private boolean enabled;
 
 	OleContextImpl(final Composite swtComposite) {
 		swtComposite.setLayout(new FillLayout());
 		this.oleFrame = new OleFrame(swtComposite, SWT.NONE);
 		this.focusListeners = new LinkedHashSet<IFocusListener>();
 		this.focusListenerAdapter = new FocusListenerAdapter();
+		this.enabled = true;
 	}
 
 	@Override
@@ -104,6 +106,9 @@ class OleContextImpl implements IOleContext {
 			oleControlSiteLazy = new OleControlSite(oleFrame, SWT.NONE, file);
 		}
 		if (oleControlSiteLazy != null) {
+			if (!enabled) {
+				oleControlSiteLazy.setEnabled(enabled);
+			}
 			oleControlSiteLazy.addFocusListener(focusListenerAdapter);
 			oleControlSiteLazy.doVerb(OLE.OLEIVERB_INPLACEACTIVATE);
 		}
@@ -372,8 +377,9 @@ class OleContextImpl implements IOleContext {
 			this.oleAutomation = oleAutomation;
 		}
 
+		@SuppressWarnings("unchecked")
 		@Override
-		public Object invoke(final String methodName, final IInvocationParameter... parameters) {
+		public <RESULT_TYPE> RESULT_TYPE invoke(final String methodName, final IInvocationParameter... parameters) {
 			Assert.paramNotEmpty(methodName, "methodName");
 			Assert.paramNotNull(parameters, "parameters");
 
@@ -389,7 +395,7 @@ class OleContextImpl implements IOleContext {
 			final int[] paramterNamesIds = oleAutomation.getIDsOfNames(parameterNames);
 			final int[] methodNameIds = oleAutomation.getIDsOfNames(new String[] {methodName});
 
-			return getVariantResult(oleAutomation.invoke(methodNameIds[0], variants, paramterNamesIds));
+			return (RESULT_TYPE) getVariantResult(oleAutomation.invoke(methodNameIds[0], variants, paramterNamesIds));
 		}
 
 		@Override
@@ -413,27 +419,24 @@ class OleContextImpl implements IOleContext {
 			}
 		}
 
+		@SuppressWarnings("unchecked")
 		@Override
-		public Object getProperty(final String propertyName, final Object... parameters) {
-
+		public <RESULT_TYPE> RESULT_TYPE getProperty(final String propertyName, final Object... parameters) {
 			final int[] propertyNameIds = oleAutomation.getIDsOfNames(new String[] {propertyName});
-
 			if (propertyNameIds != null && propertyNameIds.length == 1) {
-
 				if (parameters == null || parameters.length == 0) {
-
-					return getVariantResult(oleAutomation.getProperty(propertyNameIds[0]));
+					return (RESULT_TYPE) getVariantResult(oleAutomation.getProperty(propertyNameIds[0]));
 				}
 				else if (parameters.length > 1) {
 					final Variant[] variants = new Variant[parameters.length];
 					for (int i = 0; i < parameters.length; i++) {
 						variants[i] = createVariant(parameters[i]);
 					}
-					return getVariantResult(oleAutomation.getProperty(propertyNameIds[0], variants));
+					return (RESULT_TYPE) getVariantResult(oleAutomation.getProperty(propertyNameIds[0], variants));
 
 				}
 				else {
-					return getVariantResult(oleAutomation.getProperty(
+					return (RESULT_TYPE) getVariantResult(oleAutomation.getProperty(
 							propertyNameIds[0],
 							new Variant[] {createVariant(parameters[0])}));
 				}
@@ -441,7 +444,6 @@ class OleContextImpl implements IOleContext {
 			else {
 				throw new IllegalArgumentException("Property name '" + propertyName + "' is unknown");
 			}
-
 		}
 
 		@Override
@@ -450,6 +452,13 @@ class OleContextImpl implements IOleContext {
 				oleAutomation.dispose();
 			}
 		}
+	}
+
+	public void setEnabled(final boolean enabled) {
+		if (oleControlSiteLazy != null) {
+			oleControlSiteLazy.setEnabled(enabled);
+		}
+		this.enabled = enabled;
 	}
 
 }

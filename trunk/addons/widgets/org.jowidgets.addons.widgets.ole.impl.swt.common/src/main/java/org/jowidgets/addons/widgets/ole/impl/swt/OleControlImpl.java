@@ -72,6 +72,7 @@ class OleControlImpl extends ControlWrapper implements IOleControl {
 			final OleContextImpl oleContext = new OleContextImpl(swtCompositeValue.getValue());
 			oleContext.addFocusListener(focusListenerDelegate);
 			context.setValue(oleContext);
+			setEnabledStateOnContext();
 		}
 		else {
 			context.setValue(null);
@@ -103,6 +104,19 @@ class OleControlImpl extends ControlWrapper implements IOleControl {
 		public void focusGained() {
 			focusObservable.focusGained();
 		}
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		super.setEnabled(enabled);
+		setEnabledStateOnContext();
 	};
+
+	private void setEnabledStateOnContext() {
+		final IOleContext contextValue = context.getValue();
+		if (contextValue != null && contextValue instanceof OleContextImpl) {
+			((OleContextImpl) contextValue).setEnabled(isEnabled());
+		}
+	}
 
 }

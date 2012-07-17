@@ -38,15 +38,9 @@ import org.jowidgets.common.widgets.factory.IWidgetFactory;
 
 final class OfficeTextControlFactory implements IWidgetFactory<IOfficeControl, IOfficeTextBluePrint> {
 
-	private final String progId;
-
-	OfficeTextControlFactory(final String progId) {
-		this.progId = progId;
-	}
-
 	@Override
 	public IOfficeControl create(final Object parentUiReference, final IOfficeTextBluePrint bluePrint) {
-		final IOleDocumentBluePrint documentBp = OleDocumentBPF.document(progId);
+		final IOleDocumentBluePrint documentBp = OleDocumentBPF.document("Word.Document");
 		documentBp.setSetup(bluePrint);
 		final IOleDocument document = Toolkit.getWidgetFactory().create(parentUiReference, documentBp);
 		return new OfficeControlImpl(document, bluePrint);

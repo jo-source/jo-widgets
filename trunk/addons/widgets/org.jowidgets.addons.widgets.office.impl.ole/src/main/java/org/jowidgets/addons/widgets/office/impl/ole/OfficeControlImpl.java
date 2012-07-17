@@ -32,7 +32,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.jowidgets.addons.widgets.office.api.IOfficeControl;
 import org.jowidgets.addons.widgets.office.api.IOfficeControlSetupBuilder;
@@ -43,65 +42,56 @@ import org.jowidgets.addons.widgets.ole.document.tools.OleDocumentWrapper;
 import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.widgets.controller.IFocusListener;
-import org.jowidgets.util.IMutableValueListener;
-import org.jowidgets.util.IValueChangedEvent;
 import org.jowidgets.util.concurrent.DaemonThreadFactory;
 import org.jowidgets.util.event.ChangeObservable;
 import org.jowidgets.util.event.IChangeListener;
 
-class OfficeControlImpl extends OleDocumentWrapper implements IOfficeControl {
+final class OfficeControlImpl extends OleDocumentWrapper implements IOfficeControl {
 
-	private final IOleDocument oleDocument;
+	private static final String COUNT = "Count";
+	private static final String VISIBLE = "Visible";
+	private static final String COMMAND_BARS = "CommandBars";
+
 	private final ChangeObservable dirtyStateChangeObservable;
-	private boolean currentDirtyState;
-	private boolean newDirtyState;
 	private final ScheduledExecutorService executorService;
-	private ScheduledFuture<?> scheduleAtFixedRate;
-	private final AtomicBoolean running;
-	private boolean toolbarVisible;
+	private final DirtyCheckRunnable dirtyCheckRunnable;
+	private final int dirtyCheckInterval;
+	private final boolean toolbarVisible;
 
-	public OfficeControlImpl(final IOleDocument oleDocument, final IOfficeControlSetupBuilder<?> setup) {
+	private ScheduledFuture<?> dirtyCheckSchedule;
+
+	OfficeControlImpl(final IOleDocument oleDocument, final IOfficeControlSetupBuilder<?> setup) {
 		super(oleDocument);
-		this.oleDocument = oleDocument;
+
 		this.dirtyStateChangeObservable = new ChangeObservable();
 		this.executorService = Executors.newScheduledThreadPool(1, new DaemonThreadFactory());
 		this.toolbarVisible = setup.getToolbarVisible();
+		this.dirtyCheckInterval = setup.getDirtyCheckIntervalMs();
+		this.dirtyCheckRunnable = new DirtyCheckRunnable();
+
+		oleDocument.addDocumentChangeListener(new DocumenChangetListener());
+		oleDocument.getOleControl().addFocusListener(new DirtyListener());
+
 		setToolbarVisibility();
-		this.running = new AtomicBoolean(false);
-		if (oleDocument != null) {
-			oleDocument.getOleControl().addFocusListener(new DirtyListener());
-			oleDocument.getOleControl().getContext().addMutableValueListener(new ContextListener());
-			oleDocument.addDocumentChangeListener(new DocumenChangetListener());
-		}
 	}
 
 	private void setToolbarVisibility() {
-		if (!toolbarVisible && (oleDocument != null)) {
-			final IOleContext context = oleDocument.getOleControl().getContext().getValue();
+		if (!toolbarVisible) {
+			final IOleContext context = getOleControl().getContext().getValue();
 			if (context != null) {
-				final IOleAutomation commandBars = (IOleAutomation) context.getAutomation().getProperty("CommandBars");
+				final IOleAutomation commandBars = context.getAutomation().getProperty(COMMAND_BARS);
 				if (commandBars != null) {
-					final int commandBarsCount = (Integer) commandBars.getProperty("Count");
+					final int commandBarsCount = commandBars.getProperty(COUNT);
 					for (int i = 0; i < commandBarsCount; i++) {
-						final IOleAutomation commandBarAutomation = (IOleAutomation) context.getAutomation().getProperty(
-								"CommandBars",
-								i);
-						if (commandBarAutomation != null) {
-							commandBarAutomation.setProperty("Visible", toolbarVisible);
-							commandBarAutomation.dispose();
+						final IOleAutomation commandBar = context.getAutomation().getProperty(COMMAND_BARS, i);
+						if (commandBar != null) {
+							commandBar.setProperty(VISIBLE, toolbarVisible);
+							commandBar.dispose();
 						}
 					}
 					commandBars.dispose();
 				}
 			}
-		}
-	}
-
-	@Override
-	public void setToolbarVisible(final boolean visible) {
-		if (toolbarVisible != visible) {
-			toolbarVisible = visible;
-			setToolbarVisibility();
 		}
 	}
 
@@ -116,61 +106,66 @@ class OfficeControlImpl extends OleDocumentWrapper implements IOfficeControl {
 	}
 
 	private class DirtyListener implements IFocusListener {
-
 		@Override
 		public void focusGained() {
-			if (!running.get()) {
-				checkDirtyState();
-			}
+			startDirtyChecking();
 		}
 
 		@Override
 		public void focusLost() {
-			running.set(false);
-			scheduleAtFixedRate.cancel(true);
+			stopDirtyChecking();
 		}
 	}
 
-	private void checkDirtyState() {
-		running.set(true);
-		final IUiThreadAccess access = Toolkit.getUiThreadAccess();
-		scheduleAtFixedRate = executorService.scheduleAtFixedRate((new Runnable() {
-			@Override
-			public void run() {
-				access.invokeLater(new Runnable() {
-					@Override
-					public void run() {
-						final IOleContext value = oleDocument.getOleControl().getContext().getValue();
-						if (value != null) {
-							newDirtyState = value.isDirty();
-						}
-						else {
-							running.set(false);
-						}
+	private void startDirtyChecking() {
+		if (dirtyCheckSchedule == null) {
+			dirtyCheckSchedule = executorService.scheduleAtFixedRate(
+					dirtyCheckRunnable,
+					0,
+					dirtyCheckInterval,
+					TimeUnit.MILLISECONDS);
+		}
+	}
+
+	private void stopDirtyChecking() {
+		if (dirtyCheckSchedule != null) {
+			dirtyCheckSchedule.cancel(true);
+			dirtyCheckSchedule = null;
+		}
+	}
+
+	private final class DirtyCheckRunnable implements Runnable {
+
+		private final IUiThreadAccess uiThreadAccess;
+		private boolean currentDirtyState;
+
+		private DirtyCheckRunnable() {
+			this.uiThreadAccess = Toolkit.getUiThreadAccess();
+			this.currentDirtyState = isDirty();
+		}
+
+		@Override
+		public void run() {
+			uiThreadAccess.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					final IOleContext context = getOleControl().getContext().getValue();
+					if (context != null) {
+						final boolean newDirtyState = context.isDirty();
 						if (currentDirtyState != newDirtyState) {
 							currentDirtyState = newDirtyState;
 							dirtyStateChangeObservable.fireChangedEvent();
 						}
 					}
-				});
-
-				if (!running.get()) {
-					scheduleAtFixedRate.cancel(true);
+					else {
+						stopDirtyChecking();
+					}
 				}
-			}
-		}), 0, 1000, TimeUnit.MILLISECONDS);
-	}
-
-	private class ContextListener implements IMutableValueListener<IOleContext> {
-
-		@Override
-		public void changed(final IValueChangedEvent<IOleContext> event) {
-			setToolbarVisibility();
+			});
 		}
 	}
 
 	private class DocumenChangetListener implements IChangeListener {
-
 		@Override
 		public void changed() {
 			setToolbarVisibility();
