@@ -81,12 +81,14 @@ final class OfficeControlImpl extends OleDocumentWrapper implements IOfficeContr
 			if (context != null) {
 				final IOleAutomation commandBars = context.getAutomation().getProperty(COMMAND_BARS);
 				if (commandBars != null) {
-					final int commandBarsCount = commandBars.getProperty(COUNT);
-					for (int i = 0; i < commandBarsCount; i++) {
-						final IOleAutomation commandBar = context.getAutomation().getProperty(COMMAND_BARS, i);
-						if (commandBar != null) {
-							commandBar.setProperty(VISIBLE, toolbarVisible);
-							commandBar.dispose();
+					final Integer commandBarsCount = commandBars.getProperty(COUNT);
+					if (commandBarsCount != null) {
+						for (int i = 0; i < commandBarsCount.intValue(); i++) {
+							final IOleAutomation commandBar = context.getAutomation().getProperty(COMMAND_BARS, i);
+							if (commandBar != null) {
+								commandBar.setProperty(VISIBLE, toolbarVisible);
+								commandBar.dispose();
+							}
 						}
 					}
 					commandBars.dispose();
