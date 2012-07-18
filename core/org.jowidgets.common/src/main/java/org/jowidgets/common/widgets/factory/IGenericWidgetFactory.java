@@ -29,6 +29,7 @@ package org.jowidgets.common.widgets.factory;
 
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.util.IDecorator;
 
 public interface IGenericWidgetFactory {
 
@@ -52,5 +53,13 @@ public interface IGenericWidgetFactory {
 
 	<WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void unRegister(
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass);
+
+	<WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void addWidgetDecorator(
+		final Class<? extends DESCRIPTOR_TYPE> descriptorClass,
+		final IDecorator<WIDGET_TYPE> decorator);
+
+	<WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void addWidgetFactoryDecorator(
+		final Class<? extends DESCRIPTOR_TYPE> descriptorClass,
+		final IDecorator<IWidgetFactory<WIDGET_TYPE, ? extends DESCRIPTOR_TYPE>> decorator);
 
 }

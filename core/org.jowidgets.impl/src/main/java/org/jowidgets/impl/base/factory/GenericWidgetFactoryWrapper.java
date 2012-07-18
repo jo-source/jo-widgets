@@ -33,6 +33,7 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactoryListener;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.IDecorator;
 
 public class GenericWidgetFactoryWrapper implements IGenericWidgetFactory {
 
@@ -74,6 +75,20 @@ public class GenericWidgetFactoryWrapper implements IGenericWidgetFactory {
 	public final <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void unRegister(
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass) {
 		genericFactory.unRegister(descriptorClass);
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void addWidgetDecorator(
+		final Class<? extends DESCRIPTOR_TYPE> descriptorClass,
+		final IDecorator<WIDGET_TYPE> decorator) {
+		genericFactory.addWidgetDecorator(descriptorClass, decorator);
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void addWidgetFactoryDecorator(
+		final Class<? extends DESCRIPTOR_TYPE> descriptorClass,
+		final IDecorator<IWidgetFactory<WIDGET_TYPE, ? extends DESCRIPTOR_TYPE>> decorator) {
+		genericFactory.addWidgetFactoryDecorator(descriptorClass, decorator);
 	}
 
 	@Override

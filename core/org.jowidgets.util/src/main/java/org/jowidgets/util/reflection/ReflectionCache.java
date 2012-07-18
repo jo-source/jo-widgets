@@ -29,50 +29,27 @@
 package org.jowidgets.util.reflection;
 
 import java.lang.reflect.Method;
-import java.util.HashSet;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.jowidgets.util.Assert;
-import org.jowidgets.util.IIterationCallback;
 
-public final class ReflectionUtils {
+public final class ReflectionCache {
 
-	private ReflectionUtils() {}
+	private static final Map<Class<?>, Set<Method>> TYPE_METHODS_CACHE = new HashMap<Class<?>, Set<Method>>();
+
+	private ReflectionCache() {}
 
 	public static Set<Method> getMethods(final Class<?> type) {
 		Assert.paramNotNull(type, "type");
-		final Set<Method> result = new HashSet<Method>();
-		for (final Method method : type.getMethods()) {
-			result.add(method);
+		Set<Method> result = TYPE_METHODS_CACHE.get(type);
+		if (result == null) {
+			result = Collections.unmodifiableSet(ReflectionUtils.getMethods(type));
+			TYPE_METHODS_CACHE.put(type, result);
 		}
 		return result;
-	}
-
-	/**
-	 * Iterates over all classes and interfaces in the type hierarchy of this type (including this type).
-	 * Each class or interface will only be iterated once
-	 * 
-	 * @param type The type to iterate over
-	 * @param callback The callback
-	 */
-	public static void iterateHierarchy(final Class<?> type, final IIterationCallback<Class<?>> callback) {
-		Assert.paramNotNull(type, "type");
-		Assert.paramNotNull(callback, "callback");
-		iterateHierarchy(new HashSet<Class<?>>(), type, callback);
-	}
-
-	private static void iterateHierarchy(
-		final Set<Class<?>> visited,
-		final Class<?> type,
-		final IIterationCallback<Class<?>> callback) {
-		if (type != null && !visited.contains(type)) {
-			callback.next(type);
-			visited.add(type);
-			iterateHierarchy(visited, type.getSuperclass(), callback);
-			for (final Class<?> implemented : type.getInterfaces()) {
-				iterateHierarchy(visited, implemented, callback);
-			}
-		}
 	}
 
 }
