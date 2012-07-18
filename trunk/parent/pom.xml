@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.parent</artifactId>
-	<version>0.14.0-SNAPSHOT</version>
+	<version>0.14.0</version>
 	<packaging>pom</packaging>
 	<name>org.jowidgets.parent</name>
 
@@ -13,9 +13,9 @@
 	</properties>
 
 	<scm>
-		<connection>scm:svn:http://jo-widgets.googlecode.com/svn/trunk/parent</connection>
-		<developerConnection>scm:svn:https://jo-widgets.googlecode.com/svn/trunk/parent</developerConnection>
-		<url>http://jo-widgets.googlecode.com/svn/trunk/parent</url>
+		<connection>scm:svn:http://jo-widgets.googlecode.com/svn/tags/0.14.0/parent</connection>
+		<developerConnection>scm:svn:https://jo-widgets.googlecode.com/svn/tags/0.14.0/parent</developerConnection>
+		<url>http://jo-widgets.googlecode.com/svn/tags/0.14.0/parent</url>
 	</scm>
 
 
