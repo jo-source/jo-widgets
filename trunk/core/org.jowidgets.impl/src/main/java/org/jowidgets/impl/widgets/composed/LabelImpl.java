@@ -62,7 +62,7 @@ public class LabelImpl extends CompositeBasedControl implements ILabel {
 
 		final BluePrintFactory bpF = new BluePrintFactory();
 
-		final IIconDescriptor iconDescriptor = bpF.icon(setup.getIcon());
+		final IIconDescriptor iconDescriptor = bpF.icon(setup.getIcon()).setSetup(setup);
 		this.iconWidget = composite.add(iconDescriptor, "w 0::");
 
 		final ITextLabelDescriptor textLabelDescriptor = bpF.textLabel().setSetup(setup);

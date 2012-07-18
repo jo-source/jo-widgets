@@ -29,6 +29,8 @@ package org.jowidgets.impl.base.factory;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -38,17 +40,26 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactoryListener;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.IDecorator;
 
 public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory {
 
 	@SuppressWarnings("rawtypes")
 	private final Map factories;
 
+	@SuppressWarnings("rawtypes")
+	private final Map decorators;
+
+	@SuppressWarnings("rawtypes")
+	private final Map factoryDecorators;
+
 	private final Set<IWidgetFactoryListener> widgetFactoryListeners;
 
 	@SuppressWarnings("rawtypes")
 	public DefaultGenericWidgetFactory() {
 		this.factories = new HashMap();
+		this.decorators = new HashMap();
+		this.factoryDecorators = new HashMap();
 		this.widgetFactoryListeners = new HashSet<IWidgetFactoryListener>();
 	}
 
@@ -113,17 +124,71 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
 	@Override
 	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> getFactory(
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass) {
-		return (IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE>) factories.get(descriptorClass);
+		return decorateFactory((IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE>) factories.get(descriptorClass), descriptorClass);
+	}
+
+	@SuppressWarnings("unchecked")
+	private <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> decorateFactory(
+		final IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> widgetFactory,
+		final Class<? extends DESCRIPTOR_TYPE> descriptorClass) {
+		IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> result = widgetFactory;
+		final List<IDecorator<Object>> decoratorsList = (List<IDecorator<Object>>) factoryDecorators.get(descriptorClass);
+		if (decoratorsList != null) {
+			for (final IDecorator<Object> decorator : decoratorsList) {
+				final Object decorated = decorator.decorate(result);
+				if (decorated instanceof IWidgetFactory) {
+					result = (IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE>) decorated;
+				}
+				else {
+					throw new IllegalStateException("Decorator must return an instance of '"
+						+ IWidgetFactory.class.getName()
+						+ "'");
+				}
+			}
+		}
+		return result;
+	}
+
+	@SuppressWarnings({"rawtypes", "unchecked"})
+	@Override
+	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void addWidgetDecorator(
+		final Class<? extends DESCRIPTOR_TYPE> descriptorClass,
+		final IDecorator<WIDGET_TYPE> decorator) {
+		Assert.paramNotNull(descriptorClass, "descriptorClass");
+		Assert.paramNotNull(decorator, "decorator");
+
+		List decoratorsList = (List) decorators.get(descriptorClass);
+		if (decoratorsList == null) {
+			decoratorsList = new LinkedList();
+			decorators.put(descriptorClass, decoratorsList);
+		}
+		decoratorsList.add(decorator);
+	}
+
+	@SuppressWarnings({"rawtypes", "unchecked"})
+	@Override
+	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void addWidgetFactoryDecorator(
+		final Class<? extends DESCRIPTOR_TYPE> descriptorClass,
+		final IDecorator<IWidgetFactory<WIDGET_TYPE, ? extends DESCRIPTOR_TYPE>> decorator) {
+		Assert.paramNotNull(descriptorClass, "descriptorClass");
+		Assert.paramNotNull(decorator, "decorator");
+		List factoryDecoratorsList = (List) factoryDecorators.get(descriptorClass);
+		if (factoryDecoratorsList == null) {
+			factoryDecoratorsList = new LinkedList();
+			factoryDecorators.put(descriptorClass, factoryDecoratorsList);
+		}
+		factoryDecoratorsList.add(decorator);
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private Object createWidget(final Object parentUiReference, final IWidgetDescriptor descriptor) {
 		Assert.paramNotNull(descriptor, "descriptor");
 
-		final IWidgetFactory factory = (IWidgetFactory) factories.get(descriptor.getDescriptorInterface());
+		final IWidgetFactory factory = getFactory(descriptor.getDescriptorInterface());
 		if (factory != null) {
-			final Object result = factory.create(parentUiReference, descriptor);
+			Object result = factory.create(parentUiReference, descriptor);
 			if (result instanceof IWidgetCommon) {
+				result = decorateWidget((IWidgetCommon) result, descriptor);
 				fireWidgetCreated((IWidgetCommon) result);
 			}
 			else {
@@ -138,6 +203,26 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
 				+ descriptor.getClass().getName()
 				+ "'");
 		}
+	}
+
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	private IWidgetCommon decorateWidget(final IWidgetCommon widget, final IWidgetDescriptor descriptor) {
+		IWidgetCommon result = widget;
+		final List<IDecorator<Object>> decoratorsList = (List<IDecorator<Object>>) decorators.get(descriptor.getDescriptorInterface());
+		if (decoratorsList != null) {
+			for (final IDecorator<Object> decorator : decoratorsList) {
+				final Object decorated = decorator.decorate(result);
+				if (decorated instanceof IWidgetCommon) {
+					result = (IWidgetCommon) decorated;
+				}
+				else {
+					throw new IllegalStateException("Decorated widget must be assignable from '"
+						+ IWidgetCommon.class.getName()
+						+ "'");
+				}
+			}
+		}
+		return result;
 	}
 
 	private void fireWidgetCreated(final IWidgetCommon widget) {
