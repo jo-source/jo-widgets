@@ -107,14 +107,13 @@ public class ToolBarImpl extends AbstractToolBarSpiWrapper implements IToolBar, 
 		this.listModelListener = new ListModelAdapter() {
 
 			@Override
-			public void afterChildRemoved(final int index) {
-				final IToolBarItemModel childModel = model.getItems().get(index);
+			public void beforeChildRemove(final int index) {
+				final IToolBarItemModel childModel = getModel().getItems().get(index);
 				final int viewIndex = modelViewConverter.removeModel(childModel, index);
 				childModel.removeItemModelListener(itemModelListener);
 				if (viewIndex != -1) {
 					remove(viewIndex);
 				}
-				remove(index);
 				pack();
 			}
 

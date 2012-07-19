@@ -106,8 +106,8 @@ public class MenuDelegate extends DisposableDelegate {
 		this.listModelListener = new ListModelAdapter() {
 
 			@Override
-			public void afterChildRemoved(final int index) {
-				final IMenuItemModel childModel = model.getChildren().get(index);
+			public void beforeChildRemove(final int index) {
+				final IMenuItemModel childModel = getModel().getChildren().get(index);
 				final int viewIndex = modelViewConverter.removeModel(childModel, index);
 				childModel.removeItemModelListener(itemModelListener);
 				if (viewIndex != -1) {
