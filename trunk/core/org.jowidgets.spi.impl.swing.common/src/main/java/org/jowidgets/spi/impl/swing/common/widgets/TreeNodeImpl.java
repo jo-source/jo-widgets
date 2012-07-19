@@ -92,31 +92,37 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 	@Override
 	public void setText(final String text) {
 		getJoTreeNode().setText(text);
+		fireNodeChanged();
 	}
 
 	@Override
 	public void setToolTipText(final String toolTipText) {
 		getJoTreeNode().setToolTipText(toolTipText);
+		fireNodeChanged();
 	}
 
 	@Override
 	public void setIcon(final IImageConstant icon) {
 		getJoTreeNode().setIcon(icon);
+		fireNodeChanged();
 	}
 
 	@Override
 	public void setMarkup(final Markup markup) {
 		getJoTreeNode().setMarkup(markup);
+		fireNodeChanged();
 	}
 
 	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
 		getJoTreeNode().setForegroundColor(colorValue);
+		fireNodeChanged();
 	}
 
 	@Override
 	public void setBackgroundColor(final IColorConstant colorValue) {
 		getJoTreeNode().setBackgroundColor(colorValue);
+		fireNodeChanged();
 	}
 
 	@Override
@@ -209,6 +215,10 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 	@Override
 	public IPopupMenuSpi createPopupMenu() {
 		return new PopupMenuImpl(parentTree.getUiReference());
+	}
+
+	private void fireNodeChanged() {
+		parentTree.getTreeModel().nodeChanged(getJoTreeNode());
 	}
 
 }
