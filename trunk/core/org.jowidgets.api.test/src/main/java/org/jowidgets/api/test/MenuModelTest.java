@@ -110,6 +110,11 @@ public class MenuModelTest {
 			i++;
 		}
 
+		//remove all items
+		menuModel.removeAllItems();
+		Assert.assertEquals(0, menu.getChildren().size());
+		Assert.assertEquals(0, menuModel.getChildren().size());
+
 	}
 
 }
