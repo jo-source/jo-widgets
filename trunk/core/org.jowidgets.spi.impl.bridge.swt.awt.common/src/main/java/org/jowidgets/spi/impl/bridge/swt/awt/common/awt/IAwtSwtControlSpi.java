@@ -52,4 +52,6 @@ public interface IAwtSwtControlSpi extends IControlSpi {
 	 */
 	IMutableValue<Composite> getSwtComposite();
 
+	void dispose();
+
 }
