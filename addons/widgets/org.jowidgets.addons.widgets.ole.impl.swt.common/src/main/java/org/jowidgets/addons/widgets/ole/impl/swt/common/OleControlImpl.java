@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann, waheckma
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,12 +26,11 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.ole.impl.swt;
+package org.jowidgets.addons.widgets.ole.impl.swt.common;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.eclipse.swt.SWT;
@@ -48,25 +47,33 @@ import org.eclipse.swt.ole.win32.Variant;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.addons.widgets.ole.api.IInvocationParameter;
 import org.jowidgets.addons.widgets.ole.api.IOleAutomation;
-import org.jowidgets.addons.widgets.ole.api.IOleContext;
+import org.jowidgets.addons.widgets.ole.api.IOleControl;
+import org.jowidgets.addons.widgets.ole.api.IOleControlSetupBuilder;
 import org.jowidgets.addons.widgets.ole.api.OleCommand;
 import org.jowidgets.addons.widgets.ole.api.OleCommandOption;
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.common.widgets.controller.IFocusListener;
+import org.jowidgets.spi.impl.controller.FocusObservable;
+import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.Assert;
 
-class OleContextImpl implements IOleContext {
+class OleControlImpl extends ControlWrapper implements IOleControl {
+
+	private final FocusObservable focusObservable;
+	private final FocusListenerAdapter focusListenerAdapter;
 
 	private final OleFrame oleFrame;
-	private final Set<IFocusListener> focusListeners;
-	private final FocusListenerAdapter focusListenerAdapter;
+
 	private OleControlSite oleControlSiteLazy;
 	private OleAutomationImpl oleAutomationLazy;
 	private boolean enabled;
 
-	OleContextImpl(final Composite swtComposite) {
+	OleControlImpl(final IControl control, final Composite swtComposite, final IOleControlSetupBuilder<?> setup) {
+		super(control);
 		swtComposite.setLayout(new FillLayout());
+
 		this.oleFrame = new OleFrame(swtComposite, SWT.NONE);
-		this.focusListeners = new LinkedHashSet<IFocusListener>();
+		this.focusObservable = new FocusObservable();
 		this.focusListenerAdapter = new FocusListenerAdapter();
 		this.enabled = true;
 	}
@@ -154,8 +161,14 @@ class OleContextImpl implements IOleContext {
 		return oleAutomationLazy;
 	}
 
-	void addFocusListener(final IFocusListener listener) {
-		focusListeners.add(listener);
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		focusObservable.addFocusListener(listener);
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		focusObservable.removeFocusListener(listener);
 	}
 
 	private OleControlSite getOleControlSite() {
@@ -356,16 +369,12 @@ class OleContextImpl implements IOleContext {
 
 		@Override
 		public void focusLost(final FocusEvent e) {
-			for (final IFocusListener listener : focusListeners) {
-				listener.focusLost();
-			}
+			focusObservable.focusLost();
 		}
 
 		@Override
 		public void focusGained(final FocusEvent e) {
-			for (final IFocusListener listener : focusListeners) {
-				listener.focusGained();
-			}
+			focusObservable.focusGained();
 		}
 	}
 
@@ -454,6 +463,7 @@ class OleContextImpl implements IOleContext {
 		}
 	}
 
+	@Override
 	public void setEnabled(final boolean enabled) {
 		if (oleControlSiteLazy != null) {
 			oleControlSiteLazy.setEnabled(enabled);

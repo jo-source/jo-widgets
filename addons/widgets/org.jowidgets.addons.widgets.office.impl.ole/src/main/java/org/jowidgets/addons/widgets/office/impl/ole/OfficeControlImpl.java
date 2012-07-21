@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 import org.jowidgets.addons.widgets.office.api.IOfficeControl;
 import org.jowidgets.addons.widgets.office.api.IOfficeControlSetupBuilder;
 import org.jowidgets.addons.widgets.ole.api.IOleAutomation;
-import org.jowidgets.addons.widgets.ole.api.IOleContext;
+import org.jowidgets.addons.widgets.ole.api.IOleControl;
 import org.jowidgets.addons.widgets.ole.document.api.IOleDocument;
 import org.jowidgets.addons.widgets.ole.document.tools.OleDocumentWrapper;
 import org.jowidgets.api.threads.IUiThreadAccess;
@@ -77,22 +77,20 @@ final class OfficeControlImpl extends OleDocumentWrapper implements IOfficeContr
 
 	private void setToolbarVisibility() {
 		if (!toolbarVisible) {
-			final IOleContext context = getOleControl().getContext().getValue();
-			if (context != null) {
-				final IOleAutomation commandBars = context.getAutomation().getProperty(COMMAND_BARS);
-				if (commandBars != null) {
-					final Integer commandBarsCount = commandBars.getProperty(COUNT);
-					if (commandBarsCount != null) {
-						for (int i = 0; i < commandBarsCount.intValue(); i++) {
-							final IOleAutomation commandBar = context.getAutomation().getProperty(COMMAND_BARS, i);
-							if (commandBar != null) {
-								commandBar.setProperty(VISIBLE, toolbarVisible);
-								commandBar.dispose();
-							}
+			final IOleControl oleControl = getOleControl();
+			final IOleAutomation commandBars = oleControl.getAutomation().getProperty(COMMAND_BARS);
+			if (commandBars != null) {
+				final Integer commandBarsCount = commandBars.getProperty(COUNT);
+				if (commandBarsCount != null) {
+					for (int i = 0; i < commandBarsCount.intValue(); i++) {
+						final IOleAutomation commandBar = oleControl.getAutomation().getProperty(COMMAND_BARS, i);
+						if (commandBar != null) {
+							commandBar.setProperty(VISIBLE, toolbarVisible);
+							commandBar.dispose();
 						}
 					}
-					commandBars.dispose();
 				}
+				commandBars.dispose();
 			}
 		}
 	}
@@ -151,16 +149,10 @@ final class OfficeControlImpl extends OleDocumentWrapper implements IOfficeContr
 			uiThreadAccess.invokeLater(new Runnable() {
 				@Override
 				public void run() {
-					final IOleContext context = getOleControl().getContext().getValue();
-					if (context != null) {
-						final boolean newDirtyState = context.isDirty();
-						if (currentDirtyState != newDirtyState) {
-							currentDirtyState = newDirtyState;
-							dirtyStateChangeObservable.fireChangedEvent();
-						}
-					}
-					else {
-						stopDirtyChecking();
+					final boolean newDirtyState = getOleControl().isDirty();
+					if (currentDirtyState != newDirtyState) {
+						currentDirtyState = newDirtyState;
+						dirtyStateChangeObservable.fireChangedEvent();
 					}
 				}
 			});

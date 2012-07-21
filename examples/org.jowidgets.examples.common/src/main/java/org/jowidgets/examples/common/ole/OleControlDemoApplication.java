@@ -28,7 +28,6 @@
 
 package org.jowidgets.examples.common.ole;
 
-import org.jowidgets.addons.widgets.ole.api.IOleContext;
 import org.jowidgets.addons.widgets.ole.api.IOleControl;
 import org.jowidgets.addons.widgets.ole.api.InvocationParameter;
 import org.jowidgets.addons.widgets.ole.api.OleBPF;
@@ -44,9 +43,6 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.controller.KeyAdapter;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.widgets.blueprint.BPF;
-import org.jowidgets.util.IMutableValue;
-import org.jowidgets.util.IMutableValueListener;
-import org.jowidgets.util.IValueChangedEvent;
 
 public final class OleControlDemoApplication implements IApplication {
 
@@ -76,38 +72,22 @@ public final class OleControlDemoApplication implements IApplication {
 		//add ole content
 		final IOleControl oleControl = frame.add(OleBPF.oleControl(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
-		oleControl.getContext().addMutableValueListener(new IMutableValueListener<IOleContext>() {
-			@Override
-			public void changed(final IValueChangedEvent<IOleContext> event) {
-				onContextChange(oleControl.getContext(), urlField);
-			}
-		});
+		oleControl.setDocument("Shell.Explorer");
+		onUrlChange(oleControl, urlField);
 
 		urlField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(final IKeyEvent event) {
 				if (event.getVirtualKey() == VirtualKey.ENTER) {
-					onUrlChange(oleControl.getContext(), urlField);
+					onUrlChange(oleControl, urlField);
 				}
 			}
 		});
-		onContextChange(oleControl.getContext(), urlField);
 
 		frame.setVisible(true);
 	}
 
-	private void onContextChange(final IMutableValue<IOleContext> contextValue, final ITextControl urlField) {
-		final IOleContext context = contextValue.getValue();
-		if (context != null) {
-			context.setDocument("Shell.Explorer");
-			onUrlChange(contextValue, urlField);
-		}
-	}
-
-	private void onUrlChange(final IMutableValue<IOleContext> contextValue, final ITextControl urlField) {
-		final IOleContext context = contextValue.getValue();
-		if (context != null) {
-			context.getAutomation().invoke("Navigate", InvocationParameter.create("URL", urlField.getText()));
-		}
+	private void onUrlChange(final IOleControl oleControl, final ITextControl urlField) {
+		oleControl.getAutomation().invoke("Navigate", InvocationParameter.create("URL", urlField.getText()));
 	}
 }

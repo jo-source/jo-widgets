@@ -31,7 +31,7 @@ package org.jowidgets.addons.widgets.ole.impl.swt;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.addons.widgets.ole.api.IOleControl;
 import org.jowidgets.addons.widgets.ole.api.IOleControlBluePrint;
-import org.jowidgets.addons.widgets.ole.impl.swt.SwtOleControlFactory;
+import org.jowidgets.addons.widgets.ole.impl.swt.common.SwtOleControlFactory;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;

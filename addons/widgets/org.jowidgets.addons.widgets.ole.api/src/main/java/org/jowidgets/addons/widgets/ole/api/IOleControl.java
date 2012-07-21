@@ -28,11 +28,31 @@
 
 package org.jowidgets.addons.widgets.ole.api;
 
+import java.io.File;
+
 import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.util.IMutableValue;
 
 public interface IOleControl extends IControl {
 
-	IMutableValue<IOleContext> getContext();
+	void setDocument(String progId);
+
+	void setDocument(String progId, File file);
+
+	void setDocument(File file);
+
+	boolean saveCurrentDocument(File file, boolean includeOleInfo);
+
+	void clearDocument();
+
+	boolean isDirty();
+
+	@Override
+	boolean isDisposed();
+
+	//TODO MG add listener stuff
+
+	void execute(OleCommand command, Object in, OleCommandOption... options);
+
+	IOleAutomation getAutomation();
 
 }

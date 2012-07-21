@@ -26,26 +26,20 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.ole.impl.swt;
+package org.jowidgets.addons.widgets.ole.impl.swt.common;
 
 import org.eclipse.swt.widgets.Composite;
-import org.jowidgets.addons.widgets.ole.api.IOleControlBluePrint;
 import org.jowidgets.addons.widgets.ole.api.IOleControl;
+import org.jowidgets.addons.widgets.ole.api.IOleControlBluePrint;
 import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.util.IMutableValue;
-import org.jowidgets.util.MutableValue;
 
 public final class SwtOleControlFactory {
 
 	private SwtOleControlFactory() {}
 
-	public static IOleControl createOleControl(final IControl control, final Composite swtComposite, final IOleControlBluePrint bluePrint) {
-		return createOleControl(control, new MutableValue<Composite>(swtComposite), bluePrint);
-	}
-
 	public static IOleControl createOleControl(
 		final IControl control,
-		final IMutableValue<Composite> swtComposite,
+		final Composite swtComposite,
 		final IOleControlBluePrint bluePrint) {
 		return new OleControlImpl(control, swtComposite, bluePrint);
 	}
