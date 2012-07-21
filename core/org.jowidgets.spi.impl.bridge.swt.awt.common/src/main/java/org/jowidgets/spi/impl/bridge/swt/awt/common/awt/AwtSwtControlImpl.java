@@ -34,6 +34,7 @@ import java.awt.event.HierarchyListener;
 
 import javax.swing.SwingUtilities;
 
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -47,6 +48,11 @@ import org.jowidgets.util.MutableValue;
 class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 
 	private final MutableValue<Composite> mutableValue;
+	private final Shell backboneShell;
+	private final Composite composite;
+
+	private boolean initialized;
+	private Shell bridgeShell;
 
 	public AwtSwtControlImpl(final Object parentUiReference) {
 		super(new PeerObservablePanel());
@@ -55,7 +61,13 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 			throw new IllegalArgumentException("The AwtSwtControl must be created in the event dispatching thread of swing");
 		}
 
-		this.mutableValue = new MutableValue<Composite>();
+		this.initialized = false;
+		this.backboneShell = new Shell(getCurrentDisplay());
+		this.backboneShell.setLayout(new FillLayout());
+		this.composite = new Composite(backboneShell, SWT.NONE);
+		this.composite.setLayout(new FillLayout());
+		this.mutableValue = new MutableValue<Composite>(composite);
+
 		getUiReference().setLayout(new BorderLayout());
 		getUiReference().addPeerListener(new IPeerListener() {
 
@@ -68,29 +80,24 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 
 			@Override
 			public void beforePeerRemove() {
-				mutableValue.setValue(null);
+				onPeerRemoved();
 			}
 
 		});
 		getUiReference().addHierarchyListener(new HierarchyListener() {
 			@Override
 			public void hierarchyChanged(final HierarchyEvent e) {
-				if (mutableValue.getValue() == null && getUiReference().isDisplayable()) {
-					initialize();
+				if (!initialized && getUiReference().isDisplayable()) {
+					onPeerAdded();
 				}
 			}
 		});
 	}
 
-	private void initialize() {
+	private static Display getCurrentDisplay() {
 		final Display currentDisplay = Display.getCurrent();
 		if (currentDisplay != null) {
-			final Canvas canvas = new Canvas();
-			getUiReference().removeAll();
-			getUiReference().add(BorderLayout.CENTER, canvas);
-			final Shell shell = SWT_AWT.new_Shell(currentDisplay, canvas);
-			shell.setLayout(new FillLayout());
-			mutableValue.setValue(shell);
+			return currentDisplay;
 		}
 		else {
 			throw new IllegalStateException("This thread has no swt display. "
@@ -100,6 +107,23 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 				+ "' could be used, or, if no application "
 				+ "runner should be used, use the single ui thread pattern implemented there.");
 		}
+	}
+
+	private void onPeerAdded() {
+		final Canvas canvas = new Canvas();
+		getUiReference().removeAll();
+		getUiReference().add(BorderLayout.CENTER, canvas);
+		bridgeShell = SWT_AWT.new_Shell(getCurrentDisplay(), canvas);
+		bridgeShell.setLayout(new FillLayout());
+		composite.setParent(bridgeShell);
+		initialized = true;
+	}
+
+	private void onPeerRemoved() {
+		composite.setParent(backboneShell);
+		tryToDispose(bridgeShell);
+		bridgeShell = null;
+		initialized = false;
 	}
 
 	@Override
@@ -112,4 +136,16 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 		return mutableValue;
 	}
 
+	@Override
+	public void dispose() {
+		tryToDispose(composite);
+		tryToDispose(backboneShell);
+		tryToDispose(bridgeShell);
+	}
+
+	private static void tryToDispose(final Composite composite) {
+		if (composite != null && !composite.isDisposed()) {
+			composite.dispose();
+		}
+	}
 }

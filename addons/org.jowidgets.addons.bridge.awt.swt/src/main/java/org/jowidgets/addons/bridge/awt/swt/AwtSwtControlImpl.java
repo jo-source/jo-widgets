@@ -48,4 +48,11 @@ class AwtSwtControlImpl extends ControlImpl implements IAwtSwtControl {
 		return getWidget().getSwtComposite();
 	}
 
+	@Override
+	public void dispose() {
+		final IAwtSwtControlSpi spiWidget = getWidget();
+		super.dispose();
+		spiWidget.dispose();
+	}
+
 }
