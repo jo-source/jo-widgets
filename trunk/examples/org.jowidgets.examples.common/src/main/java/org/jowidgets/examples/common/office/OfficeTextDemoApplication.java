@@ -100,7 +100,7 @@ public final class OfficeTextDemoApplication implements IApplication {
 		officeControl.addDirtyStateListener(new IChangeListener() {
 			@Override
 			public void changed() {
-				setSaveFileButtonEnable(officeControl.getOleControl().getContext().getValue().isDirty());
+				setSaveFileButtonEnable(officeControl.getOleControl().isDirty());
 			}
 		});
 

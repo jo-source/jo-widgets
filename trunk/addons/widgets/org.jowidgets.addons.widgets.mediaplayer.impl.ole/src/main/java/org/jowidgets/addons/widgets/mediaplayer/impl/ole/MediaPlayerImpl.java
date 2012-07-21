@@ -35,13 +35,9 @@ import java.net.MalformedURLException;
 import org.jowidgets.addons.widgets.mediaplayer.api.IMediaPlayer;
 import org.jowidgets.addons.widgets.mediaplayer.api.IMediaPlayerSetupBuilder;
 import org.jowidgets.addons.widgets.ole.api.IOleAutomation;
-import org.jowidgets.addons.widgets.ole.api.IOleContext;
 import org.jowidgets.addons.widgets.ole.api.IOleControl;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.Assert;
-import org.jowidgets.util.IMutableValue;
-import org.jowidgets.util.IMutableValueListener;
-import org.jowidgets.util.IValueChangedEvent;
 import org.jowidgets.util.io.FileUtils;
 import org.jowidgets.util.io.ITempFileFactory;
 
@@ -53,63 +49,37 @@ class MediaPlayerImpl extends ControlWrapper implements IMediaPlayer {
 	private static final String METHOD_CLOSE = "close";
 	private static final String WM_PLAYER_PROG_ID = "WMPlayer.OCX";
 
-	private final IMutableValue<IOleContext> mutableOleContext;
 	private final ITempFileFactory tempFileFactory;
-
-	private String url;
 	private File tmpFile;
 
 	public MediaPlayerImpl(final IOleControl oleControl, final IMediaPlayerSetupBuilder<?> setup) {
 		super(oleControl);
-		this.mutableOleContext = oleControl.getContext();
+
 		this.tempFileFactory = setup.getTempFileFactory();
-		oleControl.getContext().addMutableValueListener(new IMutableValueListener<IOleContext>() {
-			@Override
-			public void changed(final IValueChangedEvent<IOleContext> event) {
-				oleContextChanged(event);
-			}
-		});
-		oleContextChanged(null);
+		oleControl.setDocument(WM_PLAYER_PROG_ID);
 	}
 
-	private void oleContextChanged(final IValueChangedEvent<IOleContext> event) {
-		final IOleContext oleContext = mutableOleContext.getValue();
-		if (oleContext != null) {
-			oleContext.setDocument(WM_PLAYER_PROG_ID);
-			if (url != null) {
-				open(url);
-			}
-		}
-		else if (event != null && event.getOldValue() != null) {
-			final IOleAutomation controls = (IOleAutomation) event.getOldValue().getAutomation().getProperty(PROPERTY_CONTROLS);
-			controls.invoke(METHOD_STOP);
-			event.getOldValue().getAutomation().invoke(METHOD_CLOSE);
-			controls.dispose();
-		}
+	@Override
+	protected IOleControl getWidget() {
+		return (IOleControl) super.getWidget();
 	}
 
 	@Override
 	public void clear() {
-		url = null;
-		final IOleContext oleContext = mutableOleContext.getValue();
-		if (oleContext != null) {
-			final IOleAutomation controls = (IOleAutomation) oleContext.getAutomation().getProperty("controls");
-			controls.invoke("stop");
-			oleContext.getAutomation().invoke(METHOD_CLOSE);
-			oleContext.setDocument(WM_PLAYER_PROG_ID);
-			controls.dispose();
-		}
+		final IOleControl oleControl = getWidget();
+		final IOleAutomation controls = oleControl.getAutomation().getProperty("controls");
+		controls.invoke("stop");
+		oleControl.getAutomation().invoke(METHOD_CLOSE);
+		oleControl.setDocument(WM_PLAYER_PROG_ID);
+		controls.dispose();
+
 		deleteTempFile();
 	}
 
 	@Override
 	public void open(final String url) {
 		Assert.paramNotNull(url, "url");
-		this.url = url;
-		final IOleContext oleContext = mutableOleContext.getValue();
-		if (oleContext != null) {
-			oleContext.getAutomation().setProperty(PROPERTY_URL, url);
-		}
+		getWidget().getAutomation().setProperty(PROPERTY_URL, url);
 	}
 
 	@Override
@@ -135,7 +105,11 @@ class MediaPlayerImpl extends ControlWrapper implements IMediaPlayer {
 
 	@Override
 	public void dispose() {
-		url = null;
+		final IOleControl oleControl = getWidget();
+		final IOleAutomation controls = oleControl.getAutomation().getProperty(PROPERTY_CONTROLS);
+		controls.invoke(METHOD_STOP);
+		oleControl.getAutomation().invoke(METHOD_CLOSE);
+		controls.dispose();
 		deleteTempFile();
 		super.dispose();
 	}
