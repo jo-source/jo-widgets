@@ -46,12 +46,11 @@ public interface IOleControl extends IControl {
 
 	boolean isDirty();
 
-	@Override
-	boolean isDisposed();
-
-	//TODO MG add listener stuff
-
 	void execute(OleCommand command, Object in, OleCommandOption... options);
+
+	void addEventListener(int eventID, IOleEventListener listener);
+
+	void removeEventListener(int eventID, IOleEventListener listener);
 
 	IOleAutomation getAutomation();
 

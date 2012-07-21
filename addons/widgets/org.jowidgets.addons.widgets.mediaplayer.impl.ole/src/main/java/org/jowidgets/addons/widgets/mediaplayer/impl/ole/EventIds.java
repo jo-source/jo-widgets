@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann, waheckma
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,26 +26,26 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.mediaplayer.api;
+package org.jowidgets.addons.widgets.mediaplayer.impl.ole;
 
-import java.io.File;
-import java.io.InputStream;
+final class EventIds {
 
-import org.jowidgets.api.widgets.IControl;
+	static final int OPEN_STATE_CHANGE = 0x00001389;//void OpenStateChange(int NewState);
+	static final int PLAY_STATE_CHANGE = 0x000013ED;//void PlayStateChange(int NewState);
+	static final int POSITION_CHANGE = 0x00001452;//void PositionChange(double oldPosition, double newPosition);
+	static final int END_OF_STREAM = 0x00001451;// void EndOfStream(int Result);
 
-public interface IMediaPlayer extends IControl {
+	static final int STATUS_CHANGE = 0x0000138A;//void StatusChange(); 
+	static final int MEDIA_CHANGE = 0x000016AA;// void MediaChange(IDispatch Item);
+	static final int CURRENT_MEDIA_ITEM_AVAILABLE = 0x000016AB;// void CurrentMediaItemAvailable(wchar* bstrItemName);
+	static final int MARKER_HIT = 0x00001453;// void MarkerHit(int MarkerNum);
+	static final int DURATION_UNIT_CHANGE = 0x00001454;//void DurationUnitChange(int NewDurationUnit); 
+	static final int AUDIO_LANGUAGE_CHANGE = 0x000013EE;//void AudioLanguageChange(int LangID);
 
-	void clear();
+	static final int ERROR = 0x0000157D;//void Error();
+	static final int MEDIA_ERROR = 0x000016BD;//void MediaError(IDispatch pMediaObject);
+	static final int WARNING = 0x000015E1;//void Warning(final int WarningType, final int Param, wchar* Description);
 
-	void open(String url);
-
-	void open(File file);
-
-	void open(InputStream inputStream);
-
-	/**
-	 * @return The play position of the current media in milliseconds
-	 */
-	long getCurrentPosition();
+	private EventIds() {}
 
 }

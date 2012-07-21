@@ -36,6 +36,12 @@ public interface IOleAutomation {
 
 	<RESULT_TYPE> RESULT_TYPE getProperty(String propertyName, Object... parameter);
 
+	void addEventListener(int eventID, IOleEventListener listener);
+
+	void removeEventListener(int eventID, IOleEventListener listener);
+
+	String getTypeInfo();
+
 	void dispose();
 
 }
