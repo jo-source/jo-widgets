@@ -148,7 +148,6 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 	@Override
 	public void removeDocumentChangeListener(final IChangeListener changeListener) {
 		documentChangeObservable.removeChangeListener(changeListener);
-
 	}
 
 	private File createTempFile() {

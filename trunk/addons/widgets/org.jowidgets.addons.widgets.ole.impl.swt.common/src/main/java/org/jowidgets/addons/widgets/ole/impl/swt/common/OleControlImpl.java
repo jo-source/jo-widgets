@@ -30,7 +30,12 @@ package org.jowidgets.addons.widgets.ole.impl.swt.common;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.swt.SWT;
@@ -42,13 +47,17 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.ole.win32.OLE;
 import org.eclipse.swt.ole.win32.OleAutomation;
 import org.eclipse.swt.ole.win32.OleControlSite;
+import org.eclipse.swt.ole.win32.OleEvent;
 import org.eclipse.swt.ole.win32.OleFrame;
+import org.eclipse.swt.ole.win32.OleListener;
 import org.eclipse.swt.ole.win32.Variant;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.addons.widgets.ole.api.IInvocationParameter;
 import org.jowidgets.addons.widgets.ole.api.IOleAutomation;
 import org.jowidgets.addons.widgets.ole.api.IOleControl;
 import org.jowidgets.addons.widgets.ole.api.IOleControlSetupBuilder;
+import org.jowidgets.addons.widgets.ole.api.IOleEvent;
+import org.jowidgets.addons.widgets.ole.api.IOleEventListener;
 import org.jowidgets.addons.widgets.ole.api.OleCommand;
 import org.jowidgets.addons.widgets.ole.api.OleCommandOption;
 import org.jowidgets.api.widgets.IControl;
@@ -56,13 +65,14 @@ import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.spi.impl.controller.FocusObservable;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.Tuple;
 
 class OleControlImpl extends ControlWrapper implements IOleControl {
 
 	private final FocusObservable focusObservable;
 	private final FocusListenerAdapter focusListenerAdapter;
-
 	private final OleFrame oleFrame;
+	private final OleEventObservable oleEventObservable;
 
 	private OleControlSite oleControlSiteLazy;
 	private OleAutomationImpl oleAutomationLazy;
@@ -71,7 +81,7 @@ class OleControlImpl extends ControlWrapper implements IOleControl {
 	OleControlImpl(final IControl control, final Composite swtComposite, final IOleControlSetupBuilder<?> setup) {
 		super(control);
 		swtComposite.setLayout(new FillLayout());
-
+		this.oleEventObservable = new OleEventObservable();
 		this.oleFrame = new OleFrame(swtComposite, SWT.NONE);
 		this.focusObservable = new FocusObservable();
 		this.focusListenerAdapter = new FocusListenerAdapter();
@@ -119,6 +129,7 @@ class OleControlImpl extends ControlWrapper implements IOleControl {
 			oleControlSiteLazy.addFocusListener(focusListenerAdapter);
 			oleControlSiteLazy.doVerb(OLE.OLEIVERB_INPLACEACTIVATE);
 		}
+		oleEventObservable.setSwtOleControlSite(oleControlSiteLazy);
 	}
 
 	@Override
@@ -162,6 +173,16 @@ class OleControlImpl extends ControlWrapper implements IOleControl {
 	}
 
 	@Override
+	public void addEventListener(final int eventID, final IOleEventListener listener) {
+		oleEventObservable.addEventListener(eventID, listener);
+	}
+
+	@Override
+	public void removeEventListener(final int eventID, final IOleEventListener listener) {
+		oleEventObservable.removeEventListener(eventID, listener);
+	}
+
+	@Override
 	public void addFocusListener(final IFocusListener listener) {
 		focusObservable.addFocusListener(listener);
 	}
@@ -169,6 +190,14 @@ class OleControlImpl extends ControlWrapper implements IOleControl {
 	@Override
 	public void removeFocusListener(final IFocusListener listener) {
 		focusObservable.removeFocusListener(listener);
+	}
+
+	@Override
+	public void setEnabled(final boolean enabled) {
+		if (oleControlSiteLazy != null) {
+			oleControlSiteLazy.setEnabled(enabled);
+		}
+		this.enabled = enabled;
 	}
 
 	private OleControlSite getOleControlSite() {
@@ -381,9 +410,13 @@ class OleControlImpl extends ControlWrapper implements IOleControl {
 	private final class OleAutomationImpl implements IOleAutomation {
 
 		private final OleAutomation oleAutomation;
+		private final OleEventObservable oleEventObservable;
 
 		public OleAutomationImpl(final OleAutomation oleAutomation) {
+			Assert.paramNotNull(oleAutomation, "oleAutomation");
 			this.oleAutomation = oleAutomation;
+			this.oleEventObservable = new OleEventObservable(oleAutomation);
+			this.oleEventObservable.setSwtOleControlSite(getOleControlSite());
 		}
 
 		@SuppressWarnings("unchecked")
@@ -456,19 +489,176 @@ class OleControlImpl extends ControlWrapper implements IOleControl {
 		}
 
 		@Override
+		public void addEventListener(final int eventID, final IOleEventListener listener) {
+			oleEventObservable.addEventListener(eventID, listener);
+		}
+
+		@Override
+		public void removeEventListener(final int eventID, final IOleEventListener listener) {
+			oleEventObservable.removeEventListener(eventID, listener);
+		}
+
+		@Override
+		public String getTypeInfo() {
+			return OleAutomationTypeInfoUtil.getTypeInfo(oleAutomation);
+		}
+
+		@Override
 		public void dispose() {
-			if (oleAutomation != null) {
-				oleAutomation.dispose();
-			}
+			oleEventObservable.dispose();
+			oleAutomation.dispose();
 		}
 	}
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		if (oleControlSiteLazy != null) {
-			oleControlSiteLazy.setEnabled(enabled);
+	final class OleEventObservable {
+
+		private final Map<Integer, Tuple<OleListener, Set<IOleEventListener>>> listenersMap;
+		private final OleAutomation oleAutomation;
+
+		private OleControlSite oleControlSite;
+
+		OleEventObservable() {
+			this(null);
 		}
-		this.enabled = enabled;
+
+		OleEventObservable(final OleAutomation oleAutomation) {
+			this.oleAutomation = oleAutomation;
+			this.listenersMap = new HashMap<Integer, Tuple<OleListener, Set<IOleEventListener>>>();
+		}
+
+		void setSwtOleControlSite(final OleControlSite oleControlSite) {
+			unregisterListners();
+			this.oleControlSite = oleControlSite;
+			for (final Entry<Integer, Tuple<OleListener, Set<IOleEventListener>>> entry : listenersMap.entrySet()) {
+				final int eventId = entry.getKey().intValue();
+				final OleListener oleListener = entry.getValue().getFirst();
+				if (oleControlSite != null) {
+					if (oleAutomation != null) {
+						this.oleControlSite.addEventListener(oleAutomation, eventId, oleListener);
+					}
+					else {
+						this.oleControlSite.addEventListener(eventId, oleListener);
+					}
+				}
+			}
+		}
+
+		void addEventListener(final int eventId, final IOleEventListener listener) {
+			Assert.paramNotNull(listener, "listener");
+			Tuple<OleListener, Set<IOleEventListener>> tuple = listenersMap.get(Integer.valueOf(eventId));
+			if (tuple == null) {
+				final Set<IOleEventListener> listeners = new LinkedHashSet<IOleEventListener>();
+				final OleListenerAdapter listenerAdapter = new OleListenerAdapter(listeners);
+				tuple = new Tuple<OleListener, Set<IOleEventListener>>(listenerAdapter, listeners);
+				listenersMap.put(Integer.valueOf(eventId), tuple);
+				if (this.oleControlSite != null) {
+					if (oleAutomation != null) {
+						this.oleControlSite.addEventListener(oleAutomation, eventId, listenerAdapter);
+					}
+					else {
+						this.oleControlSite.addEventListener(eventId, listenerAdapter);
+					}
+				}
+			}
+			tuple.getSecond().add(listener);
+		}
+
+		void removeEventListener(final int eventId, final IOleEventListener listener) {
+			Assert.paramNotNull(listener, "listener");
+			final Tuple<OleListener, Set<IOleEventListener>> tuple = listenersMap.get(Integer.valueOf(eventId));
+			if (tuple != null) {
+				final Set<IOleEventListener> listners = tuple.getSecond();
+				listners.remove(listener);
+				if (listners.size() == 0) {
+					listenersMap.remove(Integer.valueOf(eventId));
+					if (this.oleControlSite != null) {
+						if (oleAutomation != null) {
+							this.oleControlSite.removeEventListener(oleAutomation, eventId, tuple.getFirst());
+						}
+						else {
+							this.oleControlSite.removeEventListener(eventId, tuple.getFirst());
+						}
+					}
+				}
+			}
+		}
+
+		void unregisterListners() {
+			for (final Entry<Integer, Tuple<OleListener, Set<IOleEventListener>>> entry : listenersMap.entrySet()) {
+				final int eventId = entry.getKey().intValue();
+				final OleListener oleListener = entry.getValue().getFirst();
+				if (oleControlSite != null) {
+					if (oleAutomation != null) {
+						oleControlSite.removeEventListener(oleAutomation, eventId, oleListener);
+					}
+					else {
+						oleControlSite.removeEventListener(eventId, oleListener);
+					}
+				}
+			}
+		}
+
+		void dispose() {
+			unregisterListners();
+			listenersMap.clear();
+		}
+
+		private final class OleListenerAdapter implements OleListener {
+
+			private final Set<IOleEventListener> listeners;
+
+			private OleListenerAdapter(final Set<IOleEventListener> listeners) {
+				this.listeners = listeners;
+			}
+
+			@Override
+			public void handleEvent(final OleEvent event) {
+				for (final IOleEventListener listener : new LinkedList<IOleEventListener>(listeners)) {
+					listener.handleEvent(new OleEventImpl(event));
+				}
+			}
+
+		}
+	}
+
+	private final class OleEventImpl implements IOleEvent {
+
+		private final Object[] arguments;
+
+		private OleEventImpl(final OleEvent event) {
+			final Variant[] variants = event.arguments;
+			if (variants != null) {
+				arguments = new Object[variants.length];
+				for (int i = 0; i < variants.length; i++) {
+					arguments[i] = getVariantResult(variants[i]);
+				}
+			}
+			else {
+				arguments = new Object[0];
+			}
+		}
+
+		@Override
+		public int getArgumentCount() {
+			return arguments.length;
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public <RESULT_TYPE> RESULT_TYPE getArgument(final int nr) {
+			return (RESULT_TYPE) arguments[nr];
+		}
+
+		@Override
+		public Object[] getArguments() {
+			return arguments;
+		}
+
+		@Override
+		public String toString() {
+			return "OleEventImpl [arguments=" + Arrays.toString(arguments) + "]";
+		}
+
 	}
 
 }

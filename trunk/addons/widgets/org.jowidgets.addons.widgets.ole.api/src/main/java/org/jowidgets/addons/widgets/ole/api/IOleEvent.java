@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann, waheckma
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,26 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.mediaplayer.api;
+package org.jowidgets.addons.widgets.ole.api;
 
-import java.io.File;
-import java.io.InputStream;
+public interface IOleEvent {
 
-import org.jowidgets.api.widgets.IControl;
+	int getArgumentCount();
 
-public interface IMediaPlayer extends IControl {
+	<RESULT_TYPE> RESULT_TYPE getArgument(int nr);
 
-	void clear();
-
-	void open(String url);
-
-	void open(File file);
-
-	void open(InputStream inputStream);
-
-	/**
-	 * @return The play position of the current media in milliseconds
-	 */
-	long getCurrentPosition();
+	Object[] getArguments();
 
 }

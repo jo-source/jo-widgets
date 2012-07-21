@@ -73,6 +73,8 @@ final class OfficeControlImpl extends OleDocumentWrapper implements IOfficeContr
 		oleDocument.getOleControl().addFocusListener(new DirtyListener());
 
 		setToolbarVisibility();
+
+		setEnabled(false);
 	}
 
 	private void setToolbarVisibility() {

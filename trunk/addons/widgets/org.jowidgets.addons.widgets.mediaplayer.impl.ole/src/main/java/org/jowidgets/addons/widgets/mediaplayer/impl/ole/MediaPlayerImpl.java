@@ -45,6 +45,7 @@ class MediaPlayerImpl extends ControlWrapper implements IMediaPlayer {
 
 	private static final String PROPERTY_URL = "URL";
 	private static final String PROPERTY_CONTROLS = "controls";
+	private static final String PROPERTY_CURRENT_POSITION = "CurrentPosition";
 	private static final String METHOD_STOP = "stop";
 	private static final String METHOD_CLOSE = "close";
 	private static final String WM_PLAYER_PROG_ID = "WMPlayer.OCX";
@@ -52,9 +53,8 @@ class MediaPlayerImpl extends ControlWrapper implements IMediaPlayer {
 	private final ITempFileFactory tempFileFactory;
 	private File tmpFile;
 
-	public MediaPlayerImpl(final IOleControl oleControl, final IMediaPlayerSetupBuilder<?> setup) {
+	MediaPlayerImpl(final IOleControl oleControl, final IMediaPlayerSetupBuilder<?> setup) {
 		super(oleControl);
-
 		this.tempFileFactory = setup.getTempFileFactory();
 		oleControl.setDocument(WM_PLAYER_PROG_ID);
 	}
@@ -67,8 +67,8 @@ class MediaPlayerImpl extends ControlWrapper implements IMediaPlayer {
 	@Override
 	public void clear() {
 		final IOleControl oleControl = getWidget();
-		final IOleAutomation controls = oleControl.getAutomation().getProperty("controls");
-		controls.invoke("stop");
+		final IOleAutomation controls = oleControl.getAutomation().getProperty(PROPERTY_CONTROLS);
+		controls.invoke(METHOD_STOP);
 		oleControl.getAutomation().invoke(METHOD_CLOSE);
 		oleControl.setDocument(WM_PLAYER_PROG_ID);
 		controls.dispose();
@@ -80,6 +80,17 @@ class MediaPlayerImpl extends ControlWrapper implements IMediaPlayer {
 	public void open(final String url) {
 		Assert.paramNotNull(url, "url");
 		getWidget().getAutomation().setProperty(PROPERTY_URL, url);
+		//TODO MG enhance player with more media lifecycle methods
+		//		getWidget().getAutomation().addEventListener(EventIds.MEDIA_CHANGE, new IOleEventListener() {
+		//			@Override
+		//			public void handleEvent(final IOleEvent event) {
+		//				final IOleAutomation media = getWidget().getAutomation().getProperty("currentMedia");
+		//				final Double duration = media.getProperty("duration");
+		//CHECKSTYLE:OFF
+		//				System.out.println("Duration: " + duration / 60 + "Minutes");
+		//CHECKSTYLE:ON
+		//			}
+		//		});
 	}
 
 	@Override
@@ -101,6 +112,18 @@ class MediaPlayerImpl extends ControlWrapper implements IMediaPlayer {
 		FileUtils.inputStreamToFile(inputStream, tmp);
 		open(tmp);
 		tmpFile = tmp;
+	}
+
+	@Override
+	public long getCurrentPosition() {
+		final IOleAutomation controls = getWidget().getAutomation().getProperty(PROPERTY_CONTROLS);
+		if (controls != null) {
+			final Double result = controls.getProperty(PROPERTY_CURRENT_POSITION);
+			if (result != null) {
+				return (long) (result * 1000d);
+			}
+		}
+		return -1;
 	}
 
 	@Override
