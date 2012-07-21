@@ -42,12 +42,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.spi.impl.bridge.swt.awt.common.awt.PeerObservablePanel.IPeerListener;
 import org.jowidgets.spi.impl.swing.common.widgets.SwingControl;
-import org.jowidgets.util.IMutableValue;
-import org.jowidgets.util.MutableValue;
 
 class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 
-	private final MutableValue<Composite> mutableValue;
 	private final Shell backboneShell;
 	private final Composite composite;
 
@@ -66,7 +63,6 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 		this.backboneShell.setLayout(new FillLayout());
 		this.composite = new Composite(backboneShell, SWT.NONE);
 		this.composite.setLayout(new FillLayout());
-		this.mutableValue = new MutableValue<Composite>(composite);
 
 		getUiReference().setLayout(new BorderLayout());
 		getUiReference().addPeerListener(new IPeerListener() {
@@ -132,8 +128,8 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 	}
 
 	@Override
-	public IMutableValue<Composite> getSwtComposite() {
-		return mutableValue;
+	public Composite getSwtComposite() {
+		return composite;
 	}
 
 	@Override

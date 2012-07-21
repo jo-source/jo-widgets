@@ -28,11 +28,8 @@
 
 package org.jowidgets.addons.widgets.browser.impl.swt;
 
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.swt.SWT;
@@ -52,121 +49,53 @@ import org.jowidgets.addons.widgets.browser.api.IBrowserLocationListener;
 import org.jowidgets.addons.widgets.browser.api.IBrowserProgressListener;
 import org.jowidgets.addons.widgets.browser.api.IBrowserSetupBuilder;
 import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.spi.impl.swt.common.color.ColorCache;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.Assert;
-import org.jowidgets.util.IMutableValue;
-import org.jowidgets.util.IMutableValueListener;
-import org.jowidgets.util.IValueChangedEvent;
-import org.jowidgets.util.Tuple;
 
 class BrowserImpl extends ControlWrapper implements IBrowser {
-
-	private final Boolean initialVisiblityState;
-	private final IColorConstant initialBackgroundColor;
-	private final IColorConstant initialForegroundColor;
 
 	private final Set<IBrowserLocationListener> locationListeners;
 	private final Set<IBrowserProgressListener> progressListeners;
 
-	private final Map<String, Tuple<IBrowserFunction, BrowserFunctionHandle>> browserFunctions;
+	private final Browser swtBrowser;
 
-	private final boolean border;
-
-	private Browser swtBrowser;
-	private String url;
-	private String html;
-
-	BrowserImpl(final IControl control, final IMutableValue<Composite> swtCompositeValue, final IBrowserSetupBuilder<?> setup) {
+	BrowserImpl(final IControl control, final Composite swtComposite, final IBrowserSetupBuilder<?> setup) {
 		super(control);
-
-		this.border = setup.hasBorder();
-		this.initialVisiblityState = setup.isVisible();
-		this.initialBackgroundColor = setup.getBackgroundColor();
-		this.initialForegroundColor = setup.getForegroundColor();
 
 		this.locationListeners = new LinkedHashSet<IBrowserLocationListener>();
 		this.progressListeners = new LinkedHashSet<IBrowserProgressListener>();
-		this.browserFunctions = new LinkedHashMap<String, Tuple<IBrowserFunction, BrowserFunctionHandle>>();
 
-		swtCompositeValue.addMutableValueListener(new IMutableValueListener<Composite>() {
-			@Override
-			public void changed(final IValueChangedEvent<Composite> event) {
-				swtCompositeChanged(event.getSource());
-			}
-		});
-
-		swtCompositeChanged(swtCompositeValue);
-	}
-
-	private void swtCompositeChanged(final IMutableValue<Composite> swtCompositeValue) {
-		if (swtCompositeValue.getValue() != null) {
-			swtBrowser = createSwtBrowser(swtCompositeValue.getValue());
-		}
-		else {
-			swtBrowser = null;
-		}
-	}
-
-	final Browser getSwtBrowser() {
-		if (swtBrowser == null) {
-			throw new IllegalStateException("The browser is not initialized.");
-		}
-		return swtBrowser;
-	}
-
-	Browser createSwtBrowser(final Composite swtComposite) {
 		final Composite content;
-		if (border) {
+		if (setup.hasBorder()) {
 			swtComposite.setLayout(new FillLayout());
 			content = new Composite(swtComposite, SWT.BORDER);
 		}
 		else {
 			content = swtComposite;
 		}
-
 		content.setLayout(new FillLayout());
-		final Browser result = new Browser(content, SWT.NONE);
 
-		if (initialVisiblityState != null) {
-			setVisible(initialVisiblityState.booleanValue());
+		this.swtBrowser = new Browser(content, SWT.NONE);
+		swtBrowser.addLocationListener(new LocationListenerImpl());
+		swtBrowser.addProgressListener(new ProgressListenerImpl());
+
+		if (setup.isVisible() != null) {
+			setVisible(setup.isVisible().booleanValue());
 		}
 
-		if (initialBackgroundColor != null) {
-			result.setBackground(ColorCache.getInstance().getColor(initialBackgroundColor));
+		if (setup.getBackgroundColor() != null) {
+			swtBrowser.setBackground(ColorCache.getInstance().getColor(setup.getBackgroundColor()));
 		}
 
-		if (initialForegroundColor != null) {
-			result.setForeground(ColorCache.getInstance().getColor(initialForegroundColor));
+		if (setup.getForegroundColor() != null) {
+			swtBrowser.setForeground(ColorCache.getInstance().getColor(setup.getForegroundColor()));
 		}
+	}
 
-		result.addLocationListener(new LocationListenerImpl());
-		result.addProgressListener(new ProgressListenerImpl());
-
-		for (final Entry<String, Tuple<IBrowserFunction, BrowserFunctionHandle>> entry : browserFunctions.entrySet()) {
-			final BrowserFunctionHandle handle = entry.getValue().getSecond();
-			if (!handle.isDisposed()) {
-				final IBrowserFunction function = entry.getValue().getFirst();
-				final BrowserFunction browserFunction = new BrowserFunction(result, entry.getKey()) {
-					@Override
-					public Object function(final Object[] arguments) {
-						return function.invoke(arguments);
-					}
-				};
-				handle.setBrowserFunction(browserFunction);
-			}
-		}
-
-		if (url != null) {
-			result.setUrl(url);
-		}
-		else if (html != null) {
-			result.setText(html);
-		}
-
-		return result;
+	final Browser getSwtBrowser() {
+		return swtBrowser;
 	}
 
 	@Override
@@ -174,12 +103,8 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 		if (url == null) {
 			url = "";
 		}
-		this.html = null;
-		this.url = url;
-		if (isInitialized()) {
-			getSwtBrowser().setText("");
-			getSwtBrowser().setUrl(url);
-		}
+		swtBrowser.setText("");
+		swtBrowser.setUrl(url);
 	}
 
 	@Override
@@ -187,42 +112,27 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 		if (html == null) {
 			html = "";
 		}
-		this.url = null;
-		this.html = html;
-		if (isInitialized()) {
-			getSwtBrowser().setUrl("");
-			getSwtBrowser().setText(html);
-		}
+		swtBrowser.setUrl("");
+		swtBrowser.setText(html);
 	}
 
 	@Override
 	public final Object evaluateScript(final String javaScript) {
 		Assert.paramNotNull(javaScript, "javaScript");
-		return getSwtBrowser().evaluate(javaScript);
+		return swtBrowser.evaluate(javaScript);
 	}
 
 	@Override
 	public final boolean executeScript(final String javaScript) {
 		Assert.paramNotNull(javaScript, "javaScript");
-		return getSwtBrowser().execute(javaScript);
+		return swtBrowser.execute(javaScript);
 	}
 
 	@Override
 	public IBrowserFunctionHandle createBrowserFunction(final String functionName, final IBrowserFunction function) {
 		Assert.paramNotEmpty(functionName, "functionName");
 		Assert.paramNotNull(function, "function");
-
-		final BrowserFunctionHandle functionHandle = new BrowserFunctionHandle(functionName);
-		Tuple<IBrowserFunction, BrowserFunctionHandle> tuple;
-		tuple = new Tuple<IBrowserFunction, BrowserFunctionHandle>(function, functionHandle);
-		browserFunctions.put(functionName, tuple);
-
-		if (isInitialized()) {
-			final BrowserFunction browserFunction = new BrowserFunctionAdapter(getSwtBrowser(), functionName, function);
-			functionHandle.setBrowserFunction(browserFunction);
-		}
-
-		return functionHandle;
+		return new BrowserFunctionHandle(functionName, new BrowserFunctionAdapter(getSwtBrowser(), functionName, function));
 	}
 
 	@Override
@@ -247,18 +157,6 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 	public final void removeProgressListener(final IBrowserProgressListener listener) {
 		Assert.paramNotNull(listener, "listener");
 		progressListeners.remove(listener);
-	}
-
-	final boolean isInitialized() {
-		return swtBrowser != null;
-	}
-
-	String getUrl() {
-		return url;
-	}
-
-	String getHtml() {
-		return html;
 	}
 
 	private final class LocationListenerImpl implements LocationListener {
@@ -341,41 +239,21 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 	private final class BrowserFunctionHandle implements IBrowserFunctionHandle {
 
 		private final String functionName;
-
-		private BrowserFunction browserFunction;
-		private Boolean disposed;
-
-		private BrowserFunctionHandle(final String functionName) {
-			this(functionName, null);
-		}
+		private final BrowserFunction browserFunction;
 
 		private BrowserFunctionHandle(final String functionName, final BrowserFunction browserFunction) {
 			this.functionName = functionName;
 			this.browserFunction = browserFunction;
 		}
 
-		private void setBrowserFunction(final BrowserFunction browserFunction) {
-			this.browserFunction = browserFunction;
-		}
-
 		@Override
 		public void dispose() {
-			if (browserFunction != null) {
-				browserFunction.dispose();
-			}
-			else {
-				disposed = Boolean.TRUE;
-			}
+			browserFunction.dispose();
 		}
 
 		@Override
 		public boolean isDisposed() {
-			if (browserFunction != null) {
-				return browserFunction.isDisposed();
-			}
-			else {
-				return disposed != null && disposed.booleanValue();
-			}
+			return browserFunction.isDisposed();
 		}
 
 		@Override

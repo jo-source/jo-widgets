@@ -34,36 +34,20 @@ import org.jowidgets.addons.widgets.browser.api.IBrowserBluePrint;
 import org.jowidgets.addons.widgets.browser.api.IMainBrowser;
 import org.jowidgets.addons.widgets.browser.api.IMainBrowserBluePrint;
 import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.util.IMutableValue;
-import org.jowidgets.util.MutableValue;
 
 public final class SwtBrowserFactory {
 
 	private SwtBrowserFactory() {}
 
 	public static IBrowser createBrowser(final IControl control, final Composite swtComposite, final IBrowserBluePrint bluePrint) {
-		return createBrowser(control, new MutableValue<Composite>(swtComposite), bluePrint);
+		return new BrowserImpl(control, swtComposite, bluePrint);
 	}
 
 	public static IMainBrowser createMainBrowser(
 		final IControl control,
 		final Composite swtComposite,
 		final IMainBrowserBluePrint bluePrint) {
-		return createMainBrowser(control, new MutableValue<Composite>(swtComposite), bluePrint);
-	}
-
-	public static IMainBrowser createMainBrowser(
-		final IControl control,
-		final IMutableValue<Composite> swtComposite,
-		final IMainBrowserBluePrint bluePrint) {
 		return new MainBrowserImpl(control, swtComposite, bluePrint);
-	}
-
-	public static IBrowser createBrowser(
-		final IControl control,
-		final IMutableValue<Composite> swtComposite,
-		final IBrowserBluePrint bluePrint) {
-		return new BrowserImpl(control, swtComposite, bluePrint);
 	}
 
 }
