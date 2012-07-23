@@ -499,6 +499,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 				}
 				table.select(newSelection);
 			}
+			onSelectionChanged();
 		}
 	}
 
@@ -655,6 +656,11 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		toolTip.setVisible(true);
 	}
 
+	private void onSelectionChanged() {
+		dataModel.setSelection(getSelection());
+		tableSelectionObservable.fireSelectionChanged();
+	}
+
 	private static int getStyle(final ITableSetupSpi setup) {
 		int result = SWT.VIRTUAL;
 
@@ -680,7 +686,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 	//This listener fixes Bug 50163 by using workaround from comment 13
 	//(Visited url: https://bugs.eclipse.org/bugs/show_bug.cgi?id=50163)
-	final class EraseItemListener implements Listener {
+	private final class EraseItemListener implements Listener {
 		@Override
 		public void handleEvent(final Event event) {
 			if ((event.detail & SWT.SELECTED) != 0 || (event.detail & SWT.HOT) != 0) {
@@ -707,7 +713,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		}
 	}
 
-	final class DataListener implements Listener {
+	private final class DataListener implements Listener {
 		@Override
 		public void handleEvent(final Event event) {
 			final TableItem item = (TableItem) event.item;
@@ -747,7 +753,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		}
 	}
 
-	final class TableCellListener extends MouseAdapter {
+	private final class TableCellListener extends MouseAdapter {
 		@Override
 		public void mouseUp(final MouseEvent e) {
 			final ITableCellMouseEvent mouseEvent = getMouseEvent(e, 1);
@@ -799,7 +805,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		}
 	}
 
-	final class TableEditListener extends MouseAdapter {
+	private final class TableEditListener extends MouseAdapter {
 
 		@Override
 		public void mouseDoubleClick(final MouseEvent e) {
@@ -884,7 +890,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		}
 	}
 
-	final class TableMenuDetectListener implements MenuDetectListener {
+	private final class TableMenuDetectListener implements MenuDetectListener {
 
 		@Override
 		public void menuDetected(final MenuDetectEvent e) {
@@ -948,7 +954,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		}
 	}
 
-	final class ColumnSelectionListener extends SelectionAdapter {
+	private final class ColumnSelectionListener extends SelectionAdapter {
 		@Override
 		public void widgetSelected(final SelectionEvent e) {
 			final TableColumn column = (TableColumn) e.widget;
@@ -960,7 +966,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		}
 	}
 
-	final class ColumnControlListener implements ControlListener {
+	private final class ColumnControlListener implements ControlListener {
 
 		private long lastResizeTime = 0;
 
@@ -1003,15 +1009,14 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		}
 	}
 
-	final class TableSelectionListener extends SelectionAdapter {
+	private final class TableSelectionListener extends SelectionAdapter {
 		@Override
 		public void widgetSelected(final SelectionEvent e) {
-			dataModel.setSelection(getSelection());
-			tableSelectionObservable.fireSelectionChanged();
+			onSelectionChanged();
 		}
 	}
 
-	final class TableModelListener implements ITableDataModelListener {
+	private final class TableModelListener implements ITableDataModelListener {
 
 		@Override
 		public void rowsAdded(final int[] rowIndices) {
@@ -1048,7 +1053,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 	}
 
-	final class TableColumnModelListener implements ITableColumnModelListener {
+	private final class TableColumnModelListener implements ITableColumnModelListener {
 
 		@Override
 		public void columnsAdded(final int[] columnIndices) {
@@ -1091,7 +1096,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 	}
 
-	final class CellIndices {
+	private final class CellIndices {
 
 		private final int rowIndex;
 		private final int columnIndex;
@@ -1111,7 +1116,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		}
 	}
 
-	final class ToolTipListener implements Listener {
+	private final class ToolTipListener implements Listener {
 
 		@Override
 		public void handleEvent(final Event event) {
