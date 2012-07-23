@@ -116,7 +116,9 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 	}
 
 	private void onPeerRemoved() {
-		composite.setParent(backboneShell);
+		if (!composite.isDisposed()) {
+			composite.setParent(backboneShell);
+		}
 		tryToDispose(bridgeShell);
 		bridgeShell = null;
 		initialized = false;
