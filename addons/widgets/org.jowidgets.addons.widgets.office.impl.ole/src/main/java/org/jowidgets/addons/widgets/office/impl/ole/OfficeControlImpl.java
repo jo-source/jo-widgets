@@ -73,8 +73,6 @@ final class OfficeControlImpl extends OleDocumentWrapper implements IOfficeContr
 		oleDocument.getOleControl().addFocusListener(new DirtyListener());
 
 		setToolbarVisibility();
-
-		setEnabled(false);
 	}
 
 	private void setToolbarVisibility() {
@@ -151,10 +149,15 @@ final class OfficeControlImpl extends OleDocumentWrapper implements IOfficeContr
 			uiThreadAccess.invokeLater(new Runnable() {
 				@Override
 				public void run() {
-					final boolean newDirtyState = getOleControl().isDirty();
-					if (currentDirtyState != newDirtyState) {
-						currentDirtyState = newDirtyState;
-						dirtyStateChangeObservable.fireChangedEvent();
+					if (isDisposed()) {
+						dirtyCheckSchedule.cancel(true);
+					}
+					else {
+						final boolean newDirtyState = getOleControl().isDirty();
+						if (currentDirtyState != newDirtyState) {
+							currentDirtyState = newDirtyState;
+							dirtyStateChangeObservable.fireChangedEvent();
+						}
 					}
 				}
 			});
