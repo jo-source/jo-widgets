@@ -32,6 +32,12 @@
         <value>0.15.0-20120724.131649-1</value>
         <updated>20120724131649</updated>
       </snapshotVersion>
+      <snapshotVersion>
+        <classifier>p2artifacts</classifier>
+        <extension>xml</extension>
+        <value>0.15.0-20120724.131649-1</value>
+        <updated>20120724131649</updated>
+      </snapshotVersion>
     </snapshotVersions>
   </versioning>
 </metadata>
