@@ -34,6 +34,11 @@ import org.jowidgets.common.image.IImageConstant;
 public abstract class AbstractObjectLabelConverter<FROM_TYPE> implements IObjectLabelConverter<FROM_TYPE> {
 
 	@Override
+	public String convertToString(final FROM_TYPE value) {
+		return null;
+	}
+
+	@Override
 	public String getDescription(final FROM_TYPE value) {
 		return null;
 	}
