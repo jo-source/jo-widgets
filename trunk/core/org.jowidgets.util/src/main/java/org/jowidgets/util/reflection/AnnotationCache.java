@@ -35,10 +35,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.Tuple;
 
+@SuppressWarnings({"unchecked", "rawtypes"})
 public final class AnnotationCache {
 
-	private static final Map<Class<?>, List<Annotation>> ANNOTATIONS_CACHE = new ConcurrentHashMap<Class<?>, List<Annotation>>();
+	private static final Map<Tuple<Class, Class>, List<Annotation>> ANNOTATIONS_CACHE = new ConcurrentHashMap<Tuple<Class, Class>, List<Annotation>>();
 
 	private AnnotationCache() {}
 
@@ -54,7 +56,6 @@ public final class AnnotationCache {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public static <ANNOTATION_TYPE extends Annotation> List<ANNOTATION_TYPE> getTypeAnnotationsFromHierarchy(
 		final Class<?> type,
 		final Class<ANNOTATION_TYPE> annotationType) {
@@ -62,10 +63,12 @@ public final class AnnotationCache {
 		Assert.paramNotNull(type, "type");
 		Assert.paramNotNull(annotationType, "annotationType");
 
-		List<ANNOTATION_TYPE> result = (List<ANNOTATION_TYPE>) ANNOTATIONS_CACHE.get(type);
+		final Tuple<Class, Class> key = new Tuple<Class, Class>(type, annotationType);
+
+		List<ANNOTATION_TYPE> result = (List<ANNOTATION_TYPE>) ANNOTATIONS_CACHE.get(key);
 		if (result == null) {
 			result = Collections.unmodifiableList(AnnotationUtils.getTypeAnnotationsFromHierarchy(type, annotationType));
-			ANNOTATIONS_CACHE.put(annotationType, (List<Annotation>) result);
+			ANNOTATIONS_CACHE.put(key, (List<Annotation>) result);
 		}
 
 		return result;
