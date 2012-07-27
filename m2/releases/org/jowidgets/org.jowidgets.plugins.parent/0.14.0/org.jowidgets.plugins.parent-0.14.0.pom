@@ -39,6 +39,8 @@
 	<modules>
 		<module>../org.jowidgets.workbench.impl.rcp</module>
 		<module>../org.jowidgets.workbench.impl.rcp.libs</module>
+		<module>../org.jowidgets.workbench.impl.rcp.feature</module>
+		
 		<module>../org.jowidgets.workbench.impl.rcp.example</module>
 		<module>../org.jowidgets.workbench.impl.rcp.example.feature</module>
 		<module>../org.jowidgets.workbench.impl.rcp.example.application</module>
