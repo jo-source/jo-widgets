@@ -3,8 +3,8 @@
 <artifacts size='2'>
   <artifact classifier='osgi.bundle' id='org.jowidgets.workbench.impl.rcp' version='0.14.0'>
     <properties size='5'>
-      <property name='artifact.size' value='83628'/>
-      <property name='download.size' value='83628'/>
+      <property name='artifact.size' value='83632'/>
+      <property name='download.size' value='83632'/>
       <property name='maven-groupId' value='org.jowidgets'/>
       <property name='maven-artifactId' value='org.jowidgets.workbench.impl.rcp'/>
       <property name='maven-version' value='0.14.0'/>
@@ -12,8 +12,8 @@
   </artifact>
   <artifact classifier='osgi.bundle' id='org.jowidgets.workbench.impl.rcp.source' version='0.14.0'>
     <properties size='6'>
-      <property name='artifact.size' value='54448'/>
-      <property name='download.size' value='54448'/>
+      <property name='artifact.size' value='54450'/>
+      <property name='download.size' value='54450'/>
       <property name='maven-groupId' value='org.jowidgets'/>
       <property name='maven-artifactId' value='org.jowidgets.workbench.impl.rcp'/>
       <property name='maven-version' value='0.14.0'/>
