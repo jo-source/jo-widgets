@@ -4,7 +4,7 @@
 
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.workbench.impl.rcp.feature</artifactId>
-	<name>org.jowidgets.workbench.impl.rcp.example.feature</name>
+	<name>org.jowidgets.workbench.impl.rcp.feature</name>
 	<version>0.15.0-SNAPSHOT</version>
 	<packaging>eclipse-feature</packaging>
 	
