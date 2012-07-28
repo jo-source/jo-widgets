@@ -161,6 +161,12 @@ public class WorkbenchModelBuilder implements IWorkbenchModelBuilder {
 	}
 
 	@Override
+	public IWorkbenchModelBuilder addInitializeCallback(final IWorkbenchInitializeCallback initializeCallback) {
+		this.builder.addInitializeCallback(initializeCallback);
+		return this;
+	}
+
+	@Override
 	public IWorkbenchModelBuilder setViewFactoy(final IViewFactory viewFactory) {
 		this.builder.setViewFactoy(viewFactory);
 		return this;
