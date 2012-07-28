@@ -80,6 +80,10 @@ public class DefaultIconsRegisterService extends ImageConstantRegisterService {
 		registerImage(IconsSmall.EDIT, "edit.png");
 
 		registerImage(IconsSmall.FOLDER, "folder.png");
+		registerImage(IconsSmall.DISK, "disk.png");
+		registerImage(IconsSmall.CANCEL, "cancel.png");
+		registerImage(IconsSmall.REFRESH, "refresh.png");
+		registerImage(IconsSmall.UNDO, "undo.png");
 
 		registerImage(IconsSmall.FILTER, "filter.png");
 		registerImage(IconsSmall.FILTER_INCLUDING, "filter_including.png");
