@@ -33,6 +33,7 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.builder.ITreeSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.common.image.IImageRegistry;
 
 public final class SilkIconsInitializer {
 
@@ -44,8 +45,13 @@ public final class SilkIconsInitializer {
 	}
 
 	public static void initializeFull() {
-		Toolkit.getImageRegistry().registerImageEnum(SilkIcons.class);
-		Toolkit.getImageRegistry().registerImageConstant(IconsSmall.OK, SilkIcons.TICK);
+		final IImageRegistry imageRegistry = Toolkit.getImageRegistry();
+		imageRegistry.registerImageEnum(SilkIcons.class);
+		imageRegistry.registerImageConstant(IconsSmall.OK, SilkIcons.TICK);
+		imageRegistry.registerImageConstant(IconsSmall.DISK, SilkIcons.DISK);
+		imageRegistry.registerImageConstant(IconsSmall.REFRESH, SilkIcons.ARROW_REFRESH);
+		imageRegistry.registerImageConstant(IconsSmall.UNDO, SilkIcons.ARROW_UNDO);
+		imageRegistry.registerImageConstant(IconsSmall.CANCEL, SilkIcons.CANCEL);
 		Toolkit.getBluePrintFactory().addDefaultsInitializer(
 				ITreeBluePrint.class,
 				new IDefaultInitializer<ITreeSetupBuilder<?>>() {
