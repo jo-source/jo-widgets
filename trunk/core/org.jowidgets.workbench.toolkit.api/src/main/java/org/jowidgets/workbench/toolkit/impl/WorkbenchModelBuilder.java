@@ -28,8 +28,11 @@
 
 package org.jowidgets.workbench.toolkit.impl;
 
+import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IToolBarModel;
@@ -41,6 +44,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.util.Assert;
 import org.jowidgets.workbench.api.ICloseCallback;
 import org.jowidgets.workbench.api.ILoginCallback;
+import org.jowidgets.workbench.api.IWorkbenchContext;
 import org.jowidgets.workbench.api.IWorkbenchDescriptor;
 import org.jowidgets.workbench.toolkit.api.IViewFactory;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
@@ -62,13 +66,14 @@ class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder>
 	private IContentCreator statusBarCreator;
 	private ILoginCallback loginCallback;
 	private ICloseCallback closeCallback;
-	private IWorkbenchInitializeCallback initializeCallback;
 	private IViewFactory viewFactory;
 
+	private final Set<IWorkbenchInitializeCallback> initializeCallbacks;
 	private final List<Runnable> shutdownHooks;
 	private final List<IWorkbenchApplicationModel> applications;
 
 	WorkbenchModelBuilder() {
+		this.initializeCallbacks = new LinkedHashSet<IWorkbenchInitializeCallback>();
 		this.applications = new LinkedList<IWorkbenchApplicationModel>();
 		this.shutdownHooks = new LinkedList<Runnable>();
 		this.initialSplitWeight = 0.25;
@@ -162,7 +167,14 @@ class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder>
 
 	@Override
 	public IWorkbenchModelBuilder setInitializeCallback(final IWorkbenchInitializeCallback initializeCallback) {
-		this.initializeCallback = initializeCallback;
+		initializeCallbacks.clear();
+		return addInitializeCallback(initializeCallback);
+	}
+
+	@Override
+	public IWorkbenchModelBuilder addInitializeCallback(final IWorkbenchInitializeCallback initializeCallback) {
+		Assert.paramNotNull(initializeCallback, "initializeCallback");
+		initializeCallbacks.add(initializeCallback);
 		return this;
 	}
 
@@ -238,7 +250,7 @@ class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder>
 			statusBarCreator,
 			loginCallback,
 			closeCallback,
-			initializeCallback,
+			new InitializeCallbackComposite(initializeCallbacks),
 			viewFactory,
 			applications,
 			shutdownHooks);
@@ -246,6 +258,24 @@ class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder>
 
 	private IWorkbenchApplicationModelBuilder applicationBuilder() {
 		return WorkbenchToolkit.getWorkbenchPartBuilderFactory().application();
+	}
+
+	private static final class InitializeCallbackComposite implements IWorkbenchInitializeCallback {
+
+		private final List<IWorkbenchInitializeCallback> callbacks;
+
+		private InitializeCallbackComposite(final Collection<? extends IWorkbenchInitializeCallback> callbacks) {
+			this.callbacks = new LinkedList<IWorkbenchInitializeCallback>(callbacks);
+		}
+
+		@Override
+		public void onContextInitialize(final IWorkbenchModel model, final IWorkbenchContext context) {
+			for (final IWorkbenchInitializeCallback callback : callbacks) {
+				callback.onContextInitialize(model, context);
+			}
+
+		}
+
 	}
 
 }

@@ -66,6 +66,8 @@ public interface IWorkbenchModelBuilder extends IWorkbenchPartBuilder<IWorkbench
 
 	IWorkbenchModelBuilder setInitializeCallback(IWorkbenchInitializeCallback initializeCallback);
 
+	IWorkbenchModelBuilder addInitializeCallback(IWorkbenchInitializeCallback initializeCallback);
+
 	IWorkbenchModelBuilder addShutdownHook(Runnable shutdownHook);
 
 	IWorkbenchModelBuilder addApplication(IWorkbenchApplicationModel applicationModel);
