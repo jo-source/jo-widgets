@@ -74,6 +74,8 @@ public class ButtonImpl extends AbstractButtonSpiWrapper implements IButtonUi, I
 				}
 			}
 		});
+		
+		setTextCache(descriptor.getText());
 	}
 
 	@Override
