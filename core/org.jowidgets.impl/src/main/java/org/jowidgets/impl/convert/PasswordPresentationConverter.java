@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,52 +26,23 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.common.wrapper;
+package org.jowidgets.impl.convert;
 
-import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.widgets.ITextLabelCommon;
-import org.jowidgets.spi.widgets.ITextLabelSpi;
+import org.jowidgets.tools.converter.AbstractObjectStringConverter;
 
-public abstract class AbstractTextLabelSpiWrapper extends AbstractControlSpiWrapper implements ITextLabelCommon {
-
-	private String text;
-
-	public AbstractTextLabelSpiWrapper(final ITextLabelSpi widget) {
-		super(widget);
-	}
+final class PasswordPresentationConverter extends AbstractObjectStringConverter<String> {
 
 	@Override
-	public ITextLabelSpi getWidget() {
-		return (ITextLabelSpi) super.getWidget();
-	}
+	public String convertToString(final String value) {
+		if (value != null) {
+			final StringBuilder result = new StringBuilder();
+			for (int i = 0; i < value.length(); i++) {
+				result.append('\u2022');
+			}
+			return result.toString();
 
-	@Override
-	public void setFontSize(final int size) {
-		getWidget().setFontSize(size);
-	}
-
-	@Override
-	public void setFontName(final String fontName) {
-		getWidget().setFontName(fontName);
-	}
-
-	@Override
-	public void setMarkup(final Markup markup) {
-		getWidget().setMarkup(markup);
-	}
-
-	@Override
-	public void setText(final String text) {
-		this.text = text;
-		getWidget().setText(text);
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	protected void setTextCache(final String text) {
-		this.text = text;
+		}
+		return null;
 	}
 
 }

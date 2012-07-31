@@ -51,6 +51,7 @@ public final class DefaultConverterProvider implements IConverterProvider {
 	private static final Locale DEFAULT_LOCALE = Locale.US;
 
 	private final IObjectStringConverter<Object> toStringConverter;
+	private final IObjectStringConverter<String> passwordPresentationConverter;
 	private final Map<Locale, Map<Class<?>, IConverter<?>>> converters;
 
 	private Map<Locale, IConverter<Date>> defaultDateConverter;
@@ -61,6 +62,7 @@ public final class DefaultConverterProvider implements IConverterProvider {
 
 	public DefaultConverterProvider() {
 		toStringConverter = new DefaultObjectStringConverter();
+		this.passwordPresentationConverter = new PasswordPresentationConverter();
 		converters = new HashMap<Locale, Map<Class<?>, IConverter<?>>>();
 		register(String.class, new DefaultStringConverter());
 
@@ -385,6 +387,11 @@ public final class DefaultConverterProvider implements IConverterProvider {
 	@Override
 	public <OBJECT_TYPE> IObjectStringConverter<OBJECT_TYPE> toStringConverter() {
 		return (IObjectStringConverter<OBJECT_TYPE>) toStringConverter;
+	}
+
+	@Override
+	public IObjectStringConverter<String> passwordPresentationConveter() {
+		return passwordPresentationConverter;
 	}
 
 	private Map<Locale, IConverter<Date>> getDefaultDateConverters() {

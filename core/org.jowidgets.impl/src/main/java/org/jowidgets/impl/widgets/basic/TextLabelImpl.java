@@ -56,6 +56,7 @@ public class TextLabelImpl extends AbstractTextLabelSpiWrapper implements ITextL
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
+		setTextCache(setup.getText());
 	}
 
 	@Override
