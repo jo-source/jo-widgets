@@ -80,9 +80,15 @@ public final class Assert {
 	}
 
 	public static void paramHasType(final Object object, final Class<?> type, final String name) {
-		paramNotNull(object, name);
+		paramNotNull(object, "object");
 		if (!type.isAssignableFrom(object.getClass())) {
-			throw new IllegalArgumentException("The type of the parameter '" + name + "' must be " + type.getName() + "' !");
+			throw new IllegalArgumentException("The type of the parameter '"
+				+ name
+				+ "' must be "
+				+ type.getName()
+				+ "' but is '"
+				+ object.getClass().getName()
+				+ "'!");
 		}
 	}
 
