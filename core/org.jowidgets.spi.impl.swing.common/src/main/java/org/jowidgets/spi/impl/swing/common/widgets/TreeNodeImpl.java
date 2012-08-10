@@ -32,7 +32,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import org.jowidgets.common.color.IColorConstant;
@@ -205,11 +204,21 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 
 	@Override
 	public void removeNode(final int index) {
-		final TreeNode child = node.getChildAt(index);
-		parentTree.getTreeModel().removeNodeFromParent((JoTreeNode) child);
+		final JoTreeNode child = (JoTreeNode) node.getChildAt(index);
 		if (child != null) {
-			parentTree.unRegisterNode((JoTreeNode) child);
+			parentTree.getTreeModel().removeNodeFromParent(child);
+			parentTree.unRegisterNode(child);
+			removeAllChildren(child);
+			child.setParent(null);
 		}
+	}
+
+	private void removeAllChildren(final JoTreeNode treeNode) {
+		for (int i = 0; i < treeNode.getChildCount(); i++) {
+			removeAllChildren((JoTreeNode) treeNode.getChildAt(i));
+		}
+		treeNode.removeAllChildren();
+		treeNode.setParent(null);
 	}
 
 	@Override

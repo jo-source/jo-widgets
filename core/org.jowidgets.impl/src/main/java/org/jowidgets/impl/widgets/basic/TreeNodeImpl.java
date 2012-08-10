@@ -41,17 +41,20 @@ import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.descriptor.ITreeNodeDescriptor;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
+import org.jowidgets.common.widgets.controller.ITreeNodeListener;
 import org.jowidgets.impl.base.delegate.DisposableDelegate;
 import org.jowidgets.impl.base.delegate.PopupMenuCreationDelegate;
 import org.jowidgets.impl.base.delegate.PopupMenuCreationDelegate.IPopupFactory;
 import org.jowidgets.impl.base.delegate.TreeContainerDelegate;
 import org.jowidgets.impl.event.TreePopupEvent;
-import org.jowidgets.impl.widgets.common.wrapper.TreeNodeSpiWrapper;
+import org.jowidgets.impl.widgets.common.wrapper.AbstractTreeNodeSpiWrapper;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
+import org.jowidgets.tools.controller.PopupDetectionObservable;
 import org.jowidgets.tools.controller.TreeNodeAdapter;
+import org.jowidgets.tools.controller.TreeNodeObservable;
 import org.jowidgets.util.EmptyCheck;
 
-public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
+public class TreeNodeImpl extends AbstractTreeNodeSpiWrapper implements ITreeNode {
 
 	private final TreeImpl parentTree;
 	private final TreeNodeImpl parentNode;
@@ -59,6 +62,11 @@ public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
 	private final PopupMenuCreationDelegate popupMenuCreationDelegate;
 	private final IPopupDetectionListener popupListener;
 	private final DisposableDelegate disposableDelegate;
+	private final TreeNodeObservable treeNodeObservable;
+	private final PopupDetectionObservable popupDetectionObservable;
+
+	private final IPopupDetectionListener spiPopupDetectionListener;
+	private final ITreeNodeListener spiTreeNodeListener;
 
 	private IMenuModel popupMenuModel;
 	private IPopupMenu popupMenu;
@@ -74,6 +82,32 @@ public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
 		final ITreeNodeSpi widget,
 		final ITreeNodeDescriptor descriptor) {
 		super(widget);
+
+		this.treeNodeObservable = new TreeNodeObservable();
+		this.popupDetectionObservable = new PopupDetectionObservable();
+
+		this.spiPopupDetectionListener = new IPopupDetectionListener() {
+
+			@Override
+			public void popupDetected(final Position position) {
+				popupDetectionObservable.firePopupDetected(position);
+			}
+		};
+		widget.addPopupDetectionListener(spiPopupDetectionListener);
+
+		this.spiTreeNodeListener = new ITreeNodeListener() {
+
+			@Override
+			public void selectionChanged(final boolean selected) {
+				treeNodeObservable.fireSelectionChanged(selected);
+			}
+
+			@Override
+			public void expandedChanged(final boolean expanded) {
+				treeNodeObservable.fireExpandedChanged(expanded);
+			}
+		};
+		widget.addTreeNodeListener(spiTreeNodeListener);
 
 		this.popupListener = new IPopupDetectionListener() {
 
@@ -141,6 +175,27 @@ public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
 		this.treeContainerDelegate = new TreeContainerDelegate(parentTree, parentNode, this, widget);
 
 		checkIcon();
+
+	}
+
+	@Override
+	public void addTreeNodeListener(final ITreeNodeListener listener) {
+		treeNodeObservable.addTreeNodeListener(listener);
+	}
+
+	@Override
+	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		popupDetectionObservable.addPopupDetectionListener(popupListener);
+	}
+
+	@Override
+	public void removeTreeNodeListener(final ITreeNodeListener listener) {
+		treeNodeObservable.removeTreeNodeListener(listener);
+	}
+
+	@Override
+	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		popupDetectionObservable.removePopupDetectionListener(listener);
 	}
 
 	@Override
@@ -176,6 +231,11 @@ public class TreeNodeImpl extends TreeNodeSpiWrapper implements ITreeNode {
 				popupMenuCreationDelegate.dispose();
 				treeContainerDelegate.dispose();
 				disposableDelegate.dispose();
+				treeNodeObservable.dispose();
+				popupDetectionObservable.dispose();
+
+				getWidget().removePopupDetectionListener(spiPopupDetectionListener);
+				getWidget().removeTreeNodeListener(spiTreeNodeListener);
 			}
 		}
 	}

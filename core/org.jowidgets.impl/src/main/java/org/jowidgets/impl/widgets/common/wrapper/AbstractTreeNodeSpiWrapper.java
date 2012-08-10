@@ -31,39 +31,17 @@ package org.jowidgets.impl.widgets.common.wrapper;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.ITreeNodeCommon;
-import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
-import org.jowidgets.common.widgets.controller.ITreeNodeListener;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
 
-public class TreeNodeSpiWrapper extends ItemSpiWrapper implements ITreeNodeCommon {
+public abstract class AbstractTreeNodeSpiWrapper extends ItemSpiWrapper implements ITreeNodeCommon {
 
-	public TreeNodeSpiWrapper(final ITreeNodeSpi component) {
+	public AbstractTreeNodeSpiWrapper(final ITreeNodeSpi component) {
 		super(component);
 	}
 
 	@Override
 	public ITreeNodeSpi getWidget() {
 		return (ITreeNodeSpi) super.getWidget();
-	}
-
-	@Override
-	public void addTreeNodeListener(final ITreeNodeListener listener) {
-		getWidget().addTreeNodeListener(listener);
-	}
-
-	@Override
-	public void removeTreeNodeListener(final ITreeNodeListener listener) {
-		getWidget().removeTreeNodeListener(listener);
-	}
-
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		getWidget().addPopupDetectionListener(listener);
-	}
-
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		getWidget().removePopupDetectionListener(listener);
 	}
 
 	@Override

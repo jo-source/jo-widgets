@@ -32,6 +32,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.TreeItem;
@@ -80,6 +82,13 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 				this.item = new TreeItem(parentItem, SWT.NONE);
 			}
 		}
+
+		item.addDisposeListener(new DisposeListener() {
+			@Override
+			public void widgetDisposed(final DisposeEvent arg0) {
+				parentTree.unRegisterItem(item);
+			}
+		});
 	}
 
 	@Override

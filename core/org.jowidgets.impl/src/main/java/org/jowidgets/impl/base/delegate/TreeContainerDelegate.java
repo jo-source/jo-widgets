@@ -155,6 +155,7 @@ public class TreeContainerDelegate implements ITreeContainer {
 		//unnecessarily from its parent tree node on dispose invocation
 		children.clear();
 		for (final ITreeNode child : childrenCopy) {
+			parentTree.unRegisterNode((TreeNodeImpl) child);
 			child.dispose();
 		}
 	}

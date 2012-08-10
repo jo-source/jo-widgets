@@ -93,4 +93,9 @@ public class JoTreeNode extends DefaultMutableTreeNode {
 		return foregroundColor;
 	}
 
+	@Override
+	public String toString() {
+		return "JoTreeNode [text=" + text + ", toolTipText=" + toolTipText + "]";
+	}
+
 }

@@ -28,39 +28,47 @@
 
 package org.jowidgets.tools.controller;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.common.widgets.controller.ITreeNodeListener;
 import org.jowidgets.common.widgets.controller.ITreeNodeObservable;
+import org.jowidgets.util.Assert;
 
 public class TreeNodeObservable implements ITreeNodeObservable {
 
 	private final Set<ITreeNodeListener> listeners;
 
 	public TreeNodeObservable() {
-		this.listeners = new HashSet<ITreeNodeListener>();
+		this.listeners = new LinkedHashSet<ITreeNodeListener>();
 	}
 
 	@Override
 	public void addTreeNodeListener(final ITreeNodeListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
 	public void removeTreeNodeListener(final ITreeNodeListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
 	public void fireSelectionChanged(final boolean selected) {
-		for (final ITreeNodeListener listener : listeners) {
+		for (final ITreeNodeListener listener : new LinkedList<ITreeNodeListener>(listeners)) {
 			listener.selectionChanged(selected);
 		}
 	}
 
 	public void fireExpandedChanged(final boolean expanded) {
-		for (final ITreeNodeListener listener : listeners) {
+		for (final ITreeNodeListener listener : new LinkedList<ITreeNodeListener>(listeners)) {
 			listener.expandedChanged(expanded);
 		}
+	}
+
+	public void dispose() {
+		listeners.clear();
 	}
 }
