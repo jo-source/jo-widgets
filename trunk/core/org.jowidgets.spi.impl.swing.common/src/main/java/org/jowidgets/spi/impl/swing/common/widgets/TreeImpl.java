@@ -220,7 +220,11 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 	}
 
 	protected void unRegisterNode(final JoTreeNode joTreeNode) {
+		for (int i = 0; i < joTreeNode.getChildCount(); i++) {
+			unRegisterNode((JoTreeNode) joTreeNode.getChildAt(i));
+		}
 		nodes.remove(joTreeNode);
+		lastSelection.remove(joTreeNode);
 	}
 
 	protected DefaultMutableTreeNode getMutableRootNode() {
