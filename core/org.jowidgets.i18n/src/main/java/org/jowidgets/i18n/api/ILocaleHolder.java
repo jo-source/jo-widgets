@@ -30,17 +30,29 @@ package org.jowidgets.i18n.api;
 
 import java.util.Locale;
 
+/**
+ * Holds the current user locale context.
+ * 
+ * There may be different implementations of this interface, e.g.
+ * 
+ * 1. A static value holder that holds the same user locale for any access
+ * 2. A ThreadLocal value holder, if each thread may have its own user locale (e.g. in eclipse RWT)
+ * 3. A SessionContextLocaleHolder, if each Session has its own user locale
+ * ...
+ * 
+ * The locale holder can be injected with help of java services or set directly on the class {@link LocaleHolder}
+ */
 public interface ILocaleHolder {
 
 	/**
-	 * Gets the current user locale
+	 * Gets the current user locale.
 	 * 
 	 * @return The user locale to get, never null
 	 */
 	Locale getUserLocale();
 
 	/**
-	 * Sets the current user locale
+	 * Sets the current user locale.
 	 * 
 	 * @param userLocale The user locale to set, may be null. If set to null, the default locale will be used
 	 */

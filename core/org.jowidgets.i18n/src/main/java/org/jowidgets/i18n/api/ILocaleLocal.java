@@ -28,8 +28,27 @@
 
 package org.jowidgets.i18n.api;
 
+/**
+ * A LocaleLocal is a variable that may have different values for each locale provided from the LocaleHolder.
+ * (This could be compared with a ThreadLocal, where each thread may have its own value of a variable for each thread)
+ * 
+ * Example: A ILocaleLocale can be used e.g. as a static variable, even if each web session of a web application server
+ * has its own locale provided from the LocaleProvider. For each web session context, a own value will be created.
+ * 
+ * @param <VALUE_TYPE> The type of the object that is hold
+ */
 public interface ILocaleLocal<VALUE_TYPE> {
 
+	/**
+	 * @return The value for the currently set locale provided from the LocaleHolder
+	 */
 	VALUE_TYPE get();
+
+	/**
+	 * Sets the value for the currently set locale provided from the locale LocaleHolder
+	 * 
+	 * @param value The value to set
+	 */
+	void setValue(VALUE_TYPE value);
 
 }
