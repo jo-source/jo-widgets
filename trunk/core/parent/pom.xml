@@ -13,6 +13,7 @@
 
 	<modules>
 	    <module>../org.jowidgets.util</module>
+		<module>../org.jowidgets.i18n</module>
 		<module>../org.jowidgets.validation</module>
 		<module>../org.jowidgets.common</module>
 		<module>../org.jowidgets.api</module>
