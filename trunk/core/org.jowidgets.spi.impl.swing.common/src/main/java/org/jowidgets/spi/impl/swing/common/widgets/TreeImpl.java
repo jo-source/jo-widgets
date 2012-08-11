@@ -102,7 +102,10 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 				final TreePath path = event.getPath();
 				if (path.getLastPathComponent() != mutableRootNode) {
 					final JoTreeNode node = (JoTreeNode) path.getLastPathComponent();
-					nodes.get(node).fireExpandedChanged(true);
+					final TreeNodeImpl treeNodeImpl = nodes.get(node);
+					if (treeNodeImpl != null) {
+						treeNodeImpl.fireExpandedChanged(true);
+					}
 				}
 			}
 
@@ -111,7 +114,10 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 				final TreePath path = event.getPath();
 				if (path.getLastPathComponent() != mutableRootNode) {
 					final JoTreeNode node = (JoTreeNode) path.getLastPathComponent();
-					nodes.get(node).fireExpandedChanged(false);
+					final TreeNodeImpl treeNodeImpl = nodes.get(node);
+					if (treeNodeImpl != null) {
+						treeNodeImpl.fireExpandedChanged(false);
+					}
 				}
 			}
 		});

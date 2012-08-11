@@ -28,22 +28,21 @@
 
 package org.jowidgets.spi.impl.swt.common.util;
 
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import org.jowidgets.i18n.api.IMessage;
+import org.jowidgets.i18n.api.IMessageProvider;
+import org.jowidgets.i18n.api.MessageProvider;
 
-public class Messages {
-	private static final String BUNDLE_NAME = "org.jowidgets.spi.impl.swt.common.util.messages"; //$NON-NLS-1$
+public final class Messages {
 
-	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
+	private static final IMessageProvider MESSAGE_PROVIDER = MessageProvider.create("org.jowidgets.spi.impl.swt.common.util.messages");
 
 	private Messages() {}
 
 	public static String getString(final String key) {
-		try {
-			return RESOURCE_BUNDLE.getString(key);
-		}
-		catch (final MissingResourceException e) {
-			return '!' + key + '!';
-		}
+		return MESSAGE_PROVIDER.getString(key);
+	}
+
+	public static IMessage getMessage(final String key) {
+		return MESSAGE_PROVIDER.getMessage(key);
 	}
 }
