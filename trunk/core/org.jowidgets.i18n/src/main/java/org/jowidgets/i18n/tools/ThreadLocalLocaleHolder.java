@@ -26,12 +26,29 @@
  * DAMAGE.
  */
 
-package org.jowidgets.i18n.api;
+package org.jowidgets.i18n.tools;
 
 import java.util.Locale;
 
-public interface ILocaleProvider {
+import org.jowidgets.i18n.api.ILocaleHolder;
 
-	Locale getUserLocale();
+public class ThreadLocalLocaleHolder implements ILocaleHolder {
+
+	private final ThreadLocal<Locale> locale = new ThreadLocal<Locale>();
+
+	@Override
+	public Locale getUserLocale() {
+		return locale.get();
+	}
+
+	@Override
+	public void setUserLocale(final Locale userLocale) {
+		locale.set(userLocale);
+	}
+
+	@Override
+	public void clearUserLocale() {
+		locale.set(null);
+	}
 
 }

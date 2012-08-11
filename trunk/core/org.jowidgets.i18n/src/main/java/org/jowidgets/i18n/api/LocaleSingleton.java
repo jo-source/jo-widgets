@@ -28,12 +28,40 @@
 
 package org.jowidgets.i18n.api;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
 public final class LocaleSingleton {
 
 	private LocaleSingleton() {}
 
 	public static <VALUE_TYPE> ILocaleSingleton<VALUE_TYPE> create(final IValueFactory<VALUE_TYPE> factory) {
 		return new LocaleSingletonImpl<VALUE_TYPE>(factory);
+	}
+
+	private static final class LocaleSingletonImpl<VALUE_TYPE> implements ILocaleSingleton<VALUE_TYPE> {
+
+		private final IValueFactory<VALUE_TYPE> valueFactory;
+		private final Map<Locale, VALUE_TYPE> values;
+
+		private LocaleSingletonImpl(final IValueFactory<VALUE_TYPE> valueFactory) {
+			Assert.paramNotNull(valueFactory, "valueFactory");
+			this.valueFactory = valueFactory;
+			this.values = new HashMap<Locale, VALUE_TYPE>();
+		}
+
+		@Override
+		public VALUE_TYPE get() {
+			final Locale locale = LocaleHolder.getUserLocale();
+			VALUE_TYPE result = values.get(locale);
+			if (result == null) {
+				result = valueFactory.create();
+				values.put(locale, result);
+			}
+			return result;
+		}
+
 	}
 
 }

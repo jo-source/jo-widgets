@@ -28,55 +28,27 @@
 
 package org.jowidgets.i18n.api;
 
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import java.util.Locale;
 
-final class MessageProviderImpl implements IMessageProvider {
+public interface ILocaleHolder {
 
-	private final String resourceBundleName;
-	private final ILocaleSingleton<LocalizedMessageProvider> messageProviders;
+	/**
+	 * Gets the current user locale
+	 * 
+	 * @return The user locale to get, never null
+	 */
+	Locale getUserLocale();
 
-	MessageProviderImpl(final String resourceBundleName) {
-		Assert.paramNotNull(resourceBundleName, "resourceBundleName");
-		this.resourceBundleName = resourceBundleName;
-		this.messageProviders = LocaleSingleton.create(new MessageProviderFactory());
-	}
+	/**
+	 * Sets the current user locale
+	 * 
+	 * @param userLocale The user locale to set, may be null. If set to null, the default locale will be used
+	 */
+	void setUserLocale(Locale userLocale);
 
-	@Override
-	public String getString(final String key) {
-		return messageProviders.get().getString(key);
-	}
+	/**
+	 * Clears the current user locale
+	 */
+	void clearUserLocale();
 
-	@Override
-	public IMessage getMessage(final String key) {
-		return new MessageImpl(this, key);
-	}
-
-	private final class MessageProviderFactory implements IValueFactory<LocalizedMessageProvider> {
-
-		@Override
-		public LocalizedMessageProvider create() {
-			return new LocalizedMessageProvider(resourceBundleName);
-		}
-
-	}
-
-	private static final class LocalizedMessageProvider {
-
-		private final ResourceBundle resourceBundle;
-
-		private LocalizedMessageProvider(final String resourceBundleName) {
-			this.resourceBundle = ResourceBundle.getBundle(resourceBundleName, LocaleProvider.getUserLocale());
-		}
-
-		private String getString(final String key) {
-			try {
-				return resourceBundle.getString(key);
-			}
-			catch (final MissingResourceException e) {
-				return '!' + key + '!';
-			}
-		}
-
-	}
 }

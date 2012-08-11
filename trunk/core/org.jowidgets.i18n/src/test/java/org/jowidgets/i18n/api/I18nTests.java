@@ -40,78 +40,49 @@ public class I18nTests {
 	@Test
 	public void localeProviderTest() {
 		//if no locale provider is set, the default locale will be returned
-		Assert.assertEquals(Locale.getDefault(), LocaleProvider.getUserLocale());
-
-		//the mutable locale provider has the default locale as default
-		final MutableLocaleProvider localeProvider = new MutableLocaleProvider();
-		LocaleProvider.setInstance(localeProvider);
-		Assert.assertEquals(Locale.getDefault(), LocaleProvider.getUserLocale());
+		Assert.assertEquals(Locale.getDefault(), LocaleHolder.getUserLocale());
 
 		//test changing to canada
-		localeProvider.setUserLocale(Locale.CANADA);
-		Assert.assertEquals(Locale.CANADA, LocaleProvider.getUserLocale());
+		LocaleHolder.setUserLocale(Locale.CANADA);
+		Assert.assertEquals(Locale.CANADA, LocaleHolder.getUserLocale());
 
 		//test changing to german
-		localeProvider.setUserLocale(Locale.GERMAN);
-		Assert.assertEquals(Locale.GERMAN, LocaleProvider.getUserLocale());
+		LocaleHolder.setUserLocale(Locale.GERMAN);
+		Assert.assertEquals(Locale.GERMAN, LocaleHolder.getUserLocale());
 
 		//test resetting the locale provider
-		LocaleProvider.setInstance(null);
-		Assert.assertEquals(Locale.getDefault(), LocaleProvider.getUserLocale());
+		LocaleHolder.clearUserLocale();
+		Assert.assertEquals(Locale.getDefault(), LocaleHolder.getUserLocale());
 	}
 
 	@Test
 	public void messageProviderTest() {
-		final MutableLocaleProvider localeProvider = new MutableLocaleProvider();
-		LocaleProvider.setInstance(localeProvider);
-
-		localeProvider.setUserLocale(Locale.ENGLISH);
+		LocaleHolder.setUserLocale(Locale.ENGLISH);
 		Assert.assertEquals("message1", Messages.getString("I18nTests.message1"));
 		Assert.assertEquals("message2", Messages.getString("I18nTests.message2"));
 
-		localeProvider.setUserLocale(Locale.GERMAN);
+		LocaleHolder.setUserLocale(Locale.GERMAN);
 		Assert.assertEquals("Meldung1", Messages.getString("I18nTests.message1"));
 		Assert.assertEquals("Meldung2", Messages.getString("I18nTests.message2"));
 	}
 
 	@Test
 	public void messageTest() {
-		final MutableLocaleProvider localeProvider = new MutableLocaleProvider();
-		LocaleProvider.setInstance(localeProvider);
-
 		final IMessage message1 = Messages.getMessage("I18nTests.message1");
 		final IMessage message2 = Messages.getMessage("I18nTests.message2");
 
-		localeProvider.setUserLocale(Locale.ENGLISH);
+		LocaleHolder.setUserLocale(Locale.ENGLISH);
 		Assert.assertEquals("message1", message1.get());
 		Assert.assertEquals("message2", message2.get());
 
-		localeProvider.setUserLocale(Locale.GERMAN);
+		LocaleHolder.setUserLocale(Locale.GERMAN);
 		Assert.assertEquals("Meldung1", message1.get());
 		Assert.assertEquals("Meldung2", message2.get());
 	}
 
 	@After
 	public void tearDown() {
-		LocaleProvider.setInstance(null);
+		LocaleHolder.clearUserLocale();
 	}
 
-	private static final class MutableLocaleProvider implements ILocaleProvider {
-
-		private Locale userLocale;
-
-		private MutableLocaleProvider() {
-			this.userLocale = Locale.getDefault();
-		}
-
-		@Override
-		public Locale getUserLocale() {
-			return userLocale;
-		}
-
-		private void setUserLocale(final Locale userLocale) {
-			this.userLocale = userLocale;
-		}
-
-	}
 }
