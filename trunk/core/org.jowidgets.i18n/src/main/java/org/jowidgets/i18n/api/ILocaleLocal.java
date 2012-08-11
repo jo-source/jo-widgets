@@ -28,7 +28,7 @@
 
 package org.jowidgets.i18n.api;
 
-public interface ILocaleSingleton<VALUE_TYPE> {
+public interface ILocaleLocal<VALUE_TYPE> {
 
 	VALUE_TYPE get();
 

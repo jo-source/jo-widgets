@@ -32,7 +32,7 @@ import java.util.Locale;
 
 import org.jowidgets.i18n.api.ILocaleHolder;
 
-public class ThreadLocalLocaleHolder implements ILocaleHolder {
+public final class ThreadLocalLocaleHolder implements ILocaleHolder {
 
 	private final ThreadLocal<Locale> locale = new ThreadLocal<Locale>();
 

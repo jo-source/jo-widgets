@@ -79,8 +79,6 @@ public final class LocaleHolder {
 
 		private Locale userLocale;
 
-		DefaultUserLocaleProvider() {}
-
 		@Override
 		public Locale getUserLocale() {
 			if (userLocale != null) {

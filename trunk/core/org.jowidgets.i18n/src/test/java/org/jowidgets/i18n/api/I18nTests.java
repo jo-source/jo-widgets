@@ -38,7 +38,7 @@ import org.junit.Test;
 public class I18nTests {
 
 	@Test
-	public void localeProviderTest() {
+	public void localeHolderTest() {
 		//if no locale provider is set, the default locale will be returned
 		Assert.assertEquals(Locale.getDefault(), LocaleHolder.getUserLocale());
 
@@ -53,6 +53,68 @@ public class I18nTests {
 		//test resetting the locale provider
 		LocaleHolder.clearUserLocale();
 		Assert.assertEquals(Locale.getDefault(), LocaleHolder.getUserLocale());
+	}
+
+	@Test
+	public void customLocaleHolderTest() {
+		final LocaleHolderMock localeHolderMock = new LocaleHolderMock();
+		LocaleHolder.setInstance(localeHolderMock);
+
+		//test changing to canada
+		LocaleHolder.setUserLocale(Locale.CANADA);
+		Assert.assertEquals(Locale.CANADA, localeHolderMock.getUserLocale());
+		Assert.assertEquals(Locale.CANADA, LocaleHolder.getUserLocale());
+
+		//test changing to german
+		LocaleHolder.setUserLocale(Locale.GERMAN);
+		Assert.assertEquals(Locale.GERMAN, localeHolderMock.getUserLocale());
+		Assert.assertEquals(Locale.GERMAN, LocaleHolder.getUserLocale());
+
+		//test reseting the locale provider
+		LocaleHolder.clearUserLocale();
+		Assert.assertEquals(Locale.getDefault(), localeHolderMock.getUserLocale());
+		Assert.assertEquals(Locale.getDefault(), LocaleHolder.getUserLocale());
+
+		//test changing to canada
+		localeHolderMock.setUserLocale(Locale.CANADA);
+		Assert.assertEquals(Locale.CANADA, localeHolderMock.getUserLocale());
+		Assert.assertEquals(Locale.CANADA, LocaleHolder.getUserLocale());
+
+		//test changing to german
+		localeHolderMock.setUserLocale(Locale.GERMAN);
+		Assert.assertEquals(Locale.GERMAN, localeHolderMock.getUserLocale());
+		Assert.assertEquals(Locale.GERMAN, LocaleHolder.getUserLocale());
+
+		//test reseting the locale provider
+		localeHolderMock.clearUserLocale();
+		Assert.assertEquals(Locale.getDefault(), localeHolderMock.getUserLocale());
+		Assert.assertEquals(Locale.getDefault(), LocaleHolder.getUserLocale());
+	}
+
+	private static final class LocaleHolderMock implements ILocaleHolder {
+
+		private Locale userLocale;
+
+		@Override
+		public Locale getUserLocale() {
+			if (userLocale != null) {
+				return userLocale;
+			}
+			else {
+				return Locale.getDefault();
+			}
+		}
+
+		@Override
+		public void setUserLocale(final Locale userLocale) {
+			this.userLocale = userLocale;
+		}
+
+		@Override
+		public void clearUserLocale() {
+			this.userLocale = null;
+		}
+
 	}
 
 	@Test
@@ -80,9 +142,52 @@ public class I18nTests {
 		Assert.assertEquals("Meldung2", message2.get());
 	}
 
+	@Test
+	public void localeLocalTest() {
+		final ILocaleLocal<IconPath> stopIcon = createLocaleLocal("stop");
+		final ILocaleLocal<IconPath> goIcon = createLocaleLocal("go");
+
+		Assert.assertEquals("icons/default/stop", stopIcon.get().getIconPath());
+		Assert.assertEquals("icons/default/go", goIcon.get().getIconPath());
+
+		LocaleHolder.setUserLocale(Locale.GERMAN);
+		Assert.assertEquals("icons/german/stop", stopIcon.get().getIconPath());
+		Assert.assertEquals("icons/german/go", goIcon.get().getIconPath());
+	}
+
+	private static ILocaleLocal<IconPath> createLocaleLocal(final String pathSuffix) {
+		return LocaleLocal.create(new IValueFactory<IconPath>() {
+			@Override
+			public IconPath create() {
+				return new IconPath(pathSuffix);
+			}
+		});
+	}
+
+	private static final class IconPath {
+
+		private final String iconPathPrefix;
+		private final String iconPathSuffix;
+
+		private IconPath(final String iconPathSuffix) {
+			if (LocaleHolder.getUserLocale().equals(Locale.GERMAN)) {
+				this.iconPathPrefix = "icons/german/";
+			}
+			else {
+				this.iconPathPrefix = "icons/default/";
+			}
+			this.iconPathSuffix = iconPathSuffix;
+		}
+
+		private String getIconPath() {
+			return iconPathPrefix + iconPathSuffix;
+		}
+
+	}
+
 	@After
 	public void tearDown() {
-		LocaleHolder.clearUserLocale();
+		LocaleHolder.setInstance(null);
 	}
 
 }
