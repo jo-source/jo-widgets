@@ -32,20 +32,20 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public final class LocaleSingleton {
+public final class LocaleLocal {
 
-	private LocaleSingleton() {}
+	private LocaleLocal() {}
 
-	public static <VALUE_TYPE> ILocaleSingleton<VALUE_TYPE> create(final IValueFactory<VALUE_TYPE> factory) {
-		return new LocaleSingletonImpl<VALUE_TYPE>(factory);
+	public static <VALUE_TYPE> ILocaleLocal<VALUE_TYPE> create(final IValueFactory<VALUE_TYPE> factory) {
+		return new LocaleLocalImpl<VALUE_TYPE>(factory);
 	}
 
-	private static final class LocaleSingletonImpl<VALUE_TYPE> implements ILocaleSingleton<VALUE_TYPE> {
+	private static final class LocaleLocalImpl<VALUE_TYPE> implements ILocaleLocal<VALUE_TYPE> {
 
 		private final IValueFactory<VALUE_TYPE> valueFactory;
 		private final Map<Locale, VALUE_TYPE> values;
 
-		private LocaleSingletonImpl(final IValueFactory<VALUE_TYPE> valueFactory) {
+		private LocaleLocalImpl(final IValueFactory<VALUE_TYPE> valueFactory) {
 			Assert.paramNotNull(valueFactory, "valueFactory");
 			this.valueFactory = valueFactory;
 			this.values = new HashMap<Locale, VALUE_TYPE>();

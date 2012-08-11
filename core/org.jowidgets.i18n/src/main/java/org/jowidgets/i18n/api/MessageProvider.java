@@ -42,12 +42,12 @@ public final class MessageProvider {
 	private static final class MessageProviderImpl implements IMessageProvider {
 
 		private final String resourceBundleName;
-		private final ILocaleSingleton<LocalizedMessageProvider> messageProviders;
+		private final ILocaleLocal<LocalizedMessageProvider> messageProviders;
 
 		private MessageProviderImpl(final String resourceBundleName) {
 			Assert.paramNotNull(resourceBundleName, "resourceBundleName");
 			this.resourceBundleName = resourceBundleName;
-			this.messageProviders = LocaleSingleton.create(new MessageProviderFactory());
+			this.messageProviders = LocaleLocal.create(new MessageProviderFactory());
 		}
 
 		@Override
