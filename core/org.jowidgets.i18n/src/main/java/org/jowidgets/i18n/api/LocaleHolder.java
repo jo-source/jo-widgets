@@ -28,30 +28,79 @@
 
 package org.jowidgets.i18n.api;
 
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
-import java.util.Map;
+import java.util.ServiceLoader;
 
-final class LocaleSingletonImpl<VALUE_TYPE> implements ILocaleSingleton<VALUE_TYPE> {
+public final class LocaleHolder {
 
-	private final IValueFactory<VALUE_TYPE> valueFactory;
-	private final Map<Locale, VALUE_TYPE> values;
+	private static ILocaleHolder instance;
 
-	LocaleSingletonImpl(final IValueFactory<VALUE_TYPE> valueFactory) {
-		Assert.paramNotNull(valueFactory, "valueFactory");
-		this.valueFactory = valueFactory;
-		this.values = new HashMap<Locale, VALUE_TYPE>();
+	private LocaleHolder() {}
+
+	public static void setInstance(final ILocaleHolder localeProvider) {
+		instance = localeProvider;
 	}
 
-	@Override
-	public VALUE_TYPE get() {
-		final Locale locale = LocaleProvider.getUserLocale();
-		VALUE_TYPE result = values.get(locale);
-		if (result == null) {
-			result = valueFactory.create();
-			values.put(locale, result);
+	public static Locale getUserLocale() {
+		return getInstance().getUserLocale();
+	}
+
+	public static void setUserLocale(final Locale userLocale) {
+		getInstance().setUserLocale(userLocale);
+	}
+
+	public static void clearUserLocale() {
+		getInstance().clearUserLocale();
+	}
+
+	public static synchronized ILocaleHolder getInstance() {
+		if (instance == null) {
+			final ServiceLoader<ILocaleHolder> loader = ServiceLoader.load(ILocaleHolder.class);
+			final Iterator<ILocaleHolder> iterator = loader.iterator();
+
+			if (!iterator.hasNext()) {
+				instance = new DefaultUserLocaleProvider();
+			}
+			else {
+				instance = iterator.next();
+				if (iterator.hasNext()) {
+					throw new IllegalStateException("More than one implementation found for '"
+						+ ILocaleHolder.class.getName()
+						+ "'");
+				}
+			}
+
 		}
-		return result;
+		return instance;
+	}
+
+	private static final class DefaultUserLocaleProvider implements ILocaleHolder {
+
+		private Locale userLocale;
+
+		DefaultUserLocaleProvider() {}
+
+		@Override
+		public Locale getUserLocale() {
+			if (userLocale != null) {
+				return userLocale;
+			}
+			else {
+				return Locale.getDefault();
+			}
+		}
+
+		@Override
+		public void setUserLocale(final Locale userLocale) {
+			this.userLocale = userLocale;
+		}
+
+		@Override
+		public void clearUserLocale() {
+			this.userLocale = null;
+		}
+
 	}
 
 }

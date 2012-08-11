@@ -28,6 +28,9 @@
 
 package org.jowidgets.i18n.api;
 
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
+
 public final class MessageProvider {
 
 	private MessageProvider() {}
@@ -36,4 +39,73 @@ public final class MessageProvider {
 		return new MessageProviderImpl(resourceBundleName);
 	}
 
+	private static final class MessageProviderImpl implements IMessageProvider {
+
+		private final String resourceBundleName;
+		private final ILocaleSingleton<LocalizedMessageProvider> messageProviders;
+
+		private MessageProviderImpl(final String resourceBundleName) {
+			Assert.paramNotNull(resourceBundleName, "resourceBundleName");
+			this.resourceBundleName = resourceBundleName;
+			this.messageProviders = LocaleSingleton.create(new MessageProviderFactory());
+		}
+
+		@Override
+		public String getString(final String key) {
+			return messageProviders.get().getString(key);
+		}
+
+		@Override
+		public IMessage getMessage(final String key) {
+			return new MessageImpl(this, key);
+		}
+
+		private final class MessageProviderFactory implements IValueFactory<LocalizedMessageProvider> {
+
+			@Override
+			public LocalizedMessageProvider create() {
+				return new LocalizedMessageProvider(resourceBundleName);
+			}
+
+		}
+	}
+
+	private static final class LocalizedMessageProvider {
+
+		private final ResourceBundle resourceBundle;
+
+		private LocalizedMessageProvider(final String resourceBundleName) {
+			this.resourceBundle = ResourceBundle.getBundle(resourceBundleName, LocaleHolder.getUserLocale());
+		}
+
+		private String getString(final String key) {
+			try {
+				return resourceBundle.getString(key);
+			}
+			catch (final MissingResourceException e) {
+				return '!' + key + '!';
+			}
+		}
+
+	}
+
+	private static final class MessageImpl implements IMessage {
+
+		private final IMessageProvider messageProvider;
+		private final String key;
+
+		private MessageImpl(final IMessageProvider messageProvider, final String key) {
+			Assert.paramNotNull(messageProvider, "messageProvider");
+			Assert.paramNotEmpty(key, "key");
+
+			this.messageProvider = messageProvider;
+			this.key = key;
+		}
+
+		@Override
+		public String get() {
+			return messageProvider.getString(key);
+		}
+
+	}
 }
