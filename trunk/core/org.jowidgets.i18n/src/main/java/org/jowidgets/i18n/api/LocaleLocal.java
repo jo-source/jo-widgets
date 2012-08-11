@@ -36,6 +36,21 @@ public final class LocaleLocal {
 
 	private LocaleLocal() {}
 
+	public interface IValueFactory<VALUE_TYPE> {
+		VALUE_TYPE create();
+	}
+
+	public static <VALUE_TYPE> ILocaleLocal<VALUE_TYPE> create() {
+		return create(null);
+	}
+
+	/**
+	 * Creates a new LocaleLocal.
+	 * 
+	 * @param factory The factory that will be used to create new values for each different set locale
+	 * 
+	 * @return The new created LocaleLocal object
+	 */
 	public static <VALUE_TYPE> ILocaleLocal<VALUE_TYPE> create(final IValueFactory<VALUE_TYPE> factory) {
 		return new LocaleLocalImpl<VALUE_TYPE>(factory);
 	}
@@ -46,7 +61,6 @@ public final class LocaleLocal {
 		private final Map<Locale, VALUE_TYPE> values;
 
 		private LocaleLocalImpl(final IValueFactory<VALUE_TYPE> valueFactory) {
-			Assert.paramNotNull(valueFactory, "valueFactory");
 			this.valueFactory = valueFactory;
 			this.values = new HashMap<Locale, VALUE_TYPE>();
 		}
@@ -55,11 +69,16 @@ public final class LocaleLocal {
 		public VALUE_TYPE get() {
 			final Locale locale = LocaleHolder.getUserLocale();
 			VALUE_TYPE result = values.get(locale);
-			if (result == null) {
+			if (result == null && valueFactory != null) {
 				result = valueFactory.create();
 				values.put(locale, result);
 			}
 			return result;
+		}
+
+		@Override
+		public void setValue(final VALUE_TYPE value) {
+			values.put(LocaleHolder.getUserLocale(), value);
 		}
 
 	}

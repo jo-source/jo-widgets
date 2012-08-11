@@ -32,6 +32,7 @@ import java.util.Locale;
 
 import junit.framework.Assert;
 
+import org.jowidgets.i18n.api.LocaleLocal.IValueFactory;
 import org.junit.After;
 import org.junit.Test;
 
@@ -144,15 +145,30 @@ public class I18nTests {
 
 	@Test
 	public void localeLocalTest() {
+		//create to icons (stop and go)
 		final ILocaleLocal<IconPath> stopIcon = createLocaleLocal("stop");
 		final ILocaleLocal<IconPath> goIcon = createLocaleLocal("go");
 
+		//check if the default path will be used
 		Assert.assertEquals("icons/default/stop", stopIcon.get().getIconPath());
 		Assert.assertEquals("icons/default/go", goIcon.get().getIconPath());
 
+		//set the locale to german and check if the german path will be used
 		LocaleHolder.setUserLocale(Locale.GERMAN);
 		Assert.assertEquals("icons/german/stop", stopIcon.get().getIconPath());
 		Assert.assertEquals("icons/german/go", goIcon.get().getIconPath());
+
+		//change the path for the currently set locale (german)
+		stopIcon.setValue(new IconPath("stop2"));
+		Assert.assertEquals("icons/german/stop2", stopIcon.get().getIconPath());
+
+		//change the locale back to the default
+		LocaleHolder.clearUserLocale();
+		Assert.assertEquals("icons/default/stop", stopIcon.get().getIconPath());
+
+		//change back the locale to german, check that the value set before was not lost
+		LocaleHolder.setUserLocale(Locale.GERMAN);
+		Assert.assertEquals("icons/german/stop2", stopIcon.get().getIconPath());
 	}
 
 	private static ILocaleLocal<IconPath> createLocaleLocal(final String pathSuffix) {

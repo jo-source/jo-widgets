@@ -38,22 +38,44 @@ public final class LocaleHolder {
 
 	private LocaleHolder() {}
 
+	/**
+	 * The the instance of the value holder. The previously used instance will be overridden.
+	 * 
+	 * @param localeProvider The locale provider to set
+	 */
 	public static void setInstance(final ILocaleHolder localeProvider) {
 		instance = localeProvider;
 	}
 
+	/**
+	 * @return The user locale of the currently set LocaleHolder
+	 */
 	public static Locale getUserLocale() {
 		return getInstance().getUserLocale();
 	}
 
+	/**
+	 * Sets the user locale on the currently set LocaleHolder
+	 * 
+	 * @param userLocale The locale to set, may be null
+	 */
 	public static void setUserLocale(final Locale userLocale) {
 		getInstance().setUserLocale(userLocale);
 	}
 
+	/**
+	 * Clears the user locale on the currently set LocaleHolder
+	 */
 	public static void clearUserLocale() {
 		getInstance().clearUserLocale();
 	}
 
+	/**
+	 * Gets the instance of the currently set value holder. If no value holder was injected before, an
+	 * default implementation will be returned
+	 * 
+	 * @return The currently set value holder
+	 */
 	public static synchronized ILocaleHolder getInstance() {
 		if (instance == null) {
 			final ServiceLoader<ILocaleHolder> loader = ServiceLoader.load(ILocaleHolder.class);

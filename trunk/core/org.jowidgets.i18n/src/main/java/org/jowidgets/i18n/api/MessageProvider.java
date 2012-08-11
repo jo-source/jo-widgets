@@ -31,10 +31,19 @@ package org.jowidgets.i18n.api;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import org.jowidgets.i18n.api.LocaleLocal.IValueFactory;
+
 public final class MessageProvider {
 
 	private MessageProvider() {}
 
+	/**
+	 * Creates a new message provider for a given resource bundle name.
+	 * 
+	 * @param resourceBundleName The resource bundle name to get the message provider for, never empty
+	 * 
+	 * @return The new created message provider
+	 */
 	public static IMessageProvider create(final String resourceBundleName) {
 		return new MessageProviderImpl(resourceBundleName);
 	}

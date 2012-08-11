@@ -28,8 +28,15 @@
 
 package org.jowidgets.i18n.api;
 
+/**
+ * Represents a localized message that will be resolved each time, the get method will be invoked, depending of the currently set
+ * user locale.
+ */
 public interface IMessage {
 
+	/**
+	 * @return The value of the message for the currently set locale provided from the LocaleHolder
+	 */
 	String get();
 
 }
