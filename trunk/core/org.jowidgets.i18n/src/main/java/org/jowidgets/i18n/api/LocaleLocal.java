@@ -28,6 +28,7 @@
 
 package org.jowidgets.i18n.api;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -55,7 +56,9 @@ public final class LocaleLocal {
 		return new LocaleLocalImpl<VALUE_TYPE>(factory);
 	}
 
-	private static final class LocaleLocalImpl<VALUE_TYPE> implements ILocaleLocal<VALUE_TYPE> {
+	private static final class LocaleLocalImpl<VALUE_TYPE> implements ILocaleLocal<VALUE_TYPE>, Serializable {
+
+		private static final long serialVersionUID = 8869656349804898576L;
 
 		private final IValueFactory<VALUE_TYPE> valueFactory;
 		private final Map<Locale, VALUE_TYPE> values;
