@@ -28,6 +28,7 @@
 
 package org.jowidgets.i18n.api;
 
+import java.io.Serializable;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
@@ -48,7 +49,9 @@ public final class MessageProvider {
 		return new MessageProviderImpl(resourceBundleName);
 	}
 
-	private static final class MessageProviderImpl implements IMessageProvider {
+	private static final class MessageProviderImpl implements IMessageProvider, Serializable {
+
+		private static final long serialVersionUID = -6035175048306441676L;
 
 		private final String resourceBundleName;
 		private final ILocaleLocal<LocalizedMessageProvider> messageProviders;
@@ -69,7 +72,9 @@ public final class MessageProvider {
 			return new MessageImpl(this, key);
 		}
 
-		private final class MessageProviderFactory implements IValueFactory<LocalizedMessageProvider> {
+		private final class MessageProviderFactory implements IValueFactory<LocalizedMessageProvider>, Serializable {
+
+			private static final long serialVersionUID = -1926402720150772928L;
 
 			@Override
 			public LocalizedMessageProvider create() {
@@ -79,26 +84,38 @@ public final class MessageProvider {
 		}
 	}
 
-	private static final class LocalizedMessageProvider {
+	private static final class LocalizedMessageProvider implements Serializable {
 
-		private final ResourceBundle resourceBundle;
+		private static final long serialVersionUID = 7013591522278151364L;
+
+		private final String resourceBundleName;
+		private transient ResourceBundle resourceBundle;
 
 		private LocalizedMessageProvider(final String resourceBundleName) {
-			this.resourceBundle = ResourceBundle.getBundle(resourceBundleName, LocaleHolder.getUserLocale());
+			this.resourceBundleName = resourceBundleName;
 		}
 
 		private String getString(final String key) {
 			try {
-				return resourceBundle.getString(key);
+				return getResourceBundle().getString(key);
 			}
 			catch (final MissingResourceException e) {
 				return '!' + key + '!';
 			}
 		}
 
+		private ResourceBundle getResourceBundle() {
+			if (resourceBundle == null) {
+				resourceBundle = ResourceBundle.getBundle(resourceBundleName, LocaleHolder.getUserLocale());
+			}
+			return resourceBundle;
+		}
+
 	}
 
-	private static final class MessageImpl implements IMessage {
+	private static final class MessageImpl implements IMessage, Serializable {
+
+		private static final long serialVersionUID = -8081080214256066849L;
 
 		private final IMessageProvider messageProvider;
 		private final String key;

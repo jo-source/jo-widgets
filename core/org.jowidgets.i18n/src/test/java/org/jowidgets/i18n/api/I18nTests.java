@@ -28,6 +28,10 @@
 
 package org.jowidgets.i18n.api;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Locale;
 
 import junit.framework.Assert;
@@ -141,6 +145,40 @@ public class I18nTests {
 		LocaleHolder.setUserLocale(Locale.GERMAN);
 		Assert.assertEquals("Meldung1", message1.get());
 		Assert.assertEquals("Meldung2", message2.get());
+	}
+
+	@Test
+	public void serializationTest() {
+		final IMessage message1 = Messages.getMessage("I18nTests.message1");
+		final IMessage message2 = Messages.getMessage("I18nTests.message2");
+
+		try {
+			final ByteArrayOutputStream os = new ByteArrayOutputStream();
+			final ObjectOutputStream oos = new ObjectOutputStream(os);
+			oos.writeObject(message1);
+			oos.writeObject(message2);
+
+			final ByteArrayInputStream is = new ByteArrayInputStream(os.toByteArray());
+			final ObjectInputStream ois = new ObjectInputStream(is);
+			final IMessage message1FromStream = (IMessage) ois.readObject();
+			final IMessage message2FromStream = (IMessage) ois.readObject();
+
+			os.close();
+			oos.close();
+			is.close();
+			ois.close();
+
+			LocaleHolder.setUserLocale(Locale.ENGLISH);
+			Assert.assertEquals("message1", message1FromStream.get());
+			Assert.assertEquals("message2", message2FromStream.get());
+
+			LocaleHolder.setUserLocale(Locale.GERMAN);
+			Assert.assertEquals("Meldung1", message1FromStream.get());
+			Assert.assertEquals("Meldung2", message2FromStream.get());
+		}
+		catch (final Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Test
