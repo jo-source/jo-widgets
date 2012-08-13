@@ -28,27 +28,40 @@
 
 package org.jowidgets.i18n.tools;
 
-import java.util.Locale;
+import java.io.Serializable;
 
-import org.jowidgets.i18n.api.ILocaleHolder;
+import org.jowidgets.i18n.api.IMessage;
 
-public final class ThreadLocalLocaleHolder implements ILocaleHolder {
+/**
+ * Hold a static message.
+ * 
+ * REMARK: This implementation should only be used where i18n is NOT desired.
+ * 
+ * So this implementation could be used a an adapter where a string is available, but a IMessage
+ * is necessary by the api.
+ */
+public final class StaticMessage implements IMessage, Serializable {
 
-	private final ThreadLocal<Locale> locale = new ThreadLocal<Locale>();
+	private static final long serialVersionUID = 4966413540403838737L;
 
-	@Override
-	public Locale getUserLocale() {
-		return locale.get();
+	private final String message;
+
+	public StaticMessage() {
+		this(null);
+	}
+
+	public StaticMessage(final String message) {
+		this.message = message;
 	}
 
 	@Override
-	public void setUserLocale(final Locale userLocale) {
-		locale.set(userLocale);
+	public String get() {
+		return message;
 	}
 
 	@Override
-	public void clearUserLocale() {
-		locale.remove();
+	public String toString() {
+		return "StaticMessage [message=" + message + "]";
 	}
 
 }

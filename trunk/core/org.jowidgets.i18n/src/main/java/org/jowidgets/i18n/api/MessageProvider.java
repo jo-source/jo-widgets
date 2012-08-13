@@ -133,5 +133,10 @@ public final class MessageProvider {
 			return messageProvider.getString(key);
 		}
 
+		@Override
+		public String toString() {
+			return "MessageImpl [key=" + key + "]";
+		}
+
 	}
 }
