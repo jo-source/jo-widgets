@@ -29,6 +29,7 @@ package org.jowidgets.tools.validation;
 
 import java.util.Collection;
 
+import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.util.Assert;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
@@ -36,12 +37,12 @@ import org.jowidgets.validation.ValidationResult;
 
 public class MandatoryValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE> {
 
-	private static final String MUST_NOT_BE_NULL = Messages.getString("MandatoryValidator.must_not_be_null"); //$NON-NLS-1$
+	private static final IMessage MUST_NOT_BE_NULL = Messages.getMessage("MandatoryValidator.must_not_be_null"); //$NON-NLS-1$
 
 	private final IValidationResult result;
 
 	public MandatoryValidator() {
-		this(MUST_NOT_BE_NULL);
+		this(MUST_NOT_BE_NULL.get());
 	}
 
 	public MandatoryValidator(final String messageText) {

@@ -55,6 +55,7 @@ import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.common.widgets.controller.IKeyEvent;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
+import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.impl.layout.ListLayout;
 import org.jowidgets.impl.layout.tablelayout.TableRowLayout;
 import org.jowidgets.tools.controller.InputObservable;
@@ -71,9 +72,9 @@ import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
 
 public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper implements IInputControl<Collection<INPUT_TYPE>> {
-	private static final String ELEMENT = Messages.getString("CollectionInputControlImpl.element"); //$NON-NLS-1$
-	private static final String REMOVE_ELEMENT = Messages.getString("CollectionInputControlImpl.remove_element"); //$NON-NLS-1$
-	private static final String PLEASE_EDIT_ELEMENT = Messages.getString("CollectionInputControlImpl.please_edit_element"); //$NON-NLS-1$
+	private static final IMessage ELEMENT = Messages.getMessage("CollectionInputControlImpl.element"); //$NON-NLS-1$
+	private static final IMessage REMOVE_ELEMENT = Messages.getMessage("CollectionInputControlImpl.remove_element"); //$NON-NLS-1$
+	private static final IMessage PLEASE_EDIT_ELEMENT = Messages.getMessage("CollectionInputControlImpl.please_edit_element"); //$NON-NLS-1$
 
 	private final IBluePrintFactory bpf;
 	private final ITableLayout tableCommon;
@@ -121,13 +122,13 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 				for (final Row row : valuesContainer.rows) {
 					final IInputControl<INPUT_TYPE> inputControl = row.inputControl;
 					final IValidationResult controlResult = inputControl.validate().withContext(
-							Toolkit.getMessageReplacer().replace(ELEMENT, String.valueOf(index)));
+							Toolkit.getMessageReplacer().replace(ELEMENT.get(), String.valueOf(index)));
 					if (inputControl.hasModifications() && !controlResult.isValid()) {
 						builder.addResult(controlResult);
 					}
 					else if (!controlResult.isValid()) {
 						builder.addResult(ValidationResult.infoError(Toolkit.getMessageReplacer().replace(
-								PLEASE_EDIT_ELEMENT,
+								PLEASE_EDIT_ELEMENT.get(),
 								String.valueOf(index))));
 					}
 					index++;
@@ -428,7 +429,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 
 		public void setValueIndex(final int index) {
 			valueIndex.setText(String.valueOf(index));
-			removeButton.setToolTipText(Toolkit.getMessageReplacer().replace(REMOVE_ELEMENT, String.valueOf(index)));
+			removeButton.setToolTipText(Toolkit.getMessageReplacer().replace(REMOVE_ELEMENT.get(), String.valueOf(index)));
 			layout.invalidateControl(valueIndex);
 		}
 

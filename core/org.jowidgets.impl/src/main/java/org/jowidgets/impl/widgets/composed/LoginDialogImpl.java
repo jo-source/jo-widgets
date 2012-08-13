@@ -52,14 +52,15 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.tools.widgets.wrapper.WindowWrapper;
 import org.jowidgets.util.Assert;
 import org.jowidgets.validation.ValidationResult;
 
 public class LoginDialogImpl extends WindowWrapper implements ILoginDialog {
 
-	private static final String USERNAME = Messages.getString("LoginDialogImpl.username"); //$NON-NLS-1$
-	private static final String PASSWORD = Messages.getString("LoginDialogImpl.password"); //$NON-NLS-1$
+	private static final IMessage USERNAME = Messages.getMessage("LoginDialogImpl.username"); //$NON-NLS-1$
+	private static final IMessage PASSWORD = Messages.getMessage("LoginDialogImpl.password"); //$NON-NLS-1$
 
 	private final IUiThreadAccess uiThreadAccess;
 	private final Set<ILoginCancelListener> cancelListeners;
@@ -124,9 +125,9 @@ public class LoginDialogImpl extends WindowWrapper implements ILoginDialog {
 		validationResultLabel = content.add(bpf.validationResultLabel(), "span2, growx, wrap"); //$NON-NLS-1$
 
 		//input fields
-		content.add(bpf.textLabel(USERNAME).alignRight(), "alignx r"); //$NON-NLS-1$
+		content.add(bpf.textLabel(USERNAME.get()).alignRight(), "alignx r"); //$NON-NLS-1$
 		usernameField = content.add(bpf.inputFieldString(), "growx, wrap"); //$NON-NLS-1$
-		content.add(bpf.textLabel(PASSWORD).alignRight(), "alignx r"); //$NON-NLS-1$
+		content.add(bpf.textLabel(PASSWORD.get()).alignRight(), "alignx r"); //$NON-NLS-1$
 		passwordField = content.add(bpf.inputFieldString().setPasswordPresentation(true), "growx, wrap"); //$NON-NLS-1$
 
 		//button bar

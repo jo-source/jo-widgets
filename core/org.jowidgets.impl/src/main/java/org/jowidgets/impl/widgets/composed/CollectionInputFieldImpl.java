@@ -54,6 +54,7 @@ import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.common.widgets.controller.IKeyEvent;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.tools.controller.InputObservable;
 import org.jowidgets.tools.controller.KeyAdapter;
 import org.jowidgets.tools.validation.CompoundValidator;
@@ -69,8 +70,8 @@ import org.jowidgets.validation.ValidationResult;
 
 public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper implements IInputControl<Collection<ELEMENT_TYPE>> {
 
-	private static final String ELEMENT = Messages.getString("CollectionInputFieldImpl.element"); //$NON-NLS-1$
-	private static final String EDIT = Messages.getString("CollectionInputFieldImpl.edit"); //$NON-NLS-1$
+	private static final IMessage ELEMENT = Messages.getMessage("CollectionInputFieldImpl.element"); //$NON-NLS-1$
+	private static final IMessage EDIT = Messages.getMessage("CollectionInputFieldImpl.edit"); //$NON-NLS-1$
 	private static final Character DEFAULT_SEPARATOR = Character.valueOf(',');
 
 	private final boolean filterEmptyValues;
@@ -140,7 +141,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 					boolean validated = false;
 					if (converter.getStringValidator() != null) {
 						final IValidationResult stringResult = converter.getStringValidator().validate(element).withContext(
-								Toolkit.getMessageReplacer().replace(ELEMENT, String.valueOf(index)));
+								Toolkit.getMessageReplacer().replace(ELEMENT.get(), String.valueOf(index)));
 						if (!stringResult.isValid()) {
 							validated = true;
 							builder.addResult(stringResult);
@@ -149,7 +150,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 					if (!validated) {
 						final IValidationResult elementResult = setup.getElementValidator().validate(
 								converter.convertToObject(element)).withContext(
-								Toolkit.getMessageReplacer().replace(ELEMENT, String.valueOf(index)));
+								Toolkit.getMessageReplacer().replace(ELEMENT.get(), String.valueOf(index)));
 						builder.addResult(elementResult);
 					}
 
@@ -179,7 +180,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 				this.editButton = composite.add(buttonBp, "grow, h ::" + width + ", w ::" + width); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 			else {
-				buttonBp.setText(EDIT);
+				buttonBp.setText(EDIT.get());
 				this.editButton = composite.add(buttonBp, "grow, h ::" + (composite.getPreferredSize().getHeight() + 2)); //$NON-NLS-1$
 			}
 
