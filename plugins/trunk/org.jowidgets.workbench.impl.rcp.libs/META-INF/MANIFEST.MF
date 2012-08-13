@@ -48,7 +48,8 @@ Bundle-ClassPath: .,
  lib/org.jowidgets.workbench.tools.jar,
  lib/slf4j-api.jar,
  lib/slf4j-simple.jar,
- lib/stax-api.jar
+ lib/stax-api.jar,
+ lib/org.jowidgets.i18n.jar
 Import-Package: org.osgi.framework
 Bundle-ActivationPolicy: lazy
 Eclipse-BuddyPolicy: registered,
