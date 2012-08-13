@@ -48,13 +48,14 @@ import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.impl.widgets.composed.blueprint.convenience.registry.ComposedSetupConvenienceRegistry;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.registry.ComposedDefaultsInitializerRegistry;
 import org.jowidgets.util.Assert;
 
 public final class BluePrintFactory extends SimpleBluePrintFactory implements IBluePrintFactory {
 
-	private static final String CANCEL = Messages.getString("BluePrintFactory.cancel"); //$NON-NLS-1$
+	private static final IMessage CANCEL = Messages.getMessage("BluePrintFactory.cancel"); //$NON-NLS-1$
 
 	public BluePrintFactory() {
 		super(new ComposedSetupConvenienceRegistry(), new ComposedDefaultsInitializerRegistry());
@@ -175,7 +176,7 @@ public final class BluePrintFactory extends SimpleBluePrintFactory implements IB
 
 	@Override
 	public IQuestionDialogBluePrint yesNoCancelQuestion() {
-		return questionDialog().setCancelButton(button(CANCEL));
+		return questionDialog().setCancelButton(button(CANCEL.get()));
 	}
 
 	@Override

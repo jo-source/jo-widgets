@@ -67,6 +67,7 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.spi.impl.controller.PopupDetectionObservable;
 import org.jowidgets.spi.impl.controller.TabItemObservableSpi;
 import org.jowidgets.spi.impl.swing.common.image.SwingImageRegistry;
@@ -75,8 +76,8 @@ import org.jowidgets.spi.widgets.ITabItemSpi;
 
 public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
-	private static final String CLOSE_LABEL = Messages.getString("TabItemImpl.close"); //$NON-NLS-1$
-	private static final String CLOSE_N_LABEL = Messages.getString("TabItemImpl.close_n"); //$NON-NLS-1$
+	private static final IMessage CLOSE_LABEL = Messages.getMessage("TabItemImpl.close"); //$NON-NLS-1$
+	private static final IMessage CLOSE_N_LABEL = Messages.getMessage("TabItemImpl.close_n"); //$NON-NLS-1$
 
 	private final JPanel tabContentContainer;
 	private final SwingContainer swingContainer;
@@ -533,7 +534,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 			setRolloverEnabled(true);
 			setBorder(BorderFactory.createEmptyBorder());
 
-			setToolTipText(CLOSE_LABEL);
+			setToolTipText(CLOSE_LABEL.get());
 
 			addActionListener(new ActionListener() {
 				@Override
@@ -555,7 +556,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 		@Override
 		public void setText(final String text) {
 			if (text != null) {
-				setToolTipText(CLOSE_N_LABEL.replace("%1", text)); //$NON-NLS-1$
+				setToolTipText(CLOSE_N_LABEL.get().replace("%1", text)); //$NON-NLS-1$
 			}
 			else {
 				setToolTipText(null);
