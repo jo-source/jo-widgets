@@ -390,7 +390,7 @@ public final class DefaultConverterProvider implements IConverterProvider {
 	}
 
 	@Override
-	public IObjectStringConverter<String> passwordPresentationConveter() {
+	public IObjectStringConverter<String> passwordPresentationConverter() {
 		return passwordPresentationConverter;
 	}
 
