@@ -38,6 +38,10 @@ public final class MessageProvider {
 
 	private MessageProvider() {}
 
+	public interface IClassLoaderProvider {
+		ClassLoader get();
+	}
+
 	/**
 	 * Creates a new message provider for a given resource bundle name.
 	 * 
@@ -46,7 +50,32 @@ public final class MessageProvider {
 	 * @return The new created message provider
 	 */
 	public static IMessageProvider create(final String resourceBundleName) {
-		return new MessageProviderImpl(resourceBundleName);
+		return create(resourceBundleName, (IClassLoaderProvider) null);
+	}
+
+	/**
+	 * Creates a new message provider for a given resource bundle name and a class that provides the class loader
+	 * 
+	 * @param resourceBundleName The resource bundle name to get the message provider for, never empty
+	 * @param classLoaderProvider The class that provides the class loader that should be used to load the resource bundle with
+	 * 
+	 * @return The new created message provider
+	 */
+	public static IMessageProvider create(final String resourceBundleName, final Class<?> classLoaderProviderClass) {
+		return create(resourceBundleName, new ClassLoaderFromClassProvider(classLoaderProviderClass));
+	}
+
+	/**
+	 * Creates a new message provider for a given resource bundle name and a class loader provider
+	 * 
+	 * @param resourceBundleName The resource bundle name to get the message provider for, never empty
+	 * @param classLoaderProvider A provider that provides the class loader that should be used to load the resource bundle
+	 *            The class loader will be resolved when the resource bundle will be created
+	 * 
+	 * @return The new created message provider
+	 */
+	public static IMessageProvider create(final String resourceBundleName, final IClassLoaderProvider classLoaderProvider) {
+		return new MessageProviderImpl(resourceBundleName, classLoaderProvider);
 	}
 
 	private static final class MessageProviderImpl implements IMessageProvider, Serializable {
@@ -54,11 +83,13 @@ public final class MessageProvider {
 		private static final long serialVersionUID = -6035175048306441676L;
 
 		private final String resourceBundleName;
+		private final IClassLoaderProvider classLoaderProvider;
 		private final ILocaleLocal<LocalizedMessageProvider> messageProviders;
 
-		private MessageProviderImpl(final String resourceBundleName) {
+		private MessageProviderImpl(final String resourceBundleName, final IClassLoaderProvider classLoaderProvider) {
 			Assert.paramNotNull(resourceBundleName, "resourceBundleName");
 			this.resourceBundleName = resourceBundleName;
+			this.classLoaderProvider = classLoaderProvider;
 			this.messageProviders = LocaleLocal.create(new MessageProviderFactory());
 		}
 
@@ -78,7 +109,7 @@ public final class MessageProvider {
 
 			@Override
 			public LocalizedMessageProvider create() {
-				return new LocalizedMessageProvider(resourceBundleName);
+				return new LocalizedMessageProvider(resourceBundleName, classLoaderProvider);
 			}
 
 		}
@@ -89,10 +120,12 @@ public final class MessageProvider {
 		private static final long serialVersionUID = 7013591522278151364L;
 
 		private final String resourceBundleName;
+		private final IClassLoaderProvider classLoaderProvider;
 		private transient ResourceBundle resourceBundle;
 
-		private LocalizedMessageProvider(final String resourceBundleName) {
+		private LocalizedMessageProvider(final String resourceBundleName, final IClassLoaderProvider classLoaderProvider) {
 			this.resourceBundleName = resourceBundleName;
+			this.classLoaderProvider = classLoaderProvider;
 		}
 
 		private String getString(final String key) {
@@ -106,9 +139,19 @@ public final class MessageProvider {
 
 		private ResourceBundle getResourceBundle() {
 			if (resourceBundle == null) {
-				resourceBundle = ResourceBundle.getBundle(resourceBundleName, LocaleHolder.getUserLocale());
+				resourceBundle = createResourceBundle();
 			}
 			return resourceBundle;
+		}
+
+		private ResourceBundle createResourceBundle() {
+			if (classLoaderProvider != null) {
+				final ClassLoader classLoader = classLoaderProvider.get();
+				if (classLoader != null) {
+					return ResourceBundle.getBundle(resourceBundleName, LocaleHolder.getUserLocale(), classLoader);
+				}
+			}
+			return ResourceBundle.getBundle(resourceBundleName, LocaleHolder.getUserLocale());
 		}
 
 	}
@@ -136,6 +179,22 @@ public final class MessageProvider {
 		@Override
 		public String toString() {
 			return "MessageImpl [key=" + key + "]";
+		}
+	}
+
+	private static final class ClassLoaderFromClassProvider implements IClassLoaderProvider, Serializable {
+
+		private static final long serialVersionUID = 235793306640902023L;
+
+		private final Class<?> clazz;
+
+		private ClassLoaderFromClassProvider(final Class<?> clazz) {
+			this.clazz = clazz;
+		}
+
+		@Override
+		public ClassLoader get() {
+			return clazz.getClassLoader();
 		}
 
 	}
