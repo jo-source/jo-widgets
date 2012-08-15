@@ -34,7 +34,9 @@ import org.jowidgets.i18n.api.MessageProvider;
 
 public final class Messages {
 
-	private static final IMessageProvider MESSAGE_PROVIDER = MessageProvider.create("org.jowidgets.impl.widgets.basic.blueprint.messages");
+	private static final IMessageProvider MESSAGE_PROVIDER = MessageProvider.create(
+			"org.jowidgets.impl.widgets.basic.blueprint.messages",
+			Messages.class);
 
 	private Messages() {}
 
