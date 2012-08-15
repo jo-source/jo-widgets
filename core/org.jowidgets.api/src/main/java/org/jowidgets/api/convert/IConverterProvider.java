@@ -56,7 +56,7 @@ public interface IConverterProvider {
 
 	<OBJECT_TYPE> IObjectStringConverter<OBJECT_TYPE> toStringConverter();
 
-	IObjectStringConverter<String> passwordPresentationConveter();
+	IObjectStringConverter<String> passwordPresentationConverter();
 
 	<OBJECT_TYPE> IConverter<OBJECT_TYPE> mapConverter(
 		Map<? extends OBJECT_TYPE, String> objectToString,
