@@ -189,6 +189,7 @@ public final class MessageProvider {
 		private final Class<?> clazz;
 
 		private ClassLoaderFromClassProvider(final Class<?> clazz) {
+			Assert.paramNotNull(clazz, "clazz");
 			this.clazz = clazz;
 		}
 

@@ -93,18 +93,26 @@ import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationResultLabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.api.widgets.descriptor.setup.ICollectionInputControlSetup;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.FileChooserType;
+import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 
 public final class BPF {
 
 	private BPF() {}
+
+	public static void addDefaultsInitializer(
+		@SuppressWarnings("rawtypes") final Class<? extends ISetupBuilder> setupBuilder,
+		final IDefaultInitializer<?> defaultInitializer) {
+		Toolkit.getBluePrintFactory().addDefaultsInitializer(setupBuilder, defaultInitializer);
+	}
 
 	public static IFrameBluePrint frame() {
 		return Toolkit.getBluePrintFactory().frame();
