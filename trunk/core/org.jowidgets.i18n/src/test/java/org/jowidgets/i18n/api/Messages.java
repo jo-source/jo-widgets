@@ -28,7 +28,7 @@
 
 package org.jowidgets.i18n.api;
 
-public final class Messages {
+final class Messages {
 
 	private static final IMessageProvider MESSAGE_PROVIDER = MessageProvider.create(
 			"org.jowidgets.i18n.api.messages",
