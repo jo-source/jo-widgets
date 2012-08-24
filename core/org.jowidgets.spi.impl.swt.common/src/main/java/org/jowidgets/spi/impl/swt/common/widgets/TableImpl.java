@@ -38,6 +38,8 @@ import org.eclipse.swt.custom.ControlEditor;
 import org.eclipse.swt.custom.TableCursor;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.KeyAdapter;
@@ -223,6 +225,16 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			table.addListener(SWT.MouseHover, toolTipListener);
 			table.addListener(SWT.MouseMove, toolTipListener);
 		}
+
+		table.addDisposeListener(new DisposeListener() {
+			@Override
+			public void widgetDisposed(final DisposeEvent arg0) {
+				final ITableDataModelObservable dataModelObservable = dataModel.getTableDataModelObservable();
+				if (dataModelObservable != null) {
+					dataModelObservable.removeDataModelListener(tableModelListener);
+				}
+			}
+		});
 	}
 
 	@Override
