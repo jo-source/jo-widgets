@@ -175,7 +175,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 		for (int i = 0; i < spiElements.length; i++) {
 			newSpiElements[i] = spiElements[i];
 		}
-		newSpiElements[spiElements.length] = addLenientDecoration(objectStringConverter.convertToString(value));
+		newSpiElements[spiElements.length] = addLenientDecoration(convertToString(value));
 		comboBoxSelectionWidgetSpi.setElements(newSpiElements);
 		comboBoxSelectionWidgetSpi.setSelectedIndex(spiElements.length);
 		this.lenientValue = value;
@@ -272,7 +272,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 
 		for (final VALUE_TYPE element : newElements) {
 			elements.add(element);
-			final String elementString = objectStringConverter.convertToString(element);
+			final String elementString = convertToString(element);
 			if (lastSelectedString != null && lastSelectedString.equals(elementString)) {
 				newSelectionIndex = index;
 			}
@@ -348,8 +348,14 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 			|| autoSelectionPolicy == AutoSelectionPolicy.PREVIOUS_SELECTED_OR_LAST;
 	}
 
-	protected IObjectStringConverter<VALUE_TYPE> getObjectStringConverter() {
-		return objectStringConverter;
+	private String convertToString(final VALUE_TYPE value) {
+		final String result = objectStringConverter.convertToString(value);
+		if (result != null) {
+			return result;
+		}
+		else {
+			return "";
+		}
 	}
 
 	@Override

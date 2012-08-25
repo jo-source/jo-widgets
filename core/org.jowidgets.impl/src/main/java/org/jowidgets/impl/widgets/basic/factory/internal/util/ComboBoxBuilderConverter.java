@@ -50,9 +50,21 @@ public final class ComboBoxBuilderConverter {
 		int index = 0;
 
 		for (final VALUE_TYPE element : elements) {
-			spiElements[index] = objectStringConverter.convertToString(element);
+			spiElements[index] = convertToString(objectStringConverter, element);
 			index++;
 		}
 		builderSpi.setElements(spiElements);
+	}
+
+	private static <VALUE_TYPE> String convertToString(
+		final IObjectStringConverter<VALUE_TYPE> objectStringConverter,
+		final VALUE_TYPE value) {
+		final String result = objectStringConverter.convertToString(value);
+		if (result != null) {
+			return result;
+		}
+		else {
+			return "";
+		}
 	}
 }

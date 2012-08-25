@@ -165,8 +165,18 @@ public class ComboBoxImpl<VALUE_TYPE> extends ComboBoxSelectionImpl<VALUE_TYPE> 
 				getWidget().setSelectedIndex(indexOfContent);
 			}
 			else {
-				getWidget().setText(objectStringConverter.convertToString(value));
+				getWidget().setText(convertToString(value));
 			}
+		}
+	}
+
+	private String convertToString(final VALUE_TYPE value) {
+		final String result = objectStringConverter.convertToString(value);
+		if (result != null) {
+			return result;
+		}
+		else {
+			return "";
 		}
 	}
 
