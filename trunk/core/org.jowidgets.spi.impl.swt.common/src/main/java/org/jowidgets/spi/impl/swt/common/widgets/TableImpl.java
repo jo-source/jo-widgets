@@ -233,6 +233,10 @@ public class TableImpl extends SwtControl implements ITableSpi {
 				if (dataModelObservable != null) {
 					dataModelObservable.removeDataModelListener(tableModelListener);
 				}
+				final ITableColumnModelObservable columnModelObservable = columnModel.getTableColumnModelObservable();
+				if (columnModelObservable != null) {
+					columnModelObservable.removeColumnModelListener(tableColumnModelListener);
+				}
 			}
 		});
 	}
