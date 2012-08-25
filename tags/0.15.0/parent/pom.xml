@@ -1,0 +1,155 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jowidgets</groupId>
+	<artifactId>org.jowidgets.parent</artifactId>
+	<version>0.15.0</version>
+	<packaging>pom</packaging>
+	<name>org.jowidgets.parent</name>
+
+	<properties>
+		<java.version>1.6</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<scm>
+		<connection>scm:svn:http://jo-widgets.googlecode.com/svn/tags/0.15.0/parent</connection>
+		<developerConnection>scm:svn:https://jo-widgets.googlecode.com/svn/tags/0.15.0/parent</developerConnection>
+		<url>http://jo-widgets.googlecode.com/svn/tags/0.15.0/parent</url>
+	</scm>
+
+
+	<modules>
+		<module>../build/org.jowidgets.checkstyle</module>
+		<module>../core/parent</module>
+		<module>../addons/parent</module>
+		<module>../examples/parent</module>
+	</modules>
+
+	<distributionManagement>
+		<repository>
+			<id>jowidgets-repository</id>
+			<url>svn:https://jo-widgets.googlecode.com/svn/maven2</url>
+		</repository>
+	</distributionManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>jowidgets</id>
+			<url>http://jowidgets.org/maven2/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-checkstyle-plugin</artifactId>
+					<version>2.9.1</version>
+					<configuration>
+						<configLocation>org/jowidgets/checkstyle/checkstyle-checker.xml</configLocation>
+						<suppressionsLocation>org/jowidgets/checkstyle/checkstyle-suppressions.xml</suppressionsLocation>
+						<!-- checkstyle suppressions won't work inside eclipse, so do this 
+							workaround to omit generated classes from checking inside eclipse -->
+						<excludes>**/*Messages.java</excludes>
+					</configuration>
+					<executions>
+						<execution>
+							<phase>verify</phase>
+							<goals>
+								<goal>checkstyle</goal>
+							</goals>
+						</execution>
+					</executions>
+					<dependencies>
+						<dependency>
+							<groupId>org.jowidgets</groupId>
+							<artifactId>org.jowidgets.checkstyle</artifactId>
+							<version>${project.version}</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.5</version>
+				<dependencies>
+					<dependency>
+						<groupId>com.google.code.maven-svn-wagon</groupId>
+						<artifactId>maven-svn-wagon</artifactId>
+						<version>1.4</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<tagBase>https://jo-widgets.googlecode.com/svn/tags</tagBase>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1.2</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.1</version>
+			</plugin>
+		</plugins>
+	</build>
+</project>
