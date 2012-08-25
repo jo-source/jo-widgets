@@ -3,7 +3,7 @@
   <groupId>org.jowidgets</groupId>
   <artifactId>org.jowidgets.examples.swing</artifactId>
   <versioning>
-    <release>0.14.0</release>
+    <release>0.16.0</release>
     <versions>
       <version>0.0.16-SNAPSHOT</version>
       <version>0.0.15-SNAPSHOT</version>
@@ -41,7 +41,8 @@
       <version>0.12.0</version>
       <version>0.13.0</version>
       <version>0.14.0</version>
+      <version>0.16.0</version>
     </versions>
-    <lastUpdated>20120718095150</lastUpdated>
+    <lastUpdated>20120825215238</lastUpdated>
   </versioning>
 </metadata>
