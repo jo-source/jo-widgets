@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jowidgets</groupId>
@@ -28,8 +29,8 @@
 
 	<distributionManagement>
 		<repository>
-			<id>jowidgets-ftp-repository</id>
-			<url>ftp://jowidgets.org/jowidgets-org/maven2/</url>
+			<id>jowidgets-repository</id>
+			<url>svn:https://jo-widgets.googlecode.com/svn/maven2</url>
 		</repository>
 	</distributionManagement>
 
@@ -50,7 +51,7 @@
 				<enabled>true</enabled>
 			</releases>
 			<snapshots>
-				<enabled>true</enabled>
+				<enabled>false</enabled>
 			</snapshots>
 		</repository>
 	</repositories>
@@ -73,8 +74,8 @@
 					<configuration>
 						<configLocation>org/jowidgets/checkstyle/checkstyle-checker.xml</configLocation>
 						<suppressionsLocation>org/jowidgets/checkstyle/checkstyle-suppressions.xml</suppressionsLocation>
-						<!-- checkstyle suppressions won't work inside eclipse, so do this workaround to 
-						omit generated classes from checking inside eclipse -->
+						<!-- checkstyle suppressions won't work inside eclipse, so do this 
+							workaround to omit generated classes from checking inside eclipse -->
 						<excludes>**/*Messages.java</excludes>
 					</configuration>
 					<executions>
@@ -95,13 +96,20 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
-		
+
 		<plugins>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-deploy-plugin</artifactId>
 				<version>2.5</version>
+				<dependencies>
+					<dependency>
+						<groupId>com.google.code.maven-svn-wagon</groupId>
+						<artifactId>maven-svn-wagon</artifactId>
+						<version>1.4</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 
 			<plugin>
