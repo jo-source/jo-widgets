@@ -1,0 +1,20 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>org.jowidgets.cap.util.parent</artifactId>
+	<packaging>pom</packaging>
+	
+	<parent>
+		<groupId>org.jowidgets</groupId>
+		<artifactId>org.jowidgets.cap.parent</artifactId>
+		<version>0.13.0</version>
+		<relativePath>../../parent</relativePath>
+	</parent>
+	
+	<modules>
+		<module>../org.jowidgets.cap.util.replacer</module>
+		<module>../org.jowidgets.cap.util.replacer.sample0</module>	
+		<module>../org.jowidgets.cap.util.ddl</module>	
+	</modules>
+
+</project>
