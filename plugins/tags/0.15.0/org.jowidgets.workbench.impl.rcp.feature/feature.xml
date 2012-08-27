@@ -20,14 +20,14 @@
          id="org.jowidgets.workbench.impl.rcp"
          download-size="0"
          install-size="0"
-         version="0.15.0.qualifier"
+         version="0.16.0"
          unpack="false"/>
 
    <plugin
          id="org.jowidgets.workbench.impl.rcp.libs"
          download-size="0"
          install-size="0"
-         version="0.15.0.qualifier"
+         version="0.16.0"
          unpack="false"/>
 
 </feature>

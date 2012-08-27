@@ -18,12 +18,12 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.workbench.impl.rcp</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>${jo-widgets.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.workbench.impl.rcp.libs</artifactId>
-			<version>0.15.0-SNAPSHOT</version>
+			<version>${jo-widgets.version}</version>
 		</dependency>
 	</dependencies>
 	
