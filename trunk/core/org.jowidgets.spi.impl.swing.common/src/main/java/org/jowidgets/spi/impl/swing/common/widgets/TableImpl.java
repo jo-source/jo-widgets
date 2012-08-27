@@ -827,7 +827,14 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		@Override
 		public void valueChanged(final ListSelectionEvent e) {
 			if (!e.getValueIsAdjusting() && !programmaticClearSelection) {
+				final ITableDataModelObservable dataModelObservable = dataModel.getTableDataModelObservable();
+				if (dataModelObservable != null) {
+					dataModelObservable.removeDataModelListener(tableModelListener);
+				}
 				dataModel.setSelection(getSelection());
+				if (dataModelObservable != null) {
+					dataModelObservable.addDataModelListener(tableModelListener);
+				}
 				tableSelectionObservable.fireSelectionChanged();
 			}
 		}
