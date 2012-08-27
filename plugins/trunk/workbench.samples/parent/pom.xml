@@ -21,12 +21,8 @@
 	<distributionManagement>
 		<repository>
 			<id>jo-widgets.googlecode.com</id>
-			<url>svn:https://jo-widgets.googlecode.com/svn/m2/releases</url>
+			<url>svn:https://jo-widgets.googlecode.com/svn/maven2</url>
 		</repository>
-		<snapshotRepository>
-			<id>jo-widgets.googlecode.com</id>
-			<url>svn:https://jo-widgets.googlecode.com/svn/m2/snapshots</url>
-		</snapshotRepository>
 	</distributionManagement>
 
 	<properties>
