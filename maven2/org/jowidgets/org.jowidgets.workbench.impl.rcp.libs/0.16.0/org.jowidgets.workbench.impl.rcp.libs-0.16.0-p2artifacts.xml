@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?artifactRepository version='1.1.0'?>
+<artifacts size='1'>
+  <artifact classifier='osgi.bundle' id='org.jowidgets.workbench.impl.rcp.libs' version='0.16.0'>
+    <properties size='5'>
+      <property name='artifact.size' value='7527098'/>
+      <property name='download.size' value='7527098'/>
+      <property name='maven-groupId' value='org.jowidgets'/>
+      <property name='maven-artifactId' value='org.jowidgets.workbench.impl.rcp.libs'/>
+      <property name='maven-version' value='0.16.0'/>
+    </properties>
+  </artifact>
+</artifacts>
