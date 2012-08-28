@@ -260,13 +260,19 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 
 		for (final JoTreeNode wasSelected : lastSelection) {
 			if (!newSelection.contains(wasSelected)) {
-				nodes.get(wasSelected).fireSelectionChanged(false);
+				final TreeNodeImpl treeNode = nodes.get(wasSelected);
+				if (treeNode != null) {
+					treeNode.fireSelectionChanged(false);
+				}
 			}
 		}
 
 		for (final JoTreeNode isSelected : newSelection) {
 			if (!lastSelection.contains(isSelected)) {
-				nodes.get(isSelected).fireSelectionChanged(true);
+				final TreeNodeImpl treeNode = nodes.get(isSelected);
+				if (treeNode != null) {
+					treeNode.fireSelectionChanged(true);
+				}
 			}
 		}
 
