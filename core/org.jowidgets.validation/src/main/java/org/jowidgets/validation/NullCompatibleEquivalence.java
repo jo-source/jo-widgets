@@ -35,8 +35,7 @@ final class NullCompatibleEquivalence {
 		if (object1 == null && object2 == null) {
 			return true;
 		}
-		else if (object1 == null || object2 == null) {// only one of them is
-														// null
+		else if (object1 == null || object2 == null) {// only one of them is null
 			return false;
 		}
 		return object1.equals(object2);
