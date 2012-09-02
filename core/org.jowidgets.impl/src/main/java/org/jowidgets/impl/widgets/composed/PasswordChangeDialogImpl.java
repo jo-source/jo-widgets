@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.password.IPasswordChangeExecutor;
 import org.jowidgets.api.password.IPasswordChangeResult;
+import org.jowidgets.api.types.InputDialogDefaultButtonPolicy;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
@@ -124,6 +125,13 @@ public final class PasswordChangeDialogImpl extends WindowWrapper implements IPa
 				changePassword();
 			}
 		});
+
+		if (InputDialogDefaultButtonPolicy.OK == setup.getDefaultButtonPolicy()) {
+			dialog.setDefaultButton(okButton);
+		}
+		else if (InputDialogDefaultButtonPolicy.CANCEL == setup.getDefaultButtonPolicy()) {
+			dialog.setDefaultButton(cancelButton);
+		}
 
 		validate();
 	}
