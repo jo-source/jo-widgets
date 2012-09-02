@@ -38,6 +38,7 @@ import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.login.ILoginInterceptor;
 import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.api.model.table.ITableModel;
+import org.jowidgets.api.password.IPasswordChangeExecutor;
 import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IWidget;
@@ -66,6 +67,7 @@ import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILoginDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMainMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.IPasswordChangeDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IPopupDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
@@ -733,6 +735,11 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	@Override
 	public ILoginDialogBluePrint loginDialog(final ILoginInterceptor loginInterceptor) {
 		return bluePrintFactory.loginDialog(loginInterceptor);
+	}
+
+	@Override
+	public IPasswordChangeDialogBluePrint passwordChangeDialog(final IPasswordChangeExecutor executor) {
+		return bluePrintFactory.passwordChangeDialog(executor);
 	}
 
 	@Override

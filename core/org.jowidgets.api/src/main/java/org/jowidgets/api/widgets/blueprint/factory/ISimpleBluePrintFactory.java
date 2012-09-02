@@ -31,6 +31,7 @@ import java.util.Collection;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.login.ILoginInterceptor;
+import org.jowidgets.api.password.IPasswordChangeExecutor;
 import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputControlBluePrint;
@@ -44,6 +45,7 @@ import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILoginDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.IPasswordChangeDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
@@ -77,6 +79,8 @@ public interface ISimpleBluePrintFactory extends IBasicBluePrintFactory {
 	<INPUT_TYPE> IInputCompositeBluePrint<INPUT_TYPE> inputComposite(final IInputContentCreator<INPUT_TYPE> contentCreator);
 
 	ILoginDialogBluePrint loginDialog(ILoginInterceptor interceptor);
+
+	IPasswordChangeDialogBluePrint passwordChangeDialog(IPasswordChangeExecutor executor);
 
 	<ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(
 		ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> widgetCreator);
