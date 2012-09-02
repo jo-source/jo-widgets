@@ -38,6 +38,7 @@ import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.login.ILoginInterceptor;
 import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.api.model.table.ITableModel;
+import org.jowidgets.api.password.IPasswordChangeExecutor;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.IInputControl;
@@ -66,6 +67,7 @@ import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILoginDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMainMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.IPasswordChangeDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IPopupDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
@@ -322,6 +324,10 @@ public final class BPF {
 
 	public static ILoginDialogBluePrint loginDialog(final ILoginInterceptor interceptor) {
 		return Toolkit.getBluePrintFactory().loginDialog(interceptor);
+	}
+
+	public static IPasswordChangeDialogBluePrint passwordChangeDialog(final IPasswordChangeExecutor executor) {
+		return Toolkit.getBluePrintFactory().passwordChangeDialog(executor);
 	}
 
 	public static <ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(

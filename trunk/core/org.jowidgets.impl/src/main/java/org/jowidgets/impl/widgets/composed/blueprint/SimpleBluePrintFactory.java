@@ -31,6 +31,7 @@ import java.util.Collection;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.login.ILoginInterceptor;
+import org.jowidgets.api.password.IPasswordChangeExecutor;
 import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputControlBluePrint;
@@ -44,6 +45,7 @@ import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILoginDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.IPasswordChangeDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
@@ -143,6 +145,14 @@ public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISi
 		Assert.paramNotNull(loginInterceptor, "loginInterceptor");
 		final ILoginDialogBluePrint result = createProxy(ILoginDialogBluePrint.class);
 		result.setInterceptor(loginInterceptor);
+		return result;
+	}
+
+	@Override
+	public IPasswordChangeDialogBluePrint passwordChangeDialog(final IPasswordChangeExecutor executor) {
+		Assert.paramNotNull(executor, "executor");
+		final IPasswordChangeDialogBluePrint result = createProxy(IPasswordChangeDialogBluePrint.class);
+		result.setExecutor(executor);
 		return result;
 	}
 
