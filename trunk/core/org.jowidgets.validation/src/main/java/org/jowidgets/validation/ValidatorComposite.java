@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,33 +28,31 @@
 
 package org.jowidgets.validation;
 
-import java.io.Serializable;
+public final class ValidatorComposite {
 
-public final class Validator {
+	private ValidatorComposite() {}
 
-	@SuppressWarnings("rawtypes")
-	private static final IValidator OK_VALIDATOR = createOkValidator();
-
-	private Validator() {}
-
-	@SuppressWarnings("rawtypes")
-	private static IValidator createOkValidator() {
-		return new OkValidatorImpl();
+	public static <VALUE_TYPE> IValidatorCompositeBuilder<VALUE_TYPE> builder() {
+		return new ValidatorCompositeBuilderImpl<VALUE_TYPE>();
 	}
 
-	@SuppressWarnings("unchecked")
-	public static <VALUE_TYPE> IValidator<VALUE_TYPE> okValidator() {
-		return OK_VALIDATOR;
-	}
-
-	private static final class OkValidatorImpl<VALUE_TYPE> implements IValidator<VALUE_TYPE>, Serializable {
-
-		private static final long serialVersionUID = -654830472836975532L;
-
-		@Override
-		public IValidationResult validate(final VALUE_TYPE value) {
-			return ValidationResult.ok();
+	public static <VALUE_TYPE> IValidator<VALUE_TYPE> create(
+		final IValidator<VALUE_TYPE> validator1,
+		final IValidator<VALUE_TYPE> validator2) {
+		if (validator1 != null && validator2 != null) {
+			final IValidatorCompositeBuilder<VALUE_TYPE> builder = builder();
+			builder.add(validator1).add(validator2);
+			return builder.build();
 		}
-
+		else if (validator1 != null) {
+			return validator1;
+		}
+		else if (validator2 != null) {
+			return validator2;
+		}
+		else {
+			return Validator.okValidator();
+		}
 	}
+
 }

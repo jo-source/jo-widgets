@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,33 +28,12 @@
 
 package org.jowidgets.validation;
 
-import java.io.Serializable;
+public interface IValidatorCompositeBuilder<VALUE_TYPE> {
 
-public final class Validator {
+	IValidatorCompositeBuilder<VALUE_TYPE> add(IValidator<VALUE_TYPE> validator);
 
-	@SuppressWarnings("rawtypes")
-	private static final IValidator OK_VALIDATOR = createOkValidator();
+	IValidatorCompositeBuilder<VALUE_TYPE> addAll(Iterable<? extends IValidator<VALUE_TYPE>> validators);
 
-	private Validator() {}
+	IValidator<VALUE_TYPE> build();
 
-	@SuppressWarnings("rawtypes")
-	private static IValidator createOkValidator() {
-		return new OkValidatorImpl();
-	}
-
-	@SuppressWarnings("unchecked")
-	public static <VALUE_TYPE> IValidator<VALUE_TYPE> okValidator() {
-		return OK_VALIDATOR;
-	}
-
-	private static final class OkValidatorImpl<VALUE_TYPE> implements IValidator<VALUE_TYPE>, Serializable {
-
-		private static final long serialVersionUID = -654830472836975532L;
-
-		@Override
-		public IValidationResult validate(final VALUE_TYPE value) {
-			return ValidationResult.ok();
-		}
-
-	}
 }

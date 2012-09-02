@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,33 +28,36 @@
 
 package org.jowidgets.validation;
 
-import java.io.Serializable;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
-public final class Validator {
+final class ValidatorCompositeBuilderImpl<VALUE_TYPE> implements IValidatorCompositeBuilder<VALUE_TYPE> {
 
-	@SuppressWarnings("rawtypes")
-	private static final IValidator OK_VALIDATOR = createOkValidator();
+	private final Set<IValidator<VALUE_TYPE>> validators;
 
-	private Validator() {}
-
-	@SuppressWarnings("rawtypes")
-	private static IValidator createOkValidator() {
-		return new OkValidatorImpl();
+	ValidatorCompositeBuilderImpl() {
+		this.validators = new LinkedHashSet<IValidator<VALUE_TYPE>>();
 	}
 
-	@SuppressWarnings("unchecked")
-	public static <VALUE_TYPE> IValidator<VALUE_TYPE> okValidator() {
-		return OK_VALIDATOR;
+	@Override
+	public IValidatorCompositeBuilder<VALUE_TYPE> add(final IValidator<VALUE_TYPE> validator) {
+		Assert.paramNotNull(validator, "validator");
+		validators.add(validator);
+		return this;
 	}
 
-	private static final class OkValidatorImpl<VALUE_TYPE> implements IValidator<VALUE_TYPE>, Serializable {
-
-		private static final long serialVersionUID = -654830472836975532L;
-
-		@Override
-		public IValidationResult validate(final VALUE_TYPE value) {
-			return ValidationResult.ok();
+	@Override
+	public IValidatorCompositeBuilder<VALUE_TYPE> addAll(final Iterable<? extends IValidator<VALUE_TYPE>> validators) {
+		Assert.paramNotNull(validators, "validators");
+		for (final IValidator<VALUE_TYPE> validator : validators) {
+			add(validator);
 		}
-
+		return this;
 	}
+
+	@Override
+	public IValidator<VALUE_TYPE> build() {
+		return new ValidatorCompositeImpl<VALUE_TYPE>(validators);
+	}
+
 }
