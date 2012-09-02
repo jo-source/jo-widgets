@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -29,32 +29,26 @@
 package org.jowidgets.validation;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
-public final class Validator {
+final class ValidatorCompositeImpl<VALUE_TYPE> implements IValidator<VALUE_TYPE>, Serializable {
 
-	@SuppressWarnings("rawtypes")
-	private static final IValidator OK_VALIDATOR = createOkValidator();
+	private static final long serialVersionUID = 8768733808468454079L;
 
-	private Validator() {}
+	private final List<IValidator<VALUE_TYPE>> validators;
 
-	@SuppressWarnings("rawtypes")
-	private static IValidator createOkValidator() {
-		return new OkValidatorImpl();
+	ValidatorCompositeImpl(final Collection<IValidator<VALUE_TYPE>> validators) {
+		this.validators = new LinkedList<IValidator<VALUE_TYPE>>(validators);
 	}
 
-	@SuppressWarnings("unchecked")
-	public static <VALUE_TYPE> IValidator<VALUE_TYPE> okValidator() {
-		return OK_VALIDATOR;
-	}
-
-	private static final class OkValidatorImpl<VALUE_TYPE> implements IValidator<VALUE_TYPE>, Serializable {
-
-		private static final long serialVersionUID = -654830472836975532L;
-
-		@Override
-		public IValidationResult validate(final VALUE_TYPE value) {
-			return ValidationResult.ok();
+	@Override
+	public IValidationResult validate(final VALUE_TYPE value) {
+		final IValidationResultBuilder builder = ValidationResult.builder();
+		for (final IValidator<VALUE_TYPE> validator : validators) {
+			builder.addResult(validator.validate(value));
 		}
-
+		return builder.build();
 	}
 }
