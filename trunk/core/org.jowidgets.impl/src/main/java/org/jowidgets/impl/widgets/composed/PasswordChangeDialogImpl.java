@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.password.IPasswordChangeExecutor;
 import org.jowidgets.api.password.IPasswordChangeResult;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.types.InputDialogDefaultButtonPolicy;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IComposite;
@@ -41,6 +42,7 @@ import org.jowidgets.api.widgets.IProgressBar;
 import org.jowidgets.api.widgets.IValidationResultLabel;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.descriptor.setup.IPasswordChangeDialogSetup;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.i18n.api.IMessage;
@@ -68,6 +70,10 @@ public final class PasswordChangeDialogImpl extends WindowWrapper implements IPa
 	private static final IMessage PASSWORDS_EQUAL = Messages.getMessage("PasswordChangeDialogImpl.passwordsEqual");
 	private static final IMessage REPEAT_PASSWORD = Messages.getMessage("PasswordChangeDialogImpl.repeatPassword");
 	private static final IMessage PASSWORD_REPEAT_MISMATCH = Messages.getMessage("PasswordChangeDialogImpl.passwordRepeatMissmatch");
+	private static final IMessage PASSWORD_CHANGED = Messages.getMessage("PasswordChangeDialogImpl.passwordChanged");
+
+	private final String title;
+	private final IImageConstant icon;
 
 	private final IValidationResultLabel validationResultLabel;
 	private final IInputField<String> oldPassword;
@@ -84,6 +90,9 @@ public final class PasswordChangeDialogImpl extends WindowWrapper implements IPa
 		Assert.paramNotNull(dialog, "dialog");
 		Assert.paramNotNull(setup, "setup");
 		Assert.paramNotNull(setup.getExecutor(), "setup.getExecutor()");
+
+		this.title = setup.getTitle();
+		this.icon = setup.getIcon();
 
 		this.executor = setup.getExecutor();
 
@@ -216,6 +225,7 @@ public final class PasswordChangeDialogImpl extends WindowWrapper implements IPa
 			public void success() {
 				finishedCommon();
 				setVisible(false);
+				Toolkit.getMessagePane().showInfo(title, icon, PASSWORD_CHANGED.get());
 			}
 
 			@Override
