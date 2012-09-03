@@ -39,7 +39,7 @@ public class SwingImageHandleFactory implements IImageHandleFactory {
 
 	@Override
 	public IImageHandle createImageHandle(final URL url) {
-		return new ImageHandle<Image>(new SwingImageLoader(url));
+		return new ImageHandle<Image>(new SwingImageLoader(url), url);
 	}
 
 }

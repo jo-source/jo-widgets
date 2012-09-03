@@ -38,7 +38,7 @@ public class SwtImageHandleFactory implements IImageHandleFactory {
 
 	@Override
 	public IImageHandle createImageHandle(final URL url) {
-		return new ImageHandle<Image>(new SwtImageLoader(url));
+		return new ImageHandle<Image>(new SwtImageLoader(url), url);
 	}
 
 }

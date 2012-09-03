@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,20 +26,15 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.dummy.image;
+package org.jowidgets.addons.bridge.swt.awt;
 
-import java.net.URL;
+import java.awt.Container;
 
-import org.jowidgets.common.image.IImageHandle;
-import org.jowidgets.common.image.IImageHandleFactory;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDImage;
-import org.jowidgets.spi.impl.image.ImageHandle;
+import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.util.IConverter;
 
-public class DummyImageHandleFactory implements IImageHandleFactory {
+public interface ISwtAwtConverterFactory {
 
-	@Override
-	public IImageHandle createImageHandle(final URL url) {
-		return new ImageHandle<UIDImage>(new DummyImageLoader(url), url);
-	}
+	IConverter<IComposite, Container> createCompositeConverter();
 
 }

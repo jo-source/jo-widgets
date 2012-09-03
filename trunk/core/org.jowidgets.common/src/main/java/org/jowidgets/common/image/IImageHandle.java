@@ -27,8 +27,18 @@
  */
 package org.jowidgets.common.image;
 
+import java.net.URL;
+
 public interface IImageHandle {
 
 	Object getImage();
+
+	/**
+	 * Gets the url of the image. The url may be null, if the image was not created
+	 * from an url (e.g. system images)
+	 * 
+	 * @return The url of the image or null
+	 */
+	URL getImageUrl();
 
 }

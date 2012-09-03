@@ -27,17 +27,26 @@
  */
 package org.jowidgets.spi.impl.image;
 
+import java.net.URL;
+
 import org.jowidgets.common.image.IImageHandle;
 import org.jowidgets.util.Assert;
 
 public final class ImageHandle<IMAGE_TYPE> implements IImageHandle {
 
 	private final IImageFactory<IMAGE_TYPE> imageFactory;
-	private IMAGE_TYPE image = null;
+	private final URL url;
+
+	private IMAGE_TYPE image;
 
 	public ImageHandle(final IImageFactory<IMAGE_TYPE> imageFactory) {
+		this(imageFactory, null);
+	}
+
+	public ImageHandle(final IImageFactory<IMAGE_TYPE> imageFactory, final URL url) {
 		Assert.paramNotNull(imageFactory, "imageFactory");
 		this.imageFactory = imageFactory;
+		this.url = url;
 	}
 
 	@Override
@@ -46,6 +55,11 @@ public final class ImageHandle<IMAGE_TYPE> implements IImageHandle {
 			image = imageFactory.createImage();
 		}
 		return image;
+	}
+
+	@Override
+	public URL getImageUrl() {
+		return url;
 	}
 
 }
