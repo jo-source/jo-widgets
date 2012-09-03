@@ -30,32 +30,21 @@ package org.jowidgets.impl.image;
 import java.net.URL;
 
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.image.IImageHandleFactory;
 import org.jowidgets.common.image.IImageRegistry;
 
-public class ImageConstantRegisterService {
+class ImageConstantRegisterService {
 
 	private final IImageRegistry imageRegistry;
-	private final IImageHandleFactory imageHandleFactory;
 	private final String rootPath;
 
-	public ImageConstantRegisterService(
-		final String rootPath,
-		final IImageRegistry imageRegistry,
-		final IImageHandleFactory imageHandleFactorySpi) {
-
+	ImageConstantRegisterService(final String rootPath, final IImageRegistry imageRegistry) {
 		this.rootPath = rootPath;
 		this.imageRegistry = imageRegistry;
-		this.imageHandleFactory = imageHandleFactorySpi;
 	}
 
-	public final void registerImage(final IImageConstant imageConstant, final String relPath) {
+	final void registerImage(final IImageConstant imageConstant, final String relPath) {
 		final URL url = getClass().getClassLoader().getResource(rootPath + relPath);
-		imageRegistry.registerImageConstant(imageConstant, imageHandleFactory.createImageHandle(url));
-	}
-
-	protected IImageHandleFactory getImageHandleFactory() {
-		return imageHandleFactory;
+		imageRegistry.registerImageConstant(imageConstant, url);
 	}
 
 }

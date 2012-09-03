@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,20 +26,32 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.dummy.image;
+package org.jowidgets.addons.bridge.swt.awt;
 
-import java.net.URL;
+import java.awt.Container;
 
-import org.jowidgets.common.image.IImageHandle;
-import org.jowidgets.common.image.IImageHandleFactory;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDImage;
-import org.jowidgets.spi.impl.image.ImageHandle;
+import org.eclipse.swt.widgets.Composite;
+import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.tools.layout.MigLayoutFactory;
+import org.jowidgets.util.Assert;
+import org.jowidgets.util.IConverter;
 
-public class DummyImageHandleFactory implements IImageHandleFactory {
+final class SwtAwtConverterFactoryImpl implements ISwtAwtConverterFactory {
 
 	@Override
-	public IImageHandle createImageHandle(final URL url) {
-		return new ImageHandle<UIDImage>(new DummyImageLoader(url), url);
+	public IConverter<IComposite, Container> createCompositeConverter() {
+		return new IConverter<IComposite, Container>() {
+			@Override
+			public Container convert(final IComposite source) {
+				Assert.paramNotNull(source, "source");
+				Assert.paramHasType(source.getUiReference(), Composite.class, "source.getUiReference()");
+				source.setLayout(MigLayoutFactory.growingInnerCellLayout());
+				final ISwtAwtControl result;
+				result = SwtAwtControlFactory.getInstance().createSwtAwtControl(source.getUiReference());
+				result.setLayoutConstraints(MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+				return result.getAwtContainer();
+			}
+		};
 	}
 
 }

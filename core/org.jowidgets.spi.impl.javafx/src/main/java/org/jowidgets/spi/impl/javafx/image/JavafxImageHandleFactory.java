@@ -40,7 +40,7 @@ public class JavafxImageHandleFactory implements IImageHandleFactory {
 
 	@Override
 	public IImageHandle createImageHandle(final URL url) {
-		return new ImageHandle<Image>(new JavafxImageFactory(url));
+		return new ImageHandle<Image>(new JavafxImageFactory(url), url);
 	}
 
 }
