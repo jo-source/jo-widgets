@@ -45,6 +45,7 @@ public final class SliderImpl extends AbstractInputControl implements ISliderSpi
 		final Scale scale = getUiReference();
 
 		scale.setMinimum(setup.getMinimum());
+		scale.setSelection(setup.getMinimum());
 		scale.setMaximum(setup.getMaximum());
 		scale.setPageIncrement(setup.getTickSpacing());
 
