@@ -45,8 +45,12 @@ import org.jowidgets.api.model.item.IPopupActionItemModel;
 import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.api.model.item.IToolBarModel;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.tools.controller.ListModelAdapter;
+import org.jowidgets.tools.widgets.blueprint.BPF;
 import org.jowidgets.util.Assert;
 
 class ToolBarModelImpl implements IToolBarModel {
@@ -323,6 +327,25 @@ class ToolBarModelImpl implements IToolBarModel {
 	@Override
 	public IContainerItemModel addContainer(final IContainerContentCreator contentCreator) {
 		return addItem(new ContainerItemModelBuilder().setContentCreator(contentCreator));
+	}
+
+	@Override
+	public IContainerItemModel addContainer(final IWidgetDescriptor<? extends IControl> descriptor, final Object layoutConstraints) {
+		return addContainer(new IContainerContentCreator() {
+
+			@Override
+			public void createContent(final IContainer container) {
+				container.add(descriptor, layoutConstraints);
+			}
+
+			@Override
+			public void containerDisposed(final IContainer container) {}
+		});
+	}
+
+	@Override
+	public IContainerItemModel addTextLabel(final String text) {
+		return addContainer(BPF.textLabel(text), null);
 	}
 
 	@Override
