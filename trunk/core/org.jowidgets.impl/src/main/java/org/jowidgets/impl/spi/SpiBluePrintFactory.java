@@ -43,6 +43,7 @@ import org.jowidgets.impl.spi.blueprint.IPopupDialogBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IProgressBarBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IScrollCompositeBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ISeparatorBluePrintSpi;
+import org.jowidgets.impl.spi.blueprint.ISliderBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ISplitCompositeBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITabFolderBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ITabItemBluePrintSpi;
@@ -185,6 +186,11 @@ public class SpiBluePrintFactory extends AbstractBluePrintFactory implements ISp
 	@Override
 	public ICalendarBluePrintSpi calendar() {
 		return createProxy(ICalendarBluePrintSpi.class);
+	}
+
+	@Override
+	public ISliderBluePrintSpi slider() {
+		return createProxy(ISliderBluePrintSpi.class);
 	}
 
 }

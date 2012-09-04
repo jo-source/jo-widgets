@@ -52,6 +52,7 @@ import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
 import org.jowidgets.api.widgets.descriptor.IPopupDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.IScrollCompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.ISeparatorDescriptor;
+import org.jowidgets.api.widgets.descriptor.ISliderDescriptor;
 import org.jowidgets.api.widgets.descriptor.ISplitCompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITabFolderDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITableDescriptor;
@@ -79,6 +80,7 @@ import org.jowidgets.impl.widgets.basic.factory.internal.IconFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.PopupDialogFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.ScrollCompositeFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.SeparatorFactory;
+import org.jowidgets.impl.widgets.basic.factory.internal.SliderFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.SplitCompositeFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.TabFolderFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.TableFactory;
@@ -162,6 +164,7 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		register(ITabFolderDescriptor.class, new TabFolderFactory(this, widgetsServiceProvider, bpF));
 		register(ITreeDescriptor.class, new TreeFactory(this, widgetsServiceProvider, bpF));
 		register(ITableDescriptor.class, new TableFactory(this, widgetsServiceProvider, bpF));
+		register(ISliderDescriptor.class, new SliderFactory(this, widgetsServiceProvider, bpF));
 	}
 
 	private void registerOptionalWidgets(final IWidgetsServiceProvider widgetsServiceProvider, final ISpiBluePrintFactory bpF) {

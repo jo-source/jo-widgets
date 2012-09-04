@@ -26,25 +26,33 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.common.blueprint.convenience.registry;
+package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.common.widgets.builder.ICompositeSetupBuilderCommon;
-import org.jowidgets.common.widgets.builder.ISliderSetupBuilderCommon;
-import org.jowidgets.common.widgets.builder.ITextLabelSetupBuilderCommon;
-import org.jowidgets.common.widgets.builder.IToolBarSetupBuilderCommon;
-import org.jowidgets.impl.widgets.common.blueprint.convenience.CompositeSetupConvenienceCommon;
-import org.jowidgets.impl.widgets.common.blueprint.convenience.SliderSetupConvenienceCommon;
-import org.jowidgets.impl.widgets.common.blueprint.convenience.TextLabelSetupConvenienceCommon;
-import org.jowidgets.impl.widgets.common.blueprint.convenience.ToolBarSetupConvenienceCommon;
-import org.jowidgets.tools.widgets.blueprint.convenience.SetupBuilderConvenienceRegistry;
+import org.jowidgets.api.widgets.ISlider;
+import org.jowidgets.api.widgets.descriptor.ISliderDescriptor;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.factory.IWidgetFactory;
+import org.jowidgets.impl.spi.ISpiBluePrintFactory;
+import org.jowidgets.impl.spi.blueprint.ISliderBluePrintSpi;
+import org.jowidgets.impl.widgets.basic.SliderImpl;
+import org.jowidgets.spi.IWidgetsServiceProvider;
+import org.jowidgets.spi.widgets.ISliderSpi;
 
-public class CommonSetupConvenienceRegistry extends SetupBuilderConvenienceRegistry {
+public class SliderFactory extends AbstractWidgetFactory implements IWidgetFactory<ISlider, ISliderDescriptor> {
 
-	public CommonSetupConvenienceRegistry() {
-		super();
-		register(ICompositeSetupBuilderCommon.class, new CompositeSetupConvenienceCommon());
-		register(ITextLabelSetupBuilderCommon.class, new TextLabelSetupConvenienceCommon());
-		register(IToolBarSetupBuilderCommon.class, new ToolBarSetupConvenienceCommon());
-		register(ISliderSetupBuilderCommon.class, new SliderSetupConvenienceCommon());
+	public SliderFactory(
+		final IGenericWidgetFactory genericWidgetFactory,
+		final IWidgetsServiceProvider widgetsServiceProvider,
+		final ISpiBluePrintFactory bpF) {
+
+		super(genericWidgetFactory, widgetsServiceProvider, bpF);
 	}
+
+	@Override
+	public ISlider create(final Object parentUiReference, final ISliderDescriptor descriptor) {
+		final ISliderBluePrintSpi bp = getSpiBluePrintFactory().slider().setSetup(descriptor);
+		final ISliderSpi sliderSpi = getSpiWidgetFactory().createSlider(parentUiReference, bp);
+		return new SliderImpl(sliderSpi, descriptor);
+	}
+
 }

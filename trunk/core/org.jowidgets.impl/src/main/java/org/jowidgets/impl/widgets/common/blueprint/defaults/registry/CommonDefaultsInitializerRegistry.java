@@ -36,6 +36,7 @@ import org.jowidgets.common.widgets.builder.IInputObservableSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IPopupDialogSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IScrollCompositeSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ISeparatorSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.ISliderSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITabFolderSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITableSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITextAreaSetupBuilderCommon;
@@ -54,6 +55,7 @@ import org.jowidgets.impl.widgets.common.blueprint.defaults.InputObservableDefau
 import org.jowidgets.impl.widgets.common.blueprint.defaults.PopupDialogDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ScrolledCompositeDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.SeparatorDefaultsCommon;
+import org.jowidgets.impl.widgets.common.blueprint.defaults.SliderDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TabFolderDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TableDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.TextAreaDefaultsCommon;
@@ -88,5 +90,6 @@ public class CommonDefaultsInitializerRegistry extends DefaultsInitializerRegist
 		register(ITextComponentSetupBuilderCommon.class, new TextComponentDefaultsCommon());
 		register(IInputObservableSetupBuilderCommon.class, new InputObservableDefaultsCommon());
 		register(ITitledWindowSetupBuilderCommon.class, new TitledWindowDefaultsCommon());
+		register(ISliderSetupBuilderCommon.class, new SliderDefaultsCommon());
 	}
 }

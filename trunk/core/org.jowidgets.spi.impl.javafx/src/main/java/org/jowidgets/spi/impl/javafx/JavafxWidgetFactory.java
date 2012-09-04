@@ -65,6 +65,7 @@ import org.jowidgets.spi.widgets.IIconSpi;
 import org.jowidgets.spi.widgets.IPopupDialogSpi;
 import org.jowidgets.spi.widgets.IProgressBarSpi;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
+import org.jowidgets.spi.widgets.ISliderSpi;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 import org.jowidgets.spi.widgets.ITabFolderSpi;
 import org.jowidgets.spi.widgets.ITableSpi;
@@ -86,6 +87,7 @@ import org.jowidgets.spi.widgets.setup.IPopupDialogSetupSpi;
 import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
+import org.jowidgets.spi.widgets.setup.ISliderSetupSpi;
 import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITabFolderSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
@@ -259,6 +261,12 @@ public final class JavafxWidgetFactory implements IWidgetFactorySpi {
 	@Override
 	public ITableSpi createTable(final Object parentUiReference, final ITableSetupSpi setup) {
 		return new TableImpl(setup);
+	}
+
+	@Override
+	public ISliderSpi createSlider(final Object parentUiReference, final ISliderSetupSpi setup) {
+		// TODO MG implement JavaFx Slider
+		return null;
 	}
 
 }

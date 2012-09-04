@@ -76,6 +76,7 @@ import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorToolBarItemBluePrint;
+import org.jowidgets.api.widgets.blueprint.ISliderBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISubMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITabFolderBluePrint;
@@ -275,6 +276,10 @@ public final class BPF {
 
 	public static ICalendarBluePrint calendar() {
 		return Toolkit.getBluePrintFactory().calendar();
+	}
+
+	public static ISliderBluePrint slider() {
+		return Toolkit.getBluePrintFactory().slider();
 	}
 
 	public static ILabelBluePrint label() {
