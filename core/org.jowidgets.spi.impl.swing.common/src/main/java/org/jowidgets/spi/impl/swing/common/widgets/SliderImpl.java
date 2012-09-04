@@ -44,6 +44,7 @@ public final class SliderImpl extends AbstractInputControl implements ISliderSpi
 		final JSlider slider = getUiReference();
 
 		slider.setMinimum(setup.getMinimum());
+		slider.setValue(setup.getMinimum());
 		slider.setMaximum(setup.getMaximum());
 		slider.setMajorTickSpacing(setup.getTickSpacing());
 		slider.setPaintTicks(setup.getRenderTicks());
@@ -51,9 +52,7 @@ public final class SliderImpl extends AbstractInputControl implements ISliderSpi
 		slider.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(final ChangeEvent e) {
-				if (!getUiReference().getModel().getValueIsAdjusting()) {
-					fireInputChanged(getSelection());
-				}
+				fireInputChanged(getSelection());
 			}
 		});
 	}

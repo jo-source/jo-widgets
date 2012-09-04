@@ -224,6 +224,18 @@ public final class DemoMainComposite {
 			}
 		});
 
+		final IButton sliderDialogButton = parentContainer.add(
+				bpF.button("Slider demo", "Opens the slider demo"),
+				"grow, sg bg, wrap");
+		sliderDialogButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IFrame sliderDemoFrame = new DemoSliderFrame();
+				sliderDemoFrame.setSize(new Dimension(300, 300));
+				sliderDemoFrame.setVisible(true);
+			}
+		});
+
 		final IButton chooserDemoButton = parentContainer.add(
 				bpF.button("Chooser demo", "Demonstrates choosers"),
 				"grow, sg bg, wrap");

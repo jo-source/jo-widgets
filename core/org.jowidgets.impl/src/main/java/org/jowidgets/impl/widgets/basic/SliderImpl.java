@@ -81,7 +81,7 @@ public final class SliderImpl extends AbstractSliderSpiWrapper implements ISlide
 			}
 		});
 
-		addInputListener(new IInputListener() {
+		buttonSpi.addInputListener(new IInputListener() {
 			@Override
 			public void inputChanged() {
 				inputObservable.fireInputChanged();
