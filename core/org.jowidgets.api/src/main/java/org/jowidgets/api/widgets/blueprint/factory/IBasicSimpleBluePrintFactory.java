@@ -51,6 +51,7 @@ import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorToolBarItemBluePrint;
+import org.jowidgets.api.widgets.blueprint.ISliderBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISubMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITabFolderBluePrint;
@@ -149,5 +150,7 @@ public interface IBasicSimpleBluePrintFactory extends IBaseBluePrintFactory {
 	ITableBluePrint table(ITableColumnModel columnModel, ITableDataModel dataModel);
 
 	ICalendarBluePrint calendar();
+
+	ISliderBluePrint slider();
 
 }

@@ -51,6 +51,7 @@ import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorToolBarItemBluePrint;
+import org.jowidgets.api.widgets.blueprint.ISliderBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISubMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITabFolderBluePrint;
@@ -287,6 +288,11 @@ public class BasicSimpleBluePrintFactory extends AbstractBluePrintFactory implem
 	@Override
 	public ICalendarBluePrint calendar() {
 		return createProxy(ICalendarBluePrint.class);
+	}
+
+	@Override
+	public ISliderBluePrint slider() {
+		return createProxy(ISliderBluePrint.class);
 	}
 
 }

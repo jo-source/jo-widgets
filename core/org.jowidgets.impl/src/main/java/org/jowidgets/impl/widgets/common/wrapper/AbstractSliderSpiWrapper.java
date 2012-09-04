@@ -26,25 +26,35 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.widgets.common.blueprint.convenience.registry;
+package org.jowidgets.impl.widgets.common.wrapper;
 
-import org.jowidgets.common.widgets.builder.ICompositeSetupBuilderCommon;
-import org.jowidgets.common.widgets.builder.ISliderSetupBuilderCommon;
-import org.jowidgets.common.widgets.builder.ITextLabelSetupBuilderCommon;
-import org.jowidgets.common.widgets.builder.IToolBarSetupBuilderCommon;
-import org.jowidgets.impl.widgets.common.blueprint.convenience.CompositeSetupConvenienceCommon;
-import org.jowidgets.impl.widgets.common.blueprint.convenience.SliderSetupConvenienceCommon;
-import org.jowidgets.impl.widgets.common.blueprint.convenience.TextLabelSetupConvenienceCommon;
-import org.jowidgets.impl.widgets.common.blueprint.convenience.ToolBarSetupConvenienceCommon;
-import org.jowidgets.tools.widgets.blueprint.convenience.SetupBuilderConvenienceRegistry;
+import org.jowidgets.common.widgets.ISliderCommon;
+import org.jowidgets.spi.widgets.ISliderSpi;
 
-public class CommonSetupConvenienceRegistry extends SetupBuilderConvenienceRegistry {
+public abstract class AbstractSliderSpiWrapper extends AbstractControlSpiWrapper implements ISliderCommon {
 
-	public CommonSetupConvenienceRegistry() {
-		super();
-		register(ICompositeSetupBuilderCommon.class, new CompositeSetupConvenienceCommon());
-		register(ITextLabelSetupBuilderCommon.class, new TextLabelSetupConvenienceCommon());
-		register(IToolBarSetupBuilderCommon.class, new ToolBarSetupConvenienceCommon());
-		register(ISliderSetupBuilderCommon.class, new SliderSetupConvenienceCommon());
+	public AbstractSliderSpiWrapper(final ISliderSpi widget) {
+		super(widget);
 	}
+
+	@Override
+	public ISliderSpi getWidget() {
+		return (ISliderSpi) super.getWidget();
+	}
+
+	@Override
+	public int getSelection() {
+		return getWidget().getSelection();
+	}
+
+	@Override
+	public void setSelection(final int value) {
+		getWidget().setSelection(value);
+	}
+
+	@Override
+	public void setEditable(final boolean editable) {
+		getWidget().setEditable(editable);
+	}
+
 }
