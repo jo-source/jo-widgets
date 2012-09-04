@@ -43,7 +43,9 @@ import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
 
 public class ToolBarModel implements IToolBarModel {
@@ -205,6 +207,16 @@ public class ToolBarModel implements IToolBarModel {
 	@Override
 	public final IContainerItemModel addContainer(final IContainerContentCreator contentCreator) {
 		return model.addContainer(contentCreator);
+	}
+
+	@Override
+	public IContainerItemModel addContainer(final IWidgetDescriptor<? extends IControl> descriptor, final Object layoutConstraints) {
+		return model.addContainer(descriptor, layoutConstraints);
+	}
+
+	@Override
+	public IContainerItemModel addTextLabel(final String text) {
+		return model.addTextLabel(text);
 	}
 
 	@Override

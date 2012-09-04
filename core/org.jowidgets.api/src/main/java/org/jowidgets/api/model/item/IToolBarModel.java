@@ -32,7 +32,9 @@ import java.util.List;
 
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.IListModelObservable;
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface IToolBarModel extends IListModelObservable {
 
@@ -123,6 +125,10 @@ public interface IToolBarModel extends IListModelObservable {
 	IContainerItemModel addContainer();
 
 	IContainerItemModel addContainer(IContainerContentCreator contentCreator);
+
+	IContainerItemModel addContainer(IWidgetDescriptor<? extends IControl> descriptor, Object layoutConstraints);
+
+	IContainerItemModel addTextLabel(String text);
 
 	ISeparatorItemModel addSeparator();
 
