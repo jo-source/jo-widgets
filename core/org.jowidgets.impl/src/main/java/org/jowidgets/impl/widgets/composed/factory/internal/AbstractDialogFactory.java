@@ -35,7 +35,7 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 
-public abstract class AbstractDialogFactory<WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> implements
+public abstract class AbstractDialogFactory<WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> implements
 		IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> {
 
 	private final IGenericWidgetFactory genericWidgetFactory;

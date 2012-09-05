@@ -28,7 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
-import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IScrollComposite;
 import org.jowidgets.api.widgets.descriptor.IScrollCompositeDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
@@ -39,7 +39,7 @@ import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 
 public class ScrollCompositeFactory extends AbstractWidgetFactory implements
-		IWidgetFactory<IComposite, IScrollCompositeDescriptor> {
+		IWidgetFactory<IScrollComposite, IScrollCompositeDescriptor> {
 
 	public ScrollCompositeFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
@@ -50,7 +50,7 @@ public class ScrollCompositeFactory extends AbstractWidgetFactory implements
 	}
 
 	@Override
-	public IComposite create(final Object parentUiReference, final IScrollCompositeDescriptor descriptor) {
+	public IScrollComposite create(final Object parentUiReference, final IScrollCompositeDescriptor descriptor) {
 		final IScrollCompositeBluePrintSpi bp = getSpiBluePrintFactory().scrollComposite().setSetup(descriptor);
 		final IScrollCompositeSpi scrollContainerSpi = getSpiWidgetFactory().createScrollComposite(
 				getGenericWidgetFactory(),

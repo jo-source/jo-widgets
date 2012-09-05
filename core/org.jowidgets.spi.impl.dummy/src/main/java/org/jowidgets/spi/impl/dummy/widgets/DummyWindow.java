@@ -95,7 +95,7 @@ public class DummyWindow extends DummyContainer implements IWindowSpi {
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IDisplayCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
+	public <WIDGET_TYPE extends IDisplayCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor) {
 		return getGenericWidgetFactory().create(getUiReference(), descriptor);
 	}

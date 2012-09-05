@@ -158,8 +158,8 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		register(ISeparatorDescriptor.class, new SeparatorFactory(this, widgetsServiceProvider, bpF));
 		register(IToggleButtonDescriptor.class, new ToggleButtonFactory(this, widgetsServiceProvider, bpF));
 		register(ICheckBoxDescriptor.class, new CheckBoxFactory(this, widgetsServiceProvider, bpF));
-		register(IComboBoxSelectionDescriptor.class, new ComboBoxSelectionFactory(this, widgetsServiceProvider, bpF));
-		register(IComboBoxDescriptor.class, new ComboBoxFactory(this, widgetsServiceProvider, bpF));
+		register(IComboBoxSelectionDescriptor.class, new ComboBoxSelectionFactory<Object>(this, widgetsServiceProvider, bpF));
+		register(IComboBoxDescriptor.class, new ComboBoxFactory<Object>(this, widgetsServiceProvider, bpF));
 		register(IToolBarDescriptor.class, new ToolBarFactory(this, widgetsServiceProvider, bpF));
 		register(ITabFolderDescriptor.class, new TabFolderFactory(this, widgetsServiceProvider, bpF));
 		register(ITreeDescriptor.class, new TreeFactory(this, widgetsServiceProvider, bpF));
@@ -193,8 +193,8 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		registerUiWidget(ISplitCompositeDescriptorUi.class, ISplitCompositeUi.class, ISplitCompositeBluePrint.class);
 		registerUiWidget(IScrollCompositeDescriptorUi.class, IScrollCompositeUi.class, IScrollCompositeBluePrint.class);
 		registerUiWidget(ICompositeDescriptorUi.class, ICompositeUi.class, ICompositeBluePrint.class);
-		register(IComboBoxSelectionDescriptorUi.class, new ComboBoxSelectionFactory(this, widgetsServiceProvider, bpF));
-		register(IDialogDescriptorUi.class, new DialogFactory(this, widgetsServiceProvider, bpF));
+		registerUiWidget(IDialogDescriptorUi.class, IFrameUi.class, IFrameBluePrint.class);
+		register(IComboBoxSelectionDescriptorUi.class, new ComboBoxSelectionFactory<Object>(this, widgetsServiceProvider, bpF));
 		register(ITextFieldDescriptorUi.class, new TextFieldFactory(this, widgetsServiceProvider, bpF));
 	}
 

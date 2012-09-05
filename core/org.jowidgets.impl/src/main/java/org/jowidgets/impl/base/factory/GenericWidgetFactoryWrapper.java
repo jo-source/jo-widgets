@@ -46,46 +46,46 @@ public class GenericWidgetFactoryWrapper implements IGenericWidgetFactory {
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE create(
+	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> WIDGET_TYPE create(
 		final DESCRIPTOR_TYPE descriptor) {
 		return genericFactory.create(descriptor);
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE create(
+	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> WIDGET_TYPE create(
 		final Object parentUiReference,
 		final DESCRIPTOR_TYPE descriptor) {
 		return genericFactory.create(parentUiReference, descriptor);
 	}
 
 	@Override
-	public final <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> getFactory(
+	public final <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> getFactory(
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass) {
 		return genericFactory.getFactory(descriptorClass);
 	}
 
 	@Override
-	public final <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void register(
+	public final <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> void register(
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass,
 		final IWidgetFactory<WIDGET_TYPE, ? extends DESCRIPTOR_TYPE> widgetFactory) {
 		genericFactory.register(descriptorClass, widgetFactory);
 	}
 
 	@Override
-	public final <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void unRegister(
+	public final <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> void unRegister(
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass) {
 		genericFactory.unRegister(descriptorClass);
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void addWidgetDecorator(
+	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> void addWidgetDecorator(
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass,
 		final IDecorator<WIDGET_TYPE> decorator) {
 		genericFactory.addWidgetDecorator(descriptorClass, decorator);
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void addWidgetFactoryDecorator(
+	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> void addWidgetFactoryDecorator(
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass,
 		final IDecorator<IWidgetFactory<WIDGET_TYPE, ? extends DESCRIPTOR_TYPE>> decorator) {
 		genericFactory.addWidgetFactoryDecorator(descriptorClass, decorator);

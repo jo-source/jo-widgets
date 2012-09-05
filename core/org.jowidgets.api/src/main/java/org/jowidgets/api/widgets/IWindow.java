@@ -48,7 +48,7 @@ public interface IWindow extends IDisplay, IComponent, IWindowCommon {
 	 * @param descriptor The child windows descriptor
 	 * @return The created window
 	 */
-	<WIDGET_TYPE extends IDisplay, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
+	<WIDGET_TYPE extends IDisplay, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor);
 
 	/**

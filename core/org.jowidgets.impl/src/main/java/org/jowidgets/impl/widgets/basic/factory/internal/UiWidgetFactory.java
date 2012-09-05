@@ -38,7 +38,7 @@ import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.test.api.widgets.IWidgetUi;
 
 @SuppressWarnings("rawtypes")
-public class UiWidgetFactory<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> implements
+public class UiWidgetFactory<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> implements
 		IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> {
 
 	private final IGenericWidgetFactory genericWidgetFactory;
