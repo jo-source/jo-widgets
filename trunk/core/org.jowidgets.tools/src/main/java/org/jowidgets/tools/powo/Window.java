@@ -62,7 +62,7 @@ class Window<WIDGET_TYPE extends IWindow & IContainer, BLUE_PRINT_TYPE extends I
 	}
 
 	@Override
-	public <M_WIDGET_TYPE extends IDisplay, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends M_WIDGET_TYPE>> M_WIDGET_TYPE createChildWindow(
+	public <M_WIDGET_TYPE extends IDisplay, DESCRIPTOR_TYPE extends IWidgetDescriptor<M_WIDGET_TYPE>> M_WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor) {
 		return getWidget().createChildWindow(descriptor);
 	}

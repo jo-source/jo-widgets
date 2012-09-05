@@ -45,7 +45,8 @@ import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.tools.verify.InputVerifierComposite;
 
-public class ComboBoxFactory extends AbstractWidgetFactory implements IWidgetFactory<IComboBox<?>, IComboBoxDescriptor<?>> {
+public class ComboBoxFactory<VALUE_TYPE> extends AbstractWidgetFactory implements
+		IWidgetFactory<IComboBox<VALUE_TYPE>, IComboBoxDescriptor<VALUE_TYPE>> {
 
 	public ComboBoxFactory(
 		final IGenericWidgetFactory genericWidgetFactory,
@@ -57,7 +58,7 @@ public class ComboBoxFactory extends AbstractWidgetFactory implements IWidgetFac
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
-	public IComboBox<?> create(final Object parentUiReference, final IComboBoxDescriptor<?> descriptor) {
+	public IComboBox<VALUE_TYPE> create(final Object parentUiReference, final IComboBoxDescriptor<VALUE_TYPE> descriptor) {
 		final IComboBoxBluePrintSpi bp = getSpiBluePrintFactory().comboBox().setSetup(descriptor);
 		ComboBoxBuilderConverter.convert(bp, descriptor);
 
@@ -92,7 +93,6 @@ public class ComboBoxFactory extends AbstractWidgetFactory implements IWidgetFac
 		bp.setMask(converter.getMask());
 
 		final IComboBoxSpi widget = getSpiWidgetFactory().createComboBox(parentUiReference, bp);
-		final IComboBox<?> result = new ComboBoxImpl(widget, descriptor);
-		return result;
+		return new ComboBoxImpl<VALUE_TYPE>(widget, descriptor);
 	}
 }

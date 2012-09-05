@@ -74,14 +74,14 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE create(
+	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> WIDGET_TYPE create(
 		final DESCRIPTOR_TYPE descriptor) {
 		return create(null, descriptor);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> WIDGET_TYPE create(
+	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> WIDGET_TYPE create(
 		final Object parentUiReference,
 		final DESCRIPTOR_TYPE descriptor) {
 		return (WIDGET_TYPE) createWidget(parentUiReference, descriptor);
@@ -89,7 +89,7 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void register(
+	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> void register(
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass,
 		final IWidgetFactory<WIDGET_TYPE, ? extends DESCRIPTOR_TYPE> widgetFactory) {
 
@@ -106,7 +106,7 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
 	}
 
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void unRegister(
+	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> void unRegister(
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass) {
 		Assert.paramNotNull(descriptorClass, "descriptorClass");
 
@@ -122,13 +122,13 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> getFactory(
+	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> getFactory(
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass) {
 		return decorateFactory((IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE>) factories.get(descriptorClass), descriptorClass);
 	}
 
 	@SuppressWarnings("unchecked")
-	private <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> decorateFactory(
+	private <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> decorateFactory(
 		final IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> widgetFactory,
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass) {
 		IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> result = widgetFactory;
@@ -151,7 +151,7 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void addWidgetDecorator(
+	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> void addWidgetDecorator(
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass,
 		final IDecorator<WIDGET_TYPE> decorator) {
 		Assert.paramNotNull(descriptorClass, "descriptorClass");
@@ -167,7 +167,7 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
-	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE>> void addWidgetFactoryDecorator(
+	public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> void addWidgetFactoryDecorator(
 		final Class<? extends DESCRIPTOR_TYPE> descriptorClass,
 		final IDecorator<IWidgetFactory<WIDGET_TYPE, ? extends DESCRIPTOR_TYPE>> decorator) {
 		Assert.paramNotNull(descriptorClass, "descriptorClass");
