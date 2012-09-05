@@ -56,7 +56,6 @@ public class ComboBoxFactory<VALUE_TYPE> extends AbstractWidgetFactory implement
 		super(genericWidgetFactory, widgetsServiceProvider, bpF);
 	}
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public IComboBox<VALUE_TYPE> create(final Object parentUiReference, final IComboBoxDescriptor<VALUE_TYPE> descriptor) {
 		final IComboBoxBluePrintSpi bp = getSpiBluePrintFactory().comboBox().setSetup(descriptor);
