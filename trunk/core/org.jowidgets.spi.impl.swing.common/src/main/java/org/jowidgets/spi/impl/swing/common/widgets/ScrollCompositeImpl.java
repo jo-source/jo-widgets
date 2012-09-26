@@ -29,6 +29,7 @@ package org.jowidgets.spi.impl.swing.common.widgets;
 
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -61,7 +62,8 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 	public ScrollCompositeImpl(final IGenericWidgetFactory factory, final IScrollCompositeSetupSpi setup) {
 
 		final JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBorder(BorderConvert.convert(setup.getBorder()));
+		scrollPane.setBorder(BorderFactory.createEmptyBorder());
+		scrollPane.setViewportBorder(BorderConvert.convert(setup.getBorder()));
 		scrollPane.getViewport().setBackground(null);
 
 		final int horizontalPolicy = ScrollBarSettingsConvert.convertHorizontal(setup);
