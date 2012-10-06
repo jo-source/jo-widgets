@@ -87,7 +87,7 @@ public class ImageRegistry implements IImageRegistry {
 	@Override
 	public void registerImageConstant(final IImageConstant key, final URL url) {
 		Assert.paramNotNull(key, "key");
-		Assert.paramNotNull(url, "url");
+		Assert.paramNotNull(url, "url (for key '" + key + "')");
 		imageMap.put(key, imageHandleFactory.createImageHandle(url));
 	}
 
