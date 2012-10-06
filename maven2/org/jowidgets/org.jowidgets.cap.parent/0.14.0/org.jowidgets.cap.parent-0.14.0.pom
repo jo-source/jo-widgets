@@ -1,0 +1,252 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jowidgets</groupId>
+	<artifactId>org.jowidgets.cap.parent</artifactId>
+	<version>0.14.0</version>
+	<packaging>pom</packaging>
+	<name>org.jowidgets.cap.parent</name>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.6</java.version>
+		<maven.compiler.source>1.6</maven.compiler.source>
+		<maven.compiler.target>1.6</maven.compiler.target>
+		<jowidgets.version>0.17.0</jowidgets.version>
+	</properties>
+
+	<scm>
+		<connection>scm:svn:http://jo-client-platform.googlecode.com/svn/tags/0.14.0/trunk</connection>
+		<developerConnection>scm:svn:https://jo-client-platform.googlecode.com/svn/tags/0.14.0/parent</developerConnection>
+		<url>http://jo-client-platform.googlecode.com/svn/tags/0.14.0/trunk</url>
+	</scm>
+
+	<modules>
+		<module>../core/parent</module>
+		<module>../remoting/parent</module>
+		<module>../plugin/org.jowidgets.plugin</module>
+		<module>../service/parent</module>
+		<module>../addons/parent</module>
+		<module>../tools/parent</module>
+		<module>../util/parent</module>
+	</modules>
+
+	<distributionManagement>
+		<repository>
+			<id>jowidgets-repository</id>
+			<url>svn:https://jo-widgets.googlecode.com/svn/maven2</url>
+		</repository>
+	</distributionManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>jowidgets</id>
+			<url>http://jowidgets.org/maven2/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>2.9.1</version>
+				<configuration>
+					<configLocation>org/jowidgets/checkstyle/checkstyle-checker.xml</configLocation>
+					<suppressionsLocation>org/jowidgets/checkstyle/checkstyle-suppressions.xml</suppressionsLocation>
+					<!-- checkstyle suppressions won't work inside eclipse, so do this workaround to 
+					omit generated classes from checking inside eclipse -->
+					<excludes>**/*Messages.java</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>checkstyle</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.jowidgets</groupId>
+						<artifactId>org.jowidgets.checkstyle</artifactId>
+						<version>${jowidgets.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.5</version>
+				<dependencies>
+					<dependency>
+						<groupId>com.google.code.maven-svn-wagon</groupId>
+						<artifactId>maven-svn-wagon</artifactId>
+						<version>1.4</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+					
+					<additionalBuildcommands>
+						<buildcommand>net.sf.eclipsecs.core.CheckstyleBuilder</buildcommand>
+					</additionalBuildcommands>
+					
+					<additionalProjectnatures>
+						<projectnature>net.sf.eclipsecs.core.CheckstyleNature</projectnature>
+					</additionalProjectnatures>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1.2</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<archive>
+						<manifestFile>META-INF/MANIFEST.MF</manifestFile>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>2.1.0</version>
+				<executions>
+					<execution>
+						<id>bundle-manifest</id>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>manifest</goal>
+						</goals>
+						<configuration>
+							<manifestLocation>META-INF</manifestLocation>
+							<instructions>
+								<Export-Package>!*.internal;org.jowidgets.*</Export-Package>
+								<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+							</instructions>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<!--This plugin is used to filter some plugins for m2e. It has no influence 
+					on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.codehaus.mojo</groupId>
+										<artifactId>hibernate3-maven-plugin</artifactId>
+										<versionRange>[1.0,)</versionRange>
+										<goals>
+											<goal>hbm2ddl</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.codehaus.mojo</groupId>
+										<artifactId>exec-maven-plugin</artifactId>
+										<versionRange>[1.0.0,)</versionRange>
+										<goals>
+											<goal>java</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-dependency-plugin</artifactId>
+										<versionRange>[1.0.0,)</versionRange>
+										<goals>
+											<goal>unpack</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-antrun-plugin</artifactId>
+										<versionRange>[1.0,)</versionRange>
+										<goals>
+											<goal>run</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>
