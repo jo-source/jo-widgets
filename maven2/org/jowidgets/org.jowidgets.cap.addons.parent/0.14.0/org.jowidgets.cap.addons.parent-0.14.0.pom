@@ -1,0 +1,42 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>org.jowidgets.cap.addons.parent</artifactId>
+	<packaging>pom</packaging>
+	
+	<parent>
+		<groupId>org.jowidgets</groupId>
+		<artifactId>org.jowidgets.cap.parent</artifactId>
+		<version>0.14.0</version>
+		<relativePath>../../parent/pom.xml</relativePath>
+	</parent>
+	
+	<modules>
+		<module>../org.jowidgets.cap.service.jpa.api</module>
+		<module>../org.jowidgets.cap.service.jpa.impl</module>	
+		<module>../org.jowidgets.cap.service.hibernate</module>
+		<module>../org.jowidgets.cap.service.hibernate.oracle</module>
+		<module>../org.jowidgets.cap.service.neo4j.api</module>
+		<module>../org.jowidgets.cap.service.neo4j.impl</module>	
+		<module>../org.jowidgets.cap.service.impl.dummy</module>
+		<module>../org.jowidgets.cap.service.spring</module>
+		<module>../org.jowidgets.message.impl.akka</module>
+		<module>../org.jowidgets.security.impl.http.client</module>
+		<module>../org.jowidgets.security.impl.http.server</module>
+		<module>../org.jowidgets.cap.security.common</module>
+		<module>../org.jowidgets.cap.security.service</module>
+		<module>../org.jowidgets.cap.security.service.plugin</module>
+		<module>../org.jowidgets.cap.security.ui</module>
+		<module>../org.jowidgets.cap.security.ui.plugin</module>
+		<module>../org.jowidgets.plugin.spring</module>
+		<module>../widgets/parent</module>
+	</modules>
+	
+	<repositories>
+		<repository>
+			<id>eclipselink</id>
+			<url>http://download.eclipse.org/rt/eclipselink/maven.repo</url>
+		</repository>
+	</repositories>
+
+</project>
