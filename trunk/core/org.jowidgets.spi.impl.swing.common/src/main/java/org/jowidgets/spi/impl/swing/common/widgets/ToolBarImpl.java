@@ -69,6 +69,8 @@ public class ToolBarImpl extends SwingControl implements IToolBarSpi {
 			throw new IllegalArgumentException("Orientation '" + setup.getOrientation() + "' is not known.");
 		}
 		getUiReference().setFloatable(false);
+		getUiReference().setBorderPainted(false);
+		getUiReference().setRollover(true);
 	}
 
 	@Override
