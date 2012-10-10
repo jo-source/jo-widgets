@@ -46,6 +46,7 @@ public class ViewWithToolBar {
 
 	private final IComposite viewContent;
 
+	private final IComposite toolBarContainer;
 	private final IToolBar toolBar;
 	private final IToolBarModel toolBarModel;
 	private final IMenuModel toolBarMenuModel;
@@ -59,9 +60,12 @@ public class ViewWithToolBar {
 
 		container.setLayout(new MigLayoutDescriptor("hidemode 2", "0[grow, 0::]0", "0[]0[]0[grow, 0::]0"));
 
-		toolBar = container.add(bpf.toolBar(), "alignx right, w 0::, hidemode 2, wrap");
+		toolBarContainer = container.add(bpf.composite(), "growx, w 0::, hidemode 2, wrap");
+		toolBarContainer.setLayout(new MigLayoutDescriptor("0[grow, 0::]0[0::]0", "0[]0"));
+		toolBarContainer.add(bpf.toolBar(), "growx, growy, w 0::, h 0::");
+		toolBar = toolBarContainer.add(bpf.toolBar(), "w 0::");
 		toolBar.setModel(innerToolBarModel);
-		toolBar.setVisible(false);
+		toolBarContainer.setVisible(false);
 		final IControl toolBarSeparator = container.add(bpf.separator(), "growx, w 0::, hidemode 2, wrap");
 		toolBarSeparator.setVisible(false);
 
@@ -102,7 +106,7 @@ public class ViewWithToolBar {
 			@Override
 			public void afterChildAdded(final int index) {
 				if (innerToolBarModel.getItems().size() == 1) {
-					toolBar.setVisible(true);
+					toolBarContainer.setVisible(true);
 					toolBarSeparator.setVisible(true);
 				}
 			}
@@ -111,7 +115,7 @@ public class ViewWithToolBar {
 			public void afterChildRemoved(final int index) {
 				if (innerToolBarModel.getItems().size() == 0) {
 					innerToolBarModel.removeItem(innerToolBarModel.getItems().size());
-					toolBar.setVisible(false);
+					toolBarContainer.setVisible(false);
 					toolBarSeparator.setVisible(false);
 				}
 			}
