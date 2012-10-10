@@ -42,6 +42,8 @@ public class JoTreeNodeRenderer extends DefaultTreeCellRenderer {
 
 	private static final long serialVersionUID = -8485841535553785779L;
 
+	private static final Color TREE_BACKGROUND = javax.swing.UIManager.getDefaults().getColor("Tree.textBackground");
+
 	@Override
 	public Component getTreeCellRendererComponent(
 		final JTree tree,
@@ -68,7 +70,7 @@ public class JoTreeNodeRenderer extends DefaultTreeCellRenderer {
 				setBackgroundNonSelectionColor(ColorConvert.convert(joTreeNode.getBackgroundColor()));
 			}
 			else {
-				setBackgroundNonSelectionColor(null);
+				setBackgroundNonSelectionColor(TREE_BACKGROUND);
 			}
 
 			if (!selected && joTreeNode.getForegroundColor() != null) {
