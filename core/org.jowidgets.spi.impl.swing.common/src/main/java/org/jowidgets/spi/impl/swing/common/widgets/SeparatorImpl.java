@@ -27,6 +27,7 @@
  */
 package org.jowidgets.spi.impl.swing.common.widgets;
 
+import javax.swing.BorderFactory;
 import javax.swing.JSeparator;
 
 import org.jowidgets.spi.impl.swing.common.util.OrientationConvert;
@@ -37,6 +38,7 @@ public class SeparatorImpl extends SwingControl implements IControlSpi {
 
 	public SeparatorImpl(final ISeparatorSetupSpi setup) {
 		super(new JSeparator(OrientationConvert.convert(setup.getOrientation())));
+		getUiReference().setBorder(BorderFactory.createEmptyBorder());
 	}
 
 	@Override
