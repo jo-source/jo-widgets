@@ -34,7 +34,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
-import javax.swing.border.Border;
 import javax.swing.plaf.FontUIResource;
 
 import org.jowidgets.common.color.IColorConstant;
@@ -50,8 +49,6 @@ import org.jowidgets.spi.widgets.ITextAreaSpi;
 import org.jowidgets.spi.widgets.setup.ITextAreaSetupSpi;
 
 public class TextAreaImpl extends AbstractInputControl implements ITextAreaSpi {
-
-	private static final Border TEXT_FIELD_BORDER_RESOURCE = (Border) UIManager.get("TextField.border");
 
 	private final JTextArea textArea;
 
@@ -81,11 +78,7 @@ public class TextAreaImpl extends AbstractInputControl implements ITextAreaSpi {
 
 		if (!setup.hasBorder()) {
 			getUiReference().setBorder(BorderFactory.createEmptyBorder());
-		}
-		else {
-			if (TEXT_FIELD_BORDER_RESOURCE != null) {
-				getUiReference().setBorder(TEXT_FIELD_BORDER_RESOURCE);
-			}
+			getUiReference().setViewportBorder(BorderFactory.createEmptyBorder());
 		}
 
 		final InputObservable inputObservable;
