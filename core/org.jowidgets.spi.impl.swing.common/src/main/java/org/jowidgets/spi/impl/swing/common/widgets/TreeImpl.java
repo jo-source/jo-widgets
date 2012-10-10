@@ -292,6 +292,7 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 		tree.setShowsRootHandles(true);
 		tree.setDoubleBuffered(true);
 		tree.setRootVisible(false);
+		tree.setBorder(BorderFactory.createEmptyBorder());
 
 		ToolTipManager.sharedInstance().registerComponent(tree);
 
@@ -308,6 +309,7 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 		if (setup.isContentScrolled()) {
 			final JScrollPane result = new JScrollPane(tree);
 			result.setBorder(BorderFactory.createEmptyBorder());
+			result.setViewportBorder(BorderFactory.createEmptyBorder());
 			return result;
 		}
 		else {
