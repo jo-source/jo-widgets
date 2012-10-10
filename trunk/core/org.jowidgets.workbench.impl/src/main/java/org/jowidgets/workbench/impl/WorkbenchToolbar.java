@@ -51,7 +51,7 @@ public class WorkbenchToolbar {
 		container.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[]0"));
 
 		toolBarModel = new ToolBarModel();
-		toolBar = container.add(bpf.toolBar(), "w 0::");
+		toolBar = container.add(bpf.toolBar(), "w 0::, growx");
 		toolBar.setModel(toolBarModel);
 		container.setVisible(false);
 
