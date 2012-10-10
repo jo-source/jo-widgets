@@ -284,6 +284,8 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		this.keyObservable = new KeyObservable(keyObservableCallback);
 
 		getUiReference().addMouseListener(tableCellMenuDetectListener);
+		getUiReference().setBorder(BorderFactory.createEmptyBorder());
+		getUiReference().setViewportBorder(BorderFactory.createEmptyBorder());
 	}
 
 	@Override
