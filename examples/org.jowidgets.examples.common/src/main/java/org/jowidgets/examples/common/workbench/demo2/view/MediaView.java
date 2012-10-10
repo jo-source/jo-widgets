@@ -29,6 +29,7 @@
 package org.jowidgets.examples.common.workbench.demo2.view;
 
 import org.jowidgets.addons.icons.silkicons.SilkIcons;
+import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.IActionBuilder;
 import org.jowidgets.api.command.ICommandExecutor;
@@ -68,7 +69,8 @@ public class MediaView extends AbstractDemoView implements IView {
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
 		this.tree = container.add(bpf.tree(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		container.setBackgroundColor(tree.getBackgroundColor());
+		tree.setBackgroundColor(Colors.WHITE);
+		container.setBackgroundColor(Colors.WHITE);
 		createTreeContext(tree);
 
 		this.collapseTreeAction = createCollapseTreeAction();
