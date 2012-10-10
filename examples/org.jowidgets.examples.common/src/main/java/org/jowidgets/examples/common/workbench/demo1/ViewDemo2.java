@@ -29,6 +29,7 @@
 package org.jowidgets.examples.common.workbench.demo1;
 
 import org.jowidgets.addons.icons.silkicons.SilkIcons;
+import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.ITree;
@@ -62,7 +63,8 @@ public class ViewDemo2 extends AbstractDemoView implements IView {
 		final ITreeBluePrint treeBp = bpf.tree();
 
 		final ITree tree = container.add(treeBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		container.setBackgroundColor(tree.getBackgroundColor());
+		tree.setBackgroundColor(Colors.WHITE);
+		container.setBackgroundColor(Colors.WHITE);
 
 		final ITreeNode cdNode = tree.addNode(bpf.treeNode().setText("CD").setIcon(SilkIcons.CD));
 		final ITreeNode dvdNode = tree.addNode(bpf.treeNode().setText("DVD").setIcon(SilkIcons.DVD));
