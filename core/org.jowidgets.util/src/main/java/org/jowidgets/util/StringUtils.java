@@ -51,4 +51,7 @@ public final class StringUtils {
 		return result.toString();
 	}
 
+	public static String concatElementsSeparatedByComma(final Collection<String> strings) {
+		return concatElementsSeparatedBy(strings, ',');
+	}
 }
