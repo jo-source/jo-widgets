@@ -112,14 +112,7 @@ public final class FileUtils {
 	}
 
 	public static void tryCloseSilent(final Closeable closeable) {
-		try {
-			if (closeable != null) {
-				closeable.close();
-			}
-		}
-		catch (final IOException e) {
-			//do silent
-		}
+		IoUtils.tryCloseSilent(closeable);
 	}
 
 }
