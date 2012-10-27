@@ -35,7 +35,7 @@ import org.jowidgets.common.image.IconsSmallCommon;
 public class DefaultIconsRegisterService extends ImageConstantRegisterService {
 
 	public DefaultIconsRegisterService(final IImageRegistry imageRegistry) {
-		super("images/icons/", imageRegistry);
+		super("org/jowidgets/impl/images/icons/", imageRegistry);
 	}
 
 	public void registerImages() {
