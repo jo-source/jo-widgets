@@ -96,7 +96,7 @@ public final class TextVerifierDelegateImpl implements ITextVerifierDelegate {
 
 		if (maxLength != null) {
 			int entireLength = currentText != null ? currentText.length() : 0;
-			entireLength = entireLength + (text != null ? text.length() : 0);
+			entireLength = entireLength + (text != null ? text.length() : 0) - length;
 			if (entireLength > maxLength.intValue()) {
 				Toolkit.getDefaultToolkit().beep();
 				return false;
