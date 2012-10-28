@@ -27,9 +27,8 @@
  */
 package org.jowidgets.spi.impl.swt.common.image;
 
-import java.net.URL;
-
 import org.eclipse.swt.graphics.Image;
+import org.jowidgets.common.image.IImageDescriptor;
 import org.jowidgets.common.image.IImageHandle;
 import org.jowidgets.common.image.IImageHandleFactory;
 import org.jowidgets.spi.impl.image.ImageHandle;
@@ -37,8 +36,8 @@ import org.jowidgets.spi.impl.image.ImageHandle;
 public class SwtImageHandleFactory implements IImageHandleFactory {
 
 	@Override
-	public IImageHandle createImageHandle(final URL url) {
-		return new ImageHandle<Image>(new SwtImageLoader(url), url);
+	public IImageHandle createImageHandle(final IImageDescriptor imageDescriptor) {
+		return new ImageHandle<Image>(new SwtImageLoader(imageDescriptor), imageDescriptor);
 	}
 
 }

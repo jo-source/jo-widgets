@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, David Bauknecht
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,20 +26,25 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.javafx.image;
+package org.jowidgets.spi.impl.image;
 
-import javafx.scene.image.Image;
+import java.net.URL;
 
-import org.jowidgets.common.image.IImageDescriptor;
-import org.jowidgets.common.image.IImageHandle;
-import org.jowidgets.common.image.IImageHandleFactory;
-import org.jowidgets.spi.impl.image.ImageHandle;
+import org.jowidgets.common.image.IUrlImageDescriptor;
+import org.jowidgets.util.Assert;
 
-public class JavafxImageHandleFactory implements IImageHandleFactory {
+final class UrlImageDescriptorImpl implements IUrlImageDescriptor {
+
+	private final URL url;
+
+	UrlImageDescriptorImpl(final URL url) {
+		Assert.paramNotNull(url, "url");
+		this.url = url;
+	}
 
 	@Override
-	public IImageHandle createImageHandle(final IImageDescriptor imageDescriptor) {
-		return new ImageHandle<Image>(new JavafxImageFactory(imageDescriptor), imageDescriptor);
+	public URL getImageUrl() {
+		return url;
 	}
 
 }

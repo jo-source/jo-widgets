@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.image.IImageDescriptor;
 import org.jowidgets.common.image.IImageHandle;
 import org.jowidgets.common.image.IImageHandleFactory;
 import org.jowidgets.common.image.IImageRegistry;
@@ -88,7 +89,14 @@ public class ImageRegistry implements IImageRegistry {
 	public void registerImageConstant(final IImageConstant key, final URL url) {
 		Assert.paramNotNull(key, "key");
 		Assert.paramNotNull(url, "url (for key '" + key + "')");
-		imageMap.put(key, imageHandleFactory.createImageHandle(url));
+		registerImageConstant(key, new UrlImageDescriptorImpl(url));
+	}
+
+	@Override
+	public void registerImageConstant(final IImageConstant key, final IImageDescriptor descriptor) {
+		Assert.paramNotNull(key, "key");
+		Assert.paramNotNull(descriptor, "descriptor (for key '" + key + "')");
+		imageMap.put(key, imageHandleFactory.createImageHandle(descriptor));
 	}
 
 	@Override

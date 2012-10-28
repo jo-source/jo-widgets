@@ -30,6 +30,8 @@ package org.jowidgets.util.io;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public final class IoUtils {
 
@@ -43,6 +45,19 @@ public final class IoUtils {
 		}
 		catch (final IOException e) {
 			//do silent
+		}
+	}
+
+	public static void inputStreamToOutputStream(final InputStream inputStream, final OutputStream outputStream) {
+		try {
+			final byte[] buf = new byte[1024];
+			int length;
+			while ((length = inputStream.read(buf)) > 0) {
+				outputStream.write(buf, 0, length);
+			}
+		}
+		catch (final Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 

@@ -27,21 +27,20 @@
  */
 package org.jowidgets.spi.impl.dummy.image;
 
-import java.net.URL;
-
+import org.jowidgets.common.image.IImageDescriptor;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDImage;
 import org.jowidgets.spi.impl.image.IImageFactory;
 
 public class DummyImageLoader implements IImageFactory<UIDImage> {
 
-	private final URL url;
+	private final IImageDescriptor imageDescriptor;
 
-	public DummyImageLoader(final URL url) {
-		this.url = url;
+	public DummyImageLoader(final IImageDescriptor imageDescriptor) {
+		this.imageDescriptor = imageDescriptor;
 	}
 
 	@Override
 	public UIDImage createImage() {
-		return new UIDImage(url);
+		return new UIDImage(imageDescriptor);
 	}
 }

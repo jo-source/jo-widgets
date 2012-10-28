@@ -27,8 +27,7 @@
  */
 package org.jowidgets.common.image;
 
-import java.net.URL;
 
 public interface IImageHandleFactory {
-	IImageHandle createImageHandle(final URL url);
+	IImageHandle createImageHandle(IImageDescriptor imageDescriptor);
 }
