@@ -27,30 +27,51 @@
  */
 package org.jowidgets.spi.impl.javafx.image;
 
-import java.net.URL;
+import java.io.IOException;
+import java.io.InputStream;
 
 import javafx.scene.image.Image;
 
+import org.jowidgets.common.image.IImageDescriptor;
+import org.jowidgets.common.image.IStreamImageDescriptor;
+import org.jowidgets.common.image.IUrlImageDescriptor;
 import org.jowidgets.spi.impl.image.IImageFactory;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.io.IoUtils;
 
 public class JavafxImageFactory implements IImageFactory<Image> {
 
-	private final URL url;
+	private final IImageDescriptor imageDescriptor;
 
-	public JavafxImageFactory(final URL url) {
-		Assert.paramNotNull(url, "url");
-		this.url = url;
+	public JavafxImageFactory(final IImageDescriptor imageDescriptor) {
+		Assert.paramNotNull(imageDescriptor, "imageDescriptor");
+		this.imageDescriptor = imageDescriptor;
 	}
 
 	@Override
 	public Image createImage() {
+		InputStream inputStream = null;
 		try {
-			return new Image(this.url.toString());
+			inputStream = getInputStream();
+			return new Image(inputStream);
 		}
-		catch (final Exception e) {
+		catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
+		finally {
+			IoUtils.tryCloseSilent(inputStream);
+		}
+	}
 
+	private InputStream getInputStream() throws IOException {
+		if (imageDescriptor instanceof IUrlImageDescriptor) {
+			return ((IUrlImageDescriptor) imageDescriptor).getImageUrl().openStream();
+		}
+		else if (imageDescriptor instanceof IStreamImageDescriptor) {
+			return ((IStreamImageDescriptor) imageDescriptor).getInputStream();
+		}
+		else {
+			throw new IllegalArgumentException("Image decriptor type '" + imageDescriptor + "' is not known");
+		}
 	}
 }

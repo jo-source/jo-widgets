@@ -28,7 +28,9 @@
 
 package org.jowidgets.spi.impl.dummy.dummyui;
 
-import java.net.URL;
+import org.jowidgets.common.image.IImageDescriptor;
+import org.jowidgets.common.image.IStreamImageDescriptor;
+import org.jowidgets.common.image.IUrlImageDescriptor;
 
 public class UIDImage {
 
@@ -38,8 +40,16 @@ public class UIDImage {
 		this.description = description;
 	}
 
-	public UIDImage(final URL url) {
-		this.description = "URL: " + url.toString();
+	public UIDImage(final IImageDescriptor imageDescriptor) {
+		if (imageDescriptor instanceof IUrlImageDescriptor) {
+			this.description = "URL: " + ((IUrlImageDescriptor) imageDescriptor).getImageUrl();
+		}
+		else if (imageDescriptor instanceof IStreamImageDescriptor) {
+			this.description = "INPUT STREAM: " + ((IStreamImageDescriptor) imageDescriptor).getInputStream();
+		}
+		else {
+			throw new IllegalArgumentException("Image decriptor type '" + imageDescriptor + "' is not known");
+		}
 	}
 
 	public String getDescription() {

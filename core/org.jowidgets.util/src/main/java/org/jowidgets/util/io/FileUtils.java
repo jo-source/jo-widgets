@@ -78,19 +78,6 @@ public final class FileUtils {
 		}
 	}
 
-	public static void inputStreamToOutputStream(final InputStream inputStream, final OutputStream outputStream) {
-		try {
-			final byte[] buf = new byte[1024];
-			int length;
-			while ((length = inputStream.read(buf)) > 0) {
-				outputStream.write(buf, 0, length);
-			}
-		}
-		catch (final Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
 	public static void copyFile(final File source, final File target) {
 		Assert.paramNotNull(source, "source");
 		Assert.paramNotNull(target, "target");
@@ -109,6 +96,10 @@ public final class FileUtils {
 			tryCloseSilent(sourceChannel);
 			tryCloseSilent(targetChannel);
 		}
+	}
+
+	public static void inputStreamToOutputStream(final InputStream inputStream, final OutputStream outputStream) {
+		IoUtils.inputStreamToOutputStream(inputStream, outputStream);
 	}
 
 	public static void tryCloseSilent(final Closeable closeable) {

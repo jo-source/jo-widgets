@@ -29,30 +29,50 @@ package org.jowidgets.spi.impl.swing.common.image;
 
 import java.awt.Image;
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
+import org.jowidgets.common.image.IImageDescriptor;
+import org.jowidgets.common.image.IStreamImageDescriptor;
+import org.jowidgets.common.image.IUrlImageDescriptor;
 import org.jowidgets.spi.impl.image.IImageFactory;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.io.IoUtils;
 
 public class SwingImageLoader implements IImageFactory<Image> {
 
-	private final URL url;
+	private final IImageDescriptor imageDescriptor;
 
-	public SwingImageLoader(final URL url) {
-		Assert.paramNotNull(url, "url");
-		this.url = url;
+	public SwingImageLoader(final IImageDescriptor imageDescriptor) {
+		Assert.paramNotNull(imageDescriptor, "imageDescriptor");
+		this.imageDescriptor = imageDescriptor;
 	}
 
 	@Override
 	public Image createImage() {
+		InputStream inputStream = null;
 		try {
-			return ImageIO.read(url);
+			inputStream = getInputStream();
+			return ImageIO.read(inputStream);
 		}
 		catch (final IOException e) {
 			throw new RuntimeException(e);
 		}
+		finally {
+			IoUtils.tryCloseSilent(inputStream);
+		}
+	}
 
+	private InputStream getInputStream() throws IOException {
+		if (imageDescriptor instanceof IUrlImageDescriptor) {
+			return ((IUrlImageDescriptor) imageDescriptor).getImageUrl().openStream();
+		}
+		else if (imageDescriptor instanceof IStreamImageDescriptor) {
+			return ((IStreamImageDescriptor) imageDescriptor).getInputStream();
+		}
+		else {
+			throw new IllegalArgumentException("Image decriptor type '" + imageDescriptor + "' is not known");
+		}
 	}
 }
