@@ -41,6 +41,6 @@ public interface IFileChooserSetupBuilderCommon<INSTANCE_TYPE extends IFileChoos
 
 	INSTANCE_TYPE setTitle(String title);
 
-	INSTANCE_TYPE setFilterList(List<IFileChooserFilter> filterList);
+	INSTANCE_TYPE setFilterList(List<? extends IFileChooserFilter> filterList);
 
 }
