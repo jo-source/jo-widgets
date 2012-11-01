@@ -55,6 +55,7 @@ import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.common.widgets.controller.IKeyEvent;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.i18n.api.IMessage;
+import org.jowidgets.i18n.api.MessageReplacer;
 import org.jowidgets.tools.controller.InputObservable;
 import org.jowidgets.tools.controller.KeyAdapter;
 import org.jowidgets.tools.validation.CompoundValidator;
@@ -141,7 +142,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 					boolean validated = false;
 					if (converter.getStringValidator() != null) {
 						final IValidationResult stringResult = converter.getStringValidator().validate(element).withContext(
-								Toolkit.getMessageReplacer().replace(ELEMENT.get(), String.valueOf(index)));
+								MessageReplacer.replace(ELEMENT.get(), String.valueOf(index)));
 						if (!stringResult.isValid()) {
 							validated = true;
 							builder.addResult(stringResult);
@@ -150,7 +151,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 					if (!validated) {
 						final IValidationResult elementResult = setup.getElementValidator().validate(
 								converter.convertToObject(element)).withContext(
-								Toolkit.getMessageReplacer().replace(ELEMENT.get(), String.valueOf(index)));
+								MessageReplacer.replace(ELEMENT.get(), String.valueOf(index)));
 						builder.addResult(elementResult);
 					}
 

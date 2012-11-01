@@ -26,13 +26,11 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.message;
+package org.jowidgets.i18n.api;
 
-import java.util.List;
+import java.util.Collection;
 
-public final class MR {
-
-	private MR() {}
+public interface IMessageReplacer {
 
 	/**
 	 * Replaces all variables (%1, ..., %n) with the given string parameters
@@ -42,9 +40,7 @@ public final class MR {
 	 * 
 	 * @return A new string where the variables was replaced with the parameters
 	 */
-	public static String replace(final String message, final String... parameter) {
-		return MessageReplacer.replace(message, parameter);
-	}
+	String replace(String message, String... parameter);
 
 	/**
 	 * Replaces all variables (%1, ..., %n) with the given string parameters
@@ -54,7 +50,6 @@ public final class MR {
 	 * 
 	 * @return A new string where the variables was replaced with the parameters
 	 */
-	public static String replace(final String message, final List<String> parameter) {
-		return MessageReplacer.replace(message, parameter);
-	}
+	String replace(String message, Collection<String> parameter);
+
 }
