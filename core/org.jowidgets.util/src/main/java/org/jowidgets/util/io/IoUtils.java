@@ -28,10 +28,13 @@
 
 package org.jowidgets.util.io;
 
+import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import org.jowidgets.util.Assert;
 
 public final class IoUtils {
 
@@ -46,6 +49,21 @@ public final class IoUtils {
 		catch (final IOException e) {
 			//do silent
 		}
+	}
+
+	public static byte[] toByteArray(final InputStream inputStream) {
+		Assert.paramNotNull(inputStream, "inputStream");
+		final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		inputStreamToOutputStream(inputStream, outputStream);
+		try {
+			outputStream.flush();
+		}
+		catch (final IOException e) {
+			throw new RuntimeException(e);
+		}
+		final byte[] result = outputStream.toByteArray();
+		tryCloseSilent(outputStream);
+		return result;
 	}
 
 	public static void inputStreamToOutputStream(final InputStream inputStream, final OutputStream outputStream) {
