@@ -56,6 +56,7 @@ import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.common.widgets.controller.IKeyEvent;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.i18n.api.IMessage;
+import org.jowidgets.i18n.api.MessageReplacer;
 import org.jowidgets.impl.layout.ListLayout;
 import org.jowidgets.impl.layout.tablelayout.TableRowLayout;
 import org.jowidgets.tools.controller.InputObservable;
@@ -122,12 +123,12 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 				for (final Row row : valuesContainer.rows) {
 					final IInputControl<INPUT_TYPE> inputControl = row.inputControl;
 					final IValidationResult controlResult = inputControl.validate().withContext(
-							Toolkit.getMessageReplacer().replace(ELEMENT.get(), String.valueOf(index)));
+							MessageReplacer.replace(ELEMENT.get(), String.valueOf(index)));
 					if (inputControl.hasModifications() && !controlResult.isValid()) {
 						builder.addResult(controlResult);
 					}
 					else if (!controlResult.isValid()) {
-						builder.addResult(ValidationResult.infoError(Toolkit.getMessageReplacer().replace(
+						builder.addResult(ValidationResult.infoError(MessageReplacer.replace(
 								PLEASE_EDIT_ELEMENT.get(),
 								String.valueOf(index))));
 					}
@@ -429,7 +430,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 
 		public void setValueIndex(final int index) {
 			valueIndex.setText(String.valueOf(index));
-			removeButton.setToolTipText(Toolkit.getMessageReplacer().replace(REMOVE_ELEMENT.get(), String.valueOf(index)));
+			removeButton.setToolTipText(MessageReplacer.replace(REMOVE_ELEMENT.get(), String.valueOf(index)));
 			layout.invalidateControl(valueIndex);
 		}
 

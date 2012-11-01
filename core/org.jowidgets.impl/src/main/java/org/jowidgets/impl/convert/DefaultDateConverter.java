@@ -33,8 +33,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.jowidgets.api.convert.IConverter;
-import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.mask.ITextMask;
+import org.jowidgets.i18n.api.MessageReplacer;
 import org.jowidgets.tools.converter.AbstractConverter;
 import org.jowidgets.util.Assert;
 import org.jowidgets.validation.IValidationResult;
@@ -97,9 +97,7 @@ final class DefaultDateConverter extends AbstractConverter<Date> implements ICon
 					}
 					catch (final ParseException e) {
 						if (formatHint != null) {
-							return ValidationResult.error(Toolkit.getMessageReplacer().replace(
-									"Must have the format '%1'",
-									formatHint));
+							return ValidationResult.error(MessageReplacer.replace("Must have the format '%1'", formatHint));
 						}
 						else {
 							return ValidationResult.error("Is not a valid date or time");
