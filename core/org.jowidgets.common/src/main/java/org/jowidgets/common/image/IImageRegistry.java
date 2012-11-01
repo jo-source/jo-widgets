@@ -35,6 +35,8 @@ public interface IImageRegistry {
 
 	void registerImageUrl(final IImageUrlProvider imageUrlProvider);
 
+	void registerImageStream(final IImageStreamProvider imageStreamProvider);
+
 	void registerImageConstant(final IImageConstant key, final IImageHandle imageHandle);
 
 	void registerImageConstant(final IImageConstant key, final IImageConstant substitude);

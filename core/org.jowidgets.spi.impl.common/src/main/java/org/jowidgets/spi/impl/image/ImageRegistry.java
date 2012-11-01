@@ -36,6 +36,7 @@ import org.jowidgets.common.image.IImageDescriptor;
 import org.jowidgets.common.image.IImageHandle;
 import org.jowidgets.common.image.IImageHandleFactory;
 import org.jowidgets.common.image.IImageRegistry;
+import org.jowidgets.common.image.IImageStreamProvider;
 import org.jowidgets.common.image.IImageUrlProvider;
 import org.jowidgets.util.Assert;
 
@@ -58,13 +59,24 @@ public class ImageRegistry implements IImageRegistry {
 
 	@Override
 	public synchronized IImageHandle getImageHandle(final IImageConstant key) {
-		return imageMap.get(key);
+		IImageHandle result = imageMap.get(key);
+		if (result == null && key instanceof IImageDescriptor) {
+			registerImageConstant(key, (IImageDescriptor) key);
+			result = imageMap.get(key);
+		}
+		return result;
 	}
 
 	@Override
 	public void registerImageUrl(final IImageUrlProvider imageUrlProvider) {
 		Assert.paramNotNull(imageUrlProvider, "imageUrlProvider");
 		registerImageConstant(imageUrlProvider, imageUrlProvider.getImageUrl());
+	}
+
+	@Override
+	public void registerImageStream(final IImageStreamProvider imageStreamProvider) {
+		Assert.paramNotNull(imageStreamProvider, "imageStreamProvider");
+		registerImageConstant(imageStreamProvider, (IImageDescriptor) imageStreamProvider);
 	}
 
 	@Override
