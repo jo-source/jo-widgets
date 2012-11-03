@@ -31,21 +31,23 @@ import java.net.URL;
 
 public interface IImageRegistry {
 
-	IImageHandle getImageHandle(final IImageConstant key);
+	IImageHandle getImageHandle(IImageConstant key);
 
-	void registerImageUrl(final IImageUrlProvider imageUrlProvider);
+	void registerImageUrl(IImageUrlProvider imageUrlProvider);
 
-	void registerImageStream(final IImageStreamProvider imageStreamProvider);
+	void registerImageStream(IImageStreamProvider imageStreamProvider);
 
-	void registerImageConstant(final IImageConstant key, final IImageHandle imageHandle);
+	void registerImageProvider(IImageProvider imageProvider);
 
-	void registerImageConstant(final IImageConstant key, final IImageConstant substitude);
+	void registerImageConstant(IImageConstant key, IImageHandle imageHandle);
 
-	void registerImageConstant(final IImageConstant key, IImageDescriptor url);
+	void registerImageConstant(IImageConstant key, IImageConstant substitude);
 
-	void registerImageConstant(final IImageConstant key, URL url);
+	void registerImageConstant(IImageConstant key, IImageDescriptor url);
 
-	void registerImageConstant(final IImageConstant key, IImageUrlProvider urlProvider);
+	void registerImageConstant(IImageConstant key, URL url);
+
+	void registerImageConstant(IImageConstant key, IImageUrlProvider urlProvider);
 
 	<T extends Enum<?> & IImageUrlProvider> void registerImageEnum(final Class<T> enumClass);
 

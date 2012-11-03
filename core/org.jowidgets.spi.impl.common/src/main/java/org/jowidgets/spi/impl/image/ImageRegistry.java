@@ -35,6 +35,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.image.IImageDescriptor;
 import org.jowidgets.common.image.IImageHandle;
 import org.jowidgets.common.image.IImageHandleFactory;
+import org.jowidgets.common.image.IImageProvider;
 import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.image.IImageStreamProvider;
 import org.jowidgets.common.image.IImageUrlProvider;
@@ -65,6 +66,12 @@ public class ImageRegistry implements IImageRegistry {
 			result = imageMap.get(key);
 		}
 		return result;
+	}
+
+	@Override
+	public void registerImageProvider(final IImageProvider imageProvider) {
+		Assert.paramNotNull(imageProvider, "imageProvider");
+		registerImageConstant((IImageConstant) imageProvider, (IImageDescriptor) imageProvider);
 	}
 
 	@Override
