@@ -96,6 +96,10 @@ public final class Assert {
 		paramInBounds(0, rightBoundary, value, name);
 	}
 
+	public static void paramInBounds(final int rightBoundary, final int value, final String name) {
+		paramInBounds((long) 0, (long) rightBoundary, (long) value, name);
+	}
+
 	public static void paramInBounds(final long leftBoundary, final long rightBoundary, final long value, final String name) {
 		if (value < leftBoundary || value > rightBoundary) {
 			throw new IndexOutOfBoundsException("The parameter '"
@@ -108,6 +112,10 @@ public final class Assert {
 				+ value
 				+ "'.");
 		}
+	}
+
+	public static void paramInBounds(final int leftBoundary, final int rightBoundary, final int value, final String name) {
+		paramInBounds((long) leftBoundary, (long) rightBoundary, (long) value, name);
 	}
 
 }
