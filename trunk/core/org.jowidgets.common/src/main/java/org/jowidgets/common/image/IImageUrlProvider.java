@@ -27,7 +27,6 @@
  */
 package org.jowidgets.common.image;
 
-
-public interface IImageUrlProvider extends IImageConstant, IUrlImageDescriptor {
+public interface IImageUrlProvider extends IImageProvider, IUrlImageDescriptor {
 
 }
