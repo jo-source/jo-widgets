@@ -30,6 +30,7 @@ package org.jowidgets.api.widgets.blueprint.builder;
 import java.util.Collection;
 
 import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.widgets.descriptor.setup.ICollectionInputDialogSetup;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.validation.IValidator;
@@ -42,6 +43,8 @@ public interface ICollectionInputFieldSetupBuilder<INSTANCE_TYPE extends ICollec
 	INSTANCE_TYPE setEditButtonIcon(IImageConstant icon);
 
 	INSTANCE_TYPE setConverter(IConverter<ELEMENT_TYPE> converter);
+
+	INSTANCE_TYPE setConverter(IObjectStringConverter<ELEMENT_TYPE> converter);
 
 	INSTANCE_TYPE setElementValidator(IValidator<ELEMENT_TYPE> validator);
 

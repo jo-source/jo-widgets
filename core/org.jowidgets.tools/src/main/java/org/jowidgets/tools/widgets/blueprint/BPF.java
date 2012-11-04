@@ -306,6 +306,14 @@ public final class BPF {
 		return Toolkit.getBluePrintFactory().inputField(converter);
 	}
 
+	public static <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IObjectStringConverter<INPUT_TYPE> converter) {
+		return Toolkit.getBluePrintFactory().inputField(converter);
+	}
+
+	public static <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField() {
+		return Toolkit.getBluePrintFactory().inputField();
+	}
+
 	public static IMessageDialogBluePrint messageDialog() {
 		return Toolkit.getBluePrintFactory().messageDialog();
 	}
@@ -348,6 +356,15 @@ public final class BPF {
 	public static <ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField(
 		final IConverter<ELEMENT_TYPE> converter) {
 		return Toolkit.getBluePrintFactory().collectionInputField(converter);
+	}
+
+	public static <ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField(
+		final IObjectStringConverter<ELEMENT_TYPE> converter) {
+		return Toolkit.getBluePrintFactory().collectionInputField(converter);
+	}
+
+	public static <ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField() {
+		return Toolkit.getBluePrintFactory().collectionInputField();
 	}
 
 	public static <ELEMENT_TYPE> ICombinedCollectionInputFieldBluePrint<ELEMENT_TYPE> combinedCollectionInputField(

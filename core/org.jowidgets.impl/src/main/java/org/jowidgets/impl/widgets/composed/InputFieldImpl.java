@@ -28,6 +28,7 @@
 package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.descriptor.setup.IInputFieldSetup;
@@ -39,6 +40,7 @@ import org.jowidgets.tools.validation.CompoundValidator;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
+import org.jowidgets.util.Assert;
 import org.jowidgets.util.EmptyCompatibleEquivalence;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
@@ -48,22 +50,38 @@ import org.jowidgets.validation.Validator;
 public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInputField<VALUE_TYPE> {
 
 	private final IConverter<VALUE_TYPE> converter;
+	private final IObjectStringConverter<VALUE_TYPE> objectStringConverter;
 	private final CompoundValidator<VALUE_TYPE> compoundValidator;
 	private final IValidator<String> stringValidator;
 	private final ValidationCache validationCache;
 	private final InputObservable inputObservable;
 
+	private VALUE_TYPE value;
 	private String lastUnmodifiedTextValue;
 
+	@SuppressWarnings("unchecked")
 	public InputFieldImpl(final ITextControl textField, final IInputFieldSetup<VALUE_TYPE> setup) {
 
 		super(textField);
 
 		this.inputObservable = new InputObservable();
 		this.compoundValidator = new CompoundValidator<VALUE_TYPE>();
-		this.converter = setup.getConverter();
 
-		if (converter.getStringValidator() != null) {
+		Assert.paramNotNull(setup.getConverter(), "setup.getConverter()");
+		if (setup.getConverter() instanceof IConverter<?>) {
+			this.converter = (IConverter<VALUE_TYPE>) setup.getConverter();
+			this.objectStringConverter = converter;
+		}
+		else if (setup.getConverter() instanceof IObjectStringConverter<?>) {
+			this.converter = null;
+			this.objectStringConverter = (IObjectStringConverter<VALUE_TYPE>) setup.getConverter();
+			getWidget().setEditable(false);
+		}
+		else {
+			throw new IllegalArgumentException("Converter type'" + setup.getConverter().getClass() + "' is not supported.");
+		}
+
+		if (converter != null && converter.getStringValidator() != null) {
 			this.stringValidator = converter.getStringValidator();
 		}
 		else {
@@ -122,16 +140,22 @@ public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInput
 
 	@Override
 	public VALUE_TYPE getValue() {
-		return converter.convertToObject(getWidget().getText());
+		if (converter != null) {
+			return converter.convertToObject(getWidget().getText());
+		}
+		else {
+			return value;
+		}
 	}
 
 	@Override
 	public void setValue(final VALUE_TYPE value) {
+		this.value = value;
 		if (value == null) {
 			getWidget().setText(null);
 		}
 		else {
-			getWidget().setText(converter.convertToString(value));
+			getWidget().setText(objectStringConverter.convertToString(value));
 		}
 	}
 
@@ -182,7 +206,9 @@ public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInput
 
 	@Override
 	public void setEditable(final boolean editable) {
-		getWidget().setEditable(editable);
+		if (converter != null) {
+			getWidget().setEditable(editable);
+		}
 	}
 
 	@Override

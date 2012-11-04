@@ -29,7 +29,6 @@ package org.jowidgets.api.widgets.descriptor.setup;
 
 import java.util.Collection;
 
-import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 import org.jowidgets.validation.IValidator;
@@ -41,7 +40,7 @@ public interface ICollectionInputFieldSetup<ELEMENT_TYPE> extends IInputComponen
 	IImageConstant getEditButtonIcon();
 
 	@Mandatory
-	IConverter<ELEMENT_TYPE> getConverter();
+	Object getConverter();
 
 	@Mandatory
 	IValidator<ELEMENT_TYPE> getElementValidator();
