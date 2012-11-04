@@ -34,6 +34,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IComposite;
@@ -62,6 +63,7 @@ import org.jowidgets.tools.validation.CompoundValidator;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
+import org.jowidgets.util.Assert;
 import org.jowidgets.util.EmptyCheck;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
@@ -80,6 +82,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 	private final IInputField<String> textField;
 	private final IButton editButton;
 	private final IConverter<ELEMENT_TYPE> converter;
+	private final IObjectStringConverter<ELEMENT_TYPE> objectStringConverter;
 	private final Character separator;
 	private final Character maskingCharacter;
 	private final ValidationCache validationCache;
@@ -90,15 +93,29 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 	private Dimension lastDialogSize;
 
 	private final Collection<String> value;
+	private final Collection<ELEMENT_TYPE> elementTypeValue;
 
 	private boolean editable; // TODO MG replace by getter when implemented
 
+	@SuppressWarnings("unchecked")
 	public CollectionInputFieldImpl(final IComposite composite, final ICollectionInputFieldDescriptor<ELEMENT_TYPE> setup) {
 		super(composite);
 
 		this.filterEmptyValues = setup.isFilterEmptyValues();
 		this.dublicatesAllowed = setup.getDublicatesAllowed();
-		this.converter = setup.getConverter();
+
+		Assert.paramNotNull(setup.getConverter(), "setup.getConverter()");
+		if (setup.getConverter() instanceof IConverter<?>) {
+			this.converter = (IConverter<ELEMENT_TYPE>) setup.getConverter();
+			this.objectStringConverter = converter;
+		}
+		else if (setup.getConverter() instanceof IObjectStringConverter<?>) {
+			this.converter = null;
+			this.objectStringConverter = (IObjectStringConverter<ELEMENT_TYPE>) setup.getConverter();
+		}
+		else {
+			throw new IllegalArgumentException("Converter type'" + setup.getConverter().getClass() + "' is not supported.");
+		}
 
 		if (setup.getSeparator() != null) {
 			this.separator = setup.getSeparator();
@@ -111,6 +128,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 		final ICollectionInputDialogSetup<ELEMENT_TYPE> inputDialogSetup = setup.getCollectionInputDialogSetup();
 
 		this.value = new LinkedList<String>();
+		this.elementTypeValue = new LinkedList<ELEMENT_TYPE>();
 		this.inputObservable = new InputObservable();
 		this.compoundValidator = new CompoundValidator<Collection<ELEMENT_TYPE>>();
 
@@ -133,25 +151,27 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 			}
 		});
 
+		final IValidator<ELEMENT_TYPE> elementValidator = setup.getElementValidator();
 		this.validationCache = new ValidationCache(new IValidationResultCreator() {
 			@Override
 			public IValidationResult createValidationResult() {
 				final IValidationResultBuilder builder = ValidationResult.builder();
 				int index = 1;
 				for (final String element : value) {
-					boolean validated = false;
-					if (converter.getStringValidator() != null) {
-						final IValidationResult stringResult = converter.getStringValidator().validate(element).withContext(
-								MessageReplacer.replace(ELEMENT.get(), String.valueOf(index)));
+					boolean invalid = false;
+					final String context = MessageReplacer.replace(ELEMENT.get(), String.valueOf(index));
+
+					if (converter != null && converter.getStringValidator() != null) {
+						final IValidator<String> stringValidator = converter.getStringValidator();
+						final IValidationResult stringResult = stringValidator.validate(element).withContext(context);
 						if (!stringResult.isValid()) {
-							validated = true;
-							builder.addResult(stringResult);
+							invalid = true;
 						}
+						builder.addResult(stringResult);
 					}
-					if (!validated) {
-						final IValidationResult elementResult = setup.getElementValidator().validate(
-								converter.convertToObject(element)).withContext(
-								MessageReplacer.replace(ELEMENT.get(), String.valueOf(index)));
+					if (converter != null && !invalid) {
+						final ELEMENT_TYPE convertedElement = converter.convertToObject(element);
+						final IValidationResult elementResult = elementValidator.validate(convertedElement).withContext(context);
 						builder.addResult(elementResult);
 					}
 
@@ -213,6 +233,10 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 		if (setup.getValidator() != null) {
 			compoundValidator.addValidator(setup.getValidator());
 		}
+
+		if (converter == null) {
+			textField.setEditable(false);
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -266,29 +290,31 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 	@Override
 	public void setValue(final Collection<ELEMENT_TYPE> value) {
 		this.value.clear();
+		this.elementTypeValue.clear();
 		if (EmptyCheck.isEmpty(value)) {
 			textField.setValue(null);
 		}
 		else {
+			this.elementTypeValue.addAll(value);
 			final String maskingString = String.valueOf(maskingCharacter.charValue());
 			final String separatorString = String.valueOf(separator.charValue());
 			final StringBuilder valueString = new StringBuilder();
 			for (final ELEMENT_TYPE element : value) {
-				final String converted = converter.convertToString(element);
+				final String converted = objectStringConverter.convertToString(element);
 				this.value.add(converted);
 
 				if (converted != null) {
 					final String masked = converted.replace(maskingString, maskingString + maskingString);
-					if (converted.contains(separatorString) || converted.startsWith(" ")) { //$NON-NLS-1$
+					if (converted.contains(separatorString) || converted.startsWith(" ")) {
 						valueString.append(maskingString + masked + maskingString);
 					}
 					else {
 						valueString.append(masked);
 					}
 				}
-				valueString.append(separator + " "); //$NON-NLS-1$
+				valueString.append(separator + " ");
 			}
-			valueString.replace(valueString.length() - 2, valueString.length(), ""); //$NON-NLS-1$
+			valueString.replace(valueString.length() - 2, valueString.length(), "");
 			textField.setValue(valueString.toString());
 		}
 	}
@@ -296,11 +322,16 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 	@Override
 	public Collection<ELEMENT_TYPE> getValue() {
 		final List<ELEMENT_TYPE> result = new LinkedList<ELEMENT_TYPE>();
-		for (final String element : value) {
-			final ELEMENT_TYPE converted = converter.convertToObject(element);
-			if (!filterEmptyValues || (!EmptyCheck.isEmpty(converted) && !EmptyCheck.isEmpty(element))) {
-				result.add(converted);
+		if (converter != null) {
+			for (final String element : value) {
+				final ELEMENT_TYPE converted = converter.convertToObject(element);
+				if (!filterEmptyValues || (!EmptyCheck.isEmpty(converted) && !EmptyCheck.isEmpty(element))) {
+					result.add(converted);
+				}
 			}
+		}
+		else {
+			result.addAll(elementTypeValue);
 		}
 		return result;
 	}
@@ -323,7 +354,9 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 	@Override
 	public void setEditable(final boolean editable) {
 		this.editable = editable;
-		textField.setEditable(editable);
+		if (converter != null) {
+			textField.setEditable(editable);
+		}
 		if (editButton != null) {
 			editButton.setEnabled(editable && textField.isEnabled());
 		}

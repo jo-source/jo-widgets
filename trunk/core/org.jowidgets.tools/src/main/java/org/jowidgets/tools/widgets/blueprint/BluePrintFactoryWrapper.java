@@ -192,6 +192,16 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	}
 
 	@Override
+	public <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IObjectStringConverter<INPUT_TYPE> converter) {
+		return bluePrintFactory.inputField(converter);
+	}
+
+	@Override
+	public <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField() {
+		return bluePrintFactory.inputField();
+	}
+
+	@Override
 	public IMessageDialogBluePrint messageDialog() {
 		return bluePrintFactory.messageDialog();
 	}
@@ -770,6 +780,17 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	public <ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField(
 		final IConverter<ELEMENT_TYPE> converter) {
 		return bluePrintFactory.collectionInputField(converter);
+	}
+
+	@Override
+	public <ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField(
+		final IObjectStringConverter<ELEMENT_TYPE> converter) {
+		return bluePrintFactory.collectionInputField(converter);
+	}
+
+	@Override
+	public <ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField() {
+		return bluePrintFactory.collectionInputField();
 	}
 
 	@Override

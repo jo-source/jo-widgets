@@ -53,15 +53,23 @@ public class InputFieldFactory<VALUE_TYPE> implements IWidgetFactory<IInputField
 		this.genericFactory = genericFactory;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public IInputField<VALUE_TYPE> create(final Object parentUiReference, final IInputFieldDescriptor<VALUE_TYPE> descriptor) {
 
 		final BluePrintFactory bpF = new BluePrintFactory();
 
-		final IConverter<VALUE_TYPE> converter = descriptor.getConverter();
+		final IConverter<VALUE_TYPE> converter;
+		final Object converterObject = descriptor.getConverter();
+		if (converterObject instanceof IConverter<?>) {
+			converter = (IConverter<VALUE_TYPE>) descriptor.getConverter();
+		}
+		else {
+			converter = null;
+		}
 
 		final IInputVerifier inputVerifier = descriptor.getInputVerifier();
-		final IInputVerifier converterInputVerifier = converter.getInputVerifier();
+		final IInputVerifier converterInputVerifier = converter != null ? converter.getInputVerifier() : null;
 
 		InputVerifierComposite tfInputVerifier = null;
 		if (inputVerifier != null || converterInputVerifier != null) {
@@ -75,7 +83,7 @@ public class InputFieldFactory<VALUE_TYPE> implements IWidgetFactory<IInputField
 		}
 
 		final List<String> regExps = descriptor.getAcceptingRegExps();
-		final String converterRegExp = converter.getAcceptingRegExp();
+		final String converterRegExp = converter != null ? converter.getAcceptingRegExp() : null;
 
 		final List<String> tfRegExps = new LinkedList<String>();
 		tfRegExps.addAll(regExps);
@@ -87,7 +95,9 @@ public class InputFieldFactory<VALUE_TYPE> implements IWidgetFactory<IInputField
 		textFieldBluePrint.setSetup(descriptor);
 		textFieldBluePrint.setInputVerifier(tfInputVerifier);
 		textFieldBluePrint.setAcceptingRegExps(tfRegExps);
-		textFieldBluePrint.setMask(converter.getMask());
+		if (converter != null) {
+			textFieldBluePrint.setMask(converter.getMask());
+		}
 		textFieldBluePrint.setEditable(descriptor.isEditable());
 		textFieldBluePrint.setMaxLength(descriptor.getMaxLength());
 		textFieldBluePrint.setPasswordPresentation(descriptor.isPasswordPresentation());

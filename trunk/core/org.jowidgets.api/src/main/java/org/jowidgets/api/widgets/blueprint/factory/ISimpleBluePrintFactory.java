@@ -30,6 +30,7 @@ package org.jowidgets.api.widgets.blueprint.factory;
 import java.util.Collection;
 
 import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.login.ILoginInterceptor;
 import org.jowidgets.api.password.IPasswordChangeExecutor;
 import org.jowidgets.api.widgets.IInputComponent;
@@ -66,7 +67,11 @@ public interface ISimpleBluePrintFactory extends IBasicBluePrintFactory {
 
 	IValidationResultLabelBluePrint validationResultLabel();
 
+	<INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField();
+
 	<INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IConverter<INPUT_TYPE> converter);
+
+	<INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IObjectStringConverter<INPUT_TYPE> converter);
 
 	IMessageDialogBluePrint messageDialog();
 
@@ -89,6 +94,11 @@ public interface ISimpleBluePrintFactory extends IBasicBluePrintFactory {
 		ICollectionInputControlSetup<ELEMENT_TYPE> setup);
 
 	<ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField(IConverter<ELEMENT_TYPE> converter);
+
+	<ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField(
+		IObjectStringConverter<ELEMENT_TYPE> converter);
+
+	<ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField();
 
 	<ELEMENT_TYPE> ICombinedCollectionInputFieldBluePrint<ELEMENT_TYPE> combinedCollectionInputField(
 		ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> elementTypeCreator,

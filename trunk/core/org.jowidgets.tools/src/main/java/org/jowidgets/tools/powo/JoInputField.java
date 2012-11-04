@@ -29,11 +29,13 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
+import org.jowidgets.util.Assert;
 
 public class JoInputField<VALUE_TYPE> extends InputControl<IInputField<VALUE_TYPE>, IInputFieldBluePrint<VALUE_TYPE>, VALUE_TYPE> implements
 		IInputControl<VALUE_TYPE> {
@@ -42,14 +44,40 @@ public class JoInputField<VALUE_TYPE> extends InputControl<IInputField<VALUE_TYP
 		this(bluePrint(converter));
 	}
 
+	public JoInputField(final IObjectStringConverter<VALUE_TYPE> converter) {
+		this(bluePrint(converter));
+	}
+
 	public JoInputField(final IInputFieldDescriptor<VALUE_TYPE> descriptor) {
-		super(bluePrint(descriptor.getConverter()).setSetup(descriptor));
+		super(bluePrint(descriptor));
+	}
+
+	@SuppressWarnings("unchecked")
+	private static <VALUE_TYPE> IInputFieldBluePrint<VALUE_TYPE> bluePrint(final IInputFieldDescriptor<VALUE_TYPE> descriptor) {
+		final Object converterObject = descriptor.getConverter();
+		Assert.paramNotNull(descriptor.getConverter(), "descriptor.getConverter()");
+		if (converterObject instanceof IConverter<?>) {
+			final IConverter<VALUE_TYPE> converter = (IConverter<VALUE_TYPE>) converterObject;
+			return bluePrint(converter).setSetup(descriptor);
+		}
+		else if (converterObject instanceof IObjectStringConverter<?>) {
+			final IObjectStringConverter<VALUE_TYPE> converter = (IObjectStringConverter<VALUE_TYPE>) converterObject;
+			return bluePrint(converter).setSetup(descriptor);
+		}
+
+		else {
+			throw new IllegalArgumentException("Converter type'" + descriptor.getConverter().getClass() + "' is not supported.");
+		}
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	//some static blue print creation for convenience purpose from here
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static <VALUE_TYPE> IInputFieldBluePrint<VALUE_TYPE> bluePrint(final IConverter<VALUE_TYPE> converter) {
+		return Toolkit.getBluePrintFactory().inputField(converter);
+	}
+
+	public static <VALUE_TYPE> IInputFieldBluePrint<VALUE_TYPE> bluePrint(final IObjectStringConverter<VALUE_TYPE> converter) {
 		return Toolkit.getBluePrintFactory().inputField(converter);
 	}
 

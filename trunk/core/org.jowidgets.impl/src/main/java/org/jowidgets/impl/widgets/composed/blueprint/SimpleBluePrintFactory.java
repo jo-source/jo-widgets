@@ -30,8 +30,10 @@ package org.jowidgets.impl.widgets.composed.blueprint;
 import java.util.Collection;
 
 import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.login.ILoginInterceptor;
 import org.jowidgets.api.password.IPasswordChangeExecutor;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputControlBluePrint;
@@ -135,8 +137,21 @@ public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISi
 	@Override
 	public final <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IConverter<INPUT_TYPE> converter) {
 		Assert.paramNotNull(converter, "converter");
-
 		final IInputFieldBluePrint<INPUT_TYPE> result = createProxy(IInputFieldBluePrint.class);
+		return result.setConverter(converter);
+	}
+
+	@Override
+	public <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IObjectStringConverter<INPUT_TYPE> converter) {
+		Assert.paramNotNull(converter, "converter");
+		final IInputFieldBluePrint<INPUT_TYPE> result = createProxy(IInputFieldBluePrint.class);
+		return result.setConverter(converter);
+	}
+
+	@Override
+	public <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField() {
+		final IInputFieldBluePrint<INPUT_TYPE> result = createProxy(IInputFieldBluePrint.class);
+		final IObjectStringConverter<INPUT_TYPE> converter = Toolkit.getConverterProvider().toStringConverter();
 		return result.setConverter(converter);
 	}
 
@@ -179,6 +194,23 @@ public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISi
 		final IConverter<ELEMENT_TYPE> converter) {
 		Assert.paramNotNull(converter, "converter");
 		final ICollectionInputFieldBluePrint<ELEMENT_TYPE> result = createProxy(ICollectionInputFieldBluePrint.class);
+		result.setConverter(converter);
+		return result;
+	}
+
+	@Override
+	public <ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField(
+		final IObjectStringConverter<ELEMENT_TYPE> converter) {
+		Assert.paramNotNull(converter, "converter");
+		final ICollectionInputFieldBluePrint<ELEMENT_TYPE> result = createProxy(ICollectionInputFieldBluePrint.class);
+		result.setConverter(converter);
+		return result;
+	}
+
+	@Override
+	public <ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField() {
+		final ICollectionInputFieldBluePrint<ELEMENT_TYPE> result = createProxy(ICollectionInputFieldBluePrint.class);
+		final IObjectStringConverter<ELEMENT_TYPE> converter = Toolkit.getConverterProvider().toStringConverter();
 		result.setConverter(converter);
 		return result;
 	}
