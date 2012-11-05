@@ -3,11 +3,12 @@
   <groupId>org.jowidgets</groupId>
   <artifactId>org.jowidgets.cap.addons.widgets.graph.impl.prefuse.swt</artifactId>
   <versioning>
-    <release>0.14.0</release>
+    <release>0.15.0</release>
     <versions>
       <version>0.13.0</version>
       <version>0.14.0</version>
+      <version>0.15.0</version>
     </versions>
-    <lastUpdated>20121006220722</lastUpdated>
+    <lastUpdated>20121105233253</lastUpdated>
   </versioning>
 </metadata>
