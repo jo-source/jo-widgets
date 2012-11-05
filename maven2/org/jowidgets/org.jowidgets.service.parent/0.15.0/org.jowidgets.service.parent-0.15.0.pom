@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>org.jowidgets.service.parent</artifactId>
+	<packaging>pom</packaging>
+	
+	<parent>
+		<groupId>org.jowidgets</groupId>
+		<artifactId>org.jowidgets.cap.parent</artifactId>
+		<version>0.15.0</version>
+		<relativePath>../../parent/pom.xml</relativePath>
+	</parent>
+	
+	<modules>
+		<module>../org.jowidgets.service</module>
+		<module>../org.jowidgets.security</module>
+		<module>../org.jowidgets.message.api</module>
+		<module>../org.jowidgets.message.impl.http.client</module>	
+		<module>../org.jowidgets.message.impl.http.server</module>	
+		<module>../org.jowidgets.message.impl.socket</module>	
+		<module>../org.jowidgets.invocation.common.api</module>	
+		<module>../org.jowidgets.invocation.client.api</module>
+		<module>../org.jowidgets.invocation.server.api</module>
+		<module>../org.jowidgets.invocation.common.impl</module>	
+		<module>../org.jowidgets.invocation.client.impl</module>
+		<module>../org.jowidgets.invocation.server.impl</module>
+		<module>../org.jowidgets.invocation.service.common.api</module>	
+		<module>../org.jowidgets.invocation.service.server.api</module>
+		<module>../org.jowidgets.invocation.service.client.api</module>	
+		<module>../org.jowidgets.invocation.service.server.impl</module>
+		<module>../org.jowidgets.invocation.service.client.impl</module>				
+	</modules>
+
+</project>
