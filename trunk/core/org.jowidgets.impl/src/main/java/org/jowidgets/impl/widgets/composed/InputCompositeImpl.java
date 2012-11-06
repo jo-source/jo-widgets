@@ -209,7 +209,9 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 		contentCreator.setValue(value);
 		resetModificationState();
 		validationCache.setDirty();
-		validationLabel.resetValidation();
+		if (validationLabel != null) {
+			validationLabel.resetValidation();
+		}
 	}
 
 	@Override
