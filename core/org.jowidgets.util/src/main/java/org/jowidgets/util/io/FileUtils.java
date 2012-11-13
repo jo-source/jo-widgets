@@ -102,6 +102,45 @@ public final class FileUtils {
 		IoUtils.inputStreamToOutputStream(inputStream, outputStream);
 	}
 
+	public static String getRelativePath(final File rootPath, final File path) {
+		Assert.paramNotNull(rootPath, "rootPath");
+		Assert.paramNotNull(path, "path");
+		return getRelativePath(rootPath.getAbsolutePath(), path.getAbsolutePath());
+	}
+
+	public static String getRelativePath(final String rootPath, final String path) {
+		Assert.paramNotNull(rootPath, "rootPath");
+		Assert.paramNotNull(path, "path");
+		final String regExp = getRegExp(File.separator);
+		final String[] rootPathSplit = rootPath.split(regExp);
+		final String[] pathSplit = path.split(regExp);
+		if (pathSplit.length < rootPathSplit.length) {
+			throw new IllegalArgumentException("The root path is not a root path of the path");
+		}
+		for (int i = 0; i < rootPathSplit.length; i++) {
+			if (!rootPathSplit[i].equals(pathSplit[i])) {
+				throw new IllegalArgumentException("The root path is not a root path of the path");
+			}
+		}
+		final StringBuilder result = new StringBuilder();
+		for (int i = rootPathSplit.length; i < pathSplit.length; i++) {
+			result.append(pathSplit[i]);
+			if (i < pathSplit.length - 1) {
+				result.append(File.separator);
+			}
+		}
+		return result.toString();
+	}
+
+	private static String getRegExp(final String separator) {
+		if ("\\".equals(separator)) {
+			return "\\" + separator;
+		}
+		else {
+			return separator;
+		}
+	}
+
 	public static void tryCloseSilent(final Closeable closeable) {
 		IoUtils.tryCloseSilent(closeable);
 	}
