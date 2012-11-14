@@ -60,17 +60,17 @@ public class TextSeparatorImpl extends CompositeBasedControl implements ITextLab
 		final ITextLabelDescriptor textLabelDescriptor = bpF.textLabel().setSetup(descriptor);
 
 		if (AlignmentHorizontal.LEFT.equals(descriptor.getAlignment())) {
-			this.composite.setLayout(new MigLayoutDescriptor("0[][grow]", "0[]0"));
+			this.composite.setLayout(new MigLayoutDescriptor("0[][grow]0", "0[]0"));
 			textLabelWidget = composite.add(textLabelDescriptor, "");
 			composite.add(bpF.separator(), "growx");
 		}
 		else if (AlignmentHorizontal.RIGHT.equals(descriptor.getAlignment())) {
-			this.composite.setLayout(new MigLayoutDescriptor("0[grow][]", "0[]0"));
+			this.composite.setLayout(new MigLayoutDescriptor("0[grow][]0", "0[]0"));
 			composite.add(bpF.separator(), "growx");
 			textLabelWidget = composite.add(textLabelDescriptor, "");
 		}
 		else if (AlignmentHorizontal.CENTER.equals(descriptor.getAlignment())) {
-			this.composite.setLayout(new MigLayoutDescriptor("0[grow][][grow]", "0[]0"));
+			this.composite.setLayout(new MigLayoutDescriptor("0[grow][][grow]0", "0[]0"));
 			composite.add(bpF.separator(), "growx");
 			textLabelWidget = composite.add(textLabelDescriptor, "");
 			composite.add(bpF.separator(), "growx");
