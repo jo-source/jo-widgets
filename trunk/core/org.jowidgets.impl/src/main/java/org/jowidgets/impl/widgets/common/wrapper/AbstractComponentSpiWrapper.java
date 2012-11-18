@@ -47,6 +47,7 @@ import org.jowidgets.common.widgets.controller.IKeyListener;
 import org.jowidgets.common.widgets.controller.IMouseListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.spi.widgets.IComponentSpi;
+import org.jowidgets.util.NullCompatibleEquivalence;
 
 public abstract class AbstractComponentSpiWrapper extends WidgetSpiWrapper implements IComponentCommon {
 
@@ -159,7 +160,9 @@ public abstract class AbstractComponentSpiWrapper extends WidgetSpiWrapper imple
 
 	@Override
 	public void setSize(final Dimension size) {
-		getWidget().setSize(size);
+		if (!NullCompatibleEquivalence.equals(size, getSize())) {
+			getWidget().setSize(size);
+		}
 	}
 
 	@Override
@@ -168,16 +171,18 @@ public abstract class AbstractComponentSpiWrapper extends WidgetSpiWrapper imple
 	}
 
 	public void setSize(final int width, final int height) {
-		getWidget().setSize(new Dimension(width, height));
+		setSize(new Dimension(width, height));
 	}
 
 	public void setPosition(final int x, final int y) {
-		getWidget().setPosition(new Position(x, y));
+		setPosition(new Position(x, y));
 	}
 
 	@Override
 	public void setPosition(final Position position) {
-		getWidget().setPosition(position);
+		if (!NullCompatibleEquivalence.equals(position, getPosition())) {
+			getWidget().setPosition(position);
+		}
 	}
 
 	public Rectangle getBounds() {
@@ -185,8 +190,8 @@ public abstract class AbstractComponentSpiWrapper extends WidgetSpiWrapper imple
 	}
 
 	public void setBounds(final Rectangle bounds) {
-		getWidget().setPosition(bounds.getPosition());
-		getWidget().setSize(bounds.getSize());
+		setPosition(bounds.getPosition());
+		setSize(bounds.getSize());
 	}
 
 	@Override
