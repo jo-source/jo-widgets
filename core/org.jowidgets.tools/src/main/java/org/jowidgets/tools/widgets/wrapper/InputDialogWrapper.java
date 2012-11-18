@@ -29,6 +29,7 @@
 package org.jowidgets.tools.widgets.wrapper;
 
 import org.jowidgets.api.widgets.IInputDialog;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
@@ -89,6 +90,11 @@ public class InputDialogWrapper<INPUT_TYPE> extends WindowWrapper implements IIn
 	@Override
 	public void setEditable(final boolean editable) {
 		getWidget().setEditable(editable);
+	}
+
+	@Override
+	public void setMinSize(final Dimension minSize) {
+		getWidget().setMinSize(minSize);
 	}
 
 	@Override

@@ -40,6 +40,7 @@ import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.IInputDialogSetup;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IComponentListener;
 import org.jowidgets.common.widgets.controller.IFocusListener;
@@ -138,6 +139,11 @@ public class InputDialogImpl<INPUT_TYPE> extends WindowWrapper implements IInput
 			this.okPressed = false;
 		}
 		dialogWidget.setVisible(visible);
+	}
+
+	@Override
+	public void setMinSize(final Dimension minSize) {
+		dialogWidget.setMinSize(minSize);
 	}
 
 	@Override
