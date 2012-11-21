@@ -480,16 +480,18 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 	@Override
 	public void setColumnPermutation(final List<Integer> permutation) {
-		final int[] columnOrder = new int[permutation.size() + 1];
-		columnOrder[0] = 0;
-		int i = 1;
-		for (final Integer permutatedIndex : permutation) {
-			columnOrder[i] = permutatedIndex.intValue() + 1;
-			i++;
+		if (!table.isDisposed()) {
+			final int[] columnOrder = new int[permutation.size() + 1];
+			columnOrder[0] = 0;
+			int i = 1;
+			for (final Integer permutatedIndex : permutation) {
+				columnOrder[i] = permutatedIndex.intValue() + 1;
+				i++;
+			}
+			table.setRedraw(false);
+			table.setColumnOrder(columnOrder);
+			table.setRedraw(true);
 		}
-		table.setRedraw(false);
-		table.setColumnOrder(columnOrder);
-		table.setRedraw(true);
 	}
 
 	@Override
