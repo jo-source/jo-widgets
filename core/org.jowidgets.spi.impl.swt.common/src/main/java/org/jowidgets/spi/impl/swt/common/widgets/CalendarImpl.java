@@ -82,10 +82,7 @@ public class CalendarImpl extends SwtControl implements ICalendarSpi {
 		Assert.paramNotNull(date, "date");
 		final Calendar calendar = new GregorianCalendar();
 		calendar.setTime(date);
-		getUiReference().setDate(
-				calendar.get(Calendar.YEAR),
-				calendar.get(Calendar.MONTH) - 1,
-				calendar.get(Calendar.DAY_OF_MONTH));
+		getUiReference().setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 	}
 
 	@Override
