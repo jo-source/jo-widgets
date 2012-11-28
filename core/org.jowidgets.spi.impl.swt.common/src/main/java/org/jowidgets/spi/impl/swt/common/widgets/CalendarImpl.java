@@ -59,7 +59,7 @@ public class CalendarImpl extends SwtControl implements ICalendarSpi {
 			public void widgetSelected(final SelectionEvent e) {
 				final Calendar calendar = new GregorianCalendar();
 				calendar.set(Calendar.YEAR, getUiReference().getYear());
-				calendar.set(Calendar.MONTH, getUiReference().getMonth() + 1);
+				calendar.set(Calendar.MONTH, getUiReference().getMonth());
 				calendar.set(Calendar.DAY_OF_MONTH, getUiReference().getDay());
 				calendar.set(Calendar.HOUR_OF_DAY, 0);
 				calendar.set(Calendar.MINUTE, 0);
