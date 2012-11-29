@@ -54,4 +54,17 @@ public final class StringUtils {
 	public static String concatElementsSeparatedByComma(final Collection<String> strings) {
 		return concatElementsSeparatedBy(strings, ',');
 	}
+
+	public static String truncateToLength(final String string, final int length) {
+		Assert.paramInBounds(Integer.MAX_VALUE, length, "length");
+		if (EmptyCheck.isEmpty(string)) {
+			return string;
+		}
+		if (string.length() <= length) {
+			return string;
+		}
+		else {
+			return string.substring(0, length - 4) + " ...";
+		}
+	}
 }
