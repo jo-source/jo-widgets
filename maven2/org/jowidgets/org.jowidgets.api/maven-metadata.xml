@@ -3,7 +3,7 @@
   <groupId>org.jowidgets</groupId>
   <artifactId>org.jowidgets.api</artifactId>
   <versioning>
-    <release>0.18.0</release>
+    <release>0.19.0</release>
     <versions>
       <version>0.0.16-SNAPSHOT</version>
       <version>0.0.15-SNAPSHOT</version>
@@ -44,7 +44,8 @@
       <version>0.16.0</version>
       <version>0.17.0</version>
       <version>0.18.0</version>
+      <version>0.19.0</version>
     </versions>
-    <lastUpdated>20121105190522</lastUpdated>
+    <lastUpdated>20121202113529</lastUpdated>
   </versioning>
 </metadata>
