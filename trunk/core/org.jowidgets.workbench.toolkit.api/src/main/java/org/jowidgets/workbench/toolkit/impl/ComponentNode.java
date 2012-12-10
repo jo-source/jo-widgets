@@ -150,7 +150,7 @@ class ComponentNode extends ComponentNodeContainer implements IComponentNode {
 			icon = model.getIcon();
 		}
 		if (expanded != model.isExpanded()) {
-			context.setExpanded(expanded);
+			context.setExpanded(model.isExpanded());
 			expanded = model.isExpanded();
 		}
 		if (selected != model.isSelected()) {
