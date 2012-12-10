@@ -31,6 +31,7 @@ package org.jowidgets.workbench.toolkit.api;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.controller.ITreeNodeObservable;
+import org.jowidgets.util.wrapper.IWrapper;
 import org.jowidgets.workbench.api.IComponentNodeDescriptor;
 import org.jowidgets.workbench.api.IDisposeCallback;
 
@@ -38,7 +39,8 @@ public interface IComponentNodeModel extends
 		IComponentNodeDescriptor,
 		IComponentNodeContainerModel,
 		IWorkbenchPartModel,
-		ITreeNodeObservable {
+		ITreeNodeObservable,
+		IWrapper<IComponentNodeModel> {
 
 	boolean isSelected();
 
@@ -87,20 +89,5 @@ public interface IComponentNodeModel extends
 	IWorkbenchApplicationModel getApplication();
 
 	IWorkbenchModel getWorkbench();
-
-	/**
-	 * Gets the unwrapped instance of this object.
-	 * 
-	 * If this interface is implemented directly without wrapping another implementation,
-	 * 'this' will be returned (return this;);
-	 * 
-	 * If this object will be wrapped (wrapper pattern) to extend functionality, the wrapper have to return
-	 * the getUnwrappedThis() of the wrapped object.
-	 * 
-	 * So this method will always return the base instance nevertheless how many wrapping layers exists.
-	 * 
-	 * @return The unwrapped instance of this object
-	 */
-	IComponentNodeModel getUnwrappedThis();
 
 }

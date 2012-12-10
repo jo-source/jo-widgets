@@ -156,7 +156,7 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 		final TreePath[] selectedPaths = parentTree.getTree().getSelectionPaths();
 		if (selectedPaths != null) {
 			for (final TreePath selectedPath : selectedPaths) {
-				if (selectedPath.isDescendant(thisPath)) {
+				if (thisPath.isDescendant(selectedPath)) {
 					return true;
 				}
 			}

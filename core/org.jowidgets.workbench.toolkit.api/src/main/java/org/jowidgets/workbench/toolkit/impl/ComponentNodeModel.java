@@ -193,11 +193,11 @@ class ComponentNodeModel extends ComponentNodeContainerModel implements ICompone
 	public void setParentContainer(final IComponentNodeContainerModel parentContainer) {
 		if (this.parentContainer != parentContainer) {
 			if (this.parentContainer != null) {
-				this.parentContainer.remove(getUnwrappedThis());
+				this.parentContainer.remove(this);
 			}
 			if (parentContainer != null) {
-				if (!parentContainer.getChildren().contains(getUnwrappedThis())) {
-					parentContainer.addChild(getUnwrappedThis());
+				if (!parentContainer.getChildren().contains(this)) {
+					parentContainer.addChild(this);
 				}
 			}
 			this.parentContainer = parentContainer;
@@ -260,7 +260,7 @@ class ComponentNodeModel extends ComponentNodeContainerModel implements ICompone
 	}
 
 	@Override
-	public IComponentNodeModel getUnwrappedThis() {
+	public IComponentNodeModel unwrap() {
 		return this;
 	}
 
@@ -280,4 +280,23 @@ class ComponentNodeModel extends ComponentNodeContainerModel implements ICompone
 		workbenchPartModelObservable.fireModelChanged();
 	}
 
+	@Override
+	public int hashCode() {
+		return unwrap().hashCode();
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof IComponentNodeModel)) {
+			return false;
+		}
+		final IComponentNodeModel other = (IComponentNodeModel) obj;
+		return unwrap() == other.unwrap();
+	}
 }

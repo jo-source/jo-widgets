@@ -339,8 +339,8 @@ public class ComponentNodeModel implements IComponentNodeModel {
 	}
 
 	@Override
-	public final IComponentNodeModel getUnwrappedThis() {
-		return model.getUnwrappedThis();
+	public final IComponentNodeModel unwrap() {
+		return model.unwrap();
 	}
 
 	public static IComponentNodeModelBuilder builder() {
