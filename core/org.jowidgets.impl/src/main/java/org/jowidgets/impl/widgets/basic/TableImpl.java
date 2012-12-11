@@ -87,7 +87,7 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 		this.controlDelegate = new ControlDelegate(widgetSpi, this);
 		this.dataModel = setup.getDataModel();
 		this.columnModel = setup.getColumnModel();
-		this.maxPackWidth = setup.getMaxPackWidth();
+		this.maxPackWidth = setup.getColumnMaxPackWidth();
 		this.modelSpiAdapter = modelSpiAdapter;
 
 		this.cellObservable = new TableCellObservableSpiAdapter();
