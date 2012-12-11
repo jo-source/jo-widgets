@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jowidgets.api.controller.IDisposeListener;
+import org.jowidgets.api.model.table.ITableColumn;
 import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -70,6 +71,7 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 	private final ControlDelegate controlDelegate;
 	private final ITableDataModel dataModel;
 	private final ITableColumnModel columnModel;
+	private final int maxPackWidth;
 
 	private final TableCellObservableSpiAdapter cellObservable;
 	private final TableCellPopupDetectionObservableSpiAdapter cellPopupDetectionObservable;
@@ -85,6 +87,7 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 		this.controlDelegate = new ControlDelegate(widgetSpi, this);
 		this.dataModel = setup.getDataModel();
 		this.columnModel = setup.getColumnModel();
+		this.maxPackWidth = setup.getMaxPackWidth();
 		this.modelSpiAdapter = modelSpiAdapter;
 
 		this.cellObservable = new TableCellObservableSpiAdapter();
@@ -262,6 +265,33 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 	}
 
 	@Override
+	public void pack(final TablePackPolicy policy) {
+		getWidget().pack(policy);
+		afterPack(null);
+	}
+
+	@Override
+	public void pack(final int columnIndex, final TablePackPolicy policy) {
+		final int convertedIndex = modelSpiAdapter.convertModelToView(columnIndex);
+		getWidget().pack(convertedIndex, policy);
+		afterPack(columnIndex);
+	}
+
+	private void afterPack(final Integer columnIndex) {
+		if (columnIndex != null) {
+			final ITableColumn column = columnModel.getColumn(columnIndex.intValue());
+			if (column.getWidth() > maxPackWidth) {
+				column.setWidth(maxPackWidth);
+			}
+		}
+		else {
+			for (int i = 0; i < getColumnCount(); i++) {
+				afterPack(Integer.valueOf(i));
+			}
+		}
+	}
+
+	@Override
 	public void resetColumnPermutation() {
 		final List<Integer> permutation = new ArrayList<Integer>(getColumnCount());
 		for (int i = 0; i < getColumnCount(); i++) {
@@ -273,16 +303,6 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 	@Override
 	public void setEditable(final boolean editable) {
 		getWidget().setEditable(editable);
-	}
-
-	@Override
-	public void pack(final TablePackPolicy policy) {
-		getWidget().pack(policy);
-	}
-
-	@Override
-	public void pack(final int columnIndex, final TablePackPolicy policy) {
-		getWidget().pack(modelSpiAdapter.convertModelToView(columnIndex), policy);
 	}
 
 	@Override
