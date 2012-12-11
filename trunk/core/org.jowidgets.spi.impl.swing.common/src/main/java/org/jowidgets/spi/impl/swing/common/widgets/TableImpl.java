@@ -449,7 +449,14 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			maxWidth = Math.max(maxWidth, (int) comp.getPreferredSize().getWidth());
 		}
 
-		column.setPreferredWidth(maxWidth + 5);
+		maxWidth = maxWidth + 5;
+
+		column.setPreferredWidth(maxWidth);
+
+		setWidthInvokedOnModel = true;
+		columnModel.getColumn(column.getModelIndex()).setWidth(maxWidth);
+		setWidthInvokedOnModel = false;
+		tableColumnObservable.fireColumnResized(new TableColumnResizeEvent(column.getModelIndex(), maxWidth));
 	}
 
 	private RowRange getRowRange(final TablePackPolicy policy) {
@@ -974,7 +981,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 				for (int i = 0; i < columnIndices.length; i++) {
 					final int columnIndex = columnIndices[i];
 					final int modelIndex = table.convertColumnIndexToView(columnIndex);
-					final int viewWidth = table.getColumnModel().getColumn(modelIndex).getWidth();
+					final int viewWidth = table.getColumnModel().getColumn(modelIndex).getPreferredWidth();
 					final int modelWidth = columnModel.getColumn(columnIndex).getWidth();
 					if (viewWidth != modelWidth) {
 						table.getColumnModel().getColumn(modelIndex).setPreferredWidth(modelWidth);

@@ -40,4 +40,7 @@ public interface ITableSetup extends IComponentSetup, ITableSetupCommon {
 	@Mandatory
 	boolean isEditable();
 
+	@Mandatory
+	int getMaxPackWidth();
+
 }
