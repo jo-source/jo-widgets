@@ -101,6 +101,12 @@ public class WorkbenchModelBuilder implements IWorkbenchModelBuilder {
 	}
 
 	@Override
+	public IWorkbenchModelBuilder setInitialMaximized(final boolean maximized) {
+		this.builder.setInitialMaximized(maximized);
+		return this;
+	}
+
+	@Override
 	public final IWorkbenchModelBuilder setInitialPosition(final Position initialiPosition) {
 		this.builder.setInitialPosition(initialiPosition);
 		return this;

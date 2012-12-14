@@ -39,6 +39,11 @@ public interface IWorkbenchDescriptor extends IWorkbenchPart {
 	Dimension getInitialDimension();
 
 	/**
+	 * @return True is the application should start maximized initially, false otherwise
+	 */
+	boolean isInitialMaximized();
+
+	/**
 	 * @return The initial position or null
 	 */
 	Position getInitialPosition();
