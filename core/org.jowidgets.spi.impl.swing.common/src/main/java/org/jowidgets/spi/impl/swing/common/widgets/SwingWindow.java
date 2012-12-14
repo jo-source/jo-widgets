@@ -92,7 +92,6 @@ public class SwingWindow extends SwingContainer implements IWindowSpi {
 			public void windowOpened(final WindowEvent e) {}
 
 		});
-
 	}
 
 	@Override

@@ -65,4 +65,5 @@ public class FrameImpl extends WindowImpl implements IFrameUiSpi {
 	public boolean isTestable() {
 		return true;
 	}
+
 }

@@ -368,4 +368,21 @@ public class JavafxWindow implements IWindowSpi {
 		return windowObservableDelegate;
 	}
 
+	public void setMaximized(final boolean maximized) {
+		//TODO MG not supported yet by java fx
+	}
+
+	public boolean isMaximized() {
+		//TODO MG not supported yet by java fx
+		return false;
+	}
+
+	public void setIconfied(final boolean iconfied) {
+		getUiReference().setIconified(iconfied);
+	}
+
+	public boolean isIconfied() {
+		return getUiReference().isIconified();
+	}
+
 }

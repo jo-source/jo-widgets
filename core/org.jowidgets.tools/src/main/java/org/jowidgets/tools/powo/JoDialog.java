@@ -45,6 +45,8 @@ public class JoDialog extends Window<IFrame, IDialogBluePrint> implements IFrame
 	private JoMenuBar menuBar;
 	private IMenuBarModel menuBarModel;
 	private IButton defaultButton;
+	private Boolean maximized;
+	private Boolean iconfied;
 
 	JoDialog(final IFrame widget) {
 		this(bluePrint());
@@ -95,6 +97,12 @@ public class JoDialog extends Window<IFrame, IDialogBluePrint> implements IFrame
 		}
 		if (defaultButton != null) {
 			getWidget().setDefaultButton(defaultButton);
+		}
+		if (maximized != null) {
+			widget.setMaximized(maximized.booleanValue());
+		}
+		if (iconfied != null) {
+			widget.setIconfied(iconfied.booleanValue());
 		}
 	}
 
@@ -185,6 +193,46 @@ public class JoDialog extends Window<IFrame, IDialogBluePrint> implements IFrame
 		}
 		else {
 			getBluePrint().setTitle(title);
+		}
+	}
+
+	@Override
+	public void setMaximized(final boolean maximized) {
+		if (isInitialized()) {
+			getWidget().setMaximized(maximized);
+		}
+		else {
+			this.maximized = Boolean.valueOf(maximized);
+		}
+	}
+
+	@Override
+	public boolean isMaximized() {
+		if (isInitialized()) {
+			return getWidget().isMaximized();
+		}
+		else {
+			return maximized != null ? maximized.booleanValue() : false;
+		}
+	}
+
+	@Override
+	public void setIconfied(final boolean iconfied) {
+		if (isInitialized()) {
+			getWidget().setIconfied(iconfied);
+		}
+		else {
+			this.iconfied = Boolean.valueOf(iconfied);
+		}
+	}
+
+	@Override
+	public boolean isIconfied() {
+		if (isInitialized()) {
+			return getWidget().isIconfied();
+		}
+		else {
+			return iconfied != null ? iconfied.booleanValue() : false;
 		}
 	}
 

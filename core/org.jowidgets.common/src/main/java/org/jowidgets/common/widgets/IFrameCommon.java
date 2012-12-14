@@ -35,4 +35,12 @@ public interface IFrameCommon extends IWindowCommon, IContainerCommon {
 
 	void setTitle(String title);
 
+	void setMaximized(boolean maximized);
+
+	boolean isMaximized();
+
+	void setIconfied(boolean iconfied);
+
+	boolean isIconfied();
+
 }

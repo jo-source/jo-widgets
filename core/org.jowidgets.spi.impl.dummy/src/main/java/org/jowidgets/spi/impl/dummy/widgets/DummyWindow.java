@@ -94,6 +94,22 @@ public class DummyWindow extends DummyContainer implements IWindowSpi {
 		return getUiReference().getSize();
 	}
 
+	public void setMaximized(final boolean maximized) {
+		getUiReference().setMaximized(maximized);
+	}
+
+	public boolean isMaximized() {
+		return getUiReference().isMaximized();
+	}
+
+	public void setIconfied(final boolean iconfied) {
+		getUiReference().setIconfied(iconfied);
+	}
+
+	public boolean isIconfied() {
+		return getUiReference().isIconfied();
+	}
+
 	@Override
 	public <WIDGET_TYPE extends IDisplayCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
 		final DESCRIPTOR_TYPE descriptor) {

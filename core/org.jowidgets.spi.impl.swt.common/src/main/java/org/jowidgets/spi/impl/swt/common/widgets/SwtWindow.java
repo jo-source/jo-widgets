@@ -188,4 +188,20 @@ public class SwtWindow extends SwtContainer implements IWindowSpi {
 		return windowObservableDelegate;
 	}
 
+	public void setMaximized(final boolean maximized) {
+		getUiReference().setMaximized(maximized);
+	}
+
+	public boolean isMaximized() {
+		return getUiReference().getMaximized();
+	}
+
+	public void setIconfied(final boolean iconfied) {
+		getUiReference().setMinimized(iconfied);
+	}
+
+	public boolean isIconfied() {
+		return getUiReference().getMinimized();
+	}
+
 }
