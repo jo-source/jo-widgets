@@ -282,6 +282,30 @@ public final class DemoMainComposite {
 			}
 		});
 
+		final IButton maximizeButton = parentContainer.add(bpF.button("Toggle maximized"), "grow, sg bg, wrap");
+		maximizeButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IWindow parentWindow = getParentWindow();
+				if (parentWindow instanceof IFrame) {
+					final IFrame frame = (IFrame) parentWindow;
+					frame.setMaximized(!frame.isMaximized());
+				}
+			}
+		});
+
+		final IButton iconfyButton = parentContainer.add(bpF.button("Iconfy"), "grow, sg bg, wrap");
+		iconfyButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IWindow parentWindow = getParentWindow();
+				if (parentWindow instanceof IFrame) {
+					final IFrame frame = (IFrame) parentWindow;
+					frame.setIconfied(true);
+				}
+			}
+		});
+
 	}
 
 	public void foo() {}

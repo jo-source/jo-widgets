@@ -45,6 +45,7 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.swing.common.image.SwingImageRegistry;
 import org.jowidgets.spi.impl.swing.common.util.ColorConvert;
 import org.jowidgets.spi.impl.swing.common.util.DecorationCalc;
+import org.jowidgets.spi.impl.swing.common.util.FrameUtil;
 import org.jowidgets.spi.impl.swing.common.widgets.util.ChildRemover;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
 import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
@@ -68,7 +69,6 @@ public class FrameImpl extends SwingWindow implements IFrameUiSpi {
 		}
 
 		setIcon(setup.getIcon(), imageRegistry);
-
 	}
 
 	@Override
@@ -110,6 +110,26 @@ public class FrameImpl extends SwingWindow implements IFrameUiSpi {
 	@Override
 	public void removeAll() {
 		getUiReference().getContentPane().removeAll();
+	}
+
+	@Override
+	public void setMaximized(final boolean maximized) {
+		FrameUtil.setMaximized(getUiReference(), maximized);
+	}
+
+	@Override
+	public boolean isMaximized() {
+		return FrameUtil.isMaximized(getUiReference());
+	}
+
+	@Override
+	public void setIconfied(final boolean iconfied) {
+		FrameUtil.setIconfied(getUiReference(), iconfied);
+	}
+
+	@Override
+	public boolean isIconfied() {
+		return FrameUtil.isIconfied(getUiReference());
 	}
 
 	@Override

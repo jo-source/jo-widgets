@@ -118,4 +118,24 @@ public abstract class AbstractFrameSpiWrapper extends AbstractWindowSpiWrapper i
 		getWidget().setTitle(title);
 	}
 
+	@Override
+	public void setMaximized(final boolean maximized) {
+		getWidget().setMaximized(maximized);
+	}
+
+	@Override
+	public boolean isMaximized() {
+		return getWidget().isMaximized();
+	}
+
+	@Override
+	public void setIconfied(final boolean iconfied) {
+		getWidget().setIconfied(iconfied);
+	}
+
+	@Override
+	public boolean isIconfied() {
+		return getWidget().isIconfied();
+	}
+
 }

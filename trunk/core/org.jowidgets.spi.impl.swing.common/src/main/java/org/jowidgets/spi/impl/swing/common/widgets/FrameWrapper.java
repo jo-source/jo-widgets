@@ -39,6 +39,7 @@ import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.swing.common.util.DecorationCalc;
+import org.jowidgets.spi.impl.swing.common.util.FrameUtil;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
 import org.jowidgets.util.TypeCast;
@@ -111,4 +112,39 @@ public class FrameWrapper extends SwingWindow implements IFrameSpi {
 			rootPane.setDefaultButton(null);
 		}
 	}
+
+	@Override
+	public void setMaximized(final boolean maximized) {
+		if (getUiReference() instanceof JFrame) {
+			FrameUtil.setMaximized((JFrame) getUiReference(), maximized);
+		}
+	}
+
+	@Override
+	public boolean isMaximized() {
+		if (getUiReference() instanceof JFrame) {
+			return FrameUtil.isMaximized((JFrame) getUiReference());
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public void setIconfied(final boolean iconfied) {
+		if (getUiReference() instanceof JFrame) {
+			FrameUtil.setIconfied((JFrame) getUiReference(), iconfied);
+		}
+	}
+
+	@Override
+	public boolean isIconfied() {
+		if (getUiReference() instanceof JFrame) {
+			return FrameUtil.isIconfied((JFrame) getUiReference());
+		}
+		else {
+			return false;
+		}
+	}
+
 }

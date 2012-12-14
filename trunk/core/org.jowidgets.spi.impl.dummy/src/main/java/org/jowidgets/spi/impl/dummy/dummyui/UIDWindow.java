@@ -34,6 +34,8 @@ public class UIDWindow extends UIDContainer {
 
 	private UIDImage iconImage;
 	private final UIDWindow parent;
+	private boolean maximized;
+	private boolean iconfied;
 
 	public UIDWindow(final UIDWindow parent) {
 		super();
@@ -68,6 +70,22 @@ public class UIDWindow extends UIDContainer {
 
 	public void setTitle(final String title) {
 
+	}
+
+	public void setMaximized(final boolean maximized) {
+		this.maximized = maximized;
+	}
+
+	public boolean isMaximized() {
+		return maximized;
+	}
+
+	public void setIconfied(final boolean iconfied) {
+		this.iconfied = iconfied;
+	}
+
+	public boolean isIconfied() {
+		return iconfied;
 	}
 
 }

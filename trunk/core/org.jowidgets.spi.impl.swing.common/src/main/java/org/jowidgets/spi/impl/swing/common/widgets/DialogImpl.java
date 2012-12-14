@@ -74,7 +74,6 @@ public class DialogImpl extends SwingWindow implements IFrameSpi {
 		}
 
 		setIcon(setup.getIcon(), imageRegistry);
-
 	}
 
 	@Override
@@ -123,6 +122,28 @@ public class DialogImpl extends SwingWindow implements IFrameSpi {
 		final JMenuBar menuBar = new JMenuBar();
 		getUiReference().setJMenuBar(menuBar);
 		return new MenuBarImpl(menuBar);
+	}
+
+	@Override
+	public void setMaximized(final boolean maximized) {
+		// NOT SUPPORTED FOR SWING
+	}
+
+	@Override
+	public boolean isMaximized() {
+		// NOT SUPPORTED FOR SWING
+		return false;
+	}
+
+	@Override
+	public void setIconfied(final boolean iconfied) {
+		// NOT SUPPORTED FOR SWING
+	}
+
+	@Override
+	public boolean isIconfied() {
+		// NOT SUPPORTED FOR SWING
+		return false;
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,36 +26,41 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.dummy.dummyui;
+package org.jowidgets.spi.impl.swing.common.util;
 
-public class UIDFrame extends UIDWindow {
+import java.awt.Frame;
 
-	private String title;
-	private boolean resizable;
+public final class FrameUtil {
 
-	public UIDFrame() {
-		this(null);
+	private FrameUtil() {}
+
+	public static void setMaximized(final Frame frame, final boolean maximized) {
+		final int extendedState = frame.getExtendedState();
+		if (maximized) {
+			frame.setExtendedState(extendedState | Frame.MAXIMIZED_BOTH);
+		}
+		else {
+			frame.setExtendedState(extendedState & ~Frame.MAXIMIZED_BOTH);
+		}
+
 	}
 
-	public UIDFrame(final UIDWindow parent) {
-		super(parent);
+	public static boolean isMaximized(final Frame frame) {
+		return (frame.getExtendedState() & Frame.MAXIMIZED_BOTH) == Frame.MAXIMIZED_BOTH;
 	}
 
-	public String getTitle() {
-		return title;
+	public static void setIconfied(final Frame frame, final boolean iconfied) {
+		final int extendedState = frame.getExtendedState();
+		if (iconfied) {
+			frame.setExtendedState(extendedState | Frame.ICONIFIED);
+		}
+		else {
+			frame.setExtendedState(extendedState & ~Frame.ICONIFIED);
+		}
 	}
 
-	@Override
-	public void setTitle(final String title) {
-		this.title = title;
-	}
-
-	public boolean isResizable() {
-		return resizable;
-	}
-
-	public void setResizable(final boolean resizable) {
-		this.resizable = resizable;
+	public static boolean isIconfied(final Frame frame) {
+		return (frame.getExtendedState() & Frame.ICONIFIED) == Frame.ICONIFIED;
 	}
 
 }

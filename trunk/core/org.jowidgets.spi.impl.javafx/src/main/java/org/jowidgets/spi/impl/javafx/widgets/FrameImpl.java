@@ -140,4 +140,5 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 	public void setTitle(final String title) {
 		getUiReference().setTitle(title);
 	}
+
 }
