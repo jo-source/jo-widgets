@@ -57,6 +57,7 @@ import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder> implements IWorkbenchModelBuilder {
 
 	private Dimension initialDimension;
+	private boolean initialMaximized;
 	private Position initialPosition;
 	private double initialSplitWeight;
 	private boolean hasApplicationNavigator;
@@ -77,6 +78,7 @@ class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder>
 		this.applications = new LinkedList<IWorkbenchApplicationModel>();
 		this.shutdownHooks = new LinkedList<Runnable>();
 		this.initialSplitWeight = 0.25;
+		this.initialMaximized = false;
 		this.hasApplicationNavigator = true;
 		this.applicationsCloseable = false;
 		this.toolBar = Toolkit.getModelFactoryProvider().getItemModelFactory().toolBar();
@@ -91,6 +93,7 @@ class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder>
 		setTooltip(descriptor.getTooltip());
 		setIcon(descriptor.getIcon());
 		setInitialDimension(descriptor.getInitialDimension());
+		setInitialMaximized(descriptor.isInitialMaximized());
 		setInitialPosition(descriptor.getInitialPosition());
 		setInitialSplitWeight(descriptor.getInitialSplitWeight());
 		setApplicationNavigator(descriptor.hasApplicationNavigator());
@@ -101,6 +104,12 @@ class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder>
 	@Override
 	public IWorkbenchModelBuilder setInitialDimension(final Dimension initialDimension) {
 		this.initialDimension = initialDimension;
+		return this;
+	}
+
+	@Override
+	public IWorkbenchModelBuilder setInitialMaximized(final boolean maximized) {
+		this.initialMaximized = maximized;
 		return this;
 	}
 
@@ -241,6 +250,7 @@ class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder>
 			getTooltip(),
 			getIcon(),
 			initialDimension,
+			initialMaximized,
 			initialPosition,
 			initialSplitWeight,
 			hasApplicationNavigator,

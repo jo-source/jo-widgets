@@ -56,6 +56,11 @@ public abstract class AbstractWorkbenchDescriptor implements IWorkbenchDescripto
 	}
 
 	@Override
+	public boolean isInitialMaximized() {
+		return false;
+	}
+
+	@Override
 	public Position getInitialPosition() {
 		return null;
 	}

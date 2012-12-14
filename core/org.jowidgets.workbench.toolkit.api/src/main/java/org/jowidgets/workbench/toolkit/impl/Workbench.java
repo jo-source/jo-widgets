@@ -136,6 +136,11 @@ class Workbench implements IWorkbench {
 	}
 
 	@Override
+	public boolean isInitialMaximized() {
+		return model.isInitialMaximized();
+	}
+
+	@Override
 	public Position getInitialPosition() {
 		return model.getInitialPosition();
 	}

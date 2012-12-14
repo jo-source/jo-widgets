@@ -263,6 +263,9 @@ public class WorkbenchContext implements IWorkbenchContext {
 		final IFrame result = Toolkit.createRootFrame(rootFrameBp);
 		result.setLayout(MigLayoutFactory.growingInnerCellLayout());
 		result.addWindowListener(windowListener);
+		if (workbench.isInitialMaximized()) {
+			result.setMaximized(true);
+		}
 		return result;
 	}
 

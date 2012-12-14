@@ -55,6 +55,7 @@ class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchModel {
 	private final ListModelObservable listModelObservable;
 
 	private final Dimension initialDimension;
+	private final boolean initialMaximized;
 	private final Position initialPosition;
 	private final double initialSplitWeight;
 	private final boolean hasApplicationNavigator;
@@ -77,6 +78,7 @@ class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchModel {
 		final String tooltip,
 		final IImageConstant icon,
 		final Dimension initialDimension,
+		final boolean initialMaximized,
 		final Position initialPosition,
 		final double initialSplitWeight,
 		final boolean hasApplicationNavigator,
@@ -96,6 +98,7 @@ class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchModel {
 
 		this.finished = false;
 		this.initialDimension = initialDimension;
+		this.initialMaximized = initialMaximized;
 		this.initialPosition = initialPosition;
 		this.initialSplitWeight = initialSplitWeight;
 		this.hasApplicationNavigator = hasApplicationNavigator;
@@ -119,6 +122,11 @@ class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchModel {
 	@Override
 	public Dimension getInitialDimension() {
 		return initialDimension;
+	}
+
+	@Override
+	public boolean isInitialMaximized() {
+		return initialMaximized;
 	}
 
 	@Override
