@@ -64,6 +64,7 @@ import org.jowidgets.workbench.api.IWorkbenchContext;
 
 public class WorkbenchContext implements IWorkbenchContext {
 
+	private final IWorkbench workbench;
 	private final IApplicationLifecycle lifecycle;
 	private final List<Runnable> shutdownHooks;
 	private final IBluePrintFactory bpf;
@@ -88,6 +89,8 @@ public class WorkbenchContext implements IWorkbenchContext {
 	private boolean lastToolbarVisible;
 
 	public WorkbenchContext(final IWorkbench workbench, final IApplicationLifecycle lifecycle) {
+
+		this.workbench = workbench;
 
 		this.disposed = false;
 		this.onComponentChange = false;
@@ -200,6 +203,9 @@ public class WorkbenchContext implements IWorkbenchContext {
 	public void run() {
 		if (!this.rootFrame.isVisible()) {
 			this.rootFrame.setVisible(true);
+			if (workbench.isInitialMaximized()) {
+				rootFrame.setMaximized(true);
+			}
 		}
 	}
 
@@ -263,9 +269,6 @@ public class WorkbenchContext implements IWorkbenchContext {
 		final IFrame result = Toolkit.createRootFrame(rootFrameBp);
 		result.setLayout(MigLayoutFactory.growingInnerCellLayout());
 		result.addWindowListener(windowListener);
-		if (workbench.isInitialMaximized()) {
-			result.setMaximized(true);
-		}
 		return result;
 	}
 
