@@ -105,6 +105,14 @@ public final class JoWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	}
 
 	@Override
+	public void postWindowOpen() {
+		final IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
+		if (workbench.isInitialMaximized()) {
+			configurer.getWindow().getShell().setMaximized(true);
+		}
+	}
+
+	@Override
 	public boolean preWindowShellClose() {
 		final VetoHolder vetoHolder = new VetoHolder();
 		workbench.onClose(vetoHolder);
