@@ -82,4 +82,9 @@ public final class MapConverter<OBJECT_TYPE> implements IConverter<OBJECT_TYPE> 
 		return converter.getMask();
 	}
 
+	@Override
+	public String toString() {
+		return converter.toString();
+	}
+
 }

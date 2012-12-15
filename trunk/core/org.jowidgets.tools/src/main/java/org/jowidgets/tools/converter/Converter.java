@@ -86,4 +86,13 @@ public final class Converter<TYPE> implements IConverter<TYPE> {
 		return stringObjectConverter.getMask();
 	}
 
+	@Override
+	public String toString() {
+		return "Converter [objectStringConverter="
+			+ objectStringConverter
+			+ ", stringObjectConverter="
+			+ stringObjectConverter
+			+ "]";
+	}
+
 }
