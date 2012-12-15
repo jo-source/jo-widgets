@@ -107,6 +107,12 @@ public class WorkbenchModelBuilder implements IWorkbenchModelBuilder {
 	}
 
 	@Override
+	public IWorkbenchModelBuilder setDecorated(final boolean decorated) {
+		this.builder.setDecorated(decorated);
+		return this;
+	}
+
+	@Override
 	public final IWorkbenchModelBuilder setInitialPosition(final Position initialiPosition) {
 		this.builder.setInitialPosition(initialiPosition);
 		return this;

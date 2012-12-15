@@ -61,6 +61,11 @@ public abstract class AbstractWorkbenchDescriptor implements IWorkbenchDescripto
 	}
 
 	@Override
+	public boolean isDecorated() {
+		return true;
+	}
+
+	@Override
 	public Position getInitialPosition() {
 		return null;
 	}

@@ -58,6 +58,7 @@ class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder>
 
 	private Dimension initialDimension;
 	private boolean initialMaximized;
+	private boolean decorated;
 	private Position initialPosition;
 	private double initialSplitWeight;
 	private boolean hasApplicationNavigator;
@@ -79,6 +80,7 @@ class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder>
 		this.shutdownHooks = new LinkedList<Runnable>();
 		this.initialSplitWeight = 0.25;
 		this.initialMaximized = false;
+		this.decorated = true;
 		this.hasApplicationNavigator = true;
 		this.applicationsCloseable = false;
 		this.toolBar = Toolkit.getModelFactoryProvider().getItemModelFactory().toolBar();
@@ -110,6 +112,12 @@ class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder>
 	@Override
 	public IWorkbenchModelBuilder setInitialMaximized(final boolean maximized) {
 		this.initialMaximized = maximized;
+		return this;
+	}
+
+	@Override
+	public IWorkbenchModelBuilder setDecorated(final boolean decorated) {
+		this.decorated = decorated;
 		return this;
 	}
 
@@ -251,6 +259,7 @@ class WorkbenchModelBuilder extends WorkbenchPartBuilder<IWorkbenchModelBuilder>
 			getIcon(),
 			initialDimension,
 			initialMaximized,
+			decorated,
 			initialPosition,
 			initialSplitWeight,
 			hasApplicationNavigator,

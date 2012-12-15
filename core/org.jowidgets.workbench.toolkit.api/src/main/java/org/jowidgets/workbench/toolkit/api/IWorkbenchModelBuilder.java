@@ -46,6 +46,8 @@ public interface IWorkbenchModelBuilder extends IWorkbenchPartBuilder<IWorkbench
 
 	IWorkbenchModelBuilder setInitialMaximized(boolean maximized);
 
+	IWorkbenchModelBuilder setDecorated(boolean decorated);
+
 	IWorkbenchModelBuilder setInitialPosition(Position initialPosition);
 
 	IWorkbenchModelBuilder setInitialSplitWeight(double initialSplitWeigth);
