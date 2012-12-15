@@ -72,4 +72,9 @@ public class StringObjectMapConverter<OBJECT_TYPE> extends AbstractStringObjectC
 		return stringValidator;
 	}
 
+	@Override
+	public String toString() {
+		return "StringObjectMapConverter [stringToObject=" + stringToObject + ", stringValidator=" + stringValidator + "]";
+	}
+
 }

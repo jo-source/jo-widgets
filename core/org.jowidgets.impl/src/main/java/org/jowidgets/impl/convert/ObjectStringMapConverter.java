@@ -48,4 +48,9 @@ public class ObjectStringMapConverter<OBJECT_TYPE> extends AbstractObjectStringC
 		return objectToString.get(value);
 	}
 
+	@Override
+	public String toString() {
+		return "ObjectStringMapConverter [objectToString=" + objectToString + "]";
+	}
+
 }
