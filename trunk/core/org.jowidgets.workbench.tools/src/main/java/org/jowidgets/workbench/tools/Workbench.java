@@ -84,6 +84,11 @@ public class Workbench implements IWorkbench {
 	}
 
 	@Override
+	public boolean isDecorated() {
+		return workbench.isDecorated();
+	}
+
+	@Override
 	public final Position getInitialPosition() {
 		return workbench.getInitialPosition();
 	}

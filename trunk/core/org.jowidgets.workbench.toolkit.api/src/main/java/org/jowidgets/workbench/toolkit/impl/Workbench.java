@@ -141,6 +141,11 @@ class Workbench implements IWorkbench {
 	}
 
 	@Override
+	public boolean isDecorated() {
+		return model.isDecorated();
+	}
+
+	@Override
 	public Position getInitialPosition() {
 		return model.getInitialPosition();
 	}

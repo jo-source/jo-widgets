@@ -44,6 +44,11 @@ public interface IWorkbenchDescriptor extends IWorkbenchPart {
 	boolean isInitialMaximized();
 
 	/**
+	 * @return True if the main window should be decorated, false otherwise
+	 */
+	boolean isDecorated();
+
+	/**
 	 * @return The initial position or null
 	 */
 	Position getInitialPosition();

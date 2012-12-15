@@ -266,6 +266,7 @@ public class WorkbenchContext implements IWorkbenchContext {
 		rootFrameBp.setIcon(workbench.getIcon());
 		rootFrameBp.setPosition(workbench.getInitialPosition());
 		rootFrameBp.setSize(workbench.getInitialDimension());
+		rootFrameBp.setDecorated(workbench.isDecorated());
 		final IFrame result = Toolkit.createRootFrame(rootFrameBp);
 		result.setLayout(MigLayoutFactory.growingInnerCellLayout());
 		result.addWindowListener(windowListener);
