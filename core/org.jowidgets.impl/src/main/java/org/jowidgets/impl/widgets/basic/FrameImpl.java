@@ -73,16 +73,22 @@ public class FrameImpl extends AbstractFrameSpiWrapper implements IFrameUi {
 	private IMenuBar menuBar;
 
 	public FrameImpl(final IFrameSpi frameWidgetSpi, final IFrameSetup setup) {
+		this(frameWidgetSpi, setup, false);
+	}
+
+	public FrameImpl(final IFrameSpi frameWidgetSpi, final IFrameSetup setup, final boolean wrapperMode) {
 		super(frameWidgetSpi);
 		this.displayDelegate = new DisplayDelegate();
 		this.windowDelegate = new WindowDelegate(frameWidgetSpi, this, setup);
 		this.containerDelegate = new ContainerDelegate(frameWidgetSpi, this);
-		ColorSettingsInvoker.setColors(setup, this);
-		VisibiliySettingsInvoker.setVisibility(setup, frameWidgetSpi);
-		LayoutSettingsInvoker.setLayout(setup, this);
+		if (!wrapperMode) {
+			ColorSettingsInvoker.setColors(setup, this);
+			VisibiliySettingsInvoker.setVisibility(setup, frameWidgetSpi);
+			LayoutSettingsInvoker.setLayout(setup, this);
 
-		if (setup.getMinSize() != null) {
-			setMinSize(setup.getMinSize());
+			if (setup.getMinSize() != null) {
+				setMinSize(setup.getMinSize());
+			}
 		}
 	}
 
