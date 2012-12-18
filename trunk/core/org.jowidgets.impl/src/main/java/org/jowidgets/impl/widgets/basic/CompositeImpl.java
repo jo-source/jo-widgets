@@ -42,9 +42,15 @@ public class CompositeImpl extends ContainerImpl implements IComposite {
 	private final ControlDelegate controlDelegate;
 
 	public CompositeImpl(final ICompositeSpi containerSpi, final ICompositeSetup setup) {
+		this(containerSpi, setup, false);
+	}
+
+	public CompositeImpl(final ICompositeSpi containerSpi, final ICompositeSetup setup, final boolean wrapperMode) {
 		super(containerSpi, setup.isVisible());
-		ColorSettingsInvoker.setColors(setup, this);
-		LayoutSettingsInvoker.setLayout(setup, this);
+		if (!wrapperMode) {
+			ColorSettingsInvoker.setColors(setup, this);
+			LayoutSettingsInvoker.setLayout(setup, this);
+		}
 		this.controlDelegate = new ControlDelegate(containerSpi, this);
 	}
 

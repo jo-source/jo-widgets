@@ -58,13 +58,13 @@ public class DefaultWidgetWrapperFactory implements IWidgetWrapperFactory {
 	@Override
 	public IFrame createFrame(final Object uiReference) {
 		final IFrameBluePrint bp = Toolkit.getBluePrintFactory().frame().autoCenterOff();
-		return new FrameImpl(widgetFactorySpi.createFrame(widgetFactory, uiReference), bp);
+		return new FrameImpl(widgetFactorySpi.createFrame(widgetFactory, uiReference), bp, true);
 	}
 
 	@Override
 	public IComposite createComposite(final Object uiReference) {
 		final ICompositeBluePrint bp = Toolkit.getBluePrintFactory().composite();
-		return new CompositeImpl(widgetFactorySpi.createComposite(widgetFactory, uiReference), bp);
+		return new CompositeImpl(widgetFactorySpi.createComposite(widgetFactory, uiReference), bp, true);
 	}
 
 	@Override
