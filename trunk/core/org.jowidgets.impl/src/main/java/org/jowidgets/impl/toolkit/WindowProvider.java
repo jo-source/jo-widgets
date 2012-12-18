@@ -113,7 +113,7 @@ public class WindowProvider {
 
 			final IFrameSpi frameSpi = widgetsServiceProvider.getWidgetFactory().createFrame(genericWidgetFactory, uiRef);
 
-			final IWindow result = new FrameImpl(frameSpi, bp);
+			final IWindow result = new FrameImpl(frameSpi, bp, true);
 
 			//register the created frame to avoid a new creation for every call of this method
 			uiReferenceToWindow.put(uiRef, result);
