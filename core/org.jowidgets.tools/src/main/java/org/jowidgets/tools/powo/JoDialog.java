@@ -49,9 +49,8 @@ public class JoDialog extends Window<IFrame, IDialogBluePrint> implements IFrame
 	private Boolean iconfied;
 
 	JoDialog(final IFrame widget) {
-		this(bluePrint());
+		super(bluePrint(), widget);
 		Assert.paramNotNull(widget, "widget");
-		initialize(widget);
 	}
 
 	public JoDialog(final String title) {

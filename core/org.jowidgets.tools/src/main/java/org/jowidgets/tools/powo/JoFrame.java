@@ -50,9 +50,8 @@ public class JoFrame extends Window<IFrame, IFrameBluePrint> implements IFrame {
 	private Boolean iconfied;
 
 	JoFrame(final IFrame widget) {
-		this(bluePrint());
+		super(bluePrint(), widget);
 		Assert.paramNotNull(widget, "widget");
-		initialize(widget);
 	}
 
 	public JoFrame() {

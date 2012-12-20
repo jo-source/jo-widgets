@@ -46,18 +46,31 @@ import org.jowidgets.util.Assert;
 class Window<WIDGET_TYPE extends IWindow & IContainer, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IContainerSetupBuilder<BLUE_PRINT_TYPE> & IWindowSetupBuilder<BLUE_PRINT_TYPE>> extends
 		Container<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IWindow {
 
+	Window(final BLUE_PRINT_TYPE bluePrint, final WIDGET_TYPE widget) {
+		this(null, bluePrint, widget);
+	}
+
 	Window(final BLUE_PRINT_TYPE bluePrint) {
 		this(null, bluePrint);
 	}
 
 	Window(final IWindow parent, final BLUE_PRINT_TYPE bluePrint) {
+		this(parent, bluePrint, null);
+	}
+
+	Window(final IWindow parent, final BLUE_PRINT_TYPE bluePrint, final WIDGET_TYPE widget) {
 		super(bluePrint);
 		Assert.paramNotNull(bluePrint, "bluePrint");
-		if (parent != null) {
-			initialize(parent.createChildWindow(bluePrint));
+		if (widget == null) {
+			if (parent != null) {
+				initialize(parent.createChildWindow(bluePrint));
+			}
+			else {
+				initialize(Toolkit.getWidgetFactory().create(bluePrint));
+			}
 		}
 		else {
-			initialize(Toolkit.getWidgetFactory().create(bluePrint));
+			initialize(widget);
 		}
 	}
 
