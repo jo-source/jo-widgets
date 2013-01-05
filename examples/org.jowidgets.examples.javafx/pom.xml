@@ -22,25 +22,25 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.impl</artifactId>
-			<version>0.20.0-SNAPSHOT</version>
+			<version>0.21.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.workbench.impl</artifactId>
-			<version>0.20.0-SNAPSHOT</version>
+			<version>0.21.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.spi.impl.javafx</artifactId>
-			<version>0.20.0-SNAPSHOT</version>
+			<version>0.21.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.addons.widgets.browser.impl.javafx</artifactId>
-			<version>0.20.0-SNAPSHOT</version>
+			<version>0.21.0-SNAPSHOT</version>
 		</dependency>
 
 		<!-- headfull (GUI) test dependencies -->
@@ -53,7 +53,7 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.api.test</artifactId>
-			<version>0.20.0-SNAPSHOT</version>
+			<version>0.21.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
