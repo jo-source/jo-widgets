@@ -35,6 +35,7 @@ import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IPopupMenu;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
@@ -99,6 +100,8 @@ public abstract class AbstractComponentSpiWrapper extends WidgetSpiWrapper imple
 
 	public abstract IPopupMenu createPopupMenu();
 
+	public abstract IWidget getParent();
+
 	public boolean hasFocus() {
 		return hasFocus;
 	}
@@ -151,6 +154,19 @@ public abstract class AbstractComponentSpiWrapper extends WidgetSpiWrapper imple
 	@Override
 	public boolean isVisible() {
 		return getWidget().isVisible();
+	}
+
+	public boolean isShowing() {
+		if (isVisible()) {
+			final IWidget parent = getParent();
+			if (parent == null) {
+				return true;
+			}
+			else if (parent instanceof IComponent) {
+				return ((IComponent) parent).isShowing();
+			}
+		}
+		return false;
 	}
 
 	@Override

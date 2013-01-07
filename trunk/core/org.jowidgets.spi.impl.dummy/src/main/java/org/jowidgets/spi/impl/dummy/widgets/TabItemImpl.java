@@ -37,6 +37,9 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
+import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
@@ -235,6 +238,32 @@ public class TabItemImpl extends DummyContainer implements ITabItemSpi {
 		tabPopupObs.removeTabItemListener(listener);
 	}
 
+	@Override
+	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+		final Integer index,
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+		final Object cellConstraints) {
+
+		//TODO MG consider index
+		final WIDGET_TYPE result = getGenericWidgetFactory().create(getUiReference(), descriptor);
+		tabContainer.add((UIDComponent) result.getUiReference(), cellConstraints);
+		return result;
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+		final Integer index,
+		final ICustomWidgetCreator<WIDGET_TYPE> creator,
+		final Object cellConstraints) {
+
+		final ICustomWidgetFactory customWidgetFactory = createCustomWidgetFactory();
+
+		//TODO MG consider index
+		final WIDGET_TYPE result = creator.create(customWidgetFactory);
+		tabContainer.add((UIDComponent) result.getUiReference(), cellConstraints);
+		return result;
+	}
+
 	public void attachItem(final boolean closeable, final Integer index) {
 		tabItem = new UIDTabItem();
 		tabItem.setText(this.text);
@@ -259,4 +288,5 @@ public class TabItemImpl extends DummyContainer implements ITabItemSpi {
 	public boolean isDetached() {
 		return detached;
 	}
+
 }

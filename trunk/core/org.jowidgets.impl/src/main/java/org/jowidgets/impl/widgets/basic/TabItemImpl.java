@@ -187,7 +187,17 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 		return (ITabItemSpi) super.getWidget();
 	}
 
-	protected boolean isSelected() {
+	@Override
+	public boolean isShowing() {
+		return !detached && parent != null && parent.isShowing() && isVisible() && isSelected();
+	}
+
+	@Override
+	public boolean isSelected() {
+		return this == parent.getSelectedItem();
+	}
+
+	boolean getSelectedState() {
 		return selected;
 	}
 
@@ -209,12 +219,12 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 	}
 
 	protected void setSelected(final boolean selected) {
-		if (this.isSelected() != selected) {
+		if (this.getSelectedState() != selected) {
 			this.selected = selected;
 			if (selected) {
 				//un-select other items if this item is selected 
 				for (final TabItemImpl item : tabFolderImpl.getItemsImpl()) {
-					if (item != this && item.isSelected()) {
+					if (item != this && item.getSelectedState()) {
 						final boolean veto = item.onDeselection(this);
 						if (veto) {
 							this.selected = false;
@@ -314,6 +324,12 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 	@Override
 	public void removeDisposeListener(final IDisposeListener listener) {
 		containerDelegate.removeDisposeListener(listener);
+	}
+
+	@Override
+	public void select() {
+		checkDetached();
+		parent.setSelectedItem(this);
 	}
 
 	@Override

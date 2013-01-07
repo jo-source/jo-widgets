@@ -100,6 +100,11 @@ public class ComponentWrapper extends WidgetWrapper implements IComponent {
 	}
 
 	@Override
+	public boolean isShowing() {
+		return getWidget().isShowing();
+	}
+
+	@Override
 	public Dimension getSize() {
 		return getWidget().getSize();
 	}

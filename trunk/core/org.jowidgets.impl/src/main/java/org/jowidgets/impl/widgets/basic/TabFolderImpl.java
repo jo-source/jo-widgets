@@ -159,7 +159,7 @@ public class TabFolderImpl extends AbstractTabFolderSpiWrapper implements ITabFo
 		if (index != -1) {
 			getWidget().removeItem(index);
 			final TabItemImpl itemImpl = items.remove(index);
-			if (itemImpl.isSelected()) {
+			if (itemImpl.getSelectedState()) {
 				itemImpl.setSelected(false);
 			}
 			itemImpl.dispose();
@@ -195,7 +195,7 @@ public class TabFolderImpl extends AbstractTabFolderSpiWrapper implements ITabFo
 	public ITabItem getSelectedItem() {
 		final int selectedIndex = getWidget().getSelectedIndex();
 		if (selectedIndex != -1) {
-			items.get(selectedIndex);
+			return items.get(selectedIndex);
 		}
 		return null;
 	}
@@ -253,7 +253,7 @@ public class TabFolderImpl extends AbstractTabFolderSpiWrapper implements ITabFo
 		}
 		if (itemIndex != newIndex) {
 			final TabItemImpl itemImpl = TypeCast.toType(item, TabItemImpl.class);
-			final boolean selected = itemImpl.isSelected();
+			final boolean selected = itemImpl.getSelectedState();
 			detachItem(item);
 			attachItem(Integer.valueOf(newIndex), item);
 			if (selected) {
