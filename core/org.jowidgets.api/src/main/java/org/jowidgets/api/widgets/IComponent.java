@@ -37,6 +37,14 @@ public interface IComponent extends IWidget, IComponentCommon {
 
 	boolean isReparentable();
 
+	/**
+	 * A root component is showing if it is visible.
+	 * A child component is showing if it is visible and if it's parent component is showing
+	 * 
+	 * @return True if the component is showing, false otherwise
+	 */
+	boolean isShowing();
+
 	boolean hasFocus();
 
 	IPopupMenu createPopupMenu();

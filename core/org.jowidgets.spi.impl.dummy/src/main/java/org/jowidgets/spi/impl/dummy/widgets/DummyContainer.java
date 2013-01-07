@@ -245,7 +245,7 @@ public class DummyContainer implements IContainerSpi {
 	}
 
 	@Override
-	public final <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
 		final Integer index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object cellConstraints) {
@@ -257,7 +257,7 @@ public class DummyContainer implements IContainerSpi {
 	}
 
 	@Override
-	public final <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
 		final Integer index,
 		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object cellConstraints) {
@@ -270,7 +270,7 @@ public class DummyContainer implements IContainerSpi {
 		return result;
 	}
 
-	private ICustomWidgetFactory createCustomWidgetFactory() {
+	protected ICustomWidgetFactory createCustomWidgetFactory() {
 		return new ICustomWidgetFactory() {
 			@Override
 			public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE create(

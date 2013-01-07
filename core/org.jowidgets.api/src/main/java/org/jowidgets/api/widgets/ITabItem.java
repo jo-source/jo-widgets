@@ -42,4 +42,8 @@ public interface ITabItem extends IItem, IContainer, ITabItemObservable, ITabIte
 
 	void setParent(ITabFolder folder);
 
+	void select();
+
+	boolean isSelected();
+
 }

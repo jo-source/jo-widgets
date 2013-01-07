@@ -321,6 +321,16 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 	}
 
 	@Override
+	public boolean isShowing() {
+		if (isInitialized()) {
+			return getWidget().isShowing();
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
 	public final boolean isVisible() {
 		checkInitialized();
 		return getWidget().isVisible();
