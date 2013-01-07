@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.jowidgets.workbench.impl.rcp
+Bundle-SymbolicName: org.jowidgets.workbench.impl.rcp;singleton:=true
+Bundle-Version: 0.20.0.qualifier
+Bundle-Vendor: jo-widgets.org
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.jowidgets.workbench.impl.rcp
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: org.jowidgets.workbench.impl.rcp.internal.Activator
+Require-Bundle: org.jowidgets.workbench.impl.rcp.libs,
+ org.eclipse.ui;bundle-version="3.6.0",
+ org.eclipse.core.runtime;bundle-version="3.6.0"
