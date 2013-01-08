@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.jowidgets.api.controller.IDisposeListener;
+import org.jowidgets.api.controller.IParentListener;
 import org.jowidgets.api.controller.ITabFolderListener;
 import org.jowidgets.api.controller.ITabSelectionEvent;
 import org.jowidgets.api.widgets.IContainer;
@@ -83,6 +84,16 @@ public class TabFolderImpl extends AbstractTabFolderSpiWrapper implements ITabFo
 	@Override
 	public void setParent(final IContainer parent) {
 		controlDelegate.setParent(parent);
+	}
+
+	@Override
+	public void addParentListener(final IParentListener<IContainer> listener) {
+		controlDelegate.addParentListener(listener);
+	}
+
+	@Override
+	public void removeParentListener(final IParentListener<IContainer> listener) {
+		controlDelegate.removeParentListener(listener);
 	}
 
 	@Override

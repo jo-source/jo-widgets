@@ -28,12 +28,13 @@
 
 package org.jowidgets.api.widgets;
 
+import org.jowidgets.api.controller.IShowingStateObservable;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IComponentCommon;
 
-public interface IComponent extends IWidget, IComponentCommon {
+public interface IComponent extends IWidget, IComponentCommon, IShowingStateObservable {
 
 	boolean isReparentable();
 

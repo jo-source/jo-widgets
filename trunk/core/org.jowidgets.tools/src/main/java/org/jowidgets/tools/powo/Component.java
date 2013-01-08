@@ -28,9 +28,10 @@
 
 package org.jowidgets.tools.powo;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.jowidgets.api.controller.IShowingStateListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -57,6 +58,7 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 	private final Set<IKeyListener> keyListeners;
 	private final Set<IMouseListener> mouseListeners;
 	private final Set<IComponentListener> componentListners;
+	private final Set<IShowingStateListener> showingStateListeners;
 	private final Set<JoPopupMenu> popupMenus;
 
 	private Dimension size;
@@ -66,12 +68,13 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 
 	Component(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
-		this.popupDetectionListeners = new HashSet<IPopupDetectionListener>();
-		this.focusListeners = new HashSet<IFocusListener>();
-		this.keyListeners = new HashSet<IKeyListener>();
-		this.mouseListeners = new HashSet<IMouseListener>();
-		this.componentListners = new HashSet<IComponentListener>();
-		this.popupMenus = new HashSet<JoPopupMenu>();
+		this.popupDetectionListeners = new LinkedHashSet<IPopupDetectionListener>();
+		this.focusListeners = new LinkedHashSet<IFocusListener>();
+		this.keyListeners = new LinkedHashSet<IKeyListener>();
+		this.mouseListeners = new LinkedHashSet<IMouseListener>();
+		this.componentListners = new LinkedHashSet<IComponentListener>();
+		this.showingStateListeners = new LinkedHashSet<IShowingStateListener>();
+		this.popupMenus = new LinkedHashSet<JoPopupMenu>();
 	}
 
 	@Override
@@ -106,6 +109,9 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 		}
 		for (final IComponentListener componentListener : componentListners) {
 			widget.addComponentListener(componentListener);
+		}
+		for (final IShowingStateListener showingStateListener : showingStateListeners) {
+			widget.addShowingStateListener(showingStateListener);
 		}
 
 		popupDetectionListeners.clear();
@@ -281,6 +287,26 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 		}
 		else {
 			componentListners.remove(componentListener);
+		}
+	}
+
+	@Override
+	public void addShowingStateListener(final IShowingStateListener listener) {
+		if (isInitialized()) {
+			getWidget().addShowingStateListener(listener);
+		}
+		else {
+			showingStateListeners.add(listener);
+		}
+	}
+
+	@Override
+	public void removeShowingStateListener(final IShowingStateListener listener) {
+		if (isInitialized()) {
+			getWidget().removeShowingStateListener(listener);
+		}
+		else {
+			showingStateListeners.remove(listener);
 		}
 	}
 

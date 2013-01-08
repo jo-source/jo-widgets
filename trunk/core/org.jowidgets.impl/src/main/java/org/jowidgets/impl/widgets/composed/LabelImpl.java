@@ -44,9 +44,10 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
+import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.NullCompatibleEquivalence;
 
-public class LabelImpl extends CompositeBasedControl implements ILabel {
+public class LabelImpl extends ControlWrapper implements ILabel {
 
 	private final IIconCommon iconWidget;
 	private final ITextLabelCommon textLabelWidget;

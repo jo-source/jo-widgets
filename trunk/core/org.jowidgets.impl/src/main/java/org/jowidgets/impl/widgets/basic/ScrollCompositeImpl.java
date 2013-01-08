@@ -34,6 +34,7 @@ import org.jowidgets.api.controller.IContainerListener;
 import org.jowidgets.api.controller.IContainerRegistry;
 import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.controller.IListenerFactory;
+import org.jowidgets.api.controller.IParentListener;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
@@ -222,6 +223,16 @@ public class ScrollCompositeImpl extends AbstractScrollCompositeSpiWrapper imple
 	@Override
 	public void setParent(final IContainer parent) {
 		controlDelegate.setParent(parent);
+	}
+
+	@Override
+	public void addParentListener(final IParentListener<IContainer> listener) {
+		controlDelegate.addParentListener(listener);
+	}
+
+	@Override
+	public void removeParentListener(final IParentListener<IContainer> listener) {
+		controlDelegate.removeParentListener(listener);
 	}
 
 	@Override

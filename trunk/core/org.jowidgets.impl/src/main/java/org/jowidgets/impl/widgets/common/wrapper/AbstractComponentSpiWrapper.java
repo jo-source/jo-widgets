@@ -28,12 +28,16 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.jowidgets.api.controller.IParentListener;
+import org.jowidgets.api.controller.IShowingStateListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComponent;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.common.color.IColorConstant;
@@ -48,13 +52,16 @@ import org.jowidgets.common.widgets.controller.IKeyListener;
 import org.jowidgets.common.widgets.controller.IMouseListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.spi.widgets.IComponentSpi;
+import org.jowidgets.tools.controller.ShowingStateObservable;
 import org.jowidgets.util.NullCompatibleEquivalence;
 
 public abstract class AbstractComponentSpiWrapper extends WidgetSpiWrapper implements IComponentCommon {
 
 	private final IPopupDetectionListener popupListener;
 	private final Set<IFocusListener> focusListeners;
+	private final ShowingStateListener showingStateListener;
 
+	private ShowingStateObservable showingStateObservableLazy;
 	private IMenuModel popupMenuModel;
 	private IPopupMenu popupMenu;
 
@@ -62,7 +69,8 @@ public abstract class AbstractComponentSpiWrapper extends WidgetSpiWrapper imple
 
 	public AbstractComponentSpiWrapper(final IComponentSpi component) {
 		super(component);
-		this.focusListeners = new HashSet<IFocusListener>();
+		this.showingStateListener = new ShowingStateListener();
+		this.focusListeners = new LinkedHashSet<IFocusListener>();
 		this.popupListener = new IPopupDetectionListener() {
 
 			@Override
@@ -149,6 +157,9 @@ public abstract class AbstractComponentSpiWrapper extends WidgetSpiWrapper imple
 	@Override
 	public void setVisible(final boolean visible) {
 		getWidget().setVisible(visible);
+		if (showingStateObservableLazy != null) {
+			showingStateObservableLazy.fireShowingStateChanged(isShowing());
+		}
 	}
 
 	@Override
@@ -250,6 +261,53 @@ public abstract class AbstractComponentSpiWrapper extends WidgetSpiWrapper imple
 		focusListeners.remove(listener);
 	}
 
+	public final void addShowingStateListener(final IShowingStateListener listener) {
+		getShowingStateObservable().addShowingStateListener(listener);
+	}
+
+	public final void removeShowingStateListener(final IShowingStateListener listener) {
+		getShowingStateObservable().removeShowingStateListener(listener);
+	}
+
+	private ShowingStateObservable getShowingStateObservable() {
+		if (showingStateObservableLazy == null) {
+			showingStateObservableLazy = new ShowingStateObservable();
+			if (getThis() instanceof IControl) {
+				final IWidget parent = getParent();
+				if (parent instanceof IContainer) {
+					((IContainer) parent).addShowingStateListener(showingStateListener);
+				}
+				final IControl thisControl = (IControl) getThis();
+				thisControl.addParentListener(new IParentListener<IContainer>() {
+					@Override
+					public void parentChanged(final IContainer oldParent, final IContainer newParent) {
+						if (oldParent != null) {
+							oldParent.removeShowingStateListener(showingStateListener);
+						}
+						if (newParent != null) {
+							newParent.addShowingStateListener(showingStateListener);
+						}
+					}
+				});
+			}
+			else {
+				final IWidget parent = getParent();
+				if (parent instanceof IComponent) {
+					((IComponent) parent).addShowingStateListener(showingStateListener);
+				}
+			}
+		}
+		return showingStateObservableLazy;
+	}
+
+	Object getThis() {
+		return this;
+	}
+
+	protected ShowingStateObservable getShowingStateObservableLazy() {
+		return showingStateObservableLazy;
+	}
+
 	@Override
 	public boolean requestFocus() {
 		return getWidget().requestFocus();
@@ -291,5 +349,14 @@ public abstract class AbstractComponentSpiWrapper extends WidgetSpiWrapper imple
 	public Position toComponent(final Position componentPosition, final IComponentCommon component) {
 		final Position screenPosition = Toolkit.toScreen(componentPosition, (IComponent) this);
 		return Toolkit.toLocal(screenPosition, (IComponent) component);
+	}
+
+	private final class ShowingStateListener implements IShowingStateListener {
+		@Override
+		public void showingStateChanged(final boolean isShowing) {
+			if (showingStateObservableLazy != null) {
+				showingStateObservableLazy.fireShowingStateChanged(isShowing());
+			}
+		}
 	}
 }

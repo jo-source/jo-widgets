@@ -203,6 +203,13 @@ public class TabFolderImpl extends SwtControl implements ITabFolderSpi {
 	@Override
 	public void setSelectedItem(final int index) {
 		getUiReference().setSelection(index);
+		final CTabItem selection = getUiReference().getSelection();
+		if (selection != null) {
+			final TabItemImpl itemImpl = items.get(selection);
+			if (itemImpl != null) {
+				itemImpl.fireSelected();
+			}
+		}
 	}
 
 	@Override

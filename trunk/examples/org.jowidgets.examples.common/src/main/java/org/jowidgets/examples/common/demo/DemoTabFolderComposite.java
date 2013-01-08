@@ -30,6 +30,7 @@ package org.jowidgets.examples.common.demo;
 
 import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.api.color.Colors;
+import org.jowidgets.api.controller.IShowingStateListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
@@ -197,6 +198,15 @@ public final class DemoTabFolderComposite {
 				if (result != QuestionResult.YES) {
 					vetoable.veto();
 				}
+			}
+		});
+
+		tabItem.addShowingStateListener(new IShowingStateListener() {
+			@Override
+			public void showingStateChanged(final boolean isShowing) {
+				// CHECKSTYLE:OFF
+				System.out.println("Item '" + tabItem.getText() + "' showing state: " + isShowing);
+				// CHECKSTYLE:ON
 			}
 		});
 

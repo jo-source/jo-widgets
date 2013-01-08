@@ -28,7 +28,7 @@
 
 package org.jowidgets.spi.impl.dummy.widgets;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
@@ -52,7 +52,7 @@ public class TabFolderImpl extends DummyControl implements ITabFolderSpi {
 		this.factory = factory;
 		getUiReference().setTabsCloseable(setup.isTabsCloseable());
 		getUiReference().setTabPlacement(setup.getTabPlacement());
-		items = new LinkedList<TabItemImpl>();
+		items = new ArrayList<TabItemImpl>();
 	}
 
 	@Override
@@ -75,6 +75,10 @@ public class TabFolderImpl extends DummyControl implements ITabFolderSpi {
 		}
 		tmp = (UIDTabItem) getUiReference().getComponents().get(index);
 		tmp.setSelected(true);
+		final TabItemImpl tabItemImpl = items.get(index);
+		if (tabItemImpl != null) {
+			tabItemImpl.fireSelectionStateChanged();
+		}
 	}
 
 	@Override

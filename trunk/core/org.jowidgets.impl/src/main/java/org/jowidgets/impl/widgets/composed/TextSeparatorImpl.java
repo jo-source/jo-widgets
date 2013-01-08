@@ -40,9 +40,10 @@ import org.jowidgets.common.widgets.ITextLabelCommon;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
+import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.Assert;
 
-public class TextSeparatorImpl extends CompositeBasedControl implements ITextLabel {
+public class TextSeparatorImpl extends ControlWrapper implements ITextLabel {
 
 	private final IComposite composite;
 	private final ITextLabelCommon textLabelWidget;

@@ -28,6 +28,7 @@
 
 package org.jowidgets.tools.widgets.wrapper;
 
+import org.jowidgets.api.controller.IShowingStateListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -227,6 +228,17 @@ public class ComponentWrapper extends WidgetWrapper implements IComponent {
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
 		getWidget().removePopupDetectionListener(listener);
+	}
+
+	@Override
+	public void addShowingStateListener(final IShowingStateListener listener) {
+		getWidget().addShowingStateListener(listener);
+
+	}
+
+	@Override
+	public void removeShowingStateListener(final IShowingStateListener listener) {
+		getWidget().removeShowingStateListener(listener);
 	}
 
 	@Override

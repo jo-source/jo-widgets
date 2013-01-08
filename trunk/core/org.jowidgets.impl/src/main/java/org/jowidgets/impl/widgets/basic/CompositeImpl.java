@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import org.jowidgets.api.controller.IParentListener;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
@@ -60,13 +61,23 @@ public class CompositeImpl extends ContainerImpl implements IComposite {
 	}
 
 	@Override
+	public IControl getRoot() {
+		return (IControl) super.getRoot();
+	}
+
+	@Override
 	public IContainer getParent() {
 		return controlDelegate.getParent();
 	}
 
 	@Override
-	public IControl getRoot() {
-		return (IControl) super.getRoot();
+	public void addParentListener(final IParentListener<IContainer> listener) {
+		controlDelegate.addParentListener(listener);
+	}
+
+	@Override
+	public void removeParentListener(final IParentListener<IContainer> listener) {
+		controlDelegate.removeParentListener(listener);
 	}
 
 	@Override
