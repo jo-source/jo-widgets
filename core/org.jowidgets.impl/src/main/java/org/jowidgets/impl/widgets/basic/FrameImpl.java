@@ -62,6 +62,7 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsI
 import org.jowidgets.impl.widgets.common.wrapper.AbstractFrameSpiWrapper;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.test.api.widgets.IFrameUi;
+import org.jowidgets.tools.controller.ShowingStateObservable;
 import org.jowidgets.util.Assert;
 
 public class FrameImpl extends AbstractFrameSpiWrapper implements IFrameUi {
@@ -296,6 +297,10 @@ public class FrameImpl extends AbstractFrameSpiWrapper implements IFrameUi {
 	@Override
 	public void setVisible(final boolean visible) {
 		windowDelegate.setVisible(visible);
+		final ShowingStateObservable showingStateObservable = getShowingStateObservableLazy();
+		if (showingStateObservable != null) {
+			showingStateObservable.fireShowingStateChanged(isShowing());
+		}
 	}
 
 	@Override

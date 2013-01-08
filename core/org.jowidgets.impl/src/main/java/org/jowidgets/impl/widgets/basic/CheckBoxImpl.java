@@ -29,6 +29,7 @@
 package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.controller.IDisposeListener;
+import org.jowidgets.api.controller.IParentListener;
 import org.jowidgets.api.widgets.ICheckBox;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -179,6 +180,16 @@ public class CheckBoxImpl extends AbstractControlSpiWrapper implements ICheckBox
 	@Override
 	public IContainer getParent() {
 		return controlDelegate.getParent();
+	}
+
+	@Override
+	public void addParentListener(final IParentListener<IContainer> listener) {
+		controlDelegate.addParentListener(listener);
+	}
+
+	@Override
+	public void removeParentListener(final IParentListener<IContainer> listener) {
+		controlDelegate.removeParentListener(listener);
 	}
 
 	@Override

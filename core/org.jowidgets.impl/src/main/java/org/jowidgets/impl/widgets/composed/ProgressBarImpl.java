@@ -48,8 +48,9 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvok
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.widgets.IProgressBarSpi;
+import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 
-public class ProgressBarImpl extends CompositeBasedControl implements IProgressBar {
+public class ProgressBarImpl extends ControlWrapper implements IProgressBar {
 
 	private final IComposite composite;
 	private final IProgressBarCommon indeterminateProgressBar;

@@ -28,16 +28,20 @@
 
 package org.jowidgets.impl.base.delegate;
 
+import org.jowidgets.api.controller.IParentListener;
+import org.jowidgets.api.controller.IParentObservable;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.spi.widgets.IControlSpi;
+import org.jowidgets.tools.controller.ParentObservable;
 
-public class ControlDelegate extends DisposableDelegate {
+public class ControlDelegate extends DisposableDelegate implements IParentObservable<IContainer> {
 
 	private final IControl control;
 	private final PopupMenuCreationDelegate popupMenuCreationDelegate;
+	private final ParentObservable<IContainer> parentObservable;
 
 	private IContainer parent;
 	private boolean onRemoveByDispose;
@@ -46,6 +50,7 @@ public class ControlDelegate extends DisposableDelegate {
 		super();
 		this.control = control;
 		this.popupMenuCreationDelegate = new PopupMenuCreationDelegate(controlSpi, control);
+		this.parentObservable = new ParentObservable<IContainer>();
 		this.onRemoveByDispose = false;
 	}
 
@@ -56,7 +61,9 @@ public class ControlDelegate extends DisposableDelegate {
 	public void setParent(final IComponent parent) {
 		if (this.parent == null) {
 			if (parent instanceof IContainer) {
-				this.parent = (IContainer) parent;
+				final IContainer parentContainer = (IContainer) parent;
+				this.parent = parentContainer;
+				parentObservable.fireParentChanged(null, parentContainer);
 			}
 			else {
 				throw new IllegalArgumentException("Parent must be instance of '" + IContainer.class.getName() + "'");
@@ -65,6 +72,7 @@ public class ControlDelegate extends DisposableDelegate {
 		else if (!isReparentable()) {
 			throw new IllegalStateException("Widget is not reparentable");
 		}
+
 	}
 
 	public boolean isReparentable() {
@@ -89,5 +97,15 @@ public class ControlDelegate extends DisposableDelegate {
 
 	public IPopupMenu createPopupMenu() {
 		return popupMenuCreationDelegate.createPopupMenu();
+	}
+
+	@Override
+	public void addParentListener(final IParentListener<IContainer> listener) {
+		parentObservable.addParentListener(listener);
+	}
+
+	@Override
+	public void removeParentListener(final IParentListener<IContainer> listener) {
+		parentObservable.removeParentListener(listener);
 	}
 }

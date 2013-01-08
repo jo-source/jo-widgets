@@ -77,16 +77,6 @@ public abstract class AbstractWindowSpiWrapper extends AbstractComponentSpiWrapp
 	}
 
 	@Override
-	public void setVisible(final boolean visible) {
-		getWidget().setVisible(visible);
-	}
-
-	@Override
-	public boolean isVisible() {
-		return getWidget().isVisible();
-	}
-
-	@Override
 	public void addWindowListener(final IWindowListener listener) {
 		getWidget().addWindowListener(listener);
 	}

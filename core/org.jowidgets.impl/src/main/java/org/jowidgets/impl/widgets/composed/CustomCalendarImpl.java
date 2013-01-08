@@ -54,9 +54,10 @@ import org.jowidgets.tools.controller.MouseAdapter;
 import org.jowidgets.tools.powo.JoButton;
 import org.jowidgets.tools.powo.JoComposite;
 import org.jowidgets.tools.powo.JoTextLabel;
+import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.Assert;
 
-public class CustomCalendarImpl extends CompositeBasedControl implements ICalendar {
+public class CustomCalendarImpl extends ControlWrapper implements ICalendar {
 
 	private static final Calendar CALENDAR = new GregorianCalendar();
 	private static final Locale LOCALE = Locale.getDefault();

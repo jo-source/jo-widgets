@@ -29,6 +29,7 @@
 package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.controller.IDisposeListener;
+import org.jowidgets.api.controller.IParentListener;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -53,6 +54,16 @@ public class ControlImpl extends AbstractControlSpiWrapper implements IControl {
 	@Override
 	public void setParent(final IContainer parent) {
 		controlDelegate.setParent(parent);
+	}
+
+	@Override
+	public void addParentListener(final IParentListener<IContainer> listener) {
+		controlDelegate.addParentListener(listener);
+	}
+
+	@Override
+	public void removeParentListener(final IParentListener<IContainer> listener) {
+		controlDelegate.removeParentListener(listener);
 	}
 
 	@Override

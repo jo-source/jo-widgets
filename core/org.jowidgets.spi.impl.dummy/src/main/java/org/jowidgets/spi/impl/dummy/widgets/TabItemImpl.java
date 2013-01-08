@@ -56,7 +56,7 @@ public class TabItemImpl extends DummyContainer implements ITabItemSpi {
 	private final UIDTabFolder parentfolder;
 	private final UIDTabContainer tabContainer;
 	private UIDTabItem tabItem;
-	private final UIDObservable tabPopupObs;
+	private final UIDObservable uidObservable;
 	private final Set<PopupMenuImpl> tabPopupMenus;
 
 	private String text;
@@ -78,7 +78,7 @@ public class TabItemImpl extends DummyContainer implements ITabItemSpi {
 		this.parentfolder = parentFolder;
 		this.detached = false;
 
-		this.tabPopupObs = new UIDObservable();
+		this.uidObservable = new UIDObservable();
 		this.tabContainer = new UIDTabContainer();
 		this.tabPopupMenus = new HashSet<PopupMenuImpl>();
 
@@ -94,12 +94,12 @@ public class TabItemImpl extends DummyContainer implements ITabItemSpi {
 
 	@Override
 	public void addTabPopupDetectionListener(final IPopupDetectionListener listener) {
-		tabPopupObs.addPopupDetectionListener(listener);
+		uidObservable.addPopupDetectionListener(listener);
 	}
 
 	@Override
 	public void removeTabPopupDetectionListener(final IPopupDetectionListener listener) {
-		tabPopupObs.removePopupDetectionListener(listener);
+		uidObservable.removePopupDetectionListener(listener);
 	}
 
 	@Override
@@ -230,12 +230,12 @@ public class TabItemImpl extends DummyContainer implements ITabItemSpi {
 
 	@Override
 	public void addTabItemListener(final ITabItemListenerSpi listener) {
-		tabPopupObs.addTabItemListener(listener);
+		uidObservable.addTabItemListener(listener);
 	}
 
 	@Override
 	public void removeTabItemListener(final ITabItemListenerSpi listener) {
-		tabPopupObs.removeTabItemListener(listener);
+		uidObservable.removeTabItemListener(listener);
 	}
 
 	@Override
@@ -287,6 +287,10 @@ public class TabItemImpl extends DummyContainer implements ITabItemSpi {
 
 	public boolean isDetached() {
 		return detached;
+	}
+
+	void fireSelectionStateChanged() {
+		uidObservable.fireTabItemSelected();
 	}
 
 }

@@ -28,6 +28,7 @@
 
 package org.jowidgets.tools.widgets.wrapper;
 
+import org.jowidgets.api.controller.IParentListener;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.common.types.Dimension;
@@ -51,6 +52,16 @@ public class ControlWrapper extends ComponentWrapper implements IControl {
 	@Override
 	public IContainer getParent() {
 		return getWidget().getParent();
+	}
+
+	@Override
+	public void addParentListener(final IParentListener<IContainer> listener) {
+		getWidget().addParentListener(listener);
+	}
+
+	@Override
+	public void removeParentListener(final IParentListener<IContainer> listener) {
+		getWidget().removeParentListener(listener);
 	}
 
 	@Override

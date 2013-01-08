@@ -67,6 +67,7 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsI
 import org.jowidgets.impl.widgets.common.wrapper.AbstractContainerSpiWrapper;
 import org.jowidgets.spi.widgets.ITabItemSpi;
 import org.jowidgets.spi.widgets.controller.ITabItemListenerSpi;
+import org.jowidgets.tools.controller.ShowingStateObservable;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.util.Assert;
 
@@ -239,6 +240,10 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 			}
 			for (final ITabItemListener listener : itemListeners) {
 				listener.selectionChanged(selected);
+			}
+			final ShowingStateObservable showingStateObservable = getShowingStateObservableLazy();
+			if (showingStateObservable != null) {
+				showingStateObservable.fireShowingStateChanged(isShowing());
 			}
 		}
 	}

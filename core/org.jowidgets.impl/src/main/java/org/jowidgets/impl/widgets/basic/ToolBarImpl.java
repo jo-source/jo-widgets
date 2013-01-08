@@ -33,6 +33,7 @@ import java.util.List;
 
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.controller.IDisposeListener;
+import org.jowidgets.api.controller.IParentListener;
 import org.jowidgets.api.model.IListItemListener;
 import org.jowidgets.api.model.IListItemObservable;
 import org.jowidgets.api.model.IListModelListener;
@@ -177,6 +178,16 @@ public class ToolBarImpl extends AbstractToolBarSpiWrapper implements IToolBar, 
 	@Override
 	public void setParent(final IContainer parent) {
 		controlDelegate.setParent(parent);
+	}
+
+	@Override
+	public void addParentListener(final IParentListener<IContainer> listener) {
+		controlDelegate.addParentListener(listener);
+	}
+
+	@Override
+	public void removeParentListener(final IParentListener<IContainer> listener) {
+		controlDelegate.removeParentListener(listener);
 	}
 
 	@Override

@@ -28,6 +28,7 @@
 
 package org.jowidgets.tools.widgets.wrapper;
 
+import org.jowidgets.api.controller.IParentListener;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
@@ -52,6 +53,16 @@ public class CompositeWrapper extends ContainerWrapper implements IComposite {
 	@Override
 	public IContainer getParent() {
 		return getWidget().getParent();
+	}
+
+	@Override
+	public void addParentListener(final IParentListener<IContainer> listener) {
+		getWidget().addParentListener(listener);
+	}
+
+	@Override
+	public void removeParentListener(final IParentListener<IContainer> listener) {
+		getWidget().removeParentListener(listener);
 	}
 
 	@Override

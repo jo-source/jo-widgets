@@ -29,35 +29,37 @@
 package org.jowidgets.tools.controller;
 
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
-import org.jowidgets.api.controller.ITreeSelectionEvent;
-import org.jowidgets.api.controller.ITreeSelectionListener;
-import org.jowidgets.api.controller.ITreeSelectionObservable;
+import org.jowidgets.api.controller.IParentListener;
+import org.jowidgets.api.controller.IParentObservable;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.util.Assert;
 
-public class TreeSelectionObservable implements ITreeSelectionObservable {
+public class ParentObservable<PARENT_TYPE extends IWidget> implements IParentObservable<PARENT_TYPE> {
 
-	private final Set<ITreeSelectionListener> listeners;
+	private final Set<IParentListener<PARENT_TYPE>> listeners;
 
-	public TreeSelectionObservable() {
-		this.listeners = new LinkedHashSet<ITreeSelectionListener>();
+	public ParentObservable() {
+		this.listeners = new LinkedHashSet<IParentListener<PARENT_TYPE>>();
 	}
 
 	@Override
-	public void addTreeSelectionListener(final ITreeSelectionListener listener) {
+	public void addParentListener(final IParentListener<PARENT_TYPE> listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
-	public void removeTreeSelectionListener(final ITreeSelectionListener listener) {
+	public void removeParentListener(final IParentListener<PARENT_TYPE> listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
-	public void fireSelectionChanged(final ITreeSelectionEvent event) {
-		Assert.paramNotNull(event, "event");
-		for (final ITreeSelectionListener listener : listeners) {
-			listener.selectionChanged(event);
+	public final void fireParentChanged(final PARENT_TYPE oldParent, final PARENT_TYPE newParent) {
+		for (final IParentListener<PARENT_TYPE> listener : new LinkedList<IParentListener<PARENT_TYPE>>(listeners)) {
+			listener.parentChanged(oldParent, newParent);
 		}
 	}
 

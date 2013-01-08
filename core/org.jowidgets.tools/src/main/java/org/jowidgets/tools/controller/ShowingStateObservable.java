@@ -29,35 +29,41 @@
 package org.jowidgets.tools.controller;
 
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
-import org.jowidgets.api.controller.ITreeSelectionEvent;
-import org.jowidgets.api.controller.ITreeSelectionListener;
-import org.jowidgets.api.controller.ITreeSelectionObservable;
+import org.jowidgets.api.controller.IShowingStateListener;
+import org.jowidgets.api.controller.IShowingStateObservable;
 import org.jowidgets.util.Assert;
 
-public class TreeSelectionObservable implements ITreeSelectionObservable {
+public class ShowingStateObservable implements IShowingStateObservable {
 
-	private final Set<ITreeSelectionListener> listeners;
+	private final Set<IShowingStateListener> listeners;
 
-	public TreeSelectionObservable() {
-		this.listeners = new LinkedHashSet<ITreeSelectionListener>();
+	private Boolean lastShowingState;
+
+	public ShowingStateObservable() {
+		this.listeners = new LinkedHashSet<IShowingStateListener>();
 	}
 
 	@Override
-	public void addTreeSelectionListener(final ITreeSelectionListener listener) {
+	public void addShowingStateListener(final IShowingStateListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
-	public void removeTreeSelectionListener(final ITreeSelectionListener listener) {
+	public void removeShowingStateListener(final IShowingStateListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
-	public void fireSelectionChanged(final ITreeSelectionEvent event) {
-		Assert.paramNotNull(event, "event");
-		for (final ITreeSelectionListener listener : listeners) {
-			listener.selectionChanged(event);
+	public void fireShowingStateChanged(final boolean isShowing) {
+		if (lastShowingState == null || lastShowingState.booleanValue() != isShowing) {
+			for (final IShowingStateListener listener : new LinkedList<IShowingStateListener>(listeners)) {
+				listener.showingStateChanged(isShowing);
+			}
+			lastShowingState = Boolean.valueOf(isShowing);
 		}
 	}
 

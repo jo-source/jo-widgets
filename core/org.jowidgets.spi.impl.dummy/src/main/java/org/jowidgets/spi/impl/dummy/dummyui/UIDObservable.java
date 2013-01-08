@@ -29,6 +29,7 @@
 package org.jowidgets.spi.impl.dummy.dummyui;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.common.types.Position;
@@ -233,6 +234,12 @@ public class UIDObservable implements
 	@Override
 	public void removeComponentListener(final IComponentListener componentListener) {
 		componentListeners.remove(componentListener);
+	}
+
+	public void fireTabItemSelected() {
+		for (final ITabItemListenerSpi listener : new LinkedList<ITabItemListenerSpi>(tabItemListeners)) {
+			listener.selected();
+		}
 	}
 
 	public void fireActionPerformed() {

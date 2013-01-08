@@ -34,6 +34,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jowidgets.api.controller.IDisposeListener;
+import org.jowidgets.api.controller.IParentListener;
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.types.AutoSelectionPolicy;
 import org.jowidgets.api.widgets.IComboBox;
@@ -366,6 +367,16 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 	@Override
 	public IContainer getParent() {
 		return controlDelegate.getParent();
+	}
+
+	@Override
+	public void addParentListener(final IParentListener<IContainer> listener) {
+		controlDelegate.addParentListener(listener);
+	}
+
+	@Override
+	public void removeParentListener(final IParentListener<IContainer> listener) {
+		controlDelegate.removeParentListener(listener);
 	}
 
 	@Override

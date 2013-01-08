@@ -28,10 +28,11 @@
 
 package org.jowidgets.api.widgets;
 
+import org.jowidgets.api.controller.IParentObservable;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IControlCommon;
 
-public interface IControl extends IComponent, IControlCommon {
+public interface IControl extends IComponent, IControlCommon, IParentObservable<IContainer> {
 
 	void setParent(IContainer parent);
 

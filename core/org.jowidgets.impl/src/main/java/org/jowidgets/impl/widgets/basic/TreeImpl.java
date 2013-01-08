@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.jowidgets.api.controller.IDisposeListener;
+import org.jowidgets.api.controller.IParentListener;
 import org.jowidgets.api.controller.ITreeListener;
 import org.jowidgets.api.controller.ITreePopupDetectionListener;
 import org.jowidgets.api.controller.ITreeSelectionListener;
@@ -150,6 +151,16 @@ public class TreeImpl extends AbstractControlSpiWrapper implements ITree {
 	@Override
 	public void setParent(final IContainer parent) {
 		controlDelegate.setParent(parent);
+	}
+
+	@Override
+	public void addParentListener(final IParentListener<IContainer> listener) {
+		controlDelegate.addParentListener(listener);
+	}
+
+	@Override
+	public void removeParentListener(final IParentListener<IContainer> listener) {
+		controlDelegate.removeParentListener(listener);
 	}
 
 	@Override

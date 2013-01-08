@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2013, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,39 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.controller;
+package org.jowidgets.api.controller;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import org.jowidgets.api.widgets.IWidget;
 
-import org.jowidgets.api.controller.ITreeSelectionEvent;
-import org.jowidgets.api.controller.ITreeSelectionListener;
-import org.jowidgets.api.controller.ITreeSelectionObservable;
-import org.jowidgets.util.Assert;
+public interface IParentObservable<PARENT_TYPE extends IWidget> {
 
-public class TreeSelectionObservable implements ITreeSelectionObservable {
+	void addParentListener(IParentListener<PARENT_TYPE> listener);
 
-	private final Set<ITreeSelectionListener> listeners;
-
-	public TreeSelectionObservable() {
-		this.listeners = new LinkedHashSet<ITreeSelectionListener>();
-	}
-
-	@Override
-	public void addTreeSelectionListener(final ITreeSelectionListener listener) {
-		listeners.add(listener);
-	}
-
-	@Override
-	public void removeTreeSelectionListener(final ITreeSelectionListener listener) {
-		listeners.remove(listener);
-	}
-
-	public void fireSelectionChanged(final ITreeSelectionEvent event) {
-		Assert.paramNotNull(event, "event");
-		for (final ITreeSelectionListener listener : listeners) {
-			listener.selectionChanged(event);
-		}
-	}
+	void removeParentListener(IParentListener<PARENT_TYPE> listener);
 
 }

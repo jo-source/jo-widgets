@@ -28,6 +28,10 @@
 
 package org.jowidgets.tools.powo;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import org.jowidgets.api.controller.IParentListener;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IInputControl;
@@ -35,9 +39,12 @@ import org.jowidgets.api.widgets.blueprint.builder.IInputComponentSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.setup.IInputComponentSetup;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.util.Assert;
 
 class InputControl<WIDGET_TYPE extends IInputControl<VALUE_TYPE>, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IInputComponentSetup<VALUE_TYPE> & IInputComponentSetupBuilder<?, VALUE_TYPE>, VALUE_TYPE> extends
 		InputComponent<WIDGET_TYPE, BLUE_PRINT_TYPE, VALUE_TYPE> implements IInputControl<VALUE_TYPE> {
+
+	private final Set<IParentListener<IContainer>> parentListeners;
 
 	private Object layoutConstraints;
 
@@ -48,11 +55,15 @@ class InputControl<WIDGET_TYPE extends IInputControl<VALUE_TYPE>, BLUE_PRINT_TYP
 
 	public InputControl(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
+		this.parentListeners = new LinkedHashSet<IParentListener<IContainer>>();
 	}
 
 	@Override
 	void initialize(final WIDGET_TYPE widget) {
 		super.initialize(widget);
+		for (final IParentListener<IContainer> listener : parentListeners) {
+			getWidget().addParentListener(listener);
+		}
 		if (layoutConstraints != null) {
 			getWidget().setLayoutConstraints(layoutConstraints);
 		}
@@ -162,6 +173,28 @@ class InputControl<WIDGET_TYPE extends IInputControl<VALUE_TYPE>, BLUE_PRINT_TYP
 		}
 		else {
 			this.toolTipText = toolTip;
+		}
+	}
+
+	@Override
+	public void addParentListener(final IParentListener<IContainer> listener) {
+		Assert.paramNotNull(listener, "listener");
+		if (isInitialized()) {
+			getWidget().addParentListener(listener);
+		}
+		else {
+			parentListeners.add(listener);
+		}
+	}
+
+	@Override
+	public void removeParentListener(final IParentListener<IContainer> listener) {
+		Assert.paramNotNull(listener, "listener");
+		if (isInitialized()) {
+			getWidget().removeParentListener(listener);
+		}
+		else {
+			parentListeners.remove(listener);
 		}
 	}
 }
