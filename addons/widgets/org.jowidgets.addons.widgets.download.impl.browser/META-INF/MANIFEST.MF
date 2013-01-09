@@ -16,7 +16,7 @@ Bundle-Name: org.jowidgets.addons.widgets.download.impl.browser
 Created-By: 1.6.0_33 (Sun Microsystems Inc.)
 Build-Jdk: 1.6.0_33
 Bundle-Version: 0.21.0.SNAPSHOT
-Bnd-LastModified: 1357747640573
+Bnd-LastModified: 1357747768275
 Bundle-ManifestVersion: 2
 Import-Package: org.jowidgets.addons.widgets.browser.api;version="0.21
  ",org.jowidgets.addons.widgets.download.api;version="0.21",org.jowidg

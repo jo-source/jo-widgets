@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2013, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,36 +26,37 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets.blueprint.factory;
+package org.jowidgets.examples.common.demo;
 
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenience;
-import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
-import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
-import org.jowidgets.common.widgets.builder.ISetupBuilder;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.addons.widgets.download.api.DownloadDialogBPF;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IButton;
+import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IInputField;
+import org.jowidgets.common.widgets.controller.IActionListener;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.widgets.blueprint.BPF;
+import org.jowidgets.util.EmptyCheck;
 
-public interface IBaseBluePrintFactory {
+public final class DemoDownloadComposite {
 
-	<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends ISetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
-		final Class<BLUE_PRINT_TYPE> bluePrintType);
+	public DemoDownloadComposite(final IContainer container) {
 
-	ISetupBuilderConvenienceRegistry getSetupBuilderConvenienceRegistry();
+		container.setLayout(new MigLayoutDescriptor("[grow][]", ""));
 
-	@SuppressWarnings("rawtypes")
-	void setSetupBuilderConvenience(
-		Class<? extends ISetupBuilder> setupBuilder,
-		ISetupBuilderConvenience<?> setupBuilderConvenience);
+		final IInputField<String> url = container.add(BPF.inputFieldString(), "growx, w 0::");
 
-	IDefaultsInitializerRegistry getDefaultsInitializerRegistry();
+		final IButton button = container.add(BPF.button("Download"));
 
-	@SuppressWarnings("rawtypes")
-	void addDefaultsInitializer(Class<? extends ISetupBuilder> setupBuilder, IDefaultInitializer<?> defaultInitializer);
+		button.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				if (!EmptyCheck.isEmpty(url)) {
+					Toolkit.getActiveWindow().createChildWindow(DownloadDialogBPF.create(url.getValue())).open();
+				}
+			}
+		});
+	}
 
-	@SuppressWarnings("rawtypes")
-	void setDefaultsInitializer(Class<? extends ISetupBuilder> setupBuilder, IDefaultInitializer<?> defaultInitializer);
-
-	void setDefaultsInitializerRegistry(IDefaultsInitializerRegistry defaultInitializerRegistry);
-
+	public void foo() {}
 }

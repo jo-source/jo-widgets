@@ -40,6 +40,7 @@ import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Dimension;
@@ -257,6 +258,17 @@ public final class DemoMainComposite {
 			@Override
 			public void actionPerformed() {
 				fileChooserDialog.setVisible(true);
+			}
+		});
+
+		final IFrameBluePrint downloadDemoDialogBp = bpF.frame("Download demo").setMinPackSize(new Dimension(400, 200));
+		final IFrame dowloadDemoDiaolg = getParentWindow().createChildWindow(downloadDemoDialogBp);
+		new DemoDownloadComposite(dowloadDemoDiaolg);
+		final IButton downloadDialogButton = parentContainer.add(bpF.button("Download dialog demo"), "grow, sg bg, wrap");
+		downloadDialogButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				dowloadDemoDiaolg.setVisible(true);
 			}
 		});
 

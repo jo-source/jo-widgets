@@ -28,7 +28,6 @@
 package org.jowidgets.impl.base.blueprint.factory;
 
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenience;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
@@ -56,7 +55,7 @@ public abstract class AbstractBluePrintFactory implements IBaseBluePrintFactory 
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public <WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IComponentSetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
+	public <WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends ISetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
 		final Class<BLUE_PRINT_TYPE> bluePrintType) {
 		//This cast is necessary for compilation with sun compiler. 
 		//It compiles in eclipse Version: Helios Service Release 1 Build id: 20100917-0705
