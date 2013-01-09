@@ -40,10 +40,11 @@ public class ShowingStateObservable implements IShowingStateObservable {
 
 	private final Set<IShowingStateListener> listeners;
 
-	private Boolean lastShowingState;
+	private boolean lastShowingState;
 
-	public ShowingStateObservable() {
+	public ShowingStateObservable(final boolean isShowing) {
 		this.listeners = new LinkedHashSet<IShowingStateListener>();
+		this.lastShowingState = isShowing;
 	}
 
 	@Override
@@ -59,7 +60,7 @@ public class ShowingStateObservable implements IShowingStateObservable {
 	}
 
 	public void fireShowingStateChanged(final boolean isShowing) {
-		if (lastShowingState == null || lastShowingState.booleanValue() != isShowing) {
+		if (lastShowingState != isShowing) {
 			for (final IShowingStateListener listener : new LinkedList<IShowingStateListener>(listeners)) {
 				listener.showingStateChanged(isShowing);
 			}
