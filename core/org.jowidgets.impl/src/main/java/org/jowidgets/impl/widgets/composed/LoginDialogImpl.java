@@ -148,6 +148,8 @@ public class LoginDialogImpl extends WindowWrapper implements ILoginDialog {
 		passwordField.addInputListener(new ValidationInputListener());
 		loginButton.addActionListener(new LoginActionListener());
 		cancelButton.addActionListener(new CancelActionListener());
+
+		usernameField.requestFocus();
 	}
 
 	@Override
