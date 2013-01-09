@@ -18,6 +18,10 @@
 		<module>../org.jowidgets.addons.widgets.browser.impl.swt</module>
 		<module>../org.jowidgets.addons.widgets.browser.impl.swing</module>
 		
+		 <!-- Download -->
+		<module>../org.jowidgets.addons.widgets.download.api</module>
+		<module>../org.jowidgets.addons.widgets.download.impl.browser</module>
+		
 		 <!-- OLE -->
 		<module>../org.jowidgets.addons.widgets.ole.api</module>
 		<module>../org.jowidgets.addons.widgets.ole.document</module>

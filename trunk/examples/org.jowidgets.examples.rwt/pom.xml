@@ -44,6 +44,11 @@
         </dependency>
         <dependency>
             <groupId>org.jowidgets</groupId>
+            <artifactId>org.jowidgets.addons.widgets.download.impl.browser</artifactId>
+            <version>0.21.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jowidgets</groupId>
             <artifactId>org.jowidgets.addons.map.swt</artifactId>
             <version>0.21.0-SNAPSHOT</version>
         </dependency>

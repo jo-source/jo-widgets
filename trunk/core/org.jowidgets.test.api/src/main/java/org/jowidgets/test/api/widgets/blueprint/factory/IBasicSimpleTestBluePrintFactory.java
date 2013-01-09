@@ -31,7 +31,7 @@ package org.jowidgets.test.api.widgets.blueprint.factory;
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
+import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.test.api.widgets.blueprint.IActionMenuItemBluePrintUi;
 import org.jowidgets.test.api.widgets.blueprint.IButtonBluePrintUi;
@@ -61,7 +61,7 @@ import org.jowidgets.test.api.widgets.blueprint.IToolBarPopupButtonBluePrintUi;
 import org.jowidgets.test.api.widgets.blueprint.IToolBarToggleButtonBluePrintUi;
 
 public interface IBasicSimpleTestBluePrintFactory {
-	<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IComponentSetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
+	<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends ISetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
 		final Class<BLUE_PRINT_TYPE> bluePrintType);
 
 	IFrameBluePrintUi frame();
