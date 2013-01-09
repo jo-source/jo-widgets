@@ -271,7 +271,7 @@ public abstract class AbstractComponentSpiWrapper extends WidgetSpiWrapper imple
 
 	private ShowingStateObservable getShowingStateObservable() {
 		if (showingStateObservableLazy == null) {
-			showingStateObservableLazy = new ShowingStateObservable();
+			showingStateObservableLazy = new ShowingStateObservable(isShowing());
 			if (getThis() instanceof IControl) {
 				final IWidget parent = getParent();
 				if (parent instanceof IContainer) {
@@ -286,6 +286,9 @@ public abstract class AbstractComponentSpiWrapper extends WidgetSpiWrapper imple
 						}
 						if (newParent != null) {
 							newParent.addShowingStateListener(showingStateListener);
+							if (showingStateObservableLazy != null) {
+								showingStateObservableLazy.fireShowingStateChanged(isShowing());
+							}
 						}
 					}
 				});
