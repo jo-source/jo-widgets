@@ -40,7 +40,7 @@ import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputDialogBluePrint;
-import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
+import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Dimension;
@@ -261,14 +261,16 @@ public final class DemoMainComposite {
 			}
 		});
 
-		final IFrameBluePrint downloadDemoDialogBp = bpF.frame("Download demo").setMinPackSize(new Dimension(400, 200));
-		final IFrame dowloadDemoDiaolg = getParentWindow().createChildWindow(downloadDemoDialogBp);
-		new DemoDownloadComposite(dowloadDemoDiaolg);
-		final IButton downloadDialogButton = parentContainer.add(bpF.button("Download dialog demo"), "grow, sg bg, wrap");
+		final IButton downloadDialogButton = parentContainer.add(bpF.button("Download button demo"), "grow, sg bg, wrap");
 		downloadDialogButton.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
+				final IDialogBluePrint downloadDemoDialogBp = bpF.dialog("Download button demo");
+				downloadDemoDialogBp.setMinPackSize(new Dimension(800, 0));
+				final IFrame dowloadDemoDiaolg = getParentWindow().createChildWindow(downloadDemoDialogBp);
+				new DemoDownloadComposite(dowloadDemoDiaolg);
 				dowloadDemoDiaolg.setVisible(true);
+				dowloadDemoDiaolg.dispose();
 			}
 		});
 

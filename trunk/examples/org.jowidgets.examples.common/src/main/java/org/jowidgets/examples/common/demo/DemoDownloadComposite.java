@@ -28,34 +28,33 @@
 
 package org.jowidgets.examples.common.demo;
 
-import org.jowidgets.addons.widgets.download.api.DownloadDialogBPF;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IButton;
+import org.jowidgets.addons.widgets.download.api.DownloadBPF;
+import org.jowidgets.addons.widgets.download.api.IDownloadButton;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IInputField;
-import org.jowidgets.common.widgets.controller.IActionListener;
+import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.widgets.blueprint.BPF;
-import org.jowidgets.util.EmptyCheck;
 
 public final class DemoDownloadComposite {
 
 	public DemoDownloadComposite(final IContainer container) {
 
-		container.setLayout(new MigLayoutDescriptor("[grow][]", ""));
+		container.setLayout(new MigLayoutDescriptor("[][grow][]", ""));
+
+		container.add(BPF.textLabel("URL"));
 
 		final IInputField<String> url = container.add(BPF.inputFieldString(), "growx, w 0::");
 
-		final IButton button = container.add(BPF.button("Download"));
+		final IDownloadButton button = container.add(DownloadBPF.button().setText("Download"));
 
-		button.addActionListener(new IActionListener() {
+		url.addInputListener(new IInputListener() {
 			@Override
-			public void actionPerformed() {
-				if (!EmptyCheck.isEmpty(url)) {
-					Toolkit.getActiveWindow().createChildWindow(DownloadDialogBPF.create(url.getValue())).open();
-				}
+			public void inputChanged() {
+				button.setUrl(url.getText());
 			}
 		});
+
 	}
 
 	public void foo() {}

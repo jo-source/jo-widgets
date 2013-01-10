@@ -26,48 +26,21 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.download.impl.browser;
+package org.jowidgets.addons.widgets.download.api;
 
-import org.jowidgets.addons.widgets.browser.api.BrowserBPF;
-import org.jowidgets.addons.widgets.browser.api.IBrowser;
-import org.jowidgets.addons.widgets.download.api.IDownloadDialog;
-import org.jowidgets.addons.widgets.download.api.IDownloadDialogBluePrint;
-import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.tools.layout.MigLayoutFactory;
-import org.jowidgets.tools.widgets.wrapper.DisplayWrapper;
+import org.jowidgets.api.widgets.blueprint.builder.IButtonSetupBuilder;
+import org.jowidgets.api.widgets.descriptor.setup.IButtonSetup;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-class DownloadDialogImpl extends DisplayWrapper implements IDownloadDialog {
+public interface IDownloadButtonBluePrint extends
+		IButtonSetupBuilder<IDownloadButtonBluePrint>,
+		IButtonSetup,
+		IWidgetDescriptor<IDownloadButton> {
 
-	private final String url;
-	private final IBrowser browser;
+	IDownloadButtonBluePrint setUrl(String url);
 
-	public DownloadDialogImpl(final IFrame frame, final IDownloadDialogBluePrint bluePrint) {
-		super(frame);
-		frame.setLayout(MigLayoutFactory.growingInnerCellLayout());
-		this.url = bluePrint.getUrl();
-		this.browser = frame.add(BrowserBPF.browser(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-	}
-
-	@Override
-	protected IFrame getWidget() {
-		return (IFrame) super.getWidget();
-	}
-
-	@Override
-	public void open() {
-		getWidget().setVisible(true);
-		//		browser.addProgressListener(new IBrowserProgressListener() {
-		//			@Override
-		//			public void loadProgressChanged(final int progress, final int totalAmount) {}
-		//
-		//			@Override
-		//			public void loadFinished() {
-		//				getWidget().setVisible(false);
-		//			}
-		//		});
-
-		browser.setUrl(url);
-
-	}
+	@Mandatory
+	String getUrl();
 
 }

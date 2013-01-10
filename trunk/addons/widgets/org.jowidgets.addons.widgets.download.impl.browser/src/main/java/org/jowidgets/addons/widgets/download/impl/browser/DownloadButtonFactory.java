@@ -28,22 +28,21 @@
 
 package org.jowidgets.addons.widgets.download.impl.browser;
 
-import org.jowidgets.addons.widgets.download.api.IDownloadDialog;
-import org.jowidgets.addons.widgets.download.api.IDownloadDialogBluePrint;
+import org.jowidgets.addons.widgets.download.api.IDownloadButton;
+import org.jowidgets.addons.widgets.download.api.IDownloadButtonBluePrint;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
-import org.jowidgets.common.types.Dimension;
+import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
+import org.jowidgets.tools.widgets.blueprint.BPF;
 
-final class DownloadDialogFactory implements IWidgetFactory<IDownloadDialog, IDownloadDialogBluePrint> {
+final class DownloadButtonFactory implements IWidgetFactory<IDownloadButton, IDownloadButtonBluePrint> {
 
 	@Override
-	public IDownloadDialog create(final Object parentUiReference, final IDownloadDialogBluePrint bluePrint) {
-		final IDialogBluePrint frameBp = Toolkit.getBluePrintFactory().dialog().setSetup(bluePrint).setModal(false);
-		frameBp.setSize(new Dimension(800, 600));
-		final IFrame frame = Toolkit.getWidgetFactory().create(parentUiReference, frameBp);
-		return new DownloadDialogImpl(frame, bluePrint);
+	public IDownloadButton create(final Object parentUiReference, final IDownloadButtonBluePrint bluePrint) {
+		final ICompositeBluePrint compositeBp = BPF.composite().setSetup(bluePrint);
+		final IComposite composite = Toolkit.getWidgetFactory().create(parentUiReference, compositeBp);
+		return new DownloadButtonImpl(composite, bluePrint);
 	}
 
 }

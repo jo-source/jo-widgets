@@ -28,24 +28,24 @@
 
 package org.jowidgets.addons.widgets.download.impl.browser;
 
-import org.jowidgets.addons.widgets.download.api.IDownloadDialogBluePrint;
+import org.jowidgets.addons.widgets.download.api.IDownloadButtonBluePrint;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.IToolkitInterceptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.tools.toolkit.AbstractToolkitInterceptorHolder;
 
-public final class DownloadDialogToolkitInterceptorHolder extends AbstractToolkitInterceptorHolder {
+public final class DownloadToolkitInterceptorHolder extends AbstractToolkitInterceptorHolder {
 
 	@Override
 	protected IToolkitInterceptor createToolkitInterceptor() {
-		return new DownloadDialogToolkitInterceptor();
+		return new DownloadToolkitInterceptor();
 	}
 
-	private static final class DownloadDialogToolkitInterceptor implements IToolkitInterceptor {
+	private static final class DownloadToolkitInterceptor implements IToolkitInterceptor {
 		@Override
 		public void onToolkitCreate(final IToolkit toolkit) {
 			final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
-			widgetFactory.register(IDownloadDialogBluePrint.class, new DownloadDialogFactory());
+			widgetFactory.register(IDownloadButtonBluePrint.class, new DownloadButtonFactory());
 		}
 	}
 }
