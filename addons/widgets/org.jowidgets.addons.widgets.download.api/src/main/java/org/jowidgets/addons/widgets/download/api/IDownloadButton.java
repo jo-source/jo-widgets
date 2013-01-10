@@ -28,17 +28,26 @@
 
 package org.jowidgets.addons.widgets.download.api;
 
-import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
+import org.jowidgets.api.widgets.IButton;
 
-public interface IDownloadDialogBluePrint extends
-		IComponentSetupBuilder<IDownloadDialogBluePrint>,
-		IWidgetDescriptor<IDownloadDialog> {
+public interface IDownloadButton extends IButton {
 
-	IDownloadDialogBluePrint setUrl(String url);
+	/**
+	 * Sets the url that should be downloaded when the button will be pressed.
+	 * If set to null or a malformed url, the button will be disabled.
+	 * 
+	 * @param url The url to set, may be null
+	 */
+	void setUrl(String url);
 
-	@Mandatory
+	/**
+	 * @return The currently set url or null, if no url is set
+	 */
 	String getUrl();
+
+	/**
+	 * Initiates the download (pressing the button) programmatically
+	 */
+	void download();
 
 }

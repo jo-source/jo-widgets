@@ -28,10 +28,20 @@
 
 package org.jowidgets.addons.widgets.download.api;
 
-import org.jowidgets.api.widgets.IDisplay;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.util.Assert;
 
-public interface IDownloadDialog extends IDisplay {
+public final class DownloadBPF {
 
-	void open();
+	private DownloadBPF() {}
+
+	public static IDownloadButtonBluePrint button() {
+		return Toolkit.getBluePrintFactory().bluePrint(IDownloadButtonBluePrint.class);
+	}
+
+	public static IDownloadButtonBluePrint button(final String url) {
+		Assert.paramNotNull(url, "url");
+		return button().setUrl(url);
+	}
 
 }

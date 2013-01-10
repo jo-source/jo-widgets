@@ -26,20 +26,68 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.download.api;
+package org.jowidgets.tools.widgets.wrapper;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.util.Assert;
+import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.widgets.IButton;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.widgets.controller.IActionListener;
 
-public final class DownloadDialogBPF {
+public class ButtonWrapper extends ControlWrapper implements IButton {
 
-	private DownloadDialogBPF() {}
+	public ButtonWrapper(final IButton widget) {
+		super(widget);
+	}
 
-	public static IDownloadDialogBluePrint create(final String url) {
-		Assert.paramNotNull(url, "url");
-		final IDownloadDialogBluePrint result = Toolkit.getBluePrintFactory().bluePrint(IDownloadDialogBluePrint.class);
-		result.setUrl(url);
-		return result;
+	@Override
+	protected IButton getWidget() {
+		return (IButton) super.getWidget();
+	}
+
+	@Override
+	public String getText() {
+		return getWidget().getText();
+	}
+
+	@Override
+	public void setFontSize(final int size) {
+		getWidget().setFontSize(size);
+	}
+
+	@Override
+	public void setFontName(final String fontName) {
+		getWidget().setFontName(fontName);
+	}
+
+	@Override
+	public void setMarkup(final Markup markup) {
+		getWidget().setMarkup(markup);
+	}
+
+	@Override
+	public void setText(final String text) {
+		getWidget().setText(text);
+	}
+
+	@Override
+	public void setIcon(final IImageConstant icon) {
+		getWidget().setIcon(icon);
+	}
+
+	@Override
+	public void addActionListener(final IActionListener actionListener) {
+		getWidget().addActionListener(actionListener);
+	}
+
+	@Override
+	public void removeActionListener(final IActionListener actionListener) {
+		getWidget().removeActionListener(actionListener);
+	}
+
+	@Override
+	public void setAction(final IAction action) {
+		getWidget().setAction(action);
 	}
 
 }
