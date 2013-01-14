@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.controller.IParentListener;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITextArea;
@@ -45,6 +46,7 @@ import org.jowidgets.tools.controller.InputObservable;
 import org.jowidgets.tools.validation.CompoundValidator;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
+import org.jowidgets.util.EmptyCheck;
 import org.jowidgets.util.NullCompatibleEquivalence;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
@@ -215,6 +217,20 @@ public class TextAreaImpl extends AbstractControlSpiWrapper implements ITextArea
 	@Override
 	public void scrollToCaretPosition() {
 		getWidget().scrollToCaretPosition();
+	}
+
+	@Override
+	public void scrollToEnd() {
+		final String text = getText();
+		if (!EmptyCheck.isEmpty(text)) {
+			setCaretPosition(text.length() - 1);
+			Toolkit.getUiThreadAccess().invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					scrollToCaretPosition();
+				}
+			});
+		}
 	}
 
 	@Override
