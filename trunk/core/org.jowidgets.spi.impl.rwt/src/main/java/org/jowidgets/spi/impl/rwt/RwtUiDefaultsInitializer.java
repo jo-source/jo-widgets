@@ -40,6 +40,7 @@ public final class RwtUiDefaultsInitializer {
 
 	public static void initialize() {
 		SwtOptions.setInputVerification(false);
+		SwtOptions.setNativeTextAreaScrollBars(true);
 
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 

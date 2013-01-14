@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2013, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,16 +28,11 @@
 package org.jowidgets.spi.impl.swt.common.widgets;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.events.ControlAdapter;
-import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Text;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Dimension;
@@ -50,27 +45,20 @@ import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.ITextAreaSpi;
 import org.jowidgets.spi.widgets.setup.ITextAreaSetupSpi;
 
-public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaSpi {
+public class TextAreaNativeScrollBarImpl extends AbstractTextInputControl implements ITextAreaSpi {
 
 	private final Text textArea;
-	private final ScrolledComposite scrolledComposite;
 	private final boolean isLineWrap;
 
 	private int lastLineCount;
 
-	public TextAreaImpl(final Object parentUiReference, final ITextAreaSetupSpi setup) {
-		super(new ScrolledComposite((Composite) parentUiReference, getScrollCompositeStyle(setup)));
+	public TextAreaNativeScrollBarImpl(final Object parentUiReference, final ITextAreaSetupSpi setup) {
+		super(new Text((Composite) parentUiReference, getTextStyle(setup)));
 
 		lastLineCount = 0;
 		isLineWrap = setup.isLineWrap();
 
-		scrolledComposite = getUiReference();
-
-		scrolledComposite.setExpandHorizontal(true);
-		scrolledComposite.setExpandVertical(true);
-		scrolledComposite.setAlwaysShowScrollBars(setup.isAlwaysShowBars());
-
-		textArea = new Text(getUiReference(), getTextStyle(setup));
+		textArea = getUiReference();
 
 		if (SwtOptions.hasInputVerification()) {
 			final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(null, setup);
@@ -92,16 +80,7 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 			textArea.setTextLimit(setup.getMaxLength().intValue());
 		}
 
-		scrolledComposite.setContent(textArea);
-
 		registerTextControl(textArea, setup.getInputChangeEventPolicy());
-
-		scrolledComposite.addControlListener(new ControlAdapter() {
-			@Override
-			public void controlResized(final ControlEvent e) {
-				scrolledComposite.setMinSize(calcMinSize());
-			}
-		});
 
 		textArea.addModifyListener(new ModifyListener() {
 			@Override
@@ -111,28 +90,9 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 		});
 	}
 
-	private Point calcMinSize() {
-		if (isLineWrap) {
-			final ScrollBar bar = scrolledComposite.getVerticalBar();
-			int verticalSize = 0;
-			if (bar != null) {
-				verticalSize = bar.getSize().x + 10;
-			}
-			return textArea.computeSize(scrolledComposite.getSize().x - verticalSize, SWT.DEFAULT, false);
-		}
-		else {
-			return textArea.computeSize(SWT.DEFAULT, SWT.DEFAULT, false);
-		}
-	}
-
 	private void checkScrollBars() {
 		if (isLineWrap && lineCountChanged()) {
-			scrolledComposite.setRedraw(false);
-			scrolledComposite.setMinSize(calcMinSize());
-
-			//TODO NM evaluate only to scroll if its is really necessary
 			scrollToCaretPosition();
-			scrolledComposite.setRedraw(true);
 		}
 	}
 
@@ -151,8 +111,8 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 	}
 
 	@Override
-	public ScrolledComposite getUiReference() {
-		return (ScrolledComposite) super.getUiReference();
+	public Text getUiReference() {
+		return (Text) super.getUiReference();
 	}
 
 	@Override
@@ -229,11 +189,10 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 	@Override
 	public void scrollToCaretPosition() {
 		try {
-			final Point caretPosition = textArea.getCaretLocation();
-			scrolledComposite.setOrigin(caretPosition.x - 20, caretPosition.y - 20);
+			textArea.showSelection();
 		}
 		catch (final NoSuchMethodError e) {
-			//RWT does not support getCaretLocation()
+			//RWT does not support showSelection()
 		}
 	}
 
@@ -242,21 +201,16 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 		return new Dimension(35, 32);
 	}
 
-	private static int getScrollCompositeStyle(final ITextAreaSetupSpi setup) {
-		int result = SWT.V_SCROLL;
+	private static int getTextStyle(final ITextAreaSetupSpi setup) {
+		int result = SWT.MULTI | SWT.V_SCROLL;
 		if (!setup.isLineWrap()) {
 			result = result | SWT.H_SCROLL;
 		}
-		if (setup.hasBorder()) {
-			result = result | SWT.BORDER;
-		}
-		return result;
-	}
-
-	private static int getTextStyle(final ITextAreaSetupSpi setup) {
-		int result = SWT.MULTI;
 		if (setup.isLineWrap()) {
 			result = result | SWT.WRAP;
+		}
+		if (setup.hasBorder()) {
+			result = result | SWT.BORDER;
 		}
 		return result;
 	}

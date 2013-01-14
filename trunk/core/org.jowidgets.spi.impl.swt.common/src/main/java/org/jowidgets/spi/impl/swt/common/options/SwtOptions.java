@@ -34,6 +34,7 @@ public final class SwtOptions {
 	private static boolean classicTabs = false;
 	private static SplitlayoutMode splitLayoutMode = SplitlayoutMode.ON_MOUSE_MOVE;
 	private static boolean nativeMigLayout = true;
+	private static boolean nativeTextAreaScrollBars = false;
 
 	private SwtOptions() {}
 
@@ -67,6 +68,14 @@ public final class SwtOptions {
 
 	public static void setNativeMigLayout(final boolean nativeMigLayout) {
 		SwtOptions.nativeMigLayout = nativeMigLayout;
+	}
+
+	public static boolean hasNativeTextAreaScrollBars() {
+		return nativeTextAreaScrollBars;
+	}
+
+	public static void setNativeTextAreaScrollBars(final boolean nativeTextAreaScrollBars) {
+		SwtOptions.nativeTextAreaScrollBars = nativeTextAreaScrollBars;
 	}
 
 }

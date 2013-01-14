@@ -32,4 +32,6 @@ import org.jowidgets.common.widgets.ITextAreaCommon;
 
 public interface ITextArea extends ITextControl, ITextAreaCommon, IInputControl<String> {
 
+	void scrollToEnd();
+
 }

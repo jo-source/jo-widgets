@@ -50,6 +50,7 @@ import org.jowidgets.spi.impl.swt.common.widgets.SplitCompositeImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.TabFolderImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.TableImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.TextAreaImpl;
+import org.jowidgets.spi.impl.swt.common.widgets.TextAreaNativeScrollBarImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.TextFieldImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.TextLabelImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.ToggleButtonImpl;
@@ -188,7 +189,12 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 
 	@Override
 	public ITextAreaSpi createTextArea(final Object parentUiReference, final ITextAreaSetupSpi setup) {
-		return new TextAreaImpl(parentUiReference, setup);
+		if (SwtOptions.hasNativeTextAreaScrollBars() || setup.isAlwaysShowBars()) {
+			return new TextAreaNativeScrollBarImpl(parentUiReference, setup);
+		}
+		else {
+			return new TextAreaImpl(parentUiReference, setup);
+		}
 	}
 
 	@Override

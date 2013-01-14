@@ -43,13 +43,14 @@ public class DemoTextAreaFrame extends JoFrame {
 		super("Text area demo");
 
 		setLayout(MigLayoutFactory.growingInnerCellLayout());
-		final ITextArea textArea = add(BPF.textArea(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		final ITextArea textArea = add(BPF.textArea().setLineWrap(true), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
 		final StringBuilder textBuilder = new StringBuilder();
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 40; i++) {
 			textBuilder.append("Demonstration of an text area ");
 		}
 		textArea.setText(textBuilder.toString());
+		textArea.scrollToEnd();
 
 		textArea.addInputListener(new IInputListener() {
 			@Override
