@@ -24,12 +24,14 @@
 		<dependency>
             <groupId>org.eclipse</groupId>
             <artifactId>org.eclipse.rap.rwt</artifactId>
-            <version>1.4.0.20110315-1602</version>
+            <version>1.4.2.20120213-1324</version>
+             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.eclipse</groupId>
             <artifactId>org.eclipse.rap.rwt.q07</artifactId>
-            <version>1.4.0.20110315-1602</version>
+            <version>1.4.2.20120213-1324</version>
+             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
