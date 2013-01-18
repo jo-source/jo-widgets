@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -494,8 +495,13 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 	}
 
 	@Override
-	public void setTabOrder(final List<? extends IControl> tabOrder) {
+	public void setTabOrder(final Collection<? extends IControl> tabOrder) {
 		containerDelegate.setTabOrder(tabOrder);
+	}
+
+	@Override
+	public void setTabOrder(final IControl... controls) {
+		containerDelegate.setTabOrder(controls);
 	}
 
 	@Override

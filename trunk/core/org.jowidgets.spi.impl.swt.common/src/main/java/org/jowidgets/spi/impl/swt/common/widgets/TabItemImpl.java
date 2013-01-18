@@ -28,8 +28,8 @@
 
 package org.jowidgets.spi.impl.swt.common.widgets;
 
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import net.miginfocom.swt.MigLayout;
@@ -204,7 +204,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 	}
 
 	@Override
-	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
+	public void setTabOrder(final Collection<? extends IControlCommon> tabOrder) {
 		swtContainer.setTabOrder(tabOrder);
 	}
 

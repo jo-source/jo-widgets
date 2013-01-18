@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.jowidgets.api.controller.IContainerListener;
@@ -226,8 +227,13 @@ public class ContainerImpl extends AbstractContainerSpiWrapper implements IConta
 	}
 
 	@Override
-	public void setTabOrder(final List<? extends IControl> tabOrder) {
+	public void setTabOrder(final Collection<? extends IControl> tabOrder) {
 		containerDelegate.setTabOrder(tabOrder);
+	}
+
+	@Override
+	public void setTabOrder(final IControl... controls) {
+		containerDelegate.setTabOrder(controls);
 	}
 
 	@Override

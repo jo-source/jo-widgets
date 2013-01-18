@@ -27,7 +27,7 @@
  */
 package org.jowidgets.spi.impl.dummy.widgets;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
@@ -240,7 +240,7 @@ public class DummyContainer implements IContainerSpi {
 	}
 
 	@Override
-	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
+	public void setTabOrder(final Collection<? extends IControlCommon> tabOrder) {
 
 	}
 

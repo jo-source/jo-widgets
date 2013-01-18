@@ -27,6 +27,7 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -220,8 +221,13 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 	}
 
 	@Override
-	public void setTabOrder(final List<? extends IControl> tabOrder) {
+	public void setTabOrder(final Collection<? extends IControl> tabOrder) {
 		innerComposite.setTabOrder(tabOrder);
+	}
+
+	@Override
+	public void setTabOrder(final IControl... controls) {
+		innerComposite.setTabOrder(controls);
 	}
 
 	@Override

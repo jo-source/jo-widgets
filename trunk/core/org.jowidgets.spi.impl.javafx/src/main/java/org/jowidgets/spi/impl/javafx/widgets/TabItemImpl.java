@@ -28,8 +28,8 @@
 
 package org.jowidgets.spi.impl.javafx.widgets;
 
+import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -141,7 +141,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 	}
 
 	@Override
-	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
+	public void setTabOrder(final Collection<? extends IControlCommon> tabOrder) {
 		javafxContainer.setTabOrder(tabOrder);
 	}
 
