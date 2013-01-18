@@ -28,6 +28,7 @@
 
 package org.jowidgets.api.widgets;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.jowidgets.api.controller.IContainerObservable;
@@ -143,6 +144,13 @@ public interface IContainer extends IComponent, IContainerObservable, IRecursive
 	 * 
 	 * @param tabOrder the tab order to set or null to set the default tab behavior.
 	 */
-	void setTabOrder(List<? extends IControl> tabOrder);
+	void setTabOrder(Collection<? extends IControl> tabOrder);
+
+	/**
+	 * Sets the tab order of the container's controls.
+	 * 
+	 * @param tabOrder the tab order to set or null to set the default tab behavior.
+	 */
+	void setTabOrder(IControl... controls);
 
 }

@@ -27,7 +27,7 @@
  */
 package org.jowidgets.spi.impl.swt.common.widgets;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.miginfocom.swt.MigLayout;
 
@@ -261,7 +261,7 @@ public class SwtContainer implements IContainerSpi {
 	}
 
 	@Override
-	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
+	public void setTabOrder(final Collection<? extends IControlCommon> tabOrder) {
 		if (tabOrder == null) {
 			getUiReference().setTabList(null);
 		}

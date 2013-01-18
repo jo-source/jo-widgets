@@ -27,7 +27,7 @@
  */
 package org.jowidgets.spi.impl.swing.common.widgets;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -268,7 +268,7 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 	}
 
 	@Override
-	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
+	public void setTabOrder(final Collection<? extends IControlCommon> tabOrder) {
 		innerContainer.setTabOrder(tabOrder);
 	}
 

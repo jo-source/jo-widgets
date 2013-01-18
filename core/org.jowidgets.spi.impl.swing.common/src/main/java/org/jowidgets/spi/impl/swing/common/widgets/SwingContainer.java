@@ -31,7 +31,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.FocusTraversalPolicy;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -252,7 +252,7 @@ public class SwingContainer implements IContainerSpi {
 	}
 
 	@Override
-	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
+	public void setTabOrder(final Collection<? extends IControlCommon> tabOrder) {
 		if (tabOrder == null) {
 			getUiReference().setFocusTraversalPolicy(null);
 			getUiReference().setFocusTraversalPolicyProvider(false);
@@ -345,7 +345,7 @@ public class SwingContainer implements IContainerSpi {
 	private final class TabListTraversalPolicy extends FocusTraversalPolicy {
 		private final ArrayList<Component> tabOrder;
 
-		private TabListTraversalPolicy(final List<? extends IControlCommon> tabOrder) {
+		private TabListTraversalPolicy(final Collection<? extends IControlCommon> tabOrder) {
 			this.tabOrder = new ArrayList<Component>(tabOrder.size());
 			for (final IControlCommon control : tabOrder) {
 				this.tabOrder.add((Component) control.getUiReference());

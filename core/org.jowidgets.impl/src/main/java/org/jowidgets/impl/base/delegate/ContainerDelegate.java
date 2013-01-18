@@ -28,6 +28,9 @@
 
 package org.jowidgets.impl.base.delegate;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -43,6 +46,7 @@ import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IPopupMenu;
+import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.controller.IComponentListener;
 import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.common.widgets.controller.IKeyListener;
@@ -320,8 +324,18 @@ public class ContainerDelegate extends DisposableDelegate {
 		return result;
 	}
 
-	public void setTabOrder(final List<? extends IControl> tabOrder) {
+	public void setTabOrder(final Collection<? extends IControl> tabOrder) {
 		containerSpi.setTabOrder(tabOrder);
+	}
+
+	public void setTabOrder(final IControl... controls) {
+		if (controls != null) {
+			containerSpi.setTabOrder(Arrays.asList(controls));
+		}
+		else {
+			final Collection<IControlCommon> emptyList = Collections.emptyList();
+			containerSpi.setTabOrder(emptyList);
+		}
 	}
 
 	public List<IControl> getChildren() {

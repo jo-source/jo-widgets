@@ -27,7 +27,7 @@
  */
 package org.jowidgets.spi.impl.swt.common.widgets;
 
-import java.util.List;
+import java.util.Collection;
 
 import net.miginfocom.layout.ComponentWrapper;
 import net.miginfocom.layout.LayoutCallback;
@@ -284,7 +284,7 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 	}
 
 	@Override
-	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
+	public void setTabOrder(final Collection<? extends IControlCommon> tabOrder) {
 		innerContainer.setTabOrder(tabOrder);
 	}
 

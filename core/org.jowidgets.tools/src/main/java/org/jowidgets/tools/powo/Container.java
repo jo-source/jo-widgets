@@ -28,6 +28,9 @@
 
 package org.jowidgets.tools.powo;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -70,7 +73,7 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 	private final Set<IListenerFactory<IMouseListener>> mouseListenerFactories;
 	private final Set<IListenerFactory<IPopupDetectionListener>> popupDetectionListenerFactories;
 
-	private List<? extends IControl> tabOrder;
+	private Collection<? extends IControl> tabOrder;
 
 	@SuppressWarnings("rawtypes")
 	Container(final BLUE_PRINT_TYPE bluePrint) {
@@ -174,12 +177,27 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 	}
 
 	@Override
-	public void setTabOrder(final List<? extends IControl> tabOrder) {
+	public void setTabOrder(final Collection<? extends IControl> tabOrder) {
 		if (isInitialized()) {
 			getWidget().setTabOrder(tabOrder);
 		}
 		else {
 			this.tabOrder = tabOrder;
+		}
+	}
+
+	@Override
+	public void setTabOrder(final IControl... controls) {
+		if (isInitialized()) {
+			getWidget().setTabOrder(controls);
+		}
+		else {
+			if (controls != null) {
+				this.tabOrder = Arrays.asList(controls);
+			}
+			else {
+				this.tabOrder = Collections.emptyList();
+			}
 		}
 	}
 

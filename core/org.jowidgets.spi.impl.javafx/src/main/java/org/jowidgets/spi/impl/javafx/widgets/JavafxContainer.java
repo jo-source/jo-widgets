@@ -28,7 +28,7 @@
 
 package org.jowidgets.spi.impl.javafx.widgets;
 
-import java.util.List;
+import java.util.Collection;
 
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -383,7 +383,7 @@ public class JavafxContainer implements IContainerSpi {
 	}
 
 	@Override
-	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
+	public void setTabOrder(final Collection<? extends IControlCommon> tabOrder) {
 		// TODO DB Auto-generated method stub
 	}
 

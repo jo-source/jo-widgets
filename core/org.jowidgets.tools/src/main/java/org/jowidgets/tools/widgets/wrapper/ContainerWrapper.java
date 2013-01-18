@@ -28,6 +28,7 @@
 
 package org.jowidgets.tools.widgets.wrapper;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.jowidgets.api.controller.IContainerListener;
@@ -150,8 +151,13 @@ public class ContainerWrapper extends ComponentWrapper implements IContainer {
 	}
 
 	@Override
-	public void setTabOrder(final List<? extends IControl> tabOrder) {
+	public void setTabOrder(final Collection<? extends IControl> tabOrder) {
 		getWidget().setTabOrder(tabOrder);
+	}
+
+	@Override
+	public void setTabOrder(final IControl... controls) {
+		getWidget().setTabOrder(controls);
 	}
 
 	@Override

@@ -28,7 +28,7 @@
 
 package org.jowidgets.spi.impl.javafx.widgets;
 
-import java.util.List;
+import java.util.Collection;
 
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -108,7 +108,7 @@ public class FrameImpl extends JavafxWindow implements IFrameSpi {
 	}
 
 	@Override
-	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
+	public void setTabOrder(final Collection<? extends IControlCommon> tabOrder) {
 		throw new UnsupportedOperationException();
 	}
 

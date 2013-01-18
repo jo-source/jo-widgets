@@ -28,7 +28,7 @@
 
 package org.jowidgets.spi.impl.javafx.widgets;
 
-import java.util.List;
+import java.util.Collection;
 
 import javafx.scene.Node;
 import javafx.scene.control.Control;
@@ -278,7 +278,7 @@ public class CompositeImpl implements ICompositeSpi {
 	}
 
 	@Override
-	public void setTabOrder(final List<? extends IControlCommon> tabOrder) {
+	public void setTabOrder(final Collection<? extends IControlCommon> tabOrder) {
 		containerDelegate.setTabOrder(tabOrder);
 	}
 
