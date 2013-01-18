@@ -306,6 +306,16 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	}
 
 	@Override
+	public IButtonBluePrint buttonClose() {
+		return bluePrintFactory.buttonClose();
+	}
+
+	@Override
+	public IButtonBluePrint buttonDetails() {
+		return bluePrintFactory.buttonDetails();
+	}
+
+	@Override
 	public IIconBluePrint icon(final IImageConstant icon) {
 		return bluePrintFactory.icon(icon);
 	}

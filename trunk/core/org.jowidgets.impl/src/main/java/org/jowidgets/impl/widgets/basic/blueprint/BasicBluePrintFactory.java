@@ -117,12 +117,22 @@ public class BasicBluePrintFactory extends BasicSimpleBluePrintFactory implement
 
 	@Override
 	public IButtonBluePrint buttonOk() {
-		return button(Messages.getString("BasicBluePrintFactory.ok")); //$NON-NLS-1$
+		return button(Messages.getString("BasicBluePrintFactory.ok"));
 	}
 
 	@Override
 	public IButtonBluePrint buttonCancel() {
-		return button(Messages.getString("BasicBluePrintFactory.cancel")); //$NON-NLS-1$
+		return button(Messages.getString("BasicBluePrintFactory.cancel"));
+	}
+
+	@Override
+	public IButtonBluePrint buttonClose() {
+		return button(Messages.getString("BasicBluePrintFactory.close"));
+	}
+
+	@Override
+	public IButtonBluePrint buttonDetails() {
+		return button(Messages.getString("BasicBluePrintFactory.details"));
 	}
 
 	@Override
