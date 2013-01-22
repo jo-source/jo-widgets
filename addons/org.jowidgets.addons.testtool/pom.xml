@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.addons.parent</artifactId>
-		<version>0.21.0-SNAPSHOT</version>
+		<version>0.21.0</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
@@ -14,18 +14,18 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.test.api</artifactId>
-			<version>0.21.0-SNAPSHOT</version>
+			<version>0.21.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.workbench.api</artifactId>
-			<version>0.21.0-SNAPSHOT</version>
+			<version>0.21.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.workbench.impl</artifactId>
-			<version>0.21.0-SNAPSHOT</version>
+			<version>0.21.0</version>
 		</dependency>
 	</dependencies>
 </project>
