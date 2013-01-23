@@ -711,19 +711,15 @@ public class TableImpl extends SwtControl implements ITableSpi {
 				return; /// item selected or hot
 			}
 			final TableItem item = (TableItem) event.item;
-			final int rowIndex = table.indexOf(item);
+			final GC gc = event.gc;
+			final Color oldBackground = gc.getBackground();
 			for (int columnIndex = 0; columnIndex < getColumnCount(); columnIndex++) {
-				if (dataModel.getRowCount() > rowIndex) {
-					final ITableCell cell = dataModel.getCell(rowIndex, columnIndex);
-					final IColorConstant backgroundColor = cell.getBackgroundColor();
-					if (backgroundColor != null && cell.getIcon() != null) {
-						final int clientWidth = table.getClientArea().width;
-
-						final GC gc = event.gc;
-						final Color oldBackground = gc.getBackground();
-
-						gc.setBackground(ColorCache.getInstance().getColor(backgroundColor));
-						gc.fillRectangle(0, event.y, clientWidth, event.height);
+				if (item.getImage(columnIndex) != null) {
+					final Color background = item.getBackground(columnIndex);
+					if (background != null) {
+						gc.setBackground(background);
+						final Rectangle bounds = item.getBounds(columnIndex);
+						gc.fillRectangle(bounds.x, bounds.y, bounds.width - 2, bounds.height);
 						gc.setBackground(oldBackground);
 					}
 				}
