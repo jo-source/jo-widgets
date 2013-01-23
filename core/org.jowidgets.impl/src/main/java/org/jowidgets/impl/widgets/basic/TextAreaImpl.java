@@ -177,6 +177,11 @@ public class TextAreaImpl extends AbstractControlSpiWrapper implements ITextArea
 	}
 
 	@Override
+	public void append(final String text) {
+		getWidget().append(text);
+	}
+
+	@Override
 	public void setFontSize(final int size) {
 		getWidget().setFontSize(size);
 	}
