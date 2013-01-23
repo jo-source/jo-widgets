@@ -78,11 +78,12 @@ public class WorkbenchContext implements IWorkbenchContext {
 	private final IContainer rootContainer;
 	private final IContainer statusBar;
 	private final WorkbenchToolbar toolBar;
-	private final IMenuBarModel menuBarModel;
+
 	private final IToolBarModel toolBarModel;
 	private final IContainer workbenchContentContainer;
 	private final WorkbenchContentPanel workbenchContentPanel;
 
+	private IMenuBarModel menuBarModel;
 	private ITabFolder applicationTabFolder;
 	private boolean disposed;
 	private boolean onComponentChange;
@@ -105,9 +106,6 @@ public class WorkbenchContext implements IWorkbenchContext {
 		this.windowListener = createWindowListener(workbench);
 		this.rootFrame = createRootFrame(workbench);
 		this.rootContainer = createRootContainer();
-
-		this.menuBarModel = new MenuBarModel();
-		rootFrame.setMenuBar(menuBarModel);
 
 		this.toolBar = createToolBar();
 		this.toolBarModel = toolBar.getToolBarModel();
@@ -134,6 +132,10 @@ public class WorkbenchContext implements IWorkbenchContext {
 
 	@Override
 	public IMenuBarModel getMenuBar() {
+		if (this.menuBarModel == null) {
+			this.menuBarModel = new MenuBarModel();
+			rootFrame.setMenuBar(menuBarModel);
+		}
 		return menuBarModel;
 	}
 

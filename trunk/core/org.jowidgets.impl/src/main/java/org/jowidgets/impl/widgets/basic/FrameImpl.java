@@ -63,6 +63,7 @@ import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsI
 import org.jowidgets.impl.widgets.common.wrapper.AbstractFrameSpiWrapper;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.test.api.widgets.IFrameUi;
+import org.jowidgets.tools.controller.ListModelAdapter;
 import org.jowidgets.tools.controller.ShowingStateObservable;
 import org.jowidgets.util.Assert;
 
@@ -361,7 +362,22 @@ public class FrameImpl extends AbstractFrameSpiWrapper implements IFrameUi {
 	@Override
 	public void setMenuBar(final IMenuBarModel model) {
 		Assert.paramNotNull(model, "model");
-		createMenuBar().setModel(model);
+		if (model.getMenus().size() == 0) {
+			if (this.menuBar != null && this.menuBar != model) {
+				this.menuBar.removeAll();
+			}
+			final ListModelAdapter listener = new ListModelAdapter() {
+				@Override
+				public void afterChildAdded(final int index) {
+					createMenuBar().setModel(model);
+					model.removeListModelListener(this);
+				}
+			};
+			model.addListModelListener(listener);
+		}
+		else {
+			createMenuBar().setModel(model);
+		}
 	}
 
 	@Override
