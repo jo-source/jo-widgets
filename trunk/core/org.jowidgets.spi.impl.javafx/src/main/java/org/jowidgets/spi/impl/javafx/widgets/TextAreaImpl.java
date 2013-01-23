@@ -100,6 +100,14 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 	}
 
 	@Override
+	public void append(final String text) {
+		textArea.appendText(text);
+		if (!textArea.focusedProperty().getValue()) {
+			fireInputChanged(getText());
+		}
+	}
+
+	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
 		styleUtil.setForegroundColor(colorValue);
 	}

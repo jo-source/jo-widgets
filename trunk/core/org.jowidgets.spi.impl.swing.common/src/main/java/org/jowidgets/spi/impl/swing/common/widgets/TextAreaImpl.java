@@ -121,6 +121,14 @@ public class TextAreaImpl extends AbstractInputControl implements ITextAreaSpi {
 	}
 
 	@Override
+	public void append(final String text) {
+		textArea.append(text);
+		if (!textArea.isFocusOwner()) {
+			fireInputChanged(getText());
+		}
+	}
+
+	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
 		super.setForegroundColor(colorValue);
 		textArea.setForeground(ColorConvert.convert(colorValue));

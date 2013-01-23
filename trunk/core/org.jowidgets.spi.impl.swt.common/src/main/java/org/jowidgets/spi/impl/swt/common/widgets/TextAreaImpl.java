@@ -49,6 +49,7 @@ import org.jowidgets.spi.impl.swt.common.util.FontProvider;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.ITextAreaSpi;
 import org.jowidgets.spi.widgets.setup.ITextAreaSetupSpi;
+import org.jowidgets.util.EmptyCheck;
 
 public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaSpi {
 
@@ -171,6 +172,17 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 		checkScrollBars();
 		if (!getUiReference().isFocusControl()) {
 			fireInputChanged(getText());
+		}
+	}
+
+	@Override
+	public void append(final String text) {
+		if (!EmptyCheck.isEmpty(text)) {
+			textArea.append(text);
+			checkScrollBars();
+			if (!getUiReference().isFocusControl()) {
+				fireInputChanged(getText());
+			}
 		}
 	}
 

@@ -32,4 +32,6 @@ public interface ITextAreaCommon extends ITextControlCommon {
 
 	void scrollToCaretPosition();
 
+	void append(String text);
+
 }
