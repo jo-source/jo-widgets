@@ -255,7 +255,7 @@ class Workbench implements IWorkbench {
 			model.getMenuBar().bind(context.getMenuBar());
 		}
 		else {
-			context.getToolBar().removeAllItems();
+			context.getMenuBar().removeAllMenus();
 		}
 		menuBar = model.getMenuBar();
 	}
