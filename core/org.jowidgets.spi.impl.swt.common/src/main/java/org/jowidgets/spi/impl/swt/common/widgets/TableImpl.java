@@ -1049,8 +1049,11 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 		@Override
 		public void dataChanged() {
-			table.setItemCount(dataModel.getRowCount());
 			table.clearAll();
+			table.setItemCount(dataModel.getRowCount());
+			//Do redraw after invoke of virtual table clearAll(), 
+			//see Bug: 202237 https://bugs.eclipse.org/bugs/show_bug.cgi?id=202237
+			table.redraw();
 		}
 
 		@Override
@@ -1060,8 +1063,11 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 		private void updateRows(final int[] rowIndices) {
 			if (rowIndices != null && rowIndices.length > 0) {
-				table.setItemCount(dataModel.getRowCount());
 				table.clear(ArrayUtils.getMin(rowIndices), dataModel.getRowCount() - 1);
+				table.setItemCount(dataModel.getRowCount());
+				//Do redraw after invoke of virtual table clearAll(), 
+				//see Bug: 202237 https://bugs.eclipse.org/bugs/show_bug.cgi?id=202237
+				table.redraw();
 			}
 		}
 
