@@ -124,6 +124,18 @@ public final class DemoMainComposite {
 			}
 		});
 
+		final IButton expandCompositeButton = parentContainer.add(
+				bpF.button("Expand composite demo", "Shows an expand composite"),
+				"grow, sg bg, wrap");
+		expandCompositeButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IFrame frame = new DemoExpandComposite();
+				frame.setSize(new Dimension(400, 600));
+				frame.setVisible(true);
+			}
+		});
+
 		final IButton textAreaDemoButton = parentContainer.add(
 				bpF.button("Text area demo", "Shows a text area with line wrapping"),
 				"grow, sg bg, wrap");
