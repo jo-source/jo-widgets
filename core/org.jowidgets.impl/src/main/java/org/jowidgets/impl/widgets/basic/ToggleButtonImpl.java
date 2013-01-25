@@ -37,6 +37,8 @@ public class ToggleButtonImpl extends CheckBoxImpl implements IToggleButton {
 
 	private final IToggleButtonSpi toggleButtonWidgetSpi;
 
+	private IImageConstant icon;
+
 	public ToggleButtonImpl(final IToggleButtonSpi toggleButtonWidgetSpi, final IToggleButtonSetup setup) {
 
 		super(toggleButtonWidgetSpi, setup);
@@ -46,7 +48,13 @@ public class ToggleButtonImpl extends CheckBoxImpl implements IToggleButton {
 
 	@Override
 	public void setIcon(final IImageConstant icon) {
+		this.icon = icon;
 		toggleButtonWidgetSpi.setIcon(icon);
+	}
+
+	@Override
+	public IImageConstant getIcon() {
+		return icon;
 	}
 
 }

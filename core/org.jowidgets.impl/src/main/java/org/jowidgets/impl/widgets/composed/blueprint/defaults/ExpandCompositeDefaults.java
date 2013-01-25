@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2013, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,13 +25,23 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IIconCommon;
+import org.jowidgets.api.color.Colors;
+import org.jowidgets.api.widgets.blueprint.builder.IExpandCompositeSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.common.types.Insets;
 
-public interface IIcon extends IControl, IIconCommon {
+public class ExpandCompositeDefaults implements IDefaultInitializer<IExpandCompositeSetupBuilder<?>> {
 
-	IImageConstant getIcon();
+	@Override
+	public void initialize(final IExpandCompositeSetupBuilder<?> builder) {
+		builder.setBorder(false);
+		builder.setContentBorder(false);
+		builder.setHeaderBorder(false);
+		builder.setExpanded(false);
+		builder.setInsets(new Insets(4, 8, 4, 4));
+		builder.setHeaderBackgroundColor(Colors.LIGHT_GREY);
+	}
 
 }

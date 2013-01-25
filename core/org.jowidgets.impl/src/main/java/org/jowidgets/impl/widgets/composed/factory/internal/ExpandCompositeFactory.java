@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2013, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,13 +25,27 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.widgets.composed.factory.internal;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IIconCommon;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IExpandComposite;
+import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
+import org.jowidgets.api.widgets.descriptor.IExpandCompositeDescriptor;
+import org.jowidgets.common.widgets.factory.IWidgetFactory;
+import org.jowidgets.impl.widgets.composed.ExpandCompositeImpl;
+import org.jowidgets.tools.widgets.blueprint.BPF;
 
-public interface IIcon extends IControl, IIconCommon {
+public final class ExpandCompositeFactory implements IWidgetFactory<IExpandComposite, IExpandCompositeDescriptor> {
 
-	IImageConstant getIcon();
+	@Override
+	public IExpandComposite create(final Object parentUiReference, final IExpandCompositeDescriptor descriptor) {
+		final ICompositeBluePrint bp = BPF.composite().setBackgroundColor(descriptor.getBackgroundColor());
+		if (descriptor.getBorder()) {
+			bp.setBorder();
+		}
+		final IComposite composite = Toolkit.getWidgetFactory().create(parentUiReference, bp);
+		return new ExpandCompositeImpl(composite, descriptor);
+	}
 
 }

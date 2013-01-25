@@ -29,59 +29,56 @@
 package org.jowidgets.examples.common.demo;
 
 import org.jowidgets.addons.icons.silkicons.SilkIcons;
-import org.jowidgets.api.image.IconsSmall;
-import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.IToolBar;
-import org.jowidgets.api.widgets.IToolBarButton;
+import org.jowidgets.api.controller.IExpandListener;
+import org.jowidgets.api.widgets.IExpandComposite;
+import org.jowidgets.api.widgets.blueprint.IExpandCompositeBluePrint;
 import org.jowidgets.common.color.ColorValue;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.powo.JoFrame;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public class DemoExpandComposite extends JoFrame {
 
+	private static final ColorValue BLUE = new ColorValue(0, 0, 170);
+
 	public DemoExpandComposite() {
 		super("Expand composite demo");
+		setLayout(new MigLayoutDescriptor("wrap", "[grow, 0::]", "[][]"));
 
-		setLayout(new MigLayoutDescriptor("wrap", "[grow, 0::]", "[]0[grow, 0::]"));
-
-		final ColorValue grey = new ColorValue(220, 220, 220);
-		final ColorValue blue = new ColorValue(0, 0, 170);
-
-		final IComposite top = add(BPF.composite().setBackgroundColor(grey), "growx, w 0::");
-		top.setLayout(new MigLayoutDescriptor("[][grow, 0::][]", "[]"));
-
-		top.add(BPF.icon(SilkIcons.HELP));
-
-		top.add(BPF.textLabel("Help").setMarkup(Markup.STRONG).setColor(blue).alignLeft());
-
-		final IToolBar toolBar = top.add(BPF.toolBar().setBackgroundColor(grey));
-		final IToolBarButton button = toolBar.addItem(BPF.toolBarButton().setIcon(IconsSmall.EXPAND_DOWN));
-
-		final IComposite composite = add(BPF.composite().setBorder(), "aligny t, growx, w 0::");
-		composite.setLayout(new MigLayoutDescriptor("[]", "[]"));
 		final StringBuilder helpText = new StringBuilder();
-		helpText.append("Important for propper setup:\n\n");
-		helpText.append("- Connect your MIDI device before power on\n");
-		helpText.append("- Lower the volume before power on the amplifter\n");
-		helpText.append("- Use only short cables < 1,5 m\n");
-		helpText.append("- In case of emergency cool down\n");
+		helpText.append("Programmer: Joe Estrada\n");
+		helpText.append("Mood: Well\n");
+		helpText.append("Lines of code: Unkown\n");
+		helpText.append("Clean: Hope so!\n");
+		addExpandComposite(SilkIcons.HELP, "About", helpText.toString());
 
-		composite.add(BPF.textLabel(helpText.toString()).setColor(blue));
-		composite.setVisible(false);
+		final StringBuilder infoText = new StringBuilder();
+		infoText.append("Important for proper setup:\n\n");
+		infoText.append("- Connect your MIDI device before power on\n");
+		infoText.append("- Lower the volume before power on the amplifter\n");
+		infoText.append("- Use only short cables < 1,5 m\n");
+		infoText.append("- In case of emergency cool down\n");
+		addExpandComposite(SilkIcons.INFORMATION, "Information", infoText.toString());
 
-		button.addActionListener(new IActionListener() {
+		addExpandComposite(SilkIcons.INFORMATION, "Same information", infoText.toString());
+	}
+
+	private void addExpandComposite(final IImageConstant icon, final String header, final String text) {
+		final IExpandCompositeBluePrint expandCompositeBp = BPF.expandComposite();
+		expandCompositeBp.setText(header).setIcon(icon).setTextColor(BLUE).setTextMarkup(Markup.STRONG);
+		final IExpandComposite expandComposite = add(expandCompositeBp, "growx, w 0::");
+		expandComposite.setLayout(new MigLayoutDescriptor("[]", "[]"));
+		expandComposite.add(BPF.textLabel(text).setColor(BLUE));
+
+		expandComposite.addExpandListener(new IExpandListener() {
 			@Override
-			public void actionPerformed() {
-				composite.setVisible(!composite.isVisible());
-				if (composite.isVisible()) {
-					button.setIcon(IconsSmall.EXPAND_UP);
-				}
-				else {
-					button.setIcon(IconsSmall.EXPAND_DOWN);
-				}
+			public void expandedChanged(final boolean expanded) {
+				layout();
+				//CHECKSTYLE:OFF
+				System.out.println("Expanded " + header + ": " + expanded);
+				//CHECKSTYLE:ON
 			}
 		});
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2013, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,13 +25,39 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets;
+package org.jowidgets.api.widgets.descriptor.setup;
 
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IIconCommon;
+import org.jowidgets.common.types.Insets;
+import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
-public interface IIcon extends IControl, IIconCommon {
+public interface IExpandCompositeSetup extends IComponentSetup {
+
+	String getText();
 
 	IImageConstant getIcon();
+
+	@Mandatory
+	boolean getBorder();
+
+	@Mandatory
+	boolean getHeaderBorder();
+
+	@Mandatory
+	boolean getContentBorder();
+
+	@Mandatory
+	Markup getTextMarkup();
+
+	IColorConstant getTextColor();
+
+	IColorConstant getHeaderBackgroundColor();
+
+	boolean isExpanded();
+
+	@Mandatory
+	Insets getInsets();
 
 }

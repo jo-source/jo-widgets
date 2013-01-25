@@ -53,6 +53,7 @@ public class LabelImpl extends ControlWrapper implements ILabel {
 	private final ITextLabelCommon textLabelWidget;
 	private final IComposite composite;
 	private String text;
+	private IImageConstant icon;
 
 	public LabelImpl(final IComposite composite, final ILabelSetup setup) {
 
@@ -159,12 +160,18 @@ public class LabelImpl extends ControlWrapper implements ILabel {
 
 	@Override
 	public void setIcon(final IImageConstant icon) {
+		this.icon = icon;
 		final Dimension lastPreferredSize = iconWidget.getPreferredSize();
 		iconWidget.setIcon(icon);
 		if (!lastPreferredSize.equals(iconWidget.getPreferredSize())) {
 			composite.layoutBegin();
 			composite.layoutEnd();
 		}
+	}
+
+	@Override
+	public IImageConstant getIcon() {
+		return icon;
 	}
 
 }

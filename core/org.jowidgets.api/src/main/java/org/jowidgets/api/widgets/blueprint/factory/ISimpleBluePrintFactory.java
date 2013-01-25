@@ -39,6 +39,7 @@ import org.jowidgets.api.widgets.blueprint.ICollectionInputControlBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICombinedCollectionInputFieldBluePrint;
+import org.jowidgets.api.widgets.blueprint.IExpandCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
@@ -103,5 +104,7 @@ public interface ISimpleBluePrintFactory extends IBasicBluePrintFactory {
 	<ELEMENT_TYPE> ICombinedCollectionInputFieldBluePrint<ELEMENT_TYPE> combinedCollectionInputField(
 		ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> elementTypeCreator,
 		ICustomWidgetCreator<IInputControl<? extends Collection<ELEMENT_TYPE>>> collectionTypeCreator);
+
+	IExpandCompositeBluePrint expandComposite();
 
 }

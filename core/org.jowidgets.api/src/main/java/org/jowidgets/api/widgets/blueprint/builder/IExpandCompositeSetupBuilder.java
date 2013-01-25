@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2013, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,13 +25,33 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets;
+package org.jowidgets.api.widgets.blueprint.builder;
 
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IIconCommon;
+import org.jowidgets.common.types.Insets;
+import org.jowidgets.common.types.Markup;
 
-public interface IIcon extends IControl, IIconCommon {
+public interface IExpandCompositeSetupBuilder<INSTANCE_TYPE extends IExpandCompositeSetupBuilder<?>> extends
+		IComponentSetupBuilder<INSTANCE_TYPE> {
 
-	IImageConstant getIcon();
+	INSTANCE_TYPE setText(String text);
 
+	INSTANCE_TYPE setIcon(IImageConstant icon);
+
+	INSTANCE_TYPE setBorder(boolean border);
+
+	INSTANCE_TYPE setHeaderBorder(boolean border);
+
+	INSTANCE_TYPE setContentBorder(boolean border);
+
+	INSTANCE_TYPE setTextMarkup(Markup markup);
+
+	INSTANCE_TYPE setTextColor(IColorConstant color);
+
+	INSTANCE_TYPE setHeaderBackgroundColor(IColorConstant color);
+
+	INSTANCE_TYPE setExpanded(boolean expanded);
+
+	INSTANCE_TYPE setInsets(Insets insets);
 }

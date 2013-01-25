@@ -139,6 +139,16 @@ public class JoButton extends Control<IButton, IButtonBluePrint> implements IBut
 	}
 
 	@Override
+	public IImageConstant getIcon() {
+		if (isInitialized()) {
+			return getWidget().getIcon();
+		}
+		else {
+			return getBluePrint().getIcon();
+		}
+	}
+
+	@Override
 	public void setAction(final IAction action) {
 		if (isInitialized()) {
 			getWidget().setAction(action);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2013, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,13 +25,50 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets;
+package org.jowidgets.common.types;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IIconCommon;
+import org.jowidgets.util.Assert;
 
-public interface IIcon extends IControl, IIconCommon {
+public final class Insets {
 
-	IImageConstant getIcon();
+	private final int top;
+	private final int bottom;
+	private final int left;
+	private final int right;
+
+	public Insets(final int insets) {
+		this(insets, insets, insets, insets);
+	}
+
+	public Insets(final int topBottom, final int leftRight) {
+		this(topBottom, leftRight, topBottom, leftRight);
+	}
+
+	public Insets(final int top, final int left, final int bottom, final int right) {
+		Assert.paramInBounds(Integer.MAX_VALUE, top, "top");
+		Assert.paramInBounds(Integer.MAX_VALUE, left, "left");
+		Assert.paramInBounds(Integer.MAX_VALUE, bottom, "bottom");
+		Assert.paramInBounds(Integer.MAX_VALUE, right, "right");
+		this.top = top;
+		this.left = left;
+		this.bottom = bottom;
+		this.right = right;
+	}
+
+	public int getTop() {
+		return top;
+	}
+
+	public int getBottom() {
+		return bottom;
+	}
+
+	public int getLeft() {
+		return left;
+	}
+
+	public int getRight() {
+		return right;
+	}
 
 }

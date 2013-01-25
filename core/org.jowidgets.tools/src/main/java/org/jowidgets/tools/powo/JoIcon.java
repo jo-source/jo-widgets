@@ -54,6 +54,16 @@ public class JoIcon extends Control<IIcon, IIconBluePrint> implements IIcon {
 		}
 	}
 
+	@Override
+	public IImageConstant getIcon() {
+		if (isInitialized()) {
+			return getWidget().getIcon();
+		}
+		else {
+			return getBluePrint().getIcon();
+		}
+	}
+
 	public static IIconBluePrint bluePrint() {
 		return Toolkit.getBluePrintFactory().icon();
 	}

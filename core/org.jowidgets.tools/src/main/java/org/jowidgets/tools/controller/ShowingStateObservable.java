@@ -64,7 +64,7 @@ public class ShowingStateObservable implements IShowingStateObservable {
 			for (final IShowingStateListener listener : new LinkedList<IShowingStateListener>(listeners)) {
 				listener.showingStateChanged(isShowing);
 			}
-			lastShowingState = Boolean.valueOf(isShowing);
+			lastShowingState = isShowing;
 		}
 	}
 

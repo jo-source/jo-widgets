@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2013, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -27,11 +27,37 @@
  */
 package org.jowidgets.api.widgets;
 
+import org.jowidgets.api.controller.IExpandObservable;
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IIconCommon;
+import org.jowidgets.common.types.Markup;
 
-public interface IIcon extends IControl, IIconCommon {
+public interface IExpandComposite extends IControl, IContainer, IExpandObservable {
+
+	void setText(String text);
+
+	String getText();
+
+	void setIcon(IImageConstant icon);
 
 	IImageConstant getIcon();
+
+	void setTextMarkup(Markup markup);
+
+	void setTextColor(IColorConstant color);
+
+	IColorConstant getTextColor();
+
+	void setHeaderBackgroundColor(IColorConstant color);
+
+	IColorConstant getHeaderBackgroundColor();
+
+	void setContentBackgroundColor(IColorConstant color);
+
+	IColorConstant getContentBackgroundColor();
+
+	void setExpanded(boolean expanded);
+
+	boolean isExpanded();
 
 }
