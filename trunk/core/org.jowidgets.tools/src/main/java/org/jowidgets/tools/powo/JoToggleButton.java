@@ -58,6 +58,16 @@ public class JoToggleButton extends CheckBox<IToggleButton, IToggleButtonBluePri
 		}
 	}
 
+	@Override
+	public IImageConstant getIcon() {
+		if (isInitialized()) {
+			return getWidget().getIcon();
+		}
+		else {
+			return getBluePrint().getIcon();
+		}
+	}
+
 	public static IToggleButtonBluePrint bluePrint() {
 		return Toolkit.getBluePrintFactory().toggleButton();
 	}

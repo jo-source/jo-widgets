@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2013, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,13 +25,12 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets;
+package org.jowidgets.api.widgets.descriptor;
 
-import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.common.widgets.IIconCommon;
+import org.jowidgets.api.widgets.IExpandComposite;
+import org.jowidgets.api.widgets.descriptor.setup.IExpandCompositeSetup;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public interface IIcon extends IControl, IIconCommon {
-
-	IImageConstant getIcon();
+public interface IExpandCompositeDescriptor extends IExpandCompositeSetup, IWidgetDescriptor<IExpandComposite> {
 
 }

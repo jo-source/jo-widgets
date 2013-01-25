@@ -40,6 +40,7 @@ import org.jowidgets.api.widgets.blueprint.ICollectionInputControlBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICombinedCollectionInputFieldBluePrint;
+import org.jowidgets.api.widgets.blueprint.IExpandCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
@@ -225,6 +226,11 @@ public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISi
 		result.setElementTypeControlCreator(elementTypeCreator);
 		result.setCollectionTypeControlCreator(collectionTypeCreator);
 		return result;
+	}
+
+	@Override
+	public IExpandCompositeBluePrint expandComposite() {
+		return createProxy(IExpandCompositeBluePrint.class);
 	}
 
 }

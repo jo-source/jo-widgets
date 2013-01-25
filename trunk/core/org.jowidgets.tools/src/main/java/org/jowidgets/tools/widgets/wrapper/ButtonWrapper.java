@@ -76,6 +76,11 @@ public class ButtonWrapper extends ControlWrapper implements IButton {
 	}
 
 	@Override
+	public IImageConstant getIcon() {
+		return getWidget().getIcon();
+	}
+
+	@Override
 	public void addActionListener(final IActionListener actionListener) {
 		getWidget().addActionListener(actionListener);
 	}

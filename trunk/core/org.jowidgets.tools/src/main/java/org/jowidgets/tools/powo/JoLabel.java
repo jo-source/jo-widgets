@@ -121,6 +121,16 @@ public class JoLabel extends Control<ILabel, ILabelBluePrint> implements ILabel 
 		}
 	}
 
+	@Override
+	public IImageConstant getIcon() {
+		if (isInitialized()) {
+			return getWidget().getIcon();
+		}
+		else {
+			return getBluePrint().getIcon();
+		}
+	}
+
 	public static ILabelBluePrint bluePrint() {
 		return Toolkit.getBluePrintFactory().label();
 	}

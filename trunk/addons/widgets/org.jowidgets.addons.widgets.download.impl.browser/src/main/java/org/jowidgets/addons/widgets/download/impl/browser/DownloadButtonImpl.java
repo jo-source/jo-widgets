@@ -120,6 +120,11 @@ class DownloadButtonImpl extends CompositeWrapper implements IDownloadButton {
 	}
 
 	@Override
+	public IImageConstant getIcon() {
+		return button.getIcon();
+	}
+
+	@Override
 	public void setFontSize(final int size) {
 		button.setFontSize(size);
 	}

@@ -56,6 +56,7 @@ import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IDirectoryChooserBluePrint;
+import org.jowidgets.api.widgets.blueprint.IExpandCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFileChooserBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
@@ -646,5 +647,9 @@ public final class BPF {
 
 	public static IMainMenuBluePrint mainMenu(final String text) {
 		return Toolkit.getBluePrintFactory().mainMenu(text);
+	}
+
+	public static IExpandCompositeBluePrint expandComposite() {
+		return Toolkit.getBluePrintFactory().expandComposite();
 	}
 }

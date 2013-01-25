@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2013, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,39 +25,47 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.tools.widgets.factory;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.api.widgets.descriptor.ICompositeDescriptor;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.common.widgets.factory.IWidgetFactory;
+package org.jowidgets.tools.controller;
 
-public abstract class AbstractCompositeWidgetFactory<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> implements
-		IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> {
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.Set;
 
-	protected abstract WIDGET_TYPE createWidget(IComposite composite, DESCRIPTOR_TYPE descriptor);
+import org.jowidgets.api.controller.IExpandListener;
+import org.jowidgets.api.controller.IExpandObservable;
+import org.jowidgets.util.Assert;
+
+public class ExpandObservable implements IExpandObservable {
+
+	private final Set<IExpandListener> listeners;
+
+	private boolean lastExpanded;
+
+	public ExpandObservable(final boolean isExpanded) {
+		this.listeners = new LinkedHashSet<IExpandListener>();
+		this.lastExpanded = isExpanded;
+	}
 
 	@Override
-	public WIDGET_TYPE create(final Object parentUiReference, final DESCRIPTOR_TYPE descriptor) {
+	public void addExpandListener(final IExpandListener listener) {
+		Assert.paramNotNull(listener, "listener");
+		listeners.add(listener);
+	}
 
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
-		final IGenericWidgetFactory gwF = Toolkit.getWidgetFactory();
+	@Override
+	public void removeExpandListener(final IExpandListener listener) {
+		Assert.paramNotNull(listener, "listener");
+		listeners.remove(listener);
+	}
 
-		final IComposite compositeWidget = gwF.create(parentUiReference, bpF.composite());
-
-		if (compositeWidget == null) {
-			throw new IllegalStateException("Could not create widget with descriptor interface class '"
-				+ ICompositeDescriptor.class
-				+ "' from '"
-				+ IGenericWidgetFactory.class.getName()
-				+ "'");
+	public void fireExpandedChanged(final boolean isExpanded) {
+		if (lastExpanded != isExpanded) {
+			for (final IExpandListener listener : new LinkedList<IExpandListener>(listeners)) {
+				listener.expandedChanged(isExpanded);
+			}
+			lastExpanded = isExpanded;
 		}
-
-		return createWidget(compositeWidget, descriptor);
 	}
 
 }
