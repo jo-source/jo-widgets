@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.jowidgets.workbench.impl.rcp.example
 Bundle-SymbolicName: org.jowidgets.workbench.impl.rcp.example;singleton:=true
-Bundle-Version: 0.21.0.qualifier
+Bundle-Version: 0.22.0.qualifier
 Bundle-Vendor: jo-widgets.org
 Require-Bundle: org.jowidgets.workbench.impl.rcp,
  org.eclipse.ui;bundle-version="3.6.0",
