@@ -21,6 +21,7 @@
 		 <!-- Download -->
 		<module>../org.jowidgets.addons.widgets.download.api</module>
 		<module>../org.jowidgets.addons.widgets.download.impl.browser</module>
+		<module>../org.jowidgets.addons.widgets.download.impl.filechooser</module>
 		
 		 <!-- OLE -->
 		<module>../org.jowidgets.addons.widgets.ole.api</module>

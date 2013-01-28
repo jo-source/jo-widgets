@@ -53,7 +53,15 @@ public final class FileUtils {
 			inputStreamToOutputStream(inputStream, outputStream);
 		}
 		catch (final Exception e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException(e) {
+
+				private static final long serialVersionUID = -71819256116172748L;
+
+				@Override
+				public String getLocalizedMessage() {
+					return e.getLocalizedMessage();
+				}
+			};
 		}
 		finally {
 			tryCloseSilent(outputStream);
@@ -71,7 +79,15 @@ public final class FileUtils {
 			inputStreamToOutputStream(inputStream, outputStream);
 		}
 		catch (final Exception e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException(e) {
+
+				private static final long serialVersionUID = -71819256116172748L;
+
+				@Override
+				public String getLocalizedMessage() {
+					return e.getLocalizedMessage();
+				}
+			};
 		}
 		finally {
 			tryCloseSilent(inputStream);
@@ -90,7 +106,15 @@ public final class FileUtils {
 			targetChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
 		}
 		catch (final IOException e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException(e) {
+
+				private static final long serialVersionUID = -71819256116172748L;
+
+				@Override
+				public String getLocalizedMessage() {
+					return e.getLocalizedMessage();
+				}
+			};
 		}
 		finally {
 			tryCloseSilent(sourceChannel);
