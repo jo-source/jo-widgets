@@ -1,0 +1,41 @@
+Manifest-Version: 1.0
+Export-Package: org.jowidgets.addons.widgets.download.impl.filechooser
+ ;uses:="org.jowidgets.common.widgets.factory,org.jowidgets.common.wid
+ gets.descriptor,org.jowidgets.tools.widgets.blueprint,org.jowidgets.a
+ pi.toolkit,org.jowidgets.api.widgets.blueprint,org.jowidgets.common.w
+ idgets.builder,org.jowidgets.common.widgets.descriptor.setup,org.jowi
+ dgets.common.widgets,org.jowidgets.api.widgets,org.jowidgets.addons.w
+ idgets.download.api,org.jowidgets.api.threads,org.jowidgets.api.image
+ ,org.jowidgets.common.image,org.jowidgets.util.io,org.jowidgets.commo
+ n.widgets.controller,org.jowidgets.tools.widgets.wrapper,org.jowidget
+ s.util,org.jowidgets.i18n.api,org.jowidgets.common.types,org.jowidget
+ s.api.command,org.jowidgets.api.types,org.jowidgets.tools.toolkit";ve
+ rsion="0.22.0.SNAPSHOT"
+Built-By: grossmann
+Tool: Bnd-0.0.357
+Bundle-Name: org.jowidgets.addons.widgets.download.impl.filechooser
+Created-By: 1.6.0_33 (Sun Microsystems Inc.)
+Build-Jdk: 1.6.0_33
+Bundle-Version: 0.22.0.SNAPSHOT
+Bnd-LastModified: 1359384973963
+Bundle-ManifestVersion: 2
+Import-Package: org.jowidgets.addons.widgets.download.api;version="0.2
+ 2",org.jowidgets.addons.widgets.download.impl.filechooser;version="0.
+ 22",org.jowidgets.api.command;version="0.22",org.jowidgets.api.image;
+ version="0.22",org.jowidgets.api.threads;version="0.22",org.jowidgets
+ .api.toolkit;version="0.22",org.jowidgets.api.types;version="0.22",or
+ g.jowidgets.api.widgets;version="0.22",org.jowidgets.api.widgets.blue
+ print;version="0.22",org.jowidgets.common.image;version="0.22",org.jo
+ widgets.common.types;version="0.22",org.jowidgets.common.widgets;vers
+ ion="0.22",org.jowidgets.common.widgets.builder;version="0.22",org.jo
+ widgets.common.widgets.controller;version="0.22",org.jowidgets.common
+ .widgets.descriptor;version="0.22",org.jowidgets.common.widgets.descr
+ iptor.setup;version="0.22",org.jowidgets.common.widgets.factory;versi
+ on="0.22",org.jowidgets.i18n.api;version="0.22",org.jowidgets.tools.t
+ oolkit;version="0.22",org.jowidgets.tools.widgets.blueprint;version="
+ 0.22",org.jowidgets.tools.widgets.wrapper;version="0.22",org.jowidget
+ s.util;version="0.22",org.jowidgets.util.io;version="0.22"
+Bundle-SymbolicName: org.jowidgets.addons.widgets.download.impl.filech
+ ooser
+Originally-Created-By: 1.6.0_33 (Sun Microsystems Inc.)
+
