@@ -142,6 +142,11 @@ public final class ExpandCompositeImpl extends ControlWrapper implements IExpand
 	}
 
 	@Override
+	public void setEnabled(final boolean enabled) {
+		toolBar.setVisible(enabled);
+	}
+
+	@Override
 	public void setText(final String text) {
 		label.setText(text);
 	}
