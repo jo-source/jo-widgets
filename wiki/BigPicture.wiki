@@ -1,6 +1,6 @@
 ===Architecture===
 
-  [http://jowidgets.org/pics/architecture.gif Architecture]
+  [http://jowidgets.org/pics/architecture.jpg Architecture]
 
 
 ===Modules===
