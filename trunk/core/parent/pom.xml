@@ -60,7 +60,7 @@
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
-				<version>2.1.0</version>
+				<version>2.3.7</version>
 				<executions>
 					<execution>
 						<id>bundle-manifest</id>
@@ -71,7 +71,7 @@
 						<configuration>
 							<manifestLocation>META-INF</manifestLocation>
 							<instructions>
-								<Export-Package>!*.internal;org.jowidgets.*</Export-Package>
+								<Export-Package>org.jowidgets.*</Export-Package>
 								<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
 							</instructions>
 						</configuration>
