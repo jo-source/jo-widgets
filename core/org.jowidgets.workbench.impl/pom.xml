@@ -22,20 +22,5 @@
 			<version>0.23.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
-	
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.felix</groupId>
-				<artifactId>maven-bundle-plugin</artifactId>
-				<configuration>
-					<instructions>
-						<Require-Bundle>org.jowidgets.workbench.api</Require-Bundle>
-						<Require-Bundle>org.jowidgets.tools</Require-Bundle>
-					</instructions>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 
 </project>
