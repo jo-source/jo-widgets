@@ -27,10 +27,12 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Insets;
 import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 
 public interface IExpandCompositeSetupBuilder<INSTANCE_TYPE extends IExpandCompositeSetupBuilder<?>> extends
 		IComponentSetupBuilder<INSTANCE_TYPE> {
@@ -54,4 +56,6 @@ public interface IExpandCompositeSetupBuilder<INSTANCE_TYPE extends IExpandCompo
 	INSTANCE_TYPE setExpanded(boolean expanded);
 
 	INSTANCE_TYPE setInsets(Insets insets);
+
+	INSTANCE_TYPE setCustomHeader(ICustomWidgetCreator<? extends IControl> header);
 }
