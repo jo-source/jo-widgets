@@ -31,6 +31,7 @@ import org.jowidgets.api.controller.IExpandObservable;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 
 public interface IExpandComposite extends IControl, IContainer, IExpandObservable {
 
@@ -45,6 +46,8 @@ public interface IExpandComposite extends IControl, IContainer, IExpandObservabl
 	void setTextMarkup(Markup markup);
 
 	void setTextColor(IColorConstant color);
+
+	void setCustomHeader(ICustomWidgetCreator<? extends IControl> header);
 
 	IColorConstant getTextColor();
 

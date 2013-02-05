@@ -27,11 +27,13 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Insets;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 
 public interface IExpandCompositeSetup extends IComponentSetup {
 
@@ -59,5 +61,7 @@ public interface IExpandCompositeSetup extends IComponentSetup {
 
 	@Mandatory
 	Insets getInsets();
+
+	ICustomWidgetCreator<? extends IControl> getCustomHeader();
 
 }

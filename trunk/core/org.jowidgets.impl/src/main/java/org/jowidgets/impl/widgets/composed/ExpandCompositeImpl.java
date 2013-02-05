@@ -75,8 +75,11 @@ public final class ExpandCompositeImpl extends ControlWrapper implements IExpand
 	private final IComposite header;
 	private final IToolBar toolBar;
 	private final ILabel label;
+	private final IComposite labelContainer;
 	private final IToolBarButton button;
 	private final IComposite content;
+
+	private IControl customHeader;
 
 	public ExpandCompositeImpl(final IComposite composite, final IExpandCompositeSetup setup) {
 		super(composite);
@@ -100,7 +103,14 @@ public final class ExpandCompositeImpl extends ControlWrapper implements IExpand
 
 		final ILabelBluePrint labelBp = BPF.label().setIcon(setup.getIcon()).setText(setup.getText());
 		labelBp.setMarkup(setup.getTextMarkup()).setForegroundColor(setup.getTextColor());
-		this.label = header.add(labelBp, "growx, w 0::");
+		this.labelContainer = header.add(BPF.composite(), "growx, w 0::");
+		labelContainer.setLayout(new MigLayoutDescriptor("hidemode 3", "0[grow, 0::]0", "0[]0"));
+		this.label = labelContainer.add(labelBp, "growx, w 0::");
+		final ICustomWidgetCreator<? extends IControl> customHeaderCreator = setup.getCustomHeader();
+		if (customHeaderCreator != null) {
+			customHeader = labelContainer.add(customHeaderCreator, "growx, w 0::");
+			label.setVisible(false);
+		}
 
 		this.toolBar = header.add(BPF.toolBar().setBackgroundColor(setup.getHeaderBackgroundColor()));
 		final IToolBarButtonBluePrint buttonBp = BPF.toolBarButton();
@@ -130,6 +140,11 @@ public final class ExpandCompositeImpl extends ControlWrapper implements IExpand
 		ColorSettingsInvoker.setColors(setup, content);
 	}
 
+	@Override
+	protected IComposite getWidget() {
+		return (IComposite) super.getWidget();
+	}
+
 	private void toggle() {
 		content.setVisible(!content.isVisible());
 		if (content.isVisible()) {
@@ -154,6 +169,23 @@ public final class ExpandCompositeImpl extends ControlWrapper implements IExpand
 	@Override
 	public String getText() {
 		return label.getText();
+	}
+
+	@Override
+	public void setCustomHeader(final ICustomWidgetCreator<? extends IControl> header) {
+		getWidget().layoutBegin();
+		if (customHeader != null) {
+			labelContainer.remove(customHeader);
+			customHeader = null;
+		}
+		if (header != null) {
+			customHeader = labelContainer.add(header, "growx, w 0::");
+			label.setVisible(false);
+		}
+		else {
+			label.setVisible(true);
+		}
+		getWidget().layoutEnd();
 	}
 
 	@Override
