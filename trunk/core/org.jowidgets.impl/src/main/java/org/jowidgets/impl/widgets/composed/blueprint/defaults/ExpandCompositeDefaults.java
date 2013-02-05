@@ -31,6 +31,7 @@ import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.widgets.blueprint.builder.IExpandCompositeSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.common.types.Insets;
+import org.jowidgets.common.types.Markup;
 
 public class ExpandCompositeDefaults implements IDefaultInitializer<IExpandCompositeSetupBuilder<?>> {
 
@@ -42,6 +43,7 @@ public class ExpandCompositeDefaults implements IDefaultInitializer<IExpandCompo
 		builder.setExpanded(false);
 		builder.setInsets(new Insets(4, 8, 4, 4));
 		builder.setHeaderBackgroundColor(Colors.LIGHT_GREY);
+		builder.setTextMarkup(Markup.DEFAULT);
 	}
 
 }
