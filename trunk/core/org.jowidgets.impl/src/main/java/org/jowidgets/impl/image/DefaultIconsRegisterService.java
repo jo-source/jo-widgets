@@ -42,6 +42,7 @@ public class DefaultIconsRegisterService extends ImageConstantRegisterService {
 		registerImage(IconsSmall.EMPTY, "empty.png");
 
 		registerImage(IconsSmall.OK, "ok.png");
+		registerImage(IconsSmall.OK_GREYED, "ok_greyed.png");
 		registerImage(IconsSmall.POPUP_ARROW, "popup_arrow.png");
 
 		registerImage(IconsCommon.FALLBACK_INFO, "empty.png");

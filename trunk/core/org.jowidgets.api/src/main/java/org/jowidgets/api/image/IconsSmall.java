@@ -34,6 +34,7 @@ public enum IconsSmall implements IImageConstant {
 	EMPTY,
 
 	OK,
+	OK_GREYED,
 	INFO,
 	QUESTION,
 	WARNING,

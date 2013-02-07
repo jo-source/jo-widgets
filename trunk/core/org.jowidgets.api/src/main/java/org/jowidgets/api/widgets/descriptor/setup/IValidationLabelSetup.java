@@ -67,6 +67,8 @@ public interface IValidationLabelSetup extends IComponentSetup {
 	@Mandatory
 	IColorConstant getErrorColor();
 
+	IImageConstant getEmptyIcon();
+
 	IImageConstant getOkIcon();
 
 	IImageConstant getInfoIcon();

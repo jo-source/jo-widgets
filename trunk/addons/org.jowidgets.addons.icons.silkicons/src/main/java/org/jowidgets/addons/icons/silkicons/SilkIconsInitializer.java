@@ -42,12 +42,14 @@ public final class SilkIconsInitializer {
 	public static void initialize() {
 		Toolkit.getImageRegistry().registerImageEnum(SilkIcons.class);
 		Toolkit.getImageRegistry().registerImageConstant(IconsSmall.OK, SilkIcons.TICK);
+		Toolkit.getImageRegistry().registerImageConstant(IconsSmall.OK_GREYED, SilkIcons.TICK_GREYED);
 	}
 
 	public static void initializeFull() {
 		final IImageRegistry imageRegistry = Toolkit.getImageRegistry();
 		imageRegistry.registerImageEnum(SilkIcons.class);
 		imageRegistry.registerImageConstant(IconsSmall.OK, SilkIcons.TICK);
+		imageRegistry.registerImageConstant(IconsSmall.OK_GREYED, SilkIcons.TICK_GREYED);
 		imageRegistry.registerImageConstant(IconsSmall.DISK, SilkIcons.DISK);
 		imageRegistry.registerImageConstant(IconsSmall.REFRESH, SilkIcons.ARROW_REFRESH);
 		imageRegistry.registerImageConstant(IconsSmall.UNDO, SilkIcons.ARROW_UNDO);

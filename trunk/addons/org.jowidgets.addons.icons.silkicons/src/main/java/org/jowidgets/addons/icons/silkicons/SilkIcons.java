@@ -982,6 +982,7 @@ public enum SilkIcons implements IImageUrlProvider {
 	THUMB_DOWN("org/jowidgets/addons/icons/silkicons/icons/silkicons/thumb_down.png"),
 	THUMB_UP("org/jowidgets/addons/icons/silkicons/icons/silkicons/thumb_up.png"),
 	TICK("org/jowidgets/addons/icons/silkicons/icons/silkicons/tick.png"),
+	TICK_GREYED("org/jowidgets/addons/icons/silkicons/icons/silkicons/tick_greyed.png"),
 	TIME("org/jowidgets/addons/icons/silkicons/icons/silkicons/time.png"),
 	TIMELINE_MARKER("org/jowidgets/addons/icons/silkicons/icons/silkicons/timeline_marker.png"),
 	TIME_ADD("org/jowidgets/addons/icons/silkicons/icons/silkicons/time_add.png"),

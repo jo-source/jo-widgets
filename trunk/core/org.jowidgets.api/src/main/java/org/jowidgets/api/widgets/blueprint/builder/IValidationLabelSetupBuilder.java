@@ -56,6 +56,8 @@ public interface IValidationLabelSetupBuilder<INSTANCE_TYPE extends IValidationL
 
 	INSTANCE_TYPE setErrorColor(IColorConstant color);
 
+	INSTANCE_TYPE setEmptyIcon(IImageConstant icon);
+
 	INSTANCE_TYPE setOkIcon(IImageConstant icon);
 
 	INSTANCE_TYPE setInfoIcon(IImageConstant icon);
