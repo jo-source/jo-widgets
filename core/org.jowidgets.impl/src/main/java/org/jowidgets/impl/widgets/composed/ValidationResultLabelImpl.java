@@ -57,6 +57,8 @@ public class ValidationResultLabelImpl extends ControlWrapper implements IValida
 
 		ColorSettingsInvoker.setColors(setup, this);
 		VisibiliySettingsInvoker.setVisibility(setup, this);
+
+		setEmpty();
 	}
 
 	@Override
@@ -64,7 +66,7 @@ public class ValidationResultLabelImpl extends ControlWrapper implements IValida
 		this.validationResult = null;
 		this.lastFirstWorst = null;
 
-		label.setIcon(null);
+		label.setIcon(setup.getEmptyIcon());
 		label.setText(null);
 		label.setToolTipText(null);
 	}
