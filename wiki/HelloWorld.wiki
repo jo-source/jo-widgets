@@ -1,6 +1,6 @@
 == Hello World single sourcing example ==
 
-The Hello World single sourcing example shows how to write ui technology independend code and use it with Java Swing, Eclipse SWT or Eclipse RWT. The complete Hello World example can be found [http://code.google.com/p/jo-widgets/source/browse/#svn%2Ftrunk%2Fhelloworld here].
+The Hello World single sourcing example shows how to write jowidgets code and use it with Java Swing, Eclipse SWT or Eclipse RWT. The complete Hello World example can be found [http://code.google.com/p/jo-widgets/source/browse/#svn%2Ftrunk%2Fhelloworld here].
 
 ----
 == The parent pom ===
