@@ -65,7 +65,7 @@ The Hello World single sourcing example shows how to write jowidgets code and us
 The complete pom.xml can be found [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.common/pom.xml here].
 
 ----
-== The UI technology independend HelloWorldApplication ===
+== The common HelloWorldApplication ===
 
 {{{
 package org.jowidgets.helloworld.common;
@@ -119,3 +119,39 @@ public final class HelloWorldApplication implements IApplication {
 }}}
 
 The complete code can be found [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.common/src/main/java/org/jowidgets/helloworld/common/HelloWorldApplication.java here].
+
+----
+
+== The common pom.xml ===
+
+The common Hello World Application has no dependencies to special ui frameworks and can be used with any supported spi.
+
+{{{
+<modelVersion>4.0.0</modelVersion>
+<artifactId>org.jowidgets.helloworld.common</artifactId>
+
+<parent>
+    <groupId>org.jowidgets.helloworld</groupId>
+    <artifactId>org.jowidgets.helloworld.parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../parent/pom.xml</relativePath>
+</parent>
+	
+<dependencies>
+
+    <dependency>
+        <groupId>org.jowidgets</groupId>
+        <artifactId>org.jowidgets.api</artifactId>
+        <version>${jowidgets.version}</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.jowidgets</groupId>
+        <artifactId>org.jowidgets.tools</artifactId>
+        <version>${jowidgets.version}</version>
+    </dependency>
+
+</dependencies>
+}}}
+
+The complete pom.xml can be found [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.common/pom.xml here].
