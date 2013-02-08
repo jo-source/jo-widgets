@@ -11,7 +11,7 @@ The complete Hello World example can be found [http://code.google.com/p/jo-widge
     <packaging>pom</packaging>
 
     <properties>
-        <!-- Jowidgets needs java 1.6 or higher -->
+        <!-- jowidgets needs java 1.6 or higher -->
         <java.version>1.6</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jowidgets.version>0.22.0</jowidgets.version>
