@@ -118,6 +118,7 @@ public final class HelloWorldApplication implements IApplication {
 
 The complete code can be found [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.common/src/main/java/org/jowidgets/helloworld/common/HelloWorldApplication.java here].
 
+<br>
 
 == The common pom.xml ===
 
