@@ -162,7 +162,7 @@ The complete pom.xml can be found [http://code.google.com/p/jo-widgets/source/br
 
 == The Hello World Swing starter ==
 
-The Hello World Swing starter start the HelloWorldApplication with the jowidgets swing spi implementation.
+The Hello World Swing starter starts the HelloWorldApplication with the jowidgets Swing SPI implementation.
 
 {{{
 package org.jowidgets.helloworld.starter.swing;
@@ -227,6 +227,25 @@ The complete code can be found [http://code.google.com/p/jo-widgets/source/brows
 </dependencies>
 }}}
 
-The complete pom.xml can be found [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.common/pom.xml here].
+The complete pom.xml can be found [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.starter.swing/pom.xml here].
 
 ----
+
+== The Hello World SWT starter ==
+
+The Hello World SWT starter starts the HelloWorldApplication with the jowidgets SWT SPI implementation.
+
+{{{
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.helloworld.common.HelloWorldApplication;
+
+public final class HelloWorldStarterSwt {
+
+    private HelloWorldStarterSwt() {}
+
+    public static void main(final String[] args) throws Exception {
+        Toolkit.getApplicationRunner().run(new HelloWorldApplication());
+        System.exit(0);
+    }
+}
+}}}
