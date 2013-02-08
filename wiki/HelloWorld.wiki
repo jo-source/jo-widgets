@@ -84,7 +84,6 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class HelloWorldApplication implements IApplication {
 
-    @Override
     public void start(final IApplicationLifecycle lifecycle) {
 		
         //Create a frame BluePrint with help of the BluePrintFactory (BPF)
@@ -106,7 +105,6 @@ public final class HelloWorldApplication implements IApplication {
 
         //Add an ActionListener to the button
         button.addActionListener(new IActionListener() {
-            @Override
             public void actionPerformed() {
                 System.out.println("Hello World");
             }
@@ -249,3 +247,9 @@ public final class HelloWorldStarterSwt {
     }
 }
 }}}
+
+The complete code can be found [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.starter.swing/src/main/java/org/jowidgets/helloworld/starter/swing/HelloWorldStarterSwing.java here].
+
+----
+
+== The Swing starter pom.xml ==
