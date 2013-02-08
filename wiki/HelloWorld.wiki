@@ -3,8 +3,6 @@ The complete Hello World example can be found [http://code.google.com/p/jo-widge
 ----
 == The parent pom ===
 
-The complete [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.common/pom.xml pom.xml]
-
 {{{
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.jowidgets.helloworld</groupId>
@@ -61,6 +59,8 @@ The complete [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld
         </plugins>
     </build>
 }}}
+
+The complete pom.xml can be found [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.common/pom.xml here].
 
 ----
 
