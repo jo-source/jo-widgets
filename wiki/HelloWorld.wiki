@@ -295,4 +295,4 @@ The complete code can be found [http://code.google.com/p/jo-widgets/source/brows
 </dependencies>
 }}}
 
-The complete pom.xml can be found [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.starter.swing/pom.xml here].
+The complete pom.xml can be found [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.starter.swt/pom.xml here].
