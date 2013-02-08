@@ -6,60 +6,59 @@ The Hello World single sourcing example shows how to write jowidgets code and us
 == The Hello World example parent pom.xml ===
 
 {{{
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>org.jowidgets.helloworld</groupId>
-    <artifactId>org.jowidgets.helloworld.parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
+<groupId>org.jowidgets.helloworld</groupId>
+<artifactId>org.jowidgets.helloworld.parent</artifactId>
+<version>0.0.1-SNAPSHOT</version>
+<packaging>pom</packaging>
 
-    <properties>
-        <!-- jowidgets needs java 1.6 or higher -->
-        <java.version>1.6</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jowidgets.version>0.22.0</jowidgets.version>
-    </properties>
+<properties>
+    <!-- jowidgets needs java 1.6 or higher -->
+    <java.version>1.6</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <jowidgets.version>0.22.0</jowidgets.version>
+</properties>
 	
-    <repositories>
-        <!-- The jowidgets maven repository -->
-        <repository>
-            <id>jowidgets</id>
-            <url>http://jowidgets.org/maven2/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+<repositories>
+    <!-- The jowidgets maven repository -->
+    <repository>
+        <id>jowidgets</id>
+        <url>http://jowidgets.org/maven2/</url>
+        <releases>
+            <enabled>true</enabled>
+        </releases>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+    </repository>
+</repositories>
 	
-    <modules>
-        <!-- Hold the ui technology independend hello world code -->
-        <module>../org.jowidgets.helloworld.common</module>
+<modules>
+    <!-- Hold the ui technology independend hello world code -->
+    <module>../org.jowidgets.helloworld.common</module>
 		
-        <!-- Holds a starter that uses Java Swing -->
-        <module>../org.jowidgets.helloworld.starter.swing</module>
+    <!-- Holds a starter that uses Java Swing -->
+    <module>../org.jowidgets.helloworld.starter.swing</module>
 		
-        <!-- Holds a starter that uses Eclipse SWT (win32) -->
-        <module>../org.jowidgets.helloworld.starter.swt</module>
+    <!-- Holds a starter that uses Eclipse SWT (win32) -->
+    <module>../org.jowidgets.helloworld.starter.swt</module>
 		
-        <!-- This module creates a war that uses Eclipse RWT -->
-        <module>../org.jowidgets.helloworld.starter.rwt</module>
-    </modules>
+    <!-- This module creates a war that uses Eclipse RWT -->
+    <module>../org.jowidgets.helloworld.starter.rwt</module>
+</modules>
 	
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>2.3.2</version>
+            <configuration>
+                <source>${java.version}</source>
+                <target>${java.version}</target>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
 }}}
 
 The complete pom.xml can be found [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.common/pom.xml here].
@@ -125,7 +124,6 @@ The complete code can be found [http://code.google.com/p/jo-widgets/source/brows
 The common Hello World Application has no dependencies to special ui frameworks and can be used with any supported spi.
 
 {{{
-<modelVersion>4.0.0</modelVersion>
 <artifactId>org.jowidgets.helloworld.common</artifactId>
 
 <parent>
@@ -257,42 +255,44 @@ The complete code can be found [http://code.google.com/p/jo-widgets/source/brows
 {{{
 <artifactId>org.jowidgets.helloworld.starter.swt</artifactId>
 
-    <parent>
-        <groupId>org.jowidgets.helloworld</groupId>
-        <artifactId>org.jowidgets.helloworld.parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../parent/pom.xml</relativePath>
-    </parent>
+<parent>
+    <groupId>org.jowidgets.helloworld</groupId>
+    <artifactId>org.jowidgets.helloworld.parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../parent/pom.xml</relativePath>
+</parent>
 	
-    <dependencies>
+<dependencies>
 
-        <!-- The ui technology independend hello world module -->
-        <dependency>
-            <groupId>org.jowidgets.helloworld</groupId>
-            <artifactId>org.jowidgets.helloworld.common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+    <!-- The ui technology independend hello world module -->
+    <dependency>
+        <groupId>org.jowidgets.helloworld</groupId>
+        <artifactId>org.jowidgets.helloworld.common</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </dependency>
 
-        <!-- The default implementation of the jowidgets api -->
-        <dependency>
-            <groupId>org.jowidgets</groupId>
-            <artifactId>org.jowidgets.impl</artifactId>
-            <version>${jowidgets.version}</version>
-        </dependency>
+    <!-- The default implementation of the jowidgets api -->
+    <dependency>
+        <groupId>org.jowidgets</groupId>
+        <artifactId>org.jowidgets.impl</artifactId>
+        <version>${jowidgets.version}</version>
+    </dependency>
 
-        <!-- The SWT implementation of the jowidgets spi -->
-        <dependency>
-            <groupId>org.jowidgets</groupId>
-            <artifactId>org.jowidgets.spi.impl.swt</artifactId>
-            <version>${jowidgets.version}</version>
-        </dependency>
+    <!-- The SWT implementation of the jowidgets spi -->
+    <dependency>
+        <groupId>org.jowidgets</groupId>
+        <artifactId>org.jowidgets.spi.impl.swt</artifactId>
+        <version>${jowidgets.version}</version>
+    </dependency>
 		
-        <!-- The SWT implementation for win32 -->
-        <dependency>
-            <groupId>org.eclipse</groupId>
-            <artifactId>swt-win32-win32-x86</artifactId>
-            <version>4.2.1</version>
-        </dependency>
+    <!-- The SWT implementation for win32 -->
+    <dependency>
+        <groupId>org.eclipse</groupId>
+        <artifactId>swt-win32-win32-x86</artifactId>
+        <version>4.2.1</version>
+    </dependency>
 
 </dependencies>
 }}}
+
+The complete pom.xml can be found [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.starter.swing/pom.xml here].
