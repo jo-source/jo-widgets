@@ -118,6 +118,7 @@ public final class HelloWorldApplication implements IApplication {
 
 The complete code can be found [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.common/src/main/java/org/jowidgets/helloworld/common/HelloWorldApplication.java here].
 
+
 == The common pom.xml ===
 
 The common Hello World Application has no dependencies to special ui frameworks and can be used with any supported spi.
