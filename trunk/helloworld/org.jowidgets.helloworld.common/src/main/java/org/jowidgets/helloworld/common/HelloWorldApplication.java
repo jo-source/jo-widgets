@@ -43,6 +43,7 @@ public final class HelloWorldApplication implements IApplication {
 
 	@Override
 	public void start(final IApplicationLifecycle lifecycle) {
+
 		//Create a frame BluePrint with help of the BluePrintFactory (BPF)
 		final IFrameBluePrint frameBp = BPF.frame();
 		frameBp.setSize(new Dimension(400, 300)).setTitle("Hello World");

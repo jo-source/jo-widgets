@@ -7,12 +7,14 @@
 	<packaging>pom</packaging>
 
 	<properties>
+		<!-- Jowidgets needs java 1.6 or higher -->
 		<java.version>1.6</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jowidgets.version>0.22.0</jowidgets.version>
 	</properties>
 	
 	<repositories>
+	    <!-- The jowidgets maven repository -->
 		<repository>
 			<id>jowidgets</id>
 			<url>http://jowidgets.org/maven2/</url>
@@ -26,9 +28,16 @@
 	</repositories>
 	
 	<modules>
+		<!-- Hold the ui technology independend hello world code -->
 		<module>../org.jowidgets.helloworld.common</module>
+		
+		<!-- Holds a starter that uses Java Swing -->
 		<module>../org.jowidgets.helloworld.starter.swing</module>
+		
+		<!-- Holds a starter that uses Eclipse SWT (win32) -->
 		<module>../org.jowidgets.helloworld.starter.swt</module>
+		
+		<!-- This module creates a war that uses Eclipse RWT -->
 		<module>../org.jowidgets.helloworld.starter.rwt</module>
 	</modules>
 	
