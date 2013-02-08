@@ -3,7 +3,7 @@
 The Hello World single sourcing example shows how to write jowidgets code and use it with Java Swing, Eclipse SWT or Eclipse RWT. The complete Hello World example can be found [http://code.google.com/p/jo-widgets/source/browse/#svn%2Ftrunk%2Fhelloworld here].
 
 ----
-== The parent pom ===
+== The Hello World example parent pom ===
 
 {{{
     <modelVersion>4.0.0</modelVersion>
