@@ -1,8 +1,6 @@
 == Hello World single sourcing example ==
 
-The HelloWorld single sourcing example shows how to write ui technology independend code and use it with Java Swing, Eclipse SWT or Eclipse RWT.
-
-The complete Hello World example can be found [http://code.google.com/p/jo-widgets/source/browse/#svn%2Ftrunk%2Fhelloworld here]
+The Hello World single sourcing example shows how to write ui technology independend code and use it with Java Swing, Eclipse SWT or Eclipse RWT. The complete Hello World example can be found [http://code.google.com/p/jo-widgets/source/browse/#svn%2Ftrunk%2Fhelloworld here].
 
 ----
 == The parent pom ===
@@ -67,8 +65,8 @@ The complete Hello World example can be found [http://code.google.com/p/jo-widge
 The complete pom.xml can be found [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.common/pom.xml here].
 
 ----
+== The UI technology independend HelloWorldApplication ===
 
-[http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.common/src/main/java/org/jowidgets/helloworld/common/HelloWorldApplication.java HelloWorldApplication.java]
 {{{
 package org.jowidgets.helloworld.common;
 
@@ -119,3 +117,5 @@ public final class HelloWorldApplication implements IApplication {
     }
 }
 }}}
+
+The complete code can be found [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.common/src/main/java/org/jowidgets/helloworld/common/HelloWorldApplication.java here].
