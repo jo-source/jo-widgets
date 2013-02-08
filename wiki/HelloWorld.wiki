@@ -1,8 +1,9 @@
-A complete Hello World example can be found [http://code.google.com/p/jo-widgets/source/browse/#svn%2Ftrunk%2Fhelloworld here]
+The complete Hello World example can be found [http://code.google.com/p/jo-widgets/source/browse/#svn%2Ftrunk%2Fhelloworld here]
 
 ----
+== The parent pom ===
 
-[http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.common/pom.xml Parent pom.xml]
+The complete [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.common/pom.xml pom.xml]
 
 {{{
     <modelVersion>4.0.0</modelVersion>
