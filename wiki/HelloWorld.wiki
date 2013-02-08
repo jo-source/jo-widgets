@@ -139,12 +139,14 @@ The common Hello World Application has no dependencies to special ui frameworks 
 	
 <dependencies>
 
+    <!-- The jowidgets api -->
     <dependency>
         <groupId>org.jowidgets</groupId>
         <artifactId>org.jowidgets.api</artifactId>
         <version>${jowidgets.version}</version>
     </dependency>
 
+    <!-- Some utility classes like wrappers or abstract base classes -->
     <dependency>
         <groupId>org.jowidgets</groupId>
         <artifactId>org.jowidgets.tools</artifactId>
