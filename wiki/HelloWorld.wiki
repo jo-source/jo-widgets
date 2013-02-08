@@ -3,6 +3,7 @@
 The Hello World single sourcing example shows how to write jowidgets code and use it with Java Swing, Eclipse SWT or Eclipse RWT. The complete Hello World example can be found [http://code.google.com/p/jo-widgets/source/browse/#svn%2Ftrunk%2Fhelloworld here].
 
 ----
+
 == The Hello World example parent pom.xml ===
 
 {{{
@@ -117,8 +118,6 @@ public final class HelloWorldApplication implements IApplication {
 
 The complete code can be found [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.common/src/main/java/org/jowidgets/helloworld/common/HelloWorldApplication.java here].
 
-----
-
 == The common pom.xml ===
 
 The common Hello World Application has no dependencies to special ui frameworks and can be used with any supported spi.
@@ -183,8 +182,6 @@ public final class HelloWorldStarterSwing {
 
 The complete code can be found [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.starter.swing/src/main/java/org/jowidgets/helloworld/starter/swing/HelloWorldStarterSwing.java here].
 
-----
-
 == The Swing starter pom.xml ==
 
 {{{
@@ -247,8 +244,6 @@ public final class HelloWorldStarterSwt {
 }}}
 
 The complete code can be found [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.starter.swt/src/main/java/org/jowidgets/helloworld/starter/swt/HelloWorldStarterSwt.java here].
-
-----
 
 == The SWT starter pom.xml ==
 
