@@ -155,3 +155,32 @@ The common Hello World Application has no dependencies to special ui frameworks 
 }}}
 
 The complete pom.xml can be found [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.common/pom.xml here].
+
+----
+
+== The Hello World Swing starter ==
+
+The Hello World Swing starter start the HelloWorldApplication with the jowidgets swing spi implementation.
+
+{{{
+package org.jowidgets.helloworld.starter.swing;
+
+import javax.swing.UIManager;
+
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.helloworld.common.HelloWorldApplication;
+
+public final class HelloWorldStarterSwing {
+
+    private HelloWorldStarterSwing() {}
+
+    public static void main(final String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
+        Toolkit.getApplicationRunner().run(new HelloWorldApplication());
+        System.exit(0);
+    }
+}
+}}}
+
+The complete code can be found [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.common/src/main/java/org/jowidgets/helloworld/common/HelloWorldApplication.java here].
