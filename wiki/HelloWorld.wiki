@@ -1,5 +1,68 @@
 A complete Hello World example can be found [http://code.google.com/p/jo-widgets/source/browse/#svn%2Ftrunk%2Fhelloworld here]
 
+----
+
+[http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.common/pom.xml Parent pom.xml]
+
+{{{
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.jowidgets.helloworld</groupId>
+    <artifactId>org.jowidgets.helloworld.parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <properties>
+        <!-- Jowidgets needs java 1.6 or higher -->
+        <java.version>1.6</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jowidgets.version>0.22.0</jowidgets.version>
+    </properties>
+	
+    <repositories>
+        <!-- The jowidgets maven repository -->
+        <repository>
+            <id>jowidgets</id>
+            <url>http://jowidgets.org/maven2/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+	
+    <modules>
+        <!-- Hold the ui technology independend hello world code -->
+        <module>../org.jowidgets.helloworld.common</module>
+		
+        <!-- Holds a starter that uses Java Swing -->
+        <module>../org.jowidgets.helloworld.starter.swing</module>
+		
+        <!-- Holds a starter that uses Eclipse SWT (win32) -->
+        <module>../org.jowidgets.helloworld.starter.swt</module>
+		
+        <!-- This module creates a war that uses Eclipse RWT -->
+        <module>../org.jowidgets.helloworld.starter.rwt</module>
+    </modules>
+	
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+}}}
+
+----
+
 [http://code.google.com/p/jo-widgets/source/browse/trunk/helloworld/org.jowidgets.helloworld.common/src/main/java/org/jowidgets/helloworld/common/HelloWorldApplication.java HelloWorldApplication.java]
 {{{
 package org.jowidgets.helloworld.common;
