@@ -1,4 +1,4 @@
-A complete Hello World example can be found[http://code.google.com/p/jo-widgets/source/browse/#svn%2Ftrunk%2Fhelloworld here]
+A complete Hello World example can be found [http://code.google.com/p/jo-widgets/source/browse/#svn%2Ftrunk%2Fhelloworld here]
 
 #Hello World example 
 {{{
