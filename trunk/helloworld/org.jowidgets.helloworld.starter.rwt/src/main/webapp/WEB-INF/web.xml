@@ -5,18 +5,19 @@
 
 	<display-name>Hello World Rwt</display-name>
 
+
 	<context-param>
-		<param-name>org.eclipse.rwt.entryPoints</param-name>
-		<param-value>org.jowidgets.helloworld.starter.rwt.HelloWorldStarterRwt</param-value>
+		<param-name>org.eclipse.rap.applicationConfiguration</param-name>
+		<param-value>org.jowidgets.helloworld.starter.rwt.HelloWorldConfiguration</param-value>
 	</context-param>
 
 	<listener>
-		<listener-class>org.eclipse.rwt.internal.engine.RWTServletContextListener</listener-class>
+		<listener-class>org.eclipse.rap.rwt.engine.RWTServletContextListener</listener-class>
 	</listener>
 
 	<servlet>
 		<servlet-name>HelloWorld</servlet-name>
-		<servlet-class>org.eclipse.rwt.internal.engine.RWTDelegate</servlet-class>
+		<servlet-class>org.eclipse.rap.rwt.engine.RWTServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
