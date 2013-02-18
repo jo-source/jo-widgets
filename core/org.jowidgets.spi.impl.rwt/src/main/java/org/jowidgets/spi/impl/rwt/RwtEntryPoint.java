@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2013, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -27,15 +27,12 @@
  */
 package org.jowidgets.spi.impl.rwt;
 
-import java.util.UUID;
-
-import org.eclipse.rwt.RWT;
-import org.eclipse.rwt.lifecycle.IEntryPoint;
-import org.eclipse.rwt.lifecycle.UICallBack;
+import org.eclipse.rap.rwt.application.EntryPoint;
+import org.eclipse.rap.rwt.service.ServerPushSession;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.util.Assert;
 
-public class RwtEntryPoint implements IEntryPoint {
+public class RwtEntryPoint implements EntryPoint {
 
 	private final Runnable runnable;
 
@@ -46,28 +43,18 @@ public class RwtEntryPoint implements IEntryPoint {
 
 	@Override
 	public final int createUI() {
+		if (!Toolkit.isInitialized()) {
+			Toolkit.initialize(new RwtToolkitProvider());
+			RwtUiDefaultsInitializer.initialize();
+		}
+		final ServerPushSession pushSession = new ServerPushSession();
+		pushSession.start();
 		try {
-			if (!Toolkit.isInitialized()) {
-				Toolkit.initialize(new RwtToolkitProvider());
-				RwtUiDefaultsInitializer.initialize();
-			}
-
-			final String uuid = UUID.randomUUID().toString();
-			UICallBack.activate(uuid);
-
-			try {
-				runnable.run();
-			}
-
-			finally {
-				UICallBack.deactivate(uuid);
-			}
-
-			return 0;
+			runnable.run();
 		}
-
 		finally {
-			RWT.getRequest().getSession().invalidate();
+			pushSession.stop();
 		}
+		return 0;
 	}
 }

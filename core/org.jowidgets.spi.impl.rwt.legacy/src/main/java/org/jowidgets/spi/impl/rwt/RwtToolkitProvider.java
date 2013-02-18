@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Michael Grossmann
+ * Copyright (c) 2010, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -27,7 +27,7 @@
  */
 package org.jowidgets.spi.impl.rwt;
 
-import org.eclipse.rap.rwt.SingletonUtil;
+import org.eclipse.rwt.SessionSingletonBase;
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.IToolkitProvider;
 
@@ -35,7 +35,7 @@ public class RwtToolkitProvider implements IToolkitProvider {
 
 	@Override
 	public IToolkit get() {
-		return SingletonUtil.getSessionInstance(RwtToolkit.class);
+		return (IToolkit) SessionSingletonBase.getInstance(RwtToolkit.class);
 	}
 
 }

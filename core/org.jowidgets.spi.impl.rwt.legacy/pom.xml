@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>org.jowidgets.spi.impl.rwt</artifactId>
+	<artifactId>org.jowidgets.spi.impl.rwt.legacy</artifactId>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
@@ -24,7 +24,7 @@
 		<dependency>
             <groupId>org.eclipse</groupId>
             <artifactId>org.eclipse.rap.rwt</artifactId>
-            <version>2.0.0.20130128-0957</version>
+            <version>1.4.2.20120213-1324</version>
              <scope>provided</scope>
         </dependency>
         <dependency>
