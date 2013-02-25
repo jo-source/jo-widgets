@@ -3,6 +3,6 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://w4toolkit.com/ w4t.xsd ">
   <initialisation>
-    <lifecycle>org.eclipse.rwt.internal.lifecycle.RWTLifeCycle</lifecycle>
+    <lifecycle>org.eclipse.rap.rwt.internal.lifecycle.RWTLifeCycle</lifecycle>
   </initialisation>
 </w4t:application>
