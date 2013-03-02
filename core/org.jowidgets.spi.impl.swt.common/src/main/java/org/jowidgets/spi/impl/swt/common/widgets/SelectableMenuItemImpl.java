@@ -90,7 +90,6 @@ public class SelectableMenuItemImpl extends MenuItemImpl implements ISelectableM
 			}
 		}
 		getUiReference().setSelection(selected);
-		itemStateObservable.fireItemStateChanged();
 	}
 
 	@Override

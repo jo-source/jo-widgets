@@ -40,7 +40,7 @@ public interface IConverterProvider {
 
 	/**
 	 * Generic method to get an converter for an type. This method only gets an converter for the types supported by the
-	 * explicit methods of this interface.
+	 * explicit methods of this interface or that was registered before.
 	 * 
 	 * @param <OBJECT_TYPE> The type of the object to get the converter for
 	 * @param type the class to get the converter for

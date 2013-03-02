@@ -34,16 +34,20 @@ import org.jowidgets.common.widgets.ISelectableMenuItemCommon;
 import org.jowidgets.common.widgets.controller.IItemStateListener;
 import org.jowidgets.impl.base.delegate.SelectableItemModelBindingDelegate;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
+import org.jowidgets.tools.controller.ItemStateObservable;
 
 public class SelectableMenuItemSpiWrapper extends MenuItemSpiWrapper implements ISelectableMenuItemCommon {
 
+	private final ItemStateObservable itemStateObservable;
+
 	public SelectableMenuItemSpiWrapper(final ISelectableMenuItemSpi widget, final SelectableItemModelBindingDelegate itemDelegate) {
 		super(widget, itemDelegate);
+		this.itemStateObservable = new ItemStateObservable();
 		widget.addItemListener(new IItemStateListener() {
-
 			@Override
 			public void itemStateChanged() {
 				getModel().setSelected(widget.isSelected());
+				itemStateObservable.fireItemStateChanged();
 			}
 		});
 	}
@@ -64,12 +68,12 @@ public class SelectableMenuItemSpiWrapper extends MenuItemSpiWrapper implements 
 
 	@Override
 	public void addItemListener(final IItemStateListener listener) {
-		getWidget().addItemListener(listener);
+		itemStateObservable.addItemListener(listener);
 	}
 
 	@Override
 	public void removeItemListener(final IItemStateListener listener) {
-		getWidget().addItemListener(listener);
+		itemStateObservable.removeItemListener(listener);
 	}
 
 	@Override

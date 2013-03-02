@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2013, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,10 +28,14 @@
 
 package org.jowidgets.api.command;
 
-import org.jowidgets.util.event.IChangeObservable;
+import org.jowidgets.api.toolkit.Toolkit;
 
-public interface IEnabledChecker extends IChangeObservable {
+public final class CommandAction {
 
-	IEnabledState getEnabledState();
+	private CommandAction() {}
+
+	public static IActionBuilder builder() {
+		return Toolkit.getActionBuilderFactory().create();
+	}
 
 }
