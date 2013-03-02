@@ -302,6 +302,10 @@ public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 		return getItemModel().createCopy();
 	}
 
+	public static IMenuModel create() {
+		return new MenuModel();
+	}
+
 	public static IMenuModelBuilder builder() {
 		return Toolkit.getModelFactoryProvider().getItemModelFactory().menuBuilder();
 	}
