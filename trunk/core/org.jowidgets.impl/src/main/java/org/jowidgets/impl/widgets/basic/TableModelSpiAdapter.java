@@ -83,71 +83,75 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 		}
 
 		// Delegate events from app model to spi model
-		columnModel.getTableColumnModelObservable().addColumnModelListener(new ITableColumnModelListener() {
+		final ITableColumnModelObservable tableColumnModelObservable = columnModel.getTableColumnModelObservable();
+		if (tableColumnModelObservable != null) {
+			tableColumnModelObservable.addColumnModelListener(new ITableColumnModelListener() {
 
-			@Override
-			public void columnsRemoved(final int[] columnIndices) {
-				final List<Integer> sortedIndices = getSortedList(columnIndices);
-				for (final int modelIndex : sortedIndices) {
-					final int removedIndex = modelToView[modelIndex];
-					removeColumnFromModel(modelIndex);
-					updateMappings();
+				@Override
+				public void columnsRemoved(final int[] columnIndices) {
+					final List<Integer> sortedIndices = getSortedList(columnIndices);
+					for (final int modelIndex : sortedIndices) {
+						final int removedIndex = modelToView[modelIndex];
+						removeColumnFromModel(modelIndex);
+						updateMappings();
 
-					ignoreTablePermutationEvents = true;
-					columnModelObservable.fireColumnsRemoved(new int[] {removedIndex});
-					if (table != null) {
-						table.setColumnPermutation(createTableColumnPermutation());
-					}
-					ignoreTablePermutationEvents = false;
-				}
-			}
-
-			@Override
-			public void columnsChanged(final int[] columnIndices) {
-				final List<Integer> sortedIndices = getSortedList(columnIndices);
-				for (final int modelIndex : sortedIndices) {
-					final ITableColumn column = columnModel.getColumn(modelIndex);
-					if (column.isVisible()) {
-						if (modelToView[modelIndex] < 0) {
-							final int index = showColumn(modelIndex);
-							ignoreTablePermutationEvents = true;
-							columnModelObservable.fireColumnsAdded(new int[] {index});
-							if (table != null) {
-								table.setColumnPermutation(createTableColumnPermutation());
-							}
-							ignoreTablePermutationEvents = false;
-						}
-						else {
-							columnModelObservable.fireColumnsChanged(new int[] {modelToView[modelIndex]});
-						}
-
-					}
-					else if (modelToView[modelIndex] >= 0) {
-						final int index = hideColumn(modelIndex);
-						columnModelObservable.fireColumnsRemoved(new int[] {index});
-					}
-				}
-			}
-
-			@Override
-			public void columnsAdded(final int[] columnIndices) {
-				final List<Integer> sortedIndices = getSortedList(columnIndices);
-				for (final int modelIndex : sortedIndices) {
-					final ITableColumn column = columnModel.getColumn(modelIndex);
-					insertColumnToModel(modelIndex, column.isVisible() ? 1 : -1);
-					updateMappings();
-
-					if (column.isVisible()) {
 						ignoreTablePermutationEvents = true;
-						columnModelObservable.fireColumnsAdded(new int[] {modelToView[modelIndex]});
+						columnModelObservable.fireColumnsRemoved(new int[] {removedIndex});
 						if (table != null) {
 							table.setColumnPermutation(createTableColumnPermutation());
 						}
 						ignoreTablePermutationEvents = false;
 					}
 				}
-			}
-		});
+
+				@Override
+				public void columnsChanged(final int[] columnIndices) {
+					final List<Integer> sortedIndices = getSortedList(columnIndices);
+					for (final int modelIndex : sortedIndices) {
+						final ITableColumn column = columnModel.getColumn(modelIndex);
+						if (column.isVisible()) {
+							if (modelToView[modelIndex] < 0) {
+								final int index = showColumn(modelIndex);
+								ignoreTablePermutationEvents = true;
+								columnModelObservable.fireColumnsAdded(new int[] {index});
+								if (table != null) {
+									table.setColumnPermutation(createTableColumnPermutation());
+								}
+								ignoreTablePermutationEvents = false;
+							}
+							else {
+								columnModelObservable.fireColumnsChanged(new int[] {modelToView[modelIndex]});
+							}
+
+						}
+						else if (modelToView[modelIndex] >= 0) {
+							final int index = hideColumn(modelIndex);
+							columnModelObservable.fireColumnsRemoved(new int[] {index});
+						}
+					}
+				}
+
+				@Override
+				public void columnsAdded(final int[] columnIndices) {
+					final List<Integer> sortedIndices = getSortedList(columnIndices);
+					for (final int modelIndex : sortedIndices) {
+						final ITableColumn column = columnModel.getColumn(modelIndex);
+						insertColumnToModel(modelIndex, column.isVisible() ? 1 : -1);
+						updateMappings();
+
+						if (column.isVisible()) {
+							ignoreTablePermutationEvents = true;
+							columnModelObservable.fireColumnsAdded(new int[] {modelToView[modelIndex]});
+							if (table != null) {
+								table.setColumnPermutation(createTableColumnPermutation());
+							}
+							ignoreTablePermutationEvents = false;
+						}
+					}
+				}
+			});
+
+		}
 	}
 
 	public void setTable(final ITableSpi table) {
