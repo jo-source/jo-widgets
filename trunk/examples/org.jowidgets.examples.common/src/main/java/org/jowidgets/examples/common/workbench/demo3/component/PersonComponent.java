@@ -28,9 +28,6 @@
 
 package org.jowidgets.examples.common.workbench.demo3.component;
 
-import org.jowidgets.examples.common.workbench.demo3.model.BeanTableModel;
-import org.jowidgets.examples.common.workbench.demo3.model.Person;
-import org.jowidgets.examples.common.workbench.demo3.model.PersonTableRenderer;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
@@ -39,20 +36,17 @@ import org.jowidgets.workbench.tools.AbstractComponent;
 
 public final class PersonComponent extends AbstractComponent {
 
-	private final BeanTableModel<Person> personModel;
-
 	public PersonComponent(final IComponentNodeModel componentNodeModel, final IComponentContext componentContext) {
 		componentContext.setLayout(PersonComponentLayoutFactory.create());
-		this.personModel = new BeanTableModel<Person>(new PersonTableRenderer());
 	}
 
 	@Override
 	public IView createView(final String viewId, final IViewContext context) {
 		if (PersonTableView.ID.equals(viewId)) {
-			return new PersonTableView(context, personModel);
+			return new PersonTableView(context);
 		}
 		else if (PersonDetailView.ID.equals(viewId)) {
-			return new PersonDetailView(context, personModel);
+			return new PersonDetailView(context);
 		}
 		else {
 			throw new IllegalArgumentException("View id '" + viewId + "' is not known.");

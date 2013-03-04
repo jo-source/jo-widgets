@@ -30,15 +30,8 @@ package org.jowidgets.examples.common.workbench.demo3.component;
 
 import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IInputComposite;
-import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.examples.common.workbench.demo3.form.PersonContentCreator;
-import org.jowidgets.examples.common.workbench.demo3.model.BeanTableModel;
-import org.jowidgets.examples.common.workbench.demo3.model.Person;
-import org.jowidgets.tools.controller.TableDataModelAdapter;
 import org.jowidgets.tools.layout.MigLayoutFactory;
-import org.jowidgets.tools.widgets.blueprint.BPF;
 import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.tools.AbstractView;
 
@@ -49,24 +42,8 @@ public final class PersonDetailView extends AbstractView {
 	public static final String DEFAULT_TOOLTIP = "Shows the detail form of the person";
 	public static final IImageConstant DEFAULT_ICON = SilkIcons.USER;
 
-	public PersonDetailView(final IViewContext context, final BeanTableModel<Person> model) {
+	public PersonDetailView(final IViewContext context) {
 		final IContainer container = context.getContainer();
 		container.setLayout(MigLayoutFactory.growingCellLayout());
-
-		final IInputCompositeBluePrint<Person> inputCompositeBp = BPF.inputComposite(new PersonContentCreator(true));
-		final IInputComposite<Person> inputComposite = container.add(inputCompositeBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		inputComposite.setEditable(false);
-
-		model.addDataModelListener(new TableDataModelAdapter() {
-			@Override
-			public void selectionChanged() {
-				inputComposite.setValue(model.getSelectedBean());
-			}
-
-			@Override
-			public void dataChanged() {
-				inputComposite.setValue(model.getSelectedBean());
-			}
-		});
 	}
 }
