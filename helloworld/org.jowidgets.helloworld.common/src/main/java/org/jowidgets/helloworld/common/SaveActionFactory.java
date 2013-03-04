@@ -26,61 +26,64 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.demo3.command;
+package org.jowidgets.helloworld.common;
 
-import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.api.command.CommandAction;
+import org.jowidgets.api.command.EnabledState;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.IActionBuilder;
 import org.jowidgets.api.command.ICommandExecutor;
+import org.jowidgets.api.command.IEnabledChecker;
+import org.jowidgets.api.command.IEnabledState;
 import org.jowidgets.api.command.IExecutionContext;
+import org.jowidgets.api.image.IconsSmall;
+import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IInputDialog;
-import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.examples.common.workbench.demo3.form.PersonContentCreator;
-import org.jowidgets.examples.common.workbench.demo3.model.BeanTableModel;
-import org.jowidgets.examples.common.workbench.demo3.model.Person;
-import org.jowidgets.tools.widgets.blueprint.BPF;
+import org.jowidgets.common.widgets.controller.IItemStateListener;
+import org.jowidgets.util.event.ChangeObservable;
 
-public final class EditPersonActionFactory {
+public final class SaveActionFactory {
 
-	private EditPersonActionFactory() {}
+	private SaveActionFactory() {}
 
-	public static IAction create(final BeanTableModel<Person> model) {
+	public static IAction create(final ICheckedItemModel checkedItem) {
 		final IActionBuilder builder = CommandAction.builder();
-		builder.setText("Edit person ...");
-		builder.setIcon(SilkIcons.USER_EDIT);
-		builder.setCommand(new EditPersonCommand(model), new SingleSelectionEnabledChecker(model));
+		builder.setText("Save");
+		builder.setIcon(IconsSmall.DISK);
+		builder.setCommand(new SaveCommand(), new SaveEnabledChecker(checkedItem));
 		return builder.build();
 	}
 
-	private static final class EditPersonCommand implements ICommandExecutor {
+	private static final class SaveCommand implements ICommandExecutor {
+		@Override
+		public void execute(final IExecutionContext executionContext) throws Exception {
+			Toolkit.getMessagePane().showInfo(executionContext, "Save done!");
+		}
+	}
 
-		private final BeanTableModel<Person> model;
+	private static final class SaveEnabledChecker extends ChangeObservable implements IEnabledChecker {
 
-		private EditPersonCommand(final BeanTableModel<Person> model) {
-			this.model = model;
+		private final ICheckedItemModel checkedItem;
+
+		private SaveEnabledChecker(final ICheckedItemModel checkedItem) {
+			this.checkedItem = checkedItem;
+			checkedItem.addItemListener(new IItemStateListener() {
+				@Override
+				public void itemStateChanged() {
+					fireChangedEvent();
+				}
+			});
 		}
 
 		@Override
-		public void execute(final IExecutionContext executionContext) throws Exception {
-			final Person person = model.getSelectedBean();
-			if (person != null) {
-				final Person personCopy = person.createCopy();
-				final IInputDialogBluePrint<Person> dialogBp = BPF.inputDialog(new PersonContentCreator(false));
-				dialogBp.setMinPackSize(new Dimension(640, 480));
-				dialogBp.setExecutionContext(executionContext);
-				dialogBp.setValue(personCopy);
-				final IInputDialog<Person> dialog = Toolkit.getActiveWindow().createChildWindow(dialogBp);
-				dialog.setVisible(true);
-				if (dialog.isOkPressed()) {
-					person.setPerson(dialog.getValue());
-					model.fireDataChanged();
-				}
+		public IEnabledState getEnabledState() {
+			if (!checkedItem.isSelected()) {
+				return EnabledState.disabled("Checked item must be enabled");
+			}
+			else {
+				return EnabledState.ENABLED;
 			}
 		}
-
 	}
 
 }

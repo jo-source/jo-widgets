@@ -43,7 +43,7 @@ import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
-import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
+import org.jowidgets.tools.widgets.blueprint.BPF;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.NullCompatibleEquivalence;
 
@@ -62,12 +62,10 @@ public class LabelImpl extends ControlWrapper implements ILabel {
 		this.composite = composite;
 		this.composite.setLayout(new MigLayoutDescriptor("0[][grow]0", "0[]0"));
 
-		final BluePrintFactory bpF = new BluePrintFactory();
-
-		final IIconDescriptor iconDescriptor = bpF.icon(setup.getIcon()).setSetup(setup);
+		final IIconDescriptor iconDescriptor = BPF.icon(setup.getIcon()).setSetup(setup);
 		this.iconWidget = composite.add(iconDescriptor, "w 0::");
 
-		final ITextLabelDescriptor textLabelDescriptor = bpF.textLabel().setSetup(setup);
+		final ITextLabelDescriptor textLabelDescriptor = BPF.textLabel().setSetup(setup);
 		this.textLabelWidget = composite.add(textLabelDescriptor, "w 0::, grow");
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);

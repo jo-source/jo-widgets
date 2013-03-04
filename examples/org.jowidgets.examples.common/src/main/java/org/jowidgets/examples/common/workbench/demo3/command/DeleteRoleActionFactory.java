@@ -34,50 +34,34 @@ import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.IActionBuilder;
 import org.jowidgets.api.command.ICommandExecutor;
 import org.jowidgets.api.command.IExecutionContext;
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IInputDialog;
-import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.examples.common.workbench.demo3.form.PersonContentCreator;
 import org.jowidgets.examples.common.workbench.demo3.model.BeanTableModel;
-import org.jowidgets.examples.common.workbench.demo3.model.Person;
-import org.jowidgets.tools.widgets.blueprint.BPF;
+import org.jowidgets.examples.common.workbench.demo3.model.Role;
 
-public final class EditPersonActionFactory {
+public final class DeleteRoleActionFactory {
 
-	private EditPersonActionFactory() {}
+	private DeleteRoleActionFactory() {}
 
-	public static IAction create(final BeanTableModel<Person> model) {
+	public static IAction create(final BeanTableModel<Role> model) {
 		final IActionBuilder builder = CommandAction.builder();
-		builder.setText("Edit person ...");
-		builder.setIcon(SilkIcons.USER_EDIT);
-		builder.setCommand(new EditPersonCommand(model), new SingleSelectionEnabledChecker(model));
+		builder.setText("Delete role");
+		builder.setIcon(SilkIcons.GROUP_DELETE);
+		builder.setCommand(new DeleteRoleCommand(model), new SingleSelectionEnabledChecker(model));
 		return builder.build();
 	}
 
-	private static final class EditPersonCommand implements ICommandExecutor {
+	private static final class DeleteRoleCommand implements ICommandExecutor {
 
-		private final BeanTableModel<Person> model;
+		private final BeanTableModel<Role> model;
 
-		private EditPersonCommand(final BeanTableModel<Person> model) {
+		private DeleteRoleCommand(final BeanTableModel<Role> model) {
 			this.model = model;
 		}
 
 		@Override
 		public void execute(final IExecutionContext executionContext) throws Exception {
-			final Person person = model.getSelectedBean();
-			if (person != null) {
-				final Person personCopy = person.createCopy();
-				final IInputDialogBluePrint<Person> dialogBp = BPF.inputDialog(new PersonContentCreator(false));
-				dialogBp.setMinPackSize(new Dimension(640, 480));
-				dialogBp.setExecutionContext(executionContext);
-				dialogBp.setValue(personCopy);
-				final IInputDialog<Person> dialog = Toolkit.getActiveWindow().createChildWindow(dialogBp);
-				dialog.setVisible(true);
-				if (dialog.isOkPressed()) {
-					person.setPerson(dialog.getValue());
-					model.fireDataChanged();
-				}
+			final Role bean = model.getSelectedBean();
+			if (bean != null) {
+				model.removeBean(bean);
 			}
 		}
 

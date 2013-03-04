@@ -27,7 +27,15 @@
  */
 package org.jowidgets.helloworld.common;
 
+import org.jowidgets.api.command.CommandAction;
+import org.jowidgets.api.command.EnabledState;
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.command.IActionBuilder;
+import org.jowidgets.api.command.ICommandExecutor;
+import org.jowidgets.api.command.IEnabledChecker;
+import org.jowidgets.api.command.IEnabledState;
+import org.jowidgets.api.command.IExecutionContext;
+import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.api.model.item.IMenuBarModel;
@@ -48,8 +56,9 @@ import org.jowidgets.common.widgets.controller.IItemStateListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.widgets.blueprint.BPF;
+import org.jowidgets.util.event.ChangeObservable;
 
-public final class HelloWorldApplication implements IApplication {
+public final class HelloWorldApplicationSaveAction implements IApplication {
 
 	@Override
 	public void start(final IApplicationLifecycle lifecycle) {
@@ -88,7 +97,7 @@ public final class HelloWorldApplication implements IApplication {
 			}
 		});
 
-		final IAction saveAction = SaveActionFactory.create(checkedItem);
+		final IAction saveAction = createSaveAction(checkedItem);
 		final IActionItemModel actionItem = mainMenu.addAction(saveAction);
 		actionItem.addActionListener(new IActionListener() {
 			@Override
@@ -117,10 +126,51 @@ public final class HelloWorldApplication implements IApplication {
 		frame.setPopupMenu(mainMenu);
 
 		final IToolBarModel toolBarModel = toolBar.getModel();
-		toolBarModel.addItem(actionItem);
+		toolBarModel.addAction(saveAction);
 		toolBarModel.addItem(checkedItem);
 
 		//set the root frame visible
 		frame.setVisible(true);
+	}
+
+	private IAction createSaveAction(final ICheckedItemModel checkedItem) {
+		final IActionBuilder builder = CommandAction.builder();
+		builder.setText("Save");
+		builder.setIcon(IconsSmall.DISK);
+		builder.setCommand(new SaveExecutor(), new SaveEnabledChecker(checkedItem));
+		return builder.build();
+	}
+
+	private final class SaveExecutor implements ICommandExecutor {
+		@Override
+		public void execute(final IExecutionContext executionContext) throws Exception {
+			Toolkit.getMessagePane().showInfo(executionContext, "Data saved!");
+		}
+	}
+
+	private final class SaveEnabledChecker extends ChangeObservable implements IEnabledChecker {
+
+		private final ICheckedItemModel checkedItem;
+
+		public SaveEnabledChecker(final ICheckedItemModel checkedItem) {
+			this.checkedItem = checkedItem;
+			checkedItem.addItemListener(new IItemStateListener() {
+				@Override
+				public void itemStateChanged() {
+					fireChangedEvent();
+				}
+			});
+		}
+
+		@Override
+		public IEnabledState getEnabledState() {
+			if (checkedItem.isSelected()) {
+				return EnabledState.ENABLED;
+			}
+			else {
+				return EnabledState.disabled("Checked item must be checked");
+			}
+		}
+
 	}
 }

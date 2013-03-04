@@ -27,17 +27,14 @@
  */
 package org.jowidgets.helloworld.common;
 
-import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IRadioItemModel;
-import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.common.application.IApplication;
@@ -49,24 +46,29 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 
-public final class HelloWorldApplication implements IApplication {
+public final class HelloWorldApplicationMenuModels implements IApplication {
 
 	@Override
 	public void start(final IApplicationLifecycle lifecycle) {
 
+		//Create a frame BluePrint with help of the BluePrintFactory (BPF)
 		final IFrameBluePrint frameBp = BPF.frame();
 		frameBp.setSize(new Dimension(400, 300)).setTitle("Hello World");
 
+		//Create a frame with help of the Toolkit and BluePrint. This convenience
+		//method finishes the ApplicationLifecycle when the root frame will be closed.
 		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
 
-		frame.setLayout(new MigLayoutDescriptor("[grow]", "[][]"));
+		//Use a simple MigLayout with one column and one row for the frame (a frame is a container also)
+		frame.setLayout(new MigLayoutDescriptor("[]", "[]"));
 
-		final IToolBar toolBar = frame.add(BPF.toolBar(), "growx, w 0::, wrap");
-
+		//Create a button BluePrint with help of the BluePrintFactory (BPF)
 		final IButtonBluePrint buttonBp = BPF.button().setText("Hello World");
 
+		//Add the button defined by the BluePrint to the frame
 		final IButton button = frame.add(buttonBp);
 
+		//Add an ActionListener to the button
 		button.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {
@@ -79,21 +81,20 @@ public final class HelloWorldApplication implements IApplication {
 		//****************************************************************
 		final IMenuModel mainMenu = new MenuModel("Main menu");
 
+		final IActionItemModel actionItem = mainMenu.addActionItem("ActionItem");
+		actionItem.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				System.out.println("Action Performed");
+			}
+		});
+
 		final ICheckedItemModel checkedItem = mainMenu.addCheckedItem("CheckedItem");
 		checkedItem.setSelected(true);
 		checkedItem.addItemListener(new IItemStateListener() {
 			@Override
 			public void itemStateChanged() {
 				System.out.println(checkedItem.isSelected());
-			}
-		});
-
-		final IAction saveAction = SaveActionFactory.create(checkedItem);
-		final IActionItemModel actionItem = mainMenu.addAction(saveAction);
-		actionItem.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				System.out.println("Action Performed");
 			}
 		});
 
@@ -115,12 +116,25 @@ public final class HelloWorldApplication implements IApplication {
 		menuBar.addMenu(mainMenu);
 
 		frame.setPopupMenu(mainMenu);
-
-		final IToolBarModel toolBarModel = toolBar.getModel();
-		toolBarModel.addItem(actionItem);
-		toolBarModel.addItem(checkedItem);
+		//RECURSIVE LISTENER EXAMPLE
+		//		frame.addPopupDetectionListenerRecursive(new IListenerFactory<IPopupDetectionListener>() {
+		//			@Override
+		//			public IPopupDetectionListener create(final IComponent component) {
+		//
+		//				final IPopupMenu popupMenu = component.createPopupMenu();
+		//				popupMenu.setModel(mainMenu);
+		//
+		//				return new IPopupDetectionListener() {
+		//					@Override
+		//					public void popupDetected(final Position position) {
+		//						popupMenu.show(position);
+		//					}
+		//				};
+		//			}
+		//		});
 
 		//set the root frame visible
 		frame.setVisible(true);
 	}
+
 }
