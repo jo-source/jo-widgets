@@ -61,6 +61,12 @@ final class ValidationResultBuilder implements IValidationResultBuilder {
 	}
 
 	@Override
+	public IValidationResultBuilder addInfo(final String text) {
+		current = current.withInfo(text);
+		return this;
+	}
+
+	@Override
 	public IValidationResultBuilder addError(final String context, final String text) {
 		current = current.withError(context, text);
 		return this;
@@ -75,6 +81,12 @@ final class ValidationResultBuilder implements IValidationResultBuilder {
 	@Override
 	public IValidationResultBuilder addWarning(final String context, final String text) {
 		current = current.withWarning(context, text);
+		return this;
+	}
+
+	@Override
+	public IValidationResultBuilder addInfo(final String context, final String text) {
+		current = current.withInfo(context, text);
 		return this;
 	}
 
