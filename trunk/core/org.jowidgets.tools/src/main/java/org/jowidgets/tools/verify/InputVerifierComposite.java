@@ -54,6 +54,7 @@ public final class InputVerifierComposite implements IInputVerifier {
 
 	public void addVerifier(final IInputVerifier inputVerifier) {
 		Assert.paramNotNull(inputVerifier, "inputVerifier");
+		inputVerifiers.add(inputVerifier);
 	}
 
 }

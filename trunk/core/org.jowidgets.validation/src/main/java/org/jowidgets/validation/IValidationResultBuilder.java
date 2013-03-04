@@ -38,11 +38,15 @@ public interface IValidationResultBuilder {
 
 	IValidationResultBuilder addWarning(final String text);
 
+	IValidationResultBuilder addInfo(final String text);
+
 	IValidationResultBuilder addError(final String context, final String text);
 
 	IValidationResultBuilder addInfoError(final String context, final String text);
 
 	IValidationResultBuilder addWarning(final String context, final String text);
+
+	IValidationResultBuilder addInfo(final String context, final String text);
 
 	IValidationResultBuilder addResult(final IValidationResult result);
 
