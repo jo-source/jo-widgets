@@ -39,33 +39,33 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITableCellPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITableCellPopupEvent;
-import org.jowidgets.examples.common.workbench.demo3.command.CreatePersonActionFactory;
-import org.jowidgets.examples.common.workbench.demo3.command.DeletePersonActionFactory;
-import org.jowidgets.examples.common.workbench.demo3.command.EditPersonActionFactory;
+import org.jowidgets.examples.common.workbench.demo3.command.CreateRoleActionFactory;
+import org.jowidgets.examples.common.workbench.demo3.command.DeleteRoleActionFactory;
+import org.jowidgets.examples.common.workbench.demo3.command.EditRoleActionFactory;
 import org.jowidgets.examples.common.workbench.demo3.model.BeanTableModel;
-import org.jowidgets.examples.common.workbench.demo3.model.Person;
+import org.jowidgets.examples.common.workbench.demo3.model.Role;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 import org.jowidgets.workbench.api.IViewContext;
 import org.jowidgets.workbench.tools.AbstractView;
 
-public final class PersonTableView extends AbstractView {
+public final class RoleTableView extends AbstractView {
 
-	public static final String ID = PersonTableView.class.getName();
-	public static final String DEFAULT_LABEL = "Persons";
-	public static final String DEFAULT_TOOLTIP = "Shows all person";
-	public static final IImageConstant DEFAULT_ICON = SilkIcons.USER;
+	public static final String ID = RoleTableView.class.getName();
+	public static final String DEFAULT_LABEL = "Roles";
+	public static final String DEFAULT_TOOLTIP = "Shows all roles";
+	public static final IImageConstant DEFAULT_ICON = SilkIcons.GROUP;
 
-	public PersonTableView(final IViewContext context, final BeanTableModel<Person> model) {
+	public RoleTableView(final IViewContext context, final BeanTableModel<Role> model) {
 		final IContainer container = context.getContainer();
 		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
 
 		final ITable table = container.add(BPF.table(model), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 		table.pack();
 
-		final IAction createAction = CreatePersonActionFactory.create(model);
-		final IAction editAction = EditPersonActionFactory.create(model);
-		final IAction deleteAction = DeletePersonActionFactory.create(model);
+		final IAction createAction = CreateRoleActionFactory.create(model);
+		final IAction editAction = EditRoleActionFactory.create(model);
+		final IAction deleteAction = DeleteRoleActionFactory.create(model);
 
 		final IPopupMenu tableMenu = table.createPopupMenu();
 		final IMenuModel tableMenuModel = tableMenu.getModel();

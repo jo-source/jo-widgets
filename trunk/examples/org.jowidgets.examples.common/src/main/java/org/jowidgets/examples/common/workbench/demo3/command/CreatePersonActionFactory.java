@@ -67,6 +67,7 @@ public final class CreatePersonActionFactory {
 		public void execute(final IExecutionContext executionContext) throws Exception {
 			final IInputDialogBluePrint<Person> dialogBp = BPF.inputDialog(new PersonContentCreator(false));
 			dialogBp.setMinPackSize(new Dimension(640, 480));
+			dialogBp.setExecutionContext(executionContext);
 			final IInputDialog<Person> dialog = Toolkit.getActiveWindow().createChildWindow(dialogBp);
 			dialog.setVisible(true);
 			if (dialog.isOkPressed()) {

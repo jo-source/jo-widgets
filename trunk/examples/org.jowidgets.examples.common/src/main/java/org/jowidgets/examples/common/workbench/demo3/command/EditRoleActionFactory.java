@@ -38,44 +38,44 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.examples.common.workbench.demo3.form.PersonContentCreator;
+import org.jowidgets.examples.common.workbench.demo3.form.RoleContentCreator;
 import org.jowidgets.examples.common.workbench.demo3.model.BeanTableModel;
-import org.jowidgets.examples.common.workbench.demo3.model.Person;
+import org.jowidgets.examples.common.workbench.demo3.model.Role;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 
-public final class EditPersonActionFactory {
+public final class EditRoleActionFactory {
 
-	private EditPersonActionFactory() {}
+	private EditRoleActionFactory() {}
 
-	public static IAction create(final BeanTableModel<Person> model) {
+	public static IAction create(final BeanTableModel<Role> model) {
 		final IActionBuilder builder = CommandAction.builder();
-		builder.setText("Edit person ...");
-		builder.setIcon(SilkIcons.USER_EDIT);
-		builder.setCommand(new EditPersonCommand(model), new SingleSelectionEnabledChecker(model));
+		builder.setText("Edit role ...");
+		builder.setIcon(SilkIcons.GROUP_EDIT);
+		builder.setCommand(new EditRoleCommand(model), new SingleSelectionEnabledChecker(model));
 		return builder.build();
 	}
 
-	private static final class EditPersonCommand implements ICommandExecutor {
+	private static final class EditRoleCommand implements ICommandExecutor {
 
-		private final BeanTableModel<Person> model;
+		private final BeanTableModel<Role> model;
 
-		private EditPersonCommand(final BeanTableModel<Person> model) {
+		private EditRoleCommand(final BeanTableModel<Role> model) {
 			this.model = model;
 		}
 
 		@Override
 		public void execute(final IExecutionContext executionContext) throws Exception {
-			final Person person = model.getSelectedBean();
-			if (person != null) {
-				final Person personCopy = person.createCopy();
-				final IInputDialogBluePrint<Person> dialogBp = BPF.inputDialog(new PersonContentCreator(false));
+			final Role role = model.getSelectedBean();
+			if (role != null) {
+				final Role roleCopy = role.createCopy();
+				final IInputDialogBluePrint<Role> dialogBp = BPF.inputDialog(new RoleContentCreator(false));
 				dialogBp.setMinPackSize(new Dimension(640, 480));
 				dialogBp.setExecutionContext(executionContext);
-				dialogBp.setValue(personCopy);
-				final IInputDialog<Person> dialog = Toolkit.getActiveWindow().createChildWindow(dialogBp);
+				dialogBp.setValue(roleCopy);
+				final IInputDialog<Role> dialog = Toolkit.getActiveWindow().createChildWindow(dialogBp);
 				dialog.setVisible(true);
 				if (dialog.isOkPressed()) {
-					person.setPerson(dialog.getValue());
+					role.setRole(dialog.getValue());
 					model.fireDataChanged();
 				}
 			}
