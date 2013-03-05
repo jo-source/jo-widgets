@@ -84,8 +84,10 @@ public final class HelloWorldApplicationValidation2 implements IApplication {
 				dialogBp.setValue(inputComposite.getValue());
 				final IInputDialog<Person> dialog = frame.createChildWindow(dialogBp);
 				dialog.setVisible(true);
-				final Person person = dialog.getValue();
-				inputComposite.setValue(person);
+				if (dialog.isOkPressed()) {
+					final Person person = dialog.getValue();
+					inputComposite.setValue(person);
+				}
 			}
 		});
 
