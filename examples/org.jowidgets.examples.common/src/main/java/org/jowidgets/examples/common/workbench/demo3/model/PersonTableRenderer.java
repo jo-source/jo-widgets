@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2013, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,36 +26,63 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.demo3.component;
+package org.jowidgets.examples.common.workbench.demo3.model;
 
-import org.jowidgets.examples.common.workbench.demo3.model.BeanTableModel;
-import org.jowidgets.examples.common.workbench.demo3.model.Person;
-import org.jowidgets.examples.common.workbench.demo3.model.PersonTableRenderer;
-import org.jowidgets.workbench.api.IComponentContext;
-import org.jowidgets.workbench.api.IView;
-import org.jowidgets.workbench.api.IViewContext;
-import org.jowidgets.workbench.tools.AbstractComponent;
+import org.jowidgets.api.model.table.ITableColumn;
+import org.jowidgets.api.model.table.ITableColumnModel;
+import org.jowidgets.common.model.ITableCell;
+import org.jowidgets.common.model.ITableColumnModelObservable;
+import org.jowidgets.tools.model.table.DefaultTableColumn;
+import org.jowidgets.tools.model.table.TableCell;
 
-public final class PersonComponent extends AbstractComponent {
+public final class PersonTableRenderer implements IBeanTableRenderer<Person>, ITableColumnModel {
 
-	private final BeanTableModel<Person> personModel;
-
-	public PersonComponent(final IComponentContext componentContext) {
-		componentContext.setLayout(PersonComponentLayoutFactory.create());
-		this.personModel = new BeanTableModel<Person>(new PersonTableRenderer());
+	@Override
+	public ITableCell getCell(final int rowIndex, final int columnIndex, final Person bean) {
+		if (columnIndex == 0) {
+			return new TableCell(bean.getName());
+		}
+		else if (columnIndex == 1) {
+			if (bean.getDayOfBirth() != null) {
+				return new TableCell("" + bean.getDayOfBirth());
+			}
+			else {
+				return new TableCell();
+			}
+		}
+		else if (columnIndex == 2) {
+			if (bean.getGender() != null) {
+				return new TableCell("" + bean.getGender());
+			}
+			else {
+				return new TableCell();
+			}
+		}
+		return null;
 	}
 
 	@Override
-	public IView createView(final String viewId, final IViewContext context) {
-		if (PersonTableView.ID.equals(viewId)) {
-			return new PersonTableView(context, personModel);
+	public int getColumnCount() {
+		return 3;
+	}
+
+	@Override
+	public ITableColumn getColumn(final int columnIndex) {
+		if (columnIndex == 0) {
+			return new DefaultTableColumn("Name");
 		}
-		else if (PersonDetailView.ID.equals(viewId)) {
-			return new PersonDetailView(context, personModel);
+		else if (columnIndex == 1) {
+			return new DefaultTableColumn("Day of birth");
 		}
-		else {
-			throw new IllegalArgumentException("View id '" + viewId + "' is not known.");
+		else if (columnIndex == 2) {
+			return new DefaultTableColumn("Gender");
 		}
+		return null;
+	}
+
+	@Override
+	public ITableColumnModelObservable getTableColumnModelObservable() {
+		return null;
 	}
 
 }

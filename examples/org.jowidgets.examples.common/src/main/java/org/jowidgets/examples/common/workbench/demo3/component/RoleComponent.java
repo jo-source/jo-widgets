@@ -28,6 +28,9 @@
 
 package org.jowidgets.examples.common.workbench.demo3.component;
 
+import org.jowidgets.examples.common.workbench.demo3.model.BeanTableModel;
+import org.jowidgets.examples.common.workbench.demo3.model.Role;
+import org.jowidgets.examples.common.workbench.demo3.model.RoleTableRenderer;
 import org.jowidgets.workbench.api.IComponentContext;
 import org.jowidgets.workbench.api.IView;
 import org.jowidgets.workbench.api.IViewContext;
@@ -36,17 +39,20 @@ import org.jowidgets.workbench.tools.AbstractComponent;
 
 public final class RoleComponent extends AbstractComponent {
 
+	private final BeanTableModel<Role> roleModel;
+
 	public RoleComponent(final IComponentNodeModel componentNodeModel, final IComponentContext componentContext) {
 		componentContext.setLayout(RoleComponentLayoutFactory.create());
+		this.roleModel = new BeanTableModel<Role>(new RoleTableRenderer());
 	}
 
 	@Override
 	public IView createView(final String viewId, final IViewContext context) {
 		if (RoleTableView.ID.equals(viewId)) {
-			return new RoleTableView(context);
+			return new RoleTableView(context, roleModel);
 		}
 		else if (RoleDetailView.ID.equals(viewId)) {
-			return new RoleDetailView(context);
+			return new RoleDetailView(context, roleModel);
 		}
 		else {
 			throw new IllegalArgumentException("View id '" + viewId + "' is not known.");

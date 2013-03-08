@@ -26,47 +26,61 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.demo3.component;
+package org.jowidgets.examples.common.workbench.demo3.command;
 
 import org.jowidgets.addons.icons.silkicons.SilkIcons;
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IInputComposite;
-import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
-import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.api.command.CommandAction;
+import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.command.IActionBuilder;
+import org.jowidgets.api.command.ICommandExecutor;
+import org.jowidgets.api.command.IExecutionContext;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IInputDialog;
+import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.examples.common.workbench.demo3.form.RoleContentCreator;
 import org.jowidgets.examples.common.workbench.demo3.model.BeanTableModel;
 import org.jowidgets.examples.common.workbench.demo3.model.Role;
-import org.jowidgets.tools.controller.TableDataModelAdapter;
-import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.widgets.blueprint.BPF;
-import org.jowidgets.workbench.api.IViewContext;
-import org.jowidgets.workbench.tools.AbstractView;
 
-public final class RoleDetailView extends AbstractView {
+public final class EditRoleActionFactory {
 
-	public static final String ID = RoleDetailView.class.getName();
-	public static final String DEFAULT_LABEL = "Role form";
-	public static final String DEFAULT_TOOLTIP = "Shows the detail form of the role";
-	public static final IImageConstant DEFAULT_ICON = SilkIcons.GROUP;
+	private EditRoleActionFactory() {}
 
-	public RoleDetailView(final IViewContext context, final BeanTableModel<Role> model) {
-		final IContainer container = context.getContainer();
-		container.setLayout(MigLayoutFactory.growingCellLayout());
-
-		final IInputCompositeBluePrint<Role> inputCompositeBp = BPF.inputComposite(new RoleContentCreator(true));
-		final IInputComposite<Role> inputComposite = container.add(inputCompositeBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		inputComposite.setEditable(false);
-
-		model.addDataModelListener(new TableDataModelAdapter() {
-			@Override
-			public void selectionChanged() {
-				inputComposite.setValue(model.getSelectedBean());
-			}
-
-			@Override
-			public void dataChanged() {
-				inputComposite.setValue(model.getSelectedBean());
-			}
-		});
+	public static IAction create(final BeanTableModel<Role> model) {
+		final IActionBuilder builder = CommandAction.builder();
+		builder.setText("Edit role ...");
+		builder.setIcon(SilkIcons.GROUP_EDIT);
+		builder.setCommand(new EditRoleCommand(model), new SingleSelectionEnabledChecker(model));
+		return builder.build();
 	}
+
+	private static final class EditRoleCommand implements ICommandExecutor {
+
+		private final BeanTableModel<Role> model;
+
+		private EditRoleCommand(final BeanTableModel<Role> model) {
+			this.model = model;
+		}
+
+		@Override
+		public void execute(final IExecutionContext executionContext) throws Exception {
+			final Role role = model.getSelectedBean();
+			if (role != null) {
+				final Role roleCopy = role.createCopy();
+				final IInputDialogBluePrint<Role> dialogBp = BPF.inputDialog(new RoleContentCreator(false));
+				dialogBp.setMinPackSize(new Dimension(640, 480));
+				dialogBp.setExecutionContext(executionContext);
+				dialogBp.setValue(roleCopy);
+				final IInputDialog<Role> dialog = Toolkit.getActiveWindow().createChildWindow(dialogBp);
+				dialog.setVisible(true);
+				if (dialog.isOkPressed()) {
+					role.setRole(dialog.getValue());
+					model.fireDataChanged();
+				}
+			}
+		}
+
+	}
+
 }

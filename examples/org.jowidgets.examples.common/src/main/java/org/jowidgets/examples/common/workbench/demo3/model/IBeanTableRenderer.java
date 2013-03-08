@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2013, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,36 +26,13 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.demo3.component;
+package org.jowidgets.examples.common.workbench.demo3.model;
 
-import org.jowidgets.examples.common.workbench.demo3.model.BeanTableModel;
-import org.jowidgets.examples.common.workbench.demo3.model.Person;
-import org.jowidgets.examples.common.workbench.demo3.model.PersonTableRenderer;
-import org.jowidgets.workbench.api.IComponentContext;
-import org.jowidgets.workbench.api.IView;
-import org.jowidgets.workbench.api.IViewContext;
-import org.jowidgets.workbench.tools.AbstractComponent;
+import org.jowidgets.api.model.table.ITableColumnModel;
+import org.jowidgets.common.model.ITableCell;
 
-public final class PersonComponent extends AbstractComponent {
+public interface IBeanTableRenderer<BEAN_TYPE> extends ITableColumnModel {
 
-	private final BeanTableModel<Person> personModel;
-
-	public PersonComponent(final IComponentContext componentContext) {
-		componentContext.setLayout(PersonComponentLayoutFactory.create());
-		this.personModel = new BeanTableModel<Person>(new PersonTableRenderer());
-	}
-
-	@Override
-	public IView createView(final String viewId, final IViewContext context) {
-		if (PersonTableView.ID.equals(viewId)) {
-			return new PersonTableView(context, personModel);
-		}
-		else if (PersonDetailView.ID.equals(viewId)) {
-			return new PersonDetailView(context, personModel);
-		}
-		else {
-			throw new IllegalArgumentException("View id '" + viewId + "' is not known.");
-		}
-	}
+	ITableCell getCell(int rowIndex, int columnIndex, BEAN_TYPE bean);
 
 }
