@@ -120,6 +120,10 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 			setValue(setup.getValue());
 		}
 
+		if (!setup.isEditable()) {
+			setEditable(false);
+		}
+
 		getWidget().addInputListener(inputListener);
 		resetModificationState();
 	}
