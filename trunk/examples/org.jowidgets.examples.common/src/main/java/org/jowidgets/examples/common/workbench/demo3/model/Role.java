@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2013, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,36 +26,44 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.demo3.component;
+package org.jowidgets.examples.common.workbench.demo3.model;
 
-import org.jowidgets.examples.common.workbench.demo3.model.BeanTableModel;
-import org.jowidgets.examples.common.workbench.demo3.model.Person;
-import org.jowidgets.examples.common.workbench.demo3.model.PersonTableRenderer;
-import org.jowidgets.workbench.api.IComponentContext;
-import org.jowidgets.workbench.api.IView;
-import org.jowidgets.workbench.api.IViewContext;
-import org.jowidgets.workbench.tools.AbstractComponent;
+public final class Role {
 
-public final class PersonComponent extends AbstractComponent {
+	private String id;
+	private String description;
 
-	private final BeanTableModel<Person> personModel;
+	public String getId() {
+		return id;
+	}
 
-	public PersonComponent(final IComponentContext componentContext) {
-		componentContext.setLayout(PersonComponentLayoutFactory.create());
-		this.personModel = new BeanTableModel<Person>(new PersonTableRenderer());
+	public void setId(final String id) {
+		this.id = id;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(final String description) {
+		this.description = description;
+	}
+
+	public Role createCopy() {
+		final Role result = new Role();
+		result.setId(id);
+		result.setDescription(description);
+		return result;
+	}
+
+	public void setRole(final Role role) {
+		id = role.getId();
+		description = role.getDescription();
 	}
 
 	@Override
-	public IView createView(final String viewId, final IViewContext context) {
-		if (PersonTableView.ID.equals(viewId)) {
-			return new PersonTableView(context, personModel);
-		}
-		else if (PersonDetailView.ID.equals(viewId)) {
-			return new PersonDetailView(context, personModel);
-		}
-		else {
-			throw new IllegalArgumentException("View id '" + viewId + "' is not known.");
-		}
+	public String toString() {
+		return "Role [id=" + id + ", description=" + description + "]";
 	}
 
 }

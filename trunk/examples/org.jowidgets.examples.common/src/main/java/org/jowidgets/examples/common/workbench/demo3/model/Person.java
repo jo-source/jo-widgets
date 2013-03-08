@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2013, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,36 +26,57 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.workbench.demo3.component;
+package org.jowidgets.examples.common.workbench.demo3.model;
 
-import org.jowidgets.examples.common.workbench.demo3.model.BeanTableModel;
-import org.jowidgets.examples.common.workbench.demo3.model.Person;
-import org.jowidgets.examples.common.workbench.demo3.model.PersonTableRenderer;
-import org.jowidgets.workbench.api.IComponentContext;
-import org.jowidgets.workbench.api.IView;
-import org.jowidgets.workbench.api.IViewContext;
-import org.jowidgets.workbench.tools.AbstractComponent;
+import java.util.Date;
 
-public final class PersonComponent extends AbstractComponent {
+public final class Person {
 
-	private final BeanTableModel<Person> personModel;
+	private String name;
+	private Date dayOfBirth;
+	private Gender gender;
 
-	public PersonComponent(final IComponentContext componentContext) {
-		componentContext.setLayout(PersonComponentLayoutFactory.create());
-		this.personModel = new BeanTableModel<Person>(new PersonTableRenderer());
+	public String getName() {
+		return name;
+	}
+
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	public Date getDayOfBirth() {
+		return dayOfBirth;
+	}
+
+	public void setDayOfBirth(final Date dayOfBirth) {
+		this.dayOfBirth = dayOfBirth;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(final Gender gender) {
+		this.gender = gender;
+	}
+
+	public Person createCopy() {
+		final Person result = new Person();
+		result.setName(name);
+		result.setDayOfBirth(dayOfBirth);
+		result.setGender(gender);
+		return result;
+	}
+
+	public void setPerson(final Person person) {
+		name = person.getName();
+		dayOfBirth = person.getDayOfBirth();
+		gender = person.getGender();
 	}
 
 	@Override
-	public IView createView(final String viewId, final IViewContext context) {
-		if (PersonTableView.ID.equals(viewId)) {
-			return new PersonTableView(context, personModel);
-		}
-		else if (PersonDetailView.ID.equals(viewId)) {
-			return new PersonDetailView(context, personModel);
-		}
-		else {
-			throw new IllegalArgumentException("View id '" + viewId + "' is not known.");
-		}
+	public String toString() {
+		return "Person [name=" + name + ", dayOfBirth=" + dayOfBirth + ", gender=" + gender + "]";
 	}
 
 }

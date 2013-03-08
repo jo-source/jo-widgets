@@ -49,10 +49,11 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
-import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.controller.TabItemAdapter;
+import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.item.MenuModel;
+import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class DemoTabFolderComposite {
 
@@ -62,13 +63,10 @@ public final class DemoTabFolderComposite {
 
 		this.toolBarModel = new DemoMenuProvider(false).getToolBarModel();
 
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
-
-		final ILayoutDescriptor fillLayoutDescriptor = new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0");
-		parentContainer.setLayout(fillLayoutDescriptor);
+		parentContainer.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
 
 		final ISplitComposite split = parentContainer.add(
-				bpF.splitHorizontal().setFirstBorder(null).setSecondBorder(null),
+				BPF.splitHorizontal().setFirstBorder(null).setSecondBorder(null),
 				"growx, growy, w 0::, h 0::");
 
 		final ITabFolder folder1 = addFolder(split.getFirst());
@@ -99,11 +97,11 @@ public final class DemoTabFolderComposite {
 		});
 
 		final IWindow parentWindow = Toolkit.getWidgetUtils().getWindowAncestor(parentContainer);
-		final IFrame childWindow = Toolkit.createRootFrame(bpF.frame("Child"));
+		final IFrame childWindow = Toolkit.createRootFrame(BPF.frame("Child"));
 		childWindow.setSize(parentWindow.getSize());
 		childWindow.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
 
-		final ITabFolder folder = childWindow.add(bpF.tabFolder().setTabsCloseable(true), "growx, growy, w 0::, h 0::");
+		final ITabFolder folder = childWindow.add(BPF.tabFolder().setTabsCloseable(true), "growx, growy, w 0::, h 0::");
 		if (item2.isReparentable()) {
 			folder1.detachItem(item2);
 			folder.attachItem(item2);
@@ -126,29 +124,27 @@ public final class DemoTabFolderComposite {
 	}
 
 	private ITabFolder addFolder(final IContainer parentContainer) {
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
-		final ILayoutDescriptor fillLayoutDescriptor = new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0");
-		parentContainer.setLayout(fillLayoutDescriptor);
+		parentContainer.setLayout(MigLayoutFactory.growingInnerCellLayout());
 
-		final ITabFolder tabFolder = parentContainer.add(bpF.tabFolder().setTabsCloseable(true), "growx, growy, w 0::, h 0::");
+		final ITabFolder tabFolder = parentContainer.add(BPF.tabFolder().setTabsCloseable(true), "growx, growy, w 0::, h 0::");
 
-		ITabItemBluePrint tabItemBp = bpF.tabItem();
+		ITabItemBluePrint tabItemBp = BPF.tabItem();
 		tabItemBp.setText("Tab1").setToolTipText("Tooltip of tab1").setIcon(SilkIcons.ATTACH);
 		final ITabItem tabItem1 = tabFolder.addItem(tabItemBp);
 		addTabContent(tabItem1);
 
-		tabItemBp = bpF.tabItem();
+		tabItemBp = BPF.tabItem();
 		tabItemBp.setText("Tab2").setToolTipText("Tooltip of tab2").setIcon(SilkIcons.PALETTE);
 		final ITabItem tabItem2 = tabFolder.addItem(tabItemBp);
 		addTabContent(tabItem2);
 
-		tabItemBp = bpF.tabItem();
+		tabItemBp = BPF.tabItem();
 		tabItemBp.setText("Tab3").setToolTipText("Tooltip of tab3").setIcon(SilkIcons.STATUS_ONLINE);
 		final ITabItem tabItem3 = tabFolder.addItem(tabItemBp);
 		addTabContent(tabItem3);
 
-		tabItemBp = bpF.tabItem();
+		tabItemBp = BPF.tabItem();
 		tabItemBp.setText("Tab4").setToolTipText("Tooltip of tab4").setIcon(SilkIcons.ROSETTE);
 		final ITabItem tabItem4 = tabFolder.addItem(tabItemBp);
 		addTabContent(tabItem4);
@@ -164,12 +160,12 @@ public final class DemoTabFolderComposite {
 
 		});
 
-		tabItemBp = bpF.tabItem();
+		tabItemBp = BPF.tabItem();
 		tabItemBp.setText("Tab5").setToolTipText("Tooltip of tab5").setIcon(SilkIcons.CHART_PIE);
 		final ITabItem tabItem5 = tabFolder.addItem(tabItemBp);
 		addTabContent(tabItem5);
 
-		tabItemBp = bpF.tabItem();
+		tabItemBp = BPF.tabItem();
 		tabItemBp.setText("Tab6").setToolTipText("Tooltip of tab6").setIcon(SilkIcons.GROUP);
 		final ITabItem tabItem6 = tabFolder.addItem(tabItemBp);
 		addTabContent(tabItem6);
