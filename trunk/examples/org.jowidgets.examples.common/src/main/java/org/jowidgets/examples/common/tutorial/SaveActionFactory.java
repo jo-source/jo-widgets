@@ -33,14 +33,13 @@ import org.jowidgets.api.command.EnabledState;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.IActionBuilder;
 import org.jowidgets.api.command.ICommandExecutor;
-import org.jowidgets.api.command.IEnabledChecker;
 import org.jowidgets.api.command.IEnabledState;
 import org.jowidgets.api.command.IExecutionContext;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.widgets.controller.IItemStateListener;
-import org.jowidgets.util.event.ChangeObservable;
+import org.jowidgets.tools.command.AbstractEnabledChecker;
 
 public final class SaveActionFactory {
 
@@ -61,7 +60,7 @@ public final class SaveActionFactory {
 		}
 	}
 
-	private static final class SaveEnabledChecker extends ChangeObservable implements IEnabledChecker {
+	private static final class SaveEnabledChecker extends AbstractEnabledChecker {
 
 		private final ICheckedItemModel checkedItem;
 
