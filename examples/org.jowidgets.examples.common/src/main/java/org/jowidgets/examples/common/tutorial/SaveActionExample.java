@@ -32,7 +32,6 @@ import org.jowidgets.api.command.EnabledState;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.IActionBuilder;
 import org.jowidgets.api.command.ICommandExecutor;
-import org.jowidgets.api.command.IEnabledChecker;
 import org.jowidgets.api.command.IEnabledState;
 import org.jowidgets.api.command.IExecutionContext;
 import org.jowidgets.api.image.IconsSmall;
@@ -54,9 +53,9 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IItemStateListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.command.AbstractEnabledChecker;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.widgets.blueprint.BPF;
-import org.jowidgets.util.event.ChangeObservable;
 
 public final class SaveActionExample implements IApplication {
 
@@ -156,7 +155,7 @@ public final class SaveActionExample implements IApplication {
 		}
 	}
 
-	private final class SaveEnabledChecker extends ChangeObservable implements IEnabledChecker {
+	private final class SaveEnabledChecker extends AbstractEnabledChecker {
 
 		private final ICheckedItemModel checkedItem;
 
