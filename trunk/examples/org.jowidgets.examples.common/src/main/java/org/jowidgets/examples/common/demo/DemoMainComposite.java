@@ -104,7 +104,7 @@ public final class DemoMainComposite {
 						}
 						else {
 							if (value.size() != new HashSet<Integer>(value).size()) {
-								return ValidationResult.error("Input must not contain dublicates");
+								return ValidationResult.error("Input must not contain duplicates");
 							}
 						}
 						return null;
