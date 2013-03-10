@@ -10,7 +10,7 @@
 		<!-- jowidgets needs java 1.6 or higher -->
 		<java.version>1.6</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jowidgets.version>0.23.0-SNAPSHOT</jowidgets.version>
+		<jowidgets.version>0.23.0</jowidgets.version>
 	</properties>
 	
 	<repositories>
