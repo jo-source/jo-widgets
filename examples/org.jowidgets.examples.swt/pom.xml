@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.examples.parent</artifactId>
-		<version>0.23.0-SNAPSHOT</version>
+		<version>0.23.0</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
@@ -14,52 +14,52 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.impl</artifactId>
-			<version>0.23.0-SNAPSHOT</version>
+			<version>0.23.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.workbench.impl</artifactId>
-			<version>0.23.0-SNAPSHOT</version>
+			<version>0.23.0</version>
 		</dependency>
 		<dependency>
             <groupId>org.jowidgets</groupId>
             <artifactId>org.jowidgets.workbench.toolkit.api</artifactId>
-            <version>0.23.0-SNAPSHOT</version>
+            <version>0.23.0</version>
         </dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.spi.impl.swt.addons</artifactId>
-			<version>0.23.0-SNAPSHOT</version>
+			<version>0.23.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.examples.common</artifactId>
-			<version>0.23.0-SNAPSHOT</version>
+			<version>0.23.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.spi.impl.swt</artifactId>
-			<version>0.23.0-SNAPSHOT</version>
+			<version>0.23.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.addons.map.swt</artifactId>
-			<version>0.23.0-SNAPSHOT</version>
+			<version>0.23.0</version>
 		</dependency>
 		<dependency>
             <groupId>org.jowidgets</groupId>
             <artifactId>org.jowidgets.addons.widgets.browser.impl.swt</artifactId>
-            <version>0.23.0-SNAPSHOT</version>
+            <version>0.23.0</version>
         </dependency>
         <dependency>
             <groupId>org.jowidgets</groupId>
             <artifactId>org.jowidgets.addons.widgets.ole.impl.swt</artifactId>
-            <version>0.23.0-SNAPSHOT</version>
+            <version>0.23.0</version>
         </dependency>
         <dependency>
             <groupId>org.jowidgets</groupId>
             <artifactId>org.jowidgets.addons.widgets.download.impl.filechooser</artifactId>
-            <version>0.23.0-SNAPSHOT</version>
+            <version>0.23.0</version>
         </dependency>
 		<dependency>
             <groupId>org.eclipse</groupId>
@@ -71,13 +71,13 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.examples.common</artifactId>
-			<version>0.23.0-SNAPSHOT</version>
+			<version>0.23.0</version>
 			<type>test-jar</type>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.api.test</artifactId>
-			<version>0.23.0-SNAPSHOT</version>
+			<version>0.23.0</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -87,7 +87,7 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.addons.testtool</artifactId>
-			<version>0.23.0-SNAPSHOT</version>
+			<version>0.23.0</version>
 		</dependency>
 	</dependencies>
 </project>
