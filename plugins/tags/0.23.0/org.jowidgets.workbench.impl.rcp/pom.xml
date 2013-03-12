@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.plugins.parent</artifactId>
-		<version>0.23.0-SNAPSHOT</version>
+		<version>0.23.0</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	<artifactId>org.jowidgets.workbench.impl.rcp</artifactId>
