@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry exported="true" kind="lib" path="lib/activation.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-io.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-lang.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/JavaAPIforKml.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jaxb-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jaxb-impl.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jaxb-xjc.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/log4j-over-slf4j.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/miglayout-swing.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/miglayout-swt.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.addons.bridge.awt.swt.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.addons.bridge.swt.awt.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.addons.icons.silkicons.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.addons.map.common.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.addons.map.swt.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.addons.widgets.browser.api.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.addons.widgets.browser.impl.swt.common.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.addons.widgets.browser.impl.swt.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.api.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.common.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.impl.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.spi.impl.bridge.awt.swt.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.spi.impl.bridge.swt.awt.common.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.spi.impl.bridge.swt.awt.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.spi.impl.common.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.spi.impl.swing.common.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.spi.impl.swt.addons.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.spi.impl.swt.common.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.spi.impl.swt.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.spi.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.test.api.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.test.common.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.test.spi.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.tools.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.util.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.validation.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.workbench.api.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.workbench.impl.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.workbench.toolkit.api.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.workbench.tools.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slf4j-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/slf4j-simple.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/stax-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/org.jowidgets.i18n.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>
