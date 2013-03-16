@@ -28,48 +28,27 @@
 
 package org.jowidgets.workbench.impl;
 
+import org.jowidgets.api.controller.IContainerListener;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.tools.widgets.wrapper.ContainerWrapper;
 
 public class WorkbenchStatusBar extends ContainerWrapper {
 
-	public WorkbenchStatusBar(final IContainer widget) {
-		super(widget);
-		checkVisibility();
-	}
+	public WorkbenchStatusBar(final IContainer container) {
+		super(container);
+		container.addContainerListener(new IContainerListener() {
+			@Override
+			public void beforeRemove(final IControl control) {
+				checkVisibility();
+			}
 
-	@Override
-	public void removeAll() {
-		super.removeAll();
+			@Override
+			public void afterAdded(final IControl control) {
+				checkVisibility();
+			}
+		});
 		checkVisibility();
-	}
-
-	@Override
-	public boolean remove(final IControl control) {
-		final boolean result = super.remove(control);
-		checkVisibility();
-		return result;
-	}
-
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
-		final Object layoutConstraints) {
-		final WIDGET_TYPE result = super.add(descriptor, layoutConstraints);
-		checkVisibility();
-		return result;
-	}
-
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final ICustomWidgetCreator<WIDGET_TYPE> creator,
-		final Object layoutConstraints) {
-		final WIDGET_TYPE result = super.add(creator, layoutConstraints);
-		checkVisibility();
-		return result;
 	}
 
 	private void checkVisibility() {
