@@ -236,7 +236,7 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 	}
 
 	@Override
-	public void unRegister(final String validationContext, final IValidateable validateable) {
+	public void unregister(final String validationContext, final IValidateable validateable) {
 		this.validatables.remove(new Tuple<String, IValidateable>(validationContext, validateable));
 	}
 

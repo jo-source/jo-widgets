@@ -38,7 +38,7 @@ public interface IInputContentContainer extends IContainer {
 
 	void register(String validationContext, IValidateable validateable);
 
-	void unRegister(String validationContext, IValidateable validateable);
+	void unregister(String validationContext, IValidateable validateable);
 
 	/**
 	 * Creates and adds an control to this container.
