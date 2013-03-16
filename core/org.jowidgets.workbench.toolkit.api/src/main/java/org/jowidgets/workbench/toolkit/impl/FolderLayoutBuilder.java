@@ -52,7 +52,7 @@ class FolderLayoutBuilder extends WorkbenchPartBuilder<IFolderLayoutBuilder> imp
 	FolderLayoutBuilder() {
 		super();
 		this.detachable = true;
-		this.viewsCloseable = true;
+		this.viewsCloseable = false;
 		this.views = new LinkedList<IViewLayout>();
 	}
 
