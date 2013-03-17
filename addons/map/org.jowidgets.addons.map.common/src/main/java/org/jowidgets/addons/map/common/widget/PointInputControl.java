@@ -152,6 +152,11 @@ final class PointInputControl extends ControlWrapper implements IPointInputContr
 	}
 
 	@Override
+	public boolean isEditable() {
+		return editable;
+	}
+
+	@Override
 	public IValidationResult validate() {
 		return validationCache.validate();
 	}

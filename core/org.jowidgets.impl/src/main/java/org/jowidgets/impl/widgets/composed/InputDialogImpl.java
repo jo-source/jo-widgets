@@ -219,6 +219,11 @@ public class InputDialogImpl<INPUT_TYPE> extends WindowWrapper implements IInput
 	}
 
 	@Override
+	public boolean isEditable() {
+		return inputCompositeWidget.isEditable();
+	}
+
+	@Override
 	public void addValidator(final IValidator<INPUT_TYPE> validator) {
 		inputCompositeWidget.addValidator(validator);
 	}

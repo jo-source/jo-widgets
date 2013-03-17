@@ -52,9 +52,4 @@ public abstract class AbstractSliderSpiWrapper extends AbstractControlSpiWrapper
 		getWidget().setSelection(value);
 	}
 
-	@Override
-	public void setEditable(final boolean editable) {
-		getWidget().setEditable(editable);
-	}
-
 }

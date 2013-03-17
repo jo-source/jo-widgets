@@ -61,6 +61,8 @@ public final class SliderImpl extends AbstractSliderSpiWrapper implements ISlide
 
 	private int lastUnmodifiedValue;
 
+	private boolean editable;
+
 	public SliderImpl(final ISliderSpi buttonSpi, final ISliderDescriptor descriptor) {
 		super(buttonSpi);
 
@@ -94,6 +96,8 @@ public final class SliderImpl extends AbstractSliderSpiWrapper implements ISlide
 		if (value != null) {
 			setSelection(value.intValue());
 		}
+
+		this.editable = true;
 
 		resetModificationState();
 	}
@@ -211,6 +215,17 @@ public final class SliderImpl extends AbstractSliderSpiWrapper implements ISlide
 	@Override
 	public Integer getValue() {
 		return Integer.valueOf(getSelection());
+	}
+
+	@Override
+	public void setEditable(final boolean editable) {
+		this.editable = editable;
+		getWidget().setEditable(editable);
+	}
+
+	@Override
+	public boolean isEditable() {
+		return editable;
 	}
 
 }

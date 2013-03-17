@@ -61,6 +61,7 @@ public class CheckBoxImpl extends AbstractControlSpiWrapper implements ICheckBox
 	private String text;
 	private boolean isNull;
 	private Boolean lastUnmodifiedValue;
+	private boolean editable;
 
 	public CheckBoxImpl(final ICheckBoxSpi checkBoxWidgetSpi, final ICheckBoxSetup setup) {
 		super(checkBoxWidgetSpi);
@@ -102,6 +103,11 @@ public class CheckBoxImpl extends AbstractControlSpiWrapper implements ICheckBox
 				validationCache.setDirty();
 			}
 		});
+
+		this.editable = setup.isEditable();
+		if (!setup.isEditable()) {
+			setEditable(false);
+		}
 
 		resetModificationState();
 	}
@@ -224,7 +230,13 @@ public class CheckBoxImpl extends AbstractControlSpiWrapper implements ICheckBox
 
 	@Override
 	public void setEditable(final boolean editable) {
+		this.editable = editable;
 		getWidget().setEditable(editable);
+	}
+
+	@Override
+	public boolean isEditable() {
+		return editable;
 	}
 
 	@Override
