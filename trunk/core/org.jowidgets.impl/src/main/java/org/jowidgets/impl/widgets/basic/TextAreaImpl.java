@@ -64,6 +64,8 @@ public class TextAreaImpl extends AbstractControlSpiWrapper implements ITextArea
 
 	private String lastUnmodiefiedText;
 
+	private boolean editable;
+
 	public TextAreaImpl(final ITextAreaSpi textAreaSpi, final ITextAreaSetup setup) {
 		super(textAreaSpi);
 
@@ -95,7 +97,10 @@ public class TextAreaImpl extends AbstractControlSpiWrapper implements ITextArea
 			setFontName(setup.getFontName());
 		}
 
-		setEditable(setup.isEditable());
+		this.editable = setup.isEditable();
+		if (!setup.isEditable()) {
+			setEditable(false);
+		}
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
@@ -240,7 +245,13 @@ public class TextAreaImpl extends AbstractControlSpiWrapper implements ITextArea
 
 	@Override
 	public void setEditable(final boolean editable) {
+		this.editable = editable;
 		getWidget().setEditable(editable);
+	}
+
+	@Override
+	public boolean isEditable() {
+		return editable;
 	}
 
 	@Override

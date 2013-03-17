@@ -50,6 +50,8 @@ public class CombinedCollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapp
 	private final IInputControl<Collection<ELEMENT_TYPE>> collectionControl;
 	private final IInputListener inputListener;
 
+	private boolean editable;
+
 	@SuppressWarnings("unchecked")
 	public CombinedCollectionInputFieldImpl(
 		final IComposite composite,
@@ -79,6 +81,11 @@ public class CombinedCollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapp
 		};
 
 		elementControl.addInputListener(inputListener);
+
+		this.editable = setup.isEditable();
+		if (!setup.isEditable()) {
+			setEditable(false);
+		}
 	}
 
 	@Override
@@ -162,8 +169,14 @@ public class CombinedCollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapp
 
 	@Override
 	public void setEditable(final boolean editable) {
+		this.editable = editable;
 		collectionControl.setEditable(editable);
 		elementControl.setEditable(editable);
+	}
+
+	@Override
+	public boolean isEditable() {
+		return editable;
 	}
 
 	@Override

@@ -93,6 +93,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 	private final CompoundValidator<Collection<INPUT_TYPE>> compoundValidator;
 	private int lastRowCount;
 	private boolean programmaticUpdate;
+	private boolean editable;
 
 	public CollectionInputControlImpl(final IComposite composite, final ICollectionInputControlDescriptor<INPUT_TYPE> setup) {
 		super(composite);
@@ -179,6 +180,11 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 
 		setValue(setup.getValue());
 
+		this.editable = setup.isEditable();
+		if (!setup.isEditable()) {
+			setEditable(false);
+		}
+
 		tableCommon.validate();
 		resetModificationState();
 	}
@@ -214,8 +220,14 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 
 	@Override
 	public void setEditable(final boolean editable) {
+		this.editable = editable;
 		valuesContainer.setEditable(editable);
 		addButton.setEnabled(editable);
+	}
+
+	@Override
+	public boolean isEditable() {
+		return editable;
 	}
 
 	@Override

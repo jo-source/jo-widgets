@@ -93,6 +93,11 @@ public class InputDialogWrapper<INPUT_TYPE> extends WindowWrapper implements IIn
 	}
 
 	@Override
+	public boolean isEditable() {
+		return getWidget().isEditable();
+	}
+
+	@Override
 	public void setMinSize(final Dimension minSize) {
 		getWidget().setMinSize(minSize);
 	}

@@ -101,4 +101,9 @@ public class InputControlWrapper<VALUE_TYPE> extends ControlWrapper implements I
 		getWidget().removeInputListener(listener);
 	}
 
+	@Override
+	public boolean isEditable() {
+		return getWidget().isEditable();
+	}
+
 }

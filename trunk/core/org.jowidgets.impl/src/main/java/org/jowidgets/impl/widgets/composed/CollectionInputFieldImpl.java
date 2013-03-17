@@ -132,8 +132,6 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 		this.inputObservable = new InputObservable();
 		this.compoundValidator = new CompoundValidator<Collection<ELEMENT_TYPE>>();
 
-		this.editable = true;
-
 		if (inputDialogSetup != null) {
 			composite.setLayout(new MigLayoutDescriptor("0[grow, 0::]2[]0", "0[grow]0")); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -236,6 +234,11 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 
 		if (converter == null) {
 			textField.setEditable(false);
+		}
+
+		this.editable = setup.isEditable();
+		if (!setup.isEditable()) {
+			setEditable(false);
 		}
 	}
 
@@ -368,6 +371,11 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 		if (editButton != null) {
 			editButton.setEnabled(enabled && editable);
 		}
+	}
+
+	@Override
+	public boolean isEditable() {
+		return editable;
 	}
 
 	@Override

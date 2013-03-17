@@ -84,6 +84,16 @@ class InputComponent<WIDGET_TYPE extends IInputComponent<VALUE_TYPE>, BLUE_PRINT
 	}
 
 	@Override
+	public boolean isEditable() {
+		if (isInitialized()) {
+			return getWidget().isEditable();
+		}
+		else {
+			return getBluePrint().isEditable();
+		}
+	}
+
+	@Override
 	public void setValue(final VALUE_TYPE value) {
 		if (isInitialized()) {
 			getWidget().setValue(value);

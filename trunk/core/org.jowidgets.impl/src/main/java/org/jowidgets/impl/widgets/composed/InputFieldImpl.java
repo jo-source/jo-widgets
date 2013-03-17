@@ -58,6 +58,7 @@ public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInput
 
 	private VALUE_TYPE value;
 	private String lastUnmodifiedTextValue;
+	private boolean editable;
 
 	@SuppressWarnings("unchecked")
 	public InputFieldImpl(final ITextControl textField, final IInputFieldSetup<VALUE_TYPE> setup) {
@@ -112,7 +113,11 @@ public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInput
 			}
 		});
 
-		setEditable(setup.isEditable());
+		this.editable = setup.isEditable();
+		if (!setup.isEditable()) {
+			setEditable(false);
+		}
+
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
 
@@ -207,7 +212,18 @@ public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInput
 	@Override
 	public void setEditable(final boolean editable) {
 		if (converter != null) {
+			this.editable = editable;
 			getWidget().setEditable(editable);
+		}
+	}
+
+	@Override
+	public boolean isEditable() {
+		if (converter != null) {
+			return editable;
+		}
+		else {
+			return false;
 		}
 	}
 

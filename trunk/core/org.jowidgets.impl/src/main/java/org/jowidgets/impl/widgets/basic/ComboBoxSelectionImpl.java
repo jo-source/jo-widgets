@@ -76,6 +76,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 
 	private VALUE_TYPE lastUnmodifiedValue;
 	private VALUE_TYPE lenientValue;
+	private boolean editable;
 
 	public ComboBoxSelectionImpl(
 		final IComboBoxSelectionSpi comboBoxSelectionWidgetSpi,
@@ -120,6 +121,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 			setValue(setup.getValue());
 		}
 
+		this.editable = setup.isEditable();
 		if (!setup.isEditable()) {
 			setEditable(false);
 		}
@@ -435,7 +437,13 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 
 	@Override
 	public void setEditable(final boolean editable) {
+		this.editable = editable;
 		getWidget().setEditable(editable);
+	}
+
+	@Override
+	public boolean isEditable() {
+		return editable;
 	}
 
 	@Override

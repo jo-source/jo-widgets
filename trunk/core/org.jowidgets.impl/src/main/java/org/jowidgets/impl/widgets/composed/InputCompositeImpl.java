@@ -91,6 +91,8 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 	private final ValidationCache validationCache;
 	private final String missingInputHint;
 
+	private boolean editable;
+
 	public InputCompositeImpl(final IComposite composite, final IInputCompositeSetup<INPUT_TYPE> setup) {
 		super(composite);
 
@@ -143,6 +145,11 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 			validationLabel = null;
 		}
 
+		this.editable = setup.isEditable();
+		if (!setup.isEditable()) {
+			setEditable(false);
+		}
+
 		resetModificationState();
 		validationCache.setDirty();
 		if (validationLabel != null) {
@@ -152,9 +159,15 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 
 	@Override
 	public void setEditable(final boolean editable) {
+		this.editable = editable;
 		for (final Tuple<String, IInputControl<?>> tuple : inputControls) {
 			tuple.getSecond().setEditable(editable);
 		}
+	}
+
+	@Override
+	public boolean isEditable() {
+		return editable;
 	}
 
 	@Override

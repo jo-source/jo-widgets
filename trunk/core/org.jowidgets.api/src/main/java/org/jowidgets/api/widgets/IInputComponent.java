@@ -69,4 +69,6 @@ public interface IInputComponent<VALUE_TYPE> extends
 	 * will be reseted.
 	 */
 	void resetModificationState();
+
+	boolean isEditable();
 }
