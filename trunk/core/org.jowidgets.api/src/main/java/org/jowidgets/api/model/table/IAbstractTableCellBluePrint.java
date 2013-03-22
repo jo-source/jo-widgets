@@ -28,10 +28,24 @@
 
 package org.jowidgets.api.model.table;
 
-import org.jowidgets.common.model.ITableCell;
+import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.types.Markup;
 
-public interface ITableCellBuilder extends IAbstractTableCellBluePrint<ITableCellBuilder> {
+public interface IAbstractTableCellBluePrint<INSTANCE_TYPE> {
 
-	ITableCell build();
+	INSTANCE_TYPE setForegroundColor(IColorConstant foregroundColor);
+
+	INSTANCE_TYPE setBackgroundColor(IColorConstant backgroundColor);
+
+	INSTANCE_TYPE setMarkup(Markup markup);
+
+	INSTANCE_TYPE setText(String text);
+
+	INSTANCE_TYPE setToolTipText(String toolTipText);
+
+	INSTANCE_TYPE setIcon(IImageConstant icon);
+
+	INSTANCE_TYPE setEditable(boolean editable);
 
 }
