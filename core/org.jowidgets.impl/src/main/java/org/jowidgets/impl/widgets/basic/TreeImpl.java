@@ -28,6 +28,9 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -61,6 +64,7 @@ import org.jowidgets.spi.widgets.controller.ITreeSelectionListenerSpi;
 import org.jowidgets.tools.controller.TreeObservable;
 import org.jowidgets.tools.controller.TreePopupDetectionObservable;
 import org.jowidgets.tools.controller.TreeSelectionObservable;
+import org.jowidgets.util.EmptyCheck;
 
 public class TreeImpl extends AbstractControlSpiWrapper implements ITree {
 
@@ -69,12 +73,14 @@ public class TreeImpl extends AbstractControlSpiWrapper implements ITree {
 	private final TreeObservable treeObservable;
 	private final TreePopupDetectionObservable treePopupDetectionObservable;
 	private final TreeContainerDelegate treeContainerDelegate;
+	private final ITreeSelectionListenerSpi treeSelectionListenerSpi;
 	private final Map<ITreeNodeSpi, ITreeNode> nodes;
 
 	private final IImageConstant defaultInnerIcon;
 	private final IImageConstant defaultLeafIcon;
 
-	private List<ITreeNodeSpi> lastSelection;
+	private List<ITreeNodeSpi> lastSelectionSpi;
+	private List<ITreeNode> selection;
 
 	public TreeImpl(final ITreeSpi widgetSpi, final ITreeDescriptor descriptor) {
 		super(widgetSpi);
@@ -89,44 +95,14 @@ public class TreeImpl extends AbstractControlSpiWrapper implements ITree {
 		this.treePopupDetectionObservable = new TreePopupDetectionObservable();
 
 		this.nodes = new HashMap<ITreeNodeSpi, ITreeNode>();
-		this.lastSelection = new LinkedList<ITreeNodeSpi>();
+		this.lastSelectionSpi = new LinkedList<ITreeNodeSpi>();
+		this.selection = Collections.emptyList();
 
 		VisibiliySettingsInvoker.setVisibility(descriptor, this);
 		ColorSettingsInvoker.setColors(descriptor, this);
 
-		getWidget().addTreeSelectionListener(new ITreeSelectionListenerSpi() {
-
-			@Override
-			public void selectionChanged() {
-				final List<ITreeNode> selected = new LinkedList<ITreeNode>();
-				final List<ITreeNode> unselected = new LinkedList<ITreeNode>();
-
-				final List<ITreeNodeSpi> newSelection = getWidget().getSelectedNodes();
-
-				for (final ITreeNodeSpi wasSelected : lastSelection) {
-					if (!newSelection.contains(wasSelected)) {
-						final ITreeNode unselectedNode = nodes.get(wasSelected);
-						if (unselectedNode != null) {
-							unselected.add(unselectedNode);
-						}
-					}
-				}
-
-				for (final ITreeNodeSpi isSelected : newSelection) {
-					if (!lastSelection.contains(isSelected)) {
-						final ITreeNode selectedNode = nodes.get(isSelected);
-						if (selectedNode != null) {
-							selected.add(selectedNode);
-						}
-					}
-				}
-
-				treeSelectionObservable.fireSelectionChanged(new TreeSelectionEvent(selected, unselected));
-
-				lastSelection = newSelection;
-			}
-
-		});
+		this.treeSelectionListenerSpi = new TreeSelectionListenerSpi();
+		getWidget().addTreeSelectionListener(treeSelectionListenerSpi);
 
 		addPopupDetectionListener(new IPopupDetectionListener() {
 			@Override
@@ -194,6 +170,59 @@ public class TreeImpl extends AbstractControlSpiWrapper implements ITree {
 	@Override
 	public IPopupMenu createPopupMenu() {
 		return controlDelegate.createPopupMenu();
+	}
+
+	@Override
+	public Collection<ITreeNode> getSelection() {
+		return selection;
+	}
+
+	@Override
+	public void setSelection(Collection<? extends ITreeNode> newSelection) {
+		if (newSelection == null) {
+			newSelection = Collections.emptyList();
+		}
+		//first check if the nodes are part of the tree
+		for (final ITreeNode node : newSelection) {
+			if (node.getTree() != this) {
+				throw new IllegalArgumentException("The node '" + node + "' is not assigned to this tree");
+			}
+		}
+
+		getWidget().removeTreeSelectionListener(treeSelectionListenerSpi);
+
+		try {
+			for (final ITreeNode node : selection) {
+				node.setSelected(false);
+			}
+			for (final ITreeNode node : newSelection) {
+				node.setSelected(true);
+			}
+		}
+		catch (final RuntimeException exeption) {
+			getWidget().addTreeSelectionListener(treeSelectionListenerSpi);
+			throw exeption;
+		}
+
+		getWidget().addTreeSelectionListener(treeSelectionListenerSpi);
+
+		afterSelectionChanged();
+	}
+
+	@Override
+	public void setSelection(final ITreeNode... selection) {
+		if (!EmptyCheck.isEmpty(selection)) {
+			setSelection(Arrays.asList(selection));
+		}
+		else {
+			clearSelection();
+		}
+	}
+
+	@Override
+	public void clearSelection() {
+		final List<? extends ITreeNode> emptyList = Collections.emptyList();
+		setSelection(emptyList);
 	}
 
 	@Override
@@ -305,4 +334,39 @@ public class TreeImpl extends AbstractControlSpiWrapper implements ITree {
 		return treePopupDetectionObservable;
 	}
 
+	private void afterSelectionChanged() {
+		final List<ITreeNode> selected = new LinkedList<ITreeNode>();
+		final List<ITreeNode> unselected = new LinkedList<ITreeNode>();
+
+		final List<ITreeNodeSpi> newSelection = getWidget().getSelectedNodes();
+
+		for (final ITreeNodeSpi wasSelected : lastSelectionSpi) {
+			if (!newSelection.contains(wasSelected)) {
+				final ITreeNode unselectedNode = nodes.get(wasSelected);
+				if (unselectedNode != null) {
+					unselected.add(unselectedNode);
+				}
+			}
+		}
+
+		for (final ITreeNodeSpi isSelected : newSelection) {
+			if (!lastSelectionSpi.contains(isSelected)) {
+				final ITreeNode selectedNode = nodes.get(isSelected);
+				if (selectedNode != null) {
+					selected.add(selectedNode);
+				}
+			}
+		}
+
+		selection = Collections.unmodifiableList(selected);
+		treeSelectionObservable.fireSelectionChanged(new TreeSelectionEvent(selection, Collections.unmodifiableList(unselected)));
+		lastSelectionSpi = newSelection;
+	}
+
+	private final class TreeSelectionListenerSpi implements ITreeSelectionListenerSpi {
+		@Override
+		public void selectionChanged() {
+			afterSelectionChanged();
+		}
+	}
 }

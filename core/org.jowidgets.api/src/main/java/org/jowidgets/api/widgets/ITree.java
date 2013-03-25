@@ -28,6 +28,8 @@
 
 package org.jowidgets.api.widgets;
 
+import java.util.Collection;
+
 import org.jowidgets.api.controller.ITreeObservable;
 import org.jowidgets.api.controller.ITreePopupDetectionObservable;
 import org.jowidgets.api.controller.ITreeSelectionObservable;
@@ -40,5 +42,13 @@ public interface ITree extends
 		ITreeSelectionObservable,
 		ITreePopupDetectionObservable,
 		ITreeCommon {
+
+	Collection<ITreeNode> getSelection();
+
+	void setSelection(Collection<? extends ITreeNode> selection);
+
+	void setSelection(ITreeNode... selection);
+
+	void clearSelection();
 
 }

@@ -32,6 +32,8 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
+import net.miginfocom.swt.MigLayout;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.BrowserFunction;
@@ -39,6 +41,8 @@ import org.eclipse.swt.browser.LocationEvent;
 import org.eclipse.swt.browser.LocationListener;
 import org.eclipse.swt.browser.ProgressEvent;
 import org.eclipse.swt.browser.ProgressListener;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.addons.widgets.browser.api.IBrowser;
@@ -48,6 +52,7 @@ import org.jowidgets.addons.widgets.browser.api.IBrowserLocationEvent;
 import org.jowidgets.addons.widgets.browser.api.IBrowserLocationListener;
 import org.jowidgets.addons.widgets.browser.api.IBrowserProgressListener;
 import org.jowidgets.addons.widgets.browser.api.IBrowserSetupBuilder;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.spi.impl.swt.common.color.ColorCache;
 import org.jowidgets.tools.types.VetoHolder;
@@ -75,9 +80,18 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 		else {
 			content = swtComposite;
 		}
-		content.setLayout(new FillLayout());
+		content.setLayout(new MigLayout("", "0[grow, 0::]0", "0[grow, 0::]0"));
+
+		content.addControlListener(new ControlAdapter() {
+			@Override
+			public void controlResized(final ControlEvent e) {
+				Toolkit.getActiveWindow().redraw();
+			}
+		});
 
 		this.swtBrowser = new Browser(content, SWT.NONE);
+		swtBrowser.setLayoutData("growx, growy, w 0::, h 0::");
+
 		swtBrowser.addLocationListener(new LocationListenerImpl());
 		swtBrowser.addProgressListener(new ProgressListenerImpl());
 
