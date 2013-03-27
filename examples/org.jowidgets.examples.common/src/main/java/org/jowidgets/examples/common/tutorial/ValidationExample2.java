@@ -188,7 +188,7 @@ public final class ValidationExample2 implements IApplication {
 		}
 
 		private IValidationResult createMandatoryResult(final String propName) {
-			return ValidationResult.infoError("Bitte " + propName + " ausfüllen!");
+			return ValidationResult.infoError("Please enter value for " + propName + "!");
 		}
 	}
 

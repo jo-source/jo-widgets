@@ -37,7 +37,7 @@ import org.jowidgets.validation.ValidationResult;
 
 public class MandatoryValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE> {
 
-	private static final IMessage MUST_NOT_BE_NULL = Messages.getMessage("MandatoryValidator.must_not_be_null"); //$NON-NLS-1$
+	private static final IMessage MUST_NOT_BE_NULL = Messages.getMessage("MandatoryValidator.must_not_be_null");
 
 	private final IValidationResult result;
 
@@ -50,7 +50,7 @@ public class MandatoryValidator<VALIDATION_INPUT_TYPE> implements IValidator<VAL
 	}
 
 	public MandatoryValidator(final IValidationResult errorResult) {
-		Assert.paramNotNull(errorResult, "errorResult"); //$NON-NLS-1$
+		Assert.paramNotNull(errorResult, "errorResult");
 		this.result = errorResult;
 	}
 

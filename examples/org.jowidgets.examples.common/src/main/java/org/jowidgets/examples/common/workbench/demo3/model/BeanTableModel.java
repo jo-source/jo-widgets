@@ -47,9 +47,9 @@ public final class BeanTableModel<BEAN_TYPE> extends AbstractTableDataModel impl
 	private final List<BEAN_TYPE> data;
 	private final IBeanTableRenderer<BEAN_TYPE> renderer;
 
-	public BeanTableModel(final IBeanTableRenderer<BEAN_TYPE> beanAccessor) {
-		Assert.paramNotNull(beanAccessor, "beanAccessor");
-		this.renderer = beanAccessor;
+	public BeanTableModel(final IBeanTableRenderer<BEAN_TYPE> renderer) {
+		Assert.paramNotNull(renderer, "renderer");
+		this.renderer = renderer;
 		this.data = new ArrayList<BEAN_TYPE>();
 	}
 
