@@ -28,9 +28,29 @@
 
 package org.jowidgets.util;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedList;
+
 public final class FilterComposite {
 
 	private FilterComposite() {}
+
+	public static <FILTER_VALUE_TYPE> IFilter<FILTER_VALUE_TYPE> create(final IFilter<FILTER_VALUE_TYPE>... filters) {
+		if (!EmptyCheck.isEmpty(filters)) {
+			return create(Arrays.asList(filters));
+		}
+		else {
+			Filter.acceptAll();
+		}
+		return null;
+	}
+
+	public static <FILTER_VALUE_TYPE> IFilter<FILTER_VALUE_TYPE> create(
+		final Collection<? extends IFilter<FILTER_VALUE_TYPE>> filters) {
+		Assert.paramNotNull(filters, "filters");
+		return new FilterCollectionImpl<FILTER_VALUE_TYPE>(filters);
+	}
 
 	/**
 	 * Creates a composite from two filters. If both filters a null, null will be returned.
@@ -58,7 +78,6 @@ public final class FilterComposite {
 		else {
 			return null;
 		}
-
 	}
 
 	private static final class FilterCompositeImpl<FILTER_VALUE_TYPE> implements IFilter<FILTER_VALUE_TYPE> {
@@ -82,6 +101,26 @@ public final class FilterComposite {
 			}
 		}
 
+	}
+
+	private static final class FilterCollectionImpl<FILTER_VALUE_TYPE> implements IFilter<FILTER_VALUE_TYPE> {
+
+		private final Collection<? extends IFilter<FILTER_VALUE_TYPE>> filters;
+
+		private FilterCollectionImpl(final Collection<? extends IFilter<FILTER_VALUE_TYPE>> filters) {
+			this.filters = new LinkedList<IFilter<FILTER_VALUE_TYPE>>(filters);
+		}
+
+		@Override
+		public boolean accept(final FILTER_VALUE_TYPE value) {
+			for (final IFilter<FILTER_VALUE_TYPE> filter : filters) {
+				final boolean accepted = filter.accept(value);
+				if (!accepted) {
+					return false;
+				}
+			}
+			return true;
+		}
 	}
 
 }
