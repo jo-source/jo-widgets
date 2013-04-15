@@ -54,6 +54,7 @@ import org.jowidgets.addons.widgets.browser.api.IBrowserProgressListener;
 import org.jowidgets.addons.widgets.browser.api.IBrowserSetupBuilder;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IControl;
+import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.spi.impl.swt.common.color.ColorCache;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
@@ -85,7 +86,10 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 		content.addControlListener(new ControlAdapter() {
 			@Override
 			public void controlResized(final ControlEvent e) {
-				Toolkit.getActiveWindow().redraw();
+				final IWindow activeWindow = Toolkit.getActiveWindow();
+				if (activeWindow != null) {
+					activeWindow.redraw();
+				}
 			}
 		});
 
