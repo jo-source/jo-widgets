@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	version="2.4">
+
+	<display-name>Hello World Rwt</display-name>
+
+
+	<context-param>
+		<param-name>org.eclipse.rap.applicationConfiguration</param-name>
+		<param-value>org.jowidgets.helloworld.starter.rwt.HelloWorldConfiguration</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>org.eclipse.rap.rwt.engine.RWTServletContextListener</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>HelloWorld</servlet-name>
+		<servlet-class>org.eclipse.rap.rwt.engine.RWTServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>HelloWorld</servlet-name>
+		<url-pattern>/HelloWorld</url-pattern>
+	</servlet-mapping>
+</web-app>
