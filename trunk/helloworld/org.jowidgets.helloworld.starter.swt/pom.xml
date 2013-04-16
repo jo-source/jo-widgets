@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>org.jowidgets.helloworld.starter.swt</artifactId>
+
+	<parent>
+		<groupId>org.jowidgets.helloworld</groupId>
+		<artifactId>org.jowidgets.helloworld.parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../parent/pom.xml</relativePath>
+	</parent>
+	
+	<dependencies>
+
+		<!-- The ui technology independend hello world module -->
+		<dependency>
+			<groupId>org.jowidgets.helloworld</groupId>
+			<artifactId>org.jowidgets.helloworld.common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<!-- The default implementation of the jowidgets api -->
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.impl</artifactId>
+			<version>${jowidgets.version}</version>
+		</dependency>
+
+		<!-- The SWT implementation of the jowidgets spi -->
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.spi.impl.swt</artifactId>
+			<version>${jowidgets.version}</version>
+		</dependency>
+		
+		<!-- The SWT implementation for win32 -->
+		<dependency>
+            <groupId>org.eclipse</groupId>
+            <artifactId>swt-win32-win32-x86</artifactId>
+            <version>4.2.1</version>
+        </dependency>
+
+	</dependencies>
+
+</project>
