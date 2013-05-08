@@ -98,6 +98,23 @@ public final class IntrospectionCache {
 	}
 
 	/**
+	 * Gets the read method for a defined property in the type hierarchy (including the given type)
+	 * 
+	 * @param type
+	 * @param propertyName
+	 * @return The read method, or null if the property does not exist or has no read method
+	 */
+	public static Method getReadMethodFromHierarchy(final Class<?> type, final String propertyName) {
+		final PropertyDescriptor propertyDescriptor = getPropertyDescriptorFromHierarchy(type, propertyName);
+		if (propertyDescriptor != null) {
+			return propertyDescriptor.getReadMethod();
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
 	 * Gets a property decriptors for a specific type
 	 * 
 	 * @param type The type to get the property descriptor for
