@@ -30,6 +30,7 @@ package org.jowidgets.util.reflection;
 
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -77,6 +78,23 @@ public final class IntrospectionCache {
 		Assert.paramNotNull(type, "type");
 		Assert.paramNotNull(propertyName, "propertyName");
 		return getPropertyDescriptorsFromHierarchyImpl(type).get(propertyName);
+	}
+
+	/**
+	 * Gets the write method for a defined property in the type hierarchy (including the given type)
+	 * 
+	 * @param type
+	 * @param propertyName
+	 * @return The write method, or null if the property does not exist or is readonly
+	 */
+	public static Method getWriteMethodFromHierarchy(final Class<?> type, final String propertyName) {
+		final PropertyDescriptor propertyDescriptor = getPropertyDescriptorFromHierarchy(type, propertyName);
+		if (propertyDescriptor != null) {
+			return propertyDescriptor.getWriteMethod();
+		}
+		else {
+			return null;
+		}
 	}
 
 	/**
