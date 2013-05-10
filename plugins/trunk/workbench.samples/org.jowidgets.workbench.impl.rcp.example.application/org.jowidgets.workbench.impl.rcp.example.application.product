@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="org.jowidgets.workbench.impl.rcp.example" uid="org.jowidgets.workbench.impl.rcp.example.application" id="org.jowidgets.workbench.impl.rcp.example.demo1" application="org.jowidgets.workbench.impl.rcp.example.demo1" version="0.25.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="org.jowidgets.workbench.impl.rcp.example" uid="org.jowidgets.workbench.impl.rcp.example.application" id="org.jowidgets.workbench.impl.rcp.example.demo1" application="org.jowidgets.workbench.impl.rcp.example.demo1" version="0.26.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <configIni use="default">
    </configIni>
