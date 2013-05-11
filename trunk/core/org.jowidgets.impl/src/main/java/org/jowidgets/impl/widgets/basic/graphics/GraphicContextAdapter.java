@@ -34,6 +34,7 @@ import org.jowidgets.common.graphics.AntiAliasing;
 import org.jowidgets.common.graphics.LineCap;
 import org.jowidgets.common.graphics.LineJoin;
 import org.jowidgets.common.graphics.Point;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.spi.graphics.IGraphicContextSpi;
 import org.jowidgets.util.Assert;
@@ -58,6 +59,11 @@ public final class GraphicContextAdapter implements IGraphicContext {
 	}
 
 	@Override
+	public void setTextAntiAliasing(final AntiAliasing antiAliasing) {
+		contextSpi.setTextAntiAliasing(antiAliasing);
+	}
+
+	@Override
 	public void setLineCap(final LineCap lineCap) {
 		contextSpi.setLineCap(lineCap);
 	}
@@ -70,6 +76,21 @@ public final class GraphicContextAdapter implements IGraphicContext {
 	@Override
 	public void setLineWidth(final int width) {
 		contextSpi.setLineWidth(width);
+	}
+
+	@Override
+	public void setFontSize(final int size) {
+		contextSpi.setFontSize(size);
+	}
+
+	@Override
+	public void setFontName(final String fontName) {
+		contextSpi.setFontName(fontName);
+	}
+
+	@Override
+	public void setTextMarkup(final Markup markup) {
+		contextSpi.setTextMarkup(markup);
 	}
 
 	@Override
@@ -140,6 +161,11 @@ public final class GraphicContextAdapter implements IGraphicContext {
 	@Override
 	public void fillArc(final int x, final int y, final int width, final int height, final int startAngle, final int arcAngle) {
 		contextSpi.fillArc(x, y, width, height, startAngle, arcAngle);
+	}
+
+	@Override
+	public void drawText(final String text, final int x, final int y) {
+		contextSpi.drawText(text, x, y);
 	}
 
 }

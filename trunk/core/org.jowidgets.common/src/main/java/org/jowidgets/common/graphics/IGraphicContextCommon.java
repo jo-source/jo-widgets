@@ -29,6 +29,7 @@
 package org.jowidgets.common.graphics;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Rectangle;
 
 public interface IGraphicContextCommon {
@@ -37,11 +38,19 @@ public interface IGraphicContextCommon {
 
 	void setAntiAliasing(AntiAliasing antiAliasing);
 
+	void setTextAntiAliasing(AntiAliasing antiAliasing);
+
 	void setLineWidth(int width);
 
 	void setLineCap(LineCap lineCap);
 
 	void setLineJoin(LineJoin lineJoin);
+
+	void setFontSize(int size);
+
+	void setFontName(String fontName);
+
+	void setTextMarkup(Markup markup);
 
 	void setForegroundColor(IColorConstant color);
 
@@ -70,5 +79,7 @@ public interface IGraphicContextCommon {
 	void fillOval(int x, int y, int width, int height);
 
 	void fillArc(int x, int y, int width, int height, int startAngle, int arcAngle);
+
+	void drawText(String text, int x, int y);
 
 }

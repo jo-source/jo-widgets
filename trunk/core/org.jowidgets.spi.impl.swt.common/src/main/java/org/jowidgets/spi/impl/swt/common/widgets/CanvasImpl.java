@@ -45,7 +45,7 @@ public class CanvasImpl extends SwtComposite implements ICanvasSpi {
 	private final PaintObservable paintObservable;
 
 	public CanvasImpl(final IGenericWidgetFactory factory, final Object parentUiReference, final ICanvasSetupSpi setup) {
-		super(factory, new Canvas((Composite) parentUiReference, SWT.NONE));
+		super(factory, new Canvas((Composite) parentUiReference, SWT.DOUBLE_BUFFERED));
 		getUiReference().setBackgroundMode(SWT.INHERIT_DEFAULT);
 		this.paintObservable = new PaintObservable();
 
