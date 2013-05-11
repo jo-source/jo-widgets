@@ -34,6 +34,7 @@ import org.jowidgets.api.model.table.ITableModel;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICalendarBluePrint;
+import org.jowidgets.api.widgets.blueprint.ICanvasBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckedMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
@@ -293,6 +294,11 @@ public class BasicSimpleBluePrintFactory extends AbstractBluePrintFactory implem
 	@Override
 	public ISliderBluePrint slider() {
 		return createProxy(ISliderBluePrint.class);
+	}
+
+	@Override
+	public ICanvasBluePrint canvas() {
+		return createProxy(ICanvasBluePrint.class);
 	}
 
 }

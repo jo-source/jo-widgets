@@ -249,6 +249,18 @@ public final class DemoMainComposite {
 			}
 		});
 
+		final IButton canvasDialogButton = parentContainer.add(
+				bpF.button("Canvas demo", "Opens the canvas demo"),
+				"grow, sg bg, wrap");
+		canvasDialogButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IFrame frame = new DemoCanvasFrame();
+				frame.setSize(new Dimension(800, 600));
+				frame.setVisible(true);
+			}
+		});
+
 		final IButton chooserDemoButton = parentContainer.add(
 				bpF.button("Chooser demo", "Demonstrates choosers"),
 				"grow, sg bg, wrap");

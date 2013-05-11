@@ -37,6 +37,7 @@ import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.impl.swing.common.image.SwingImageRegistry;
 import org.jowidgets.spi.impl.swing.common.options.SwingOptions;
 import org.jowidgets.spi.impl.swing.common.widgets.ButtonImpl;
+import org.jowidgets.spi.impl.swing.common.widgets.CanvasImpl;
 import org.jowidgets.spi.impl.swing.common.widgets.CheckBoxImpl;
 import org.jowidgets.spi.impl.swing.common.widgets.ComboBoxImpl;
 import org.jowidgets.spi.impl.swing.common.widgets.CompositeImpl;
@@ -61,6 +62,7 @@ import org.jowidgets.spi.impl.swing.common.widgets.ToggleButtonImpl;
 import org.jowidgets.spi.impl.swing.common.widgets.ToolBarImpl;
 import org.jowidgets.spi.impl.swing.common.widgets.TreeImpl;
 import org.jowidgets.spi.widgets.IButtonSpi;
+import org.jowidgets.spi.widgets.ICanvasSpi;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
@@ -82,6 +84,7 @@ import org.jowidgets.spi.widgets.IToggleButtonSpi;
 import org.jowidgets.spi.widgets.IToolBarSpi;
 import org.jowidgets.spi.widgets.ITreeSpi;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
+import org.jowidgets.spi.widgets.setup.ICanvasSetupSpi;
 import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
@@ -279,6 +282,14 @@ public final class SwingWidgetFactory implements IWidgetFactorySpi {
 	@Override
 	public ISliderSpi createSlider(final Object parentUiReference, final ISliderSetupSpi setup) {
 		return new SliderImpl(setup);
+	}
+
+	@Override
+	public ICanvasSpi createCanvas(
+		final IGenericWidgetFactory factory,
+		final Object parentUiReference,
+		final ICanvasSetupSpi setup) {
+		return new CanvasImpl(factory, setup);
 	}
 
 }

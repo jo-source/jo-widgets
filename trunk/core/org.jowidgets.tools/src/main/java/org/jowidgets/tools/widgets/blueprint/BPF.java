@@ -45,6 +45,7 @@ import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICalendarBluePrint;
+import org.jowidgets.api.widgets.blueprint.ICanvasBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckedMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputControlBluePrint;
@@ -651,5 +652,9 @@ public final class BPF {
 
 	public static IExpandCompositeBluePrint expandComposite() {
 		return Toolkit.getBluePrintFactory().expandComposite();
+	}
+
+	public static ICanvasBluePrint canvas() {
+		return Toolkit.getBluePrintFactory().canvas();
 	}
 }

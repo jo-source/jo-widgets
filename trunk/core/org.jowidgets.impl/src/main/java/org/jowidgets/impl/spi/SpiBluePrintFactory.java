@@ -30,6 +30,7 @@ package org.jowidgets.impl.spi;
 import org.jowidgets.impl.base.blueprint.factory.AbstractBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.IButtonBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ICalendarBluePrintSpi;
+import org.jowidgets.impl.spi.blueprint.ICanvasBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ICheckBoxBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IComboBoxBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.IComboBoxSelectionBluePrintSpi;
@@ -191,6 +192,11 @@ public class SpiBluePrintFactory extends AbstractBluePrintFactory implements ISp
 	@Override
 	public ISliderBluePrintSpi slider() {
 		return createProxy(ISliderBluePrintSpi.class);
+	}
+
+	@Override
+	public ICanvasBluePrintSpi canvas() {
+		return createProxy(ICanvasBluePrintSpi.class);
 	}
 
 }
