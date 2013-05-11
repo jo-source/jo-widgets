@@ -36,9 +36,11 @@ import org.jowidgets.common.graphics.AntiAliasing;
 import org.jowidgets.common.graphics.LineCap;
 import org.jowidgets.common.graphics.LineJoin;
 import org.jowidgets.common.graphics.Point;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.spi.graphics.IGraphicContextSpi;
 import org.jowidgets.spi.impl.swt.common.color.ColorCache;
+import org.jowidgets.spi.impl.swt.common.util.FontProvider;
 import org.jowidgets.util.Assert;
 
 public final class GraphicContextSpiImpl implements IGraphicContextSpi {
@@ -68,6 +70,23 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
 		}
 		else if (AntiAliasing.DEFAULT.equals(antiAliasing)) {
 			gc.setAntialias(SWT.DEFAULT);
+		}
+		else {
+			throw new IllegalArgumentException("AntiAliasing '" + antiAliasing + "' is not known.");
+		}
+	}
+
+	@Override
+	public void setTextAntiAliasing(final AntiAliasing antiAliasing) {
+		Assert.paramNotNull(antiAliasing, "antiAliasing");
+		if (AntiAliasing.ON.equals(antiAliasing)) {
+			gc.setTextAntialias(SWT.ON);
+		}
+		else if (AntiAliasing.OFF.equals(antiAliasing)) {
+			gc.setTextAntialias(SWT.OFF);
+		}
+		else if (AntiAliasing.DEFAULT.equals(antiAliasing)) {
+			gc.setTextAntialias(SWT.DEFAULT);
 		}
 		else {
 			throw new IllegalArgumentException("AntiAliasing '" + antiAliasing + "' is not known.");
@@ -111,6 +130,21 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
 	@Override
 	public void setLineWidth(final int width) {
 		gc.setLineWidth(width);
+	}
+
+	@Override
+	public void setTextMarkup(final Markup markup) {
+		gc.setFont(FontProvider.deriveFont(gc.getFont(), markup));
+	}
+
+	@Override
+	public void setFontSize(final int size) {
+		gc.setFont(FontProvider.deriveFont(gc.getFont(), size));
+	}
+
+	@Override
+	public void setFontName(final String fontName) {
+		gc.setFont(FontProvider.deriveFont(gc.getFont(), fontName));
 	}
 
 	@Override
@@ -193,6 +227,11 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
 		gc.setBackground(gc.getForeground());
 		gc.fillArc(x, y, width, height, startAngle, arcAngle);
 		gc.setBackground(background);
+	}
+
+	@Override
+	public void drawText(final String text, final int x, final int y) {
+		gc.drawText(text, x, y, true);
 	}
 
 	private static int[] getCoordinates(final Point[] points) {

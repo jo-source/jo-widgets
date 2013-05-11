@@ -34,6 +34,7 @@ import org.jowidgets.api.graphics.IPaintListener;
 import org.jowidgets.api.widgets.ICanvas;
 import org.jowidgets.common.graphics.AntiAliasing;
 import org.jowidgets.common.graphics.Point;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.powo.JoFrame;
 import org.jowidgets.tools.widgets.blueprint.BPF;
@@ -50,6 +51,7 @@ public class DemoCanvasFrame extends JoFrame {
 			@Override
 			public void paint(final IGraphicContext gc) {
 				gc.setAntiAliasing(AntiAliasing.ON);
+				gc.setTextAntiAliasing(AntiAliasing.ON);
 
 				gc.setLineWidth(10);
 
@@ -63,6 +65,11 @@ public class DemoCanvasFrame extends JoFrame {
 				gc.setForegroundColor(Colors.BLACK);
 				final Point[] polyline = new Point[] {new Point(10, 115), new Point(220, 115), new Point(400, 60)};
 				gc.drawPolyline(polyline);
+
+				gc.setFontSize(20);
+				gc.setFontName("Arial");
+				gc.setTextMarkup(Markup.STRONG);
+				gc.drawText("Canvas Demo", 18, 25);
 			}
 		});
 	}

@@ -29,18 +29,22 @@
 package org.jowidgets.spi.impl.swing.common.graphics;
 
 import java.awt.BasicStroke;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
+import java.awt.Stroke;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.graphics.AntiAliasing;
 import org.jowidgets.common.graphics.LineCap;
 import org.jowidgets.common.graphics.LineJoin;
 import org.jowidgets.common.graphics.Point;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.spi.graphics.IGraphicContextSpi;
 import org.jowidgets.spi.impl.swing.common.util.ColorConvert;
+import org.jowidgets.spi.impl.swing.common.util.FontProvider;
 import org.jowidgets.util.Assert;
 
 public final class GraphicContextSpiImpl implements IGraphicContextSpi {
@@ -79,6 +83,23 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
 		}
 		else if (AntiAliasing.DEFAULT.equals(antiAliasing)) {
 			graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_DEFAULT);
+		}
+		else {
+			throw new IllegalArgumentException("AntiAliasing '" + antiAliasing + "' is not known.");
+		}
+	}
+
+	@Override
+	public void setTextAntiAliasing(final AntiAliasing antiAliasing) {
+		Assert.paramNotNull(antiAliasing, "antiAliasing");
+		if (AntiAliasing.ON.equals(antiAliasing)) {
+			graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		}
+		else if (AntiAliasing.OFF.equals(antiAliasing)) {
+			graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+		}
+		else if (AntiAliasing.DEFAULT.equals(antiAliasing)) {
+			graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_DEFAULT);
 		}
 		else {
 			throw new IllegalArgumentException("AntiAliasing '" + antiAliasing + "' is not known.");
@@ -132,6 +153,21 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
 	}
 
 	@Override
+	public void setTextMarkup(final Markup markup) {
+		graphics.setFont(FontProvider.deriveFont(graphics.getFont(), markup));
+	}
+
+	@Override
+	public void setFontSize(final int size) {
+		graphics.setFont(FontProvider.deriveFont(graphics.getFont(), size));
+	}
+
+	@Override
+	public void setFontName(final String fontName) {
+		graphics.setFont(FontProvider.deriveFont(graphics.getFont(), fontName));
+	}
+
+	@Override
 	public void setForegroundColor(final IColorConstant color) {
 		graphics.setColor(ColorConvert.convert(color));
 	}
@@ -148,7 +184,10 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
 
 	@Override
 	public void drawPoint(final int x, final int y) {
+		final Stroke currentStroke = graphics.getStroke();
+		graphics.setStroke(new BasicStroke(1));
 		graphics.drawLine(x, y, x, y);
+		graphics.setStroke(currentStroke);
 	}
 
 	@Override
@@ -200,6 +239,13 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
 	@Override
 	public void fillArc(final int x, final int y, final int width, final int height, final int startAngle, final int arcAngle) {
 		graphics.fillArc(x, y, width, height, startAngle, arcAngle);
+	}
+
+	@Override
+	public void drawText(final String text, final int x, final int y) {
+		final FontMetrics fontMetrics = graphics.getFontMetrics();
+		final int offset = fontMetrics.getAscent() + fontMetrics.getLeading() + 1;
+		graphics.drawString(text, x + 1, y + offset);
 	}
 
 	private static Polygon getPolygon(final Point[] points) {
