@@ -29,6 +29,7 @@ package org.jowidgets.spi;
 
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.widgets.IButtonSpi;
+import org.jowidgets.spi.widgets.ICanvasSpi;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
@@ -50,6 +51,7 @@ import org.jowidgets.spi.widgets.IToggleButtonSpi;
 import org.jowidgets.spi.widgets.IToolBarSpi;
 import org.jowidgets.spi.widgets.ITreeSpi;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
+import org.jowidgets.spi.widgets.setup.ICanvasSetupSpi;
 import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
@@ -134,5 +136,7 @@ public interface IWidgetFactorySpi {
 	ITableSpi createTable(Object parentUiReference, ITableSetupSpi setup);
 
 	ISliderSpi createSlider(Object parentUiReference, ISliderSetupSpi setup);
+
+	ICanvasSpi createCanvas(IGenericWidgetFactory factory, Object parentUiReference, ICanvasSetupSpi setup);
 
 }

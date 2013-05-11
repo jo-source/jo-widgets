@@ -53,6 +53,7 @@ import org.jowidgets.spi.impl.dummy.widgets.ToggleButtonImpl;
 import org.jowidgets.spi.impl.dummy.widgets.ToolBarImpl;
 import org.jowidgets.spi.impl.dummy.widgets.TreeImpl;
 import org.jowidgets.spi.widgets.IButtonSpi;
+import org.jowidgets.spi.widgets.ICanvasSpi;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
@@ -74,6 +75,7 @@ import org.jowidgets.spi.widgets.IToggleButtonSpi;
 import org.jowidgets.spi.widgets.IToolBarSpi;
 import org.jowidgets.spi.widgets.ITreeSpi;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
+import org.jowidgets.spi.widgets.setup.ICanvasSetupSpi;
 import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
@@ -268,6 +270,15 @@ public final class DummyWidgetFactory implements IWidgetFactorySpi {
 	@Override
 	public ISliderSpi createSlider(final Object parentUiReference, final ISliderSetupSpi setup) {
 		// TODO LG Dummy slider must be implemented
+		return null;
+	}
+
+	@Override
+	public ICanvasSpi createCanvas(
+		final IGenericWidgetFactory factory,
+		final Object parentUiReference,
+		final ICanvasSetupSpi setup) {
+		// TODO MG Dummy canvas must be implemented
 		return null;
 	}
 

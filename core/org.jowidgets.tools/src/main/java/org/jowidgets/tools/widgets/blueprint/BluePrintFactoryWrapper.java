@@ -45,6 +45,7 @@ import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICalendarBluePrint;
+import org.jowidgets.api.widgets.blueprint.ICanvasBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckBoxBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICheckedMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputControlBluePrint;
@@ -825,6 +826,11 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	@Override
 	public IExpandCompositeBluePrint expandComposite() {
 		return bluePrintFactory.expandComposite();
+	}
+
+	@Override
+	public ICanvasBluePrint canvas() {
+		return bluePrintFactory.canvas();
 	}
 
 }

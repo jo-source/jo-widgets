@@ -40,6 +40,7 @@ import org.jowidgets.api.widgets.blueprint.IToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarBluePrint;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.api.widgets.descriptor.ICalendarDescriptor;
+import org.jowidgets.api.widgets.descriptor.ICanvasDescriptor;
 import org.jowidgets.api.widgets.descriptor.ICheckBoxDescriptor;
 import org.jowidgets.api.widgets.descriptor.IComboBoxDescriptor;
 import org.jowidgets.api.widgets.descriptor.IComboBoxSelectionDescriptor;
@@ -68,6 +69,7 @@ import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.SpiBluePrintFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.ButtonFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.CalendarFactory;
+import org.jowidgets.impl.widgets.basic.factory.internal.CanvasFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.CheckBoxFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.ComboBoxFactory;
 import org.jowidgets.impl.widgets.basic.factory.internal.ComboBoxSelectionFactory;
@@ -165,6 +167,7 @@ public class BasicGenericWidgetFactory extends GenericWidgetFactoryWrapper {
 		register(ITreeDescriptor.class, new TreeFactory(this, widgetsServiceProvider, bpF));
 		register(ITableDescriptor.class, new TableFactory(this, widgetsServiceProvider, bpF));
 		register(ISliderDescriptor.class, new SliderFactory(this, widgetsServiceProvider, bpF));
+		register(ICanvasDescriptor.class, new CanvasFactory(this, widgetsServiceProvider, bpF));
 	}
 
 	private void registerOptionalWidgets(final IWidgetsServiceProvider widgetsServiceProvider, final ISpiBluePrintFactory bpF) {

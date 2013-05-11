@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2013, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,36 +25,10 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.color;
+package org.jowidgets.impl.spi.descriptor;
 
-import org.jowidgets.common.color.ColorValue;
-import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.spi.widgets.ICanvasSpi;
+import org.jowidgets.spi.widgets.setup.ICanvasSetupSpi;
 
-public enum Colors implements IColorConstant {
-
-	DEFAULT(new ColorValue(0, 0, 0)),
-	ERROR(new ColorValue(220, 0, 0)),
-	WARNING(new ColorValue(209, 124, 34)),
-	STRONG(new ColorValue(0, 70, 213)),
-	DISABLED(new ColorValue(130, 130, 130)),
-	DEFAULT_TABLE_EVEN_BACKGROUND_COLOR(new ColorValue(222, 235, 235)),
-	SELECTED_BACKGROUND(new ColorValue(16, 63, 149)),
-
-	BLACK(new ColorValue(0, 0, 0)),
-	WHITE(new ColorValue(255, 255, 255)),
-	DARK_GREY(new ColorValue(80, 80, 80)),
-	LIGHT_GREY(new ColorValue(225, 225, 225)),
-	GREEN(new ColorValue(7, 106, 3));
-
-	private ColorValue colorValue;
-
-	private Colors(final ColorValue colorValue) {
-		this.colorValue = colorValue;
-	}
-
-	@Override
-	public ColorValue getDefaultValue() {
-		return colorValue;
-	}
-
-}
+public interface ICanvasDescriptorSpi extends ICanvasSetupSpi, IWidgetDescriptor<ICanvasSpi> {}
