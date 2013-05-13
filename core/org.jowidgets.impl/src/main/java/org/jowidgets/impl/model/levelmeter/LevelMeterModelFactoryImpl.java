@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2013, mgrossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,18 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.model;
+package org.jowidgets.impl.model.levelmeter;
 
-import org.jowidgets.api.model.item.IItemModelFactory;
 import org.jowidgets.api.model.levelmeter.ILevelMeterModelFactory;
-import org.jowidgets.api.model.table.ITableModelFactory;
+import org.jowidgets.api.model.levelmeter.IMutableLevelMeterModel;
 
-public interface IModelFactoryProvider {
+public final class LevelMeterModelFactoryImpl implements ILevelMeterModelFactory {
 
-	IItemModelFactory getItemModelFactory();
-
-	ITableModelFactory getTableModelFactory();
-
-	ILevelMeterModelFactory getLevelMeterModelFactory();
+	@Override
+	public IMutableLevelMeterModel createMutableModel() {
+		return new MutableLevelMeterModelImpl();
+	}
 
 }

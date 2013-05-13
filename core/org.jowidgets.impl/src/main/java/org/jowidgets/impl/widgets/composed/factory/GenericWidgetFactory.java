@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2013, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -38,6 +38,7 @@ import org.jowidgets.api.widgets.descriptor.IInputCompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.IInputDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.ILabelDescriptor;
+import org.jowidgets.api.widgets.descriptor.ILevelMeterDescriptor;
 import org.jowidgets.api.widgets.descriptor.ILoginDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.IMessageDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.IPasswordChangeDialogDescriptor;
@@ -56,6 +57,7 @@ import org.jowidgets.impl.widgets.composed.factory.internal.InputCompositeFactor
 import org.jowidgets.impl.widgets.composed.factory.internal.InputDialogFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.InputFieldFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.LabelFactory;
+import org.jowidgets.impl.widgets.composed.factory.internal.LevelMeterFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.LoginDialogFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.MessageDialogFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.PasswordChangeDialogFactory;
@@ -93,6 +95,7 @@ public class GenericWidgetFactory extends BasicGenericWidgetFactory {
 		register(ICollectionInputFieldDescriptor.class, new CollectionInputFieldFactory());
 		register(ICombinedCollectionInputFieldDescriptor.class, new CombinedCollectionInputFieldFactory());
 		register(IExpandCompositeDescriptor.class, new ExpandCompositeFactory());
+		register(ILevelMeterDescriptor.class, new LevelMeterFactory());
 	}
 
 	private void registerFallbackWidgets() {

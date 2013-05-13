@@ -30,14 +30,17 @@ package org.jowidgets.impl.model;
 
 import org.jowidgets.api.model.IModelFactoryProvider;
 import org.jowidgets.api.model.item.IItemModelFactory;
+import org.jowidgets.api.model.levelmeter.ILevelMeterModelFactory;
 import org.jowidgets.api.model.table.ITableModelFactory;
 import org.jowidgets.impl.model.item.ItemModelFactory;
+import org.jowidgets.impl.model.levelmeter.LevelMeterModelFactoryImpl;
 import org.jowidgets.impl.model.table.TableModelFactory;
 
 public class ModelFactoryProvider implements IModelFactoryProvider {
 
 	private IItemModelFactory itemModelFactory;
 	private ITableModelFactory tableModelFactory;
+	private ILevelMeterModelFactory levelMeterModelFactory;
 
 	@Override
 	public IItemModelFactory getItemModelFactory() {
@@ -53,6 +56,14 @@ public class ModelFactoryProvider implements IModelFactoryProvider {
 			this.tableModelFactory = new TableModelFactory();
 		}
 		return tableModelFactory;
+	}
+
+	@Override
+	public ILevelMeterModelFactory getLevelMeterModelFactory() {
+		if (levelMeterModelFactory == null) {
+			this.levelMeterModelFactory = new LevelMeterModelFactoryImpl();
+		}
+		return levelMeterModelFactory;
 	}
 
 }

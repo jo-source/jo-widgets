@@ -261,6 +261,18 @@ public final class DemoMainComposite {
 			}
 		});
 
+		final IButton levelMeterDialogButton = parentContainer.add(
+				bpF.button("Level meter demo", "Opens the level meter demo"),
+				"grow, sg bg, wrap");
+		levelMeterDialogButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IFrame frame = new DemoLevelMeterFrame();
+				frame.setSize(new Dimension(400, 300));
+				frame.setVisible(true);
+			}
+		});
+
 		final IButton chooserDemoButton = parentContainer.add(
 				bpF.button("Chooser demo", "Demonstrates choosers"),
 				"grow, sg bg, wrap");

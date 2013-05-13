@@ -25,12 +25,56 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.descriptor;
+package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.api.widgets.ITextLabel;
-import org.jowidgets.api.widgets.descriptor.setup.ITextLabelSetup;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.api.model.levelmeter.ILevelMeterModel;
+import org.jowidgets.common.color.IColorConstant;
 
-public interface ITextLabelDescriptor extends ITextLabelSetup, IWidgetDescriptor<ITextLabel> {
+public interface ILevelMeterSetupBuilder<INSTANCE_TYPE extends ILevelMeterSetupBuilder<?>> extends
+		IComponentSetupBuilder<INSTANCE_TYPE> {
+
+	INSTANCE_TYPE setModel(ILevelMeterModel model);
+
+	INSTANCE_TYPE setLetteringVisible(boolean visible);
+
+	/**
+	 * Sets the foreground color of the low peak range (from 0.0 to highPeakTreshold)
+	 * 
+	 * @param color The foreground color
+	 * @return This builder
+	 */
+	INSTANCE_TYPE setLowPeakColor(IColorConstant color);
+
+	/**
+	 * Sets the foreground color of the high peak range (from highPeakThreshold to clipPeakThreshold)
+	 * 
+	 * @param color The foreground color
+	 * @return This builder
+	 */
+	INSTANCE_TYPE setHighPeakColor(IColorConstant color);
+
+	/**
+	 * Sets the foreground color of the low peak range (from clipPeakThreshold to 1.0)
+	 * 
+	 * @param color The foreground color
+	 * @return This builder
+	 */
+	INSTANCE_TYPE setClipPeakColor(IColorConstant color);
+
+	/**
+	 * Sets the threshold that defines a high peak
+	 * 
+	 * @param threshold The threshold to set (0.0 <= highPeakThreshold < clipPeakThreshold)
+	 * @return This builder
+	 */
+	INSTANCE_TYPE setHighPeakThreshold(double threshold);
+
+	/**
+	 * Sets the threshold that defines a clip peak
+	 * 
+	 * @param threshold The threshold to set (highPeakThreshold <= clipPeakThreshold <= 1.0)
+	 * @return This builder
+	 */
+	INSTANCE_TYPE setClipPeakThreshold(double threshold);
 
 }
