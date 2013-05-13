@@ -29,6 +29,7 @@ package org.jowidgets.api.widgets.blueprint.factory;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.api.model.levelmeter.ILevelMeterModel;
 import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.api.model.table.ITableModel;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
@@ -45,6 +46,7 @@ import org.jowidgets.api.widgets.blueprint.IDirectoryChooserBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFileChooserBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IIconBluePrint;
+import org.jowidgets.api.widgets.blueprint.ILevelMeterBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMainMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.IPopupDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IRadioMenuItemBluePrint;
@@ -155,5 +157,7 @@ public interface IBasicSimpleBluePrintFactory extends IBaseBluePrintFactory {
 	ISliderBluePrint slider();
 
 	ICanvasBluePrint canvas();
+
+	ILevelMeterBluePrint levelMeter(ILevelMeterModel model);
 
 }

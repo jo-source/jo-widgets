@@ -36,6 +36,7 @@ import java.util.List;
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.login.ILoginInterceptor;
+import org.jowidgets.api.model.levelmeter.ILevelMeterModel;
 import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.api.model.table.ITableModel;
 import org.jowidgets.api.password.IPasswordChangeExecutor;
@@ -66,6 +67,7 @@ import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.ILevelMeterBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILoginDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMainMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
@@ -831,6 +833,11 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	@Override
 	public ICanvasBluePrint canvas() {
 		return bluePrintFactory.canvas();
+	}
+
+	@Override
+	public ILevelMeterBluePrint levelMeter(final ILevelMeterModel model) {
+		return bluePrintFactory.levelMeter(model);
 	}
 
 }

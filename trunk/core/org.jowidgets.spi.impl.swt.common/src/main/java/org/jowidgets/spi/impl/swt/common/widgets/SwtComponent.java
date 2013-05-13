@@ -40,6 +40,7 @@ import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.jowidgets.common.color.ColorValue;
 import org.jowidgets.common.color.IColorConstant;
@@ -228,9 +229,11 @@ public class SwtComponent extends SwtWidget implements IComponentSpi {
 
 	@Override
 	public void redraw() {
-		if (getUiReference().getParent() != null) {
-			getUiReference().getParent().layout(new Control[] {getUiReference()});
-			getUiReference().getParent().redraw();
+		final Composite parent = getUiReference().getParent();
+		if (parent != null) {
+			parent.layout(new Control[] {getUiReference()});
+			parent.redraw();
+			getUiReference().redraw();
 		}
 		else {
 			getUiReference().redraw();

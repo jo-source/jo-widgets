@@ -29,6 +29,7 @@
 package org.jowidgets.impl.widgets.composed.blueprint.defaults.registry;
 
 import org.jowidgets.api.widgets.blueprint.IExpandCompositeBluePrint;
+import org.jowidgets.api.widgets.blueprint.ILevelMeterBluePrint;
 import org.jowidgets.api.widgets.blueprint.builder.ICollectionInputControlSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ICollectionInputDialogSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ICollectionInputFieldSetupBuilder;
@@ -51,6 +52,7 @@ import org.jowidgets.impl.widgets.composed.blueprint.defaults.InputComponentVali
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.InputCompositeDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.InputDialogDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.InputFieldDefaults;
+import org.jowidgets.impl.widgets.composed.blueprint.defaults.LevelMeterDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.LoginDialogDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.MessageDialogDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.PasswordChangeDialogDefaults;
@@ -76,5 +78,6 @@ public class ComposedDefaultsInitializerRegistry extends BasicDefaultsInitialize
 		register(ICollectionInputDialogSetupBuilder.class, new CollectionInputDialogDefaults());
 		register(ICollectionInputFieldSetupBuilder.class, new CollectionInputFieldDefaults());
 		register(IExpandCompositeBluePrint.class, new ExpandCompositeDefaults());
+		register(ILevelMeterBluePrint.class, new LevelMeterDefaults());
 	}
 }

@@ -28,49 +28,52 @@
 
 package org.jowidgets.examples.common.demo;
 
-import org.jowidgets.api.color.Colors;
-import org.jowidgets.api.graphics.IGraphicContext;
-import org.jowidgets.api.graphics.IPaintListener;
-import org.jowidgets.api.widgets.ICanvas;
-import org.jowidgets.common.graphics.AntiAliasing;
-import org.jowidgets.common.graphics.Point;
-import org.jowidgets.common.types.Markup;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
+import org.jowidgets.api.model.levelmeter.IMutableLevelMeterModel;
+import org.jowidgets.api.model.levelmeter.MutableLevelMeterModel;
+import org.jowidgets.api.threads.IUiThreadAccess;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.powo.JoFrame;
 import org.jowidgets.tools.widgets.blueprint.BPF;
+import org.jowidgets.util.concurrent.DaemonThreadFactory;
 
-public class DemoCanvasFrame extends JoFrame {
+public class DemoLevelMeterFrame extends JoFrame {
 
-	public DemoCanvasFrame() {
-		super("Canvas demo");
+	public DemoLevelMeterFrame() {
+		super("Level meter demo");
 
-		setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
-		final ICanvas canvas = add(BPF.canvas(), "growx, w 0::, growy, h 0::");
+		setLayout(new MigLayoutDescriptor("[20!][20!][20!][20!][20!][20!][20!][20!]", "[grow, 0::]"));
 
-		canvas.addPaintListener(new IPaintListener() {
+		final IMutableLevelMeterModel[] models = new IMutableLevelMeterModel[8];
+
+		for (int i = 0; i < 8; i++) {
+			models[i] = MutableLevelMeterModel.create();
+			add(BPF.levelMeter(models[i]), "growx, w 0::, growy, h 0::");
+		}
+
+		final ScheduledExecutorService threadPool = Executors.newScheduledThreadPool(1, new DaemonThreadFactory());
+
+		final IUiThreadAccess uiThreadAccess = Toolkit.getUiThreadAccess();
+		final Runnable modelChangeRunnable = new Runnable() {
+
 			@Override
-			public void paint(final IGraphicContext gc) {
-				gc.setAntiAliasing(AntiAliasing.ON);
-				gc.setTextAntiAliasing(AntiAliasing.ON);
-
-				gc.setLineWidth(10);
-
-				gc.setForegroundColor(Colors.ERROR);
-				gc.drawRectangle(10, 10, 200, 70);
-
-				gc.setForegroundColor(Colors.STRONG);
-				gc.fillOval(30, 70, 40, 40);
-				gc.fillOval(150, 70, 40, 40);
-
-				gc.setForegroundColor(Colors.BLACK);
-				final Point[] polyline = new Point[] {new Point(10, 115), new Point(220, 115), new Point(400, 60)};
-				gc.drawPolyline(polyline);
-
-				gc.setFontSize(20);
-				gc.setFontName("Arial");
-				gc.setTextMarkup(Markup.STRONG);
-				gc.drawText("Canvas Demo", 18, 25);
+			public void run() {
+				uiThreadAccess.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						for (int i = 0; i < 8; i++) {
+							models[i].setLevel(Math.random());
+						}
+					}
+				});
 			}
-		});
+		};
+
+		threadPool.scheduleWithFixedDelay(modelChangeRunnable, 0, 150, TimeUnit.MILLISECONDS);
+
 	}
 }

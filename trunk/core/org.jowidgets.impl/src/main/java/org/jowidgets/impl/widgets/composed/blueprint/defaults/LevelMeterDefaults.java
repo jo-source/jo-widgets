@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, Michael Grossmann
+ * Copyright (c) 2010, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,12 +25,21 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.descriptor;
+package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 
-import org.jowidgets.api.widgets.ITextLabel;
-import org.jowidgets.api.widgets.descriptor.setup.ITextLabelSetup;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.api.color.Colors;
+import org.jowidgets.api.widgets.blueprint.builder.ILevelMeterSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
-public interface ITextLabelDescriptor extends ITextLabelSetup, IWidgetDescriptor<ITextLabel> {
+public class LevelMeterDefaults implements IDefaultInitializer<ILevelMeterSetupBuilder<?>> {
 
+	@Override
+	public void initialize(final ILevelMeterSetupBuilder<?> builder) {
+		builder.setLetteringVisible(false);
+		builder.setLowPeakColor(Colors.GREEN);
+		builder.setHighPeakColor(Colors.ERROR);
+		builder.setClipPeakColor(Colors.ERROR);
+		builder.setHighPeakThreshold(0.75d);
+		builder.setClipPeakThreshold(0.95d);
+	}
 }

@@ -26,51 +26,25 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.demo;
+package org.jowidgets.impl.model.levelmeter;
 
-import org.jowidgets.api.color.Colors;
-import org.jowidgets.api.graphics.IGraphicContext;
-import org.jowidgets.api.graphics.IPaintListener;
-import org.jowidgets.api.widgets.ICanvas;
-import org.jowidgets.common.graphics.AntiAliasing;
-import org.jowidgets.common.graphics.Point;
-import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.powo.JoFrame;
-import org.jowidgets.tools.widgets.blueprint.BPF;
+import org.jowidgets.api.model.levelmeter.IMutableLevelMeterModel;
+import org.jowidgets.impl.event.LevelObservable;
 
-public class DemoCanvasFrame extends JoFrame {
+final class MutableLevelMeterModelImpl extends LevelObservable implements IMutableLevelMeterModel {
 
-	public DemoCanvasFrame() {
-		super("Canvas demo");
+	private double level;
 
-		setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
-		final ICanvas canvas = add(BPF.canvas(), "growx, w 0::, growy, h 0::");
-
-		canvas.addPaintListener(new IPaintListener() {
-			@Override
-			public void paint(final IGraphicContext gc) {
-				gc.setAntiAliasing(AntiAliasing.ON);
-				gc.setTextAntiAliasing(AntiAliasing.ON);
-
-				gc.setLineWidth(10);
-
-				gc.setForegroundColor(Colors.ERROR);
-				gc.drawRectangle(10, 10, 200, 70);
-
-				gc.setForegroundColor(Colors.STRONG);
-				gc.fillOval(30, 70, 40, 40);
-				gc.fillOval(150, 70, 40, 40);
-
-				gc.setForegroundColor(Colors.BLACK);
-				final Point[] polyline = new Point[] {new Point(10, 115), new Point(220, 115), new Point(400, 60)};
-				gc.drawPolyline(polyline);
-
-				gc.setFontSize(20);
-				gc.setFontName("Arial");
-				gc.setTextMarkup(Markup.STRONG);
-				gc.drawText("Canvas Demo", 18, 25);
-			}
-		});
+	@Override
+	public double getLevel() {
+		return level;
 	}
+
+	@Override
+	public void setLevel(final double level) {
+		final double oldLevel = this.level;
+		this.level = level;
+		fireLevelChanged(oldLevel, level);
+	}
+
 }

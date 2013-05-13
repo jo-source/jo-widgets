@@ -25,12 +25,19 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.descriptor;
+package org.jowidgets.impl.widgets.composed.factory.internal;
 
-import org.jowidgets.api.widgets.ITextLabel;
-import org.jowidgets.api.widgets.descriptor.setup.ITextLabelSetup;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.ILevelMeter;
+import org.jowidgets.api.widgets.descriptor.ILevelMeterDescriptor;
+import org.jowidgets.impl.widgets.composed.LevelMeterImpl;
+import org.jowidgets.tools.widgets.factory.AbstractCompositeWidgetFactory;
 
-public interface ITextLabelDescriptor extends ITextLabelSetup, IWidgetDescriptor<ITextLabel> {
+public final class LevelMeterFactory extends AbstractCompositeWidgetFactory<ILevelMeter, ILevelMeterDescriptor> {
+
+	@Override
+	protected ILevelMeter createWidget(final IComposite compositeWidget, final ILevelMeterDescriptor descriptor) {
+		return new LevelMeterImpl(compositeWidget, descriptor);
+	}
 
 }
