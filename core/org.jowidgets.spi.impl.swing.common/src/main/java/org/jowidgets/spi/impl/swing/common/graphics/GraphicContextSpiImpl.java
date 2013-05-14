@@ -40,10 +40,12 @@ import org.jowidgets.common.graphics.AntiAliasing;
 import org.jowidgets.common.graphics.LineCap;
 import org.jowidgets.common.graphics.LineJoin;
 import org.jowidgets.common.graphics.Point;
+import org.jowidgets.common.text.IFontMetrics;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.spi.graphics.IGraphicContextSpi;
 import org.jowidgets.spi.impl.swing.common.util.ColorConvert;
+import org.jowidgets.spi.impl.swing.common.util.FontMetricsConvert;
 import org.jowidgets.spi.impl.swing.common.util.FontProvider;
 import org.jowidgets.util.Assert;
 
@@ -246,6 +248,32 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
 		final FontMetrics fontMetrics = graphics.getFontMetrics();
 		final int offset = fontMetrics.getAscent() + fontMetrics.getLeading() + 1;
 		graphics.drawString(text, x + 1, y + offset);
+	}
+
+	@Override
+	public IColorConstant getForegroundColor() {
+		return ColorConvert.convert(graphics.getColor());
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return ColorConvert.convert(graphics.getBackground());
+	}
+
+	@Override
+	public IFontMetrics getFontMetrics() {
+		return FontMetricsConvert.convert(graphics.getFontMetrics());
+	}
+
+	@Override
+	public int getTextWidth(final String text) {
+		if (text != null) {
+			final char[] charArray = text.toCharArray();
+			return graphics.getFontMetrics().charsWidth(charArray, 0, charArray.length);
+		}
+		else {
+			return 0;
+		}
 	}
 
 	private static Polygon getPolygon(final Point[] points) {

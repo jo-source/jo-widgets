@@ -36,10 +36,13 @@ import org.jowidgets.common.graphics.AntiAliasing;
 import org.jowidgets.common.graphics.LineCap;
 import org.jowidgets.common.graphics.LineJoin;
 import org.jowidgets.common.graphics.Point;
+import org.jowidgets.common.text.IFontMetrics;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.spi.graphics.IGraphicContextSpi;
 import org.jowidgets.spi.impl.swt.common.color.ColorCache;
+import org.jowidgets.spi.impl.swt.common.util.ColorConvert;
+import org.jowidgets.spi.impl.swt.common.util.FontMetricsConvert;
 import org.jowidgets.spi.impl.swt.common.util.FontProvider;
 import org.jowidgets.util.Assert;
 
@@ -232,6 +235,35 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
 	@Override
 	public void drawText(final String text, final int x, final int y) {
 		gc.drawText(text, x, y, true);
+	}
+
+	@Override
+	public IColorConstant getForegroundColor() {
+		return ColorConvert.convert(gc.getForeground());
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return ColorConvert.convert(gc.getBackground());
+	}
+
+	@Override
+	public IFontMetrics getFontMetrics() {
+		return FontMetricsConvert.convert(gc.getFontMetrics());
+	}
+
+	@Override
+	public int getTextWidth(final String text) {
+		if (text != null) {
+			int result = 0;
+			for (final char ch : text.toCharArray()) {
+				result += gc.getAdvanceWidth(ch);
+			}
+			return result;
+		}
+		else {
+			return 0;
+		}
 	}
 
 	private static int[] getCoordinates(final Point[] points) {
