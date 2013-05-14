@@ -43,14 +43,18 @@ import org.jowidgets.util.concurrent.DaemonThreadFactory;
 
 public class DemoLevelMeterFrame extends JoFrame {
 
+	private final static int NUMBER_OF_BARS = 10;
+
 	public DemoLevelMeterFrame() {
 		super("Level meter demo");
 
-		setLayout(new MigLayoutDescriptor("[20!][20!][20!][20!][20!][20!][20!][20!]", "[grow, 0::]"));
+		final String migLayoutColumnDescriptor = getColumnDescriptor();
 
-		final IMutableLevelMeterModel[] models = new IMutableLevelMeterModel[8];
+		setLayout(new MigLayoutDescriptor(migLayoutColumnDescriptor, "[grow, 0::]"));
 
-		for (int i = 0; i < 8; i++) {
+		final IMutableLevelMeterModel[] models = new IMutableLevelMeterModel[NUMBER_OF_BARS];
+
+		for (int i = 0; i < NUMBER_OF_BARS; i++) {
 			models[i] = MutableLevelMeterModel.create();
 			add(BPF.levelMeter(models[i]), "growx, w 0::, growy, h 0::");
 		}
@@ -65,15 +69,44 @@ public class DemoLevelMeterFrame extends JoFrame {
 				uiThreadAccess.invokeLater(new Runnable() {
 					@Override
 					public void run() {
-						for (int i = 0; i < 8; i++) {
-							models[i].setLevel(Math.random());
+						for (int i = 0; i < NUMBER_OF_BARS; i++) {
+							final double oldLevel = models[i].getLevel();
+							if (oldLevel == 0) {
+								models[i].setLevel(Math.random());
+							}
+							else {
+								final double variance = Math.random() / 10;
+								double newLevel = oldLevel;
+								double plusMinus = Math.random();
+								if (oldLevel > 0.89) {
+									plusMinus = 0.0;
+								}
+								if (oldLevel < 0.11) {
+									plusMinus = 1.0;
+								}
+								if (plusMinus < 0.5) {
+									newLevel = newLevel - variance;
+								}
+								else {
+									newLevel = newLevel + variance;
+								}
+								models[i].setLevel(newLevel);
+							}
 						}
 					}
 				});
 			}
 		};
 
-		threadPool.scheduleWithFixedDelay(modelChangeRunnable, 0, 150, TimeUnit.MILLISECONDS);
+		threadPool.scheduleWithFixedDelay(modelChangeRunnable, 0, 100, TimeUnit.MILLISECONDS);
 
+	}
+
+	private String getColumnDescriptor() {
+		final StringBuilder stringBuilder = new StringBuilder();
+		for (int i = 0; i < NUMBER_OF_BARS; i++) {
+			stringBuilder.append("[grow, 0::]");
+		}
+		return stringBuilder.toString();
 	}
 }
