@@ -34,6 +34,7 @@ import org.jowidgets.common.graphics.AntiAliasing;
 import org.jowidgets.common.graphics.LineCap;
 import org.jowidgets.common.graphics.LineJoin;
 import org.jowidgets.common.graphics.Point;
+import org.jowidgets.common.text.IFontMetrics;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.spi.graphics.IGraphicContextSpi;
@@ -46,11 +47,6 @@ public final class GraphicContextAdapter implements IGraphicContext {
 	public GraphicContextAdapter(final IGraphicContextSpi contextSpi) {
 		Assert.paramNotNull(contextSpi, "contextSpi");
 		this.contextSpi = contextSpi;
-	}
-
-	@Override
-	public Rectangle getBounds() {
-		return contextSpi.getBounds();
 	}
 
 	@Override
@@ -166,6 +162,31 @@ public final class GraphicContextAdapter implements IGraphicContext {
 	@Override
 	public void drawText(final String text, final int x, final int y) {
 		contextSpi.drawText(text, x, y);
+	}
+
+	@Override
+	public int getTextWidth(final String text) {
+		return contextSpi.getTextWidth(text);
+	}
+
+	@Override
+	public Rectangle getBounds() {
+		return contextSpi.getBounds();
+	}
+
+	@Override
+	public IColorConstant getForegroundColor() {
+		return contextSpi.getForegroundColor();
+	}
+
+	@Override
+	public IColorConstant getBackgroundColor() {
+		return contextSpi.getBackgroundColor();
+	}
+
+	@Override
+	public IFontMetrics getFontMetrics() {
+		return contextSpi.getFontMetrics();
 	}
 
 }

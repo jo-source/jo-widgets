@@ -26,69 +26,44 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.graphics;
+package org.jowidgets.spi.impl.text;
 
-import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.text.IFontMetrics;
-import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.types.Rectangle;
 
-public interface IGraphicContextCommon {
+final class FontMetricsImpl implements IFontMetrics {
 
-	void setAntiAliasing(AntiAliasing antiAliasing);
+	private final int ascent;
+	private final int descent;
+	private final int height;
+	private final int leading;
 
-	void setTextAntiAliasing(AntiAliasing antiAliasing);
+	FontMetricsImpl(final int leading, final int ascent, final int descent, final int height) {
+		super();
+		this.ascent = ascent;
 
-	void setLineWidth(int width);
+		this.descent = descent;
+		this.height = height;
+		this.leading = leading;
+	}
 
-	void setLineCap(LineCap lineCap);
+	@Override
+	public int getLeading() {
+		return leading;
+	}
 
-	void setLineJoin(LineJoin lineJoin);
+	@Override
+	public int getAscent() {
+		return ascent;
+	}
 
-	void setFontSize(int size);
+	@Override
+	public int getDescent() {
+		return descent;
+	}
 
-	void setFontName(String fontName);
-
-	void setTextMarkup(Markup markup);
-
-	void setForegroundColor(IColorConstant color);
-
-	void setBackgroundColor(IColorConstant color);
-
-	void clearRectangle(int x, int y, int width, int height);
-
-	void drawPoint(int x, int y);
-
-	void drawLine(int x1, int y1, int x2, int y2);
-
-	void drawRectangle(int x, int y, int width, int height);
-
-	void drawPolygon(Point[] points);
-
-	void drawPolyline(Point[] points);
-
-	void drawOval(int x, int y, int width, int height);
-
-	void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle);
-
-	void fillRectangle(int x, int y, int width, int height);
-
-	void fillPolygon(Point[] points);
-
-	void fillOval(int x, int y, int width, int height);
-
-	void fillArc(int x, int y, int width, int height, int startAngle, int arcAngle);
-
-	void drawText(String text, int x, int y);
-
-	Rectangle getBounds();
-
-	IColorConstant getForegroundColor();
-
-	IColorConstant getBackgroundColor();
-
-	IFontMetrics getFontMetrics();
-
-	int getTextWidth(String text);
+	@Override
+	public int getHeight() {
+		return height;
+	}
 
 }
