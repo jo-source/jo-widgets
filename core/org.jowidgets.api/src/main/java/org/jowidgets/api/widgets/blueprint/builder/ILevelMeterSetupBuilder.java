@@ -35,7 +35,37 @@ public interface ILevelMeterSetupBuilder<INSTANCE_TYPE extends ILevelMeterSetupB
 
 	INSTANCE_TYPE setModel(ILevelMeterModel model);
 
+	/**
+	 * Sets the lettering visible or invisible
+	 * 
+	 * @param visible visibility
+	 * @return This builder
+	 */
 	INSTANCE_TYPE setLetteringVisible(boolean visible);
+
+	/**
+	 * Sets the size of the gaps between the colored boxes
+	 * 
+	 * @param gapSize size of the gaps (in pixels)
+	 * @return This builder
+	 */
+	INSTANCE_TYPE setGapSize(int gapSize);
+
+	/**
+	 * Sets the size of the small colored boxes indicating the level
+	 * 
+	 * @param boxSize size of the boxes (in pixels)
+	 * @return This builder
+	 */
+	INSTANCE_TYPE setBoxSize(int boxSize);
+
+	/**
+	 * Sets the color of the gap between the small boxes
+	 * 
+	 * @param color
+	 * @return
+	 */
+	INSTANCE_TYPE setGapColor(IColorConstant color);
 
 	/**
 	 * Sets the foreground color of the low peak range (from 0.0 to highPeakTreshold)

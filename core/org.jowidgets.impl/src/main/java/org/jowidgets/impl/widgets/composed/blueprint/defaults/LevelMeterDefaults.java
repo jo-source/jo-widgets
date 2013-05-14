@@ -37,9 +37,12 @@ public class LevelMeterDefaults implements IDefaultInitializer<ILevelMeterSetupB
 	public void initialize(final ILevelMeterSetupBuilder<?> builder) {
 		builder.setLetteringVisible(false);
 		builder.setLowPeakColor(Colors.GREEN);
-		builder.setHighPeakColor(Colors.ERROR);
+		builder.setHighPeakColor(Colors.WARNING);
 		builder.setClipPeakColor(Colors.ERROR);
-		builder.setHighPeakThreshold(0.75d);
-		builder.setClipPeakThreshold(0.95d);
+		builder.setHighPeakThreshold(0.5d);
+		builder.setClipPeakThreshold(0.75d);
+		builder.setBoxSize(1);
+		builder.setGapSize(1);
+		builder.setGapColor(Colors.DARK_GREY);
 	}
 }

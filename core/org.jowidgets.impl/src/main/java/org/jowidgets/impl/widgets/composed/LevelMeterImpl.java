@@ -36,7 +36,7 @@ import org.jowidgets.api.widgets.ICanvas;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.ILevelMeter;
 import org.jowidgets.api.widgets.descriptor.setup.ILevelMeterSetup;
-import org.jowidgets.common.types.Rectangle;
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.tools.layout.MigLayoutFactory;
@@ -46,11 +46,13 @@ import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 public final class LevelMeterImpl extends ControlWrapper implements ILevelMeter {
 
 	private final ILevelMeterModel model;
+	ILevelMeterSetup setup;
 
 	public LevelMeterImpl(final IComposite composite, final ILevelMeterSetup setup) {
 		super(composite);
 
 		this.model = setup.getModel();
+		this.setup = setup;
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
@@ -68,16 +70,7 @@ public final class LevelMeterImpl extends ControlWrapper implements ILevelMeter 
 		canvas.addPaintListener(new IPaintListener() {
 			@Override
 			public void paint(final IGraphicContext gc) {
-				final Rectangle bounds = gc.getBounds();
-
-				gc.clearRectangle(0, 0, bounds.getWidth() - 1, bounds.getHeight() - 1);
-
-				gc.setForegroundColor(setup.getLowPeakColor());
-				final int y = (int) ((1.0 - model.getLevel()) * bounds.getHeight());
-				gc.fillRectangle(0, y, bounds.getWidth(), bounds.getHeight() - y);
-
-				gc.setForegroundColor(Colors.DISABLED);
-				gc.drawRectangle(0, 0, bounds.getWidth() - 1, bounds.getHeight() - 1);
+				paintCanvas(gc);
 			}
 		});
 
@@ -88,4 +81,51 @@ public final class LevelMeterImpl extends ControlWrapper implements ILevelMeter 
 		return model;
 	}
 
+	private void paintCanvas(final IGraphicContext gc) {
+		final int gapSize = setup.getGapSize();
+		final int boxSize = setup.getBoxSize();
+
+		final int canvasHeight = gc.getBounds().getHeight();
+		final int canvasWidth = gc.getBounds().getWidth();
+		//clear canvas
+		gc.setForegroundColor(Colors.DISABLED);
+		gc.clearRectangle(0, 0, canvasWidth, canvasHeight);
+
+		int letteringWidth = 0;
+		if (setup.isLetteringVisible()) {
+			final String longestLettering = "-INF";
+			letteringWidth = gc.getTextWidth(longestLettering) + 5;
+			gc.drawText("0db", 0, 15);
+			gc.drawText("-INF", 0, canvasHeight - 15);
+		}
+
+		//calculate box data depending on canvas height
+		final int numberOfBoxes = calculateNumberOfBoxes(canvasHeight, boxSize, gapSize);
+		final int numberOfActiveBoxes = (int) Math.round(numberOfBoxes * model.getLevel());
+		final int numberOfLowPeakBoxes = (int) Math.round(numberOfBoxes * setup.getHighPeakThreshold());
+		final int numberOfHighPeakBoxes = (int) Math.round(numberOfBoxes * setup.getClipPeakThreshold());
+
+		final IColorConstant gapColor = setup.getGapColor();
+		IColorConstant peakColor = setup.getLowPeakColor();
+
+		//draw boxes
+		for (int i = 0; i < numberOfActiveBoxes; i++) {
+			if (i + 1 > numberOfLowPeakBoxes) {
+				peakColor = setup.getHighPeakColor();
+			}
+			if (i + 1 > numberOfHighPeakBoxes) {
+				peakColor = setup.getClipPeakColor();
+			}
+			final int y = canvasHeight - i * (gapSize + boxSize);
+			gc.setForegroundColor(gapColor);
+			gc.fillRectangle(letteringWidth + 5, y, 10, gapSize);
+			gc.setForegroundColor(peakColor);
+			gc.fillRectangle(letteringWidth + 5, y + gapSize, 10, boxSize);
+		}
+
+	}
+
+	private int calculateNumberOfBoxes(final int canvasHeight, final int boxSize, final int gapSize) {
+		return canvasHeight / (boxSize + gapSize) - 1;
+	}
 }
