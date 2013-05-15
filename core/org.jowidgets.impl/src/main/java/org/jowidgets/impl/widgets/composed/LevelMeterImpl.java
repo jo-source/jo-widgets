@@ -47,6 +47,14 @@ public final class LevelMeterImpl extends ControlWrapper implements ILevelMeter 
 
 	private final ILevelMeterModel model;
 	ILevelMeterSetup setup;
+	private static final String UPPER_SCALE_LETTERING = "0db";
+	private static final String LOWER_SCALE_LETTERING = "-" + Character.toString('\u221E');
+	private static final int GAP_BETWEEN_SCALE_TEXT_AND_SCALE_LINE = 2;
+	private static final int LENGTH_OF_LONGER_SCALE_LINE = 7;
+	private static final int LENGTH_OF_SMALLER_SCALE_LINE = 3;
+	private static final int GAP_BETWEEN_SCALE_AND_BAR = 7;
+	private static final int UPPER_GAP_TO_CANVAS = 10;
+	private static final int LOWER_GAP_TO_CANVAS = 10;
 
 	public LevelMeterImpl(final IComposite composite, final ILevelMeterSetup setup) {
 		super(composite);
@@ -87,40 +95,73 @@ public final class LevelMeterImpl extends ControlWrapper implements ILevelMeter 
 
 		final int canvasHeight = gc.getBounds().getHeight();
 		final int canvasWidth = gc.getBounds().getWidth();
+		final int baseline = canvasHeight - LOWER_GAP_TO_CANVAS;
+		final int overallBoxSize = canvasHeight - UPPER_GAP_TO_CANVAS - LOWER_GAP_TO_CANVAS;
 		//clear canvas
 		gc.setForegroundColor(Colors.DISABLED);
 		gc.clearRectangle(0, 0, canvasWidth, canvasHeight);
 
-		int letteringWidth = 0;
-		if (setup.isLetteringVisible()) {
-			final String longestLettering = "-INF";
-			letteringWidth = gc.getTextWidth(longestLettering) + 5;
-			gc.drawText("0db", 0, 15);
-			gc.drawText("-INF", 0, canvasHeight - 15);
-		}
-
 		//calculate box data depending on canvas height
-		final int numberOfBoxes = calculateNumberOfBoxes(canvasHeight, boxSize, gapSize);
+		final int numberOfBoxes = calculateNumberOfBoxes(overallBoxSize, boxSize, gapSize);
 		final int numberOfActiveBoxes = (int) Math.round(numberOfBoxes * model.getLevel());
 		final int numberOfLowPeakBoxes = (int) Math.round(numberOfBoxes * setup.getHighPeakThreshold());
 		final int numberOfHighPeakBoxes = (int) Math.round(numberOfBoxes * setup.getClipPeakThreshold());
 
+		int letteringWidth = 0;
+
+		//draw scale of configured to do so
+		if (setup.isLetteringVisible()) {
+			final int heightOfOneScaleSector = overallBoxSize / 10;
+			final int lengthOfLongestScaleLettering = gc.getTextWidth(UPPER_SCALE_LETTERING);
+			letteringWidth = lengthOfLongestScaleLettering
+				+ GAP_BETWEEN_SCALE_TEXT_AND_SCALE_LINE
+				+ LENGTH_OF_LONGER_SCALE_LINE
+				+ GAP_BETWEEN_SCALE_AND_BAR;
+			for (int i = 0; i < 11; i++) {
+				if (i == 0 || i == 5 || i == 10) {
+					gc.setLineWidth(2);
+					gc.drawLine(lengthOfLongestScaleLettering + GAP_BETWEEN_SCALE_TEXT_AND_SCALE_LINE, baseline
+						- 1
+						- (i * heightOfOneScaleSector), lengthOfLongestScaleLettering
+						+ GAP_BETWEEN_SCALE_TEXT_AND_SCALE_LINE
+						+ LENGTH_OF_LONGER_SCALE_LINE, baseline - 1 - (i * heightOfOneScaleSector));
+				}
+				else {
+					gc.setLineWidth(1);
+					gc.drawLine(lengthOfLongestScaleLettering + GAP_BETWEEN_SCALE_TEXT_AND_SCALE_LINE + 2, baseline
+						- 1
+						- (i * heightOfOneScaleSector), lengthOfLongestScaleLettering
+						+ GAP_BETWEEN_SCALE_TEXT_AND_SCALE_LINE
+						+ 2
+						+ LENGTH_OF_SMALLER_SCALE_LINE, baseline - 1 - (i * heightOfOneScaleSector));
+				}
+				if (i == 0) {
+					final int fontHeight = gc.getFontMetrics().getHeight();
+					gc.drawText(LOWER_SCALE_LETTERING, 0, baseline - fontHeight / 2 - 2 - (i * heightOfOneScaleSector));
+				}
+				if (i == 10) {
+					final int fontHeight = gc.getFontMetrics().getHeight();
+					gc.drawText(UPPER_SCALE_LETTERING, 0, baseline - fontHeight / 2 - 2 - (i * heightOfOneScaleSector));
+				}
+			}
+		}
+
 		final IColorConstant gapColor = setup.getGapColor();
-		IColorConstant peakColor = setup.getLowPeakColor();
+		IColorConstant boxColor = setup.getLowPeakColor();
 
 		//draw boxes
 		for (int i = 0; i < numberOfActiveBoxes; i++) {
 			if (i + 1 > numberOfLowPeakBoxes) {
-				peakColor = setup.getHighPeakColor();
+				boxColor = setup.getHighPeakColor();
 			}
 			if (i + 1 > numberOfHighPeakBoxes) {
-				peakColor = setup.getClipPeakColor();
+				boxColor = setup.getClipPeakColor();
 			}
-			final int y = canvasHeight - i * (gapSize + boxSize);
+			final int y = baseline - (gapSize + boxSize) - i * (gapSize + boxSize);
 			gc.setForegroundColor(gapColor);
-			gc.fillRectangle(letteringWidth + 5, y, 10, gapSize);
-			gc.setForegroundColor(peakColor);
-			gc.fillRectangle(letteringWidth + 5, y + gapSize, 10, boxSize);
+			gc.fillRectangle(letteringWidth, y, canvasWidth, gapSize);
+			gc.setForegroundColor(boxColor);
+			gc.fillRectangle(letteringWidth, y + gapSize, canvasWidth, boxSize);
 		}
 
 	}
