@@ -45,8 +45,6 @@ import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 
 public final class LevelMeterImpl extends ControlWrapper implements ILevelMeter {
 
-	private final ILevelMeterModel model;
-	ILevelMeterSetup setup;
 	private static final String UPPER_SCALE_LETTERING = "0db";
 	private static final String LOWER_SCALE_LETTERING = "-" + Character.toString('\u221E');
 	private static final int GAP_BETWEEN_SCALE_TEXT_AND_SCALE_LINE = 2;
@@ -55,6 +53,10 @@ public final class LevelMeterImpl extends ControlWrapper implements ILevelMeter 
 	private static final int GAP_BETWEEN_SCALE_AND_BAR = 7;
 	private static final int UPPER_GAP_TO_CANVAS = 10;
 	private static final int LOWER_GAP_TO_CANVAS = 10;
+
+	private final ILevelMeterModel model;
+
+	private final ILevelMeterSetup setup;
 
 	public LevelMeterImpl(final IComposite composite, final ILevelMeterSetup setup) {
 		super(composite);

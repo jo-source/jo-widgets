@@ -43,7 +43,7 @@ import org.jowidgets.util.concurrent.DaemonThreadFactory;
 
 public class DemoLevelMeterFrame extends JoFrame {
 
-	private final static int NUMBER_OF_BARS = 10;
+	private static final int NUMBER_OF_BARS = 10;
 
 	public DemoLevelMeterFrame() {
 		super("Level meter demo");
@@ -56,7 +56,7 @@ public class DemoLevelMeterFrame extends JoFrame {
 
 		for (int i = 0; i < NUMBER_OF_BARS; i++) {
 			models[i] = MutableLevelMeterModel.create();
-			add(BPF.levelMeter(models[i]), "growx, w 70!, growy, h 0::");
+			add(BPF.levelMeter(models[i]).setLetteringVisible(true), "growx, w 70!, growy, h 0::");
 		}
 
 		final ScheduledExecutorService threadPool = Executors.newScheduledThreadPool(1, new DaemonThreadFactory());
