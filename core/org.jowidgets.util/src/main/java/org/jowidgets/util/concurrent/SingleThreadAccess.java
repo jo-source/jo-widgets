@@ -28,6 +28,7 @@
 
 package org.jowidgets.util.concurrent;
 
+import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -44,11 +45,13 @@ public final class SingleThreadAccess implements ISingleThreadAccess {
 	private final BlockingQueue<Runnable> events;
 
 	private Thread singleThread;
+	private UncaughtExceptionHandler uncaughtExceptionHandler;
 
 	public SingleThreadAccess() {
 		this.running = new AtomicBoolean(false);
 		this.paused = new AtomicBoolean(false);
 		this.events = new LinkedBlockingQueue<Runnable>();
+		this.uncaughtExceptionHandler = new DefaultUncaughtExeptionHandler();
 	}
 
 	@Override
@@ -101,6 +104,11 @@ public final class SingleThreadAccess implements ISingleThreadAccess {
 		return running.get();
 	}
 
+	public void setUncaughtExceptionHandler(final UncaughtExceptionHandler uncaughtExceptionHandler) {
+		Assert.paramNotNull(uncaughtExceptionHandler, "uncaughtExceptionHandler");
+		this.uncaughtExceptionHandler = uncaughtExceptionHandler;
+	}
+
 	private final class EventLoop implements Runnable {
 
 		@Override
@@ -113,7 +121,12 @@ public final class SingleThreadAccess implements ISingleThreadAccess {
 					else {
 						final Runnable runnable = events.poll(SLEEP_TIME, TimeUnit.MILLISECONDS);
 						if (runnable != null) {
-							runnable.run();
+							try {
+								runnable.run();
+							}
+							catch (final Exception e) {
+								uncaughtExceptionHandler.uncaughtException(Thread.currentThread(), e);
+							}
 						}
 					}
 				}
@@ -122,6 +135,17 @@ public final class SingleThreadAccess implements ISingleThreadAccess {
 				}
 			}
 			events.clear();
+		}
+
+	}
+
+	private final class DefaultUncaughtExeptionHandler implements UncaughtExceptionHandler {
+
+		@Override
+		public void uncaughtException(final Thread t, final Throwable e) {
+			//CHECKSTYLE:OFF
+			e.printStackTrace();
+			//CHECKSTYLE:ON
 		}
 
 	}
