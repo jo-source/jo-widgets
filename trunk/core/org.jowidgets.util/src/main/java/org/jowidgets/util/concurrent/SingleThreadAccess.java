@@ -70,8 +70,9 @@ public final class SingleThreadAccess implements ISingleThreadAccess {
 			throw new IllegalStateException("Event queue is already running");
 		}
 		else {
-			this.singleThread = new Thread(new EventLoop());
-			this.singleThread.setDaemon(true);
+			singleThread = new Thread(new EventLoop());
+			singleThread.setDaemon(true);
+			singleThread.start();
 		}
 	}
 
