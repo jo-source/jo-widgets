@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jowidgets.api.animation.IAnimationRunnerBuilder;
 import org.jowidgets.api.animation.IWaitAnimationProcessor;
 import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
@@ -216,6 +217,11 @@ public class DefaultToolkit implements IToolkit {
 			waitAnimationProcessor = new DefaultWaitAnimationProcessor();
 		}
 		return waitAnimationProcessor;
+	}
+
+	@Override
+	public IAnimationRunnerBuilder getAnimationRunnerBuilder() {
+		return new AnimationRunnerBuilderImpl();
 	}
 
 	@Override
