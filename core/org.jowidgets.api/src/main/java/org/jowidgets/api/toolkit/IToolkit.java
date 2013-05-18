@@ -30,6 +30,7 @@ package org.jowidgets.api.toolkit;
 
 import java.util.List;
 
+import org.jowidgets.api.animation.IAnimationRunnerBuilder;
 import org.jowidgets.api.animation.IWaitAnimationProcessor;
 import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
@@ -105,6 +106,8 @@ public interface IToolkit {
 	boolean hasSpiMigLayoutSupport();
 
 	IWaitAnimationProcessor getWaitAnimationProcessor();
+
+	IAnimationRunnerBuilder getAnimationRunnerBuilder();
 
 	IWidgetUtils getWidgetUtils();
 
