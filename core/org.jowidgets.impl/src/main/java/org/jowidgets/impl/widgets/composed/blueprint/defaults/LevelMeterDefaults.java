@@ -30,19 +30,20 @@ package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.widgets.blueprint.builder.ILevelMeterSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.common.color.ColorValue;
 
 public class LevelMeterDefaults implements IDefaultInitializer<ILevelMeterSetupBuilder<?>> {
 
 	@Override
 	public void initialize(final ILevelMeterSetupBuilder<?> builder) {
 		builder.setLetteringVisible(false);
-		builder.setLowPeakColor(Colors.GREEN);
+		builder.setLowPeakColor(new ColorValue(49, 160, 45));
 		builder.setHighPeakColor(Colors.WARNING);
 		builder.setClipPeakColor(Colors.ERROR);
 		builder.setHighPeakThreshold(0.7d);
 		builder.setClipPeakThreshold(0.9d);
-		builder.setBoxSize(1);
+		builder.setBoxSize(2);
 		builder.setGapSize(1);
-		builder.setGapColor(Colors.DARK_GREY);
+		builder.setGapColor(Colors.LIGHT_GREY);
 	}
 }
