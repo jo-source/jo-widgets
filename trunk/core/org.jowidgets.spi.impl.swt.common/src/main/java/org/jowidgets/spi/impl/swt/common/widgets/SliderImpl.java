@@ -39,8 +39,12 @@ import org.jowidgets.util.Assert;
 
 public final class SliderImpl extends AbstractInputControl implements ISliderSpi {
 
+	private final Orientation orientation;
+
 	public SliderImpl(final Object parentUiReference, final ISliderSetupSpi setup) {
 		super(new Scale((Composite) parentUiReference, getStyle(setup)));
+
+		this.orientation = setup.getOrientation();
 
 		final Scale scale = getUiReference();
 
@@ -84,12 +88,22 @@ public final class SliderImpl extends AbstractInputControl implements ISliderSpi
 
 	@Override
 	public int getSelection() {
-		return getUiReference().getMaximum() - getUiReference().getSelection();
+		if (orientation == Orientation.HORIZONTAL) {
+			return getUiReference().getSelection();
+		}
+		else {
+			return getUiReference().getMaximum() - getUiReference().getSelection();
+		}
 	}
 
 	@Override
 	public void setSelection(final int value) {
-		getUiReference().setSelection(getUiReference().getMaximum() - value);
+		if (orientation == Orientation.HORIZONTAL) {
+			getUiReference().setSelection(value);
+		}
+		else {
+			getUiReference().setSelection(getUiReference().getMaximum() - value);
+		}
 		fireInputChanged(getSelection());
 	}
 
