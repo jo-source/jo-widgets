@@ -84,12 +84,12 @@ public final class SliderImpl extends AbstractInputControl implements ISliderSpi
 
 	@Override
 	public int getSelection() {
-		return getUiReference().getSelection();
+		return getUiReference().getMaximum() - getUiReference().getSelection();
 	}
 
 	@Override
 	public void setSelection(final int value) {
-		getUiReference().setSelection(value);
+		getUiReference().setSelection(getUiReference().getMaximum() - value);
 		fireInputChanged(getSelection());
 	}
 
