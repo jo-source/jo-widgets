@@ -40,7 +40,7 @@ final class AnimationRunnerBuilderImpl implements IAnimationRunnerBuilder {
 	private TimeUnit timeUnit;
 
 	AnimationRunnerBuilderImpl() {
-		this.delay = 250;
+		this.delay = 100;
 		this.timeUnit = TimeUnit.MILLISECONDS;
 	}
 
