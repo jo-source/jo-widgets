@@ -29,7 +29,7 @@
 package org.jowidgets.impl.model.levelmeter;
 
 import org.jowidgets.api.model.levelmeter.IMutableLevelMeterModel;
-import org.jowidgets.impl.event.LevelObservable;
+import org.jowidgets.tools.controller.LevelObservable;
 
 final class MutableLevelMeterModelImpl extends LevelObservable implements IMutableLevelMeterModel {
 

@@ -72,7 +72,7 @@ public final class LevelMeterImpl extends ControlWrapper implements ILevelMeter 
 
 		model.addLevelListener(new ILevelListener() {
 			@Override
-			public void levelChanged(final double oldValue, final double newValues) {
+			public void levelChanged(final double oldValue, final double newValue) {
 				canvas.redraw();
 			}
 		});
