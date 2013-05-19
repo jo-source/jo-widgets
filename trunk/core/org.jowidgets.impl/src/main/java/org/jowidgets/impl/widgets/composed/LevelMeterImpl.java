@@ -51,8 +51,8 @@ public final class LevelMeterImpl extends ControlWrapper implements ILevelMeter 
 	private static final int LENGTH_OF_LONGER_SCALE_LINE = 7;
 	private static final int LENGTH_OF_SMALLER_SCALE_LINE = 3;
 	private static final int GAP_BETWEEN_SCALE_AND_BAR = 7;
-	private static final int UPPER_GAP_TO_CANVAS = 10;
-	private static final int LOWER_GAP_TO_CANVAS = 10;
+	private static final int UPPER_GAP_TO_CANVAS = 0;
+	private static final int LOWER_GAP_TO_CANVAS = 0;
 
 	private final ILevelMeterModel model;
 
