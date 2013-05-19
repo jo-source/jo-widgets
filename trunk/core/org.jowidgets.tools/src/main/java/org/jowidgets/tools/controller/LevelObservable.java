@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.event;
+package org.jowidgets.tools.controller;
 
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -56,9 +56,9 @@ public class LevelObservable implements ILevelObservable {
 		listeners.remove(listener);
 	}
 
-	public final void fireLevelChanged(final double oldValue, final double newValues) {
+	public final void fireLevelChanged(final double oldValue, final double newValue) {
 		for (final ILevelListener listener : new LinkedList<ILevelListener>(listeners)) {
-			listener.levelChanged(oldValue, newValues);
+			listener.levelChanged(oldValue, newValue);
 		}
 	}
 

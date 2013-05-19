@@ -39,8 +39,8 @@ public class LevelMeterDefaults implements IDefaultInitializer<ILevelMeterSetupB
 		builder.setLowPeakColor(Colors.GREEN);
 		builder.setHighPeakColor(Colors.WARNING);
 		builder.setClipPeakColor(Colors.ERROR);
-		builder.setHighPeakThreshold(0.5d);
-		builder.setClipPeakThreshold(0.75d);
+		builder.setHighPeakThreshold(0.7d);
+		builder.setClipPeakThreshold(0.9d);
 		builder.setBoxSize(1);
 		builder.setGapSize(1);
 		builder.setGapColor(Colors.DARK_GREY);
