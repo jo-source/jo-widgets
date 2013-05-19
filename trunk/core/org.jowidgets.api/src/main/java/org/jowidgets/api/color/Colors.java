@@ -43,6 +43,7 @@ public enum Colors implements IColorConstant {
 	BLACK(new ColorValue(0, 0, 0)),
 	WHITE(new ColorValue(255, 255, 255)),
 	DARK_GREY(new ColorValue(80, 80, 80)),
+	GREY(new ColorValue(140, 140, 140)),
 	LIGHT_GREY(new ColorValue(225, 225, 225)),
 	GREEN(new ColorValue(7, 106, 3));
 
