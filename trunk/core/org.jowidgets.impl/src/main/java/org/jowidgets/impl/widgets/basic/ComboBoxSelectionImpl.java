@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.basic;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -248,7 +249,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 	}
 
 	@Override
-	public void setElements(final List<? extends VALUE_TYPE> newElements) {
+	public void setElements(final Collection<? extends VALUE_TYPE> newElements) {
 
 		Assert.paramNotNull(newElements, "newElements");
 

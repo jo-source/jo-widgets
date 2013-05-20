@@ -27,7 +27,7 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.types.AutoSelectionPolicy;
@@ -40,7 +40,7 @@ public interface IComboBoxSelectionSetup<INPUT_TYPE> extends IInputComponentSetu
 	IObjectStringConverter<INPUT_TYPE> getObjectStringConverter();
 
 	@Mandatory
-	List<INPUT_TYPE> getElements();
+	Collection<INPUT_TYPE> getElements();
 
 	@Mandatory
 	AutoSelectionPolicy getAutoSelectionPolicy();

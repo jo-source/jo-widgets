@@ -27,7 +27,7 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.types.AutoSelectionPolicy;
@@ -41,7 +41,7 @@ public interface IComboBoxSelectionSetupBuilder<INSTANCE_TYPE extends IComboBoxS
 
 	INSTANCE_TYPE setAutoSelectionPolicy(AutoSelectionPolicy autoSelectionPolicy);
 
-	INSTANCE_TYPE setElements(List<? extends INPUT_TYPE> elements);
+	INSTANCE_TYPE setElements(Collection<? extends INPUT_TYPE> elements);
 
 	INSTANCE_TYPE setObjectStringConverter(IObjectStringConverter<INPUT_TYPE> objectStringConverter);
 

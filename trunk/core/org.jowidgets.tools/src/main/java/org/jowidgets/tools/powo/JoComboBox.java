@@ -28,6 +28,8 @@
 
 package org.jowidgets.tools.powo;
 
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.convert.IConverter;
@@ -62,12 +64,12 @@ public class JoComboBox<VALUE_TYPE> extends InputControl<IComboBox<VALUE_TYPE>, 
 			return getWidget().getElements();
 		}
 		else {
-			return getBluePrint().getElements();
+			return new LinkedList<VALUE_TYPE>(getBluePrint().getElements());
 		}
 	}
 
 	@Override
-	public void setElements(final List<? extends VALUE_TYPE> elements) {
+	public void setElements(final Collection<? extends VALUE_TYPE> elements) {
 		if (isInitialized()) {
 			getWidget().setElements(elements);
 		}

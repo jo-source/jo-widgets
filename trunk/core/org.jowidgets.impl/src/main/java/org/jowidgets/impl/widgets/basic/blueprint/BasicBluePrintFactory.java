@@ -27,6 +27,7 @@
  */
 package org.jowidgets.impl.widgets.basic.blueprint;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.jowidgets.api.convert.IObjectStringConverter;
@@ -185,6 +186,12 @@ public class BasicBluePrintFactory extends BasicSimpleBluePrintFactory implement
 		final ENUM_TYPE... enumValues) {
 		final IObjectStringConverter<ENUM_TYPE> converter = DefaultObjectStringConverter.getInstance();
 		return comboBoxSelection(converter).setElements(enumValues);
+	}
+
+	@Override
+	public <VALUE_TYPE> IComboBoxSelectionBluePrint<VALUE_TYPE> comboBoxSelection(final Collection<VALUE_TYPE> elements) {
+		final IObjectStringConverter<VALUE_TYPE> converter = DefaultObjectStringConverter.getInstance();
+		return comboBoxSelection(converter).setElements(elements);
 	}
 
 	@Override
