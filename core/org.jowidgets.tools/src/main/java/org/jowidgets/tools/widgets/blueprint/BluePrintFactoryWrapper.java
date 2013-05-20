@@ -385,6 +385,11 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	}
 
 	@Override
+	public <VALUE_TYPE> IComboBoxSelectionBluePrint<VALUE_TYPE> comboBoxSelection(final Collection<VALUE_TYPE> elements) {
+		return bluePrintFactory.comboBoxSelection(elements);
+	}
+
+	@Override
 	public <ENUM_TYPE extends Enum<?>> IComboBoxSelectionBluePrint<ENUM_TYPE> comboBoxSelection(final ENUM_TYPE... enumValues) {
 		return bluePrintFactory.comboBoxSelection(enumValues);
 	}

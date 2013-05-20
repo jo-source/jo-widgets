@@ -28,6 +28,7 @@
 
 package org.jowidgets.tools.widgets.wrapper;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.jowidgets.api.widgets.IComboBox;
@@ -49,7 +50,7 @@ public class ComboBoxWrapper<VALUE_TYPE> extends InputControlWrapper<VALUE_TYPE>
 	}
 
 	@Override
-	public void setElements(final List<? extends VALUE_TYPE> elements) {
+	public void setElements(final Collection<? extends VALUE_TYPE> elements) {
 		getWidget().setElements(elements);
 	}
 

@@ -27,6 +27,7 @@
  */
 package org.jowidgets.api.widgets.blueprint.factory;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
@@ -107,6 +108,8 @@ public interface IBasicBluePrintFactory extends IBasicSimpleBluePrintFactory {
 	IComboBoxSelectionBluePrint<String> comboBoxSelection();
 
 	IComboBoxSelectionBluePrint<String> comboBoxSelection(String... elements);
+
+	<VALUE_TYPE> IComboBoxSelectionBluePrint<VALUE_TYPE> comboBoxSelection(Collection<VALUE_TYPE> elements);
 
 	IComboBoxSelectionBluePrint<String> comboBoxSelection(List<String> elements);
 

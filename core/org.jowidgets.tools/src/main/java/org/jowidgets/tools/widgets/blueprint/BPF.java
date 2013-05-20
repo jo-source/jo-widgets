@@ -612,6 +612,10 @@ public final class BPF {
 		return Toolkit.getBluePrintFactory().comboBoxSelection(enumValues);
 	}
 
+	public static <VALUE_TYPE> IComboBoxSelectionBluePrint<VALUE_TYPE> comboBoxSelection(final Collection<VALUE_TYPE> elements) {
+		return Toolkit.getBluePrintFactory().comboBoxSelection(elements);
+	}
+
 	public static IComboBoxSelectionBluePrint<String> comboBoxSelectionString() {
 		return Toolkit.getBluePrintFactory().comboBoxSelectionString();
 	}

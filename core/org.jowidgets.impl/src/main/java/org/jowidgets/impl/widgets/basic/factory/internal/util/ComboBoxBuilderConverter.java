@@ -28,7 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal.util;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSelectionSetup;
@@ -42,7 +42,7 @@ public final class ComboBoxBuilderConverter {
 		final IComboBoxSelectionSetupBuilderSpi<?> builderSpi,
 		final IComboBoxSelectionSetup<VALUE_TYPE> setup) {
 
-		final List<VALUE_TYPE> elements = setup.getElements();
+		final Collection<VALUE_TYPE> elements = setup.getElements();
 		final IObjectStringConverter<VALUE_TYPE> objectStringConverter = setup.getObjectStringConverter();
 
 		final String[] spiElements = new String[elements.size()];

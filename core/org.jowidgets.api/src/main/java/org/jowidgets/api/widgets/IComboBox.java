@@ -27,13 +27,14 @@
  */
 package org.jowidgets.api.widgets;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface IComboBox<VALUE_TYPE> extends IControl, IInputControl<VALUE_TYPE> {
 
 	List<VALUE_TYPE> getElements();
 
-	void setElements(List<? extends VALUE_TYPE> elements);
+	void setElements(Collection<? extends VALUE_TYPE> elements);
 
 	void setElements(VALUE_TYPE... elements);
 
