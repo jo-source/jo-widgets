@@ -28,33 +28,36 @@
 
 package org.jowidgets.spi.impl.controller;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IActionObservable;
+import org.jowidgets.util.Assert;
 
 public class ActionObservable implements IActionObservable {
 
-	private final Set<IActionListener> actionListeners;
+	private final Set<IActionListener> listeners;
 
 	public ActionObservable() {
-		super();
-		this.actionListeners = new HashSet<IActionListener>();
+		this.listeners = new LinkedHashSet<IActionListener>();
 	}
 
 	@Override
 	public final void addActionListener(final IActionListener listener) {
-		this.actionListeners.add(listener);
+		Assert.paramNotNull(listener, "listener");
+		this.listeners.add(listener);
 	}
 
 	@Override
 	public final void removeActionListener(final IActionListener listener) {
-		this.actionListeners.remove(listener);
+		Assert.paramNotNull(listener, "listener");
+		this.listeners.remove(listener);
 	}
 
 	public final void fireActionPerformed() {
-		for (final IActionListener actionListener : actionListeners) {
+		for (final IActionListener actionListener : new LinkedList<IActionListener>(listeners)) {
 			actionListener.actionPerformed();
 		}
 	}
