@@ -31,6 +31,8 @@ package org.jowidgets.util;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 public final class ArrayUtils {
@@ -85,6 +87,41 @@ public final class ArrayUtils {
 			result.add(array[i]);
 		}
 		return result;
+	}
+
+	public static <TYPE> Iterator<TYPE> toIterator(final TYPE[] array) {
+		Assert.paramNotNull(array, "array");
+		return new Iterator<TYPE>() {
+
+			private int index = 0;
+
+			@Override
+			public boolean hasNext() {
+				if (index < array.length) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+
+			@Override
+			public TYPE next() {
+				if (!hasNext()) {
+					throw new NoSuchElementException("No more elements available");
+				}
+				else {
+					return array[index++];
+				}
+			}
+
+			@Override
+			public void remove() {
+				throw new UnsupportedOperationException("Cannot remove elements from the array");
+			}
+
+		};
+
 	}
 
 }
