@@ -29,6 +29,7 @@
 package org.jowidgets.util;
 
 import java.util.HashSet;
+import java.util.Iterator;
 
 public final class CollectionUtils {
 
@@ -41,5 +42,27 @@ public final class CollectionUtils {
 			result.add(element);
 		}
 		return result;
+	}
+
+	public static <ELEMENT_TYPE> Iterator<ELEMENT_TYPE> unmodifiableIterator(final Iterator<ELEMENT_TYPE> original) {
+		Assert.paramNotNull(original, "original");
+		return new Iterator<ELEMENT_TYPE>() {
+
+			@Override
+			public boolean hasNext() {
+				return original.hasNext();
+			}
+
+			@Override
+			public ELEMENT_TYPE next() {
+				return original.next();
+			}
+
+			@Override
+			public void remove() {
+				throw new UnsupportedOperationException("This collection is imutable");
+			}
+
+		};
 	}
 }
