@@ -60,14 +60,6 @@ public interface ILevelMeterSetupBuilder<INSTANCE_TYPE extends ILevelMeterSetupB
 	INSTANCE_TYPE setBoxSize(int boxSize);
 
 	/**
-	 * Sets the color of the gap between the small boxes
-	 * 
-	 * @param color
-	 * @return
-	 */
-	INSTANCE_TYPE setGapColor(IColorConstant color);
-
-	/**
 	 * Sets the foreground color of the low peak range (from 0.0 to highPeakTreshold)
 	 * 
 	 * @param color The foreground color
@@ -90,6 +82,14 @@ public interface ILevelMeterSetupBuilder<INSTANCE_TYPE extends ILevelMeterSetupB
 	 * @return This builder
 	 */
 	INSTANCE_TYPE setClipPeakColor(IColorConstant color);
+
+	/**
+	 * Sets the color for boxes that are not filled
+	 * 
+	 * @param color The base box color
+	 * @return This builder
+	 */
+	INSTANCE_TYPE setBaseBoxColor(IColorConstant color);
 
 	/**
 	 * Sets the threshold that defines a high peak
