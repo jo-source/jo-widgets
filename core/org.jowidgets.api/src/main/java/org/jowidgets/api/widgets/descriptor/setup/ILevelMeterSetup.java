@@ -46,9 +46,6 @@ public interface ILevelMeterSetup extends IComponentSetup {
 	int getGapSize();
 
 	@Mandatory
-	IColorConstant getGapColor();
-
-	@Mandatory
 	IColorConstant getLowPeakColor();
 
 	@Mandatory
@@ -56,6 +53,9 @@ public interface ILevelMeterSetup extends IComponentSetup {
 
 	@Mandatory
 	IColorConstant getClipPeakColor();
+
+	@Mandatory
+	IColorConstant getBaseBoxColor();
 
 	@Mandatory
 	double getHighPeakThreshold();
