@@ -40,7 +40,7 @@ public interface ILevelMeterSetup extends IComponentSetup {
 	boolean isLetteringVisible();
 
 	@Mandatory
-	int getBoxSize();
+	int getBoxHeight();
 
 	@Mandatory
 	int getGapSize();
@@ -55,7 +55,7 @@ public interface ILevelMeterSetup extends IComponentSetup {
 	IColorConstant getClipPeakColor();
 
 	@Mandatory
-	IColorConstant getBaseBoxColor();
+	IColorConstant getNoPeakColor();
 
 	@Mandatory
 	double getHighPeakThreshold();
