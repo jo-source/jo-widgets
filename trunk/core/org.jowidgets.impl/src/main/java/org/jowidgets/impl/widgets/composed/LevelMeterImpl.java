@@ -52,7 +52,7 @@ public final class LevelMeterImpl extends ControlWrapper implements ILevelMeter 
 	private static final int LENGTH_OF_SMALLER_SCALE_LINE = 3;
 	private static final int GAP_BETWEEN_SCALE_AND_BAR = 7;
 	private static final int UPPER_GAP_TO_CANVAS = 0;
-	private static final int LOWER_GAP_TO_CANVAS = 0;
+	private static final int LOWER_GAP_TO_CANVAS = 10;
 
 	private final ILevelMeterModel model;
 
@@ -148,19 +148,21 @@ public final class LevelMeterImpl extends ControlWrapper implements ILevelMeter 
 			}
 		}
 
-		final IColorConstant gapColor = setup.getGapColor();
 		IColorConstant boxColor = setup.getLowPeakColor();
 
 		//draw boxes
-		for (int i = 0; i < numberOfActiveBoxes; i++) {
+		for (int i = 0; i < numberOfBoxes; i++) {
 			if (i + 1 > numberOfLowPeakBoxes) {
 				boxColor = setup.getHighPeakColor();
 			}
 			if (i + 1 > numberOfHighPeakBoxes) {
 				boxColor = setup.getClipPeakColor();
 			}
+			if (i + 1 > numberOfActiveBoxes) {
+				boxColor = setup.getBaseBoxColor();
+			}
 			final int y = baseline - (gapSize + boxSize) - i * (gapSize + boxSize);
-			gc.setForegroundColor(gapColor);
+			gc.setForegroundColor(gc.getBackgroundColor());
 			gc.fillRectangle(letteringWidth, y, canvasWidth, gapSize);
 			gc.setForegroundColor(boxColor);
 			gc.fillRectangle(letteringWidth, y + gapSize, canvasWidth, boxSize);
