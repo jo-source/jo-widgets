@@ -41,6 +41,8 @@ public interface IGraphicContextCommon {
 
 	void setLineWidth(int width);
 
+	void setDashedLine(float[] pattern, float offset);
+
 	void setLineCap(LineCap lineCap);
 
 	void setLineJoin(LineJoin lineJoin);

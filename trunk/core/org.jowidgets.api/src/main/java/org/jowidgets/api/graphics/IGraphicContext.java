@@ -32,4 +32,6 @@ import org.jowidgets.common.graphics.IGraphicContextCommon;
 
 public interface IGraphicContext extends IGraphicContextCommon {
 
+	void setSolidLine();
+
 }
