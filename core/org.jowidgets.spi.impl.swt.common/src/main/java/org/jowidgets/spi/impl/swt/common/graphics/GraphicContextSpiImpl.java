@@ -31,6 +31,7 @@ package org.jowidgets.spi.impl.swt.common.graphics;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.LineAttributes;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.graphics.AntiAliasing;
 import org.jowidgets.common.graphics.LineCap;
@@ -51,10 +52,25 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
 	private final GC gc;
 	private final Rectangle bounds;
 
+	private int lineWidth;
+	private int lineCap;
+	private int lineJoin;
+	private float[] dashPattern;
+	private float dashPatternOffset;
+
 	public GraphicContextSpiImpl(final GC gc, final Rectangle bounds) {
 		super();
 		this.gc = gc;
 		this.bounds = bounds;
+
+		this.lineWidth = 1;
+		this.lineCap = SWT.CAP_SQUARE;
+		this.lineJoin = SWT.JOIN_MITER;
+
+		this.dashPattern = null;
+		this.dashPatternOffset = 0.0f;
+
+		setLineAttributes();
 	}
 
 	@Override
@@ -100,39 +116,49 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
 	public void setLineCap(final LineCap lineCap) {
 		Assert.paramNotNull(lineCap, "lineCap");
 		if (LineCap.FLAT.equals(lineCap)) {
-			gc.setLineCap(SWT.CAP_FLAT);
+			this.lineCap = SWT.CAP_FLAT;
 		}
 		else if (LineCap.ROUND.equals(lineCap)) {
-			gc.setLineCap(SWT.CAP_ROUND);
+			this.lineCap = SWT.CAP_ROUND;
 		}
 		else if (LineCap.SQUARE.equals(lineCap)) {
-			gc.setLineCap(SWT.CAP_SQUARE);
+			this.lineCap = SWT.CAP_SQUARE;
 		}
 		else {
 			throw new IllegalArgumentException("LineCap '" + lineCap + "' is not known.");
 		}
+		setLineAttributes();
 	}
 
 	@Override
 	public void setLineJoin(final LineJoin lineJoin) {
 		Assert.paramNotNull(lineJoin, "lineJoin");
 		if (LineJoin.BEVEL.equals(lineJoin)) {
-			gc.setLineJoin(SWT.JOIN_BEVEL);
+			this.lineJoin = SWT.JOIN_BEVEL;
 		}
 		else if (LineJoin.MITER.equals(lineJoin)) {
-			gc.setLineJoin(SWT.JOIN_MITER);
+			this.lineJoin = SWT.JOIN_MITER;
 		}
 		else if (LineJoin.ROUND.equals(lineJoin)) {
-			gc.setLineJoin(SWT.JOIN_ROUND);
+			this.lineJoin = SWT.JOIN_ROUND;
 		}
 		else {
 			throw new IllegalArgumentException("LineJoin '" + lineJoin + "' is not known.");
 		}
+		setLineAttributes();
 	}
 
 	@Override
 	public void setLineWidth(final int width) {
-		gc.setLineWidth(width);
+		this.lineWidth = width;
+		setLineAttributes();
+	}
+
+	@Override
+	public void setDashedLine(final float[] pattern, final float offset) {
+		this.dashPattern = pattern;
+		this.dashPatternOffset = offset;
+		setLineAttributes();
 	}
 
 	@Override
@@ -263,6 +289,29 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
 		}
 		else {
 			return 0;
+		}
+	}
+
+	private void setLineAttributes() {
+		if (dashPattern != null) {
+			gc.setLineAttributes(new LineAttributes(
+				lineWidth,
+				lineCap,
+				lineJoin,
+				SWT.LINE_CUSTOM,
+				dashPattern,
+				dashPatternOffset,
+				10.0f));
+		}
+		else {
+			gc.setLineAttributes(new LineAttributes(
+				lineWidth,
+				lineCap,
+				lineJoin,
+				SWT.LINE_SOLID,
+				dashPattern,
+				dashPatternOffset,
+				10.0f));
 		}
 	}
 

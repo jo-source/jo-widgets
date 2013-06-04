@@ -57,6 +57,8 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
 	private int lineWidth;
 	private int lineCap;
 	private int lineJoin;
+	private float[] dashPattern;
+	private float dashPatternOffset;
 
 	public GraphicContextSpiImpl(final Graphics2D graphics, final Rectangle bounds) {
 		Assert.paramNotNull(graphics, "graphics");
@@ -67,6 +69,11 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
 		this.lineWidth = 1;
 		this.lineCap = BasicStroke.CAP_SQUARE;
 		this.lineJoin = BasicStroke.JOIN_MITER;
+
+		this.dashPattern = null;
+		this.dashPatternOffset = 0.0f;
+
+		setStroke();
 	}
 
 	@Override
@@ -115,6 +122,13 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
 	}
 
 	@Override
+	public void setDashedLine(final float[] pattern, final float offset) {
+		this.dashPattern = pattern;
+		this.dashPatternOffset = offset;
+		setStroke();
+	}
+
+	@Override
 	public void setLineCap(final LineCap lineCap) {
 		Assert.paramNotNull(lineCap, "lineCap");
 		if (LineCap.FLAT.equals(lineCap)) {
@@ -151,7 +165,7 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
 	}
 
 	private void setStroke() {
-		graphics.setStroke(new BasicStroke(lineWidth, lineCap, lineJoin));
+		graphics.setStroke(new BasicStroke(lineWidth, lineCap, lineJoin, 10.0f, dashPattern, dashPatternOffset));
 	}
 
 	@Override

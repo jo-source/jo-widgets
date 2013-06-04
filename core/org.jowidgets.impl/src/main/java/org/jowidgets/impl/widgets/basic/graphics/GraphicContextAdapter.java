@@ -50,6 +50,11 @@ public final class GraphicContextAdapter implements IGraphicContext {
 	}
 
 	@Override
+	public void setSolidLine() {
+		setDashedLine(null, 0.0f);
+	}
+
+	@Override
 	public void setAntiAliasing(final AntiAliasing antiAliasing) {
 		contextSpi.setAntiAliasing(antiAliasing);
 	}
@@ -72,6 +77,11 @@ public final class GraphicContextAdapter implements IGraphicContext {
 	@Override
 	public void setLineWidth(final int width) {
 		contextSpi.setLineWidth(width);
+	}
+
+	@Override
+	public void setDashedLine(final float[] pattern, final float offset) {
+		contextSpi.setDashedLine(pattern, offset);
 	}
 
 	@Override
