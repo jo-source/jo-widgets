@@ -50,6 +50,7 @@ import org.jowidgets.common.widgets.controller.IComponentListener;
 import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.common.widgets.controller.IKeyListener;
 import org.jowidgets.common.widgets.controller.IMouseListener;
+import org.jowidgets.common.widgets.controller.IMouseMotionListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.spi.widgets.IComponentSpi;
 import org.jowidgets.tools.controller.ShowingStateObservable;
@@ -239,6 +240,16 @@ public abstract class AbstractComponentSpiWrapper extends WidgetSpiWrapper imple
 	@Override
 	public void removeMouseListener(final IMouseListener mouseListener) {
 		getWidget().removeMouseListener(mouseListener);
+	}
+
+	@Override
+	public void addMouseMotionListener(final IMouseMotionListener listener) {
+		getWidget().addMouseMotionListener(listener);
+	}
+
+	@Override
+	public void removeMouseMotionListener(final IMouseMotionListener listener) {
+		getWidget().removeMouseMotionListener(listener);
 	}
 
 	@Override

@@ -38,6 +38,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JComponent;
 
@@ -51,12 +52,14 @@ import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.common.widgets.controller.IKeyListener;
 import org.jowidgets.common.widgets.controller.IMouseButtonEvent;
 import org.jowidgets.common.widgets.controller.IMouseListener;
+import org.jowidgets.common.widgets.controller.IMouseMotionListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.spi.impl.controller.ComponentObservable;
 import org.jowidgets.spi.impl.controller.FocusObservable;
 import org.jowidgets.spi.impl.controller.IObservableCallback;
 import org.jowidgets.spi.impl.controller.KeyObservable;
 import org.jowidgets.spi.impl.controller.MouseButtonEvent;
+import org.jowidgets.spi.impl.controller.MouseMotionObservable;
 import org.jowidgets.spi.impl.controller.MouseObservable;
 import org.jowidgets.spi.impl.controller.PopupDetectionObservable;
 import org.jowidgets.spi.impl.swing.common.util.ColorConvert;
@@ -74,6 +77,7 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 	private final FocusObservable focusObservable;
 	private final KeyObservable keyObservable;
 	private final MouseObservable mouseObservable;
+	private final MouseMotionObservable mouseMotionObservable;
 	private final ComponentObservable componentObservable;
 	private final KeyListener keyListener;
 
@@ -202,6 +206,44 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 				return new MouseButtonEvent(position, mouseButton, MouseUtil.getModifier(event));
 			}
 		});
+
+		final MouseMotionListener mouseMotionListener = new MouseMotionListener() {
+
+			@Override
+			public void mouseMoved(final MouseEvent e) {
+				final Position position = new Position(e.getX(), e.getY());
+				mouseMotionObservable.fireMouseMoved(position);
+			}
+
+			@Override
+			public void mouseDragged(final MouseEvent event) {
+				final MouseButton mouseButton = MouseUtil.getMouseButton(event);
+				if (mouseButton == null) {
+					return;
+				}
+				final Position position = new Position(event.getX(), event.getY());
+				final MouseButtonEvent mouseButtonEvent = new MouseButtonEvent(
+					position,
+					mouseButton,
+					MouseUtil.getModifier(event));
+				mouseMotionObservable.fireMouseDragged(mouseButtonEvent);
+			}
+		};
+
+		final IObservableCallback mouseMotionObservableCallback = new IObservableCallback() {
+
+			@Override
+			public void onFirstRegistered() {
+				getUiReference().addMouseMotionListener(mouseMotionListener);
+			}
+
+			@Override
+			public void onLastUnregistered() {
+				getUiReference().removeMouseMotionListener(mouseMotionListener);
+			}
+		};
+
+		this.mouseMotionObservable = new MouseMotionObservable(mouseMotionObservableCallback);
 	}
 
 	protected PopupDetectionObservable getPopupDetectionObservable() {
@@ -329,6 +371,16 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 	@Override
 	public void removeMouseListener(final IMouseListener mouseListener) {
 		mouseObservable.removeMouseListener(mouseListener);
+	}
+
+	@Override
+	public void addMouseMotionListener(final IMouseMotionListener listener) {
+		mouseMotionObservable.addMouseMotionListener(listener);
+	}
+
+	@Override
+	public void removeMouseMotionListener(final IMouseMotionListener listener) {
+		mouseMotionObservable.removeMouseMotionListener(listener);
 	}
 
 	@Override

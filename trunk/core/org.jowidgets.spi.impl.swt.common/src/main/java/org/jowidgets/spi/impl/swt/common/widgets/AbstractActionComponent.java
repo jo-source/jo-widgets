@@ -36,6 +36,7 @@ import org.jowidgets.common.widgets.controller.IComponentListener;
 import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.common.widgets.controller.IKeyListener;
 import org.jowidgets.common.widgets.controller.IMouseListener;
+import org.jowidgets.common.widgets.controller.IMouseMotionListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.spi.widgets.IActionWidgetSpi;
 import org.jowidgets.spi.widgets.IComponentSpi;
@@ -153,6 +154,16 @@ public abstract class AbstractActionComponent extends AbstractActionWidget imple
 	@Override
 	public void removeMouseListener(final IMouseListener mouseListener) {
 		swtComponentDelegate.removeMouseListener(mouseListener);
+	}
+
+	@Override
+	public void addMouseMotionListener(final IMouseMotionListener listener) {
+		swtComponentDelegate.addMouseMotionListener(listener);
+	}
+
+	@Override
+	public void removeMouseMotionListener(final IMouseMotionListener listener) {
+		swtComponentDelegate.addMouseMotionListener(listener);
 	}
 
 	@Override

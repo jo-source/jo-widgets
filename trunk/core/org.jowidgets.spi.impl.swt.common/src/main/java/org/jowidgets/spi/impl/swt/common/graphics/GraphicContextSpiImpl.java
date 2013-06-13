@@ -56,6 +56,7 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
 	private int lineCap;
 	private int lineJoin;
 	private float[] dashPattern;
+	private int[] dashPatternInt;
 	private float dashPatternOffset;
 
 	public GraphicContextSpiImpl(final GC gc, final Rectangle bounds) {
@@ -294,24 +295,29 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
 
 	private void setLineAttributes() {
 		if (dashPattern != null) {
-			gc.setLineAttributes(new LineAttributes(
-				lineWidth,
-				lineCap,
-				lineJoin,
-				SWT.LINE_CUSTOM,
-				dashPattern,
-				dashPatternOffset,
-				10.0f));
+			setLineAttributes(SWT.LINE_CUSTOM);
 		}
 		else {
-			gc.setLineAttributes(new LineAttributes(
-				lineWidth,
-				lineCap,
-				lineJoin,
-				SWT.LINE_SOLID,
-				dashPattern,
-				dashPatternOffset,
-				10.0f));
+			setLineAttributes(SWT.LINE_SOLID);
+		}
+	}
+
+	private void setLineAttributes(final int style) {
+		try {
+			gc.setLineAttributes(new LineAttributes(lineWidth, lineCap, lineJoin, style, dashPattern, dashPatternOffset, 10.0f));
+		}
+		catch (final NoSuchMethodError e) {
+			gc.setLineWidth(lineWidth);
+			gc.setLineCap(lineCap);
+			gc.setLineJoin(lineJoin);
+			if (dashPatternInt == null && dashPattern != null) {
+				this.dashPatternInt = new int[dashPattern.length];
+				for (int i = 0; i < dashPatternInt.length; i++) {
+					dashPatternInt[i] = (int) dashPattern[i];
+				}
+				gc.setLineDash(dashPatternInt);
+			}
+
 		}
 	}
 

@@ -46,6 +46,7 @@ import org.jowidgets.common.widgets.controller.IComponentListener;
 import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.common.widgets.controller.IKeyListener;
 import org.jowidgets.common.widgets.controller.IMouseListener;
+import org.jowidgets.common.widgets.controller.IMouseMotionListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
@@ -57,6 +58,7 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 	private final Set<IFocusListener> focusListeners;
 	private final Set<IKeyListener> keyListeners;
 	private final Set<IMouseListener> mouseListeners;
+	private final Set<IMouseMotionListener> mouseMotionListeners;
 	private final Set<IComponentListener> componentListners;
 	private final Set<IShowingStateListener> showingStateListeners;
 	private final Set<JoPopupMenu> popupMenus;
@@ -72,6 +74,7 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 		this.focusListeners = new LinkedHashSet<IFocusListener>();
 		this.keyListeners = new LinkedHashSet<IKeyListener>();
 		this.mouseListeners = new LinkedHashSet<IMouseListener>();
+		this.mouseMotionListeners = new LinkedHashSet<IMouseMotionListener>();
 		this.componentListners = new LinkedHashSet<IComponentListener>();
 		this.showingStateListeners = new LinkedHashSet<IShowingStateListener>();
 		this.popupMenus = new LinkedHashSet<JoPopupMenu>();
@@ -106,6 +109,9 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 		}
 		for (final IMouseListener mouseListener : mouseListeners) {
 			widget.addMouseListener(mouseListener);
+		}
+		for (final IMouseMotionListener mouseMotionListener : mouseMotionListeners) {
+			widget.addMouseMotionListener(mouseMotionListener);
 		}
 		for (final IComponentListener componentListener : componentListners) {
 			widget.addComponentListener(componentListener);
@@ -267,6 +273,26 @@ class Component<WIDGET_TYPE extends IComponent, BLUE_PRINT_TYPE extends IWidgetD
 		}
 		else {
 			mouseListeners.remove(mouseListener);
+		}
+	}
+
+	@Override
+	public void addMouseMotionListener(final IMouseMotionListener listener) {
+		if (isInitialized()) {
+			getWidget().addMouseMotionListener(listener);
+		}
+		else {
+			mouseMotionListeners.add(listener);
+		}
+	}
+
+	@Override
+	public void removeMouseMotionListener(final IMouseMotionListener listener) {
+		if (isInitialized()) {
+			getWidget().removeMouseMotionListener(listener);
+		}
+		else {
+			mouseMotionListeners.remove(listener);
 		}
 	}
 
