@@ -26,43 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.swt.common.util;
+package org.jowidgets.common.widgets.controller;
 
-import java.util.HashSet;
-import java.util.Set;
+public interface IMouseMotionObservable {
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MouseEvent;
-import org.jowidgets.common.types.Modifier;
-import org.jowidgets.common.types.MouseButton;
+	void addMouseMotionListener(IMouseMotionListener listener);
 
-public final class MouseUtil {
+	void removeMouseMotionListener(IMouseMotionListener listener);
 
-	private MouseUtil() {}
-
-	public static MouseButton getMouseButton(final MouseEvent event) {
-		if (event.button == 1 || (event.stateMask & SWT.BUTTON1) > 0) {
-			return MouseButton.LEFT;
-		}
-		else if (event.button == 3 || (event.stateMask & SWT.BUTTON3) > 0) {
-			return MouseButton.RIGHT;
-		}
-		else {
-			return null;
-		}
-	}
-
-	public static Set<Modifier> getModifier(final int stateMask) {
-		final Set<Modifier> modifier = new HashSet<Modifier>();
-		if ((stateMask & SWT.SHIFT) > 0) {
-			modifier.add(Modifier.SHIFT);
-		}
-		if ((stateMask & SWT.CTRL) > 0) {
-			modifier.add(Modifier.CTRL);
-		}
-		if ((stateMask & SWT.ALT) > 0) {
-			modifier.add(Modifier.ALT);
-		}
-		return modifier;
-	}
 }

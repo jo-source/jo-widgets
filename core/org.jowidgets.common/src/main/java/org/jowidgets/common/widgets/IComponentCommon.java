@@ -34,6 +34,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IComponentObservable;
 import org.jowidgets.common.widgets.controller.IFocusObservable;
 import org.jowidgets.common.widgets.controller.IKeyObservable;
+import org.jowidgets.common.widgets.controller.IMouseMotionObservable;
 import org.jowidgets.common.widgets.controller.IMouseObservable;
 import org.jowidgets.common.widgets.controller.IPopupDetectionObservable;
 
@@ -43,6 +44,7 @@ public interface IComponentCommon extends
 		IFocusObservable,
 		IKeyObservable,
 		IMouseObservable,
+		IMouseMotionObservable,
 		IPopupDetectionObservable {
 
 	/**

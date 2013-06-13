@@ -32,24 +32,26 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-import org.jowidgets.common.widgets.controller.IKeyEvent;
-import org.jowidgets.common.widgets.controller.IKeyListener;
-import org.jowidgets.common.widgets.controller.IKeyObservable;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controller.IMouseButtonEvent;
+import org.jowidgets.common.widgets.controller.IMouseEvent;
+import org.jowidgets.common.widgets.controller.IMouseMotionListener;
+import org.jowidgets.common.widgets.controller.IMouseMotionObservable;
 import org.jowidgets.util.Assert;
 
-public class KeyObservable implements IKeyObservable {
+public class MouseMotionObservable implements IMouseMotionObservable {
 
-	private final Set<IKeyListener> listeners;
+	private final Set<IMouseMotionListener> listeners;
 	private final IObservableCallback observableCallback;
 
-	public KeyObservable(final IObservableCallback observableCallback) {
+	public MouseMotionObservable(final IObservableCallback observableCallback) {
 		Assert.paramNotNull(observableCallback, "observableCallback");
-		this.listeners = new LinkedHashSet<IKeyListener>();
+		this.listeners = new LinkedHashSet<IMouseMotionListener>();
 		this.observableCallback = observableCallback;
 	}
 
 	@Override
-	public final void addKeyListener(final IKeyListener listener) {
+	public void addMouseMotionListener(final IMouseMotionListener listener) {
 		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 		if (listeners.size() == 1) {
@@ -58,7 +60,7 @@ public class KeyObservable implements IKeyObservable {
 	}
 
 	@Override
-	public final void removeKeyListener(final IKeyListener listener) {
+	public void removeMouseMotionListener(final IMouseMotionListener listener) {
 		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 		if (listeners.size() == 0) {
@@ -66,21 +68,21 @@ public class KeyObservable implements IKeyObservable {
 		}
 	}
 
-	public final void fireKeyPressed(final ILazyKeyEventContentFactory contentFactory) {
-		if (listeners.size() > 0) {
-			final IKeyEvent event = new KeyEvent(contentFactory);
-			for (final IKeyListener listener : new LinkedList<IKeyListener>(listeners)) {
-				listener.keyPressed(event);
-			}
+	public final void fireMouseMoved(final Position position) {
+		fireMouseMoved(new MouseEvent(position));
+	}
+
+	public final void fireMouseMoved(final IMouseEvent event) {
+		Assert.paramNotNull(event, "event");
+		for (final IMouseMotionListener listener : new LinkedList<IMouseMotionListener>(listeners)) {
+			listener.mouseMoved(event);
 		}
 	}
 
-	public final void fireKeyReleased(final ILazyKeyEventContentFactory contentFactory) {
-		if (listeners.size() > 0) {
-			final IKeyEvent event = new KeyEvent(contentFactory);
-			for (final IKeyListener listener : new LinkedList<IKeyListener>(listeners)) {
-				listener.keyReleased(event);
-			}
+	public final void fireMouseDragged(final IMouseButtonEvent event) {
+		Assert.paramNotNull(event, "event");
+		for (final IMouseMotionListener listener : new LinkedList<IMouseMotionListener>(listeners)) {
+			listener.mouseDragged(event);
 		}
 	}
 

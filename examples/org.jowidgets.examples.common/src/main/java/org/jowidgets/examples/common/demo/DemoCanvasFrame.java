@@ -35,6 +35,9 @@ import org.jowidgets.api.widgets.ICanvas;
 import org.jowidgets.common.graphics.AntiAliasing;
 import org.jowidgets.common.graphics.Point;
 import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.widgets.controller.IMouseButtonEvent;
+import org.jowidgets.common.widgets.controller.IMouseEvent;
+import org.jowidgets.common.widgets.controller.IMouseMotionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.powo.JoFrame;
 import org.jowidgets.tools.widgets.blueprint.BPF;
@@ -70,6 +73,23 @@ public class DemoCanvasFrame extends JoFrame {
 				gc.setFontName("Arial");
 				gc.setTextMarkup(Markup.STRONG);
 				gc.drawText("Canvas Demo", 18, 25);
+			}
+		});
+
+		canvas.addMouseMotionListener(new IMouseMotionListener() {
+
+			@Override
+			public void mouseMoved(final IMouseEvent event) {
+				//CHECKSTYLE:OFF
+				System.out.println("MOUSE MOVED: " + event);
+				//CHECKSTYLE:ON
+			}
+
+			@Override
+			public void mouseDragged(final IMouseButtonEvent event) {
+				//CHECKSTYLE:OFF
+				System.out.println("MOUSE DRAGGED: " + event);
+				//CHECKSTYLE:ON
 			}
 		});
 	}

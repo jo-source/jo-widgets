@@ -48,6 +48,8 @@ import org.jowidgets.common.widgets.controller.IKeyObservable;
 import org.jowidgets.common.widgets.controller.IMenuListener;
 import org.jowidgets.common.widgets.controller.IMenuObservable;
 import org.jowidgets.common.widgets.controller.IMouseListener;
+import org.jowidgets.common.widgets.controller.IMouseMotionListener;
+import org.jowidgets.common.widgets.controller.IMouseMotionObservable;
 import org.jowidgets.common.widgets.controller.IMouseObservable;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionObservable;
@@ -73,6 +75,7 @@ public class UIDObservable implements
 		IFocusObservable,
 		IKeyObservable,
 		IMouseObservable,
+		IMouseMotionObservable,
 		IComponentObservable {
 
 	private final Set<IInputListener> inputListeners;
@@ -87,6 +90,7 @@ public class UIDObservable implements
 	private final Set<IFocusListener> focusListeners;
 	private final Set<IKeyListener> keyListeners;
 	private final Set<IMouseListener> mouseListeners;
+	private final Set<IMouseMotionListener> mouseMotionListeners;
 	private final Set<IComponentListener> componentListeners;
 
 	public UIDObservable() {
@@ -103,6 +107,7 @@ public class UIDObservable implements
 		this.focusListeners = new HashSet<IFocusListener>();
 		this.keyListeners = new HashSet<IKeyListener>();
 		this.mouseListeners = new HashSet<IMouseListener>();
+		this.mouseMotionListeners = new HashSet<IMouseMotionListener>();
 		this.componentListeners = new HashSet<IComponentListener>();
 	}
 
@@ -224,6 +229,16 @@ public class UIDObservable implements
 	@Override
 	public void removeMouseListener(final IMouseListener mouseListener) {
 		mouseListeners.remove(mouseListener);
+	}
+
+	@Override
+	public void addMouseMotionListener(final IMouseMotionListener listener) {
+		mouseMotionListeners.add(listener);
+	}
+
+	@Override
+	public void removeMouseMotionListener(final IMouseMotionListener listener) {
+		mouseMotionListeners.remove(listener);
 	}
 
 	@Override
