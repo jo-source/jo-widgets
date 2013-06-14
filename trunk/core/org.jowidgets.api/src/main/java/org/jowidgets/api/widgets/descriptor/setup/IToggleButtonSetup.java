@@ -29,6 +29,6 @@ package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.common.widgets.descriptor.setup.IToggleButtonSetupCommon;
 
-public interface IToggleButtonSetup extends ICheckBoxSetup, IToggleButtonSetupCommon {
+public interface IToggleButtonSetup extends ICheckBoxSetup, IButtonSetup, IToggleButtonSetupCommon {
 
 }

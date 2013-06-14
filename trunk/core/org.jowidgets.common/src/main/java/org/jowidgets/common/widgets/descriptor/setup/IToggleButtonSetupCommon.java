@@ -27,6 +27,6 @@
  */
 package org.jowidgets.common.widgets.descriptor.setup;
 
-public interface IToggleButtonSetupCommon extends ICheckBoxSetupCommon, IIconSetupCommon {
+public interface IToggleButtonSetupCommon extends ICheckBoxSetupCommon, IButtonSetupCommon, IIconSetupCommon {
 
 }
