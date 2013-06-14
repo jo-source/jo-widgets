@@ -29,6 +29,7 @@ package org.jowidgets.api.widgets.blueprint.builder;
 
 public interface IToggleButtonSetupBuilder<INSTANCE_TYPE extends IToggleButtonSetupBuilder<?>> extends
 		ICheckBoxSetupBuilder<INSTANCE_TYPE>,
+		IButtonSetupBuilder<INSTANCE_TYPE>,
 		IIconSetupBuilder<INSTANCE_TYPE>,
 		IInputComponentSetupBuilder<INSTANCE_TYPE, Boolean> {
 
@@ -37,5 +38,11 @@ public interface IToggleButtonSetupBuilder<INSTANCE_TYPE extends IToggleButtonSe
 	//the method setTooltipText of ICheckBoxSetupBuilder and IIconSetupBuilder
 	//is consistent
 	INSTANCE_TYPE setToolTipText(String toolTipText);
+
+	@Override
+	INSTANCE_TYPE setFontSize(Integer size);
+
+	@Override
+	INSTANCE_TYPE setFontName(String fontName);
 
 }
