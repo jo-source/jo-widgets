@@ -98,6 +98,26 @@ public class JoComboBoxSelection<VALUE_TYPE> extends
 		}
 	}
 
+	@Override
+	public int getSelectedIndex() {
+		if (isInitialized()) {
+			return getWidget().getSelectedIndex();
+		}
+		else {
+			throw new IllegalStateException("This function is not supported for an uninitialized powo. Feel free to implent it");
+		}
+	}
+
+	@Override
+	public void setSelectedIndex(final int index) {
+		if (isInitialized()) {
+			getWidget().setSelectedIndex(index);
+		}
+		else {
+			throw new IllegalStateException("This function is not supported for an uninitialized powo. Feel free to implent it");
+		}
+	}
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	//some static blue print creation for convenience purpose from here
 	////////////////////////////////////////////////////////////////////////////////////////////////////

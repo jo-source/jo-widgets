@@ -88,6 +88,26 @@ public class JoComboBox<VALUE_TYPE> extends InputControl<IComboBox<VALUE_TYPE>, 
 		}
 	}
 
+	@Override
+	public int getSelectedIndex() {
+		if (isInitialized()) {
+			return getWidget().getSelectedIndex();
+		}
+		else {
+			throw new IllegalStateException("This function is not supported for an uninitialized powo. Feel free to implent it");
+		}
+	}
+
+	@Override
+	public void setSelectedIndex(final int index) {
+		if (isInitialized()) {
+			getWidget().setSelectedIndex(index);
+		}
+		else {
+			throw new IllegalStateException("This function is not supported for an uninitialized powo. Feel free to implent it");
+		}
+	}
+
 	private static <VALUE_TYPE> IConverter<VALUE_TYPE> createConverter(final IComboBoxDescriptor<VALUE_TYPE> descriptor) {
 		return new Converter<VALUE_TYPE>(descriptor.getObjectStringConverter(), descriptor.getStringObjectConverter());
 	}
