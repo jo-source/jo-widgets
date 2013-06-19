@@ -59,4 +59,14 @@ public class ComboBoxWrapper<VALUE_TYPE> extends InputControlWrapper<VALUE_TYPE>
 		getWidget().setElements(elements);
 	}
 
+	@Override
+	public int getSelectedIndex() {
+		return getWidget().getSelectedIndex();
+	}
+
+	@Override
+	public void setSelectedIndex(final int index) {
+		getWidget().setSelectedIndex(index);
+	}
+
 }

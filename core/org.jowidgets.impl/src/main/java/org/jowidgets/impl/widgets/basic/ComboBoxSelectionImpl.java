@@ -367,6 +367,16 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 	}
 
 	@Override
+	public int getSelectedIndex() {
+		return getWidget().getSelectedIndex();
+	}
+
+	@Override
+	public void setSelectedIndex(final int index) {
+		getWidget().setSelectedIndex(index);
+	}
+
+	@Override
 	public void setParent(final IContainer parent) {
 		controlDelegate.setParent(parent);
 	}

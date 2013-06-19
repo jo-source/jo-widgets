@@ -38,4 +38,8 @@ public interface IComboBox<VALUE_TYPE> extends IControl, IInputControl<VALUE_TYP
 
 	void setElements(VALUE_TYPE... elements);
 
+	int getSelectedIndex();
+
+	void setSelectedIndex(int index);
+
 }
