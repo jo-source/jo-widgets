@@ -43,6 +43,7 @@ import org.jowidgets.api.password.IPasswordChangeExecutor;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.IInputControl;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICalendarBluePrint;
@@ -119,6 +120,11 @@ public final class BPF {
 		@SuppressWarnings("rawtypes") final Class<? extends ISetupBuilder> setupBuilder,
 		final IDefaultInitializer<?> defaultInitializer) {
 		Toolkit.getBluePrintFactory().addDefaultsInitializer(setupBuilder, defaultInitializer);
+	}
+
+	public static <WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends ISetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
+		final Class<BLUE_PRINT_TYPE> bluePrintType) {
+		return Toolkit.getBluePrintFactory().bluePrint(bluePrintType);
 	}
 
 	public static IFrameBluePrint frame() {
