@@ -83,6 +83,11 @@ final class AnimationRunnerImpl implements IAnimationRunner {
 	}
 
 	@Override
+	public boolean isRunning() {
+		return scheduledFuture != null;
+	}
+
+	@Override
 	public void run(final Runnable animationStep, final ICallback<Void> callback) {
 		Assert.paramNotNull(animationStep, "animationStep");
 		events.add(new Tuple<Runnable, ICallback<Void>>(animationStep, callback));

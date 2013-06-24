@@ -34,4 +34,6 @@ public interface IAnimationRunner extends IAnimationScheduler {
 
 	void stop();
 
+	boolean isRunning();
+
 }
