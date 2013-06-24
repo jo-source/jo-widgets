@@ -28,20 +28,34 @@
 
 package org.jowidgets.impl.toolkit;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import org.jowidgets.api.animation.IAnimationRunner;
 import org.jowidgets.api.animation.IAnimationRunnerBuilder;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.ITypedKey;
+import org.jowidgets.util.concurrent.DaemonThreadFactory;
 
 final class AnimationRunnerBuilderImpl implements IAnimationRunnerBuilder {
 
+	private static final ITypedKey<ScheduledExecutorService> DEFAULT_EXECUTOR_KEY = new ITypedKey<ScheduledExecutorService>() {};
+
 	private long delay;
 	private TimeUnit timeUnit;
+	private ScheduledExecutorService executor;
 
 	AnimationRunnerBuilderImpl() {
 		this.delay = 100;
 		this.timeUnit = TimeUnit.MILLISECONDS;
+	}
+
+	@Override
+	public IAnimationRunnerBuilder setExecutor(final ScheduledExecutorService executor) {
+		this.executor = executor;
+		return this;
 	}
 
 	@Override
@@ -58,9 +72,23 @@ final class AnimationRunnerBuilderImpl implements IAnimationRunnerBuilder {
 		return this;
 	}
 
+	private ScheduledExecutorService getExecutor() {
+		if (executor != null) {
+			return executor;
+		}
+		else {
+			ScheduledExecutorService executorService = Toolkit.getValue(DEFAULT_EXECUTOR_KEY);
+			if (executorService == null) {
+				executorService = Executors.newSingleThreadScheduledExecutor(new DaemonThreadFactory());
+				Toolkit.setValue(DEFAULT_EXECUTOR_KEY, executorService);
+			}
+			return executorService;
+		}
+	}
+
 	@Override
 	public IAnimationRunner build() {
-		return new AnimationRunnerImpl(delay, timeUnit);
+		return new AnimationRunnerImpl(getExecutor(), delay, timeUnit);
 	}
 
 }
