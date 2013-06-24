@@ -36,6 +36,7 @@ import org.jowidgets.api.animation.IAnimationRunnerBuilder;
 import org.jowidgets.api.animation.IWaitAnimationProcessor;
 import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
+import org.jowidgets.api.event.IDelayedEventRunnerBuilder;
 import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
@@ -222,6 +223,11 @@ public class DefaultToolkit implements IToolkit {
 	@Override
 	public IAnimationRunnerBuilder getAnimationRunnerBuilder() {
 		return new AnimationRunnerBuilderImpl();
+	}
+
+	@Override
+	public IDelayedEventRunnerBuilder getDelayedEventRunnerBuilder() {
+		return new DelayedEventRunnerBuilderImpl();
 	}
 
 	@Override
