@@ -36,6 +36,7 @@ import org.jowidgets.api.animation.IAnimationRunnerBuilder;
 import org.jowidgets.api.animation.IWaitAnimationProcessor;
 import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
+import org.jowidgets.api.event.IDelayedEventRunnerBuilder;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.mask.ITextMaskBuilder;
 import org.jowidgets.api.model.IModelFactoryProvider;
@@ -160,6 +161,10 @@ public final class Toolkit {
 
 	public static IAnimationRunnerBuilder getAnimationRunnerBuilder() {
 		return getInstance().getAnimationRunnerBuilder();
+	}
+
+	public static IDelayedEventRunnerBuilder getDelayedEventRunnerBuilder() {
+		return getInstance().getDelayedEventRunnerBuilder();
 	}
 
 	public static IWindow getActiveWindow() {
