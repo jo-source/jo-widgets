@@ -58,6 +58,14 @@ public final class CursorCache {
 			cursorMap.put(Cursor.DEFAULT, null);
 			cursorMap.put(Cursor.WAIT, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_WAIT));
 			cursorMap.put(Cursor.ARROW, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_ARROW));
+			cursorMap.put(Cursor.CROSS, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_CROSS));
+			cursorMap.put(Cursor.SIZENS, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_SIZENS));
+			cursorMap.put(Cursor.SIZEWE, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_SIZEWE));
+			cursorMap.put(Cursor.SIZENE, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_SIZENE));
+			cursorMap.put(Cursor.SIZESE, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_SIZESE));
+			cursorMap.put(Cursor.SIZESW, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_SIZESW));
+			cursorMap.put(Cursor.SIZENW, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_SIZENW));
+			cursorMap.put(Cursor.HAND, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_HAND));
 		}
 		return cursorMap;
 	}

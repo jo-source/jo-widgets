@@ -32,6 +32,14 @@ public enum Cursor {
 
 	DEFAULT,
 	WAIT,
-	ARROW;
+	ARROW,
+	CROSS,
+	SIZENS,
+	SIZEWE,
+	SIZENE,
+	SIZESE,
+	SIZESW,
+	SIZENW,
+	HAND;
 
 }

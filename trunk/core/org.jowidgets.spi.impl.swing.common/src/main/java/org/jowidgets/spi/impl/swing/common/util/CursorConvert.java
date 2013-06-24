@@ -46,10 +46,36 @@ public final class CursorConvert {
 		else if (cursor == Cursor.ARROW) {
 			return java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR);
 		}
+		else if (cursor == Cursor.CROSS) {
+			return java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.CROSSHAIR_CURSOR);
+		}
+		else if (cursor == Cursor.HAND) {
+			return java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.HAND_CURSOR);
+		}
+		else if (cursor == Cursor.SIZEWE) {
+			return java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.W_RESIZE_CURSOR);
+		}
+		else if (cursor == Cursor.SIZENS) {
+			return java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.N_RESIZE_CURSOR);
+		}
+		else if (cursor == Cursor.SIZENE) {
+			return java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.NE_RESIZE_CURSOR);
+		}
+		else if (cursor == Cursor.SIZESE) {
+			return java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.SE_RESIZE_CURSOR);
+		}
+		else if (cursor == Cursor.SIZESW) {
+			return java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.SW_RESIZE_CURSOR);
+		}
+		else if (cursor == Cursor.SIZENW) {
+			return java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.NW_RESIZE_CURSOR);
+		}
+		else if (cursor == Cursor.ARROW) {
+			return java.awt.Cursor.getPredefinedCursor(java.awt.Cursor.DEFAULT_CURSOR);
+		}
 		else {
 			throw new IllegalArgumentException("Cursor '" + cursor + "' is unknown");
 		}
 
 	}
-
 }
