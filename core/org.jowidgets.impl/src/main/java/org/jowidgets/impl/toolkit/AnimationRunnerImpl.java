@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -44,7 +43,6 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.ICallback;
 import org.jowidgets.util.Tuple;
-import org.jowidgets.util.concurrent.DaemonThreadFactory;
 
 final class AnimationRunnerImpl implements IAnimationRunner {
 
@@ -57,13 +55,13 @@ final class AnimationRunnerImpl implements IAnimationRunner {
 
 	private ScheduledFuture<?> scheduledFuture;
 
-	AnimationRunnerImpl(final long delay, final TimeUnit timeUnit) {
+	AnimationRunnerImpl(final ScheduledExecutorService executorService, final long delay, final TimeUnit timeUnit) {
 		Assert.paramNotNull(timeUnit, "timeUnit");
 		this.delay = delay;
 		this.timeUnit = timeUnit;
 		this.events = new ConcurrentLinkedQueue<Tuple<Runnable, ICallback<Void>>>();
 		this.uiThreadAccess = Toolkit.getUiThreadAccess();
-		this.executorService = Executors.newSingleThreadScheduledExecutor(new DaemonThreadFactory());
+		this.executorService = executorService;
 
 	}
 

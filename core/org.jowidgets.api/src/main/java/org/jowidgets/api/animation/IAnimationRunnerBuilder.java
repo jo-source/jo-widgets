@@ -28,9 +28,12 @@
 
 package org.jowidgets.api.animation;
 
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public interface IAnimationRunnerBuilder {
+
+	IAnimationRunnerBuilder setExecutor(ScheduledExecutorService executor);
 
 	IAnimationRunnerBuilder setDelay(long delay, TimeUnit timeUnit);
 
