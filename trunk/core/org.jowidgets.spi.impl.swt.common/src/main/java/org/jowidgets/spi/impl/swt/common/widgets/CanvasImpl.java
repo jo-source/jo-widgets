@@ -32,6 +32,7 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.graphics.IPaintListenerSpi;
@@ -52,7 +53,8 @@ public class CanvasImpl extends SwtComposite implements ICanvasSpi {
 		getUiReference().addPaintListener(new PaintListener() {
 			@Override
 			public void paintControl(final PaintEvent e) {
-				final Rectangle bounds = new Rectangle(e.x, e.y, e.width, e.height);
+				final Dimension size = getSize();
+				final Rectangle bounds = new Rectangle(0, 0, size.getWidth(), size.getHeight());
 				final GraphicContextSpiImpl gc = new GraphicContextSpiImpl(e.gc, bounds);
 				paintObservable.firePaint(gc);
 			}
