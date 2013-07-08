@@ -28,41 +28,28 @@
 
 package org.jowidgets.util.parameter;
 
+import java.util.List;
+
+import org.jowidgets.util.Assert;
 import org.jowidgets.util.ITypedKey;
-import org.jowidgets.util.concurrent.ISingleThreadAccess;
 
-public interface IParameterizedBuilder {
+public class ParameterizedWrapper implements IParameterized {
 
-	/**
-	 * If set, all read operations must be invoked with the given thread access
-	 * 
-	 * @param singleThreadAccess The thread access for read operations
-	 * 
-	 * @return This builder
-	 */
-	IParameterizedBuilder setReadThreadAccess(ISingleThreadAccess singleThreadAccess);
+	private final IParameterized original;
 
-	/**
-	 * If set, all write operations must be invoked with the given thread access.
-	 * 
-	 * @param singleThreadAccess The thread access for read operations
-	 * 
-	 * @return This builder
-	 */
-	IParameterizedBuilder setWriteThreadAccess(ISingleThreadAccess singleThreadAccess);
+	public ParameterizedWrapper(final IParameterized original) {
+		Assert.paramNotNull(original, "original");
+		this.original = original;
+	}
 
-	<VALUE_TYPE> IParameterizedBuilder addParameter(ITypedKey<VALUE_TYPE> key, IParameter<VALUE_TYPE> parameter);
+	@Override
+	public final List<ITypedKey<?>> getAvailableParameters() {
+		return original.getAvailableParameters();
+	}
 
-	<VALUE_TYPE> IParameterizedBuilder addParameter(ITypedKey<VALUE_TYPE> key, Class<VALUE_TYPE> valueType);
-
-	<VALUE_TYPE> IParameterizedBuilder addParameter(ITypedKey<VALUE_TYPE> key, Class<VALUE_TYPE> valueType, String label);
-
-	<VALUE_TYPE> IParameterizedBuilder addParameter(
-		ITypedKey<VALUE_TYPE> key,
-		Class<VALUE_TYPE> valueType,
-		String label,
-		String description);
-
-	IParameterized build();
+	@Override
+	public final <VALUE_TYPE> IParameter<VALUE_TYPE> getParameter(final ITypedKey<VALUE_TYPE> key) {
+		return original.getParameter(key);
+	}
 
 }

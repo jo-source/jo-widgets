@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, MGrossmann
+ * Copyright (c) 2013, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -38,7 +38,7 @@ import java.util.Map.Entry;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.ITypedKey;
 import org.jowidgets.util.concurrent.ISingleThreadAccess;
-import org.jowidgets.util.concurrent.SynchronizedParameter;
+import org.jowidgets.util.concurrent.SingleThreadParameter;
 
 public final class Parameterized {
 
@@ -110,7 +110,7 @@ public final class Parameterized {
 			if (readThreadAccess != null || writeThreadAccess != null) {
 				parametersForImpl = new LinkedHashMap<ITypedKey<?>, IParameter<?>>();
 				for (final Entry<ITypedKey<?>, IParameter<?>> entry : parameters.entrySet()) {
-					final IParameter<?> synchronizedParameter = new SynchronizedParameter(
+					final IParameter<?> synchronizedParameter = new SingleThreadParameter(
 						entry.getValue(),
 						readThreadAccess,
 						writeThreadAccess);

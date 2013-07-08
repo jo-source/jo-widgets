@@ -26,43 +26,34 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util.parameter;
+package org.jowidgets.tools.threads;
 
-import org.jowidgets.util.ITypedKey;
+import org.jowidgets.api.threads.IUiThreadAccess;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.util.concurrent.ISingleThreadAccess;
 
-public interface IParameterizedBuilder {
+public final class UiSingleThreadAccess implements ISingleThreadAccess {
 
-	/**
-	 * If set, all read operations must be invoked with the given thread access
-	 * 
-	 * @param singleThreadAccess The thread access for read operations
-	 * 
-	 * @return This builder
-	 */
-	IParameterizedBuilder setReadThreadAccess(ISingleThreadAccess singleThreadAccess);
+	private final IUiThreadAccess uiThreadAccess;
 
-	/**
-	 * If set, all write operations must be invoked with the given thread access.
-	 * 
-	 * @param singleThreadAccess The thread access for read operations
-	 * 
-	 * @return This builder
-	 */
-	IParameterizedBuilder setWriteThreadAccess(ISingleThreadAccess singleThreadAccess);
+	public UiSingleThreadAccess() {
+		this.uiThreadAccess = Toolkit.getUiThreadAccess();
+	}
 
-	<VALUE_TYPE> IParameterizedBuilder addParameter(ITypedKey<VALUE_TYPE> key, IParameter<VALUE_TYPE> parameter);
+	@Override
+	public boolean isSingleThread() {
+		return uiThreadAccess.isUiThread();
+	}
 
-	<VALUE_TYPE> IParameterizedBuilder addParameter(ITypedKey<VALUE_TYPE> key, Class<VALUE_TYPE> valueType);
+	@Override
+	public void invoke(final Runnable runnable) {
+		uiThreadAccess.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				runnable.run();
+			}
+		});
 
-	<VALUE_TYPE> IParameterizedBuilder addParameter(ITypedKey<VALUE_TYPE> key, Class<VALUE_TYPE> valueType, String label);
-
-	<VALUE_TYPE> IParameterizedBuilder addParameter(
-		ITypedKey<VALUE_TYPE> key,
-		Class<VALUE_TYPE> valueType,
-		String label,
-		String description);
-
-	IParameterized build();
+	}
 
 }

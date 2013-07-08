@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, MGrossmann
+ * Copyright (c) 2013, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -33,18 +33,18 @@ import org.jowidgets.util.IObservableValueListener;
 import org.jowidgets.util.parameter.IParameter;
 import org.jowidgets.util.parameter.ParameterWrapper;
 
-public final class SynchronizedParameter<VALUE_TYPE> extends ParameterWrapper<VALUE_TYPE> implements IParameter<VALUE_TYPE> {
+public final class SingleThreadParameter<VALUE_TYPE> extends ParameterWrapper<VALUE_TYPE> implements IParameter<VALUE_TYPE> {
 
 	private final IParameter<VALUE_TYPE> original;
 
 	private final ISingleThreadAccess readThreadAccess;
 	private final ISingleThreadAccess writeThreadAccess;
 
-	public SynchronizedParameter(final IParameter<VALUE_TYPE> original, final ISingleThreadAccess singleThreadAccess) {
+	public SingleThreadParameter(final IParameter<VALUE_TYPE> original, final ISingleThreadAccess singleThreadAccess) {
 		this(original, singleThreadAccess, singleThreadAccess);
 	}
 
-	public SynchronizedParameter(
+	public SingleThreadParameter(
 		final IParameter<VALUE_TYPE> original,
 		final ISingleThreadAccess readThreadAccess,
 		final ISingleThreadAccess writeThreadAccess) {
