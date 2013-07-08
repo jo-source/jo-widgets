@@ -51,6 +51,15 @@ public interface IParameterizedBuilder {
 	 */
 	IParameterizedBuilder setWriteThreadAccess(ISingleThreadAccess singleThreadAccess);
 
+	/**
+	 * If set, all read and write operations must be invoked with the given thread access.
+	 * 
+	 * @param singleThreadAccess The thread access for read operations
+	 * 
+	 * @return This builder
+	 */
+	IParameterizedBuilder setReadWriteThreadAccess(ISingleThreadAccess singleThreadAccess);
+
 	<VALUE_TYPE> IParameterizedBuilder addParameter(ITypedKey<VALUE_TYPE> key, IParameter<VALUE_TYPE> parameter);
 
 	<VALUE_TYPE> IParameterizedBuilder addParameter(ITypedKey<VALUE_TYPE> key, Class<VALUE_TYPE> valueType);
