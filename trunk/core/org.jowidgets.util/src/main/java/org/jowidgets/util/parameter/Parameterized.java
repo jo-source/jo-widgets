@@ -72,6 +72,13 @@ public final class Parameterized {
 		}
 
 		@Override
+		public IParameterizedBuilder setReadWriteThreadAccess(final ISingleThreadAccess singleThreadAccess) {
+			setReadThreadAccess(singleThreadAccess);
+			setWriteThreadAccess(singleThreadAccess);
+			return this;
+		}
+
+		@Override
 		public <VALUE_TYPE> IParameterizedBuilder addParameter(
 			final ITypedKey<VALUE_TYPE> key,
 			final IParameter<VALUE_TYPE> parameter) {
