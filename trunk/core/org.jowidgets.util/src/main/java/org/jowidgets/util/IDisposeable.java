@@ -26,43 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util.parameter;
+package org.jowidgets.util;
 
-import org.jowidgets.util.ITypedKey;
-import org.jowidgets.util.concurrent.ISingleThreadAccess;
+public interface IDisposeable {
 
-public interface IParameterizedBuilder {
-
-	/**
-	 * If set, all read operations must be invoked with the given thread access
-	 * 
-	 * @param singleThreadAccess The thread access for read operations
-	 * 
-	 * @return This builder
-	 */
-	IParameterizedBuilder setReadThreadAccess(ISingleThreadAccess singleThreadAccess);
-
-	/**
-	 * If set, all write operations must be invoked with the given thread access.
-	 * 
-	 * @param singleThreadAccess The thread access for read operations
-	 * 
-	 * @return This builder
-	 */
-	IParameterizedBuilder setWriteThreadAccess(ISingleThreadAccess singleThreadAccess);
-
-	<VALUE_TYPE> IParameterizedBuilder addParameter(ITypedKey<VALUE_TYPE> key, IParameter<VALUE_TYPE> parameter);
-
-	<VALUE_TYPE> IParameterizedBuilder addParameter(ITypedKey<VALUE_TYPE> key, Class<VALUE_TYPE> valueType);
-
-	<VALUE_TYPE> IParameterizedBuilder addParameter(ITypedKey<VALUE_TYPE> key, Class<VALUE_TYPE> valueType, String label);
-
-	<VALUE_TYPE> IParameterizedBuilder addParameter(
-		ITypedKey<VALUE_TYPE> key,
-		Class<VALUE_TYPE> valueType,
-		String label,
-		String description);
-
-	IParameterized build();
+	void dispose();
 
 }
