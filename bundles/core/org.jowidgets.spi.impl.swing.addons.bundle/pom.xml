@@ -2,20 +2,37 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>org.jowidgets.spi.impl.swing.addons.bundle</artifactId>
+	<packaging>bundle</packaging>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
-		<artifactId>org.jowidgets.core.parent</artifactId>
+		<artifactId>org.jowidgets.bundles.core.parent</artifactId>
 		<version>0.26.0-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
-
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.tools</artifactId>
+			<artifactId>org.jowidgets.spi.impl.swing.addons</artifactId>
 			<version>0.26.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>${maven.bundle.plugin.version}</version>
+				<configuration>
+					<instructions>
+						<Embed-Dependency>org.jowidgets.spi.impl.swing.addons;inline=true</Embed-Dependency>
+						<Require-Bundle>org.jowidgets.tools.bundle</Require-Bundle>
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>
