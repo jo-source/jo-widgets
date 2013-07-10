@@ -25,7 +25,6 @@
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
-				<version>${maven.bundle.plugin.version}</version>
 				<configuration>
 					<instructions>
 						<Embed-Dependency>org.jowidgets.spi.impl.dummy;inline=true</Embed-Dependency>
