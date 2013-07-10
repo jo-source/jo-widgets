@@ -2,28 +2,37 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>org.jowidgets.test.api.bundle</artifactId>
+	<packaging>bundle</packaging>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
-		<artifactId>org.jowidgets.core.parent</artifactId>
+		<artifactId>org.jowidgets.bundles.core.parent</artifactId>
 		<version>0.26.0-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
-
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.test.common</artifactId>
+			<artifactId>org.jowidgets.test.api</artifactId>
 			<version>0.26.0-SNAPSHOT</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.api</artifactId>
-			<version>0.26.0-SNAPSHOT</version>
-			<scope>compile</scope>
 		</dependency>
 	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>${maven.bundle.plugin.version}</version>
+				<configuration>
+					<instructions>
+						<Embed-Dependency>org.jowidgets.test.api;inline=true</Embed-Dependency>
+						<Require-Bundle>org.jowidgets.test.common.bundle,org.jowidgets.api.bundle</Require-Bundle>
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>
