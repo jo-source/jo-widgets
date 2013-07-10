@@ -24,6 +24,7 @@
 		<module>../core/parent</module>
 		<module>../addons/parent</module>
 		<module>../examples/parent</module>
+		<module>../bundles/parent</module>
 	</modules>
 
 	<distributionManagement>
