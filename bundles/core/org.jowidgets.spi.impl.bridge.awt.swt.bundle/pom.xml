@@ -24,7 +24,6 @@
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
-				<version>${maven.bundle.plugin.version}</version>
 				<configuration>
 					<instructions>
 						<Embed-Dependency>org.jowidgets.spi.impl.bridge.awt.swt;inline=true</Embed-Dependency>
