@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>org.jowidgets.bundles.core.parent</artifactId>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>org.jowidgets</groupId>
+		<artifactId>org.jowidgets.bundles.parent</artifactId>
+		<version>0.26.0-SNAPSHOT</version>
+		<relativePath>../../parent/pom.xml</relativePath>
+	</parent>
+
+	<modules>
+	    <module>../org.jowidgets.util.bundle</module>
+		<module>../org.jowidgets.i18n.bundle</module>
+		<module>../org.jowidgets.validation.bundle</module>
+		<module>../org.jowidgets.common.bundle</module>
+		<module>../org.jowidgets.api.bundle</module>
+		<module>../org.jowidgets.api.test.bundle</module>
+		<module>../org.jowidgets.tools.bundle</module>
+		<module>../org.jowidgets.workbench.api.bundle</module>
+		<module>../org.jowidgets.workbench.impl.bundle</module>
+		<module>../org.jowidgets.workbench.toolkit.api.bundle</module>
+		<module>../org.jowidgets.workbench.tools.bundle</module>
+		<module>../org.jowidgets.impl.bundle</module>
+		<module>../org.jowidgets.spi.bundle</module>
+		<module>../org.jowidgets.spi.impl.common.bundle</module>
+		<module>../org.jowidgets.spi.impl.dummy.bundle</module>	
+		<module>../org.jowidgets.spi.impl.swing.common.bundle</module>
+		<module>../org.jowidgets.spi.impl.swing.bundle</module>
+		<module>../org.jowidgets.spi.impl.swing.addons.bundle</module>
+		<module>../org.jowidgets.spi.impl.swt.common.bundle</module>	
+		<module>../org.jowidgets.spi.impl.swt.bundle</module>
+		<module>../org.jowidgets.spi.impl.swt.addons.bundle</module>
+		<module>../org.jowidgets.spi.impl.bridge.swt.awt.common.bundle</module>
+		<module>../org.jowidgets.spi.impl.bridge.swt.awt.bundle</module>
+		<module>../org.jowidgets.spi.impl.bridge.awt.swt.bundle</module>			
+		<module>../org.jowidgets.spi.impl.rwt.bundle</module>
+		<module>../org.jowidgets.spi.impl.rwt.legacy.bundle</module>
+		<module>../org.jowidgets.test.common.bundle</module>
+		<module>../org.jowidgets.test.api.bundle</module>
+		<module>../org.jowidgets.test.spi.bundle</module>
+	</modules>
+
+</project>

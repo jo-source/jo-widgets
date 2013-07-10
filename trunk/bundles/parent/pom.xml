@@ -1,0 +1,66 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>org.jowidgets.bundles.parent</artifactId>
+	<packaging>pom</packaging>
+	
+	<properties>
+		<maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
+		<maven.bundle.plugin.version>2.4.0</maven.bundle.plugin.version>
+	</properties>
+
+	<parent>
+		<groupId>org.jowidgets</groupId>
+		<artifactId>org.jowidgets.parent</artifactId>
+		<version>0.26.0-SNAPSHOT</version>
+		<relativePath>../../parent/pom.xml</relativePath>
+	</parent>
+
+	<modules>	
+		<module>../core/parent</module>
+	</modules>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<archive>
+						<manifestFile>META-INF/MANIFEST.MF</manifestFile>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>${maven.bundle.plugin.version}</version>
+				<extensions>true</extensions>
+				<executions>
+					<execution>
+						<id>bundle-manifest</id>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>manifest</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<manifestLocation>META-INF</manifestLocation>
+					<instructions>
+						<Export-Package>org.jowidgets.*</Export-Package>	
+						<_snapshot>${maven.build.timestamp}</_snapshot>
+						<_nodefaultversion>true</_nodefaultversion>
+					</instructions>
+				</configuration>
+			</plugin>	
+			
+		</plugins>
+		<pluginManagement>
+			<plugins>
+					
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>
