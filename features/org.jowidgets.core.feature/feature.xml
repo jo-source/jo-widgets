@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+    id="org.jowidgets.core.feature"
+    label="jowidgets core feature"
+    version="0.26.0.qualifier">
+
+	<description url="http://www.example.com/description">
+		Feature that holds all core bundles
+	</description>
+
+	<copyright url="http://www.example.com/copyright">
+		org.jowidgets Michael Grossmann 2013
+	</copyright>
+
+	<license url="http://www.example.com/license">
+		BSD Licence
+	</license>
+
+	<plugin
+         id="org.jowidgets.api.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.api.test.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+	
+	<plugin
+         id="org.jowidgets.common.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.i18n.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.impl.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.spi.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.spi.impl.bridge.awt.swt.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.spi.impl.bridge.swt.awt.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.spi.impl.bridge.swt.awt.common.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.spi.impl.common.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.spi.impl.dummy.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.spi.impl.rwt.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.spi.impl.rwt.legacy.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.spi.impl.swing.addons.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.spi.impl.swing.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.spi.impl.swing.common.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.spi.impl.swt.addons.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.spi.impl.swt.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.spi.impl.swt.common.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.test.api.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.test.common.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.test.spi.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.tools.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.util.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.validation.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.workbench.api.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.workbench.impl.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.workbench.toolkit.api.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.workbench.tools.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

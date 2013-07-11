@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+    id="org.jowidgets.thirdparty.feature"
+    label="jowidgets thirdparty feature"
+    version="0.26.0.qualifier">
+	
+	<description url="http://www.example.com/description">
+		Feature that holds third party dependecies for jowidgets
+	</description>
+
+	<copyright url="http://www.example.com/copyright">
+		
+	</copyright>
+
+	<license url="http://www.example.com/license">
+		
+	</license>
+
+	<plugin
+         id="net.miginfocom.miglayout.swt.bundle"
+         download-size="0"
+         install-size="0"
+         version="3.7.3.1"
+         unpack="false"/>
+		 
+	<plugin
+         id="net.miginfocom.miglayout.swing.bundle"
+         download-size="0"
+         install-size="0"
+         version="3.7.3.1"
+         unpack="false"/>
+
+</feature>

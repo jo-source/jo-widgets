@@ -1,0 +1,94 @@
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.jowidgets</groupId>
+	<artifactId>org.jowidgets.thirdparty.feature</artifactId>
+	<packaging>eclipse-feature</packaging>
+
+	<parent>
+		<groupId>org.jowidgets</groupId>
+		<artifactId>org.jowidgets.features.parent</artifactId>
+		<version>0.26.0-SNAPSHOT</version>
+		<relativePath>../parent/pom.xml</relativePath>
+	</parent>
+
+	<properties>
+		<tycho-version>0.16.0</tycho-version>
+		<tycho-provider>org.eclipse.tycho</tycho-provider>
+	</properties>
+ 	
+	<dependencies>
+		<dependency>
+			<groupId>net.miginfocom.miglayout</groupId>
+			<artifactId>net.miginfocom.miglayout.swt.bundle</artifactId>
+			<version>3.7.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>net.miginfocom.miglayout</groupId>
+			<artifactId>net.miginfocom.miglayout.swing.bundle</artifactId>
+			<version>3.7.3.1</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.3</version>			
+				<executions>
+			  <execution>
+				<id>copy-dependencies</id>
+				<phase>validate</phase>
+				<goals>
+					<goal>copy-dependencies</goal>
+				</goals>
+					<configuration>
+					<destFileName>${basedir}/lib</destFileName>
+				</configuration>
+			  </execution>
+			</executions>			
+			</plugin>
+			<plugin>
+				<groupId>${tycho-provider}</groupId>
+				<artifactId>tycho-packaging-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<deployableFeature>true</deployableFeature>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>${tycho-provider}</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>${tycho-provider}</groupId>
+				<artifactId>tycho-p2-repository-plugin</artifactId>
+				<version>${tycho-version}</version>
+			</plugin>
+			<plugin>
+				<groupId>${tycho-provider}</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<pomDependencies>consider</pomDependencies>
+					<environments><!-- required for testing on Jenkins -->
+						<environment>
+							<ws>win32</ws>
+							<os>win32</os>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<ws>gtk</ws>
+							<os>linux</os>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
