@@ -24,6 +24,7 @@
 		<module>../org.jowidgets.workbench.toolkit.api.bundle</module>
 		<module>../org.jowidgets.workbench.tools.bundle</module>
 		<module>../org.jowidgets.impl.bundle</module>
+		<module>../org.jowidgets.impl.test.bundle</module>
 		<module>../org.jowidgets.spi.bundle</module>
 		<module>../org.jowidgets.spi.impl.common.bundle</module>
 		<module>../org.jowidgets.spi.impl.dummy.bundle</module>	

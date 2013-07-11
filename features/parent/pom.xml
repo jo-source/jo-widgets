@@ -26,7 +26,7 @@
 		
 		<repository>
 			<id>rap-2.0</id>
-			<url> http://download.eclipse.org/rt/rap/2.0</url>
+			<url>http://download.eclipse.org/rt/rap/2.0</url>
 			<layout>p2</layout>
 		</repository>
 		
