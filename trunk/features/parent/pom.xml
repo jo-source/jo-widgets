@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>org.jowidgets.features.parent</artifactId>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>org.jowidgets</groupId>
+		<artifactId>org.jowidgets.parent</artifactId>
+		<version>0.26.0-SNAPSHOT</version>
+		<relativePath>../../parent/pom.xml</relativePath>
+	</parent>
+	
+	<repositories>
+	
+		<repository>
+			<id>juno</id>
+			<url>http://download.eclipse.org/releases/juno</url>
+			<layout>p2</layout>
+		</repository>
+		
+		<repository>
+			<id>rap-2.0</id>
+			<url> http://download.eclipse.org/rt/rap/2.0</url>
+			<layout>p2</layout>
+		</repository>
+		
+		<repository>
+			<id>rap-1.5</id>
+			<url>http://download.eclipse.org/rt/rap/1.5/runtime</url>
+			<layout>p2</layout>
+		</repository>
+		
+		<repository>
+			<id>rap-1.4</id>
+			<url>http://download.eclipse.org/rt/rap/1.4/runtime</url>
+			<layout>p2</layout>
+		</repository>
+		
+		<repository>
+			<id>org.jowidgets.thirdparty</id>
+			<url>http://www.jowidgets.org/p2/jowidgets/thirdparty/</url>
+			<layout>p2</layout>
+		</repository>
+	</repositories>
+
+	<modules>
+	    <module>../org.jowidgets.core.feature</module>
+		<module>../org.jowidgets.thirdparty.feature</module>
+	</modules>
+
+</project>

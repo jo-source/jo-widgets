@@ -18,6 +18,7 @@
 
 	<modules>
 		<module>../core/parent</module>
+		<module>../thirdparty/parent</module>
 	</modules>
 
 	<build>
