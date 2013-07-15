@@ -13,7 +13,7 @@
 
 	<modules>
 	    <module>../net.miginfocom.miglayout.swt.bundle</module>
-		<module>../net.miginfocom.miglayout.swing.bundle</module>
+		<module>../net.miginfocom.miglayout.swing.bundle</module>	
 	</modules>
 
 </project>

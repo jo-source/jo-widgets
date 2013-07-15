@@ -28,6 +28,7 @@
 					<instructions>
 						<Embed-Dependency>org.jowidgets.spi.impl.swt;inline=true</Embed-Dependency>
 						<Require-Bundle>org.jowidgets.spi.impl.swt.common.bundle</Require-Bundle>
+						<SPI-Provider>*</SPI-Provider>
 					</instructions>
 				</configuration>
 			</plugin>

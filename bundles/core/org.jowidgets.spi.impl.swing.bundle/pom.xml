@@ -29,6 +29,7 @@
 					<instructions>
 						<Embed-Dependency>org.jowidgets.spi.impl.swing;inline=true</Embed-Dependency>
 						<Require-Bundle>org.jowidgets.spi.impl.swing.common.bundle</Require-Bundle>
+						<SPI-Provider>*</SPI-Provider>
 					</instructions>
 				</configuration>
 			</plugin>

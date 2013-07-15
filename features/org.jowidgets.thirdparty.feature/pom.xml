@@ -24,6 +24,22 @@
 			<artifactId>net.miginfocom.miglayout.swing.bundle</artifactId>
 			<version>3.7.3.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.objectweb.asm</groupId>
+			<artifactId>org.objectweb.asm.all</artifactId>
+			<version>4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.aries</groupId>
+			<artifactId>org.apache.aries.spifly.dynamic.bundle</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.aries</groupId>
+			<artifactId>org.apache.aries.util</artifactId>
+			<version>1.1.0</version>
+		</dependency>
 	</dependencies>
+	
 	
 </project>

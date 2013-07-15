@@ -17,6 +17,13 @@
 			<artifactId>org.jowidgets.api</artifactId>
 			<version>0.26.0-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.api</artifactId>
+			<version>0.26.0-SNAPSHOT</version>
+			<type>jar</type>
+			<classifier>sources</classifier>
+		</dependency>
 	</dependencies>
 	
 	<build>
@@ -28,6 +35,7 @@
 					<instructions>
 						<Embed-Dependency>org.jowidgets.api;inline=true</Embed-Dependency>
 						<Require-Bundle>org.jowidgets.common.bundle,org.jowidgets.validation.bundle</Require-Bundle>
+						<SPI-Consumer>*</SPI-Consumer>
 					</instructions>
 				</configuration>
 			</plugin>
