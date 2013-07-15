@@ -18,6 +18,13 @@
 			<artifactId>org.jowidgets.spi.impl.swing.common</artifactId>
 			<version>0.26.0-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.spi.impl.swing.common</artifactId>
+			<version>0.26.0-SNAPSHOT</version>
+			<type>jar</type>
+			<classifier>sources</classifier>
+		</dependency>
 	</dependencies>
 	
 	<build>
