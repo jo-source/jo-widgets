@@ -36,12 +36,6 @@
 			<layout>p2</layout>
 		</repository>
 		
-		<repository>
-			<id>org.jowidgets.thirdparty</id>
-			<url>http://www.jowidgets.org/p2/jowidgets/thirdparty/</url>
-			<layout>p2</layout>
-		</repository>
-		
 	</repositories>
 
 	<modules>
@@ -51,23 +45,6 @@
 	
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.3</version>			
-				<executions>
-			  <execution>
-				<id>copy-dependencies</id>
-				<phase>validate</phase>
-				<goals>
-					<goal>copy-dependencies</goal>
-				</goals>
-					<configuration>
-					<destFileName>${basedir}/lib</destFileName>
-				</configuration>
-			  </execution>
-			</executions>			
-			</plugin>
 			<plugin>
 				<groupId>${tycho-provider}</groupId>
 				<artifactId>tycho-packaging-plugin</artifactId>
