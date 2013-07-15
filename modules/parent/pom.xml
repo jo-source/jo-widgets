@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>org.jowidgets.examples.parent</artifactId>
+	<artifactId>org.jowidgets.modules.parent</artifactId>
 	<packaging>pom</packaging>
 
 	<parent>
@@ -10,21 +10,12 @@
 		<version>0.26.0-SNAPSHOT</version>
 		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
-
-	<modules>
-		<module>../org.jowidgets.examples.common</module>
-		<module>../org.jowidgets.examples.swing</module>
-		<module>../org.jowidgets.examples.swt</module>
-		<module>../org.jowidgets.examples.rwt</module>
-	</modules>
 	
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+	<modules>
+		<module>../build/org.jowidgets.checkstyle</module>
+		<module>../core/parent</module>
+		<module>../addons/parent</module>
+		<module>../examples/parent</module>
+	</modules>
 
 </project>

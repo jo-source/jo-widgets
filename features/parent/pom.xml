@@ -31,12 +31,6 @@
 		</repository>
 		
 		<repository>
-			<id>rap-1.5</id>
-			<url>http://download.eclipse.org/rt/rap/1.5/runtime</url>
-			<layout>p2</layout>
-		</repository>
-		
-		<repository>
 			<id>rap-1.4</id>
 			<url>http://download.eclipse.org/rt/rap/1.4/runtime</url>
 			<layout>p2</layout>
