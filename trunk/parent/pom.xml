@@ -20,10 +20,7 @@
 
 
 	<modules>
-		<module>../build/org.jowidgets.checkstyle</module>
-		<module>../core/parent</module>
-		<module>../addons/parent</module>
-		<module>../examples/parent</module>
+		<module>../modules/parent</module>
 		<module>../bundles/parent</module>
 	</modules>
 
