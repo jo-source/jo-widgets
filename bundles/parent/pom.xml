@@ -6,7 +6,9 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
+		<tycho-version>0.16.0</tycho-version>
+		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
+		<osgi-version-qualifier>${maven.build.timestamp}</osgi-version-qualifier>
 	</properties>
 
 	<parent>
@@ -25,37 +27,94 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.3.1</version>
 				<configuration>
 					<archive>
 						<manifestFile>META-INF/MANIFEST.MF</manifestFile>
 					</archive>
 				</configuration>
 			</plugin>
+			
 			<plugin>
-				<groupId>org.apache.felix</groupId>
-				<artifactId>maven-bundle-plugin</artifactId>
-				<version>2.4.0</version>
-				<extensions>true</extensions>
-				<executions>
-					<execution>
-						<id>bundle-manifest</id>
-						<phase>process-classes</phase>
-						<goals>
-							<goal>manifest</goal>
-						</goals>
-					</execution>
-				</executions>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
 				<configuration>
-					<manifestLocation>META-INF</manifestLocation>
-					<instructions>
-						<Export-Package>org.jowidgets.*</Export-Package>
-						<_snapshot>${maven.build.timestamp}</_snapshot>
-						<_nodefaultversion>true</_nodefaultversion>
-					</instructions>
+					<filesets>
+						<fileset>
+							<directory>.</directory>
+							<includes>
+								<include>META-INF</include>
+							</includes>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+					</filesets>
 				</configuration>
-			</plugin>
+			</plugin>	
 		</plugins>
+		
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.3.1</version>
+					<configuration>
+						<archive>
+							<manifestFile>META-INF/MANIFEST.MF</manifestFile>
+						</archive>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<version>2.4.0</version>
+					<extensions>true</extensions>
+					<executions>
+						<!--  execution>
+							<id>bundle-manifest</id>
+							<phase>process-classes</phase>
+							<goals>
+								<goal>manifest</goal>
+							</goals>
+						</execution-->
+					</executions>
+					<configuration>
+						<manifestLocation>META-INF</manifestLocation>
+						<instructions>
+							<Export-Package>org.jowidgets.*</Export-Package>
+							<_snapshot>${osgi-version-qualifier}</_snapshot>
+							<_nodefaultversion>true</_nodefaultversion>
+						</instructions>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
+	
+	<profiles>
+	    <profile>
+	      <activation>
+	        <property>
+	          <name>m2e.version</name>
+	        </property>
+	      </activation>
+	      <properties>
+	        <osgi-version-qualifier>qualifier</osgi-version-qualifier>
+	      </properties>
+	      <build>
+	        <pluginManagement>
+	          <plugins>
+	            <plugin>
+	              <groupId>org.apache.felix</groupId>
+	              <artifactId>maven-bundle-plugin</artifactId>
+	              <configuration>
+	                  <!-- PDE does not honour custom manifest location -->
+	                <manifestLocation>META-INF</manifestLocation>
+	              </configuration>
+	            </plugin>
+	          </plugins>
+	        </pluginManagement>
+	      </build>
+	    </profile>
+ 	</profiles>
+	
 
 </project>
