@@ -37,7 +37,7 @@
 				<configuration>
 					<instructions>
 						<Embed-Dependency>org.jowidgets.addons.widgets.mediaplayer.api;inline=true</Embed-Dependency>
-						<Require-Bundle>>org.jowidgets.api.bundle</Require-Bundle>
+						<Require-Bundle>org.jowidgets.api.bundle</Require-Bundle>
 					</instructions>
 				</configuration>
 			</plugin>
