@@ -38,6 +38,7 @@
 					<instructions>
 						<Embed-Dependency>org.jowidgets.addons.widgets.mediaplayer.impl.ole;inline=true</Embed-Dependency>
 						<Require-Bundle>org.jowidgets.tools.bundle,org.jowidgets.addons.widgets.mediaplayer.api.bundle,org.jowidgets.addons.widgets.ole.api.bundle</Require-Bundle>
+						<SPI-Provider>*</SPI-Provider>
 					</instructions>
 				</configuration>
 			</plugin>
