@@ -114,7 +114,7 @@
          version="0.0.0"
          unpack="false"/>
 	
-	<!-- OLE SUPPORT NOT VISIBLE IN JUNO RELEAS, OWn SWT BUNDLES MUST BE CREATED -->
+	<!-- OLE SUPPORT IS NOT VISIBLE IN JUNO RELEASE, OWN SWT BUNDLES MUST BE CREATED -->
 	<!--plugin
          id="org.jowidgets.addons.widgets.mediaplayer.api.bundle"
          download-size="0"

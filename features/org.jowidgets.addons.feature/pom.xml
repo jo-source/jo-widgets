@@ -84,7 +84,7 @@
 			<artifactId>org.jowidgets.addons.widgets.download.impl.filechooser.bundle</artifactId>
 			<version>0.26.0-SNAPSHOT</version>
 		</dependency>
-		<!-- OLE SUPPORT NOT VISIBLE IN JUNO RELEAS, OWn SWT BUNDLES MUST BE CREATED -->
+		<!-- OLE SUPPORT IS NOT VISIBLE IN JUNO RELEASE, OWN SWT BUNDLES MUST BE CREATED -->
 		<!--dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.addons.widgets.mediaplayer.api.bundle</artifactId>
