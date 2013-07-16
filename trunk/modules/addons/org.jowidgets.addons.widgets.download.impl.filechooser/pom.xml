@@ -20,15 +20,9 @@
 		
 		<dependency>
 			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.addons.widgets.browser.api</artifactId>
-			<version>0.26.0-SNAPSHOT</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.tools</artifactId>
 			<version>0.26.0-SNAPSHOT</version>
-		</dependency>
+		</dependency> 
 
 	</dependencies>
 </project>

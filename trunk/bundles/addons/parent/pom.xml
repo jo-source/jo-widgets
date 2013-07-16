@@ -1,0 +1,42 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>org.jowidgets.bundles.addons.parent</artifactId>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>org.jowidgets</groupId>
+		<artifactId>org.jowidgets.bundles.parent</artifactId>
+		<version>0.26.0-SNAPSHOT</version>
+		<relativePath>../../parent/pom.xml</relativePath>
+	</parent>
+
+	<modules>
+		<module>../org.jowidgets.addons.icons.silkicons.bundle</module>	
+		<module>../org.jowidgets.addons.testtool.bundle</module>
+		<module>../org.jowidgets.addons.bridge.swt.awt.bundle</module>
+		<module>../org.jowidgets.addons.bridge.awt.swt.bundle</module>
+		<module>../org.jowidgets.addons.map.common.bundle</module>
+		<module>../org.jowidgets.addons.map.swing.bundle</module>
+		<module>../org.jowidgets.addons.map.swt.bundle</module>
+		<module>../org.jowidgets.addons.widgets.browser.api.bundle</module>
+		<module>../org.jowidgets.addons.widgets.browser.impl.swt.common.bundle</module>
+		<module>../org.jowidgets.addons.widgets.browser.impl.swt.bundle</module>
+		<module>../org.jowidgets.addons.widgets.browser.impl.swing.bundle</module>
+		<module>../org.jowidgets.addons.widgets.download.api.bundle</module>
+		<module>../org.jowidgets.addons.widgets.download.impl.browser.bundle</module>
+		<module>../org.jowidgets.addons.widgets.download.impl.filechooser.bundle</module>
+		<module>../org.jowidgets.addons.widgets.ole.api.bundle</module>
+		<module>../org.jowidgets.addons.widgets.ole.document.bundle</module>
+		<module>../org.jowidgets.addons.widgets.ole.impl.swt.common.bundle</module>
+		<module>../org.jowidgets.addons.widgets.ole.impl.swt.bundle</module>
+		<module>../org.jowidgets.addons.widgets.ole.impl.swing.bundle</module>
+		<module>../org.jowidgets.addons.widgets.office.api.bundle</module>
+		<module>../org.jowidgets.addons.widgets.office.impl.ole.bundle</module>
+		<module>../org.jowidgets.addons.widgets.mediaplayer.api.bundle</module>	
+		<module>../org.jowidgets.addons.widgets.mediaplayer.impl.ole.bundle</module>
+		<module>../org.jowidgets.addons.widgets.pdf.api.bundle</module>	
+		<module>../org.jowidgets.addons.widgets.pdf.impl.browser.bundle</module>
+	</modules>
+
+</project>

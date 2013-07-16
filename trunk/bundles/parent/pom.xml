@@ -20,6 +20,7 @@
 
 	<modules>
 		<module>../core/parent</module>
+		<module>../addons/parent</module>
 		<module>../thirdparty/parent</module>
 	</modules>
 
