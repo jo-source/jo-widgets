@@ -37,7 +37,7 @@
 				<configuration>
 					<instructions>
 						<Embed-Dependency>org.jowidgets.addons.widgets.ole.impl.swt.common;inline=true</Embed-Dependency>
-						<Require-Bundle>org.jowidgets.tools.bundle,org.jowidgets.spi.impl.swt.common.bundle,org.jowidgets.addons.widgets.ole.api.bundle</Require-Bundle>
+						<Require-Bundle>org.jowidgets.tools.bundle,org.jowidgets.spi.impl.swt.common.bundle,org.jowidgets.addons.widgets.ole.api.bundle,org.eclipse.swt.win32.win32.x86</Require-Bundle>
 					</instructions>
 				</configuration>
 			</plugin>

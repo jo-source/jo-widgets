@@ -37,9 +37,26 @@
 		</repository>
 		
 	</repositories>
+	
+	<dependencies>
+		<!-- THIRD PARTY -->
+		<dependency>
+			<groupId>net.miginfocom.miglayout</groupId>
+			<artifactId>net.miginfocom.miglayout.swt.bundle</artifactId>
+			<version>3.7.3.1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>net.miginfocom.miglayout</groupId>
+			<artifactId>net.miginfocom.miglayout.swing.bundle</artifactId>
+			<version>3.7.3.1</version>
+		</dependency>
+		
+	</dependencies>
 
 	<modules>
 	    <module>../org.jowidgets.core.feature</module>
+		<module>../org.jowidgets.addons.feature</module>
 		<module>../org.jowidgets.thirdparty.feature</module>
 	</modules>
 	
