@@ -38,6 +38,7 @@
 					<instructions>
 						<Embed-Dependency>org.jowidgets.addons.widgets.download.impl.browser;inline=true</Embed-Dependency>
 						<Require-Bundle>org.jowidgets.addons.widgets.download.api.bundle,org.jowidgets.addons.widgets.browser.api.bundle,org.jowidgets.tools.bundle</Require-Bundle>
+						<SPI-Provider>*</SPI-Provider>
 					</instructions>
 				</configuration>
 			</plugin>
