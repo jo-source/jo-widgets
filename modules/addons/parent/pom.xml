@@ -12,12 +12,52 @@
 	</parent>
 
 	<modules>
+		
+		<!-- Slikicons -->
+		<module>../org.jowidgets.addons.icons.silkicons</module>	
+		
+		<!-- Testtool -->
+		<module>../org.jowidgets.addons.testtool</module>
+		
+		<!-- SWT AWT Bridge -->
 		<module>../org.jowidgets.addons.bridge.swt.awt</module>
 		<module>../org.jowidgets.addons.bridge.awt.swt</module>
-		<module>../org.jowidgets.addons.testtool</module>
-		<module>../org.jowidgets.addons.icons.silkicons</module>	
-		<module>../widgets/parent</module>
-		<module>../map/parent</module>
+		
+		<!-- Map -->
+		<module>../org.jowidgets.addons.map.common</module>
+		<module>../org.jowidgets.addons.map.swing</module>
+		<module>../org.jowidgets.addons.map.swt</module>
+		
+		<!-- Browser -->
+		<module>../org.jowidgets.addons.widgets.browser.api</module>
+		<module>../org.jowidgets.addons.widgets.browser.impl.swt.common</module>
+		<module>../org.jowidgets.addons.widgets.browser.impl.swt</module>
+		<module>../org.jowidgets.addons.widgets.browser.impl.swing</module>
+		
+		<!-- Download -->
+		<module>../org.jowidgets.addons.widgets.download.api</module>
+		<module>../org.jowidgets.addons.widgets.download.impl.browser</module>
+		<module>../org.jowidgets.addons.widgets.download.impl.filechooser</module>
+		
+		<!-- OLE -->
+		<module>../org.jowidgets.addons.widgets.ole.api</module>
+		<module>../org.jowidgets.addons.widgets.ole.document</module>
+		<module>../org.jowidgets.addons.widgets.ole.impl.swt.common</module>
+		<module>../org.jowidgets.addons.widgets.ole.impl.swt</module>
+		<module>../org.jowidgets.addons.widgets.ole.impl.swing</module>
+		
+		<!-- Office -->
+		<module>../org.jowidgets.addons.widgets.office.api</module>
+		<module>../org.jowidgets.addons.widgets.office.impl.ole</module>
+		
+		<!-- Mediaplayer -->
+		<module>../org.jowidgets.addons.widgets.mediaplayer.api</module>	
+		<module>../org.jowidgets.addons.widgets.mediaplayer.impl.ole</module>
+		
+		<!-- PDF Reader -->
+		<module>../org.jowidgets.addons.widgets.pdf.api</module>	
+		<module>../org.jowidgets.addons.widgets.pdf.impl.browser</module>
+		
 	</modules>
 
 	<build>
