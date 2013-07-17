@@ -3,14 +3,14 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.jowidgets</groupId>
-	<artifactId>org.jowidgets.thirdparty.feature</artifactId>
+	<artifactId>org.jowidgets.addons.feature</artifactId>
 	<packaging>eclipse-feature</packaging>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
-		<artifactId>org.jowidgets.features.parent</artifactId>
+		<artifactId>org.jowidgets.tycho.features.parent</artifactId>
 		<version>0.26.0-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
- 	
+
 </project>
