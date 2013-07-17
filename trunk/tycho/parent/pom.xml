@@ -19,8 +19,8 @@
 	<repositories>
 	
 		<repository>
-			<id>juno</id>
-			<url>http://download.eclipse.org/releases/juno</url>
+			<id>helios</id>
+			<url>http://download.eclipse.org/releases/helios</url>
 			<layout>p2</layout>
 		</repository>
 		
@@ -350,6 +350,7 @@
 
 	<modules>
 	    <module>../features/parent/</module>
+		<module>../plugins/parent/</module>
 	</modules>
 	
 	<build>
