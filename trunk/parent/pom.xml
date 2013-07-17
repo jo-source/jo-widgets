@@ -22,7 +22,6 @@
 	<modules>
 		<module>../modules/parent</module>
 		<module>../bundles/parent</module>
-		<module>../features/parent</module>
 	</modules>
 
 	<distributionManagement>
