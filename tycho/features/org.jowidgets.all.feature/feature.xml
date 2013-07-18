@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+    id="org.jowidgets.all.feature"
+    label="jowidgets addons feature"
+    version="0.26.0.qualifier">
+
+	<description url="http://www.example.com/description">
+		Feature that holds all addons bundles
+	</description>
+
+	<copyright url="http://www.example.com/copyright">
+		org.jowidgets Michael Grossmann 2013
+	</copyright>
+
+	<license url="http://www.example.com/license">
+		BSD Licence
+	</license>
+
+	<includes
+         id="org.jowidgets.addons.feature"
+         version="0.0.0"/>
+
+	<includes
+         id="org.jowidgets.core.feature"
+         version="0.0.0"/>
+		 
+</feature>
