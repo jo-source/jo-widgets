@@ -14,6 +14,7 @@
 	<modules>
 	    <module>../org.jowidgets.core.feature</module>
 		<module>../org.jowidgets.addons.feature</module>
+		<module>../org.jowidgets.plugins.feature</module>
 		<module>../org.jowidgets.thirdparty.feature</module>
 		<module>../org.jowidgets.all.feature</module>
 	</modules>
