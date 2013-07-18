@@ -24,4 +24,8 @@
          id="org.jowidgets.core.feature"
          version="0.0.0"/>
 		 
+	<includes
+         id="org.jowidgets.plugins.feature"
+         version="0.0.0"/>
+		 
 </feature>
