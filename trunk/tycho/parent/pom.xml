@@ -19,8 +19,8 @@
 	<repositories>
 	
 		<repository>
-			<id>indigo</id>
-			<url>http://download.eclipse.org/releases/indigo</url>
+			<id>helios</id>
+			<url>http://download.eclipse.org/releases/helios</url>
 			<layout>p2</layout>
 		</repository>
 		
