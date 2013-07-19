@@ -79,5 +79,55 @@
          install-size="0"
          version="1.6.1"
          unpack="false"/>
+		 
+	<plugin
+         id="com.springsource.org.apache.lucene"
+         download-size="0"
+         install-size="0"
+         version="2.3.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="com.springsource.org.apache.commons.codec"
+         download-size="0"
+         install-size="0"
+         version="1.6.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="commons.io.bundle"
+         download-size="0"
+         install-size="0"
+         version="2.0.1"
+         unpack="false"/>
+		 
+	<plugin
+         id="com.springsource.javax.servlet"
+         download-size="0"
+         install-size="0"
+         version="2.5.0"
+         unpack="false"/>
+
+	<plugin
+         id="org.eclipse.jetty.servlet.bundle"
+         download-size="0"
+         install-size="0"
+         version="7.4.5.v20110725"
+         unpack="false"/>	
+
+	<plugin
+         id="org.springframework.context"
+         download-size="0"
+         install-size="0"
+         version="3.2.3.RELEASE"
+         unpack="false"/>
+
+	<plugin
+         id="com.springsource.org.apache.commons.lang"
+         download-size="0"
+         install-size="0"
+         version="2.6.0"
+         unpack="false"/>	 
+		 
 
 </feature>
