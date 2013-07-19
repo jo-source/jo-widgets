@@ -31,6 +31,13 @@
          unpack="false"/>
 		 
 	<plugin
+         id="de.micromata.jak.JavaAPIforKml.bundle"
+         download-size="0"
+         install-size="0"
+         version="2.2.0"
+         unpack="false"/>
+		 
+	<plugin
          id="org.apache.aries.spifly.dynamic.bundle"
          download-size="0"
          install-size="0"
@@ -49,6 +56,28 @@
          download-size="0"
          install-size="0"
          version="1.1.0"
+         unpack="false"/>
+		
+	<!-- other useful thirdparty bundles -->
+	<plugin
+         id="com.springsource.slf4j.api"
+         download-size="0"
+         install-size="0"
+         version="1.6.1"
+         unpack="false"/>
+		 
+	<plugin
+         id="com.springsource.slf4j.bridge"
+         download-size="0"
+         install-size="0"
+         version="1.6.1"
+         unpack="false"/>
+		 
+	<plugin
+         id="com.springsource.slf4j.nop"
+         download-size="0"
+         install-size="0"
+         version="1.6.1"
          unpack="false"/>
 
 </feature>
