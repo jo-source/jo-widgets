@@ -19,6 +19,12 @@
 	<repositories>
 	
 		<repository>
+			<id>com.springsource.repository.bundles.external</id>
+			<name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
+			<url>http://repository.springsource.com/maven/bundles/external</url>
+		</repository>
+	
+		<repository>
 			<id>helios</id>
 			<url>http://download.eclipse.org/releases/helios</url>
 			<layout>p2</layout>
@@ -340,6 +346,22 @@
 			<version>2.2.0</version>
 		</dependency>
 		
+		<!-- Other useful THIRD PARTY dependencies-->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>com.springsource.slf4j.api</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>com.springsource.slf4j.nop</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>com.springsource.slf4j.bridge</artifactId>
+			<version>1.6.1</version>
+		</dependency>	
 	</dependencies>
 
 	<modules>
