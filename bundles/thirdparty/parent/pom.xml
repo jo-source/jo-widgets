@@ -14,7 +14,9 @@
 	<modules>
 	    <module>../net.miginfocom.miglayout.swt.bundle</module>
 		<module>../net.miginfocom.miglayout.swing.bundle</module>	
-		<module>../de.micromata.jak.JavaAPIforKml.bundle</module>	
+		<module>../de.micromata.jak.JavaAPIforKml.bundle</module>
+		<module>../commons.io.bundle</module>	
+		<module>../org.eclipse.jetty.servlet.bundle</module>
 	</modules>
 
 </project>
