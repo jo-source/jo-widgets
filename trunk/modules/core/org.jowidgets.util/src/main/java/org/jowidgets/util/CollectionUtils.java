@@ -28,6 +28,8 @@
 
 package org.jowidgets.util;
 
+import java.util.Collection;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -64,5 +66,36 @@ public final class CollectionUtils {
 			}
 
 		};
+	}
+
+	public static <ELEMENT_TYPE> Enumeration<ELEMENT_TYPE> enumerationFromCollection(final Collection<ELEMENT_TYPE> collection) {
+		Assert.paramNotNull(collection, "collection");
+		return enumerationFromIterator(collection.iterator());
+	}
+
+	public static <ELEMENT_TYPE> Enumeration<ELEMENT_TYPE> enumerationFromIterator(final Iterator<ELEMENT_TYPE> iterator) {
+		Assert.paramNotNull(iterator, "iterator");
+		return new Enumeration<ELEMENT_TYPE>() {
+
+			@Override
+			public boolean hasMoreElements() {
+				return iterator.hasNext();
+			}
+
+			@Override
+			public ELEMENT_TYPE nextElement() {
+				return iterator.next();
+			}
+		};
+	}
+
+	public static <ELEMENT_TYPE> void addFromEnumerationToCollection(
+		final Collection<ELEMENT_TYPE> collection,
+		final Enumeration<ELEMENT_TYPE> enumeration) {
+		Assert.paramNotNull(collection, "collection");
+		Assert.paramNotNull(enumeration, "enumeration");
+		while (enumeration.hasMoreElements()) {
+			collection.add(enumeration.nextElement());
+		}
 	}
 }
