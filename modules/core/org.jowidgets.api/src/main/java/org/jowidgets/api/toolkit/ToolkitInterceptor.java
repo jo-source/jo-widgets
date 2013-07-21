@@ -35,6 +35,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ServiceLoader;
 
+import org.jowidgets.classloading.api.SharedClassLoader;
 import org.jowidgets.util.Assert;
 
 public final class ToolkitInterceptor {
@@ -51,7 +52,9 @@ public final class ToolkitInterceptor {
 	private static synchronized CompositeToolkitInterceptorHolder getCompositeHolder() {
 		if (compositeHolder == null) {
 			compositeHolder = new CompositeToolkitInterceptorHolder();
-			final ServiceLoader<IToolkitInterceptorHolder> serviceLoader = ServiceLoader.load(IToolkitInterceptorHolder.class);
+			final ServiceLoader<IToolkitInterceptorHolder> serviceLoader = ServiceLoader.load(
+					IToolkitInterceptorHolder.class,
+					SharedClassLoader.getCompositeClassLoader());
 			final Iterator<IToolkitInterceptorHolder> iterator = serviceLoader.iterator();
 			while (iterator.hasNext()) {
 				compositeHolder.add(iterator.next());

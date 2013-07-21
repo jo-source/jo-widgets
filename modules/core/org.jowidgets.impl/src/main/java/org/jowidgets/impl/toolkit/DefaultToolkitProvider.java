@@ -33,6 +33,7 @@ import java.util.ServiceLoader;
 
 import org.jowidgets.api.toolkit.IToolkit;
 import org.jowidgets.api.toolkit.IToolkitProvider;
+import org.jowidgets.classloading.api.SharedClassLoader;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 
 public class DefaultToolkitProvider implements IToolkitProvider {
@@ -40,7 +41,9 @@ public class DefaultToolkitProvider implements IToolkitProvider {
 	private final IToolkit toolkit;
 
 	public DefaultToolkitProvider() {
-		final ServiceLoader<IWidgetsServiceProvider> widgetServiceLoader = ServiceLoader.load(IWidgetsServiceProvider.class);
+		final ServiceLoader<IWidgetsServiceProvider> widgetServiceLoader = ServiceLoader.load(
+				IWidgetsServiceProvider.class,
+				SharedClassLoader.getCompositeClassLoader());
 		final Iterator<IWidgetsServiceProvider> iterator = widgetServiceLoader.iterator();
 
 		if (iterator.hasNext()) {

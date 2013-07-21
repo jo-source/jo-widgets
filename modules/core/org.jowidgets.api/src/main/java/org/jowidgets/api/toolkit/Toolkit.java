@@ -48,6 +48,7 @@ import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentCreatorFactory;
 import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
+import org.jowidgets.classloading.api.SharedClassLoader;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.application.IApplicationRunner;
 import org.jowidgets.common.image.IImageRegistry;
@@ -76,7 +77,9 @@ public final class Toolkit {
 
 	public static synchronized IToolkit getInstance() {
 		if (toolkitProvider == null) {
-			final ServiceLoader<IToolkitProvider> toolkitProviderLoader = ServiceLoader.load(IToolkitProvider.class);
+			final ServiceLoader<IToolkitProvider> toolkitProviderLoader = ServiceLoader.load(
+					IToolkitProvider.class,
+					SharedClassLoader.getCompositeClassLoader());
 			final Iterator<IToolkitProvider> iterator = toolkitProviderLoader.iterator();
 
 			if (!iterator.hasNext()) {
