@@ -34,6 +34,8 @@
 				<configuration>
 					<instructions>
 						<Embed-Dependency>org.jowidgets.i18n;inline=true</Embed-Dependency>
+						<Require-Bundle>org.jowidgets.classloading.api.bundle</Require-Bundle>
+						<SPI-Consumer>*</SPI-Consumer>
 					</instructions>
 				</configuration>
 			</plugin>

@@ -34,7 +34,7 @@
 				<configuration>
 					<instructions>
 						<Embed-Dependency>org.jowidgets.impl;inline=true</Embed-Dependency>
-						<Require-Bundle>org.jowidgets.tools.bundle,org.jowidgets.spi.bundle,org.jowidgets.test.api.bundle,org.jowidgets.test.spi.bundle</Require-Bundle>
+						<Require-Bundle>org.jowidgets.tools.bundle,org.jowidgets.spi.bundle,org.jowidgets.test.api.bundle,org.jowidgets.test.spi.bundle,org.jowidgets.classloading.api.bundle</Require-Bundle>
 						<SPI-Provider>*</SPI-Provider>
 						<SPI-Consumer>*</SPI-Consumer>
 					</instructions>

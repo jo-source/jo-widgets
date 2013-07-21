@@ -34,7 +34,7 @@
 				<configuration>
 					<instructions>
 						<Embed-Dependency>org.jowidgets.api;inline=true</Embed-Dependency>
-						<Require-Bundle>org.jowidgets.common.bundle,org.jowidgets.validation.bundle</Require-Bundle>
+						<Require-Bundle>org.jowidgets.common.bundle,org.jowidgets.validation.bundle,org.jowidgets.classloading.api.bundle</Require-Bundle>
 						<SPI-Consumer>*</SPI-Consumer>
 					</instructions>
 				</configuration>
