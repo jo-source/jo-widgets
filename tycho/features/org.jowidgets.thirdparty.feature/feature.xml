@@ -67,10 +67,10 @@
          unpack="false"/>
 		 
 	<plugin
-         id="com.springsource.slf4j.bridge"
+         id="org.slf4j.jul.to.slf4j.bundle"
          download-size="0"
          install-size="0"
-         version="1.6.1"
+         version="1.6.6"
          unpack="false"/>
 		 
 	<plugin

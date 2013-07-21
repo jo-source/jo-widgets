@@ -1,23 +1,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.eclipse.jetty</groupId>
-	<artifactId>org.eclipse.jetty.servlet.bundle</artifactId>
-	<version>7.4.5.v20110725</version>
+	<artifactId>org.jowidgets.classloading.api.bundle</artifactId>
 	<packaging>bundle</packaging>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
-		<artifactId>org.jowidgets.bundles.thirdparty.parent</artifactId>
+		<artifactId>org.jowidgets.bundles.core.parent</artifactId>
 		<version>0.26.0-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	
 	<dependencies>
 		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-servlet</artifactId>
-			<version>7.4.5.v20110725</version>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.classloading.api</artifactId>
+			<version>0.26.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.classloading.api</artifactId>
+			<version>0.26.0-SNAPSHOT</version>
+			<type>jar</type>
+			<classifier>sources</classifier>
 		</dependency>
 	</dependencies>
 	
@@ -28,14 +33,12 @@
 				<artifactId>maven-bundle-plugin</artifactId>
 				<configuration>
 					<instructions>
-						<Export-Package>*</Export-Package>
-						<Embed-Dependency>jetty-servlet;inline=true</Embed-Dependency>
-						<Embed-Transitive>true</Embed-Transitive>
-						<version>7.4.5.v20110725</version>
+						<Embed-Dependency>org.jowidgets.classloading.api;inline=true</Embed-Dependency>
+						<Require-Bundle>org.jowidgets.util.bundle</Require-Bundle>
 					</instructions>
 				</configuration>
 			</plugin>
 		</plugins>
-	</build>
-
+	</build> 
+	
 </project>
