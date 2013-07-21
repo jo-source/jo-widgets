@@ -31,6 +31,7 @@ package org.jowidgets.test.api.toolkit;
 import java.util.Iterator;
 import java.util.ServiceLoader;
 
+import org.jowidgets.classloading.api.SharedClassLoader;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.test.api.widgets.IFrameUi;
@@ -47,7 +48,9 @@ public final class TestToolkit {
 
 	public static synchronized ITestToolkit getInstance() {
 		if (toolkit == null) {
-			final ServiceLoader<ITestToolkit> toolkitProviderLoader = ServiceLoader.load(ITestToolkit.class);
+			final ServiceLoader<ITestToolkit> toolkitProviderLoader = ServiceLoader.load(
+					ITestToolkit.class,
+					SharedClassLoader.getCompositeClassLoader());
 			final Iterator<ITestToolkit> iterator = toolkitProviderLoader.iterator();
 
 			if (!iterator.hasNext()) {

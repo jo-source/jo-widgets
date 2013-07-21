@@ -32,6 +32,8 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.ServiceLoader;
 
+import org.jowidgets.classloading.api.SharedClassLoader;
+
 public final class LocaleHolder {
 
 	private static ILocaleHolder instance;
@@ -78,7 +80,9 @@ public final class LocaleHolder {
 	 */
 	public static synchronized ILocaleHolder getInstance() {
 		if (instance == null) {
-			final ServiceLoader<ILocaleHolder> loader = ServiceLoader.load(ILocaleHolder.class);
+			final ServiceLoader<ILocaleHolder> loader = ServiceLoader.load(
+					ILocaleHolder.class,
+					SharedClassLoader.getCompositeClassLoader());
 			final Iterator<ILocaleHolder> iterator = loader.iterator();
 
 			if (!iterator.hasNext()) {

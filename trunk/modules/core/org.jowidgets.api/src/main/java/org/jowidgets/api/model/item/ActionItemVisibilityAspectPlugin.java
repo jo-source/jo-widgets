@@ -37,6 +37,7 @@ import java.util.ServiceLoader;
 
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.item.IActionItemVisibilityAspect.RequestContext;
+import org.jowidgets.classloading.api.SharedClassLoader;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.priority.IPriorityValue;
 import org.jowidgets.util.priority.LowHighPriority;
@@ -144,7 +145,9 @@ public final class ActionItemVisibilityAspectPlugin {
 
 		private List<IActionItemVisibilityAspectPlugin> getRegisteredPlugins() {
 			final List<IActionItemVisibilityAspectPlugin> result = new LinkedList<IActionItemVisibilityAspectPlugin>();
-			final ServiceLoader<IActionItemVisibilityAspectPlugin> service = ServiceLoader.load(IActionItemVisibilityAspectPlugin.class);
+			final ServiceLoader<IActionItemVisibilityAspectPlugin> service = ServiceLoader.load(
+					IActionItemVisibilityAspectPlugin.class,
+					SharedClassLoader.getCompositeClassLoader());
 			if (service != null) {
 				final Iterator<IActionItemVisibilityAspectPlugin> iterator = service.iterator();
 				while (iterator.hasNext()) {
