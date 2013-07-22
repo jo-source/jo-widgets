@@ -127,7 +127,27 @@
          download-size="0"
          install-size="0"
          version="2.6.0"
-         unpack="false"/>	 
+         unpack="false"/>	
+
+	<plugin
+         id="com.springsource.org.hibernate.validator"
+         download-size="0"
+         install-size="0"
+         version="4.2.0.Final"
+         unpack="false"/>
 		 
+	<plugin
+         id="com.springsource.org.jsoup"
+         download-size="0"
+         install-size="0"
+         version="1.5.2"
+         unpack="false"/>
+		 
+	<plugin
+         id="com.springsource.org.joda.time"
+         download-size="0"
+         install-size="0"
+         version="1.6.2"
+         unpack="false"/>	 	 
 
 </feature>

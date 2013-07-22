@@ -43,6 +43,7 @@
 		<module>../org.jowidgets.test.api.bundle</module>
 		<module>../org.jowidgets.test.spi.bundle</module>
 		<module>../org.jowidgets.classloading.api.bundle</module>
+		<module>../org.jowidgets.beanvalidation.bootstrap.api.bundle</module>		
 	</modules>
 
 </project>
