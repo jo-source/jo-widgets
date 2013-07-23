@@ -121,7 +121,21 @@
          install-size="0"
          version="3.2.3.RELEASE"
          unpack="false"/>
-
+		 
+	<plugin
+         id="org.springframework.core"
+         download-size="0"
+         install-size="0"
+         version="3.2.3.RELEASE"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.springframework.beans"
+         download-size="0"
+         install-size="0"
+         version="3.2.3.RELEASE"
+         unpack="false"/>
+		 	 
 	<plugin
          id="com.springsource.org.apache.commons.lang"
          download-size="0"
@@ -148,6 +162,20 @@
          download-size="0"
          install-size="0"
          version="1.6.2"
-         unpack="false"/>	 	 
+         unpack="false"/>
+
+	<plugin
+         id="com.springsource.org.apache.commons.collections"
+         download-size="0"
+         install-size="0"
+         version="3.2.1"
+         unpack="false"/>
+		 
+	<plugin
+         id="com.springsource.org.apache.xml.resolver"
+         download-size="0"
+         install-size="0"
+         version="1.2.0"
+         unpack="false"/>
 
 </feature>
