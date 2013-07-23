@@ -8,7 +8,7 @@
 	<properties>
 		<tycho-version>0.16.0</tycho-version>
 		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
-		<osgi-version-qualifier>${maven.build.timestamp}</osgi-version-qualifier>
+		<osgi.version.snapshot>${maven.build.timestamp}</osgi.version.snapshot>
 	</properties>
 
 	<parent>
@@ -75,7 +75,7 @@
 						<manifestLocation>META-INF</manifestLocation>
 						<instructions>
 							<Export-Package>org.jowidgets.*</Export-Package>
-							<_snapshot>${osgi-version-qualifier}</_snapshot>
+							<_snapshot>${osgi.version.snapshot}</_snapshot>
 							<_nodefaultversion>true</_nodefaultversion>
 						</instructions>
 					</configuration>
