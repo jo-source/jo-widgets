@@ -110,7 +110,7 @@ public final class SharedClassLoader {
 		@Override
 		public List<IClassLoaderReference> getClassLoaders(final String className) {
 			final List<IClassLoaderReference> result = new LinkedList<IClassLoaderReference>();
-			for (final IClassLoaderReference classLoaderRef : classLoaders) {
+			for (final IClassLoaderReference classLoaderRef : new LinkedList<IClassLoaderReference>(classLoaders)) {
 				try {
 					classLoaderRef.getClassLoader().loadClass(className);
 					result.add(classLoaderRef);
@@ -131,7 +131,7 @@ public final class SharedClassLoader {
 
 			@Override
 			protected Class<?> findClass(final String name) throws ClassNotFoundException {
-				for (final IClassLoaderReference classLoaderRef : classLoaders) {
+				for (final IClassLoaderReference classLoaderRef : new LinkedList<IClassLoaderReference>(classLoaders)) {
 					try {
 						return classLoaderRef.getClassLoader().loadClass(name);
 					}
@@ -144,7 +144,7 @@ public final class SharedClassLoader {
 
 			@Override
 			protected URL findResource(final String name) {
-				for (final IClassLoaderReference classLoaderRef : classLoaders) {
+				for (final IClassLoaderReference classLoaderRef : new LinkedList<IClassLoaderReference>(classLoaders)) {
 					try {
 						return classLoaderRef.getClassLoader().getResource(name);
 					}
@@ -158,7 +158,7 @@ public final class SharedClassLoader {
 			@Override
 			protected Enumeration<URL> findResources(final String name) throws IOException {
 				final List<URL> result = new LinkedList<URL>();
-				for (final IClassLoaderReference classLoaderRef : classLoaders) {
+				for (final IClassLoaderReference classLoaderRef : new LinkedList<IClassLoaderReference>(classLoaders)) {
 					try {
 						final Enumeration<URL> resources = classLoaderRef.getClassLoader().getResources(name);
 						CollectionUtils.addFromEnumerationToCollection(result, resources);
