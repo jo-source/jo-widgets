@@ -36,6 +36,13 @@
          install-size="0"
          version="2.2.0"
          unpack="false"/>
+		 
+	<plugin
+         id="com.springsource.javax.validation"
+         download-size="0"
+         install-size="0"
+         version="1.0.0.GA"
+         unpack="false"/>
 		
 	<!-- other useful thirdparty bundles -->
 	<plugin
