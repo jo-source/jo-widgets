@@ -13,6 +13,7 @@
 
 	<modules>
 	    <module>../org.jowidgets.workbench.impl.rcp.plugin</module>
+		<module>../org.jowidgets.tools.starter.classloading.plugin</module>
 	</modules>
 
 </project>
