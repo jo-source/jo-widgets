@@ -2,7 +2,7 @@
 <feature
     id="org.jowidgets.thirdparty.feature"
     label="jowidgets thirdparty feature"
-    version="0.0.1.qualifier">
+    version="0.0.1">
 	
 	<description url="http://www.example.com/description">
 		Feature that holds third party dependecies for jowidgets
