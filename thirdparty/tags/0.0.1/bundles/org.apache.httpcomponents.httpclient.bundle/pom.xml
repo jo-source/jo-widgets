@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.apache.httpcomponents</groupId>
+	<artifactId>org.apache.httpcomponents.httpclient.bundle</artifactId>
+	<version>4.1.1</version>
+	<packaging>bundle</packaging>
+
+	<parent>
+		<groupId>org.jowidgets.thirdparty</groupId>
+		<artifactId>org.jowidgets.thirdparty.bundles.parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../parent/pom.xml</relativePath>
+	</parent>
+	
+	<dependencies>
+		 <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.1.1</version>
+        </dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>4.1</version>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<configuration>
+					<instructions>
+						<Export-Package>*</Export-Package>
+						<Embed-Dependency>httpclient;inline=true,httpcore;inline=true</Embed-Dependency>
+						<Embed-Transitive>true</Embed-Transitive>
+						<version>4.1.1</version>
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
