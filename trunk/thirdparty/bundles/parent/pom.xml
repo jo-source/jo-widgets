@@ -1,31 +1,32 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>org.jowidgets.bundles.parent</artifactId>
+	<artifactId>org.jowidgets.thirdparty.bundles.parent</artifactId>
 	<packaging>pom</packaging>
-
-	<properties>
-		<tycho-version>0.16.0</tycho-version>
-		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
-		<osgi.version.snapshot>${maven.build.timestamp}</osgi.version.snapshot>
-	</properties>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
-		<artifactId>org.jowidgets.parent</artifactId>
-		<version>0.26.0-SNAPSHOT</version>
+		<artifactId>org.jowidgets.thirdparty.parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 
 	<modules>
-		<module>../core/parent</module>
-		<module>../addons/parent</module>
+	    <module>../net.miginfocom.miglayout.swt.bundle</module>
+		<module>../net.miginfocom.miglayout.swing.bundle</module>	
+		<module>../commons.io.bundle</module>	
+		<module>../org.eclipse.jetty.servlet.bundle</module>
+		<module>../org.slf4j.jul.to.slf4j.bundle</module>
+		<module>../org.prefuse.bundle</module>	
+		<module>../org.hibernate.entitymanager.bundle</module>
+		<module>../org.neo4j.bundle</module>
+		<module>../org.apache.httpcomponents.httpclient.bundle</module>
+		<module>../se.scalablesolutions.akka.actor.bundle</module>
 	</modules>
-
+	
 	<build>
 		<plugins>
-			
+
 			<plugin>
 				<artifactId>maven-jar-plugin</artifactId>
 				<configuration>
@@ -34,7 +35,7 @@
 					</archive>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-clean-plugin</artifactId>
@@ -50,10 +51,10 @@
 						</fileset>
 					</filesets>
 				</configuration>
-			</plugin>	
-				
+			</plugin>
+
 		</plugins>
-		
+
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -74,7 +75,7 @@
 						<manifestLocation>META-INF</manifestLocation>
 						<instructions>
 							<Export-Package>org.jowidgets.*</Export-Package>
-							<_snapshot>${osgi.version.snapshot}</_snapshot>
+							<_snapshot>${osgi-version-qualifier}</_snapshot>
 							<_nodefaultversion>true</_nodefaultversion>
 						</instructions>
 					</configuration>
@@ -82,33 +83,32 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-	
+
 	<profiles>
-	    <profile>
-	      <activation>
-	        <property>
-	          <name>m2e.version</name>
-	        </property>
-	      </activation>
-	      <properties>
-	        <osgi-version-qualifier>qualifier</osgi-version-qualifier>
-	      </properties>
-	      <build>
-	        <pluginManagement>
-	          <plugins>
-	            <plugin>
-	              <groupId>org.apache.felix</groupId>
-	              <artifactId>maven-bundle-plugin</artifactId>
-	              <configuration>
-	                  <!-- PDE does not honour custom manifest location -->
-	                <manifestLocation>META-INF</manifestLocation>
-	              </configuration>
-	            </plugin>
-	          </plugins>
-	        </pluginManagement>
-	      </build>
-	    </profile>
- 	</profiles>
-	
+		<profile>
+			<activation>
+				<property>
+					<name>m2e.version</name>
+				</property>
+			</activation>
+			<properties>
+				<osgi-version-qualifier>qualifier</osgi-version-qualifier>
+			</properties>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.apache.felix</groupId>
+							<artifactId>maven-bundle-plugin</artifactId>
+							<configuration>
+								<!-- PDE does not honour custom manifest location -->
+								<manifestLocation>META-INF</manifestLocation>
+							</configuration>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+		</profile>
+	</profiles>
 
 </project>

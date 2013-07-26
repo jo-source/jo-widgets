@@ -37,8 +37,6 @@
 		<module>../org.jowidgets.spi.impl.bridge.swt.awt.common.bundle</module>
 		<module>../org.jowidgets.spi.impl.bridge.swt.awt.bundle</module>
 		<module>../org.jowidgets.spi.impl.bridge.awt.swt.bundle</module>			
-		<module>../org.jowidgets.spi.impl.rwt.bundle</module>
-		<module>../org.jowidgets.spi.impl.rwt.legacy.bundle</module>
 		<module>../org.jowidgets.test.common.bundle</module>
 		<module>../org.jowidgets.test.api.bundle</module>
 		<module>../org.jowidgets.test.spi.bundle</module>

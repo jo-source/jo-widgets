@@ -89,6 +89,7 @@ public final class SharedClassLoader {
 			this.classLoaders = new LinkedHashSet<IClassLoaderReference>();
 			this.compositeClassLoader = new CompositeClassLoaderImpl();
 			addClassLoader(ClassLoader.getSystemClassLoader());
+			addClassLoader(new CurrentThreadClassLoader());
 		}
 
 		@Override
@@ -172,6 +173,42 @@ public final class SharedClassLoader {
 
 		}
 
+	}
+
+	private static final class CurrentThreadClassLoader extends ClassLoader {
+
+		@Override
+		protected Class<?> findClass(final String name) throws ClassNotFoundException {
+			final ClassLoader tccl = Thread.currentThread().getContextClassLoader();
+			if (tccl != null) {
+				return tccl.loadClass(name);
+			}
+			else {
+				throw new ClassNotFoundException("No Thread context classloader set");
+			}
+		}
+
+		@Override
+		protected URL findResource(final String name) {
+			final ClassLoader tccl = Thread.currentThread().getContextClassLoader();
+			if (tccl != null) {
+				return tccl.getResource(name);
+			}
+			else {
+				return null;
+			}
+		}
+
+		@Override
+		protected Enumeration<URL> findResources(final String name) throws IOException {
+			final ClassLoader tccl = Thread.currentThread().getContextClassLoader();
+			if (tccl != null) {
+				return tccl.getResources(name);
+			}
+			else {
+				return null;
+			}
+		}
 	}
 
 }
