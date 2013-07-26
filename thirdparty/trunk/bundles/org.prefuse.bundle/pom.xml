@@ -7,7 +7,7 @@
 	<packaging>bundle</packaging>
 
 	<parent>
-		<groupId>org.jowidgets</groupId>
+		<groupId>org.jowidgets.thirdparty</groupId>
 		<artifactId>org.jowidgets.thirdparty.bundles.parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
