@@ -21,7 +21,7 @@
 		<repository>
 			<id>org.jowidgets.thirdparty</id>
 			<name>Jowidgets Third Party Repository</name>
-			<url>file:///c:/projects/jo-widgets/eclipse/thirdparty/tycho/features/org.jowidgets.thirdparty.feature/target/site</url>
+			<url>http://www.jowidgets.org/p2/thirdparty/releases/0.0.1/</url>
 		</repository>
 	
 		<repository>
