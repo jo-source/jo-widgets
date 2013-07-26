@@ -37,7 +37,8 @@
          version="0.0.0"
          unpack="false"/>
 	
-	<plugin
+	<!-- no kml bundle at the moment found -->
+	<!--plugin
          id="org.jowidgets.addons.map.common.bundle"
          download-size="0"
          install-size="0"
@@ -56,7 +57,7 @@
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>
+         unpack="false"/-->
 		 
 	<plugin
          id="org.jowidgets.addons.testtool.bundle"

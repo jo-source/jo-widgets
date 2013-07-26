@@ -22,13 +22,14 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-		 
-	<plugin
+		
+	<!-- no easymock3 bundle found at the moment -->		
+	<!--plugin
          id="org.jowidgets.api.test.bundle"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>
+         unpack="false"/-->
 	
 	<plugin
          id="org.jowidgets.common.bundle"
@@ -88,20 +89,6 @@
 		 
 	<plugin
          id="org.jowidgets.spi.impl.dummy.bundle"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-		 
-	<plugin
-         id="org.jowidgets.spi.impl.rwt.bundle"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-		 
-	<plugin
-         id="org.jowidgets.spi.impl.rwt.legacy.bundle"
          download-size="0"
          install-size="0"
          version="0.0.0"
