@@ -53,6 +53,7 @@ public final class LevelMeterImpl extends ControlWrapper implements ILevelMeter 
 	private static final int GAP_BETWEEN_SCALE_AND_BAR = 7;
 
 	private final ILevelMeterModel model;
+	private final ILevelListener levelListener;
 
 	private final ILevelMeterSetup setup;
 
@@ -68,12 +69,13 @@ public final class LevelMeterImpl extends ControlWrapper implements ILevelMeter 
 		composite.setLayout(MigLayoutFactory.growingInnerCellLayout());
 		final ICanvas canvas = composite.add(BPF.canvas(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
-		model.addLevelListener(new ILevelListener() {
+		this.levelListener = new ILevelListener() {
 			@Override
 			public void levelChanged(final double oldValue, final double newValue) {
 				canvas.redraw();
 			}
-		});
+		};
+		model.addLevelListener(levelListener);
 
 		canvas.addPaintListener(new IPaintListener() {
 			@Override
@@ -87,6 +89,12 @@ public final class LevelMeterImpl extends ControlWrapper implements ILevelMeter 
 	@Override
 	public ILevelMeterModel getModel() {
 		return model;
+	}
+
+	@Override
+	public void dispose() {
+		model.removesLevelListener(levelListener);
+		super.dispose();
 	}
 
 	private void paintCanvas(final IGraphicContext gc) {
