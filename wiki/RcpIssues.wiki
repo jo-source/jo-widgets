@@ -1,4 +1,4 @@
-= jowidgets and Eclispe RCP =
+= jowidgets and Eclipse RCP =
 
 Using jowidgets in Eclipse RCP can be done on (at least) two different ways:
 
