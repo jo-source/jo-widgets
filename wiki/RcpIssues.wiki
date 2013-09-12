@@ -37,4 +37,5 @@ The example is a tiny user administration with users, authorizations and roles, 
   * Stop earlier startet applications (e.g. the standalone starter). Because of the h2 db, there can only be one service layer active at the same time accessing the database file
   * Start the application server inside eclipse (org.jowidgets.samples.rcp.sample1.starter.server.RcpSample1StarterServer)
   * In the module org.jowidgets.samples.rcp.sample1.starter.client.rcp.plugin you find a launch configuration, launch this
+  * uses admin, admin for login
   * If not works, let me now
