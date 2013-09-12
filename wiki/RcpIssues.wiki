@@ -19,7 +19,7 @@ Let me give a litle overview what the example does and how it can be started:
 
 The example is a tiny user administration with users, authorizations and roles, that can be linked. All data will be persistet, in the example the h2 db will be used for that. The jo-client-platform provides a three layer (ui ,service, persistence) architecture. The example uses the jowidgets workbench api. The example can be started without RCP, but there is also an starter for RCP that can be found here:[http://code.google.com/p/jo-client-platform-samples/source/browse/trunk/rcp/example1/tycho/plugins/org.jowidgets.samples.rcp.sample1.starter.client.rcp.plugin/src/main/java/org/jowidgets/samples/rcp/sample1/starter/client/rcp/RcpSample1StarterClientRcp.java RcpSample1StarterClientRcp.java]
 
-=How to make it run with rcp=
+==How to make it run with rcp==
 
   * Check out the jo-client-platform samples: http://code.google.com/p/jo-client-platform-samples/source/checkout
   * Switch to the folder to some like this C:\projects\jo-client-platform-samples\modules\rcp\example1\parent
