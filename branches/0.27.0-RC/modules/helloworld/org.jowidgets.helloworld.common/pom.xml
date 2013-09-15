@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>org.jowidgets.helloworld.common</artifactId>
+
+	<parent>
+		<groupId>org.jowidgets.helloworld</groupId>
+		<artifactId>org.jowidgets.helloworld.parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../parent/pom.xml</relativePath>
+	</parent>
+	
+	<dependencies>
+
+		<!-- The jowidgets api -->
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.api</artifactId>
+			<version>${jowidgets.version}</version>
+		</dependency>
+
+		<!-- Some utility classes like wrappers or abstract base classes -->
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.tools</artifactId>
+			<version>${jowidgets.version}</version>
+		</dependency>
+
+	</dependencies>
+
+</project>
