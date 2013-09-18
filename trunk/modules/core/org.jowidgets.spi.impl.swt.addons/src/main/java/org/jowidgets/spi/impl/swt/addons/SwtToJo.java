@@ -28,6 +28,8 @@
 
 package org.jowidgets.spi.impl.swt.addons;
 
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.api.toolkit.Toolkit;
@@ -41,12 +43,26 @@ public final class SwtToJo {
 
 	public static JoComposite create(final Composite composite) {
 		Assert.paramNotNull(composite, "composite");
-		return JoComposite.toJoComposite(Toolkit.getWidgetWrapperFactory().createComposite(composite));
+		final JoComposite result = JoComposite.toJoComposite(Toolkit.getWidgetWrapperFactory().createComposite(composite));
+		composite.addDisposeListener(new DisposeListener() {
+			@Override
+			public void widgetDisposed(final DisposeEvent e) {
+				result.dispose();
+			}
+		});
+		return result;
 	}
 
 	public static JoFrame create(final Shell shell) {
 		Assert.paramNotNull(shell, "shell");
-		return JoFrame.toJoFrame(Toolkit.getWidgetWrapperFactory().createFrame(shell));
+		final JoFrame result = JoFrame.toJoFrame(Toolkit.getWidgetWrapperFactory().createFrame(shell));
+		shell.addDisposeListener(new DisposeListener() {
+			@Override
+			public void widgetDisposed(final DisposeEvent e) {
+				result.dispose();
+			}
+		});
+		return result;
 	}
 
 	//TODO ANYBODY may feel free to add more create methods
