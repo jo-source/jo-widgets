@@ -44,16 +44,20 @@ public final class SwingToJo {
 
 	public static JoComposite create(final JPanel panel) {
 		Assert.paramNotNull(panel, "panel");
+		//TODO observe information when panel was disposed (removed from its parent) and
+		//invoke dispose on the result
 		return JoComposite.toJoComposite(Toolkit.getWidgetWrapperFactory().createComposite(panel));
 	}
 
 	public static JoFrame create(final JFrame frame) {
 		Assert.paramNotNull(frame, "frame");
+		//TODO observe information when frame was disposed and invoke dispose on the result
 		return JoFrame.toJoFrame(Toolkit.getWidgetWrapperFactory().createFrame(frame));
 	}
 
 	public static JoDialog create(final JDialog dialog) {
 		Assert.paramNotNull(dialog, "dialog");
+		//TODO observe information when dialog was disposed and invoke dispose on the result
 		return JoDialog.toJoDialog(Toolkit.getWidgetWrapperFactory().createFrame(dialog));
 	}
 
