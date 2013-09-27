@@ -52,4 +52,40 @@ public class ParameterizedWrapper implements IParameterized {
 		return original.getParameter(key);
 	}
 
+	public float getFloatValue(final ITypedKey<Float> key, final float defaultValue) {
+		final Float value = getParameterMandatory(key).getValue();
+		if (value != null) {
+			return value.floatValue();
+		}
+		else {
+			return defaultValue;
+		}
+	}
+
+	public void setFloatValue(final ITypedKey<Float> key, final float value) {
+		getParameterMandatory(key).setValue(Float.valueOf(value));
+	}
+
+	public int getIntValue(final ITypedKey<Integer> key, final int defaultValue) {
+		final Integer value = getParameterMandatory(key).getValue();
+		if (value != null) {
+			return value.intValue();
+		}
+		else {
+			return defaultValue;
+		}
+	}
+
+	public void setIntValue(final ITypedKey<Integer> key, final int value) {
+		getParameterMandatory(key).setValue(Integer.valueOf(value));
+	}
+
+	public final <VALUE_TYPE> IParameter<VALUE_TYPE> getParameterMandatory(final ITypedKey<VALUE_TYPE> key) {
+		Assert.paramNotNull(key, "key");
+		final IParameter<VALUE_TYPE> result = getParameter(key);
+		if (result == null) {
+			throw new IllegalArgumentException("No parameter for the key '" + key + "' defined");
+		}
+		return result;
+	}
 }
