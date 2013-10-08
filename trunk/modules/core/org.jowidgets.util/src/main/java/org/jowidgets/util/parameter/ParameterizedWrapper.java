@@ -52,6 +52,10 @@ public class ParameterizedWrapper implements IParameterized, IChangeObservable {
 		this.changeObservable = new ChangeObservable();
 	}
 
+	protected IParameterized getOriginal() {
+		return original;
+	}
+
 	@Override
 	public void addChangeListener(final IChangeListener listener) {
 		initChangeObservable();
