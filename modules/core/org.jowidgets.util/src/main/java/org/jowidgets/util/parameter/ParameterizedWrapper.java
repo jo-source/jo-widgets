@@ -43,26 +43,18 @@ public class ParameterizedWrapper implements IParameterized, IChangeObservable {
 	private final IParameterized original;
 	private final ChangeObservable changeObservable;
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
+	@SuppressWarnings("rawtypes")
+	private IObservableValueListener observableValueListener;
+
 	public ParameterizedWrapper(final IParameterized original) {
 		Assert.paramNotNull(original, "original");
 		this.original = original;
 		this.changeObservable = new ChangeObservable();
-
-		final IObservableValueListener observableValueListener = new IObservableValueListener() {
-			@Override
-			public void changed(final IObservableValue observableValue, final Object value) {
-				changeObservable.fireChangedEvent();
-			}
-		};
-
-		for (final ITypedKey<?> key : original.getAvailableParameters()) {
-			original.getParameter(key).addValueListener(observableValueListener);
-		}
 	}
 
 	@Override
 	public void addChangeListener(final IChangeListener listener) {
+		initChangeObservable();
 		changeObservable.addChangeListener(listener);
 	}
 
@@ -130,5 +122,20 @@ public class ParameterizedWrapper implements IParameterized, IChangeObservable {
 			throw new IllegalArgumentException("No parameter for the key '" + key + "' defined");
 		}
 		return result;
+	}
+
+	@SuppressWarnings({"rawtypes", "unchecked"})
+	private void initChangeObservable() {
+		if (observableValueListener == null) {
+			observableValueListener = new IObservableValueListener() {
+				@Override
+				public void changed(final IObservableValue observableValue, final Object value) {
+					changeObservable.fireChangedEvent();
+				}
+			};
+			for (final ITypedKey<?> key : original.getAvailableParameters()) {
+				original.getParameter(key).addValueListener(observableValueListener);
+			}
+		}
 	}
 }
