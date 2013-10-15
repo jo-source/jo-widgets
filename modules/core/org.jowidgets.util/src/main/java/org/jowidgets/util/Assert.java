@@ -28,6 +28,7 @@
 package org.jowidgets.util;
 
 import java.util.Collection;
+import java.util.Map;
 
 public final class Assert {
 
@@ -49,6 +50,12 @@ public final class Assert {
 
 	public static void paramNotEmpty(final Collection<?> collection, final String name) {
 		if (collection == null || collection.size() <= 0) {
+			throw new IllegalArgumentException("The parameter '" + name + "' must not be empty!");
+		}
+	}
+
+	public static void paramNotEmpty(final Map<?, ?> map, final String name) {
+		if (map == null || map.size() <= 0) {
 			throw new IllegalArgumentException("The parameter '" + name + "' must not be empty!");
 		}
 	}
