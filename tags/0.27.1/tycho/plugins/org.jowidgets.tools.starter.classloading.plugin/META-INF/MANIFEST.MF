@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.jowidgets.tools.starter.classloading.plugin
+Bundle-SymbolicName: org.jowidgets.tools.starter.classloading.plugin;singleton:=true
+Bundle-Version: 0.27.1.qualifier
+Bundle-Vendor: jowidgets.org
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Require-Bundle: 
+ org.eclipse.osgi,
+ org.jowidgets.util.bundle,
+ org.jowidgets.classloading.api.bundle
+Export-Package: org.jowidgets.tools.starter.classloading
