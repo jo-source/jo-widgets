@@ -1,1 +1,1 @@
-mvn org.eclipse.tycho:tycho-versions-plugin:0.13.1.patched:set-version -DnewVersion=0.27.1-SNAPSHOT -Dtycho.mode=maven
+mvn org.eclipse.tycho:tycho-versions-plugin:0.18.0:set-version -DnewVersion=0.27.1 -Dtycho.mode=maven
