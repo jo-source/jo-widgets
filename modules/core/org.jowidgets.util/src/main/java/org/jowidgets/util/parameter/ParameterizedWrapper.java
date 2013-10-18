@@ -31,40 +31,15 @@ package org.jowidgets.util.parameter;
 import java.util.List;
 
 import org.jowidgets.util.Assert;
-import org.jowidgets.util.IObservableValue;
-import org.jowidgets.util.IObservableValueListener;
 import org.jowidgets.util.ITypedKey;
-import org.jowidgets.util.event.ChangeObservable;
-import org.jowidgets.util.event.IChangeListener;
-import org.jowidgets.util.event.IChangeObservable;
 
-public class ParameterizedWrapper implements IParameterized, IChangeObservable {
+public class ParameterizedWrapper implements IParameterized {
 
 	private final IParameterized original;
-	private final ChangeObservable changeObservable;
-
-	@SuppressWarnings("rawtypes")
-	private IObservableValueListener observableValueListener;
 
 	public ParameterizedWrapper(final IParameterized original) {
 		Assert.paramNotNull(original, "original");
 		this.original = original;
-		this.changeObservable = new ChangeObservable();
-	}
-
-	protected IParameterized getOriginal() {
-		return original;
-	}
-
-	@Override
-	public void addChangeListener(final IChangeListener listener) {
-		initChangeObservable();
-		changeObservable.addChangeListener(listener);
-	}
-
-	@Override
-	public void removeChangeListener(final IChangeListener listener) {
-		changeObservable.removeChangeListener(listener);
 	}
 
 	@Override
@@ -77,69 +52,4 @@ public class ParameterizedWrapper implements IParameterized, IChangeObservable {
 		return original.getParameter(key);
 	}
 
-	public float getFloatValue(final ITypedKey<Float> key, final float defaultValue) {
-		final Float value = getParameterMandatory(key).getValue();
-		if (value != null) {
-			return value.floatValue();
-		}
-		else {
-			return defaultValue;
-		}
-	}
-
-	public void setFloatValue(final ITypedKey<Float> key, final float value) {
-		getParameterMandatory(key).setValue(Float.valueOf(value));
-	}
-
-	public int getIntValue(final ITypedKey<Integer> key, final int defaultValue) {
-		final Integer value = getParameterMandatory(key).getValue();
-		if (value != null) {
-			return value.intValue();
-		}
-		else {
-			return defaultValue;
-		}
-	}
-
-	public void setIntValue(final ITypedKey<Integer> key, final int value) {
-		getParameterMandatory(key).setValue(Integer.valueOf(value));
-	}
-
-	public boolean getBooleanValue(final ITypedKey<Boolean> key, final boolean defaultValue) {
-		final Boolean value = getParameterMandatory(key).getValue();
-		if (value != null) {
-			return value.booleanValue();
-		}
-		else {
-			return defaultValue;
-		}
-	}
-
-	public void setBooleanValue(final ITypedKey<Boolean> key, final boolean value) {
-		getParameterMandatory(key).setValue(Boolean.valueOf(value));
-	}
-
-	public final <VALUE_TYPE> IParameter<VALUE_TYPE> getParameterMandatory(final ITypedKey<VALUE_TYPE> key) {
-		Assert.paramNotNull(key, "key");
-		final IParameter<VALUE_TYPE> result = getParameter(key);
-		if (result == null) {
-			throw new IllegalArgumentException("No parameter for the key '" + key + "' defined");
-		}
-		return result;
-	}
-
-	@SuppressWarnings({"rawtypes", "unchecked"})
-	private void initChangeObservable() {
-		if (observableValueListener == null) {
-			observableValueListener = new IObservableValueListener() {
-				@Override
-				public void changed(final IObservableValue observableValue, final Object value) {
-					changeObservable.fireChangedEvent();
-				}
-			};
-			for (final ITypedKey<?> key : original.getAvailableParameters()) {
-				original.getParameter(key).addValueListener(observableValueListener);
-			}
-		}
-	}
 }
