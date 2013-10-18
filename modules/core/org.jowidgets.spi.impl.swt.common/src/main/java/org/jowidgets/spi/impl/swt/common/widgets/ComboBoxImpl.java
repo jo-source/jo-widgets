@@ -110,12 +110,25 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 		}
 
 		if (setup.getInputChangeEventPolicy() == InputChangeEventPolicy.ANY_CHANGE) {
-			getUiReference().addModifyListener(new ModifyListener() {
+			getUiReference().addSelectionListener(new SelectionListener() {
 				@Override
-				public void modifyText(final ModifyEvent e) {
+				public void widgetSelected(final SelectionEvent e) {
+					fireInputChanged(getUiReference().getText());
+				}
+
+				@Override
+				public void widgetDefaultSelected(final SelectionEvent e) {
 					fireInputChanged(getUiReference().getText());
 				}
 			});
+			if (!isSelectionMode || isAutoCompletionMode) {
+				getUiReference().addModifyListener(new ModifyListener() {
+					@Override
+					public void modifyText(final ModifyEvent e) {
+						fireInputChanged(getUiReference().getText());
+					}
+				});
+			}
 		}
 		else if (setup.getInputChangeEventPolicy() == InputChangeEventPolicy.EDIT_FINISHED) {
 			getUiReference().addFocusListener(new FocusAdapter() {
