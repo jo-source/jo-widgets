@@ -29,6 +29,8 @@
 package org.jowidgets.spi.impl.swt.common.widgets;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
@@ -42,6 +44,13 @@ public class PopupMenuImpl extends SwtMenu implements IPopupMenuSpi {
 	public PopupMenuImpl(final Control parent) {
 		super(new Menu(parent.getShell(), SWT.POP_UP));
 		this.parent = parent;
+
+		parent.addDisposeListener(new DisposeListener() {
+			@Override
+			public void widgetDisposed(final DisposeEvent e) {
+				getUiReference().dispose();
+			}
+		});
 	}
 
 	@Override
