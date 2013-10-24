@@ -146,6 +146,8 @@ public class TabItemImpl extends AbstractContainerSpiWrapper implements ITabItem
 				for (final ITabItemListener listener : itemListeners) {
 					listener.closed();
 				}
+				tabPopupMenuCreationDelegate.dispose();
+				containerDelegate.dispose();
 			}
 
 		};
