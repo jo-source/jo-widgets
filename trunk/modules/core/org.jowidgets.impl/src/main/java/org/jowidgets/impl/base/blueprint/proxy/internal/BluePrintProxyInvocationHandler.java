@@ -157,6 +157,7 @@ public class BluePrintProxyInvocationHandler implements InvocationHandler {
 			final ISetupBuilderConvenience<ISetupBuilder<?>> impl = convenienceMethodsMap.get(methodKey);
 			impl.setBuilder((ISetupBuilder<?>) proxy);
 			method.invoke(impl, args);
+			impl.setBuilder(null);
 			return proxy;
 		}
 		else if (method.getName().startsWith("get")) {
