@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.bundles.core.parent</artifactId>
-		<version>0.27.2-SNAPSHOT</version>
+		<version>0.27.2</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 	
@@ -15,12 +15,12 @@
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.impl</artifactId>
-			<version>0.27.2-SNAPSHOT</version>
+			<version>0.27.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.impl</artifactId>
-			<version>0.27.2-SNAPSHOT</version>
+			<version>0.27.2</version>
 			<type>jar</type>
 			<classifier>sources</classifier>
 		</dependency>
