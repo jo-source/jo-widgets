@@ -102,6 +102,16 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 		cTabItem.setControl(swtContainer.getUiReference());
 	}
 
+	void dispose() {
+		if (detachedControl != null && !detachedControl.isDisposed()) {
+			detachedControl.dispose();
+		}
+		final Control control = cTabItem.getControl();
+		if (control != null && !control.isDisposed()) {
+			control.dispose();
+		}
+	}
+
 	@Override
 	public CTabItem getUiReference() {
 		return cTabItem;
