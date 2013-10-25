@@ -2,7 +2,7 @@
 <feature
     id="org.jowidgets.all.feature"
     label="jowidgets all feature"
-    version="0.27.2.qualifier">
+    version="0.27.3.qualifier">
 
 	<description url="http://www.example.com/description">
 		Feature that holds all addons bundles
