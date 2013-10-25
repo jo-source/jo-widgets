@@ -1,0 +1,21 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>org.jowidgets.modules.parent</artifactId>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>org.jowidgets</groupId>
+		<artifactId>org.jowidgets.parent</artifactId>
+		<version>0.27.2</version>
+		<relativePath>../../parent/pom.xml</relativePath>
+	</parent>
+	
+	<modules>
+		<module>../build/org.jowidgets.checkstyle</module>
+		<module>../core/parent</module>
+		<module>../addons/parent</module>
+		<module>../examples/parent</module>
+	</modules>
+
+</project>
