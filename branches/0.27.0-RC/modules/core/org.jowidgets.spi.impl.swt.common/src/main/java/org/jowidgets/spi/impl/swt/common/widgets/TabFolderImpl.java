@@ -107,7 +107,9 @@ public class TabFolderImpl extends SwtControl implements ITabFolderSpi {
 						event.doit = false;
 					}
 					else {
+						items.remove(event.item);
 						itemImpl.fireClosed();
+						itemImpl.dispose();
 					}
 				}
 				else {
