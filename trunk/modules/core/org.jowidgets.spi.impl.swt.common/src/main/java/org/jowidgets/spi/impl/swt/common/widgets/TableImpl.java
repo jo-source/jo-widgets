@@ -107,6 +107,7 @@ import org.jowidgets.spi.impl.controller.TableColumnResizeEvent;
 import org.jowidgets.spi.impl.controller.TableSelectionObservable;
 import org.jowidgets.spi.impl.swt.common.color.ColorCache;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
+import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.common.util.AlignmentConvert;
 import org.jowidgets.spi.impl.swt.common.util.FontProvider;
 import org.jowidgets.spi.impl.swt.common.util.MouseUtil;
@@ -141,6 +142,9 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private final boolean columnsMoveable;
 	private final boolean columnsResizeable;
 
+	private final IColorConstant selectedForegroundColor;
+	private final IColorConstant selectedBackgroundColor;
+
 	private int[] lastColumnOrder;
 	private boolean setWidthInvokedOnModel;
 	private ToolTip toolTip;
@@ -148,6 +152,9 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 	public TableImpl(final Object parentUiReference, final ITableSetupSpi setup) {
 		super(new Table((Composite) parentUiReference, getStyle(setup)));
+
+		this.selectedForegroundColor = SwtOptions.getTableSelectedForegroundColor();
+		this.selectedBackgroundColor = SwtOptions.getTableSelectedBackgroundColor();
 
 		this.editable = true;
 
@@ -686,17 +693,29 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		return result;
 	}
 
-	//This listener fixes Bug 50163 by using workaround from comment 13
-	//(Visited url: https://bugs.eclipse.org/bugs/show_bug.cgi?id=50163)
 	private final class EraseItemListener implements Listener {
 		@Override
 		public void handleEvent(final Event event) {
-			if ((event.detail & SWT.SELECTED) != 0 || (event.detail & SWT.HOT) != 0) {
-				return; /// item selected or hot
-			}
-			final TableItem item = (TableItem) event.item;
 			final GC gc = event.gc;
 			final Color oldBackground = gc.getBackground();
+			if ((event.detail & SWT.SELECTED) != 0 || (event.detail & SWT.HOT) != 0) {
+				if ((selectedForegroundColor != null || selectedBackgroundColor != null) && (event.detail & SWT.SELECTED) != 0) {
+					final Rectangle rect = event.getBounds();
+					if (selectedForegroundColor != null) {
+						gc.setForeground(ColorCache.getInstance().getColor(selectedForegroundColor));
+					}
+					if (selectedBackgroundColor != null) {
+						gc.setBackground(ColorCache.getInstance().getColor(selectedBackgroundColor));
+					}
+					gc.fillRectangle(rect);
+					event.detail &= ~SWT.SELECTED;
+				}
+				return;
+			}
+
+			//This fixes Bug 50163 by using workaround from comment 13
+			//(Visited url: https://bugs.eclipse.org/bugs/show_bug.cgi?id=50163)
+			final TableItem item = (TableItem) event.item;
 			for (int columnIndex = 0; columnIndex < getColumnCount(); columnIndex++) {
 				if (item.getImage(columnIndex) != null) {
 					final Color background = item.getBackground(columnIndex);
@@ -708,6 +727,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 					}
 				}
 			}
+
 		}
 	}
 
