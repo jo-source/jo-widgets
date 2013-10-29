@@ -28,6 +28,9 @@
 
 package org.jowidgets.spi.impl.swt.common.options;
 
+import org.jowidgets.common.color.ColorValue;
+import org.jowidgets.common.color.IColorConstant;
+
 public final class SwtOptions {
 
 	private static boolean inputVerification = true;
@@ -35,6 +38,9 @@ public final class SwtOptions {
 	private static SplitlayoutMode splitLayoutMode = SplitlayoutMode.ON_MOUSE_MOVE;
 	private static boolean nativeMigLayout = true;
 	private static boolean nativeTextAreaScrollBars = false;
+
+	private static IColorConstant tableSelectedForegroundColor;
+	private static IColorConstant tableSelectedBackgroundColor;
 
 	private SwtOptions() {}
 
@@ -76,6 +82,31 @@ public final class SwtOptions {
 
 	public static void setNativeTextAreaScrollBars(final boolean nativeTextAreaScrollBars) {
 		SwtOptions.nativeTextAreaScrollBars = nativeTextAreaScrollBars;
+	}
+
+	public static IColorConstant getTableSelectedForegroundColor() {
+		return tableSelectedForegroundColor;
+	}
+
+	public static void setTableSelectedForegroundColor(final IColorConstant tableSelectedForegroundColor) {
+		SwtOptions.tableSelectedForegroundColor = tableSelectedForegroundColor;
+	}
+
+	public static IColorConstant getTableSelectedBackgroundColor() {
+		return tableSelectedBackgroundColor;
+	}
+
+	public static void setTableSelectedBackgroundColor(final IColorConstant tableSelectedBackgroundColor) {
+		SwtOptions.tableSelectedBackgroundColor = tableSelectedBackgroundColor;
+	}
+
+	/**
+	 * Some customers mention that selected and unselected colors can hardly be distinguished on win7 and win8
+	 * clients. With this mode, the selection color in like under winxp
+	 */
+	public static void setClassicTableSelectionColors() {
+		setTableSelectedForegroundColor(new ColorValue(255, 255, 255));
+		setTableSelectedBackgroundColor(new ColorValue(51, 153, 255));
 	}
 
 }
