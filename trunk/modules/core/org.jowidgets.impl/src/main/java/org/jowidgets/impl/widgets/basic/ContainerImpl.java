@@ -187,6 +187,11 @@ public class ContainerImpl extends AbstractContainerSpiWrapper implements IConta
 	}
 
 	@Override
+	public void layoutLater() {
+		containerDelegate.layoutLater();
+	}
+
+	@Override
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
 		final int index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,

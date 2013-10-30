@@ -307,6 +307,11 @@ public final class ExpandCompositeImpl extends ControlWrapper implements IExpand
 	}
 
 	@Override
+	public void layoutLater() {
+		content.layoutLater();
+	}
+
+	@Override
 	public void addContainerRegistry(final IContainerRegistry registry) {
 		content.addContainerRegistry(registry);
 	}

@@ -161,6 +161,11 @@ public class PopupDialogImpl extends AbstractComponentSpiWrapper implements IPop
 	}
 
 	@Override
+	public void layoutLater() {
+		containerDelegate.layoutLater();
+	}
+
+	@Override
 	public Rectangle getClientArea() {
 		return getWidget().getClientArea();
 	}

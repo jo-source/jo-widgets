@@ -46,6 +46,12 @@ public interface IContainer extends IComponent, IContainerObservable, IRecursive
 
 	void layout();
 
+	/**
+	 * Layouts the container later in the event queue. If this method will be invoked more than once before the layout
+	 * occurs, only one layout invocation will be done on this container.
+	 */
+	void layoutLater();
+
 	void addContainerRegistry(IContainerRegistry registry);
 
 	void removeContainerRegistry(IContainerRegistry registry);

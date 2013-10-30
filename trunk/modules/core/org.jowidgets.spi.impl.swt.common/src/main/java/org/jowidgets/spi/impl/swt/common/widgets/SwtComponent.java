@@ -104,12 +104,12 @@ public class SwtComponent extends SwtWidget implements IComponentSpi {
 		getUiReference().addControlListener(new ControlListener() {
 			@Override
 			public void controlResized(final ControlEvent e) {
-				componentObservable.fireSizeChanged();
+				componentObservable.fireSizeChanged(getSize());
 			}
 
 			@Override
 			public void controlMoved(final ControlEvent e) {
-				componentObservable.firePositionChanged();
+				componentObservable.firePositionChanged(getPosition());
 			}
 		});
 

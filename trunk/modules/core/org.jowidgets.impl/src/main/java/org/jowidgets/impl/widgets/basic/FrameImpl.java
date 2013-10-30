@@ -211,6 +211,11 @@ public class FrameImpl extends AbstractFrameSpiWrapper implements IFrameUi {
 	}
 
 	@Override
+	public void layoutLater() {
+		containerDelegate.layoutLater();
+	}
+
+	@Override
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
 		final int index,
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
