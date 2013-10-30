@@ -96,6 +96,11 @@ public class ContainerWrapper extends ComponentWrapper implements IContainer {
 	}
 
 	@Override
+	public void layoutLater() {
+		getWidget().layoutLater();
+	}
+
+	@Override
 	public void removeAll() {
 		getWidget().removeAll();
 	}

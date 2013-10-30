@@ -28,39 +28,55 @@
 
 package org.jowidgets.spi.impl.controller;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IComponentListener;
 import org.jowidgets.common.widgets.controller.IComponentObservable;
+import org.jowidgets.util.Assert;
+import org.jowidgets.util.NullCompatibleEquivalence;
 
 public class ComponentObservable implements IComponentObservable {
 
 	private final Set<IComponentListener> listeners;
 
+	private Dimension lastSize;
+	private Position lastPosition;
+
 	public ComponentObservable() {
-		this.listeners = new HashSet<IComponentListener>();
+		this.listeners = new LinkedHashSet<IComponentListener>();
 	}
 
 	@Override
 	public final void addComponentListener(final IComponentListener componentListener) {
+		Assert.paramNotNull(componentListener, "componentListener");
 		listeners.add(componentListener);
 	}
 
 	@Override
 	public final void removeComponentListener(final IComponentListener componentListener) {
+		Assert.paramNotNull(componentListener, "componentListener");
 		listeners.remove(componentListener);
 	}
 
-	public final void fireSizeChanged() {
-		for (final IComponentListener listener : listeners) {
-			listener.sizeChanged();
+	public final void fireSizeChanged(final Dimension size) {
+		if (!NullCompatibleEquivalence.equals(size, lastSize)) {
+			lastSize = size;
+			for (final IComponentListener listener : new LinkedList<IComponentListener>(listeners)) {
+				listener.sizeChanged();
+			}
 		}
 	}
 
-	public final void firePositionChanged() {
-		for (final IComponentListener listener : listeners) {
-			listener.positionChanged();
+	public final void firePositionChanged(final Position position) {
+		if (!NullCompatibleEquivalence.equals(position, lastPosition)) {
+			lastPosition = position;
+			for (final IComponentListener listener : new LinkedList<IComponentListener>(listeners)) {
+				listener.positionChanged();
+			}
 		}
 	}
 

@@ -110,12 +110,12 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 		getUiReference().addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(final ComponentEvent e) {
-				componentObservable.fireSizeChanged();
+				componentObservable.fireSizeChanged(getSize());
 			}
 
 			@Override
 			public void componentMoved(final ComponentEvent e) {
-				componentObservable.firePositionChanged();
+				componentObservable.firePositionChanged(getPosition());
 			}
 		});
 

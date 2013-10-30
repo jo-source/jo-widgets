@@ -42,6 +42,7 @@ import org.jowidgets.api.controller.IContainerListener;
 import org.jowidgets.api.controller.IContainerRegistry;
 import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.controller.IListenerFactory;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
@@ -70,6 +71,7 @@ public class ContainerDelegate extends DisposableDelegate {
 	private final Map<IListenerFactory<?>, RecursiveListenenerManager<?>> listenenerManagers;
 
 	private boolean onRemoveByDispose;
+	private Runnable layoutRunnable;
 
 	public ContainerDelegate(final IContainerSpi containerSpi, final IContainer container) {
 		Assert.paramNotNull(containerSpi, "containerWidget");
@@ -270,6 +272,21 @@ public class ContainerDelegate extends DisposableDelegate {
 
 	public void removePopupDetectionListenerRecursive(final IListenerFactory<IPopupDetectionListener> listenerFactory) {
 		removeListenerRecursive(listenerFactory);
+	}
+
+	public void layoutLater() {
+		if (layoutRunnable == null) {
+			layoutRunnable = new Runnable() {
+				@Override
+				public void run() {
+					if (!container.isDisposed()) {
+						container.layout();
+					}
+					layoutRunnable = null;
+				}
+			};
+			Toolkit.getUiThreadAccess().invokeLater(layoutRunnable);
+		}
 	}
 
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
