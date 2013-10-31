@@ -67,10 +67,10 @@ final class RecursiveListenenerManager<LISTENER_TYPE> {
 	void dispose() {
 		container.removeContainerRegistry(containerRegistry);
 		if (rootListener != null) {
-			listenerRegistrationDelegate.removeListener(container, rootListener);
+			removeListener(container, rootListener);
 		}
 		for (final Entry<IControl, LISTENER_TYPE> entry : createdListeners.entrySet()) {
-			listenerRegistrationDelegate.removeListener(entry.getKey(), entry.getValue());
+			removeListener(entry.getKey(), entry.getValue());
 		}
 		createdListeners.clear();
 	}
@@ -86,17 +86,29 @@ final class RecursiveListenenerManager<LISTENER_TYPE> {
 					createdListeners.put(control, listener);
 				}
 			}
-			//else should never occur //TODO MG handle else (or think about it)
+			//else should never occur 
 		}
 
 		@Override
 		public void unregister(final IControl control) {
-			final LISTENER_TYPE listener = createdListeners.get(control);
+			final LISTENER_TYPE listener = createdListeners.remove(control);
 			if (listener != null) {
-				listenerRegistrationDelegate.removeListener(control, listener);
+				removeListener(control, listener);
 			}
 		}
 
+	}
+
+	private void removeListener(final IComponent component, final LISTENER_TYPE listener) {
+		if (!component.isDisposed()) {
+			try {
+				listenerRegistrationDelegate.removeListener(component, listener);
+			}
+			catch (final Exception e) {
+				//do nothing, maybe the ui reference was already disposed
+				//so it is no longer necessary to unregister the listnere
+			}
+		}
 	}
 
 	interface IListenerRegistrationDelegate<LISTENER_TYPE> {
