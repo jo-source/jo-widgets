@@ -91,7 +91,6 @@ public final class SingleThreadAccess implements ISingleThreadAccess {
 	 */
 	public synchronized void stop() {
 		if (running.getAndSet(true)) {
-
 			this.singleThread = new Thread(new EventLoop());
 			this.singleThread.setDaemon(true);
 		}
