@@ -32,6 +32,8 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public final class CollectionUtils {
 
@@ -40,6 +42,15 @@ public final class CollectionUtils {
 	public static <ELEMENT_TYPE> HashSet<ELEMENT_TYPE> createHashSet(final Iterable<? extends ELEMENT_TYPE> iterable) {
 		Assert.paramNotNull(iterable, "iterable");
 		final HashSet<ELEMENT_TYPE> result = new HashSet<ELEMENT_TYPE>();
+		for (final ELEMENT_TYPE element : iterable) {
+			result.add(element);
+		}
+		return result;
+	}
+
+	public static <ELEMENT_TYPE> List<ELEMENT_TYPE> createList(final Iterable<? extends ELEMENT_TYPE> iterable) {
+		Assert.paramNotNull(iterable, "iterable");
+		final List<ELEMENT_TYPE> result = new LinkedList<ELEMENT_TYPE>();
 		for (final ELEMENT_TYPE element : iterable) {
 			result.add(element);
 		}
