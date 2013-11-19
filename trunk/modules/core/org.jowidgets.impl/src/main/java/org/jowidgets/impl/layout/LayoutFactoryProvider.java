@@ -29,6 +29,7 @@
 package org.jowidgets.impl.layout;
 
 import org.jowidgets.api.layout.IBorderLayoutFactoryBuilder;
+import org.jowidgets.api.layout.ICachedFillLayout;
 import org.jowidgets.api.layout.IFillLayoutFactoryBuilder;
 import org.jowidgets.api.layout.IFlowLayoutFactoryBuilder;
 import org.jowidgets.api.layout.ILayoutFactory;
@@ -48,6 +49,7 @@ public class LayoutFactoryProvider implements ILayoutFactoryProvider {
 
 	private static final ILayoutFactory<ILayouter> NULL_LAYOUT_FACTORY = createNullLayoutFactory();
 	private static final ILayoutFactory<ILayouter> PREFERRED_SIZE_LAYOUT_FACTORY = createPreferredSizeLayoutFactory();
+	private static final ILayoutFactory<ICachedFillLayout> CACHED_FILL_LAYOUT_FACTORY = createChachedFillLayoutFactory();
 
 	private IMigLayoutToolkit migLayoutConstraintsToolkit;
 
@@ -79,6 +81,11 @@ public class LayoutFactoryProvider implements ILayoutFactoryProvider {
 	@Override
 	public IFillLayoutFactoryBuilder fillLayoutBuilder() {
 		return new FillLayoutFactoryBuilder();
+	}
+
+	@Override
+	public ILayoutFactory<ICachedFillLayout> cachedFillLayout() {
+		return CACHED_FILL_LAYOUT_FACTORY;
 	}
 
 	@Override
@@ -133,6 +140,15 @@ public class LayoutFactoryProvider implements ILayoutFactoryProvider {
 			@Override
 			public ILayouter create(final IContainer container) {
 				return new PreferredSizeLayout(container);
+			}
+		};
+	}
+
+	private static ILayoutFactory<ICachedFillLayout> createChachedFillLayoutFactory() {
+		return new ILayoutFactory<ICachedFillLayout>() {
+			@Override
+			public ICachedFillLayout create(final IContainer container) {
+				return new CachedFillLayoutImpl(container);
 			}
 		};
 	}
