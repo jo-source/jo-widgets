@@ -59,10 +59,10 @@ import org.jowidgets.common.widgets.controller.ITableColumnPopupEvent;
 import org.jowidgets.common.widgets.controller.ITableColumnResizeEvent;
 import org.jowidgets.common.widgets.controller.ITableSelectionListener;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractControlSpiWrapper;
 import org.jowidgets.spi.widgets.ITableSpi;
+import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
+import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 import org.jowidgets.util.EmptyCheck;
 
 public class TableImpl extends AbstractControlSpiWrapper implements ITable {

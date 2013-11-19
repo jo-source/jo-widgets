@@ -39,12 +39,12 @@ import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.command.ActionExecuter;
 import org.jowidgets.impl.command.ActionWidgetSync;
 import org.jowidgets.impl.command.IActionWidget;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractButtonSpiWrapper;
 import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.test.api.widgets.IButtonUi;
 import org.jowidgets.test.spi.widgets.IButtonUiSpi;
+import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
+import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 
 public class ButtonImpl extends AbstractButtonSpiWrapper implements IButtonUi, IActionWidget {
 

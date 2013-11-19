@@ -38,10 +38,10 @@ import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.descriptor.ICalendarDescriptor;
 import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractControlSpiWrapper;
 import org.jowidgets.spi.widgets.ICalendarSpi;
+import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
+import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 
 public class CalendarImpl extends AbstractControlSpiWrapper implements ICalendar {
 

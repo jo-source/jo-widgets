@@ -25,21 +25,18 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.widgets.basic.factory.internal.util;
+package org.jowidgets.tools.widgets.invoker;
 
 import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
 import org.jowidgets.common.widgets.IComponentCommon;
 
-public final class ColorSettingsInvoker {
+public final class VisibiliySettingsInvoker {
 
-	private ColorSettingsInvoker() {}
+	private VisibiliySettingsInvoker() {}
 
-	public static void setColors(final IComponentSetup setup, final IComponentCommon widget) {
-		if (setup.getForegroundColor() != null) {
-			widget.setForegroundColor(setup.getForegroundColor());
-		}
-		if (setup.getBackgroundColor() != null) {
-			widget.setBackgroundColor(setup.getBackgroundColor());
+	public static void setVisibility(final IComponentSetup setup, final IComponentCommon widget) {
+		if (setup.isVisible() != null) {
+			widget.setVisible(setup.isVisible().booleanValue());
 		}
 	}
 

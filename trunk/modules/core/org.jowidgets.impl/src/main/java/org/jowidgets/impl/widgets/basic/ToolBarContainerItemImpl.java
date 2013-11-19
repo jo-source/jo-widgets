@@ -40,10 +40,10 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.impl.model.item.ContainerItemModelBuilder;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.LayoutSettingsInvoker;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.spi.widgets.IToolBarContainerItemSpi;
+import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
+import org.jowidgets.tools.widgets.invoker.LayoutSettingsInvoker;
+import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 import org.jowidgets.util.Assert;
 
 public class ToolBarContainerItemImpl extends ContainerImpl implements IToolBarContainerItem {

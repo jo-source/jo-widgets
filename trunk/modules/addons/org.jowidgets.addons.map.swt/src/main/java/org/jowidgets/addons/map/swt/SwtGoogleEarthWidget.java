@@ -38,8 +38,8 @@ import org.jowidgets.addons.map.common.impl.GoogleEarth;
 import org.jowidgets.addons.map.common.widget.IMapWidget;
 import org.jowidgets.addons.map.common.widget.IMapWidgetBlueprint;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
+import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
+import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 
 final class SwtGoogleEarthWidget extends ControlWrapper implements IMapWidget {

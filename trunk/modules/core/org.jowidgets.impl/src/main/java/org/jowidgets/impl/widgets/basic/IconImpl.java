@@ -35,10 +35,10 @@ import org.jowidgets.api.widgets.IIcon;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.descriptor.setup.IIconSetup;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractIconSpiWrapper;
 import org.jowidgets.spi.widgets.IIconSpi;
+import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
+import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 
 public class IconImpl extends AbstractIconSpiWrapper implements IIcon {
 

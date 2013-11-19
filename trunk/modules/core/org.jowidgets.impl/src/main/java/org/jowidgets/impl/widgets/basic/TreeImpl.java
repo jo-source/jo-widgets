@@ -55,8 +55,6 @@ import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.base.delegate.TreeContainerDelegate;
 import org.jowidgets.impl.event.TreePopupEvent;
 import org.jowidgets.impl.event.TreeSelectionEvent;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractControlSpiWrapper;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
 import org.jowidgets.spi.widgets.ITreeSpi;
@@ -64,6 +62,8 @@ import org.jowidgets.spi.widgets.controller.ITreeSelectionListenerSpi;
 import org.jowidgets.tools.controller.TreeObservable;
 import org.jowidgets.tools.controller.TreePopupDetectionObservable;
 import org.jowidgets.tools.controller.TreeSelectionObservable;
+import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
+import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 import org.jowidgets.util.EmptyCheck;
 
 public class TreeImpl extends AbstractControlSpiWrapper implements ITree {

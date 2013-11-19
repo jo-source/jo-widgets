@@ -36,10 +36,10 @@ import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.descriptor.setup.ITextFieldSetup;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractInputControlSpiWrapper;
 import org.jowidgets.spi.widgets.ITextControlSpi;
+import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
+import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 
 public class TextFieldImpl extends AbstractInputControlSpiWrapper implements ITextControl {
 
