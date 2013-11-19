@@ -105,6 +105,29 @@ public interface ILayoutFactoryProvider {
 	IFillLayoutFactoryBuilder fillLayoutBuilder();
 
 	/**
+	 * Creates a 'CachedFillLayout'
+	 * 
+	 * 'CachedFillLayout' allows only one visible control in the container when calculation is done.
+	 * If more than one control is visible, it will be ignored for the layouting.
+	 * 
+	 * layout(): The size of the visible control is set to the containers clientAreaSize
+	 * 
+	 * getPreferredSize(): Returns the preferred size of the visible control
+	 * getMinSize(): Returns the min size of the visible control
+	 * getMaxSize(): returns new Dimension(Short.MAX_VALUE, Short.MAX_VALUE)
+	 * 
+	 * The PreferredSize, MinSize() and MaxSize() will be cached, until clear cache will be invoked
+	 * 
+	 * In many cases, the min, max and pref size of the child container will not change until the child container
+	 * has not been changed by adding or removing children. So using this layout manager as a parent for a complex
+	 * layout can improve performance extremely. The tradeoff is, that the programmer has to take care for container
+	 * changes itself and clearing the cache.
+	 * 
+	 * @return A layout factory that produces 'CachedFillLayouts'
+	 */
+	ILayoutFactory<ICachedFillLayout> cachedFillLayout();
+
+	/**
 	 * Creates 'BorderLayout'
 	 * 
 	 * @return A layout factory that produces 'BorderLayouts'
