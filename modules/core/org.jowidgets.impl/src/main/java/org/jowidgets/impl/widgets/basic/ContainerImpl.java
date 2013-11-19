@@ -51,10 +51,10 @@ import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.impl.base.delegate.ComponentDelegate;
 import org.jowidgets.impl.base.delegate.ContainerDelegate;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.LayoutSettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractContainerSpiWrapper;
 import org.jowidgets.spi.widgets.IContainerSpi;
+import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
+import org.jowidgets.tools.widgets.invoker.LayoutSettingsInvoker;
 import org.jowidgets.util.Assert;
 
 public class ContainerImpl extends AbstractContainerSpiWrapper implements IContainer {

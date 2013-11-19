@@ -37,13 +37,13 @@ import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.descriptor.ICanvasDescriptor;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.event.PaintObservable;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.basic.graphics.GraphicContextAdapter;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractCanvasSpiWrapper;
 import org.jowidgets.spi.graphics.IGraphicContextSpi;
 import org.jowidgets.spi.graphics.IPaintListenerSpi;
 import org.jowidgets.spi.widgets.ICanvasSpi;
+import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
+import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 
 public final class CanvasImpl extends AbstractCanvasSpiWrapper implements ICanvas {
 

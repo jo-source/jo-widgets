@@ -71,8 +71,6 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.base.delegate.ModelViewIndexConverter;
 import org.jowidgets.impl.event.ListItemObservable;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractToolBarSpiWrapper;
 import org.jowidgets.spi.widgets.IToolBarButtonSpi;
 import org.jowidgets.spi.widgets.IToolBarContainerItemSpi;
@@ -81,6 +79,8 @@ import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 import org.jowidgets.spi.widgets.IToolBarSpi;
 import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
 import org.jowidgets.tools.controller.ListModelAdapter;
+import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
+import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 import org.jowidgets.util.Assert;
 
 public class ToolBarImpl extends AbstractToolBarSpiWrapper implements IToolBar, IListItemObservable {

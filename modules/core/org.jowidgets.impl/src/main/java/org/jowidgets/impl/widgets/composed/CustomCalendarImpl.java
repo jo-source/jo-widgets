@@ -46,14 +46,14 @@ import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.common.widgets.controller.IMouseEvent;
 import org.jowidgets.common.widgets.layout.ILayouter;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.composed.MonthComposite.IMouseoverListener;
 import org.jowidgets.tools.controller.InputObservable;
 import org.jowidgets.tools.controller.MouseAdapter;
 import org.jowidgets.tools.powo.JoButton;
 import org.jowidgets.tools.powo.JoComposite;
 import org.jowidgets.tools.powo.JoTextLabel;
+import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
+import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.Assert;
 

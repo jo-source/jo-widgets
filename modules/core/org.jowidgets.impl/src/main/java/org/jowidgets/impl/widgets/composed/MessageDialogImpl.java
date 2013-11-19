@@ -36,9 +36,9 @@ import org.jowidgets.api.widgets.descriptor.setup.IMessageDialogSetup;
 import org.jowidgets.common.widgets.IButtonCommon;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.tools.controller.WindowAdapter;
+import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
 import org.jowidgets.tools.widgets.wrapper.ComponentWrapper;
 
 public class MessageDialogImpl extends ComponentWrapper implements IMessageDialog {

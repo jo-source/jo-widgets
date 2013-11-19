@@ -48,12 +48,12 @@ import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.event.TabSelectionEvent;
 import org.jowidgets.impl.spi.SpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.ITabItemBluePrintSpi;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractTabFolderSpiWrapper;
 import org.jowidgets.spi.widgets.ITabFolderSpi;
 import org.jowidgets.spi.widgets.ITabItemSpi;
 import org.jowidgets.tools.types.VetoHolder;
+import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
+import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.TypeCast;
 

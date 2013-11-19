@@ -57,14 +57,14 @@ import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.impl.base.delegate.ContainerDelegate;
 import org.jowidgets.impl.base.delegate.DisplayDelegate;
 import org.jowidgets.impl.base.delegate.WindowDelegate;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.LayoutSettingsInvoker;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractFrameSpiWrapper;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.test.api.widgets.IFrameUi;
 import org.jowidgets.tools.controller.ListModelAdapter;
 import org.jowidgets.tools.controller.ShowingStateObservable;
+import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
+import org.jowidgets.tools.widgets.invoker.LayoutSettingsInvoker;
+import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 import org.jowidgets.util.Assert;
 
 public class FrameImpl extends AbstractFrameSpiWrapper implements IFrameUi {

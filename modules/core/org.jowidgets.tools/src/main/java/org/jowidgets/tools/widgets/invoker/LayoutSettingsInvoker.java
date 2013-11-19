@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.impl.widgets.basic.factory.internal.util;
+package org.jowidgets.tools.widgets.invoker;
 
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.descriptor.setup.IContainerSetup;

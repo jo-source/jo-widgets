@@ -37,10 +37,10 @@ import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.ILevelMeter;
 import org.jowidgets.api.widgets.descriptor.setup.ILevelMeterSetup;
 import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.ColorSettingsInvoker;
-import org.jowidgets.impl.widgets.basic.factory.internal.util.VisibiliySettingsInvoker;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.widgets.blueprint.BPF;
+import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
+import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 
 public final class LevelMeterImpl extends ControlWrapper implements ILevelMeter {
