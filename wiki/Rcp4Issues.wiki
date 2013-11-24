@@ -13,7 +13,7 @@ To make it work, do the following steps:
 
 == Example 1 ==
 
-This example shows how to use jowidgets with the (default) workbench SWT renderer. Because of that, there is a dependendy to the SWT SPI implementation of jowidgets (SwtToJo). So example 1 is not ideal, if you want to make single sourcing, but it shows how to use the jowidgets api in an simple way.
+This example shows how to use jowidgets with the (default) workbench SWT renderer. Because of that, there is a dependendy to the SWT SPI implementation of jowidgets (SwtToJo). So example 1 is not ideal, if you want to make single sourcing, but it shows how to use the jowidgets APIin a simple way.
 
 == Example 2 ==
 
