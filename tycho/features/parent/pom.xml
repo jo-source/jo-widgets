@@ -16,6 +16,10 @@
 		<module>../org.jowidgets.addons.feature</module>
 		<module>../org.jowidgets.plugins.feature</module>
 		<module>../org.jowidgets.all.feature</module>
+		<module>../org.jowidgets.api.feature</module>
+		<module>../org.jowidgets.impl.feature</module>
+		<module>../org.jowidgets.impl.swt.feature</module>
+		<module>../org.jowidgets.impl.swing.feature</module>
 	</modules>
 
 </project>

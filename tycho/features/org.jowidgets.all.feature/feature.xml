@@ -28,4 +28,20 @@
          id="org.jowidgets.plugins.feature"
          version="0.0.0"/>
 		 
+	<includes
+         id="org.jowidgets.api.feature"
+         version="0.0.0"/>
+		 
+	<includes
+         id="org.jowidgets.impl.feature"
+         version="0.0.0"/>
+		 
+	<includes
+         id="org.jowidgets.impl.swt.feature"
+         version="0.0.0"/>
+		 
+	<includes
+         id="org.jowidgets.impl.swing.feature"
+         version="0.0.0"/>
+		 
 </feature>
