@@ -1,0 +1,3 @@
+= jowidgets and Eclipse RCP 4.x =
+
+There are two examples how to use jowidgets with Eclipse RCP 4.x. They can be found here 
