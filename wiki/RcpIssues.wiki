@@ -1,8 +1,8 @@
 = jowidgets and Eclipse RCP 3.x =
 
-== Using the Eclipse 3.x jowidgets workbench implementation ==
+== The jowidgets workbench ==
 
-An example (the common part) how to do that can be found here: [http://code.google.com/p/jo-widgets/source/browse/#svn%2Ftrunk%2Fmodules%2Fexamples%2Forg.jowidgets.examples.common%2Fsrc%2Fmain%2Fjava%2Forg%2Fjowidgets%2Fexamples%2Fcommon%2Fworkbench%2Fdemo3 WorkbenchDemo3] This example can be started with an workbench implementation and an jowidgets spi implementation. An example that uses the default workbench implementation and swing spi implementation can be found here: [http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.swing/src/main/java/org/jowidgets/examples/swing/SiwngWorkbenchDemo3Starter.java SiwngWorkbenchDemo3Starter.java]. 
+Jowidgets provides a workbench api to logigcal define a workbench with application, components ans views. An example (the common part) how to do that can be found here: [http://code.google.com/p/jo-widgets/source/browse/#svn%2Ftrunk%2Fmodules%2Fexamples%2Forg.jowidgets.examples.common%2Fsrc%2Fmain%2Fjava%2Forg%2Fjowidgets%2Fexamples%2Fcommon%2Fworkbench%2Fdemo3 WorkbenchDemo3] This example can be started with an workbench implementation and an jowidgets spi implementation. An example that uses the default workbench implementation and swing spi implementation can be found here: [http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.swing/src/main/java/org/jowidgets/examples/swing/SiwngWorkbenchDemo3Starter.java SiwngWorkbenchDemo3Starter.java]. 
 There is also an workbench implementation [http://code.google.com/p/jo-widgets/source/browse/trunk/#trunk%2Ftycho%2Fplugins%2Forg.jowidgets.workbench.impl.rcp.plugin RCPWorkbenchImpl] that uses the Eclipse workbench to render the defined workbench components. 
 
 ==The RCP Example==
