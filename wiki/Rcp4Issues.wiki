@@ -4,7 +4,7 @@ There are two examples how to use jowidgets with Eclipse RCP 4.x. They can be fo
 
 To make it work, do the following steps
 
-* Generell Information how to create Eclispe 4.x model based Applications can be found here [http://www.vogella.com/articles/EclipseRCP/article.html Vogella Eclipse RCP Tutorial]
-* Check out all Projects
-* Import them into eclipse
-* Set the target Definition {{{org.jowidgets.examples.rcp.target}}} as target platform
+  * Generell Information how to create Eclispe 4.x model based Applications can be found here [http://www.vogella.com/articles/EclipseRCP/article.html Vogella Eclipse RCP Tutorial]
+  * Check out the example projects from [http://code.google.com/p/jo-widgets/source/browse/#svn%2Ftrunk%2Frcp%2Fexamples here]
+  * Import them into eclipse
+  * Set the target Definition {{{org.jowidgets.examples.rcp.target}}} as target platform
