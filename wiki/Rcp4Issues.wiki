@@ -17,4 +17,6 @@ This example shows how to use jowidgets with the (default) workbench SWT rendere
 
 == Example 2 ==
 
-In this example the SWT dependency from the Example2Part was removed. For that a custom PartRenderer was created that was derived from the ContributedPartRenderer of the SWT Workbench Renderer. This JoToSwtPartRenderer let the created composite implement an {{{IProvider<IComposite>}}} that can be used by jowidgets. So the example part needs no dependency to SWT or to the swt renderer. The project {{{org.jowidgets.examples.rcp.example2.swt}}} has the launcher to start the model of {{{org.jowidgets.examples.rcp.example2.common}}} with SWT. For other renderers (e.g. Swing) this can be handeled in the same way.
+In this example the SWT dependency from the Example2Part was removed. For that a custom PartRenderer was created that was derived from the ContributedPartRenderer of the SWT Workbench Renderer. This SwtToJoPartRenderer let the created composite implement an {{{IProvider<IComposite>}}} that can be used to receive the jowidgets composite. So the example part needs no dependency to SWT. The project {{{org.jowidgets.examples.rcp.example2.swt}}} has the launcher to start the model of {{{org.jowidgets.examples.rcp.example2.common}}} with SWT. For other renderers (e.g. Swing) this can be handeled in the same way. 
+
+If there will be created a JowidgetsEclipseWorkbench renderer it will be even possible to use a {{{IComposite}}} instead of an {{{IProvider<IComposite>}}}. This is planned to do in future.
