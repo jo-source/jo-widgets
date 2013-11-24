@@ -1,6 +1,6 @@
-= jowidgets and Eclipse RCP =
+= jowidgets and Eclipse RCP 3.x =
 
-Using jowidgets in Eclipse RCP can be done on (at least) two different ways:
+Using jowidgets in Eclipse RCP 3.x can be done on (at least) two different ways:
 
 ==Method 1== 
 
