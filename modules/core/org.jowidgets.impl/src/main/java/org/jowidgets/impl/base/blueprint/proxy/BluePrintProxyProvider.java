@@ -31,6 +31,7 @@ import java.lang.reflect.Proxy;
 
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
+import org.jowidgets.classloading.api.SharedClassLoader;
 import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.impl.base.blueprint.proxy.internal.BluePrintProxyInvocationHandler;
@@ -51,7 +52,7 @@ public class BluePrintProxyProvider<BLUE_PRINT_TYPE extends ISetupBuilder<?>> {
 		final BluePrintProxyInvocationHandler invocationHandler = new BluePrintProxyInvocationHandler();
 
 		proxy = (BLUE_PRINT_TYPE) Proxy.newProxyInstance(
-				bluePrintType.getClassLoader(),
+				new BluePrintProxyClassLoader(bluePrintType.getClassLoader()),
 				new Class[] {bluePrintType},
 				invocationHandler);
 
@@ -61,6 +62,27 @@ public class BluePrintProxyProvider<BLUE_PRINT_TYPE extends ISetupBuilder<?>> {
 
 	public BLUE_PRINT_TYPE getBluePrint() {
 		return proxy;
+	}
+
+	private final class BluePrintProxyClassLoader extends ClassLoader {
+
+		private final ClassLoader original;
+
+		private BluePrintProxyClassLoader(final ClassLoader classLoader) {
+			this.original = classLoader;
+		}
+
+		@Override
+		protected Class<?> findClass(final String name) throws ClassNotFoundException {
+			try {
+				return original.loadClass(name);
+			}
+			catch (final Exception e) {
+				//Nothing to do, this loader may not know the class
+			}
+			return SharedClassLoader.getCompositeClassLoader().loadClass(name);
+		}
+
 	}
 
 }
