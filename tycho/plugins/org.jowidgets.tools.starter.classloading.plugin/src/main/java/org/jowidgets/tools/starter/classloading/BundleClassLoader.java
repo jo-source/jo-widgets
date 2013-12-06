@@ -31,17 +31,18 @@ package org.jowidgets.tools.starter.classloading;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
-
 import org.jowidgets.util.Assert;
 import org.osgi.framework.Bundle;
 
 public final class BundleClassLoader extends ClassLoader {
 
 	private final Bundle bundle;
+	private final long bundleId;
 
 	public BundleClassLoader(final Bundle bundle) {
 		Assert.paramNotNull(bundle, "bundle");
 		this.bundle = bundle;
+		this.bundleId = bundle.getBundleId();
 	}
 
 	@Override
@@ -58,6 +59,32 @@ public final class BundleClassLoader extends ClassLoader {
 	@Override
 	protected Enumeration<URL> findResources(final String name) throws IOException {
 		return bundle.getResources(name);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (bundleId ^ (bundleId >>> 32));
+		return result;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof BundleClassLoader)) {
+			return false;
+		}
+		final BundleClassLoader other = (BundleClassLoader) obj;
+		if (bundleId != other.bundleId) {
+			return false;
+		}
+		return true;
 	}
 
 }
