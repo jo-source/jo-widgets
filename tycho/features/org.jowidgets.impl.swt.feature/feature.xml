@@ -2,7 +2,7 @@
 <feature
     id="org.jowidgets.impl.swt.feature"
     label="jowidgets swt implementation feature"
-    version="0.28.1.qualifier">
+    version="0.28.1">
 
 	<description url="http://www.example.com/description">
 		Holds the implementation bundles including the swt implementation
