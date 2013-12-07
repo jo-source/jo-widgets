@@ -13,9 +13,9 @@
 	</properties>
 
 	<scm>
-		<connection>scm:svn:http://jo-widgets.googlecode.com/svn/tags/0.28.0/parent</connection>
-		<developerConnection>scm:svn:https://jo-widgets.googlecode.com/svn/tags/0.28.0/parent</developerConnection>
-		<url>http://jo-widgets.googlecode.com/svn/tags/0.28.0/parent</url>
+		<connection>scm:svn:http://jo-widgets.googlecode.com/svn/branches/0.28-MAINTENANCE/parent</connection>
+		<developerConnection>scm:svn:https://jo-widgets.googlecode.com/svn/branches/0.28-MAINTENANCE/parent</developerConnection>
+		<url>http://jo-widgets.googlecode.com/svn/branches/0.28-MAINTENANCE/parent</url>
 	</scm>
 
 
