@@ -28,32 +28,21 @@
 
 package org.jowidgets.classloading.api;
 
-import java.util.List;
-
 public interface ISharedClassLoader {
-
-	/**
-	 * Adds a class loader to the shared class loader
-	 * 
-	 * @param classLoaderReference The class loader reference to add
-	 */
-	void addClassLoader(IClassLoaderReference classLoaderReference);
 
 	/**
 	 * Adds a class loader to the shared class loader
 	 * 
 	 * @param classLoader The class loader to add
 	 */
-	void addClassLoader(ClassLoader classLoader);
+	void addClassLoader(IClassLoader classLoader);
 
 	/**
-	 * Gets all class loaders found for a specific class name or an empty list if no loader was found
+	 * Removes a class loader from the shared class loader
 	 * 
-	 * @param className The class name to get the loaders for
-	 * 
-	 * @return A list will all found class loaders
+	 * @param classLoader The class loader to remove
 	 */
-	List<IClassLoaderReference> getClassLoaders(String className);
+	void removeClassLoader(IClassLoader classLoader);
 
 	/**
 	 * Gets the composite class loader that uses all registered class loaders to resolve

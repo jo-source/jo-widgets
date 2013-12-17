@@ -31,10 +31,12 @@ package org.jowidgets.tools.starter.classloading;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
+
+import org.jowidgets.classloading.api.IClassLoader;
 import org.jowidgets.util.Assert;
 import org.osgi.framework.Bundle;
 
-public final class BundleClassLoader extends ClassLoader {
+public final class BundleClassLoader implements IClassLoader {
 
 	private final Bundle bundle;
 	private final long bundleId;
@@ -46,18 +48,17 @@ public final class BundleClassLoader extends ClassLoader {
 	}
 
 	@Override
-	protected Class<?> findClass(final String name) throws ClassNotFoundException {
+	public Class<?> findClass(final String name) throws ClassNotFoundException {
 		return bundle.loadClass(name);
 	}
 
 	@Override
-	protected URL findResource(final String name) {
+	public URL findResource(final String name) {
 		return bundle.getResource(name);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	protected Enumeration<URL> findResources(final String name) throws IOException {
+	public Enumeration<URL> findResources(final String name) throws IOException {
 		return bundle.getResources(name);
 	}
 
