@@ -30,7 +30,6 @@ package org.jowidgets.classloading.api;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -53,26 +52,26 @@ public final class SharedClassLoader {
 	/**
 	 * Adds a class loader to the shared class loader
 	 * 
-	 * @param classLoaderReference The class loader reference to add
+	 * @param classLoader The class loader to add
 	 */
-	public static void addClassLoader(final IClassLoaderReference classLoaderReference) {
-		getInstance().addClassLoader(classLoaderReference);
+	public static void addClassLoader(final IClassLoader classLoader) {
+		getInstance().addClassLoader(classLoader);
 	}
 
 	/**
-	 * Adds a class loader to the shared class loader
+	 * Removes a class loader from the shared class loader
 	 * 
-	 * @param classLoader The class loader to add
+	 * @param classLoader The class loader to remove
 	 */
-	public static void addClassLoader(final ClassLoader classLoader) {
-		getInstance().addClassLoader(classLoader);
+	public static void removeClassLoader(final IClassLoader classLoader) {
+		getInstance().removeClassLoader(classLoader);
 	}
 
 	/**
 	 * Gets the composite class loader that uses all registered class loaders to resolve
 	 * the class to load.
 	 * The shared class loader always uses the SystemClassLoader and the ThreadContextLocalClassLoader
-	 * as default (e.g. if no classLoader was added)
+	 * as default (e.g. if no classloader was added)
 	 * 
 	 * @return The composite class loader
 	 */
@@ -82,45 +81,26 @@ public final class SharedClassLoader {
 
 	private static final class SharedClassLoaderImpl implements ISharedClassLoader {
 
-		private final Set<IClassLoaderReference> classLoaders;
+		private final Set<IClassLoader> classLoaders;
 		private final ClassLoader compositeClassLoader;
 
 		private SharedClassLoaderImpl() {
-			this.classLoaders = new LinkedHashSet<IClassLoaderReference>();
+			this.classLoaders = new LinkedHashSet<IClassLoader>();
 			this.compositeClassLoader = new CompositeClassLoaderImpl();
-			addClassLoader(ClassLoader.getSystemClassLoader());
+			addClassLoader(ClassLoaderAdapter.create(ClassLoader.getSystemClassLoader()));
 			addClassLoader(new CurrentThreadClassLoader());
 		}
 
 		@Override
-		public void addClassLoader(final IClassLoaderReference classLoaderReference) {
-			Assert.paramNotNull(classLoaderReference, "classLoaderReference");
-			addClassLoaderImpl(classLoaderReference);
-		}
-
-		@Override
-		public void addClassLoader(final ClassLoader classLoader) {
-			addClassLoaderImpl(ClassLoaderReference.create(classLoader));
-		}
-
-		private synchronized void addClassLoaderImpl(final IClassLoaderReference classLoader) {
+		public void addClassLoader(final IClassLoader classLoader) {
 			Assert.paramNotNull(classLoader, "classLoader");
 			classLoaders.add(classLoader);
 		}
 
 		@Override
-		public List<IClassLoaderReference> getClassLoaders(final String className) {
-			final List<IClassLoaderReference> result = new LinkedList<IClassLoaderReference>();
-			for (final IClassLoaderReference classLoaderRef : new LinkedList<IClassLoaderReference>(classLoaders)) {
-				try {
-					classLoaderRef.getClassLoader().loadClass(className);
-					result.add(classLoaderRef);
-				}
-				catch (final Exception e) {
-					//Nothing to do, this loader may not know the class
-				}
-			}
-			return Collections.unmodifiableList(result);
+		public void removeClassLoader(final IClassLoader classLoader) {
+			Assert.paramNotNull(classLoader, "classLoader");
+			classLoaders.remove(classLoader);
 		}
 
 		@Override
@@ -132,9 +112,9 @@ public final class SharedClassLoader {
 
 			@Override
 			protected Class<?> findClass(final String name) throws ClassNotFoundException {
-				for (final IClassLoaderReference classLoaderRef : new LinkedList<IClassLoaderReference>(classLoaders)) {
+				for (final IClassLoader classLoader : new LinkedList<IClassLoader>(classLoaders)) {
 					try {
-						return classLoaderRef.getClassLoader().loadClass(name);
+						return classLoader.findClass(name);
 					}
 					catch (final Exception e) {
 						//Nothing to do, this loader may not know the class
@@ -145,9 +125,12 @@ public final class SharedClassLoader {
 
 			@Override
 			protected URL findResource(final String name) {
-				for (final IClassLoaderReference classLoaderRef : new LinkedList<IClassLoaderReference>(classLoaders)) {
+				for (final IClassLoader classLoader : new LinkedList<IClassLoader>(classLoaders)) {
 					try {
-						return classLoaderRef.getClassLoader().getResource(name);
+						final URL result = classLoader.findResource(name);
+						if (result != null) {
+							return result;
+						}
 					}
 					catch (final Exception e) {
 						//Nothing to do, this loader may not know the class
@@ -159,9 +142,9 @@ public final class SharedClassLoader {
 			@Override
 			protected Enumeration<URL> findResources(final String name) throws IOException {
 				final List<URL> result = new LinkedList<URL>();
-				for (final IClassLoaderReference classLoaderRef : new LinkedList<IClassLoaderReference>(classLoaders)) {
+				for (final IClassLoader classLoader : new LinkedList<IClassLoader>(classLoaders)) {
 					try {
-						final Enumeration<URL> resources = classLoaderRef.getClassLoader().getResources(name);
+						final Enumeration<URL> resources = classLoader.findResources(name);
 						CollectionUtils.addFromEnumerationToCollection(result, resources);
 					}
 					catch (final Exception e) {
@@ -175,10 +158,10 @@ public final class SharedClassLoader {
 
 	}
 
-	private static final class CurrentThreadClassLoader extends ClassLoader {
+	private static final class CurrentThreadClassLoader implements IClassLoader {
 
 		@Override
-		protected Class<?> findClass(final String name) throws ClassNotFoundException {
+		public Class<?> findClass(final String name) throws ClassNotFoundException {
 			final ClassLoader tccl = Thread.currentThread().getContextClassLoader();
 			if (tccl != null) {
 				return tccl.loadClass(name);
@@ -189,7 +172,7 @@ public final class SharedClassLoader {
 		}
 
 		@Override
-		protected URL findResource(final String name) {
+		public URL findResource(final String name) {
 			final ClassLoader tccl = Thread.currentThread().getContextClassLoader();
 			if (tccl != null) {
 				return tccl.getResource(name);
@@ -200,7 +183,7 @@ public final class SharedClassLoader {
 		}
 
 		@Override
-		protected Enumeration<URL> findResources(final String name) throws IOException {
+		public Enumeration<URL> findResources(final String name) throws IOException {
 			final ClassLoader tccl = Thread.currentThread().getContextClassLoader();
 			if (tccl != null) {
 				return tccl.getResources(name);
