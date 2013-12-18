@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, grossmann
+ * Copyright (c) 2013, Michael
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,11 +28,16 @@
 
 package org.jowidgets.classloading.api;
 
-import org.jowidgets.util.ITypedKey;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Enumeration;
 
-public interface IClassLoaderReference {
+public interface IClassLoader {
 
-	ClassLoader getClassLoader();
+	Class<?> findClass(String name) throws ClassNotFoundException;
 
-	<PROPERTY_TYPE> PROPERTY_TYPE getProperty(ITypedKey<PROPERTY_TYPE> key);
+	URL findResource(String name);
+
+	Enumeration<URL> findResources(final String name) throws IOException;
+
 }
