@@ -2,7 +2,7 @@
 <feature
     id="org.jowidgets.api.feature"
     label="jowidgets api feature"
-    version="0.28.2.qualifier">
+    version="0.28.3.qualifier">
 
 	<description url="http://www.example.com/description">
 		Holds the core api bundles independend from the spi implementation
