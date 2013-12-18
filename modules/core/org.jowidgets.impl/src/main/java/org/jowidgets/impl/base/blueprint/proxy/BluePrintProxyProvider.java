@@ -28,6 +28,8 @@
 package org.jowidgets.impl.base.blueprint.proxy;
 
 import java.lang.reflect.Proxy;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
@@ -38,6 +40,8 @@ import org.jowidgets.impl.base.blueprint.proxy.internal.BluePrintProxyInvocation
 import org.jowidgets.util.Assert;
 
 public class BluePrintProxyProvider<BLUE_PRINT_TYPE extends ISetupBuilder<?>> {
+
+	private static final Map<ClassLoader, BluePrintProxyClassLoader> BLUE_PRINT_CLASS_LOADERS = new HashMap<ClassLoader, BluePrintProxyClassLoader>();
 
 	private final BLUE_PRINT_TYPE proxy;
 
@@ -52,7 +56,7 @@ public class BluePrintProxyProvider<BLUE_PRINT_TYPE extends ISetupBuilder<?>> {
 		final BluePrintProxyInvocationHandler invocationHandler = new BluePrintProxyInvocationHandler();
 
 		proxy = (BLUE_PRINT_TYPE) Proxy.newProxyInstance(
-				new BluePrintProxyClassLoader(bluePrintType.getClassLoader()),
+				getBluePrintClassLoader(bluePrintType.getClassLoader()),
 				new Class[] {bluePrintType},
 				invocationHandler);
 
@@ -64,7 +68,16 @@ public class BluePrintProxyProvider<BLUE_PRINT_TYPE extends ISetupBuilder<?>> {
 		return proxy;
 	}
 
-	private final class BluePrintProxyClassLoader extends ClassLoader {
+	private static BluePrintProxyClassLoader getBluePrintClassLoader(final ClassLoader original) {
+		BluePrintProxyClassLoader result = BLUE_PRINT_CLASS_LOADERS.get(original);
+		if (result == null) {
+			result = new BluePrintProxyClassLoader(original);
+			BLUE_PRINT_CLASS_LOADERS.put(original, result);
+		}
+		return result;
+	}
+
+	private static final class BluePrintProxyClassLoader extends ClassLoader {
 
 		private final ClassLoader original;
 
