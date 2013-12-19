@@ -48,7 +48,7 @@ final class AnimationRunnerBuilderImpl implements IAnimationRunnerBuilder {
 	private ScheduledExecutorService executor;
 
 	AnimationRunnerBuilderImpl() {
-		this.delay = 100;
+		this.delay = 200;
 		this.timeUnit = TimeUnit.MILLISECONDS;
 	}
 

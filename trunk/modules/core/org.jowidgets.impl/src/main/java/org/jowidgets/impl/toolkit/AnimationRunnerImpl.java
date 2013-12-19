@@ -32,7 +32,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -109,31 +108,20 @@ final class AnimationRunnerImpl implements IAnimationRunner {
 					}
 				}
 
-				final CountDownLatch latch = new CountDownLatch(currentEvents.size());
-
 				for (final Tuple<Runnable, ICallback<Void>> event : currentEvents) {
 					uiThreadAccess.invokeLater(new Runnable() {
 						@Override
 						public void run() {
 							event.getFirst().run();
-							latch.countDown();
+							final ICallback<Void> callback = event.getSecond();
+							if (callback != null) {
+								callback.call(null);
+							}
 						}
 					});
+
 				}
 
-				try {
-					latch.await();
-				}
-				catch (final InterruptedException e) {
-					throw new RuntimeException(e);
-				}
-
-				for (final Tuple<Runnable, ICallback<Void>> event : currentEvents) {
-					final ICallback<Void> callback = event.getSecond();
-					if (callback != null) {
-						callback.call(null);
-					}
-				}
 			}
 		}
 	}
