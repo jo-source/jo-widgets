@@ -37,7 +37,7 @@ public interface IAnimationScheduler {
 	 * This method may be invoked in any thread.
 	 * 
 	 * @param animationStep The animation step to run (must not be null). This will be invoked in the ui thread
-	 * @param callback A callback that will invoked in the animation thread after the animation step was executed
+	 * @param callback A callback that will invoked in the ui thread after the animation step was executed
 	 */
 	void run(Runnable animationStep, ICallback<Void> callback);
 
