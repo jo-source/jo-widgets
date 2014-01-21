@@ -29,6 +29,8 @@ package org.jowidgets.spi.impl.swing.common.util;
 
 import java.awt.Font;
 
+import javax.swing.text.StyleContext;
+
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.util.Assert;
 
@@ -71,7 +73,10 @@ public final class FontProvider {
 		final int size = newSize != null ? (newSize.intValue() * 100 / 72) : baseFont.getSize();
 		final int style = newStyle != null ? newStyle.intValue() : baseFont.getStyle();
 
-		return new Font(fontName, style, size);
+		//Workaround because otherwise composite Font's wont't work
+		//http://elliotth.blogspot.de/2007/04/far-east-asian-fonts-with-java-7-on.html
+		//return new Font(fontName, style, size);
+		return StyleContext.getDefaultStyleContext().getFont(fontName, style, size);
 	}
 
 }
