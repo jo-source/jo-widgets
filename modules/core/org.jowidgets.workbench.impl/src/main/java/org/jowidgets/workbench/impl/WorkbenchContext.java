@@ -393,6 +393,9 @@ public class WorkbenchContext implements IWorkbenchContext {
 			}
 
 			runShutdownHooks();
+
+			rootFrame.dispose();
+
 			lifecycle.finish();
 		}
 	}
