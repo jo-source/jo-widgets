@@ -77,6 +77,7 @@ final class AnimationRunnerImpl implements IAnimationRunner {
 			scheduledFuture.cancel(false);
 			scheduledFuture = null;
 		}
+		events.clear();
 	}
 
 	@Override
@@ -94,6 +95,10 @@ final class AnimationRunnerImpl implements IAnimationRunner {
 
 		@Override
 		public void run() {
+			if (scheduledFuture == null) {
+				return;
+			}
+
 			final int eventsSize = events.size();
 
 			if (eventsSize > 0) {
@@ -109,9 +114,15 @@ final class AnimationRunnerImpl implements IAnimationRunner {
 				}
 
 				for (final Tuple<Runnable, ICallback<Void>> event : currentEvents) {
+					if (scheduledFuture == null) {
+						return;
+					}
 					uiThreadAccess.invokeLater(new Runnable() {
 						@Override
 						public void run() {
+							if (scheduledFuture == null) {
+								return;
+							}
 							event.getFirst().run();
 							final ICallback<Void> callback = event.getSecond();
 							if (callback != null) {
@@ -119,7 +130,6 @@ final class AnimationRunnerImpl implements IAnimationRunner {
 							}
 						}
 					});
-
 				}
 
 			}
