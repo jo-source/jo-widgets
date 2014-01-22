@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="Restored Target" sequenceNumber="22">
+<?pde version="3.8"?><target name="Restored Target" sequenceNumber="20">
 <locations>
 <location path="${eclipse_home}" type="Profile"/>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.jowidgets.thirdparty.feature.feature.group" version="0.0.1"/>
-<repository location="http://www.jowidgets.org/p2/thirdparty/releases/0.0.1/"/>
+<unit id="org.jowidgets.impl.swt.feature.feature.group" version="0.28.0.201311231440"/>
+<repository location="http://www.jowidgets.org/p2/jowidgets/snapshots/0.28.0.201311231440/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.jowidgets.impl.swt.feature.feature.group" version="0.28.0"/>
-<repository location="http://www.jowidgets.org/p2/jowidgets/releases/"/>
+<unit id="org.jowidgets.thirdparty.feature.feature.group" version="0.0.1"/>
+<repository location="http://www.jowidgets.org/p2/thirdparty/releases/0.0.1/"/>
 </location>
 </locations>
 <environment>
