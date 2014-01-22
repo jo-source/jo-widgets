@@ -90,10 +90,11 @@ public final class SingleThreadAccess implements ISingleThreadAccess {
 	 * Stops the events loop, refuses all events
 	 */
 	public synchronized void stop() {
-		if (running.getAndSet(true)) {
-			this.singleThread = new Thread(new EventLoop());
-			this.singleThread.setDaemon(true);
+		//CHECKSTYLE:OFF
+		if (running.getAndSet(false)) {
+			//nothing else to do
 		}
+		//CHECKSTYLE:ON
 		else {
 			throw new IllegalStateException("Event queue is not running");
 		}
@@ -134,6 +135,7 @@ public final class SingleThreadAccess implements ISingleThreadAccess {
 				}
 			}
 			events.clear();
+			singleThread = null;
 		}
 
 	}
