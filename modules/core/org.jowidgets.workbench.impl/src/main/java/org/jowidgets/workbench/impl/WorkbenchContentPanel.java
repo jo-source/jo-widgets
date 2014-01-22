@@ -73,17 +73,9 @@ public class WorkbenchContentPanel {
 		switchContent(getLayoutPanel(componentContext, layout).getContentPane());
 	}
 
-	public void resetLayout(final ComponentContext componentContext, final ILayout layout) {
-		//CHECKSTYLE:OFF
-		System.out.println("RESET LAYOUT: " + componentContext.getComponentNodeContext().getTreeNode().getText());
-		//CHECKSTYLE:ON
-	}
+	public void resetLayout(final ComponentContext componentContext, final ILayout layout) {}
 
-	public void disposeComponent(final ComponentContext componentContext) {
-		//CHECKSTYLE:OFF
-		System.out.println("DISPOSE COMPONENT: " + componentContext.getComponentNodeContext().getTreeNode().getText());
-		//CHECKSTYLE:ON
-	}
+	public void disposeComponent(final ComponentContext componentContext) {}
 
 	private void switchContent(final IControl newContent) {
 		if (lastContent != newContent) {
