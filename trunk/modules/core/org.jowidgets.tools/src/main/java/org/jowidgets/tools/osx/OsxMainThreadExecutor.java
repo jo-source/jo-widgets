@@ -32,6 +32,8 @@ import java.lang.reflect.Method;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
 
+import org.jowidgets.util.Assert;
+
 /**
  * A workaround to deal with the problem that swt applications started with webstart
  * won't work on mac os x under some circumstances even if -XstartOnFirstThread was set
@@ -55,43 +57,39 @@ public final class OsxMainThreadExecutor {
 	 *            This runnable has to block until the application was finished
 	 */
 	public static void runAppInOsxMainThread(final Runnable runnable) {
+		Assert.paramNotNull(runnable, "runnable");
 
+		//try to get the man executor from os x, if fails an exception will be thrown
 		final Executor osxMainThreadExecutor = getOsxNonBlockingMainExecutor();
 
-		final Runnable runner = new Runnable() {
-			@Override
-			public void run() {
-				final CountDownLatch latch = new CountDownLatch(1);
-				osxMainThreadExecutor.execute(new Runnable() {
-					@Override
-					public void run() {
-						try {
-							//this starts the swt event loop and blocks until main shell will closed
-							runnable.run();
-						}
-						finally {
-							//ensure that the execution thread not blocks on exceptions
-							latch.countDown();
-						}
+		try {
+			//maybe the thread is already correct, so first try to start normally
+			runnable.run();
+		}
+		catch (final Exception e) {
+			final CountDownLatch latch = new CountDownLatch(1);
+			osxMainThreadExecutor.execute(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						//this starts the swt event loop and blocks until main shell will closed
+						runnable.run();
 					}
-				});
-				try {
-					//wait until the application has been finished
-					latch.await();
+					finally {
+						//ensure that the execution thread not blocks on exceptions
+						latch.countDown();
+					}
 				}
-				catch (final InterruptedException e) {
-					throw new RuntimeException(e);
-				}
+			});
+			try {
+				//wait until the application has been finished
+				latch.await();
 			}
-		};
+			catch (final InterruptedException e2) {
+				throw new RuntimeException(e2);
+			}
+		}
 
-		//Use an own thread to avoid deadlock when this method was already invoked in main thread
-		//(let me now, if you have a better way to check if in main thread on mac os x)
-		final Thread starter = new Thread(runner);
-
-		//Use a user thread to avoid the starter thread will be finished before application finished
-		starter.setDaemon(false);
-		starter.start();
 	}
 
 	/**
