@@ -31,7 +31,9 @@ package org.jowidgets.spi.impl.swing.common.widgets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.border.Border;
 
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.spi.impl.controller.ActionObservable;
@@ -39,12 +41,15 @@ import org.jowidgets.spi.widgets.IToolBarButtonSpi;
 
 public class ToolBarButtonImpl extends ToolBarItemImpl implements IToolBarButtonSpi {
 
+	private static final Border EMPTY_BORDER = BorderFactory.createEmptyBorder(3, 3, 3, 3);
+
 	private final ActionObservable actionObservable;
 
 	public ToolBarButtonImpl(final JButton button) {
 		super(button);
 
 		getUiReference().setOpaque(false);
+		getUiReference().setBorder(EMPTY_BORDER);
 
 		getUiReference().addActionListener(new ActionListener() {
 			@Override
