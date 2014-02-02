@@ -59,16 +59,16 @@ public final class OsxMainThreadExecutor {
 	public static void runAppInOsxMainThread(final Runnable runnable) {
 		Assert.paramNotNull(runnable, "runnable");
 
-		//try to get the man executor from os x, if fails an exception will be thrown
-		final Executor osxMainThreadExecutor = getOsxNonBlockingMainExecutor();
-
 		try {
 			//maybe the thread is already correct, so first try to start normally
 			runnable.run();
 		}
 		catch (final Exception e) {
+			//CHECKSTYLE:OFF
+			System.out.println("*** Ignore warning about wrong thread by now and try it in the main thread");
+			//CHECKSTYLE:ON
 			final CountDownLatch latch = new CountDownLatch(1);
-			osxMainThreadExecutor.execute(new Runnable() {
+			getOsxNonBlockingMainExecutor().execute(new Runnable() {
 				@Override
 				public void run() {
 					try {
