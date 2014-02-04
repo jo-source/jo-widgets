@@ -40,18 +40,21 @@ import org.jowidgets.spi.widgets.ITextControlSpi;
 
 public abstract class AbstractTextInputControl extends AbstractInputControl implements ITextControlSpi {
 
+	private ModifyListener modifyListener;
+
 	public AbstractTextInputControl(final Control control) {
 		super(control);
 	}
 
 	protected void registerTextControl(final Text textControl, final InputChangeEventPolicy policy) {
 		if (policy == InputChangeEventPolicy.ANY_CHANGE) {
-			textControl.addModifyListener(new ModifyListener() {
+			this.modifyListener = new ModifyListener() {
 				@Override
 				public void modifyText(final ModifyEvent e) {
 					fireInputChanged(textControl.getText());
 				}
-			});
+			};
+			textControl.addModifyListener(modifyListener);
 		}
 		else if (policy == InputChangeEventPolicy.EDIT_FINISHED) {
 			textControl.addFocusListener(new FocusAdapter() {
@@ -66,10 +69,21 @@ public abstract class AbstractTextInputControl extends AbstractInputControl impl
 					fireInputChanged(textControl.getText());
 				}
 			});
-
 		}
 		else {
 			throw new IllegalArgumentException("InputChangeEventPolicy '" + policy + "' is not known.");
+		}
+	}
+
+	protected void registerTextControl(final Text textControl) {
+		if (modifyListener != null) {
+			textControl.addModifyListener(modifyListener);
+		}
+	}
+
+	protected void unregisterTextControl(final Text textControl) {
+		if (modifyListener != null) {
+			textControl.removeModifyListener(modifyListener);
 		}
 	}
 

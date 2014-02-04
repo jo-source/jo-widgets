@@ -32,7 +32,10 @@ import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.common.types.Markup;
@@ -42,8 +45,12 @@ import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.common.util.FontProvider;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
+import org.jowidgets.util.EmptyCheck;
 
 public class TextFieldImpl extends AbstractTextInputControl {
+
+	private VerifyListener inputVerificationListener;
+	private Listener showListener;
 
 	public TextFieldImpl(final Object parentUiReference, final ITextFieldSetupSpi setup) {
 		super(new Text((Composite) parentUiReference, getStyle(setup)));
@@ -53,7 +60,8 @@ public class TextFieldImpl extends AbstractTextInputControl {
 
 			final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(maskVerifier, setup);
 			if (inputVerifier != null) {
-				addInputVerifier(inputVerifier);
+				inputVerificationListener = createVerifyListener(inputVerifier);
+				getUiReference().addVerifyListener(inputVerificationListener);
 			}
 		}
 
@@ -86,6 +94,13 @@ public class TextFieldImpl extends AbstractTextInputControl {
 
 	@Override
 	public void setText(final String text) {
+		if (SwtOptions.hasTextFieldTruncateWorkaround()
+			&& showListener == null
+			&& !getUiReference().isVisible()
+			&& !EmptyCheck.isEmpty(text)) {
+			showListener = new ShowListener();
+			getUiReference().addListener(SWT.Resize, showListener);
+		}
 		if (text != null) {
 			getUiReference().setText(text);
 		}
@@ -94,6 +109,22 @@ public class TextFieldImpl extends AbstractTextInputControl {
 		}
 		if (!getUiReference().isFocusControl()) {
 			fireInputChanged(getText());
+		}
+	}
+
+	@Override
+	protected void registerTextControl(final Text textControl) {
+		super.registerTextControl(textControl);
+		if (inputVerificationListener != null) {
+			getUiReference().addVerifyListener(inputVerificationListener);
+		}
+	}
+
+	@Override
+	protected void unregisterTextControl(final Text textControl) {
+		super.unregisterTextControl(textControl);
+		if (inputVerificationListener != null) {
+			getUiReference().removeVerifyListener(inputVerificationListener);
 		}
 	}
 
@@ -132,8 +163,8 @@ public class TextFieldImpl extends AbstractTextInputControl {
 		getUiReference().setEditable(editable);
 	}
 
-	private void addInputVerifier(final IInputVerifier verifier) {
-		getUiReference().addVerifyListener(new VerifyListener() {
+	private VerifyListener createVerifyListener(final IInputVerifier verifier) {
+		return new VerifyListener() {
 			@Override
 			public void verifyText(final VerifyEvent verifyEvent) {
 				verifyEvent.doit = verifier.verify(
@@ -142,7 +173,7 @@ public class TextFieldImpl extends AbstractTextInputControl {
 						verifyEvent.start,
 						verifyEvent.end);
 			}
-		});
+		};
 	}
 
 	private static int getStyle(final ITextFieldSetupSpi setup) {
@@ -155,5 +186,18 @@ public class TextFieldImpl extends AbstractTextInputControl {
 		}
 		return result;
 	}
+
+	private final class ShowListener implements Listener {
+		@Override
+		public void handleEvent(final Event event) {
+			if (getUiReference().isVisible() && !getUiReference().isFocusControl()) {
+				getUiReference().setSelection(new Point(0, 0));
+				if (showListener != null) {
+					getUiReference().removeListener(SWT.Resize, showListener);
+					showListener = null;
+				}
+			}
+		}
+	};
 
 }
