@@ -41,6 +41,8 @@ import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.common.types.InputChangeEventPolicy;
 import org.jowidgets.common.types.Markup;
@@ -59,6 +61,7 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 
 	private final boolean isAutoCompletionMode;
 	private final boolean isSelectionMode;
+
 	private boolean programmaticTextChange;
 
 	public ComboBoxImpl(final Object parentUiReference, final IComboBoxSelectionSetupSpi setup) {
@@ -109,23 +112,30 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 			});
 		}
 
-		if (setup.getInputChangeEventPolicy() == InputChangeEventPolicy.ANY_CHANGE) {
-			getUiReference().addSelectionListener(new SelectionListener() {
-				@Override
-				public void widgetSelected(final SelectionEvent e) {
+		getUiReference().addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetSelected(final SelectionEvent e) {
+				if (!programmaticTextChange) {
 					fireInputChanged(getUiReference().getText());
 				}
+			}
 
-				@Override
-				public void widgetDefaultSelected(final SelectionEvent e) {
+			@Override
+			public void widgetDefaultSelected(final SelectionEvent e) {
+				if (!programmaticTextChange) {
 					fireInputChanged(getUiReference().getText());
 				}
-			});
+			}
+		});
+
+		if (setup.getInputChangeEventPolicy() == InputChangeEventPolicy.ANY_CHANGE) {
 			if (!isSelectionMode || isAutoCompletionMode) {
 				getUiReference().addModifyListener(new ModifyListener() {
 					@Override
 					public void modifyText(final ModifyEvent e) {
-						fireInputChanged(getUiReference().getText());
+						if (!programmaticTextChange) {
+							fireInputChanged(getUiReference().getText());
+						}
 					}
 				});
 			}
@@ -134,17 +144,6 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 			getUiReference().addFocusListener(new FocusAdapter() {
 				@Override
 				public void focusLost(final FocusEvent e) {
-					fireInputChanged(getUiReference().getText());
-				}
-			});
-			getUiReference().addSelectionListener(new SelectionListener() {
-				@Override
-				public void widgetSelected(final SelectionEvent e) {
-					fireInputChanged(getUiReference().getText());
-				}
-
-				@Override
-				public void widgetDefaultSelected(final SelectionEvent e) {
 					fireInputChanged(getUiReference().getText());
 				}
 			});
@@ -182,6 +181,10 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 				&& TextMaskMode.FULL_MASK == comboBoxSetup.getMask().getMode()) {
 				setText(comboBoxSetup.getMask().getPlaceholder());
 			}
+		}
+
+		if (SwtOptions.hasComboTruncateWorkaround() && (isAutoCompletionMode || !isSelectionMode)) {
+			getUiReference().addListener(SWT.Resize, new ResizeTruncateWorkaroundListener());
 		}
 
 		programmaticTextChange = false;
@@ -386,5 +389,12 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 			this.completion = completion;
 		}
 	}
+
+	private final class ResizeTruncateWorkaroundListener implements Listener {
+		@Override
+		public void handleEvent(final Event event) {
+			getUiReference().setSelection(new Point(0, 0));
+		}
+	};
 
 }

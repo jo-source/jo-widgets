@@ -39,6 +39,12 @@ public final class SwtOptions {
 	private static boolean nativeMigLayout = true;
 	private static boolean nativeTextAreaScrollBars = false;
 
+	//not fix in swt 4.3 (tested with win)
+	private static boolean textFieldTruncateWorkaround = true;
+
+	//fixed within swt 3.7 (tested with win)
+	private static boolean comboTruncateWorkaround = false;
+
 	private static IColorConstant tableSelectedForegroundColor;
 	private static IColorConstant tableSelectedBackgroundColor;
 
@@ -98,6 +104,22 @@ public final class SwtOptions {
 
 	public static void setTableSelectedBackgroundColor(final IColorConstant tableSelectedBackgroundColor) {
 		SwtOptions.tableSelectedBackgroundColor = tableSelectedBackgroundColor;
+	}
+
+	public static boolean hasTextFieldTruncateWorkaround() {
+		return textFieldTruncateWorkaround;
+	}
+
+	public static void setTextFieldTruncateWorkaround(final boolean textFieldTruncateWorkaround) {
+		SwtOptions.textFieldTruncateWorkaround = textFieldTruncateWorkaround;
+	}
+
+	public static boolean hasComboTruncateWorkaround() {
+		return comboTruncateWorkaround;
+	}
+
+	public static void setComboTruncateWorkaround(final boolean comboTruncateWorkaround) {
+		SwtOptions.comboTruncateWorkaround = comboTruncateWorkaround;
 	}
 
 	/**

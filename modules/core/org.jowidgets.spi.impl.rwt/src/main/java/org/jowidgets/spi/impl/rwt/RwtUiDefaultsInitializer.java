@@ -39,6 +39,8 @@ public final class RwtUiDefaultsInitializer {
 	private RwtUiDefaultsInitializer() {}
 
 	public static void initialize() {
+		SwtOptions.setTextFieldTruncateWorkaround(false);
+		SwtOptions.setComboTruncateWorkaround(false);
 		SwtOptions.setInputVerification(false);
 		SwtOptions.setNativeTextAreaScrollBars(true);
 
