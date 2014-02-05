@@ -34,7 +34,7 @@ public class TableDefaults implements IDefaultInitializer<ITableSetupBuilder<?>>
 
 	@Override
 	public void initialize(final ITableSetupBuilder<?> builder) {
-		builder.setEditable(true);
+		builder.setEditable(false);
 		builder.setColumnMaxPackWidth(1000);
 	}
 
