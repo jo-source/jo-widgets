@@ -206,7 +206,7 @@ public enum VirtualKey {
 			characterToVirtualKey.put(Character.valueOf('E'), VirtualKey.E);
 			characterToVirtualKey.put(Character.valueOf('F'), VirtualKey.F);
 			characterToVirtualKey.put(Character.valueOf('G'), VirtualKey.G);
-			characterToVirtualKey.put(Character.valueOf('G'), VirtualKey.H);
+			characterToVirtualKey.put(Character.valueOf('H'), VirtualKey.H);
 			characterToVirtualKey.put(Character.valueOf('I'), VirtualKey.I);
 			characterToVirtualKey.put(Character.valueOf('J'), VirtualKey.J);
 			characterToVirtualKey.put(Character.valueOf('K'), VirtualKey.K);
