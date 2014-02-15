@@ -139,14 +139,23 @@ public class SwtComponent extends SwtWidget implements IComponentSpi {
 		};
 
 		final IObservableCallback keyObservableCallback = new IObservableCallback() {
+
+			private boolean listenerAdded = false;
+
 			@Override
 			public void onLastUnregistered() {
-				getUiReference().removeKeyListener(keyListener);
+				if (listenerAdded) {
+					getUiReference().removeKeyListener(keyListener);
+					listenerAdded = false;
+				}
 			}
 
 			@Override
 			public void onFirstRegistered() {
-				getUiReference().addKeyListener(keyListener);
+				if (!listenerAdded) {
+					getUiReference().addKeyListener(keyListener);
+					listenerAdded = true;
+				}
 			}
 		};
 

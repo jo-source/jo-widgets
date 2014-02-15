@@ -32,8 +32,9 @@ import java.util.List;
 
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.common.widgets.ITreeNodeCommon;
+import org.jowidgets.common.widgets.controller.IKeyObservable;
 
-public interface ITreeNode extends IItem, ITreeContainer, ITreeNodeCommon {
+public interface ITreeNode extends IItem, ITreeContainer, IKeyObservable, ITreeNodeCommon {
 
 	/**
 	 * @return The tree this node belongs to

@@ -89,6 +89,7 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 				parentTree.unRegisterItem(item);
 			}
 		});
+
 	}
 
 	@Override
