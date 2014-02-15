@@ -63,6 +63,7 @@ import org.jowidgets.spi.widgets.ITreeNodeSpi;
 import org.jowidgets.spi.widgets.ITreeSpi;
 import org.jowidgets.spi.widgets.controller.ITreeSelectionListenerSpi;
 import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
+import org.jowidgets.util.Tuple;
 
 public class TreeImpl extends SwingControl implements ITreeSpi {
 
@@ -280,7 +281,7 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 		treeObservable.fireSelectionChanged();
 	}
 
-	private static Component createComponent(final ITreeSetupSpi setup) {
+	private static Tuple<Component, Component> createComponent(final ITreeSetupSpi setup) {
 
 		final DefaultMutableTreeNode rootNode = new DefaultMutableTreeNode();
 		final DefaultTreeModel treeModel = new DefaultTreeModel(rootNode);
@@ -310,10 +311,10 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 			final JScrollPane result = new JScrollPane(tree);
 			result.setBorder(BorderFactory.createEmptyBorder());
 			result.setViewportBorder(BorderFactory.createEmptyBorder());
-			return result;
+			return new Tuple<Component, Component>(result, tree);
 		}
 		else {
-			return tree;
+			return new Tuple<Component, Component>(tree, tree);
 		}
 	}
 

@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.controller;
+package org.jowidgets.tools.controller;
 
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -39,25 +39,26 @@ import org.jowidgets.util.Assert;
 
 public class KeyObservable implements IKeyObservable {
 
-	private static final IEventInvoker KEY_PRESSED_INVOKER = new KeyPressedInvoker();
-	private static final IEventInvoker KEY_RELEASED_INVOKER = new KeyReleasedInvoker();
+	private static final IKeyObservableCallback DUMMY_KEY_OBSERVABLE_CALLBACK = new DummyKeyObservableCallback();
 
 	private final Set<IKeyListener> listeners;
-	private final IObservableCallback observableCallback;
-	private boolean onFire;
+	private final IKeyObservableCallback observableCallback;
 
-	public KeyObservable(final IObservableCallback observableCallback) {
+	public KeyObservable() {
+		this(DUMMY_KEY_OBSERVABLE_CALLBACK);
+	}
+
+	public KeyObservable(final IKeyObservableCallback observableCallback) {
 		Assert.paramNotNull(observableCallback, "observableCallback");
 		this.listeners = new LinkedHashSet<IKeyListener>();
 		this.observableCallback = observableCallback;
-		this.onFire = false;
 	}
 
 	@Override
 	public final void addKeyListener(final IKeyListener listener) {
 		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
-		if (!onFire && listeners.size() == 1) {
+		if (listeners.size() == 1) {
 			observableCallback.onFirstRegistered();
 		}
 	}
@@ -66,56 +67,43 @@ public class KeyObservable implements IKeyObservable {
 	public final void removeKeyListener(final IKeyListener listener) {
 		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
-		if (!onFire && listeners.size() == 0) {
+		if (listeners.size() == 0) {
 			observableCallback.onLastUnregistered();
 		}
 	}
 
-	public final void fireKeyPressed(final ILazyKeyEventContentFactory contentFactory) {
-		fireKeyEvent(contentFactory, KEY_PRESSED_INVOKER);
-	}
-
-	public final void fireKeyReleased(final ILazyKeyEventContentFactory contentFactory) {
-		fireKeyEvent(contentFactory, KEY_RELEASED_INVOKER);
-	}
-
-	private void fireKeyEvent(final ILazyKeyEventContentFactory contentFactory, final IEventInvoker eventInvoker) {
-		if (listeners.size() > 0) {
-			final int lastSize = listeners.size();
-			onFire = true;
-			try {
-				final IKeyEvent event = new KeyEvent(contentFactory);
-				for (final IKeyListener listener : new LinkedList<IKeyListener>(listeners)) {
-					eventInvoker.fireEvent(listener, event);
-				}
-			}
-			finally {
-				onFire = false;
-				if (lastSize > 0 && listeners.size() == 0) {
-					observableCallback.onLastUnregistered();
-				}
-				else if (lastSize == 0 && listeners.size() > 0) {
-					observableCallback.onFirstRegistered();
-				}
-			}
+	public final void fireKeyPressed(final IKeyEvent event) {
+		for (final IKeyListener listener : new LinkedList<IKeyListener>(listeners)) {
+			listener.keyPressed(event);
 		}
 	}
 
-	private interface IEventInvoker {
-		void fireEvent(IKeyListener listener, IKeyEvent event);
-	}
-
-	private static final class KeyReleasedInvoker implements IEventInvoker {
-		@Override
-		public void fireEvent(final IKeyListener listener, final IKeyEvent event) {
+	public final void fireKeyReleased(final IKeyEvent event) {
+		for (final IKeyListener listener : new LinkedList<IKeyListener>(listeners)) {
 			listener.keyReleased(event);
 		}
 	}
 
-	private static final class KeyPressedInvoker implements IEventInvoker {
-		@Override
-		public void fireEvent(final IKeyListener listener, final IKeyEvent event) {
-			listener.keyPressed(event);
-		}
+	public final int size() {
+		return listeners.size();
 	}
+
+	public interface IKeyObservableCallback {
+
+		void onFirstRegistered();
+
+		void onLastUnregistered();
+
+	}
+
+	public static final class DummyKeyObservableCallback implements IKeyObservableCallback {
+
+		@Override
+		public void onFirstRegistered() {}
+
+		@Override
+		public void onLastUnregistered() {}
+
+	}
+
 }

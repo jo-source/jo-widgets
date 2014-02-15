@@ -29,7 +29,9 @@
 package org.jowidgets.common.types;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.util.Assert;
@@ -44,7 +46,7 @@ public final class Accelerator {
 		this(virtualKey, Arrays.asList(modifier));
 	}
 
-	public Accelerator(final VirtualKey virtualKey, final List<Modifier> modifier) {
+	public Accelerator(final VirtualKey virtualKey, final Collection<Modifier> modifier) {
 		this(null, virtualKey, modifier);
 		Assert.paramNotNull(virtualKey, "virtualKey");
 	}
@@ -53,11 +55,11 @@ public final class Accelerator {
 		this(key, Arrays.asList(modifier));
 	}
 
-	public Accelerator(final char key, final List<Modifier> modifier) {
+	public Accelerator(final char key, final Collection<Modifier> modifier) {
 		this(key, null, modifier);
 	}
 
-	private Accelerator(final Character character, final VirtualKey virtualKey, final List<Modifier> modifier) {
+	private Accelerator(final Character character, final VirtualKey virtualKey, final Collection<Modifier> modifier) {
 		Assert.paramNotNull(modifier, "modifier");
 		if (virtualKey == VirtualKey.UNDEFINED) {
 			throw new IllegalArgumentException("The virtual key '"
@@ -67,7 +69,7 @@ public final class Accelerator {
 		}
 		this.character = character;
 		this.virtualKey = virtualKey;
-		this.modifier = Collections.unmodifiableList(modifier);
+		this.modifier = Collections.unmodifiableList(new LinkedList<Modifier>(modifier));
 	}
 
 	/**

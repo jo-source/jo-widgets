@@ -84,6 +84,10 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 	private MouseListener mouseListener;
 
 	public SwingComponent(final Component component) {
+		this(component, component);
+	}
+
+	public SwingComponent(final Component component, final Component innerComponent) {
 		super(component);
 		this.popupDetectionObservable = new PopupDetectionObservable();
 		this.focusObservable = new FocusObservable();
@@ -119,7 +123,7 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 			}
 		});
 
-		getUiReference().addFocusListener(new FocusListener() {
+		innerComponent.addFocusListener(new FocusListener() {
 			@Override
 			public void focusLost(final FocusEvent e) {
 				focusObservable.focusLost();
@@ -146,18 +150,18 @@ public class SwingComponent extends SwingWidget implements IComponentSpi {
 		final IObservableCallback keyObservableCallback = new IObservableCallback() {
 			@Override
 			public void onLastUnregistered() {
-				getUiReference().removeKeyListener(keyListener);
+				innerComponent.removeKeyListener(keyListener);
 			}
 
 			@Override
 			public void onFirstRegistered() {
-				getUiReference().addKeyListener(keyListener);
+				innerComponent.addKeyListener(keyListener);
 			}
 		};
 
 		this.keyObservable = new KeyObservable(keyObservableCallback);
 
-		getUiReference().addMouseListener(new MouseListener() {
+		innerComponent.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseExited(final MouseEvent e) {

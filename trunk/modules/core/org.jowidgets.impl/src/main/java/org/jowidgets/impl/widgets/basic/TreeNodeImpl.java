@@ -28,10 +28,13 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.controller.IDisposeListener;
+import org.jowidgets.api.controller.ITreeSelectionEvent;
+import org.jowidgets.api.controller.ITreeSelectionListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -40,6 +43,9 @@ import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.descriptor.ITreeNodeDescriptor;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.controller.IFocusListener;
+import org.jowidgets.common.widgets.controller.IKeyEvent;
+import org.jowidgets.common.widgets.controller.IKeyListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITreeNodeListener;
 import org.jowidgets.impl.base.delegate.DisposableDelegate;
@@ -49,6 +55,8 @@ import org.jowidgets.impl.base.delegate.TreeContainerDelegate;
 import org.jowidgets.impl.event.TreePopupEvent;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractTreeNodeSpiWrapper;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
+import org.jowidgets.tools.controller.KeyObservable;
+import org.jowidgets.tools.controller.KeyObservable.IKeyObservableCallback;
 import org.jowidgets.tools.controller.PopupDetectionObservable;
 import org.jowidgets.tools.controller.TreeNodeAdapter;
 import org.jowidgets.tools.controller.TreeNodeObservable;
@@ -64,6 +72,8 @@ public class TreeNodeImpl extends AbstractTreeNodeSpiWrapper implements ITreeNod
 	private final DisposableDelegate disposableDelegate;
 	private final TreeNodeObservable treeNodeObservable;
 	private final PopupDetectionObservable popupDetectionObservable;
+	private final KeyObservable keyObservable;
+	private final IKeyListener keyListener;
 
 	private final IPopupDetectionListener spiPopupDetectionListener;
 	private final ITreeNodeListener spiTreeNodeListener;
@@ -110,7 +120,6 @@ public class TreeNodeImpl extends AbstractTreeNodeSpiWrapper implements ITreeNod
 		widget.addTreeNodeListener(spiTreeNodeListener);
 
 		this.popupListener = new IPopupDetectionListener() {
-
 			@Override
 			public void popupDetected(final Position position) {
 				if (popupMenuModel != null) {
@@ -153,6 +162,35 @@ public class TreeNodeImpl extends AbstractTreeNodeSpiWrapper implements ITreeNod
 		setIcon(descriptor.getIcon());
 		setMarkup(descriptor.getMarkup());
 
+		this.keyListener = new IKeyListener() {
+
+			@Override
+			public void keyReleased(final IKeyEvent event) {
+				if (parentTree.hasFocus() && isFirstSelected()) {
+					keyObservable.fireKeyReleased(event);
+				}
+			}
+
+			@Override
+			public void keyPressed(final IKeyEvent event) {
+				if (parentTree.hasFocus() && isFirstSelected()) {
+					keyObservable.fireKeyPressed(event);
+				}
+			}
+		};
+
+		this.keyObservable = new KeyObservable(new IKeyObservableCallback() {
+			@Override
+			public void onLastUnregistered() {
+				updateKeyListeners();
+			}
+
+			@Override
+			public void onFirstRegistered() {
+				updateKeyListeners();
+			}
+		});
+
 		addTreeNodeListener(new TreeNodeAdapter() {
 			@Override
 			public void expandedChanged(final boolean expanded) {
@@ -172,10 +210,48 @@ public class TreeNodeImpl extends AbstractTreeNodeSpiWrapper implements ITreeNod
 			}
 		});
 
+		final IFocusListener focusListener = new IFocusListener() {
+			@Override
+			public void focusLost() {
+				updateKeyListeners();
+			}
+
+			@Override
+			public void focusGained() {
+				updateKeyListeners();
+			}
+		};
+		parentTree.addFocusListener(focusListener);
+
+		final ITreeSelectionListener treeSelectionListener = new ITreeSelectionListener() {
+			@Override
+			public void selectionChanged(final ITreeSelectionEvent event) {
+				updateKeyListeners();
+			}
+		};
+		parentTree.addTreeSelectionListener(treeSelectionListener);
+
+		addDisposeListener(new IDisposeListener() {
+			@Override
+			public void onDispose() {
+				parentTree.removeFocusListener(focusListener);
+				parentTree.removeTreeSelectionListener(treeSelectionListener);
+				parentTree.removeKeyListener(keyListener);
+			}
+		});
+
 		this.treeContainerDelegate = new TreeContainerDelegate(parentTree, parentNode, this, widget);
 
 		checkIcon();
+	}
 
+	private void updateKeyListeners() {
+		if (keyObservable.size() > 0 && parentTree.hasFocus() && isFirstSelected()) {
+			parentTree.addKeyListener(keyListener);
+		}
+		else {
+			parentTree.removeKeyListener(keyListener);
+		}
 	}
 
 	@Override
@@ -196,6 +272,16 @@ public class TreeNodeImpl extends AbstractTreeNodeSpiWrapper implements ITreeNod
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
 		popupDetectionObservable.removePopupDetectionListener(listener);
+	}
+
+	@Override
+	public void addKeyListener(final IKeyListener listener) {
+		keyObservable.addKeyListener(listener);
+	}
+
+	@Override
+	public void removeKeyListener(final IKeyListener listener) {
+		keyObservable.removeKeyListener(listener);
 	}
 
 	@Override
@@ -343,6 +429,16 @@ public class TreeNodeImpl extends AbstractTreeNodeSpiWrapper implements ITreeNod
 			addPopupDetectionListener(popupListener);
 		}
 		this.popupMenuModel = popupMenuModel;
+	}
+
+	private boolean isFirstSelected() {
+		final Collection<ITreeNode> selection = parentTree.getSelection();
+		if (selection.size() > 0) {
+			return selection.iterator().next() == this;
+		}
+		else {
+			return false;
+		}
 	}
 
 	private void checkIcon() {

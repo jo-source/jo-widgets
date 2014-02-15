@@ -37,11 +37,20 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.spi.impl.swing.common.layout.LayoutManagerImpl;
 import org.jowidgets.spi.impl.swing.common.util.DimensionConvert;
 import org.jowidgets.spi.widgets.IControlSpi;
+import org.jowidgets.util.Tuple;
 
 public class SwingControl extends SwingComponent implements IControlSpi {
 
+	public SwingControl(final Tuple<Component, Component> component) {
+		this(component.getFirst(), component.getSecond());
+	}
+
 	public SwingControl(final Component component) {
-		super(component);
+		this(component, component);
+	}
+
+	public SwingControl(final Component component, final Component innerComponent) {
+		super(component, innerComponent);
 	}
 
 	@Override
