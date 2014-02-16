@@ -83,6 +83,7 @@ public class DefaultIconsRegisterService extends ImageConstantRegisterService {
 
 		registerImage(IconsSmall.SETTINGS, "settings.gif");
 
+		registerImage(IconsSmall.COPY, "copy.png");
 		registerImage(IconsSmall.EDIT, "edit.png");
 
 		registerImage(IconsSmall.FOLDER, "folder.png");
