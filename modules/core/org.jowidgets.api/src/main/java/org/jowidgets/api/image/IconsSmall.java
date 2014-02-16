@@ -72,6 +72,7 @@ public enum IconsSmall implements IImageConstant {
 
 	SETTINGS,
 
+	COPY,
 	EDIT,
 
 	FOLDER,
