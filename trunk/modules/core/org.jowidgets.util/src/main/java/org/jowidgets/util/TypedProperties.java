@@ -28,6 +28,7 @@
 
 package org.jowidgets.util;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -62,7 +63,9 @@ public final class TypedProperties {
 
 	}
 
-	private static final class TypedPropertiesImpl implements ITypedProperties {
+	private static final class TypedPropertiesImpl implements ITypedProperties, Serializable {
+
+		private static final long serialVersionUID = -9075567930291454175L;
 
 		private final Map<ITypedKey<?>, Object> properties;
 
