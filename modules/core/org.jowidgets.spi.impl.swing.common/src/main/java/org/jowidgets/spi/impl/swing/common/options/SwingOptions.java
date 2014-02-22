@@ -35,6 +35,7 @@ public final class SwingOptions {
 	private static boolean joWidgetsTabLayout = false;
 	private static boolean wrapTabLayout = false;
 	private static boolean nativeMigLayout = true;
+	private static boolean defaultTableTransferHandler = true;
 
 	private SwingOptions() {}
 
@@ -76,6 +77,14 @@ public final class SwingOptions {
 
 	public static void setNativeMigLayout(final boolean useNativeMigLayout) {
 		SwingOptions.nativeMigLayout = useNativeMigLayout;
+	}
+
+	public static boolean isDefaultTableTransferHandler() {
+		return defaultTableTransferHandler;
+	}
+
+	public static void setDefaultTableTransferHandler(final boolean defaultTableTransferHandler) {
+		SwingOptions.defaultTableTransferHandler = defaultTableTransferHandler;
 	}
 
 }

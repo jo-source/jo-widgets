@@ -43,16 +43,19 @@ import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.IWidgetsServiceProvider;
+import org.jowidgets.spi.clipboard.IClipboardSpi;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
 import org.jowidgets.spi.impl.swt.common.application.SwtApplicationRunnerFactory;
+import org.jowidgets.spi.impl.swt.common.clipboard.SwtClipboard;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageHandleFactorySpi;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.threads.SwtUiThreadAccess;
 import org.jowidgets.spi.impl.swt.common.util.PositionConvert;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.IFactory;
+import org.jowidgets.util.IProvider;
 
-public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
+public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider, IProvider<Display> {
 
 	private final Display display;
 	private final SwtImageRegistry imageRegistry;
@@ -60,6 +63,7 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
 	private final SwtWidgetFactory widgetFactory;
 	private final SwtOptionalWidgetsFactory optionalWidgetsFactory;
 	private final IFactory<IApplicationRunner> applicationRunnerFactory;
+	private final SwtClipboard clipboard;
 
 	public SwtWidgetsServiceProvider() {
 		this((Display) null);
@@ -81,6 +85,12 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
 		this.imageHandleFactorySpi = new SwtImageHandleFactorySpi(imageRegistry);
 		this.widgetFactory = new SwtWidgetFactory();
 		this.optionalWidgetsFactory = new SwtOptionalWidgetsFactory();
+		this.clipboard = new SwtClipboard(this);
+	}
+
+	@Override
+	public IClipboardSpi getClipboard() {
+		return clipboard;
 	}
 
 	@Override
@@ -166,6 +176,11 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider {
 		}
 
 		return PositionConvert.convert(control.toControl(PositionConvert.convert(screenPosition)));
+	}
+
+	@Override
+	public Display get() {
+		return display;
 	}
 
 }
