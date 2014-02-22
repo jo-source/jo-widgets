@@ -135,4 +135,9 @@ final class TableCell implements ITableCell {
 		this.editable = editable;
 	}
 
+	@Override
+	public String toString() {
+		return text;
+	}
+
 }
