@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, grossmann
+ * Copyright (c) 2014, Michael
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,15 +26,47 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.clipboard;
+package org.jowidgets.tools.clipboard;
 
-import java.io.Serializable;
 import java.util.Collection;
+import java.util.Collections;
 
-public interface ITransferable extends Serializable {
+import org.jowidgets.api.clipboard.ITransferType;
+import org.jowidgets.api.clipboard.ITransferable;
+import org.jowidgets.api.clipboard.StringType;
 
-	Collection<ITransferType<?>> getTransferTypes();
+public final class StringTransfer implements ITransferable {
 
-	<DATA_TYPE> DATA_TYPE getData(ITransferType<DATA_TYPE> type);
+	private static final long serialVersionUID = -4679417069294285597L;
+
+	@SuppressWarnings("unchecked")
+	private static final Collection<ITransferType<?>> TRANSFER_TYPES = createTransferTypes();
+
+	private final String data;
+
+	public StringTransfer(final String data) {
+		this.data = data;
+	}
+
+	@Override
+	public Collection<ITransferType<?>> getTransferTypes() {
+		return TRANSFER_TYPES;
+	}
+
+	@SuppressWarnings("rawtypes")
+	private static Collection createTransferTypes() {
+		return Collections.unmodifiableSet(Collections.singleton(StringType.getInstance()));
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <DATA_TYPE> DATA_TYPE getData(final ITransferType<DATA_TYPE> type) {
+		if (StringType.isStringType(type)) {
+			return (DATA_TYPE) data;
+		}
+		else {
+			return null;
+		}
+	}
 
 }

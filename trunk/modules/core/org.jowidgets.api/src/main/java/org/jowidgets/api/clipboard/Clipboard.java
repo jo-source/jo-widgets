@@ -28,13 +28,38 @@
 
 package org.jowidgets.api.clipboard;
 
-import java.io.Serializable;
-import java.util.Collection;
+import org.jowidgets.api.toolkit.Toolkit;
 
-public interface ITransferable extends Serializable {
+public final class Clipboard {
 
-	Collection<ITransferType<?>> getTransferTypes();
+	private Clipboard() {}
 
-	<DATA_TYPE> DATA_TYPE getData(ITransferType<DATA_TYPE> type);
+	public static IClipboard getInstance() {
+		return Toolkit.getClipboard();
+	}
+
+	public static void setContent(final ITransferable contents) {
+		getInstance().setContent(contents);
+	}
+
+	public static ITransferable getContent() {
+		return getInstance().getContent();
+	}
+
+	public static <DATA_TYPE> DATA_TYPE getData(final ITransferType<DATA_TYPE> type) {
+		return getInstance().getData(type);
+	}
+
+	public static void addClipbaordListener(final IClipboardListener listener) {
+		getInstance().addClipboardListener(listener);
+	}
+
+	public static void removeClipbaordListener(final IClipboardListener listener) {
+		getInstance().removeClipboardListener(listener);
+	}
+
+	public static void dispose() {
+		getInstance().dispose();
+	}
 
 }

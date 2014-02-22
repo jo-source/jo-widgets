@@ -32,6 +32,7 @@ import java.util.List;
 
 import org.jowidgets.api.animation.IAnimationRunnerBuilder;
 import org.jowidgets.api.animation.IWaitAnimationProcessor;
+import org.jowidgets.api.clipboard.IClipboard;
 import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.event.IDelayedEventRunnerBuilder;
@@ -73,6 +74,8 @@ public interface IToolkit {
 	 * @return The value for the key, may be null
 	 */
 	<VALUE_TYPE> VALUE_TYPE getValue(ITypedKey<VALUE_TYPE> key);
+
+	IClipboard getClipboard();
 
 	IImageRegistry getImageRegistry();
 

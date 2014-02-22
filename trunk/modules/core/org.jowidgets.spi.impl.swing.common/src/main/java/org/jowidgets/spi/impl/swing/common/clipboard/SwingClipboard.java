@@ -38,16 +38,16 @@ import java.awt.datatransfer.Transferable;
 
 import org.jowidgets.spi.clipboard.IClipboardObservableSpi;
 import org.jowidgets.spi.clipboard.IClipboardSpi;
-import org.jowidgets.spi.impl.clipboard.ClipboardObservable;
+import org.jowidgets.spi.impl.clipboard.ClipboardObservableSpi;
 
 public final class SwingClipboard implements IClipboardSpi {
 
-	private final ClipboardObservable clipboardObservable;
+	private final ClipboardObservableSpi clipboardObservable;
 	private final Clipboard systemClipboard;
 	private final FlavorListener flavorListener;
 
 	public SwingClipboard() {
-		this.clipboardObservable = new ClipboardObservable();
+		this.clipboardObservable = new ClipboardObservableSpi();
 		this.systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 
 		this.flavorListener = new FlavorListener() {

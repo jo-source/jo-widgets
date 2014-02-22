@@ -62,7 +62,7 @@ public class SwtUiThreadAccess implements IUiThreadAccessCommon {
 		return currentDisplay != null && currentDisplay == getDisplay();
 	}
 
-	private Display getDisplay() {
+	public Display getDisplay() {
 		if (display == null) {
 			display = Display.getDefault();
 		}
