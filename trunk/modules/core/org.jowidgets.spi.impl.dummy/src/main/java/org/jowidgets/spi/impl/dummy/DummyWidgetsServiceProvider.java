@@ -39,8 +39,10 @@ import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.IWidgetsServiceProvider;
+import org.jowidgets.spi.clipboard.IClipboardSpi;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
 import org.jowidgets.spi.impl.dummy.application.DummyApplicationRunner;
+import org.jowidgets.spi.impl.dummy.clipboard.DummyClipboard;
 import org.jowidgets.spi.impl.dummy.image.DummyImageHandleFactory;
 import org.jowidgets.spi.impl.dummy.image.DummyImageHandleFactorySpi;
 import org.jowidgets.spi.impl.dummy.image.DummyImageRegistry;
@@ -52,6 +54,7 @@ public class DummyWidgetsServiceProvider implements IWidgetsServiceProvider {
 	private final DummyImageRegistry imageRegistry;
 	private final DummyWidgetFactory widgetFactory;
 	private final DummyOptionalWidgetsFactory optionalWidgetsFactory;
+	private final DummyClipboard clipboard;
 
 	public DummyWidgetsServiceProvider() {
 		super();
@@ -59,6 +62,7 @@ public class DummyWidgetsServiceProvider implements IWidgetsServiceProvider {
 		this.imageHandleFactorySpi = new DummyImageHandleFactorySpi(imageRegistry);
 		this.widgetFactory = new DummyWidgetFactory(imageRegistry);
 		this.optionalWidgetsFactory = new DummyOptionalWidgetsFactory();
+		this.clipboard = new DummyClipboard();
 	}
 
 	@Override
@@ -112,6 +116,11 @@ public class DummyWidgetsServiceProvider implements IWidgetsServiceProvider {
 	public Position toLocal(final Position screenPosition, final IComponentCommon component) {
 		// TODO LG implement
 		return null;
+	}
+
+	@Override
+	public IClipboardSpi getClipboard() {
+		return clipboard;
 	}
 
 }

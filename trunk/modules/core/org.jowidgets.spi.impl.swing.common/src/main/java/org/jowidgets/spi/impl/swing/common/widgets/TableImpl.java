@@ -118,6 +118,7 @@ import org.jowidgets.spi.impl.controller.TableColumnPopupEvent;
 import org.jowidgets.spi.impl.controller.TableColumnResizeEvent;
 import org.jowidgets.spi.impl.controller.TableSelectionObservable;
 import org.jowidgets.spi.impl.swing.common.image.SwingImageRegistry;
+import org.jowidgets.spi.impl.swing.common.options.SwingOptions;
 import org.jowidgets.spi.impl.swing.common.util.AlignmentConvert;
 import org.jowidgets.spi.impl.swing.common.util.ColorConvert;
 import org.jowidgets.spi.impl.swing.common.util.FontProvider;
@@ -282,6 +283,10 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		};
 
 		this.keyObservable = new KeyObservable(keyObservableCallback);
+
+		if (!SwingOptions.isDefaultTableTransferHandler()) {
+			table.setTransferHandler(null);
+		}
 
 		getUiReference().addMouseListener(tableCellMenuDetectListener);
 		getUiReference().setBorder(BorderFactory.createEmptyBorder());

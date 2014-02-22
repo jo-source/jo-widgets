@@ -35,6 +35,7 @@ import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.threads.IUiThreadAccessCommon;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.IComponentCommon;
+import org.jowidgets.spi.clipboard.IClipboardSpi;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
 
 public interface IWidgetsServiceProvider {
@@ -87,5 +88,10 @@ public interface IWidgetsServiceProvider {
 	 * @return local position relative to the component
 	 */
 	Position toLocal(final Position screenPosition, final IComponentCommon component);
+
+	/**
+	 * @return The system clipboard
+	 */
+	IClipboardSpi getClipboard();
 
 }

@@ -46,8 +46,10 @@ import org.jowidgets.common.widgets.IComponentCommon;
 import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.IWidgetsServiceProvider;
+import org.jowidgets.spi.clipboard.IClipboardSpi;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
 import org.jowidgets.spi.impl.swing.common.application.SwingApplicationRunnerFactory;
+import org.jowidgets.spi.impl.swing.common.clipboard.SwingClipboard;
 import org.jowidgets.spi.impl.swing.common.image.SwingImageHandleFactorySpi;
 import org.jowidgets.spi.impl.swing.common.image.SwingImageRegistry;
 import org.jowidgets.spi.impl.swing.common.threads.SwingUiThreadAccess;
@@ -62,6 +64,7 @@ public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 	private final SwingImageRegistry imageRegistry;
 	private final SwingWidgetFactory widgetFactory;
 	private final SwingOptionalWidgetsFactory optionalWidgetsFactory;
+	private final SwingClipboard clipboard;
 
 	public SwingWidgetsServiceProvider() {
 		this(new SwingApplicationRunnerFactory());
@@ -74,6 +77,12 @@ public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 		this.imageHandleFactorySpi = new SwingImageHandleFactorySpi(imageRegistry);
 		this.widgetFactory = new SwingWidgetFactory(imageRegistry);
 		this.optionalWidgetsFactory = new SwingOptionalWidgetsFactory();
+		this.clipboard = new SwingClipboard();
+	}
+
+	@Override
+	public IClipboardSpi getClipboard() {
+		return clipboard;
 	}
 
 	@Override
