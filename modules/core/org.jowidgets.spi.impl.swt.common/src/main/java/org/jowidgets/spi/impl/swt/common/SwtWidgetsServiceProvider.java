@@ -65,6 +65,8 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider, IProv
 	private final IFactory<IApplicationRunner> applicationRunnerFactory;
 	private final SwtClipboard clipboard;
 
+	private SwtUiThreadAccess uiThreadAccess;
+
 	public SwtWidgetsServiceProvider() {
 		this((Display) null);
 	}
@@ -115,7 +117,8 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider, IProv
 
 	@Override
 	public IUiThreadAccessCommon createUiThreadAccess() {
-		return new SwtUiThreadAccess(display);
+		uiThreadAccess = new SwtUiThreadAccess(display);
+		return uiThreadAccess;
 	}
 
 	@Override
@@ -180,7 +183,12 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider, IProv
 
 	@Override
 	public Display get() {
-		return display;
+		if (uiThreadAccess != null) {
+			return uiThreadAccess.getDisplay();
+		}
+		else {
+			return display;
+		}
 	}
 
 }

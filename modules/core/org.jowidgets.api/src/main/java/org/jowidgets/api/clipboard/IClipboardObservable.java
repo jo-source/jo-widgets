@@ -30,8 +30,8 @@ package org.jowidgets.api.clipboard;
 
 public interface IClipboardObservable {
 
-	void addClipbaordListener(IClipboardListener listener);
+	void addClipboardListener(IClipboardListener listener);
 
-	void removeClipbaordListener(IClipboardListener listener);
+	void removeClipboardListener(IClipboardListener listener);
 
 }

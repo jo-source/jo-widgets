@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Michael
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,40 +26,47 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.clipboard;
+package org.jowidgets.api.clipboard;
 
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.Set;
+import java.io.Serializable;
 
-import org.jowidgets.spi.clipboard.IClipboardListenerSpi;
-import org.jowidgets.spi.clipboard.IClipboardObservableSpi;
-import org.jowidgets.util.Assert;
+public final class StringType implements ITransferType<String>, Serializable {
 
-public class ClipboardObservable implements IClipboardObservableSpi {
+	private static final long serialVersionUID = 5478417637325018881L;
 
-	private final Set<IClipboardListenerSpi> listeners;
+	private static final StringType INSTANCE = new StringType();
 
-	public ClipboardObservable() {
-		this.listeners = new LinkedHashSet<IClipboardListenerSpi>();
+	private StringType() {}
+
+	@Override
+	public Class<String> getType() {
+		return String.class;
+	}
+
+	public static StringType getInstance() {
+		return INSTANCE;
+	}
+
+	public static boolean isStringType(final ITransferType<?> otherType) {
+		return INSTANCE.equals(otherType);
 	}
 
 	@Override
-	public final void addClipboardListener(final IClipboardListenerSpi listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (serialVersionUID ^ (serialVersionUID >>> 32));
+		return result;
 	}
 
 	@Override
-	public final void removeClipboardListener(final IClipboardListenerSpi listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
-
-	public final void fireClipboardChanged() {
-		for (final IClipboardListenerSpi listener : new LinkedList<IClipboardListenerSpi>(listeners)) {
-			listener.clipboardChanged();
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
 		}
+		if (obj == null) {
+			return false;
+		}
+		return getClass().getName().equals(obj.getClass().getName());
 	}
-
 }

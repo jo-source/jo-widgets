@@ -26,15 +26,40 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.clipboard;
+package org.jowidgets.impl.clipboard;
 
-import java.io.Serializable;
-import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.Set;
 
-public interface ITransferable extends Serializable {
+import org.jowidgets.spi.clipboard.IClipboardListenerSpi;
+import org.jowidgets.spi.clipboard.IClipboardObservableSpi;
+import org.jowidgets.util.Assert;
 
-	Collection<ITransferType<?>> getTransferTypes();
+public class ClipboardObservableSpi implements IClipboardObservableSpi {
 
-	<DATA_TYPE> DATA_TYPE getData(ITransferType<DATA_TYPE> type);
+	private final Set<IClipboardListenerSpi> listeners;
+
+	public ClipboardObservableSpi() {
+		this.listeners = new LinkedHashSet<IClipboardListenerSpi>();
+	}
+
+	@Override
+	public final void addClipboardListener(final IClipboardListenerSpi listener) {
+		Assert.paramNotNull(listener, "listener");
+		listeners.add(listener);
+	}
+
+	@Override
+	public final void removeClipboardListener(final IClipboardListenerSpi listener) {
+		Assert.paramNotNull(listener, "listener");
+		listeners.remove(listener);
+	}
+
+	public final void fireClipboardChanged() {
+		for (final IClipboardListenerSpi listener : new LinkedList<IClipboardListenerSpi>(listeners)) {
+			listener.clipboardChanged();
+		}
+	}
 
 }

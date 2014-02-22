@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, grossmann
+ * Copyright (c) 2014, Michael
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,15 +26,40 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.clipboard;
+package org.jowidgets.impl.clipboard;
 
-import java.io.Serializable;
-import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.Set;
 
-public interface ITransferable extends Serializable {
+import org.jowidgets.api.clipboard.IClipboardListener;
+import org.jowidgets.api.clipboard.IClipboardObservable;
+import org.jowidgets.util.Assert;
 
-	Collection<ITransferType<?>> getTransferTypes();
+class ClipboardObservable implements IClipboardObservable {
 
-	<DATA_TYPE> DATA_TYPE getData(ITransferType<DATA_TYPE> type);
+	private final Set<IClipboardListener> listeners;
+
+	public ClipboardObservable() {
+		this.listeners = new LinkedHashSet<IClipboardListener>();
+	}
+
+	@Override
+	public final void addClipboardListener(final IClipboardListener listener) {
+		Assert.paramNotNull(listener, "listener");
+		listeners.add(listener);
+	}
+
+	@Override
+	public final void removeClipboardListener(final IClipboardListener listener) {
+		Assert.paramNotNull(listener, "listener");
+		listeners.remove(listener);
+	}
+
+	public final void fireClipboardChanged() {
+		for (final IClipboardListener listener : new LinkedList<IClipboardListener>(listeners)) {
+			listener.clipboardChanged();
+		}
+	}
 
 }

@@ -26,15 +26,41 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.clipboard;
+package org.jowidgets.impl.clipboard;
 
-import java.io.Serializable;
-import java.util.Collection;
+import org.jowidgets.spi.clipboard.IClipboardObservableSpi;
+import org.jowidgets.spi.clipboard.IClipboardSpi;
 
-public interface ITransferable extends Serializable {
+final class ObservableClipbaordSpi extends ClipboardObservableSpi implements IClipboardSpi {
 
-	Collection<ITransferType<?>> getTransferTypes();
+	private final IClipboardSpi original;
+	private final ClipboardObservableSpi clipboardObservableSpi;
 
-	<DATA_TYPE> DATA_TYPE getData(ITransferType<DATA_TYPE> type);
+	ObservableClipbaordSpi(final IClipboardSpi original) {
+		this.original = original;
+		this.clipboardObservableSpi = new ClipboardObservableSpi();
+
+		//TODO clipboard polling must be implemented 
+	}
+
+	@Override
+	public String get() {
+		return original.get();
+	}
+
+	@Override
+	public void set(final String data) {
+		original.set(data);
+	}
+
+	@Override
+	public IClipboardObservableSpi getObservable() {
+		return clipboardObservableSpi;
+	}
+
+	@Override
+	public void dispose() {
+		original.dispose();
+	}
 
 }

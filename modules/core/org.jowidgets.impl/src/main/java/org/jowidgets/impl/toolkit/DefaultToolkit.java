@@ -34,6 +34,7 @@ import java.util.Map;
 
 import org.jowidgets.api.animation.IAnimationRunnerBuilder;
 import org.jowidgets.api.animation.IWaitAnimationProcessor;
+import org.jowidgets.api.clipboard.IClipboard;
 import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.event.IDelayedEventRunnerBuilder;
@@ -63,6 +64,7 @@ import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.application.ApplicationRunner;
+import org.jowidgets.impl.clipboard.ClipbaordImpl;
 import org.jowidgets.impl.command.ActionBuilderFactory;
 import org.jowidgets.impl.content.InputContentCreatorFactory;
 import org.jowidgets.impl.convert.DefaultConverterProvider;
@@ -102,6 +104,7 @@ public class DefaultToolkit implements IToolkit {
 
 	private IWaitAnimationProcessor waitAnimationProcessor;
 	private IUiThreadAccess uiThreadAccess;
+	private IClipboard clipboard;
 	private IApplicationRunner applicationRunner;
 
 	public DefaultToolkit(final IWidgetsServiceProvider toolkitSpi) {
@@ -228,6 +231,16 @@ public class DefaultToolkit implements IToolkit {
 	@Override
 	public IDelayedEventRunnerBuilder getDelayedEventRunnerBuilder() {
 		return new DelayedEventRunnerBuilderImpl();
+	}
+
+	@Override
+	public IClipboard getClipboard() {
+		//ensure invocation in ui thread
+		getUiThreadAccess();
+		if (clipboard == null) {
+			clipboard = new ClipbaordImpl(widgetsServiceProvider.getClipboard());
+		}
+		return clipboard;
 	}
 
 	@Override

@@ -34,6 +34,7 @@ import java.util.ServiceLoader;
 
 import org.jowidgets.api.animation.IAnimationRunnerBuilder;
 import org.jowidgets.api.animation.IWaitAnimationProcessor;
+import org.jowidgets.api.clipboard.IClipboard;
 import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.event.IDelayedEventRunnerBuilder;
@@ -108,6 +109,10 @@ public final class Toolkit {
 
 	public static boolean hasSpiMigLayoutSupport() {
 		return getInstance().hasSpiMigLayoutSupport();
+	}
+
+	public static IClipboard getClipboard() {
+		return getInstance().getClipboard();
 	}
 
 	public static IImageRegistry getImageRegistry() {
