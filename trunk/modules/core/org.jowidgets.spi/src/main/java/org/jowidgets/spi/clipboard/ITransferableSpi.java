@@ -26,40 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.clipboard;
+package org.jowidgets.spi.clipboard;
 
-import org.jowidgets.api.toolkit.Toolkit;
+import java.util.Collection;
 
-public final class Clipboard {
+public interface ITransferableSpi {
 
-	private Clipboard() {}
+	Collection<TransferTypeSpi> getSupportedTypes();
 
-	public static IClipboard getInstance() {
-		return Toolkit.getClipboard();
-	}
-
-	public static void setContents(final ITransferable contents) {
-		getInstance().setContents(contents);
-	}
-
-	public static ITransferable getContents() {
-		return getInstance().getContents();
-	}
-
-	public static <JAVA_TYPE> JAVA_TYPE getData(final TransferType<JAVA_TYPE> type) {
-		return getInstance().getData(type);
-	}
-
-	public static void addClipbaordListener(final IClipboardListener listener) {
-		getInstance().addClipboardListener(listener);
-	}
-
-	public static void removeClipbaordListener(final IClipboardListener listener) {
-		getInstance().removeClipboardListener(listener);
-	}
-
-	public static void dispose() {
-		getInstance().dispose();
-	}
+	Object getData(TransferTypeSpi type);
 
 }

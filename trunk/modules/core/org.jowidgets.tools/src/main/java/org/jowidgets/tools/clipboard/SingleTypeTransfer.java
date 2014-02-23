@@ -26,10 +26,47 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.clipboard;
+package org.jowidgets.tools.clipboard;
 
-public interface ITransferType<DATA_TYPE> {
+import java.util.Collection;
+import java.util.Collections;
 
-	Class<DATA_TYPE> getType();
+import org.jowidgets.api.clipboard.ITransferable;
+import org.jowidgets.api.clipboard.TransferType;
+import org.jowidgets.util.Assert;
+
+public final class SingleTypeTransfer<SINGLE_JAVA_TYPE> implements ITransferable {
+
+	@SuppressWarnings("rawtypes")
+	private final Collection supportedTypes;
+	private final SINGLE_JAVA_TYPE data;
+
+	public SingleTypeTransfer(final Class<SINGLE_JAVA_TYPE> javaType, final SINGLE_JAVA_TYPE data) {
+		this(new TransferType<SINGLE_JAVA_TYPE>(javaType), data);
+	}
+
+	public SingleTypeTransfer(final TransferType<SINGLE_JAVA_TYPE> transferType, final SINGLE_JAVA_TYPE data) {
+		Assert.paramNotNull(transferType, "transferType");
+		this.supportedTypes = Collections.singleton(transferType);
+		this.data = data;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Collection<TransferType<?>> getSupportedTypes() {
+		return supportedTypes;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <JAVA_TYPE> JAVA_TYPE getData(final TransferType<JAVA_TYPE> type) {
+		Assert.paramNotNull(type, "type");
+		if (supportedTypes.contains(type)) {
+			return (JAVA_TYPE) data;
+		}
+		else {
+			return null;
+		}
+	}
 
 }

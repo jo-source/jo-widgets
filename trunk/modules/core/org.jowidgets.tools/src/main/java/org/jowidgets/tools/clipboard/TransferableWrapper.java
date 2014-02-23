@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, grossmann
+ * Copyright (c) 2014, Michael
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,40 +26,31 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.clipboard;
+package org.jowidgets.tools.clipboard;
 
-import org.jowidgets.api.toolkit.Toolkit;
+import java.util.Collection;
 
-public final class Clipboard {
+import org.jowidgets.api.clipboard.ITransferable;
+import org.jowidgets.api.clipboard.TransferType;
+import org.jowidgets.util.Assert;
 
-	private Clipboard() {}
+public class TransferableWrapper implements ITransferable {
 
-	public static IClipboard getInstance() {
-		return Toolkit.getClipboard();
+	private final ITransferable original;
+
+	public TransferableWrapper(final ITransferable original) {
+		Assert.paramNotNull(original, "original");
+		this.original = original;
 	}
 
-	public static void setContents(final ITransferable contents) {
-		getInstance().setContents(contents);
+	@Override
+	public final Collection<TransferType<?>> getSupportedTypes() {
+		return original.getSupportedTypes();
 	}
 
-	public static ITransferable getContents() {
-		return getInstance().getContents();
-	}
-
-	public static <JAVA_TYPE> JAVA_TYPE getData(final TransferType<JAVA_TYPE> type) {
-		return getInstance().getData(type);
-	}
-
-	public static void addClipbaordListener(final IClipboardListener listener) {
-		getInstance().addClipboardListener(listener);
-	}
-
-	public static void removeClipbaordListener(final IClipboardListener listener) {
-		getInstance().removeClipboardListener(listener);
-	}
-
-	public static void dispose() {
-		getInstance().dispose();
+	@Override
+	public final <JAVA_TYPE> JAVA_TYPE getData(final TransferType<JAVA_TYPE> type) {
+		return original.getData(type);
 	}
 
 }

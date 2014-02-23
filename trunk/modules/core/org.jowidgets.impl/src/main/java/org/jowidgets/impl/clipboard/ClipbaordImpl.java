@@ -29,14 +29,13 @@
 package org.jowidgets.impl.clipboard;
 
 import org.jowidgets.api.clipboard.IClipboard;
-import org.jowidgets.api.clipboard.ITransferType;
 import org.jowidgets.api.clipboard.ITransferable;
-import org.jowidgets.api.clipboard.StringType;
+import org.jowidgets.api.clipboard.TransferType;
 import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.spi.clipboard.IClipboardListenerSpi;
 import org.jowidgets.spi.clipboard.IClipboardSpi;
-import org.jowidgets.tools.clipboard.StringTransfer;
+import org.jowidgets.spi.clipboard.ITransferableSpi;
 import org.jowidgets.util.Assert;
 
 public final class ClipbaordImpl extends ClipboardObservable implements IClipboard {
@@ -67,32 +66,20 @@ public final class ClipbaordImpl extends ClipboardObservable implements IClipboa
 	}
 
 	@Override
-	public void setContent(final ITransferable content) {
-		checkThread();
-		if (content == null) {
-			clipboardSpi.set(null);
-		}
-		else if (contentIsOnlyString(content)) {
-			clipboardSpi.set(content.getData(StringType.getInstance()));
+	public void setContents(final ITransferable contents) {
+		if (contents != null) {
+			clipboardSpi.setContents(new TransferableSpiAdapter(contents));
 		}
 		else {
-			throw new UnsupportedOperationException("Only StringType is supported yet");
+			clipboardSpi.setContents(null);
 		}
-	}
-
-	private boolean contentIsOnlyString(final ITransferable content) {
-		if (content.getTransferTypes().size() == 1) {
-			return StringType.isStringType(content.getTransferTypes().iterator().next());
-		}
-		return false;
 	}
 
 	@Override
-	public ITransferable getContent() {
-		checkThread();
-		final String result = clipboardSpi.get();
-		if (result != null) {
-			return new StringTransfer(result);
+	public ITransferable getContents() {
+		final ITransferableSpi contents = clipboardSpi.getContents();
+		if (contents != null) {
+			return new TransferableAdapter(contents);
 		}
 		else {
 			return null;
@@ -100,10 +87,10 @@ public final class ClipbaordImpl extends ClipboardObservable implements IClipboa
 	}
 
 	@Override
-	public <DATA_TYPE> DATA_TYPE getData(final ITransferType<DATA_TYPE> type) {
-		final ITransferable content = getContent();
+	public <JAVA_TYPE> JAVA_TYPE getData(final TransferType<JAVA_TYPE> type) {
+		final ITransferable content = getContents();
 		if (content != null) {
-			if (content.getTransferTypes().contains(type)) {
+			if (content.getSupportedTypes().contains(type)) {
 				return content.getData(type);
 			}
 		}

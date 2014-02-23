@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Michael
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,45 +28,10 @@
 
 package org.jowidgets.tools.clipboard;
 
-import java.util.Collection;
-import java.util.Collections;
-
-import org.jowidgets.api.clipboard.ITransferType;
-import org.jowidgets.api.clipboard.ITransferable;
-import org.jowidgets.api.clipboard.StringType;
-
-public final class StringTransfer implements ITransferable {
-
-	private static final long serialVersionUID = -4679417069294285597L;
-
-	@SuppressWarnings("unchecked")
-	private static final Collection<ITransferType<?>> TRANSFER_TYPES = createTransferTypes();
-
-	private final String data;
+public final class StringTransfer extends TransferableWrapper {
 
 	public StringTransfer(final String data) {
-		this.data = data;
-	}
-
-	@Override
-	public Collection<ITransferType<?>> getTransferTypes() {
-		return TRANSFER_TYPES;
-	}
-
-	@SuppressWarnings("rawtypes")
-	private static Collection createTransferTypes() {
-		return Collections.unmodifiableSet(Collections.singleton(StringType.getInstance()));
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public <DATA_TYPE> DATA_TYPE getData(final ITransferType<DATA_TYPE> type) {
-		if (StringType.isStringType(type)) {
-			return (DATA_TYPE) data;
-		}
-		else {
-			return null;
-		}
+		super(new SingleTypeTransfer<String>(String.class, data));
 	}
 
 }

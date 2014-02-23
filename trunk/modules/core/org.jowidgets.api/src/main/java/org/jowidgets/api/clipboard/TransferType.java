@@ -28,38 +28,51 @@
 
 package org.jowidgets.api.clipboard;
 
-import org.jowidgets.api.toolkit.Toolkit;
+import java.io.Serializable;
 
-public final class Clipboard {
+import org.jowidgets.util.Assert;
 
-	private Clipboard() {}
+public final class TransferType<JAVA_TYPE> implements Serializable {
 
-	public static IClipboard getInstance() {
-		return Toolkit.getClipboard();
+	public static final TransferType<String> STRING_TYPE = new TransferType<String>(String.class);
+
+	private static final long serialVersionUID = 3536962082573394080L;
+
+	private final Class<JAVA_TYPE> javaType;
+	private final String className;
+
+	public TransferType(final Class<JAVA_TYPE> javaType) {
+		Assert.paramNotNull(javaType, "javaType");
+		this.javaType = javaType;
+		this.className = javaType.getName();
 	}
 
-	public static void setContents(final ITransferable contents) {
-		getInstance().setContents(contents);
+	public Class<JAVA_TYPE> getJavaType() {
+		return javaType;
 	}
 
-	public static ITransferable getContents() {
-		return getInstance().getContents();
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((className == null) ? 0 : className.hashCode());
+		return result;
 	}
 
-	public static <JAVA_TYPE> JAVA_TYPE getData(final TransferType<JAVA_TYPE> type) {
-		return getInstance().getData(type);
-	}
-
-	public static void addClipbaordListener(final IClipboardListener listener) {
-		getInstance().addClipboardListener(listener);
-	}
-
-	public static void removeClipbaordListener(final IClipboardListener listener) {
-		getInstance().removeClipboardListener(listener);
-	}
-
-	public static void dispose() {
-		getInstance().dispose();
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof TransferType)) {
+			return false;
+		}
+		@SuppressWarnings({"unchecked", "rawtypes"})
+		final TransferType<JAVA_TYPE> other = (TransferType) obj;
+		return className.equals(other.getJavaType().getName());
 	}
 
 }
