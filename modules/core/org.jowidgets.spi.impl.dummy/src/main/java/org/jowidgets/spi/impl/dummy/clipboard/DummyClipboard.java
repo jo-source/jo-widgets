@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Michael
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -30,19 +30,20 @@ package org.jowidgets.spi.impl.dummy.clipboard;
 
 import org.jowidgets.spi.clipboard.IClipboardObservableSpi;
 import org.jowidgets.spi.clipboard.IClipboardSpi;
+import org.jowidgets.spi.clipboard.ITransferableSpi;
 
 public final class DummyClipboard implements IClipboardSpi {
 
-	private String data;
+	private ITransferableSpi contents;
 
 	@Override
-	public String get() {
-		return data;
+	public void setContents(final ITransferableSpi contents) {
+		this.contents = contents;
 	}
 
 	@Override
-	public void set(final String data) {
-		this.data = data;
+	public ITransferableSpi getContents() {
+		return contents;
 	}
 
 	@Override
@@ -52,7 +53,7 @@ public final class DummyClipboard implements IClipboardSpi {
 
 	@Override
 	public void dispose() {
-		data = null;
+		contents = null;
 	}
 
 }

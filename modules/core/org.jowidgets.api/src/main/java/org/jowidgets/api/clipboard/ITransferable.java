@@ -28,13 +28,12 @@
 
 package org.jowidgets.api.clipboard;
 
-import java.io.Serializable;
 import java.util.Collection;
 
-public interface ITransferable extends Serializable {
+public interface ITransferable {
 
-	Collection<ITransferType<?>> getTransferTypes();
+	Collection<TransferType<?>> getSupportedTypes();
 
-	<DATA_TYPE> DATA_TYPE getData(ITransferType<DATA_TYPE> type);
+	<JAVA_TYPE> JAVA_TYPE getData(TransferType<JAVA_TYPE> type);
 
 }

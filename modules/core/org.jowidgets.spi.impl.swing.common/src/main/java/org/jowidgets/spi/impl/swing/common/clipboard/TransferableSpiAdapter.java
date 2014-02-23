@@ -26,40 +26,56 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.clipboard;
+package org.jowidgets.spi.impl.swing.common.clipboard;
 
-import org.jowidgets.api.toolkit.Toolkit;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
-public final class Clipboard {
+import org.jowidgets.spi.clipboard.ITransferableSpi;
+import org.jowidgets.spi.clipboard.TransferTypeSpi;
+import org.jowidgets.util.Assert;
 
-	private Clipboard() {}
+final class TransferableSpiAdapter implements ITransferableSpi {
 
-	public static IClipboard getInstance() {
-		return Toolkit.getClipboard();
+	private final Collection<TransferTypeSpi> transferTypes;
+	private final Map<TransferTypeSpi, Object> dataMap;
+
+	TransferableSpiAdapter(final Transferable contents) {
+		Assert.paramNotNull(contents, "contents");
+
+		this.dataMap = new HashMap<TransferTypeSpi, Object>();
+		final Set<TransferTypeSpi> typeSet = new LinkedHashSet<TransferTypeSpi>();
+
+		for (final DataFlavor flavor : contents.getTransferDataFlavors()) {
+			final TransferTypeSpi transferType = new TransferTypeSpi(flavor.getRepresentationClass());
+
+			try {
+				final Object transferData = contents.getTransferData(flavor);
+				typeSet.add(transferType);
+				dataMap.put(transferType, transferData);
+			}
+			catch (final Exception e) {
+			}
+
+		}
+
+		this.transferTypes = Collections.unmodifiableSet(typeSet);
 	}
 
-	public static void setContents(final ITransferable contents) {
-		getInstance().setContents(contents);
+	@Override
+	public Collection<TransferTypeSpi> getSupportedTypes() {
+		return transferTypes;
 	}
 
-	public static ITransferable getContents() {
-		return getInstance().getContents();
-	}
-
-	public static <JAVA_TYPE> JAVA_TYPE getData(final TransferType<JAVA_TYPE> type) {
-		return getInstance().getData(type);
-	}
-
-	public static void addClipbaordListener(final IClipboardListener listener) {
-		getInstance().addClipboardListener(listener);
-	}
-
-	public static void removeClipbaordListener(final IClipboardListener listener) {
-		getInstance().removeClipboardListener(listener);
-	}
-
-	public static void dispose() {
-		getInstance().dispose();
+	@Override
+	public Object getData(final TransferTypeSpi type) {
+		return dataMap.get(type);
 	}
 
 }

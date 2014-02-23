@@ -34,6 +34,7 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Display;
 import org.jowidgets.spi.clipboard.IClipboardObservableSpi;
 import org.jowidgets.spi.clipboard.IClipboardSpi;
+import org.jowidgets.spi.clipboard.ITransferableSpi;
 import org.jowidgets.util.IProvider;
 
 public final class SwtClipboard implements IClipboardSpi {
@@ -49,24 +50,35 @@ public final class SwtClipboard implements IClipboardSpi {
 		this.displayProvider = displayProvider;
 	}
 
+	//	@Override
+	//	public String get() {
+	//		final Clipboard clipboard = getClipboard();
+	//		if (clipboard != null) {
+	//			final Object contents = clipboard.getContents(TEXT_TRANSFER);
+	//			if (contents instanceof String) {
+	//				return (String) contents;
+	//			}
+	//		}
+	//		return null;
+	//	}
+	//
+	//	@Override
+	//	public void set(final String data) {
+	//		final Clipboard clipboard = getClipboard();
+	//		if (clipboard != null) {
+	//			clipboard.setContents(new String[] {data}, TEXT_TRANSFERS);
+	//		}
+	//	}
+
 	@Override
-	public String get() {
-		final Clipboard clipboard = getClipboard();
-		if (clipboard != null) {
-			final Object contents = clipboard.getContents(TEXT_TRANSFER);
-			if (contents instanceof String) {
-				return (String) contents;
-			}
-		}
-		return null;
+	public void setContents(final ITransferableSpi contents) {
+		// TODO MG must be implemented
 	}
 
 	@Override
-	public void set(final String data) {
-		final Clipboard clipboard = getClipboard();
-		if (clipboard != null) {
-			clipboard.setContents(new String[] {data}, TEXT_TRANSFERS);
-		}
+	public ITransferableSpi getContents() {
+		// TODO MG must be implemented
+		return null;
 	}
 
 	@Override

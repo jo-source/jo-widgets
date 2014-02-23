@@ -26,47 +26,52 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.clipboard;
+package org.jowidgets.impl.clipboard;
 
-import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
-public final class StringType implements ITransferType<String>, Serializable {
+import org.jowidgets.api.clipboard.ITransferable;
+import org.jowidgets.api.clipboard.TransferType;
+import org.jowidgets.spi.clipboard.ITransferableSpi;
+import org.jowidgets.spi.clipboard.TransferTypeSpi;
+import org.jowidgets.util.Assert;
 
-	private static final long serialVersionUID = 5478417637325018881L;
+final class TransferableAdapter implements ITransferable {
 
-	private static final StringType INSTANCE = new StringType();
+	private final Collection<TransferType<?>> supportedTypes;
+	private final Map<TransferType<?>, Object> dataMap;
 
-	private StringType() {}
+	TransferableAdapter(final ITransferableSpi contents) {
+		Assert.paramNotNull(contents, "contents");
 
-	@Override
-	public Class<String> getType() {
-		return String.class;
-	}
+		final Set<TransferType<?>> typesSet = new LinkedHashSet<TransferType<?>>();
+		this.dataMap = new HashMap<TransferType<?>, Object>();
 
-	public static StringType getInstance() {
-		return INSTANCE;
-	}
-
-	public static boolean isStringType(final ITransferType<?> otherType) {
-		return INSTANCE.equals(otherType);
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (serialVersionUID ^ (serialVersionUID >>> 32));
-		return result;
-	}
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
+		for (final TransferTypeSpi transferTypeSpi : contents.getSupportedTypes()) {
+			@SuppressWarnings("unchecked")
+			final TransferType<?> transferType = new TransferType<Object>((Class<Object>) transferTypeSpi.getJavaType());
+			typesSet.add(transferType);
+			dataMap.put(transferType, contents.getData(transferTypeSpi));
 		}
-		if (obj == null) {
-			return false;
-		}
-		return getClass().getName().equals(obj.getClass().getName());
+
+		this.supportedTypes = Collections.unmodifiableSet(typesSet);
 	}
+
+	@Override
+	public Collection<TransferType<?>> getSupportedTypes() {
+		return supportedTypes;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <JAVA_TYPE> JAVA_TYPE getData(final TransferType<JAVA_TYPE> type) {
+		Assert.paramNotNull(type, "type");
+		return (JAVA_TYPE) dataMap.get(type);
+	}
+
 }

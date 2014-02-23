@@ -30,6 +30,7 @@ package org.jowidgets.impl.clipboard;
 
 import org.jowidgets.spi.clipboard.IClipboardObservableSpi;
 import org.jowidgets.spi.clipboard.IClipboardSpi;
+import org.jowidgets.spi.clipboard.ITransferableSpi;
 
 final class ObservableClipbaordSpi extends ClipboardObservableSpi implements IClipboardSpi {
 
@@ -44,13 +45,13 @@ final class ObservableClipbaordSpi extends ClipboardObservableSpi implements ICl
 	}
 
 	@Override
-	public String get() {
-		return original.get();
+	public void setContents(final ITransferableSpi content) {
+		original.setContents(content);
 	}
 
 	@Override
-	public void set(final String data) {
-		original.set(data);
+	public ITransferableSpi getContents() {
+		return original.getContents();
 	}
 
 	@Override

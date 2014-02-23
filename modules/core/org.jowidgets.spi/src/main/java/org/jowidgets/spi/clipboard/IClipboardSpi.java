@@ -37,18 +37,18 @@ package org.jowidgets.spi.clipboard;
 public interface IClipboardSpi {
 
 	/**
-	 * Gets the content from the clipboard
+	 * Sets the contents into the clipboard
 	 * 
-	 * @return The content, may be null
+	 * @param content The contents to set, may be null
 	 */
-	String get();
+	void setContents(ITransferableSpi contents);
 
 	/**
-	 * Sets the content into the clipboard
+	 * Gets the contents from the clipboard
 	 * 
-	 * @param data The content, may be null
+	 * @return The contents or null, if no content is set
 	 */
-	void set(String data);
+	ITransferableSpi getContents();
 
 	/**
 	 * Gets he observable part of the interface. If this can not be implemented with native methods,

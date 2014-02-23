@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Michael
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,66 +28,66 @@
 
 package org.jowidgets.spi.impl.swing.common.clipboard;
 
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.FlavorEvent;
-import java.awt.datatransfer.FlavorListener;
+import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-import org.jowidgets.spi.clipboard.IClipboardObservableSpi;
-import org.jowidgets.spi.clipboard.IClipboardSpi;
 import org.jowidgets.spi.clipboard.ITransferableSpi;
-import org.jowidgets.spi.impl.clipboard.ClipboardObservableSpi;
+import org.jowidgets.spi.clipboard.TransferTypeSpi;
+import org.jowidgets.util.Assert;
 
-public final class SwingClipboard implements IClipboardSpi {
+final class TransferableAdapter implements Transferable, Serializable {
 
-	private final ClipboardObservableSpi clipboardObservable;
-	private final Clipboard systemClipboard;
-	private final FlavorListener flavorListener;
+	private static final long serialVersionUID = -5633005828108967675L;
 
-	public SwingClipboard() {
-		this.clipboardObservable = new ClipboardObservableSpi();
-		this.systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+	private final DataFlavor[] flavors;
+	private final Map<DataFlavor, Object> dataMap;
 
-		this.flavorListener = new FlavorListener() {
-			@Override
-			public void flavorsChanged(final FlavorEvent e) {
-				clipboardObservable.fireClipboardChanged();
+	TransferableAdapter(final ITransferableSpi transferableSpi) {
+		Assert.paramNotNull(transferableSpi, "transferableSpi");
+
+		final Collection<TransferTypeSpi> transferTypes = transferableSpi.getSupportedTypes();
+
+		this.flavors = new DataFlavor[transferTypes.size()];
+		this.dataMap = new LinkedHashMap<DataFlavor, Object>();
+
+		int index = 0;
+		for (final TransferTypeSpi transferType : transferTypes) {
+			final DataFlavor flavor = new DataFlavor(transferType.getJavaType(), transferType.getJavaType().getName());
+			flavors[index] = flavor;
+			dataMap.put(flavor, transferableSpi.getData(transferType));
+			index++;
+		}
+	}
+
+	@Override
+	public DataFlavor[] getTransferDataFlavors() {
+		return flavors;
+	}
+
+	@Override
+	public boolean isDataFlavorSupported(final DataFlavor flavor) {
+		for (final DataFlavor supportedFlavor : flavors) {
+			if (supportedFlavor.equals(flavor)) {
+				return true;
 			}
-		};
-		systemClipboard.addFlavorListener(flavorListener);
+		}
+		return false;
 	}
 
 	@Override
-	public void setContents(final ITransferableSpi content) {
-		if (content != null) {
-			systemClipboard.setContents(new TransferableAdapter(content), null);
+	public Object getTransferData(final DataFlavor flavor) throws UnsupportedFlavorException, IOException {
+		if (isDataFlavorSupported(flavor)) {
+			return dataMap.get(flavor);
 		}
 		else {
-			systemClipboard.setContents(null, null);
+			throw new UnsupportedFlavorException(flavor);
 		}
-
-	}
-
-	@Override
-	public ITransferableSpi getContents() {
-		final Transferable contents = systemClipboard.getContents(null);
-		if (contents != null) {
-			return new TransferableSpiAdapter(contents);
-		}
-		else {
-			return null;
-		}
-	}
-
-	@Override
-	public IClipboardObservableSpi getObservable() {
-		return clipboardObservable;
-	}
-
-	@Override
-	public void dispose() {
-		systemClipboard.removeFlavorListener(flavorListener);
 	}
 
 }
