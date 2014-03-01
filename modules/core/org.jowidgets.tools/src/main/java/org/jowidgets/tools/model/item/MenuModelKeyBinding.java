@@ -37,6 +37,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.command.IExceptionHandler;
 import org.jowidgets.api.command.IExecutionContext;
 import org.jowidgets.api.model.IListModelListener;
 import org.jowidgets.api.model.item.IActionItemModel;
@@ -100,7 +101,13 @@ public final class MenuModelKeyBinding {
 						}
 						catch (final Exception e) {
 							try {
-								action.getExceptionHandler().handleException(executionContext, e);
+								final IExceptionHandler exceptionHandler = action.getExceptionHandler();
+								if (exceptionHandler != null) {
+									exceptionHandler.handleException(executionContext, e);
+								}
+								else {
+									throw e;
+								}
 							}
 							catch (final Exception e1) {
 								final UncaughtExceptionHandler uncaughtExceptionHandler = Thread.currentThread().getUncaughtExceptionHandler();

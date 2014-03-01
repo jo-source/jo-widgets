@@ -29,47 +29,27 @@
 package org.jowidgets.spi.clipboard;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
 
 import org.jowidgets.util.Assert;
 
-public final class TransferTypeSpi implements Serializable {
+public final class TransferContainer implements Serializable {
 
-	private static final long serialVersionUID = 3536962082573394080L;
+	public static final String MIME_TYPE = "application/x-jowidgets-transfer-container";
 
-	private final Class<?> javaType;
-	private final String className;
+	private static final long serialVersionUID = 7633172392759619262L;
 
-	public TransferTypeSpi(final Class<?> javaType) {
-		Assert.paramNotNull(javaType, "javaType");
-		this.javaType = javaType;
-		this.className = javaType.getName();
+	private final Collection<TransferObject> transferObjects;
+
+	public TransferContainer(final Collection<TransferObject> transferObjects) {
+		Assert.paramNotNull(transferObjects, "transferObjects");
+		this.transferObjects = Collections.unmodifiableList(new LinkedList<TransferObject>(transferObjects));
 	}
 
-	public Class<?> getJavaType() {
-		return javaType;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((className == null) ? 0 : className.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof TransferTypeSpi)) {
-			return false;
-		}
-		final TransferTypeSpi other = (TransferTypeSpi) obj;
-		return className.equals(other.getJavaType().getName());
+	public Collection<TransferObject> getTransferObjetcs() {
+		return transferObjects;
 	}
 
 }

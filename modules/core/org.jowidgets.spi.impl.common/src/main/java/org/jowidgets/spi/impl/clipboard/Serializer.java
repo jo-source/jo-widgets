@@ -26,50 +26,45 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.clipboard;
+package org.jowidgets.spi.impl.clipboard;
 
-import java.io.Serializable;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import org.jowidgets.util.Assert;
 
-public final class TransferTypeSpi implements Serializable {
+public final class Serializer {
 
-	private static final long serialVersionUID = 3536962082573394080L;
+	private Serializer() {}
 
-	private final Class<?> javaType;
-	private final String className;
-
-	public TransferTypeSpi(final Class<?> javaType) {
-		Assert.paramNotNull(javaType, "javaType");
-		this.javaType = javaType;
-		this.className = javaType.getName();
+	public static byte[] serialize(final Object obj) {
+		try {
+			final ByteArrayOutputStream b = new ByteArrayOutputStream();
+			final ObjectOutputStream o = new ObjectOutputStream(b);
+			o.writeObject(obj);
+			return b.toByteArray();
+		}
+		catch (final Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
-	public Class<?> getJavaType() {
-		return javaType;
+	public static Object deserialize(final byte[] bytes) {
+		return deserialize(new ByteArrayInputStream(bytes));
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((className == null) ? 0 : className.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
+	public static Object deserialize(final InputStream inputStream) {
+		Assert.paramNotNull(inputStream, "inputStream");
+		try {
+			final ObjectInputStream o = new ObjectInputStream(inputStream);
+			return o.readObject();
 		}
-		if (obj == null) {
-			return false;
+		catch (final Exception e) {
+			throw new RuntimeException(e);
 		}
-		if (!(obj instanceof TransferTypeSpi)) {
-			return false;
-		}
-		final TransferTypeSpi other = (TransferTypeSpi) obj;
-		return className.equals(other.getJavaType().getName());
 	}
 
 }

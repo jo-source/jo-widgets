@@ -26,50 +26,34 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.clipboard;
+package org.jowidgets.spi.impl.swt.common.clipboard;
 
-import java.io.Serializable;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
+import org.jowidgets.spi.clipboard.ITransferableSpi;
+import org.jowidgets.spi.clipboard.TransferTypeSpi;
 import org.jowidgets.util.Assert;
 
-public final class TransferTypeSpi implements Serializable {
+final class TransferableSpiAdapter implements ITransferableSpi {
 
-	private static final long serialVersionUID = 3536962082573394080L;
+	private final Map<TransferTypeSpi, Object> dataMap;
 
-	private final Class<?> javaType;
-	private final String className;
-
-	public TransferTypeSpi(final Class<?> javaType) {
-		Assert.paramNotNull(javaType, "javaType");
-		this.javaType = javaType;
-		this.className = javaType.getName();
-	}
-
-	public Class<?> getJavaType() {
-		return javaType;
+	TransferableSpiAdapter(final Map<TransferTypeSpi, Object> dataMap) {
+		Assert.paramNotNull(dataMap, "dataMap");
+		this.dataMap = new LinkedHashMap<TransferTypeSpi, Object>(dataMap);
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((className == null) ? 0 : className.hashCode());
-		return result;
+	public Collection<TransferTypeSpi> getSupportedTypes() {
+		return dataMap.keySet();
 	}
 
 	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof TransferTypeSpi)) {
-			return false;
-		}
-		final TransferTypeSpi other = (TransferTypeSpi) obj;
-		return className.equals(other.getJavaType().getName());
+	public Object getData(final TransferTypeSpi type) {
+		Assert.paramNotNull(type, "type");
+		return dataMap.get(type);
 	}
 
 }
