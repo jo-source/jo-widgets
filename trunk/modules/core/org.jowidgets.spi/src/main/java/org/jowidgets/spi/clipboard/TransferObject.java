@@ -32,44 +32,27 @@ import java.io.Serializable;
 
 import org.jowidgets.util.Assert;
 
-public final class TransferTypeSpi implements Serializable {
+public final class TransferObject implements Serializable {
 
-	private static final long serialVersionUID = 3536962082573394080L;
+	public static final String MIME_TYPE = "application/x-jowidgets-transfer-container";
 
-	private final Class<?> javaType;
-	private final String className;
+	private static final long serialVersionUID = 7633172392759619262L;
 
-	public TransferTypeSpi(final Class<?> javaType) {
-		Assert.paramNotNull(javaType, "javaType");
-		this.javaType = javaType;
-		this.className = javaType.getName();
+	private final TransferTypeSpi transferType;
+	private final Object data;
+
+	public TransferObject(final TransferTypeSpi transferType, final Object data) {
+		Assert.paramNotNull(transferType, "transferType");
+		this.transferType = transferType;
+		this.data = data;
 	}
 
-	public Class<?> getJavaType() {
-		return javaType;
+	public TransferTypeSpi getTransferType() {
+		return transferType;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((className == null) ? 0 : className.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof TransferTypeSpi)) {
-			return false;
-		}
-		final TransferTypeSpi other = (TransferTypeSpi) obj;
-		return className.equals(other.getJavaType().getName());
+	public Object getData() {
+		return data;
 	}
 
 }

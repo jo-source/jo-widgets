@@ -30,47 +30,61 @@ package org.jowidgets.spi.impl.swing.common.clipboard;
 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
+import java.io.InputStream;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.jowidgets.spi.clipboard.ITransferableSpi;
+import org.jowidgets.spi.clipboard.TransferContainer;
+import org.jowidgets.spi.clipboard.TransferObject;
 import org.jowidgets.spi.clipboard.TransferTypeSpi;
+import org.jowidgets.spi.impl.clipboard.Serializer;
 import org.jowidgets.util.Assert;
 
 final class TransferableSpiAdapter implements ITransferableSpi {
 
-	private final Collection<TransferTypeSpi> transferTypes;
 	private final Map<TransferTypeSpi, Object> dataMap;
 
 	TransferableSpiAdapter(final Transferable contents) {
 		Assert.paramNotNull(contents, "contents");
 
 		this.dataMap = new HashMap<TransferTypeSpi, Object>();
-		final Set<TransferTypeSpi> typeSet = new LinkedHashSet<TransferTypeSpi>();
 
 		for (final DataFlavor flavor : contents.getTransferDataFlavors()) {
-			final TransferTypeSpi transferType = new TransferTypeSpi(flavor.getRepresentationClass());
-
-			try {
-				final Object transferData = contents.getTransferData(flavor);
-				typeSet.add(transferType);
-				dataMap.put(transferType, transferData);
+			if (DataFlavor.stringFlavor.equals(flavor)) {
+				try {
+					final TransferTypeSpi transferType = new TransferTypeSpi(flavor.getRepresentationClass());
+					final Object transferData = contents.getTransferData(flavor);
+					dataMap.put(transferType, transferData);
+				}
+				catch (final Exception e) {
+				}
 			}
-			catch (final Exception e) {
+			else if (InputStream.class.isAssignableFrom(flavor.getRepresentationClass())) {
+				try {
+					final Object transferData = contents.getTransferData(flavor);
+					if (transferData instanceof InputStream) {
+						final InputStream inputStream = (InputStream) transferData;
+						inputStream.reset();
+						final Object deserialized = Serializer.deserialize(inputStream);
+						if (deserialized instanceof TransferContainer) {
+							final TransferContainer transferContainer = (TransferContainer) deserialized;
+							for (final TransferObject transferObject : transferContainer.getTransferObjetcs()) {
+								dataMap.put(transferObject.getTransferType(), transferObject.getData());
+							}
+						}
+					}
+				}
+				catch (final Exception e) {
+				}
 			}
-
 		}
-
-		this.transferTypes = Collections.unmodifiableSet(typeSet);
 	}
 
 	@Override
 	public Collection<TransferTypeSpi> getSupportedTypes() {
-		return transferTypes;
+		return dataMap.keySet();
 	}
 
 	@Override

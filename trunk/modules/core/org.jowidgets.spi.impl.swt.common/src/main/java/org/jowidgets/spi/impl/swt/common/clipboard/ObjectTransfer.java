@@ -26,50 +26,61 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.clipboard;
+package org.jowidgets.spi.impl.swt.common.clipboard;
 
-import java.io.Serializable;
+import org.eclipse.swt.dnd.ByteArrayTransfer;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.dnd.TransferData;
+import org.jowidgets.spi.clipboard.TransferContainer;
+import org.jowidgets.spi.impl.clipboard.Serializer;
 
-import org.jowidgets.util.Assert;
+final class ObjectTransfer extends ByteArrayTransfer {
 
-public final class TransferTypeSpi implements Serializable {
+	private static final String MIME_TYPE = TransferContainer.MIME_TYPE;
+	private static final int MIME_TYPE_ID = registerType(MIME_TYPE);
 
-	private static final long serialVersionUID = 3536962082573394080L;
+	private static final ObjectTransfer INSTANCE = new ObjectTransfer();
 
-	private final Class<?> javaType;
-	private final String className;
-
-	public TransferTypeSpi(final Class<?> javaType) {
-		Assert.paramNotNull(javaType, "javaType");
-		this.javaType = javaType;
-		this.className = javaType.getName();
-	}
-
-	public Class<?> getJavaType() {
-		return javaType;
+	public static Transfer getInstance() {
+		return INSTANCE;
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((className == null) ? 0 : className.hashCode());
-		return result;
+	protected int[] getTypeIds() {
+		return new int[] {MIME_TYPE_ID};
 	}
 
 	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
+	protected String[] getTypeNames() {
+		return new String[] {MIME_TYPE};
+	}
+
+	@Override
+	public void javaToNative(final Object object, final TransferData transferData) {
+		if (!validate(object) || !isSupportedType(transferData)) {
+			DND.error(DND.ERROR_INVALID_DATA);
+		}
+		super.javaToNative(Serializer.serialize(object), transferData);
+	}
+
+	@Override
+	public Object nativeToJava(final TransferData transferData) {
+		if (!isSupportedType(transferData)) {
+			return null;
+		}
+		final byte[] bytes = (byte[]) super.nativeToJava(transferData);
+		return bytes == null ? null : Serializer.deserialize(bytes);
+	}
+
+	@Override
+	protected boolean validate(final Object object) {
+		if (object == null) {
+			return false;
+		}
+		else {
 			return true;
 		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof TransferTypeSpi)) {
-			return false;
-		}
-		final TransferTypeSpi other = (TransferTypeSpi) obj;
-		return className.equals(other.getJavaType().getName());
 	}
 
 }

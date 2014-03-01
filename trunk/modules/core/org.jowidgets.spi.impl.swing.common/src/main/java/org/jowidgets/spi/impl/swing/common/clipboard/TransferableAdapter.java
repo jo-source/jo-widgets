@@ -31,19 +31,27 @@ package org.jowidgets.spi.impl.swing.common.clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.jowidgets.spi.clipboard.ITransferableSpi;
+import org.jowidgets.spi.clipboard.TransferContainer;
+import org.jowidgets.spi.clipboard.TransferObject;
 import org.jowidgets.spi.clipboard.TransferTypeSpi;
+import org.jowidgets.spi.impl.clipboard.Serializer;
 import org.jowidgets.util.Assert;
 
 final class TransferableAdapter implements Transferable, Serializable {
 
 	private static final long serialVersionUID = -5633005828108967675L;
+
+	private static final DataFlavor TRANSFER_CONTAINER_FLAVOR = SwingClipboard.TRANSFER_CONTAINER_FLAVOR;
 
 	private final DataFlavor[] flavors;
 	private final Map<DataFlavor, Object> dataMap;
@@ -53,14 +61,30 @@ final class TransferableAdapter implements Transferable, Serializable {
 
 		final Collection<TransferTypeSpi> transferTypes = transferableSpi.getSupportedTypes();
 
-		this.flavors = new DataFlavor[transferTypes.size()];
 		this.dataMap = new LinkedHashMap<DataFlavor, Object>();
 
-		int index = 0;
+		final List<TransferObject> transferObjects = new LinkedList<TransferObject>();
+
 		for (final TransferTypeSpi transferType : transferTypes) {
-			final DataFlavor flavor = new DataFlavor(transferType.getJavaType(), transferType.getJavaType().getName());
+			if (String.class.equals(transferType.getJavaType())) {
+				final DataFlavor flavor = DataFlavor.stringFlavor;
+				dataMap.put(flavor, transferableSpi.getData(transferType));
+			}
+			else {
+				final Object data = transferableSpi.getData(transferType);
+				transferObjects.add(new TransferObject(transferType, data));
+			}
+		}
+
+		if (!transferObjects.isEmpty()) {
+			final byte[] serializied = Serializer.serialize(new TransferContainer(transferObjects));
+			dataMap.put(TRANSFER_CONTAINER_FLAVOR, new ByteArrayInputStream(serializied));
+		}
+
+		this.flavors = new DataFlavor[dataMap.size()];
+		int index = 0;
+		for (final DataFlavor flavor : dataMap.keySet()) {
 			flavors[index] = flavor;
-			dataMap.put(flavor, transferableSpi.getData(transferType));
 			index++;
 		}
 	}

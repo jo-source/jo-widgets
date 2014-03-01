@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Michael
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -30,22 +30,34 @@ package org.jowidgets.spi.impl.swing.common.clipboard;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.FlavorEvent;
 import java.awt.datatransfer.FlavorListener;
+import java.awt.datatransfer.FlavorMap;
+import java.awt.datatransfer.SystemFlavorMap;
 import java.awt.datatransfer.Transferable;
+
+import javax.swing.SwingUtilities;
 
 import org.jowidgets.spi.clipboard.IClipboardObservableSpi;
 import org.jowidgets.spi.clipboard.IClipboardSpi;
 import org.jowidgets.spi.clipboard.ITransferableSpi;
+import org.jowidgets.spi.clipboard.TransferContainer;
 import org.jowidgets.spi.impl.clipboard.ClipboardObservableSpi;
 
 public final class SwingClipboard implements IClipboardSpi {
+
+	static final DataFlavor TRANSFER_CONTAINER_FLAVOR = createTransferContainerFlavor();
 
 	private final ClipboardObservableSpi clipboardObservable;
 	private final Clipboard systemClipboard;
 	private final FlavorListener flavorListener;
 
 	public SwingClipboard() {
+		if (!SwingUtilities.isEventDispatchThread()) {
+			throw new IllegalStateException("The clipboard must be created in the event dispatcher thread");
+		}
+
 		this.clipboardObservable = new ClipboardObservableSpi();
 		this.systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 
@@ -56,6 +68,23 @@ public final class SwingClipboard implements IClipboardSpi {
 			}
 		};
 		systemClipboard.addFlavorListener(flavorListener);
+
+		final FlavorMap map = SystemFlavorMap.getDefaultFlavorMap();
+		if (map instanceof SystemFlavorMap) {
+			final SystemFlavorMap systemMap = (SystemFlavorMap) map;
+			systemMap.addFlavorForUnencodedNative(TransferContainer.MIME_TYPE, TRANSFER_CONTAINER_FLAVOR);
+			systemMap.addUnencodedNativeForFlavor(TRANSFER_CONTAINER_FLAVOR, TransferContainer.MIME_TYPE);
+		}
+
+	}
+
+	private static DataFlavor createTransferContainerFlavor() {
+		try {
+			return new DataFlavor(TransferContainer.MIME_TYPE);
+		}
+		catch (final ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override
@@ -66,7 +95,6 @@ public final class SwingClipboard implements IClipboardSpi {
 		else {
 			systemClipboard.setContents(null, null);
 		}
-
 	}
 
 	@Override

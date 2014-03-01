@@ -64,7 +64,8 @@ public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 	private final SwingImageRegistry imageRegistry;
 	private final SwingWidgetFactory widgetFactory;
 	private final SwingOptionalWidgetsFactory optionalWidgetsFactory;
-	private final SwingClipboard clipboard;
+
+	private SwingClipboard clipboard;
 
 	public SwingWidgetsServiceProvider() {
 		this(new SwingApplicationRunnerFactory());
@@ -77,11 +78,16 @@ public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 		this.imageHandleFactorySpi = new SwingImageHandleFactorySpi(imageRegistry);
 		this.widgetFactory = new SwingWidgetFactory(imageRegistry);
 		this.optionalWidgetsFactory = new SwingOptionalWidgetsFactory();
-		this.clipboard = new SwingClipboard();
 	}
 
 	@Override
 	public IClipboardSpi getClipboard() {
+		if (!SwingUtilities.isEventDispatchThread()) {
+			throw new IllegalStateException("The clipboard must be created in the events dispatcher thread");
+		}
+		if (clipboard == null) {
+			this.clipboard = new SwingClipboard();
+		}
 		return clipboard;
 	}
 

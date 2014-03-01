@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Michael
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,19 +28,30 @@
 
 package org.jowidgets.spi.impl.swt.common.clipboard;
 
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.dnd.TransferData;
 import org.eclipse.swt.widgets.Display;
 import org.jowidgets.spi.clipboard.IClipboardObservableSpi;
 import org.jowidgets.spi.clipboard.IClipboardSpi;
 import org.jowidgets.spi.clipboard.ITransferableSpi;
+import org.jowidgets.spi.clipboard.TransferContainer;
+import org.jowidgets.spi.clipboard.TransferObject;
+import org.jowidgets.spi.clipboard.TransferTypeSpi;
 import org.jowidgets.util.IProvider;
+import org.jowidgets.util.Tuple;
 
 public final class SwtClipboard implements IClipboardSpi {
 
 	private static final Transfer TEXT_TRANSFER = TextTransfer.getInstance();
-	private static final Transfer[] TEXT_TRANSFERS = new Transfer[] {TEXT_TRANSFER};
+	private static final Transfer OBJECT_TRANSFER = ObjectTransfer.getInstance();
 
 	private final IProvider<Display> displayProvider;
 
@@ -50,35 +61,79 @@ public final class SwtClipboard implements IClipboardSpi {
 		this.displayProvider = displayProvider;
 	}
 
-	//	@Override
-	//	public String get() {
-	//		final Clipboard clipboard = getClipboard();
-	//		if (clipboard != null) {
-	//			final Object contents = clipboard.getContents(TEXT_TRANSFER);
-	//			if (contents instanceof String) {
-	//				return (String) contents;
-	//			}
-	//		}
-	//		return null;
-	//	}
-	//
-	//	@Override
-	//	public void set(final String data) {
-	//		final Clipboard clipboard = getClipboard();
-	//		if (clipboard != null) {
-	//			clipboard.setContents(new String[] {data}, TEXT_TRANSFERS);
-	//		}
-	//	}
-
 	@Override
 	public void setContents(final ITransferableSpi contents) {
-		// TODO MG must be implemented
+		final Clipboard clipboard = getClipboard();
+		if (clipboard != null) {
+			if (contents != null) {
+				setContentsImpl(clipboard, contents);
+			}
+			else {
+				clipboard.clearContents();
+			}
+		}
+	}
+
+	private void setContentsImpl(final Clipboard clipboard, final ITransferableSpi contents) {
+		final Collection<TransferTypeSpi> typesSpi = contents.getSupportedTypes();
+
+		final List<Tuple<Transfer, Object>> transferTupleList = new LinkedList<Tuple<Transfer, Object>>();
+		final List<TransferObject> transferObjectsList = new LinkedList<TransferObject>();
+
+		for (final TransferTypeSpi typeSpi : typesSpi) {
+			if (String.class.equals(typeSpi.getJavaType())) {
+				transferTupleList.add(new Tuple<Transfer, Object>(TEXT_TRANSFER, contents.getData(typeSpi)));
+			}
+			else {
+				transferObjectsList.add(new TransferObject(typeSpi, contents.getData(typeSpi)));
+			}
+		}
+
+		if (transferObjectsList != null) {
+			transferTupleList.add(new Tuple<Transfer, Object>(OBJECT_TRANSFER, new TransferContainer(transferObjectsList)));
+		}
+
+		final Transfer[] transfers = new Transfer[transferTupleList.size()];
+		final Object[] data = new Object[transferTupleList.size()];
+
+		int index = 0;
+		for (final Tuple<Transfer, Object> tuple : transferTupleList) {
+			transfers[index] = tuple.getFirst();
+			data[index] = tuple.getSecond();
+			index++;
+		}
+
+		clipboard.setContents(data, transfers);
 	}
 
 	@Override
 	public ITransferableSpi getContents() {
-		// TODO MG must be implemented
-		return null;
+		final Clipboard clipboard = getClipboard();
+		if (clipboard != null) {
+			final Map<TransferTypeSpi, Object> transferMap = new LinkedHashMap<TransferTypeSpi, Object>();
+			for (final TransferData transferData : clipboard.getAvailableTypes()) {
+				if (TEXT_TRANSFER.isSupportedType(transferData)) {
+					transferMap.put(new TransferTypeSpi(String.class), clipboard.getContents(TEXT_TRANSFER));
+				}
+				else if (OBJECT_TRANSFER.isSupportedType(transferData)) {
+					final Object data = clipboard.getContents(OBJECT_TRANSFER);
+					if (data instanceof TransferContainer) {
+						for (final TransferObject transferObject : ((TransferContainer) data).getTransferObjetcs()) {
+							transferMap.put(transferObject.getTransferType(), transferObject.getData());
+						}
+					}
+				}
+			}
+			if (!transferMap.isEmpty()) {
+				return new TransferableSpiAdapter(transferMap);
+			}
+			else {
+				return null;
+			}
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override
