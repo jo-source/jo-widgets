@@ -36,6 +36,7 @@ import org.jowidgets.common.widgets.controller.IKeyEvent;
 import org.jowidgets.common.widgets.controller.IKeyListener;
 import org.jowidgets.common.widgets.controller.IKeyObservable;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.event.IObservableCallback;
 
 public class KeyObservable implements IKeyObservable {
 

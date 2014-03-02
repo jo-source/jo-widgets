@@ -56,7 +56,6 @@ import org.jowidgets.common.widgets.controller.IMouseMotionListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.spi.impl.controller.ComponentObservable;
 import org.jowidgets.spi.impl.controller.FocusObservable;
-import org.jowidgets.spi.impl.controller.IObservableCallback;
 import org.jowidgets.spi.impl.controller.KeyObservable;
 import org.jowidgets.spi.impl.controller.MouseButtonEvent;
 import org.jowidgets.spi.impl.controller.MouseMotionObservable;
@@ -70,6 +69,7 @@ import org.jowidgets.spi.impl.swing.common.util.PositionConvert;
 import org.jowidgets.spi.impl.swing.common.widgets.event.LazyKeyEventContentFactory;
 import org.jowidgets.spi.widgets.IComponentSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
+import org.jowidgets.util.event.IObservableCallback;
 
 public class SwingComponent extends SwingWidget implements IComponentSpi {
 

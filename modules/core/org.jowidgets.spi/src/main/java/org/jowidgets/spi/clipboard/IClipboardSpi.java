@@ -30,11 +30,8 @@ package org.jowidgets.spi.clipboard;
 
 /**
  * This class represents the spi for the system clipboard.
- * 
- * The spi only supports string contents (as swing e.g. also only supports string contents
- * for tranfers between different vm's or applications.
  */
-public interface IClipboardSpi {
+public interface IClipboardSpi extends IClipboardObservableSpi {
 
 	/**
 	 * Sets the contents into the clipboard
@@ -49,14 +46,6 @@ public interface IClipboardSpi {
 	 * @return The contents or null, if no content is set
 	 */
 	ITransferableSpi getContents();
-
-	/**
-	 * Gets he observable part of the interface. If this can not be implemented with native methods,
-	 * null can be returned. In this case, the default implementation make the clipboard observable by polling.
-	 * 
-	 * @return The observable or null if not supported
-	 */
-	IClipboardObservableSpi getObservable();
 
 	/**
 	 * Disposes the clipboard

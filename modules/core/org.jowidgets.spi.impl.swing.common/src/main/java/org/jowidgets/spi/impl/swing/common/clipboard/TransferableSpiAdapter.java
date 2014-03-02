@@ -44,6 +44,8 @@ import org.jowidgets.util.Assert;
 
 final class TransferableSpiAdapter implements ITransferableSpi {
 
+	private static final DataFlavor TRANSFER_CONTAINER_FLAVOR = SwingClipboard.TRANSFER_CONTAINER_FLAVOR;
+
 	private final Map<TransferTypeSpi, Object> dataMap;
 
 	TransferableSpiAdapter(final Transferable contents) {
@@ -54,14 +56,14 @@ final class TransferableSpiAdapter implements ITransferableSpi {
 		for (final DataFlavor flavor : contents.getTransferDataFlavors()) {
 			if (DataFlavor.stringFlavor.equals(flavor)) {
 				try {
-					final TransferTypeSpi transferType = new TransferTypeSpi(flavor.getRepresentationClass());
+					final TransferTypeSpi transferType = new TransferTypeSpi(String.class);
 					final Object transferData = contents.getTransferData(flavor);
 					dataMap.put(transferType, transferData);
 				}
 				catch (final Exception e) {
 				}
 			}
-			else if (InputStream.class.isAssignableFrom(flavor.getRepresentationClass())) {
+			else if (TRANSFER_CONTAINER_FLAVOR.equals(flavor)) {
 				try {
 					final Object transferData = contents.getTransferData(flavor);
 					if (transferData instanceof InputStream) {

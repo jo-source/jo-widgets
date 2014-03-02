@@ -52,4 +52,35 @@ public final class TransferContainer implements Serializable {
 		return transferObjects;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((transferObjects == null) ? 0 : transferObjects.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof TransferContainer)) {
+			return false;
+		}
+		final TransferContainer other = (TransferContainer) obj;
+		if (transferObjects == null) {
+			if (other.transferObjects != null) {
+				return false;
+			}
+		}
+		else if (!transferObjects.equals(other.transferObjects)) {
+			return false;
+		}
+		return true;
+	}
+
 }

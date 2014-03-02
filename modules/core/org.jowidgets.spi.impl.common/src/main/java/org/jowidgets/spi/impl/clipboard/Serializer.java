@@ -63,7 +63,7 @@ public final class Serializer {
 			return o.readObject();
 		}
 		catch (final Exception e) {
-			throw new RuntimeException(e);
+			return null;
 		}
 	}
 

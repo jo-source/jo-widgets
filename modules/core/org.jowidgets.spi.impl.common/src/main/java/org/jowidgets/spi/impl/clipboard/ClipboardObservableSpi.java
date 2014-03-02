@@ -45,13 +45,13 @@ public class ClipboardObservableSpi implements IClipboardObservableSpi {
 	}
 
 	@Override
-	public final void addClipboardListener(final IClipboardListenerSpi listener) {
+	public void addClipboardListener(final IClipboardListenerSpi listener) {
 		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
-	public final void removeClipboardListener(final IClipboardListenerSpi listener) {
+	public void removeClipboardListener(final IClipboardListenerSpi listener) {
 		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
@@ -60,6 +60,10 @@ public class ClipboardObservableSpi implements IClipboardObservableSpi {
 		for (final IClipboardListenerSpi listener : new LinkedList<IClipboardListenerSpi>(listeners)) {
 			listener.clipboardChanged();
 		}
+	}
+
+	protected int getSize() {
+		return listeners.size();
 	}
 
 }

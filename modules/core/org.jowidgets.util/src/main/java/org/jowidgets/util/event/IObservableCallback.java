@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.controller;
+package org.jowidgets.util.event;
 
 public interface IObservableCallback {
 

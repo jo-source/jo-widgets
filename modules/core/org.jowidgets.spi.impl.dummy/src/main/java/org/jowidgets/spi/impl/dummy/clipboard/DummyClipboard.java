@@ -28,27 +28,23 @@
 
 package org.jowidgets.spi.impl.dummy.clipboard;
 
-import org.jowidgets.spi.clipboard.IClipboardObservableSpi;
 import org.jowidgets.spi.clipboard.IClipboardSpi;
 import org.jowidgets.spi.clipboard.ITransferableSpi;
+import org.jowidgets.spi.impl.clipboard.ClipboardObservableSpi;
 
-public final class DummyClipboard implements IClipboardSpi {
+public final class DummyClipboard extends ClipboardObservableSpi implements IClipboardSpi {
 
 	private ITransferableSpi contents;
 
 	@Override
 	public void setContents(final ITransferableSpi contents) {
 		this.contents = contents;
+		fireClipboardChanged();
 	}
 
 	@Override
 	public ITransferableSpi getContents() {
 		return contents;
-	}
-
-	@Override
-	public IClipboardObservableSpi getObservable() {
-		return null;
 	}
 
 	@Override
