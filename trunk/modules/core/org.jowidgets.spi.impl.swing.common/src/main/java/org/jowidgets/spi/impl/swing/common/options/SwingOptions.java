@@ -36,6 +36,7 @@ public final class SwingOptions {
 	private static boolean wrapTabLayout = false;
 	private static boolean nativeMigLayout = true;
 	private static boolean defaultTableTransferHandler = true;
+	private static Long clipbaordPollingMillis = Long.valueOf(1000L);
 
 	private SwingOptions() {}
 
@@ -85,6 +86,19 @@ public final class SwingOptions {
 
 	public static void setDefaultTableTransferHandler(final boolean defaultTableTransferHandler) {
 		SwingOptions.defaultTableTransferHandler = defaultTableTransferHandler;
+	}
+
+	public static Long getClipbaordPollingMillis() {
+		return clipbaordPollingMillis;
+	}
+
+	/**
+	 * Sets the clipboard polling millis. If set to null, clipboard polling is deactivated.
+	 * 
+	 * @param clipbaordPolling The polling interval in millis or null
+	 */
+	public static void setClipbaordPollingMillis(final Long clipbaordPolling) {
+		SwingOptions.clipbaordPollingMillis = clipbaordPolling;
 	}
 
 }

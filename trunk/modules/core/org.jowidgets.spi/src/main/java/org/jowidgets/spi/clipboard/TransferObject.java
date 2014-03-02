@@ -55,4 +55,44 @@ public final class TransferObject implements Serializable {
 		return data;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((data == null) ? 0 : data.hashCode());
+		result = prime * result + ((transferType == null) ? 0 : transferType.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof TransferObject)) {
+			return false;
+		}
+		final TransferObject other = (TransferObject) obj;
+		if (data == null) {
+			if (other.data != null) {
+				return false;
+			}
+		}
+		else if (!data.equals(other.data)) {
+			return false;
+		}
+		if (transferType == null) {
+			if (other.transferType != null) {
+				return false;
+			}
+		}
+		else if (!transferType.equals(other.transferType)) {
+			return false;
+		}
+		return true;
+	}
+
 }

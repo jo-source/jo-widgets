@@ -38,6 +38,7 @@ import org.jowidgets.common.widgets.controller.IMouseEvent;
 import org.jowidgets.common.widgets.controller.IMouseMotionListener;
 import org.jowidgets.common.widgets.controller.IMouseMotionObservable;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.event.IObservableCallback;
 
 public class MouseMotionObservable implements IMouseMotionObservable {
 

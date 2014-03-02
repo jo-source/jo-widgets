@@ -101,7 +101,6 @@ import org.jowidgets.common.widgets.controller.ITableColumnMouseEvent;
 import org.jowidgets.common.widgets.controller.ITableColumnPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITableSelectionListener;
 import org.jowidgets.spi.impl.controller.FocusObservable;
-import org.jowidgets.spi.impl.controller.IObservableCallback;
 import org.jowidgets.spi.impl.controller.KeyObservable;
 import org.jowidgets.spi.impl.controller.PopupDetectionObservable;
 import org.jowidgets.spi.impl.controller.TableCellEditEvent;
@@ -130,6 +129,7 @@ import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
 import org.jowidgets.util.ArrayUtils;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.event.IObservableCallback;
 
 public class TableImpl extends SwingControl implements ITableSpi {
 

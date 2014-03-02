@@ -78,7 +78,9 @@ final class TransferableAdapter implements Transferable, Serializable {
 
 		if (!transferObjects.isEmpty()) {
 			final byte[] serializied = Serializer.serialize(new TransferContainer(transferObjects));
-			dataMap.put(TRANSFER_CONTAINER_FLAVOR, new ByteArrayInputStream(serializied));
+			if (serializied != null) {
+				dataMap.put(TRANSFER_CONTAINER_FLAVOR, new ByteArrayInputStream(serializied));
+			}
 		}
 
 		this.flavors = new DataFlavor[dataMap.size()];

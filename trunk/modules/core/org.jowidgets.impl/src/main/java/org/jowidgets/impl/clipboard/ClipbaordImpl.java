@@ -29,6 +29,7 @@
 package org.jowidgets.impl.clipboard;
 
 import org.jowidgets.api.clipboard.IClipboard;
+import org.jowidgets.api.clipboard.IClipboardListener;
 import org.jowidgets.api.clipboard.ITransferable;
 import org.jowidgets.api.clipboard.TransferType;
 import org.jowidgets.api.threads.IUiThreadAccess;
@@ -37,30 +38,42 @@ import org.jowidgets.spi.clipboard.IClipboardListenerSpi;
 import org.jowidgets.spi.clipboard.IClipboardSpi;
 import org.jowidgets.spi.clipboard.ITransferableSpi;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.event.IObservableCallback;
 
-public final class ClipbaordImpl extends ClipboardObservable implements IClipboard {
+public final class ClipbaordImpl implements IClipboard {
 
 	private final IClipboardSpi clipboardSpi;
 	private final IClipboardListenerSpi clipboardListenerSpi;
+	private final ClipboardObservable clipboardObservable;
 
 	private final IUiThreadAccess uiThreadAccess;
 
 	public ClipbaordImpl(final IClipboardSpi clipboard) {
 		Assert.paramNotNull(clipboard, "clipboard");
-		if (clipboard.getObservable() == null) {
-			this.clipboardSpi = new ObservableClipbaordSpi(clipboard);
-		}
-		else {
-			this.clipboardSpi = clipboard;
-		}
+
+		this.clipboardSpi = clipboard;
 
 		this.clipboardListenerSpi = new IClipboardListenerSpi() {
 			@Override
 			public void clipboardChanged() {
-				fireClipboardChanged();
+				clipboardObservable.fireClipboardChanged();
 			}
 		};
-		clipboardSpi.getObservable().addClipboardListener(clipboardListenerSpi);
+
+		final IObservableCallback observableCallback = new IObservableCallback() {
+
+			@Override
+			public void onFirstRegistered() {
+				clipboardSpi.addClipboardListener(clipboardListenerSpi);
+			}
+
+			@Override
+			public void onLastUnregistered() {
+				clipboardSpi.removeClipboardListener(clipboardListenerSpi);
+			}
+		};
+
+		this.clipboardObservable = new ClipboardObservable(observableCallback);
 
 		this.uiThreadAccess = Toolkit.getUiThreadAccess();
 	}
@@ -98,9 +111,19 @@ public final class ClipbaordImpl extends ClipboardObservable implements IClipboa
 	}
 
 	@Override
+	public void addClipboardListener(final IClipboardListener listener) {
+		clipboardObservable.addClipboardListener(listener);
+	}
+
+	@Override
+	public void removeClipboardListener(final IClipboardListener listener) {
+		clipboardObservable.removeClipboardListener(listener);
+	}
+
+	@Override
 	public void dispose() {
 		checkThread();
-		clipboardSpi.getObservable().removeClipboardListener(clipboardListenerSpi);
+		clipboardSpi.removeClipboardListener(clipboardListenerSpi);
 	}
 
 	private void checkThread() {

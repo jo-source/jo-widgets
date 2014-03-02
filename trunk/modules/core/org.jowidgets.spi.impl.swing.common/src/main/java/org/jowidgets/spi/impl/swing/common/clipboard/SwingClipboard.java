@@ -31,43 +31,35 @@ package org.jowidgets.spi.impl.swing.common.clipboard;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.FlavorEvent;
-import java.awt.datatransfer.FlavorListener;
 import java.awt.datatransfer.FlavorMap;
 import java.awt.datatransfer.SystemFlavorMap;
 import java.awt.datatransfer.Transferable;
+import java.util.Arrays;
 
 import javax.swing.SwingUtilities;
 
-import org.jowidgets.spi.clipboard.IClipboardObservableSpi;
 import org.jowidgets.spi.clipboard.IClipboardSpi;
 import org.jowidgets.spi.clipboard.ITransferableSpi;
 import org.jowidgets.spi.clipboard.TransferContainer;
-import org.jowidgets.spi.impl.clipboard.ClipboardObservableSpi;
+import org.jowidgets.spi.impl.clipboard.AbstractPollingClipboardObservableSpi;
+import org.jowidgets.spi.impl.swing.common.options.SwingOptions;
+import org.jowidgets.util.NullCompatibleEquivalence;
 
-public final class SwingClipboard implements IClipboardSpi {
+public final class SwingClipboard extends AbstractPollingClipboardObservableSpi implements IClipboardSpi {
 
 	static final DataFlavor TRANSFER_CONTAINER_FLAVOR = createTransferContainerFlavor();
 
-	private final ClipboardObservableSpi clipboardObservable;
 	private final Clipboard systemClipboard;
-	private final FlavorListener flavorListener;
+
+	private Transferable lastContents;
 
 	public SwingClipboard() {
+		super(SwingOptions.getClipbaordPollingMillis());
 		if (!SwingUtilities.isEventDispatchThread()) {
 			throw new IllegalStateException("The clipboard must be created in the event dispatcher thread");
 		}
 
-		this.clipboardObservable = new ClipboardObservableSpi();
 		this.systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-
-		this.flavorListener = new FlavorListener() {
-			@Override
-			public void flavorsChanged(final FlavorEvent e) {
-				clipboardObservable.fireClipboardChanged();
-			}
-		};
-		systemClipboard.addFlavorListener(flavorListener);
 
 		final FlavorMap map = SystemFlavorMap.getDefaultFlavorMap();
 		if (map instanceof SystemFlavorMap) {
@@ -76,6 +68,7 @@ public final class SwingClipboard implements IClipboardSpi {
 			systemMap.addUnencodedNativeForFlavor(TRANSFER_CONTAINER_FLAVOR, TransferContainer.MIME_TYPE);
 		}
 
+		checkContentChanged();
 	}
 
 	private static DataFlavor createTransferContainerFlavor() {
@@ -95,6 +88,7 @@ public final class SwingClipboard implements IClipboardSpi {
 		else {
 			systemClipboard.setContents(null, null);
 		}
+		checkContentChanged();
 	}
 
 	@Override
@@ -109,13 +103,67 @@ public final class SwingClipboard implements IClipboardSpi {
 	}
 
 	@Override
-	public IClipboardObservableSpi getObservable() {
-		return clipboardObservable;
+	protected synchronized void checkContentChanged() {
+		final Transferable contents = systemClipboard.getContents(null);
+		if (hasContentChanged(contents)) {
+			if (SwingUtilities.isEventDispatchThread()) {
+				fireClipboardChanged();
+			}
+			else {
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override
+					public void run() {
+						fireClipboardChanged();
+					}
+				});
+			}
+		}
+		lastContents = contents;
+	}
+
+	private boolean hasContentChanged(final Transferable contents) {
+
+		if (contents == lastContents) {
+			return false;
+		}
+		else if (lastContents == null && contents == null) {
+			return false;
+		}
+		else if (contents == null || lastContents == null) {
+			return true;
+		}
+		else {//both not null	
+			final DataFlavor[] lastFlavors = lastContents.getTransferDataFlavors();
+			final DataFlavor[] flavors = contents.getTransferDataFlavors();
+
+			if (!Arrays.equals(lastFlavors, flavors)) {
+				return true;
+			}
+			else {//flavors are equal
+				for (int i = 0; i < flavors.length; i++) {
+					final DataFlavor flavor = flavors[i];
+					if (TRANSFER_CONTAINER_FLAVOR.equals(flavor) || DataFlavor.stringFlavor.equals(flavor)) {
+						try {
+							final Object lastObject = lastContents.getTransferData(lastFlavors[i]);
+							final Object object = contents.getTransferData(flavor);
+							if (object instanceof String || object instanceof TransferContainer) {
+								if (!NullCompatibleEquivalence.equals(lastObject, object)) {
+									return true;
+								}
+							}
+						}
+						catch (final Exception e) {
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	@Override
 	public void dispose() {
-		systemClipboard.removeFlavorListener(flavorListener);
+		super.dispose();
 	}
 
 }

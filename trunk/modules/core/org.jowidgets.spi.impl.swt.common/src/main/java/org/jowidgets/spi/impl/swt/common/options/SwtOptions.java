@@ -38,6 +38,7 @@ public final class SwtOptions {
 	private static SplitlayoutMode splitLayoutMode = SplitlayoutMode.ON_MOUSE_MOVE;
 	private static boolean nativeMigLayout = true;
 	private static boolean nativeTextAreaScrollBars = false;
+	private static Long clipbaordPollingMillis = Long.valueOf(1000L);
 
 	//not fix in swt 4.3 (tested with win)
 	private static boolean textFieldTruncateWorkaround = true;
@@ -129,6 +130,19 @@ public final class SwtOptions {
 	public static void setClassicTableSelectionColors() {
 		setTableSelectedForegroundColor(new ColorValue(255, 255, 255));
 		setTableSelectedBackgroundColor(new ColorValue(51, 153, 255));
+	}
+
+	public static Long getClipbaordPollingMillis() {
+		return clipbaordPollingMillis;
+	}
+
+	/**
+	 * Sets the clipboard polling millis. If set to null, clipboard polling is deactivated.
+	 * 
+	 * @param clipbaordPolling The polling interval in millis or null
+	 */
+	public static void setClipbaordPollingMillis(final Long clipbaordPolling) {
+		SwtOptions.clipbaordPollingMillis = clipbaordPolling;
 	}
 
 }

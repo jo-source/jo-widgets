@@ -56,4 +56,35 @@ final class TransferableSpiAdapter implements ITransferableSpi {
 		return dataMap.get(type);
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((dataMap == null) ? 0 : dataMap.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof TransferableSpiAdapter)) {
+			return false;
+		}
+		final TransferableSpiAdapter other = (TransferableSpiAdapter) obj;
+		if (dataMap == null) {
+			if (other.dataMap != null) {
+				return false;
+			}
+		}
+		else if (!dataMap.equals(other.dataMap)) {
+			return false;
+		}
+		return true;
+	}
+
 }

@@ -56,7 +56,6 @@ import org.jowidgets.common.types.InputChangeEventPolicy;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.common.widgets.controller.IKeyListener;
-import org.jowidgets.spi.impl.controller.IObservableCallback;
 import org.jowidgets.spi.impl.controller.InputObservable;
 import org.jowidgets.spi.impl.controller.KeyObservable;
 import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
@@ -70,6 +69,7 @@ import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
 import org.jowidgets.util.Tuple;
+import org.jowidgets.util.event.IObservableCallback;
 
 public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelectionSpi, IComboBoxSpi {
 

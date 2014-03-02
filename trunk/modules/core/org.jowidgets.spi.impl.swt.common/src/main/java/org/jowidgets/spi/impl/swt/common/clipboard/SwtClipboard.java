@@ -39,16 +39,18 @@ import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.dnd.TransferData;
 import org.eclipse.swt.widgets.Display;
-import org.jowidgets.spi.clipboard.IClipboardObservableSpi;
 import org.jowidgets.spi.clipboard.IClipboardSpi;
 import org.jowidgets.spi.clipboard.ITransferableSpi;
 import org.jowidgets.spi.clipboard.TransferContainer;
 import org.jowidgets.spi.clipboard.TransferObject;
 import org.jowidgets.spi.clipboard.TransferTypeSpi;
+import org.jowidgets.spi.impl.clipboard.AbstractPollingClipboardObservableSpi;
+import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.util.IProvider;
+import org.jowidgets.util.NullCompatibleEquivalence;
 import org.jowidgets.util.Tuple;
 
-public final class SwtClipboard implements IClipboardSpi {
+public final class SwtClipboard extends AbstractPollingClipboardObservableSpi implements IClipboardSpi {
 
 	private static final Transfer TEXT_TRANSFER = TextTransfer.getInstance();
 	private static final Transfer OBJECT_TRANSFER = ObjectTransfer.getInstance();
@@ -57,7 +59,10 @@ public final class SwtClipboard implements IClipboardSpi {
 
 	private Clipboard systemClipboard;
 
+	private ITransferableSpi lastContents;
+
 	public SwtClipboard(final IProvider<Display> displayProvider) {
+		super(SwtOptions.getClipbaordPollingMillis());
 		this.displayProvider = displayProvider;
 	}
 
@@ -71,6 +76,7 @@ public final class SwtClipboard implements IClipboardSpi {
 			else {
 				clipboard.clearContents();
 			}
+			checkContentChangedInUiThread();
 		}
 	}
 
@@ -110,26 +116,30 @@ public final class SwtClipboard implements IClipboardSpi {
 	public ITransferableSpi getContents() {
 		final Clipboard clipboard = getClipboard();
 		if (clipboard != null) {
-			final Map<TransferTypeSpi, Object> transferMap = new LinkedHashMap<TransferTypeSpi, Object>();
-			for (final TransferData transferData : clipboard.getAvailableTypes()) {
-				if (TEXT_TRANSFER.isSupportedType(transferData)) {
-					transferMap.put(new TransferTypeSpi(String.class), clipboard.getContents(TEXT_TRANSFER));
-				}
-				else if (OBJECT_TRANSFER.isSupportedType(transferData)) {
-					final Object data = clipboard.getContents(OBJECT_TRANSFER);
-					if (data instanceof TransferContainer) {
-						for (final TransferObject transferObject : ((TransferContainer) data).getTransferObjetcs()) {
-							transferMap.put(transferObject.getTransferType(), transferObject.getData());
-						}
+			return getContents(clipboard);
+		}
+		else {
+			return null;
+		}
+	}
+
+	private ITransferableSpi getContents(final Clipboard clipboard) {
+		final Map<TransferTypeSpi, Object> transferMap = new LinkedHashMap<TransferTypeSpi, Object>();
+		for (final TransferData transferData : clipboard.getAvailableTypes()) {
+			if (TEXT_TRANSFER.isSupportedType(transferData)) {
+				transferMap.put(new TransferTypeSpi(String.class), clipboard.getContents(TEXT_TRANSFER));
+			}
+			else if (OBJECT_TRANSFER.isSupportedType(transferData)) {
+				final Object data = clipboard.getContents(OBJECT_TRANSFER);
+				if (data instanceof TransferContainer) {
+					for (final TransferObject transferObject : ((TransferContainer) data).getTransferObjetcs()) {
+						transferMap.put(transferObject.getTransferType(), transferObject.getData());
 					}
 				}
 			}
-			if (!transferMap.isEmpty()) {
-				return new TransferableSpiAdapter(transferMap);
-			}
-			else {
-				return null;
-			}
+		}
+		if (!transferMap.isEmpty()) {
+			return new TransferableSpiAdapter(transferMap);
 		}
 		else {
 			return null;
@@ -137,18 +147,60 @@ public final class SwtClipboard implements IClipboardSpi {
 	}
 
 	@Override
-	public IClipboardObservableSpi getObservable() {
-		return null;
+	protected synchronized void checkContentChanged() {
+		final Display display = displayProvider.get();
+		if (display == null) {
+			return;
+		}
+		display.asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				checkContentChangedInUiThread();
+			}
+		});
+
+	}
+
+	protected synchronized void checkContentChangedInUiThread() {
+		final Clipboard clipboard = getClipboard();
+		if (clipboard == null) {
+			return;
+		}
+		final ITransferableSpi contents = getContents();
+		if (!NullCompatibleEquivalence.equals(contents, lastContents)) {
+			fireClipboardChanged();
+		}
+		lastContents = contents;
+	}
+
+	private boolean isUiThread(final Display display) {
+		final Display currentDisplay = Display.getCurrent();
+		return currentDisplay != null && currentDisplay == display;
 	}
 
 	@Override
 	public void dispose() {
+		super.dispose();
 		systemClipboard.dispose();
 	}
 
-	private Clipboard getClipboard() {
+	private synchronized Clipboard getClipboard() {
 		if (systemClipboard == null && displayProvider.get() != null) {
-			systemClipboard = new Clipboard(displayProvider.get());
+			final Display display = displayProvider.get();
+			if (isUiThread(display)) {
+				systemClipboard = new Clipboard(displayProvider.get());
+				lastContents = getContents(systemClipboard);
+			}
+			else {
+				display.asyncExec(new Runnable() {
+					@Override
+					public void run() {
+						systemClipboard = new Clipboard(displayProvider.get());
+						lastContents = getContents(systemClipboard);
+					}
+				});
+				return null;
+			}
 		}
 		return systemClipboard;
 	}
