@@ -60,7 +60,7 @@ public class ChangeObservable implements IChangeObservable {
 		}
 	}
 
-	public final void dispose() {
+	public void dispose() {
 		listeners.clear();
 	}
 
