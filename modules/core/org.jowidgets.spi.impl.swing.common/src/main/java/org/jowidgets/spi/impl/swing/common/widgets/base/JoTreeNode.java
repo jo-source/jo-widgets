@@ -95,7 +95,7 @@ public class JoTreeNode extends DefaultMutableTreeNode {
 
 	@Override
 	public String toString() {
-		return "JoTreeNode [text=" + text + ", toolTipText=" + toolTipText + "]";
+		return text;
 	}
 
 }
