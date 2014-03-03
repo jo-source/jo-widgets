@@ -63,7 +63,7 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider, IProv
 	private final SwtWidgetFactory widgetFactory;
 	private final SwtOptionalWidgetsFactory optionalWidgetsFactory;
 	private final IFactory<IApplicationRunner> applicationRunnerFactory;
-	private final SwtClipboard clipboard;
+	private final IClipboardSpi clipboard;
 
 	private SwtUiThreadAccess uiThreadAccess;
 
@@ -75,11 +75,22 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider, IProv
 		this(display, new SwtApplicationRunnerFactory());
 	}
 
+	public SwtWidgetsServiceProvider(final Display display, final IClipboardSpi clipboard) {
+		this(display, new SwtApplicationRunnerFactory(), clipboard);
+	}
+
 	public SwtWidgetsServiceProvider(final IFactory<IApplicationRunner> applicationRunnerFactory) {
 		this(null, applicationRunnerFactory);
 	}
 
 	public SwtWidgetsServiceProvider(final Display display, final IFactory<IApplicationRunner> applicationRunnerFactory) {
+		this(display, applicationRunnerFactory, null);
+	}
+
+	public SwtWidgetsServiceProvider(
+		final Display display,
+		final IFactory<IApplicationRunner> applicationRunnerFactory,
+		final IClipboardSpi clipboard) {
 		Assert.paramNotNull(applicationRunnerFactory, "applicationRunnerFactory");
 		this.display = display;
 		this.applicationRunnerFactory = applicationRunnerFactory;
@@ -87,7 +98,13 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider, IProv
 		this.imageHandleFactorySpi = new SwtImageHandleFactorySpi(imageRegistry);
 		this.widgetFactory = new SwtWidgetFactory();
 		this.optionalWidgetsFactory = new SwtOptionalWidgetsFactory();
-		this.clipboard = new SwtClipboard(this);
+
+		if (clipboard != null) {
+			this.clipboard = clipboard;
+		}
+		else {
+			this.clipboard = new SwtClipboard(this);
+		}
 	}
 
 	@Override

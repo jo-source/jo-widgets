@@ -26,13 +26,13 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.dummy.clipboard;
+package org.jowidgets.spi.impl.clipboard;
 
 import org.jowidgets.spi.clipboard.IClipboardSpi;
 import org.jowidgets.spi.clipboard.ITransferableSpi;
 import org.jowidgets.spi.impl.clipboard.ClipboardObservableSpi;
 
-public final class DummyClipboard extends ClipboardObservableSpi implements IClipboardSpi {
+public final class ApplicationLocalClipboard extends ClipboardObservableSpi implements IClipboardSpi {
 
 	private ITransferableSpi contents;
 
