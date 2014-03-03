@@ -36,6 +36,7 @@ public final class SwingOptions {
 	private static boolean wrapTabLayout = false;
 	private static boolean nativeMigLayout = true;
 	private static boolean defaultTableTransferHandler = true;
+	private static boolean defaultTreeTransferHandler = true;
 	private static Long clipbaordPollingMillis = Long.valueOf(1000L);
 
 	private SwingOptions() {}
@@ -86,6 +87,14 @@ public final class SwingOptions {
 
 	public static void setDefaultTableTransferHandler(final boolean defaultTableTransferHandler) {
 		SwingOptions.defaultTableTransferHandler = defaultTableTransferHandler;
+	}
+
+	public static boolean isDefaultTreeTransferHandler() {
+		return defaultTreeTransferHandler;
+	}
+
+	public static void setDefaultTreeTransferHandler(final boolean defaultTreeTransferHandler) {
+		SwingOptions.defaultTreeTransferHandler = defaultTreeTransferHandler;
 	}
 
 	public static Long getClipbaordPollingMillis() {

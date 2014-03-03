@@ -55,6 +55,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.spi.impl.controller.TreeSelectionObservableSpi;
+import org.jowidgets.spi.impl.swing.common.options.SwingOptions;
 import org.jowidgets.spi.impl.swing.common.util.ColorConvert;
 import org.jowidgets.spi.impl.swing.common.util.PositionConvert;
 import org.jowidgets.spi.impl.swing.common.widgets.base.JoTreeNode;
@@ -166,6 +167,10 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 			}
 
 		});
+
+		if (!SwingOptions.isDefaultTreeTransferHandler()) {
+			tree.setTransferHandler(null);
+		}
 
 		this.rootNode = new TreeNodeImpl(this, mutableRootNode);
 	}
