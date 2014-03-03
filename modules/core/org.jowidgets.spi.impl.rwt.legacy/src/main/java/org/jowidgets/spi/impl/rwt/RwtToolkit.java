@@ -30,12 +30,13 @@ package org.jowidgets.spi.impl.rwt;
 
 import org.eclipse.swt.widgets.Display;
 import org.jowidgets.impl.toolkit.DefaultToolkit;
+import org.jowidgets.spi.impl.clipboard.ApplicationLocalClipboard;
 import org.jowidgets.spi.impl.swt.common.SwtWidgetsServiceProvider;
 
 public class RwtToolkit extends DefaultToolkit {
 
 	public RwtToolkit() {
-		super(new SwtWidgetsServiceProvider(Display.getDefault()));
+		super(new SwtWidgetsServiceProvider(Display.getDefault(), new ApplicationLocalClipboard()));
 	}
 
 }
