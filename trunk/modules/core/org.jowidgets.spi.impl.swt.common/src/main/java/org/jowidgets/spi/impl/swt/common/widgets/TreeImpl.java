@@ -320,13 +320,17 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi {
 		}
 	}
 
-	private boolean isNodeSelected(final TreeItem item) {
+	boolean isNodeSelected(final TreeItem item) {
 		for (final TreeItem selectedItem : getUiReference().getSelection()) {
 			if (selectedItem == item) {
 				return true;
 			}
 		}
 		return false;
+	}
+
+	protected TreeNodeImpl getTreeNodeItem(final TreeItem item) {
+		return items.get(item);
 	}
 
 	protected void registerItem(final TreeItem item, final TreeNodeImpl treeNodeImpl) {

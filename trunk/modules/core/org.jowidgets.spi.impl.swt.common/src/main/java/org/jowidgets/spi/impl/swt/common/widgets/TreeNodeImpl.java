@@ -206,6 +206,12 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 	public void removeNode(final int index) {
 		final TreeItem child = getUiReference().getItem(index);
 		if (child != null) {
+			if (parentTree.isNodeSelected(child)) {
+				final TreeNodeImpl treeNode = parentTree.getTreeNodeItem(child);
+				if (treeNode != null) {
+					parentTree.setSelected(treeNode, false);
+				}
+			}
 			parentTree.unRegisterItem(child);
 			child.dispose();
 		}
