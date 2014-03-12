@@ -90,6 +90,9 @@ public enum IconsSmall implements IImageConstant {
 	FILTER_ENABLED,
 	FILTER_DELETE,
 
+	EXPAND_ALL,
+	COLLAPSE_ALL,
+
 	WAIT_1,
 	WAIT_2,
 	WAIT_3,

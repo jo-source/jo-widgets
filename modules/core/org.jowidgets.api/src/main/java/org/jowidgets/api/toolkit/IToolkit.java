@@ -34,6 +34,7 @@ import org.jowidgets.api.animation.IAnimationRunnerBuilder;
 import org.jowidgets.api.animation.IWaitAnimationProcessor;
 import org.jowidgets.api.clipboard.IClipboard;
 import org.jowidgets.api.command.IActionBuilderFactory;
+import org.jowidgets.api.command.IDefaultActionFactory;
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.event.IDelayedEventRunnerBuilder;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
@@ -100,6 +101,8 @@ public interface IToolkit {
 	IConverterProvider getConverterProvider();
 
 	IActionBuilderFactory getActionBuilderFactory();
+
+	IDefaultActionFactory getDefaultActionFactory();
 
 	IModelFactoryProvider getModelFactoryProvider();
 
