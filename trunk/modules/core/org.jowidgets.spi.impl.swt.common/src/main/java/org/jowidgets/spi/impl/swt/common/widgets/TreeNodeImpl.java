@@ -58,6 +58,8 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 	private final TreeItem item;
 	private String toolTipText;
 
+	private Boolean expanded;
+
 	public TreeNodeImpl(final TreeImpl parentTree, final TreeItem parentItem, final Integer index) {
 		super();
 		Assert.paramNotNull(parentTree, "parentTree");
@@ -156,12 +158,25 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 	@Override
 	public void setExpanded(final boolean expanded) {
 		item.setExpanded(expanded);
-		fireExpandedChanged(expanded);
+		if (item.getExpanded() == expanded) {
+			fireExpandedChanged(expanded);
+		}
+	}
+
+	@Override
+	public void fireExpandedChanged(final boolean expanded) {
+		this.expanded = Boolean.valueOf(expanded);
+		super.fireExpandedChanged(expanded);
 	}
 
 	@Override
 	public boolean isExpanded() {
-		return item.getExpanded();
+		if (expanded != null) {
+			return expanded.booleanValue();
+		}
+		else {
+			return item.getExpanded();
+		}
 	}
 
 	@Override
