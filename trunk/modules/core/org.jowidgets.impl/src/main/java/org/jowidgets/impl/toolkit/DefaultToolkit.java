@@ -36,6 +36,7 @@ import org.jowidgets.api.animation.IAnimationRunnerBuilder;
 import org.jowidgets.api.animation.IWaitAnimationProcessor;
 import org.jowidgets.api.clipboard.IClipboard;
 import org.jowidgets.api.command.IActionBuilderFactory;
+import org.jowidgets.api.command.IDefaultActionFactory;
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.event.IDelayedEventRunnerBuilder;
 import org.jowidgets.api.image.Icons;
@@ -66,6 +67,7 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.application.ApplicationRunner;
 import org.jowidgets.impl.clipboard.ClipbaordImpl;
 import org.jowidgets.impl.command.ActionBuilderFactory;
+import org.jowidgets.impl.command.DefaultActionFactoryImpl;
 import org.jowidgets.impl.content.InputContentCreatorFactory;
 import org.jowidgets.impl.convert.DefaultConverterProvider;
 import org.jowidgets.impl.image.DefaultIconsRegisterService;
@@ -92,6 +94,7 @@ public class DefaultToolkit implements IToolkit {
 	private final IBluePrintFactory bluePrintFactory;
 	private ISupportedWidgets supportedWidgets;
 	private final IActionBuilderFactory actionBuilderFactory;
+	private final IDefaultActionFactory defaultActionFactory;
 	private final IModelFactoryProvider modelFactoryProvider;
 	private final IConverterProvider converterProvider;
 	private final IInputContentCreatorFactory inputContentCreatorFactory;
@@ -116,6 +119,7 @@ public class DefaultToolkit implements IToolkit {
 		this.layoutFactoryProvider = new LayoutFactoryProvider();
 		this.bluePrintFactory = new BluePrintFactory();
 		this.actionBuilderFactory = new ActionBuilderFactory();
+		this.defaultActionFactory = new DefaultActionFactoryImpl();
 		this.modelFactoryProvider = new ModelFactoryProvider();
 		this.converterProvider = new DefaultConverterProvider();
 		this.inputContentCreatorFactory = new InputContentCreatorFactory();
@@ -198,6 +202,11 @@ public class DefaultToolkit implements IToolkit {
 	@Override
 	public IActionBuilderFactory getActionBuilderFactory() {
 		return actionBuilderFactory;
+	}
+
+	@Override
+	public IDefaultActionFactory getDefaultActionFactory() {
+		return defaultActionFactory;
 	}
 
 	@Override
