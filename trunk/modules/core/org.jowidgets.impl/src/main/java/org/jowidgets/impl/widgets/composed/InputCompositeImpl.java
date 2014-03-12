@@ -50,6 +50,7 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.api.widgets.descriptor.setup.IInputCompositeSetup;
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.controller.IComponentListener;
@@ -64,9 +65,11 @@ import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.controller.InputObservable;
+import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.validation.CompoundValidator;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
+import org.jowidgets.tools.widgets.blueprint.BPF;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.Tuple;
 import org.jowidgets.validation.IValidateable;
@@ -110,22 +113,26 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 		this.validationCache = new ValidationCache(new ValidationResultCreator());
 
 		if (setup.getValidationLabel() != null) {
-			this.composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[][grow]0"));
+			final int heigth = setup.getValidationLabelHeight();
+			this.composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[" + heigth + "!]0[grow]0"));
 		}
 		else {
 			this.composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
 		}
 
+		final IComposite innerRoot;
 		if (setup.isContentScrolled()) {
 			final IScrollCompositeBluePrint scrollCompositeBluePrint = bpf.scrollComposite();
 			scrollCompositeBluePrint.setBorder(setup.getContentBorder());
-			innerComposite = composite.add(scrollCompositeBluePrint, "growx, growy, h 0::,w 0::");
+			innerRoot = composite.add(scrollCompositeBluePrint, "growx, growy, h 0::,w 0::");
 		}
 		else {
 			final ICompositeBluePrint compositeBluePrint = bpf.composite();
 			compositeBluePrint.setBorder(setup.getContentBorder());
-			innerComposite = composite.add(compositeBluePrint, "growx, growy, h 0::,w 0::");
+			innerRoot = composite.add(compositeBluePrint, "growx, growy, h 0::,w 0::");
 		}
+		innerRoot.setLayout(MigLayoutFactory.growingCellLayout());
+		innerComposite = innerRoot.add(BPF.composite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
 		this.compoundValidator = new CompoundValidator<INPUT_TYPE>();
 		if (setup.getValidator() != null) {
@@ -136,10 +143,21 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 		contentCreator.setValue(setup.getValue());
 
 		if (setup.getValidationLabel() != null) {
+			final IComposite validationContainer = this.composite.add(
+					0,
+					BPF.composite(),
+					MigLayoutFactory.GROWING_CELL_CONSTRAINTS + ", wrap");
+			validationContainer.setLayout(new MigLayoutDescriptor("[grow, 0::]", "[grow, 0::]"));
+
+			final IColorConstant validationBackground = setup.getValidationLabelBackground();
+			if (validationBackground != null) {
+				validationContainer.setBackgroundColor(validationBackground);
+			}
+
 			final IInputComponentValidationLabelBluePrint validationLabelBp = bpf.inputComponentValidationLabel();
 			validationLabelBp.setSetup(setup.getValidationLabel());
 			validationLabelBp.setInputComponent(this);
-			validationLabel = this.composite.add(0, validationLabelBp, "h 18::, growx, wrap");
+			validationLabel = validationContainer.add(validationLabelBp, "aligny c, growx");
 		}
 		else {
 			validationLabel = null;

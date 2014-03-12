@@ -28,6 +28,7 @@
 package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.api.widgets.content.IInputContentCreator;
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Border;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
@@ -44,6 +45,11 @@ public interface IInputCompositeSetup<INPUT_TYPE> extends IInputComponentSetup<I
 	Border getContentBorder();
 
 	IInputComponentValidationLabelSetup getValidationLabel();
+
+	IColorConstant getValidationLabelBackground();
+
+	@Mandatory
+	int getValidationLabelHeight();
 
 	String getMissingInputHint();
 
