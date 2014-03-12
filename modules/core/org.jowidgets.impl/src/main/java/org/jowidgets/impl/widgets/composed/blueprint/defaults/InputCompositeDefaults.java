@@ -27,6 +27,7 @@
  */
 package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 
+import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.builder.IInputCompositeSetupBuilder;
@@ -40,6 +41,10 @@ public class InputCompositeDefaults implements IDefaultInitializer<IInputComposi
 	@Override
 	public void initialize(final IInputCompositeSetupBuilder<?, ?> builder) {
 		builder.setContentScrolled(true);
+
+		builder.setValidationLabelBackground(Colors.LIGHT_GREY);
+		builder.setValidationLabelHeight(35);
+
 		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
 		final IInputComponentValidationLabelBluePrint validationLabelBp = bpF.inputComponentValidationLabel();
