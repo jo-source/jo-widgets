@@ -350,17 +350,16 @@ public class TreeImpl extends AbstractControlSpiWrapper implements ITree {
 		}
 
 		for (final ITreeNodeSpi isSelected : newSelection) {
-			if (!lastSelectionSpi.contains(isSelected)) {
-				final ITreeNode selectedNode = nodes.get(isSelected);
-				if (selectedNode != null) {
-					selected.add(selectedNode);
-				}
+			final ITreeNode selectedNode = nodes.get(isSelected);
+			if (selectedNode != null) {
+				selected.add(selectedNode);
 			}
 		}
 
 		selection = Collections.unmodifiableList(selected);
 		treeSelectionObservable.fireSelectionChanged(new TreeSelectionEvent(selection, Collections.unmodifiableList(unselected)));
 		lastSelectionSpi = newSelection;
+
 	}
 
 	private final class TreeSelectionListenerSpi implements ITreeSelectionListenerSpi {
