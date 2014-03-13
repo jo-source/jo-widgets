@@ -35,6 +35,7 @@ import java.util.Map;
 import org.jowidgets.api.animation.IAnimationRunnerBuilder;
 import org.jowidgets.api.animation.IWaitAnimationProcessor;
 import org.jowidgets.api.clipboard.IClipboard;
+import org.jowidgets.api.clipboard.ITransferableBuilder;
 import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.command.IDefaultActionFactory;
 import org.jowidgets.api.convert.IConverterProvider;
@@ -66,6 +67,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.application.ApplicationRunner;
 import org.jowidgets.impl.clipboard.ClipbaordImpl;
+import org.jowidgets.impl.clipboard.TransferableBuilderImpl;
 import org.jowidgets.impl.command.ActionBuilderFactory;
 import org.jowidgets.impl.command.DefaultActionFactoryImpl;
 import org.jowidgets.impl.content.InputContentCreatorFactory;
@@ -250,6 +252,11 @@ public class DefaultToolkit implements IToolkit {
 			clipboard = new ClipbaordImpl(widgetsServiceProvider.getClipboard());
 		}
 		return clipboard;
+	}
+
+	@Override
+	public ITransferableBuilder createTransferableBuilder() {
+		return new TransferableBuilderImpl();
 	}
 
 	@Override

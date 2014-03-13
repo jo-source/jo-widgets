@@ -33,6 +33,7 @@ import java.util.List;
 import org.jowidgets.api.animation.IAnimationRunnerBuilder;
 import org.jowidgets.api.animation.IWaitAnimationProcessor;
 import org.jowidgets.api.clipboard.IClipboard;
+import org.jowidgets.api.clipboard.ITransferableBuilder;
 import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.command.IDefaultActionFactory;
 import org.jowidgets.api.convert.IConverterProvider;
@@ -77,6 +78,8 @@ public interface IToolkit {
 	<VALUE_TYPE> VALUE_TYPE getValue(ITypedKey<VALUE_TYPE> key);
 
 	IClipboard getClipboard();
+
+	ITransferableBuilder createTransferableBuilder();
 
 	IImageRegistry getImageRegistry();
 

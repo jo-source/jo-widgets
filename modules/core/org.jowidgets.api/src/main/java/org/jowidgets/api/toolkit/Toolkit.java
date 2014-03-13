@@ -35,6 +35,7 @@ import java.util.ServiceLoader;
 import org.jowidgets.api.animation.IAnimationRunnerBuilder;
 import org.jowidgets.api.animation.IWaitAnimationProcessor;
 import org.jowidgets.api.clipboard.IClipboard;
+import org.jowidgets.api.clipboard.ITransferableBuilder;
 import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.command.IDefaultActionFactory;
 import org.jowidgets.api.convert.IConverterProvider;
@@ -114,6 +115,10 @@ public final class Toolkit {
 
 	public static IClipboard getClipboard() {
 		return getInstance().getClipboard();
+	}
+
+	public static ITransferableBuilder createTransferableBuilder() {
+		return getInstance().createTransferableBuilder();
 	}
 
 	public static IImageRegistry getImageRegistry() {
