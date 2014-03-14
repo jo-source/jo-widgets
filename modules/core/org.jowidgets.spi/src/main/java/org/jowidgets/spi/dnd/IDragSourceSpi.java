@@ -29,11 +29,15 @@
 package org.jowidgets.spi.dnd;
 
 import java.util.Collection;
+import java.util.Set;
 
+import org.jowidgets.common.dnd.DnD;
 import org.jowidgets.spi.clipboard.TransferTypeSpi;
 
 public interface IDragSourceSpi extends IDragSourceObservableSpi {
 
 	void setTransferTypes(Collection<TransferTypeSpi> supportedTypes);
+
+	void setActions(Set<DnD> actions);
 
 }

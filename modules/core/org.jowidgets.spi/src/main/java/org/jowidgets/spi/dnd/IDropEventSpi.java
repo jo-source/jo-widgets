@@ -29,9 +29,16 @@
 package org.jowidgets.spi.dnd;
 
 import org.jowidgets.common.types.Position;
+import org.jowidgets.spi.clipboard.TransferTypeSpi;
 
-public interface IDragEventSpi {
+public interface IDropEventSpi {
 
 	Position getPosition();
+
+	Object getDropLocation();
+
+	Object getData();
+
+	TransferTypeSpi getTransferType();
 
 }

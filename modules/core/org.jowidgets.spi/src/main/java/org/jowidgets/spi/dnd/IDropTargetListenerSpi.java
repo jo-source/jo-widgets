@@ -28,10 +28,18 @@
 
 package org.jowidgets.spi.dnd;
 
-import org.jowidgets.common.types.Position;
+public interface IDropTargetListenerSpi {
 
-public interface IDragEventSpi {
+	void dragEnter(final IDropEventSpi event, IDropOperationResponseSpi response);
 
-	Position getPosition();
+	void dragExit(final IDropEventSpi event);
+
+	void dragOperationChanged(final IDropEventSpi event, IDropOperationResponseSpi response);
+
+	void dropAccept(final IDropEventSpi event, IDropOperationResponseSpi response);
+
+	void drop(final IDropEventSpi event);
+
+	void dragOver(final IDropEventSpi event, IDropOperationResponseSpi response);
 
 }

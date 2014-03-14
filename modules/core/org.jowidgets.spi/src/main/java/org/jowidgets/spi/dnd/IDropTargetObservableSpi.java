@@ -28,10 +28,10 @@
 
 package org.jowidgets.spi.dnd;
 
-import org.jowidgets.common.types.Position;
+public interface IDropTargetObservableSpi {
 
-public interface IDragEventSpi {
+	void addDropTargetListenerSpi(IDropTargetListenerSpi listener);
 
-	Position getPosition();
+	void removeDropTargetListenerSpi(IDropTargetListenerSpi listener);
 
 }
