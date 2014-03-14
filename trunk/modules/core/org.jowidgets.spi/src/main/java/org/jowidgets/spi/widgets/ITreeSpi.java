@@ -30,12 +30,15 @@ package org.jowidgets.spi.widgets;
 
 import java.util.List;
 
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.ITreeCommon;
 import org.jowidgets.spi.widgets.controller.ITreeSelectionObservableSpi;
 
 public interface ITreeSpi extends IControlSpi, ITreeSelectionObservableSpi, ITreeCommon {
 
 	ITreeNodeSpi getRootNode();
+
+	ITreeNodeSpi getNodeAt(Position position);
 
 	List<ITreeNodeSpi> getSelectedNodes();
 

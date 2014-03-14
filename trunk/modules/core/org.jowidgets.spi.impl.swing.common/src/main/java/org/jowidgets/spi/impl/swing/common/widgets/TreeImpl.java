@@ -64,6 +64,7 @@ import org.jowidgets.spi.widgets.ITreeNodeSpi;
 import org.jowidgets.spi.widgets.ITreeSpi;
 import org.jowidgets.spi.widgets.controller.ITreeSelectionListenerSpi;
 import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
+import org.jowidgets.util.Assert;
 import org.jowidgets.util.Tuple;
 
 public class TreeImpl extends SwingControl implements ITreeSpi {
@@ -178,6 +179,19 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 	@Override
 	public ITreeNodeSpi getRootNode() {
 		return rootNode;
+	}
+
+	@Override
+	public ITreeNodeSpi getNodeAt(final Position position) {
+		Assert.paramNotNull(position, "position");
+		final TreePath treePath = tree.getPathForLocation(position.getX(), position.getY());
+		if (treePath != null) {
+			final Object lastNode = treePath.getLastPathComponent();
+			if (lastNode instanceof JoTreeNode) {
+				return nodes.get(lastNode);
+			}
+		}
+		return null;
 	}
 
 	@Override

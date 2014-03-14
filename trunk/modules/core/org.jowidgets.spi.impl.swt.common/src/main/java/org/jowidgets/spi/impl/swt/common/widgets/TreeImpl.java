@@ -56,10 +56,12 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.common.widgets.controller.ITreeNodeListener;
 import org.jowidgets.spi.impl.controller.TreeSelectionObservableSpi;
+import org.jowidgets.spi.impl.swt.common.util.PositionConvert;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
 import org.jowidgets.spi.widgets.ITreeSpi;
 import org.jowidgets.spi.widgets.controller.ITreeSelectionListenerSpi;
 import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
+import org.jowidgets.util.Assert;
 
 public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi {
 
@@ -203,6 +205,18 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi {
 			}
 			unRegisterItem(child);
 			child.dispose();
+		}
+	}
+
+	@Override
+	public ITreeNodeSpi getNodeAt(final Position position) {
+		Assert.paramNotNull(position, "position");
+		final TreeItem item = getUiReference().getItem(PositionConvert.convert(position));
+		if (item != null) {
+			return items.get(item);
+		}
+		else {
+			return null;
 		}
 	}
 
