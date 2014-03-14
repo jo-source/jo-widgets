@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, grossmann
+ * Copyright (c) 2014, MGrossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,10 +28,12 @@
 
 package org.jowidgets.spi.dnd;
 
-import org.jowidgets.common.types.Position;
+import org.jowidgets.common.dnd.DnD;
 
-public interface IDragEventSpi {
+public interface IDropOperationResponseSpi {
 
-	Position getPosition();
+	void accept(DnD operation);
+
+	void reject();
 
 }

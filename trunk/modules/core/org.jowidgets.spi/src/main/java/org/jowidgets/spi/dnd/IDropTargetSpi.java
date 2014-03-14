@@ -28,10 +28,16 @@
 
 package org.jowidgets.spi.dnd;
 
-import org.jowidgets.common.types.Position;
+import java.util.Collection;
+import java.util.Set;
 
-public interface IDragEventSpi {
+import org.jowidgets.common.dnd.DnD;
+import org.jowidgets.spi.clipboard.TransferTypeSpi;
 
-	Position getPosition();
+public interface IDropTargetSpi extends IDropTargetObservableSpi {
+
+	void setTransferTypes(Collection<TransferTypeSpi> supportedTypes);
+
+	void setActions(Set<DnD> actions);
 
 }

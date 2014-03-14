@@ -28,14 +28,16 @@
 
 package org.jowidgets.spi.dnd;
 
+import org.jowidgets.common.dnd.DnD;
 import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.spi.clipboard.TransferTypeSpi;
 
 public interface IDragSourceListenerSpi {
 
 	void dragStart(IDragEventSpi event, IVetoable veto);
 
-	void dragSetData(IDragEventSpi event, IVetoable veto, IDragDataResponseSpi dragData);
+	void dragSetData(IDragEventSpi event, IVetoable veto, TransferTypeSpi transferType, IDragDataResponseSpi dragData);
 
-	void dragFinished(IDragEventSpi event);
+	void dragFinished(IDragEventSpi event, DnD dropAction);
 
 }
