@@ -64,6 +64,7 @@ import org.jowidgets.tools.controller.TreePopupDetectionObservable;
 import org.jowidgets.tools.controller.TreeSelectionObservable;
 import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
 import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
+import org.jowidgets.util.Assert;
 import org.jowidgets.util.EmptyCheck;
 
 public class TreeImpl extends AbstractControlSpiWrapper implements ITree {
@@ -308,6 +309,18 @@ public class TreeImpl extends AbstractControlSpiWrapper implements ITree {
 	@Override
 	public int getLevel() {
 		return treeContainerDelegate.getLevel();
+	}
+
+	@Override
+	public ITreeNode getNodeAt(final Position position) {
+		Assert.paramNotNull(position, "position");
+		final ITreeNodeSpi treeNodeSpi = getWidget().getNodeAt(position);
+		if (treeNodeSpi != null) {
+			return nodes.get(treeNodeSpi);
+		}
+		else {
+			return null;
+		}
 	}
 
 	public void registerNode(final TreeNodeImpl node) {

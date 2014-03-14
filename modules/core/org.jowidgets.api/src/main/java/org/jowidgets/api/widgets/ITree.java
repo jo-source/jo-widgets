@@ -33,6 +33,7 @@ import java.util.Collection;
 import org.jowidgets.api.controller.ITreeObservable;
 import org.jowidgets.api.controller.ITreePopupDetectionObservable;
 import org.jowidgets.api.controller.ITreeSelectionObservable;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.ITreeCommon;
 
 public interface ITree extends
@@ -42,6 +43,8 @@ public interface ITree extends
 		ITreeSelectionObservable,
 		ITreePopupDetectionObservable,
 		ITreeCommon {
+
+	ITreeNode getNodeAt(Position position);
 
 	Collection<ITreeNode> getSelection();
 

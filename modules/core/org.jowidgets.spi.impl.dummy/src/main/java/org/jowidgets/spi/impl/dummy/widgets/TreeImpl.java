@@ -126,6 +126,11 @@ public class TreeImpl extends DummyControl implements ITreeSpi, ITreeNodeSpi {
 	}
 
 	@Override
+	public ITreeNodeSpi getNodeAt(final Position position) {
+		return null;
+	}
+
+	@Override
 	public void setMarkup(final Markup markup) {
 		throw new UnsupportedOperationException("setMarkup is not possible on the root node");
 	}
