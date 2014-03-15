@@ -30,16 +30,23 @@ package org.jowidgets.spi.impl.swing.common.widgets;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.LayoutManager;
+import java.util.Collection;
+import java.util.Set;
 
 import net.miginfocom.swing.MigLayout;
 
+import org.jowidgets.common.dnd.DnD;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.spi.clipboard.TransferTypeSpi;
+import org.jowidgets.spi.dnd.IDragSourceListenerSpi;
 import org.jowidgets.spi.impl.swing.common.layout.LayoutManagerImpl;
 import org.jowidgets.spi.impl.swing.common.util.DimensionConvert;
 import org.jowidgets.spi.widgets.IControlSpi;
 import org.jowidgets.util.Tuple;
 
 public class SwingControl extends SwingComponent implements IControlSpi {
+
+	private final SwingDragSource dragSource;
 
 	public SwingControl(final Tuple<Component, Component> component) {
 		this(component.getFirst(), component.getSecond());
@@ -51,6 +58,8 @@ public class SwingControl extends SwingComponent implements IControlSpi {
 
 	public SwingControl(final Component component, final Component innerComponent) {
 		super(component, innerComponent);
+
+		dragSource = new SwingDragSource(innerComponent);
 	}
 
 	@Override
@@ -94,6 +103,26 @@ public class SwingControl extends SwingComponent implements IControlSpi {
 	@Override
 	public Dimension getMaxSize() {
 		return DimensionConvert.convert(getUiReference().getMaximumSize());
+	}
+
+	@Override
+	public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {
+		dragSource.setTransferTypes(supportedTypes);
+	}
+
+	@Override
+	public void setActions(final Set<DnD> actions) {
+		dragSource.setActions(actions);
+	}
+
+	@Override
+	public void addDragSourceListenerSpi(final IDragSourceListenerSpi listener) {
+		dragSource.addDragSourceListenerSpi(listener);
+	}
+
+	@Override
+	public void removeDragSourceListenerSpi(final IDragSourceListenerSpi listener) {
+		dragSource.removeDragSourceListenerSpi(listener);
 	}
 
 	private LayoutManager getParentLayout() {

@@ -27,8 +27,12 @@
  */
 package org.jowidgets.spi.impl.swt.common.widgets;
 
+import java.util.Collection;
+import java.util.Set;
+
 import org.eclipse.swt.widgets.Control;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.dnd.DnD;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
@@ -38,6 +42,8 @@ import org.jowidgets.common.widgets.controller.IKeyListener;
 import org.jowidgets.common.widgets.controller.IMouseListener;
 import org.jowidgets.common.widgets.controller.IMouseMotionListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
+import org.jowidgets.spi.clipboard.TransferTypeSpi;
+import org.jowidgets.spi.dnd.IDragSourceListenerSpi;
 import org.jowidgets.spi.impl.controller.InputObservable;
 import org.jowidgets.spi.widgets.IInputControlSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
@@ -231,6 +237,26 @@ public abstract class AbstractInputControl extends InputObservable implements II
 	@Override
 	public void setToolTipText(final String toolTip) {
 		swtControlDelegate.setToolTipText(toolTip);
+	}
+
+	@Override
+	public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {
+		swtControlDelegate.setTransferTypes(supportedTypes);
+	}
+
+	@Override
+	public void setActions(final Set<DnD> actions) {
+		swtControlDelegate.setActions(actions);
+	}
+
+	@Override
+	public void addDragSourceListenerSpi(final IDragSourceListenerSpi listener) {
+		swtControlDelegate.addDragSourceListenerSpi(listener);
+	}
+
+	@Override
+	public void removeDragSourceListenerSpi(final IDragSourceListenerSpi listener) {
+		swtControlDelegate.removeDragSourceListenerSpi(listener);
 	}
 
 }

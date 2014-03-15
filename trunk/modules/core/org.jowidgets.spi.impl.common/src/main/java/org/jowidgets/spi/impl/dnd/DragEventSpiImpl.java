@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,11 +26,24 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.spi.impl.dnd;
 
-import org.jowidgets.common.widgets.IControlCommon;
-import org.jowidgets.spi.dnd.IDragSourceSpi;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.spi.dnd.IDragEventSpi;
+import org.jowidgets.util.Assert;
 
-public interface IControlSpi extends IComponentSpi, IDragSourceSpi, IControlCommon {
+public final class DragEventSpiImpl implements IDragEventSpi {
+
+	private final Position position;
+
+	public DragEventSpiImpl(final Position position) {
+		Assert.paramNotNull(position, "position");
+		this.position = position;
+	}
+
+	@Override
+	public Position getPosition() {
+		return position;
+	}
 
 }

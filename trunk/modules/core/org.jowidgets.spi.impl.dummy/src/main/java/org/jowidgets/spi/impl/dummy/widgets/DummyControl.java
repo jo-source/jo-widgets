@@ -27,7 +27,13 @@
  */
 package org.jowidgets.spi.impl.dummy.widgets;
 
+import java.util.Collection;
+import java.util.Set;
+
+import org.jowidgets.common.dnd.DnD;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.spi.clipboard.TransferTypeSpi;
+import org.jowidgets.spi.dnd.IDragSourceListenerSpi;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
 import org.jowidgets.spi.widgets.IControlSpi;
 
@@ -61,5 +67,17 @@ public class DummyControl extends DummyComponent implements IControlSpi {
 	public Dimension getMaxSize() {
 		return getUiReference().getMaxSize();
 	}
+
+	@Override
+	public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {}
+
+	@Override
+	public void setActions(final Set<DnD> actions) {}
+
+	@Override
+	public void addDragSourceListenerSpi(final IDragSourceListenerSpi listener) {}
+
+	@Override
+	public void removeDragSourceListenerSpi(final IDragSourceListenerSpi listener) {}
 
 }
