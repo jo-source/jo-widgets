@@ -28,9 +28,14 @@
 package org.jowidgets.spi.impl.swing.common.widgets;
 
 import java.awt.Container;
+import java.util.Collection;
+import java.util.Set;
 
+import org.jowidgets.common.dnd.DnD;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.clipboard.TransferTypeSpi;
+import org.jowidgets.spi.dnd.IDragSourceListenerSpi;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 
 public class SwingComposite extends SwingContainer implements ICompositeSpi {
@@ -65,6 +70,26 @@ public class SwingComposite extends SwingContainer implements ICompositeSpi {
 	@Override
 	public Dimension getMaxSize() {
 		return swingControlDelegate.getMaxSize();
+	}
+
+	@Override
+	public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {
+		swingControlDelegate.setTransferTypes(supportedTypes);
+	}
+
+	@Override
+	public void setActions(final Set<DnD> actions) {
+		swingControlDelegate.setActions(actions);
+	}
+
+	@Override
+	public void addDragSourceListenerSpi(final IDragSourceListenerSpi listener) {
+		swingControlDelegate.addDragSourceListenerSpi(listener);
+	}
+
+	@Override
+	public void removeDragSourceListenerSpi(final IDragSourceListenerSpi listener) {
+		swingControlDelegate.removeDragSourceListenerSpi(listener);
 	}
 
 }

@@ -27,9 +27,15 @@
  */
 package org.jowidgets.spi.impl.swt.common.widgets;
 
+import java.util.Collection;
+import java.util.Set;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Control;
+import org.jowidgets.common.dnd.DnD;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.spi.clipboard.TransferTypeSpi;
+import org.jowidgets.spi.dnd.IDragSourceListenerSpi;
 import org.jowidgets.spi.impl.swt.common.util.DimensionConvert;
 import org.jowidgets.spi.widgets.IControlSpi;
 
@@ -37,8 +43,11 @@ public class SwtControl extends SwtComponent implements IControlSpi {
 
 	private static final Dimension MAX_SIZE = new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);
 
+	private final SwtDragSource dragSource;
+
 	public SwtControl(final Control control) {
 		super(control);
+		this.dragSource = new SwtDragSource(control);
 	}
 
 	@Override
@@ -64,6 +73,26 @@ public class SwtControl extends SwtComponent implements IControlSpi {
 	@Override
 	public Dimension getMaxSize() {
 		return MAX_SIZE;
+	}
+
+	@Override
+	public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {
+		dragSource.setTransferTypes(supportedTypes);
+	}
+
+	@Override
+	public void setActions(final Set<DnD> actions) {
+		dragSource.setActions(actions);
+	}
+
+	@Override
+	public void addDragSourceListenerSpi(final IDragSourceListenerSpi listener) {
+		dragSource.addDragSourceListenerSpi(listener);
+	}
+
+	@Override
+	public void removeDragSourceListenerSpi(final IDragSourceListenerSpi listener) {
+		dragSource.removeDragSourceListenerSpi(listener);
 	}
 
 }

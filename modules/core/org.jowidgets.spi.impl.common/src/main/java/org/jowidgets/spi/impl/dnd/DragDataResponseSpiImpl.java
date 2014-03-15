@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,11 +26,21 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.spi.impl.dnd;
 
-import org.jowidgets.common.widgets.IControlCommon;
-import org.jowidgets.spi.dnd.IDragSourceSpi;
+import org.jowidgets.spi.dnd.IDragDataResponseSpi;
 
-public interface IControlSpi extends IComponentSpi, IDragSourceSpi, IControlCommon {
+public class DragDataResponseSpiImpl implements IDragDataResponseSpi {
+
+	private Object data;
+
+	@Override
+	public void setData(final Object data) {
+		this.data = data;
+	}
+
+	public Object getData() {
+		return data;
+	}
 
 }
