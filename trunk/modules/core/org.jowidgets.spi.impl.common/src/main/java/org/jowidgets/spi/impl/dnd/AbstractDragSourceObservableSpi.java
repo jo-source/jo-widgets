@@ -34,6 +34,7 @@ import java.util.Set;
 
 import org.jowidgets.common.dnd.DnD;
 import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.spi.clipboard.TransferTypeSpi;
 import org.jowidgets.spi.dnd.IDragDataResponseSpi;
 import org.jowidgets.spi.dnd.IDragEventSpi;
@@ -41,24 +42,41 @@ import org.jowidgets.spi.dnd.IDragSourceListenerSpi;
 import org.jowidgets.spi.dnd.IDragSourceObservableSpi;
 import org.jowidgets.util.Assert;
 
-public class DragSourceObservableSpi implements IDragSourceObservableSpi {
+public abstract class AbstractDragSourceObservableSpi implements IDragSourceObservableSpi {
 
 	private final Set<IDragSourceListenerSpi> listeners;
 
-	public DragSourceObservableSpi() {
+	private boolean active;
+
+	public AbstractDragSourceObservableSpi() {
 		this.listeners = new LinkedHashSet<IDragSourceListenerSpi>();
+		this.active = false;
 	}
 
 	@Override
 	public final void addDragSourceListenerSpi(final IDragSourceListenerSpi listener) {
 		Assert.paramNotNull(listener, "listener");
+		final int lastSize = listeners.size();
 		listeners.add(listener);
+		if (lastSize == 0) {
+			this.active = true;
+			setActive(true);
+		}
 	}
 
 	@Override
 	public final void removeDragSourceListenerSpi(final IDragSourceListenerSpi listener) {
 		Assert.paramNotNull(listener, "listener");
+		final int lastSize = listeners.size();
 		listeners.remove(listener);
+		if (lastSize == 1 && listeners.size() == 0) {
+			this.active = false;
+			setActive(false);
+		}
+	}
+
+	public final void fireDragStart(final int x, final int y, final IVetoable veto) {
+		fireDragStart(new DragEventSpiImpl(new Position(x, y)), veto);
 	}
 
 	public final void fireDragStart(final IDragEventSpi event, final IVetoable veto) {
@@ -67,7 +85,16 @@ public class DragSourceObservableSpi implements IDragSourceObservableSpi {
 		}
 	}
 
-	public final void dragSetData(
+	public final void fireDragSetData(
+		final int x,
+		final int y,
+		final IVetoable veto,
+		final TransferTypeSpi transferType,
+		final IDragDataResponseSpi dragData) {
+		fireDragSetData(new DragEventSpiImpl(new Position(x, y)), veto, transferType, dragData);
+	}
+
+	public final void fireDragSetData(
 		final IDragEventSpi event,
 		final IVetoable veto,
 		final TransferTypeSpi transferType,
@@ -77,10 +104,20 @@ public class DragSourceObservableSpi implements IDragSourceObservableSpi {
 		}
 	}
 
-	public final void dragFinished(final IDragEventSpi event, final DnD dropAction) {
+	public final void fireDragFinished(final int x, final int y, final DnD dropAction) {
+		fireDragFinished(new DragEventSpiImpl(new Position(x, y)), dropAction);
+	}
+
+	public final void fireDragFinished(final IDragEventSpi event, final DnD dropAction) {
 		for (final IDragSourceListenerSpi listener : new LinkedList<IDragSourceListenerSpi>(listeners)) {
 			listener.dragFinished(event, dropAction);
 		}
 	}
+
+	protected boolean isActive() {
+		return active;
+	}
+
+	protected abstract void setActive(boolean active);
 
 }

@@ -35,7 +35,7 @@ import org.eclipse.swt.dnd.TransferData;
 import org.jowidgets.spi.clipboard.TransferContainer;
 import org.jowidgets.spi.impl.clipboard.Serializer;
 
-final class ObjectTransfer extends ByteArrayTransfer {
+public final class ObjectTransfer extends ByteArrayTransfer {
 
 	private static final String MIME_TYPE = TransferContainer.MIME_TYPE;
 	private static final int MIME_TYPE_ID = registerType(MIME_TYPE);

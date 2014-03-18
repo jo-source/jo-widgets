@@ -35,10 +35,10 @@ import java.util.Set;
 import org.jowidgets.common.dnd.DnD;
 import org.jowidgets.spi.clipboard.TransferTypeSpi;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
-import org.jowidgets.spi.impl.dnd.DragSourceObservableSpi;
+import org.jowidgets.spi.impl.dnd.AbstractDragSourceObservableSpi;
 import org.jowidgets.util.Assert;
 
-final class SwingDragSource extends DragSourceObservableSpi implements IDragSourceSpi {
+final class SwingDragSource extends AbstractDragSourceObservableSpi implements IDragSourceSpi {
 
 	@SuppressWarnings("unused")
 	private final Component component;
@@ -56,6 +56,11 @@ final class SwingDragSource extends DragSourceObservableSpi implements IDragSour
 	@Override
 	public void setActions(final Set<DnD> actions) {
 		// TODO MG must be implemented
+	}
+
+	@Override
+	protected void setActive(final boolean active) {
+		// TODO Auto-generated method stub
 	}
 
 }
