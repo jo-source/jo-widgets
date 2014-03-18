@@ -28,6 +28,7 @@
 
 package org.jowidgets.tools.powo;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -103,6 +104,12 @@ final class DragSourcePowo implements IDragSource {
 	}
 
 	@Override
+	public void setTransferTypes(final TransferType<?>... supportedTypes) {
+		Assert.paramNotNull(supportedTypes, "supportedTypes");
+		setTransferTypes(Arrays.asList(supportedTypes));
+	}
+
+	@Override
 	public void setActions(final Set<DnD> actions) {
 		Assert.paramNotNull(actions, "actions");
 		if (original != null) {
@@ -111,6 +118,16 @@ final class DragSourcePowo implements IDragSource {
 		else {
 			this.actions = new HashSet<DnD>(actions);
 		}
+	}
+
+	@Override
+	public void setActions(final DnD... actions) {
+		Assert.paramNotNull(actions, "actions");
+		final Set<DnD> actionsSet = new HashSet<DnD>();
+		for (int i = 0; i < actions.length; i++) {
+			actionsSet.add(actions[i]);
+		}
+		setActions(actionsSet);
 	}
 
 }
