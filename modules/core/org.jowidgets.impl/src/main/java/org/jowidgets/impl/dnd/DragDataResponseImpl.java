@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,29 +26,24 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.dnd;
 
-import org.jowidgets.api.controller.IParentObservable;
-import org.jowidgets.api.dnd.IDragSource;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.IControlCommon;
+import org.jowidgets.api.dnd.IDragDataResponse;
+import org.jowidgets.spi.dnd.IDragDataResponseSpi;
+import org.jowidgets.util.Assert;
 
-public interface IControl extends IComponent, IControlCommon, IParentObservable<IContainer> {
+final class DragDataResponseImpl implements IDragDataResponse {
 
-	void setParent(IContainer parent);
+	private final IDragDataResponseSpi dragDataResponseSpi;
+
+	DragDataResponseImpl(final IDragDataResponseSpi dragDataResponseSpi) {
+		Assert.paramNotNull(dragDataResponseSpi, "dragDataResponseSpi");
+		this.dragDataResponseSpi = dragDataResponseSpi;
+	}
 
 	@Override
-	IContainer getParent();
-
-	@Override
-	IControl getRoot();
-
-	IDragSource getDragSource();
-
-	void setMinSize(final Dimension minSize);
-
-	void setPreferredSize(Dimension preferredSize);
-
-	void setMaxSize(Dimension maxSize);
+	public void setData(final Object data) {
+		dragDataResponseSpi.setData(data);
+	}
 
 }

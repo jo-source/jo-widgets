@@ -32,6 +32,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.jowidgets.api.controller.IParentListener;
+import org.jowidgets.api.dnd.IDragSource;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
@@ -51,6 +52,7 @@ class Composite<WIDGET_TYPE extends IComposite, BLUE_PRINT_TYPE extends IWidgetD
 	private Dimension preferredSize;
 	private Dimension maxSize;
 	private String toolTipText;
+	private DragSourcePowo dragSource;
 
 	Composite(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
@@ -77,6 +79,9 @@ class Composite<WIDGET_TYPE extends IComposite, BLUE_PRINT_TYPE extends IWidgetD
 		}
 		if (toolTipText != null) {
 			getWidget().setToolTipText(toolTipText);
+		}
+		if (dragSource != null) {
+			dragSource.setOriginal(widget.getDragSource());
 		}
 	}
 
@@ -194,6 +199,20 @@ class Composite<WIDGET_TYPE extends IComposite, BLUE_PRINT_TYPE extends IWidgetD
 		}
 		else {
 			parentListeners.remove(listener);
+		}
+	}
+
+	@Override
+	public IDragSource getDragSource() {
+		if (dragSource != null) {
+			return dragSource;
+		}
+		else if (isInitialized()) {
+			return getWidget().getDragSource();
+		}
+		else {
+			dragSource = new DragSourcePowo();
+			return dragSource;
 		}
 	}
 

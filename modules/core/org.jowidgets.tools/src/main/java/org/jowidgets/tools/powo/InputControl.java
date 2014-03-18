@@ -32,6 +32,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.jowidgets.api.controller.IParentListener;
+import org.jowidgets.api.dnd.IDragSource;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IInputControl;
@@ -52,6 +53,7 @@ class InputControl<WIDGET_TYPE extends IInputControl<VALUE_TYPE>, BLUE_PRINT_TYP
 	private Dimension preferredSize;
 	private Dimension maxSize;
 	private String toolTipText;
+	private DragSourcePowo dragSource;
 
 	public InputControl(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
@@ -78,6 +80,9 @@ class InputControl<WIDGET_TYPE extends IInputControl<VALUE_TYPE>, BLUE_PRINT_TYP
 		}
 		if (toolTipText != null) {
 			getWidget().setToolTipText(toolTipText);
+		}
+		if (dragSource != null) {
+			dragSource.setOriginal(widget.getDragSource());
 		}
 	}
 
@@ -195,6 +200,20 @@ class InputControl<WIDGET_TYPE extends IInputControl<VALUE_TYPE>, BLUE_PRINT_TYP
 		}
 		else {
 			parentListeners.remove(listener);
+		}
+	}
+
+	@Override
+	public IDragSource getDragSource() {
+		if (dragSource != null) {
+			return dragSource;
+		}
+		else if (isInitialized()) {
+			return getWidget().getDragSource();
+		}
+		else {
+			dragSource = new DragSourcePowo();
+			return dragSource;
 		}
 	}
 }
