@@ -36,6 +36,7 @@ import org.jowidgets.common.dnd.DnD;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.spi.clipboard.TransferTypeSpi;
 import org.jowidgets.spi.dnd.IDragSourceListenerSpi;
+import org.jowidgets.spi.impl.swt.common.dnd.SwtDragSource;
 import org.jowidgets.spi.impl.swt.common.util.DimensionConvert;
 import org.jowidgets.spi.widgets.IControlSpi;
 
