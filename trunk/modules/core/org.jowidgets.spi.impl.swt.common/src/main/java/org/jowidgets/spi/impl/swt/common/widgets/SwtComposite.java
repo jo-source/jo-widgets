@@ -27,15 +27,10 @@
  */
 package org.jowidgets.spi.impl.swt.common.widgets;
 
-import java.util.Collection;
-import java.util.Set;
-
 import org.eclipse.swt.widgets.Composite;
-import org.jowidgets.common.dnd.DnD;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.spi.clipboard.TransferTypeSpi;
-import org.jowidgets.spi.dnd.IDragSourceListenerSpi;
+import org.jowidgets.spi.dnd.IDragSourceSpi;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 
 public class SwtComposite extends SwtContainer implements ICompositeSpi {
@@ -73,23 +68,8 @@ public class SwtComposite extends SwtContainer implements ICompositeSpi {
 	}
 
 	@Override
-	public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {
-		swtControlDelegate.setTransferTypes(supportedTypes);
-	}
-
-	@Override
-	public void setActions(final Set<DnD> actions) {
-		swtControlDelegate.setActions(actions);
-	}
-
-	@Override
-	public void addDragSourceListenerSpi(final IDragSourceListenerSpi listener) {
-		swtControlDelegate.addDragSourceListenerSpi(listener);
-	}
-
-	@Override
-	public void removeDragSourceListenerSpi(final IDragSourceListenerSpi listener) {
-		swtControlDelegate.removeDragSourceListenerSpi(listener);
+	public IDragSourceSpi getDragSource() {
+		return swtControlDelegate.getDragSource();
 	}
 
 }

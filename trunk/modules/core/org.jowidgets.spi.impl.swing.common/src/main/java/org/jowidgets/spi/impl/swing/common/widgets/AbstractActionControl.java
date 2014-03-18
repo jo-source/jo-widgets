@@ -28,13 +28,9 @@
 package org.jowidgets.spi.impl.swing.common.widgets;
 
 import java.awt.Component;
-import java.util.Collection;
-import java.util.Set;
 
-import org.jowidgets.common.dnd.DnD;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.spi.clipboard.TransferTypeSpi;
-import org.jowidgets.spi.dnd.IDragSourceListenerSpi;
+import org.jowidgets.spi.dnd.IDragSourceSpi;
 import org.jowidgets.spi.widgets.IControlSpi;
 
 public abstract class AbstractActionControl extends AbstractActionComponent implements IControlSpi {
@@ -77,22 +73,8 @@ public abstract class AbstractActionControl extends AbstractActionComponent impl
 	}
 
 	@Override
-	public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {
-		swingControlDelegate.setTransferTypes(supportedTypes);
+	public IDragSourceSpi getDragSource() {
+		return swingControlDelegate.getDragSource();
 	}
 
-	@Override
-	public void setActions(final Set<DnD> actions) {
-		swingControlDelegate.setActions(actions);
-	}
-
-	@Override
-	public void addDragSourceListenerSpi(final IDragSourceListenerSpi listener) {
-		swingControlDelegate.addDragSourceListenerSpi(listener);
-	}
-
-	@Override
-	public void removeDragSourceListenerSpi(final IDragSourceListenerSpi listener) {
-		swingControlDelegate.removeDragSourceListenerSpi(listener);
-	}
 }
