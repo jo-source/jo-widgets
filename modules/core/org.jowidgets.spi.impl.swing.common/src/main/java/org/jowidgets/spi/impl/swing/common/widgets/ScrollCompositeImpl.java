@@ -28,14 +28,12 @@
 package org.jowidgets.spi.impl.swing.common.widgets;
 
 import java.util.Collection;
-import java.util.Set;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.dnd.DnD;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
@@ -51,8 +49,7 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
-import org.jowidgets.spi.clipboard.TransferTypeSpi;
-import org.jowidgets.spi.dnd.IDragSourceListenerSpi;
+import org.jowidgets.spi.dnd.IDragSourceSpi;
 import org.jowidgets.spi.impl.swing.common.util.BorderConvert;
 import org.jowidgets.spi.impl.swing.common.util.ScrollBarSettingsConvert;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
@@ -288,23 +285,8 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 	}
 
 	@Override
-	public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {
-		outerContainer.setTransferTypes(supportedTypes);
-	}
-
-	@Override
-	public void setActions(final Set<DnD> actions) {
-		outerContainer.setActions(actions);
-	}
-
-	@Override
-	public void addDragSourceListenerSpi(final IDragSourceListenerSpi listener) {
-		outerContainer.addDragSourceListenerSpi(listener);
-	}
-
-	@Override
-	public void removeDragSourceListenerSpi(final IDragSourceListenerSpi listener) {
-		outerContainer.removeDragSourceListenerSpi(listener);
+	public IDragSourceSpi getDragSource() {
+		return outerContainer.getDragSource();
 	}
 
 	@Override

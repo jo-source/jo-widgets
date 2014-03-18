@@ -34,6 +34,7 @@ import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
+import org.jowidgets.spi.dnd.IDragSourceSpi;
 
 public class UIDComponent extends UIDObservable {
 
@@ -41,6 +42,7 @@ public class UIDComponent extends UIDObservable {
 	private Dimension size = new Dimension(400, 300);
 	private IColorConstant foregroundColor = new ColorValue(0, 0, 0);
 	private IColorConstant backgroundColor = new ColorValue(230, 230, 230);
+	private final IDragSourceSpi dragSource = new DummyDragSource();
 	private String tooltipText;
 	private boolean visible = true;
 	private boolean enabled = true;
@@ -153,6 +155,10 @@ public class UIDComponent extends UIDObservable {
 	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
 		// TODO LG computeDecoratedSize
 		return clientAreaSize;
+	}
+
+	public IDragSourceSpi getDragSource() {
+		return dragSource;
 	}
 
 }
