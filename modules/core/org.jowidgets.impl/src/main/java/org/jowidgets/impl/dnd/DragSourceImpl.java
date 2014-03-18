@@ -28,7 +28,9 @@
 
 package org.jowidgets.impl.dnd;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -61,7 +63,7 @@ public final class DragSourceImpl extends AbstractDragSourceObservable implement
 
 	@Override
 	public void setTransferTypes(final Collection<TransferType<?>> types) {
-		Assert.paramNotNull(supportedTypes, "supportedTypes");
+		Assert.paramNotNull(types, "types");
 		this.supportedTypes = new LinkedHashMap<TransferTypeSpi, TransferType<?>>();
 		final List<TransferTypeSpi> transferTypesSpi = new LinkedList<TransferTypeSpi>();
 		for (final TransferType<?> transferType : types) {
@@ -73,9 +75,25 @@ public final class DragSourceImpl extends AbstractDragSourceObservable implement
 	}
 
 	@Override
+	public void setTransferTypes(final TransferType<?>... supportedTypes) {
+		Assert.paramNotNull(supportedTypes, "supportedTypes");
+		setTransferTypes(Arrays.asList(supportedTypes));
+	}
+
+	@Override
 	public void setActions(final Set<DnD> actions) {
 		Assert.paramNotNull(actions, "actions");
 		dragSourceSpi.setActions(actions);
+	}
+
+	@Override
+	public void setActions(final DnD... actions) {
+		Assert.paramNotNull(actions, "actions");
+		final Set<DnD> actionsSet = new HashSet<DnD>();
+		for (int i = 0; i < actions.length; i++) {
+			actionsSet.add(actions[i]);
+		}
+		setActions(actionsSet);
 	}
 
 	@Override
