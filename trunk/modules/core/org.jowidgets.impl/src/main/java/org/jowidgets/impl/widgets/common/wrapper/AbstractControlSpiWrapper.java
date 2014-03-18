@@ -28,13 +28,17 @@
 
 package org.jowidgets.impl.widgets.common.wrapper;
 
+import org.jowidgets.api.dnd.IDragSource;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IControlCommon;
+import org.jowidgets.impl.dnd.DragSourceImpl;
 import org.jowidgets.spi.widgets.IControlSpi;
 
 public abstract class AbstractControlSpiWrapper extends AbstractComponentSpiWrapper implements IControlCommon {
 	private static final Dimension INFINITE_SIZE = new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
+
+	private final IDragSource dragSource;
 
 	private Dimension minSize;
 	private Dimension prefferedSize;
@@ -42,6 +46,7 @@ public abstract class AbstractControlSpiWrapper extends AbstractComponentSpiWrap
 
 	public AbstractControlSpiWrapper(final IControlSpi control) {
 		super(control);
+		this.dragSource = new DragSourceImpl(control.getDragSource());
 	}
 
 	@Override
@@ -109,5 +114,9 @@ public abstract class AbstractControlSpiWrapper extends AbstractComponentSpiWrap
 		else {
 			return INFINITE_SIZE;
 		}
+	}
+
+	public IDragSource getDragSource() {
+		return dragSource;
 	}
 }

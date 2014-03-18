@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,29 +26,18 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.api.dnd;
 
-import org.jowidgets.api.controller.IParentObservable;
-import org.jowidgets.api.dnd.IDragSource;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.IControlCommon;
+import org.jowidgets.api.clipboard.TransferType;
+import org.jowidgets.common.dnd.DnD;
+import org.jowidgets.common.types.IVetoable;
 
-public interface IControl extends IComponent, IControlCommon, IParentObservable<IContainer> {
+public interface IDragSourceListener {
 
-	void setParent(IContainer parent);
+	void dragStart(IDragEvent event, IVetoable veto);
 
-	@Override
-	IContainer getParent();
+	void dragSetData(IDragEvent event, IVetoable veto, TransferType<?> transferType, IDragDataResponse dragData);
 
-	@Override
-	IControl getRoot();
-
-	IDragSource getDragSource();
-
-	void setMinSize(final Dimension minSize);
-
-	void setPreferredSize(Dimension preferredSize);
-
-	void setMaxSize(Dimension maxSize);
+	void dragFinished(IDragEvent event, DnD dropAction);
 
 }

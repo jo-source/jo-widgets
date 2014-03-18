@@ -29,11 +29,13 @@
 package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.controller.IParentListener;
+import org.jowidgets.api.dnd.IDragSource;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.descriptor.setup.ICompositeSetup;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
+import org.jowidgets.impl.dnd.DragSourceImpl;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
 import org.jowidgets.tools.widgets.invoker.LayoutSettingsInvoker;
@@ -41,6 +43,7 @@ import org.jowidgets.tools.widgets.invoker.LayoutSettingsInvoker;
 public class CompositeImpl extends ContainerImpl implements IComposite {
 
 	private final ControlDelegate controlDelegate;
+	private final IDragSource dragSource;
 
 	public CompositeImpl(final ICompositeSpi containerSpi, final ICompositeSetup setup) {
 		this(containerSpi, setup, false);
@@ -53,6 +56,7 @@ public class CompositeImpl extends ContainerImpl implements IComposite {
 			LayoutSettingsInvoker.setLayout(setup, this);
 		}
 		this.controlDelegate = new ControlDelegate(containerSpi, this);
+		this.dragSource = new DragSourceImpl(containerSpi.getDragSource());
 	}
 
 	@Override
@@ -103,6 +107,11 @@ public class CompositeImpl extends ContainerImpl implements IComposite {
 	@Override
 	public void setToolTipText(final String toolTip) {
 		getWidget().setToolTipText(toolTip);
+	}
+
+	@Override
+	public IDragSource getDragSource() {
+		return dragSource;
 	}
 
 }

@@ -29,6 +29,7 @@
 package org.jowidgets.tools.widgets.wrapper;
 
 import org.jowidgets.api.controller.IParentListener;
+import org.jowidgets.api.dnd.IDragSource;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
@@ -113,6 +114,11 @@ public class CompositeWrapper extends ContainerWrapper implements IComposite {
 	@Override
 	public void setToolTipText(final String toolTip) {
 		getWidget().setToolTipText(toolTip);
+	}
+
+	@Override
+	public IDragSource getDragSource() {
+		return getWidget().getDragSource();
 	}
 
 }

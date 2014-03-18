@@ -36,6 +36,7 @@ import org.jowidgets.api.controller.IContainerRegistry;
 import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.controller.IListenerFactory;
 import org.jowidgets.api.controller.IParentListener;
+import org.jowidgets.api.dnd.IDragSource;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
@@ -52,6 +53,7 @@ import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.impl.base.delegate.ContainerDelegate;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
+import org.jowidgets.impl.dnd.DragSourceImpl;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractScrollCompositeSpiWrapper;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
@@ -63,11 +65,13 @@ public class ScrollCompositeImpl extends AbstractScrollCompositeSpiWrapper imple
 
 	private final ControlDelegate controlDelegate;
 	private final ContainerDelegate containerDelegate;
+	private final IDragSource dragSource;
 
 	public ScrollCompositeImpl(final IScrollCompositeSpi containerWidgetSpi, final IScrollCompositeSetup setup) {
 		super(containerWidgetSpi);
 		this.controlDelegate = new ControlDelegate(containerWidgetSpi, this);
 		this.containerDelegate = new ContainerDelegate(containerWidgetSpi, this);
+		this.dragSource = new DragSourceImpl(containerWidgetSpi.getDragSource());
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
 		LayoutSettingsInvoker.setLayout(setup, this);
@@ -274,6 +278,11 @@ public class ScrollCompositeImpl extends AbstractScrollCompositeSpiWrapper imple
 	@Override
 	public IPopupMenu createPopupMenu() {
 		return containerDelegate.createPopupMenu();
+	}
+
+	@Override
+	public IDragSource getDragSource() {
+		return dragSource;
 	}
 
 }

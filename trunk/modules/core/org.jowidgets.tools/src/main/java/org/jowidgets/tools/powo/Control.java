@@ -32,6 +32,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.jowidgets.api.controller.IParentListener;
+import org.jowidgets.api.dnd.IDragSource;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
@@ -49,6 +50,7 @@ class Control<WIDGET_TYPE extends IControl, BLUE_PRINT_TYPE extends IWidgetDescr
 	private Dimension preferredSize;
 	private Dimension maxSize;
 	private String toolTipText;
+	private DragSourcePowo dragSource;
 
 	public Control(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
@@ -75,6 +77,9 @@ class Control<WIDGET_TYPE extends IControl, BLUE_PRINT_TYPE extends IWidgetDescr
 		}
 		if (toolTipText != null) {
 			getWidget().setToolTipText(toolTipText);
+		}
+		if (dragSource != null) {
+			dragSource.setOriginal(widget.getDragSource());
 		}
 	}
 
@@ -192,6 +197,20 @@ class Control<WIDGET_TYPE extends IControl, BLUE_PRINT_TYPE extends IWidgetDescr
 		}
 		else {
 			parentListeners.remove(listener);
+		}
+	}
+
+	@Override
+	public IDragSource getDragSource() {
+		if (dragSource != null) {
+			return dragSource;
+		}
+		else if (isInitialized()) {
+			return getWidget().getDragSource();
+		}
+		else {
+			dragSource = new DragSourcePowo();
+			return dragSource;
 		}
 	}
 
