@@ -29,10 +29,9 @@
 package org.jowidgets.spi.impl.swt.common.dnd;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 import org.eclipse.swt.dnd.DND;
@@ -40,7 +39,6 @@ import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.dnd.DropTargetEvent;
 import org.eclipse.swt.dnd.DropTargetListener;
 import org.eclipse.swt.dnd.TextTransfer;
-import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.dnd.TransferData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
@@ -63,8 +61,8 @@ import org.jowidgets.util.EmptyCheck;
 
 public final class SwtDropTarget extends AbstractDropTargetObservableSpi implements IDropTargetSpi {
 
-	private static final Transfer TEXT_TRANSFER = TextTransfer.getInstance();
-	private static final Transfer OBJECT_TRANSFER = ObjectTransfer.getInstance();
+	private static final TextTransfer TEXT_TRANSFER = TextTransfer.getInstance();
+	private static final ObjectTransfer OBJECT_TRANSFER = ObjectTransfer.getInstance();
 
 	private final Control control;
 	private final IDropSelectionProvider dropSelectionProvider;
@@ -156,6 +154,7 @@ public final class SwtDropTarget extends AbstractDropTargetObservableSpi impleme
 
 		@Override
 		public void dragOver(final DropTargetEvent event) {
+
 			handleDropTargetEvent(event, new IEventPublisher() {
 				@Override
 				public void fireEvent(final IDropEventSpi dropEvent, final IDropResponseSpi dropResponse) {
@@ -187,83 +186,67 @@ public final class SwtDropTarget extends AbstractDropTargetObservableSpi impleme
 	}
 
 	private void handleDropTargetEvent(final DropTargetEvent event, final IEventPublisher eventPublisher) {
-		final Set<DropMode> dropModes = new HashSet<DropMode>();
-		final Set<DropAction> dropActions = new HashSet<DropAction>();
-		boolean rejected = false;
-		for (final IDropEventSpi dropEvent : createDropEvents(event)) {
-			final DropResponseSpiImpl dropResponse = new DropResponseSpiImpl();
-			eventPublisher.fireEvent(dropEvent, dropResponse);
-			final DropAction accepted = dropResponse.getAccepted();
-			if (accepted != null) {
-				dropActions.add(accepted);
-			}
-			final DropMode dropMode = dropResponse.getDropMode();
-			if (dropMode != null) {
-				dropModes.add(dropMode);
-			}
-			if (dropResponse.isRejected()) {
-				rejected = true;
-			}
-		}
-		handleDropActions(dropActions, rejected, event);
-		setFeedback(dropModes, event);
+		final IDropEventSpi dropEvent = createDropEvent(event);
+		final DropResponseSpiImpl dropResponse = new DropResponseSpiImpl();
+		eventPublisher.fireEvent(dropEvent, dropResponse);
+		handleDropAction(dropResponse.getAccepted(), dropResponse.isRejected(), event);
+		setFeedback(dropResponse.getDropMode(), event);
 	}
 
-	private void handleDropActions(final Set<DropAction> dropActions, final boolean rejected, final DropTargetEvent event) {
-		if (dropActions.size() > 1) {
-			throw new IllegalStateException("It is not possible to accept more than one drop action for the same event, "
-				+ dropActions);
-		}
-		else if (rejected && dropActions.isEmpty()) {
+	private void handleDropAction(final DropAction dropAction, final boolean rejected, final DropTargetEvent event) {
+		if (rejected && dropAction == null) {
 			event.detail = DND.DROP_NONE;
 		}
-		else if (dropActions.size() == 1) {
-			event.detail = DragDropUtil.createOperations(dropActions);
-		}
-	}
-
-	private void setFeedback(final Set<DropMode> dropModes, final DropTargetEvent event) {
-		if (dropModes.size() > 1) {
-			throw new IllegalStateException("It is not possible to set more than one drop mode for the same event, " + dropModes);
-		}
-		else if (dropModes.size() == 1) {
-			setFeedback(dropModes.iterator().next(), event);
-		}
-		else if (defaultDropMode != null) {
-			setFeedback(defaultDropMode, event);
+		else if (dropAction != null) {
+			event.detail = DragDropUtil.createOperations(Collections.singleton(dropAction));
 		}
 	}
 
 	private void setFeedback(final DropMode dropMode, final DropTargetEvent event) {
+		if (dropMode != null) {
+			setFeedbackImpl(dropMode, event);
+		}
+		else if (defaultDropMode != null) {
+			setFeedbackImpl(defaultDropMode, event);
+		}
+	}
+
+	private void setFeedbackImpl(final DropMode dropMode, final DropTargetEvent event) {
 		final Integer feedback = dropSelectionProvider.getFeedback(event.item, getPosition(event), dropMode);
 		if (feedback != null) {
 			event.feedback = feedback.intValue();
 		}
 	}
 
-	private List<IDropEventSpi> createDropEvents(final DropTargetEvent event) {
-		final List<IDropEventSpi> result = new LinkedList<IDropEventSpi>();
+	private IDropEventSpi createDropEvent(final DropTargetEvent event) {
 		final TransferData transferData = event.currentDataType;
 		if (TEXT_TRANSFER.isSupportedType(transferData)) {
 			final TransferTypeSpi transferType = DragDropUtil.getStringTransferType(supportedTypes);
 			//Only create a event, if this drop target supports the transfer type
 			if (transferType != null) {
-				result.add(createDropEvent(event, event.data, transferType));
+				Object data = event.data;
+				if (data == null) {
+					data = TEXT_TRANSFER.nativeToJava(transferData);
+				}
+				return createDropEvent(event, data, transferType);
 			}
 		}
 		else if (OBJECT_TRANSFER.isSupportedType(transferData)) {
-			final Object data = event.data;
+			Object data = event.data;
+			if (data == null) {
+				data = OBJECT_TRANSFER.nativeToJava(transferData);
+			}
 			if (data instanceof TransferContainer) {
 				for (final TransferObject transferObject : ((TransferContainer) data).getTransferObjetcs()) {
 					final TransferTypeSpi transferType = transferObject.getTransferType();
 					//Only create a event, if this drop target supports the transfer type
 					if (supportedTypes.contains(transferType)) {
-						result.add(createDropEvent(event, transferObject.getData(), transferType));
+						return createDropEvent(event, transferObject.getData(), transferType);
 					}
 				}
 			}
 		}
-		return result;
+		return createDropEvent(event, null, TransferTypeSpi.UNKNOWN_TYPE);
 	}
 
 	private IDropEventSpi createDropEvent(final DropTargetEvent event, final Object data, final TransferTypeSpi transferType) {

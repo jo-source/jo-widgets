@@ -84,7 +84,12 @@ final class DragDropDelegate {
 	}
 
 	TransferType<?> getTransferType(final TransferTypeSpi transferTypeSpi) {
-		return supportedTypes.get(transferTypeSpi);
+		if (TransferTypeSpi.UNKNOWN_TYPE.equals(transferTypeSpi)) {
+			return TransferType.UNKOWN_TYPE;
+		}
+		else {
+			return supportedTypes.get(transferTypeSpi);
+		}
 	}
 
 }

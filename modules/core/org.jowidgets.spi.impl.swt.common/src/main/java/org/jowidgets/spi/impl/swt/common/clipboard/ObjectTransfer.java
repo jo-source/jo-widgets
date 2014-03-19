@@ -30,7 +30,6 @@ package org.jowidgets.spi.impl.swt.common.clipboard;
 
 import org.eclipse.swt.dnd.ByteArrayTransfer;
 import org.eclipse.swt.dnd.DND;
-import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.dnd.TransferData;
 import org.jowidgets.spi.clipboard.TransferContainer;
 import org.jowidgets.spi.impl.clipboard.Serializer;
@@ -42,7 +41,7 @@ public final class ObjectTransfer extends ByteArrayTransfer {
 
 	private static final ObjectTransfer INSTANCE = new ObjectTransfer();
 
-	public static Transfer getInstance() {
+	public static ObjectTransfer getInstance() {
 		return INSTANCE;
 	}
 
