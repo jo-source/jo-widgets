@@ -29,7 +29,7 @@
 package org.jowidgets.api.dnd;
 
 import org.jowidgets.api.clipboard.TransferType;
-import org.jowidgets.common.dnd.DnD;
+import org.jowidgets.common.dnd.DropAction;
 import org.jowidgets.common.types.IVetoable;
 
 public interface IDragSourceListener {
@@ -38,6 +38,6 @@ public interface IDragSourceListener {
 
 	void dragSetData(IDragEvent event, IVetoable veto, TransferType<?> transferType, IDragDataResponse dragData);
 
-	void dragFinished(IDragEvent event, DnD dropAction);
+	void dragFinished(IDragEvent event, DropAction dropAction);
 
 }

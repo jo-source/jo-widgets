@@ -31,13 +31,13 @@ package org.jowidgets.spi.dnd;
 import java.util.Collection;
 import java.util.Set;
 
-import org.jowidgets.common.dnd.DnD;
+import org.jowidgets.common.dnd.DropAction;
 import org.jowidgets.spi.clipboard.TransferTypeSpi;
 
 public interface IDropTargetSpi extends IDropTargetObservableSpi {
 
 	void setTransferTypes(Collection<TransferTypeSpi> supportedTypes);
 
-	void setActions(Set<DnD> actions);
+	void setActions(Set<DropAction> actions);
 
 }

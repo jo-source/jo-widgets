@@ -32,7 +32,7 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-import org.jowidgets.common.dnd.DnD;
+import org.jowidgets.common.dnd.DropAction;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.spi.clipboard.TransferTypeSpi;
@@ -104,11 +104,11 @@ public abstract class AbstractDragSourceObservableSpi implements IDragSourceObse
 		}
 	}
 
-	public final void fireDragFinished(final int x, final int y, final DnD dropAction) {
+	public final void fireDragFinished(final int x, final int y, final DropAction dropAction) {
 		fireDragFinished(new DragEventSpiImpl(new Position(x, y)), dropAction);
 	}
 
-	public final void fireDragFinished(final IDragEventSpi event, final DnD dropAction) {
+	public final void fireDragFinished(final IDragEventSpi event, final DropAction dropAction) {
 		for (final IDragSourceListenerSpi listener : new LinkedList<IDragSourceListenerSpi>(listeners)) {
 			listener.dragFinished(event, dropAction);
 		}

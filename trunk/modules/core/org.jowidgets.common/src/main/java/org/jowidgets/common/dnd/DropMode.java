@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, grossmmann
+ * Copyright (c) 2014, Michael
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,12 +28,10 @@
 
 package org.jowidgets.common.dnd;
 
-public enum DnD {
+public enum DropMode {
 
-	NONE,
-	DEFAULT,
-	MOVE,
-	COPY,
-	LINK;
+	SELECT,
+	INSERT,
+	SELECT_OR_INSERT
 
 }

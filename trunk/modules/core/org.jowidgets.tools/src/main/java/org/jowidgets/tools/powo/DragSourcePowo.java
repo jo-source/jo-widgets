@@ -38,7 +38,7 @@ import java.util.Set;
 import org.jowidgets.api.clipboard.TransferType;
 import org.jowidgets.api.dnd.IDragSource;
 import org.jowidgets.api.dnd.IDragSourceListener;
-import org.jowidgets.common.dnd.DnD;
+import org.jowidgets.common.dnd.DropAction;
 import org.jowidgets.util.Assert;
 
 final class DragSourcePowo implements IDragSource {
@@ -48,7 +48,7 @@ final class DragSourcePowo implements IDragSource {
 	private IDragSource original;
 
 	private Collection<TransferType<?>> supportedTypes;
-	private Set<DnD> actions;
+	private Set<DropAction> actions;
 
 	DragSourcePowo() {
 		this.listeners = new LinkedHashSet<IDragSourceListener>();
@@ -110,20 +110,20 @@ final class DragSourcePowo implements IDragSource {
 	}
 
 	@Override
-	public void setActions(final Set<DnD> actions) {
+	public void setActions(final Set<DropAction> actions) {
 		Assert.paramNotNull(actions, "actions");
 		if (original != null) {
 			original.setActions(actions);
 		}
 		else {
-			this.actions = new HashSet<DnD>(actions);
+			this.actions = new HashSet<DropAction>(actions);
 		}
 	}
 
 	@Override
-	public void setActions(final DnD... actions) {
+	public void setActions(final DropAction... actions) {
 		Assert.paramNotNull(actions, "actions");
-		final Set<DnD> actionsSet = new HashSet<DnD>();
+		final Set<DropAction> actionsSet = new HashSet<DropAction>();
 		for (int i = 0; i < actions.length; i++) {
 			actionsSet.add(actions[i]);
 		}

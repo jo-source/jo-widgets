@@ -30,16 +30,16 @@ package org.jowidgets.spi.dnd;
 
 public interface IDropTargetListenerSpi {
 
-	void dragEnter(final IDropEventSpi event, IDropOperationResponseSpi response);
+	void dragEnter(final IDropEventSpi event, IDropResponseSpi response);
 
 	void dragExit(final IDropEventSpi event);
 
-	void dragOperationChanged(final IDropEventSpi event, IDropOperationResponseSpi response);
+	void dragOperationChanged(final IDropEventSpi event, IDropResponseSpi response);
 
-	void dropAccept(final IDropEventSpi event, IDropOperationResponseSpi response);
+	void dropAccept(final IDropEventSpi event, IDropResponseSpi response);
 
 	void drop(final IDropEventSpi event);
 
-	void dragOver(final IDropEventSpi event, IDropOperationResponseSpi response);
+	void dragOver(final IDropEventSpi event, IDropResponseSpi response);
 
 }
