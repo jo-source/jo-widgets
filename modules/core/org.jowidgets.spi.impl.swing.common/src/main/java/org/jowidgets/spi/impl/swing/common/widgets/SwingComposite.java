@@ -32,6 +32,9 @@ import java.awt.Container;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
+import org.jowidgets.spi.dnd.IDropTargetSpi;
+import org.jowidgets.spi.impl.swing.common.dnd.IDropSelectionProvider;
+import org.jowidgets.spi.impl.swing.common.dnd.ImmutableDropSelection;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 
 public class SwingComposite extends SwingContainer implements ICompositeSpi {
@@ -39,8 +42,23 @@ public class SwingComposite extends SwingContainer implements ICompositeSpi {
 	private final SwingControl swingControlDelegate;
 
 	public SwingComposite(final IGenericWidgetFactory factory, final Container container) {
+		this(factory, container, null);
+	}
+
+	public SwingComposite(
+		final IGenericWidgetFactory factory,
+		final Container container,
+		IDropSelectionProvider dropSelectionProvider) {
 		super(factory, container);
-		this.swingControlDelegate = new SwingControl(container);
+		if (dropSelectionProvider == null) {
+			if (this instanceof IDropSelectionProvider) {
+				dropSelectionProvider = (IDropSelectionProvider) this;
+			}
+			else {
+				dropSelectionProvider = new ImmutableDropSelection(this);
+			}
+		}
+		this.swingControlDelegate = new SwingControl(container, dropSelectionProvider);
 	}
 
 	@Override
@@ -71,6 +89,11 @@ public class SwingComposite extends SwingContainer implements ICompositeSpi {
 	@Override
 	public IDragSourceSpi getDragSource() {
 		return swingControlDelegate.getDragSource();
+	}
+
+	@Override
+	public IDropTargetSpi getDropTarget() {
+		return swingControlDelegate.getDropTarget();
 	}
 
 }

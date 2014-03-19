@@ -31,7 +31,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Control;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
+import org.jowidgets.spi.dnd.IDropTargetSpi;
+import org.jowidgets.spi.impl.swt.common.dnd.IDropSelectionProvider;
+import org.jowidgets.spi.impl.swt.common.dnd.ImmutableDropSelection;
 import org.jowidgets.spi.impl.swt.common.dnd.SwtDragSource;
+import org.jowidgets.spi.impl.swt.common.dnd.SwtDropTarget;
 import org.jowidgets.spi.impl.swt.common.util.DimensionConvert;
 import org.jowidgets.spi.widgets.IControlSpi;
 
@@ -40,10 +44,24 @@ public class SwtControl extends SwtComponent implements IControlSpi {
 	private static final Dimension MAX_SIZE = new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);
 
 	private final SwtDragSource dragSource;
+	private final SwtDropTarget dropTarget;
 
 	public SwtControl(final Control control) {
+		this(control, null);
+	}
+
+	public SwtControl(final Control control, IDropSelectionProvider dropSelectionProvider) {
 		super(control);
 		this.dragSource = new SwtDragSource(control);
+		if (dropSelectionProvider == null) {
+			if (this instanceof IDropSelectionProvider) {
+				dropSelectionProvider = (IDropSelectionProvider) this;
+			}
+			else {
+				dropSelectionProvider = new ImmutableDropSelection(this);
+			}
+		}
+		this.dropTarget = new SwtDropTarget(control, dropSelectionProvider);
 	}
 
 	@Override
@@ -74,6 +92,11 @@ public class SwtControl extends SwtComponent implements IControlSpi {
 	@Override
 	public IDragSourceSpi getDragSource() {
 		return dragSource;
+	}
+
+	@Override
+	public IDropTargetSpi getDropTarget() {
+		return dropTarget;
 	}
 
 }

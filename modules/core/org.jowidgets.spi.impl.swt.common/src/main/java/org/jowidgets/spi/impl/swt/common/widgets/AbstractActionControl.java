@@ -30,6 +30,8 @@ package org.jowidgets.spi.impl.swt.common.widgets;
 import org.eclipse.swt.widgets.Control;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
+import org.jowidgets.spi.dnd.IDropTargetSpi;
+import org.jowidgets.spi.impl.swt.common.dnd.ImmutableDropSelection;
 import org.jowidgets.spi.widgets.IControlSpi;
 
 public abstract class AbstractActionControl extends AbstractActionComponent implements IControlSpi {
@@ -38,7 +40,7 @@ public abstract class AbstractActionControl extends AbstractActionComponent impl
 
 	public AbstractActionControl(final Control control) {
 		super(control);
-		this.swtControlDelegate = new SwtControl(control);
+		this.swtControlDelegate = new SwtControl(control, new ImmutableDropSelection(this));
 	}
 
 	@Override
@@ -74,6 +76,11 @@ public abstract class AbstractActionControl extends AbstractActionComponent impl
 	@Override
 	public IDragSourceSpi getDragSource() {
 		return swtControlDelegate.getDragSource();
+	}
+
+	@Override
+	public IDropTargetSpi getDropTarget() {
+		return swtControlDelegate.getDropTarget();
 	}
 
 }

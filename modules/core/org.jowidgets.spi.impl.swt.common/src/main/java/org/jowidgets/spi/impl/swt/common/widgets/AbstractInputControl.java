@@ -39,7 +39,9 @@ import org.jowidgets.common.widgets.controller.IMouseListener;
 import org.jowidgets.common.widgets.controller.IMouseMotionListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
+import org.jowidgets.spi.dnd.IDropTargetSpi;
 import org.jowidgets.spi.impl.controller.InputObservable;
+import org.jowidgets.spi.impl.swt.common.dnd.ImmutableDropSelection;
 import org.jowidgets.spi.widgets.IInputControlSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
@@ -51,7 +53,7 @@ public abstract class AbstractInputControl extends InputObservable implements II
 	public AbstractInputControl(final Control control) {
 		super();
 		this.control = control;
-		this.swtControlDelegate = new SwtControl(control);
+		this.swtControlDelegate = new SwtControl(control, new ImmutableDropSelection(this));
 	}
 
 	@Override
@@ -238,4 +240,10 @@ public abstract class AbstractInputControl extends InputObservable implements II
 	public IDragSourceSpi getDragSource() {
 		return swtControlDelegate.getDragSource();
 	}
+
+	@Override
+	public IDropTargetSpi getDropTarget() {
+		return swtControlDelegate.getDropTarget();
+	}
+
 }

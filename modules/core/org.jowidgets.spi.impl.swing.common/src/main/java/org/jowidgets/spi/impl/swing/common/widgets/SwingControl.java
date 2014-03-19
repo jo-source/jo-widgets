@@ -35,6 +35,11 @@ import net.miginfocom.swing.MigLayout;
 
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
+import org.jowidgets.spi.dnd.IDropTargetSpi;
+import org.jowidgets.spi.impl.swing.common.dnd.IDropSelectionProvider;
+import org.jowidgets.spi.impl.swing.common.dnd.ImmutableDropSelection;
+import org.jowidgets.spi.impl.swing.common.dnd.SwingDragSource;
+import org.jowidgets.spi.impl.swing.common.dnd.SwingDropTarget;
 import org.jowidgets.spi.impl.swing.common.layout.LayoutManagerImpl;
 import org.jowidgets.spi.impl.swing.common.util.DimensionConvert;
 import org.jowidgets.spi.widgets.IControlSpi;
@@ -43,18 +48,36 @@ import org.jowidgets.util.Tuple;
 public class SwingControl extends SwingComponent implements IControlSpi {
 
 	private final SwingDragSource dragSource;
+	private final SwingDropTarget dropTarget;
 
 	public SwingControl(final Tuple<Component, Component> component) {
-		this(component.getFirst(), component.getSecond());
+		this(component, null);
+	}
+
+	public SwingControl(final Tuple<Component, Component> component, final IDropSelectionProvider dropSelectionProvider) {
+		this(component.getFirst(), component.getSecond(), dropSelectionProvider);
 	}
 
 	public SwingControl(final Component component) {
-		this(component, component);
+		this(component, null);
 	}
 
-	public SwingControl(final Component component, final Component innerComponent) {
+	public SwingControl(final Component component, final IDropSelectionProvider dropSelectionProvider) {
+		this(component, component, dropSelectionProvider);
+	}
+
+	public SwingControl(final Component component, final Component innerComponent, IDropSelectionProvider dropSelectionProvider) {
 		super(component, innerComponent);
 		dragSource = new SwingDragSource(innerComponent);
+		if (dropSelectionProvider == null) {
+			if (this instanceof IDropSelectionProvider) {
+				dropSelectionProvider = (IDropSelectionProvider) this;
+			}
+			else {
+				dropSelectionProvider = new ImmutableDropSelection(this);
+			}
+		}
+		dropTarget = new SwingDropTarget(innerComponent, dropSelectionProvider);
 	}
 
 	@Override
@@ -103,6 +126,11 @@ public class SwingControl extends SwingComponent implements IControlSpi {
 	@Override
 	public IDragSourceSpi getDragSource() {
 		return dragSource;
+	}
+
+	@Override
+	public IDropTargetSpi getDropTarget() {
+		return dropTarget;
 	}
 
 	private LayoutManager getParentLayout() {

@@ -29,6 +29,7 @@ package org.jowidgets.spi.impl.dummy.widgets;
 
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
+import org.jowidgets.spi.dnd.IDropTargetSpi;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
 import org.jowidgets.spi.widgets.IControlSpi;
 
@@ -74,6 +75,11 @@ public abstract class AbstractActionControl extends AbstractActionComponent impl
 	@Override
 	public IDragSourceSpi getDragSource() {
 		return dummyControlDelegate.getDragSource();
+	}
+
+	@Override
+	public IDropTargetSpi getDropTarget() {
+		return dummyControlDelegate.getDropTarget();
 	}
 
 }

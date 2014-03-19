@@ -50,12 +50,14 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.swt.widgets.Widget;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.common.widgets.controller.ITreeNodeListener;
 import org.jowidgets.spi.impl.controller.TreeSelectionObservableSpi;
+import org.jowidgets.spi.impl.swt.common.dnd.IDropSelectionProvider;
 import org.jowidgets.spi.impl.swt.common.util.PositionConvert;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
 import org.jowidgets.spi.widgets.ITreeSpi;
@@ -63,7 +65,7 @@ import org.jowidgets.spi.widgets.controller.ITreeSelectionListenerSpi;
 import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
 import org.jowidgets.util.Assert;
 
-public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi {
+public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi, IDropSelectionProvider {
 
 	private final boolean multiSelection;
 	private final Map<TreeItem, TreeNodeImpl> items;
@@ -170,6 +172,11 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi {
 	@Override
 	public Tree getUiReference() {
 		return (Tree) super.getUiReference();
+	}
+
+	@Override
+	public Object getDropSelection(final Widget item) {
+		return items.get(item);
 	}
 
 	@Override

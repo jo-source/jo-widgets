@@ -31,6 +31,8 @@ import java.awt.Component;
 
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
+import org.jowidgets.spi.dnd.IDropTargetSpi;
+import org.jowidgets.spi.impl.swing.common.dnd.ImmutableDropSelection;
 import org.jowidgets.spi.widgets.IControlSpi;
 
 public abstract class AbstractActionControl extends AbstractActionComponent implements IControlSpi {
@@ -39,7 +41,7 @@ public abstract class AbstractActionControl extends AbstractActionComponent impl
 
 	public AbstractActionControl(final Component component) {
 		super(component);
-		this.swingControlDelegate = new SwingControl(component);
+		this.swingControlDelegate = new SwingControl(component, new ImmutableDropSelection(this));
 	}
 
 	@Override
@@ -75,6 +77,11 @@ public abstract class AbstractActionControl extends AbstractActionComponent impl
 	@Override
 	public IDragSourceSpi getDragSource() {
 		return swingControlDelegate.getDragSource();
+	}
+
+	@Override
+	public IDropTargetSpi getDropTarget() {
+		return swingControlDelegate.getDropTarget();
 	}
 
 }
