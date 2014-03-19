@@ -26,41 +26,28 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.swing.common.widgets;
+package org.jowidgets.spi.impl.dummy.dummyui;
 
-import java.awt.Component;
 import java.util.Collection;
 import java.util.Set;
 
 import org.jowidgets.common.dnd.DropAction;
 import org.jowidgets.spi.clipboard.TransferTypeSpi;
-import org.jowidgets.spi.dnd.IDragSourceSpi;
-import org.jowidgets.spi.impl.dnd.AbstractDragSourceObservableSpi;
-import org.jowidgets.util.Assert;
+import org.jowidgets.spi.dnd.IDropTargetListenerSpi;
+import org.jowidgets.spi.dnd.IDropTargetSpi;
 
-final class SwingDragSource extends AbstractDragSourceObservableSpi implements IDragSourceSpi {
-
-	@SuppressWarnings("unused")
-	private final Component component;
-
-	public SwingDragSource(final Component component) {
-		Assert.paramNotNull(component, "component");
-		this.component = component;
-	}
+final class DummyDropTarget implements IDropTargetSpi {
 
 	@Override
-	public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {
-		// TODO MG must be implemented
-	}
+	public void addDropTargetListenerSpi(final IDropTargetListenerSpi listener) {}
 
 	@Override
-	public void setActions(final Set<DropAction> actions) {
-		// TODO MG must be implemented
-	}
+	public void removeDropTargetListenerSpi(final IDropTargetListenerSpi listener) {}
 
 	@Override
-	protected void setActive(final boolean active) {
-		// TODO Auto-generated method stub
-	}
+	public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {}
+
+	@Override
+	public void setActions(final Set<DropAction> actions) {}
 
 }

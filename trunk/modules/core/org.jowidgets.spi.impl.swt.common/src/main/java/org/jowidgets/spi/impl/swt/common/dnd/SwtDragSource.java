@@ -34,7 +34,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSource;
 import org.eclipse.swt.dnd.DragSourceEvent;
 import org.eclipse.swt.dnd.DragSourceListener;
@@ -73,7 +72,7 @@ public final class SwtDragSource extends AbstractDragSourceObservableSpi impleme
 	public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {
 		this.supportedTypes = new LinkedList<TransferTypeSpi>(supportedTypes);
 		if (dragSource != null) {
-			dragSource.setTransfer(createTransfers(supportedTypes));
+			dragSource.setTransfer(DragDropUtil.createTransfers(supportedTypes));
 		}
 		createDragSourceIfNecessary();
 	}
@@ -103,58 +102,10 @@ public final class SwtDragSource extends AbstractDragSourceObservableSpi impleme
 
 	private void createDragSourceIfNecessary() {
 		if (dragSource == null && isActive() && !EmptyCheck.isEmpty(actions) && !EmptyCheck.isEmpty(supportedTypes)) {
-			this.dragSource = new DragSource(control, createOperations(actions));
-			dragSource.setTransfer(createTransfers(supportedTypes));
+			this.dragSource = new DragSource(control, DragDropUtil.createOperations(actions));
+			dragSource.setTransfer(DragDropUtil.createTransfers(supportedTypes));
 			dragSource.addDragListener(new DragSourceListenerImpl());
 		}
-	}
-
-	private Transfer[] createTransfers(final Collection<TransferTypeSpi> supportedTypes) {
-		boolean hasTextTransfer = false;
-		boolean hasObjectTransfer = false;
-		for (final TransferTypeSpi type : supportedTypes) {
-			if (String.class.equals(type.getJavaType())) {
-				hasTextTransfer = true;
-				if (hasObjectTransfer) {
-					break;
-				}
-			}
-			else {
-				hasObjectTransfer = true;
-				if (hasTextTransfer) {
-					break;
-				}
-			}
-		}
-		if (hasObjectTransfer && hasTextTransfer) {
-			return new Transfer[] {TEXT_TRANSFER, OBJECT_TRANSFER};
-		}
-		else if (hasTextTransfer) {
-			return new Transfer[] {TEXT_TRANSFER};
-		}
-		else {
-			return new Transfer[] {OBJECT_TRANSFER};
-		}
-	}
-
-	private int createOperations(final Set<DropAction> actions) {
-		int result = 0;
-		if (actions.contains(DropAction.NONE)) {
-			result = result | DND.DROP_NONE;
-		}
-		if (actions.contains(DropAction.DEFAULT)) {
-			result = result | DND.DROP_DEFAULT;
-		}
-		if (actions.contains(DropAction.COPY)) {
-			result = result | DND.DROP_COPY;
-		}
-		if (actions.contains(DropAction.MOVE)) {
-			result = result | DND.DROP_MOVE;
-		}
-		if (actions.contains(DropAction.LINK)) {
-			result = result | DND.DROP_LINK;
-		}
-		return result;
 	}
 
 	private final class DragSourceListenerImpl implements DragSourceListener {
@@ -171,7 +122,7 @@ public final class SwtDragSource extends AbstractDragSourceObservableSpi impleme
 		@Override
 		public void dragSetData(final DragSourceEvent event) {
 			if (TEXT_TRANSFER.isSupportedType(event.dataType)) {
-				final TransferTypeSpi transferType = getStringTransferType();
+				final TransferTypeSpi transferType = DragDropUtil.getStringTransferType(supportedTypes);
 				if (transferType != null) {
 					final DragDataResponseSpiImpl dragData = new DragDataResponseSpiImpl();
 					final VetoHolder veto = new VetoHolder();
@@ -189,7 +140,7 @@ public final class SwtDragSource extends AbstractDragSourceObservableSpi impleme
 			}
 			else if (OBJECT_TRANSFER.isSupportedType(event.dataType)) {
 				final List<TransferObject> transferObjectsList = new LinkedList<TransferObject>();
-				for (final TransferTypeSpi transferType : getTransferObjectTypes()) {
+				for (final TransferTypeSpi transferType : DragDropUtil.getTransferObjectTypes(supportedTypes)) {
 					final DragDataResponseSpiImpl dragData = new DragDataResponseSpiImpl();
 					final VetoHolder veto = new VetoHolder();
 					fireDragSetData(event.x, event.y, veto, transferType, dragData);
@@ -211,47 +162,7 @@ public final class SwtDragSource extends AbstractDragSourceObservableSpi impleme
 
 		@Override
 		public void dragFinished(final DragSourceEvent event) {
-			fireDragFinished(event.x, event.y, getDropAction(event.detail));
-		}
-
-		private DropAction getDropAction(final int detail) {
-			if (detail == DND.DROP_NONE) {
-				return DropAction.NONE;
-			}
-			else if (detail == DND.DROP_DEFAULT) {
-				return DropAction.DEFAULT;
-			}
-			else if (detail == DND.DROP_COPY) {
-				return DropAction.COPY;
-			}
-			else if (detail == DND.DROP_MOVE) {
-				return DropAction.MOVE;
-			}
-			else if (detail == DND.DROP_LINK) {
-				return DropAction.LINK;
-			}
-			else {
-				return DropAction.NONE;
-			}
-		}
-
-		private TransferTypeSpi getStringTransferType() {
-			for (final TransferTypeSpi type : supportedTypes) {
-				if (String.class.equals(type.getJavaType())) {
-					return type;
-				}
-			}
-			return null;
-		}
-
-		private Collection<TransferTypeSpi> getTransferObjectTypes() {
-			final List<TransferTypeSpi> result = new LinkedList<TransferTypeSpi>();
-			for (final TransferTypeSpi type : supportedTypes) {
-				if (!String.class.equals(type.getJavaType())) {
-					result.add(type);
-				}
-			}
-			return result;
+			fireDragFinished(event.x, event.y, DragDropUtil.getDropAction(event.detail));
 		}
 	}
 

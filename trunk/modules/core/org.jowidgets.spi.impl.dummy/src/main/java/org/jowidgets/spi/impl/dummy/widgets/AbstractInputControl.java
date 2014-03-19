@@ -38,6 +38,7 @@ import org.jowidgets.common.widgets.controller.IMouseListener;
 import org.jowidgets.common.widgets.controller.IMouseMotionListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
+import org.jowidgets.spi.dnd.IDropTargetSpi;
 import org.jowidgets.spi.impl.controller.InputObservable;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
 import org.jowidgets.spi.widgets.IInputControlSpi;
@@ -235,6 +236,11 @@ public abstract class AbstractInputControl extends InputObservable implements II
 	@Override
 	public IDragSourceSpi getDragSource() {
 		return dummyControlDelegate.getDragSource();
+	}
+
+	@Override
+	public IDropTargetSpi getDropTarget() {
+		return dummyControlDelegate.getDropTarget();
 	}
 
 }

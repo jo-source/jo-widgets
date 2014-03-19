@@ -29,6 +29,7 @@ package org.jowidgets.spi.impl.dummy.widgets;
 
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
+import org.jowidgets.spi.dnd.IDropTargetSpi;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
 import org.jowidgets.spi.widgets.IControlSpi;
 
@@ -66,6 +67,11 @@ public class DummyControl extends DummyComponent implements IControlSpi {
 	@Override
 	public IDragSourceSpi getDragSource() {
 		return getUiReference().getDragSource();
+	}
+
+	@Override
+	public IDropTargetSpi getDropTarget() {
+		return getUiReference().getDropTarget();
 	}
 
 }

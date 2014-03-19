@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,16 +26,22 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.spi.impl.swing.common.dnd;
 
-import org.jowidgets.common.widgets.IControlCommon;
-import org.jowidgets.spi.dnd.IDragSourceSpi;
-import org.jowidgets.spi.dnd.IDropTargetSpi;
+import org.jowidgets.util.Assert;
 
-public interface IControlSpi extends IComponentSpi, IControlCommon {
+public final class ImmutableDropSelection implements IDropSelectionProvider {
 
-	IDragSourceSpi getDragSource();
+	private final Object selection;
 
-	IDropTargetSpi getDropTarget();
+	public ImmutableDropSelection(final Object selection) {
+		Assert.paramNotNull(selection, "selection");
+		this.selection = selection;
+	}
+
+	@Override
+	public Object getDropSelection(final Object dropLocation) {
+		return selection;
+	}
 
 }

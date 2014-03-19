@@ -53,6 +53,8 @@ import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
+import org.jowidgets.spi.dnd.IDropTargetSpi;
+import org.jowidgets.spi.impl.swt.common.dnd.ImmutableDropSelection;
 import org.jowidgets.spi.impl.swt.common.util.BorderToComposite;
 import org.jowidgets.spi.impl.swt.common.util.ScrollBarSettingsConvert;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
@@ -75,7 +77,7 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 		final Composite outerComposite = BorderToComposite.convert((Composite) parentUiReference, setup.getBorder());
 
 		outerComposite.setBackgroundMode(SWT.INHERIT_FORCE);
-		this.outerContainer = new SwtComposite(factory, outerComposite);
+		this.outerContainer = new SwtComposite(factory, outerComposite, new ImmutableDropSelection(this));
 		outerComposite.setLayout(growingMigLayout);
 
 		final ScrolledComposite scrolledComposite = new ScrolledComposite(outerComposite, ScrollBarSettingsConvert.convert(setup));
@@ -345,6 +347,11 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 	@Override
 	public IDragSourceSpi getDragSource() {
 		return outerContainer.getDragSource();
+	}
+
+	@Override
+	public IDropTargetSpi getDropTarget() {
+		return outerContainer.getDropTarget();
 	}
 
 }

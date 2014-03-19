@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,16 +26,41 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.spi.impl.swing.common.dnd;
 
-import org.jowidgets.common.widgets.IControlCommon;
+import java.awt.Component;
+import java.util.Collection;
+import java.util.Set;
+
+import org.jowidgets.common.dnd.DropAction;
+import org.jowidgets.spi.clipboard.TransferTypeSpi;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
-import org.jowidgets.spi.dnd.IDropTargetSpi;
+import org.jowidgets.spi.impl.dnd.AbstractDragSourceObservableSpi;
+import org.jowidgets.util.Assert;
 
-public interface IControlSpi extends IComponentSpi, IControlCommon {
+public final class SwingDragSource extends AbstractDragSourceObservableSpi implements IDragSourceSpi {
 
-	IDragSourceSpi getDragSource();
+	@SuppressWarnings("unused")
+	private final Component component;
 
-	IDropTargetSpi getDropTarget();
+	public SwingDragSource(final Component component) {
+		Assert.paramNotNull(component, "component");
+		this.component = component;
+	}
+
+	@Override
+	public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {
+		// TODO MG must be implemented
+	}
+
+	@Override
+	public void setActions(final Set<DropAction> actions) {
+		// TODO MG must be implemented
+	}
+
+	@Override
+	protected void setActive(final boolean active) {
+		// TODO MG must be implemented
+	}
 
 }

@@ -35,14 +35,18 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
+import org.jowidgets.spi.dnd.IDropTargetSpi;
 
 public class UIDComponent extends UIDObservable {
+
+	private final IDragSourceSpi dragSource = new DummyDragSource();
+	private final IDropTargetSpi dropTarget = new DummyDropTarget();
 
 	private Position position = new Position(0, 0);
 	private Dimension size = new Dimension(400, 300);
 	private IColorConstant foregroundColor = new ColorValue(0, 0, 0);
 	private IColorConstant backgroundColor = new ColorValue(230, 230, 230);
-	private final IDragSourceSpi dragSource = new DummyDragSource();
+
 	private String tooltipText;
 	private boolean visible = true;
 	private boolean enabled = true;
@@ -159,6 +163,10 @@ public class UIDComponent extends UIDObservable {
 
 	public IDragSourceSpi getDragSource() {
 		return dragSource;
+	}
+
+	public IDropTargetSpi getDropTarget() {
+		return dropTarget;
 	}
 
 }

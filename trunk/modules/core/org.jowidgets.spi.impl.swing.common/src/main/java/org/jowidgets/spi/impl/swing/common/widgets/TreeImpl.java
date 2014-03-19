@@ -55,6 +55,7 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.spi.impl.controller.TreeSelectionObservableSpi;
+import org.jowidgets.spi.impl.swing.common.dnd.IDropSelectionProvider;
 import org.jowidgets.spi.impl.swing.common.options.SwingOptions;
 import org.jowidgets.spi.impl.swing.common.util.ColorConvert;
 import org.jowidgets.spi.impl.swing.common.util.PositionConvert;
@@ -67,7 +68,7 @@ import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.Tuple;
 
-public class TreeImpl extends SwingControl implements ITreeSpi {
+public class TreeImpl extends SwingControl implements ITreeSpi, IDropSelectionProvider {
 
 	private final Map<JoTreeNode, TreeNodeImpl> nodes;
 	private final TreeSelectionObservableSpi treeObservable;
@@ -179,6 +180,18 @@ public class TreeImpl extends SwingControl implements ITreeSpi {
 	@Override
 	public ITreeNodeSpi getRootNode() {
 		return rootNode;
+	}
+
+	@Override
+	public Object getDropSelection(final Object dropLocation) {
+		if (dropLocation instanceof JTree.DropLocation) {
+			final JTree.DropLocation treeDropLocation = (JTree.DropLocation) dropLocation;
+			final Object lastNode = treeDropLocation.getPath().getLastPathComponent();
+			if (lastNode instanceof JoTreeNode) {
+				return nodes.get(lastNode);
+			}
+		}
+		return null;
 	}
 
 	@Override

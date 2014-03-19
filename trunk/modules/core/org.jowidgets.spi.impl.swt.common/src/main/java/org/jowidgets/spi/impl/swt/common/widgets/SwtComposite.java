@@ -31,6 +31,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
+import org.jowidgets.spi.dnd.IDropTargetSpi;
+import org.jowidgets.spi.impl.swt.common.dnd.IDropSelectionProvider;
+import org.jowidgets.spi.impl.swt.common.dnd.ImmutableDropSelection;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 
 public class SwtComposite extends SwtContainer implements ICompositeSpi {
@@ -38,8 +41,23 @@ public class SwtComposite extends SwtContainer implements ICompositeSpi {
 	private final SwtControl swtControlDelegate;
 
 	public SwtComposite(final IGenericWidgetFactory factory, final Composite composite) {
+		this(factory, composite, null);
+	}
+
+	public SwtComposite(
+		final IGenericWidgetFactory factory,
+		final Composite composite,
+		IDropSelectionProvider dropSelectionProvider) {
 		super(factory, composite);
-		this.swtControlDelegate = new SwtControl(composite);
+		if (dropSelectionProvider == null) {
+			if (this instanceof IDropSelectionProvider) {
+				dropSelectionProvider = (IDropSelectionProvider) this;
+			}
+			else {
+				dropSelectionProvider = new ImmutableDropSelection(this);
+			}
+		}
+		this.swtControlDelegate = new SwtControl(composite, dropSelectionProvider);
 	}
 
 	@Override
@@ -70,6 +88,11 @@ public class SwtComposite extends SwtContainer implements ICompositeSpi {
 	@Override
 	public IDragSourceSpi getDragSource() {
 		return swtControlDelegate.getDragSource();
+	}
+
+	@Override
+	public IDropTargetSpi getDropTarget() {
+		return swtControlDelegate.getDropTarget();
 	}
 
 }

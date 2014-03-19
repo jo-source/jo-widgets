@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,16 +26,45 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.spi.impl.swing.common.dnd;
 
-import org.jowidgets.common.widgets.IControlCommon;
-import org.jowidgets.spi.dnd.IDragSourceSpi;
+import java.awt.Component;
+import java.util.Collection;
+import java.util.Set;
+
+import org.jowidgets.common.dnd.DropAction;
+import org.jowidgets.spi.clipboard.TransferTypeSpi;
 import org.jowidgets.spi.dnd.IDropTargetSpi;
+import org.jowidgets.spi.impl.dnd.AbstractDropTargetObservableSpi;
+import org.jowidgets.util.Assert;
 
-public interface IControlSpi extends IComponentSpi, IControlCommon {
+public final class SwingDropTarget extends AbstractDropTargetObservableSpi implements IDropTargetSpi {
 
-	IDragSourceSpi getDragSource();
+	@SuppressWarnings("unused")
+	private final Component component;
+	@SuppressWarnings("unused")
+	private final IDropSelectionProvider dropSelectionProvider;
 
-	IDropTargetSpi getDropTarget();
+	public SwingDropTarget(final Component component, final IDropSelectionProvider dropSelectionProvider) {
+		Assert.paramNotNull(component, "component");
+		Assert.paramNotNull(dropSelectionProvider, "dropSelectionProvider");
+		this.component = component;
+		this.dropSelectionProvider = dropSelectionProvider;
+	}
+
+	@Override
+	public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {
+		// TODO MG must be implemented
+	}
+
+	@Override
+	public void setActions(final Set<DropAction> actions) {
+		// TODO MG must be implemented
+	}
+
+	@Override
+	protected void setActive(final boolean active) {
+		// TODO MG must be implemented
+	}
 
 }
