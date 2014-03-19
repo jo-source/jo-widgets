@@ -239,7 +239,6 @@ public class SwingDragAndDropPractice2 implements IApplication {
 			public void dragEnter(final DropTargetDragEvent dtde) {
 				System.out.println("DRAG ENTER: " + dtde);
 				dtde.acceptDrag(DnDConstants.ACTION_MOVE);
-
 			}
 		};
 

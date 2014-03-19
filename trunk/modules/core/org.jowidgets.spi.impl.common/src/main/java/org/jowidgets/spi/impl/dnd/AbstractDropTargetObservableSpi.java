@@ -89,9 +89,9 @@ public abstract class AbstractDropTargetObservableSpi implements IDropTargetObse
 		}
 	}
 
-	public final void fireDragExit(final IDropEventSpi event) {
+	public final void fireDragExit() {
 		for (final IDropTargetListenerSpi listener : new LinkedList<IDropTargetListenerSpi>(listeners)) {
-			listener.dragExit(event);
+			listener.dragExit();
 		}
 	}
 

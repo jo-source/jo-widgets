@@ -26,26 +26,76 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.dnd;
+package org.jowidgets.spi.impl.dnd;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.jowidgets.common.dnd.DropAction;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.spi.clipboard.TransferTypeSpi;
+import org.jowidgets.spi.dnd.IDropEventSpi;
+import org.jowidgets.util.Assert;
 
-public interface IDropEventSpi {
+public final class DropEventSpiImpl implements IDropEventSpi {
 
-	Position getPosition();
+	private final Position position;
+	private final Object dropLocation;
+	private final Set<DropAction> supportedActions;
+	private final DropAction dropAction;
+	private final Object data;
+	private final TransferTypeSpi transferType;
 
-	Set<DropAction> getSupportedActions();
+	public DropEventSpiImpl(
+		final Position position,
+		final Object dropLocation,
+		final Set<DropAction> supportedActions,
+		final DropAction dropAction,
+		final Object data,
+		final TransferTypeSpi transferType) {
 
-	DropAction getDropAction();
+		Assert.paramNotNull(position, "position");
+		Assert.paramNotNull(supportedActions, "supportedActions");
+		Assert.paramNotNull(dropAction, "dropAction");
+		Assert.paramNotNull(transferType, "transferType");
 
-	Object getDropLocation();
+		this.position = position;
+		this.supportedActions = Collections.unmodifiableSet(new HashSet<DropAction>(supportedActions));
+		this.dropAction = dropAction;
+		this.dropLocation = dropLocation;
+		this.data = data;
+		this.transferType = transferType;
+	}
 
-	Object getData();
+	@Override
+	public Position getPosition() {
+		return position;
+	}
 
-	TransferTypeSpi getTransferType();
+	@Override
+	public Object getDropLocation() {
+		return dropLocation;
+	}
+
+	@Override
+	public Set<DropAction> getSupportedActions() {
+		return supportedActions;
+	}
+
+	@Override
+	public DropAction getDropAction() {
+		return dropAction;
+	}
+
+	@Override
+	public Object getData() {
+		return data;
+	}
+
+	@Override
+	public TransferTypeSpi getTransferType() {
+		return transferType;
+	}
 
 }

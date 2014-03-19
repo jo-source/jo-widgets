@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, grossmann
+ * Copyright (c) 2014, Michael
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,26 +26,52 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.dnd;
-
-import java.util.Set;
+package org.jowidgets.spi.impl.dnd;
 
 import org.jowidgets.common.dnd.DropAction;
-import org.jowidgets.common.types.Position;
-import org.jowidgets.spi.clipboard.TransferTypeSpi;
+import org.jowidgets.common.dnd.DropMode;
+import org.jowidgets.spi.dnd.IDropResponseSpi;
+import org.jowidgets.util.Assert;
 
-public interface IDropEventSpi {
+public final class DropResponseSpiImpl implements IDropResponseSpi {
 
-	Position getPosition();
+	private DropAction accepted;
+	private boolean rejected;
+	private DropMode dropMode;
 
-	Set<DropAction> getSupportedActions();
+	public DropResponseSpiImpl() {
+		this.rejected = false;
+		this.dropMode = DropMode.DEFAULT;
+	}
 
-	DropAction getDropAction();
+	@Override
+	public void accept(final DropAction accepted) {
+		this.accepted = accepted;
+		this.rejected = false;
+	}
 
-	Object getDropLocation();
+	@Override
+	public void reject() {
+		this.accepted = null;
+		this.rejected = true;
+	}
 
-	Object getData();
+	@Override
+	public void setDropMode(final DropMode dropMode) {
+		Assert.paramNotNull(dropMode, "dropMode");
+		this.dropMode = dropMode;
+	}
 
-	TransferTypeSpi getTransferType();
+	public DropAction getAccepted() {
+		return accepted;
+	}
+
+	public boolean isRejected() {
+		return rejected;
+	}
+
+	public DropMode getDropMode() {
+		return dropMode;
+	}
 
 }
