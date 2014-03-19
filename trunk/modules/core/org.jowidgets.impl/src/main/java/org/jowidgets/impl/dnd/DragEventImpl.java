@@ -51,4 +51,9 @@ final class DragEventImpl implements IDragEvent {
 		return position;
 	}
 
+	@Override
+	public String toString() {
+		return "DragEventImpl [position=" + position + "]";
+	}
+
 }
