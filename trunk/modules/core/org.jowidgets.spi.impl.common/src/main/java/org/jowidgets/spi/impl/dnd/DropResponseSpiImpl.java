@@ -31,7 +31,6 @@ package org.jowidgets.spi.impl.dnd;
 import org.jowidgets.common.dnd.DropAction;
 import org.jowidgets.common.dnd.DropMode;
 import org.jowidgets.spi.dnd.IDropResponseSpi;
-import org.jowidgets.util.Assert;
 
 public final class DropResponseSpiImpl implements IDropResponseSpi {
 
@@ -41,7 +40,6 @@ public final class DropResponseSpiImpl implements IDropResponseSpi {
 
 	public DropResponseSpiImpl() {
 		this.rejected = false;
-		this.dropMode = DropMode.DEFAULT;
 	}
 
 	@Override
@@ -58,7 +56,6 @@ public final class DropResponseSpiImpl implements IDropResponseSpi {
 
 	@Override
 	public void setDropMode(final DropMode dropMode) {
-		Assert.paramNotNull(dropMode, "dropMode");
 		this.dropMode = dropMode;
 	}
 

@@ -29,6 +29,8 @@
 package org.jowidgets.spi.impl.swt.common.dnd;
 
 import org.eclipse.swt.widgets.Widget;
+import org.jowidgets.common.dnd.DropMode;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.util.Assert;
 
 public final class ImmutableDropSelection implements IDropSelectionProvider {
@@ -43,6 +45,11 @@ public final class ImmutableDropSelection implements IDropSelectionProvider {
 	@Override
 	public Object getDropSelection(final Widget item) {
 		return selection;
+	}
+
+	@Override
+	public Integer getFeedback(final Widget item, final Position position, final DropMode dropMode) {
+		return null;
 	}
 
 }

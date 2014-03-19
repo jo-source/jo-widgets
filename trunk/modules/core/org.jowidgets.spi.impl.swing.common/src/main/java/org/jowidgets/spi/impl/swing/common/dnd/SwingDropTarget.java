@@ -33,6 +33,7 @@ import java.util.Collection;
 import java.util.Set;
 
 import org.jowidgets.common.dnd.DropAction;
+import org.jowidgets.common.dnd.DropMode;
 import org.jowidgets.spi.clipboard.TransferTypeSpi;
 import org.jowidgets.spi.dnd.IDropTargetSpi;
 import org.jowidgets.spi.impl.dnd.AbstractDropTargetObservableSpi;
@@ -65,6 +66,11 @@ public final class SwingDropTarget extends AbstractDropTargetObservableSpi imple
 	@Override
 	protected void setActive(final boolean active) {
 		// TODO MG must be implemented
+	}
+
+	@Override
+	public void setDefaultDropMode(final DropMode dropMode) {
+		// TODO Auto-generated method stub
 	}
 
 }

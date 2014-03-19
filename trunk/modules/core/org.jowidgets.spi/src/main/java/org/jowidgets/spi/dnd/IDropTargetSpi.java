@@ -32,6 +32,7 @@ import java.util.Collection;
 import java.util.Set;
 
 import org.jowidgets.common.dnd.DropAction;
+import org.jowidgets.common.dnd.DropMode;
 import org.jowidgets.spi.clipboard.TransferTypeSpi;
 
 public interface IDropTargetSpi extends IDropTargetObservableSpi {
@@ -39,5 +40,7 @@ public interface IDropTargetSpi extends IDropTargetObservableSpi {
 	void setTransferTypes(Collection<TransferTypeSpi> supportedTypes);
 
 	void setActions(Set<DropAction> actions);
+
+	void setDefaultDropMode(DropMode dropMode);
 
 }

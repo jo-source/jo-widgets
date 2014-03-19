@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -43,6 +44,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.TreeEvent;
 import org.eclipse.swt.events.TreeListener;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -51,6 +53,7 @@ import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
+import org.jowidgets.common.dnd.DropMode;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Position;
@@ -177,6 +180,44 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi, IDro
 	@Override
 	public Object getDropSelection(final Widget item) {
 		return items.get(item);
+	}
+
+	@Override
+	public Integer getFeedback(final Widget widget, final Position position, final DropMode dropMode) {
+		final int result = DND.FEEDBACK_SCROLL | DND.FEEDBACK_EXPAND;
+		if (DropMode.SELECT.equals(dropMode)) {
+			return result | DND.FEEDBACK_SELECT;
+		}
+		else if (DropMode.SELECT_OR_INSERT.equals(dropMode)) {
+			if (widget instanceof TreeItem) {
+				final TreeItem item = (TreeItem) widget;
+				final int y = position.getY();
+				final Rectangle bounds = item.getBounds();
+				if (y < bounds.y + bounds.height / 3) {
+					return result | DND.FEEDBACK_INSERT_BEFORE;
+				}
+				else if (y > bounds.y + 2 * bounds.height / 3) {
+					return result | DND.FEEDBACK_INSERT_AFTER;
+				}
+				else {
+					return result | DND.FEEDBACK_SELECT;
+				}
+			}
+		}
+		else if (DropMode.INSERT.equals(dropMode)) {
+			if (widget instanceof TreeItem) {
+				final TreeItem item = (TreeItem) widget;
+				final int y = position.getY();
+				final Rectangle bounds = item.getBounds();
+				if (y < bounds.y + bounds.height / 2) {
+					return result | DND.FEEDBACK_INSERT_BEFORE;
+				}
+				else {
+					return result | DND.FEEDBACK_INSERT_AFTER;
+				}
+			}
+		}
+		return null;
 	}
 
 	@Override
