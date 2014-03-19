@@ -30,7 +30,6 @@ package org.jowidgets.common.dnd;
 
 public enum DropMode {
 
-	DEFAULT,
 	SELECT,
 	INSERT,
 	SELECT_OR_INSERT

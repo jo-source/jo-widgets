@@ -42,7 +42,7 @@ public interface IDropEventSpi {
 
 	DropAction getDropAction();
 
-	Object getDropLocation();
+	Object getDropSelection();
 
 	Object getData();
 

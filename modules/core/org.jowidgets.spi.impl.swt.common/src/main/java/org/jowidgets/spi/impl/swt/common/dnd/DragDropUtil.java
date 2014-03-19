@@ -29,6 +29,7 @@
 package org.jowidgets.spi.impl.swt.common.dnd;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -91,6 +92,26 @@ final class DragDropUtil {
 		}
 		if (actions.contains(DropAction.LINK)) {
 			result = result | DND.DROP_LINK;
+		}
+		return result;
+	}
+
+	static Set<DropAction> createActions(final int operations) {
+		final Set<DropAction> result = new HashSet<DropAction>();
+		if ((operations & DND.DROP_NONE) != 0) {
+			result.add(DropAction.NONE);
+		}
+		if ((operations & DND.DROP_DEFAULT) != 0) {
+			result.add(DropAction.DEFAULT);
+		}
+		if ((operations & DND.DROP_COPY) != 0) {
+			result.add(DropAction.COPY);
+		}
+		if ((operations & DND.DROP_MOVE) != 0) {
+			result.add(DropAction.MOVE);
+		}
+		if ((operations & DND.DROP_LINK) != 0) {
+			result.add(DropAction.LINK);
 		}
 		return result;
 	}

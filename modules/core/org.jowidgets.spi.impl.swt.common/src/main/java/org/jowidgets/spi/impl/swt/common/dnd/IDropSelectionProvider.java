@@ -29,9 +29,13 @@
 package org.jowidgets.spi.impl.swt.common.dnd;
 
 import org.eclipse.swt.widgets.Widget;
+import org.jowidgets.common.dnd.DropMode;
+import org.jowidgets.common.types.Position;
 
 public interface IDropSelectionProvider {
 
 	Object getDropSelection(Widget item);
+
+	Integer getFeedback(Widget item, Position position, DropMode dropMode);
 
 }

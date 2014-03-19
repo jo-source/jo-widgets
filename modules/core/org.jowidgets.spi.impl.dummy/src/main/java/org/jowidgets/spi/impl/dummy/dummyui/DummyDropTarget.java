@@ -32,6 +32,7 @@ import java.util.Collection;
 import java.util.Set;
 
 import org.jowidgets.common.dnd.DropAction;
+import org.jowidgets.common.dnd.DropMode;
 import org.jowidgets.spi.clipboard.TransferTypeSpi;
 import org.jowidgets.spi.dnd.IDropTargetListenerSpi;
 import org.jowidgets.spi.dnd.IDropTargetSpi;
@@ -49,5 +50,8 @@ final class DummyDropTarget implements IDropTargetSpi {
 
 	@Override
 	public void setActions(final Set<DropAction> actions) {}
+
+	@Override
+	public void setDefaultDropMode(final DropMode dropMode) {}
 
 }

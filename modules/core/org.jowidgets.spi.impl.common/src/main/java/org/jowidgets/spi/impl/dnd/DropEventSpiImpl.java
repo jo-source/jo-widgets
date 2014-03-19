@@ -74,7 +74,7 @@ public final class DropEventSpiImpl implements IDropEventSpi {
 	}
 
 	@Override
-	public Object getDropLocation() {
+	public Object getDropSelection() {
 		return dropLocation;
 	}
 
