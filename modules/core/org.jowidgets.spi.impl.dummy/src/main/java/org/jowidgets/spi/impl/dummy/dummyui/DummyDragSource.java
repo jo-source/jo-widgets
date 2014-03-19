@@ -31,7 +31,7 @@ package org.jowidgets.spi.impl.dummy.dummyui;
 import java.util.Collection;
 import java.util.Set;
 
-import org.jowidgets.common.dnd.DnD;
+import org.jowidgets.common.dnd.DropAction;
 import org.jowidgets.spi.clipboard.TransferTypeSpi;
 import org.jowidgets.spi.dnd.IDragSourceListenerSpi;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
@@ -48,6 +48,6 @@ final class DummyDragSource implements IDragSourceSpi {
 	public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {}
 
 	@Override
-	public void setActions(final Set<DnD> actions) {}
+	public void setActions(final Set<DropAction> actions) {}
 
 }

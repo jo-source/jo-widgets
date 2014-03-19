@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, grossmann
+ * Copyright (c) 2014, grossmmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,18 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.dnd;
+package org.jowidgets.common.dnd;
 
-import org.jowidgets.common.dnd.DropAction;
-import org.jowidgets.common.types.IVetoable;
-import org.jowidgets.spi.clipboard.TransferTypeSpi;
+public enum DropAction {
 
-public interface IDragSourceListenerSpi {
-
-	void dragStart(IDragEventSpi event, IVetoable veto);
-
-	void dragSetData(IDragEventSpi event, IVetoable veto, TransferTypeSpi transferType, IDragDataResponseSpi dragData);
-
-	void dragFinished(IDragEventSpi event, DropAction dropAction);
+	NONE,
+	DEFAULT,
+	MOVE,
+	COPY,
+	LINK;
 
 }

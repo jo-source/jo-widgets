@@ -41,7 +41,7 @@ import org.eclipse.swt.dnd.DragSourceListener;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Control;
-import org.jowidgets.common.dnd.DnD;
+import org.jowidgets.common.dnd.DropAction;
 import org.jowidgets.spi.clipboard.TransferContainer;
 import org.jowidgets.spi.clipboard.TransferObject;
 import org.jowidgets.spi.clipboard.TransferTypeSpi;
@@ -61,7 +61,7 @@ public final class SwtDragSource extends AbstractDragSourceObservableSpi impleme
 	private final Control control;
 
 	private Collection<TransferTypeSpi> supportedTypes;
-	private Set<DnD> actions;
+	private Set<DropAction> actions;
 	private DragSource dragSource;
 
 	public SwtDragSource(final Control control) {
@@ -79,12 +79,12 @@ public final class SwtDragSource extends AbstractDragSourceObservableSpi impleme
 	}
 
 	@Override
-	public void setActions(final Set<DnD> actions) {
+	public void setActions(final Set<DropAction> actions) {
 		if (dragSource != null) {
 			dragSource.dispose();
 			dragSource = null;
 		}
-		this.actions = new HashSet<DnD>(actions);
+		this.actions = new HashSet<DropAction>(actions);
 		createDragSourceIfNecessary();
 	}
 
@@ -137,21 +137,21 @@ public final class SwtDragSource extends AbstractDragSourceObservableSpi impleme
 		}
 	}
 
-	private int createOperations(final Set<DnD> actions) {
+	private int createOperations(final Set<DropAction> actions) {
 		int result = 0;
-		if (actions.contains(DnD.NONE)) {
+		if (actions.contains(DropAction.NONE)) {
 			result = result | DND.DROP_NONE;
 		}
-		if (actions.contains(DnD.DEFAULT)) {
+		if (actions.contains(DropAction.DEFAULT)) {
 			result = result | DND.DROP_DEFAULT;
 		}
-		if (actions.contains(DnD.COPY)) {
+		if (actions.contains(DropAction.COPY)) {
 			result = result | DND.DROP_COPY;
 		}
-		if (actions.contains(DnD.MOVE)) {
+		if (actions.contains(DropAction.MOVE)) {
 			result = result | DND.DROP_MOVE;
 		}
-		if (actions.contains(DnD.LINK)) {
+		if (actions.contains(DropAction.LINK)) {
 			result = result | DND.DROP_LINK;
 		}
 		return result;
@@ -214,24 +214,24 @@ public final class SwtDragSource extends AbstractDragSourceObservableSpi impleme
 			fireDragFinished(event.x, event.y, getDropAction(event.detail));
 		}
 
-		private DnD getDropAction(final int detail) {
+		private DropAction getDropAction(final int detail) {
 			if (detail == DND.DROP_NONE) {
-				return DnD.NONE;
+				return DropAction.NONE;
 			}
 			else if (detail == DND.DROP_DEFAULT) {
-				return DnD.DEFAULT;
+				return DropAction.DEFAULT;
 			}
 			else if (detail == DND.DROP_COPY) {
-				return DnD.COPY;
+				return DropAction.COPY;
 			}
 			else if (detail == DND.DROP_MOVE) {
-				return DnD.MOVE;
+				return DropAction.MOVE;
 			}
 			else if (detail == DND.DROP_LINK) {
-				return DnD.LINK;
+				return DropAction.LINK;
 			}
 			else {
-				return DnD.NONE;
+				return DropAction.NONE;
 			}
 		}
 

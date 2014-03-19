@@ -32,7 +32,7 @@ import java.util.Collection;
 import java.util.Set;
 
 import org.jowidgets.api.clipboard.TransferType;
-import org.jowidgets.common.dnd.DnD;
+import org.jowidgets.common.dnd.DropAction;
 
 public interface IDragSource extends IDragSourceObservable {
 
@@ -40,8 +40,8 @@ public interface IDragSource extends IDragSourceObservable {
 
 	void setTransferTypes(TransferType<?>... supportedTypes);
 
-	void setActions(Set<DnD> actions);
+	void setActions(Set<DropAction> actions);
 
-	void setActions(DnD... actions);
+	void setActions(DropAction... actions);
 
 }

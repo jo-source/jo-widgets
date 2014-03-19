@@ -39,7 +39,7 @@ import java.util.Set;
 
 import org.jowidgets.api.clipboard.TransferType;
 import org.jowidgets.api.dnd.IDragSource;
-import org.jowidgets.common.dnd.DnD;
+import org.jowidgets.common.dnd.DropAction;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.spi.clipboard.TransferTypeSpi;
 import org.jowidgets.spi.dnd.IDragDataResponseSpi;
@@ -81,15 +81,15 @@ public final class DragSourceImpl extends AbstractDragSourceObservable implement
 	}
 
 	@Override
-	public void setActions(final Set<DnD> actions) {
+	public void setActions(final Set<DropAction> actions) {
 		Assert.paramNotNull(actions, "actions");
 		dragSourceSpi.setActions(actions);
 	}
 
 	@Override
-	public void setActions(final DnD... actions) {
+	public void setActions(final DropAction... actions) {
 		Assert.paramNotNull(actions, "actions");
-		final Set<DnD> actionsSet = new HashSet<DnD>();
+		final Set<DropAction> actionsSet = new HashSet<DropAction>();
 		for (int i = 0; i < actions.length; i++) {
 			actionsSet.add(actions[i]);
 		}
@@ -124,7 +124,7 @@ public final class DragSourceImpl extends AbstractDragSourceObservable implement
 		}
 
 		@Override
-		public void dragFinished(final IDragEventSpi event, final DnD dropAction) {
+		public void dragFinished(final IDragEventSpi event, final DropAction dropAction) {
 			fireDragFinished(new DragEventImpl(event), dropAction);
 		}
 

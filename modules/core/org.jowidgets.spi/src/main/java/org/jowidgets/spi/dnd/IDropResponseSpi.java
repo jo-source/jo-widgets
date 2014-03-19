@@ -28,12 +28,15 @@
 
 package org.jowidgets.spi.dnd;
 
-import org.jowidgets.common.dnd.DnD;
+import org.jowidgets.common.dnd.DropAction;
+import org.jowidgets.common.dnd.DropMode;
 
-public interface IDropOperationResponseSpi {
+public interface IDropResponseSpi {
 
-	void accept(DnD operation);
+	void accept(DropAction operation);
 
 	void reject();
+
+	void setDropMode(DropMode dropMode);
 
 }

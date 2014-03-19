@@ -32,7 +32,7 @@ import java.awt.Component;
 import java.util.Collection;
 import java.util.Set;
 
-import org.jowidgets.common.dnd.DnD;
+import org.jowidgets.common.dnd.DropAction;
 import org.jowidgets.spi.clipboard.TransferTypeSpi;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
 import org.jowidgets.spi.impl.dnd.AbstractDragSourceObservableSpi;
@@ -54,7 +54,7 @@ final class SwingDragSource extends AbstractDragSourceObservableSpi implements I
 	}
 
 	@Override
-	public void setActions(final Set<DnD> actions) {
+	public void setActions(final Set<DropAction> actions) {
 		// TODO MG must be implemented
 	}
 

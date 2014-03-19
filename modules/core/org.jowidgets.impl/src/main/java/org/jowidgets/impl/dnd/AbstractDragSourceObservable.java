@@ -37,7 +37,7 @@ import org.jowidgets.api.dnd.IDragDataResponse;
 import org.jowidgets.api.dnd.IDragEvent;
 import org.jowidgets.api.dnd.IDragSourceListener;
 import org.jowidgets.api.dnd.IDragSourceObservable;
-import org.jowidgets.common.dnd.DnD;
+import org.jowidgets.common.dnd.DropAction;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.util.Assert;
 
@@ -85,7 +85,7 @@ abstract class AbstractDragSourceObservable implements IDragSourceObservable {
 		}
 	}
 
-	final void fireDragFinished(final IDragEvent event, final DnD dropAction) {
+	final void fireDragFinished(final IDragEvent event, final DropAction dropAction) {
 		for (final IDragSourceListener listener : new LinkedList<IDragSourceListener>(listeners)) {
 			listener.dragFinished(event, dropAction);
 		}

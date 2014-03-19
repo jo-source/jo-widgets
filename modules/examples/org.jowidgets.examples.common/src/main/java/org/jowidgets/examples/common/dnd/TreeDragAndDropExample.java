@@ -42,7 +42,7 @@ import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
-import org.jowidgets.common.dnd.DnD;
+import org.jowidgets.common.dnd.DropAction;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.widgets.controller.IMouseButtonEvent;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
@@ -81,7 +81,7 @@ public class TreeDragAndDropExample implements IApplication {
 
 	private void addDragSource(final ITree tree) {
 		final IDragSource dragSource = tree.getDragSource();
-		dragSource.setActions(DnD.MOVE, DnD.COPY);
+		dragSource.setActions(DropAction.MOVE, DropAction.COPY);
 		dragSource.setTransferTypes(TransferType.STRING_TYPE);
 
 		dragSource.addDragSourceListener(new IDragSourceListener() {
@@ -106,8 +106,8 @@ public class TreeDragAndDropExample implements IApplication {
 			}
 
 			@Override
-			public void dragFinished(final IDragEvent event, final DnD dropAction) {
-				if (DnD.MOVE.equals(dropAction) && dragItem != null) {
+			public void dragFinished(final IDragEvent event, final DropAction dropAction) {
+				if (DropAction.MOVE.equals(dropAction) && dragItem != null) {
 					dragItem.dispose();
 				}
 			}
