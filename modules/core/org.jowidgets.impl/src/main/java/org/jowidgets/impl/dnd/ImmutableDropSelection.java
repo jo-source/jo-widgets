@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,32 +26,22 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.dnd;
 
-import org.jowidgets.api.controller.IParentObservable;
-import org.jowidgets.api.dnd.IDragSource;
-import org.jowidgets.api.dnd.IDropTarget;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.IControlCommon;
+import org.jowidgets.util.Assert;
 
-public interface IControl extends IComponent, IControlCommon, IParentObservable<IContainer> {
+public final class ImmutableDropSelection implements IDropSelectionProvider {
 
-	void setParent(IContainer parent);
+	private final Object selection;
 
-	@Override
-	IContainer getParent();
+	public ImmutableDropSelection(final Object selection) {
+		Assert.paramNotNull(selection, "selection");
+		this.selection = selection;
+	}
 
 	@Override
-	IControl getRoot();
-
-	IDragSource getDragSource();
-
-	IDropTarget getDropTarget();
-
-	void setMinSize(final Dimension minSize);
-
-	void setPreferredSize(Dimension preferredSize);
-
-	void setMaxSize(Dimension maxSize);
+	public Object getDropSelection(final Object spiSelection) {
+		return selection;
+	}
 
 }

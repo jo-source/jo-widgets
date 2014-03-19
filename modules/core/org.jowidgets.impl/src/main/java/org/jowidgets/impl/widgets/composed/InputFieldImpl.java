@@ -29,6 +29,8 @@ package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.api.dnd.IDragSource;
+import org.jowidgets.api.dnd.IDropTarget;
 import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.descriptor.setup.IInputFieldSetup;
@@ -235,6 +237,16 @@ public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInput
 	@Override
 	public void removeInputListener(final IInputListener listener) {
 		inputObservable.removeInputListener(listener);
+	}
+
+	@Override
+	public IDragSource getDragSource() {
+		return getWidget().getDragSource();
+	}
+
+	@Override
+	public IDropTarget getDropTarget() {
+		return getWidget().getDropTarget();
 	}
 
 }

@@ -27,9 +27,12 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
+import org.jowidgets.api.dnd.IDragSource;
+import org.jowidgets.api.dnd.IDropTarget;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.ILabel;
+import org.jowidgets.api.widgets.ITextLabel;
 import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextLabelDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ILabelSetup;
@@ -38,7 +41,6 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.IIconCommon;
-import org.jowidgets.common.widgets.ITextLabelCommon;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.widgets.blueprint.BPF;
@@ -50,7 +52,7 @@ import org.jowidgets.util.NullCompatibleEquivalence;
 public class LabelImpl extends ControlWrapper implements ILabel {
 
 	private final IIconCommon iconWidget;
-	private final ITextLabelCommon textLabelWidget;
+	private final ITextLabel textLabelWidget;
 	private final IComposite composite;
 	private String text;
 	private IImageConstant icon;
@@ -170,6 +172,16 @@ public class LabelImpl extends ControlWrapper implements ILabel {
 	@Override
 	public IImageConstant getIcon() {
 		return icon;
+	}
+
+	@Override
+	public IDragSource getDragSource() {
+		return textLabelWidget.getDragSource();
+	}
+
+	@Override
+	public IDropTarget getDropTarget() {
+		return textLabelWidget.getDropTarget();
 	}
 
 }

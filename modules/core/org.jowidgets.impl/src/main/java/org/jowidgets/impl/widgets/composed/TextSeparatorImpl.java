@@ -28,6 +28,8 @@
 package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.color.Colors;
+import org.jowidgets.api.dnd.IDragSource;
+import org.jowidgets.api.dnd.IDropTarget;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.ITextLabel;
@@ -36,7 +38,6 @@ import org.jowidgets.api.widgets.descriptor.ITextSeparatorDescriptor;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.widgets.ITextLabelCommon;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
@@ -46,7 +47,7 @@ import org.jowidgets.util.Assert;
 public class TextSeparatorImpl extends ControlWrapper implements ITextLabel {
 
 	private final IComposite composite;
-	private final ITextLabelCommon textLabelWidget;
+	private final ITextLabel textLabelWidget;
 	private String text;
 
 	public TextSeparatorImpl(final IComposite composite, final ITextSeparatorDescriptor descriptor) {
@@ -161,6 +162,16 @@ public class TextSeparatorImpl extends ControlWrapper implements ITextLabel {
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
 		composite.removePopupDetectionListener(listener);
+	}
+
+	@Override
+	public IDragSource getDragSource() {
+		return textLabelWidget.getDragSource();
+	}
+
+	@Override
+	public IDropTarget getDropTarget() {
+		return textLabelWidget.getDropTarget();
 	}
 
 }

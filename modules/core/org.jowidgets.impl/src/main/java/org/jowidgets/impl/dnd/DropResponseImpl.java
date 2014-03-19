@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2014, Michael
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,32 +26,36 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.dnd;
 
-import org.jowidgets.api.controller.IParentObservable;
-import org.jowidgets.api.dnd.IDragSource;
-import org.jowidgets.api.dnd.IDropTarget;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.IControlCommon;
+import org.jowidgets.api.dnd.IDropResponse;
+import org.jowidgets.common.dnd.DropAction;
+import org.jowidgets.common.dnd.DropMode;
+import org.jowidgets.spi.dnd.IDropResponseSpi;
+import org.jowidgets.util.Assert;
 
-public interface IControl extends IComponent, IControlCommon, IParentObservable<IContainer> {
+final class DropResponseImpl implements IDropResponse {
 
-	void setParent(IContainer parent);
+	private final IDropResponseSpi dropResponseSpi;
+
+	DropResponseImpl(final IDropResponseSpi dropResponseSpi) {
+		Assert.paramNotNull(dropResponseSpi, "dropResponseSpi");
+		this.dropResponseSpi = dropResponseSpi;
+	}
 
 	@Override
-	IContainer getParent();
+	public void accept(final DropAction operation) {
+		dropResponseSpi.accept(operation);
+	}
 
 	@Override
-	IControl getRoot();
+	public void reject() {
+		dropResponseSpi.reject();
+	}
 
-	IDragSource getDragSource();
-
-	IDropTarget getDropTarget();
-
-	void setMinSize(final Dimension minSize);
-
-	void setPreferredSize(Dimension preferredSize);
-
-	void setMaxSize(Dimension maxSize);
+	@Override
+	public void setDropMode(final DropMode dropMode) {
+		dropResponseSpi.setDropMode(dropMode);
+	}
 
 }

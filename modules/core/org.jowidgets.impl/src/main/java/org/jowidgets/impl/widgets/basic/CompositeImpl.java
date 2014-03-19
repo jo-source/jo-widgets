@@ -30,12 +30,15 @@ package org.jowidgets.impl.widgets.basic;
 
 import org.jowidgets.api.controller.IParentListener;
 import org.jowidgets.api.dnd.IDragSource;
+import org.jowidgets.api.dnd.IDropTarget;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.descriptor.setup.ICompositeSetup;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.dnd.DragSourceImpl;
+import org.jowidgets.impl.dnd.DropTargetImpl;
+import org.jowidgets.impl.dnd.ImmutableDropSelection;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
 import org.jowidgets.tools.widgets.invoker.LayoutSettingsInvoker;
@@ -44,6 +47,7 @@ public class CompositeImpl extends ContainerImpl implements IComposite {
 
 	private final ControlDelegate controlDelegate;
 	private final IDragSource dragSource;
+	private final IDropTarget dropTarget;
 
 	public CompositeImpl(final ICompositeSpi containerSpi, final ICompositeSetup setup) {
 		this(containerSpi, setup, false);
@@ -57,6 +61,7 @@ public class CompositeImpl extends ContainerImpl implements IComposite {
 		}
 		this.controlDelegate = new ControlDelegate(containerSpi, this);
 		this.dragSource = new DragSourceImpl(containerSpi.getDragSource());
+		this.dropTarget = new DropTargetImpl(containerSpi.getDropTarget(), new ImmutableDropSelection(this));
 	}
 
 	@Override
@@ -112,6 +117,11 @@ public class CompositeImpl extends ContainerImpl implements IComposite {
 	@Override
 	public IDragSource getDragSource() {
 		return dragSource;
+	}
+
+	@Override
+	public IDropTarget getDropTarget() {
+		return dropTarget;
 	}
 
 }

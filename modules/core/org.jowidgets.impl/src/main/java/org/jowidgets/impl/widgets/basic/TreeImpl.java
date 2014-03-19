@@ -53,6 +53,7 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.base.delegate.TreeContainerDelegate;
+import org.jowidgets.impl.dnd.IDropSelectionProvider;
 import org.jowidgets.impl.event.TreePopupEvent;
 import org.jowidgets.impl.event.TreeSelectionEvent;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractControlSpiWrapper;
@@ -67,7 +68,7 @@ import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.EmptyCheck;
 
-public class TreeImpl extends AbstractControlSpiWrapper implements ITree {
+public class TreeImpl extends AbstractControlSpiWrapper implements ITree, IDropSelectionProvider {
 
 	private final ControlDelegate controlDelegate;
 	private final TreeSelectionObservable treeSelectionObservable;
@@ -143,6 +144,11 @@ public class TreeImpl extends AbstractControlSpiWrapper implements ITree {
 	@Override
 	public boolean isReparentable() {
 		return controlDelegate.isReparentable();
+	}
+
+	@Override
+	public Object getDropSelection(final Object spiSelection) {
+		return nodes.get(spiSelection);
 	}
 
 	@Override

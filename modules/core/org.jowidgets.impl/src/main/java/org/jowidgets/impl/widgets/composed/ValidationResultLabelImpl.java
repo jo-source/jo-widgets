@@ -53,6 +53,8 @@ public class ValidationResultLabelImpl extends ControlWrapper implements IValida
 
 		this.showLabel = setup.isShowValidationMessage();
 		this.label = labelWidget;
+
+		//TOGO MG this seems to be dangerous, because setup my change, if not a single used
 		this.setup = setup;
 
 		ColorSettingsInvoker.setColors(setup, this);
