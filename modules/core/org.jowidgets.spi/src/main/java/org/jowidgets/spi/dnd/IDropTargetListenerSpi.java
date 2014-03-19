@@ -36,7 +36,7 @@ public interface IDropTargetListenerSpi {
 
 	void dragOperationChanged(final IDropEventSpi event, IDropResponseSpi response);
 
-	void dragExit(final IDropEventSpi event);
+	void dragExit();
 
 	void dropAccept(final IDropEventSpi event, IDropResponseSpi response);
 

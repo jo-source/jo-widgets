@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Michael
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -30,6 +30,7 @@ package org.jowidgets.common.dnd;
 
 public enum DropMode {
 
+	DEFAULT,
 	SELECT,
 	INSERT,
 	SELECT_OR_INSERT
