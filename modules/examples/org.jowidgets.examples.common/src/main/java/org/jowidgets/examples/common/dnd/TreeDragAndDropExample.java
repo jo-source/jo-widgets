@@ -33,6 +33,10 @@ import org.jowidgets.api.dnd.IDragDataResponse;
 import org.jowidgets.api.dnd.IDragEvent;
 import org.jowidgets.api.dnd.IDragSource;
 import org.jowidgets.api.dnd.IDragSourceListener;
+import org.jowidgets.api.dnd.IDropEvent;
+import org.jowidgets.api.dnd.IDropResponse;
+import org.jowidgets.api.dnd.IDropTarget;
+import org.jowidgets.api.dnd.IDropTargetListener;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IFrame;
@@ -43,6 +47,7 @@ import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.dnd.DropAction;
+import org.jowidgets.common.dnd.DropMode;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.widgets.controller.IMouseButtonEvent;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
@@ -117,77 +122,71 @@ public class TreeDragAndDropExample implements IApplication {
 
 	//CHECKSTYLE:OFF
 	private void addDropTarget(final ITree tree) {
-		//		final Tree tree = (Tree) joTree.getUiReference();
-		//
-		//		final int operations = DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_DEFAULT | DND.DROP_NONE;
-		//		final DropTarget target = new DropTarget(tree, operations);
-		//
-		//		target.setTransfer(new Transfer[] {TextTransfer.getInstance()});
-		//
-		//		target.addDropListener(new DropTargetListener() {
-		//
-		//			@Override
-		//			public void dropAccept(final DropTargetEvent event) {
-		//				System.out.println("DROP ACCEPT: " + event);
-		//			}
-		//
-		//			@Override
-		//			public void drop(final DropTargetEvent event) {
-		//				System.out.println("DROP: " + event);
-		//				if (TextTransfer.getInstance().isSupportedType(event.currentDataType)) {
-		//					final String text = (String) event.data;
-		//
-		//					final TreeItem item = (TreeItem) event.item;
-		//					System.out.println("ITEM: " + item.getText());
-		//
-		//					final Point point = tree.toControl(new Point(event.x, event.y));
-		//					final Position position = new Position(point.x, point.y);
-		//
-		//					final ITreeNode treeNode = joTree.getNodeAt(position);
-		//					if (treeNode != null) {
-		//						final ITreeNode parentNode = treeNode.getParent();
-		//						if (parentNode != null) {
-		//							final int indexOfItem = getIndexOfItem(parentNode, treeNode);
-		//							if (indexOfItem != -1) {
-		//								final ITreeNode newNode = parentNode.addNode(indexOfItem + 1);
-		//								newNode.setText(text);
-		//							}
-		//						}
-		//					}
-		//				}
-		//			}
-		//
-		//			private int getIndexOfItem(final ITreeNode parent, final ITreeNode node) {
-		//				int result = 0;
-		//				for (final ITreeNode child : parent.getChildren()) {
-		//					if (child == node) {
-		//						return result;
-		//					}
-		//					result++;
-		//				}
-		//				return -1;
-		//			}
-		//
-		//			@Override
-		//			public void dragOver(final DropTargetEvent event) {
-		//				event.feedback = DND.FEEDBACK_SCROLL | DND.FEEDBACK_INSERT_AFTER | DND.FEEDBACK_EXPAND;
-		//			}
-		//
-		//			@Override
-		//			public void dragOperationChanged(final DropTargetEvent event) {
-		//				System.out.println("DRAG OPERATION CHANGED: " + event);
-		//			}
-		//
-		//			@Override
-		//			public void dragLeave(final DropTargetEvent event) {
-		//				System.out.println("DRAG LEAVE: " + event);
-		//			}
-		//
-		//			@Override
-		//			public void dragEnter(final DropTargetEvent event) {
-		//				System.out.println("DRAG ENTER: " + event);
-		//			}
-		//		});
+		final IDropTarget dropTarget = tree.getDropTarget();
+		dropTarget.setActions(DropAction.COPY, DropAction.MOVE);
+		dropTarget.setTransferTypes(TransferType.STRING_TYPE);
+		dropTarget.setDefaultDropMode(DropMode.SELECT_OR_INSERT);
+
+		dropTarget.addDropTargetListener(new IDropTargetListener() {
+
+			@Override
+			public void dropAccept(final IDropEvent event, final IDropResponse response) {
+				System.out.println("DROP ACCEPT: " + event);
+			}
+
+			@Override
+			public void drop(final IDropEvent event) {
+				System.out.println("DROP: " + event);
+				if (TransferType.STRING_TYPE.equals(event.getTransferType())) {
+					final String text = (String) event.getData();
+
+					final ITreeNode treeNode = (ITreeNode) event.getDropSelection();
+					if (treeNode != null) {
+						final ITreeNode parentNode = treeNode.getParent();
+						if (parentNode != null) {
+							final int indexOfItem = getIndexOfItem(parentNode, treeNode);
+							if (indexOfItem != -1) {
+								final ITreeNode newNode = parentNode.addNode(indexOfItem + 1);
+								newNode.setText(text);
+							}
+						}
+					}
+				}
+
+			}
+
+			private int getIndexOfItem(final ITreeNode parent, final ITreeNode node) {
+				int result = 0;
+				for (final ITreeNode child : parent.getChildren()) {
+					if (child == node) {
+						return result;
+					}
+					result++;
+				}
+				return -1;
+			}
+
+			@Override
+			public void dragOver(final IDropEvent event, final IDropResponse response) {
+				System.out.println("DRAG OVER: " + event);
+			}
+
+			@Override
+			public void dragOperationChanged(final IDropEvent event, final IDropResponse response) {
+				System.out.println("DRAG OPERATION CHANGED: " + event);
+			}
+
+			@Override
+			public void dragExit() {
+				System.out.println("DRAG EXIT");
+			}
+
+			@Override
+			public void dragEnter(final IDropEvent event, final IDropResponse response) {
+				System.out.println("DRAG ENTER: " + event);
+			}
+
+		});
 
 	}
 

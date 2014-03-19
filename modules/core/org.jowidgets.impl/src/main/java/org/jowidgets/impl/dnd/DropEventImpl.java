@@ -107,4 +107,21 @@ final class DropEventImpl implements IDropEvent {
 		return transferType;
 	}
 
+	@Override
+	public String toString() {
+		return "DropEventImpl [position="
+			+ position
+			+ ", supportedActions="
+			+ supportedActions
+			+ ", dropAction="
+			+ dropAction
+			+ ", dropSelection="
+			+ dropSelection
+			+ ", data="
+			+ data
+			+ ", transferType="
+			+ transferType
+			+ "]";
+	}
+
 }
