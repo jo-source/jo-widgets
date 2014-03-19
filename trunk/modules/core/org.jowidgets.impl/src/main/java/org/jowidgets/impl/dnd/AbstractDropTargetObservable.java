@@ -32,25 +32,22 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-import org.jowidgets.api.clipboard.TransferType;
-import org.jowidgets.api.dnd.IDragDataResponse;
-import org.jowidgets.api.dnd.IDragEvent;
-import org.jowidgets.api.dnd.IDragSourceListener;
-import org.jowidgets.api.dnd.IDragSourceObservable;
-import org.jowidgets.common.dnd.DropAction;
-import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.api.dnd.IDropEvent;
+import org.jowidgets.api.dnd.IDropResponse;
+import org.jowidgets.api.dnd.IDropTargetListener;
+import org.jowidgets.api.dnd.IDropTargetObservable;
 import org.jowidgets.util.Assert;
 
-abstract class AbstractDragSourceObservable implements IDragSourceObservable {
+abstract class AbstractDropTargetObservable implements IDropTargetObservable {
 
-	private final Set<IDragSourceListener> listeners;
+	private final Set<IDropTargetListener> listeners;
 
-	public AbstractDragSourceObservable() {
-		this.listeners = new LinkedHashSet<IDragSourceListener>();
+	public AbstractDropTargetObservable() {
+		this.listeners = new LinkedHashSet<IDropTargetListener>();
 	}
 
 	@Override
-	public final void addDragSourceListener(final IDragSourceListener listener) {
+	public final void addDropTargetListener(final IDropTargetListener listener) {
 		Assert.paramNotNull(listener, "listener");
 		final int lastSize = listeners.size();
 		listeners.add(listener);
@@ -60,7 +57,7 @@ abstract class AbstractDragSourceObservable implements IDragSourceObservable {
 	}
 
 	@Override
-	public final void removeDragSourceListener(final IDragSourceListener listener) {
+	public final void removeDropTargetListener(final IDropTargetListener listener) {
 		Assert.paramNotNull(listener, "listener");
 		final int lastSize = listeners.size();
 		listeners.remove(listener);
@@ -69,25 +66,39 @@ abstract class AbstractDragSourceObservable implements IDragSourceObservable {
 		}
 	}
 
-	final void fireDragStart(final IDragEvent event, final IVetoable veto) {
-		for (final IDragSourceListener listener : new LinkedList<IDragSourceListener>(listeners)) {
-			listener.dragStart(event, veto);
+	final void fireDragEnter(final IDropEvent event, final IDropResponse response) {
+		for (final IDropTargetListener listener : new LinkedList<IDropTargetListener>(listeners)) {
+			listener.dragEnter(event, response);
 		}
 	}
 
-	final void fireDragSetData(
-		final IDragEvent event,
-		final IVetoable veto,
-		final TransferType<?> transferType,
-		final IDragDataResponse dragData) {
-		for (final IDragSourceListener listener : new LinkedList<IDragSourceListener>(listeners)) {
-			listener.dragSetData(event, veto, transferType, dragData);
+	final void fireDragOver(final IDropEvent event, final IDropResponse response) {
+		for (final IDropTargetListener listener : new LinkedList<IDropTargetListener>(listeners)) {
+			listener.dragOver(event, response);
 		}
 	}
 
-	final void fireDragFinished(final IDragEvent event, final DropAction dropAction) {
-		for (final IDragSourceListener listener : new LinkedList<IDragSourceListener>(listeners)) {
-			listener.dragFinished(event, dropAction);
+	final void fireDragOperationChanged(final IDropEvent event, final IDropResponse response) {
+		for (final IDropTargetListener listener : new LinkedList<IDropTargetListener>(listeners)) {
+			listener.dragOperationChanged(event, response);
+		}
+	}
+
+	final void fireDragExit() {
+		for (final IDropTargetListener listener : new LinkedList<IDropTargetListener>(listeners)) {
+			listener.dragExit();
+		}
+	}
+
+	final void fireDropAccept(final IDropEvent event, final IDropResponse response) {
+		for (final IDropTargetListener listener : new LinkedList<IDropTargetListener>(listeners)) {
+			listener.dropAccept(event, response);
+		}
+	}
+
+	final void fireDrop(final IDropEvent event) {
+		for (final IDropTargetListener listener : new LinkedList<IDropTargetListener>(listeners)) {
+			listener.drop(event);
 		}
 	}
 

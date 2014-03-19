@@ -30,6 +30,7 @@ package org.jowidgets.tools.widgets.wrapper;
 
 import org.jowidgets.api.controller.IParentListener;
 import org.jowidgets.api.dnd.IDragSource;
+import org.jowidgets.api.dnd.IDropTarget;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.common.types.Dimension;
@@ -118,6 +119,11 @@ public class ControlWrapper extends ComponentWrapper implements IControl {
 	@Override
 	public IDragSource getDragSource() {
 		return getWidget().getDragSource();
+	}
+
+	@Override
+	public IDropTarget getDropTarget() {
+		return getWidget().getDropTarget();
 	}
 
 }

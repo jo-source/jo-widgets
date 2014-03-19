@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2014, Michael
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,32 +26,18 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.dnd;
 
-import org.jowidgets.api.controller.IParentObservable;
-import org.jowidgets.api.dnd.IDragSource;
-import org.jowidgets.api.dnd.IDropTarget;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.IControlCommon;
+import java.util.Collection;
+import java.util.Set;
 
-public interface IControl extends IComponent, IControlCommon, IParentObservable<IContainer> {
+import org.jowidgets.common.dnd.DropAction;
+import org.jowidgets.spi.clipboard.TransferTypeSpi;
 
-	void setParent(IContainer parent);
+interface IDragDropSpiSupport {
 
-	@Override
-	IContainer getParent();
+	void setTransferTypesSpi(Collection<TransferTypeSpi> supportedTypes);
 
-	@Override
-	IControl getRoot();
-
-	IDragSource getDragSource();
-
-	IDropTarget getDropTarget();
-
-	void setMinSize(final Dimension minSize);
-
-	void setPreferredSize(Dimension preferredSize);
-
-	void setMaxSize(Dimension maxSize);
+	void setActionsSpi(Set<DropAction> actions);
 
 }

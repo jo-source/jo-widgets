@@ -33,6 +33,7 @@ import java.util.Set;
 
 import org.jowidgets.api.controller.IParentListener;
 import org.jowidgets.api.dnd.IDragSource;
+import org.jowidgets.api.dnd.IDropTarget;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
@@ -53,6 +54,7 @@ class Composite<WIDGET_TYPE extends IComposite, BLUE_PRINT_TYPE extends IWidgetD
 	private Dimension maxSize;
 	private String toolTipText;
 	private DragSourcePowo dragSource;
+	private DropTargetPowo dropTarget;
 
 	Composite(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
@@ -82,6 +84,9 @@ class Composite<WIDGET_TYPE extends IComposite, BLUE_PRINT_TYPE extends IWidgetD
 		}
 		if (dragSource != null) {
 			dragSource.setOriginal(widget.getDragSource());
+		}
+		if (dropTarget != null) {
+			dropTarget.setOriginal(widget.getDropTarget());
 		}
 	}
 
@@ -213,6 +218,20 @@ class Composite<WIDGET_TYPE extends IComposite, BLUE_PRINT_TYPE extends IWidgetD
 		else {
 			dragSource = new DragSourcePowo();
 			return dragSource;
+		}
+	}
+
+	@Override
+	public IDropTarget getDropTarget() {
+		if (dropTarget != null) {
+			return dropTarget;
+		}
+		else if (isInitialized()) {
+			return getWidget().getDropTarget();
+		}
+		else {
+			dropTarget = new DropTargetPowo();
+			return dropTarget;
 		}
 	}
 

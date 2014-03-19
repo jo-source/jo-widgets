@@ -29,16 +29,21 @@
 package org.jowidgets.impl.widgets.common.wrapper;
 
 import org.jowidgets.api.dnd.IDragSource;
+import org.jowidgets.api.dnd.IDropTarget;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.impl.dnd.DragSourceImpl;
+import org.jowidgets.impl.dnd.DropTargetImpl;
+import org.jowidgets.impl.dnd.IDropSelectionProvider;
+import org.jowidgets.impl.dnd.ImmutableDropSelection;
 import org.jowidgets.spi.widgets.IControlSpi;
 
 public abstract class AbstractControlSpiWrapper extends AbstractComponentSpiWrapper implements IControlCommon {
 	private static final Dimension INFINITE_SIZE = new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
 
 	private final IDragSource dragSource;
+	private final IDropTarget dropTarget;
 
 	private Dimension minSize;
 	private Dimension prefferedSize;
@@ -46,7 +51,15 @@ public abstract class AbstractControlSpiWrapper extends AbstractComponentSpiWrap
 
 	public AbstractControlSpiWrapper(final IControlSpi control) {
 		super(control);
+		final IDropSelectionProvider dropSelectionProvider;
+		if (this instanceof IDropSelectionProvider) {
+			dropSelectionProvider = (IDropSelectionProvider) this;
+		}
+		else {
+			dropSelectionProvider = new ImmutableDropSelection(this);
+		}
 		this.dragSource = new DragSourceImpl(control.getDragSource());
+		this.dropTarget = new DropTargetImpl(control.getDropTarget(), dropSelectionProvider);
 	}
 
 	@Override
@@ -118,5 +131,9 @@ public abstract class AbstractControlSpiWrapper extends AbstractComponentSpiWrap
 
 	public IDragSource getDragSource() {
 		return dragSource;
+	}
+
+	public IDropTarget getDropTarget() {
+		return dropTarget;
 	}
 }

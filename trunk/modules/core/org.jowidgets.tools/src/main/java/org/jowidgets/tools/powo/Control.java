@@ -33,6 +33,7 @@ import java.util.Set;
 
 import org.jowidgets.api.controller.IParentListener;
 import org.jowidgets.api.dnd.IDragSource;
+import org.jowidgets.api.dnd.IDropTarget;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
@@ -51,6 +52,7 @@ class Control<WIDGET_TYPE extends IControl, BLUE_PRINT_TYPE extends IWidgetDescr
 	private Dimension maxSize;
 	private String toolTipText;
 	private DragSourcePowo dragSource;
+	private DropTargetPowo dropTarget;
 
 	public Control(final BLUE_PRINT_TYPE bluePrint) {
 		super(bluePrint);
@@ -80,6 +82,9 @@ class Control<WIDGET_TYPE extends IControl, BLUE_PRINT_TYPE extends IWidgetDescr
 		}
 		if (dragSource != null) {
 			dragSource.setOriginal(widget.getDragSource());
+		}
+		if (dropTarget != null) {
+			dropTarget.setOriginal(widget.getDropTarget());
 		}
 	}
 
@@ -211,6 +216,20 @@ class Control<WIDGET_TYPE extends IControl, BLUE_PRINT_TYPE extends IWidgetDescr
 		else {
 			dragSource = new DragSourcePowo();
 			return dragSource;
+		}
+	}
+
+	@Override
+	public IDropTarget getDropTarget() {
+		if (dropTarget != null) {
+			return dropTarget;
+		}
+		else if (isInitialized()) {
+			return getWidget().getDropTarget();
+		}
+		else {
+			dropTarget = new DropTargetPowo();
+			return dropTarget;
 		}
 	}
 

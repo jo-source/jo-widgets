@@ -28,13 +28,7 @@
 
 package org.jowidgets.impl.dnd;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.jowidgets.api.clipboard.TransferType;
@@ -52,48 +46,45 @@ public final class DragSourceImpl extends AbstractDragSourceObservable implement
 
 	private final IDragSourceSpi dragSourceSpi;
 	private final IDragSourceListenerSpi dragSourceListenerSpi;
-
-	private Map<TransferTypeSpi, TransferType<?>> supportedTypes;
+	private final DragDropDelegate dragDropDelegate;
 
 	public DragSourceImpl(final IDragSourceSpi dragSourceSpi) {
 		Assert.paramNotNull(dragSourceSpi, "dragSourceSpi");
+
 		this.dragSourceSpi = dragSourceSpi;
 		this.dragSourceListenerSpi = new DragSourceListenerSpi();
+		this.dragDropDelegate = new DragDropDelegate(new IDragDropSpiSupport() {
+
+			@Override
+			public void setTransferTypesSpi(final Collection<TransferTypeSpi> supportedTypes) {
+				dragSourceSpi.setTransferTypes(supportedTypes);
+			}
+
+			@Override
+			public void setActionsSpi(final Set<DropAction> actions) {
+				dragSourceSpi.setActions(actions);
+			}
+		});
 	}
 
 	@Override
 	public void setTransferTypes(final Collection<TransferType<?>> types) {
-		Assert.paramNotNull(types, "types");
-		this.supportedTypes = new LinkedHashMap<TransferTypeSpi, TransferType<?>>();
-		final List<TransferTypeSpi> transferTypesSpi = new LinkedList<TransferTypeSpi>();
-		for (final TransferType<?> transferType : types) {
-			final TransferTypeSpi transferTypeSpi = new TransferTypeSpi(transferType.getJavaType());
-			transferTypesSpi.add(transferTypeSpi);
-			supportedTypes.put(transferTypeSpi, transferType);
-		}
-		dragSourceSpi.setTransferTypes(transferTypesSpi);
+		dragDropDelegate.setTransferTypes(types);
 	}
 
 	@Override
 	public void setTransferTypes(final TransferType<?>... supportedTypes) {
-		Assert.paramNotNull(supportedTypes, "supportedTypes");
-		setTransferTypes(Arrays.asList(supportedTypes));
+		dragDropDelegate.setTransferTypes(supportedTypes);
 	}
 
 	@Override
 	public void setActions(final Set<DropAction> actions) {
-		Assert.paramNotNull(actions, "actions");
-		dragSourceSpi.setActions(actions);
+		dragDropDelegate.setActions(actions);
 	}
 
 	@Override
 	public void setActions(final DropAction... actions) {
-		Assert.paramNotNull(actions, "actions");
-		final Set<DropAction> actionsSet = new HashSet<DropAction>();
-		for (int i = 0; i < actions.length; i++) {
-			actionsSet.add(actions[i]);
-		}
-		setActions(actionsSet);
+		dragDropDelegate.setActions(actions);
 	}
 
 	@Override
@@ -119,7 +110,7 @@ public final class DragSourceImpl extends AbstractDragSourceObservable implement
 			final IVetoable veto,
 			final TransferTypeSpi transferTypeSpi,
 			final IDragDataResponseSpi dragData) {
-			final TransferType<?> transferType = supportedTypes.get(transferTypeSpi);
+			final TransferType<?> transferType = dragDropDelegate.getTransferType(transferTypeSpi);
 			fireDragSetData(new DragEventImpl(event), veto, transferType, new DragDataResponseImpl(dragData));
 		}
 
