@@ -34,6 +34,8 @@ import org.jowidgets.util.Assert;
 
 public final class TransferTypeSpi implements Serializable {
 
+	public static final TransferTypeSpi UNKNOWN_TYPE = new TransferTypeSpi(UnknownTransferTypeClassSpi.class);
+
 	private static final long serialVersionUID = 3536962082573394080L;
 
 	private final Class<?> javaType;
@@ -70,6 +72,10 @@ public final class TransferTypeSpi implements Serializable {
 		}
 		final TransferTypeSpi other = (TransferTypeSpi) obj;
 		return className.equals(other.getJavaType().getName());
+	}
+
+	private static final class UnknownTransferTypeClassSpi implements Serializable {
+		private static final long serialVersionUID = -2369206887803864740L;
 	}
 
 }

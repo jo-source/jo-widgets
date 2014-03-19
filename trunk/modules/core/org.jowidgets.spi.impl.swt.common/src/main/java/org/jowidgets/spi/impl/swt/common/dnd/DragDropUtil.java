@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.swt.common.dnd;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -49,31 +50,19 @@ final class DragDropUtil {
 	private DragDropUtil() {}
 
 	static Transfer[] createTransfers(final Collection<TransferTypeSpi> supportedTypes) {
-		boolean hasTextTransfer = false;
-		boolean hasObjectTransfer = false;
+		final Set<Transfer> result = new LinkedHashSet<Transfer>();
 		for (final TransferTypeSpi type : supportedTypes) {
 			if (String.class.equals(type.getJavaType())) {
-				hasTextTransfer = true;
-				if (hasObjectTransfer) {
-					break;
-				}
+				result.add(TEXT_TRANSFER);
 			}
 			else {
-				hasObjectTransfer = true;
-				if (hasTextTransfer) {
-					break;
-				}
+				result.add(OBJECT_TRANSFER);
+			}
+			if (result.size() == 2) {
+				break;
 			}
 		}
-		if (hasObjectTransfer && hasTextTransfer) {
-			return new Transfer[] {TEXT_TRANSFER, OBJECT_TRANSFER};
-		}
-		else if (hasTextTransfer) {
-			return new Transfer[] {TEXT_TRANSFER};
-		}
-		else {
-			return new Transfer[] {OBJECT_TRANSFER};
-		}
+		return result.toArray(new Transfer[result.size()]);
 	}
 
 	static int createOperations(final Set<DropAction> actions) {
