@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, grossmann
+ * Copyright (c) 2014, MGrossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,30 +26,32 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.swt.common.dnd;
+package org.jowidgets.spi.impl.dnd;
 
-import org.eclipse.swt.widgets.Widget;
-import org.jowidgets.common.dnd.DropMode;
-import org.jowidgets.common.types.Position;
+import org.jowidgets.spi.dnd.ITreeDropLocationSpi;
+import org.jowidgets.spi.widgets.ITreeNodeSpi;
 import org.jowidgets.util.Assert;
 
-public final class ImmutableDropSelection implements IDropSelectionProvider {
+public final class TreeDropLocationSpiImpl implements ITreeDropLocationSpi {
 
-	private final Object selection;
+	private final ITreeNodeSpi treeNode;
+	private final TreeDropPositionSpi dropPosition;
 
-	public ImmutableDropSelection(final Object selection) {
-		Assert.paramNotNull(selection, "selection");
-		this.selection = selection;
+	public TreeDropLocationSpiImpl(final ITreeNodeSpi treeNode, final TreeDropPositionSpi dropPosition) {
+		Assert.paramNotNull(treeNode, "treeNode");
+		Assert.paramNotNull(dropPosition, "dropPosition");
+		this.treeNode = treeNode;
+		this.dropPosition = dropPosition;
 	}
 
 	@Override
-	public Integer getFeedback(final Widget item, final Position position, final DropMode dropMode) {
-		return null;
+	public ITreeNodeSpi getTreeNode() {
+		return treeNode;
 	}
 
 	@Override
-	public Object getDropSelection(final Widget item, final Position position, final int dropFeedback) {
-		return selection;
+	public TreeDropPositionSpi getDropPosition() {
+		return dropPosition;
 	}
 
 }

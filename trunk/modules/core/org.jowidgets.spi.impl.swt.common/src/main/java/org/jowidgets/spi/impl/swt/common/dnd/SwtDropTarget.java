@@ -250,9 +250,10 @@ public final class SwtDropTarget extends AbstractDropTargetObservableSpi impleme
 	}
 
 	private IDropEventSpi createDropEvent(final DropTargetEvent event, final Object data, final TransferTypeSpi transferType) {
+		final Position position = getPosition(event);
 		return new DropEventSpiImpl(
-			getPosition(event),
-			getDropSelection(event),
+			position,
+			getDropSelection(event, position),
 			getSupportedActions(event),
 			getDropAction(event),
 			data,
@@ -263,8 +264,8 @@ public final class SwtDropTarget extends AbstractDropTargetObservableSpi impleme
 		return PositionConvert.convert(control.toControl(new Point(event.x, event.y)));
 	}
 
-	private Object getDropSelection(final DropTargetEvent event) {
-		return dropSelectionProvider.getDropSelection(event.item);
+	private Object getDropSelection(final DropTargetEvent event, final Position position) {
+		return dropSelectionProvider.getDropSelection(event.item, position, event.feedback);
 	}
 
 	private Set<DropAction> getSupportedActions(final DropTargetEvent event) {
