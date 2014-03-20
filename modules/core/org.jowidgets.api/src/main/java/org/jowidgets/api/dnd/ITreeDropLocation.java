@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, grossmann
+ * Copyright (c) 2014, MGrossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,30 +26,20 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.swt.common.dnd;
+package org.jowidgets.api.dnd;
 
-import org.eclipse.swt.widgets.Widget;
-import org.jowidgets.common.dnd.DropMode;
-import org.jowidgets.common.types.Position;
-import org.jowidgets.util.Assert;
+import org.jowidgets.api.widgets.ITreeNode;
 
-public final class ImmutableDropSelection implements IDropSelectionProvider {
+public interface ITreeDropLocation {
 
-	private final Object selection;
-
-	public ImmutableDropSelection(final Object selection) {
-		Assert.paramNotNull(selection, "selection");
-		this.selection = selection;
+	public enum TreeDropPosition {
+		ON,
+		BEFORE,
+		AFTER
 	}
 
-	@Override
-	public Integer getFeedback(final Widget item, final Position position, final DropMode dropMode) {
-		return null;
-	}
+	ITreeNode getTreeNode();
 
-	@Override
-	public Object getDropSelection(final Widget item, final Position position, final int dropFeedback) {
-		return selection;
-	}
+	TreeDropPosition getDropPosition();
 
 }

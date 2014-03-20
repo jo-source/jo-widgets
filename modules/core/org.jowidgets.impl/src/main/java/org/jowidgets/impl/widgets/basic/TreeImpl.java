@@ -41,6 +41,7 @@ import org.jowidgets.api.controller.IParentListener;
 import org.jowidgets.api.controller.ITreeListener;
 import org.jowidgets.api.controller.ITreePopupDetectionListener;
 import org.jowidgets.api.controller.ITreeSelectionListener;
+import org.jowidgets.api.dnd.ITreeDropLocation.TreeDropPosition;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITree;
@@ -54,9 +55,12 @@ import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.base.delegate.TreeContainerDelegate;
 import org.jowidgets.impl.dnd.IDropSelectionProvider;
+import org.jowidgets.impl.dnd.TreeDropLocationImpl;
 import org.jowidgets.impl.event.TreePopupEvent;
 import org.jowidgets.impl.event.TreeSelectionEvent;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractControlSpiWrapper;
+import org.jowidgets.spi.dnd.ITreeDropLocationSpi;
+import org.jowidgets.spi.dnd.ITreeDropLocationSpi.TreeDropPositionSpi;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
 import org.jowidgets.spi.widgets.ITreeSpi;
 import org.jowidgets.spi.widgets.controller.ITreeSelectionListenerSpi;
@@ -148,7 +152,28 @@ public class TreeImpl extends AbstractControlSpiWrapper implements ITree, IDropS
 
 	@Override
 	public Object getDropSelection(final Object spiSelection) {
-		return nodes.get(spiSelection);
+		if (spiSelection instanceof ITreeDropLocationSpi) {
+			final ITreeDropLocationSpi dropLoacation = (ITreeDropLocationSpi) spiSelection;
+			return new TreeDropLocationImpl(
+				nodes.get(dropLoacation.getTreeNode()),
+				getDropPosition(dropLoacation.getDropPosition()));
+		}
+		return null;
+	}
+
+	private TreeDropPosition getDropPosition(final TreeDropPositionSpi dropPositionSpi) {
+		if (TreeDropPositionSpi.ON.equals(dropPositionSpi)) {
+			return TreeDropPosition.ON;
+		}
+		else if (TreeDropPositionSpi.BEFORE.equals(dropPositionSpi)) {
+			return TreeDropPosition.BEFORE;
+		}
+		else if (TreeDropPositionSpi.AFTER.equals(dropPositionSpi)) {
+			return TreeDropPosition.AFTER;
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override

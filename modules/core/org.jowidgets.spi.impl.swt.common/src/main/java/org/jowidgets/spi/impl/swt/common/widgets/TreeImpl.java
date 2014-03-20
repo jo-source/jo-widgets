@@ -59,7 +59,9 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.common.widgets.controller.ITreeNodeListener;
+import org.jowidgets.spi.dnd.ITreeDropLocationSpi.TreeDropPositionSpi;
 import org.jowidgets.spi.impl.controller.TreeSelectionObservableSpi;
+import org.jowidgets.spi.impl.dnd.TreeDropLocationSpiImpl;
 import org.jowidgets.spi.impl.swt.common.dnd.IDropSelectionProvider;
 import org.jowidgets.spi.impl.swt.common.util.PositionConvert;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
@@ -178,8 +180,20 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi, IDro
 	}
 
 	@Override
-	public Object getDropSelection(final Widget item) {
-		return items.get(item);
+	public Object getDropSelection(final Widget item, final Position position, final int dropFeedback) {
+		final TreeNodeImpl node = items.get(item);
+		if (node != null) {
+			if ((dropFeedback & DND.FEEDBACK_INSERT_BEFORE) != 0) {
+				return new TreeDropLocationSpiImpl(node, TreeDropPositionSpi.BEFORE);
+			}
+			else if ((dropFeedback & DND.FEEDBACK_INSERT_AFTER) != 0) {
+				return new TreeDropLocationSpiImpl(node, TreeDropPositionSpi.AFTER);
+			}
+			else if ((dropFeedback & DND.FEEDBACK_SELECT) != 0) {
+				return new TreeDropLocationSpiImpl(node, TreeDropPositionSpi.ON);
+			}
+		}
+		return null;
 	}
 
 	@Override
