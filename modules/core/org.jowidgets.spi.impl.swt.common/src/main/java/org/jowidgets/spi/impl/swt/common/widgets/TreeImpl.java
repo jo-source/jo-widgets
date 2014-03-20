@@ -191,6 +191,9 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi, IDro
 		else if (DropMode.SELECT_OR_INSERT.equals(dropMode)) {
 			if (widget instanceof TreeItem) {
 				final TreeItem item = (TreeItem) widget;
+				if (item.isDisposed()) {//pragmatic approach, no clear why swt throws events for disposed items
+					return result;
+				}
 				final int y = position.getY();
 				final Rectangle bounds = item.getBounds();
 				if (y < bounds.y + bounds.height / 3) {
@@ -207,6 +210,9 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi, IDro
 		else if (DropMode.INSERT.equals(dropMode)) {
 			if (widget instanceof TreeItem) {
 				final TreeItem item = (TreeItem) widget;
+				if (item.isDisposed()) {//pragmatic approach, no clear why swt throws events for disposed items
+					return result;
+				}
 				final int y = position.getY();
 				final Rectangle bounds = item.getBounds();
 				if (y < bounds.y + bounds.height / 2) {
