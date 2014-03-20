@@ -116,6 +116,12 @@ public class TreeNodeImpl extends AbstractTreeNodeSpiWrapper implements ITreeNod
 			public void expandedChanged(final boolean expanded) {
 				treeNodeObservable.fireExpandedChanged(expanded);
 			}
+
+			@Override
+			public void checkedChanged(final boolean checked) {
+				treeNodeObservable.fireCheckedChanged(checked);
+			}
+
 		};
 		widget.addTreeNodeListener(spiTreeNodeListener);
 

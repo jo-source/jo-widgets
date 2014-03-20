@@ -39,4 +39,7 @@ public interface ITreeSetupCommon extends IComponentSetupCommon {
 	@Mandatory
 	boolean isContentScrolled();
 
+	@Mandatory
+	boolean isChecked();
+
 }

@@ -67,4 +67,10 @@ public class TreeNodeObservable implements ITreeNodeObservable {
 			listener.expandedChanged(expanded);
 		}
 	}
+
+	public void fireCheckedChanged(final boolean checked) {
+		for (final ITreeNodeListener listener : new LinkedList<ITreeNodeListener>(listeners)) {
+			listener.checkedChanged(checked);
+		}
+	}
 }

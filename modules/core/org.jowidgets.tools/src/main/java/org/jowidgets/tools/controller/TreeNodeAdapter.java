@@ -38,4 +38,7 @@ public class TreeNodeAdapter implements ITreeNodeListener {
 	@Override
 	public void expandedChanged(final boolean expanded) {}
 
+	@Override
+	public void checkedChanged(final boolean checked) {}
+
 }

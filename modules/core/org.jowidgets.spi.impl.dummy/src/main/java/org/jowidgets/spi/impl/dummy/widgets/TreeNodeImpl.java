@@ -125,6 +125,26 @@ public class TreeNodeImpl implements ITreeNodeSpi {
 	}
 
 	@Override
+	public void setChecked(final boolean checked) {
+		item.setChecked(checked);
+	}
+
+	@Override
+	public boolean isChecked() {
+		return item.isChecked();
+	}
+
+	@Override
+	public void setGreyed(final boolean greyed) {
+		item.setGreyed(greyed);
+	}
+
+	@Override
+	public boolean isGreyed() {
+		return item.isGreyed();
+	}
+
+	@Override
 	public void addTreeNodeListener(final ITreeNodeListener listener) {
 		treeObs.addTreeNodeListener(listener);
 	}

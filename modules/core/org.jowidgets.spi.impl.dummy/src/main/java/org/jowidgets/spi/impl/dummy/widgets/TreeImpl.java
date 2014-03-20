@@ -181,6 +181,26 @@ public class TreeImpl extends DummyControl implements ITreeSpi, ITreeNodeSpi {
 	}
 
 	@Override
+	public void setChecked(final boolean checked) {
+		throw new UnsupportedOperationException("setChecked is not possible on the root node");
+	}
+
+	@Override
+	public boolean isChecked() {
+		throw new UnsupportedOperationException("isChecked is not possible on the root node");
+	}
+
+	@Override
+	public void setGreyed(final boolean greyed) {
+		throw new UnsupportedOperationException("setGreyed is not possible on the root node");
+	}
+
+	@Override
+	public boolean isGreyed() {
+		throw new UnsupportedOperationException("isGreyed is not possible on the root node");
+	}
+
+	@Override
 	public void setSize(final Dimension size) {
 		this.size = size;
 	}

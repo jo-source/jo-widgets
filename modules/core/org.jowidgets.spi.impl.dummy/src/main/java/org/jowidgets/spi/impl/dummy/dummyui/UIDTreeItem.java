@@ -34,6 +34,8 @@ import org.jowidgets.common.types.Markup;
 public class UIDTreeItem extends UIDComponent {
 
 	private boolean expanded;
+	private boolean checked;
+	private boolean greyed;
 	private String text;
 	private IImageConstant icon;
 	private Markup markup;
@@ -68,5 +70,21 @@ public class UIDTreeItem extends UIDComponent {
 
 	public void setMarkup(final Markup markup) {
 		this.markup = markup;
+	}
+
+	public void setChecked(final boolean checked) {
+		this.checked = checked;
+	}
+
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setGreyed(final boolean greyed) {
+		this.greyed = greyed;
+	}
+
+	public boolean isGreyed() {
+		return greyed;
 	}
 }
