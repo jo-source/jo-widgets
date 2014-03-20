@@ -56,7 +56,7 @@ public final class DemoTreeComposite {
 		final ILayoutDescriptor fillLayoutDescriptor = new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0");
 		parentContainer.setLayout(fillLayoutDescriptor);
 
-		final ITree tree = parentContainer.add(bpF.tree().multiSelection(), "growx, growy, w 0::, h 0::");
+		final ITree tree = parentContainer.add(bpF.tree().multiSelection().setChecked(true), "growx, growy, w 0::, h 0::");
 		final IPopupMenu popupMenu = tree.createPopupMenu();
 		fillMenu("", popupMenu);
 
@@ -141,6 +141,13 @@ public final class DemoTreeComposite {
 			public void expandedChanged(final boolean expanded) {
 				// CHECKSTYLE:OFF
 				System.out.println(node.getText() + " expanded = " + expanded);
+				// CHECKSTYLE:ON
+			}
+
+			@Override
+			public void checkedChanged(final boolean checked) {
+				// CHECKSTYLE:OFF
+				System.out.println(node.getText() + " checked = " + checked);
 				// CHECKSTYLE:ON
 			}
 		});

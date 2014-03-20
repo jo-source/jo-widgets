@@ -36,6 +36,7 @@ public class TreeDefaultsCommon implements IDefaultInitializer<ITreeSetupBuilder
 	@Override
 	public void initialize(final ITreeSetupBuilderCommon<?> builder) {
 		builder.setContentScrolled(Boolean.TRUE);
+		builder.setChecked(false);
 		builder.setSelectionPolicy(SelectionPolicy.SINGLE_SELECTION);
 	}
 

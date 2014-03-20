@@ -34,6 +34,7 @@ import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.controller.ITreeNodeListener;
 import org.jowidgets.tools.controller.ListModelAdapter;
+import org.jowidgets.tools.controller.TreeNodeAdapter;
 import org.jowidgets.tools.controller.TreeNodeObservable;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.types.VetoHolder;
@@ -188,7 +189,7 @@ public class ComponentNodeContext extends ComponentNodeContainerContext implemen
 	}
 
 	private ITreeNodeListener createTreeNodeListener() {
-		return new ITreeNodeListener() {
+		return new TreeNodeAdapter() {
 			@Override
 			public void selectionChanged(final boolean selected) {
 				treeNodeObservable.fireSelectionChanged(selected);

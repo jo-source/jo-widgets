@@ -83,4 +83,24 @@ public abstract class AbstractTreeNodeSpiWrapper extends ItemSpiWrapper implemen
 		return getWidget().isSelected();
 	}
 
+	@Override
+	public void setChecked(final boolean checked) {
+		getWidget().setChecked(checked);
+	}
+
+	@Override
+	public boolean isChecked() {
+		return getWidget().isChecked();
+	}
+
+	@Override
+	public void setGreyed(final boolean greyed) {
+		getWidget().setGreyed(greyed);
+	}
+
+	@Override
+	public boolean isGreyed() {
+		return getWidget().isGreyed();
+	}
+
 }

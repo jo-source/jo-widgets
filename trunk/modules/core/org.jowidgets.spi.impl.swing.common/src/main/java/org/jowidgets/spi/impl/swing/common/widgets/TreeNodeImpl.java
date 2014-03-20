@@ -165,6 +165,37 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 	}
 
 	@Override
+	public void setChecked(final boolean checked) {
+		//CHECKSTYLE:OFF
+		System.out.println("Checked Tree is not jet implemented for swing");
+		//CHECKSTYLE:ON
+	}
+
+	@Override
+	public boolean isChecked() {
+		//CHECKSTYLE:OFF
+		System.out.println("Checked Tree is not jet implemented for swing");
+		//CHECKSTYLE:ON
+		return false;
+	}
+
+	@Override
+	public void setGreyed(final boolean greyed) {
+		//CHECKSTYLE:OFF
+		System.out.println("Checked Tree is not jet implemented for swing");
+		//CHECKSTYLE:ON
+
+	}
+
+	@Override
+	public boolean isGreyed() {
+		//CHECKSTYLE:OFF
+		System.out.println("Checked Tree is not jet implemented for swing");
+		//CHECKSTYLE:ON
+		return false;
+	}
+
+	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
 		popupDetectionListeners.add(listener);
 	}

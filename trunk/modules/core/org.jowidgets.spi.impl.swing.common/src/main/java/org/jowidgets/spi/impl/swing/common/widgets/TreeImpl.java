@@ -83,6 +83,12 @@ public class TreeImpl extends SwingControl implements ITreeSpi, IDropSelectionPr
 	public TreeImpl(final ITreeSetupSpi setup) {
 		super(createComponent(setup));
 
+		if (setup.isChecked()) {
+			//CHECKSTYLE:OFF
+			System.out.println("Checked Tree is not jet implemented for swing");
+			//CHECKSTYLE:ON
+		}
+
 		this.nodes = new HashMap<JoTreeNode, TreeNodeImpl>();
 		this.treeObservable = new TreeSelectionObservableSpi();
 		this.lastSelection = new LinkedList<JoTreeNode>();

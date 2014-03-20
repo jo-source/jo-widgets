@@ -34,4 +34,6 @@ public interface ITreeNodeListener {
 
 	void expandedChanged(boolean expanded);
 
+	void checkedChanged(boolean checked);
+
 }

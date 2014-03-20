@@ -156,6 +156,27 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 	}
 
 	@Override
+	public void setChecked(final boolean checked) {
+		getUiReference().setChecked(checked);
+		fireCheckedChanged(checked);
+	}
+
+	@Override
+	public boolean isChecked() {
+		return getUiReference().getChecked();
+	}
+
+	@Override
+	public void setGreyed(final boolean grayed) {
+		getUiReference().setGrayed(grayed);
+	}
+
+	@Override
+	public boolean isGreyed() {
+		return getUiReference().getGrayed();
+	}
+
+	@Override
 	public void setExpanded(final boolean expanded) {
 		item.setExpanded(expanded);
 		if (item.getExpanded() == expanded) {

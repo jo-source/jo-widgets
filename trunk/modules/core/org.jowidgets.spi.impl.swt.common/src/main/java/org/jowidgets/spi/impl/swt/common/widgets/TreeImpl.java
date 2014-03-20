@@ -132,24 +132,37 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi, IDro
 		final SelectionListener selectionListener = new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
-				if (!multiSelection) {
-					getUiReference().removeSelectionListener(this);
-					if ((e.stateMask & SWT.CTRL) > 0) {
-						final TreeItem[] selection = getUiReference().getSelection();
-						if (selection != null && selection.length > 1) {
-							getUiReference().setSelection(new TreeItem[] {(TreeItem) e.item});
-						}
-						else {
-							getUiReference().setSelection(new TreeItem[] {});
-						}
+				if (e.detail == SWT.CHECK) {
+					final TreeNodeImpl itemImpl = items.get(e.item);
+					if (itemImpl != null) {
+						itemImpl.fireCheckedChanged(itemImpl.isChecked());
 					}
 					else {
-						getUiReference().setSelection(new TreeItem[] {(TreeItem) e.item});
+						throw new IllegalStateException("No item impl registered for item '"
+							+ e.item
+							+ "'. This seems to be a bug");
 					}
-					getUiReference().addSelectionListener(this);
 				}
+				else {
+					if (!multiSelection) {
+						getUiReference().removeSelectionListener(this);
+						if ((e.stateMask & SWT.CTRL) > 0) {
+							final TreeItem[] selection = getUiReference().getSelection();
+							if (selection != null && selection.length > 1) {
+								getUiReference().setSelection(new TreeItem[] {(TreeItem) e.item});
+							}
+							else {
+								getUiReference().setSelection(new TreeItem[] {});
+							}
+						}
+						else {
+							getUiReference().setSelection(new TreeItem[] {(TreeItem) e.item});
+						}
+						getUiReference().addSelectionListener(this);
+					}
 
-				fireSelectionChange(getUiReference().getSelection());
+					fireSelectionChange(getUiReference().getSelection());
+				}
 			}
 		};
 
@@ -348,6 +361,26 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi, IDro
 		throw new UnsupportedOperationException("removeTreeNodeListener is not possible on the root node");
 	}
 
+	@Override
+	public void setChecked(final boolean checked) {
+		throw new UnsupportedOperationException("setChecked is not possible on the root node");
+	}
+
+	@Override
+	public boolean isChecked() {
+		throw new UnsupportedOperationException("isChecked is not possible on the root node");
+	}
+
+	@Override
+	public void setGreyed(final boolean greyed) {
+		throw new UnsupportedOperationException("setGreyed is not possible on the root node");
+	}
+
+	@Override
+	public boolean isGreyed() {
+		throw new UnsupportedOperationException("isGreyed is not possible on the root node");
+	}
+
 	private void showToolTip(final String message) {
 		toolTip.setMessage(message);
 		final Point location = Display.getCurrent().getCursorLocation();
@@ -461,6 +494,9 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi, IDro
 		//single selection will be simulated by selection listener
 		int result = SWT.MULTI;
 
+		if (setup.isChecked()) {
+			result = result | SWT.CHECK;
+		}
 		if (!setup.isContentScrolled()) {
 			result = result | SWT.NO_SCROLL;
 		}
@@ -490,4 +526,5 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi, IDro
 			}
 		}
 	}
+
 }
