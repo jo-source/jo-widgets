@@ -39,6 +39,7 @@ import org.jowidgets.api.login.ILoginInterceptor;
 import org.jowidgets.api.model.levelmeter.ILevelMeterModel;
 import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.api.model.table.ITableModel;
+import org.jowidgets.api.model.tree.ITreeNodeModel;
 import org.jowidgets.api.password.IPasswordChangeExecutor;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IInputComponent;
@@ -100,6 +101,7 @@ import org.jowidgets.api.widgets.blueprint.IToolBarPopupButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
+import org.jowidgets.api.widgets.blueprint.ITreeViewerBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationResultLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
@@ -278,6 +280,11 @@ public final class BPF {
 
 	public static ITreeBluePrint tree() {
 		return Toolkit.getBluePrintFactory().tree();
+	}
+
+	public static <ROOT_NODE_VALUE_TYPE> ITreeViewerBluePrint<ROOT_NODE_VALUE_TYPE> treeViewer(
+		final ITreeNodeModel<ROOT_NODE_VALUE_TYPE> model) {
+		return Toolkit.getBluePrintFactory().treeViewer(model);
 	}
 
 	public static ITreeNodeBluePrint treeNode() {

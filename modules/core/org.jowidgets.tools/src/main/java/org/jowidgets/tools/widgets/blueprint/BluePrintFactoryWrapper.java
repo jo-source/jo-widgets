@@ -39,6 +39,7 @@ import org.jowidgets.api.login.ILoginInterceptor;
 import org.jowidgets.api.model.levelmeter.ILevelMeterModel;
 import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.api.model.table.ITableModel;
+import org.jowidgets.api.model.tree.ITreeNodeModel;
 import org.jowidgets.api.password.IPasswordChangeExecutor;
 import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.IInputControl;
@@ -99,6 +100,7 @@ import org.jowidgets.api.widgets.blueprint.IToolBarPopupButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
+import org.jowidgets.api.widgets.blueprint.ITreeViewerBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationResultLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenience;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
@@ -739,6 +741,12 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	@Override
 	public ITreeBluePrint tree() {
 		return bluePrintFactory.tree();
+	}
+
+	@Override
+	public <ROOT_NODE_VALUE_TYPE> ITreeViewerBluePrint<ROOT_NODE_VALUE_TYPE> treeViewer(
+		final ITreeNodeModel<ROOT_NODE_VALUE_TYPE> model) {
+		return bluePrintFactory.treeViewer(model);
 	}
 
 	@Override

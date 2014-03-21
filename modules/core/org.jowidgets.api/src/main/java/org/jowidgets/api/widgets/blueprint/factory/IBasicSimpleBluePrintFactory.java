@@ -32,6 +32,7 @@ import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.model.levelmeter.ILevelMeterModel;
 import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.api.model.table.ITableModel;
+import org.jowidgets.api.model.tree.ITreeNodeModel;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICalendarBluePrint;
@@ -72,6 +73,7 @@ import org.jowidgets.api.widgets.blueprint.IToolBarPopupButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
+import org.jowidgets.api.widgets.blueprint.ITreeViewerBluePrint;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.FileChooserType;
 
@@ -145,6 +147,8 @@ public interface IBasicSimpleBluePrintFactory extends IBaseBluePrintFactory {
 	ITabItemBluePrint tabItem();
 
 	ITreeBluePrint tree();
+
+	<ROOT_NODE_VALUE_TYPE> ITreeViewerBluePrint<ROOT_NODE_VALUE_TYPE> treeViewer(ITreeNodeModel<ROOT_NODE_VALUE_TYPE> model);
 
 	ITreeNodeBluePrint treeNode();
 
