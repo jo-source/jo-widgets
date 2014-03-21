@@ -40,6 +40,6 @@ public interface ITreeNodeModelListener {
 
 	void expansionChanged();
 
-	void disposed();
+	void dispose();
 
 }

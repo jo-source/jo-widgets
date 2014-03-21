@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, grossmann
+ * Copyright (c) 2014, Michael
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,22 +26,28 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.model.tree;
+package org.jowidgets.impl.model.tree;
 
-import org.jowidgets.api.widgets.ITreeNode;
+import org.jowidgets.api.model.tree.ITreeNodeModelListener;
 
-public interface ITreeNodeRenderer<VALUE_TYPE> {
+public class TreeNodeModelAdapter implements ITreeNodeModelListener {
 
-	void nodeCreated(VALUE_TYPE value, ITreeNode node);
+	@Override
+	public void dataChanged() {}
 
-	void dataChanged(VALUE_TYPE value, ITreeNode node);
+	@Override
+	public void childrenChanged() {}
 
-	void selectionChanged(VALUE_TYPE value, ITreeNode node);
+	@Override
+	public void selectionChanged() {}
 
-	void checkedChanged(VALUE_TYPE value, ITreeNode node);
+	@Override
+	public void checkedChanged() {}
 
-	void expansionChanged(VALUE_TYPE value, ITreeNode node);
+	@Override
+	public void expansionChanged() {}
 
-	void disposeNode(VALUE_TYPE value, ITreeNode node);
+	@Override
+	public void dispose() {}
 
 }
