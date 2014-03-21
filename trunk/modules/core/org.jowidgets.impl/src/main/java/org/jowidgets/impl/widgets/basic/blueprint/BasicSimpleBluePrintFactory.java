@@ -32,6 +32,7 @@ import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.model.levelmeter.ILevelMeterModel;
 import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.api.model.table.ITableModel;
+import org.jowidgets.api.model.tree.ITreeNodeModel;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICalendarBluePrint;
@@ -72,6 +73,7 @@ import org.jowidgets.api.widgets.blueprint.IToolBarPopupButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
+import org.jowidgets.api.widgets.blueprint.ITreeViewerBluePrint;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.IBasicSimpleBluePrintFactory;
@@ -266,6 +268,14 @@ public class BasicSimpleBluePrintFactory extends AbstractBluePrintFactory implem
 	@Override
 	public ITreeBluePrint tree() {
 		return createProxy(ITreeBluePrint.class);
+	}
+
+	@Override
+	public <ROOT_NODE_VALUE_TYPE> ITreeViewerBluePrint<ROOT_NODE_VALUE_TYPE> treeViewer(
+		final ITreeNodeModel<ROOT_NODE_VALUE_TYPE> model) {
+		final ITreeViewerBluePrint<ROOT_NODE_VALUE_TYPE> result = createProxy(ITreeViewerBluePrint.class);
+		result.setRootNodeModel(model);
+		return result;
 	}
 
 	@Override
