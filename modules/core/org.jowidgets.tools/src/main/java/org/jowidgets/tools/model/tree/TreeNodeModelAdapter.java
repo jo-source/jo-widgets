@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, grossmann
+ * Copyright (c) 2014, Michael
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,53 +26,28 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.model.tree;
+package org.jowidgets.tools.model.tree;
 
-import org.jowidgets.api.model.tree.ITreeNodeModel;
+import org.jowidgets.api.model.tree.ITreeNodeModelListener;
 
-public abstract class AbstractTreeNodeModel<VALUE_TYPE> extends TreeNodeModelObservable implements ITreeNodeModel<VALUE_TYPE> {
-
-	private boolean selected;
-	private boolean checked;
-	private boolean expanded;
+public class TreeNodeModelAdapter implements ITreeNodeModelListener {
 
 	@Override
-	public final boolean isSelected() {
-		return selected;
-	}
+	public void dataChanged() {}
 
 	@Override
-	public final void setSelected(final boolean selected) {
-		if (this.selected != selected) {
-			this.selected = selected;
-			fireSelectionChanged();
-		}
-	}
+	public void childrenChanged() {}
 
 	@Override
-	public final boolean isChecked() {
-		return checked;
-	}
+	public void selectionChanged() {}
 
 	@Override
-	public final void setChecked(final boolean checked) {
-		if (this.checked != checked) {
-			this.checked = checked;
-			fireCheckedChanged();
-		}
-	}
+	public void checkedChanged() {}
 
 	@Override
-	public final boolean isExpanded() {
-		return expanded;
-	}
+	public void expansionChanged() {}
 
 	@Override
-	public final void setExpanded(final boolean expanded) {
-		if (this.expanded != expanded) {
-			this.expanded = expanded;
-			fireExpansionChanged();
-		}
-	}
+	public void dispose() {}
 
 }

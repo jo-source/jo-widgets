@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.model.tree;
+package org.jowidgets.tools.model.tree;
 
 import java.util.LinkedHashSet;
 import java.util.LinkedList;

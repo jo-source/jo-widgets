@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Michael
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,28 +26,53 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.model.tree;
+package org.jowidgets.tools.model.tree;
 
-import org.jowidgets.api.model.tree.ITreeNodeModelListener;
+import org.jowidgets.api.model.tree.ITreeNodeModel;
 
-public class TreeNodeModelAdapter implements ITreeNodeModelListener {
+public abstract class AbstractTreeNodeModel<VALUE_TYPE> extends TreeNodeModelObservable implements ITreeNodeModel<VALUE_TYPE> {
 
-	@Override
-	public void dataChanged() {}
-
-	@Override
-	public void childrenChanged() {}
+	private boolean selected;
+	private boolean checked;
+	private boolean expanded;
 
 	@Override
-	public void selectionChanged() {}
+	public final boolean isSelected() {
+		return selected;
+	}
 
 	@Override
-	public void checkedChanged() {}
+	public final void setSelected(final boolean selected) {
+		if (this.selected != selected) {
+			this.selected = selected;
+			fireSelectionChanged();
+		}
+	}
 
 	@Override
-	public void expansionChanged() {}
+	public final boolean isChecked() {
+		return checked;
+	}
 
 	@Override
-	public void dispose() {}
+	public final void setChecked(final boolean checked) {
+		if (this.checked != checked) {
+			this.checked = checked;
+			fireCheckedChanged();
+		}
+	}
+
+	@Override
+	public final boolean isExpanded() {
+		return expanded;
+	}
+
+	@Override
+	public final void setExpanded(final boolean expanded) {
+		if (this.expanded != expanded) {
+			this.expanded = expanded;
+			fireExpansionChanged();
+		}
+	}
 
 }

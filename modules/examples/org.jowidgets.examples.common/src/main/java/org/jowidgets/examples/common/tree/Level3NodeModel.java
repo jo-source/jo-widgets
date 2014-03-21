@@ -42,7 +42,7 @@ public final class Level3NodeModel extends AbstractStringNodeModel {
 	}
 
 	@Override
-	public ITreeNodeModel<?> getChildNode(final int index) {
+	public ITreeNodeModel<String> getChildNode(final int index) {
 		return null;
 	}
 
