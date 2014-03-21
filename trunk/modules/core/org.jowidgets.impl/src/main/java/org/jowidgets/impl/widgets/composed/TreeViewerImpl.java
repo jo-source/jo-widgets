@@ -38,7 +38,7 @@ import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.ITreeViewer;
 import org.jowidgets.api.widgets.descriptor.setup.ITreeViewerSetup;
-import org.jowidgets.impl.model.tree.TreeNodeModelAdapter;
+import org.jowidgets.tools.model.tree.TreeNodeModelAdapter;
 import org.jowidgets.tools.widgets.wrapper.TreeWrapper;
 import org.jowidgets.util.Assert;
 

@@ -28,11 +28,12 @@
 
 package org.jowidgets.examples.common.tree;
 
+import org.jowidgets.api.model.tree.ITreeNodeModel;
 import org.jowidgets.api.model.tree.ITreeNodeRenderer;
-import org.jowidgets.impl.model.tree.AbstractTreeNodeModel;
-import org.jowidgets.impl.model.tree.DefaultTreeNodeRenderer;
+import org.jowidgets.tools.model.tree.AbstractTreeNodeModel;
+import org.jowidgets.tools.model.tree.DefaultTreeNodeRenderer;
 
-abstract class AbstractStringNodeModel extends AbstractTreeNodeModel<String> {
+abstract class AbstractStringNodeModel extends AbstractTreeNodeModel<String> implements ITreeNodeModel<String> {
 
 	private static final ITreeNodeRenderer<String> RENDERER = new DefaultTreeNodeRenderer<String>();
 

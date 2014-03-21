@@ -30,6 +30,7 @@ package org.jowidgets.examples.common.tree;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
+import org.jowidgets.api.widgets.blueprint.ITreeViewerBluePrint;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.types.Dimension;
@@ -48,7 +49,9 @@ public final class TreeViewerDemo implements IApplication {
 		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
 		frame.setLayout(MigLayoutFactory.growingInnerCellLayout());
 
-		frame.add(BPF.treeViewer(new RootNodeModel()).setChecked(true), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		final ITreeViewerBluePrint<String> treeViewerBp = BPF.treeViewer(new RootNodeModel());
+		treeViewerBp.setChecked(true);
+		frame.add(treeViewerBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
 		//set the root frame visible
 		frame.setVisible(true);

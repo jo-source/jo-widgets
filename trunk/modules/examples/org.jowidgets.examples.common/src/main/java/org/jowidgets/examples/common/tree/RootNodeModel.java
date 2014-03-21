@@ -45,7 +45,7 @@ public final class RootNodeModel extends AbstractStringNodeModel {
 	}
 
 	@Override
-	public ITreeNodeModel<?> getChildNode(final int index) {
+	public ITreeNodeModel<String> getChildNode(final int index) {
 		return new Level1NodeModel(PREFIX + index);
 	}
 
