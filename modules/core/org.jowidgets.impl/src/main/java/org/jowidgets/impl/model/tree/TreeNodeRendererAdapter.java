@@ -37,7 +37,7 @@ public class TreeNodeRendererAdapter<VALUE_TYPE> implements ITreeNodeRenderer<VA
 	public void nodeCreated(final VALUE_TYPE value, final ITreeNode node) {}
 
 	@Override
-	public void valueChanged(final VALUE_TYPE value, final ITreeNode node) {}
+	public void dataChanged(final VALUE_TYPE value, final ITreeNode node) {}
 
 	@Override
 	public void selectionChanged(final VALUE_TYPE value, final ITreeNode node) {}
@@ -49,6 +49,6 @@ public class TreeNodeRendererAdapter<VALUE_TYPE> implements ITreeNodeRenderer<VA
 	public void expansionChanged(final VALUE_TYPE value, final ITreeNode node) {}
 
 	@Override
-	public void nodeDisposed(final VALUE_TYPE value, final ITreeNode node) {}
+	public void disposeNode(final VALUE_TYPE value, final ITreeNode node) {}
 
 }

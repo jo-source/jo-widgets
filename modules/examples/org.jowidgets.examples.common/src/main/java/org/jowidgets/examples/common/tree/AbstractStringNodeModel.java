@@ -40,6 +40,7 @@ abstract class AbstractStringNodeModel extends AbstractTreeNodeModel<String> {
 
 	AbstractStringNodeModel(final String data) {
 		this.data = data;
+		setExpanded(true);
 	}
 
 	@Override

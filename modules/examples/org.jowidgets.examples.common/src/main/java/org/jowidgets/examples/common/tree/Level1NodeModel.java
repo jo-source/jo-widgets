@@ -32,7 +32,7 @@ import org.jowidgets.api.model.tree.ITreeNodeModel;
 
 public final class Level1NodeModel extends AbstractStringNodeModel {
 
-	private static final int CHILD_COUNT = 10;
+	private static final int CHILD_COUNT = 5;
 	private static final String PREFIX = "Level 2, Node ";
 
 	Level1NodeModel(final String data) {
