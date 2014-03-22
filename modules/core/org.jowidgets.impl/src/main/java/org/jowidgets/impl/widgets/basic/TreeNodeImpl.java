@@ -78,6 +78,10 @@ public class TreeNodeImpl extends AbstractTreeNodeSpiWrapper implements ITreeNod
 	private final IPopupDetectionListener spiPopupDetectionListener;
 	private final ITreeNodeListener spiTreeNodeListener;
 
+	private final ITreeNodeListener autoCheckListener;
+
+	private final boolean autoCheckMode;
+
 	private IMenuModel popupMenuModel;
 	private IPopupMenu popupMenu;
 	private boolean onRemoveByDispose;
@@ -93,8 +97,24 @@ public class TreeNodeImpl extends AbstractTreeNodeSpiWrapper implements ITreeNod
 		final ITreeNodeDescriptor descriptor) {
 		super(widget);
 
+		this.autoCheckMode = parentTree.getAutoCheckMode();
+
 		this.treeNodeObservable = new TreeNodeObservable();
 		this.popupDetectionObservable = new PopupDetectionObservable();
+
+		this.autoCheckListener = new TreeNodeAdapter() {
+			@Override
+			public void checkedChanged(final boolean checked) {
+				setAutoCheckChildState(checked);
+				final TreeNodeImpl parent = (TreeNodeImpl) getParent();
+				if (parent != null) {
+					parent.setAutoCheckParentState();
+				}
+			}
+		};
+		if (autoCheckMode) {
+			widget.addTreeNodeListener(autoCheckListener);
+		}
 
 		this.spiPopupDetectionListener = new IPopupDetectionListener() {
 
@@ -207,6 +227,17 @@ public class TreeNodeImpl extends AbstractTreeNodeSpiWrapper implements ITreeNod
 					parentTree.getTreeObservable().fireNodeCollapsed(TreeNodeImpl.this);
 				}
 			}
+
+			@Override
+			public void checkedChanged(final boolean checked) {
+				if (checked) {
+					parentTree.getTreeObservable().fireNodeChecked(TreeNodeImpl.this);
+				}
+				else {
+					parentTree.getTreeObservable().fireNodeUnchecked(TreeNodeImpl.this);
+				}
+			}
+
 		});
 
 		addPopupDetectionListener(new IPopupDetectionListener() {
@@ -257,6 +288,62 @@ public class TreeNodeImpl extends AbstractTreeNodeSpiWrapper implements ITreeNod
 		}
 		else {
 			parentTree.removeKeyListener(keyListener);
+		}
+	}
+
+	private void setAutoCheckChildState(final boolean checked) {
+		if (!autoCheckMode) {
+			return;
+		}
+		else {
+			getWidget().removeTreeNodeListener(autoCheckListener);
+			if (isGreyed() || isChecked() != checked) {
+				setChecked(checked);
+			}
+			for (final ITreeNode childNode : getChildren()) {
+				((TreeNodeImpl) childNode).setAutoCheckChildState(checked);
+			}
+			getWidget().addTreeNodeListener(autoCheckListener);
+		}
+	}
+
+	private void setAutoCheckParentState() {
+		if (!autoCheckMode) {
+			return;
+		}
+		else {
+			getWidget().removeTreeNodeListener(autoCheckListener);
+
+			int checkedCount = 0;
+			int greyedCount = 0;
+			for (final ITreeNode childNode : getChildren()) {
+				if (childNode.isChecked()) {
+					checkedCount++;
+				}
+				else if (childNode.isGreyed()) {
+					greyedCount++;
+				}
+			}
+
+			if (checkedCount == getChildren().size()) {
+				setChecked(true);
+				setGreyed(false);
+			}
+			else if (checkedCount > 0) {
+				setGreyed(true);
+			}
+			else if (greyedCount > 0) {
+				setGreyed(true);
+			}
+			else {
+				setChecked(false);
+			}
+			final TreeNodeImpl parent = (TreeNodeImpl) getParent();
+			if (parent != null) {
+				parent.setAutoCheckParentState();
+			}
+
+			getWidget().addTreeNodeListener(autoCheckListener);
 		}
 	}
 
@@ -409,6 +496,11 @@ public class TreeNodeImpl extends AbstractTreeNodeSpiWrapper implements ITreeNod
 	public void setAllChildrenExpanded(final boolean expanded) {
 		setExpanded(expanded);
 		treeContainerDelegate.setAllChildrenExpanded(expanded);
+	}
+
+	@Override
+	public void setAllChildrenChecked(final boolean checked) {
+		treeContainerDelegate.setAllChildrenChecked(checked);
 	}
 
 	@Override

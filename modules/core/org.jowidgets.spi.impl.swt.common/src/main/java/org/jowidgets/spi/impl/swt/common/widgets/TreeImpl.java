@@ -134,6 +134,7 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi, IDro
 			public void widgetSelected(final SelectionEvent e) {
 				if (e.detail == SWT.CHECK) {
 					final TreeNodeImpl itemImpl = items.get(e.item);
+
 					if (itemImpl != null) {
 						itemImpl.fireCheckedChanged(itemImpl.isChecked());
 					}

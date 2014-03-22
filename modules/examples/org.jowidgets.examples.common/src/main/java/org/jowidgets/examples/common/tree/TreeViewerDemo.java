@@ -27,13 +27,20 @@
  */
 package org.jowidgets.examples.common.tree;
 
+import org.jowidgets.api.command.CheckTreeAction;
+import org.jowidgets.api.command.CollapseTreeAction;
+import org.jowidgets.api.command.ExpandTreeAction;
+import org.jowidgets.api.command.UncheckTreeAction;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.IToolBar;
+import org.jowidgets.api.widgets.ITreeViewer;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeViewerBluePrint;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.widgets.blueprint.BPF;
@@ -47,11 +54,20 @@ public final class TreeViewerDemo implements IApplication {
 		frameBp.setSize(new Dimension(800, 600)).setTitle("Tree Viewer Demo");
 
 		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
-		frame.setLayout(MigLayoutFactory.growingInnerCellLayout());
+		frame.setLayout(new MigLayoutDescriptor("wrap", "0[grow, 0::]0", "0[]0[]0[grow, 0::]"));
+
+		final IToolBar toolBar = frame.add(BPF.toolBar());
+		frame.add(BPF.separator(), "growx, w 0::");
 
 		final ITreeViewerBluePrint<String> treeViewerBp = BPF.treeViewer(new RootNodeModel());
-		treeViewerBp.setChecked(true);
-		frame.add(treeViewerBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		treeViewerBp.setChecked(true).setAutoCheckMode(true);
+		final ITreeViewer<String> tree = frame.add(treeViewerBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+
+		toolBar.addAction(CollapseTreeAction.create(tree));
+		toolBar.addAction(ExpandTreeAction.create(tree));
+		toolBar.addAction(UncheckTreeAction.create(tree));
+		toolBar.addAction(CheckTreeAction.create(tree));
+		toolBar.pack();
 
 		//set the root frame visible
 		frame.setVisible(true);

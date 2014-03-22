@@ -38,27 +38,27 @@ import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.tools.command.AbstractEnabledChecker;
 import org.jowidgets.tools.controller.TreeAdapter;
 
-final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implements IEnabledChecker {
+final class TreeCheckedEnabledChecker extends AbstractEnabledChecker implements IEnabledChecker {
 
-	private static final IMessage NODES_ALREADY_EXPANDED = Messages.getMessage("TreeExpansionEnabledChecker.nodesAlreadyExpanded");
-	private static final IMessage NODES_ALREADY_COLLAPSED = Messages.getMessage("TreeExpansionEnabledChecker.nodesAlreadyCollapsed");
+	private static final IMessage NODES_ALREADY_CHECKED = Messages.getMessage("TreeCheckedEnabledChecker.nodesAlreadyChecked");
+	private static final IMessage NODES_ALREADY_UNCHECKED = Messages.getMessage("TreeCheckedEnabledChecker.nodesAlreadyUnchecked");
 
 	private final ITreeContainer treeContainer;
-	private final boolean expanded;
+	private final boolean checked;
 
-	TreeExpansionEnabledChecker(final ITreeContainer treeContainer, final boolean expanded) {
+	TreeCheckedEnabledChecker(final ITreeContainer treeContainer, final boolean checked) {
 		this.treeContainer = treeContainer;
-		this.expanded = expanded;
+		this.checked = checked;
 
 		getParentTree(treeContainer).addTreeListener(new TreeAdapter() {
 
 			@Override
-			public void nodeExpanded(final ITreeNode node) {
+			public void nodeChecked(final ITreeNode node) {
 				fireChangedEvent();
 			}
 
 			@Override
-			public void nodeCollapsed(final ITreeNode node) {
+			public void nodeUnchecked(final ITreeNode node) {
 				fireChangedEvent();
 			}
 
@@ -79,23 +79,21 @@ final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implement
 		if (hasNodeThatWillBeChanged(treeContainer)) {
 			return EnabledState.ENABLED;
 		}
-		else if (expanded) {
-			return EnabledState.disabled(NODES_ALREADY_EXPANDED.get());
+		else if (checked) {
+			return EnabledState.disabled(NODES_ALREADY_CHECKED.get());
 		}
 		else {
-			return EnabledState.disabled(NODES_ALREADY_COLLAPSED.get());
+			return EnabledState.disabled(NODES_ALREADY_UNCHECKED.get());
 		}
 	}
 
 	private boolean hasNodeThatWillBeChanged(final ITreeContainer tree) {
 		for (final ITreeNode childNode : tree.getChildren()) {
-			if (childNode.getChildren().size() > 0) {
-				if (childNode.isExpanded() != expanded) {
-					return true;
-				}
-				if (hasNodeThatWillBeChanged(childNode)) {
-					return true;
-				}
+			if (childNode.isChecked() != checked) {
+				return true;
+			}
+			if (hasNodeThatWillBeChanged(childNode)) {
+				return true;
 			}
 		}
 		return false;

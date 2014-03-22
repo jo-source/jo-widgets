@@ -28,7 +28,6 @@
 
 package org.jowidgets.examples.common.demo;
 
-import org.jowidgets.api.controller.ITreeListener;
 import org.jowidgets.api.controller.ITreePopupDetectionListener;
 import org.jowidgets.api.controller.ITreePopupEvent;
 import org.jowidgets.api.controller.ITreeSelectionEvent;
@@ -46,6 +45,7 @@ import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITreeNodeListener;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.controller.TreeAdapter;
 
 public final class DemoTreeComposite {
 
@@ -70,7 +70,7 @@ public final class DemoTreeComposite {
 			}
 		});
 
-		tree.addTreeListener(new ITreeListener() {
+		tree.addTreeListener(new TreeAdapter() {
 
 			@Override
 			public void nodeExpanded(final ITreeNode node) {

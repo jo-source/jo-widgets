@@ -26,57 +26,23 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.command;
+package org.jowidgets.tools.controller;
 
-import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.command.IDefaultActionBuilder;
-import org.jowidgets.api.command.IDefaultActionFactory;
-import org.jowidgets.api.widgets.ITreeContainer;
-import org.jowidgets.util.Assert;
+import org.jowidgets.api.controller.ITreeListener;
+import org.jowidgets.api.widgets.ITreeNode;
 
-public final class DefaultActionFactoryImpl implements IDefaultActionFactory {
+public class TreeAdapter implements ITreeListener {
 
 	@Override
-	public IDefaultActionBuilder collapseTreeActionBuilder(final ITreeContainer tree) {
-		Assert.paramNotNull(tree, "tree");
-		return new CollapseTreeActionBuilder(tree);
-	}
+	public void nodeExpanded(final ITreeNode node) {}
 
 	@Override
-	public IAction collapseTreeAction(final ITreeContainer tree) {
-		Assert.paramNotNull(tree, "tree");
-		return collapseTreeActionBuilder(tree).build();
-	}
+	public void nodeCollapsed(final ITreeNode node) {}
 
 	@Override
-	public IDefaultActionBuilder expandTreeActionBuilder(final ITreeContainer tree) {
-		return new ExpandTreeActionBuilder(tree);
-	}
+	public void nodeChecked(final ITreeNode node) {}
 
 	@Override
-	public IAction expandTreeAction(final ITreeContainer tree) {
-		Assert.paramNotNull(tree, "tree");
-		return expandTreeActionBuilder(tree).build();
-	}
-
-	@Override
-	public IDefaultActionBuilder checkTreeActionBuilder(final ITreeContainer tree) {
-		return new CheckTreeActionBuilder(tree);
-	}
-
-	@Override
-	public IAction checkTreeAction(final ITreeContainer tree) {
-		return checkTreeActionBuilder(tree).build();
-	}
-
-	@Override
-	public IDefaultActionBuilder uncheckTreeActionBuilder(final ITreeContainer tree) {
-		return new UncheckTreeActionBuilder(tree);
-	}
-
-	@Override
-	public IAction uncheckTreeAction(final ITreeContainer tree) {
-		return uncheckTreeActionBuilder(tree).build();
-	}
+	public void nodeUnchecked(final ITreeNode node) {}
 
 }
