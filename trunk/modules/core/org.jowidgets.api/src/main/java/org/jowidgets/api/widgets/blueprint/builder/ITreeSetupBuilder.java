@@ -40,4 +40,6 @@ public interface ITreeSetupBuilder<INSTANCE_TYPE extends ITreeSetupBuilder<?>> e
 
 	INSTANCE_TYPE setDefaultLeafIcon(IImageConstant icon);
 
+	INSTANCE_TYPE setAutoCheckMode(boolean autoCheckMode);
+
 }

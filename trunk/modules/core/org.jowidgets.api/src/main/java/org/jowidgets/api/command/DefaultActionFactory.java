@@ -60,4 +60,20 @@ public final class DefaultActionFactory {
 		return getInstance().expandTreeAction(tree);
 	}
 
+	public static IDefaultActionBuilder checkTreeActionBuilder(final ITreeContainer tree) {
+		return getInstance().checkTreeActionBuilder(tree);
+	}
+
+	public static IAction checkTreeAction(final ITreeContainer tree) {
+		return getInstance().checkTreeAction(tree);
+	}
+
+	public static IDefaultActionBuilder uncheckTreeActionBuilder(final ITreeContainer tree) {
+		return getInstance().uncheckTreeActionBuilder(tree);
+	}
+
+	public static IAction uncheckTreeAction(final ITreeContainer tree) {
+		return getInstance().uncheckTreeAction(tree);
+	}
+
 }

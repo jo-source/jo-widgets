@@ -40,4 +40,12 @@ public interface IDefaultActionFactory {
 
 	IAction expandTreeAction(ITreeContainer tree);
 
+	IDefaultActionBuilder checkTreeActionBuilder(ITreeContainer tree);
+
+	IAction checkTreeAction(ITreeContainer tree);
+
+	IDefaultActionBuilder uncheckTreeActionBuilder(ITreeContainer tree);
+
+	IAction uncheckTreeAction(ITreeContainer tree);
+
 }

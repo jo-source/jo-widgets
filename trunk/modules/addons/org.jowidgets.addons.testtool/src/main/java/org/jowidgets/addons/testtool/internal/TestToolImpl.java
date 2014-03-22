@@ -33,7 +33,6 @@ import java.util.List;
 
 import org.jowidgets.addons.testtool.internal.persister.ITestDataPersister;
 import org.jowidgets.addons.testtool.internal.persister.TestDataXmlPersister;
-import org.jowidgets.api.controller.ITreeListener;
 import org.jowidgets.api.controller.ITreePopupDetectionListener;
 import org.jowidgets.api.controller.ITreePopupEvent;
 import org.jowidgets.api.controller.ITreeSelectionEvent;
@@ -68,6 +67,7 @@ import org.jowidgets.common.widgets.controller.IMouseButtonEvent;
 import org.jowidgets.test.api.widgets.IButtonUi;
 import org.jowidgets.tools.controller.MouseAdapter;
 import org.jowidgets.tools.controller.TabItemAdapter;
+import org.jowidgets.tools.controller.TreeAdapter;
 import org.jowidgets.tools.controller.WindowAdapter;
 
 public final class TestToolImpl implements ITestTool {
@@ -230,7 +230,7 @@ public final class TestToolImpl implements ITestTool {
 					}
 				}
 			});
-			tree.addTreeListener(new ITreeListener() {
+			tree.addTreeListener(new TreeAdapter() {
 
 				@Override
 				public void nodeExpanded(final ITreeNode node) {

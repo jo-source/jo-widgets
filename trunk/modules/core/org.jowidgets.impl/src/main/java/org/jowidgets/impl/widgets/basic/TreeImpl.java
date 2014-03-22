@@ -85,6 +85,8 @@ public class TreeImpl extends AbstractControlSpiWrapper implements ITree, IDropS
 	private final IImageConstant defaultInnerIcon;
 	private final IImageConstant defaultLeafIcon;
 
+	private final boolean autoCheckMode;
+
 	private List<ITreeNodeSpi> lastSelectionSpi;
 	private List<ITreeNode> selection;
 
@@ -93,6 +95,7 @@ public class TreeImpl extends AbstractControlSpiWrapper implements ITree, IDropS
 
 		this.defaultInnerIcon = descriptor.getDefaultInnerIcon();
 		this.defaultLeafIcon = descriptor.getDefaultLeafIcon();
+		this.autoCheckMode = descriptor.getAutoCheckMode() && descriptor.isChecked();
 
 		this.controlDelegate = new ControlDelegate(widgetSpi, this);
 
@@ -338,6 +341,11 @@ public class TreeImpl extends AbstractControlSpiWrapper implements ITree, IDropS
 	}
 
 	@Override
+	public void setAllChildrenChecked(final boolean checked) {
+		treeContainerDelegate.setAllChildrenChecked(checked);
+	}
+
+	@Override
 	public int getLevel() {
 		return treeContainerDelegate.getLevel();
 	}
@@ -378,6 +386,10 @@ public class TreeImpl extends AbstractControlSpiWrapper implements ITree, IDropS
 		return treePopupDetectionObservable;
 	}
 
+	boolean getAutoCheckMode() {
+		return autoCheckMode;
+	}
+
 	private void afterSelectionChanged() {
 		final List<ITreeNode> selected = new LinkedList<ITreeNode>();
 		final List<ITreeNode> unselected = new LinkedList<ITreeNode>();
@@ -412,4 +424,5 @@ public class TreeImpl extends AbstractControlSpiWrapper implements ITree, IDropS
 			afterSelectionChanged();
 		}
 	}
+
 }

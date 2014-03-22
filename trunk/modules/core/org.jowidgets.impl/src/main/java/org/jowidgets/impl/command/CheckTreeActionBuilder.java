@@ -29,54 +29,30 @@
 package org.jowidgets.impl.command;
 
 import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.command.IDefaultActionBuilder;
-import org.jowidgets.api.command.IDefaultActionFactory;
+import org.jowidgets.api.command.IActionBuilder;
+import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.widgets.ITreeContainer;
+import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.util.Assert;
 
-public final class DefaultActionFactoryImpl implements IDefaultActionFactory {
+final class CheckTreeActionBuilder extends AbstractDefaultActionBuilder {
 
-	@Override
-	public IDefaultActionBuilder collapseTreeActionBuilder(final ITreeContainer tree) {
+	private static final IMessage CHECK_ALL_MESSAGE = Messages.getMessage("CheckTreeActionBuilder.checkAllLabel");
+
+	private final ITreeContainer tree;
+
+	CheckTreeActionBuilder(final ITreeContainer tree) {
 		Assert.paramNotNull(tree, "tree");
-		return new CollapseTreeActionBuilder(tree);
+		this.tree = tree;
+
+		setText(CHECK_ALL_MESSAGE.get());
+		setIcon(IconsSmall.CHECK_ALL);
 	}
 
 	@Override
-	public IAction collapseTreeAction(final ITreeContainer tree) {
-		Assert.paramNotNull(tree, "tree");
-		return collapseTreeActionBuilder(tree).build();
-	}
-
-	@Override
-	public IDefaultActionBuilder expandTreeActionBuilder(final ITreeContainer tree) {
-		return new ExpandTreeActionBuilder(tree);
-	}
-
-	@Override
-	public IAction expandTreeAction(final ITreeContainer tree) {
-		Assert.paramNotNull(tree, "tree");
-		return expandTreeActionBuilder(tree).build();
-	}
-
-	@Override
-	public IDefaultActionBuilder checkTreeActionBuilder(final ITreeContainer tree) {
-		return new CheckTreeActionBuilder(tree);
-	}
-
-	@Override
-	public IAction checkTreeAction(final ITreeContainer tree) {
-		return checkTreeActionBuilder(tree).build();
-	}
-
-	@Override
-	public IDefaultActionBuilder uncheckTreeActionBuilder(final ITreeContainer tree) {
-		return new UncheckTreeActionBuilder(tree);
-	}
-
-	@Override
-	public IAction uncheckTreeAction(final ITreeContainer tree) {
-		return uncheckTreeActionBuilder(tree).build();
+	protected IAction doBuild(final IActionBuilder superBuilder) {
+		superBuilder.setCommand(new TreeCheckCommand(tree, true), new TreeCheckedEnabledChecker(tree, true));
+		return superBuilder.build();
 	}
 
 }

@@ -149,6 +149,21 @@ public class TreeContainerDelegate implements ITreeContainer {
 		}
 	}
 
+	@Override
+	public void setAllChildrenChecked(final boolean checked) {
+		if (treeNode != null) {
+			if (treeNode.isChecked() != checked || treeNode.isGreyed()) {
+				if (treeNode.isGreyed()) {
+					treeNode.setGreyed(false);
+				}
+				treeNode.setChecked(checked);
+			}
+		}
+		for (final ITreeNode childNode : children) {
+			childNode.setAllChildrenChecked(checked);
+		}
+	}
+
 	public void dispose() {
 		final List<ITreeNode> childrenCopy = new LinkedList<ITreeNode>(children);
 		//clear the children to avoid that children will be removed

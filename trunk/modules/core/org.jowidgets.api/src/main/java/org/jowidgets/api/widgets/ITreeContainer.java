@@ -54,6 +54,8 @@ public interface ITreeContainer {
 
 	void setAllChildrenExpanded(boolean expanded);
 
+	void setAllChildrenChecked(boolean checked);
+
 	int getLevel();
 
 }
