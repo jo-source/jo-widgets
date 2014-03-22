@@ -102,6 +102,9 @@ public class DefaultIconsRegisterService extends ImageConstantRegisterService {
 		registerImage(IconsSmall.EXPAND_ALL, "expand_all.png");
 		registerImage(IconsSmall.COLLAPSE_ALL, "collapse_all.png");
 
+		registerImage(IconsSmall.CHECK_ALL, "check_all.png");
+		registerImage(IconsSmall.UNCHECK_ALL, "uncheck_all.png");
+
 		registerImage(IconsSmall.WAIT_1, "wait_1.png");
 		registerImage(IconsSmall.WAIT_2, "wait_2.png");
 		registerImage(IconsSmall.WAIT_3, "wait_3.png");

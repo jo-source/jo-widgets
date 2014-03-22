@@ -92,6 +92,8 @@ public enum IconsSmall implements IImageConstant {
 
 	EXPAND_ALL,
 	COLLAPSE_ALL,
+	CHECK_ALL,
+	UNCHECK_ALL,
 
 	WAIT_1,
 	WAIT_2,
