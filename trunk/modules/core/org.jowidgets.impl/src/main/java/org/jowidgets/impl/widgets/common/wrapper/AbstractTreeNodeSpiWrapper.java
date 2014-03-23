@@ -85,10 +85,8 @@ public abstract class AbstractTreeNodeSpiWrapper extends ItemSpiWrapper implemen
 
 	@Override
 	public void setChecked(final boolean checked) {
+		getWidget().setGreyed(false);
 		getWidget().setChecked(checked);
-		if (!checked) {
-			getWidget().setGreyed(false);
-		}
 	}
 
 	@Override
@@ -96,10 +94,9 @@ public abstract class AbstractTreeNodeSpiWrapper extends ItemSpiWrapper implemen
 		return getWidget().isChecked() && !getWidget().isGreyed();
 	}
 
-	@Override
 	public void setGreyed(final boolean greyed) {
 		getWidget().setGreyed(greyed);
-		if (greyed) {
+		if (greyed && !getWidget().isChecked()) {
 			getWidget().setChecked(true);
 		}
 	}

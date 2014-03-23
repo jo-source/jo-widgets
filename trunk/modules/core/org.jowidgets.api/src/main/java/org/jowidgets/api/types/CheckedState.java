@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2014, MGrossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,18 +26,23 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.widgets;
+package org.jowidgets.api.types;
 
-import org.jowidgets.common.widgets.ITreeNodeCommon;
+public enum CheckedState {
 
-public interface ITreeNodeSpi extends IItemSpi, ITreeNodeCommon {
+	/**
+	 * The item is checked completely
+	 */
+	CHECKED,
 
-	ITreeNodeSpi addNode(Integer index);
+	/**
+	 * The item is checked partially
+	 */
+	GREYED,
 
-	void removeNode(int index);
-
-	IPopupMenuSpi createPopupMenu();
-
-	void setGreyed(boolean greyed);
+	/**
+	 * The item is unchecked
+	 */
+	UNCHECKED;
 
 }

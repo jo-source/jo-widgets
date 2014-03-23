@@ -37,6 +37,7 @@ import org.jowidgets.api.controller.ITreeSelectionEvent;
 import org.jowidgets.api.controller.ITreeSelectionListener;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.types.CheckedState;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeContainer;
@@ -60,6 +61,7 @@ import org.jowidgets.tools.controller.KeyObservable.IKeyObservableCallback;
 import org.jowidgets.tools.controller.PopupDetectionObservable;
 import org.jowidgets.tools.controller.TreeNodeAdapter;
 import org.jowidgets.tools.controller.TreeNodeObservable;
+import org.jowidgets.util.Assert;
 import org.jowidgets.util.EmptyCheck;
 
 public class TreeNodeImpl extends AbstractTreeNodeSpiWrapper implements ITreeNode {
@@ -327,13 +329,9 @@ public class TreeNodeImpl extends AbstractTreeNodeSpiWrapper implements ITreeNod
 
 			if (checkedCount == getChildren().size()) {
 				setChecked(true);
-				setGreyed(false);
 			}
-			else if (checkedCount > 0) {
-				setGreyed(true);
-			}
-			else if (greyedCount > 0) {
-				setGreyed(true);
+			else if (checkedCount > 0 || greyedCount > 0) {
+				setGreyed();
 			}
 			else {
 				setChecked(false);
@@ -345,6 +343,49 @@ public class TreeNodeImpl extends AbstractTreeNodeSpiWrapper implements ITreeNod
 
 			getWidget().addTreeNodeListener(autoCheckListener);
 		}
+	}
+
+	@Override
+	public void setGreyed() {
+		if (!isGreyed()) {
+			super.setGreyed(true);
+			treeNodeObservable.fireCheckedChanged(false);
+		}
+	}
+
+	@Override
+	public CheckedState getCheckedState() {
+		if (isChecked()) {
+			return CheckedState.CHECKED;
+		}
+		else if (isGreyed()) {
+			return CheckedState.GREYED;
+		}
+		else {
+			return CheckedState.UNCHECKED;
+		}
+	}
+
+	@Override
+	public void setCheckedState(final CheckedState state) {
+		Assert.paramNotNull(state, "state");
+		if (CheckedState.CHECKED.equals(state)) {
+			setChecked(true);
+		}
+		else if (CheckedState.GREYED.equals(state)) {
+			setGreyed(true);
+		}
+		else if (CheckedState.UNCHECKED.equals(state)) {
+			setChecked(false);
+		}
+		else {
+			throw new IllegalArgumentException("The state '" + state + "' is not known");
+		}
+	}
+
+	@Override
+	public boolean isUnchecked() {
+		return !isGreyed() && !isChecked();
 	}
 
 	@Override

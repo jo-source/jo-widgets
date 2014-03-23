@@ -31,6 +31,7 @@ package org.jowidgets.api.widgets;
 import java.util.List;
 
 import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.types.CheckedState;
 import org.jowidgets.common.widgets.ITreeNodeCommon;
 import org.jowidgets.common.widgets.controller.IKeyObservable;
 
@@ -73,5 +74,23 @@ public interface ITreeNode extends IItem, ITreeContainer, IKeyObservable, ITreeN
 
 	@Override
 	ITreeNode getParent();
+
+	CheckedState getCheckedState();
+
+	void setCheckedState(CheckedState state);
+
+	/**
+	 * Sets the node to the greyed state.
+	 * If set, the isChecked() and isUnchecked() methods will return false both,
+	 * and the isGreyed() method will return true
+	 */
+	void setGreyed();
+
+	/**
+	 * Checks if node is unchecked. If true it is not checked and not greyed, if false it my be greyed or checked
+	 * 
+	 * @return The unchecked state
+	 */
+	boolean isUnchecked();
 
 }
