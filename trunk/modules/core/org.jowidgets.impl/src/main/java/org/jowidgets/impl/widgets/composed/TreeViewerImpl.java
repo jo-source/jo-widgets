@@ -38,6 +38,7 @@ import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.api.widgets.ITreeViewer;
 import org.jowidgets.api.widgets.descriptor.setup.ITreeViewerSetup;
+import org.jowidgets.common.widgets.controller.ITreeNodeListener;
 import org.jowidgets.tools.model.tree.TreeNodeModelAdapter;
 import org.jowidgets.tools.widgets.wrapper.TreeWrapper;
 import org.jowidgets.util.Assert;
@@ -90,6 +91,7 @@ public final class TreeViewerImpl<ROOT_NODE_VALUE_TYPE> extends TreeWrapper impl
 
 		private final ITreeNodeModelListener dataListener;
 		private final ITreeNodeModelListener childrenListener;
+		private final ITreeNodeListener treeNodeListener;
 
 		private ModelNodeBinding(final ITreeContainer parentNode, final ITreeNodeModel<?> parentNodeModel) {
 			Assert.paramNotNull(parentNode, "parentNode");
@@ -99,13 +101,24 @@ public final class TreeViewerImpl<ROOT_NODE_VALUE_TYPE> extends TreeWrapper impl
 
 			this.dataListener = new DataListener();
 			this.childrenListener = new ChildrenListener();
+			this.treeNodeListener = new TreeNodeListener();
 
 			if (parentNode instanceof ITreeNode) {
-				renderDataChanged(parentNodeModel, (ITreeNode) parentNode);
-				parentNodeModel.addTreeNodeModelListener(dataListener);
+				final ITreeNode treeNode = (ITreeNode) parentNode;
+				renderDataChanged(parentNodeModel, treeNode);
+				renderSelectionChanged(parentNodeModel, treeNode);
+				renderCheckedChanged(parentNodeModel, treeNode);
 			}
 
 			onChildrenChanged();
+
+			if (parentNode instanceof ITreeNode) {
+				final ITreeNode treeNode = (ITreeNode) parentNode;
+				renderExpansionChanged(parentNodeModel, treeNode);
+				parentNodeModel.addTreeNodeModelListener(dataListener);
+				treeNode.addTreeNodeListener(treeNodeListener);
+			}
+
 			parentNodeModel.addTreeNodeModelListener(childrenListener);
 		}
 
@@ -137,9 +150,7 @@ public final class TreeViewerImpl<ROOT_NODE_VALUE_TYPE> extends TreeWrapper impl
 					childNode.setExpanded(true);
 				}
 
-				if (childNodeModel.isChecked()) {
-					childNode.setChecked(true);
-				}
+				childNode.setCheckedState(childNodeModel.getCheckedState());
 
 				if (childNodeModel.isSelected()) {
 					childNode.setSelected(true);
@@ -162,9 +173,25 @@ public final class TreeViewerImpl<ROOT_NODE_VALUE_TYPE> extends TreeWrapper impl
 			model.getRenderer().disposeNode(model.getData(), node);
 		}
 
+		@SuppressWarnings({"rawtypes", "unchecked"})
+		private void renderSelectionChanged(final ITreeNodeModel model, final ITreeNode node) {
+			model.getRenderer().selectionChanged(model.getData(), node);
+		}
+
+		@SuppressWarnings({"rawtypes", "unchecked"})
+		private void renderCheckedChanged(final ITreeNodeModel model, final ITreeNode node) {
+			model.getRenderer().checkedChanged(model.getData(), node);
+		}
+
+		@SuppressWarnings({"rawtypes", "unchecked"})
+		private void renderExpansionChanged(final ITreeNodeModel model, final ITreeNode node) {
+			model.getRenderer().expansionChanged(model.getData(), node);
+		}
+
 		private void dispose() {
 			if (parentNode instanceof ITreeNode) {
 				parentNodeModel.removeTreeNodeModelListener(dataListener);
+				((ITreeNode) parentNode).removeTreeNodeListener(treeNodeListener);
 			}
 			parentNodeModel.removeTreeNodeModelListener(childrenListener);
 		}
@@ -180,6 +207,28 @@ public final class TreeViewerImpl<ROOT_NODE_VALUE_TYPE> extends TreeWrapper impl
 			@Override
 			public void childrenChanged() {
 				onChildrenChanged();
+			}
+		}
+
+		private final class TreeNodeListener implements ITreeNodeListener {
+
+			@Override
+			public void selectionChanged(final boolean selected) {
+				parentNodeModel.setSelected(selected);
+				renderSelectionChanged(parentNodeModel, (ITreeNode) parentNode);
+			}
+
+			@Override
+			public void expandedChanged(final boolean expanded) {
+				parentNodeModel.setExpanded(expanded);
+				renderExpansionChanged(parentNodeModel, (ITreeNode) parentNode);
+			}
+
+			@Override
+			public void checkedChanged(final boolean checked) {
+				final ITreeNode treeNode = (ITreeNode) parentNode;
+				parentNodeModel.setCheckedState(treeNode.getCheckedState());
+				renderCheckedChanged(parentNodeModel, treeNode);
 			}
 		}
 

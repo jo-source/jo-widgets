@@ -32,6 +32,7 @@ import org.jowidgets.api.model.tree.ITreeNodeModel;
 import org.jowidgets.api.model.tree.ITreeNodeRenderer;
 import org.jowidgets.tools.model.tree.AbstractTreeNodeModel;
 import org.jowidgets.tools.model.tree.DefaultTreeNodeRenderer;
+import org.jowidgets.tools.model.tree.TreeNodeModelAdapter;
 
 abstract class AbstractStringNodeModel extends AbstractTreeNodeModel<String> implements ITreeNodeModel<String> {
 
@@ -42,6 +43,30 @@ abstract class AbstractStringNodeModel extends AbstractTreeNodeModel<String> imp
 	AbstractStringNodeModel(final String data) {
 		this.data = data;
 		setExpanded(true);
+
+		addTreeNodeModelListener(new TreeNodeModelAdapter() {
+			@Override
+			public void selectionChanged() {
+				//CHECKSTYLE:OFF
+				System.out.println("SELECTION CHANGED: " + isSelected() + " / " + getData());
+				//CHECKSTYLE:ON
+			}
+
+			@Override
+			public void checkedChanged() {
+				//CHECKSTYLE:OFF
+				System.out.println("CHECKED CHANGED: " + getCheckedState() + " / " + getData());
+				//CHECKSTYLE:ON
+			}
+
+			@Override
+			public void expansionChanged() {
+				//CHECKSTYLE:OFF
+				System.out.println("EXPANSION CHANGED: " + isExpanded() + " / " + getData());
+				//CHECKSTYLE:ON
+			}
+
+		});
 	}
 
 	@Override

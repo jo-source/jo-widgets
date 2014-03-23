@@ -28,6 +28,8 @@
 
 package org.jowidgets.api.model.tree;
 
+import org.jowidgets.api.types.CheckedState;
+
 public interface ITreeNodeModel<VALUE_TYPE> extends ITreeNodeModelObservable {
 
 	int getChildrenCount();
@@ -42,9 +44,9 @@ public interface ITreeNodeModel<VALUE_TYPE> extends ITreeNodeModelObservable {
 
 	void setSelected(boolean selected);
 
-	boolean isChecked();
+	CheckedState getCheckedState();
 
-	void setChecked(boolean checked);
+	void setCheckedState(CheckedState state);
 
 	boolean isExpanded();
 
