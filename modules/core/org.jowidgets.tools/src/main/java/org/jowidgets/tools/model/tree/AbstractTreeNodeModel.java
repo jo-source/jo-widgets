@@ -29,12 +29,19 @@
 package org.jowidgets.tools.model.tree;
 
 import org.jowidgets.api.model.tree.ITreeNodeModel;
+import org.jowidgets.api.types.CheckedState;
+import org.jowidgets.util.Assert;
 
 public abstract class AbstractTreeNodeModel<VALUE_TYPE> extends TreeNodeModelObservable implements ITreeNodeModel<VALUE_TYPE> {
 
+	private CheckedState checkedState;
+
 	private boolean selected;
-	private boolean checked;
 	private boolean expanded;
+
+	public AbstractTreeNodeModel() {
+		this.checkedState = CheckedState.UNCHECKED;
+	}
 
 	@Override
 	public final boolean isSelected() {
@@ -50,21 +57,22 @@ public abstract class AbstractTreeNodeModel<VALUE_TYPE> extends TreeNodeModelObs
 	}
 
 	@Override
-	public final boolean isChecked() {
-		return checked;
-	}
-
-	@Override
-	public final void setChecked(final boolean checked) {
-		if (this.checked != checked) {
-			this.checked = checked;
-			fireCheckedChanged();
-		}
-	}
-
-	@Override
 	public final boolean isExpanded() {
 		return expanded;
+	}
+
+	@Override
+	public CheckedState getCheckedState() {
+		return checkedState;
+	}
+
+	@Override
+	public void setCheckedState(final CheckedState state) {
+		Assert.paramNotNull(state, "state");
+		if (!this.checkedState.equals(state)) {
+			this.checkedState = state;
+			fireCheckedChanged();
+		}
 	}
 
 	@Override
