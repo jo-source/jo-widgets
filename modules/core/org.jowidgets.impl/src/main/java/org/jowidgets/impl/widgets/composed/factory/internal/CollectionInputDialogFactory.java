@@ -86,7 +86,7 @@ public class CollectionInputDialogFactory<ELEMENT_TYPE> implements
 
 			@Override
 			public void createContent(final IInputContentContainer container) {
-				container.setLayout(MigLayoutFactory.growingInnerCellLayout());
+				container.setLayout(MigLayoutFactory.growingCellLayout());
 				this.control = container.add(inputControlBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 			}
 

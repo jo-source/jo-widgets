@@ -131,7 +131,7 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 			compositeBluePrint.setBorder(setup.getContentBorder());
 			innerRoot = composite.add(compositeBluePrint, "growx, growy, h 0::,w 0::");
 		}
-		innerRoot.setLayout(MigLayoutFactory.growingCellLayout());
+		innerRoot.setLayout(MigLayoutFactory.growingInnerCellLayout());
 		innerComposite = innerRoot.add(BPF.composite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
 		this.compoundValidator = new CompoundValidator<INPUT_TYPE>();
