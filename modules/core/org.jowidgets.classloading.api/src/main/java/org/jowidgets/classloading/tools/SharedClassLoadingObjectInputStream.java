@@ -39,7 +39,7 @@ import org.jowidgets.util.Assert;
 public final class SharedClassLoadingObjectInputStream extends ObjectInputStream {
 
 	public SharedClassLoadingObjectInputStream(final InputStream in) throws IOException {
-		super(Assert.paramNotNull(in, "in"));
+		super(Assert.getParamNotNull(in, "in"));
 	}
 
 	@Override
