@@ -36,9 +36,12 @@ public final class Assert {
 		super();
 	}
 
-	public static void paramNotNull(final Object object, final String name) {
+	public static <PARAM_TYPE> PARAM_TYPE paramNotNull(final PARAM_TYPE object, final String name) {
 		if (object == null) {
 			throw new IllegalArgumentException("The parameter '" + name + "' must not be null!");
+		}
+		else {
+			return object;
 		}
 	}
 
