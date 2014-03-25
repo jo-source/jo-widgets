@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, grossmann
+ * Copyright (c) 2014, MGrossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,49 +26,30 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.clipboard;
+package org.jowidgets.classloading.tools;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectStreamClass;
 
-import org.jowidgets.classloading.tools.SharedClassLoadingObjectInputStream;
+import org.jowidgets.classloading.api.SharedClassLoader;
 import org.jowidgets.util.Assert;
-import org.jowidgets.util.io.IoUtils;
 
-public final class Serializer {
+public final class SharedClassLoadingObjectInputStream extends ObjectInputStream {
 
-	private Serializer() {}
-
-	public static byte[] serialize(final Object obj) {
-		try {
-			final ByteArrayOutputStream b = new ByteArrayOutputStream();
-			final ObjectOutputStream o = new ObjectOutputStream(b);
-			o.writeObject(obj);
-			return b.toByteArray();
-		}
-		catch (final Exception e) {
-			throw new RuntimeException(e);
-		}
+	public SharedClassLoadingObjectInputStream(final InputStream in) throws IOException {
+		super(Assert.paramNotNull(in, "in"));
 	}
 
-	public static Object deserialize(final byte[] bytes) {
-		return deserialize(new ByteArrayInputStream(bytes));
-	}
-
-	public static Object deserialize(final InputStream inputStream) {
-		Assert.paramNotNull(inputStream, "inputStream");
-		SharedClassLoadingObjectInputStream objectInputStream = null;
+	@Override
+	protected Class<?> resolveClass(final ObjectStreamClass objectStreamClass) throws IOException, ClassNotFoundException {
 		try {
-			objectInputStream = new SharedClassLoadingObjectInputStream(inputStream);
-			return objectInputStream.readObject();
+			return SharedClassLoader.getCompositeClassLoader().loadClass(objectStreamClass.getName());
 		}
 		catch (final Exception e) {
-			return null;
-		}
-		finally {
-			IoUtils.tryCloseSilent(objectInputStream);
+			//no exception handling, some objectStreamClasses like 'long' won't be found by classloaders
+			return super.resolveClass(objectStreamClass);
 		}
 	}
 
