@@ -2,7 +2,7 @@
 <feature
     id="org.jowidgets.core.feature"
     label="jowidgets core feature"
-    version="0.30.0.qualifier">
+    version="0.31.0.qualifier">
 
 	<description url="http://www.example.com/description">
 		Feature that holds all core bundles
