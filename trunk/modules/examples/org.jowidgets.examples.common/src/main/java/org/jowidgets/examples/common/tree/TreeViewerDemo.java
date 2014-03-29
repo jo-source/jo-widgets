@@ -28,12 +28,10 @@
 package org.jowidgets.examples.common.tree;
 
 import org.jowidgets.api.command.CheckTreeAction;
-import org.jowidgets.api.command.CollapseTreeAction;
-import org.jowidgets.api.command.ExpandTreeAction;
-import org.jowidgets.api.command.ITreeExpansionAction;
 import org.jowidgets.api.command.UncheckTreeAction;
-import org.jowidgets.api.model.item.IRadioItemModel;
 import org.jowidgets.api.model.item.IToolBarModel;
+import org.jowidgets.api.model.item.ITreeExpansionToolbarItemModelBuilder;
+import org.jowidgets.api.model.item.TreeExpansionToolbarItemModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IToolBar;
@@ -43,11 +41,9 @@ import org.jowidgets.api.widgets.blueprint.ITreeViewerBluePrint;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.controller.IItemStateListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 import org.jowidgets.tools.layout.MigLayoutFactory;
-import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class TreeViewerDemo implements IApplication {
@@ -59,7 +55,7 @@ public final class TreeViewerDemo implements IApplication {
 		frameBp.setSize(new Dimension(800, 600)).setTitle("Tree Viewer Demo");
 
 		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
-		frame.setLayout(new MigLayoutDescriptor("wrap", "0[grow, 0::]0", "0[]0[]0[grow, 0::]"));
+		frame.setLayout(new MigLayoutDescriptor("wrap", "0[grow, 0::]0", "0[]0[]0[grow, 0::]0"));
 
 		final IToolBar toolBar = frame.add(BPF.toolBar());
 		final IToolBarModel toolBarModel = toolBar.getModel();
@@ -69,18 +65,12 @@ public final class TreeViewerDemo implements IApplication {
 		treeViewerBp.setChecked(true).setAutoCheckMode(true);
 		final ITreeViewer<String> tree = frame.add(treeViewerBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
-		final ITreeExpansionAction expandAction = ExpandTreeAction.create(tree);
-		final ITreeExpansionAction collapseAction = CollapseTreeAction.create(tree);
+		final ITreeExpansionToolbarItemModelBuilder expansionItemBuilder = TreeExpansionToolbarItemModel.builder();
+		expansionItemBuilder.setActions(tree);
+		expansionItemBuilder.setLevels(3, true);
 
-		final MenuModel levelMenu = new MenuModel();
-		addItemListener(levelMenu.addRadioItem("All Level"), expandAction, collapseAction, null, true);
-		addItemListener(levelMenu.addRadioItem("Level 1"), expandAction, collapseAction, Integer.valueOf(0), false);
-		addItemListener(levelMenu.addRadioItem("Level 2"), expandAction, collapseAction, Integer.valueOf(1), false);
-		addItemListener(levelMenu.addRadioItem("Level 3"), expandAction, collapseAction, Integer.valueOf(2), false);
-		addItemListener(levelMenu.addRadioItem("Level 4"), expandAction, collapseAction, Integer.valueOf(3), false);
-
-		toolBarModel.addPopupAction(expandAction, levelMenu);
-		toolBarModel.addPopupAction(collapseAction, levelMenu);
+		toolBarModel.addItem(expansionItemBuilder.buildExpandItem());
+		toolBarModel.addItem(expansionItemBuilder.buildCollapseItem());
 
 		toolBarModel.addAction(UncheckTreeAction.create(tree));
 		toolBarModel.addAction(CheckTreeAction.create(tree));
@@ -89,25 +79,6 @@ public final class TreeViewerDemo implements IApplication {
 
 		//set the root frame visible
 		frame.setVisible(true);
-	}
-
-	private void addItemListener(
-		final IRadioItemModel itemModel,
-		final ITreeExpansionAction expandAction,
-		final ITreeExpansionAction collapseAction,
-		final Integer level,
-		final boolean selected) {
-
-		itemModel.addItemListener(new IItemStateListener() {
-			@Override
-			public void itemStateChanged() {
-				if (itemModel.isSelected()) {
-					expandAction.setPivotLevel(level);
-					collapseAction.setPivotLevel(level);
-				}
-			}
-		});
-		itemModel.setSelected(selected);
 	}
 
 	public void start() {

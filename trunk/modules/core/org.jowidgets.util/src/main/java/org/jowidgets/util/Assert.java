@@ -134,4 +134,28 @@ public final class Assert {
 		}
 	}
 
+	public static void paramNotNegative(final int param, final String name) {
+		if (param < 0) {
+			throw new IllegalArgumentException("The parameter '" + name + "' must not be negative but is '" + param + "'");
+		}
+	}
+
+	public static void paramLessOrEqual(final int param1, final int param2, final String name1, final String name2) {
+		if (param2 < param1) {
+			throw new IllegalArgumentException("The parameter '"
+				+ name1
+				+ "' must be less or equal '"
+				+ name2
+				+ "', but '"
+				+ name1
+				+ "' is '"
+				+ param1
+				+ "' and '"
+				+ name2
+				+ "' is'"
+				+ param2
+				+ "'");
+		}
+	}
+
 }
