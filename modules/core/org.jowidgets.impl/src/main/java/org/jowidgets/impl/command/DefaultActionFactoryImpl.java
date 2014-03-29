@@ -62,6 +62,16 @@ public final class DefaultActionFactoryImpl implements IDefaultActionFactory {
 	}
 
 	@Override
+	public ITreeExpansionActionBuilder expandCollapseTreeActionBuilder(final ITreeContainer tree) {
+		return new ExpandCollapseTreeActionBuilder(tree);
+	}
+
+	@Override
+	public ITreeExpansionAction expandCollapseTreeAction(final ITreeContainer tree) {
+		return expandCollapseTreeActionBuilder(tree).build();
+	}
+
+	@Override
 	public IDefaultActionBuilder checkTreeActionBuilder(final ITreeContainer tree) {
 		return new CheckTreeActionBuilder(tree);
 	}

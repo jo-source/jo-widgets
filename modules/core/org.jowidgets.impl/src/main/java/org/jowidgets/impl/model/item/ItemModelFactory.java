@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.model.item;
 
+import org.jowidgets.api.command.ITreeExpansionAction;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.IActionItemModelBuilder;
 import org.jowidgets.api.model.item.ICheckedItemModel;
@@ -130,8 +131,8 @@ public class ItemModelFactory implements IItemModelFactory {
 	}
 
 	@Override
-	public ITreeExpansionToolbarItemModelBuilder treeExpansionToolbarItemModelBuilder() {
-		return new TreeExpansionToolbarActionModelBuilderImpl();
+	public ITreeExpansionToolbarItemModelBuilder treeExpansionToolbarItemBuilder(final ITreeExpansionAction action) {
+		return new TreeExpansionToolbarActionModelBuilderImpl(action);
 	}
 
 }

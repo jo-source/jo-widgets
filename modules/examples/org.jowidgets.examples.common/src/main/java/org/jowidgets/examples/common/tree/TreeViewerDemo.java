@@ -28,10 +28,11 @@
 package org.jowidgets.examples.common.tree;
 
 import org.jowidgets.api.command.CheckTreeAction;
+import org.jowidgets.api.command.CollapseTreeAction;
+import org.jowidgets.api.command.ExpandTreeAction;
 import org.jowidgets.api.command.UncheckTreeAction;
+import org.jowidgets.api.model.item.ExpandCollapseTreeToolbarItemModel;
 import org.jowidgets.api.model.item.IToolBarModel;
-import org.jowidgets.api.model.item.ITreeExpansionToolbarItemModelBuilder;
-import org.jowidgets.api.model.item.TreeExpansionToolbarItemModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IToolBar;
@@ -65,12 +66,9 @@ public final class TreeViewerDemo implements IApplication {
 		treeViewerBp.setChecked(true).setAutoCheckMode(true);
 		final ITreeViewer<String> tree = frame.add(treeViewerBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
-		final ITreeExpansionToolbarItemModelBuilder expansionItemBuilder = TreeExpansionToolbarItemModel.builder();
-		expansionItemBuilder.setActions(tree);
-		expansionItemBuilder.setLevels(3, true);
-
-		toolBarModel.addItem(expansionItemBuilder.buildExpandItem());
-		toolBarModel.addItem(expansionItemBuilder.buildCollapseItem());
+		toolBarModel.addAction(ExpandTreeAction.create(tree));
+		toolBarModel.addItem(ExpandCollapseTreeToolbarItemModel.create(tree, 4, 2));
+		toolBarModel.addAction(CollapseTreeAction.create(tree));
 
 		toolBarModel.addAction(UncheckTreeAction.create(tree));
 		toolBarModel.addAction(CheckTreeAction.create(tree));

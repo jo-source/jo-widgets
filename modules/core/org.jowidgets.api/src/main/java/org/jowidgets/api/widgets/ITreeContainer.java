@@ -58,7 +58,6 @@ public interface ITreeContainer {
 	 * Sets all children expanded or collapsed until a pivot level is reached
 	 * 
 	 * @param pivotLevel The pivot level to use, assuming this node has level 0, the children level 1 and so on
-	 * 
 	 *            If expanded is true, all nodes of this level and below will be expanded
 	 *            If expanded is false, all node of this level and above will be collapsed
 	 *            If expanded is null, the expansion is unbound
@@ -70,6 +69,13 @@ public interface ITreeContainer {
 	void setAllChildrenExpanded(Integer pivotLevel, boolean expanded);
 
 	void setAllChildrenChecked(boolean checked);
+
+	/**
+	 * Expands all nodes of the given level and below and collapses all nodes above
+	 * 
+	 * @param pivotLevel The pivot level, assuming this node has level 0, the children level 1 and so on
+	 */
+	void setAllChildrenBelowExpandedAboveCollapsed(int pivotLevel);
 
 	int getLevel();
 

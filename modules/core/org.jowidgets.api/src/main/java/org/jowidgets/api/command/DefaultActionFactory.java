@@ -60,6 +60,14 @@ public final class DefaultActionFactory {
 		return getInstance().expandTreeAction(tree);
 	}
 
+	public static ITreeExpansionActionBuilder expandCollapseTreeActionBuilder(final ITreeContainer tree) {
+		return getInstance().expandCollapseTreeActionBuilder(tree);
+	}
+
+	public static ITreeExpansionAction expandCollapseTreeAction(final ITreeContainer tree) {
+		return getInstance().expandCollapseTreeAction(tree);
+	}
+
 	public static IDefaultActionBuilder checkTreeActionBuilder(final ITreeContainer tree) {
 		return getInstance().checkTreeActionBuilder(tree);
 	}

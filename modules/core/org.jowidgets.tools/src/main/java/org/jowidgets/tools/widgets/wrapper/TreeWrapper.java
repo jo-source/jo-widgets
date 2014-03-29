@@ -107,6 +107,11 @@ public class TreeWrapper extends ControlWrapper implements ITree {
 	}
 
 	@Override
+	public void setAllChildrenBelowExpandedAboveCollapsed(final int pivotLevel) {
+		getWidget().setAllChildrenBelowExpandedAboveCollapsed(pivotLevel);
+	}
+
+	@Override
 	public void setAllChildrenChecked(final boolean checked) {
 		getWidget().setAllChildrenChecked(checked);
 	}

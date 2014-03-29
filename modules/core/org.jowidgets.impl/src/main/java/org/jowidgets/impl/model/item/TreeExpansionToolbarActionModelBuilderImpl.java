@@ -31,14 +31,11 @@ package org.jowidgets.impl.model.item;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.jowidgets.api.command.CollapseTreeAction;
-import org.jowidgets.api.command.ExpandTreeAction;
 import org.jowidgets.api.command.ITreeExpansionAction;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IRadioItemModel;
 import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.api.model.item.ITreeExpansionToolbarItemModelBuilder;
-import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.common.widgets.controller.IItemStateListener;
 import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.tools.model.item.ActionItemModel;
@@ -56,40 +53,17 @@ final class TreeExpansionToolbarActionModelBuilderImpl implements ITreeExpansion
 	private static final IMessage UNBOUND = Messages.getMessage("TreeExpansionToolbarActionModelBuilderImpl.unbound");
 
 	private final List<Tuple<Integer, String>> levels;
+	private final ITreeExpansionAction action;
+
 	private IMaybe<Integer> defaultLevelMaybe;
 	private boolean exhausted;
 
-	private ITreeExpansionAction expandAction;
-	private ITreeExpansionAction collapseAction;
-
-	private IToolBarItemModel expandItem;
-	private IToolBarItemModel collapseItem;
-
-	TreeExpansionToolbarActionModelBuilderImpl() {
+	TreeExpansionToolbarActionModelBuilderImpl(final ITreeExpansionAction action) {
+		Assert.paramNotNull(action, "action");
+		this.action = action;
 		this.levels = new LinkedList<Tuple<Integer, String>>();
-		exhausted = false;
-	}
 
-	@Override
-	public ITreeExpansionToolbarItemModelBuilder setActions(final ITreeContainer tree) {
-		Assert.paramNotNull(tree, "tree");
-		setExpandAction(ExpandTreeAction.create(tree));
-		setCollapseAction(CollapseTreeAction.create(tree));
-		return this;
-	}
-
-	@Override
-	public ITreeExpansionToolbarItemModelBuilder setCollapseAction(final ITreeExpansionAction collapseAction) {
-		Assert.paramNotNull(collapseAction, "collapseAction");
-		this.collapseAction = collapseAction;
-		return this;
-	}
-
-	@Override
-	public ITreeExpansionToolbarItemModelBuilder setExpandAction(final ITreeExpansionAction expandAction) {
-		Assert.paramNotNull(expandAction, "expandAction");
-		this.expandAction = expandAction;
-		return this;
+		this.exhausted = false;
 	}
 
 	@Override
@@ -191,52 +165,18 @@ final class TreeExpansionToolbarActionModelBuilderImpl implements ITreeExpansion
 	}
 
 	@Override
-	public IToolBarItemModel buildExpandItem() {
-		if (expandItem == null) {
-			doBuild();
-		}
-		if (expandItem == null) {
-			throw new IllegalStateException("The was no expand action set so far");
-		}
-		return expandItem;
-	}
-
-	@Override
-	public IToolBarItemModel buildCollapseItem() {
-		if (collapseItem == null) {
-			doBuild();
-		}
-		if (collapseItem == null) {
-			throw new IllegalStateException("The was no collapse action set so far");
-		}
-		return collapseItem;
-	}
-
-	private void doBuild() {
-		if (expandAction == null && collapseAction == null) {
-			throw new IllegalStateException("There are no expand or collapse actions set so far");
-		}
+	public IToolBarItemModel build() {
+		exhausted = true;
 		if (levels.size() > 0) {
-			final IMenuModel levelMenu = buildLevelMenu(expandAction, collapseAction);
-			if (expandAction != null) {
-				expandItem = PopupActionItemModel.builder(expandAction, levelMenu).build();
-			}
-			if (collapseAction != null) {
-				collapseItem = PopupActionItemModel.builder(collapseAction, levelMenu).build();
-			}
+			final IMenuModel levelMenu = buildLevelMenu();
+			return PopupActionItemModel.builder(action, levelMenu).build();
 		}
 		else {
-			if (expandAction != null) {
-				expandItem = ActionItemModel.builder(expandAction).build();
-			}
-			if (collapseAction != null) {
-				collapseItem = ActionItemModel.builder(collapseAction).build();
-			}
+			return ActionItemModel.builder(action).build();
 		}
-		exhausted = true;
 	}
 
-	private IMenuModel buildLevelMenu(final ITreeExpansionAction expandAction, final ITreeExpansionAction collapseAction) {
+	private IMenuModel buildLevelMenu() {
 		final MenuModel levelMenu = new MenuModel();
 
 		final Integer defaultLevel;
@@ -255,31 +195,22 @@ final class TreeExpansionToolbarActionModelBuilderImpl implements ITreeExpansion
 			final String label = levelTuple.getSecond();
 			final Integer level = levelTuple.getFirst();
 			final boolean selected = NullCompatibleEquivalence.equals(defaultLevel, level);
-			addItemListener(levelMenu.addRadioItem(label), expandAction, collapseAction, level, label, selected);
+			addItemListener(levelMenu.addRadioItem(label), level, label, selected);
 		}
 		return levelMenu;
 	}
 
-	private void addItemListener(
-		final IRadioItemModel itemModel,
-		final ITreeExpansionAction expandAction,
-		final ITreeExpansionAction collapseAction,
-		final Integer level,
-		final String label,
-		final boolean selected) {
-
+	private void addItemListener(final IRadioItemModel itemModel, final Integer level, final String label, final boolean selected) {
 		itemModel.addItemListener(new IItemStateListener() {
 			@Override
 			public void itemStateChanged() {
 				if (itemModel.isSelected()) {
-					expandAction.setPivotLevel(level, label);
-					collapseAction.setPivotLevel(level, label);
+					action.setPivotLevel(level, label);
 				}
 			}
 		});
 		if (selected) {
-			expandAction.setPivotLevel(level, label);
-			collapseAction.setPivotLevel(level, label);
+			action.setPivotLevel(level, label);
 			itemModel.setSelected(selected);
 		}
 	}

@@ -155,6 +155,13 @@ public class TreeContainerDelegate implements ITreeContainer {
 	}
 
 	@Override
+	public void setAllChildrenBelowExpandedAboveCollapsed(final int pivotLevel) {
+		for (final ITreeNode childNode : children) {
+			childNode.setAllChildrenBelowExpandedAboveCollapsed(pivotLevel);
+		}
+	}
+
+	@Override
 	public void setAllChildrenChecked(final boolean checked) {
 		if (treeNode != null) {
 			if (treeNode.isChecked() != checked || treeNode.isGreyed()) {

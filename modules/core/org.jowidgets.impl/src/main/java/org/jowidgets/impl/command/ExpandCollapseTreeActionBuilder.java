@@ -32,17 +32,17 @@ import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.i18n.api.IMessage;
 
-final class CollapseTreeActionBuilder extends TreeExpansionActionBuilder {
+final class ExpandCollapseTreeActionBuilder extends TreeExpansionActionBuilder {
 
-	private static final IMessage COLLAPSE_ALL_MESSAGE = Messages.getMessage("CollapseTreeActionBuilder.collapseAllLabel");
-	private static final IMessage COLLAPSE_ALL_BOUND_MESSAGE = Messages.getMessage("CollapseTreeActionBuilder.collapseAllBoundLabel");
+	private static final IMessage EXPAND_ALL_MESSAGE = Messages.getMessage("ExpandCollapseTreeActionBuilder.expandAllLabel");
+	private static final IMessage EXPAND_ALL_BOUND_MESSAGE = Messages.getMessage("ExpandCollapseTreeActionBuilder.expandAllBoundLabel");
 
-	CollapseTreeActionBuilder(final ITreeContainer tree) {
-		super(tree, ExpansionMode.COLLAPSE);
+	ExpandCollapseTreeActionBuilder(final ITreeContainer tree) {
+		super(tree, ExpansionMode.BOTH);
 
-		setText(COLLAPSE_ALL_MESSAGE.get());
-		setBoundPivotLevelText(COLLAPSE_ALL_BOUND_MESSAGE.get());
-		setIcon(IconsSmall.COLLAPSE_ALL);
+		setText(EXPAND_ALL_MESSAGE.get());
+		setBoundPivotLevelText(EXPAND_ALL_BOUND_MESSAGE.get());
+		setIcon(IconsSmall.EXPAND_COLLAPSE_ALL);
 	}
 
 }
