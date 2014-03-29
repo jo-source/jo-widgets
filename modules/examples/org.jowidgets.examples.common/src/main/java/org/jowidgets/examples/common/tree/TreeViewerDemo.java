@@ -73,10 +73,10 @@ public final class TreeViewerDemo implements IApplication {
 
 		final MenuModel levelMenu = new MenuModel();
 		addItemListener(levelMenu.addRadioItem("All Level"), expandAction, collapseAction, null, true);
-		addItemListener(levelMenu.addRadioItem("Level 0"), expandAction, collapseAction, Integer.valueOf(0), false);
-		addItemListener(levelMenu.addRadioItem("Level 1"), expandAction, collapseAction, Integer.valueOf(1), false);
-		addItemListener(levelMenu.addRadioItem("Level 2"), expandAction, collapseAction, Integer.valueOf(2), false);
-		addItemListener(levelMenu.addRadioItem("Level 3"), expandAction, collapseAction, Integer.valueOf(3), false);
+		addItemListener(levelMenu.addRadioItem("Level 1"), expandAction, collapseAction, Integer.valueOf(0), false);
+		addItemListener(levelMenu.addRadioItem("Level 2"), expandAction, collapseAction, Integer.valueOf(1), false);
+		addItemListener(levelMenu.addRadioItem("Level 3"), expandAction, collapseAction, Integer.valueOf(2), false);
+		addItemListener(levelMenu.addRadioItem("Level 4"), expandAction, collapseAction, Integer.valueOf(3), false);
 
 		final IToolBarPopupButton expandButton = toolBar.addItem(BPF.toolBarPopupButton());
 		expandButton.setAction(expandAction);
@@ -106,6 +106,7 @@ public final class TreeViewerDemo implements IApplication {
 			public void itemStateChanged() {
 				if (itemModel.isSelected()) {
 					expandAction.setPivotLevel(level);
+					collapseAction.setPivotLevel(level);
 				}
 			}
 		});

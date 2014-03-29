@@ -29,28 +29,21 @@
 package org.jowidgets.examples.common.tree;
 
 import org.jowidgets.api.model.tree.ITreeNodeModel;
-import org.jowidgets.api.model.tree.ITreeNodeRenderer;
-import org.jowidgets.tools.model.tree.AbstractTreeNodeModel;
-import org.jowidgets.tools.model.tree.DefaultTreeNodeRenderer;
 
-abstract class AbstractStringNodeModel extends AbstractTreeNodeModel<String> implements ITreeNodeModel<String> {
+public final class Level5NodeModel extends AbstractStringNodeModel {
 
-	private static final ITreeNodeRenderer<String> RENDERER = new DefaultTreeNodeRenderer<String>();
-
-	private final String data;
-
-	AbstractStringNodeModel(final String data) {
-		this.data = data;
+	Level5NodeModel(final String data) {
+		super(data);
 	}
 
 	@Override
-	public final ITreeNodeRenderer<String> getRenderer() {
-		return RENDERER;
+	public int getChildrenCount() {
+		return 0;
 	}
 
 	@Override
-	public final String getData() {
-		return data;
+	public ITreeNodeModel<String> getChildNode(final int index) {
+		return null;
 	}
 
 }
