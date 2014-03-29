@@ -535,28 +535,37 @@ public class TreeNodeImpl extends AbstractTreeNodeSpiWrapper implements ITreeNod
 
 	@Override
 	public void setAllChildrenExpanded(final boolean expanded) {
-		setExpanded(expanded);
-		treeContainerDelegate.setAllChildrenExpanded(expanded);
+		setAllChildrenExpanded(null, expanded);
 	}
 
 	@Override
 	public void setAllChildrenExpanded(final Integer pivotLevel, final boolean expanded) {
 		if (pivotLevel == null) {
-			setAllChildrenExpanded(expanded);
+			setExpanded(expanded);
+			treeContainerDelegate.setAllChildrenExpanded(expanded);
 		}
 		else {
 			final int pivot = pivotLevel.intValue();
+			int newPivot = pivot;
 			if (pivot < 0) {
 				throw new IllegalArgumentException("The pivot level must be greater or equal 0, but is " + pivot);
 			}
+			else if (newPivot > 0) {
+				newPivot--;
+			}
 			if (expanded) {
 				setExpanded(true);
+				if (pivot > 0) {
+					treeContainerDelegate.setAllChildrenExpanded(Integer.valueOf(newPivot), expanded);
+				}
 			}
-			else if (pivot == 0) {//expanded == false here
-				//do not collapse nodes above the pivot level
-				setExpanded(false);
+			else {//expanded == false here
+				if (pivot == 0) {//do not collapse nodes above the pivot level
+					setExpanded(false);
+				}
+				treeContainerDelegate.setAllChildrenExpanded(Integer.valueOf(newPivot), expanded);
 			}
-			treeContainerDelegate.setAllChildrenExpanded(pivotLevel, expanded);
+
 		}
 
 	}

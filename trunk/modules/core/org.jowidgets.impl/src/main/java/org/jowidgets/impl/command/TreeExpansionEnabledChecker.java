@@ -96,7 +96,7 @@ final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implement
 			final ITreeNode node = (ITreeNode) tree;
 			if (currentLevel == null) {
 				if (node.isExpanded() != expanded) {
-					return true;
+					return node.getChildren().size() > 0;
 				}
 			}
 			else {
@@ -104,14 +104,14 @@ final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implement
 				if (expanded) {
 					if (pivot > 0) {
 						if (node.isExpanded() != expanded) {
-							return true;
+							return node.getChildren().size() > 0;
 						}
 					}
 				}
 				else {
 					if (pivot == 0) {
 						if (node.isExpanded() != expanded) {
-							return true;
+							return node.getChildren().size() > 0;
 						}
 					}
 				}

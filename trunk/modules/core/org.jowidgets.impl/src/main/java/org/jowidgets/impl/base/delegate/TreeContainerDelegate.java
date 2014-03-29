@@ -144,28 +144,13 @@ public class TreeContainerDelegate implements ITreeContainer {
 
 	@Override
 	public void setAllChildrenExpanded(final boolean expanded) {
-		for (final ITreeNode childNode : children) {
-			childNode.setAllChildrenExpanded(expanded);
-		}
+		setAllChildrenExpanded(null, expanded);
 	}
 
 	@Override
 	public void setAllChildrenExpanded(final Integer pivotLevel, final boolean expanded) {
-		if (pivotLevel == null) {
-			setAllChildrenExpanded(expanded);
-		}
-		else if (expanded) {
-			final int pivot = pivotLevel.intValue();
-			if (pivot > 0) {
-				setAllChildrenExpanded(Integer.valueOf(pivot - 1), expanded);
-			}
-		}
-		else {//!expanded
-			int pivot = pivotLevel.intValue();
-			if (pivot > 0) {
-				pivot--;
-			}
-			setAllChildrenExpanded(Integer.valueOf(pivot), expanded);
+		for (final ITreeNode childNode : children) {
+			childNode.setAllChildrenExpanded(pivotLevel, expanded);
 		}
 	}
 
