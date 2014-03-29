@@ -80,7 +80,7 @@ final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implement
 
 	@Override
 	public IEnabledState getEnabledState() {
-		if (hasNodeThatWillBeChanged(treeContainer, pivotLevel)) {
+		if (hasChildNodeThatWillBeChanged(treeContainer, pivotLevel)) {
 			return EnabledState.ENABLED;
 		}
 		else if (expanded) {
@@ -91,37 +91,19 @@ final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implement
 		}
 	}
 
-	private boolean hasNodeThatWillBeChanged(final ITreeContainer tree, final Integer currentLevel) {
-		if (tree instanceof ITreeNode) {
-			final ITreeNode node = (ITreeNode) tree;
-			if (currentLevel == null) {
-				if (node.isExpanded() != expanded) {
-					return node.getChildren().size() > 0;
-				}
-			}
-			else {
-				final int pivot = currentLevel.intValue();
-				if (expanded) {
-					if (pivot > 0) {
-						if (node.isExpanded() != expanded) {
-							return node.getChildren().size() > 0;
-						}
-					}
-				}
-				else {
-					if (pivot == 0) {
-						if (node.isExpanded() != expanded) {
-							return node.getChildren().size() > 0;
-						}
-					}
-				}
-			}
+	private boolean hasChildNodeThatWillBeChanged(final ITreeContainer tree, final Integer currentLevel) {
+
+		if (tree.getChildren().size() == 0) {
+			return false;
 		}
 
 		//consider children
 		if (currentLevel == null) {
 			for (final ITreeNode childNode : tree.getChildren()) {
-				if (hasNodeThatWillBeChanged(childNode, null)) {
+				if (willNodeBeChanged(childNode, null)) {
+					return true;
+				}
+				else if (hasChildNodeThatWillBeChanged(childNode, null)) {
 					return true;
 				}
 			}
@@ -132,10 +114,51 @@ final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implement
 			if (newPivot > 0) {
 				newPivot = pivot - 1;
 			}
-			if (!expanded || pivot > 0) {
+			final Integer newPivotlevel = Integer.valueOf(newPivot);
+
+			if (expanded) {
 				for (final ITreeNode childNode : tree.getChildren()) {
-					if (hasNodeThatWillBeChanged(childNode, Integer.valueOf(newPivot))) {
+					if (willNodeBeChanged(childNode, pivot)) {
 						return true;
+					}
+					else if (pivot > 0 && hasChildNodeThatWillBeChanged(childNode, newPivotlevel)) {
+						return true;
+					}
+				}
+			}
+			else {
+				for (final ITreeNode childNode : tree.getChildren()) {
+					if (willNodeBeChanged(childNode, pivot)) {
+						return true;
+					}
+					else if (hasChildNodeThatWillBeChanged(childNode, newPivotlevel)) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	private boolean willNodeBeChanged(final ITreeNode node, final Integer currentLevel) {
+
+		if (currentLevel == null) {
+			if (node.isExpanded() != expanded) {
+				return node.getChildren().size() > 0;
+			}
+		}
+		else {
+			final int pivot = currentLevel.intValue();
+			if (expanded) {
+				if (node.isExpanded() != expanded) {
+					return node.getChildren().size() > 0;
+				}
+			}
+			else {
+				if (pivot == 0) {
+					if (node.isExpanded() != expanded) {
+						return node.getChildren().size() > 0;
 					}
 				}
 			}
