@@ -35,11 +35,13 @@ import org.jowidgets.i18n.api.IMessage;
 final class ExpandTreeActionBuilder extends TreeExpansionActionBuilder {
 
 	private static final IMessage EXPAND_ALL_MESSAGE = Messages.getMessage("ExpandTreeActionBuilder.expandAllLabel");
+	private static final IMessage EXPAND_ALL_BOUND_MESSAGE = Messages.getMessage("ExpandTreeActionBuilder.expandAllBoundLabel");
 
 	ExpandTreeActionBuilder(final ITreeContainer tree) {
 		super(tree, true);
 
 		setText(EXPAND_ALL_MESSAGE.get());
+		setBoundPivotLevelText(EXPAND_ALL_BOUND_MESSAGE.get());
 		setIcon(IconsSmall.EXPAND_ALL);
 	}
 

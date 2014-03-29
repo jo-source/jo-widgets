@@ -35,11 +35,13 @@ import org.jowidgets.i18n.api.IMessage;
 final class CollapseTreeActionBuilder extends TreeExpansionActionBuilder {
 
 	private static final IMessage COLLAPSE_ALL_MESSAGE = Messages.getMessage("CollapseTreeActionBuilder.collapseAllLabel");
+	private static final IMessage COLLAPSE_ALL_BOUND_MESSAGE = Messages.getMessage("CollapseTreeActionBuilder.collapseAllBoundLabel");
 
 	CollapseTreeActionBuilder(final ITreeContainer tree) {
 		super(tree, false);
 
 		setText(COLLAPSE_ALL_MESSAGE.get());
+		setBoundPivotLevelText(COLLAPSE_ALL_BOUND_MESSAGE.get());
 		setIcon(IconsSmall.COLLAPSE_ALL);
 	}
 

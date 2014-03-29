@@ -28,7 +28,6 @@
 
 package org.jowidgets.api.command;
 
-
 public interface ITreeExpansionAction extends IAction {
 
 	/**
@@ -39,5 +38,15 @@ public interface ITreeExpansionAction extends IAction {
 	 * @see setAllChildrenExpanded(Integer, boolean) for ITreeContainer
 	 */
 	void setPivotLevel(Integer level);
+
+	/**
+	 * Sets the pivot level for the expand or collapse
+	 * 
+	 * @param level The level to set
+	 * @param levelName the name of the pivot level
+	 * 
+	 * @see setAllChildrenExpanded(Integer, boolean) for ITreeContainer
+	 */
+	void setPivotLevel(Integer level, String levelName);
 
 }
