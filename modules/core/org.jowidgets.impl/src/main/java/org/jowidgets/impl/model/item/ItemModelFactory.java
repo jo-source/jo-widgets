@@ -45,6 +45,7 @@ import org.jowidgets.api.model.item.IRadioItemModelBuilder;
 import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.api.model.item.ISeparatorItemModelBuilder;
 import org.jowidgets.api.model.item.IToolBarModel;
+import org.jowidgets.api.model.item.ITreeExpansionToolbarItemModelBuilder;
 
 public class ItemModelFactory implements IItemModelFactory {
 
@@ -126,6 +127,11 @@ public class ItemModelFactory implements IItemModelFactory {
 	@Override
 	public IToolBarModel toolBar() {
 		return new ToolBarModelImpl();
+	}
+
+	@Override
+	public ITreeExpansionToolbarItemModelBuilder treeExpansionToolbarItemModelBuilder() {
+		return new TreeExpansionToolbarActionModelBuilderImpl();
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,41 +28,14 @@
 
 package org.jowidgets.api.model.item;
 
+import org.jowidgets.api.toolkit.Toolkit;
 
-public interface IItemModelFactory {
+public final class TreeExpansionToolbarItemModel {
 
-	IMenuModelBuilder menuBuilder();
+	private TreeExpansionToolbarItemModel() {}
 
-	IActionItemModelBuilder actionItemBuilder();
-
-	ICheckedItemModelBuilder checkedItemBuilder();
-
-	IRadioItemModelBuilder radioItemBuilder();
-
-	ISeparatorItemModelBuilder separatorBuilder();
-
-	IPopupActionItemModel popupActionItem();
-
-	IPopupActionItemModelBuilder popupActionItemBuilder();
-
-	IContainerItemModel containerItem();
-
-	IContainerItemModelBuilder containerItemBuilder();
-
-	IMenuModel menu();
-
-	IActionItemModel actionItem();
-
-	ICheckedItemModel checkedItem();
-
-	IRadioItemModel radioItem();
-
-	ISeparatorItemModel separator();
-
-	IMenuBarModel menuBar();
-
-	IToolBarModel toolBar();
-
-	ITreeExpansionToolbarItemModelBuilder treeExpansionToolbarItemModelBuilder();
+	public static ITreeExpansionToolbarItemModelBuilder builder() {
+		return Toolkit.getModelFactoryProvider().getItemModelFactory().treeExpansionToolbarItemModelBuilder();
+	}
 
 }
