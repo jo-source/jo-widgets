@@ -26,31 +26,25 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.command;
+package org.jowidgets.impl.model.item;
 
-public interface ITreeExpansionActionBuilder extends IDefaultActionBuilder {
+import org.jowidgets.i18n.api.IMessage;
+import org.jowidgets.i18n.api.IMessageProvider;
+import org.jowidgets.i18n.api.MessageProvider;
 
-	/**
-	 * Sets the label that is used, if a bound pivot level ist used
-	 * 
-	 * @param the bound pivot level text to set
-	 * 
-	 * @return This builder
-	 */
-	ITreeExpansionActionBuilder setBoundPivotLevelText(String text);
+final class Messages {
 
-	/**
-	 * Sets the pivot level for the expand or collapse
-	 * 
-	 * @param level The level to set
-	 * 
-	 * @return This builder
-	 * 
-	 * @see setAllChildrenExpanded(Integer, boolean) for ITreeContainer
-	 */
-	ITreeExpansionActionBuilder setPivotLevel(Integer level);
+	private static final IMessageProvider MESSAGE_PROVIDER = MessageProvider.create(
+			"org.jowidgets.impl.model.item.messages",
+			Messages.class);
 
-	@Override
-	ITreeExpansionAction build();
+	private Messages() {}
 
+	public static String getString(final String key) {
+		return MESSAGE_PROVIDER.getString(key);
+	}
+
+	public static IMessage getMessage(final String key) {
+		return MESSAGE_PROVIDER.getMessage(key);
+	}
 }

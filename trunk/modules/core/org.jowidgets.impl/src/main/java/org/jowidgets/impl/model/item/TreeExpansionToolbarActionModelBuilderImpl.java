@@ -40,6 +40,7 @@ import org.jowidgets.api.model.item.IToolBarItemModel;
 import org.jowidgets.api.model.item.ITreeExpansionToolbarItemModelBuilder;
 import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.common.widgets.controller.IItemStateListener;
+import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.tools.model.item.ActionItemModel;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.model.item.PopupActionItemModel;
@@ -50,6 +51,9 @@ import org.jowidgets.util.maybe.IMaybe;
 import org.jowidgets.util.maybe.Some;
 
 final class TreeExpansionToolbarActionModelBuilderImpl implements ITreeExpansionToolbarItemModelBuilder {
+
+	private static final IMessage LEVEL = Messages.getMessage("TreeExpansionToolbarActionModelBuilderImpl.level");
+	private static final IMessage UNBOUND = Messages.getMessage("TreeExpansionToolbarActionModelBuilderImpl.unbound");
 
 	private final List<Tuple<Integer, String>> levels;
 	private IMaybe<Integer> defaultLevelMaybe;
@@ -90,7 +94,7 @@ final class TreeExpansionToolbarActionModelBuilderImpl implements ITreeExpansion
 
 	@Override
 	public ITreeExpansionToolbarItemModelBuilder addUnboundLevel() {
-		return addUnboundLevel(getDefaultUnboundLevelName());
+		return addUnboundLevel(UNBOUND.get());
 	}
 
 	@Override
@@ -183,11 +187,7 @@ final class TreeExpansionToolbarActionModelBuilderImpl implements ITreeExpansion
 	}
 
 	private static String getDefaultLevelName(final int level) {
-		return "Level " + (level + 1);
-	}
-
-	private static String getDefaultUnboundLevelName() {
-		return "All levels";
+		return LEVEL.get() + " " + (level + 1);
 	}
 
 	@Override
@@ -255,7 +255,7 @@ final class TreeExpansionToolbarActionModelBuilderImpl implements ITreeExpansion
 			final String label = levelTuple.getSecond();
 			final Integer level = levelTuple.getFirst();
 			final boolean selected = NullCompatibleEquivalence.equals(defaultLevel, level);
-			addItemListener(levelMenu.addRadioItem(label), expandAction, collapseAction, level, selected);
+			addItemListener(levelMenu.addRadioItem(label), expandAction, collapseAction, level, label, selected);
 		}
 		return levelMenu;
 	}
@@ -265,18 +265,23 @@ final class TreeExpansionToolbarActionModelBuilderImpl implements ITreeExpansion
 		final ITreeExpansionAction expandAction,
 		final ITreeExpansionAction collapseAction,
 		final Integer level,
+		final String label,
 		final boolean selected) {
 
 		itemModel.addItemListener(new IItemStateListener() {
 			@Override
 			public void itemStateChanged() {
 				if (itemModel.isSelected()) {
-					expandAction.setPivotLevel(level);
-					collapseAction.setPivotLevel(level);
+					expandAction.setPivotLevel(level, label);
+					collapseAction.setPivotLevel(level, label);
 				}
 			}
 		});
-		itemModel.setSelected(selected);
+		if (selected) {
+			expandAction.setPivotLevel(level, label);
+			collapseAction.setPivotLevel(level, label);
+			itemModel.setSelected(selected);
+		}
 	}
 
 }

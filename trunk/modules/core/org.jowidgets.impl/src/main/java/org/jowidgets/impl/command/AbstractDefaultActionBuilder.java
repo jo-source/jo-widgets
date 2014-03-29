@@ -39,6 +39,8 @@ import org.jowidgets.common.types.VirtualKey;
 
 abstract class AbstractDefaultActionBuilder implements IDefaultActionBuilder {
 
+	private String text;
+
 	private final IActionBuilder original;
 
 	AbstractDefaultActionBuilder() {
@@ -52,6 +54,7 @@ abstract class AbstractDefaultActionBuilder implements IDefaultActionBuilder {
 	@Override
 	public final IDefaultActionBuilder setText(final String text) {
 		original.setText(text);
+		this.text = text;
 		return this;
 	}
 
@@ -100,6 +103,10 @@ abstract class AbstractDefaultActionBuilder implements IDefaultActionBuilder {
 	@Override
 	public IAction build() {
 		return doBuild(original);
+	}
+
+	String getText() {
+		return text;
 	}
 
 	protected abstract IAction doBuild(IActionBuilder superBuilder);

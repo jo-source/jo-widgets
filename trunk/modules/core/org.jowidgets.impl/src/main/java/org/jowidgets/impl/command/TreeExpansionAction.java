@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, Michael
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -35,18 +35,35 @@ import org.jowidgets.api.command.ICommandExecutor;
 import org.jowidgets.api.command.IEnabledChecker;
 import org.jowidgets.api.command.ITreeExpansionAction;
 import org.jowidgets.api.widgets.ITreeContainer;
+import org.jowidgets.i18n.api.MessageReplacer;
 import org.jowidgets.tools.command.ActionWrapper;
+import org.jowidgets.util.EmptyCheck;
+import org.jowidgets.util.NullCompatibleEquivalence;
 
 final class TreeExpansionAction extends ActionWrapper implements ITreeExpansionAction {
 
+	private final String unboundPivotlevelLabel;
+	private final String boundPivotlevelLabel;
 	private final TreeExpansionExecutor executor;
 	private final TreeExpansionEnabledChecker enabledChecker;
+	private final ICommandAction action;
 
-	TreeExpansionAction(final IActionBuilder builder, final ITreeContainer tree, final boolean expanded, final Integer pivotLevel) {
+	TreeExpansionAction(
+		final IActionBuilder builder,
+		final ITreeContainer tree,
+		final boolean expanded,
+		final Integer pivotLevel,
+		final String unboundPivotlevelLabel,
+		final String boundPivotlevelLabel) {
+
 		super(createAction(builder, tree, expanded, pivotLevel));
 
-		final ICommand command = ((ICommandAction) unwrap()).getCommand();
+		this.unboundPivotlevelLabel = unboundPivotlevelLabel;
+		this.boundPivotlevelLabel = boundPivotlevelLabel;
 
+		this.action = ((ICommandAction) unwrap());
+
+		final ICommand command = action.getCommand();
 		this.executor = (TreeExpansionExecutor) command.getCommandExecutor();
 		this.enabledChecker = (TreeExpansionEnabledChecker) command.getEnabledChecker();
 	}
@@ -65,8 +82,21 @@ final class TreeExpansionAction extends ActionWrapper implements ITreeExpansionA
 
 	@Override
 	public void setPivotLevel(final Integer pivotLevel) {
-		executor.setPivotLevel(pivotLevel);
-		enabledChecker.setPivotLevel(pivotLevel);
+		setPivotLevel(pivotLevel, unboundPivotlevelLabel);
+	}
+
+	@Override
+	public void setPivotLevel(final Integer level, final String levelName) {
+		if (level == null || levelName == null || EmptyCheck.isEmpty(boundPivotlevelLabel)) {
+			if (!NullCompatibleEquivalence.equals(action.getText(), unboundPivotlevelLabel)) {
+				action.setText(unboundPivotlevelLabel);
+			}
+		}
+		else {
+			action.setText(MessageReplacer.replace(boundPivotlevelLabel, levelName));
+		}
+		executor.setPivotLevel(level);
+		enabledChecker.setPivotLevel(level);
 	}
 
 }

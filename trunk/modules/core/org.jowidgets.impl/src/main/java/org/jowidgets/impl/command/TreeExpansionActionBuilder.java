@@ -40,6 +40,7 @@ class TreeExpansionActionBuilder extends AbstractDefaultActionBuilder implements
 	private final boolean expanded;
 
 	private Integer level;
+	private String boundPivotLevelText;
 
 	TreeExpansionActionBuilder(final ITreeContainer tree, final boolean expanded) {
 		Assert.paramNotNull(tree, "tree");
@@ -54,13 +55,19 @@ class TreeExpansionActionBuilder extends AbstractDefaultActionBuilder implements
 	}
 
 	@Override
+	public ITreeExpansionActionBuilder setBoundPivotLevelText(final String text) {
+		this.boundPivotLevelText = text;
+		return this;
+	}
+
+	@Override
 	public ITreeExpansionAction build() {
 		return (ITreeExpansionAction) super.build();
 	}
 
 	@Override
 	protected ITreeExpansionAction doBuild(final IActionBuilder original) {
-		return new TreeExpansionAction(original, tree, expanded, level);
+		return new TreeExpansionAction(original, tree, expanded, level, getText(), boundPivotLevelText);
 	}
 
 }
