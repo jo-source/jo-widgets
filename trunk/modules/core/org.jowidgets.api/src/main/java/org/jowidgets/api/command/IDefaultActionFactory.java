@@ -32,13 +32,13 @@ import org.jowidgets.api.widgets.ITreeContainer;
 
 public interface IDefaultActionFactory {
 
-	IDefaultActionBuilder collapseTreeActionBuilder(ITreeContainer tree);
+	ITreeExpansionActionBuilder collapseTreeActionBuilder(ITreeContainer tree);
 
-	IAction collapseTreeAction(ITreeContainer tree);
+	ITreeExpansionAction collapseTreeAction(ITreeContainer tree);
 
-	IDefaultActionBuilder expandTreeActionBuilder(ITreeContainer tree);
+	ITreeExpansionActionBuilder expandTreeActionBuilder(ITreeContainer tree);
 
-	IAction expandTreeAction(ITreeContainer tree);
+	ITreeExpansionAction expandTreeAction(ITreeContainer tree);
 
 	IDefaultActionBuilder checkTreeActionBuilder(ITreeContainer tree);
 

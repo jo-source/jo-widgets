@@ -150,6 +150,26 @@ public class TreeContainerDelegate implements ITreeContainer {
 	}
 
 	@Override
+	public void setAllChildrenExpanded(final Integer pivotLevel, final boolean expanded) {
+		if (pivotLevel == null) {
+			setAllChildrenExpanded(expanded);
+		}
+		else if (expanded) {
+			final int pivot = pivotLevel.intValue();
+			if (pivot > 0) {
+				setAllChildrenExpanded(Integer.valueOf(pivot - 1), expanded);
+			}
+		}
+		else {//!expanded
+			int pivot = pivotLevel.intValue();
+			if (pivot > 0) {
+				pivot--;
+			}
+			setAllChildrenExpanded(Integer.valueOf(pivot), expanded);
+		}
+	}
+
+	@Override
 	public void setAllChildrenChecked(final boolean checked) {
 		if (treeNode != null) {
 			if (treeNode.isChecked() != checked || treeNode.isGreyed()) {

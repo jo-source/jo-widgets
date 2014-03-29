@@ -26,54 +26,41 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.command;
+package org.jowidgets.impl.command;
 
-import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.command.IActionBuilder;
+import org.jowidgets.api.command.ITreeExpansionAction;
+import org.jowidgets.api.command.ITreeExpansionActionBuilder;
 import org.jowidgets.api.widgets.ITreeContainer;
+import org.jowidgets.util.Assert;
 
-public final class DefaultActionFactory {
+class TreeExpansionActionBuilder extends AbstractDefaultActionBuilder implements ITreeExpansionActionBuilder {
 
-	private static IDefaultActionFactory instance;
+	private final ITreeContainer tree;
+	private final boolean expanded;
 
-	private DefaultActionFactory() {}
+	private Integer level;
 
-	public static IDefaultActionFactory getInstance() {
-		if (instance == null) {
-			instance = Toolkit.getDefaultActionFactory();
-		}
-		return instance;
+	TreeExpansionActionBuilder(final ITreeContainer tree, final boolean expanded) {
+		Assert.paramNotNull(tree, "tree");
+		this.tree = tree;
+		this.expanded = expanded;
 	}
 
-	public static ITreeExpansionActionBuilder collapseTreeActionBuilder(final ITreeContainer tree) {
-		return getInstance().collapseTreeActionBuilder(tree);
+	@Override
+	public ITreeExpansionActionBuilder setPivotLevel(final Integer level) {
+		this.level = level;
+		return this;
 	}
 
-	public static ITreeExpansionAction collapseTreeAction(final ITreeContainer tree) {
-		return getInstance().collapseTreeAction(tree);
+	@Override
+	public ITreeExpansionAction build() {
+		return (ITreeExpansionAction) super.build();
 	}
 
-	public static ITreeExpansionActionBuilder expandTreeActionBuilder(final ITreeContainer tree) {
-		return getInstance().expandTreeActionBuilder(tree);
-	}
-
-	public static ITreeExpansionAction expandTreeAction(final ITreeContainer tree) {
-		return getInstance().expandTreeAction(tree);
-	}
-
-	public static IDefaultActionBuilder checkTreeActionBuilder(final ITreeContainer tree) {
-		return getInstance().checkTreeActionBuilder(tree);
-	}
-
-	public static IAction checkTreeAction(final ITreeContainer tree) {
-		return getInstance().checkTreeAction(tree);
-	}
-
-	public static IDefaultActionBuilder uncheckTreeActionBuilder(final ITreeContainer tree) {
-		return getInstance().uncheckTreeActionBuilder(tree);
-	}
-
-	public static IAction uncheckTreeAction(final ITreeContainer tree) {
-		return getInstance().uncheckTreeAction(tree);
+	@Override
+	protected ITreeExpansionAction doBuild(final IActionBuilder original) {
+		return new TreeExpansionAction(original, tree, expanded, level);
 	}
 
 }

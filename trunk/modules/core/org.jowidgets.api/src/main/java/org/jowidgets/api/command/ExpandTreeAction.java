@@ -34,11 +34,11 @@ public final class ExpandTreeAction {
 
 	private ExpandTreeAction() {}
 
-	public static IDefaultActionBuilder builder(final ITreeContainer tree) {
+	public static ITreeExpansionActionBuilder builder(final ITreeContainer tree) {
 		return DefaultActionFactory.expandTreeActionBuilder(tree);
 	}
 
-	public static IAction create(final ITreeContainer tree) {
+	public static ITreeExpansionAction create(final ITreeContainer tree) {
 		return DefaultActionFactory.expandTreeAction(tree);
 	}
 

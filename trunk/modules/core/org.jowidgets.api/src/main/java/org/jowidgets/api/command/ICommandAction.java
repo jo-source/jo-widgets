@@ -50,6 +50,8 @@ public interface ICommandAction extends IAction {
 
 	void setCommand(ICommandExecutor command, IEnabledChecker enabledChecker, IExceptionHandler exceptionHandler);
 
+	ICommand getCommand();
+
 	/**
 	 * Set's the ExceptionHandler of the action. The actions ExceptionHandler handles exceptions that are not
 	 * handled by the command's exception handler.

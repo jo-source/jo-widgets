@@ -187,6 +187,11 @@ class CommandActionImpl implements ICommandAction, IActionChangeObservable {
 	}
 
 	@Override
+	public ICommand getCommand() {
+		return command;
+	}
+
+	@Override
 	public void setCommand(final ICommandExecutor command) {
 		setCommand(new Command(command));
 	}

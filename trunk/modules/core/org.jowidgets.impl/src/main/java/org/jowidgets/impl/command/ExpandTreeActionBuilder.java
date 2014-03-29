@@ -28,31 +28,19 @@
 
 package org.jowidgets.impl.command;
 
-import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.command.IActionBuilder;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.i18n.api.IMessage;
-import org.jowidgets.util.Assert;
 
-final class ExpandTreeActionBuilder extends AbstractDefaultActionBuilder {
+final class ExpandTreeActionBuilder extends TreeExpansionActionBuilder {
 
 	private static final IMessage EXPAND_ALL_MESSAGE = Messages.getMessage("ExpandTreeActionBuilder.expandAllLabel");
 
-	private final ITreeContainer tree;
-
 	ExpandTreeActionBuilder(final ITreeContainer tree) {
-		Assert.paramNotNull(tree, "tree");
-		this.tree = tree;
+		super(tree, true);
 
 		setText(EXPAND_ALL_MESSAGE.get());
 		setIcon(IconsSmall.EXPAND_ALL);
-	}
-
-	@Override
-	protected IAction doBuild(final IActionBuilder superBuilder) {
-		superBuilder.setCommand(new TreeExpansionCommand(tree, true), new TreeExpansionEnabledChecker(tree, true));
-		return superBuilder.build();
 	}
 
 }
