@@ -33,10 +33,10 @@ import org.jowidgets.api.command.ExpandTreeAction;
 import org.jowidgets.api.command.ITreeExpansionAction;
 import org.jowidgets.api.command.UncheckTreeAction;
 import org.jowidgets.api.model.item.IRadioItemModel;
+import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IToolBar;
-import org.jowidgets.api.widgets.IToolBarPopupButton;
 import org.jowidgets.api.widgets.ITreeViewer;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeViewerBluePrint;
@@ -62,6 +62,7 @@ public final class TreeViewerDemo implements IApplication {
 		frame.setLayout(new MigLayoutDescriptor("wrap", "0[grow, 0::]0", "0[]0[]0[grow, 0::]"));
 
 		final IToolBar toolBar = frame.add(BPF.toolBar());
+		final IToolBarModel toolBarModel = toolBar.getModel();
 		frame.add(BPF.separator(), "growx, w 0::");
 
 		final ITreeViewerBluePrint<String> treeViewerBp = BPF.treeViewer(new RootNodeModel());
@@ -78,16 +79,12 @@ public final class TreeViewerDemo implements IApplication {
 		addItemListener(levelMenu.addRadioItem("Level 3"), expandAction, collapseAction, Integer.valueOf(2), false);
 		addItemListener(levelMenu.addRadioItem("Level 4"), expandAction, collapseAction, Integer.valueOf(3), false);
 
-		final IToolBarPopupButton expandButton = toolBar.addItem(BPF.toolBarPopupButton());
-		expandButton.setAction(expandAction);
-		expandButton.setPopupMenu(levelMenu);
+		toolBarModel.addPopupAction(expandAction, levelMenu);
+		toolBarModel.addPopupAction(collapseAction, levelMenu);
 
-		final IToolBarPopupButton collapseButton = toolBar.addItem(BPF.toolBarPopupButton());
-		collapseButton.setAction(collapseAction);
-		collapseButton.setPopupMenu(levelMenu);
+		toolBarModel.addAction(UncheckTreeAction.create(tree));
+		toolBarModel.addAction(CheckTreeAction.create(tree));
 
-		toolBar.addAction(UncheckTreeAction.create(tree));
-		toolBar.addAction(CheckTreeAction.create(tree));
 		toolBar.pack();
 
 		//set the root frame visible
