@@ -33,8 +33,9 @@ import org.jowidgets.api.model.item.IItemModelListener;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.types.Modifier;
+import org.jowidgets.util.wrapper.IWrapper;
 
-abstract class AbstractItemModelWrapper implements IItemModel {
+abstract class AbstractItemModelWrapper implements IItemModel, IWrapper<IItemModel> {
 
 	private final IItemModel itemModel;
 
@@ -145,6 +146,11 @@ abstract class AbstractItemModelWrapper implements IItemModel {
 	@Override
 	public final void removeItemModelListener(final IItemModelListener listener) {
 		itemModel.removeItemModelListener(listener);
+	}
+
+	@Override
+	public IItemModel unwrap() {
+		return itemModel;
 	}
 
 }

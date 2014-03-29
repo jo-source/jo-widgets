@@ -49,6 +49,7 @@ import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.NullCompatibleEquivalence;
+import org.jowidgets.util.wrapper.IWrapper;
 
 class ListModelDelegate {
 
@@ -218,15 +219,23 @@ class ListModelDelegate {
 		return item;
 	}
 
-	protected <MODEL_TYPE extends IItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item) {
+	@SuppressWarnings("unchecked")
+	protected <MODEL_TYPE extends IItemModel> MODEL_TYPE addItem(final int index, MODEL_TYPE item) {
 		Assert.paramNotNull(item, "item");
+
+		if (item instanceof IWrapper<?>) {
+			item = ((IWrapper<MODEL_TYPE>) item).unwrap();
+		}
+
 		if (item instanceof IMenuModel && this instanceof IMenuModel) {
 			checkRecursion((IMenuModel) item, (IMenuModel) this);
 		}
+
 		checkIds(item);
 		children.add(index, item);
 		item.addItemModelListener(itemModelListener);
 		fireAfterChildAdded(index);
+
 		return item;
 	}
 
