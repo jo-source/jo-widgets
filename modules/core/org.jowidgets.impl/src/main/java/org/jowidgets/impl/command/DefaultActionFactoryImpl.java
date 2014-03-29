@@ -31,30 +31,32 @@ package org.jowidgets.impl.command;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.IDefaultActionBuilder;
 import org.jowidgets.api.command.IDefaultActionFactory;
+import org.jowidgets.api.command.ITreeExpansionAction;
+import org.jowidgets.api.command.ITreeExpansionActionBuilder;
 import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.util.Assert;
 
 public final class DefaultActionFactoryImpl implements IDefaultActionFactory {
 
 	@Override
-	public IDefaultActionBuilder collapseTreeActionBuilder(final ITreeContainer tree) {
+	public ITreeExpansionActionBuilder collapseTreeActionBuilder(final ITreeContainer tree) {
 		Assert.paramNotNull(tree, "tree");
 		return new CollapseTreeActionBuilder(tree);
 	}
 
 	@Override
-	public IAction collapseTreeAction(final ITreeContainer tree) {
+	public ITreeExpansionAction collapseTreeAction(final ITreeContainer tree) {
 		Assert.paramNotNull(tree, "tree");
 		return collapseTreeActionBuilder(tree).build();
 	}
 
 	@Override
-	public IDefaultActionBuilder expandTreeActionBuilder(final ITreeContainer tree) {
+	public ITreeExpansionActionBuilder expandTreeActionBuilder(final ITreeContainer tree) {
 		return new ExpandTreeActionBuilder(tree);
 	}
 
 	@Override
-	public IAction expandTreeAction(final ITreeContainer tree) {
+	public ITreeExpansionAction expandTreeAction(final ITreeContainer tree) {
 		Assert.paramNotNull(tree, "tree");
 		return expandTreeActionBuilder(tree).build();
 	}

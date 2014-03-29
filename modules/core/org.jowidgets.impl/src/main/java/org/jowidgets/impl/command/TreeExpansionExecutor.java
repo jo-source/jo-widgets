@@ -26,54 +26,32 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.command;
+package org.jowidgets.impl.command;
 
-import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.command.ICommandExecutor;
+import org.jowidgets.api.command.IExecutionContext;
 import org.jowidgets.api.widgets.ITreeContainer;
 
-public final class DefaultActionFactory {
+final class TreeExpansionExecutor implements ICommandExecutor {
 
-	private static IDefaultActionFactory instance;
+	private final ITreeContainer tree;
+	private final boolean expanded;
 
-	private DefaultActionFactory() {}
+	private Integer pivotLevel;
 
-	public static IDefaultActionFactory getInstance() {
-		if (instance == null) {
-			instance = Toolkit.getDefaultActionFactory();
-		}
-		return instance;
+	TreeExpansionExecutor(final ITreeContainer tree, final boolean expanded, final Integer pivotLevel) {
+		this.tree = tree;
+		this.expanded = expanded;
+		this.pivotLevel = pivotLevel;
 	}
 
-	public static ITreeExpansionActionBuilder collapseTreeActionBuilder(final ITreeContainer tree) {
-		return getInstance().collapseTreeActionBuilder(tree);
+	@Override
+	public void execute(final IExecutionContext executionContext) throws Exception {
+		tree.setAllChildrenExpanded(pivotLevel, expanded);
 	}
 
-	public static ITreeExpansionAction collapseTreeAction(final ITreeContainer tree) {
-		return getInstance().collapseTreeAction(tree);
-	}
-
-	public static ITreeExpansionActionBuilder expandTreeActionBuilder(final ITreeContainer tree) {
-		return getInstance().expandTreeActionBuilder(tree);
-	}
-
-	public static ITreeExpansionAction expandTreeAction(final ITreeContainer tree) {
-		return getInstance().expandTreeAction(tree);
-	}
-
-	public static IDefaultActionBuilder checkTreeActionBuilder(final ITreeContainer tree) {
-		return getInstance().checkTreeActionBuilder(tree);
-	}
-
-	public static IAction checkTreeAction(final ITreeContainer tree) {
-		return getInstance().checkTreeAction(tree);
-	}
-
-	public static IDefaultActionBuilder uncheckTreeActionBuilder(final ITreeContainer tree) {
-		return getInstance().uncheckTreeActionBuilder(tree);
-	}
-
-	public static IAction uncheckTreeAction(final ITreeContainer tree) {
-		return getInstance().uncheckTreeAction(tree);
+	void setPivotLevel(final Integer pivotLevel) {
+		this.pivotLevel = pivotLevel;
 	}
 
 }

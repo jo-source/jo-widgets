@@ -341,6 +341,11 @@ public class TreeImpl extends AbstractControlSpiWrapper implements ITree, IDropS
 	}
 
 	@Override
+	public void setAllChildrenExpanded(final Integer pivotLevel, final boolean expanded) {
+		treeContainerDelegate.setAllChildrenExpanded(pivotLevel, expanded);
+	}
+
+	@Override
 	public void setAllChildrenChecked(final boolean checked) {
 		treeContainerDelegate.setAllChildrenChecked(checked);
 	}

@@ -37,6 +37,7 @@ import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.tools.command.AbstractEnabledChecker;
 import org.jowidgets.tools.controller.TreeAdapter;
+import org.jowidgets.util.NullCompatibleEquivalence;
 
 final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implements IEnabledChecker {
 
@@ -46,9 +47,12 @@ final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implement
 	private final ITreeContainer treeContainer;
 	private final boolean expanded;
 
-	TreeExpansionEnabledChecker(final ITreeContainer treeContainer, final boolean expanded) {
+	private Integer pivotLevel;
+
+	TreeExpansionEnabledChecker(final ITreeContainer treeContainer, final boolean expanded, final Integer pivotLevel) {
 		this.treeContainer = treeContainer;
 		this.expanded = expanded;
+		this.pivotLevel = pivotLevel;
 
 		getParentTree(treeContainer).addTreeListener(new TreeAdapter() {
 
@@ -76,7 +80,7 @@ final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implement
 
 	@Override
 	public IEnabledState getEnabledState() {
-		if (hasNodeThatWillBeChanged(treeContainer)) {
+		if (hasNodeThatWillBeChanged(treeContainer, pivotLevel)) {
 			return EnabledState.ENABLED;
 		}
 		else if (expanded) {
@@ -87,18 +91,64 @@ final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implement
 		}
 	}
 
-	private boolean hasNodeThatWillBeChanged(final ITreeContainer tree) {
-		for (final ITreeNode childNode : tree.getChildren()) {
-			if (childNode.getChildren().size() > 0) {
-				if (childNode.isExpanded() != expanded) {
+	private boolean hasNodeThatWillBeChanged(final ITreeContainer tree, final Integer currentLevel) {
+		if (tree instanceof ITreeNode) {
+			final ITreeNode node = (ITreeNode) tree;
+			if (currentLevel == null) {
+				if (node.isExpanded() != expanded) {
 					return true;
 				}
-				if (hasNodeThatWillBeChanged(childNode)) {
+			}
+			else {
+				final int pivot = currentLevel.intValue();
+				if (expanded) {
+					if (pivot > 0) {
+						if (node.isExpanded() != expanded) {
+							return true;
+						}
+					}
+				}
+				else {
+					if (pivot == 0) {
+						if (node.isExpanded() != expanded) {
+							return true;
+						}
+					}
+				}
+			}
+		}
+
+		//consider children
+		if (currentLevel == null) {
+			for (final ITreeNode childNode : tree.getChildren()) {
+				if (hasNodeThatWillBeChanged(childNode, null)) {
 					return true;
 				}
 			}
 		}
+		else {
+			final int pivot = currentLevel.intValue();
+			int newPivot = pivot;
+			if (newPivot > 0) {
+				newPivot = pivot - 1;
+			}
+			if (!expanded || pivot > 0) {
+				for (final ITreeNode childNode : tree.getChildren()) {
+					if (hasNodeThatWillBeChanged(childNode, Integer.valueOf(newPivot))) {
+						return true;
+					}
+				}
+			}
+		}
+
 		return false;
+	}
+
+	void setPivotLevel(final Integer pivotLevel) {
+		if (!NullCompatibleEquivalence.equals(this.pivotLevel, pivotLevel)) {
+			this.pivotLevel = pivotLevel;
+			fireChangedEvent();
+		}
 	}
 
 }

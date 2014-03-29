@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, MGrossmann
+ * Copyright (c) 2014, Michael
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,23 +28,45 @@
 
 package org.jowidgets.impl.command;
 
+import org.jowidgets.api.command.IActionBuilder;
+import org.jowidgets.api.command.ICommand;
+import org.jowidgets.api.command.ICommandAction;
 import org.jowidgets.api.command.ICommandExecutor;
-import org.jowidgets.api.command.IExecutionContext;
+import org.jowidgets.api.command.IEnabledChecker;
+import org.jowidgets.api.command.ITreeExpansionAction;
 import org.jowidgets.api.widgets.ITreeContainer;
+import org.jowidgets.tools.command.ActionWrapper;
 
-final class TreeExpansionCommand implements ICommandExecutor {
+final class TreeExpansionAction extends ActionWrapper implements ITreeExpansionAction {
 
-	private final ITreeContainer tree;
-	private final boolean expanded;
+	private final TreeExpansionExecutor executor;
+	private final TreeExpansionEnabledChecker enabledChecker;
 
-	TreeExpansionCommand(final ITreeContainer tree, final boolean expanded) {
-		this.tree = tree;
-		this.expanded = expanded;
+	TreeExpansionAction(final IActionBuilder builder, final ITreeContainer tree, final boolean expanded, final Integer pivotLevel) {
+		super(createAction(builder, tree, expanded, pivotLevel));
+
+		final ICommand command = ((ICommandAction) unwrap()).getCommand();
+
+		this.executor = (TreeExpansionExecutor) command.getCommandExecutor();
+		this.enabledChecker = (TreeExpansionEnabledChecker) command.getEnabledChecker();
+	}
+
+	private static ICommandAction createAction(
+		final IActionBuilder builder,
+		final ITreeContainer tree,
+		final boolean expanded,
+		final Integer level) {
+
+		final ICommandExecutor executor = new TreeExpansionExecutor(tree, expanded, level);
+		final IEnabledChecker enabledChecker = new TreeExpansionEnabledChecker(tree, expanded, level);
+
+		return builder.setCommand(executor, enabledChecker).build();
 	}
 
 	@Override
-	public void execute(final IExecutionContext executionContext) throws Exception {
-		tree.setAllChildrenExpanded(expanded);
+	public void setPivotLevel(final Integer pivotLevel) {
+		executor.setPivotLevel(pivotLevel);
+		enabledChecker.setPivotLevel(pivotLevel);
 	}
 
 }

@@ -37,12 +37,16 @@ import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.VirtualKey;
 
-public abstract class AbstractDefaultActionBuilder implements IDefaultActionBuilder {
+abstract class AbstractDefaultActionBuilder implements IDefaultActionBuilder {
 
 	private final IActionBuilder original;
 
 	AbstractDefaultActionBuilder() {
 		this.original = Toolkit.getActionBuilderFactory().create();
+	}
+
+	IActionBuilder getOriginal() {
+		return original;
 	}
 
 	@Override

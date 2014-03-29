@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, MGrossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,52 +28,16 @@
 
 package org.jowidgets.api.command;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.ITreeContainer;
 
-public final class DefaultActionFactory {
+public interface ITreeExpansionAction extends IAction {
 
-	private static IDefaultActionFactory instance;
-
-	private DefaultActionFactory() {}
-
-	public static IDefaultActionFactory getInstance() {
-		if (instance == null) {
-			instance = Toolkit.getDefaultActionFactory();
-		}
-		return instance;
-	}
-
-	public static ITreeExpansionActionBuilder collapseTreeActionBuilder(final ITreeContainer tree) {
-		return getInstance().collapseTreeActionBuilder(tree);
-	}
-
-	public static ITreeExpansionAction collapseTreeAction(final ITreeContainer tree) {
-		return getInstance().collapseTreeAction(tree);
-	}
-
-	public static ITreeExpansionActionBuilder expandTreeActionBuilder(final ITreeContainer tree) {
-		return getInstance().expandTreeActionBuilder(tree);
-	}
-
-	public static ITreeExpansionAction expandTreeAction(final ITreeContainer tree) {
-		return getInstance().expandTreeAction(tree);
-	}
-
-	public static IDefaultActionBuilder checkTreeActionBuilder(final ITreeContainer tree) {
-		return getInstance().checkTreeActionBuilder(tree);
-	}
-
-	public static IAction checkTreeAction(final ITreeContainer tree) {
-		return getInstance().checkTreeAction(tree);
-	}
-
-	public static IDefaultActionBuilder uncheckTreeActionBuilder(final ITreeContainer tree) {
-		return getInstance().uncheckTreeActionBuilder(tree);
-	}
-
-	public static IAction uncheckTreeAction(final ITreeContainer tree) {
-		return getInstance().uncheckTreeAction(tree);
-	}
+	/**
+	 * Sets the pivot level for the expand or collapse
+	 * 
+	 * @param level The level to set
+	 * 
+	 * @see setAllChildrenExpanded(Integer, boolean) for ITreeContainer
+	 */
+	void setPivotLevel(Integer level);
 
 }

@@ -28,31 +28,19 @@
 
 package org.jowidgets.impl.command;
 
-import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.command.IActionBuilder;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.i18n.api.IMessage;
-import org.jowidgets.util.Assert;
 
-final class CollapseTreeActionBuilder extends AbstractDefaultActionBuilder {
+final class CollapseTreeActionBuilder extends TreeExpansionActionBuilder {
 
 	private static final IMessage COLLAPSE_ALL_MESSAGE = Messages.getMessage("CollapseTreeActionBuilder.collapseAllLabel");
 
-	private final ITreeContainer tree;
-
 	CollapseTreeActionBuilder(final ITreeContainer tree) {
-		Assert.paramNotNull(tree, "tree");
-		this.tree = tree;
+		super(tree, false);
 
 		setText(COLLAPSE_ALL_MESSAGE.get());
 		setIcon(IconsSmall.COLLAPSE_ALL);
-	}
-
-	@Override
-	protected IAction doBuild(final IActionBuilder superBuilder) {
-		superBuilder.setCommand(new TreeExpansionCommand(tree, false), new TreeExpansionEnabledChecker(tree, false));
-		return superBuilder.build();
 	}
 
 }

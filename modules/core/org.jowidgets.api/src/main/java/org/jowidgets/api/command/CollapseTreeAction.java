@@ -34,11 +34,11 @@ public final class CollapseTreeAction {
 
 	private CollapseTreeAction() {}
 
-	public static IDefaultActionBuilder builder(final ITreeContainer tree) {
+	public static ITreeExpansionActionBuilder builder(final ITreeContainer tree) {
 		return DefaultActionFactory.collapseTreeActionBuilder(tree);
 	}
 
-	public static IAction create(final ITreeContainer tree) {
+	public static ITreeExpansionAction create(final ITreeContainer tree) {
 		return DefaultActionFactory.collapseTreeAction(tree);
 	}
 

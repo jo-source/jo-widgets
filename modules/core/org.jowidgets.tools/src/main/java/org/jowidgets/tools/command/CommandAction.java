@@ -120,6 +120,11 @@ public class CommandAction implements ICommandAction {
 	}
 
 	@Override
+	public ICommand getCommand() {
+		return action.getCommand();
+	}
+
+	@Override
 	public final boolean isEnabled() {
 		return action.isEnabled();
 	}
