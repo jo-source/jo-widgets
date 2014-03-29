@@ -35,19 +35,27 @@ import org.jowidgets.api.widgets.ITreeContainer;
 final class TreeExpansionExecutor implements ICommandExecutor {
 
 	private final ITreeContainer tree;
-	private final boolean expanded;
+	private final ExpansionMode expansionMode;
 
 	private Integer pivotLevel;
 
-	TreeExpansionExecutor(final ITreeContainer tree, final boolean expanded, final Integer pivotLevel) {
+	TreeExpansionExecutor(final ITreeContainer tree, final ExpansionMode expansionMode, final Integer pivotLevel) {
 		this.tree = tree;
-		this.expanded = expanded;
+		this.expansionMode = expansionMode;
 		this.pivotLevel = pivotLevel;
 	}
 
 	@Override
 	public void execute(final IExecutionContext executionContext) throws Exception {
-		tree.setAllChildrenExpanded(pivotLevel, expanded);
+		if (ExpansionMode.EXPAND.equals(expansionMode) || (ExpansionMode.BOTH.equals(expansionMode) && pivotLevel == null)) {
+			tree.setAllChildrenExpanded(pivotLevel, true);
+		}
+		else if (ExpansionMode.COLLAPSE.equals(expansionMode)) {
+			tree.setAllChildrenExpanded(pivotLevel, false);
+		}
+		else if (ExpansionMode.BOTH.equals(expansionMode)) {
+			tree.setAllChildrenBelowExpandedAboveCollapsed(pivotLevel.intValue());
+		}
 	}
 
 	void setPivotLevel(final Integer pivotLevel) {

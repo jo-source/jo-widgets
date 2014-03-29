@@ -37,15 +37,20 @@ import org.jowidgets.util.Assert;
 class TreeExpansionActionBuilder extends AbstractDefaultActionBuilder implements ITreeExpansionActionBuilder {
 
 	private final ITreeContainer tree;
-	private final boolean expanded;
+	private final ExpansionMode expansionMode;
 
 	private Integer level;
 	private String boundPivotLevelText;
 
-	TreeExpansionActionBuilder(final ITreeContainer tree, final boolean expanded) {
+	TreeExpansionActionBuilder(final ITreeContainer tree, final ExpansionMode expansionMode) {
 		Assert.paramNotNull(tree, "tree");
 		this.tree = tree;
-		this.expanded = expanded;
+		this.expansionMode = expansionMode;
+	}
+
+	@Override
+	public ITreeExpansionActionBuilder setPivotLevel(final int level) {
+		return setPivotLevel(Integer.valueOf(level));
 	}
 
 	@Override
@@ -67,7 +72,7 @@ class TreeExpansionActionBuilder extends AbstractDefaultActionBuilder implements
 
 	@Override
 	protected ITreeExpansionAction doBuild(final IActionBuilder original) {
-		return new TreeExpansionAction(original, tree, expanded, level, getText(), boundPivotLevelText);
+		return new TreeExpansionAction(original, tree, expansionMode, level, getText(), boundPivotLevelText);
 	}
 
 }

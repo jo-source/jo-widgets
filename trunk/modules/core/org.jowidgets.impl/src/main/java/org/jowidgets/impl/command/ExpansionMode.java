@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, MGrossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,21 +28,10 @@
 
 package org.jowidgets.impl.command;
 
-import org.jowidgets.api.image.IconsSmall;
-import org.jowidgets.api.widgets.ITreeContainer;
-import org.jowidgets.i18n.api.IMessage;
+enum ExpansionMode {
 
-final class CollapseTreeActionBuilder extends TreeExpansionActionBuilder {
-
-	private static final IMessage COLLAPSE_ALL_MESSAGE = Messages.getMessage("CollapseTreeActionBuilder.collapseAllLabel");
-	private static final IMessage COLLAPSE_ALL_BOUND_MESSAGE = Messages.getMessage("CollapseTreeActionBuilder.collapseAllBoundLabel");
-
-	CollapseTreeActionBuilder(final ITreeContainer tree) {
-		super(tree, ExpansionMode.COLLAPSE);
-
-		setText(COLLAPSE_ALL_MESSAGE.get());
-		setBoundPivotLevelText(COLLAPSE_ALL_BOUND_MESSAGE.get());
-		setIcon(IconsSmall.COLLAPSE_ALL);
-	}
+	EXPAND,
+	COLLAPSE,
+	BOTH;
 
 }

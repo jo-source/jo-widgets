@@ -26,23 +26,20 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.command;
+package org.jowidgets.api.command;
 
-import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.widgets.ITreeContainer;
-import org.jowidgets.i18n.api.IMessage;
 
-final class CollapseTreeActionBuilder extends TreeExpansionActionBuilder {
+public final class ExpandCollapseTreeAction {
 
-	private static final IMessage COLLAPSE_ALL_MESSAGE = Messages.getMessage("CollapseTreeActionBuilder.collapseAllLabel");
-	private static final IMessage COLLAPSE_ALL_BOUND_MESSAGE = Messages.getMessage("CollapseTreeActionBuilder.collapseAllBoundLabel");
+	private ExpandCollapseTreeAction() {}
 
-	CollapseTreeActionBuilder(final ITreeContainer tree) {
-		super(tree, ExpansionMode.COLLAPSE);
+	public static ITreeExpansionActionBuilder builder(final ITreeContainer tree) {
+		return DefaultActionFactory.expandCollapseTreeActionBuilder(tree);
+	}
 
-		setText(COLLAPSE_ALL_MESSAGE.get());
-		setBoundPivotLevelText(COLLAPSE_ALL_BOUND_MESSAGE.get());
-		setIcon(IconsSmall.COLLAPSE_ALL);
+	public static ITreeExpansionAction create(final ITreeContainer tree) {
+		return DefaultActionFactory.expandCollapseTreeAction(tree);
 	}
 
 }

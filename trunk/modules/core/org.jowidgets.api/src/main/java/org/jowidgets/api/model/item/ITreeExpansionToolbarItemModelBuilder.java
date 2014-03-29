@@ -28,37 +28,7 @@
 
 package org.jowidgets.api.model.item;
 
-import org.jowidgets.api.command.ITreeExpansionAction;
-import org.jowidgets.api.widgets.ITreeContainer;
-
 public interface ITreeExpansionToolbarItemModelBuilder {
-
-	/**
-	 * Sets the expand and collapse action by creating them from a ITreeConatainer
-	 * 
-	 * @param tree The tree to create the expand and collapse actions from
-	 * 
-	 * @return This builder
-	 */
-	ITreeExpansionToolbarItemModelBuilder setActions(ITreeContainer tree);
-
-	/**
-	 * Sets the collapse action that should be used
-	 * 
-	 * @param expandAction The collapse action to set
-	 * 
-	 * @return This builder
-	 */
-	ITreeExpansionToolbarItemModelBuilder setCollapseAction(ITreeExpansionAction collapseAction);
-
-	/**
-	 * Sets the expand action that should be used
-	 * 
-	 * @param expandAction The expand action to set
-	 * 
-	 * @return This builder
-	 */
-	ITreeExpansionToolbarItemModelBuilder setExpandAction(ITreeExpansionAction expandAction);
 
 	/**
 	 * Adds an unbound level with a default label
@@ -152,17 +122,10 @@ public interface ITreeExpansionToolbarItemModelBuilder {
 	ITreeExpansionToolbarItemModelBuilder setUnboundDefaultLevel();
 
 	/**
-	 * Builds the expand tree toolbar item
+	 * Builds the item
 	 * 
-	 * @return The expand tree toolbar item
+	 * @return The builded item
 	 */
-	IToolBarItemModel buildExpandItem();
-
-	/**
-	 * Builds the collapse tree toolbar item
-	 * 
-	 * @return The collapse tree toolbar item
-	 */
-	IToolBarItemModel buildCollapseItem();
+	IToolBarItemModel build();
 
 }

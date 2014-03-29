@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, MGrossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,23 +26,24 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.command;
+package org.jowidgets.api.model.item;
 
-import org.jowidgets.api.image.IconsSmall;
+import org.jowidgets.api.command.ExpandTreeAction;
 import org.jowidgets.api.widgets.ITreeContainer;
-import org.jowidgets.i18n.api.IMessage;
+import org.jowidgets.util.Assert;
 
-final class CollapseTreeActionBuilder extends TreeExpansionActionBuilder {
+public final class ExpandTreeToolbarItemModel {
 
-	private static final IMessage COLLAPSE_ALL_MESSAGE = Messages.getMessage("CollapseTreeActionBuilder.collapseAllLabel");
-	private static final IMessage COLLAPSE_ALL_BOUND_MESSAGE = Messages.getMessage("CollapseTreeActionBuilder.collapseAllBoundLabel");
+	private ExpandTreeToolbarItemModel() {}
 
-	CollapseTreeActionBuilder(final ITreeContainer tree) {
-		super(tree, ExpansionMode.COLLAPSE);
+	public static ITreeExpansionToolbarItemModelBuilder builder(final ITreeContainer tree) {
+		Assert.paramNotNull(tree, "tree");
+		return TreeExpansionToolbarItemModel.builder(ExpandTreeAction.create(tree));
+	}
 
-		setText(COLLAPSE_ALL_MESSAGE.get());
-		setBoundPivotLevelText(COLLAPSE_ALL_BOUND_MESSAGE.get());
-		setIcon(IconsSmall.COLLAPSE_ALL);
+	public static IToolBarItemModel create(final ITreeContainer tree, final int maxLevel) {
+		Assert.paramNotNull(tree, "tree");
+		return TreeExpansionToolbarItemModel.create(ExpandTreeAction.create(tree), maxLevel);
 	}
 
 }

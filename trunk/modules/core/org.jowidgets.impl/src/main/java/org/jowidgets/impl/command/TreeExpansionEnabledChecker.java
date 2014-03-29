@@ -45,13 +45,13 @@ final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implement
 	private static final IMessage NODES_ALREADY_COLLAPSED = Messages.getMessage("TreeExpansionEnabledChecker.nodesAlreadyCollapsed");
 
 	private final ITreeContainer treeContainer;
-	private final boolean expanded;
+	private final ExpansionMode expansionMode;
 
 	private Integer pivotLevel;
 
-	TreeExpansionEnabledChecker(final ITreeContainer treeContainer, final boolean expanded, final Integer pivotLevel) {
+	TreeExpansionEnabledChecker(final ITreeContainer treeContainer, final ExpansionMode expansionMode, final Integer pivotLevel) {
 		this.treeContainer = treeContainer;
-		this.expanded = expanded;
+		this.expansionMode = expansionMode;
 		this.pivotLevel = pivotLevel;
 
 		getParentTree(treeContainer).addTreeListener(new TreeAdapter() {
@@ -80,18 +80,32 @@ final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implement
 
 	@Override
 	public IEnabledState getEnabledState() {
-		if (hasChildNodeThatWillBeChanged(treeContainer, pivotLevel)) {
-			return EnabledState.ENABLED;
+		if (ExpansionMode.EXPAND.equals(expansionMode) || (ExpansionMode.BOTH.equals(expansionMode) && pivotLevel == null)) {
+			if (hasChildNodeThatWillBeChanged(treeContainer, pivotLevel, true)) {
+				return EnabledState.ENABLED;
+			}
+			else {
+				return EnabledState.disabled(NODES_ALREADY_EXPANDED.get());
+			}
 		}
-		else if (expanded) {
-			return EnabledState.disabled(NODES_ALREADY_EXPANDED.get());
+		else if (ExpansionMode.COLLAPSE.equals(expansionMode)) {
+			if (hasChildNodeThatWillBeChanged(treeContainer, pivotLevel, false)) {
+				return EnabledState.ENABLED;
+			}
+			else {
+				return EnabledState.disabled(NODES_ALREADY_COLLAPSED.get());
+			}
 		}
 		else {
-			return EnabledState.disabled(NODES_ALREADY_COLLAPSED.get());
+			if (((pivotLevel > 0) && hasChildNodeThatWillBeChanged(treeContainer, pivotLevel - 1, true))
+				|| hasChildNodeThatWillBeChanged(treeContainer, pivotLevel, false)) {
+				return EnabledState.ENABLED;
+			}
+			return EnabledState.disabled(NODES_ALREADY_EXPANDED.get());
 		}
 	}
 
-	private boolean hasChildNodeThatWillBeChanged(final ITreeContainer tree, final Integer currentLevel) {
+	private boolean hasChildNodeThatWillBeChanged(final ITreeContainer tree, final Integer currentLevel, final boolean expanded) {
 
 		if (tree.getChildren().size() == 0) {
 			return false;
@@ -100,10 +114,10 @@ final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implement
 		//consider children
 		if (currentLevel == null) {
 			for (final ITreeNode childNode : tree.getChildren()) {
-				if (willNodeBeChanged(childNode, null)) {
+				if (willNodeBeChanged(childNode, null, expanded)) {
 					return true;
 				}
-				else if (hasChildNodeThatWillBeChanged(childNode, null)) {
+				else if (hasChildNodeThatWillBeChanged(childNode, null, expanded)) {
 					return true;
 				}
 			}
@@ -118,20 +132,20 @@ final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implement
 
 			if (expanded) {
 				for (final ITreeNode childNode : tree.getChildren()) {
-					if (willNodeBeChanged(childNode, pivot)) {
+					if (willNodeBeChanged(childNode, pivot, expanded)) {
 						return true;
 					}
-					else if (pivot > 0 && hasChildNodeThatWillBeChanged(childNode, newPivotlevel)) {
+					else if (pivot > 0 && hasChildNodeThatWillBeChanged(childNode, newPivotlevel, expanded)) {
 						return true;
 					}
 				}
 			}
 			else {
 				for (final ITreeNode childNode : tree.getChildren()) {
-					if (willNodeBeChanged(childNode, pivot)) {
+					if (willNodeBeChanged(childNode, pivot, expanded)) {
 						return true;
 					}
-					else if (hasChildNodeThatWillBeChanged(childNode, newPivotlevel)) {
+					else if (hasChildNodeThatWillBeChanged(childNode, newPivotlevel, expanded)) {
 						return true;
 					}
 				}
@@ -141,7 +155,7 @@ final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implement
 		return false;
 	}
 
-	private boolean willNodeBeChanged(final ITreeNode node, final Integer currentLevel) {
+	private boolean willNodeBeChanged(final ITreeNode node, final Integer currentLevel, final boolean expanded) {
 
 		if (currentLevel == null) {
 			if (node.isExpanded() != expanded) {

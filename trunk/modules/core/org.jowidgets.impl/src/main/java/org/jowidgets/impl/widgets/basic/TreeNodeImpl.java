@@ -546,11 +546,9 @@ public class TreeNodeImpl extends AbstractTreeNodeSpiWrapper implements ITreeNod
 		}
 		else {
 			final int pivot = pivotLevel.intValue();
+			Assert.paramNotNegative(pivot, "pivot");
 			int newPivot = pivot;
-			if (pivot < 0) {
-				throw new IllegalArgumentException("The pivot level must be greater or equal 0, but is " + pivot);
-			}
-			else if (newPivot > 0) {
+			if (newPivot > 0) {
 				newPivot--;
 			}
 			if (expanded) {
@@ -565,9 +563,24 @@ public class TreeNodeImpl extends AbstractTreeNodeSpiWrapper implements ITreeNod
 				}
 				treeContainerDelegate.setAllChildrenExpanded(Integer.valueOf(newPivot), expanded);
 			}
-
 		}
+	}
 
+	@Override
+	public void setAllChildrenBelowExpandedAboveCollapsed(final int pivot) {
+		Assert.paramNotNegative(pivot, "pivot");
+
+		int newPivot = pivot;
+		if (newPivot > 0) {
+			newPivot--;
+		}
+		if (pivot > 0) {
+			setExpanded(pivot > 0);
+		}
+		else {
+			setExpanded(false);
+		}
+		treeContainerDelegate.setAllChildrenBelowExpandedAboveCollapsed(Integer.valueOf(newPivot));
 	}
 
 	@Override

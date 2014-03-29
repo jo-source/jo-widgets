@@ -38,7 +38,7 @@ final class ExpandTreeActionBuilder extends TreeExpansionActionBuilder {
 	private static final IMessage EXPAND_ALL_BOUND_MESSAGE = Messages.getMessage("ExpandTreeActionBuilder.expandAllBoundLabel");
 
 	ExpandTreeActionBuilder(final ITreeContainer tree) {
-		super(tree, true);
+		super(tree, ExpansionMode.EXPAND);
 
 		setText(EXPAND_ALL_MESSAGE.get());
 		setBoundPivotLevelText(EXPAND_ALL_BOUND_MESSAGE.get());

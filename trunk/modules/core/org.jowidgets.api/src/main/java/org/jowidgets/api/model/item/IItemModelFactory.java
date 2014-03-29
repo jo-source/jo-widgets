@@ -28,6 +28,7 @@
 
 package org.jowidgets.api.model.item;
 
+import org.jowidgets.api.command.ITreeExpansionAction;
 
 public interface IItemModelFactory {
 
@@ -63,6 +64,6 @@ public interface IItemModelFactory {
 
 	IToolBarModel toolBar();
 
-	ITreeExpansionToolbarItemModelBuilder treeExpansionToolbarItemModelBuilder();
+	ITreeExpansionToolbarItemModelBuilder treeExpansionToolbarItemBuilder(ITreeExpansionAction action);
 
 }

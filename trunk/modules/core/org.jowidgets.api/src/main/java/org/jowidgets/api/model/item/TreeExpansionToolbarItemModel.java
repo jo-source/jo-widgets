@@ -28,14 +28,27 @@
 
 package org.jowidgets.api.model.item;
 
+import org.jowidgets.api.command.ITreeExpansionAction;
 import org.jowidgets.api.toolkit.Toolkit;
 
 public final class TreeExpansionToolbarItemModel {
 
 	private TreeExpansionToolbarItemModel() {}
 
-	public static ITreeExpansionToolbarItemModelBuilder builder() {
-		return Toolkit.getModelFactoryProvider().getItemModelFactory().treeExpansionToolbarItemModelBuilder();
+	public static ITreeExpansionToolbarItemModelBuilder builder(final ITreeExpansionAction action) {
+		return Toolkit.getModelFactoryProvider().getItemModelFactory().treeExpansionToolbarItemBuilder(action);
+	}
+
+	public static IToolBarItemModel create(final ITreeExpansionAction action, final int maxLevel) {
+		return builder(action).setLevels(maxLevel).build();
+	}
+
+	public static IToolBarItemModel create(
+		final ITreeExpansionAction action,
+		final int maxLevel,
+		final int defaultLevel,
+		final boolean hasUnbound) {
+		return builder(action).setLevels(maxLevel, hasUnbound).setDefaultLevel(defaultLevel).build();
 	}
 
 }

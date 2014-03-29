@@ -50,6 +50,17 @@ public interface ITreeExpansionActionBuilder extends IDefaultActionBuilder {
 	 */
 	ITreeExpansionActionBuilder setPivotLevel(Integer level);
 
+	/**
+	 * Sets the pivot level for the expand or collapse
+	 * 
+	 * @param level The level to set
+	 * 
+	 * @return This builder
+	 * 
+	 * @see setAllChildrenExpanded(Integer, boolean) for ITreeContainer
+	 */
+	ITreeExpansionActionBuilder setPivotLevel(int level);
+
 	@Override
 	ITreeExpansionAction build();
 
