@@ -85,12 +85,14 @@ public class ToolBarPopupButtonImpl extends ToolBarPopupButtonSpiWrapper impleme
 		this.modelListener = new IItemModelListener() {
 			@Override
 			public void itemChanged(final IItemModel item) {
+				getModel().removeItemModelListener(modelListener);
 				if (getModel().getAction() != action) {
-					setActionValue(action, ActionStyle.OMIT_TEXT);
+					setActionValue(getModel().getAction(), ActionStyle.OMIT_TEXT);
 				}
 				if (getModel().getPopupMenu() != popupMenuModel) {
-					setPopupMenuValue(popupMenuModel);
+					setPopupMenuValue(getModel().getPopupMenu());
 				}
+				getModel().addItemModelListener(modelListener);
 			}
 		};
 

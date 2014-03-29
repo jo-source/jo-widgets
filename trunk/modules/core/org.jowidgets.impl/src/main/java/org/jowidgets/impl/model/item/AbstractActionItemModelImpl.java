@@ -135,6 +135,8 @@ abstract class AbstractActionItemModelImpl extends ItemModelImpl {
 			}
 		}
 		this.action = action;
+		decoratorsDirty = true;
+
 		setVisibilityFromAspects(RequestContext.ACTION);
 	}
 

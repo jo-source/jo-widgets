@@ -155,4 +155,9 @@ public class PopupActionItemModel extends AbstractItemModelWrapper implements IP
 		return builder(text, toolTipText, icon).setId(id);
 	}
 
+	@Override
+	public String toString() {
+		return "PopupActionItemModel [getId()=" + getId() + "]";
+	}
+
 }
