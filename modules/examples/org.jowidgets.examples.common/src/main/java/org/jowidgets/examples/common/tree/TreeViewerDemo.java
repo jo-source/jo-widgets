@@ -66,9 +66,9 @@ public final class TreeViewerDemo implements IApplication {
 		treeViewerBp.setChecked(true).setAutoCheckMode(true);
 		final ITreeViewer<String> tree = frame.add(treeViewerBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
-		toolBarModel.addAction(ExpandTreeAction.create(tree));
-		toolBarModel.addItem(ExpandCollapseTreeToolbarItemModel.create(tree, 4, 2));
 		toolBarModel.addAction(CollapseTreeAction.create(tree));
+		toolBarModel.addItem(ExpandCollapseTreeToolbarItemModel.create(tree, 4, 2));
+		toolBarModel.addAction(ExpandTreeAction.create(tree));
 
 		toolBarModel.addAction(UncheckTreeAction.create(tree));
 		toolBarModel.addAction(CheckTreeAction.create(tree));
