@@ -32,7 +32,7 @@ import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.i18n.api.IMessageProvider;
 import org.jowidgets.i18n.api.MessageProvider;
 
-public final class Messages {
+final class Messages {
 
 	private static final IMessageProvider MESSAGE_PROVIDER = MessageProvider.create(
 			"org.jowidgets.tools.validation.messages",
@@ -40,11 +40,11 @@ public final class Messages {
 
 	private Messages() {}
 
-	public static String getString(final String key) {
+	static String getString(final String key) {
 		return MESSAGE_PROVIDER.getString(key);
 	}
 
-	public static IMessage getMessage(final String key) {
+	static IMessage getMessage(final String key) {
 		return MESSAGE_PROVIDER.getMessage(key);
 	}
 }

@@ -32,7 +32,7 @@ import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.i18n.api.IMessageProvider;
 import org.jowidgets.i18n.api.MessageProvider;
 
-public final class Messages {
+final class Messages {
 
 	private static final IMessageProvider MESSAGE_PROVIDER = MessageProvider.create(
 			"org.jowidgets.spi.impl.swing.common.widgets.messages",
