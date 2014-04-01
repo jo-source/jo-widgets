@@ -48,6 +48,18 @@ public final class MessageReplacer {
 	 * 
 	 * @return A new string where the variables was replaced with the parameters
 	 */
+	public static String replace(final IMessage message, final String... parameter) {
+		return MESSAGE_REPLACER.replace(message.get(), parameter);
+	}
+
+	/**
+	 * Replaces all variables (%1, ..., %n) with the given string parameters
+	 * 
+	 * @param message The message that contains variables
+	 * @param parameter The parameters to insert
+	 * 
+	 * @return A new string where the variables was replaced with the parameters
+	 */
 	public static String replace(final String message, final String... parameter) {
 		return MESSAGE_REPLACER.replace(message, parameter);
 	}
