@@ -34,6 +34,8 @@ public interface ISliderSetupBuilderCommon<INSTANCE_TYPE extends ISliderSetupBui
 		IComponentSetupBuilderCommon<INSTANCE_TYPE>,
 		ISliderSetupConvenienceCommon<INSTANCE_TYPE> {
 
+	INSTANCE_TYPE setToolTipText(String text);
+
 	INSTANCE_TYPE setOrientation(Orientation orientation);
 
 	INSTANCE_TYPE setMinimum(int minimum);

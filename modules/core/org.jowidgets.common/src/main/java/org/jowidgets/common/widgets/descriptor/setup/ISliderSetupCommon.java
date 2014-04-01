@@ -47,4 +47,6 @@ public interface ISliderSetupCommon extends IComponentSetupCommon {
 	@Mandatory
 	boolean getRenderTicks();
 
+	String getToolTipText();
+
 }
