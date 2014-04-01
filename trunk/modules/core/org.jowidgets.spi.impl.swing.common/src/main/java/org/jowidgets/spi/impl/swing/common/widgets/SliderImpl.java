@@ -48,6 +48,7 @@ public final class SliderImpl extends AbstractInputControl implements ISliderSpi
 		slider.setMaximum(setup.getMaximum());
 		slider.setMajorTickSpacing(setup.getTickSpacing());
 		slider.setPaintTicks(setup.getRenderTicks());
+		slider.setToolTipText(setup.getToolTipText());
 
 		slider.addChangeListener(new ChangeListener() {
 			@Override
