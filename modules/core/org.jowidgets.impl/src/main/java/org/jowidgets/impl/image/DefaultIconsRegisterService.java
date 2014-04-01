@@ -57,6 +57,7 @@ public class DefaultIconsRegisterService extends ImageConstantRegisterService {
 		registerImage(IconsSmall.NAVIGATION_FIRST2_TINY, "nav_first2_tiny.gif");
 		registerImage(IconsSmall.NAVIGATION_NEXT_TINY, "nav_next_tiny.gif");
 		registerImage(IconsSmall.NAVIGATION_STOP_TINY, "nav_stop_tiny.gif");
+		registerImage(IconsSmall.NAVIGATION_PAUSE_TINY, "nav_pause_tiny.gif");
 		registerImage(IconsSmall.NAVIGATION_PREVIOUS_TINY, "nav_prev_tiny.gif");
 		registerImage(IconsSmall.NAVIGATION_LAST_TINY, "nav_last_tiny.gif");
 		registerImage(IconsSmall.NAVIGATION_LAST2_TINY, "nav_last2_tiny.gif");
