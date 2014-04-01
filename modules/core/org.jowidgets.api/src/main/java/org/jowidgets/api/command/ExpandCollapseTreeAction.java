@@ -42,4 +42,8 @@ public final class ExpandCollapseTreeAction {
 		return DefaultActionFactory.expandCollapseTreeAction(tree);
 	}
 
+	public static ITreeExpansionAction create(final ITreeContainer tree, final boolean enabledChecking) {
+		return DefaultActionFactory.expandCollapseTreeActionBuilder(tree).setEnabledChecking(enabledChecking).build();
+	}
+
 }

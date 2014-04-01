@@ -46,4 +46,17 @@ public final class ExpandCollapseTreeToolbarItemModel {
 		return TreeExpansionToolbarItemModel.create(ExpandCollapseTreeAction.create(tree), maxLevel, defaultLevel, false);
 	}
 
+	public static IToolBarItemModel create(
+		final ITreeContainer tree,
+		final boolean enabledChecking,
+		final int maxLevel,
+		final int defaultLevel) {
+		Assert.paramNotNull(tree, "tree");
+		return TreeExpansionToolbarItemModel.create(
+				ExpandCollapseTreeAction.create(tree, enabledChecking),
+				maxLevel,
+				defaultLevel,
+				false);
+	}
+
 }

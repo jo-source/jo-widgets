@@ -61,6 +61,16 @@ public interface ITreeExpansionActionBuilder extends IDefaultActionBuilder {
 	 */
 	ITreeExpansionActionBuilder setPivotLevel(int level);
 
+	/**
+	 * Enable or disable enable checking.
+	 * By default enabled checking is enabled
+	 * 
+	 * @param enabledChecker If set true, enable checking is enabled, otherwise enabled checking is disabled
+	 * 
+	 * @return This builder
+	 */
+	ITreeExpansionActionBuilder setEnabledChecking(boolean enabledChecking);
+
 	@Override
 	ITreeExpansionAction build();
 
