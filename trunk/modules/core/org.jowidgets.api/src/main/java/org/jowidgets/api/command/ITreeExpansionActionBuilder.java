@@ -28,10 +28,13 @@
 
 package org.jowidgets.api.command;
 
+import org.jowidgets.api.widgets.ITreeNode;
+import org.jowidgets.util.IFilter;
+
 public interface ITreeExpansionActionBuilder extends IDefaultActionBuilder {
 
 	/**
-	 * Sets the label that is used, if a bound pivot level ist used
+	 * Sets the label that is used, if a bound pivot level is used
 	 * 
 	 * @param the bound pivot level text to set
 	 * 
@@ -60,6 +63,25 @@ public interface ITreeExpansionActionBuilder extends IDefaultActionBuilder {
 	 * @see setAllChildrenExpanded(Integer, boolean) for ITreeContainer
 	 */
 	ITreeExpansionActionBuilder setPivotLevel(int level);
+
+	/**
+	 * Adds a filter. Only nodes that was accepted by the filter will be affected
+	 * 
+	 * @param filter The filter to set
+	 * 
+	 * @return This builder
+	 */
+	ITreeExpansionActionBuilder addFilter(IFilter<ITreeNode> filter);
+
+	/**
+	 * Sets a filter. Only nodes that was accepted by the filter will be affected.
+	 * Remark: Setting a filter will remove all currently added filters
+	 * 
+	 * @param filter The filter to set
+	 * 
+	 * @return This builder
+	 */
+	ITreeExpansionActionBuilder setFilter(IFilter<ITreeNode> filter);
 
 	/**
 	 * Enable or disable enable checking.

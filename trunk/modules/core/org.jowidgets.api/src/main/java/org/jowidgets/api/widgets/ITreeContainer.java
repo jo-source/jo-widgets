@@ -77,6 +77,20 @@ public interface ITreeContainer {
 	 */
 	void setAllChildrenBelowExpandedAboveCollapsed(int pivotLevel);
 
+	/**
+	 * Visits the nodes of the container by a visitor
+	 * 
+	 * @param visitor The visitor to visit the nodes, must not be null
+	 * 
+	 * @return false if the visiting should be stopped
+	 */
+	boolean accept(ITreeNodeVisitor visitor);
+
+	/**
+	 * Gets the level of the node, where 0 is the root level
+	 * 
+	 * @return The level of the node
+	 */
 	int getLevel();
 
 }

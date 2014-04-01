@@ -26,38 +26,43 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.command;
+package org.jowidgets.api.command;
 
-import org.jowidgets.api.command.ITreeExpansionActionBuilder;
-import org.jowidgets.api.image.IconsSmall;
+import org.jowidgets.api.types.CheckedState;
 import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.api.widgets.ITreeNode;
-import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.util.IFilter;
 
-final class ExpandTreeActionBuilder extends TreeExpansionActionBuilder {
+public final class ExpandCheckedNodesTreeAction {
 
-	private static final IMessage EXPAND_ALL_MESSAGE = Messages.getMessage("ExpandTreeActionBuilder.expandAllLabel");
-	private static final IMessage EXPAND_ALL_BOUND_MESSAGE = Messages.getMessage("ExpandTreeActionBuilder.expandAllBoundLabel");
+	private ExpandCheckedNodesTreeAction() {}
 
-	ExpandTreeActionBuilder(final ITreeContainer tree) {
-		super(tree, ExpansionMode.EXPAND);
-
-		setText(EXPAND_ALL_MESSAGE.get());
-		setBoundPivotLevelText(EXPAND_ALL_BOUND_MESSAGE.get());
-		setIcon(IconsSmall.EXPAND_ALL);
+	public static ITreeExpansionActionBuilder builder(final ITreeContainer tree) {
+		return DefaultActionFactory.expandCheckedNodesTreeActionBuilder(tree);
 	}
 
-	@Override
-	public ITreeExpansionActionBuilder addFilter(final IFilter<ITreeNode> filter) {
-		throw new UnsupportedOperationException(
-			"Filters are not supported for this action at the moment. Feel free to contribute a implementation");
+	public static ITreeExpansionAction create(final ITreeContainer tree) {
+		return DefaultActionFactory.expandCheckedNodesTreeAction(tree);
 	}
 
-	@Override
-	public ITreeExpansionActionBuilder setFilter(final IFilter<ITreeNode> filter) {
-		throw new UnsupportedOperationException(
-			"Filters are not supported for this action at the moment. Feel free to contribute a implementation");
+	public static ITreeExpansionActionBuilder builder(final ITreeContainer tree, final boolean acceptGreyedOnly) {
+		if (acceptGreyedOnly) {
+			final ITreeExpansionActionBuilder builder = builder(tree);
+			builder.setFilter(new IFilter<ITreeNode>() {
+				@Override
+				public boolean accept(final ITreeNode value) {
+					return CheckedState.GREYED.equals(value.getCheckedState());
+				}
+			});
+			return builder;
+		}
+		else {
+			return builder(tree);
+		}
+	}
+
+	public static ITreeExpansionAction create(final ITreeContainer tree, final boolean acceptGreyedOnly) {
+		return builder(tree, acceptGreyedOnly).build();
 	}
 
 }

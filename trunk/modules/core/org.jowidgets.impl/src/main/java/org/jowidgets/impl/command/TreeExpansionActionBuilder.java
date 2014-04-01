@@ -28,16 +28,23 @@
 
 package org.jowidgets.impl.command;
 
+import java.util.Collection;
+import java.util.LinkedList;
+
 import org.jowidgets.api.command.IActionBuilder;
 import org.jowidgets.api.command.ITreeExpansionAction;
 import org.jowidgets.api.command.ITreeExpansionActionBuilder;
 import org.jowidgets.api.widgets.ITreeContainer;
+import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.FilterComposite;
+import org.jowidgets.util.IFilter;
 
 class TreeExpansionActionBuilder extends AbstractDefaultActionBuilder implements ITreeExpansionActionBuilder {
 
 	private final ITreeContainer tree;
 	private final ExpansionMode expansionMode;
+	private final Collection<IFilter<ITreeNode>> filters;
 
 	private Integer level;
 	private boolean enabledChecking;
@@ -48,6 +55,7 @@ class TreeExpansionActionBuilder extends AbstractDefaultActionBuilder implements
 		this.tree = tree;
 		this.enabledChecking = true;
 		this.expansionMode = expansionMode;
+		this.filters = new LinkedList<IFilter<ITreeNode>>();
 	}
 
 	@Override
@@ -74,13 +82,35 @@ class TreeExpansionActionBuilder extends AbstractDefaultActionBuilder implements
 	}
 
 	@Override
+	public ITreeExpansionActionBuilder addFilter(final IFilter<ITreeNode> filter) {
+		Assert.paramNotNull(filter, "filter");
+		filters.add(filter);
+		return this;
+	}
+
+	@Override
+	public ITreeExpansionActionBuilder setFilter(final IFilter<ITreeNode> filter) {
+		Assert.paramNotNull(filter, "filter");
+		filters.clear();
+		return addFilter(filter);
+	}
+
+	@Override
 	public ITreeExpansionAction build() {
 		return (ITreeExpansionAction) super.build();
 	}
 
 	@Override
 	protected ITreeExpansionAction doBuild(final IActionBuilder original) {
-		return new TreeExpansionAction(original, tree, expansionMode, enabledChecking, level, getText(), boundPivotLevelText);
+		return new TreeExpansionAction(
+			original,
+			tree,
+			expansionMode,
+			FilterComposite.create(filters),
+			enabledChecking,
+			level,
+			getText(),
+			boundPivotLevelText);
 	}
 
 }

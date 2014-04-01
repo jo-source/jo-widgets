@@ -34,6 +34,7 @@ import java.util.List;
 
 import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.api.widgets.ITreeNode;
+import org.jowidgets.api.widgets.ITreeNodeVisitor;
 import org.jowidgets.api.widgets.descriptor.ITreeNodeDescriptor;
 import org.jowidgets.impl.widgets.basic.TreeImpl;
 import org.jowidgets.impl.widgets.basic.TreeNodeImpl;
@@ -140,6 +141,18 @@ public class TreeContainerDelegate implements ITreeContainer {
 	@Override
 	public List<ITreeNode> getChildren() {
 		return childrenView;
+	}
+
+	@Override
+	public boolean accept(final ITreeNodeVisitor visitor) {
+		Assert.paramNotNull(visitor, "visitor");
+		for (final ITreeNode childNode : children) {
+			final boolean childAccept = childNode.accept(visitor);
+			if (!childAccept) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, MGrossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,38 +26,26 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.command;
+package org.jowidgets.api.widgets;
 
-import org.jowidgets.api.command.ITreeExpansionActionBuilder;
-import org.jowidgets.api.image.IconsSmall;
-import org.jowidgets.api.widgets.ITreeContainer;
-import org.jowidgets.api.widgets.ITreeNode;
-import org.jowidgets.i18n.api.IMessage;
-import org.jowidgets.util.IFilter;
+public interface ITreeNodeVisitor {
 
-final class ExpandTreeActionBuilder extends TreeExpansionActionBuilder {
+	/**
+	 * Will be invoked when a node entered and before its children will be visited
+	 * 
+	 * @param node The node that was entered
+	 * 
+	 * @return false if the visiting should be stopped
+	 */
+	boolean visitEnter(ITreeNode node);
 
-	private static final IMessage EXPAND_ALL_MESSAGE = Messages.getMessage("ExpandTreeActionBuilder.expandAllLabel");
-	private static final IMessage EXPAND_ALL_BOUND_MESSAGE = Messages.getMessage("ExpandTreeActionBuilder.expandAllBoundLabel");
-
-	ExpandTreeActionBuilder(final ITreeContainer tree) {
-		super(tree, ExpansionMode.EXPAND);
-
-		setText(EXPAND_ALL_MESSAGE.get());
-		setBoundPivotLevelText(EXPAND_ALL_BOUND_MESSAGE.get());
-		setIcon(IconsSmall.EXPAND_ALL);
-	}
-
-	@Override
-	public ITreeExpansionActionBuilder addFilter(final IFilter<ITreeNode> filter) {
-		throw new UnsupportedOperationException(
-			"Filters are not supported for this action at the moment. Feel free to contribute a implementation");
-	}
-
-	@Override
-	public ITreeExpansionActionBuilder setFilter(final IFilter<ITreeNode> filter) {
-		throw new UnsupportedOperationException(
-			"Filters are not supported for this action at the moment. Feel free to contribute a implementation");
-	}
+	/**
+	 * Will be invoked, when the node will be leaved
+	 * 
+	 * @param node The node that will be leaved
+	 * 
+	 * @return false if the visiting should be stopped
+	 */
+	boolean visitLeave(ITreeNode node);
 
 }

@@ -31,30 +31,58 @@ package org.jowidgets.impl.command;
 import org.jowidgets.api.command.ICommandExecutor;
 import org.jowidgets.api.command.IExecutionContext;
 import org.jowidgets.api.widgets.ITreeContainer;
+import org.jowidgets.api.widgets.ITreeNode;
+import org.jowidgets.api.widgets.ITreeNodeVisitor;
+import org.jowidgets.util.IFilter;
 
 final class TreeExpansionExecutor implements ICommandExecutor {
 
 	private final ITreeContainer tree;
 	private final ExpansionMode expansionMode;
+	private final IFilter<ITreeNode> filter;
 
 	private Integer pivotLevel;
 
-	TreeExpansionExecutor(final ITreeContainer tree, final ExpansionMode expansionMode, final Integer pivotLevel) {
+	TreeExpansionExecutor(
+		final ITreeContainer tree,
+		final ExpansionMode expansionMode,
+		final IFilter<ITreeNode> filter,
+		final Integer pivotLevel) {
 		this.tree = tree;
 		this.expansionMode = expansionMode;
+		this.filter = filter;
 		this.pivotLevel = pivotLevel;
 	}
 
 	@Override
 	public void execute(final IExecutionContext executionContext) throws Exception {
-		if (ExpansionMode.EXPAND.equals(expansionMode) || (ExpansionMode.BOTH.equals(expansionMode) && pivotLevel == null)) {
+		if (ExpansionMode.EXPAND.equals(expansionMode)
+			|| (ExpansionMode.EXPAND_COLLAPSE.equals(expansionMode) && pivotLevel == null)) {
 			tree.setAllChildrenExpanded(pivotLevel, true);
 		}
 		else if (ExpansionMode.COLLAPSE.equals(expansionMode)) {
 			tree.setAllChildrenExpanded(pivotLevel, false);
 		}
-		else if (ExpansionMode.BOTH.equals(expansionMode)) {
+		else if (ExpansionMode.EXPAND_COLLAPSE.equals(expansionMode)) {
 			tree.setAllChildrenBelowExpandedAboveCollapsed(pivotLevel.intValue());
+		}
+		else if (ExpansionMode.EXPAND_FILTER_ACCEPT_COLLAPSE_OTHERS.equals(expansionMode)) {
+			tree.accept(new ITreeNodeVisitor() {
+				@Override
+				public boolean visitEnter(final ITreeNode node) {
+					boolean expanded = filter.accept(node) && !node.isLeaf();
+					if (pivotLevel != null) {
+						expanded = expanded && node.getLevel() <= pivotLevel.intValue();
+					}
+					node.setExpanded(expanded);
+					return true;
+				}
+
+				@Override
+				public boolean visitLeave(final ITreeNode node) {
+					return true;
+				}
+			});
 		}
 	}
 

@@ -47,6 +47,7 @@ import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.api.widgets.ITreeNode;
+import org.jowidgets.api.widgets.ITreeNodeVisitor;
 import org.jowidgets.api.widgets.descriptor.ITreeDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITreeNodeDescriptor;
 import org.jowidgets.common.image.IImageConstant;
@@ -333,6 +334,11 @@ public class TreeImpl extends AbstractControlSpiWrapper implements ITree, IDropS
 	@Override
 	public List<ITreeNode> getChildren() {
 		return treeContainerDelegate.getChildren();
+	}
+
+	@Override
+	public boolean accept(final ITreeNodeVisitor visitor) {
+		return treeContainerDelegate.accept(visitor);
 	}
 
 	@Override

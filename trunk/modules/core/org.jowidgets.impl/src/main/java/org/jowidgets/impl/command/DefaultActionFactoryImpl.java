@@ -68,7 +68,19 @@ public final class DefaultActionFactoryImpl implements IDefaultActionFactory {
 
 	@Override
 	public ITreeExpansionAction expandCollapseTreeAction(final ITreeContainer tree) {
+		Assert.paramNotNull(tree, "tree");
 		return expandCollapseTreeActionBuilder(tree).build();
+	}
+
+	@Override
+	public ITreeExpansionActionBuilder expandCheckedNodesTreeActionBuilder(final ITreeContainer tree) {
+		return new ExpandCheckedNodesTreeActionBuilder(tree);
+	}
+
+	@Override
+	public ITreeExpansionAction expandCheckedNodesTreeAction(final ITreeContainer tree) {
+		Assert.paramNotNull(tree, "tree");
+		return expandCheckedNodesTreeActionBuilder(tree).build();
 	}
 
 	@Override

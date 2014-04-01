@@ -28,9 +28,12 @@
 
 package org.jowidgets.impl.command;
 
+import org.jowidgets.api.command.ITreeExpansionActionBuilder;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.widgets.ITreeContainer;
+import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.i18n.api.IMessage;
+import org.jowidgets.util.IFilter;
 
 final class CollapseTreeActionBuilder extends TreeExpansionActionBuilder {
 
@@ -43,6 +46,18 @@ final class CollapseTreeActionBuilder extends TreeExpansionActionBuilder {
 		setText(COLLAPSE_ALL_MESSAGE.get());
 		setBoundPivotLevelText(COLLAPSE_ALL_BOUND_MESSAGE.get());
 		setIcon(IconsSmall.COLLAPSE_ALL);
+	}
+
+	@Override
+	public ITreeExpansionActionBuilder addFilter(final IFilter<ITreeNode> filter) {
+		throw new UnsupportedOperationException(
+			"Filters are not supported for this action at the moment. Feel free to contribute a implementation");
+	}
+
+	@Override
+	public ITreeExpansionActionBuilder setFilter(final IFilter<ITreeNode> filter) {
+		throw new UnsupportedOperationException(
+			"Filters are not supported for this action at the moment. Feel free to contribute a implementation");
 	}
 
 }
