@@ -44,6 +44,10 @@ public interface IDefaultActionFactory {
 
 	ITreeExpansionAction expandCollapseTreeAction(ITreeContainer tree);
 
+	ITreeExpansionActionBuilder expandCheckedNodesTreeActionBuilder(ITreeContainer tree);
+
+	ITreeExpansionAction expandCheckedNodesTreeAction(ITreeContainer tree);
+
 	IDefaultActionBuilder checkTreeActionBuilder(ITreeContainer tree);
 
 	IAction checkTreeAction(ITreeContainer tree);

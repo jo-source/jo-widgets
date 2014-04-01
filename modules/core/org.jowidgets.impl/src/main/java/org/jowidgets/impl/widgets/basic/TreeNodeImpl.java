@@ -42,6 +42,7 @@ import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.api.widgets.ITreeNode;
+import org.jowidgets.api.widgets.ITreeNodeVisitor;
 import org.jowidgets.api.widgets.descriptor.ITreeNodeDescriptor;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IFocusListener;
@@ -531,6 +532,15 @@ public class TreeNodeImpl extends AbstractTreeNodeSpiWrapper implements ITreeNod
 	@Override
 	public List<ITreeNode> getChildren() {
 		return treeContainerDelegate.getChildren();
+	}
+
+	@Override
+	public boolean accept(final ITreeNodeVisitor visitor) {
+		Assert.paramNotNull(visitor, "visitor");
+		if (visitor.visitEnter(this)) {
+			treeContainerDelegate.accept(visitor);
+		}
+		return visitor.visitLeave(this);
 	}
 
 	@Override

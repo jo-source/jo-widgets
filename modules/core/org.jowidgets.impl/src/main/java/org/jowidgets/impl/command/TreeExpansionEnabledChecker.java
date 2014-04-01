@@ -34,10 +34,13 @@ import org.jowidgets.api.command.IEnabledState;
 import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.api.widgets.ITreeNode;
+import org.jowidgets.api.widgets.ITreeNodeVisitor;
 import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.tools.command.AbstractEnabledChecker;
 import org.jowidgets.tools.controller.TreeAdapter;
+import org.jowidgets.util.IFilter;
 import org.jowidgets.util.NullCompatibleEquivalence;
+import org.jowidgets.util.ValueHolder;
 
 final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implements IEnabledChecker {
 
@@ -46,12 +49,19 @@ final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implement
 
 	private final ITreeContainer treeContainer;
 	private final ExpansionMode expansionMode;
+	private final IFilter<ITreeNode> filter;
 
 	private Integer pivotLevel;
 
-	TreeExpansionEnabledChecker(final ITreeContainer treeContainer, final ExpansionMode expansionMode, final Integer pivotLevel) {
+	TreeExpansionEnabledChecker(
+		final ITreeContainer treeContainer,
+		final ExpansionMode expansionMode,
+		final IFilter<ITreeNode> filter,
+		final Integer pivotLevel) {
+
 		this.treeContainer = treeContainer;
 		this.expansionMode = expansionMode;
+		this.filter = filter;
 		this.pivotLevel = pivotLevel;
 
 		getParentTree(treeContainer).addTreeListener(new TreeAdapter() {
@@ -63,6 +73,16 @@ final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implement
 
 			@Override
 			public void nodeCollapsed(final ITreeNode node) {
+				fireChangedEvent();
+			}
+
+			@Override
+			public void nodeChecked(final ITreeNode node) {
+				fireChangedEvent();
+			}
+
+			@Override
+			public void nodeUnchecked(final ITreeNode node) {
 				fireChangedEvent();
 			}
 
@@ -80,7 +100,8 @@ final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implement
 
 	@Override
 	public IEnabledState getEnabledState() {
-		if (ExpansionMode.EXPAND.equals(expansionMode) || (ExpansionMode.BOTH.equals(expansionMode) && pivotLevel == null)) {
+		if (ExpansionMode.EXPAND.equals(expansionMode)
+			|| (ExpansionMode.EXPAND_COLLAPSE.equals(expansionMode) && pivotLevel == null)) {
 			if (hasChildNodeThatWillBeChanged(treeContainer, pivotLevel, true)) {
 				return EnabledState.ENABLED;
 			}
@@ -96,12 +117,43 @@ final class TreeExpansionEnabledChecker extends AbstractEnabledChecker implement
 				return EnabledState.disabled(NODES_ALREADY_COLLAPSED.get());
 			}
 		}
-		else {
+		else if (ExpansionMode.EXPAND_COLLAPSE.equals(expansionMode)) {
 			if (((pivotLevel > 0) && hasChildNodeThatWillBeChanged(treeContainer, pivotLevel - 1, true))
 				|| hasChildNodeThatWillBeChanged(treeContainer, pivotLevel, false)) {
 				return EnabledState.ENABLED;
 			}
 			return EnabledState.disabled(NODES_ALREADY_EXPANDED.get());
+		}
+		else if (ExpansionMode.EXPAND_FILTER_ACCEPT_COLLAPSE_OTHERS.equals(expansionMode)) {
+			final ValueHolder<IEnabledState> result = new ValueHolder<IEnabledState>(
+				EnabledState.disabled(NODES_ALREADY_EXPANDED.get()));
+
+			treeContainer.accept(new ITreeNodeVisitor() {
+
+				private boolean visitResult = true;
+
+				@Override
+				public boolean visitEnter(final ITreeNode node) {
+					boolean expanded = filter.accept(node);
+					if (pivotLevel != null) {
+						expanded = expanded && node.getLevel() <= pivotLevel.intValue();
+					}
+					if (!node.isLeaf() && node.isExpanded() != expanded) {
+						result.set(EnabledState.ENABLED);
+						visitResult = false;
+					}
+					return visitResult;
+				}
+
+				@Override
+				public boolean visitLeave(final ITreeNode node) {
+					return visitResult;
+				}
+			});
+			return result.get();
+		}
+		else {
+			throw new IllegalStateException("The expansion mode '" + expansionMode + "' is not supported");
 		}
 	}
 

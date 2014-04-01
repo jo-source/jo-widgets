@@ -29,6 +29,7 @@ package org.jowidgets.examples.common.tree;
 
 import org.jowidgets.api.command.CheckTreeAction;
 import org.jowidgets.api.command.CollapseTreeAction;
+import org.jowidgets.api.command.ExpandCheckedNodesTreeAction;
 import org.jowidgets.api.command.ExpandTreeAction;
 import org.jowidgets.api.command.UncheckTreeAction;
 import org.jowidgets.api.model.item.ExpandCollapseTreeToolbarItemModel;
@@ -69,6 +70,8 @@ public final class TreeViewerDemo implements IApplication {
 		toolBarModel.addAction(CollapseTreeAction.create(tree));
 		toolBarModel.addItem(ExpandCollapseTreeToolbarItemModel.create(tree, 4, 2));
 		toolBarModel.addAction(ExpandTreeAction.create(tree));
+
+		toolBarModel.addAction(ExpandCheckedNodesTreeAction.create(tree));
 
 		toolBarModel.addAction(UncheckTreeAction.create(tree));
 		toolBarModel.addAction(CheckTreeAction.create(tree));

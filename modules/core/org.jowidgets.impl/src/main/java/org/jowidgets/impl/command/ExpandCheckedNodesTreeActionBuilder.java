@@ -28,36 +28,36 @@
 
 package org.jowidgets.impl.command;
 
-import org.jowidgets.api.command.ITreeExpansionActionBuilder;
 import org.jowidgets.api.image.IconsSmall;
+import org.jowidgets.api.types.CheckedState;
 import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.util.IFilter;
 
-final class ExpandTreeActionBuilder extends TreeExpansionActionBuilder {
+final class ExpandCheckedNodesTreeActionBuilder extends TreeExpansionActionBuilder {
 
-	private static final IMessage EXPAND_ALL_MESSAGE = Messages.getMessage("ExpandTreeActionBuilder.expandAllLabel");
-	private static final IMessage EXPAND_ALL_BOUND_MESSAGE = Messages.getMessage("ExpandTreeActionBuilder.expandAllBoundLabel");
+	private static final IMessage EXPAND_ALL_MESSAGE = Messages.getMessage("ExpandCheckedNodesTreeActionBuilder.expandAllLabel");
+	private static final IMessage EXPAND_ALL_BOUND_MESSAGE = Messages.getMessage("ExpandCheckedNodesTreeActionBuilder.expandAllBoundLabel");
 
-	ExpandTreeActionBuilder(final ITreeContainer tree) {
-		super(tree, ExpansionMode.EXPAND);
+	private static final IFilter<ITreeNode> NOT_UNCHECKED_FILTER = new NotUncheckedFilter();
+
+	ExpandCheckedNodesTreeActionBuilder(final ITreeContainer tree) {
+		super(tree, ExpansionMode.EXPAND_FILTER_ACCEPT_COLLAPSE_OTHERS);
 
 		setText(EXPAND_ALL_MESSAGE.get());
 		setBoundPivotLevelText(EXPAND_ALL_BOUND_MESSAGE.get());
-		setIcon(IconsSmall.EXPAND_ALL);
+		setIcon(IconsSmall.EXPAND_ALL_CHECKED);
+
+		setFilter(NOT_UNCHECKED_FILTER);
 	}
 
-	@Override
-	public ITreeExpansionActionBuilder addFilter(final IFilter<ITreeNode> filter) {
-		throw new UnsupportedOperationException(
-			"Filters are not supported for this action at the moment. Feel free to contribute a implementation");
-	}
+	private static final class NotUncheckedFilter implements IFilter<ITreeNode> {
 
-	@Override
-	public ITreeExpansionActionBuilder setFilter(final IFilter<ITreeNode> filter) {
-		throw new UnsupportedOperationException(
-			"Filters are not supported for this action at the moment. Feel free to contribute a implementation");
-	}
+		@Override
+		public boolean accept(final ITreeNode value) {
+			return !CheckedState.UNCHECKED.equals(value.getCheckedState());
+		}
 
+	}
 }

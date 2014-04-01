@@ -35,9 +35,11 @@ import org.jowidgets.api.command.ICommandExecutor;
 import org.jowidgets.api.command.IEnabledChecker;
 import org.jowidgets.api.command.ITreeExpansionAction;
 import org.jowidgets.api.widgets.ITreeContainer;
+import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.i18n.api.MessageReplacer;
 import org.jowidgets.tools.command.ActionWrapper;
 import org.jowidgets.util.EmptyCheck;
+import org.jowidgets.util.IFilter;
 import org.jowidgets.util.NullCompatibleEquivalence;
 
 final class TreeExpansionAction extends ActionWrapper implements ITreeExpansionAction {
@@ -52,12 +54,13 @@ final class TreeExpansionAction extends ActionWrapper implements ITreeExpansionA
 		final IActionBuilder builder,
 		final ITreeContainer tree,
 		final ExpansionMode expansionMode,
+		final IFilter<ITreeNode> filter,
 		final boolean enabledChecking,
 		final Integer pivotLevel,
 		final String unboundPivotlevelLabel,
 		final String boundPivotlevelLabel) {
 
-		super(createAction(builder, tree, expansionMode, enabledChecking, pivotLevel));
+		super(createAction(builder, tree, expansionMode, filter, enabledChecking, pivotLevel));
 
 		this.unboundPivotlevelLabel = unboundPivotlevelLabel;
 		this.boundPivotlevelLabel = boundPivotlevelLabel;
@@ -73,13 +76,14 @@ final class TreeExpansionAction extends ActionWrapper implements ITreeExpansionA
 		final IActionBuilder builder,
 		final ITreeContainer tree,
 		final ExpansionMode expansionMode,
+		final IFilter<ITreeNode> filter,
 		final boolean enabledChecking,
 		final Integer level) {
 
-		final ICommandExecutor executor = new TreeExpansionExecutor(tree, expansionMode, level);
+		final ICommandExecutor executor = new TreeExpansionExecutor(tree, expansionMode, filter, level);
 
 		if (enabledChecking) {
-			final IEnabledChecker enabledChecker = new TreeExpansionEnabledChecker(tree, expansionMode, level);
+			final IEnabledChecker enabledChecker = new TreeExpansionEnabledChecker(tree, expansionMode, filter, level);
 			return builder.setCommand(executor, enabledChecker).build();
 		}
 		else {

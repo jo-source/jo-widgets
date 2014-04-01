@@ -68,6 +68,14 @@ public final class DefaultActionFactory {
 		return getInstance().expandCollapseTreeAction(tree);
 	}
 
+	public static ITreeExpansionActionBuilder expandCheckedNodesTreeActionBuilder(final ITreeContainer tree) {
+		return getInstance().expandCheckedNodesTreeActionBuilder(tree);
+	}
+
+	public static ITreeExpansionAction expandCheckedNodesTreeAction(final ITreeContainer tree) {
+		return getInstance().expandCheckedNodesTreeAction(tree);
+	}
+
 	public static IDefaultActionBuilder checkTreeActionBuilder(final ITreeContainer tree) {
 		return getInstance().checkTreeActionBuilder(tree);
 	}

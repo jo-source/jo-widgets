@@ -37,6 +37,7 @@ import org.jowidgets.api.controller.ITreeSelectionListener;
 import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.ITreeContainer;
 import org.jowidgets.api.widgets.ITreeNode;
+import org.jowidgets.api.widgets.ITreeNodeVisitor;
 import org.jowidgets.api.widgets.descriptor.ITreeNodeDescriptor;
 import org.jowidgets.common.types.Position;
 
@@ -119,6 +120,11 @@ public class TreeWrapper extends ControlWrapper implements ITree {
 	@Override
 	public int getLevel() {
 		return getWidget().getLevel();
+	}
+
+	@Override
+	public boolean accept(final ITreeNodeVisitor visitor) {
+		return getWidget().accept(visitor);
 	}
 
 	@Override
