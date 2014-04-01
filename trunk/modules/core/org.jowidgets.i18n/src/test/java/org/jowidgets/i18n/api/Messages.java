@@ -36,11 +36,11 @@ final class Messages {
 
 	private Messages() {}
 
-	public static String getString(final String key) {
+	static String getString(final String key) {
 		return MESSAGE_PROVIDER.getString(key);
 	}
 
-	public static IMessage getMessage(final String key) {
+	static IMessage getMessage(final String key) {
 		return MESSAGE_PROVIDER.getMessage(key);
 	}
 }
