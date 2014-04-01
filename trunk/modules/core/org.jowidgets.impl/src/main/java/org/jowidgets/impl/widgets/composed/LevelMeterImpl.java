@@ -57,6 +57,8 @@ public final class LevelMeterImpl extends ControlWrapper implements ILevelMeter 
 
 	private final ILevelMeterSetup setup;
 
+	private final ICanvas canvas;
+
 	public LevelMeterImpl(final IComposite composite, final ILevelMeterSetup setup) {
 		super(composite);
 
@@ -67,7 +69,7 @@ public final class LevelMeterImpl extends ControlWrapper implements ILevelMeter 
 		ColorSettingsInvoker.setColors(setup, this);
 
 		composite.setLayout(MigLayoutFactory.growingInnerCellLayout());
-		final ICanvas canvas = composite.add(BPF.canvas(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		canvas = composite.add(BPF.canvas(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
 		this.levelListener = new ILevelListener() {
 			@Override
@@ -183,4 +185,10 @@ public final class LevelMeterImpl extends ControlWrapper implements ILevelMeter 
 		}
 		return result;
 	}
+
+	@Override
+	public void setToolTipText(final String toolTip) {
+		canvas.setToolTipText(toolTip);
+	}
+
 }
