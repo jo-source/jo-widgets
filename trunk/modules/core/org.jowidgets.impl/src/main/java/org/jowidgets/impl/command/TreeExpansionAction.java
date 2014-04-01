@@ -52,11 +52,12 @@ final class TreeExpansionAction extends ActionWrapper implements ITreeExpansionA
 		final IActionBuilder builder,
 		final ITreeContainer tree,
 		final ExpansionMode expansionMode,
+		final boolean enabledChecking,
 		final Integer pivotLevel,
 		final String unboundPivotlevelLabel,
 		final String boundPivotlevelLabel) {
 
-		super(createAction(builder, tree, expansionMode, pivotLevel));
+		super(createAction(builder, tree, expansionMode, enabledChecking, pivotLevel));
 
 		this.unboundPivotlevelLabel = unboundPivotlevelLabel;
 		this.boundPivotlevelLabel = boundPivotlevelLabel;
@@ -72,12 +73,18 @@ final class TreeExpansionAction extends ActionWrapper implements ITreeExpansionA
 		final IActionBuilder builder,
 		final ITreeContainer tree,
 		final ExpansionMode expansionMode,
+		final boolean enabledChecking,
 		final Integer level) {
 
 		final ICommandExecutor executor = new TreeExpansionExecutor(tree, expansionMode, level);
-		final IEnabledChecker enabledChecker = new TreeExpansionEnabledChecker(tree, expansionMode, level);
 
-		return builder.setCommand(executor, enabledChecker).build();
+		if (enabledChecking) {
+			final IEnabledChecker enabledChecker = new TreeExpansionEnabledChecker(tree, expansionMode, level);
+			return builder.setCommand(executor, enabledChecker).build();
+		}
+		else {
+			return builder.setCommand(executor).build();
+		}
 	}
 
 	@Override
@@ -96,7 +103,9 @@ final class TreeExpansionAction extends ActionWrapper implements ITreeExpansionA
 			action.setText(MessageReplacer.replace(boundPivotlevelLabel, levelName));
 		}
 		executor.setPivotLevel(level);
-		enabledChecker.setPivotLevel(level);
+		if (enabledChecker != null) {
+			enabledChecker.setPivotLevel(level);
+		}
 	}
 
 	@Override

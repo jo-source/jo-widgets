@@ -40,11 +40,13 @@ class TreeExpansionActionBuilder extends AbstractDefaultActionBuilder implements
 	private final ExpansionMode expansionMode;
 
 	private Integer level;
+	private boolean enabledChecking;
 	private String boundPivotLevelText;
 
 	TreeExpansionActionBuilder(final ITreeContainer tree, final ExpansionMode expansionMode) {
 		Assert.paramNotNull(tree, "tree");
 		this.tree = tree;
+		this.enabledChecking = true;
 		this.expansionMode = expansionMode;
 	}
 
@@ -66,13 +68,19 @@ class TreeExpansionActionBuilder extends AbstractDefaultActionBuilder implements
 	}
 
 	@Override
+	public ITreeExpansionActionBuilder setEnabledChecking(final boolean enabledChecking) {
+		this.enabledChecking = enabledChecking;
+		return this;
+	}
+
+	@Override
 	public ITreeExpansionAction build() {
 		return (ITreeExpansionAction) super.build();
 	}
 
 	@Override
 	protected ITreeExpansionAction doBuild(final IActionBuilder original) {
-		return new TreeExpansionAction(original, tree, expansionMode, level, getText(), boundPivotLevelText);
+		return new TreeExpansionAction(original, tree, expansionMode, enabledChecking, level, getText(), boundPivotLevelText);
 	}
 
 }
