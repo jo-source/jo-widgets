@@ -64,7 +64,7 @@ public final class ValidationExample2 implements IApplication {
 		final IFrameBluePrint frameBp = BPF.frame();
 		frameBp.setSize(new Dimension(800, 600)).setTitle("Hello World");
 		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
-		frame.setLayout(new MigLayoutDescriptor("wrap", "[grow, 0::]", "[][]"));
+		frame.setLayout(new MigLayoutDescriptor("wrap", "0[grow, 0::]0", "0[][]0"));
 
 		final IInputComposite<Person> inputComposite = frame.add(BPF.inputComposite(new PersonContentCreator()), "growx, w 0::");
 		inputComposite.addInputListener(new IInputListener() {
@@ -76,7 +76,7 @@ public final class ValidationExample2 implements IApplication {
 			}
 		});
 
-		final IButton button = frame.add(BPF.button("Open Dialog"), "growx, w 0::");
+		final IButton button = frame.add(BPF.button("Open Dialog"), "w 100!, alignx c");
 		button.addActionListener(new IActionListener() {
 			@Override
 			public void actionPerformed() {

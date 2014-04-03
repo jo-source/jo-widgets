@@ -27,14 +27,7 @@
  */
 package org.jowidgets.examples.common.tutorial;
 
-import org.jowidgets.api.command.CommandAction;
-import org.jowidgets.api.command.EnabledState;
 import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.command.IActionBuilder;
-import org.jowidgets.api.command.ICommandExecutor;
-import org.jowidgets.api.command.IEnabledState;
-import org.jowidgets.api.command.IExecutionContext;
-import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.api.model.item.IMenuBarModel;
@@ -53,7 +46,6 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IItemStateListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.command.AbstractEnabledChecker;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 
@@ -100,7 +92,7 @@ public final class SaveActionExample implements IApplication {
 			}
 		});
 
-		final IAction saveAction = createSaveAction(checkedItem);
+		final IAction saveAction = SaveActionFactory.create(checkedItem);
 		final IActionItemModel actionItem = mainMenu.addAction(saveAction);
 		actionItem.addActionListener(new IActionListener() {
 			@Override
@@ -140,44 +132,4 @@ public final class SaveActionExample implements IApplication {
 		frame.setVisible(true);
 	}
 
-	private IAction createSaveAction(final ICheckedItemModel checkedItem) {
-		final IActionBuilder builder = CommandAction.builder();
-		builder.setText("Save");
-		builder.setIcon(IconsSmall.DISK);
-		builder.setCommand(new SaveExecutor(), new SaveEnabledChecker(checkedItem));
-		return builder.build();
-	}
-
-	private final class SaveExecutor implements ICommandExecutor {
-		@Override
-		public void execute(final IExecutionContext executionContext) throws Exception {
-			Toolkit.getMessagePane().showInfo(executionContext, "Data saved!");
-		}
-	}
-
-	private final class SaveEnabledChecker extends AbstractEnabledChecker {
-
-		private final ICheckedItemModel checkedItem;
-
-		public SaveEnabledChecker(final ICheckedItemModel checkedItem) {
-			this.checkedItem = checkedItem;
-			checkedItem.addItemListener(new IItemStateListener() {
-				@Override
-				public void itemStateChanged() {
-					fireChangedEvent();
-				}
-			});
-		}
-
-		@Override
-		public IEnabledState getEnabledState() {
-			if (checkedItem.isSelected()) {
-				return EnabledState.ENABLED;
-			}
-			else {
-				return EnabledState.disabled("Checked item must be checked");
-			}
-		}
-
-	}
 }
