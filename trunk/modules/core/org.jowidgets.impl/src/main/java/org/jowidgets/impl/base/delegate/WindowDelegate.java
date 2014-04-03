@@ -31,6 +31,7 @@ package org.jowidgets.impl.base.delegate;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.types.AutoCenterPolicy;
 import org.jowidgets.api.types.AutoPackPolicy;
 import org.jowidgets.api.types.AutoPositionCorrectionPolicy;
@@ -180,6 +181,12 @@ public class WindowDelegate {
 		final WIDGET_TYPE result = windowSpi.createChildWindow(descriptor);
 		result.setParent(window);
 		childWindows.add(result);
+		result.addDisposeListener(new IDisposeListener() {
+			@Override
+			public void onDispose() {
+				childWindows.remove(result);
+			}
+		});
 		return result;
 	}
 
