@@ -51,7 +51,7 @@ public final class PersonDetailView extends AbstractView {
 
 	public PersonDetailView(final IViewContext context, final BeanTableModel<Person> model) {
 		final IContainer container = context.getContainer();
-		container.setLayout(MigLayoutFactory.growingCellLayout());
+		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
 
 		final IInputCompositeBluePrint<Person> inputCompositeBp = BPF.inputComposite(new PersonContentCreator(true));
 		final IInputComposite<Person> inputComposite = container.add(inputCompositeBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
