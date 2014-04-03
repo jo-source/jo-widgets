@@ -72,10 +72,10 @@ public final class RoleContentCreator implements IInputContentCreator<Role> {
 	@Override
 	public void createContent(final IInputContentContainer content) {
 		if (readonly) {
-			content.setLayout(new MigLayoutDescriptor("wrap", "0[][grow, 0::]0", "[][]"));
+			content.setLayout(new MigLayoutDescriptor("wrap", "[][grow, 0::]", "[][]"));
 		}
 		else {
-			content.setLayout(new MigLayoutDescriptor("wrap", "0[][grow, 0::][]0", "[][]"));
+			content.setLayout(new MigLayoutDescriptor("wrap", "[][grow, 0::][]", "[][]"));
 		}
 
 		final ITextLabelBluePrint labelBp = BPF.textLabel().alignRight();

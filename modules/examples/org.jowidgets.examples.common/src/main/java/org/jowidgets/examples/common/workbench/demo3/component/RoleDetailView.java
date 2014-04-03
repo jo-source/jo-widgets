@@ -51,7 +51,7 @@ public final class RoleDetailView extends AbstractView {
 
 	public RoleDetailView(final IViewContext context, final BeanTableModel<Role> model) {
 		final IContainer container = context.getContainer();
-		container.setLayout(MigLayoutFactory.growingCellLayout());
+		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
 
 		final IInputCompositeBluePrint<Role> inputCompositeBp = BPF.inputComposite(new RoleContentCreator(true));
 		final IInputComposite<Role> inputComposite = container.add(inputCompositeBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
