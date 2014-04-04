@@ -15,6 +15,8 @@
 	    <module>../org.jowidgets.workbench.impl.rcp.plugin</module>
 		<module>../org.jowidgets.tools.starter.classloading.plugin</module>
 		<module>../org.jowidgets.tools.starter.application.osgi.plugin</module>
+		<module>../org.jowidgets.tools.starter.workbench.osgi.plugin</module>
+		<module>../org.jowidgets.tools.starter.workbench.rcp.plugin</module>
 	</modules>
 
 </project>
