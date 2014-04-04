@@ -28,6 +28,7 @@
 
 package org.jowidgets.workbench.impl.rcp;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -48,12 +49,12 @@ public final class FileConfigService implements IWorkbenchConfigurationService {
 	@Override
 	public Serializable loadConfiguration() {
 		try {
+			if (!new File(filePath).exists()) {
+				return null;
+			}
 			final ObjectInputStream oos = new ObjectInputStream(new FileInputStream(filePath));
 			try {
 				final Serializable configuration = (Serializable) oos.readObject();
-				// CHECKSTYLE:OFF
-				System.out.println("Read configuration: " + configuration);
-				// CHECKSTYLE:ON
 				return configuration;
 			}
 			finally {
@@ -74,9 +75,6 @@ public final class FileConfigService implements IWorkbenchConfigurationService {
 			final ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath));
 			try {
 				oos.writeObject(configuration);
-				// CHECKSTYLE:OFF
-				System.out.println("Wrote configuration: " + configuration);
-				// CHECKSTYLE:ON
 			}
 			finally {
 				oos.close();

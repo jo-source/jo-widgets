@@ -26,28 +26,51 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.starter.application.osgi.plugin;
+package org.jowidgets.tools.starter.classloading;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.common.application.IApplication;
-import org.jowidgets.tools.starter.classloading.ClassLoadingActivator;
+import org.jowidgets.util.Assert;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
+import org.osgi.framework.BundleListener;
 
-public class OsgiApplicationRunner extends ClassLoadingActivator {
+public class ClassLoadingActivator implements BundleActivator {
 
-	private final IApplication application;
+	private final String[] includePath;
 
-	public OsgiApplicationRunner(final IApplication application) {
-		this(application, new String[] {});
+	public ClassLoadingActivator() {
+		this(new String[] {});
 	}
 
-	public OsgiApplicationRunner(final IApplication application, final String[] includePath) {
-		super(includePath);
-		this.application = application;
+	public ClassLoadingActivator(final String[] includePath) {
+		Assert.paramNotNull(includePath, "packageNames");
+		this.includePath = new String[includePath.length + 1];
+		this.includePath[0] = "org.jowidgets";
+		for (int i = 0; i < includePath.length; i++) {
+			this.includePath[i + 1] = includePath[i];
+		}
 	}
 
 	@Override
-	protected void bundleStartet() {
-		Toolkit.getApplicationRunner().run(application);
+	public void start(final BundleContext context) throws Exception {
+
+		BundleContextClassLoaderRegisterer.registerClassLoaders(context, includePath);
+
+		final Bundle bundle = context.getBundle();
+		context.addBundleListener(new BundleListener() {
+			@Override
+			public void bundleChanged(final BundleEvent event) {
+				if (event.getBundle().equals(bundle) && BundleEvent.STARTED == event.getType()) {
+					bundleStartet();
+				}
+			}
+		});
 	}
+
+	@Override
+	public void stop(final BundleContext context) throws Exception {}
+
+	protected void bundleStartet() {}
 
 }
