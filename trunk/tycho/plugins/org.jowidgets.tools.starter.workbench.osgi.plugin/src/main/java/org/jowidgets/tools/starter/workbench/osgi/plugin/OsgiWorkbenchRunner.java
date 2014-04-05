@@ -52,6 +52,7 @@ public class OsgiWorkbenchRunner extends ClassLoadingActivator {
 	@Override
 	protected void bundleStartet() {
 		WORKBENCH_RUNNER.run(workbenchFactory);
+		System.exit(0);
 	}
 
 }

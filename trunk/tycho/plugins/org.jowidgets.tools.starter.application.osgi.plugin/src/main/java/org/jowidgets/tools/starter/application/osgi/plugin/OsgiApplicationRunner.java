@@ -48,6 +48,7 @@ public class OsgiApplicationRunner extends ClassLoadingActivator {
 	@Override
 	protected void bundleStartet() {
 		Toolkit.getApplicationRunner().run(application);
+		System.exit(0);
 	}
 
 }
