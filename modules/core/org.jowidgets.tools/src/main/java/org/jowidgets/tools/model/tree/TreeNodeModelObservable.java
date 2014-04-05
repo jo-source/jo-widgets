@@ -86,6 +86,12 @@ public class TreeNodeModelObservable implements ITreeNodeModelObservable {
 		}
 	}
 
+	public final void fireVisibilityChanged() {
+		for (final ITreeNodeModelListener listener : new LinkedList<ITreeNodeModelListener>(listeners)) {
+			listener.visibilityChanged();
+		}
+	}
+
 	public final void fireDisposed() {
 		for (final ITreeNodeModelListener listener : new LinkedList<ITreeNodeModelListener>(listeners)) {
 			listener.dataChanged();

@@ -38,6 +38,7 @@ public abstract class AbstractTreeNodeModel<VALUE_TYPE> extends TreeNodeModelObs
 
 	private boolean selected;
 	private boolean expanded;
+	private boolean visible;
 
 	public AbstractTreeNodeModel() {
 		this.checkedState = CheckedState.UNCHECKED;
@@ -59,6 +60,19 @@ public abstract class AbstractTreeNodeModel<VALUE_TYPE> extends TreeNodeModelObs
 	@Override
 	public final boolean isExpanded() {
 		return expanded;
+	}
+
+	@Override
+	public boolean isVisible() {
+		return visible;
+	}
+
+	@Override
+	public void setVisible(final boolean visible) {
+		if (this.visible != visible) {
+			this.visible = visible;
+			fireVisibilityChanged();
+		}
 	}
 
 	@Override

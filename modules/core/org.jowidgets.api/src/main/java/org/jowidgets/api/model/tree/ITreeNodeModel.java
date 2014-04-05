@@ -52,4 +52,8 @@ public interface ITreeNodeModel<VALUE_TYPE> extends ITreeNodeModelObservable {
 
 	void setExpanded(boolean expanded);
 
+	boolean isVisible();
+
+	void setVisible(boolean visible);
+
 }

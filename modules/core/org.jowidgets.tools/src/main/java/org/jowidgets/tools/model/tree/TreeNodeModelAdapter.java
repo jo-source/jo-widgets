@@ -48,6 +48,9 @@ public class TreeNodeModelAdapter implements ITreeNodeModelListener {
 	public void expansionChanged() {}
 
 	@Override
+	public void visibilityChanged() {}
+
+	@Override
 	public void dispose() {}
 
 }

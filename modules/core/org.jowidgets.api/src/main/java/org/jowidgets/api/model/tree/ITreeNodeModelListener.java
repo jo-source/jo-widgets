@@ -40,6 +40,8 @@ public interface ITreeNodeModelListener {
 
 	void expansionChanged();
 
+	void visibilityChanged();
+
 	void dispose();
 
 }
