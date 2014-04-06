@@ -19,6 +19,10 @@
 	<includes
          id="org.jowidgets.addons.feature"
          version="0.0.0"/>
+		 
+	<includes
+         id="org.jowidgets.addons.silkicons.feature"
+         version="0.0.0"/>
 
 	<includes
          id="org.jowidgets.core.feature"
