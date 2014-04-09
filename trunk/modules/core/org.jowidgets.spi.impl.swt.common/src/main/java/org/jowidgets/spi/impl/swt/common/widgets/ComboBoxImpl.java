@@ -106,8 +106,19 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 
 					if (!previousText.equals(newText)) {
 						event.doit = doAutoCompletion(newText, event.keyCode, pos);
+						if (isSelectionMode) {
+							final int selectedIndex = getSelectedIndex();
+							if (selectedIndex != -1) {
+								final String[] elements = getElements();
+								if (elements != null && selectedIndex < elements.length) {
+									fireInputChanged(elements[selectedIndex]);
+								}
+							}
+						}
 					}
+
 					programmaticTextChange = false;
+
 				}
 			});
 		}
