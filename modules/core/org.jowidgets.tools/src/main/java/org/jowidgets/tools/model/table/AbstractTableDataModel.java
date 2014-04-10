@@ -35,6 +35,7 @@ import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.model.ITableDataModelListener;
 import org.jowidgets.common.model.ITableDataModelObservable;
 import org.jowidgets.tools.controller.TableDataModelObservable;
+import org.jowidgets.util.CollectionUtils;
 
 public abstract class AbstractTableDataModel implements ITableDataModel, ITableDataModelObservable {
 
@@ -49,7 +50,7 @@ public abstract class AbstractTableDataModel implements ITableDataModel, ITableD
 
 	@Override
 	public final ArrayList<Integer> getSelection() {
-		return selection;
+		return CollectionUtils.unmodifiableArrayList(selection);
 	}
 
 	@Override

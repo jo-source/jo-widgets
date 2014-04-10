@@ -28,12 +28,14 @@
 
 package org.jowidgets.util;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 
 public final class CollectionUtils {
 
@@ -79,6 +81,58 @@ public final class CollectionUtils {
 		};
 	}
 
+	public static <ELEMENT_TYPE> ListIterator<ELEMENT_TYPE> unmodifiableListIterator(final ListIterator<ELEMENT_TYPE> original) {
+		Assert.paramNotNull(original, "original");
+		return new ListIterator<ELEMENT_TYPE>() {
+
+			@Override
+			public boolean hasNext() {
+				return original.hasNext();
+			}
+
+			@Override
+			public ELEMENT_TYPE next() {
+				return original.next();
+			}
+
+			@Override
+			public void remove() {
+				throw new UnsupportedOperationException("This collection is imutable");
+			}
+
+			@Override
+			public boolean hasPrevious() {
+				return original.hasPrevious();
+			}
+
+			@Override
+			public ELEMENT_TYPE previous() {
+				return original.previous();
+			}
+
+			@Override
+			public int nextIndex() {
+				return original.nextIndex();
+			}
+
+			@Override
+			public int previousIndex() {
+				return original.previousIndex();
+			}
+
+			@Override
+			public void set(final ELEMENT_TYPE e) {
+				throw new UnsupportedOperationException("This collection is imutable");
+			}
+
+			@Override
+			public void add(final ELEMENT_TYPE e) {
+				throw new UnsupportedOperationException("This collection is imutable");
+			}
+
+		};
+	}
+
 	public static <ELEMENT_TYPE> Enumeration<ELEMENT_TYPE> enumerationFromCollection(final Collection<ELEMENT_TYPE> collection) {
 		Assert.paramNotNull(collection, "collection");
 		return enumerationFromIterator(collection.iterator());
@@ -109,4 +163,88 @@ public final class CollectionUtils {
 			collection.add(enumeration.nextElement());
 		}
 	}
+
+	public static <ELEMENT_TYPE> ArrayList<ELEMENT_TYPE> unmodifiableArrayList(final ArrayList<ELEMENT_TYPE> original) {
+		return new ArrayList<ELEMENT_TYPE>(original) {
+
+			private static final long serialVersionUID = 969991953708235922L;
+
+			@Override
+			public ELEMENT_TYPE remove(final int index) {
+				throw new UnsupportedOperationException("This collection is immutable");
+			}
+
+			@Override
+			public boolean remove(final Object o) {
+				throw new UnsupportedOperationException("This collection is immutable");
+			}
+
+			@Override
+			protected void removeRange(final int fromIndex, final int toIndex) {
+				throw new UnsupportedOperationException("This collection is immutable");
+			}
+
+			@Override
+			public Iterator<ELEMENT_TYPE> iterator() {
+				return unmodifiableIterator(super.iterator());
+			}
+
+			@Override
+			public ListIterator<ELEMENT_TYPE> listIterator() {
+				return unmodifiableListIterator(super.listIterator());
+			}
+
+			@Override
+			public ListIterator<ELEMENT_TYPE> listIterator(final int index) {
+				return unmodifiableListIterator(super.listIterator(index));
+			}
+
+			@Override
+			public boolean removeAll(final Collection<?> c) {
+				throw new UnsupportedOperationException("This collection is immutable");
+			}
+
+			@Override
+			public void trimToSize() {
+				throw new UnsupportedOperationException("This collection is immutable");
+			}
+
+			@Override
+			public void ensureCapacity(final int minCapacity) {
+				throw new UnsupportedOperationException("This collection is immutable");
+			}
+
+			@Override
+			public ELEMENT_TYPE set(final int index, final ELEMENT_TYPE element) {
+				throw new UnsupportedOperationException("This collection is immutable");
+			}
+
+			@Override
+			public boolean add(final ELEMENT_TYPE e) {
+				throw new UnsupportedOperationException("This collection is immutable");
+			}
+
+			@Override
+			public void add(final int index, final ELEMENT_TYPE element) {
+				throw new UnsupportedOperationException("This collection is immutable");
+			}
+
+			@Override
+			public void clear() {
+				throw new UnsupportedOperationException("This collection is immutable");
+			}
+
+			@Override
+			public boolean addAll(final Collection<? extends ELEMENT_TYPE> c) {
+				throw new UnsupportedOperationException("This collection is immutable");
+			}
+
+			@Override
+			public boolean addAll(final int index, final Collection<? extends ELEMENT_TYPE> c) {
+				throw new UnsupportedOperationException("This collection is immutable");
+			}
+
+		};
+	}
+
 }
