@@ -28,7 +28,8 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.common.types.IVetoable;
@@ -38,22 +39,25 @@ import org.jowidgets.common.widgets.controller.ITableCellEditorObservable;
 import org.jowidgets.common.widgets.controller.ITableCellEvent;
 import org.jowidgets.impl.event.TableCellEditEvent;
 import org.jowidgets.impl.event.TableCellEvent;
+import org.jowidgets.util.Assert;
 
 class TableCellEditorObservableSpiAdapter implements ITableCellEditorObservable {
 
 	private final Set<ITableCellEditorListener> listeners;
 
 	TableCellEditorObservableSpiAdapter() {
-		this.listeners = new HashSet<ITableCellEditorListener>();
+		this.listeners = new LinkedHashSet<ITableCellEditorListener>();
 	}
 
 	@Override
 	public void addTableCellEditorListener(final ITableCellEditorListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
 	public void removeTableCellEditorListener(final ITableCellEditorListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
@@ -62,7 +66,7 @@ class TableCellEditorObservableSpiAdapter implements ITableCellEditorObservable 
 			final ITableCellEvent decoratedEvent = new TableCellEvent(
 				event.getRowIndex(),
 				modelSpiAdapter.convertViewToModel(event.getColumnIndex()));
-			for (final ITableCellEditorListener listener : listeners) {
+			for (final ITableCellEditorListener listener : new LinkedList<ITableCellEditorListener>(listeners)) {
 				listener.editCanceled(decoratedEvent);
 			}
 		}
@@ -71,7 +75,7 @@ class TableCellEditorObservableSpiAdapter implements ITableCellEditorObservable 
 	public void fireEditFinished(final ITableCellEditEvent event, final TableModelSpiAdapter modelSpiAdapter) {
 		if (!listeners.isEmpty()) {
 			final ITableCellEditEvent decoratedEvent = createDecoratedEvent(event, modelSpiAdapter);
-			for (final ITableCellEditorListener listener : listeners) {
+			for (final ITableCellEditorListener listener : new LinkedList<ITableCellEditorListener>(listeners)) {
 				listener.editFinished(decoratedEvent);
 			}
 		}
@@ -80,7 +84,7 @@ class TableCellEditorObservableSpiAdapter implements ITableCellEditorObservable 
 	public void fireOnEdit(final IVetoable veto, final ITableCellEditEvent event, final TableModelSpiAdapter modelSpiAdapter) {
 		if (!listeners.isEmpty()) {
 			final ITableCellEditEvent decoratedEvent = createDecoratedEvent(event, modelSpiAdapter);
-			for (final ITableCellEditorListener listener : listeners) {
+			for (final ITableCellEditorListener listener : new LinkedList<ITableCellEditorListener>(listeners)) {
 				listener.onEdit(veto, decoratedEvent);
 			}
 		}

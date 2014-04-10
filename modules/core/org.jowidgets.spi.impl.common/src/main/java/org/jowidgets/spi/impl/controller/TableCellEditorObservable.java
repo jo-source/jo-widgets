@@ -28,7 +28,8 @@
 
 package org.jowidgets.spi.impl.controller;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.common.widgets.controller.ITableCellEditEvent;
@@ -36,6 +37,7 @@ import org.jowidgets.common.widgets.controller.ITableCellEditorListener;
 import org.jowidgets.common.widgets.controller.ITableCellEditorObservable;
 import org.jowidgets.common.widgets.controller.ITableCellEvent;
 import org.jowidgets.spi.impl.types.VetoHolder;
+import org.jowidgets.util.Assert;
 
 public class TableCellEditorObservable implements ITableCellEditorObservable {
 
@@ -43,22 +45,24 @@ public class TableCellEditorObservable implements ITableCellEditorObservable {
 
 	public TableCellEditorObservable() {
 		super();
-		this.listeners = new HashSet<ITableCellEditorListener>();
+		this.listeners = new LinkedHashSet<ITableCellEditorListener>();
 	}
 
 	@Override
 	public void addTableCellEditorListener(final ITableCellEditorListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
 	public void removeTableCellEditorListener(final ITableCellEditorListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
 	public boolean fireOnEdit(final ITableCellEditEvent event) {
 		final VetoHolder vetoHolder = new VetoHolder();
-		for (final ITableCellEditorListener listener : listeners) {
+		for (final ITableCellEditorListener listener : new LinkedList<ITableCellEditorListener>(listeners)) {
 			listener.onEdit(vetoHolder, event);
 			if (vetoHolder.hasVeto()) {
 				break;
@@ -68,13 +72,13 @@ public class TableCellEditorObservable implements ITableCellEditorObservable {
 	}
 
 	public void fireEditFinished(final ITableCellEditEvent event) {
-		for (final ITableCellEditorListener listener : listeners) {
+		for (final ITableCellEditorListener listener : new LinkedList<ITableCellEditorListener>(listeners)) {
 			listener.editFinished(event);
 		}
 	}
 
 	public void fireEditCanceled(final ITableCellEvent event) {
-		for (final ITableCellEditorListener listener : listeners) {
+		for (final ITableCellEditorListener listener : new LinkedList<ITableCellEditorListener>(listeners)) {
 			listener.editCanceled(event);
 		}
 	}

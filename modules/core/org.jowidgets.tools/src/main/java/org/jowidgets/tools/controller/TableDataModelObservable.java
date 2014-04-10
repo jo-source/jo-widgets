@@ -28,28 +28,31 @@
 
 package org.jowidgets.tools.controller;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.common.model.ITableDataModelListener;
 import org.jowidgets.common.model.ITableDataModelObservable;
+import org.jowidgets.util.Assert;
 
 public class TableDataModelObservable implements ITableDataModelObservable {
 
 	private final Set<ITableDataModelListener> listeners;
 
 	public TableDataModelObservable() {
-		this.listeners = new HashSet<ITableDataModelListener>();
+		this.listeners = new LinkedHashSet<ITableDataModelListener>();
 	}
 
 	@Override
 	public void addDataModelListener(final ITableDataModelListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
 	public void removeDataModelListener(final ITableDataModelListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 

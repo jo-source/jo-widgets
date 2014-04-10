@@ -28,29 +28,33 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.common.widgets.controller.ITableCellPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITableCellPopupDetectionObservable;
 import org.jowidgets.common.widgets.controller.ITableCellPopupEvent;
 import org.jowidgets.impl.event.TableCellPopupEvent;
+import org.jowidgets.util.Assert;
 
 class TableCellPopupDetectionObservableSpiAdapter implements ITableCellPopupDetectionObservable {
 
 	private final Set<ITableCellPopupDetectionListener> listeners;
 
 	TableCellPopupDetectionObservableSpiAdapter() {
-		this.listeners = new HashSet<ITableCellPopupDetectionListener>();
+		this.listeners = new LinkedHashSet<ITableCellPopupDetectionListener>();
 	}
 
 	@Override
 	public void addTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
 	public void removeTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
@@ -60,7 +64,7 @@ class TableCellPopupDetectionObservableSpiAdapter implements ITableCellPopupDete
 				event.getRowIndex(),
 				modelSpiAdapter.convertViewToModel(event.getColumnIndex()),
 				event.getPosition());
-			for (final ITableCellPopupDetectionListener listener : listeners) {
+			for (final ITableCellPopupDetectionListener listener : new LinkedList<ITableCellPopupDetectionListener>(listeners)) {
 				listener.popupDetected(decoratedEvent);
 			}
 		}

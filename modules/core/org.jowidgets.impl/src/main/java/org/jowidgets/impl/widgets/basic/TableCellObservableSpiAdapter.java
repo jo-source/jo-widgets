@@ -28,36 +28,40 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.common.widgets.controller.ITableCellListener;
 import org.jowidgets.common.widgets.controller.ITableCellMouseEvent;
 import org.jowidgets.common.widgets.controller.ITableCellObservable;
 import org.jowidgets.impl.event.TableCellMouseEvent;
+import org.jowidgets.util.Assert;
 
 class TableCellObservableSpiAdapter implements ITableCellObservable {
 
 	private final Set<ITableCellListener> listeners;
 
 	TableCellObservableSpiAdapter() {
-		this.listeners = new HashSet<ITableCellListener>();
+		this.listeners = new LinkedHashSet<ITableCellListener>();
 	}
 
 	@Override
 	public void addTableCellListener(final ITableCellListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
 	public void removeTableCellListener(final ITableCellListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
 	public void fireMouseDoubleClicked(final ITableCellMouseEvent event, final TableModelSpiAdapter modelSpiAdapter) {
 		if (!listeners.isEmpty()) {
 			final ITableCellMouseEvent decoratedEvent = createDecoratedEvent(event, modelSpiAdapter);
-			for (final ITableCellListener listener : listeners) {
+			for (final ITableCellListener listener : new LinkedList<ITableCellListener>(listeners)) {
 				listener.mouseDoubleClicked(decoratedEvent);
 			}
 		}
@@ -66,7 +70,7 @@ class TableCellObservableSpiAdapter implements ITableCellObservable {
 	public void fireMousePressed(final ITableCellMouseEvent event, final TableModelSpiAdapter modelSpiAdapter) {
 		if (!listeners.isEmpty()) {
 			final ITableCellMouseEvent decoratedEvent = createDecoratedEvent(event, modelSpiAdapter);
-			for (final ITableCellListener listener : listeners) {
+			for (final ITableCellListener listener : new LinkedList<ITableCellListener>(listeners)) {
 				listener.mousePressed(decoratedEvent);
 			}
 		}
@@ -75,7 +79,7 @@ class TableCellObservableSpiAdapter implements ITableCellObservable {
 	public void fireMouseReleased(final ITableCellMouseEvent event, final TableModelSpiAdapter modelSpiAdapter) {
 		if (!listeners.isEmpty()) {
 			final ITableCellMouseEvent decoratedEvent = createDecoratedEvent(event, modelSpiAdapter);
-			for (final ITableCellListener listener : listeners) {
+			for (final ITableCellListener listener : new LinkedList<ITableCellListener>(listeners)) {
 				listener.mouseReleased(decoratedEvent);
 			}
 		}

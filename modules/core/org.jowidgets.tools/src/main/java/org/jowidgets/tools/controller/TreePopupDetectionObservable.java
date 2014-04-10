@@ -28,33 +28,37 @@
 
 package org.jowidgets.tools.controller;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.api.controller.ITreePopupDetectionListener;
 import org.jowidgets.api.controller.ITreePopupDetectionObservable;
 import org.jowidgets.api.controller.ITreePopupEvent;
+import org.jowidgets.util.Assert;
 
 public class TreePopupDetectionObservable implements ITreePopupDetectionObservable {
 
 	private final Set<ITreePopupDetectionListener> listeners;
 
 	public TreePopupDetectionObservable() {
-		this.listeners = new HashSet<ITreePopupDetectionListener>();
+		this.listeners = new LinkedHashSet<ITreePopupDetectionListener>();
 	}
 
 	@Override
 	public void addTreePopupDetectionListener(final ITreePopupDetectionListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
 	public void removeTreePopupDetectionListener(final ITreePopupDetectionListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
 	public void firePopupDetected(final ITreePopupEvent event) {
-		for (final ITreePopupDetectionListener listener : listeners) {
+		for (final ITreePopupDetectionListener listener : new LinkedList<ITreePopupDetectionListener>(listeners)) {
 			listener.popupDetected(event);
 		}
 	}

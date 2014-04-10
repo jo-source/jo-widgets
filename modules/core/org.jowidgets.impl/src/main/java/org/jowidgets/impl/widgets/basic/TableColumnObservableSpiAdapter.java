@@ -28,7 +28,8 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.common.widgets.controller.ITableColumnListener;
@@ -37,28 +38,31 @@ import org.jowidgets.common.widgets.controller.ITableColumnObservable;
 import org.jowidgets.common.widgets.controller.ITableColumnResizeEvent;
 import org.jowidgets.impl.event.TableColumnMouseEvent;
 import org.jowidgets.impl.event.TableColumnResizeEvent;
+import org.jowidgets.util.Assert;
 
 class TableColumnObservableSpiAdapter implements ITableColumnObservable {
 
 	private final Set<ITableColumnListener> listeners;
 
 	TableColumnObservableSpiAdapter() {
-		this.listeners = new HashSet<ITableColumnListener>();
+		this.listeners = new LinkedHashSet<ITableColumnListener>();
 	}
 
 	@Override
 	public void addTableColumnListener(final ITableColumnListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
 	public void removeTableColumnListener(final ITableColumnListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
 	public void fireColumnPermutationChanged() {
 		if (!listeners.isEmpty()) {
-			for (final ITableColumnListener listener : listeners) {
+			for (final ITableColumnListener listener : new LinkedList<ITableColumnListener>(listeners)) {
 				listener.columnPermutationChanged();
 			}
 		}
@@ -69,7 +73,7 @@ class TableColumnObservableSpiAdapter implements ITableColumnObservable {
 			final ITableColumnResizeEvent decoratedEvent = new TableColumnResizeEvent(
 				modelSpiAdapter.convertViewToModel(event.getColumnIndex()),
 				event.getWidth());
-			for (final ITableColumnListener listener : listeners) {
+			for (final ITableColumnListener listener : new LinkedList<ITableColumnListener>(listeners)) {
 				listener.columnResized(decoratedEvent);
 			}
 		}
@@ -80,7 +84,7 @@ class TableColumnObservableSpiAdapter implements ITableColumnObservable {
 			final ITableColumnMouseEvent decoratedEvent = new TableColumnMouseEvent(
 				modelSpiAdapter.convertViewToModel(event.getColumnIndex()),
 				event.getModifiers());
-			for (final ITableColumnListener listener : listeners) {
+			for (final ITableColumnListener listener : new LinkedList<ITableColumnListener>(listeners)) {
 				listener.mouseClicked(decoratedEvent);
 			}
 		}

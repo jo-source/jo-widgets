@@ -44,7 +44,6 @@ public class InputObservable implements IInputObservable {
 	private Object lastValue;
 
 	public InputObservable() {
-		super();
 		this.inputListeners = new LinkedHashSet<IInputListener>();
 	}
 

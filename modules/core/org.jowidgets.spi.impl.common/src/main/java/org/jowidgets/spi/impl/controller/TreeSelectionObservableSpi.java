@@ -28,11 +28,13 @@
 
 package org.jowidgets.spi.impl.controller;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.spi.widgets.controller.ITreeSelectionListenerSpi;
 import org.jowidgets.spi.widgets.controller.ITreeSelectionObservableSpi;
+import org.jowidgets.util.Assert;
 
 public class TreeSelectionObservableSpi implements ITreeSelectionObservableSpi {
 
@@ -40,21 +42,23 @@ public class TreeSelectionObservableSpi implements ITreeSelectionObservableSpi {
 
 	public TreeSelectionObservableSpi() {
 		super();
-		this.listeners = new HashSet<ITreeSelectionListenerSpi>();
+		this.listeners = new LinkedHashSet<ITreeSelectionListenerSpi>();
 	}
 
 	@Override
 	public void addTreeSelectionListener(final ITreeSelectionListenerSpi listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
 	public void removeTreeSelectionListener(final ITreeSelectionListenerSpi listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
 	public void fireSelectionChanged() {
-		for (final ITreeSelectionListenerSpi listener : listeners) {
+		for (final ITreeSelectionListenerSpi listener : new LinkedList<ITreeSelectionListenerSpi>(listeners)) {
 			listener.selectionChanged();
 		}
 	}

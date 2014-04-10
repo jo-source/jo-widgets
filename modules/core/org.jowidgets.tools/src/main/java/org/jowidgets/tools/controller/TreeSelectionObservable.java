@@ -29,6 +29,7 @@
 package org.jowidgets.tools.controller;
 
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.api.controller.ITreeSelectionEvent;
@@ -46,17 +47,19 @@ public class TreeSelectionObservable implements ITreeSelectionObservable {
 
 	@Override
 	public void addTreeSelectionListener(final ITreeSelectionListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
 	public void removeTreeSelectionListener(final ITreeSelectionListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
 	public void fireSelectionChanged(final ITreeSelectionEvent event) {
 		Assert.paramNotNull(event, "event");
-		for (final ITreeSelectionListener listener : listeners) {
+		for (final ITreeSelectionListener listener : new LinkedList<ITreeSelectionListener>(listeners)) {
 			listener.selectionChanged(event);
 		}
 	}

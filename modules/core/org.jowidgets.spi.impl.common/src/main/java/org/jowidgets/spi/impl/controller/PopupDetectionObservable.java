@@ -28,12 +28,14 @@
 
 package org.jowidgets.spi.impl.controller;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionObservable;
+import org.jowidgets.util.Assert;
 
 public class PopupDetectionObservable implements IPopupDetectionObservable {
 
@@ -41,21 +43,23 @@ public class PopupDetectionObservable implements IPopupDetectionObservable {
 
 	public PopupDetectionObservable() {
 		super();
-		this.listeners = new HashSet<IPopupDetectionListener>();
+		this.listeners = new LinkedHashSet<IPopupDetectionListener>();
 	}
 
 	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
 	public void firePopupDetected(final Position position) {
-		for (final IPopupDetectionListener listener : listeners) {
+		for (final IPopupDetectionListener listener : new LinkedList<IPopupDetectionListener>(listeners)) {
 			listener.popupDetected(position);
 		}
 	}
