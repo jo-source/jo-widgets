@@ -28,13 +28,15 @@
 
 package org.jowidgets.spi.impl.controller;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.common.widgets.controller.ITableColumnListener;
 import org.jowidgets.common.widgets.controller.ITableColumnMouseEvent;
 import org.jowidgets.common.widgets.controller.ITableColumnObservable;
 import org.jowidgets.common.widgets.controller.ITableColumnResizeEvent;
+import org.jowidgets.util.Assert;
 
 public class TableColumnObservable implements ITableColumnObservable {
 
@@ -42,33 +44,35 @@ public class TableColumnObservable implements ITableColumnObservable {
 
 	public TableColumnObservable() {
 		super();
-		this.listeners = new HashSet<ITableColumnListener>();
+		this.listeners = new LinkedHashSet<ITableColumnListener>();
 	}
 
 	@Override
 	public void addTableColumnListener(final ITableColumnListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
 	public void removeTableColumnListener(final ITableColumnListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
 	public void fireMouseClicked(final ITableColumnMouseEvent event) {
-		for (final ITableColumnListener listener : listeners) {
+		for (final ITableColumnListener listener : new LinkedList<ITableColumnListener>(listeners)) {
 			listener.mouseClicked(event);
 		}
 	}
 
 	public void fireColumnResized(final ITableColumnResizeEvent event) {
-		for (final ITableColumnListener listener : listeners) {
+		for (final ITableColumnListener listener : new LinkedList<ITableColumnListener>(listeners)) {
 			listener.columnResized(event);
 		}
 	}
 
 	public void fireColumnPermutationChanged() {
-		for (final ITableColumnListener listener : listeners) {
+		for (final ITableColumnListener listener : new LinkedList<ITableColumnListener>(listeners)) {
 			listener.columnPermutationChanged();
 		}
 	}

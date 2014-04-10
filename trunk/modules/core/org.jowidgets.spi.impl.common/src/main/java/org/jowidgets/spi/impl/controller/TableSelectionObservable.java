@@ -28,11 +28,13 @@
 
 package org.jowidgets.spi.impl.controller;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.common.widgets.controller.ITableSelectionListener;
 import org.jowidgets.common.widgets.controller.ITableSelectionObservable;
+import org.jowidgets.util.Assert;
 
 public class TableSelectionObservable implements ITableSelectionObservable {
 
@@ -40,21 +42,23 @@ public class TableSelectionObservable implements ITableSelectionObservable {
 
 	public TableSelectionObservable() {
 		super();
-		this.listeners = new HashSet<ITableSelectionListener>();
+		this.listeners = new LinkedHashSet<ITableSelectionListener>();
 	}
 
 	@Override
 	public void addTableSelectionListener(final ITableSelectionListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
 	public void removeTableSelectionListener(final ITableSelectionListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
 	public void fireSelectionChanged() {
-		for (final ITableSelectionListener listener : listeners) {
+		for (final ITableSelectionListener listener : new LinkedList<ITableSelectionListener>(listeners)) {
 			listener.selectionChanged();
 		}
 	}

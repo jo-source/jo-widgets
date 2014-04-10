@@ -28,12 +28,14 @@
 
 package org.jowidgets.spi.impl.controller;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.spi.widgets.controller.ITabItemListenerSpi;
 import org.jowidgets.spi.widgets.controller.ITabItemObservableSpi;
+import org.jowidgets.util.Assert;
 import org.jowidgets.util.ValueHolder;
 
 public class TabItemObservableSpi implements ITabItemObservableSpi {
@@ -41,34 +43,36 @@ public class TabItemObservableSpi implements ITabItemObservableSpi {
 	private final Set<ITabItemListenerSpi> listeners;
 
 	public TabItemObservableSpi() {
-		this.listeners = new HashSet<ITabItemListenerSpi>();
+		this.listeners = new LinkedHashSet<ITabItemListenerSpi>();
 	}
 
 	@Override
 	public void addTabItemListener(final ITabItemListenerSpi listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
 	public void removeTabItemListener(final ITabItemListenerSpi listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
 	public void fireSelected() {
-		for (final ITabItemListenerSpi listener : listeners) {
+		for (final ITabItemListenerSpi listener : new LinkedList<ITabItemListenerSpi>(listeners)) {
 			listener.selected();
 		}
 	}
 
 	public void fireOnClose(final IVetoable vetoable) {
-		for (final ITabItemListenerSpi listener : listeners) {
+		for (final ITabItemListenerSpi listener : new LinkedList<ITabItemListenerSpi>(listeners)) {
 			listener.onClose(vetoable);
 		}
 	}
 
 	public boolean fireOnClose() {
 		final ValueHolder<Boolean> veto = new ValueHolder<Boolean>(Boolean.FALSE);
-		for (final ITabItemListenerSpi listener : listeners) {
+		for (final ITabItemListenerSpi listener : new LinkedList<ITabItemListenerSpi>(listeners)) {
 			listener.onClose(new IVetoable() {
 				@Override
 				public void veto() {
@@ -83,7 +87,7 @@ public class TabItemObservableSpi implements ITabItemObservableSpi {
 	}
 
 	public void fireClosed() {
-		for (final ITabItemListenerSpi listener : listeners) {
+		for (final ITabItemListenerSpi listener : new LinkedList<ITabItemListenerSpi>(listeners)) {
 			listener.closed();
 		}
 	}

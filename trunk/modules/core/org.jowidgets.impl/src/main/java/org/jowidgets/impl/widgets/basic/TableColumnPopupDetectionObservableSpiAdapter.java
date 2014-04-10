@@ -28,29 +28,33 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.common.widgets.controller.ITableColumnPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITableColumnPopupDetectionObservable;
 import org.jowidgets.common.widgets.controller.ITableColumnPopupEvent;
 import org.jowidgets.impl.event.TableColumnPopupEvent;
+import org.jowidgets.util.Assert;
 
 class TableColumnPopupDetectionObservableSpiAdapter implements ITableColumnPopupDetectionObservable {
 
 	private final Set<ITableColumnPopupDetectionListener> listeners;
 
 	TableColumnPopupDetectionObservableSpiAdapter() {
-		this.listeners = new HashSet<ITableColumnPopupDetectionListener>();
+		this.listeners = new LinkedHashSet<ITableColumnPopupDetectionListener>();
 	}
 
 	@Override
 	public void addTableColumnPopupDetectionListener(final ITableColumnPopupDetectionListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
 	public void removeTableColumnPopupDetectionListener(final ITableColumnPopupDetectionListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
@@ -58,7 +62,7 @@ class TableColumnPopupDetectionObservableSpiAdapter implements ITableColumnPopup
 		if (!listeners.isEmpty()) {
 			final int convertedIndex = modelSpiAdapter.convertViewToModel(event.getColumnIndex());
 			final ITableColumnPopupEvent decoratedEvent = new TableColumnPopupEvent(convertedIndex, event.getPosition());
-			for (final ITableColumnPopupDetectionListener listener : listeners) {
+			for (final ITableColumnPopupDetectionListener listener : new LinkedList<ITableColumnPopupDetectionListener>(listeners)) {
 				listener.popupDetected(decoratedEvent);
 			}
 		}

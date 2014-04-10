@@ -28,46 +28,49 @@
 
 package org.jowidgets.spi.impl.controller;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.common.widgets.controller.ITableCellListener;
 import org.jowidgets.common.widgets.controller.ITableCellMouseEvent;
 import org.jowidgets.common.widgets.controller.ITableCellObservable;
+import org.jowidgets.util.Assert;
 
 public class TableCellObservable implements ITableCellObservable {
 
 	private final Set<ITableCellListener> listeners;
 
 	public TableCellObservable() {
-		super();
-		this.listeners = new HashSet<ITableCellListener>();
+		this.listeners = new LinkedHashSet<ITableCellListener>();
 	}
 
 	@Override
 	public void addTableCellListener(final ITableCellListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
 	public void removeTableCellListener(final ITableCellListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
 	public void fireMousePressed(final ITableCellMouseEvent event) {
-		for (final ITableCellListener listener : listeners) {
+		for (final ITableCellListener listener : new LinkedList<ITableCellListener>(listeners)) {
 			listener.mousePressed(event);
 		}
 	}
 
 	public void fireMouseReleased(final ITableCellMouseEvent event) {
-		for (final ITableCellListener listener : listeners) {
+		for (final ITableCellListener listener : new LinkedList<ITableCellListener>(listeners)) {
 			listener.mouseReleased(event);
 		}
 	}
 
 	public void fireMouseDoubleClicked(final ITableCellMouseEvent event) {
-		for (final ITableCellListener listener : listeners) {
+		for (final ITableCellListener listener : new LinkedList<ITableCellListener>(listeners)) {
 			listener.mouseDoubleClicked(event);
 		}
 	}

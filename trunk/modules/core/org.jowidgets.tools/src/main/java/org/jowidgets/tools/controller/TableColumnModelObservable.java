@@ -28,44 +28,48 @@
 
 package org.jowidgets.tools.controller;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.common.model.ITableColumnModelListener;
 import org.jowidgets.common.model.ITableColumnModelObservable;
+import org.jowidgets.util.Assert;
 
 public class TableColumnModelObservable implements ITableColumnModelObservable {
 
 	private final Set<ITableColumnModelListener> listeners;
 
 	public TableColumnModelObservable() {
-		this.listeners = new HashSet<ITableColumnModelListener>();
+		this.listeners = new LinkedHashSet<ITableColumnModelListener>();
 	}
 
 	@Override
 	public void addColumnModelListener(final ITableColumnModelListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
 	public void removeColumnModelListener(final ITableColumnModelListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
 	public void fireColumnsAdded(final int[] columnIndices) {
-		for (final ITableColumnModelListener listener : listeners) {
+		for (final ITableColumnModelListener listener : new LinkedList<ITableColumnModelListener>(listeners)) {
 			listener.columnsAdded(columnIndices);
 		}
 	}
 
 	public void fireColumnsRemoved(final int[] columnIndices) {
-		for (final ITableColumnModelListener listener : listeners) {
+		for (final ITableColumnModelListener listener : new LinkedList<ITableColumnModelListener>(listeners)) {
 			listener.columnsRemoved(columnIndices);
 		}
 	}
 
 	public void fireColumnsChanged(final int[] columnIndices) {
-		for (final ITableColumnModelListener listener : listeners) {
+		for (final ITableColumnModelListener listener : new LinkedList<ITableColumnModelListener>(listeners)) {
 			listener.columnsChanged(columnIndices);
 		}
 	}

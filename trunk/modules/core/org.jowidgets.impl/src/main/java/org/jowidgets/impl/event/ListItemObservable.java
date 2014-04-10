@@ -28,40 +28,43 @@
 
 package org.jowidgets.impl.event;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.api.model.IListItemListener;
 import org.jowidgets.api.model.IListItemObservable;
 import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.util.Assert;
 
 public class ListItemObservable implements IListItemObservable {
 
-	private final Set<IListItemListener> itemContainerListeners;
+	private final Set<IListItemListener> listeners;
 
 	public ListItemObservable() {
-		super();
-		this.itemContainerListeners = new HashSet<IListItemListener>();
+		this.listeners = new LinkedHashSet<IListItemListener>();
 	}
 
 	@Override
 	public final void addItemContainerListener(final IListItemListener listener) {
-		itemContainerListeners.add(listener);
+		Assert.paramNotNull(listener, "listener");
+		listeners.add(listener);
 	}
 
 	@Override
 	public final void removeItemContainerListener(final IListItemListener listener) {
-		itemContainerListeners.remove(listener);
+		Assert.paramNotNull(listener, "listener");
+		listeners.remove(listener);
 	}
 
 	public final void fireItemAdded(final IWidget item) {
-		for (final IListItemListener listener : itemContainerListeners) {
+		for (final IListItemListener listener : new LinkedList<IListItemListener>(listeners)) {
 			listener.itemAdded(item);
 		}
 	}
 
 	public final void fireItemRemoved(final IWidget item) {
-		for (final IListItemListener listener : itemContainerListeners) {
+		for (final IListItemListener listener : new LinkedList<IListItemListener>(listeners)) {
 			listener.itemRemoved(item);
 		}
 	}

@@ -28,11 +28,13 @@
 
 package org.jowidgets.tools.controller;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.common.widgets.controller.IMenuListener;
 import org.jowidgets.common.widgets.controller.IMenuObservable;
+import org.jowidgets.util.Assert;
 
 public class MenuObservable implements IMenuObservable {
 
@@ -40,27 +42,29 @@ public class MenuObservable implements IMenuObservable {
 
 	public MenuObservable() {
 		super();
-		this.listeners = new HashSet<IMenuListener>();
+		this.listeners = new LinkedHashSet<IMenuListener>();
 	}
 
 	@Override
 	public void addMenuListener(final IMenuListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
 	public void removeMenuListener(final IMenuListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
 	public void fireMenuActivated() {
-		for (final IMenuListener menuListener : listeners) {
+		for (final IMenuListener menuListener : new LinkedList<IMenuListener>(listeners)) {
 			menuListener.menuActivated();
 		}
 	}
 
 	public void fireMenuDeactivated() {
-		for (final IMenuListener menuListener : listeners) {
+		for (final IMenuListener menuListener : new LinkedList<IMenuListener>(listeners)) {
 			menuListener.menuDeactivated();
 		}
 	}

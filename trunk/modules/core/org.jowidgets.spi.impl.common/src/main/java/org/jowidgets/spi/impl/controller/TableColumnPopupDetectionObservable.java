@@ -28,34 +28,37 @@
 
 package org.jowidgets.spi.impl.controller;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.common.widgets.controller.ITableColumnPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITableColumnPopupDetectionObservable;
 import org.jowidgets.common.widgets.controller.ITableColumnPopupEvent;
+import org.jowidgets.util.Assert;
 
 public class TableColumnPopupDetectionObservable implements ITableColumnPopupDetectionObservable {
 
 	private final Set<ITableColumnPopupDetectionListener> listeners;
 
 	public TableColumnPopupDetectionObservable() {
-		super();
-		this.listeners = new HashSet<ITableColumnPopupDetectionListener>();
+		this.listeners = new LinkedHashSet<ITableColumnPopupDetectionListener>();
 	}
 
 	@Override
 	public void addTableColumnPopupDetectionListener(final ITableColumnPopupDetectionListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
 	public void removeTableColumnPopupDetectionListener(final ITableColumnPopupDetectionListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
 	public void firePopupDetected(final ITableColumnPopupEvent event) {
-		for (final ITableColumnPopupDetectionListener listener : listeners) {
+		for (final ITableColumnPopupDetectionListener listener : new LinkedList<ITableColumnPopupDetectionListener>(listeners)) {
 			listener.popupDetected(event);
 		}
 	}

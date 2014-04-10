@@ -28,12 +28,14 @@
 
 package org.jowidgets.tools.controller;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.api.controller.ITabItemListener;
 import org.jowidgets.api.controller.ITabItemObservable;
 import org.jowidgets.common.types.IVetoable;
+import org.jowidgets.util.Assert;
 import org.jowidgets.util.ValueHolder;
 
 public class TabItemObservable implements ITabItemObservable {
@@ -41,34 +43,36 @@ public class TabItemObservable implements ITabItemObservable {
 	private final Set<ITabItemListener> listeners;
 
 	public TabItemObservable() {
-		this.listeners = new HashSet<ITabItemListener>();
+		this.listeners = new LinkedHashSet<ITabItemListener>();
 	}
 
 	@Override
 	public void addTabItemListener(final ITabItemListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
 	public void removeTabItemListener(final ITabItemListener listener) {
+		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
 	public void fireSelectionChanged(final boolean selected) {
-		for (final ITabItemListener listener : listeners) {
+		for (final ITabItemListener listener : new LinkedList<ITabItemListener>(listeners)) {
 			listener.selectionChanged(selected);
 		}
 	}
 
 	public void fireOnClose(final IVetoable vetoable) {
-		for (final ITabItemListener listener : listeners) {
+		for (final ITabItemListener listener : new LinkedList<ITabItemListener>(listeners)) {
 			listener.onClose(vetoable);
 		}
 	}
 
 	public boolean fireOnClose() {
 		final ValueHolder<Boolean> veto = new ValueHolder<Boolean>(Boolean.FALSE);
-		for (final ITabItemListener listener : listeners) {
+		for (final ITabItemListener listener : new LinkedList<ITabItemListener>(listeners)) {
 			listener.onClose(new IVetoable() {
 				@Override
 				public void veto() {

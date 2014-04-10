@@ -28,59 +28,63 @@
 
 package org.jowidgets.tools.controller;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.widgets.controller.IWindowListener;
 import org.jowidgets.common.widgets.controller.IWindowObservable;
+import org.jowidgets.util.Assert;
 import org.jowidgets.util.ValueHolder;
 
 public class WindowObservable implements IWindowObservable {
 
-	private final Set<IWindowListener> windowListeners;
+	private final Set<IWindowListener> listeners;
 
 	public WindowObservable() {
 		super();
-		this.windowListeners = new HashSet<IWindowListener>();
+		this.listeners = new LinkedHashSet<IWindowListener>();
 	}
 
 	@Override
 	public final void addWindowListener(final IWindowListener listener) {
-		windowListeners.add(listener);
+		Assert.paramNotNull(listener, "listener");
+		listeners.add(listener);
 	}
 
 	@Override
 	public final void removeWindowListener(final IWindowListener listener) {
-		windowListeners.remove(listener);
+		Assert.paramNotNull(listener, "listener");
+		listeners.remove(listener);
 	}
 
 	public final void fireWindowActivated() {
-		for (final IWindowListener windowListener : windowListeners) {
+		for (final IWindowListener windowListener : new LinkedList<IWindowListener>(listeners)) {
 			windowListener.windowActivated();
 		}
 	}
 
 	public final void fireWindowDeactivated() {
-		for (final IWindowListener windowListener : windowListeners) {
+		for (final IWindowListener windowListener : new LinkedList<IWindowListener>(listeners)) {
 			windowListener.windowDeactivated();
 		}
 	}
 
 	public final void fireWindowIconified() {
-		for (final IWindowListener windowListener : windowListeners) {
+		for (final IWindowListener windowListener : new LinkedList<IWindowListener>(listeners)) {
 			windowListener.windowIconified();
 		}
 	}
 
 	public final void fireWindowDeiconified() {
-		for (final IWindowListener windowListener : windowListeners) {
+		for (final IWindowListener windowListener : new LinkedList<IWindowListener>(listeners)) {
 			windowListener.windowDeiconified();
 		}
 	}
 
 	public final void fireWindowClosed() {
-		for (final IWindowListener windowListener : windowListeners) {
+		for (final IWindowListener windowListener : new LinkedList<IWindowListener>(listeners)) {
 			windowListener.windowClosed();
 		}
 	}
@@ -93,7 +97,7 @@ public class WindowObservable implements IWindowObservable {
 				veto.set(Boolean.TRUE);
 			}
 		};
-		for (final IWindowListener windowListener : windowListeners) {
+		for (final IWindowListener windowListener : new LinkedList<IWindowListener>(listeners)) {
 			windowListener.windowClosing(innerVetoable);
 			if (veto.get().booleanValue()) {
 				vetoable.veto();
@@ -110,7 +114,7 @@ public class WindowObservable implements IWindowObservable {
 				veto.set(Boolean.TRUE);
 			}
 		};
-		for (final IWindowListener windowListener : windowListeners) {
+		for (final IWindowListener windowListener : new LinkedList<IWindowListener>(listeners)) {
 			windowListener.windowClosing(vetoable);
 			if (veto.get().booleanValue()) {
 				return true;

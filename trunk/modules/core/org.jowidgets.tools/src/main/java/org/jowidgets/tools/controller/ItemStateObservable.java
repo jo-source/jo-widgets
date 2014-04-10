@@ -28,33 +28,37 @@
 
 package org.jowidgets.tools.controller;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.jowidgets.common.widgets.controller.IItemStateListener;
 import org.jowidgets.common.widgets.controller.IItemStateObservable;
+import org.jowidgets.util.Assert;
 
 public class ItemStateObservable implements IItemStateObservable {
 
-	private final Set<IItemStateListener> itemListeners;
+	private final Set<IItemStateListener> listeners;
 
 	public ItemStateObservable() {
 		super();
-		this.itemListeners = new HashSet<IItemStateListener>();
+		this.listeners = new LinkedHashSet<IItemStateListener>();
 	}
 
 	@Override
 	public final void addItemListener(final IItemStateListener listener) {
-		this.itemListeners.add(listener);
+		Assert.paramNotNull(listener, "listener");
+		this.listeners.add(listener);
 	}
 
 	@Override
 	public final void removeItemListener(final IItemStateListener listener) {
-		this.itemListeners.remove(listener);
+		Assert.paramNotNull(listener, "listener");
+		this.listeners.remove(listener);
 	}
 
 	public final void fireItemStateChanged() {
-		for (final IItemStateListener listener : itemListeners) {
+		for (final IItemStateListener listener : new LinkedList<IItemStateListener>(listeners)) {
 			listener.itemStateChanged();
 		}
 	}

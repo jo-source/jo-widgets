@@ -49,7 +49,7 @@ public final class DemoForm1Creator {
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
 		//layout for the composite
-		parentContainer.setLayout(new MigLayoutDescriptor("[grow, 0::]", "[grow, 0::]"));
+		parentContainer.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
 
 		//define the blue print for the input composite
 		final IInputCompositeBluePrint<List<String>> inputCompositeBp = bpf.inputComposite(new DemoForm1ContentCreator());
