@@ -29,12 +29,16 @@ package org.jowidgets.spi.impl.swing.common.widgets;
 
 import java.awt.Component;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JMenuBar;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.border.Border;
 
 import org.jowidgets.common.color.IColorConstant;
@@ -71,6 +75,21 @@ public class DialogImpl extends SwingWindow implements IFrameSpi {
 		if (!setup.isDecorated()) {
 			getUiReference().setUndecorated(true);
 			((JComponent) getUiReference().getContentPane()).setBorder(BORDER);
+		}
+
+		final boolean closeOnEscape = setup.isCloseable() && setup.isCloseOnEscape();
+		if (closeOnEscape) {
+			final ActionListener actionListener = new ActionListener() {
+				@Override
+				public void actionPerformed(final ActionEvent e) {
+					setVisible(false);
+				}
+			};
+
+			getUiReference().getRootPane().registerKeyboardAction(
+					actionListener,
+					KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+					JComponent.WHEN_IN_FOCUSED_WINDOW);
 		}
 
 		setIcon(setup.getIcon(), imageRegistry);

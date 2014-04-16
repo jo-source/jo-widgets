@@ -48,4 +48,6 @@ public interface IInputDialogSetupBuilder<INSTANCE_TYPE extends IInputDialogSetu
 
 	INSTANCE_TYPE setCloseable(boolean closeable);
 
+	INSTANCE_TYPE setCloseOnEscape(boolean closeOnEscape);
+
 }

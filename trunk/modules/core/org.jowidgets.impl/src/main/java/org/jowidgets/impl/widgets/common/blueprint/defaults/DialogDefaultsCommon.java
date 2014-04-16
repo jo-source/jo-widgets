@@ -35,6 +35,7 @@ public class DialogDefaultsCommon implements IDefaultInitializer<IDialogSetupBui
 	@Override
 	public void initialize(final IDialogSetupBuilderCommon<?> builder) {
 		builder.setModal(true);
+		builder.setCloseOnEscape(true);
 	}
 
 }

@@ -29,6 +29,8 @@ package org.jowidgets.spi.impl.swt.common.widgets;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.widgets.IFrameSpi;
@@ -48,6 +50,22 @@ public class DialogImpl extends WindowImpl implements IFrameSpi {
 			getUiReference().setText(setup.getTitle());
 		}
 		setIcon(setup.getIcon());
+
+		final boolean closeOnEscape = setup.isCloseable() && setup.isCloseOnEscape();
+
+		getUiReference().addListener(SWT.Traverse, new Listener() {
+			@Override
+			public void handleEvent(final Event event) {
+				if (event.detail == SWT.TRAVERSE_ESCAPE) {
+					if (closeOnEscape) {
+						setVisible(false);
+					}
+					event.detail = SWT.TRAVERSE_NONE;
+					event.doit = false;
+				}
+			}
+		});
+
 	}
 
 	@Override

@@ -45,7 +45,8 @@ public class InputDialogDefaults implements IDefaultInitializer<IInputDialogSetu
 		builder.setCancelButton(bpF.button(Messages.getString("InputDialogDefaults.cancel"))); //$NON-NLS-1$
 		builder.setValidationLabel(bpF.inputComponentValidationLabel());
 		builder.setDefaultButtonPolicy(InputDialogDefaultButtonPolicy.OK);
-		builder.setCloseable(false);
+		builder.setCloseable(true);
+		builder.setCloseOnEscape(true);
 
 		final IInputComponentValidationLabelBluePrint validationLabelBp = bpF.inputComponentValidationLabel();
 		validationLabelBp.setInitialValidationDecorator(new IDecorator<IValidationResult>() {

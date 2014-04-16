@@ -45,4 +45,7 @@ public interface IInputDialogSetup<INPUT_TYPE> extends ITitledWindowSetup, IInpu
 	@Mandatory
 	boolean isCloseable();
 
+	@Mandatory
+	boolean isCloseOnEscape();
+
 }

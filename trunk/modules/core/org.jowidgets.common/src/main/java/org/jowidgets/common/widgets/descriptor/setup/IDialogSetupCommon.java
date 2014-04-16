@@ -34,4 +34,7 @@ public interface IDialogSetupCommon extends IFrameSetupCommon {
 	@Mandatory
 	boolean isModal();
 
+	@Mandatory
+	boolean isCloseOnEscape();
+
 }
