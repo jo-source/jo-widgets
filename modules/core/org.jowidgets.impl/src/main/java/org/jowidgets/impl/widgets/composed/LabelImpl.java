@@ -62,13 +62,15 @@ public class LabelImpl extends ControlWrapper implements ILabel {
 		super(composite);
 
 		this.composite = composite;
-		this.composite.setLayout(new MigLayoutDescriptor("0[][grow]0", "0[]0"));
 
 		final IIconDescriptor iconDescriptor = BPF.icon(setup.getIcon()).setSetup(setup);
 		this.iconWidget = composite.add(iconDescriptor, "w 0::");
+		this.icon = setup.getIcon();
 
 		final ITextLabelDescriptor textLabelDescriptor = BPF.textLabel().setSetup(setup);
 		this.textLabelWidget = composite.add(textLabelDescriptor, "w 0::, grow");
+
+		setLayout();
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
@@ -160,12 +162,25 @@ public class LabelImpl extends ControlWrapper implements ILabel {
 
 	@Override
 	public void setIcon(final IImageConstant icon) {
+		final boolean layoutChanged = (icon == null && this.icon != null) || (icon != null && this.icon == null);
 		this.icon = icon;
 		final Dimension lastPreferredSize = iconWidget.getPreferredSize();
 		iconWidget.setIcon(icon);
-		if (!lastPreferredSize.equals(iconWidget.getPreferredSize())) {
+		if (layoutChanged) {
+			setLayout();
+		}
+		if (!lastPreferredSize.equals(iconWidget.getPreferredSize()) || layoutChanged) {
 			composite.layoutBegin();
 			composite.layoutEnd();
+		}
+	}
+
+	private void setLayout() {
+		if (icon == null) {
+			this.composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[]0"));
+		}
+		else {
+			this.composite.setLayout(new MigLayoutDescriptor("0[][grow]0", "0[]0"));
 		}
 	}
 
