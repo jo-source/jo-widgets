@@ -46,13 +46,6 @@ public final class Parameter {
 	public static <VALUE_TYPE> IParameter<VALUE_TYPE> create(
 		final Class<VALUE_TYPE> valueType,
 		final String label,
-		final VALUE_TYPE defaultValue) {
-		return create(valueType, label, null, defaultValue);
-	}
-
-	public static <VALUE_TYPE> IParameter<VALUE_TYPE> create(
-		final Class<VALUE_TYPE> valueType,
-		final String label,
 		final String descripion) {
 		return create(valueType, label, descripion, null);
 	}
