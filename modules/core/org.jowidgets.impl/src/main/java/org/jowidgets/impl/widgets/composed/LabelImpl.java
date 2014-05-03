@@ -177,7 +177,7 @@ public class LabelImpl extends ControlWrapper implements ILabel {
 
 	private void setLayout() {
 		if (icon == null) {
-			this.composite.setLayout(new MigLayoutDescriptor("0[grow]0", "0[]0"));
+			this.composite.setLayout(new MigLayoutDescriptor("0[]0", "0[]0"));
 		}
 		else {
 			this.composite.setLayout(new MigLayoutDescriptor("0[][grow]0", "0[]0"));
