@@ -99,7 +99,7 @@ public class TextFieldImpl extends AbstractTextInputControl {
 			&& !getUiReference().isVisible()
 			&& !EmptyCheck.isEmpty(text)) {
 			showListener = new ShowListener();
-			getUiReference().addListener(SWT.Resize, showListener);
+			getUiReference().addListener(SWT.Paint, showListener);
 		}
 		if (text != null) {
 			getUiReference().setText(text);
@@ -193,7 +193,7 @@ public class TextFieldImpl extends AbstractTextInputControl {
 			if (getUiReference().isVisible() && !getUiReference().isFocusControl()) {
 				getUiReference().setSelection(new Point(0, 0));
 				if (showListener != null) {
-					getUiReference().removeListener(SWT.Resize, showListener);
+					getUiReference().removeListener(SWT.Paint, showListener);
 					showListener = null;
 				}
 			}

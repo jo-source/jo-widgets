@@ -40,7 +40,7 @@ public final class SwtOptions {
 	private static boolean nativeTextAreaScrollBars = false;
 	private static Long clipbaordPollingMillis = Long.valueOf(1000L);
 
-	//not fix in swt 4.3 (tested with win)
+	//not fixed in swt 4.3 (tested with win)
 	private static boolean textFieldTruncateWorkaround = true;
 
 	//fixed within swt 3.7 (tested with win)
