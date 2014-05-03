@@ -126,7 +126,7 @@ public final class Parameterized {
 			final Class<VALUE_TYPE> valueType,
 			final VALUE_TYPE defaultValue,
 			final String label) {
-			return addParameter(key, Parameter.create(valueType, label, defaultValue));
+			return addParameter(key, Parameter.create(valueType, label, null, defaultValue));
 		}
 
 		@SuppressWarnings({"rawtypes", "unchecked"})
