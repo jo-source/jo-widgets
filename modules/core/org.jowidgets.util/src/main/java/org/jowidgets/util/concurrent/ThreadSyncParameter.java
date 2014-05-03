@@ -47,7 +47,11 @@ public final class ThreadSyncParameter<VALUE_TYPE> extends ParameterWrapper<VALU
 		final IParameter<VALUE_TYPE> original,
 		final ISingleThreadAccess originalThreadAccess,
 		final ISingleThreadAccess newThreadAccess) {
-		super(Parameter.create(original.getValueType(), original.getLabel(), original.getDescription()));
+		super(Parameter.create(
+				original.getValueType(),
+				original.getLabel(),
+				original.getDescription(),
+				original.getDefaultValue()));
 
 		this.originalParameter = original;
 		this.originalThreadAccess = originalThreadAccess;
@@ -126,6 +130,19 @@ public final class ThreadSyncParameter<VALUE_TYPE> extends ParameterWrapper<VALU
 	private void checkThread() {
 		if (!newThreadAccess.isSingleThread()) {
 			throw new IllegalArgumentException("Operation must be invoked in write thread access!");
+		}
+	}
+
+	@Override
+	public String toString() {
+		if (originalThreadAccess.isSingleThread()) {
+			return originalParameter.toString();
+		}
+		else if (newThreadAccess.isSingleThread()) {
+			return super.toString();
+		}
+		else {
+			return "toString() invoked in wrong thread!";
 		}
 	}
 

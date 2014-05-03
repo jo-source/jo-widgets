@@ -51,4 +51,14 @@ public class ParameterWrapper<VALUE_TYPE> extends ObservableValueWrapper<VALUE_T
 		return original.getDescription();
 	}
 
+	@Override
+	public VALUE_TYPE getDefaultValue() {
+		return original.getDefaultValue();
+	}
+
+	@Override
+	public String toString() {
+		return "ParameterWrapper [original=" + original + "]";
+	}
+
 }

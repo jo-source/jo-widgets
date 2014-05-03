@@ -105,9 +105,28 @@ public final class Parameterized {
 		public <VALUE_TYPE> IParameterizedBuilder addParameter(
 			final ITypedKey<VALUE_TYPE> key,
 			final Class<VALUE_TYPE> valueType,
+			final VALUE_TYPE defaultValue,
+			final String label,
+			final String description) {
+			return addParameter(key, Parameter.create(valueType, label, description, defaultValue));
+		}
+
+		@Override
+		public <VALUE_TYPE> IParameterizedBuilder addParameter(
+			final ITypedKey<VALUE_TYPE> key,
+			final Class<VALUE_TYPE> valueType,
 			final String label,
 			final String description) {
 			return addParameter(key, Parameter.create(valueType, label, description));
+		}
+
+		@Override
+		public <VALUE_TYPE> IParameterizedBuilder addParameter(
+			final ITypedKey<VALUE_TYPE> key,
+			final Class<VALUE_TYPE> valueType,
+			final VALUE_TYPE defaultValue,
+			final String label) {
+			return addParameter(key, Parameter.create(valueType, label, defaultValue));
 		}
 
 		@SuppressWarnings({"rawtypes", "unchecked"})
