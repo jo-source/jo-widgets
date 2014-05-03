@@ -69,6 +69,19 @@ public interface IParameterizedBuilder {
 	<VALUE_TYPE> IParameterizedBuilder addParameter(
 		ITypedKey<VALUE_TYPE> key,
 		Class<VALUE_TYPE> valueType,
+		VALUE_TYPE defaultValue,
+		String label);
+
+	<VALUE_TYPE> IParameterizedBuilder addParameter(
+		ITypedKey<VALUE_TYPE> key,
+		Class<VALUE_TYPE> valueType,
+		String label,
+		String description);
+
+	<VALUE_TYPE> IParameterizedBuilder addParameter(
+		ITypedKey<VALUE_TYPE> key,
+		Class<VALUE_TYPE> valueType,
+		VALUE_TYPE defaultValue,
 		String label,
 		String description);
 

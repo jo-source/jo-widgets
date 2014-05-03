@@ -46,9 +46,24 @@ public final class Parameter {
 	public static <VALUE_TYPE> IParameter<VALUE_TYPE> create(
 		final Class<VALUE_TYPE> valueType,
 		final String label,
+		final VALUE_TYPE defaultValue) {
+		return create(valueType, label, null, defaultValue);
+	}
+
+	public static <VALUE_TYPE> IParameter<VALUE_TYPE> create(
+		final Class<VALUE_TYPE> valueType,
+		final String label,
 		final String descripion) {
+		return create(valueType, label, descripion, null);
+	}
+
+	public static <VALUE_TYPE> IParameter<VALUE_TYPE> create(
+		final Class<VALUE_TYPE> valueType,
+		final String label,
+		final String descripion,
+		final VALUE_TYPE defaultValue) {
 		final IParameterBuilder<VALUE_TYPE> builder = builder();
-		builder.setValueType(valueType).setLabel(label).setDescription(descripion);
+		builder.setValueType(valueType).setLabel(label).setDescription(descripion).setDefaultValue(defaultValue);
 		return builder.build();
 	}
 
@@ -60,6 +75,7 @@ public final class Parameter {
 
 		private Class<VALUE_TYPE> valueType;
 		private VALUE_TYPE value;
+		private VALUE_TYPE defaultValue;
 		private String label;
 		private String description;
 
@@ -77,6 +93,12 @@ public final class Parameter {
 		}
 
 		@Override
+		public IParameterBuilder<VALUE_TYPE> setDefaultValue(final VALUE_TYPE value) {
+			this.defaultValue = value;
+			return this;
+		}
+
+		@Override
 		public IParameterBuilder<VALUE_TYPE> setLabel(final String label) {
 			this.label = label;
 			return this;
@@ -90,7 +112,7 @@ public final class Parameter {
 
 		@Override
 		public IParameter<VALUE_TYPE> build() {
-			return new ParameterImpl<VALUE_TYPE>(valueType, value, label, description);
+			return new ParameterImpl<VALUE_TYPE>(valueType, value, defaultValue, label, description);
 		}
 
 	}
@@ -99,16 +121,19 @@ public final class Parameter {
 
 		private final String label;
 		private final String description;
+		private final VALUE_TYPE defaultValue;
 
 		private ParameterImpl(
 			final Class<VALUE_TYPE> valueType,
 			final VALUE_TYPE value,
+			final VALUE_TYPE defaultValue,
 			final String label,
 			final String description) {
 			super(valueType);
 
 			this.label = label;
 			this.description = description;
+			this.defaultValue = defaultValue;
 			setValue(value);
 		}
 
@@ -120,6 +145,24 @@ public final class Parameter {
 		@Override
 		public String getDescription() {
 			return description;
+		}
+
+		@Override
+		public VALUE_TYPE getDefaultValue() {
+			return defaultValue;
+		}
+
+		@Override
+		public String toString() {
+			return "ParameterImpl [label="
+				+ label
+				+ ", description="
+				+ description
+				+ ", defaultValue="
+				+ defaultValue
+				+ ", getValue()="
+				+ getValue()
+				+ "]";
 		}
 
 	}

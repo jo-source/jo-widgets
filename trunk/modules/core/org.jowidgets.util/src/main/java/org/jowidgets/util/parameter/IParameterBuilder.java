@@ -34,6 +34,8 @@ public interface IParameterBuilder<VALUE_TYPE> {
 
 	IParameterBuilder<VALUE_TYPE> setValue(VALUE_TYPE value);
 
+	IParameterBuilder<VALUE_TYPE> setDefaultValue(VALUE_TYPE value);
+
 	IParameterBuilder<VALUE_TYPE> setLabel(String label);
 
 	IParameterBuilder<VALUE_TYPE> setDescription(String description);

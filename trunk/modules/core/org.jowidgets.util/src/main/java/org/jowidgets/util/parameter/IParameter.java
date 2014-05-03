@@ -36,4 +36,6 @@ public interface IParameter<VALUE_TYPE> extends IObservableValue<VALUE_TYPE> {
 
 	String getDescription();
 
+	VALUE_TYPE getDefaultValue();
+
 }
