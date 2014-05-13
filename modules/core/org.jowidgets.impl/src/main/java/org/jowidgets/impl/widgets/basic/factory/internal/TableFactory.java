@@ -29,9 +29,15 @@
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
 import org.jowidgets.api.model.table.ITableColumnModel;
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.descriptor.ITableDescriptor;
+import org.jowidgets.common.model.ITableCell;
 import org.jowidgets.common.model.ITableDataModel;
+import org.jowidgets.common.widgets.editor.EditActivation;
+import org.jowidgets.common.widgets.editor.ITableCellEditor;
+import org.jowidgets.common.widgets.editor.ITableCellEditorFactory;
+import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
@@ -40,6 +46,7 @@ import org.jowidgets.impl.widgets.basic.TableImpl;
 import org.jowidgets.impl.widgets.basic.TableModelSpiAdapter;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.ITableSpi;
+import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 
 public class TableFactory extends AbstractWidgetFactory implements IWidgetFactory<ITable, ITableDescriptor> {
 
@@ -56,6 +63,10 @@ public class TableFactory extends AbstractWidgetFactory implements IWidgetFactor
 		final ITableBluePrintSpi tableBpSpi = getSpiBluePrintFactory().table();
 		tableBpSpi.setSetup(descriptor);
 
+		final ITableCellEditorFactory<? extends ITableCellEditor> editor = tableBpSpi.getEditor();
+		if (editor != null) {
+			tableBpSpi.setEditor(new TableCellEditorFactoryDecorator(editor));
+		}
 		final ITableColumnModel columnModel = descriptor.getColumnModel();
 		final ITableDataModel dataModel = descriptor.getDataModel();
 		final TableModelSpiAdapter modelSpiAdapter = new TableModelSpiAdapter(columnModel, dataModel);
@@ -63,10 +74,68 @@ public class TableFactory extends AbstractWidgetFactory implements IWidgetFactor
 		tableBpSpi.setColumnModel(modelSpiAdapter);
 		tableBpSpi.setDataModel(modelSpiAdapter);
 
-		final ITableSpi tableSpi = getSpiWidgetFactory().createTable(parentUiReference, tableBpSpi);
+		final ITableSpi tableSpi = getSpiWidgetFactory().createTable(getGenericWidgetFactory(), parentUiReference, tableBpSpi);
 
 		// TODO MG, NM review, avoid setter
 		modelSpiAdapter.setTable(tableSpi);
 		return new TableImpl(tableSpi, descriptor, modelSpiAdapter);
+	}
+
+	private final class TableCellEditorFactoryDecorator implements ITableCellEditorFactory<ITableCellEditor> {
+
+		private final ITableCellEditorFactory<? extends ITableCellEditor> original;
+
+		public TableCellEditorFactoryDecorator(final ITableCellEditorFactory<? extends ITableCellEditor> original) {
+			this.original = original;
+		}
+
+		@Override
+		public ITableCellEditor create(
+			final ITableCell cell,
+			final int row,
+			final int column,
+			final ICustomWidgetFactory widgetFactory) {
+			final ITableCellEditor result = original.create(cell, row, column, widgetFactory);
+			if (result instanceof IControl) {
+				return new DecoratedTableCellEditor((IControl) result, result);
+			}
+			else {
+				return result;
+			}
+		}
+
+		@Override
+		public EditActivation getActivation(final ITableCell cell, final int row, final int column) {
+			return original.getActivation(cell, row, column);
+		}
+
+	}
+
+	private final class DecoratedTableCellEditor extends ControlWrapper implements ITableCellEditor {
+
+		private final ITableCellEditor original;
+
+		private DecoratedTableCellEditor(final IControl widget, final ITableCellEditor original) {
+			super(widget);
+			this.original = original;
+		}
+
+		@Override
+		public void startEditing(final ITableCell cell, final int row, final int column) {
+			original.startEditing(cell, row, column);
+		}
+
+		@Override
+		public void stopEditing(final ITableCell cell, final int row, final int column) {
+			original.stopEditing(cell, row, column);
+			getWidget().dispose();
+		}
+
+		@Override
+		public void cancelEditing(final ITableCell cell, final int row, final int column) {
+			original.cancelEditing(cell, row, column);
+			getWidget().dispose();
+		}
+
 	}
 }

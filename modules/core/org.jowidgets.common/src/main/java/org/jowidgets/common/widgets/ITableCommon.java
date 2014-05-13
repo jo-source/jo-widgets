@@ -59,7 +59,17 @@ public interface ITableCommon extends
 	 */
 	void setEditable(boolean editable);
 
+	void editCell(int row, int column);
+
+	void stopEditing();
+
+	void cancelEditing();
+
+	boolean isEditing();
+
 	void resetFromModel();
+
+	void setRowHeight(int height);
 
 	Position getCellPosition(int rowIndex, int columnIndex);
 

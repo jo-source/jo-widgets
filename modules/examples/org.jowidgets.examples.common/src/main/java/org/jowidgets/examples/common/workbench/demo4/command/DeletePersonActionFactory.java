@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2013, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,47 +26,45 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util;
+package org.jowidgets.examples.common.workbench.demo4.command;
 
-import java.util.Arrays;
-import java.util.Collection;
+import org.jowidgets.addons.icons.silkicons.SilkIcons;
+import org.jowidgets.api.command.CommandAction;
+import org.jowidgets.api.command.IAction;
+import org.jowidgets.api.command.IActionBuilder;
+import org.jowidgets.api.command.ICommandExecutor;
+import org.jowidgets.api.command.IExecutionContext;
+import org.jowidgets.examples.common.workbench.demo4.model.BeanTableModel;
+import org.jowidgets.examples.common.workbench.demo4.model.Person;
 
-public final class StringUtils {
+public final class DeletePersonActionFactory {
 
-	private StringUtils() {}
+	private DeletePersonActionFactory() {}
 
-	public static String concatElementsSeparatedBy(final Object[] strings, final char separator) {
-		Assert.paramNotNull(strings, "strings");
-		return concatElementsSeparatedBy(Arrays.asList(strings), separator);
+	public static IAction create(final BeanTableModel<Person> model) {
+		final IActionBuilder builder = CommandAction.builder();
+		builder.setText("Delete person");
+		builder.setIcon(SilkIcons.USER_DELETE);
+		builder.setCommand(new DeletePersonCommand(model));
+		return builder.build();
 	}
 
-	public static String concatElementsSeparatedBy(final Collection<?> strings, final char separator) {
-		final StringBuilder result = new StringBuilder();
-		for (final Object label : strings) {
-			if (label != null) {
-				result.append(label.toString() + separator + " ");
+	private static final class DeletePersonCommand implements ICommandExecutor {
+
+		private final BeanTableModel<Person> model;
+
+		private DeletePersonCommand(final BeanTableModel<Person> model) {
+			this.model = model;
+		}
+
+		@Override
+		public void execute(final IExecutionContext executionContext) throws Exception {
+			final Person person = model.getSelectedBean();
+			if (person != null) {
+				model.removeBean(person);
 			}
 		}
-		if (strings.size() > 0) {
-			result.replace(result.length() - 2, result.length(), "");
-		}
-		return result.toString();
+
 	}
 
-	public static String concatElementsSeparatedByComma(final Collection<?> strings) {
-		return concatElementsSeparatedBy(strings, ',');
-	}
-
-	public static String truncateToLength(final String string, final int length) {
-		Assert.paramInBounds(Integer.MAX_VALUE, length, "length");
-		if (EmptyCheck.isEmpty(string)) {
-			return string;
-		}
-		if (string.length() <= length) {
-			return string;
-		}
-		else {
-			return string.substring(0, length - 4) + " ...";
-		}
-	}
 }

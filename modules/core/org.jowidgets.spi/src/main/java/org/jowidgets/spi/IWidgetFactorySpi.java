@@ -133,7 +133,7 @@ public interface IWidgetFactorySpi {
 
 	ITreeSpi createTree(Object parentUiReference, ITreeSetupSpi setup);
 
-	ITableSpi createTable(Object parentUiReference, ITableSetupSpi setup);
+	ITableSpi createTable(IGenericWidgetFactory factory, Object parentUiReference, ITableSetupSpi setup);
 
 	ISliderSpi createSlider(Object parentUiReference, ISliderSetupSpi setup);
 

@@ -30,12 +30,12 @@ package org.jowidgets.spi.impl.swt.common.widgets;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ControlEditor;
-import org.eclipse.swt.custom.TableCursor;
+import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.DisposeEvent;
@@ -50,6 +50,8 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.TraverseEvent;
+import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Color;
@@ -58,6 +60,7 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
@@ -86,6 +89,10 @@ import org.jowidgets.common.types.MouseButton;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TablePackPolicy;
 import org.jowidgets.common.types.TableSelectionPolicy;
+import org.jowidgets.common.types.VirtualKey;
+import org.jowidgets.common.widgets.IControlCommon;
+import org.jowidgets.common.widgets.controller.IKeyEvent;
+import org.jowidgets.common.widgets.controller.IKeyListener;
 import org.jowidgets.common.widgets.controller.ITableCellEditorListener;
 import org.jowidgets.common.widgets.controller.ITableCellListener;
 import org.jowidgets.common.widgets.controller.ITableCellMouseEvent;
@@ -93,6 +100,12 @@ import org.jowidgets.common.widgets.controller.ITableCellPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITableColumnListener;
 import org.jowidgets.common.widgets.controller.ITableColumnPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITableSelectionListener;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.editor.EditActivation;
+import org.jowidgets.common.widgets.editor.ITableCellEditor;
+import org.jowidgets.common.widgets.editor.ITableCellEditorFactory;
+import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.controller.TableCellEditEvent;
 import org.jowidgets.spi.impl.controller.TableCellEditorObservable;
 import org.jowidgets.spi.impl.controller.TableCellMouseEvent;
@@ -110,6 +123,7 @@ import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.common.util.AlignmentConvert;
 import org.jowidgets.spi.impl.swt.common.util.FontProvider;
+import org.jowidgets.spi.impl.swt.common.util.ListenerUtil;
 import org.jowidgets.spi.impl.swt.common.util.MouseUtil;
 import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
@@ -122,8 +136,8 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private final Table table;
 	private final ITableDataModel dataModel;
 	private final ITableColumnModelSpi columnModel;
-	private TableCursor cursor;
-	private ControlEditor editor;
+	private final IGenericWidgetFactory factory;
+	private final ICustomWidgetFactory editorCustomWidgetFactory;
 
 	private final TableCellObservable tableCellObservable;
 	private final TableCellPopupDetectionObservable tableCellPopupDetectionObservable;
@@ -138,6 +152,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private final TableColumnModelListener tableColumnModelListener;
 	private final DataListener dataListener;
 	private final EraseItemListener eraseItemListener;
+	private final ITableCellEditorFactory<? extends ITableCellEditor> editorFactory;
 
 	private final boolean columnsMoveable;
 	private final boolean columnsResizeable;
@@ -149,9 +164,19 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private boolean setWidthInvokedOnModel;
 	private ToolTip toolTip;
 	private boolean editable;
+	private TableEditor editor;
+	private ITableCellEditor tableCellEditor;
+	private ITableCell editTableCell;
+	private int editRowIndex;
+	private int editColumnIndex;
 
-	public TableImpl(final Object parentUiReference, final ITableSetupSpi setup) {
+	private Integer rowHeight;
+
+	public TableImpl(final IGenericWidgetFactory factory, final Object parentUiReference, final ITableSetupSpi setup) {
 		super(new Table((Composite) parentUiReference, getStyle(setup)));
+
+		this.factory = factory;
+		this.editorCustomWidgetFactory = new EditorCustomWidgetFactory();
 
 		this.selectedForegroundColor = SwtOptions.getTableSelectedForegroundColor();
 		this.selectedBackgroundColor = SwtOptions.getTableSelectedBackgroundColor();
@@ -180,6 +205,8 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		this.columnsMoveable = setup.getColumnsMoveable();
 		this.columnsResizeable = setup.getColumnsResizeable();
 
+		this.editorFactory = setup.getEditor();
+
 		this.table = getUiReference();
 
 		table.setLinesVisible(true);
@@ -193,18 +220,19 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		fakeColumn.setText("FAKE");
 
 		try {
-			this.cursor = new TableCursor(table, SWT.NONE);
-			this.cursor.setVisible(false);
-			this.editor = new ControlEditor(table);
+			this.editor = new TableEditor(table);
 			this.editor.grabHorizontal = true;
 			this.editor.grabVertical = true;
 			table.addMouseListener(new TableEditListener());
 		}
 		catch (final NoClassDefFoundError e) {
 			//RWT does not support TableCursor yet :-(
-			this.cursor = null;
+			//this.cursor = null;
 			this.editor = null;
 		}
+
+		this.editRowIndex = -1;
+		this.editColumnIndex = -1;
 
 		table.addListener(SWT.SetData, dataListener);
 		table.addListener(SWT.EraseItem, eraseItemListener);
@@ -243,6 +271,62 @@ public class TableImpl extends SwtControl implements ITableSpi {
 				}
 			}
 		});
+
+		table.addListener(SWT.MeasureItem, new Listener() {
+			@Override
+			public void handleEvent(final Event event) {
+				handleMeasureEvent(event);
+			}
+		});
+
+		table.addListener(SWT.EraseItem, new Listener() {
+			@Override
+			public void handleEvent(final Event event) {
+				handleMeasureEvent(event);
+			}
+		});
+
+		table.addListener(SWT.PaintItem, new Listener() {
+			@Override
+			public void handleEvent(final Event event) {
+				final TableItem item = (TableItem) event.item;
+				final int row = table.indexOf(item);
+				final int column = event.index - 1;
+				if (tableCellEditor != null && editColumnIndex == column && editRowIndex == row) {
+					final Rectangle bounds = item.getBounds(event.index);
+					tableCellEditor.setSize(new Dimension(bounds.width, event.height));
+				}
+			}
+		});
+
+		table.addTraverseListener(new TraverseListener() {
+			@Override
+			public void keyTraversed(final TraverseEvent e) {
+				if (e.detail == SWT.TRAVERSE_ESCAPE) {
+					cancelEditing();
+				}
+			}
+		});
+	}
+
+	private void handleMeasureEvent(final Event event) {
+		if (rowHeight != null) {
+			event.height = rowHeight.intValue();
+		}
+		else {
+			final TableItem item = (TableItem) event.item;
+			final int row = table.indexOf(item);
+			final int column = event.index - 1;
+			if (tableCellEditor != null && editColumnIndex == column && editRowIndex == row) {
+				event.height = tableCellEditor.getPreferredSize().getHeight() + 1;
+			}
+		}
+	}
+
+	@Override
+	public void setRowHeight(final int height) {
+		this.rowHeight = Integer.valueOf(height);
+		table.redraw();
 	}
 
 	@Override
@@ -672,6 +756,210 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		tableSelectionObservable.fireSelectionChanged();
 	}
 
+	@Override
+	public void editCell(final int row, final int column) {
+		if (editor != null && this.editRowIndex != row || editColumnIndex != column) {
+			stopEditing();
+			this.editRowIndex = row;
+			this.editColumnIndex = column;
+			editTableCell = dataModel.getCell(editRowIndex, editColumnIndex);
+			activateEditorFromFactory();
+		}
+	}
+
+	@Override
+	public void stopEditing() {
+		if (tableCellEditor != null) {
+			tableCellEditor.stopEditing(editTableCell, editRowIndex, editColumnIndex);
+			disposeEditor();
+		}
+	}
+
+	@Override
+	public void cancelEditing() {
+		if (tableCellEditor != null) {
+			tableCellEditor.cancelEditing(editTableCell, editRowIndex, editColumnIndex);
+			disposeEditor();
+		}
+	}
+
+	private void disposeEditor() {
+		((Control) tableCellEditor.getUiReference()).dispose();
+		tableCellEditor = null;
+		editTableCell = null;
+		editRowIndex = -1;
+		editColumnIndex = -1;
+		editor.setEditor(null);
+		table.clearAll();
+	}
+
+	@Override
+	public boolean isEditing() {
+		return tableCellEditor != null;
+	}
+
+	private void activateEditorFromFactory() {
+
+		tableCellEditor = editorFactory.create(editTableCell, editRowIndex, editColumnIndex, editorCustomWidgetFactory);
+		if (tableCellEditor == null) {
+			return;
+		}
+
+		final int internalIndex = editColumnIndex + 1;
+
+		final Control uiReference = (Control) tableCellEditor.getUiReference();
+
+		tableCellEditor.startEditing(editTableCell, editRowIndex, editColumnIndex);
+		editor.setEditor(uiReference, table.getItem(editRowIndex), internalIndex);
+		tableCellEditor.requestFocus();
+
+		final TraverseListener traverseListener = new TraverseListener() {
+			@Override
+			public void keyTraversed(final TraverseEvent e) {
+				if (e.detail == SWT.TRAVERSE_TAB_NEXT) {
+					final int viewIndex = convertColumnIndexToView(editColumnIndex);
+					if (viewIndex + 1 < columnModel.getColumnCount()) {
+						editCell(editRowIndex, convertColumnIndexToModel(viewIndex + 1));
+					}
+					e.doit = false;
+				}
+				else if (e.detail == SWT.TRAVERSE_TAB_PREVIOUS) {
+					final int viewIndex = convertColumnIndexToView(editColumnIndex);
+					if (viewIndex > 0) {
+						editCell(editRowIndex, convertColumnIndexToModel(viewIndex - 1));
+					}
+					e.doit = false;
+				}
+			}
+		};
+
+		ListenerUtil.addRecursiveTraverseListener(uiReference, traverseListener);
+
+		tableCellEditor.addKeyListener(new IKeyListener() {
+
+			@Override
+			public void keyReleased(final IKeyEvent event) {}
+
+			@Override
+			public void keyPressed(final IKeyEvent event) {
+				if (VirtualKey.ENTER.equals(event.getVirtualKey())) {
+					stopEditing();
+				}
+				else if (VirtualKey.ESC.equals(event.getVirtualKey())) {
+					cancelEditing();
+				}
+				else if (VirtualKey.TAB.equals(event.getVirtualKey())
+					|| (VirtualKey.ARROW_RIGHT.equals(event.getVirtualKey()) && event.getModifier().contains(Modifier.SHIFT))) {
+					final int viewIndex = convertColumnIndexToView(editColumnIndex);
+					if (viewIndex + 1 < columnModel.getColumnCount()) {
+						editCell(editRowIndex, convertColumnIndexToModel(viewIndex + 1));
+					}
+					else if (dataModel.getRowCount() > editRowIndex + 1) {
+						setSelection(Collections.singletonList(Integer.valueOf(editRowIndex + 1)));
+						editCell(editRowIndex + 1, convertColumnIndexToModel(0));
+					}
+				}
+				else if ((VirtualKey.ARROW_LEFT.equals(event.getVirtualKey()) || VirtualKey.TAB.equals(event.getVirtualKey()))
+					&& event.getModifier().contains(Modifier.SHIFT)) {
+					final int viewIndex = convertColumnIndexToView(editColumnIndex);
+					if (viewIndex > 0) {
+						editCell(editRowIndex, convertColumnIndexToModel(viewIndex - 1));
+					}
+					else if (editRowIndex > 0) {
+						setSelection(Collections.singletonList(Integer.valueOf(editRowIndex - 1)));
+						editCell(editRowIndex - 1, convertColumnIndexToModel(columnModel.getColumnCount() - 1));
+					}
+				}
+				else if (VirtualKey.ARROW_UP.equals(event.getVirtualKey()) && event.getModifier().contains(Modifier.SHIFT)) {
+					if (editRowIndex > 0) {
+						setSelection(Collections.singletonList(Integer.valueOf(editRowIndex - 1)));
+						editCell(editRowIndex - 1, editColumnIndex);
+					}
+				}
+				else if (VirtualKey.ARROW_DOWN.equals(event.getVirtualKey()) && event.getModifier().contains(Modifier.SHIFT)) {
+					if (dataModel.getRowCount() > editRowIndex + 1) {
+						setSelection(Collections.singletonList(Integer.valueOf(editRowIndex + 1)));
+						editCell(editRowIndex + 1, editColumnIndex);
+					}
+				}
+			}
+		});
+	}
+
+	private int convertColumnIndexToView(final int modelIndex) {
+		final ArrayList<Integer> permutation = getColumnPermutation();
+		return permutation.indexOf(Integer.valueOf(modelIndex));
+	}
+
+	private int convertColumnIndexToModel(final int viewIndex) {
+		return getColumnPermutation().get(viewIndex).intValue();
+	}
+
+	private void activateEditor(final CellIndices indices) {
+		final int rowIndex = indices.getRowIndex();
+		final int columnIndex = indices.getColumnIndex();
+		final int internalIndex = columnIndex + 1;
+
+		final Text textField = new Text(table, SWT.NONE);
+		final TableItem item = table.getItem(rowIndex);
+		textField.setText(item.getText(internalIndex));
+		textField.setSelection(0, textField.getText().length());
+
+		textField.addVerifyListener(new VerifyListener() {
+			@Override
+			public void verifyText(final VerifyEvent verifyEvent) {
+				final String newText = getNewText(textField, verifyEvent);
+				final TableCellEditEvent editEvent = new TableCellEditEvent(rowIndex, columnIndex, newText);
+				final boolean veto = tableCellEditorObservable.fireOnEdit(editEvent);
+				if (veto) {
+					verifyEvent.doit = false;
+				}
+			}
+
+		});
+		textField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(final KeyEvent keyEvent) {
+				final TableCellEditEvent editEvent = new TableCellEditEvent(rowIndex, columnIndex, textField.getText());
+				if (keyEvent.character == SWT.CR) {
+					editFinished(rowIndex, columnIndex, item, textField, editEvent);
+				}
+				else if (keyEvent.character == SWT.ESC) {
+					tableCellEditorObservable.fireEditCanceled(editEvent);
+					textField.dispose();
+				}
+			}
+		});
+		textField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(final FocusEvent e) {
+				final TableCellEditEvent editEvent = new TableCellEditEvent(rowIndex, columnIndex, textField.getText());
+				editFinished(rowIndex, columnIndex, item, textField, editEvent);
+			}
+		});
+		editor.setEditor(textField, item, internalIndex);
+		textField.setFocus();
+	}
+
+	private void editFinished(
+		final int rowIndex,
+		final int columnIndex,
+		final TableItem item,
+		final Text textField,
+		final TableCellEditEvent editEvent) {
+		final int internalIndex = columnIndex + 1;
+		tableCellEditorObservable.fireEditFinished(editEvent);
+		final String newModelText = dataModel.getCell(rowIndex, columnIndex).getText();
+		item.setText(internalIndex, newModelText);
+		textField.dispose();
+	}
+
+	private String getNewText(final Text textField, final VerifyEvent verifyEvent) {
+		final StringBuilder result = new StringBuilder(textField.getText());
+		result.replace(verifyEvent.start, verifyEvent.end, verifyEvent.text);
+		return result.toString();
+	}
+
 	private static int getStyle(final ITableSetupSpi setup) {
 		int result = SWT.VIRTUAL;
 
@@ -693,6 +981,13 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		}
 
 		return result;
+	}
+
+	private final class EditorCustomWidgetFactory implements ICustomWidgetFactory {
+		@Override
+		public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE create(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+			return factory.create(table, descriptor);
+		}
 	}
 
 	private final class EraseItemListener implements Listener {
@@ -828,86 +1123,53 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private final class TableEditListener extends MouseAdapter {
 
 		@Override
-		public void mouseDoubleClick(final MouseEvent e) {
-			final CellIndices indices = getExternalCellIndices(new Point(e.x, e.y));
-			if (indices != null) {
-				final ITableCell cell = dataModel.getCell(indices.getRowIndex(), indices.getColumnIndex());
-				if (cell.isEditable() && editable) {
-					activateEditor(indices);
+		public void mouseUp(final MouseEvent e) {
+			if (((e.stateMask & SWT.BUTTON1) != 0) && editorFactory != null) {
+				final CellIndices indices = getExternalCellIndices(new Point(e.x, e.y));
+				if (indices != null) {
+					final ITableCell cell = dataModel.getCell(indices.getRowIndex(), indices.getColumnIndex());
+					if (cell.isEditable() && editable && editor != null) {
+						if (EditActivation.SINGLE_CLICK.equals(editorFactory.getActivation(
+								cell,
+								indices.getRowIndex(),
+								indices.getColumnIndex()))) {
+							startEdit(indices);
+						}
+					}
 				}
 			}
 		}
 
-		private void activateEditor(final CellIndices indices) {
-			final int rowIndex = indices.getRowIndex();
-			final int columnIndex = indices.getColumnIndex();
-			final int internalIndex = columnIndex + 1;
-
-			cursor.setSelection(rowIndex, internalIndex);
-			cursor.setVisible(true);
-
-			final Text textField = new Text(cursor, SWT.NONE);
-			final TableItem item = cursor.getRow();
-			textField.setText(item.getText(internalIndex));
-			textField.setSelection(0, textField.getText().length());
-
-			textField.addVerifyListener(new VerifyListener() {
-				@Override
-				public void verifyText(final VerifyEvent verifyEvent) {
-					final String newText = getNewText(textField, verifyEvent);
-					final TableCellEditEvent editEvent = new TableCellEditEvent(rowIndex, columnIndex, newText);
-					final boolean veto = tableCellEditorObservable.fireOnEdit(editEvent);
-					if (veto) {
-						verifyEvent.doit = false;
+		@Override
+		public void mouseDoubleClick(final MouseEvent e) {
+			final CellIndices indices = getExternalCellIndices(new Point(e.x, e.y));
+			if (indices != null) {
+				final ITableCell cell = dataModel.getCell(indices.getRowIndex(), indices.getColumnIndex());
+				if (cell.isEditable() && editable && editor != null) {
+					if (editorFactory != null) {
+						if (EditActivation.DOUBLE_CLICK.equals(editorFactory.getActivation(
+								cell,
+								indices.getRowIndex(),
+								indices.getColumnIndex()))) {
+							startEdit(indices);
+						}
+					}
+					else {
+						startEdit(indices);
 					}
 				}
-
-			});
-			textField.addKeyListener(new KeyAdapter() {
-				@Override
-				public void keyPressed(final KeyEvent keyEvent) {
-					final TableCellEditEvent editEvent = new TableCellEditEvent(rowIndex, columnIndex, textField.getText());
-					if (keyEvent.character == SWT.CR) {
-						editFinished(rowIndex, columnIndex, item, textField, editEvent);
-					}
-					else if (keyEvent.character == SWT.ESC) {
-						tableCellEditorObservable.fireEditCanceled(editEvent);
-						textField.dispose();
-						cursor.setVisible(false);
-					}
-				}
-			});
-			textField.addFocusListener(new FocusAdapter() {
-				@Override
-				public void focusLost(final FocusEvent e) {
-					final TableCellEditEvent editEvent = new TableCellEditEvent(rowIndex, columnIndex, textField.getText());
-					editFinished(rowIndex, columnIndex, item, textField, editEvent);
-				}
-			});
-			editor.setEditor(textField);
-			textField.setFocus();
+			}
 		}
 
-		private void editFinished(
-			final int rowIndex,
-			final int columnIndex,
-			final TableItem item,
-			final Text textField,
-			final TableCellEditEvent editEvent) {
-			final int internalIndex = columnIndex + 1;
-			tableCellEditorObservable.fireEditFinished(editEvent);
-			final String newModelText = dataModel.getCell(rowIndex, columnIndex).getText();
-			item.setText(internalIndex, newModelText);
-
-			textField.dispose();
-			cursor.setVisible(false);
+		private void startEdit(final CellIndices indices) {
+			if (editorFactory == null) {
+				activateEditor(indices);
+			}
+			else {
+				editCell(indices.getRowIndex(), indices.getColumnIndex());
+			}
 		}
 
-		private String getNewText(final Text textField, final VerifyEvent verifyEvent) {
-			final StringBuilder result = new StringBuilder(textField.getText());
-			result.replace(verifyEvent.start, verifyEvent.end, verifyEvent.text);
-			return result.toString();
-		}
 	}
 
 	private final class TableMenuDetectListener implements MenuDetectListener {
@@ -1032,6 +1294,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private final class TableSelectionListener extends SelectionAdapter {
 		@Override
 		public void widgetSelected(final SelectionEvent e) {
+			stopEditing();
 			onSelectionChanged();
 		}
 	}

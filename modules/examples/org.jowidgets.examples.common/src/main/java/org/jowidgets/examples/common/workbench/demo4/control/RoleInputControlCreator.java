@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,47 +26,28 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util;
+package org.jowidgets.examples.common.workbench.demo4.control;
 
-import java.util.Arrays;
 import java.util.Collection;
 
-public final class StringUtils {
+import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IInputControl;
+import org.jowidgets.api.widgets.blueprint.ICollectionInputFieldBluePrint;
+import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
+import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.examples.common.workbench.demo4.model.Role;
+import org.jowidgets.tools.widgets.blueprint.BPF;
 
-	private StringUtils() {}
+public final class RoleInputControlCreator implements ICustomWidgetCreator<IInputControl<Collection<Role>>> {
 
-	public static String concatElementsSeparatedBy(final Object[] strings, final char separator) {
-		Assert.paramNotNull(strings, "strings");
-		return concatElementsSeparatedBy(Arrays.asList(strings), separator);
-	}
-
-	public static String concatElementsSeparatedBy(final Collection<?> strings, final char separator) {
-		final StringBuilder result = new StringBuilder();
-		for (final Object label : strings) {
-			if (label != null) {
-				result.append(label.toString() + separator + " ");
-			}
-		}
-		if (strings.size() > 0) {
-			result.replace(result.length() - 2, result.length(), "");
-		}
-		return result.toString();
-	}
-
-	public static String concatElementsSeparatedByComma(final Collection<?> strings) {
-		return concatElementsSeparatedBy(strings, ',');
-	}
-
-	public static String truncateToLength(final String string, final int length) {
-		Assert.paramInBounds(Integer.MAX_VALUE, length, "length");
-		if (EmptyCheck.isEmpty(string)) {
-			return string;
-		}
-		if (string.length() <= length) {
-			return string;
-		}
-		else {
-			return string.substring(0, length - 4) + " ...";
-		}
+	@Override
+	public IInputControl<Collection<Role>> create(final ICustomWidgetFactory widgetFactory) {
+		final IObjectStringConverter<Role> converter = Toolkit.getConverterProvider().toStringConverter();
+		final ICollectionInputFieldBluePrint<Role> bp = BPF.collectionInputField(converter);
+		bp.setCollectionInputDialogSetup(BPF.collectionInputDialog(BPF.comboBoxSelection(Role.values())));
+		bp.setFilterEmptyValues(true);
+		bp.setDublicatesAllowed(false);
+		return widgetFactory.create(bp);
 	}
 }

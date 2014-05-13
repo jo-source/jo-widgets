@@ -299,6 +299,35 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	}
 
 	@Override
+	public void editCell(final int row, final int column) {
+		//TODO must be implemented
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void stopEditing() {
+		//TODO must be implemented
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void cancelEditing() {
+		//TODO must be implemented
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public boolean isEditing() {
+		//TODO must be implemented
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setRowHeight(final int height) {
+		table.setRowHeight(height);
+	}
+
+	@Override
 	public void setEditable(final boolean editable) {
 		this.editable = editable;
 	}
