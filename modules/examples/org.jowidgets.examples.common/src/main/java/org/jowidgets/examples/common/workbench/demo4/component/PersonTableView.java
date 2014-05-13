@@ -32,7 +32,10 @@ import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.model.item.IToolBarModel;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IComboBox;
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.blueprint.ITableBluePrint;
@@ -46,6 +49,7 @@ import org.jowidgets.examples.common.workbench.demo4.command.DeletePersonActionF
 import org.jowidgets.examples.common.workbench.demo4.command.EditPersonActionFactory;
 import org.jowidgets.examples.common.workbench.demo4.editor.PersonTableCellEditorFactory;
 import org.jowidgets.examples.common.workbench.demo4.model.BeanTableModel;
+import org.jowidgets.examples.common.workbench.demo4.model.Gender;
 import org.jowidgets.examples.common.workbench.demo4.model.Person;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.widgets.blueprint.BPF;
@@ -67,7 +71,7 @@ public final class PersonTableView extends AbstractView {
 		tableBp.setEditable(true);
 		tableBp.setEditor(new PersonTableCellEditorFactory(model));
 		final ITable table = container.add(tableBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		table.setRowHeight(PersonTableCellEditorFactory.getMaxHeight());
+		table.setRowHeight(getMaxHeight());
 
 		final IAction createAction = CreatePersonActionFactory.create(model);
 		final IAction editAction = EditPersonActionFactory.create(model);
@@ -102,6 +106,14 @@ public final class PersonTableView extends AbstractView {
 			}
 		});
 
+	}
+
+	public static int getMaxHeight() {
+		final IFrame fakeFrame = Toolkit.createRootFrame(BPF.frame());
+		final IComboBox<Gender> comboBox = fakeFrame.add(BPF.comboBoxSelection(Gender.values()));
+		final int result = comboBox.getPreferredSize().getHeight() + 1;
+		fakeFrame.dispose();
+		return result;
 	}
 
 }
