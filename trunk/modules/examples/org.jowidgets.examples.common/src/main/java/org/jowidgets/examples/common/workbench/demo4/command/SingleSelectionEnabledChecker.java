@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2013, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,47 +26,36 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util;
+package org.jowidgets.examples.common.workbench.demo4.command;
 
-import java.util.Arrays;
-import java.util.Collection;
+import org.jowidgets.api.command.EnabledState;
+import org.jowidgets.api.command.IEnabledState;
+import org.jowidgets.examples.common.workbench.demo4.model.BeanTableModel;
+import org.jowidgets.tools.command.AbstractEnabledChecker;
+import org.jowidgets.tools.controller.TableDataModelAdapter;
 
-public final class StringUtils {
+public final class SingleSelectionEnabledChecker extends AbstractEnabledChecker {
 
-	private StringUtils() {}
+	private final BeanTableModel<?> model;
 
-	public static String concatElementsSeparatedBy(final Object[] strings, final char separator) {
-		Assert.paramNotNull(strings, "strings");
-		return concatElementsSeparatedBy(Arrays.asList(strings), separator);
-	}
+	public SingleSelectionEnabledChecker(final BeanTableModel<?> model) {
+		this.model = model;
 
-	public static String concatElementsSeparatedBy(final Collection<?> strings, final char separator) {
-		final StringBuilder result = new StringBuilder();
-		for (final Object label : strings) {
-			if (label != null) {
-				result.append(label.toString() + separator + " ");
+		model.addDataModelListener(new TableDataModelAdapter() {
+			@Override
+			public void selectionChanged() {
+				fireEnabledStateChanged();
 			}
-		}
-		if (strings.size() > 0) {
-			result.replace(result.length() - 2, result.length(), "");
-		}
-		return result.toString();
+		});
 	}
 
-	public static String concatElementsSeparatedByComma(final Collection<?> strings) {
-		return concatElementsSeparatedBy(strings, ',');
-	}
-
-	public static String truncateToLength(final String string, final int length) {
-		Assert.paramInBounds(Integer.MAX_VALUE, length, "length");
-		if (EmptyCheck.isEmpty(string)) {
-			return string;
-		}
-		if (string.length() <= length) {
-			return string;
+	@Override
+	public IEnabledState getEnabledState() {
+		if (model.getSelection().size() == 1) {
+			return EnabledState.ENABLED;
 		}
 		else {
-			return string.substring(0, length - 4) + " ...";
+			return EnabledState.disabled("Exactly one dataset must be selected!");
 		}
 	}
 }

@@ -30,6 +30,8 @@ package org.jowidgets.common.widgets.builder;
 
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.TableSelectionPolicy;
+import org.jowidgets.common.widgets.editor.ITableCellEditor;
+import org.jowidgets.common.widgets.editor.ITableCellEditorFactory;
 
 public interface ITableSetupBuilderCommon<INSTANCE_TYPE extends ITableSetupBuilderCommon<?>> extends
 		IComponentSetupBuilderCommon<INSTANCE_TYPE> {
@@ -45,5 +47,7 @@ public interface ITableSetupBuilderCommon<INSTANCE_TYPE extends ITableSetupBuild
 	INSTANCE_TYPE setBorder(boolean border);
 
 	INSTANCE_TYPE setDataModel(ITableDataModel model);
+
+	INSTANCE_TYPE setEditor(ITableCellEditorFactory<? extends ITableCellEditor> editor);
 
 }

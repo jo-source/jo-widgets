@@ -267,8 +267,8 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 	}
 
 	@Override
-	public ITableSpi createTable(final Object parentUiReference, final ITableSetupSpi setup) {
-		return new TableImpl(parentUiReference, setup);
+	public ITableSpi createTable(final IGenericWidgetFactory factory, final Object parentUiReference, final ITableSetupSpi setup) {
+		return new TableImpl(factory, parentUiReference, setup);
 	}
 
 	@Override

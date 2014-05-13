@@ -241,6 +241,26 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 	}
 
 	@Override
+	public void editCell(final int row, final int column) {
+		getWidget().editCell(row, modelSpiAdapter.convertModelToView(column));
+	}
+
+	@Override
+	public void stopEditing() {
+		getWidget().stopEditing();
+	}
+
+	@Override
+	public void cancelEditing() {
+		getWidget().cancelEditing();
+	}
+
+	@Override
+	public boolean isEditing() {
+		return getWidget().isEditing();
+	}
+
+	@Override
 	public void resetFromModel() {
 		getWidget().resetFromModel();
 	}
@@ -434,5 +454,11 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 	@Override
 	public void removeTableColumnListener(final ITableColumnListener listener) {
 		columnObservable.removeTableColumnListener(listener);
+	}
+
+	@Override
+	public void setRowHeight(final int height) {
+		getWidget().setRowHeight(height);
+
 	}
 }

@@ -54,6 +54,8 @@ import org.jowidgets.common.types.VirtualKey;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.common.widgets.controller.IKeyEvent;
+import org.jowidgets.common.widgets.controller.IKeyListener;
+import org.jowidgets.common.widgets.controller.IMouseListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.i18n.api.MessageReplacer;
@@ -133,14 +135,14 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 		this.compoundValidator = new CompoundValidator<Collection<ELEMENT_TYPE>>();
 
 		if (inputDialogSetup != null) {
-			composite.setLayout(new MigLayoutDescriptor("0[grow, 0::]2[]0", "0[grow]0")); //$NON-NLS-1$ //$NON-NLS-2$
+			composite.setLayout(new MigLayoutDescriptor("0[grow, 0::]0[]0", "0[]0"));
 		}
 		else {
-			composite.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow]0")); //$NON-NLS-1$ //$NON-NLS-2$
+			composite.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[]0"));
 		}
 
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		this.textField = composite.add(bpf.inputFieldString(), "growx, growy, w 0::, id tf"); //$NON-NLS-1$
+		this.textField = composite.add(bpf.inputFieldString(), "growx, w 0::, id tf");
 		textField.addInputListener(new IInputListener() {
 
 			@Override
@@ -195,16 +197,15 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 			final IButtonBluePrint buttonBp = bpf.button();
 			if (setup.getEditButtonIcon() != null) {
 				buttonBp.setIcon(setup.getEditButtonIcon());
-				final int width = composite.getPreferredSize().getHeight() + 2;
-				this.editButton = composite.add(buttonBp, "grow, h ::" + width + ", w ::" + width); //$NON-NLS-1$ //$NON-NLS-2$
+				final int width = textField.getPreferredSize().getHeight() + 2;
+				this.editButton = composite.add(buttonBp, "h " + width + "!, w " + width + "!");
 			}
 			else {
 				buttonBp.setText(EDIT.get());
-				this.editButton = composite.add(buttonBp, "grow, h ::" + (composite.getPreferredSize().getHeight() + 2)); //$NON-NLS-1$
+				this.editButton = composite.add(buttonBp, "h ::" + (textField.getPreferredSize().getHeight()));
 			}
 
 			this.editButton.addActionListener(new IActionListener() {
-
 				@Override
 				public void actionPerformed() {
 					openDialog();
@@ -376,6 +377,31 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 	@Override
 	public boolean isEditable() {
 		return editable;
+	}
+
+	@Override
+	public boolean requestFocus() {
+		return textField.requestFocus();
+	}
+
+	@Override
+	public void addKeyListener(final IKeyListener listener) {
+		textField.addKeyListener(listener);
+	}
+
+	@Override
+	public void removeKeyListener(final IKeyListener listener) {
+		textField.removeKeyListener(listener);
+	}
+
+	@Override
+	public void addMouseListener(final IMouseListener listener) {
+		textField.addMouseListener(listener);
+	}
+
+	@Override
+	public void removeMouseListener(final IMouseListener listener) {
+		textField.removeMouseListener(listener);
 	}
 
 	@Override

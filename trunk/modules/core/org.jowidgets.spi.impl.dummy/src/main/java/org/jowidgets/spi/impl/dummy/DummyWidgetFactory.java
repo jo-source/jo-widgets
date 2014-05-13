@@ -262,8 +262,8 @@ public final class DummyWidgetFactory implements IWidgetFactorySpi {
 	}
 
 	@Override
-	public ITableSpi createTable(final Object parentUiReference, final ITableSetupSpi setup) {
-		// TODO LG Dummy Table must be implemented
+	public ITableSpi createTable(final IGenericWidgetFactory factory, final Object parentUiReference, final ITableSetupSpi setup) {
+		// TODO must be implemented
 		return null;
 	}
 

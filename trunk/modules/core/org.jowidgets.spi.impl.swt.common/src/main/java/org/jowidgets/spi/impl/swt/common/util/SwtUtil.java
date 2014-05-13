@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,47 +26,24 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util;
+package org.jowidgets.spi.impl.swt.common.util;
 
-import java.util.Arrays;
-import java.util.Collection;
+import org.eclipse.swt.widgets.Control;
 
-public final class StringUtils {
+public final class SwtUtil {
 
-	private StringUtils() {}
+	private SwtUtil() {}
 
-	public static String concatElementsSeparatedBy(final Object[] strings, final char separator) {
-		Assert.paramNotNull(strings, "strings");
-		return concatElementsSeparatedBy(Arrays.asList(strings), separator);
-	}
-
-	public static String concatElementsSeparatedBy(final Collection<?> strings, final char separator) {
-		final StringBuilder result = new StringBuilder();
-		for (final Object label : strings) {
-			if (label != null) {
-				result.append(label.toString() + separator + " ");
-			}
+	public static boolean isAncestor(final Control toTest, final Control ancestor) {
+		if (toTest == ancestor) {
+			return true;
 		}
-		if (strings.size() > 0) {
-			result.replace(result.length() - 2, result.length(), "");
-		}
-		return result.toString();
-	}
-
-	public static String concatElementsSeparatedByComma(final Collection<?> strings) {
-		return concatElementsSeparatedBy(strings, ',');
-	}
-
-	public static String truncateToLength(final String string, final int length) {
-		Assert.paramInBounds(Integer.MAX_VALUE, length, "length");
-		if (EmptyCheck.isEmpty(string)) {
-			return string;
-		}
-		if (string.length() <= length) {
-			return string;
+		else if (toTest.getParent() != null) {
+			return isAncestor(toTest.getParent(), ancestor);
 		}
 		else {
-			return string.substring(0, length - 4) + " ...";
+			return false;
 		}
 	}
+
 }

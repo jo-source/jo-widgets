@@ -31,6 +31,8 @@ package org.jowidgets.common.widgets.descriptor.setup;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.TableSelectionPolicy;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
+import org.jowidgets.common.widgets.editor.ITableCellEditor;
+import org.jowidgets.common.widgets.editor.ITableCellEditorFactory;
 
 public interface ITableSetupCommon extends IComponentSetupCommon {
 
@@ -48,6 +50,8 @@ public interface ITableSetupCommon extends IComponentSetupCommon {
 
 	@Mandatory
 	boolean hasBorder();
+
+	ITableCellEditorFactory<? extends ITableCellEditor> getEditor();
 
 	@Mandatory
 	ITableDataModel getDataModel();

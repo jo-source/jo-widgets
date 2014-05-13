@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,47 +26,17 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util;
+package org.jowidgets.examples.swt;
 
-import java.util.Arrays;
-import java.util.Collection;
+import org.jowidgets.examples.common.workbench.demo4.Demo4Workbench;
+import org.jowidgets.workbench.impl.WorkbenchRunner;
 
-public final class StringUtils {
+public final class SwtWorkbenchDemo4Starter {
 
-	private StringUtils() {}
+	private SwtWorkbenchDemo4Starter() {}
 
-	public static String concatElementsSeparatedBy(final Object[] strings, final char separator) {
-		Assert.paramNotNull(strings, "strings");
-		return concatElementsSeparatedBy(Arrays.asList(strings), separator);
+	public static void main(final String[] args) throws Exception {
+		new WorkbenchRunner().run(new Demo4Workbench());
 	}
 
-	public static String concatElementsSeparatedBy(final Collection<?> strings, final char separator) {
-		final StringBuilder result = new StringBuilder();
-		for (final Object label : strings) {
-			if (label != null) {
-				result.append(label.toString() + separator + " ");
-			}
-		}
-		if (strings.size() > 0) {
-			result.replace(result.length() - 2, result.length(), "");
-		}
-		return result.toString();
-	}
-
-	public static String concatElementsSeparatedByComma(final Collection<?> strings) {
-		return concatElementsSeparatedBy(strings, ',');
-	}
-
-	public static String truncateToLength(final String string, final int length) {
-		Assert.paramInBounds(Integer.MAX_VALUE, length, "length");
-		if (EmptyCheck.isEmpty(string)) {
-			return string;
-		}
-		if (string.length() <= length) {
-			return string;
-		}
-		else {
-			return string.substring(0, length - 4) + " ...";
-		}
-	}
 }

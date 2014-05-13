@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,47 +26,39 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util;
+package org.jowidgets.examples.common.workbench.demo4.model;
 
-import java.util.Arrays;
-import java.util.Collection;
+import org.jowidgets.util.Assert;
 
-public final class StringUtils {
+public final class ByteValue {
 
-	private StringUtils() {}
+	private final ByteUnit unit;
+	private final int value;
 
-	public static String concatElementsSeparatedBy(final Object[] strings, final char separator) {
-		Assert.paramNotNull(strings, "strings");
-		return concatElementsSeparatedBy(Arrays.asList(strings), separator);
+	public ByteValue(final int value, final ByteUnit unit) {
+		Assert.paramNotNull(unit, "unit");
+		this.unit = unit;
+		this.value = value;
 	}
 
-	public static String concatElementsSeparatedBy(final Collection<?> strings, final char separator) {
-		final StringBuilder result = new StringBuilder();
-		for (final Object label : strings) {
-			if (label != null) {
-				result.append(label.toString() + separator + " ");
-			}
-		}
-		if (strings.size() > 0) {
-			result.replace(result.length() - 2, result.length(), "");
-		}
-		return result.toString();
+	public ByteUnit getUnit() {
+		return unit;
 	}
 
-	public static String concatElementsSeparatedByComma(final Collection<?> strings) {
-		return concatElementsSeparatedBy(strings, ',');
+	public int getValue() {
+		return value;
 	}
 
-	public static String truncateToLength(final String string, final int length) {
-		Assert.paramInBounds(Integer.MAX_VALUE, length, "length");
-		if (EmptyCheck.isEmpty(string)) {
-			return string;
-		}
-		if (string.length() <= length) {
-			return string;
-		}
-		else {
-			return string.substring(0, length - 4) + " ...";
-		}
+	@Override
+	public String toString() {
+		return value + " " + unit;
 	}
+
+	public enum ByteUnit {
+		KB,
+		MB,
+		GB,
+		TB;
+	}
+
 }

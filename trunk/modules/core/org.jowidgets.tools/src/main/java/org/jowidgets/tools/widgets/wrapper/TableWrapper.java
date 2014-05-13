@@ -170,6 +170,26 @@ public class TableWrapper extends ControlWrapper implements ITable {
 	}
 
 	@Override
+	public void editCell(final int row, final int column) {
+		getWidget().editCell(row, column);
+	}
+
+	@Override
+	public void stopEditing() {
+		getWidget().stopEditing();
+	}
+
+	@Override
+	public void cancelEditing() {
+		getWidget().cancelEditing();
+	}
+
+	@Override
+	public boolean isEditing() {
+		return getWidget().isEditing();
+	}
+
+	@Override
 	public void addTableSelectionListener(final ITableSelectionListener listener) {
 		getWidget().addTableSelectionListener(listener);
 	}
@@ -227,6 +247,11 @@ public class TableWrapper extends ControlWrapper implements ITable {
 	@Override
 	public void removeTableColumnPopupDetectionListener(final ITableColumnPopupDetectionListener listener) {
 		getWidget().removeTableColumnPopupDetectionListener(listener);
+	}
+
+	@Override
+	public void setRowHeight(final int height) {
+		getWidget().setRowHeight(height);
 	}
 
 }
