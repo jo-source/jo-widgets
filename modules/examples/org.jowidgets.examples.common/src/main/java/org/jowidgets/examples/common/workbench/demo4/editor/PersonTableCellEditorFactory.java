@@ -82,6 +82,7 @@ public final class PersonTableCellEditorFactory extends AbstractTableCellEditorF
 		else if (column == 4) {
 			return new RolesEditor(widgetFactory);
 		}
+
 		return null;
 	}
 
@@ -93,7 +94,7 @@ public final class PersonTableCellEditorFactory extends AbstractTableCellEditorF
 		return result;
 	}
 
-	private final class NameEditor extends AbstractTableCellEditor implements ITableCellEditor {
+	private final class NameEditor extends AbstractTableCellEditor {
 
 		private final IInputField<String> editor;
 
@@ -117,7 +118,7 @@ public final class PersonTableCellEditorFactory extends AbstractTableCellEditorF
 
 	}
 
-	private final class DayOfBirthEditor extends AbstractTableCellEditor implements ITableCellEditor {
+	private final class DayOfBirthEditor extends AbstractTableCellEditor {
 
 		private final IInputField<Date> editor;
 
@@ -125,12 +126,12 @@ public final class PersonTableCellEditorFactory extends AbstractTableCellEditorF
 		private DayOfBirthEditor(final ICustomWidgetFactory widgetFactory) {
 			super(widgetFactory.create(BPF.inputFieldDate()));
 			this.editor = (IInputField<Date>) super.getWidget();
-			editor.selectAll();
 		}
 
 		@Override
 		public void startEditing(final ITableCell cell, final int row, final int column) {
 			editor.setValue(model.getBean(row).getDayOfBirth());
+			editor.selectAll();
 		}
 
 		@Override
@@ -141,7 +142,7 @@ public final class PersonTableCellEditorFactory extends AbstractTableCellEditorF
 
 	}
 
-	private final class GenderEditor extends AbstractTableCellEditor implements ITableCellEditor {
+	private final class GenderEditor extends AbstractTableCellEditor {
 
 		private final IInputControl<Gender> editor;
 
@@ -164,7 +165,7 @@ public final class PersonTableCellEditorFactory extends AbstractTableCellEditorF
 
 	}
 
-	private final class QuotaEditor extends AbstractTableCellEditor implements ITableCellEditor {
+	private final class QuotaEditor extends AbstractTableCellEditor {
 
 		private final IInputControl<ByteValue> editor;
 
@@ -187,7 +188,7 @@ public final class PersonTableCellEditorFactory extends AbstractTableCellEditorF
 
 	}
 
-	private final class RolesEditor extends AbstractTableCellEditor implements ITableCellEditor {
+	private final class RolesEditor extends AbstractTableCellEditor {
 
 		private final IInputControl<List<Role>> editor;
 
