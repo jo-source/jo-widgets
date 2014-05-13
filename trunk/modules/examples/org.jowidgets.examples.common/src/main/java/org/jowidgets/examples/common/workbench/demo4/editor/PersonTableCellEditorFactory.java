@@ -31,9 +31,6 @@ package org.jowidgets.examples.common.workbench.demo4.editor;
 import java.util.Date;
 import java.util.List;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IComboBox;
-import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.common.model.ITableCell;
@@ -84,14 +81,6 @@ public final class PersonTableCellEditorFactory extends AbstractTableCellEditorF
 		}
 
 		return null;
-	}
-
-	public static int getMaxHeight() {
-		final IFrame fakeFrame = Toolkit.createRootFrame(BPF.frame());
-		final IComboBox<Gender> comboBox = fakeFrame.add(BPF.comboBoxSelection(Gender.values()));
-		final int result = comboBox.getPreferredSize().getHeight() + 1;
-		fakeFrame.dispose();
-		return result;
 	}
 
 	private final class NameEditor extends AbstractTableCellEditor {
