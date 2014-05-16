@@ -68,7 +68,7 @@ public class LabelImpl extends ControlWrapper implements ILabel {
 		this.icon = setup.getIcon();
 
 		final ITextLabelDescriptor textLabelDescriptor = BPF.textLabel().setSetup(setup);
-		this.textLabelWidget = composite.add(textLabelDescriptor, "w 0::, grow");
+		this.textLabelWidget = composite.add(textLabelDescriptor, "w 0::");
 
 		setLayout();
 
@@ -164,6 +164,7 @@ public class LabelImpl extends ControlWrapper implements ILabel {
 	public void setIcon(final IImageConstant icon) {
 		final boolean layoutChanged = (icon == null && this.icon != null) || (icon != null && this.icon == null);
 		this.icon = icon;
+
 		final Dimension lastPreferredSize = iconWidget.getPreferredSize();
 		iconWidget.setIcon(icon);
 		if (layoutChanged) {
@@ -173,14 +174,17 @@ public class LabelImpl extends ControlWrapper implements ILabel {
 			composite.layoutBegin();
 			composite.layoutEnd();
 		}
+
 	}
 
 	private void setLayout() {
 		if (icon == null) {
-			this.composite.setLayout(new MigLayoutDescriptor("0[]0", "0[]0"));
+			//TODO This will no work under swt, because it leads to space greedy label
+			//this.composite.setLayout(new MigLayoutDescriptor("0[]0[grow, 0::]0", "0[]0"));
+			this.composite.setLayout(new MigLayoutDescriptor("0[][grow, 0::]0", "0[]0"));
 		}
 		else {
-			this.composite.setLayout(new MigLayoutDescriptor("0[][grow]0", "0[]0"));
+			this.composite.setLayout(new MigLayoutDescriptor("0[][grow, 0::]0", "0[]0"));
 		}
 	}
 
