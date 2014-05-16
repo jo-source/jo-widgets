@@ -28,7 +28,13 @@
 
 package org.jowidgets.util.reflection;
 
+import java.beans.BeanInfo;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.jowidgets.util.Assert;
 
@@ -71,6 +77,40 @@ public final class BeanUtils {
 		}
 		else {
 			throw new IllegalArgumentException("No read method found for property '" + propertyName + "' on bean '" + bean + "'.");
+		}
+	}
+
+	public static List<String> getProperties(final Class<?> beanType) {
+		Assert.paramNotNull(beanType, "beanType");
+		try {
+			final BeanInfo beanInfo = Introspector.getBeanInfo(beanType);
+			final List<String> result = new LinkedList<String>();
+			for (final PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
+				final String propertyName = propertyDescriptor.getName();
+				result.add(propertyName);
+			}
+			return result;
+		}
+		catch (final IntrospectionException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static List<String> getReadableProperties(final Class<?> beanType) {
+		Assert.paramNotNull(beanType, "beanType");
+		try {
+			final BeanInfo beanInfo = Introspector.getBeanInfo(beanType);
+			final List<String> result = new LinkedList<String>();
+			for (final PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
+				final String propertyName = propertyDescriptor.getName();
+				if (propertyDescriptor.getReadMethod() != null) {
+					result.add(propertyName);
+				}
+			}
+			return result;
+		}
+		catch (final IntrospectionException e) {
+			throw new RuntimeException(e);
 		}
 	}
 }
