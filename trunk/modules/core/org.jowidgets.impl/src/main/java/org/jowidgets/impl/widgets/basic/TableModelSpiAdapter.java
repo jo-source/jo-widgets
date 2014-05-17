@@ -246,11 +246,11 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 		return dataModel.getTableDataModelObservable();
 	}
 
-	int convertViewToModel(final int columnIndex) {
+	public int convertViewToModel(final int columnIndex) {
 		return viewToModel[columnIndex];
 	}
 
-	int convertModelToView(final int columnIndex) {
+	public int convertModelToView(final int columnIndex) {
 		return modelToView[columnIndex];
 	}
 

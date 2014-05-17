@@ -63,16 +63,17 @@ public class TableFactory extends AbstractWidgetFactory implements IWidgetFactor
 		final ITableBluePrintSpi tableBpSpi = getSpiBluePrintFactory().table();
 		tableBpSpi.setSetup(descriptor);
 
-		final ITableCellEditorFactory<? extends ITableCellEditor> editor = tableBpSpi.getEditor();
-		if (editor != null) {
-			tableBpSpi.setEditor(new TableCellEditorFactoryDecorator(editor));
-		}
 		final ITableColumnModel columnModel = descriptor.getColumnModel();
 		final ITableDataModel dataModel = descriptor.getDataModel();
 		final TableModelSpiAdapter modelSpiAdapter = new TableModelSpiAdapter(columnModel, dataModel);
 
 		tableBpSpi.setColumnModel(modelSpiAdapter);
 		tableBpSpi.setDataModel(modelSpiAdapter);
+
+		final ITableCellEditorFactory<? extends ITableCellEditor> editor = tableBpSpi.getEditor();
+		if (editor != null) {
+			tableBpSpi.setEditor(new TableCellEditorFactoryDecorator(editor, modelSpiAdapter));
+		}
 
 		final ITableSpi tableSpi = getSpiWidgetFactory().createTable(getGenericWidgetFactory(), parentUiReference, tableBpSpi);
 
@@ -83,9 +84,13 @@ public class TableFactory extends AbstractWidgetFactory implements IWidgetFactor
 
 	private final class TableCellEditorFactoryDecorator implements ITableCellEditorFactory<ITableCellEditor> {
 
+		private final TableModelSpiAdapter modelSpiAdapter;
 		private final ITableCellEditorFactory<? extends ITableCellEditor> original;
 
-		public TableCellEditorFactoryDecorator(final ITableCellEditorFactory<? extends ITableCellEditor> original) {
+		public TableCellEditorFactoryDecorator(
+			final ITableCellEditorFactory<? extends ITableCellEditor> original,
+			final TableModelSpiAdapter modelSpiAdapter) {
+			this.modelSpiAdapter = modelSpiAdapter;
 			this.original = original;
 		}
 
@@ -95,9 +100,9 @@ public class TableFactory extends AbstractWidgetFactory implements IWidgetFactor
 			final int row,
 			final int column,
 			final ICustomWidgetFactory widgetFactory) {
-			final ITableCellEditor result = original.create(cell, row, column, widgetFactory);
+			final ITableCellEditor result = original.create(cell, row, modelSpiAdapter.convertViewToModel(column), widgetFactory);
 			if (result instanceof IControl) {
-				return new DecoratedTableCellEditor((IControl) result, result);
+				return new DecoratedTableCellEditor((IControl) result, result, modelSpiAdapter);
 			}
 			else {
 				return result;
@@ -106,34 +111,39 @@ public class TableFactory extends AbstractWidgetFactory implements IWidgetFactor
 
 		@Override
 		public EditActivation getActivation(final ITableCell cell, final int row, final int column) {
-			return original.getActivation(cell, row, column);
+			return original.getActivation(cell, row, modelSpiAdapter.convertViewToModel(column));
 		}
 
 	}
 
 	private final class DecoratedTableCellEditor extends ControlWrapper implements ITableCellEditor {
 
+		private final TableModelSpiAdapter modelSpiAdapter;
 		private final ITableCellEditor original;
 
-		private DecoratedTableCellEditor(final IControl widget, final ITableCellEditor original) {
+		private DecoratedTableCellEditor(
+			final IControl widget,
+			final ITableCellEditor original,
+			final TableModelSpiAdapter modelSpiAdapter) {
 			super(widget);
+			this.modelSpiAdapter = modelSpiAdapter;
 			this.original = original;
 		}
 
 		@Override
 		public void startEditing(final ITableCell cell, final int row, final int column) {
-			original.startEditing(cell, row, column);
+			original.startEditing(cell, row, modelSpiAdapter.convertViewToModel(column));
 		}
 
 		@Override
 		public void stopEditing(final ITableCell cell, final int row, final int column) {
-			original.stopEditing(cell, row, column);
+			original.stopEditing(cell, row, modelSpiAdapter.convertViewToModel(column));
 			getWidget().dispose();
 		}
 
 		@Override
 		public void cancelEditing(final ITableCell cell, final int row, final int column) {
-			original.cancelEditing(cell, row, column);
+			original.cancelEditing(cell, row, modelSpiAdapter.convertViewToModel(column));
 			getWidget().dispose();
 		}
 

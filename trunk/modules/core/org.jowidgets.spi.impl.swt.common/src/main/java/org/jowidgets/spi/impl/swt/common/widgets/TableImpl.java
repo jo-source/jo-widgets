@@ -843,7 +843,13 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			@Override
 			public void keyPressed(final IKeyEvent event) {
 				if (VirtualKey.ENTER.equals(event.getVirtualKey())) {
-					stopEditing();
+					if (dataModel.getRowCount() > editRowIndex + 1) {
+						setSelection(Collections.singletonList(Integer.valueOf(editRowIndex + 1)));
+						editCell(editRowIndex + 1, convertColumnIndexToModel(0));
+					}
+					else {
+						stopEditing();
+					}
 				}
 				else if (VirtualKey.ESC.equals(event.getVirtualKey())) {
 					cancelEditing();
