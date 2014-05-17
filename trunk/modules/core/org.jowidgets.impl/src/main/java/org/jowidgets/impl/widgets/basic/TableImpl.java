@@ -241,8 +241,8 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 	}
 
 	@Override
-	public void editCell(final int row, final int column) {
-		getWidget().editCell(row, modelSpiAdapter.convertModelToView(column));
+	public boolean editCell(final int row, final int column) {
+		return getWidget().editCell(row, modelSpiAdapter.convertModelToView(column));
 	}
 
 	@Override

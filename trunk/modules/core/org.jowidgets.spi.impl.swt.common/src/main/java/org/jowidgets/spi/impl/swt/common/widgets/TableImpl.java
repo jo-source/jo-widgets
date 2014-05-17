@@ -757,7 +757,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	}
 
 	@Override
-	public void editCell(final int row, final int column) {
+	public boolean editCell(final int row, final int column) {
 		if (editor != null && this.editRowIndex != row || editColumnIndex != column) {
 			stopEditing();
 			this.editRowIndex = row;
@@ -765,6 +765,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			editTableCell = dataModel.getCell(editRowIndex, editColumnIndex);
 			activateEditorFromFactory();
 		}
+		return isEditing();
 	}
 
 	@Override
@@ -817,17 +818,15 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			@Override
 			public void keyTraversed(final TraverseEvent e) {
 				if (e.detail == SWT.TRAVERSE_TAB_NEXT) {
-					final int viewIndex = convertColumnIndexToView(editColumnIndex);
-					if (viewIndex + 1 < columnModel.getColumnCount()) {
-						editCell(editRowIndex, convertColumnIndexToModel(viewIndex + 1));
-					}
+					navigateRight();
 					e.doit = false;
 				}
 				else if (e.detail == SWT.TRAVERSE_TAB_PREVIOUS) {
-					final int viewIndex = convertColumnIndexToView(editColumnIndex);
-					if (viewIndex > 0) {
-						editCell(editRowIndex, convertColumnIndexToModel(viewIndex - 1));
-					}
+					//					final int viewIndex = convertColumnIndexToView(editColumnIndex);
+					//					if (viewIndex > 0) {
+					//						editCell(editRowIndex, convertColumnIndexToModel(viewIndex - 1));
+					//					}
+					navigateLeft();
 					e.doit = false;
 				}
 			}
@@ -859,11 +858,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 				final boolean down = VirtualKey.ARROW_DOWN.equals(event.getVirtualKey()) && alt;
 
 				if (enter) {
-					if (dataModel.getRowCount() > editRowIndex + 1) {
-						setSelection(Collections.singletonList(Integer.valueOf(editRowIndex + 1)));
-						editCell(editRowIndex + 1, convertColumnIndexToModel(0));
-					}
-					else {
+					if (!navigateDownLeft()) {
 						stopEditing();
 					}
 				}
@@ -871,39 +866,136 @@ public class TableImpl extends SwtControl implements ITableSpi {
 					cancelEditing();
 				}
 				else if (right) {
-					final int viewIndex = convertColumnIndexToView(editColumnIndex);
-					if (viewIndex + 1 < columnModel.getColumnCount()) {
-						editCell(editRowIndex, convertColumnIndexToModel(viewIndex + 1));
-					}
-					else if (dataModel.getRowCount() > editRowIndex + 1) {
-						setSelection(Collections.singletonList(Integer.valueOf(editRowIndex + 1)));
-						editCell(editRowIndex + 1, convertColumnIndexToModel(0));
-					}
+					navigateRight();
 				}
 				else if (left) {
-					final int viewIndex = convertColumnIndexToView(editColumnIndex);
-					if (viewIndex > 0) {
-						editCell(editRowIndex, convertColumnIndexToModel(viewIndex - 1));
-					}
-					else if (editRowIndex > 0) {
-						setSelection(Collections.singletonList(Integer.valueOf(editRowIndex - 1)));
-						editCell(editRowIndex - 1, convertColumnIndexToModel(columnModel.getColumnCount() - 1));
-					}
+					navigateLeft();
 				}
 				else if (up) {
-					if (editRowIndex > 0) {
-						setSelection(Collections.singletonList(Integer.valueOf(editRowIndex - 1)));
-						editCell(editRowIndex - 1, editColumnIndex);
-					}
+					navigateUp();
 				}
 				else if (down) {
-					if (dataModel.getRowCount() > editRowIndex + 1) {
-						setSelection(Collections.singletonList(Integer.valueOf(editRowIndex + 1)));
-						editCell(editRowIndex + 1, editColumnIndex);
-					}
+					navigateDown();
 				}
 			}
 		});
+	}
+
+	private boolean navigateRight() {
+		if (isEditing()) {
+			return navigateRight(editRowIndex, editRowIndex, convertColumnIndexToView(editColumnIndex));
+		}
+		else {
+			return false;
+		}
+	}
+
+	private boolean navigateDown() {
+		if (isEditing()) {
+			return navigateDown(editRowIndex, editRowIndex, convertColumnIndexToView(editColumnIndex));
+		}
+		else {
+			return false;
+		}
+	}
+
+	private boolean navigateLeft() {
+		if (isEditing()) {
+			return navigateLeft(editRowIndex, editRowIndex, convertColumnIndexToView(editColumnIndex));
+		}
+		else {
+			return false;
+		}
+	}
+
+	private boolean navigateUp() {
+		if (isEditing()) {
+			return navigateUp(editRowIndex, editRowIndex, convertColumnIndexToView(editColumnIndex));
+		}
+		else {
+			return false;
+		}
+	}
+
+	private boolean navigateDownLeft() {
+		if (isEditing()) {
+			return navigateDown(editRowIndex, editRowIndex, 0);
+		}
+		else {
+			return false;
+		}
+	}
+
+	private boolean navigateRight(final int startRow, final int row, final int viewColumnIndex) {
+		if (viewColumnIndex + 1 < columnModel.getColumnCount()) {
+			if (editCell(row, convertColumnIndexToModel(viewColumnIndex + 1))) {
+				return true;
+			}
+			else {
+				return navigateRight(startRow, row, viewColumnIndex + 1);
+			}
+		}
+		else if (row - startRow < 2) {
+			return navigateDown(startRow, row, 0);
+		}
+		else {
+			return false;
+		}
+	}
+
+	private boolean navigateDown(final int startRow, final int row, final int viewColumnIndex) {
+		if (dataModel.getRowCount() > row + 1) {
+			if (editCell(row + 1, convertColumnIndexToModel(viewColumnIndex))) {
+				setSelection(Collections.singletonList(Integer.valueOf(row + 1)));
+				return true;
+			}
+			else if (row - startRow < 2) {
+				setSelection(Collections.singletonList(Integer.valueOf(row + 1)));
+				return navigateRight(startRow, row + 1, viewColumnIndex);
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
+	}
+
+	private boolean navigateLeft(final int startRow, final int row, final int viewColumnIndex) {
+		if (viewColumnIndex > 0) {
+			if (editCell(row, convertColumnIndexToModel(viewColumnIndex - 1))) {
+				return true;
+			}
+			else {
+				return navigateLeft(startRow, row, viewColumnIndex - 1);
+			}
+		}
+		else if (startRow - row < 2) {
+			return navigateUp(startRow, row, columnModel.getColumnCount() - 1);
+		}
+		else {
+			return false;
+		}
+	}
+
+	private boolean navigateUp(final int startRow, final int row, final int viewColumnIndex) {
+		if (row > 0) {
+			if (editCell(row - 1, convertColumnIndexToModel(viewColumnIndex))) {
+				setSelection(Collections.singletonList(Integer.valueOf(row - 1)));
+				return true;
+			}
+			else if (startRow - row < 2) {
+				setSelection(Collections.singletonList(Integer.valueOf(row - 1)));
+				return navigateLeft(startRow, row - 1, viewColumnIndex);
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			return false;
+		}
 	}
 
 	private int convertColumnIndexToView(final int modelIndex) {
@@ -1366,6 +1458,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 		@Override
 		public void columnsAdded(final int[] columnIndices) {
+			stopEditing();
 			table.setRedraw(false);
 			table.clearAll();
 			Arrays.sort(columnIndices);
@@ -1379,6 +1472,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 		@Override
 		public void columnsRemoved(final int[] columnIndices) {
+			stopEditing();
 			table.setRedraw(false);
 			table.clearAll();
 			Arrays.sort(columnIndices);
@@ -1394,6 +1488,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 		@Override
 		public void columnsChanged(final int[] columnIndices) {
+			stopEditing();
 			if (!setWidthInvokedOnModel) {
 				final TableColumn[] columns = table.getColumns();
 				for (final int changedIndex : columnIndices) {

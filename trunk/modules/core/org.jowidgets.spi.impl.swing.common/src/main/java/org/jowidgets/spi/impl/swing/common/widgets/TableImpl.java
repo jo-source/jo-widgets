@@ -299,7 +299,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	}
 
 	@Override
-	public void editCell(final int row, final int column) {
+	public boolean editCell(final int row, final int column) {
 		//TODO must be implemented
 		throw new UnsupportedOperationException();
 	}
