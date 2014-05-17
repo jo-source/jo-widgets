@@ -59,7 +59,14 @@ public interface ITableCommon extends
 	 */
 	void setEditable(boolean editable);
 
-	void editCell(int row, int column);
+	/**
+	 * Set the edit mode for a cell.
+	 * 
+	 * @param row the row index of the cell
+	 * @param column the column index of the cell
+	 * @return true if the edit mode could be set, false otherwise (e.g. no editor is defined or cell is not editable)
+	 */
+	boolean editCell(int row, int column);
 
 	void stopEditing();
 

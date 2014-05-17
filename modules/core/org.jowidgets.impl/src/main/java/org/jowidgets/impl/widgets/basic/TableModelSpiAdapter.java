@@ -89,6 +89,7 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 
 				@Override
 				public void columnsRemoved(final int[] columnIndices) {
+					table.stopEditing();
 					final List<Integer> sortedIndices = getSortedList(columnIndices);
 					for (final int modelIndex : sortedIndices) {
 						final int removedIndex = modelToView[modelIndex];
@@ -106,6 +107,7 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 
 				@Override
 				public void columnsChanged(final int[] columnIndices) {
+					table.stopEditing();
 					final List<Integer> sortedIndices = getSortedList(columnIndices);
 					for (final int modelIndex : sortedIndices) {
 						final ITableColumn column = columnModel.getColumn(modelIndex);
@@ -133,6 +135,7 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
 
 				@Override
 				public void columnsAdded(final int[] columnIndices) {
+					table.stopEditing();
 					final List<Integer> sortedIndices = getSortedList(columnIndices);
 					for (final int modelIndex : sortedIndices) {
 						final ITableColumn column = columnModel.getColumn(modelIndex);
