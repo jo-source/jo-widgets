@@ -822,10 +822,6 @@ public class TableImpl extends SwtControl implements ITableSpi {
 					e.doit = false;
 				}
 				else if (e.detail == SWT.TRAVERSE_TAB_PREVIOUS) {
-					//					final int viewIndex = convertColumnIndexToView(editColumnIndex);
-					//					if (viewIndex > 0) {
-					//						editCell(editRowIndex, convertColumnIndexToModel(viewIndex - 1));
-					//					}
 					navigateLeft();
 					e.doit = false;
 				}
@@ -929,6 +925,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private boolean navigateRight(final int startRow, final int row, final int viewColumnIndex) {
 		if (viewColumnIndex + 1 < columnModel.getColumnCount()) {
 			if (editCell(row, convertColumnIndexToModel(viewColumnIndex + 1))) {
+				editor.layout();
 				return true;
 			}
 			else {
@@ -952,6 +949,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			}
 			else if (row - startRow < 2) {
 				setSelection(Collections.singletonList(Integer.valueOf(row + 1)));
+				editor.layout();
 				return navigateRight(startRow, row + 1, viewColumnIndex);
 			}
 			else {
@@ -966,6 +964,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private boolean navigateLeft(final int startRow, final int row, final int viewColumnIndex) {
 		if (viewColumnIndex > 0) {
 			if (editCell(row, convertColumnIndexToModel(viewColumnIndex - 1))) {
+				editor.layout();
 				return true;
 			}
 			else {
@@ -984,10 +983,12 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		if (row > 0) {
 			if (editCell(row - 1, convertColumnIndexToModel(viewColumnIndex))) {
 				setSelection(Collections.singletonList(Integer.valueOf(row - 1)));
+				editor.layout();
 				return true;
 			}
 			else if (startRow - row < 2) {
 				setSelection(Collections.singletonList(Integer.valueOf(row - 1)));
+				editor.layout();
 				return navigateLeft(startRow, row - 1, viewColumnIndex);
 			}
 			else {
