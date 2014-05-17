@@ -41,6 +41,7 @@ import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.IInputField;
+import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
@@ -48,6 +49,7 @@ import org.jowidgets.api.widgets.descriptor.ICollectionInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ICollectionInputDialogSetup;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.VirtualKey;
@@ -73,7 +75,9 @@ import org.jowidgets.validation.IValidationResultBuilder;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
 
-public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper implements IInputControl<Collection<ELEMENT_TYPE>> {
+public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper implements
+		IInputControl<Collection<ELEMENT_TYPE>>,
+		ITextControl {
 
 	private static final IMessage ELEMENT = Messages.getMessage("CollectionInputFieldImpl.element"); //$NON-NLS-1$
 	private static final IMessage EDIT = Messages.getMessage("CollectionInputFieldImpl.edit"); //$NON-NLS-1$
@@ -432,6 +436,45 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 	@Override
 	public IColorConstant getBackgroundColor() {
 		return textField.getBackgroundColor();
+	}
+
+	@Override
+	public String getText() {
+		return textField.getText();
+	}
+
+	@Override
+	public void setText(final String text) {
+		textField.setValue(text);
+	}
+
+	@Override
+	public void setFontSize(final int size) {}
+
+	@Override
+	public void setFontName(final String fontName) {}
+
+	@Override
+	public void setMarkup(final Markup markup) {}
+
+	@Override
+	public void setSelection(final int start, final int end) {
+		textField.setSelection(start, end);
+	}
+
+	@Override
+	public void setCaretPosition(final int pos) {
+		textField.setCaretPosition(pos);
+	}
+
+	@Override
+	public int getCaretPosition() {
+		return textField.getCaretPosition();
+	}
+
+	@Override
+	public void selectAll() {
+		textField.selectAll();
 	}
 
 	private void inputChangedListener() {

@@ -74,7 +74,9 @@ public class TextFieldImpl extends AbstractTextInputControl {
 			getUiReference().addFocusListener(new FocusAdapter() {
 				@Override
 				public void focusGained(final FocusEvent e) {
-					getUiReference().setSelection(0, 0);
+					if (getUiReference().getSelectionCount() == 0) {
+						getUiReference().setSelection(0, 0);
+					}
 				}
 			});
 		}
