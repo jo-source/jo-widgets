@@ -852,7 +852,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 				left = left || (VirtualKey.TAB.equals(event.getVirtualKey()) && shift);
 
 				boolean right = VirtualKey.ARROW_RIGHT.equals(event.getVirtualKey()) && alt;
-				right = right || (VirtualKey.TAB.equals(event.getVirtualKey()));
+				right = right || (VirtualKey.TAB.equals(event.getVirtualKey()) && !shift);
 
 				final boolean up = VirtualKey.ARROW_UP.equals(event.getVirtualKey()) && alt;
 
