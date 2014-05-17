@@ -235,7 +235,25 @@ public final class DefaultConverterProvider implements IConverterProvider {
 		if (result == null) {
 			result = getConverterFromLocale(DEFAULT_LOCALE, type);
 		}
+		if (result == null && type.isEnum()) {
+			return getEnumConverter(type);
+		}
 		return result;
+	}
+
+	private <OBJECT_TYPE> IConverter<OBJECT_TYPE> getEnumConverter(final Class<? extends OBJECT_TYPE> type) {
+		final Map<OBJECT_TYPE, String> objectToString = new HashMap<OBJECT_TYPE, String>();
+		final Map<String, OBJECT_TYPE> stringToObject = new HashMap<String, OBJECT_TYPE>();
+		for (final OBJECT_TYPE constant : type.getEnumConstants()) {
+			final String tanga = constant.toString();
+			objectToString.put(constant, tanga);
+			stringToObject.put(tanga, constant);
+			stringToObject.put(tanga.toLowerCase(), constant);
+			stringToObject.put(tanga.toUpperCase(), constant);
+		}
+		return new Converter<OBJECT_TYPE>(
+			new ObjectStringMapConverter<OBJECT_TYPE>(objectToString),
+			new StringObjectMapConverter<OBJECT_TYPE>(stringToObject, null));
 	}
 
 	@SuppressWarnings("unchecked")
