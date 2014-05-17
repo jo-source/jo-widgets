@@ -947,6 +947,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		if (dataModel.getRowCount() > row + 1) {
 			if (editCell(row + 1, convertColumnIndexToModel(viewColumnIndex))) {
 				setSelection(Collections.singletonList(Integer.valueOf(row + 1)));
+				editor.layout();
 				return true;
 			}
 			else if (row - startRow < 2) {
