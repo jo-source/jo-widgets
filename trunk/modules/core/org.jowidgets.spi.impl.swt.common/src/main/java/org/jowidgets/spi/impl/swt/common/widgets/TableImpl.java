@@ -842,7 +842,23 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 			@Override
 			public void keyPressed(final IKeyEvent event) {
-				if (VirtualKey.ENTER.equals(event.getVirtualKey())) {
+				final boolean alt = event.getModifier().contains(Modifier.ALT);
+				final boolean shift = event.getModifier().contains(Modifier.SHIFT);
+
+				final boolean enter = VirtualKey.ENTER.equals(event.getVirtualKey());
+				final boolean esc = VirtualKey.ESC.equals(event.getVirtualKey());
+
+				boolean left = VirtualKey.ARROW_LEFT.equals(event.getVirtualKey()) && alt;
+				left = left || (VirtualKey.TAB.equals(event.getVirtualKey()) && shift);
+
+				boolean right = VirtualKey.ARROW_RIGHT.equals(event.getVirtualKey()) && alt;
+				right = right || (VirtualKey.TAB.equals(event.getVirtualKey()));
+
+				final boolean up = VirtualKey.ARROW_UP.equals(event.getVirtualKey()) && alt;
+
+				final boolean down = VirtualKey.ARROW_DOWN.equals(event.getVirtualKey()) && alt;
+
+				if (enter) {
 					if (dataModel.getRowCount() > editRowIndex + 1) {
 						setSelection(Collections.singletonList(Integer.valueOf(editRowIndex + 1)));
 						editCell(editRowIndex + 1, convertColumnIndexToModel(0));
@@ -851,11 +867,10 @@ public class TableImpl extends SwtControl implements ITableSpi {
 						stopEditing();
 					}
 				}
-				else if (VirtualKey.ESC.equals(event.getVirtualKey())) {
+				else if (esc) {
 					cancelEditing();
 				}
-				else if (VirtualKey.TAB.equals(event.getVirtualKey())
-					|| (VirtualKey.ARROW_RIGHT.equals(event.getVirtualKey()) && event.getModifier().contains(Modifier.SHIFT))) {
+				else if (right) {
 					final int viewIndex = convertColumnIndexToView(editColumnIndex);
 					if (viewIndex + 1 < columnModel.getColumnCount()) {
 						editCell(editRowIndex, convertColumnIndexToModel(viewIndex + 1));
@@ -865,8 +880,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 						editCell(editRowIndex + 1, convertColumnIndexToModel(0));
 					}
 				}
-				else if ((VirtualKey.ARROW_LEFT.equals(event.getVirtualKey()) || VirtualKey.TAB.equals(event.getVirtualKey()))
-					&& event.getModifier().contains(Modifier.SHIFT)) {
+				else if (left) {
 					final int viewIndex = convertColumnIndexToView(editColumnIndex);
 					if (viewIndex > 0) {
 						editCell(editRowIndex, convertColumnIndexToModel(viewIndex - 1));
@@ -876,13 +890,13 @@ public class TableImpl extends SwtControl implements ITableSpi {
 						editCell(editRowIndex - 1, convertColumnIndexToModel(columnModel.getColumnCount() - 1));
 					}
 				}
-				else if (VirtualKey.ARROW_UP.equals(event.getVirtualKey()) && event.getModifier().contains(Modifier.SHIFT)) {
+				else if (up) {
 					if (editRowIndex > 0) {
 						setSelection(Collections.singletonList(Integer.valueOf(editRowIndex - 1)));
 						editCell(editRowIndex - 1, editColumnIndex);
 					}
 				}
-				else if (VirtualKey.ARROW_DOWN.equals(event.getVirtualKey()) && event.getModifier().contains(Modifier.SHIFT)) {
+				else if (down) {
 					if (dataModel.getRowCount() > editRowIndex + 1) {
 						setSelection(Collections.singletonList(Integer.valueOf(editRowIndex + 1)));
 						editCell(editRowIndex + 1, editColumnIndex);
