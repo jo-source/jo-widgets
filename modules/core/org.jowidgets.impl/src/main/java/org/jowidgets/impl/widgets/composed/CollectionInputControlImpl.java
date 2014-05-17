@@ -73,9 +73,9 @@ import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
 
 public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper implements IInputControl<Collection<INPUT_TYPE>> {
-	private static final IMessage ELEMENT = Messages.getMessage("CollectionInputControlImpl.element"); //$NON-NLS-1$
-	private static final IMessage REMOVE_ELEMENT = Messages.getMessage("CollectionInputControlImpl.remove_element"); //$NON-NLS-1$
-	private static final IMessage PLEASE_EDIT_ELEMENT = Messages.getMessage("CollectionInputControlImpl.please_edit_element"); //$NON-NLS-1$
+	private static final IMessage ELEMENT = Messages.getMessage("CollectionInputControlImpl.element");
+	private static final IMessage REMOVE_ELEMENT = Messages.getMessage("CollectionInputControlImpl.remove_element");
+	private static final IMessage PLEASE_EDIT_ELEMENT = Messages.getMessage("CollectionInputControlImpl.please_edit_element");
 
 	private final IBluePrintFactory bpf;
 	private final ITableLayout tableCommon;

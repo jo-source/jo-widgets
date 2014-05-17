@@ -307,7 +307,6 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	@Override
 	public void stopEditing() {
 		//TODO must be implemented
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
