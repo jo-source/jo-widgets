@@ -814,6 +814,13 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		editor.setEditor(uiReference, table.getItem(editRowIndex), internalIndex);
 		tableCellEditor.requestFocus();
 
+		Display.getCurrent().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				editor.layout();
+			}
+		});
+
 		final TraverseListener traverseListener = new TraverseListener() {
 			@Override
 			public void keyTraversed(final TraverseEvent e) {
