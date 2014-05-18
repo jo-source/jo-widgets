@@ -812,12 +812,16 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 		tableCellEditor.startEditing(editTableCell, editRowIndex, editColumnIndex);
 		editor.setEditor(uiReference, table.getItem(editRowIndex), internalIndex);
-		tableCellEditor.requestFocus();
 
 		Display.getCurrent().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				editor.layout();
+				if (isEditing()) {
+					editor.layout();
+					tableCellEditor.requestFocus();
+					table.showColumn(table.getColumn(editor.getColumn()));
+					table.showItem(editor.getItem());
+				}
 			}
 		});
 
@@ -931,6 +935,8 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		if (viewColumnIndex + 1 < columnModel.getColumnCount()) {
 			if (editCell(row, convertColumnIndexToModel(viewColumnIndex + 1))) {
 				editor.layout();
+				table.showColumn(table.getColumn(editor.getColumn()));
+				table.showItem(editor.getItem());
 				return true;
 			}
 			else {
@@ -950,11 +956,14 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			if (editCell(row + 1, convertColumnIndexToModel(viewColumnIndex))) {
 				setSelection(Collections.singletonList(Integer.valueOf(row + 1)));
 				editor.layout();
+				table.showColumn(table.getColumn(editor.getColumn()));
 				return true;
 			}
 			else if (row - startRow < 2) {
 				setSelection(Collections.singletonList(Integer.valueOf(row + 1)));
 				editor.layout();
+				table.showColumn(table.getColumn(editor.getColumn()));
+				table.showItem(editor.getItem());
 				return navigateRight(startRow, row + 1, viewColumnIndex);
 			}
 			else {
@@ -970,6 +979,8 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		if (viewColumnIndex > 0) {
 			if (editCell(row, convertColumnIndexToModel(viewColumnIndex - 1))) {
 				editor.layout();
+				table.showColumn(table.getColumn(editor.getColumn()));
+				table.showItem(editor.getItem());
 				return true;
 			}
 			else {
@@ -989,11 +1000,14 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			if (editCell(row - 1, convertColumnIndexToModel(viewColumnIndex))) {
 				setSelection(Collections.singletonList(Integer.valueOf(row - 1)));
 				editor.layout();
+				table.showColumn(table.getColumn(editor.getColumn()));
 				return true;
 			}
 			else if (startRow - row < 2) {
 				setSelection(Collections.singletonList(Integer.valueOf(row - 1)));
 				editor.layout();
+				table.showColumn(table.getColumn(editor.getColumn()));
+				table.showItem(editor.getItem());
 				return navigateLeft(startRow, row - 1, viewColumnIndex);
 			}
 			else {
@@ -1295,6 +1309,9 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 		@Override
 		public void menuDetected(final MenuDetectEvent e) {
+			//stop editing before popup opens
+			stopEditing();
+
 			// calculate position manually due to different behavior of Windows and Linux
 			final Rectangle tableBounds = table.getBounds();
 			final Point tableOrigin = table.getParent().toDisplay(new Point(tableBounds.x, tableBounds.y));
@@ -1413,7 +1430,6 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private final class TableSelectionListener extends SelectionAdapter {
 		@Override
 		public void widgetSelected(final SelectionEvent e) {
-			stopEditing();
 			onSelectionChanged();
 		}
 	}
