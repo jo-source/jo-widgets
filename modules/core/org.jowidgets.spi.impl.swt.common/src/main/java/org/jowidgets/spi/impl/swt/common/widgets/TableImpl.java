@@ -861,9 +861,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 				final boolean down = VirtualKey.ARROW_DOWN.equals(event.getVirtualKey()) && alt;
 
 				if (enter) {
-					if (!navigateDownLeft()) {
-						stopEditing();
-					}
+					navigateDownLeft();
 				}
 				else if (esc) {
 					cancelEditing();
