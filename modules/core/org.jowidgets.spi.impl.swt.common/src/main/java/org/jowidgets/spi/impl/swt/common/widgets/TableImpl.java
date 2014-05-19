@@ -857,6 +857,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			@Override
 			public void keyPressed(final IKeyEvent event) {
 				final boolean alt = event.getModifier().contains(Modifier.ALT);
+				final boolean ctrl = event.getModifier().contains(Modifier.CTRL);
 				final boolean shift = event.getModifier().contains(Modifier.SHIFT);
 
 				final boolean enter = VirtualKey.ENTER.equals(event.getVirtualKey());
@@ -872,6 +873,9 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 				final boolean down = VirtualKey.ARROW_DOWN.equals(event.getVirtualKey()) && alt;
 
+				if (enter && ctrl) {
+					stopEditing();
+				}
 				if (enter) {
 					navigateDownLeft();
 				}
