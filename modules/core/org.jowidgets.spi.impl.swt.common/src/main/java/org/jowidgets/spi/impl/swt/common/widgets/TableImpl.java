@@ -334,6 +334,14 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		this.editable = editable;
 	}
 
+	@Override
+	public void setEnabled(final boolean enabled) {
+		if (isEditing() && !enabled) {
+			stopEditing();
+		}
+		super.setEnabled(enabled);
+	}
+
 	private int getColumnCount() {
 		return table.getColumnCount() - 1;
 	}
@@ -791,7 +799,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		editRowIndex = -1;
 		editColumnIndex = -1;
 		editor.setEditor(null);
-		table.clearAll();
+		editor.layout();
 	}
 
 	@Override
