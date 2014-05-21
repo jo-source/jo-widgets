@@ -760,7 +760,6 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	}
 
 	private void onSelectionChanged() {
-		dataModel.setSelection(getSelection());
 		tableSelectionObservable.fireSelectionChanged();
 	}
 

@@ -33,6 +33,7 @@ import java.util.List;
 
 import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.controller.IParentListener;
+import org.jowidgets.api.controller.ISelectionVetoListener;
 import org.jowidgets.api.model.table.ITableColumn;
 import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.api.widgets.IContainer;
@@ -61,6 +62,8 @@ import org.jowidgets.common.widgets.controller.ITableSelectionListener;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractControlSpiWrapper;
 import org.jowidgets.spi.widgets.ITableSpi;
+import org.jowidgets.tools.controller.SelectionVetoObservable;
+import org.jowidgets.tools.controller.TableSelectionObservable;
 import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
 import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 import org.jowidgets.util.EmptyCheck;
@@ -79,8 +82,13 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 	private final TableCellEditorObservableSpiAdapter cellEditorObservable;
 	private final TableColumnObservableSpiAdapter columnObservable;
 	private final TableColumnPopupDetectionObservableSpiAdapter columnPopupDetectionObservable;
+	private final TableSelectionObservable tableSelectionObservable;
+	private final SelectionVetoObservable selectionVetoObservable;
+	private final ITableSelectionListener tableSelectionListener;
 
 	private final TableModelSpiAdapter modelSpiAdapter;
+
+	private ArrayList<Integer> lastSelection;
 
 	public TableImpl(final ITableSpi widgetSpi, final ITableDescriptor setup, final TableModelSpiAdapter modelSpiAdapter) {
 		super(widgetSpi);
@@ -92,6 +100,8 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 		this.modelSpiAdapter = modelSpiAdapter;
 
 		this.cellObservable = new TableCellObservableSpiAdapter();
+		this.selectionVetoObservable = new SelectionVetoObservable();
+		this.tableSelectionObservable = new TableSelectionObservable();
 
 		getWidget().setEditable(setup.isEditable());
 
@@ -169,10 +179,32 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 			}
 		});
 
+		this.tableSelectionListener = new ITableSelectionListener() {
+			@Override
+			public void selectionChanged() {
+				if (EmptyCheck.isEmpty(getWidget().getSelection()) || selectionVetoObservable.allowSelectionChange()) {
+					lastSelection = getWidget().getSelection();
+					dataModel.setSelection(getSelection());
+					tableSelectionObservable.fireSelectionChanged();
+				}
+				else {
+					getWidget().removeTableSelectionListener(tableSelectionListener);
+					try {
+						getWidget().setSelection(lastSelection);
+					}
+					finally {
+						getWidget().addTableSelectionListener(tableSelectionListener);
+					}
+				}
+			}
+		};
+		getWidget().addTableSelectionListener(tableSelectionListener);
+
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
 
 		resetFromModel();
+		lastSelection = getWidget().getSelection();
 	}
 
 	@Override
@@ -358,7 +390,7 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 
 	@Override
 	public ArrayList<Integer> getSelection() {
-		return getWidget().getSelection();
+		return lastSelection;
 	}
 
 	@Override
@@ -438,12 +470,22 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 
 	@Override
 	public void addTableSelectionListener(final ITableSelectionListener listener) {
-		getWidget().addTableSelectionListener(listener);
+		tableSelectionObservable.addTableSelectionListener(listener);
 	}
 
 	@Override
 	public void removeTableSelectionListener(final ITableSelectionListener listener) {
-		getWidget().removeTableSelectionListener(listener);
+		tableSelectionObservable.removeTableSelectionListener(listener);
+	}
+
+	@Override
+	public void addSelectionVetoListener(final ISelectionVetoListener listener) {
+		selectionVetoObservable.addSelectionVetoListener(listener);
+	}
+
+	@Override
+	public void removeSelectionVetoListener(final ISelectionVetoListener listener) {
+		selectionVetoObservable.removeSelectionVetoListener(listener);
 	}
 
 	@Override
