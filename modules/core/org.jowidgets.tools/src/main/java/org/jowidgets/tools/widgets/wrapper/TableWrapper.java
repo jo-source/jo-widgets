@@ -31,7 +31,7 @@ package org.jowidgets.tools.widgets.wrapper;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jowidgets.api.controller.ISelectionVetoListener;
+import org.jowidgets.api.controller.IListSelectionVetoListener;
 import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Interval;
@@ -201,12 +201,12 @@ public class TableWrapper extends ControlWrapper implements ITable {
 	}
 
 	@Override
-	public void addSelectionVetoListener(final ISelectionVetoListener listener) {
+	public void addSelectionVetoListener(final IListSelectionVetoListener listener) {
 		getWidget().addSelectionVetoListener(listener);
 	}
 
 	@Override
-	public void removeSelectionVetoListener(final ISelectionVetoListener listener) {
+	public void removeSelectionVetoListener(final IListSelectionVetoListener listener) {
 		getWidget().removeSelectionVetoListener(listener);
 	}
 

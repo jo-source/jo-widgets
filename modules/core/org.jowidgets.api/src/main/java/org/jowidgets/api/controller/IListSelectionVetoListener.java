@@ -28,11 +28,12 @@
 
 package org.jowidgets.api.controller;
 
+import java.util.List;
 
-public interface ISelectionVetoObservable {
+import org.jowidgets.common.types.IVetoable;
 
-	void addSelectionVetoListener(ISelectionVetoListener listener);
+public interface IListSelectionVetoListener {
 
-	void removeSelectionVetoListener(ISelectionVetoListener listener);
+	void beforeSelectionChange(List<Integer> newSelection, IVetoable veto);
 
 }

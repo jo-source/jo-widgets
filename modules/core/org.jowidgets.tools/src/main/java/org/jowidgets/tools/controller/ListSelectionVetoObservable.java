@@ -30,37 +30,38 @@ package org.jowidgets.tools.controller;
 
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
-import org.jowidgets.api.controller.ISelectionVetoListener;
-import org.jowidgets.api.controller.ISelectionVetoObservable;
+import org.jowidgets.api.controller.IListSelectionVetoListener;
+import org.jowidgets.api.controller.IListSelectionVetoObservable;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.util.Assert;
 
-public class SelectionVetoObservable implements ISelectionVetoObservable {
+public class ListSelectionVetoObservable implements IListSelectionVetoObservable {
 
-	private final Set<ISelectionVetoListener> listeners;
+	private final Set<IListSelectionVetoListener> listeners;
 
-	public SelectionVetoObservable() {
-		this.listeners = new LinkedHashSet<ISelectionVetoListener>();
+	public ListSelectionVetoObservable() {
+		this.listeners = new LinkedHashSet<IListSelectionVetoListener>();
 	}
 
 	@Override
-	public void addSelectionVetoListener(final ISelectionVetoListener listener) {
+	public void addSelectionVetoListener(final IListSelectionVetoListener listener) {
 		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
-	public void removeSelectionVetoListener(final ISelectionVetoListener listener) {
+	public void removeSelectionVetoListener(final IListSelectionVetoListener listener) {
 		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
-	public boolean allowSelectionChange() {
+	public boolean allowSelectionChange(final List<Integer> newSelection) {
 		final VetoHolder vetoHolder = new VetoHolder();
-		for (final ISelectionVetoListener listener : new LinkedList<ISelectionVetoListener>(listeners)) {
-			listener.beforeSelectionChange(vetoHolder);
+		for (final IListSelectionVetoListener listener : new LinkedList<IListSelectionVetoListener>(listeners)) {
+			listener.beforeSelectionChange(newSelection, vetoHolder);
 			if (vetoHolder.hasVeto()) {
 				return false;
 			}
