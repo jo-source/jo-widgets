@@ -26,43 +26,40 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.tools.controller;
 
-import org.jowidgets.api.controller.ISelectionVetoObservable;
-import org.jowidgets.common.widgets.ITableCommon;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.Set;
 
-public interface ITable extends IControl, ITableCommon, ISelectionVetoObservable {
+import org.jowidgets.common.widgets.controller.ITableSelectionListener;
+import org.jowidgets.common.widgets.controller.ITableSelectionObservable;
+import org.jowidgets.util.Assert;
 
-	void pack();
+public class TableSelectionObservable implements ITableSelectionObservable {
 
-	void pack(int columnIndex);
+	private final Set<ITableSelectionListener> listeners;
 
-	int getRowCount();
+	public TableSelectionObservable() {
+		super();
+		this.listeners = new LinkedHashSet<ITableSelectionListener>();
+	}
 
-	int getColumnCount();
+	@Override
+	public void addTableSelectionListener(final ITableSelectionListener listener) {
+		Assert.paramNotNull(listener, "listener");
+		listeners.add(listener);
+	}
 
-	int convertColumnIndexToView(int modelIndex);
+	@Override
+	public void removeTableSelectionListener(final ITableSelectionListener listener) {
+		Assert.paramNotNull(listener, "listener");
+		listeners.remove(listener);
+	}
 
-	int convertColumnIndexToModel(int viewIndex);
-
-	void moveColumn(int oldViewIndex, int newViewIndex);
-
-	/**
-	 * Scrolls the viewport to the first selected row.
-	 * If nothing is selected or the first selected row is already visible, nothing happens.
-	 * 
-	 * @see ITableCommon#scrollToRow(int)
-	 */
-	void scrollToSelection();
-
-	/**
-	 * Scrolls the viewport to the last row.
-	 * If the table is empty, nothing happens.
-	 * 
-	 * @see ITableCommon#scrollToRow(int)
-	 */
-	void scrollToEnd();
-
-	void resetColumnPermutation();
-
+	public void fireSelectionChanged() {
+		for (final ITableSelectionListener listener : new LinkedList<ITableSelectionListener>(listeners)) {
+			listener.selectionChanged();
+		}
+	}
 }

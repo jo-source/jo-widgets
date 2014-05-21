@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,43 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.api.controller;
 
-import org.jowidgets.api.controller.ISelectionVetoObservable;
-import org.jowidgets.common.widgets.ITableCommon;
+import org.jowidgets.common.types.IVetoable;
 
-public interface ITable extends IControl, ITableCommon, ISelectionVetoObservable {
+public interface ISelectionVetoListener {
 
-	void pack();
-
-	void pack(int columnIndex);
-
-	int getRowCount();
-
-	int getColumnCount();
-
-	int convertColumnIndexToView(int modelIndex);
-
-	int convertColumnIndexToModel(int viewIndex);
-
-	void moveColumn(int oldViewIndex, int newViewIndex);
-
-	/**
-	 * Scrolls the viewport to the first selected row.
-	 * If nothing is selected or the first selected row is already visible, nothing happens.
-	 * 
-	 * @see ITableCommon#scrollToRow(int)
-	 */
-	void scrollToSelection();
-
-	/**
-	 * Scrolls the viewport to the last row.
-	 * If the table is empty, nothing happens.
-	 * 
-	 * @see ITableCommon#scrollToRow(int)
-	 */
-	void scrollToEnd();
-
-	void resetColumnPermutation();
+	void beforeSelectionChange(IVetoable veto);
 
 }

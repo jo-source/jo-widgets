@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,43 +26,46 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets;
+package org.jowidgets.tools.controller;
 
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.Set;
+
+import org.jowidgets.api.controller.ISelectionVetoListener;
 import org.jowidgets.api.controller.ISelectionVetoObservable;
-import org.jowidgets.common.widgets.ITableCommon;
+import org.jowidgets.tools.types.VetoHolder;
+import org.jowidgets.util.Assert;
 
-public interface ITable extends IControl, ITableCommon, ISelectionVetoObservable {
+public class SelectionVetoObservable implements ISelectionVetoObservable {
 
-	void pack();
+	private final Set<ISelectionVetoListener> listeners;
 
-	void pack(int columnIndex);
+	public SelectionVetoObservable() {
+		this.listeners = new LinkedHashSet<ISelectionVetoListener>();
+	}
 
-	int getRowCount();
+	@Override
+	public void addSelectionVetoListener(final ISelectionVetoListener listener) {
+		Assert.paramNotNull(listener, "listener");
+		listeners.add(listener);
+	}
 
-	int getColumnCount();
+	@Override
+	public void removeSelectionVetoListener(final ISelectionVetoListener listener) {
+		Assert.paramNotNull(listener, "listener");
+		listeners.remove(listener);
+	}
 
-	int convertColumnIndexToView(int modelIndex);
-
-	int convertColumnIndexToModel(int viewIndex);
-
-	void moveColumn(int oldViewIndex, int newViewIndex);
-
-	/**
-	 * Scrolls the viewport to the first selected row.
-	 * If nothing is selected or the first selected row is already visible, nothing happens.
-	 * 
-	 * @see ITableCommon#scrollToRow(int)
-	 */
-	void scrollToSelection();
-
-	/**
-	 * Scrolls the viewport to the last row.
-	 * If the table is empty, nothing happens.
-	 * 
-	 * @see ITableCommon#scrollToRow(int)
-	 */
-	void scrollToEnd();
-
-	void resetColumnPermutation();
+	public boolean allowSelectionChange() {
+		final VetoHolder vetoHolder = new VetoHolder();
+		for (final ISelectionVetoListener listener : new LinkedList<ISelectionVetoListener>(listeners)) {
+			listener.beforeSelectionChange(vetoHolder);
+			if (vetoHolder.hasVeto()) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 }
