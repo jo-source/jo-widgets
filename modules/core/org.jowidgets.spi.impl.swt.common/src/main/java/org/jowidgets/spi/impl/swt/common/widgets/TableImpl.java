@@ -305,6 +305,19 @@ public class TableImpl extends SwtControl implements ITableSpi {
 				if (e.detail == SWT.TRAVERSE_ESCAPE) {
 					cancelEditing();
 				}
+				if (e.detail == SWT.TRAVERSE_RETURN) {
+					final ArrayList<Integer> selection = getSelection();
+					if (!isEditing() && getSelection().size() > 0) {
+						final int rowIndex = selection.get(0).intValue() - 1;
+						//this method adds one the row index for edit mode
+						navigateDown(rowIndex, rowIndex, 0);
+					}
+					if (!isEditing() && dataModel.getRowCount() > 0) {
+						final int rowIndex = -1;
+						//this method adds one the row index for edit mode
+						navigateDown(rowIndex, rowIndex, 0);
+					}
+				}
 			}
 		});
 	}
