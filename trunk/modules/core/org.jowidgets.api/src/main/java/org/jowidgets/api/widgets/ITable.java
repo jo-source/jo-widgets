@@ -28,10 +28,10 @@
 
 package org.jowidgets.api.widgets;
 
-import org.jowidgets.api.controller.ISelectionVetoObservable;
+import org.jowidgets.api.controller.IListSelectionVetoObservable;
 import org.jowidgets.common.widgets.ITableCommon;
 
-public interface ITable extends IControl, ITableCommon, ISelectionVetoObservable {
+public interface ITable extends IControl, ITableCommon, IListSelectionVetoObservable {
 
 	void pack();
 
