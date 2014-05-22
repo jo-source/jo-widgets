@@ -326,12 +326,15 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		if (rowHeight != null) {
 			event.height = rowHeight.intValue();
 		}
-		else {
-			final TableItem item = (TableItem) event.item;
-			final int row = table.indexOf(item);
-			final int column = event.index - 1;
-			if (tableCellEditor != null && editColumnIndex == column && editRowIndex == row) {
-				event.height = tableCellEditor.getPreferredSize().getHeight() + 1;
+		final TableItem item = (TableItem) event.item;
+		final int row = table.indexOf(item);
+		final int column = event.index - 1;
+		if (tableCellEditor != null && editColumnIndex == column && editRowIndex == row) {
+			final int newHeigth = tableCellEditor.getPreferredSize().getHeight() + 1;
+			if (rowHeight == null || newHeigth > rowHeight.intValue()) {
+				event.height = newHeigth;
+				rowHeight = newHeigth;
+				editor.layout();
 			}
 		}
 	}
@@ -820,7 +823,6 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	}
 
 	private void activateEditorFromFactory() {
-
 		tableCellEditor = editorFactory.create(editTableCell, editRowIndex, editColumnIndex, editorCustomWidgetFactory);
 		if (tableCellEditor == null) {
 			return;
@@ -1279,18 +1281,24 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 	private final class TableEditListener extends MouseAdapter {
 
+		private Point lastPoint;
+
 		@Override
 		public void mouseUp(final MouseEvent e) {
 			if (((e.stateMask & SWT.BUTTON1) != 0) && editorFactory != null) {
-				final CellIndices indices = getExternalCellIndices(new Point(e.x, e.y));
-				if (indices != null) {
-					final ITableCell cell = dataModel.getCell(indices.getRowIndex(), indices.getColumnIndex());
-					if (cell.isEditable() && editable && editor != null) {
-						if (EditActivation.SINGLE_CLICK.equals(editorFactory.getActivation(
-								cell,
-								indices.getRowIndex(),
-								indices.getColumnIndex()))) {
-							startEdit(indices);
+				final Point point = new Point(e.x, e.y);
+				if (!point.equals(lastPoint)) {
+					final CellIndices indices = getExternalCellIndices(point);
+					if (indices != null) {
+						final ITableCell cell = dataModel.getCell(indices.getRowIndex(), indices.getColumnIndex());
+						if (cell.isEditable() && editable && editor != null) {
+							if (EditActivation.SINGLE_CLICK.equals(editorFactory.getActivation(
+									cell,
+									indices.getRowIndex(),
+									indices.getColumnIndex()))) {
+								lastPoint = point;
+								startEdit(indices);
+							}
 						}
 					}
 				}
@@ -1299,20 +1307,24 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 		@Override
 		public void mouseDoubleClick(final MouseEvent e) {
-			final CellIndices indices = getExternalCellIndices(new Point(e.x, e.y));
-			if (indices != null) {
-				final ITableCell cell = dataModel.getCell(indices.getRowIndex(), indices.getColumnIndex());
-				if (cell.isEditable() && editable && editor != null) {
-					if (editorFactory != null) {
-						if (EditActivation.DOUBLE_CLICK.equals(editorFactory.getActivation(
-								cell,
-								indices.getRowIndex(),
-								indices.getColumnIndex()))) {
+			final Point point = new Point(e.x, e.y);
+			if (!point.equals(lastPoint)) {
+				final CellIndices indices = getExternalCellIndices(point);
+				if (indices != null) {
+					final ITableCell cell = dataModel.getCell(indices.getRowIndex(), indices.getColumnIndex());
+					if (cell.isEditable() && editable && editor != null) {
+						if (editorFactory != null) {
+							if (EditActivation.DOUBLE_CLICK.equals(editorFactory.getActivation(
+									cell,
+									indices.getRowIndex(),
+									indices.getColumnIndex()))) {
+								lastPoint = point;
+								startEdit(indices);
+							}
+						}
+						else {
 							startEdit(indices);
 						}
-					}
-					else {
-						startEdit(indices);
 					}
 				}
 			}
@@ -1552,19 +1564,24 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		private final int rowIndex;
 		private final int columnIndex;
 
-		public CellIndices(final int rowIndex, final int columnIndex) {
-			super();
+		private CellIndices(final int rowIndex, final int columnIndex) {
 			this.rowIndex = rowIndex;
 			this.columnIndex = columnIndex;
 		}
 
-		public int getRowIndex() {
+		private int getRowIndex() {
 			return rowIndex;
 		}
 
-		public int getColumnIndex() {
+		private int getColumnIndex() {
 			return columnIndex;
 		}
+
+		@Override
+		public String toString() {
+			return "CellIndices [rowIndex=" + rowIndex + ", columnIndex=" + columnIndex + "]";
+		}
+
 	}
 
 	private final class ToolTipListener implements Listener {
