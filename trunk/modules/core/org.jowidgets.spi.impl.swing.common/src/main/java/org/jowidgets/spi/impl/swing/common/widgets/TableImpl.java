@@ -49,6 +49,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.AbstractCellEditor;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JLabel;
@@ -62,6 +63,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableColumnModelEvent;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -83,11 +85,15 @@ import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Interval;
 import org.jowidgets.common.types.Markup;
+import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.MouseButton;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TablePackPolicy;
 import org.jowidgets.common.types.TableSelectionPolicy;
+import org.jowidgets.common.types.VirtualKey;
+import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.controller.IFocusListener;
+import org.jowidgets.common.widgets.controller.IKeyEvent;
 import org.jowidgets.common.widgets.controller.IKeyListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITableCellEditEvent;
@@ -100,6 +106,12 @@ import org.jowidgets.common.widgets.controller.ITableColumnListener;
 import org.jowidgets.common.widgets.controller.ITableColumnMouseEvent;
 import org.jowidgets.common.widgets.controller.ITableColumnPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITableSelectionListener;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.common.widgets.editor.EditActivation;
+import org.jowidgets.common.widgets.editor.ITableCellEditor;
+import org.jowidgets.common.widgets.editor.ITableCellEditorFactory;
+import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.controller.FocusObservable;
 import org.jowidgets.spi.impl.controller.KeyObservable;
 import org.jowidgets.spi.impl.controller.PopupDetectionObservable;
@@ -133,11 +145,14 @@ import org.jowidgets.util.event.IObservableCallback;
 
 public class TableImpl extends SwingControl implements ITableSpi {
 
+	private final IGenericWidgetFactory factory;
+	private final ICustomWidgetFactory editorCustomWidgetFactory;
+
 	private final JTable table;
 	private final ITableDataModel dataModel;
 	private final ITableColumnModelSpi columnModel;
 	private final CellRenderer cellRenderer;
-	private final CellEditor cellEditor;
+	private final TableCellEditor cellEditor;
 	private final TableCellRenderer headerRenderer;
 
 	private final PopupDetectionObservable popupDetectionObservable;
@@ -162,6 +177,8 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	private final boolean columnsResizeable;
 	private final boolean hasBorder;
 
+	private EditorFactoryBasedCellEditor factoryBasedEditor;
+
 	private SwingTableModel swingTableModel;
 	private ArrayList<Integer> lastColumnPermutation;
 	private boolean columnMoveOccured;
@@ -169,13 +186,22 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	private boolean editable;
 	private boolean programmaticClearSelection;
 
-	public TableImpl(final ITableSetupSpi setup) {
+	public TableImpl(final IGenericWidgetFactory factory, final ITableSetupSpi setup) {
 		super(new JScrollPane(new JTable()));
 
+		this.factory = factory;
+		this.editorCustomWidgetFactory = new EditorCustomWidgetFactory();
 		this.editable = true;
 
 		this.cellRenderer = new CellRenderer();
-		this.cellEditor = new CellEditor();
+
+		if (setup.getEditor() != null) {
+			this.factoryBasedEditor = new EditorFactoryBasedCellEditor(setup.getEditor());
+			this.cellEditor = factoryBasedEditor;
+		}
+		else {
+			this.cellEditor = new CellEditor();
+		}
 
 		this.popupDetectionObservable = new PopupDetectionObservable();
 		this.tableCellObservable = new TableCellObservable();
@@ -300,25 +326,22 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 	@Override
 	public boolean editCell(final int row, final int column) {
-		//TODO must be implemented
-		throw new UnsupportedOperationException();
+		return table.editCellAt(row, column);
 	}
 
 	@Override
 	public void stopEditing() {
-		//TODO must be implemented
+		table.editingStopped(null);
 	}
 
 	@Override
 	public void cancelEditing() {
-		//TODO must be implemented
-		throw new UnsupportedOperationException();
+		table.editingCanceled(null);
 	}
 
 	@Override
 	public boolean isEditing() {
-		//TODO must be implemented
-		throw new UnsupportedOperationException();
+		return factoryBasedEditor.isEditing();
 	}
 
 	@Override
@@ -1190,6 +1213,149 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			}
 
 			return result;
+		}
+	}
+
+	final class EditorFactoryBasedCellEditor extends AbstractCellEditor implements TableCellEditor {
+
+		private static final long serialVersionUID = 3420610701760793714L;
+
+		private final ITableCellEditorFactory<? extends ITableCellEditor> editorFactory;
+
+		private ITableCellEditor tableCellEditor;
+		private int column;
+		private int row;
+
+		public EditorFactoryBasedCellEditor(final ITableCellEditorFactory<? extends ITableCellEditor> editorFactory) {
+			this.editorFactory = editorFactory;
+		}
+
+		public boolean isEditing() {
+			return tableCellEditor != null;
+		}
+
+		@Override
+		public Object getCellEditorValue() {
+			return null;
+		}
+
+		@Override
+		public boolean isCellEditable(final EventObject event) {
+			if (event == null) {
+				return true;
+			}
+			if (event instanceof MouseEvent) {
+				final MouseEvent mouseEvent = (MouseEvent) event;
+				final CellIndices cellIndices = getCellIndices(mouseEvent);
+				final ITableCell cell = dataModel.getCell(cellIndices.getRowIndex(), cellIndices.getColumnIndex());
+				final EditActivation activation = editorFactory.getActivation(
+						cell,
+						cellIndices.getRowIndex(),
+						cellIndices.getColumnIndex());
+				if (EditActivation.DOUBLE_CLICK.equals(activation)) {
+					return SwingUtilities.isLeftMouseButton(mouseEvent) && mouseEvent.getClickCount() == 2;
+				}
+				else if (EditActivation.SINGLE_CLICK.equals(activation)) {
+					return SwingUtilities.isLeftMouseButton(mouseEvent) && mouseEvent.getClickCount() == 1;
+				}
+			}
+			if (event instanceof KeyEvent) {
+				if (isEditing() || dataModel.getRowCount() == 0) {
+					return false;
+				}
+				final KeyEvent keyEvent = (KeyEvent) event;
+				if ((keyEvent.getKeyCode() == KeyEvent.VK_ENTER)) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		@Override
+		public boolean shouldSelectCell(final EventObject anEvent) {
+			return true;
+		}
+
+		@Override
+		public boolean stopCellEditing() {
+			if (tableCellEditor != null && row != -1 && column != -1) {
+				tableCellEditor.stopEditing(dataModel.getCell(row, column), row, column);
+			}
+			tableCellEditor = null;
+			row = -1;
+			column = -1;
+			fireEditingStopped();
+			return true;
+		}
+
+		@Override
+		public void cancelCellEditing() {
+			if (tableCellEditor != null && row != -1 && column != -1) {
+				tableCellEditor.cancelEditing(dataModel.getCell(row, column), row, column);
+			}
+			tableCellEditor = null;
+			row = -1;
+			column = -1;
+			fireEditingCanceled();
+		}
+
+		@Override
+		public Component getTableCellEditorComponent(
+			final JTable table,
+			final Object value,
+			final boolean isSelected,
+			final int row,
+			final int viewColumn) {
+
+			if (isEditing()) {
+				stopEditing();
+			}
+
+			this.row = row;
+			this.column = table.convertColumnIndexToModel(viewColumn);
+			final ITableCell tableCell = dataModel.getCell(row, column);
+
+			this.tableCellEditor = editorFactory.create(tableCell, row, column, editorCustomWidgetFactory);
+
+			if (tableCellEditor == null) {
+				this.row = -1;
+				this.column = -1;
+				return null;
+			}
+
+			tableCellEditor.addKeyListener(new IKeyListener() {
+
+				@Override
+				public void keyReleased(final IKeyEvent event) {}
+
+				@Override
+				public void keyPressed(final IKeyEvent event) {
+					if (VirtualKey.ESC.equals(event.getVirtualKey())) {
+						cancelCellEditing();
+					}
+					else if (VirtualKey.ENTER.equals(event.getVirtualKey()) && event.getModifier().contains(Modifier.CTRL)) {
+						stopCellEditing();
+					}
+				}
+			});
+
+			tableCellEditor.startEditing(tableCell, row, column);
+			tableCellEditor.requestFocus();
+
+			final int height = tableCellEditor.getPreferredSize().getHeight();
+
+			if (table.getRowHeight() < height) {
+				table.setRowHeight(height);
+			}
+
+			return (Component) tableCellEditor.getUiReference();
+		}
+	}
+
+	private final class EditorCustomWidgetFactory implements ICustomWidgetFactory {
+		@Override
+		public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE create(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+			return factory.create(table, descriptor);
 		}
 	}
 
