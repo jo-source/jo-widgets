@@ -34,6 +34,7 @@ import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.widgets.ISelectable;
 import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.common.widgets.controller.IKeyListener;
 import org.jowidgets.common.widgets.controller.IMouseListener;
@@ -46,7 +47,7 @@ import org.jowidgets.tools.widgets.wrapper.AbstractInputControl;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.ValidationResult;
 
-public final class ByteValueControl extends AbstractInputControl<ByteValue> {
+public final class ByteValueControl extends AbstractInputControl<ByteValue> implements ISelectable {
 
 	private final IInputField<Integer> valueField;
 	private final IComboBox<ByteUnit> unitCmb;
@@ -130,6 +131,11 @@ public final class ByteValueControl extends AbstractInputControl<ByteValue> {
 		final boolean result = valueField.requestFocus();
 		valueField.selectAll();
 		return result;
+	}
+
+	@Override
+	public void select() {
+		valueField.select();
 	}
 
 	@Override
