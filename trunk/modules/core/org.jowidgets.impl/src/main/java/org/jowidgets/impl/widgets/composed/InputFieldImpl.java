@@ -177,6 +177,11 @@ public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInput
 	}
 
 	@Override
+	public void select() {
+		getWidget().selectAll();
+	}
+
+	@Override
 	public void setCaretPosition(final int pos) {
 		getWidget().setCaretPosition(pos);
 	}

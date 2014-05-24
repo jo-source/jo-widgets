@@ -179,6 +179,11 @@ public class TextAreaNativeScrollBarImpl extends AbstractTextInputControl implem
 	}
 
 	@Override
+	public void select() {
+		textArea.selectAll();
+	}
+
+	@Override
 	public void setCaretPosition(final int pos) {
 		textArea.setSelection(pos, pos);
 	}

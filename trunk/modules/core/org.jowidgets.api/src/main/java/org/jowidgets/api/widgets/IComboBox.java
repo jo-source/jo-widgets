@@ -30,7 +30,9 @@ package org.jowidgets.api.widgets;
 import java.util.Collection;
 import java.util.List;
 
-public interface IComboBox<VALUE_TYPE> extends IControl, IInputControl<VALUE_TYPE> {
+import org.jowidgets.common.widgets.ISelectable;
+
+public interface IComboBox<VALUE_TYPE> extends IControl, IInputControl<VALUE_TYPE>, ISelectable {
 
 	List<VALUE_TYPE> getElements();
 

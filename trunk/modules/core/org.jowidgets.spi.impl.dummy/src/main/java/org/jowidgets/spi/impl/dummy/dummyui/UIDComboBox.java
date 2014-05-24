@@ -99,4 +99,8 @@ public class UIDComboBox extends UIDComponent {
 		// TODO LG implement setMarkup
 	}
 
+	public void select() {
+		// TODO LG implement select
+	}
+
 }

@@ -90,4 +90,8 @@ public class UIDTextField extends UIDTextComponent {
 		// TODO LG implement setMarkup
 	}
 
+	public void select() {
+		// TODO LG implement select
+	}
+
 }

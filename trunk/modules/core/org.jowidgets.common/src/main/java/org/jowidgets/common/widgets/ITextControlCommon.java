@@ -30,7 +30,7 @@ package org.jowidgets.common.widgets;
 
 import org.jowidgets.common.types.Markup;
 
-public interface ITextControlCommon extends IInputControlCommon {
+public interface ITextControlCommon extends IInputControlCommon, ISelectable {
 
 	String getText();
 

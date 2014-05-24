@@ -225,6 +225,11 @@ public class TextAreaImpl extends AbstractControlSpiWrapper implements ITextArea
 	}
 
 	@Override
+	public void select() {
+		selectAll();
+	}
+
+	@Override
 	public void scrollToCaretPosition() {
 		getWidget().scrollToCaretPosition();
 	}

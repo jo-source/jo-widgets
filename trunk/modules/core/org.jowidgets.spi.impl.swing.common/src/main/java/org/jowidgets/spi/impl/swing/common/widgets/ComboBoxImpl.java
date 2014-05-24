@@ -306,6 +306,13 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 	}
 
 	@Override
+	public void select() {
+		if (comboBoxEditor != null) {
+			comboBoxEditor.selectAll();
+		}
+	}
+
+	@Override
 	public void setCaretPosition(final int pos) {
 		if (comboBoxEditor != null) {
 			comboBoxEditor.setCaretPosition(pos);

@@ -310,6 +310,11 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 	}
 
 	@Override
+	public void select() {
+		getUiReference().setSelection(new Point(0, getUiReference().getText().length()));
+	}
+
+	@Override
 	public void setCaretPosition(final int pos) {
 		setSelection(pos, pos);
 	}

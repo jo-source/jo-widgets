@@ -85,7 +85,10 @@ public class TextFieldImpl extends AbstractInputControl implements ITextControlS
 			getUiReference().addFocusListener(new FocusAdapter() {
 				@Override
 				public void focusGained(final FocusEvent e) {
-					getUiReference().setCaretPosition(0);
+					final JTextField uiReference = getUiReference();
+					if (uiReference.getSelectionEnd() - uiReference.getSelectionStart() == 0) {
+						uiReference.setCaretPosition(0);
+					}
 				}
 			});
 		}
@@ -130,6 +133,11 @@ public class TextFieldImpl extends AbstractInputControl implements ITextControlS
 	public void setSelection(final int start, final int end) {
 		getUiReference().setSelectionStart(start);
 		getUiReference().setSelectionEnd(end);
+	}
+
+	@Override
+	public void select() {
+		getUiReference().selectAll();
 	}
 
 	@Override

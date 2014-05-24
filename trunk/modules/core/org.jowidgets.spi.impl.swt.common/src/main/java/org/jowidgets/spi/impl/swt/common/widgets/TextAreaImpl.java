@@ -219,6 +219,11 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 	}
 
 	@Override
+	public void select() {
+		textArea.selectAll();
+	}
+
+	@Override
 	public void setCaretPosition(final int pos) {
 		textArea.setSelection(pos, pos);
 	}
