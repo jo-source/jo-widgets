@@ -350,6 +350,9 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 	@Override
 	public boolean editCell(final int row, final int column) {
+		if (isEditing()) {
+			stopEditing();
+		}
 		final int viewColumnIndex = table.convertColumnIndexToView(column);
 		final StartEditEvent event = new StartEditEvent(table, row, viewColumnIndex);
 		return table.editCellAt(row, viewColumnIndex, event);
@@ -357,11 +360,17 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 	@Override
 	public void stopEditing() {
+		if (factoryBasedEditor != null) {
+			factoryBasedEditor.stopCellEditing();
+		}
 		table.editingStopped(null);
 	}
 
 	@Override
 	public void cancelEditing() {
+		if (factoryBasedEditor != null) {
+			factoryBasedEditor.cancelCellEditing();
+		}
 		table.editingCanceled(null);
 	}
 
@@ -1336,11 +1345,14 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		public boolean stopCellEditing() {
 			if (tableCellEditor != null && this.row != -1 && this.column != -1) {
 				tableCellEditor.stopEditing(dataModel.getCell(this.row, column), this.row, this.column);
+				//Workaround to avoid getting exceptions on comboxes that want to
+				//show their popup when navigated to another cell vio arrow up or down
+				((JComponent) tableCellEditor.getUiReference()).setEnabled(false);
 			}
-			tableCellEditor = null;
+			this.tableCellEditor = null;
 			this.row = -1;
-			column = -1;
-			stopEditTimestamp = System.currentTimeMillis();
+			this.column = -1;
+			this.stopEditTimestamp = System.currentTimeMillis();
 			fireEditingStopped();
 			return true;
 		}
@@ -1348,12 +1360,12 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		@Override
 		public void cancelCellEditing() {
 			if (tableCellEditor != null && row != -1 && column != -1) {
-				tableCellEditor.cancelEditing(dataModel.getCell(row, column), row, column);
+				tableCellEditor.cancelEditing(dataModel.getCell(this.row, column), this.row, this.column);
 			}
-			tableCellEditor = null;
-			row = -1;
-			column = -1;
-			stopEditTimestamp = 0;
+			this.tableCellEditor = null;
+			this.row = -1;
+			this.column = -1;
+			this.stopEditTimestamp = 0;
 			fireEditingCanceled();
 		}
 
@@ -1438,6 +1450,21 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			}
 
 			final JComponent component = (JComponent) tableCellEditor.getUiReference();
+
+			//			final KeyStroke enterKey = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0);
+			//			final KeyStroke tabKey = KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0);
+			//			final KeyStroke shiftTabKey = KeyStroke.getKeyStroke(KeyEvent.VK_TAB, KeyEvent.SHIFT_DOWN_MASK);
+			//			final KeyStroke upKey = KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0);
+			//			final KeyStroke downKey = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0);
+			//			final KeyStroke leftKey = KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0);
+			//			final KeyStroke rightKey = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0);
+			//			component.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(enterKey, null);
+			//			component.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(tabKey, null);
+			//			component.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(shiftTabKey, null);
+			//			component.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(upKey, null);
+			//			component.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(downKey, null);
+			//			component.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(leftKey, null);
+			//			component.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(rightKey, null);
 
 			//ensure that editing is stopped when editor get invisible
 			component.addHierarchyListener(new HierarchyListener() {
