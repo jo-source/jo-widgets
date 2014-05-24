@@ -110,8 +110,13 @@ public class TableFactory extends AbstractWidgetFactory implements IWidgetFactor
 		}
 
 		@Override
-		public EditActivation getActivation(final ITableCell cell, final int row, final int column) {
-			return original.getActivation(cell, row, modelSpiAdapter.convertViewToModel(column));
+		public EditActivation getActivation(
+			final ITableCell cell,
+			final int row,
+			final int column,
+			final boolean editMode,
+			final long editModeStopped) {
+			return original.getActivation(cell, row, modelSpiAdapter.convertViewToModel(column), editMode, editModeStopped);
 		}
 
 	}

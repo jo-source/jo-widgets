@@ -37,7 +37,12 @@ public abstract class AbstractTableCellEditorFactory<WIDGET_TYPE extends ITableC
 		ITableCellEditorFactory<WIDGET_TYPE> {
 
 	@Override
-	public EditActivation getActivation(final ITableCell cell, final int row, final int column) {
+	public EditActivation getActivation(
+		final ITableCell cell,
+		final int row,
+		final int column,
+		final boolean editMode,
+		final long editModeStopped) {
 		return EditActivation.DOUBLE_CLICK;
 	}
 

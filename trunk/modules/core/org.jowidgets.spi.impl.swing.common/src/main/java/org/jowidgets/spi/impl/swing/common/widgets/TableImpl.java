@@ -1227,6 +1227,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		private ITableCellEditor tableCellEditor;
 		private int column;
 		private int row;
+		private long stopEditTimestamp;
 
 		public EditorFactoryBasedCellEditor(final ITableCellEditorFactory<? extends ITableCellEditor> editorFactory) {
 			this.editorFactory = editorFactory;
@@ -1253,7 +1254,9 @@ public class TableImpl extends SwingControl implements ITableSpi {
 				final EditActivation activation = editorFactory.getActivation(
 						cell,
 						cellIndices.getRowIndex(),
-						cellIndices.getColumnIndex());
+						cellIndices.getColumnIndex(),
+						isEditing(),
+						stopEditTimestamp);
 				if (EditActivation.DOUBLE_CLICK.equals(activation)) {
 					return SwingUtilities.isLeftMouseButton(mouseEvent) && mouseEvent.getClickCount() == 2;
 				}
@@ -1286,6 +1289,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			tableCellEditor = null;
 			this.row = -1;
 			column = -1;
+			stopEditTimestamp = System.currentTimeMillis();
 			fireEditingStopped();
 			return true;
 		}
@@ -1298,6 +1302,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			tableCellEditor = null;
 			row = -1;
 			column = -1;
+			stopEditTimestamp = 0;
 			fireEditingCanceled();
 		}
 
