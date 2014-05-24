@@ -35,6 +35,8 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -1278,11 +1280,11 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		@Override
 		public boolean stopCellEditing() {
-			if (tableCellEditor != null && row != -1 && column != -1) {
-				tableCellEditor.stopEditing(dataModel.getCell(row, column), row, column);
+			if (tableCellEditor != null && this.row != -1 && this.column != -1) {
+				tableCellEditor.stopEditing(dataModel.getCell(this.row, column), this.row, this.column);
 			}
 			tableCellEditor = null;
-			row = -1;
+			this.row = -1;
 			column = -1;
 			fireEditingStopped();
 			return true;
@@ -1308,7 +1310,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			final int viewColumn) {
 
 			if (isEditing()) {
-				stopEditing();
+				stopCellEditing();
 			}
 
 			this.row = row;
@@ -1342,13 +1344,24 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			tableCellEditor.startEditing(tableCell, row, column);
 			tableCellEditor.requestFocus();
 
-			final int height = tableCellEditor.getPreferredSize().getHeight();
+			final int height = tableCellEditor.getPreferredSize().getHeight() + 1;
 
 			if (table.getRowHeight() < height) {
 				table.setRowHeight(height);
 			}
 
-			return (Component) tableCellEditor.getUiReference();
+			final Component component = (Component) tableCellEditor.getUiReference();
+
+			component.addHierarchyListener(new HierarchyListener() {
+				@Override
+				public void hierarchyChanged(final HierarchyEvent e) {
+					if (!component.isShowing() && tableCellEditor != null) {
+						stopCellEditing();
+					}
+				}
+			});
+
+			return component;
 		}
 	}
 

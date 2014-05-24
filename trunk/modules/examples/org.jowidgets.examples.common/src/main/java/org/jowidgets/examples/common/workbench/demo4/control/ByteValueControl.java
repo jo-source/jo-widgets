@@ -59,14 +59,13 @@ public final class ByteValueControl extends AbstractInputControl<ByteValue> {
 
 		this.focusObservable = new FocusObservable();
 
-		composite.setLayout(new MigLayoutDescriptor("0[grow, 0::]0[]0", "0[]0"));
+		composite.setLayout(new MigLayoutDescriptor("0[grow, 0::]0[]0", "0[grow]0"));
 
 		final IComboBoxSelectionBluePrint<ByteUnit> unitCmbBp = BPF.comboBoxSelection(ByteUnit.values());
 		unitCmbBp.autoCompletionOff().setValue(ByteUnit.MB);
-		this.unitCmb = composite.add(unitCmbBp, "growx");
+		this.unitCmb = composite.add(unitCmbBp, "growy, sgy hg");
 
-		final int height = unitCmb.getPreferredSize().getHeight();
-		this.valueField = composite.add(0, BPF.inputFieldIntegerNumber(), "growx, w 0::, h " + height + "!");
+		this.valueField = composite.add(0, BPF.inputFieldIntegerNumber(), "grow, w 0::, sgy hg");
 
 		this.lastFocus = hasFocus();
 
@@ -172,6 +171,20 @@ public final class ByteValueControl extends AbstractInputControl<ByteValue> {
 		final Dimension valueSize = valueField.getPreferredSize();
 		final Dimension unitSize = unitCmb.getPreferredSize();
 		return new Dimension(valueSize.getWidth() + unitSize.getWidth() + 2, unitSize.getHeight());
+	}
+
+	@Override
+	public void setSize(final Dimension size) {
+		setSize(size.getWidth(), size.getHeight());
+	}
+
+	@Override
+	public void setSize(final int width, final int height) {
+		super.setSize(width, height);
+		final Dimension valueSize = valueField.getSize();
+		final Dimension unitSize = unitCmb.getSize();
+		valueField.setSize(valueSize.getWidth(), height);
+		unitCmb.setSize(unitSize.getWidth(), height);
 	}
 
 	@Override
