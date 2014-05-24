@@ -34,6 +34,7 @@ import org.jowidgets.api.controller.IParentListener;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.command.ActionExecuter;
@@ -52,6 +53,8 @@ public class ButtonImpl extends AbstractButtonSpiWrapper implements IButtonUi, I
 
 	private ActionWidgetSync actionWidgetSync;
 	private ActionExecuter actionExecuter;
+
+	private IImageConstant icon;
 
 	public ButtonImpl(final IButtonSpi buttonSpi, final IButtonDescriptor descriptor) {
 		super(buttonSpi);
@@ -77,6 +80,8 @@ public class ButtonImpl extends AbstractButtonSpiWrapper implements IButtonUi, I
 		});
 
 		setTextCache(descriptor.getText());
+
+		this.icon = descriptor.getIcon();
 	}
 
 	@Override
@@ -146,6 +151,17 @@ public class ButtonImpl extends AbstractButtonSpiWrapper implements IButtonUi, I
 			actionWidgetSync.dispose();
 			actionWidgetSync = null;
 		}
+	}
+
+	@Override
+	public void setIcon(final IImageConstant icon) {
+		this.icon = icon;
+		super.setIcon(icon);
+	}
+
+	@Override
+	public IImageConstant getIcon() {
+		return icon;
 	}
 
 	@Override

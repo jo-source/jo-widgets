@@ -35,8 +35,6 @@ import org.jowidgets.spi.widgets.IButtonSpi;
 
 public abstract class AbstractButtonSpiWrapper extends AbstractTextLabelSpiWrapper implements IButtonCommon {
 
-	private IImageConstant icon;
-
 	public AbstractButtonSpiWrapper(final IButtonSpi widget) {
 		super(widget);
 	}
@@ -48,12 +46,7 @@ public abstract class AbstractButtonSpiWrapper extends AbstractTextLabelSpiWrapp
 
 	@Override
 	public void setIcon(final IImageConstant icon) {
-		this.icon = icon;
 		getWidget().setIcon(icon);
-	}
-
-	public IImageConstant getIcon() {
-		return icon;
 	}
 
 	@Override
