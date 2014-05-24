@@ -34,5 +34,5 @@ public interface ITableCellEditorFactory<WIDGET_TYPE extends ITableCellEditor> {
 
 	WIDGET_TYPE create(ITableCell cell, int row, int column, ICustomWidgetFactory widgetFactory);
 
-	EditActivation getActivation(ITableCell cell, int row, int column);
+	EditActivation getActivation(ITableCell cell, int row, int column, boolean editMode, long editModeStopped);
 }

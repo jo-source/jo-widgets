@@ -169,6 +169,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private ITableCell editTableCell;
 	private int editRowIndex;
 	private int editColumnIndex;
+	private long stopEditTimestamp;
 
 	private Integer rowHeight;
 
@@ -815,6 +816,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		editColumnIndex = -1;
 		editor.setEditor(null);
 		editor.layout();
+		stopEditTimestamp = System.currentTimeMillis();
 	}
 
 	@Override
@@ -1295,7 +1297,9 @@ public class TableImpl extends SwtControl implements ITableSpi {
 							if (EditActivation.SINGLE_CLICK.equals(editorFactory.getActivation(
 									cell,
 									indices.getRowIndex(),
-									indices.getColumnIndex()))) {
+									indices.getColumnIndex(),
+									isEditing(),
+									stopEditTimestamp))) {
 								lastPoint = point;
 								startEdit(indices);
 							}
@@ -1317,7 +1321,9 @@ public class TableImpl extends SwtControl implements ITableSpi {
 							if (EditActivation.DOUBLE_CLICK.equals(editorFactory.getActivation(
 									cell,
 									indices.getRowIndex(),
-									indices.getColumnIndex()))) {
+									indices.getColumnIndex(),
+									isEditing(),
+									stopEditTimestamp))) {
 								lastPoint = point;
 								startEdit(indices);
 							}
