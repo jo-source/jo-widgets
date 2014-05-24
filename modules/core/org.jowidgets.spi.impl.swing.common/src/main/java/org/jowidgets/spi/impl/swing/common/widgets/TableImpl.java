@@ -334,7 +334,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			public void actionPerformed(final ActionEvent evt) {
 				final int selectedRow = table.getSelectedRow();
 				final int selectedColumn = table.getSelectedColumn();
-				editCell(selectedRow, selectedColumn);
+				editCell(selectedRow, table.convertColumnIndexToModel(selectedColumn));
 			}
 		});
 
