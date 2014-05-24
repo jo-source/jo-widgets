@@ -118,6 +118,16 @@ public class JoComboBoxSelection<VALUE_TYPE> extends
 		}
 	}
 
+	@Override
+	public void select() {
+		if (isInitialized()) {
+			getWidget().select();
+		}
+		else {
+			throw new IllegalStateException("This function is not supported for an uninitialized powo. Feel free to implent it");
+		}
+	}
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	//some static blue print creation for convenience purpose from here
 	////////////////////////////////////////////////////////////////////////////////////////////////////

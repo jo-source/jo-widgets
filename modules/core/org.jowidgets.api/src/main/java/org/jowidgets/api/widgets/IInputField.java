@@ -28,7 +28,9 @@
 
 package org.jowidgets.api.widgets;
 
-public interface IInputField<VALUE_TYPE> extends IInputControl<VALUE_TYPE> {
+import org.jowidgets.common.widgets.ISelectable;
+
+public interface IInputField<VALUE_TYPE> extends IInputControl<VALUE_TYPE>, ISelectable {
 
 	void selectAll();
 

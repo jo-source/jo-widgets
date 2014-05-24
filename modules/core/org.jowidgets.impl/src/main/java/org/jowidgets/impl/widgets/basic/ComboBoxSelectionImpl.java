@@ -377,6 +377,11 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 	}
 
 	@Override
+	public void select() {
+		getWidget().select();
+	}
+
+	@Override
 	public void setParent(final IContainer parent) {
 		controlDelegate.setParent(parent);
 	}

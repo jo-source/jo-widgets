@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Nikolaus Moll
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,52 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.widgets.wrapper;
+package org.jowidgets.common.widgets;
 
-import java.util.Collection;
-import java.util.List;
+public interface ISelectable {
 
-import org.jowidgets.api.widgets.IComboBox;
-
-public class ComboBoxWrapper<VALUE_TYPE> extends InputControlWrapper<VALUE_TYPE> implements IComboBox<VALUE_TYPE> {
-
-	public ComboBoxWrapper(final IComboBox<VALUE_TYPE> widget) {
-		super(widget);
-	}
-
-	@Override
-	protected IComboBox<VALUE_TYPE> getWidget() {
-		return (IComboBox<VALUE_TYPE>) super.getWidget();
-	}
-
-	@Override
-	public List<VALUE_TYPE> getElements() {
-		return getWidget().getElements();
-	}
-
-	@Override
-	public void setElements(final Collection<? extends VALUE_TYPE> elements) {
-		getWidget().setElements(elements);
-	}
-
-	@Override
-	public void setElements(final VALUE_TYPE... elements) {
-		getWidget().setElements(elements);
-	}
-
-	@Override
-	public int getSelectedIndex() {
-		return getWidget().getSelectedIndex();
-	}
-
-	@Override
-	public void setSelectedIndex(final int index) {
-		getWidget().setSelectedIndex(index);
-	}
-
-	@Override
-	public void select() {
-		getWidget().select();
-	}
+	void select();
 
 }

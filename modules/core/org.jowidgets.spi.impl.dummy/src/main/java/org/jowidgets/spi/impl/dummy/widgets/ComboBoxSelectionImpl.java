@@ -75,4 +75,9 @@ public class ComboBoxSelectionImpl extends AbstractInputControl implements IComb
 		getUiReference().setElements(elements);
 	}
 
+	@Override
+	public void select() {
+		getUiReference().select();
+	}
+
 }

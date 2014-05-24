@@ -162,6 +162,11 @@ public class TextAreaImpl extends AbstractInputControl implements ITextAreaSpi {
 	}
 
 	@Override
+	public void select() {
+		textArea.selectAll();
+	}
+
+	@Override
 	public void setEditable(final boolean editable) {
 		textArea.setEditable(editable);
 	}

@@ -151,6 +151,11 @@ public class TextFieldImpl extends AbstractTextInputControl {
 	}
 
 	@Override
+	public void select() {
+		getUiReference().selectAll();
+	}
+
+	@Override
 	public void setCaretPosition(final int pos) {
 		getUiReference().setSelection(pos, pos);
 	}

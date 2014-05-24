@@ -479,6 +479,11 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 		textField.selectAll();
 	}
 
+	@Override
+	public void select() {
+		selectAll();
+	}
+
 	private void inputChangedListener() {
 		final String maskingString = String.valueOf(maskingCharacter.charValue());
 		final String separatorString = String.valueOf(separator.charValue());

@@ -173,4 +173,9 @@ public class TextFieldImpl extends AbstractInputControlSpiWrapper implements ITe
 		}
 	}
 
+	@Override
+	public void select() {
+		selectAll();
+	}
+
 }
