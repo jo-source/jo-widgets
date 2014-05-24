@@ -40,6 +40,7 @@ import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IInputDialog;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITable;
+import org.jowidgets.api.widgets.blueprint.ITableBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.AlignmentHorizontal;
@@ -48,8 +49,6 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TablePackPolicy;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
-import org.jowidgets.common.widgets.controller.ITableCellEditEvent;
-import org.jowidgets.common.widgets.controller.ITableCellEditorListener;
 import org.jowidgets.common.widgets.controller.ITableCellEvent;
 import org.jowidgets.common.widgets.controller.ITableCellPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITableCellPopupEvent;
@@ -58,6 +57,9 @@ import org.jowidgets.common.widgets.controller.ITableColumnPopupEvent;
 import org.jowidgets.examples.common.demo.DemoInputDialog1;
 import org.jowidgets.examples.common.demo.DemoMenuProvider;
 import org.jowidgets.examples.common.workbench.base.AbstractDemoView;
+import org.jowidgets.tools.editor.TextFieldCellEditorFactory;
+import org.jowidgets.tools.editor.TextFieldCellEditorFactory.ITableCellEditEvent;
+import org.jowidgets.tools.editor.TextFieldCellEditorFactory.ITableCellEditorListener;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.table.DefaultTableColumn;
 import org.jowidgets.util.ValueHolder;
@@ -88,7 +90,9 @@ public class ViewDemo1 extends AbstractDemoView {
 		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
 		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		table = container.add(bpf.table(tableModel), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		final TextFieldCellEditorFactory editor = new TextFieldCellEditorFactory();
+		final ITableBluePrint tableBp = bpf.table(tableModel).setEditor(editor).setEditable(true);
+		table = container.add(tableBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 		table.pack(TablePackPolicy.HEADER_AND_DATA_ALL);
 
 		final ValueHolder<Integer> currentRow = new ValueHolder<Integer>();
@@ -298,7 +302,7 @@ public class ViewDemo1 extends AbstractDemoView {
 		popupMenuModel.addItem(fitColumnsAction);
 		cellPopupMenuModel.addItem(fitColumnsAction);
 
-		table.addTableCellEditorListener(new ITableCellEditorListener() {
+		editor.addTableCellEditorListener(new ITableCellEditorListener() {
 
 			@Override
 			public void onEdit(final IVetoable veto, final ITableCellEditEvent event) {}

@@ -40,10 +40,6 @@ import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.FocusAdapter;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.events.MouseAdapter;
@@ -52,8 +48,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.events.TraverseListener;
-import org.eclipse.swt.events.VerifyEvent;
-import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
@@ -68,7 +62,6 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolTip;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
@@ -93,7 +86,6 @@ import org.jowidgets.common.types.VirtualKey;
 import org.jowidgets.common.widgets.IControlCommon;
 import org.jowidgets.common.widgets.controller.IKeyEvent;
 import org.jowidgets.common.widgets.controller.IKeyListener;
-import org.jowidgets.common.widgets.controller.ITableCellEditorListener;
 import org.jowidgets.common.widgets.controller.ITableCellListener;
 import org.jowidgets.common.widgets.controller.ITableCellMouseEvent;
 import org.jowidgets.common.widgets.controller.ITableCellPopupDetectionListener;
@@ -106,8 +98,6 @@ import org.jowidgets.common.widgets.editor.ITableCellEditor;
 import org.jowidgets.common.widgets.editor.ITableCellEditorFactory;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.spi.impl.controller.TableCellEditEvent;
-import org.jowidgets.spi.impl.controller.TableCellEditorObservable;
 import org.jowidgets.spi.impl.controller.TableCellMouseEvent;
 import org.jowidgets.spi.impl.controller.TableCellObservable;
 import org.jowidgets.spi.impl.controller.TableCellPopupDetectionObservable;
@@ -144,7 +134,6 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private final TableColumnPopupDetectionObservable tableColumnPopupDetectionObservable;
 	private final TableColumnObservable tableColumnObservable;
 	private final TableSelectionObservable tableSelectionObservable;
-	private final TableCellEditorObservable tableCellEditorObservable;
 
 	private final ColumnSelectionListener columnSelectionListener;
 	private final ColumnControlListener columnControlListener;
@@ -191,7 +180,6 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		this.tableColumnPopupDetectionObservable = new TableColumnPopupDetectionObservable();
 		this.tableColumnObservable = new TableColumnObservable();
 		this.tableSelectionObservable = new TableSelectionObservable();
-		this.tableCellEditorObservable = new TableCellEditorObservable();
 
 		this.dataListener = new DataListener();
 		this.eraseItemListener = new EraseItemListener();
@@ -713,16 +701,6 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		tableSelectionObservable.removeTableSelectionListener(listener);
 	}
 
-	@Override
-	public void addTableCellEditorListener(final ITableCellEditorListener listener) {
-		tableCellEditorObservable.addTableCellEditorListener(listener);
-	}
-
-	@Override
-	public void removeTableCellEditorListener(final ITableCellEditorListener listener) {
-		tableCellEditorObservable.removeTableCellEditorListener(listener);
-	}
-
 	private CellIndices getExternalCellIndices(final Point point) {
 		final TableItem item = table.getItem(point);
 		if (item != null) {
@@ -1056,71 +1034,6 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		return getColumnPermutation().get(viewIndex).intValue();
 	}
 
-	private void activateEditor(final CellIndices indices) {
-		final int rowIndex = indices.getRowIndex();
-		final int columnIndex = indices.getColumnIndex();
-		final int internalIndex = columnIndex + 1;
-
-		final Text textField = new Text(table, SWT.NONE);
-		final TableItem item = table.getItem(rowIndex);
-		textField.setText(item.getText(internalIndex));
-		textField.setSelection(0, textField.getText().length());
-
-		textField.addVerifyListener(new VerifyListener() {
-			@Override
-			public void verifyText(final VerifyEvent verifyEvent) {
-				final String newText = getNewText(textField, verifyEvent);
-				final TableCellEditEvent editEvent = new TableCellEditEvent(rowIndex, columnIndex, newText);
-				final boolean veto = tableCellEditorObservable.fireOnEdit(editEvent);
-				if (veto) {
-					verifyEvent.doit = false;
-				}
-			}
-
-		});
-		textField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(final KeyEvent keyEvent) {
-				final TableCellEditEvent editEvent = new TableCellEditEvent(rowIndex, columnIndex, textField.getText());
-				if (keyEvent.character == SWT.CR) {
-					editFinished(rowIndex, columnIndex, item, textField, editEvent);
-				}
-				else if (keyEvent.character == SWT.ESC) {
-					tableCellEditorObservable.fireEditCanceled(editEvent);
-					textField.dispose();
-				}
-			}
-		});
-		textField.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(final FocusEvent e) {
-				final TableCellEditEvent editEvent = new TableCellEditEvent(rowIndex, columnIndex, textField.getText());
-				editFinished(rowIndex, columnIndex, item, textField, editEvent);
-			}
-		});
-		editor.setEditor(textField, item, internalIndex);
-		textField.setFocus();
-	}
-
-	private void editFinished(
-		final int rowIndex,
-		final int columnIndex,
-		final TableItem item,
-		final Text textField,
-		final TableCellEditEvent editEvent) {
-		final int internalIndex = columnIndex + 1;
-		tableCellEditorObservable.fireEditFinished(editEvent);
-		final String newModelText = dataModel.getCell(rowIndex, columnIndex).getText();
-		item.setText(internalIndex, newModelText);
-		textField.dispose();
-	}
-
-	private String getNewText(final Text textField, final VerifyEvent verifyEvent) {
-		final StringBuilder result = new StringBuilder(textField.getText());
-		result.replace(verifyEvent.start, verifyEvent.end, verifyEvent.text);
-		return result.toString();
-	}
-
 	private static int getStyle(final ITableSetupSpi setup) {
 		int result = SWT.VIRTUAL;
 
@@ -1337,10 +1250,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		}
 
 		private void startEdit(final CellIndices indices) {
-			if (editorFactory == null) {
-				activateEditor(indices);
-			}
-			else {
+			if (editorFactory != null) {
 				editCell(indices.getRowIndex(), indices.getColumnIndex());
 			}
 		}

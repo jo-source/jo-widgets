@@ -37,7 +37,6 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Interval;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TablePackPolicy;
-import org.jowidgets.common.widgets.controller.ITableCellEditorListener;
 import org.jowidgets.common.widgets.controller.ITableCellListener;
 import org.jowidgets.common.widgets.controller.ITableCellPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITableColumnListener;
@@ -228,16 +227,6 @@ public class TableWrapper extends ControlWrapper implements ITable {
 	@Override
 	public void removeTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
 		getWidget().removeTableCellPopupDetectionListener(listener);
-	}
-
-	@Override
-	public void addTableCellEditorListener(final ITableCellEditorListener listener) {
-		getWidget().addTableCellEditorListener(listener);
-	}
-
-	@Override
-	public void removeTableCellEditorListener(final ITableCellEditorListener listener) {
-		getWidget().removeTableCellEditorListener(listener);
 	}
 
 	@Override
