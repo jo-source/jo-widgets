@@ -41,6 +41,7 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITable;
+import org.jowidgets.api.widgets.blueprint.ITableBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableCell;
@@ -48,8 +49,6 @@ import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.widgets.controller.IActionListener;
-import org.jowidgets.common.widgets.controller.ITableCellEditEvent;
-import org.jowidgets.common.widgets.controller.ITableCellEditorListener;
 import org.jowidgets.common.widgets.controller.ITableCellEvent;
 import org.jowidgets.common.widgets.controller.ITableCellListener;
 import org.jowidgets.common.widgets.controller.ITableCellMouseEvent;
@@ -63,6 +62,9 @@ import org.jowidgets.common.widgets.controller.ITableColumnResizeEvent;
 import org.jowidgets.common.widgets.controller.ITableSelectionListener;
 import org.jowidgets.examples.common.demo.DemoMenuProvider;
 import org.jowidgets.examples.common.workbench.base.AbstractDemoView;
+import org.jowidgets.tools.editor.TextFieldCellEditorFactory;
+import org.jowidgets.tools.editor.TextFieldCellEditorFactory.ITableCellEditEvent;
+import org.jowidgets.tools.editor.TextFieldCellEditorFactory.ITableCellEditorListener;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.model.table.AbstractTableDataModel;
 import org.jowidgets.tools.model.table.DefaultTableColumnBuilder;
@@ -123,6 +125,7 @@ public class ViewDemo6 extends AbstractDemoView implements IView {
 			@Override
 			public ITableCell getCell(final int rowIndex, final int columnIndex) {
 				final ITableCellBuilder cellBuilder = new TableCellBuilder();
+				cellBuilder.setEditable(true);
 				cellBuilder.setText("Cell (" + rowIndex + " / " + columnIndex + ")");
 				if (rowIndex % 2 == 0) {
 					cellBuilder.setBackgroundColor(Colors.DEFAULT_TABLE_EVEN_BACKGROUND_COLOR);
@@ -131,7 +134,9 @@ public class ViewDemo6 extends AbstractDemoView implements IView {
 			}
 		};
 
-		final ITable table = container.add(bpf.table(columnModel, dataModel), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+		final TextFieldCellEditorFactory editor = new TextFieldCellEditorFactory();
+		final ITableBluePrint tableBp = bpf.table(columnModel, dataModel).setEditor(editor).setEditable(true);
+		final ITable table = container.add(tableBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
 		table.addTableSelectionListener(new ITableSelectionListener() {
 			@Override
@@ -190,7 +195,7 @@ public class ViewDemo6 extends AbstractDemoView implements IView {
 			}
 		});
 
-		table.addTableCellEditorListener(new ITableCellEditorListener() {
+		editor.addTableCellEditorListener(new ITableCellEditorListener() {
 
 			@Override
 			public void onEdit(final IVetoable veto, final ITableCellEditEvent event) {

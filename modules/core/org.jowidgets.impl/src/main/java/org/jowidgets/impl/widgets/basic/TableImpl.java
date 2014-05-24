@@ -42,13 +42,9 @@ import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.descriptor.ITableDescriptor;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.IVetoable;
 import org.jowidgets.common.types.Interval;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TablePackPolicy;
-import org.jowidgets.common.widgets.controller.ITableCellEditEvent;
-import org.jowidgets.common.widgets.controller.ITableCellEditorListener;
-import org.jowidgets.common.widgets.controller.ITableCellEvent;
 import org.jowidgets.common.widgets.controller.ITableCellListener;
 import org.jowidgets.common.widgets.controller.ITableCellMouseEvent;
 import org.jowidgets.common.widgets.controller.ITableCellPopupDetectionListener;
@@ -80,7 +76,6 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 
 	private final TableCellObservableSpiAdapter cellObservable;
 	private final TableCellPopupDetectionObservableSpiAdapter cellPopupDetectionObservable;
-	private final TableCellEditorObservableSpiAdapter cellEditorObservable;
 	private final TableColumnObservableSpiAdapter columnObservable;
 	private final TableColumnPopupDetectionObservableSpiAdapter columnPopupDetectionObservable;
 	private final TableSelectionObservable tableSelectionObservable;
@@ -129,25 +124,6 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 			@Override
 			public void popupDetected(final ITableCellPopupEvent event) {
 				cellPopupDetectionObservable.firePopupDetected(event, modelSpiAdapter);
-			}
-		});
-
-		this.cellEditorObservable = new TableCellEditorObservableSpiAdapter();
-		getWidget().addTableCellEditorListener(new ITableCellEditorListener() {
-
-			@Override
-			public void onEdit(final IVetoable veto, final ITableCellEditEvent event) {
-				cellEditorObservable.fireOnEdit(veto, event, modelSpiAdapter);
-			}
-
-			@Override
-			public void editFinished(final ITableCellEditEvent event) {
-				cellEditorObservable.fireEditFinished(event, modelSpiAdapter);
-			}
-
-			@Override
-			public void editCanceled(final ITableCellEvent event) {
-				cellEditorObservable.fireEditCanceled(event, modelSpiAdapter);
 			}
 		});
 
@@ -441,16 +417,6 @@ public class TableImpl extends AbstractControlSpiWrapper implements ITable {
 	@Override
 	public void removeTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
 		cellPopupDetectionObservable.removeTableCellPopupDetectionListener(listener);
-	}
-
-	@Override
-	public void addTableCellEditorListener(final ITableCellEditorListener listener) {
-		cellEditorObservable.addTableCellEditorListener(listener);
-	}
-
-	@Override
-	public void removeTableCellEditorListener(final ITableCellEditorListener listener) {
-		cellEditorObservable.removeTableCellEditorListener(listener);
 	}
 
 	@Override

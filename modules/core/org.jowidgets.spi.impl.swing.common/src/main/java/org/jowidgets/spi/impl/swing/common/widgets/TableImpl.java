@@ -57,12 +57,10 @@ import java.util.Set;
 import javax.swing.AbstractAction;
 import javax.swing.AbstractCellEditor;
 import javax.swing.BorderFactory;
-import javax.swing.DefaultCellEditor;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
@@ -75,9 +73,6 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.PlainDocument;
 
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
@@ -104,9 +99,6 @@ import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.common.widgets.controller.IKeyEvent;
 import org.jowidgets.common.widgets.controller.IKeyListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
-import org.jowidgets.common.widgets.controller.ITableCellEditEvent;
-import org.jowidgets.common.widgets.controller.ITableCellEditorListener;
-import org.jowidgets.common.widgets.controller.ITableCellEvent;
 import org.jowidgets.common.widgets.controller.ITableCellListener;
 import org.jowidgets.common.widgets.controller.ITableCellMouseEvent;
 import org.jowidgets.common.widgets.controller.ITableCellPopupDetectionListener;
@@ -123,9 +115,6 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.controller.FocusObservable;
 import org.jowidgets.spi.impl.controller.KeyObservable;
 import org.jowidgets.spi.impl.controller.PopupDetectionObservable;
-import org.jowidgets.spi.impl.controller.TableCellEditEvent;
-import org.jowidgets.spi.impl.controller.TableCellEditorObservable;
-import org.jowidgets.spi.impl.controller.TableCellEvent;
 import org.jowidgets.spi.impl.controller.TableCellMouseEvent;
 import org.jowidgets.spi.impl.controller.TableCellObservable;
 import org.jowidgets.spi.impl.controller.TableCellPopupDetectionObservable;
@@ -161,7 +150,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	private final ITableDataModel dataModel;
 	private final ITableColumnModelSpi columnModel;
 	private final CellRenderer cellRenderer;
-	private final TableCellEditor cellEditor;
+	private final EditorFactoryBasedCellEditor cellEditor;
 	private final TableCellRenderer headerRenderer;
 
 	private final PopupDetectionObservable popupDetectionObservable;
@@ -170,7 +159,6 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	private final TableColumnPopupDetectionObservable tableColumnPopupDetectionObservable;
 	private final TableColumnObservable tableColumnObservable;
 	private final TableSelectionObservable tableSelectionObservable;
-	private final TableCellEditorObservable tableCellEditorObservable;
 	private final FocusObservable focusObservable;
 	private final KeyObservable keyObservable;
 	private final KeyListener keyListener;
@@ -185,8 +173,6 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 	private final boolean columnsResizeable;
 	private final boolean hasBorder;
-
-	private EditorFactoryBasedCellEditor factoryBasedEditor;
 
 	private SwingTableModel swingTableModel;
 	private ArrayList<Integer> lastColumnPermutation;
@@ -205,11 +191,10 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		this.cellRenderer = new CellRenderer();
 
 		if (setup.getEditor() != null) {
-			this.factoryBasedEditor = new EditorFactoryBasedCellEditor(setup.getEditor());
-			this.cellEditor = factoryBasedEditor;
+			this.cellEditor = new EditorFactoryBasedCellEditor(setup.getEditor());
 		}
 		else {
-			this.cellEditor = new CellEditor();
+			this.cellEditor = null;
 		}
 
 		this.popupDetectionObservable = new PopupDetectionObservable();
@@ -218,7 +203,6 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		this.tableColumnPopupDetectionObservable = new TableColumnPopupDetectionObservable();
 		this.tableColumnObservable = new TableColumnObservable();
 		this.tableSelectionObservable = new TableSelectionObservable();
-		this.tableCellEditorObservable = new TableCellEditorObservable();
 		this.focusObservable = new FocusObservable();
 
 		this.tableColumnResizeListener = new TableColumnResizeListener();
@@ -360,24 +344,24 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 	@Override
 	public void stopEditing() {
-		if (factoryBasedEditor != null) {
-			factoryBasedEditor.stopCellEditing();
+		if (cellEditor != null) {
+			cellEditor.stopCellEditing();
+			table.editingStopped(null);
 		}
-		table.editingStopped(null);
 	}
 
 	@Override
 	public void cancelEditing() {
-		if (factoryBasedEditor != null) {
-			factoryBasedEditor.cancelCellEditing();
+		if (cellEditor != null) {
+			cellEditor.cancelCellEditing();
+			table.editingCanceled(null);
 		}
-		table.editingCanceled(null);
 	}
 
 	@Override
 	public boolean isEditing() {
-		if (factoryBasedEditor != null) {
-			return factoryBasedEditor.isEditing();
+		if (cellEditor != null) {
+			return cellEditor.isEditing();
 		}
 		else {
 			return false;
@@ -745,16 +729,6 @@ public class TableImpl extends SwingControl implements ITableSpi {
 	@Override
 	public void removeTableSelectionListener(final ITableSelectionListener listener) {
 		tableSelectionObservable.removeTableSelectionListener(listener);
-	}
-
-	@Override
-	public void addTableCellEditorListener(final ITableCellEditorListener listener) {
-		tableCellEditorObservable.addTableCellEditorListener(listener);
-	}
-
-	@Override
-	public void removeTableCellEditorListener(final ITableCellEditorListener listener) {
-		tableCellEditorObservable.removeTableCellEditorListener(listener);
 	}
 
 	private CellIndices getCellIndices(final MouseEvent event) {
@@ -1651,128 +1625,6 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		private int getColum() {
 			return colum;
-		}
-
-	}
-
-	final class CellEditor extends DefaultCellEditor {
-
-		private static final long serialVersionUID = -5014746984033398117L;
-
-		private int currentRow;
-		private int currentColumn;
-
-		public CellEditor() {
-			super(new JTextField());
-		}
-
-		@Override
-		public Component getTableCellEditorComponent(
-			final JTable table,
-			final Object value,
-			final boolean isSelected,
-			final int row,
-			final int column) {
-
-			this.currentRow = row;
-			this.currentColumn = column;
-
-			final JTextField textField = (JTextField) super.getTableCellEditorComponent(table, value, isSelected, row, column);
-			textField.setDocument(new TableCellDocument(row, column));
-
-			final String text = dataModel.getCell(row, column).getText();
-			if (text != null) {
-
-				SwingUtilities.invokeLater(new Runnable() {
-					@Override
-					public void run() {
-						startEditing(textField, text, row, column);
-					}
-				});
-
-			}
-			else {
-				textField.setText(null);
-			}
-
-			return textField;
-		}
-
-		@Override
-		public int getClickCountToStart() {
-			return 2;
-		}
-
-		@Override
-		public boolean stopCellEditing() {
-			final String text = ((JTextField) getComponent()).getText();
-			final ITableCellEditEvent editEvent = new TableCellEditEvent(currentRow, currentColumn, text);
-			tableCellEditorObservable.fireEditFinished(editEvent);
-			return super.stopCellEditing();
-		}
-
-		@Override
-		public void cancelCellEditing() {
-			final ITableCellEvent event = new TableCellEvent(currentRow, currentColumn);
-			tableCellEditorObservable.fireEditCanceled(event);
-			super.cancelCellEditing();
-		}
-
-		private void startEditing(final JTextField textField, final String text, final int row, final int column) {
-			textField.setText(text);
-			textField.selectAll();
-		}
-
-		@Override
-		public boolean isCellEditable(final EventObject evt) {
-			if (!editable) {
-				return false;
-			}
-			else if (evt instanceof MouseEvent) {
-				return ((MouseEvent) evt).getClickCount() >= 2;
-			}
-			else {
-				return false;
-			}
-		}
-
-	}
-
-	/**
-	 * This class implements the editor veto capabilities.
-	 * Limitation: If selected text is replaced by new text, and new input fails, selected text stays removed and won't be
-	 * restored
-	 */
-	final class TableCellDocument extends PlainDocument {
-
-		private static final long serialVersionUID = -3417284499762627374L;
-		private final int row;
-		private final int column;
-
-		public TableCellDocument(final int row, final int column) {
-			this.row = row;
-			this.column = column;
-		}
-
-		@Override
-		public void remove(final int offset, final int length) throws BadLocationException {
-			final String text = getText(0, offset) + getText(offset + length, getLength() - (offset + length));
-			if (!fireEditEvent(text)) {
-				super.remove(offset, length);
-			}
-		}
-
-		@Override
-		public void insertString(final int offset, final String str, final AttributeSet a) throws BadLocationException {
-			final String text = getText(0, offset) + str + getText(offset, getLength() - offset);
-			if (!fireEditEvent(text)) {
-				super.insertString(offset, str, a);
-			}
-		}
-
-		private boolean fireEditEvent(final String text) {
-			final ITableCellEditEvent editEvent = new TableCellEditEvent(row, column, text);
-			return tableCellEditorObservable.fireOnEdit(editEvent);
 		}
 
 	}

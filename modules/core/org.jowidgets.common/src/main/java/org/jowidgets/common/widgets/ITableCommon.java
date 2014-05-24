@@ -35,7 +35,6 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Interval;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TablePackPolicy;
-import org.jowidgets.common.widgets.controller.ITableCellEditorObservable;
 import org.jowidgets.common.widgets.controller.ITableCellObservable;
 import org.jowidgets.common.widgets.controller.ITableCellPopupDetectionObservable;
 import org.jowidgets.common.widgets.controller.ITableColumnObservable;
@@ -46,7 +45,6 @@ public interface ITableCommon extends
 		ITableSelectionObservable,
 		ITableCellObservable,
 		ITableCellPopupDetectionObservable,
-		ITableCellEditorObservable,
 		ITableColumnObservable,
 		ITableColumnPopupDetectionObservable,
 		IControlCommon {
