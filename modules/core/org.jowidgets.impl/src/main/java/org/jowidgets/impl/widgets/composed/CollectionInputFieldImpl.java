@@ -46,7 +46,6 @@ import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputDialogBluePrint;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.ICollectionInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ICollectionInputDialogSetup;
 import org.jowidgets.common.color.IColorConstant;
@@ -70,6 +69,7 @@ import org.jowidgets.tools.controller.KeyAdapter;
 import org.jowidgets.tools.validation.CompoundValidator;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
+import org.jowidgets.tools.widgets.blueprint.BPF;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.EmptyCheck;
@@ -91,6 +91,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 	private final boolean dublicatesAllowed;
 	private final IInputField<String> textField;
 	private final IButton editButton;
+	private final IComposite editButtonContainer;
 	private final IConverter<ELEMENT_TYPE> converter;
 	private final IObjectStringConverter<ELEMENT_TYPE> objectStringConverter;
 	private final Character separator;
@@ -142,10 +143,8 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 		this.inputObservable = new InputObservable();
 		this.compoundValidator = new CompoundValidator<Collection<ELEMENT_TYPE>>();
 
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		this.textField = composite.add(bpf.inputFieldString(), "grow, w 0::, sgy hg");
+		this.textField = composite.add(BPF.inputFieldString(), "grow, w 0::, sgy hg");
 		textField.addInputListener(new IInputListener() {
-
 			@Override
 			public void inputChanged() {
 				inputChangedListener();
@@ -191,19 +190,22 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 		});
 
 		if (inputDialogSetup != null) {
-			inputDialogBp = bpf.collectionInputDialog(inputDialogSetup.getCollectionInputControlSetup());
+			inputDialogBp = BPF.collectionInputDialog(inputDialogSetup.getCollectionInputControlSetup());
 			inputDialogBp.setSetup(inputDialogSetup);
 			inputDialogBp.setValidator(setup.getValidator());
 
-			final IButtonBluePrint buttonBp = bpf.button();
+			final IButtonBluePrint buttonBp = BPF.button();
 			if (setup.getEditButtonIcon() != null) {
 				buttonBp.setIcon(setup.getEditButtonIcon());
-				this.editButton = composite.add(buttonBp);
+
 			}
 			else {
 				buttonBp.setText(EDIT.get());
-				this.editButton = composite.add(buttonBp);
 			}
+
+			editButtonContainer = composite.add(BPF.composite());
+			this.editButton = editButtonContainer.add(buttonBp);
+			editButtonContainer.setLayout(new EditButtonConatinerLayouterFactory());
 
 			this.editButton.addActionListener(new IActionListener() {
 				@Override
@@ -229,6 +231,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 		else {
 			composite.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow]0"));
 			this.inputDialogBp = null;
+			this.editButtonContainer = null;
 			this.editButton = null;
 		}
 
@@ -574,7 +577,7 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 				this.buttonWidth = fieldSize.getHeight();
 			}
 			else {
-				this.buttonWidth = editButton.getPreferredSize().getWidth();
+				this.buttonWidth = editButtonContainer.getPreferredSize().getWidth();
 			}
 
 			this.preferredSize = new Dimension(fieldSize.getWidth() + buttonWidth, fieldSize.getHeight());
@@ -599,8 +602,8 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 			}
 			final int textFieldWidth = clientWidht - newButtonWidth;
 
-			editButton.setPosition(clientArea.getX() + textFieldWidth - 1, clientArea.getY() - 1);
-			editButton.setSize(new Dimension(newButtonWidth + 2, clientHeight + 2));
+			editButtonContainer.setPosition(clientArea.getX() + textFieldWidth, clientArea.getY());
+			editButtonContainer.setSize(new Dimension(newButtonWidth, clientHeight));
 
 			textField.setPosition(clientArea.getX(), clientArea.getY());
 			textField.setSize(new Dimension(textFieldWidth, clientHeight));
@@ -622,6 +625,59 @@ public class CollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper imple
 		@Override
 		public Dimension getMaxSize() {
 			return maxSize;
+		}
+	}
+
+	private final class EditButtonConatinerLayouterFactory implements ILayoutFactory<ILayouter> {
+
+		@Override
+		public ILayouter create(final IContainer container) {
+			return new EditButtonConatinerLayouter(container);
+		}
+
+	}
+
+	private final class EditButtonConatinerLayouter implements ILayouter {
+
+		private final IContainer container;
+
+		private final Dimension preferredSize;
+
+		private EditButtonConatinerLayouter(final IContainer container) {
+
+			this.container = container;
+
+			this.preferredSize = editButton.getPreferredSize();
+		}
+
+		@Override
+		public void layout() {
+			final Rectangle clientArea = container.getClientArea();
+
+			final Dimension clientSize = clientArea.getSize();
+			final int clientWidht = clientSize.getWidth();
+			final int clientHeight = clientSize.getHeight();
+
+			editButton.setPosition(clientArea.getX() - 1, clientArea.getY() - 1);
+			editButton.setSize(new Dimension(clientWidht + 2, clientHeight + 2));
+		}
+
+		@Override
+		public void invalidate() {}
+
+		@Override
+		public Dimension getPreferredSize() {
+			return preferredSize;
+		}
+
+		@Override
+		public Dimension getMinSize() {
+			return preferredSize;
+		}
+
+		@Override
+		public Dimension getMaxSize() {
+			return preferredSize;
 		}
 	}
 
