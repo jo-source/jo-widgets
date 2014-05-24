@@ -48,6 +48,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.EventObject;
 import java.util.HashSet;
 import java.util.List;
@@ -57,6 +58,7 @@ import javax.swing.AbstractAction;
 import javax.swing.AbstractCellEditor;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -619,6 +621,16 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			else {
 				selectionModel.clearSelection();
 			}
+		}
+	}
+
+	private void scrollToCell(final int rowIndex, final int columnIndex) {
+		Assert.paramInBounds(table.getRowCount() - 1, rowIndex, "rowIndex");
+		Assert.paramInBounds(table.getColumnCount() - 1, columnIndex, "columnIndex");
+		final Rectangle rectangle = table.getCellRect(rowIndex, columnIndex, false);
+		final Rectangle visibleRectangle = table.getVisibleRect();
+		if (!visibleRectangle.contains(rectangle)) {
+			table.scrollRectToVisible(rectangle);
 		}
 	}
 
@@ -1376,11 +1388,43 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 				@Override
 				public void keyPressed(final IKeyEvent event) {
-					if (VirtualKey.ESC.equals(event.getVirtualKey())) {
-						cancelCellEditing();
+					final boolean alt = event.getModifier().contains(Modifier.ALT);
+					final boolean ctrl = event.getModifier().contains(Modifier.CTRL);
+					final boolean shift = event.getModifier().contains(Modifier.SHIFT);
+
+					final boolean enter = VirtualKey.ENTER.equals(event.getVirtualKey());
+					final boolean esc = VirtualKey.ESC.equals(event.getVirtualKey());
+
+					boolean left = VirtualKey.ARROW_LEFT.equals(event.getVirtualKey()) && alt;
+					left = left || (VirtualKey.TAB.equals(event.getVirtualKey()) && shift);
+
+					boolean right = VirtualKey.ARROW_RIGHT.equals(event.getVirtualKey()) && alt;
+					right = right || (VirtualKey.TAB.equals(event.getVirtualKey()) && !shift);
+
+					final boolean up = VirtualKey.ARROW_UP.equals(event.getVirtualKey()) && alt;
+
+					final boolean down = VirtualKey.ARROW_DOWN.equals(event.getVirtualKey()) && alt;
+
+					if (enter && ctrl) {
+						stopEditing();
 					}
-					else if (VirtualKey.ENTER.equals(event.getVirtualKey()) && event.getModifier().contains(Modifier.CTRL)) {
-						stopCellEditing();
+					if (enter) {
+						navigateDownLeft();
+					}
+					else if (esc) {
+						cancelEditing();
+					}
+					else if (right) {
+						navigateRight();
+					}
+					else if (left) {
+						navigateLeft();
+					}
+					else if (up) {
+						navigateUp();
+					}
+					else if (down) {
+						navigateDown();
 					}
 				}
 			});
@@ -1393,7 +1437,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 				table.setRowHeight(height);
 			}
 
-			final Component component = (Component) tableCellEditor.getUiReference();
+			final JComponent component = (JComponent) tableCellEditor.getUiReference();
 
 			//ensure that editing is stopped when editor get invisible
 			component.addHierarchyListener(new HierarchyListener() {
@@ -1421,6 +1465,136 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			component.addFocusListener(focusListener);
 
 			return component;
+		}
+
+		private boolean navigateRight() {
+			if (isEditing()) {
+				return navigateRight(row, row, convertColumnIndexToView(column));
+			}
+			else {
+				return false;
+			}
+		}
+
+		private boolean navigateDown() {
+			if (isEditing()) {
+				return navigateDown(row, row, convertColumnIndexToView(column));
+			}
+			else {
+				return false;
+			}
+		}
+
+		private boolean navigateLeft() {
+			if (isEditing()) {
+				return navigateLeft(row, row, convertColumnIndexToView(column));
+			}
+			else {
+				return false;
+			}
+		}
+
+		private boolean navigateUp() {
+			if (isEditing()) {
+				return navigateUp(row, row, convertColumnIndexToView(column));
+			}
+			else {
+				return false;
+			}
+		}
+
+		private boolean navigateDownLeft() {
+			if (isEditing()) {
+				return navigateDown(row, row, 0);
+			}
+			else {
+				return false;
+			}
+		}
+
+		private boolean navigateRight(final int startRow, final int row, final int viewColumnIndex) {
+			if (viewColumnIndex + 1 < columnModel.getColumnCount()) {
+				if (editCell(row, convertColumnIndexToModel(viewColumnIndex + 1))) {
+					scrollToCell(row, convertColumnIndexToModel(viewColumnIndex + 1));
+					setSelection(Collections.singletonList(Integer.valueOf(row)));
+					return true;
+				}
+				else {
+					return navigateRight(startRow, row, viewColumnIndex + 1);
+				}
+			}
+			else if (row - startRow < 2) {
+				return navigateDown(startRow, row, 0);
+			}
+			else {
+				return false;
+			}
+		}
+
+		private boolean navigateDown(final int startRow, final int row, final int viewColumnIndex) {
+			if (dataModel.getRowCount() > row + 1) {
+				if (editCell(row + 1, convertColumnIndexToModel(viewColumnIndex))) {
+					scrollToCell(row + 1, convertColumnIndexToModel(viewColumnIndex));
+					setSelection(Collections.singletonList(Integer.valueOf(row + 1)));
+					return true;
+				}
+				else if (row - startRow < 2) {
+					setSelection(Collections.singletonList(Integer.valueOf(row + 1)));
+					return navigateRight(startRow, row + 1, viewColumnIndex);
+				}
+				else {
+					return false;
+				}
+			}
+			else {
+				return false;
+			}
+		}
+
+		private boolean navigateLeft(final int startRow, final int row, final int viewColumnIndex) {
+			if (viewColumnIndex > 0) {
+				if (editCell(row, convertColumnIndexToModel(viewColumnIndex - 1))) {
+					scrollToCell(row, convertColumnIndexToModel(viewColumnIndex - 1));
+					setSelection(Collections.singletonList(Integer.valueOf(row)));
+					return true;
+				}
+				else {
+					return navigateLeft(startRow, row, viewColumnIndex - 1);
+				}
+			}
+			else if (startRow - row < 2) {
+				return navigateUp(startRow, row, columnModel.getColumnCount() - 1);
+			}
+			else {
+				return false;
+			}
+		}
+
+		private boolean navigateUp(final int startRow, final int row, final int viewColumnIndex) {
+			if (row > 0) {
+				if (editCell(row - 1, convertColumnIndexToModel(viewColumnIndex))) {
+					scrollToCell(row - 1, convertColumnIndexToModel(viewColumnIndex));
+					setSelection(Collections.singletonList(Integer.valueOf(row - 1)));
+					return true;
+				}
+				else if (startRow - row < 2) {
+					return navigateLeft(startRow, row - 1, viewColumnIndex);
+				}
+				else {
+					return false;
+				}
+			}
+			else {
+				return false;
+			}
+		}
+
+		private int convertColumnIndexToView(final int modelIndex) {
+			return table.convertColumnIndexToView(modelIndex);
+		}
+
+		private int convertColumnIndexToModel(final int viewIndex) {
+			return table.convertColumnIndexToModel(viewIndex);
 		}
 	}
 
