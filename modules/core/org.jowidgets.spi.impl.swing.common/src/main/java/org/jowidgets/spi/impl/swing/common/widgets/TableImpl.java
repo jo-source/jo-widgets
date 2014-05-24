@@ -33,6 +33,8 @@ import java.awt.Component;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.HierarchyEvent;
@@ -51,6 +53,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.AbstractAction;
 import javax.swing.AbstractCellEditor;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
@@ -58,6 +61,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
@@ -143,6 +147,7 @@ import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
 import org.jowidgets.util.ArrayUtils;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.ValueHolder;
 import org.jowidgets.util.event.IObservableCallback;
 
 public class TableImpl extends SwingControl implements ITableSpi {
@@ -316,6 +321,21 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			table.setTransferHandler(null);
 		}
 
+		table.setSurrendersFocusOnKeystroke(true);
+		final KeyStroke enterKey = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0);
+		table.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(enterKey, "Action.enter");
+		table.getActionMap().put("Action.enter", new AbstractAction() {
+
+			private static final long serialVersionUID = -6159891640633692648L;
+
+			@Override
+			public void actionPerformed(final ActionEvent evt) {
+				final int selectedRow = table.getSelectedRow();
+				final int selectedColumn = table.getSelectedColumn();
+				editCell(selectedRow, selectedColumn);
+			}
+		});
+
 		getUiReference().addMouseListener(tableCellMenuDetectListener);
 		getUiReference().setBorder(BorderFactory.createEmptyBorder());
 		getUiReference().setViewportBorder(BorderFactory.createEmptyBorder());
@@ -328,7 +348,9 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 	@Override
 	public boolean editCell(final int row, final int column) {
-		return table.editCellAt(row, column);
+		final int viewColumnIndex = table.convertColumnIndexToView(column);
+		final StartEditEvent event = new StartEditEvent(table, row, viewColumnIndex);
+		return table.editCellAt(row, viewColumnIndex, event);
 	}
 
 	@Override
@@ -343,7 +365,12 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 	@Override
 	public boolean isEditing() {
-		return factoryBasedEditor.isEditing();
+		if (factoryBasedEditor != null) {
+			return factoryBasedEditor.isEditing();
+		}
+		else {
+			return false;
+		}
 	}
 
 	@Override
@@ -1247,10 +1274,22 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			if (event == null) {
 				return true;
 			}
-			if (event instanceof MouseEvent) {
+			else if (event instanceof StartEditEvent) {
+				final StartEditEvent startEditEvent = (StartEditEvent) event;
+				final int rowIndex = startEditEvent.getRow();
+				final int columnIndex = table.convertColumnIndexToModel(startEditEvent.getColum());
+				final ITableCell cell = dataModel.getCell(rowIndex, columnIndex);
+				return cell.isEditable() && editable;
+			}
+			else if (event instanceof MouseEvent) {
 				final MouseEvent mouseEvent = (MouseEvent) event;
 				final CellIndices cellIndices = getCellIndices(mouseEvent);
 				final ITableCell cell = dataModel.getCell(cellIndices.getRowIndex(), cellIndices.getColumnIndex());
+
+				if (!cell.isEditable() || !editable) {
+					return false;
+				}
+
 				final EditActivation activation = editorFactory.getActivation(
 						cell,
 						cellIndices.getRowIndex(),
@@ -1264,7 +1303,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 					return SwingUtilities.isLeftMouseButton(mouseEvent) && mouseEvent.getClickCount() == 1;
 				}
 			}
-			if (event instanceof KeyEvent) {
+			else if (event instanceof KeyEvent) {
 				if (isEditing() || dataModel.getRowCount() == 0) {
 					return false;
 				}
@@ -1347,7 +1386,6 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			});
 
 			tableCellEditor.startEditing(tableCell, row, column);
-			tableCellEditor.requestFocus();
 
 			final int height = tableCellEditor.getPreferredSize().getHeight() + 1;
 
@@ -1357,14 +1395,30 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 			final Component component = (Component) tableCellEditor.getUiReference();
 
+			//ensure that editing is stopped when editor get invisible
 			component.addHierarchyListener(new HierarchyListener() {
 				@Override
 				public void hierarchyChanged(final HierarchyEvent e) {
-					if (!component.isShowing() && tableCellEditor != null) {
+					if (tableCellEditor != null && !component.isShowing()) {
 						stopCellEditing();
 					}
 				}
 			});
+
+			//ensure that cell editor get the focus when swing auto focus gives the focus to the
+			//component, but the component is a container that wraps other input controls
+			final ValueHolder<FocusListener> focusListenerHolder = new ValueHolder<FocusListener>();
+			final FocusAdapter focusListener = new FocusAdapter() {
+				@Override
+				public void focusGained(final FocusEvent e) {
+					component.removeFocusListener(focusListenerHolder.get());
+					if (tableCellEditor != null) {
+						tableCellEditor.requestFocus();
+					}
+				}
+			};
+			focusListenerHolder.set(focusListener);
+			component.addFocusListener(focusListener);
 
 			return component;
 		}
@@ -1375,6 +1429,29 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE create(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
 			return factory.create(table, descriptor);
 		}
+	}
+
+	private final class StartEditEvent extends EventObject {
+
+		private static final long serialVersionUID = -1143486782609023655L;
+
+		private final int row;
+		private final int colum;
+
+		private StartEditEvent(final Object source, final int row, final int colum) {
+			super(source);
+			this.row = row;
+			this.colum = colum;
+		}
+
+		private int getRow() {
+			return row;
+		}
+
+		private int getColum() {
+			return colum;
+		}
+
 	}
 
 	final class CellEditor extends DefaultCellEditor {
