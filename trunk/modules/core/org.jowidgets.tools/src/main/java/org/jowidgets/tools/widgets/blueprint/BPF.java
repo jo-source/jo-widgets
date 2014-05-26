@@ -201,6 +201,10 @@ public final class BPF {
 		return Toolkit.getBluePrintFactory().buttonCancel();
 	}
 
+	public static IButtonBluePrint buttonSave() {
+		return Toolkit.getBluePrintFactory().buttonSave();
+	}
+
 	public static ICheckBoxBluePrint checkBox() {
 		return Toolkit.getBluePrintFactory().checkBox();
 	}

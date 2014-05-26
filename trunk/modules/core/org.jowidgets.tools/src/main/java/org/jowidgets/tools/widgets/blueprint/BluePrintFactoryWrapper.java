@@ -307,6 +307,11 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	}
 
 	@Override
+	public IButtonBluePrint buttonSave() {
+		return bluePrintFactory.buttonSave();
+	}
+
+	@Override
 	public IButtonBluePrint buttonCancel() {
 		return bluePrintFactory.buttonCancel();
 	}
