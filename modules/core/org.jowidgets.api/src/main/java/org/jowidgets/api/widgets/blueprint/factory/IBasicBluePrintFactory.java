@@ -81,6 +81,8 @@ public interface IBasicBluePrintFactory extends IBasicSimpleBluePrintFactory {
 
 	IButtonBluePrint buttonCancel();
 
+	IButtonBluePrint buttonSave();
+
 	IButtonBluePrint buttonClose();
 
 	IButtonBluePrint buttonDetails();

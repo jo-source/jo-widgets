@@ -58,7 +58,7 @@ import org.jowidgets.util.ITypedKey;
 
 public final class MenuModelKeyBinding {
 
-	private final Collection<? extends IMenuModel> menus;
+	private final Collection<IMenuModel> menus;
 	private final IKeyObservable sourceKeyObservable;
 	private final IWidget sourceWidget;
 
@@ -150,6 +150,11 @@ public final class MenuModelKeyBinding {
 			}
 		}
 		return null;
+	}
+
+	public void addMenu(final IMenuModel menu) {
+		menus.add(menu);
+		updateActionsMapLater();
 	}
 
 	public void dispose() {

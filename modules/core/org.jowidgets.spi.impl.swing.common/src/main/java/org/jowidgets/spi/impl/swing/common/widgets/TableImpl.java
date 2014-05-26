@@ -806,6 +806,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 		private void fireMenuDetect(final MouseEvent e) {
 			if (e.isPopupTrigger()) {
+				stopEditing();
 				final Point point = new Point(e.getX(), e.getY());
 
 				final Point popupPosition = new Point(e.getLocationOnScreen());
