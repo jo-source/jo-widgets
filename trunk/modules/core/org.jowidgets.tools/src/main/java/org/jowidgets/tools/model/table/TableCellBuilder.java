@@ -79,6 +79,18 @@ public class TableCellBuilder implements ITableCellBuilder {
 	}
 
 	@Override
+	public ITableCellBuilder setSelectedForegroundColor(final IColorConstant foregroundColor) {
+		builder.setSelectedForegroundColor(foregroundColor);
+		return this;
+	}
+
+	@Override
+	public ITableCellBuilder setSelectedBackgroundColor(final IColorConstant backgroundColor) {
+		builder.setSelectedBackgroundColor(backgroundColor);
+		return this;
+	}
+
+	@Override
 	public final ITableCellBuilder setMarkup(final Markup markup) {
 		builder.setMarkup(markup);
 		return this;

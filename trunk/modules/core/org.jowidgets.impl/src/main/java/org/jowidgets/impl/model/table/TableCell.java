@@ -41,6 +41,8 @@ final class TableCell implements ITableCell {
 	private Markup markup;
 	private IColorConstant foregroundColor;
 	private IColorConstant backgroundColor;
+	private final IColorConstant selectedForegroundColor;
+	private final IColorConstant selectedBackgroundColor;
 	private boolean editable;
 
 	TableCell(final ITableCell cell) {
@@ -51,6 +53,8 @@ final class TableCell implements ITableCell {
 			cell.getMarkup(),
 			cell.getForegroundColor(),
 			cell.getBackgroundColor(),
+			cell.getSelectedForegroundColor(),
+			cell.getSelectedBackgroundColor(),
 			cell.isEditable());
 	}
 
@@ -61,6 +65,8 @@ final class TableCell implements ITableCell {
 		final Markup markup,
 		final IColorConstant foregroundColor,
 		final IColorConstant backgroundColor,
+		final IColorConstant selectedForegroundColor,
+		final IColorConstant selectedBackgroundColor,
 		final boolean editable) {
 
 		this.text = text;
@@ -69,6 +75,8 @@ final class TableCell implements ITableCell {
 		this.markup = markup;
 		this.foregroundColor = foregroundColor;
 		this.backgroundColor = backgroundColor;
+		this.selectedForegroundColor = selectedForegroundColor;
+		this.selectedBackgroundColor = selectedBackgroundColor;
 		this.editable = editable;
 	}
 
@@ -100,6 +108,16 @@ final class TableCell implements ITableCell {
 	@Override
 	public IColorConstant getBackgroundColor() {
 		return backgroundColor;
+	}
+
+	@Override
+	public IColorConstant getSelectedForegroundColor() {
+		return selectedForegroundColor;
+	}
+
+	@Override
+	public IColorConstant getSelectedBackgroundColor() {
+		return selectedBackgroundColor;
 	}
 
 	@Override

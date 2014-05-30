@@ -82,6 +82,16 @@ public class TableCell implements ITableCell {
 	}
 
 	@Override
+	public IColorConstant getSelectedForegroundColor() {
+		return cell.getSelectedForegroundColor();
+	}
+
+	@Override
+	public IColorConstant getSelectedBackgroundColor() {
+		return cell.getSelectedBackgroundColor();
+	}
+
+	@Override
 	public final Markup getMarkup() {
 		return cell.getMarkup();
 	}

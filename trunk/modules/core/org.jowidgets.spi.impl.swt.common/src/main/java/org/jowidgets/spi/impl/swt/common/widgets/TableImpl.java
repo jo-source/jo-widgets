@@ -1069,36 +1069,64 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		public void handleEvent(final Event event) {
 			final GC gc = event.gc;
 			final Color oldBackground = gc.getBackground();
-			if ((event.detail & SWT.SELECTED) != 0 || (event.detail & SWT.HOT) != 0) {
-				if ((selectedForegroundColor != null || selectedBackgroundColor != null) && (event.detail & SWT.SELECTED) != 0) {
-					final Rectangle rect = event.getBounds();
-					if (selectedForegroundColor != null) {
-						gc.setForeground(ColorCache.getInstance().getColor(selectedForegroundColor));
-					}
-					if (selectedBackgroundColor != null) {
-						gc.setBackground(ColorCache.getInstance().getColor(selectedBackgroundColor));
-					}
-					gc.fillRectangle(rect);
-					event.detail &= ~SWT.SELECTED;
+			final TableItem item = (TableItem) event.item;
+			final int viewColumnIndex = event.index;
+			final int rowIndex = table.indexOf(item);
+			if (rowIndex < 0 || viewColumnIndex < 1) {
+				return;
+			}
+
+			final int modelColumnIndex = convertColumnIndexToModel(viewColumnIndex - 1);
+			final ITableCell cell = dataModel.getCell(rowIndex, modelColumnIndex);
+
+			final IColorConstant foreground = cell.getForegroundColor();
+			final IColorConstant background = cell.getBackgroundColor();
+
+			IColorConstant selectedForeground = cell.getSelectedForegroundColor();
+			IColorConstant selectedBackground = cell.getSelectedBackgroundColor();
+
+			if (selectedForeground == null) {
+				selectedForeground = selectedForegroundColor;
+			}
+
+			if (selectedBackground == null) {
+				selectedBackground = selectedBackgroundColor;
+			}
+
+			if ((selectedForeground != null || selectedBackground != null) && (event.detail & SWT.SELECTED) != 0) {
+				final Rectangle rect = item.getBounds(viewColumnIndex);
+				if (selectedForeground != null) {
+					gc.setForeground(ColorCache.getInstance().getColor(selectedForeground));
 				}
+				if (selectedBackground != null) {
+					gc.setBackground(ColorCache.getInstance().getColor(selectedBackground));
+				}
+				gc.fillRectangle(rect);
+				event.detail &= ~SWT.SELECTED;
+				return;
+			}
+			else if ((selectedForeground != null || selectedBackground != null) && (event.detail & SWT.HOT) != 0) {
+				final Rectangle rect = item.getBounds(viewColumnIndex);
+				if (foreground != null) {
+					gc.setForeground(ColorCache.getInstance().getColor(foreground));
+				}
+				if (background != null) {
+					gc.setBackground(ColorCache.getInstance().getColor(background));
+				}
+				gc.fillRectangle(rect);
+				event.detail &= ~SWT.HOT;
 				return;
 			}
 
 			//This fixes Bug 50163 by using workaround from comment 13
 			//(Visited url: https://bugs.eclipse.org/bugs/show_bug.cgi?id=50163)
-			final TableItem item = (TableItem) event.item;
-			for (int columnIndex = 0; columnIndex < getColumnCount(); columnIndex++) {
-				if (item.getImage(columnIndex) != null) {
-					final Color background = item.getBackground(columnIndex);
-					if (background != null) {
-						gc.setBackground(background);
-						final Rectangle bounds = item.getBounds(columnIndex);
-						gc.fillRectangle(bounds.x, bounds.y, bounds.width - 2, bounds.height);
-						gc.setBackground(oldBackground);
-					}
-				}
+			final Color backgroundColor = item.getBackground(viewColumnIndex);
+			if (backgroundColor != null) {
+				gc.setBackground(backgroundColor);
+				final Rectangle bounds = item.getBounds(viewColumnIndex);
+				gc.fillRectangle(bounds.x, bounds.y, bounds.width, bounds.height);
+				gc.setBackground(oldBackground);
 			}
-
 		}
 	}
 
@@ -1106,7 +1134,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		@Override
 		public void handleEvent(final Event event) {
 			final TableItem item = (TableItem) event.item;
-			final int rowIndex = table.indexOf(item);
+			final int rowIndex = event.index;
 			for (int columnIndex = 0; columnIndex < getColumnCount(); columnIndex++) {
 				final int internalIndex = columnIndex + 1;
 				if (dataModel.getRowCount() > rowIndex) {

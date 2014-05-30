@@ -57,6 +57,18 @@ public final class TableCellBluePrint implements ITableCellBluePrint {
 	}
 
 	@Override
+	public ITableCellBluePrint setSelectedForegroundColor(final IColorConstant foregroundColor) {
+		builder.setSelectedForegroundColor(foregroundColor);
+		return this;
+	}
+
+	@Override
+	public ITableCellBluePrint setSelectedBackgroundColor(final IColorConstant backgroundColor) {
+		builder.setSelectedBackgroundColor(backgroundColor);
+		return this;
+	}
+
+	@Override
 	public ITableCellBluePrint setMarkup(final Markup markup) {
 		builder.setMarkup(markup);
 		return this;

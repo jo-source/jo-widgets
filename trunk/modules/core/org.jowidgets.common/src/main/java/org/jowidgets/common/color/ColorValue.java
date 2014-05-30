@@ -27,7 +27,12 @@
  */
 package org.jowidgets.common.color;
 
-public final class ColorValue implements IColorConstant {
+import java.io.Serializable;
+
+public final class ColorValue implements IColorConstant, Serializable {
+
+	private static final long serialVersionUID = 6862989508930470810L;
+
 	private final short red;
 	private final short green;
 	private final short blue;
