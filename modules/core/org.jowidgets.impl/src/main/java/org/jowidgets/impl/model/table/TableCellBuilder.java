@@ -42,6 +42,8 @@ final class TableCellBuilder implements ITableCellBuilder {
 	private Markup markup;
 	private IColorConstant foregroundColor;
 	private IColorConstant backgroundColor;
+	private IColorConstant selectedForegroundColor;
+	private IColorConstant selectedBackgroundColor;
 	private boolean editable;
 
 	TableCellBuilder() {
@@ -86,6 +88,18 @@ final class TableCellBuilder implements ITableCellBuilder {
 	}
 
 	@Override
+	public ITableCellBuilder setSelectedForegroundColor(final IColorConstant foregroundColor) {
+		this.selectedForegroundColor = foregroundColor;
+		return this;
+	}
+
+	@Override
+	public ITableCellBuilder setSelectedBackgroundColor(final IColorConstant backgroundColor) {
+		this.selectedBackgroundColor = backgroundColor;
+		return this;
+	}
+
+	@Override
 	public ITableCellBuilder setEditable(final boolean editable) {
 		this.editable = editable;
 		return this;
@@ -93,7 +107,16 @@ final class TableCellBuilder implements ITableCellBuilder {
 
 	@Override
 	public ITableCell build() {
-		return new TableCell(text, toolTipText, icon, markup, foregroundColor, backgroundColor, editable);
+		return new TableCell(
+			text,
+			toolTipText,
+			icon,
+			markup,
+			foregroundColor,
+			backgroundColor,
+			selectedForegroundColor,
+			selectedBackgroundColor,
+			editable);
 	}
 
 }

@@ -38,6 +38,10 @@ public interface ITableCell {
 
 	IColorConstant getBackgroundColor();
 
+	IColorConstant getSelectedForegroundColor();
+
+	IColorConstant getSelectedBackgroundColor();
+
 	Markup getMarkup();
 
 	String getText();

@@ -38,6 +38,10 @@ public interface IAbstractTableCellBluePrint<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setBackgroundColor(IColorConstant backgroundColor);
 
+	INSTANCE_TYPE setSelectedForegroundColor(IColorConstant foregroundColor);
+
+	INSTANCE_TYPE setSelectedBackgroundColor(IColorConstant backgroundColor);
+
 	INSTANCE_TYPE setMarkup(Markup markup);
 
 	INSTANCE_TYPE setText(String text);
