@@ -43,8 +43,8 @@ public final class SwtOptions {
 	//not fixed in swt 4.3 (tested with win)
 	private static boolean textFieldTruncateWorkaround = true;
 
-	//fixed within swt 3.7 (tested with win)
-	private static boolean comboTruncateWorkaround = false;
+	//not fixed in swt 4.3 (tested with win)
+	private static boolean comboTruncateWorkaround = true;
 
 	private static IColorConstant tableSelectedForegroundColor;
 	private static IColorConstant tableSelectedBackgroundColor;
