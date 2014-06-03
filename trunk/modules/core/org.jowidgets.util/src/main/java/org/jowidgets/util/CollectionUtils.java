@@ -36,10 +36,50 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
 
 public final class CollectionUtils {
 
 	private CollectionUtils() {}
+
+	/**
+	 * Tests if two collections have the same elements without considering the order
+	 * 
+	 * @param collection1
+	 * @param collection2
+	 * 
+	 * @return true if both collections have the same elements or both collections are null or empty, fasle otherwise
+	 */
+	public static boolean elementsEqual(final Collection<?> collection1, final Collection<?> collection2) {
+		if (collection1 == null && collection2 == null) {
+			return true;
+		}
+		else if (collection1 == null) {
+			return false;
+		}
+		else if (collection2 == null) {
+			return false;
+		}
+		else if (collection1 == collection2) {
+			return true;
+		}
+		else {
+			final int size1 = collection1.size();
+			final int size2 = collection2.size();
+			if (size1 != size2) {
+				return false;
+			}
+			else {//size1 == size2
+				final Set<Object> set2 = new HashSet<Object>(collection2);
+				for (final Object objectOfCollection1 : collection1) {
+					if (!set2.contains(objectOfCollection1)) {
+						return false;
+					}
+				}
+				return true;
+			}
+		}
+	}
 
 	public static <ELEMENT_TYPE> HashSet<ELEMENT_TYPE> createHashSet(final Iterable<? extends ELEMENT_TYPE> iterable) {
 		Assert.paramNotNull(iterable, "iterable");
