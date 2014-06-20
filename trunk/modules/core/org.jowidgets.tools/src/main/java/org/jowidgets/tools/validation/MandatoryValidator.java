@@ -35,6 +35,10 @@ import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
 
+/**
+ * @deprecated Use org.jowidgets.validation.tools.MandatoryValidator of org.jowidgets.validation.tools module instead
+ */
+@Deprecated
 public class MandatoryValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE> {
 
 	private static final IMessage MUST_NOT_BE_NULL = Messages.getMessage("MandatoryValidator.must_not_be_null");

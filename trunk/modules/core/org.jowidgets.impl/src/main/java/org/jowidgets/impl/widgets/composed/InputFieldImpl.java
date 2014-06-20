@@ -36,7 +36,6 @@ import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.descriptor.setup.IInputFieldSetup;
 import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.tools.controller.InputObservable;
-import org.jowidgets.tools.validation.CompoundValidator;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
 import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
@@ -48,6 +47,7 @@ import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.Validator;
+import org.jowidgets.validation.tools.CompoundValidator;
 
 public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInputField<VALUE_TYPE> {
 

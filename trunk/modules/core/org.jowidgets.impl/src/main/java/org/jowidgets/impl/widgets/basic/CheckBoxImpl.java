@@ -40,7 +40,6 @@ import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractControlSpiWrapper;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.tools.controller.InputObservable;
-import org.jowidgets.tools.validation.CompoundValidator;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
 import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
@@ -49,6 +48,7 @@ import org.jowidgets.util.NullCompatibleEquivalence;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
+import org.jowidgets.validation.tools.CompoundValidator;
 
 public class CheckBoxImpl extends AbstractControlSpiWrapper implements ICheckBox {
 

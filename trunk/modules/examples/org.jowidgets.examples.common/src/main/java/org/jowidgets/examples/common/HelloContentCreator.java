@@ -34,13 +34,13 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.validation.MandatoryValidator;
 import org.jowidgets.util.IDecorator;
 import org.jowidgets.validation.IValidationMessage;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.MessageType;
 import org.jowidgets.validation.ValidationResult;
+import org.jowidgets.validation.tools.MandatoryValidator;
 
 public class HelloContentCreator implements IInputContentCreator<String> {
 

@@ -61,7 +61,6 @@ import org.jowidgets.impl.layout.ListLayout;
 import org.jowidgets.impl.layout.tablelayout.TableRowLayout;
 import org.jowidgets.tools.controller.InputObservable;
 import org.jowidgets.tools.controller.KeyAdapter;
-import org.jowidgets.tools.validation.CompoundValidator;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
 import org.jowidgets.tools.widgets.wrapper.CompositeWrapper;
@@ -71,6 +70,7 @@ import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidationResultBuilder;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
+import org.jowidgets.validation.tools.CompoundValidator;
 
 public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper implements IInputControl<Collection<INPUT_TYPE>> {
 	private static final IMessage ELEMENT = Messages.getMessage("CollectionInputControlImpl.element");

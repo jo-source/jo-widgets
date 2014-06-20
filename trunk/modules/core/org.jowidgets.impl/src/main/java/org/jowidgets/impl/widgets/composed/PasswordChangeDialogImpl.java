@@ -47,7 +47,6 @@ import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.tools.layout.MigLayoutFactory;
-import org.jowidgets.tools.validation.MandatoryValidator;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 import org.jowidgets.tools.widgets.wrapper.WindowWrapper;
 import org.jowidgets.util.Assert;
@@ -59,6 +58,7 @@ import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidationResultBuilder;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
+import org.jowidgets.validation.tools.MandatoryValidator;
 
 public final class PasswordChangeDialogImpl extends WindowWrapper implements IPasswordChangeDialog {
 

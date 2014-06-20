@@ -39,8 +39,8 @@ import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.examples.common.workbench.demo3.model.Gender;
 import org.jowidgets.examples.common.workbench.demo3.model.Person;
-import org.jowidgets.tools.validation.MandatoryValidator;
 import org.jowidgets.tools.widgets.blueprint.BPF;
+import org.jowidgets.validation.tools.MandatoryValidator;
 
 public final class PersonContentCreator implements IInputContentCreator<Person> {
 

@@ -42,8 +42,8 @@ import org.jowidgets.examples.common.workbench.demo4.control.ByteValueControlCre
 import org.jowidgets.examples.common.workbench.demo4.model.ByteValue;
 import org.jowidgets.examples.common.workbench.demo4.model.Gender;
 import org.jowidgets.examples.common.workbench.demo4.model.Person;
-import org.jowidgets.tools.validation.MandatoryValidator;
 import org.jowidgets.tools.widgets.blueprint.BPF;
+import org.jowidgets.validation.tools.MandatoryValidator;
 
 public final class PersonContentCreator implements IInputContentCreator<Person> {
 

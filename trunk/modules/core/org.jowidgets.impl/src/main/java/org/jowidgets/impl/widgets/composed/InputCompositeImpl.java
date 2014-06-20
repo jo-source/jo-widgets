@@ -66,7 +66,6 @@ import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.controller.InputObservable;
 import org.jowidgets.tools.layout.MigLayoutFactory;
-import org.jowidgets.tools.validation.CompoundValidator;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
 import org.jowidgets.tools.widgets.blueprint.BPF;
@@ -78,6 +77,7 @@ import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidationResultBuilder;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
+import org.jowidgets.validation.tools.CompoundValidator;
 
 public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements IInputComposite<INPUT_TYPE>, IInputContentContainer {
 
