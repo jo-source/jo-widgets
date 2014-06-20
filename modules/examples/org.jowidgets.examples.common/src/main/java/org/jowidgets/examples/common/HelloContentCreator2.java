@@ -40,7 +40,7 @@ import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.validation.MandatoryValidator;
+import org.jowidgets.validation.tools.MandatoryValidator;
 
 public class HelloContentCreator2 implements IInputContentCreator<String> {
 

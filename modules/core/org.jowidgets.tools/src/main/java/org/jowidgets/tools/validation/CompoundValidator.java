@@ -37,6 +37,10 @@ import org.jowidgets.validation.IValidationResultBuilder;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
 
+/**
+ * @deprecated Use org.jowidgets.validation.tools.CompoundValidator of org.jowidgets.validation.tools module instead
+ */
+@Deprecated
 public class CompoundValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE> {
 
 	private final List<IValidator<VALIDATION_INPUT_TYPE>> validators;

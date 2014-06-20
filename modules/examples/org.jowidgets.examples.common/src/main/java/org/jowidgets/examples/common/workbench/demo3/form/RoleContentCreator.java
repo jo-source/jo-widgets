@@ -35,8 +35,8 @@ import org.jowidgets.api.widgets.content.IInputContentContainer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.examples.common.workbench.demo3.model.Role;
-import org.jowidgets.tools.validation.MandatoryValidator;
 import org.jowidgets.tools.widgets.blueprint.BPF;
+import org.jowidgets.validation.tools.MandatoryValidator;
 
 public final class RoleContentCreator implements IInputContentCreator<Role> {
 

@@ -58,10 +58,10 @@ import org.jowidgets.examples.common.data.GermanCities;
 import org.jowidgets.examples.common.data.Languages;
 import org.jowidgets.tools.controller.KeyAdapter;
 import org.jowidgets.tools.controller.MouseAdapter;
-import org.jowidgets.tools.validation.MandatoryValidator;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
+import org.jowidgets.validation.tools.MandatoryValidator;
 
 public class DemoForm1ContentCreator implements IInputContentCreator<List<String>> {
 

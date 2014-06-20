@@ -179,6 +179,13 @@
          unpack="false"/>
 		 
 	<plugin
+         id="org.jowidgets.validation.tools.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
          id="org.jowidgets.workbench.api.bundle"
          download-size="0"
          install-size="0"
