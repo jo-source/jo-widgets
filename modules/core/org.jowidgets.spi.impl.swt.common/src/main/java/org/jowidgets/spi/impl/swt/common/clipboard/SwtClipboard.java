@@ -149,7 +149,7 @@ public final class SwtClipboard extends AbstractPollingClipboardObservableSpi im
 	@Override
 	protected synchronized void checkContentChanged() {
 		final Display display = displayProvider.get();
-		if (display == null) {
+		if (display == null || display.isDisposed()) {
 			return;
 		}
 		display.asyncExec(new Runnable() {
