@@ -38,8 +38,18 @@ import org.jowidgets.validation.ValidationResult;
 public final class MandatoryValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE> {
 
 	private static final IMessage MUST_NOT_BE_EMPTY = Messages.getMessage("MandatoryValidator.must_not_be_empty");
+	private static final IMessage PLEASE_INSERT_VALUE = Messages.getMessage("MandatoryValidator.please_insert_value");
 
 	private final IValidationResult result;
+
+	public enum MandatoryMessageType {
+		ERROR,
+		INFO_ERROR;
+	}
+
+	public MandatoryValidator(final MandatoryMessageType messageType) {
+		this(getValidationResult(messageType));
+	}
 
 	public MandatoryValidator() {
 		this(MUST_NOT_BE_EMPTY.get());
@@ -52,6 +62,19 @@ public final class MandatoryValidator<VALIDATION_INPUT_TYPE> implements IValidat
 	public MandatoryValidator(final IValidationResult errorResult) {
 		Assert.paramNotNull(errorResult, "errorResult");
 		this.result = errorResult;
+	}
+
+	private static IValidationResult getValidationResult(final MandatoryMessageType messageType) {
+		Assert.paramNotNull(messageType, "messageType");
+		if (MandatoryMessageType.ERROR.equals(messageType)) {
+			return ValidationResult.error(MUST_NOT_BE_EMPTY.get());
+		}
+		else if (MandatoryMessageType.INFO_ERROR.equals(messageType)) {
+			return ValidationResult.infoError(PLEASE_INSERT_VALUE.get());
+		}
+		else {
+			throw new IllegalArgumentException("MandatoryMessageType '" + messageType + "' is not known");
+		}
 	}
 
 	@Override
