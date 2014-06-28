@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,49 +26,24 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util.wrapper;
+package org.jowidgets.util.unit;
 
-import org.jowidgets.util.Assert;
-import org.jowidgets.util.NullCompatibleEquivalence;
+public interface IUnitSetBuilder {
 
-public final class WrapperUtil {
+	IUnitSetBuilder add(IUnit unit);
 
-	private WrapperUtil() {}
+	IUnitSetBuilder add(String abbreviation, String name, double conversionFactor);
 
-	/**
-	 * Try to cast an object to an type. If the object implements the {@link IWrapper} interface,
-	 * the cast will also be be tried on the unwrapped object (recursively).
-	 * 
-	 * @param object The object to cast, may be null
-	 * @param type The type to cast into, not null
-	 * 
-	 * @return The casted object or null, if neither the object itself can be casted nor the unwrapped objects
-	 */
-	@SuppressWarnings("unchecked")
-	public static <TYPE> TYPE tryToCast(final Object object, final Class<TYPE> type) {
-		Assert.paramNotNull(type, "type");
-		if (object != null) {
-			if (type.isAssignableFrom(object.getClass())) {
-				return (TYPE) object;
-			}
-			else if (object instanceof IWrapper<?>) {
-				return tryToCast(((IWrapper<?>) object).unwrap(), type);
-			}
-		}
-		return null;
-	}
+	IUnitSetBuilder add(String abbreviation, String name, long conversionFactor);
 
-	@SuppressWarnings("unchecked")
-	public static <TYPE> TYPE unwrap(final TYPE object) {
-		if (object instanceof IWrapper<?>) {
-			return (TYPE) unwrap(((IWrapper<?>) object).unwrap());
-		}
-		else {
-			return object;
-		}
-	}
+	IUnitSetBuilder add(String abbreviation, double conversionFactor);
 
-	public static boolean nullCompatibleEquivalence(final Object object1, final Object object2) {
-		return NullCompatibleEquivalence.equals(unwrap(object1), (unwrap(object2)));
-	}
+	IUnitSetBuilder add(String abbreviation, long conversionFactor);
+
+	IUnitSetBuilder add(String abbreviation, String name);
+
+	IUnitSetBuilder add(String abbreviation);
+
+	IUnitSet build();
+
 }

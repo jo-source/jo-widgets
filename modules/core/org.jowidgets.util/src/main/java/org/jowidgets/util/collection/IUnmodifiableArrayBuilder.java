@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,49 +26,20 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util.wrapper;
+package org.jowidgets.util.collection;
 
-import org.jowidgets.util.Assert;
-import org.jowidgets.util.NullCompatibleEquivalence;
+import java.util.Enumeration;
 
-public final class WrapperUtil {
+public interface IUnmodifiableArrayBuilder<VALUE_TYPE> {
 
-	private WrapperUtil() {}
+	IUnmodifiableArrayBuilder<VALUE_TYPE> addAll(Enumeration<? extends VALUE_TYPE> values);
 
-	/**
-	 * Try to cast an object to an type. If the object implements the {@link IWrapper} interface,
-	 * the cast will also be be tried on the unwrapped object (recursively).
-	 * 
-	 * @param object The object to cast, may be null
-	 * @param type The type to cast into, not null
-	 * 
-	 * @return The casted object or null, if neither the object itself can be casted nor the unwrapped objects
-	 */
-	@SuppressWarnings("unchecked")
-	public static <TYPE> TYPE tryToCast(final Object object, final Class<TYPE> type) {
-		Assert.paramNotNull(type, "type");
-		if (object != null) {
-			if (type.isAssignableFrom(object.getClass())) {
-				return (TYPE) object;
-			}
-			else if (object instanceof IWrapper<?>) {
-				return tryToCast(((IWrapper<?>) object).unwrap(), type);
-			}
-		}
-		return null;
-	}
+	IUnmodifiableArrayBuilder<VALUE_TYPE> addAll(Iterable<? extends VALUE_TYPE> values);
 
-	@SuppressWarnings("unchecked")
-	public static <TYPE> TYPE unwrap(final TYPE object) {
-		if (object instanceof IWrapper<?>) {
-			return (TYPE) unwrap(((IWrapper<?>) object).unwrap());
-		}
-		else {
-			return object;
-		}
-	}
+	IUnmodifiableArrayBuilder<VALUE_TYPE> addAll(VALUE_TYPE... values);
 
-	public static boolean nullCompatibleEquivalence(final Object object1, final Object object2) {
-		return NullCompatibleEquivalence.equals(unwrap(object1), (unwrap(object2)));
-	}
+	IUnmodifiableArrayBuilder<VALUE_TYPE> add(VALUE_TYPE value);
+
+	IUnmodifiableArray<VALUE_TYPE> build();
+
 }

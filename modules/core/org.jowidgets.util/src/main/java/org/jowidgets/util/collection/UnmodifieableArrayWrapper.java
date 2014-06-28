@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2014, Michael
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,49 +26,63 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util.wrapper;
+package org.jowidgets.util.collection;
+
+import java.util.Iterator;
 
 import org.jowidgets.util.Assert;
-import org.jowidgets.util.NullCompatibleEquivalence;
+import org.jowidgets.util.wrapper.IWrapper;
+import org.jowidgets.util.wrapper.WrapperUtil;
 
-public final class WrapperUtil {
+public class UnmodifieableArrayWrapper<VALUE_TYPE> implements
+		IUnmodifiableArray<VALUE_TYPE>,
+		IWrapper<IUnmodifiableArray<VALUE_TYPE>> {
 
-	private WrapperUtil() {}
+	private final IUnmodifiableArray<VALUE_TYPE> original;
 
-	/**
-	 * Try to cast an object to an type. If the object implements the {@link IWrapper} interface,
-	 * the cast will also be be tried on the unwrapped object (recursively).
-	 * 
-	 * @param object The object to cast, may be null
-	 * @param type The type to cast into, not null
-	 * 
-	 * @return The casted object or null, if neither the object itself can be casted nor the unwrapped objects
-	 */
-	@SuppressWarnings("unchecked")
-	public static <TYPE> TYPE tryToCast(final Object object, final Class<TYPE> type) {
-		Assert.paramNotNull(type, "type");
-		if (object != null) {
-			if (type.isAssignableFrom(object.getClass())) {
-				return (TYPE) object;
-			}
-			else if (object instanceof IWrapper<?>) {
-				return tryToCast(((IWrapper<?>) object).unwrap(), type);
-			}
-		}
-		return null;
+	public UnmodifieableArrayWrapper(final IUnmodifiableArray<VALUE_TYPE> original) {
+		Assert.paramNotNull(original, "original");
+		this.original = original;
 	}
 
-	@SuppressWarnings("unchecked")
-	public static <TYPE> TYPE unwrap(final TYPE object) {
-		if (object instanceof IWrapper<?>) {
-			return (TYPE) unwrap(((IWrapper<?>) object).unwrap());
-		}
-		else {
-			return object;
-		}
+	@Override
+	public final Iterator<VALUE_TYPE> iterator() {
+		return original.iterator();
 	}
 
-	public static boolean nullCompatibleEquivalence(final Object object1, final Object object2) {
-		return NullCompatibleEquivalence.equals(unwrap(object1), (unwrap(object2)));
+	@Override
+	public final int size() {
+		return original.size();
 	}
+
+	@Override
+	public final VALUE_TYPE get(final int index) {
+		return original.get(index);
+	}
+
+	@Override
+	public String toString() {
+		return "UnmodifieableArrayWrapper [original=" + original + "]";
+	}
+
+	@Override
+	public IUnmodifiableArray<VALUE_TYPE> unwrap() {
+		return WrapperUtil.unwrap(this);
+	}
+
+	@Override
+	public int hashCode() {
+		final IUnmodifiableArray<VALUE_TYPE> unwrappedThis = unwrap();
+
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((unwrappedThis == null) ? 0 : unwrappedThis.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		return WrapperUtil.nullCompatibleEquivalence(this, obj);
+	}
+
 }
