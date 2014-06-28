@@ -38,6 +38,9 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 
+import org.jowidgets.util.collection.IUnmodifiableArray;
+import org.jowidgets.util.collection.UnmodifiableArray;
+
 public final class CollectionUtils {
 
 	private CollectionUtils() {}
@@ -171,6 +174,11 @@ public final class CollectionUtils {
 			}
 
 		};
+	}
+
+	public static <ELEMENT_TYPE> Collection<ELEMENT_TYPE> toCollection(final IUnmodifiableArray<ELEMENT_TYPE> collection) {
+		Assert.paramNotNull(collection, "collection");
+		return UnmodifiableArray.asCollection(collection);
 	}
 
 	public static <ELEMENT_TYPE> Enumeration<ELEMENT_TYPE> enumerationFromCollection(final Collection<ELEMENT_TYPE> collection) {
