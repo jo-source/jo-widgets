@@ -72,6 +72,11 @@ public final class UnmodifiableArray {
 		return new UnmodifiableArrayBuilderImpl<VALUE_TYPE>();
 	}
 
+	public static <VALUE_TYPE> Collection<VALUE_TYPE> asCollection(final IUnmodifiableArray<VALUE_TYPE> array) {
+		Assert.paramNotNull(array, "array");
+		return new UnmodifieableArrayToCollectionWrapper<VALUE_TYPE>(array);
+	}
+
 	private static final class UnmodifiableArrayBuilderImpl<VALUE_TYPE> implements IUnmodifiableArrayBuilder<VALUE_TYPE> {
 
 		private final List<VALUE_TYPE> elements;
