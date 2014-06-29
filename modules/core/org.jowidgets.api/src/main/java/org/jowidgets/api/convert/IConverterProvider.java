@@ -35,6 +35,8 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.jowidgets.common.mask.ITextMask;
+import org.jowidgets.unit.api.IUnit;
+import org.jowidgets.unit.api.IUnitConverter;
 
 public interface IConverterProvider {
 
@@ -57,6 +59,16 @@ public interface IConverterProvider {
 	<OBJECT_TYPE> IObjectStringConverter<OBJECT_TYPE> toStringConverter();
 
 	IObjectStringConverter<String> passwordPresentationConverter();
+
+	<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IObjectStringConverter<BASE_VALUE_TYPE> unitValueConverter(
+		IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitConverter,
+		Class<? extends UNIT_VALUE_TYPE> unitValueType);
+
+	<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IObjectStringConverter<BASE_VALUE_TYPE> unitValueConverter(
+		IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitConverter,
+		IObjectStringConverter<UNIT_VALUE_TYPE> unitValueConverter);
+
+	IObjectStringConverter<IUnit> unitConverter();
 
 	<OBJECT_TYPE> IConverter<OBJECT_TYPE> mapConverter(
 		Map<? extends OBJECT_TYPE, String> objectToString,

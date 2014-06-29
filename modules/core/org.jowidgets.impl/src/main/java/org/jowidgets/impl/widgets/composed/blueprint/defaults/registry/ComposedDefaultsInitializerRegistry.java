@@ -43,6 +43,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IPasswordChangeDialogSetupBui
 import org.jowidgets.api.widgets.blueprint.builder.IProgressBarSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IQuestionDialogSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ITreeSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.IUnitValueFieldSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IValidationLabelSetupBuilder;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.registry.BasicDefaultsInitializerRegistry;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.CollectionInputControlDefaults;
@@ -60,6 +61,7 @@ import org.jowidgets.impl.widgets.composed.blueprint.defaults.PasswordChangeDial
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.ProgressBarDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.QuestionDialogDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.TreeDefaults;
+import org.jowidgets.impl.widgets.composed.blueprint.defaults.UnitValueFieldDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.ValidationLabelDefaults;
 
 public class ComposedDefaultsInitializerRegistry extends BasicDefaultsInitializerRegistry {
@@ -75,6 +77,7 @@ public class ComposedDefaultsInitializerRegistry extends BasicDefaultsInitialize
 		register(ILoginDialogSetupBuilder.class, new LoginDialogDefaults());
 		register(IPasswordChangeDialogSetupBuilder.class, new PasswordChangeDialogDefaults());
 		register(IInputFieldSetupBuilder.class, new InputFieldDefaults());
+		register(IUnitValueFieldSetupBuilder.class, new UnitValueFieldDefaults());
 		register(IValidationLabelSetupBuilder.class, new ValidationLabelDefaults());
 		register(IInputComponentValidationLabelSetupBuilder.class, new InputComponentValidationLabelDefaults());
 		register(ICollectionInputDialogSetupBuilder.class, new CollectionInputDialogDefaults());

@@ -44,6 +44,8 @@ import org.jowidgets.api.convert.IStringObjectConverter;
 import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.tools.converter.AbstractObjectLabelConverter;
 import org.jowidgets.tools.converter.Converter;
+import org.jowidgets.unit.api.IUnit;
+import org.jowidgets.unit.api.IUnitConverter;
 import org.jowidgets.util.Assert;
 
 public final class DefaultConverterProvider implements IConverterProvider {
@@ -52,6 +54,7 @@ public final class DefaultConverterProvider implements IConverterProvider {
 
 	private final IObjectStringConverter<Object> toStringConverter;
 	private final IObjectStringConverter<String> passwordPresentationConverter;
+	private final IObjectStringConverter<IUnit> unitConverter;
 	private final Map<Locale, Map<Class<?>, IConverter<?>>> converters;
 
 	private Map<Locale, IConverter<Date>> defaultDateConverter;
@@ -63,6 +66,7 @@ public final class DefaultConverterProvider implements IConverterProvider {
 	public DefaultConverterProvider() {
 		toStringConverter = new DefaultObjectStringConverter();
 		this.passwordPresentationConverter = new PasswordPresentationConverter();
+		this.unitConverter = new UnitConverter();
 		converters = new HashMap<Locale, Map<Class<?>, IConverter<?>>>();
 		register(String.class, new DefaultStringConverter());
 
@@ -401,6 +405,25 @@ public final class DefaultConverterProvider implements IConverterProvider {
 		return converter;
 	}
 
+	@Override
+	public <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IObjectStringConverter<BASE_VALUE_TYPE> unitValueConverter(
+		final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitConverter,
+		final Class<? extends UNIT_VALUE_TYPE> unitValueType) {
+		Assert.paramNotNull(unitConverter, "unitConverter");
+		Assert.paramNotNull(unitValueType, "unitValueType");
+		return unitValueConverter(unitConverter, getObjectStringConverter(unitValueType));
+	}
+
+	@Override
+	public <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IObjectStringConverter<BASE_VALUE_TYPE> unitValueConverter(
+		final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitConverter,
+		final IObjectStringConverter<UNIT_VALUE_TYPE> unitValueConverter) {
+		Assert.paramNotNull(unitConverter, "unitConverter");
+		Assert.paramNotNull(unitValueConverter, "unitValueConverter");
+
+		return new UnitObjectStringConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE>(unitConverter, unitValueConverter);
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public <OBJECT_TYPE> IObjectStringConverter<OBJECT_TYPE> toStringConverter() {
@@ -410,6 +433,11 @@ public final class DefaultConverterProvider implements IConverterProvider {
 	@Override
 	public IObjectStringConverter<String> passwordPresentationConverter() {
 		return passwordPresentationConverter;
+	}
+
+	@Override
+	public IObjectStringConverter<IUnit> unitConverter() {
+		return unitConverter;
 	}
 
 	private Map<Locale, IConverter<Date>> getDefaultDateConverters() {

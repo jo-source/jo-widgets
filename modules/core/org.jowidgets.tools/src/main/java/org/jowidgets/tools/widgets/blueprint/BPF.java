@@ -102,9 +102,11 @@ import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeViewerBluePrint;
+import org.jowidgets.api.widgets.blueprint.IUnitValueFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationResultLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
+import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ICollectionInputControlSetup;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.mask.ITextMask;
@@ -113,6 +115,9 @@ import org.jowidgets.common.types.FileChooserType;
 import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
+import org.jowidgets.unit.api.IUnit;
+import org.jowidgets.unit.api.IUnitConverter;
+import org.jowidgets.unit.api.IUnitSet;
 
 public final class BPF {
 
@@ -341,6 +346,29 @@ public final class BPF {
 
 	public static <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField() {
 		return Toolkit.getBluePrintFactory().inputField();
+	}
+
+	public static <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField() {
+		return Toolkit.getBluePrintFactory().unitValueField();
+	}
+
+	public static <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
+		final Class<? extends UNIT_VALUE_TYPE> inputFieldType) {
+		return Toolkit.getBluePrintFactory().unitValueField(inputFieldType);
+	}
+
+	public static <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
+		final IUnitSet unitSet,
+		final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter,
+		final IInputFieldDescriptor<UNIT_VALUE_TYPE> inputField) {
+		return Toolkit.getBluePrintFactory().unitValueField(unitSet, converter, inputField);
+	}
+
+	public static <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
+		final IUnitSet unitSet,
+		final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter,
+		final Class<? extends UNIT_VALUE_TYPE> inputFieldType) {
+		return Toolkit.getBluePrintFactory().unitValueField(unitSet, converter, inputFieldType);
 	}
 
 	public static IMessageDialogBluePrint messageDialog() {
@@ -631,6 +659,10 @@ public final class BPF {
 
 	public static <VALUE_TYPE> IComboBoxSelectionBluePrint<VALUE_TYPE> comboBoxSelection(final Collection<VALUE_TYPE> elements) {
 		return Toolkit.getBluePrintFactory().comboBoxSelection(elements);
+	}
+
+	public static IComboBoxSelectionBluePrint<IUnit> comboBoxSelection(final IUnitSet unitSet) {
+		return Toolkit.getBluePrintFactory().comboBoxSelection(unitSet);
 	}
 
 	public static IComboBoxSelectionBluePrint<String> comboBoxSelectionString() {

@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util.unit;
+package org.jowidgets.unit.api;
 
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.collection.IUnmodifiableArray;
@@ -51,6 +51,12 @@ public final class UnitSet {
 			Assert.paramNotNull(unit, "unit");
 			arrayBuilder.add(unit);
 			return this;
+		}
+
+		@Override
+		public IUnitSetBuilder add(final IUnitBuilder unitBuilder) {
+			Assert.paramNotNull(unitBuilder, "unitBuilder");
+			return add(unitBuilder.build());
 		}
 
 		@Override
