@@ -101,6 +101,7 @@ import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeViewerBluePrint;
+import org.jowidgets.api.widgets.blueprint.IUnitValueFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationResultLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenience;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
@@ -108,6 +109,7 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
+import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ICollectionInputControlSetup;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.mask.ITextMask;
@@ -116,6 +118,9 @@ import org.jowidgets.common.types.FileChooserType;
 import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
+import org.jowidgets.unit.api.IUnit;
+import org.jowidgets.unit.api.IUnitConverter;
+import org.jowidgets.unit.api.IUnitSet;
 import org.jowidgets.util.Assert;
 
 public class BluePrintFactoryWrapper implements IBluePrintFactory {
@@ -204,6 +209,33 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	@Override
 	public <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField() {
 		return bluePrintFactory.inputField();
+	}
+
+	@Override
+	public <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField() {
+		return bluePrintFactory.unitValueField();
+	}
+
+	@Override
+	public <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
+		final Class<? extends UNIT_VALUE_TYPE> inputFieldType) {
+		return bluePrintFactory.unitValueField(inputFieldType);
+	}
+
+	@Override
+	public <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
+		final IUnitSet unitSet,
+		final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter,
+		final IInputFieldDescriptor<UNIT_VALUE_TYPE> inputField) {
+		return bluePrintFactory.unitValueField(unitSet, converter, inputField);
+	}
+
+	@Override
+	public <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
+		final IUnitSet unitSet,
+		final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter,
+		final Class<? extends UNIT_VALUE_TYPE> inputFieldType) {
+		return bluePrintFactory.unitValueField(unitSet, converter, inputFieldType);
 	}
 
 	@Override
@@ -399,6 +431,11 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	@Override
 	public <ENUM_TYPE extends Enum<?>> IComboBoxSelectionBluePrint<ENUM_TYPE> comboBoxSelection(final ENUM_TYPE... enumValues) {
 		return bluePrintFactory.comboBoxSelection(enumValues);
+	}
+
+	@Override
+	public IComboBoxSelectionBluePrint<IUnit> comboBoxSelection(final IUnitSet unitSet) {
+		return bluePrintFactory.comboBoxSelection(unitSet);
 	}
 
 	@Override

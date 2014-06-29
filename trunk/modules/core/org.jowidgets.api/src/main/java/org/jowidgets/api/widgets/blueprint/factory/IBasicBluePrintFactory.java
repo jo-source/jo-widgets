@@ -46,6 +46,8 @@ import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISubMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.unit.api.IUnit;
+import org.jowidgets.unit.api.IUnitSet;
 
 public interface IBasicBluePrintFactory extends IBasicSimpleBluePrintFactory {
 
@@ -115,7 +117,9 @@ public interface IBasicBluePrintFactory extends IBasicSimpleBluePrintFactory {
 
 	IComboBoxSelectionBluePrint<String> comboBoxSelection(List<String> elements);
 
-	<ENUM_TYPE extends Enum<?>> IComboBoxSelectionBluePrint<ENUM_TYPE> comboBoxSelection(final ENUM_TYPE... enumValues);
+	<ENUM_TYPE extends Enum<?>> IComboBoxSelectionBluePrint<ENUM_TYPE> comboBoxSelection(ENUM_TYPE... enumValues);
+
+	IComboBoxSelectionBluePrint<IUnit> comboBoxSelection(IUnitSet unitSet);
 
 	IComboBoxSelectionBluePrint<String> comboBoxSelectionString();
 

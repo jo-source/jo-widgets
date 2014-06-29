@@ -26,10 +26,11 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util.unit;
+package org.jowidgets.unit.api;
 
+import org.jowidgets.i18n.api.IMessage;
+import org.jowidgets.i18n.tools.StaticMessage;
 import org.jowidgets.util.Assert;
-import org.jowidgets.util.IProvider;
 
 public final class Unit {
 
@@ -65,19 +66,19 @@ public final class Unit {
 
 	private static final class UnitBuilderImpl implements IUnitBuilder {
 
-		private IProvider<String> abbreviation;
-		private IProvider<String> name = new MessageProvider(null);
+		private IMessage abbreviation;
+		private IMessage name = new StaticMessage(null);
 		private double conversionFactor = 1.0;
 
 		@Override
-		public IUnitBuilder abbreviation(final IProvider<String> abbreviation) {
+		public IUnitBuilder abbreviation(final IMessage abbreviation) {
 			Assert.paramNotNull(abbreviation, "abbreviation");
 			this.abbreviation = abbreviation;
 			return this;
 		}
 
 		@Override
-		public IUnitBuilder name(final IProvider<String> name) {
+		public IUnitBuilder name(final IMessage name) {
 			Assert.paramNotNull(name, "name");
 			this.name = name;
 			return this;
@@ -86,12 +87,12 @@ public final class Unit {
 		@Override
 		public IUnitBuilder abbreviation(final String abbreviation) {
 			Assert.paramNotEmpty(abbreviation, "abbreviation");
-			return abbreviation(new MessageProvider(abbreviation));
+			return abbreviation(new StaticMessage(abbreviation));
 		}
 
 		@Override
 		public IUnitBuilder name(final String name) {
-			return abbreviation(new MessageProvider(name));
+			return abbreviation(new StaticMessage(name));
 		}
 
 		@Override
@@ -115,11 +116,11 @@ public final class Unit {
 
 	private static final class UnitImpl implements IUnit {
 
-		private final IProvider<String> abbreviation;
-		private final IProvider<String> name;
+		private final IMessage abbreviation;
+		private final IMessage name;
 		private final double conversionFactor;
 
-		public UnitImpl(final IProvider<String> abbreviation, final IProvider<String> name, final double conversionFactor) {
+		public UnitImpl(final IMessage abbreviation, final IMessage name, final double conversionFactor) {
 			Assert.paramNotNull(abbreviation, "abbreviation");
 			Assert.paramNotNull(name, "name");
 
@@ -145,27 +146,7 @@ public final class Unit {
 
 		@Override
 		public String toString() {
-			return "UnitImpl [abbreviation=" + abbreviation + ", name=" + name + ", conversionFactor=" + conversionFactor + "]";
-		}
-
-	}
-
-	private static final class MessageProvider implements IProvider<String> {
-
-		private final String message;
-
-		private MessageProvider(final String message) {
-			this.message = message;
-		}
-
-		@Override
-		public String get() {
-			return message;
-		}
-
-		@Override
-		public String toString() {
-			return "MessageProvider [message=" + message + "]";
+			return getAbbreviation();
 		}
 
 	}

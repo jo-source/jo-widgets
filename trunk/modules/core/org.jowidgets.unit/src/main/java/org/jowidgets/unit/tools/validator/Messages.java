@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,23 +26,25 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util.unit;
+package org.jowidgets.unit.tools.validator;
 
-import org.jowidgets.util.IProvider;
+import org.jowidgets.i18n.api.IMessage;
+import org.jowidgets.i18n.api.IMessageProvider;
+import org.jowidgets.i18n.api.MessageProvider;
 
-public interface IUnitBuilder {
+final class Messages {
 
-	IUnitBuilder abbreviation(String abbreviation);
+	private static final IMessageProvider MESSAGE_PROVIDER = MessageProvider.create(
+			"org.jowidgets.unit.tools.validator.messages",
+			Messages.class);
 
-	IUnitBuilder abbreviation(IProvider<String> abbreviation);
+	private Messages() {}
 
-	IUnitBuilder name(String name);
+	public static String getString(final String key) {
+		return MESSAGE_PROVIDER.getString(key);
+	}
 
-	IUnitBuilder name(IProvider<String> name);
-
-	IUnitBuilder conversionFactor(double conversionFactor);
-
-	IUnitBuilder conversionFactor(long conversionFactor);
-
-	IUnit build();
+	public static IMessage getMessage(final String key) {
+		return MESSAGE_PROVIDER.getMessage(key);
+	}
 }

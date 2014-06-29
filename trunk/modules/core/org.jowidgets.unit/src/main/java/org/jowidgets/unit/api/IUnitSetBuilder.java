@@ -26,11 +26,13 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util.unit;
+package org.jowidgets.unit.api;
 
 public interface IUnitSetBuilder {
 
 	IUnitSetBuilder add(IUnit unit);
+
+	IUnitSetBuilder add(IUnitBuilder unitBuilder);
 
 	IUnitSetBuilder add(String abbreviation, String name, double conversionFactor);
 

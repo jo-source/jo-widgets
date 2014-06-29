@@ -51,10 +51,14 @@ import org.jowidgets.api.widgets.blueprint.IPasswordChangeDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
+import org.jowidgets.api.widgets.blueprint.IUnitValueFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationResultLabelBluePrint;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
+import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ICollectionInputControlSetup;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
+import org.jowidgets.unit.api.IUnitConverter;
+import org.jowidgets.unit.api.IUnitSet;
 
 public interface ISimpleBluePrintFactory extends IBasicBluePrintFactory {
 
@@ -73,6 +77,21 @@ public interface ISimpleBluePrintFactory extends IBasicBluePrintFactory {
 	<INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IConverter<INPUT_TYPE> converter);
 
 	<INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IObjectStringConverter<INPUT_TYPE> converter);
+
+	<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField();
+
+	<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
+		Class<? extends UNIT_VALUE_TYPE> inputFieldType);
+
+	<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
+		IUnitSet unitSet,
+		IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter,
+		IInputFieldDescriptor<UNIT_VALUE_TYPE> inputField);
+
+	<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
+		IUnitSet unitSet,
+		IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter,
+		Class<? extends UNIT_VALUE_TYPE> inputFieldType);
 
 	IMessageDialogBluePrint messageDialog();
 

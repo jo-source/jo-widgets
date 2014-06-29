@@ -52,14 +52,18 @@ import org.jowidgets.api.widgets.blueprint.IPasswordChangeDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
+import org.jowidgets.api.widgets.blueprint.IUnitValueFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationResultLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.ISimpleBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
+import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ICollectionInputControlSetup;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.impl.widgets.basic.blueprint.BasicBluePrintFactory;
+import org.jowidgets.unit.api.IUnitConverter;
+import org.jowidgets.unit.api.IUnitSet;
 import org.jowidgets.util.Assert;
 
 public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISimpleBluePrintFactory {
@@ -154,6 +158,50 @@ public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISi
 		final IInputFieldBluePrint<INPUT_TYPE> result = createProxy(IInputFieldBluePrint.class);
 		final IObjectStringConverter<INPUT_TYPE> converter = Toolkit.getConverterProvider().toStringConverter();
 		return result.setConverter(converter);
+	}
+
+	@Override
+	public <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField() {
+		final IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> result = createProxy(IUnitValueFieldBluePrint.class);
+		return result;
+	}
+
+	@Override
+	public <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
+		final Class<? extends UNIT_VALUE_TYPE> inputFieldType) {
+		Assert.paramNotNull(inputFieldType, "inputFieldType");
+
+		final IConverter<UNIT_VALUE_TYPE> converter = Toolkit.getConverterProvider().getConverter(inputFieldType);
+		if (converter == null) {
+			throw new IllegalArgumentException("No converter found for type '" + inputFieldType.getName() + "'.");
+		}
+
+		final IInputFieldBluePrint<UNIT_VALUE_TYPE> inputField = inputField();
+		inputField.setConverter(converter);
+
+		final IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> result = unitValueField();
+		result.setUnitValueInputField(inputField);
+		return result;
+	}
+
+	@Override
+	public <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
+		final IUnitSet unitSet,
+		final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter,
+		final IInputFieldDescriptor<UNIT_VALUE_TYPE> inputField) {
+		final IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> result = unitValueField();
+		result.setUnitSet(unitSet).setUnitConverter(converter).setUnitValueInputField(inputField);
+		return result;
+	}
+
+	@Override
+	public <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
+		final IUnitSet unitSet,
+		final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter,
+		final Class<? extends UNIT_VALUE_TYPE> inputFieldType) {
+		final IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> result = unitValueField(inputFieldType);
+		result.setUnitSet(unitSet).setUnitConverter(converter);
+		return result;
 	}
 
 	@Override

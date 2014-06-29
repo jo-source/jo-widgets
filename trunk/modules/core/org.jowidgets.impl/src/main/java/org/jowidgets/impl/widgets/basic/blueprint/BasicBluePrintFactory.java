@@ -53,6 +53,9 @@ import org.jowidgets.api.widgets.blueprint.factory.IBasicBluePrintFactory;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Orientation;
 import org.jowidgets.impl.convert.DefaultObjectStringConverter;
+import org.jowidgets.unit.api.IUnit;
+import org.jowidgets.unit.api.IUnitSet;
+import org.jowidgets.util.CollectionUtils;
 
 public class BasicBluePrintFactory extends BasicSimpleBluePrintFactory implements IBasicBluePrintFactory {
 
@@ -197,6 +200,12 @@ public class BasicBluePrintFactory extends BasicSimpleBluePrintFactory implement
 	public <VALUE_TYPE> IComboBoxSelectionBluePrint<VALUE_TYPE> comboBoxSelection(final Collection<VALUE_TYPE> elements) {
 		final IObjectStringConverter<VALUE_TYPE> converter = DefaultObjectStringConverter.getInstance();
 		return comboBoxSelection(converter).setElements(elements);
+	}
+
+	@Override
+	public IComboBoxSelectionBluePrint<IUnit> comboBoxSelection(final IUnitSet unitSet) {
+		final IObjectStringConverter<IUnit> converter = Toolkit.getConverterProvider().unitConverter();
+		return comboBoxSelection(converter).setElements(CollectionUtils.toCollection(unitSet));
 	}
 
 	@Override

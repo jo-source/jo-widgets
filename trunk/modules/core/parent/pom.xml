@@ -18,6 +18,7 @@
 		<module>../org.jowidgets.i18n</module>
 		<module>../org.jowidgets.validation</module>
 		<module>../org.jowidgets.validation.tools</module>
+		<module>../org.jowidgets.unit</module>
 		<module>../org.jowidgets.common</module>
 		<module>../org.jowidgets.api</module>
 		<module>../org.jowidgets.api.test</module>

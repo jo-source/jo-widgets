@@ -26,10 +26,24 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util.unit;
+package org.jowidgets.unit.tools;
 
-import org.jowidgets.util.collection.IUnmodifiableArray;
+import org.jowidgets.unit.api.IUnit;
+import org.jowidgets.unit.api.IUnitProvider;
+import org.jowidgets.util.Assert;
 
-public interface IUnitSet extends IUnmodifiableArray<IUnit> {
+public final class StaticUnitProvider<BASE_VALUE_TYPE> implements IUnitProvider<BASE_VALUE_TYPE> {
+
+	private final IUnit unit;
+
+	public StaticUnitProvider(final IUnit unit) {
+		Assert.paramNotNull(unit, "unit");
+		this.unit = unit;
+	}
+
+	@Override
+	public IUnit getUnit(final BASE_VALUE_TYPE value) {
+		return unit;
+	}
 
 }
