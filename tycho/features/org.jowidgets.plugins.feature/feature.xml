@@ -2,7 +2,7 @@
 <feature
       id="org.jowidgets.plugins.feature"
       label="jowidgets plugins feature"
-      version="0.34.0.qualifier">
+      version="0.35.0.qualifier">
 
    <description url="http://www.example.com/description">
       Feature that holds all eclipse plugins
