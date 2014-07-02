@@ -1,0 +1,113 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>org.jowidgets.bundles.parent</artifactId>
+	<packaging>pom</packaging>
+
+	<properties>
+		<tycho-version>0.16.0</tycho-version>
+		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
+		<osgi.version.snapshot>${maven.build.timestamp}</osgi.version.snapshot>
+	</properties>
+
+	<parent>
+		<groupId>org.jowidgets</groupId>
+		<artifactId>org.jowidgets.parent</artifactId>
+		<version>0.34.0</version>
+		<relativePath>../../parent/pom.xml</relativePath>
+	</parent>
+
+	<modules>
+		<module>../core/parent</module>
+		<module>../addons/parent</module>
+	</modules>
+
+	<build>
+		<plugins>
+			
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifestFile>META-INF/MANIFEST.MF</manifestFile>
+					</archive>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>.</directory>
+							<includes>
+								<include>META-INF</include>
+							</includes>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>	
+				
+		</plugins>
+		
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.4</version>
+					<configuration>
+						<archive>
+							<manifestFile>META-INF/MANIFEST.MF</manifestFile>
+						</archive>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<version>2.4.0</version>
+					<extensions>true</extensions>
+					<configuration>
+						<manifestLocation>META-INF</manifestLocation>
+						<instructions>
+							<Export-Package>org.jowidgets.*</Export-Package>
+							<_snapshot>${osgi.version.snapshot}</_snapshot>
+							<_nodefaultversion>true</_nodefaultversion>
+						</instructions>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	
+	<profiles>
+	    <profile>
+	      <activation>
+	        <property>
+	          <name>m2e.version</name>
+	        </property>
+	      </activation>
+	      <properties>
+	        <osgi-version-qualifier>qualifier</osgi-version-qualifier>
+	      </properties>
+	      <build>
+	        <pluginManagement>
+	          <plugins>
+	            <plugin>
+	              <groupId>org.apache.felix</groupId>
+	              <artifactId>maven-bundle-plugin</artifactId>
+	              <configuration>
+	                  <!-- PDE does not honour custom manifest location -->
+	                <manifestLocation>META-INF</manifestLocation>
+	              </configuration>
+	            </plugin>
+	          </plugins>
+	        </pluginManagement>
+	      </build>
+	    </profile>
+ 	</profiles>
+	
+
+</project>
