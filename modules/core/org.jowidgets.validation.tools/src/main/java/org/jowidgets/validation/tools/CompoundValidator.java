@@ -27,6 +27,7 @@
  */
 package org.jowidgets.validation.tools;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,7 +38,9 @@ import org.jowidgets.validation.IValidationResultBuilder;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
 
-public final class CompoundValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE> {
+public final class CompoundValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE>, Serializable {
+
+	private static final long serialVersionUID = -6857961928993086297L;
 
 	private final List<IValidator<VALIDATION_INPUT_TYPE>> validators;
 

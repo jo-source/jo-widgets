@@ -27,6 +27,7 @@
  */
 package org.jowidgets.validation.tools;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import org.jowidgets.i18n.api.IMessage;
@@ -35,7 +36,9 @@ import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
 
-public final class MandatoryValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE> {
+public final class MandatoryValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE>, Serializable {
+
+	private static final long serialVersionUID = 8029380657803427107L;
 
 	private static final IMessage MUST_NOT_BE_EMPTY = Messages.getMessage("MandatoryValidator.must_not_be_empty");
 	private static final IMessage PLEASE_INSERT_VALUE = Messages.getMessage("MandatoryValidator.please_insert_value");
