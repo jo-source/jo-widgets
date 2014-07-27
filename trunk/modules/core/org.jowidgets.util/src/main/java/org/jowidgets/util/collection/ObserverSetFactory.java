@@ -49,6 +49,10 @@ public final class ObserverSetFactory {
 		return getInstance().getDefaultStrategy();
 	}
 
+	public static <OBSERVER_TYPE> IObserverSet<OBSERVER_TYPE> emptySet() {
+		return getInstance().emptySet();
+	}
+
 	public static <OBSERVER_TYPE> IObserverSet<OBSERVER_TYPE> create() {
 		return getInstance().create();
 	}
@@ -62,9 +66,17 @@ public final class ObserverSetFactory {
 
 		private static final Strategy DEFAULT_STRATEGY = Strategy.HIGH_PERFORMANCE;
 
+		private static final IObserverSet<Object> EMPTY_SET = new UnmodifableEmptyObserverSet<Object>();
+
 		@Override
 		public Strategy getDefaultStrategy() {
 			return DEFAULT_STRATEGY;
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public <OBSERVER_TYPE> IObserverSet<OBSERVER_TYPE> emptySet() {
+			return (IObserverSet<OBSERVER_TYPE>) EMPTY_SET;
 		}
 
 		@Override

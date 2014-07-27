@@ -65,4 +65,11 @@ public interface IObserverSetFactory {
 	 */
 	<OBSERVER_TYPE> IObserverSet<OBSERVER_TYPE> create(Strategy strategy);
 
+	/**
+	 * Gets a singleton instance of an unmodifiable empty set
+	 * 
+	 * @return An unmodifiable empty set
+	 */
+	<OBSERVER_TYPE> IObserverSet<OBSERVER_TYPE> emptySet();
+
 }
