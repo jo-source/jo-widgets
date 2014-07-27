@@ -41,7 +41,7 @@ final class ObserverSetMemoryStrategyImpl<OBSERVER_TYPE> implements IObserverSet
 	@Override
 	public Iterator<OBSERVER_TYPE> iterator() {
 		if (listeners == null) {
-			return CollectionUtils.emptyIterator();
+			return CollectionUtils.unmodifiableEmptyIterator();
 		}
 		else {
 			return CollectionUtils.unmodifiableIterator(Arrays.asList(listeners).iterator());
@@ -68,13 +68,14 @@ final class ObserverSetMemoryStrategyImpl<OBSERVER_TYPE> implements IObserverSet
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void remove(final OBSERVER_TYPE observer) {
+	public boolean remove(final OBSERVER_TYPE observer) {
 		Assert.paramNotNull(observer, "observer");
 		if (listeners != null) {
 			//listeners.length is at least 1
 			if (listeners.length == 1) {
 				if (listeners[0].equals(observer)) {
 					listeners = null;
+					return true;
 				}
 			}
 			else {//listeners.length > 1
@@ -93,9 +94,11 @@ final class ObserverSetMemoryStrategyImpl<OBSERVER_TYPE> implements IObserverSet
 						System.arraycopy(oldListeners, 0, listeners, 0, removeIndex);
 						System.arraycopy(oldListeners, indexAfter, listeners, removeIndex, listeners.length - removeIndex);
 					}
+					return true;
 				}
 			}
 		}
+		return false;
 	}
 
 	private int indexOf(final OBSERVER_TYPE observer) {

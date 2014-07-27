@@ -167,18 +167,18 @@ public class ObserverSetTest {
 		Assert.assertEquals("BCDE", invokeListeners(set));
 
 		//remove last
-		set.remove(e);
-		set.remove(e);
+		Assert.assertTrue(set.remove(e));
+		Assert.assertFalse(set.remove(e));
 		Assert.assertEquals("BCD", invokeListeners(set));
 
 		//remove in the middle
-		set.remove(c);
-		set.remove(c);
+		Assert.assertTrue(set.remove(c));
+		Assert.assertFalse(set.remove(c));
 		Assert.assertEquals("BD", invokeListeners(set));
 
 		//remove first of two elements
-		set.remove(b);
-		set.remove(b);
+		Assert.assertTrue(set.remove(b));
+		Assert.assertFalse(set.remove(b));
 		Assert.assertEquals("D", invokeListeners(set));
 
 		//add b again
@@ -187,13 +187,13 @@ public class ObserverSetTest {
 		Assert.assertEquals("DB", invokeListeners(set));
 
 		//remove last of two elements
-		set.remove(b);
-		set.remove(b);
+		Assert.assertTrue(set.remove(b));
+		Assert.assertFalse(set.remove(b));
 		Assert.assertEquals("D", invokeListeners(set));
 
 		//remove last
-		set.remove(d);
-		set.remove(d);
+		Assert.assertTrue(set.remove(d));
+		Assert.assertFalse(set.remove(d));
 		Assert.assertTrue(EmptyCheck.isEmpty(invokeListeners(set)));
 	}
 

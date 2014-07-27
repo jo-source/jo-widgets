@@ -119,13 +119,13 @@ public final class CollectionUtils {
 
 			@Override
 			public void remove() {
-				throw new UnsupportedOperationException("This collection is imutable");
+				throw new UnsupportedOperationException("This iterator is imutable");
 			}
 
 		};
 	}
 
-	public static <ELEMENT_TYPE> Iterator<ELEMENT_TYPE> emptyIterator() {
+	public static <ELEMENT_TYPE> Iterator<ELEMENT_TYPE> unmodifiableEmptyIterator() {
 		return new Iterator<ELEMENT_TYPE>() {
 
 			@Override
