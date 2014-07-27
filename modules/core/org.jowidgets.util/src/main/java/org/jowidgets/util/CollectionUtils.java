@@ -36,6 +36,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.jowidgets.util.collection.IUnmodifiableArray;
@@ -119,6 +120,27 @@ public final class CollectionUtils {
 			@Override
 			public void remove() {
 				throw new UnsupportedOperationException("This collection is imutable");
+			}
+
+		};
+	}
+
+	public static <ELEMENT_TYPE> Iterator<ELEMENT_TYPE> emptyIterator() {
+		return new Iterator<ELEMENT_TYPE>() {
+
+			@Override
+			public boolean hasNext() {
+				return false;
+			}
+
+			@Override
+			public ELEMENT_TYPE next() {
+				throw new NoSuchElementException();
+			}
+
+			@Override
+			public void remove() {
+				throw new UnsupportedOperationException("This collection is imutable and empty");
 			}
 
 		};
