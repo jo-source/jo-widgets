@@ -29,8 +29,8 @@
 package org.jowidgets.validation;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 final class ValidationResultImpl implements IValidationResult, Serializable {
@@ -136,7 +136,12 @@ final class ValidationResultImpl implements IValidationResult, Serializable {
 	@Override
 	public IValidationResult withMessage(final IValidationMessage message) {
 		Assert.paramNotNull(message, "messages");
-		return new ValidationResultImpl(this, null, message, null);
+		if (MessageType.OK.equals(message.getType())) {
+			return this;
+		}
+		else {
+			return new ValidationResultImpl(this, null, message, null);
+		}
 	}
 
 	@Override
@@ -151,7 +156,12 @@ final class ValidationResultImpl implements IValidationResult, Serializable {
 
 	@Override
 	public IValidationResult withResult(final IValidationResult result) {
-		return new ValidationResultImpl(this, result, null, null);
+		if (result == null || result.isOk()) {
+			return this;
+		}
+		else {
+			return new ValidationResultImpl(this, result, null, null);
+		}
 	}
 
 	@Override
@@ -200,11 +210,11 @@ final class ValidationResultImpl implements IValidationResult, Serializable {
 	}
 
 	private void initializeLazy() {
-		final List<IValidationMessage> messagesMutable = new LinkedList<IValidationMessage>();
-		final List<IValidationMessage> errorsMutable = new LinkedList<IValidationMessage>();
-		final List<IValidationMessage> infoErrorsMutable = new LinkedList<IValidationMessage>();
-		final List<IValidationMessage> warningsMutable = new LinkedList<IValidationMessage>();
-		final List<IValidationMessage> infosMutable = new LinkedList<IValidationMessage>();
+		final ArrayList<IValidationMessage> messagesMutable = new ArrayList<IValidationMessage>();
+		final ArrayList<IValidationMessage> errorsMutable = new ArrayList<IValidationMessage>();
+		final ArrayList<IValidationMessage> infoErrorsMutable = new ArrayList<IValidationMessage>();
+		final ArrayList<IValidationMessage> warningsMutable = new ArrayList<IValidationMessage>();
+		final ArrayList<IValidationMessage> infosMutable = new ArrayList<IValidationMessage>();
 
 		if (inheritedResult != null) {
 			addMessages(
@@ -223,6 +233,12 @@ final class ValidationResultImpl implements IValidationResult, Serializable {
 		if (newMessage != null) {
 			addMessage(newMessage, messagesMutable, errorsMutable, infoErrorsMutable, warningsMutable, infosMutable);
 		}
+
+		messagesMutable.trimToSize();
+		errorsMutable.trimToSize();
+		infoErrorsMutable.trimToSize();
+		warningsMutable.trimToSize();
+		infosMutable.trimToSize();
 
 		messages = Collections.unmodifiableList(messagesMutable);
 		errors = Collections.unmodifiableList(errorsMutable);

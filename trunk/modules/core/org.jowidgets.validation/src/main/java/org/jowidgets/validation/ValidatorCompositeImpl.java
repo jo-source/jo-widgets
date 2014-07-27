@@ -29,8 +29,8 @@
 package org.jowidgets.validation;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 
 final class ValidatorCompositeImpl<VALUE_TYPE> implements IValidator<VALUE_TYPE>, Serializable {
@@ -40,7 +40,7 @@ final class ValidatorCompositeImpl<VALUE_TYPE> implements IValidator<VALUE_TYPE>
 	private final List<IValidator<VALUE_TYPE>> validators;
 
 	ValidatorCompositeImpl(final Collection<IValidator<VALUE_TYPE>> validators) {
-		this.validators = new LinkedList<IValidator<VALUE_TYPE>>(validators);
+		this.validators = new ArrayList<IValidator<VALUE_TYPE>>(validators);
 	}
 
 	@Override
