@@ -28,11 +28,10 @@
 
 package org.jowidgets.tools.validation;
 
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.Set;
-
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.collection.IObserverSet;
+import org.jowidgets.util.collection.IObserverSetFactory.Strategy;
+import org.jowidgets.util.collection.ObserverSetFactory;
 import org.jowidgets.validation.IValidateable;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
@@ -40,14 +39,14 @@ import org.jowidgets.validation.IValidationResult;
 public class ValidationCache implements IValidateable {
 
 	private final IValidationResultCreator validationResultCreator;
-	private final Set<IValidationConditionListener> validationConditionListener;
+	private final IObserverSet<IValidationConditionListener> validationConditionListener;
 
 	private boolean chacheDirty;
 	private IValidationResult validationResult;
 
 	public ValidationCache(final IValidationResultCreator validationResultCreator) {
 		Assert.paramNotNull(validationResultCreator, "validationResultCreator");
-		this.validationConditionListener = new LinkedHashSet<IValidationConditionListener>();
+		this.validationConditionListener = ObserverSetFactory.create(Strategy.LOW_MEMORY);
 		this.validationResultCreator = validationResultCreator;
 		this.chacheDirty = true;
 	}
@@ -57,8 +56,7 @@ public class ValidationCache implements IValidateable {
 	 */
 	public final void setDirty() {
 		this.chacheDirty = true;
-		for (final IValidationConditionListener listener : new LinkedList<IValidationConditionListener>(
-			validationConditionListener)) {
+		for (final IValidationConditionListener listener : validationConditionListener) {
 			listener.validationConditionsChanged();
 		}
 	}
