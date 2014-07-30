@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            name="org.jowidgets.examples.rcp.example2.swt"
+            application="org.eclipse.e4.ui.workbench.swt.E4Application">
+         <property
+               name="applicationCSS"
+               value="platform:/plugin/org.jowidgets.examples.rcp.example2.common/css/default.css">
+         </property>
+          <property
+               name="applicationXMI"
+               value="org.jowidgets.examples.rcp.example2.common/Application.e4xmi">
+         </property>
+         <property
+               name="appName"
+               value="org.jowidgets.examples.rcp.example2.swt">
+         </property>
+         <property
+      		  name="rendererFactoryUri"
+       		  value="bundleclass://org.jowidgets.rcp.renderer.swt/org.jowidgets.rcp.renderer.swt.SwtToJoRendererFactory">
+       	 </property>
+      </product>
+   </extension>
+
+</plugin>
