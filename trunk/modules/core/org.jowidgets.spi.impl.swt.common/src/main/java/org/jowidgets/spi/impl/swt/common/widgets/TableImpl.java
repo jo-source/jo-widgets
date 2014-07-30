@@ -28,6 +28,7 @@
 
 package org.jowidgets.spi.impl.swt.common.widgets;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -149,6 +150,8 @@ public class TableImpl extends SwtControl implements ITableSpi {
 	private final IColorConstant selectedForegroundColor;
 	private final IColorConstant selectedBackgroundColor;
 
+	private Method setFocusIndexMethod;
+
 	private int[] lastColumnOrder;
 	private boolean setWidthInvokedOnModel;
 	private ToolTip toolTip;
@@ -197,6 +200,15 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		this.editorFactory = setup.getEditor();
 
 		this.table = getUiReference();
+
+		try {
+			setFocusIndexMethod = table.getClass().getDeclaredMethod("setFocusIndex", int.class);
+			setFocusIndexMethod.setAccessible(true);
+		}
+		catch (final Exception e) {
+			//DO NOTHING, SET FOCUS INDEX WILL NOT WORK ONLY
+			e.printStackTrace();
+		}
 
 		table.setLinesVisible(true);
 		table.setHeaderVisible(setup.isHeaderVisible());
@@ -617,12 +629,29 @@ public class TableImpl extends SwtControl implements ITableSpi {
 				for (int i = 0; i < newSelection.length; i++) {
 					newSelection[i] = selection.get(i).intValue();
 				}
-				table.setSelection(newSelection);
+				setSelectionWithoutShowSelection(newSelection);
 			}
 			else {
-				table.setSelection(new int[0]);
+				setSelectionWithoutShowSelection(new int[0]);
 			}
 			onSelectionChanged();
+		}
+	}
+
+	private void setSelectionWithoutShowSelection(final int[] indices) {
+		table.deselectAll();
+		if (indices.length == 0) {
+			return;
+		}
+		table.select(indices);
+		final int focusIndex = indices[0];
+		if (setFocusIndexMethod != null && focusIndex != -1) {
+			try {
+				setFocusIndexMethod.invoke(table, focusIndex);
+			}
+			catch (final Exception e) {
+				throw new RuntimeException(e);
+			}
 		}
 	}
 
