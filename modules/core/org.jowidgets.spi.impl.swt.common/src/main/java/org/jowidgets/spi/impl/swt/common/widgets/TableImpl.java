@@ -207,7 +207,6 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		}
 		catch (final Exception e) {
 			//DO NOTHING, SET FOCUS INDEX WILL NOT WORK ONLY
-			e.printStackTrace();
 		}
 
 		table.setLinesVisible(true);
@@ -988,12 +987,14 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		if (dataModel.getRowCount() > row + 1) {
 			if (editCell(row + 1, convertColumnIndexToModel(viewColumnIndex))) {
 				setSelection(Collections.singletonList(Integer.valueOf(row + 1)));
+				table.showSelection();
 				table.showColumn(table.getColumn(editor.getColumn()));
 				editor.layout();
 				return true;
 			}
 			else if (row - startRow < 2) {
 				setSelection(Collections.singletonList(Integer.valueOf(row + 1)));
+				table.showSelection();
 				editor.layout();
 				return navigateRight(startRow, row + 1, viewColumnIndex);
 			}
@@ -1029,12 +1030,14 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		if (row > 0) {
 			if (editCell(row - 1, convertColumnIndexToModel(viewColumnIndex))) {
 				setSelection(Collections.singletonList(Integer.valueOf(row - 1)));
+				table.showSelection();
 				table.showColumn(table.getColumn(editor.getColumn()));
 				editor.layout();
 				return true;
 			}
 			else if (startRow - row < 2) {
 				setSelection(Collections.singletonList(Integer.valueOf(row - 1)));
+				table.showSelection();
 				table.showColumn(table.getColumn(editor.getColumn()));
 				editor.layout();
 				return navigateLeft(startRow, row - 1, viewColumnIndex);
