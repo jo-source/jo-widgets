@@ -31,6 +31,7 @@ import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
@@ -55,7 +56,9 @@ import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.common.types.InputChangeEventPolicy;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.verify.IInputVerifier;
+import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.common.widgets.controller.IKeyListener;
+import org.jowidgets.spi.impl.controller.FocusObservable;
 import org.jowidgets.spi.impl.controller.InputObservable;
 import org.jowidgets.spi.impl.controller.KeyObservable;
 import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
@@ -77,6 +80,7 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 	private Integer maxLength;
 
 	private final KeyObservable keyObservable;
+	private final FocusObservable focusObservable;
 	private final KeyListener keyListener;
 	private final boolean isAutoCompletionMode;
 	private final boolean isSelectionMode;
@@ -148,6 +152,19 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 				}
 			};
 			this.keyObservable = new KeyObservable(keyObservableCallback);
+			this.focusObservable = new FocusObservable();
+
+			comboBoxEditor.addFocusListener(new FocusListener() {
+				@Override
+				public void focusLost(final FocusEvent e) {
+					focusObservable.focusLost();
+				}
+
+				@Override
+				public void focusGained(final FocusEvent e) {
+					focusObservable.focusGained();
+				}
+			});
 
 			if (isAutoCompletionMode) {
 				getUiReference().addPopupMenuListener(new PopupMenuListener() {
@@ -175,6 +192,7 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 		else {
 			this.comboBoxEditor = null;
 			this.keyObservable = null;
+			this.focusObservable = null;
 			this.keyListener = null;
 		}
 
@@ -344,6 +362,26 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 	}
 
 	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		if (focusObservable != null) {
+			focusObservable.addFocusListener(listener);
+		}
+		else {
+			super.addFocusListener(listener);
+		}
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		if (focusObservable != null) {
+			focusObservable.removeFocusListener(listener);
+		}
+		else {
+			super.removeFocusListener(listener);
+		}
+	}
+
+	@Override
 	public void setForegroundColor(final IColorConstant colorValue) {
 		getUiReference().getEditor().getEditorComponent().setForeground(ColorConvert.convert(colorValue));
 		super.setForegroundColor(colorValue);
@@ -452,6 +490,10 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 
 		public void removeKeyListener(final KeyListener keyListener) {
 			textField.removeKeyListener(keyListener);
+		}
+
+		public void addFocusListener(final FocusListener focusListener) {
+			textField.addFocusListener(focusListener);
 		}
 
 		public int getCaretPosition() {
