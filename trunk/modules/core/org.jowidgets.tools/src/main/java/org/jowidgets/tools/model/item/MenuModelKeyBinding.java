@@ -90,29 +90,31 @@ public final class MenuModelKeyBinding {
 		this.keyListener = new KeyAdapter() {
 			@Override
 			public void keyPressed(final IKeyEvent event) {
-				event.getVirtualKey();
-				final Accelerator pressedAccelerator = getAccelerator(event);
-				if (pressedAccelerator != null) {
-					final IAction action = actions.get(pressedAccelerator);
-					if (action != null && action.isEnabled()) {
-						final IExecutionContext executionContext = new ExecutionContext(action);
-						try {
-							action.execute(executionContext);
-						}
-						catch (final Exception e) {
+				final VirtualKey virtualKey = event.getVirtualKey();
+				if (VirtualKey.UNDEFINED != virtualKey) {
+					final Accelerator pressedAccelerator = getAccelerator(event);
+					if (pressedAccelerator != null) {
+						final IAction action = actions.get(pressedAccelerator);
+						if (action != null && action.isEnabled()) {
+							final IExecutionContext executionContext = new ExecutionContext(action);
 							try {
-								final IExceptionHandler exceptionHandler = action.getExceptionHandler();
-								if (exceptionHandler != null) {
-									exceptionHandler.handleException(executionContext, e);
-								}
-								else {
-									throw e;
-								}
+								action.execute(executionContext);
 							}
-							catch (final Exception e1) {
-								final UncaughtExceptionHandler uncaughtExceptionHandler = Thread.currentThread().getUncaughtExceptionHandler();
-								if (uncaughtExceptionHandler != null) {
-									uncaughtExceptionHandler.uncaughtException(Thread.currentThread(), e1);
+							catch (final Exception e) {
+								try {
+									final IExceptionHandler exceptionHandler = action.getExceptionHandler();
+									if (exceptionHandler != null) {
+										exceptionHandler.handleException(executionContext, e);
+									}
+									else {
+										throw e;
+									}
+								}
+								catch (final Exception e1) {
+									final UncaughtExceptionHandler uncaughtExceptionHandler = Thread.currentThread().getUncaughtExceptionHandler();
+									if (uncaughtExceptionHandler != null) {
+										uncaughtExceptionHandler.uncaughtException(Thread.currentThread(), e1);
+									}
 								}
 							}
 						}
