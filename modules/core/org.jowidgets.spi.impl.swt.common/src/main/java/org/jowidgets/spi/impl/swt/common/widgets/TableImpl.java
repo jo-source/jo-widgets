@@ -805,6 +805,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		if (tableCellEditor != null) {
 			tableCellEditor.stopEditing(editTableCell, editRowIndex, editColumnIndex);
 			disposeEditor();
+			table.forceFocus();
 		}
 	}
 
@@ -813,6 +814,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		if (tableCellEditor != null) {
 			tableCellEditor.cancelEditing(editTableCell, editRowIndex, editColumnIndex);
 			disposeEditor();
+			table.forceFocus();
 		}
 	}
 
