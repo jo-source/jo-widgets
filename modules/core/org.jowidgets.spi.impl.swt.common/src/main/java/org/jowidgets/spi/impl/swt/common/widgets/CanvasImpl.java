@@ -68,6 +68,11 @@ public class CanvasImpl extends SwtComposite implements ICanvasSpi {
 	}
 
 	@Override
+	public void redraw() {
+		getUiReference().redraw();
+	}
+
+	@Override
 	public void addPaintListener(final IPaintListenerSpi listener) {
 		paintObservable.addPaintListener(listener);
 	}
