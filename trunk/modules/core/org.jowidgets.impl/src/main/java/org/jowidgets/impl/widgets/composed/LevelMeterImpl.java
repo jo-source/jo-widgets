@@ -59,11 +59,14 @@ public final class LevelMeterImpl extends ControlWrapper implements ILevelMeter 
 
 	private final ICanvas canvas;
 
+	private double lastLevel;
+
 	public LevelMeterImpl(final IComposite composite, final ILevelMeterSetup setup) {
 		super(composite);
 
 		this.model = setup.getModel();
 		this.setup = setup;
+		this.lastLevel = -1;
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
@@ -74,7 +77,10 @@ public final class LevelMeterImpl extends ControlWrapper implements ILevelMeter 
 		this.levelListener = new ILevelListener() {
 			@Override
 			public void levelChanged(final double oldValue, final double newValue) {
-				canvas.redraw();
+				if (lastLevel == -1 || lastLevel != newValue) {
+					canvas.redraw();
+					lastLevel = newValue;
+				}
 			}
 		};
 		model.addLevelListener(levelListener);
@@ -100,6 +106,7 @@ public final class LevelMeterImpl extends ControlWrapper implements ILevelMeter 
 	}
 
 	private void paintCanvas(final IGraphicContext gc) {
+
 		final int gapSize = setup.getGapSize();
 		final int boxHeight = setup.getBoxHeight();
 
