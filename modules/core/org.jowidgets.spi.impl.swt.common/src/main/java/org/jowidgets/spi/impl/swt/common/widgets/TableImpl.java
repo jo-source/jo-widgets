@@ -570,7 +570,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 		}
 
 		if (packed) {
-			column.setWidth(Math.max(max + 15, column.getWidth()));
+			column.setWidth(Math.max(max + 15, column.getWidth() + 2));
 		}
 		else {
 			column.setWidth(max + 15);
