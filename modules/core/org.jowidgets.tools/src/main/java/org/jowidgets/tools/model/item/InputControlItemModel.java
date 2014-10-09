@@ -34,6 +34,7 @@ import java.util.Map;
 import org.jowidgets.api.model.item.IContainerContentCreator;
 import org.jowidgets.api.model.item.IContainerItemModel;
 import org.jowidgets.api.model.item.IContainerItemModelBuilder;
+import org.jowidgets.api.model.item.IItemModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IInputControl;
@@ -170,4 +171,10 @@ public class InputControlItemModel<VALUE_TYPE> extends AbstractItemModelWrapper 
 	public final void removeInputListener(final IInputListener listener) {
 		inputObservable.removeInputListener(listener);
 	}
+
+	@Override
+	public IItemModel unwrap() {
+		return this;
+	}
+
 }
