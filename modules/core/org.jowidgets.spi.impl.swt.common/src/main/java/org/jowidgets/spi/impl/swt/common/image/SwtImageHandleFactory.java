@@ -27,17 +27,14 @@
  */
 package org.jowidgets.spi.impl.swt.common.image;
 
-import org.eclipse.swt.graphics.Image;
 import org.jowidgets.common.image.IImageDescriptor;
-import org.jowidgets.common.image.IImageHandle;
 import org.jowidgets.common.image.IImageHandleFactory;
-import org.jowidgets.spi.impl.image.ImageHandle;
 
 public class SwtImageHandleFactory implements IImageHandleFactory {
 
 	@Override
-	public IImageHandle createImageHandle(final IImageDescriptor imageDescriptor) {
-		return new ImageHandle<Image>(new SwtImageLoader(imageDescriptor), imageDescriptor);
+	public SwtImageHandle createImageHandle(final IImageDescriptor imageDescriptor) {
+		return new SwtImageHandle(new SwtImageLoader(imageDescriptor), imageDescriptor);
 	}
 
 }

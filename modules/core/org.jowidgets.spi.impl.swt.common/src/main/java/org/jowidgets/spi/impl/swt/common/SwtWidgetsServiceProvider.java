@@ -44,9 +44,11 @@ import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.clipboard.IClipboardSpi;
+import org.jowidgets.spi.image.IImageFactorySpi;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
 import org.jowidgets.spi.impl.swt.common.application.SwtApplicationRunnerFactory;
 import org.jowidgets.spi.impl.swt.common.clipboard.SwtClipboard;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageFactory;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageHandleFactorySpi;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.threads.SwtUiThreadAccess;
@@ -60,6 +62,7 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider, IProv
 	private final Display display;
 	private final SwtImageRegistry imageRegistry;
 	private final SwtImageHandleFactorySpi imageHandleFactorySpi;
+	private final SwtImageFactory imageFactory;
 	private final SwtWidgetFactory widgetFactory;
 	private final SwtOptionalWidgetsFactory optionalWidgetsFactory;
 	private final IFactory<IApplicationRunner> applicationRunnerFactory;
@@ -96,6 +99,7 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider, IProv
 		this.applicationRunnerFactory = applicationRunnerFactory;
 		this.imageRegistry = SwtImageRegistry.getInstance();
 		this.imageHandleFactorySpi = new SwtImageHandleFactorySpi(imageRegistry);
+		this.imageFactory = new SwtImageFactory(imageRegistry, imageHandleFactorySpi, this);
 		this.widgetFactory = new SwtWidgetFactory();
 		this.optionalWidgetsFactory = new SwtOptionalWidgetsFactory();
 
@@ -115,6 +119,11 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider, IProv
 	@Override
 	public IImageRegistry getImageRegistry() {
 		return imageRegistry;
+	}
+
+	@Override
+	public IImageFactorySpi getImageFactory() {
+		return imageFactory;
 	}
 
 	@Override

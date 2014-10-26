@@ -59,12 +59,22 @@ public class CanvasImpl extends SwtComposite implements ICanvasSpi {
 				paintObservable.firePaint(gc);
 			}
 		});
-
 	}
 
 	@Override
 	public Canvas getUiReference() {
 		return (Canvas) super.getUiReference();
+	}
+
+	@Override
+	public void scroll(
+		final int sourceX,
+		final int sourceY,
+		final int sourceWidth,
+		final int sourceHeight,
+		final int destinationX,
+		final int destinationY) {
+		getUiReference().scroll(destinationX, destinationY, sourceX, sourceY, sourceWidth, sourceHeight, false);
 	}
 
 	@Override

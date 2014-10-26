@@ -43,6 +43,7 @@ import org.jowidgets.spi.clipboard.IClipboardSpi;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
 import org.jowidgets.spi.impl.clipboard.ApplicationLocalClipboard;
 import org.jowidgets.spi.impl.dummy.application.DummyApplicationRunner;
+import org.jowidgets.spi.impl.dummy.image.DummyImageFactory;
 import org.jowidgets.spi.impl.dummy.image.DummyImageHandleFactory;
 import org.jowidgets.spi.impl.dummy.image.DummyImageHandleFactorySpi;
 import org.jowidgets.spi.impl.dummy.image.DummyImageRegistry;
@@ -52,6 +53,7 @@ public class DummyWidgetsServiceProvider implements IWidgetsServiceProvider {
 
 	private final DummyImageHandleFactorySpi imageHandleFactorySpi;
 	private final DummyImageRegistry imageRegistry;
+	private final DummyImageFactory imageFactory;
 	private final DummyWidgetFactory widgetFactory;
 	private final DummyOptionalWidgetsFactory optionalWidgetsFactory;
 	private final IClipboardSpi clipboard;
@@ -61,6 +63,7 @@ public class DummyWidgetsServiceProvider implements IWidgetsServiceProvider {
 		this.imageRegistry = new DummyImageRegistry(new DummyImageHandleFactory());
 		this.imageHandleFactorySpi = new DummyImageHandleFactorySpi(imageRegistry);
 		this.widgetFactory = new DummyWidgetFactory(imageRegistry);
+		this.imageFactory = new DummyImageFactory(imageHandleFactorySpi);
 		this.optionalWidgetsFactory = new DummyOptionalWidgetsFactory();
 		this.clipboard = new ApplicationLocalClipboard();
 	}
@@ -73,6 +76,11 @@ public class DummyWidgetsServiceProvider implements IWidgetsServiceProvider {
 	@Override
 	public IImageHandleFactorySpi getImageHandleFactory() {
 		return imageHandleFactorySpi;
+	}
+
+	@Override
+	public DummyImageFactory getImageFactory() {
+		return imageFactory;
 	}
 
 	@Override

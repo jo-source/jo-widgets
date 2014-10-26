@@ -29,7 +29,6 @@
 package org.jowidgets.spi.impl.dummy.image;
 
 import org.jowidgets.common.image.IImageDescriptor;
-import org.jowidgets.common.image.IImageHandle;
 import org.jowidgets.common.image.IImageHandleFactory;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDImage;
 import org.jowidgets.spi.impl.image.ImageHandle;
@@ -37,7 +36,7 @@ import org.jowidgets.spi.impl.image.ImageHandle;
 public class DummyImageHandleFactory implements IImageHandleFactory {
 
 	@Override
-	public IImageHandle createImageHandle(final IImageDescriptor imageDescriptor) {
+	public ImageHandle<UIDImage> createImageHandle(final IImageDescriptor imageDescriptor) {
 		return new ImageHandle<UIDImage>(new DummyImageLoader(imageDescriptor), imageDescriptor);
 	}
 

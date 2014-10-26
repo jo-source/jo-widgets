@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,52 +26,26 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.base.delegate;
+package org.jowidgets.spi.impl.image;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.io.InputStream;
 
-import org.jowidgets.api.controller.IDisposeListener;
+import org.jowidgets.common.image.IStreamImageDescriptor;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.IFactory;
 
-public class DisposableDelegate {
+public final class StreamImageDecriptorImpl implements IStreamImageDescriptor {
 
-	private final Set<IDisposeListener> listeners;
+	private final IFactory<InputStream> inputStreamFactory;
 
-	private boolean disposed;
-
-	public DisposableDelegate() {
-		this.listeners = new LinkedHashSet<IDisposeListener>();
-		this.disposed = false;
-	};
-
-	public void addDisposeListener(final IDisposeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
+	public StreamImageDecriptorImpl(final IFactory<InputStream> inputStreamFactory) {
+		Assert.paramNotNull(inputStreamFactory, "inputStreamFactory");
+		this.inputStreamFactory = inputStreamFactory;
 	}
 
-	public void removeDisposeListener(final IDisposeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
-
-	public void dispose() {
-		if (!disposed) {
-			fireOnDispose();
-			this.disposed = true;
-			listeners.clear();
-		}
-	}
-
-	public boolean isDisposed() {
-		return disposed;
-	}
-
-	public void fireOnDispose() {
-		for (final IDisposeListener listener : new ArrayList<IDisposeListener>(listeners)) {
-			listener.onDispose();
-		}
+	@Override
+	public InputStream getInputStream() {
+		return inputStreamFactory.create();
 	}
 
 }

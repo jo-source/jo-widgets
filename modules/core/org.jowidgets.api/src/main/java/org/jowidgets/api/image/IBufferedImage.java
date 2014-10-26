@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,52 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.base.delegate;
+package org.jowidgets.api.image;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import org.jowidgets.api.graphics.IGraphicContext;
+import org.jowidgets.common.image.IBufferedImageCommon;
 
-import org.jowidgets.api.controller.IDisposeListener;
-import org.jowidgets.util.Assert;
+public interface IBufferedImage extends IImage, IBufferedImageCommon {
 
-public class DisposableDelegate {
-
-	private final Set<IDisposeListener> listeners;
-
-	private boolean disposed;
-
-	public DisposableDelegate() {
-		this.listeners = new LinkedHashSet<IDisposeListener>();
-		this.disposed = false;
-	};
-
-	public void addDisposeListener(final IDisposeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
-
-	public void removeDisposeListener(final IDisposeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
-
-	public void dispose() {
-		if (!disposed) {
-			fireOnDispose();
-			this.disposed = true;
-			listeners.clear();
-		}
-	}
-
-	public boolean isDisposed() {
-		return disposed;
-	}
-
-	public void fireOnDispose() {
-		for (final IDisposeListener listener : new ArrayList<IDisposeListener>(listeners)) {
-			listener.onDispose();
-		}
-	}
+	@Override
+	IGraphicContext getGraphicContext();
 
 }

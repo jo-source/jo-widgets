@@ -31,6 +31,7 @@ package org.jowidgets.spi.impl.swing.common.graphics;
 import java.awt.BasicStroke;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
@@ -40,10 +41,12 @@ import org.jowidgets.common.graphics.AntiAliasing;
 import org.jowidgets.common.graphics.LineCap;
 import org.jowidgets.common.graphics.LineJoin;
 import org.jowidgets.common.graphics.Point;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.text.IFontMetrics;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.spi.graphics.IGraphicContextSpi;
+import org.jowidgets.spi.impl.swing.common.image.SwingImageRegistry;
 import org.jowidgets.spi.impl.swing.common.util.ColorConvert;
 import org.jowidgets.spi.impl.swing.common.util.FontMetricsConvert;
 import org.jowidgets.spi.impl.swing.common.util.FontProvider;
@@ -262,6 +265,41 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
 		final FontMetrics fontMetrics = graphics.getFontMetrics();
 		final int offset = fontMetrics.getAscent() + fontMetrics.getLeading() + 1;
 		graphics.drawString(text, x + 1, y + offset);
+	}
+
+	@Override
+	public void drawImage(
+		final IImageConstant imageKey,
+		final int sourceX,
+		final int sourceY,
+		final int sourceWidth,
+		final int sourceHeight,
+		final int destinationX,
+		final int destinationY,
+		final int destinationWidth,
+		final int destinationHeight) {
+
+		final Image image = SwingImageRegistry.getInstance().getImage(imageKey);
+
+		final int dx1 = destinationX;
+		final int dy1 = destinationY;
+		final int dx2 = dx1 + destinationWidth;
+		final int dy2 = dy1 + destinationHeight;
+
+		final int sx1 = sourceX;
+		final int sy1 = sourceY;
+		final int sx2 = sx1 + sourceWidth;
+		final int sy2 = sy1 + sourceHeight;
+
+		graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+		graphics.drawImage(image, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, null);
+	}
+
+	@Override
+	public void drawImage(final IImageConstant imageKey, final int x, final int y) {
+		final Image image = SwingImageRegistry.getInstance().getImage(imageKey);
+		graphics.drawImage(image, x, y, null);
 	}
 
 	@Override

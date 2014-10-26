@@ -33,11 +33,11 @@ import java.net.URL;
 import org.jowidgets.common.image.IUrlImageDescriptor;
 import org.jowidgets.util.Assert;
 
-final class UrlImageDescriptorImpl implements IUrlImageDescriptor {
+public final class UrlImageDescriptorImpl implements IUrlImageDescriptor {
 
 	private final URL url;
 
-	UrlImageDescriptorImpl(final URL url) {
+	public UrlImageDescriptorImpl(final URL url) {
 		Assert.paramNotNull(url, "url");
 		this.url = url;
 	}

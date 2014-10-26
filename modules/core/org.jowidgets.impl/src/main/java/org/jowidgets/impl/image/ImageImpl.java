@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,52 +26,38 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.base.delegate;
+package org.jowidgets.impl.image;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
-import org.jowidgets.api.controller.IDisposeListener;
+import org.jowidgets.api.image.IImage;
+import org.jowidgets.common.image.IImageRegistry;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.impl.base.delegate.DisposableDelegate;
+import org.jowidgets.spi.image.IImageSpi;
 import org.jowidgets.util.Assert;
 
-public class DisposableDelegate {
+class ImageImpl extends DisposableDelegate implements IImage {
 
-	private final Set<IDisposeListener> listeners;
+	private final IImageSpi imageSpi;
+	private final IImageRegistry imageRegistry;
 
-	private boolean disposed;
+	public ImageImpl(final IImageSpi imageSpi, final IImageRegistry imageRegistry) {
+		Assert.paramNotNull(imageSpi, "imageSpi");
+		Assert.paramNotNull(imageRegistry, "imageRegistry");
 
-	public DisposableDelegate() {
-		this.listeners = new LinkedHashSet<IDisposeListener>();
-		this.disposed = false;
-	};
-
-	public void addDisposeListener(final IDisposeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
+		this.imageSpi = imageSpi;
+		this.imageRegistry = imageRegistry;
+		this.imageRegistry.registerImageConstant(this, imageSpi.getImageHandle());
 	}
 
-	public void removeDisposeListener(final IDisposeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
+	@Override
+	public Dimension getSize() {
+		return imageSpi.getSize();
 	}
 
+	@Override
 	public void dispose() {
-		if (!disposed) {
-			fireOnDispose();
-			this.disposed = true;
-			listeners.clear();
-		}
+		super.dispose();
+		imageSpi.dispose();
+		imageRegistry.unRegisterImage(this);
 	}
-
-	public boolean isDisposed() {
-		return disposed;
-	}
-
-	public void fireOnDispose() {
-		for (final IDisposeListener listener : new ArrayList<IDisposeListener>(listeners)) {
-			listener.onDispose();
-		}
-	}
-
 }

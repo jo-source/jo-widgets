@@ -28,7 +28,8 @@
 
 package org.jowidgets.common.widgets;
 
-
 public interface ICanvasCommon extends IControlCommon {
+
+	void scroll(int sourceX, int sourceY, int sourceWidth, int sourceHeight, int destinationX, int destinationY);
 
 }

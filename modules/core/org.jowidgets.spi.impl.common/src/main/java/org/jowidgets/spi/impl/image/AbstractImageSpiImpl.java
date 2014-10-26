@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,52 +26,44 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.base.delegate;
+package org.jowidgets.spi.impl.image;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
-import org.jowidgets.api.controller.IDisposeListener;
+import org.jowidgets.spi.image.IImageSpi;
 import org.jowidgets.util.Assert;
 
-public class DisposableDelegate {
+public abstract class AbstractImageSpiImpl<IMAGE_TYPE> implements IImageSpi {
 
-	private final Set<IDisposeListener> listeners;
-
+	private ImageHandle<? extends IMAGE_TYPE> imageHandle;
 	private boolean disposed;
 
-	public DisposableDelegate() {
-		this.listeners = new LinkedHashSet<IDisposeListener>();
+	public AbstractImageSpiImpl(final ImageHandle<? extends IMAGE_TYPE> imageHandle) {
+
+		Assert.paramNotNull(imageHandle, "imageHandle");
+
+		this.imageHandle = imageHandle;
 		this.disposed = false;
-	};
-
-	public void addDisposeListener(final IDisposeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
 	}
 
-	public void removeDisposeListener(final IDisposeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
-
+	@Override
 	public void dispose() {
-		if (!disposed) {
-			fireOnDispose();
-			this.disposed = true;
-			listeners.clear();
+		checkDisposed();
+		disposed = true;
+		if (!imageHandle.isDisposed()) {
+			imageHandle.dispose();
+			imageHandle = null;
 		}
 	}
 
-	public boolean isDisposed() {
-		return disposed;
+	@SuppressWarnings("unchecked")
+	@Override
+	public ImageHandle<IMAGE_TYPE> getImageHandle() {
+		checkDisposed();
+		return (ImageHandle<IMAGE_TYPE>) imageHandle;
 	}
 
-	public void fireOnDispose() {
-		for (final IDisposeListener listener : new ArrayList<IDisposeListener>(listeners)) {
-			listener.onDispose();
+	protected void checkDisposed() {
+		if (disposed) {
+			throw new IllegalStateException("Image is disposed");
 		}
 	}
-
 }

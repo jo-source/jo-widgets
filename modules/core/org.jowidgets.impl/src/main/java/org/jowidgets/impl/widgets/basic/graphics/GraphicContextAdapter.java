@@ -34,6 +34,7 @@ import org.jowidgets.common.graphics.AntiAliasing;
 import org.jowidgets.common.graphics.LineCap;
 import org.jowidgets.common.graphics.LineJoin;
 import org.jowidgets.common.graphics.Point;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.text.IFontMetrics;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Rectangle;
@@ -172,6 +173,44 @@ public final class GraphicContextAdapter implements IGraphicContext {
 	@Override
 	public void drawText(final String text, final int x, final int y) {
 		contextSpi.drawText(text, x, y);
+	}
+
+	@Override
+	public void drawImage(
+		final IImageConstant image,
+		final int sourceX,
+		final int sourceY,
+		final int sourceWidth,
+		final int sourceHeight,
+		final int destinationX,
+		final int destinationY,
+		final int destinationWidth,
+		final int destinationHeight) {
+		contextSpi.drawImage(
+				image,
+				sourceX,
+				sourceY,
+				sourceWidth,
+				sourceHeight,
+				destinationX,
+				destinationY,
+				destinationWidth,
+				destinationHeight);
+	}
+
+	@Override
+	public void drawImage(final IImageConstant image, final int x, final int y, final int width, final int height) {
+		drawImage(image, x, y, width, height, x, y, width, height);
+	}
+
+	@Override
+	public void drawImage(final IImageConstant image, final int x, final int y) {
+		contextSpi.drawImage(image, x, y);
+	}
+
+	@Override
+	public void drawImage(final IImageConstant image) {
+		drawImage(image, 0, 0);
 	}
 
 	@Override

@@ -31,12 +31,23 @@ import org.jowidgets.common.image.IImageDescriptor;
 import org.jowidgets.common.image.IImageHandle;
 import org.jowidgets.util.Assert;
 
-public final class ImageHandle<IMAGE_TYPE> implements IImageHandle {
+public class ImageHandle<IMAGE_TYPE> implements IImageHandle {
 
 	private final IImageFactory<IMAGE_TYPE> imageFactory;
 	private final IImageDescriptor imageDescriptor;
 
+	private boolean disposed;
+
 	private IMAGE_TYPE image;
+
+	public ImageHandle(final IMAGE_TYPE image) {
+		this(new IImageFactory<IMAGE_TYPE>() {
+			@Override
+			public IMAGE_TYPE createImage() {
+				return image;
+			}
+		}, null);
+	}
 
 	public ImageHandle(final IImageFactory<IMAGE_TYPE> imageFactory) {
 		this(imageFactory, null);
@@ -46,10 +57,13 @@ public final class ImageHandle<IMAGE_TYPE> implements IImageHandle {
 		Assert.paramNotNull(imageFactory, "imageFactory");
 		this.imageFactory = imageFactory;
 		this.imageDescriptor = imageDescriptor;
+
+		this.disposed = false;
 	}
 
 	@Override
-	public synchronized IMAGE_TYPE getImage() {
+	public final synchronized IMAGE_TYPE getImage() {
+		checkDisposed();
 		if (image == null) {
 			image = imageFactory.createImage();
 		}
@@ -57,8 +71,29 @@ public final class ImageHandle<IMAGE_TYPE> implements IImageHandle {
 	}
 
 	@Override
-	public IImageDescriptor getImageDescriptor() {
+	public final IImageDescriptor getImageDescriptor() {
+		checkDisposed();
 		return imageDescriptor;
+	}
+
+	public final synchronized boolean isInitialized() {
+		checkDisposed();
+		return image != null;
+	}
+
+	public final synchronized boolean isDisposed() {
+		return disposed;
+	}
+
+	public synchronized void dispose() {
+		checkDisposed();
+		image = null;
+	}
+
+	private void checkDisposed() {
+		if (disposed) {
+			throw new IllegalStateException("Image handle is disposed");
+		}
 	}
 
 }

@@ -29,6 +29,7 @@
 package org.jowidgets.common.graphics;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.text.IFontMetrics;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Rectangle;
@@ -82,6 +83,19 @@ public interface IGraphicContextCommon {
 	void fillArc(int x, int y, int width, int height, int startAngle, int arcAngle);
 
 	void drawText(String text, int x, int y);
+
+	void drawImage(
+		IImageConstant image,
+		final int sourceX,
+		final int sourceY,
+		final int sourceWidth,
+		final int sourceHeight,
+		final int destinationX,
+		final int destinationY,
+		final int destinationWidth,
+		final int destinationHeight);
+
+	void drawImage(final IImageConstant image, final int x, final int y);
 
 	Rectangle getBounds();
 

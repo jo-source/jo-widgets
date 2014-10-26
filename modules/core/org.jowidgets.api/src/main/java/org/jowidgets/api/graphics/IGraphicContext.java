@@ -29,9 +29,16 @@
 package org.jowidgets.api.graphics;
 
 import org.jowidgets.common.graphics.IGraphicContextCommon;
+import org.jowidgets.common.image.IImageConstant;
 
 public interface IGraphicContext extends IGraphicContextCommon {
 
 	void setSolidLine();
+
+	void drawImage(IImageConstant image, final int x, final int y, final int width, final int height);
+
+	void drawImage(IImageConstant image, final int x, final int y);
+
+	void drawImage(IImageConstant image);
 
 }

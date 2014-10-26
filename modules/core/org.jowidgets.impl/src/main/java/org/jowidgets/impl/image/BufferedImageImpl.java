@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,52 +26,31 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.base.delegate;
+package org.jowidgets.impl.image;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import org.jowidgets.api.graphics.IGraphicContext;
+import org.jowidgets.api.image.IBufferedImage;
+import org.jowidgets.common.image.IImageRegistry;
+import org.jowidgets.impl.widgets.basic.graphics.GraphicContextAdapter;
+import org.jowidgets.spi.image.IBufferedImageSpi;
 
-import org.jowidgets.api.controller.IDisposeListener;
-import org.jowidgets.util.Assert;
+final class BufferedImageImpl extends ImageImpl implements IBufferedImage {
 
-public class DisposableDelegate {
+	private final IBufferedImageSpi imageSpi;
 
-	private final Set<IDisposeListener> listeners;
+	private IGraphicContext graphicContext;
 
-	private boolean disposed;
-
-	public DisposableDelegate() {
-		this.listeners = new LinkedHashSet<IDisposeListener>();
-		this.disposed = false;
-	};
-
-	public void addDisposeListener(final IDisposeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
+	public BufferedImageImpl(final IBufferedImageSpi imageSpi, final IImageRegistry imageRegistry) {
+		super(imageSpi, imageRegistry);
+		this.imageSpi = imageSpi;
 	}
 
-	public void removeDisposeListener(final IDisposeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
-
-	public void dispose() {
-		if (!disposed) {
-			fireOnDispose();
-			this.disposed = true;
-			listeners.clear();
+	@Override
+	public synchronized IGraphicContext getGraphicContext() {
+		if (graphicContext == null) {
+			graphicContext = new GraphicContextAdapter(imageSpi.getGraphicContext());
 		}
-	}
-
-	public boolean isDisposed() {
-		return disposed;
-	}
-
-	public void fireOnDispose() {
-		for (final IDisposeListener listener : new ArrayList<IDisposeListener>(listeners)) {
-			listener.onDispose();
-		}
+		return graphicContext;
 	}
 
 }

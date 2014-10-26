@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2010, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,52 +26,41 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.base.delegate;
+package org.jowidgets.spi.image;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.io.InputStream;
+import java.net.URL;
 
-import org.jowidgets.api.controller.IDisposeListener;
-import org.jowidgets.util.Assert;
+import org.jowidgets.util.IFactory;
 
-public class DisposableDelegate {
+public interface IImageFactorySpi {
 
-	private final Set<IDisposeListener> listeners;
+	/**
+	 * Creates an image from an input stream.
+	 * 
+	 * @param inputStream A factory for an input stream
+	 * 
+	 * @return The created image
+	 */
+	IImageSpi createImage(IFactory<InputStream> inputStream);
 
-	private boolean disposed;
+	/**
+	 * Creates an image from an url.
+	 * 
+	 * @param url The url to create the image from
+	 * 
+	 * @return The created image
+	 */
+	IImageSpi createImage(URL url);
 
-	public DisposableDelegate() {
-		this.listeners = new LinkedHashSet<IDisposeListener>();
-		this.disposed = false;
-	};
-
-	public void addDisposeListener(final IDisposeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
-
-	public void removeDisposeListener(final IDisposeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
-
-	public void dispose() {
-		if (!disposed) {
-			fireOnDispose();
-			this.disposed = true;
-			listeners.clear();
-		}
-	}
-
-	public boolean isDisposed() {
-		return disposed;
-	}
-
-	public void fireOnDispose() {
-		for (final IDisposeListener listener : new ArrayList<IDisposeListener>(listeners)) {
-			listener.onDispose();
-		}
-	}
+	/**
+	 * Creates an buffered image with defined with and height.
+	 * 
+	 * @param width The width of the image
+	 * @param height The height of the image
+	 * 
+	 * @return The created image
+	 */
+	IBufferedImageSpi createBufferedImage(int width, int height);
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,52 +26,36 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.base.delegate;
+package org.jowidgets.spi.impl.swt.common.image;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import org.eclipse.swt.graphics.Image;
+import org.jowidgets.common.image.IImageDescriptor;
+import org.jowidgets.spi.impl.image.IImageFactory;
+import org.jowidgets.spi.impl.image.ImageHandle;
 
-import org.jowidgets.api.controller.IDisposeListener;
-import org.jowidgets.util.Assert;
+public final class SwtImageHandle extends ImageHandle<Image> {
 
-public class DisposableDelegate {
-
-	private final Set<IDisposeListener> listeners;
-
-	private boolean disposed;
-
-	public DisposableDelegate() {
-		this.listeners = new LinkedHashSet<IDisposeListener>();
-		this.disposed = false;
-	};
-
-	public void addDisposeListener(final IDisposeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
+	public SwtImageHandle(final IImageFactory<Image> imageFactory, final IImageDescriptor imageDescriptor) {
+		super(imageFactory, imageDescriptor);
 	}
 
-	public void removeDisposeListener(final IDisposeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
+	public SwtImageHandle(final IImageFactory<Image> imageFactory) {
+		super(imageFactory);
 	}
 
-	public void dispose() {
-		if (!disposed) {
-			fireOnDispose();
-			this.disposed = true;
-			listeners.clear();
+	public SwtImageHandle(final Image image) {
+		super(image);
+	}
+
+	@Override
+	public synchronized void dispose() {
+		if (isInitialized()) {
+			final Image image = getImage();
+			if (image != null && !image.isDisposed()) {
+				image.dispose();
+			}
 		}
-	}
-
-	public boolean isDisposed() {
-		return disposed;
-	}
-
-	public void fireOnDispose() {
-		for (final IDisposeListener listener : new ArrayList<IDisposeListener>(listeners)) {
-			listener.onDispose();
-		}
+		super.dispose();
 	}
 
 }
