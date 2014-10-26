@@ -42,4 +42,16 @@ public abstract class AbstractCanvasSpiWrapper extends AbstractControlSpiWrapper
 		return (ICanvasSpi) super.getWidget();
 	}
 
+	@Override
+	public void scroll(
+		final int sourceX,
+		final int sourceY,
+		final int sourceWidth,
+		final int sourceHeight,
+		final int destinationX,
+		final int destinationY) {
+
+		getWidget().scroll(sourceX, sourceY, sourceWidth, sourceHeight, destinationX, destinationY);
+	}
+
 }

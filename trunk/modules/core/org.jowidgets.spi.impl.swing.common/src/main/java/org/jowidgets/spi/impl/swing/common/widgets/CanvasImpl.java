@@ -27,6 +27,7 @@
  */
 package org.jowidgets.spi.impl.swing.common.widgets;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
@@ -62,6 +63,32 @@ public class CanvasImpl extends SwingComposite implements ICanvasSpi {
 	@Override
 	public void removePaintListener(final IPaintListenerSpi listener) {
 		getUiReference().removePaintListener(listener);
+	}
+
+	@Override
+	public void scroll(
+		final int sourceX,
+		final int sourceY,
+		final int sourceWidth,
+		final int sourceHeight,
+		final int destinationX,
+		final int destinationY) {
+
+		final Dimension size = getUiReference().getSize();
+		final Graphics graphics = getUiReference().getGraphics();
+
+		//copy the area to scroll
+		graphics.copyArea(sourceX, sourceY, sourceWidth, sourceHeight, destinationX - sourceX, destinationY - sourceY);
+
+		//clear the area outside the scroll destination
+		//left border
+		graphics.clearRect(0, 0, destinationX, size.height);
+		//right border
+		graphics.clearRect(destinationX + sourceWidth, 0, size.width - (destinationX + sourceWidth), size.height);
+		//top border
+		graphics.clearRect(destinationX, 0, sourceWidth, destinationY);
+		//bottom border
+		graphics.clearRect(destinationX, destinationY + sourceHeight, sourceWidth, size.height - (destinationY + sourceHeight));
 	}
 
 	private static final class CanvasPanel extends JPanel implements IPaintObservableSpi {

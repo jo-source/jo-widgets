@@ -38,6 +38,7 @@ import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.command.IDefaultActionFactory;
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.event.IDelayedEventRunnerBuilder;
+import org.jowidgets.api.image.IImageFactory;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.mask.ITextMaskBuilder;
 import org.jowidgets.api.model.IModelFactoryProvider;
@@ -82,6 +83,8 @@ public interface IToolkit {
 	ITransferableBuilder createTransferableBuilder();
 
 	IImageRegistry getImageRegistry();
+
+	IImageFactory getImageFactory();
 
 	IMessagePane getMessagePane();
 

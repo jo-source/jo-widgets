@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,52 +26,44 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.base.delegate;
+package org.jowidgets.impl.image;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.io.InputStream;
+import java.net.URL;
 
-import org.jowidgets.api.controller.IDisposeListener;
+import org.jowidgets.api.image.IBufferedImage;
+import org.jowidgets.api.image.IImage;
+import org.jowidgets.api.image.IImageFactory;
+import org.jowidgets.common.image.IImageRegistry;
+import org.jowidgets.spi.image.IImageFactorySpi;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.IFactory;
 
-public class DisposableDelegate {
+public final class DefaultImageFactoryImpl implements IImageFactory {
 
-	private final Set<IDisposeListener> listeners;
+	private final IImageFactorySpi factorySpi;
+	private final IImageRegistry imageRegistry;
 
-	private boolean disposed;
-
-	public DisposableDelegate() {
-		this.listeners = new LinkedHashSet<IDisposeListener>();
-		this.disposed = false;
-	};
-
-	public void addDisposeListener(final IDisposeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
+	public DefaultImageFactoryImpl(final IImageFactorySpi factorySpi, final IImageRegistry imageRegistry) {
+		Assert.paramNotNull(factorySpi, "factorySpi");
+		Assert.paramNotNull(imageRegistry, "imageRegistry");
+		this.imageRegistry = imageRegistry;
+		this.factorySpi = factorySpi;
 	}
 
-	public void removeDisposeListener(final IDisposeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
+	@Override
+	public IImage createImage(final URL url) {
+		return new ImageImpl(factorySpi.createImage(url), imageRegistry);
 	}
 
-	public void dispose() {
-		if (!disposed) {
-			fireOnDispose();
-			this.disposed = true;
-			listeners.clear();
-		}
+	@Override
+	public IImage createImage(final IFactory<InputStream> inputStream) {
+		return new ImageImpl(factorySpi.createImage(inputStream), imageRegistry);
 	}
 
-	public boolean isDisposed() {
-		return disposed;
-	}
-
-	public void fireOnDispose() {
-		for (final IDisposeListener listener : new ArrayList<IDisposeListener>(listeners)) {
-			listener.onDispose();
-		}
+	@Override
+	public IBufferedImage createBufferedImage(final int width, final int height) {
+		return new BufferedImageImpl(factorySpi.createBufferedImage(width, height), imageRegistry);
 	}
 
 }

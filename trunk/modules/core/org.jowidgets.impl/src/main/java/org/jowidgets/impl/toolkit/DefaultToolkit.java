@@ -40,6 +40,7 @@ import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.command.IDefaultActionFactory;
 import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.event.IDelayedEventRunnerBuilder;
+import org.jowidgets.api.image.IImageFactory;
 import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
@@ -73,6 +74,7 @@ import org.jowidgets.impl.command.DefaultActionFactoryImpl;
 import org.jowidgets.impl.content.InputContentCreatorFactory;
 import org.jowidgets.impl.convert.DefaultConverterProvider;
 import org.jowidgets.impl.image.DefaultIconsRegisterService;
+import org.jowidgets.impl.image.DefaultImageFactoryImpl;
 import org.jowidgets.impl.layout.LayoutFactoryProvider;
 import org.jowidgets.impl.mask.TextMaskBuilder;
 import org.jowidgets.impl.model.ModelFactoryProvider;
@@ -91,6 +93,7 @@ public class DefaultToolkit implements IToolkit {
 	private final Map<ITypedKey<? extends Object>, Object> values;
 	private final IWidgetsServiceProvider widgetsServiceProvider;
 	private final IGenericWidgetFactory genericWidgetFactory;
+	private final IImageFactory imageFactory;
 	private final ILayoutFactoryProvider layoutFactoryProvider;
 	private final IWidgetWrapperFactory widgetWrapperFactory;
 	private final IBluePrintFactory bluePrintFactory;
@@ -117,6 +120,7 @@ public class DefaultToolkit implements IToolkit {
 		this.values = new HashMap<ITypedKey<? extends Object>, Object>();
 		this.widgetsServiceProvider = toolkitSpi;
 		this.genericWidgetFactory = new GenericWidgetFactory(toolkitSpi);
+		this.imageFactory = new DefaultImageFactoryImpl(toolkitSpi.getImageFactory(), toolkitSpi.getImageRegistry());
 		this.widgetWrapperFactory = new DefaultWidgetWrapperFactory(genericWidgetFactory, toolkitSpi.getWidgetFactory());
 		this.layoutFactoryProvider = new LayoutFactoryProvider();
 		this.bluePrintFactory = new BluePrintFactory();
@@ -171,6 +175,11 @@ public class DefaultToolkit implements IToolkit {
 	@Override
 	public IImageRegistry getImageRegistry() {
 		return widgetsServiceProvider.getImageRegistry();
+	}
+
+	@Override
+	public IImageFactory getImageFactory() {
+		return imageFactory;
 	}
 
 	@Override

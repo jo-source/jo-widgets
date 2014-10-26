@@ -59,7 +59,7 @@ public final class SwingImageRegistry extends ImageRegistry {
 			return imageHandle.getImage();
 		}
 		else {
-			throw new IllegalArgumentException("No icon found for the image constant '" + key + "'");
+			throw new IllegalArgumentException("No image found for the image constant '" + key + "'");
 		}
 	}
 

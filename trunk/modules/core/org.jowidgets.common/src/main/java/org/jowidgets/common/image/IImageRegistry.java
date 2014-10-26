@@ -51,4 +51,11 @@ public interface IImageRegistry {
 
 	<T extends Enum<?> & IImageUrlProvider> void registerImageEnum(final Class<T> enumClass);
 
+	/**
+	 * Unregisters an image. This also disposes the image. After that the image can not be used anymore
+	 * 
+	 * @param image The image to unregister
+	 */
+	void unRegisterImage(IImageCommon image);
+
 }

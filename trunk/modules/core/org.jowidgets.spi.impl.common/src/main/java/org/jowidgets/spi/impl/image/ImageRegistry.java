@@ -31,6 +31,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jowidgets.common.image.IImageCommon;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.image.IImageDescriptor;
 import org.jowidgets.common.image.IImageHandle;
@@ -123,6 +124,13 @@ public class ImageRegistry implements IImageRegistry {
 		for (final IImageUrlProvider imageUrlProvider : enumClass.getEnumConstants()) {
 			registerImageUrl(imageUrlProvider);
 		}
+	}
+
+	@Override
+	public void unRegisterImage(final IImageCommon image) {
+		Assert.paramNotNull(image, "image");
+		imageMap.remove(image);
+		image.dispose();
 	}
 
 	protected IImageHandleFactory getImageHandleFactory() {

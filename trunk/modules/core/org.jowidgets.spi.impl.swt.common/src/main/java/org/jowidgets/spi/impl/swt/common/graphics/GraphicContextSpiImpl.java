@@ -37,11 +37,13 @@ import org.jowidgets.common.graphics.AntiAliasing;
 import org.jowidgets.common.graphics.LineCap;
 import org.jowidgets.common.graphics.LineJoin;
 import org.jowidgets.common.graphics.Point;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.text.IFontMetrics;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.spi.graphics.IGraphicContextSpi;
 import org.jowidgets.spi.impl.swt.common.color.ColorCache;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.util.ColorConvert;
 import org.jowidgets.spi.impl.swt.common.util.FontMetricsConvert;
 import org.jowidgets.spi.impl.swt.common.util.FontProvider;
@@ -262,6 +264,35 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
 	@Override
 	public void drawText(final String text, final int x, final int y) {
 		gc.drawText(text, x, y, true);
+	}
+
+	@Override
+	public void drawImage(
+		final IImageConstant imageKey,
+		final int sourceX,
+		final int sourceY,
+		final int sourceWidth,
+		final int sourceHeight,
+		final int destinationX,
+		final int destinationY,
+		final int destinationWidth,
+		final int destinationHeight) {
+
+		gc.drawImage(
+				SwtImageRegistry.getInstance().getImage(imageKey),
+				sourceX,
+				sourceY,
+				sourceWidth,
+				sourceHeight,
+				destinationX,
+				destinationY,
+				destinationWidth,
+				destinationHeight);
+	}
+
+	@Override
+	public void drawImage(final IImageConstant imageKey, final int x, final int y) {
+		gc.drawImage(SwtImageRegistry.getInstance().getImage(imageKey), x, y);
 	}
 
 	@Override

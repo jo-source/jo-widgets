@@ -47,9 +47,11 @@ import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.clipboard.IClipboardSpi;
+import org.jowidgets.spi.image.IImageFactorySpi;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
 import org.jowidgets.spi.impl.swing.common.application.SwingApplicationRunnerFactory;
 import org.jowidgets.spi.impl.swing.common.clipboard.SwingClipboard;
+import org.jowidgets.spi.impl.swing.common.image.SwingImageFactory;
 import org.jowidgets.spi.impl.swing.common.image.SwingImageHandleFactorySpi;
 import org.jowidgets.spi.impl.swing.common.image.SwingImageRegistry;
 import org.jowidgets.spi.impl.swing.common.threads.SwingUiThreadAccess;
@@ -62,6 +64,7 @@ public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 	private final IFactory<IApplicationRunner> applicationRunnerFactory;
 	private final SwingImageHandleFactorySpi imageHandleFactorySpi;
 	private final SwingImageRegistry imageRegistry;
+	private final SwingImageFactory imageFactory;
 	private final SwingWidgetFactory widgetFactory;
 	private final SwingOptionalWidgetsFactory optionalWidgetsFactory;
 
@@ -76,6 +79,7 @@ public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 		this.applicationRunnerFactory = applicationRunnerFactory;
 		this.imageRegistry = SwingImageRegistry.getInstance();
 		this.imageHandleFactorySpi = new SwingImageHandleFactorySpi(imageRegistry);
+		this.imageFactory = new SwingImageFactory(imageHandleFactorySpi);
 		this.widgetFactory = new SwingWidgetFactory(imageRegistry);
 		this.optionalWidgetsFactory = new SwingOptionalWidgetsFactory();
 	}
@@ -99,6 +103,11 @@ public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 	@Override
 	public IImageHandleFactorySpi getImageHandleFactory() {
 		return imageHandleFactorySpi;
+	}
+
+	@Override
+	public IImageFactorySpi getImageFactory() {
+		return imageFactory;
 	}
 
 	@Override
