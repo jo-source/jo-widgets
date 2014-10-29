@@ -27,6 +27,8 @@
  */
 package org.jowidgets.examples.common.image;
 
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -49,6 +51,7 @@ import org.jowidgets.api.widgets.ISlider;
 import org.jowidgets.api.widgets.blueprint.ISliderBluePrint;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
+import org.jowidgets.common.color.ColorValue;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
@@ -56,17 +59,22 @@ import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 import org.jowidgets.util.ICallback;
 import org.jowidgets.util.NullCompatibleEquivalence;
+import org.jowidgets.util.Tuple;
 import org.jowidgets.util.ValueHolder;
+import org.jowidgets.util.io.IoUtils;
 
 public final class ImageAnimationDemo1 implements IApplication {
 
 	private static final Random RANDOM = new Random();
 
+	private static final String ENVELOPE_1_RESOURCE_NAME = "envelopes/envelope1.tupleArray";
+	private static final String ENVELOPE_2_RESOURCE_NAME = "envelopes/envelope2.tupleArray";
+
 	private static final int IMAGE_HEIGHT = 120;
-	private static final int IMAGE_WIDTH = 10000;
+	private static final int IMAGE_WIDTH = 28699;
 	private static final int BORDER_SIZE = 5;
 
-	private static final int CANVAS_COUNT = 6;
+	private static final int CANVAS_COUNT = 3;
 
 	private static final int SLIDER_MAX = 10000;
 
@@ -171,11 +179,14 @@ public final class ImageAnimationDemo1 implements IApplication {
 
 		//create canvas list
 		final List<ICanvas> canvasList = new ArrayList<ICanvas>(CANVAS_COUNT);
-		for (int i = 0; i < CANVAS_COUNT - 1; i++) {
-			canvasList.add(createCanvas(container, createImage(), scaleFactor, offset, scrollingCb, false));
+		for (int i = 0; i < CANVAS_COUNT - 2; i++) {
+			canvasList.add(createCanvas(container, createImage(null), scaleFactor, offset, scrollingCb, false));
+		}
+		if (CANVAS_COUNT > 1) {
+			canvasList.add(createCanvas(container, createImage(ENVELOPE_2_RESOURCE_NAME), scaleFactor, offset, scrollingCb, false));
 		}
 		if (CANVAS_COUNT > 0) {
-			canvasList.add(createCanvas(container, createImage(), scaleFactor, offset, scrollingCb, true));
+			canvasList.add(createCanvas(container, createImage(ENVELOPE_1_RESOURCE_NAME), scaleFactor, offset, scrollingCb, true));
 		}
 
 		rootFrame.setVisible(true);
@@ -277,13 +288,13 @@ public final class ImageAnimationDemo1 implements IApplication {
 		return result;
 	}
 
-	private IImage createImage() {
+	private IImage createImage(final String resourceName) {
 		final IBufferedImage image = Toolkit.getImageFactory().createBufferedImage(IMAGE_WIDTH, IMAGE_HEIGHT);
 		final IGraphicContext gc = image.getGraphicContext();
 
 		gc.setBackgroundColor(Colors.WHITE);
 		gc.clearRectangle(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
-		gc.setForegroundColor(Colors.STRONG);
+		gc.setForegroundColor(new ColorValue(0, 0, 98));
 
 		final int innerHeight = IMAGE_HEIGHT - (2 * BORDER_SIZE);
 		final int baseLine = IMAGE_HEIGHT - BORDER_SIZE;
@@ -291,18 +302,46 @@ public final class ImageAnimationDemo1 implements IApplication {
 
 		double minValue = -1.0d;
 		double maxValue = 1.0d;
-		for (int i = 0; i < IMAGE_WIDTH; i++) {
-			minValue = -1.0d * RANDOM.nextDouble();
-			maxValue = RANDOM.nextDouble();
-			final int maxY = (int) (baseLine - ((maxValue + 1.0) * scale));
-			final int minY = (int) (baseLine - ((minValue + 1.0) * scale));
-			if (minY != maxY) {
-				gc.fillRectangle(i, maxY, 1, Math.abs(maxY - minY));
+		try {
+			ObjectInputStream ois = null;
+			if (resourceName != null) {
+				final InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(resourceName);
+				ois = new ObjectInputStream(inputStream);
 			}
-			else {
-				gc.drawPoint(i, minY);
+
+			for (int i = 0; i < IMAGE_WIDTH; i++) {
+				if (ois != null) {
+					try {
+						@SuppressWarnings("unchecked")
+						final Tuple<Double, Double> tuple = (Tuple<Double, Double>) ois.readObject();
+						minValue = tuple.getFirst();
+						maxValue = tuple.getSecond();
+					}
+					catch (final Exception e) {
+						IoUtils.tryCloseSilent(ois);
+						ois = null;
+					}
+				}
+				else {
+					minValue = -1.0d * RANDOM.nextDouble();
+					maxValue = RANDOM.nextDouble();
+				}
+
+				final int maxY = (int) (baseLine - ((maxValue + 1.0) * scale));
+				final int minY = (int) (baseLine - ((minValue + 1.0) * scale));
+				if (minY != maxY) {
+					gc.fillRectangle(i, maxY, 1, Math.abs(maxY - minY));
+				}
+				else {
+					gc.drawPoint(i, minY);
+				}
 			}
+			IoUtils.tryCloseSilent(ois);
 		}
+		catch (final Exception e) {
+			throw new RuntimeException(e);
+		}
+
 		return image;
 	}
 
@@ -374,10 +413,14 @@ public final class ImageAnimationDemo1 implements IApplication {
 			}
 
 			if (scrollingCb.isSelected()) {
+				final long currentTime = System.currentTimeMillis();
 				for (final ICanvas canvas : canvasList) {
 					final Dimension size = canvas.getSize();
 					canvas.scroll(0, 0, size.getWidth() - animationStep, size.getHeight(), animationStep, 0);
 				}
+				//CHECKSTYLE:OFF
+				System.out.println("SCROLL TIME: " + (System.currentTimeMillis() - currentTime));
+				//CHECKSTYLE:ON
 			}
 
 		}
