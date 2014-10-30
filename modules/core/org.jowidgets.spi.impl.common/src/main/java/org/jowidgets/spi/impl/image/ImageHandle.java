@@ -87,6 +87,7 @@ public class ImageHandle<IMAGE_TYPE> implements IImageHandle {
 
 	public synchronized void dispose() {
 		checkDisposed();
+		disposed = true;
 		image = null;
 	}
 
