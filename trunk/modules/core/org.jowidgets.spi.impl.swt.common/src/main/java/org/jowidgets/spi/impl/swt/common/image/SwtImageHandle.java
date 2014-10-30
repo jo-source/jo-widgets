@@ -57,5 +57,4 @@ public final class SwtImageHandle extends ImageHandle<Image> {
 		}
 		super.dispose();
 	}
-
 }

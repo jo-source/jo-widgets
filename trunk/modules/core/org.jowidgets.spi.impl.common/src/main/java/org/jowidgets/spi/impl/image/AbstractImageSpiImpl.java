@@ -47,11 +47,11 @@ public abstract class AbstractImageSpiImpl<IMAGE_TYPE> implements IImageSpi {
 	@Override
 	public void dispose() {
 		checkDisposed();
-		disposed = true;
-		if (!imageHandle.isDisposed()) {
+		if (!disposed && !imageHandle.isDisposed()) {
 			imageHandle.dispose();
 			imageHandle = null;
 		}
+		disposed = true;
 	}
 
 	@SuppressWarnings("unchecked")

@@ -57,7 +57,11 @@ class ImageImpl extends DisposableDelegate implements IImage {
 	@Override
 	public void dispose() {
 		super.dispose();
-		imageSpi.dispose();
-		imageRegistry.unRegisterImage(this);
+		if (imageRegistry.getImageHandle(this) != null) {
+			imageRegistry.unRegisterImage(this);
+		}
+		else {
+			imageSpi.dispose();
+		}
 	}
 }
