@@ -31,6 +31,7 @@ package org.jowidgets.util.concurrent;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -40,6 +41,7 @@ public final class SingleThreadAccess implements ISingleThreadAccess {
 
 	private static final long SLEEP_TIME = 200;
 
+	private final ThreadFactory threadFactory;
 	private final AtomicBoolean running;
 	private final AtomicBoolean paused;
 	private final BlockingQueue<Runnable> events;
@@ -48,6 +50,13 @@ public final class SingleThreadAccess implements ISingleThreadAccess {
 	private UncaughtExceptionHandler uncaughtExceptionHandler;
 
 	public SingleThreadAccess() {
+		this(new DaemonThreadFactory());
+	}
+
+	public SingleThreadAccess(final ThreadFactory threadFactory) {
+		Assert.paramNotNull(threadFactory, "threadFactory");
+
+		this.threadFactory = threadFactory;
 		this.running = new AtomicBoolean(false);
 		this.paused = new AtomicBoolean(false);
 		this.events = new LinkedBlockingQueue<Runnable>();
@@ -73,8 +82,7 @@ public final class SingleThreadAccess implements ISingleThreadAccess {
 			throw new IllegalStateException("Event queue is already running");
 		}
 		else {
-			singleThread = new Thread(new EventLoop());
-			singleThread.setDaemon(true);
+			singleThread = threadFactory.newThread(new EventLoop());
 			singleThread.start();
 		}
 	}
