@@ -31,15 +31,52 @@ package org.jowidgets.util.concurrent;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
+import org.jowidgets.util.Assert;
+import org.jowidgets.util.IFactory;
+
 public final class DaemonThreadFactory implements ThreadFactory {
 
-	private final ThreadFactory defaultThreadFactory = Executors.defaultThreadFactory();
+	private final IFactory<String> threadNameFactory;
+	private final ThreadFactory defaultThreadFactory;
+
+	public DaemonThreadFactory() {
+		this((IFactory<String>) null);
+	}
+
+	public DaemonThreadFactory(final String threadNamePrefix) {
+		this(new DefaultThreadNameFactory(threadNamePrefix));
+	}
+
+	public DaemonThreadFactory(final IFactory<String> threadNameFactory) {
+		this.threadNameFactory = threadNameFactory;
+		this.defaultThreadFactory = Executors.defaultThreadFactory();
+	}
 
 	@Override
 	public Thread newThread(final Runnable runnable) {
 		final Thread result = defaultThreadFactory.newThread(runnable);
 		result.setDaemon(true);
+		if (threadNameFactory != null) {
+			result.setName(threadNameFactory.create());
+		}
 		return result;
 	}
 
+	private static final class DefaultThreadNameFactory implements IFactory<String> {
+
+		private final String prefix;
+		private long count;
+
+		private DefaultThreadNameFactory(final String prefix) {
+			Assert.paramNotNull(prefix, "prefix");
+			this.prefix = prefix;
+			this.count = 0;
+		}
+
+		@Override
+		public String create() {
+			return prefix + count++;
+		}
+
+	}
 }
