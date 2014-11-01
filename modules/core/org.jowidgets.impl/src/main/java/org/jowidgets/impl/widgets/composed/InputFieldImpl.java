@@ -38,11 +38,13 @@ import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.tools.controller.InputObservable;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
+import org.jowidgets.tools.value.InputComponentObservableValue;
 import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
 import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.EmptyCompatibleEquivalence;
+import org.jowidgets.util.IObservableValue;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
@@ -57,6 +59,7 @@ public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInput
 	private final IValidator<String> stringValidator;
 	private final ValidationCache validationCache;
 	private final InputObservable inputObservable;
+	private final IObservableValue<VALUE_TYPE> observableValue;
 
 	private VALUE_TYPE value;
 	private String lastUnmodifiedTextValue;
@@ -127,12 +130,19 @@ public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInput
 			setValue(setup.getValue());
 		}
 
+		this.observableValue = new InputComponentObservableValue<VALUE_TYPE>(this);
+
 		resetModificationState();
 	}
 
 	@Override
 	protected ITextControl getWidget() {
 		return (ITextControl) super.getWidget();
+	}
+
+	@Override
+	public IObservableValue<VALUE_TYPE> getObservableValue() {
+		return observableValue;
 	}
 
 	@Override

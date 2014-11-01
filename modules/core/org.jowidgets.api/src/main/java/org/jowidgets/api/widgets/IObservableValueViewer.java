@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,16 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util;
+package org.jowidgets.api.widgets;
 
-public interface IObservableValue<VALUE_TYPE> {
+import org.jowidgets.util.IObservableValue;
 
-	void setValue(VALUE_TYPE value);
+public interface IObservableValueViewer<VALUE_TYPE> {
 
-	VALUE_TYPE getValue();
-
-	void addValueListener(IObservableValueListener<VALUE_TYPE> listener);
-
-	void removeValueListener(IObservableValueListener<VALUE_TYPE> listener);
+	IObservableValue<VALUE_TYPE> getObservableValue();
 
 }

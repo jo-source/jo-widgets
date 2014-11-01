@@ -41,8 +41,10 @@ import org.jowidgets.spi.widgets.ISliderSpi;
 import org.jowidgets.tools.controller.InputObservable;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
+import org.jowidgets.tools.value.InputComponentObservableValue;
 import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
 import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
+import org.jowidgets.util.IObservableValue;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
@@ -58,6 +60,8 @@ public final class SliderImpl extends AbstractSliderSpiWrapper implements ISlide
 
 	private final int minimum;
 	private final int maximum;
+
+	private final IObservableValue<Integer> observableValue;
 
 	private int lastUnmodifiedValue;
 
@@ -99,7 +103,14 @@ public final class SliderImpl extends AbstractSliderSpiWrapper implements ISlide
 
 		this.editable = true;
 
+		this.observableValue = new InputComponentObservableValue<Integer>(this);
+
 		resetModificationState();
+	}
+
+	@Override
+	public IObservableValue<Integer> getObservableValue() {
+		return observableValue;
 	}
 
 	@Override

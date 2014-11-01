@@ -42,6 +42,11 @@ public class ParameterWrapper<VALUE_TYPE> extends ObservableValueWrapper<VALUE_T
 	}
 
 	@Override
+	public Class<VALUE_TYPE> getValueType() {
+		return original.getValueType();
+	}
+
+	@Override
 	public String getLabel() {
 		return original.getLabel();
 	}

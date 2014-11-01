@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, Michael Grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,14 +25,19 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets;
+package org.jowidgets.api.widgets.blueprint.builder;
 
-import org.jowidgets.common.widgets.ISliderCommon;
+import org.jowidgets.api.convert.ISliderViewerConverter;
+import org.jowidgets.common.widgets.builder.ISliderSetupBuilderCommon;
+import org.jowidgets.util.IObservableValue;
 
-public interface ISlider extends IInputControl<Integer>, ISliderCommon, IObservableValueViewer<Integer> {
+public interface ISliderViewerSetupBuilder<INSTANCE_TYPE extends ISliderViewerSetupBuilder<?, VALUE_TYPE>, VALUE_TYPE> extends
+		ISliderSetupBuilderCommon<INSTANCE_TYPE>,
+		IComponentSetupBuilder<INSTANCE_TYPE> {
 
-	int getMinimum();
+	INSTANCE_TYPE setConverter(ISliderViewerConverter<VALUE_TYPE> converter);
 
-	int getMaximum();
+	INSTANCE_TYPE setObservableValue(IObservableValue<VALUE_TYPE> observableValue);
 
+	INSTANCE_TYPE setValue(VALUE_TYPE value);
 }

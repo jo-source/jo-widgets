@@ -112,6 +112,7 @@ public final class Parameter {
 
 	private static final class ParameterImpl<VALUE_TYPE> extends ObservableValue<VALUE_TYPE> implements IParameter<VALUE_TYPE> {
 
+		private final Class<VALUE_TYPE> valueType;
 		private final String label;
 		private final String description;
 		private final VALUE_TYPE defaultValue;
@@ -122,12 +123,18 @@ public final class Parameter {
 			final VALUE_TYPE defaultValue,
 			final String label,
 			final String description) {
-			super(valueType);
-
+			super();
+			Assert.paramNotNull(valueType, "valueType");
+			this.valueType = valueType;
 			this.label = label;
 			this.description = description;
 			this.defaultValue = defaultValue;
 			setValue(value);
+		}
+
+		@Override
+		public Class<VALUE_TYPE> getValueType() {
+			return valueType;
 		}
 
 		@Override

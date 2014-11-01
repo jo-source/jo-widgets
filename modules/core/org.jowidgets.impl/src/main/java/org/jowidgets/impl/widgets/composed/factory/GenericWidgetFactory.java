@@ -44,6 +44,7 @@ import org.jowidgets.api.widgets.descriptor.IMessageDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.IPasswordChangeDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.IProgressBarDescriptor;
 import org.jowidgets.api.widgets.descriptor.IQuestionDialogDescriptor;
+import org.jowidgets.api.widgets.descriptor.ISliderViewerDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITextSeparatorDescriptor;
 import org.jowidgets.api.widgets.descriptor.ITreeViewerDescriptor;
 import org.jowidgets.api.widgets.descriptor.IUnitValueFieldDescriptor;
@@ -65,6 +66,7 @@ import org.jowidgets.impl.widgets.composed.factory.internal.MessageDialogFactory
 import org.jowidgets.impl.widgets.composed.factory.internal.PasswordChangeDialogFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.ProgressBarFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.QuestionDialogFactory;
+import org.jowidgets.impl.widgets.composed.factory.internal.SliderViewerFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.TextSeparatorFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.TreeViewerFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.UnitValueFieldFactory;
@@ -102,6 +104,7 @@ public class GenericWidgetFactory extends BasicGenericWidgetFactory {
 		register(IExpandCompositeDescriptor.class, new ExpandCompositeFactory());
 		register(ILevelMeterDescriptor.class, new LevelMeterFactory());
 		register(ITreeViewerDescriptor.class, new TreeViewerFactory<Object>());
+		register(ISliderViewerDescriptor.class, new SliderViewerFactory<Object>(this));
 	}
 
 	private void registerFallbackWidgets() {

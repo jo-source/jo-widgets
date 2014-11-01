@@ -42,6 +42,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IMessageDialogSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IPasswordChangeDialogSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IProgressBarSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IQuestionDialogSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.ISliderViewerSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ITreeSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IUnitValueFieldSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IValidationLabelSetupBuilder;
@@ -60,6 +61,7 @@ import org.jowidgets.impl.widgets.composed.blueprint.defaults.MessageDialogDefau
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.PasswordChangeDialogDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.ProgressBarDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.QuestionDialogDefaults;
+import org.jowidgets.impl.widgets.composed.blueprint.defaults.SliderViewerDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.TreeDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.UnitValueFieldDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.ValidationLabelDefaults;
@@ -85,5 +87,6 @@ public class ComposedDefaultsInitializerRegistry extends BasicDefaultsInitialize
 		register(IExpandCompositeBluePrint.class, new ExpandCompositeDefaults());
 		register(ILevelMeterBluePrint.class, new LevelMeterDefaults());
 		register(ITreeSetupBuilder.class, new TreeDefaults());
+		register(ISliderViewerSetupBuilder.class, new SliderViewerDefaults());
 	}
 }

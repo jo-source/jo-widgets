@@ -28,26 +28,18 @@
 
 package org.jowidgets.util;
 
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.Set;
+import org.jowidgets.util.collection.IObserverSet;
+import org.jowidgets.util.collection.IObserverSetFactory.Strategy;
+import org.jowidgets.util.collection.ObserverSetFactory;
 
 public class ObservableValue<VALUE_TYPE> implements IObservableValue<VALUE_TYPE> {
 
-	private final Set<IObservableValueListener<VALUE_TYPE>> listeners;
-	private final Class<VALUE_TYPE> valueType;
+	private final IObserverSet<IObservableValueListener<VALUE_TYPE>> listeners;
 
 	private VALUE_TYPE value;
 
-	public ObservableValue(final Class<VALUE_TYPE> valueType) {
-		Assert.paramNotNull(valueType, "valueType");
-		this.valueType = valueType;
-		this.listeners = new LinkedHashSet<IObservableValueListener<VALUE_TYPE>>();
-	}
-
-	@Override
-	public final Class<VALUE_TYPE> getValueType() {
-		return valueType;
+	public ObservableValue() {
+		this.listeners = ObserverSetFactory.create(Strategy.LOW_MEMORY);
 	}
 
 	@Override
@@ -76,7 +68,7 @@ public class ObservableValue<VALUE_TYPE> implements IObservableValue<VALUE_TYPE>
 	}
 
 	private void fireChanged() {
-		for (final IObservableValueListener<VALUE_TYPE> listener : new LinkedList<IObservableValueListener<VALUE_TYPE>>(listeners)) {
+		for (final IObservableValueListener<VALUE_TYPE> listener : listeners) {
 			listener.changed(this, value);
 		}
 	}
