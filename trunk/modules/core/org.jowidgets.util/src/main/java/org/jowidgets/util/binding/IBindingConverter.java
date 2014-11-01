@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,16 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util;
+package org.jowidgets.util.binding;
 
-public interface IObservableValue<VALUE_TYPE> {
+public interface IBindingConverter<SOURCE_TYPE, DESTINATION_TYPE> {
 
-	void setValue(VALUE_TYPE value);
+	DESTINATION_TYPE convertSource(SOURCE_TYPE sourceValue);
 
-	VALUE_TYPE getValue();
-
-	void addValueListener(IObservableValueListener<VALUE_TYPE> listener);
-
-	void removeValueListener(IObservableValueListener<VALUE_TYPE> listener);
+	SOURCE_TYPE convertDestination(DESTINATION_TYPE destinationValue);
 
 }

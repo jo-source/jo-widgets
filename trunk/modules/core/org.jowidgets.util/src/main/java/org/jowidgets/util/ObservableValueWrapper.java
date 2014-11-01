@@ -37,9 +37,8 @@ public class ObservableValueWrapper<VALUE_TYPE> implements IObservableValue<VALU
 		this.original = original;
 	}
 
-	@Override
-	public Class<VALUE_TYPE> getValueType() {
-		return original.getValueType();
+	protected IObservableValue<VALUE_TYPE> getOriginal() {
+		return original;
 	}
 
 	@Override

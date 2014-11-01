@@ -35,6 +35,7 @@ import java.util.List;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.api.convert.ISliderViewerConverter;
 import org.jowidgets.api.login.ILoginInterceptor;
 import org.jowidgets.api.model.levelmeter.ILevelMeterModel;
 import org.jowidgets.api.model.table.ITableColumnModel;
@@ -82,6 +83,7 @@ import org.jowidgets.api.widgets.blueprint.ISeparatorBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISeparatorToolBarItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISliderBluePrint;
+import org.jowidgets.api.widgets.blueprint.ISliderViewerBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISubMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITabFolderBluePrint;
@@ -893,6 +895,16 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	@Override
 	public ILevelMeterBluePrint levelMeter(final ILevelMeterModel model) {
 		return bluePrintFactory.levelMeter(model);
+	}
+
+	@Override
+	public <VALUE_TYPE> ISliderViewerBluePrint<VALUE_TYPE> sliderViewer() {
+		return bluePrintFactory.sliderViewer();
+	}
+
+	@Override
+	public <VALUE_TYPE> ISliderViewerBluePrint<VALUE_TYPE> sliderViewer(final ISliderViewerConverter<VALUE_TYPE> converter) {
+		return bluePrintFactory.sliderViewer(converter);
 	}
 
 }

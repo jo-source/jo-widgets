@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,16 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util;
+package org.jowidgets.api.convert;
 
-public interface IObservableValue<VALUE_TYPE> {
+public interface ISliderViewerConverter<VALUE_TYPE> {
 
-	void setValue(VALUE_TYPE value);
+	VALUE_TYPE getModelValue(int sliderMin, int sliderMax, int sliderValue);
 
-	VALUE_TYPE getValue();
-
-	void addValueListener(IObservableValueListener<VALUE_TYPE> listener);
-
-	void removeValueListener(IObservableValueListener<VALUE_TYPE> listener);
+	int getSliderValue(int sliderMin, int sliderMax, VALUE_TYPE modelValue);
 
 }

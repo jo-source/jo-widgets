@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, Michael Grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,14 +25,21 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 
-import org.jowidgets.common.widgets.ISliderCommon;
+import org.jowidgets.api.widgets.blueprint.builder.ISliderViewerSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.util.ObservableValue;
 
-public interface ISlider extends IInputControl<Integer>, ISliderCommon, IObservableValueViewer<Integer> {
+public class SliderViewerDefaults implements IDefaultInitializer<ISliderViewerSetupBuilder<?, ?>> {
 
-	int getMinimum();
-
-	int getMaximum();
+	@SuppressWarnings({"rawtypes", "unchecked"})
+	@Override
+	public void initialize(final ISliderViewerSetupBuilder<?, ?> builder) {
+		builder.setMinimum(0);
+		builder.setMaximum(1000);
+		builder.setTickSpacing(100);
+		builder.setObservableValue(new ObservableValue());
+	}
 
 }

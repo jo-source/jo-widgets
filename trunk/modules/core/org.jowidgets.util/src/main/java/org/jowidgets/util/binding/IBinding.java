@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,16 +26,29 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util;
+package org.jowidgets.util.binding;
 
-public interface IObservableValue<VALUE_TYPE> {
+public interface IBinding {
 
-	void setValue(VALUE_TYPE value);
+	/**
+	 * Unbinds the bound values. After that, the observables are no longer bound bit still referenced to bind them again later
+	 */
+	void unbind();
 
-	VALUE_TYPE getValue();
+	/**
+	 * Binds the referenced values. This this only necessary if the values was unbound before using the unbind() method
+	 */
+	void bind();
 
-	void addValueListener(IObservableValueListener<VALUE_TYPE> listener);
+	/**
+	 * @return True if the binding is disposed, false otherwise
+	 */
+	boolean isDisposed();
 
-	void removeValueListener(IObservableValueListener<VALUE_TYPE> listener);
+	/**
+	 * Disposes the binding. After that, the observables are no longer bound and referenced.
+	 * Using the binding is no longer possible.
+	 */
+	void dispose();
 
 }

@@ -31,16 +31,17 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.blueprint.ITextFieldBluePrint;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ITextFieldSetup;
 import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.widgets.composed.InputFieldImpl;
-import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.tools.verify.InputVerifierComposite;
 
@@ -57,7 +58,7 @@ public class InputFieldFactory<VALUE_TYPE> implements IWidgetFactory<IInputField
 	@Override
 	public IInputField<VALUE_TYPE> create(final Object parentUiReference, final IInputFieldDescriptor<VALUE_TYPE> descriptor) {
 
-		final BluePrintFactory bpF = new BluePrintFactory();
+		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
 		final IConverter<VALUE_TYPE> converter;
 		final Object converterObject = descriptor.getConverter();

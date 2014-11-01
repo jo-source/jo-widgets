@@ -30,7 +30,7 @@ package org.jowidgets.api.widgets;
 
 import org.jowidgets.common.widgets.ISelectable;
 
-public interface IInputField<VALUE_TYPE> extends IInputControl<VALUE_TYPE>, ISelectable {
+public interface IInputField<VALUE_TYPE> extends IObservableValueViewer<VALUE_TYPE>, IInputControl<VALUE_TYPE>, ISelectable {
 
 	void selectAll();
 

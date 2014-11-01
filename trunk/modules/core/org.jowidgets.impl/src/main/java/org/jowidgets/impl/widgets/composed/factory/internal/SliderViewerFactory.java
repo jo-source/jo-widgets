@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, Michael Grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,14 +25,31 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.widgets.composed.factory.internal;
 
-import org.jowidgets.common.widgets.ISliderCommon;
+import org.jowidgets.api.widgets.ISliderViewer;
+import org.jowidgets.api.widgets.blueprint.ISliderBluePrint;
+import org.jowidgets.api.widgets.descriptor.ISliderViewerDescriptor;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.common.widgets.factory.IWidgetFactory;
+import org.jowidgets.impl.widgets.composed.SliderViewerImpl;
+import org.jowidgets.tools.widgets.blueprint.BPF;
 
-public interface ISlider extends IInputControl<Integer>, ISliderCommon, IObservableValueViewer<Integer> {
+public class SliderViewerFactory<VALUE_TYPE> implements
+		IWidgetFactory<ISliderViewer<VALUE_TYPE>, ISliderViewerDescriptor<VALUE_TYPE>> {
 
-	int getMinimum();
+	private final IGenericWidgetFactory widgetFactory;
 
-	int getMaximum();
+	public SliderViewerFactory(final IGenericWidgetFactory widgetFactory) {
+		super();
+		this.widgetFactory = widgetFactory;
+	}
+
+	@Override
+	public ISliderViewer<VALUE_TYPE> create(final Object parentUiReference, final ISliderViewerDescriptor<VALUE_TYPE> descriptor) {
+		final ISliderBluePrint bluePrint = BPF.slider();
+		bluePrint.setSetup(descriptor);
+		return new SliderViewerImpl<VALUE_TYPE>(widgetFactory.create(parentUiReference, bluePrint), descriptor);
+	}
 
 }

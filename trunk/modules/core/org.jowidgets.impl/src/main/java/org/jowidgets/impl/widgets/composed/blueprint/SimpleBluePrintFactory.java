@@ -31,6 +31,7 @@ import java.util.Collection;
 
 import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.api.convert.ISliderViewerConverter;
 import org.jowidgets.api.login.ILoginInterceptor;
 import org.jowidgets.api.password.IPasswordChangeExecutor;
 import org.jowidgets.api.toolkit.Toolkit;
@@ -51,6 +52,7 @@ import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IPasswordChangeDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.ISliderViewerBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
 import org.jowidgets.api.widgets.blueprint.IUnitValueFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationResultLabelBluePrint;
@@ -279,6 +281,18 @@ public class SimpleBluePrintFactory extends BasicBluePrintFactory implements ISi
 	@Override
 	public IExpandCompositeBluePrint expandComposite() {
 		return createProxy(IExpandCompositeBluePrint.class);
+	}
+
+	@Override
+	public <VALUE_TYPE> ISliderViewerBluePrint<VALUE_TYPE> sliderViewer() {
+		return createProxy(ISliderViewerBluePrint.class);
+	}
+
+	@Override
+	public <VALUE_TYPE> ISliderViewerBluePrint<VALUE_TYPE> sliderViewer(final ISliderViewerConverter<VALUE_TYPE> converter) {
+		final ISliderViewerBluePrint<VALUE_TYPE> result = sliderViewer();
+		result.setConverter(converter);
+		return result;
 	}
 
 }

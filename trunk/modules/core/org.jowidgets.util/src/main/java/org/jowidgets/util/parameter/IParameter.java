@@ -32,6 +32,8 @@ import org.jowidgets.util.IObservableValue;
 
 public interface IParameter<VALUE_TYPE> extends IObservableValue<VALUE_TYPE> {
 
+	Class<VALUE_TYPE> getValueType();
+
 	String getLabel();
 
 	String getDescription();
