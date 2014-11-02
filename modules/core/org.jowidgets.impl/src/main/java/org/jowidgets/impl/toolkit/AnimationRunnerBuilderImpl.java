@@ -30,12 +30,14 @@ package org.jowidgets.impl.toolkit;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 import org.jowidgets.api.animation.IAnimationRunner;
 import org.jowidgets.api.animation.IAnimationRunnerBuilder;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.IFactory;
 import org.jowidgets.util.ITypedKey;
 import org.jowidgets.util.concurrent.DaemonThreadFactory;
 
@@ -56,6 +58,24 @@ final class AnimationRunnerBuilderImpl implements IAnimationRunnerBuilder {
 	public IAnimationRunnerBuilder setExecutor(final ScheduledExecutorService executor) {
 		this.executor = executor;
 		return this;
+	}
+
+	@Override
+	public IAnimationRunnerBuilder setExecutor(final ThreadFactory threadFactory) {
+		Assert.paramNotNull(threadFactory, "threadFactory");
+		return setExecutor(Executors.newSingleThreadScheduledExecutor(threadFactory));
+	}
+
+	@Override
+	public IAnimationRunnerBuilder setExecutor(final IFactory<String> threadNameFactory) {
+		Assert.paramNotNull(threadNameFactory, "threadNameFactory");
+		return setExecutor(new DaemonThreadFactory(threadNameFactory));
+	}
+
+	@Override
+	public IAnimationRunnerBuilder setExecutor(final String threadPrefix) {
+		Assert.paramNotNull(threadPrefix, "threadPrefix");
+		return setExecutor(new DaemonThreadFactory(threadPrefix));
 	}
 
 	@Override
