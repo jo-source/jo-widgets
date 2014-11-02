@@ -59,6 +59,8 @@ public interface IBluePrintFactory extends ISimpleBluePrintFactory {
 
 	IInputFieldBluePrint<Short> inputFieldShortNumber();
 
+	IInputFieldBluePrint<Double> inputFieldDoubleNumber();
+
 	IInputFieldBluePrint<Date> inputFieldDate(DateFormat dateFormat, String formatHint, ITextMask mask);
 
 	IInputFieldBluePrint<Date> inputFieldDate(DateFormat dateFormat, String formatHint);

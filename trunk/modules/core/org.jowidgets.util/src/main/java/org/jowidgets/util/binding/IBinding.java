@@ -31,6 +31,13 @@ package org.jowidgets.util.binding;
 public interface IBinding {
 
 	/**
+	 * Sets the binding state
+	 * 
+	 * @param bind If true, the referenced values will be bound, if false they will be unbound
+	 */
+	void setBindingState(boolean bind);
+
+	/**
 	 * Unbinds the bound values. After that, the observables are no longer bound bit still referenced to bind them again later
 	 */
 	void unbind();

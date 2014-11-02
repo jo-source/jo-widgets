@@ -261,6 +261,17 @@ public final class DemoMainComposite {
 			}
 		});
 
+		final IButton bindingDialogButton = parentContainer.add(
+				bpF.button("Binding demo", "Opens the binding demo"),
+				"grow, sg bg, wrap");
+		bindingDialogButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IFrame bindingDemoFrame = new DemoBindingFrame();
+				bindingDemoFrame.setVisible(true);
+			}
+		});
+
 		final IButton canvasDialogButton = parentContainer.add(
 				bpF.button("Canvas demo", "Opens the canvas demo"),
 				"grow, sg bg, wrap");

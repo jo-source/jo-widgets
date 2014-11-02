@@ -69,4 +69,21 @@ public final class StringUtils {
 			return string.substring(0, length - 4) + " ...";
 		}
 	}
+
+	public static String loop(final String tanga, final int count) {
+		if (tanga == null) {
+			return null;
+		}
+		else if (tanga.isEmpty()) {
+			return tanga;
+		}
+		else {
+			final StringBuilder result = new StringBuilder();
+			for (int i = 0; i < count; i++) {
+				result.append(tanga);
+			}
+			return result.toString();
+		}
+
+	}
 }

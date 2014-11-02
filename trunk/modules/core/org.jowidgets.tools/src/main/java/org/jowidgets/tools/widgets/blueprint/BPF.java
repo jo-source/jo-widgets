@@ -448,6 +448,10 @@ public final class BPF {
 		return Toolkit.getBluePrintFactory().inputFieldShortNumber();
 	}
 
+	public static IInputFieldBluePrint<Double> inputFieldDoubleNumber() {
+		return Toolkit.getBluePrintFactory().inputFieldDoubleNumber();
+	}
+
 	public static IInputFieldBluePrint<Date> inputFieldDate(
 		final DateFormat dateFormat,
 		final String formatHint,

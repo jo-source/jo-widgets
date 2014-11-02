@@ -27,21 +27,21 @@
  */
 package org.jowidgets.impl.widgets.common.blueprint.convenience;
 
-import org.jowidgets.api.widgets.blueprint.builder.ISliderSetupBuilder;
 import org.jowidgets.common.types.Orientation;
+import org.jowidgets.common.widgets.builder.ISliderSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.convenience.ISliderSetupConvenienceCommon;
 import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
-public class SliderSetupConvenienceCommon extends AbstractSetupBuilderConvenience<ISliderSetupBuilder<?>> implements
-		ISliderSetupConvenienceCommon<ISliderSetupBuilder<?>> {
+public class SliderSetupConvenienceCommon extends AbstractSetupBuilderConvenience<ISliderSetupBuilderCommon<?>> implements
+		ISliderSetupConvenienceCommon<ISliderSetupBuilderCommon<?>> {
 
 	@Override
-	public ISliderSetupBuilder<?> setHorizontal() {
+	public ISliderSetupBuilderCommon<?> setHorizontal() {
 		return getBuilder().setOrientation(Orientation.HORIZONTAL);
 	}
 
 	@Override
-	public ISliderSetupBuilder<?> setVertical() {
+	public ISliderSetupBuilderCommon<?> setVertical() {
 		return getBuilder().setOrientation(Orientation.VERTICAL);
 	}
 
