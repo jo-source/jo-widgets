@@ -45,7 +45,7 @@ public class DemoSliderViewerFrame extends JoFrame {
 
 		setLayout(new MigLayoutDescriptor("wrap", "0[grow, 0::]0", "0[]10[]10[]0"));
 
-		//slider1 - only for demonstration purpose, see next slider creation for more convenient way
+		//slider1 - for demonstration purpose, see next sliders creation for more convenient way
 		final ISliderViewerBluePrint<Double> sliderBp1 = BPF.sliderViewer();
 		sliderBp1.setValue(0.5d);
 		sliderBp1.setMinimum(50).setMaximum(1000);
