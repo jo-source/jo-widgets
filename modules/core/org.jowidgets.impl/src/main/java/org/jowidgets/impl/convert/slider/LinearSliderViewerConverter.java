@@ -93,7 +93,12 @@ final class LinearSliderViewerConverter<VALUE_TYPE extends Number> implements IS
 
 	@Override
 	public int getSliderValue(final int sliderMin, final int sliderMax, final VALUE_TYPE modelValue) {
-		return (int) (sliderMin + ((sliderMax - sliderMin) * (scale * (modelValue.doubleValue() - getMin()))));
+		if (modelValue != null) {
+			return (int) (sliderMin + ((sliderMax - sliderMin) * (scale * (modelValue.doubleValue() - getMin()))));
+		}
+		else {
+			return sliderMin;
+		}
 	}
 
 	@Override

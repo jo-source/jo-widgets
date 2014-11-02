@@ -105,34 +105,56 @@ public final class Bind {
 
 			this.disposed = false;
 
-			if (!NullCompatibleEquivalence.equals(source.getValue(), converter.convertDestination(destination.getValue()))) {
-				destination.setValue(converter.convertSource(source.getValue()));
-			}
-
 			this.sourceListener = new IObservableValueListener<SOURCE_TYPE>() {
 				@Override
 				public void changed(final IObservableValue<SOURCE_TYPE> observableValue, final SOURCE_TYPE value) {
-					destination.removeValueListener(destinationListener);
-					destination.setValue(BindingImpl.this.converter.convertSource(value));
-					destination.addValueListener(destinationListener);
+					setSourceToDestination();
 				}
 			};
 
 			this.destinationListener = new IObservableValueListener<DESTINATION_TYPE>() {
 				@Override
 				public void changed(final IObservableValue<DESTINATION_TYPE> observableValue, final DESTINATION_TYPE value) {
-					source.removeValueListener(sourceListener);
-					source.setValue(BindingImpl.this.converter.convertDestination(value));
-					source.addValueListener(sourceListener);
+					setDestinationToSource();
 				}
 			};
 
 			bind();
 		}
 
+		private void setSourceToDestination() {
+			final DESTINATION_TYPE convertedSource = converter.convertSource(source.getValue());
+			if (!NullCompatibleEquivalence.equals(convertedSource, destination.getValue())) {
+				destination.removeValueListener(destinationListener);
+				destination.setValue(convertedSource);
+				destination.addValueListener(destinationListener);
+			}
+		}
+
+		private void setDestinationToSource() {
+			final SOURCE_TYPE convertedDestination = converter.convertDestination(destination.getValue());
+			if (!NullCompatibleEquivalence.equals(convertedDestination, source.getValue())) {
+				source.removeValueListener(sourceListener);
+				source.setValue(convertedDestination);
+				source.addValueListener(sourceListener);
+			}
+		}
+
+		@Override
+		public void setBindingState(final boolean bind) {
+			checkDisposed();
+			if (bind) {
+				bind();
+			}
+			else {
+				unbind();
+			}
+		}
+
 		@Override
 		public void bind() {
 			checkDisposed();
+			setSourceToDestination();
 			source.addValueListener(sourceListener);
 			destination.addValueListener(destinationListener);
 		}

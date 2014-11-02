@@ -72,7 +72,10 @@ public class SliderViewerImpl<VALUE_TYPE> extends AbstractInputControl<VALUE_TYP
 
 			@Override
 			public Integer convertSource(final VALUE_TYPE sourceValue) {
-				return Integer.valueOf(viewerConverter.getSliderValue(slider.getMinimum(), slider.getMaximum(), sourceValue));
+				int sliderValue = viewerConverter.getSliderValue(slider.getMinimum(), slider.getMaximum(), sourceValue);
+				sliderValue = Math.max(slider.getMinimum(), sliderValue);
+				sliderValue = Math.min(slider.getMaximum(), sliderValue);
+				return Integer.valueOf(sliderValue);
 			}
 
 			@Override
