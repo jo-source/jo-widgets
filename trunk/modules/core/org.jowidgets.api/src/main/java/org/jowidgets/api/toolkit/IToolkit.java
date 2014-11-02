@@ -37,6 +37,7 @@ import org.jowidgets.api.clipboard.ITransferableBuilder;
 import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.command.IDefaultActionFactory;
 import org.jowidgets.api.convert.IConverterProvider;
+import org.jowidgets.api.convert.ISliderConverterFactory;
 import org.jowidgets.api.event.IDelayedEventRunnerBuilder;
 import org.jowidgets.api.image.IImageFactory;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
@@ -111,6 +112,8 @@ public interface IToolkit {
 	IDefaultActionFactory getDefaultActionFactory();
 
 	IModelFactoryProvider getModelFactoryProvider();
+
+	ISliderConverterFactory getSliderConverterFactory();
 
 	IApplicationRunner getApplicationRunner();
 

@@ -38,7 +38,7 @@ import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.tools.controller.InputObservable;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
-import org.jowidgets.tools.value.InputComponentObservableValue;
+import org.jowidgets.tools.value.InputComponentBind;
 import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
 import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
@@ -86,6 +86,7 @@ public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInput
 		else {
 			throw new IllegalArgumentException("Converter type'" + setup.getConverter().getClass() + "' is not supported.");
 		}
+		this.observableValue = setup.getObservableValue();
 
 		if (converter != null && converter.getStringValidator() != null) {
 			this.stringValidator = converter.getStringValidator();
@@ -126,11 +127,11 @@ public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInput
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
 
-		if (setup.getValue() != null) {
+		if (setup.getValue() != null && observableValue.getValue() == null) {
 			setValue(setup.getValue());
 		}
 
-		this.observableValue = new InputComponentObservableValue<VALUE_TYPE>(this);
+		InputComponentBind.bind(observableValue, this);
 
 		resetModificationState();
 	}

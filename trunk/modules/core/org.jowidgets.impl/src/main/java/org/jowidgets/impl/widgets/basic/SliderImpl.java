@@ -41,7 +41,7 @@ import org.jowidgets.spi.widgets.ISliderSpi;
 import org.jowidgets.tools.controller.InputObservable;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
-import org.jowidgets.tools.value.InputComponentObservableValue;
+import org.jowidgets.tools.value.InputComponentBind;
 import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
 import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 import org.jowidgets.util.IObservableValue;
@@ -100,10 +100,13 @@ public final class SliderImpl extends AbstractSliderSpiWrapper implements ISlide
 		if (value != null) {
 			setSelection(value.intValue());
 		}
+		else {
+			setSelection(descriptor.getMinimum());
+		}
 
 		this.editable = true;
 
-		this.observableValue = new InputComponentObservableValue<Integer>(this);
+		this.observableValue = InputComponentBind.bind(this);
 
 		resetModificationState();
 	}

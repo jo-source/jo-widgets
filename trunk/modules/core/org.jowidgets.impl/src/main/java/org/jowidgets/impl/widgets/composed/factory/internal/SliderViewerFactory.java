@@ -29,14 +29,14 @@ package org.jowidgets.impl.widgets.composed.factory.internal;
 
 import org.jowidgets.api.widgets.ISliderViewer;
 import org.jowidgets.api.widgets.blueprint.ISliderBluePrint;
-import org.jowidgets.api.widgets.descriptor.ISliderViewerDescriptor;
+import org.jowidgets.api.widgets.blueprint.ISliderViewerBluePrint;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.widgets.composed.SliderViewerImpl;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public class SliderViewerFactory<VALUE_TYPE> implements
-		IWidgetFactory<ISliderViewer<VALUE_TYPE>, ISliderViewerDescriptor<VALUE_TYPE>> {
+		IWidgetFactory<ISliderViewer<VALUE_TYPE>, ISliderViewerBluePrint<VALUE_TYPE>> {
 
 	private final IGenericWidgetFactory widgetFactory;
 
@@ -46,10 +46,17 @@ public class SliderViewerFactory<VALUE_TYPE> implements
 	}
 
 	@Override
-	public ISliderViewer<VALUE_TYPE> create(final Object parentUiReference, final ISliderViewerDescriptor<VALUE_TYPE> descriptor) {
-		final ISliderBluePrint bluePrint = BPF.slider();
-		bluePrint.setSetup(descriptor);
-		return new SliderViewerImpl<VALUE_TYPE>(widgetFactory.create(parentUiReference, bluePrint), descriptor);
+	public ISliderViewer<VALUE_TYPE> create(final Object parentUiReference, final ISliderViewerBluePrint<VALUE_TYPE> bluePrint) {
+		final ISliderBluePrint sliderBluePrint = BPF.slider();
+
+		//avoid that viewer value will be set by setSetup() on wrapper slider with vylue type integer
+		final VALUE_TYPE viewerValue = bluePrint.getValue();
+		bluePrint.setValue(null);
+		sliderBluePrint.setSetup(bluePrint);
+		if (viewerValue != null) {
+			bluePrint.setValue(viewerValue);
+		}
+		return new SliderViewerImpl<VALUE_TYPE>(widgetFactory.create(parentUiReference, sliderBluePrint), bluePrint);
 	}
 
 }

@@ -31,6 +31,7 @@ import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
+import org.jowidgets.util.IObservableValue;
 
 public interface IInputFieldSetupBuilder<INSTANCE_TYPE extends IInputFieldSetupBuilder<?, ?>, INPUT_TYPE> extends
 		IInputComponentSetupBuilder<INSTANCE_TYPE, INPUT_TYPE>,
@@ -39,6 +40,8 @@ public interface IInputFieldSetupBuilder<INSTANCE_TYPE extends IInputFieldSetupB
 	INSTANCE_TYPE setConverter(IConverter<INPUT_TYPE> converter);
 
 	INSTANCE_TYPE setConverter(IObjectStringConverter<INPUT_TYPE> converter);
+
+	INSTANCE_TYPE setObservableValue(IObservableValue<INPUT_TYPE> observableValue);
 
 	INSTANCE_TYPE setMarkup(Markup markup);
 

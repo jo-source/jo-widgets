@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Nikolaus Moll
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,58 +26,33 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.widgets.wrapper;
+package org.jowidgets.impl.convert.slider;
 
-import java.util.Collection;
-import java.util.List;
+import org.jowidgets.api.convert.ILinearSliderConverterBuilder;
+import org.jowidgets.api.convert.ISliderViewerConverter;
+import org.jowidgets.util.Assert;
 
-import org.jowidgets.api.widgets.IComboBox;
-import org.jowidgets.util.IObservableValue;
+final class LinearSliderConverterBuilderImpl<VALUE_TYPE extends Number> implements ILinearSliderConverterBuilder<VALUE_TYPE> {
 
-public class ComboBoxWrapper<VALUE_TYPE> extends InputControlWrapper<VALUE_TYPE> implements IComboBox<VALUE_TYPE> {
+	private VALUE_TYPE minValue;
+	private VALUE_TYPE maxValue;
 
-	public ComboBoxWrapper(final IComboBox<VALUE_TYPE> widget) {
-		super(widget);
+	@Override
+	public ILinearSliderConverterBuilder<VALUE_TYPE> setMinValue(final VALUE_TYPE minValue) {
+		this.minValue = minValue;
+		return this;
 	}
 
 	@Override
-	protected IComboBox<VALUE_TYPE> getWidget() {
-		return (IComboBox<VALUE_TYPE>) super.getWidget();
+	public ILinearSliderConverterBuilder<VALUE_TYPE> setMaxValue(final VALUE_TYPE maxValue) {
+		Assert.paramNotNull(maxValue, "maxValue");
+		this.maxValue = maxValue;
+		return this;
 	}
 
 	@Override
-	public IObservableValue<VALUE_TYPE> getObservableValue() {
-		return getWidget().getObservableValue();
-	}
-
-	@Override
-	public List<VALUE_TYPE> getElements() {
-		return getWidget().getElements();
-	}
-
-	@Override
-	public void setElements(final Collection<? extends VALUE_TYPE> elements) {
-		getWidget().setElements(elements);
-	}
-
-	@Override
-	public void setElements(final VALUE_TYPE... elements) {
-		getWidget().setElements(elements);
-	}
-
-	@Override
-	public int getSelectedIndex() {
-		return getWidget().getSelectedIndex();
-	}
-
-	@Override
-	public void setSelectedIndex(final int index) {
-		getWidget().setSelectedIndex(index);
-	}
-
-	@Override
-	public void select() {
-		getWidget().select();
+	public ISliderViewerConverter<VALUE_TYPE> build() {
+		return new LinearSliderViewerConverter<VALUE_TYPE>(minValue, maxValue);
 	}
 
 }

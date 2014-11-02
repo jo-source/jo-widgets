@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Nikolaus Moll
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,58 +26,32 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.widgets.wrapper;
+package org.jowidgets.api.convert;
 
-import java.util.Collection;
-import java.util.List;
+public interface ISliderConverterFactory {
 
-import org.jowidgets.api.widgets.IComboBox;
-import org.jowidgets.util.IObservableValue;
+	<VALUE_TYPE extends Number> ILinearSliderConverterBuilder<VALUE_TYPE> linearConverterBuilder();
 
-public class ComboBoxWrapper<VALUE_TYPE> extends InputControlWrapper<VALUE_TYPE> implements IComboBox<VALUE_TYPE> {
+	<VALUE_TYPE extends Number> ISliderViewerConverter<VALUE_TYPE> linearConverter(VALUE_TYPE max);
 
-	public ComboBoxWrapper(final IComboBox<VALUE_TYPE> widget) {
-		super(widget);
-	}
+	<VALUE_TYPE extends Number> ISliderViewerConverter<VALUE_TYPE> linearConverter(VALUE_TYPE min, VALUE_TYPE max);
 
-	@Override
-	protected IComboBox<VALUE_TYPE> getWidget() {
-		return (IComboBox<VALUE_TYPE>) super.getWidget();
-	}
+	ISliderViewerConverter<Double> linearConverter();
 
-	@Override
-	public IObservableValue<VALUE_TYPE> getObservableValue() {
-		return getWidget().getObservableValue();
-	}
+	ISliderViewerConverter<Double> linearConverter(double max);
 
-	@Override
-	public List<VALUE_TYPE> getElements() {
-		return getWidget().getElements();
-	}
+	ISliderViewerConverter<Double> linearConverter(double min, double max);
 
-	@Override
-	public void setElements(final Collection<? extends VALUE_TYPE> elements) {
-		getWidget().setElements(elements);
-	}
+	ISliderViewerConverter<Float> linearConverter(float max);
 
-	@Override
-	public void setElements(final VALUE_TYPE... elements) {
-		getWidget().setElements(elements);
-	}
+	ISliderViewerConverter<Float> linearConverter(float min, float max);
 
-	@Override
-	public int getSelectedIndex() {
-		return getWidget().getSelectedIndex();
-	}
+	ISliderViewerConverter<Integer> linearConverter(int max);
 
-	@Override
-	public void setSelectedIndex(final int index) {
-		getWidget().setSelectedIndex(index);
-	}
+	ISliderViewerConverter<Integer> linearConverter(int min, int max);
 
-	@Override
-	public void select() {
-		getWidget().select();
-	}
+	ISliderViewerConverter<Long> linearConverter(long max);
+
+	ISliderViewerConverter<Long> linearConverter(long min, long max);
 
 }

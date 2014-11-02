@@ -32,7 +32,11 @@ import java.util.List;
 
 import org.jowidgets.common.widgets.ISelectable;
 
-public interface IComboBox<VALUE_TYPE> extends IControl, IInputControl<VALUE_TYPE>, ISelectable {
+public interface IComboBox<VALUE_TYPE> extends
+		IControl,
+		IInputControl<VALUE_TYPE>,
+		IObservableValueViewer<VALUE_TYPE>,
+		ISelectable {
 
 	List<VALUE_TYPE> getElements();
 

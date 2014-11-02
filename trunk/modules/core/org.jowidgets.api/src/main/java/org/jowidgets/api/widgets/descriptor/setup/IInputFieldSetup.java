@@ -30,11 +30,15 @@ package org.jowidgets.api.widgets.descriptor.setup;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.descriptor.setup.ITextFieldSetupCommon;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
+import org.jowidgets.util.IObservableValue;
 
 public interface IInputFieldSetup<INPUT_TYPE> extends IInputComponentSetup<INPUT_TYPE>, ITextFieldSetupCommon {
 
 	@Mandatory
 	Object getConverter();
+
+	@Mandatory
+	IObservableValue<INPUT_TYPE> getObservableValue();
 
 	Markup getMarkup();
 

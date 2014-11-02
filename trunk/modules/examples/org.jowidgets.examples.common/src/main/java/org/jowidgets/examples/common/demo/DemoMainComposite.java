@@ -249,6 +249,18 @@ public final class DemoMainComposite {
 			}
 		});
 
+		final IButton sliderViewerDialogButton = parentContainer.add(
+				bpF.button("Slider viewer demo", "Opens the slider viewer demo"),
+				"grow, sg bg, wrap");
+		sliderViewerDialogButton.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				final IFrame sliderViewerDemoFrame = new DemoSliderViewerFrame();
+				sliderViewerDemoFrame.setSize(new Dimension(300, 300));
+				sliderViewerDemoFrame.setVisible(true);
+			}
+		});
+
 		final IButton canvasDialogButton = parentContainer.add(
 				bpF.button("Canvas demo", "Opens the canvas demo"),
 				"grow, sg bg, wrap");
