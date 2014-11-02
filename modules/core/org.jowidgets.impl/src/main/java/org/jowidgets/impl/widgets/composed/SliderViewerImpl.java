@@ -55,6 +55,7 @@ public class SliderViewerImpl<VALUE_TYPE> extends AbstractInputControl<VALUE_TYP
 		Assert.paramNotNull(setup.getObservableValue(), "setup.getObservableValue()");
 
 		this.observableValue = setup.getObservableValue();
+		final ISliderViewerConverter<VALUE_TYPE> viewerConverter = setup.getConverter();
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
@@ -63,8 +64,10 @@ public class SliderViewerImpl<VALUE_TYPE> extends AbstractInputControl<VALUE_TYP
 		if (setup.getValue() != null && observableValue.getValue() == null) {
 			setValue(setup.getValue());
 		}
+		else if (observableValue.getValue() == null) {
+			observableValue.setValue(viewerConverter.getModelValue(slider.getMinimum(), slider.getMaximum(), slider.getValue()));
+		}
 
-		final ISliderViewerConverter<VALUE_TYPE> viewerConverter = setup.getConverter();
 		this.binding = Bind.bind(observableValue, slider.getObservableValue(), new IBindingConverter<VALUE_TYPE, Integer>() {
 
 			@Override

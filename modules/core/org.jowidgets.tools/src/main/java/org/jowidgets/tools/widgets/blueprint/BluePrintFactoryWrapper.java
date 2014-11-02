@@ -907,4 +907,53 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 		return bluePrintFactory.sliderViewer(converter);
 	}
 
+	@Override
+	public ISliderViewerBluePrint<Double> sliderViewerDouble() {
+		return bluePrintFactory.sliderViewerDouble();
+	}
+
+	@Override
+	public ISliderViewerBluePrint<Double> sliderViewerDouble(final double max) {
+		return bluePrintFactory.sliderViewerDouble(max);
+	}
+
+	@Override
+	public ISliderViewerBluePrint<Double> sliderViewerDouble(final double min, final double max) {
+		return bluePrintFactory.sliderViewerDouble(min, max);
+	}
+
+	@Override
+	public ISliderViewerBluePrint<Float> sliderViewerFloat() {
+		return bluePrintFactory.sliderViewerFloat();
+	}
+
+	@Override
+	public ISliderViewerBluePrint<Float> sliderViewerFloat(final float max) {
+		return bluePrintFactory.sliderViewerFloat(max);
+	}
+
+	@Override
+	public ISliderViewerBluePrint<Float> sliderViewerFloat(final float min, final float max) {
+		return bluePrintFactory.sliderViewerFloat(min, max);
+	}
+
+	@Override
+	public ISliderViewerBluePrint<Integer> sliderViewerInteger(final int max) {
+		return bluePrintFactory.sliderViewerInteger(max);
+	}
+
+	@Override
+	public ISliderViewerBluePrint<Integer> sliderViewerInteger(final int min, final int max) {
+		return bluePrintFactory.sliderViewerInteger(min, max);
+	}
+
+	@Override
+	public ISliderViewerBluePrint<Long> sliderViewerLong(final long max) {
+		return bluePrintFactory.sliderViewerLong(max);
+	}
+
+	@Override
+	public ISliderViewerBluePrint<Long> sliderViewerLong(final long min, final long max) {
+		return bluePrintFactory.sliderViewerLong(min, max);
+	}
 }

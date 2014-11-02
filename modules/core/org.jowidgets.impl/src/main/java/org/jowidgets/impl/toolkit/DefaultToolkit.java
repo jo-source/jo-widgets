@@ -39,6 +39,7 @@ import org.jowidgets.api.clipboard.ITransferableBuilder;
 import org.jowidgets.api.command.IActionBuilderFactory;
 import org.jowidgets.api.command.IDefaultActionFactory;
 import org.jowidgets.api.convert.IConverterProvider;
+import org.jowidgets.api.convert.ISliderConverterFactory;
 import org.jowidgets.api.event.IDelayedEventRunnerBuilder;
 import org.jowidgets.api.image.IImageFactory;
 import org.jowidgets.api.image.Icons;
@@ -73,6 +74,7 @@ import org.jowidgets.impl.command.ActionBuilderFactory;
 import org.jowidgets.impl.command.DefaultActionFactoryImpl;
 import org.jowidgets.impl.content.InputContentCreatorFactory;
 import org.jowidgets.impl.convert.DefaultConverterProvider;
+import org.jowidgets.impl.convert.slider.SliderConverterFactoryImpl;
 import org.jowidgets.impl.image.DefaultIconsRegisterService;
 import org.jowidgets.impl.image.DefaultImageFactoryImpl;
 import org.jowidgets.impl.layout.LayoutFactoryProvider;
@@ -100,6 +102,7 @@ public class DefaultToolkit implements IToolkit {
 	private ISupportedWidgets supportedWidgets;
 	private final IActionBuilderFactory actionBuilderFactory;
 	private final IDefaultActionFactory defaultActionFactory;
+	private final ISliderConverterFactory sliderConverterFactory;
 	private final IModelFactoryProvider modelFactoryProvider;
 	private final IConverterProvider converterProvider;
 	private final IInputContentCreatorFactory inputContentCreatorFactory;
@@ -126,6 +129,7 @@ public class DefaultToolkit implements IToolkit {
 		this.bluePrintFactory = new BluePrintFactory();
 		this.actionBuilderFactory = new ActionBuilderFactory();
 		this.defaultActionFactory = new DefaultActionFactoryImpl();
+		this.sliderConverterFactory = SliderConverterFactoryImpl.getInstance();
 		this.modelFactoryProvider = new ModelFactoryProvider();
 		this.converterProvider = new DefaultConverterProvider();
 		this.inputContentCreatorFactory = new InputContentCreatorFactory();
@@ -218,6 +222,11 @@ public class DefaultToolkit implements IToolkit {
 	@Override
 	public IDefaultActionFactory getDefaultActionFactory() {
 		return defaultActionFactory;
+	}
+
+	@Override
+	public ISliderConverterFactory getSliderConverterFactory() {
+		return sliderConverterFactory;
 	}
 
 	@Override

@@ -33,11 +33,15 @@ import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.types.AutoSelectionPolicy;
 import org.jowidgets.common.widgets.descriptor.setup.IComboBoxSelectionSetupCommon;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
+import org.jowidgets.util.IObservableValue;
 
 public interface IComboBoxSelectionSetup<INPUT_TYPE> extends IInputComponentSetup<INPUT_TYPE>, IComboBoxSelectionSetupCommon {
 
 	@Mandatory
 	IObjectStringConverter<INPUT_TYPE> getObjectStringConverter();
+
+	@Mandatory
+	IObservableValue<INPUT_TYPE> getObservableValue();
 
 	@Mandatory
 	Collection<INPUT_TYPE> getElements();

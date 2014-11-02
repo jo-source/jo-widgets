@@ -28,18 +28,12 @@
 
 package org.jowidgets.impl.widgets.basic;
 
-import org.jowidgets.api.controller.IDisposeListener;
-import org.jowidgets.api.controller.IParentListener;
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.convert.IStringObjectConverter;
 import org.jowidgets.api.widgets.IComboBox;
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.descriptor.setup.IComboBoxSetup;
 import org.jowidgets.common.widgets.controller.IInputListener;
-import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
-import org.jowidgets.tools.controller.InputObservable;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
 import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
@@ -56,9 +50,7 @@ public class ComboBoxImpl<VALUE_TYPE> extends ComboBoxSelectionImpl<VALUE_TYPE> 
 	private final IStringObjectConverter<VALUE_TYPE> stringObjectConverter;
 	private final IObjectStringConverter<VALUE_TYPE> objectStringConverter;
 	private final ValidationCache validationCache;
-	private final ControlDelegate controlDelegate;
 	private final CompoundValidator<VALUE_TYPE> compoundValidator;
-	private final InputObservable inputObservable;
 
 	private String lastUnmodifiedValue;
 
@@ -74,12 +66,9 @@ public class ComboBoxImpl<VALUE_TYPE> extends ComboBoxSelectionImpl<VALUE_TYPE> 
 			setValue(setup.getValue());
 		}
 
-		this.inputObservable = new InputObservable();
-
 		this.stringObjectConverter = setup.getStringObjectConverter();
 		this.objectStringConverter = setup.getObjectStringConverter();
 
-		this.controlDelegate = new ControlDelegate(comboBoxWidgetSpi, this);
 		this.compoundValidator = new CompoundValidator<VALUE_TYPE>();
 
 		final IValidator<VALUE_TYPE> validator = setup.getValidator();
@@ -112,7 +101,7 @@ public class ComboBoxImpl<VALUE_TYPE> extends ComboBoxSelectionImpl<VALUE_TYPE> 
 			@Override
 			public void inputChanged() {
 				getWidget().setToolTipText(objectStringConverter.getDescription(getValue()));
-				inputObservable.fireInputChanged();
+				fireInputChanged();
 				validationCache.setDirty();
 			}
 		});
@@ -190,68 +179,8 @@ public class ComboBoxImpl<VALUE_TYPE> extends ComboBoxSelectionImpl<VALUE_TYPE> 
 	}
 
 	@Override
-	public void setParent(final IContainer parent) {
-		controlDelegate.setParent(parent);
-	}
-
-	@Override
-	public IContainer getParent() {
-		return controlDelegate.getParent();
-	}
-
-	@Override
-	public void addParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.addParentListener(listener);
-	}
-
-	@Override
-	public void removeParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.removeParentListener(listener);
-	}
-
-	@Override
-	public boolean isReparentable() {
-		return controlDelegate.isReparentable();
-	}
-
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		controlDelegate.addDisposeListener(listener);
-	}
-
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		controlDelegate.removeDisposeListener(listener);
-	}
-
-	@Override
-	public boolean isDisposed() {
-		return controlDelegate.isDisposed();
-	}
-
-	@Override
-	public void dispose() {
-		controlDelegate.dispose();
-	}
-
-	@Override
-	public IPopupMenu createPopupMenu() {
-		return controlDelegate.createPopupMenu();
-	}
-
-	@Override
 	public void setEditable(final boolean editable) {
 		getWidget().setEditable(editable);
-	}
-
-	@Override
-	public void addInputListener(final IInputListener listener) {
-		inputObservable.addInputListener(listener);
-	}
-
-	@Override
-	public void removeInputListener(final IInputListener listener) {
-		inputObservable.removeInputListener(listener);
 	}
 
 }

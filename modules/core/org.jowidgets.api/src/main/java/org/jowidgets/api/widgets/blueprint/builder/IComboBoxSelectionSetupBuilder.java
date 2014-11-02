@@ -33,6 +33,7 @@ import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.types.AutoSelectionPolicy;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.IComboBoxSelectionSetupConvenience;
 import org.jowidgets.common.widgets.builder.IComboBoxSelectionSetupBuilderCommon;
+import org.jowidgets.util.IObservableValue;
 
 public interface IComboBoxSelectionSetupBuilder<INSTANCE_TYPE extends IComboBoxSelectionSetupBuilder<?, ?>, INPUT_TYPE> extends
 		IInputComponentSetupBuilder<INSTANCE_TYPE, INPUT_TYPE>,
@@ -44,6 +45,8 @@ public interface IComboBoxSelectionSetupBuilder<INSTANCE_TYPE extends IComboBoxS
 	INSTANCE_TYPE setElements(Collection<? extends INPUT_TYPE> elements);
 
 	INSTANCE_TYPE setObjectStringConverter(IObjectStringConverter<INPUT_TYPE> objectStringConverter);
+
+	INSTANCE_TYPE setObservableValue(IObservableValue<INPUT_TYPE> observableValue);
 
 	/**
 	 * A lenient combobox allows to set values that are not contained in the elements list.

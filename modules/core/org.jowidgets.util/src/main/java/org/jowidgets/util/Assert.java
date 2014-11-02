@@ -158,4 +158,22 @@ public final class Assert {
 		}
 	}
 
+	public static void paramLessOrEqual(final double param1, final double param2, final String name1, final String name2) {
+		if (param2 < param1) {
+			throw new IllegalArgumentException("The parameter '"
+				+ name1
+				+ "' must be less or equal '"
+				+ name2
+				+ "', but '"
+				+ name1
+				+ "' is '"
+				+ param1
+				+ "' and '"
+				+ name2
+				+ "' is'"
+				+ param2
+				+ "'");
+		}
+	}
+
 }

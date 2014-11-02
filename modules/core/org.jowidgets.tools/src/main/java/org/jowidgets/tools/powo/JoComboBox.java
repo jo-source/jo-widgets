@@ -38,6 +38,7 @@ import org.jowidgets.api.widgets.IComboBox;
 import org.jowidgets.api.widgets.blueprint.IComboBoxBluePrint;
 import org.jowidgets.api.widgets.descriptor.IComboBoxDescriptor;
 import org.jowidgets.tools.converter.Converter;
+import org.jowidgets.util.IObservableValue;
 
 public class JoComboBox<VALUE_TYPE> extends InputControl<IComboBox<VALUE_TYPE>, IComboBoxBluePrint<VALUE_TYPE>, VALUE_TYPE> implements
 		IComboBox<VALUE_TYPE> {
@@ -56,6 +57,16 @@ public class JoComboBox<VALUE_TYPE> extends InputControl<IComboBox<VALUE_TYPE>, 
 
 	public JoComboBox(final IComboBoxDescriptor<VALUE_TYPE> descriptor) {
 		super(bluePrint(createConverter(descriptor)).setSetup(descriptor));
+	}
+
+	@Override
+	public IObservableValue<VALUE_TYPE> getObservableValue() {
+		if (isInitialized()) {
+			return getWidget().getObservableValue();
+		}
+		else {
+			return getBluePrint().getObservableValue();
+		}
 	}
 
 	@Override

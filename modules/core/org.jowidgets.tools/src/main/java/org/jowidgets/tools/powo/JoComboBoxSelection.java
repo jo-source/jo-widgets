@@ -37,6 +37,7 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComboBox;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.descriptor.IComboBoxSelectionDescriptor;
+import org.jowidgets.util.IObservableValue;
 
 public class JoComboBoxSelection<VALUE_TYPE> extends
 		InputControl<IComboBox<VALUE_TYPE>, IComboBoxSelectionBluePrint<VALUE_TYPE>, VALUE_TYPE> implements IComboBox<VALUE_TYPE> {
@@ -66,6 +67,16 @@ public class JoComboBoxSelection<VALUE_TYPE> extends
 	@SuppressWarnings("unchecked")
 	public JoComboBoxSelection(final IComboBoxSelectionDescriptor<VALUE_TYPE> descriptor) {
 		super((IComboBoxSelectionBluePrint<VALUE_TYPE>) bluePrint().setSetup(descriptor));
+	}
+
+	@Override
+	public IObservableValue<VALUE_TYPE> getObservableValue() {
+		if (isInitialized()) {
+			return getWidget().getObservableValue();
+		}
+		else {
+			return getBluePrint().getObservableValue();
+		}
 	}
 
 	@Override

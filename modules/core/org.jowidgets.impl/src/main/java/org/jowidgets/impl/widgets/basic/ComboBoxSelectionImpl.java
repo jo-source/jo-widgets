@@ -49,11 +49,13 @@ import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.tools.controller.InputObservable;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
+import org.jowidgets.tools.value.InputComponentBind;
 import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
 import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.EmptyCheck;
 import org.jowidgets.util.EmptyCompatibleEquivalence;
+import org.jowidgets.util.IObservableValue;
 import org.jowidgets.util.NullCompatibleEquivalence;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
@@ -75,6 +77,8 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 	private final InputObservable inputObservable;
 	private final IInputListener inputListener;
 
+	private final IObservableValue<VALUE_TYPE> observableValue;
+
 	private VALUE_TYPE lastUnmodifiedValue;
 	private VALUE_TYPE lenientValue;
 	private boolean editable;
@@ -89,6 +93,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 		this.comboBoxSelectionWidgetSpi = comboBoxSelectionWidgetSpi;
 		this.objectStringConverter = setup.getObjectStringConverter();
 		this.autoSelectionPolicy = setup.getAutoSelectionPolicy();
+		this.observableValue = setup.getObservableValue();
 		this.elements = new ArrayList<VALUE_TYPE>();
 		this.elementsView = Collections.unmodifiableList(this.elements);
 
@@ -118,7 +123,7 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 		};
 
 		setElements(setup.getElements());
-		if (setup.getValue() != null) {
+		if (setup.getValue() != null && observableValue.getValue() != null) {
 			setValue(setup.getValue());
 		}
 
@@ -127,8 +132,14 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 			setEditable(false);
 		}
 
+		InputComponentBind.bind(observableValue, this);
+
 		getWidget().addInputListener(inputListener);
 		resetModificationState();
+	}
+
+	void fireInputChanged() {
+		inputObservable.fireInputChanged();
 	}
 
 	private void onInputChanged(final boolean removeLenient) {
@@ -236,6 +247,11 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 		else {
 			return null;
 		}
+	}
+
+	@Override
+	public IObservableValue<VALUE_TYPE> getObservableValue() {
+		return observableValue;
 	}
 
 	@Override

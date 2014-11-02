@@ -727,4 +727,44 @@ public final class BPF {
 		return Toolkit.getBluePrintFactory().sliderViewer(converter);
 	}
 
+	public static ISliderViewerBluePrint<Double> sliderViewerDouble() {
+		return Toolkit.getBluePrintFactory().sliderViewerDouble();
+	}
+
+	public static ISliderViewerBluePrint<Double> sliderViewerDouble(final double max) {
+		return Toolkit.getBluePrintFactory().sliderViewerDouble(max);
+	}
+
+	public static ISliderViewerBluePrint<Double> sliderViewerDouble(final double min, final double max) {
+		return Toolkit.getBluePrintFactory().sliderViewerDouble(min, max);
+	}
+
+	public static ISliderViewerBluePrint<Float> sliderViewerFloat() {
+		return Toolkit.getBluePrintFactory().sliderViewerFloat();
+	}
+
+	public static ISliderViewerBluePrint<Float> sliderViewerFloat(final float max) {
+		return Toolkit.getBluePrintFactory().sliderViewerFloat(max);
+	}
+
+	public static ISliderViewerBluePrint<Float> sliderViewerFloat(final float min, final float max) {
+		return Toolkit.getBluePrintFactory().sliderViewerFloat(min, max);
+	}
+
+	public static ISliderViewerBluePrint<Integer> sliderViewerInteger(final int max) {
+		return Toolkit.getBluePrintFactory().sliderViewerInteger(max);
+	}
+
+	public static ISliderViewerBluePrint<Integer> sliderViewerInteger(final int min, final int max) {
+		return Toolkit.getBluePrintFactory().sliderViewerInteger(min, max);
+	}
+
+	public static ISliderViewerBluePrint<Long> sliderViewerLong(final long max) {
+		return Toolkit.getBluePrintFactory().sliderViewerLong(max);
+	}
+
+	public static ISliderViewerBluePrint<Long> sliderViewerLong(final long min, final long max) {
+		return Toolkit.getBluePrintFactory().sliderViewerLong(min, max);
+	}
+
 }

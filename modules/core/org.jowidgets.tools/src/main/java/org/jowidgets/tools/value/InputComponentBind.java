@@ -35,52 +35,76 @@ import org.jowidgets.util.Assert;
 import org.jowidgets.util.IObservableValue;
 import org.jowidgets.util.IObservableValueListener;
 import org.jowidgets.util.ObservableValue;
-import org.jowidgets.util.ObservableValueWrapper;
+import org.jowidgets.util.ValueHolder;
 
-public final class InputComponentObservableValue<VALUE_TYPE> extends ObservableValueWrapper<VALUE_TYPE> {
+public final class InputComponentBind {
 
-	private final IInputListener inputListener;
-	private final IObservableValueListener<VALUE_TYPE> observableValueListener;
+	private InputComponentBind() {}
 
-	public InputComponentObservableValue(final IInputComponent<VALUE_TYPE> inputComponent) {
-		super(new ObservableValue<VALUE_TYPE>());
+	/**
+	 * Binds an input component to a newly created observable value and returns the observable value.
+	 * If the input component will be disposed, the binding will be disposed too.
+	 * 
+	 * @param inputComponent The input component to bind
+	 * 
+	 * @return The created observable value
+	 */
+	public static <VALUE_TYPE> IObservableValue<VALUE_TYPE> bind(final IInputComponent<VALUE_TYPE> inputComponent) {
 		Assert.paramNotNull(inputComponent, "inputComponent");
-		final IObservableValue<VALUE_TYPE> original = getOriginal();
+		final IObservableValue<VALUE_TYPE> result = new ObservableValue<VALUE_TYPE>();
+		bind(result, inputComponent);
+		return result;
+	}
 
-		if (original.getValue() != null) {
-			inputComponent.setValue(original.getValue());
+	/**
+	 * Binds an input component to an observable value. If the input component will be disposed, the binding will be disposed too.
+	 * 
+	 * @param source The source observable value to bind to
+	 * @param inputComponent The input component to bind
+	 */
+	public static <VALUE_TYPE> void bind(
+		final IObservableValue<VALUE_TYPE> source,
+		final IInputComponent<VALUE_TYPE> inputComponent) {
+
+		Assert.paramNotNull(inputComponent, "inputComponent");
+
+		if (source.getValue() != null) {
+			inputComponent.setValue(source.getValue());
 		}
 		else if (inputComponent.getValue() != null) {
-			original.setValue(inputComponent.getValue());
+			source.setValue(inputComponent.getValue());
 		}
 
-		this.inputListener = new IInputListener() {
+		final ValueHolder<IInputListener> inputListener = new ValueHolder<IInputListener>();
+		final ValueHolder<IObservableValueListener<VALUE_TYPE>> observableValueListener = new ValueHolder<IObservableValueListener<VALUE_TYPE>>();
+
+		inputListener.set(new IInputListener() {
 			@Override
 			public void inputChanged() {
-				original.removeValueListener(observableValueListener);
-				original.setValue(inputComponent.getValue());
-				original.addValueListener(observableValueListener);
+				source.removeValueListener(observableValueListener.get());
+				source.setValue(inputComponent.getValue());
+				source.addValueListener(observableValueListener.get());
 			}
-		};
-		inputComponent.addInputListener(inputListener);
+		});
+		inputComponent.addInputListener(inputListener.get());
 
-		this.observableValueListener = new IObservableValueListener<VALUE_TYPE>() {
+		observableValueListener.set(new IObservableValueListener<VALUE_TYPE>() {
 			@Override
 			public void changed(final IObservableValue<VALUE_TYPE> observableValue, final VALUE_TYPE value) {
-				inputComponent.removeInputListener(inputListener);
+				inputComponent.removeInputListener(inputListener.get());
 				inputComponent.setValue(value);
-				inputComponent.addInputListener(inputListener);
+				inputComponent.addInputListener(inputListener.get());
 			}
-		};
-		original.addValueListener(observableValueListener);
+		});
+		source.addValueListener(observableValueListener.get());
 
 		inputComponent.addDisposeListener(new IDisposeListener() {
 			@Override
 			public void onDispose() {
-				inputComponent.removeInputListener(inputListener);
-				original.removeValueListener(observableValueListener);
+				inputComponent.removeInputListener(inputListener.get());
+				source.removeValueListener(observableValueListener.get());
 			}
 		});
-	}
 
+	}
 }

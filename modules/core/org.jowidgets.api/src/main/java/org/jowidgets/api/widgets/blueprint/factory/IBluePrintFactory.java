@@ -38,6 +38,7 @@ import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.ISliderViewerBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.mask.ITextMask;
@@ -115,4 +116,23 @@ public interface IBluePrintFactory extends ISimpleBluePrintFactory {
 	<ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
 		IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>> descriptor);
 
+	ISliderViewerBluePrint<Double> sliderViewerDouble();
+
+	ISliderViewerBluePrint<Double> sliderViewerDouble(double max);
+
+	ISliderViewerBluePrint<Double> sliderViewerDouble(double min, double max);
+
+	ISliderViewerBluePrint<Float> sliderViewerFloat();
+
+	ISliderViewerBluePrint<Float> sliderViewerFloat(float max);
+
+	ISliderViewerBluePrint<Float> sliderViewerFloat(float min, float max);
+
+	ISliderViewerBluePrint<Integer> sliderViewerInteger(int max);
+
+	ISliderViewerBluePrint<Integer> sliderViewerInteger(int min, int max);
+
+	ISliderViewerBluePrint<Long> sliderViewerLong(long max);
+
+	ISliderViewerBluePrint<Long> sliderViewerLong(long min, long max);
 }

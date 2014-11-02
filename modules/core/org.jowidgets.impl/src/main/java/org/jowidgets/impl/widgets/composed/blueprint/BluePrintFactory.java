@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.composed.blueprint;
 import java.text.DateFormat;
 import java.util.Date;
 
+import org.jowidgets.api.convert.LinearSliderConverter;
 import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IInputControl;
@@ -40,6 +41,7 @@ import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.ISliderViewerBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.descriptor.setup.ICollectionInputControlSetup;
@@ -222,6 +224,66 @@ public final class BluePrintFactory extends SimpleBluePrintFactory implements IB
 		final IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>> descriptor) {
 		final ICollectionInputControlSetup<ELEMENT_TYPE> collectionInputControlSetup = collectionInputControl(descriptor);
 		return collectionInputDialog(collectionInputControlSetup);
+	}
+
+	@Override
+	public ISliderViewerBluePrint<Double> sliderViewerDouble() {
+		final ISliderViewerBluePrint<Double> result = sliderViewer();
+		return result.setConverter(LinearSliderConverter.create());
+	}
+
+	@Override
+	public ISliderViewerBluePrint<Double> sliderViewerDouble(final double max) {
+		final ISliderViewerBluePrint<Double> result = sliderViewer();
+		return result.setConverter(LinearSliderConverter.create(max));
+	}
+
+	@Override
+	public ISliderViewerBluePrint<Double> sliderViewerDouble(final double min, final double max) {
+		final ISliderViewerBluePrint<Double> result = sliderViewer();
+		return result.setConverter(LinearSliderConverter.create(min, max));
+	}
+
+	@Override
+	public ISliderViewerBluePrint<Float> sliderViewerFloat() {
+		final ISliderViewerBluePrint<Float> result = sliderViewer();
+		return result.setConverter(LinearSliderConverter.create(1.0f));
+	}
+
+	@Override
+	public ISliderViewerBluePrint<Float> sliderViewerFloat(final float max) {
+		final ISliderViewerBluePrint<Float> result = sliderViewer();
+		return result.setConverter(LinearSliderConverter.create(max));
+	}
+
+	@Override
+	public ISliderViewerBluePrint<Float> sliderViewerFloat(final float min, final float max) {
+		final ISliderViewerBluePrint<Float> result = sliderViewer();
+		return result.setConverter(LinearSliderConverter.create(min, max));
+	}
+
+	@Override
+	public ISliderViewerBluePrint<Integer> sliderViewerInteger(final int max) {
+		final ISliderViewerBluePrint<Integer> result = sliderViewer();
+		return result.setConverter(LinearSliderConverter.create(max));
+	}
+
+	@Override
+	public ISliderViewerBluePrint<Integer> sliderViewerInteger(final int min, final int max) {
+		final ISliderViewerBluePrint<Integer> result = sliderViewer();
+		return result.setConverter(LinearSliderConverter.create(min, max));
+	}
+
+	@Override
+	public ISliderViewerBluePrint<Long> sliderViewerLong(final long max) {
+		final ISliderViewerBluePrint<Long> result = sliderViewer();
+		return result.setConverter(LinearSliderConverter.create(max));
+	}
+
+	@Override
+	public ISliderViewerBluePrint<Long> sliderViewerLong(final long min, final long max) {
+		final ISliderViewerBluePrint<Long> result = sliderViewer();
+		return result.setConverter(LinearSliderConverter.create(min, max));
 	}
 
 }
