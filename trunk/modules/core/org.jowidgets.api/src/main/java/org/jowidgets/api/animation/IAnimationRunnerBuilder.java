@@ -29,11 +29,50 @@
 package org.jowidgets.api.animation;
 
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
+
+import org.jowidgets.util.IFactory;
 
 public interface IAnimationRunnerBuilder {
 
+	/**
+	 * Sets the ScheduledExecutorService to use
+	 * 
+	 * @param executor The executor service to set
+	 * 
+	 * @return This builder
+	 */
 	IAnimationRunnerBuilder setExecutor(ScheduledExecutorService executor);
+
+	/**
+	 * Sets a default ScheduledExecutorService (Executors.newSingleThreadScheduledExecutor()) using the given thread factory
+	 * 
+	 * @param threadFactory The thread factory to use
+	 * 
+	 * @return This builder
+	 */
+	IAnimationRunnerBuilder setExecutor(ThreadFactory threadFactory);
+
+	/**
+	 * Sets a default ScheduledExecutorService (Executors.newSingleThreadScheduledExecutor()) using a default
+	 * DaemonThreadFactory using the given ThreadNameFactory
+	 * 
+	 * @param threadNameFactory The thread name factory to use
+	 * 
+	 * @return this builder
+	 */
+	IAnimationRunnerBuilder setExecutor(IFactory<String> threadNameFactory);
+
+	/**
+	 * Sets a default ScheduledExecutorService (Executors.newSingleThreadScheduledExecutor()) using a default
+	 * DaemonThreadFactory using a default ThreadNameFactory where all created threads has the given thread name prefix
+	 * 
+	 * @param threadPrefix The thread name prefix to use
+	 * 
+	 * @return this builder
+	 */
+	IAnimationRunnerBuilder setExecutor(String threadPrefix);
 
 	IAnimationRunnerBuilder setDelay(long delay, TimeUnit timeUnit);
 

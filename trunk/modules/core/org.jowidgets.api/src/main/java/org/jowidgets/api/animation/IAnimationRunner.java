@@ -57,6 +57,9 @@ public interface IAnimationRunner extends IAnimationScheduler {
 	 */
 	void setDelay(long delay);
 
+	/**
+	 * @return true if the animation is currently running
+	 */
 	boolean isRunning();
 
 }
