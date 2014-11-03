@@ -28,6 +28,7 @@
 package org.jowidgets.api.widgets.blueprint.builder;
 
 import org.jowidgets.common.widgets.builder.ICheckBoxSetupBuilderCommon;
+import org.jowidgets.util.IObservableValue;
 
 public interface ICheckBoxSetupBuilder<INSTANCE_TYPE extends ICheckBoxSetupBuilder<?>> extends
 		ICheckBoxSetupBuilderCommon<INSTANCE_TYPE>,
@@ -36,5 +37,7 @@ public interface ICheckBoxSetupBuilder<INSTANCE_TYPE extends ICheckBoxSetupBuild
 	INSTANCE_TYPE setFontSize(Integer size);
 
 	INSTANCE_TYPE setFontName(String fontName);
+
+	INSTANCE_TYPE setObservableValue(IObservableValue<Boolean> observableValue);
 
 }

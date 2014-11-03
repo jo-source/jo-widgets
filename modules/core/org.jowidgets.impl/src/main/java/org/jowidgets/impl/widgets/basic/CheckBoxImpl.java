@@ -42,8 +42,10 @@ import org.jowidgets.spi.widgets.ICheckBoxSpi;
 import org.jowidgets.tools.controller.InputObservable;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
+import org.jowidgets.tools.value.InputComponentBind;
 import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
 import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
+import org.jowidgets.util.IObservableValue;
 import org.jowidgets.util.NullCompatibleEquivalence;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
@@ -57,6 +59,7 @@ public class CheckBoxImpl extends AbstractControlSpiWrapper implements ICheckBox
 	private final ValidationCache validationCache;
 	private final ControlDelegate controlDelegate;
 	private final CompoundValidator<Boolean> compoundValidator;
+	private final IObservableValue<Boolean> observableValue;
 
 	private String text;
 	private boolean isNull;
@@ -77,9 +80,14 @@ public class CheckBoxImpl extends AbstractControlSpiWrapper implements ICheckBox
 
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
-		if (setup.getValue() != null) {
+
+		this.observableValue = setup.getObservableValue();
+
+		if (setup.getValue() != null && observableValue.getValue() == null) {
 			setValue(setup.getValue());
 		}
+
+		InputComponentBind.bind(observableValue, this);
 
 		if (setup.getFontSize() != null) {
 			setFontSize(Integer.valueOf(setup.getFontSize()));
@@ -115,6 +123,11 @@ public class CheckBoxImpl extends AbstractControlSpiWrapper implements ICheckBox
 	@Override
 	public ICheckBoxSpi getWidget() {
 		return (ICheckBoxSpi) super.getWidget();
+	}
+
+	@Override
+	public IObservableValue<Boolean> getObservableValue() {
+		return observableValue;
 	}
 
 	@Override
