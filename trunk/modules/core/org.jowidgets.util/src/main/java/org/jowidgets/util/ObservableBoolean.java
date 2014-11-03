@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Nikolaus Moll
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,66 +26,30 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.widgets.wrapper;
+package org.jowidgets.util;
 
-import org.jowidgets.api.widgets.ICheckBox;
-import org.jowidgets.common.types.Markup;
-import org.jowidgets.util.IObservableValue;
+public final class ObservableBoolean extends ObservableValue<Boolean> {
 
-public class CheckBoxWrapper extends InputControlWrapper<Boolean> implements ICheckBox {
+	public ObservableBoolean() {
+		setValue(false);
+	}
 
-	public CheckBoxWrapper(final ICheckBox widget) {
-		super(widget);
+	public ObservableBoolean(final boolean value) {
+		set(value);
+	}
+
+	public boolean get() {
+		return getValue().booleanValue();
+	}
+
+	public void set(final boolean value) {
+		super.setValue(Boolean.valueOf(value));
 	}
 
 	@Override
-	protected ICheckBox getWidget() {
-		return (ICheckBox) super.getWidget();
-	}
-
-	@Override
-	public String getText() {
-		return getWidget().getText();
-	}
-
-	@Override
-	public void setFontSize(final int size) {
-		getWidget().setFontSize(size);
-	}
-
-	@Override
-	public void setFontName(final String fontName) {
-		getWidget().setFontName(fontName);
-	}
-
-	@Override
-	public void setMarkup(final Markup markup) {
-		getWidget().setMarkup(markup);
-	}
-
-	@Override
-	public void setText(final String text) {
-		getWidget().setText(text);
-	}
-
-	@Override
-	public void setToolTipText(final String text) {
-		getWidget().setToolTipText(text);
-	}
-
-	@Override
-	public boolean isSelected() {
-		return getWidget().isSelected();
-	}
-
-	@Override
-	public void setSelected(final boolean selected) {
-		getWidget().setSelected(selected);
-	}
-
-	@Override
-	public IObservableValue<Boolean> getObservableValue() {
-		return getWidget().getObservableValue();
+	public void setValue(final Boolean value) {
+		Assert.paramNotNull(value, "value");
+		super.setValue(value);
 	}
 
 }

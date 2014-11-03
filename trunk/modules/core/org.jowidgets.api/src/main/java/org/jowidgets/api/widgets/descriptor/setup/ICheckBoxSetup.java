@@ -28,6 +28,7 @@
 package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.common.widgets.descriptor.setup.ICheckBoxSetupCommon;
+import org.jowidgets.util.IObservableValue;
 
 public interface ICheckBoxSetup extends ICheckBoxSetupCommon, IInputComponentSetup<Boolean> {
 
@@ -35,4 +36,5 @@ public interface ICheckBoxSetup extends ICheckBoxSetupCommon, IInputComponentSet
 
 	String getFontName();
 
+	IObservableValue<Boolean> getObservableValue();
 }

@@ -30,6 +30,7 @@ package org.jowidgets.impl.widgets.basic.blueprint.defaults.registry;
 
 import org.jowidgets.api.widgets.blueprint.IToolBarMenuBluePrint;
 import org.jowidgets.api.widgets.blueprint.builder.IButtonSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.ICheckBoxSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IComboBoxSelectionSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IContainerSetupBuilder;
@@ -43,6 +44,7 @@ import org.jowidgets.api.widgets.blueprint.builder.ITextFieldSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ITreeNodeSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IWindowSetupBuilder;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.ButtonDefaults;
+import org.jowidgets.impl.widgets.basic.blueprint.defaults.CheckBoxDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.ComboBoxSelectionDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.ContainerDefaults;
 import org.jowidgets.impl.widgets.basic.blueprint.defaults.InputWidgetDefaults;
@@ -65,6 +67,7 @@ public class BasicDefaultsInitializerRegistry extends CommonDefaultsInitializerR
 		register(IButtonSetupBuilder.class, new ButtonDefaults());
 		register(IContainerSetupBuilder.class, new ContainerDefaults());
 		register(IComboBoxSelectionSetupBuilder.class, new ComboBoxSelectionDefaults());
+		register(ICheckBoxSetupBuilder.class, new CheckBoxDefaults());
 		register(IInputComponentSetupBuilder.class, new InputWidgetDefaults());
 		register(ITextFieldSetupBuilder.class, new TextFieldDefaults());
 		register(ITextAreaSetupBuilder.class, new TextAreaDefaults());

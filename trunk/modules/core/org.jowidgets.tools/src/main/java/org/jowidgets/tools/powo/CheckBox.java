@@ -33,6 +33,7 @@ import org.jowidgets.api.widgets.blueprint.builder.ICheckBoxSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.setup.ICheckBoxSetup;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.util.IObservableValue;
 
 class CheckBox<WIDGET_TYPE extends ICheckBox, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & ICheckBoxSetup & ICheckBoxSetupBuilder<?>> extends
 		InputControl<WIDGET_TYPE, BLUE_PRINT_TYPE, Boolean> implements ICheckBox {
@@ -108,6 +109,16 @@ class CheckBox<WIDGET_TYPE extends ICheckBox, BLUE_PRINT_TYPE extends IWidgetDes
 		}
 		else {
 			getBluePrint().setInitialState(selected);
+		}
+	}
+
+	@Override
+	public IObservableValue<Boolean> getObservableValue() {
+		if (isInitialized()) {
+			return getWidget().getObservableValue();
+		}
+		else {
+			return getBluePrint().getObservableValue();
 		}
 	}
 

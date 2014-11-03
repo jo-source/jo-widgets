@@ -25,23 +25,17 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets;
+package org.jowidgets.impl.widgets.basic.blueprint.defaults;
 
-public interface ICheckBox extends IInputControl<Boolean>, IObservableValueViewer<Boolean>, ITextLabel {
+import org.jowidgets.api.widgets.blueprint.builder.ICheckBoxSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.util.ObservableValue;
 
-	/**
-	 * Convenience method for the generic method getValue()
-	 * 
-	 * @return true, if the toggle button is selected
-	 */
-	boolean isSelected();
+public class CheckBoxDefaults implements IDefaultInitializer<ICheckBoxSetupBuilder<?>> {
 
-	/**
-	 * Convenience method for the generic method setValue(Boolean value)
-	 * 
-	 * @param selected
-	 *            the selection state to set
-	 */
-	void setSelected(boolean selected);
+	@Override
+	public void initialize(final ICheckBoxSetupBuilder<?> builder) {
+		builder.setObservableValue(new ObservableValue<Boolean>());
+	}
 
 }

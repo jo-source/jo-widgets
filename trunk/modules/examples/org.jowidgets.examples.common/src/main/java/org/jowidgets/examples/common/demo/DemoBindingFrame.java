@@ -38,6 +38,7 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.powo.JoFrame;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 import org.jowidgets.util.IObservableValue;
+import org.jowidgets.util.ObservableBoolean;
 import org.jowidgets.util.ObservableValue;
 import org.jowidgets.util.StringUtils;
 import org.jowidgets.util.binding.Bind;
@@ -85,7 +86,8 @@ final class DemoBindingFrame extends JoFrame {
 		}
 
 		//add binding checkbox
-		final ICheckBox bindingCb = add(BPF.checkBox().setText("Bind").setValue(true));
+		final ObservableBoolean booleanValue = new ObservableBoolean(true);
+		final ICheckBox bindingCb = add(BPF.checkBox().setText("Bind").setValue(true).setObservableValue(booleanValue));
 		bindingCb.addInputListener(new IInputListener() {
 			@Override
 			public void inputChanged() {

@@ -43,7 +43,7 @@ public class ObservableValue<VALUE_TYPE> implements IObservableValue<VALUE_TYPE>
 	}
 
 	@Override
-	public final void setValue(final VALUE_TYPE value) {
+	public void setValue(final VALUE_TYPE value) {
 		if (!NullCompatibleEquivalence.equals(this.value, value)) {
 			this.value = value;
 			fireChanged();
@@ -51,7 +51,7 @@ public class ObservableValue<VALUE_TYPE> implements IObservableValue<VALUE_TYPE>
 	}
 
 	@Override
-	public final VALUE_TYPE getValue() {
+	public VALUE_TYPE getValue() {
 		return value;
 	}
 
