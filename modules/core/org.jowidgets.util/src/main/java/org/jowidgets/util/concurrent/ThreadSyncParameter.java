@@ -84,13 +84,13 @@ public final class ThreadSyncParameter<VALUE_TYPE> extends ParameterWrapper<VALU
 	}
 
 	@Override
-	public void addValueListener(final IObservableValueListener<VALUE_TYPE> listener) {
+	public void addValueListener(final IObservableValueListener<?> listener) {
 		checkThread();
 		super.addValueListener(listener);
 	}
 
 	@Override
-	public void removeValueListener(final IObservableValueListener<VALUE_TYPE> listener) {
+	public void removeValueListener(final IObservableValueListener<?> listener) {
 		checkThread();
 		super.removeValueListener(listener);
 	}

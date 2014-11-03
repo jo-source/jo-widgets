@@ -34,11 +34,16 @@ import org.jowidgets.util.collection.ObserverSetFactory;
 
 public class ObservableValue<VALUE_TYPE> implements IObservableValue<VALUE_TYPE> {
 
-	private final IObserverSet<IObservableValueListener<VALUE_TYPE>> listeners;
+	private final IObserverSet<IObservableValueListener<?>> listeners;
 
 	private VALUE_TYPE value;
 
 	public ObservableValue() {
+		this(null);
+	}
+
+	public ObservableValue(final VALUE_TYPE value) {
+		this.value = value;
 		this.listeners = ObserverSetFactory.create(Strategy.LOW_MEMORY);
 	}
 
@@ -56,19 +61,20 @@ public class ObservableValue<VALUE_TYPE> implements IObservableValue<VALUE_TYPE>
 	}
 
 	@Override
-	public final void addValueListener(final IObservableValueListener<VALUE_TYPE> listener) {
+	public final void addValueListener(final IObservableValueListener<?> listener) {
 		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
-	public final void removeValueListener(final IObservableValueListener<VALUE_TYPE> listener) {
+	public final void removeValueListener(final IObservableValueListener<?> listener) {
 		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	private void fireChanged() {
-		for (final IObservableValueListener<VALUE_TYPE> listener : listeners) {
+		for (final IObservableValueListener listener : listeners) {
 			listener.changed(this, value);
 		}
 	}

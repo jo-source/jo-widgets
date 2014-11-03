@@ -128,7 +128,7 @@ public class ParameterizedWrapper implements IParameterized, IChangeObservable {
 		return result;
 	}
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
+	@SuppressWarnings({"rawtypes"})
 	private void initChangeObservable() {
 		if (observableValueListener == null) {
 			observableValueListener = new IObservableValueListener() {
