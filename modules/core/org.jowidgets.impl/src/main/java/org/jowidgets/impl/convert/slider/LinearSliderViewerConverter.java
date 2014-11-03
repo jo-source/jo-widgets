@@ -36,6 +36,7 @@ final class LinearSliderViewerConverter<VALUE_TYPE extends Number> implements IS
 
 	private final VALUE_TYPE minValue;
 	private final VALUE_TYPE maxValue;
+
 	private final IConverter<Double, VALUE_TYPE> converter;
 
 	private final double scale;
@@ -44,6 +45,14 @@ final class LinearSliderViewerConverter<VALUE_TYPE extends Number> implements IS
 	@SuppressWarnings("unchecked")
 	LinearSliderViewerConverter(final VALUE_TYPE minValue, final VALUE_TYPE maxValue) {
 		Assert.paramNotNull(maxValue, "maxValue");
+
+		if (minValue != null) {
+			Assert.paramLess(minValue.doubleValue(), maxValue.doubleValue(), "minValue", "maxValue");
+		}
+		else {
+			Assert.paramGreater(maxValue.doubleValue(), 0.0d, "maxValue", "minValue(default=0)");
+		}
+
 		this.minValue = minValue;
 		this.maxValue = maxValue;
 

@@ -60,7 +60,6 @@ final class DemoBindingFrame extends JoFrame {
 		final ArrayList<IBinding> bindings = new ArrayList<IBinding>(COLUMNS - 1);
 		for (int i = 0; i < COLUMNS; i++) {
 			final IObservableValue<Double> observableValue = new ObservableValue<Double>();
-			observableValue.setValue(DEFAULT_VALUE);
 			observableValues.add(observableValue);
 			if (i > 0) {
 				//bind next value to the previous
@@ -73,6 +72,7 @@ final class DemoBindingFrame extends JoFrame {
 		for (int i = 0; i < COLUMNS; i++) {
 			final ISliderViewerBluePrint<Double> sliderBp = BPF.sliderViewerDouble(MIN_VALUE, MAX_VALUE);
 			sliderBp.setVertical();
+			sliderBp.setDefaultValue(DEFAULT_VALUE);
 			sliderBp.setObservableValue(observableValues.get(i));
 			add(sliderBp, "sgx g1");
 		}

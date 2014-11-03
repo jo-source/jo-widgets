@@ -30,10 +30,50 @@ package org.jowidgets.api.convert;
 
 public interface ILinearSliderConverterBuilder<VALUE_TYPE extends Number> {
 
+	/**
+	 * Sets the minimal model value
+	 * 
+	 * @param minValue The minimal model value
+	 * 
+	 * @return This builder
+	 */
 	ILinearSliderConverterBuilder<VALUE_TYPE> setMinValue(VALUE_TYPE minValue);
 
+	/**
+	 * Sets the maximal model value
+	 * 
+	 * @param maxValue The maximal model value
+	 * 
+	 * @return This builder
+	 */
 	ILinearSliderConverterBuilder<VALUE_TYPE> setMaxValue(VALUE_TYPE maxValue);
 
+	/**
+	 * Sets a pivot value. With that, the slider can be separated into two separate zones.
+	 * Example: Modeling a scale factor for magnifying and demagnifying with factors from 1/10 to 10x.
+	 * Use min=0.1d, max=10.0d, pivot=(0.5d, 1.0d). Then the lower part of the slider has the (linear)
+	 * range from 0.1 to 1.0 and the upper part has the range from 1.0d to 10.0d.
+	 * 
+	 * @param ratio The ration of the pivot where 0.0d is at the sliders min position, 0.5d is in the middle and 1.0d is at the
+	 *            max position
+	 * @param value The value at the ratio position. This value must be between min and max
+	 * 
+	 * @return This builder
+	 */
+	ILinearSliderConverterBuilder<VALUE_TYPE> setPivotValue(double ratio, VALUE_TYPE value);
+
+	/**
+	 * Sets a pivot value with ratio 0.5d
+	 * 
+	 * @param value The value at the ratio position. This value must be between min and max
+	 * 
+	 * @return This builder
+	 */
+	ILinearSliderConverterBuilder<VALUE_TYPE> setPivotValue(VALUE_TYPE value);
+
+	/**
+	 * @return A newly created converter
+	 */
 	ISliderViewerConverter<VALUE_TYPE> build();
 
 }

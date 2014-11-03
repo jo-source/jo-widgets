@@ -27,6 +27,7 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
+import org.jowidgets.api.controller.IMouseButtonEventMatcher;
 import org.jowidgets.api.convert.ISliderViewerConverter;
 import org.jowidgets.common.widgets.descriptor.setup.ISliderSetupCommon;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
@@ -41,5 +42,10 @@ public interface ISliderViewerSetup<VALUE_TYPE> extends ISliderSetupCommon, ICom
 	IObservableValue<VALUE_TYPE> getObservableValue();
 
 	VALUE_TYPE getValue();
+
+	VALUE_TYPE getDefaultValue();
+
+	@Mandatory
+	IMouseButtonEventMatcher getDefaultValueMatcher();
 
 }

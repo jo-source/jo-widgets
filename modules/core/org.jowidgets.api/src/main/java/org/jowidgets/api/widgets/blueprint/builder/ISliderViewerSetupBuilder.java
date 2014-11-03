@@ -27,6 +27,7 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
+import org.jowidgets.api.controller.IMouseButtonEventMatcher;
 import org.jowidgets.api.convert.ISliderViewerConverter;
 import org.jowidgets.common.widgets.builder.ISliderSetupBuilderCommon;
 import org.jowidgets.util.IObservableValue;
@@ -40,4 +41,9 @@ public interface ISliderViewerSetupBuilder<INSTANCE_TYPE extends ISliderViewerSe
 	INSTANCE_TYPE setObservableValue(IObservableValue<VALUE_TYPE> observableValue);
 
 	INSTANCE_TYPE setValue(VALUE_TYPE value);
+
+	INSTANCE_TYPE setDefaultValue(VALUE_TYPE value);
+
+	INSTANCE_TYPE setDefaultValueMatcher(IMouseButtonEventMatcher matcher);
+
 }

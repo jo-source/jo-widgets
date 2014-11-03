@@ -34,6 +34,7 @@ import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.IObservableValue;
 import org.jowidgets.util.IObservableValueListener;
+import org.jowidgets.util.NullCompatibleEquivalence;
 import org.jowidgets.util.ObservableValue;
 import org.jowidgets.util.ValueHolder;
 
@@ -75,34 +76,50 @@ public final class InputComponentBind {
 			source.setValue(inputComponent.getValue());
 		}
 
-		final ValueHolder<IInputListener> inputListener = new ValueHolder<IInputListener>();
-		final ValueHolder<IObservableValueListener<VALUE_TYPE>> observableValueListener = new ValueHolder<IObservableValueListener<VALUE_TYPE>>();
+		final ValueHolder<Boolean> onSourceSet = new ValueHolder<Boolean>(false);
+		final ValueHolder<Boolean> onDestinationSet = new ValueHolder<Boolean>(false);
 
-		inputListener.set(new IInputListener() {
+		final IInputListener inputListener = new IInputListener() {
 			@Override
 			public void inputChanged() {
-				source.removeValueListener(observableValueListener.get());
-				source.setValue(inputComponent.getValue());
-				source.addValueListener(observableValueListener.get());
+				if (!onSourceSet.get().booleanValue()
+					&& !onDestinationSet.get().booleanValue()
+					&& !NullCompatibleEquivalence.equals(inputComponent.getValue(), source.getValue())) {
+					onSourceSet.set(true);
+					try {
+						source.setValue(inputComponent.getValue());
+					}
+					finally {
+						onSourceSet.set(false);
+					}
+				}
 			}
-		});
-		inputComponent.addInputListener(inputListener.get());
+		};
+		inputComponent.addInputListener(inputListener);
 
-		observableValueListener.set(new IObservableValueListener<VALUE_TYPE>() {
+		final IObservableValueListener<VALUE_TYPE> observableValueListener = new IObservableValueListener<VALUE_TYPE>() {
 			@Override
 			public void changed(final IObservableValue<VALUE_TYPE> observableValue, final VALUE_TYPE value) {
-				inputComponent.removeInputListener(inputListener.get());
-				inputComponent.setValue(value);
-				inputComponent.addInputListener(inputListener.get());
+				if (!onSourceSet.get().booleanValue()
+					&& !onDestinationSet.get().booleanValue()
+					&& !NullCompatibleEquivalence.equals(inputComponent.getValue(), value)) {
+					onDestinationSet.set(true);
+					try {
+						inputComponent.setValue(value);
+					}
+					finally {
+						onDestinationSet.set(false);
+					}
+				}
 			}
-		});
-		source.addValueListener(observableValueListener.get());
+		};
+		source.addValueListener(observableValueListener);
 
 		inputComponent.addDisposeListener(new IDisposeListener() {
 			@Override
 			public void onDispose() {
-				inputComponent.removeInputListener(inputListener.get());
-				source.removeValueListener(observableValueListener.get());
+				inputComponent.removeInputListener(inputListener);
+				source.removeValueListener(observableValueListener);
 			}
 		});
 
