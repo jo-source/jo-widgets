@@ -67,7 +67,7 @@ final class DemoSliderViewerFrame extends JoFrame {
 
 		//slider2 - uses default double slider with min=0.0d and max=1.0d
 		final ISliderViewerBluePrint<Double> sliderBp2 = BPF.sliderViewer();
-		sliderBp2.setDefaultValue(0.5d);
+		sliderBp2.setDefaultValue(0.0d);
 		//use the linear converter explicit, see next slider how to use implicit
 		sliderBp2.setConverter(LinearSliderConverter.create());
 		final ISliderViewer<Double> slider2 = add(sliderBp2, "growx, w 0::");

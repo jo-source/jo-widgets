@@ -56,7 +56,7 @@ final class DemoBindingFrame extends JoFrame {
 
 		setLayout(new MigLayoutDescriptor("wrap", StringUtils.loop("[]10", COLUMNS - 1) + "[]", "[]0[]20[]"));
 
-		//create observable values and binding
+		//create observable values and bindings
 		final ArrayList<IObservableValue<Double>> observableValues = new ArrayList<IObservableValue<Double>>(COLUMNS);
 		final ArrayList<IBinding> bindings = new ArrayList<IBinding>(COLUMNS - 1);
 		for (int i = 0; i < COLUMNS; i++) {
