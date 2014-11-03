@@ -26,53 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.convert.slider;
+package org.jowidgets.api.controller;
 
-import org.jowidgets.api.convert.ILinearSliderConverterBuilder;
-import org.jowidgets.api.convert.ISliderViewerConverter;
-import org.jowidgets.util.Assert;
+import org.jowidgets.common.widgets.controller.IMouseButtonEvent;
 
-final class LinearSliderConverterBuilderImpl<VALUE_TYPE extends Number> implements ILinearSliderConverterBuilder<VALUE_TYPE> {
+public interface IMouseButtonEventMatcher {
 
-	private VALUE_TYPE minValue;
-	private VALUE_TYPE maxValue;
-
-	private double pivotRatio;
-	private VALUE_TYPE pivot;
-
-	@Override
-	public ILinearSliderConverterBuilder<VALUE_TYPE> setMinValue(final VALUE_TYPE minValue) {
-		this.minValue = minValue;
-		return this;
-	}
-
-	@Override
-	public ILinearSliderConverterBuilder<VALUE_TYPE> setMaxValue(final VALUE_TYPE maxValue) {
-		Assert.paramNotNull(maxValue, "maxValue");
-		this.maxValue = maxValue;
-		return this;
-	}
-
-	@Override
-	public ILinearSliderConverterBuilder<VALUE_TYPE> setPivotValue(final double ratio, final VALUE_TYPE value) {
-		this.pivot = value;
-		this.pivotRatio = ratio;
-		return this;
-	}
-
-	@Override
-	public ILinearSliderConverterBuilder<VALUE_TYPE> setPivotValue(final VALUE_TYPE value) {
-		return setPivotValue(0.5d, value);
-	}
-
-	@Override
-	public ISliderViewerConverter<VALUE_TYPE> build() {
-		if (pivot == null) {
-			return new LinearSliderViewerConverter<VALUE_TYPE>(minValue, maxValue);
-		}
-		else {
-			return new LinearPivotSliderViewerConverter<VALUE_TYPE>(minValue, maxValue, pivot, pivotRatio);
-		}
-	}
+	boolean matches(IMouseButtonEvent event, boolean doubleClick);
 
 }

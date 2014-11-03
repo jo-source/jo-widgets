@@ -90,6 +90,9 @@ public final class Bind {
 
 		private final boolean disposed;
 
+		private boolean onSourceSet;
+		private boolean onDestinationSet;
+
 		private BindingImpl(
 			final IObservableValue<SOURCE_TYPE> source,
 			final IObservableValue<DESTINATION_TYPE> destination,
@@ -104,6 +107,8 @@ public final class Bind {
 			this.converter = converter;
 
 			this.disposed = false;
+			this.onSourceSet = false;
+			this.onDestinationSet = false;
 
 			this.sourceListener = new IObservableValueListener<SOURCE_TYPE>() {
 				@Override
@@ -123,20 +128,34 @@ public final class Bind {
 		}
 
 		private void setSourceToDestination() {
+			if (onSourceSet || onDestinationSet) {
+				return;
+			}
 			final DESTINATION_TYPE convertedSource = converter.convertSource(source.getValue());
 			if (!NullCompatibleEquivalence.equals(convertedSource, destination.getValue())) {
-				destination.removeValueListener(destinationListener);
-				destination.setValue(convertedSource);
-				destination.addValueListener(destinationListener);
+				onDestinationSet = true;
+				try {
+					destination.setValue(convertedSource);
+				}
+				finally {
+					onDestinationSet = false;
+				}
 			}
 		}
 
 		private void setDestinationToSource() {
+			if (onSourceSet || onDestinationSet) {
+				return;
+			}
 			final SOURCE_TYPE convertedDestination = converter.convertDestination(destination.getValue());
 			if (!NullCompatibleEquivalence.equals(convertedDestination, source.getValue())) {
-				source.removeValueListener(sourceListener);
-				source.setValue(convertedDestination);
-				source.addValueListener(sourceListener);
+				onSourceSet = true;
+				try {
+					source.setValue(convertedDestination);
+				}
+				finally {
+					onSourceSet = false;
+				}
 			}
 		}
 

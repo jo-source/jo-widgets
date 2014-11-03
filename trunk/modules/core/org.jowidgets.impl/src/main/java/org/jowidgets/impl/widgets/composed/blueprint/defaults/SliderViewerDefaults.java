@@ -27,8 +27,12 @@
  */
 package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 
+import org.jowidgets.api.controller.IMouseButtonEventMatcher;
 import org.jowidgets.api.widgets.blueprint.builder.ISliderViewerSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.common.types.Modifier;
+import org.jowidgets.common.types.MouseButton;
+import org.jowidgets.common.widgets.controller.IMouseButtonEvent;
 import org.jowidgets.util.ObservableValue;
 
 public class SliderViewerDefaults implements IDefaultInitializer<ISliderViewerSetupBuilder<?, ?>> {
@@ -40,6 +44,19 @@ public class SliderViewerDefaults implements IDefaultInitializer<ISliderViewerSe
 		builder.setMaximum(1000);
 		builder.setTickSpacing(100);
 		builder.setObservableValue(new ObservableValue());
+		builder.setDefaultValueMatcher(new IMouseButtonEventMatcher() {
+			@Override
+			public boolean matches(final IMouseButtonEvent event, final boolean doubleClick) {
+				if (!doubleClick
+					&& event.getMouseButton() == MouseButton.LEFT
+					&& event.getModifiers().contains(Modifier.CTRL)
+					&& event.getModifiers().size() == 1) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+		});
 	}
-
 }

@@ -176,4 +176,39 @@ public final class Assert {
 		}
 	}
 
+	public static void paramLess(final double param1, final double param2, final String name1, final String name2) {
+		if (param2 <= param1) {
+			throw new IllegalArgumentException("The parameter '"
+				+ name1
+				+ "' must be less '"
+				+ name2
+				+ "', but '"
+				+ name1
+				+ "' is '"
+				+ param1
+				+ "' and '"
+				+ name2
+				+ "' is'"
+				+ param2
+				+ "'");
+		}
+	}
+
+	public static void paramGreater(final double param1, final double param2, final String name1, final String name2) {
+		if (param2 >= param1) {
+			throw new IllegalArgumentException("The parameter '"
+				+ name1
+				+ "' must be less '"
+				+ name2
+				+ "', but '"
+				+ name1
+				+ "' is '"
+				+ param1
+				+ "' and '"
+				+ name2
+				+ "' is'"
+				+ param2
+				+ "'");
+		}
+	}
 }
