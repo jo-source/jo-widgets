@@ -52,12 +52,12 @@ public class ObservableValueWrapper<VALUE_TYPE> implements IObservableValue<VALU
 	}
 
 	@Override
-	public void addValueListener(final IObservableValueListener<VALUE_TYPE> listener) {
+	public void addValueListener(final IObservableValueListener<?> listener) {
 		original.addValueListener(listener);
 	}
 
 	@Override
-	public void removeValueListener(final IObservableValueListener<VALUE_TYPE> listener) {
+	public void removeValueListener(final IObservableValueListener<?> listener) {
 		original.removeValueListener(listener);
 	}
 

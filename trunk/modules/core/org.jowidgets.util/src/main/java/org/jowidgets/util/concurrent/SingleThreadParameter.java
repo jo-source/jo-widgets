@@ -70,13 +70,13 @@ public final class SingleThreadParameter<VALUE_TYPE> extends ParameterWrapper<VA
 	}
 
 	@Override
-	public void addValueListener(final IObservableValueListener<VALUE_TYPE> listener) {
+	public void addValueListener(final IObservableValueListener<?> listener) {
 		checkWriteThread();
 		original.addValueListener(listener);
 	}
 
 	@Override
-	public void removeValueListener(final IObservableValueListener<VALUE_TYPE> listener) {
+	public void removeValueListener(final IObservableValueListener<?> listener) {
 		checkWriteThread();
 		original.removeValueListener(listener);
 	}

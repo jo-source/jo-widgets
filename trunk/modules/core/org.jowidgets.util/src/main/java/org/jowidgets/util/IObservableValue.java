@@ -34,8 +34,8 @@ public interface IObservableValue<VALUE_TYPE> {
 
 	VALUE_TYPE getValue();
 
-	void addValueListener(IObservableValueListener<VALUE_TYPE> listener);
+	void addValueListener(IObservableValueListener<?> listener);
 
-	void removeValueListener(IObservableValueListener<VALUE_TYPE> listener);
+	void removeValueListener(IObservableValueListener<?> listener);
 
 }
