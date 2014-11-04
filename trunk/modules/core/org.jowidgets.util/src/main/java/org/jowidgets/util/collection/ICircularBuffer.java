@@ -62,4 +62,8 @@ public interface ICircularBuffer<ELEMENT_TYPE> {
 	 */
 	ELEMENT_TYPE get(int index);
 
+	/**
+	 * Clears the current buffer
+	 */
+	void clear();
 }

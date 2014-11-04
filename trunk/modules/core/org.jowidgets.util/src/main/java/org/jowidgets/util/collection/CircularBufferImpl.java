@@ -32,23 +32,18 @@ import org.jowidgets.util.Assert;
 
 final class CircularBufferImpl<ELEMENT_TYPE> implements ICircularBuffer<ELEMENT_TYPE> {
 
-	private final ELEMENT_TYPE[] buffer;
 	private final int capacity;
 
+	private ELEMENT_TYPE[] buffer;
 	private int insertIndex;
-
 	private boolean shiftMode;
 
-	@SuppressWarnings("unchecked")
 	CircularBufferImpl(final int capacity) {
 		if (capacity < 1) {
 			throw new IllegalArgumentException("Buffer must have at least capacity of one.");
 		}
-		this.buffer = (ELEMENT_TYPE[]) new Object[capacity];
-		this.capacity = buffer.length;
-
-		insertIndex = 0;
-		shiftMode = false;
+		this.capacity = capacity;
+		clear();
 	}
 
 	@Override
@@ -93,6 +88,14 @@ final class CircularBufferImpl<ELEMENT_TYPE> implements ICircularBuffer<ELEMENT_
 			}
 			return buffer[shiftedIndex];
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void clear() {
+		this.buffer = (ELEMENT_TYPE[]) new Object[capacity];
+		insertIndex = 0;
+		shiftMode = false;
 	}
 
 }
