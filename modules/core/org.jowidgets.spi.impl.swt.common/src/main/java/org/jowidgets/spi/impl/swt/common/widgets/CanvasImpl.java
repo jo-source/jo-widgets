@@ -56,6 +56,7 @@ public class CanvasImpl extends SwtComposite implements ICanvasSpi {
 				final Dimension size = getSize();
 				final Rectangle bounds = new Rectangle(0, 0, size.getWidth(), size.getHeight());
 				final GraphicContextSpiImpl gc = new GraphicContextSpiImpl(e.gc, bounds);
+				getUiReference().drawBackground(e.gc, 0, 0, size.getWidth(), size.getHeight());
 				paintObservable.firePaint(gc);
 			}
 		});
@@ -80,6 +81,11 @@ public class CanvasImpl extends SwtComposite implements ICanvasSpi {
 	@Override
 	public void redraw() {
 		getUiReference().redraw();
+	}
+
+	@Override
+	public void redraw(final int x, final int y, final int width, final int height) {
+		getUiReference().redraw(x, y, width, height, false);
 	}
 
 	@Override

@@ -32,4 +32,6 @@ public interface ICanvasCommon extends IControlCommon {
 
 	void scroll(int sourceX, int sourceY, int sourceWidth, int sourceHeight, int destinationX, int destinationY);
 
+	void redraw(int x, int y, int width, int height);
+
 }
