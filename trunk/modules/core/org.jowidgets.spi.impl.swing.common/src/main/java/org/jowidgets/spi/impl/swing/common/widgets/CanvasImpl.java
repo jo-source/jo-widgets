@@ -91,6 +91,11 @@ public class CanvasImpl extends SwingComposite implements ICanvasSpi {
 		graphics.clearRect(destinationX, destinationY + sourceHeight, sourceWidth, size.height - (destinationY + sourceHeight));
 	}
 
+	@Override
+	public void redraw(final int x, final int y, final int width, final int height) {
+		getUiReference().repaint(x, y, width, height);
+	}
+
 	private static final class CanvasPanel extends JPanel implements IPaintObservableSpi {
 
 		private static final long serialVersionUID = -6875610604989809218L;
