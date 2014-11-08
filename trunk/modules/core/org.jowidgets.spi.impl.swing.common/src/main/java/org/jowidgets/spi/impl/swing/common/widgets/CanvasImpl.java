@@ -27,7 +27,6 @@
  */
 package org.jowidgets.spi.impl.swing.common.widgets;
 
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
@@ -77,21 +76,54 @@ public class CanvasImpl extends SwingComposite implements ICanvasSpi {
 		final int destinationX,
 		final int destinationY) {
 
-		final Dimension size = getUiReference().getSize();
 		final Graphics graphics = getUiReference().getGraphics();
 
-		//copy the area to scroll
-		graphics.copyArea(sourceX, sourceY, sourceWidth, sourceHeight, destinationX - sourceX, destinationY - sourceY);
+		final int dx = destinationX - sourceX;
+		final int dy = destinationY - sourceY;
 
-		//clear the area outside the scroll destination
-		//left border
-		graphics.clearRect(0, 0, destinationX, size.height);
-		//right border
-		graphics.clearRect(destinationX + sourceWidth, 0, size.width - (destinationX + sourceWidth), size.height);
-		//top border
-		graphics.clearRect(destinationX, 0, sourceWidth, destinationY);
-		//bottom border
-		graphics.clearRect(destinationX, destinationY + sourceHeight, sourceWidth, size.height - (destinationY + sourceHeight));
+		final int dirtyX;
+		final int dirtyWidth;
+		final int dirtyY;
+		final int dirtyHeight;
+		if (dx != 0 && dy != 0) {
+			dirtyX = sourceX;
+			dirtyWidth = sourceWidth;
+			dirtyY = sourceY;
+			dirtyHeight = sourceHeight;
+		}
+		else if (dx < 0 && dy == 0) {
+			dirtyX = sourceX + sourceWidth + dx;
+			dirtyWidth = -dx;
+			dirtyY = sourceY;
+			dirtyHeight = sourceHeight;
+		}
+		else if (dx > 0 && dy == 0) {
+			dirtyX = sourceX;
+			dirtyWidth = dx;
+			dirtyY = sourceY;
+			dirtyHeight = sourceHeight;
+		}
+		else if (dy < 0 && dx == 0) {
+			dirtyX = sourceX;
+			dirtyWidth = sourceWidth;
+			dirtyY = sourceY + sourceHeight + dx;
+			dirtyHeight = -dy;
+		}
+		else if (dy > 0 && dx == 0) {
+			dirtyX = sourceX;
+			dirtyWidth = sourceWidth;
+			dirtyY = sourceY;
+			dirtyHeight = dy;
+		}
+		else {//no scroll, deltas all 0
+			return;
+		}
+
+		//copy the area to scroll
+		graphics.copyArea(sourceX, sourceY, sourceWidth, sourceHeight, dx, dy);
+
+		//redraw the dirty area
+		redraw(dirtyX, dirtyY, dirtyWidth, dirtyHeight);
 	}
 
 	@Override

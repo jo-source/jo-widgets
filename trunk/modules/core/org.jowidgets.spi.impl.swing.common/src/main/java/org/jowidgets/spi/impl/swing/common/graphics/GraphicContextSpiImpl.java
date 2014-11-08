@@ -268,6 +268,21 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
 	}
 
 	@Override
+	public void copyArea(
+		final int sourceX,
+		final int sourceY,
+		final int sourceWidth,
+		final int sourceHeight,
+		final int destinationX,
+		final int destinationY) {
+
+		final int dx = destinationX - sourceX;
+		final int dy = destinationY - sourceY;
+
+		graphics.copyArea(sourceX, sourceY, sourceWidth, sourceHeight, dx, dy);
+	}
+
+	@Override
 	public void drawImage(
 		final IImageConstant imageKey,
 		final int sourceX,
