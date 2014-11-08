@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, grossmann
+ * Copyright (c) 2014, MGrossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,12 +26,37 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.graphics;
+package org.jowidgets.spi.impl.controller;
 
-import org.jowidgets.api.controller.IPaintEvent;
+import org.jowidgets.common.types.Rectangle;
+import org.jowidgets.spi.controller.IPaintEventSpi;
+import org.jowidgets.spi.graphics.IGraphicContextSpi;
+import org.jowidgets.util.Assert;
 
-public interface IPaintListener {
+public final class PaintEventSpiImpl implements IPaintEventSpi {
 
-	void paint(IPaintEvent paintEvent);
+	private final IGraphicContextSpi graphicContext;
+	private final Rectangle clipBounds;
+
+	public PaintEventSpiImpl(final IGraphicContextSpi graphicContext) {
+		this(Assert.getParamNotNull(graphicContext, "graphicContext"), graphicContext.getBounds());
+	}
+
+	public PaintEventSpiImpl(final IGraphicContextSpi graphicContext, final Rectangle clipBounds) {
+		Assert.paramNotNull(graphicContext, "graphicContext");
+		Assert.paramNotNull(clipBounds, "clipBounds");
+		this.graphicContext = graphicContext;
+		this.clipBounds = clipBounds;
+	}
+
+	@Override
+	public IGraphicContextSpi getGraphicContext() {
+		return graphicContext;
+	}
+
+	@Override
+	public Rectangle getClipBounds() {
+		return clipBounds;
+	}
 
 }

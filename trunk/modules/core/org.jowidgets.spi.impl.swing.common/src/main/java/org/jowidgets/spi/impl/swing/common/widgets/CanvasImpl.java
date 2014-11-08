@@ -36,8 +36,11 @@ import javax.swing.JPanel;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.descriptor.setup.ICanvasSetupCommon;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.controller.IPaintEventSpi;
+import org.jowidgets.spi.graphics.IGraphicContextSpi;
 import org.jowidgets.spi.graphics.IPaintListenerSpi;
 import org.jowidgets.spi.graphics.IPaintObservableSpi;
+import org.jowidgets.spi.impl.controller.PaintEventSpiImpl;
 import org.jowidgets.spi.impl.controller.PaintObservable;
 import org.jowidgets.spi.impl.swing.common.graphics.GraphicContextSpiImpl;
 import org.jowidgets.spi.impl.swing.common.util.RectangleConvert;
@@ -109,7 +112,15 @@ public class CanvasImpl extends SwingComposite implements ICanvasSpi {
 		@Override
 		public void paint(final Graphics g) {
 			final Rectangle bounds = RectangleConvert.convert(getBounds());
-			paintObservable.firePaint(new GraphicContextSpiImpl((Graphics2D) g, bounds));
+			final IGraphicContextSpi graphicContext = new GraphicContextSpiImpl((Graphics2D) g, bounds);
+			final IPaintEventSpi paintEvent;
+			if (g.getClipBounds() != null) {
+				paintEvent = new PaintEventSpiImpl(graphicContext, RectangleConvert.convert(g.getClipBounds()));
+			}
+			else {
+				paintEvent = new PaintEventSpiImpl(graphicContext);
+			}
+			paintObservable.firePaint(paintEvent);
 		}
 
 		@Override

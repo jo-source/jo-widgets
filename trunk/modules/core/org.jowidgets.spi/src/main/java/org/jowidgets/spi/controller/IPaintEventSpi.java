@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, grossmann
+ * Copyright (c) 2014, MGrossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,12 +26,21 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.graphics;
+package org.jowidgets.spi.controller;
 
-import org.jowidgets.api.controller.IPaintEvent;
+import org.jowidgets.common.types.Rectangle;
+import org.jowidgets.spi.graphics.IGraphicContextSpi;
 
-public interface IPaintListener {
+public interface IPaintEventSpi {
 
-	void paint(IPaintEvent paintEvent);
+	/**
+	 * @return The graphic context
+	 */
+	IGraphicContextSpi getGraphicContext();
+
+	/**
+	 * @return The area that needs to be repainted
+	 */
+	Rectangle getClipBounds();
 
 }

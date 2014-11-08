@@ -37,9 +37,8 @@ import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.descriptor.ICanvasDescriptor;
 import org.jowidgets.impl.base.delegate.ControlDelegate;
 import org.jowidgets.impl.event.PaintObservable;
-import org.jowidgets.impl.widgets.basic.graphics.GraphicContextAdapter;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractCanvasSpiWrapper;
-import org.jowidgets.spi.graphics.IGraphicContextSpi;
+import org.jowidgets.spi.controller.IPaintEventSpi;
 import org.jowidgets.spi.graphics.IPaintListenerSpi;
 import org.jowidgets.spi.widgets.ICanvasSpi;
 import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
@@ -61,8 +60,8 @@ public final class CanvasImpl extends AbstractCanvasSpiWrapper implements ICanva
 
 		canvasSpi.addPaintListener(new IPaintListenerSpi() {
 			@Override
-			public void paint(final IGraphicContextSpi gc) {
-				paintObservable.firePaint(new GraphicContextAdapter(gc));
+			public void paint(final IPaintEventSpi paintEventSpi) {
+				paintObservable.firePaint(paintEventSpi);
 			}
 		});
 	}
