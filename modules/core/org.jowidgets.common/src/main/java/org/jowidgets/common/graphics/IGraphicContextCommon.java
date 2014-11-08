@@ -84,6 +84,14 @@ public interface IGraphicContextCommon {
 
 	void drawText(String text, int x, int y);
 
+	void copyArea(
+		final int sourceX,
+		final int sourceY,
+		final int sourceWidth,
+		final int sourceHeight,
+		final int destinationX,
+		final int destinationY);
+
 	void drawImage(
 		IImageConstant image,
 		final int sourceX,

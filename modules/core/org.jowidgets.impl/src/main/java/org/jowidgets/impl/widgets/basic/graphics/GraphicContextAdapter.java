@@ -176,6 +176,17 @@ public final class GraphicContextAdapter implements IGraphicContext {
 	}
 
 	@Override
+	public void copyArea(
+		final int sourceX,
+		final int sourceY,
+		final int sourceWidth,
+		final int sourceHeight,
+		final int destinationX,
+		final int destinationY) {
+		contextSpi.copyArea(sourceX, sourceY, sourceWidth, sourceHeight, destinationX, destinationY);
+	}
+
+	@Override
 	public void drawImage(
 		final IImageConstant image,
 		final int sourceX,
