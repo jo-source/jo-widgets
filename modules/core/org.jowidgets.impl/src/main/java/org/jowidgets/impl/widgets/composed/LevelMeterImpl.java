@@ -28,6 +28,7 @@
 package org.jowidgets.impl.widgets.composed;
 
 import org.jowidgets.api.color.Colors;
+import org.jowidgets.api.controller.IPaintEvent;
 import org.jowidgets.api.graphics.IGraphicContext;
 import org.jowidgets.api.graphics.IPaintListener;
 import org.jowidgets.api.model.levelmeter.ILevelListener;
@@ -87,7 +88,8 @@ public final class LevelMeterImpl extends ControlWrapper implements ILevelMeter 
 
 		canvas.addPaintListener(new IPaintListener() {
 			@Override
-			public void paint(final IGraphicContext gc) {
+			public void paint(final IPaintEvent paintEvent) {
+				final IGraphicContext gc = paintEvent.getGraphicContext();
 				paintCanvas(gc);
 			}
 		});

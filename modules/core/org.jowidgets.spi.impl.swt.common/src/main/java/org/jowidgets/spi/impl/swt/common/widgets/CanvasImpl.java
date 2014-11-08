@@ -36,6 +36,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.graphics.IPaintListenerSpi;
+import org.jowidgets.spi.impl.controller.PaintEventSpiImpl;
 import org.jowidgets.spi.impl.controller.PaintObservable;
 import org.jowidgets.spi.impl.swt.common.graphics.GraphicContextSpiImpl;
 import org.jowidgets.spi.widgets.ICanvasSpi;
@@ -55,9 +56,9 @@ public class CanvasImpl extends SwtComposite implements ICanvasSpi {
 			public void paintControl(final PaintEvent e) {
 				final Dimension size = getSize();
 				final Rectangle bounds = new Rectangle(0, 0, size.getWidth(), size.getHeight());
-				final GraphicContextSpiImpl gc = new GraphicContextSpiImpl(e.gc, bounds);
-				getUiReference().drawBackground(e.gc, 0, 0, size.getWidth(), size.getHeight());
-				paintObservable.firePaint(gc);
+				final Rectangle clipBounds = new Rectangle(e.x, e.y, e.width, e.height);
+				final GraphicContextSpiImpl graphicContext = new GraphicContextSpiImpl(e.gc, bounds);
+				paintObservable.firePaint(new PaintEventSpiImpl(graphicContext, clipBounds));
 			}
 		});
 	}

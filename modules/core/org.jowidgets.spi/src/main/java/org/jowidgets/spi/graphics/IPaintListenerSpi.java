@@ -28,8 +28,10 @@
 
 package org.jowidgets.spi.graphics;
 
+import org.jowidgets.spi.controller.IPaintEventSpi;
+
 public interface IPaintListenerSpi {
 
-	void paint(IGraphicContextSpi gc);
+	void paint(IPaintEventSpi paintEvent);
 
 }

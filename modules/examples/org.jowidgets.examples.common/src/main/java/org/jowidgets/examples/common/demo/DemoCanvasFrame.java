@@ -29,6 +29,7 @@
 package org.jowidgets.examples.common.demo;
 
 import org.jowidgets.api.color.Colors;
+import org.jowidgets.api.controller.IPaintEvent;
 import org.jowidgets.api.graphics.IGraphicContext;
 import org.jowidgets.api.graphics.IPaintListener;
 import org.jowidgets.api.widgets.ICanvas;
@@ -52,7 +53,8 @@ public class DemoCanvasFrame extends JoFrame {
 
 		canvas.addPaintListener(new IPaintListener() {
 			@Override
-			public void paint(final IGraphicContext gc) {
+			public void paint(final IPaintEvent paintEvent) {
+				final IGraphicContext gc = paintEvent.getGraphicContext();
 				gc.setAntiAliasing(AntiAliasing.ON);
 				gc.setTextAntiAliasing(AntiAliasing.ON);
 

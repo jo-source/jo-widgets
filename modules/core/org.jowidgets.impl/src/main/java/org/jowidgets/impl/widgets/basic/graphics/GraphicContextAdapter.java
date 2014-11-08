@@ -238,4 +238,17 @@ public final class GraphicContextAdapter implements IGraphicContext {
 		return contextSpi.getFontMetrics();
 	}
 
+	@Override
+	public String toString() {
+		return "GraphicContextAdapter [getBounds()="
+			+ getBounds()
+			+ ", getForegroundColor()="
+			+ getForegroundColor()
+			+ ", getBackgroundColor()="
+			+ getBackgroundColor()
+			+ ", getFontMetrics()="
+			+ getFontMetrics()
+			+ "]";
+	}
+
 }

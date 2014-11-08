@@ -32,7 +32,7 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-import org.jowidgets.spi.graphics.IGraphicContextSpi;
+import org.jowidgets.spi.controller.IPaintEventSpi;
 import org.jowidgets.spi.graphics.IPaintListenerSpi;
 import org.jowidgets.spi.graphics.IPaintObservableSpi;
 import org.jowidgets.util.Assert;
@@ -57,7 +57,7 @@ public class PaintObservable implements IPaintObservableSpi {
 		listeners.remove(listener);
 	}
 
-	public void firePaint(final IGraphicContextSpi gc) {
+	public void firePaint(final IPaintEventSpi gc) {
 		for (final IPaintListenerSpi listener : new LinkedList<IPaintListenerSpi>(listeners)) {
 			listener.paint(gc);
 		}

@@ -37,6 +37,7 @@ import org.jowidgets.api.animation.AnimationRunner;
 import org.jowidgets.api.animation.IAnimationRunner;
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.controller.IDisposeListener;
+import org.jowidgets.api.controller.IPaintEvent;
 import org.jowidgets.api.graphics.IGraphicContext;
 import org.jowidgets.api.graphics.IPaintListener;
 import org.jowidgets.api.image.IBufferedImage;
@@ -231,7 +232,8 @@ public final class ImageAnimationDemo1 implements IApplication {
 			private Double lastScaleFactor = null;
 
 			@Override
-			public void paint(final IGraphicContext gc) {
+			public void paint(final IPaintEvent paintEvent) {
+				final IGraphicContext gc = paintEvent.getGraphicContext();
 
 				if (!scrollingCb.isSelected()
 					|| !NullCompatibleEquivalence.equals(scaleFactor.get(), lastScaleFactor)
