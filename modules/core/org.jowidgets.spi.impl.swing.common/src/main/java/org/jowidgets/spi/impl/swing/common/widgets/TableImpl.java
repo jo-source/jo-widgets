@@ -86,7 +86,6 @@ import org.jowidgets.common.model.ITableDataModelListener;
 import org.jowidgets.common.model.ITableDataModelObservable;
 import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Interval;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.MouseButton;
@@ -138,6 +137,7 @@ import org.jowidgets.spi.widgets.ITableSpi;
 import org.jowidgets.spi.widgets.setup.ITableSetupSpi;
 import org.jowidgets.util.ArrayUtils;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.Interval;
 import org.jowidgets.util.ValueHolder;
 import org.jowidgets.util.event.IObservableCallback;
 
