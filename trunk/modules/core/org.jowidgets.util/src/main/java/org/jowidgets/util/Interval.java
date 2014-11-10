@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.types;
+package org.jowidgets.util;
 
 public final class Interval<NUMBER_TYPE extends Number> {
 

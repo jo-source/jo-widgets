@@ -42,7 +42,6 @@ import org.jowidgets.api.widgets.ITable;
 import org.jowidgets.api.widgets.descriptor.ITableDescriptor;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Interval;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TablePackPolicy;
 import org.jowidgets.common.widgets.controller.ITableCellListener;
@@ -63,6 +62,7 @@ import org.jowidgets.tools.controller.TableSelectionObservable;
 import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
 import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 import org.jowidgets.util.EmptyCheck;
+import org.jowidgets.util.Interval;
 import org.jowidgets.util.NullCompatibleEquivalence;
 
 public class TableImpl extends AbstractControlSpiWrapper implements ITable {

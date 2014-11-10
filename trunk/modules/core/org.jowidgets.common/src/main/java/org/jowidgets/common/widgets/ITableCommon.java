@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Interval;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TablePackPolicy;
 import org.jowidgets.common.widgets.controller.ITableCellObservable;
@@ -40,6 +39,7 @@ import org.jowidgets.common.widgets.controller.ITableCellPopupDetectionObservabl
 import org.jowidgets.common.widgets.controller.ITableColumnObservable;
 import org.jowidgets.common.widgets.controller.ITableColumnPopupDetectionObservable;
 import org.jowidgets.common.widgets.controller.ITableSelectionObservable;
+import org.jowidgets.util.Interval;
 
 public interface ITableCommon extends
 		ITableSelectionObservable,
