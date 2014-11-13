@@ -36,6 +36,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.IFactory;
 
 public final class SingleThreadAccess implements ISingleThreadAccess {
 
@@ -53,6 +54,29 @@ public final class SingleThreadAccess implements ISingleThreadAccess {
 		this(new DaemonThreadFactory());
 	}
 
+	/**
+	 * Creates a new single thread access that uses the given thread name factory for thread creation
+	 * 
+	 * @param threadNameFactory The thread name factory to use
+	 */
+	public SingleThreadAccess(final IFactory<String> threadNameFactory) {
+		this(new DaemonThreadFactory(Assert.getParamNotNull(threadNameFactory, "threadNameFactory")));
+	}
+
+	/**
+	 * Creates a new single thread access that uses the given thread name prefix for thread creation
+	 * 
+	 * @param threadPrefix The thread name prefix to use
+	 */
+	public SingleThreadAccess(final String threadPrefix) {
+		this(new DaemonThreadFactory(Assert.getParamNotNull(threadPrefix, "threadPrefix")));
+	}
+
+	/**
+	 * Creates a new single thread access that uses the given thread factory for thread creation
+	 * 
+	 * @param threadFactory The thread factory to use
+	 */
 	public SingleThreadAccess(final ThreadFactory threadFactory) {
 		Assert.paramNotNull(threadFactory, "threadFactory");
 
