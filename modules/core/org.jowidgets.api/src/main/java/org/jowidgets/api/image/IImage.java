@@ -33,4 +33,6 @@ import org.jowidgets.common.image.IImageCommon;
 
 public interface IImage extends IImageCommon, IDisposeObservable {
 
+	boolean isDisposed();
+
 }
