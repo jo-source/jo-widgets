@@ -34,17 +34,17 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.util.Assert;
 
-public class TranslationGraphicContextWrapper extends GraphicContextWrapper implements IGraphicContext {
+public class TranslatedGraphicContext extends GraphicContextWrapper implements IGraphicContext {
 
 	private final IGraphicContext original;
 	private final int offsetX;
 	private final int offsetY;
 
-	public TranslationGraphicContextWrapper(final IGraphicContext original, final int offsetX, final int offsetY) {
+	public TranslatedGraphicContext(final IGraphicContext original, final int offsetX, final int offsetY) {
 		this(original, new Point(offsetX, offsetY));
 	}
 
-	public TranslationGraphicContextWrapper(final IGraphicContext original, final Point offset) {
+	public TranslatedGraphicContext(final IGraphicContext original, final Point offset) {
 		super(original);
 		Assert.paramNotNull(offset, "offset");
 		this.original = original;
