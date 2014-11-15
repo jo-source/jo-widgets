@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,52 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.util.event;
+package org.jowidgets.util;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import org.jowidgets.util.event.ICancelObservable;
 
-import org.jowidgets.util.Assert;
+public interface ICancelCallback extends ICancelObservable {
 
-public class CancelObservable implements ICancelObservable {
-
-	private final Set<ICancelListener> listeners;
-
-	public CancelObservable() {
-		this.listeners = new LinkedHashSet<ICancelListener>();
-	}
-
-	@Override
-	public final void addCancelListener(final ICancelListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		synchronized (this) {
-			listeners.add(listener);
-		}
-	}
-
-	@Override
-	public final void removeCancelListener(final ICancelListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		synchronized (this) {
-			listeners.remove(listener);
-		}
-	}
-
-	public final void fireCanceledEvent() {
-		final Collection<ICancelListener> listenerCopy;
-		synchronized (this) {
-			listenerCopy = new ArrayList<ICancelListener>(listeners);
-		}
-
-		for (final ICancelListener listener : listenerCopy) {
-			listener.canceled();
-		}
-	}
-
-	public final void dispose() {
-		listeners.clear();
-	}
+	boolean isCanceled();
 
 }
