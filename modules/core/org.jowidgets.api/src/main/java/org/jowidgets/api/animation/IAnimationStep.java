@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, MGrossmann
+ * Copyright (c) 2014, MGrossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -30,24 +30,18 @@ package org.jowidgets.api.animation;
 
 import org.jowidgets.util.ICallback;
 
-public interface IAnimationScheduler {
+public interface IAnimationStep {
 
 	/**
-	 * Runs an animation step in the next animation time slot in the ui thread.
-	 * This method may be invoked in any thread.
-	 * 
-	 * @param animationStep The animation step to run (must not be null). This will be invoked in the ui thread
-	 * @param callback A callback that will invoked in the ui thread after the animation step was executed, or null, if no
-	 *            callback is used
+	 * @return The animation steps code
 	 */
-	void run(Runnable animationStep, ICallback<Void> callback);
+	Runnable getAnimationStep();
 
 	/**
-	 * Runs an animation step in the next animation time slot in the ui thread.
-	 * This method may be invoked in any thread.
+	 * Will be invoked, after the animation step was invoked and the animation is ready for a new step
 	 * 
-	 * @param animationStep The animation step to run (must not be null). This will be invoked in the ui thread
+	 * @return The callback to invoke or null, if no callback is used
 	 */
-	void run(IAnimationStep animationStep);
+	ICallback<Void> getFinishedCallback();
 
 }
