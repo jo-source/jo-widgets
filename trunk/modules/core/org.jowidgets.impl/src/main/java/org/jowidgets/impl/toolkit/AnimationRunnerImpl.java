@@ -37,6 +37,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import org.jowidgets.api.animation.IAnimationRunner;
+import org.jowidgets.api.animation.IAnimationStep;
 import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.util.Assert;
@@ -113,6 +114,12 @@ final class AnimationRunnerImpl implements IAnimationRunner {
 	public void run(final Runnable animationStep, final ICallback<Void> callback) {
 		Assert.paramNotNull(animationStep, "animationStep");
 		events.add(new Tuple<Runnable, ICallback<Void>>(animationStep, callback));
+	}
+
+	@Override
+	public void run(final IAnimationStep animationStep) {
+		Assert.paramNotNull(animationStep, "animationStep");
+		run(animationStep.getAnimationStep(), animationStep.getFinishedCallback());
 	}
 
 	private final class EventDispatcher implements Runnable {
