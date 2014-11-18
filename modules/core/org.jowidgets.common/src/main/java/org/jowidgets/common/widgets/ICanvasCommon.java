@@ -34,4 +34,22 @@ public interface ICanvasCommon extends IControlCommon {
 
 	void redraw(int x, int y, int width, int height);
 
+	/**
+	 * Redraws the canvas
+	 * 
+	 * @param sync true if redraw should be done immediately, false otherwise
+	 */
+	void redraw(boolean sync);
+
+	/**
+	 * Redraws an are of the canvas
+	 * 
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 * @param sync true if redraw should be done immediately, false otherwise
+	 */
+	void redraw(int x, int y, int width, int height, boolean sync);
+
 }

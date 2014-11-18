@@ -29,6 +29,7 @@ package org.jowidgets.spi.impl.swing.common.widgets;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
 
 import javax.swing.JPanel;
 
@@ -129,6 +130,22 @@ public class CanvasImpl extends SwingComposite implements ICanvasSpi {
 	@Override
 	public void redraw(final int x, final int y, final int width, final int height) {
 		getUiReference().repaint(x, y, width, height);
+	}
+
+	@Override
+	public void redraw(final boolean sync) {
+		super.redraw();
+		if (sync) {
+			Toolkit.getDefaultToolkit().sync();
+		}
+	}
+
+	@Override
+	public void redraw(final int x, final int y, final int width, final int height, final boolean sync) {
+		redraw(x, y, width, height);
+		if (sync) {
+			Toolkit.getDefaultToolkit().sync();
+		}
 	}
 
 	private static final class CanvasPanel extends JPanel implements IPaintObservableSpi {

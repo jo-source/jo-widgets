@@ -122,6 +122,16 @@ public final class CanvasImpl extends AbstractCanvasSpiWrapper implements ICanva
 	}
 
 	@Override
+	public void redraw(final boolean sync) {
+		getWidget().redraw(sync);
+	}
+
+	@Override
+	public void redraw(final int x, final int y, final int width, final int height, final boolean sync) {
+		getWidget().redraw(x, y, width, height, sync);
+	}
+
+	@Override
 	public void addPaintListener(final IPaintListener listener) {
 		paintObservable.addPaintListener(listener);
 	}

@@ -82,11 +82,29 @@ public class CanvasImpl extends SwtComposite implements ICanvasSpi {
 	@Override
 	public void redraw() {
 		getUiReference().redraw();
+
 	}
 
 	@Override
 	public void redraw(final int x, final int y, final int width, final int height) {
 		getUiReference().redraw(x, y, width, height, false);
+		getUiReference().update();
+	}
+
+	@Override
+	public void redraw(final boolean sync) {
+		redraw();
+		if (sync) {
+			getUiReference().update();
+		}
+	}
+
+	@Override
+	public void redraw(final int x, final int y, final int width, final int height, final boolean sync) {
+		redraw(x, y, width, height);
+		if (sync) {
+			getUiReference().update();
+		}
 	}
 
 	@Override
