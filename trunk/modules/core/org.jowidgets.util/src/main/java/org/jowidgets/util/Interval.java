@@ -70,6 +70,52 @@ public final class Interval<NUMBER_TYPE extends Number> {
 		return rightOpen;
 	}
 
+	/**
+	 * Calculates the intersection of this interval and the given interval
+	 * 
+	 * If the intersection is the empty interval, null will be returned
+	 * 
+	 * @param interval The interval to intersect with
+	 * 
+	 * @return The intersection interval or null, if the intersection is empty
+	 */
+	public Interval<NUMBER_TYPE> intersection(final Interval<NUMBER_TYPE> interval) {
+		Assert.paramNotNull(interval, "interval");
+
+		final NUMBER_TYPE min = NumberUtils.max(leftBoundary, interval.getLeftBoundary());
+		final NUMBER_TYPE max = NumberUtils.min(rightBoundary, interval.getRightBoundary());
+
+		if (min != null && max != null && NumberUtils.compareTo(min, max) < 0) {
+			return new Interval<NUMBER_TYPE>(min, max);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Calculates the union of this interval and the given interval
+	 * 
+	 * If the union can not be calculated, null will be returned
+	 * 
+	 * @param interval The interval to calculate the union with
+	 * 
+	 * @return The union interval or null
+	 */
+	public Interval<NUMBER_TYPE> union(final Interval<NUMBER_TYPE> interval) {
+		Assert.paramNotNull(interval, "interval");
+
+		final NUMBER_TYPE min = NumberUtils.min(leftBoundary, interval.getLeftBoundary());
+		final NUMBER_TYPE max = NumberUtils.max(rightBoundary, interval.getRightBoundary());
+
+		if (min != null && max != null) {
+			return new Interval<NUMBER_TYPE>(min, max);
+		}
+		else {
+			return null;
+		}
+	}
+
 	@Override
 	public String toString() {
 		if (stringRepresentation == null) {

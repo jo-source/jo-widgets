@@ -38,4 +38,66 @@ public final class NumberUtils {
 		return Math.round(value * factor) / factor;
 	}
 
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public static <NUMBER_TYPE extends Number> int compareTo(final NUMBER_TYPE n1, final NUMBER_TYPE n2) {
+		if (n1 == null && n2 == null) {
+			return 0;
+		}
+		else if (n1 == null) {// only one of them is null
+			return -1;
+		}
+		else if (n2 == null) {// only one of them is null
+			return 1;
+		}
+		else {
+			if (!(n1 instanceof Comparable<?>) || !(n2 instanceof Comparable<?>)) {
+				throw new IllegalArgumentException("The given numbers must be comparable");
+			}
+			return ((Comparable) n1).compareTo(n2);
+		}
+	}
+
+	public static <NUMBER_TYPE extends Number> NUMBER_TYPE min(final NUMBER_TYPE n1, final NUMBER_TYPE n2) {
+		if (n1 == null && n2 == null) {
+			return null;
+		}
+		else if (n1 == null) {// only one of them is null
+			return n2;
+		}
+		else if (n2 == null) {// only one of them is null
+			return n1;
+		}
+		final int compared = compareTo(n1, n2);
+		if (compared < 0) {
+			return n1;
+		}
+		else if (compared > 0) {
+			return n2;
+		}
+		else {
+			return n1;
+		}
+	}
+
+	public static <NUMBER_TYPE extends Number> NUMBER_TYPE max(final NUMBER_TYPE n1, final NUMBER_TYPE n2) {
+		if (n1 == null && n2 == null) {
+			return null;
+		}
+		else if (n1 == null) {// only one of them is null
+			return n2;
+		}
+		else if (n2 == null) {// only one of them is null
+			return n1;
+		}
+		final int compared = compareTo(n1, n2);
+		if (compared > 0) {
+			return n1;
+		}
+		else if (compared < 0) {
+			return n2;
+		}
+		else {
+			return n1;
+		}
+	}
 }
