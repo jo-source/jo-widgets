@@ -198,7 +198,7 @@ public final class Assert {
 		if (param2 >= param1) {
 			throw new IllegalArgumentException("The parameter '"
 				+ name1
-				+ "' must be less '"
+				+ "' must be greater '"
 				+ name2
 				+ "', but '"
 				+ name1
