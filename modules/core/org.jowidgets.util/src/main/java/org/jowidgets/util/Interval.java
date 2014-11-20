@@ -116,6 +116,17 @@ public final class Interval<NUMBER_TYPE extends Number> {
 		}
 	}
 
+	/**
+	 * Checks if a number is contained in an interval
+	 * 
+	 * @param number The number to check
+	 * 
+	 * @return True if contained, false otherwise
+	 */
+	public boolean contains(final NUMBER_TYPE number) {
+		return NumberUtils.compareTo(number, leftBoundary) >= 0 && NumberUtils.compareTo(number, rightBoundary) <= 0;
+	}
+
 	@Override
 	public String toString() {
 		if (stringRepresentation == null) {
