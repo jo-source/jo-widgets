@@ -79,7 +79,7 @@ public final class Interval<NUMBER_TYPE extends Number> {
 	 * 
 	 * @return The intersection interval or null, if the intersection is empty
 	 */
-	public Interval<NUMBER_TYPE> intersection(final Interval<NUMBER_TYPE> interval) {
+	public Interval<NUMBER_TYPE> intersect(final Interval<NUMBER_TYPE> interval) {
 		Assert.paramNotNull(interval, "interval");
 
 		final NUMBER_TYPE min = NumberUtils.max(leftBoundary, interval.getLeftBoundary());
