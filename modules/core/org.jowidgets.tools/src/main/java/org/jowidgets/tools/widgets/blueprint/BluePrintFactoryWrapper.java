@@ -578,6 +578,11 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
 	}
 
 	@Override
+	public IInputFieldBluePrint<Double> inputFieldDoubleNumber(final int minFractionDigits, final int maxFractionDigits) {
+		return bluePrintFactory.inputFieldDoubleNumber(minFractionDigits, maxFractionDigits);
+	}
+
+	@Override
 	public IInputFieldBluePrint<Date> inputFieldDate(final DateFormat dateFormat, final String formatHint, final ITextMask mask) {
 		return bluePrintFactory.inputFieldDate(dateFormat, formatHint, mask);
 	}
