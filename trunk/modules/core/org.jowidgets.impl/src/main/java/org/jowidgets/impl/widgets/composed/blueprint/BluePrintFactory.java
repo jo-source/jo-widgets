@@ -91,6 +91,11 @@ public final class BluePrintFactory extends SimpleBluePrintFactory implements IB
 	}
 
 	@Override
+	public IInputFieldBluePrint<Double> inputFieldDoubleNumber(final int minFractionDigits, final int maxFractionDigits) {
+		return inputField(Toolkit.getConverterProvider().doubleNumber(minFractionDigits, maxFractionDigits));
+	}
+
+	@Override
 	public IInputFieldBluePrint<Date> inputFieldDate(final DateFormat dateFormat, final String formatHint, final ITextMask mask) {
 		return inputField(Toolkit.getConverterProvider().date(dateFormat, formatHint, mask));
 	}

@@ -42,6 +42,7 @@ import org.jowidgets.api.convert.IObjectLabelConverter;
 import org.jowidgets.api.convert.IObjectStringConverter;
 import org.jowidgets.api.convert.IStringObjectConverter;
 import org.jowidgets.common.mask.ITextMask;
+import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.tools.converter.AbstractObjectLabelConverter;
 import org.jowidgets.tools.converter.Converter;
 import org.jowidgets.unit.api.IUnit;
@@ -51,6 +52,8 @@ import org.jowidgets.util.Assert;
 public final class DefaultConverterProvider implements IConverterProvider {
 
 	private static final Locale DEFAULT_LOCALE = Locale.US;
+
+	private static final IMessage MUST_BE_A_FLOATING_POINT_NUMBER = Messages.getMessage("DefaultConverterProvider.MustBeFloatingPointNumber");
 
 	private final IObjectStringConverter<Object> toStringConverter;
 	private final IObjectStringConverter<String> passwordPresentationConverter;
@@ -348,6 +351,14 @@ public final class DefaultConverterProvider implements IConverterProvider {
 	@Override
 	public IConverter<Double> doubleNumber(final DecimalFormat decimalFormat, final String formatHint) {
 		return new DefaultDoubleConverter(decimalFormat, formatHint);
+	}
+
+	@Override
+	public IConverter<Double> doubleNumber(final int minFractionDigits, final int maxFractionDigits) {
+		final DecimalFormat decimalFormat = new DecimalFormat();
+		decimalFormat.setMinimumFractionDigits(minFractionDigits);
+		decimalFormat.setMaximumFractionDigits(maxFractionDigits);
+		return new DefaultDoubleConverter(decimalFormat, MUST_BE_A_FLOATING_POINT_NUMBER.get());
 	}
 
 	@Override

@@ -452,6 +452,10 @@ public final class BPF {
 		return Toolkit.getBluePrintFactory().inputFieldDoubleNumber();
 	}
 
+	public static IInputFieldBluePrint<Double> inputFieldDoubleNumber(final int minFractionDigits, final int maxFractionDigits) {
+		return Toolkit.getBluePrintFactory().inputFieldDoubleNumber(minFractionDigits, maxFractionDigits);
+	}
+
 	public static IInputFieldBluePrint<Date> inputFieldDate(
 		final DateFormat dateFormat,
 		final String formatHint,

@@ -91,6 +91,8 @@ public interface IConverterProvider {
 
 	IConverter<Double> doubleNumber();
 
+	IConverter<Double> doubleNumber(final int minFractionDigits, final int maxFractionDigits);
+
 	IConverter<Double> doubleNumber(DecimalFormat decimalFormat, String formatHint);
 
 	IConverter<Date> date(DateFormat dateFormat, String formatHint, ITextMask mask);
