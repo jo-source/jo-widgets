@@ -96,7 +96,7 @@ public final class Interval<NUMBER_TYPE extends Number> {
 	/**
 	 * Calculates the union of this interval and the given interval
 	 * 
-	 * If the union can not be calculated, null will be returned
+	 * If the union can not be calculated, e.g. its not a single interval, null will be returned
 	 * 
 	 * @param interval The interval to calculate the union with
 	 * 
@@ -104,6 +104,10 @@ public final class Interval<NUMBER_TYPE extends Number> {
 	 */
 	public Interval<NUMBER_TYPE> union(final Interval<NUMBER_TYPE> interval) {
 		Assert.paramNotNull(interval, "interval");
+
+		if (intersect(interval) == null) {
+			return null;
+		}
 
 		final NUMBER_TYPE min = NumberUtils.min(leftBoundary, interval.getLeftBoundary());
 		final NUMBER_TYPE max = NumberUtils.max(rightBoundary, interval.getRightBoundary());
