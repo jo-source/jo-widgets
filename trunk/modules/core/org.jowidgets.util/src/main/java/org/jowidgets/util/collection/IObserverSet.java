@@ -44,7 +44,7 @@ package org.jowidgets.util.collection;
  * It's reasonable to iterate always in the same order to avoid indeterministic behavior, e.g. to reproduce bugs.
  * 
  * 3. Iteration is always done with a defensive copy, so changing the set while iterating over it is explicitly allowed,
- * but the iterator itself is unmodifiable. So changing the set while iterationg over it must be done with add() and remove()
+ * but the iterator itself is unmodifiable. So changing the set while iterating over it must be done with add() and remove()
  * 
  * The are many cases where it is very practical the remove a listener while it will be invoked, e.g. on dispose or for binding
  * issues
