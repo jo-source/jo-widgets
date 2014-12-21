@@ -54,12 +54,12 @@ public abstract class AbstractTableDataModel implements ITableDataModel, ITableD
 	}
 
 	@Override
-	public final void setSelection(Collection<Integer> selection) {
-		if (selection == null) {
-			selection = new ArrayList<Integer>();
+	public final void setSelection(Collection<Integer> newSelection) {
+		if (newSelection == null) {
+			newSelection = new ArrayList<Integer>();
 		}
-		if (!this.selection.equals(selection)) {
-			this.selection = new ArrayList<Integer>(selection);
+		if (!CollectionUtils.elementsEqual(selection, newSelection)) {
+			this.selection = new ArrayList<Integer>(newSelection);
 			fireSelectionChanged();
 		}
 	}
