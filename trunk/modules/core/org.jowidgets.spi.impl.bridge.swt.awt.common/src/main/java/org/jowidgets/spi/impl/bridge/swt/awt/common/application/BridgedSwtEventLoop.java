@@ -34,6 +34,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.SwingUtilities;
 
 import org.eclipse.swt.widgets.Display;
+import org.jowidgets.util.Assert;
 
 public final class BridgedSwtEventLoop {
 
@@ -43,6 +44,7 @@ public final class BridgedSwtEventLoop {
 
 	private Display display;
 	private Thread eventDispatchingThread;
+	private Runnable stoppedCallback;
 
 	public BridgedSwtEventLoop() {
 		this(10, 10);
@@ -72,11 +74,11 @@ public final class BridgedSwtEventLoop {
 	 */
 	public void start() {
 		checkNotUiThread();
-		if (isRunning.get()) {
-			return;
+		if (!isRunning.getAndSet(true)) {
+			isRunning.set(true);
 		}
 		else {
-			isRunning.set(true);
+			return;
 		}
 		while (isRunning.get()) {
 			final CountDownLatch latch = new CountDownLatch(1);
@@ -105,10 +107,36 @@ public final class BridgedSwtEventLoop {
 				throw new RuntimeException(e);
 			}
 		}
+
+		if (stoppedCallback != null) {
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						stoppedCallback.run();
+					}
+					finally {
+						stoppedCallback = null;
+					}
+				}
+			});
+		}
 	}
 
 	public void stop() {
-		isRunning.set(false);
+		stop(new Runnable() {
+			@Override
+			public void run() {}
+		});
+	}
+
+	public void stop(final Runnable stoppedCallback) {
+		checkUiThread();
+		Assert.paramNotNull(stoppedCallback, "stoppedCallback");
+		if (this.stoppedCallback == null) {
+			this.stoppedCallback = stoppedCallback;
+			isRunning.set(false);
+		}
 	}
 
 	public boolean isRunning() {
@@ -122,6 +150,12 @@ public final class BridgedSwtEventLoop {
 	private void checkNotUiThread() {
 		if (SwingUtilities.isEventDispatchThread()) {
 			throw new IllegalStateException("The swt event loop must not be started from the awt event thread");
+		}
+	}
+
+	private void checkUiThread() {
+		if (!SwingUtilities.isEventDispatchThread()) {
+			throw new IllegalStateException("The swt event loop must be stopped from the awt event thread");
 		}
 	}
 
