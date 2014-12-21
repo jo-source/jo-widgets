@@ -101,23 +101,29 @@ final class BridgedSwtAwtApplicationRunner implements IApplicationRunner {
 						for (final Shell shell : currentDisplay.getShells()) {
 							shell.dispose();
 						}
+						if (!currentDisplay.isDisposed()) {
+							currentDisplay.dispose();
+						}
 					}
 
 					//stop the swt event dispatching
-					swtEventLoop.stop();
-
-					//stop the awt event dispatching
-					try {
-						if (eventDispatcherThread != null) {
-							final Class<?> edtClass = Class.forName("java.awt.EventDispatchThread");
-							final Method method = edtClass.getDeclaredMethod("stopDispatching");
-							method.setAccessible(true);
-							method.invoke(eventDispatcherThread);
+					swtEventLoop.stop(new Runnable() {
+						@Override
+						public void run() {
+							//stop the awt event dispatching
+							try {
+								if (eventDispatcherThread != null) {
+									final Class<?> edtClass = Class.forName("java.awt.EventDispatchThread");
+									final Method method = edtClass.getDeclaredMethod("stopDispatching");
+									method.setAccessible(true);
+									method.invoke(eventDispatcherThread);
+								}
+							}
+							catch (final Exception e) {
+								throw new RuntimeException(e);
+							}
 						}
-					}
-					catch (final Exception e) {
-						throw new RuntimeException(e);
-					}
+					});
 				}
 			}
 		};
