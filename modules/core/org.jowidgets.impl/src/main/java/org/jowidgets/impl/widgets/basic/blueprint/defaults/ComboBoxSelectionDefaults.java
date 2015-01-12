@@ -32,14 +32,12 @@ import java.util.Collections;
 import org.jowidgets.api.types.AutoSelectionPolicy;
 import org.jowidgets.api.widgets.blueprint.builder.IComboBoxSelectionSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.util.ObservableValue;
 
 public class ComboBoxSelectionDefaults implements IDefaultInitializer<IComboBoxSelectionSetupBuilder<?, ?>> {
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
+	@SuppressWarnings({"unchecked"})
 	@Override
 	public void initialize(final IComboBoxSelectionSetupBuilder<?, ?> builder) {
-		builder.setObservableValue(new ObservableValue());
 		builder.setAutoCompletion(true);
 		builder.setAutoSelectionPolicy(AutoSelectionPolicy.OFF);
 		builder.setElements(Collections.EMPTY_LIST);

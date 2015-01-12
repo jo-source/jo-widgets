@@ -57,6 +57,7 @@ import org.jowidgets.util.EmptyCheck;
 import org.jowidgets.util.EmptyCompatibleEquivalence;
 import org.jowidgets.util.IObservableValue;
 import org.jowidgets.util.NullCompatibleEquivalence;
+import org.jowidgets.util.ObservableValue;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
@@ -93,7 +94,8 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 		this.comboBoxSelectionWidgetSpi = comboBoxSelectionWidgetSpi;
 		this.objectStringConverter = setup.getObjectStringConverter();
 		this.autoSelectionPolicy = setup.getAutoSelectionPolicy();
-		this.observableValue = setup.getObservableValue();
+		this.observableValue = setup.getObservableValue() != null
+				? setup.getObservableValue() : new ObservableValue<VALUE_TYPE>();
 		this.elements = new ArrayList<VALUE_TYPE>();
 		this.elementsView = Collections.unmodifiableList(this.elements);
 

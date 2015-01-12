@@ -36,7 +36,6 @@ import org.jowidgets.util.IObservableValue;
 import org.jowidgets.util.IObservableValueListener;
 import org.jowidgets.util.NullCompatibleEquivalence;
 import org.jowidgets.util.ObservableValue;
-import org.jowidgets.util.ValueHolder;
 
 public final class InputComponentBind {
 
@@ -67,61 +66,88 @@ public final class InputComponentBind {
 		final IObservableValue<VALUE_TYPE> source,
 		final IInputComponent<VALUE_TYPE> inputComponent) {
 
+		Assert.paramNotNull(source, "source");
 		Assert.paramNotNull(inputComponent, "inputComponent");
 
-		if (source.getValue() != null) {
-			inputComponent.setValue(source.getValue());
-		}
-		else if (inputComponent.getValue() != null) {
-			source.setValue(inputComponent.getValue());
-		}
-
-		final ValueHolder<Boolean> onSourceSet = new ValueHolder<Boolean>(false);
-		final ValueHolder<Boolean> onDestinationSet = new ValueHolder<Boolean>(false);
-
-		final IInputListener inputListener = new IInputListener() {
-			@Override
-			public void inputChanged() {
-				if (!onSourceSet.get().booleanValue()
-					&& !onDestinationSet.get().booleanValue()
-					&& !NullCompatibleEquivalence.equals(inputComponent.getValue(), source.getValue())) {
-					onSourceSet.set(true);
-					try {
-						source.setValue(inputComponent.getValue());
-					}
-					finally {
-						onSourceSet.set(false);
-					}
-				}
-			}
-		};
-		inputComponent.addInputListener(inputListener);
-
-		final IObservableValueListener<VALUE_TYPE> observableValueListener = new IObservableValueListener<VALUE_TYPE>() {
-			@Override
-			public void changed(final IObservableValue<VALUE_TYPE> observableValue, final VALUE_TYPE value) {
-				if (!onSourceSet.get().booleanValue()
-					&& !onDestinationSet.get().booleanValue()
-					&& !NullCompatibleEquivalence.equals(inputComponent.getValue(), value)) {
-					onDestinationSet.set(true);
-					try {
-						inputComponent.setValue(value);
-					}
-					finally {
-						onDestinationSet.set(false);
-					}
-				}
-			}
-		};
-		source.addValueListener(observableValueListener);
+		final InputComponentBinding<VALUE_TYPE> binding = new InputComponentBinding<VALUE_TYPE>(source, inputComponent);
+		binding.bind();
 
 		inputComponent.addDisposeListener(new IDisposeListener() {
 			@Override
 			public void onDispose() {
-				inputComponent.removeInputListener(inputListener);
-				source.removeValueListener(observableValueListener);
+				binding.dispose();
 			}
 		});
+
+	}
+
+	private static final class InputComponentBinding<VALUE_TYPE> {
+
+		private final IObservableValue<VALUE_TYPE> source;
+		private final IInputComponent<VALUE_TYPE> inputComponent;
+
+		private final IInputListener inputListener;
+		private final IObservableValueListener<VALUE_TYPE> observableValueListener;
+
+		private boolean onSourceSet;
+		private boolean onDestinationSet;
+
+		private InputComponentBinding(final IObservableValue<VALUE_TYPE> source, final IInputComponent<VALUE_TYPE> inputComponent) {
+			super();
+
+			this.source = source;
+			this.inputComponent = inputComponent;
+
+			if (source.getValue() != null) {
+				inputComponent.setValue(source.getValue());
+			}
+			else if (inputComponent.getValue() != null) {
+				source.setValue(inputComponent.getValue());
+			}
+
+			this.inputListener = new IInputListener() {
+				@Override
+				public void inputChanged() {
+					if (!onSourceSet
+						&& !onDestinationSet
+						&& !NullCompatibleEquivalence.equals(inputComponent.getValue(), source.getValue())) {
+						onSourceSet = true;
+						try {
+							source.setValue(inputComponent.getValue());
+						}
+						finally {
+							onSourceSet = false;
+						}
+					}
+				}
+			};
+
+			this.observableValueListener = new IObservableValueListener<VALUE_TYPE>() {
+				@Override
+				public void changed(final IObservableValue<VALUE_TYPE> observableValue, final VALUE_TYPE value) {
+					if (!onSourceSet && !onDestinationSet && !NullCompatibleEquivalence.equals(inputComponent.getValue(), value)) {
+						onDestinationSet = true;
+						try {
+							inputComponent.setValue(value);
+						}
+						finally {
+							onDestinationSet = false;
+						}
+					}
+				}
+			};
+
+		}
+
+		private void bind() {
+			inputComponent.addInputListener(inputListener);
+			source.addValueListener(observableValueListener);
+		}
+
+		private void dispose() {
+			inputComponent.removeInputListener(inputListener);
+			source.removeValueListener(observableValueListener);
+		}
 
 	}
 }

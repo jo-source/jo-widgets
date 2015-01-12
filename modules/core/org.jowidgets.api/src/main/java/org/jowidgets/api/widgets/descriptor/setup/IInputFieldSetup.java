@@ -37,7 +37,6 @@ public interface IInputFieldSetup<INPUT_TYPE> extends IInputComponentSetup<INPUT
 	@Mandatory
 	Object getConverter();
 
-	@Mandatory
 	IObservableValue<INPUT_TYPE> getObservableValue();
 
 	Markup getMarkup();

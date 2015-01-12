@@ -45,6 +45,7 @@ import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.EmptyCompatibleEquivalence;
 import org.jowidgets.util.IObservableValue;
+import org.jowidgets.util.ObservableValue;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
@@ -86,7 +87,8 @@ public class InputFieldImpl<VALUE_TYPE> extends ControlWrapper implements IInput
 		else {
 			throw new IllegalArgumentException("Converter type'" + setup.getConverter().getClass() + "' is not supported.");
 		}
-		this.observableValue = setup.getObservableValue();
+		this.observableValue = setup.getObservableValue() != null
+				? setup.getObservableValue() : new ObservableValue<VALUE_TYPE>();
 
 		if (converter != null && converter.getStringValidator() != null) {
 			this.stringValidator = converter.getStringValidator();
