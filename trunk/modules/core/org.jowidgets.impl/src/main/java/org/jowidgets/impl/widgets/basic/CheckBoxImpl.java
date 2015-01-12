@@ -47,6 +47,7 @@ import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
 import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 import org.jowidgets.util.IObservableValue;
 import org.jowidgets.util.NullCompatibleEquivalence;
+import org.jowidgets.util.ObservableValue;
 import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
@@ -81,7 +82,7 @@ public class CheckBoxImpl extends AbstractControlSpiWrapper implements ICheckBox
 		VisibiliySettingsInvoker.setVisibility(setup, this);
 		ColorSettingsInvoker.setColors(setup, this);
 
-		this.observableValue = setup.getObservableValue();
+		this.observableValue = setup.getObservableValue() != null ? setup.getObservableValue() : new ObservableValue<Boolean>();
 
 		if (setup.getValue() != null && observableValue.getValue() == null) {
 			setValue(setup.getValue());

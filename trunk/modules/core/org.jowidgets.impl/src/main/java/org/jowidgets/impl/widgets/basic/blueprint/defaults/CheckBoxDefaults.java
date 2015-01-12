@@ -29,13 +29,12 @@ package org.jowidgets.impl.widgets.basic.blueprint.defaults;
 
 import org.jowidgets.api.widgets.blueprint.builder.ICheckBoxSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.util.ObservableValue;
 
 public class CheckBoxDefaults implements IDefaultInitializer<ICheckBoxSetupBuilder<?>> {
 
 	@Override
 	public void initialize(final ICheckBoxSetupBuilder<?> builder) {
-		builder.setObservableValue(new ObservableValue<Boolean>());
+
 	}
 
 }

@@ -41,9 +41,6 @@ public interface IComboBoxSelectionSetup<INPUT_TYPE> extends IInputComponentSetu
 	IObjectStringConverter<INPUT_TYPE> getObjectStringConverter();
 
 	@Mandatory
-	IObservableValue<INPUT_TYPE> getObservableValue();
-
-	@Mandatory
 	Collection<INPUT_TYPE> getElements();
 
 	@Mandatory
@@ -51,5 +48,7 @@ public interface IComboBoxSelectionSetup<INPUT_TYPE> extends IInputComponentSetu
 
 	@Mandatory
 	boolean isLenient();
+
+	IObservableValue<INPUT_TYPE> getObservableValue();
 
 }

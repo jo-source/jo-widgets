@@ -29,7 +29,6 @@ package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 
 import org.jowidgets.api.widgets.blueprint.builder.IInputFieldSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.util.ObservableValue;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.Validator;
 
@@ -43,6 +42,5 @@ public class InputFieldDefaults implements IDefaultInitializer<IInputFieldSetupB
 		builder.setPasswordPresentation(false);
 		builder.setBorder(true);
 		builder.setMaxLength(2000);
-		builder.setObservableValue(new ObservableValue<Object>());
 	}
 }
