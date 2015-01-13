@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:advanced="http://www.eclipse.org/ui/2010/UIModel/application/ui/advanced" xmlns:application="http://www.eclipse.org/ui/2010/UIModel/application" xmlns:basic="http://www.eclipse.org/ui/2010/UIModel/application/ui/basic" xmi:id="_Tmb0UFRKEeO5g-usbC7Eig" elementId="org.eclipse.e4.ide.application" bindingContexts="_Tmb0WVRKEeO5g-usbC7Eig">
+  <children xsi:type="basic:TrimmedWindow" xmi:id="_Tmb0UVRKEeO5g-usbC7Eig" label="Jowidgets RCP Example 1" width="500" height="400">
+    <children xsi:type="advanced:PerspectiveStack" xmi:id="_gEPY0FRKEeO5g-usbC7Eig" elementId="org.jowidgets.examples.rcp.example1.perspectivestack.0">
+      <children xsi:type="advanced:Perspective" xmi:id="_h7LFQFRKEeO5g-usbC7Eig" elementId="org.jowidgets.examples.rcp.example1.perspective.0">
+        <children xsi:type="basic:PartStack" xmi:id="_mE6h0FRKEeO5g-usbC7Eig" elementId="org.jowidgets.examples.rcp.example1.partstack.0">
+          <children xsi:type="basic:Part" xmi:id="_nI35MFRKEeO5g-usbC7Eig" elementId="org.jowidgets.examples.rcp.example1.part.0" contributionURI="bundleclass://org.jowidgets.examples.rcp.example1/org.jowidgets.examples.rcp.example1.Example1Part" label="Example1"/>
+        </children>
+      </children>
+    </children>
+  </children>
+  <rootContext xmi:id="_Tmb0WVRKEeO5g-usbC7Eig" elementId="org.eclipse.ui.contexts.dialogAndWindow" name="In Dialog and Windows">
+    <children xmi:id="_Tmb0WlRKEeO5g-usbC7Eig" elementId="org.eclipse.ui.contexts.window" name="In Windows"/>
+    <children xmi:id="_Tmb0W1RKEeO5g-usbC7Eig" elementId="org.eclipse.ui.contexts.dialog" name="In Dialogs"/>
+  </rootContext>
+  <addons xmi:id="_Tmb0UlRKEeO5g-usbC7Eig" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
+  <addons xmi:id="_Tmb0U1RKEeO5g-usbC7Eig" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
+  <addons xmi:id="_Tmb0VFRKEeO5g-usbC7Eig" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>
+  <addons xmi:id="_Tmb0VVRKEeO5g-usbC7Eig" elementId="org.eclipse.e4.ui.workbench.commands.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.CommandProcessingAddon"/>
+  <addons xmi:id="_Tmb0VlRKEeO5g-usbC7Eig" elementId="org.eclipse.e4.ui.workbench.handler.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.HandlerProcessingAddon"/>
+  <addons xmi:id="_Tmb0V1RKEeO5g-usbC7Eig" elementId="org.eclipse.e4.ui.workbench.contexts.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench/org.eclipse.e4.ui.internal.workbench.addons.ContextProcessingAddon"/>
+  <addons xmi:id="_Tmb0WFRKEeO5g-usbC7Eig" elementId="org.eclipse.e4.ui.workbench.bindings.model" contributionURI="bundleclass://org.eclipse.e4.ui.workbench.swt/org.eclipse.e4.ui.workbench.swt.util.BindingProcessingAddon"/>
+</application:Application>
