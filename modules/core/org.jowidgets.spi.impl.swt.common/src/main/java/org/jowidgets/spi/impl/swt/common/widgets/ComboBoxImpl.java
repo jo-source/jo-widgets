@@ -27,15 +27,18 @@
  */
 package org.jowidgets.spi.impl.swt.common.widgets;
 
-import java.awt.event.KeyEvent;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.events.TraverseEvent;
+import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Point;
@@ -47,20 +50,34 @@ import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.common.types.InputChangeEventPolicy;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.verify.IInputVerifier;
+import org.jowidgets.common.widgets.controller.IFocusListener;
+import org.jowidgets.common.widgets.controller.IKeyListener;
+import org.jowidgets.spi.impl.controller.FocusObservable;
+import org.jowidgets.spi.impl.controller.KeyObservable;
 import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.common.util.FontProvider;
+import org.jowidgets.spi.impl.swt.common.widgets.event.LazyKeyEventContentFactory;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.event.IObservableCallback;
 
 public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelectionSpi, IComboBoxSpi {
 
+	public static final int KEY_CODE_DELETE = 0x7F; /* ASCII DEL */
+	public static final int KEY_CODE_BACK_SPACE = '\b';
+
 	private final boolean isAutoCompletionMode;
 	private final boolean isSelectionMode;
+	private final KeyListener keyListener;
+	private final KeyObservable keyObservable;
+	private final FocusObservable focusObservable;
+
+	private boolean isPopupVisible;
 
 	private boolean programmaticTextChange;
 
@@ -69,6 +86,7 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 		this.programmaticTextChange = true;
 		this.isAutoCompletionMode = setup.isAutoCompletion();
 		this.isSelectionMode = !(setup instanceof IComboBoxSetupSpi);
+		this.isPopupVisible = false;
 
 		setElements(setup.getElements());
 
@@ -84,13 +102,13 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 					programmaticTextChange = true;
 					final String newEnteredText;
 					int pos = event.start;
-					if (event.keyCode != KeyEvent.VK_DELETE && event.keyCode != KeyEvent.VK_BACK_SPACE) {
+					if (event.keyCode != KEY_CODE_DELETE && event.keyCode != KEY_CODE_BACK_SPACE) {
 						newEnteredText = event.text;
 						pos = pos + event.text.length();
 					}
 					else {
 						final Point selection = getUiReference().getSelection();
-						if (event.keyCode == KeyEvent.VK_BACK_SPACE && selection.x != selection.y) {
+						if (event.keyCode == KEY_CODE_BACK_SPACE && selection.x != selection.y) {
 							pos = Math.max(0, pos - 1);
 						}
 						newEnteredText = "";
@@ -193,12 +211,101 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 				setText(comboBoxSetup.getMask().getPlaceholder());
 			}
 		}
+		else {
+			getUiReference().addTraverseListener(new TraverseListener() {
+				@Override
+				public void keyTraversed(final TraverseEvent e) {
+					if (e.detail == SWT.TRAVERSE_ESCAPE || e.detail == SWT.TRAVERSE_RETURN) {
+						e.doit = false;
+					}
+				}
+			});
+
+		}
 
 		if (SwtOptions.hasComboTruncateWorkaround() && (isAutoCompletionMode || !isSelectionMode)) {
 			getUiReference().addListener(SWT.Resize, new ResizeTruncateWorkaroundListener());
 		}
 
+		this.keyListener = new KeyListener() {
+			@Override
+			public void keyReleased(final KeyEvent e) {
+				keyObservable.fireKeyReleased(new LazyKeyEventContentFactory(e));
+			}
+
+			@Override
+			public void keyPressed(final KeyEvent e) {
+				keyObservable.fireKeyPressed(new LazyKeyEventContentFactory(e));
+
+				if ((e.stateMask & SWT.ALT) == SWT.ALT && (e.keyCode == SWT.ARROW_UP || e.keyCode == SWT.ARROW_DOWN)) {
+					isPopupVisible = true;
+				}
+
+				if (e.keyCode == SWT.ESC || e.keyCode == SWT.CR) {
+					isPopupVisible = false;
+				}
+			}
+		};
+
+		final IObservableCallback keyObservableCallback = new IObservableCallback() {
+
+			private boolean listenerAdded = false;
+
+			@Override
+			public void onLastUnregistered() {
+				if (listenerAdded) {
+					getUiReference().removeKeyListener(keyListener);
+					listenerAdded = false;
+				}
+			}
+
+			@Override
+			public void onFirstRegistered() {
+				if (!listenerAdded) {
+					getUiReference().addKeyListener(keyListener);
+					listenerAdded = true;
+				}
+			}
+		};
+
+		this.keyObservable = new KeyObservable(keyObservableCallback);
+
+		this.focusObservable = new FocusObservable();
+		getUiReference().addFocusListener(new FocusListener() {
+
+			@Override
+			public void focusLost(final FocusEvent e) {
+				isPopupVisible = false;
+				focusObservable.focusLost();
+			}
+
+			@Override
+			public void focusGained(final FocusEvent e) {
+				focusObservable.focusGained();
+			}
+		});
+
 		programmaticTextChange = false;
+	}
+
+	@Override
+	public void addKeyListener(final IKeyListener listener) {
+		keyObservable.addKeyListener(listener);
+	}
+
+	@Override
+	public void removeKeyListener(final IKeyListener listener) {
+		keyObservable.removeKeyListener(listener);
+	}
+
+	@Override
+	public void addFocusListener(final IFocusListener listener) {
+		focusObservable.addFocusListener(listener);
+	}
+
+	@Override
+	public void removeFocusListener(final IFocusListener listener) {
+		focusObservable.removeFocusListener(listener);
 	}
 
 	private static Combo createCombo(final Composite parent, final IComboBoxSelectionSetupSpi setup) {
@@ -324,14 +431,28 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 		return getUiReference().getSelection().y;
 	}
 
+	@Override
+	public void setPopupVisible(final boolean visible) {
+		this.isPopupVisible = true;
+		getUiReference().setListVisible(visible);
+	}
+
+	@Override
+	public boolean isPopupVisible() {
+		return isPopupVisible;
+		//do not use is popup visible because it will be false if closing key events arrive,
+		//so key observer can not determine if key event will open or closed the popup
+		//return getUiReference().getListVisible();
+	}
+
 	private boolean doAutoCompletion(final String text, final int keyCode, final int pos) {
-		if (!isSelectionMode && (keyCode == KeyEvent.VK_DELETE || keyCode == KeyEvent.VK_BACK_SPACE)) {
+		if (!isSelectionMode && (keyCode == KEY_CODE_DELETE || keyCode == KEY_CODE_BACK_SPACE)) {
 			return true;
 		}
 
 		final CompletionItem ci = getIndexOfPrefix(text);
 
-		if (isSelectionMode && !ci.isPrefix && (keyCode == KeyEvent.VK_DELETE || keyCode == KeyEvent.VK_BACK_SPACE)) {
+		if (isSelectionMode && !ci.isPrefix && (keyCode == KEY_CODE_DELETE || keyCode == KEY_CODE_BACK_SPACE)) {
 			getUiReference().setSelection(new Point(pos, getUiReference().getText().length()));
 			return false;
 		}
@@ -343,6 +464,7 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 			// Windows automatically selects an item, if the text partially matches an element 
 			if (isSelectionMode && keyCode != 0 && !getUiReference().getListVisible()) {
 				getUiReference().setListVisible(true);
+				isPopupVisible = true;
 			}
 
 			getUiReference().setSelection(new Point(pos, ci.completion.length()));

@@ -48,4 +48,8 @@ public interface IComboBox<VALUE_TYPE> extends
 
 	void setSelectedIndex(int index);
 
+	void setPopupVisible(boolean visible);
+
+	boolean isPopupVisible();
+
 }

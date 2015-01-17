@@ -139,6 +139,26 @@ public class JoComboBoxSelection<VALUE_TYPE> extends
 		}
 	}
 
+	@Override
+	public void setPopupVisible(final boolean visible) {
+		if (isInitialized()) {
+			getWidget().setPopupVisible(visible);
+		}
+		else {
+			throw new IllegalStateException("This function is not supported for an uninitialized powo. Feel free to implent it");
+		}
+	}
+
+	@Override
+	public boolean isPopupVisible() {
+		if (isInitialized()) {
+			return getWidget().isPopupVisible();
+		}
+		else {
+			throw new IllegalStateException("This function is not supported for an uninitialized powo. Feel free to implent it");
+		}
+	}
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	//some static blue print creation for convenience purpose from here
 	////////////////////////////////////////////////////////////////////////////////////////////////////

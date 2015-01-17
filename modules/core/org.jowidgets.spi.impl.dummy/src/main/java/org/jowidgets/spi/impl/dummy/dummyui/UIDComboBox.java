@@ -36,6 +36,7 @@ public class UIDComboBox extends UIDComponent {
 	private int selectedIndex;
 	private boolean editable;
 	private String text;
+	private boolean popupVisible;
 
 	public UIDComboBox() {
 		this(new String[] {});
@@ -44,6 +45,7 @@ public class UIDComboBox extends UIDComponent {
 	public UIDComboBox(final String[] elements) {
 		super();
 		this.elements = elements;
+		this.popupVisible = false;
 	}
 
 	public String[] getElements() {
@@ -101,6 +103,14 @@ public class UIDComboBox extends UIDComponent {
 
 	public void select() {
 		// TODO LG implement select
+	}
+
+	public void setPopupVisible(final boolean visible) {
+		this.popupVisible = visible;
+	}
+
+	public boolean isPopopVisible() {
+		return popupVisible;
 	}
 
 }

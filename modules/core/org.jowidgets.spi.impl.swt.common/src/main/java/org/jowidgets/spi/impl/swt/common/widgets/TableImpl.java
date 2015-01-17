@@ -861,11 +861,9 @@ public class TableImpl extends SwtControl implements ITableSpi {
 			@Override
 			public void keyTraversed(final TraverseEvent e) {
 				if (e.detail == SWT.TRAVERSE_TAB_NEXT) {
-					navigateRight();
 					e.doit = false;
 				}
 				else if (e.detail == SWT.TRAVERSE_TAB_PREVIOUS) {
-					navigateLeft();
 					e.doit = false;
 				}
 			}
@@ -880,6 +878,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
 			@Override
 			public void keyPressed(final IKeyEvent event) {
+
 				final boolean ctrl = event.getModifier().contains(Modifier.CTRL);
 				final boolean shift = event.getModifier().contains(Modifier.SHIFT);
 

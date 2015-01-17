@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, Nikolaus Moll
+ * Copyright (c) 2015, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,68 +26,60 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.widgets.wrapper;
+package org.jowidgets.spi.impl.swing.common.widgets.base;
 
-import java.util.Collection;
-import java.util.List;
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
+import java.io.Serializable;
 
-import org.jowidgets.api.widgets.IComboBox;
-import org.jowidgets.util.IObservableValue;
+import javax.swing.Action;
 
-public class ComboBoxWrapper<VALUE_TYPE> extends InputControlWrapper<VALUE_TYPE> implements IComboBox<VALUE_TYPE> {
+import org.jowidgets.util.Assert;
 
-	public ComboBoxWrapper(final IComboBox<VALUE_TYPE> widget) {
-		super(widget);
+public class SwingActionWrapper implements Action, Serializable {
+
+	private static final long serialVersionUID = -4929518877569965000L;
+
+	private final Action original;
+
+	public SwingActionWrapper(final Action original) {
+		Assert.paramNotNull(original, "original");
+		this.original = original;
 	}
 
 	@Override
-	protected IComboBox<VALUE_TYPE> getWidget() {
-		return (IComboBox<VALUE_TYPE>) super.getWidget();
+	public void actionPerformed(final ActionEvent e) {
+		original.actionPerformed(e);
 	}
 
 	@Override
-	public IObservableValue<VALUE_TYPE> getObservableValue() {
-		return getWidget().getObservableValue();
+	public Object getValue(final String key) {
+		return original.getValue(key);
 	}
 
 	@Override
-	public List<VALUE_TYPE> getElements() {
-		return getWidget().getElements();
+	public void putValue(final String key, final Object value) {
+		original.putValue(key, value);
 	}
 
 	@Override
-	public void setElements(final Collection<? extends VALUE_TYPE> elements) {
-		getWidget().setElements(elements);
+	public void setEnabled(final boolean b) {
+		original.setEnabled(b);
 	}
 
 	@Override
-	public void setElements(final VALUE_TYPE... elements) {
-		getWidget().setElements(elements);
+	public boolean isEnabled() {
+		return original.isEnabled();
 	}
 
 	@Override
-	public int getSelectedIndex() {
-		return getWidget().getSelectedIndex();
+	public void addPropertyChangeListener(final PropertyChangeListener listener) {
+		original.addPropertyChangeListener(listener);
 	}
 
 	@Override
-	public void setSelectedIndex(final int index) {
-		getWidget().setSelectedIndex(index);
-	}
-
-	@Override
-	public void select() {
-		getWidget().select();
-	}
-
-	@Override
-	public void setPopupVisible(final boolean visible) {
-		getWidget().setPopupVisible(visible);
-	}
-
-	@Override
-	public boolean isPopupVisible() {
-		return getWidget().isPopupVisible();
+	public void removePropertyChangeListener(final PropertyChangeListener listener) {
+		original.removePropertyChangeListener(listener);
 	}
 
 }
