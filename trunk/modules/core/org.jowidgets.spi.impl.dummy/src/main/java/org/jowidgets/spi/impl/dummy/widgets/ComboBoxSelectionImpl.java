@@ -80,4 +80,14 @@ public class ComboBoxSelectionImpl extends AbstractInputControl implements IComb
 		getUiReference().select();
 	}
 
+	@Override
+	public void setPopupVisible(final boolean visible) {
+		getUiReference().setPopupVisible(visible);
+	}
+
+	@Override
+	public boolean isPopupVisible() {
+		return getUiReference().isPopopVisible();
+	}
+
 }

@@ -39,4 +39,8 @@ public interface IComboBoxSelectionSpi extends IControlSpi, IInputControlSpi, IS
 
 	void setElements(String[] elements);
 
+	void setPopupVisible(boolean visible);
+
+	boolean isPopupVisible();
+
 }

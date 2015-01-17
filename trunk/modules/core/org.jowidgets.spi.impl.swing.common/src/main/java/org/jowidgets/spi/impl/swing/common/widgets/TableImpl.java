@@ -37,8 +37,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.HierarchyEvent;
-import java.awt.event.HierarchyListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -56,6 +54,8 @@ import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.AbstractCellEditor;
+import javax.swing.Action;
+import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -131,6 +131,7 @@ import org.jowidgets.spi.impl.swing.common.util.ColorConvert;
 import org.jowidgets.spi.impl.swing.common.util.FontProvider;
 import org.jowidgets.spi.impl.swing.common.util.MouseUtil;
 import org.jowidgets.spi.impl.swing.common.util.PositionConvert;
+import org.jowidgets.spi.impl.swing.common.widgets.base.SwingActionWrapper;
 import org.jowidgets.spi.impl.swing.common.widgets.base.TableColumnModelAdapter;
 import org.jowidgets.spi.impl.swing.common.widgets.event.LazyKeyEventContentFactory;
 import org.jowidgets.spi.widgets.ITableSpi;
@@ -308,6 +309,38 @@ public class TableImpl extends SwingControl implements ITableSpi {
 		}
 
 		table.setSurrendersFocusOnKeystroke(true);
+
+		getUiReference().addMouseListener(tableCellMenuDetectListener);
+		getUiReference().setBorder(BorderFactory.createEmptyBorder());
+		getUiReference().setViewportBorder(BorderFactory.createEmptyBorder());
+
+		//disable default table key actions during editing
+		final ActionMap actionMap = table.getActionMap();
+		for (final Object actionKey : actionMap.allKeys()) {
+			Action originalAction = actionMap.get(actionMap);
+			if (originalAction == null) {
+				originalAction = actionMap.getParent().get(actionKey);
+			}
+			final Action originalActionFinal = originalAction;
+			if (originalActionFinal != null) {
+				actionMap.put(actionKey, new SwingActionWrapper(originalAction) {
+
+					private static final long serialVersionUID = -5138227823410592157L;
+
+					@Override
+					public boolean isEnabled() {
+						if (isEditing()) {
+							return false;
+						}
+						else {
+							return originalActionFinal.isEnabled();
+						}
+					}
+
+				});
+			}
+		}
+
 		final KeyStroke enterKey = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0);
 		table.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(enterKey, "Action.enter");
 		table.getActionMap().put("Action.enter", new AbstractAction() {
@@ -322,9 +355,6 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			}
 		});
 
-		getUiReference().addMouseListener(tableCellMenuDetectListener);
-		getUiReference().setBorder(BorderFactory.createEmptyBorder());
-		getUiReference().setViewportBorder(BorderFactory.createEmptyBorder());
 	}
 
 	@Override
@@ -1375,6 +1405,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
 				@Override
 				public void keyPressed(final IKeyEvent event) {
+
 					final boolean ctrl = event.getModifier().contains(Modifier.CTRL);
 					final boolean shift = event.getModifier().contains(Modifier.SHIFT);
 
@@ -1424,31 +1455,6 @@ public class TableImpl extends SwingControl implements ITableSpi {
 			}
 
 			final JComponent component = (JComponent) tableCellEditor.getUiReference();
-
-			//			final KeyStroke enterKey = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0);
-			//			final KeyStroke tabKey = KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0);
-			//			final KeyStroke shiftTabKey = KeyStroke.getKeyStroke(KeyEvent.VK_TAB, KeyEvent.SHIFT_DOWN_MASK);
-			//			final KeyStroke upKey = KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0);
-			//			final KeyStroke downKey = KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0);
-			//			final KeyStroke leftKey = KeyStroke.getKeyStroke(KeyEvent.VK_LEFT, 0);
-			//			final KeyStroke rightKey = KeyStroke.getKeyStroke(KeyEvent.VK_RIGHT, 0);
-			//			component.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(enterKey, null);
-			//			component.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(tabKey, null);
-			//			component.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(shiftTabKey, null);
-			//			component.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(upKey, null);
-			//			component.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(downKey, null);
-			//			component.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(leftKey, null);
-			//			component.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(rightKey, null);
-
-			//ensure that editing is stopped when editor get invisible
-			component.addHierarchyListener(new HierarchyListener() {
-				@Override
-				public void hierarchyChanged(final HierarchyEvent e) {
-					if (tableCellEditor != null && !component.isShowing()) {
-						stopCellEditing();
-					}
-				}
-			});
 
 			//ensure that cell editor get the focus when swing auto focus gives the focus to the
 			//component, but the component is a container that wraps other input controls

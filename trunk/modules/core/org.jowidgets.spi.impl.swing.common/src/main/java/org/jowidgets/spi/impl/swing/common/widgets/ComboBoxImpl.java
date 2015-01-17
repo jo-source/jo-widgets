@@ -190,10 +190,44 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 			}
 		}
 		else {
+			this.keyListener = new KeyAdapter() {
+				@Override
+				public void keyReleased(final KeyEvent e) {
+					keyObservable.fireKeyReleased(new LazyKeyEventContentFactory(e));
+				}
+
+				@Override
+				public void keyPressed(final KeyEvent e) {
+					keyObservable.fireKeyPressed(new LazyKeyEventContentFactory(e));
+				}
+			};
+			final IObservableCallback keyObservableCallback = new IObservableCallback() {
+				@Override
+				public void onLastUnregistered() {
+					getUiReference().removeKeyListener(keyListener);
+				}
+
+				@Override
+				public void onFirstRegistered() {
+					getUiReference().addKeyListener(keyListener);
+				}
+			};
+			this.keyObservable = new KeyObservable(keyObservableCallback);
+
+			this.focusObservable = new FocusObservable();
+			getUiReference().addFocusListener(new FocusListener() {
+				@Override
+				public void focusLost(final FocusEvent e) {
+					focusObservable.focusLost();
+				}
+
+				@Override
+				public void focusGained(final FocusEvent e) {
+					focusObservable.focusGained();
+				}
+			});
+
 			this.comboBoxEditor = null;
-			this.keyObservable = null;
-			this.focusObservable = null;
-			this.keyListener = null;
 		}
 
 		if (setup.getInputChangeEventPolicy() == InputChangeEventPolicy.ANY_CHANGE) {
@@ -349,36 +383,22 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 
 	@Override
 	public void addKeyListener(final IKeyListener listener) {
-		if (keyObservable != null) {
-			keyObservable.addKeyListener(listener);
-		}
+		keyObservable.addKeyListener(listener);
 	}
 
 	@Override
 	public void removeKeyListener(final IKeyListener listener) {
-		if (keyObservable != null) {
-			keyObservable.removeKeyListener(listener);
-		}
+		keyObservable.removeKeyListener(listener);
 	}
 
 	@Override
 	public void addFocusListener(final IFocusListener listener) {
-		if (focusObservable != null) {
-			focusObservable.addFocusListener(listener);
-		}
-		else {
-			super.addFocusListener(listener);
-		}
+		focusObservable.addFocusListener(listener);
 	}
 
 	@Override
 	public void removeFocusListener(final IFocusListener listener) {
-		if (focusObservable != null) {
-			focusObservable.removeFocusListener(listener);
-		}
-		else {
-			super.removeFocusListener(listener);
-		}
+		focusObservable.removeFocusListener(listener);
 	}
 
 	@Override
@@ -391,6 +411,16 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 	public void setBackgroundColor(final IColorConstant colorValue) {
 		getUiReference().getEditor().getEditorComponent().setBackground(ColorConvert.convert(colorValue));
 		super.setBackgroundColor(colorValue);
+	}
+
+	@Override
+	public void setPopupVisible(final boolean visible) {
+		getUiReference().setPopupVisible(true);
+	}
+
+	@Override
+	public boolean isPopupVisible() {
+		return getUiReference().isPopupVisible();
 	}
 
 	private void fireInputChanged() {

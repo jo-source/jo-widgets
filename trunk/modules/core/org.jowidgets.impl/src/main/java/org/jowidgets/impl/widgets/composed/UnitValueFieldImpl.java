@@ -38,6 +38,7 @@ import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.descriptor.setup.IUnitValueFieldSetup;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.VirtualKey;
 import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.common.widgets.controller.IInputListener;
@@ -47,6 +48,7 @@ import org.jowidgets.common.widgets.controller.IMouseListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.controller.FocusObservable;
 import org.jowidgets.tools.controller.KeyAdapter;
+import org.jowidgets.tools.controller.KeyObservable;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
 import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
@@ -72,6 +74,7 @@ public final class UnitValueFieldImpl<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> extends 
 	private final IInputField<UNIT_VALUE_TYPE> valueField;
 	private final IComboBox<IUnit> unitCmb;
 	private final FocusObservable focusObservable;
+	private final KeyObservable keyObservable;
 
 	private boolean lastFocus;
 
@@ -91,6 +94,7 @@ public final class UnitValueFieldImpl<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> extends 
 		}
 
 		this.focusObservable = new FocusObservable();
+		this.keyObservable = new KeyObservable();
 
 		final Integer unitComboMinSize = setup.getUnitComboMinSize();
 		final String unitCmbColumnC;
@@ -129,17 +133,56 @@ public final class UnitValueFieldImpl<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> extends 
 
 		final Map<VirtualKey, IUnit> unitKeyMapping = setup.getUnitKeyMapping();
 
-		if (unitKeyMapping != null) {
-			valueField.addKeyListener(new KeyAdapter() {
-				@Override
-				public void keyPressed(final IKeyEvent event) {
+		valueField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(final IKeyEvent event) {
+
+				if (unitKeyMapping != null) {
 					final IUnit unit = unitKeyMapping.get(event.getVirtualKey());
 					if (unit != null) {
 						unitCmb.setValue(unit);
 					}
 				}
-			});
-		}
+
+				final boolean shift = event.getModifier().contains(Modifier.SHIFT);
+				final boolean right = VirtualKey.TAB.equals(event.getVirtualKey()) && !shift;
+
+				if (right) {
+					unitCmb.requestFocus();
+					unitCmb.select();
+				}
+				else {
+					keyObservable.fireKeyPressed(event);
+				}
+
+			}
+		});
+
+		unitCmb.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(final IKeyEvent event) {
+
+				if (unitKeyMapping != null) {
+					final IUnit unit = unitKeyMapping.get(event.getVirtualKey());
+					if (unit != null) {
+						unitCmb.setValue(unit);
+					}
+				}
+
+				final boolean shift = event.getModifier().contains(Modifier.SHIFT);
+				final boolean left = VirtualKey.TAB.equals(event.getVirtualKey()) && shift;
+
+				final boolean enter = VirtualKey.ENTER.equals(event.getVirtualKey());
+				final boolean esc = VirtualKey.ESC.equals(event.getVirtualKey());
+
+				if (left) {
+					valueField.requestFocus();
+				}
+				else if (!((enter || esc) && unitCmb.isPopupVisible())) {
+					keyObservable.fireKeyPressed(event);
+				}
+			}
+		});
 
 		if (setup.getValidator() != null) {
 			addValidator(setup.getValidator());
@@ -235,8 +278,7 @@ public final class UnitValueFieldImpl<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> extends 
 
 	@Override
 	public void addKeyListener(final IKeyListener listener) {
-		valueField.addKeyListener(listener);
-		unitCmb.addKeyListener(listener);
+		keyObservable.addKeyListener(listener);
 	}
 
 	@Override

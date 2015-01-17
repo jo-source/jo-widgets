@@ -400,6 +400,16 @@ public class ComboBoxSelectionImpl<VALUE_TYPE> extends AbstractControlSpiWrapper
 	}
 
 	@Override
+	public void setPopupVisible(final boolean visible) {
+		getWidget().setPopupVisible(visible);
+	}
+
+	@Override
+	public boolean isPopupVisible() {
+		return getWidget().isPopupVisible();
+	}
+
+	@Override
 	public void setParent(final IContainer parent) {
 		controlDelegate.setParent(parent);
 	}
