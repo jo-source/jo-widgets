@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2010, grossmann
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  * * Redistributions of source code must retain the above copyright
@@ -12,7 +12,7 @@
  * * Neither the name of the jo-widgets.org nor the
  *   names of its contributors may be used to endorse or promote products
  *   derived from this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.bridge.swt.awt.common.application;
 
 import java.awt.Window;
 import java.lang.reflect.Method;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.SwingUtilities;
 
@@ -82,11 +83,14 @@ final class BridgedSwtAwtApplicationRunner implements IApplicationRunner {
 		eventPumpThread = Thread.currentThread();
 		eventDispatcherThread = swtEventLoop.getEventDispatchingThread();
 
+		final AtomicBoolean finished = new AtomicBoolean(false);
+
 		//Create a lifecycle that disposes all windows and shells when finished
 		final IApplicationLifecycle lifecycle = new IApplicationLifecycle() {
 
 			@Override
 			public synchronized void finish() {
+				finished.set(true);
 				if (eventPumpThread != null) {
 					eventPumpThread = null;
 
@@ -141,6 +145,8 @@ final class BridgedSwtAwtApplicationRunner implements IApplicationRunner {
 		}
 
 		//this will block until the lifecycle was finished
-		swtEventLoop.start();
+		if (!finished.get()) {
+			swtEventLoop.start();
+		}
 	}
 }
