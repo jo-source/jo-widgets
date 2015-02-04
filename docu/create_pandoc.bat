@@ -3,6 +3,7 @@ if exist pandoc_out/ (
 )
 mkdir pandoc_out
 copy style.css pandoc_out\style.css
+xcopy images pandoc_out\images\ 
 pandoc -s -S -t docbook Dokumentation.md -V lang=german --toc --number-sections --epub-chapter-level=1  -o pandoc_out/Dokumentation.db
 pandoc Dokumentation.md -V lang=german --toc --number-sections --epub-chapter-level=1 --chapters -o pandoc_out/Dokumentation.pdf
 pandoc Dokumentation.md -V lang=german -c style.css --toc --number-sections --epub-chapter-level=1 --chapters -o pandoc_out/Dokumentation.html
