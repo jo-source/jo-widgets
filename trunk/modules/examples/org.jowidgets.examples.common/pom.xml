@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>org.jowidgets.examples.common</artifactId>
@@ -10,12 +11,24 @@
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
+	<repositories>
+		<repository>
+			<id>googlecode</id>
+			<url>http://docbook4j.googlecode.com/svn/m2-repo/releases/</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
-	    <dependency>
-            <groupId>org.jowidgets</groupId>
-            <artifactId>org.jowidgets.addons.icons.silkicons</artifactId>
-            <version>0.41.0-SNAPSHOT</version>
-        </dependency>
+		<dependency>
+			<groupId>com.google.code.docbook4j</groupId>
+			<artifactId>docbook4j</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.addons.icons.silkicons</artifactId>
+			<version>0.41.0-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.tools</artifactId>
@@ -32,30 +45,30 @@
 			<version>0.41.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-            <groupId>org.jowidgets</groupId>
-            <artifactId>org.jowidgets.addons.widgets.browser.api</artifactId>
-            <version>0.41.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jowidgets</groupId>
-            <artifactId>org.jowidgets.addons.widgets.download.api</artifactId>
-            <version>0.41.0-SNAPSHOT</version>
-        </dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.addons.widgets.browser.api</artifactId>
+			<version>0.41.0-SNAPSHOT</version>
+		</dependency>
 		<dependency>
-            <groupId>org.jowidgets</groupId>
-            <artifactId>org.jowidgets.addons.widgets.ole.api</artifactId>
-            <version>0.41.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jowidgets</groupId>
-            <artifactId>org.jowidgets.addons.widgets.office.api</artifactId>
-            <version>0.41.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jowidgets</groupId>
-            <artifactId>org.jowidgets.addons.widgets.office.impl.ole</artifactId>
-            <version>0.41.0-SNAPSHOT</version>
-        </dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.addons.widgets.download.api</artifactId>
+			<version>0.41.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.addons.widgets.ole.api</artifactId>
+			<version>0.41.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.addons.widgets.office.api</artifactId>
+			<version>0.41.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.addons.widgets.office.impl.ole</artifactId>
+			<version>0.41.0-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.impl</artifactId>
@@ -69,7 +82,7 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<plugins>
 			<plugin>
