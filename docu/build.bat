@@ -1,4 +1,4 @@
-call buildPandoc.bat
-call buildDocbook.bat
-
+call clean.bat
+call create_pandoc.bat
+call create_docbook.bat
 
