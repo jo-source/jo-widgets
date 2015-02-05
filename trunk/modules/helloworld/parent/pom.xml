@@ -18,12 +18,6 @@
 		<repository>
 			<id>jowidgets</id>
 			<url>http://jowidgets.org/maven2/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
 		</repository>
 	</repositories>
 	
