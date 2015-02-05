@@ -12,14 +12,7 @@
 	
 	<dependencies>
 
-		<!-- The jowidgets api -->
-		<dependency>
-			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.api</artifactId>
-			<version>${jowidgets.version}</version>
-		</dependency>
-
-		<!-- Some utility classes like wrappers or abstract base classes -->
+		<!-- The jowidgets api and tools -->
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.tools</artifactId>
