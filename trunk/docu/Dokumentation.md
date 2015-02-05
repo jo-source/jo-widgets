@@ -263,7 +263,7 @@ __org.jowidgets.tools__
 
 Die Klasse `HelloWorldApplication` sieht wie folgt aus:
 
-~~~ {.java .numberLines startFrom="1"}
+```{.java .numberLines startFrom="1"} 
 package org.jowidgets.helloworld.common;
 
 import org.jowidgets.api.toolkit.Toolkit;
@@ -312,7 +312,7 @@ public final class HelloWorldApplication implements IApplication {
 		frame.setVisible(true);
 	}
 }
-~~~
+```
     
 
 

@@ -1,9 +1,12 @@
 if exist html_out/ (
 	rmdir /s /q html_out
 )
+ping 192.0.2.2 -n 1 -w 2000 > nul
 mkdir html_out
 copy style.css html_out\style.css
 xcopy images html_out\images\ 
-xsltproc --stringparam highlight.source 1 --stringparam chunker.output.indent yes --stringparam l10n.gentext.language de --stringparam chunk.section.depth 4 --stringparam chunk.first.sections 1 --stringparam  section.autolabel 1 --stringparam  section.label.includes.component.label 1 --stringparam base.dir html_out\ --stringparam html.stylesheet style.css C:\docbook-xsl-1.78.1\html\chunk.xsl pandoc_out/Dokumentation.db 
+javac DocBookPostProcessor.java
+java DocBookPostProcessor pandoc_out/Dokumentation.db pandoc_out/Dokumentation_processed.db
+java -cp "saxon/saxon.jar;saxon/saxon65.jar;saxon/xslthl-2.1.3.jar;saxon/xercesImpl.jar;saxon/xml-apis.jar" -Dxslthl.config="file:///c:/docbook-xsl-1.78.1/highlighting/xslthl-config.xml" -Djavax.xml.parsers.DocumentBuilderFactory=org.apache.xerces.jaxp.DocumentBuilderFactoryImpl -Djavax.xml.parsers.SAXParserFactory=org.apache.xerces.jaxp.SAXParserFactoryImpl com.icl.saxon.StyleSheet -o html_out\index.html pandoc_out/Dokumentation_processed.db docbook.xsl 
 
 

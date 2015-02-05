@@ -67,6 +67,11 @@ dd p {
         margin-top: 0;
 }
 
+span.lineannotation { 
+    font-family: serif;
+    font-style:  italic;
+}
+
 img { 
    border:1px solid #021a40;
 }
