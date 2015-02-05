@@ -68,7 +68,7 @@ Man kam zu dem Schluss, dass jede Interaktion mit dem Nutzer (HCI) durch eine Ja
 
 Das API sollte nicht nur diese einfachen und zusammengesetzten Widgets Schnittstellen bereitstellen, sondern auch eine Platform bieten um selbst eigene Widget Bibliotheken nach dem gleichen Konzept und mit dem gleichen Benefit wie anpassbaren Defaultwerten, Dekorierbarkeit, Testbarkeit, etc. zu erstellen. 
 
-Jowidgets sollte eine __offene__, __erweiterbare__ API für Widgets in Java bieten. Der Name jowidges steht ursprünglich für Java Open Widgets.
+Jowidgets sollte eine __offene__, __erweiterbare__ API für Widgets in Java bieten. Der Name jowidges steht ursprünglich für _Java Open Widgets_.
 
 >>>_Defintion: 
 >>>Ein Widget ist eine Schnittstelle für den Austausch von Informationen zwischen Nutzer und Applikation_
@@ -97,7 +97,226 @@ Items sind die Elemente von Menüs oder Toolbars. Eine MenuBar enthält Menüs.
 
 ## Maven
 
+Für die Verwendung von jowidgets mit Maven muss folgendes Repository hinzugefügt werden:
+
+~~~ {.xml}
+<repositories>
+    <!-- The jowidgets maven repository -->
+    <repository>
+        <id>jowidgets</id>
+        <url>http://jowidgets.org/maven2/</url>
+    </repository>
+</repositories>
+~~~
+
 ## Hello World
+
+Um das Hello World Beispiel zu compilieren und auszuprobieren, sollten folgende Tools vorhanden sein:
+
+* Java (mindestens 1.6)
+* Maven
+* SVN
+* Eclipse (inklusive M2e maven integration)
+
+Das Hello World Beispiel kann hier [http://jo-widgets.googlecode.com/svn/trunk/modules/helloworld](https://jo-widgets.googlecode.com/svn/trunk/modules/helloworld) per SVN ausgecheckt werden. 
+
+Es findet sich dann die folgende Verzeichnisstruktur:
+
+![Hello World Module](images/hello_world_exlorer.gif "Hello World Module")
+
+Die Module können mit __Import Existing Maven Projects__ in eclipse importiert werden. 
+
+### Das parent Modul
+
+Im _parent_ Verzeichnis findet sich das parent pom.xml. 
+
+~~~ {.xml}
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jowidgets.helloworld</groupId>
+	<artifactId>org.jowidgets.helloworld.parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<!-- jowidgets needs java 1.6 or higher -->
+		<java.version>1.6</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jowidgets.version>0.40.0</jowidgets.version>
+	</properties>
+	
+	<repositories>
+	    <!-- The jowidgets maven repository -->
+		<repository>
+			<id>jowidgets</id>
+			<url>http://jowidgets.org/maven2/</url>
+		</repository>
+	</repositories>
+	
+	<modules>
+		<!-- Hold the ui technology independend hello world code -->
+		<module>../org.jowidgets.helloworld.common</module>
+		
+		<!-- Holds a starter that uses Java Swing -->
+		<module>../org.jowidgets.helloworld.starter.swing</module>
+		
+		<!-- Holds a starter that uses Eclipse SWT (win32) -->
+		<module>../org.jowidgets.helloworld.starter.swt</module>
+		
+		<!-- This module creates a war that uses Eclipse RWT -->
+		<module>../org.jowidgets.helloworld.starter.rwt</module>
+	</modules>
+	
+	...
+
+</project>
+~~~
+
+Die Hello World Applikation besteht aus vier Modulen.
+
+* org.jowidgets.helloworld.common
+* org.jowidgets.helloworld.starter.swing
+* org.jowidgets.helloworld.starter.swt
+* org.jowidgets.helloworld.starter.rwt
+
+Das `common` Modul enthält den SPI unabhängigen Code, die drei anderen Module beinhalten die Starter für die jeweilige SPI Implementierung sowie die zugehörigen Maven Abhängigkeiten. 
+
+In einem _realen_ Projekt hat man normalerweise nicht Starter für alle möglichen SPI Implementierungen. Dennoch ist es eine gute Idee, den SPI unabhängigen Code in ein separates Modul zu packen, um ihn in anderen Projekten, welche eventuell eine andere UI Technologie voraussetzen, besser wiederverwenden zu können.
+
+### Das common Modul
+
+Betrachten wir zunächst das _common_ pom File im Ordner `org.jowidgets.helloworld.common`. Will man die Kernfunktion von jowidgets nutzen, muss man das Modul `org.jowidgets.tools` hinzufügen.
+
+~~~ {.xml}
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>org.jowidgets.helloworld.common</artifactId>
+
+	<parent>
+		<groupId>org.jowidgets.helloworld</groupId>
+		<artifactId>org.jowidgets.helloworld.parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../parent/pom.xml</relativePath>
+	</parent>
+	
+	<dependencies>	
+		<!-- The jowidgets api and tools -->
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.tools</artifactId>
+			<version>${jowidgets.version}</version>
+		</dependency>
+	</dependencies>
+
+</project>
+~~~
+
+### Transitive Abhängigkeiten der common Moduls
+
+In der Praxis ist jedoch immer gut zu wissen, welche transitiven Abhängigkeiten man bekommt, wenn man eine neue Technologie einführt. Jowidgets wurde bewusst so entworfen, dass (außer jowidgets selbst) __keine weiteren Abhängigkeiten__ existieren. 
+
+Dieser Abschnitt beinhaltet Zusatzinformation, welche für das Verständnis der Hello World Applikation nicht zwingend erforderlich sind, und kann daher auch übersprungen werden. 
+
+Das Modul __`org.jowidgets.tools`__ hat folgende Abhängigkeiten (siehe auch [Jowidgets Modulübersicht](#module_overview) im Anhang).
+
+__org.jowidgets.util__
+
+:   UI unabhängige Utilities und Datenstrukturen. Siehe auch [Jowidgets Utils](#jowidgets_utils).
+
+__org.jowidgets.i18n__
+
+:   Eine API für Multi User Internationalisierung. Da jowidgtes Web fähig ist, kann jeder Nutzer eine unterschiedliche Locale in der JVM benötigen. Daher sind alle jowidgets internen Labels mit Hilfe dieser API internationalisiert. Die API kann aber auch für eigene Projekte genutzt werden. Siehe auch [i18n](#jowidgets_i18n).
+
+__org.jowidgets.classloading.api__
+
+:   API mit dessen Hilfe man ClassLoader registrieren kann. Dies ist hauptsächlich für die OSGi Kompatibilität notwendig. Siehe auch [Jowidgets Classloading](#jowidgets_classloading).
+
+__org.jowidgets.validation__
+
+:   Eine (UI unabhängige) API für Validierung.
+
+__org.jowidgets.validation.tools__
+
+:   Vorgefertigte Validatoren.
+
+__org.jowidgets.unit__
+
+:   Eine (UI unabhängige) API für das Rechnen mit Einheiten (z.B. Hz, Byte, KG, etc.).
+
+__org.jowidgets.common__
+
+:   Gemeinsame Schnittstellen und Klassen der API und der SPI.
+
+__org.jowidgets.api__
+
+:   Die jowidgets API welche überwiegend aus Java Interfaces besteht.
+
+__org.jowidgets.tools__
+
+:   Während die API überwiegend aus Schnittstellen besteht, finden sich hier nützliche Klassen, welche sich aus den Schnittstellen ergeben, wie zum Beispiel Default Implementierungen, abstrakte Basisklassen, Wrapper, Listener Adapter und weitere. 
+
+
+### Der Common Ui Code
+
+Die Klasse `HelloWorldApplication` sieht wie folgt aus:
+
+~~~ {.java .numberLines startFrom="1"}
+package org.jowidgets.helloworld.common;
+
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IButton;
+import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
+import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
+import org.jowidgets.common.application.IApplication;
+import org.jowidgets.common.application.IApplicationLifecycle;
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.widgets.controller.IActionListener;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.widgets.blueprint.BPF;
+
+public final class HelloWorldApplication implements IApplication {
+
+	@Override
+	public void start(final IApplicationLifecycle lifecycle) {
+
+		//Create a frame BluePrint with help of the BluePrintFactory (BPF)
+		final IFrameBluePrint frameBp = BPF.frame();
+		frameBp.setSize(new Dimension(400, 300)).setTitle("Hello World");
+
+		//Create a frame with help of the Toolkit and BluePrint. This convenience
+		//method finishes the ApplicationLifecycle when the root frame will be closed.
+		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
+
+		//Use a simple MigLayout with one column and one row for the frame (a frame is a container also)
+		frame.setLayout(new MigLayoutDescriptor("[]", "[]"));
+
+		//Create a button BluePrint with help of the BluePrintFactory (BPF)
+		final IButtonBluePrint buttonBp = BPF.button().setText("Hello World");
+
+		//Add the button defined by the BluePrint to the frame
+		final IButton button = frame.add(buttonBp);
+
+		//Add an ActionListener to the button
+		button.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				System.out.println("Hello World");
+			}
+		});
+
+		//set the root frame visible
+		frame.setVisible(true);
+	}
+}
+~~~
+    
+
+
+
 
 ## BluePrints
 
@@ -228,13 +447,13 @@ Items sind die Elemente von Menüs oder Toolbars. Eine MenuBar enthält Menüs.
 
 # Jowidgets Workbench
 
-# Jowidgets Utils
+# Jowidgets Utils {#jowidgets_utils}
 
 # Weiterführende Themen
 
 ## Validierung
 
-## i18n
+## i18n {#jowidgets_i18n}
 
 ## Widget Defaults {#widget_defaults}
 
@@ -246,12 +465,14 @@ Items sind die Elemente von Menüs oder Toolbars. Eine MenuBar enthält Menüs.
 
 ## Jowidgets und RAP {#jowidgets_rap}
 
+## Jowidgets Classloading{#jowidgets_classloading}
+
 ## Jowidgets und RCP {#jowidgets_rcp}
 
 
 # Anhang
 
-## Modulübersicht
+## Modulübersicht {#module_overview}
 
 
 
