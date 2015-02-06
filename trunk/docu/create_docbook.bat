@@ -1,7 +1,6 @@
 if exist html_out/ (
 	rmdir /s /q html_out
 )
-ping 192.0.2.2 -n 1 -w 2000 > nul
 mkdir html_out
 copy style.css html_out\style.css
 xcopy images html_out\images\ 

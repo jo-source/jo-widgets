@@ -46,21 +46,35 @@ public final class DocBookPostProcessor {
 
 		final FileWriter writer = new FileWriter(new File(args[1]));
 
+		boolean lineBreakNext = false;
 		String line = "";
 		while (line != null) {
 			line = reader.readLine();
 			if (line == null) {
 				break;
 			}
-			if (line.contains("<programlisting language=\"java\">")) {
+			if (lineBreakNext && !line.contains("</programlisting>")){
+				writer.write("\n");
+			}
+			
+			if (line.contains("<programlisting language=\"xml\">")) {
+				line = line.replace(
+						"<programlisting language=\"xml\">",
+						"<programlisting language=\"xml\" linenumbering=\"numbered\">");
+				writer.write(line);
+				lineBreakNext = false;
+			}
+			else if (line.contains("<programlisting language=\"java\">")) {
 				line = line.replace(
 						"<programlisting language=\"java\">",
 						"<programlisting language=\"java\" linenumbering=\"numbered\">");
 				writer.write(line);
+				lineBreakNext = false;
 			}
-			else {
-				writer.write(line + "\n");
-			}
+			else{
+				lineBreakNext = true;
+				writer.write(line);
+			}	
 		}
 
 		reader.close();
