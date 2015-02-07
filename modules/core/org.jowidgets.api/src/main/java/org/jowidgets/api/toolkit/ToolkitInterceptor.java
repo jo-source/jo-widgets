@@ -44,9 +44,17 @@ public final class ToolkitInterceptor {
 
 	private ToolkitInterceptor() {}
 
-	public static synchronized void registerTollkitInterceptorHolder(final IToolkitInterceptorHolder holder) {
+	public static synchronized void registerToolkitInterceptorHolder(final IToolkitInterceptorHolder holder) {
 		Assert.paramNotNull(holder, "holder");
 		getCompositeHolder().add(holder);
+	}
+
+	/**
+	 * @deprecated Use registerToolkitInterceptorHolder instead, because this method has a type
+	 */
+	@Deprecated
+	public static synchronized void registerTollkitInterceptorHolder(final IToolkitInterceptorHolder holder) {
+		registerToolkitInterceptorHolder(holder);
 	}
 
 	private static synchronized CompositeToolkitInterceptorHolder getCompositeHolder() {
