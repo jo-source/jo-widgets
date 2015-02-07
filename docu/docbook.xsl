@@ -30,9 +30,6 @@
 
 <xsl:param name="html.stylesheet" select="'style.css'"/> 
 
-
-
-
 <xsl:template match="xslthl:keyword" mode="xslthl">
     <strong class="hl-keyword">
 	<em style="color:#950055">
