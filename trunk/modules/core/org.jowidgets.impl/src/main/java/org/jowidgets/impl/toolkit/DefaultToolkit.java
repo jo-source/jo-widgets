@@ -78,7 +78,7 @@ import org.jowidgets.impl.convert.slider.SliderConverterFactoryImpl;
 import org.jowidgets.impl.image.DefaultIconsRegisterService;
 import org.jowidgets.impl.image.DefaultImageFactoryImpl;
 import org.jowidgets.impl.layout.LayoutFactoryProvider;
-import org.jowidgets.impl.mask.TextMaskBuilder;
+import org.jowidgets.impl.mask.TextMaskBuilderImpl;
 import org.jowidgets.impl.model.ModelFactoryProvider;
 import org.jowidgets.impl.threads.UiThreadAccess;
 import org.jowidgets.impl.utils.WidgetUtils;
@@ -323,7 +323,7 @@ public class DefaultToolkit implements IToolkit {
 
 	@Override
 	public ITextMaskBuilder createTextMaskBuilder() {
-		return new TextMaskBuilder();
+		return new TextMaskBuilderImpl();
 	}
 
 	@Override

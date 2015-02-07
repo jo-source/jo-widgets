@@ -37,13 +37,13 @@ import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.util.Assert;
 
-public final class TextMaskBuilder implements ITextMaskBuilder {
+public final class TextMaskBuilderImpl implements ITextMaskBuilder {
 
 	private final List<CharacterMask> characterMasks;
 	private Character defaultPlaceholder;
 	private TextMaskMode mode;
 
-	public TextMaskBuilder() {
+	public TextMaskBuilderImpl() {
 		this.characterMasks = new LinkedList<CharacterMask>();
 		this.mode = TextMaskMode.FULL_MASK;
 	}
