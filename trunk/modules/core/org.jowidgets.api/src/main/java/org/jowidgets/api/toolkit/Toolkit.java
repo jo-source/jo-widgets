@@ -103,139 +103,332 @@ public final class Toolkit {
 		return toolkitProvider.get();
 	}
 
-	public static <VALUE_TYPE> void setValue(final ITypedKey<VALUE_TYPE> key, final VALUE_TYPE value) {
-		getInstance().setValue(key, value);
-	}
-
-	public static <VALUE_TYPE> VALUE_TYPE getValue(final ITypedKey<VALUE_TYPE> key) {
-		return getInstance().getValue(key);
-	}
-
-	public static boolean hasSpiMigLayoutSupport() {
-		return getInstance().hasSpiMigLayoutSupport();
-	}
-
-	public static IClipboard getClipboard() {
-		return getInstance().getClipboard();
-	}
-
-	public static ITransferableBuilder createTransferableBuilder() {
-		return getInstance().createTransferableBuilder();
-	}
-
-	public static IImageRegistry getImageRegistry() {
-		return getInstance().getImageRegistry();
-	}
-
-	public static IImageFactory getImageFactory() {
-		return getInstance().getImageFactory();
-	}
-
-	public static IWidgetWrapperFactory getWidgetWrapperFactory() {
-		return getInstance().getWidgetWrapperFactory();
-	}
-
-	public static IGenericWidgetFactory getWidgetFactory() {
-		return getInstance().getWidgetFactory();
-	}
-
-	public static ILayoutFactoryProvider getLayoutFactoryProvider() {
-		return getInstance().getLayoutFactoryProvider();
-	}
-
-	public static IBluePrintFactory getBluePrintFactory() {
-		return getInstance().getBluePrintFactory();
-	}
-
-	public static ISupportedWidgets getSupportedWidgets() {
-		return getInstance().getSupportedWidgets();
-	}
-
-	public static IActionBuilderFactory getActionBuilderFactory() {
-		return getInstance().getActionBuilderFactory();
-	}
-
-	public static IDefaultActionFactory getDefaultActionFactory() {
-		return getInstance().getDefaultActionFactory();
-	}
-
-	public static IModelFactoryProvider getModelFactoryProvider() {
-		return getInstance().getModelFactoryProvider();
-	}
-
-	public static ISliderConverterFactory getSliderConverterFactory() {
-		return getInstance().getSliderConverterFactory();
-	}
-
-	public static IInputContentCreatorFactory getInputContentCreatorFactory() {
-		return getInstance().getInputContentCreatorFactory();
-	}
-
-	public static IConverterProvider getConverterProvider() {
-		return getInstance().getConverterProvider();
-	}
-
+	/**
+	 * Gets the toolkits application runner
+	 * 
+	 * @return The toolkits application runner
+	 */
 	public static IApplicationRunner getApplicationRunner() {
 		return getInstance().getApplicationRunner();
 	}
 
+	/**
+	 * Gets the ui thread access.
+	 * 
+	 * Remark: This method must be invoked in the ui thread
+	 * 
+	 * 
+	 * @throws IllegalStateException if the method was not accessed in the ui thread
+	 * 
+	 * @return The ui thread access
+	 */
 	public static IUiThreadAccess getUiThreadAccess() {
 		return getInstance().getUiThreadAccess();
 	}
 
-	public static IWaitAnimationProcessor getWaitAnimationProcessor() {
-		return getInstance().getWaitAnimationProcessor();
+	/**
+	 * Gets the blue print factory
+	 * 
+	 * @return The blue print factory
+	 */
+	public static IBluePrintFactory getBluePrintFactory() {
+		return getInstance().getBluePrintFactory();
 	}
 
-	public static IAnimationRunnerBuilder getAnimationRunnerBuilder() {
-		return getInstance().getAnimationRunnerBuilder();
+	/**
+	 * Gets the toolkits converter provider
+	 * 
+	 * @return The toolkits converter provider
+	 */
+	public static IConverterProvider getConverterProvider() {
+		return getInstance().getConverterProvider();
 	}
 
-	public static IDelayedEventRunnerBuilder getDelayedEventRunnerBuilder() {
-		return getInstance().getDelayedEventRunnerBuilder();
+	/**
+	 * Gets the slider converter factory
+	 * 
+	 * @return The slider converter factory
+	 */
+	public static ISliderConverterFactory getSliderConverterFactory() {
+		return getInstance().getSliderConverterFactory();
 	}
 
-	public static IWindow getActiveWindow() {
-		return getInstance().getActiveWindow();
-	}
-
-	public static List<IWindow> getAllWindows() {
-		return getInstance().getAllWindows();
-	}
-
-	public static IMessagePane getMessagePane() {
-		return getInstance().getMessagePane();
-	}
-
-	public static IQuestionPane getQuestionPane() {
-		return getInstance().getQuestionPane();
-	}
-
-	public static IWidgetUtils getWidgetUtils() {
-		return getInstance().getWidgetUtils();
-	}
-
-	public static ITextMaskBuilder createTextMaskBuilder() {
-		return getInstance().createTextMaskBuilder();
-	}
-
-	public static ILoginPane getLoginPane() {
-		return getInstance().getLoginPane();
-	}
-
+	/**
+	 * Creates a root frame for the given descriptor
+	 * 
+	 * @param descriptor The descriptor to create the frame for
+	 * 
+	 * @return The created frame
+	 */
 	public static IFrame createRootFrame(final IFrameDescriptor descriptor) {
 		return getInstance().createRootFrame(descriptor);
 	}
 
+	/**
+	 * Creates an root frame for the given descriptor and application lifecycle.
+	 * 
+	 * When the rootFrame will be closed, the lifecycle will be finished.
+	 * 
+	 * @param descriptor The descriptor to create the frame for
+	 * @param lifecycle The lifecycle to bind on the frame
+	 * 
+	 * @return the created frame
+	 */
 	public static IFrame createRootFrame(final IFrameDescriptor descriptor, final IApplicationLifecycle lifecycle) {
 		return getInstance().createRootFrame(descriptor, lifecycle);
 	}
 
+	/**
+	 * Gets the generic widget factory
+	 * 
+	 * @return The generic widget factory
+	 */
+	public static IGenericWidgetFactory getWidgetFactory() {
+		return getInstance().getWidgetFactory();
+	}
+
+	/**
+	 * Gets the widget wrapper factory that can be used to create wrappers
+	 * for native widgets
+	 * 
+	 * @return The widget wrapper factory
+	 */
+	public static IWidgetWrapperFactory getWidgetWrapperFactory() {
+		return getInstance().getWidgetWrapperFactory();
+	}
+
+	/**
+	 * Gets the image factory
+	 * 
+	 * @return The image factory
+	 */
+	public static IImageFactory getImageFactory() {
+		return getInstance().getImageFactory();
+	}
+
+	/**
+	 * Gets the image registry that can be used to register icons and images
+	 * 
+	 * @return The image registry
+	 */
+	public static IImageRegistry getImageRegistry() {
+		return getInstance().getImageRegistry();
+	}
+
+	/**
+	 * Gets the message pane that can be used to show user messages
+	 * 
+	 * @return The message pane
+	 */
+	public static IMessagePane getMessagePane() {
+		return getInstance().getMessagePane();
+	}
+
+	/**
+	 * Gets the question pane that can be used to ask user questions
+	 * 
+	 * @return The question pane
+	 */
+	public static IQuestionPane getQuestionPane() {
+		return getInstance().getQuestionPane();
+	}
+
+	/**
+	 * Gets the login pane that can be used for user login
+	 * 
+	 * @return The login pane
+	 */
+	public static ILoginPane getLoginPane() {
+		return getInstance().getLoginPane();
+	}
+
+	/**
+	 * Gets the factory for layouts
+	 * 
+	 * @return The layout factory provider
+	 */
+	public static ILayoutFactoryProvider getLayoutFactoryProvider() {
+		return getInstance().getLayoutFactoryProvider();
+	}
+
+	/**
+	 * Gets the action builder factory
+	 * 
+	 * @return The action builder factory
+	 */
+	public static IActionBuilderFactory getActionBuilderFactory() {
+		return getInstance().getActionBuilderFactory();
+	}
+
+	/**
+	 * Gets the default action factory
+	 * 
+	 * @return The default action factory
+	 */
+	public static IDefaultActionFactory getDefaultActionFactory() {
+		return getInstance().getDefaultActionFactory();
+	}
+
+	/**
+	 * Gets the model factory provider
+	 * 
+	 * @return The model factory provider
+	 */
+	public static IModelFactoryProvider getModelFactoryProvider() {
+		return getInstance().getModelFactoryProvider();
+	}
+
+	/**
+	 * Gets the text mask builder
+	 * 
+	 * @return The text mask builder
+	 */
+	public static ITextMaskBuilder createTextMaskBuilder() {
+		return getInstance().createTextMaskBuilder();
+	}
+
+	/**
+	 * Gets the input content creator factory
+	 * 
+	 * @return the input content creator factory
+	 */
+	public static IInputContentCreatorFactory getInputContentCreatorFactory() {
+		return getInstance().getInputContentCreatorFactory();
+	}
+
+	/**
+	 * Gets the wait animation processor
+	 * 
+	 * @return the wait animation processor
+	 */
+	public static IWaitAnimationProcessor getWaitAnimationProcessor() {
+		return getInstance().getWaitAnimationProcessor();
+	}
+
+	/**
+	 * Creates an animation runner builder
+	 * 
+	 * @return An animation runner builder
+	 */
+	public static IAnimationRunnerBuilder getAnimationRunnerBuilder() {
+		return getInstance().getAnimationRunnerBuilder();
+	}
+
+	/**
+	 * Gets the delayed event runner builder
+	 * 
+	 * @return The delayed event runner builder
+	 */
+	public static IDelayedEventRunnerBuilder getDelayedEventRunnerBuilder() {
+		return getInstance().getDelayedEventRunnerBuilder();
+	}
+
+	/**
+	 * Gets the system clipboard
+	 * 
+	 * @return The system clipboard
+	 */
+	public static IClipboard getClipboard() {
+		return getInstance().getClipboard();
+	}
+
+	/**
+	 * Creates a transferable builder
+	 * 
+	 * @return a transferable builder
+	 */
+	public static ITransferableBuilder createTransferableBuilder() {
+		return getInstance().createTransferableBuilder();
+	}
+
+	/**
+	 * Gets the widget utils
+	 * 
+	 * @return The widget utils
+	 */
+	public static IWidgetUtils getWidgetUtils() {
+		return getInstance().getWidgetUtils();
+	}
+
+	/**
+	 * Gets the active window
+	 * 
+	 * @return The active window or null, if no active window exists
+	 */
+	public static IWindow getActiveWindow() {
+		return getInstance().getActiveWindow();
+	}
+
+	/**
+	 * Gets a list of all windows
+	 * 
+	 * @return A list of all windows
+	 */
+	public static List<IWindow> getAllWindows() {
+		return getInstance().getAllWindows();
+	}
+
+	/**
+	 * Sets a value for a typed key for the toolkit
+	 * 
+	 * @param <VALUE_TYPE> The type of the value
+	 * @param key The key
+	 * @param value The value to set, may be null
+	 */
+	public static <VALUE_TYPE> void setValue(final ITypedKey<VALUE_TYPE> key, final VALUE_TYPE value) {
+		getInstance().setValue(key, value);
+	}
+
+	/**
+	 * Gets a value for a typed key
+	 * 
+	 * @param <VALUE_TYPE> The type of the resulting value
+	 * @param key The key to get the value for
+	 * 
+	 * @return The value for the key, may be null
+	 */
+	public static <VALUE_TYPE> VALUE_TYPE getValue(final ITypedKey<VALUE_TYPE> key) {
+		return getInstance().getValue(key);
+	}
+
+	/**
+	 * Transforms a local component position to a screen position
+	 * 
+	 * @param localPosition Local position relative to the component
+	 * @param component The component
+	 * @return screen position
+	 */
 	public static Position toScreen(final Position localPosition, final IComponent component) {
 		return getInstance().toScreen(localPosition, component);
 	}
 
+	/**
+	 * Transforms a screen position to a local component position
+	 * 
+	 * @param screenPosition Screen position
+	 * @param component The component
+	 * @return local position relative to the component
+	 */
 	public static Position toLocal(final Position screenPosition, final IComponent component) {
 		return getInstance().toLocal(screenPosition, component);
 	}
+
+	/**
+	 * Gets the supported widgets information
+	 * 
+	 * @return The supported widgets information
+	 */
+	public static ISupportedWidgets getSupportedWidgets() {
+		return getInstance().getSupportedWidgets();
+	}
+
+	/**
+	 * Checks if the underlying spi implementation has mig layout support
+	 * 
+	 * @return True if native mig layout is supported, false otherwise
+	 */
+	public static boolean hasSpiMigLayoutSupport() {
+		return getInstance().hasSpiMigLayoutSupport();
+	}
+
 }

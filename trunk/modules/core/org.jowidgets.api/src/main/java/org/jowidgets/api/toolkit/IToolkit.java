@@ -61,6 +61,215 @@ import org.jowidgets.util.ITypedKey;
 public interface IToolkit {
 
 	/**
+	 * Gets the toolkits application runner
+	 * 
+	 * @return The toolkits application runner
+	 */
+	IApplicationRunner getApplicationRunner();
+
+	/**
+	 * Gets the ui thread access.
+	 * 
+	 * Remark: This method must be invoked in the ui thread
+	 * 
+	 * 
+	 * @throws IllegalStateException if the method was not accessed in the ui thread
+	 * 
+	 * @return The ui thread access
+	 */
+	IUiThreadAccess getUiThreadAccess();
+
+	/**
+	 * Gets the blue print factory
+	 * 
+	 * @return The blue print factory
+	 */
+	IBluePrintFactory getBluePrintFactory();
+
+	/**
+	 * Gets the toolkits converter provider
+	 * 
+	 * @return The toolkits converter provider
+	 */
+	IConverterProvider getConverterProvider();
+
+	/**
+	 * Gets the slider converter factory
+	 * 
+	 * @return The slider converter factory
+	 */
+	ISliderConverterFactory getSliderConverterFactory();
+
+	/**
+	 * Creates a root frame for the given descriptor
+	 * 
+	 * @param descriptor The descriptor to create the frame for
+	 * 
+	 * @return The created frame
+	 */
+	IFrame createRootFrame(IFrameDescriptor descriptor);
+
+	/**
+	 * Creates an root frame for the given descriptor and application lifecycle.
+	 * 
+	 * When the rootFrame will be closed, the lifecycle will be finished.
+	 * 
+	 * @param descriptor The descriptor to create the frame for
+	 * @param lifecycle The lifecycle to bind on the frame
+	 * 
+	 * @return the created frame
+	 */
+	IFrame createRootFrame(IFrameDescriptor descriptor, IApplicationLifecycle lifecycle);
+
+	/**
+	 * Gets the generic widget factory
+	 * 
+	 * @return The generic widget factory
+	 */
+	IGenericWidgetFactory getWidgetFactory();
+
+	/**
+	 * Gets the widget wrapper factory that can be used to create wrappers
+	 * for native widgets
+	 * 
+	 * @return The widget wrapper factory
+	 */
+	IWidgetWrapperFactory getWidgetWrapperFactory();
+
+	/**
+	 * Gets the image factory
+	 * 
+	 * @return The image factory
+	 */
+	IImageFactory getImageFactory();
+
+	/**
+	 * Gets the image registry that can be used to register icons and images
+	 * 
+	 * @return The image registry
+	 */
+	IImageRegistry getImageRegistry();
+
+	/**
+	 * Gets the message pane that can be used to show user messages
+	 * 
+	 * @return The message pane
+	 */
+	IMessagePane getMessagePane();
+
+	/**
+	 * Gets the question pane that can be used to ask user questions
+	 * 
+	 * @return The question pane
+	 */
+	IQuestionPane getQuestionPane();
+
+	/**
+	 * Gets the login pane that can be used for user login
+	 * 
+	 * @return The login pane
+	 */
+	ILoginPane getLoginPane();
+
+	/**
+	 * Gets the factory for layouts
+	 * 
+	 * @return The layout factory provider
+	 */
+	ILayoutFactoryProvider getLayoutFactoryProvider();
+
+	/**
+	 * Gets the action builder factory
+	 * 
+	 * @return The action builder factory
+	 */
+	IActionBuilderFactory getActionBuilderFactory();
+
+	/**
+	 * Gets the default action factory
+	 * 
+	 * @return The default action factory
+	 */
+	IDefaultActionFactory getDefaultActionFactory();
+
+	/**
+	 * Gets the model factory provider
+	 * 
+	 * @return The model factory provider
+	 */
+	IModelFactoryProvider getModelFactoryProvider();
+
+	/**
+	 * Gets the text mask builder
+	 * 
+	 * @return The text mask builder
+	 */
+	ITextMaskBuilder createTextMaskBuilder();
+
+	/**
+	 * Gets the input content creator factory
+	 * 
+	 * @return the input content creator factory
+	 */
+	IInputContentCreatorFactory getInputContentCreatorFactory();
+
+	/**
+	 * Gets the wait animation processor
+	 * 
+	 * @return the wait animation processor
+	 */
+	IWaitAnimationProcessor getWaitAnimationProcessor();
+
+	/**
+	 * Creates an animation runner builder
+	 * 
+	 * @return An animation runner builder
+	 */
+	IAnimationRunnerBuilder getAnimationRunnerBuilder();
+
+	/**
+	 * Gets the delayed event runner builder
+	 * 
+	 * @return The delayed event runner builder
+	 */
+	IDelayedEventRunnerBuilder getDelayedEventRunnerBuilder();
+
+	/**
+	 * Gets the system clipboard
+	 * 
+	 * @return The system clipboard
+	 */
+	IClipboard getClipboard();
+
+	/**
+	 * Creates a transferable builder
+	 * 
+	 * @return a transferable builder
+	 */
+	ITransferableBuilder createTransferableBuilder();
+
+	/**
+	 * Gets the widget utils
+	 * 
+	 * @return The widget utils
+	 */
+	IWidgetUtils getWidgetUtils();
+
+	/**
+	 * Gets the active window
+	 * 
+	 * @return The active window or null, if no active window exists
+	 */
+	IWindow getActiveWindow();
+
+	/**
+	 * Gets a list of all windows
+	 * 
+	 * @return A list of all windows
+	 */
+	List<IWindow> getAllWindows();
+
+	/**
 	 * Sets a value for a typed key for the toolkit
 	 * 
 	 * @param <VALUE_TYPE> The type of the value
@@ -79,74 +288,6 @@ public interface IToolkit {
 	 */
 	<VALUE_TYPE> VALUE_TYPE getValue(ITypedKey<VALUE_TYPE> key);
 
-	IClipboard getClipboard();
-
-	ITransferableBuilder createTransferableBuilder();
-
-	IImageRegistry getImageRegistry();
-
-	IImageFactory getImageFactory();
-
-	IMessagePane getMessagePane();
-
-	IQuestionPane getQuestionPane();
-
-	ILoginPane getLoginPane();
-
-	IGenericWidgetFactory getWidgetFactory();
-
-	IWidgetWrapperFactory getWidgetWrapperFactory();
-
-	ILayoutFactoryProvider getLayoutFactoryProvider();
-
-	IBluePrintFactory getBluePrintFactory();
-
-	ISupportedWidgets getSupportedWidgets();
-
-	IInputContentCreatorFactory getInputContentCreatorFactory();
-
-	IConverterProvider getConverterProvider();
-
-	IActionBuilderFactory getActionBuilderFactory();
-
-	IDefaultActionFactory getDefaultActionFactory();
-
-	IModelFactoryProvider getModelFactoryProvider();
-
-	ISliderConverterFactory getSliderConverterFactory();
-
-	IApplicationRunner getApplicationRunner();
-
-	IUiThreadAccess getUiThreadAccess();
-
-	boolean hasSpiMigLayoutSupport();
-
-	IWaitAnimationProcessor getWaitAnimationProcessor();
-
-	IAnimationRunnerBuilder getAnimationRunnerBuilder();
-
-	IDelayedEventRunnerBuilder getDelayedEventRunnerBuilder();
-
-	IWidgetUtils getWidgetUtils();
-
-	ITextMaskBuilder createTextMaskBuilder();
-
-	IWindow getActiveWindow();
-
-	List<IWindow> getAllWindows();
-
-	IFrame createRootFrame(IFrameDescriptor descriptor);
-
-	/**
-	 * Creates an root frame for an application lifecycle. When the rootFrame will be
-	 * closed, the lifecycle will be finished.
-	 * 
-	 * @param descriptor The frame descriptor
-	 * @param lifecycle The lifecycle of the current application
-	 * @return the created frame
-	 */
-	IFrame createRootFrame(IFrameDescriptor descriptor, IApplicationLifecycle lifecycle);
-
 	/**
 	 * Transforms a local component position to a screen position
 	 * 
@@ -164,5 +305,19 @@ public interface IToolkit {
 	 * @return local position relative to the component
 	 */
 	Position toLocal(final Position screenPosition, final IComponent component);
+
+	/**
+	 * Gets the supported widgets information
+	 * 
+	 * @return The supported widgets information
+	 */
+	ISupportedWidgets getSupportedWidgets();
+
+	/**
+	 * Checks if the underlying spi implementation has mig layout support
+	 * 
+	 * @return True if native mig layout is supported, false otherwise
+	 */
+	boolean hasSpiMigLayoutSupport();
 
 }
