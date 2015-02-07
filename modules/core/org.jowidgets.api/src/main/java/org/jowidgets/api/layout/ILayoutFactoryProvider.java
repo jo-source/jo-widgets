@@ -178,6 +178,11 @@ public interface ILayoutFactoryProvider {
 	 */
 	IListLayoutFactoryBuilder listLayoutBuilder();
 
+	/**
+	 * Creates a builder for the 'tabelLayout'
+	 * 
+	 * @return The builder
+	 */
 	ITableLayoutBuilder tableLayoutBuilder();
 
 }
