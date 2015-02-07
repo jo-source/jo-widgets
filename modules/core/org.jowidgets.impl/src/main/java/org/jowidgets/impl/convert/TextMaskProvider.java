@@ -30,17 +30,17 @@ package org.jowidgets.impl.convert;
 
 import org.jowidgets.api.mask.ITextMaskBuilder;
 import org.jowidgets.common.mask.ITextMask;
-import org.jowidgets.impl.mask.TextMaskBuilder;
+import org.jowidgets.impl.mask.TextMaskBuilderImpl;
 
 final class TextMaskProvider {
 	private TextMaskProvider() {}
 
 	static ITextMask dateMaskUS() {
-		return appendDateMaskUS(new TextMaskBuilder()).build();
+		return appendDateMaskUS(new TextMaskBuilderImpl()).build();
 	}
 
 	static ITextMask dateTimeMaskUS() {
-		final ITextMaskBuilder builder = new TextMaskBuilder();
+		final ITextMaskBuilder builder = new TextMaskBuilderImpl();
 		appendDateMaskUS(builder);
 		builder.addDelimiter(' ');
 		appendTimeMask(builder);
@@ -48,11 +48,11 @@ final class TextMaskProvider {
 	}
 
 	static ITextMask dateMaskDE() {
-		return appendDateMaskDE(new TextMaskBuilder()).build();
+		return appendDateMaskDE(new TextMaskBuilderImpl()).build();
 	}
 
 	static ITextMask dateTimeMaskDE() {
-		final ITextMaskBuilder builder = new TextMaskBuilder();
+		final ITextMaskBuilder builder = new TextMaskBuilderImpl();
 		appendDateMaskDE(builder);
 		builder.addDelimiter(' ');
 		appendTimeMask(builder);
@@ -60,7 +60,7 @@ final class TextMaskProvider {
 	}
 
 	static ITextMask timeMask() {
-		return appendTimeMask(new TextMaskBuilder()).build();
+		return appendTimeMask(new TextMaskBuilderImpl()).build();
 	}
 
 	private static ITextMaskBuilder appendDateMaskUS(final ITextMaskBuilder builder) {
