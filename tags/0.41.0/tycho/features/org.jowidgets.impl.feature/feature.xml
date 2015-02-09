@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+    id="org.jowidgets.impl.feature"
+    label="jowidgets implementation feature"
+    version="0.41.0.qualifier">
+
+	<description url="http://www.example.com/description">
+		Holds the implementation bundles 
+	</description>
+
+	<copyright url="http://www.example.com/copyright">
+		org.jowidgets Michael Grossmann 2013
+	</copyright>
+
+	<license url="http://www.example.com/license">
+		BSD Licence
+	</license>
+
+	<includes
+         id="org.jowidgets.api.feature"
+         version="0.0.0"/>
+		 
+	<plugin
+         id="org.jowidgets.spi.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.test.api.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.test.common.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.test.spi.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.impl.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>	
+
+	<plugin
+         id="org.jowidgets.beanvalidation.bootstrap.api.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.tools.starter.classloading.plugin"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+	
+	<plugin
+         id="org.jowidgets.tools.starter.application.osgi.plugin"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+</feature>
