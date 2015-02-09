@@ -11,19 +11,7 @@
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
-	<repositories>
-		<repository>
-			<id>googlecode</id>
-			<url>http://docbook4j.googlecode.com/svn/m2-repo/releases/</url>
-		</repository>
-	</repositories>
-
 	<dependencies>
-		<dependency>
-			<groupId>com.google.code.docbook4j</groupId>
-			<artifactId>docbook4j</artifactId>
-			<version>1.0.0</version>
-		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.addons.icons.silkicons</artifactId>
