@@ -57,7 +57,11 @@ public final class DocBookPostProcessor {
 				writer.write("\n");
 			}
 			
-			if (line.contains("<programlisting language=\"xml\">")) {
+			if (line.contains("<!DOCTYPE article PUBLIC \"-//OASIS//DTD DocBook XML V4.5//EN\"") || 
+				line.contains("\"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd\">")) {
+				//ignore dtd to allow build when offline
+			}
+			else if (line.contains("<programlisting language=\"xml\">")) {
 				line = line.replace(
 						"<programlisting language=\"xml\">",
 						"<programlisting language=\"xml\" linenumbering=\"numbered\">");
