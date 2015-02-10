@@ -121,7 +121,7 @@ Um das Hello World Beispiel zu compilieren und zu starten sollten folgende Tools
 * Eclipse (inklusive M2e Maven Integration)
 * Tomcat (für das Starten im Browser)
 
-Das Hello World Beispiel kann hier [http://jo-widgets.googlecode.com/svn/trunk/modules/helloworld](https://jo-widgets.googlecode.com/svn/trunk/modules/helloworld) per SVN ausgecheckt werden. 
+Das Hello World Beispiel kann hier [http://jo-widgets.googlecode.com/svn/trunk/modules/helloworld](http://jo-widgets.googlecode.com/svn/trunk/modules/helloworld) per SVN ausgecheckt werden. 
 
 Es findet sich dann die folgende Verzeichnisstruktur:
 
@@ -1115,7 +1115,7 @@ In der Praxis übergibt man die `IUiThreadAccess` Instanz einfach an den anderen
 				@Override
 				public void run() {
 					//this will be invoked in the service thread
-					final ServiceResult result = longLastingService.doLongLastCalculation();
+					final ServiceResult result = longLastingService.doLongLastingCalculation();
 
 					uiThreadAccess.invokeLater(new Runnable() {
 						@Override
@@ -1131,10 +1131,49 @@ In der Praxis übergibt man die `IUiThreadAccess` Instanz einfach an den anderen
 	});
 ~~~
 
-Hinweis: Das obige Beispiel wurde bewusst stark vereinfacht. Es fehlen u.A. wichtige Aspekte wie Fehlerbehandlung oder das Abbrechen der Berechnung.
+Hinweis: Das obige Beispiel wurde bewusst vereinfacht. Es fehlen u.A. wichtige Aspekte wie Fehlerbehandlung oder das Abbrechen der Berechnung.
 
 
-## BluePrints {#blue_prints}
+## BluePrints{#blue_prints}
+
+BluePrints werden benötigt, um Widgets zu erzeugen. Siehe auch [HelloWorldApplication - Der common Ui Code](#hello_world_common_code)
+
+Mit Hilfe eines BluePrint wird das (Default) Setup eines Widgets festgelegt. Wenn ein Widget erzeugt wird, werden alle Eigenschaften, welche auf dem Setup definiert sind, für das Widget übernommen. Einige Parameter eines Setups sind Pflichtparameter. Diese sind sind mit der `@Mandatory` Annotation gekennzeichnet. Für alle Pflichtparameter existieren Defaultwerte, welche beliebig überschrieben werden können. Siehe dazu auch [Widget Defaults](#widget_defaults). Ein BluePrint kann Methoden enthalten, welche für das Widget nicht mehr veränderbar sind. Zum Beispiel muss die `Orientation` eines `SplitComposite` initial auf horizontal oder vertikal festgelegt werden, und ist nachträglich nicht mehr änderbar. 
+
+Für die Erstellung eigener Widget Bibliotheken kann der Blueprint Mechanismus verwendet werden. Dabei müssen die BluePrint Schnittstellen nicht selbst implementiert werden da die Implementierung mit Hilfe von [Java Proxies](http://docs.oracle.com/javase/7/docs/api/java/lang/reflect/Proxy.html) umgesetzt wird. Das Definieren der BluePrint Schnittstelle reicht also auch. Siehe dazu auch [Erstellung eigener Widget Bibliotheken](#custom_widget_libraries).
+
+BluePrints erhält man von der BluePrintFactory. Dazu kann entweder die _Abreviation Accessor Klass_ `BPF` verwendet werden, oder man holt sich die Instanz der `IBluePrintFactory` Schnittstelle vom Toolkit mittels `Toolkit.getBluePrintFactory()`.
+
+Im folgenden Beispiel wird ein BluePrint für ein Frame erzeugt:
+
+~~~{.java .numberLines startFrom="1"} 
+	final IFrameBluePrint frameBp = BPF.frame();
+	frameBp
+		.setAutoCenterPolicy(AutoCenterPolicy.ALWAYS)
+		.setAutoDispose(true)
+		.setResizable(false)
+		.setTitle("My Dialog");
+~~~
+
+Mit diesem Frame Blue Print kann man zum Beispiel mit Hilfe des Toolkit ein Root Frame
+
+~~~
+	IFrame frame = Toolkit.createRootFrame(frameBp);
+~~~
+
+oder auch wie folgt ein Kind Fenster erzeugen
+
+~~~
+	IFrame childFrame = frame.createChildWindow(frameBp);
+~~~
+
+
+
+## Die Schnittstelle IWidget
+
+## Die Schnittstelle IComponent
+
+## Die Schnittstelle IContainer
 
 ## Container
 
@@ -1309,7 +1348,7 @@ TODO Beschreibung von Tree Actions in IDefaultActionFactory
 
 ## Widget Dekorierung
 
-## Erstellung eigener Widget Bibliotheken
+## Erstellung eigener Widget Bibliotheken{#custom_widget_libraries}
 
 ## Automatisierte GUI Tests {#automated_ui_tests} 
 
