@@ -1,3 +1,3 @@
-rmdir /s /q pandoc_out
-rmdir /s /q html_out
+call clean_api_doc.bat
+call clean_docu.bat
 
