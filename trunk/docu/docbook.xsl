@@ -11,7 +11,7 @@
 
 <xsl:param name="l10n.gentext.language" select="de"/>
 
-<xsl:param name="base.dir" select="'html_out\'"/>
+<xsl:param name="base.dir" select="'docu\'"/>
 
 <xsl:param name="use.extensions" select="1"/>
 <xsl:param name="admon.graphics" select="1"/>
