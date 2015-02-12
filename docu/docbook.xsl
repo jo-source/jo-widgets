@@ -17,18 +17,24 @@
 <xsl:param name="admon.graphics" select="1"/>
 
 <xsl:param name="chunker.output.indent" select="'yes'"/>
-<xsl:param name="chunk.section.depth" select="4"/>
+<xsl:param name="chunk.section.depth" select="3"/>
 <xsl:param name="chunk.first.sections" select="1"/>
+<xsl:param name="toc.section.depth" select="3"/>
 
 <xsl:param name="section.autolabel" select="1"/>
 <xsl:param name="section.label.includes.component.label" select="1"/>
+<xsl:param name="section.autolabel.max.depth" select="3"/>
 
 <xsl:param name="highlight.source" select="1"/>
-<xsl:param name="linenumbering" select="'numbered'"/>
 <xsl:param name="linenumbering.everyNth" select="1"/>
 <xsl:param name="linenumbering.separator" select="'  '"/>
 
 <xsl:param name="html.stylesheet" select="'style.css'"/> 
+
+<xsl:template name="user.footer.navigation">
+  <br></br>
+  <div style="font-size:80%">Siehe auch <a href="http://www.jowidgets.org/api_doc" target="_blank">Jowidgets API Spezifikation</a></div>
+</xsl:template>
 
 <xsl:template match="xslthl:keyword" mode="xslthl">
     <strong class="hl-keyword">
@@ -99,9 +105,9 @@
   </xsl:template>
   <!-- Not sure which element will be in final XSLTHL 2.0 -->
   <xsl:template match="xslthl:doccomment|xslthl:doctype" mode="xslthl">
-    <strong class="hl-tag" style="color: blue">
+    <em class="hl-comment" style="color:3F93E9">
       <xsl:apply-templates mode="xslthl"/>
-    </strong>
+    </em>
   </xsl:template>
 
 </xsl:stylesheet>  

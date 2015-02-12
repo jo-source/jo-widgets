@@ -2,7 +2,12 @@
 % Michael Grossmann
 % 02. Februar 2015
 
+[API_DOC]: <http://www.jowidgets.org/api_doc>  "Jowidgets API Spezification"
+
+
 # Einführung
+
+Diese Nutzerhandbuch bietet eine Einführung in die Verwendung von jowidgets. Unter [www.jowidgets.org/api_doc][API_DOC] ist die jowidgets API Spezifikation zu finden.
 
 ## Lizenz
 
@@ -78,7 +83,7 @@ In jowidgets werden diese Schnittstellen immer durch Java Interfaces abgebildet.
 
 
 
-## Widget Hierarchie
+## Widget Hierarchie{#widget_hierarchy}
 
 Folgende Abbildungen zeigt die konzeptionelle (nicht vollständige) Widget Hierarchie von jowidgets. Widgets teilen sich auf oberster Ebene in Komponenten (Component) und Items mit Menüs auf.
 
@@ -819,12 +824,15 @@ Mit Hilfe des [Toolkit Interceptors](#toolkit_interceptor) kann man sich benachr
 
 Es folgt eine kurze Übersicht über alle Methoden der Schnittstelle `org.jowidgets.api.toolkit.IToolkit` mit kurzen Erläuterungen oder Verweisen auf die zugehörigen Abschnitte. 
 
+#### Application Runner
+
 ~~~
 	IApplicationRunner getApplicationRunner();	
 ~~~
 
 Der `IApplicationRunner` wird zum Starten einer jowidgets standalone Applikation benötigt. Sie dazu auch [Der Application Runner](#application_runner).
 
+#### UI Thread Access
 
 ~~~
 	IUiThreadAccess getUiThreadAccess();	
@@ -833,12 +841,15 @@ Der `IApplicationRunner` wird zum Starten einer jowidgets standalone Applikation
 Liefert den Zugriff auf den UI Thread. Der Zugriff muss im UI Thread erfolgen. Sie auch [Der Ui Thread Access](#ui_thread_access)
 
 
+#### BluePrintFactory
+
 ~~~
 	IBluePrintFactory getBluePrintFactory();
 ~~~
 
 Liefert den Zugriff auf die BluePrintFactory. Sie auch [BluePrints](#blue_prints)
 
+#### ConverterProvider
 
 ~~~
 	IConverterProvider getConverterProvider();
@@ -846,11 +857,15 @@ Liefert den Zugriff auf die BluePrintFactory. Sie auch [BluePrints](#blue_prints
 
 Liefert den jowidgets Converter Provider. Siehe auch [Jowidgets Converter](#jowidget_converter)
 
+#### SliderConverterFactory
+
 ~~~
 	ISliderConverterFactory getSliderConverterFactory();
 ~~~
 	
 Liefert eine Factory für Slider Converter. Sie auch [Das Slider Viewer Widget](#slider_viewer)	
+
+#### RootFrame Erzeugung
 
 ~~~
 	IFrame createRootFrame(IFrameDescriptor descriptor);
@@ -864,11 +879,15 @@ Erzeugt ein root Frame für ein Frame Descriptor (BluePrint).
 	
 Erzeugt ein root Frame für ein Frame Descriptor (BluePrint). Zusätzlich wird ein Window Listener auf dem erzeugten Frame hinzugefügt, welches auf dem lifecycle die Methode `finish()` aufruft, sobald das Frame geschlossen wird.
 	
+#### WidgetFactory
+	
 ~~~
 	IGenericWidgetFactory getWidgetFactory();
 ~~~
 
 Liefert die Widget Factory von jowidgets. Siehe auch [Die GenericWidgetFactory](#generic_widget_factory)
+
+#### WidgetWrapperFactory
 
 ~~~
 	IWidgetWrapperFactory getWidgetWrapperFactory();
@@ -876,12 +895,16 @@ Liefert die Widget Factory von jowidgets. Siehe auch [Die GenericWidgetFactory](
 	
 Die WidgetWrapperFactory kann verwendet werden, um aus nativen Widgets (z.B. JFrame, Shell, JPanel, Composite) Wrapper zu erstellen, welche die zugehörigen jowidgets Schnittstellen implementieren (z.B. IFrame und IComposite). Siehe auch [Jowidgets Code in native Projekte integrieren](#integrate_jowidgets_in_native_code).
 	
+#### Images
+	
 ~~~
 	IImageFactory getImageFactory();
 	IImageRegistry getImageRegistry();
 ~~~	
 
 Liefert die Image Factory und Image Registry. Siehe auch [Icons und Images](#icons_and_images).
+
+#### Dialog Panes
 
 ~~~
 	IMessagePane getMessagePane();
@@ -901,11 +924,15 @@ Das Question Pane liefert einen vereinfachten Zugriff auf den [QuestionDialog](#
 
 Das Login Pane liefert einen vereinfachten Zugriff auf den [LoginDialog](#login_dialog).
 
+#### Layouting
+
 ~~~
 	ILayoutFactoryProvider getLayoutFactoryProvider();
 ~~~	
 
 Der Layout Factory Provider bietet einen Zugriff auf verschiedene Layouts. Siehe auch [Layouting](#layouting)
+
+#### ActionBuilderFactory
 
 ~~~
 	IActionBuilderFactory getActionBuilderFactory();
@@ -913,11 +940,15 @@ Der Layout Factory Provider bietet einen Zugriff auf verschiedene Layouts. Siehe
 
 Stellt die Action Builder Factory zur Verfügung. Siehe auch [Actions und Commands](#actions_and_commands)
 
+#### Default Actions
+
 ~~~
 	IDefaultActionFactory getDefaultActionFactory();
 ~~~	
 
 Liefert diverse default Actions. Derzeit existieren ausschließlich default Actions für Bäume. Siehe daher auch [Das Tree Widget](#tree_widget)
+
+#### ModelFactory
 
 ~~~
 	IModelFactoryProvider getModelFactoryProvider();
@@ -925,6 +956,7 @@ Liefert diverse default Actions. Derzeit existieren ausschließlich default Acti
 
 Liefert diverse Model Factories für [Menu Items](#menu_models), die [Tabelle](#table_widget) und das [Levelmeter Widget](#levelmeter_widget)
 
+#### TextMaskBuilder
 
 ~~~
 	ITextMaskBuilder createTextMaskBuilder();
@@ -932,11 +964,15 @@ Liefert diverse Model Factories für [Menu Items](#menu_models), die [Tabelle](#
 
 Liefert einen Builder für Textmasken. Siehe auch [Maskierte Texteingaben](#text_masks) 
 
+#### InputContentCreator
+
 ~~~
 	IInputContentCreatorFactory getInputContentCreatorFactory();
 ~~~
 
 Liefert spezielle Content Creator für ein [InputComposite](#input_composite) oder ein [InputDialog](#input_dialog)
+
+#### WaitAnimation
 
 ~~~
 	IWaitAnimationProcessor getWaitAnimationProcessor();
@@ -944,17 +980,23 @@ Liefert spezielle Content Creator für ein [InputComposite](#input_composite) od
 
 Liefert Zugriff auf die [Wait Animation](#wait_animation)
 
+#### AnimationRunnerBuilder
+
 ~~~
 	IAnimationRunnerBuilder getAnimationRunnerBuilder();
 ~~~
 
 Erzeugt einen Builder für einen `AnimationRunner`. Siehe auch [Animationen](#animations)
 
+#### Delayed Events
+
 ~~~
 	IDelayedEventRunnerBuilder getDelayedEventRunnerBuilder();
 ~~~
 
 Erzeugt einen Builder für einen `DelayedEventRunner`. Siehe auch [Verzögerte Events](#delayed_events)
+
+#### Drag and Drop / Copy and Paste
 
 ~~~
 	IClipboard getClipboard();
@@ -967,6 +1009,8 @@ Liefert Zugriff auf das System Clipboard. Siehe auch [Copy and Paste](#copy_and_
 ~~~
 
 Erzeugt einen `TransferableBuilder`. Siehe auch [Copy and Paste](#copy_and_paste) und [Drag and Drop](#drag_and_drop). 
+
+#### Widget Utils
 
 ~~~
 	IWidgetUtils getWidgetUtils();
@@ -984,6 +1028,8 @@ Gibt das aktive Fenster zurück. U.A. hilfreich bei der Erzeugung von Dialogen, 
 	List<IWindow> getAllWindows();
 ~~~
 
+#### Toolkit Properties
+
 Gibt eine Liste aller Fenster zurück.
 
 ~~~
@@ -994,6 +1040,8 @@ Gibt eine Liste aller Fenster zurück.
 Mit Hilfe dieser Methoden kann man Properties auf dem Toolkit setzen und auslesen. Wenn man jowidgets Applikation schreibt, die auch Web kompatibel sein sollen, muss man sehr vorsichtig mit Singletons sein, da sich die JVM mehrere Nutzer teilen. Ansonsten könnte sich das Ändern eines globalen Zustands eines Nutzers auch auf einen anderen Nutzer auswirken.
 
 Falls man dennoch _globale Variablen_ benötigt, zum Beispiel zum Speichern des Security Context oder ähnlichem, kann man mit Hilfe dieser Methoden ein _Session Singleton_ realisieren, da pro User Session ein Toolkit existiert. Siehe auch [Typed Properties](#typed_properties).
+
+#### Umrechnungsmethoden
 
 ~~~
 	Position toScreen(final Position localPosition, final IComponent component);
@@ -1007,9 +1055,13 @@ Transformiert eine lokale Position einer Komponente in eine absolute Bildschirmp
 
 Transformiert eine Bildschirmposition in eine lokale Position einer Komponente.
 
+#### SupportedWidgets
+
 ~~~
 	ISupportedWidgets getSupportedWidgets();
 ~~~
+
+#### SpiMigLayoutSupport
 
 Liefert die Info, ob bestimmte Widgets unterstützt werden. Derzeit betrift dies ausschließlich den FileChooser und DirectoryChooser. Diese werden in Webapplikationen nicht unterstützt.
 
@@ -1207,13 +1259,69 @@ Das folgende Beispiel zeigt die Wiederverwendung eines Label BluePrint:
 
 Das Alignment, die Farbe sowie das Icon wird nur ein Mal definiert und daraus anschließend drei Label Widgets mit unterschiedlichem Text erzeugt.
 
-## Die Schnittstelle IWidget
+## Allgemeine Widget Schnittstellen
 
-## Die Schnittstelle IComponent
+Der folgende Abschnitt enthält eine Übersicht über die allgemeinen Widget Schnittstellen und deren Methoden innerhalb der [Widget Hierarchie](#widget_hierarchy). Für eine vollständige Übersicht sei auf die [Jowidgets API Spezifikation][API_DOC] verwiesen.
 
-## Die Schnittstelle IContainer
+### Die Schnittstelle IWidget
 
-## Container
+Alle Widgets implementieren die Schnittstelle `org.jowidgets.api.widgets.IWidget`. Es folgt eine kurze Übersicht über die wichtigsten Methoden:
+
+#### Ui Referenz
+
+~~~
+Object getUiReference();
+~~~
+
+Liefert die UI Referenz des Widgets. Der Typ hängt von der verwendeten SPI Implementierung ab. Beispielsweise wird für ein `org.jowidgets.api.widgets.IButton` bei Verwendung der Swing Spi Implementierung ein `javax.swing.JButton` und bei der Verwendung der SWT SPI Implementierung ein `org.eclipse.swt.widgets.Button` zurückgegeben.
+
+Die Ui Referenz kann zum Beispiel verwendet werden, um _native_ Widgets oder Funktionen _nativer_ zu verwenden, welche in jowidgets nicht vorhanden sind. Allerdings hat man dann nicht mehr die Möglichkeit, den Code mit anderen nativen Ui Technologien zu verwenden. 
+
+Tipp: Wird solch eine natives Widget oder eine Funktion mehrfach verwendet, empfiehlt es sich, eine eigenes Widget dafür zu definieren. (Siehe dazu [Erstellung eigener Widget Bibliotheken](#custom_widget_libraries)). Die Widget Implementierung kann dann vorerst nur für die benötigte _native_ Technologie implementiert werden. Soll ein Modul, welches dieses Widget verwendet, später auch mit einer anderen Technologie verwendet werden, muss nur Implementierung des Widgets angepasst werden, und nicht das Modul. 
+
+#### Enablement
+
+~~~
+void setEnabled(boolean enabled);
+
+boolean isEnabled();
+~~~
+
+Ein Widget das _disabled_ ist nimmt keine Nutzereingaben mehr an. Per default sind alle Widgets initial _enabled_.
+
+#### Widget Parent
+
+~~~
+	IWidget getParent();
+~~~
+
+Liefert das übergeordnete Widget oder null, falls das Widget ein _Root Element_ ist.
+
+#### Widget Root
+
+~~~
+	IWidget getRoot();
+~~~
+
+Für zusammengesetzte (Composite) Widgets wird das _Root Widget_ zurückgegeben, also zum Beispiel ein org.jowidgets.api.widgets.IComposite. Ansonsten wird das Widget selbst zurückgegeben.
+
+#### Dispose Management
+
+~~~
+	void dispose();
+
+	boolean isDisposed();
+	
+	void addDisposeListener(IDisposeListener listener);
+
+	void removeDisposeListener(IDisposeListener listener);
+~~~
+
+Mit Hilfe der Methode `dispose()` kann ein Widgets _disposed_ werden, wenn man es nicht mehr benötigt. Ein Widget, das _disposed_ wurde, kann nicht mehr verwendet werden. Wird zum Beispiel ein Fenster _disposed_ wird es auch geschlossen. Wird ein Control disposed, wird es auch aus seinem Container entfernt. Mit Hilfe eines `IDisposeListener` kann man sich als Observer registrieren, um über das _Dispose_ eines Widgets informiert zu werden.
+
+### Die Schnittstelle IComponent
+
+### Die Schnittstelle IContainer
 
 ## Layouting{#layouting}
 
