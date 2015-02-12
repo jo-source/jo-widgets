@@ -35,8 +35,8 @@ public interface IUiThreadAccess extends IUiThreadAccessCommon {
 	/**
 	 * Disables all windows, executes the runnable and after that enables all windows again.
 	 * 
-	 * WARNING: This method will be invoked in the event dispatcher thread, so the runnable should
-	 * not run to long (e.g. 0-2 seconds seems to be ok).
+	 * Remark: This method will be invoked in the event dispatcher thread, so the runnable should
+	 * not do long lasting things.
 	 * 
 	 * @param runnable The runnable to run
 	 */

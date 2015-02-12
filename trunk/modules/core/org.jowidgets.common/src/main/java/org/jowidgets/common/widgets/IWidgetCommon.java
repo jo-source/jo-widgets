@@ -27,18 +27,36 @@
  */
 package org.jowidgets.common.widgets;
 
-
 public interface IWidgetCommon {
 
 	/**
-	 * @return the reference to the ui implementation of this widget. e.g.
-	 *         JPanel, JFrame, JLabel, JButton, ... in Swing or Composite,
-	 *         Shell, Text, Button, ... in SWT
+	 * Gets the reference to the ui implementation of this widget.
+	 * 
+	 * The type depends on the SPI Implementation used,
+	 * 
+	 * With the Swing SPI implementation e.g a IComposite will return a
+	 * javax.swing.JPanel or a IButton will will return a javax.swing.JButton
+	 * 
+	 * With the SWT SPI implementation e.g a IComposite will return a
+	 * org.eclipse.swt.widgets.Composite or a IButton will will return a
+	 * org.eclipse.swt.widgets.Button
+	 * 
+	 * @return the ui reference, never null
 	 */
 	Object getUiReference();
 
+	/**
+	 * Sets the widget enabled
+	 * 
+	 * @param enabled The enabled state to set
+	 */
 	void setEnabled(boolean enabled);
 
+	/**
+	 * Gets the enabled state
+	 * 
+	 * @return The enabled state
+	 */
 	boolean isEnabled();
 
 }
