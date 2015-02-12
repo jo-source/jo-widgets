@@ -30,6 +30,9 @@ package org.jowidgets.api.controller;
 
 public interface IDisposeListener {
 
+	/**
+	 * Will be invoked on dispose
+	 */
 	void onDispose();
 
 }
