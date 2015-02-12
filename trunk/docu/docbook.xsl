@@ -32,8 +32,7 @@
 <xsl:param name="html.stylesheet" select="'style.css'"/> 
 
 <xsl:template name="user.footer.navigation">
-  <br></br>
-  <div style="font-size:80%">Siehe auch <a href="http://www.jowidgets.org/api_doc" target="_blank">Jowidgets API Spezifikation</a></div>
+  <div style="font-size:75%"><br></br>Siehe auch <a href="documentation.pdf" target="_blank">PDF Version dieses Dokuments</a>, <a href="http://www.jowidgets.org/api_doc" target="_blank">Jowidgets API Spezifikation</a></div>
 </xsl:template>
 
 <xsl:template match="xslthl:keyword" mode="xslthl">
