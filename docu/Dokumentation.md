@@ -2,12 +2,12 @@
 % Michael Grossmann
 % 02. Februar 2015
 
-[API_DOC]: <http://www.jowidgets.org/api_doc>  "Jowidgets API Spezification"
+[API_DOC]: <http://www.jowidgets.org/api_doc/index.html>  "Jowidgets API Spezification"
 
 
 # Einführung
 
-Diese Nutzerhandbuch bietet eine Einführung in die Verwendung von jowidgets. Unter [www.jowidgets.org/api_doc][API_DOC] ist die jowidgets API Spezifikation zu finden.
+Diese Nutzerhandbuch bietet eine Einführung in die Verwendung von jowidgets. Das Dokument ist sowohl als [PDF Version](documentation.pdf) als auch online unter [http://www.jowidgets.org/docu/](http://www.jowidgets.org/docu/) verfügbar. Unter [http://www.jowidgets.org/api_doc/][API_DOC] ist die jowidgets API Spezifikation zu finden. 
 
 ## Lizenz
 
@@ -1277,7 +1277,7 @@ Liefert die UI Referenz des Widgets. Der Typ hängt von der verwendeten SPI Impl
 
 Die Ui Referenz kann zum Beispiel verwendet werden, um _native_ Widgets oder Funktionen _nativer_ zu verwenden, welche in jowidgets nicht vorhanden sind. Allerdings hat man dann nicht mehr die Möglichkeit, den Code mit anderen nativen Ui Technologien zu verwenden. 
 
-Tipp: Wird solch eine natives Widget oder eine Funktion mehrfach verwendet, empfiehlt es sich, eine eigenes Widget dafür zu definieren. (Siehe dazu [Erstellung eigener Widget Bibliotheken](#custom_widget_libraries)). Die Widget Implementierung kann dann vorerst nur für die benötigte _native_ Technologie implementiert werden. Soll ein Modul, welches dieses Widget verwendet, später auch mit einer anderen Technologie verwendet werden, muss nur Implementierung des Widgets angepasst werden, und nicht das Modul. 
+Tipp: Wird solch eine natives Widget oder eine Funktion mehrfach verwendet, empfiehlt es sich, eine eigene Widget Schnittstelle dafür zu definieren. (Siehe dazu [Erstellung eigener Widget Bibliotheken](#custom_widget_libraries)). Die Widget Implementierung kann dann vorerst nur für die benötigte _native_ Technologie implementiert werden. Soll ein Modul, welches dieses Widget verwendet, später auch mit einer anderen Technologie verwendet werden, muss nur Implementierung des Widgets angepasst werden, und nicht das Modul. 
 
 #### Enablement
 
