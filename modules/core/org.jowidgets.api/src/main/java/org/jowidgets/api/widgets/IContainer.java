@@ -42,37 +42,63 @@ import org.jowidgets.common.widgets.layout.ILayouter;
 
 public interface IContainer extends IComponent, IContainerObservable, IRecursiveContainerObservable, IContainerCommon {
 
+	/**
+	 * Sets the layouter for this container defined by a layout factory
+	 * 
+	 * @param layoutFactory The layout to set
+	 * 
+	 * @return The layouter created from the factory
+	 */
 	<LAYOUT_TYPE extends ILayouter> LAYOUT_TYPE setLayout(ILayoutFactory<LAYOUT_TYPE> layoutFactory);
 
+	/**
+	 * Layouts the container
+	 */
 	void layout();
 
 	/**
-	 * Layouts the container later in the event queue. If this method will be invoked more than once before the layout
+	 * Layouts the container later in the event queue.
+	 * If this method will be invoked more than once before the layout
 	 * occurs, only one layout invocation will be done on this container.
 	 */
 	void layoutLater();
 
+	/**
+	 * Adds a container registry recursively.
+	 * 
+	 * With help of a container registry its is possible to get an access to all children
+	 * of the container currently existing and all eventually added or removed children
+	 * in the future
+	 * 
+	 * @param registry The registry to add
+	 */
 	void addContainerRegistry(IContainerRegistry registry);
 
+	/**
+	 * Removes a container registry
+	 * 
+	 * @param registry The registry to remove
+	 */
 	void removeContainerRegistry(IContainerRegistry registry);
 
 	/**
 	 * Gets the containers children
 	 * 
-	 * @return a defensive copy of the containers children
+	 * @return a unmodifiable copy of the containers children
 	 */
 	List<IControl> getChildren();
 
 	/**
-	 * Allows to remove a control from an container.
+	 * Removes a control from this container.
+	 * 
 	 * Removing controls should be nested with layoutBegin() - layoutEnd() to ensure
 	 * that the container revalidates its layout.
 	 * 
-	 * A further using / access of removed controls is not indented and may lead to arbitrary behavior
+	 * The removed controls will be disposed an can no longer be used
 	 * 
 	 * @param control The control to remove
 	 * 
-	 * @return true if the widget could be removed, false otherwise
+	 * @return true if the widget was removed, false otherwise
 	 */
 	boolean remove(IControl control);
 

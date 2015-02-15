@@ -30,8 +30,18 @@ package org.jowidgets.common.widgets.controller;
 
 public interface IMouseObservable {
 
+	/**
+	 * Adds a mouse listener
+	 * 
+	 * @param listener The listener to add
+	 */
 	void addMouseListener(IMouseListener listener);
 
+	/**
+	 * Removes a mouse listener
+	 * 
+	 * @param listener The listener to remove
+	 */
 	void removeMouseListener(IMouseListener listener);
 
 }

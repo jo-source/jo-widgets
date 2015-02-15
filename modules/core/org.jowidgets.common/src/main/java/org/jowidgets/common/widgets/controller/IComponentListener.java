@@ -30,8 +30,14 @@ package org.jowidgets.common.widgets.controller;
 
 public interface IComponentListener {
 
+	/**
+	 * Will be invoked if the size of a component has been changed
+	 */
 	void sizeChanged();
 
+	/**
+	 * Will be invoked if the position of a component has been changed
+	 */
 	void positionChanged();
 
 }

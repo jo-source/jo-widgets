@@ -35,10 +35,24 @@ public final class Rectangle {
 	private final Position position;
 	private final Dimension size;
 
+	/**
+	 * Creates a new rectangle
+	 * 
+	 * @param x The x - coordinate
+	 * @param y The y - coordinate
+	 * @param width The width
+	 * @param height The height
+	 */
 	public Rectangle(final int x, final int y, final int width, final int height) {
 		this(new Position(x, y), new Dimension(width, height));
 	}
 
+	/**
+	 * Creates a new rectangle defined by position and dimension
+	 * 
+	 * @param position The position of the rectangle, must not be null
+	 * @param size The dimension of the rectangle, must not be null
+	 */
 	public Rectangle(final Position position, final Dimension size) {
 		Assert.paramNotNull(position, "position");
 		Assert.paramNotNull(size, "size");
@@ -46,30 +60,67 @@ public final class Rectangle {
 		this.size = size;
 	}
 
+	/**
+	 * Gets the position of the rectangle
+	 * 
+	 * @return The position, never null
+	 */
 	public Position getPosition() {
 		return position;
 	}
 
+	/**
+	 * Gets the size of the rectangle
+	 * 
+	 * @return The size, never null
+	 */
 	public Dimension getSize() {
 		return size;
 	}
 
+	/**
+	 * Gets the width of the rectangle
+	 * 
+	 * @return The width
+	 */
 	public int getWidth() {
 		return size.getWidth();
 	}
 
+	/***
+	 * Gets the height of the rectangle
+	 * 
+	 * @return The height
+	 */
 	public int getHeight() {
 		return size.getHeight();
 	}
 
+	/**
+	 * Gets the x - coordinate of the rectangle
+	 * 
+	 * @return The x - coordinate
+	 */
 	public int getX() {
 		return position.getX();
 	}
 
+	/**
+	 * Gets the y - coordinate of the rectangle
+	 * 
+	 * @return The y - coordinate
+	 */
 	public int getY() {
 		return position.getY();
 	}
 
+	/**
+	 * Checks if a given position is contained in this rectangle
+	 * 
+	 * @param point The position to check
+	 * 
+	 * @return True if the position is contained in the rectangle, false otherwise
+	 */
 	public boolean contains(final Position point) {
 		Assert.paramNotNull(point, "point");
 

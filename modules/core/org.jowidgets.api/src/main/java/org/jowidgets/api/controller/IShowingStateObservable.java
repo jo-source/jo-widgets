@@ -30,8 +30,18 @@ package org.jowidgets.api.controller;
 
 public interface IShowingStateObservable {
 
+	/**
+	 * Adds a showing state listener
+	 * 
+	 * @param listener The listener to add
+	 */
 	void addShowingStateListener(IShowingStateListener listener);
 
+	/**
+	 * Removes a showing state listener
+	 * 
+	 * @param listener The listener to remove
+	 */
 	void removeShowingStateListener(IShowingStateListener listener);
 
 }
