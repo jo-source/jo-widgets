@@ -7,7 +7,11 @@
 
 # Einführung
 
-Diese Nutzerhandbuch bietet eine Einführung in die Verwendung von jowidgets. Das Dokument ist sowohl als [PDF Version](documentation.pdf) als auch online unter [http://www.jowidgets.org/docu/](http://www.jowidgets.org/docu/) verfügbar. Unter [http://www.jowidgets.org/api_doc/][API_DOC] ist die jowidgets API Spezifikation zu finden. 
+Diese Nutzerhandbuch bietet eine Einführung in die Verwendung von jowidgets. 
+
+Das Dokument ist sowohl als [PDF Version](documentation.pdf) als auch online unter [http://www.jowidgets.org/docu/](http://www.jowidgets.org/docu/) verfügbar. 
+
+Unter [http://www.jowidgets.org/api_doc/][API_DOC] ist die jowidgets API Spezifikation zu finden. 
 
 ## Lizenz
 
@@ -1261,7 +1265,7 @@ Das Alignment, die Farbe sowie das Icon wird nur ein Mal definiert und daraus an
 
 ## Allgemeine Widget Schnittstellen
 
-Der folgende Abschnitt enthält eine Übersicht über die allgemeinen Widget Schnittstellen und deren Methoden innerhalb der [Widget Hierarchie](#widget_hierarchy). Für eine vollständige Übersicht sei auf die [Jowidgets API Spezifikation][API_DOC] verwiesen.
+Der folgende Abschnitt enthält eine Übersicht über die allgemeinen Widget Schnittstellen und deren Methoden innerhalb der [Widget Hierarchie](#widget_hierarchy). Für weitere Informationen sei auf die [Jowidgets API Spezifikation][API_DOC] verwiesen.
 
 ### Die Schnittstelle IWidget
 
@@ -1270,7 +1274,7 @@ Alle Widgets implementieren die Schnittstelle `org.jowidgets.api.widgets.IWidget
 #### Ui Referenz
 
 ~~~
-Object getUiReference();
+	Object getUiReference();
 ~~~
 
 Liefert die UI Referenz des Widgets. Der Typ hängt von der verwendeten SPI Implementierung ab. Beispielsweise wird für ein `org.jowidgets.api.widgets.IButton` bei Verwendung der Swing Spi Implementierung ein `javax.swing.JButton` und bei der Verwendung der SWT SPI Implementierung ein `org.eclipse.swt.widgets.Button` zurückgegeben.
@@ -1282,9 +1286,9 @@ Tipp: Wird solch eine natives Widget oder eine Funktion mehrfach verwendet, empf
 #### Enablement
 
 ~~~
-void setEnabled(boolean enabled);
+	void setEnabled(boolean enabled);
 
-boolean isEnabled();
+	boolean isEnabled();
 ~~~
 
 Ein Widget das _disabled_ ist nimmt keine Nutzereingaben mehr an. Per default sind alle Widgets initial _enabled_.
@@ -1334,6 +1338,8 @@ Mit Hilfe der Methode `dispose()` kann ein Widgets _disposed_ werden, wenn man e
 ## Menu Models {#menu_models}
 
 ## Actions und Commands {#actions_and_commands}
+
+## Colors{#colors}
 
 ## Icons und Images{#icons_and_images}
 
