@@ -356,7 +356,7 @@ public class ContainerDelegate extends DisposableDelegate {
 	}
 
 	public List<IControl> getChildren() {
-		return new LinkedList<IControl>(children);
+		return Collections.unmodifiableList(new LinkedList<IControl>(children));
 	}
 
 	public void removeAll() {
