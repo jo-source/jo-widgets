@@ -32,13 +32,13 @@ public interface IWidgetCommon {
 	/**
 	 * Gets the reference to the ui implementation of this widget.
 	 * 
-	 * The type depends on the SPI Implementation used,
+	 * The type depends on the SPI Implementation used.
 	 * 
 	 * With the Swing SPI implementation e.g a IComposite will return a
-	 * javax.swing.JPanel or a IButton will will return a javax.swing.JButton
+	 * javax.swing.JPanel or a IButton will return a javax.swing.JButton
 	 * 
 	 * With the SWT SPI implementation e.g a IComposite will return a
-	 * org.eclipse.swt.widgets.Composite or a IButton will will return a
+	 * org.eclipse.swt.widgets.Composite or a IButton will return a
 	 * org.eclipse.swt.widgets.Button
 	 * 
 	 * @return the ui reference, never null

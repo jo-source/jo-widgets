@@ -27,6 +27,9 @@
  */
 package org.jowidgets.common.widgets.layout;
 
+/**
+ * Tagging interface for layouts
+ */
 public interface ILayoutDescriptor {
 
 }

@@ -71,7 +71,7 @@ public interface IKeyEvent {
 	Character getResultingCharacter();
 
 	/**
-	 * Gets the modifiers of the key event.
+	 * Gets the modifiers of the key event as an unmodifiable set
 	 * 
 	 * @return The set of the applied modifiers. May be empty but is never null
 	 */

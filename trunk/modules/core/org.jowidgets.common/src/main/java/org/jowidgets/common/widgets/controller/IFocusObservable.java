@@ -30,8 +30,18 @@ package org.jowidgets.common.widgets.controller;
 
 public interface IFocusObservable {
 
+	/**
+	 * Adds a focus listener
+	 * 
+	 * @param listener The listener to add
+	 */
 	void addFocusListener(IFocusListener listener);
 
+	/**
+	 * Removes a focus listener
+	 * 
+	 * @param listener The listener to remove
+	 */
 	void removeFocusListener(IFocusListener listener);
 
 }

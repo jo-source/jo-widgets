@@ -30,8 +30,18 @@ package org.jowidgets.api.controller;
 
 public interface IContainerObservable {
 
+	/**
+	 * Adds a container listener
+	 * 
+	 * @param listener The listener to add
+	 */
 	void addContainerListener(IContainerListener listener);
 
+	/**
+	 * Removes a container listener
+	 * 
+	 * @param listener The listener to remove
+	 */
 	void removeContainerListener(IContainerListener listener);
 
 }

@@ -30,7 +30,17 @@ package org.jowidgets.common.widgets.controller;
 
 public interface IKeyListener {
 
+	/**
+	 * Will be invoked if a key was pressed
+	 * 
+	 * @param event The Key event
+	 */
 	void keyPressed(final IKeyEvent event);
 
+	/**
+	 * Will be invoked if a key was released
+	 * 
+	 * @param event The key event
+	 */
 	void keyReleased(final IKeyEvent event);
 }

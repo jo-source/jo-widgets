@@ -32,6 +32,11 @@ import org.jowidgets.common.types.Position;
 
 public interface IPopupDetectionListener {
 
+	/**
+	 * Will be invoked if an popup occurred
+	 * 
+	 * @param position The position of the popup relative to its component
+	 */
 	void popupDetected(Position position);
 
 }

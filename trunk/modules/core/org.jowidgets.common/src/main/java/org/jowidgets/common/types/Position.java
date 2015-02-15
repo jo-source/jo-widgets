@@ -32,20 +32,43 @@ public final class Position {
 	private final int x;
 	private final int y;
 
+	/**
+	 * Creates a new position
+	 * 
+	 * @param x The x coordinate
+	 * @param y The y coordinate
+	 */
 	public Position(final int x, final int y) {
 		super();
 		this.x = x;
 		this.y = y;
 	}
 
+	/**
+	 * Gets the x coordinate
+	 * 
+	 * @return The x coordinate
+	 */
 	public int getX() {
 		return x;
 	}
 
+	/**
+	 * Gets the y coordinate
+	 * 
+	 * @return The y coordinate
+	 */
 	public int getY() {
 		return y;
 	}
 
+	/**
+	 * Gets the absolute value of the position.
+	 * 
+	 * The absolute value is defined by sqrt(x^2 + y^2)
+	 * 
+	 * @return
+	 */
 	public int getAbsoluteValue() {
 		return (int) (Math.sqrt(x * x + y * y));
 	}

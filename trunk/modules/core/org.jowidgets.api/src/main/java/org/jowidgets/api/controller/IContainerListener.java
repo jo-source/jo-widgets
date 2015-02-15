@@ -32,8 +32,18 @@ import org.jowidgets.api.widgets.IControl;
 
 public interface IContainerListener {
 
+	/**
+	 * Will be invoked after a control was added
+	 * 
+	 * @param control The control that was added
+	 */
 	void afterAdded(IControl control);
 
+	/**
+	 * Will be invoked before a control will be removed
+	 * 
+	 * @param control The control that will be removed
+	 */
 	void beforeRemove(IControl control);
 
 }

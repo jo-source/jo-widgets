@@ -32,16 +32,32 @@ public final class Dimension {
 	private final int width;
 	private final int height;
 
+	/**
+	 * Creates a new Dimension
+	 * 
+	 * @param width The width of the dimension
+	 * @param height The height of the dimension
+	 */
 	public Dimension(final int width, final int height) {
 		super();
 		this.width = width;
 		this.height = height;
 	}
 
+	/**
+	 * Gets the width
+	 * 
+	 * @return The width
+	 */
 	public int getWidth() {
 		return width;
 	}
 
+	/**
+	 * Gets the height
+	 * 
+	 * @return The height
+	 */
 	public int getHeight() {
 		return height;
 	}

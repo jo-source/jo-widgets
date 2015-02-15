@@ -36,6 +36,11 @@ import org.jowidgets.common.widgets.IComponentCommon;
 
 public interface IComponent extends IWidget, IComponentCommon, IShowingStateObservable {
 
+	/**
+	 * Gets the information if the component is reparentable
+	 * 
+	 * @return True if the component is reparentable, false otherwise
+	 */
 	boolean isReparentable();
 
 	/**
@@ -46,12 +51,25 @@ public interface IComponent extends IWidget, IComponentCommon, IShowingStateObse
 	 */
 	boolean isShowing();
 
+	/**
+	 * Gets the input focus state of the component.
+	 * 
+	 * Only one component can have the focus at the same time
+	 * 
+	 * @return true if the component has the focus, false otherwise
+	 */
 	boolean hasFocus();
 
+	/**
+	 * Creates a popup menu as a child of this component
+	 * 
+	 * @return The created popup menu, never null
+	 */
 	IPopupMenu createPopupMenu();
 
 	/**
-	 * Sets a popup menu for this component.
+	 * Sets a popup menu for this component defined by a model.
+	 * 
 	 * The popup menu will be shown, when an popup event occurs on this component.
 	 * 
 	 * @param menuModel
@@ -59,33 +77,73 @@ public interface IComponent extends IWidget, IComponentCommon, IShowingStateObse
 	 */
 	void setPopupMenu(IMenuModel popupMenu);
 
+	/**
+	 * Transforms a position in the coordinate system of this component to the screen coordinate system
+	 * 
+	 * @param localPosition The local position, must not be null
+	 * 
+	 * @return The corresponding screen position, never null
+	 */
 	Position toScreen(final Position localPosition);
 
+	/**
+	 * Transforms a position in the screen coordinate system to this components coordinate system
+	 * 
+	 * @param screenPosition The screen position to transform, must not ne null
+	 * 
+	 * @return The corresponding local position, never null
+	 */
 	Position toLocal(final Position screenPosition);
 
+	/**
+	 * Sets the size of the component defined by width and height
+	 * 
+	 * @param width The width
+	 * @param height The height
+	 */
 	void setSize(int width, int height);
 
+	/**
+	 * Sets the position of the component defined by the x-coordinate and the y-coordinate
+	 * 
+	 * @param x The x coordinate
+	 * @param y The y coordinate
+	 */
 	void setPosition(int x, int y);
 
+	/**
+	 * Gets the bounds of the component
+	 * 
+	 * @return The bounds, never null
+	 */
 	Rectangle getBounds();
 
+	/**
+	 * The the bounds of the component
+	 * 
+	 * @param bounds The bounds to set, never null
+	 */
 	void setBounds(Rectangle bounds);
 
 	/**
-	 * Transforms a position from another component to the current component
+	 * Transforms a position from another components coordinate system to
+	 * this components coordinate system
 	 * 
-	 * @param component Component, which the position is relative to
-	 * @param componentPosition Position
-	 * @return transformed local position
+	 * @param component Component, which the position is relative to, must not be null
+	 * @param componentPosition Position The position to transform, must not be null
+	 * 
+	 * @return The transformed position
 	 */
 	Position fromComponent(final IComponentCommon component, final Position componentPosition);
 
 	/**
-	 * Transforms a local position to another component
+	 * Transforms a position from this components coordinate system to another components
+	 * coordinate system
 	 * 
-	 * @param componentPosition Local position
-	 * @param component Component, which the position is transformed to
-	 * @return transformed position
+	 * @param componentPosition The position in this coordinate system
+	 * @param component Component, in what coordinate system the position is transformed to
+	 * 
+	 * @return The transformed position
 	 */
 	Position toComponent(final Position componentPosition, final IComponentCommon component);
 
