@@ -60,8 +60,9 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 
 	private Boolean expanded;
 
+	private boolean selected;
+
 	public TreeNodeImpl(final TreeImpl parentTree, final TreeItem parentItem, final Integer index) {
-		super();
 		Assert.paramNotNull(parentTree, "parentTree");
 
 		this.popupDetectionListeners = new HashSet<IPopupDetectionListener>();
@@ -91,6 +92,8 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 				parentTree.unRegisterItem(item);
 			}
 		});
+
+		this.selected = false;
 
 	}
 
@@ -202,17 +205,15 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 
 	@Override
 	public void setSelected(final boolean selected) {
-		parentTree.setSelected(this, selected);
+		if (this.selected != selected) {
+			parentTree.setSelected(this, selected);
+			this.selected = selected;
+		}
 	}
 
 	@Override
 	public boolean isSelected() {
-		for (final TreeItem selectedItem : parentTree.getUiReference().getSelection()) {
-			if (selectedItem == this.item) {
-				return true;
-			}
-		}
-		return false;
+		return selected;
 	}
 
 	@Override
