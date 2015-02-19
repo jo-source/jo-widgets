@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, grossmann
+ * Copyright (c) 2015, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,19 +26,32 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets.descriptor.setup;
+package org.jowidgets.api.types;
 
-import org.jowidgets.api.model.tree.ITreeNodeModel;
-import org.jowidgets.api.types.TreeViewerCreationPolicy;
-import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
+public enum TreeViewerCreationPolicy {
 
-public interface ITreeViewerSetup<ROOT_NODE_VALUE_TYPE> extends ITreeSetup {
+	/**
+	 * Creates the complete tree on initialization.
+	 * This may not scale for large trees.
+	 */
+	CREATE_COMPLETE,
 
-	ITreeNodeModel<ROOT_NODE_VALUE_TYPE> getRootNodeModel();
+	/**
+	 * Creates child nodes only for expanded parent nodes.
+	 * Nodes once created will not be disposed on collapse of parent.
+	 * 
+	 * REMARK: This may lead to unexpected behavior in combination with auto check mode, because
+	 * model nodes will become checked only of the corresponding tree node was created.
+	 */
+	CREATE_ON_EXPAND,
 
-	Integer getPageSize();
-
-	@Mandatory
-	TreeViewerCreationPolicy getCreationPolicy();
+	/**
+	 * Creates child nodes only for expanded parent nodes.
+	 * Nodes once created will be disposed on collapse of parent.
+	 * 
+	 * REMARK: This may lead to unexpected behavior in combination with auto check mode, because
+	 * model nodes will become checked only of the corresponding tree node was created.
+	 */
+	CREATE_ON_EXPAND_DISPOSE_ON_COLLAPSE;
 
 }

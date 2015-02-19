@@ -25,17 +25,17 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.api.widgets.blueprint.builder;
+package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 
-import org.jowidgets.api.model.tree.ITreeNodeModel;
 import org.jowidgets.api.types.TreeViewerCreationPolicy;
+import org.jowidgets.api.widgets.blueprint.builder.ITreeViewerSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
-public interface ITreeViewerSetupBuilder<INSTANCE_TYPE extends ITreeViewerSetupBuilder<?, ?>, ROOT_NODE_VALUE_TYPE> extends
-		ITreeSetupBuilder<INSTANCE_TYPE> {
+public class TreeViewerDefaults implements IDefaultInitializer<ITreeViewerSetupBuilder<?, ?>> {
 
-	INSTANCE_TYPE setRootNodeModel(ITreeNodeModel<ROOT_NODE_VALUE_TYPE> model);
+	@Override
+	public void initialize(final ITreeViewerSetupBuilder<?, ?> builder) {
+		builder.setCreationPolicy(TreeViewerCreationPolicy.CREATE_COMPLETE);
+	}
 
-	INSTANCE_TYPE setCreationPolicy(TreeViewerCreationPolicy policy);
-
-	INSTANCE_TYPE setPageSize(Integer pageSize);
 }
