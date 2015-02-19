@@ -303,7 +303,7 @@ public class TreeNodeImpl extends AbstractTreeNodeSpiWrapper implements ITreeNod
 			if (isGreyed() || isChecked() != checked) {
 				setChecked(checked);
 			}
-			for (final ITreeNode childNode : getChildren()) {
+			for (final ITreeNode childNode : new LinkedList<ITreeNode>(getChildren())) {
 				((TreeNodeImpl) childNode).setAutoCheckChildState(checked);
 			}
 			getWidget().addTreeNodeListener(autoCheckListener);
@@ -319,7 +319,7 @@ public class TreeNodeImpl extends AbstractTreeNodeSpiWrapper implements ITreeNod
 
 			int checkedCount = 0;
 			int greyedCount = 0;
-			for (final ITreeNode childNode : getChildren()) {
+			for (final ITreeNode childNode : new LinkedList<ITreeNode>(getChildren())) {
 				if (childNode.isChecked()) {
 					checkedCount++;
 				}
