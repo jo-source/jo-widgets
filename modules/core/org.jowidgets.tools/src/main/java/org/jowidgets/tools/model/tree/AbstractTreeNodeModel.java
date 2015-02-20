@@ -40,8 +40,11 @@ public abstract class AbstractTreeNodeModel<VALUE_TYPE> extends TreeNodeModelObs
 	private boolean expanded;
 	private boolean visible;
 
+	private boolean checkable;
+
 	public AbstractTreeNodeModel() {
 		this.checkedState = CheckedState.UNCHECKED;
+		this.checkable = true;
 	}
 
 	@Override
@@ -87,6 +90,19 @@ public abstract class AbstractTreeNodeModel<VALUE_TYPE> extends TreeNodeModelObs
 			this.checkedState = state;
 			fireCheckedChanged();
 		}
+	}
+
+	@Override
+	public void setCheckable(final boolean checkable) {
+		if (this.checkable != checkable) {
+			this.checkable = checkable;
+			fireCheckableChanged();
+		}
+	}
+
+	@Override
+	public boolean isCheckable() {
+		return checkable;
 	}
 
 	@Override

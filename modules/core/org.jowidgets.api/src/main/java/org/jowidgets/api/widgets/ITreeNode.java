@@ -30,12 +30,13 @@ package org.jowidgets.api.widgets;
 
 import java.util.List;
 
+import org.jowidgets.api.controller.ITreeNodeCheckableObservable;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.types.CheckedState;
 import org.jowidgets.common.widgets.ITreeNodeCommon;
 import org.jowidgets.common.widgets.controller.IKeyObservable;
 
-public interface ITreeNode extends IItem, ITreeContainer, IKeyObservable, ITreeNodeCommon {
+public interface ITreeNode extends IItem, ITreeContainer, ITreeNodeCheckableObservable, IKeyObservable, ITreeNodeCommon {
 
 	/**
 	 * @return The tree this node belongs to
@@ -93,4 +94,5 @@ public interface ITreeNode extends IItem, ITreeContainer, IKeyObservable, ITreeN
 	 */
 	boolean isUnchecked();
 
+	boolean isCheckable();
 }

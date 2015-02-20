@@ -53,6 +53,8 @@ public interface ITreeNodeCommon extends IItemCommon, ITreeNodeObservable, IPopu
 
 	boolean isChecked();
 
+	void setCheckable(boolean checkable);
+
 	boolean isGreyed();
 
 }

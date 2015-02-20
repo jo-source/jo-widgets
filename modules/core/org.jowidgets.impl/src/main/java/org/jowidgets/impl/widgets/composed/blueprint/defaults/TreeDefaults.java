@@ -27,6 +27,7 @@
  */
 package org.jowidgets.impl.widgets.composed.blueprint.defaults;
 
+import org.jowidgets.api.types.TreeAutoCheckPolicy;
 import org.jowidgets.api.widgets.blueprint.builder.ITreeSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
@@ -34,7 +35,7 @@ public class TreeDefaults implements IDefaultInitializer<ITreeSetupBuilder<?>> {
 
 	@Override
 	public void initialize(final ITreeSetupBuilder<?> builder) {
-		builder.setAutoCheckMode(false);
+		builder.setAutoCheckPolicy(TreeAutoCheckPolicy.MULTI_PATH);
 	}
 
 }

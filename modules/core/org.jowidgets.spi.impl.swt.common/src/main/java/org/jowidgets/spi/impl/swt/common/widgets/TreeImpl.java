@@ -30,9 +30,11 @@ package org.jowidgets.spi.impl.swt.common.widgets;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
@@ -43,6 +45,8 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.TreeEvent;
 import org.eclipse.swt.events.TreeListener;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
@@ -53,6 +57,8 @@ import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
+import org.jowidgets.common.color.ColorValue;
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.dnd.DropMode;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
@@ -62,7 +68,9 @@ import org.jowidgets.common.widgets.controller.ITreeNodeListener;
 import org.jowidgets.spi.dnd.ITreeDropLocationSpi.TreeDropPositionSpi;
 import org.jowidgets.spi.impl.controller.TreeSelectionObservableSpi;
 import org.jowidgets.spi.impl.dnd.TreeDropLocationSpiImpl;
+import org.jowidgets.spi.impl.swt.common.color.ColorCache;
 import org.jowidgets.spi.impl.swt.common.dnd.IDropSelectionProvider;
+import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.common.util.PositionConvert;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
 import org.jowidgets.spi.widgets.ITreeSpi;
@@ -72,9 +80,20 @@ import org.jowidgets.util.Assert;
 
 public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi, IDropSelectionProvider {
 
+	static final ColorValue DISABLED_COLOR = new ColorValue(130, 130, 130);
+
 	private final boolean multiSelection;
 	private final Map<TreeItem, TreeNodeImpl> items;
+	private final Set<TreeItem> uncheckableItems;
 	private final TreeSelectionObservableSpi treeObservable;
+
+	private final IColorConstant selectedForeground;
+	private final IColorConstant selectedBackground;
+	private final IColorConstant selectedBorder;
+	private final IColorConstant disabledSelectedForeground;
+	private final IColorConstant disabledSelectedBackground;
+	private final IColorConstant disabledSelectedBorder;
+
 	private ToolTip toolTip;
 
 	private List<TreeItem> lastSelection;
@@ -85,8 +104,26 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi, IDro
 		this.lastSelection = new LinkedList<TreeItem>();
 		this.treeObservable = new TreeSelectionObservableSpi();
 		this.items = new HashMap<TreeItem, TreeNodeImpl>();
-
+		this.uncheckableItems = new HashSet<TreeItem>();
 		this.multiSelection = setup.getSelectionPolicy() == SelectionPolicy.MULTI_SELECTION;
+
+		this.selectedForeground = setup.getSelectedForegroundColor() != null
+				? setup.getSelectedForegroundColor() : SwtOptions.getTreeSelectedForegroundColor();
+
+		this.selectedBackground = setup.getSelectedBackgroundColor() != null
+				? setup.getSelectedBackgroundColor() : SwtOptions.getTreeSelectedBackgroundColor();
+
+		this.selectedBorder = setup.getSelectedBorderColor() != null
+				? setup.getSelectedBorderColor() : SwtOptions.getTreeSelectedBorderColor();
+
+		this.disabledSelectedForeground = setup.getDisabledSelectedForegroundColor() != null
+				? setup.getDisabledSelectedForegroundColor() : SwtOptions.getTreeDisabledSelectedForegroundColor();
+
+		this.disabledSelectedBackground = setup.getDisabledSelectedBackgroundColor() != null
+				? setup.getDisabledSelectedBackgroundColor() : SwtOptions.getTreeDisabledSelectedBackgroundColor();
+
+		this.disabledSelectedBorder = setup.getDisabledSelectedBorderColor() != null
+				? setup.getDisabledSelectedBorderColor() : SwtOptions.getTreeDisabledSelectedBorderColor();
 
 		setMenuDetectListener(new MenuDetectListener() {
 			@Override
@@ -136,7 +173,12 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi, IDro
 					final TreeNodeImpl itemImpl = items.get(e.item);
 
 					if (itemImpl != null) {
-						itemImpl.fireCheckedChanged(itemImpl.isChecked());
+						if (itemImpl.isCheckable()) {
+							itemImpl.fireCheckedChanged(itemImpl.isChecked());
+						}
+						else {
+							itemImpl.getUiReference().setChecked(itemImpl.getUiReference().getGrayed());
+						}
 					}
 					else {
 						throw new IllegalStateException("No item impl registered for item '"
@@ -186,6 +228,16 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi, IDro
 			tree.addListener(SWT.MouseHover, toolTipListener);
 			tree.addListener(SWT.MouseMove, toolTipListener);
 		}
+
+		if (selectedForeground != null
+			|| selectedBackground != null
+			|| selectedBorder != null
+			|| disabledSelectedForeground != null
+			|| disabledSelectedBackground != null
+			|| disabledSelectedBorder != null) {
+			getUiReference().addListener(SWT.EraseItem, new CustomSelectionRenderingListener());
+		}
+
 	}
 
 	@Override
@@ -382,6 +434,11 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi, IDro
 		throw new UnsupportedOperationException("isGreyed is not possible on the root node");
 	}
 
+	@Override
+	public void setCheckable(final boolean checkable) {
+		throw new UnsupportedOperationException("setCheckable is not possible on the root node");
+	}
+
 	private void showToolTip(final String message) {
 		toolTip.setMessage(message);
 		final Point location = Display.getCurrent().getCursorLocation();
@@ -456,6 +513,17 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi, IDro
 
 	protected void unRegisterItem(final TreeItem item) {
 		items.remove(item);
+		uncheckableItems.remove(item);
+	}
+
+	void addUncheckableItem(final TreeItem item) {
+		Assert.paramNotNull(item, "item");
+		uncheckableItems.add(item);
+	}
+
+	void removeUncheckableItem(final TreeItem item) {
+		Assert.paramNotNull(item, "item");
+		uncheckableItems.remove(item);
 	}
 
 	private void fireSelectionChange(final TreeItem[] newSelection) {
@@ -526,6 +594,68 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi, IDro
 					toolTip.setVisible(false);
 				}
 			}
+		}
+	}
+
+	private final class CustomSelectionRenderingListener implements Listener {
+
+		@Override
+		public void handleEvent(final Event event) {
+			final TreeItem item = (TreeItem) event.item;
+
+			final GC gc = event.gc;
+
+			final Color currentBackground = gc.getBackground();
+			final Color currentForeground = gc.getForeground();
+
+			final boolean checkable = !uncheckableItems.contains(item);
+
+			if ((event.detail & SWT.SELECTED) != 0) {
+				final Rectangle rect = item.getBounds(0);
+
+				if (selectedBackground != null && checkable) {
+					gc.setBackground(ColorCache.getInstance().getColor(selectedBackground));
+					gc.fillRectangle(rect);
+					event.detail &= ~SWT.SELECTED;
+				}
+				else if (disabledSelectedBackground != null && !checkable) {
+					gc.setBackground(ColorCache.getInstance().getColor(disabledSelectedBackground));
+					gc.fillRectangle(rect);
+					event.detail &= ~SWT.SELECTED;
+				}
+				else {
+					gc.setBackground(currentBackground);
+				}
+
+				if (selectedBorder != null && checkable) {
+					gc.setForeground(ColorCache.getInstance().getColor(selectedBorder));
+					gc.drawRectangle(rect.x, rect.y, rect.width, rect.height - 1);
+					event.detail &= ~SWT.SELECTED;
+				}
+				else if (disabledSelectedBorder != null && !checkable) {
+					gc.setForeground(ColorCache.getInstance().getColor(disabledSelectedBorder));
+					gc.drawRectangle(rect.x, rect.y, rect.width, rect.height - 1);
+					event.detail &= ~SWT.SELECTED;
+				}
+
+				if (selectedForeground != null && checkable) {
+					gc.setForeground(ColorCache.getInstance().getColor(selectedForeground));
+					event.detail &= ~SWT.SELECTED;
+				}
+				else if (disabledSelectedForeground != null && !checkable) {
+					gc.setForeground(ColorCache.getInstance().getColor(disabledSelectedForeground));
+					event.detail &= ~SWT.SELECTED;
+				}
+				else {
+					gc.setForeground(currentForeground);
+				}
+
+			}
+			else if ((event.detail & SWT.HOT) != 0) {
+				event.detail &= ~SWT.HOT;
+				return;
+			}
+
 		}
 	}
 

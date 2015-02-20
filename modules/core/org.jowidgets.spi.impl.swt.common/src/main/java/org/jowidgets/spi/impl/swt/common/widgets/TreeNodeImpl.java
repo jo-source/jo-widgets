@@ -45,6 +45,7 @@ import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.spi.impl.controller.TreeNodeObservable;
 import org.jowidgets.spi.impl.swt.common.color.ColorCache;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
+import org.jowidgets.spi.impl.swt.common.util.ColorConvert;
 import org.jowidgets.spi.impl.swt.common.util.FontProvider;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
@@ -61,6 +62,9 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 	private Boolean expanded;
 
 	private boolean selected;
+	private boolean checkable;
+
+	private IColorConstant lastCheckableColor;
 
 	public TreeNodeImpl(final TreeImpl parentTree, final TreeItem parentItem, final Integer index) {
 		Assert.paramNotNull(parentTree, "parentTree");
@@ -68,6 +72,7 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 		this.popupDetectionListeners = new HashSet<IPopupDetectionListener>();
 
 		this.parentTree = parentTree;
+		this.checkable = true;
 
 		if (index != null) {
 			if (parentItem == null) {
@@ -177,6 +182,27 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 	@Override
 	public boolean isGreyed() {
 		return getUiReference().getGrayed();
+	}
+
+	@Override
+	public void setCheckable(final boolean checkable) {
+		this.checkable = checkable;
+		if (!checkable) {
+			parentTree.addUncheckableItem(item);
+			if (isChecked()) {
+				setChecked(false);
+			}
+			lastCheckableColor = ColorConvert.convert(getUiReference().getForeground());
+			setForegroundColor(TreeImpl.DISABLED_COLOR);
+		}
+		else {
+			parentTree.removeUncheckableItem(item);
+			setForegroundColor(lastCheckableColor);
+		}
+	}
+
+	boolean isCheckable() {
+		return checkable;
 	}
 
 	@Override

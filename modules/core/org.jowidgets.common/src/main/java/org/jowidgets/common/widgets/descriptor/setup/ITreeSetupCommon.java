@@ -28,6 +28,7 @@
 
 package org.jowidgets.common.widgets.descriptor.setup;
 
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
@@ -41,5 +42,17 @@ public interface ITreeSetupCommon extends IComponentSetupCommon {
 
 	@Mandatory
 	boolean isChecked();
+
+	IColorConstant getSelectedForegroundColor();
+
+	IColorConstant getSelectedBackgroundColor();
+
+	IColorConstant getSelectedBorderColor();
+
+	IColorConstant getDisabledSelectedForegroundColor();
+
+	IColorConstant getDisabledSelectedBackgroundColor();
+
+	IColorConstant getDisabledSelectedBorderColor();
 
 }

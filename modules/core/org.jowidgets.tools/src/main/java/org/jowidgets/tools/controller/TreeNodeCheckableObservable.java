@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, grossmann
+ * Copyright (c) 2015, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,24 +26,36 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.model.tree;
+package org.jowidgets.tools.controller;
 
-public interface ITreeNodeModelListener {
+import org.jowidgets.api.controller.ITreeNodeCheckableListener;
+import org.jowidgets.api.controller.ITreeNodeCheckableObservable;
+import org.jowidgets.util.collection.IObserverSet;
+import org.jowidgets.util.collection.IObserverSetFactory.Strategy;
+import org.jowidgets.util.collection.ObserverSetFactory;
 
-	void dataChanged();
+public class TreeNodeCheckableObservable implements ITreeNodeCheckableObservable {
 
-	void childrenChanged();
+	private final IObserverSet<ITreeNodeCheckableListener> listeners;
 
-	void selectionChanged();
+	public TreeNodeCheckableObservable() {
+		this.listeners = ObserverSetFactory.create(Strategy.HIGH_PERFORMANCE);
+	}
 
-	void checkedChanged();
+	@Override
+	public void addCheckableListener(final ITreeNodeCheckableListener listener) {
+		listeners.add(listener);
+	}
 
-	void checkableChanged();
+	@Override
+	public void removeCheckableListener(final ITreeNodeCheckableListener listener) {
+		listeners.remove(listener);
+	}
 
-	void expansionChanged();
-
-	void visibilityChanged();
-
-	void dispose();
+	public void fireCheckableChanged(final boolean checkable) {
+		for (final ITreeNodeCheckableListener listener : listeners) {
+			listener.checkableChanged(checkable);
+		}
+	}
 
 }
