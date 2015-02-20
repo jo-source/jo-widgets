@@ -196,6 +196,13 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 	}
 
 	@Override
+	public void setCheckable(final boolean checkable) {
+		//CHECKSTYLE:OFF
+		System.out.println("Checked Tree is not jet implemented for swing");
+		//CHECKSTYLE:ON
+	}
+
+	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
 		popupDetectionListeners.add(listener);
 	}

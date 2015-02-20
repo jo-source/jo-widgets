@@ -27,8 +27,10 @@
  */
 package org.jowidgets.impl.widgets.basic.blueprint.convenience;
 
+import org.jowidgets.api.types.TreeAutoCheckPolicy;
 import org.jowidgets.api.widgets.blueprint.builder.ITreeSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.ITreeSetupConvenience;
+import org.jowidgets.common.color.ColorValue;
 import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
@@ -43,6 +45,41 @@ public class TreeSetupConvenience extends AbstractSetupBuilderConvenience<ITreeS
 	@Override
 	public ITreeSetupBuilder<?> singleSelection() {
 		return getBuilder().setSelectionPolicy(SelectionPolicy.SINGLE_SELECTION);
+	}
+
+	@Override
+	public ITreeSetupBuilder<?> setAutoCheckMode(final boolean autoCheckMode) {
+		if (autoCheckMode) {
+			getBuilder().setAutoCheckPolicy(TreeAutoCheckPolicy.MULTI_PATH);
+		}
+		else {
+			getBuilder().setAutoCheckPolicy(TreeAutoCheckPolicy.OFF);
+		}
+		return getBuilder();
+	}
+
+	@Override
+	public ITreeSetupBuilder<?> setClassicSelectionColors() {
+		getBuilder().setSelectedForegroundColor(new ColorValue(255, 255, 255));
+		getBuilder().setSelectedBackgroundColor(new ColorValue(51, 153, 255));
+		getBuilder().setSelectedBorderColor(new ColorValue(60, 60, 60));
+
+		getBuilder().setDisabledSelectedForegroundColor(new ColorValue(130, 130, 130));
+		getBuilder().setDisabledSelectedBackgroundColor(new ColorValue(255, 255, 255));
+		getBuilder().setDisabledSelectedBorderColor(new ColorValue(130, 130, 130));
+		return getBuilder();
+	}
+
+	@Override
+	public ITreeSetupBuilder<?> setWinSelectionColors() {
+		getBuilder().setSelectedForegroundColor(new ColorValue(0, 0, 0));
+		getBuilder().setSelectedBackgroundColor(new ColorValue(203, 232, 246));
+		getBuilder().setSelectedBorderColor(new ColorValue(38, 160, 218));
+
+		getBuilder().setDisabledSelectedForegroundColor(new ColorValue(130, 130, 130));
+		getBuilder().setDisabledSelectedBackgroundColor(new ColorValue(255, 255, 255));
+		getBuilder().setDisabledSelectedBorderColor(new ColorValue(130, 130, 130));
+		return getBuilder();
 	}
 
 }

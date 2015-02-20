@@ -28,6 +28,7 @@
 
 package org.jowidgets.api.widgets.descriptor.setup;
 
+import org.jowidgets.api.types.TreeAutoCheckPolicy;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.descriptor.setup.ITreeSetupCommon;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
@@ -39,6 +40,6 @@ public interface ITreeSetup extends IComponentSetup, ITreeSetupCommon {
 	IImageConstant getDefaultLeafIcon();
 
 	@Mandatory
-	boolean getAutoCheckMode();
+	TreeAutoCheckPolicy getAutoCheckPolicy();
 
 }

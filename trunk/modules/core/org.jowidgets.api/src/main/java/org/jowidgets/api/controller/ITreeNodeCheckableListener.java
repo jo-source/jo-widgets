@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, grossmann
+ * Copyright (c) 2015, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,24 +26,10 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.model.tree;
+package org.jowidgets.api.controller;
 
-public interface ITreeNodeModelListener {
+public interface ITreeNodeCheckableListener {
 
-	void dataChanged();
-
-	void childrenChanged();
-
-	void selectionChanged();
-
-	void checkedChanged();
-
-	void checkableChanged();
-
-	void expansionChanged();
-
-	void visibilityChanged();
-
-	void dispose();
+	void checkableChanged(boolean checkable);
 
 }

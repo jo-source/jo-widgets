@@ -49,6 +49,13 @@ public final class SwtOptions {
 	private static IColorConstant tableSelectedForegroundColor;
 	private static IColorConstant tableSelectedBackgroundColor;
 
+	private static IColorConstant treeSelectedForegroundColor;
+	private static IColorConstant treeSelectedBackgroundColor;
+	private static IColorConstant treeSelectedBorderColor;
+	private static IColorConstant treeDisabledSelectedForegroundColor;
+	private static IColorConstant treeDisabledSelectedBackgroundColor;
+	private static IColorConstant treeDisabledSelectedBorderColor;
+
 	private SwtOptions() {}
 
 	public static boolean hasClassicTabs() {
@@ -107,6 +114,54 @@ public final class SwtOptions {
 		SwtOptions.tableSelectedBackgroundColor = tableSelectedBackgroundColor;
 	}
 
+	public static IColorConstant getTreeSelectedForegroundColor() {
+		return treeSelectedForegroundColor;
+	}
+
+	public static void setTreeSelectedForegroundColor(final IColorConstant treeSelectedForegroundColor) {
+		SwtOptions.treeSelectedForegroundColor = treeSelectedForegroundColor;
+	}
+
+	public static IColorConstant getTreeSelectedBackgroundColor() {
+		return treeSelectedBackgroundColor;
+	}
+
+	public static void setTreeSelectedBackgroundColor(final IColorConstant treeSelectedBackgroundColor) {
+		SwtOptions.treeSelectedBackgroundColor = treeSelectedBackgroundColor;
+	}
+
+	public static IColorConstant getTreeSelectedBorderColor() {
+		return treeSelectedBorderColor;
+	}
+
+	public static void setTreeSelectedBorderColor(final IColorConstant treeSelectedBorderColor) {
+		SwtOptions.treeSelectedBorderColor = treeSelectedBorderColor;
+	}
+
+	public static IColorConstant getTreeDisabledSelectedForegroundColor() {
+		return treeDisabledSelectedForegroundColor;
+	}
+
+	public static void setTreeDisabledSelectedForegroundColor(final IColorConstant treeDisabledSelectedForegroundColor) {
+		SwtOptions.treeDisabledSelectedForegroundColor = treeDisabledSelectedForegroundColor;
+	}
+
+	public static IColorConstant getTreeDisabledSelectedBackgroundColor() {
+		return treeDisabledSelectedBackgroundColor;
+	}
+
+	public static void setTreeDisabledSelectedBackgroundColor(final IColorConstant treeDisabledSelectedBackgroundColor) {
+		SwtOptions.treeDisabledSelectedBackgroundColor = treeDisabledSelectedBackgroundColor;
+	}
+
+	public static IColorConstant getTreeDisabledSelectedBorderColor() {
+		return treeDisabledSelectedBorderColor;
+	}
+
+	public static void setTreeDisabledSelectedBorderColor(final IColorConstant treeDisabledSelectedBorderColor) {
+		SwtOptions.treeDisabledSelectedBorderColor = treeDisabledSelectedBorderColor;
+	}
+
 	public static boolean hasTextFieldTruncateWorkaround() {
 		return textFieldTruncateWorkaround;
 	}
@@ -125,11 +180,37 @@ public final class SwtOptions {
 
 	/**
 	 * Some customers mention that selected and unselected colors can hardly be distinguished on win7 and win8
-	 * clients. With this mode, the selection color in like under winxp
+	 * clients. With this mode, the selection color is like under winxp
 	 */
 	public static void setClassicTableSelectionColors() {
 		setTableSelectedForegroundColor(new ColorValue(255, 255, 255));
 		setTableSelectedBackgroundColor(new ColorValue(51, 153, 255));
+	}
+
+	/**
+	 * With this colors the tree selection colors are the same like classic table selection colors
+	 */
+	public static void setClassicTreeSelectionColors() {
+		setTreeSelectedForegroundColor(new ColorValue(255, 255, 255));
+		setTreeSelectedBackgroundColor(new ColorValue(51, 153, 255));
+		setTreeSelectedBorderColor(new ColorValue(60, 60, 60));
+
+		setTreeDisabledSelectedForegroundColor(new ColorValue(130, 130, 130));
+		setTreeDisabledSelectedBackgroundColor(new ColorValue(255, 255, 255));
+		setTreeDisabledSelectedBorderColor(new ColorValue(130, 130, 130));
+	}
+
+	/**
+	 * With this colors the tree selection colors are the same like in windows
+	 */
+	public static void setWinTreeSelectionColors() {
+		setTreeSelectedForegroundColor(new ColorValue(0, 0, 0));
+		setTreeSelectedBackgroundColor(new ColorValue(203, 232, 246));
+		setTreeSelectedBorderColor(new ColorValue(38, 160, 218));
+
+		setTreeDisabledSelectedForegroundColor(new ColorValue(130, 130, 130));
+		setTreeDisabledSelectedBackgroundColor(new ColorValue(255, 255, 255));
+		setTreeDisabledSelectedBorderColor(new ColorValue(130, 130, 130));
 	}
 
 	public static Long getClipbaordPollingMillis() {

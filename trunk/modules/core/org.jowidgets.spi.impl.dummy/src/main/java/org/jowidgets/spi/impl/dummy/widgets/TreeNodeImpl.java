@@ -145,6 +145,11 @@ public class TreeNodeImpl implements ITreeNodeSpi {
 	}
 
 	@Override
+	public void setCheckable(final boolean checkable) {
+		item.setCheckable(checkable);
+	}
+
+	@Override
 	public void addTreeNodeListener(final ITreeNodeListener listener) {
 		treeObs.addTreeNodeListener(listener);
 	}

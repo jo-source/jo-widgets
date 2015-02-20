@@ -27,6 +27,7 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
+import org.jowidgets.api.types.TreeAutoCheckPolicy;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.ITreeSetupConvenience;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.builder.ITreeSetupBuilderCommon;
@@ -40,6 +41,6 @@ public interface ITreeSetupBuilder<INSTANCE_TYPE extends ITreeSetupBuilder<?>> e
 
 	INSTANCE_TYPE setDefaultLeafIcon(IImageConstant icon);
 
-	INSTANCE_TYPE setAutoCheckMode(boolean autoCheckMode);
+	INSTANCE_TYPE setAutoCheckPolicy(TreeAutoCheckPolicy autoCheckPolicy);
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, grossmann
+ * Copyright (c) 2015, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,24 +26,23 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.model.tree;
+package org.jowidgets.api.types;
 
-public interface ITreeNodeModelListener {
+public enum TreeAutoCheckPolicy {
 
-	void dataChanged();
+	/**
+	 * Auto check mode is not active
+	 */
+	OFF,
 
-	void childrenChanged();
+	/**
+	 * Only a single path can be checked at the same time
+	 */
+	SINGLE_PATH,
 
-	void selectionChanged();
-
-	void checkedChanged();
-
-	void checkableChanged();
-
-	void expansionChanged();
-
-	void visibilityChanged();
-
-	void dispose();
+	/**
+	 * Multiple path's can be checked at the same time
+	 */
+	MULTI_PATH;
 
 }

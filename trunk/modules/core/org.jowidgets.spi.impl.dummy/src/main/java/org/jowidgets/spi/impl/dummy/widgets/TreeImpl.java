@@ -191,6 +191,11 @@ public class TreeImpl extends DummyControl implements ITreeSpi, ITreeNodeSpi {
 	}
 
 	@Override
+	public void setCheckable(final boolean checkable) {
+		throw new UnsupportedOperationException("setCheckable is not possible on the root node");
+	}
+
+	@Override
 	public void setGreyed(final boolean greyed) {
 		throw new UnsupportedOperationException("setGreyed is not possible on the root node");
 	}

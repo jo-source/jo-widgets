@@ -45,6 +45,9 @@ public class TreeNodeModelAdapter implements ITreeNodeModelListener {
 	public void checkedChanged() {}
 
 	@Override
+	public void checkableChanged() {}
+
+	@Override
 	public void expansionChanged() {}
 
 	@Override

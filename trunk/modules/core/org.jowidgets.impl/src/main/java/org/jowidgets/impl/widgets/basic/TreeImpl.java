@@ -42,6 +42,7 @@ import org.jowidgets.api.controller.ITreeListener;
 import org.jowidgets.api.controller.ITreePopupDetectionListener;
 import org.jowidgets.api.controller.ITreeSelectionListener;
 import org.jowidgets.api.dnd.ITreeDropLocation.TreeDropPosition;
+import org.jowidgets.api.types.TreeAutoCheckPolicy;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.ITree;
@@ -87,16 +88,20 @@ public class TreeImpl extends AbstractControlSpiWrapper implements ITree, IDropS
 	private final IImageConstant defaultLeafIcon;
 
 	private final boolean autoCheckMode;
+	private final TreeAutoCheckPolicy autoCheckPolicy;
 
 	private List<ITreeNodeSpi> lastSelectionSpi;
 	private List<ITreeNode> selection;
+
+	private TreeNodeImpl checkedNode;
 
 	public TreeImpl(final ITreeSpi widgetSpi, final ITreeDescriptor descriptor) {
 		super(widgetSpi);
 
 		this.defaultInnerIcon = descriptor.getDefaultInnerIcon();
 		this.defaultLeafIcon = descriptor.getDefaultLeafIcon();
-		this.autoCheckMode = descriptor.getAutoCheckMode() && descriptor.isChecked();
+		this.autoCheckPolicy = descriptor.getAutoCheckPolicy();
+		this.autoCheckMode = autoCheckPolicy != TreeAutoCheckPolicy.OFF && descriptor.isChecked();
 
 		this.controlDelegate = new ControlDelegate(widgetSpi, this);
 
@@ -384,6 +389,17 @@ public class TreeImpl extends AbstractControlSpiWrapper implements ITree, IDropS
 
 	public void unRegisterNode(final TreeNodeImpl node) {
 		nodes.remove(node.getWidget());
+		if (checkedNode == node) {
+			checkedNode = null;
+		}
+	}
+
+	void setCheckedNode(final TreeNodeImpl node) {
+		this.checkedNode = node;
+	}
+
+	TreeNodeImpl getCheckedNode() {
+		return checkedNode;
 	}
 
 	public IImageConstant getDefaultInnerIcon() {
@@ -404,6 +420,10 @@ public class TreeImpl extends AbstractControlSpiWrapper implements ITree, IDropS
 
 	boolean getAutoCheckMode() {
 		return autoCheckMode;
+	}
+
+	TreeAutoCheckPolicy getAutoCheckPolicy() {
+		return autoCheckPolicy;
 	}
 
 	private void afterSelectionChanged() {

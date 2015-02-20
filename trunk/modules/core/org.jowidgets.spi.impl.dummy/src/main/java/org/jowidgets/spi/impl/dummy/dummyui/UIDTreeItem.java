@@ -36,9 +36,14 @@ public class UIDTreeItem extends UIDComponent {
 	private boolean expanded;
 	private boolean checked;
 	private boolean greyed;
+	private boolean checkable;
 	private String text;
 	private IImageConstant icon;
 	private Markup markup;
+
+	public UIDTreeItem() {
+		this.checkable = true;
+	}
 
 	public boolean isExpanded() {
 		return expanded;
@@ -86,5 +91,13 @@ public class UIDTreeItem extends UIDComponent {
 
 	public boolean isGreyed() {
 		return greyed;
+	}
+
+	public void setCheckable(final boolean checkable) {
+		this.checkable = checkable;
+	}
+
+	public boolean isCheckable() {
+		return checkable;
 	}
 }

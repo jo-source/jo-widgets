@@ -48,6 +48,10 @@ public interface ITreeNodeModel<VALUE_TYPE> extends ITreeNodeModelObservable {
 
 	void setCheckedState(CheckedState state);
 
+	void setCheckable(boolean checkable);
+
+	boolean isCheckable();
+
 	boolean isExpanded();
 
 	void setExpanded(boolean expanded);

@@ -28,72 +28,74 @@
 
 package org.jowidgets.tools.model.tree;
 
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.Set;
-
 import org.jowidgets.api.model.tree.ITreeNodeModelListener;
 import org.jowidgets.api.model.tree.ITreeNodeModelObservable;
-import org.jowidgets.util.Assert;
+import org.jowidgets.util.collection.IObserverSet;
+import org.jowidgets.util.collection.IObserverSetFactory.Strategy;
+import org.jowidgets.util.collection.ObserverSetFactory;
 
 public class TreeNodeModelObservable implements ITreeNodeModelObservable {
 
-	private final Set<ITreeNodeModelListener> listeners;
+	private final IObserverSet<ITreeNodeModelListener> listeners;
 
 	public TreeNodeModelObservable() {
-		this.listeners = new LinkedHashSet<ITreeNodeModelListener>();
+		this.listeners = ObserverSetFactory.create(Strategy.HIGH_PERFORMANCE);
 	}
 
 	@Override
 	public final void addTreeNodeModelListener(final ITreeNodeModelListener listener) {
-		Assert.paramNotNull(listener, "listener");
 		listeners.add(listener);
 	}
 
 	@Override
 	public final void removeTreeNodeModelListener(final ITreeNodeModelListener listener) {
-		Assert.paramNotNull(listener, "listener");
 		listeners.remove(listener);
 	}
 
 	public final void fireDataChanged() {
-		for (final ITreeNodeModelListener listener : new LinkedList<ITreeNodeModelListener>(listeners)) {
+		for (final ITreeNodeModelListener listener : listeners) {
 			listener.dataChanged();
 		}
 	}
 
 	public final void fireChildrenChanged() {
-		for (final ITreeNodeModelListener listener : new LinkedList<ITreeNodeModelListener>(listeners)) {
+		for (final ITreeNodeModelListener listener : listeners) {
 			listener.childrenChanged();
 		}
 	}
 
 	public final void fireSelectionChanged() {
-		for (final ITreeNodeModelListener listener : new LinkedList<ITreeNodeModelListener>(listeners)) {
+		for (final ITreeNodeModelListener listener : listeners) {
 			listener.selectionChanged();
 		}
 	}
 
 	public final void fireCheckedChanged() {
-		for (final ITreeNodeModelListener listener : new LinkedList<ITreeNodeModelListener>(listeners)) {
+		for (final ITreeNodeModelListener listener : listeners) {
 			listener.checkedChanged();
 		}
 	}
 
+	public final void fireCheckableChanged() {
+		for (final ITreeNodeModelListener listener : listeners) {
+			listener.checkableChanged();
+		}
+	}
+
 	public final void fireExpansionChanged() {
-		for (final ITreeNodeModelListener listener : new LinkedList<ITreeNodeModelListener>(listeners)) {
+		for (final ITreeNodeModelListener listener : listeners) {
 			listener.expansionChanged();
 		}
 	}
 
 	public final void fireVisibilityChanged() {
-		for (final ITreeNodeModelListener listener : new LinkedList<ITreeNodeModelListener>(listeners)) {
+		for (final ITreeNodeModelListener listener : listeners) {
 			listener.visibilityChanged();
 		}
 	}
 
 	public final void fireDisposed() {
-		for (final ITreeNodeModelListener listener : new LinkedList<ITreeNodeModelListener>(listeners)) {
+		for (final ITreeNodeModelListener listener : listeners) {
 			listener.dataChanged();
 		}
 	}
