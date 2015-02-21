@@ -25,20 +25,16 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.examples.swing;
+package org.jowidgets.examples.swt;
 
-import javax.swing.UIManager;
+import org.jowidgets.examples.common.tree.demo2.TreeViewerDemo2;
 
-import org.jowidgets.examples.common.tree.demo1.TreeViewerDemo1;
+public final class SwtTreeViewerDemo2Starter {
 
-public final class SwingTreeViewerDemoStarter {
-
-	private SwingTreeViewerDemoStarter() {}
+	private SwtTreeViewerDemo2Starter() {}
 
 	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		new TreeViewerDemo1().start();
+		new TreeViewerDemo2().start();
 	}
 
 }

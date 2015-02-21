@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.examples.common.tree;
+package org.jowidgets.examples.common.tree.demo1;
 
 import org.jowidgets.api.command.CheckTreeAction;
 import org.jowidgets.api.command.CollapseTreeAction;
@@ -48,7 +48,7 @@ import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 
-public final class TreeViewerDemo implements IApplication {
+public final class TreeViewerDemo1 implements IApplication {
 
 	@Override
 	public void start(final IApplicationLifecycle lifecycle) {
