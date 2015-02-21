@@ -26,16 +26,16 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.tree;
+package org.jowidgets.examples.common.tree.demo1;
 
 import org.jowidgets.api.model.tree.ITreeNodeModel;
 
-public final class Level2NodeModel extends AbstractStringNodeModel {
+public final class Level1NodeModel extends AbstractStringNodeModel {
 
-	private static final int CHILD_COUNT = 2;
-	private static final String PREFIX = "Level 3, Node ";
+	private static final int CHILD_COUNT = 3;
+	private static final String PREFIX = "Level 2, Node ";
 
-	Level2NodeModel(final String data) {
+	Level1NodeModel(final String data) {
 		super(data);
 	}
 
@@ -46,7 +46,7 @@ public final class Level2NodeModel extends AbstractStringNodeModel {
 
 	@Override
 	public ITreeNodeModel<String> getChildNode(final int index) {
-		return new Level3NodeModel(PREFIX + (index + 1));
+		return new Level2NodeModel(PREFIX + (index + 1));
 	}
 
 }

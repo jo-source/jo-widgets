@@ -27,14 +27,14 @@
  */
 package org.jowidgets.examples.swt;
 
-import org.jowidgets.examples.common.tree.TreeViewerDemo;
+import org.jowidgets.examples.common.tree.demo1.TreeViewerDemo1;
 
 public final class SwtTreeViewerDemoStarter {
 
 	private SwtTreeViewerDemoStarter() {}
 
 	public static void main(final String[] args) throws Exception {
-		new TreeViewerDemo().start();
+		new TreeViewerDemo1().start();
 	}
 
 }

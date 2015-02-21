@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.tree;
+package org.jowidgets.examples.common.tree.demo1;
 
 import org.jowidgets.api.model.tree.ITreeNodeModel;
 import org.jowidgets.api.model.tree.ITreeNodeRenderer;

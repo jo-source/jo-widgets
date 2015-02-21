@@ -1,22 +1,22 @@
 /*
- * Copyright (c) 2014, grossmann
+ * Copyright (c) 2014, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  * * Redistributions of source code must retain the above copyright
- *   notice, this list of conditions and the following disclaimer.
+ * notice, this list of conditions and the following disclaimer.
  * * Redistributions in binary form must reproduce the above copyright
- *   notice, this list of conditions and the following disclaimer in the
- *   documentation and/or other materials provided with the distribution.
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
  * * Neither the name of the jo-widgets.org nor the
- *   names of its contributors may be used to endorse or promote products
- *   derived from this software without specific prior written permission.
+ * names of its contributors may be used to endorse or promote products
+ * derived from this software without specific prior written permission.
  * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL jo-widgets.org BE LIABLE FOR ANY
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY
  * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
  * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
@@ -25,28 +25,20 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
+package org.jowidgets.examples.swing;
 
-package org.jowidgets.examples.common.tree;
+import javax.swing.UIManager;
 
-import org.jowidgets.api.model.tree.ITreeNodeModel;
+import org.jowidgets.examples.common.tree.demo2.TreeViewerDemo2;
 
-public final class Level3NodeModel extends AbstractStringNodeModel {
+public final class SwingTreeViewerDemo2Starter {
 
-	private static final int CHILD_COUNT = 2;
-	private static final String PREFIX = "Level 4, Node ";
+	private SwingTreeViewerDemo2Starter() {}
 
-	Level3NodeModel(final String data) {
-		super(data);
-	}
-
-	@Override
-	public int getChildrenCount() {
-		return CHILD_COUNT;
-	}
-
-	@Override
-	public ITreeNodeModel<String> getChildNode(final int index) {
-		return new Level4NodeModel(PREFIX + (index + 1));
+	public static void main(final String[] args) throws Exception {
+		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		System.setProperty("apple.laf.useScreenMenuBar", "true");
+		new TreeViewerDemo2().start();
 	}
 
 }
