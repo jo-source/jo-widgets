@@ -42,13 +42,13 @@ import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.impl.layout.miglayout.common.AC;
-import org.jowidgets.impl.layout.miglayout.common.CC;
-import org.jowidgets.impl.layout.miglayout.common.IComponentWrapper;
-import org.jowidgets.impl.layout.miglayout.common.ConstraintParser;
-import org.jowidgets.impl.layout.miglayout.common.IContainerWrapper;
-import org.jowidgets.impl.layout.miglayout.common.Grid;
-import org.jowidgets.impl.layout.miglayout.common.LC;
 import org.jowidgets.impl.layout.miglayout.common.AbstractLayoutCallback;
+import org.jowidgets.impl.layout.miglayout.common.CC;
+import org.jowidgets.impl.layout.miglayout.common.ConstraintParser;
+import org.jowidgets.impl.layout.miglayout.common.Grid;
+import org.jowidgets.impl.layout.miglayout.common.IComponentWrapper;
+import org.jowidgets.impl.layout.miglayout.common.IContainerWrapper;
+import org.jowidgets.impl.layout.miglayout.common.LC;
 import org.jowidgets.impl.layout.miglayout.common.LayoutUtil;
 
 final class MigLayout implements IMigLayout {
@@ -249,7 +249,7 @@ final class MigLayout implements IMigLayout {
 	}
 
 	private void checkChildren() {
-		final List<IControl> comps = container.getChildren();
+		final List<IControl> comps = new LinkedList<IControl>(container.getChildren());
 
 		final List<IComponentWrapper> removed = new LinkedList<IComponentWrapper>();
 		for (final IComponentWrapper cw : ccMap.keySet()) {
