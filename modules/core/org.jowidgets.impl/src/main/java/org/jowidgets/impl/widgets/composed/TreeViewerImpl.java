@@ -51,6 +51,7 @@ import org.jowidgets.tools.controller.TreeNodeAdapter;
 import org.jowidgets.tools.model.tree.TreeNodeModelAdapter;
 import org.jowidgets.tools.widgets.wrapper.TreeWrapper;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.ICallback;
 import org.jowidgets.util.NullCompatibleEquivalence;
 
 public final class TreeViewerImpl<ROOT_NODE_VALUE_TYPE> extends TreeWrapper implements ITreeViewer<ROOT_NODE_VALUE_TYPE> {
@@ -63,6 +64,7 @@ public final class TreeViewerImpl<ROOT_NODE_VALUE_TYPE> extends TreeWrapper impl
 	private final TreeViewerCreationPolicy creationPolicy;
 	private final Integer pageSize;
 	private final boolean autoCheckMode;
+	private final TreeAutoCheckPolicy autoCheckPolicy;
 
 	private final Map<ITreeContainer, ModelNodeBinding> bindings;
 
@@ -73,7 +75,8 @@ public final class TreeViewerImpl<ROOT_NODE_VALUE_TYPE> extends TreeWrapper impl
 		this.rootNodeModel = setup.getRootNodeModel();
 		this.creationPolicy = setup.getCreationPolicy();
 		this.pageSize = setup.getPageSize();
-		this.autoCheckMode = setup.getAutoCheckPolicy() != TreeAutoCheckPolicy.OFF && setup.isChecked();
+		this.autoCheckPolicy = setup.getAutoCheckPolicy();
+		this.autoCheckMode = autoCheckPolicy != TreeAutoCheckPolicy.OFF && setup.isChecked();
 		this.bindings = new HashMap<ITreeContainer, TreeViewerImpl<ROOT_NODE_VALUE_TYPE>.ModelNodeBinding>();
 
 		final ModelNodeBinding rootBinding = new ModelNodeBinding(tree, rootNodeModel);
@@ -142,7 +145,9 @@ public final class TreeViewerImpl<ROOT_NODE_VALUE_TYPE> extends TreeWrapper impl
 						onChildrenChanged();
 					}
 					else {
-						parentNode.addNode().setText(DUMMY_NODE_NAME);
+						final ITreeNode dummyNode = parentNode.addNode();
+						dummyNode.setText(DUMMY_NODE_NAME);
+						dummyNode.addTreeNodeListener(new DummyNodeListener(dummyNode));
 						if (parentNodeModel.getChildrenCount() > 1) {
 							//add a second dummy node for consistency with single path auto check mode
 							parentNode.addNode().setText(DUMMY_NODE_NAME);
@@ -413,6 +418,59 @@ public final class TreeViewerImpl<ROOT_NODE_VALUE_TYPE> extends TreeWrapper impl
 				renderCheckedChanged(parentNodeModel, treeNode);
 			}
 
+		}
+
+		private final class DummyNodeListener extends TreeNodeAdapter {
+
+			private final ITreeNode dummyNode;
+
+			private DummyNodeListener(final ITreeNode dummyNode) {
+				Assert.paramNotNull(dummyNode, "dummyNode");
+				this.dummyNode = dummyNode;
+				onCheckedChanged();
+			}
+
+			@Override
+			public void checkedChanged(final boolean checked) {
+				onCheckedChanged();
+			}
+
+			private void onCheckedChanged() {
+				final CheckedState checkedState = dummyNode.getCheckedState();
+				if (CheckedState.UNCHECKED.equals(checkedState)) {
+					invokeOnChildren(parentNodeModel, false, new ICallback<ITreeNodeModel<?>>() {
+						@Override
+						public void call(final ITreeNodeModel<?> model) {
+							model.setCheckedState(CheckedState.UNCHECKED);
+						}
+					});
+				}
+				else if (CheckedState.CHECKED.equals(checkedState)) {
+					final boolean firstChildOnly = TreeAutoCheckPolicy.SINGLE_PATH.equals(autoCheckPolicy);
+					invokeOnChildren(parentNodeModel, firstChildOnly, new ICallback<ITreeNodeModel<?>>() {
+						@Override
+						public void call(final ITreeNodeModel<?> model) {
+							model.setCheckedState(CheckedState.CHECKED);
+						}
+					});
+				}
+			}
+
+			private void invokeOnChildren(
+				final ITreeNodeModel<?> node,
+				final boolean firstChildOnly,
+				final ICallback<ITreeNodeModel<?>> callback) {
+				for (int i = 0; i < node.getChildrenCount(); i++) {
+					final ITreeNodeModel<?> childNode = node.getChildNode(i);
+					if (childNode.isCheckable()) {
+						callback.call(childNode);
+						invokeOnChildren(childNode, firstChildOnly, callback);
+						if (firstChildOnly) {
+							break;
+						}
+					}
+				}
+			}
 		}
 
 	}
