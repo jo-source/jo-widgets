@@ -169,6 +169,9 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi, IDro
 		final SelectionListener selectionListener = new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
+				if (e.item.isDisposed()) {
+					return;
+				}
 				if (e.detail == SWT.CHECK) {
 					final TreeNodeImpl itemImpl = items.get(e.item);
 
