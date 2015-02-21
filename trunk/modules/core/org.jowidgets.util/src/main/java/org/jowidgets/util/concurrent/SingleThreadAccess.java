@@ -145,8 +145,8 @@ public final class SingleThreadAccess implements ISingleThreadAccess {
 
 		@Override
 		public void run() {
-			while (running.get()) {
-				try {
+			try {
+				while (running.get()) {
 					if (paused.get()) {
 						Thread.sleep(SLEEP_TIME);
 					}
@@ -162,17 +162,16 @@ public final class SingleThreadAccess implements ISingleThreadAccess {
 						}
 					}
 				}
-				catch (final InterruptedException e) {
-					throw new RuntimeException(e);
-				}
-				finally {
-					running.set(false);
-				}
 			}
-			events.clear();
-			singleThread = null;
+			catch (final InterruptedException e) {
+				uncaughtExceptionHandler.uncaughtException(Thread.currentThread(), e);
+			}
+			finally {
+				running.set(false);
+				events.clear();
+				singleThread = null;
+			}
 		}
-
 	}
 
 	private final class DefaultUncaughtExeptionHandler implements UncaughtExceptionHandler {
