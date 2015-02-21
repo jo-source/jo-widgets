@@ -165,6 +165,9 @@ public final class SingleThreadAccess implements ISingleThreadAccess {
 				catch (final InterruptedException e) {
 					throw new RuntimeException(e);
 				}
+				finally {
+					running.set(false);
+				}
 			}
 			events.clear();
 			singleThread = null;
