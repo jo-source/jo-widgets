@@ -34,6 +34,7 @@ import java.util.List;
 import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
+import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IFrame;
@@ -235,6 +236,34 @@ public class WidgetDisposeTest {
 
 				frame.dispose();
 
+				testDisposeListenerCount();
+			}
+		});
+	}
+
+	@Test
+	public void testMultiContainerDisposal() {
+		Toolkit.getApplicationRunner().run(new IApplication() {
+
+			@Override
+			public void start(final IApplicationLifecycle lifecycle) {
+
+				final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
+				frame.addDisposeListener(new DisposeListener(frame));
+
+				frame.setVisible(true);
+
+				final IComposite parentComposite = frame.add(BPF.composite());
+				parentComposite.addDisposeListener(new DisposeListener(parentComposite));
+
+				final IComposite childComposite = parentComposite.add(BPF.composite());
+				childComposite.addDisposeListener(new DisposeListener(childComposite));
+
+				childComposite.dispose();
+
+				Assert.assertFalse(parentComposite.getChildren().contains(childComposite));
+
+				frame.dispose();
 				testDisposeListenerCount();
 			}
 		});

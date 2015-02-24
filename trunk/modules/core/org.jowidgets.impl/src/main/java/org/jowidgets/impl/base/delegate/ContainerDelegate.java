@@ -118,7 +118,7 @@ public class ContainerDelegate extends DisposableDelegate {
 				&& !onRemoveByDispose) {
 
 				onRemoveByDispose = true;
-				(((IControl) container).getParent()).getChildren().remove(container); //this will invoke dispose by the parent container
+				(((IControl) container).getParent()).remove((IControl) container); //this will invoke dispose by the parent container
 				onRemoveByDispose = false;
 			}
 			else {
