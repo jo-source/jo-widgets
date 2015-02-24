@@ -27,6 +27,7 @@
  */
 package org.jowidgets.helloworld.common;
 
+import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IFrame;
@@ -36,7 +37,10 @@ import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controller.IActionListener;
+import org.jowidgets.common.widgets.controller.IItemStateListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.model.item.MenuBarModel;
+import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class HelloWorldApplication implements IApplication {
@@ -71,6 +75,38 @@ public final class HelloWorldApplication implements IApplication {
 				System.out.println("Hello World");
 			}
 		});
+
+		//		final IPopupMenu menu = frame.createPopupMenu();
+		//		final ISelectableMenuItem option = menu.addItem(BPF.checkedMenuItem("My option"));
+		//		frame.addPopupDetectionListener(new IPopupDetectionListener() {
+		//			@Override
+		//			public void popupDetected(final Position position) {
+		//				menu.show(position);
+		//			}
+		//		});
+		//		option.addItemListener(new IItemStateListener() {
+		//			@Override
+		//			public void itemStateChanged() {
+		//				System.out.println("My option selected: " + option.isSelected());
+		//			}
+		//		});
+
+		final MenuModel menu = new MenuModel();
+
+		final ICheckedItemModel option = menu.addCheckedItem("My option");
+		option.addItemListener(new IItemStateListener() {
+			@Override
+			public void itemStateChanged() {
+				System.out.println("My option selected: " + option.isSelected());
+			}
+		});
+
+		frame.setPopupMenu(menu);
+
+		menu.setText("Main Menu");
+		final MenuBarModel menuBar = new MenuBarModel();
+		menuBar.addMenu(menu);
+		frame.setMenuBar(menuBar);
 
 		//set the root frame visible
 		frame.setVisible(true);
