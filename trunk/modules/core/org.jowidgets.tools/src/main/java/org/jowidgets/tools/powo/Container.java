@@ -357,6 +357,13 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 		}
 	}
 
+	@Override
+	public <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(
+		final int index,
+		final IWidgetDescriptor<? extends M_WIDGET_TYPE> descriptor) {
+		return add(index, descriptor, null);
+	}
+
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public final <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(
@@ -505,6 +512,11 @@ class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetD
 		final Object layoutConstraints) {
 		checkInitialized();
 		return getWidget().add(index, creator, layoutConstraints);
+	}
+
+	@Override
+	public <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(final int index, final ICustomWidgetCreator<M_WIDGET_TYPE> creator) {
+		return add(index, creator, null);
 	}
 
 	@Override

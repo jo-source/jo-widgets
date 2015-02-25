@@ -434,6 +434,13 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 
 	@Override
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final int index,
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+		return add(index, descriptor, null);
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {
 
@@ -450,6 +457,11 @@ public class InputCompositeImpl<INPUT_TYPE> extends ControlWrapper implements II
 		final WIDGET_TYPE result = innerComposite.add(creator, layoutConstraints);
 		afterAdd(null, result);
 		return result;
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final int index, final ICustomWidgetCreator<WIDGET_TYPE> creator) {
+		return add(index, creator, null);
 	}
 
 	@Override

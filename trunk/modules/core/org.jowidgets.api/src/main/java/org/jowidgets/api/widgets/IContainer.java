@@ -118,6 +118,17 @@ public interface IContainer extends IComponent, IContainerObservable, IRecursive
 		Object layoutConstraints);
 
 	/**
+	 * Creates and adds an control to this container.
+	 * 
+	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
+	 * @param index The index at which the control should be added in the container
+	 * @param descriptor The descriptor that describes the control to add
+	 * 
+	 * @return the created and added control
+	 */
+	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(int index, IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
+
+	/**
 	 * Creates and adds an control to this container
 	 * 
 	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
@@ -128,6 +139,17 @@ public interface IContainer extends IComponent, IContainerObservable, IRecursive
 	 * @return the created and added control
 	 */
 	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(int index, ICustomWidgetCreator<WIDGET_TYPE> creator, Object layoutConstraints);
+
+	/**
+	 * Creates and adds an control to this container
+	 * 
+	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
+	 * @param index The index at which the control should be added in the container
+	 * @param creator The creator that creates the control
+	 * 
+	 * @return the created and added control
+	 */
+	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(int index, ICustomWidgetCreator<WIDGET_TYPE> creator);
 
 	/**
 	 * Creates and adds an control to this container.

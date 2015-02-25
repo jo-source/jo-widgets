@@ -348,6 +348,18 @@ public final class ExpandCompositeImpl extends ControlWrapper implements IExpand
 	}
 
 	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final int index, final ICustomWidgetCreator<WIDGET_TYPE> creator) {
+		return content.add(index, creator);
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final int index,
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+		return content.add(index, descriptor);
+	}
+
+	@Override
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
 		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
 		final Object layoutConstraints) {

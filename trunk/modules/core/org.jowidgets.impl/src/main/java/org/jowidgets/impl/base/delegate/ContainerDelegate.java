@@ -298,9 +298,19 @@ public class ContainerDelegate extends DisposableDelegate {
 
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
 		final int index,
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+		return add(index, descriptor, null);
+	}
+
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final int index,
 		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
 		return add(Integer.valueOf(index), creator, layoutConstraints);
+	}
+
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final int index, final ICustomWidgetCreator<WIDGET_TYPE> creator) {
+		return add(Integer.valueOf(index), creator, null);
 	}
 
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
