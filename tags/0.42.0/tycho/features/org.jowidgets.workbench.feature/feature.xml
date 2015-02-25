@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+    id="org.jowidgets.workbench.feature"
+    label="jowidgets workbench feature"
+    version="0.42.0.qualifier">
+
+	<description url="http://www.example.com/description">
+		Holds the bundles for using the jowidgets workbench
+	</description>
+
+	<copyright url="http://www.example.com/copyright">
+		org.jowidgets Michael Grossmann 2014
+	</copyright>
+
+	<license url="http://www.example.com/license">
+		BSD Licence
+	</license>
+
+	<plugin
+         id="org.jowidgets.workbench.api.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.workbench.toolkit.api.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.workbench.tools.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.workbench.impl.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.workbench.impl.rcp.plugin"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+	<plugin
+         id="org.jowidgets.tools.starter.workbench.osgi.plugin"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/> 
+		 
+	<plugin
+         id="org.jowidgets.tools.starter.workbench.rcp.plugin"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/> 
+		 
+</feature>
