@@ -137,11 +137,15 @@ public class LabelImpl extends ControlWrapper implements ILabel {
 
 	@Override
 	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+		textLabelWidget.addPopupDetectionListener(listener);
+		iconWidget.addPopupDetectionListener(listener);
 		composite.addPopupDetectionListener(listener);
 	}
 
 	@Override
 	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+		textLabelWidget.removePopupDetectionListener(listener);
+		iconWidget.removePopupDetectionListener(listener);
 		composite.removePopupDetectionListener(listener);
 	}
 
