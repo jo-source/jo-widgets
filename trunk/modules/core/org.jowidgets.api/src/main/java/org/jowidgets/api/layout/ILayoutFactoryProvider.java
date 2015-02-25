@@ -167,7 +167,7 @@ public interface ILayoutFactoryProvider {
 	 * 
 	 * A ListLayout is kind of a vertical Flow Layout
 	 * 
-	 * @return A layout factory that produces 'BorderLayouts'
+	 * @return A layout factory that produces 'ListLayouts'
 	 */
 	ILayoutFactory<ILayouter> listLayout();
 
