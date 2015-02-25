@@ -18,7 +18,7 @@ Unter [http://www.jowidgets.org/api_doc/][API_DOC] ist die jowidgets API Spezifi
 Im Rahmen der Jowidgets Entwicklung wurden mehrere Bachelorarbeiten zum Thema angefertigt. Die folgende Liste enthält eine Auswahl:
 
   * [Erweiterung von Layout-Manager Konzepten für Jo Widgets](ba_nm.pdf)
-  * [Entwicklung eines Prototyps einer Test-Bibliothek zum GUI Framework Jo Widgets für automatisierte Tests](ba_nm.pdf)
+  * [Entwicklung eines Prototyps einer Test-Bibliothek zum GUI Framework Jo Widgets für automatisierte Tests](ba_lg.pdf)
   * [Evaluierung der Eignung von JavaFX 2 als UI Technologie für das GUI-Framework Jo Widgets anhand einer prototypischen Implementierung des Jo Widgets Service Provider Interfaces](ba_db.pdf)
 
 ## Lizenz
@@ -2150,11 +2150,11 @@ Mittels der folgenden Methoden können die Default Größen für ein Control erm
 	Dimension getMaxSize(); 
 ~~~
 
-Die Methoden dürfen nicht `null` zurückgeben. Werden eigene Controls entworfen, sollte darauf geachtet werden, _sinnvolle_Default Größen zu liefern.
+Die Methoden dürfen nicht `null` zurückgeben. Werden eigene Controls entworfen, sollte darauf geachtet werden, _sinnvolle_ Default Größen zu liefern.
 
 Die `MinSize` definiert die minimale Größe, die ein Control haben soll, damit es sinnvoll angezeigt werden kann. Die `PreferredSize` gibt an, wie groß ein Control sein soll, um es optimal anzuzeigen. Die `MaxSize` definiert, wie groß ein Control maximal angezeigt werden soll. Die Default Größen können sich zur Laufzeit ändern. So ändert sich Beispielsweise die `PreferredSize` eines Textfeldes abhängig vom gesetzten Text.
 
-Einige Layouter wie zum Beispiel [Mig Layout](#mig_layout) bieten die Möglichkeit, die Default Größen mit Hilfe von Constraints zu überschreiben . Die MigLayout Constraints `"w 0:100:200"` setzen zum Beispiel die `MinWidth` auf `0`, die `PreferredWidth` auf `100` und die `MaxWidth` auf `200`, unabhängig davon, was die Methoden `getMinSize()`, `getPreferredSize()` und `getMaxSize()` für Werte zurückliefern. Andere Layouter wie zum Beispiel das FillLayout ignorieren die Default Größen vollständig.
+Einige Layouter wie zum Beispiel [Mig Layout](#mig_layout) bieten die Möglichkeit, die Default Größen mit Hilfe von Constraints zu überschreiben. Die MigLayout Constraints `"w 0:100:200"` setzen zum Beispiel die `MinWidth` auf `0`, die `PreferredWidth` auf `100` und die `MaxWidth` auf `200`, unabhängig davon, was die Methoden `getMinSize()`, `getPreferredSize()` und `getMaxSize()` für Werte zurückliefern. Andere Layouter wie zum Beispiel das FillLayout ignorieren die Default Größen vollständig.
 
 Mit Hilfe der folgenden Methoden können die Default Größen eines Controls geändert werden:
 
@@ -2217,7 +2217,7 @@ Die vordefinierten Layouts von Jowidgets implementieren die `ILayoutFactory` Sch
 
 Mig Layout ist ein freier, von der Firma MiG InfoCom AB entwickelter Layout Manager, der unter BSD Lizenz steht. Es existieren Implementierungen für Swing, Swt und Java FX 2. Der Layout Manager hat einen sehr flexiblen Grid basierten Layout Ansatz und eignet sich für sehr viele Anwendungsfälle. Insbesondere ist damit die Erstellung von formularbasierten Masken sehr intuitiv und einfach umzusetzen.   
 
-Um Mig Layout in Kombination mit jowidgets zu verwenden, wird empfohlen, vorab den MigLayout QuickStart Guide unter [http://www.miglayout.com/](http://www.miglayout.com/) zu studieren. 
+Um Mig Layout in Kombination mit jowidgets zu verwenden, wird empfohlen, vorab den MigLayout __Quick Start Guide__ unter [http://www.miglayout.com/](http://www.miglayout.com/) zu studieren. 
 
 Die Klasse `org.jowidgets.common.widgets.layout.MigLayoutDescriptor` bietet die Möglichkeit, die `LayoutConstraints`, `RowConstraints` und `ColumnConstraints` für das Layout festzulegen. Die Constraints haben die gleiche Bedeutung wie in den Klassen `net.miginfocom.swt.MigLayout` oder `net.miginfocom.swing.MigLayout`.
 
