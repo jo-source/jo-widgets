@@ -4,6 +4,9 @@ if exist docu (
 mkdir docu
 copy style.css docu\style.css
 copy pandoc_out\Dokumentation.pdf docu\documentation.pdf
+copy ba_db.pdf docu\ba_db.pdf
+copy ba_lg.pdf docu\ba_lg.pdf
+copy ba_nm.pdf docu\ba_nm.pdf
 xcopy images docu\images\ 
 javac DocBookPostProcessor.java
 java DocBookPostProcessor pandoc_out/Dokumentation.db pandoc_out/Dokumentation_processed.db

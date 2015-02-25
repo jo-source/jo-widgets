@@ -13,6 +13,14 @@ Das Dokument ist sowohl als [PDF Version](documentation.pdf) als auch online unt
 
 Unter [http://www.jowidgets.org/api_doc/][API_DOC] ist die jowidgets API Spezifikation zu finden. 
 
+## Bachelorarbeiten
+
+Im Rahmen der Jowidgets Entwicklung wurden mehrere Bachelorarbeiten zum Thema angefertigt. Die folgende Liste enthält eine Auswahl:
+
+  * [Erweiterung von Layout-Manager Konzepten für Jo Widgets](ba_nm.pdf)
+  * [Entwicklung eines Prototyps einer Test-Bibliothek zum GUI Framework Jo Widgets für automatisierte Tests](ba_nm.pdf)
+  * [Evaluierung der Eignung von JavaFX 2 als UI Technologie für das GUI-Framework Jo Widgets anhand einer prototypischen Implementierung des Jo Widgets Service Provider Interfaces](ba_db.pdf)
+
 ## Lizenz
 
 Jowidgets steht unter der [BSD Lizenz](https://www.freebsd.org/copyright/freebsd-license.html) und kann somit sowohl für kommerzielle als auch für nicht kommerzielle Zwecke frei verwendet werden.
@@ -27,13 +35,13 @@ Die Erfahrung bei der Entwicklung von graphischen Oberflächen in unterschiedlic
 
 Hierzu ein kleines Beispiel. In einer Eingabemaske soll in ein Eingabefeld eine Zahl eingegeben werden. Die Eingabe soll validiert werden, und der Nutzer soll ein möglichst für ihn verständliches Feedback bekommen, wenn etwas falsch ist. Für die Eingabe bietet Swing ein `JTextField`. Dieses liefert aber einen String und keine Zahl zurück, das heißt der Wert muss erst konvertiert werden. Für die Anzeige des Validierungsfeedback könnte man in Swing ein `JLabel` verwenden. Da man Anwendungsfälle wie die Eingabe von Zahlen, Eingabe eines Datum, Anzeige von Validierungsfehlern, etc. in sehr vielen Softwarehäusern vorfindet, existieren vermutlich auch in jeder dieser firmeninternen UI Bibliothek Widgets wie: `InputNumberField`, `ValidatedInputNumberField`, `ValidatedDateField`, `ValidationLabel` usw.. Wer sich hier _wieder findet_ oder wer vielleicht selbst schon mal solch ein Widget implementiert oder verwendet hat, für den könnte jowidgets möglicherweise genau _das richtige_ UI Framework sein. 
 
-Im Vergleich zu herkömmlichen Technologien wie _Swing_, oder _JavaFx_ liefert jowidgets kein eigenständiges Rendering für Basiswidgets ^[Wie zum Beispiel Frame, Dialog, Composite, Button, TextField, ...], sondern lediglich Adapter, welche die jowidgets Widget Schnittstellen implementieren. Dadurch ist es möglich, UI Code, welcher gegen das jowidgets API implementiert wurde, mit quasi jedem Java UI Framework auszuführen. Derzeit existieren Adapter (SPI Implementierungen, siehe  [Architektur](#architecture)) für [Swing](http://www.java-tutorial.org/swing.html), [SWT](http://eclipse.org/swt/) und [RWT](http://eclipse.org/rap/). Dadurch ist es sogar möglich, eine jowidgets Applikation als [Webapplikation](#jowidgets_rap) im Browser auszuführen. Eine _JavaFx_ Adapter Implementierung wurde im Rahmen einer Diplomarbeit prototypisch umgesetzt. Es existieren Bundle Manifeste für OSGi, so dass auch ein Einsatz in [Eclipse RCP](https://eclipse.org/) (siehe [Jowidgets und RCP](#jowidgets_rcp)) ohne weiters möglich ist.
+Im Vergleich zu herkömmlichen Technologien wie _Swing_, oder _JavaFx_ liefert jowidgets kein eigenständiges Rendering für Basiswidgets ^[Wie zum Beispiel Frame, Dialog, Composite, Button, TextField, ...], sondern lediglich Adapter, welche die jowidgets Widget Schnittstellen implementieren. Dadurch ist es möglich, UI Code, welcher gegen das jowidgets API implementiert wurde, mit quasi jedem Java UI Framework auszuführen. Derzeit existieren Adapter (SPI Implementierungen, siehe  [Architektur](#architecture)) für [Swing](http://www.java-tutorial.org/swing.html), [SWT](http://eclipse.org/swt/) und [RWT](http://eclipse.org/rap/). Dadurch ist es sogar möglich, eine jowidgets Applikation als [Webapplikation](#jowidgets_rap) im Browser auszuführen. Eine _JavaFx_ Adapter Implementierung wurde im Rahmen einer [Bachelorarbeit](ba_db.pdf) prototypisch umgesetzt. Es existieren Bundle Manifeste für OSGi, so dass auch ein Einsatz in [Eclipse RCP](https://eclipse.org/) (siehe [Jowidgets und RCP](#jowidgets_rcp)) ohne weiters möglich ist.
 
 Aufbauend auf den Basiswidgets existieren wie bereits weiter oben angedeutet zusätzliche Composite Widgets und Features, welche sich in herkömmlichen UI-Frameworks nicht finden. Zwei davon sollen an dieser Stelle exemplarisch vorgestellt werden.  
 
 Beispielsweise gibt es ein generisches [`InputField<VALUE_TYPE>`](#input_field). Dieses hat Methoden wie `VALUE_TYPE getValue()` oder `setValue(VALUE_TYPE value)`. Für Standarddatentypen wie `Integer`, `Long`, `Double`, `Float`, `Date`, etc. existieren bereits Defaultimplementierungen. Im obigen Beispiel würde das Eingabefeld also bereits eine Zahl liefern. Mit Hilfe von Convertern kann aber auch jeder beliebige andere Datentyp unterstützt werden. Für ein `InputField` lassen sich auch beliebige Validatoren definieren. Zudem kann die UI an [`ObservableValues`](#observable_values) gebunden werden. 
 
-Für das nächste Feature betrachten wir noch einmal das vorige Beispiel mit dem Eingabefeld von Zahlen. Für die Validierungsausgabe könnte ein ValidationLabel Widget erstellt worden sein, welches Warnungen und Fehler mit entsprechenden Icons und / oder Fehlertext anzeigen kann. Dabei kann man sowohl die Icons als auch die Farbe konfigurieren, weil Kunde A Fehler nur mit _dezenten_ Farben angzeigt bekommen möchte (laut Aussage seiner Mitarbeiter bekommt man von der standardmäßig verwendeten Farbe _Augenkrämpfe_), Kunde B kann aber Validierungsfehler, die nicht _Fett_ und _Rot_ angezeigt werden, gar nicht wahrnehmen, was die Applikation für ihn unbrauchbar macht. Stellen wir uns nun weiter vor, diese Eingabefelder und Validierungslabels sind in ein Widget mit dem Namen `GenericInputForm` eingebettet, welches sowohl von Kunde A als auch von Kunde B verwendet wird, und stellen wir uns weiter vor, dass die verwendeten Widgets noch weitere Konfigurationsattribute haben, dann müssten diese alle auch für das `GenericInputForm` konfigurierbar sein. Spätestens wenn dieses in ein weiteres Modul eingebettet ist, wird klar, dass dieses Vorgehen schnell unpraktikabel wird. 
+Für das nächste Feature betrachten wir noch einmal das vorige Beispiel mit dem Eingabefeld von Zahlen. Für die Validierungsausgabe könnte ein ValidationLabel Widget erstellt worden sein, welches Warnungen und Fehler mit entsprechenden Icons und / oder Fehlertext anzeigen kann. Dabei kann man sowohl die Icons als auch die Farbe konfigurieren, weil Kunde A Fehler nur mit _dezenten_ Farben angzeigt bekommen möchte (laut Aussage seiner Mitarbeiter bekommt man von der standardmäßig verwendeten Farbe _Augenkrämpfe_), Kunde B kann aber Validierungsfehler, die nicht _fett_ und _rot_ angezeigt werden, gar nicht wahrnehmen, was die Applikation für ihn unbrauchbar macht. Stellen wir uns nun weiter vor, diese Eingabefelder und Validierungslabels sind in ein Widget mit dem Namen `GenericInputForm` eingebettet, welches sowohl von Kunde A als auch von Kunde B verwendet wird, und stellen wir uns weiter vor, dass die verwendeten Widgets noch weitere Konfigurationsattribute haben, dann müssten diese alle auch für das `GenericInputForm` konfigurierbar sein. Spätestens wenn dieses in ein weiteres Modul eingebettet ist, wird klar, dass dieses Vorgehen schnell unpraktikabel wird. 
 
 In jowidgets ist es u.A. für solche Anwendungsfälle möglich, für jedes beliebige Widget die Defaulteinstellungen global _umzudefinieren_ (siehe dazu [Widget Defaults](#widget_defaults)). So könnte man im genannten Beispiel die gleiche Applikation einmal mit _roten_ und einmal mit _grauen_ Validierungslabels ausliefern, ohne dazu die eigentliche Applikation anpassen zu müssen. Mit der gleichen Methode könnte man zum Beispiel auch die Reihenfolge für Buttons in Eingabedialogen anpassen, definieren in welchem Format Datumswerte angezeigt werden sollen, definieren ob Buttons für Speichern und Abbrechen auf jedem Formular oder nur in der Toolbar vorhanden sind, uvm..
 
@@ -50,9 +58,9 @@ Die Schnittstellen der SPI Widgets wurden bewusst _schlank_ gehalten, um das Hin
 
 Dies soll am Vergleich mit dem Eclipse Standard Widget Toolkit (SWT) erläutert werden. Dort findet man eine ähnliche Architekur. Es gibt eine API, welche für verschiedenen Platformen implementiert ist. Die Implementierungen stellen im Prinzip Adapter bereit, welche mittels JNI Methodenaufrufe an das jeweilige native UI Toolkit delegieren.  
 
-Wer SWT kennt, weiß jedoch, dass sich die Verwendung der API zum Teil sehr _"low level" anfühlt_. Will man hingegen eine API Implementierung machen (zum Bespiel für Swing oder JavaFX), sieht aus dieser Perspektive betrachtet die API sehr _mächtig_ und komplex aus. Bei der Definition der Schnittstellen musste immer ein Kompromiss aus einfacher Implementierbarkeit und komfortabler Nutzbarkeit gemacht werden. 
+Wer SWT kennt, weiß jedoch, dass sich die Verwendung der API zum Teil sehr _low level anfühlt_. Will man hingegen eine API Implementierung machen (zum Bespiel für Swing oder JavaFX), sieht aus dieser Perspektive betrachtet die API sehr _mächtig_ und komplex aus. Bei der Definition der Schnittstellen musste immer ein Kompromiss aus einfacher Implementierbarkeit und komfortabler Nutzbarkeit gemacht werden. 
 
-Durch die Aufteilung in API und SPI kann die API _"mächtige"_ Funktionen enthalten, welche aber nur ein mal implementiert werden müssen. Auf der anderen Seite ist eine SPI Implementierung für eine neue UI Technologie keine allzu komplexes Aufgabe, was die Option bietet, geschrieben UI Code auch für zukünftige UI Technologien wiederzuverwenden.
+Durch die Aufteilung in API und SPI kann die API _mächtige_ Funktionen enthalten, welche aber nur ein mal implementiert werden müssen. Auf der anderen Seite ist eine SPI Implementierung für eine neue UI Technologie keine allzu komplexes Aufgabe, was die Option bietet, geschrieben UI Code auch für zukünftige UI Technologien wiederzuverwenden.
 
 Im diesem Kontext liegt vielleicht der Vergleich nahe, die jowidgets SPI mit SWT zu vergleichen, und die jowidgets API mit [JFace](https://wiki.eclipse.org/JFace). Dieser Vergleich ist jedoch nicht ganz korrekt, denn:
 
@@ -67,7 +75,7 @@ Im diesem Kontext liegt vielleicht der Vergleich nahe, die jowidgets SPI mit SWT
 
 In diesem Abschnitt soll der Begriff des _Widget_ im Kontext von jowidgets definiert werden. Dazu wird zunächst ein kleiner Abstecher zur Entstehungsgeschichte gemacht.
 
-In einem gemeinsamen Projekt zweier Unternehmen sollte ein bereits vorhandenes firmeninternes Framework neu entwickelt werden. Dieses Framework lieferte unter anderem Tabellen und Formulare für CRUD Anwendungen mit Datenbankanbindung sowie Sortierung und Filterung in der Datenbank (und nicht im Client, weil das für große Datenmengen nicht möglich ist). Bei der Neuentwicklung sollten bisherige Schwachpunkte wie eine fehlende 3 Tier Architektur, Security in der Service Schicht und eine nicht austauschbare Datenschicht optimiert werden. ^[Dieses Framework ist auch unter BSD Lizenz veröffentlicht und findet sich hier [jo-client-platform](http://code.google.com/p/jo-client-platform/)]
+In einem gemeinsamen Projekt zweier Unternehmen sollte ein bereits vorhandenes firmeninternes Framework neu entwickelt werden. Dieses Framework lieferte unter anderem Tabellen und Formulare für CRUD Anwendungen mit Datenbankanbindung sowie Sortierung und Filterung in der Datenbank (und nicht im Client, weil das für große Datenmengen nicht möglich ist). Bei der Neuentwicklung sollten bisherige Schwachpunkte wie eine fehlende 3 Tier Architektur, keine Security in der Service Schicht und eine nicht austauschbare Datenschicht optimiert werden. ^[Dieses Framework ist auch unter BSD Lizenz veröffentlicht und findet sich hier [jo-client-platform](http://code.google.com/p/jo-client-platform/)]
 
 Die eine Firma setzte Eclipse RCP ein und wollte daran auch nichts ändern, die andere Swing. Die neu entwickelten Module sollten aber auch für die Erweiterung bisheriger (Swing) Applikation _kompatibel_ sein und ob man zukünftig anstatt Swing SWT einsetzten wollte, war auch nicht geklärt.
 
@@ -83,8 +91,6 @@ Jowidgets sollte eine __offene__, __erweiterbare__ API für Widgets in Java biet
 >>>Ein Widget ist eine Schnittstelle für den Austausch von Informationen zwischen Nutzer und Applikation_
 
 In jowidgets werden diese Schnittstellen immer durch Java Interfaces abgebildet. Es kann generell mehrere Implementierungen für die gleiche Schnittstelle geben. So könnte zum Beispiel die Eingabe von Personendaten auf einem Tablet anders aussehen als auf einem Desktop PC. Eine Widget Implementierung kann in der WidgetFactory überschrieben oder dekoriert (Decorator Pattern) werden. Zudem läßt sich das Default Setup eines jeden Widgets überschreiben.
-
-
 
 
 ## Widget Hierarchie{#widget_hierarchy}
@@ -234,11 +240,11 @@ Betrachten wir zunächst das _common_ pom.xml File im Ordner `org.jowidgets.hell
 </project>
 ~~~
 
-### Transitive Abhängigkeiten der common Module
+### Transitive Abhängigkeiten des common Moduls
 
 In der Praxis ist immer gut zu wissen, welche transitiven Abhängigkeiten man sich _einhandelt_, wenn man eine neue Technologie einführt. Jowidgets wurde bewusst so entworfen, dass (außer jowidgets selbst) __möglichst keine weiteren externen Abhängigkeiten__ notwendig sind. 
 
-Das Modul __`org.jowidgets.tools`__ hat die folgenden interen (siehe auch [Jowidgets Modulübersicht](#module_overview) im Anhang) und __keine externen transitiven Abhängigkeiten__.
+Durch das Modul __`org.jowidgets.tools`__ hat man die folgenden internen (siehe auch [Jowidgets Modulübersicht](#module_overview) im Anhang) und __keine externen transitiven Abhängigkeiten__.
 
 __org.jowidgets.util__
 
@@ -337,7 +343,7 @@ public final class HelloWorldApplication implements IApplication {
 
 Im Vergleich zu anderern UI Frameworks gibt es in jowidgets einen wesentlichen Unterschied bei der Widget Erzeugung. Widgets werden nicht direkt, also mit Hilfe des `new` Schlüßelwortes instantiiert, sondern von einer Factory erzeugt. Dies hat einige Vorteile, siehe dazu auch [Die GenericWidgetFactory](#generic_widget_factory). 
 
-Die Wigdet Factory benötigt für die Erzeugung eines Widgets ein sogenanntes _BluePrint_ (Blaupause). Siehe dazu auch [BluePrints](#blue_prints). BluePrints erhält man von der BluePrintFactory. Die Klasse `BPF` liefert einen Zugriffspunkt auf alle BluePrints. In Zeile 21 wird so das BluePrint für ein Frame und in Zeile 33 das BluePrint für einen Button erzeugt. BluePrints sind Setup und Builder zugleich. Sie werden dazu verwendet, das Widgets zu Konfigurieren und liefern dadurch der Implementierung das initiale Setup des Widgets. In Zeile 22 wird so die Größe und der Titel des Fensters gesetzt. In Zeile 33 wird so das Button Label definiert. BluePrints sind nach dem Prinzip des _BuilderPattern_ entworfen, das heißt sie liefern die eigene Instanz als Rückgabewert, um verkettete Aufrufe zu ermöglichen.
+Die Wigdet Factory benötigt für die Erzeugung eines Widgets ein sogenanntes _BluePrint_ (Blaupause). Siehe dazu auch [BluePrints](#blue_prints). BluePrints erhält man von der BluePrintFactory. Die Klasse `BPF` liefert einen Zugriffspunkt auf alle BluePrints der BluePrintFactory. In Zeile 21 wird so das BluePrint für ein Frame und in Zeile 33 das BluePrint für einen Button erzeugt. BluePrints sind Setup und Builder zugleich. Sie werden dazu verwendet, das Widgets zu Konfigurieren und liefern dadurch der Implementierung das initiale Setup des Widgets. In Zeile 22 wird so die Größe und der Titel des Fensters gesetzt. In Zeile 33 wird so das Button Label definiert. BluePrints sind nach dem Prinzip des _BuilderPattern_ entworfen, das heißt sie liefern die eigene Instanz als Rückgabewert, um verkettete Aufrufe zu ermöglichen.
 
 In der Regel wird die Widget Factory nicht explizit verwendet. Um das root Fenster zu erhalten, wird in Zeile 27 ein IFrame Widget mit Hilfe des `frameBp` und des Toolkit's erzeugt. Bei der verwendeten Methode handelt es sich um eine _convenience Methode_ die beim Schließen des Fensters den `ApplicationLifecycle` beendet. Das Frame ist gleichzeitig auch ein Container. Um ein Widget zu einem Container hinzuzufügen, fügt man das BluePrint hinzu und erhält dafür das Widget. In Zeile 36 wird so der Button erzeugt. 
 
@@ -466,9 +472,6 @@ In Zeile 13 wird das System System Look and Feel für Swing gesetzt, Zeile 14 en
 Die folgende Abbildung zeigt das Hello World Fenster für die Swing SPI Implementierung:
 
 ![Hello World Swing](images/hello_world_swing.gif "Hello World Swing")
-
-
-
 
 
 
@@ -903,6 +906,7 @@ Die WidgetWrapperFactory kann verwendet werden, um aus nativen Widgets (z.B. JFr
 	
 ~~~
 	IImageFactory getImageFactory();
+	
 	IImageRegistry getImageRegistry();
 ~~~	
 
@@ -928,7 +932,7 @@ Das Question Pane liefert einen vereinfachten Zugriff auf den [QuestionDialog](#
 
 Das Login Pane liefert einen vereinfachten Zugriff auf den [LoginDialog](#login_dialog).
 
-#### Layouting
+#### Layouting{#toolkit_layouting}
 
 ~~~
 	ILayoutFactoryProvider getLayoutFactoryProvider();
@@ -1032,18 +1036,19 @@ Gibt das aktive Fenster zurück. U.A. hilfreich bei der Erzeugung von Dialogen, 
 	List<IWindow> getAllWindows();
 ~~~
 
-#### Toolkit Properties
-
 Gibt eine Liste aller Fenster zurück.
+
+#### Toolkit Properties
 
 ~~~
 	<VALUE_TYPE> void setValue(ITypedKey<VALUE_TYPE> key, VALUE_TYPE value);
+	
 	<VALUE_TYPE> VALUE_TYPE getValue(ITypedKey<VALUE_TYPE> key);
 ~~~
 
 Mit Hilfe dieser Methoden kann man Properties auf dem Toolkit setzen und auslesen. Wenn man jowidgets Applikation schreibt, die auch Web kompatibel sein sollen, muss man sehr vorsichtig mit Singletons sein, da sich die JVM mehrere Nutzer teilen. Ansonsten könnte sich das Ändern eines globalen Zustands eines Nutzers auch auf einen anderen Nutzer auswirken.
 
-Falls man dennoch _globale Variablen_ benötigt, zum Beispiel zum Speichern des Security Context oder ähnlichem, kann man mit Hilfe dieser Methoden ein _Session Singleton_ realisieren, da pro User Session ein Toolkit existiert. Siehe auch [Typed Properties](#typed_properties).
+Falls man dennoch _globale Variablen_ benötigt, zum Beispiel zum Speichern des Security Context oder ähnlichem, kann man mit Hilfe dieser Methoden ein _Session Singleton_ realisieren, da pro User Session genau ein Toolkit existiert. Siehe auch [Typed Properties](#typed_properties).
 
 #### Umrechnungsmethoden
 
@@ -1065,9 +1070,9 @@ Transformiert eine Bildschirmposition in eine lokale Position einer Komponente.
 	ISupportedWidgets getSupportedWidgets();
 ~~~
 
-#### SpiMigLayoutSupport
-
 Liefert die Info, ob bestimmte Widgets unterstützt werden. Derzeit betrift dies ausschließlich den FileChooser und DirectoryChooser. Diese werden in Webapplikationen nicht unterstützt.
+
+#### SpiMigLayoutSupport
 
 ~~~
 	boolean hasSpiMigLayoutSupport();
@@ -1078,7 +1083,7 @@ Liefert die Information, ob die verwendete SPI Implementierung eine native Mig L
 
 ## Der Application Runner {#application_runner}
 
-Der Application Runner dienst zum Starten einer jowidgets standalone Applikation. Standalone bedeutet, dass alle Widgets ausschließlich über die Jowidget API erzeugt werden. 
+Der Application Runner dienst zum Starten einer jowidgets standalone Applikation. Standalone bedeutet, dass die initialen Widgets sowie der Event Dispatcher Thread über die Jowidget API erzeugt werden. 
 
 Die Schnittstelle `IApplicationRunner` sieht wie folgt aus:
 
@@ -1092,7 +1097,9 @@ public interface IApplicationRunner {
 }
 ~~~
 
-Eine Implementierung erhält man vom Toolkit. Die Methode `run()` blockiert, bis die Applikation beendet wurde. Die Schnittstelle `IApplication` wird selbst implementiert. Siehe dazu auch [HelloWorldApplication - Der common Ui Code](#hello_world_common_code)
+Eine Implementierung erhält man vom Toolkit. Die Methode `run()` blockiert, bis die Applikation beendet wurde. 
+
+Die Schnittstelle `IApplication` wird _selbst_ implementiert. Siehe dazu auch [HelloWorldApplication - Der common Ui Code](#hello_world_common_code)
 
 ~~~{.java .numberLines startFrom="1"} 
 package org.jowidgets.common.application;
@@ -1116,7 +1123,7 @@ public interface IApplicationLifecycle {
 }
 ~~~
 
-Wird auf dem `IApplicationLifecycle` die Methode `finish()` aufgerufen, wird die Applikation beendet. Dabei werden alle Widgets des gültigen Toolkit disposed.
+Wird auf dem `IApplicationLifecycle` die Methode `finish()` aufgerufen, wird die Applikation beendet. Dabei werden alle Widgets des zugehörigen Toolkit disposed.
 
 Wie man jowidgets (ohne ApplicationRunner) in nativen (Swing, Swt, Rwt, ...) Code integriert findet sich im Abschnitt [Jowidgets Code in native Projekte integrieren](#integrate_jowidgets_in_native_code).
 
@@ -1124,7 +1131,7 @@ Wie man jowidgets (ohne ApplicationRunner) in nativen (Swing, Swt, Rwt, ...) Cod
 
 Wie in anderen UI Frameworks (wie Swing oder Swt) gibt es auch in jowidgets einen _UI Thread_, in welchem alle UI Events _dispatched_ werden. Alle Modifikationen an Widgets oder deren _Models_ müssen in diesem Thread erfolgen. Reagiert man auf Events, welche durch Nutzereingaben ausgelöst wurden, befindet man sich bereits automatisch im UI Thread. Dabei ist, wie auch bei anderen UI Frameworks, darauf zu achten, den UI Thread nicht für lange Berechnungen zu blockieren, weil ansonsten keine Events mehr verarbeitet werden können und die Oberfläche für diese Zeit _einfriert_. 
 
-Operationen die potentiell lange dauern können, wie Beispielsweise das Aufrufen eines Service, sollten daher im in einem eigenen Thread stattfinden. 
+Operationen die potentiell lange dauern können, wie Beispielsweise das Aufrufen eines Service, sollten daher immer in einem eigenen Thread stattfinden. 
 
 Will man aus einem anderen Thread heraus wieder Methoden auf UI Elementen aufrufen, bietet die Schnittstelle `IUiThreadAccess` dafür die folgenden Methoden:
 
@@ -1198,7 +1205,7 @@ Mit Hilfe eines BluePrint wird das (Default) Setup eines Widgets festgelegt. Wen
 
 Ein BluePrint kann Eigenschaften enthalten, welche für das Widget nicht mehr veränderbar sind. Zum Beispiel muss die `Orientation` eines `SplitComposite` initial auf horizontal oder vertikal festgelegt werden, und ist nachträglich nicht mehr änderbar. Durch die klare Trennung der Setup und Widget Schnittstellen lassen sich (auch für eigene Widgets) sogenannte [imutable Member](http://www.javapractices.com/topic/TopicAction.do?Id=29) einfach umsetzen, ohne dabei lange Parameterlisten in Konstruktoren zu benötigen. Dies kann die Implementierung eines Widgets erleichtern, weil nicht alle Eigenschaften modifizierbar implementiert werden müssen. 
 
-Die Frage, ob eine Eigenschaft imutable ist oder nicht ist eine Design (oder auch Philosophie) Frage. Man könnte sich zum Beispiel auf den Standpunkt stellen, dass ein Fenster entweder _closeable_ ist oder nicht. Diesen Zustand während der Anzeige des Fensters zu ändern wäre ungewöhnlich, daher kann man sich den Implementierungsaufwand dafür auch einsparen. Das man den Titel eines Fensters zur Laufzeit ändert, ist jedoch üblich. Beispielsweise zeigt das Explorer Fenster von Windows immer den ausgewählten Ordner im Titel an. Diese Eigenschaft sollte also eher veränderbar entworfen werden. Bei dem Entwurf eigener Widgets kann man auch, wenn es einfacher ist, Eigenschaften erst mal _imutable_ entwerfen, und diese erst bei Bedarf modifizierbar machen, wenn sich dadurch der Implementierungsaufwand spürbar reduziert. Das Prinzip, dass Widgets unveränderbare Eigenschaften haben findet sich auch bei SWT wieder. Dort werden diese über den Style, welcher eine Bitmaske darstellt, gesetzt. 
+Die Frage, ob eine Eigenschaft imutable ist oder nicht ist eine Design (oder auch Philosophie) Frage. Man könnte sich zum Beispiel auf den Standpunkt stellen, dass ein Fenster entweder _closeable_ ist oder nicht. Diesen Zustand während der Anzeige des Fensters zu ändern wäre ungewöhnlich, daher kann man sich den Implementierungsaufwand dafür auch einsparen. Das man den Titel eines Fensters zur Laufzeit ändert, ist jedoch üblich. Beispielsweise zeigt das Explorer Fenster von Windows immer den ausgewählten Ordner im Titel an. Diese Eigenschaft sollte also eher veränderbar entworfen werden. Bei dem Entwurf eigener Widgets kann man auch, wenn es einfacher ist, Eigenschaften erst mal _imutable_ entwerfen, und diese erst bei Bedarf modifizierbar machen, wenn sich dadurch der Implementierungsaufwand erst einmal spürbar reduziert. Das Prinzip, dass Widgets unveränderbare Eigenschaften haben findet sich auch bei SWT wieder. Dort werden diese über den Style, welcher eine Bitmaske darstellt, gesetzt. 
 
 Für die Erstellung eigener Widget Bibliotheken kann der Blueprint Mechanismus verwendet werden. Dabei müssen die BluePrint Schnittstellen nicht selbst implementiert werden da die Implementierung mit Hilfe von [Java Proxies](http://docs.oracle.com/javase/7/docs/api/java/lang/reflect/Proxy.html) umgesetzt wird. Das Definieren der BluePrint Schnittstelle reicht also aus. Siehe dazu auch [Erstellung eigener Widget Bibliotheken](#custom_widget_libraries).
 
@@ -1267,7 +1274,7 @@ Das Alignment, die Farbe sowie das Icon wird nur ein Mal definiert und daraus an
 
 Der folgende Abschnitt enthält eine Übersicht über die allgemeinen Widget Schnittstellen und deren Methoden innerhalb der [Widget Hierarchie](#widget_hierarchy). Für weitere Informationen sei auf die [Jowidgets API Spezifikation][API_DOC] verwiesen.
 
-### Die Schnittstelle IWidget
+### Die Schnittstelle IWidget{#widget_interface}
 
 Alle Widgets implementieren die Schnittstelle `org.jowidgets.api.widgets.IWidget`. Es folgt eine kurze Übersicht über die wichtigsten Methoden:
 
@@ -1281,7 +1288,7 @@ Liefert die UI Referenz des Widgets. Der Typ hängt von der verwendeten SPI Impl
 
 Die Ui Referenz kann zum Beispiel verwendet werden, um _native_ Widgets oder Funktionen _nativer_ Widgets zu verwenden, welche in jowidgets nicht vorhanden sind. Allerdings hat man dann nicht mehr die Möglichkeit, den Code mit anderen nativen Ui Technologien zu verwenden. 
 
-Tipp: Wird solch eine natives Widget oder eine Funktion mehrfach verwendet, empfiehlt es sich, eine eigene Widget Schnittstelle dafür zu definieren. (Siehe dazu [Erstellung eigener Widget Bibliotheken](#custom_widget_libraries)). Die Widget Implementierung kann dann vorerst nur für die benötigte _native_ Technologie implementiert werden. Soll ein Modul, welches dieses Widget verwendet, später auch mit einer anderen Technologie verwendet werden, muss nur Implementierung des Widgets angepasst werden, und nicht das Modul. 
+Tipp: Wird solch eine natives Widget oder eine Funktion mehrfach verwendet, empfiehlt es sich, eine eigene Widget Schnittstelle dafür zu definieren. (Siehe dazu [Erstellung eigener Widget Bibliotheken](#custom_widget_libraries)). Die Widget Implementierung kann dann vorerst nur für die benötigte _native_ Technologie implementiert werden. Soll ein Modul, welches dieses Widget verwendet, später auch mit einer anderen Technologie verwendet werden, muss nur die Implementierung des Widgets angepasst werden, und nicht das Modul. 
 
 #### Enablement
 
@@ -1323,9 +1330,11 @@ Für zusammengesetzte (Composite) Widgets wird das _Root Widget_ zurückgegeben,
 
 Mit Hilfe der Methode `dispose()` kann ein Widgets _disposed_ werden, wenn man es nicht mehr benötigt. Ein Widget, das _disposed_ wurde, kann nicht mehr verwendet werden. Wird zum Beispiel ein Fenster _disposed_ wird es auch geschlossen. Wird ein Control disposed, wird es auch aus seinem Container entfernt. Mit Hilfe eines `IDisposeListener` kann man sich als Observer registrieren, um über das _Dispose_ eines Widgets informiert zu werden.
 
-### Die Schnittstelle IComponent
+### Die Schnittstelle IComponent{#component_interface}
 
-Die Schnittstelle `IComponent` stellt die gemeinsamen Funktionen für Fenster und Controls bereit. Es folgt eine Übersicht der wichtigsten Methoden:
+Die Schnittstelle `IComponent` stellt die gemeinsamen Funktionen für Fenster und Controls bereit. Die Schnittstelle `IComponent` erweitert [`IWidget`](#widget_interface). 
+
+Es folgt eine Übersicht der wichtigsten Methoden:
 
 #### Neuzeichnen
 
@@ -1722,9 +1731,9 @@ Zur Umrechnung von Koordinaten in ein Koordinatensystem einer anderen Komponente
 	Position toComponent(final Position componentPosition, final IComponentCommon component);
 ~~~
  
-### Die Schnittstelle IContainer
+### Die Schnittstelle IContainer{#container_interface}
 
-Ein Container ist eine Komponente, welche eine Liste von [Controls](#control_interface) enthält. Die Controls eines Containers werden mit Hilfe eines [Layouters](#layouting) angeordnet. Es folgt eine Beschreibung der wichtigsten Methoden.
+Ein Container ist eine Komponente, welche eine Liste von [Controls](#control_interface) enthält. Die Schnittstelle `IContainer` erweitert [`IComponent`](#component_interface) und somit auch [`IWidget`](#widget_interface). Die Controls eines Containers werden mit Hilfe eines [Layouters](#layouting) angeordnet. Es folgt eine Beschreibung der wichtigsten Methoden.
 
 #### Hinzufügen von Controls mit Hilfe von BluePrints
 
@@ -2089,11 +2098,191 @@ Das Kontextmenü könnte zum Beispiel Aktionen enthalten, welche den Inhalt des 
 	
 ### Die Schnittstelle IControl{#control_interface}
 
+Die Schnittstelle `IControl` stellt die gemeinsamen Funktionen für alle Controls bereits. `IControl` erweitert [`IComponent`](#component_interface) und somit auch [`IWidget`](#widget_interface). 
+
+Controls stellen Nutzerschnittstellen dar. Beispiele für elementare Controls sind Buttons, Checkboxen, Comboboxen, Eingabefelder, Slider etc. Controls können aber auch komplex sein, wie zum Beispiel ein [InputComposite](#input_composite).
+
+Controls werden immer zu [Containern](#container_interface) hinzugefügt. Es folgt eine kurze Übersicht der wichtigsten Methoden:
+
+#### Tooltip
+
+Mit der folgenden Methode kann der Tooltip Text gesetzt werden:
+
+~~~
+	void setToolTipText(String toolTip);
+~~~
+
+Wird `null` gesetzt, dann wird für das Control kein Tooltip angezeigt. 
+
+#### Layout Constraints
+
+Mit den folgenden Methoden können die Layout Constraints für ein Control gesetzt und ausgelesen werden.
+
+~~~
+	void setLayoutConstraints(Object layoutConstraints);
+
+	Object getLayoutConstraints();
+~~~
+
+Die Layout Constraints können `null` sein. In der Regel werden die Layout Constraints bereits beim Hinzufügen zum Container gesetzt:
+
+~~~{.java .numberLines startFrom="1"}
+	final IInputField<Date> dateField = container.add(BPF.inputFieldDate(), "growx, w 0::");
+~~~
+
+In diesem Fall würde die Methode `dateField.getLayoutConstraints()` den String `"growx, w 0::"` zurückgeben.
+
+Die Layout Constraints sind _Layouter spezifisch_, das bedeutet, ein Layouter definiert, welche Constraints gültig sind. 
+
+Werden die Layout Constraints nach dem _layouten_ des zugehörigen Containers geändert, so muss dieser neu _gelayoutet_ werden.
+
+Weitere Informationen finden sich im Abschnitt [Layouting](#layouting)
+
+#### Default Größen
+
+Mittels der folgenden Methoden können die Default Größen für ein Control ermittelt werden.
+
+~~~
+	Dimension getMinSize();
+
+	Dimension getPreferredSize();
+
+	Dimension getMaxSize(); 
+~~~
+
+Die Methoden dürfen nicht `null` zurückgeben. Werden eigene Controls entworfen, sollte darauf geachtet werden, _sinnvolle_Default Größen zu liefern.
+
+Die `MinSize` definiert die minimale Größe, die ein Control haben soll, damit es sinnvoll angezeigt werden kann. Die `PreferredSize` gibt an, wie groß ein Control sein soll, um es optimal anzuzeigen. Die `MaxSize` definiert, wie groß ein Control maximal angezeigt werden soll. Die Default Größen können sich zur Laufzeit ändern. So ändert sich Beispielsweise die `PreferredSize` eines Textfeldes abhängig vom gesetzten Text.
+
+Einige Layouter wie zum Beispiel [Mig Layout](#mig_layout) bieten die Möglichkeit, die Default Größen mit Hilfe von Constraints zu überschreiben . Die MigLayout Constraints `"w 0:100:200"` setzen zum Beispiel die `MinWidth` auf `0`, die `PreferredWidth` auf `100` und die `MaxWidth` auf `200`, unabhängig davon, was die Methoden `getMinSize()`, `getPreferredSize()` und `getMaxSize()` für Werte zurückliefern. Andere Layouter wie zum Beispiel das FillLayout ignorieren die Default Größen vollständig.
+
+Mit Hilfe der folgenden Methoden können die Default Größen eines Controls geändert werden:
+
+~~~
+	void setMinSize(final Dimension minSize);
+
+	void setPreferredSize(Dimension preferredSize);
+
+	void setMaxSize(Dimension maxSize);
+~~~
+
+Nach dem Umsetzen einer Default Größe geben die zugehörigen Getter Methoden den neuen Wert zurück. Wird eine Default Größe auf `null` gesetzt, wird vom zugehörigen Getter wieder der __Default Wert__ und nicht `null` zurückgegeben.
+
+#### Drag and Drop
+
+Mit den folgenden Methoden kann einem Control _Drag and Drop_ Funktionalität hinzugefügt werden:
+
+~~~
+	IDragSource getDragSource();
+
+	IDropTarget getDropTarget();
+~~~
+
+Für weitere Informationen sei auf den Abschnitt [Drag and Drop](#drag_and_drop) verwiesen.
+
 ## Layouting{#layouting}
 
-### Mig Layout{#mig_layout}
+Um die [Controls](#control_interface) eines [Containers](#container_interface) anzuordnen benötigt man einen Layouter. Man kann entweder vorgefertigte Layouter verwenden, oder selbst einen [Custom Layouter](#container_interface) implementieren.   
 
-### Custom Layout Managers{#custom_layouts}
+Anfangs unterstütze jowidgets ausschließlich [Mig Layout](#mig_layout) als vorgefertigtes Layout, welches in der SPI implementiert werden musste ^[Was nicht problematisch war, da MigLayout Implementierungen bereits für Swing und Swt existierten.]. Für die Definition des Layouts wird dabei die Klasse `MigLayoutDescriptor` verwendet, welche das Tagging Interface `ILayoutDescriptor` implementiert.
+
+Im Jahr 2011 wurde im Rahmen einer [Bacheloarbeit](ba_nm.pdf) jowidgets um die Möglichkeit erweitert, eigene Layouter zu erstellen. Dabei wurde die Schnittstelle `ILayouter` eingeführt, welche ebenfalls von `ILayoutDescriptor` abgeleitet ist. Zudem wurde [Mig Layout](#mig_layout) in die API portiert, so dass eine SPI Implementierung nicht mehr zwingend eine Mig Layout Implementierung anbieten muss. Außerdem wurden weitere vorgefertigte Layouter hinzugefügt. 
+
+Das sich Portierung nicht 100% gleich verhält, wird das portierte Mig Layout im folgenden als __Mib Layout__^[In Anlehnung an den Entwickler, der die Portierung durchgeführt hat.] bezeichnet. Im Gegensatz dazu wird Mig Layout als __Natives Mig Layout__ bezeichnet, wenn betont werden soll, dass es sich __nicht__ um Mib Layout handelt.
+
+Um ein Layout auf einem Container zu setzen, bietet dieser die folgenden Methoden an:
+
+~~~
+    void setLayout(ILayoutDescriptor layoutDescriptor);
+
+	<LAYOUT_TYPE extends ILayouter> LAYOUT_TYPE setLayout(
+		ILayoutFactory<LAYOUT_TYPE> layoutFactory);
+~~~
+
+Mit Hilfe der ersten Methode wird entweder ein `ILayouter` oder der native [`MigLayoutDescriptor`](#mig_layout) gesetzt. 
+
+Die zweite Methode bietet die Möglichkeit, einen Layouter mit Hilfe einer `ILayoutFactory` zu setzen. Der Layouter wird dabei erzeugt und zurückgegeben. Die Layout Factory sieht wie folgt aus:
+
+~~~{.java .numberLines startFrom="1"}
+public interface ILayoutFactory<LAYOUTER_TYPE extends ILayouter> {
+
+	LAYOUTER_TYPE create(IContainer container);
+
+}
+~~~  
+
+Die vordefinierten Layouts von Jowidgets implementieren die `ILayoutFactory` Schnittstelle.
+
+### Mig Layout (nativ){#mig_layout}
+
+Mig Layout ist ein freier, von der Firma MiG InfoCom AB entwickelter Layout Manager, der unter BSD Lizenz steht. Es existieren Implementierungen für Swing, Swt und Java FX 2. Der Layout Manager hat einen sehr flexiblen Grid basierten Layout Ansatz und eignet sich für sehr viele Anwendungsfälle. Insbesondere ist damit die Erstellung von formularbasierten Masken sehr intuitiv und einfach umzusetzen.   
+
+Um Mig Layout in Kombination mit jowidgets zu verwenden, wird empfohlen, vorab den MigLayout QuickStart Guide unter [http://www.miglayout.com/](http://www.miglayout.com/) zu studieren. 
+
+Die Klasse `org.jowidgets.common.widgets.layout.MigLayoutDescriptor` bietet die Möglichkeit, die `LayoutConstraints`, `RowConstraints` und `ColumnConstraints` für das Layout festzulegen. Die Constraints haben die gleiche Bedeutung wie in den Klassen `net.miginfocom.swt.MigLayout` oder `net.miginfocom.swing.MigLayout`.
+
+Im folgenden Beispiel wird ein MigLayout definiert. 
+
+~~~{.java .numberLines startFrom="1"}
+	container.setLayout(new MigLayoutDescriptor("wrap", "[][grow, 0::]", "[][]"));
+~~~
+
+Das Layout hat zwei Spalten und zwei Zeilen, wobei die zweite Spalte wächst und eine `MinSize` von `0` hat. Die `LayoutConstraints="wrap"` bedeuten, dass automatisch eine neue Zeile begonnen wird, wenn die aktuelle Zeile voll ist (in diesem Fall also nach zwei Controls).
+
+Die Cell Constraints werden im folgenden Beispiel beim Hinzufügen der Controls zum Container gesetzt:
+
+~~~{.java .numberLines startFrom="1"}
+	final String textFieldCC = "growx, w 0::";
+
+	//row 0, column 0
+	container.add(BPF.textLabel("Field 1"));
+
+	//row 0, column 1
+	container.add(BPF.textField(), textFieldCC);
+
+	//row 1 (autowrap has wraped to row 1), column 0 
+	container.add(BPF.textLabel("Field 2"));
+
+	//row 1, column 1
+	container.add(BPF.textField(), textFieldCC);
+~~~
+
+Die Textfelder wachsen horizontal und haben eine `MinSize` von `0`.
+
+Die folgende Abbildung zeigt das Ergebnis:
+
+![Mig Layout Beispiel](images/mig_layout_example.gif "Mig Layout Beispiel")
+
+__Hinweise:__ 
+
+* Da native Swt Controls keine `MinSize` haben, verwendet die Swt Mig Layout Implementierung als `MinSize` die `PreferredSize`. Das kann zum Beispiel dazu führen, dass in Scroll Composites kein Scroll Bar angezeigt wird. Es wird daher empfohlen, die `MinSize` immer explizit anzugeben, wenn diese von der `PreferredSize` abweicht.
+
+* Wenn eine SPI Implementierung kein natives Mig Layout unterstützt, wird bei der Verwendung des nativen `MigLayoutDescriptor` automatisch Mib Layout verwendet.
+	
+* Wenn [Mib Layout](#mib_layout) verwendet wird, wird __kein__ natives Mig Layout verwendet, auch wenn es die verwendetet SPI Mig Layout unterstützt
+	
+* Die auf einem Control gesetzten Default Größen `MinSize`, `PreferredSize` und `MaxSize` werden vom nativen MigLayout __nicht__ ausgewertet. Es wird daher empfohlen, die Default Größen nicht in Kombination mit MigLayout zu verwenden, um eine größt mögliche Kompatibilität zu gewährleisten!
+
+
+### Null Layout
+
+### Preferred Size Layout
+
+### Flow Layout
+
+### Border Layout
+
+### Fill Layout
+
+### Cached Fill Layout
+
+### Mib Layout{#mib_layout}
+
+### Custom Layouts{#custom_layouts}
+
+
+
+
 
 ## Menüs und Items{#menus_and_items}
 
@@ -2247,6 +2436,8 @@ TODO Beschreibung von Tree Actions in IDefaultActionFactory
 ### Jowidgets Code in Swt / RCP Projekte integrieren
 
 ### Jowidgets Code in Swing Projekte integrieren
+
+## Nativen Code in jowidgets Code integrieren {#integrate_native_code_in_jowidgets}
 
 ## Validierung
 
