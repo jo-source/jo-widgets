@@ -44,7 +44,6 @@ public final class MigLayoutDescriptor implements ILayoutDescriptor {
 	}
 
 	public MigLayoutDescriptor(final String layoutConstraints, final String columnConstraints, final String rowConstraints) {
-
 		super();
 		Assert.paramNotNull(layoutConstraints, "layoutConstraints");
 		Assert.paramNotNull(columnConstraints, "columnConstraints");
