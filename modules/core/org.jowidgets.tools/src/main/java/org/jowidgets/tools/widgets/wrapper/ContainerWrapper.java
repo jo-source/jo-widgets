@@ -126,9 +126,21 @@ public class ContainerWrapper extends ComponentWrapper implements IContainer {
 	@Override
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
 		final int index,
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+		return getWidget().add(index, descriptor);
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final int index,
 		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
 		return getWidget().add(index, creator, layoutConstraints);
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final int index, final ICustomWidgetCreator<WIDGET_TYPE> creator) {
+		return getWidget().add(index, creator);
 	}
 
 	@Override

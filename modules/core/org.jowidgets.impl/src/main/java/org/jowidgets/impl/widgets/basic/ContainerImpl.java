@@ -202,9 +202,21 @@ public class ContainerImpl extends AbstractContainerSpiWrapper implements IConta
 	@Override
 	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
 		final int index,
+		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+		return containerDelegate.add(index, descriptor);
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+		final int index,
 		final ICustomWidgetCreator<WIDGET_TYPE> creator,
 		final Object layoutConstraints) {
 		return containerDelegate.add(index, creator, layoutConstraints);
+	}
+
+	@Override
+	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final int index, final ICustomWidgetCreator<WIDGET_TYPE> creator) {
+		return containerDelegate.add(index, creator);
 	}
 
 	@Override
