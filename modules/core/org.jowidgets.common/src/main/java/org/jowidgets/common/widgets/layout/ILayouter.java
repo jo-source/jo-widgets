@@ -33,15 +33,16 @@ import org.jowidgets.common.types.Dimension;
 public interface ILayouter extends ILayoutDescriptor {
 
 	/**
-	 * Do the layout
+	 * Do the layout by setting the size and position of the
+	 * containers children
 	 */
 	void layout();
 
 	/**
 	 * Gets the min size of the layout.
 	 * 
-	 * The min size is the minimal size a layouter needs to layout
-	 * its children
+	 * The min size is the minimal size a layouter needs
+	 * to layout its children
 	 * 
 	 * @return The min size, never null
 	 */
@@ -66,7 +67,8 @@ public interface ILayouter extends ILayoutDescriptor {
 	Dimension getMaxSize();
 
 	/**
-	 * Invalidates the layout which means that the structure of the container to layout changed
+	 * Invalidates the layout which means that the structure
+	 * of the container to layout has been changed
 	 */
 	void invalidate();
 
