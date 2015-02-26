@@ -47,6 +47,31 @@ import org.jowidgets.common.widgets.layout.ILayouter;
  */
 public final class BorderLayout {
 
+	/**
+	 * The center region
+	 */
+	public static final BorderLayoutConstraints CENTER = BorderLayoutConstraints.CENTER;
+
+	/**
+	 * The left region
+	 */
+	public static final BorderLayoutConstraints LEFT = BorderLayoutConstraints.LEFT;
+
+	/**
+	 * The right region
+	 */
+	public static final BorderLayoutConstraints RIGHT = BorderLayoutConstraints.RIGHT;
+
+	/**
+	 * The top region
+	 */
+	public static final BorderLayoutConstraints TOP = BorderLayoutConstraints.TOP;
+
+	/**
+	 * The bottom region
+	 */
+	public static final BorderLayoutConstraints BOTTOM = BorderLayoutConstraints.BOTTOM;
+
 	private BorderLayout() {}
 
 	/**
