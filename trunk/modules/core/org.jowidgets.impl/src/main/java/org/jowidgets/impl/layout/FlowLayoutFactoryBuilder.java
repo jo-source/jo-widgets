@@ -37,12 +37,14 @@ import org.jowidgets.util.Assert;
 
 final class FlowLayoutFactoryBuilder implements IFlowLayoutFactoryBuilder {
 
+	private static final int DEFAULT_GAP = 4;
+
 	private int gap;
 	private Orientation orientation;
 
 	FlowLayoutFactoryBuilder() {
 		this.orientation = Orientation.HORIZONTAL;
-		this.gap = 0;
+		this.gap = DEFAULT_GAP;
 	}
 
 	@Override
