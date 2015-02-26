@@ -36,8 +36,6 @@ import org.jowidgets.util.Assert;
 
 final class CachedFillLayoutImpl implements ICachedFillLayout {
 
-	private static final Dimension MAX_SIZE = new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);
-
 	private final IContainer container;
 
 	private Dimension preferredSize;
@@ -51,7 +49,7 @@ final class CachedFillLayoutImpl implements ICachedFillLayout {
 
 	@Override
 	public void layout() {
-		final IControl control = getFirstControl();
+		final IControl control = getFirstVisibleControl();
 		if (control != null) {
 			control.setBounds(container.getClientArea());
 		}
@@ -62,7 +60,7 @@ final class CachedFillLayoutImpl implements ICachedFillLayout {
 
 	@Override
 	public Dimension getPreferredSize() {
-		final IControl control = getFirstControl();
+		final IControl control = getFirstVisibleControl();
 		if (control != null) {
 			if (preferredSize == null) {
 				preferredSize = control.getPreferredSize();
@@ -70,13 +68,13 @@ final class CachedFillLayoutImpl implements ICachedFillLayout {
 			return container.computeDecoratedSize(preferredSize);
 		}
 		else {
-			return new Dimension(0, 0);
+			return container.computeDecoratedSize(Dimension.MIN);
 		}
 	}
 
 	@Override
 	public Dimension getMinSize() {
-		final IControl control = getFirstControl();
+		final IControl control = getFirstVisibleControl();
 		if (control != null) {
 			if (minSize == null) {
 				minSize = control.getMinSize();
@@ -84,13 +82,13 @@ final class CachedFillLayoutImpl implements ICachedFillLayout {
 			return container.computeDecoratedSize(minSize);
 		}
 		else {
-			return new Dimension(0, 0);
+			return container.computeDecoratedSize(Dimension.MIN);
 		}
 	}
 
 	@Override
 	public Dimension getMaxSize() {
-		final IControl control = getFirstControl();
+		final IControl control = getFirstVisibleControl();
 		if (control != null) {
 			if (maxSize == null) {
 				maxSize = control.getMaxSize();
@@ -98,7 +96,7 @@ final class CachedFillLayoutImpl implements ICachedFillLayout {
 			return container.computeDecoratedSize(maxSize);
 		}
 		else {
-			return MAX_SIZE;
+			return container.computeDecoratedSize(Dimension.MIN);
 		}
 	}
 
@@ -109,7 +107,7 @@ final class CachedFillLayoutImpl implements ICachedFillLayout {
 		preferredSize = null;
 	}
 
-	private IControl getFirstControl() {
+	private IControl getFirstVisibleControl() {
 		for (final IControl control : container.getChildren()) {
 			if (control.isVisible()) {
 				return control;
