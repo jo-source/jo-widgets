@@ -2154,7 +2154,7 @@ Die Methoden dürfen nicht `null` zurückgeben. Werden eigene Controls entworfen
 
 Die `MinSize` definiert die minimale Größe, die ein Control haben soll, damit es sinnvoll angezeigt werden kann. Die `PreferredSize` gibt an, wie groß ein Control sein soll, um es optimal anzuzeigen. Die `MaxSize` definiert, wie groß ein Control maximal angezeigt werden soll. Die Default Größen können sich zur Laufzeit ändern. So ändert sich Beispielsweise die `PreferredSize` eines Textfeldes abhängig vom gesetzten Text.
 
-Einige Layouter wie zum Beispiel [Mig Layout](#mig_layout) bieten die Möglichkeit, die Default Größen mit Hilfe von Constraints zu überschreiben. Die MigLayout Constraints `"w 0:100:200"` setzen zum Beispiel die `MinWidth` auf `0`, die `PreferredWidth` auf `100` und die `MaxWidth` auf `200`, unabhängig davon, was die Methoden `getMinSize()`, `getPreferredSize()` und `getMaxSize()` für Werte zurückliefern. Andere Layouter wie zum Beispiel das FillLayout ignorieren die Default Größen vollständig.
+Einige Layouter wie zum Beispiel [Mib Layout](#mib_layout) bieten die Möglichkeit, die Default Größen mit Hilfe von Constraints zu überschreiben. Die MigLayout Constraints `"w 0:100:200"` setzen zum Beispiel die `MinWidth` auf `0`, die `PreferredWidth` auf `100` und die `MaxWidth` auf `200`, unabhängig davon, was die Methoden `getMinSize()`, `getPreferredSize()` und `getMaxSize()` für Werte zurückliefern. Andere Layouter wie zum Beispiel das FillLayout ignorieren die Default Größen vollständig.
 
 Mit Hilfe der folgenden Methoden können die Default Größen eines Controls geändert werden:
 
@@ -2188,7 +2188,7 @@ Anfangs unterstütze jowidgets ausschließlich [Mig Layout](#mig_layout) als vor
 
 Im Jahr 2011 wurde im Rahmen einer [Bacheloarbeit](ba_nm.pdf) jowidgets um die Möglichkeit erweitert, eigene Layouter zu erstellen. Dabei wurde die Schnittstelle `ILayouter` eingeführt, welche ebenfalls von `ILayoutDescriptor` abgeleitet ist. Zudem wurde [Mig Layout](#mig_layout) in die API portiert, so dass eine SPI Implementierung nicht mehr zwingend eine Mig Layout Implementierung anbieten muss. Außerdem wurden weitere vorgefertigte Layouter hinzugefügt. 
 
-Das sich Portierung nicht 100% gleich verhält, wird das portierte Mig Layout im folgenden als __Mib Layout__^[In Anlehnung an den Entwickler, der die Portierung durchgeführt hat.] bezeichnet. Im Gegensatz dazu wird Mig Layout als __Natives Mig Layout__ bezeichnet, wenn betont werden soll, dass es sich __nicht__ um Mib Layout handelt.
+Da sich die Portierung nicht 100% gleich verhält, wird das portierte Mig Layout im folgenden als __Mib Layout__^[In Anlehnung an den Entwickler, der die Portierung durchgeführt hat.] bezeichnet. Im Gegensatz dazu wird Mig Layout als __Natives Mig Layout__ bezeichnet, wenn betont werden soll, dass es sich __nicht__ um Mib Layout handelt.
 
 Um ein Layout auf einem Container zu setzen, bietet dieser die folgenden Methoden an:
 
@@ -2211,11 +2211,11 @@ public interface ILayoutFactory<LAYOUTER_TYPE extends ILayouter> {
 }
 ~~~  
 
-Die vordefinierten Layouts von Jowidgets implementieren die `ILayoutFactory` Schnittstelle.
+Layout Factories lassen sich für verschiedene Container wiederverwenden. Die vordefinierten Layouts von Jowidgets (mit Ausnahme des nativen Mig Layout) implementieren die `ILayoutFactory` Schnittstelle.
 
 ### Mig Layout (nativ){#mig_layout}
 
-Mig Layout ist ein freier, von der Firma MiG InfoCom AB entwickelter Layout Manager, der unter BSD Lizenz steht. Es existieren Implementierungen für Swing, Swt und Java FX 2. Der Layout Manager hat einen sehr flexiblen Grid basierten Layout Ansatz und eignet sich für sehr viele Anwendungsfälle. Insbesondere ist damit die Erstellung von formularbasierten Masken sehr intuitiv und einfach umzusetzen.   
+Mig Layout ist ein freier, von Mikael Grev, Inhaber der Firma MiG InfoCom AB, entwickelter Layout Manager, der unter BSD Lizenz steht. Es existieren Implementierungen für Swing, Swt und Java FX 2. Der Layout Manager hat einen sehr flexiblen Grid basierten Layout Ansatz und eignet sich für sehr viele Anwendungsfälle. Insbesondere ist damit die Erstellung von formularbasierten Masken sehr intuitiv und einfach umzusetzen.   
 
 Um Mig Layout in Kombination mit jowidgets zu verwenden, wird empfohlen, vorab den MigLayout __Quick Start Guide__ unter [http://www.miglayout.com/](http://www.miglayout.com/) zu studieren. 
 
@@ -2255,32 +2255,306 @@ Die folgende Abbildung zeigt das Ergebnis:
 
 __Hinweise:__ 
 
-* Da native Swt Controls keine `MinSize` haben, verwendet die Swt Mig Layout Implementierung als `MinSize` die `PreferredSize`. Das kann zum Beispiel dazu führen, dass in Scroll Composites kein Scroll Bar angezeigt wird. Es wird daher empfohlen, die `MinSize` immer explizit anzugeben, wenn diese von der `PreferredSize` abweicht.
+* Da native Swt Controls keine `MinSize` haben, verwendet die Swt Mig Layout Implementierung als `MinSize` die `PreferredSize`. Das kann unter Umständen zu Problemen führen. Es wird daher empfohlen, die `MinSize` immer explizit anzugeben, wenn diese von der `PreferredSize` abweicht.
 
 * Wenn eine SPI Implementierung kein natives Mig Layout unterstützt, wird bei der Verwendung des nativen `MigLayoutDescriptor` automatisch Mib Layout verwendet.
 	
-* Wenn [Mib Layout](#mib_layout) verwendet wird, wird __kein__ natives Mig Layout verwendet, auch wenn es die verwendetet SPI Mig Layout unterstützt
+* Wenn [Mib Layout](#mib_layout) verwendet wird, wird __kein__ natives Mig Layout verwendet, auch wenn die verwendetet SPI Implementierung ein natives Mig Layout bereitstellt.
 	
 * Die auf einem Control gesetzten Default Größen `MinSize`, `PreferredSize` und `MaxSize` werden vom nativen MigLayout __nicht__ ausgewertet. Es wird daher empfohlen, die Default Größen nicht in Kombination mit MigLayout zu verwenden, um eine größt mögliche Kompatibilität zu gewährleisten!
 
+### Custom Layouts{#custom_layouts}
+
+Bevor die vordefinierten Layouts von jowidgets vorgestellt werden, soll vorab die `ILayouter` Schnittstelle besprochen werden, um ein besseres Verständnis zu schaffen, was beim Layouten eines Containers passiert. 
+
+Um einen eigenes (custom) Layout zu verwenden, muss diese Schnittstelle implementiert werden:
+
+~~~{.java .numberLines startFrom="1"}
+public interface ILayouter extends ILayoutDescriptor {
+
+	void layout();
+
+	Dimension getMinSize();
+
+	Dimension getPreferredSize();
+
+	Dimension getMaxSize();
+
+	void invalidate();
+
+}
+~~~
+
+Die Methode `layout()` ist dafür zuständig, auf den Controls des Containers die Größe und die Position zu setzen.
+
+Für das Layout sind zwei Größen relevant, die `ClientArea` und die `DecoratedSize`. 
+Die `ClientArea` ist der Bereich des Containers, welcher für das Zeichnen der Controls zur Verfügung steht. Die `DecoratedSize` ist die gesamte Größe des Containers für eine gegebene `ClientArea` Größe. Bei einem Fenster kommen zum Beispiel bei der `DecoratedSize` noch der Rahmen und ein eventuelles Menü hinzu.
+
+Die Methoden `getMinSize()`, `getPreferredSize()` und `getMaxSize()` geben die minimale, bevorzugte und maximale Größe des Containers zum aktuellen Zeitpunkt zurück, die der Layouter benötigt, um seine Controls zu layouten. Die zurückgegebenen Größen beziehen sich dabei auf die `DecoratedSize` und __nicht__ auf die Größe der `ClientArea`. 
+
+Die Methode `invalidate()` wird aufgerufen, wenn sich die Struktur des Layouts geändert haben _könnte_. Dies kann ein guter Zeitpunkt sein, um _gecachte_ Werte zu löschen.
+
+Die Verwendung der Schnittstelle soll Anhand eines Beispiels verdeutlicht werden. Es wird ein vereinfachten [FillLayout](#fill_layout) implementiert. Ein FillLayout zeichnet das erste sichtbare Control eines Containers so, dass es die `ClientArea` voll ausfüllt. Eine Implementierung könnte wie folgt aussehen:
+
+~~~{.java .numberLines startFrom="1"}
+final class FillLayout implements ILayouter {
+
+	private final IContainer container;
+
+	private Dimension minSize;
+	private Dimension preferredSize;
+
+	FillLayout(final IContainer container) {
+		this.container = container;
+	}
+
+	@Override
+	public void layout() {
+		final IControl control = getFirstVisibleControl();
+		if (control != null) {
+			final Rectangle clientArea = container.getClientArea();
+			control.setPosition(clientArea.getPosition());
+			control.setSize(clientArea.getSize());
+		}
+	}
+
+	@Override
+	public Dimension getMinSize() {
+		if (minSize == null) {
+			this.minSize = calcMinSize();
+		}
+		return minSize;
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		if (preferredSize == null) {
+			this.preferredSize = calcPreferredSize();
+		}
+		return preferredSize;
+	}
+
+	@Override
+	public Dimension getMaxSize() {
+		return Dimension.MAX;
+	}
+
+	@Override
+	public void invalidate() {
+		minSize = null;
+		preferredSize = null;
+	}
+
+	private Dimension calcMinSize() {
+		final IControl control = getFirstVisibleControl();
+		if (control != null) {
+			return container.computeDecoratedSize(control.getMinSize());
+		}
+		else {
+			return container.computeDecoratedSize(new Dimension(0, 0));
+		}
+	}
+
+	private Dimension calcPreferredSize() {
+		final IControl control = getFirstVisibleControl();
+		if (control != null) {
+			return container.computeDecoratedSize(control.getPreferredSize());
+		}
+		else {
+			return container.computeDecoratedSize(new Dimension(0, 0));
+		}
+	}
+	
+	private IControl getFirstVisibleControl() {
+		for (final IControl control : container.getChildren()) {
+			if (control.isVisible()) {
+				return control;
+			}
+		}
+		return null;
+	}
+}
+~~~
+
+Folgendes ist dabei zu beachten:
+
+* Die Werte für die `MinSize` und `PreferredSize` werden, solange `invalidate()` nicht aufgerufen wird, nur ein Mal berechnet. Dadurch kann die Performance gesteigert werden. Gerade bei verschachtelten Containern kann das Berechnen der `PreferredSize` unter Umständen _teuer_ sein. 
+
+* Die Methoden `calcMinSize()` und `calcPreferredSize()` verwenden die Methode `computeDecoratedSize()` des Containers um aus der für die `ClientArea` gültigen Große die `DecoratedSize` zu berechnen (Zeile 52, 55, 62, 65). Wird dies nicht berücksichtigt, funktioniert das Layout nur für die Container korrekt, wo die `ClientArea` Größe mit der `DecoratedSize` übereinstimmt.
+
+Um einen eigenen (custom) Layouter zu implementieren, ist es eventuell hilfreich, den Source Code der vordefinierten Layout Manager zu studieren. Dieser findet sich unter anderem [hier](http://code.google.com/p/jo-widgets/source/browse/#svn%2Ftrunk%2Fmodules%2Fcore%2Forg.jowidgets.impl%2Fsrc%2Fmain%2Fjava%2Forg%2Fjowidgets%2Fimpl%2Flayout).
+
+### Flow Layout
+
+Bei einem Flow Layout werden alle Controls nebeneinander oder untereinander gezeichnet. Die Größe der Controls wird auf deren `PreferredSize` gesetzt, wenn genügend Platz vorhanden ist, ansonsten werden die Controls gleichmäßig verkleinert, jedoch nicht kleiner als ihre `MinSize`.
+
+Die Accessor Klasse `org.jowidgets.api.layout.FlowLayout` liefert einen Zugriff auf ein Flow Layout. Sie hat folgende Methoden:
+
+~~~
+	public static ILayoutFactory<ILayouter> get(){...}
+	
+	public static IFlowLayoutFactoryBuilder builder(){...}
+~~~
+
+Ein `IFlowLayoutFactoryBuilder` hat die folgenden Methoden:
+
+~~~
+	IFlowLayoutFactoryBuilder gap(int gap);
+
+	IFlowLayoutFactoryBuilder orientation(Orientation orientation);
+
+	IFlowLayoutFactoryBuilder vertical();
+
+	IFlowLayoutFactoryBuilder horizontal();
+
+	ILayoutFactory<ILayouter> build();
+~~~
+
+Die Orientation gibt an, ob die Elemente nebeneinander oder untereinander angeordnet werden. Die default `Orientation` ist `HORIZONTAL`. 
+Die Methoden `vertical()` und `horizontal()` setzen ebenfalls die `Orientation` mit verkürzter Schreibweise. Der `gap` definiert den _Freiraum_ zwischen den Controls. Der default `gap` beträgt 4 Pixel. Die Methode `build()` liefert eine neue `ILayoutFactory` zurück. 
+
+Folgendes Beispiel demonstriert Verwendung:
+
+~~~{.java .numberLines startFrom="1"}
+	container.setLayout(FlowLayout.get());
+	container.add(BPF.textLabel().setText("Attribute1"));
+	final ITextControl textField = container.add(BPF.textField());
+	textField.setText("This is the most common attribute");
+~~~
+
+Die folgende Abbildung zeigt das Ergebnis:
+
+![Flow Layout Beispiel 1](images/flow_layout_example_1.gif "Flow Layout Beispiel 1")
+
+Im nächsten Beispiel wird das FlowLayout vertikal ausgerichtet:
+
+~~~{.java .numberLines startFrom="1"}
+	container.setLayout(FlowLayout.builder().gap(0).vertical().build());
+	container.add(BPF.textLabel().setText("Attribute1"));
+	final ITextControl textField = container.add(BPF.textField());
+	textField.setText("This is the most common attribute");
+~~~	
+
+Die folgende Abbildung zeigt das Ergebnis:
+
+![Flow Layout Beispiel 2](images/flow_layout_example_2.gif "Flow Layout Beispiel 2")
+
+### Border Layout
+
+Ein Border Layout teilt einen Container in fünf mögliche Bereiche auf: Center, Top, Bottom, Left und Right. In jedem Bereich kann sich genau ein Control befinden. Die folgende Abbildung zeigt ein typisches Border Layout:
+
+![Border Layout Beispiel](images/border_layout_example_1.gif "Border Layout Beispiel")
+
+In der Mitte (center) befindet sich eine TextArea, oben, rechts und links je eine Toolbar und unter ein TextFeld.
+
+Die Accessor Klasse `org.jowidgets.api.layout.BorderLayout` liefert einen Zugriff auf ein Border Layout. Sie hat folgende Methoden:
+
+~~~
+	public static ILayoutFactory<ILayouter> get(){...}
+	
+	public static IBorderLayoutFactoryBuilder builder(){...}
+~~~
+
+Ein `IBorderLayoutFactoryBuilder` hat die folgenden Methoden:
+
+~~~
+	IBorderLayoutFactoryBuilder margin(int margin);
+
+	IBorderLayoutFactoryBuilder gap(int gap);
+
+	IBorderLayoutFactoryBuilder gapX(int gapX);
+
+	IBorderLayoutFactoryBuilder gapY(int gapY);
+
+	IBorderLayoutFactoryBuilder marginLeft(int marginLeft);
+
+	IBorderLayoutFactoryBuilder marginRight(int marginRight);
+
+	IBorderLayoutFactoryBuilder marginTop(int marginTop);
+
+	IBorderLayoutFactoryBuilder marginBottom(int marginBottom);
+
+	ILayoutFactory<ILayouter> build();
+~~~
+
+Der `margin` definiert den äußeren Abstand zur `ClientArea` des Containers. Er kann separat für recht, links, oben und unten oder für alle Seiten zusammen gesetzt werden. Der default `margin` ist `0`. Der `gap` definiert den Abstand zwischen den einzelnen Bereichen. Er kann separat für die x-Richtung und y-Richtung oder für beide zusammen gesetzt werden. Der default `gap` ist 4. Die Methode `build()` liefert eine neue `ILayoutFactory` zurück. 
+
+Um festzulegen, in welchem Bereich ein Control hinzugefügt wird, muss auf diesem der LayoutConstraint `BorderLayoutConstraints` gesetzt werden. Das folgende Beispiel verdeutlicht dies: 
+
+~~~{.java .numberLines startFrom="1"}
+	IToolBar top = container.add(BPF.toolBar(), BorderLayout.TOP);
+	IToolBar left = container.add(BPF.toolBar().setVertical(), BorderLayout.LEFT);
+	ITextArea center = container.add(BPF.textArea(), BorderLayout.CENTER);
+	IToolBar right = container.add(BPF.toolBar().setVertical(), BorderLayout.RIGHT);
+	ITextControl bottom = container.add(BPF.textField(), BorderLayout.BOTTOM);
+~~~
+
+### Fill Layout{#fill_layout}
+
+Ein Fill Layout zeichnet ausschließlich das erste (sichtbare) Control eines Containers. Dabei wird unabhängig von der `MinSize`, `PreferredSize` oder `MaxSize` die komplette `ClientArea` abzüglich des `margin` für das Control verwendet. 
+
+Die Accessor Klasse `org.jowidgets.api.layout.BorderLayout` liefert einen Zugriff auf ein Fill Layout. Sie hat folgende Methoden:
+
+~~~
+	public static ILayoutFactory<ILayouter> get(){...}
+	
+	public static IFillLayoutFactoryBuilder builder(){...}
+~~~
+
+Ein `IFillLayoutFactoryBuilder` hat die folgenden Methoden:
+
+~~~
+	IFillLayoutFactoryBuilder margin(int margin);
+	
+	IFillLayoutFactoryBuilder marginLeft(int marginLeft);
+
+	IFillLayoutFactoryBuilder marginRight(int marginRight);
+
+	IFillLayoutFactoryBuilder marginTop(int marginTop);
+
+	IFillLayoutFactoryBuilder marginBottom(int marginBottom);
+
+	ILayoutFactory<ILayouter> build();
+~~~
+
+Der `margin` definiert den äußeren Abstand zur `ClientArea` des Containers. Er kann separat für recht, links, oben und unten oder für alle Seiten zusammen gesetzt werden. Der default `margin` ist `0`.  Die Methode `build()` liefert eine neue `ILayoutFactory` zurück. 
+	
+Folgendes Beispiel demonstriert Verwendung:
+
+~~~{.java .numberLines startFrom="1"}
+	container.setLayout(FillLayout.builder().margin(5).build());
+	final ITextArea textArea = container.add(BPF.textArea());
+	textArea.setText("Some text in this text area");
+~~~
+
+Die folgende Abbildung zeigt das Ergebnis:
+
+![Fill Layout Beispiel 1](images/fill_layout_example_1.gif "Fill Layout Beispiel 1")
+
+### Cached Fill Layout
+
+Das Cached Fill Layout wurde entworfen, um das Layouten komplexer Controls zu optimieren. Immer wenn sich zum Beispiel die Größe eines Fensters oder eines Bereichs innerhalb eines Split Composites ändert, wird auf einem Layouter die `invalidate()` Methode aufgerufen. Wenn man keine Kenntnis über die darunter liegenden Controls hat, ist dieses Vorgehen auch sinnvoll, denn durch das Ändern der Größe könnte sich auch das Layout ändern. Allerdings ist dieses Vorgehen auch _teuer_ und unter Umständen werden dabei die immer gleichen `PreferredSize` Werte berechnet.
+
+Es gibt Situationen, in denen man weiß, dass das Ändern der Größe keinen Einfluss auf die `PreferredSize` der Kind Controls hat. In diesem Fall kann man ein Cached Fill Layout verwenden. Dies berechnet die `MinSize`, `PreferredSize` und `MaxSize` bei einem `invalidate()` nicht neu. Ansonsten ist es mit dem Fill Layout zu vergleichen, da auch hier die gesamte `ClientArea` ausgenutzt wird.
+
+Die Accessor Klasse `org.jowidgets.api.layout.BorderLayout` liefert einen Zugriff auf ein Cached Fill Layout. Sie hat folgende Methode:
+
+~~~
+	public static ILayoutFactory<ICachedFillLayout> get(){...}
+~~~
+
+Um den Cache explizit zu löschen, kann auf dem `ICachedFillLayout` die folgende Methode verwendet werden:
+
+~~~
+	void clearCache();
+~~~
+
+
+### Mib Layout{#mib_layout}
 
 ### Null Layout
 
 ### Preferred Size Layout
-
-### Flow Layout
-
-### Border Layout
-
-### Fill Layout
-
-### Cached Fill Layout
-
-### Mib Layout{#mib_layout}
-
-### Custom Layouts{#custom_layouts}
-
-
 
 
 
