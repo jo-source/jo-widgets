@@ -37,8 +37,6 @@ import org.jowidgets.util.Assert;
 
 final class FillLayoutImpl implements ILayouter {
 
-	private static final Dimension MAX_SIZE = new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);
-
 	private final IContainer container;
 
 	private final int marginTop;
@@ -102,7 +100,7 @@ final class FillLayoutImpl implements ILayouter {
 
 	@Override
 	public Dimension getMaxSize() {
-		return MAX_SIZE;
+		return Dimension.MAX;
 	}
 
 	@Override
