@@ -46,12 +46,15 @@ public class SwtControl extends SwtComponent implements IControlSpi {
 	private final SwtDragSource dragSource;
 	private final SwtDropTarget dropTarget;
 
+	private boolean visible;
+
 	public SwtControl(final Control control) {
 		this(control, null);
 	}
 
 	public SwtControl(final Control control, IDropSelectionProvider dropSelectionProvider) {
 		super(control);
+		this.visible = true;
 		this.dragSource = new SwtDragSource(control);
 		if (dropSelectionProvider == null) {
 			if (this instanceof IDropSelectionProvider) {
@@ -97,6 +100,17 @@ public class SwtControl extends SwtComponent implements IControlSpi {
 	@Override
 	public IDropTargetSpi getDropTarget() {
 		return dropTarget;
+	}
+
+	@Override
+	public void setVisible(final boolean visible) {
+		this.visible = visible;
+		super.setVisible(visible);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return visible;
 	}
 
 }
