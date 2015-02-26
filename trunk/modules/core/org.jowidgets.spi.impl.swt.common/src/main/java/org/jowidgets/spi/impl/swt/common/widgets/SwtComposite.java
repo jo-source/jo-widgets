@@ -95,4 +95,14 @@ public class SwtComposite extends SwtContainer implements ICompositeSpi {
 		return swtControlDelegate.getDropTarget();
 	}
 
+	@Override
+	public void setVisible(final boolean visible) {
+		swtControlDelegate.setVisible(visible);
+	}
+
+	@Override
+	public boolean isVisible() {
+		return swtControlDelegate.isVisible();
+	}
+
 }
