@@ -28,7 +28,7 @@
 
 package org.jowidgets.examples.common.demo;
 
-import org.jowidgets.api.layout.ILayoutFactoryProvider;
+import org.jowidgets.api.layout.FillLayout;
 import org.jowidgets.api.model.table.ISimpleTableModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
@@ -45,12 +45,11 @@ import org.jowidgets.tools.powo.JoFrame;
 public class DemoFillLayoutMarginFrame extends JoFrame {
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
-	private static final ILayoutFactoryProvider LFP = Toolkit.getLayoutFactoryProvider();
 
 	public DemoFillLayoutMarginFrame() {
 		super("Fill layout (margin) demo");
 
-		final ILayouter layouter = setLayout(LFP.fillLayoutBuilder().margin(100).build());
+		final ILayouter layouter = setLayout(FillLayout.builder().margin(100).build());
 
 		addSplitComposite(this);
 
@@ -87,10 +86,10 @@ public class DemoFillLayoutMarginFrame extends JoFrame {
 
 	private IComposite addComposite(final IContainer container) {
 		IComposite composite = container.add(BPF.composite().setBorder());
-		composite.setLayout(LFP.fillLayout());
+		composite.setLayout(FillLayout.get());
 		for (int i = 0; i < 3; i++) {
 			composite = composite.add(BPF.composite().setBorder());
-			composite.setLayout(LFP.fillLayout());
+			composite.setLayout(FillLayout.get());
 		}
 
 		addTextArea(composite);
@@ -104,8 +103,8 @@ public class DemoFillLayoutMarginFrame extends JoFrame {
 		final IContainer first = split.getFirst();
 		final IContainer second = split.getSecond();
 
-		final ILayouter firstLayouter = first.setLayout(LFP.fillLayout());
-		final ILayouter secondLayouter = second.setLayout(LFP.fillLayout());
+		final ILayouter firstLayouter = first.setLayout(FillLayout.get());
+		final ILayouter secondLayouter = second.setLayout(FillLayout.get());
 
 		addComposite(split.getFirst());
 		addTable(split.getSecond());

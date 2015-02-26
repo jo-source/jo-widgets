@@ -33,20 +33,74 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
 public interface IMigLayoutFactoryBuilder {
 
+	/**
+	 * Sets the row, column and layout constraints based on mig layout descriptor
+	 * 
+	 * @param descriptor The mig layout descriptor to use, must no be null
+	 * 
+	 * @return This builder
+	 */
 	IMigLayoutFactoryBuilder descriptor(MigLayoutDescriptor descriptor);
 
+	/**
+	 * Sets the row constraints
+	 * 
+	 * @param constraints The constraints to set
+	 * 
+	 * @return This builder
+	 */
 	IMigLayoutFactoryBuilder rowConstraints(String constraints);
 
+	/**
+	 * Sets the column constraints
+	 * 
+	 * @param constraints The constraints to set
+	 * 
+	 * @return This builder
+	 */
 	IMigLayoutFactoryBuilder columnConstraints(String constraints);
 
+	/**
+	 * Sets the layout constraints
+	 * 
+	 * @param constraints The constraints to set
+	 * 
+	 * @return This builder
+	 */
 	IMigLayoutFactoryBuilder constraints(String constraints);
 
+	/**
+	 * Sets the row constraints
+	 * 
+	 * @param constraints The constraints to set
+	 * 
+	 * @return This builder
+	 */
 	IMigLayoutFactoryBuilder rowConstraints(IAC constraints);
 
+	/**
+	 * Sets the column constraints
+	 * 
+	 * @param constraints The constraints to set
+	 * 
+	 * @return This builder
+	 */
 	IMigLayoutFactoryBuilder columnConstraints(IAC constraints);
 
+	/**
+	 * Sets the layout constraints
+	 * 
+	 * @param constraints The constraints to set
+	 * 
+	 * @return This builder
+	 */
 	IMigLayoutFactoryBuilder constraints(ILC constraints);
 
+	/**
+	 * Creates a new layout factory for 'IMigLayout'
+	 * 
+	 * @return A new layout factory for 'IMigLayout', never null
+	 */
 	ILayoutFactory<IMigLayout> build();
 
 }

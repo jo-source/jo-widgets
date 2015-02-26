@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,55 +26,71 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.layout;
+package org.jowidgets.impl.layout;
 
-import org.jowidgets.api.layout.ICachedFillLayout;
-import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.util.Assert;
 
-/**
- * @deprecated Use {@link org.jowidgets.api.layout.CachedFillLayout} instead
- */
-@Deprecated
-public final class CachedFillLayout implements ICachedFillLayout {
+final class PreferredSizeLayoutImpl implements ILayouter {
 
-	private final ICachedFillLayout original;
+	private final IContainer container;
 
-	public CachedFillLayout(final IContainer container) {
+	private Dimension preferredSize;
+	private boolean layoutNeeded;
+
+	PreferredSizeLayoutImpl(final IContainer container) {
 		Assert.paramNotNull(container, "container");
-		this.original = Toolkit.getLayoutFactoryProvider().cachedFillLayout().create(container);
+		this.container = container;
+		this.layoutNeeded = true;
 	}
 
 	@Override
 	public void layout() {
-		original.layout();
-	}
-
-	@Override
-	public void invalidate() {
-		original.invalidate();
-	}
-
-	@Override
-	public Dimension getPreferredSize() {
-		return original.getPreferredSize();
+		if (layoutNeeded) {
+			for (final IControl control : container.getChildren()) {
+				control.setSize(control.getPreferredSize());
+			}
+			layoutNeeded = false;
+		}
 	}
 
 	@Override
 	public Dimension getMinSize() {
-		return original.getMinSize();
+		return getPreferredSize();
+	}
+
+	@Override
+	public Dimension getPreferredSize() {
+		if (preferredSize == null) {
+			this.preferredSize = calcPreferredSize();
+		}
+		return preferredSize;
 	}
 
 	@Override
 	public Dimension getMaxSize() {
-		return original.getMaxSize();
+		return getPreferredSize();
 	}
 
 	@Override
-	public void clearCache() {
-		original.clearCache();
+	public void invalidate() {
+		preferredSize = null;
+		layoutNeeded = true;
 	}
 
+	private Dimension calcPreferredSize() {
+		int maxX = 0;
+		int maxY = 0;
+		for (final IControl control : container.getChildren()) {
+			final Dimension controlSize = control.getPreferredSize();
+			final Position controlPos = control.getPosition();
+			maxX = Math.max(maxX, controlPos.getX() + controlSize.getWidth());
+			maxY = Math.max(maxY, controlPos.getY() + controlSize.getHeight());
+		}
+		return container.computeDecoratedSize(new Dimension(maxX, maxY));
+	}
 }

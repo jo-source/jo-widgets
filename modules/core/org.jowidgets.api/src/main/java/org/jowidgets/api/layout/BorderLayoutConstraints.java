@@ -30,10 +30,29 @@ package org.jowidgets.api.layout;
 
 public enum BorderLayoutConstraints {
 
+	/**
+	 * The center region
+	 */
 	CENTER,
+
+	/**
+	 * The left region
+	 */
 	LEFT,
+
+	/**
+	 * The right region
+	 */
 	RIGHT,
+
+	/**
+	 * The top region
+	 */
 	TOP,
+
+	/**
+	 * The bottom region
+	 */
 	BOTTOM;
 
 }

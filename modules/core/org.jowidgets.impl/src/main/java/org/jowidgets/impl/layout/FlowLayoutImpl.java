@@ -38,12 +38,12 @@ import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.util.Assert;
 
-final class FlowLayout extends AbstractCachingLayout implements ILayouter {
+final class FlowLayoutImpl extends AbstractCachingLayout implements ILayouter {
 	private final IContainer container;
 	private final int gap;
 	private final Orientation orientation;
 
-	FlowLayout(final IContainer container, final int gap, final Orientation orientation) {
+	FlowLayoutImpl(final IContainer container, final int gap, final Orientation orientation) {
 		Assert.paramNotNull(container, "container");
 		this.container = container;
 		this.gap = gap;

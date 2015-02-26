@@ -38,12 +38,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.jowidgets.api.controller.ITreeSelectionEvent;
 import org.jowidgets.api.controller.ITreeSelectionListener;
 import org.jowidgets.api.layout.ILayoutFactory;
-import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.layout.miglayout.IAC;
 import org.jowidgets.api.layout.miglayout.ILC;
 import org.jowidgets.api.layout.miglayout.IMigLayout;
 import org.jowidgets.api.layout.miglayout.IMigLayoutToolkit;
 import org.jowidgets.api.layout.miglayout.IPlatformDefaults;
+import org.jowidgets.api.layout.miglayout.MigLayout;
+import org.jowidgets.api.layout.miglayout.MigLayoutToolkit;
 import org.jowidgets.api.model.table.ITableColumn;
 import org.jowidgets.api.model.table.ITableModel;
 import org.jowidgets.api.toolkit.Toolkit;
@@ -83,7 +84,7 @@ import org.jowidgets.tools.powo.JoFrame;
 public final class DemoMigLayoutFrame extends JoFrame {
 
 	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
-	private static final ILayoutFactoryProvider LFP = Toolkit.getLayoutFactoryProvider();
+	//private static final ILayoutFactoryProvider LFP = Toolkit.getLayoutFactoryProvider();
 
 	private static final ColorValue LABEL_COLOR = new ColorValue(0, 70, 213);
 
@@ -247,14 +248,13 @@ public final class DemoMigLayoutFrame extends JoFrame {
 			}
 		});
 
-		setLayout(LFP.migLayoutBuilder().constraints("wrap").columnConstraints("[]u[grow,fill]").rowConstraints(
-				"[grow,fill][pref]").build());
+		setLayout(MigLayout.builder().constraints("wrap").columnConstraints("[]u[grow,fill]").rowConstraints("[grow,fill][pref]").build());
 
 		final ITabFolder layoutPickerTabPane = add(BPF.tabFolder().setTabsCloseable(false), "spany, grow");
 
 		// font bold...
 		final ITabItem tabPickerList = layoutPickerTabPane.addItem(BPF.tabItem().setText("Example Browser"));
-		tabPickerList.setLayout(LFP.migLayoutBuilder().constraints("fill, insets 0").build());
+		tabPickerList.setLayout(MigLayout.builder().constraints("fill, insets 0").build());
 		final ITree pickerList = tabPickerList.add(BPF.tree(), "spany, grow");
 		//pickerList.setBackgroundRole(layoutPickerTabPane.backgroundRole());
 
@@ -266,11 +266,11 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		}
 
 		layoutDisplayPanel = add(BPF.composite());
-		layoutDisplayPanel.setLayout(LFP.migLayoutBuilder().constraints("fill, insets 0").build());
+		layoutDisplayPanel.setLayout(MigLayout.builder().constraints("fill, insets 0").build());
 
 		descriptionTabPane = add(BPF.tabFolder(), "growx, hmin 120");
 		final ITabItem tabDescriptionPane = descriptionTabPane.addItem(BPF.tabItem().setText("Description"));
-		tabDescriptionPane.setLayout(LFP.migLayoutBuilder().constraints("fill, insets 0").build());
+		tabDescriptionPane.setLayout(MigLayout.builder().constraints("fill, insets 0").build());
 		descrTextArea = tabDescriptionPane.add(BPF.textArea().setEditable(false).setBorder(false), "grow");
 		descrTextArea.setFontName("tahoma");
 		descrTextArea.setFontSize(8);
@@ -333,7 +333,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		final ITabItem panel = result.addItem(BPF.tabItem().setText("Welcome"));
-		panel.setLayout(LFP.migLayoutBuilder().constraints("ins 20, fill").build());
+		panel.setLayout(MigLayout.builder().constraints("ins 20, fill").build());
 
 		final String s = "MigLayout's main purpose is to make layouts for SWT and Swing, and possibly other frameworks, much more powerful and a lot easier to create, especially for manual coding.\n\n"
 			+ "The motto is: \"MigLayout makes complex layouts easy and normal layouts one-liners.\"\n\n"
@@ -362,7 +362,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		final ITabItem panel = result.addItem(BPF.tabItem().setText("Quick Start"));
-		panel.setLayout(LFP.migLayoutBuilder().constraints("wrap").columnConstraints(
+		panel.setLayout(MigLayout.builder().constraints("wrap").columnConstraints(
 				"[right][fill,sizegroup]unrel[right][fill,sizegroup]").build());
 
 		addSeparator(panel, "General");
@@ -390,7 +390,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		final ITabItem panel = result.addItem(BPF.tabItem().setText("Plain"));
-		panel.setLayout(LFP.migLayoutBuilder().columnConstraints("[r][100lp, fill][60lp][95lp, fill]").build());
+		panel.setLayout(MigLayout.builder().columnConstraints("[r][100lp, fill][60lp][95lp, fill]").build());
 
 		addSeparator(panel, "Manufacturer");
 		createLabel(panel, "Company", "");
@@ -426,7 +426,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Horizontal tab
 		final ITabItem horTab = result.addItem(BPF.tabItem().setText("Horizontal"));
-		horTab.setLayout(LFP.migLayoutBuilder().constraints("wrap").columnConstraints(
+		horTab.setLayout(MigLayout.builder().constraints("wrap").columnConstraints(
 				"[label]15[left]15[center]15[right]15[fill]15[]").rowConstraints("[]15[]").build());
 
 		final String[] horLabels = new String[] {"[label]", "[left]", "[center]", "[right]", "[fill]", "[] (Default)"};
@@ -449,7 +449,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Vertical tab
 		final ITabItem verTab = result.addItem(BPF.tabItem().setText("Vertical"));
-		verTab.setLayout(LFP.migLayoutBuilder().constraints("wrap, flowy").columnConstraints("[]unrel[]rel[]").rowConstraints(
+		verTab.setLayout(MigLayout.builder().constraints("wrap, flowy").columnConstraints("[]unrel[]rel[]").rowConstraints(
 				"[top]15[center]15[bottom]15[fill]15[fill,baseline]15[baseline]15[]").build());
 
 		final String[] verLabels = new String[] {
@@ -485,7 +485,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Horizontal
 		final ITabItem hPanel = result.addItem(BPF.tabItem().setText("Horizontal"));
-		hPanel.setLayout(LFP.migLayoutBuilder().constraints("wrap").columnConstraints(
+		hPanel.setLayout(MigLayout.builder().constraints("wrap").columnConstraints(
 				"[grow,left][grow,center][grow,right][grow,fill,center]").rowConstraints("[]unrel[][]").build());
 
 		final String[] sizes = new String[] {"", "growx", "growx 0", "left", "center", "right", "leading", "trailing"};
@@ -503,7 +503,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Vertical
 		final ITabItem vPanel = result.addItem(BPF.tabItem().setText("Vertical"));
-		vPanel.setLayout(LFP.migLayoutBuilder().constraints("wrap,flowy").columnConstraints("[right][]").rowConstraints(
+		vPanel.setLayout(MigLayout.builder().constraints("wrap,flowy").columnConstraints("[right][]").rowConstraints(
 				"[grow,top][grow,center][grow,bottom][grow,fill,bottom][grow,fill,baseline]").build());
 
 		final String[] vSizes = new String[] {"", "growy", "growy 0", "top", "center", "bottom"};
@@ -526,7 +526,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Horizontal tab
 		final ITabItem horTab = result.addItem(BPF.tabItem().setText("Horizontal - Column size set"));
-		horTab.setLayout(LFP.migLayoutBuilder().columnConstraints("[]15[75px]25[min]25[]").rowConstraints("[]15").build());
+		horTab.setLayout(MigLayout.builder().columnConstraints("[]15[75px]25[min]25[]").rowConstraints("[]15").build());
 
 		createLabel(horTab, "75px", "skip");
 		createLabel(horTab, "Min", "");
@@ -539,7 +539,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Vertical tab 1
 		final ITabItem verTab = result.addItem(BPF.tabItem().setText("Vertical - Row sized"));
-		verTab.setLayout(LFP.migLayoutBuilder().constraints("flowy,wrap").columnConstraints("[]15[]").rowConstraints(
+		verTab.setLayout(MigLayout.builder().constraints("flowy,wrap").columnConstraints("[]15[]").rowConstraints(
 				"[]15[c,45:45]15[c,min]15[c,pref]").build());
 
 		createLabel(verTab, "45px", "skip");
@@ -553,7 +553,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Componentsized/Baseline 2
 		final ITabItem verTab2 = result.addItem(BPF.tabItem().setText("Vertical - Component sized + Baseline"));
-		verTab2.setLayout(LFP.migLayoutBuilder().constraints("flowy,wrap").columnConstraints("[]15[]").rowConstraints(
+		verTab2.setLayout(MigLayout.builder().constraints("flowy,wrap").columnConstraints("[]15[]").rowConstraints(
 				"[]15[baseline]15[baseline]15[baseline]").build());
 
 		createLabel(verTab2, "45px", "skip");
@@ -571,7 +571,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// All tab
 		final ITabItem allTab = result.addItem(BPF.tabItem().setText("All"));
-		allTab.setLayout(LFP.migLayoutBuilder().columnConstraints("[pref!][grow,fill]").rowConstraints("[]15[]").build());
+		allTab.setLayout(MigLayout.builder().columnConstraints("[pref!][grow,fill]").rowConstraints("[]15[]").build());
 
 		createLabel(allTab, "Fixed", "");
 		createLabel(allTab, "Gets all extra space", "wrap");
@@ -580,7 +580,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Half tab
 		final ITabItem halfTab = result.addItem(BPF.tabItem().setText("Half"));
-		halfTab.setLayout(LFP.migLayoutBuilder().columnConstraints("[pref!][grow,fill]").rowConstraints("[]15[]").build());
+		halfTab.setLayout(MigLayout.builder().columnConstraints("[pref!][grow,fill]").rowConstraints("[]15[]").build());
 
 		createLabel(halfTab, "Fixed", "");
 		createLabel(halfTab, "Gets half of extra space", "");
@@ -591,7 +591,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Percent 1 tab
 		final ITabItem p1Tab = result.addItem(BPF.tabItem().setText("Percent 1"));
-		p1Tab.setLayout(LFP.migLayoutBuilder().columnConstraints("[pref!][0:0,grow 25,fill][0:0,grow 75,fill]").rowConstraints(
+		p1Tab.setLayout(MigLayout.builder().columnConstraints("[pref!][0:0,grow 25,fill][0:0,grow 75,fill]").rowConstraints(
 				"[]15[]").build());
 
 		createLabel(p1Tab, "Fixed", "");
@@ -603,7 +603,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Percent 2 tab
 		final ITabItem p2Tab = result.addItem(BPF.tabItem().setText("Percent 2"));
-		p2Tab.setLayout(LFP.migLayoutBuilder().columnConstraints("[0:0,grow 33,fill][0:0,grow 67,fill]").rowConstraints("[]15[]").build());
+		p2Tab.setLayout(MigLayout.builder().columnConstraints("[0:0,grow 33,fill][0:0,grow 67,fill]").rowConstraints("[]15[]").build());
 
 		createLabel(p2Tab, "Gets 33% of extra space", "");
 		createLabel(p2Tab, "Gets 67% of extra space", "wrap");
@@ -612,7 +612,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Vertical 1 tab
 		final ITabItem v1Tab = result.addItem(BPF.tabItem().setText("Vertical 1"));
-		v1Tab.setLayout(LFP.migLayoutBuilder().constraints("flowy").columnConstraints("[]15[]").rowConstraints(
+		v1Tab.setLayout(MigLayout.builder().constraints("flowy").columnConstraints("[]15[]").rowConstraints(
 				"[][c,pref!][c,grow 25,fill][c,grow 75,fill]").build());
 
 		createLabel(v1Tab, "Fixed", "skip");
@@ -625,7 +625,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Vertical 2 tab
 		final ITabItem v2Tab = result.addItem(BPF.tabItem().setText("Vertical 2"));
-		v2Tab.setLayout(LFP.migLayoutBuilder().constraints("flowy").columnConstraints("[]15[]").rowConstraints(
+		v2Tab.setLayout(MigLayout.builder().constraints("flowy").columnConstraints("[]15[]").rowConstraints(
 				"[][c,grow 33,fill][c,grow 67,fill]").build());
 
 		createLabel(v2Tab, "Gets 33% of extra space", "skip");
@@ -640,14 +640,14 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// shrink tab
 		final ITabItem shrinkPanel = result.addItem(BPF.tabItem().setText("Shrink"));
-		shrinkPanel.setLayout(LFP.migLayoutBuilder().constraints("fill, insets 0").columnConstraints("[fill]").rowConstraints(
+		shrinkPanel.setLayout(MigLayout.builder().constraints("fill, insets 0").columnConstraints("[fill]").rowConstraints(
 				"[fill]").build());
 
 		final ISplitComposite sSplitPane = shrinkPanel.add(BPF.splitHorizontal(), "grow");
 		final IContainer sPanel = sSplitPane.getFirst();
 		final IContainer sTextPanel = sSplitPane.getSecond();
 
-		sPanel.setLayout(LFP.migLayoutBuilder().constraints("nogrid").build());
+		sPanel.setLayout(MigLayout.builder().constraints("nogrid").build());
 
 		createTextField(sPanel, "shp 110", "shp 110,w 10:130");
 		createTextField(sPanel, "Default (100)", "w 10:130");
@@ -665,7 +665,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		createTextField(sPanel, "shp 100,shrink 25", "shp 100,shrink 25,w 10:130");
 		createTextField(sPanel, "shp 100,shrink 75", "shp 100,shrink 75,w 10:130");
 
-		sTextPanel.setLayout(LFP.migLayoutBuilder().rowConstraints("0[grow]0").columnConstraints("0[grow]0").build());
+		sTextPanel.setLayout(MigLayout.builder().rowConstraints("0[grow]0").columnConstraints("0[grow]0").build());
 		final ITextControl sTextArea = createTextArea(
 				sTextPanel,
 				"Use the slider to see how the components shrink depending on the constraints set on them.\n\n'shp' means Shrink Priority. "
@@ -680,14 +680,13 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Grow tab
 		final ITabItem growPanel = result.addItem(BPF.tabItem().setText("Grow"));
-		growPanel.setLayout(LFP.migLayoutBuilder().constraints("fill, insets 0").columnConstraints("[fill]").rowConstraints(
-				"[fill]").build());
+		growPanel.setLayout(MigLayout.builder().constraints("fill, insets 0").columnConstraints("[fill]").rowConstraints("[fill]").build());
 
 		final ISplitComposite gSplitPane = growPanel.add(BPF.splitHorizontal(), "grow");
 		final IContainer gPanel = gSplitPane.getFirst();
 		final IContainer gTextPanel = gSplitPane.getSecond();
 
-		gPanel.setLayout(LFP.migLayoutBuilder().constraints("nogrid").columnConstraints("[grow]").build());
+		gPanel.setLayout(MigLayout.builder().constraints("nogrid").columnConstraints("[grow]").build());
 
 		createButton(gPanel, "gp 110, grow", "gp 110, grow, wmax 170");
 		createButton(gPanel, "Default (100), grow", "grow, wmax 170");
@@ -701,7 +700,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		createButton(gPanel, "gp 100, grow 25", "gp 100, grow 25, wmax 170");
 		createButton(gPanel, "gp 100, grow 75", "gp 100, grow 75, wmax 170");
 
-		gTextPanel.setLayout(LFP.migLayoutBuilder().rowConstraints("0[grow]0").columnConstraints("0[grow]0").build());
+		gTextPanel.setLayout(MigLayout.builder().rowConstraints("0[grow]0").columnConstraints("0[grow]0").build());
 		final ITextControl gTextArea = createTextArea(
 				gTextPanel,
 				"'gp' means Grow Priority. "
@@ -720,7 +719,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Horizontal span
 		final ITabItem colPanel = result.addItem(BPF.tabItem().setText("Column Span/Split"));
-		colPanel.setLayout(LFP.migLayoutBuilder().columnConstraints("[fill][25%,fill][105lp!,fill][150px!,fill]").rowConstraints(
+		colPanel.setLayout(MigLayout.builder().columnConstraints("[fill][25%,fill][105lp!,fill][150px!,fill]").rowConstraints(
 				"[]15[][]").build());
 
 		createTextField(colPanel, "Col1 [ ]", "");
@@ -744,7 +743,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Vertical span
 		final ITabItem rowPanel = result.addItem(BPF.tabItem().setText("Row Span"));
-		rowPanel.setLayout(LFP.migLayoutBuilder().constraints("wrap").columnConstraints("[225lp]para[225lp]").rowConstraints(
+		rowPanel.setLayout(MigLayout.builder().constraints("wrap").columnConstraints("[225lp]para[225lp]").rowConstraints(
 				"[]3[]unrel[]3[]unrel[]3[]").build());
 
 		createLabel(rowPanel, "Name", "");
@@ -768,7 +767,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 	private ITabItem createFlowPanel(final ITabFolder parent, final String text, final String gridFlow, final String cellFlow) {
 		final ITabItem result = parent.addItem(BPF.tabItem().setText(text));
-		result.setLayout(LFP.migLayoutBuilder().constraints("center, wrap 3," + gridFlow).columnConstraints("[110,fill]").rowConstraints(
+		result.setLayout(MigLayout.builder().constraints("center, wrap 3," + gridFlow).columnConstraints("[110,fill]").rowConstraints(
 				"[110,fill]").build());
 
 		for (int i = 0; i < 9; i++) {
@@ -785,7 +784,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Ungrouped
 		final ITabItem ugPanel = result.addItem(BPF.tabItem().setText("Ungrouped"));
-		ugPanel.setLayout(LFP.migLayoutBuilder().columnConstraints("[]push[][][]").build());
+		ugPanel.setLayout(MigLayout.builder().columnConstraints("[]push[][][]").build());
 
 		createButton(ugPanel, "Help", "");
 		createButton(ugPanel, "< Back", "gap push");
@@ -795,7 +794,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Grouped Components
 		final ITabItem gPanel = result.addItem(BPF.tabItem().setText("Grouped (Components)"));
-		gPanel.setLayout(LFP.migLayoutBuilder().constraints("nogrid, fillx").build());
+		gPanel.setLayout(MigLayout.builder().constraints("nogrid, fillx").build());
 
 		createButton(gPanel, "Help", "sg");
 		createButton(gPanel, "< Back", "sg, gap push");
@@ -805,7 +804,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Grouped Columns
 		final ITabItem gcPanel = result.addItem(BPF.tabItem().setText("Grouped (Columns)"));
-		gcPanel.setLayout(LFP.migLayoutBuilder().columnConstraints("[sg,fill]push[sg,fill][sg,fill]unrel[sg,fill]unrel[sg,fill]").build());
+		gcPanel.setLayout(MigLayout.builder().columnConstraints("[sg,fill]push[sg,fill][sg,fill]unrel[sg,fill]unrel[sg,fill]").build());
 
 		createButton(gcPanel, "Help", "");
 		createButton(gcPanel, "< Back", "");
@@ -815,7 +814,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Ungrouped Rows
 		final ITabItem ugrPanel = result.addItem(BPF.tabItem().setText("Ungrouped Rows"));
-		ugrPanel.setLayout(LFP.migLayout());
+		ugrPanel.setLayout(MigLayout.get());
 
 		createLabel(ugrPanel, "File Number:", "");
 		createTextField(ugrPanel, "30                            ", "wrap");
@@ -840,7 +839,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Grouped Rows
 		final ITabItem grPanel = result.addItem(BPF.tabItem().setText("Grouped Rows"));
-		grPanel.setLayout(LFP.migLayoutBuilder().columnConstraints("[]").rowConstraints("[sg]").build()); // "sg" is the only difference to previous panel
+		grPanel.setLayout(MigLayout.builder().columnConstraints("[]").rowConstraints("[sg]").build()); // "sg" is the only difference to previous panel
 
 		createLabel(grPanel, "File Number:", "");
 		createTextField(grPanel, "30                            ", "wrap");
@@ -869,7 +868,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Horizontal
 		final ITabItem hPanel = result.addItem(BPF.tabItem().setText("Horizontal"));
-		hPanel.setLayout(LFP.migLayoutBuilder().constraints("wrap").columnConstraints("[right][]").build());
+		hPanel.setLayout(MigLayout.builder().constraints("wrap").columnConstraints("[right][]").build());
 
 		final String[] sizes = new String[] {"72pt", "25.4mm", "2.54cm", "1in", "72px", "96px", "120px", "25%", "20sp"};
 		for (int i = 0; i < sizes.length; i++) {
@@ -879,7 +878,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Horizontal lp
 		final ITabItem hlpPanel = result.addItem(BPF.tabItem().setText("Horizontal LP"));
-		hlpPanel.setLayout(LFP.migLayoutBuilder().columnConstraints("[right][][]").build());
+		hlpPanel.setLayout(MigLayout.builder().columnConstraints("[right][][]").build());
 
 		createLabel(hlpPanel, "9 cols", "");
 		createTextField(hlpPanel, "", "wmin 9*6");
@@ -892,7 +891,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Vertical
 		final ITabItem vPanel = result.addItem(BPF.tabItem().setText("Vertical"));
-		vPanel.setLayout(LFP.migLayoutBuilder().constraints("wrap,flowy").columnConstraints("[c]").rowConstraints("[top][top]").build());
+		vPanel.setLayout(MigLayout.builder().constraints("wrap,flowy").columnConstraints("[c]").rowConstraints("[top][top]").build());
 
 		final String[] vSizes = new String[] {"72pt", "25.4mm", "2.54cm", "1in", "72px", "96px", "120px", "25%", "20sp"};
 		for (int i = 0; i < sizes.length; i++) {
@@ -902,7 +901,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Vertical lp
 		final ITabItem vlpPanel = result.addItem(BPF.tabItem().setText("Vertical LP"));
-		vlpPanel.setLayout(LFP.migLayoutBuilder().constraints("wrap,flowy").columnConstraints("[c]").rowConstraints(
+		vlpPanel.setLayout(MigLayout.builder().constraints("wrap,flowy").columnConstraints("[c]").rowConstraints(
 				"[top][top]40px[top][top]").build());
 
 		createLabel(vlpPanel, "4 rows", "");
@@ -927,13 +926,13 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		final ITabItem tabPanel = result.addItem(BPF.tabItem().setText("Component Sizes"));
-		tabPanel.setLayout(LFP.migLayoutBuilder().constraints("fill").build());
+		tabPanel.setLayout(MigLayout.builder().constraints("fill").build());
 
 		final ISplitComposite splitPane = tabPanel.add(BPF.splitHorizontal(), "grow");
 		final IContainer panel = splitPane.getFirst();
 		final IContainer textPanel = splitPane.getSecond();
 
-		panel.setLayout(LFP.migLayoutBuilder().constraints("wrap").columnConstraints("[right][0:pref,grow]").build());
+		panel.setLayout(MigLayout.builder().constraints("wrap").columnConstraints("[right][0:pref,grow]").build());
 
 		createLabel(panel, "", "");
 		createTextField(panel, "8       ", "");
@@ -954,7 +953,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		createLabel(panel, "width 40:40:40", null);
 		createTextField(panel, "8       ", "width 40:40:40");
 
-		textPanel.setLayout(LFP.migLayoutBuilder().rowConstraints("0[grow]0").columnConstraints("0[grow]0").build());
+		textPanel.setLayout(MigLayout.builder().rowConstraints("0[grow]0").columnConstraints("0[grow]0").build());
 		final ITextControl textArea = createTextArea(
 				textPanel,
 				"Use slider to see how the components grow and shrink depending on the constraints set on them.",
@@ -970,7 +969,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 			final String colConstr = i == 0 ? "[right][300]" : "[right, 150lp:pref][300]";
 
 			final ITabItem panel1 = result.addItem(BPF.tabItem().setText(i == 0 ? "Jumping 1" : "Stable 1"));
-			panel1.setLayout(LFP.migLayoutBuilder().constraints("wrap").columnConstraints(colConstr).build());
+			panel1.setLayout(MigLayout.builder().constraints("wrap").columnConstraints(colConstr).build());
 
 			createLabel(panel1, "File Number:", "");
 			createTextField(panel1, "", "growx");
@@ -982,7 +981,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 			createTextField(panel1, "", "growx");
 
 			final ITabItem panel2 = result.addItem(BPF.tabItem().setText(i == 0 ? "Jumping 2" : "Stable 2"));
-			panel2.setLayout(LFP.migLayoutBuilder().constraints("wrap").columnConstraints(colConstr).build());
+			panel2.setLayout(MigLayout.builder().constraints("wrap").columnConstraints(colConstr).build());
 
 			createLabel(panel2, "Shipper:", "");
 			createTextField(panel2, "        ", "split 2");
@@ -1004,7 +1003,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Absolute grid position
 		final ITabItem absPanel = result.addItem(BPF.tabItem().setText("Absolute"));
-		absPanel.setLayout(LFP.migLayoutBuilder().columnConstraints("[100:pref,fill]").rowConstraints("[100:pref,fill]").build());
+		absPanel.setLayout(MigLayout.builder().columnConstraints("[100:pref,fill]").rowConstraints("[100:pref,fill]").build());
 
 		createPanel(absPanel, "cell 0 0", null);
 		createPanel(absPanel, "cell 2 0", null);
@@ -1016,7 +1015,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Relative grid position with wrap
 		final ITabItem relAwPanel = result.addItem(BPF.tabItem().setText("Relative + Wrap"));
-		relAwPanel.setLayout(LFP.migLayoutBuilder().constraints("wrap").columnConstraints(
+		relAwPanel.setLayout(MigLayout.builder().constraints("wrap").columnConstraints(
 				"[100:pref,fill][100:pref,fill][100:pref,fill][100:pref,fill]").rowConstraints("[100:pref,fill]").build());
 
 		createPanel(relAwPanel, "", null);
@@ -1029,7 +1028,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Relative grid position with manual wrap
 		final ITabItem relWPanel = result.addItem(BPF.tabItem().setText("Relative"));
-		relWPanel.setLayout(LFP.migLayoutBuilder().columnConstraints("[100:pref,fill]").rowConstraints("[100:pref,fill]").build());
+		relWPanel.setLayout(MigLayout.builder().columnConstraints("[100:pref,fill]").rowConstraints("[100:pref,fill]").build());
 
 		createPanel(relWPanel, "", null);
 		createPanel(relWPanel, "skip", null);
@@ -1041,7 +1040,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Mixed relative and absolute grid position
 		final ITabItem mixPanel = result.addItem(BPF.tabItem().setText("Mixed"));
-		mixPanel.setLayout(LFP.migLayoutBuilder().columnConstraints("[100:pref,fill]").rowConstraints("[100:pref,fill]").build());
+		mixPanel.setLayout(MigLayout.builder().columnConstraints("[100:pref,fill]").rowConstraints("[100:pref,fill]").build());
 
 		createPanel(mixPanel, "", null);
 		createPanel(mixPanel, "cell 2 0", null);
@@ -1056,11 +1055,11 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		final ITabItem mainPanel = result.addItem(BPF.tabItem().setText("Orientation"));
-		mainPanel.setLayout(LFP.migLayoutBuilder().constraints("flowy").columnConstraints("[grow,fill]").rowConstraints(
+		mainPanel.setLayout(MigLayout.builder().constraints("flowy").columnConstraints("[grow,fill]").rowConstraints(
 				"[]0[]15lp[]0[]").build());
 
 		// Default orientation
-		final IContainer defPanel = createPanel(mainPanel, LFP.migLayoutBuilder().columnConstraints("[][grow,fill]").build());
+		final IContainer defPanel = createPanel(mainPanel, MigLayout.builder().columnConstraints("[][grow,fill]").build());
 
 		addSeparator(defPanel, "Default Orientation");
 		createLabel(defPanel, "Level", "");
@@ -1072,7 +1071,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		// Right-to-left, Top-to-bottom
 		final IContainer rtlPanel = createPanel(
 				mainPanel,
-				LFP.migLayoutBuilder().constraints("rtl,ttb").columnConstraints("[][grow,fill]").build());
+				MigLayout.builder().constraints("rtl,ttb").columnConstraints("[][grow,fill]").build());
 		addSeparator(rtlPanel, "Right to Left");
 		createLabel(rtlPanel, "Level", "");
 		createTextField(rtlPanel, "", "span,growx");
@@ -1083,7 +1082,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		// Right-to-left, Bottom-to-top
 		final IContainer rtlbPanel = createPanel(
 				mainPanel,
-				LFP.migLayoutBuilder().constraints("rtl,btt").columnConstraints("[][grow,fill]").build());
+				MigLayout.builder().constraints("rtl,btt").columnConstraints("[][grow,fill]").build());
 		addSeparator(rtlbPanel, "Right to Left, Bottom to Top");
 		createLabel(rtlbPanel, "Level", "");
 		createTextField(rtlbPanel, "", "span,growx");
@@ -1094,7 +1093,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		// Left-to-right, Bottom-to-top
 		final IContainer ltrbPanel = createPanel(
 				mainPanel,
-				LFP.migLayoutBuilder().constraints("ltr,btt").columnConstraints("[][grow,fill]").build());
+				MigLayout.builder().constraints("ltr,btt").columnConstraints("[][grow,fill]").build());
 		addSeparator(ltrbPanel, "Left to Right, Bottom to Top");
 		createLabel(ltrbPanel, "Level", "");
 		createTextField(ltrbPanel, "", "span,growx");
@@ -1107,7 +1106,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		final ITabItem posPanel = result.addItem(BPF.tabItem().setText("X Y Positions"));
-		posPanel.setLayout(LFP.migLayout());
+		posPanel.setLayout(MigLayout.get());
 
 		windowMovedListeningWidget = posPanel;
 
@@ -1129,11 +1128,11 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Bounds tab
 		final ITabItem boundsTabPanel = result.addItem(BPF.tabItem().setText("X1 Y1 X2 Y2 Bounds"));
-		boundsTabPanel.setLayout(LFP.migLayoutBuilder().constraints("fill").columnConstraints("[grow,fill]").rowConstraints(
+		boundsTabPanel.setLayout(MigLayout.builder().constraints("fill").columnConstraints("[grow,fill]").rowConstraints(
 				"[grow,fill]").build());
 
 		final IContainer boundsPanel = boundsTabPanel.add(BPF.composite(), "grow");
-		boundsPanel.setLayout(LFP.migLayout());
+		boundsPanel.setLayout(MigLayout.get());
 
 		// label should have a border
 		final ITextLabel southLabel = createLabel(
@@ -1162,7 +1161,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Links tab
 		final ITabItem linksPanel = result.addItem(BPF.tabItem().setText("Component Links"));
-		linksPanel.setLayout(LFP.migLayout());
+		linksPanel.setLayout(MigLayout.get());
 
 		createButton(linksPanel, "Mini", "pos null ta.y ta.x2 null, pad 3 0 -3 0");
 		createTextArea(linksPanel, "Components, Please Link to Me!\nMy ID is: 'ta'", "id ta, pos 0.5al 0.5al, w 300");
@@ -1175,7 +1174,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// External tab
 		final ITabItem externalPanel = result.addItem(BPF.tabItem().setText("External Components"));
-		externalPanel.setLayout(LFP.migLayout());
+		externalPanel.setLayout(MigLayout.get());
 
 		final IButton extButt = createButton(externalPanel, "Bounds Externally Set!", "id ext, external");
 		extButt.setSize(200, 40);
@@ -1185,7 +1184,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// End grouping
 		final ITabItem egPanel = result.addItem(BPF.tabItem().setText("End Grouping"));
-		egPanel.setLayout(LFP.migLayout());
+		egPanel.setLayout(MigLayout.get());
 
 		createButton(egPanel, "id b1, endgroupx g1, pos 200 200", null);
 		createButton(egPanel, "id b2, endgroupx g1, pos (b1.x+2ind) (b1.y2+rel)", null);
@@ -1194,7 +1193,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 		// Group Bounds tab
 		final ITabItem gpPanel = result.addItem(BPF.tabItem().setText("Group Bounds"));
-		gpPanel.setLayout(LFP.migLayout());
+		gpPanel.setLayout(MigLayout.get());
 
 		createButton(gpPanel, "id grp1.b1, pos n 0.5al 50% n", null);
 		createButton(gpPanel, "id grp1.b2, pos 50% 0.5al n n", null);
@@ -1214,7 +1213,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		final ITabItem p1 = result.addItem(BPF.tabItem().setText("Docking 1"));
-		p1.setLayout(LFP.migLayoutBuilder().constraints("fill").build());
+		p1.setLayout(MigLayout.builder().constraints("fill").build());
 
 		createPanel(p1, "1. North", "north");
 		createPanel(p1, "2. West", "west");
@@ -1316,7 +1315,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		//table.setLinesVisible(true);
 
 		final ITabItem p2 = result.addItem(BPF.tabItem().setText("Docking 2 (fill)"));
-		p2.setLayout(LFP.migLayoutBuilder().constraints("fill").columnConstraints("[c]").build());
+		p2.setLayout(MigLayout.builder().constraints("fill").columnConstraints("[c]").build());
 
 		createPanel(p2, "1. North", "north");
 		createPanel(p2, "2. North", "north");
@@ -1329,7 +1328,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		createButton(p2, "9. Normal", "");
 
 		final ITabItem p3 = result.addItem(BPF.tabItem().setText("Docking 3"));
-		p3.setLayout(LFP.migLayoutBuilder().build());
+		p3.setLayout(MigLayout.builder().build());
 
 		createPanel(p3, "1. North", "north");
 		createPanel(p3, "2. South", "south");
@@ -1338,7 +1337,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		createButton(p3, "5. Normal", "");
 
 		final ITabItem p4 = result.addItem(BPF.tabItem().setText("Docking 4"));
-		p4.setLayout(LFP.migLayoutBuilder().build());
+		p4.setLayout(MigLayout.builder().build());
 
 		createPanel(p4, "1. North", "north");
 		createPanel(p4, "2. North", "north");
@@ -1351,7 +1350,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		createButton(p4, "9. Normal", "");
 
 		final ITabItem p5 = result.addItem(BPF.tabItem().setText("Docking 5 (fillx)"));
-		p5.setLayout(LFP.migLayoutBuilder().constraints("fillx").columnConstraints("[c]").build());
+		p5.setLayout(MigLayout.builder().constraints("fillx").columnConstraints("[c]").build());
 
 		createPanel(p5, "1. North", "north");
 		createPanel(p5, "2. North", "north");
@@ -1364,7 +1363,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		createButton(p5, "9. Normal", "");
 
 		final ITabItem p6 = result.addItem(BPF.tabItem().setText("Random Docking"));
-		p6.setLayout(LFP.migLayoutBuilder().constraints("fill").build());
+		p6.setLayout(MigLayout.builder().constraints("fill").build());
 
 		final String[] sides = {"north", "east", "south", "west"};
 		final Random rand = new Random();
@@ -1379,7 +1378,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		final ITabItem mainPanel = result.addItem(BPF.tabItem().setText("Button Bars"));
-		mainPanel.setLayout(LFP.migLayoutBuilder().constraints("ins 0 0 15lp 0").columnConstraints("[grow]").rowConstraints(
+		mainPanel.setLayout(MigLayout.builder().constraints("ins 0 0 15lp 0").columnConstraints("[grow]").rowConstraints(
 				"[grow]u[baseline,nogrid]").build());
 
 		// TODO NM should not create an inner tab folder 
@@ -1450,7 +1449,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		final String helpTag,
 		final boolean sizeLocked) {
 		final ITabItem panel = parent.addItem(BPF.tabItem().setText(text));
-		panel.setLayout(LFP.migLayoutBuilder().constraints("nogrid, fillx, aligny 100%, gapy unrel").build());
+		panel.setLayout(MigLayout.builder().constraints("nogrid, fillx, aligny 100%, gapy unrel").build());
 
 		// Notice that the order in the rows below does not matter...
 		final String[][] buttons = new String[][] {
@@ -1490,7 +1489,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
 		final ITabItem p1 = result.addItem(BPF.tabItem().setText("Layout Showdown (pure)"));
-		p1.setLayout(LFP.migLayoutBuilder().columnConstraints("[]15[][grow,fill]15[grow]").build());
+		p1.setLayout(MigLayout.builder().columnConstraints("[]15[][grow,fill]15[grow]").build());
 
 		// References to text fields not stored to reduce code clutter.
 
@@ -1525,7 +1524,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 		// Fixed version *******************************************
 
 		final ITabItem p2 = result.addItem(BPF.tabItem().setText("Layout Showdown (improved)"));
-		p2.setLayout(LFP.migLayoutBuilder().columnConstraints("[]15[][grow,fill]15[][grow,fill]").build());
+		p2.setLayout(MigLayout.builder().columnConstraints("[]15[][grow,fill]15[][grow,fill]").build());
 
 		// References to text fields not stored to reduce code clutter.
 
@@ -1561,14 +1560,14 @@ public final class DemoMigLayoutFrame extends JoFrame {
 	public void createAPIConstraints1() {
 		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
-		final IMigLayoutToolkit cf = LFP.getMigLayoutToolkit();
+		final IMigLayoutToolkit cf = MigLayoutToolkit.getInstance();
 
 		final ILC layC = cf.lc().fill().wrap();
 		final IAC colC = cf.ac().align("right", 0).fill(1, 3).grow(100, 1, 3).align("right", 2).gap("15", 1);
 		final IAC rowC = cf.ac().align("top", 7).gap("15!", 6).grow(100, 8);
 
 		final ITabItem p1 = result.addItem(BPF.tabItem().setText("Layout Showdown (improved)"));
-		p1.setLayout(LFP.migLayoutBuilder().constraints(layC).columnConstraints(colC).rowConstraints(rowC).build());
+		p1.setLayout(MigLayout.builder().constraints(layC).columnConstraints(colC).rowConstraints(rowC).build());
 
 		// References to text fields not stored to reduce code clutter.
 
@@ -1604,14 +1603,14 @@ public final class DemoMigLayoutFrame extends JoFrame {
 	public void createAPIConstraints2() {
 		final ITabFolder result = createTabFolder(layoutDisplayPanel);
 
-		final IMigLayoutToolkit cf = LFP.getMigLayoutToolkit();
+		final IMigLayoutToolkit cf = MigLayoutToolkit.getInstance();
 
 		final ILC layC = cf.lc().fill().wrap();
 		final IAC colC = cf.ac().align("right", 0).fill(1, 3).grow(100, 1, 3).align("right", 2).gap("15", 1);
 		final IAC rowC = cf.ac().index(6).gap("15!").align("top").grow(100, 8);
 
 		final ITabItem p1 = result.addItem(BPF.tabItem().setText("Layout Showdown (improved)"));
-		p1.setLayout(LFP.migLayoutBuilder().constraints(layC).columnConstraints(colC).rowConstraints(rowC).build());
+		p1.setLayout(MigLayout.builder().constraints(layC).columnConstraints(colC).rowConstraints(rowC).build());
 
 		// References to text fields not stored to reduce code clutter.
 
@@ -1712,7 +1711,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 	private static IComposite createPanel(final IContainer parent, String text, final Object layout) {
 		final IComposite panel = parent.add(BPF.compositeWithBorder(), layout != null ? layout : text);
-		panel.setLayout(LFP.migLayoutBuilder().constraints("fill").build());
+		panel.setLayout(MigLayout.builder().constraints("fill").build());
 
 		final IColorConstant bg = new ColorValue(255, 255, 255);
 		panel.setBackgroundColor(bg);
@@ -1727,7 +1726,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 	private static IComposite createPanelWithoutBorder(final IContainer parent, String text, final Object layout) {
 		final IComposite panel = parent.add(BPF.composite(), layout != null ? layout : text);
-		panel.setLayout(LFP.migLayoutBuilder().constraints("fill").build());
+		panel.setLayout(MigLayout.builder().constraints("fill").build());
 
 		final IColorConstant bg = new ColorValue(255, 255, 255);
 		panel.setBackgroundColor(bg);
@@ -1742,7 +1741,7 @@ public final class DemoMigLayoutFrame extends JoFrame {
 
 	private static IComposite createPanel(final IContainer parent, String text, final Object layout, final int fontSize) {
 		final IComposite panel = parent.add(BPF.compositeWithBorder(), layout != null ? layout : text);
-		panel.setLayout(LFP.migLayoutBuilder().constraints("fill").build());
+		panel.setLayout(MigLayout.builder().constraints("fill").build());
 
 		final IColorConstant bg = new ColorValue(255, 255, 255);
 		panel.setBackgroundColor(bg);

@@ -31,7 +31,7 @@ package org.jowidgets.impl.layout;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.layout.ILayouter;
 
-public class DummyLayouter implements ILayouter {
+public final class DummyLayouter implements ILayouter {
 
 	@Override
 	public void layout() {}

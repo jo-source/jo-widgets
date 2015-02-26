@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, nimoll
+ * Copyright (c) 2015, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,68 +28,100 @@
 
 package org.jowidgets.api.layout.miglayout;
 
-public interface IMigLayoutToolkit {
+import org.jowidgets.api.toolkit.Toolkit;
+
+public final class MigLayoutToolkit {
+
+	private MigLayoutToolkit() {}
+
+	/**
+	 * Gets the Mig Layout toolkit instance
+	 * 
+	 * @return The mig layout toolkit instance
+	 */
+	public static IMigLayoutToolkit getInstance() {
+		return Toolkit.getLayoutFactoryProvider().getMigLayoutToolkit();
+	}
 
 	/**
 	 * Creates column constraints
 	 * 
 	 * @return New column constraints
 	 */
-	IAC columnConstraints();
+	public static IAC columnConstraints() {
+		return getInstance().columnConstraints();
+	}
 
 	/**
 	 * Creates row constraints
 	 * 
 	 * @return New row constraints
 	 */
-	IAC rowConstraints();
+	public static IAC rowConstraints() {
+		return getInstance().rowConstraints();
+	}
 
 	/**
 	 * Creates layout constraints
 	 * 
 	 * @return New layout constraints
 	 */
-	ILC layoutConstraints();
+	public static ILC layoutConstraints() {
+		return getInstance().layoutConstraints();
+	}
 
 	/**
 	 * Creates component constraints
 	 * 
 	 * @return New component constraints
 	 */
-	ICC componentConstraints();
+	public static ICC componentConstraints() {
+		return getInstance().componentConstraints();
+	}
 
 	/**
 	 * Creates component constraints
 	 * 
 	 * @return New component constraints
 	 */
-	ICC cc();
+	public static ICC cc() {
+		return getInstance().cc();
+	}
 
 	/**
 	 * Creates row / column constraints
 	 * 
 	 * @return New row / column constraints
 	 */
-	IAC ac();
+	public static IAC ac() {
+		return getInstance().ac();
+	}
 
 	/**
 	 * Creates layout constraints
 	 * 
 	 * @return New layout constraints
 	 */
-	ILC lc();
+	public static ILC lc() {
+		return getInstance().lc();
+	}
 
 	/**
 	 * Gets the platform defaults
 	 * 
 	 * @return The platform defaults, never null
 	 */
-	IPlatformDefaults getPlatformDefaults();
+	public static IPlatformDefaults getPlatformDefaults() {
+		return getInstance().getPlatformDefaults();
+	}
 
 	/**
 	 * Gets the mig layout version
 	 * 
 	 * @return The mig layout version
 	 */
-	String getMigLayoutVersion();
+	public static String getMigLayoutVersion() {
+		return getInstance().getMigLayoutVersion();
+	}
+
 }

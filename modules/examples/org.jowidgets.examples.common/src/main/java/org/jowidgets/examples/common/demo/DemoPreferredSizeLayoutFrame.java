@@ -28,7 +28,7 @@
 
 package org.jowidgets.examples.common.demo;
 
-import org.jowidgets.api.layout.ILayoutFactoryProvider;
+import org.jowidgets.api.layout.PreferredSizeLayout;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
@@ -43,9 +43,7 @@ public class DemoPreferredSizeLayoutFrame extends JoFrame {
 	public DemoPreferredSizeLayoutFrame() {
 		super("Preferred size layout demo");
 
-		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
-
-		final ILayouter layouter = setLayout(lfp.preferredSizeLayout());
+		final ILayouter layouter = setLayout(PreferredSizeLayout.get());
 
 		final Rectangle clientArea = getClientArea();
 		final int x = clientArea.getX();

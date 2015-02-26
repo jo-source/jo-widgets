@@ -30,18 +30,37 @@ package org.jowidgets.tools.layout;
 
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
+/**
+ * This class provides some often used MigLayoutDescriptors and constraints
+ */
 public final class MigLayoutFactory {
 
+	/**
+	 * Component constraints that grows in x and y direction with min with and height of 0
+	 */
 	public static final String GROWING_CELL_CONSTRAINTS = "growx, growy, w 0::, h 0::";
+
+	private static final MigLayoutDescriptor GROWING_CELL_LAYOUT = new MigLayoutDescriptor("[grow, 0::]", "[grow, 0::]");
+	private static final MigLayoutDescriptor GROWING_INNER_CELL_LAYOUT = new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0");
 
 	private MigLayoutFactory() {}
 
+	/**
+	 * Gets a layout descriptor with one cell that grows in both directions and has a min size 0
+	 * 
+	 * @return A layout descriptor with one cell that grows in both directions and has a min size 0
+	 */
 	public static MigLayoutDescriptor growingCellLayout() {
-		return new MigLayoutDescriptor("[grow, 0::]", "[grow, 0::]");
+		return GROWING_CELL_LAYOUT;
 	}
 
+	/**
+	 * Gets a layout descriptor with one cell that grows in both directions and has a min size 0 and with no margin
+	 * 
+	 * @return A layout descriptor with one cell that grows in both directions and has a min size 0 and with no margin
+	 */
 	public static MigLayoutDescriptor growingInnerCellLayout() {
-		return new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0");
+		return GROWING_INNER_CELL_LAYOUT;
 	}
 
 }

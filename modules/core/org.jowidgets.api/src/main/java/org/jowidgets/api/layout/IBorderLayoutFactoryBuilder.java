@@ -32,22 +32,99 @@ import org.jowidgets.common.widgets.layout.ILayouter;
 
 public interface IBorderLayoutFactoryBuilder {
 
+	/**
+	 * Sets the top, left, right and bottom margin.
+	 * 
+	 * The default margin is 0
+	 * 
+	 * @param margin The margin to set
+	 * 
+	 * @return This builder
+	 */
 	IBorderLayoutFactoryBuilder margin(int margin);
 
+	/**
+	 * Sets the x and y gap between the center control and the outer controls.
+	 * 
+	 * The default gap is 4
+	 * 
+	 * @param margin The gap to set
+	 * 
+	 * @return This builder
+	 */
 	IBorderLayoutFactoryBuilder gap(int gap);
 
+	/**
+	 * Sets the x gap between the center control and the outer controls.
+	 * 
+	 * The default gap is 4
+	 * 
+	 * @param margin The gap to set
+	 * 
+	 * @return This builder
+	 */
 	IBorderLayoutFactoryBuilder gapX(int gapX);
 
+	/**
+	 * Sets the y gap between the center control and the outer controls.
+	 * 
+	 * The default gap is 4
+	 * 
+	 * @param margin The gap to set
+	 * 
+	 * @return This builder
+	 */
 	IBorderLayoutFactoryBuilder gapY(int gapY);
 
+	/**
+	 * Sets the left margin.
+	 * 
+	 * The default margin is 0
+	 * 
+	 * @param margin The margin to set
+	 * 
+	 * @return This builder
+	 */
 	IBorderLayoutFactoryBuilder marginLeft(int marginLeft);
 
+	/**
+	 * Sets the right margin.
+	 * 
+	 * The default margin is 0
+	 * 
+	 * @param margin The margin to set
+	 * 
+	 * @return This builder
+	 */
 	IBorderLayoutFactoryBuilder marginRight(int marginRight);
 
+	/**
+	 * Sets the top margin.
+	 * 
+	 * The default margin is 0
+	 * 
+	 * @param margin The margin to set
+	 * 
+	 * @return This builder
+	 */
 	IBorderLayoutFactoryBuilder marginTop(int marginTop);
 
+	/**
+	 * Sets the bottom margin.
+	 * 
+	 * The default margin is 0
+	 * 
+	 * @param margin The margin to set
+	 * 
+	 * @return This builder
+	 */
 	IBorderLayoutFactoryBuilder marginBottom(int marginBottom);
 
+	/**
+	 * Creates a new layout factory for 'BorderLayout'
+	 * 
+	 * @return A new layout factory for 'BorderLayout', never null
+	 */
 	ILayoutFactory<ILayouter> build();
 
 }

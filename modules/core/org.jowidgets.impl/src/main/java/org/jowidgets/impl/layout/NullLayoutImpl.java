@@ -29,68 +29,38 @@
 package org.jowidgets.impl.layout;
 
 import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.util.Assert;
 
-final class PreferredSizeLayout implements ILayouter {
+final class NullLayoutImpl implements ILayouter {
 
 	private final IContainer container;
 
-	private Dimension preferredSize;
-	private boolean layoutNeeded;
-
-	PreferredSizeLayout(final IContainer container) {
+	NullLayoutImpl(final IContainer container) {
 		Assert.paramNotNull(container, "container");
 		this.container = container;
-		this.layoutNeeded = true;
 	}
 
 	@Override
-	public void layout() {
-		if (layoutNeeded) {
-			for (final IControl control : container.getChildren()) {
-				control.setSize(control.getPreferredSize());
-			}
-			layoutNeeded = false;
-		}
-	}
+	public void layout() {}
 
 	@Override
 	public Dimension getMinSize() {
-		return getPreferredSize();
+		return container.getSize();
 	}
 
 	@Override
 	public Dimension getPreferredSize() {
-		if (preferredSize == null) {
-			this.preferredSize = calcPreferredSize();
-		}
-		return preferredSize;
+		return container.getSize();
 	}
 
 	@Override
 	public Dimension getMaxSize() {
-		return getPreferredSize();
+		return container.getSize();
 	}
 
 	@Override
-	public void invalidate() {
-		preferredSize = null;
-		layoutNeeded = true;
-	}
+	public void invalidate() {}
 
-	private Dimension calcPreferredSize() {
-		int maxX = 0;
-		int maxY = 0;
-		for (final IControl control : container.getChildren()) {
-			final Dimension controlSize = control.getPreferredSize();
-			final Position controlPos = control.getPosition();
-			maxX = Math.max(maxX, controlPos.getX() + controlSize.getWidth());
-			maxY = Math.max(maxY, controlPos.getY() + controlSize.getHeight());
-		}
-		return container.computeDecoratedSize(new Dimension(maxX, maxY));
-	}
 }

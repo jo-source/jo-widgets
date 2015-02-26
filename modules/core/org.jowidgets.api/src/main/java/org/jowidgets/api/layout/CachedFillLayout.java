@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2015, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,42 +26,41 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.demo;
+package org.jowidgets.api.layout;
 
-import org.jowidgets.api.layout.NullLayout;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IButton;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.types.Rectangle;
-import org.jowidgets.tools.powo.JoFrame;
 
-public class DemoNullLayoutFrame extends JoFrame {
+/**
+ * Accessor for 'CachedFillLayout'
+ * 
+ * This layouter renders the first visible child of the container into the whole available space and caches the size
+ * of its children, so the next time the layout will be done, the cached values will be used until
+ * the cache is cleared by the user.
+ * 
+ * In many cases, the min, max and pref size of the child container will not change until the child container
+ * has not been changed by adding or removing children. So using this layout manager as a parent for a complex
+ * layout can improve performance extremely. The tradeoff is, that the programmer has to take care for container
+ * changes itself and clearing the cache.
+ * 
+ * layout(): The size of the visible control is set to the containers clientAreaSize
+ * 
+ * getPreferredSize(): Returns the preferred size of the visible control
+ * getMinSize(): Returns the min size of the visible control
+ * getMaxSize(): returns new Dimension(Short.MAX_VALUE, Short.MAX_VALUE)
+ * 
+ * The PreferredSize, MinSize() and MaxSize() will be cached, until clear cache will be invoked
+ */
+public final class CachedFillLayout {
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+	private CachedFillLayout() {}
 
-	public DemoNullLayoutFrame() {
-		super("Null layout demo");
-
-		setLayout(NullLayout.get());
-
-		final Rectangle clientArea = getClientArea();
-		final int x = clientArea.getX();
-		final int y = clientArea.getY();
-
-		for (int i = 0; i < 10; i++) {
-			final IButton button = add(BPF.button());
-			button.setPosition(x + i * 20, y + i * 40);
-			button.setText("Button " + i);
-			button.setSize(button.getPreferredSize());
-		}
-
-		for (int i = 0; i < 10; i++) {
-			final IButton button = add(BPF.button());
-			button.setPosition(x + 400 + i * 20, y + (9 - i) * 40);
-			button.setText("Button " + i);
-			button.setSize(200, 30);
-		}
-
-		setSize(800, 600);
+	/**
+	 * Gets a layout factory for an 'CachedFillLayout'
+	 * 
+	 * @return A layout factory that produces 'CachedFillLayout'
+	 */
+	public static ILayoutFactory<ICachedFillLayout> get() {
+		return Toolkit.getLayoutFactoryProvider().cachedFillLayout();
 	}
+
 }
