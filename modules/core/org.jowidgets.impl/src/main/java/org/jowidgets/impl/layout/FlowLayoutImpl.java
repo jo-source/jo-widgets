@@ -109,7 +109,7 @@ final class FlowLayoutImpl extends AbstractCachingLayout implements ILayouter {
 				prefHeights[i] = prefSize.getHeight();
 
 				if (availableWidth > prefSize.getWidth()) {
-					widths[i] = prefSize.getHeight();
+					widths[i] = prefSize.getWidth();
 				}
 				else if (availableWidth > minSize.getWidth()) {
 					widths[i] = availableWidth;
