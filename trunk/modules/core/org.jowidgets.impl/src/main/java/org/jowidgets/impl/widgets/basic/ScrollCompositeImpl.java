@@ -44,6 +44,7 @@ import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.IScrollComposite;
 import org.jowidgets.api.widgets.descriptor.setup.IScrollCompositeSetup;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.controller.IComponentListener;
 import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.common.widgets.controller.IKeyListener;
@@ -71,6 +72,8 @@ public class ScrollCompositeImpl extends AbstractScrollCompositeSpiWrapper imple
 	private final IDragSource dragSource;
 	private final IDropTarget dropTarget;
 
+	private Dimension minSize;
+
 	public ScrollCompositeImpl(final IScrollCompositeSpi containerWidgetSpi, final IScrollCompositeSetup setup) {
 		super(containerWidgetSpi);
 		this.controlDelegate = new ControlDelegate(containerWidgetSpi, this);
@@ -93,6 +96,21 @@ public class ScrollCompositeImpl extends AbstractScrollCompositeSpiWrapper imple
 		final LAYOUT_TYPE result = layoutFactory.create(this);
 		setLayout(result);
 		return result;
+	}
+
+	@Override
+	public void setMinSize(final Dimension minSize) {
+		this.minSize = minSize;
+	}
+
+	@Override
+	public Dimension getMinSize() {
+		if (minSize != null) {
+			return minSize;
+		}
+		else {
+			return Dimension.MIN;
+		}
 	}
 
 	@Override
