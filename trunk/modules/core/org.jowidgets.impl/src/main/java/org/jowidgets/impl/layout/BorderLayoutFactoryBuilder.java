@@ -35,12 +35,24 @@ import org.jowidgets.common.widgets.layout.ILayouter;
 
 final class BorderLayoutFactoryBuilder implements IBorderLayoutFactoryBuilder {
 
+	private static final int DEFAULT_GAP = 4;
+	private static final int DEFAULT_MARGIN = 0;
+
 	private int gapX;
 	private int gapY;
 	private int marginTop;
 	private int marginBottom;
 	private int marginLeft;
 	private int marginRight;
+
+	BorderLayoutFactoryBuilder() {
+		this.gapX = DEFAULT_GAP;
+		this.gapY = DEFAULT_GAP;
+		this.marginTop = DEFAULT_MARGIN;
+		this.marginBottom = DEFAULT_MARGIN;
+		this.marginLeft = DEFAULT_MARGIN;
+		this.marginRight = DEFAULT_MARGIN;
+	}
 
 	@Override
 	public IBorderLayoutFactoryBuilder margin(final int margin) {
@@ -99,7 +111,7 @@ final class BorderLayoutFactoryBuilder implements IBorderLayoutFactoryBuilder {
 		return new ILayoutFactory<ILayouter>() {
 			@Override
 			public ILayouter create(final IContainer container) {
-				return new BorderLayout(container, marginLeft, marginRight, marginTop, marginBottom, gapX, gapY);
+				return new BorderLayoutImpl(container, marginLeft, marginRight, marginTop, marginBottom, gapX, gapY);
 			}
 
 		};

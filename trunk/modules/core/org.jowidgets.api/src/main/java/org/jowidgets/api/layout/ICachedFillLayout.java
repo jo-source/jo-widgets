@@ -31,7 +31,7 @@ package org.jowidgets.api.layout;
 import org.jowidgets.common.widgets.layout.ILayouter;
 
 /**
- * This layouter renders on child of the container into the whole avalable space and caches the size
+ * This layouter renders the first visible child of the container into the whole available space and caches the size
  * of its children, so the next time the layout will be done, the cached values will be used until
  * the cache is cleared by the user.
  * 
@@ -39,9 +39,6 @@ import org.jowidgets.common.widgets.layout.ILayouter;
  * has not been changed by adding or removing children. So using this layout manager as a parent for a complicate
  * layout can improve performance extremely. The tradeoff is, that the programmer has to take care for container
  * changes itself and clearing the cache.
- * 
- * @author grossmann
- * 
  */
 public interface ICachedFillLayout extends ILayouter {
 

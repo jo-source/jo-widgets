@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2015, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,42 +26,44 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.demo;
+package org.jowidgets.api.layout;
 
-import org.jowidgets.api.layout.NullLayout;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IButton;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.types.Rectangle;
-import org.jowidgets.tools.powo.JoFrame;
+import org.jowidgets.common.widgets.layout.ILayouter;
 
-public class DemoNullLayoutFrame extends JoFrame {
+/**
+ * Accessor for 'FlowLayout'
+ * 
+ * layout(): set the sizes of the controls to the preferred size, positions the
+ * controls side by side (alignment == VERTICAL) or below each other (alignment == HORIZONTAL)
+ * with the given gap between the controls
+ * 
+ * getPreferredSize: get the size needed to layout all controls
+ * 
+ * getMinSize(): gets the preferred size
+ * 
+ * getMaxSize(): returns new Dimension(Short.MAX_VALUE, Short.MAX_VALUE)
+ */
+public final class FlowLayout {
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+	private FlowLayout() {}
 
-	public DemoNullLayoutFrame() {
-		super("Null layout demo");
-
-		setLayout(NullLayout.get());
-
-		final Rectangle clientArea = getClientArea();
-		final int x = clientArea.getX();
-		final int y = clientArea.getY();
-
-		for (int i = 0; i < 10; i++) {
-			final IButton button = add(BPF.button());
-			button.setPosition(x + i * 20, y + i * 40);
-			button.setText("Button " + i);
-			button.setSize(button.getPreferredSize());
-		}
-
-		for (int i = 0; i < 10; i++) {
-			final IButton button = add(BPF.button());
-			button.setPosition(x + 400 + i * 20, y + (9 - i) * 40);
-			button.setText("Button " + i);
-			button.setSize(200, 30);
-		}
-
-		setSize(800, 600);
+	/**
+	 * Gets a layout factory for an 'FlowLayout'
+	 * 
+	 * @return A layout factory that produces 'FlowLayout'
+	 */
+	public static ILayoutFactory<ILayouter> get() {
+		return Toolkit.getLayoutFactoryProvider().flowLayout();
 	}
+
+	/**
+	 * Gets a builder for an layout factory of an 'FlowLayout'
+	 * 
+	 * @return A builder for an layout factory of an 'FlowLayout'
+	 */
+	public static IFlowLayoutFactoryBuilder builder() {
+		return Toolkit.getLayoutFactoryProvider().flowLayoutBuilder();
+	}
+
 }

@@ -37,8 +37,8 @@ import org.jowidgets.common.widgets.layout.ILayouter;
 public interface ILayoutFactoryProvider {
 
 	/**
-	 * The 'NullLayout' does no layouting at all. It returns
-	 * the containers size for min-, max-, and preferred size.
+	 * The 'NullLayout' does no layouting at all.
+	 * It returns the containers size for min-, max-, and preferred size.
 	 * 
 	 * @return The layout factory that produces 'NullLayouts'
 	 */
@@ -130,12 +130,34 @@ public interface ILayoutFactoryProvider {
 	/**
 	 * Creates 'BorderLayout'
 	 * 
+	 * A border layout lays out a container that can consist of five regions:
+	 * left, right, top, bottom, and center.
+	 * 
+	 * Each region can contain at most one control, and regions can be empty.
+	 * 
+	 * The center region will grow in x and y dimension, the other regions will be arranged
+	 * around the center.
+	 * 
+	 * When adding a control to a container with a border layout, use the {@link BorderLayoutConstraints} to
+	 * define the region to add to.
+	 * 
 	 * @return A layout factory that produces 'BorderLayouts'
 	 */
 	ILayoutFactory<ILayouter> borderLayout();
 
 	/**
 	 * Creates a builder for a 'BorderLayout' factory
+	 * 
+	 * A border layout lays out a container that can consist of five regions:
+	 * left, right, top, bottom, and center.
+	 * 
+	 * Each region can contain at most one control, and regions can be empty.
+	 * 
+	 * The center region will grow in x and y dimension, the other regions will be arranged
+	 * around the center.
+	 * 
+	 * When adding a control to a container with a border layout, use the {@link BorderLayoutConstraints} to
+	 * define the region to add to.
 	 * 
 	 * @return The builder
 	 */

@@ -42,6 +42,7 @@ final class FlowLayoutFactoryBuilder implements IFlowLayoutFactoryBuilder {
 
 	FlowLayoutFactoryBuilder() {
 		this.orientation = Orientation.HORIZONTAL;
+		this.gap = 0;
 	}
 
 	@Override
@@ -74,7 +75,7 @@ final class FlowLayoutFactoryBuilder implements IFlowLayoutFactoryBuilder {
 		return new ILayoutFactory<ILayouter>() {
 			@Override
 			public ILayouter create(final IContainer container) {
-				return new FlowLayout(container, gap, orientation);
+				return new FlowLayoutImpl(container, gap, orientation);
 			}
 		};
 	}

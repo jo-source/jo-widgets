@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2015, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,42 +26,45 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.demo;
+package org.jowidgets.api.layout;
 
-import org.jowidgets.api.layout.NullLayout;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.IButton;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.types.Rectangle;
-import org.jowidgets.tools.powo.JoFrame;
+import org.jowidgets.common.widgets.layout.ILayouter;
 
-public class DemoNullLayoutFrame extends JoFrame {
+/**
+ * Accessor for 'FillLayout'
+ * 
+ * 'FillLayout' allows only one visible control in the container when calculation is done.
+ * If more than one control is visible, it will be ignored for the layouting.
+ * 
+ * layout(): The size of the visible control is set to the containers clientAreaSize
+ * 
+ * getPreferredSize(): Returns the preferred size of the visible control
+ * 
+ * getMinSize(): Returns the min size of the visible control
+ * 
+ * getMaxSize(): returns new Dimension(Short.MAX_VALUE, Short.MAX_VALUE)
+ */
+public final class FillLayout {
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+	private FillLayout() {}
 
-	public DemoNullLayoutFrame() {
-		super("Null layout demo");
-
-		setLayout(NullLayout.get());
-
-		final Rectangle clientArea = getClientArea();
-		final int x = clientArea.getX();
-		final int y = clientArea.getY();
-
-		for (int i = 0; i < 10; i++) {
-			final IButton button = add(BPF.button());
-			button.setPosition(x + i * 20, y + i * 40);
-			button.setText("Button " + i);
-			button.setSize(button.getPreferredSize());
-		}
-
-		for (int i = 0; i < 10; i++) {
-			final IButton button = add(BPF.button());
-			button.setPosition(x + 400 + i * 20, y + (9 - i) * 40);
-			button.setText("Button " + i);
-			button.setSize(200, 30);
-		}
-
-		setSize(800, 600);
+	/**
+	 * Gets a layout factory for an 'FillLayout'
+	 * 
+	 * @return A layout factory that produces 'FillLayout'
+	 */
+	public static ILayoutFactory<ILayouter> get() {
+		return Toolkit.getLayoutFactoryProvider().fillLayout();
 	}
+
+	/**
+	 * Gets a builder for an layout factory of an 'FillLayout'
+	 * 
+	 * @return A builder for an layout factory of an 'FillLayout'
+	 */
+	public static IFillLayoutFactoryBuilder builder() {
+		return Toolkit.getLayoutFactoryProvider().fillLayoutBuilder();
+	}
+
 }

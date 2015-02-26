@@ -29,8 +29,8 @@
 package org.jowidgets.examples.common.demo;
 
 import org.jowidgets.addons.icons.silkicons.SilkIcons;
+import org.jowidgets.api.layout.BorderLayout;
 import org.jowidgets.api.layout.BorderLayoutConstraints;
-import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.ITextArea;
@@ -47,8 +47,7 @@ public class DemoBorderLayoutFrame extends JoFrame {
 	public DemoBorderLayoutFrame() {
 		super("Border layout demo");
 
-		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
-		final ILayouter layouter = setLayout(lfp.borderLayoutBuilder().margin(1).gap(2).build());
+		final ILayouter layouter = setLayout(BorderLayout.get());
 
 		final IToolBar toolBar = add(BPF.toolBar(), BorderLayoutConstraints.TOP);
 		final IToolBarModel toolBarModel = toolBar.getModel();

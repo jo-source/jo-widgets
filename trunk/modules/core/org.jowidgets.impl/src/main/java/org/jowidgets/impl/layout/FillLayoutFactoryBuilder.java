@@ -40,6 +40,13 @@ final class FillLayoutFactoryBuilder implements IFillLayoutFactoryBuilder {
 	private int marginLeft;
 	private int marginRight;
 
+	FillLayoutFactoryBuilder() {
+		this.marginTop = 0;
+		this.marginBottom = 0;
+		this.marginLeft = 0;
+		this.marginRight = 0;
+	}
+
 	@Override
 	public IFillLayoutFactoryBuilder margin(final int margin) {
 		this.marginTop = margin;
@@ -78,7 +85,7 @@ final class FillLayoutFactoryBuilder implements IFillLayoutFactoryBuilder {
 		return new ILayoutFactory<ILayouter>() {
 			@Override
 			public ILayouter create(final IContainer container) {
-				return new FillLayout(container, marginLeft, marginRight, marginTop, marginBottom);
+				return new FillLayoutImpl(container, marginLeft, marginRight, marginTop, marginBottom);
 			}
 		};
 	}

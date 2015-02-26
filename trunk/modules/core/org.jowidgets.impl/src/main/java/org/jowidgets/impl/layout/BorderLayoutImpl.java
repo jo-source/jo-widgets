@@ -39,7 +39,7 @@ import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.util.Assert;
 
-final class BorderLayout extends AbstractCachingLayout implements ILayouter {
+final class BorderLayoutImpl extends AbstractCachingLayout implements ILayouter {
 	private final IContainer container;
 
 	private final int gapX;
@@ -51,7 +51,7 @@ final class BorderLayout extends AbstractCachingLayout implements ILayouter {
 
 	private Map<BorderLayoutConstraints, IControl> controlsMap;
 
-	BorderLayout(
+	BorderLayoutImpl(
 		final IContainer container,
 		final int marginLeft,
 		final int marginRight,

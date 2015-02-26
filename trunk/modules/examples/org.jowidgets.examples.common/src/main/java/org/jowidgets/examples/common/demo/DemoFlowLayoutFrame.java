@@ -28,7 +28,7 @@
 
 package org.jowidgets.examples.common.demo;
 
-import org.jowidgets.api.layout.ILayoutFactoryProvider;
+import org.jowidgets.api.layout.FlowLayout;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IInputField;
@@ -44,9 +44,7 @@ public class DemoFlowLayoutFrame extends JoFrame {
 	public DemoFlowLayoutFrame() {
 		super("Flow layout demo");
 
-		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
-
-		final ILayouter layouter = setLayout(lfp.flowLayoutBuilder().build());
+		final ILayouter layouter = setLayout(FlowLayout.get());
 
 		final IControl button = add(BPF.button("Button"));
 		button.setPreferredSize(new Dimension(200, button.getMinSize().getHeight()));

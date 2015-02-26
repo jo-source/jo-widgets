@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2015, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,41 +26,20 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.layout;
+package org.jowidgets.api.layout.miglayout;
 
-import org.jowidgets.api.widgets.IContainer;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.widgets.layout.ILayouter;
-import org.jowidgets.util.Assert;
 
-final class NullLayout implements ILayouter {
+public final class CC {
 
-	private final IContainer container;
+	private CC() {}
 
-	NullLayout(final IContainer container) {
-		Assert.paramNotNull(container, "container");
-		this.container = container;
+	/**
+	 * Creates a new ICC instance
+	 * 
+	 * @return a new ICC instance
+	 */
+	public static ICC create() {
+		return MigLayoutToolkit.cc();
 	}
-
-	@Override
-	public void layout() {}
-
-	@Override
-	public Dimension getMinSize() {
-		return container.getSize();
-	}
-
-	@Override
-	public Dimension getPreferredSize() {
-		return container.getSize();
-	}
-
-	@Override
-	public Dimension getMaxSize() {
-		return container.getSize();
-	}
-
-	@Override
-	public void invalidate() {}
 
 }

@@ -35,7 +35,7 @@ import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.util.Assert;
 
-final class FillLayout implements ILayouter {
+final class FillLayoutImpl implements ILayouter {
 
 	private static final Dimension MAX_SIZE = new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);
 
@@ -51,7 +51,7 @@ final class FillLayout implements ILayouter {
 
 	private Dimension controlMinSize;
 
-	FillLayout(
+	FillLayoutImpl(
 		final IContainer container,
 		final int marginLeft,
 		final int marginRight,
@@ -151,7 +151,9 @@ final class FillLayout implements ILayouter {
 
 	private IControl getFirstControl() {
 		for (final IControl control : container.getChildren()) {
-			return control;
+			if (control.isVisible()) {
+				return control;
+			}
 		}
 		return null;
 	}

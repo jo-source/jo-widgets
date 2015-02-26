@@ -111,7 +111,9 @@ final class CachedFillLayoutImpl implements ICachedFillLayout {
 
 	private IControl getFirstControl() {
 		for (final IControl control : container.getChildren()) {
-			return control;
+			if (control.isVisible()) {
+				return control;
+			}
 		}
 		return null;
 	}

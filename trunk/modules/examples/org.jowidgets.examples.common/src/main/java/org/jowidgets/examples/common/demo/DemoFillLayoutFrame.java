@@ -28,7 +28,7 @@
 
 package org.jowidgets.examples.common.demo;
 
-import org.jowidgets.api.layout.ILayoutFactoryProvider;
+import org.jowidgets.api.layout.FillLayout;
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.ITextArea;
@@ -49,9 +49,7 @@ public class DemoFillLayoutFrame extends JoFrame {
 		menuBarModel.addMenu("Edit");
 		setMenuBar(menuBarModel);
 
-		final ILayoutFactoryProvider lfp = Toolkit.getLayoutFactoryProvider();
-
-		final ILayouter layouter = setLayout(lfp.fillLayout());
+		final ILayouter layouter = setLayout(FillLayout.get());
 		final ITextArea textArea = add(BPF.textArea().setBorder(false));
 
 		final StringBuilder stringBuilder = new StringBuilder();

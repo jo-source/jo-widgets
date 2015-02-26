@@ -130,7 +130,7 @@ public class LayoutFactoryProvider implements ILayoutFactoryProvider {
 		return new ILayoutFactory<ILayouter>() {
 			@Override
 			public ILayouter create(final IContainer container) {
-				return new NullLayout(container);
+				return new NullLayoutImpl(container);
 			}
 		};
 	}
@@ -139,7 +139,7 @@ public class LayoutFactoryProvider implements ILayoutFactoryProvider {
 		return new ILayoutFactory<ILayouter>() {
 			@Override
 			public ILayouter create(final IContainer container) {
-				return new PreferredSizeLayout(container);
+				return new PreferredSizeLayoutImpl(container);
 			}
 		};
 	}
