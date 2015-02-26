@@ -36,7 +36,7 @@ public interface IFlowLayoutFactoryBuilder {
 	/**
 	 * Sets the gap between the controls
 	 * 
-	 * The default gap is 0
+	 * The default gap is 4
 	 * 
 	 * @param gap The gap to set
 	 * 
