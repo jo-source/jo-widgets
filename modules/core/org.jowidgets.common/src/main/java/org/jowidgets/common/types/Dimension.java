@@ -29,6 +29,9 @@ package org.jowidgets.common.types;
 
 public final class Dimension {
 
+	public static final Dimension MIN = new Dimension(0, 0);
+	public static final Dimension MAX = new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
+
 	private final int width;
 	private final int height;
 
