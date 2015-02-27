@@ -29,17 +29,16 @@
 package org.jowidgets.impl.layout.miglayout;
 
 import org.jowidgets.api.layout.miglayout.IAC;
-import org.jowidgets.impl.layout.miglayout.common.AC;
 
-public class ACWrapper implements IAC {
+class ACWrapper implements IAC {
 
-	private final AC ac;
+	private final ACCommon ac;
 
-	public ACWrapper() {
-		this.ac = new AC();
+	ACWrapper() {
+		this.ac = new ACCommon();
 	}
 
-	public AC getAC() {
+	public ACCommon getAC() {
 		return ac;
 	}
 

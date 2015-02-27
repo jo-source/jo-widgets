@@ -29,7 +29,7 @@
  * @author Mikael Grev, MiG InfoCom AB
  *         Date: 2006-sep-08
  */
-package org.jowidgets.impl.layout.miglayout.common;
+package org.jowidgets.impl.layout.miglayout;
 
 import java.beans.Encoder;
 import java.beans.Expression;
@@ -40,29 +40,30 @@ import java.io.ObjectOutputStream;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
 
-import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
-
 /**
- * A size that contains minimum, preferred and maximum size of type {@link UnitValue}.
+ * A size that contains minimum, preferred and maximum size of type {@link UnitValueCommon}.
  * <p>
  * This class is a simple value container and it is immutable.
  * <p>
  * If a size is missing (i.e., <code>null</code>) that boundary should be considered "not in use".
  * <p>
- * You can create a BoundSize from a String with the use of {@link ConstraintParser#parseBoundSize(String, boolean, boolean)}
+ * You can create a BoundSize from a String with the use of
+ * {@link ConstraintParserCommon#parseBoundSize(String, boolean, boolean)}
  */
-public class BoundSize implements Serializable {
-	public static final BoundSize NULL_SIZE = new BoundSize(null, null);
-	public static final BoundSize ZERO_PIXEL = new BoundSize(MigLayoutToolkit.getMigUnitValueToolkit().ZERO, "0px");
+class BoundSizeCommon implements Serializable {
+	public static final BoundSizeCommon NULL_SIZE = new BoundSizeCommon(null, null);
+	public static final BoundSizeCommon ZERO_PIXEL = new BoundSizeCommon(
+		MigLayoutToolkitImpl.getMigUnitValueToolkit().ZERO,
+		"0px");
 
 	private static final long serialVersionUID = 1L;
 
-	private final transient UnitValue min;
-	private final transient UnitValue pref;
-	private final transient UnitValue max;
+	private final transient UnitValueCommon min;
+	private final transient UnitValueCommon pref;
+	private final transient UnitValueCommon max;
 	private final transient boolean gapPush;
 
-	private final LayoutUtil layoutUtil;
+	private final LayoutUtilCommon layoutUtil;
 
 	/**
 	 * Constructor that use the same value for min/preferred/max size.
@@ -70,27 +71,31 @@ public class BoundSize implements Serializable {
 	 * @param minMaxPref The value to use for min/preferred/max size.
 	 * @param createString The string used to create the BoundsSize.
 	 */
-	public BoundSize(final UnitValue minMaxPref, final String createString) {
+	BoundSizeCommon(final UnitValueCommon minMaxPref, final String createString) {
 		this(minMaxPref, minMaxPref, minMaxPref, createString);
 	}
 
 	/**
 	 * Constructor. <b>This method is here for serilization only and should normally not be used. Use
-	 * {@link ConstraintParser#parseBoundSize(String, boolean, boolean)} instead.
+	 * {@link ConstraintParserCommon#parseBoundSize(String, boolean, boolean)} instead.
 	 * 
 	 * @param min The minimum size. May be <code>null</code>.
 	 * @param preferred The preferred size. May be <code>null</code>.
 	 * @param max The maximum size. May be <code>null</code>.
 	 * @param createString The string used to create the BoundsSize.
 	 */
-	public BoundSize(final UnitValue min, final UnitValue preferred, final UnitValue max, final String createString) // Bound to old delegate!!!!!
+	BoundSizeCommon(
+		final UnitValueCommon min,
+		final UnitValueCommon preferred,
+		final UnitValueCommon max,
+		final String createString) // Bound to old delegate!!!!!
 	{
 		this(min, preferred, max, false, createString);
 	}
 
 	/**
 	 * Constructor. <b>This method is here for serilization only and should normally not be used. Use
-	 * {@link ConstraintParser#parseBoundSize(String, boolean, boolean)} instead.
+	 * {@link ConstraintParserCommon#parseBoundSize(String, boolean, boolean)} instead.
 	 * 
 	 * @param min The minimum size. May be <code>null</code>.
 	 * @param preferred The preferred size. May be <code>null</code>.
@@ -98,13 +103,13 @@ public class BoundSize implements Serializable {
 	 * @param gapPush If the size should be hinted as "pushing" and thus want to occupy free space if no one else is claiming it.
 	 * @param createString The string used to create the BoundsSize.
 	 */
-	public BoundSize(
-		final UnitValue min,
-		final UnitValue preferred,
-		final UnitValue max,
+	BoundSizeCommon(
+		final UnitValueCommon min,
+		final UnitValueCommon preferred,
+		final UnitValueCommon max,
 		final boolean gapPush,
 		final String createString) {
-		this.layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
+		this.layoutUtil = MigLayoutToolkitImpl.getMigLayoutUtil();
 
 		this.min = min;
 		this.pref = preferred;
@@ -119,7 +124,7 @@ public class BoundSize implements Serializable {
 	 * 
 	 * @return The minimum size as sent into the constructor. May be <code>null</code>.
 	 */
-	public final UnitValue getMin() {
+	public final UnitValueCommon getMin() {
 		return min;
 	}
 
@@ -128,7 +133,7 @@ public class BoundSize implements Serializable {
 	 * 
 	 * @return The preferred size as sent into the constructor. May be <code>null</code>.
 	 */
-	public final UnitValue getPreferred() {
+	public final UnitValueCommon getPreferred() {
 		return pref;
 	}
 
@@ -137,7 +142,7 @@ public class BoundSize implements Serializable {
 	 * 
 	 * @return The maximum size as sent into the constructor. May be <code>null</code>.
 	 */
-	public final UnitValue getMax() {
+	public final UnitValueCommon getMax() {
 		return max;
 	}
 
@@ -168,7 +173,7 @@ public class BoundSize implements Serializable {
 	 * @param parent The parent container.
 	 * @return The size, constrained within min and max.
 	 */
-	public int constrain(int size, final float refValue, final IContainerWrapper parent) {
+	public int constrain(int size, final float refValue, final IContainerWrapperCommon parent) {
 		if (max != null) {
 			size = Math.min(size, max.getPixels(refValue, parent, parent));
 		}
@@ -184,14 +189,14 @@ public class BoundSize implements Serializable {
 	 * @param sizeType The type. <code>LayoutUtil.MIN</code>, <code>LayoutUtil.PREF</code> or <code>LayoutUtil.MAX</code>.
 	 * @return
 	 */
-	final UnitValue getSize(final int sizeType) {
-		if (sizeType == LayoutUtil.MIN) {
+	final UnitValueCommon getSize(final int sizeType) {
+		if (sizeType == LayoutUtilCommon.MIN) {
 			return min;
 		}
-		else if (sizeType == LayoutUtil.PREF) {
+		else if (sizeType == LayoutUtilCommon.PREF) {
 			return pref;
 		}
-		else if (sizeType == LayoutUtil.MAX) {
+		else if (sizeType == LayoutUtilCommon.MAX) {
 			return max;
 		}
 		else {
@@ -202,17 +207,18 @@ public class BoundSize implements Serializable {
 	/**
 	 * Convert the bound sizes to pixels.
 	 * <p>
-	 * <code>null</code> bound sizes will be 0 for min and preferred and {@link net.miginfocom.layout.LayoutUtil#INF} for max.
+	 * <code>null</code> bound sizes will be 0 for min and preferred and {@link LayoutUtilCommon.miginfocom.layout.LayoutUtil#INF}
+	 * for max.
 	 * 
 	 * @param refSize The reference size.
 	 * @param parent The parent. Not <code>null</code>.
 	 * @param comp The component, if applicable, can be <code>null</code>.
 	 * @return An array of lenth three (min,pref,max).
 	 */
-	final int[] getPixelSizes(final float refSize, final IContainerWrapper parent, final IComponentWrapper comp) {
+	final int[] getPixelSizes(final float refSize, final IContainerWrapperCommon parent, final IComponentWrapperCommon comp) {
 		return new int[] {
 				min != null ? min.getPixels(refSize, parent, comp) : 0, pref != null ? pref.getPixels(refSize, parent, comp) : 0,
-				max != null ? max.getPixels(refSize, parent, comp) : LayoutUtil.INF};
+				max != null ? max.getPixels(refSize, parent, comp) : LayoutUtilCommon.INF};
 	}
 
 	/**
@@ -267,18 +273,18 @@ public class BoundSize implements Serializable {
 	}
 
 	static {
-		final LayoutUtil lUtil = MigLayoutToolkit.getMigLayoutUtil();
+		final LayoutUtilCommon lUtil = MigLayoutToolkitImpl.getMigLayoutUtil();
 		if (lUtil.hasBeans()) {
-			lUtil.setDelegate(BoundSize.class, new PersistenceDelegate() {
+			lUtil.setDelegate(BoundSizeCommon.class, new PersistenceDelegate() {
 				@Override
 				protected Expression instantiate(final Object oldInstance, final Encoder out) {
-					final BoundSize bs = (BoundSize) oldInstance;
-					if (Grid.TEST_GAPS) {
-						return new Expression(oldInstance, BoundSize.class, "new", new Object[] {
+					final BoundSizeCommon bs = (BoundSizeCommon) oldInstance;
+					if (GridCommon.TEST_GAPS) {
+						return new Expression(oldInstance, BoundSizeCommon.class, "new", new Object[] {
 								bs.getMin(), bs.getPreferred(), bs.getMax(), bs.getGapPush(), bs.getConstraintString()});
 					}
 					else {
-						return new Expression(oldInstance, BoundSize.class, "new", new Object[] {
+						return new Expression(oldInstance, BoundSizeCommon.class, "new", new Object[] {
 								bs.getMin(), bs.getPreferred(), bs.getMax(), bs.getConstraintString()});
 					}
 				}
@@ -294,7 +300,7 @@ public class BoundSize implements Serializable {
 	}
 
 	private void writeObject(final ObjectOutputStream out) throws IOException {
-		if (getClass() == BoundSize.class) {
+		if (getClass() == BoundSizeCommon.class) {
 			layoutUtil.writeAsXML(out, this);
 		}
 	}

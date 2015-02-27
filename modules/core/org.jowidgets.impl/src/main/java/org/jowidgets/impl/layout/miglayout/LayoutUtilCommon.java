@@ -26,7 +26,7 @@
  * OF SUCH DAMAGE.
  *
  */
-package org.jowidgets.impl.layout.miglayout.common;
+package org.jowidgets.impl.layout.miglayout;
 
 import java.beans.Beans;
 import java.beans.ExceptionListener;
@@ -45,12 +45,10 @@ import java.util.IdentityHashMap;
 import java.util.TreeSet;
 import java.util.WeakHashMap;
 
-import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
-
 /**
  * A utility class that has only static helper methods.
  */
-public final class LayoutUtil {
+final class LayoutUtilCommon {
 	public static final int MIN = 0;
 	public static final int PREF = 1;
 	public static final int MAX = 2;
@@ -79,7 +77,7 @@ public final class LayoutUtil {
 	private byte[] readBuf = null;
 	private final IdentityHashMap<Object, Object> serMap = new IdentityHashMap<Object, Object>(2);
 
-	public LayoutUtil() {
+	public LayoutUtilCommon() {
 		hasBeans = initializeHasBeans();
 	}
 
@@ -94,7 +92,7 @@ public final class LayoutUtil {
 
 	private boolean initializeHasBeans() {
 		try {
-			LayoutUtil.class.getClassLoader().loadClass("java.beans.Beans");
+			LayoutUtilCommon.class.getClassLoader().loadClass("java.beans.Beans");
 			return true;
 		}
 		catch (final ClassNotFoundException e) {
@@ -107,7 +105,7 @@ public final class LayoutUtil {
 	}
 
 	/**
-	 * Sets if design time is turned on for a Container in {@link IContainerWrapper}.
+	 * Sets if design time is turned on for a Container in {@link IContainerWrapperCommon}.
 	 * 
 	 * @param cw The container to set design time for. <code>null</code> is legal and can be used as
 	 *            a key to turn on/off design time "in general". Note though that design time "in general" is
@@ -118,7 +116,7 @@ public final class LayoutUtil {
 	 *            design time value.
 	 * @param b <code>true</code> means design time on.
 	 */
-	public void setDesignTime(final IContainerWrapper cw, final boolean b) {
+	public void setDesignTime(final IContainerWrapperCommon cw, final boolean b) {
 		if (dtMap == null) {
 			dtMap = new WeakHashMap<Object, Boolean>();
 		}
@@ -127,14 +125,14 @@ public final class LayoutUtil {
 	}
 
 	/**
-	 * Returns if design time is turned on for a Container in {@link IContainerWrapper}.
+	 * Returns if design time is turned on for a Container in {@link IContainerWrapperCommon}.
 	 * 
 	 * @param cw The container to set design time for. <code>null</code> is legal will return <code>true</code> if there is at
 	 *            least one <code>ContainerWrapper</code> (or <code>null</code>) that have design time
 	 *            turned on.
 	 * @return If design time is set for <code>cw</code>.
 	 */
-	public boolean isDesignTime(IContainerWrapper cw) {
+	public boolean isDesignTime(IContainerWrapperCommon cw) {
 		if (dtMap == null) {
 			return hasBeans && Beans.isDesignTime();
 		}
@@ -173,7 +171,7 @@ public final class LayoutUtil {
 	 * probably have an equals method that compares identities or <code>con</code> objects that .equals() will only
 	 * be able to have <b>one</b> creation string.
 	 * <p>
-	 * If {@link LayoutUtil#isDesignTime(IContainerWrapper)} returns <code>false</code> the method does nothing.
+	 * If {@link LayoutUtilCommon#isDesignTime(IContainerWrapperCommon)} returns <code>false</code> the method does nothing.
 	 * 
 	 * @param con The object. if <code>null</code> the method does nothing.
 	 * @param s The creation string. if <code>null</code> the method does nothing.
@@ -204,7 +202,7 @@ public final class LayoutUtil {
 
 	/**
 	 * Returns strings set with {@link #putCCString(Object, String)} or <code>null</code> if nothing is associated or
-	 * {@link LayoutUtil#isDesignTime(IContainerWrapper)} returns <code>false</code>.
+	 * {@link LayoutUtilCommon#isDesignTime(IContainerWrapperCommon)} returns <code>false</code>.
 	 * 
 	 * @param con The constrain object.
 	 * @return The creation string or <code>null</code> if nothing is registered with the <code>con</code> object.
@@ -231,13 +229,13 @@ public final class LayoutUtil {
 	 *            missing.
 	 * @param defPushWeights If there is no grow weight for a resConstr the corresponding value of this array is used.
 	 *            These forced resConstr will be grown last though and only if needed to fill to the bounds.
-	 * @param startSizeType The initial size to use. E.g. {@link net.miginfocom.layout.LayoutUtil#MIN}.
+	 * @param startSizeType The initial size to use. E.g. {@link net.miginfocom.layout.LayoutUtilCommon#MIN}.
 	 * @param bounds To use for relative sizes.
 	 * @return The sizes. Array length will match <code>sizes</code>.
 	 */
 	int[] calculateSerial(
 		final int[][] sizes,
-		final ResizeConstraint[] resConstr,
+		final ResizeConstraintCommon[] resConstr,
 		final Float[] defPushWeights,
 		final int startSizeType,
 		final int bounds) {
@@ -265,7 +263,7 @@ public final class LayoutUtil {
 			// Create a Set with the available priorities
 			final TreeSet<Integer> prioList = new TreeSet<Integer>();
 			for (int i = 0; i < sizes.length; i++) {
-				final ResizeConstraint resC = (ResizeConstraint) getIndexSafe(resConstr, i);
+				final ResizeConstraintCommon resC = (ResizeConstraintCommon) getIndexSafe(resConstr, i);
 				if (resC != null) {
 					prioList.add(isGrow ? resC.growPrio : resC.shrinkPrio);
 				}
@@ -283,7 +281,7 @@ public final class LayoutUtil {
 							continue;
 						}
 
-						final ResizeConstraint resC = (ResizeConstraint) getIndexSafe(resConstr, i);
+						final ResizeConstraintCommon resC = (ResizeConstraintCommon) getIndexSafe(resConstr, i);
 						if (resC != null) {
 							final int prio = isGrow ? resC.growPrio : resC.shrinkPrio;
 
@@ -390,17 +388,21 @@ public final class LayoutUtil {
 
 	public int getSizeSafe(final int[] sizes, final int sizeType) {
 		if (sizes == null || sizes[sizeType] == NOT_SET) {
-			return sizeType == MAX ? LayoutUtil.INF : 0;
+			return sizeType == MAX ? LayoutUtilCommon.INF : 0;
 		}
 		return sizes[sizeType];
 	}
 
-	BoundSize derive(final BoundSize bs, final UnitValue min, final UnitValue pref, final UnitValue max) {
+	BoundSizeCommon derive(
+		final BoundSizeCommon bs,
+		final UnitValueCommon min,
+		final UnitValueCommon pref,
+		final UnitValueCommon max) {
 		if (bs == null || bs.isUnset()) {
-			return new BoundSize(min, pref, max, null);
+			return new BoundSizeCommon(min, pref, max, null);
 		}
 
-		return new BoundSize(min != null ? min : bs.getMin(), pref != null ? pref : bs.getPreferred(), max != null
+		return new BoundSizeCommon(min != null ? min : bs.getMin(), pref != null ? pref : bs.getPreferred(), max != null
 				? max : bs.getMax(), bs.getGapPush(), null);
 	}
 
@@ -412,7 +414,7 @@ public final class LayoutUtil {
 	 * @param container The parent that may be used to get the left-to-right if ffc does not specify this.
 	 * @return If left-to-right orientation is currently used.
 	 */
-	public boolean isLeftToRight(final LC lc, final IContainerWrapper container) {
+	public boolean isLeftToRight(final LCCommon lc, final IContainerWrapperCommon container) {
 		if (lc != null && lc.getLeftToRight() != null) {
 			return lc.getLeftToRight();
 		}
@@ -484,10 +486,11 @@ public final class LayoutUtil {
 	 * @param getDefault If <code>true</code> the default insets will get retrieved if <code>lc</code> has none set.
 	 * @return The inset for the side. Never <code>null</code>.
 	 */
-	UnitValue getInsets(final LC lc, final int side, final boolean getDefault) {
-		final UnitValue[] i = lc.getInsets();
-		return (i != null && i[side] != null) ? i[side] : (getDefault ? MigLayoutToolkit.getMigPlatformDefaults().getPanelInsets(
-				side) : MigLayoutToolkit.getMigUnitValueToolkit().ZERO);
+	UnitValueCommon getInsets(final LCCommon lc, final int side, final boolean getDefault) {
+		final UnitValueCommon[] i = lc.getInsets();
+		return (i != null && i[side] != null) ? i[side] : (getDefault
+				? MigLayoutToolkitImpl.getMigPlatformDefaults().getPanelInsets(side)
+				: MigLayoutToolkitImpl.getMigUnitValueToolkit().ZERO);
 	}
 
 	/**
@@ -499,7 +502,7 @@ public final class LayoutUtil {
 	 */
 	void writeXMLObject(final OutputStream os, final Object o, final ExceptionListener listener) {
 		final ClassLoader oldClassLoader = Thread.currentThread().getContextClassLoader();
-		Thread.currentThread().setContextClassLoader(LayoutUtil.class.getClassLoader());
+		Thread.currentThread().setContextClassLoader(LayoutUtilCommon.class.getClassLoader());
 
 		final XMLEncoder encoder = new XMLEncoder(os);
 
@@ -558,7 +561,7 @@ public final class LayoutUtil {
 
 		try {
 			oldCL = cThread.getContextClassLoader();
-			cThread.setContextClassLoader(LayoutUtil.class.getClassLoader());
+			cThread.setContextClassLoader(LayoutUtilCommon.class.getClassLoader());
 		}
 		catch (final SecurityException ignored) {
 		}

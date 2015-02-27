@@ -37,10 +37,8 @@ import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.impl.layout.miglayout.common.IComponentWrapper;
-import org.jowidgets.impl.layout.miglayout.common.IContainerWrapper;
 
-class JoMigComponentWrapper implements IComponentWrapper {
+class JoMigComponentWrapper implements IComponentWrapperCommon {
 
 	// TODO MG,NM MigLayout - change screen size when Jo Widgets supports screen information
 	private static Dimension screenSize;
@@ -164,7 +162,7 @@ class JoMigComponentWrapper implements IComponentWrapper {
 	}
 
 	@Override
-	public final IContainerWrapper getParent() {
+	public final IContainerWrapperCommon getParent() {
 		if (component.getParent() == null) {
 			return null;
 		}

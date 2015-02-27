@@ -29,7 +29,7 @@
  * @author Mikael Grev, MiG InfoCom AB
  *         Date: 2006-sep-08
  */
-package org.jowidgets.impl.layout.miglayout.common;
+package org.jowidgets.impl.layout.miglayout;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -38,15 +38,13 @@ import java.io.ObjectOutput;
 import java.io.ObjectStreamException;
 import java.util.ArrayList;
 
-import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
-
 /**
  * A simple value holder for one component's constraint.
  */
-public final class CC implements Externalizable {
+final class CCCommon implements Externalizable {
 	static final String[] DOCK_SIDES = {"north", "west", "south", "east"};
 
-	private static final BoundSize DEF_GAP = BoundSize.NULL_SIZE; // Only used to denote default wrap/newline gap.
+	private static final BoundSizeCommon DEF_GAP = BoundSizeCommon.NULL_SIZE; // Only used to denote default wrap/newline gap.
 
 	private static final String[] EMPTY_ARR = new String[0];
 
@@ -54,9 +52,9 @@ public final class CC implements Externalizable {
 
 	private int dock = -1;
 
-	private UnitValue[] pos = null; // [x1, y1, x2, y2]
+	private UnitValueCommon[] pos = null; // [x1, y1, x2, y2]
 
-	private UnitValue[] padding = null; // top, left, bottom, right
+	private UnitValueCommon[] padding = null; // top, left, bottom, right
 
 	private Boolean flowX = null;
 
@@ -76,13 +74,13 @@ public final class CC implements Externalizable {
 
 	private int hideMode = -1;
 
-	private DimConstraint hor = new DimConstraint();
+	private DimConstraintCommon hor = new DimConstraintCommon();
 
-	private DimConstraint ver = new DimConstraint();
+	private DimConstraintCommon ver = new DimConstraintCommon();
 
-	private BoundSize newline = null;
+	private BoundSizeCommon newline = null;
 
-	private BoundSize wrap = null;
+	private BoundSizeCommon wrap = null;
 
 	private boolean boundsInGrid = true;
 
@@ -98,7 +96,7 @@ public final class CC implements Externalizable {
 	/**
 	 * Empty constructor.
 	 */
-	public CC() {}
+	CCCommon() {}
 
 	String[] getLinkTargets() {
 		if (linkTargets == null) {
@@ -115,7 +113,7 @@ public final class CC implements Externalizable {
 		return linkTargets;
 	}
 
-	private void addLinkTargetIDs(final ArrayList<String> targets, final UnitValue uv) {
+	private void addLinkTargetIDs(final ArrayList<String> targets, final UnitValueCommon uv) {
 		if (uv != null) {
 			final String linkId = uv.getLinkTargetId();
 			if (linkId != null) {
@@ -123,7 +121,7 @@ public final class CC implements Externalizable {
 			}
 			else {
 				for (int i = uv.getSubUnitCount() - 1; i >= 0; i--) {
-					final UnitValue subUv = uv.getSubUnitValue(i);
+					final UnitValueCommon subUv = uv.getSubUnitValue(i);
 					if (subUv.isLinkedDeep()) {
 						addLinkTargetIDs(targets, subUv);
 					}
@@ -146,7 +144,7 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC endGroupX(final String s) {
+	public CCCommon endGroupX(final String s) {
 		hor.setEndGroup(s);
 		return this;
 	}
@@ -161,7 +159,7 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC sizeGroupX(final String s) {
+	public CCCommon sizeGroupX(final String s) {
 		hor.setSizeGroup(s);
 		return this;
 	}
@@ -175,10 +173,10 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC minWidth(final String size) {
-		hor.setSize(MigLayoutToolkit.getMigLayoutUtil().derive(
+	public CCCommon minWidth(final String size) {
+		hor.setSize(MigLayoutToolkitImpl.getMigLayoutUtil().derive(
 				hor.getSize(),
-				ConstraintParser.parseUnitValue(size, true),
+				ConstraintParserCommon.parseUnitValue(size, true),
 				null,
 				null));
 		return this;
@@ -194,8 +192,8 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC width(final String size) {
-		hor.setSize(ConstraintParser.parseBoundSize(size, false, true));
+	public CCCommon width(final String size) {
+		hor.setSize(ConstraintParserCommon.parseBoundSize(size, false, true));
 		return this;
 	}
 
@@ -208,12 +206,12 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC maxWidth(final String size) {
-		hor.setSize(MigLayoutToolkit.getMigLayoutUtil().derive(
+	public CCCommon maxWidth(final String size) {
+		hor.setSize(MigLayoutToolkitImpl.getMigLayoutUtil().derive(
 				hor.getSize(),
 				null,
 				null,
-				ConstraintParser.parseUnitValue(size, true)));
+				ConstraintParserCommon.parseUnitValue(size, true)));
 		return this;
 	}
 
@@ -227,13 +225,13 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC gapX(final String before, final String after) {
+	public CCCommon gapX(final String before, final String after) {
 		if (before != null) {
-			hor.setGapBefore(ConstraintParser.parseBoundSize(before, true, true));
+			hor.setGapBefore(ConstraintParserCommon.parseBoundSize(before, true, true));
 		}
 
 		if (after != null) {
-			hor.setGapAfter(ConstraintParser.parseBoundSize(after, true, true));
+			hor.setGapAfter(ConstraintParserCommon.parseBoundSize(after, true, true));
 		}
 
 		return this;
@@ -250,8 +248,8 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC alignX(final String align) {
-		hor.setAlign(ConstraintParser.parseUnitValueOrAlign(align, true, null));
+	public CCCommon alignX(final String align) {
+		hor.setAlign(ConstraintParserCommon.parseUnitValueOrAlign(align, true, null));
 		return this;
 	}
 
@@ -264,7 +262,7 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC growPrioX(final int p) {
+	public CCCommon growPrioX(final int p) {
 		hor.setGrowPriority(p);
 		return this;
 	}
@@ -279,7 +277,7 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	public CC growPrio(final int... widthHeight) {
+	public CCCommon growPrio(final int... widthHeight) {
 		switch (widthHeight.length) {
 			case 1:
 				growPrioX(widthHeight[0]);
@@ -303,8 +301,8 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @see #growX(float)
 	 */
-	public CC growX() {
-		hor.setGrow(ResizeConstraint.WEIGHT_100);
+	public CCCommon growX() {
+		hor.setGrow(ResizeConstraintCommon.WEIGHT_100);
 		return this;
 	}
 
@@ -317,7 +315,7 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC growX(final float w) {
+	public CCCommon growX(final float w) {
 		hor.setGrow(new Float(w));
 		return this;
 	}
@@ -332,7 +330,7 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	public CC grow(final float... widthHeight) {
+	public CCCommon grow(final float... widthHeight) {
 		switch (widthHeight.length) {
 			case 1:
 				growX(widthHeight[0]);
@@ -356,7 +354,7 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC shrinkPrioX(final int p) {
+	public CCCommon shrinkPrioX(final int p) {
 		hor.setShrinkPriority(p);
 		return this;
 	}
@@ -371,7 +369,7 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	public CC shrinkPrio(final int... widthHeight) {
+	public CCCommon shrinkPrio(final int... widthHeight) {
 		switch (widthHeight.length) {
 			case 1:
 				shrinkPrioX(widthHeight[0]);
@@ -395,7 +393,7 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC shrinkX(final float w) {
+	public CCCommon shrinkX(final float w) {
 		hor.setShrink(new Float(w));
 		return this;
 	}
@@ -410,7 +408,7 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	public CC shrink(final float... widthHeight) {
+	public CCCommon shrink(final float... widthHeight) {
 		switch (widthHeight.length) {
 			case 2:
 				shrinkY(widthHeight[1]);
@@ -434,7 +432,7 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC endGroupY(final String s) {
+	public CCCommon endGroupY(final String s) {
 		ver.setEndGroup(s);
 		return this;
 	}
@@ -449,7 +447,7 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	public CC endGroup(final String... xy) {
+	public CCCommon endGroup(final String... xy) {
 		switch (xy.length) {
 			case 1:
 				endGroupX(xy[0]);
@@ -473,7 +471,7 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC sizeGroupY(final String s) {
+	public CCCommon sizeGroupY(final String s) {
 		ver.setSizeGroup(s);
 		return this;
 	}
@@ -488,7 +486,7 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	public CC sizeGroup(final String... xy) {
+	public CCCommon sizeGroup(final String... xy) {
 		switch (xy.length) {
 			case 1:
 				sizeGroupX(xy[0]);
@@ -512,10 +510,10 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC minHeight(final String size) {
-		ver.setSize(MigLayoutToolkit.getMigLayoutUtil().derive(
+	public CCCommon minHeight(final String size) {
+		ver.setSize(MigLayoutToolkitImpl.getMigLayoutUtil().derive(
 				ver.getSize(),
-				ConstraintParser.parseUnitValue(size, false),
+				ConstraintParserCommon.parseUnitValue(size, false),
 				null,
 				null));
 		return this;
@@ -531,8 +529,8 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC height(final String size) {
-		ver.setSize(ConstraintParser.parseBoundSize(size, false, false));
+	public CCCommon height(final String size) {
+		ver.setSize(ConstraintParserCommon.parseBoundSize(size, false, false));
 		return this;
 	}
 
@@ -545,12 +543,12 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC maxHeight(final String size) {
-		ver.setSize(MigLayoutToolkit.getMigLayoutUtil().derive(
+	public CCCommon maxHeight(final String size) {
+		ver.setSize(MigLayoutToolkitImpl.getMigLayoutUtil().derive(
 				ver.getSize(),
 				null,
 				null,
-				ConstraintParser.parseUnitValue(size, false)));
+				ConstraintParserCommon.parseUnitValue(size, false)));
 		return this;
 	}
 
@@ -565,13 +563,13 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC gapY(final String before, final String after) {
+	public CCCommon gapY(final String before, final String after) {
 		if (before != null) {
-			ver.setGapBefore(ConstraintParser.parseBoundSize(before, true, false));
+			ver.setGapBefore(ConstraintParserCommon.parseBoundSize(before, true, false));
 		}
 
 		if (after != null) {
-			ver.setGapAfter(ConstraintParser.parseBoundSize(after, true, false));
+			ver.setGapAfter(ConstraintParserCommon.parseBoundSize(after, true, false));
 		}
 
 		return this;
@@ -588,8 +586,8 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC alignY(final String align) {
-		ver.setAlign(ConstraintParser.parseUnitValueOrAlign(align, false, null));
+	public CCCommon alignY(final String align) {
+		ver.setAlign(ConstraintParserCommon.parseUnitValueOrAlign(align, false, null));
 		return this;
 	}
 
@@ -602,7 +600,7 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC growPrioY(final int p) {
+	public CCCommon growPrioY(final int p) {
 		ver.setGrowPriority(p);
 		return this;
 	}
@@ -616,8 +614,8 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @see #growY(Float)
 	 */
-	public CC growY() {
-		ver.setGrow(ResizeConstraint.WEIGHT_100);
+	public CCCommon growY() {
+		ver.setGrow(ResizeConstraintCommon.WEIGHT_100);
 		return this;
 	}
 
@@ -630,7 +628,7 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC growY(final Float w) {
+	public CCCommon growY(final Float w) {
 		ver.setGrow(w);
 		return this;
 	}
@@ -644,7 +642,7 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC shrinkPrioY(final int p) {
+	public CCCommon shrinkPrioY(final int p) {
 		ver.setShrinkPriority(p);
 		return this;
 	}
@@ -658,7 +656,7 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC shrinkY(final float w) {
+	public CCCommon shrinkY(final float w) {
 		ver.setShrink(new Float(w));
 		return this;
 	}
@@ -668,7 +666,7 @@ public final class CC implements Externalizable {
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
 	 * 
-	 * @param mode The mode. Default to the mode in the {@link net.miginfocom.layout.LC}.
+	 * @param mode The mode. Default to the mode in the {@link LCCommon.miginfocom.layout.LC}.
 	 *            0 == Normal. Bounds will be calculated as if the component was visible.<br>
 	 *            1 == If hidden the size will be 0, 0 but the gaps remain.<br>
 	 *            2 == If hidden the size will be 0, 0 and gaps set to zero.<br>
@@ -676,7 +674,7 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC hideMode(final int mode) {
+	public CCCommon hideMode(final int mode) {
 		setHideMode(mode);
 		return this;
 	}
@@ -692,7 +690,7 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 */
-	public CC id(final String s) {
+	public CCCommon id(final String s) {
 		setId(s);
 		return this;
 	}
@@ -706,7 +704,7 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setTag(String)
 	 */
-	public CC tag(final String tag) {
+	public CCCommon tag(final String tag) {
 		setTag(tag);
 		return this;
 	}
@@ -726,7 +724,7 @@ public final class CC implements Externalizable {
 	 * @see #setSpanY(int)
 	 * @since 3.7.2. Replacing cell(int, int) and cell(int, int, int, int)
 	 */
-	public CC cell(final int... colRowWidthHeight) {
+	public CCCommon cell(final int... colRowWidthHeight) {
 		if ((colRowWidthHeight.length > 4) || (colRowWidthHeight.length < 1)) {
 			throw new IllegalArgumentException("Illegal argument count: " + colRowWidthHeight.length);
 		}
@@ -758,9 +756,9 @@ public final class CC implements Externalizable {
 	 * @see #spanX()
 	 * @since 3.7.2 Replaces span(int, int).
 	 */
-	public CC span(final int... cells) {
+	public CCCommon span(final int... cells) {
 		if (cells == null || cells.length == 0) {
-			setSpanX(LayoutUtil.INF);
+			setSpanX(LayoutUtilCommon.INF);
 			setSpanY(1);
 		}
 		else if (cells.length == 1) {
@@ -781,7 +779,7 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	public CC gap(final String... args) {
+	public CCCommon gap(final String... args) {
 		if ((args.length > 4) || (args.length < 1)) {
 			throw new IllegalArgumentException("Illegal argument count: " + args.length);
 		}
@@ -808,8 +806,8 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	public CC gapBefore(final String boundsSize) {
-		hor.setGapBefore(ConstraintParser.parseBoundSize(boundsSize, true, true));
+	public CCCommon gapBefore(final String boundsSize) {
+		hor.setGapBefore(ConstraintParserCommon.parseBoundSize(boundsSize, true, true));
 		return this;
 	}
 
@@ -822,8 +820,8 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	public CC gapAfter(final String boundsSize) {
-		hor.setGapAfter(ConstraintParser.parseBoundSize(boundsSize, true, true));
+	public CCCommon gapAfter(final String boundsSize) {
+		hor.setGapAfter(ConstraintParserCommon.parseBoundSize(boundsSize, true, true));
 		return this;
 	}
 
@@ -834,8 +832,8 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	public CC gapTop(final String boundsSize) {
-		ver.setGapBefore(ConstraintParser.parseBoundSize(boundsSize, true, false));
+	public CCCommon gapTop(final String boundsSize) {
+		ver.setGapBefore(ConstraintParserCommon.parseBoundSize(boundsSize, true, false));
 		return this;
 	}
 
@@ -846,8 +844,8 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	public CC gapLeft(final String boundsSize) {
-		hor.setGapBefore(ConstraintParser.parseBoundSize(boundsSize, true, true));
+	public CCCommon gapLeft(final String boundsSize) {
+		hor.setGapBefore(ConstraintParserCommon.parseBoundSize(boundsSize, true, true));
 		return this;
 	}
 
@@ -858,8 +856,8 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	public CC gapBottom(final String boundsSize) {
-		ver.setGapAfter(ConstraintParser.parseBoundSize(boundsSize, true, false));
+	public CCCommon gapBottom(final String boundsSize) {
+		ver.setGapAfter(ConstraintParserCommon.parseBoundSize(boundsSize, true, false));
 		return this;
 	}
 
@@ -870,8 +868,8 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	public CC gapRight(final String boundsSize) {
-		hor.setGapAfter(ConstraintParser.parseBoundSize(boundsSize, true, true));
+	public CCCommon gapRight(final String boundsSize) {
+		hor.setGapAfter(ConstraintParserCommon.parseBoundSize(boundsSize, true, true));
 		return this;
 	}
 
@@ -885,8 +883,8 @@ public final class CC implements Externalizable {
 	 * @see #setSpanY(int)
 	 * @see #spanY()
 	 */
-	public CC spanY() {
-		return spanY(LayoutUtil.INF);
+	public CCCommon spanY() {
+		return spanY(LayoutUtilCommon.INF);
 	}
 
 	/**
@@ -898,7 +896,7 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setSpanY(int)
 	 */
-	public CC spanY(final int cells) {
+	public CCCommon spanY(final int cells) {
 		setSpanY(cells);
 		return this;
 	}
@@ -913,8 +911,8 @@ public final class CC implements Externalizable {
 	 * @see #setSpanX(int)
 	 * @see #spanX()
 	 */
-	public CC spanX() {
-		return spanX(LayoutUtil.INF);
+	public CCCommon spanX() {
+		return spanX(LayoutUtilCommon.INF);
 	}
 
 	/**
@@ -926,7 +924,7 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setSpanY(int)
 	 */
-	public CC spanX(final int cells) {
+	public CCCommon spanX(final int cells) {
 		setSpanX(cells);
 		return this;
 	}
@@ -943,7 +941,7 @@ public final class CC implements Externalizable {
 	 * @see #pushY()
 	 * @see #pushX()
 	 */
-	public CC push() {
+	public CCCommon push() {
 		return pushX().pushY();
 	}
 
@@ -962,7 +960,7 @@ public final class CC implements Externalizable {
 	 * @see #pushY()
 	 * @see #pushX()
 	 */
-	public CC push(final Float weightX, final Float weightY) {
+	public CCCommon push(final Float weightX, final Float weightY) {
 		return pushX(weightX).pushY(weightY);
 	}
 
@@ -975,8 +973,8 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setPushY(Float)
 	 */
-	public CC pushY() {
-		return pushY(ResizeConstraint.WEIGHT_100);
+	public CCCommon pushY() {
+		return pushY(ResizeConstraintCommon.WEIGHT_100);
 	}
 
 	/**
@@ -989,7 +987,7 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setPushY(Float)
 	 */
-	public CC pushY(final Float weight) {
+	public CCCommon pushY(final Float weight) {
 		setPushY(weight);
 		return this;
 	}
@@ -1003,8 +1001,8 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setPushX(Float)
 	 */
-	public CC pushX() {
-		return pushX(ResizeConstraint.WEIGHT_100);
+	public CCCommon pushX() {
+		return pushX(ResizeConstraintCommon.WEIGHT_100);
 	}
 
 	/**
@@ -1017,7 +1015,7 @@ public final class CC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setPushY(Float)
 	 */
-	public CC pushX(final Float weight) {
+	public CCCommon pushX(final Float weight) {
 		setPushX(weight);
 		return this;
 	}
@@ -1032,7 +1030,7 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @see #setSplit(int)
 	 */
-	public CC split(final int parts) {
+	public CCCommon split(final int parts) {
 		setSplit(parts);
 		return this;
 	}
@@ -1048,8 +1046,8 @@ public final class CC implements Externalizable {
 	 * @see #setSplit(int)
 	 * @since 3.7.2
 	 */
-	public CC split() {
-		setSplit(LayoutUtil.INF);
+	public CCCommon split() {
+		setSplit(LayoutUtilCommon.INF);
 		return this;
 	}
 
@@ -1063,7 +1061,7 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @see #setSkip(int)
 	 */
-	public CC skip(final int cells) {
+	public CCCommon skip(final int cells) {
 		setSkip(cells);
 		return this;
 	}
@@ -1078,7 +1076,7 @@ public final class CC implements Externalizable {
 	 * @see #setSkip(int)
 	 * @since 3.7.2
 	 */
-	public CC skip() {
+	public CCCommon skip() {
 		setSkip(1);
 		return this;
 	}
@@ -1093,7 +1091,7 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @see #setExternal(boolean)
 	 */
-	public CC external() {
+	public CCCommon external() {
 		setExternal(true);
 		return this;
 	}
@@ -1108,7 +1106,7 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @see #setFlowX(Boolean)
 	 */
-	public CC flowX() {
+	public CCCommon flowX() {
 		setFlowX(Boolean.TRUE);
 		return this;
 	}
@@ -1123,7 +1121,7 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @see #setFlowX(Boolean)
 	 */
-	public CC flowY() {
+	public CCCommon flowY() {
 		setFlowX(Boolean.FALSE);
 		return this;
 	}
@@ -1138,7 +1136,7 @@ public final class CC implements Externalizable {
 	 * @see #growX()
 	 * @see #growY()
 	 */
-	public CC grow() {
+	public CCCommon grow() {
 		growX();
 		growY();
 		return this;
@@ -1154,13 +1152,13 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @see #setNewline(boolean)
 	 */
-	public CC newline() {
+	public CCCommon newline() {
 		setNewline(true);
 		return this;
 	}
 
 	/**
-	 * Same functionality as {@link #setNewlineGapSize(BoundSize)} only this method returns <code>this</code> for chaining
+	 * Same functionality as {@link #setNewlineGapSize(BoundSizeCommon)} only this method returns <code>this</code> for chaining
 	 * multiple calls.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
@@ -1168,13 +1166,13 @@ public final class CC implements Externalizable {
 	 * @param gapSize The gap size that will override the gap size in the row/colum constraints if <code>!= null</code>. E.g.
 	 *            "5px" or "unrel".
 	 *            If <code>null</code> or <code>""</code> the newline size will be set to the default size and turned on. This is
-	 *            different compared to {@link #setNewlineGapSize(BoundSize)}.
+	 *            different compared to {@link #setNewlineGapSize(BoundSizeCommon)}.
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
-	 * @see #setNewlineGapSize(BoundSize)
+	 * @see #setNewlineGapSize(BoundSizeCommon)
 	 */
-	public CC newline(final String gapSize) {
-		final BoundSize bs = ConstraintParser.parseBoundSize(gapSize, true, (flowX != null && flowX == false));
+	public CCCommon newline(final String gapSize) {
+		final BoundSizeCommon bs = ConstraintParserCommon.parseBoundSize(gapSize, true, (flowX != null && flowX == false));
 		if (bs != null) {
 			setNewlineGapSize(bs);
 		}
@@ -1194,13 +1192,14 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @see #setWrap(boolean)
 	 */
-	public CC wrap() {
+	public CCCommon wrap() {
 		setWrap(true);
 		return this;
 	}
 
 	/**
-	 * Same functionality as {@link #setWrapGapSize(BoundSize)} only this method returns <code>this</code> for chaining multiple
+	 * Same functionality as {@link #setWrapGapSize(BoundSizeCommon)} only this method returns <code>this</code> for chaining
+	 * multiple
 	 * calls.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
@@ -1208,13 +1207,13 @@ public final class CC implements Externalizable {
 	 * @param gapSize The gap size that will override the gap size in the row/colum constraints if <code>!= null</code>. E.g.
 	 *            "5px" or "unrel".
 	 *            If <code>null</code> or <code>""</code> the wrap size will be set to the default size and turned on. This is
-	 *            different compared to {@link #setWrapGapSize(BoundSize)}.
+	 *            different compared to {@link #setWrapGapSize(BoundSizeCommon)}.
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
-	 * @see #setWrapGapSize(BoundSize)
+	 * @see #setWrapGapSize(BoundSizeCommon)
 	 */
-	public CC wrap(final String gapSize) {
-		final BoundSize bs = ConstraintParser.parseBoundSize(gapSize, true, (flowX != null && flowX == false));
+	public CCCommon wrap(final String gapSize) {
+		final BoundSizeCommon bs = ConstraintParserCommon.parseBoundSize(gapSize, true, (flowX != null && flowX == false));
 		if (bs != null) {
 			setWrapGapSize(bs);
 		}
@@ -1233,7 +1232,7 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @see #setDockSide(int)
 	 */
-	public CC dockNorth() {
+	public CCCommon dockNorth() {
 		setDockSide(0);
 		return this;
 	}
@@ -1247,7 +1246,7 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @see #setDockSide(int)
 	 */
-	public CC dockWest() {
+	public CCCommon dockWest() {
 		setDockSide(1);
 		return this;
 	}
@@ -1261,7 +1260,7 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @see #setDockSide(int)
 	 */
-	public CC dockSouth() {
+	public CCCommon dockSouth() {
 		setDockSide(2);
 		return this;
 	}
@@ -1275,7 +1274,7 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @see #setDockSide(int)
 	 */
-	public CC dockEast() {
+	public CCCommon dockEast() {
 		setDockSide(3);
 		return this;
 	}
@@ -1289,10 +1288,10 @@ public final class CC implements Externalizable {
 	 * @param x The x position as a UnitValue. E.g. "10" or "40mm" or "container.x+10".
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
-	 * @see #setPos(UnitValue[])
+	 * @see #setPos(UnitValueCommon[])
 	 * @see #setBoundsInGrid(boolean)
 	 */
-	public CC x(final String x) {
+	public CCCommon x(final String x) {
 		return corrPos(x, 0);
 	}
 
@@ -1305,10 +1304,10 @@ public final class CC implements Externalizable {
 	 * @param y The y position as a UnitValue. E.g. "10" or "40mm" or "container.x+10".
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
-	 * @see #setPos(UnitValue[])
+	 * @see #setPos(UnitValueCommon[])
 	 * @see #setBoundsInGrid(boolean)
 	 */
-	public CC y(final String y) {
+	public CCCommon y(final String y) {
 		return corrPos(y, 1);
 	}
 
@@ -1322,10 +1321,10 @@ public final class CC implements Externalizable {
 	 * @param x2 The x2 side's position as a UnitValue. E.g. "10" or "40mm" or "container.x2 - 10".
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
-	 * @see #setPos(UnitValue[])
+	 * @see #setPos(UnitValueCommon[])
 	 * @see #setBoundsInGrid(boolean)
 	 */
-	public CC x2(final String x2) {
+	public CCCommon x2(final String x2) {
 		return corrPos(x2, 2);
 	}
 
@@ -1339,20 +1338,20 @@ public final class CC implements Externalizable {
 	 * @param y2 The y2 side's position as a UnitValue. E.g. "10" or "40mm" or "container.x2 - 10".
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
-	 * @see #setPos(UnitValue[])
+	 * @see #setPos(UnitValueCommon[])
 	 * @see #setBoundsInGrid(boolean)
 	 */
-	public CC y2(final String y2) {
+	public CCCommon y2(final String y2) {
 		return corrPos(y2, 3);
 	}
 
-	private CC corrPos(final String uv, final int ix) {
-		UnitValue[] b = getPos();
+	private CCCommon corrPos(final String uv, final int ix) {
+		UnitValueCommon[] b = getPos();
 		if (b == null) {
-			b = new UnitValue[4];
+			b = new UnitValueCommon[4];
 		}
 
-		b[ix] = ConstraintParser.parseUnitValue(uv, (ix % 2 == 0));
+		b[ix] = ConstraintParserCommon.parseUnitValue(uv, (ix % 2 == 0));
 		setPos(b);
 
 		setBoundsInGrid(true);
@@ -1368,16 +1367,16 @@ public final class CC implements Externalizable {
 	 * @param y The y position as a UnitValue. E.g. "10" or "40mm" or "container.x+10".
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
-	 * @see #setPos(UnitValue[])
+	 * @see #setPos(UnitValueCommon[])
 	 */
-	public CC pos(final String x, final String y) {
-		UnitValue[] b = getPos();
+	public CCCommon pos(final String x, final String y) {
+		UnitValueCommon[] b = getPos();
 		if (b == null) {
-			b = new UnitValue[4];
+			b = new UnitValueCommon[4];
 		}
 
-		b[0] = ConstraintParser.parseUnitValue(x, true);
-		b[1] = ConstraintParser.parseUnitValue(y, false);
+		b[0] = ConstraintParserCommon.parseUnitValue(x, true);
+		b[1] = ConstraintParserCommon.parseUnitValue(y, false);
 		setPos(b);
 
 		setBoundsInGrid(false);
@@ -1396,18 +1395,18 @@ public final class CC implements Externalizable {
 	 * @param y2 The y2 side's position as a UnitValue. E.g. "10" or "40mm" or "container.x2 - 10".
 	 * @return <code>this</code> so it is possible to chain calls. E.g.
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
-	 * @see #setPos(UnitValue[])
+	 * @see #setPos(UnitValueCommon[])
 	 */
-	public CC pos(final String x, final String y, final String x2, final String y2) {
-		setPos(new UnitValue[] {
-				ConstraintParser.parseUnitValue(x, true), ConstraintParser.parseUnitValue(y, false),
-				ConstraintParser.parseUnitValue(x2, true), ConstraintParser.parseUnitValue(y2, false),});
+	public CCCommon pos(final String x, final String y, final String x2, final String y2) {
+		setPos(new UnitValueCommon[] {
+				ConstraintParserCommon.parseUnitValue(x, true), ConstraintParserCommon.parseUnitValue(y, false),
+				ConstraintParserCommon.parseUnitValue(x2, true), ConstraintParserCommon.parseUnitValue(y2, false),});
 		setBoundsInGrid(false);
 		return this;
 	}
 
 	/**
-	 * Same functionality as {@link #setPadding(UnitValue[])} but the unit values as absolute pixels. This method returns
+	 * Same functionality as {@link #setPadding(UnitValueCommon[])} but the unit values as absolute pixels. This method returns
 	 * <code>this</code> for chaining multiple calls.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
@@ -1420,8 +1419,9 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @see #setTag(String)
 	 */
-	public CC pad(final int top, final int left, final int bottom, final int right) {
-		setPadding(new UnitValue[] {new UnitValue(top), new UnitValue(left), new UnitValue(bottom), new UnitValue(right)});
+	public CCCommon pad(final int top, final int left, final int bottom, final int right) {
+		setPadding(new UnitValueCommon[] {
+				new UnitValueCommon(top), new UnitValueCommon(left), new UnitValueCommon(bottom), new UnitValueCommon(right)});
 		return this;
 	}
 
@@ -1436,8 +1436,8 @@ public final class CC implements Externalizable {
 	 *         <code>new ComponentConstraint().noGrid().gap().fill()</code>.
 	 * @see #setTag(String)
 	 */
-	public CC pad(final String pad) {
-		setPadding(pad != null ? ConstraintParser.parseInsets(pad, false) : null);
+	public CCCommon pad(final String pad) {
+		setPadding(pad != null ? ConstraintParserCommon.parseInsets(pad, false) : null);
 		return this;
 	}
 
@@ -1454,7 +1454,7 @@ public final class CC implements Externalizable {
 	 * 
 	 * @return The current dimension constraint. Never <code>null</code>.
 	 */
-	public DimConstraint getHorizontal() {
+	public DimConstraintCommon getHorizontal() {
 		return hor;
 	}
 
@@ -1464,8 +1464,8 @@ public final class CC implements Externalizable {
 	 * 
 	 * @param h The new dimension constraint. If <code>null</code> it will be reset to <code>new DimConstraint();</code>
 	 */
-	public void setHorizontal(final DimConstraint h) {
-		hor = h != null ? h : new DimConstraint();
+	public void setHorizontal(final DimConstraintCommon h) {
+		hor = h != null ? h : new DimConstraintCommon();
 	}
 
 	/**
@@ -1477,7 +1477,7 @@ public final class CC implements Externalizable {
 	 * 
 	 * @return The current dimension constraint. Never <code>null</code>.
 	 */
-	public DimConstraint getVertical() {
+	public DimConstraintCommon getVertical() {
 		return ver;
 	}
 
@@ -1487,8 +1487,8 @@ public final class CC implements Externalizable {
 	 * 
 	 * @param v The new dimension constraint. If <code>null</code> it will be reset to <code>new DimConstraint();</code>
 	 */
-	public void setVertical(final DimConstraint v) {
-		ver = v != null ? v : new DimConstraint();
+	public void setVertical(final DimConstraintCommon v) {
+		ver = v != null ? v : new DimConstraintCommon();
 	}
 
 	/**
@@ -1500,7 +1500,7 @@ public final class CC implements Externalizable {
 	 * @param isHor If the horizontal constraint should be returned.
 	 * @return The dim constraint. Never <code>null</code>.
 	 */
-	public DimConstraint getDimConstraint(final boolean isHor) {
+	public DimConstraintCommon getDimConstraint(final boolean isHor) {
 		return isHor ? hor : ver;
 	}
 
@@ -1517,8 +1517,8 @@ public final class CC implements Externalizable {
 	 * 
 	 * @return The current value as a new array, free to modify.
 	 */
-	public UnitValue[] getPos() {
-		return pos != null ? new UnitValue[] {pos[0], pos[1], pos[2], pos[3]} : null;
+	public UnitValueCommon[] getPos() {
+		return pos != null ? new UnitValueCommon[] {pos[0], pos[1], pos[2], pos[3]} : null;
 	}
 
 	/**
@@ -1535,8 +1535,8 @@ public final class CC implements Externalizable {
 	 * @param pos <code>UnitValue[] {x, y, x2, y2}</code>. Must be <code>null</code> or of length 4. Elements can be
 	 *            <code>null</code>.
 	 */
-	public void setPos(final UnitValue[] pos) {
-		this.pos = pos != null ? new UnitValue[] {pos[0], pos[1], pos[2], pos[3]} : null;
+	public void setPos(final UnitValueCommon[] pos) {
+		this.pos = pos != null ? new UnitValueCommon[] {pos[0], pos[1], pos[2], pos[3]} : null;
 		linkTargets = null;
 	}
 
@@ -1562,7 +1562,7 @@ public final class CC implements Externalizable {
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
 	 * 
 	 * @param b <code>true</code> for bounds taken from the grid position. <code>false</code> is default.
-	 * @see #setPos(UnitValue[])
+	 * @see #setPos(UnitValueCommon[])
 	 */
 	void setBoundsInGrid(final boolean b) {
 		this.boundsInGrid = b;
@@ -1676,7 +1676,7 @@ public final class CC implements Externalizable {
 	 * Returns if the flow in the <b>cell</b> is in the horizontal dimension. Vertical if <code>false</code>. Only the first
 	 * component is a cell can set the flow.
 	 * <p>
-	 * If <code>null</code> the flow direction is inherited by from the {@link net.miginfocom.layout.LC}.
+	 * If <code>null</code> the flow direction is inherited by from the {@link LCCommon.miginfocom.layout.LC}.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
 	 * 
@@ -1690,7 +1690,7 @@ public final class CC implements Externalizable {
 	 * Sets if the flow in the <b>cell</b> is in the horizontal dimension. Vertical if <code>false</code>. Only the first
 	 * component is a cell can set the flow.
 	 * <p>
-	 * If <code>null</code> the flow direction is inherited by from the {@link net.miginfocom.layout.LC}.
+	 * If <code>null</code> the flow direction is inherited by from the {@link LCCommon.miginfocom.layout.LC}.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
 	 * 
@@ -1765,8 +1765,8 @@ public final class CC implements Externalizable {
 	 * 
 	 * @return The current value. <code>null</code> or of length 4.
 	 */
-	public UnitValue[] getPadding() {
-		return padding != null ? new UnitValue[] {padding[0], padding[1], padding[2], padding[3]} : null;
+	public UnitValueCommon[] getPadding() {
+		return padding != null ? new UnitValueCommon[] {padding[0], padding[1], padding[2], padding[3]} : null;
 	}
 
 	/**
@@ -1778,8 +1778,8 @@ public final class CC implements Externalizable {
 	 * 
 	 * @param sides top, left, bottom right. Must be <code>null</code> or of length 4.
 	 */
-	public void setPadding(final UnitValue[] sides) {
-		this.padding = sides != null ? new UnitValue[] {sides[0], sides[1], sides[2], sides[3]} : null;
+	public void setPadding(final UnitValueCommon[] sides) {
+		this.padding = sides != null ? new UnitValueCommon[] {sides[0], sides[1], sides[2], sides[3]} : null;
 	}
 
 	/**
@@ -1961,7 +1961,8 @@ public final class CC implements Externalizable {
 
 	/**
 	 * Tags the component with metadata. Currently only used to tag buttons with for instance "cancel" or "ok" to make them
-	 * show up in the correct order depending on platform. See {@link PlatformDefaults#setButtonOrder(String)} for information.
+	 * show up in the correct order depending on platform. See {@link PlatformDefaultsCommon#setButtonOrder(String)} for
+	 * information.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
 	 * 
@@ -2014,7 +2015,7 @@ public final class CC implements Externalizable {
 	 * @see #setWrap(boolean)
 	 * @since 2.4.2
 	 */
-	public BoundSize getWrapGapSize() {
+	public BoundSizeCommon getWrapGapSize() {
 		return wrap == DEF_GAP ? null : wrap;
 	}
 
@@ -2028,7 +2029,7 @@ public final class CC implements Externalizable {
 	 * @see #setWrap(boolean)
 	 * @since 2.4.2
 	 */
-	public void setWrapGapSize(final BoundSize s) {
+	public void setWrapGapSize(final BoundSizeCommon s) {
 		wrap = s == null ? (wrap != null ? DEF_GAP : null) : s;
 	}
 
@@ -2064,7 +2065,7 @@ public final class CC implements Externalizable {
 	 * @see #setNewline(boolean)
 	 * @since 2.4.2
 	 */
-	public BoundSize getNewlineGapSize() {
+	public BoundSizeCommon getNewlineGapSize() {
 		return newline == DEF_GAP ? null : newline;
 	}
 
@@ -2078,7 +2079,7 @@ public final class CC implements Externalizable {
 	 * @see #setNewline(boolean)
 	 * @since 2.4.2
 	 */
-	public void setNewlineGapSize(final BoundSize s) {
+	public void setNewlineGapSize(final BoundSizeCommon s) {
 		newline = s == null ? (newline != null ? DEF_GAP : null) : s;
 	}
 
@@ -2087,19 +2088,19 @@ public final class CC implements Externalizable {
 	// ************************************************
 
 	private Object readResolve() throws ObjectStreamException {
-		return MigLayoutToolkit.getMigLayoutUtil().getSerializedObject(this);
+		return MigLayoutToolkitImpl.getMigLayoutUtil().getSerializedObject(this);
 	}
 
 	@Override
 	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
-		final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
+		final LayoutUtilCommon layoutUtil = MigLayoutToolkitImpl.getMigLayoutUtil();
 		layoutUtil.setSerializedObject(this, layoutUtil.readAsXML(in));
 	}
 
 	@Override
 	public void writeExternal(final ObjectOutput out) throws IOException {
-		if (getClass() == CC.class) {
-			MigLayoutToolkit.getMigLayoutUtil().writeAsXML(out, this);
+		if (getClass() == CCCommon.class) {
+			MigLayoutToolkitImpl.getMigLayoutUtil().writeAsXML(out, this);
 		}
 	}
 }

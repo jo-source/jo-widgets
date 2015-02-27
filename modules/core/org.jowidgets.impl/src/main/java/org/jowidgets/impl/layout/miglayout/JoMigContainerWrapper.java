@@ -31,19 +31,17 @@ import java.util.List;
 
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.impl.layout.miglayout.common.IComponentWrapper;
-import org.jowidgets.impl.layout.miglayout.common.IContainerWrapper;
 
-final class JoMigContainerWrapper extends JoMigComponentWrapper implements IContainerWrapper {
+final class JoMigContainerWrapper extends JoMigComponentWrapper implements IContainerWrapperCommon {
 	JoMigContainerWrapper(final IContainer c) {
 		super(c);
 	}
 
 	@Override
-	public IComponentWrapper[] getComponents() {
+	public IComponentWrapperCommon[] getComponents() {
 		final IContainer c = getComponent();
 		final List<IControl> cons = c.getChildren();
-		final IComponentWrapper[] cws = new IComponentWrapper[cons.size()];
+		final IComponentWrapperCommon[] cws = new IComponentWrapperCommon[cons.size()];
 		for (int i = 0; i < cws.length; i++) {
 			cws[i] = new JoMigComponentWrapper(cons.get(i));
 		}

@@ -26,7 +26,7 @@
  * OF SUCH DAMAGE.
  *
  */
-package org.jowidgets.impl.layout.miglayout.common;
+package org.jowidgets.impl.layout.miglayout;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ import java.util.HashMap;
 
 /**
  */
-public final class LinkHandler {
+final class LinkHandlerCommon {
 	public static final int X = 0;
 	public static final int Y = 1;
 	public static final int WIDTH = 2;
@@ -46,7 +46,7 @@ public final class LinkHandler {
 	private final ArrayList<HashMap<String, int[]>> valuesMap = new ArrayList<HashMap<String, int[]>>(4);
 	private final ArrayList<HashMap<String, int[]>> valuesTemp = new ArrayList<HashMap<String, int[]>>(4);
 
-	public LinkHandler() {}
+	public LinkHandlerCommon() {}
 
 	public synchronized Integer getValue(final Object layout, final String key, final int type) {
 		Integer ret = null;
@@ -56,12 +56,12 @@ public final class LinkHandler {
 			final Object l = layouts.get(i).get();
 			if (ret == null && l == layout) {
 				int[] rect = valuesTemp.get(i).get(key);
-				if (cont && rect != null && rect[type] != LayoutUtil.NOT_SET) {
+				if (cont && rect != null && rect[type] != LayoutUtilCommon.NOT_SET) {
 					ret = rect[type];
 				}
 				else {
 					rect = valuesMap.get(i).get(key);
-					ret = (rect != null && rect[type] != LayoutUtil.NOT_SET) ? rect[type] : null;
+					ret = (rect != null && rect[type] != LayoutUtilCommon.NOT_SET) ? rect[type] : null;
 				}
 				cont = false;
 			}
@@ -122,16 +122,16 @@ public final class LinkHandler {
 
 				boolean changed = false;
 
-				if (x != LayoutUtil.NOT_SET) {
-					if (old[X] == LayoutUtil.NOT_SET || x < old[X]) {
+				if (x != LayoutUtilCommon.NOT_SET) {
+					if (old[X] == LayoutUtilCommon.NOT_SET || x < old[X]) {
 						old[X] = x;
 						old[WIDTH] = old[X2] - x;
 						changed = true;
 					}
 
-					if (width != LayoutUtil.NOT_SET) {
+					if (width != LayoutUtilCommon.NOT_SET) {
 						final int x2 = x + width;
-						if (old[X2] == LayoutUtil.NOT_SET || x2 > old[X2]) {
+						if (old[X2] == LayoutUtilCommon.NOT_SET || x2 > old[X2]) {
 							old[X2] = x2;
 							old[WIDTH] = x2 - old[X];
 							changed = true;
@@ -139,16 +139,16 @@ public final class LinkHandler {
 					}
 				}
 
-				if (y != LayoutUtil.NOT_SET) {
-					if (old[Y] == LayoutUtil.NOT_SET || y < old[Y]) {
+				if (y != LayoutUtilCommon.NOT_SET) {
+					if (old[Y] == LayoutUtilCommon.NOT_SET || y < old[Y]) {
 						old[Y] = y;
 						old[HEIGHT] = old[Y2] - y;
 						changed = true;
 					}
 
-					if (height != LayoutUtil.NOT_SET) {
+					if (height != LayoutUtilCommon.NOT_SET) {
 						final int y2 = y + height;
-						if (old[Y2] == LayoutUtil.NOT_SET || y2 > old[Y2]) {
+						if (old[Y2] == LayoutUtilCommon.NOT_SET || y2 > old[Y2]) {
 							old[Y2] = y2;
 							old[HEIGHT] = y2 - old[Y];
 							changed = true;

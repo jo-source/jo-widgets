@@ -26,20 +26,18 @@
  * OF SUCH DAMAGE.
  *
  */
-package org.jowidgets.impl.layout.miglayout.common;
+package org.jowidgets.impl.layout.miglayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
-
 /**
  * Parses string constraints.
  */
-public final class ConstraintParser {
-	private ConstraintParser() {}
+final class ConstraintParserCommon {
+	private ConstraintParserCommon() {}
 
 	/**
 	 * Parses the layout constraints and stores the parsed values in the transient (cache) member varables.
@@ -48,8 +46,8 @@ public final class ConstraintParser {
 	 * @throws RuntimeException if the constaint was not valid.
 	 * @return The parsed constraint. Never <code>null</code>.
 	 */
-	public static LC parseLayoutConstraint(final String s) {
-		final LC lc = new LC();
+	public static LCCommon parseLayoutConstraint(final String s) {
+		final LCCommon lc = new LCCommon();
 		if (s.length() == 0) {
 			return lc;
 		}
@@ -202,8 +200,8 @@ public final class ConstraintParser {
 					ix = startsWithLenient(part, "insets", 3, true);
 					if (ix > -1) {
 						final String insStr = part.substring(ix).trim();
-						final UnitValue[] ins = parseInsets(insStr, true);
-						MigLayoutToolkit.getMigLayoutUtil().putCCString(ins, insStr);
+						final UnitValueCommon[] ins = parseInsets(insStr, true);
+						MigLayoutToolkitImpl.getMigLayoutUtil().putCCString(ins, insStr);
 						lc.setInsets(ins);
 						continue;
 					}
@@ -212,8 +210,8 @@ public final class ConstraintParser {
 				if (c == 'a') {
 					ix = startsWithLenient(part, new String[] {"aligny", "ay"}, new int[] {6, 2}, true);
 					if (ix > -1) {
-						final UnitValue align = parseUnitValueOrAlign(part.substring(ix).trim(), false, null);
-						if (align == MigLayoutToolkit.getMigUnitValueToolkit().BASELINE_IDENTITY) {
+						final UnitValueCommon align = parseUnitValueOrAlign(part.substring(ix).trim(), false, null);
+						if (align == MigLayoutToolkitImpl.getMigUnitValueToolkit().BASELINE_IDENTITY) {
 							throw new IllegalArgumentException("'baseline' can not be used to align the whole component group.");
 						}
 						lc.setAlignY(align);
@@ -258,14 +256,14 @@ public final class ConstraintParser {
 				}
 
 				if (lc.getAlignX() == null) {
-					final UnitValue alignX = parseAlignKeywords(part, true);
+					final UnitValueCommon alignX = parseAlignKeywords(part, true);
 					if (alignX != null) {
 						lc.setAlignX(alignX);
 						continue;
 					}
 				}
 
-				final UnitValue alignY = parseAlignKeywords(part, false);
+				final UnitValueCommon alignY = parseAlignKeywords(part, false);
 				if (alignY != null) {
 					lc.setAlignY(alignY);
 					continue;
@@ -288,10 +286,11 @@ public final class ConstraintParser {
 	 * Parses the column or rows constraints. They normally looks something like <code>"[min:pref]rel[10px][]"</code>.
 	 * 
 	 * @param s The string to parse. Not <code>null</code>.
-	 * @return An array of {@link DimConstraint}s that is as manu are there exist "[...]" sections in the string that is parsed.
+	 * @return An array of {@link DimConstraintCommon}s that is as manu are there exist "[...]" sections in the string that is
+	 *         parsed.
 	 * @throws RuntimeException if the constaint was not valid.
 	 */
-	public static AC parseRowConstraints(final String s) {
+	public static ACCommon parseRowConstraints(final String s) {
 		return parseAxisConstraint(s, false);
 	}
 
@@ -299,10 +298,11 @@ public final class ConstraintParser {
 	 * Parses the column or rows constraints. They normally looks something like <code>"[min:pref]rel[10px][]"</code>.
 	 * 
 	 * @param s The string to parse. Not <code>null</code>.
-	 * @return An array of {@link DimConstraint}s that is as manu are there exist "[...]" sections in the string that is parsed.
+	 * @return An array of {@link DimConstraintCommon}s that is as manu are there exist "[...]" sections in the string that is
+	 *         parsed.
 	 * @throws RuntimeException if the constaint was not valid.
 	 */
-	public static AC parseColumnConstraints(final String s) {
+	public static ACCommon parseColumnConstraints(final String s) {
 		return parseAxisConstraint(s, true);
 	}
 
@@ -311,28 +311,29 @@ public final class ConstraintParser {
 	 * 
 	 * @param s The string to parse. Not <code>null</code>.
 	 * @param isCols If this for columns rather than rows.
-	 * @return An array of {@link DimConstraint}s that is as manu are there exist "[...]" sections in the string that is parsed.
+	 * @return An array of {@link DimConstraintCommon}s that is as manu are there exist "[...]" sections in the string that is
+	 *         parsed.
 	 * @throws RuntimeException if the constaint was not valid.
 	 */
-	private static AC parseAxisConstraint(String s, final boolean isCols) {
+	private static ACCommon parseAxisConstraint(String s, final boolean isCols) {
 		s = s.trim();
 
 		if (s.length() == 0) {
-			return new AC(); // Short circuit for performance.
+			return new ACCommon(); // Short circuit for performance.
 		}
 
 		s = s.toLowerCase();
 
 		final ArrayList<String> parts = getRowColAndGapsTrimmed(s);
 
-		final BoundSize[] gaps = new BoundSize[(parts.size() >> 1) + 1];
+		final BoundSizeCommon[] gaps = new BoundSizeCommon[(parts.size() >> 1) + 1];
 		final int iSz = parts.size();
 		int gIx = 0;
 		for (int i = 0; i < iSz; i += 2, gIx++) {
 			gaps[gIx] = parseBoundSize(parts.get(i), true, isCols);
 		}
 
-		final DimConstraint[] colSpecs = new DimConstraint[parts.size() >> 1];
+		final DimConstraintCommon[] colSpecs = new DimConstraintCommon[parts.size() >> 1];
 		gIx = 0;
 		for (int i = 0; i < colSpecs.length; i++, gIx++) {
 			if (gIx >= gaps.length - 1) {
@@ -342,7 +343,7 @@ public final class ConstraintParser {
 			colSpecs[i] = parseDimConstraint(parts.get((i << 1) + 1), gaps[gIx], gaps[gIx + 1], isCols);
 		}
 
-		final AC ac = new AC();
+		final ACCommon ac = new ACCommon();
 		ac.setConstaints(colSpecs);
 
 		//		ac = (AC) serializeTest(ac);
@@ -364,12 +365,12 @@ public final class ConstraintParser {
 	 * @return A single constraint. Never <code>null</code>.
 	 * @throws RuntimeException if the constraint was not valid.
 	 */
-	private static DimConstraint parseDimConstraint(
+	private static DimConstraintCommon parseDimConstraint(
 		final String s,
-		final BoundSize gapBefore,
-		final BoundSize gapAfter,
+		final BoundSizeCommon gapBefore,
+		final BoundSizeCommon gapAfter,
 		final boolean isCols) {
-		final DimConstraint dimConstraint = new DimConstraint();
+		final DimConstraintCommon dimConstraint = new DimConstraintCommon();
 
 		// Default values.
 		dimConstraint.setGapBefore(gapBefore);
@@ -412,7 +413,7 @@ public final class ConstraintParser {
 
 					ix = startsWithLenient(part, "shrink", 6, true);
 					if (ix > -1) {
-						dimConstraint.setShrink(parseFloat(part.substring(ix).trim(), ResizeConstraint.WEIGHT_100));
+						dimConstraint.setShrink(parseFloat(part.substring(ix).trim(), ResizeConstraintCommon.WEIGHT_100));
 						continue;
 					}
 				}
@@ -426,7 +427,7 @@ public final class ConstraintParser {
 
 					ix = startsWithLenient(part, "grow", 4, true);
 					if (ix > -1) {
-						dimConstraint.setGrow(parseFloat(part.substring(ix).trim(), ResizeConstraint.WEIGHT_100));
+						dimConstraint.setGrow(parseFloat(part.substring(ix).trim(), ResizeConstraintCommon.WEIGHT_100));
 						continue;
 					}
 				}
@@ -440,7 +441,7 @@ public final class ConstraintParser {
 					}
 				}
 
-				final UnitValue align = parseAlignKeywords(part, isCols);
+				final UnitValueCommon align = parseAlignKeywords(part, isCols);
 				if (align != null) {
 					//					if (dimConstraint.isFill() == false)    // Swallow, but ignore if fill is set. (changed for 3.5 since it can have "growy 0")
 					dimConstraint.setAlign(align);
@@ -464,11 +465,12 @@ public final class ConstraintParser {
 	 * @param constrMap The constraints as <code>String</code>s. Strings <b>must be lower case and trimmed</b>
 	 * @return The parsed constraints. Never <code>null</code>.
 	 */
-	public static Map<IComponentWrapper, CC> parseComponentConstraints(final Map<IComponentWrapper, String> constrMap) {
-		final HashMap<IComponentWrapper, CC> flowConstrMap = new HashMap<IComponentWrapper, CC>();
+	public static Map<IComponentWrapperCommon, CCCommon> parseComponentConstraints(
+		final Map<IComponentWrapperCommon, String> constrMap) {
+		final HashMap<IComponentWrapperCommon, CCCommon> flowConstrMap = new HashMap<IComponentWrapperCommon, CCCommon>();
 
-		for (final Iterator<Map.Entry<IComponentWrapper, String>> it = constrMap.entrySet().iterator(); it.hasNext();) {
-			final Map.Entry<IComponentWrapper, String> entry = it.next();
+		for (final Iterator<Map.Entry<IComponentWrapperCommon, String>> it = constrMap.entrySet().iterator(); it.hasNext();) {
+			final Map.Entry<IComponentWrapperCommon, String> entry = it.next();
 			flowConstrMap.put(entry.getKey(), parseComponentConstraint(entry.getValue()));
 		}
 
@@ -482,8 +484,8 @@ public final class ConstraintParser {
 	 * @throws RuntimeException if the constaint was not valid.
 	 * @return The parsed constraint. Never <code>null</code>.
 	 */
-	public static CC parseComponentConstraint(final String s) {
-		final CC cc = new CC();
+	public static CCCommon parseComponentConstraint(final String s) {
+		final CCCommon cc = new CCCommon();
 
 		if (s.length() == 0) {
 			return cc;
@@ -534,7 +536,7 @@ public final class ConstraintParser {
 					ix = startsWithLenient(part, "split", 5, true);
 					if (ix > -1) {
 						final String split = part.substring(ix).trim();
-						cc.setSplit(split.length() > 0 ? Integer.parseInt(split) : LayoutUtil.INF);
+						cc.setSplit(split.length() > 0 ? Integer.parseInt(split) : LayoutUtilCommon.INF);
 						continue;
 					}
 
@@ -558,29 +560,29 @@ public final class ConstraintParser {
 					ix = startsWithLenient(part, "span", 4, true);
 					if (ix > -1) {
 						final String[] spans = toTrimmedTokens(part.substring(ix).trim(), ' ');
-						cc.setSpanX(spans[0].length() > 0 ? Integer.parseInt(spans[0]) : LayoutUtil.INF);
+						cc.setSpanX(spans[0].length() > 0 ? Integer.parseInt(spans[0]) : LayoutUtilCommon.INF);
 						cc.setSpanY(spans.length > 1 ? Integer.parseInt(spans[1]) : 1);
 						continue;
 					}
 
 					ix = startsWithLenient(part, "shrinkx", 7, true);
 					if (ix > -1) {
-						cc.getHorizontal().setShrink(parseFloat(part.substring(ix).trim(), ResizeConstraint.WEIGHT_100));
+						cc.getHorizontal().setShrink(parseFloat(part.substring(ix).trim(), ResizeConstraintCommon.WEIGHT_100));
 						continue;
 					}
 
 					ix = startsWithLenient(part, "shrinky", 7, true);
 					if (ix > -1) {
-						cc.getVertical().setShrink(parseFloat(part.substring(ix).trim(), ResizeConstraint.WEIGHT_100));
+						cc.getVertical().setShrink(parseFloat(part.substring(ix).trim(), ResizeConstraintCommon.WEIGHT_100));
 						continue;
 					}
 
 					ix = startsWithLenient(part, "shrink", 6, false);
 					if (ix > -1) {
 						final String[] shrinks = toTrimmedTokens(part.substring(ix).trim(), ' ');
-						cc.getHorizontal().setShrink(parseFloat(part.substring(ix).trim(), ResizeConstraint.WEIGHT_100));
+						cc.getHorizontal().setShrink(parseFloat(part.substring(ix).trim(), ResizeConstraintCommon.WEIGHT_100));
 						if (shrinks.length > 1) {
-							cc.getVertical().setShrink(parseFloat(part.substring(ix).trim(), ResizeConstraint.WEIGHT_100));
+							cc.getVertical().setShrink(parseFloat(part.substring(ix).trim(), ResizeConstraintCommon.WEIGHT_100));
 						}
 						continue;
 					}
@@ -622,21 +624,21 @@ public final class ConstraintParser {
 				if (c == 'g') {
 					ix = startsWithLenient(part, "growx", 5, true);
 					if (ix > -1) {
-						cc.getHorizontal().setGrow(parseFloat(part.substring(ix).trim(), ResizeConstraint.WEIGHT_100));
+						cc.getHorizontal().setGrow(parseFloat(part.substring(ix).trim(), ResizeConstraintCommon.WEIGHT_100));
 						continue;
 					}
 
 					ix = startsWithLenient(part, "growy", 5, true);
 					if (ix > -1) {
-						cc.getVertical().setGrow(parseFloat(part.substring(ix).trim(), ResizeConstraint.WEIGHT_100));
+						cc.getVertical().setGrow(parseFloat(part.substring(ix).trim(), ResizeConstraintCommon.WEIGHT_100));
 						continue;
 					}
 
 					ix = startsWithLenient(part, "grow", 4, false);
 					if (ix > -1) {
 						final String[] grows = toTrimmedTokens(part.substring(ix).trim(), ' ');
-						cc.getHorizontal().setGrow(parseFloat(grows[0], ResizeConstraint.WEIGHT_100));
-						cc.getVertical().setGrow(parseFloat(grows.length > 1 ? grows[1] : "", ResizeConstraint.WEIGHT_100));
+						cc.getHorizontal().setGrow(parseFloat(grows[0], ResizeConstraintCommon.WEIGHT_100));
+						cc.getVertical().setGrow(parseFloat(grows.length > 1 ? grows[1] : "", ResizeConstraintCommon.WEIGHT_100));
 						continue;
 					}
 
@@ -658,7 +660,7 @@ public final class ConstraintParser {
 					}
 
 					if (part.startsWith("gap")) {
-						final BoundSize[] gaps = parseGaps(part); // Changes order!!
+						final BoundSizeCommon[] gaps = parseGaps(part); // Changes order!!
 						if (gaps[0] != null) {
 							cc.getVertical().setGapBefore(gaps[0]);
 						}
@@ -703,14 +705,14 @@ public final class ConstraintParser {
 					final char c2 = part.charAt(1);
 					if (c2 == ' ' || (c2 == '2' && part.charAt(2) == ' ')) {
 						if (cc.getPos() == null) {
-							cc.setPos(new UnitValue[4]);
+							cc.setPos(new UnitValueCommon[4]);
 						}
 						else if (cc.isBoundsInGrid() == false) {
 							throw new IllegalArgumentException("Cannot combine 'position' with 'x/y/x2/y2' keywords.");
 						}
 
 						final int edge = (c == 'x' ? 0 : 1) + (c2 == '2' ? 2 : 0);
-						final UnitValue[] pos = cc.getPos();
+						final UnitValueCommon[] pos = cc.getPos();
 						pos[edge] = parseUnitValue(part.substring(2).trim(), null, c == 'x');
 						cc.setPos(pos);
 						cc.setBoundsInGrid(true);
@@ -745,7 +747,7 @@ public final class ConstraintParser {
 						}
 
 						final String[] pos = toTrimmedTokens(part.substring(ix).trim(), ' ');
-						final UnitValue[] bounds = new UnitValue[4];
+						final UnitValueCommon[] bounds = new UnitValueCommon[4];
 						for (int j = 0; j < pos.length; j++) {
 							bounds[j] = parseUnitValue(pos[j], null, j % 2 == 0);
 						}
@@ -761,29 +763,29 @@ public final class ConstraintParser {
 
 					ix = startsWithLenient(part, "pad", 3, true);
 					if (ix > -1) {
-						final UnitValue[] p = parseInsets(part.substring(ix).trim(), false);
-						cc.setPadding(new UnitValue[] {
+						final UnitValueCommon[] p = parseInsets(part.substring(ix).trim(), false);
+						cc.setPadding(new UnitValueCommon[] {
 								p[0], p.length > 1 ? p[1] : null, p.length > 2 ? p[2] : null, p.length > 3 ? p[3] : null});
 						continue;
 					}
 
 					ix = startsWithLenient(part, "pushx", 5, true);
 					if (ix > -1) {
-						cc.setPushX(parseFloat(part.substring(ix).trim(), ResizeConstraint.WEIGHT_100));
+						cc.setPushX(parseFloat(part.substring(ix).trim(), ResizeConstraintCommon.WEIGHT_100));
 						continue;
 					}
 
 					ix = startsWithLenient(part, "pushy", 5, true);
 					if (ix > -1) {
-						cc.setPushY(parseFloat(part.substring(ix).trim(), ResizeConstraint.WEIGHT_100));
+						cc.setPushY(parseFloat(part.substring(ix).trim(), ResizeConstraintCommon.WEIGHT_100));
 						continue;
 					}
 
 					ix = startsWithLenient(part, "push", 4, false);
 					if (ix > -1) {
 						final String[] pushs = toTrimmedTokens(part.substring(ix).trim(), ' ');
-						cc.setPushX(parseFloat(pushs[0], ResizeConstraint.WEIGHT_100));
-						cc.setPushY(parseFloat(pushs.length > 1 ? pushs[1] : "", ResizeConstraint.WEIGHT_100));
+						cc.setPushX(parseFloat(pushs[0], ResizeConstraintCommon.WEIGHT_100));
+						cc.setPushY(parseFloat(pushs.length > 1 ? pushs[1] : "", ResizeConstraintCommon.WEIGHT_100));
 						continue;
 					}
 				}
@@ -827,10 +829,10 @@ public final class ConstraintParser {
 						|| part.startsWith("hmax ")) {
 						final String uvStr = part.substring(5).trim();
 						if (uvStr.length() > 0) {
-							final UnitValue uv = parseUnitValue(uvStr, null, isHor);
+							final UnitValueCommon uv = parseUnitValue(uvStr, null, isHor);
 							final boolean isMin = part.charAt(3) == 'n';
-							final DimConstraint dc = isHor ? cc.getHorizontal() : cc.getVertical();
-							dc.setSize(new BoundSize(isMin ? uv : dc.getSize().getMin(), dc.getSize().getPreferred(), isMin
+							final DimConstraintCommon dc = isHor ? cc.getHorizontal() : cc.getVertical();
+							dc.setSize(new BoundSizeCommon(isMin ? uv : dc.getSize().getMin(), dc.getSize().getPreferred(), isMin
 									? (dc.getSize().getMax()) : uv, uvStr));
 							continue;
 						}
@@ -876,7 +878,7 @@ public final class ConstraintParser {
 					if (ix > -1) {
 						final String sg = part.substring(ix).trim();
 						final char lc = part.charAt(ix - 1);
-						final DimConstraint dc = (lc == 'x' ? cc.getHorizontal() : cc.getVertical());
+						final DimConstraintCommon dc = (lc == 'x' ? cc.getHorizontal() : cc.getVertical());
 						dc.setEndGroup(sg);
 						continue;
 					}
@@ -909,13 +911,13 @@ public final class ConstraintParser {
 					}
 				}
 
-				final UnitValue horAlign = parseAlignKeywords(part, true);
+				final UnitValueCommon horAlign = parseAlignKeywords(part, true);
 				if (horAlign != null) {
 					cc.getHorizontal().setAlign(horAlign);
 					continue;
 				}
 
-				final UnitValue verAlign = parseAlignKeywords(part, false);
+				final UnitValueCommon verAlign = parseAlignKeywords(part, false);
 				if (verAlign != null) {
 					cc.getVertical().setAlign(verAlign);
 					continue;
@@ -942,31 +944,31 @@ public final class ConstraintParser {
 	 * @return An array of length 4 with the parsed insets.
 	 * @throws IllegalArgumentException if the parsing could not be done.
 	 */
-	public static UnitValue[] parseInsets(final String s, final boolean acceptPanel) {
+	public static UnitValueCommon[] parseInsets(final String s, final boolean acceptPanel) {
 		if (s.length() == 0 || s.equals("dialog") || s.equals("panel")) {
 			if (acceptPanel == false) {
 				throw new IllegalAccessError("Insets now allowed: " + s + "\n");
 			}
 
 			final boolean isPanel = s.startsWith("p");
-			final UnitValue[] ins = new UnitValue[4];
+			final UnitValueCommon[] ins = new UnitValueCommon[4];
 			for (int j = 0; j < 4; j++) {
 				ins[j] = isPanel
-						? MigLayoutToolkit.getMigPlatformDefaults().getPanelInsets(j)
-						: MigLayoutToolkit.getMigPlatformDefaults().getDialogInsets(j);
+						? MigLayoutToolkitImpl.getMigPlatformDefaults().getPanelInsets(j)
+						: MigLayoutToolkitImpl.getMigPlatformDefaults().getDialogInsets(j);
 			}
 
 			return ins;
 		}
 		else {
 			final String[] insS = toTrimmedTokens(s, ' ');
-			final UnitValue[] ins = new UnitValue[4];
+			final UnitValueCommon[] ins = new UnitValueCommon[4];
 			for (int j = 0; j < 4; j++) {
-				final UnitValue insSz = parseUnitValue(
+				final UnitValueCommon insSz = parseUnitValue(
 						insS[j < insS.length ? j : insS.length - 1],
-						MigLayoutToolkit.getMigUnitValueToolkit().ZERO,
+						MigLayoutToolkitImpl.getMigUnitValueToolkit().ZERO,
 						j % 2 == 1);
-				ins[j] = insSz != null ? insSz : MigLayoutToolkit.getMigPlatformDefaults().getPanelInsets(j);
+				ins[j] = insSz != null ? insSz : MigLayoutToolkitImpl.getMigPlatformDefaults().getPanelInsets(j);
 			}
 			return ins;
 		}
@@ -979,8 +981,8 @@ public final class ConstraintParser {
 	 * @return The gaps as specified in <code>s</code>. Indexed: <code>[top,left,bottom,right][min,pref,max]</code> or
 	 *         [before,after][min,pref,max] if <code>oneDim</code> is true.
 	 */
-	private static BoundSize[] parseGaps(String s) {
-		final BoundSize[] ret = new BoundSize[4];
+	private static BoundSizeCommon[] parseGaps(String s) {
+		final BoundSizeCommon[] ret = new BoundSizeCommon[4];
 
 		int ix = startsWithLenient(s, "gaptop", -1, true);
 		if (ix > -1) {
@@ -1056,7 +1058,7 @@ public final class ConstraintParser {
 	}
 
 	private static int parseSpan(final String s) {
-		return s.length() > 0 ? Integer.parseInt(s) : LayoutUtil.INF;
+		return s.length() > 0 ? Integer.parseInt(s) : LayoutUtilCommon.INF;
 	}
 
 	private static Float parseFloat(final String s, final Float nullVal) {
@@ -1071,7 +1073,7 @@ public final class ConstraintParser {
 	 * @param isHor If the size is for the horizontal dimension.
 	 * @return A bound size that may be <code>null</code> if the string was "null", "n" or <code>null</code>.
 	 */
-	public static BoundSize parseBoundSize(String s, final boolean isGap, final boolean isHor) {
+	public static BoundSizeCommon parseBoundSize(String s, final boolean isGap, final boolean isHor) {
 		if (s.length() == 0 || s.equals("null") || s.equals("n")) {
 			return null;
 		}
@@ -1083,7 +1085,7 @@ public final class ConstraintParser {
 			final int l = s.length();
 			s = s.substring(0, l - (s.endsWith(":push") ? 5 : 4));
 			if (s.length() == 0) {
-				return new BoundSize(null, null, null, true, cs);
+				return new BoundSizeCommon(null, null, null, true, cs);
 			}
 		}
 
@@ -1095,15 +1097,15 @@ public final class ConstraintParser {
 			if (hasEM) {
 				s0 = s0.substring(0, s0.length() - 1);
 			}
-			final UnitValue uv = parseUnitValue(s0, null, isHor);
-			return new BoundSize(((isGap || hasEM) ? uv : null), uv, (hasEM ? uv : null), push, cs);
+			final UnitValueCommon uv = parseUnitValue(s0, null, isHor);
+			return new BoundSizeCommon(((isGap || hasEM) ? uv : null), uv, (hasEM ? uv : null), push, cs);
 
 		}
 		else if (sizes.length == 2) {
-			return new BoundSize(parseUnitValue(s0, null, isHor), parseUnitValue(sizes[1], null, isHor), null, push, cs);
+			return new BoundSizeCommon(parseUnitValue(s0, null, isHor), parseUnitValue(sizes[1], null, isHor), null, push, cs);
 		}
 		else if (sizes.length == 3) {
-			return new BoundSize(parseUnitValue(s0, null, isHor), parseUnitValue(sizes[1], null, isHor), parseUnitValue(
+			return new BoundSizeCommon(parseUnitValue(s0, null, isHor), parseUnitValue(sizes[1], null, isHor), parseUnitValue(
 					sizes[2],
 					null,
 					isHor), push, cs);
@@ -1121,12 +1123,15 @@ public final class ConstraintParser {
 	 * @param emptyReplacement A replacement if <code>s</code> is empty. May be <code>null</code>.
 	 * @return The parsed unit value. May be <code>null</code>.
 	 */
-	public static UnitValue parseUnitValueOrAlign(final String s, final boolean isHor, final UnitValue emptyReplacement) {
+	public static UnitValueCommon parseUnitValueOrAlign(
+		final String s,
+		final boolean isHor,
+		final UnitValueCommon emptyReplacement) {
 		if (s.length() == 0) {
 			return emptyReplacement;
 		}
 
-		final UnitValue align = parseAlignKeywords(s, isHor);
+		final UnitValueCommon align = parseAlignKeywords(s, isHor);
 		if (align != null) {
 			return align;
 		}
@@ -1141,7 +1146,7 @@ public final class ConstraintParser {
 	 * @param isHor If the value is for the horizontal dimension.
 	 * @return The parsed unit value. <code>null</code> is empty string,
 	 */
-	public static UnitValue parseUnitValue(final String s, final boolean isHor) {
+	public static UnitValueCommon parseUnitValue(final String s, final boolean isHor) {
 		return parseUnitValue(s, null, isHor);
 	}
 
@@ -1153,7 +1158,7 @@ public final class ConstraintParser {
 	 * @param isHor If the value is for the horizontal dimension.
 	 * @return The parsed unit value. May be <code>null</code>.
 	 */
-	private static UnitValue parseUnitValue(String s, final UnitValue emptyReplacement, final boolean isHor) {
+	private static UnitValueCommon parseUnitValue(String s, final UnitValueCommon emptyReplacement, final boolean isHor) {
 		if (s == null || s.length() == 0) {
 			return emptyReplacement;
 		}
@@ -1171,16 +1176,16 @@ public final class ConstraintParser {
 		}
 
 		if (c0 == 'i' && s.equals("inf")) {
-			return MigLayoutToolkit.getMigUnitValueToolkit().INF;
+			return MigLayoutToolkitImpl.getMigUnitValueToolkit().INF;
 		}
 
 		final int oper = getOper(s);
-		final boolean inline = oper == UnitValueToolkit.ADD
-			|| oper == UnitValueToolkit.SUB
-			|| oper == UnitValueToolkit.MUL
-			|| oper == UnitValueToolkit.DIV;
+		final boolean inline = oper == UnitValueToolkitCommon.ADD
+			|| oper == UnitValueToolkitCommon.SUB
+			|| oper == UnitValueToolkitCommon.MUL
+			|| oper == UnitValueToolkitCommon.DIV;
 
-		if (oper != UnitValueToolkit.STATIC) { // It is a multi-value
+		if (oper != UnitValueToolkitCommon.STATIC) { // It is a multi-value
 
 			String[] uvs;
 			if (inline == false) { // If the format is of type "opr(xxx,yyy)" (compared to in-line "10%+15px")
@@ -1192,13 +1197,13 @@ public final class ConstraintParser {
 			}
 			else {
 				char delim;
-				if (oper == UnitValueToolkit.ADD) {
+				if (oper == UnitValueToolkitCommon.ADD) {
 					delim = '+';
 				}
-				else if (oper == UnitValueToolkit.SUB) {
+				else if (oper == UnitValueToolkitCommon.SUB) {
 					delim = '-';
 				}
-				else if (oper == UnitValueToolkit.MUL) {
+				else if (oper == UnitValueToolkitCommon.MUL) {
 					delim = '*';
 				}
 				else { // div left
@@ -1216,21 +1221,21 @@ public final class ConstraintParser {
 				throw new IllegalArgumentException("Malformed UnitValue: '" + s + "'");
 			}
 
-			final UnitValue sub1 = parseUnitValue(uvs[0], null, isHor);
-			final UnitValue sub2 = parseUnitValue(uvs[1], null, isHor);
+			final UnitValueCommon sub1 = parseUnitValue(uvs[0], null, isHor);
+			final UnitValueCommon sub2 = parseUnitValue(uvs[1], null, isHor);
 
 			if (sub1 == null || sub2 == null) {
 				throw new IllegalArgumentException("Malformed UnitValue. Must be two sub-values: '" + s + "'");
 			}
 
-			return new UnitValue(isHor, oper, sub1, sub2, cs);
+			return new UnitValueCommon(isHor, oper, sub1, sub2, cs);
 		}
 		else {
 			try {
 				final String[] numParts = getNumTextParts(s);
 				final float value = numParts[0].length() > 0 ? Float.parseFloat(numParts[0]) : 1; // e.g. "related" has no number part..
 
-				return new UnitValue(value, numParts[1], isHor, oper, cs);
+				return new UnitValueCommon(value, numParts[1], isHor, oper, cs);
 
 			}
 			catch (final Exception e) {
@@ -1246,45 +1251,45 @@ public final class ConstraintParser {
 	 * @param isHor If alignments for horizontal is checked. <code>false</code> means vertical.
 	 * @return The unit value or <code>null</code> if not recognized (no exception).
 	 */
-	static UnitValue parseAlignKeywords(final String s, final boolean isHor) {
+	static UnitValueCommon parseAlignKeywords(final String s, final boolean isHor) {
 		if (startsWithLenient(s, "center", 1, false) != -1) {
-			return MigLayoutToolkit.getMigUnitValueToolkit().CENTER;
+			return MigLayoutToolkitImpl.getMigUnitValueToolkit().CENTER;
 		}
 
 		if (isHor) {
 			if (startsWithLenient(s, "left", 1, false) != -1) {
-				return MigLayoutToolkit.getMigUnitValueToolkit().LEFT;
+				return MigLayoutToolkitImpl.getMigUnitValueToolkit().LEFT;
 			}
 
 			if (startsWithLenient(s, "right", 1, false) != -1) {
-				return MigLayoutToolkit.getMigUnitValueToolkit().RIGHT;
+				return MigLayoutToolkitImpl.getMigUnitValueToolkit().RIGHT;
 			}
 
 			if (startsWithLenient(s, "leading", 4, false) != -1) {
-				return MigLayoutToolkit.getMigUnitValueToolkit().LEADING;
+				return MigLayoutToolkitImpl.getMigUnitValueToolkit().LEADING;
 			}
 
 			if (startsWithLenient(s, "trailing", 5, false) != -1) {
-				return MigLayoutToolkit.getMigUnitValueToolkit().TRAILING;
+				return MigLayoutToolkitImpl.getMigUnitValueToolkit().TRAILING;
 			}
 
 			if (startsWithLenient(s, "label", 5, false) != -1) {
-				return MigLayoutToolkit.getMigUnitValueToolkit().LABEL;
+				return MigLayoutToolkitImpl.getMigUnitValueToolkit().LABEL;
 			}
 
 		}
 		else {
 
 			if (startsWithLenient(s, "baseline", 4, false) != -1) {
-				return MigLayoutToolkit.getMigUnitValueToolkit().BASELINE_IDENTITY;
+				return MigLayoutToolkitImpl.getMigUnitValueToolkit().BASELINE_IDENTITY;
 			}
 
 			if (startsWithLenient(s, "top", 1, false) != -1) {
-				return MigLayoutToolkit.getMigUnitValueToolkit().TOP;
+				return MigLayoutToolkitImpl.getMigUnitValueToolkit().TOP;
 			}
 
 			if (startsWithLenient(s, "bottom", 1, false) != -1) {
-				return MigLayoutToolkit.getMigUnitValueToolkit().BOTTOM;
+				return MigLayoutToolkitImpl.getMigUnitValueToolkit().BOTTOM;
 			}
 		}
 
@@ -1322,20 +1327,20 @@ public final class ConstraintParser {
 	private static int getOper(final String s) {
 		final int len = s.length();
 		if (len < 3) {
-			return UnitValueToolkit.STATIC;
+			return UnitValueToolkitCommon.STATIC;
 		}
 
 		if (len > 5 && s.charAt(3) == '(' && s.charAt(len - 1) == ')') {
 			if (s.startsWith("min(")) {
-				return UnitValueToolkit.MIN;
+				return UnitValueToolkitCommon.MIN;
 			}
 
 			if (s.startsWith("max(")) {
-				return UnitValueToolkit.MAX;
+				return UnitValueToolkitCommon.MAX;
 			}
 
 			if (s.startsWith("mid(")) {
-				return UnitValueToolkit.MID;
+				return UnitValueToolkitCommon.MID;
 			}
 		}
 
@@ -1353,24 +1358,24 @@ public final class ConstraintParser {
 				else if (p == 0) {
 					if (j == 0) {
 						if (c == '+') {
-							return UnitValueToolkit.ADD;
+							return UnitValueToolkitCommon.ADD;
 						}
 						if (c == '-') {
-							return UnitValueToolkit.SUB;
+							return UnitValueToolkitCommon.SUB;
 						}
 					}
 					else {
 						if (c == '*') {
-							return UnitValueToolkit.MUL;
+							return UnitValueToolkitCommon.MUL;
 						}
 						if (c == '/') {
-							return UnitValueToolkit.DIV;
+							return UnitValueToolkitCommon.DIV;
 						}
 					}
 				}
 			}
 		}
-		return UnitValueToolkit.STATIC;
+		return UnitValueToolkitCommon.STATIC;
 	}
 
 	/**

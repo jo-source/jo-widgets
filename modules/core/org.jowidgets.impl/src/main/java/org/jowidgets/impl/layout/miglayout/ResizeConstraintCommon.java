@@ -26,7 +26,7 @@
  * OF SUCH DAMAGE.
  *
  */
-package org.jowidgets.impl.layout.miglayout.common;
+package org.jowidgets.impl.layout.miglayout;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,13 +34,11 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.ObjectStreamException;
 
-import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
-
 /**
  * A parsed constraint that specifies how an entity (normally column/row or component) can shrink or
  * grow compared to other entities.
  */
-final class ResizeConstraint implements Externalizable {
+final class ResizeConstraintCommon implements Externalizable {
 	static final Float WEIGHT_100 = new Float(100);
 
 	/**
@@ -70,10 +68,10 @@ final class ResizeConstraint implements Externalizable {
 
 	//CHECKSTYLE:ON
 
-	public ResizeConstraint() // For Externalizable
+	public ResizeConstraintCommon() // For Externalizable
 	{}
 
-	ResizeConstraint(final int shrinkPrio, final Float shrinkWeight, final int growPrio, final Float growWeight) {
+	ResizeConstraintCommon(final int shrinkPrio, final Float shrinkWeight, final int growPrio, final Float growWeight) {
 		this.shrinkPrio = shrinkPrio;
 		this.shrink = shrinkWeight;
 		this.growPrio = growPrio;
@@ -85,19 +83,19 @@ final class ResizeConstraint implements Externalizable {
 	// ************************************************
 
 	private Object readResolve() throws ObjectStreamException {
-		return MigLayoutToolkit.getMigLayoutUtil().getSerializedObject(this);
+		return MigLayoutToolkitImpl.getMigLayoutUtil().getSerializedObject(this);
 	}
 
 	@Override
 	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
-		final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
+		final LayoutUtilCommon layoutUtil = MigLayoutToolkitImpl.getMigLayoutUtil();
 		layoutUtil.setSerializedObject(this, layoutUtil.readAsXML(in));
 	}
 
 	@Override
 	public void writeExternal(final ObjectOutput out) throws IOException {
-		if (getClass() == ResizeConstraint.class) {
-			MigLayoutToolkit.getMigLayoutUtil().writeAsXML(out, this);
+		if (getClass() == ResizeConstraintCommon.class) {
+			MigLayoutToolkitImpl.getMigLayoutUtil().writeAsXML(out, this);
 		}
 	}
 }

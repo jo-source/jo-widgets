@@ -29,17 +29,16 @@
 package org.jowidgets.impl.layout.miglayout;
 
 import org.jowidgets.api.layout.miglayout.ILC;
-import org.jowidgets.impl.layout.miglayout.common.LC;
 
-public class LCWrapper implements ILC {
+class LCWrapper implements ILC {
 
-	private final LC lc;
+	private final LCCommon lc;
 
 	public LCWrapper() {
-		this.lc = new LC();
+		this.lc = new LCCommon();
 	}
 
-	public LC getLC() {
+	public LCCommon getLC() {
 		return lc;
 	}
 

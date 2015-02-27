@@ -26,7 +26,7 @@
  * OF SUCH DAMAGE.
  *
  */
-package org.jowidgets.impl.layout.miglayout.common;
+package org.jowidgets.impl.layout.miglayout;
 
 /**
  * An interface to implement if you want to decide the gaps between two types of components within the same cell.
@@ -46,7 +46,7 @@ package org.jowidgets.impl.layout.miglayout.common;
  * return (adjacentSide == SwingConstants.LEFT || adjacentSide == SwingConstants.RIGHT) ? RELATED_X : RELATED_Y;
  * </pre
  */
-public interface IInCellGapProvider {
+interface IInCellGapProviderCommon {
 	/**
 	 * Returns the default gap between two components that <b>are in the same cell</b>.
 	 * 
@@ -59,5 +59,10 @@ public interface IInCellGapProvider {
 	 * @param isLTR If it is left-to-right.
 	 * @return The default gap between two components or <code>null</code> if there should be no gap.
 	 */
-	BoundSize getDefaultGap(IComponentWrapper comp, IComponentWrapper adjacentComp, int adjacentSide, String tag, boolean isLTR);
+	BoundSizeCommon getDefaultGap(
+		IComponentWrapperCommon comp,
+		IComponentWrapperCommon adjacentComp,
+		int adjacentSide,
+		String tag,
+		boolean isLTR);
 }

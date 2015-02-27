@@ -26,7 +26,7 @@
  * OF SUCH DAMAGE.
  *
  */
-package org.jowidgets.impl.layout.miglayout.common;
+package org.jowidgets.impl.layout.miglayout;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,29 +34,27 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.ObjectStreamException;
 
-import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
-
 /**
  * A simple value holder for a constraint for one dimension.
  */
-public final class DimConstraint implements Externalizable {
+final class DimConstraintCommon implements Externalizable {
 	/**
 	 * How this entity can be resized in the dimension that this constraint represents.
 	 */
 	//CHECKSTYLE:OFF
-	final ResizeConstraint resize = new ResizeConstraint();
+	final ResizeConstraintCommon resize = new ResizeConstraintCommon();
 	//CHECKSTYLE:ON
 
 	// Look at the properties' getter/setter methods for explanation
 
 	private String sizeGroup = null; // A "context" compared with equals.
 
-	private BoundSize size = BoundSize.NULL_SIZE; // Min, pref, max. Never null, but sizes can be null.
+	private BoundSizeCommon size = BoundSizeCommon.NULL_SIZE; // Min, pref, max. Never null, but sizes can be null.
 
-	private BoundSize gapBefore = null;
-	private BoundSize gapAfter = null;
+	private BoundSizeCommon gapBefore = null;
+	private BoundSizeCommon gapAfter = null;
 
-	private UnitValue align = null;
+	private UnitValueCommon align = null;
 
 	// **************  Only applicable on components! *******************
 
@@ -71,7 +69,7 @@ public final class DimConstraint implements Externalizable {
 	/**
 	 * Empty constructor.
 	 */
-	public DimConstraint() {}
+	DimConstraintCommon() {}
 
 	/**
 	 * Returns the grow priority. Relative priority is used for determining which entities gets the extra space first.
@@ -189,17 +187,18 @@ public final class DimConstraint implements Externalizable {
 		resize.shrink = weight;
 	}
 
-	public UnitValue getAlignOrDefault(final boolean isCols) {
+	public UnitValueCommon getAlignOrDefault(final boolean isCols) {
 		if (align != null) {
 			return align;
 		}
 
 		if (isCols) {
-			return MigLayoutToolkit.getMigUnitValueToolkit().LEADING;
+			return MigLayoutToolkitImpl.getMigUnitValueToolkit().LEADING;
 		}
 
-		return fill || MigLayoutToolkit.getMigPlatformDefaults().getDefaultRowAlignmentBaseline() == false
-				? MigLayoutToolkit.getMigUnitValueToolkit().CENTER : MigLayoutToolkit.getMigUnitValueToolkit().BASELINE_IDENTITY;
+		return fill || MigLayoutToolkitImpl.getMigPlatformDefaults().getDefaultRowAlignmentBaseline() == false
+				? MigLayoutToolkitImpl.getMigUnitValueToolkit().CENTER
+				: MigLayoutToolkitImpl.getMigUnitValueToolkit().BASELINE_IDENTITY;
 	}
 
 	/**
@@ -209,7 +208,7 @@ public final class DimConstraint implements Externalizable {
 	 * 
 	 * @return The alignment.
 	 */
-	public UnitValue getAlign() {
+	public UnitValueCommon getAlign() {
 		return align;
 	}
 
@@ -218,9 +217,10 @@ public final class DimConstraint implements Externalizable {
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
 	 * 
-	 * @param uv The new shrink priority. E.g. {@link UnitValue#CENTER} or {@link net.miginfocom.layout.UnitValue#LEADING}.
+	 * @param uv The new shrink priority. E.g. {@link UnitValueCommon#CENTER} or
+	 *            {@link net.miginfocom.layout.UnitValueCommon#LEADING}.
 	 */
-	public void setAlign(final UnitValue uv) {
+	public void setAlign(final UnitValueCommon uv) {
 		this.align = uv;
 	}
 
@@ -233,7 +233,7 @@ public final class DimConstraint implements Externalizable {
 	 * 
 	 * @return The gap after this entity
 	 */
-	public BoundSize getGapAfter() {
+	public BoundSizeCommon getGapAfter() {
 		return gapAfter;
 	}
 
@@ -247,7 +247,7 @@ public final class DimConstraint implements Externalizable {
 	 * @param size The new gap.
 	 * @see net.miginfocom.layout.ConstraintParser#parseBoundSize(String, boolean, boolean).
 	 */
-	public void setGapAfter(final BoundSize size) {
+	public void setGapAfter(final BoundSizeCommon size) {
 		this.gapAfter = size;
 	}
 
@@ -268,7 +268,7 @@ public final class DimConstraint implements Externalizable {
 	 * 
 	 * @return The gap before this entity
 	 */
-	public BoundSize getGapBefore() {
+	public BoundSizeCommon getGapBefore() {
 		return gapBefore;
 	}
 
@@ -282,7 +282,7 @@ public final class DimConstraint implements Externalizable {
 	 * @param size The new gap.
 	 * @see net.miginfocom.layout.ConstraintParser#parseBoundSize(String, boolean, boolean).
 	 */
-	public void setGapBefore(final BoundSize size) {
+	public void setGapBefore(final BoundSizeCommon size) {
 		this.gapBefore = size;
 	}
 
@@ -302,7 +302,7 @@ public final class DimConstraint implements Externalizable {
 	 * @return The current size. Never <code>null</code> since v3.5.
 	 * @see net.miginfocom.layout.ConstraintParser#parseBoundSize(String, boolean, boolean).
 	 */
-	public BoundSize getSize() {
+	public BoundSizeCommon getSize() {
 		return size;
 	}
 
@@ -313,7 +313,7 @@ public final class DimConstraint implements Externalizable {
 	 * 
 	 * @param size The new size. May be <code>null</code>.
 	 */
-	public void setSize(final BoundSize size) {
+	public void setSize(final BoundSizeCommon size) {
 		if (size != null) {
 			size.checkNotLinked();
 		}
@@ -437,12 +437,13 @@ public final class DimConstraint implements Externalizable {
 	 * @param defGap The default gap to use if there is no gap set on this object (i.e. it is null).
 	 * @param refSize The reference size used to get the pixel sizes.
 	 * @param before IF it is the gap before rather than the gap after to return.
-	 * @return The [min,preferred,max] sizes for the specified gap. Uses {@link net.miginfocom.layout.LayoutUtil#NOT_SET} for gap
+	 * @return The [min,preferred,max] sizes for the specified gap. Uses {@link net.miginfocom.layout.LayoutUtilCommon#NOT_SET}
+	 *         for gap
 	 *         sizes that are <code>null</code>. Returns <code>null</code> if there was no gap specified. A new and free to use
 	 *         array.
 	 */
-	int[] getRowGaps(final IContainerWrapper parent, final BoundSize defGap, final int refSize, final boolean before) {
-		BoundSize gap = before ? gapBefore : gapAfter;
+	int[] getRowGaps(final IContainerWrapperCommon parent, final BoundSizeCommon defGap, final int refSize, final boolean before) {
+		BoundSizeCommon gap = before ? gapBefore : gapAfter;
 		if (gap == null || gap.isUnset()) {
 			gap = defGap;
 		}
@@ -452,9 +453,9 @@ public final class DimConstraint implements Externalizable {
 		}
 
 		final int[] ret = new int[3];
-		for (int i = LayoutUtil.MIN; i <= LayoutUtil.MAX; i++) {
-			final UnitValue uv = gap.getSize(i);
-			ret[i] = uv != null ? uv.getPixels(refSize, parent, null) : LayoutUtil.NOT_SET;
+		for (int i = LayoutUtilCommon.MIN; i <= LayoutUtilCommon.MAX; i++) {
+			final UnitValueCommon uv = gap.getSize(i);
+			ret[i] = uv != null ? uv.getPixels(refSize, parent, null) : LayoutUtilCommon.NOT_SET;
 		}
 		return ret;
 	}
@@ -470,24 +471,25 @@ public final class DimConstraint implements Externalizable {
 	 * @param adjacentSide What side the <code>adjacentComp</code> is on. 0 = top, 1 = left, 2 = bottom, 3 = right.
 	 * @param tag The tag string that the component might be tagged with in the component constraints. May be <code>null</code>.
 	 * @param isLTR If it is left-to-right.
-	 * @return The [min,preferred,max] sizes for the specified gap. Uses {@link net.miginfocom.layout.LayoutUtil#NOT_SET} for gap
+	 * @return The [min,preferred,max] sizes for the specified gap. Uses {@link net.miginfocom.layout.LayoutUtilCommon#NOT_SET}
+	 *         for gap
 	 *         sizes that are <code>null</code>. Returns <code>null</code> if there was no gap specified. A new and free to use
 	 *         array.
 	 */
 	int[] getComponentGaps(
-		final IContainerWrapper parent,
-		final IComponentWrapper comp,
-		final BoundSize adjGap,
-		final IComponentWrapper adjacentComp,
+		final IContainerWrapperCommon parent,
+		final IComponentWrapperCommon comp,
+		final BoundSizeCommon adjGap,
+		final IComponentWrapperCommon adjacentComp,
 		final String tag,
 		final int refSize,
 		final int adjacentSide,
 		final boolean isLTR) {
-		BoundSize gap = adjacentSide < 2 ? gapBefore : gapAfter;
+		BoundSizeCommon gap = adjacentSide < 2 ? gapBefore : gapAfter;
 
 		final boolean hasGap = gap != null && gap.getGapPush();
 		if ((gap == null || gap.isUnset()) && (adjGap == null || adjGap.isUnset()) && comp != null) {
-			gap = MigLayoutToolkit.getMigPlatformDefaults().getDefaultComponentGap(
+			gap = MigLayoutToolkitImpl.getMigPlatformDefaults().getDefaultComponentGap(
 					comp,
 					adjacentComp,
 					adjacentSide + 1,
@@ -496,13 +498,13 @@ public final class DimConstraint implements Externalizable {
 		}
 
 		if (gap == null) {
-			return hasGap ? new int[] {0, 0, LayoutUtil.NOT_SET} : null;
+			return hasGap ? new int[] {0, 0, LayoutUtilCommon.NOT_SET} : null;
 		}
 
 		final int[] ret = new int[3];
-		for (int i = LayoutUtil.MIN; i <= LayoutUtil.MAX; i++) {
-			final UnitValue uv = gap.getSize(i);
-			ret[i] = uv != null ? uv.getPixels(refSize, parent, null) : LayoutUtil.NOT_SET;
+		for (int i = LayoutUtilCommon.MIN; i <= LayoutUtilCommon.MAX; i++) {
+			final UnitValueCommon uv = gap.getSize(i);
+			ret[i] = uv != null ? uv.getPixels(refSize, parent, null) : LayoutUtilCommon.NOT_SET;
 		}
 		return ret;
 	}
@@ -512,19 +514,19 @@ public final class DimConstraint implements Externalizable {
 	// ************************************************
 
 	private Object readResolve() throws ObjectStreamException {
-		return MigLayoutToolkit.getMigLayoutUtil().getSerializedObject(this);
+		return MigLayoutToolkitImpl.getMigLayoutUtil().getSerializedObject(this);
 	}
 
 	@Override
 	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
-		final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
+		final LayoutUtilCommon layoutUtil = MigLayoutToolkitImpl.getMigLayoutUtil();
 		layoutUtil.setSerializedObject(this, layoutUtil.readAsXML(in));
 	}
 
 	@Override
 	public void writeExternal(final ObjectOutput out) throws IOException {
-		if (getClass() == DimConstraint.class) {
-			MigLayoutToolkit.getMigLayoutUtil().writeAsXML(out, this);
+		if (getClass() == DimConstraintCommon.class) {
+			MigLayoutToolkitImpl.getMigLayoutUtil().writeAsXML(out, this);
 		}
 	}
 }
