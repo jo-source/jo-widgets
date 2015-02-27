@@ -1940,7 +1940,7 @@ Die Methode `layoutLater()` führt ein Layout in einem späteren UI Event durch.
 
 Damit lässt sich ein in der Praxis gelegentlich auftretendes Problem lösen, welches bewirken kann, dass viele _unabhängige_ Änderungen eines Containers  in einem Ui Event ein sofortiges `layout()` nach sich ziehen. Dann wird in einem Event mehrfach ein layout() durchgeführt, obwohl das Ergebnis nicht mehr als ein Mal pro UI Event sichtbar werden kann. De facto wird also nur der letzte `layout()` Aufruf für den Nutzer sichtbar, die vielen anderen `layout()` Aufrufe haben dabei unnötiger Weise den UI Thread blockiert. Durch den mehrfachen Aufruf der Methode `layoutLater()` anstatt `layout()` tritt das Problem dann nicht mehr auf, weil nur ein mal zu einem späteren Zeitpunkt ein `layout()` durchgeführt wird.
 
-Um einen [eigenen Layoutmanager](#custom_layouts) zu implementieren, können die folgenden Methoden relevant sein:
+Um einen [eigenen Layouter](#custom_layouts) zu implementieren, sind die folgenden Methoden relevant:
 
 ~~~
 	Rectangle getClientArea();
@@ -2100,7 +2100,7 @@ Das Kontextmenü könnte zum Beispiel Aktionen enthalten, welche den Inhalt des 
 
 Die Schnittstelle `IControl` stellt die gemeinsamen Funktionen für alle Controls bereits. `IControl` erweitert [`IComponent`](#component_interface) und somit auch [`IWidget`](#widget_interface). 
 
-Controls stellen Nutzerschnittstellen dar. Beispiele für elementare Controls sind Buttons, Checkboxen, Comboboxen, Eingabefelder, Slider etc. Controls können aber auch komplex sein, wie zum Beispiel ein [InputComposite](#input_composite).
+Controls stellen Schnittstellen zur Nutzerinteraktion dar. Beispiele für elementare Controls sind Buttons, Checkboxen, Comboboxen, Eingabefelder, Slider etc. Controls können aber auch komplex sein, wie zum Beispiel ein [InputComposite](#input_composite).
 
 Controls werden immer zu [Containern](#container_interface) hinzugefügt. Es folgt eine kurze Übersicht der wichtigsten Methoden:
 
@@ -2184,11 +2184,11 @@ Für weitere Informationen sei auf den Abschnitt [Drag and Drop](#drag_and_drop)
 
 Um die [Controls](#control_interface) eines [Containers](#container_interface) anzuordnen benötigt man einen Layouter. Man kann entweder vorgefertigte Layouter verwenden, oder selbst einen [Custom Layouter](#container_interface) implementieren.   
 
-Anfangs unterstütze jowidgets ausschließlich [Mig Layout](#mig_layout) als vorgefertigtes Layout, welches in der SPI implementiert werden musste ^[Was nicht problematisch war, da MigLayout Implementierungen bereits für Swing und Swt existierten.]. Für die Definition des Layouts wird dabei die Klasse `MigLayoutDescriptor` verwendet, welche das Tagging Interface `ILayoutDescriptor` implementiert.
+Anfangs unterstütze jowidgets ausschließlich [Mig Layout](#mig_layout) als layout Möglichkeit. Dieses musste von einer SPI Implementierung unterstützt werden ^[Was nicht problematisch war, da MigLayout Implementierungen bereits für Swing und Swt existierten.]. Für die Definition des Layouts wird dabei die Klasse `MigLayoutDescriptor` verwendet, welche das Tagging Interface `ILayoutDescriptor` implementiert.
 
-Im Jahr 2011 wurde im Rahmen einer [Bacheloarbeit](ba_nm.pdf) jowidgets um die Möglichkeit erweitert, eigene Layouter zu erstellen. Dabei wurde die Schnittstelle `ILayouter` eingeführt, welche ebenfalls von `ILayoutDescriptor` abgeleitet ist. Zudem wurde [Mig Layout](#mig_layout) in die API portiert, so dass eine SPI Implementierung nicht mehr zwingend eine Mig Layout Implementierung anbieten muss. Außerdem wurden weitere vorgefertigte Layouter hinzugefügt. 
+Später wurde im Rahmen einer [Bacheloarbeit](ba_nm.pdf) jowidgets um die Möglichkeit erweitert, eigene Layouter zu erstellen. Dabei wurde die Schnittstelle `ILayouter` eingeführt, welche ebenfalls von `ILayoutDescriptor` abgeleitet ist. Zudem wurde [Mig Layout](#mig_layout) für diese Schnittstelle portiert, so dass eine SPI Implementierung nicht mehr zwingend eine Mig Layout Implementierung anbieten muss. Außerdem wurden weitere vorgefertigte Layouter hinzugefügt. 
 
-Da sich die Portierung nicht 100% gleich verhält, wird das portierte Mig Layout im folgenden als __Mib Layout__^[In Anlehnung an den Entwickler, der die Portierung durchgeführt hat.] bezeichnet. Im Gegensatz dazu wird Mig Layout als __Natives Mig Layout__ bezeichnet, wenn betont werden soll, dass es sich __nicht__ um Mib Layout handelt.
+Zur besseren Unterscheidung wird das portierte Mig Layout im folgenden als __Mib Layout__^[In Anlehnung an den Entwickler, der die Portierung durchgeführt hat.] bezeichnet. Im Gegensatz dazu wird Mig Layout als __Natives Mig Layout__ bezeichnet, wenn betont werden soll, dass es sich __nicht__ um Mib Layout handelt.
 
 Um ein Layout auf einem Container zu setzen, bietet dieser die folgenden Methoden an:
 
@@ -2211,13 +2211,13 @@ public interface ILayoutFactory<LAYOUTER_TYPE extends ILayouter> {
 }
 ~~~  
 
-Layout Factories lassen sich für verschiedene Container wiederverwenden. Die vordefinierten Layouts von Jowidgets (mit Ausnahme des nativen Mig Layout) implementieren die `ILayoutFactory` Schnittstelle.
+Layout Factories lassen sich für verschiedene Container wiederverwenden. Die vordefinierten Layouts von Jowidgets (mit Ausnahme des nativen Mig Layout) bieten eine Implementierung der `ILayoutFactory` Schnittstelle.
 
 ### Mig Layout (nativ){#mig_layout}
 
-Mig Layout ist ein freier, von Mikael Grev, Inhaber der Firma MiG InfoCom AB, entwickelter Layout Manager, der unter BSD Lizenz steht. Es existieren Implementierungen für Swing, Swt und Java FX 2. Der Layout Manager hat einen sehr flexiblen Grid basierten Layout Ansatz und eignet sich für sehr viele Anwendungsfälle. Insbesondere ist damit die Erstellung von formularbasierten Masken sehr intuitiv und einfach umzusetzen.   
+Mig Layout ist ein freier, von Mikael Grev, Inhaber der Firma MiG InfoCom AB, entwickelter Layout Manager ([http://www.miglayout.com/](http://www.miglayout.com/)), der unter BSD Lizenz steht. Es existieren Implementierungen für Swing, Swt und Java FX 2. Der Layout Manager hat einen sehr flexiblen Grid basierten Layout Ansatz und eignet sich für sehr viele Anwendungsfälle. Insbesondere ist damit die Erstellung von formularbasierten Masken sehr intuitiv und einfach umzusetzen.   
 
-Um Mig Layout in Kombination mit jowidgets zu verwenden, wird empfohlen, vorab den MigLayout __Quick Start Guide__ unter [http://www.miglayout.com/](http://www.miglayout.com/) zu studieren. 
+Um Mig Layout mit jowidgets zu verwenden, wird empfohlen, vorab den [Mig Layout Quick Start Guide](#http://www.miglayout.com/QuickStart.pdf) zu studieren. 
 
 Die Klasse `org.jowidgets.common.widgets.layout.MigLayoutDescriptor` bietet die Möglichkeit, die `LayoutConstraints`, `RowConstraints` und `ColumnConstraints` für das Layout festzulegen. Die Constraints haben die gleiche Bedeutung wie in den Klassen `net.miginfocom.swt.MigLayout` oder `net.miginfocom.swing.MigLayout`.
 
@@ -2257,11 +2257,11 @@ __Hinweise:__
 
 * Da native Swt Controls keine `MinSize` haben, verwendet die Swt Mig Layout Implementierung als `MinSize` die `PreferredSize`. Das kann unter Umständen zu Problemen führen. Es wird daher empfohlen, die `MinSize` immer explizit anzugeben, wenn diese von der `PreferredSize` abweicht.
 
-* Wenn eine SPI Implementierung kein natives Mig Layout unterstützt, wird bei der Verwendung des nativen `MigLayoutDescriptor` automatisch Mib Layout verwendet.
+* Wenn eine SPI Implementierung kein natives Mig Layout unterstützt, wird bei der Verwendung des nativen `MigLayoutDescriptor` automatisch [Mib Layout](#mib_layout) verwendet.
 	
-* Wenn [Mib Layout](#mib_layout) verwendet wird, wird __kein__ natives Mig Layout verwendet, auch wenn die verwendetet SPI Implementierung ein natives Mig Layout bereitstellt.
+* Wenn [Mib Layout](#mib_layout) verwendet wird, wird __kein__ natives Mig Layout verwendet, auch wenn die verwendete SPI Implementierung ein natives Mig Layout bereitstellt.
 	
-* Die auf einem Control gesetzten Default Größen `MinSize`, `PreferredSize` und `MaxSize` werden vom nativen MigLayout __nicht__ ausgewertet. Es wird daher empfohlen, die Default Größen nicht in Kombination mit MigLayout zu verwenden, um eine größt mögliche Kompatibilität zu gewährleisten!
+* Die auf einem Control gesetzten Default Größen `MinSize`, `PreferredSize` und `MaxSize` werden vom nativen MigLayout __nicht__ ausgewertet. Es wird daher empfohlen, die Methoden zum Ändern der Default Größen auf Controls nicht in Kombination mit MigLayout zu verwenden, um eine größt mögliche Kompatibilität zu gewährleisten!
 
 ### Custom Layouts{#custom_layouts}
 
@@ -2285,16 +2285,15 @@ public interface ILayouter extends ILayoutDescriptor {
 }
 ~~~
 
-Die Methode `layout()` ist dafür zuständig, auf den Controls des Containers die Größe und die Position zu setzen.
+Die Methode `layout()` ist dafür zuständig, auf den Controls eines Containers die Größe und die Position zu setzen.
 
-Für das Layout sind zwei Größen relevant, die `ClientArea` und die `DecoratedSize`. 
-Die `ClientArea` ist der Bereich des Containers, welcher für das Zeichnen der Controls zur Verfügung steht. Die `DecoratedSize` ist die gesamte Größe des Containers für eine gegebene `ClientArea` Größe. Bei einem Fenster kommen zum Beispiel bei der `DecoratedSize` noch der Rahmen und ein eventuelles Menü hinzu.
+Die `ClientArea` ist der Bereich des Containers, welcher für das Zeichnen der Controls zur Verfügung steht. Die `DecoratedSize` ist die gesamte Größe des Containers bei einer gegebenen `ClientArea` Größe. Bei einem Fenster kommen zum Beispiel bei der `DecoratedSize` noch der Rahmen oder ein eventuelles Menü hinzu.
 
 Die Methoden `getMinSize()`, `getPreferredSize()` und `getMaxSize()` geben die minimale, bevorzugte und maximale Größe des Containers zum aktuellen Zeitpunkt zurück, die der Layouter benötigt, um seine Controls zu layouten. Die zurückgegebenen Größen beziehen sich dabei auf die `DecoratedSize` und __nicht__ auf die Größe der `ClientArea`. 
 
 Die Methode `invalidate()` wird aufgerufen, wenn sich die Struktur des Layouts geändert haben _könnte_. Dies kann ein guter Zeitpunkt sein, um _gecachte_ Werte zu löschen.
 
-Die Verwendung der Schnittstelle soll Anhand eines Beispiels verdeutlicht werden. Es wird ein vereinfachten [FillLayout](#fill_layout) implementiert. Ein FillLayout zeichnet das erste sichtbare Control eines Containers so, dass es die `ClientArea` voll ausfüllt. Eine Implementierung könnte wie folgt aussehen:
+Die Verwendung der Schnittstelle soll Anhand eines Beispiels verdeutlicht werden. Es wird ein vereinfachtes [Fill Layout](#fill_layout) implementiert. Ein Fill Layout zeichnet das erste sichtbare Control eines Containers so, dass es die `ClientArea` voll ausfüllt. Eine Implementierung könnte wie folgt aussehen:
 
 ~~~{.java .numberLines startFrom="1"}
 final class FillLayout implements ILayouter {
@@ -2411,7 +2410,7 @@ Ein `IFlowLayoutFactoryBuilder` hat die folgenden Methoden:
 ~~~
 
 Die Orientation gibt an, ob die Elemente nebeneinander oder untereinander angeordnet werden. Die default `Orientation` ist `HORIZONTAL`. 
-Die Methoden `vertical()` und `horizontal()` setzen ebenfalls die `Orientation` mit verkürzter Schreibweise. Der `gap` definiert den _Freiraum_ zwischen den Controls. Der default `gap` beträgt 4 Pixel. Die Methode `build()` liefert eine neue `ILayoutFactory` zurück. 
+Die Methoden `vertical()` und `horizontal()` setzen ebenfalls die `Orientation`, jedoch mit verkürzter Schreibweise. Der `gap` definiert den _Freiraum_ zwischen den Controls. Der default `gap` beträgt 4 Pixel. Die Methode `build()` liefert eine neue `ILayoutFactory` zurück. 
 
 Folgendes Beispiel demonstriert Verwendung:
 
@@ -2445,7 +2444,7 @@ Ein Border Layout teilt einen Container in fünf mögliche Bereiche auf: Center,
 
 ![Border Layout Beispiel](images/border_layout_example_1.gif "Border Layout Beispiel")
 
-In der Mitte (center) befindet sich eine TextArea, oben, rechts und links je eine Toolbar und unter ein TextFeld.
+In der Mitte (center) befindet sich eine TextArea, oben, rechts und links je eine Toolbar und unten ein TextFeld.
 
 Die Accessor Klasse `org.jowidgets.api.layout.BorderLayout` liefert einen Zugriff auf ein Border Layout. Sie hat folgende Methoden:
 
@@ -2535,9 +2534,9 @@ Die folgende Abbildung zeigt das Ergebnis:
 
 Das Cached Fill Layout wurde entworfen, um das Layouten komplexer Controls zu optimieren. Immer wenn sich zum Beispiel die Größe eines Fensters oder eines Bereichs innerhalb eines Split Composites ändert, wird auf einem Layouter die `invalidate()` Methode aufgerufen. Wenn man keine Kenntnis über die darunter liegenden Controls hat, ist dieses Vorgehen auch sinnvoll, denn durch das Ändern der Größe könnte sich auch das Layout ändern. Allerdings ist dieses Vorgehen auch _teuer_ und unter Umständen werden dabei die immer gleichen `PreferredSize` Werte berechnet.
 
-Es gibt Situationen, in denen man weiß, dass das Ändern der Größe keinen Einfluss auf die `PreferredSize` der Kind Controls hat. In diesem Fall kann man ein Cached Fill Layout verwenden. Dies berechnet die `MinSize`, `PreferredSize` und `MaxSize` bei einem `invalidate()` nicht neu. Ansonsten ist es mit dem Fill Layout zu vergleichen, da auch hier die gesamte `ClientArea` ausgenutzt wird.
+Es gibt Situationen, in denen man weiß, dass das Ändern der Größe keinen Einfluss auf die `PreferredSize` der Kind Controls hat. In diesem Fall kann man ein Cached Fill Layout verwenden. Dies berechnet die `MinSize`, `PreferredSize` und `MaxSize` bei einem `invalidate()` nicht neu. Ansonsten ist es mit dem [Fill Layout](#fill_layout) zu vergleichen, da auch hier die gesamte `ClientArea` ausgenutzt wird.
 
-Die Accessor Klasse `org.jowidgets.api.layout.BorderLayout` liefert einen Zugriff auf ein Cached Fill Layout. Sie hat folgende Methode:
+Die Accessor Klasse `org.jowidgets.api.layout.CachedFillLayout` liefert einen Zugriff auf ein Cached Fill Layout. Sie hat folgende Methode:
 
 ~~~
 	public static ILayoutFactory<ICachedFillLayout> get(){...}
@@ -2552,11 +2551,230 @@ Um den Cache explizit zu löschen, kann auf dem `ICachedFillLayout` die folgende
 
 ### Mib Layout{#mib_layout}
 
-### Null Layout
+Im Rahmen einer [Bacheloarbeit](ba_nm.pdf) wurde [Mig Layout (http://www.miglayout.com/)](http://www.miglayout.com/) für jowidgets portiert. Die Portierung implementiert die `ILayouter` Schnittstelle. Es wurden die meisten Funktionen portiert. Zudem wurde auch die original MigLayout Demo Applikation auf Basis der Portierung umgesetzt, der Source Code findet sich [hier](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/demo/DemoMigLayoutFrame.java). Die folgende Abbildung zeigt die Demo Applikation:
+
+![Mib Layout Demo Applikation](images/mib_layout_demo_application.gif "Mib Layout Demo Applikation")
+
+
+#### Mib Layout Verwendung in jowidgets
+
+Um Mib Layout in jowidgets zu verwenden, wird empfohlen, vorab den [Mig Layout Quick Start Guide](#http://www.miglayout.com/QuickStart.pdf) zu studieren.
+
+Die Accessor Klasse `org.jowidgets.api.layout.miglayout.MigLayout` liefert einen Zugriff auf das Mib Layout. Sie hat folgende Methoden:
+
+~~~
+	public static ILayoutFactory<IMigLayout> get(){...}
+
+	public static ILayoutFactory<IMigLayout> create(
+		final String layoutConstraints) {...}
+
+	public static ILayoutFactory<IMigLayout> create(
+		final String columnConstraints,
+		final String rowConstraints) {...}
+
+	public static ILayoutFactory<IMigLayout> create(
+		final String layoutConstraints,
+		final String columnConstraints,
+		final String rowConstraints) {...}
+
+	public static ILayoutFactory<IMigLayout> create(
+		final MigLayoutDescriptor descriptor) {...}
+
+	public static IMigLayoutFactoryBuilder builder() {...}
+~~~
+
+Ein `IMigLayoutFactoryBuilder` hat die folgenden Methoden:
+
+~~~
+	IMigLayoutFactoryBuilder descriptor(MigLayoutDescriptor descriptor);
+
+	IMigLayoutFactoryBuilder columnConstraints(String constraints);
+
+	IMigLayoutFactoryBuilder constraints(String constraints);
+
+	IMigLayoutFactoryBuilder rowConstraints(IAC constraints);
+
+	IMigLayoutFactoryBuilder columnConstraints(IAC constraints);
+
+	IMigLayoutFactoryBuilder constraints(ILC constraints);
+
+	ILayoutFactory<IMigLayout> build();
+~~~
+
+Constraints können wie im original Mig Layout mit Hilfe von Strings oder durch Builder (siehe [Mib Layout Constraints Builder](#mib_layout_constraints_builder)) erzeugt werden. Die Methode `build()` liefert eine neue `ILayoutFactory<IMigLayout>` zurück. Die Schnittstelle `IMiglayout` hat die folgenden Methoden:
+
+~~~
+	void setLayoutConstraints(Object constraints);
+
+	Object getLayoutConstraints();
+
+	void setColumnConstraints(Object constraints);
+
+	Object getColumnConstraints();
+
+	void setRowConstraints(Object constraints);
+
+	Object getRowConstraints();
+
+	void setConstraintMap(Map<IControl, Object> map);
+
+	Map<IControl, Object> getConstraintMap();
+
+	boolean isManagingComponent(IControl control);
+~~~
+
+Die Methoden sind identisch zur Klasse `net.miginfocom.swt.MigLayout`.
+
+#### Mib Layout Constraints Builder{#mib_layout_constraints_builder}
+
+Die Accessor Klasse org.jowidgets.api.layout.miglayout.LC kann für die Builder basierte Erzeugung von `LayoutConstraints` verwendet werden. Sie hat die folgende Methode:
+
+~~~
+	public static ILC create() {...}
+~~~
+
+Die Schnittstelle `org.jowidgets.api.layout.miglayout.ILC` hat die gleichen Methoden wie die original Mig Layout Klasse `net.miginfocom.layout.LC`.
+
+Die Accessor Klasse org.jowidgets.api.layout.miglayout.AC kann für die Builder basierte Erzeugung von `AxisConstraints` (also `ColumnConstraints` und `RowConstraints`) verwendet werden. Sie hat die folgende Methode:
+
+~~~
+	public static IAC create() {...}
+~~~
+
+Die Schnittstelle `org.jowidgets.api.layout.miglayout.IAC` hat die gleichen Methoden wie die original Mig Layout Klasse `net.miginfocom.layout.AC`.
+
+Die Accessor Klasse org.jowidgets.api.layout.miglayout.CC kann für die Builder basierte Erzeugung von `ComponentConstraints` verwendet werden. Sie hat die folgende Methode:
+
+~~~
+	public static ICC create() {...}
+~~~
+
+Die Schnittstelle `org.jowidgets.api.layout.miglayout.ICC` hat die gleichen Methoden wie die original Mig Layout Klasse `net.miginfocom.layout.CC`.
+
+#### Mib Layout Platform Defaults
+
+Die Accessor Klasse `org.jowidgets.api.layout.miglayout.PlatformDefaults` bietet den Zugriff auf die Portierung der Klasse    `net.miginfocom.layout.PlatformDefaults`.
+
+#### Mib Layout Beispiel
+
+Im folgenden wurde das Beispiel aus dem Abschnitt [Mig Layout (nativ)](#mig_layout) mit Mib Layout umgesetzt:
+
+~~~{.java .numberLines startFrom="1"}
+	container.setLayout(MigLayout.create("wrap", "[][grow, 0::]", "[][]"));
+
+	final String textFieldCC = "growx, w 0::";
+
+	//row 0, column 0
+	container.add(BPF.textLabel("Field 1"));
+
+	//row 0, column 1
+	container.add(BPF.textField(), textFieldCC);
+
+	//row 1 (autowrap has wraped to row 1), column 0 
+	container.add(BPF.textLabel("Field 2"));
+
+	//row 1, column 1
+	container.add(BPF.textField(), textFieldCC);
+~~~
+
+Der einzige Unterschied findet sich in Zeile 1 bei der Definition des Layouts, der Rest ist identisch. Die folgende Abbildung zeigt das Ergebnis:
+
+![Mib Layout Beispiel](images/mib_layout_example.gif "Mib Layout Beispiel")
+
+Im folgenden Beispiel wird das gleiche wie oben mit Hilfe der Constraints Builder umgesetzt: 
+
+~~~{.java .numberLines startFrom="1"}
+	container.setLayout(
+		MigLayout.builder()
+			.constraints(LC.create().wrap())
+			.columnConstraints(AC.create().index(1).grow().size("0::")).build());
+
+	final ICC textFieldCC = CC.create().growX().width("0::");
+
+	//row 0, column 0
+	container.add(BPF.textLabel("Field 1"));
+
+	//row 0, column 1
+	container.add(BPF.textField(), textFieldCC);
+
+	//row 1 (autowrap has wraped to row 1), column 0 
+	container.add(BPF.textLabel("Field 2"));
+
+	//row 1, column 1
+	container.add(BPF.textField(), textFieldCC);
+~~~
+
+### Null Layout{#null_layout}
+
+Der Null Layout Layouter implementiert eine _leere_ `layout()` Methode. Die Methoden `getMinSize()`, `getPreferredSize()` und `getMaxSize()` liefern die aktuelle Größe des Containers. Bei einem NullLayout müssen die Position und die Größe der Controls daher manuell gesetzt werden.
+
+Die Accessor Klasse `org.jowidgets.api.layout.NullLayout` liefert einen Zugriff auf ein Null Layout. Sie hat die folgende Methode:
+
+~~~
+	public static ILayoutFactory<ILayouter> get(){...}
+~~~
+
+Das folgende Beispiel zeigt die Verwendung eines Null Layout:
+
+~~~{.java .numberLines startFrom="1"}
+	container.setLayout(NullLayout.get());
+
+	final int x = 10;
+	final int y = 10;
+
+	for (int i = 0; i < 5; i++) {
+		final IButton button = container.add(BPF.button());
+		button.setPosition(x + i * 20, y + i * 40);
+		button.setText("Button A - " + i);
+		button.setSize(button.getPreferredSize());
+	}
+
+	for (int i = 0; i < 5; i++) {
+		final IButton button = container.add(BPF.button());
+		button.setPosition(x + 160 + i * 20, y + (4 - i) * 40);
+		button.setText("Button B - " + i);
+		button.setSize(200, 30);
+	}
+~~~
+
+Die folgende Abbildung zeigt das Ergebnis:
+
+![Null Layout Beispiel](images/null_layout_example.gif "Null Layout Beispiel")
 
 ### Preferred Size Layout
 
+Bei einem Preferred Size Layout wird in der `layout()` Methode nur die `PreferredSize` der Controls gesetzt. Die Position muss wie beim [Null Layout](#null_layout) manuell gesetzt werden.
 
+Die Accessor Klasse `org.jowidgets.api.layout.PreferredSizeLayout` liefert einen Zugriff auf ein Preferred Size Layout. Sie hat die folgende Methode:
+
+~~~
+	public static ILayoutFactory<ILayouter> get(){...}
+~~~
+
+Das folgende Beispiel zeigt die Verwendung eines Preferred Size Layout:
+
+~~~{.java .numberLines startFrom="1"}
+	container.setLayout(PreferredSizeLayout.get());
+
+	final int x = 10;
+	final int y = 10;
+
+	for (int i = 0; i < 5; i++) {
+		final IButton button = container.add(BPF.button());
+		button.setPosition(x + i * 20, y + i * 40);
+		button.setText("Button A - " + i);
+	}
+
+	for (int i = 0; i < 5; i++) {
+		final IButton button = container.add(BPF.button());
+		button.setPosition(x + 160 + i * 20, y + (4 - i) * 40);
+		button.setText("Button B - " + i);
+	}
+~~~
+
+Die folgende Abbildung zeigt das Ergebnis:
+
+![Preferred Size Layout Beispiel](images/pref_size_layout_example.gif "Preferred Size Layout Beispiel")
 
 ## Menüs und Items{#menus_and_items}
 
