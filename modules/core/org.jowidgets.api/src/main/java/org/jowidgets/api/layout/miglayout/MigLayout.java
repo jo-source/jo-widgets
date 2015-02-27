@@ -63,33 +63,33 @@ public final class MigLayout {
 	/**
 	 * Creates a layout factory for 'MigLayout' with given constraints
 	 * 
-	 * @param rowConstraints The row constraints to use
 	 * @param columnConstraints The column constraints to use
+	 * @param rowConstraints The row constraints to use
 	 * 
 	 * @return A layout factory that produces 'MigLayout', never null
 	 */
-	public static ILayoutFactory<IMigLayout> create(final String rowConstraints, final String columnConstraints) {
-		return builder().rowConstraints(rowConstraints).columnConstraints(columnConstraints).build();
+	public static ILayoutFactory<IMigLayout> create(final String columnConstraints, final String rowConstraints) {
+		return builder().columnConstraints(columnConstraints).rowConstraints(rowConstraints).build();
 	}
 
 	/**
 	 * Creates a layout factory for 'MigLayout' with given constraints
 	 * 
 	 * @param layoutConstraints The layout constraints to use
-	 * @param rowConstraints The row constraints to use
 	 * @param columnConstraints The column constraints to use
+	 * @param rowConstraints The row constraints to use
 	 * 
 	 * @return A layout factory that produces 'MigLayout', never null
 	 */
 	public static ILayoutFactory<IMigLayout> create(
 		final String layoutConstraints,
-		final String rowConstraints,
-		final String columnConstraints) {
+		final String columnConstraints,
+		final String rowConstraints) {
 
 		final IMigLayoutFactoryBuilder builder = builder();
 		builder.constraints(layoutConstraints);
-		builder.rowConstraints(rowConstraints);
 		builder.columnConstraints(columnConstraints);
+		builder.rowConstraints(rowConstraints);
 		return builder.build();
 	}
 
