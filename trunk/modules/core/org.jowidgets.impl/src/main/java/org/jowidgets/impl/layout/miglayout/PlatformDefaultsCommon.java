@@ -33,74 +33,73 @@
  *         Date: 2008-jan-16
 
  */
-package org.jowidgets.impl.layout.miglayout.common;
+package org.jowidgets.impl.layout.miglayout;
 
 import java.util.HashMap;
 
 import javax.swing.SwingConstants;
 
 import org.jowidgets.api.layout.miglayout.IPlatformDefaults;
-import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
 
 /**
  * Currently handles Windows, Mac OS X, and GNOME spacing.
  */
-public final class PlatformDefaults implements IPlatformDefaults {
-	private int defaultHUnit = UnitValueToolkit.LPX;
-	private int defaultVUnit = UnitValueToolkit.LPY;
+final class PlatformDefaultsCommon implements IPlatformDefaults {
+	private int defaultHUnit = UnitValueToolkitCommon.LPX;
+	private int defaultVUnit = UnitValueToolkitCommon.LPY;
 
-	private IInCellGapProvider gapProvider = null;
+	private IInCellGapProviderCommon gapProvider = null;
 
 	private volatile int modificationCount = 0;
 
-	private final UnitValue lpx4 = new UnitValue(4, UnitValueToolkit.LPX, null);
-	private final UnitValue lpx6 = new UnitValue(6, UnitValueToolkit.LPX, null);
-	private final UnitValue lpx7 = new UnitValue(7, UnitValueToolkit.LPX, null);
+	private final UnitValueCommon lpx4 = new UnitValueCommon(4, UnitValueToolkitCommon.LPX, null);
+	private final UnitValueCommon lpx6 = new UnitValueCommon(6, UnitValueToolkitCommon.LPX, null);
+	private final UnitValueCommon lpx7 = new UnitValueCommon(7, UnitValueToolkitCommon.LPX, null);
 	//	private final UnitValue lpx8 = new UnitValue(8, UnitValueToolkit.LPX, null);
-	private final UnitValue lpx9 = new UnitValue(9, UnitValueToolkit.LPX, null);
-	private final UnitValue lpx10 = new UnitValue(10, UnitValueToolkit.LPX, null);
-	private final UnitValue lpx11 = new UnitValue(11, UnitValueToolkit.LPX, null);
-	private final UnitValue lpx12 = new UnitValue(12, UnitValueToolkit.LPX, null);
-	private final UnitValue lpx14 = new UnitValue(14, UnitValueToolkit.LPX, null);
-	private final UnitValue lpx16 = new UnitValue(16, UnitValueToolkit.LPX, null);
-	private final UnitValue lpx18 = new UnitValue(18, UnitValueToolkit.LPX, null);
-	private final UnitValue lpx20 = new UnitValue(20, UnitValueToolkit.LPX, null);
+	private final UnitValueCommon lpx9 = new UnitValueCommon(9, UnitValueToolkitCommon.LPX, null);
+	private final UnitValueCommon lpx10 = new UnitValueCommon(10, UnitValueToolkitCommon.LPX, null);
+	private final UnitValueCommon lpx11 = new UnitValueCommon(11, UnitValueToolkitCommon.LPX, null);
+	private final UnitValueCommon lpx12 = new UnitValueCommon(12, UnitValueToolkitCommon.LPX, null);
+	private final UnitValueCommon lpx14 = new UnitValueCommon(14, UnitValueToolkitCommon.LPX, null);
+	private final UnitValueCommon lpx16 = new UnitValueCommon(16, UnitValueToolkitCommon.LPX, null);
+	private final UnitValueCommon lpx18 = new UnitValueCommon(18, UnitValueToolkitCommon.LPX, null);
+	private final UnitValueCommon lpx20 = new UnitValueCommon(20, UnitValueToolkitCommon.LPX, null);
 
-	private final UnitValue lpy4 = new UnitValue(4, UnitValueToolkit.LPY, null);
-	private final UnitValue lpy6 = new UnitValue(6, UnitValueToolkit.LPY, null);
-	private final UnitValue lpy7 = new UnitValue(7, UnitValueToolkit.LPY, null);
+	private final UnitValueCommon lpy4 = new UnitValueCommon(4, UnitValueToolkitCommon.LPY, null);
+	private final UnitValueCommon lpy6 = new UnitValueCommon(6, UnitValueToolkitCommon.LPY, null);
+	private final UnitValueCommon lpy7 = new UnitValueCommon(7, UnitValueToolkitCommon.LPY, null);
 	//	private static final UnitValue lpy8 = new UnitValue(8, UnitValueToolkit.LPY, null);
-	private final UnitValue lpy9 = new UnitValue(9, UnitValueToolkit.LPY, null);
-	private final UnitValue lpy10 = new UnitValue(10, UnitValueToolkit.LPY, null);
-	private final UnitValue lpy11 = new UnitValue(11, UnitValueToolkit.LPY, null);
-	private final UnitValue lpy12 = new UnitValue(12, UnitValueToolkit.LPY, null);
-	private final UnitValue lpy14 = new UnitValue(14, UnitValueToolkit.LPY, null);
-	private final UnitValue lpy16 = new UnitValue(16, UnitValueToolkit.LPY, null);
-	private final UnitValue lpy18 = new UnitValue(18, UnitValueToolkit.LPY, null);
-	private final UnitValue lpy20 = new UnitValue(20, UnitValueToolkit.LPY, null);
+	private final UnitValueCommon lpy9 = new UnitValueCommon(9, UnitValueToolkitCommon.LPY, null);
+	private final UnitValueCommon lpy10 = new UnitValueCommon(10, UnitValueToolkitCommon.LPY, null);
+	private final UnitValueCommon lpy11 = new UnitValueCommon(11, UnitValueToolkitCommon.LPY, null);
+	private final UnitValueCommon lpy12 = new UnitValueCommon(12, UnitValueToolkitCommon.LPY, null);
+	private final UnitValueCommon lpy14 = new UnitValueCommon(14, UnitValueToolkitCommon.LPY, null);
+	private final UnitValueCommon lpy16 = new UnitValueCommon(16, UnitValueToolkitCommon.LPY, null);
+	private final UnitValueCommon lpy18 = new UnitValueCommon(18, UnitValueToolkitCommon.LPY, null);
+	private final UnitValueCommon lpy20 = new UnitValueCommon(20, UnitValueToolkitCommon.LPY, null);
 
 	private int currentPlatform = WINDOWS_XP;
 
 	// Used for holding values.
-	private final UnitValue[] panelIns = new UnitValue[4];
-	private final UnitValue[] dialogIns = new UnitValue[4];
+	private final UnitValueCommon[] panelIns = new UnitValueCommon[4];
+	private final UnitValueCommon[] dialogIns = new UnitValueCommon[4];
 
 	private String buttonFormat = null;
 
-	private final HashMap<String, UnitValue> horDefs = new HashMap<String, UnitValue>(32);
-	private final HashMap<String, UnitValue> verDefs = new HashMap<String, UnitValue>(32);
-	private BoundSize defVGap = null;
-	private BoundSize defHGap = null;
-	private BoundSize relatedX = null;
-	private BoundSize relatedY = null;
+	private final HashMap<String, UnitValueCommon> horDefs = new HashMap<String, UnitValueCommon>(32);
+	private final HashMap<String, UnitValueCommon> verDefs = new HashMap<String, UnitValueCommon>(32);
+	private BoundSizeCommon defVGap = null;
+	private BoundSizeCommon defHGap = null;
+	private BoundSizeCommon relatedX = null;
+	private BoundSizeCommon relatedY = null;
 
 	@SuppressWarnings("unused")
-	private BoundSize unrelatedX = null;
+	private BoundSizeCommon unrelatedX = null;
 
 	@SuppressWarnings("unused")
-	private BoundSize unrelatedY = null;
+	private BoundSizeCommon unrelatedY = null;
 
-	private UnitValue buttonWidth = null;
+	private UnitValueCommon buttonWidth = null;
 
 	private Float horScale = null;
 	private Float verScale = null;
@@ -112,7 +111,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 
 	private boolean dra = true;
 
-	public PlatformDefaults() {
+	PlatformDefaultsCommon() {
 		setPlatform(getCurrentPlatform());
 		modificationCount = 0;
 	}
@@ -152,7 +151,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 				setIndentGap(lpx9, lpy9);
 				setGridCellGap(lpx4, lpy4);
 
-				setMinimumButtonWidth(new UnitValue(75, UnitValueToolkit.LPX, null));
+				setMinimumButtonWidth(new UnitValueCommon(75, UnitValueToolkitCommon.LPX, null));
 				setButtonOrder("L_E+U+YNBXOCAH_R");
 				setDialogInsets(lpy11, lpx11, lpy11, lpx11);
 				setPanelInsets(lpy7, lpx7, lpy7, lpx7);
@@ -164,7 +163,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 				setIndentGap(lpx10, lpy10);
 				setGridCellGap(lpx4, lpy4);
 
-				setMinimumButtonWidth(new UnitValue(68, UnitValueToolkit.LPX, null));
+				setMinimumButtonWidth(new UnitValueCommon(68, UnitValueToolkitCommon.LPX, null));
 				setButtonOrder("L_HE+U+NYBXCOA_R");
 				setDialogInsets(lpy14, lpx20, lpy20, lpx20);
 				setPanelInsets(lpy16, lpx16, lpy16, lpx16);
@@ -188,7 +187,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 				setGridCellGap(lpx6, lpy6); // GNOME HIG 8.2.3
 
 				// GtkButtonBox, child-min-width property default value
-				setMinimumButtonWidth(new UnitValue(85, UnitValueToolkit.LPX, null));
+				setMinimumButtonWidth(new UnitValueCommon(85, UnitValueToolkitCommon.LPX, null));
 				setButtonOrder("L_HE+UNYACBXIO_R"); // GNOME HIG 3.4.2, 3.7.1
 				setDialogInsets(lpy12, lpx12, lpy12, lpx12); // GNOME HIG 3.4.3
 				setPanelInsets(lpy6, lpx6, lpy6, lpx6); // ???
@@ -253,7 +252,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * 
 	 * @return The forced scale or <code>null</code> for default scaling.
 	 * @see #getHorizontalScaleFactor()
-	 * @see IComponentWrapper#getHorizontalScreenDPI()
+	 * @see IComponentWrapperCommon#getHorizontalScreenDPI()
 	 */
 	@Override
 	public Float getHorizontalScaleFactor() {
@@ -267,11 +266,11 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * 
 	 * @param f The forced scale or <code>null</code> for default scaling.
 	 * @see #getHorizontalScaleFactor()
-	 * @see IComponentWrapper#getHorizontalScreenDPI()
+	 * @see IComponentWrapperCommon#getHorizontalScreenDPI()
 	 */
 	@Override
 	public void setHorizontalScaleFactor(final Float f) {
-		final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
+		final LayoutUtilCommon layoutUtil = MigLayoutToolkitImpl.getMigLayoutUtil();
 		if (layoutUtil.equals(horScale, f) == false) {
 			horScale = f;
 			modificationCount++;
@@ -285,7 +284,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * 
 	 * @return The forced scale or <code>null</code> for default scaling.
 	 * @see #getHorizontalScaleFactor()
-	 * @see IComponentWrapper#getVerticalScreenDPI()
+	 * @see IComponentWrapperCommon#getVerticalScreenDPI()
 	 */
 	@Override
 	public Float getVerticalScaleFactor() {
@@ -299,11 +298,11 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * 
 	 * @param f The forced scale or <code>null</code> for default scaling.
 	 * @see #getHorizontalScaleFactor()
-	 * @see IComponentWrapper#getVerticalScreenDPI()
+	 * @see IComponentWrapperCommon#getVerticalScreenDPI()
 	 */
 	@Override
 	public void setVerticalScaleFactor(final Float f) {
-		final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
+		final LayoutUtilCommon layoutUtil = MigLayoutToolkitImpl.getMigLayoutUtil();
 		if (layoutUtil.equals(verScale, f) == false) {
 			verScale = f;
 			modificationCount++;
@@ -349,11 +348,11 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * @param x The value that will be transformed to pixels. If <code>null</code> the current value will not change.
 	 * @param y The value that will be transformed to pixels. If <code>null</code> the current value will not change.
 	 */
-	public void setRelatedGap(final UnitValue x, final UnitValue y) {
+	public void setRelatedGap(final UnitValueCommon x, final UnitValueCommon y) {
 		setUnitValue(new String[] {"r", "rel", "related"}, x, y);
 
-		relatedX = new BoundSize(x, x, null, "rel:rel");
-		relatedY = new BoundSize(y, y, null, "rel:rel");
+		relatedX = new BoundSizeCommon(x, x, null, "rel:rel");
+		relatedY = new BoundSizeCommon(y, y, null, "rel:rel");
 	}
 
 	/**
@@ -362,11 +361,11 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * @param x The value that will be transformed to pixels. If <code>null</code> the current value will not change.
 	 * @param y The value that will be transformed to pixels. If <code>null</code> the current value will not change.
 	 */
-	public void setUnrelatedGap(final UnitValue x, final UnitValue y) {
+	public void setUnrelatedGap(final UnitValueCommon x, final UnitValueCommon y) {
 		setUnitValue(new String[] {"u", "unrel", "unrelated"}, x, y);
 
-		unrelatedX = new BoundSize(x, x, null, "unrel:unrel");
-		unrelatedY = new BoundSize(y, y, null, "unrel:unrel");
+		unrelatedX = new BoundSizeCommon(x, x, null, "unrel:unrel");
+		unrelatedY = new BoundSizeCommon(y, y, null, "unrel:unrel");
 	}
 
 	/**
@@ -375,7 +374,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * @param x The value that will be transformed to pixels. If <code>null</code> the current value will not change.
 	 * @param y The value that will be transformed to pixels. If <code>null</code> the current value will not change.
 	 */
-	public void setParagraphGap(final UnitValue x, final UnitValue y) {
+	public void setParagraphGap(final UnitValueCommon x, final UnitValueCommon y) {
 		setUnitValue(new String[] {"p", "para", "paragraph"}, x, y);
 	}
 
@@ -385,7 +384,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * @param x The value that will be transformed to pixels. If <code>null</code> the current value will not change.
 	 * @param y The value that will be transformed to pixels. If <code>null</code> the current value will not change.
 	 */
-	public void setIndentGap(final UnitValue x, final UnitValue y) {
+	public void setIndentGap(final UnitValueCommon x, final UnitValueCommon y) {
 		setUnitValue(new String[] {"i", "ind", "indent"}, x, y);
 	}
 
@@ -396,13 +395,13 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * @param x The value that will be transformed to pixels. If <code>null</code> the current value will not change.
 	 * @param y The value that will be transformed to pixels. If <code>null</code> the current value will not change.
 	 */
-	public void setGridCellGap(final UnitValue x, final UnitValue y) {
+	public void setGridCellGap(final UnitValueCommon x, final UnitValueCommon y) {
 		if (x != null) {
-			defHGap = new BoundSize(x, x, null, null);
+			defHGap = new BoundSizeCommon(x, x, null, null);
 		}
 
 		if (y != null) {
-			defVGap = new BoundSize(y, y, null, null);
+			defVGap = new BoundSizeCommon(y, y, null, null);
 		}
 
 		modificationCount++;
@@ -413,7 +412,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * 
 	 * @param width The recommended minimum button width.
 	 */
-	public void setMinimumButtonWidth(final UnitValue width) {
+	public void setMinimumButtonWidth(final UnitValueCommon width) {
 		buttonWidth = width;
 		modificationCount++;
 	}
@@ -423,7 +422,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * 
 	 * @return The recommended minimum button width depending on the current set platform.
 	 */
-	public UnitValue getMinimumButtonWidth() {
+	public UnitValueCommon getMinimumButtonWidth() {
 		return buttonWidth;
 	}
 
@@ -433,7 +432,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * @param unit The unit string.
 	 * @return The unit value associated with the unit. <code>null</code> for unrecognized units.
 	 */
-	public UnitValue getUnitValueX(final String unit) {
+	public UnitValueCommon getUnitValueX(final String unit) {
 		return horDefs.get(unit);
 	}
 
@@ -443,7 +442,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * @param unit The unit string.
 	 * @return The unit value associated with the unit. <code>null</code> for unrecognized units.
 	 */
-	public UnitValue getUnitValueY(final String unit) {
+	public UnitValueCommon getUnitValueY(final String unit) {
 		return verDefs.get(unit);
 	}
 
@@ -459,7 +458,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * @param y The value for the vertical dimension. Might be same object as for <code>x</code>. If <code>null</code> the value
 	 *            is not changed.
 	 */
-	public void setUnitValue(final String[] unitStrings, final UnitValue x, final UnitValue y) {
+	public void setUnitValue(final String[] unitStrings, final UnitValueCommon x, final UnitValueCommon y) {
 		for (final String unitString : unitStrings) {
 			final String s = unitString.toLowerCase().trim();
 			if (x != null) {
@@ -480,10 +479,10 @@ public final class PlatformDefaults implements IPlatformDefaults {
 		final String unit,
 		final boolean isHor,
 		final float ref,
-		final IContainerWrapper parent,
-		final IComponentWrapper comp) {
-		final UnitValue uv = (isHor ? horDefs : verDefs).get(unit);
-		return uv != null ? Math.round(value * uv.getPixels(ref, parent, comp)) : UnitConverter.UNABLE;
+		final IContainerWrapperCommon parent,
+		final IComponentWrapperCommon comp) {
+		final UnitValueCommon uv = (isHor ? horDefs : verDefs).get(unit);
+		return uv != null ? Math.round(value * uv.getPixels(ref, parent, comp)) : UnitConverterCommon.UNABLE;
 	}
 
 	/**
@@ -542,7 +541,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	}
 
 	/**
-	 * Returns the tag (used in the {@link CC}) for a char. The char is same as used in {@link #getButtonOrder()}.
+	 * Returns the tag (used in the {@link CCCommon}) for a char. The char is same as used in {@link #getButtonOrder()}.
 	 * 
 	 * @param c The char. Must be lower case!
 	 * @return The tag that corresponds to the char or <code>null</code> if the char is unrecognized.
@@ -585,7 +584,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * 
 	 * @return The platform recommended inter-cell gap in the horizontal (x) dimension..
 	 */
-	public BoundSize getGridGapX() {
+	public BoundSizeCommon getGridGapX() {
 		return defHGap;
 	}
 
@@ -594,7 +593,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * 
 	 * @return The platform recommended inter-cell gap in the vertical (x) dimension..
 	 */
-	public BoundSize getGridGapY() {
+	public BoundSizeCommon getGridGapY() {
 		return defVGap;
 	}
 
@@ -604,7 +603,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * @param side top == 0, left == 1, bottom = 2, right = 3.
 	 * @return The inset. Never <code>null</code>.
 	 */
-	public UnitValue getDialogInsets(final int side) {
+	public UnitValueCommon getDialogInsets(final int side) {
 		return dialogIns[side];
 	}
 
@@ -616,7 +615,11 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * @param bottom The bottom inset. May be <code>null</code>.
 	 * @param right The right inset. May be <code>null</code>.
 	 */
-	public void setDialogInsets(final UnitValue top, final UnitValue left, final UnitValue bottom, final UnitValue right) {
+	public void setDialogInsets(
+		final UnitValueCommon top,
+		final UnitValueCommon left,
+		final UnitValueCommon bottom,
+		final UnitValueCommon right) {
 		if (top != null) {
 			dialogIns[0] = top;
 		}
@@ -642,7 +645,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * @param side top == 0, left == 1, bottom = 2, right = 3.
 	 * @return The inset. Never <code>null</code>.
 	 */
-	public UnitValue getPanelInsets(final int side) {
+	public UnitValueCommon getPanelInsets(final int side) {
 		return panelIns[side];
 	}
 
@@ -654,7 +657,11 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * @param bottom The bottom inset. May be <code>null</code>.
 	 * @param right The right inset. May be <code>null</code>.
 	 */
-	public void setPanelInsets(final UnitValue top, final UnitValue left, final UnitValue bottom, final UnitValue right) {
+	public void setPanelInsets(
+		final UnitValueCommon top,
+		final UnitValueCommon left,
+		final UnitValueCommon bottom,
+		final UnitValueCommon right) {
 		if (top != null) {
 			panelIns[0] = top;
 		}
@@ -696,9 +703,9 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * @param isLTR If it is left-to-right.
 	 * @return The default gap between two components or <code>null</code> if there should be no gap.
 	 */
-	BoundSize getDefaultComponentGap(
-		final IComponentWrapper comp,
-		final IComponentWrapper adjacentComp,
+	BoundSizeCommon getDefaultComponentGap(
+		final IComponentWrapperCommon comp,
+		final IComponentWrapperCommon adjacentComp,
 		final int adjacentSide,
 		final String tag,
 		final boolean isLTR) {
@@ -721,7 +728,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * 
 	 * @return The current gap provider or <code>null</code> if none is set and "related" should always be used.
 	 */
-	public IInCellGapProvider getGapProvider() {
+	public IInCellGapProviderCommon getGapProvider() {
 		return gapProvider;
 	}
 
@@ -730,7 +737,7 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * 
 	 * @param provider The current gap provider or <code>null</code> if none is set and "related" should always be used.
 	 */
-	public void setGapProvider(final IInCellGapProvider provider) {
+	public void setGapProvider(final IInCellGapProviderCommon provider) {
 		gapProvider = provider;
 	}
 
@@ -757,8 +764,8 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * Returns the current default unit. The default unit is the unit used if no unit is set. E.g. "width 10".
 	 * 
 	 * @return The current default unit.
-	 * @see UnitValue#PIXEL
-	 * @see UnitValue#LPX
+	 * @see UnitValueCommon#PIXEL
+	 * @see UnitValueCommon#LPX
 	 */
 	@Override
 	public int getDefaultHorizontalUnit() {
@@ -769,12 +776,12 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * Sets the default unit. The default unit is the unit used if no unit is set. E.g. "width 10".
 	 * 
 	 * @param unit The new default unit.
-	 * @see UnitValue#PIXEL
-	 * @see UnitValue#LPX
+	 * @see UnitValueCommon#PIXEL
+	 * @see UnitValueCommon#LPX
 	 */
 	@Override
 	public void setDefaultHorizontalUnit(final int unit) {
-		if (unit < UnitValueToolkit.PIXEL || unit > UnitValueToolkit.LABEL_ALIGN) {
+		if (unit < UnitValueToolkitCommon.PIXEL || unit > UnitValueToolkitCommon.LABEL_ALIGN) {
 			throw new IllegalArgumentException("Illegal Unit: " + unit);
 		}
 
@@ -788,8 +795,8 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * Returns the current default unit. The default unit is the unit used if no unit is set. E.g. "width 10".
 	 * 
 	 * @return The current default unit.
-	 * @see UnitValue#PIXEL
-	 * @see UnitValue#LPY
+	 * @see UnitValueCommon#PIXEL
+	 * @see UnitValueCommon#LPY
 	 */
 	@Override
 	public int getDefaultVerticalUnit() {
@@ -800,12 +807,12 @@ public final class PlatformDefaults implements IPlatformDefaults {
 	 * Sets the default unit. The default unit is the unit used if no unit is set. E.g. "width 10".
 	 * 
 	 * @param unit The new default unit.
-	 * @see UnitValue#PIXEL
-	 * @see UnitValue#LPY
+	 * @see UnitValueCommon#PIXEL
+	 * @see UnitValueCommon#LPY
 	 */
 	@Override
 	public void setDefaultVerticalUnit(final int unit) {
-		if (unit < UnitValueToolkit.PIXEL || unit > UnitValueToolkit.LABEL_ALIGN) {
+		if (unit < UnitValueToolkitCommon.PIXEL || unit > UnitValueToolkitCommon.LABEL_ALIGN) {
 			throw new IllegalArgumentException("Illegal Unit: " + unit);
 		}
 

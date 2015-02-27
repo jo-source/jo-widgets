@@ -29,12 +29,12 @@
  * @author Mikael Grev, MiG InfoCom AB
  *         Date: 2006-sep-08
  */
-package org.jowidgets.impl.layout.miglayout.common;
+package org.jowidgets.impl.layout.miglayout;
 
 /**
  */
 //CHECKSTYLE:OFF
-public abstract class UnitConverter {
+abstract class UnitConverterCommon {
 	//CHECKSTYLE:ON
 	/**
 	 * Value to return if this converter can not handle the <code>unit</code> sent in as an argument
@@ -62,6 +62,6 @@ public abstract class UnitConverter {
 		String unit,
 		boolean isHor,
 		float refValue,
-		IContainerWrapper parent,
-		IComponentWrapper comp);
+		IContainerWrapperCommon parent,
+		IComponentWrapperCommon comp);
 }

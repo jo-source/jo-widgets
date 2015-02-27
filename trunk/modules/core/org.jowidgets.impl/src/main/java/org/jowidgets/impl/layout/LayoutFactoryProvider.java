@@ -42,7 +42,7 @@ import org.jowidgets.api.layout.tablelayout.ITableLayoutBuilder;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.impl.layout.miglayout.MigLayoutFactoryBuilder;
-import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
+import org.jowidgets.impl.layout.miglayout.MigLayoutToolkitImpl;
 import org.jowidgets.impl.layout.tablelayout.TableLayoutBuilder;
 
 public class LayoutFactoryProvider implements ILayoutFactoryProvider {
@@ -121,7 +121,7 @@ public class LayoutFactoryProvider implements ILayoutFactoryProvider {
 	@Override
 	public IMigLayoutToolkit getMigLayoutToolkit() {
 		if (migLayoutConstraintsToolkit == null) {
-			migLayoutConstraintsToolkit = new MigLayoutToolkit();
+			migLayoutConstraintsToolkit = new MigLayoutToolkitImpl();
 		}
 		return migLayoutConstraintsToolkit;
 	}

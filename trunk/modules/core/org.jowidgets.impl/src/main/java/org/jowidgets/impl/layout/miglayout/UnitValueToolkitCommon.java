@@ -26,14 +26,12 @@
  * DAMAGE.
  */
 
-package org.jowidgets.impl.layout.miglayout.common;
+package org.jowidgets.impl.layout.miglayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
-
-public final class UnitValueToolkit {
+final class UnitValueToolkitCommon {
 	/**
 	 * An operation indicating a static value.
 	 */
@@ -202,26 +200,26 @@ public final class UnitValueToolkit {
 	static final int IDENTITY = -1;
 
 	//CHECKSTYLE:OFF
-	final UnitValue ZERO = new UnitValue(0, null, PIXEL, true, STATIC, null, null, "0px");
-	final UnitValue TOP = new UnitValue(0, null, PERCENT, false, STATIC, null, null, "top");
-	final UnitValue LEADING = new UnitValue(0, null, PERCENT, true, STATIC, null, null, "leading");
-	final UnitValue LEFT = new UnitValue(0, null, PERCENT, true, STATIC, null, null, "left");
-	final UnitValue CENTER = new UnitValue(50, null, PERCENT, true, STATIC, null, null, "center");
-	final UnitValue TRAILING = new UnitValue(100, null, PERCENT, true, STATIC, null, null, "trailing");
-	final UnitValue RIGHT = new UnitValue(100, null, PERCENT, true, STATIC, null, null, "right");
-	final UnitValue BOTTOM = new UnitValue(100, null, PERCENT, false, STATIC, null, null, "bottom");
-	final UnitValue LABEL = new UnitValue(0, null, LABEL_ALIGN, false, STATIC, null, null, "label");
+	final UnitValueCommon ZERO = new UnitValueCommon(0, null, PIXEL, true, STATIC, null, null, "0px");
+	final UnitValueCommon TOP = new UnitValueCommon(0, null, PERCENT, false, STATIC, null, null, "top");
+	final UnitValueCommon LEADING = new UnitValueCommon(0, null, PERCENT, true, STATIC, null, null, "leading");
+	final UnitValueCommon LEFT = new UnitValueCommon(0, null, PERCENT, true, STATIC, null, null, "left");
+	final UnitValueCommon CENTER = new UnitValueCommon(50, null, PERCENT, true, STATIC, null, null, "center");
+	final UnitValueCommon TRAILING = new UnitValueCommon(100, null, PERCENT, true, STATIC, null, null, "trailing");
+	final UnitValueCommon RIGHT = new UnitValueCommon(100, null, PERCENT, true, STATIC, null, null, "right");
+	final UnitValueCommon BOTTOM = new UnitValueCommon(100, null, PERCENT, false, STATIC, null, null, "bottom");
+	final UnitValueCommon LABEL = new UnitValueCommon(0, null, LABEL_ALIGN, false, STATIC, null, null, "label");
 
-	final UnitValue INF = new UnitValue(LayoutUtil.INF, null, PIXEL, true, STATIC, null, null, "inf");
+	final UnitValueCommon INF = new UnitValueCommon(LayoutUtilCommon.INF, null, PIXEL, true, STATIC, null, null, "inf");
 
-	final UnitValue BASELINE_IDENTITY = new UnitValue(0, null, IDENTITY, false, STATIC, null, null, "baseline");
+	final UnitValueCommon BASELINE_IDENTITY = new UnitValueCommon(0, null, IDENTITY, false, STATIC, null, null, "baseline");
 	//CHECKSTYLE:ON
 
 	private final HashMap<String, Integer> unitMap = new HashMap<String, Integer>(32);
 
-	private final ArrayList<UnitConverter> converteres = new ArrayList<UnitConverter>();
+	private final ArrayList<UnitConverterCommon> converteres = new ArrayList<UnitConverterCommon>();
 
-	public UnitValueToolkit() {
+	UnitValueToolkitCommon() {
 		unitMap.put("px", PIXEL);
 		unitMap.put("lpx", LPX);
 		unitMap.put("lpy", LPY);
@@ -247,7 +245,7 @@ public final class UnitValueToolkit {
 		return unitMap;
 	}
 
-	public ArrayList<UnitConverter> getConverters() {
+	public ArrayList<UnitConverterCommon> getConverters() {
 		return converteres;
 	}
 
@@ -259,7 +257,7 @@ public final class UnitValueToolkit {
 	 * 
 	 * @param conv The converter. Not <code>null</code>.
 	 */
-	public synchronized void addGlobalUnitConverter(final UnitConverter conv) {
+	public synchronized void addGlobalUnitConverter(final UnitConverterCommon conv) {
 		if (conv == null) {
 			throw new NullPointerException();
 		}
@@ -272,7 +270,7 @@ public final class UnitValueToolkit {
 	 * @param unit The converter.
 	 * @return If there was a converter found and thus removed.
 	 */
-	public synchronized boolean removeGlobalUnitConverter(final UnitConverter unit) {
+	public synchronized boolean removeGlobalUnitConverter(final UnitConverterCommon unit) {
 		return converteres.remove(unit);
 	}
 
@@ -281,8 +279,8 @@ public final class UnitValueToolkit {
 	 * 
 	 * @return The converters. Never <code>null</code>.
 	 */
-	public synchronized UnitConverter[] getGlobalUnitConverters() {
-		return converteres.toArray(new UnitConverter[converteres.size()]);
+	public synchronized UnitConverterCommon[] getGlobalUnitConverters() {
+		return converteres.toArray(new UnitConverterCommon[converteres.size()]);
 	}
 
 	/**
@@ -291,12 +289,12 @@ public final class UnitValueToolkit {
 	 * @return The current default unit.
 	 * @see #PIXEL
 	 * @see #LPX
-	 * @deprecated Use {@link PlatformDefaults#getDefaultHorizontalUnit()} and {@link PlatformDefaults#getDefaultVerticalUnit()}
-	 *             instead.
+	 * @deprecated Use {@link PlatformDefaultsCommon#getDefaultHorizontalUnit()} and
+	 *             {@link PlatformDefaultsCommon#getDefaultVerticalUnit()} instead.
 	 */
 	@Deprecated
 	public int getDefaultUnit() {
-		return MigLayoutToolkit.getMigPlatformDefaults().getDefaultHorizontalUnit();
+		return MigLayoutToolkitImpl.getMigPlatformDefaults().getDefaultHorizontalUnit();
 	}
 
 	/**
@@ -305,13 +303,13 @@ public final class UnitValueToolkit {
 	 * @param unit The new default unit.
 	 * @see #PIXEL
 	 * @see #LPX
-	 * @deprecated Use {@link PlatformDefaults#setDefaultHorizontalUnit(int)} and
-	 *             {@link PlatformDefaults#setDefaultVerticalUnit(int)} instead.
+	 * @deprecated Use {@link PlatformDefaultsCommon#setDefaultHorizontalUnit(int)} and
+	 *             {@link PlatformDefaultsCommon#setDefaultVerticalUnit(int)} instead.
 	 */
 	@Deprecated
 	public void setDefaultUnit(final int unit) {
-		MigLayoutToolkit.getMigPlatformDefaults().setDefaultHorizontalUnit(unit);
-		MigLayoutToolkit.getMigPlatformDefaults().setDefaultVerticalUnit(unit);
+		MigLayoutToolkitImpl.getMigPlatformDefaults().setDefaultHorizontalUnit(unit);
+		MigLayoutToolkitImpl.getMigPlatformDefaults().setDefaultVerticalUnit(unit);
 	}
 
 }

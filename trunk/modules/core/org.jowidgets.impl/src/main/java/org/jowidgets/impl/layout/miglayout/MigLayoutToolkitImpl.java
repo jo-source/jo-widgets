@@ -34,52 +34,48 @@ import org.jowidgets.api.layout.miglayout.ILC;
 import org.jowidgets.api.layout.miglayout.IMigLayoutToolkit;
 import org.jowidgets.api.layout.miglayout.IPlatformDefaults;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.impl.layout.miglayout.common.LayoutUtil;
-import org.jowidgets.impl.layout.miglayout.common.LinkHandler;
-import org.jowidgets.impl.layout.miglayout.common.PlatformDefaults;
-import org.jowidgets.impl.layout.miglayout.common.UnitValueToolkit;
 
-public class MigLayoutToolkit implements IMigLayoutToolkit {
+public final class MigLayoutToolkitImpl implements IMigLayoutToolkit {
 
-	private LayoutUtil layoutUtil;
-	private PlatformDefaults platformDefaults;
-	private UnitValueToolkit unitValueToolkit;
-	private LinkHandler linkHandler;
+	private LayoutUtilCommon layoutUtil;
+	private PlatformDefaultsCommon platformDefaults;
+	private UnitValueToolkitCommon unitValueToolkit;
+	private LinkHandlerCommon linkHandler;
 
-	public MigLayoutToolkit() {}
+	public MigLayoutToolkitImpl() {}
 
-	public static MigLayoutToolkit getToolkit() {
-		return (MigLayoutToolkit) Toolkit.getLayoutFactoryProvider().getMigLayoutToolkit();
+	private static MigLayoutToolkitImpl getToolkit() {
+		return (MigLayoutToolkitImpl) Toolkit.getLayoutFactoryProvider().getMigLayoutToolkit();
 	}
 
-	public static LayoutUtil getMigLayoutUtil() {
-		final MigLayoutToolkit toolkit = getToolkit();
+	static LayoutUtilCommon getMigLayoutUtil() {
+		final MigLayoutToolkitImpl toolkit = getToolkit();
 		if (toolkit.layoutUtil == null) {
-			toolkit.layoutUtil = new LayoutUtil();
+			toolkit.layoutUtil = new LayoutUtilCommon();
 		}
 		return toolkit.layoutUtil;
 	}
 
-	public static PlatformDefaults getMigPlatformDefaults() {
-		final MigLayoutToolkit toolkit = getToolkit();
+	static PlatformDefaultsCommon getMigPlatformDefaults() {
+		final MigLayoutToolkitImpl toolkit = getToolkit();
 		if (toolkit.platformDefaults == null) {
-			toolkit.platformDefaults = new PlatformDefaults();
+			toolkit.platformDefaults = new PlatformDefaultsCommon();
 		}
 		return toolkit.platformDefaults;
 	}
 
-	public static UnitValueToolkit getMigUnitValueToolkit() {
-		final MigLayoutToolkit toolkit = getToolkit();
+	static UnitValueToolkitCommon getMigUnitValueToolkit() {
+		final MigLayoutToolkitImpl toolkit = getToolkit();
 		if (toolkit.unitValueToolkit == null) {
-			toolkit.unitValueToolkit = new UnitValueToolkit();
+			toolkit.unitValueToolkit = new UnitValueToolkitCommon();
 		}
 		return toolkit.unitValueToolkit;
 	}
 
-	public static LinkHandler getMigLinkHandler() {
-		final MigLayoutToolkit toolkit = getToolkit();
+	static LinkHandlerCommon getMigLinkHandler() {
+		final MigLayoutToolkitImpl toolkit = getToolkit();
 		if (toolkit.linkHandler == null) {
-			toolkit.linkHandler = new LinkHandler();
+			toolkit.linkHandler = new LinkHandlerCommon();
 		}
 		return toolkit.linkHandler;
 	}

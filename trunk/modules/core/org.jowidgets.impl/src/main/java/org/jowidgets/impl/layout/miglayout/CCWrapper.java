@@ -29,17 +29,16 @@
 package org.jowidgets.impl.layout.miglayout;
 
 import org.jowidgets.api.layout.miglayout.ICC;
-import org.jowidgets.impl.layout.miglayout.common.CC;
 
-public class CCWrapper implements ICC {
+class CCWrapper implements ICC {
 
-	private final CC cc;
+	private final CCCommon cc;
 
-	public CCWrapper() {
-		this.cc = new CC();
+	CCWrapper() {
+		this.cc = new CCCommon();
 	}
 
-	public CC getCC() {
+	public CCCommon getCC() {
 		return cc;
 	}
 

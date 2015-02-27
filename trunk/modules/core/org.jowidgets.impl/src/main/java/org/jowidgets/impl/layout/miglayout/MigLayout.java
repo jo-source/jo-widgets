@@ -41,38 +41,29 @@ import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Rectangle;
-import org.jowidgets.impl.layout.miglayout.common.AC;
-import org.jowidgets.impl.layout.miglayout.common.AbstractLayoutCallback;
-import org.jowidgets.impl.layout.miglayout.common.CC;
-import org.jowidgets.impl.layout.miglayout.common.ConstraintParser;
-import org.jowidgets.impl.layout.miglayout.common.Grid;
-import org.jowidgets.impl.layout.miglayout.common.IComponentWrapper;
-import org.jowidgets.impl.layout.miglayout.common.IContainerWrapper;
-import org.jowidgets.impl.layout.miglayout.common.LC;
-import org.jowidgets.impl.layout.miglayout.common.LayoutUtil;
 
 final class MigLayout implements IMigLayout {
 
 	private final IContainer container;
-	private transient IContainerWrapper cacheParentW = null;
+	private transient IContainerWrapperCommon cacheParentW = null;
 
 	// Hold the serializable text representation of the constraints.
 	private Object constraints;
 	private Object columnConstraints;
 	private Object rowConstraints;
 
-	private transient LC lc = null;
-	private transient AC colSpecs = null;
-	private transient AC rowSpecs = null;
+	private transient LCCommon lc = null;
+	private transient ACCommon colSpecs = null;
+	private transient ACCommon rowSpecs = null;
 
-	private final transient Map<IComponentWrapper, CC> ccMap = new HashMap<IComponentWrapper, CC>(8);
-	private transient Grid grid = null;
+	private final transient Map<IComponentWrapperCommon, CCCommon> ccMap = new HashMap<IComponentWrapperCommon, CCCommon>(8);
+	private transient GridCommon grid = null;
 
 	// The component to string constraints mappings.
 	private final Map<IControl, Object> scrConstrMap = new IdentityHashMap<IControl, Object>(8);
 
-	private transient ArrayList<AbstractLayoutCallback> callbackList = null;
-	private transient int lastModCount = MigLayoutToolkit.getMigPlatformDefaults().getModCount();
+	private transient ArrayList<AbstractLayoutCallbackCommon> callbackList = null;
+	private transient int lastModCount = MigLayoutToolkitImpl.getMigPlatformDefaults().getModCount();
 	private transient int lastHash = -1;
 
 	private final StringBuilder reason = new StringBuilder();
@@ -81,7 +72,7 @@ final class MigLayout implements IMigLayout {
 	//private long cacheTimeSetMs = 0;
 	private final long cacheTimeSetNano = 0;
 
-	private final LayoutUtil layoutUtil;
+	private final LayoutUtilCommon layoutUtil;
 
 	public MigLayout(
 		final IContainer container,
@@ -90,7 +81,7 @@ final class MigLayout implements IMigLayout {
 		final Object rowConstraints) {
 		this.container = container;
 		this.cacheParentW = new JoMigContainerWrapper(container);
-		layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
+		layoutUtil = MigLayoutToolkitImpl.getMigLayoutUtil();
 		setLayoutConstraints(constraints);
 		setColumnConstraints(columnConstraints);
 		setRowConstraints(rowConstraints);
@@ -99,14 +90,14 @@ final class MigLayout implements IMigLayout {
 	@Override
 	public void setLayoutConstraints(Object constraints) {
 		if (constraints == null || constraints instanceof String) {
-			constraints = ConstraintParser.prepare((String) constraints);
-			lc = ConstraintParser.parseLayoutConstraint((String) constraints);
+			constraints = ConstraintParserCommon.prepare((String) constraints);
+			lc = ConstraintParserCommon.parseLayoutConstraint((String) constraints);
 		}
 		else if (constraints instanceof LCWrapper) {
 			lc = ((LCWrapper) constraints).getLC();
 		}
-		else if (constraints instanceof LC) {
-			lc = (LC) constraints;
+		else if (constraints instanceof LCCommon) {
+			lc = (LCCommon) constraints;
 		}
 		else {
 			throw new IllegalArgumentException("Illegal constraint type: " + constraints.getClass().toString());
@@ -124,14 +115,14 @@ final class MigLayout implements IMigLayout {
 	@Override
 	public void setColumnConstraints(Object constraints) {
 		if (constraints == null || constraints instanceof String) {
-			constraints = ConstraintParser.prepare((String) constraints);
-			colSpecs = ConstraintParser.parseColumnConstraints((String) constraints);
+			constraints = ConstraintParserCommon.prepare((String) constraints);
+			colSpecs = ConstraintParserCommon.parseColumnConstraints((String) constraints);
 		}
 		else if (constraints instanceof ACWrapper) {
 			colSpecs = ((ACWrapper) constraints).getAC();
 		}
-		else if (constraints instanceof AC) {
-			colSpecs = (AC) constraints;
+		else if (constraints instanceof ACCommon) {
+			colSpecs = (ACCommon) constraints;
 		}
 		else {
 			throw new IllegalArgumentException("Illegal constraint type: " + constraints.getClass().toString());
@@ -149,14 +140,14 @@ final class MigLayout implements IMigLayout {
 	@Override
 	public void setRowConstraints(Object constraints) {
 		if (constraints == null || constraints instanceof String) {
-			constraints = ConstraintParser.prepare((String) constraints);
-			rowSpecs = ConstraintParser.parseRowConstraints((String) constraints);
+			constraints = ConstraintParserCommon.prepare((String) constraints);
+			rowSpecs = ConstraintParserCommon.parseRowConstraints((String) constraints);
 		}
 		else if (constraints instanceof ACWrapper) {
 			rowSpecs = ((ACWrapper) constraints).getAC();
 		}
-		else if (constraints instanceof AC) {
-			rowSpecs = (AC) constraints;
+		else if (constraints instanceof ACCommon) {
+			rowSpecs = (ACCommon) constraints;
 		}
 		else {
 			throw new IllegalArgumentException("Illegal constraint type: " + constraints.getClass().toString());
@@ -190,7 +181,7 @@ final class MigLayout implements IMigLayout {
 	 * <p>
 	 * See the class JavaDocs for information on how this string is formatted.
 	 * 
-	 * @param constr The component constraints as a String or {@link net.miginfocom.layout.CC}. <code>null</code> is ok.
+	 * @param constr The component constraints as a String or {@link CCCommon.miginfocom.layout.CC}. <code>null</code> is ok.
 	 * @param comp The component to set the constraints for.
 	 * @param noCheck Doesn't check if control already is managed.
 	 * @throws RuntimeException if the constaint was not valid.
@@ -201,21 +192,21 @@ final class MigLayout implements IMigLayout {
 			throw new IllegalArgumentException("Component must already be added to parent!");
 		}
 
-		final IComponentWrapper cw = new JoMigComponentWrapper(comp);
+		final IComponentWrapperCommon cw = new JoMigComponentWrapper(comp);
 
 		if (constr == null || constr instanceof String) {
-			final String cStr = ConstraintParser.prepare((String) constr);
+			final String cStr = ConstraintParserCommon.prepare((String) constr);
 
 			scrConstrMap.put(comp, constr);
-			ccMap.put(cw, ConstraintParser.parseComponentConstraint(cStr));
+			ccMap.put(cw, ConstraintParserCommon.parseComponentConstraint(cStr));
 		}
 		else if (constr instanceof CCWrapper) {
 			scrConstrMap.put(comp, constr);
 			ccMap.put(cw, ((CCWrapper) constr).getCC());
 		}
-		else if (constr instanceof CC) {
+		else if (constr instanceof CCCommon) {
 			scrConstrMap.put(comp, constr);
-			ccMap.put(cw, (CC) constr);
+			ccMap.put(cw, (CCCommon) constr);
 		}
 		else {
 			throw new IllegalArgumentException("Constraint must be String or ComponentConstraint: "
@@ -230,19 +221,19 @@ final class MigLayout implements IMigLayout {
 		return scrConstrMap.containsKey(control);
 	}
 
-	public void addLayoutCallback(final AbstractLayoutCallback callback) {
+	public void addLayoutCallback(final AbstractLayoutCallbackCommon callback) {
 		if (callback == null) {
 			throw new NullPointerException();
 		}
 
 		if (callbackList == null) {
-			callbackList = new ArrayList<AbstractLayoutCallback>(1);
+			callbackList = new ArrayList<AbstractLayoutCallbackCommon>(1);
 		}
 
 		callbackList.add(callback);
 	}
 
-	public void removeLayoutCallback(final AbstractLayoutCallback callback) {
+	public void removeLayoutCallback(final AbstractLayoutCallbackCommon callback) {
 		if (callbackList != null) {
 			callbackList.remove(callback);
 		}
@@ -251,8 +242,8 @@ final class MigLayout implements IMigLayout {
 	private void checkChildren() {
 		final List<IControl> comps = new LinkedList<IControl>(container.getChildren());
 
-		final List<IComponentWrapper> removed = new LinkedList<IComponentWrapper>();
-		for (final IComponentWrapper cw : ccMap.keySet()) {
+		final List<IComponentWrapperCommon> removed = new LinkedList<IComponentWrapperCommon>();
+		for (final IComponentWrapperCommon cw : ccMap.keySet()) {
 			if (comps.contains(cw.getComponent())) {
 				comps.remove(cw.getComponent());
 				continue;
@@ -260,7 +251,7 @@ final class MigLayout implements IMigLayout {
 			removed.add(cw);
 		}
 
-		for (final IComponentWrapper cw : removed) {
+		for (final IComponentWrapperCommon cw : removed) {
 			scrConstrMap.remove(cw.getComponent());
 			ccMap.remove(cw);
 		}
@@ -307,7 +298,7 @@ final class MigLayout implements IMigLayout {
 		checkChildren();
 
 		// Check if the grid is valid
-		final int mc = MigLayoutToolkit.getMigPlatformDefaults().getModCount();
+		final int mc = MigLayoutToolkitImpl.getMigPlatformDefaults().getModCount();
 		if (lastModCount != mc) {
 			grid = null;
 			lastModCount = mc;
@@ -315,7 +306,7 @@ final class MigLayout implements IMigLayout {
 		}
 
 		int hash = container.getSize().hashCode();
-		for (final Iterator<IComponentWrapper> it = ccMap.keySet().iterator(); it.hasNext();) {
+		for (final Iterator<IComponentWrapperCommon> it = ccMap.keySet().iterator(); it.hasNext();) {
 			hash += it.next().getLayoutHashCode();
 		}
 
@@ -331,7 +322,7 @@ final class MigLayout implements IMigLayout {
 			//CHECKSTYLE:OFF
 			//System.out.println("new Grid for " + this + " [" + reason + "]");
 			//CHECKSTYLE:ON
-			grid = new Grid(cacheParentW, lc, rowSpecs, colSpecs, ccMap, callbackList);
+			grid = new GridCommon(cacheParentW, lc, rowSpecs, colSpecs, ccMap, callbackList);
 			reason.setLength(0);
 		}
 
@@ -378,17 +369,17 @@ final class MigLayout implements IMigLayout {
 
 	@Override
 	public Dimension getMinSize() {
-		return getSize(LayoutUtil.MIN);
+		return getSize(LayoutUtilCommon.MIN);
 	}
 
 	@Override
 	public Dimension getPreferredSize() {
-		return getSize(LayoutUtil.PREF);
+		return getSize(LayoutUtilCommon.PREF);
 	}
 
 	@Override
 	public Dimension getMaxSize() {
-		return getSize(LayoutUtil.MAX);
+		return getSize(LayoutUtilCommon.MAX);
 	}
 
 	@Override

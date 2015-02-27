@@ -1,72 +1,72 @@
 //CHECKSTYLE:OFF
 
-package org.jowidgets.impl.layout.miglayout.common;
+package org.jowidgets.impl.layout.miglayout;
 
 import java.util.HashMap;
 
-import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
+import org.jowidgets.tools.widgets.wrapper.ContainerWrapper;
 
 /**
  * This class contains static methods to be used by IDE vendors to convert to and from String/API constraints.
  * <p>
- * <b>Note that {@link LayoutUtil#setDesignTime(ContainerWrapper, boolean)} should be set to <code>true</code> for this class'
- * methods to work.</b>
+ * <b>Note that {@link LayoutUtilCommon#setDesignTime(ContainerWrapper, boolean)} should be set to <code>true</code> for this
+ * class' methods to work.</b>
  */
-public class IDEUtil {
+class IDEUtilCommon {
 	/**
-	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
+	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValueCommon}.
 	 */
-	public final UnitValue ZERO = MigLayoutToolkit.getMigUnitValueToolkit().ZERO;
+	public final UnitValueCommon ZERO = MigLayoutToolkitImpl.getMigUnitValueToolkit().ZERO;
 
 	/**
-	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
+	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValueCommon}.
 	 */
-	public final UnitValue TOP = MigLayoutToolkit.getMigUnitValueToolkit().TOP;
+	public final UnitValueCommon TOP = MigLayoutToolkitImpl.getMigUnitValueToolkit().TOP;
 
 	/**
-	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
+	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValueCommon}.
 	 */
-	public final UnitValue LEADING = MigLayoutToolkit.getMigUnitValueToolkit().LEADING;
+	public final UnitValueCommon LEADING = MigLayoutToolkitImpl.getMigUnitValueToolkit().LEADING;
 
 	/**
-	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
+	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValueCommon}.
 	 */
-	public final UnitValue LEFT = MigLayoutToolkit.getMigUnitValueToolkit().LEFT;
+	public final UnitValueCommon LEFT = MigLayoutToolkitImpl.getMigUnitValueToolkit().LEFT;
 
 	/**
-	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
+	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValueCommon}.
 	 */
-	public final UnitValue CENTER = MigLayoutToolkit.getMigUnitValueToolkit().CENTER;
+	public final UnitValueCommon CENTER = MigLayoutToolkitImpl.getMigUnitValueToolkit().CENTER;
 
 	/**
-	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
+	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValueCommon}.
 	 */
-	public final UnitValue TRAILING = MigLayoutToolkit.getMigUnitValueToolkit().TRAILING;
+	public final UnitValueCommon TRAILING = MigLayoutToolkitImpl.getMigUnitValueToolkit().TRAILING;
 
 	/**
-	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
+	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValueCommon}.
 	 */
-	public final UnitValue RIGHT = MigLayoutToolkit.getMigUnitValueToolkit().RIGHT;
+	public final UnitValueCommon RIGHT = MigLayoutToolkitImpl.getMigUnitValueToolkit().RIGHT;
 
 	/**
-	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
+	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValueCommon}.
 	 */
-	public final UnitValue BOTTOM = MigLayoutToolkit.getMigUnitValueToolkit().BOTTOM;
+	public final UnitValueCommon BOTTOM = MigLayoutToolkitImpl.getMigUnitValueToolkit().BOTTOM;
 
 	/**
-	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
+	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValueCommon}.
 	 */
-	public final UnitValue LABEL = MigLayoutToolkit.getMigUnitValueToolkit().LABEL;
+	public final UnitValueCommon LABEL = MigLayoutToolkitImpl.getMigUnitValueToolkit().LABEL;
 
 	/**
-	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
+	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValueCommon}.
 	 */
-	public final UnitValue INF = MigLayoutToolkit.getMigUnitValueToolkit().INF;
+	public final UnitValueCommon INF = MigLayoutToolkitImpl.getMigUnitValueToolkit().INF;
 
 	/**
-	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValue}.
+	 * A direct reference to the corresponding value for predefined UnitValues in {@link UnitValueCommon}.
 	 */
-	public final UnitValue BASELINE_IDENTITY = MigLayoutToolkit.getMigUnitValueToolkit().BASELINE_IDENTITY;
+	public final UnitValueCommon BASELINE_IDENTITY = MigLayoutToolkitImpl.getMigUnitValueToolkit().BASELINE_IDENTITY;
 
 	private final String[] X_Y_STRINGS = new String[] {"x", "y", "x2", "y2"};
 
@@ -96,7 +96,7 @@ public class IDEUtil {
 	 *         row/column constraint will be totally disregarded.
 	 */
 	public HashMap<Object, int[]> getGridPositions(final Object parentContainer) {
-		return Grid.getGridPositions(parentContainer);
+		return GridCommon.getGridPositions(parentContainer);
 	}
 
 	/**
@@ -115,13 +115,13 @@ public class IDEUtil {
 	 * @param parentContainer The container to retuern the row sizes and gaps for. In Swing it will be a
 	 *            {@link java.awt.Container} and
 	 *            in SWT it will be a {@link org.eclipse.swt.widgets.Composite}.
-	 * @return The sizes or <code>null</code> if {@link LayoutUtil#isDesignTime(ContainerWrapper)} is <code>false</code> or
+	 * @return The sizes or <code>null</code> if {@link LayoutUtilCommon#isDesignTime(ContainerWrapper)} is <code>false</code> or
 	 *         <code>parentContainer</code> does not have a MigLayout layout manager.
 	 *         The returned sizes will be the ones calculated in the last layout cycle.
-	 * @see LayoutUtil#isDesignTime(ContainerWrapper)
+	 * @see LayoutUtilCommon#isDesignTime(ContainerWrapper)
 	 */
 	public int[][] getRowSizes(final Object parentContainer) {
-		return Grid.getSizesAndIndexes(parentContainer, true);
+		return GridCommon.getSizesAndIndexes(parentContainer, true);
 	}
 
 	/**
@@ -140,13 +140,13 @@ public class IDEUtil {
 	 * @param parentContainer The container to retuern the column sizes and gaps for. In Swing it will be a
 	 *            {@link java.awt.Container} and
 	 *            in SWT it will be a {@link org.eclipse.swt.widgets.Composite}.
-	 * @return The sizes and indexes or <code>null</code> if {@link LayoutUtil#isDesignTime(ContainerWrapper)} is
+	 * @return The sizes and indexes or <code>null</code> if {@link LayoutUtilCommon#isDesignTime(ContainerWrapper)} is
 	 *         <code>false</code> or <code>parentContainer</code> does not have a MigLayout layout manager.
 	 *         The returned sizes will be the ones calculated in the last layout cycle.
-	 * @see LayoutUtil#isDesignTime(ContainerWrapper)
+	 * @see LayoutUtilCommon#isDesignTime(ContainerWrapper)
 	 */
 	public int[][] getColumnSizes(final Object parentContainer) {
-		return Grid.getSizesAndIndexes(parentContainer, false);
+		return GridCommon.getSizesAndIndexes(parentContainer, false);
 	}
 
 	/**
@@ -158,21 +158,21 @@ public class IDEUtil {
 	 * @param isCols The the constraint should be returned for columns rather than rows.
 	 * @return A String. Never <code>null</code>.
 	 */
-	public String getConstraintString(final AC ac, final boolean asAPI, final boolean isCols) {
+	public String getConstraintString(final ACCommon ac, final boolean asAPI, final boolean isCols) {
 		final StringBuffer sb = new StringBuffer(32);
 
-		final DimConstraint[] dims = ac.getConstaints();
-		final BoundSize defGap = isCols
-				? MigLayoutToolkit.getMigPlatformDefaults().getGridGapX()
-				: MigLayoutToolkit.getMigPlatformDefaults().getGridGapY();
+		final DimConstraintCommon[] dims = ac.getConstaints();
+		final BoundSizeCommon defGap = isCols
+				? MigLayoutToolkitImpl.getMigPlatformDefaults().getGridGapX()
+				: MigLayoutToolkitImpl.getMigPlatformDefaults().getGridGapY();
 
 		for (int i = 0; i < dims.length; i++) {
-			final DimConstraint dc = dims[i];
+			final DimConstraintCommon dc = dims[i];
 
 			addRowDimConstraintString(dc, sb, asAPI);
 
 			if (i < dims.length - 1) {
-				BoundSize gap = dc.getGapAfter();
+				BoundSizeCommon gap = dc.getGapAfter();
 
 				if (gap == defGap || gap == null)
 					gap = dims[i + 1].getGapBefore();
@@ -203,12 +203,12 @@ public class IDEUtil {
 	 * @param asAPI If the returned string should be of API type (e.g. .flowX().gap("rel").align("right")) or
 	 *            as a String type (e.g. "flowx, gap rel, right").
 	 */
-	private void addRowDimConstraintString(final DimConstraint dc, final StringBuffer sb, final boolean asAPI) {
+	private void addRowDimConstraintString(final DimConstraintCommon dc, final StringBuffer sb, final boolean asAPI) {
 		final int gp = dc.getGrowPriority();
 
 		final int firstComma = sb.length();
 
-		final BoundSize size = dc.getSize();
+		final BoundSizeCommon size = dc.getSize();
 		if (size.isUnset() == false) {
 			if (asAPI) {
 				sb.append(".size(\"").append(getBS(size)).append("\")");
@@ -284,7 +284,7 @@ public class IDEUtil {
 			}
 		}
 
-		final UnitValue al = dc.getAlign();
+		final UnitValueCommon al = dc.getAlign();
 		if (al != null) {
 			if (asAPI) {
 				sb.append(".align(\"").append(getUV(al)).append("\")");
@@ -343,7 +343,7 @@ public class IDEUtil {
 	 * @return A constraint string. Never <code>null</code>.
 	 */
 	private void addComponentDimConstraintString(
-		final DimConstraint dc,
+		final DimConstraintCommon dc,
 		final StringBuffer sb,
 		final boolean asAPI,
 		final boolean isHor,
@@ -414,7 +414,7 @@ public class IDEUtil {
 
 		appendBoundSize(dc.getSize(), sb, isHor, asAPI);
 
-		final UnitValue al = dc.getAlign();
+		final UnitValueCommon al = dc.getAlign();
 		if (al != null) {
 			if (asAPI) {
 				sb.append(isHor ? ".alignX(\"" : ".alignY(\"").append(getUV(al)).append("\")");
@@ -424,8 +424,8 @@ public class IDEUtil {
 			}
 		}
 
-		final BoundSize gapBef = dc.getGapBefore();
-		final BoundSize gapAft = dc.getGapAfter();
+		final BoundSizeCommon gapBef = dc.getGapBefore();
+		final BoundSizeCommon gapAft = dc.getGapAfter();
 		if (gapBef != null || gapAft != null) {
 			if (asAPI) {
 				sb.append(isHor ? ".gapX(\"" : ".gapY(\"").append(getBS(gapBef)).append("\", \"").append(getBS(gapAft)).append(
@@ -439,7 +439,7 @@ public class IDEUtil {
 		}
 	}
 
-	private void appendBoundSize(final BoundSize size, final StringBuffer sb, final boolean isHor, final boolean asAPI) {
+	private void appendBoundSize(final BoundSizeCommon size, final StringBuffer sb, final boolean isHor, final boolean asAPI) {
 		if (size.isUnset() == false) {
 			if (size.getPreferred() == null) {
 				if (size.getMin() == null) {
@@ -489,7 +489,7 @@ public class IDEUtil {
 	 *            as a String type (e.g. "flowx, gap rel, right").
 	 * @return A String. Never <code>null</code>.
 	 */
-	public String getConstraintString(final CC cc, final boolean asAPI) {
+	public String getConstraintString(final CCCommon cc, final boolean asAPI) {
 		final StringBuffer sb = new StringBuffer(16);
 
 		if (cc.isNewline())
@@ -508,7 +508,7 @@ public class IDEUtil {
 			}
 		}
 
-		final UnitValue[] pad = cc.getPadding();
+		final UnitValueCommon[] pad = cc.getPadding();
 		if (pad != null) {
 			sb.append(asAPI ? ".pad(\"" : ",pad ");
 			for (int i = 0; i < pad.length; i++)
@@ -517,7 +517,7 @@ public class IDEUtil {
 				sb.append("\")");
 		}
 
-		final UnitValue[] pos = cc.getPos();
+		final UnitValueCommon[] pos = cc.getPos();
 		if (pos != null) {
 			if (cc.isBoundsInGrid()) {
 				for (int i = 0; i < 4; i++) {
@@ -584,7 +584,7 @@ public class IDEUtil {
 
 		final int split = cc.getSplit();
 		if (split > 1) {
-			final String s = split == LayoutUtil.INF ? "" : String.valueOf(split);
+			final String s = split == LayoutUtilCommon.INF ? "" : String.valueOf(split);
 			if (asAPI) {
 				sb.append(".split(").append(s).append(')');
 			}
@@ -615,10 +615,10 @@ public class IDEUtil {
 				sb.append(asAPI ? ".span(" : ",span ").append(spanX).append(asAPI ? ", " : " ").append(spanY);
 			}
 			else if (spanX > 1) {
-				sb.append(asAPI ? ".spanX(" : ",spanx ").append(spanX == LayoutUtil.INF ? "" : (String.valueOf(spanX)));
+				sb.append(asAPI ? ".spanX(" : ",spanx ").append(spanX == LayoutUtilCommon.INF ? "" : (String.valueOf(spanX)));
 			}
 			else if (spanY > 1) {
-				sb.append(asAPI ? ".spanY(" : ",spany ").append(spanY == LayoutUtil.INF ? "" : (String.valueOf(spanY)));
+				sb.append(asAPI ? ".spanY(" : ",spany ").append(spanY == LayoutUtilCommon.INF ? "" : (String.valueOf(spanY)));
 			}
 			if (asAPI)
 				sb.append(')');
@@ -644,7 +644,7 @@ public class IDEUtil {
 
 		final int dock = cc.getDockSide();
 		if (dock >= 0) {
-			final String ds = CC.DOCK_SIDES[dock];
+			final String ds = CCCommon.DOCK_SIDES[dock];
 			if (asAPI) {
 				sb.append(".dock").append(Character.toUpperCase(ds.charAt(0))).append(ds.substring(1)).append("()");
 			}
@@ -678,7 +678,7 @@ public class IDEUtil {
 	 *            as a String type (e.g. "flowx, gap rel, right").
 	 * @return A String. Never <code>null</code>.
 	 */
-	public String getConstraintString(final LC lc, final boolean asAPI) {
+	public String getConstraintString(final LCCommon lc, final boolean asAPI) {
 		final StringBuffer sb = new StringBuffer(16);
 
 		if (lc.isFlowX() == false)
@@ -739,9 +739,9 @@ public class IDEUtil {
 		if (lc.isTopToBottom() == false)
 			sb.append(asAPI ? ".bottomToTop()" : ",btt");
 
-		final UnitValue[] insets = lc.getInsets();
+		final UnitValueCommon[] insets = lc.getInsets();
 		if (insets != null) {
-			final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
+			final LayoutUtilCommon layoutUtil = MigLayoutToolkitImpl.getMigLayoutUtil();
 			final String cs = layoutUtil.getCCString(insets);
 			if (cs != null) {
 				if (asAPI) {
@@ -779,8 +779,8 @@ public class IDEUtil {
 		appendBoundSize(lc.getWidth(), sb, true, asAPI);
 		appendBoundSize(lc.getHeight(), sb, false, asAPI);
 
-		final UnitValue alignX = lc.getAlignX();
-		final UnitValue alignY = lc.getAlignY();
+		final UnitValueCommon alignX = lc.getAlignX();
+		final UnitValueCommon alignY = lc.getAlignY();
 		if (alignX != null || alignY != null) {
 			if (alignX != null && alignY != null) {
 				sb.append(asAPI ? ".align(\"" : ",align ").append(getUV(alignX)).append(' ').append(getUV(alignY));
@@ -795,8 +795,8 @@ public class IDEUtil {
 				sb.append("\")");
 		}
 
-		final BoundSize gridGapX = lc.getGridGapX();
-		final BoundSize gridGapY = lc.getGridGapY();
+		final BoundSizeCommon gridGapX = lc.getGridGapX();
+		final BoundSizeCommon gridGapY = lc.getGridGapY();
 		if (gridGapX != null || gridGapY != null) {
 			if (gridGapX != null && gridGapY != null) {
 				sb.append(asAPI ? ".gridGap(\"" : ",gap ").append(getBS(gridGapX)).append(' ').append(getBS(gridGapY));
@@ -812,7 +812,7 @@ public class IDEUtil {
 		}
 
 		final int wrapAfter = lc.getWrapAfter();
-		if (wrapAfter != LayoutUtil.INF) {
+		if (wrapAfter != LayoutUtilCommon.INF) {
 			final String ws = wrapAfter > 0 ? String.valueOf(wrapAfter) : "";
 			if (asAPI) {
 				sb.append(".wrap(").append(ws).append(')');
@@ -836,11 +836,11 @@ public class IDEUtil {
 		return s.length() == 0 || s.charAt(0) != ',' ? s : s.substring(1);
 	}
 
-	private String getUV(final UnitValue uv) {
+	private String getUV(final UnitValueCommon uv) {
 		return uv != null ? uv.getConstraintString() : "null";
 	}
 
-	private String getBS(final BoundSize bs) {
+	private String getBS(final BoundSizeCommon bs) {
 		return bs != null ? bs.getConstraintString() : "null";
 	}
 

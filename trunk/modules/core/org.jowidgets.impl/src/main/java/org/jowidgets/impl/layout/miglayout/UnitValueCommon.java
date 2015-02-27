@@ -29,7 +29,7 @@
  * @author Mikael Grev, MiG InfoCom AB
  *         Date: 2006-sep-08
  */
-package org.jowidgets.impl.layout.miglayout.common;
+package org.jowidgets.impl.layout.miglayout;
 
 import java.beans.Encoder;
 import java.beans.Expression;
@@ -41,9 +41,7 @@ import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
-
-public final class UnitValue implements Serializable {
+final class UnitValueCommon implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private static final float[] SCALE = new float[] {25.4f, 2.54f, 1f, 0f, 72f};
@@ -54,44 +52,49 @@ public final class UnitValue implements Serializable {
 	private final transient String unitStr;
 	private transient String linkId = null; // Should be final, but initializes in a sub method.
 	private final transient boolean isHor;
-	private final transient UnitValue[] subUnits;
+	private final transient UnitValueCommon[] subUnits;
 
 	// Pixel
-	public UnitValue(final float value) // If hor/ver does not matter.
+	UnitValueCommon(final float value) // If hor/ver does not matter.
 	{
-		this(value, null, UnitValueToolkit.PIXEL, true, UnitValueToolkit.STATIC, null, null, value + "px");
+		this(value, null, UnitValueToolkitCommon.PIXEL, true, UnitValueToolkitCommon.STATIC, null, null, value + "px");
 	}
 
-	public UnitValue(final float value, final int unit, final String createString) // If hor/ver does not matter.
+	UnitValueCommon(final float value, final int unit, final String createString) // If hor/ver does not matter.
 	{
-		this(value, null, unit, true, UnitValueToolkit.STATIC, null, null, createString);
+		this(value, null, unit, true, UnitValueToolkitCommon.STATIC, null, null, createString);
 	}
 
-	UnitValue(final float value, final String unitStr, final boolean isHor, final int oper, final String createString) {
+	UnitValueCommon(final float value, final String unitStr, final boolean isHor, final int oper, final String createString) {
 		this(value, unitStr, -1, isHor, oper, null, null, createString);
 	}
 
-	UnitValue(final boolean isHor, final int oper, final UnitValue sub1, final UnitValue sub2, final String createString) {
+	UnitValueCommon(
+		final boolean isHor,
+		final int oper,
+		final UnitValueCommon sub1,
+		final UnitValueCommon sub2,
+		final String createString) {
 		this(0, "", -1, isHor, oper, sub1, sub2, createString);
 		if (sub1 == null || sub2 == null) {
 			throw new IllegalArgumentException("Sub units is null!");
 		}
 	}
 
-	UnitValue(
+	UnitValueCommon(
 		final float value,
 		final String unitStr,
 		final int unit,
 		final boolean isHor,
 		final int oper,
-		final UnitValue sub1,
-		final UnitValue sub2,
+		final UnitValueCommon sub1,
+		final UnitValueCommon sub2,
 		final String createString) {
-		if (oper < UnitValueToolkit.STATIC || oper > UnitValueToolkit.MID) {
+		if (oper < UnitValueToolkitCommon.STATIC || oper > UnitValueToolkitCommon.MID) {
 			throw new IllegalArgumentException("Unknown Operation: " + oper);
 		}
 
-		if (oper >= UnitValueToolkit.ADD && oper <= UnitValueToolkit.MID && (sub1 == null || sub2 == null)) {
+		if (oper >= UnitValueToolkitCommon.ADD && oper <= UnitValueToolkitCommon.MID && (sub1 == null || sub2 == null)) {
 			throw new IllegalArgumentException(oper + " Operation may not have null sub-UnitValues.");
 		}
 
@@ -100,9 +103,9 @@ public final class UnitValue implements Serializable {
 		this.isHor = isHor;
 		this.unitStr = unitStr;
 		this.unit = unitStr != null ? parseUnitString() : unit;
-		this.subUnits = sub1 != null && sub2 != null ? new UnitValue[] {sub1, sub2} : null;
+		this.subUnits = sub1 != null && sub2 != null ? new UnitValueCommon[] {sub1, sub2} : null;
 
-		final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
+		final LayoutUtilCommon layoutUtil = MigLayoutToolkitImpl.getMigLayoutUtil();
 		layoutUtil.putCCString(this, createString); // "this" escapes!! Safe though.
 	}
 
@@ -118,7 +121,7 @@ public final class UnitValue implements Serializable {
 	 *            connected to any component.
 	 * @return The size in pixels.
 	 */
-	public int getPixels(final float refValue, final IContainerWrapper parent, final IComponentWrapper comp) {
+	public int getPixels(final float refValue, final IContainerWrapperCommon parent, final IComponentWrapperCommon comp) {
 		return Math.round(getPixelsExact(refValue, parent, comp));
 	}
 
@@ -134,110 +137,114 @@ public final class UnitValue implements Serializable {
 	 *            connected to any component.
 	 * @return The size in pixels.
 	 */
-	public float getPixelsExact(final float refValue, final IContainerWrapper parent, final IComponentWrapper comp) {
+	public float getPixelsExact(final float refValue, final IContainerWrapperCommon parent, final IComponentWrapperCommon comp) {
 		if (parent == null) {
 			return 1;
 		}
 
-		if (oper == UnitValueToolkit.STATIC) {
+		if (oper == UnitValueToolkitCommon.STATIC) {
 			switch (unit) {
-				case UnitValueToolkit.PIXEL:
+				case UnitValueToolkitCommon.PIXEL:
 					return value;
 
-				case UnitValueToolkit.LPX:
-				case UnitValueToolkit.LPY:
-					return parent.getPixelUnitFactor(unit == UnitValueToolkit.LPX) * value;
+				case UnitValueToolkitCommon.LPX:
+				case UnitValueToolkitCommon.LPY:
+					return parent.getPixelUnitFactor(unit == UnitValueToolkitCommon.LPX) * value;
 
-				case UnitValueToolkit.MM:
-				case UnitValueToolkit.CM:
-				case UnitValueToolkit.INCH:
-				case UnitValueToolkit.PT:
-					float f = SCALE[unit - UnitValueToolkit.MM];
+				case UnitValueToolkitCommon.MM:
+				case UnitValueToolkitCommon.CM:
+				case UnitValueToolkitCommon.INCH:
+				case UnitValueToolkitCommon.PT:
+					float f = SCALE[unit - UnitValueToolkitCommon.MM];
 					final Float s = isHor
-							? MigLayoutToolkit.getMigPlatformDefaults().getHorizontalScaleFactor()
-							: MigLayoutToolkit.getMigPlatformDefaults().getVerticalScaleFactor();
+							? MigLayoutToolkitImpl.getMigPlatformDefaults().getHorizontalScaleFactor()
+							: MigLayoutToolkitImpl.getMigPlatformDefaults().getVerticalScaleFactor();
 					if (s != null) {
 						f *= s;
 					}
 					return (isHor ? parent.getHorizontalScreenDPI() : parent.getVerticalScreenDPI()) * value / f;
 
-				case UnitValueToolkit.PERCENT:
+				case UnitValueToolkitCommon.PERCENT:
 					return value * refValue * 0.01f;
 
-				case UnitValueToolkit.SPX:
-				case UnitValueToolkit.SPY:
-					return (unit == UnitValueToolkit.SPX ? parent.getScreenWidth() : parent.getScreenHeight()) * value * 0.01f;
+				case UnitValueToolkitCommon.SPX:
+				case UnitValueToolkitCommon.SPY:
+					return (unit == UnitValueToolkitCommon.SPX ? parent.getScreenWidth() : parent.getScreenHeight())
+						* value
+						* 0.01f;
 
-				case UnitValueToolkit.ALIGN:
-					final Integer st = MigLayoutToolkit.getMigLinkHandler().getValue(
+				case UnitValueToolkitCommon.ALIGN:
+					final Integer st = MigLayoutToolkitImpl.getMigLinkHandler().getValue(
 							parent.getLayout(),
 							"visual",
-							isHor ? LinkHandler.X : LinkHandler.Y);
-					final Integer sz = MigLayoutToolkit.getMigLinkHandler().getValue(
+							isHor ? LinkHandlerCommon.X : LinkHandlerCommon.Y);
+					final Integer sz = MigLayoutToolkitImpl.getMigLinkHandler().getValue(
 							parent.getLayout(),
 							"visual",
-							isHor ? LinkHandler.WIDTH : LinkHandler.HEIGHT);
+							isHor ? LinkHandlerCommon.WIDTH : LinkHandlerCommon.HEIGHT);
 					if (st == null || sz == null) {
 						return 0;
 					}
 					return value * (Math.max(0, sz) - refValue) + st;
 
-				case UnitValueToolkit.MIN_SIZE:
+				case UnitValueToolkitCommon.MIN_SIZE:
 					if (comp == null) {
 						return 0;
 					}
 					return isHor ? comp.getMinimumWidth(comp.getHeight()) : comp.getMinimumHeight(comp.getWidth());
 
-				case UnitValueToolkit.PREF_SIZE:
+				case UnitValueToolkitCommon.PREF_SIZE:
 					if (comp == null) {
 						return 0;
 					}
 					return isHor ? comp.getPreferredWidth(comp.getHeight()) : comp.getPreferredHeight(comp.getWidth());
 
-				case UnitValueToolkit.MAX_SIZE:
+				case UnitValueToolkitCommon.MAX_SIZE:
 					if (comp == null) {
 						return 0;
 					}
 					return isHor ? comp.getMaximumWidth(comp.getHeight()) : comp.getMaximumHeight(comp.getWidth());
 
-				case UnitValueToolkit.BUTTON:
-					return MigLayoutToolkit.getMigPlatformDefaults().getMinimumButtonWidth().getPixels(refValue, parent, comp);
+				case UnitValueToolkitCommon.BUTTON:
+					return MigLayoutToolkitImpl.getMigPlatformDefaults().getMinimumButtonWidth().getPixels(refValue, parent, comp);
 
-				case UnitValueToolkit.LINK_X:
-				case UnitValueToolkit.LINK_Y:
-				case UnitValueToolkit.LINK_W:
-				case UnitValueToolkit.LINK_H:
-				case UnitValueToolkit.LINK_X2:
-				case UnitValueToolkit.LINK_Y2:
-				case UnitValueToolkit.LINK_XPOS:
-				case UnitValueToolkit.LINK_YPOS:
-					final Integer v = MigLayoutToolkit.getMigLinkHandler().getValue(
+				case UnitValueToolkitCommon.LINK_X:
+				case UnitValueToolkitCommon.LINK_Y:
+				case UnitValueToolkitCommon.LINK_W:
+				case UnitValueToolkitCommon.LINK_H:
+				case UnitValueToolkitCommon.LINK_X2:
+				case UnitValueToolkitCommon.LINK_Y2:
+				case UnitValueToolkitCommon.LINK_XPOS:
+				case UnitValueToolkitCommon.LINK_YPOS:
+					final Integer v = MigLayoutToolkitImpl.getMigLinkHandler().getValue(
 							parent.getLayout(),
 							getLinkTargetId(),
-							unit - (unit >= UnitValueToolkit.LINK_XPOS ? UnitValueToolkit.LINK_XPOS : UnitValueToolkit.LINK_X));
+							unit
+								- (unit >= UnitValueToolkitCommon.LINK_XPOS
+										? UnitValueToolkitCommon.LINK_XPOS : UnitValueToolkitCommon.LINK_X));
 					if (v == null) {
 						return 0;
 					}
 
-					if (unit == UnitValueToolkit.LINK_XPOS) {
+					if (unit == UnitValueToolkitCommon.LINK_XPOS) {
 						return parent.getScreenLocationX() + v;
 					}
-					if (unit == UnitValueToolkit.LINK_YPOS) {
+					if (unit == UnitValueToolkitCommon.LINK_YPOS) {
 						return parent.getScreenLocationY() + v;
 					}
 
 					return v;
 
-				case UnitValueToolkit.LOOKUP:
+				case UnitValueToolkitCommon.LOOKUP:
 					final float res = lookup(refValue, parent, comp);
-					if (res != UnitConverter.UNABLE) {
+					if (res != UnitConverterCommon.UNABLE) {
 						return res;
 					}
 
-				case UnitValueToolkit.LABEL_ALIGN:
-					return MigLayoutToolkit.getMigPlatformDefaults().getLabelAlignPercentage() * refValue;
+				case UnitValueToolkitCommon.LABEL_ALIGN:
+					return MigLayoutToolkitImpl.getMigPlatformDefaults().getLabelAlignPercentage() * refValue;
 
-				case UnitValueToolkit.IDENTITY:
+				case UnitValueToolkitCommon.IDENTITY:
 				default:
 					break;
 			}
@@ -248,19 +255,19 @@ public final class UnitValue implements Serializable {
 			final float r1 = subUnits[0].getPixelsExact(refValue, parent, comp);
 			final float r2 = subUnits[1].getPixelsExact(refValue, parent, comp);
 			switch (oper) {
-				case UnitValueToolkit.ADD:
+				case UnitValueToolkitCommon.ADD:
 					return r1 + r2;
-				case UnitValueToolkit.SUB:
+				case UnitValueToolkitCommon.SUB:
 					return r1 - r2;
-				case UnitValueToolkit.MUL:
+				case UnitValueToolkitCommon.MUL:
 					return r1 * r2;
-				case UnitValueToolkit.DIV:
+				case UnitValueToolkitCommon.DIV:
 					return r1 / r2;
-				case UnitValueToolkit.MIN:
+				case UnitValueToolkitCommon.MIN:
 					return r1 < r2 ? r1 : r2;
-				case UnitValueToolkit.MAX:
+				case UnitValueToolkitCommon.MAX:
 					return r1 > r2 ? r1 : r2;
-				case UnitValueToolkit.MID:
+				case UnitValueToolkitCommon.MID:
 					return (r1 + r2) * 0.5f;
 				default:
 					break;
@@ -270,41 +277,41 @@ public final class UnitValue implements Serializable {
 		throw new IllegalArgumentException("Internal: Unknown Oper: " + oper);
 	}
 
-	private float lookup(final float refValue, final IContainerWrapper parent, final IComponentWrapper comp) {
-		float res = UnitConverter.UNABLE;
-		final ArrayList<UnitConverter> converters = MigLayoutToolkit.getMigUnitValueToolkit().getConverters();
+	private float lookup(final float refValue, final IContainerWrapperCommon parent, final IComponentWrapperCommon comp) {
+		float res = UnitConverterCommon.UNABLE;
+		final ArrayList<UnitConverterCommon> converters = MigLayoutToolkitImpl.getMigUnitValueToolkit().getConverters();
 		for (int i = converters.size() - 1; i >= 0; i--) {
 			res = converters.get(i).convertToPixels(value, unitStr, isHor, refValue, parent, comp);
-			if (res != UnitConverter.UNABLE) {
+			if (res != UnitConverterCommon.UNABLE) {
 				return res;
 			}
 		}
-		return MigLayoutToolkit.getMigPlatformDefaults().convertToPixels(value, unitStr, isHor, refValue, parent, comp);
+		return MigLayoutToolkitImpl.getMigPlatformDefaults().convertToPixels(value, unitStr, isHor, refValue, parent, comp);
 	}
 
 	private int parseUnitString() {
 		final int len = unitStr.length();
 		if (len == 0) {
 			return isHor
-					? MigLayoutToolkit.getMigPlatformDefaults().getDefaultHorizontalUnit()
-					: MigLayoutToolkit.getMigPlatformDefaults().getDefaultVerticalUnit();
+					? MigLayoutToolkitImpl.getMigPlatformDefaults().getDefaultHorizontalUnit()
+					: MigLayoutToolkitImpl.getMigPlatformDefaults().getDefaultVerticalUnit();
 		}
 
-		final Integer u = MigLayoutToolkit.getMigUnitValueToolkit().getUnitMap().get(unitStr);
+		final Integer u = MigLayoutToolkitImpl.getMigUnitValueToolkit().getUnitMap().get(unitStr);
 		if (u != null) {
 			return u;
 		}
 
 		if (unitStr.equals("lp")) {
-			return isHor ? UnitValueToolkit.LPX : UnitValueToolkit.LPY;
+			return isHor ? UnitValueToolkitCommon.LPX : UnitValueToolkitCommon.LPY;
 		}
 
 		if (unitStr.equals("sp")) {
-			return isHor ? UnitValueToolkit.SPX : UnitValueToolkit.SPY;
+			return isHor ? UnitValueToolkitCommon.SPX : UnitValueToolkitCommon.SPY;
 		}
 
-		if (lookup(0, null, null) != UnitConverter.UNABLE) {
-			return UnitValueToolkit.LOOKUP;
+		if (lookup(0, null, null) != UnitConverterCommon.UNABLE) {
+			return UnitValueToolkitCommon.LOOKUP;
 		}
 
 		// Only link left. E.g. "otherID.width"
@@ -315,28 +322,28 @@ public final class UnitValue implements Serializable {
 			final String e = unitStr.substring(pIx + 1);
 
 			if (e.equals("x")) {
-				return UnitValueToolkit.LINK_X;
+				return UnitValueToolkitCommon.LINK_X;
 			}
 			if (e.equals("y")) {
-				return UnitValueToolkit.LINK_Y;
+				return UnitValueToolkitCommon.LINK_Y;
 			}
 			if (e.equals("w") || e.equals("width")) {
-				return UnitValueToolkit.LINK_W;
+				return UnitValueToolkitCommon.LINK_W;
 			}
 			if (e.equals("h") || e.equals("height")) {
-				return UnitValueToolkit.LINK_H;
+				return UnitValueToolkitCommon.LINK_H;
 			}
 			if (e.equals("x2")) {
-				return UnitValueToolkit.LINK_X2;
+				return UnitValueToolkitCommon.LINK_X2;
 			}
 			if (e.equals("y2")) {
-				return UnitValueToolkit.LINK_Y2;
+				return UnitValueToolkitCommon.LINK_Y2;
 			}
 			if (e.equals("xpos")) {
-				return UnitValueToolkit.LINK_XPOS;
+				return UnitValueToolkitCommon.LINK_XPOS;
 			}
 			if (e.equals("ypos")) {
-				return UnitValueToolkit.LINK_YPOS;
+				return UnitValueToolkitCommon.LINK_YPOS;
 			}
 		}
 
@@ -352,7 +359,7 @@ public final class UnitValue implements Serializable {
 			return linkId != null;
 		}
 
-		for (final UnitValue subUnit : subUnits) {
+		for (final UnitValueCommon subUnit : subUnits) {
 			if (subUnit.isLinkedDeep()) {
 				return true;
 			}
@@ -365,7 +372,7 @@ public final class UnitValue implements Serializable {
 		return linkId;
 	}
 
-	UnitValue getSubUnitValue(final int i) {
+	UnitValueCommon getSubUnitValue(final int i) {
 		return subUnits[i];
 	}
 
@@ -373,7 +380,7 @@ public final class UnitValue implements Serializable {
 		return subUnits != null ? subUnits.length : 0;
 	}
 
-	UnitValue[] getSubUnits() {
+	UnitValueCommon[] getSubUnits() {
 		return subUnits != null ? subUnits.clone() : null;
 	}
 
@@ -413,13 +420,14 @@ public final class UnitValue implements Serializable {
 	}
 
 	/**
-	 * Returns the creation string for this object. Note that {@link LayoutUtil#setDesignTime(IContainerWrapper, boolean)} must be
+	 * Returns the creation string for this object. Note that
+	 * {@link LayoutUtilCommon#setDesignTime(IContainerWrapperCommon, boolean)} must be
 	 * set to <code>true</code> for the creation strings to be stored.
 	 * 
 	 * @return The constraint string or <code>null</code> if none is registered.
 	 */
 	public String getConstraintString() {
-		final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
+		final LayoutUtilCommon layoutUtil = MigLayoutToolkitImpl.getMigLayoutUtil();
 		return layoutUtil.getCCString(this);
 	}
 
@@ -429,18 +437,18 @@ public final class UnitValue implements Serializable {
 	}
 
 	static {
-		final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
+		final LayoutUtilCommon layoutUtil = MigLayoutToolkitImpl.getMigLayoutUtil();
 		if (layoutUtil.hasBeans()) {
-			layoutUtil.setDelegate(UnitValue.class, new PersistenceDelegate() {
+			layoutUtil.setDelegate(UnitValueCommon.class, new PersistenceDelegate() {
 				@Override
 				protected Expression instantiate(final Object oldInstance, final Encoder out) {
-					final UnitValue uv = (UnitValue) oldInstance;
+					final UnitValueCommon uv = (UnitValueCommon) oldInstance;
 					final String cs = uv.getConstraintString();
 					if (cs == null) {
 						throw new IllegalStateException("Design time must be on to use XML persistence. See LayoutUtil.");
 					}
 
-					return new Expression(oldInstance, ConstraintParser.class, "parseUnitValueOrAlign", new Object[] {
+					return new Expression(oldInstance, ConstraintParserCommon.class, "parseUnitValueOrAlign", new Object[] {
 							uv.getConstraintString(), (uv.isHorizontal() ? Boolean.TRUE : Boolean.FALSE), null});
 				}
 			});
@@ -452,17 +460,17 @@ public final class UnitValue implements Serializable {
 	// ************************************************
 
 	private Object readResolve() throws ObjectStreamException {
-		return MigLayoutToolkit.getMigLayoutUtil().getSerializedObject(this);
+		return MigLayoutToolkitImpl.getMigLayoutUtil().getSerializedObject(this);
 	}
 
 	private void writeObject(final ObjectOutputStream out) throws IOException {
-		if (getClass() == UnitValue.class) {
-			MigLayoutToolkit.getMigLayoutUtil().writeAsXML(out, this);
+		if (getClass() == UnitValueCommon.class) {
+			MigLayoutToolkitImpl.getMigLayoutUtil().writeAsXML(out, this);
 		}
 	}
 
 	private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
-		final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
+		final LayoutUtilCommon layoutUtil = MigLayoutToolkitImpl.getMigLayoutUtil();
 		layoutUtil.setSerializedObject(this, layoutUtil.readAsXML(in));
 	}
 }

@@ -29,18 +29,18 @@
  * @author Mikael Grev, MiG InfoCom AB
  *         Date: 2006-sep-08
  */
-package org.jowidgets.impl.layout.miglayout.common;
+package org.jowidgets.impl.layout.miglayout;
 
 /**
  * A class that wraps a container that contains components.
  */
-public interface IContainerWrapper extends IComponentWrapper {
+interface IContainerWrapperCommon extends IComponentWrapperCommon {
 	/**
 	 * Returns the components of the container that wrapper is wrapping.
 	 * 
 	 * @return The components of the container that wrapper is wrapping. Never <code>null</code>.
 	 */
-	IComponentWrapper[] getComponents();
+	IComponentWrapperCommon[] getComponents();
 
 	/**
 	 * Returns the number of components that this parent has.

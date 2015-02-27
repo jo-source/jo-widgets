@@ -29,7 +29,7 @@
  * @author Mikael Grev, MiG InfoCom AB
  *         Date: 2006-sep-08
  */
-package org.jowidgets.impl.layout.miglayout.common;
+package org.jowidgets.impl.layout.miglayout;
 
 /**
  * A class that wraps the important parts of a Component.
@@ -49,7 +49,7 @@ package org.jowidgets.impl.layout.miglayout.common;
  * }
  * </pre>
  */
-public interface IComponentWrapper {
+interface IComponentWrapperCommon {
 	int TYPE_UNSET = -1;
 	int TYPE_UNKNOWN = 0;
 	int TYPE_CONTAINER = 1;
@@ -235,7 +235,7 @@ public interface IComponentWrapper {
 	 * 
 	 * @return The container for this component. Will return <code>null</code> if the component has no parent.
 	 */
-	IContainerWrapper getParent();
+	IContainerWrapperCommon getParent();
 
 	/**
 	 * Returns the pixel unit factor for the horizontal or vertical dimension.
@@ -260,7 +260,7 @@ public interface IComponentWrapper {
 	 * Returns the DPI (Dots Per Inch) of the screen the component is currently in or for the default
 	 * screen if the component is not visible.
 	 * <p>
-	 * If headless mode {@link net.miginfocom.layout.PlatformDefaults#getDefaultDPI} will be returned.
+	 * If headless mode {@link PlatformDefaultsCommon.miginfocom.layout.PlatformDefaults#getDefaultDPI} will be returned.
 	 * 
 	 * @return The DPI.
 	 */
@@ -270,7 +270,7 @@ public interface IComponentWrapper {
 	 * Returns the DPI (Dots Per Inch) of the screen the component is currently in or for the default
 	 * screen if the component is not visible.
 	 * <p>
-	 * If headless mode {@link net.miginfocom.layout.PlatformDefaults#getDefaultDPI} will be returned.
+	 * If headless mode {@link PlatformDefaultsCommon.miginfocom.layout.PlatformDefaults#getDefaultDPI} will be returned.
 	 * 
 	 * @return The DPI.
 	 */

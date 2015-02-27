@@ -26,7 +26,7 @@
  * OF SUCH DAMAGE.
  *
  */
-package org.jowidgets.impl.layout.miglayout.common;
+package org.jowidgets.impl.layout.miglayout;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -34,31 +34,29 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.ObjectStreamException;
 
-import org.jowidgets.impl.layout.miglayout.MigLayoutToolkit;
-
 /**
- * Contains the constraints for an instance of the {@link LC} layout manager.
+ * Contains the constraints for an instance of the {@link LCCommon} layout manager.
  */
-public final class LC implements Externalizable {
+final class LCCommon implements Externalizable {
 	// See the corresponding set/get method for documentation of the property!
 
-	private int wrapAfter = LayoutUtil.INF;
+	private int wrapAfter = LayoutUtilCommon.INF;
 
 	private Boolean leftToRight = null;
 
-	private UnitValue[] insets = null; // Never null elememts but if unset array is null
+	private UnitValueCommon[] insets = null; // Never null elememts but if unset array is null
 
-	private UnitValue alignX = null;
-	private UnitValue alignY = null;
+	private UnitValueCommon alignX = null;
+	private UnitValueCommon alignY = null;
 
-	private BoundSize gridGapX = null;
-	private BoundSize gridGapY = null;
+	private BoundSizeCommon gridGapX = null;
+	private BoundSizeCommon gridGapY = null;
 
-	private BoundSize width = BoundSize.NULL_SIZE;
-	private BoundSize height = BoundSize.NULL_SIZE;
+	private BoundSizeCommon width = BoundSizeCommon.NULL_SIZE;
+	private BoundSizeCommon height = BoundSizeCommon.NULL_SIZE;
 
-	private BoundSize packW = BoundSize.NULL_SIZE;
-	private BoundSize packH = BoundSize.NULL_SIZE;
+	private BoundSizeCommon packW = BoundSizeCommon.NULL_SIZE;
+	private BoundSizeCommon packH = BoundSizeCommon.NULL_SIZE;
 
 	private float pwAlign = 0.5f;
 	private float phAlign = 1.0f;
@@ -83,7 +81,7 @@ public final class LC implements Externalizable {
 	/**
 	 * Empty constructor.
 	 */
-	public LC() {}
+	public LCCommon() {}
 
 	// ************************************************************************
 	// * JavaBean get/set methods.
@@ -122,7 +120,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return The current alignment.
 	 */
-	public UnitValue getAlignX() {
+	public UnitValueCommon getAlignX() {
 		return alignX;
 	}
 
@@ -133,10 +131,10 @@ public final class LC implements Externalizable {
 	 * components will not be affected
 	 * by this property.
 	 * 
-	 * @param uv The new alignment. Use {@link ConstraintParser#parseAlignKeywords(String, boolean)} to create the
-	 *            {@link UnitValue}. May be <code>null</code>.
+	 * @param uv The new alignment. Use {@link ConstraintParserCommon#parseAlignKeywords(String, boolean)} to create the
+	 *            {@link UnitValueCommon}. May be <code>null</code>.
 	 */
-	public void setAlignX(final UnitValue uv) {
+	public void setAlignX(final UnitValueCommon uv) {
 		this.alignX = uv;
 	}
 
@@ -149,7 +147,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return The current alignment.
 	 */
-	public UnitValue getAlignY() {
+	public UnitValueCommon getAlignY() {
 		return alignY;
 	}
 
@@ -160,10 +158,10 @@ public final class LC implements Externalizable {
 	 * components will not be affected
 	 * by this property.
 	 * 
-	 * @param uv The new alignment. Use {@link ConstraintParser#parseAlignKeywords(String, boolean)} to create the
-	 *            {@link UnitValue}. May be <code>null</code>.
+	 * @param uv The new alignment. Use {@link ConstraintParserCommon#parseAlignKeywords(String, boolean)} to create the
+	 *            {@link UnitValueCommon}. May be <code>null</code>.
 	 */
-	public void setAlignY(final UnitValue uv) {
+	public void setAlignY(final UnitValueCommon uv) {
 		this.alignY = uv;
 	}
 
@@ -253,7 +251,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return The default grid gap between columns in the grid. <code>null</code> if the platform default is used.
 	 */
-	public BoundSize getGridGapX() {
+	public BoundSizeCommon getGridGapX() {
 		return gridGapX;
 	}
 
@@ -263,7 +261,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @param x The default grid gap between columns in the grid. If <code>null</code> the platform default is used.
 	 */
-	public void setGridGapX(final BoundSize x) {
+	public void setGridGapX(final BoundSizeCommon x) {
 		this.gridGapX = x;
 	}
 
@@ -273,7 +271,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return The default grid gap between rows in the grid. <code>null</code> if the platform default is used.
 	 */
-	public BoundSize getGridGapY() {
+	public BoundSizeCommon getGridGapY() {
 		return gridGapY;
 	}
 
@@ -283,7 +281,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @param y The default grid gap between rows in the grid. If <code>null</code> the platform default is used.
 	 */
-	public void setGridGapY(final BoundSize y) {
+	public void setGridGapY(final BoundSizeCommon y) {
 		this.gridGapY = y;
 	}
 
@@ -321,31 +319,31 @@ public final class LC implements Externalizable {
 	 * The insets for the layed out panel. The insets will be an empty space around the components in the panel. <code>null</code>
 	 * values
 	 * means that the default panel insets for the platform is used. See
-	 * {@link PlatformDefaults#setDialogInsets(net.miginfocom.layout.UnitValue, net.miginfocom.layout.UnitValue, net.miginfocom.layout.UnitValue, net.miginfocom.layout.UnitValue)}
+	 * {@link PlatformDefaultsCommon#setDialogInsets(net.miginfocom.layout.UnitValueCommon, net.miginfocom.layout.UnitValueCommon, net.miginfocom.layout.UnitValueCommon, net.miginfocom.layout.UnitValueCommon)}
 	 * .
 	 * 
 	 * @return The insets. Of length 4 (top, left, bottom, right) or <code>null</code>. The elements (1 to 4) may be
 	 *         <code>null</code>. The array is a copy and can be used freely.
-	 * @see net.miginfocom.layout.ConstraintParser#parseInsets(String, boolean)
+	 * @see net.miginfocom.layout.ConstraintParserCommon#parseInsets(String, boolean)
 	 */
-	public UnitValue[] getInsets() {
-		return insets != null ? new UnitValue[] {insets[0], insets[1], insets[2], insets[3]} : null;
+	public UnitValueCommon[] getInsets() {
+		return insets != null ? new UnitValueCommon[] {insets[0], insets[1], insets[2], insets[3]} : null;
 	}
 
 	/**
 	 * The insets for the layed out panel. The insets will be an empty space around the components in the panel. <code>null</code>
 	 * values
 	 * means that the default panel insets for the platform is used. See
-	 * {@link PlatformDefaults#setDialogInsets(net.miginfocom.layout.UnitValue, net.miginfocom.layout.UnitValue, net.miginfocom.layout.UnitValue, net.miginfocom.layout.UnitValue)}
+	 * {@link PlatformDefaultsCommon#setDialogInsets(net.miginfocom.layout.UnitValueCommon, net.miginfocom.layout.UnitValueCommon, net.miginfocom.layout.UnitValueCommon, net.miginfocom.layout.UnitValueCommon)}
 	 * .
 	 * 
 	 * @param ins The new insets. Must be of length 4 (top, left, bottom, right) or <code>null</code>. The elements (1 to 4) may
 	 *            be <code>null</code> to use
 	 *            the platform default for that side. The array is copied for storage.
-	 * @see net.miginfocom.layout.ConstraintParser#parseInsets(String, boolean)
+	 * @see net.miginfocom.layout.ConstraintParserCommon#parseInsets(String, boolean)
 	 */
-	public void setInsets(final UnitValue[] ins) {
-		this.insets = ins != null ? new UnitValue[] {ins[0], ins[1], ins[2], ins[3]} : null;
+	public void setInsets(final UnitValueCommon[] ins) {
+		this.insets = ins != null ? new UnitValueCommon[] {ins[0], ins[1], ins[2], ins[3]} : null;
 	}
 
 	/**
@@ -430,7 +428,7 @@ public final class LC implements Externalizable {
 	 * Returns after what cell the grid should always auto wrap.
 	 * 
 	 * @return After what cell the grid should always auto wrap. If <code>0</code> the number of columns/rows in the
-	 *         {@link net.miginfocom.layout.AC} is used. <code>LayoutUtil.INF</code> is used for no auto wrap.
+	 *         {@link net.miginfocom.layout.ACCommon} is used. <code>LayoutUtil.INF</code> is used for no auto wrap.
 	 */
 	public int getWrapAfter() {
 		return wrapAfter;
@@ -440,7 +438,7 @@ public final class LC implements Externalizable {
 	 * Sets after what cell the grid should always auto wrap.
 	 * 
 	 * @param count After what cell the grid should always auto wrap. If <code>0</code> the number of columns/rows in the
-	 *            {@link net.miginfocom.layout.AC} is used. <code>LayoutUtil.INF</code> is used for no auto wrap.
+	 *            {@link net.miginfocom.layout.ACCommon} is used. <code>LayoutUtil.INF</code> is used for no auto wrap.
 	 */
 	public void setWrapAfter(final int count) {
 		this.wrapAfter = count;
@@ -461,7 +459,7 @@ public final class LC implements Externalizable {
 	 * @return The current value. Never <code>null</code>. Check if not set with <code>.isUnset()</code>.
 	 * @since 3.5
 	 */
-	public BoundSize getPackWidth() {
+	public BoundSizeCommon getPackWidth() {
 		return packW;
 	}
 
@@ -480,8 +478,8 @@ public final class LC implements Externalizable {
 	 * @param size The new pack size. If <code>null</code> it will be corrected to an "unset" BoundSize.
 	 * @since 3.5
 	 */
-	public void setPackWidth(final BoundSize size) {
-		packW = size != null ? size : BoundSize.NULL_SIZE;
+	public void setPackWidth(final BoundSizeCommon size) {
+		packW = size != null ? size : BoundSizeCommon.NULL_SIZE;
 	}
 
 	/**
@@ -499,7 +497,7 @@ public final class LC implements Externalizable {
 	 * @return The current value. Never <code>null</code>. Check if not set with <code>.isUnset()</code>.
 	 * @since 3.5
 	 */
-	public BoundSize getPackHeight() {
+	public BoundSizeCommon getPackHeight() {
 		return packH;
 	}
 
@@ -518,12 +516,13 @@ public final class LC implements Externalizable {
 	 * @param size The new pack size. If <code>null</code> it will be corrected to an "unset" BoundSize.
 	 * @since 3.5
 	 */
-	public void setPackHeight(final BoundSize size) {
-		packH = size != null ? size : BoundSize.NULL_SIZE;
+	public void setPackHeight(final BoundSizeCommon size) {
+		packH = size != null ? size : BoundSizeCommon.NULL_SIZE;
 	}
 
 	/**
-	 * If there is a resize of the window due to packing (see {@link #setPackHeight(BoundSize)} this value, which is between 0f
+	 * If there is a resize of the window due to packing (see {@link #setPackHeight(BoundSizeCommon)} this value, which is between
+	 * 0f
 	 * and 1f,
 	 * decides where the extra/surpurflous size is placed. 0f means that the window will resize so that the upper part moves up
 	 * and the
@@ -539,7 +538,8 @@ public final class LC implements Externalizable {
 	}
 
 	/**
-	 * If there is a resize of the window due to packing (see {@link #setPackHeight(BoundSize)} this value, which is between 0f
+	 * If there is a resize of the window due to packing (see {@link #setPackHeight(BoundSizeCommon)} this value, which is between
+	 * 0f
 	 * and 1f,
 	 * decides where the extra/surpurflous size is placed. 0f means that the window will resize so that the upper part moves up
 	 * and the
@@ -555,7 +555,8 @@ public final class LC implements Externalizable {
 	}
 
 	/**
-	 * If there is a resize of the window due to packing (see {@link #setPackHeight(BoundSize)} this value, which is between 0f
+	 * If there is a resize of the window due to packing (see {@link #setPackHeight(BoundSizeCommon)} this value, which is between
+	 * 0f
 	 * and 1f,
 	 * decides where the extra/surpurflous size is placed. 0f means that the window will resize so that the left part moves left
 	 * and the
@@ -571,7 +572,8 @@ public final class LC implements Externalizable {
 	}
 
 	/**
-	 * If there is a resize of the window due to packing (see {@link #setPackHeight(BoundSize)} this value, which is between 0f
+	 * If there is a resize of the window due to packing (see {@link #setPackHeight(BoundSizeCommon)} this value, which is between
+	 * 0f
 	 * and 1f,
 	 * decides where the extra/surpurflous size is placed. 0f means that the window will resize so that the left part moves left
 	 * and the
@@ -595,7 +597,7 @@ public final class LC implements Externalizable {
 	 *         all sizes can be <code>null</code>.
 	 * @since 3.5
 	 */
-	public BoundSize getWidth() {
+	public BoundSizeCommon getWidth() {
 		return width;
 	}
 
@@ -608,8 +610,8 @@ public final class LC implements Externalizable {
 	 *            a bound size containing only null sizes.
 	 * @since 3.5
 	 */
-	public void setWidth(final BoundSize size) {
-		this.width = size != null ? size : BoundSize.NULL_SIZE;
+	public void setWidth(final BoundSizeCommon size) {
+		this.width = size != null ? size : BoundSizeCommon.NULL_SIZE;
 	}
 
 	/**
@@ -621,7 +623,7 @@ public final class LC implements Externalizable {
 	 *         all sizes can be <code>null</code>.
 	 * @since 3.5
 	 */
-	public BoundSize getHeight() {
+	public BoundSizeCommon getHeight() {
 		return height;
 	}
 
@@ -634,8 +636,8 @@ public final class LC implements Externalizable {
 	 *            a bound size containing only null sizes.
 	 * @since 3.5
 	 */
-	public void setHeight(final BoundSize size) {
-		this.height = size != null ? size : BoundSize.NULL_SIZE;
+	public void setHeight(final BoundSizeCommon size) {
+		this.height = size != null ? size : BoundSizeCommon.NULL_SIZE;
 	}
 
 	// ************************************************************************
@@ -645,23 +647,25 @@ public final class LC implements Externalizable {
 	/**
 	 * Short for, and thus same as, <code>.pack("pref", "pref")</code>.
 	 * <p>
-	 * Same functionality as {@link #setPackHeight(BoundSize)} and {@link #setPackWidth(net.miginfocom.layout.BoundSize)} only
-	 * this method returns <code>this</code> for chaining multiple calls.
+	 * Same functionality as {@link #setPackHeight(BoundSizeCommon)} and
+	 * {@link #setPackWidth(net.miginfocom.layout.BoundSizeCommon)} only this method returns <code>this</code> for chaining
+	 * multiple calls.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.5
 	 */
-	public LC pack() {
+	public LCCommon pack() {
 		return pack("pref", "pref");
 	}
 
 	/**
 	 * Sets the pack width and height.
 	 * <p>
-	 * Same functionality as {@link #setPackHeight(BoundSize)} and {@link #setPackWidth(net.miginfocom.layout.BoundSize)} only
-	 * this method returns <code>this</code> for chaining multiple calls.
+	 * Same functionality as {@link #setPackHeight(BoundSizeCommon)} and
+	 * {@link #setPackWidth(net.miginfocom.layout.BoundSizeCommon)} only this method returns <code>this</code> for chaining
+	 * multiple calls.
 	 * <p>
 	 * For a more thorough explanation of what this constraint does see the white paper or cheat Sheet at www.migcomponents.com.
 	 * 
@@ -670,9 +674,9 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.5
 	 */
-	public LC pack(final String width, final String height) {
-		setPackWidth(width != null ? ConstraintParser.parseBoundSize(width, false, false) : BoundSize.NULL_SIZE);
-		setPackHeight(height != null ? ConstraintParser.parseBoundSize(height, false, false) : BoundSize.NULL_SIZE);
+	public LCCommon pack(final String width, final String height) {
+		setPackWidth(width != null ? ConstraintParserCommon.parseBoundSize(width, false, false) : BoundSizeCommon.NULL_SIZE);
+		setPackHeight(height != null ? ConstraintParserCommon.parseBoundSize(height, false, false) : BoundSizeCommon.NULL_SIZE);
 		return this;
 	}
 
@@ -689,14 +693,14 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.5
 	 */
-	public LC packAlign(final float alignX, final float alignY) {
+	public LCCommon packAlign(final float alignX, final float alignY) {
 		setPackWidthAlign(alignX);
 		setPackHeightAlign(alignY);
 		return this;
 	}
 
 	/**
-	 * Sets a wrap after the number of columns/rows that is defined in the {@link net.miginfocom.layout.AC}.
+	 * Sets a wrap after the number of columns/rows that is defined in the {@link net.miginfocom.layout.ACCommon}.
 	 * <p>
 	 * Same functionality as {@link #setWrapAfter(int 0)} only this method returns <code>this</code> for chaining multiple calls.
 	 * <p>
@@ -704,7 +708,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public LC wrap() {
+	public LCCommon wrap() {
 		setWrapAfter(0);
 		return this;
 	}
@@ -717,7 +721,7 @@ public final class LC implements Externalizable {
 	 * @param count After what cell the grid should always auto wrap. If <code>0</code> the number of columns/rows in the
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public LC wrapAfter(final int count) {
+	public LCCommon wrapAfter(final int count) {
 		setWrapAfter(count);
 		return this;
 	}
@@ -730,7 +734,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public LC noCache() {
+	public LCCommon noCache() {
 		setNoCache(true);
 		return this;
 	}
@@ -743,7 +747,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public LC flowY() {
+	public LCCommon flowY() {
 		setFlowX(false);
 		return this;
 	}
@@ -756,7 +760,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public LC flowX() {
+	public LCCommon flowX() {
 		setFlowX(true);
 		return this;
 	}
@@ -769,7 +773,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public LC fill() {
+	public LCCommon fill() {
 		setFillX(true);
 		setFillY(true);
 		return this;
@@ -783,7 +787,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public LC fillX() {
+	public LCCommon fillX() {
 		setFillX(true);
 		return this;
 	}
@@ -796,7 +800,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public LC fillY() {
+	public LCCommon fillY() {
 		setFillY(true);
 		return this;
 	}
@@ -810,7 +814,7 @@ public final class LC implements Externalizable {
 	 * @param b <code>true</code> for forcing left-to-right. <code>false</code> for forcing right-to-left.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public LC leftToRight(final boolean b) {
+	public LCCommon leftToRight(final boolean b) {
 		setLeftToRight(b ? Boolean.TRUE : Boolean.FALSE);
 		return this;
 	}
@@ -823,7 +827,7 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	public LC rightToLeft() {
+	public LCCommon rightToLeft() {
 		setLeftToRight(Boolean.FALSE);
 		return this;
 	}
@@ -836,7 +840,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public LC bottomToTop() {
+	public LCCommon bottomToTop() {
 		setTopToBottom(false);
 		return this;
 	}
@@ -850,7 +854,7 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @since 3.7.2
 	 */
-	public LC topToBottom() {
+	public LCCommon topToBottom() {
 		setTopToBottom(true);
 		return this;
 	}
@@ -863,7 +867,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public LC noGrid() {
+	public LCCommon noGrid() {
 		setNoGrid(true);
 		return this;
 	}
@@ -876,7 +880,7 @@ public final class LC implements Externalizable {
 	 * 
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public LC noVisualPadding() {
+	public LCCommon noVisualPadding() {
 		setVisualPadding(false);
 		return this;
 	}
@@ -889,12 +893,12 @@ public final class LC implements Externalizable {
 	 * @param allSides The unit value to set for all sides. May be <code>null</code> which means that the default panel insets
 	 *            for the platform is used.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
-	 * @see #setInsets(UnitValue[])
+	 * @see #setInsets(UnitValueCommon[])
 	 */
-	public LC insetsAll(final String allSides) {
-		final UnitValue insH = ConstraintParser.parseUnitValue(allSides, true);
-		final UnitValue insV = ConstraintParser.parseUnitValue(allSides, false);
-		insets = new UnitValue[] {insV, insH, insV, insH}; // No setter to avoid copy again
+	public LCCommon insetsAll(final String allSides) {
+		final UnitValueCommon insH = ConstraintParserCommon.parseUnitValue(allSides, true);
+		final UnitValueCommon insV = ConstraintParserCommon.parseUnitValue(allSides, false);
+		insets = new UnitValueCommon[] {insV, insH, insV, insH}; // No setter to avoid copy again
 		return this;
 	}
 
@@ -906,10 +910,10 @@ public final class LC implements Externalizable {
 	 * 
 	 * @param s The string to parse. E.g. "10 10 10 10" or "20". If less than 4 groups the last will be used for the missing.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
-	 * @see #setInsets(UnitValue[])
+	 * @see #setInsets(UnitValueCommon[])
 	 */
-	public LC insets(final String s) {
-		insets = ConstraintParser.parseInsets(s, true);
+	public LCCommon insets(final String s) {
+		insets = ConstraintParserCommon.parseInsets(s, true);
 		return this;
 	}
 
@@ -931,12 +935,12 @@ public final class LC implements Externalizable {
 	 *            for this
 	 *            side for the platform will be used.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
-	 * @see #setInsets(UnitValue[])
+	 * @see #setInsets(UnitValueCommon[])
 	 */
-	public LC insets(final String top, final String left, final String bottom, final String right) {
-		insets = new UnitValue[] { // No setter to avoid copy again
-				ConstraintParser.parseUnitValue(top, false), ConstraintParser.parseUnitValue(left, true),
-				ConstraintParser.parseUnitValue(bottom, false), ConstraintParser.parseUnitValue(right, true)};
+	public LCCommon insets(final String top, final String left, final String bottom, final String right) {
+		insets = new UnitValueCommon[] { // No setter to avoid copy again
+				ConstraintParserCommon.parseUnitValue(top, false), ConstraintParserCommon.parseUnitValue(left, true),
+				ConstraintParserCommon.parseUnitValue(bottom, false), ConstraintParserCommon.parseUnitValue(right, true)};
 		return this;
 	}
 
@@ -948,10 +952,10 @@ public final class LC implements Externalizable {
 	 * 
 	 * @param align The align keyword or for instance "100px". E.g "left", "right", "leading" or "trailing".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
-	 * @see #setAlignX(UnitValue)
+	 * @see #setAlignX(UnitValueCommon)
 	 */
-	public LC alignX(final String align) {
-		setAlignX(ConstraintParser.parseUnitValueOrAlign(align, true, null));
+	public LCCommon alignX(final String align) {
+		setAlignX(ConstraintParserCommon.parseUnitValueOrAlign(align, true, null));
 		return this;
 	}
 
@@ -963,10 +967,10 @@ public final class LC implements Externalizable {
 	 * 
 	 * @param align The align keyword or for instance "100px". E.g "top" or "bottom".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
-	 * @see #setAlignY(UnitValue)
+	 * @see #setAlignY(UnitValueCommon)
 	 */
-	public LC alignY(final String align) {
-		setAlignY(ConstraintParser.parseUnitValueOrAlign(align, false, null));
+	public LCCommon alignY(final String align) {
+		setAlignY(ConstraintParserCommon.parseUnitValueOrAlign(align, false, null));
 		return this;
 	}
 
@@ -981,7 +985,7 @@ public final class LC implements Externalizable {
 	 * @see #alignX(String)
 	 * @see #alignY(String)
 	 */
-	public LC align(final String ax, final String ay) {
+	public LCCommon align(final String ax, final String ay) {
 		if (ax != null) {
 			alignX(ax);
 		}
@@ -1002,10 +1006,10 @@ public final class LC implements Externalizable {
 	 * @param boundsSize The <code>BoundSize</code> of the gap. This is a minimum and/or preferred and/or maximum size. E.g.
 	 *            <code>"50:100:200"</code> or <code>"100px"</code>.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
-	 * @see #setGridGapX(BoundSize)
+	 * @see #setGridGapX(BoundSizeCommon)
 	 */
-	public LC gridGapX(final String boundsSize) {
-		setGridGapX(ConstraintParser.parseBoundSize(boundsSize, true, true));
+	public LCCommon gridGapX(final String boundsSize) {
+		setGridGapX(ConstraintParserCommon.parseBoundSize(boundsSize, true, true));
 		return this;
 	}
 
@@ -1018,10 +1022,10 @@ public final class LC implements Externalizable {
 	 * @param boundsSize The <code>BoundSize</code> of the gap. This is a minimum and/or preferred and/or maximum size. E.g.
 	 *            <code>"50:100:200"</code> or <code>"100px"</code>.
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
-	 * @see #setGridGapY(BoundSize)
+	 * @see #setGridGapY(BoundSizeCommon)
 	 */
-	public LC gridGapY(final String boundsSize) {
-		setGridGapY(ConstraintParser.parseBoundSize(boundsSize, true, false));
+	public LCCommon gridGapY(final String boundsSize) {
+		setGridGapY(ConstraintParserCommon.parseBoundSize(boundsSize, true, false));
 		return this;
 	}
 
@@ -1038,7 +1042,7 @@ public final class LC implements Externalizable {
 	 * @see #gridGapX(String)
 	 * @see #gridGapY(String)
 	 */
-	public LC gridGap(final String gapx, final String gapy) {
+	public LCCommon gridGap(final String gapx, final String gapy) {
 		if (gapx != null) {
 			gridGapX(gapx);
 		}
@@ -1060,7 +1064,7 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setDebugMillis(int)
 	 */
-	public LC debug(final int repaintMillis) {
+	public LCCommon debug(final int repaintMillis) {
 		setDebugMillis(repaintMillis);
 		return this;
 	}
@@ -1079,7 +1083,7 @@ public final class LC implements Externalizable {
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 * @see #setHideMode(int)
 	 */
-	public LC hideMode(final int mode) {
+	public LCCommon hideMode(final int mode) {
 		setHideMode(mode);
 		return this;
 	}
@@ -1092,9 +1096,9 @@ public final class LC implements Externalizable {
 	 * @param width The width expressed as a <code>UnitValue</code>. E.g. "100px" or "200mm".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public LC minWidth(final String width) {
-		final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
-		setWidth(layoutUtil.derive(getWidth(), ConstraintParser.parseUnitValue(width, true), null, null));
+	public LCCommon minWidth(final String width) {
+		final LayoutUtilCommon layoutUtil = MigLayoutToolkitImpl.getMigLayoutUtil();
+		setWidth(layoutUtil.derive(getWidth(), ConstraintParserCommon.parseUnitValue(width, true), null, null));
 		return this;
 	}
 
@@ -1108,8 +1112,8 @@ public final class LC implements Externalizable {
 	 * @param width The width expressed as a <code>BoundSize</code>. E.g. "50:100px:200mm" or "100px".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public LC width(final String width) {
-		setWidth(ConstraintParser.parseBoundSize(width, false, true));
+	public LCCommon width(final String width) {
+		setWidth(ConstraintParserCommon.parseBoundSize(width, false, true));
 		return this;
 	}
 
@@ -1121,9 +1125,9 @@ public final class LC implements Externalizable {
 	 * @param width The width expressed as a <code>UnitValue</code>. E.g. "100px" or "200mm".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public LC maxWidth(final String width) {
-		final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
-		setWidth(layoutUtil.derive(getWidth(), null, null, ConstraintParser.parseUnitValue(width, true)));
+	public LCCommon maxWidth(final String width) {
+		final LayoutUtilCommon layoutUtil = MigLayoutToolkitImpl.getMigLayoutUtil();
+		setWidth(layoutUtil.derive(getWidth(), null, null, ConstraintParserCommon.parseUnitValue(width, true)));
 		return this;
 	}
 
@@ -1135,9 +1139,9 @@ public final class LC implements Externalizable {
 	 * @param height The height expressed as a <code>UnitValue</code>. E.g. "100px" or "200mm".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public LC minHeight(final String height) {
-		final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
-		setHeight(layoutUtil.derive(getHeight(), ConstraintParser.parseUnitValue(height, false), null, null));
+	public LCCommon minHeight(final String height) {
+		final LayoutUtilCommon layoutUtil = MigLayoutToolkitImpl.getMigLayoutUtil();
+		setHeight(layoutUtil.derive(getHeight(), ConstraintParserCommon.parseUnitValue(height, false), null, null));
 		return this;
 	}
 
@@ -1151,8 +1155,8 @@ public final class LC implements Externalizable {
 	 * @param height The height expressed as a <code>BoundSize</code>. E.g. "50:100px:200mm" or "100px".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public LC height(final String height) {
-		setHeight(ConstraintParser.parseBoundSize(height, false, false));
+	public LCCommon height(final String height) {
+		setHeight(ConstraintParserCommon.parseBoundSize(height, false, false));
 		return this;
 	}
 
@@ -1164,9 +1168,9 @@ public final class LC implements Externalizable {
 	 * @param height The height expressed as a <code>UnitValue</code>. E.g. "100px" or "200mm".
 	 * @return <code>this</code> so it is possible to chain calls. E.g. <code>new LayoutConstraint().noGrid().gap().fill()</code>.
 	 */
-	public LC maxHeight(final String height) {
-		final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
-		setHeight(layoutUtil.derive(getHeight(), null, null, ConstraintParser.parseUnitValue(height, false)));
+	public LCCommon maxHeight(final String height) {
+		final LayoutUtilCommon layoutUtil = MigLayoutToolkitImpl.getMigLayoutUtil();
+		setHeight(layoutUtil.derive(getHeight(), null, null, ConstraintParserCommon.parseUnitValue(height, false)));
 		return this;
 	}
 
@@ -1175,19 +1179,19 @@ public final class LC implements Externalizable {
 	// ************************************************
 
 	private Object readResolve() throws ObjectStreamException {
-		return MigLayoutToolkit.getMigLayoutUtil().getSerializedObject(this);
+		return MigLayoutToolkitImpl.getMigLayoutUtil().getSerializedObject(this);
 	}
 
 	@Override
 	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
-		final LayoutUtil layoutUtil = MigLayoutToolkit.getMigLayoutUtil();
+		final LayoutUtilCommon layoutUtil = MigLayoutToolkitImpl.getMigLayoutUtil();
 		layoutUtil.setSerializedObject(this, layoutUtil.readAsXML(in));
 	}
 
 	@Override
 	public void writeExternal(final ObjectOutput out) throws IOException {
-		if (getClass() == LC.class) {
-			MigLayoutToolkit.getMigLayoutUtil().writeAsXML(out, this);
+		if (getClass() == LCCommon.class) {
+			MigLayoutToolkitImpl.getMigLayoutUtil().writeAsXML(out, this);
 		}
 	}
 }

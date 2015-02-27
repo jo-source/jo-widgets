@@ -26,14 +26,14 @@
  * OF SUCH DAMAGE.
  *
  */
-package org.jowidgets.impl.layout.miglayout.common;
+package org.jowidgets.impl.layout.miglayout;
 
 /**
  * A class to extend if you want to provide more control over where a component is placed or the size of it.
  * <p>
  * Note! Returned arrays from this class will never be altered. This means that caching of arrays in these methods is OK.
  */
-public abstract class AbstractLayoutCallback {
+abstract class AbstractLayoutCallbackCommon {
 	/**
 	 * Returns a position similar to the "pos" the component constraint.
 	 * 
@@ -41,10 +41,10 @@ public abstract class AbstractLayoutCallback {
 	 *            <b>Should not be altered.</b>
 	 * @return The [x, y, x2, y2] as explained in the documentation for "pos". If <code>null</code> is returned nothing is done
 	 *         and this is the default.
-	 * @see UnitValue
-	 * @see net.miginfocom.layout.ConstraintParser#parseUnitValue(String, boolean)
+	 * @see UnitValueCommon
+	 * @see net.miginfocom.layout.ConstraintParserCommon#parseUnitValue(String, boolean)
 	 */
-	public UnitValue[] getPosition(final IComponentWrapper comp) {
+	public UnitValueCommon[] getPosition(final IComponentWrapperCommon comp) {
 		return null;
 	}
 
@@ -55,10 +55,10 @@ public abstract class AbstractLayoutCallback {
 	 *            <b>Should not be altered.</b>
 	 * @return The [width, height] as explained in the documentation for "width" and "height". If <code>null</code> is returned
 	 *         nothing is done and this is the default.
-	 * @see net.miginfocom.layout.BoundSize
-	 * @see net.miginfocom.layout.ConstraintParser#parseBoundSize(String, boolean, boolean)
+	 * @see net.miginfocom.layout.BoundSizeCommon
+	 * @see net.miginfocom.layout.ConstraintParserCommon#parseBoundSize(String, boolean, boolean)
 	 */
-	public BoundSize[] getSize(final IComponentWrapper comp) {
+	public BoundSizeCommon[] getSize(final IComponentWrapperCommon comp) {
 		return null;
 	}
 
@@ -68,5 +68,5 @@ public abstract class AbstractLayoutCallback {
 	 * 
 	 * @param comp The component wrapper that holds the actual component (JComponent is Swing and Control in SWT).
 	 */
-	public void correctBounds(final IComponentWrapper comp) {}
+	public void correctBounds(final IComponentWrapperCommon comp) {}
 }

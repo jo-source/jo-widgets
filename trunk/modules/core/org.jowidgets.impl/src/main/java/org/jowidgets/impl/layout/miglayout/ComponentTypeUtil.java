@@ -52,7 +52,6 @@ import org.jowidgets.api.widgets.IToolBarPopupButton;
 import org.jowidgets.api.widgets.IToolBarToggleButton;
 import org.jowidgets.api.widgets.ITree;
 import org.jowidgets.api.widgets.IValidationResultLabel;
-import org.jowidgets.impl.layout.miglayout.common.IComponentWrapper;
 
 final class ComponentTypeUtil {
 
@@ -61,63 +60,63 @@ final class ComponentTypeUtil {
 	static int getType(final IComponent component) {
 
 		if (isContainer(component)) {
-			return IComponentWrapper.TYPE_CONTAINER;
+			return IComponentWrapperCommon.TYPE_CONTAINER;
 		}
 		if (isButton(component)) {
-			return IComponentWrapper.TYPE_BUTTON;
+			return IComponentWrapperCommon.TYPE_BUTTON;
 		}
 		if (isLabel(component)) {
-			return IComponentWrapper.TYPE_LABEL;
+			return IComponentWrapperCommon.TYPE_LABEL;
 		}
 		if (isTextField(component)) {
-			return IComponentWrapper.TYPE_TEXT_FIELD;
+			return IComponentWrapperCommon.TYPE_TEXT_FIELD;
 		}
 		if (isTextArea(component)) {
-			return IComponentWrapper.TYPE_TEXT_AREA;
+			return IComponentWrapperCommon.TYPE_TEXT_AREA;
 		}
 		if (isList(component)) {
-			return IComponentWrapper.TYPE_LIST;
+			return IComponentWrapperCommon.TYPE_LIST;
 		}
 		if (isTable(component)) {
-			return IComponentWrapper.TYPE_TABLE;
+			return IComponentWrapperCommon.TYPE_TABLE;
 		}
 		if (isScrollPane(component)) {
-			return IComponentWrapper.TYPE_SCROLL_PANE;
+			return IComponentWrapperCommon.TYPE_SCROLL_PANE;
 		}
 		if (isImage(component)) {
-			return IComponentWrapper.TYPE_IMAGE;
+			return IComponentWrapperCommon.TYPE_IMAGE;
 		}
 		if (isPanel(component)) {
-			return IComponentWrapper.TYPE_PANEL;
+			return IComponentWrapperCommon.TYPE_PANEL;
 		}
 		if (isComboBox(component)) {
-			return IComponentWrapper.TYPE_COMBO_BOX;
+			return IComponentWrapperCommon.TYPE_COMBO_BOX;
 		}
 		if (isCheckBox(component)) {
-			return IComponentWrapper.TYPE_CHECK_BOX;
+			return IComponentWrapperCommon.TYPE_CHECK_BOX;
 		}
 		if (isProgressBar(component)) {
-			return IComponentWrapper.TYPE_PROGRESS_BAR;
+			return IComponentWrapperCommon.TYPE_PROGRESS_BAR;
 		}
 		if (isTree(component)) {
-			return IComponentWrapper.TYPE_TREE;
+			return IComponentWrapperCommon.TYPE_TREE;
 		}
 
 		if (isSlider(component)) {
-			return IComponentWrapper.TYPE_SLIDER;
+			return IComponentWrapperCommon.TYPE_SLIDER;
 		}
 		if (isSpinner(component)) {
-			return IComponentWrapper.TYPE_SPINNER;
+			return IComponentWrapperCommon.TYPE_SPINNER;
 		}
 		if (isScrollBar(component)) {
-			return IComponentWrapper.TYPE_SCROLL_BAR;
+			return IComponentWrapperCommon.TYPE_SCROLL_BAR;
 		}
 
 		if (isSeparator(component)) {
-			return IComponentWrapper.TYPE_SEPARATOR;
+			return IComponentWrapperCommon.TYPE_SEPARATOR;
 		}
 
-		return IComponentWrapper.TYPE_UNKNOWN;
+		return IComponentWrapperCommon.TYPE_UNKNOWN;
 	}
 
 	private static boolean isSeparator(final IComponent component) {
