@@ -32,16 +32,39 @@ import org.jowidgets.common.types.IVetoable;
 
 public interface IWindowListener {
 
+	/**
+	 * Will be invoked if the window becomes the active window
+	 */
 	void windowActivated();
 
+	/**
+	 * Will be invoked if the window was the active window and another window
+	 * becomes the active window now
+	 */
 	void windowDeactivated();
 
+	/**
+	 * Will be invoked if the window was iconfied
+	 */
 	void windowIconified();
 
+	/**
+	 * Will be invoked if the window was deiconfied
+	 */
 	void windowDeiconified();
 
+	/**
+	 * Will be invoked, if the window should be closed.
+	 * 
+	 * The closed operation can be vetoed with the given vetoable
+	 * 
+	 * @param vetoable The vetoable can be used to prohibit the closing of the window
+	 */
 	void windowClosing(IVetoable vetoable);
 
+	/**
+	 * Will be invoked if the window was closed
+	 */
 	void windowClosed();
 
 }

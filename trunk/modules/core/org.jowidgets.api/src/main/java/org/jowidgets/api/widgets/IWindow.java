@@ -36,7 +36,9 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 public interface IWindow extends IDisplay, IComponent, IWindowCommon {
 
 	/**
-	 * Centers the location relative to the parent display
+	 * Centers the location relative to the parent bounds
+	 * 
+	 * @see #getParentBounds()
 	 */
 	void centerLocation();
 
@@ -52,15 +54,38 @@ public interface IWindow extends IDisplay, IComponent, IWindowCommon {
 		final DESCRIPTOR_TYPE descriptor);
 
 	/**
-	 * Gets the child windows of this window
+	 * Gets the child windows of this window as a unmodifiable copy
 	 * 
-	 * @return all children of this window or an empty list if this window
-	 *         has no child windows
+	 * @return all children of this window, may be empty but never null
 	 */
 	List<IDisplay> getChildWindows();
 
+	/**
+	 * Sets the min pack size of the window.
+	 * 
+	 * If the window will be packed and a min pack size was defined
+	 * before, the window will not become smaller than the min pack size.
+	 * 
+	 * The min pack size can be used to avoid that window becomes to small by packing.
+	 * 
+	 * @param size The min pack size to set
+	 * 
+	 * @see #pack()
+	 */
 	void setMinPackSize(Dimension size);
 
+	/**
+	 * Sets the max pack size of the window.
+	 * 
+	 * If the window will be packed and a max pack size was defined
+	 * before, the window will not become larger than the max pack size.
+	 * 
+	 * The max pack size can be used to avoid that window becomes to big by packing.
+	 * 
+	 * @param size The max pack size to set
+	 * 
+	 * @see #pack()
+	 */
 	void setMaxPackSize(Dimension size);
 
 }

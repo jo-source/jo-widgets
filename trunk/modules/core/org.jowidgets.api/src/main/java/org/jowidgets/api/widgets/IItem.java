@@ -33,10 +33,25 @@ import org.jowidgets.common.widgets.IItemCommon;
 
 public interface IItem extends IWidget, IItemCommon {
 
+	/**
+	 * Gets the text of the item
+	 * 
+	 * @return The items text or null if no text is defined
+	 */
 	String getText();
 
+	/**
+	 * Gets the tooltip text of the item
+	 * 
+	 * @return The items tooltip text or null if no tooltip is defined
+	 */
 	String getToolTipText();
 
+	/**
+	 * Gets the icon of the item
+	 * 
+	 * @return The items icon or null if no icon is defined
+	 */
 	IImageConstant getIcon();
 
 }

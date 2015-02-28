@@ -32,10 +32,24 @@ import org.jowidgets.common.widgets.controller.IWindowObservable;
 
 public interface IWindowCommon extends IDisplayCommon, IComponentCommon, IWindowObservable {
 
+	/**
+	 * Gets the parent bounds of this window.
+	 * 
+	 * If the window is a root window, the bounds of the screen will be returned,
+	 * otherwise the bounds of the parent window will be returned.
+	 * 
+	 * @return The parent bounds, never null
+	 */
 	Rectangle getParentBounds();
 
+	/**
+	 * Resizes the window to its preferred size and layouts its underlying container
+	 */
 	void pack();
 
+	/**
+	 * Disposes the window
+	 */
 	void dispose();
 
 }
