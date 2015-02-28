@@ -27,8 +27,20 @@
  */
 package org.jowidgets.validation;
 
+/**
+ * A validator validates one or more conditions for a given value
+ * 
+ * @param <VALUE_TYPE> The type of the value this validator does validation for
+ */
 public interface IValidator<VALUE_TYPE> {
 
+	/**
+	 * Do the validation for a given value
+	 * 
+	 * @param value The value to validate, may be null
+	 * 
+	 * @return The validation result, never null
+	 */
 	IValidationResult validate(VALUE_TYPE value);
 
 }

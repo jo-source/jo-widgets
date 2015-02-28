@@ -30,7 +30,7 @@ package org.jowidgets.validation;
 public enum MessageType {
 
 	/**
-	 * Input is valid
+	 * Input is ok
 	 */
 	OK(true),
 
@@ -51,7 +51,7 @@ public enum MessageType {
 	INFO_ERROR(false),
 
 	/**
-	 * Input is not valid
+	 * Input is not valid because of a invalid user input
 	 */
 	ERROR(false);
 

@@ -29,32 +29,139 @@ package org.jowidgets.validation;
 
 import java.util.List;
 
+/**
+ * A validation result holds all validation messages of an validation.
+ * 
+ * A validation result is mutable, so messages can not be added or removed after creation.
+ * 
+ * Because ValidationMessages are designed imutable either, a validation result never changes after creation.
+ */
 public interface IValidationResult {
 
+	/**
+	 * Gets all validation messages as a unmodifiable list in order of their creation
+	 * 
+	 * @return All validation messages, may be empty but never null
+	 */
 	List<IValidationMessage> getAll();
 
+	/**
+	 * Gets all validation error messages as a unmodifiable list in order of their creation
+	 * 
+	 * @return All validation error messages, may be empty but never null
+	 */
 	List<IValidationMessage> getErrors();
 
+	/**
+	 * Gets all validation info error messages as a unmodifiable list in order of their creation
+	 * 
+	 * @return All validation info error messages, may be empty but never null
+	 */
 	List<IValidationMessage> getInfoErrors();
 
+	/**
+	 * Gets all validation warning messages as a unmodifiable list in order of their creation
+	 * 
+	 * @return All validation warning messages, may be empty but never null
+	 */
 	List<IValidationMessage> getWarnings();
 
+	/**
+	 * Gets all validation info messages as a unmodifiable list in order of their creation
+	 * 
+	 * @return All validation info messages, may be empty but never null
+	 */
 	List<IValidationMessage> getInfos();
 
+	/**
+	 * Gets the first message of the worst MessageType this result has.
+	 * 
+	 * In many cases only the first error is relevant and fill be shown up to the user
+	 * 
+	 * @return The first worst message, never null
+	 */
 	IValidationMessage getWorstFirst();
 
+	/**
+	 * Checks if this result is valid.
+	 * 
+	 * A result is valid if it has no error or info error messages.
+	 * 
+	 * Attention: Be careful not this mix up with the {@link #isOk()} Method.
+	 * A result may be valid but not ok because it has warnings or infos.
+	 * 
+	 * @return True if valid, false otherwise
+	 */
 	boolean isValid();
 
+	/**
+	 * Returns true if the result has no messages or only messages with type ok.
+	 * 
+	 * Attention: Be careful not this mix up with the {@link #isValid()} Method.
+	 * A result may be valid but not ok because it has warnings or infos.
+	 * 
+	 * @return The if the result is ok
+	 */
 	boolean isOk();
 
-	IValidationResult withMessage(final IValidationMessage text);
+	/**
+	 * Creates a new validation result based on this result with adding a new message.
+	 * 
+	 * Remark: This validation result remains unchanged by this operation, so the result must
+	 * be assigned explicitly to an variable or constant.
+	 * 
+	 * @param message The message to add, must not be null
+	 * 
+	 * @return The new validation result, never null
+	 */
+	IValidationResult withMessage(final IValidationMessage message);
 
+	/**
+	 * Creates a new validation result based on this result with adding a error message.
+	 * 
+	 * Remark: This validation result remains unchanged by this operation, so the result must
+	 * be assigned explicitly to an variable or constant.
+	 * 
+	 * @param message The text of the message to add
+	 * 
+	 * @return The new validation result, never null
+	 */
 	IValidationResult withError(final String text);
 
+	/**
+	 * Creates a new validation result based on this result with adding a info error message.
+	 * 
+	 * Remark: This validation result remains unchanged by this operation, so the result must
+	 * be assigned explicitly to an variable or constant.
+	 * 
+	 * @param message The text of the message to add
+	 * 
+	 * @return The new validation result, never null
+	 */
 	IValidationResult withInfoError(final String text);
 
+	/**
+	 * Creates a new validation result based on this result with adding a warning message.
+	 * 
+	 * Remark: This validation result remains unchanged by this operation, so the result must
+	 * be assigned explicitly to an variable or constant.
+	 * 
+	 * @param message The text of the message to add
+	 * 
+	 * @return The new validation result, never null
+	 */
 	IValidationResult withWarning(final String text);
 
+	/**
+	 * Creates a new validation result based on this result with adding a info message.
+	 * 
+	 * Remark: This validation result remains unchanged by this operation, so the result must
+	 * be assigned explicitly to an variable or constant.
+	 * 
+	 * @param message The text of the message to add
+	 * 
+	 * @return The new validation result, never null
+	 */
 	IValidationResult withInfo(final String text);
 
 	IValidationResult withError(final String context, final String text);

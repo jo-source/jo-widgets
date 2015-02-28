@@ -28,12 +28,30 @@
 
 package org.jowidgets.validation;
 
+/**
+ * A IValidateable is an Object that can validate its own state.
+ */
 public interface IValidateable {
 
+	/**
+	 * Does the validation
+	 * 
+	 * @return The validation result, must not be null
+	 */
 	IValidationResult validate();
 
+	/**
+	 * Adds a validation condition listener
+	 * 
+	 * @param listener The listener to add
+	 */
 	void addValidationConditionListener(IValidationConditionListener listener);
 
+	/**
+	 * Removes a validation condition listener
+	 * 
+	 * @param listener The listener to remove
+	 */
 	void removeValidationConditionListener(IValidationConditionListener listener);
 
 }
