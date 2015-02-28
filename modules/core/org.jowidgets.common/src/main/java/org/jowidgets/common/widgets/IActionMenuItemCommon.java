@@ -32,6 +32,11 @@ import org.jowidgets.common.types.Accelerator;
 
 public interface IActionMenuItemCommon extends IMenuItemCommon, IActionItemCommon {
 
+	/**
+	 * Sets the key combination which should invoke the menu items actions listener.
+	 * 
+	 * @param accelerator The accelerator to set, may be null
+	 */
 	void setAccelerator(Accelerator accelerator);
 
 }

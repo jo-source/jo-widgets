@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.base.delegate;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -191,7 +192,7 @@ public class WindowDelegate {
 	}
 
 	public List<IDisplay> getChildWindows() {
-		return new LinkedList<IDisplay>(childWindows);
+		return Collections.unmodifiableList(new LinkedList<IDisplay>(childWindows));
 	}
 
 	public void correctPosition() {

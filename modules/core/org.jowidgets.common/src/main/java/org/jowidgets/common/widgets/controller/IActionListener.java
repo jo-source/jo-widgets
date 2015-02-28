@@ -29,6 +29,9 @@ package org.jowidgets.common.widgets.controller;
 
 public interface IActionListener {
 
+	/**
+	 * Will be invoked if an action was performed
+	 */
 	void actionPerformed();
 
 }

@@ -36,25 +36,52 @@ import java.util.List;
 
 import org.jowidgets.util.Assert;
 
+/**
+ * This class defines a key accelerator consisting of an key and a set of key modifiers
+ */
 public final class Accelerator {
 
 	private final Character character;
 	private final VirtualKey virtualKey;
 	private final List<Modifier> modifier;
 
+	/**
+	 * Creates a new key accelerator
+	 * 
+	 * @param virtualKey The virtual key to use
+	 * @param modifier The modifier keys to use
+	 */
 	public Accelerator(final VirtualKey virtualKey, final Modifier... modifier) {
 		this(virtualKey, Arrays.asList(modifier));
 	}
 
+	/**
+	 * Creates a new key accelerator
+	 * 
+	 * @param virtualKey The virtual key to use
+	 * @param modifier The modifier keys to use
+	 */
 	public Accelerator(final VirtualKey virtualKey, final Collection<Modifier> modifier) {
 		this(null, virtualKey, modifier);
 		Assert.paramNotNull(virtualKey, "virtualKey");
 	}
 
+	/**
+	 * Creates a new key accelerator
+	 * 
+	 * @param virtualKey The character to use
+	 * @param modifier The modifier keys to use
+	 */
 	public Accelerator(final char key, final Modifier... modifier) {
 		this(key, Arrays.asList(modifier));
 	}
 
+	/**
+	 * Creates a new key accelerator
+	 * 
+	 * @param virtualKey The character to use
+	 * @param modifier The modifier keys to use
+	 */
 	public Accelerator(final char key, final Collection<Modifier> modifier) {
 		this(key, null, modifier);
 	}

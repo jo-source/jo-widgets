@@ -30,6 +30,9 @@ package org.jowidgets.common.types;
 
 public interface IVetoable {
 
+	/**
+	 * Indicates a veto for the operation
+	 */
 	void veto();
 
 }

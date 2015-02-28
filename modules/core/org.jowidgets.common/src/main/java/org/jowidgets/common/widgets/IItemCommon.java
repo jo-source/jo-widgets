@@ -32,10 +32,25 @@ import org.jowidgets.common.image.IImageConstant;
 
 public interface IItemCommon extends IWidgetCommon {
 
+	/**
+	 * Sets the items text
+	 * 
+	 * @param text The text to set, may be null
+	 */
 	void setText(String text);
 
+	/**
+	 * Sets the items tooltip text
+	 * 
+	 * @param text The text to set
+	 */
 	void setToolTipText(String text);
 
+	/**
+	 * Sets a icon for the item
+	 * 
+	 * @param icon The icon to set
+	 */
 	void setIcon(IImageConstant icon);
 
 }

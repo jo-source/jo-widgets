@@ -32,6 +32,16 @@ import org.jowidgets.common.widgets.IDisplayCommon;
 
 public interface IDisplay extends IWidget, IDisplayCommon {
 
+	/**
+	 * Sets the parent window.
+	 * 
+	 * If the parent is already set, a IllegalStateException will be throw
+	 * 
+	 * This method is only for internal use,
+	 * because at the moment windows are not reparentable
+	 * 
+	 * @param parent The parent to set
+	 */
 	void setParent(IWindow parent);
 
 	@Override
