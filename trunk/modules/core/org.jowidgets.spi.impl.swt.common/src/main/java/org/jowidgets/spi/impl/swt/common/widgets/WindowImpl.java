@@ -76,6 +76,9 @@ public class WindowImpl extends SwtWindow implements IWindowSpi {
 						if (!veto && !getUiReference().isDisposed()) {
 							getUiReference().setVisible(false);
 						}
+						else {
+							return;
+						}
 					}
 					else {
 						return;
