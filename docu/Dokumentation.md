@@ -95,16 +95,51 @@ In jowidgets werden diese Schnittstellen immer durch Java Interfaces abgebildet.
 
 ## Widget Hierarchie{#widget_hierarchy}
 
-Folgende Abbildungen zeigt die konzeptionelle (nicht vollständige) Widget Hierarchie von jowidgets. Widgets teilen sich auf oberster Ebene in Komponenten (Component) und Items mit Menüs auf.
+Folgende Abbildungen zeigt die konzeptionelle (nicht vollständige) Widget Hierarchie von jowidgets. [Widgets](#widget_interface) teilen sich auf oberster Ebene in Komponenten ([Component](#component_interface)) und [Items mit Menüs](#menus_and_items) auf.
 
 
 ![Widget Hierarchie / Components](images/widgets_hierarchy_1.gif "Jowidgets Widget Hierarchie / Components")
 
-Komponenten sind Fenster, Controls, Container oder InputComponents. Container enthalten Controls bzw. Controls sind Elemente von Containern. InputComponents liefern eine Nutzereingabe für einen definierten Datentyp und stellen diesen Wert dar. Dieser kann sowohl einfach sein (z.B. `String`, `Integer`,`Date`, ...) als auch komplex (z.B. `Person`, `Company`, `Rule`, ...). 
+Komponenten sind [Fenster](#display_interface), [Controls](#control_interface), [Container](#container_interface) oder [InputComponents](#input_component_interface). Container enthalten Controls bzw. Controls sind Elemente von Containern. InputComponents liefern eine Nutzereingabe für einen definierten Datentyp und stellen diesen Wert dar. Dieser kann sowohl einfach sein (z.B. `String`, `Integer`,`Date`, ...) als auch komplex (z.B. `Person`, `Company`, `Rule`, ...). 
 
 ![Widget Hierarchie / Items](images/widgets_hierarchy_2.gif "Jowidgets Widget Hierarchie / Items")
 
-Items sind die Elemente von Menüs oder Toolbars. Eine MenuBar enthält Menüs.
+[Items](#item_interface) sind zum Einen die Elemente von [Menüs](#menus_and_items) oder [Toolbars](#toolbar_widget). Weitere Items sind TabItems, also die _Reiter_ eines [TabFolder](#tabFolder) sowie die Nodes eines [Tree](#tree_widget)^[Dieser Aspekt fehlt in der Abbildung]. Eine [MenuBar](#menu_bar) enthält [Menüs](#menus_and_items).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -771,6 +806,48 @@ Für ein tieferes Verständnis von Rwt sei auf die [RAP / RWT Dokumentation](htt
 
 Weitere Information zum Thema jowidgets und RAP / RWT finden sich im Abschnitt [Jowidgets und RAP](#jowidgets_rap)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Jowidgets Basisfunktionen
 
 ## Das Jowidgets Toolkit {#jowidgets_toolkit}
@@ -1081,6 +1158,25 @@ Liefert die Info, ob bestimmte Widgets unterstützt werden. Derzeit betrift dies
 Liefert die Information, ob die verwendete SPI Implementierung eine native Mig Layout Implementierung bietet. Nur für interne Zwecke relevant. Siehe dazu auch [Mig Layout](#mig_layout)
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Der Application Runner {#application_runner}
 
 Der Application Runner dienst zum Starten einer jowidgets standalone Applikation. Standalone bedeutet, dass die initialen Widgets sowie der Event Dispatcher Thread über die Jowidget API erzeugt werden. 
@@ -1197,6 +1293,24 @@ In der Praxis übergibt man die `IUiThreadAccess` Instanz einfach an den anderen
 Hinweis: Das obige Beispiel wurde bewusst vereinfacht. Es fehlen u.A. wichtige Aspekte wie Fehlerbehandlung oder das Abbrechen der Berechnung.
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## BluePrints{#blue_prints}
 
 BluePrints werden benötigt, um Widgets zu erzeugen. Siehe auch [HelloWorldApplication - Der common Ui Code](#hello_world_common_code)
@@ -1270,9 +1384,219 @@ Das folgende Beispiel zeigt die Wiederverwendung eines Label BluePrint:
 
 Das Alignment, die Farbe sowie das Icon wird nur ein Mal definiert und daraus anschließend drei Label Widgets mit unterschiedlichem Text erzeugt.
 
+
+
+
+
+
+## Die Validation API{#validation_api}
+
+Die Validation API bietet Schnittstellen und Funktionen für die Validierung von Objekten und findet zum Beispiel Verwendung beim [InputField](#input_field), dem [InputComposite](#input_composite), dem [InputDialog](#input_dialog) oder dem [ValidationLabel](#validation_label). Darüber hinaus kann die Validation API auch für die Verwendung eigener [Komponenten](#component_interface) herangezogen werden. 
+
+Die Validation API befindet sich im Modul `org.jowidgets.validation`. Dieses hat weder jowidgets interne noch externe transitive Abhängigkeiten. Insbesondere hat sie dadurch auch keine Abhängigkeiten auf UI Aspekte und kann somit auch für die serverseitige Validierung herangezogen werden. 
+
+Sie bildet die Basis für die [jo-client-platform](http://code.google.com/p/jo-client-platform/) Bean Validation, welche Adapter für die [Javax Bean Validation (JSR 303)](http://beanvalidation.org/) bereitstellt. 
+
+Im Vergleich zu einer Bean Validation API liefert die Validation API keine besonderen Aspekte bezüglich der Validierung von Properties eines Beans, sondern ausschließlich Aspekte für die Validierung von Objekten. Diese können natürlich sowohl Beans als Bean Properties sein. Die Validation API ist damit allgemeiner als eine Bean Validation API.
+
+Die jowidgets Validation API unterstützt im Vergleich zur Javax Bean Validation API eine differenzierte Unterscheidung von Fehlertypen. Neben `ok` und `error` gibt es weitere Typen wie `warning`, `info`, etc. (siehe auch [Message Types](#validation_message_type)).
+
+Die Validation API wurde nicht entworfen um Javax Bean Validation zu ersetzen, sondern um damit zu _koexistieren_. Javax Bean Validatoren lassen sich zum Beispiel einfach auf [jo-client-platform](http://code.google.com/p/jo-client-platform/) Bean Validatoren adaptieren. Siehe zum Beispiel [BeanPropertyValidatorAdapter](https://code.google.com/p/jo-client-platform/source/browse/trunk/modules/core/org.jowidgets.cap.common/src/main/java/org/jowidgets/cap/common/impl/BeanPropertyValidatorAdapter.java) 
+
+### Die Schnittstelle IValidator{#validator_interface}
+
+Ein Validator validiert eine oder mehrere Bedingungen für einen gegebenen Wert. Die Schnittstelle sieht wie folgt aus:
+
+~~~{.java .numberLines startFrom="1"}
+public interface IValidator<VALUE_TYPE> {
+
+	IValidationResult validate(VALUE_TYPE value);
+
+}
+~~~
+
+Der zu validierende Wert kann `null` sein. Das Ergebnis einer Validierung muss __ungleich null__ sein.
+
+Das folgende Beispiel implementiert einen OkValidator:
+
+~~~{.java .numberLines startFrom="1"}
+public final class OkValidator<VALUE_TYPE> implements IValidator<VALUE_TYPE> {
+
+	@Override
+	public IValidationResult validate(final VALUE_TYPE value) {
+		return ValidationResult.ok();
+	}
+
+}
+~~~
+
+
+Ein [Validation Result](#validation_result) besteht aus einer Liste von [Validation Messages](#validation_message) welche einen [Message Type](#validation_message_type) haben.
+
+### Message Type{#validation_message_type}
+
+Die Enum `org.jowidgets.validation.MessageType` liefert die möglichen Message Typen. Diese werden in der folgenden Tabelle dargestellt:
+
+     Type           Valid    
+----------------  -----------   
+OK                   yes
+INFO                 yes
+WARNING              yes
+INFO_ERROR            no
+ERROR                 no
+
+Die Message Typen sind nach ihrem Schweregrad (Severity) sortiert, wobei `Error` der _schwerste_ Fehler ist. In der Spalte _Valid_ wird angegeben, ob der validierte Wert als _valide_ einstuft wird. Valide Werte können weiter verarbeitet werden, zum Beispiel indem sie in die Datenbank geschrieben, oder für eine andersartige Transaktion verwendet werden. Nicht valide Werte sind abzulehnen. 
+
+Es folgt eine kurze Beschreibung der Semantik der einzelnen Message Typen:
+
+*  Ein [Validation Result](#validation_result) hat gar keine oder genau eine __OK__ Message ohne Text, wenn die Validierung erfolgreich war und es keine weiteren Informationen oder Warnungen zur Validierung gibt. Per Konvention hat eine OK Message keinen Message Text und Context.
+
+*  Der Typ __INFO__ kann verwendet werden, um Informationen anzuzeigen, wie zum Beispiel: "Die Angabe ist freiwillig", "Eingabe korrekt" oder "Gut gemacht!".
+
+*  Messages vom Typ __WARNING__ können verwendet werden, wenn der Wert zwar (technisch) valide ist, es sich aber eventuell um einen Irrtum handelt, zum Beispiel weil der Wert ungewöhnlich erscheint. Auch kann der Nutzer über zusätzliche Folgen gewarnt werden, falls die Eingabe so übernommen wird. Beispiele für Message Texte sind: "Möchten die wirklich 100 Fernseher bestellen?", "Die Maße liegen außerhalb des Normbereichs", "Bei dieser Bestellmenge fallen zusätzliche Gebühren an!", "Für diesen Artikel kann keine UsSt ausgewiesen werden!".
+
+*  Der Typ __INFO_ERROR__ kann für Fehler verwendet werden, bei denen der Wert zwar technisch nicht valide ist (und somit auch nicht akzeptiert wird), der Nutzer aber bisher nichts falsch gemacht hat. Dies gilt zum Beispiel für Pflichtfelder, deren Editierung noch nicht begonnen wurde oder für Eingaben, die zum Beispiel durch Ergänzung noch richtig werden könnten. Beispiele wären: "Pflichtangabe", "Bitte vervollständigen Sie die Eingabe".  
+
+*  Der Typ __ERROR__ gilt für alle anderen Fehler.
+
+Die Typen `INFO` und `INFO_ERROR` wurden Aufgrund von Kundenfeedback eingeführt. So wollten Kunden neben negativen auch positives Feedback beim Ausfüllen einer Maske haben, um sich bestätigt zu fühlen, alles richtig gemacht zu haben. Des Weiteren wurde bemängelt, dass eine Maske zum Erzeugen eines Datensatzes mit Pflichtfeldern bereits beim Öffnen mit etlichen Fehlern angezeigt wurde, obwohl man offensichtlich doch noch gar nichts falsch gemacht habe. Meldungen vom Typ `INFO_ERROR` enthalten daher eher Information, was zu tun ist, damit es richtig wird und werden in der Regel (konfigurierbar) nicht mit roter Farbe angezeigt. Meldungen von Typ `ERROR` geben eher an, was falsch ist. Ein gutes Beispiel für einen __schlechten__ `ERROR` Text wäre: "Geben sie einen gültigen Wert ein", besser wäre "Es sind nicht mehr als 20 Zeichen erlaubt".
+
+Die Existenz der Fehlertypen bedeutet nicht, dass auch allen Typen Verwendung finden müssen. Für einige Anwendungsfälle reicht eventuell `OK==richtig` und `ERROR==falsch` aus.
+
+#### Der Valid Status
+
+Die Enum `MessageType` bietet folgende Methode, um zu prüfen, ob der Typ zur Klasse der validen Messages gehört oder nicht.
+
+~~~
+	public boolean isValid() {...}
+~~~
+
+Die Werte werden anhand der oben angezeigten Tabelle zurückgegeben.
+
+#### Vergleichsmethoden der Enum MessageType
+
+Die Enum `MessageType` bietet folgende Methoden, um den Schweregrad (Severity) zweier Message Types zu vergleichen.
+
+~~~
+	public boolean equalOrWorse(final MessageType messageType) {...}
+
+	public boolean worse(final MessageType messageType) {...}
+~~~
+
+Die Methode `equalOrWorse` liefert `true` zurück, falls der MessageType die gleiche oder eine höhere Severity hat, als der übergebene. Die Methode `worse()` liefert `true` zurück, falls der MessageType eine höhere Severity hat, als der übergebene.
+
+Beispiel:
+
+~~~
+	System.out.println(MessageType.ERROR.equalOrWorse(MessageType.WARNING));
+	System.out.println(MessageType.WARNING.equalOrWorse(MessageType.ERROR));
+~~~
+
+Ergebnis:
+
+~~~
+	true
+	false
+~~~
+
+
+### Validation Message{#validation_message}
+
+Eine `IValidationMessage` stellt eine einzelne Nachricht eines [`IValidationResult`](#validation_result) bereit. Eine Validation Message ist imutable, das heißt die Properties können nachträglich nicht mehr geändert werden. Die Schnittstelle sieht wie folgt aus:
+
+~~~{.java .numberLines startFrom="1"}
+public interface IValidationMessage {
+
+	MessageType getType();
+
+	String getText();
+
+	String getContext();
+
+	IValidationMessage withContext(String context);
+
+	boolean equalOrWorse(final IValidationMessage message);
+
+	boolean worse(final IValidationMessage message);
+}
+~~~
+
+Die Methode `getType()` liefert den [`MessageType`](#validation_message_type) zurück. Dieser ist nie `null`. Der Message Text (`getText()`) liefert den eigentliche Fehler oder Info Text. Dieser kann `null` sein, was jedoch nur für Fehler vom Typ `OK` angeraten wird. Der `context` gibt an, wo der Fehler aufgetreten ist. Das kann zum Beispiel der Name des Attributes einer Eingabemaske sein. Auch der Context kann `null` sein.
+
+Mit Hilfe der Methode withContext() kann eine Kopie der Message erstellt werden, welche den übergeben `context` als neuen `context` bekommt.
+
+Die Methode `equalOrWorse()` und `worse()` vergleichen den Schweregrad (Severity) zweier Messages, analog zu den Methoden gleichen Namens auf der Enum [MessageType](#validation_message_type).
+
+### Validation Result{#validation_result}
+
+Ein Validation Result bündelt das Ergebnis einer Validierung und besteht aus 0 bis n [Validation Messages](#validation_message), welche alle einen unterschiedlichen [Message Type](#validation_message_type) haben können. Ein ValidationResult ist imutable, wodurch sichergestellt ist, dass sich ein einmal ausgewertetes Ergebnis nicht mehr ändert.
+
+#### Zugriff auf die Validation Messages
+
+Für den Zugriff auf die einzelnen Messages bietet die Schnittstelle `IValidationResult` die folgenden Methoden:
+
+~~~
+	List<IValidationMessage> getAll();
+
+	List<IValidationMessage> getErrors();
+
+	List<IValidationMessage> getInfoErrors();
+
+	List<IValidationMessage> getWarnings();
+
+	List<IValidationMessage> getInfos();
+~~~
+
+Die Methode getAll() liefert alle Messages, die anderen Methoden liefern die Methoden des entsprechenden Typs. Die Ergebnisliste ist _unmodifieable_. Die Default Implementierung erzeugt die Listen _lazy_ bei der ersten Anfrage. (Das gilt auch für die `All` Liste.) Falls man mit der [First Worst Message](#first_worst_validation_message) auskommt, kann das Rechenleistung und Speicher sparen.
+
+#### First Worst Message{#first_worst_validation_message} 
+
+In einigen Anwendungsfällen kann es ausreichen, nur die erste aufgetretenen Message mit höchstem Schweregrad anzuzeigen. Dazu kann die folgende Methode auf einem `IValidationResult` verwendet werden:
+
+~~~
+	IValidationMessage getWorstFirst();
+~~~
+
+Diese Methode liefert __immer__ eine Message zurück. Gibt es keine __echten__ Messages, wird eine Message vom Typ `OK` zurückgegeben. Diese hat per Konvention keinen Message Text und Message Context. Ansonsten wird die Message zurückgegeben, welche den höchsten Schweregrad hat. Existieren mehrere Messages mit diesem Schweregrad, wird die herangezogen, welche als erstes aufgetreten ist, bzw. dem Ergebnis hinzugefügt wurde. 
+
+Die Default Implementierung aktualisiert den Wert immer direkt beim Hinzufügen neuer Messages (Beim [Message Chaining](#validation_message_chaining) oder mit Hilfe des [Validation Result Builder](#validation_result_builder)), so dass dieser nicht explizit berechnet werden muss. 
+
+__Die Abfrage der First Worst Message ist also effizienter als die Verwendung der Message Listen__
+
+#### Gesamtergebnis
+
+In bestimmten Fällen sind die eigentlichen Messages gar nicht relevant, sondern nur, ob das Ergebnis valide ist oder nicht. Dafür kann die folgende Convenience Methode verwendet werden:
+
+~~~
+	boolean isValid();
+~~~
+
+Diese gibt `false` zurück, falls es mindestens eine Messages gibt, welche nicht valid ist und ansonsten `true`.
+
+Die Methode:
+
+~~~
+	boolean isOk();
+~~~
+
+liefert `false` zurück, falls es mindestens eine Message mit Schweregrad `INFO` oder höher gibt, und sonst `true`
+
+#### Message Chaining{#validation_message_chaining}
+
+#### Validation Result Builder{#validation_result_builder}
+
+### Validator Composite
+
+### IValidatable{#validatetable_interface}
+
+
 ## Allgemeine Widget Schnittstellen
 
 Der folgende Abschnitt enthält eine Übersicht über die allgemeinen Widget Schnittstellen und deren Methoden innerhalb der [Widget Hierarchie](#widget_hierarchy). Für weitere Informationen sei auf die [Jowidgets API Spezifikation][API_DOC] verwiesen.
+
+
+
+
 
 ### Die Schnittstelle IWidget{#widget_interface}
 
@@ -1329,6 +1653,14 @@ Für zusammengesetzte (Composite) Widgets wird das _Root Widget_ zurückgegeben,
 ~~~
 
 Mit Hilfe der Methode `dispose()` kann ein Widgets _disposed_ werden, wenn man es nicht mehr benötigt. Ein Widget, das _disposed_ wurde, kann nicht mehr verwendet werden. Wird zum Beispiel ein Fenster _disposed_ wird es auch geschlossen. Wird ein Control disposed, wird es auch aus seinem Container entfernt. Mit Hilfe eines `IDisposeListener` kann man sich als Observer registrieren, um über das _Dispose_ eines Widgets informiert zu werden.
+
+
+
+
+
+
+
+
 
 ### Die Schnittstelle IComponent{#component_interface}
 
@@ -1731,6 +2063,14 @@ Zur Umrechnung von Koordinaten in ein Koordinatensystem einer anderen Komponente
 	Position toComponent(final Position componentPosition, final IComponentCommon component);
 ~~~
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 ### Die Schnittstelle IContainer{#container_interface}
 
 Ein Container ist eine Komponente, welche eine Liste von [Controls](#control_interface) enthält. Die Schnittstelle `IContainer` erweitert [`IComponent`](#component_interface) und somit auch [`IWidget`](#widget_interface). Die Controls eines Containers werden mit Hilfe eines [Layouters](#layouting) angeordnet. Es folgt eine Beschreibung der wichtigsten Methoden.
@@ -2096,6 +2436,17 @@ Für alle Labels eines Containers wird ein Kontextmenü (`labelMenu`) hinzugefü
 
 Das Kontextmenü könnte zum Beispiel Aktionen enthalten, welche den Inhalt des Labels in die Zwischenablage kopieren oder dessen Farbe ändern, etc. 
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 ### Die Schnittstelle IControl{#control_interface}
 
 Die Schnittstelle `IControl` stellt die gemeinsamen Funktionen für alle Controls bereits. `IControl` erweitert [`IComponent`](#component_interface) und somit auch [`IWidget`](#widget_interface). 
@@ -2180,11 +2531,198 @@ Mit den folgenden Methoden kann einem Control _Drag and Drop_ Funktionalität hi
 
 Für weitere Informationen sei auf den Abschnitt [Drag and Drop](#drag_and_drop) verwiesen.
 
+
+
+
+### Die Schnittstelle IDisplay{#display_interface}
+
+Die Schnittstelle `IDisplay` leitet von [`IWidget`](#widget_interface) ab und ist die Basisschnittstelle für alle eigenständig anzeigbaren Widgets. Dazu zählen alle Arten von Fenstern und Dialogen. Die Schnittstelle `IDisplay` hat selbst keine zusätzlichen Methoden, um beim Entwurf von Dialog oder Fensterschnittstellen eine größtmögliche Freiheit zu haben, und nicht Methoden zu erben, deren Implementierung keinen Sinn macht und dadurch zu einer `UnsupportedOpperationException` führen würde.
+
+Einige Dialoge leiten daher bewusst nicht von [IWindow](#window_interface) ab, weil zum Beispiel das Erzeugen von Kind Fenstern nicht möglich sein soll, oder der Aufruf der Methode `pack()` keinen Effekt hätte. Dazu zählen zum Beispiel der [File Chooser](#file_chooser), der [Directory Chooser](#directory_chooser), der [Message Dialog](#message_dialog), der [Question Dialog](#question_dialog) und weitere.
+
+
+
+### Die Schnittstelle IWindow{#window_interface}
+
+Die Schnittstelle `IWindow` stellt gemeinsamen Funktionen für Fenster bereits. `IWindow` erweitert [`IDisplay`](#display_interface) und somit auch [`IWidget`](#widget_interface). Es folgt eine kurze Übersicht der wichtigsten Methoden:
+
+#### Kind Fenster
+
+Ein Kind Fenster lässt sich mit Hilfe der folgenden Methode erzeugen: 
+
+~~~
+	<WIDGET_TYPE extends IDisplay, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> 
+		WIDGET_TYPE createChildWindow(final DESCRIPTOR_TYPE descriptor);
+~~~
+
+Ein Kind Fenster wird mit Hilfe eines BluePrint (IWidgetDescriptor) erzeugt. Dieses wird der Methode `createChildWindow()` übergeben, welche das erzeugte Fenster zurück gibt.
+
+Im folgenden Beispiel wird so ein [FileChooser](#file_chooser) zum Öffnen einer Datei erstellt:
+
+~~~{.java .numberLines startFrom="1"}
+	IFileChooserBluePrint fileChooserBp = BPF.fileChooser(FileChooserType.OPEN_FILE);
+	final IFileChooser fileChooser = frame.createChildWindow(fileChooserBp);
+	final DialogResult result = fileChooser.open();
+	if (DialogResult.OK.equals(result)) {
+		System.out.println(fileChooser.getSelectedFiles());
+	}
+~~~
+
+Die folgende Methode liefert die Kind Fenster eines Fensters.
+
+~~~
+	List<IDisplay> getChildWindows();
+~~~
+
+Dabei handelt es sich um eine nicht modifizierbare Kopie aller aktuell vorhandenen Kind Fenster. Fenster die bereits disposed wurden, sind nicht enthalten.
+
+Im obigen Beispiel würde ein Aufruf von `getChildWindows()` zwischen Zeile 2 und Zeile 3 eine Referenz auf den erzeugten File Chooser enthalten, und bei einem Aufruf nach Zeile 3 nicht mehr, da der Aufruf `open()` blockiert, bis der File Chooser wieder geschlossen wird, und anschließend das FileChooser Fenster automatisch disposed wurde.
+
+#### Window Listener
+
+Die folgenden Methoden können verwendet werden um `IWindowListener` zu registrieren oder zu deregistrieren:
+
+~~~
+	void addWindowListener(IWindowListener listener);
+
+	void removeWindowListener(IWindowListener listener);
+~~~
+	
+Ein `IWindowListener` hat die folgenden Methoden:
+
+~~~
+	void windowActivated();
+
+	void windowDeactivated();
+
+	void windowIconified();
+
+	void windowDeiconified();
+
+	void windowClosing(IVetoable vetoable);
+
+	void windowClosed();
+~~~
+
+In einer Fenster basierten Anwendung kann zur selben Zeit genau ein Fenster aktiv sein. Die Methoden `windowActivated()` und `windowDeactivated()` informieren über eine Änderung des `active` Status. Die Methode Toolkit.getActiveWindow() liefert das gerade aktive Fenster. 
+
+Die Methode `windowClosing(IVetoable vetoable)` wird aufgerufen, bevor ein Fenster geschlossen werden soll. Mit Hilfe des `vetoable` hat man die Möglichkeit, das Schließen zu verhindern. Das folgende Beispiel soll dies verdeutlichen:
+
+~~~{.java .numberLines startFrom="1"}
+	frame.addWindowListener(new WindowAdapter() {
+		@Override
+		public void windowClosing(final IVetoable vetoable) {
+			final String msg = "Close Window?";
+			final QuestionResult questionResult = QuestionPane.askYesNoQuestion(msg, msg);
+			if (!QuestionResult.YES.equals(questionResult)) {
+				vetoable.veto();
+			}
+		}
+	});
+~~~
+
+Beim Schließen des Fensters wird ein [QuestionDialog](#question_dialog) angezeigt, um den Nutzer zu fragen, ob das Fenster wirklich geschlossen werden soll. Falls nicht wird in Zeile 7 ein _Veto eingelegt_, wodurch das Fenster nicht geschlossen wird. Die folgende Abbildung zeigt das Ergebnis nachdem das `X` zum Schließen gedrückt wurde:
+
+![Close Window Veto Beispiel](images/close_veto_example.gif "Close Window Veto Beispiel")
+
+Die Methode `windowClosed()` wird aufgerufen, nachdem das Fenster geschlossen wurden. __Achtung:__ Wenn ein Fenster geschlossen, bedeutet dies nicht automatisch, das das Fenster dann auch disposed ist. 
+
+Die Klasse `org.jowidgets.tools.controller.WindowAdapter` implementiert die `IWindowListener` Schnittstelle mit leeren Methodenrümpfen und kann verwendet werden, falls nicht alle Methoden implementiert werden sollen.
+	
+	
+#### Packen von Fenstern
+
+Die Methode pack
+
+~~~
+	void pack();
+~~~ 
+
+sorgt dafür, das für das Fenster die `PreferredSize` berechnet und gesetzt wird. Anschließend wird auf dem zugehörigen Container ein `layout()` durchgeführt. 
+
+Mit Hilfe der folgenden Methoden kann das `pack()` beeinflußt werden:
+
+~~~
+	void setMinPackSize(Dimension size);
+
+	void setMaxPackSize(Dimension size);
+~~~ 
+
+Die `MinPackSize` legt eine minimale Größe fest, die das Fenster mindestens (trotz pack) haben soll. Dadurch kann zum Beispiel verhindert werden, dass ein Fenster mit _dynamisch_ erzeugten Inhalt zu klein angezeigt wird.
+
+Die `MaxPackSize` legt eine maximale Größe fest, die das Fenster höchsten (trotz pack) haben soll. Dadurch kann zum Beispiel verhindert werden, dass ein Fenster mit _dynamisch_ erzeugten Inhalt zu groß angezeigt wird.
+
+#### Weitere Utilities
+
+Die folgende Methode:
+
+~~~
+	Rectangle getParentBounds();
+~~~
+
+liefert die `ParentBounds`. Ist das Fenster ein Root Fenster (`getParent() == null`) werden die Bounds des Bildschirm zurückgegeben. Ist es ein Kind Fenster, werden die Bounds des Vaters zurückgegeben. Die Methode liefert somit nie `null` zurück. Dies kann zum Beispiel hilfreich sein, um ein Fenster relativ zum Vater anzuzeigen, ohne vorab überprüfen zum müssen, ob es sich um ein Root Fenster oder ein Kind Fenster handelt.
+
+Die folgende Methode:
+
+~~~
+	void centerLocation();
+~~~
+
+setzt die Position des Fensters so, das es zentriert zu den `ParentBounds` angezeigt wird. Root Fenster werden somit zentriert auf dem Bildschirm angezeigt, Kind Fenster zentriert bezüglich des Vater Fensters. Dabei haben beide Fenster dann den gleichen Mittelpunkt.
+
+
+
+
+### Die Schnittstelle IInputComponent{#input_component_interface}
+
+
+
+
+
+### Die Schnittstelle IItem{#item_interface}
+
+[Items](#item_interface) sind zum Einen die Elemente von [Menüs](#menus_and_items) oder [Toolbars](#toolbar_widget). Weitere Items sind TabItems, also die _Reiter_ eines [TabFolder](#tabFolder) sowie die Nodes eines [Tree](#tree_widget). Items sind somit keine eigenständigen Komponenten sondern Teil anderer Komponenten oder Menüs. Eine TreeNode kann nicht ohne zugehörigen Tree existieren, ein TabItem nicht ohne zugehörigen TabFolder und ein MenuItem nicht ohne zugehöriges Menü.
+
+Items können einen Text (Label^[Die Eigenschaft `text` sollte passender `label` heißen. Angelehnt an das SWT _wording_ wurde jedoch anfangs `text` gewählt. Dies nachträglich zu ändern würde einen nicht unerheblichen Aufwand mit sich bringen und müsste dann konsequenterweise auch an anderen Stellen (z.B. beim Button) umgesetzt werden.]), ein Tooltip und ein Icon haben. Zum Setzen und Auslesen dieser Eigenschaften existieren die folgenden Methoden:
+
+~~~
+	void setText(String text);
+
+	String getText();
+
+	void setToolTipText(String text);
+	
+	String getToolTipText();
+
+	IImageConstant getIcon();
+	
+	void setIcon(IImageConstant icon);
+~~~
+
+Die Verwendung von Icons wird im Abschnitt [Icons und Images](#icons_and_images) beschrieben.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Layouting{#layouting}
 
 Um die [Controls](#control_interface) eines [Containers](#container_interface) anzuordnen benötigt man einen Layouter. Man kann entweder vorgefertigte Layouter verwenden, oder selbst einen [Custom Layouter](#container_interface) implementieren.   
 
-Anfangs unterstütze jowidgets ausschließlich [Mig Layout](#mig_layout) als layout Möglichkeit. Dieses musste von einer SPI Implementierung unterstützt werden ^[Was nicht problematisch war, da MigLayout Implementierungen bereits für Swing und Swt existierten.]. Für die Definition des Layouts wird dabei die Klasse `MigLayoutDescriptor` verwendet, welche das Tagging Interface `ILayoutDescriptor` implementiert.
+Anfangs unterstütze jowidgets ausschließlich [Mig Layout](#mig_layout) als Layout Mechanismus. Dieses musste von einer SPI Implementierung unterstützt werden ^[Was nicht problematisch war, da MigLayout Implementierungen bereits für Swing und Swt existierten.]. Für die Definition des Layouts wird dabei die Klasse `MigLayoutDescriptor` verwendet, welche das Tagging Interface `ILayoutDescriptor` implementiert.
 
 Später wurde im Rahmen einer [Bacheloarbeit](ba_nm.pdf) jowidgets um die Möglichkeit erweitert, eigene Layouter zu erstellen. Dabei wurde die Schnittstelle `ILayouter` eingeführt, welche ebenfalls von `ILayoutDescriptor` abgeleitet ist. Zudem wurde [Mig Layout](#mig_layout) für diese Schnittstelle portiert, so dass eine SPI Implementierung nicht mehr zwingend eine Mig Layout Implementierung anbieten muss. Außerdem wurden weitere vorgefertigte Layouter hinzugefügt. 
 
@@ -2778,6 +3316,8 @@ Die folgende Abbildung zeigt das Ergebnis:
 
 ## Menüs und Items{#menus_and_items}
 
+### Menu Bar{#menu_bar}
+
 ## Menü und Item Models{#menu_models}
 
 ## Actions und Commands{#actions_and_commands}
@@ -2837,7 +3377,7 @@ Die folgende Abbildung zeigt das Ergebnis:
 
 ## InputDialog{#input_dialog}
 
-## ValidationLabel
+## ValidationLabel{#validation_label}
 
 ## CheckBox
 
@@ -2871,17 +3411,17 @@ TODO Beschreibung von Tree Actions in IDefaultActionFactory
 
 ## Canvas
 
-## Toolbar
+## Toolbar{#toolbar_widget}
 
-## MessageDialog {#message_dialog}
+## MessageDialog{#message_dialog}
 
-## QuestionDialog {#question_dialog}
+## QuestionDialog{#question_dialog}
 
 ## PopupDialog
 
-## FileChooser
+## FileChooser{#file_chooser}
 
-## DirectoryChooser
+## DirectoryChooser{#directory_chooser}
 
 ## LoginDialog {#login_dialog}
 
@@ -2930,8 +3470,6 @@ TODO Beschreibung von Tree Actions in IDefaultActionFactory
 ### Jowidgets Code in Swing Projekte integrieren
 
 ## Nativen Code in jowidgets Code integrieren {#integrate_native_code_in_jowidgets}
-
-## Validierung
 
 ## Verzögerte Events{#delayed_events}
 
