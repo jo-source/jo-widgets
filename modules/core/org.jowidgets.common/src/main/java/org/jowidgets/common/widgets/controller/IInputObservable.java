@@ -29,8 +29,18 @@ package org.jowidgets.common.widgets.controller;
 
 public interface IInputObservable {
 
+	/**
+	 * Adds an input listener
+	 * 
+	 * @param listener The listener to add
+	 */
 	void addInputListener(IInputListener listener);
 
+	/**
+	 * Removes an input listener
+	 * 
+	 * @param listener The listener to remove
+	 */
 	void removeInputListener(IInputListener listener);
 
 }

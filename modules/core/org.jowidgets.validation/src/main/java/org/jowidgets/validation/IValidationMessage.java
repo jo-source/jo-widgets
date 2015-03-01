@@ -27,6 +27,11 @@
  */
 package org.jowidgets.validation;
 
+/**
+ * Holds a single message of an validation
+ * 
+ * A validation message was designed immutable
+ */
 public interface IValidationMessage {
 
 	/**
