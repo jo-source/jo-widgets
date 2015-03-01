@@ -127,6 +127,31 @@ public class ValidationResultTest {
 
 	}
 
+	@Test
+	public void testContextRemainsUnchanged() {
+		final String context0 = "CONTEXT0";
+		final String context1 = "CONTEXT1";
+		final String context2 = "CONTEXT2";
+
+		final String newContext = "NEW_CONTEXT";
+
+		IValidationResult result = ValidationResult.create();
+
+		result = result.withError(context0, null);
+		result = result.withError(context1, null);
+		result = result.withError(context2, null);
+
+		final List<IValidationMessage> errors = result.getErrors();
+
+		Assert.assertTrue(errors.get(0).getContext().equals(context0));
+		Assert.assertTrue(errors.get(1).getContext().equals(context1));
+		Assert.assertTrue(errors.get(2).getContext().equals(context2));
+
+		result = result.withContext(newContext);
+
+		assertContext(result.getAll(), newContext);
+	}
+
 	private void testContextNull(final List<IValidationMessage> messages) {
 		for (final IValidationMessage message : messages) {
 			Assert.assertNull(message.getContext());
