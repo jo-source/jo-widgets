@@ -32,12 +32,29 @@ import org.jowidgets.common.widgets.IInputComponentCommon;
 import org.jowidgets.validation.IValidateable;
 import org.jowidgets.validation.IValidator;
 
+/**
+ * An input provides a user interface (HCI) for a specific VALUE_TYPE.
+ * 
+ * The VALUE_TYPE can be simple (String, Integer, Float, ..)
+ * or complex (Person, Company, ...)
+ * 
+ * A input component can validate its own state.
+ * 
+ * Validators can be added to allow custom validation rules.
+ * 
+ * @param <VALUE_TYPE> The type of the values the input component can handle with
+ */
 public interface IInputComponent<VALUE_TYPE> extends
 		IComponent,
 		IInputValueAccessor<VALUE_TYPE>,
 		IValidateable,
 		IInputComponentCommon {
 
+	/**
+	 * Adds a validator to the input component
+	 * 
+	 * @param validator The validator to add, must not be null
+	 */
 	void addValidator(IValidator<VALUE_TYPE> validator);
 
 	/**
@@ -70,5 +87,10 @@ public interface IInputComponent<VALUE_TYPE> extends
 	 */
 	void resetModificationState();
 
+	/**
+	 * Gets the editable state
+	 * 
+	 * @return True if the component is editable, false otherwise
+	 */
 	boolean isEditable();
 }

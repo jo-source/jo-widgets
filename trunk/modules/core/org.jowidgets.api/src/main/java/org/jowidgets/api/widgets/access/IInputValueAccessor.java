@@ -29,8 +29,18 @@ package org.jowidgets.api.widgets.access;
 
 public interface IInputValueAccessor<VALUE_TYPE> {
 
+	/**
+	 * Sets the value
+	 * 
+	 * @param value The value, may be null
+	 */
 	void setValue(VALUE_TYPE value);
 
+	/**
+	 * Gets the value
+	 * 
+	 * @return The value, may be null
+	 */
 	VALUE_TYPE getValue();
 
 }

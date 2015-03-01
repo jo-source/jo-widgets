@@ -29,6 +29,9 @@ package org.jowidgets.common.widgets.controller;
 
 public interface IInputListener {
 
+	/**
+	 * Will be invoked if the input of the user changed
+	 */
 	void inputChanged();
 
 }

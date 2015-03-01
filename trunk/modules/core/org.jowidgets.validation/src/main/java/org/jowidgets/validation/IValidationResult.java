@@ -164,16 +164,80 @@ public interface IValidationResult {
 	 */
 	IValidationResult withInfo(final String text);
 
+	/**
+	 * Creates a new validation result based on this result with adding a error message for a given context.
+	 * 
+	 * Remark: This validation result remains unchanged by this operation, so the result must
+	 * be assigned explicitly to an variable or constant.
+	 * 
+	 * @param context The context of the message to add (the other contexts remains unchanged)
+	 * @param message The text of the message to add
+	 * 
+	 * @return The new validation result, never null
+	 */
 	IValidationResult withError(final String context, final String text);
 
+	/**
+	 * Creates a new validation result based on this result with adding a info error message for a given context.
+	 * 
+	 * Remark: This validation result remains unchanged by this operation, so the result must
+	 * be assigned explicitly to an variable or constant.
+	 * 
+	 * @param context The context of the message to add (the other contexts remains unchanged)
+	 * @param message The text of the message to add
+	 * 
+	 * @return The new validation result, never null
+	 */
 	IValidationResult withInfoError(final String context, final String text);
 
+	/**
+	 * Creates a new validation result based on this result with adding a warning message for a given context.
+	 * 
+	 * Remark: This validation result remains unchanged by this operation, so the result must
+	 * be assigned explicitly to an variable or constant.
+	 * 
+	 * @param context The context of the message to add (the other contexts remains unchanged)
+	 * @param message The text of the message to add
+	 * 
+	 * @return The new validation result, never null
+	 */
 	IValidationResult withWarning(final String context, final String text);
 
+	/**
+	 * Creates a new validation result based on this result with adding a info message for a given context.
+	 * 
+	 * Remark: This validation result remains unchanged by this operation, so the result must
+	 * be assigned explicitly to an variable or constant.
+	 * 
+	 * @param context The context of the message to add (the other contexts remains unchanged)
+	 * @param message The text of the message to add
+	 * 
+	 * @return The new validation result, never null
+	 */
 	IValidationResult withInfo(final String context, final String text);
 
+	/**
+	 * Creates a new validation result based on this result with adding all messages of a given validation result
+	 * 
+	 * Remark: This validation result remains unchanged by this operation, so the result must
+	 * be assigned explicitly to an variable or constant.
+	 * 
+	 * @param result The result to add
+	 * 
+	 * @return The new validation result, never null
+	 */
 	IValidationResult withResult(final IValidationResult result);
 
+	/**
+	 * Creates a new validation result based on this result with changing the context of all messages
+	 * 
+	 * Remark: This validation result remains unchanged by this operation, so the result must
+	 * be assigned explicitly to an variable or constant.
+	 * 
+	 * @param result The context to set, may be null
+	 * 
+	 * @return The new validation result, never null
+	 */
 	IValidationResult withContext(final String context);
 
 }
