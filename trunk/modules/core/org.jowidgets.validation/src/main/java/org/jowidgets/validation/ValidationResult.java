@@ -34,45 +34,137 @@ public final class ValidationResult {
 
 	private ValidationResult() {}
 
-	public static IValidationResultBuilder builder() {
-		return new ValidationResultBuilder();
-	}
-
+	/**
+	 * Creates a new validation result.
+	 * 
+	 * This method does the same as the method {@link #ok()}
+	 * 
+	 * @return A validation result constant
+	 */
 	public static IValidationResult create() {
 		return OK;
 	}
 
+	/**
+	 * Creates a new validation result with one message of MessageType OK
+	 * 
+	 * @return The ok validation result constant
+	 */
 	public static IValidationResult ok() {
 		return OK;
 	}
 
+	/**
+	 * Creates a new validation result for a given validation message
+	 * 
+	 * @param message The message to create the result for, must not be null
+	 * 
+	 * @return A new validation result, never null
+	 */
 	public static IValidationResult create(final IValidationMessage message) {
 		Assert.paramNotNull(message, "message");
 		return create().withMessage(message);
 	}
 
+	/**
+	 * Creates a new validation result with one info message
+	 * 
+	 * @param text The message text of the message the result consists of
+	 * 
+	 * @return A new validation result, never null
+	 */
+	public static IValidationResult info(final String text) {
+		return create().withInfo(text);
+	}
+
+	/**
+	 * Creates a new validation result with one warning message
+	 * 
+	 * @param text The message text of the message the result consists of
+	 * 
+	 * @return A new validation result, never null
+	 */
 	public static IValidationResult warning(final String text) {
 		return create().withWarning(text);
 	}
 
+	/**
+	 * Creates a new validation result with one info error message
+	 * 
+	 * @param text The message text of the message the result consists of
+	 * 
+	 * @return A new validation result, never null
+	 */
 	public static IValidationResult infoError(final String text) {
 		return create().withInfoError(text);
 	}
 
+	/**
+	 * Creates a new validation result with one error message
+	 * 
+	 * @param text The message text of the message the result consists of
+	 * 
+	 * @return A new validation result, never null
+	 */
 	public static IValidationResult error(final String text) {
 		return create().withError(text);
 	}
 
+	/**
+	 * Creates a new validation result with one info message
+	 * 
+	 * @param context The context of the message the result consists of
+	 * @param text The message text of the message the result consists of
+	 * 
+	 * @return A new validation result, never null
+	 */
+	public static IValidationResult info(final String context, final String text) {
+		return create().withWarning(context, text);
+	}
+
+	/**
+	 * Creates a new validation result with one warning message
+	 * 
+	 * @param context The context of the message the result consists of
+	 * @param text The message text of the message the result consists of
+	 * 
+	 * @return A new validation result, never null
+	 */
 	public static IValidationResult warning(final String context, final String text) {
 		return create().withWarning(context, text);
 	}
 
+	/**
+	 * Creates a new validation result with one info error message
+	 * 
+	 * @param context The context of the message the result consists of
+	 * @param text The message text of the message the result consists of
+	 * 
+	 * @return A new validation result, never null
+	 */
 	public static IValidationResult infoError(final String context, final String text) {
 		return create().withInfoError(context, text);
 	}
 
+	/**
+	 * Creates a new validation result with one error message
+	 * 
+	 * @param context The context of the message the result consists of
+	 * @param text The message text of the message the result consists of
+	 * 
+	 * @return A new validation result, never null
+	 */
 	public static IValidationResult error(final String context, final String text) {
 		return create().withError(context, text);
+	}
+
+	/**
+	 * Creates a new validation result builder
+	 * 
+	 * @return A new validation result builder
+	 */
+	public static IValidationResultBuilder builder() {
+		return new ValidationResultBuilder();
 	}
 
 }

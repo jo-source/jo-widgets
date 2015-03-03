@@ -30,26 +30,105 @@ package org.jowidgets.validation;
 
 public interface IValidationResultBuilder {
 
-	IValidationResultBuilder addMessage(final IValidationMessage text);
+	/**
+	 * Adds a message
+	 * 
+	 * @param message The message to add, must not be null
+	 * 
+	 * @return This builder
+	 */
+	IValidationResultBuilder addMessage(final IValidationMessage message);
 
-	IValidationResultBuilder addError(final String text);
-
-	IValidationResultBuilder addInfoError(final String text);
-
-	IValidationResultBuilder addWarning(final String text);
-
+	/**
+	 * Adds a info message
+	 * 
+	 * @param message The message text of the message to add
+	 * 
+	 * @return This builder
+	 */
 	IValidationResultBuilder addInfo(final String text);
 
-	IValidationResultBuilder addError(final String context, final String text);
+	/**
+	 * Adds a warning message
+	 * 
+	 * @param message The message text of the message to add
+	 * 
+	 * @return This builder
+	 */
+	IValidationResultBuilder addWarning(final String text);
 
-	IValidationResultBuilder addInfoError(final String context, final String text);
+	/**
+	 * Adds a info error message
+	 * 
+	 * @param message The message text of the message to add
+	 * 
+	 * @return This builder
+	 */
+	IValidationResultBuilder addInfoError(final String text);
 
-	IValidationResultBuilder addWarning(final String context, final String text);
+	/**
+	 * Adds a error message
+	 * 
+	 * @param message The message text of the message to add
+	 * 
+	 * @return This builder
+	 */
+	IValidationResultBuilder addError(final String text);
 
+	/**
+	 * Adds a info message
+	 * 
+	 * @param context The context of the message to add
+	 * @param text The message text of the message to add
+	 * 
+	 * @return This builder
+	 */
 	IValidationResultBuilder addInfo(final String context, final String text);
 
+	/**
+	 * Adds a warning message
+	 * 
+	 * @param context The context of the message to add
+	 * @param text The message text of the message to add
+	 * 
+	 * @return This builder
+	 */
+	IValidationResultBuilder addWarning(final String context, final String text);
+
+	/**
+	 * Adds a info error message
+	 * 
+	 * @param context The context of the message to add
+	 * @param text The message text of the message to add
+	 * 
+	 * @return This builder
+	 */
+	IValidationResultBuilder addInfoError(final String context, final String text);
+
+	/**
+	 * Adds a error message
+	 * 
+	 * @param context The context of the message to add
+	 * @param text The message text of the message to add
+	 * 
+	 * @return This builder
+	 */
+	IValidationResultBuilder addError(final String context, final String text);
+
+	/**
+	 * Adds all messages of a result the new result
+	 * 
+	 * @param result The result to add, must not be null
+	 * 
+	 * @return This builder
+	 */
 	IValidationResultBuilder addResult(final IValidationResult result);
 
+	/**
+	 * Creates a new validation result
+	 * 
+	 * @return A new validation result, never null
+	 */
 	IValidationResult build();
 
 }
