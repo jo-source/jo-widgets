@@ -28,14 +28,33 @@
 
 package org.jowidgets.validation;
 
+/**
+ * Accessor class for a validator composite
+ */
 public final class ValidatorComposite {
 
 	private ValidatorComposite() {}
 
+	/**
+	 * Creates a new validator composite builder
+	 * 
+	 * @return A new validator composite builder
+	 */
 	public static <VALUE_TYPE> IValidatorCompositeBuilder<VALUE_TYPE> builder() {
 		return new ValidatorCompositeBuilderImpl<VALUE_TYPE>();
 	}
 
+	/**
+	 * Creates a new validator based on two given validators.
+	 * 
+	 * Both validators may be null. In this case, the OkValidator will
+	 * be returned
+	 * 
+	 * @param validator1 The first validator, may be null
+	 * @param validator2 The second validator, may be null
+	 * 
+	 * @return The resulting validator, never null
+	 */
 	public static <VALUE_TYPE> IValidator<VALUE_TYPE> create(
 		final IValidator<VALUE_TYPE> validator1,
 		final IValidator<VALUE_TYPE> validator2) {

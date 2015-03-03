@@ -30,10 +30,29 @@ package org.jowidgets.validation;
 
 public interface IValidatorCompositeBuilder<VALUE_TYPE> {
 
+	/**
+	 * Adds a validator
+	 * 
+	 * @param validator The validator to add, must not be null
+	 * 
+	 * @return This builder
+	 */
 	IValidatorCompositeBuilder<VALUE_TYPE> add(IValidator<VALUE_TYPE> validator);
 
+	/**
+	 * Adds a list of validators
+	 * 
+	 * @param validators The validators to add, must not be null
+	 * 
+	 * @return This builder
+	 */
 	IValidatorCompositeBuilder<VALUE_TYPE> addAll(Iterable<? extends IValidator<VALUE_TYPE>> validators);
 
+	/**
+	 * Creates a new validator
+	 * 
+	 * @return A new validator
+	 */
 	IValidator<VALUE_TYPE> build();
 
 }
