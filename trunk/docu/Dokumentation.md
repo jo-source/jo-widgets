@@ -1393,7 +1393,7 @@ Das Alignment, die Farbe sowie das Icon wird nur ein Mal definiert und daraus an
 
 Die Validation API bietet Schnittstellen und Funktionen für die Validierung von Objekten und findet zum Beispiel Verwendung beim [InputField](#input_field), dem [InputComposite](#input_composite), dem [InputDialog](#input_dialog) oder dem [ValidationLabel](#validation_label). Darüber hinaus kann die Validation API auch für die Verwendung eigener [Komponenten](#component_interface) herangezogen werden. 
 
-Die Validation API befindet sich im Modul `org.jowidgets.validation`. Dieses hat weder jowidgets interne noch externe transitive Abhängigkeiten. Insbesondere hat sie dadurch auch keine Abhängigkeiten auf UI Aspekte und kann somit auch für die serverseitige Validierung herangezogen werden. 
+Die Validation API befindet sich im Modul `org.jowidgets.validation`. Dieses hat weder jowidgets interne noch externe transitive Abhängigkeiten. Insbesondere hat die API dadurch auch keine Abhängigkeiten auf UI Aspekte und kann somit auch für die serverseitige Validierung herangezogen werden. 
 
 Sie bildet die Basis für die [jo-client-platform](http://code.google.com/p/jo-client-platform/) Bean Validation, welche Adapter für die [Javax Bean Validation (JSR 303)](http://beanvalidation.org/) bereitstellt. 
 
@@ -1415,23 +1415,35 @@ public interface IValidator<VALUE_TYPE> {
 }
 ~~~
 
-Der zu validierende Wert kann `null` sein. Das Ergebnis einer Validierung muss __ungleich null__ sein.
+Der zu validierende Wert kann `null` sein. Das Ergebnis einer Validierung muss __ungleich null__ sein. Ein [Validation Result](#validation_result) besteht aus einer Liste von [Validation Messages](#validation_message) welche einen [Message Type](#validation_message_type) haben.
 
-Das folgende Beispiel implementiert einen OkValidator:
+Das folgende Beispiel implementiert einen `NotNullValidator`:
 
 ~~~{.java .numberLines startFrom="1"}
-public final class OkValidator<VALUE_TYPE> implements IValidator<VALUE_TYPE> {
+public final class NotNullValidator<VALUE_TYPE> implements IValidator<VALUE_TYPE> {
 
 	@Override
 	public IValidationResult validate(final VALUE_TYPE value) {
-		return ValidationResult.ok();
+		if (value == null){
+			return ValidationResult.error("Must not be null");
+		}
+		else{
+			return ValidationResult.ok();
+		}
 	}
 
 }
 ~~~
 
+#### OkValidator{#ok_validator}
 
-Ein [Validation Result](#validation_result) besteht aus einer Liste von [Validation Messages](#validation_message) welche einen [Message Type](#validation_message_type) haben.
+Die statische Accessor Klasse `Validator` liefert einen OkValidator mit Hilfe der folgenden statische Methode:
+
+~~~
+	public static <VALUE_TYPE> IValidator<VALUE_TYPE> okValidator() {...}
+~~~ 
+
+Dieser Validator liefert für alle Werte `ValidationResult.ok()` zurück.
 
 ### Message Type{#validation_message_type}
 
@@ -1500,6 +1512,10 @@ Ergebnis:
 ~~~
 
 
+
+
+
+
 ### Validation Message{#validation_message}
 
 Eine `IValidationMessage` stellt eine einzelne Nachricht eines [`IValidationResult`](#validation_result) bereit. Eine Validation Message ist imutable, das heißt die Properties können nachträglich nicht mehr geändert werden. Die Schnittstelle sieht wie folgt aus:
@@ -1527,9 +1543,15 @@ Mit Hilfe der Methode withContext() kann eine Kopie der Message erstellt werden,
 
 Die Methode `equalOrWorse()` und `worse()` vergleichen den Schweregrad (Severity) zweier Messages, analog zu den Methoden gleichen Namens auf der Enum [MessageType](#validation_message_type).
 
+
+
+
+
+
+
 ### Validation Result{#validation_result}
 
-Ein Validation Result bündelt das Ergebnis einer Validierung und besteht aus 0 bis n [Validation Messages](#validation_message), welche alle einen unterschiedlichen [Message Type](#validation_message_type) haben können. Ein ValidationResult ist imutable, wodurch sichergestellt ist, dass sich ein einmal ausgewertetes Ergebnis nicht mehr ändert.
+Ein Validation Result bündelt das Ergebnis einer Validierung und besteht aus 0 bis n [Validation Messages](#validation_message), welche alle einen unterschiedlichen [Message Type](#validation_message_type) haben können. Ein ValidationResult ist imutable, wodurch sichergestellt ist, dass sich ein einmal ausgewertetes Ergebnis nicht mehr ändern kann.
 
 #### Zugriff auf die Validation Messages
 
@@ -1547,11 +1569,11 @@ Für den Zugriff auf die einzelnen Messages bietet die Schnittstelle `IValidatio
 	List<IValidationMessage> getInfos();
 ~~~
 
-Die Methode getAll() liefert alle Messages, die anderen Methoden liefern die Methoden des entsprechenden Typs. Die Ergebnisliste ist _unmodifieable_. Die Default Implementierung erzeugt die Listen _lazy_ bei der ersten Anfrage. (Das gilt auch für die `All` Liste.) Falls man mit der [First Worst Message](#first_worst_validation_message) auskommt, kann das Rechenleistung und Speicher sparen.
+Die Methode getAll() liefert alle Messages, die anderen Methoden liefern die Messages des entsprechenden Typs. Die Messages sind in der Reihenfolge angeordnet, wie sie hinzugefügt wurden. Die Ergebnisliste ist nicht modifizierbar (_unmodifieable_). Die Default Implementierung erzeugt die Listen _lazy_ bei der ersten Anfrage. (Das gilt auch für die `All` Liste.) Falls man mit der [First Worst Message](#first_worst_validation_message) auskommt, kann das Rechenleistung und Speicher sparen.
 
 #### First Worst Message{#first_worst_validation_message} 
 
-In einigen Anwendungsfällen kann es ausreichen, nur die erste aufgetretenen Message mit höchstem Schweregrad anzuzeigen. Dazu kann die folgende Methode auf einem `IValidationResult` verwendet werden:
+In einigen Anwendungsfällen kann es ausreichen, nur die erste aufgetretenen Message mit höchstem Schweregrad zu kennen. Dazu kann die folgende Methode auf einem `IValidationResult` verwendet werden:
 
 ~~~
 	IValidationMessage getWorstFirst();
@@ -1559,13 +1581,13 @@ In einigen Anwendungsfällen kann es ausreichen, nur die erste aufgetretenen Mes
 
 Diese Methode liefert __immer__ eine Message zurück. Gibt es keine __echten__ Messages, wird eine Message vom Typ `OK` zurückgegeben. Diese hat per Konvention keinen Message Text und Message Context. Ansonsten wird die Message zurückgegeben, welche den höchsten Schweregrad hat. Existieren mehrere Messages mit diesem Schweregrad, wird die herangezogen, welche als erstes aufgetreten ist, bzw. dem Ergebnis hinzugefügt wurde. 
 
-Die Default Implementierung aktualisiert den Wert immer direkt beim Hinzufügen neuer Messages (Beim [Message Chaining](#validation_message_chaining) oder mit Hilfe des [Validation Result Builder](#validation_result_builder)), so dass dieser nicht explizit berechnet werden muss. 
+Die Default Implementierung aktualisiert den Wert immer direkt beim Hinzufügen neuer Messages (Bei der [Message Verkettung](#validation_message_chaining) oder mit Hilfe des [Validation Result Builder](#validation_result_builder)), so dass dieser nicht explizit berechnet werden muss. 
 
 __Die Abfrage der First Worst Message ist also effizienter als die Verwendung der Message Listen__
 
 #### Gesamtergebnis
 
-In bestimmten Fällen sind die eigentlichen Messages gar nicht relevant, sondern nur, ob das Ergebnis valide ist oder nicht. Dafür kann die folgende Convenience Methode verwendet werden:
+In bestimmten Fällen sind die eigentlichen Messages gar nicht relevant, sondern nur, ob das Ergebnis valide ist oder nicht. Dafür kann die folgende Methode verwendet werden:
 
 ~~~
 	boolean isValid();
@@ -1581,14 +1603,188 @@ Die Methode:
 
 liefert `false` zurück, falls es mindestens eine Message mit Schweregrad `INFO` oder höher gibt, und sonst `true`
 
-#### Message Chaining{#validation_message_chaining}
+#### Die Validation Result Accessor Klasse
+
+Die Accessor Klasse `ValidationResult` liefert folgende statische Methoden zur Erzeugung eines `IValidationResult` mit genau einer [Validation Message](#validation_message):
+
+~~~
+	public static IValidationResult create() {...}
+
+	public static IValidationResult ok() {...}
+
+	public static IValidationResult create(final IValidationMessage message) {...}
+
+	public static IValidationResult warning(final String text) {...}
+
+	public static IValidationResult infoError(final String text) {...}
+
+	public static IValidationResult error(final String text){...}
+
+	public static IValidationResult warning(final String context, final String text) {...}
+
+	public static IValidationResult infoError(final String context, final String text) {...}
+
+	public static IValidationResult error(final String context, final String text){...}
+~~~
+
+Mit Hilfe der folgenden Methode kann ein [`IValidationResultBuilder`](#validation_result_builder) erzeugt werden:
+
+~~~
+	public static IValidationResultBuilder builder() {...}
+~~~
+
+
+#### Message Verkettung{#validation_message_chaining}
+
+Ein Validation Result ist immutable. Daher können zu einem Ergebnis nachträglich auch keine Messages hinzugefügt werden. Es ist jedoch möglich, zu einem Validation Result eine Message hinzuzufügen, indem man das Ergebnis kopiert und dabei die neue Nachricht hinzufügt. Dazu können die folgenden Methoden verwendet werden:
+
+~~~
+	IValidationResult withMessage(final IValidationMessage message);
+
+	IValidationResult withError(final String text);
+
+	IValidationResult withInfoError(final String text);
+
+	IValidationResult withWarning(final String text);
+
+	IValidationResult withInfo(final String text);
+
+	IValidationResult withError(final String context, final String text);
+
+	IValidationResult withInfoError(final String context, final String text);
+
+	IValidationResult withWarning(final String context, final String text);
+
+	IValidationResult withInfo(final String context, final String text);
+~~~
+
+Das resultierende Validation Result ist eine Kopie des aktuellen Validation Results, welchem die übergebene Message hinzugefügt wurde. Die Methode `withMessage()` verlangt eine `IValidationMessage`, die anderen Methoden sind Convenience Methoden, welche die [Validation Message](#validation_message) mit Hilfe des Parameter `text` (und optional `context`) erzeugen.
+
+
+Das folgende Beispiel soll das verdeutlichen:
+
+~~~{.java .numberLines startFrom="1"}
+	IValidationResult result = ValidationResult.create();
+	result = result.withInfo("Info message");
+	result = result.withError("Error message");
+	result = result.withWarning("Warn message");
+~~~
+
+Es werden dem initialen Validation Result (Zeile 1) drei weitere Messages hinzugefügt. Bei dieser Methode ist darauf zu achten, dass das `result` immer wieder neue zugewiesen werden muss. Um diese potentielle Fehlerquelle zu vermeiden, kann auch ein [`IValidationResultBuilder`](#validation_result_builder) verwendet werden.
+
+#### Ändern des Context
+
+Mit Hilfe der folgenden Methode kann der Context für alle [Validation Messages](#validation_message) eines `IValidationResult` geändert werden, indem eine Kopie erzeugt wird und auf dieser der Context geändert wird:
+
+~~~
+	IValidationResult withContext(final String context);
+~~~
 
 #### Validation Result Builder{#validation_result_builder}
 
+Die Schnittstelle `IValidationResultBuilder` hat die folgenden Methoden:
+
+~~~
+	IValidationResultBuilder addMessage(final IValidationMessage message);
+
+	IValidationResultBuilder addInfo(final String text);
+
+	IValidationResultBuilder addWarning(final String text);
+
+	IValidationResultBuilder addInfoError(final String text);
+
+	IValidationResultBuilder addError(final String text);
+
+	IValidationResultBuilder addInfo(final String context, final String text);
+
+	IValidationResultBuilder addWarning(final String context, final String text);
+
+	IValidationResultBuilder addInfoError(final String context, final String text);
+
+	IValidationResultBuilder addError(final String context, final String text);
+
+	IValidationResultBuilder addResult(final IValidationResult result);
+
+	IValidationResult build();
+~~~
+
+Der Builder liefert Methoden zum Hinzufügen von [Validation Messages](#validation_message). Mit Hilfe der Methode `addResult()` kann man alle Messages eines anderen `IValidationResult` hinzufügen. Mit Hilfe der Methode `build()` wird das erzeugte `IValidationResult` zurückgegeben.
+
+Das folgende Beispiel verwendet den `IValidationResultBuilder` für die Erzeugung eines Validation Result:
+
+~~~{.java .numberLines startFrom="1"}
+	final IValidationResultBuilder builder = ValidationResult.builder();
+	builder
+		.addInfo("Info message")
+		.addError("Error message")
+		.addWarning("Warn message");
+		
+	final IValidationResult result = builder.build();
+~~~ 
+
+Das resultierende Validation Result ist identisch mit dem obigen Beispiel bei der [Message Verkettung](#validation_message_chaining). Der Vorteil beim Builder Ansatz ist, dass die Neuzuweisung entfällt (welche bei der Message Verkettung versehentlich vergessen werden könnte). 
+
 ### Validator Composite
+
+Ein Validator Composite ist ein `IValidator`, welche mehrere `IValidator` verwendet, um seine `validate()` Methode zu implementieren.  Die statische Accessor Klasss `ValidatorComposite` liefert folgende Methoden zur Erzeugung eines Validator Composite:
+
+~~~
+	public static <VALUE_TYPE> IValidator<VALUE_TYPE> create(
+		final IValidator<VALUE_TYPE> validator1,
+		final IValidator<VALUE_TYPE> validator2) {...}
+		
+	public static <VALUE_TYPE> IValidatorCompositeBuilder<VALUE_TYPE> builder() {...}
+~~~
+
+Die erste Methode erzeugt aus zwei Validatoren einen _neuen_ `IValidator`. Dabei können sowohl `validator1` als auch `validator2` als auch beide `null` sein. Der resultierende Validator fügt die [Validation Results](#validation_result) beider Validatoren zu einem neuen Validation Result zusammen. Ist ein Parameter (`validator1`, `validator2`) `null` wird stellvertretend ein  [OkValidator](#ok_validator) verwendet.
+
+Die Methode `builder()` liefert ein `IValidatorCompositeBuilder`. Dieser hat die folgenden Methoden:
+
+~~~
+	IValidatorCompositeBuilder<VALUE_TYPE> add(IValidator<VALUE_TYPE> validator);
+
+	IValidatorCompositeBuilder<VALUE_TYPE> addAll(Iterable<? extends IValidator<VALUE_TYPE>> validators);
+
+	IValidator<VALUE_TYPE> build();
+~~~
+
+Die Methode `add()` fügt einen einzelen Validator hinzu, die Methode `addAll()` eine Liste von Validatoren. Die Methode build() erzeugt einen neuen Composite Validator. Das folgende Beispiel demonstriert die Verwendung:
+
+~~~{.java .numberLines startFrom="1"}
+	final IValidatorCompositeBuilder<Person> builder = ValidatorComposite.builder();
+	builder
+		.add(notNullValidator)
+		.add(adultValidator)
+		.add(maleValidator);
+		
+	IValidator<Person> maleAdultPersonValidator = builder.build();
+~~~
 
 ### IValidatable{#validatetable_interface}
 
+Ein `IValidatable` ist ein Objekt, was in der Lage ist, seinen eigenen Zustand zu validieren. Die Schnittstelle sieht wie folgt aus:
+
+~~~{.java .numberLines startFrom="1"}
+public interface IValidateable {
+
+	IValidationResult validate();
+
+	void addValidationConditionListener(IValidationConditionListener listener);
+
+	void removeValidationConditionListener(IValidationConditionListener listener);
+
+}
+~~~
+
+Ein `IValidationConditionListener` wird aufgerufen, wenn sich die Bedingungen für die Validierung geändert haben, zum Beispiel weil der zu validierende Wert sich geändert hat, oder weil sich die Validierungsregeln geändert haben. Der Listener sieht wie folgt aus:
+
+~~~{.java .numberLines startFrom="1"}
+public interface IValidationConditionListener {
+
+	void validationConditionsChanged();
+
+}
+~~~ 
 
 ## Allgemeine Widget Schnittstellen
 
