@@ -36,26 +36,95 @@ import org.jowidgets.common.widgets.IMenuBarCommon;
 
 public interface IMenuBar extends IWidget, IMenuBarCommon {
 
+	/**
+	 * Sets the model
+	 * 
+	 * @param model The model, must not be null
+	 */
 	void setModel(IMenuBarModel model);
 
+	/**
+	 * Gets the model
+	 * 
+	 * @return The model, never null
+	 */
 	IMenuBarModel getModel();
 
-	List<IMenu> getMenus();
-
-	boolean remove(IMenu menu);
-
-	void remove(final int index);
-
-	void removeAll();
-
-	IMainMenu addMenu(String name);
-
-	IMainMenu addMenu(String name, char mnemonic);
-
-	IMainMenu addMenu(int index, String name);
-
+	/**
+	 * Adds a menu to the menu bar
+	 * 
+	 * @param descriptor The descriptor of the menu
+	 * 
+	 * @return The added menu
+	 */
 	IMainMenu addMenu(IMainMenuDescriptor descriptor);
 
+	/**
+	 * Adds a menu to the menu bar at a given index
+	 * 
+	 * @param index The index to at the menu at
+	 * @param descriptor The descriptor of the menu
+	 * 
+	 * @return The added menu
+	 */
 	IMainMenu addMenu(int index, IMainMenuDescriptor descriptor);
 
+	/**
+	 * Adds a menu to the menu bar
+	 * 
+	 * @param name The name of the menu to add
+	 * 
+	 * @return The added menu
+	 */
+	IMainMenu addMenu(String name);
+
+	/**
+	 * Adds a menu to the menu bar
+	 * 
+	 * @param name The name of the menu
+	 * @param mnemonic The mnemonic of the mneu
+	 * 
+	 * @return The added menu
+	 */
+	IMainMenu addMenu(String name, char mnemonic);
+
+	/**
+	 * Adds a menu to the menu bar at a given index
+	 * 
+	 * @param index The index to at the menu at
+	 * @param name The name of the menu
+	 * 
+	 * @return The added menu
+	 */
+	IMainMenu addMenu(int index, String name);
+
+	/**
+	 * Gets a unmodifieable copy of the menus this menu bar contains
+	 * 
+	 * @return The list of menus, never null
+	 */
+	List<IMenu> getMenus();
+
+	/**
+	 * Removes a menu from the menu bar
+	 * 
+	 * The menu will be disposed by that
+	 * 
+	 * @param menu The menu to remove
+	 * 
+	 * @return true if the menu was removed, false if the given menu was no child of this menu bar
+	 */
+	boolean remove(IMenu menu);
+
+	/**
+	 * Removes a menu from the menu bar at a given index
+	 * 
+	 * @param index The index to remove the menu at
+	 */
+	void remove(final int index);
+
+	/**
+	 * Removes all menus from the mneu bar
+	 */
+	void removeAll();
 }

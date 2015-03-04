@@ -31,8 +31,30 @@ import org.jowidgets.common.widgets.builder.ISetupBuilder;
 
 public interface IMainMenuSetupBuilder<INSTANCE_TYPE extends IMainMenuSetupBuilder<?>> extends ISetupBuilder<INSTANCE_TYPE> {
 
+	/**
+	 * Sets the label text of the menu
+	 * 
+	 * @param text The label text to set
+	 * 
+	 * @return This builder
+	 */
 	INSTANCE_TYPE setText(String text);
 
+	/**
+	 * Sets the keyboard mnemonic
+	 * 
+	 * The mnemonic is the key that will activate the menu when combined
+	 * with (usually) ALT key.
+	 * 
+	 * A mnemonic must correspond to a single key and is case-insensitive.
+	 * 
+	 * The first occurrence of the mnemonic key will be underlined in the
+	 * menu label to indicate the mnemonic to the user
+	 * 
+	 * @param mnemonic The mnemonic to set
+	 * 
+	 * @return This builder
+	 */
 	INSTANCE_TYPE setMnemonic(Character mnemonic);
 
 }

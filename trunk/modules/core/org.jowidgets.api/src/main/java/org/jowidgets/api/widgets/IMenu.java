@@ -37,26 +37,93 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface IMenu extends IWidget, IMenuCommon {
 
-	List<IMenuItem> getChildren();
-
-	boolean remove(IMenuItem item);
-
-	void removeAll();
-
-	IMenuItem addSeparator();
-
-	IMenuItem addSeparator(int index);
-
-	<WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addItem(IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
-
-	<WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addItem(int index, IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
-
-	IActionMenuItem addAction(IAction action);
-
-	IActionMenuItem addAction(int index, IAction action);
-
+	/**
+	 * Gets the model of the menu
+	 * 
+	 * @return The model, never null
+	 */
 	IMenuModel getModel();
 
+	/**
+	 * Sets the model of the menu
+	 * 
+	 * @param model The model to set, must not be null
+	 */
 	void setModel(IMenuModel model);
+
+	/**
+	 * Adds a menu item to the menu
+	 * 
+	 * @param descriptor The descriptor for the item to add, must not be null
+	 * 
+	 * @return The created menu item
+	 */
+	<WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addItem(IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
+
+	/**
+	 * Adds a menu item to the menu at a specific index
+	 * 
+	 * @param index The index where to add the item
+	 * @param descriptor The descriptor for the item to add, must not be null
+	 * 
+	 * @return The created menu item
+	 */
+	<WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addItem(int index, IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
+
+	/**
+	 * Adds an action item to the menu that will be bound to the given action
+	 * 
+	 * @param action The action to add, must not be null
+	 * 
+	 * @return The action item that was created
+	 */
+	IActionMenuItem addAction(IAction action);
+
+	/**
+	 * Adds an action item to the menu at a specific that will be bound to the given action
+	 * 
+	 * @param index The index where to add the item
+	 * @param action The action to add, must not be null
+	 * 
+	 * @return The action item that was created
+	 */
+	IActionMenuItem addAction(int index, IAction action);
+
+	/**
+	 * Adds a separator item to the menu
+	 * 
+	 * @return The separator item that was added
+	 */
+	IMenuItem addSeparator();
+
+	/**
+	 * Adds a separator item to the menu at a specific index
+	 * 
+	 * @param index The index where to add the separarot item
+	 * 
+	 * @return The separator item that was added
+	 */
+	IMenuItem addSeparator(int index);
+
+	/**
+	 * Removes a menu item form the menu
+	 * 
+	 * @param item The item to remove
+	 * 
+	 * @return True if the item was removed, false of the item is no child of the menu
+	 */
+	boolean remove(IMenuItem item);
+
+	/**
+	 * Removes all items from the menu
+	 */
+	void removeAll();
+
+	/**
+	 * Gets the menu items of the menu as a unmodifieable copy
+	 * 
+	 * @return The menu items of the menu, never null but may be empty
+	 */
+	List<IMenuItem> getChildren();
 
 }

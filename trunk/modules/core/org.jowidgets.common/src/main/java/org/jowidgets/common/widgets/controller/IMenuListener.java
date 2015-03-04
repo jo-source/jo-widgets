@@ -30,8 +30,14 @@ package org.jowidgets.common.widgets.controller;
 
 public interface IMenuListener {
 
+	/**
+	 * Will be invoked if the menu becomes active / visible
+	 */
 	void menuActivated();
 
+	/**
+	 * Will be invoked if a menu becomes inactive / invisible
+	 */
 	void menuDeactivated();
 
 }
