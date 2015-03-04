@@ -56,7 +56,7 @@ Dieser hat die Methoden:
 	void focusLost();
 ~~~
 
-#### Tastatureingaben
+#### Tastatureingaben(#container_key_events)
 
 Um Tastatureingaben zur erhalten kann ein `IKeyListener` verwendet werden:
 
@@ -177,13 +177,13 @@ Die Methode übergibt die Position im Koordinatensystem der Komponente.
 
 #### Popup Menus
 
-Mit Hilfe der folgenden Methode kann ein Popup Menü erzeugt werden:
+Mit Hilfe der folgenden Methode kann ein [Popup Menü](#popup_menu) erzeugt werden:
 
 ~~~
 	IPopupMenu createPopupMenu();
 ~~~
 
-Ein Popup Menu implementiert die Schnittstelle `IMenu`, somit kann man zum Beispiel mit Hilfe der Methode `addItem()` Menüeinträge hinzufügen. Das Menü kann mit Hilfe der Methode `show()` angezeigt werden:
+Ein Popup Menu implementiert die Schnittstelle [`IMenu`](#menu_interface), somit kann man zum Beispiel mit Hilfe der Methode `addItem()` Menüeinträge hinzufügen. Das Menü kann mit Hilfe der Methode `show()` angezeigt werden:
 
 ~~~
 	void show(Position position);
