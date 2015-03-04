@@ -1,9 +1,3 @@
-
-
-## Menüs und Items{#menus_and_items}
-
-### Menu Bar{#menu_bar}
-
 ## Menü und Item Models{#menu_models}
 
 ## Actions und Commands{#actions_and_commands}
@@ -28,7 +22,7 @@
 
 # Basis und Composite Widgets 
 
-## Frame
+## [Frame]{#frame_widget}
 
 ## Dialog
 
@@ -112,13 +106,6 @@ TODO Beschreibung von Tree Actions in IDefaultActionFactory
 
 ## PasswordChangeDialog
 
-## Menu
-
-## PopupMenu
-
-## Toolbar
-
-## MenuItems
 
 # Addon Widgets 
 
