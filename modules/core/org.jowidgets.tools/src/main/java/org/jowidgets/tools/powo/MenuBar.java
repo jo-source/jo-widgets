@@ -28,6 +28,7 @@
 
 package org.jowidgets.tools.powo;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -84,7 +85,7 @@ class MenuBar extends Widget<IMenuBar, DummyBluePrint<IMenuBar>> implements IMen
 			return getWidget().getMenus();
 		}
 		else {
-			return new LinkedList<IMenu>(menus);
+			return Collections.unmodifiableList(new LinkedList<IMenu>(menus));
 		}
 	}
 
