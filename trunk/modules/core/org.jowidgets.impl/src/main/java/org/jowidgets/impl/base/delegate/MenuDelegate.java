@@ -29,6 +29,7 @@
 package org.jowidgets.impl.base.delegate;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -283,7 +284,7 @@ public class MenuDelegate extends DisposableDelegate {
 	}
 
 	public List<IMenuItem> getChildren() {
-		return new LinkedList<IMenuItem>(children);
+		return Collections.unmodifiableList(new LinkedList<IMenuItem>(children));
 	}
 
 	public boolean remove(final IMenuItem item) {
