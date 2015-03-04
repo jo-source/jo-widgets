@@ -35,6 +35,13 @@ public interface IActionMenuItemCommon extends IMenuItemCommon, IActionItemCommo
 	/**
 	 * Sets the key combination which should invoke the menu items actions listener.
 	 * 
+	 * The key binding will only be done automatically if the item is
+	 * a child of a menu or submenu that is contained in a menu bar of an
+	 * active window.
+	 * 
+	 * Hence for actions in popup menus there is no key binding. This must be done
+	 * therefore by adding the same action to a main menu or by using a key listener.
+	 * 
 	 * @param accelerator The accelerator to set, may be null
 	 */
 	void setAccelerator(Accelerator accelerator);

@@ -32,10 +32,31 @@ import org.jowidgets.common.widgets.builder.ISetupBuilder;
 
 public interface IItemSetupBuilder<INSTANCE_TYPE extends IItemSetupBuilder<?>> extends ISetupBuilder<INSTANCE_TYPE> {
 
+	/**
+	 * Sets the label text of the item
+	 * 
+	 * @param text The label text to set
+	 * 
+	 * @return This builder
+	 */
 	INSTANCE_TYPE setText(String text);
 
+	/**
+	 * Sets the tooltip text of the item
+	 * 
+	 * @param toolTipText The tooltip text to set
+	 * 
+	 * @return This builder
+	 */
 	INSTANCE_TYPE setToolTipText(String toolTipText);
 
+	/**
+	 * Sets the icon
+	 * 
+	 * @param icon The icon to set
+	 * 
+	 * @return This builder
+	 */
 	INSTANCE_TYPE setIcon(IImageConstant icon);
 
 }

@@ -33,7 +33,7 @@ public interface IMenuItemCommon extends IItemCommon {
 	/**
 	 * Sets the keyboard mnemonic
 	 * 
-	 * The mnemonic is the key that will activate the menu when combined
+	 * The mnemonic is the key that will activate the item when combined
 	 * with (usually) ALT key.
 	 * 
 	 * A mnemonic must correspond to a single key and is case-insensitive.
