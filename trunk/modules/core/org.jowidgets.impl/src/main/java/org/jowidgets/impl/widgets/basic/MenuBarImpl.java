@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.widgets.basic;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -132,7 +133,7 @@ public class MenuBarImpl extends WidgetSpiWrapper implements IMenuBar {
 
 	@Override
 	public List<IMenu> getMenus() {
-		return new LinkedList<IMenu>(menus);
+		return Collections.unmodifiableList(new LinkedList<IMenu>(menus));
 	}
 
 	@Override
