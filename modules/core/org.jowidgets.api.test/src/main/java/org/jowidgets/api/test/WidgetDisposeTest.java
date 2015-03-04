@@ -33,6 +33,7 @@ import java.util.List;
 
 import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IActionMenuItem;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
@@ -177,6 +178,37 @@ public class WidgetDisposeTest {
 				frame.dispose();
 
 				testDisposeListenerCount();
+			}
+
+		});
+	}
+
+	@Test
+	public void testDisposeMenuItem() {
+		Toolkit.getApplicationRunner().run(new IApplication() {
+
+			@Override
+			public void start(final IApplicationLifecycle lifecycle) {
+
+				final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
+
+				frame.setVisible(true);
+
+				final IMenuBar menuBar = frame.createMenuBar();
+
+				final IMainMenu menu = menuBar.addMenu("menu");
+				Assert.assertTrue(menuBar.getMenus().contains(menu));
+
+				final IActionMenuItem item = menu.addItem(BPF.menuItem());
+				Assert.assertTrue(menu.getChildren().contains(item));
+
+				item.dispose();
+				Assert.assertFalse(menu.getChildren().contains(item));
+
+				menu.dispose();
+				Assert.assertFalse(menuBar.getMenus().contains(menu));
+
+				frame.dispose();
 			}
 
 		});

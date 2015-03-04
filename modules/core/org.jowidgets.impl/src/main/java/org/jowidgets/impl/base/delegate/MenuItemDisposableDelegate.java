@@ -48,7 +48,7 @@ public class MenuItemDisposableDelegate extends DisposableDelegate {
 		if (!isDisposed()) {
 			if (menuItem.getParent() != null && menuItem.getParent().getChildren().contains(menuItem) && !onRemoveByDispose) {
 				onRemoveByDispose = true;
-				menuItem.getParent().getChildren().remove(menuItem); //this will invoke dispose by the parent menu
+				menuItem.getParent().remove(menuItem); //this will invoke dispose by the parent menu
 				onRemoveByDispose = false;
 			}
 			else {
