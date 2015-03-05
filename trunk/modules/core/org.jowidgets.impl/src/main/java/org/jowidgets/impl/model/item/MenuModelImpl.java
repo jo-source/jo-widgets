@@ -334,13 +334,13 @@ class MenuModelImpl extends ItemModelImpl implements IMenuModel {
 	}
 
 	@Override
-	public <MODEL_TYPE extends IMenuItemModel> MODEL_TYPE addItem(final MODEL_TYPE item) {
-		return listModelDelegate.addItem(item);
+	public void addItem(final IMenuItemModel item) {
+		listModelDelegate.addItem(item);
 	}
 
 	@Override
-	public <MODEL_TYPE extends IMenuItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item) {
-		return listModelDelegate.addItem(index, item);
+	public void addItem(final int index, final IMenuItemModel item) {
+		listModelDelegate.addItem(index, item);
 	}
 
 	@Override
