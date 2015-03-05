@@ -99,25 +99,73 @@ public interface IItemModel extends IItemModelObservable {
 	 */
 	void setAccelerator(final VirtualKey key, final Modifier... modifier);
 
+	/**
+	 * Gets the key accelerator that should be used for the item
+	 * 
+	 * @return The key accelerator, may be null
+	 */
 	Accelerator getAccelerator();
 
-	Character getMnemonic();
-
-	boolean isEnabled();
-
+	/**
+	 * Sets the mnemonic character
+	 * 
+	 * @param mnemonic The mnemonic character to set, may be null
+	 */
 	void setMnemonic(Character mnemonic);
 
+	/**
+	 * Sets the mnemonic character
+	 * 
+	 * @param mnemonic The mnemonic character to set
+	 */
 	void setMnemonic(char mnemonic);
 
+	/**
+	 * Gets the mnemonic character
+	 * 
+	 * @return The mnemonic character, may be null
+	 */
+	Character getMnemonic();
+
+	/**
+	 * Sets the enabled state of the item.
+	 * 
+	 * Remark: Not all bound items may support to become disabled
+	 * 
+	 * @param enabled The enabled state to set
+	 */
 	void setEnabled(boolean enabled);
 
+	/**
+	 * Gets the enabled state of the item
+	 * 
+	 * Remark: Not all bound items may support to become disabled
+	 * 
+	 * @return true if enabled, false otherwise
+	 */
+	boolean isEnabled();
+
+	/**
+	 * Sets the visible state of an item
+	 * 
+	 * Items that was set invisible will be hidden in their container
+	 * 
+	 * @param visible The visible state to set
+	 */
 	void setVisible(boolean visible);
 
+	/**
+	 * Gets the visible state of the item
+	 * 
+	 * @return True if visible, false otherwise
+	 */
 	boolean isVisible();
 
 	/**
-	 * Makes a deep copy of the item and its children.
-	 * Registered listeners on items won't be copied.
+	 * Creates a deep copy of the item and its children.
+	 * 
+	 * Remark: Registered listeners on items won't be copied, so the result has no
+	 * registered listeners for the first time.
 	 * 
 	 * @return A new instance that is a clone of this instance
 	 */

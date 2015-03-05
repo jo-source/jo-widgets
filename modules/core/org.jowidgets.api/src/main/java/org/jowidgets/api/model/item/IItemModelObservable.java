@@ -28,11 +28,20 @@
 
 package org.jowidgets.api.model.item;
 
-
 public interface IItemModelObservable {
 
+	/**
+	 * Adds a item model listener
+	 * 
+	 * @param listener The listener to add
+	 */
 	void addItemModelListener(IItemModelListener listener);
 
+	/**
+	 * removes a item model listener
+	 * 
+	 * @param listener The listener to remove
+	 */
 	void removeItemModelListener(IItemModelListener listener);
 
 }
