@@ -196,9 +196,7 @@ Das Ergebnis sieht wie folgt aus:
  
 ### Die Schnittstelle IMenuItem{#menu_item_interface}
 
-Die Schnittstelle `IMenuItem` liefert die Basisfunktionen für alle Menu Items. Dazu zählen das [Action Menü Item](#action_menu_item), [Checked Menu Item](#checked_menu_item), [Radio Menu Item](#radio_menu_item), [Separator Menu Item](#separator_menu_item) und das [Sub Menu](#sub_menu). Ein `IMenuItem` ist von [`IItem`](#item_interface) und somit von [`IWidget`](#widget_interface) abgeleitet. 
-
-Es folgt eine kurze Beschreibung der wichtigsten Methoden:
+Die Schnittstelle `IMenuItem` liefert die Basisfunktionen für alle Menu Items. Dazu zählen das [Action Menü Item](#action_menu_item), [Checked Menu Item](#checked_menu_item), [Radio Menu Item](#radio_menu_item), [Separator Menu Item](#separator_menu_item) und das [Sub Menu](#sub_menu). Ein `IMenuItem` ist von [`IItem`](#item_interface) und somit von [`IWidget`](#widget_interface) abgeleitet. Ein `IMenuItem` hat die folgenden weiteren Methoden:
  
 ~~~
 	IMenuItemModel getModel();
@@ -232,9 +230,9 @@ Beim `text` handelt es sich um den Label Text des Menüs. Der Mnemonic definiert
 Ein Main Menu kann (u.A.) mit Hilfe eines `IMainMenuBluePrint` erzeugt werden. Die Klasse `BPF` liefert die folgenden Methoden für die Erzeugung eines BluePrint:
 
 ~~~
-	public static IMainMenuBluePrint mainMenu();
+	public static IMainMenuBluePrint mainMenu(){...}
 	
-	public static IMainMenuBluePrint mainMenu(final String text) {
+	public static IMainMenuBluePrint mainMenu(final String text){...}
 ~~~
 
 Die zweite Methode ermöglicht das gleichzeitige setzen des Label Textes auf dem BluePrint bei der Erzeugung.
@@ -252,7 +250,7 @@ Diese definieren, analog zu den Methoden auf `IMainMenu` den Label Text und das 
 
 ### Sub Menu{#sub_menu}
 
-Ein Sub Menu ist ein Untermenü eines [`IMenu`](#menu_interface) und ist somit [`IMenu`](#menu_interface) und [`IMenuItem`](#menu_item) zugleich. Die Schnittstelle `ISubMenu` hat neben den von [`IMenu`](#menu_interface), [`IMenuItem`](#menu_item_interface), [`IItem`](#item_interface), [`IWidget`](#widget_interface) und [`ISubMenu`](#subMenu) geerbten __keine__ weiteren Methoden:
+Ein Sub Menu ist ein Untermenü eines [`IMenu`](#menu_interface) und ist somit [`IMenu`](#menu_interface) und [`IMenuItem`](#menu_item) zugleich. Die Schnittstelle `ISubMenu` hat neben den von [`IMenu`](#menu_interface), [`IMenuItem`](#menu_item_interface), [`IItem`](#item_interface), [`IWidget`](#widget_interface) und [`ISubMenu`](#subMenu) geerbten __keine__ weiteren Methoden. 
 
 
 #### Sub Menu BluePrint
@@ -282,7 +280,26 @@ Ein `ISubMenuBluePrint` hat die folgenden Methoden zur Konfiguration:
 Mit den ersten drei Methoden kann, analog zu einen [`IItem`](#item_interface) der Label Text, das Tooltip und das Icon gesetzt werden. Mit Hilfe der Methode `setMnemonic()` lässt sich das Mnemonic (vgl. [`IMenuItem`](#menu_item_interface)) festgelegt.
 
 
+#### Beispiel
 
+Das folgende Beispiel zeigt die Verwendung von Sub Menus:
+
+~~~{.java .numberLines startFrom="1"}
+	final ISubMenu subMenu1 = menu.addItem(BPF.subMenu("Submenu 1"));
+	final ISubMenu subMenu2 = menu.addItem(BPF.subMenu("Submenu 2"));
+
+	subMenu1.addItem(BPF.menuItem("Item1"));
+	subMenu1.addItem(BPF.menuItem("Item2"));
+	final ISubMenu subSubMenu1 = subMenu1.addItem(BPF.subMenu("Subsubmenu1"));
+
+	final ISubMenu subSubMenu2 = subMenu1.addItem(BPF.subMenu("Subsubmenu2"));
+	subSubMenu2.addItem(BPF.menuItem("Item1"));
+	subSubMenu2.addItem(BPF.menuItem("Item2"));
+~~~
+
+Die folgende Abbildung zeigt das Ergebnis:
+
+![Sub Menu Beispiel](images/sub_menu_example.gif "Sub Menu Beispiel")
 
 
 ### Popup Menu{#popup_menu}
@@ -340,7 +357,11 @@ In Zeile 2 wird ein neues PopupMenu erzeugt. In den Zeilen 5 - 16 werden diesem 
 
 ### Action Menu Item{#action_menu_item}
 
-Ein Action Menu Item ist ein [Menu Item](#menu_item_interface), welches beim _Anklicken_ ein Action Event auslöst. Es folgt eine Beschreibung der wichtigsten Methoden der Schnittstelle `IActionMenuItem`: 
+Ein Action Menu Item ist ein [Menu Item](#menu_item_interface), welches beim _Anklicken_ ein Action Event auslöst. Die folgende Abbildung zeigt ein Menu mit zwei Action Menu Items:
+
+![Action Menu Item Beispiel](images/action_menu_item_example.gif "Action Menu Item Beispiel")
+
+Neben denen von [IMenuItem](#menu_item_interface), [Item](#item_interface) und [IWidget](#widget_interface) geerbten Methoden hat die Schnittstelle `IActionMenuItem` die folgenden weiteren Funktionen:
 
 #### Menu Model
 
@@ -372,7 +393,7 @@ Diese wird aufgerufen, wenn das Item die Aktion ausführen soll, zum Beispiel du
 
 #### Action Binding
 
-Mit der folgenden Methode kann eine `IAction` gebunden werden:
+Mit der folgenden Methode kann eine `IAction` an das Item gebunden werden:
 
 ~~~
 	void setAction(IAction action);
@@ -382,7 +403,7 @@ Weitere Details finden sich im Abschnitt [Actions und Commands](#actions_and_com
 
 #### Tastaturkürzel{#key_accelerator}
 
-Mit Hilfe der folgenden Methode kann das Tastaturkürzel (Key Accelerator) festgelegt werden, mit welchen die Aktion (ohne Maus) ausgeführt werden soll:
+Mit Hilfe der folgenden Methode kann das Tastaturkürzel (Key Accelerator) festgelegt werden, mit welchem die Aktion (ohne Maus) ausgeführt werden soll:
 
 ~~~
 	void setAccelerator(Accelerator accelerator);
@@ -456,10 +477,237 @@ Das folgende Beispiel demonstriert die Verwendung von Action Menu Items:
 
 __Bemerkung:__ Für größeren Anwendungen wird anstatt der obigen Vorgehensweise die Verwendung von [Actions](#actions_and_commands) empfohlen.
 
+
+
 ### Die Schnittstelle ISelectableMenuItem{#selectable_menu_item_interface}
+
+Die Schnittstelle `ISelectableMenuItem` liefert die Funktionen für das [Checked Menu Item](#checked_menu_item) und [Radio Menu Item](#radio_menu_item). Ein `ISelectableMenuItem` ist von [`IMenuItem`](#menu_item_interface) und somit auch von [`IItem`](#item_interface) und [`IWidget`](#widget_interface) abgeleitet. 
+
+Es folgt eine kurze Beschreibung der wichtigsten Methoden:
+ 
+#### Menu Model
+
+Mit Hilfe der folgenden Methoden kann das Model gesetzt und ausgelesen werden. Siehe auch [Menü und Item Models](#menu_models).
+
+~~~
+	ISelectableMenuItemModel getModel();
+
+	void setModel(ISelectableMenuItemModel model);
+~~~
+
+#### Selected State{#selectable_menu_item_state}
+
+Der `selected` State gibt an, ob das Item ausgewählt ist, oder nicht. Bei einem [Checked Menu Item](#checked_menu_item) ist das der Fall, wenn die Checkbox _angehackt_ ist. Bei einem [Radio Menu Item](#radio_menu_item), wenn der Radio Button gedrückt ist. Mit Hilfe der folgenden Methoden kann der `selected` State gesetzt und ausgelesen werden:
+
+~~~
+	boolean isSelected();
+
+	void setSelected(boolean selected);
+~~~
+
+Um sich über Änderungen des `selected` State informieren zu lassen, kann ein `IItemStateListener` verwendet werden:
+
+ 
+~~~
+	void addItemListener(final IItemStateListener listener);
+
+	void removeItemListener(final IItemStateListener listener);
+~~~
+
+Dieser hat die folgende Methode:
+
+~~~
+	void itemStateChanged();
+~~~
+
+
+#### Tastaturkürzel{#key_accelerator_selectable_menu_item}
+
+Mit Hilfe der folgenden Methode kann das Tastaturkürzel (Key Accelerator) festgelegt werden:
+
+~~~
+	void setAccelerator(Accelerator accelerator);
+~~~ 
+
+Ist das zugehörige Item in einem [Main Menu](#main_menu) eines aktiven [Frames](#frame_widget), wird das Tastaturkürzel automatisch ausgewertet und ein Action Event gefeuert, wenn die entsprechende Tastenkombination gedrückt wird. 
+
+Bei Items in Popup Menüs ist das __nicht der Fall__. Dort muss man sich, z.B. mit Hilfe eines [KeyListener](#container_key_events), selbst um das Auslösen der Aktionen kümmern. 
+
+Bei einem [Checked Menu Item](#checked_menu_item) wird durch das Tastaturkürzel der [Selected State](#selectable_menu_item_state) umgeschalten (toggle). Bei einem [Radio Menu Item](#radio_menu_item) wird durch das Tastaturkürzel der `selected` State auf `true` gesetzt, falls er `false` ist. Ist das Item bereits selektiert, wird der Tastaturkürzel ignoriert.
+
 
 ### Checked Menu Item{#checked_menu_item}
 
+Ein Checked Menu Item ist ein Optionsfeld (Checkbox) innerhalb eines Menüs. Im Vergleich zu einem [Radio Menu Item](#radio_menu_item) handelt es sich dabei um eine Einzeloption. Die folgende Abbildung zeigt ein Menu mit zwei Checked Menu Items, wobei die erste Option ausgewählt (`selected`) ist. Beide Optionen können mit Hilfe eines [Tastaturkürzel](#key_accelerator_selectable_menu_item) umgeschalten werden.
+
+![Checked Menu Item Beispiel](images/checked_menu_item_example_1.gif "Checked Menu Item Beispiel")
+
+Eine Checked Menu Item implementiert die Schnittstelle [ISelectableMenuItem](#selectable_menu_item_interface) und liefert keine zusätzlichen Methoden.
+
+#### Checked Menu Item BluePrint
+
+Ein Checked Menu Item kann (u.A.) mit Hilfe eines `ICheckedMenuItemBluePrint` erzeugt werden. Die Klasse `BPF` liefert die folgenden Methoden für die Erzeugung eines BluePrint:
+
+~~~
+	public static ICheckedMenuItemBluePrint checkedMenuItem() {...}
+
+	public static ICheckedMenuItemBluePrint checkedMenuItem(final String text) {...}
+~~~
+
+Die zweite Methode ermöglicht das gleichzeitige setzen des Label Textes auf dem BluePrint bei der Erzeugung.
+
+Ein `ICheckedMenuItemBluePrint` hat die folgenden Methoden zur Konfiguration:  
+
+~~~
+	ICheckedMenuItemBluePrint setText(String text);
+
+	ICheckedMenuItemBluePrint setToolTipText(String toolTipText);
+	
+	ICheckedMenuItemBluePrint setMnemonic(Character mnemonic);
+	
+	ICheckedMenuItemBluePrint setAccelerator(Accelerator accelerator);
+	
+	ICheckedMenuItemBluePrint setSelected(boolean selected);
+~~~
+
+Diese können analog zu den Methoden der Schnittstelle `ISelectableMenuItem` verwendet werden.
+
+
+#### Beispiel
+
+Das folgende Beispiel demonstriert die Verwendung
+
+~~~{.java .numberLines startFrom="1"}
+    //first option
+	final ICheckedMenuItemBluePrint option1Bp = BPF.checkedMenuItem();
+	option1Bp
+		.setText("Option1")
+		.setToolTipText("Check this if option1 is desired")
+		.setAccelerator(new Accelerator(VirtualKey.DIGIT_1, Modifier.CTRL))
+		.setSelected(true);
+
+	final ISelectableMenuItem option1 = menu.addItem(option1Bp);
+	option1.addItemListener(new IItemStateListener() {
+		@Override
+		public void itemStateChanged() {
+			System.out.println("Option1 changed: " + option1.isSelected());
+		}
+	});
+
+	//second option
+	final ICheckedMenuItemBluePrint option2Bp = BPF.checkedMenuItem();
+	option2Bp
+		.setText("Option2")
+		.setToolTipText("Check this if option2 is desired")
+		.setAccelerator(new Accelerator(VirtualKey.DIGIT_2, Modifier.CTRL));
+
+	final ISelectableMenuItem option2 = menu.addItem(option2Bp);
+	option2.addItemListener(new IItemStateListener() {
+		@Override
+		public void itemStateChanged() {
+			System.out.println("Option2 changed: " + option2.isSelected());
+		}
+	});
+~~~
+
 ### Radio Menu Item{#radio_menu_item}
 
+Mit Hilfe eines Radio Menu Item kann eine Auswahl innerhalb einer Radio Item Group getroffen werden. Innerhalb einer Radion Item Group ist maximal ein Radio Item gleichzeitig ausgewählt. 
+
+Alle direkt benachbarten Radion Menu Items eines Menüs gehören zu einer Gruppe. Mit Hilfe von [Separator Menu Items](#separator_menu_item) können somit innerhalb eines Menüs mehrere Gruppen umgesetzt werden. Ein explizites setzen von Gruppen ist __nicht__ möglich ^[Dies war eine bewußte Design Entscheidung. Radio Gruppen zu definieren, welche der Nutzer nicht als Gruppe wahrnimmt, weil die Items nicht zusammenhängend dargestellt werden, hat keine praktische Relevanz. Demgegenüber sollte für den Standardfall kein zusätzlicher Implementierungsaufwand durch die Zuweisung zu Gruppen notwendig sein.]! Die folgende Abbildung zeigt ein Menu mit drei Radio Menu Item Gruppen, wobei jeweils eine Option ausgewählt (`selected`) ist. 
+
+![Radio Menu Item Beispiel](images/radio_menu_item_example_1.gif "Radio Menu Item Beispiel")
+
+Eine Radio Menu Item implementiert die Schnittstelle [ISelectableMenuItem](#selectable_menu_item_interface) und liefert keine zusätzlichen Methoden.
+
+#### Radio Menu Item BluePrint
+
+Ein Radio Menu Item kann (u.A.) mit Hilfe eines `IRadioMenuItemBluePrint` erzeugt werden. Die Klasse `BPF` liefert die folgenden Methoden für die Erzeugung eines BluePrint:
+
+~~~
+	public static IRadioMenuItemBluePrint checkedMenuItem() {...}
+
+	public static IRadioMenuItemBluePrint checkedMenuItem(final String text) {...}
+~~~
+
+Die zweite Methode ermöglicht das gleichzeitige setzen des Label Textes auf dem BluePrint bei der Erzeugung.
+
+Ein `IRadioMenuItemBluePrint` hat die folgenden Methoden zur Konfiguration:  
+
+~~~
+	IRadioMenuItemBluePrint setText(String text);
+
+	IRadioMenuItemBluePrint setToolTipText(String toolTipText);
+	
+	IRadioMenuItemBluePrint setMnemonic(Character mnemonic);
+	
+	IRadioMenuItemBluePrint setAccelerator(Accelerator accelerator);
+	
+	IRadioMenuItemBluePrint setSelected(boolean selected);
+~~~
+
+Diese können analog zu den Methoden der Schnittstelle `ISelectableMenuItem` verwendet werden.
+
+
+#### Beispiel
+
+Das folgende Beispiel demonstriert die Verwendung:
+
+~~~{.java .numberLines startFrom="1"}
+	//radio group1
+	ISelectableMenuItem g1Opt1 = menu.addItem(BPF.radioMenuItem("G1 - Opt1").setSelected(true));
+	ISelectableMenuItem g1Opt2 = menu.addItem(BPF.radioMenuItem("G1 - Opt2"));
+	ISelectableMenuItem g1Opt3 = menu.addItem(BPF.radioMenuItem("G1 - Opt2"));
+
+	//radio group2
+	menu.addSeparator();
+	ISelectableMenuItem g2Opt1 = menu.addItem(BPF.radioMenuItem("G2 - Opt1"));
+	ISelectableMenuItem g2Opt2 = menu.addItem(BPF.radioMenuItem("G2 - Opt2").setSelected(true));
+	ISelectableMenuItem g2Opt3 = menu.addItem(BPF.radioMenuItem("G2 - Opt2"));
+
+	//radio group3
+	menu.addSeparator();
+	ISelectableMenuItem g3Opt1 = menu.addItem(BPF.radioMenuItem("G3 - Opt1"));
+	ISelectableMenuItem g3Opt2 = menu.addItem(BPF.radioMenuItem("G3 - Opt2"));
+	ISelectableMenuItem g3Opt3 = menu.addItem(BPF.radioMenuItem("G3 - Opt2").setSelected(true));
+~~~
+
 ### Separator Menu Item{#separator_menu_item}
+
+Ein Menu Separator kann zur visuellen Gruppierung von Items innerhalb eines Menüs verwendet werden.
+
+#### Separator Menu Item BluePrint
+
+Ein Separator Menu Item kann (u.A.) mit Hilfe eines `ISeparatorMenuItemBluePrint` erzeugt werden. Die Klasse `BPF` liefert die folgenden Methoden für die Erzeugung eines BluePrint:
+
+~~~
+	public static ISeparatorMenuItemBluePrint menuSeparator() {...}
+~~~
+
+#### Beispiel
+
+Das folgende Beispiel demonstriert die Verwendung:
+
+~~~{.java .numberLines startFrom="1"}
+	menu.addItem(BPF.menuItem("Item1"));
+	menu.addItem(BPF.menuItem("Item2"));
+	menu.addItem(BPF.menuItem("Item3"));
+
+	menu.addItem(BPF.menuSeparator());
+	menu.addItem(BPF.menuItem("Item4"));
+	menu.addItem(BPF.menuItem("Item5"));
+
+	menu.addSeparator();
+	menu.addItem(BPF.menuItem("Item6"));
+	menu.addItem(BPF.menuItem("Item7"));
+	menu.addItem(BPF.menuItem("Item8"));
+	menu.addItem(BPF.menuItem("Item9"));
+~~~
+
+In Zeile 5 wird der Separator mit Hilfe eines BluePrint erzeugt, in Zeile 9 mit Hilfe der Convenience Methode `addSeparator()` der Schnittstelle [`IMenu`](#menu_interface).
+
+Die folgende Abbildung zeigt das Ergebnis:
+
+![Menu Separator Item Beispiel](images/menu_separator_example.gif "Menu Separator Item Beispiel")
+
+
