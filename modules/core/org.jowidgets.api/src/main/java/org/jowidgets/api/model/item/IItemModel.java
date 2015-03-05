@@ -34,6 +34,11 @@ import org.jowidgets.common.types.Modifier;
 
 public interface IItemModel extends IItemModelObservable {
 
+	/**
+	 * Gets the id of the item
+	 * 
+	 * @return
+	 */
 	String getId();
 
 	String getText();
@@ -47,8 +52,6 @@ public interface IItemModel extends IItemModelObservable {
 	Character getMnemonic();
 
 	boolean isEnabled();
-
-	void setId(String id);
 
 	void setText(final String text);
 

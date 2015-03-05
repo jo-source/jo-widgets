@@ -84,11 +84,6 @@ abstract class AbstractItemModelWrapper implements IItemModel, IWrapper<IItemMod
 	}
 
 	@Override
-	public final void setId(final String id) {
-		itemModel.setId(id);
-	}
-
-	@Override
 	public final void setText(final String text) {
 		itemModel.setText(text);
 	}

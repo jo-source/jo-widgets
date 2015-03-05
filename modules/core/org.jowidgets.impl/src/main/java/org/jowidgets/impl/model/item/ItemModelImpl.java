@@ -136,12 +136,6 @@ class ItemModelImpl implements IItemModel {
 	}
 
 	@Override
-	public void setId(final String id) {
-		this.id = id;
-		fireItemChanged();
-	}
-
-	@Override
 	public final void setText(final String text) {
 		this.text = text;
 		fireItemChanged();
