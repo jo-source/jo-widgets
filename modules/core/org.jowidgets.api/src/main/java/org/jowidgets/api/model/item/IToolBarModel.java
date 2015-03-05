@@ -63,9 +63,9 @@ public interface IToolBarModel extends IListModelObservable {
 	 */
 	void unbind(IToolBarModel model);
 
-	<MODEL_TYPE extends IToolBarItemModel> MODEL_TYPE addItem(final MODEL_TYPE item);
+	void addItem(final IToolBarItemModel item);
 
-	<MODEL_TYPE extends IToolBarItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item);
+	void addItem(final int index, final IToolBarItemModel item);
 
 	<MODEL_TYPE extends IToolBarItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
 		final BUILDER_TYPE itemBuilder);

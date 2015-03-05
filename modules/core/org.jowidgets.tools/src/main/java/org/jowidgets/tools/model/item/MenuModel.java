@@ -125,13 +125,13 @@ public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 	}
 
 	@Override
-	public final <MODEL_TYPE extends IMenuItemModel> MODEL_TYPE addItem(final MODEL_TYPE item) {
-		return getItemModel().addItem(item);
+	public final void addItem(final IMenuItemModel item) {
+		getItemModel().addItem(item);
 	}
 
 	@Override
-	public final <MODEL_TYPE extends IMenuItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item) {
-		return getItemModel().addItem(index, item);
+	public final void addItem(final int index, final IMenuItemModel item) {
+		getItemModel().addItem(index, item);
 	}
 
 	@Override

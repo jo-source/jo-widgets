@@ -125,13 +125,13 @@ class ToolBarModelImpl implements IToolBarModel {
 	}
 
 	@Override
-	public <MODEL_TYPE extends IToolBarItemModel> MODEL_TYPE addItem(final MODEL_TYPE item) {
-		return listModelDelegate.addItem(item);
+	public void addItem(final IToolBarItemModel item) {
+		listModelDelegate.addItem(item);
 	}
 
 	@Override
-	public <MODEL_TYPE extends IToolBarItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item) {
-		return listModelDelegate.addItem(index, item);
+	public void addItem(final int index, final IToolBarItemModel item) {
+		listModelDelegate.addItem(index, item);
 	}
 
 	@Override

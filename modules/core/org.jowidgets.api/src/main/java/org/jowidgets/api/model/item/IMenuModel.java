@@ -38,9 +38,9 @@ import org.jowidgets.util.IDecorator;
 public interface IMenuModel extends IItemModel, IMenuItemModel, IToolBarItemModel, IListModelObservable {
 
 	//TODO MG add checked item model gets problem with ids
-	<MODEL_TYPE extends IMenuItemModel> MODEL_TYPE addItem(final MODEL_TYPE item);
+	void addItem(final IMenuItemModel item);
 
-	<MODEL_TYPE extends IMenuItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item);
+	void addItem(final int index, final IMenuItemModel item);
 
 	<MODEL_TYPE extends IMenuItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
 		final BUILDER_TYPE itemBuilder);
