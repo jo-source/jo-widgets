@@ -31,37 +31,79 @@ package org.jowidgets.api.model.item;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.types.Modifier;
+import org.jowidgets.common.types.VirtualKey;
 
 public interface IItemModel extends IItemModelObservable {
 
 	/**
 	 * Gets the id of the item
 	 * 
-	 * @return
+	 * @return The id of the item, never null
 	 */
 	String getId();
 
+	/**
+	 * Sets the items label text
+	 * 
+	 * @param text The label text of the item, may be null
+	 */
+	void setText(final String text);
+
+	/**
+	 * Gets the items label text
+	 * 
+	 * @return The label text of the item, may be null
+	 */
 	String getText();
 
+	/**
+	 * Sets the tooltip text for the item
+	 * 
+	 * @param toolTipText The tooltip text to set, may be null
+	 */
+	void setToolTipText(String toolTipText);
+
+	/**
+	 * Gets the tooltip text of the item
+	 * 
+	 * @return The tooltip text, may be null
+	 */
 	String getToolTipText();
 
+	/**
+	 * Sets the items icon
+	 * 
+	 * @param icon The icon to set, may be null
+	 */
+	void setIcon(IImageConstant icon);
+
+	/**
+	 * Gets the items icon
+	 * 
+	 * @return The icon, may be null
+	 */
 	IImageConstant getIcon();
+
+	/**
+	 * Sets the key accelerator that should be used for the item
+	 * 
+	 * @param accelerator The accelerator to set, may be null
+	 */
+	void setAccelerator(Accelerator accelerator);
+
+	/**
+	 * Sets the key accelerator that should be used for the item
+	 * 
+	 * @param key The character to use
+	 * @param modifier The modifier to use
+	 */
+	void setAccelerator(final VirtualKey key, final Modifier... modifier);
 
 	Accelerator getAccelerator();
 
 	Character getMnemonic();
 
 	boolean isEnabled();
-
-	void setText(final String text);
-
-	void setToolTipText(String toolTipText);
-
-	void setIcon(IImageConstant icon);
-
-	void setAccelerator(Accelerator accelerator);
-
-	void setAccelerator(final char key, final Modifier... modifier);
 
 	void setMnemonic(Character mnemonic);
 
