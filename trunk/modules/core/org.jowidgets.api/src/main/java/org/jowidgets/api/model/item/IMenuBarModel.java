@@ -35,11 +35,39 @@ import org.jowidgets.common.image.IImageConstant;
 
 public interface IMenuBarModel extends IListModelObservable {
 
+	void addMenu(IMenuModel menu);
+
+	void addMenu(int index, IMenuModel menu);
+
+	IMenuModel addMenu(IMenuModelBuilder menuBuilder);
+
+	IMenuModel addMenu(int index, IMenuModelBuilder menuBuilder);
+
+	IMenuModel addMenu();
+
+	IMenuModel addMenu(String text);
+
+	IMenuModel addMenu(String text, String toolTipText);
+
+	IMenuModel addMenu(String text, IImageConstant icon);
+
+	IMenuModel addMenu(String text, String toolTipText, IImageConstant icon);
+
 	void addAfter(IMenuModel newMenu, String id);
 
 	void addBefore(IMenuModel newMenu, String id);
 
 	void addMenusOfModel(IMenuBarModel model);
+
+	void removeMenu(final IMenuModel item);
+
+	void removeMenu(int index);
+
+	void removeAllMenus();
+
+	List<IMenuModel> getMenus();
+
+	IMenuModel findMenuById(String id);
 
 	/**
 	 * Binds the given model to this model with the following manner:
@@ -64,37 +92,11 @@ public interface IMenuBarModel extends IListModelObservable {
 	 */
 	void unbind(IMenuBarModel model);
 
-	IMenuModel addMenu(IMenuModel menu);
-
-	IMenuModel addMenu(int index, IMenuModel menu);
-
-	IMenuModel addMenu(IMenuModelBuilder menuBuilder);
-
-	IMenuModel addMenu(int index, IMenuModelBuilder menuBuilder);
-
-	IMenuModel addMenu();
-
-	IMenuModel addMenu(String text);
-
-	IMenuModel addMenu(String text, String toolTipText);
-
-	IMenuModel addMenu(String text, IImageConstant icon);
-
-	IMenuModel addMenu(String text, String toolTipText, IImageConstant icon);
-
-	void removeMenu(final IMenuModel item);
-
-	void removeMenu(int index);
-
-	void removeAllMenus();
-
-	IMenuModel findMenuById(String id);
-
-	List<IMenuModel> getMenus();
-
 	/**
-	 * Makes a deep copy of the menu bar and its children.
-	 * Registered listeners on items won't be copied.
+	 * Creates a deep copy of the model and its children.
+	 * 
+	 * Remark: Registered listeners won't be copied, so the result has no
+	 * registered listeners for the first time.
 	 * 
 	 * @return A new instance that is a clone of this instance
 	 */
