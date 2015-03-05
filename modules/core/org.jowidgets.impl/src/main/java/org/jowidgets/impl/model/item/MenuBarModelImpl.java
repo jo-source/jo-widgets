@@ -113,13 +113,13 @@ class MenuBarModelImpl implements IMenuBarModel {
 	}
 
 	@Override
-	public IMenuModel addMenu(final IMenuModel menu) {
-		return listModelDelegate.addItem(menu);
+	public void addMenu(final IMenuModel menu) {
+		listModelDelegate.addItem(menu);
 	}
 
 	@Override
-	public IMenuModel addMenu(final int index, final IMenuModel menu) {
-		return listModelDelegate.addItem(index, menu);
+	public void addMenu(final int index, final IMenuModel menu) {
+		listModelDelegate.addItem(index, menu);
 	}
 
 	@Override
