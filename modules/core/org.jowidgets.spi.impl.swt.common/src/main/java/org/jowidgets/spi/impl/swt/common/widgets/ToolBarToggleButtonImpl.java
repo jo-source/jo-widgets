@@ -46,7 +46,7 @@ public class ToolBarToggleButtonImpl extends ToolBarButtonImpl implements IToolB
 		item.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
-				itemStateObservable.fireItemStateChanged();
+				itemStateObservable.fireItemStateChanged(isSelected());
 			}
 		});
 	}
