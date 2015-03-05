@@ -48,7 +48,7 @@ public class SelectableMenuItemImpl extends MenuItemImpl implements ISelectableM
 		menuItem.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(final SelectionEvent e) {
-				itemStateObservable.fireItemStateChanged();
+				itemStateObservable.fireItemStateChanged(isSelected());
 			}
 		});
 	}

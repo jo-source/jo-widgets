@@ -35,10 +35,13 @@ import java.util.Set;
 import org.jowidgets.common.widgets.controller.IItemStateListener;
 import org.jowidgets.common.widgets.controller.IItemStateObservable;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.NullCompatibleEquivalence;
 
 public class ItemStateObservable implements IItemStateObservable {
 
 	private final Set<IItemStateListener> itemListeners;
+
+	private Boolean lastState;
 
 	public ItemStateObservable() {
 		this.itemListeners = new LinkedHashSet<IItemStateListener>();
@@ -56,9 +59,12 @@ public class ItemStateObservable implements IItemStateObservable {
 		this.itemListeners.remove(listener);
 	}
 
-	public final void fireItemStateChanged() {
-		for (final IItemStateListener listener : new LinkedList<IItemStateListener>(itemListeners)) {
-			listener.itemStateChanged();
+	public final void fireItemStateChanged(final boolean state) {
+		if (!NullCompatibleEquivalence.equals(Boolean.valueOf(state), lastState)) {
+			for (final IItemStateListener listener : new LinkedList<IItemStateListener>(itemListeners)) {
+				listener.itemStateChanged();
+			}
+			lastState = state;
 		}
 	}
 

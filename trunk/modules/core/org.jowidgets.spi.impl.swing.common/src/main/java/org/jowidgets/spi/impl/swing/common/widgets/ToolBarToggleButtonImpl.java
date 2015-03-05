@@ -48,7 +48,7 @@ public class ToolBarToggleButtonImpl extends ToolBarItemImpl implements IToolBar
 
 			@Override
 			public void itemStateChanged(final ItemEvent e) {
-				itemStateObservable.fireItemStateChanged();
+				itemStateObservable.fireItemStateChanged(isSelected());
 			}
 		});
 
