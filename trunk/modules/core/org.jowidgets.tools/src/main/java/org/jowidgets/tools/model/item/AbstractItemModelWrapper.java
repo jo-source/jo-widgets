@@ -33,6 +33,7 @@ import org.jowidgets.api.model.item.IItemModelListener;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.types.Modifier;
+import org.jowidgets.common.types.VirtualKey;
 import org.jowidgets.util.wrapper.IWrapper;
 
 abstract class AbstractItemModelWrapper implements IItemModel, IWrapper<IItemModel> {
@@ -104,7 +105,7 @@ abstract class AbstractItemModelWrapper implements IItemModel, IWrapper<IItemMod
 	}
 
 	@Override
-	public final void setAccelerator(final char key, final Modifier... modifier) {
+	public final void setAccelerator(final VirtualKey key, final Modifier... modifier) {
 		itemModel.setAccelerator(key, modifier);
 	}
 
