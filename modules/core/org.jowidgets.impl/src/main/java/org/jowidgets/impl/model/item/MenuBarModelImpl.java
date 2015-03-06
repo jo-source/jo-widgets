@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.model.item;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -165,7 +166,7 @@ class MenuBarModelImpl implements IMenuBarModel {
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public List<IMenuModel> getMenus() {
-		return new LinkedList(listModelDelegate.getChildren());
+		return Collections.unmodifiableList(new LinkedList(listModelDelegate.getChildren()));
 	}
 
 	@Override
