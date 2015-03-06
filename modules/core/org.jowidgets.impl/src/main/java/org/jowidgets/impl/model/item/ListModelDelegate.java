@@ -39,7 +39,6 @@ import org.jowidgets.api.model.item.IActionItemModel;
 import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.api.model.item.IItemModel;
 import org.jowidgets.api.model.item.IItemModelBuilder;
-import org.jowidgets.api.model.item.IItemModelListener;
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IMenuItemModel;
 import org.jowidgets.api.model.item.IMenuModel;
@@ -49,24 +48,15 @@ import org.jowidgets.api.model.item.IToolBarModel;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.NullCompatibleEquivalence;
-import org.jowidgets.util.wrapper.IWrapper;
 
 class ListModelDelegate {
 
 	private final Set<IListModelListener> listModelListeners;
 	private final List<IItemModel> children;
-	private final IItemModelListener itemModelListener;
 
 	protected ListModelDelegate() {
 		listModelListeners = new HashSet<IListModelListener>();
 		this.children = new LinkedList<IItemModel>();
-
-		this.itemModelListener = new IItemModelListener() {
-			@Override
-			public void itemChanged(final IItemModel item) {
-				checkIds(item);
-			}
-		};
 	}
 
 	protected void setContent(final IMenuModel source) {
@@ -219,13 +209,8 @@ class ListModelDelegate {
 		return item;
 	}
 
-	@SuppressWarnings("unchecked")
-	protected <MODEL_TYPE extends IItemModel> MODEL_TYPE addItem(final int index, MODEL_TYPE item) {
+	protected <MODEL_TYPE extends IItemModel> MODEL_TYPE addItem(final int index, final MODEL_TYPE item) {
 		Assert.paramNotNull(item, "item");
-
-		if (item instanceof IWrapper<?>) {
-			item = ((IWrapper<MODEL_TYPE>) item).unwrap();
-		}
 
 		if (item instanceof IMenuModel && this instanceof IMenuModel) {
 			checkRecursion((IMenuModel) item, (IMenuModel) this);
@@ -233,7 +218,6 @@ class ListModelDelegate {
 
 		checkIds(item);
 		children.add(index, item);
-		item.addItemModelListener(itemModelListener);
 		fireAfterChildAdded(index);
 
 		return item;
@@ -339,7 +323,6 @@ class ListModelDelegate {
 		}
 		final IItemModel removedItem = children.remove(index);
 		if (removedItem != null) {
-			removedItem.removeItemModelListener(itemModelListener);
 			fireAfterChildRemoved(index);
 		}
 	}
@@ -381,7 +364,7 @@ class ListModelDelegate {
 			throw new IllegalArgumentException("Invalid item ID: The item '" + item + "' has no id.");
 		}
 		for (final IItemModel child : children) {
-			if (child != item && NullCompatibleEquivalence.equals(item.getId(), child.getId())) {
+			if (NullCompatibleEquivalence.equals(item.getId(), child.getId())) {
 				throw new IllegalArgumentException("Invalid item ID: The item '"
 					+ item
 					+ "' has the same id ("
@@ -398,15 +381,15 @@ class ListModelDelegate {
 		}
 	}
 
-	private void checkRecursion(final IMenuModel menu1, final IMenuModel menu2) {
-		if (NullCompatibleEquivalence.equals(menu1, menu2)) {
+	private void checkRecursion(final IMenuModel itemToAdd, final IMenuModel menu) {
+		if (NullCompatibleEquivalence.equals(itemToAdd, menu)) {
 			throw new IllegalArgumentException("Menu Model Recursion: "
 				+ "The added menu has the same id than this menu or has a child menu with the same id than this menu.");
 		}
 
-		for (final IItemModel child : menu1.getChildren()) {
+		for (final IItemModel child : itemToAdd.getChildren()) {
 			if (child instanceof IMenuModel) {
-				checkRecursion((IMenuModel) child, menu2);
+				checkRecursion((IMenuModel) child, menu);
 			}
 		}
 	}

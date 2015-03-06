@@ -35,38 +35,149 @@ import org.jowidgets.common.image.IImageConstant;
 
 public interface IMenuBarModel extends IListModelObservable {
 
+	/**
+	 * Adds a menu
+	 * 
+	 * @param menu The menu to add
+	 */
 	void addMenu(IMenuModel menu);
 
+	/**
+	 * Adds a menu at a given index
+	 * 
+	 * @param index The index where to add the menu
+	 * @param menu The menu to add
+	 */
 	void addMenu(int index, IMenuModel menu);
 
+	/**
+	 * Creates and adds a menu defined by a builder.
+	 * 
+	 * @param menuBuilder The builder that defines the menu
+	 * 
+	 * @return The added menu
+	 */
 	IMenuModel addMenu(IMenuModelBuilder menuBuilder);
 
+	/**
+	 * Creates and adds a menu defined by a builder at a given index
+	 * 
+	 * @param index The index where to add the menu
+	 * @param menuBuilder The builder that defines the menu
+	 * 
+	 * @return The added menu
+	 */
 	IMenuModel addMenu(int index, IMenuModelBuilder menuBuilder);
 
+	/**
+	 * Creates and add a submenu
+	 * 
+	 * @return The created submenu
+	 */
 	IMenuModel addMenu();
 
+	/**
+	 * Creates and add a submenu
+	 * 
+	 * @param text The label text of the sub menu
+	 * 
+	 * @return The created submenu
+	 */
 	IMenuModel addMenu(String text);
 
+	/**
+	 * Creates and add a submenu
+	 * 
+	 * @param text The label text of the sub menu
+	 * @param toolTipText The tooltip text of the submenu
+	 * 
+	 * @return The created submenu
+	 */
 	IMenuModel addMenu(String text, String toolTipText);
 
+	/**
+	 * Creates and add a submenu
+	 * 
+	 * @param text The label text of the sub menu
+	 * @param icon The icon of the submenu
+	 * 
+	 * @return The created submenu
+	 */
 	IMenuModel addMenu(String text, IImageConstant icon);
 
+	/**
+	 * Creates and add a submenu
+	 * 
+	 * @param text The label text of the sub menu
+	 * @param toolTipText The tooltip text of the submenu
+	 * @param icon The icon of the submenu
+	 * 
+	 * @return The created submenu
+	 */
 	IMenuModel addMenu(String text, String toolTipText, IImageConstant icon);
 
+	/**
+	 * Adds a menu after another menu
+	 * 
+	 * @param newMenu The menu to add
+	 * @param id The id of the menu to add the newMenu after
+	 * 
+	 * @throws IllegalArgumentException if no menu with the given id exists,
+	 *             use {@link #findMenuById(String)} to check if the menu exist
+	 */
 	void addAfter(IMenuModel newMenu, String id);
 
+	/**
+	 * Adds a menu before another menu
+	 * 
+	 * @param newMenu The menu to add
+	 * @param id The id of the menu to add the newMenu before
+	 * 
+	 * @throws IllegalArgumentException if no menu with the given id exists,
+	 *             use {@link #findMenuById(String)} to check if the menu exist
+	 */
 	void addBefore(IMenuModel newMenu, String id);
 
+	/**
+	 * Adds all menus of a given menu bar
+	 * 
+	 * @param model The menu bar which models should be added
+	 */
 	void addMenusOfModel(IMenuBarModel model);
 
+	/**
+	 * Removes a menu
+	 * 
+	 * @param item The menu to remove
+	 */
 	void removeMenu(final IMenuModel item);
 
+	/**
+	 * Removes a menu at a given index
+	 * 
+	 * @param index The index where to remove the menu
+	 */
 	void removeMenu(int index);
 
+	/**
+	 * Removes all menus
+	 */
 	void removeAllMenus();
 
+	/**
+	 * Gets a unmodifieable copy of all menus
+	 * 
+	 * @return
+	 */
 	List<IMenuModel> getMenus();
 
+	/**
+	 * Searches for a menu with a given id
+	 * 
+	 * @param id The id of the menu to search for
+	 * 
+	 * @return The found menu or null if no menu with the id exists
+	 */
 	IMenuModel findMenuById(String id);
 
 	/**

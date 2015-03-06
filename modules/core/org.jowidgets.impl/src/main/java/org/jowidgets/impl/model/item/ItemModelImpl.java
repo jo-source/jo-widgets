@@ -39,6 +39,7 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.VirtualKey;
+import org.jowidgets.util.NullCompatibleEquivalence;
 
 class ItemModelImpl implements IItemModel {
 
@@ -252,19 +253,11 @@ class ItemModelImpl implements IItemModel {
 		if (obj == null) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (!(obj instanceof IItemModel)) {
 			return false;
 		}
-		final ItemModelImpl other = (ItemModelImpl) obj;
-		if (id == null) {
-			if (other.id != null) {
-				return false;
-			}
-		}
-		else if (!id.equals(other.id)) {
-			return false;
-		}
-		return true;
+		final IItemModel other = (IItemModel) obj;
+		return NullCompatibleEquivalence.equals(id, other.getId());
 	}
 
 }

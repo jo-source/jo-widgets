@@ -28,9 +28,13 @@
 
 package org.jowidgets.api.model.item;
 
-
 public interface IActionItemVisibilityAspectPlugin {
 
+	/**
+	 * Gets the visibility aspect of the plugin
+	 * 
+	 * @return The visibility aspect, never null
+	 */
 	IActionItemVisibilityAspect getVisibilityAspect();
 
 	/**

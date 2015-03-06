@@ -46,30 +46,70 @@ import org.jowidgets.util.IDecorator;
 
 public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 
+	/**
+	 * Creates a new menu model
+	 */
 	public MenuModel() {
 		this(builder());
 	}
 
+	/**
+	 * Creates a new menu model
+	 * 
+	 * @param text The label text of the menu model
+	 */
 	public MenuModel(final String text) {
 		this(builder().setText(text));
 	}
 
+	/**
+	 * Creates a new menu model
+	 * 
+	 * @param text The label text
+	 * @param icon The icon
+	 */
 	public MenuModel(final String text, final IImageConstant icon) {
 		this(builder(text, icon));
 	}
 
+	/**
+	 * Creates a new menu model
+	 * 
+	 * @param text The label text
+	 * @param toolTipText The tooltip text
+	 */
 	public MenuModel(final String text, final String toolTipText) {
 		this(builder(text, toolTipText));
 	}
 
+	/**
+	 * Creates a nwe menu model
+	 * 
+	 * @param text The label text
+	 * @param toolTipText The tooltip text
+	 * @param icon The icon
+	 */
 	public MenuModel(final String text, final String toolTipText, final IImageConstant icon) {
 		this(builder(text, toolTipText, icon));
 	}
 
+	/**
+	 * Creates a nwe menu model
+	 * 
+	 * @param id the id
+	 * @param text The label text
+	 * @param toolTipText The tooltip text
+	 * @param icon The icon
+	 */
 	public MenuModel(final String id, final String text, final String toolTipText, final IImageConstant icon) {
 		this(builder(id, text, toolTipText, icon));
 	}
 
+	/**
+	 * Creates a new menu model defined by a builder
+	 * 
+	 * @param builder The builder that defines the model
+	 */
 	public MenuModel(final IMenuModelBuilder builder) {
 		super(builder.build());
 	}
@@ -302,30 +342,82 @@ public class MenuModel extends AbstractItemModelWrapper implements IMenuModel {
 		return getItemModel().createCopy();
 	}
 
+	/**
+	 * Creates a new menu model instance
+	 * 
+	 * @return The new menu model
+	 */
 	public static IMenuModel create() {
-		return new MenuModel();
+		return builder().build();
 	}
 
+	/**
+	 * Creates a new menu model builder
+	 * 
+	 * @return A new menu model builder
+	 */
 	public static IMenuModelBuilder builder() {
 		return Toolkit.getModelFactoryProvider().getItemModelFactory().menuBuilder();
 	}
 
+	/**
+	 * Creates a new menu model builder and set defaults
+	 * 
+	 * @param text The label text to set on the builder
+	 * 
+	 * @return A new menu model builder
+	 */
 	public static IMenuModelBuilder builder(final String text) {
 		return builder().setText(text);
 	}
 
+	/**
+	 * Creates a new menu model builder and set defaults
+	 * 
+	 * @param text The label text to set on the builder
+	 * @param toolTipText The tooltip text to set on the builder
+	 * 
+	 * @return A new menu model builder
+	 */
 	public static IMenuModelBuilder builder(final String text, final String toolTipText) {
 		return builder(text).setToolTipText(toolTipText);
 	}
 
+	/**
+	 * Creates a new menu model builder and set defaults
+	 * 
+	 * @param text The label text to set on the builder
+	 * @param icon The icon to set on the builder
+	 * 
+	 * @return A new menu model builder
+	 */
 	public static IMenuModelBuilder builder(final String text, final IImageConstant icon) {
 		return builder().setText(text).setIcon(icon);
 	}
 
+	/**
+	 * Creates a new menu model builder and set defaults
+	 * 
+	 * @param text The label text to set on the builder
+	 * @param toolTipText The tooltip text to set on the builder
+	 * @param icon The icon to set on the builder
+	 * 
+	 * @return A new menu model builder
+	 */
 	public static IMenuModelBuilder builder(final String text, final String toolTipText, final IImageConstant icon) {
 		return builder(text, toolTipText).setIcon(icon);
 	}
 
+	/**
+	 * Creates a new menu model builder and set defaults
+	 * 
+	 * @param id The id to set on the builder
+	 * @param text The label text to set on the builder
+	 * @param toolTipText The tooltip text to set on the builder
+	 * @param icon The icon to set on the builder
+	 * 
+	 * @return A new menu model builder
+	 */
 	public static IMenuModelBuilder builder(
 		final String id,
 		final String text,

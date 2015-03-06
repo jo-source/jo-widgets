@@ -50,6 +50,9 @@ public interface IActionItemVisibilityAspect {
 	 */
 	RequestContext getRequestContext();
 
+	/**
+	 * The request context
+	 */
 	public enum RequestContext {
 
 		/**
