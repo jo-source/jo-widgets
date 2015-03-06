@@ -1,6 +1,6 @@
-## Menü und Item Models{#menu_models}
-
 ## Actions und Commands{#actions_and_commands}
+
+### ActionItemVisibilityAspect{#action_item_visibility_aspect}
 
 ## Farben{#colors}
 
@@ -22,7 +22,7 @@
 
 # Basis und Composite Widgets 
 
-## [Frame]{#frame_widget}
+## Frame{#frame_widget}
 
 ## Dialog
 
@@ -91,6 +91,14 @@ TODO Beschreibung von Tree Actions in IDefaultActionFactory
 ## Canvas
 
 ## Toolbar{#toolbar_widget}
+
+### ToolBarButton{#tool_bar_button}
+
+### ToolBarToggleButton{#tool_bar_toogle_button}
+
+### ToolBarMenu{#tool_bar_menu}
+
+### Toolbar Model{#toolbar_model}
 
 ## MessageDialog{#message_dialog}
 
