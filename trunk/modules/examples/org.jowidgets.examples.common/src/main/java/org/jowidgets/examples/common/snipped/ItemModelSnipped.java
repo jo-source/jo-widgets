@@ -66,19 +66,22 @@ public final class ItemModelSnipped implements IApplication {
 		final IToolBarModel toolBar = frame.add(BPF.toolBar(), BorderLayout.TOP).getModel();
 		final IComposite composite = frame.add(BPF.composite().setBorder(), BorderLayout.CENTER);
 
+		//Create the menu bar
+		final IMenuBarModel menuBar = frame.getMenuBarModel();
+
 		//create a checked item for filter
 		final CheckedItemModel filter = new CheckedItemModel("Filter", IconsSmall.FILTER);
 		filter.setSelected(true);
 
-		//create save action with constructor
+		//create save action (with constructor)
 		final ActionItemModel save = new ActionItemModel("Save", IconsSmall.DISK);
 		save.setAccelerator(VirtualKey.S, Modifier.CTRL);
 
-		//create copy action with constructor
+		//create copy action (with constructor)
 		final ActionItemModel copy = new ActionItemModel("Copy", IconsSmall.COPY);
 		copy.setAccelerator(VirtualKey.C, Modifier.CTRL);
 
-		//create paste action with builder
+		//create paste action (with builder)
 		final IActionItemModel paste = ActionItemModel.builder().setText("Paste").setIcon(IconsSmall.PASTE).setAccelerator(
 				VirtualKey.V,
 				Modifier.CTRL).build();
@@ -99,7 +102,6 @@ public final class ItemModelSnipped implements IApplication {
 		final IActionItemModel action3 = subMenu.addActionItem("Action 3");
 
 		//add the menu to the menu bar
-		final IMenuBarModel menuBar = frame.getMenuBarModel();
 		menuBar.addMenu(menu);
 
 		//sets the menu as popup menu on the composite
@@ -127,6 +129,10 @@ public final class ItemModelSnipped implements IApplication {
 
 		//set the root frame visible
 		frame.setVisible(true);
+
+		subMenu.removeItem(action2);
+
+		subMenu.addItem(1, action2);
 	}
 
 	private final class SysoutActionListener implements IActionListener {
