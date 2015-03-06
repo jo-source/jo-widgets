@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.model.item;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -358,7 +359,7 @@ class MenuModelImpl extends ItemModelImpl implements IMenuModel {
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public final List<IMenuItemModel> getChildren() {
-		return new LinkedList(listModelDelegate.getChildren());
+		return Collections.unmodifiableList(new LinkedList(listModelDelegate.getChildren()));
 	}
 
 	@Override
