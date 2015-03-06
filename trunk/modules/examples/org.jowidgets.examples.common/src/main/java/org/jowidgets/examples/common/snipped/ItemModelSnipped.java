@@ -61,13 +61,13 @@ public final class ItemModelSnipped implements IApplication {
 		frameBp.setSize(new Dimension(400, 300)).setTitle("Menu and Item Models");
 		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
 
+		//Create the menu bar
+		final IMenuBarModel menuBar = frame.getMenuBarModel();
+
 		//Use a border layout, add toolbar and composite
 		frame.setLayout(BorderLayout.builder().gap(0).build());
 		final IToolBarModel toolBar = frame.add(BPF.toolBar(), BorderLayout.TOP).getModel();
 		final IComposite composite = frame.add(BPF.composite().setBorder(), BorderLayout.CENTER);
-
-		//Create the menu bar
-		final IMenuBarModel menuBar = frame.getMenuBarModel();
 
 		//create a checked item for filter
 		final CheckedItemModel filter = new CheckedItemModel("Filter", IconsSmall.FILTER);
@@ -129,10 +129,6 @@ public final class ItemModelSnipped implements IApplication {
 
 		//set the root frame visible
 		frame.setVisible(true);
-
-		subMenu.removeItem(action2);
-
-		subMenu.addItem(1, action2);
 	}
 
 	private final class SysoutActionListener implements IActionListener {
