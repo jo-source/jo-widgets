@@ -37,73 +37,361 @@ import org.jowidgets.util.IDecorator;
 
 public interface IMenuModel extends IItemModel, IMenuItemModel, IToolBarItemModel, IListModelObservable {
 
-	//TODO MG add checked item model gets problem with ids
+	/**
+	 * Adds an item to the model
+	 * 
+	 * @param item The item to add, must not be null
+	 */
 	void addItem(final IMenuItemModel item);
 
+	/**
+	 * Adds an item at a given index
+	 * 
+	 * @param index The index to add the item at
+	 * @param item The item to add
+	 */
 	void addItem(final int index, final IMenuItemModel item);
 
+	/**
+	 * Adds an item defined by an builder and returns the build item
+	 * 
+	 * @param itemBuilder The builder that defines the item
+	 * 
+	 * @return The added item
+	 */
 	<MODEL_TYPE extends IMenuItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
 		final BUILDER_TYPE itemBuilder);
 
+	/**
+	 * Adds an item at a given index defined by an builder and returns the build item
+	 * 
+	 * @param index The index to add the item at
+	 * @param itemBuilder The builder that defines the item
+	 * 
+	 * @return The added item
+	 */
 	<MODEL_TYPE extends IMenuItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
 		int index,
 		final BUILDER_TYPE itemBuilder);
 
+	/**
+	 * Adds an item after another item defined by an path of item id
+	 * 
+	 * If the given path not exists, an IllegalArgumentException will be thrown
+	 * 
+	 * @param newItem The item to add
+	 * @param idPath The path where to add the item
+	 * 
+	 * @throws IllegalArgumentException
+	 */
 	void addAfter(IMenuItemModel newItem, String... idPath);
 
+	/**
+	 * Adds an item before another item defined by an path of item id
+	 * 
+	 * If the given path not exists, an IllegalArgumentException will be thrown
+	 * 
+	 * @param newItem The item to add
+	 * @param idPath The path where to add the item
+	 * 
+	 * @throws IllegalArgumentException
+	 */
 	void addBefore(IMenuItemModel newItem, String... idPath);
 
+	/**
+	 * Creates an adds an action item and binds it to the given action
+	 * 
+	 * @param action The action to use
+	 * 
+	 * @return The created action item
+	 */
 	IActionItemModel addAction(IAction action);
 
+	/**
+	 * Creates an adds an action item at a given index and binds it to the given action
+	 * 
+	 * @param index The index to add the item at
+	 * @param action The action to use
+	 * 
+	 * @return The created action item
+	 */
 	IActionItemModel addAction(final int index, IAction action);
 
+	/**
+	 * Creates and adds a action item
+	 * 
+	 * @return The created action item
+	 */
 	IActionItemModel addActionItem();
 
+	/**
+	 * Creates and adds a action item
+	 * 
+	 * @param text The label text of the action item
+	 * 
+	 * @return The created action item
+	 */
 	IActionItemModel addActionItem(String text);
 
+	/**
+	 * Creates and adds a action item
+	 * 
+	 * @param text The label text of the action item
+	 * @param toolTipText The tooltip text of the action item
+	 * 
+	 * @return The created action item
+	 */
 	IActionItemModel addActionItem(String text, String toolTipText);
 
+	/**
+	 * Creates and adds a action item
+	 * 
+	 * @param text The label text of the action item
+	 * @param icon The icon of the action item
+	 * 
+	 * @return The created action item
+	 */
 	IActionItemModel addActionItem(String text, IImageConstant icon);
 
+	/**
+	 * Creates and adds a action item
+	 * 
+	 * @param text The label text of the action item
+	 * @param toolTipText The tooltip text of the action item
+	 * @param icon The icon of the action item
+	 * 
+	 * @return The created action item
+	 */
 	IActionItemModel addActionItem(String text, String toolTipText, IImageConstant icon);
 
+	/**
+	 * Creates and adds a checked item
+	 * 
+	 * @return The created item
+	 */
 	ICheckedItemModel addCheckedItem();
 
+	/**
+	 * Creates and adds a checked item
+	 * 
+	 * @param text The label text of the item
+	 * 
+	 * @return The created item
+	 */
 	ICheckedItemModel addCheckedItem(String text);
 
+	/**
+	 * Creates and adds a checked item
+	 * 
+	 * @param text The label text of the item
+	 * @param toolTipText The tooltip text of the item
+	 * 
+	 * @return The created item
+	 */
 	ICheckedItemModel addCheckedItem(String text, String toolTipText);
 
+	/**
+	 * Creates and adds a checked item
+	 * 
+	 * @param text The label text of the item
+	 * @param icon The icon of the item
+	 * 
+	 * @return The created item
+	 */
 	ICheckedItemModel addCheckedItem(String text, IImageConstant icon);
 
+	/**
+	 * Creates and adds a checked item
+	 * 
+	 * @param text The label text of the item
+	 * @param toolTipText The tooltip text of the item
+	 * @param icon The icon of the item
+	 * 
+	 * @return The created item
+	 */
 	ICheckedItemModel addCheckedItem(String text, String toolTipText, IImageConstant icon);
 
+	/**
+	 * Creates and adds a radio item
+	 * 
+	 * @return The created item
+	 */
 	IRadioItemModel addRadioItem();
 
+	/**
+	 * Creates and adds a radio item
+	 * 
+	 * @param text The label text of the item
+	 * 
+	 * @return The created item
+	 */
 	IRadioItemModel addRadioItem(String text);
 
+	/**
+	 * Creates and adds a radio item
+	 * 
+	 * @param text The label text of the item
+	 * @param toolTipText The tooltip text of the item
+	 * 
+	 * @return The created item
+	 */
 	IRadioItemModel addRadioItem(String text, String toolTipText);
 
+	/**
+	 * Creates and adds a radio item
+	 * 
+	 * @param text The label text of the item
+	 * @param icon The icon of the item
+	 * 
+	 * @return The created item
+	 */
 	IRadioItemModel addRadioItem(String text, IImageConstant icon);
 
+	/**
+	 * Creates and adds a radio item
+	 * 
+	 * @param text The label text of the item
+	 * @param toolTipText The tooltip text of the item
+	 * @param icon The icon of the item
+	 * 
+	 * @return The created item
+	 */
 	IRadioItemModel addRadioItem(String text, String toolTipText, IImageConstant icon);
 
+	/**
+	 * Creates and adds a separator
+	 * 
+	 * @return The created item
+	 */
 	ISeparatorItemModel addSeparator();
 
+	/**
+	 * Creates and adds a separator
+	 * 
+	 * @param id The id of the separator
+	 * 
+	 * @return The created item
+	 */
 	ISeparatorItemModel addSeparator(String id);
 
+	/**
+	 * Creates and adds separator at a given index
+	 * 
+	 * @param index The index where to add the separator
+	 * 
+	 * @return The created item
+	 */
 	ISeparatorItemModel addSeparator(int index);
 
+	/**
+	 * Creates and add a submenu
+	 * 
+	 * @return The created submenu
+	 */
 	IMenuModel addMenu();
 
+	/**
+	 * Creates and add a submenu
+	 * 
+	 * @param text The label text of the sub menu
+	 * 
+	 * @return The created submenu
+	 */
 	IMenuModel addMenu(String text);
 
+	/**
+	 * Creates and add a submenu
+	 * 
+	 * @param text The label text of the sub menu
+	 * @param toolTipText The tooltip text of the submenu
+	 * 
+	 * @return The created submenu
+	 */
 	IMenuModel addMenu(String text, String toolTipText);
 
+	/**
+	 * Creates and add a submenu
+	 * 
+	 * @param text The label text of the sub menu
+	 * @param icon The icon of the submenu
+	 * 
+	 * @return The created submenu
+	 */
 	IMenuModel addMenu(String text, IImageConstant icon);
 
+	/**
+	 * Creates and add a submenu
+	 * 
+	 * @param text The label text of the sub menu
+	 * @param toolTipText The tooltip text of the submenu
+	 * @param icon The icon of the submenu
+	 * 
+	 * @return The created submenu
+	 */
 	IMenuModel addMenu(String text, String toolTipText, IImageConstant icon);
 
+	/**
+	 * Adds all items of a given model to this model
+	 * 
+	 * @param menuModel The model which items should be added
+	 */
 	void addItemsOfModel(IMenuModel menuModel);
+
+	/**
+	 * Adds an action decorator for all actions contained in this menu an all sub menus.
+	 * 
+	 * Remark: The decorator decorates the contained action and the actions
+	 * that will be added in the future
+	 * 
+	 * @param decorator The decorator to add, must not be null
+	 */
+	void addDecorator(IDecorator<IAction> decorator);
+
+	/**
+	 * Removes a decorator for all actions contained in this menu an all sub menus.
+	 * 
+	 * Remark: The decorator will only be removed for items that are still descendant
+	 * of this menu. In other words: When removing an item before removing the decorator,
+	 * the remove decorator invocation on the ancestor has no effect for the removed items.
+	 * 
+	 * @param decorator The decorator to remove, must not be null
+	 */
+	void removeDecorator(IDecorator<IAction> decorator);
+
+	/**
+	 * Removes an item from this menu
+	 * 
+	 * @param item The item to remove, must not be null
+	 */
+	void removeItem(final IMenuItemModel item);
+
+	/**
+	 * Removes an item at a given index
+	 * 
+	 * @param index The index where to remove the item
+	 */
+	void removeItem(int index);
+
+	/**
+	 * Removes all items from the menu
+	 */
+	void removeAllItems();
+
+	/**
+	 * Gets a unmodifieable copy of the menus items
+	 * 
+	 * @return The child items, never null but may be empty
+	 */
+	List<IMenuItemModel> getChildren();
+
+	/**
+	 * Searches for an item in this model defined by a given path
+	 * 
+	 * @param idPath The path of the items ids
+	 * 
+	 * @return The item if found, null otherwise
+	 */
+	IMenuItemModel findItemByPath(String... idPath);
 
 	/**
 	 * Binds the given model to this model with the following manner:
@@ -128,26 +416,6 @@ public interface IMenuModel extends IItemModel, IMenuItemModel, IToolBarItemMode
 	 */
 	void unbind(IMenuModel model);
 
-	void removeItem(final IMenuItemModel item);
-
-	void removeItem(int index);
-
-	void removeAllItems();
-
-	IMenuItemModel findItemByPath(String... idPath);
-
-	void addDecorator(IDecorator<IAction> decorator);
-
-	void removeDecorator(IDecorator<IAction> decorator);
-
-	List<IMenuItemModel> getChildren();
-
-	/**
-	 * Makes a deep copy of the item and its children.
-	 * Registered listeners on items won't be copied.
-	 * 
-	 * @return A new instance that is a clone of this instance
-	 */
 	@Override
 	IMenuModel createCopy();
 

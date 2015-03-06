@@ -149,4 +149,14 @@ abstract class AbstractItemModelWrapper implements IItemModel, IWrapper<IItemMod
 		return itemModel;
 	}
 
+	@Override
+	public int hashCode() {
+		return itemModel.hashCode();
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		return itemModel.equals(obj);
+	}
+
 }

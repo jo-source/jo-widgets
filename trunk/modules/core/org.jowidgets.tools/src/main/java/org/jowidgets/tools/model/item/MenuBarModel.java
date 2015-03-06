@@ -43,7 +43,7 @@ public class MenuBarModel implements IMenuBarModel {
 	private final IMenuBarModel model;
 
 	public MenuBarModel() {
-		this(createInstance());
+		this(create());
 	}
 
 	private MenuBarModel(final IMenuBarModel model) {
@@ -161,7 +161,12 @@ public class MenuBarModel implements IMenuBarModel {
 		return model.createCopy();
 	}
 
-	private static IMenuBarModel createInstance() {
+	/**
+	 * Creates a new menu bar model
+	 * 
+	 * @return A new menu bar model
+	 */
+	public static IMenuBarModel create() {
 		return Toolkit.getModelFactoryProvider().getItemModelFactory().menuBar();
 	}
 

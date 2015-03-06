@@ -38,34 +38,79 @@ import org.jowidgets.util.IDecorator;
 
 public class ActionItemModel extends AbstractItemModelWrapper implements IActionItemModel {
 
+	/**
+	 * Creates a new action item model
+	 */
 	public ActionItemModel() {
 		this(builder());
 	}
 
+	/**
+	 * Creates a new action item model
+	 * 
+	 * @param action The action use
+	 */
 	public ActionItemModel(final IAction action) {
 		this(builder(action));
 	}
 
+	/**
+	 * Creates a new action item model
+	 * 
+	 * @param text The label text to use
+	 */
 	public ActionItemModel(final String text) {
 		this(builder(text));
 	}
 
+	/**
+	 * Creates a new action item model
+	 * 
+	 * @param text The label text to use
+	 * @param icon The icon to use
+	 */
 	public ActionItemModel(final String text, final IImageConstant icon) {
 		this(builder(text, icon));
 	}
 
+	/**
+	 * Creates a new action item model
+	 * 
+	 * @param text The label text to use
+	 * @param toolTipText The tooltip text to use
+	 */
 	public ActionItemModel(final String text, final String toolTipText) {
 		this(builder(text, toolTipText));
 	}
 
+	/**
+	 * Creates a new action item model
+	 * 
+	 * @param text The label text to use
+	 * @param toolTipText The tooltip text to use
+	 * @param icon The icon to use
+	 */
 	public ActionItemModel(final String text, final String toolTipText, final IImageConstant icon) {
 		this(builder(text, toolTipText, icon));
 	}
 
+	/**
+	 * Creates a new action item model
+	 * 
+	 * @param id The id to use
+	 * @param text The label text to use
+	 * @param toolTipText The tooltip text to use
+	 * @param icon The icon to use
+	 */
 	public ActionItemModel(final String id, final String text, final String toolTipText, final IImageConstant icon) {
 		this(builder(id, text, toolTipText, icon));
 	}
 
+	/**
+	 * Creates a action item model defined by a builder
+	 * 
+	 * @param builder The builder that defines the model
+	 */
 	public ActionItemModel(final IActionItemModelBuilder builder) {
 		super(builder.build());
 	}
@@ -115,30 +160,93 @@ public class ActionItemModel extends AbstractItemModelWrapper implements IAction
 		return getItemModel().createCopy();
 	}
 
+	/**
+	 * Creates a new action item model
+	 * 
+	 * @return A new action item model
+	 */
+	public static IActionItemModel create() {
+		return builder().build();
+	}
+
+	/**
+	 * Creates a new action item model builder
+	 * 
+	 * @return A new action item model builder
+	 */
 	public static IActionItemModelBuilder builder() {
 		return Toolkit.getModelFactoryProvider().getItemModelFactory().actionItemBuilder();
 	}
 
+	/**
+	 * Creates a new action item model builder
+	 * 
+	 * @param text The label text to set on the builder
+	 * 
+	 * @return A new action item model builder
+	 */
 	public static IActionItemModelBuilder builder(final String text) {
 		return builder().setText(text);
 	}
 
+	/**
+	 * Creates a new action item model builder
+	 * 
+	 * @param action The action to set on the builder
+	 * 
+	 * @return A new action item model builder
+	 */
 	public static IActionItemModelBuilder builder(final IAction action) {
 		return builder().setAction(action);
 	}
 
+	/**
+	 * Creates a new action item model builder
+	 * 
+	 * @param text The label text to set on the builder
+	 * @param toolTipText The tooltip text to set on the builder
+	 * 
+	 * @return A new action item model builder
+	 */
 	public static IActionItemModelBuilder builder(final String text, final String toolTipText) {
 		return builder(text).setToolTipText(toolTipText);
 	}
 
+	/**
+	 * Creates a new action item model builder
+	 * 
+	 * @param text The label text to set on the builder
+	 * @param icon The icon to set on the builder
+	 * 
+	 * @return A new action item model builder
+	 */
 	public static IActionItemModelBuilder builder(final String text, final IImageConstant icon) {
 		return builder().setText(text).setIcon(icon);
 	}
 
+	/**
+	 * Creates a new action item model builder
+	 * 
+	 * @param text The label text to set on the builder
+	 * @param toolTipText The tooltip text to set on the builder
+	 * @param icon The icon to set on the builder
+	 * 
+	 * @return A new action item model builder
+	 */
 	public static IActionItemModelBuilder builder(final String text, final String toolTipText, final IImageConstant icon) {
 		return builder(text, toolTipText).setIcon(icon);
 	}
 
+	/**
+	 * Creates a new action item model builder
+	 * 
+	 * @param id The id to set on builder
+	 * @param text The label text to set on the builder
+	 * @param toolTipText The tooltip text to set on the builder
+	 * @param icon The icon to set on the builder
+	 * 
+	 * @return A new action item model builder
+	 */
 	public static IActionItemModelBuilder builder(
 		final String id,
 		final String text,
