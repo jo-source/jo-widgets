@@ -118,7 +118,7 @@ public final class ItemModelSnipped implements IApplication {
 		//add menu to the toolbar
 		toolBar.addItem(menu);
 
-		//add listeners to the items items
+		//add listeners to the items
 		filter.addItemListener(new SysoutSelectionListener(filter));
 		save.addActionListener(new SysoutActionListener(save));
 		copy.addActionListener(new SysoutActionListener(copy));

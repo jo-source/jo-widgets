@@ -256,7 +256,7 @@ Die folgende Abbildung zeigt das Ergebnis:
 
 ![Flow Layout Beispiel 2](images/flow_layout_example_2.gif "Flow Layout Beispiel 2")
 
-### Border Layout
+### Border Layout{#border_layout}
 
 Ein Border Layout teilt einen Container in fünf mögliche Bereiche auf: Center, Top, Bottom, Left und Right. In jedem Bereich kann sich genau ein Control befinden. Die folgende Abbildung zeigt ein typisches Border Layout:
 

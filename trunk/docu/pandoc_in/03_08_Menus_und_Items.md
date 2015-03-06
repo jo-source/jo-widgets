@@ -2,6 +2,15 @@
 
 Der folgende Abschnitt gibt eine Einführung in die Verwendung von nativen Menüs und Menü Items in jowidgets. Menüs können auch mit Hilfe von [Menü und Item Models](#menu_models) erstellt werden, was einige Vorteile mit sich bringt. Der hier beschriebene native Ansatz ist mit dem anderer UI Frameworks vergleichbar. 
 
+
+
+
+
+
+
+
+
+
 ### Menu Bar{#menu_bar}
 
 Eine Menu Bar ist eine _Menüleiste_ für ein [Frame](#frame_widget). Folgende Abbildung zeigt ein Frame mit einer Menu Bar, welche ein __File__ und ein __Edit__ Menü enthält:
@@ -121,6 +130,12 @@ Dabei handelt es sich um eine nicht modifizierbare Kopie der derzeit vorhandenen
 
 
 
+
+
+
+
+
+
 ### Die Schnittstelle IMenu{#menu_interface}
 
 Die Schnittstelle IMenu liefert die Basisfunktionen für das [Main Menu](#main_menu) das [Sub Menu](#sub_menu) sowie das [Popup Menu](#popup_menu). Es folgt eine kurze Beschreibung der wichtigsten Methoden:
@@ -194,6 +209,19 @@ Das Ergebnis sieht wie folgt aus:
  
  
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
 ### Die Schnittstelle IMenuItem{#menu_item_interface}
 
 Die Schnittstelle `IMenuItem` liefert die Basisfunktionen für alle Menu Items. Dazu zählen das [Action Menü Item](#action_menu_item), [Checked Menu Item](#checked_menu_item), [Radio Menu Item](#radio_menu_item), [Separator Menu Item](#separator_menu_item) und das [Sub Menu](#sub_menu). Ein `IMenuItem` ist von [`IItem`](#item_interface) und somit von [`IWidget`](#widget_interface) abgeleitet. Ein `IMenuItem` hat die folgenden weiteren Methoden:
@@ -207,6 +235,18 @@ Die Schnittstelle `IMenuItem` liefert die Basisfunktionen für alle Menu Items. 
 ~~~
  
 Mit Hilfe von `getModel()` und `setModel()` wird das Model gesetzt oder geholt (siehe auch [Menü und Item Models](#menu_models)). Der Mnemonic definiert das Tastenkürzel, mit welchen das Item in Kombination mit der Taste ALT (z.B. unter Windows) geöffnet bzw. ausgeführt werden kann. Auf manchen Plattformen wird das Mnemonic Zeichen unterstrichen dargestellt, falls es im Label Text vorkommt.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
  
  
@@ -246,6 +286,25 @@ Ein `IMainMenuBluePrint` hat die folgenden Methoden zur Konfiguration:
 ~~~
 
 Diese definieren, analog zu den Methoden auf `IMainMenu` den Label Text und das Mnemonic.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ### Sub Menu{#sub_menu}
@@ -302,6 +361,21 @@ Die folgende Abbildung zeigt das Ergebnis:
 ![Sub Menu Beispiel](images/sub_menu_example.gif "Sub Menu Beispiel")
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Popup Menu{#popup_menu}
 
 Ein Popup Menu ist ein Kontexmenü, welches von einer [Komponente](#component_interface) mit Hilfe der folgenden Methode erzeugt werden kann:
@@ -353,6 +427,23 @@ Folgendes Beispiel zeigt die Verwendung eines PopMenüs:
 In Zeile 2 wird ein neues PopupMenu erzeugt. In den Zeilen 5 - 16 werden diesem Items hinzugefügt. In Zeile 19 wird ein PopupDetectionListener hinzugefügt, der das Menü bei einem PopupEvent sichtbar macht. Die folgende Abbildung zeigt das Ergebnis:
 
 ![Popup Menu Beispiel](images/popup_menu_example.gif "Popup Menu Beispiel")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ### Action Menu Item{#action_menu_item}
@@ -479,6 +570,21 @@ __Bemerkung:__ Für größeren Anwendungen wird anstatt der obigen Vorgehensweis
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Die Schnittstelle ISelectableMenuItem{#selectable_menu_item_interface}
 
 Die Schnittstelle `ISelectableMenuItem` liefert die Funktionen für das [Checked Menu Item](#checked_menu_item) und [Radio Menu Item](#radio_menu_item). Ein `ISelectableMenuItem` ist von [`IMenuItem`](#menu_item_interface) und somit auch von [`IItem`](#item_interface) und [`IWidget`](#widget_interface) abgeleitet. 
@@ -534,6 +640,19 @@ Ist das zugehörige Item in einem [Main Menu](#main_menu) eines aktiven [Frames]
 Bei Items in Popup Menüs ist das __nicht der Fall__. Dort muss man sich, z.B. mit Hilfe eines [KeyListener](#container_key_events), selbst um das Auslösen der Aktionen kümmern. 
 
 Bei einem [Checked Menu Item](#checked_menu_item) wird durch das Tastaturkürzel der [Selected State](#selectable_menu_item_state) umgeschalten (toggle). Bei einem [Radio Menu Item](#radio_menu_item) wird durch das Tastaturkürzel der `selected` State auf `true` gesetzt, falls er `false` ist. Ist das Item bereits selektiert, wird der Tastaturkürzel ignoriert.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ### Checked Menu Item{#checked_menu_item}
@@ -610,6 +729,16 @@ Das folgende Beispiel demonstriert die Verwendung
 	});
 ~~~
 
+
+
+
+
+
+
+
+
+
+
 ### Radio Menu Item{#radio_menu_item}
 
 Mit Hilfe eines Radio Menu Item kann eine Auswahl innerhalb einer Radio Item Group getroffen werden. Innerhalb einer Radion Item Group ist maximal ein Radio Item gleichzeitig ausgewählt. 
@@ -671,6 +800,21 @@ Das folgende Beispiel demonstriert die Verwendung:
 	ISelectableMenuItem g3Opt2 = menu.addItem(BPF.radioMenuItem("G3 - Opt2"));
 	ISelectableMenuItem g3Opt3 = menu.addItem(BPF.radioMenuItem("G3 - Opt2").setSelected(true));
 ~~~
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### Separator Menu Item{#separator_menu_item}
 
