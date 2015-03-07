@@ -98,6 +98,8 @@ TODO Beschreibung von Tree Actions in IDefaultActionFactory
 
 ### ToolBarMenu{#tool_bar_menu}
 
+### ToolBarSeparator{#tool_bar_separator}
+
 ### Toolbar Model{#toolbar_model}
 
 ## MessageDialog{#message_dialog}
