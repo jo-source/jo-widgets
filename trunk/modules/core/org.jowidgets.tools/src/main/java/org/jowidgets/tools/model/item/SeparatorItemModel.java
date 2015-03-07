@@ -34,14 +34,27 @@ import org.jowidgets.api.toolkit.Toolkit;
 
 public class SeparatorItemModel extends AbstractItemModelWrapper implements ISeparatorItemModel {
 
+	/**
+	 * Creates a new separator item model
+	 */
 	public SeparatorItemModel() {
 		this(builder());
 	}
 
+	/**
+	 * Creates a new separator item model
+	 * 
+	 * @param id The id of the model
+	 */
 	public SeparatorItemModel(final String id) {
 		this(builder().setId(id));
 	}
 
+	/**
+	 * Creates a new separator item model with help of a builder
+	 * 
+	 * @param builder The builder to use
+	 */
 	public SeparatorItemModel(final ISeparatorItemModelBuilder builder) {
 		super(builder.build());
 	}
@@ -56,10 +69,22 @@ public class SeparatorItemModel extends AbstractItemModelWrapper implements ISep
 		return getItemModel().createCopy();
 	}
 
+	/**
+	 * Creates a builder
+	 * 
+	 * @return A new builder
+	 */
 	public static ISeparatorItemModelBuilder builder() {
 		return Toolkit.getModelFactoryProvider().getItemModelFactory().separatorBuilder();
 	}
 
+	/**
+	 * Creates a builder
+	 * 
+	 * @param id The id to set on the builder
+	 * 
+	 * @return A new builder
+	 */
 	public static ISeparatorItemModelBuilder builder(final String id) {
 		return builder().setId(id);
 	}

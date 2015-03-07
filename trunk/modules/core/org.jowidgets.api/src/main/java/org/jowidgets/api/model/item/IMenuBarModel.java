@@ -70,49 +70,49 @@ public interface IMenuBarModel extends IListModelObservable {
 	IMenuModel addMenu(int index, IMenuModelBuilder menuBuilder);
 
 	/**
-	 * Creates and add a submenu
+	 * Creates and add a menu
 	 * 
-	 * @return The created submenu
+	 * @return The created menu
 	 */
 	IMenuModel addMenu();
 
 	/**
-	 * Creates and add a submenu
+	 * Creates and add a menu
 	 * 
-	 * @param text The label text of the sub menu
+	 * @param text The label text of the menu
 	 * 
-	 * @return The created submenu
+	 * @return The created menu
 	 */
 	IMenuModel addMenu(String text);
 
 	/**
-	 * Creates and add a submenu
+	 * Creates and add a menu
 	 * 
-	 * @param text The label text of the sub menu
-	 * @param toolTipText The tooltip text of the submenu
+	 * @param text The label text of the menu
+	 * @param toolTipText The tooltip text of the menu
 	 * 
-	 * @return The created submenu
+	 * @return The created menu
 	 */
 	IMenuModel addMenu(String text, String toolTipText);
 
 	/**
-	 * Creates and add a submenu
+	 * Creates and add a menu
 	 * 
-	 * @param text The label text of the sub menu
-	 * @param icon The icon of the submenu
+	 * @param text The label text of the menu
+	 * @param icon The icon of the menu
 	 * 
-	 * @return The created submenu
+	 * @return The created menu
 	 */
 	IMenuModel addMenu(String text, IImageConstant icon);
 
 	/**
-	 * Creates and add a submenu
+	 * Creates and add a menu
 	 * 
-	 * @param text The label text of the sub menu
-	 * @param toolTipText The tooltip text of the submenu
-	 * @param icon The icon of the submenu
+	 * @param text The label text of the menu
+	 * @param toolTipText The tooltip text of the menu
+	 * @param icon The icon of the menu
 	 * 
-	 * @return The created submenu
+	 * @return The created menu
 	 */
 	IMenuModel addMenu(String text, String toolTipText, IImageConstant icon);
 
