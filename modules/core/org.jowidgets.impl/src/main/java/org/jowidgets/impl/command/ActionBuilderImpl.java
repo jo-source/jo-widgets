@@ -109,35 +109,35 @@ final class ActionBuilderImpl implements IActionBuilder {
 	}
 
 	@Override
-	public IActionBuilder setCommand(final ICommand commandProvider) {
-		this.command = commandProvider;
+	public IActionBuilder setCommand(final ICommand command) {
+		this.command = command;
 		return this;
 	}
 
 	@Override
-	public IActionBuilder setCommand(final ICommandExecutor command) {
-		this.command = new Command(command);
+	public IActionBuilder setCommand(final ICommandExecutor executor) {
+		this.command = new Command(executor);
 		return this;
 	}
 
 	@Override
-	public IActionBuilder setCommand(final ICommandExecutor command, final IEnabledChecker executableStateChecker) {
-		this.command = new Command(command, executableStateChecker);
+	public IActionBuilder setCommand(final ICommandExecutor executor, final IEnabledChecker executableStateChecker) {
+		this.command = new Command(executor, executableStateChecker);
 		return this;
 	}
 
 	@Override
-	public IActionBuilder setCommand(final ICommandExecutor command, final IExceptionHandler exceptionHandler) {
-		this.command = new Command(command, exceptionHandler);
+	public IActionBuilder setCommand(final ICommandExecutor executor, final IExceptionHandler exceptionHandler) {
+		this.command = new Command(executor, exceptionHandler);
 		return this;
 	}
 
 	@Override
 	public IActionBuilder setCommand(
-		final ICommandExecutor command,
+		final ICommandExecutor executor,
 		final IEnabledChecker enabledChecker,
 		final IExceptionHandler exceptionHandler) {
-		this.command = new Command(command, enabledChecker, exceptionHandler);
+		this.command = new Command(executor, enabledChecker, exceptionHandler);
 		return this;
 	}
 
