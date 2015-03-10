@@ -35,7 +35,7 @@ public class ActionBuilderFactory implements IActionBuilderFactory {
 
 	@Override
 	public IActionBuilder create() {
-		return new ActionBuilder();
+		return new ActionBuilderImpl();
 	}
 
 }

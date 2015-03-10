@@ -39,7 +39,7 @@ import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.VirtualKey;
 
-public class ActionBuilder implements IActionBuilder {
+final class ActionBuilderImpl implements IActionBuilder {
 
 	private String text;
 	private String toolTipText;
@@ -52,7 +52,7 @@ public class ActionBuilder implements IActionBuilder {
 
 	private IExceptionHandler exceptionHandler;
 
-	public ActionBuilder() {
+	public ActionBuilderImpl() {
 		this.enabled = true;
 	}
 
