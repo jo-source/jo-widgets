@@ -51,7 +51,7 @@ public interface IActionBuilder {
 	 * 
 	 * @return This builder
 	 */
-	IActionBuilder setToolTipText(final String toolTipText);
+	IActionBuilder setToolTipText(String toolTipText);
 
 	/**
 	 * Sets the actions icon
@@ -69,7 +69,7 @@ public interface IActionBuilder {
 	 * 
 	 * @return This builder
 	 */
-	IActionBuilder setMnemonic(final Character mnemonic);
+	IActionBuilder setMnemonic(Character mnemonic);
 
 	/**
 	 * Sets the actions mnemonic
@@ -78,7 +78,7 @@ public interface IActionBuilder {
 	 * 
 	 * @return This builder
 	 */
-	IActionBuilder setMnemonic(final char mnemonic);
+	IActionBuilder setMnemonic(char mnemonic);
 
 	/**
 	 * Sets the actions accelerator
@@ -97,7 +97,7 @@ public interface IActionBuilder {
 	 * 
 	 * @return This builder
 	 */
-	IActionBuilder setAccelerator(final char key, final Modifier... modifier);
+	IActionBuilder setAccelerator(char key, Modifier... modifier);
 
 	/**
 	 * Sets the actions accelerator
@@ -107,7 +107,7 @@ public interface IActionBuilder {
 	 * 
 	 * @return This builder
 	 */
-	IActionBuilder setAccelerator(final VirtualKey virtualKey, final Modifier... modifier);
+	IActionBuilder setAccelerator(VirtualKey virtualKey, Modifier... modifier);
 
 	/**
 	 * Sets the enabled state of the action
