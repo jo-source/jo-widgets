@@ -36,6 +36,7 @@ import org.jowidgets.api.command.EnabledState;
 import org.jowidgets.api.command.IEnabledChecker;
 import org.jowidgets.api.command.IEnabledState;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.EmptyCheck;
 import org.jowidgets.util.event.IChangeListener;
 
 public class EnabledChecker implements IEnabledChecker {
@@ -57,6 +58,19 @@ public class EnabledChecker implements IEnabledChecker {
 
 		if (stateChanged) {
 			fireEnabledStateChanged();
+		}
+	}
+
+	public final void setEnabled() {
+		setEnabledState(EnabledState.ENABLED);
+	}
+
+	public final void setDisabled(String reason) {
+		if (EmptyCheck.isEmpty(reason)){
+			setEnabledState(EnabledState.DISABLED);
+		}
+		else{
+			setEnabledState(EnabledState.disabled(reason));
 		}
 	}
 
