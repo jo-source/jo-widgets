@@ -55,7 +55,6 @@ import org.jowidgets.common.types.VirtualKey;
 import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.command.AbstractEnabledChecker;
-import org.jowidgets.tools.command.EnabledChecker;
 import org.jowidgets.tools.model.item.MenuModel;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 
@@ -112,20 +111,6 @@ public final class CommandActionSnipped implements IApplication {
 		builder.setToolTipText("Saves the text");
 		builder.setAccelerator(VirtualKey.S, Modifier.CTRL);
 		builder.setIcon(IconsSmall.DISK);
-
-		final EnabledChecker enabledChecker = new EnabledChecker();
-
-		inputComponent.addInputListener(new IInputListener() {
-			@Override
-			public void inputChanged() {
-				if (!inputComponent.hasModifications()) {
-					enabledChecker.setDisabled("There is no modification");
-				}
-				else {
-					enabledChecker.setEnabled();
-				}
-			}
-		});
 
 		final SaveCommand saveCommand = new SaveCommand(inputComponent);
 		builder.setCommand(saveCommand, saveCommand);
