@@ -105,7 +105,7 @@ public final class MenuModelKeyBindingSnipped implements IApplication {
 		@Override
 		public void actionPerformed() {
 			//CHECKSTYLE:OFF
-			System.out.println("Invokation on: " + item.getText());
+			System.out.println("Invocation on: " + item.getText());
 			//CHECKSTYLE:ON
 		}
 
