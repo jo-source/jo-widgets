@@ -30,8 +30,18 @@ package org.jowidgets.util.event;
 
 public interface IChangeObservable {
 
+	/**
+	 * Adds a change listener
+	 * 
+	 * @param listener The listener to add
+	 */
 	void addChangeListener(IChangeListener listener);
 
+	/**
+	 * Removes a changed listener
+	 * 
+	 * @param listener The listener to remove
+	 */
 	void removeChangeListener(IChangeListener listener);
 
 }
