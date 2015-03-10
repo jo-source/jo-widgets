@@ -30,7 +30,16 @@ package org.jowidgets.api.command;
 
 public final class EnabledState implements IEnabledState {
 
+	/**
+	 * A enabled state constant for enabled = true
+	 */
 	public static final EnabledState ENABLED = new EnabledState();
+
+	/**
+	 * A enabled state constant for enabled = false. This enabled state has no reason!
+	 * For better usability of the application provide information why its is disabled
+	 * to the user with help of the method {@link #disabled(String)}
+	 */
 	public static final EnabledState DISABLED = new EnabledState(false, null);
 
 	private final boolean enabled;
@@ -45,25 +54,23 @@ public final class EnabledState implements IEnabledState {
 		this.reason = reason;
 	}
 
-	/**
-	 * @return true, if the command is enabled, false otherwise
-	 */
 	@Override
 	public boolean isEnabled() {
 		return enabled;
 	}
 
-	/**
-	 * If the command is not enabled, this get's the reason why. This reason should
-	 * be offered to the user, e.g. in the tooltip of a disabled button or menu item
-	 * 
-	 * @return the reason (why is this button grey ?)
-	 */
 	@Override
 	public String getReason() {
 		return reason;
 	}
 
+	/**
+	 * Creates a new enabled state that is disabled
+	 * 
+	 * @param reason The reason why it is disabled
+	 * 
+	 * @return The created enabled state
+	 */
 	public static EnabledState disabled(final String reason) {
 		return new EnabledState(false, reason);
 	}
