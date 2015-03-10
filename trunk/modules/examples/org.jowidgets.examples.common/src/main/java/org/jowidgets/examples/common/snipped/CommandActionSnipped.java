@@ -81,9 +81,9 @@ public final class CommandActionSnipped implements IApplication {
 		final IComposite composite = frame.add(BPF.composite().setBorder(), BorderLayout.CENTER);
 		composite.setLayout(new MigLayoutDescriptor("[grow][]", "[]"));
 
-		//add a input field an save button to the composite
+		//add a input field and save button to the composite
 		final IInputField<String> inputField = composite.add(BPF.inputFieldString(), "growx");
-		final IButton saveButton = composite.add(BPF.buttonSave());
+		final IButton saveButton = composite.add(BPF.button());
 
 		//create save action 
 		final IAction saveAction = createSaveAction(inputField);
@@ -112,6 +112,8 @@ public final class CommandActionSnipped implements IApplication {
 		builder.setAccelerator(VirtualKey.S, Modifier.CTRL);
 		builder.setIcon(IconsSmall.DISK);
 
+		//save command implements ICommandExecutor and IEnabledChecker,
+		//so set them both
 		final SaveCommand saveCommand = new SaveCommand(inputComponent);
 		builder.setCommand(saveCommand, saveCommand);
 
@@ -137,7 +139,8 @@ public final class CommandActionSnipped implements IApplication {
 		public void execute(final IExecutionContext executionContext) throws Exception {
 			inputComponent.resetModificationState();
 			fireEnabledStateChanged();
-			MessagePane.showInfo(executionContext, "'" + inputComponent.getValue() + "' saved!");
+			final String message = "'" + inputComponent.getValue() + "' saved!";
+			MessagePane.showInfo(executionContext, message);
 		}
 
 		@Override
