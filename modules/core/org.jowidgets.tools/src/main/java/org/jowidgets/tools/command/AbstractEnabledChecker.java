@@ -31,8 +31,16 @@ package org.jowidgets.tools.command;
 import org.jowidgets.api.command.IEnabledChecker;
 import org.jowidgets.util.event.ChangeObservable;
 
+/**
+ * This class can be used as base implementation for the `IEnabledChecker` interface.
+ * 
+ * This implementation provides the registration and deregistration of `IChangeListener` objects
+ */
 public abstract class AbstractEnabledChecker extends ChangeObservable implements IEnabledChecker {
 
+	/**
+	 * Fires a changed event to all registered `IChangeListener` objects
+	 */
 	protected final void fireEnabledStateChanged() {
 		fireChangedEvent();
 	}

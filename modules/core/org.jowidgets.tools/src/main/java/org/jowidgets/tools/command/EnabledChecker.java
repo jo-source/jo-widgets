@@ -45,11 +45,19 @@ public class EnabledChecker implements IEnabledChecker {
 
 	private IEnabledState enabledState;
 
+	/**
+	 * Creates a new enabled checker
+	 */
 	public EnabledChecker() {
 		this.changeListeners = new LinkedHashSet<IChangeListener>();
 		this.enabledState = EnabledState.ENABLED;
 	}
 
+	/**
+	 * Sets the enabled state
+	 * 
+	 * @param enabledState The enabled state to set, must not be null
+	 */
 	public final void setEnabledState(final IEnabledState enabledState) {
 		Assert.paramNotNull(enabledState, "enabledState");
 
@@ -61,10 +69,18 @@ public class EnabledChecker implements IEnabledChecker {
 		}
 	}
 
+	/**
+	 * Sets the enables state EnabledState.ENABLED
+	 */
 	public final void setEnabled() {
 		setEnabledState(EnabledState.ENABLED);
 	}
 
+	/**
+	 * Sets a disabled EnabledState with a given reason
+	 * 
+	 * @param reason The reason, may be empty and null
+	 */
 	public final void setDisabled(final String reason) {
 		if (EmptyCheck.isEmpty(reason)) {
 			setEnabledState(EnabledState.DISABLED);
@@ -89,6 +105,9 @@ public class EnabledChecker implements IEnabledChecker {
 		changeListeners.remove(listener);
 	}
 
+	/**
+	 * Fires a changed event on all registered change listeners
+	 */
 	public final void fireEnabledStateChanged() {
 		for (final IChangeListener listener : new LinkedList<IChangeListener>(changeListeners)) {
 			listener.changed();
