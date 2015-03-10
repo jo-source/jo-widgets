@@ -32,8 +32,18 @@ import org.jowidgets.api.widgets.IWidget;
 
 public interface IExecutionContext extends IExecutionContextValues {
 
+	/**
+	 * Gets the action that is executed
+	 * 
+	 * @return The action that is executed, never null
+	 */
 	IAction getAction();
 
+	/**
+	 * Gets the source widget the action was invoked on
+	 * 
+	 * @return The source widget, never null
+	 */
 	IWidget getSource();
 
 }
