@@ -76,7 +76,7 @@ public final class MenuModelKeyBindingSnipped implements IApplication {
 		//set the root frame visible
 		frame.setVisible(true);
 
-		//add some actions after binding to show that they are bound two
+		//add some actions after binding to show that they are bound too
 		final IMenuModel submenu = popup.addMenu("Submenu");
 
 		final IActionItemModel action4 = submenu.addActionItem("Action4");
