@@ -65,11 +65,11 @@ public class EnabledChecker implements IEnabledChecker {
 		setEnabledState(EnabledState.ENABLED);
 	}
 
-	public final void setDisabled(String reason) {
-		if (EmptyCheck.isEmpty(reason)){
+	public final void setDisabled(final String reason) {
+		if (EmptyCheck.isEmpty(reason)) {
 			setEnabledState(EnabledState.DISABLED);
 		}
-		else{
+		else {
 			setEnabledState(EnabledState.disabled(reason));
 		}
 	}
