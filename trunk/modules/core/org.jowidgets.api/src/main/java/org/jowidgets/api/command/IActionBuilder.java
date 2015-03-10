@@ -77,6 +77,11 @@ public interface IActionBuilder {
 	 */
 	IActionBuilder setActionExceptionHandler(IExceptionHandler exceptionHandler);
 
+	/**
+	 * Creates a new command action defined by the builder setup
+	 * 
+	 * @return A new command action, never null
+	 */
 	ICommandAction build();
 
 }

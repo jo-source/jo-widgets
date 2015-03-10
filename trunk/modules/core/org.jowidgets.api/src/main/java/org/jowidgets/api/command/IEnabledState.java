@@ -39,7 +39,7 @@ public interface IEnabledState {
 	 * If the action is not enabled, this get's the reason why. This reason should
 	 * be offered to the user, e.g. in the tooltip of a disabled button or menu item
 	 * 
-	 * @return the reason (why is this button grey ?)
+	 * @return the reason
 	 */
 	String getReason();
 }

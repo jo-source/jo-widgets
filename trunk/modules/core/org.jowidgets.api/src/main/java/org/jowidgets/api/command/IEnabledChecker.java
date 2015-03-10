@@ -32,6 +32,11 @@ import org.jowidgets.util.event.IChangeObservable;
 
 public interface IEnabledChecker extends IChangeObservable {
 
+	/**
+	 * Gets the enabled state
+	 * 
+	 * @return The enabled state, never null
+	 */
 	IEnabledState getEnabledState();
 
 }
