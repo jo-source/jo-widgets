@@ -50,6 +50,8 @@ public class ActionWidgetSync {
 
 	private boolean currentEnabled;
 
+	private boolean disposed;
+
 	public ActionWidgetSync(final IAction action, final IActionWidget actionWidget) {
 		this(action, ActionStyle.COMPLETE, actionWidget);
 	}
@@ -57,6 +59,7 @@ public class ActionWidgetSync {
 	public ActionWidgetSync(final IAction action, final ActionStyle style, final IActionWidget actionWidget) {
 		super();
 		this.active = false;
+		this.disposed = false;
 
 		this.textDirty = true;
 		this.toolTipTextDirty = true;
@@ -104,6 +107,7 @@ public class ActionWidgetSync {
 	}
 
 	public void dispose() {
+		this.disposed = true;
 		if (action.getActionChangeObservable() != null) {
 			action.getActionChangeObservable().removeActionChangeListener(actionChangeListener);
 		}
@@ -155,6 +159,10 @@ public class ActionWidgetSync {
 
 		@Override
 		public void textChanged() {
+			if (disposed) {
+				return;
+			}
+
 			if (active) {
 				setText(action.getText());
 			}
@@ -165,6 +173,10 @@ public class ActionWidgetSync {
 
 		@Override
 		public void toolTipTextChanged() {
+			if (disposed) {
+				return;
+			}
+
 			if (active) {
 				setTooltipText(action.getToolTipText());
 			}
@@ -175,6 +187,10 @@ public class ActionWidgetSync {
 
 		@Override
 		public void iconChanged() {
+			if (disposed) {
+				return;
+			}
+
 			if (active) {
 				setIcon(action.getIcon());
 			}
@@ -185,6 +201,10 @@ public class ActionWidgetSync {
 
 		@Override
 		public void enabledChanged() {
+			if (disposed) {
+				return;
+			}
+
 			if (active) {
 				setEnabled(action.isEnabled());
 			}
