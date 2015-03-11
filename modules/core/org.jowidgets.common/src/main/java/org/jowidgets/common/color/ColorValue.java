@@ -42,6 +42,13 @@ public final class ColorValue extends Cacheable implements IColorConstant, Seria
 	private final short green;
 	private final short blue;
 
+	/**
+	 * Creates a new ColorValue object
+	 * 
+	 * @param red The red component
+	 * @param green The green component
+	 * @param blue The blue component
+	 */
 	public ColorValue(final int red, final int green, final int blue) {
 		this.red = shorten(red);
 		this.green = shorten(green);
@@ -58,14 +65,29 @@ public final class ColorValue extends Cacheable implements IColorConstant, Seria
 		return (short) value;
 	}
 
+	/**
+	 * Gets the red component
+	 * 
+	 * @return The red component
+	 */
 	public int getRed() {
 		return red;
 	}
 
+	/**
+	 * Gets the green component
+	 * 
+	 * @return The green component
+	 */
 	public int getGreen() {
 		return green;
 	}
 
+	/**
+	 * Gets the blue component
+	 * 
+	 * @return The blue component
+	 */
 	public int getBlue() {
 		return blue;
 	}
