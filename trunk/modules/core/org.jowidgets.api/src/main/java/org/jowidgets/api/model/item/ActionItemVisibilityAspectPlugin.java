@@ -36,7 +36,6 @@ import java.util.List;
 import java.util.ServiceLoader;
 
 import org.jowidgets.api.command.IAction;
-import org.jowidgets.api.model.item.IActionItemVisibilityAspect.RequestContext;
 import org.jowidgets.classloading.api.SharedClassLoader;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.priority.IPriorityValue;
@@ -49,9 +48,8 @@ public final class ActionItemVisibilityAspectPlugin {
 
 	private ActionItemVisibilityAspectPlugin() {}
 
-	public static IPriorityValue<Boolean, LowHighPriority> getVisibility(final IAction action, final RequestContext requestContext) {
-		Assert.paramNotNull(requestContext, "requestContext");
-		return getPluginCompositeImpl().getVisibility(action, requestContext);
+	public static IPriorityValue<Boolean, LowHighPriority> getVisibility(final IAction action) {
+		return getPluginCompositeImpl().getVisibility(action);
 	}
 
 	public static void registerPlugin(final IActionItemVisibilityAspectPlugin plugin) {
@@ -69,35 +67,15 @@ public final class ActionItemVisibilityAspectPlugin {
 	private static final class PluginComposite {
 
 		private final List<IActionItemVisibilityAspectPlugin> allPlugins;
-		private final List<IActionItemVisibilityAspectPlugin> enabledStatePlugins;
 
 		private PluginComposite() {
 			this.allPlugins = new LinkedList<IActionItemVisibilityAspectPlugin>();
-			this.enabledStatePlugins = new LinkedList<IActionItemVisibilityAspectPlugin>();
 			this.allPlugins.addAll(getRegisteredPlugins());
 			sortPlugins(allPlugins);
-
-			for (final IActionItemVisibilityAspectPlugin plugin : allPlugins) {
-				if (plugin.getVisibilityAspect().getRequestContext() == RequestContext.ACTION_AND_ENABLED_STATE) {
-					enabledStatePlugins.add(plugin);
-				}
-			}
-			sortPlugins(enabledStatePlugins);
 		}
 
-		private IPriorityValue<Boolean, LowHighPriority> getVisibility(final IAction action, final RequestContext requestContext) {
-			if (requestContext == RequestContext.ACTION_AND_ENABLED_STATE) {
-				return getVisibility(action, allPlugins);
-				//TODO MG this wont work, because checks that only belongs to the action must be made
-				//at enabled state change to
-				//return getVisibility(action, enabledStatePlugins);
-			}
-			else if (requestContext == RequestContext.ACTION) {
-				return getVisibility(action, allPlugins);
-			}
-			else {
-				throw new IllegalArgumentException("RequestContext '" + requestContext + "' is not supported");
-			}
+		private IPriorityValue<Boolean, LowHighPriority> getVisibility(final IAction action) {
+			return getVisibility(action, allPlugins);
 		}
 
 		private IPriorityValue<Boolean, LowHighPriority> getVisibility(
@@ -120,11 +98,6 @@ public final class ActionItemVisibilityAspectPlugin {
 		private void addPlugin(final IActionItemVisibilityAspectPlugin plugin) {
 			allPlugins.add(plugin);
 			sortPlugins(allPlugins);
-
-			if (plugin.getVisibilityAspect().getRequestContext() == RequestContext.ACTION_AND_ENABLED_STATE) {
-				enabledStatePlugins.add(plugin);
-				sortPlugins(enabledStatePlugins);
-			}
 		}
 
 		private void sortPlugins(final List<IActionItemVisibilityAspectPlugin> plugins) {
