@@ -61,7 +61,6 @@ final class AnimationRunnerImpl implements IAnimationRunner {
 		this.events = new ConcurrentLinkedQueue<Tuple<Runnable, ICallback<Void>>>();
 		this.uiThreadAccess = Toolkit.getUiThreadAccess();
 		this.executorService = executorService;
-
 	}
 
 	@Override
@@ -114,6 +113,11 @@ final class AnimationRunnerImpl implements IAnimationRunner {
 	public void run(final Runnable animationStep, final ICallback<Void> callback) {
 		Assert.paramNotNull(animationStep, "animationStep");
 		events.add(new Tuple<Runnable, ICallback<Void>>(animationStep, callback));
+	}
+
+	@Override
+	public void run(final Runnable animationStep) {
+		run(animationStep, null);
 	}
 
 	@Override
