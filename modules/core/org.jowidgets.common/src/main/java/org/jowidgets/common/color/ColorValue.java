@@ -29,6 +29,9 @@ package org.jowidgets.common.color;
 
 import java.io.Serializable;
 
+/**
+ * Default implementation for IColorConstant
+ */
 public final class ColorValue implements IColorConstant, Serializable {
 
 	private static final long serialVersionUID = 6862989508930470810L;
@@ -43,7 +46,7 @@ public final class ColorValue implements IColorConstant, Serializable {
 		this.blue = shorten(blue);
 	}
 
-	private short shorten(final int value) {
+	private static short shorten(final int value) {
 		if (value > 255) {
 			throw new IllegalArgumentException("Value " + value + "outside of range [0,255]");
 		}

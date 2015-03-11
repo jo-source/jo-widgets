@@ -56,7 +56,7 @@ Dieser hat die Methoden:
 	void focusLost();
 ~~~
 
-#### Tastatureingaben(#container_key_events)
+#### Tastatureingaben{#container_key_events}
 
 Um Tastatureingaben zur erhalten kann ein `IKeyListener` verwendet werden:
 

@@ -1,7 +1,3 @@
-## Actions und Commands{#actions_and_commands}
-
-### ActionItemVisibilityAspect{#action_item_visibility_aspect}
-
 ## Farben{#colors}
 
 ## Icons und Images{#icons_and_images}
@@ -42,7 +38,7 @@
 
 ## Icon
 
-## Button
+## Button{#button_widget}
 
 ## ToggleButton
 

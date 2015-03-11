@@ -502,7 +502,7 @@ Mit Hilfe der folgenden Methode kann das Tastaturkürzel (Key Accelerator) festg
 
 Ist das zugehörige Item in einem [Main Menu](#main_menu) eines aktiven [Frames](#frame_widget), wird das Tastaturkürzel automatisch ausgewertet und ein Action Event gefeuert, wenn die entsprechende Tastenkombination gedrückt wird. 
 
-Bei Action Items in Popup Menüs ist das __nicht der Fall__. Dort muss man sich, z.B. mit Hilfe eines [KeyListener](#container_key_events), selbst um das Auslösen der Aktionen kümmern.  
+Bei Action Items in Popup Menüs ist das __nicht der Fall__. Dort muss man sich, z.B. mit Hilfe eines [KeyListener](#container_key_events), selbst um das Auslösen der Aktionen kümmern. Die Utility Klasse [MenuModelKeyBinding](#menu_model_key_binding) kann dabei unterstützen.
 
 #### Action Item BluePrint
 
