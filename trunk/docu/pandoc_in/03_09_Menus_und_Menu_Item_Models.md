@@ -1081,11 +1081,66 @@ Mit Hilfe einer Instantiierung mittels `new` kann das gleiche so erreicht werden
 
 
 
+### Menu Model Key Binding{#menu_model_key_binding}
 
+Die Key Accelerators in einem [Popup Menüs](#popup_menu) werden, im Vergleich zu denen in einer [Menu Bar](#menu_bar), nicht automatisch gebunden. Die Klasse `org.jowidgets.tools.model.item.MenuModelKeyBinding` bietet verschiedenen Möglichkeiten, die Key Accelerator der [Action Item Models](#action_item_model) eines [Menu Models](#menu_model) an ein [`IComponent`](#component_interface) zu binden.
 
-### Menu Model Key Binding
-TODO org.jowidgets.tools.model.item.MenuModelKeyBinding
+Die folgende statische Methode führt ein Binding eines Menu Model mit einem Component durch:
 
+~~~
+	public static MenuModelKeyBinding bind(final IMenuModel menu, final IComponent component) {...}
+~~~
+
+Tritt auf dem `component` (oder auf einem seiner Kinder, falls es ein IContainer ist) ein Key Event auf, wird geprüft, ob dafür eine Aktion existiert, und wenn ja, wird diese ausgeführt. Wird das übergebene `component` disposed, wird automatisch auch das Binding disposed. Es werden auch die Aktionen gebunden, welche erst nach dem Aufruf von `bind()` hinzugefügt wurden.
+
+Das folgende Snipped zeigt die Verwendung (das vollständige Snipped findet sich [hier](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/MenuModelKeyBindingSnipped.java)). 
+
+~~~{.java .numberLines startFrom="1"}
+	//create a root frame
+	final IFrameBluePrint frameBp = BPF.frame();
+	frameBp.setSize(new Dimension(400, 300)).setTitle("Menu model key binding");
+	final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
+	frame.setLayout(FillLayout.get());
+
+	//create a popup menu with some actions
+	final MenuModel popup = new MenuModel();
+
+	final IActionItemModel action1 = popup.addActionItem("Action1");
+	action1.setAccelerator(VirtualKey.DIGIT_1, Modifier.CTRL);
+
+	final IActionItemModel action2 = popup.addActionItem("Action2");
+	action2.setAccelerator(VirtualKey.DIGIT_2, Modifier.CTRL);
+
+	final IActionItemModel action3 = popup.addActionItem("Action3");
+	action3.setAccelerator(VirtualKey.DIGIT_3, Modifier.CTRL);
+
+	//set the popup menu for the frame
+	frame.setPopupMenu(popup);
+
+	//do the key binding to the frame (recursive)
+	MenuModelKeyBinding.bind(popup, frame);
+
+	//set the root frame visible
+	frame.setVisible(true);
+
+	//add some actions after binding to show that they are bound too
+	final IMenuModel submenu = popup.addMenu("Submenu");
+
+	final IActionItemModel action4 = submenu.addActionItem("Action4");
+	action4.setAccelerator(VirtualKey.DIGIT_4, Modifier.CTRL);
+
+	final IActionItemModel action5 = submenu.addActionItem("Action5");
+	action5.setAccelerator(VirtualKey.DIGIT_5, Modifier.CTRL);
+
+	//add listeners to the items
+	action1.addActionListener(new SysoutActionListener(action1));
+	action2.addActionListener(new SysoutActionListener(action2));
+	action3.addActionListener(new SysoutActionListener(action3));
+	action4.addActionListener(new SysoutActionListener(action4));
+	action5.addActionListener(new SysoutActionListener(action5));
+~~~
+
+In Zeile 23 wird das Binding durchgeführt.
 
 
 
