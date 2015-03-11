@@ -38,16 +38,16 @@ import org.jowidgets.util.priority.IPriorityValue;
 import org.jowidgets.util.priority.LowHighPriority;
 import org.jowidgets.util.priority.PrioritizedResultCreator;
 
-public final class ActionItemVisibilityAspectComposite {
+final class ActionItemVisibilityAspectComposite {
 
 	private final List<IActionItemVisibilityAspect> allAspects;
 
-	public ActionItemVisibilityAspectComposite(final List<IActionItemVisibilityAspect> visibilityAspects) {
+	ActionItemVisibilityAspectComposite(final List<IActionItemVisibilityAspect> visibilityAspects) {
 		this.allAspects = new LinkedList<IActionItemVisibilityAspect>();
 		this.allAspects.addAll(visibilityAspects);
 	}
 
-	public IPriorityValue<Boolean, LowHighPriority> getVisibility(final IAction action) {
+	IPriorityValue<Boolean, LowHighPriority> getVisibility(final IAction action) {
 		return getVisibility(action, allAspects);
 	}
 
