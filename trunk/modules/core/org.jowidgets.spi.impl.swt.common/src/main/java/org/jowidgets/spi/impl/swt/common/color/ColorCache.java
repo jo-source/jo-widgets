@@ -34,6 +34,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
 import org.jowidgets.common.color.ColorValue;
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.util.cache.ICacheableListener;
 
 public final class ColorCache implements IColorCache {
 
@@ -45,13 +46,13 @@ public final class ColorCache implements IColorCache {
 
 	@Override
 	public synchronized Color getColor(final IColorConstant colorConstant) {
-		// TODO MG this might be replaced by registered color for this constant
 		if (colorConstant != null) {
 			final ColorValue colorValue = colorConstant.getDefaultValue();
 			Color color = colorMap.get(colorValue);
 			if (color == null) {
 				color = new Color(Display.getDefault(), colorValue.getRed(), colorValue.getGreen(), colorValue.getBlue());
 				colorMap.put(colorValue, color);
+				colorValue.addCacheableListener(new CachaeableListener(colorValue));
 			}
 			return color;
 		}
@@ -62,6 +63,25 @@ public final class ColorCache implements IColorCache {
 
 	public static IColorCache getInstance() {
 		return INSTANCE;
+	}
+
+	private final class CachaeableListener implements ICacheableListener {
+
+		private final ColorValue colorValue;
+
+		private CachaeableListener(final ColorValue colorValue) {
+			this.colorValue = colorValue;
+		}
+
+		@Override
+		public void onRelease() {
+			final Color removedColor = colorMap.remove(colorValue);
+			if (removedColor != null && !removedColor.isDisposed()) {
+				removedColor.dispose();
+			}
+			colorValue.removeCacheableListener(this);
+		}
+
 	}
 
 }

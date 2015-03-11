@@ -29,10 +29,12 @@ package org.jowidgets.common.color;
 
 import java.io.Serializable;
 
+import org.jowidgets.util.cache.Cacheable;
+
 /**
  * Default implementation for IColorConstant
  */
-public final class ColorValue implements IColorConstant, Serializable {
+public final class ColorValue extends Cacheable implements IColorConstant, Serializable {
 
 	private static final long serialVersionUID = 6862989508930470810L;
 
