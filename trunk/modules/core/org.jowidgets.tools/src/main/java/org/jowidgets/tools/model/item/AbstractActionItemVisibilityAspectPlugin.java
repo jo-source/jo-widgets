@@ -35,6 +35,11 @@ public abstract class AbstractActionItemVisibilityAspectPlugin implements IActio
 
 	private IActionItemVisibilityAspect visibilityAspect;
 
+	/**
+	 * Creates the visibility aspect for the plugin
+	 * 
+	 * @return The visibility aspect, never null
+	 */
 	protected abstract IActionItemVisibilityAspect createVisibilityAspect();
 
 	@Override
