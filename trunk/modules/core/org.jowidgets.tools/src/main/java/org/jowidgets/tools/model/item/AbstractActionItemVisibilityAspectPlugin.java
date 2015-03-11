@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2015, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,37 +28,21 @@
 
 package org.jowidgets.tools.model.item;
 
-import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.model.item.IActionItemVisibilityAspect;
-import org.jowidgets.util.priority.IPriorityValue;
-import org.jowidgets.util.priority.LowHighPriority;
-import org.jowidgets.util.priority.PriorityValue;
+import org.jowidgets.api.model.item.IActionItemVisibilityAspectPlugin;
 
-/**
- * This aspect makes disabled actions invisible with high prio, and enabled action visible with low prio
- */
-public final class EnabledStateVisibilityAspect implements IActionItemVisibilityAspect {
+public abstract class AbstractActionItemVisibilityAspectPlugin implements IActionItemVisibilityAspectPlugin {
 
-	private static final IPriorityValue<Boolean, LowHighPriority> NOT_VISIBLE = new PriorityValue<Boolean, LowHighPriority>(
-		Boolean.FALSE,
-		LowHighPriority.HIGH);
+	private IActionItemVisibilityAspect visibilityAspect;
 
-	private static final IPriorityValue<Boolean, LowHighPriority> VISIBLE = new PriorityValue<Boolean, LowHighPriority>(
-		Boolean.TRUE,
-		LowHighPriority.LOW);
+	protected abstract IActionItemVisibilityAspect createVisibilityAspect();
 
 	@Override
-	public IPriorityValue<Boolean, LowHighPriority> getVisibility(final IAction action) {
-		if (action != null) {
-			final boolean enabled = action.isEnabled();
-			if (!enabled) {
-				return NOT_VISIBLE;
-			}
-			else {
-				return VISIBLE;
-			}
+	public IActionItemVisibilityAspect getVisibilityAspect() {
+		if (visibilityAspect == null) {
+			visibilityAspect = createVisibilityAspect();
 		}
-		return null;
+		return visibilityAspect;
 	}
 
 }
