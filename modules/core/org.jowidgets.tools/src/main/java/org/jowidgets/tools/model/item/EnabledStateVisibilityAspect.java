@@ -50,8 +50,4 @@ public final class EnabledStateVisibilityAspect implements IActionItemVisibility
 		return null;
 	}
 
-	@Override
-	public RequestContext getRequestContext() {
-		return RequestContext.ACTION_AND_ENABLED_STATE;
-	}
 }

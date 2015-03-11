@@ -35,7 +35,6 @@ import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.IActionChangeListener;
 import org.jowidgets.api.command.IActionChangeObservable;
 import org.jowidgets.api.model.item.ActionItemVisibilityAspectPlugin;
-import org.jowidgets.api.model.item.IActionItemVisibilityAspect.RequestContext;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.widgets.controller.IActionListener;
@@ -83,7 +82,7 @@ abstract class AbstractActionItemModelImpl extends ItemModelImpl {
 			@Override
 			public void enabledChanged() {
 				final boolean oldVisible = isVisible();
-				setVisibilityFromAspects(RequestContext.ACTION_AND_ENABLED_STATE);
+				setVisibilityFromAspects();
 				if (oldVisible != isVisible()) {
 					fireItemChanged();
 				}
@@ -137,18 +136,18 @@ abstract class AbstractActionItemModelImpl extends ItemModelImpl {
 		this.action = action;
 		decoratorsDirty = true;
 
-		setVisibilityFromAspects(RequestContext.ACTION);
+		setVisibilityFromAspects();
 	}
 
-	private void setVisibilityFromAspects(final RequestContext requestContext) {
+	private void setVisibilityFromAspects() {
 		final PrioritizedResultCreator<Boolean, LowHighPriority> resultCreator;
 		resultCreator = new PrioritizedResultCreator<Boolean, LowHighPriority>(LowHighPriority.HIGH);
 
 		if (visibilityAspect != null) {
-			resultCreator.addResult(visibilityAspect.getVisibility(getAction(), requestContext));
+			resultCreator.addResult(visibilityAspect.getVisibility(getAction()));
 		}
 		if (!resultCreator.hasMaxPrio()) {
-			resultCreator.addResult(ActionItemVisibilityAspectPlugin.getVisibility(getAction(), requestContext));
+			resultCreator.addResult(ActionItemVisibilityAspectPlugin.getVisibility(getAction()));
 		}
 
 		final IPriorityValue<Boolean, LowHighPriority> visibility = resultCreator.getResult();

@@ -43,26 +43,4 @@ public interface IActionItemVisibilityAspect {
 	 */
 	IPriorityValue<Boolean, LowHighPriority> getVisibility(IAction action);
 
-	/**
-	 * Determines when the aspect should be requested
-	 * 
-	 * @return The request context, never null
-	 */
-	RequestContext getRequestContext();
-
-	/**
-	 * The request context
-	 */
-	public enum RequestContext {
-
-		/**
-		 * The aspect will be requested on model construction and when the action changed (e.g. by setAction()).
-		 */
-		ACTION,
-
-		/**
-		 * The aspect will be requested in the same manner than 'ACTION' and additionally on any change of the enabled state
-		 */
-		ACTION_AND_ENABLED_STATE;
-	}
 }
