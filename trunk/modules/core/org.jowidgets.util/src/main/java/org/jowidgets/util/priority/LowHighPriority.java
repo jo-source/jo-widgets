@@ -30,7 +30,14 @@ package org.jowidgets.util.priority;
 
 public enum LowHighPriority implements Comparable<LowHighPriority> {
 
+	/**
+	 * Low priority
+	 */
 	LOW,
+
+	/**
+	 * High priority
+	 */
 	HIGH;
 
 }

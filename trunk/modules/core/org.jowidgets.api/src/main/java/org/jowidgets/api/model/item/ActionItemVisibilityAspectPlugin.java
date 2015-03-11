@@ -48,10 +48,22 @@ public final class ActionItemVisibilityAspectPlugin {
 
 	private ActionItemVisibilityAspectPlugin() {}
 
+	/**
+	 * Gets the visibility for an action
+	 * 
+	 * @param action The action to get visibility for
+	 * 
+	 * @return The visibility for the action, may be null
+	 */
 	public static IPriorityValue<Boolean, LowHighPriority> getVisibility(final IAction action) {
 		return getPluginCompositeImpl().getVisibility(action);
 	}
 
+	/**
+	 * Registers a IActionItemVisibilityAspectPlugin
+	 * 
+	 * @param plugin the plugin to register
+	 */
 	public static void registerPlugin(final IActionItemVisibilityAspectPlugin plugin) {
 		Assert.paramNotNull(plugin, "plugin");
 		getPluginCompositeImpl().addPlugin(plugin);
