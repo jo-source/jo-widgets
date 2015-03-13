@@ -78,6 +78,7 @@ public enum IconsSmall implements IImageConstant {
 	EDIT,
 
 	FOLDER,
+	PAGE_WHITE,
 	DISK,
 	CANCEL,
 	REFRESH,
@@ -87,8 +88,6 @@ public enum IconsSmall implements IImageConstant {
 	FILTER_INCLUDING,
 	FILTER_EXCLUDING,
 	FILTER_EDIT,
-	FILTER_DISABLED,
-	FILTER_ENABLED,
 	FILTER_DELETE,
 
 	EXPAND_ALL,
