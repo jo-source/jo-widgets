@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2015, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,30 +28,33 @@
 
 package org.jowidgets.addons.icons.silkicons;
 
-import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.toolkit.IToolkit;
+import org.jowidgets.api.toolkit.IToolkitInterceptor;
+import org.jowidgets.api.toolkit.IToolkitInterceptorHolder;
 
-/**
- * @deprecated, Use {@link SilkIconsSubstitude} instead
- */
-@Deprecated
-public final class SilkIconsInitializer {
+public final class SilkIconsToolkitInterceptorHolder implements IToolkitInterceptorHolder {
 
-	private SilkIconsInitializer() {}
+	private final IToolkitInterceptor interceptor;
 
-	/**
-	 * @deprecated use {@link SilkIconsSubstitude.substitude()} instead
-	 */
-	@Deprecated
-	public static void initialize() {
-		SilkIconsSubstitude.substitude(Toolkit.getInstance());
+	public SilkIconsToolkitInterceptorHolder() {
+		this.interceptor = new SilkIconsToolkitInterceptor();
 	}
 
-	/**
-	 * @deprecated use {@link SilkIconsSubstitude.substitude()} instead
-	 */
-	@Deprecated
-	public static void initializeFull() {
-		SilkIconsSubstitude.substitude(Toolkit.getInstance());
+	@Override
+	public IToolkitInterceptor getToolkitInterceptor() {
+		return interceptor;
+	}
+
+	@Override
+	public int getOrder() {
+		return 2;
+	}
+
+	private static final class SilkIconsToolkitInterceptor implements IToolkitInterceptor {
+		@Override
+		public void onToolkitCreate(final IToolkit toolkit) {
+			SilkIconsSubstitude.substitude(toolkit);
+		}
 	}
 
 }
