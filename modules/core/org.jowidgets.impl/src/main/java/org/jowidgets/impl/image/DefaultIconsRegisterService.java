@@ -89,6 +89,7 @@ public class DefaultIconsRegisterService extends ImageConstantRegisterService {
 		registerImage(IconsSmall.EDIT, "edit.png");
 
 		registerImage(IconsSmall.FOLDER, "folder.png");
+		registerImage(IconsSmall.PAGE_WHITE, "page_white.png");
 		registerImage(IconsSmall.DISK, "disk.png");
 		registerImage(IconsSmall.CANCEL, "cancel.png");
 		registerImage(IconsSmall.REFRESH, "refresh.png");

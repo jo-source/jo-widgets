@@ -27,6 +27,7 @@
  */
 package org.jowidgets.impl.widgets.basic.blueprint.convenience;
 
+import org.jowidgets.api.image.IconsSmall;
 import org.jowidgets.api.types.TreeAutoCheckPolicy;
 import org.jowidgets.api.widgets.blueprint.builder.ITreeSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.convenience.ITreeSetupConvenience;
@@ -56,6 +57,14 @@ public class TreeSetupConvenience extends AbstractSetupBuilderConvenience<ITreeS
 			getBuilder().setAutoCheckPolicy(TreeAutoCheckPolicy.OFF);
 		}
 		return getBuilder();
+	}
+
+	@Override
+	public ITreeSetupBuilder<?> setDefaultIcons() {
+		final ITreeSetupBuilder<?> builder = getBuilder();
+		builder.setDefaultInnerIcon(IconsSmall.FOLDER);
+		builder.setDefaultLeafIcon(IconsSmall.PAGE_WHITE);
+		return null;
 	}
 
 	@Override
