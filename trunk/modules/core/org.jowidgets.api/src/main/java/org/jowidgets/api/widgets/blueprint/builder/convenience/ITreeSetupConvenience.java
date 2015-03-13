@@ -35,6 +35,8 @@ public interface ITreeSetupConvenience<INSTANCE_TYPE> {
 
 	INSTANCE_TYPE setAutoCheckMode(boolean autoCheckMode);
 
+	INSTANCE_TYPE setDefaultIcons();
+
 	INSTANCE_TYPE setClassicSelectionColors();
 
 	INSTANCE_TYPE setWinSelectionColors();

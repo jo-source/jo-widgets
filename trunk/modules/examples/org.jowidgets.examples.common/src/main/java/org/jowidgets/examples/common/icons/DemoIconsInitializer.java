@@ -48,8 +48,7 @@ public final class DemoIconsInitializer {
 				new IDefaultInitializer<ITreeSetupBuilder<?>>() {
 					@Override
 					public void initialize(final ITreeSetupBuilder<?> setupBuilder) {
-						setupBuilder.setDefaultInnerIcon(SilkIcons.FOLDER);
-						setupBuilder.setDefaultLeafIcon(SilkIcons.PAGE_WHITE);
+						setupBuilder.setDefaultIcons();
 					}
 				});
 
