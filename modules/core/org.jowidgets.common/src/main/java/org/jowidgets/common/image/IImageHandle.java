@@ -29,6 +29,13 @@ package org.jowidgets.common.image;
 
 public interface IImageHandle {
 
+	/**
+	 * Gets the native image
+	 * 
+	 * The type depends on the underlying ui framework
+	 * 
+	 * @return The native image, never null
+	 */
 	Object getImage();
 
 	/**

@@ -28,6 +28,11 @@
 
 package org.jowidgets.common.image;
 
+/**
+ * Tagging interface for all image descriptors
+ * 
+ * An image descriptor provides a description for image creation
+ */
 public interface IImageDescriptor {
 
 }

@@ -27,6 +27,9 @@
  */
 package org.jowidgets.common.image;
 
+/**
+ * Tagging interface for all images
+ */
 public interface IImageConstant {
 
 }

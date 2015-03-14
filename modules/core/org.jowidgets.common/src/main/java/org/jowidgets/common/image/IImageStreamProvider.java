@@ -27,6 +27,9 @@
  */
 package org.jowidgets.common.image;
 
+/**
+ * An image provider that uses an inpput stream for image creation
+ */
 public interface IImageStreamProvider extends IImageProvider, IStreamImageDescriptor {
 
 }
