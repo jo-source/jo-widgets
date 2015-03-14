@@ -41,6 +41,8 @@ public interface IImageRegistry {
 
 	void registerImageConstant(IImageConstant key, IImageHandle imageHandle);
 
+	void unregisterImageConstant(IImageConstant key);
+
 	void registerImageConstant(IImageConstant key, IImageConstant substitude);
 
 	void registerImageConstant(IImageConstant key, IImageDescriptor url);

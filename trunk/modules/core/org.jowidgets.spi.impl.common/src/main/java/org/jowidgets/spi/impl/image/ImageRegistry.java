@@ -56,14 +56,81 @@ public class ImageRegistry implements IImageRegistry {
 	public synchronized void registerImageConstant(final IImageConstant key, final IImageHandle imageHandle) {
 		Assert.paramNotNull(key, "key");
 		Assert.paramNotNull(imageHandle, "imageHandle");
+
+		final IImageHandle registeredHandle = imageMap.get(key);
+
+		if (imageHandle == registeredHandle) {
+			//already registered
+			return;
+		}
+
+		if (registeredHandle != null && registeredHandle instanceof ImageHandle<?>) {
+			final ImageHandle<?> imageHandleImpl = (ImageHandle<?>) registeredHandle;
+			if (!imageHandleImpl.isDisposed() && imageHandleImpl.isInitialized()) {
+				throw new IllegalArgumentException(
+					"Image subtitution failed: For the image constant: '"
+						+ key
+						+ "' the following ImageHandle was already created and initialized: "
+						+ registeredHandle
+						+ "'. This means that some widget may still use the native image of the previosly created image handle. So the new ImageHandle ("
+						+ imageHandle
+						+ ") can not be registered , until the the old handle was disposed. "
+						+ "To do so, use the method: 'unregisterImageConstant(key)' first, if you are shure, "
+						+ "that the native image of the old handle is no longer be used."
+						+ "To avoid this problem completely, "
+						+ "only substitude image constants inside a IToolkitInterceptor to ensure, "
+						+ "that image handles wasn't alerady used. "
+						+ "This exception was introduced with jowidgets version 0.43.0."
+						+ " If you haven't had this exception with older versions, "
+						+ "nevertheless your code may have a potential memory leak");
+			}
+		}
+		else if (registeredHandle != null) {
+			throw new IllegalArgumentException(
+				"Image subtitution failed: For the image constant: '"
+					+ key
+					+ "' the following ImageHandle was already created and initialized: "
+					+ registeredHandle
+					+ "'. This means that some widget may still use the native image of the previosly created image handle. So the new ImageHandle ("
+					+ imageHandle
+					+ ") can not be registered , until the the old handle was disposed. "
+					+ "To do so, use the method: 'unregisterImageConstant(key)' to unregister the key first"
+					+ " (and ensure that you dispose your native ImageHandle, because no default implementation of image handle was used), "
+					+ "if you are shure, that the native image of the old handle is no longer be used."
+					+ "To avoid this problem completely, "
+					+ "only substitude image constants inside a IToolkitInterceptor to ensure, "
+					+ "that image handles wasn't alerady used. "
+					+ "This exception was introduced with jowidgets version 0.43.0. "
+					+ "If you haven't had this exception with older versions, "
+					+ "nevertheless your code may have a potential memory leak");
+		}
+
 		imageMap.put(key, imageHandle);
+	}
+
+	@Override
+	public synchronized void unregisterImageConstant(final IImageConstant key) {
+		final IImageHandle registeredHandle = imageMap.remove(key);
+
+		if (registeredHandle == null) {
+			//not registered, do nothing
+			return;
+		}
+
+		if (registeredHandle != null && registeredHandle instanceof ImageHandle<?>) {
+			final ImageHandle<?> imageHandleImpl = (ImageHandle<?>) registeredHandle;
+			if (!imageHandleImpl.isDisposed() && imageHandleImpl.isInitialized()) {
+				imageHandleImpl.dispose();
+			}
+		}
+
 	}
 
 	@Override
 	public void registerImageConstant(final IImageConstant key, final IImageDescriptor descriptor) {
 		Assert.paramNotNull(key, "key");
 		Assert.paramNotNull(descriptor, "descriptor (for key '" + key + "')");
-		imageMap.put(key, imageHandleFactory.createImageHandle(descriptor));
+		registerImageConstant(key, imageHandleFactory.createImageHandle(descriptor));
 	}
 
 	@Override
@@ -127,7 +194,7 @@ public class ImageRegistry implements IImageRegistry {
 	}
 
 	@Override
-	public void unRegisterImage(final IImageCommon image) {
+	public synchronized void unRegisterImage(final IImageCommon image) {
 		Assert.paramNotNull(image, "image");
 		imageMap.remove(image);
 		image.dispose();
