@@ -59,10 +59,6 @@ public final class SwtImageRegistry extends ImageRegistry {
 		}
 	}
 
-	public SwtImageHandleFactory getSwtImageHandleFactory() {
-		return (SwtImageHandleFactory) super.getImageHandleFactory();
-	}
-
 	public static SwtImageRegistry getInstance() {
 		return INSTANCE;
 	}

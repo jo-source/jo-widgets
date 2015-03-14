@@ -76,9 +76,9 @@ public class ImageHandle<IMAGE_TYPE> implements IImageHandle {
 		return imageDescriptor;
 	}
 
+	@Override
 	public final synchronized boolean isInitialized() {
-		checkDisposed();
-		return image != null;
+		return !isDisposed() && image != null;
 	}
 
 	public final synchronized boolean isDisposed() {

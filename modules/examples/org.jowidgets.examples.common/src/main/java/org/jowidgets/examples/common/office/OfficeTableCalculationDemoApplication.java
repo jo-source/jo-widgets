@@ -184,7 +184,6 @@ public class OfficeTableCalculationDemoApplication implements IApplication {
 	}
 
 	private static void initializeSilkIcons() {
-		Toolkit.getImageRegistry().registerImageEnum(SilkIcons.class);
 		Toolkit.getImageRegistry().registerImageConstant(IconsSmall.OK, SilkIcons.TICK);
 
 		Toolkit.getBluePrintFactory().addDefaultsInitializer(

@@ -40,7 +40,6 @@ public final class DemoIconsInitializer {
 	private DemoIconsInitializer() {}
 
 	public static void initialize() {
-		Toolkit.getImageRegistry().registerImageEnum(SilkIcons.class);
 		Toolkit.getImageRegistry().registerImageConstant(IconsSmall.OK, SilkIcons.TICK);
 
 		Toolkit.getBluePrintFactory().addDefaultsInitializer(
