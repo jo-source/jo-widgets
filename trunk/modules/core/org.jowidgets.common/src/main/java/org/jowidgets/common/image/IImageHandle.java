@@ -30,13 +30,20 @@ package org.jowidgets.common.image;
 public interface IImageHandle {
 
 	/**
-	 * Gets the native image
+	 * Gets the native image or creates it, if not yet created
 	 * 
 	 * The type depends on the underlying ui framework
 	 * 
 	 * @return The native image, never null
 	 */
 	Object getImage();
+
+	/**
+	 * Gets the information if the handle is already initialized
+	 * 
+	 * @return True if initialized, false otherwise
+	 */
+	boolean isInitialized();
 
 	/**
 	 * Gets the descriptor of the image. The descriptor may be null, if the image was not created

@@ -41,13 +41,16 @@ import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.image.IImageStreamProvider;
 import org.jowidgets.common.image.IImageUrlProvider;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.NullCompatibleEquivalence;
+import org.jowidgets.util.cache.ICacheable;
+import org.jowidgets.util.cache.ICacheableListener;
 
 public class ImageRegistry implements IImageRegistry {
 
 	private final Map<Object, IImageHandle> imageMap = new HashMap<Object, IImageHandle>();
 	private final IImageHandleFactory imageHandleFactory;
 
-	public ImageRegistry(final IImageHandleFactory imageHandleFactory) {
+	protected ImageRegistry(final IImageHandleFactory imageHandleFactory) {
 		Assert.paramNotNull(imageHandleFactory, "imageHandleFactory");
 		this.imageHandleFactory = imageHandleFactory;
 	}
@@ -64,54 +67,76 @@ public class ImageRegistry implements IImageRegistry {
 			return;
 		}
 
-		if (registeredHandle != null && registeredHandle instanceof ImageHandle<?>) {
-			final ImageHandle<?> imageHandleImpl = (ImageHandle<?>) registeredHandle;
-			if (!imageHandleImpl.isDisposed() && imageHandleImpl.isInitialized()) {
-				throw new IllegalArgumentException(
-					"Image subtitution failed: For the image constant: '"
-						+ key
-						+ "' the following ImageHandle was already created and initialized: "
-						+ registeredHandle
-						+ "'. This means that some widget may still use the native image of the previosly created image handle. So the new ImageHandle ("
-						+ imageHandle
-						+ ") can not be registered , until the the old handle was disposed. "
-						+ "To do so, use the method: 'unregisterImageConstant(key)' first, if you are shure, "
-						+ "that the native image of the old handle is no longer be used."
-						+ "To avoid this problem completely, "
-						+ "only substitude image constants inside a IToolkitInterceptor to ensure, "
-						+ "that image handles wasn't alerady used. "
-						+ "This exception was introduced with jowidgets version 0.43.0."
-						+ " If you haven't had this exception with older versions, "
-						+ "nevertheless your code may have a potential memory leak");
-			}
+		if (isImageInitialized(key)) {//do not allow substitution for already used images
+			throw new IllegalArgumentException(createInitializedExceptionMessage(key, imageHandle, registeredHandle));
 		}
-		else if (registeredHandle != null) {
-			throw new IllegalArgumentException(
-				"Image subtitution failed: For the image constant: '"
-					+ key
-					+ "' the following ImageHandle was already created and initialized: "
-					+ registeredHandle
-					+ "'. This means that some widget may still use the native image of the previosly created image handle. So the new ImageHandle ("
-					+ imageHandle
-					+ ") can not be registered , until the the old handle was disposed. "
-					+ "To do so, use the method: 'unregisterImageConstant(key)' to unregister the key first"
-					+ " (and ensure that you dispose your native ImageHandle, because no default implementation of image handle was used), "
-					+ "if you are shure, that the native image of the old handle is no longer be used."
-					+ "To avoid this problem completely, "
-					+ "only substitude image constants inside a IToolkitInterceptor to ensure, "
-					+ "that image handles wasn't alerady used. "
-					+ "This exception was introduced with jowidgets version 0.43.0. "
-					+ "If you haven't had this exception with older versions, "
-					+ "nevertheless your code may have a potential memory leak");
+
+		if (key instanceof ICacheable) {
+			((ICacheable) key).addCacheableListener(new CacheableListener(key));
 		}
 
 		imageMap.put(key, imageHandle);
 	}
 
 	@Override
-	public synchronized void unregisterImageConstant(final IImageConstant key) {
-		final IImageHandle registeredHandle = imageMap.remove(key);
+	public void registerImageConstant(final IImageConstant key, final IImageDescriptor descriptor) {
+		Assert.paramNotNull(key, "key");
+		Assert.paramNotNull(descriptor, "descriptor");
+		registerImageConstant(key, imageHandleFactory.createImageHandle(descriptor));
+	}
 
+	@Override
+	public void registerImageConstant(final IImageConstant key, final IImageProvider provider) {
+		Assert.paramNotNull(key, "key");
+		Assert.paramNotNull(provider, "provider");
+		registerImageConstant(key, (IImageDescriptor) provider);
+	}
+
+	@Override
+	public void registerImageConstant(final IImageConstant key, final URL url) {
+		Assert.paramNotNull(key, "key");
+		Assert.paramNotNull(url, "url (for key '" + key + "')");
+		registerImageConstant(key, new UrlImageDescriptorImpl(url));
+	}
+
+	@Override
+	public void registerImageConstant(final IImageConstant key, final IImageConstant substitude) {
+		Assert.paramNotNull(key, "key");
+		Assert.paramNotNull(substitude, "substitude");
+		final IImageHandle substitudeHandle = getImageHandle(substitude);
+		if (substitudeHandle == null) {
+			throw new IllegalArgumentException("Substitude is not registered");
+		}
+		registerImageConstant(key, substitudeHandle);
+	}
+
+	@Override
+	public synchronized IImageHandle getImageHandle(final IImageConstant key) {
+		IImageHandle result = imageMap.get(key);
+		if (result == null) {
+			result = getOrCreateImageHandleForKeyIfPossible(key);
+			if (result != null) {
+				registerImageConstant(key, result);
+			}
+		}
+		return result;
+	}
+
+	@Override
+	public synchronized void unRegisterImageConstant(final IImageConstant key) {
+		Assert.paramNotNull(key, "key");
+
+		if (key instanceof ICacheable) {
+			((ICacheable) key).removeCacheableListener(new CacheableListener(key));
+		}
+
+		//ensure that images will be disposed completely
+		if (key instanceof IImageCommon) {
+			unRegisterImage((IImageCommon) key);
+			return;
+		}
+
+		final IImageHandle registeredHandle = imageMap.remove(key);
 		if (registeredHandle == null) {
 			//not registered, do nothing
 			return;
@@ -127,81 +152,125 @@ public class ImageRegistry implements IImageRegistry {
 	}
 
 	@Override
-	public void registerImageConstant(final IImageConstant key, final IImageDescriptor descriptor) {
-		Assert.paramNotNull(key, "key");
-		Assert.paramNotNull(descriptor, "descriptor (for key '" + key + "')");
-		registerImageConstant(key, imageHandleFactory.createImageHandle(descriptor));
-	}
-
-	@Override
-	public synchronized IImageHandle getImageHandle(final IImageConstant key) {
-		IImageHandle result = imageMap.get(key);
-		if (result == null && key instanceof IImageDescriptor) {
-			registerImageConstant(key, (IImageDescriptor) key);
-			result = imageMap.get(key);
-		}
-		return result;
-	}
-
-	@Override
-	public void registerImageProvider(final IImageProvider imageProvider) {
-		Assert.paramNotNull(imageProvider, "imageProvider");
-		registerImageConstant((IImageConstant) imageProvider, (IImageDescriptor) imageProvider);
-	}
-
-	@Override
-	public void registerImageUrl(final IImageUrlProvider imageUrlProvider) {
-		Assert.paramNotNull(imageUrlProvider, "imageUrlProvider");
-		registerImageConstant(imageUrlProvider, imageUrlProvider.getImageUrl());
-	}
-
-	@Override
-	public void registerImageStream(final IImageStreamProvider imageStreamProvider) {
-		Assert.paramNotNull(imageStreamProvider, "imageStreamProvider");
-		registerImageConstant(imageStreamProvider, (IImageDescriptor) imageStreamProvider);
-	}
-
-	@Override
-	public void registerImageConstant(final IImageConstant key, final IImageConstant substitude) {
-		Assert.paramNotNull(key, "key");
-		Assert.paramNotNull(substitude, "substitude");
-		final IImageHandle imageHandle = getImageHandle(substitude);
-		if (imageHandle == null) {
-			throw new IllegalArgumentException("Substitude is not registered");
-		}
-		registerImageConstant(key, imageHandle);
-	}
-
-	@Override
-	public void registerImageConstant(final IImageConstant key, final IImageUrlProvider urlProvider) {
-		Assert.paramNotNull(key, "key");
-		Assert.paramNotNull(urlProvider, "urlProvider");
-		registerImageConstant(key, urlProvider.getImageUrl());
-	}
-
-	@Override
-	public void registerImageConstant(final IImageConstant key, final URL url) {
-		Assert.paramNotNull(key, "key");
-		Assert.paramNotNull(url, "url (for key '" + key + "')");
-		registerImageConstant(key, new UrlImageDescriptorImpl(url));
-	}
-
-	@Override
-	public <T extends Enum<?> & IImageUrlProvider> void registerImageEnum(final Class<T> enumClass) {
-		for (final IImageUrlProvider imageUrlProvider : enumClass.getEnumConstants()) {
-			registerImageUrl(imageUrlProvider);
-		}
-	}
-
-	@Override
 	public synchronized void unRegisterImage(final IImageCommon image) {
 		Assert.paramNotNull(image, "image");
 		imageMap.remove(image);
 		image.dispose();
 	}
 
+	@Override
+	public boolean isImageAvailable(final IImageConstant key) {
+		Assert.paramNotNull(key, "key");
+		return (key instanceof IImageDescriptor) || isImageRegistered(key);
+	}
+
+	@Override
+	public boolean isImageRegistered(final IImageConstant key) {
+		Assert.paramNotNull(key, "key");
+		return imageMap.containsKey(key);
+	}
+
+	@Override
+	public boolean isImageInitialized(final IImageConstant key) {
+		return isImageRegistered(key) && imageMap.get(key).isInitialized();
+	}
+
 	protected IImageHandleFactory getImageHandleFactory() {
 		return imageHandleFactory;
+	}
+
+	private synchronized IImageHandle getOrCreateImageHandleForKeyIfPossible(final IImageConstant key) {
+		IImageHandle result = imageMap.get(key);
+		if (result == null && key instanceof IImageDescriptor) {
+			result = imageHandleFactory.createImageHandle((IImageDescriptor) key);
+		}
+		return result;
+	}
+
+	private String createInitializedExceptionMessage(
+		final IImageConstant key,
+		final IImageHandle imageHandle,
+		final IImageHandle registeredHandle) {
+		return "Image subtitution failed: For the image constant: '"
+			+ key
+			+ "' the following ImageHandle was already created and initialized: "
+			+ registeredHandle
+			+ "'. This means that some widget may still use the native image of the previosly created image handle. So the new ImageHandle ("
+			+ imageHandle
+			+ ") can not be registered , until the the old handle was disposed. "
+			+ "To do so, use the method: 'unregisterImageConstant(key)' first, if you are shure, "
+			+ "that the native image of the old handle is no longer be used."
+			+ "To avoid this problem completely, "
+			+ "only substitude image constants inside a IToolkitInterceptor to ensure, "
+			+ "that image handles wasn't alerady used. "
+			+ "This exception was introduced with jowidgets version 0.43.0."
+			+ " If you haven't had this exception with older versions, "
+			+ "nevertheless your code may have a potential memory leak";
+	}
+
+	@Override
+	@Deprecated
+	public void registerImageProvider(final IImageProvider imageProvider) {
+		Assert.paramNotNull(imageProvider, "imageProvider");
+		registerImageConstant(imageProvider, (IImageDescriptor) imageProvider);
+	}
+
+	@Override
+	@Deprecated
+	public void registerImageUrl(final IImageUrlProvider imageUrlProvider) {
+		Assert.paramNotNull(imageUrlProvider, "imageUrlProvider");
+		registerImageProvider(imageUrlProvider);
+	}
+
+	@Override
+	@Deprecated
+	public void registerImageStream(final IImageStreamProvider imageStreamProvider) {
+		Assert.paramNotNull(imageStreamProvider, "imageStreamProvider");
+		registerImageProvider(imageStreamProvider);
+	}
+
+	@Override
+	@Deprecated
+	public <T extends Enum<?> & IImageUrlProvider> void registerImageEnum(final Class<T> enumClass) {
+		for (final IImageUrlProvider imageUrlProvider : enumClass.getEnumConstants()) {
+			registerImageUrl(imageUrlProvider);
+		}
+	}
+
+	private final class CacheableListener implements ICacheableListener {
+
+		private final IImageConstant key;
+
+		private CacheableListener(final IImageConstant key) {
+			Assert.paramNotNull(key, "key");
+			this.key = key;
+		}
+
+		@Override
+		public void onRelease() {
+			unRegisterImageConstant(key);
+		}
+
+		@Override
+		public int hashCode() {
+			return key.hashCode();
+		}
+
+		@Override
+		public boolean equals(final Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (obj == null) {
+				return false;
+			}
+			if (!(obj instanceof CacheableListener)) {
+				return false;
+			}
+			final CacheableListener other = (CacheableListener) obj;
+			return NullCompatibleEquivalence.equals(key, other.key);
+		}
+
 	}
 
 }
