@@ -60,6 +60,13 @@ public class ImageRegistry implements IImageRegistry {
 	}
 
 	@Override
+	public void registerImageConstant(final IImageConstant key, final IImageDescriptor descriptor) {
+		Assert.paramNotNull(key, "key");
+		Assert.paramNotNull(descriptor, "descriptor (for key '" + key + "')");
+		imageMap.put(key, imageHandleFactory.createImageHandle(descriptor));
+	}
+
+	@Override
 	public synchronized IImageHandle getImageHandle(final IImageConstant key) {
 		IImageHandle result = imageMap.get(key);
 		if (result == null && key instanceof IImageDescriptor) {
@@ -91,7 +98,7 @@ public class ImageRegistry implements IImageRegistry {
 	public void registerImageConstant(final IImageConstant key, final IImageConstant substitude) {
 		Assert.paramNotNull(key, "key");
 		Assert.paramNotNull(substitude, "substitude");
-		final IImageHandle imageHandle = imageMap.get(substitude);
+		final IImageHandle imageHandle = getImageHandle(substitude);
 		if (imageHandle == null) {
 			throw new IllegalArgumentException("Substitude is not registered");
 		}
@@ -110,13 +117,6 @@ public class ImageRegistry implements IImageRegistry {
 		Assert.paramNotNull(key, "key");
 		Assert.paramNotNull(url, "url (for key '" + key + "')");
 		registerImageConstant(key, new UrlImageDescriptorImpl(url));
-	}
-
-	@Override
-	public void registerImageConstant(final IImageConstant key, final IImageDescriptor descriptor) {
-		Assert.paramNotNull(key, "key");
-		Assert.paramNotNull(descriptor, "descriptor (for key '" + key + "')");
-		imageMap.put(key, imageHandleFactory.createImageHandle(descriptor));
 	}
 
 	@Override
