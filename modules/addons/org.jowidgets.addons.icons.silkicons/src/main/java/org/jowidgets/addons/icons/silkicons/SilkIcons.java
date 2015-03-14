@@ -31,12 +31,15 @@ package org.jowidgets.addons.icons.silkicons;
 import java.net.URL;
 
 import org.jowidgets.common.image.IImageUrlProvider;
+import org.jowidgets.util.cache.Cacheable;
+import org.jowidgets.util.cache.ICacheable;
+import org.jowidgets.util.cache.ICacheableListener;
 
 /**
  * Holds icon constants for the silk icons
  * (http://www.famfamfam.com/lab/icons/silk/)
  */
-public enum SilkIcons implements IImageUrlProvider {
+public enum SilkIcons implements IImageUrlProvider, ICacheable {
 
 	ACCEPT(getIconsPath() + "accept.png"),
 	ADD(getIconsPath() + "add.png"),
@@ -1051,14 +1054,47 @@ public enum SilkIcons implements IImageUrlProvider {
 	private static final String ICONS_PATH = "org/jowidgets/addons/icons/silkicons/icons/silkicons/";
 
 	private final URL url;
+	private final Cacheable cacheable;
 
 	private SilkIcons(final String defaultPath) {
 		this.url = getClass().getClassLoader().getResource(defaultPath);
+		this.cacheable = new Cacheable();
+	}
+
+	/**
+	 * Releases all icons form the cache and disposes them.
+	 * 
+	 * Do not do this if any icon may already be in use.
+	 */
+	public static void releaseAll() {
+		for (final SilkIcons icon : values()) {
+			icon.release();
+		}
 	}
 
 	@Override
 	public URL getImageUrl() {
 		return url;
+	}
+
+	@Override
+	public void addCacheableListener(final ICacheableListener listener) {
+		cacheable.addCacheableListener(listener);
+	}
+
+	@Override
+	public void removeCacheableListener(final ICacheableListener listener) {
+		cacheable.removeCacheableListener(listener);
+	}
+
+	/**
+	 * Releases and disposes this icon.
+	 * 
+	 * Do not do this if the icon may already be in use.
+	 */
+	@Override
+	public void release() {
+		cacheable.release();
 	}
 
 	private static String getIconsPath() {
