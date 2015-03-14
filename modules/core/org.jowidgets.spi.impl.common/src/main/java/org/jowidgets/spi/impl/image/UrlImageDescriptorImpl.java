@@ -47,4 +47,9 @@ public final class UrlImageDescriptorImpl implements IUrlImageDescriptor {
 		return url;
 	}
 
+	@Override
+	public String toString() {
+		return "UrlImageDescriptorImpl [url=" + url + "]";
+	}
+
 }

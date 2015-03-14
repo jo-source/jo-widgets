@@ -97,4 +97,9 @@ public class ImageHandle<IMAGE_TYPE> implements IImageHandle {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "ImageHandle [imageDescriptor=" + imageDescriptor + ", disposed=" + disposed + ", image=" + image + "]";
+	}
+
 }
