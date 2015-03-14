@@ -30,8 +30,16 @@ package org.jowidgets.common.image;
 
 import java.net.URL;
 
+/**
+ * Describes an image by an URL
+ */
 public interface IUrlImageDescriptor extends IImageDescriptor {
 
+	/**
+	 * Gets the url that provides the image data
+	 * 
+	 * @return The url, never null
+	 */
 	URL getImageUrl();
 
 }

@@ -30,8 +30,16 @@ package org.jowidgets.common.image;
 
 import java.io.InputStream;
 
+/**
+ * Describes an image by an input stream
+ */
 public interface IStreamImageDescriptor extends IImageDescriptor {
 
+	/**
+	 * Gets the stream that provides the image data
+	 * 
+	 * @return A input stream for image data, never null
+	 */
 	InputStream getInputStream();
 
 }

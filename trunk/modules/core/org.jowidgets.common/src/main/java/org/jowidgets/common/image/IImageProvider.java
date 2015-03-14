@@ -27,6 +27,14 @@
  */
 package org.jowidgets.common.image;
 
+/**
+ * Tagging interface for all image providers
+ * 
+ * An image provider is a self describing image constant
+ * 
+ * An image provider must no be registered in the {@link IImageRegistry} explicitly to use,
+ * it will be registered automatically at the first use.
+ */
 public interface IImageProvider extends IImageConstant, IImageDescriptor {
 
 }

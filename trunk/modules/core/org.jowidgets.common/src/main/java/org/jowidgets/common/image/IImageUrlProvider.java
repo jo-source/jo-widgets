@@ -27,6 +27,9 @@
  */
 package org.jowidgets.common.image;
 
+/**
+ * An image provider that uses an url for image creation
+ */
 public interface IImageUrlProvider extends IImageProvider, IUrlImageDescriptor {
 
 }
