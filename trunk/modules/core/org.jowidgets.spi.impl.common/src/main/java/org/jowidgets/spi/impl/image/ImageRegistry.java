@@ -157,6 +157,13 @@ public class ImageRegistry implements IImageRegistry {
 	@Override
 	public synchronized void unRegisterImage(final IImageCommon image) {
 		Assert.paramNotNull(image, "image");
+
+		if (image instanceof ICacheable) {
+			//this works because CacheableListener has a equals and hashCode implementation
+			//that make it work:-)
+			((ICacheable) image).removeCacheableListener(new CacheableListener(image));
+		}
+
 		imageMap.remove(image);
 		image.dispose();
 	}
