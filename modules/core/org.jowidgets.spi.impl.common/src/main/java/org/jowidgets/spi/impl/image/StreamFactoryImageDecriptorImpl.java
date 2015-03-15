@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,23 +26,26 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.graphics;
+package org.jowidgets.spi.impl.image;
 
-public enum AntiAliasing {
+import java.io.InputStream;
 
-	/**
-	 * No antialiasing
-	 */
-	OFF,
+import org.jowidgets.common.image.IStreamFactoryImageDescriptor;
+import org.jowidgets.util.Assert;
+import org.jowidgets.util.IFactory;
 
-	/**
-	 * Antialising is used
-	 */
-	ON,
+public final class StreamFactoryImageDecriptorImpl implements IStreamFactoryImageDescriptor {
 
-	/**
-	 * The default of the underlying ui framework
-	 */
-	DEFAULT;
+	private final IFactory<InputStream> inputStreamFactory;
+
+	public StreamFactoryImageDecriptorImpl(final IFactory<InputStream> inputStreamFactory) {
+		Assert.paramNotNull(inputStreamFactory, "inputStreamFactory");
+		this.inputStreamFactory = inputStreamFactory;
+	}
+
+	@Override
+	public InputStream createInputStream() {
+		return inputStreamFactory.create();
+	}
 
 }

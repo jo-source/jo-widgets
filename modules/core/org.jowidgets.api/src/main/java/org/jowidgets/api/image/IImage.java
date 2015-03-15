@@ -33,6 +33,11 @@ import org.jowidgets.common.image.IImageCommon;
 
 public interface IImage extends IImageCommon, IDisposeObservable {
 
+	/**
+	 * Checks if the image is already disposed
+	 * 
+	 * @return The if diposed, false otherwise
+	 */
 	boolean isDisposed();
 
 }

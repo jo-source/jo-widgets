@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013, grossmann
+ * Copyright (c) 2015, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,23 +26,64 @@
  * DAMAGE.
  */
 
-package org.jowidgets.common.graphics;
+package org.jowidgets.tools.image;
 
-public enum AntiAliasing {
+import java.io.File;
+import java.net.URL;
+
+import org.jowidgets.common.image.IImageUrlProvider;
+import org.jowidgets.util.cache.Cacheable;
+import org.jowidgets.util.cache.ICacheable;
+import org.jowidgets.util.cache.ICacheableListener;
+
+public class ImageUrlProvider extends UrlImageDescriptor implements IImageUrlProvider, ICacheable {
+
+	private final Cacheable cacheable = new Cacheable();
 
 	/**
-	 * No antialiasing
+	 * Creates a new ImageUrlProvider from a file
+	 * 
+	 * @param file A File used to create the url from
+	 * 
+	 * @throws IllegalArgumentException if the url is malformed
 	 */
-	OFF,
+	public ImageUrlProvider(final File file) {
+		super(file);
+	}
 
 	/**
-	 * Antialising is used
+	 * Creates a new ImageUrlProvider
+	 * 
+	 * @param url A String defining the url
+	 * 
+	 * @throws IllegalArgumentException if the url is malformed
 	 */
-	ON,
+	public ImageUrlProvider(final String url) {
+		super(url);
+	}
 
 	/**
-	 * The default of the underlying ui framework
+	 * Creates a new ImageUrlProvider
+	 * 
+	 * @param url The url to use, must not be null
 	 */
-	DEFAULT;
+	public ImageUrlProvider(final URL url) {
+		super(url);
+	}
+
+	@Override
+	public final void addCacheableListener(final ICacheableListener listener) {
+		cacheable.addCacheableListener(listener);
+	}
+
+	@Override
+	public final void removeCacheableListener(final ICacheableListener listener) {
+		cacheable.removeCacheableListener(listener);
+	}
+
+	@Override
+	public final void release() {
+		cacheable.release();
+	}
 
 }

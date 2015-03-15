@@ -34,11 +34,13 @@ import java.io.InputStream;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.jowidgets.common.image.IImageDescriptor;
+import org.jowidgets.common.image.IStreamFactoryImageDescriptor;
 import org.jowidgets.common.image.IStreamImageDescriptor;
 import org.jowidgets.common.image.IUrlImageDescriptor;
 import org.jowidgets.spi.impl.image.IImageFactory;
 import org.jowidgets.util.io.IoUtils;
 
+@SuppressWarnings("deprecation")
 public class SwtImageLoader implements IImageFactory<Image> {
 
 	private final IImageDescriptor imageDescriptor;
@@ -65,6 +67,9 @@ public class SwtImageLoader implements IImageFactory<Image> {
 	private InputStream getInputStream() throws IOException {
 		if (imageDescriptor instanceof IUrlImageDescriptor) {
 			return ((IUrlImageDescriptor) imageDescriptor).getImageUrl().openStream();
+		}
+		else if (imageDescriptor instanceof IStreamFactoryImageDescriptor) {
+			return ((IStreamFactoryImageDescriptor) imageDescriptor).createInputStream();
 		}
 		else if (imageDescriptor instanceof IStreamImageDescriptor) {
 			return ((IStreamImageDescriptor) imageDescriptor).getInputStream();

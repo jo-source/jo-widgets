@@ -45,6 +45,7 @@ import org.jowidgets.util.NullCompatibleEquivalence;
 import org.jowidgets.util.cache.ICacheable;
 import org.jowidgets.util.cache.ICacheableListener;
 
+@SuppressWarnings("deprecation")
 public class ImageRegistry implements IImageRegistry {
 
 	private final Map<Object, IImageHandle> imageMap = new HashMap<Object, IImageHandle>();
@@ -127,6 +128,8 @@ public class ImageRegistry implements IImageRegistry {
 		Assert.paramNotNull(key, "key");
 
 		if (key instanceof ICacheable) {
+			//this works because CacheableListener has a equals and hashCode implementation
+			//that make it work:-)
 			((ICacheable) key).removeCacheableListener(new CacheableListener(key));
 		}
 

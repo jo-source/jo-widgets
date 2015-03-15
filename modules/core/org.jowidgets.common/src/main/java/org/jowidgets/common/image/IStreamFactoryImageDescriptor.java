@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, grossmann
+ * Copyright (c) 2012, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,26 +26,22 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.image;
+package org.jowidgets.common.image;
 
 import java.io.InputStream;
 
-import org.jowidgets.common.image.IStreamImageDescriptor;
-import org.jowidgets.util.Assert;
-import org.jowidgets.util.IFactory;
+/**
+ * Describes an image by an input stream
+ */
+public interface IStreamFactoryImageDescriptor extends IImageDescriptor {
 
-public final class StreamImageDecriptorImpl implements IStreamImageDescriptor {
-
-	private final IFactory<InputStream> inputStreamFactory;
-
-	public StreamImageDecriptorImpl(final IFactory<InputStream> inputStreamFactory) {
-		Assert.paramNotNull(inputStreamFactory, "inputStreamFactory");
-		this.inputStreamFactory = inputStreamFactory;
-	}
-
-	@Override
-	public InputStream getInputStream() {
-		return inputStreamFactory.create();
-	}
+	/**
+	 * Creates the stream that provides the image data.
+	 * 
+	 * The input stream will be closed by the invoker
+	 * 
+	 * @return A input stream for image data, never null
+	 */
+	InputStream createInputStream();
 
 }
