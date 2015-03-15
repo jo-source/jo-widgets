@@ -41,7 +41,7 @@ import org.jowidgets.spi.image.IImageSpi;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDImage;
 import org.jowidgets.spi.impl.image.AbstractImageSpiImpl;
 import org.jowidgets.spi.impl.image.ImageHandle;
-import org.jowidgets.spi.impl.image.StreamImageDecriptorImpl;
+import org.jowidgets.spi.impl.image.StreamFactoryImageDecriptorImpl;
 import org.jowidgets.spi.impl.image.UrlImageDescriptorImpl;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.IFactory;
@@ -63,7 +63,7 @@ public final class DummyImageFactory implements IImageFactorySpi {
 	@Override
 	public IImageSpi createImage(final IFactory<InputStream> inputStream) {
 		Assert.paramNotNull(inputStream, "inputStream");
-		final IImageDescriptor descriptor = new StreamImageDecriptorImpl(inputStream);
+		final IImageDescriptor descriptor = new StreamFactoryImageDecriptorImpl(inputStream);
 		return new ImageSpiImpl<UIDImage>(imageHandleFactory.createImageHandle(descriptor));
 	}
 

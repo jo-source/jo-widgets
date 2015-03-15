@@ -34,12 +34,14 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 
 import org.jowidgets.common.image.IImageDescriptor;
+import org.jowidgets.common.image.IStreamFactoryImageDescriptor;
 import org.jowidgets.common.image.IStreamImageDescriptor;
 import org.jowidgets.common.image.IUrlImageDescriptor;
 import org.jowidgets.spi.impl.image.IImageFactory;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.io.IoUtils;
 
+@SuppressWarnings("deprecation")
 public class SwingImageLoader implements IImageFactory<Image> {
 
 	private final IImageDescriptor imageDescriptor;
@@ -67,6 +69,9 @@ public class SwingImageLoader implements IImageFactory<Image> {
 	private InputStream getInputStream() throws IOException {
 		if (imageDescriptor instanceof IUrlImageDescriptor) {
 			return ((IUrlImageDescriptor) imageDescriptor).getImageUrl().openStream();
+		}
+		else if (imageDescriptor instanceof IStreamFactoryImageDescriptor) {
+			return ((IStreamFactoryImageDescriptor) imageDescriptor).createInputStream();
 		}
 		else if (imageDescriptor instanceof IStreamImageDescriptor) {
 			return ((IStreamImageDescriptor) imageDescriptor).getInputStream();

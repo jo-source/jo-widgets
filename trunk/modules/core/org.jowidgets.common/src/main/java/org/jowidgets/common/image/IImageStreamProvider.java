@@ -29,7 +29,10 @@ package org.jowidgets.common.image;
 
 /**
  * An image provider that uses an inpput stream for image creation
+ * 
+ * @deprecated Use {@link IStreamImageFactoryDescriptor} instead
  */
+@Deprecated
 public interface IImageStreamProvider extends IImageProvider, IStreamImageDescriptor {
 
 }

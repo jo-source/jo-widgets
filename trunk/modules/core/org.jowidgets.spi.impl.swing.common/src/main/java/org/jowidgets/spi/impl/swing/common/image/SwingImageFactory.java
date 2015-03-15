@@ -43,7 +43,7 @@ import org.jowidgets.spi.image.IImageFactorySpi;
 import org.jowidgets.spi.image.IImageSpi;
 import org.jowidgets.spi.impl.image.AbstractImageSpiImpl;
 import org.jowidgets.spi.impl.image.ImageHandle;
-import org.jowidgets.spi.impl.image.StreamImageDecriptorImpl;
+import org.jowidgets.spi.impl.image.StreamFactoryImageDecriptorImpl;
 import org.jowidgets.spi.impl.image.UrlImageDescriptorImpl;
 import org.jowidgets.spi.impl.swing.common.graphics.GraphicContextSpiImpl;
 import org.jowidgets.util.Assert;
@@ -66,7 +66,7 @@ public final class SwingImageFactory implements IImageFactorySpi {
 	@Override
 	public IImageSpi createImage(final IFactory<InputStream> inputStream) {
 		Assert.paramNotNull(inputStream, "inputStream");
-		final IImageDescriptor descriptor = new StreamImageDecriptorImpl(inputStream);
+		final IImageDescriptor descriptor = new StreamFactoryImageDecriptorImpl(inputStream);
 		return new ImageSpiImpl<Image>(imageHandleFactory.createImageHandle(descriptor));
 	}
 

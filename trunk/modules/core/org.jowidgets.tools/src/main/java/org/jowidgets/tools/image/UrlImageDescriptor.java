@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2014, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,39 +26,79 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.dummy.dummyui;
+package org.jowidgets.tools.image;
 
-import org.jowidgets.common.image.IImageDescriptor;
-import org.jowidgets.common.image.IStreamFactoryImageDescriptor;
-import org.jowidgets.common.image.IStreamImageDescriptor;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.jowidgets.common.image.IUrlImageDescriptor;
+import org.jowidgets.util.Assert;
 
-@SuppressWarnings("deprecation")
-public class UIDImage {
+public class UrlImageDescriptor implements IUrlImageDescriptor {
 
-	private final String description;
+	private final URL url;
 
-	public UIDImage(final String description) {
-		this.description = description;
+	/**
+	 * Creates a new UrlImageDescriptor from a file
+	 * 
+	 * @param file A File used to create the url from
+	 * 
+	 * @throws IllegalArgumentException if the url is malformed
+	 */
+	public UrlImageDescriptor(final File file) {
+		this(createUrl(file));
 	}
 
-	public UIDImage(final IImageDescriptor imageDescriptor) {
-		if (imageDescriptor instanceof IUrlImageDescriptor) {
-			this.description = "URL: " + ((IUrlImageDescriptor) imageDescriptor).getImageUrl();
+	/**
+	 * Creates a new UrlImageDescriptor
+	 * 
+	 * @param url A String defining the url
+	 * 
+	 * @throws IllegalArgumentException if the url is malformed
+	 */
+	public UrlImageDescriptor(final String url) {
+		this(createUrl(url));
+	}
+
+	/**
+	 * Creates a new UrlImageDescriptor
+	 * 
+	 * @param url The url to use, must not be null
+	 */
+	public UrlImageDescriptor(final URL url) {
+		Assert.paramNotNull(url, "url");
+		this.url = url;
+	}
+
+	private static URL createUrl(final String url) {
+		Assert.paramNotEmpty(url, "url");
+		try {
+			return new URL(url);
 		}
-		else if (imageDescriptor instanceof IStreamFactoryImageDescriptor) {
-			this.description = "INPUT STREAM: " + ((IStreamFactoryImageDescriptor) imageDescriptor).createInputStream();
-		}
-		else if (imageDescriptor instanceof IStreamImageDescriptor) {
-			this.description = "INPUT STREAM: " + ((IStreamImageDescriptor) imageDescriptor).getInputStream();
-		}
-		else {
-			throw new IllegalArgumentException("Image decriptor type '" + imageDescriptor + "' is not known");
+		catch (final MalformedURLException e) {
+			throw new IllegalArgumentException(e);
 		}
 	}
 
-	public String getDescription() {
-		return description;
+	private static URL createUrl(final File file) {
+		Assert.paramNotNull(file, "file");
+		try {
+			return file.toURI().toURL();
+		}
+		catch (final MalformedURLException e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
+
+	@Override
+	public final URL getImageUrl() {
+		return url;
+	}
+
+	@Override
+	public String toString() {
+		return "UrlImageDescriptor [url=" + url + "]";
 	}
 
 }
