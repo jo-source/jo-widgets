@@ -1,6 +1,4 @@
-## Farben{#colors}
-
-## Icons und Images{#icons_and_images}
+## Graphic Context{#graphic_context}
 
 ## Wait Animation{#wait_animation}
 
@@ -15,6 +13,12 @@
 ## Drag and Drop{#drag_and_drop}
 
 ## ObervableValues{#observable_values}
+
+
+
+
+
+
 
 # Basis und Composite Widgets 
 
@@ -47,6 +51,8 @@
 ## TextArea
 
 ## InputField{#input_field}
+
+## CollectionInputField{#collection_input_field}
 
 ## InputComposite{#input_composite}
 
@@ -155,11 +161,13 @@ TODO Beschreibung von Tree Actions in IDefaultActionFactory
 
 ## i18n{#jowidgets_i18n}
 
-## Der Toolkit Interceptor {#toolkit_interceptor}
+## Der Toolkit Interceptor{#toolkit_interceptor}
 
-## Die GenericWidgetFactory {#generic_widget_factory}
+## Die GenericWidgetFactory{#generic_widget_factory}
 
-## Widget Defaults {#widget_defaults}
+## Widget Defaults{#widget_defaults}
+
+### Widget Defaults überschreiben{#widget_defaults_override}
 
 ## Widget Dekorierung
 
@@ -167,15 +175,15 @@ TODO Beispiel welches alles Labels mit Hilfe von Textfeldern rendert, um Copy Pa
 
 ## Erstellung eigener Widget Bibliotheken{#custom_widget_libraries}
 
-## Automatisierte GUI Tests {#automated_ui_tests} 
+## Automatisierte GUI Tests{#automated_ui_tests} 
 
-## Jowidgets und RAP {#jowidgets_rap}
+## Jowidgets und RAP{#jowidgets_rap}
 
 ## Jowidgets Classloading{#jowidgets_classloading}
 
-## Jowidgets und RCP {#jowidgets_rcp}
+## Jowidgets und RCP{#jowidgets_rcp}
 
 # Anhang
 
-## Modulübersicht {#module_overview}
+## Modulübersicht{#module_overview}
 

@@ -326,7 +326,10 @@ Mit Hilfe der folgenden Methoden kann der Command gesetzt und geändert werden:
 
 	void setCommand(ICommandExecutor executor, IExceptionHandler exceptionHandler);
 
-	void setCommand(ICommandExecutor executor, IEnabledChecker enabledChecker, IExceptionHandler exceptionHandler);
+	void setCommand(
+		ICommandExecutor executor, 
+		IEnabledChecker enabledChecker, 
+		IExceptionHandler exceptionHandler);
 ~~~
 
 Die erste Methode verwendet dazu die [`ICommand`](#command_interface) Schnittstelle, die anderen Methoden erlauben das Setzen eines Command mit Hilfe der einzelnen Aspekte (Executor, EnabledChecker, ExceptionHandler). Dabei werden immer alle Aspekte neu gesetzt (die nicht angegebenen werden Aspkete werden zu `null`). Ein Command kann explizit auf `null` gesetzt werden. Die Action wird dadurch automatisch `disabled`.
@@ -383,7 +386,10 @@ Die Schnittstelle `IActionBuilder` hat die folgenden Methoden:
 
 	IActionBuilder setCommand(ICommandExecutor command, IExceptionHandler exceptionHandler);
 
-	IActionBuilder setCommand(ICommandExecutor command, IEnabledChecker enabledChecker, IExceptionHandler exceptionHandler);
+	IActionBuilder setCommand(
+		ICommandExecutor command, 
+		IEnabledChecker enabledChecker, 
+		IExceptionHandler exceptionHandler);
 
 	IActionBuilder setActionExceptionHandler(IExceptionHandler exceptionHandler);
 
