@@ -6,7 +6,7 @@ Es gibt zum einen die Möglichkeit, Images von der [`IImageFactory`](#image_fact
 
 Zudem bietet jowidgets auch die Möglichkeit, [Image Konstanten](#image_constant) zu definieren, welche über eine [Image Registry](#image_registry) registriert werden. Dadurch wird sicher gestellt, dass ein Image für eine Konstante nur ein Mal erzeugt wird, unabhängig davon, wie oft man die Konstante verwendet.  Die Definition der Konstanten und die Registrierung konkreter Images kann dabei in unterschiedlichen Modulen erfolgen, so dass zum Beispiel für unterschiedliche Implementierungen einer API auch unterschiedliche Icons verwendet werden können. 
 
-Zudem ist es möglich, Images zu einer Image Konstante beliebig [auszutauschen](#substitude_icons). In Software Unternehmen werden oft kommerzielle Icon Bibliotheken eingesetzt, welche von professionellen Grafik Designern erstellt wurden. Jowidgets verwendet für einige Widgets bereits [Icon Konstanten](#icons_small) als Default Icon. ^[Die Default Icons dafür wurden jedoch nicht von einem professionellen Grafik Designer, sondern von einem Informatiker entworfen, zumindest hat der Ersteller der Default Icons, welcher auch gleichzeitig Autor dieses Textes ist, kein Grafikdesign studiert :-)] Das [Validation Label](#validation_label) verwendet z.B. das Icon `OK` als Default Icon für den MessageType OK. Hat man nun in einer firmeninternen Icon Bibliothek ein _besseres_ Ok Icon, oder will man aus Gründen der Konsistenz, dass überall das gleiche Ok Icon verwendet wird, kann man das Icon einfach _umregistrieren_. ^[Man könnte im konkreten Fall das gleiche auch erreichen, indem man die Widget Defaults des Validation Label global [überschreibt](#widget_defaults_override), allerdings könnte es sein, dass ein Icon von mehreren Widgets (und vielleicht sogar innerhalb der firmeneigenen Widgets) verwendet wird. Das Edit Icon wird zum Beispiel von mehreren Actions der [jo-client-platform](http://code.google.com/p/jo-client-platform/) sowie vom [CollectionInputField](#collection_input_field) verwendet.]
+Zudem ist es möglich, Images zu einer Image Konstante beliebig [auszutauschen](#substitude_icons). In Software Unternehmen werden oft kommerzielle Icon Bibliotheken eingesetzt, welche von professionellen Grafik Designern erstellt wurden. Jowidgets verwendet für einige Widgets bereits [Icon Konstanten](#icons_small) als Default Icon. ^[Die konkreten Default Icons dafür wurden jedoch nicht von einem professionellen Grafik Designer, sondern von einem Informatiker entworfen, zumindest hat der Ersteller der Default Icons, welcher auch gleichzeitig Autor dieses Textes ist, kein Grafikdesign studiert :-)] Das [Validation Label](#validation_label) verwendet z.B. das Icon `OK` als Default Icon für den MessageType OK. Hat man nun in einer firmeninternen Icon Bibliothek ein _besseres_ Ok Icon, oder will man aus Gründen der Konsistenz, dass überall das gleiche Ok Icon verwendet wird, kann man das Icon einfach _umregistrieren_. ^[Man könnte im konkreten Fall das gleiche auch erreichen, indem man die Widget Defaults des Validation Label global [überschreibt](#widget_defaults_override), allerdings könnte es sein, dass ein Icon von mehreren Widgets (und vielleicht sogar innerhalb der firmeneigenen Widgets) verwendet wird. Das Edit Icon wird zum Beispiel von mehreren Actions der [jo-client-platform](http://code.google.com/p/jo-client-platform/) sowie vom [CollectionInputField](#collection_input_field) verwendet.]
 
 Mit Hilfe von [Image Providern](#image_provider) ist auch eine implizite Registrierung von Images möglich. Im Abschnitt: [Eigene Icon Bibliotheken mit Hilfe von Image Provider Enums](#icon_library_with_image_providers) wird gezeigt, wie dadurch sehr einfach eigene Icon Bibliotheken erstellt werden können.
 
@@ -234,9 +234,9 @@ Eine Image Registry Instanz bekommt man vom Toolkit mittels der folgenden Method
 Es folgt eine kurze Auflistung der wichtigsten Methoden der Schnittstelle `IImageRegistry`:
 
 
-#### Methoden zur Registrierung von Image Handles
+#### Methoden zur Registrierung und zum Austauschen von Image Handles()
 
-Die folgenden Methoden dienen einer Registrierung eines [`Image Handle`](#image_handle) zu einer [`Image Konstante`](#image_constant):
+Die folgenden Methoden dienen der Registrierung eines [`Image Handle`](#image_handle) zu einer [`Image Konstante`](#image_constant):
 
 ~~~{.java .numberLines startFrom="1"}
 	void registerImageConstant(IImageConstant key, IImageHandle imageHandle);
@@ -250,7 +250,7 @@ Die folgenden Methoden dienen einer Registrierung eines [`Image Handle`](#image_
 	void registerImageConstant(IImageConstant key, IImageProvider provider);
 ~~~
 
-Die erste Methode macht dies explizit. Diese wird normalerweise nur von der SPI Implementierung verwendet, welche das Image Handle erzeugt, zum Beispiel mit Hilfe eines [Image Descriptors](#image_descriptor), welchen man mit der Methode in Zeile 3 übergeben kann. 
+Die erste Methode macht die Registrierung explizit. Diese wird normalerweise nur von der SPI Implementierung verwendet, welche das Image Handle erzeugt, zum Beispiel mit Hilfe eines [Image Descriptors](#image_descriptor), welchen man mit der Methode in Zeile 3 übergeben kann. 
 
 Die Methode in Zeile 5 bietet eine verkürzte Schreibweise zur Verwendung eines [UrlImageDescriptor](#url_image_descriptor).
 
@@ -258,7 +258,13 @@ Die nächste Methode in Zeile 7 ersetzt ein Image durch ein anderes, welches dur
 
 Die letzte Methode in Zeile 9 ersetzt auch eine vorhandene Registrierung. Dazu wird bei Bedarf vorab der Image Provider `provider` (mit seinem eigenen Schlüssel) registriert, wenn er noch nicht vorhanden ist. Das Image, welches der Provider liefert ist dadurch sowohl für die Image Konstante `key` als auch für die Image Konstante des `provider` verfügbar. Es ist für die Ausführung der Methode nicht notwendig, dass für den Quell `key` bereits ein Handle registriert ist.
 
-Für alle Methoden gilt, dass für den `key` noch kein Image Handle registriert sein darf, welches bereits [initialisiert](#image_constant_intitialized_state) ist (nicht initialisierte aber registrierte oder verfügbare Handles stellen jedoch kein Problem dar). Würde man ein bereits initialisiertes Image aus der Registry entfernen (indem man ein neues Image Handle für den `key` setzt), ohne das bisherige, initialisierte Handle vorab zu disposen, würde man dadurch ein potentielles Speicherleck provozieren, da zum Beispiel unter SWT das native Image nicht mehr disposed werden würde, wodurch das SWT Display eine Referenz darauf behält. Würde man das alte Handle automatisch disposen, würde man einen potentiellen Folgefehler provozieren, dessen Ursache nur schwer zu finden ist, da er sich erst später auswirken kann. Man kann wie folgt prüfen, ob ein Image Handle für eine Image Konstante initialisiert ist:
+
+
+#### Austauschen von Images{#substitude_icons}
+
+Mit allen oben aufgeführten Methoden kann auch ein bereits registriertes Image Handle durch ein anderes ersetzt (substituiert) werden, jedoch nur, wenn dieses nicht  bereits [initialisiert](#image_constant_intitialized_state) wurde (nicht initialisierte aber registrierte oder verfügbare Handles stellen kein Problem dar). 
+
+Würde man ein bereits initialisiertes Image aus der Registry entfernen (indem man ein neues Image Handle für den `key` setzt), ohne das bisherige, initialisierte Handle vorab zu [disposen](#unregister_images), würde man dadurch ein potentielles Speicherleck provozieren, da zum Beispiel unter SWT das native Image nicht mehr disposed werden würde, wodurch das SWT Display eine Referenz darauf behält. Würde man das alte Handle automatisch disposen, würde man einen potentiellen Folgefehler provozieren, dessen Ursache nur schwer zu finden ist, da er sich erst später auswirken kann. Man kann wie folgt prüfen, ob ein Image Handle für eine Image Konstante initialisiert ist:
 
 ~~~
 	if (!registry.isImageInitialized(IconsSmall.DISK)) {
@@ -268,6 +274,16 @@ Für alle Methoden gilt, dass für den `key` noch kein Image Handle registriert 
 
 __Hinweis:__ Um das Problem grundsätzlich zu vermeiden, wird empfohlen, Registrierungen und Substituierungen immer mit Hilfe eines [Toolkit Interceptor](#toolkit_interceptor) durchzuführen. Dadurch ist sichergestellt, dass die Registrierung stattfindet, bevor ein Image initialisiert werden kann.
 
+Das folgende Beispiel zeigt, wie logische Icons einer Bibliothek durch konkrete ersetzt werden:
+
+~~~{.java .numberLines startFrom="1"}
+	registry.registerImageConstant(IconsSmall.OK, IconLib_16x16.TICK);
+	registry.registerImageConstant(IconsSmall.EDIT, IconLib_16x16.PENCIL);
+	registry.registerImageConstant(IconsSmall.REFRESH, IconLib_16x16.RECYCLE);
+	registry.registerImageConstant(IconsSmall.UNDO, IconLib_16x16.ARROW_UNDO);
+	registry.registerImageConstant(IconsSmall.CANCEL, IconLib_16x16.CANCEL);
+	registry.registerImageConstant(IconsSmall.ERROR, IconLib_16x16.ERROR);
+~~~
 
 
 #### Zugriff auf ein Image Handle
@@ -283,7 +299,7 @@ Diese Methode wird in der Regel nur von der SPI Implementierung verwendet, um f�
 
 
 
-#### Deregistrierung von Objekten
+#### Deregistrierung von Objekten{#unregister_images}
 
 Die folgenden Methoden können verwendet werden, um Einträge aus der Image Registry zu entfernen. 
 
@@ -468,22 +484,143 @@ Das folgende Beispiel zeigt, wie die oben definierten Icons verwendet werden kö
 	final IButton zoomOutButton = container.add(BPF.button().setIcon(SilkIcons.ZOOM_OUT));
 ~~~
 
-Anmerkung: Handelt es sich bei der Bibliothek um alle Icons einer unter Umständen größeren Icon Sammlung, kann es hilfreich sein, die Enum Klasse mit Hilfe eines Skriptes zu generieren. Für die [Silk Icons Bibliothek](#silk_icons) wurde das so gemacht.
+Dieser Ansatz eignet sich sowohl für die Erstellung [logischer-](#logical_icon_libs) als auch für die Erstellung [konkreter](#concrete_icon_libs) Icon Bibliotheken. 
+
+Anmerkung: Beinhaltet eine konkreten Icon Bibliothek alle Icons einer unter Umständen größeren Icon Sammlung, kann es hilfreich sein, die Enum Klasse mit Hilfe eines Skriptes zu generieren. Für die [Silk Icons Bibliothek](#silk_icons) wurde das so gemacht.
 
 
 
 
+### Eigene Icon Bibliotheken - Trennung von API und Implementierung
+
+Im folgenden soll beschrieben werden, wie man eine Icon Bibliothek erstellt, bei der die Definition der Image Konstanten (API) und die Bereitstellung der konkreten Icons (Implementierung) getrennt ist.
+
+Dieser Ansatz eignet sich sowohl für die Erstellung [logischer-](#logical_icon_libs), als auch für die Erstellung [konkreter](#concrete_icon_libs) Icon Bibliotheken. Die Trennung könnte wie folgt motiviert sein:
+
+* __Aufteilung API und Implementierung bei der Erstellung einer Widget Bibliothek:__ Man möchte die API und die Implementierung in unterschiedliche Module packen, eventuell weil es mehrere Implementierungen gibt. Dann gehört die Icon Konstante zur API, das konkrete Icon zur Implementierung.
+
+* __Einsparung von Resourcen im ausgelieferten Produkt:__ Eine Icon API beinhaltet sehr viele Icons einer großer Icon Sammlung. Mehrere Produkte verwenden diese Icon API, welche nur Konstanten enthält, um einen schnellen Zugriff auf die möglichen Icons zu haben. Für ein konkretes Produkt wird dann ein konkretes Plugin erstellt, welches nur die Icons registriert, welche in dem Produkt tatsächlich verwendet werden. Die Menge der verwendeten Icons und somit auch das Plugin könnte man mit einem Tool erstellen (Source Code Generierung). 
+
+#### Definition der Icon Konstanten
+
+Das folgende Beispiel zeigt die Definition der Icons für eine Audio Player Widget Bibliothek. 
+
+~~~{.java .numberLines startFrom="1"}
+public enum AudioIcons implements IImageConstant {
+
+	PLAY,
+	STOP,
+	PAUSE,
+	FORWARD,
+	REWIND,
+
+	NEXT,
+	PREVIOUS,
+	FIRST,
+	LAST,
+
+	MUTED,
+	NOT_MUTED,
+
+	LOUDSPEAKER,
+	EDIT_AUDIO_SETTINGS
+
+}
+~~~
+
+Die Icon Konstanten können dann für das Default Setup der Widgets und / oder innerhalb der Implementierung verwendet werden.
 
 
-### Eigene Icon Bibliotheken - Allgemeiner Ansatz
+#### Registrierung der konkreten Icons
+
+Die folgende Klasse verwendet die Klasse [`AbstractResourceImageInitializer`](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/core/org.jowidgets.tools/src/main/java/org/jowidgets/tools/image/AbstractResourceImageInitializer.java) für die Registrierung der konkreten Icons:
+
+~~~{.java .numberLines startFrom="1"}
+package org.mycompany.audio.impl;
+
+import org.jowidgets.common.image.IImageRegistry;
+import org.jowidgets.tools.image.AbstractResourceImageInitializer;
+
+public final class AudioIconsInitializer extends AbstractResourceImageInitializer {
+
+	public AudioIconsInitializer(final IImageRegistry registry) {
+		super(AudioIconsInitializer.class, registry, "org/mycompany/audio/impl/icons/");
+	}
+
+	@Override
+	public void doRegistration() {
+		registerResourceImage(AudioIcons.PLAY, "play.png");
+		registerResourceImage(AudioIcons.STOP, "stop.png");
+		registerResourceImage(AudioIcons.PAUSE, "pause.png");
+		registerResourceImage(AudioIcons.FORWARD, "forward.png");
+		registerResourceImage(AudioIcons.REWIND, "rewind.png");
+
+		registerResourceImage(AudioIcons.NEXT, "next.png");
+		registerResourceImage(AudioIcons.PREVIOUS, "previous.png");
+		registerResourceImage(AudioIcons.FIRST, "first.png");
+		registerResourceImage(AudioIcons.LAST, "last.png");
+
+		registerResourceImage(AudioIcons.MUTED, "muted.png");
+		registerResourceImage(AudioIcons.NOT_MUTED, "not_muted.png");
+
+		registerResourceImage(AudioIcons.LOUDSPEAKER, "loudspeaker.png");
+		registerResourceImage(AudioIcons.EDIT_AUDIO_SETTINGS, "edit_audio_settings.png");
+
+		//do this, if your are assuming that this initializer should initialize all icons
+		checkEnumAvailability(AudioIcons.class);
+	}
+
+}
+~~~
+
+Der Test in Zeile 32 ist optional und würde für den Fall, dass man z.B. vergessen hätte, ein Icon zu registrieren, eine `IllegalStateException` werfen. Wenn man zum Beispiel die Konstanten der Bibliothek erweitert, und die konkrete Registrierung vergisst, oder z.B. aus Versehen zwei mal den gleichen `key` für unterschiedliche Icons verwendet, tritt der Fehler bereits beim Starten der Applikation auf, was z.B. für einen _Smoketest_ hilfreich ist, und nicht erst später, wenn das fehlende Icon verwendet wird.  
+
+Die folgende Abbildung zeigt die zugehörigen Icon Dateien innerhalb der Resourcen der Implementierung:
+
+![Audio Icon Resourcen](images/audio_icon_resources.gif   "Audio Icon Resourcen")
 
 
+#### Registrierung mittels Toolkit Interceptor
 
+Um sicher zu Stellen, dass die Icons vor der ersten Verwendung registriert sind, wird empfohlen, die Registrierung innerhalb eines [Toolkit Interceptors](#toolkit_interceptor) durchzuführen. Das folgende Beispiel nutzt dazu die abstrakte Klasse [`AbstractToolkitInterceptorHolder`](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/core/org.jowidgets.tools/src/main/java/org/jowidgets/tools/toolkit/AbstractToolkitInterceptorHolder.java):
 
+~~~{.java .numberLines startFrom="1"}
+package org.mycompany.audio.impl;
 
+import org.jowidgets.api.toolkit.IToolkit;
+import org.jowidgets.api.toolkit.IToolkitInterceptor;
+import org.jowidgets.tools.toolkit.AbstractToolkitInterceptorHolder;
 
+public final class AudioIconsInitializerToolkitInterceptor 
+	extends AbstractToolkitInterceptorHolder {
 
-### Austauschen von Icons{#substitude_icons}
+	@Override
+	protected IToolkitInterceptor createToolkitInterceptor() {
+		return new IToolkitInterceptor() {
+			@Override
+			public void onToolkitCreate(final IToolkit toolkit) {
+				final AudioIconsInitializer initializer 
+					= new AudioIconsInitializer(toolkit.getImageRegistry());
+				initializer.doRegistration();
+			}
+		};
+	}
+
+}
+~~~
+
+Um diesen mit Hilfe des Java [ServiceLoader](http://docs.oracle.com/javase/6/docs/api/java/util/ServiceLoader.html) Mechanismus zu registrieren, kann man unter `META-INF/services` eine Datei mit dem Namen `org.jowidgets.api.toolkit.IToolkitInterceptorHolder` und dem Inhalt:
+
+~~~
+org.jowidgets.helloworld.common.AudioIconsInitializerToolkitInterceptor
+~~~
+
+ablegen. Die folgende Abbildung soll das verdeutlichen:
+
+![Icon Toolkit Interceptor](images/icon_toolkit_interceptor.gif   "Icon Toolkit Interceptor")
+
+Dadurch werden die Icons automatisch registriert, wenn man das Modul `org.mycompany.audio.impl` im Classpath hat, und zwar bevor das jowidgets Toolkit verwendet wird, da der Interceptor bei der Erzeugung des Toolkit ausgeführt wird.
+
 
 
 
@@ -577,7 +714,274 @@ Bei der Nutzung von jowidgets als UI Framework kann man somit frei entscheiden, 
 
 ### Die Image Factory{#image_factory}
 
-#### Images{#image_factory_images}
+Die Image Factory ermöglicht die Erzeugung von [Images](#image_factory_images) oder [Buffered Images](#buffered_images).
 
-#### Buffered Images{#buffered_images}
+Die Schnittstelle `IImageFactory' hat die folgenden Methoden:
+
+~~~
+	IImage createImage(File file);
+
+	IImage createImage(URL url);
+
+	IImage createImage(IFactory<InputStream> inputStream);
+
+	IBufferedImage createBufferedImage(int width, int height);
+~~~
+
+
+
+
+
+#### Image Factory Instanz
+
+Eine Instanz erhält man vom Toolkit mit Hilfe der folgenden Methode:
+
+~~~
+	IImageFactory getImageFactory();
+~~~
+
+
+
+
+
+#### Die Schnittstelle IImage{#image_factory_images}
+
+Die Schnittstelle `IImage` hat die folgenden Methoden:
+
+~~~
+	Dimension getSize();
+
+	void initialize();
+
+	void dispose();
+	
+	boolean isDisposed();
+	
+	void addDisposeListener(IDisposeListener listener);
+
+	void removeDisposeListener(IDisposeListener listener);
+~~~
+
+Ein `IImage` ist von [`IImageConstant`](#image_constant) abgeleitet, und kann somit überall verwendet werden, wo Image Konstanten verwendet werden können.^[Hier macht es sich besonders unangenehm bemerkbar, dass der Name `IImageConstant` und nicht `IImageKey` gewählt wurde, da ein `IImage` nicht zwingend eine Konstante sein muss und das `dispose()` explizit zum Vertrag gehört.]
+
+Wird ein Image (oder [Buffered Image](#buffered_images)) von der Image Factory erzeugt, wird es automatisch in der [Image Registry](#image_registry) registriert, und ist somit für die Verwendung in Widgets unmittelbar verfügbar. 
+
+Das native Image (z.B. `org.eclipse.swt.graphics.Image`) wird erst erzeugt, wenn es einem Widget zugewiesen, oder die Methode `getSize()` oder `initialize()` aufgerufen wurde. Wird das Image mehrfach (für unterschiedliche Widgets) verwendet, wird trotzdem nur eine native Image Instanz erzeugt. 
+
+Wird die `dispose()` Methode auf dem Image aufgerufen, wird das Image automatisch aus der [Image Registry](#image_registry) entfernt und das zugehörige native Image disposed, falls es bereits initialisiert wurde. Das gleiche passiert, wenn auf der [Image Registry](#image_registry) die Methode `unRegisterImage(...)` für das Image aufgerufen wird. In beiden Fällen führen anschließend alle Operation auf dem Image (außer `isDisposed()`) zu einem Fehler.
+
+Images können in jedem beliebigen Thread erzeugt werden. Für Images, welche explizit außerhalb des Ui Thread geladen werden sollen, sollte man darauf achten, dass _ohne_ expliziten Aufruf der Methode `initialize()` nur ein [Image Handle](#image_handle) erzeugt wird, und das eigentliche Laden erst bei der ersten Verwendung im UI Thread stattfindet. 
+
+
+
+
+
+#### Die Schnittstelle IBufferedImage{#buffered_images}
+
+Die Schnittstelle `IBufferedImage` ist von `IImage` abgeleitet. Zusätzlich zu den geerbten Methoden hat ein Bufferd Image die folgende weitere Methode:
+
+~~~
+	IGraphicContext getGraphicContext();
+~~~
+
+Ein Buffered Image liefert einen [Graphic Context](#graphic_context) zum Zeichnen des Bildes.
+
+
+
+
+#### Das ImageIconSnipped
+
+Das [`ImageIconSnipped`](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/ImageIconSnipped.java) zeigt die Verwendung eines Images in Verbindung mit einem [Icon Widget](#icon_widget):
+
+~~~{.java .numberLines startFrom="1"}
+public final class ImageIconSnipped implements IApplication {
+
+	@Override
+	public void start(final IApplicationLifecycle lifecycle) {
+
+		//create the root frame
+		final IFrame frame = Toolkit.createRootFrame(
+			BPF.frame("Image Icon Snipped"), 
+			lifecycle);
+		frame.setLayout(FillLayout.get());
+
+		//create a scroll composite
+		final IScrollComposite container = frame.add(BPF.scrollComposite());
+		container.setLayout(FillLayout.get());
+
+		//create a image from url
+		String url = "http://www.jowidgets.org/docu/images/widgets_hierarchy_1.gif";
+		final IImage image = ImageFactory.createImage(UrlFactory.create(url));
+
+		//use the icon widget to display the image
+		final IIcon imageIcon = container.add(BPF.icon(image));
+
+		//remove the icon on double click from its container to test dispose
+		imageIcon.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDoubleClicked(final IMouseButtonEvent mouseEvent) {
+				imageIcon.dispose();
+				container.layoutLater();
+			}
+		});
+
+		//dispose the image if it was removed from its container
+		imageIcon.addDisposeListener(new IDisposeListener() {
+			@Override
+			public void onDispose() {
+				image.dispose();
+				//CHECKSTYLE:OFF
+				System.out.println("DISPOSED IMAGE");
+				//CHECKSTYLE:ON
+			}
+		});
+
+		//set the root frame visible
+		frame.setVisible(true);
+	}
+}
+~~~
+
+Das `image` wird auf einem [Icon Widget](#icon_widget) gesetzt (Zeile 21). Auf dem Icon Widget wird ein Listener registriert, welcher dieses bei einem Doppeklick aus seinem Container entfernt, wodurch es disposed wird. 
+
+In Zeile 16 bis 18 könnte man zum Beispiel auch das Folgende schreiben, um das Image aus einem File einzulesen:
+
+~~~{.java .numberLines startFrom="1"}
+	//create a image from file
+	final String path = "C:/projects/jo-widgets/trunk/docu/images/widgets_hierarchy_1.gif";
+	final IImage image = ImageFactory.createImage(new File(path));
+~~~
+
+#### Das ImageCanvasSnipped
+
+Das [`ImageCanvasSnipped`](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/ImageCanvasSnipped.java) zeigt die Verwendung eines Images in Verbindung mit einem [Canvas](#canvas_widget):
+
+~~~{.java .numberLines startFrom="1"}
+public final class ImageCanvasSnipped implements IApplication {
+
+	@Override
+	public void start(final IApplicationLifecycle lifecycle) {
+
+		//create the root frame
+		final IFrame frame = Toolkit.createRootFrame(BPF.frame("Image Canvas Snipped"), lifecycle);
+		frame.setLayout(FillLayout.get());
+
+		//create a scroll composite
+		final IScrollComposite container = frame.add(BPF.scrollComposite());
+		container.setLayout(FillLayout.get());
+
+		//create a image from url
+		final String url = "http://www.jowidgets.org/docu/images/widgets_hierarchy_1.gif";
+		final IImage image = ImageFactory.createImage(UrlFactory.create(url));
+
+		//use a canvas to display the image
+		final ICanvas canvas = container.add(BPF.canvas());
+
+		//set the preferred size of the canvas to the image size
+		canvas.setPreferredSize(image.getSize());
+
+		//add a paint listener to draw the image and an arrow
+		canvas.addPaintListener(new IPaintListener() {
+			@Override
+			public void paint(final IPaintEvent event) {
+				final IGraphicContext gc = event.getGraphicContext();
+
+				//draw the image
+				gc.drawImage(image);
+
+				//draw with green color
+				gc.setForegroundColor(Colors.GREEN);
+
+				//define a polygon that shapes an arrow
+				final Point p1 = new Point(438, 205);
+				final Point p2 = new Point(464, 205);
+				final Point p3 = new Point(464, 199);
+				final Point p4 = new Point(486, 211);
+				final Point p5 = new Point(464, 223);
+				final Point p6 = new Point(464, 217);
+				final Point p7 = new Point(438, 217);
+				final Point[] polygon = new Point[] {p1, p2, p3, p4, p5, p6, p7, p1};
+
+				//fill the polygon 
+				gc.fillPolygon(polygon);
+			}
+		});
+
+		//set the root frame visible
+		frame.setVisible(true);
+	}
+}
+~~~
+
+Das Image wird mit Hilfe eine Canvas gezeichnet (Zeile 31). Anschließend wird auf der Grafik ein grüner Pfeil, welcher durch ein Polygon definiert wird, gezeichnet (Zeile 47). Die folgende Abbildung zeigt das Ergebnis:
+
+![ImageCanvasSnipped](images/image_canvas_snipped.gif "ImageCanvasSnipped")
+
+#### Das BufferedImageSnipped
+
+Das [`BufferedImageSnipped`](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/BufferedImageSnipped.java) zeigt die Verwendung eines [Buffered Image](#buffered_images):
+
+~~~{.java .numberLines startFrom="1"}
+public final class BufferedImageSnipped implements IApplication {
+
+	@Override
+	public void start(final IApplicationLifecycle lifecycle) {
+
+		//create the root frame
+		final IFrameBluePrint frameBp = BPF.frame("Buffered Image Snipped");
+		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
+		frame.setSize(300, 200);
+		frame.setBackgroundColor(Colors.WHITE);
+		frame.setLayout(FillLayout.builder().margin(10).build());
+
+		//create a arrow buffered image
+		final IBufferedImage image = createArrowImage();
+
+		//create a label using the buffered image as icon
+		frame.add(BPF.label().setIcon(image).setText("Hello world"));
+
+		//set the root frame visible
+		frame.setVisible(true);
+	}
+
+	private static IBufferedImage createArrowImage() {
+		//create a buffered image
+		final IBufferedImage image = ImageFactory.createBufferedImage(52, 26);
+		final IGraphicContext gc = image.getGraphicContext();
+
+		//use anti aliasing
+		gc.setAntiAliasing(AntiAliasing.ON);
+
+		//define a polygon that shapes an arrow
+		final Point p1 = new Point(0, 6);
+		final Point p2 = new Point(26, 6);
+		final Point p3 = new Point(26, 0);
+		final Point p4 = new Point(48, 12);
+		final Point p5 = new Point(26, 24);
+		final Point p6 = new Point(26, 18);
+		final Point p7 = new Point(0, 18);
+		final Point[] polygon = new Point[] {p1, p2, p3, p4, p5, p6, p7, p1};
+
+		//use white background for the image
+		gc.setBackgroundColor(Colors.WHITE);
+		gc.clear();
+
+		//draw with green color
+		gc.setForegroundColor(Colors.GREEN);
+
+		//fill the polygon 
+		gc.fillPolygon(polygon);
+
+		return image;
+	}
+}
+~~~
+
+Die folgende Abbildung zeigt das Ergebnis:
+
+![BufferedImageSnipped](images/buffered_image_snipped.gif "BufferedImageSnipped")
+
+
+
+
 

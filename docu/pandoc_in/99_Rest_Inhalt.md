@@ -40,7 +40,7 @@
 
 ## Label
 
-## Icon
+## Icon{#icon_widget}
 
 ## Button{#button_widget}
 
@@ -88,9 +88,9 @@ TODO Beschreibung von Tree Actions in IDefaultActionFactory
 
 ## ProgressBar
 
-## Levelmeter {#levelmeter_widget}
+## Levelmeter{#levelmeter_widget}
 
-## Canvas
+## Canvas{#canvas_widget}
 
 ## Toolbar{#toolbar_widget}
 
