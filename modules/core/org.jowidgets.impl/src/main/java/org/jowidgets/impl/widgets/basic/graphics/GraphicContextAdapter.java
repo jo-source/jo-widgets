@@ -116,6 +116,17 @@ public final class GraphicContextAdapter implements IGraphicContext {
 	}
 
 	@Override
+	public void clearRectangle(final Rectangle bounds) {
+		Assert.paramNotNull(bounds, "bounds");
+		clearRectangle(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+	}
+
+	@Override
+	public void clear() {
+		clearRectangle(getBounds());
+	}
+
+	@Override
 	public void drawPoint(final int x, final int y) {
 		contextSpi.drawPoint(x, y);
 	}

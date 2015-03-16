@@ -125,6 +125,16 @@ public class GraphicContextWrapper implements IGraphicContext {
 	}
 
 	@Override
+	public void clearRectangle(final Rectangle bounds) {
+		original.clearRectangle(bounds);
+	}
+
+	@Override
+	public void clear() {
+		original.clear();
+	}
+
+	@Override
 	public void clearRectangle(final int x, final int y, final int width, final int height) {
 		original.clearRectangle(x, y, width, height);
 	}
