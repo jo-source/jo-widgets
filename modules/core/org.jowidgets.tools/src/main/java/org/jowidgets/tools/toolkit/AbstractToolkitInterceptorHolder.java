@@ -33,20 +33,33 @@ import org.jowidgets.api.toolkit.IToolkitInterceptorHolder;
 
 public abstract class AbstractToolkitInterceptorHolder implements IToolkitInterceptorHolder {
 
-	public static final int DEFAULT_ORDER = 2;
+	public static final int DEFAULT_ORDER = IToolkitInterceptorHolder.DEFAULT_ORDER;
 
 	private final int order;
 
 	private IToolkitInterceptor toolkitInterceptor;
 
+	/**
+	 * Creates a new instance with default order
+	 */
 	protected AbstractToolkitInterceptorHolder() {
 		this(DEFAULT_ORDER);
 	}
 
+	/**
+	 * Creates a new instance with given order
+	 * 
+	 * @param order The order of this holder to use
+	 */
 	protected AbstractToolkitInterceptorHolder(final int order) {
 		this.order = order;
 	}
 
+	/**
+	 * Creates the toolkit interceptor. This method will only be invoked once.
+	 * 
+	 * @return A new toolkit interceptor, never null
+	 */
 	protected abstract IToolkitInterceptor createToolkitInterceptor();
 
 	@Override
