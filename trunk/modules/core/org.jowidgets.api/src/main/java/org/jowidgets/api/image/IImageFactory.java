@@ -28,12 +28,28 @@
 
 package org.jowidgets.api.image;
 
+import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 
 import org.jowidgets.util.IFactory;
 
 public interface IImageFactory {
+
+	/**
+	 * Creates an image from an file.
+	 * 
+	 * The resulting image is also an image constant that will be registered at the image registry,
+	 * so it can be used as image constant, until the image will be disposed.
+	 * 
+	 * Remark: If the resulting image will be disposed, it will be unregistered from
+	 * the image registry
+	 * 
+	 * @param file The file that holds the image
+	 * 
+	 * @return The created image
+	 */
+	IImage createImage(File file);
 
 	/**
 	 * Creates an image from an url.

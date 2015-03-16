@@ -28,6 +28,7 @@
 
 package org.jowidgets.impl.image;
 
+import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 
@@ -49,6 +50,17 @@ public final class DefaultImageFactoryImpl implements IImageFactory {
 		Assert.paramNotNull(imageRegistry, "imageRegistry");
 		this.imageRegistry = imageRegistry;
 		this.factorySpi = factorySpi;
+	}
+
+	@Override
+	public IImage createImage(final File file) {
+		Assert.paramNotNull(file, "file");
+		try {
+			return createImage(file.toURI().toURL());
+		}
+		catch (final Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override
