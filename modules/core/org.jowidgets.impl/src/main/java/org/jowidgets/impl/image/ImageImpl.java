@@ -55,6 +55,12 @@ class ImageImpl extends DisposableDelegate implements IImage {
 	}
 
 	@Override
+	public void initialize() {
+		//for calculating the size, the image must be initialized
+		getSize();
+	}
+
+	@Override
 	public void dispose() {
 		super.dispose();
 		if (imageRegistry.getImageHandle(this) != null) {
