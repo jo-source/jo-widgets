@@ -27,8 +27,6 @@
  */
 package org.jowidgets.examples.common.snipped;
 
-import java.io.File;
-
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.controller.IPaintEvent;
 import org.jowidgets.api.graphics.IGraphicContext;
@@ -44,6 +42,7 @@ import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.graphics.Point;
 import org.jowidgets.tools.widgets.blueprint.BPF;
+import org.jowidgets.util.url.UrlFactory;
 
 public final class ImageCanvasSnipped implements IApplication {
 
@@ -59,8 +58,8 @@ public final class ImageCanvasSnipped implements IApplication {
 		container.setLayout(FillLayout.get());
 
 		//create a image from url
-		final String path = "C:/projects/jo/jo-widgets/repo/trunk/docu/images/widgets_hierarchy_1.gif";
-		final IImage image = ImageFactory.createImage(new File(path));
+		final String url = "http://www.jowidgets.org/docu/images/widgets_hierarchy_1.gif";
+		final IImage image = ImageFactory.createImage(UrlFactory.create(url));
 
 		//use a canvas to display the image
 		final ICanvas canvas = container.add(BPF.canvas());
