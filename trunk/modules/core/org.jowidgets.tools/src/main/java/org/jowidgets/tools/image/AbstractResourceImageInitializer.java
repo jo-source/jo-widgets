@@ -42,6 +42,14 @@ public abstract class AbstractResourceImageInitializer {
 	private final IImageRegistry imageRegistry;
 	private final String resourcesPath;
 
+	/**
+	 * Creates a new instance
+	 * 
+	 * @param resourceClass A class that has the same class loader then the resources that holds the image file, e.g. the concrete
+	 *            class that is derived from this class
+	 * @param imageRegistry The image registry to use
+	 * @param resourcesPath The root path of the resources
+	 */
 	public AbstractResourceImageInitializer(
 		final Class<?> resourceClass,
 		final IImageRegistry imageRegistry,
@@ -49,6 +57,13 @@ public abstract class AbstractResourceImageInitializer {
 		this(resourceClass.getClassLoader(), imageRegistry, resourcesPath);
 	}
 
+	/**
+	 * Creates a new instance
+	 * 
+	 * @param resourceClassLoader The class loader to access the resources that holds the image file
+	 * @param imageRegistry The image registry to use
+	 * @param resourcesPath The root path of the resources
+	 */
 	public AbstractResourceImageInitializer(
 		final ClassLoader resourceClassLoader,
 		final IImageRegistry imageRegistry,
@@ -63,18 +78,35 @@ public abstract class AbstractResourceImageInitializer {
 		this.resourcesPath = resourcesPath;
 	}
 
+	/**
+	 * Register a image from the resources
+	 * 
+	 * @param key The key of the image to register
+	 * @param resourceName The name of the resource (will be appended to the resource path)
+	 */
 	protected void registerResourceImage(final IImageConstant key, final String resourceName) {
 		Assert.paramNotNull(key, "resourceName");
 		final URL url = resourceClassLoader.getResource(resourcesPath + resourceName);
 		imageRegistry.registerImageConstant(key, url);
 	}
 
+	/**
+	 * Registers a image with help of another image key
+	 * 
+	 * @param key The key to register
+	 * @param substitude The (already available) image to use as substitude
+	 */
 	protected void registerSubstitudeIcon(final IImageConstant key, final IImageConstant substitude) {
 		Assert.paramNotNull(key, "resourceName");
 		Assert.paramNotNull(substitude, "substitude");
 		imageRegistry.registerImageConstant(key, substitude);
 	}
 
+	/**
+	 * Check if all keys of the given enum are available in the registry
+	 * 
+	 * @param imageEnumType The enum to checks
+	 */
 	protected void checkEnumAvailability(final Class<? extends Enum<? extends IImageConstant>> imageEnumType) {
 		Assert.paramNotNull(imageEnumType, "imageEnumType");
 		final List<IImageConstant> unavailableKeys = getUnavailableKeys(imageEnumType);
@@ -85,6 +117,13 @@ public abstract class AbstractResourceImageInitializer {
 		}
 	}
 
+	/**
+	 * Gets all unavailable keys of a given enum
+	 * 
+	 * @param imageEnumType The enum to get the unavailable keys for
+	 * 
+	 * @return The unavailable keys, never null but may be empty if all keys are available
+	 */
 	protected List<IImageConstant> getUnavailableKeys(final Class<? extends Enum<? extends IImageConstant>> imageEnumType) {
 		final List<IImageConstant> result = new LinkedList<IImageConstant>();
 		for (final Enum<? extends IImageConstant> key : imageEnumType.getEnumConstants()) {
@@ -96,6 +135,9 @@ public abstract class AbstractResourceImageInitializer {
 		return result;
 	}
 
-	public abstract void initialize();
+	/**
+	 * Does the image registration
+	 */
+	public abstract void doRegistration();
 
 }
