@@ -27,8 +27,6 @@
  */
 package org.jowidgets.examples.common.snipped;
 
-import java.net.URL;
-
 import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.image.IImage;
 import org.jowidgets.api.image.ImageFactory;
@@ -58,8 +56,8 @@ public final class ImageIconSnipped implements IApplication {
 		container.setLayout(FillLayout.get());
 
 		//create a image
-		final URL url = UrlFactory.create("http://www.jowidgets.org/docu/images/widgets_hierarchy_1.gif");
-		final IImage image = ImageFactory.createImage(url);
+		final String url = "http://www.jowidgets.org/docu/images/widgets_hierarchy_1.gif";
+		final IImage image = ImageFactory.createImage(UrlFactory.create(url));
 
 		//use the icon widget to display the image
 		final IIcon imageIcon = container.add(BPF.icon(image));
@@ -72,7 +70,7 @@ public final class ImageIconSnipped implements IApplication {
 			}
 		});
 
-		//dispose the icon if it is no longer used
+		//dispose the image if it was removed from its container
 		imageIcon.addDisposeListener(new IDisposeListener() {
 			@Override
 			public void onDispose() {
