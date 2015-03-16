@@ -40,4 +40,9 @@ public interface IImage extends IImageCommon, IDisposeObservable {
 	 */
 	boolean isDisposed();
 
+	/**
+	 * Initializes the image, if not already done.
+	 */
+	void initialize();
+
 }
