@@ -80,8 +80,7 @@ public abstract class AbstractFrameSpiWrapper extends AbstractWindowSpiWrapper i
 	@Override
 	public void pack() {
 		if (layouter != null) {
-			super.pack();
-			setSize(computeDecoratedSize(layouter.getPreferredSize()));
+			setSize(layouter.getPreferredSize());
 		}
 		else {
 			super.pack();
