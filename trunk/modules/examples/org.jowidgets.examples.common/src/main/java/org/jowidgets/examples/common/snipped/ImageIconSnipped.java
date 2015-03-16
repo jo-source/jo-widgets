@@ -27,8 +27,6 @@
  */
 package org.jowidgets.examples.common.snipped;
 
-import java.io.File;
-
 import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.image.IImage;
 import org.jowidgets.api.image.ImageFactory;
@@ -42,6 +40,7 @@ import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.widgets.controller.IMouseButtonEvent;
 import org.jowidgets.tools.controller.MouseAdapter;
 import org.jowidgets.tools.widgets.blueprint.BPF;
+import org.jowidgets.util.url.UrlFactory;
 
 public final class ImageIconSnipped implements IApplication {
 
@@ -57,8 +56,8 @@ public final class ImageIconSnipped implements IApplication {
 		container.setLayout(FillLayout.get());
 
 		//create a image from url
-		final String path = "C:/projects/jo/jo-widgets/repo/trunk/docu/images/widgets_hierarchy_1.gif";
-		final IImage image = ImageFactory.createImage(new File(path));
+		final String url = "http://www.jowidgets.org/docu/images/widgets_hierarchy_1.gif";
+		final IImage image = ImageFactory.createImage(UrlFactory.create(url));
 
 		//use the icon widget to display the image
 		final IIcon imageIcon = container.add(BPF.icon(image));
@@ -68,6 +67,7 @@ public final class ImageIconSnipped implements IApplication {
 			@Override
 			public void mouseDoubleClicked(final IMouseButtonEvent mouseEvent) {
 				imageIcon.dispose();
+				container.layoutLater();
 			}
 		});
 
