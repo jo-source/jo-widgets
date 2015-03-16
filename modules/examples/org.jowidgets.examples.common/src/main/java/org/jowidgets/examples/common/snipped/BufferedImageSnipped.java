@@ -35,11 +35,10 @@ import org.jowidgets.api.layout.FillLayout;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
-import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
+import org.jowidgets.common.graphics.AntiAliasing;
 import org.jowidgets.common.graphics.Point;
-import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class BufferedImageSnipped implements IApplication {
@@ -54,17 +53,23 @@ public final class BufferedImageSnipped implements IApplication {
 		frame.setBackgroundColor(Colors.WHITE);
 		frame.setLayout(FillLayout.builder().margin(10).build());
 
+		//create a arrow buffered image
+		final IBufferedImage image = createArrowImage();
+
+		//create a label using the buffered image as icon
+		frame.add(BPF.label().setIcon(image).setText("Hello world"));
+
+		//set the root frame visible
+		frame.setVisible(true);
+	}
+
+	private static IBufferedImage createArrowImage() {
 		//create a buffered image
 		final IBufferedImage image = ImageFactory.createBufferedImage(52, 26);
 		final IGraphicContext gc = image.getGraphicContext();
-		final Rectangle bounds = gc.getBounds();
 
-		//use white background for the image
-		gc.setBackgroundColor(Colors.WHITE);
-		gc.clearRectangle(0, 0, bounds.getWidth(), bounds.getHeight());
-
-		//draw with green color
-		gc.setForegroundColor(Colors.GREEN);
+		//use anti aliasing
+		gc.setAntiAliasing(AntiAliasing.ON);
 
 		//define a polygon that shapes an arrow
 		final Point p1 = new Point(0, 6);
@@ -76,17 +81,16 @@ public final class BufferedImageSnipped implements IApplication {
 		final Point p7 = new Point(0, 18);
 		final Point[] polygon = new Point[] {p1, p2, p3, p4, p5, p6, p7, p1};
 
+		//use white background for the image
+		gc.setBackgroundColor(Colors.WHITE);
+		gc.clear();
+
+		//draw with green color
+		gc.setForegroundColor(Colors.GREEN);
+
 		//fill the polygon 
 		gc.fillPolygon(polygon);
 
-		//create a label using the buffered image as icon
-		final ILabelBluePrint labelBp = BPF.label();
-		labelBp.setText("Hello world");
-		labelBp.setIcon(image);
-		labelBp.setBackgroundColor(Colors.WHITE);
-		frame.add(labelBp);
-
-		//set the root frame visible
-		frame.setVisible(true);
+		return image;
 	}
 }
