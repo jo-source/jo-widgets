@@ -50,7 +50,7 @@ public final class ImageIconSnipped implements IApplication {
 	public void start(final IApplicationLifecycle lifecycle) {
 
 		//create the root frame
-		final IFrame frame = Toolkit.createRootFrame(BPF.frame("Image Icon Demo"), lifecycle);
+		final IFrame frame = Toolkit.createRootFrame(BPF.frame("Image Icon Snipped"), lifecycle);
 		frame.setLayout(FillLayout.get());
 
 		//create a scroll composite
