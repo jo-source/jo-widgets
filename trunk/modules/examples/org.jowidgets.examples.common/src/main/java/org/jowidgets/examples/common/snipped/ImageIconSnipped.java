@@ -27,6 +27,8 @@
  */
 package org.jowidgets.examples.common.snipped;
 
+import java.io.File;
+
 import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.image.IImage;
 import org.jowidgets.api.image.ImageFactory;
@@ -40,7 +42,6 @@ import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.widgets.controller.IMouseButtonEvent;
 import org.jowidgets.tools.controller.MouseAdapter;
 import org.jowidgets.tools.widgets.blueprint.BPF;
-import org.jowidgets.util.url.UrlFactory;
 
 public final class ImageIconSnipped implements IApplication {
 
@@ -55,9 +56,9 @@ public final class ImageIconSnipped implements IApplication {
 		final IScrollComposite container = frame.add(BPF.scrollComposite());
 		container.setLayout(FillLayout.get());
 
-		//create a image
-		final String url = "http://www.jowidgets.org/docu/images/widgets_hierarchy_1.gif";
-		final IImage image = ImageFactory.createImage(UrlFactory.create(url));
+		//create a image from url
+		final String path = "C:/projects/jo/jo-widgets/repo/trunk/docu/images/widgets_hierarchy_1.gif";
+		final IImage image = ImageFactory.createImage(new File(path));
 
 		//use the icon widget to display the image
 		final IIcon imageIcon = container.add(BPF.icon(image));
