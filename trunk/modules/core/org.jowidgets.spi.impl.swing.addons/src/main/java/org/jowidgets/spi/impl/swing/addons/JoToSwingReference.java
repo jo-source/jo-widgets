@@ -26,27 +26,29 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.swt.addons;
+package org.jowidgets.spi.impl.swing.addons;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.util.Assert;
 
-/**
- * @deprecated Use {@link JoToSwtReference} instead
- */
-@Deprecated
-public final class JoToSwt {
+public final class JoToSwingReference {
 
-	private JoToSwt() {}
+	private JoToSwingReference() {}
 
-	public static Composite convert(final IComposite composite) {
-		return JoToSwtReference.getUiReference(composite);
+	public static JPanel getUiReference(final IComposite composite) {
+		Assert.paramNotNull(composite, "composite");
+		return (JPanel) composite.getUiReference();
 	}
 
-	public static Shell convert(final IFrame frame) {
-		return JoToSwtReference.getUiReference(frame);
+	public static JFrame getUiReference(final IFrame frame) {
+		Assert.paramNotNull(frame, "frame");
+		return (JFrame) frame.getUiReference();
 	}
+
+	//TODO ANYBODY may feel free to add more convert methods
 
 }

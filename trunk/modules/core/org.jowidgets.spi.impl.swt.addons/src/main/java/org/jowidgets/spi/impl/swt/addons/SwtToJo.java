@@ -28,41 +28,25 @@
 
 package org.jowidgets.spi.impl.swt.addons;
 
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
-import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.tools.powo.JoComposite;
 import org.jowidgets.tools.powo.JoFrame;
-import org.jowidgets.util.Assert;
 
+/**
+ * @deprecated Use {@link SwtToJoWrapper} instead
+ */
+@Deprecated
 public final class SwtToJo {
 
 	private SwtToJo() {}
 
 	public static JoComposite create(final Composite composite) {
-		Assert.paramNotNull(composite, "composite");
-		final JoComposite result = JoComposite.toJoComposite(Toolkit.getWidgetWrapperFactory().createComposite(composite));
-		composite.addDisposeListener(new DisposeListener() {
-			@Override
-			public void widgetDisposed(final DisposeEvent e) {
-				result.dispose();
-			}
-		});
-		return result;
+		return JoComposite.toJoComposite(SwtToJoWrapper.create(composite));
 	}
 
 	public static JoFrame create(final Shell shell) {
-		Assert.paramNotNull(shell, "shell");
-		final JoFrame result = JoFrame.toJoFrame(Toolkit.getWidgetWrapperFactory().createFrame(shell));
-		shell.addDisposeListener(new DisposeListener() {
-			@Override
-			public void widgetDisposed(final DisposeEvent e) {
-				result.dispose();
-			}
-		});
-		return result;
+		return JoFrame.toJoFrame(SwtToJoWrapper.create(shell));
 	}
 
 	//TODO ANYBODY may feel free to add more create methods

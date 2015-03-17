@@ -28,25 +28,62 @@
 
 package org.jowidgets.spi.impl.swt.addons;
 
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.util.Assert;
 
 /**
- * @deprecated Use {@link JoToSwtReference} instead
+ * Creates wrapper for native swt widgets
  */
-@Deprecated
-public final class JoToSwt {
+public final class SwtToJoWrapper {
 
-	private JoToSwt() {}
+	private SwtToJoWrapper() {}
 
-	public static Composite convert(final IComposite composite) {
-		return JoToSwtReference.getUiReference(composite);
+	/**
+	 * Creates a IComposite Wrapper with help of a swt composite.
+	 * 
+	 * The IComposite will be disposed if the swt composite will be disposed
+	 * 
+	 * @param composite The swt composite to create the IComposite for, must not be null
+	 * 
+	 * @return A IComposite Wrapper
+	 */
+	public static IComposite create(final Composite composite) {
+		Assert.paramNotNull(composite, "composite");
+		final IComposite result = Toolkit.getWidgetWrapperFactory().createComposite(composite);
+		composite.addDisposeListener(new DisposeListener() {
+			@Override
+			public void widgetDisposed(final DisposeEvent e) {
+				result.dispose();
+			}
+		});
+		return result;
 	}
 
-	public static Shell convert(final IFrame frame) {
-		return JoToSwtReference.getUiReference(frame);
+	/**
+	 * Creates a IFrame Wrapper with help of a swt shell.
+	 * 
+	 * The IFrame will be disposed if the swt shell will be disposed
+	 * 
+	 * @param shell The swt shell to create the IComposite for, must not be null
+	 * 
+	 * @return A IFrame Wrapper
+	 */
+	public static IFrame create(final Shell shell) {
+		Assert.paramNotNull(shell, "shell");
+		final IFrame result = Toolkit.getWidgetWrapperFactory().createFrame(shell);
+		shell.addDisposeListener(new DisposeListener() {
+			@Override
+			public void widgetDisposed(final DisposeEvent e) {
+				result.dispose();
+			}
+		});
+		return result;
 	}
 
 }

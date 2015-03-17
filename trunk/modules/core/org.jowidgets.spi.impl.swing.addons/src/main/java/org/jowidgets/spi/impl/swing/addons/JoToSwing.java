@@ -33,22 +33,21 @@ import javax.swing.JPanel;
 
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IFrame;
-import org.jowidgets.util.Assert;
 
+/**
+ * @deprecated Use {@link JoToSwingReference} instead
+ */
+@Deprecated
 public final class JoToSwing {
 
 	private JoToSwing() {}
 
 	public static JPanel convert(final IComposite composite) {
-		Assert.paramNotNull(composite, "composite");
-		return (JPanel) composite.getUiReference();
+		return JoToSwingReference.getUiReference(composite);
 	}
 
 	public static JFrame convert(final IFrame frame) {
-		Assert.paramNotNull(frame, "frame");
-		return (JFrame) frame.getUiReference();
+		return JoToSwingReference.getUiReference(frame);
 	}
-
-	//TODO ANYBODY may feel free to add more convert methods
 
 }

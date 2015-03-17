@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2015, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -32,21 +32,39 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.util.Assert;
 
 /**
- * @deprecated Use {@link JoToSwtReference} instead
+ * Gets a (casted) swt ui reference from a jowidgets widget
  */
-@Deprecated
-public final class JoToSwt {
+public final class JoToSwtReference {
 
-	private JoToSwt() {}
+	private JoToSwtReference() {}
 
-	public static Composite convert(final IComposite composite) {
-		return JoToSwtReference.getUiReference(composite);
+	/**
+	 * Gets the swt composite for a jowidgets composite
+	 * 
+	 * @param composite The jowidgets composite to get the swt composite for
+	 * 
+	 * @return The swt composite, never null
+	 */
+	public static Composite getUiReference(final IComposite composite) {
+		Assert.paramNotNull(composite, "composite");
+		return (Composite) composite.getUiReference();
 	}
 
-	public static Shell convert(final IFrame frame) {
-		return JoToSwtReference.getUiReference(frame);
+	/**
+	 * Gets the swt shell reference for a jowidgets frame
+	 * 
+	 * @param frame The jowidgets frame to get the swt shell for
+	 * 
+	 * @return the swt shell, never null
+	 */
+	public static Shell getUiReference(final IFrame frame) {
+		Assert.paramNotNull(frame, "frame");
+		return (Shell) frame.getUiReference();
 	}
+
+	//TODO ANYBODY may feel free to add more convert methods
 
 }
