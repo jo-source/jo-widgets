@@ -30,10 +30,43 @@ package org.jowidgets.util.binding;
 
 import org.jowidgets.util.IObservableValue;
 
+/**
+ * Creates a binding for observable values
+ */
 public interface IBind {
 
+	/**
+	 * Binds two observable values with same type bidirectional.
+	 * 
+	 * If the source and destination value differs when bound,
+	 * the destination value becomes the source value.
+	 * 
+	 * If the source value changes later, the destination value will be changed to the source.
+	 * If the destination value changes later, the source value will be changed to the destination.
+	 * 
+	 * @param source The source value to bind, must not be null
+	 * @param destination The destination value to bind, must not be null
+	 * 
+	 * @return The binding reference for the created binding
+	 */
 	<VALUE_TYPE> IBinding bind(IObservableValue<VALUE_TYPE> source, IObservableValue<VALUE_TYPE> destination);
 
+	/**
+	 * Binds two observable values with potentially different type bidirectional using a
+	 * binding converter.
+	 * 
+	 * If the source and destination value differs when bound,
+	 * the destination value becomes the source value.
+	 * 
+	 * If the source value changes later, the destination value will be changed to the source.
+	 * If the destination value changes later, the source value will be changed to the destination.
+	 * 
+	 * @param source The source value to bind, must not be null
+	 * @param destination The destination value to bind, must not be null
+	 * @param converter The binding converter to use, must not be null
+	 * 
+	 * @return The binding reference for the created binding
+	 */
 	<SOURCE_TYPE, DESTINATION_TYPE> IBinding bind(
 		final IObservableValue<SOURCE_TYPE> source,
 		final IObservableValue<DESTINATION_TYPE> destination,

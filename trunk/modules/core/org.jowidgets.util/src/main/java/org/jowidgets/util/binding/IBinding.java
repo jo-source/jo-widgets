@@ -38,7 +38,16 @@ public interface IBinding {
 	void setBindingState(boolean bind);
 
 	/**
-	 * Unbinds the bound values. After that, the observables are no longer bound bit still referenced to bind them again later
+	 * Gets the binding state
+	 * 
+	 * @return True if bound, false otherwise
+	 */
+	boolean isBound();
+
+	/**
+	 * Unbinds the bound values.
+	 * 
+	 * After that, the observables are no longer bound but still referenced to bind them again later
 	 */
 	void unbind();
 
