@@ -28,7 +28,9 @@
 
 package org.jowidgets.util;
 
-public class ObservableValueWrapper<VALUE_TYPE> implements IObservableValue<VALUE_TYPE> {
+import org.jowidgets.util.wrapper.IWrapper;
+
+public class ObservableValueWrapper<VALUE_TYPE> implements IObservableValue<VALUE_TYPE>, IWrapper<IObservableValue<VALUE_TYPE>> {
 
 	private final IObservableValue<VALUE_TYPE> original;
 
@@ -59,6 +61,11 @@ public class ObservableValueWrapper<VALUE_TYPE> implements IObservableValue<VALU
 	@Override
 	public void removeValueListener(final IObservableValueListener<?> listener) {
 		original.removeValueListener(listener);
+	}
+
+	@Override
+	public IObservableValue<VALUE_TYPE> unwrap() {
+		return original;
 	}
 
 }
