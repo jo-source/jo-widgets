@@ -28,8 +28,13 @@
 
 package org.jowidgets.util.binding;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import junit.framework.Assert;
 
+import org.jowidgets.util.CollectionUtils;
 import org.jowidgets.util.IObservableValue;
 import org.jowidgets.util.ObservableValue;
 import org.junit.Test;
@@ -152,11 +157,60 @@ public class BindingTest {
 		//the values of the observable value must be equal
 		Assert.assertEquals(source.getValue(), destination.getValue());
 
-		//the destination must be the expected value
+		//the source must be the expected value
 		Assert.assertEquals(expectedValue, source.getValue());
 
 		//the destination must be the expected value
 		Assert.assertEquals(expectedValue, destination.getValue());
+	}
+
+	@Test
+	public void testBindingConverter() {
+
+		final ObservableValue<List<String>> source = new ObservableValue<List<String>>();
+		final ObservableValue<String[]> destination = new ObservableValue<String[]>();
+
+		Bind.bind(source, destination, new ListArrayBindingConverter());
+
+		//create an set list and check if bound to the destination
+		final List<String> list = new ArrayList<String>(3);
+		for (int i = 0; i < 3; i++) {
+			list.add("String_of_list_" + i);
+		}
+		source.setValue(list);
+		Assert.assertTrue(CollectionUtils.elementsEqual(source.getValue(), Arrays.asList(destination.getValue())));
+
+		//create an set array and check if bound to the source
+		final String[] array = new String[3];
+		for (int i = 0; i < 3; i++) {
+			array[i] = "String_of_array_" + i;
+		}
+		destination.setValue(array);
+		Assert.assertTrue(CollectionUtils.elementsEqual(source.getValue(), Arrays.asList(destination.getValue())));
+	}
+
+	private class ListArrayBindingConverter implements IBindingConverter<List<String>, String[]> {
+
+		@Override
+		public String[] convertSource(final List<String> collection) {
+			if (collection != null) {
+				return collection.toArray(new String[collection.size()]);
+			}
+			else {
+				return null;
+			}
+		}
+
+		@Override
+		public List<String> convertDestination(final String[] destinationValue) {
+			if (destinationValue != null) {
+				return new ArrayList<String>(Arrays.asList(destinationValue));
+			}
+			else {
+				return null;
+			}
+		}
+
 	}
 
 }
