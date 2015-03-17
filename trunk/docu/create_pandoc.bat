@@ -7,7 +7,7 @@ xcopy images pandoc_out\images\
 
 Setlocal EnableDelayedExpansion
 set inputPath=
-for /f %%f in ('dir /b pandoc_in\') do (
+for /f %%f in ('dir /b pandoc_in\*.md') do (
 	set inputPath=!inputPath! pandoc_in\%%f
 	echo %%f
 )
