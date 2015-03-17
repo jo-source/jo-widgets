@@ -99,19 +99,19 @@ public class BindingTest {
 		//binding is bound by default
 		Assert.assertTrue(binding.isBound());
 
-		//must be equal and STRING_4 (last source value)
+		//must be equal and STRING_5 (last source value)
 		testEquality(source, destination, STRING_5);
 
 		//change source must change destination
 		source.setValue(STRING_7);
 
-		//must be equal and STRING_3
+		//must be equal and STRING_7
 		testEquality(source, destination, STRING_7);
 
 		//change destination must change source
 		destination.setValue(STRING_8);
 
-		//must be equal and STRING_4
+		//must be equal and STRING_8
 		testEquality(source, destination, STRING_8);
 
 		//dispose the binding
