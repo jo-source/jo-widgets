@@ -40,7 +40,7 @@ import org.jowidgets.addons.widgets.browser.api.BrowserBPF;
 import org.jowidgets.addons.widgets.browser.api.IBrowser;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.spi.impl.bridge.swt.awt.common.application.BridgedSwtEventLoop;
-import org.jowidgets.spi.impl.swing.addons.SwingToJo;
+import org.jowidgets.spi.impl.swing.addons.SwingToJoWrapper;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 
 public final class PlainSwingBrowserDemo {
@@ -83,7 +83,7 @@ public final class PlainSwingBrowserDemo {
 
 		//convert the content pane to a jo widgets composite
 		final JPanel contentPane = (JPanel) frame.getContentPane();
-		final IComposite composite = SwingToJo.create(contentPane);
+		final IComposite composite = SwingToJoWrapper.create(contentPane);
 
 		//add the browser widget to the composite
 		composite.setLayout(MigLayoutFactory.growingInnerCellLayout());

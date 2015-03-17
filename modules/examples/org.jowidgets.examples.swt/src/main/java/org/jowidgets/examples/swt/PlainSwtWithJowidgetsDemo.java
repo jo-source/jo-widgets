@@ -38,7 +38,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.examples.common.demo.DemoForm1Creator;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
-import org.jowidgets.spi.impl.swt.addons.SwtToJo;
+import org.jowidgets.spi.impl.swt.addons.SwtToJoWrapper;
 
 public final class PlainSwtWithJowidgetsDemo {
 
@@ -74,7 +74,7 @@ public final class PlainSwtWithJowidgetsDemo {
 		// now a jowidgets composite will be created with help of the swt
 		// composite
 		// and the demo form 1 from examples common will be added
-		final IComposite joComposite = SwtToJo.create(swtComposite2);
+		final IComposite joComposite = SwtToJoWrapper.create(swtComposite2);
 		DemoForm1Creator.createDemoForm1(joComposite);
 
 		// open the shell

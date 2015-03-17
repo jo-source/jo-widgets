@@ -26,27 +26,38 @@
  * DAMAGE.
  */
 
-package org.jowidgets.spi.impl.swt.addons;
+package org.jowidgets.spi.impl.swing.addons;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.util.Assert;
 
-/**
- * @deprecated Use {@link JoToSwtReference} instead
- */
-@Deprecated
-public final class JoToSwt {
+public final class SwingToJoWrapper {
 
-	private JoToSwt() {}
+	private SwingToJoWrapper() {}
 
-	public static Composite convert(final IComposite composite) {
-		return JoToSwtReference.getUiReference(composite);
+	public static IComposite create(final JPanel panel) {
+		Assert.paramNotNull(panel, "panel");
+		//TODO observe information when panel was disposed (removed from its parent) and
+		//invoke dispose on the result
+		return Toolkit.getWidgetWrapperFactory().createComposite(panel);
 	}
 
-	public static Shell convert(final IFrame frame) {
-		return JoToSwtReference.getUiReference(frame);
+	public static IFrame create(final JFrame frame) {
+		Assert.paramNotNull(frame, "frame");
+		//TODO observe information when frame was disposed and invoke dispose on the result
+		return Toolkit.getWidgetWrapperFactory().createFrame(frame);
+	}
+
+	public static IFrame create(final JDialog dialog) {
+		Assert.paramNotNull(dialog, "dialog");
+		//TODO observe information when dialog was disposed and invoke dispose on the result
+		return Toolkit.getWidgetWrapperFactory().createFrame(dialog);
 	}
 
 }

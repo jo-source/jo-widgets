@@ -45,7 +45,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.examples.common.demo.DemoForm1Creator;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
-import org.jowidgets.spi.impl.swing.addons.JoToSwing;
+import org.jowidgets.spi.impl.swing.addons.JoToSwingReference;
 
 public final class JoWidgetsWithPlainSwingDemo {
 
@@ -82,7 +82,7 @@ public final class JoWidgetsWithPlainSwingDemo {
 
 		//add a composite to the second row and convert it to a JPanel
 		final IComposite composite2 = scrollComposite.add(bpf.composite(), "alignx center");
-		final JPanel panel2 = JoToSwing.convert(composite2);
+		final JPanel panel2 = JoToSwingReference.getUiReference(composite2);
 
 		//add a swing label to the panel
 		final JLabel label = new JLabel("Label created with swing");

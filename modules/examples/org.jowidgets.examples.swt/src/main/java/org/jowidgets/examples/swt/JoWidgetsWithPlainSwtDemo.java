@@ -45,7 +45,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.examples.common.demo.DemoForm1Creator;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
-import org.jowidgets.spi.impl.swt.addons.JoToSwt;
+import org.jowidgets.spi.impl.swt.addons.JoToSwtReference;
 
 public final class JoWidgetsWithPlainSwtDemo {
 
@@ -81,7 +81,7 @@ public final class JoWidgetsWithPlainSwtDemo {
 
 		// add a composite to the second row and convert it to a JPanel
 		final IComposite joComposite2 = scrollComposite.add(bpf.composite(), "alignx center");
-		final Composite swtComposite2 = JoToSwt.convert(joComposite2);
+		final Composite swtComposite2 = JoToSwtReference.getUiReference(joComposite2);
 
 		// add a swt label to the panel
 		final Label label = new Label(swtComposite2, SWT.NONE);

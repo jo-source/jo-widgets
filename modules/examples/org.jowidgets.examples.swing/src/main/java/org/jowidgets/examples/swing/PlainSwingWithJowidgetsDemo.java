@@ -40,7 +40,7 @@ import javax.swing.UIManager;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.examples.common.demo.DemoForm1Creator;
 import org.jowidgets.examples.common.icons.DemoIconsInitializer;
-import org.jowidgets.spi.impl.swing.addons.SwingToJo;
+import org.jowidgets.spi.impl.swing.addons.SwingToJoWrapper;
 
 public final class PlainSwingWithJowidgetsDemo {
 
@@ -78,7 +78,7 @@ public final class PlainSwingWithJowidgetsDemo {
 
 		//now a jowidgets composite will be created with help of the swing panel
 		//and the demo form 1 from examples common will be added 
-		final IComposite centerComposite = SwingToJo.create(centerPanel);
+		final IComposite centerComposite = SwingToJoWrapper.create(centerPanel);
 		DemoForm1Creator.createDemoForm1(centerComposite);
 
 		//show the frame
