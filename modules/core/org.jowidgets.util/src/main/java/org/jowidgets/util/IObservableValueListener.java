@@ -30,6 +30,12 @@ package org.jowidgets.util;
 
 public interface IObservableValueListener<VALUE_TYPE> {
 
+	/**
+	 * Will be invoked if the value has been changed
+	 * 
+	 * @param observableValue The observable value that has been changed
+	 * @param value The new value
+	 */
 	void changed(IObservableValue<VALUE_TYPE> observableValue, VALUE_TYPE value);
 
 }
