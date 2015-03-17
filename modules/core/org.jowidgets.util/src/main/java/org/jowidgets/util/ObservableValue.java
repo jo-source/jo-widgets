@@ -38,10 +38,18 @@ public class ObservableValue<VALUE_TYPE> implements IObservableValue<VALUE_TYPE>
 
 	private VALUE_TYPE value;
 
+	/**
+	 * Creates a new observable value
+	 */
 	public ObservableValue() {
 		this(null);
 	}
 
+	/**
+	 * Creates a new observable value
+	 * 
+	 * @param value The initial value of the observable value
+	 */
 	public ObservableValue(final VALUE_TYPE value) {
 		this.value = value;
 		this.listeners = ObserverSetFactory.create(Strategy.LOW_MEMORY);
@@ -82,37 +90,6 @@ public class ObservableValue<VALUE_TYPE> implements IObservableValue<VALUE_TYPE>
 	@Override
 	public String toString() {
 		return "ObservableValue [value=" + value + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((value == null) ? 0 : value.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof IObservableValue)) {
-			return false;
-		}
-		final IObservableValue<?> other = (IObservableValue<?>) obj;
-		if (value == null) {
-			if (other.getValue() != null) {
-				return false;
-			}
-		}
-		else if (!value.equals(other.getValue())) {
-			return false;
-		}
-		return true;
 	}
 
 }
