@@ -30,8 +30,18 @@ package org.jowidgets.api.widgets;
 
 import org.jowidgets.util.IObservableValue;
 
+/**
+ * A widget that is bound to an observable value
+ * 
+ * @param <VALUE_TYPE> The type of the observable value
+ */
 public interface IObservableValueViewer<VALUE_TYPE> {
 
+	/**
+	 * Gets the observable value
+	 * 
+	 * @return The observable value, never null
+	 */
 	IObservableValue<VALUE_TYPE> getObservableValue();
 
 }
