@@ -22,7 +22,7 @@
 
 ## Button{#button_widget}
 
-## ToggleButton
+## ToggleButton{#toggle_button_widget}
 
 ## TextField
 
@@ -42,7 +42,7 @@
 
 ## Combobox{#combobox_widget}
 
-## ComboboxSelection
+## ComboboxSelection{#combobox_selection_widget}
 
 ## Slider{#slider_widget}
 
