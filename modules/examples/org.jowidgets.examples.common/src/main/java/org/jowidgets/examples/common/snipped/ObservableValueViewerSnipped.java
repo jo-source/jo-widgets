@@ -30,8 +30,10 @@ package org.jowidgets.examples.common.snipped;
 import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISliderViewerBluePrint;
+import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.types.Markup;
@@ -46,14 +48,17 @@ public final class ObservableValueViewerSnipped implements IApplication {
 	public void start(final IApplicationLifecycle lifecycle) {
 
 		//create the root frame
-		final IFrame frame = Toolkit.createRootFrame(BPF.frame("Observable value viewer snipped"), lifecycle);
+		final IFrameBluePrint frameBp = BPF.frame("Observable value viewer snipped");
+		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
 		frame.setLayout(new MigLayoutDescriptor("wrap", "[][][]", "[]"));
 
 		//create panorama observable value 
 		final IObservableValue<Double> panorama = new ObservableValue<Double>(0.0d);
 
 		//add panorama label
-		frame.add(BPF.textLabel("Panorama").setForegroundColor(Colors.STRONG).setMarkup(Markup.STRONG));
+		final ITextLabelBluePrint labelBp = BPF.textLabel("Panorama");
+		labelBp.setForegroundColor(Colors.STRONG).setMarkup(Markup.STRONG);
+		frame.add(labelBp);
 
 		//add panorama slider
 		final ISliderViewerBluePrint<Double> sliderBp = BPF.sliderViewerDouble(-1.0d, 1.0d);
