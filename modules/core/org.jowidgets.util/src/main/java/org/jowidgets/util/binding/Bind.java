@@ -33,6 +33,9 @@ import org.jowidgets.util.IObservableValue;
 import org.jowidgets.util.IObservableValueListener;
 import org.jowidgets.util.NullCompatibleEquivalence;
 
+/**
+ * Accessor class for IBind interface
+ */
 public final class Bind {
 
 	@SuppressWarnings("rawtypes")
@@ -42,16 +45,51 @@ public final class Bind {
 
 	private Bind() {}
 
+	/**
+	 * Gets the bind instance
+	 * 
+	 * @return The bind instance, never null
+	 */
 	public static IBind getInstance() {
 		return INSTANCE;
 	}
 
+	/**
+	 * Binds two observable values with same type bidirectional.
+	 * 
+	 * If the source and destination value differs when bound,
+	 * the destination value becomes the source value.
+	 * 
+	 * If the source value changes later, the destination value will be changed to the source.
+	 * If the destination value changes later, the source value will be changed to the destination.
+	 * 
+	 * @param source The source value to bind, must not be null
+	 * @param destination The destination value to bind, must not be null
+	 * 
+	 * @return The binding reference for the created binding
+	 */
 	public static <VALUE_TYPE> IBinding bind(
 		final IObservableValue<VALUE_TYPE> source,
 		final IObservableValue<VALUE_TYPE> destination) {
 		return getInstance().bind(source, destination);
 	}
 
+	/**
+	 * Binds two observable values with potentially different type bidirectional using a
+	 * binding converter.
+	 * 
+	 * If the source and destination value differs when bound,
+	 * the destination value becomes the source value.
+	 * 
+	 * If the source value changes later, the destination value will be changed to the source.
+	 * If the destination value changes later, the source value will be changed to the destination.
+	 * 
+	 * @param source The source value to bind, must not be null
+	 * @param destination The destination value to bind, must not be null
+	 * @param converter The binding converter to use, must not be null
+	 * 
+	 * @return The binding reference for the created binding
+	 */
 	public static <SOURCE_TYPE, DESTINATION_TYPE> IBinding bind(
 		final IObservableValue<SOURCE_TYPE> source,
 		final IObservableValue<DESTINATION_TYPE> destination,
@@ -88,8 +126,8 @@ public final class Bind {
 		private IObservableValue<DESTINATION_TYPE> destination;
 		private IBindingConverter<SOURCE_TYPE, DESTINATION_TYPE> converter;
 
-		private final boolean disposed;
-
+		private boolean bound;
+		private boolean disposed;
 		private boolean onSourceSet;
 		private boolean onDestinationSet;
 
@@ -171,8 +209,14 @@ public final class Bind {
 		}
 
 		@Override
+		public boolean isBound() {
+			return bound;
+		}
+
+		@Override
 		public void bind() {
 			checkDisposed();
+			bound = true;
 			setSourceToDestination();
 			source.addValueListener(sourceListener);
 			destination.addValueListener(destinationListener);
@@ -181,6 +225,7 @@ public final class Bind {
 		@Override
 		public void unbind() {
 			checkDisposed();
+			bound = false;
 			source.removeValueListener(sourceListener);
 			destination.removeValueListener(destinationListener);
 		}
@@ -194,6 +239,7 @@ public final class Bind {
 		public void dispose() {
 			checkDisposed();
 			unbind();
+			disposed = true;
 			source = null;
 			destination = null;
 			converter = null;
