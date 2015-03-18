@@ -62,6 +62,8 @@ public final class HelloWorldApplication implements IApplication {
         //Add the button defined by the BluePrint to the frame
         final IButton button = frame.add(buttonBp);
 
+        Toolkit.getSupportedWidgets().hasFileChooser();
+
         //Add an ActionListener to the button
         button.addActionListener(new IActionListener() {
             @Override

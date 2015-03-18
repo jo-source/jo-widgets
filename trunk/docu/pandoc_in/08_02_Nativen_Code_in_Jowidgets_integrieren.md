@@ -8,7 +8,9 @@ Mögliche Gründe für die Einbettung von nativem Code könnten sein:
 * Es existieren komplexe native Widgets, welche man verwenden möchte und für die in jowidgets kein Pondon existiert.
 * Ein Jo Widget bietet eine bestimmte Funktion nicht an, obwohl es das native Widget tut.
 
-__Hinweis:__ Man sollte sich bewusst machen, dass man durch die direkte Einbettung von nativem Code später nicht mehr __einfach__ in der Lage ist, das Modul oder Widget in Kombination mit einer anderen UI Technologie zu verwenden. 
+__Hinweis:__ 
+
+Man sollte sich bewusst machen, dass man durch die direkte Einbettung von nativem Code später nicht mehr __einfach__ in der Lage ist, das Modul oder Widget in Kombination mit einer anderen UI Technologie zu verwenden. 
 
 Anstatt nativen Code direkt einzubetten, könnte man für die oben genannten Fälle auch wie folgt vorgehen:
 
