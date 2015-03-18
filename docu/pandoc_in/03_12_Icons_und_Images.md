@@ -234,7 +234,7 @@ Eine Image Registry Instanz bekommt man vom Toolkit mittels der folgenden Method
 Es folgt eine kurze Auflistung der wichtigsten Methoden der Schnittstelle `IImageRegistry`:
 
 
-#### Methoden zur Registrierung und zum Austauschen von Image Handles()
+#### Methoden zur Registrierung und zum Austauschen von Image Handles{#register_or_substitude_images}
 
 Die folgenden Methoden dienen der Registrierung eines [`Image Handle`](#image_handle) zu einer [`Image Konstante`](#image_constant):
 

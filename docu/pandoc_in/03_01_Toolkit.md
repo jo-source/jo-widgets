@@ -263,7 +263,7 @@ Gibt das aktive Fenster zurück. U.A. hilfreich bei der Erzeugung von Dialogen, 
 
 Gibt eine Liste aller Fenster zurück.
 
-#### Toolkit Properties
+#### Toolkit Properties{#toolkit_properties}
 
 ~~~
 	<VALUE_TYPE> void setValue(ITypedKey<VALUE_TYPE> key, VALUE_TYPE value);
@@ -273,7 +273,7 @@ Gibt eine Liste aller Fenster zurück.
 
 Mit Hilfe dieser Methoden kann man Properties auf dem Toolkit setzen und auslesen. Wenn man jowidgets Applikation schreibt, die auch Web kompatibel sein sollen, muss man sehr vorsichtig mit Singletons sein, da sich die JVM mehrere Nutzer teilen. Ansonsten könnte sich das Ändern eines globalen Zustands eines Nutzers auch auf einen anderen Nutzer auswirken.
 
-Falls man dennoch _globale Variablen_ benötigt, zum Beispiel zum Speichern des Security Context oder ähnlichem, kann man mit Hilfe dieser Methoden ein _Session Singleton_ realisieren, da pro User Session genau ein Toolkit existiert. Siehe auch [Typed Properties](#typed_properties).
+Falls man dennoch _globale Variablen_ benötigt, zum Beispiel zum Speichern des Security Context oder ähnlichem, kann man mit Hilfe dieser Methoden ein _Session Singleton_ realisieren, da pro User Session genau ein Toolkit existiert. Siehe zudem auch [Typed Properties](#typed_properties).
 
 #### Umrechnungsmethoden
 
