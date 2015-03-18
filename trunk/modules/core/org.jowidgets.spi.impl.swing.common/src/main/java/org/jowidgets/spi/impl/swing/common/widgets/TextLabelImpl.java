@@ -38,58 +38,58 @@ import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 
 public class TextLabelImpl extends SwingControl implements ITextLabelSpi {
 
-	public TextLabelImpl(final ITextLabelSetupSpi setup) {
-		super(new JLabel());
+    public TextLabelImpl(final ITextLabelSetupSpi setup) {
+        super(new JLabel());
 
-		setText(setup.getText());
-		setToolTipText(setup.getToolTipText());
+        setText(setup.getText());
+        setToolTipText(setup.getToolTipText());
 
-		setMarkup(setup.getMarkup());
+        setMarkup(setup.getMarkup());
 
-		getUiReference().setHorizontalAlignment(AlignmentConvert.convert(setup.getAlignment()));
-	}
+        getUiReference().setHorizontalAlignment(AlignmentConvert.convert(setup.getAlignment()));
+    }
 
-	@Override
-	public JLabel getUiReference() {
-		return (JLabel) super.getUiReference();
-	}
+    @Override
+    public JLabel getUiReference() {
+        return (JLabel) super.getUiReference();
+    }
 
-	@Override
-	public void setText(String text) {
-		//allow line breaks by using html
-		if (text != null && text.contains("\n")) {
-			text = "<html>" + text.replace("\n", "<br>") + "</html>";
-		}
-		getUiReference().setText(text);
-	}
+    @Override
+    public void setText(String text) {
+        //allow line breaks by using html
+        if (text != null && text.contains("\n")) {
+            text = "<html>" + text.replace("\n", "<br>") + "</html>";
+        }
+        getUiReference().setText(text);
+    }
 
-	@Override
-	public void setToolTipText(final String text) {
-		getUiReference().setToolTipText(text);
-	}
+    @Override
+    public void setToolTipText(final String text) {
+        getUiReference().setToolTipText(text);
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		final JLabel label = getUiReference();
-		label.setFont(FontProvider.deriveFont(label.getFont(), markup));
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        final JLabel label = getUiReference();
+        label.setFont(FontProvider.deriveFont(label.getFont(), markup));
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), size));
-	}
+    @Override
+    public void setFontSize(final int size) {
+        getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), size));
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), fontName));
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), fontName));
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		if (colorValue != null) {
-			getUiReference().setOpaque(true);
-			super.setBackgroundColor(colorValue);
-		}
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        if (colorValue != null) {
+            getUiReference().setOpaque(true);
+            super.setBackgroundColor(colorValue);
+        }
+    }
 
 }

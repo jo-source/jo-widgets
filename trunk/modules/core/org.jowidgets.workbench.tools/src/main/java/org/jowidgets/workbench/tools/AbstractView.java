@@ -33,19 +33,19 @@ import org.jowidgets.workbench.api.IView;
 
 public abstract class AbstractView implements IView {
 
-	@Override
-	public void onActiveStateChanged(final boolean active) {}
+    @Override
+    public void onActiveStateChanged(final boolean active) {}
 
-	@Override
-	public void onVisibleStateChanged(final boolean visible) {}
+    @Override
+    public void onVisibleStateChanged(final boolean visible) {}
 
-	@Override
-	public void onHiddenStateChanged(final boolean hidden) {}
+    @Override
+    public void onHiddenStateChanged(final boolean hidden) {}
 
-	@Override
-	public void onClose(final IVetoable vetoable) {}
+    @Override
+    public void onClose(final IVetoable vetoable) {}
 
-	@Override
-	public void onDispose() {}
+    @Override
+    public void onDispose() {}
 
 }

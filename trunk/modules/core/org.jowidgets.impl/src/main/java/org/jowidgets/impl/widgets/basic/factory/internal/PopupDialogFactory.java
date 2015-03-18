@@ -40,18 +40,21 @@ import org.jowidgets.spi.widgets.IPopupDialogSpi;
 
 public class PopupDialogFactory extends AbstractWidgetFactory implements IWidgetFactory<IPopupDialog, IPopupDialogDescriptor> {
 
-	public PopupDialogFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+    public PopupDialogFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider,
+        final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
-	}
+        super(genericWidgetFactory, widgetsServiceProvider, bpF);
+    }
 
-	@Override
-	public IPopupDialog create(final Object parentUiReference, final IPopupDialogDescriptor descriptor) {
-		final IPopupDialogBluePrintSpi bp = getSpiBluePrintFactory().popupDialog().setSetup(descriptor);
-		final IPopupDialogSpi widgetSpi = getSpiWidgetFactory().createPopupDialog(getGenericWidgetFactory(), parentUiReference, bp);
-		return new PopupDialogImpl(widgetSpi, descriptor);
-	}
+    @Override
+    public IPopupDialog create(final Object parentUiReference, final IPopupDialogDescriptor descriptor) {
+        final IPopupDialogBluePrintSpi bp = getSpiBluePrintFactory().popupDialog().setSetup(descriptor);
+        final IPopupDialogSpi widgetSpi = getSpiWidgetFactory().createPopupDialog(
+                getGenericWidgetFactory(),
+                parentUiReference,
+                bp);
+        return new PopupDialogImpl(widgetSpi, descriptor);
+    }
 }

@@ -33,17 +33,17 @@ import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 
 public class ActionMenuItemSpiInvoker extends MenuItemSpiInvoker implements IItemSpiInvoker {
 
-	public ActionMenuItemSpiInvoker(final IActionMenuItemSpi item) {
-		super(item);
-	}
+    public ActionMenuItemSpiInvoker(final IActionMenuItemSpi item) {
+        super(item);
+    }
 
-	@Override
-	public IActionMenuItemSpi getItem() {
-		return (IActionMenuItemSpi) super.getItem();
-	}
+    @Override
+    public IActionMenuItemSpi getItem() {
+        return (IActionMenuItemSpi) super.getItem();
+    }
 
-	@Override
-	public void setAccelerator(final Accelerator accelerator) {
-		getItem().setAccelerator(accelerator);
-	}
+    @Override
+    public void setAccelerator(final Accelerator accelerator) {
+        getItem().setAccelerator(accelerator);
+    }
 }

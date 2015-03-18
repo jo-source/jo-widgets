@@ -33,25 +33,25 @@ import org.jowidgets.spi.impl.bridge.swt.awt.common.awt.IAwtSwtControlSpi;
 
 class AwtSwtControlImpl extends ControlImpl implements IAwtSwtControl {
 
-	AwtSwtControlImpl(final IAwtSwtControlSpi awtSwtControlSpi) {
-		super(awtSwtControlSpi);
-	}
+    AwtSwtControlImpl(final IAwtSwtControlSpi awtSwtControlSpi) {
+        super(awtSwtControlSpi);
+    }
 
-	@Override
-	public IAwtSwtControlSpi getWidget() {
-		return (IAwtSwtControlSpi) super.getWidget();
-	}
+    @Override
+    public IAwtSwtControlSpi getWidget() {
+        return (IAwtSwtControlSpi) super.getWidget();
+    }
 
-	@Override
-	public Composite getSwtComposite() {
-		return getWidget().getSwtComposite();
-	}
+    @Override
+    public Composite getSwtComposite() {
+        return getWidget().getSwtComposite();
+    }
 
-	@Override
-	public void dispose() {
-		final IAwtSwtControlSpi spiWidget = getWidget();
-		super.dispose();
-		spiWidget.dispose();
-	}
+    @Override
+    public void dispose() {
+        final IAwtSwtControlSpi spiWidget = getWidget();
+        super.dispose();
+        spiWidget.dispose();
+    }
 
 }

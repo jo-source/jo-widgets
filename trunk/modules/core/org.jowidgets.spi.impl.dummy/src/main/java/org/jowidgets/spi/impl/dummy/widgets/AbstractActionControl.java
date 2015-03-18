@@ -35,51 +35,51 @@ import org.jowidgets.spi.widgets.IControlSpi;
 
 public abstract class AbstractActionControl extends AbstractActionComponent implements IControlSpi {
 
-	private final DummyControl dummyControlDelegate;
+    private final DummyControl dummyControlDelegate;
 
-	public AbstractActionControl(final UIDComponent component) {
-		super(component);
-		this.dummyControlDelegate = new DummyControl(component);
-	}
+    public AbstractActionControl(final UIDComponent component) {
+        super(component);
+        this.dummyControlDelegate = new DummyControl(component);
+    }
 
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		dummyControlDelegate.setLayoutConstraints(layoutConstraints);
-	}
+    @Override
+    public void setLayoutConstraints(final Object layoutConstraints) {
+        dummyControlDelegate.setLayoutConstraints(layoutConstraints);
+    }
 
-	@Override
-	public Object getLayoutConstraints() {
-		return dummyControlDelegate.getLayoutConstraints();
-	}
+    @Override
+    public Object getLayoutConstraints() {
+        return dummyControlDelegate.getLayoutConstraints();
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		return dummyControlDelegate.getMinSize();
-	}
+    @Override
+    public Dimension getMinSize() {
+        return dummyControlDelegate.getMinSize();
+    }
 
-	@Override
-	public Dimension getPreferredSize() {
-		return dummyControlDelegate.getPreferredSize();
-	}
+    @Override
+    public Dimension getPreferredSize() {
+        return dummyControlDelegate.getPreferredSize();
+    }
 
-	@Override
-	public Dimension getMaxSize() {
-		return dummyControlDelegate.getMaxSize();
-	}
+    @Override
+    public Dimension getMaxSize() {
+        return dummyControlDelegate.getMaxSize();
+    }
 
-	@Override
-	public void setToolTipText(final String toolTip) {
-		dummyControlDelegate.setToolTipText(toolTip);
-	}
+    @Override
+    public void setToolTipText(final String toolTip) {
+        dummyControlDelegate.setToolTipText(toolTip);
+    }
 
-	@Override
-	public IDragSourceSpi getDragSource() {
-		return dummyControlDelegate.getDragSource();
-	}
+    @Override
+    public IDragSourceSpi getDragSource() {
+        return dummyControlDelegate.getDragSource();
+    }
 
-	@Override
-	public IDropTargetSpi getDropTarget() {
-		return dummyControlDelegate.getDropTarget();
-	}
+    @Override
+    public IDropTargetSpi getDropTarget() {
+        return dummyControlDelegate.getDropTarget();
+    }
 
 }

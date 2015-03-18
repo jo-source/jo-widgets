@@ -40,47 +40,47 @@ import org.junit.Test;
 
 public class TreeTest {
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+    private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
-	@Test
-	public void createTreeTests() {
-		Toolkit.getApplicationRunner().run(new IApplication() {
+    @Test
+    public void createTreeTests() {
+        Toolkit.getApplicationRunner().run(new IApplication() {
 
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
-				final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
-				frame.setVisible(true);
+            @Override
+            public void start(final IApplicationLifecycle lifecycle) {
+                final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
+                frame.setVisible(true);
 
-				final ITree tree = frame.add(BPF.tree(), "");
-				testAddNodes(tree);
-				testExpandNodes(tree);
-				testRemoveNodes(tree);
+                final ITree tree = frame.add(BPF.tree(), "");
+                testAddNodes(tree);
+                testExpandNodes(tree);
+                testRemoveNodes(tree);
 
-				frame.dispose();
-			}
-		});
-	}
+                frame.dispose();
+            }
+        });
+    }
 
-	private void testExpandNodes(final ITree tree) {
-		tree.setAllChildrenExpanded(true);
-		for (final ITreeNode node : tree.getChildren()) {
-			Assert.assertTrue(!node.isExpanded());
-		}
-	}
+    private void testExpandNodes(final ITree tree) {
+        tree.setAllChildrenExpanded(true);
+        for (final ITreeNode node : tree.getChildren()) {
+            Assert.assertTrue(!node.isExpanded());
+        }
+    }
 
-	private void testAddNodes(final ITree tree) {
-		final ITreeNode node = tree.addNode(0);
-		Assert.assertTrue(tree.getChildren().contains(node));
+    private void testAddNodes(final ITree tree) {
+        final ITreeNode node = tree.addNode(0);
+        Assert.assertTrue(tree.getChildren().contains(node));
 
-		final ITreeNode node2 = tree.addNode();
-		Assert.assertTrue(tree.getChildren().contains(node2));
-	}
+        final ITreeNode node2 = tree.addNode();
+        Assert.assertTrue(tree.getChildren().contains(node2));
+    }
 
-	private void testRemoveNodes(final ITree tree) {
-		tree.removeNode(1);
-		Assert.assertTrue(tree.getChildren().size() == 1);
+    private void testRemoveNodes(final ITree tree) {
+        tree.removeNode(1);
+        Assert.assertTrue(tree.getChildren().size() == 1);
 
-		tree.removeAllNodes();
-		Assert.assertTrue(tree.getChildren().isEmpty());
-	}
+        tree.removeAllNodes();
+        Assert.assertTrue(tree.getChildren().isEmpty());
+    }
 }

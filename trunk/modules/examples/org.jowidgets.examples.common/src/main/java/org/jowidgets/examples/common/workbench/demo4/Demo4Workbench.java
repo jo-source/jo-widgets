@@ -38,16 +38,16 @@ import org.jowidgets.workbench.tools.WorkbenchModelBuilder;
 
 public final class Demo4Workbench implements IWorkbenchFactory {
 
-	@Override
-	public IWorkbench create() {
-		DemoIconsInitializer.initialize();
-		final WorkbenchModelBuilder builder = new WorkbenchModelBuilder();
-		builder.setLabel("User adminstration");
-		builder.setIcon(SilkIcons.GROUP);
-		builder.setInitialDimension(new Dimension(1024, 768));
-		builder.setInitialSplitWeight(0.18);
-		builder.addApplication(Demo4ApplicationFactory.create());
-		return WorkbenchToolkit.getWorkbenchPartFactory().workbench(builder);
-	}
+    @Override
+    public IWorkbench create() {
+        DemoIconsInitializer.initialize();
+        final WorkbenchModelBuilder builder = new WorkbenchModelBuilder();
+        builder.setLabel("User adminstration");
+        builder.setIcon(SilkIcons.GROUP);
+        builder.setInitialDimension(new Dimension(1024, 768));
+        builder.setInitialSplitWeight(0.18);
+        builder.addApplication(Demo4ApplicationFactory.create());
+        return WorkbenchToolkit.getWorkbenchPartFactory().workbench(builder);
+    }
 
 }

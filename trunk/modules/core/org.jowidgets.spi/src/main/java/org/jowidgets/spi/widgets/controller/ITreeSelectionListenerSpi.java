@@ -30,6 +30,6 @@ package org.jowidgets.spi.widgets.controller;
 
 public interface ITreeSelectionListenerSpi {
 
-	void selectionChanged();
+    void selectionChanged();
 
 }

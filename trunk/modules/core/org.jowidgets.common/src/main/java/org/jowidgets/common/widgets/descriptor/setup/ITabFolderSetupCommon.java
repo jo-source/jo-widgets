@@ -33,10 +33,10 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ITabFolderSetupCommon extends IComponentSetupCommon {
 
-	@Mandatory
-	TabPlacement getTabPlacement();
+    @Mandatory
+    TabPlacement getTabPlacement();
 
-	@Mandatory
-	boolean isTabsCloseable();
+    @Mandatory
+    boolean isTabsCloseable();
 
 }

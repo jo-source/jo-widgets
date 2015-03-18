@@ -33,9 +33,9 @@ import org.jowidgets.api.toolkit.IToolkitProvider;
 
 public class RwtToolkitProvider implements IToolkitProvider {
 
-	@Override
-	public IToolkit get() {
-		return (IToolkit) SessionSingletonBase.getInstance(RwtToolkit.class);
-	}
+    @Override
+    public IToolkit get() {
+        return (IToolkit) SessionSingletonBase.getInstance(RwtToolkit.class);
+    }
 
 }

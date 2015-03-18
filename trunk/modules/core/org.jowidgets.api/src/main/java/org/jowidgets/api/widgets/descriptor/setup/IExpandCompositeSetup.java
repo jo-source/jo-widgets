@@ -37,31 +37,31 @@ import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 
 public interface IExpandCompositeSetup extends IComponentSetup {
 
-	String getText();
+    String getText();
 
-	IImageConstant getIcon();
+    IImageConstant getIcon();
 
-	@Mandatory
-	boolean getBorder();
+    @Mandatory
+    boolean getBorder();
 
-	@Mandatory
-	boolean getHeaderBorder();
+    @Mandatory
+    boolean getHeaderBorder();
 
-	@Mandatory
-	boolean getContentBorder();
+    @Mandatory
+    boolean getContentBorder();
 
-	@Mandatory
-	Markup getTextMarkup();
+    @Mandatory
+    Markup getTextMarkup();
 
-	IColorConstant getTextColor();
+    IColorConstant getTextColor();
 
-	IColorConstant getHeaderBackgroundColor();
+    IColorConstant getHeaderBackgroundColor();
 
-	boolean isExpanded();
+    boolean isExpanded();
 
-	@Mandatory
-	Insets getInsets();
+    @Mandatory
+    Insets getInsets();
 
-	ICustomWidgetCreator<? extends IControl> getCustomHeader();
+    ICustomWidgetCreator<? extends IControl> getCustomHeader();
 
 }

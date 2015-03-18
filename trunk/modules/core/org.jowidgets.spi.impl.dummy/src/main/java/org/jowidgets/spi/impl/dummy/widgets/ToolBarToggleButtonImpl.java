@@ -35,45 +35,45 @@ import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
 
 public class ToolBarToggleButtonImpl extends ToolBarItemImpl implements IToolBarToggleButtonSpi {
 
-	private final UIDObservable itemStateObersvable;
+    private final UIDObservable itemStateObersvable;
 
-	public ToolBarToggleButtonImpl(final UIDToolBarToggleButton button) {
-		super(button);
+    public ToolBarToggleButtonImpl(final UIDToolBarToggleButton button) {
+        super(button);
 
-		super.getUiReference().addItemListener(new IItemStateListener() {
+        super.getUiReference().addItemListener(new IItemStateListener() {
 
-			@Override
-			public void itemStateChanged() {
-				itemStateObersvable.fireItemStateChanged();
-			}
-		});
+            @Override
+            public void itemStateChanged() {
+                itemStateObersvable.fireItemStateChanged();
+            }
+        });
 
-		this.itemStateObersvable = new UIDObservable();
-	}
+        this.itemStateObersvable = new UIDObservable();
+    }
 
-	@Override
-	public UIDToolBarToggleButton getUiReference() {
-		return (UIDToolBarToggleButton) super.getUiReference();
-	}
+    @Override
+    public UIDToolBarToggleButton getUiReference() {
+        return (UIDToolBarToggleButton) super.getUiReference();
+    }
 
-	@Override
-	public boolean isSelected() {
-		return getUiReference().isSelected();
-	}
+    @Override
+    public boolean isSelected() {
+        return getUiReference().isSelected();
+    }
 
-	@Override
-	public void setSelected(final boolean selected) {
-		getUiReference().setSelected(selected);
-	}
+    @Override
+    public void setSelected(final boolean selected) {
+        getUiReference().setSelected(selected);
+    }
 
-	@Override
-	public void addItemListener(final IItemStateListener listener) {
-		itemStateObersvable.addItemListener(listener);
-	}
+    @Override
+    public void addItemListener(final IItemStateListener listener) {
+        itemStateObersvable.addItemListener(listener);
+    }
 
-	@Override
-	public void removeItemListener(final IItemStateListener listener) {
-		itemStateObersvable.removeItemListener(listener);
-	}
+    @Override
+    public void removeItemListener(final IItemStateListener listener) {
+        itemStateObersvable.removeItemListener(listener);
+    }
 
 }

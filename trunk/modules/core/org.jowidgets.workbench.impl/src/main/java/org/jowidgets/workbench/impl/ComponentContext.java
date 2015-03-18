@@ -36,106 +36,106 @@ import org.jowidgets.workbench.api.ILayout;
 
 public final class ComponentContext implements IComponentContext {
 
-	private final ComponentNodeContext nodeContext;
-	private final WorkbenchContentPanel workbenchContentPanel;
-	private final IComponent component;
+    private final ComponentNodeContext nodeContext;
+    private final WorkbenchContentPanel workbenchContentPanel;
+    private final IComponent component;
 
-	private boolean active;
-	private boolean layoutReset;
-	private ILayout currentLayout;
+    private boolean active;
+    private boolean layoutReset;
+    private ILayout currentLayout;
 
-	public ComponentContext(final IComponentNode componentNode, final ComponentNodeContext nodeContext) {
-		this.active = false;
-		this.layoutReset = false;
-		this.nodeContext = nodeContext;
-		this.workbenchContentPanel = nodeContext.getWorkbenchContext().getWorkbenchContentPanel();
-		this.component = componentNode.createComponent(this);
-	}
+    public ComponentContext(final IComponentNode componentNode, final ComponentNodeContext nodeContext) {
+        this.active = false;
+        this.layoutReset = false;
+        this.nodeContext = nodeContext;
+        this.workbenchContentPanel = nodeContext.getWorkbenchContext().getWorkbenchContentPanel();
+        this.component = componentNode.createComponent(this);
+    }
 
-	public void activate() {
-		if (!active) {
-			this.active = true;
-			if (component != null) {
-				if (currentLayout != null && layoutReset) {
-					workbenchContentPanel.resetLayout(this, currentLayout);
-				}
-				if (currentLayout != null) {
-					workbenchContentPanel.setLayout(this, currentLayout);
-				}
-				else {
-					workbenchContentPanel.setEmptyContent();
-				}
-				component.onActivation();
-			}
-			else {
-				workbenchContentPanel.setEmptyContent();
-			}
-		}
-	}
+    public void activate() {
+        if (!active) {
+            this.active = true;
+            if (component != null) {
+                if (currentLayout != null && layoutReset) {
+                    workbenchContentPanel.resetLayout(this, currentLayout);
+                }
+                if (currentLayout != null) {
+                    workbenchContentPanel.setLayout(this, currentLayout);
+                }
+                else {
+                    workbenchContentPanel.setEmptyContent();
+                }
+                component.onActivation();
+            }
+            else {
+                workbenchContentPanel.setEmptyContent();
+            }
+        }
+    }
 
-	public VetoHolder deactivate() {
-		final VetoHolder result = new VetoHolder();
-		if (active) {
-			this.active = false;
-			if (component != null) {
-				component.onDeactivation(result);
-				if (result.hasVeto()) {
-					this.active = true;
-				}
-			}
-		}
-		return result;
-	}
+    public VetoHolder deactivate() {
+        final VetoHolder result = new VetoHolder();
+        if (active) {
+            this.active = false;
+            if (component != null) {
+                component.onDeactivation(result);
+                if (result.hasVeto()) {
+                    this.active = true;
+                }
+            }
+        }
+        return result;
+    }
 
-	public void onDispose() {
-		if (component != null) {
-			component.onDispose();
-		}
-		workbenchContentPanel.disposeComponent(this);
-	}
+    public void onDispose() {
+        if (component != null) {
+            component.onDispose();
+        }
+        workbenchContentPanel.disposeComponent(this);
+    }
 
-	@Override
-	public void setLayout(final ILayout layout) {
-		this.currentLayout = layout;
-		if (active && currentLayout != null) {
-			workbenchContentPanel.setLayout(this, currentLayout);
-		}
-		else if (active) {
-			workbenchContentPanel.setEmptyContent();
-		}
-	}
+    @Override
+    public void setLayout(final ILayout layout) {
+        this.currentLayout = layout;
+        if (active && currentLayout != null) {
+            workbenchContentPanel.setLayout(this, currentLayout);
+        }
+        else if (active) {
+            workbenchContentPanel.setEmptyContent();
+        }
+    }
 
-	@Override
-	public void resetLayout(final ILayout layout) {
-		this.currentLayout = layout;
-		if (active && currentLayout != null) {
-			workbenchContentPanel.resetLayout(this, currentLayout);
-		}
-		else if (active) {
-			workbenchContentPanel.setEmptyContent();
-		}
-		else {
-			layoutReset = true;
-		}
-	}
+    @Override
+    public void resetLayout(final ILayout layout) {
+        this.currentLayout = layout;
+        if (active && currentLayout != null) {
+            workbenchContentPanel.resetLayout(this, currentLayout);
+        }
+        else if (active) {
+            workbenchContentPanel.setEmptyContent();
+        }
+        else {
+            layoutReset = true;
+        }
+    }
 
-	@Override
-	public ComponentNodeContext getComponentNodeContext() {
-		return nodeContext;
-	}
+    @Override
+    public ComponentNodeContext getComponentNodeContext() {
+        return nodeContext;
+    }
 
-	@Override
-	public WorkbenchApplicationContext getWorkbenchApplicationContext() {
-		return getComponentNodeContext().getWorkbenchApplicationContext();
-	}
+    @Override
+    public WorkbenchApplicationContext getWorkbenchApplicationContext() {
+        return getComponentNodeContext().getWorkbenchApplicationContext();
+    }
 
-	@Override
-	public WorkbenchContext getWorkbenchContext() {
-		return getWorkbenchApplicationContext().getWorkbenchContext();
-	}
+    @Override
+    public WorkbenchContext getWorkbenchContext() {
+        return getWorkbenchApplicationContext().getWorkbenchContext();
+    }
 
-	protected IComponent getComponent() {
-		return component;
-	}
+    protected IComponent getComponent() {
+        return component;
+    }
 
 }

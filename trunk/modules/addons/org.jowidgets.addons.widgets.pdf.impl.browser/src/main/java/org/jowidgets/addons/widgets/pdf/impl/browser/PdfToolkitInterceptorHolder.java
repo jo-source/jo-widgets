@@ -33,9 +33,9 @@ import org.jowidgets.tools.toolkit.AbstractToolkitInterceptorHolder;
 
 public final class PdfToolkitInterceptorHolder extends AbstractToolkitInterceptorHolder {
 
-	@Override
-	protected IToolkitInterceptor createToolkitInterceptor() {
-		return new PdfToolkitInterceptor();
-	}
+    @Override
+    protected IToolkitInterceptor createToolkitInterceptor() {
+        return new PdfToolkitInterceptor();
+    }
 
 }

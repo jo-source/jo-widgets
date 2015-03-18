@@ -37,13 +37,13 @@ import org.jowidgets.workbench.impl.WorkbenchRunner;
 
 public final class SwtWorkbenchDemo1Starter {
 
-	private SwtWorkbenchDemo1Starter() {}
+    private SwtWorkbenchDemo1Starter() {}
 
-	public static void main(final String[] args) throws Exception {
-		Toolkit.getWidgetFactory().register(
-				IMapWidgetBlueprint.class,
-				new SwtGoogleEarthWidgetFactory(MapDemoApplication.API_KEY));
-		new WorkbenchRunner().run(new WorkbenchDemo1Factory());
-	}
+    public static void main(final String[] args) throws Exception {
+        Toolkit.getWidgetFactory().register(
+                IMapWidgetBlueprint.class,
+                new SwtGoogleEarthWidgetFactory(MapDemoApplication.API_KEY));
+        new WorkbenchRunner().run(new WorkbenchDemo1Factory());
+    }
 
 }

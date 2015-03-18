@@ -40,83 +40,83 @@ import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
 
 class ModelBasedComponentNodeContext extends ModelBasedComponentNodeContainerContext implements IComponentNodeContext {
 
-	private final IComponentNodeContext nodeContext;
-	private final IComponentNodeModel nodeModel;
+    private final IComponentNodeContext nodeContext;
+    private final IComponentNodeModel nodeModel;
 
-	private IComponentNodeContext parentNodeContext;
-	private IWorkbenchApplicationContext workbenchApplicationContext;
+    private IComponentNodeContext parentNodeContext;
+    private IWorkbenchApplicationContext workbenchApplicationContext;
 
-	ModelBasedComponentNodeContext(final IComponentNodeContext nodeContext, final IComponentNodeModel nodeModel) {
-		super(nodeModel);
-		Assert.paramNotNull(nodeContext, "nodeContext");
-		Assert.paramNotNull(nodeModel, "nodeModel");
-		this.nodeContext = nodeContext;
-		this.nodeModel = nodeModel;
-	}
+    ModelBasedComponentNodeContext(final IComponentNodeContext nodeContext, final IComponentNodeModel nodeModel) {
+        super(nodeModel);
+        Assert.paramNotNull(nodeContext, "nodeContext");
+        Assert.paramNotNull(nodeModel, "nodeModel");
+        this.nodeContext = nodeContext;
+        this.nodeModel = nodeModel;
+    }
 
-	@Override
-	public void setSelected(final boolean selected) {
-		nodeModel.setSelected(selected);
-	}
+    @Override
+    public void setSelected(final boolean selected) {
+        nodeModel.setSelected(selected);
+    }
 
-	@Override
-	public void setExpanded(final boolean expanded) {
-		nodeModel.setExpanded(true);
-	}
+    @Override
+    public void setExpanded(final boolean expanded) {
+        nodeModel.setExpanded(true);
+    }
 
-	@Override
-	public void setLabel(final String label) {
-		nodeModel.setLabel(label);
-	}
+    @Override
+    public void setLabel(final String label) {
+        nodeModel.setLabel(label);
+    }
 
-	@Override
-	public void setTooltip(final String tooltip) {
-		nodeModel.setTooltip(tooltip);
-	}
+    @Override
+    public void setTooltip(final String tooltip) {
+        nodeModel.setTooltip(tooltip);
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		nodeModel.setIcon(icon);
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        nodeModel.setIcon(icon);
+    }
 
-	@Override
-	public IMenuModel getPopupMenu() {
-		return nodeModel.getPopupMenu();
-	}
+    @Override
+    public IMenuModel getPopupMenu() {
+        return nodeModel.getPopupMenu();
+    }
 
-	@Override
-	public IComponentNodeContext getParent() {
-		if (nodeContext.getParent() != null) {
-			if (parentNodeContext == null) {
-				parentNodeContext = new ModelBasedComponentNodeContext(nodeContext.getParent(), nodeModel.getParent());
-			}
-		}
-		return parentNodeContext;
-	}
+    @Override
+    public IComponentNodeContext getParent() {
+        if (nodeContext.getParent() != null) {
+            if (parentNodeContext == null) {
+                parentNodeContext = new ModelBasedComponentNodeContext(nodeContext.getParent(), nodeModel.getParent());
+            }
+        }
+        return parentNodeContext;
+    }
 
-	@Override
-	public IWorkbenchApplicationContext getWorkbenchApplicationContext() {
-		if (workbenchApplicationContext == null) {
-			final IWorkbenchApplicationModel applicationModel = nodeModel.getApplication();
-			final IWorkbenchApplicationContext applicationContext = nodeContext.getWorkbenchApplicationContext();
-			workbenchApplicationContext = new ModelBasedWorkbenchApplicationContext(applicationContext, applicationModel);
-		}
-		return workbenchApplicationContext;
-	}
+    @Override
+    public IWorkbenchApplicationContext getWorkbenchApplicationContext() {
+        if (workbenchApplicationContext == null) {
+            final IWorkbenchApplicationModel applicationModel = nodeModel.getApplication();
+            final IWorkbenchApplicationContext applicationContext = nodeContext.getWorkbenchApplicationContext();
+            workbenchApplicationContext = new ModelBasedWorkbenchApplicationContext(applicationContext, applicationModel);
+        }
+        return workbenchApplicationContext;
+    }
 
-	@Override
-	public IWorkbenchContext getWorkbenchContext() {
-		return getWorkbenchApplicationContext().getWorkbenchContext();
-	}
+    @Override
+    public IWorkbenchContext getWorkbenchContext() {
+        return getWorkbenchApplicationContext().getWorkbenchContext();
+    }
 
-	@Override
-	public void addTreeNodeListener(final ITreeNodeListener listener) {
-		nodeContext.addTreeNodeListener(listener);
-	}
+    @Override
+    public void addTreeNodeListener(final ITreeNodeListener listener) {
+        nodeContext.addTreeNodeListener(listener);
+    }
 
-	@Override
-	public void removeTreeNodeListener(final ITreeNodeListener listener) {
-		nodeContext.removeTreeNodeListener(listener);
-	}
+    @Override
+    public void removeTreeNodeListener(final ITreeNodeListener listener) {
+        nodeContext.removeTreeNodeListener(listener);
+    }
 
 }

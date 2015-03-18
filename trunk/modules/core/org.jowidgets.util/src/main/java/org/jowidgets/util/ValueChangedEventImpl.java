@@ -30,30 +30,30 @@ package org.jowidgets.util;
 
 final class ValueChangedEventImpl<VALUE_TYPE> implements IValueChangedEvent<VALUE_TYPE> {
 
-	private final VALUE_TYPE oldValue;
-	private final VALUE_TYPE newValue;
-	private final MutableValue<VALUE_TYPE> source;
+    private final VALUE_TYPE oldValue;
+    private final VALUE_TYPE newValue;
+    private final MutableValue<VALUE_TYPE> source;
 
-	ValueChangedEventImpl(final VALUE_TYPE oldValue, final VALUE_TYPE newValue, final MutableValue<VALUE_TYPE> source) {
-		Assert.paramNotNull(source, "source");
-		this.oldValue = oldValue;
-		this.newValue = newValue;
-		this.source = source;
-	}
+    ValueChangedEventImpl(final VALUE_TYPE oldValue, final VALUE_TYPE newValue, final MutableValue<VALUE_TYPE> source) {
+        Assert.paramNotNull(source, "source");
+        this.oldValue = oldValue;
+        this.newValue = newValue;
+        this.source = source;
+    }
 
-	@Override
-	public VALUE_TYPE getOldValue() {
-		return oldValue;
-	}
+    @Override
+    public VALUE_TYPE getOldValue() {
+        return oldValue;
+    }
 
-	@Override
-	public VALUE_TYPE getNewValue() {
-		return newValue;
-	}
+    @Override
+    public VALUE_TYPE getNewValue() {
+        return newValue;
+    }
 
-	@Override
-	public IMutableValue<VALUE_TYPE> getSource() {
-		return source;
-	}
+    @Override
+    public IMutableValue<VALUE_TYPE> getSource() {
+        return source;
+    }
 
 }

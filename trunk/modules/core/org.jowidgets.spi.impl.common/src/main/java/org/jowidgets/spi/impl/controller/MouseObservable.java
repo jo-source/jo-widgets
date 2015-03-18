@@ -43,72 +43,72 @@ import org.jowidgets.util.Assert;
 
 public class MouseObservable implements IMouseObservable {
 
-	private final Set<IMouseListener> listeners;
+    private final Set<IMouseListener> listeners;
 
-	public MouseObservable() {
-		this.listeners = new LinkedHashSet<IMouseListener>();
-	}
+    public MouseObservable() {
+        this.listeners = new LinkedHashSet<IMouseListener>();
+    }
 
-	@Override
-	public final void addMouseListener(final IMouseListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		this.listeners.add(listener);
-	}
+    @Override
+    public final void addMouseListener(final IMouseListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        this.listeners.add(listener);
+    }
 
-	@Override
-	public final void removeMouseListener(final IMouseListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		this.listeners.remove(listener);
-	}
+    @Override
+    public final void removeMouseListener(final IMouseListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        this.listeners.remove(listener);
+    }
 
-	public final void fireMousePressed(final Position position, final MouseButton mouseButton, final Set<Modifier> modifiers) {
-		fireMousePressed(new MouseButtonEvent(position, mouseButton, modifiers));
-	}
+    public final void fireMousePressed(final Position position, final MouseButton mouseButton, final Set<Modifier> modifiers) {
+        fireMousePressed(new MouseButtonEvent(position, mouseButton, modifiers));
+    }
 
-	public final void fireMouseReleased(final Position position, final MouseButton mouseButton, final Set<Modifier> modifiers) {
-		fireMouseReleased(new MouseButtonEvent(position, mouseButton, modifiers));
-	}
+    public final void fireMouseReleased(final Position position, final MouseButton mouseButton, final Set<Modifier> modifiers) {
+        fireMouseReleased(new MouseButtonEvent(position, mouseButton, modifiers));
+    }
 
-	public final void fireMouseDoubleClicked(final Position position, final MouseButton mouseButton, final Set<Modifier> modifiers) {
-		fireMouseDoubleClicked(new MouseButtonEvent(position, mouseButton, modifiers));
-	}
+    public final void fireMouseDoubleClicked(final Position position, final MouseButton mouseButton, final Set<Modifier> modifiers) {
+        fireMouseDoubleClicked(new MouseButtonEvent(position, mouseButton, modifiers));
+    }
 
-	public final void fireMouseEnter(final Position position) {
-		fireMouseEnter(new MouseEvent(position));
-	}
+    public final void fireMouseEnter(final Position position) {
+        fireMouseEnter(new MouseEvent(position));
+    }
 
-	public final void fireMouseExit(final Position position) {
-		fireMouseExit(new MouseEvent(position));
-	}
+    public final void fireMouseExit(final Position position) {
+        fireMouseExit(new MouseEvent(position));
+    }
 
-	public final void fireMousePressed(final IMouseButtonEvent mouseEvent) {
-		for (final IMouseListener listener : new LinkedList<IMouseListener>(listeners)) {
-			listener.mousePressed(mouseEvent);
-		}
-	}
+    public final void fireMousePressed(final IMouseButtonEvent mouseEvent) {
+        for (final IMouseListener listener : new LinkedList<IMouseListener>(listeners)) {
+            listener.mousePressed(mouseEvent);
+        }
+    }
 
-	public final void fireMouseReleased(final IMouseButtonEvent mouseEvent) {
-		for (final IMouseListener listener : new LinkedList<IMouseListener>(listeners)) {
-			listener.mouseReleased(mouseEvent);
-		}
-	}
+    public final void fireMouseReleased(final IMouseButtonEvent mouseEvent) {
+        for (final IMouseListener listener : new LinkedList<IMouseListener>(listeners)) {
+            listener.mouseReleased(mouseEvent);
+        }
+    }
 
-	public final void fireMouseDoubleClicked(final IMouseButtonEvent mouseEvent) {
-		for (final IMouseListener listener : new LinkedList<IMouseListener>(listeners)) {
-			listener.mouseDoubleClicked(mouseEvent);
-		}
-	}
+    public final void fireMouseDoubleClicked(final IMouseButtonEvent mouseEvent) {
+        for (final IMouseListener listener : new LinkedList<IMouseListener>(listeners)) {
+            listener.mouseDoubleClicked(mouseEvent);
+        }
+    }
 
-	public final void fireMouseEnter(final IMouseEvent mouseEvent) {
-		for (final IMouseListener listener : new LinkedList<IMouseListener>(listeners)) {
-			listener.mouseEnter(mouseEvent);
-		}
-	}
+    public final void fireMouseEnter(final IMouseEvent mouseEvent) {
+        for (final IMouseListener listener : new LinkedList<IMouseListener>(listeners)) {
+            listener.mouseEnter(mouseEvent);
+        }
+    }
 
-	public final void fireMouseExit(final IMouseEvent mouseEvent) {
-		for (final IMouseListener listener : new LinkedList<IMouseListener>(listeners)) {
-			listener.mouseExit(mouseEvent);
-		}
-	}
+    public final void fireMouseExit(final IMouseEvent mouseEvent) {
+        for (final IMouseListener listener : new LinkedList<IMouseListener>(listeners)) {
+            listener.mouseExit(mouseEvent);
+        }
+    }
 
 }

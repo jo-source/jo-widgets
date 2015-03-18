@@ -41,137 +41,137 @@ import org.jowidgets.util.Assert;
  */
 public final class Accelerator {
 
-	private final Character character;
-	private final VirtualKey virtualKey;
-	private final List<Modifier> modifier;
+    private final Character character;
+    private final VirtualKey virtualKey;
+    private final List<Modifier> modifier;
 
-	/**
-	 * Creates a new key accelerator
-	 * 
-	 * @param virtualKey The virtual key to use
-	 * @param modifier The modifier keys to use
-	 */
-	public Accelerator(final VirtualKey virtualKey, final Modifier... modifier) {
-		this(virtualKey, Arrays.asList(modifier));
-	}
+    /**
+     * Creates a new key accelerator
+     * 
+     * @param virtualKey The virtual key to use
+     * @param modifier The modifier keys to use
+     */
+    public Accelerator(final VirtualKey virtualKey, final Modifier... modifier) {
+        this(virtualKey, Arrays.asList(modifier));
+    }
 
-	/**
-	 * Creates a new key accelerator
-	 * 
-	 * @param virtualKey The virtual key to use
-	 * @param modifier The modifier keys to use
-	 */
-	public Accelerator(final VirtualKey virtualKey, final Collection<Modifier> modifier) {
-		this(null, virtualKey, modifier);
-		Assert.paramNotNull(virtualKey, "virtualKey");
-	}
+    /**
+     * Creates a new key accelerator
+     * 
+     * @param virtualKey The virtual key to use
+     * @param modifier The modifier keys to use
+     */
+    public Accelerator(final VirtualKey virtualKey, final Collection<Modifier> modifier) {
+        this(null, virtualKey, modifier);
+        Assert.paramNotNull(virtualKey, "virtualKey");
+    }
 
-	/**
-	 * Creates a new key accelerator
-	 * 
-	 * @param virtualKey The character to use
-	 * @param modifier The modifier keys to use
-	 */
-	public Accelerator(final char key, final Modifier... modifier) {
-		this(key, Arrays.asList(modifier));
-	}
+    /**
+     * Creates a new key accelerator
+     * 
+     * @param virtualKey The character to use
+     * @param modifier The modifier keys to use
+     */
+    public Accelerator(final char key, final Modifier... modifier) {
+        this(key, Arrays.asList(modifier));
+    }
 
-	/**
-	 * Creates a new key accelerator
-	 * 
-	 * @param virtualKey The character to use
-	 * @param modifier The modifier keys to use
-	 */
-	public Accelerator(final char key, final Collection<Modifier> modifier) {
-		this(key, null, modifier);
-	}
+    /**
+     * Creates a new key accelerator
+     * 
+     * @param virtualKey The character to use
+     * @param modifier The modifier keys to use
+     */
+    public Accelerator(final char key, final Collection<Modifier> modifier) {
+        this(key, null, modifier);
+    }
 
-	private Accelerator(final Character character, final VirtualKey virtualKey, final Collection<Modifier> modifier) {
-		Assert.paramNotNull(modifier, "modifier");
-		if (virtualKey == VirtualKey.UNDEFINED) {
-			throw new IllegalArgumentException("The virtual key '"
-				+ VirtualKey.UNDEFINED
-				+ "' must not be used "
-				+ "for accelerators.");
-		}
-		this.character = character;
-		this.virtualKey = virtualKey;
-		this.modifier = Collections.unmodifiableList(new LinkedList<Modifier>(modifier));
-	}
+    private Accelerator(final Character character, final VirtualKey virtualKey, final Collection<Modifier> modifier) {
+        Assert.paramNotNull(modifier, "modifier");
+        if (virtualKey == VirtualKey.UNDEFINED) {
+            throw new IllegalArgumentException("The virtual key '"
+                + VirtualKey.UNDEFINED
+                + "' must not be used "
+                + "for accelerators.");
+        }
+        this.character = character;
+        this.virtualKey = virtualKey;
+        this.modifier = Collections.unmodifiableList(new LinkedList<Modifier>(modifier));
+    }
 
-	/**
-	 * Gets the accelerators character or null if the accelerator is defined with a virtual key.
-	 * 
-	 * Remark: If the character is null, the virtual key is not null and vice versa
-	 * 
-	 * @return The character or null
-	 */
-	public Character getCharacter() {
-		return character;
-	}
+    /**
+     * Gets the accelerators character or null if the accelerator is defined with a virtual key.
+     * 
+     * Remark: If the character is null, the virtual key is not null and vice versa
+     * 
+     * @return The character or null
+     */
+    public Character getCharacter() {
+        return character;
+    }
 
-	/**
-	 * Gets the accelerators virtual key or null if the accelerator is defined with a character.
-	 * 
-	 * Remark: If the character is null, the virtual key is not null and vice versa
-	 * 
-	 * @return The virtual key or null
-	 */
-	public VirtualKey getVirtualKey() {
-		return virtualKey;
-	}
+    /**
+     * Gets the accelerators virtual key or null if the accelerator is defined with a character.
+     * 
+     * Remark: If the character is null, the virtual key is not null and vice versa
+     * 
+     * @return The virtual key or null
+     */
+    public VirtualKey getVirtualKey() {
+        return virtualKey;
+    }
 
-	/**
-	 * The modifiers or an empty list if no modifiers are defined
-	 * 
-	 * @return The odifers or an empry list
-	 */
-	public List<Modifier> getModifier() {
-		return modifier;
-	}
+    /**
+     * The modifiers or an empty list if no modifiers are defined
+     * 
+     * @return The odifers or an empry list
+     */
+    public List<Modifier> getModifier() {
+        return modifier;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((character == null) ? 0 : character.hashCode());
-		result = prime * result + ((modifier == null) ? 0 : modifier.hashCode());
-		result = prime * result + ((virtualKey == null) ? 0 : virtualKey.hashCode());
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((character == null) ? 0 : character.hashCode());
+        result = prime * result + ((modifier == null) ? 0 : modifier.hashCode());
+        result = prime * result + ((virtualKey == null) ? 0 : virtualKey.hashCode());
+        return result;
+    }
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final Accelerator other = (Accelerator) obj;
-		if (character == null) {
-			if (other.character != null) {
-				return false;
-			}
-		}
-		else if (!character.equals(other.character)) {
-			return false;
-		}
-		if (modifier == null) {
-			if (other.modifier != null) {
-				return false;
-			}
-		}
-		else if (!modifier.equals(other.modifier)) {
-			return false;
-		}
-		if (virtualKey != other.virtualKey) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Accelerator other = (Accelerator) obj;
+        if (character == null) {
+            if (other.character != null) {
+                return false;
+            }
+        }
+        else if (!character.equals(other.character)) {
+            return false;
+        }
+        if (modifier == null) {
+            if (other.modifier != null) {
+                return false;
+            }
+        }
+        else if (!modifier.equals(other.modifier)) {
+            return false;
+        }
+        if (virtualKey != other.virtualKey) {
+            return false;
+        }
+        return true;
+    }
 
 }

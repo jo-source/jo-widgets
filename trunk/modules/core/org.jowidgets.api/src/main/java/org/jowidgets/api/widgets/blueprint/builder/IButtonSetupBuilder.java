@@ -30,13 +30,13 @@ package org.jowidgets.api.widgets.blueprint.builder;
 import org.jowidgets.common.widgets.builder.IButtonSetupBuilderCommon;
 
 public interface IButtonSetupBuilder<INSTANCE_TYPE extends IButtonSetupBuilder<?>> extends
-		IButtonSetupBuilderCommon<INSTANCE_TYPE>,
-		IComponentSetupBuilder<INSTANCE_TYPE> {
+        IButtonSetupBuilderCommon<INSTANCE_TYPE>,
+        IComponentSetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setEnabled(boolean enabled);
+    INSTANCE_TYPE setEnabled(boolean enabled);
 
-	INSTANCE_TYPE setFontSize(Integer size);
+    INSTANCE_TYPE setFontSize(Integer size);
 
-	INSTANCE_TYPE setFontName(String fontName);
+    INSTANCE_TYPE setFontName(String fontName);
 
 }

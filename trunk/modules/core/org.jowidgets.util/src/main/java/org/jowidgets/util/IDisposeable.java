@@ -30,6 +30,6 @@ package org.jowidgets.util;
 
 public interface IDisposeable {
 
-	void dispose();
+    void dispose();
 
 }

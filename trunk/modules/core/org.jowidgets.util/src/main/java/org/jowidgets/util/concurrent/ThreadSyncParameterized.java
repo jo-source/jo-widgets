@@ -38,39 +38,39 @@ import org.jowidgets.util.parameter.ParameterizedWrapper;
 
 public final class ThreadSyncParameterized extends ParameterizedWrapper {
 
-	public ThreadSyncParameterized(
-		final IParameterized original,
-		final ISingleThreadAccess originalThreadAccess,
-		final ISingleThreadAccess newThreadAccess) {
-		super(create(original, originalThreadAccess, newThreadAccess));
-	}
+    public ThreadSyncParameterized(
+        final IParameterized original,
+        final ISingleThreadAccess originalThreadAccess,
+        final ISingleThreadAccess newThreadAccess) {
+        super(create(original, originalThreadAccess, newThreadAccess));
+    }
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
-	public void dispose() {
-		for (final ITypedKey key : getAvailableParameters()) {
-			final ThreadSyncParameter parameter = (ThreadSyncParameter) getParameter(key);
-			parameter.dispose();
-		}
-	}
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public void dispose() {
+        for (final ITypedKey key : getAvailableParameters()) {
+            final ThreadSyncParameter parameter = (ThreadSyncParameter) getParameter(key);
+            parameter.dispose();
+        }
+    }
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
-	private static IParameterized create(
-		final IParameterized original,
-		final ISingleThreadAccess originalThreadAccess,
-		final ISingleThreadAccess newThreadAccess) {
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    private static IParameterized create(
+        final IParameterized original,
+        final ISingleThreadAccess originalThreadAccess,
+        final ISingleThreadAccess newThreadAccess) {
 
-		Assert.paramNotNull(original, "original");
-		Assert.paramNotNull(originalThreadAccess, "originalThreadAccess");
-		Assert.paramNotNull(newThreadAccess, "newThreadAccess");
+        Assert.paramNotNull(original, "original");
+        Assert.paramNotNull(originalThreadAccess, "originalThreadAccess");
+        Assert.paramNotNull(newThreadAccess, "newThreadAccess");
 
-		final IParameterizedBuilder builder = Parameterized.builder();
+        final IParameterizedBuilder builder = Parameterized.builder();
 
-		for (final ITypedKey key : original.getAvailableParameters()) {
-			final IParameter originalParameter = original.getParameter(key);
-			final IParameter newParameter = new ThreadSyncParameter(originalParameter, originalThreadAccess, newThreadAccess);
-			builder.addParameter(key, newParameter);
-		}
+        for (final ITypedKey key : original.getAvailableParameters()) {
+            final IParameter originalParameter = original.getParameter(key);
+            final IParameter newParameter = new ThreadSyncParameter(originalParameter, originalThreadAccess, newThreadAccess);
+            builder.addParameter(key, newParameter);
+        }
 
-		return builder.build();
-	}
+        return builder.build();
+    }
 }

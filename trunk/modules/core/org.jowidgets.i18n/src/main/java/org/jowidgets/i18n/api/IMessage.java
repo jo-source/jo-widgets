@@ -34,9 +34,9 @@ package org.jowidgets.i18n.api;
  */
 public interface IMessage {
 
-	/**
-	 * @return The value of the message for the currently set locale provided from the LocaleHolder
-	 */
-	String get();
+    /**
+     * @return The value of the message for the currently set locale provided from the LocaleHolder
+     */
+    String get();
 
 }

@@ -30,7 +30,7 @@ package org.jowidgets.api.model.item;
 
 public interface ICheckedItemModel extends IToolBarItemModel, ISelectableMenuItemModel {
 
-	@Override
-	ICheckedItemModel createCopy();
+    @Override
+    ICheckedItemModel createCopy();
 
 }

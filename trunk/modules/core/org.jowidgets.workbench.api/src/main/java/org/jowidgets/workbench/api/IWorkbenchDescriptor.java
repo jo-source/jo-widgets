@@ -33,30 +33,30 @@ import org.jowidgets.common.types.Position;
 
 public interface IWorkbenchDescriptor extends IWorkbenchPart {
 
-	/**
-	 * @return The initial dimension or null
-	 */
-	Dimension getInitialDimension();
+    /**
+     * @return The initial dimension or null
+     */
+    Dimension getInitialDimension();
 
-	/**
-	 * @return True is the application should start maximized initially, false otherwise
-	 */
-	boolean isInitialMaximized();
+    /**
+     * @return True is the application should start maximized initially, false otherwise
+     */
+    boolean isInitialMaximized();
 
-	/**
-	 * @return True if the main window should be decorated, false otherwise
-	 */
-	boolean isDecorated();
+    /**
+     * @return True if the main window should be decorated, false otherwise
+     */
+    boolean isDecorated();
 
-	/**
-	 * @return The initial position or null
-	 */
-	Position getInitialPosition();
+    /**
+     * @return The initial position or null
+     */
+    Position getInitialPosition();
 
-	double getInitialSplitWeight();
+    double getInitialSplitWeight();
 
-	boolean hasApplicationNavigator();
+    boolean hasApplicationNavigator();
 
-	boolean getApplicationsCloseable();
+    boolean getApplicationsCloseable();
 
 }

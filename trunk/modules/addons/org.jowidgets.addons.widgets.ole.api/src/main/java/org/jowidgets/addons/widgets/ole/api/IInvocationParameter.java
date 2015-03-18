@@ -30,8 +30,8 @@ package org.jowidgets.addons.widgets.ole.api;
 
 public interface IInvocationParameter {
 
-	Object getParameter();
+    Object getParameter();
 
-	String getParameterName();
+    String getParameterName();
 
 }

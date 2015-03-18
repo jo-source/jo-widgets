@@ -30,8 +30,8 @@ package org.jowidgets.tools.clipboard;
 
 public final class StringTransfer extends TransferableWrapper {
 
-	public StringTransfer(final String data) {
-		super(new SingleTypeTransfer<String>(String.class, data));
-	}
+    public StringTransfer(final String data) {
+        super(new SingleTypeTransfer<String>(String.class, data));
+    }
 
 }

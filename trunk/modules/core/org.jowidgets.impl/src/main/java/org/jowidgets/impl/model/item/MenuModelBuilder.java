@@ -33,9 +33,9 @@ import org.jowidgets.api.model.item.IMenuModelBuilder;
 
 public class MenuModelBuilder extends AbstractItemModelBuilder<IMenuModelBuilder, IMenuModel> implements IMenuModelBuilder {
 
-	@Override
-	public IMenuModel build() {
-		return new MenuModelImpl(getId(), getText(), getToolTipText(), getIcon(), getAccelerator(), getMnemonic(), isEnabled());
-	}
+    @Override
+    public IMenuModel build() {
+        return new MenuModelImpl(getId(), getText(), getToolTipText(), getIcon(), getAccelerator(), getMnemonic(), isEnabled());
+    }
 
 }

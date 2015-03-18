@@ -28,10 +28,10 @@
 package org.jowidgets.common.widgets.builder;
 
 public interface ITextFieldSetupBuilderCommon<INSTANCE_TYPE extends ITextFieldSetupBuilderCommon<?>> extends
-		ITextComponentSetupBuilderCommon<INSTANCE_TYPE> {
+        ITextComponentSetupBuilderCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setPasswordPresentation(boolean passwordPresentation);
+    INSTANCE_TYPE setPasswordPresentation(boolean passwordPresentation);
 
-	INSTANCE_TYPE setBorder(boolean border);
+    INSTANCE_TYPE setBorder(boolean border);
 
 }

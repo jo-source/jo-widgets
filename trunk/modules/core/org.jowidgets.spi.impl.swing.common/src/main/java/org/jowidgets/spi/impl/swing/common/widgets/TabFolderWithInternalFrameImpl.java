@@ -59,190 +59,190 @@ import org.jowidgets.util.TypeCast;
 
 public class TabFolderWithInternalFrameImpl extends SwingControl implements ITabFolderSpi {
 
-	private final IGenericWidgetFactory widgetFactory;
-	private final boolean tabsCloseable;
-	private final List<TabItemImpl> items;
-	private final JTabbedPane tabbedPane;
+    private final IGenericWidgetFactory widgetFactory;
+    private final boolean tabsCloseable;
+    private final List<TabItemImpl> items;
+    private final JTabbedPane tabbedPane;
 
-	public TabFolderWithInternalFrameImpl(final IGenericWidgetFactory widgetFactory, final ITabFolderSetupSpi setup) {
-		super(new JInternalFrame());
+    public TabFolderWithInternalFrameImpl(final IGenericWidgetFactory widgetFactory, final ITabFolderSetupSpi setup) {
+        super(new JInternalFrame());
 
-		this.tabbedPane = new JTabbedPane();
-		this.items = new LinkedList<TabItemImpl>();
+        this.tabbedPane = new JTabbedPane();
+        this.items = new LinkedList<TabItemImpl>();
 
-		//avoid that internal frame can be dragged 
-		//TODO MG this may work not for all LookAndFeels
-		final JInternalFrame internalFrame = getUiReference();
-		final InternalFrameUI internalFrameUI = internalFrame.getUI();
-		if (internalFrameUI instanceof BasicInternalFrameUI) {
-			final BasicInternalFrameUI ui = (BasicInternalFrameUI) getUiReference().getUI();
-			final Component northPane = ui.getNorthPane();
-			for (final MouseMotionListener listener : northPane.getListeners(MouseMotionListener.class)) {
-				northPane.removeMouseMotionListener(listener);
-			}
-		}
+        //avoid that internal frame can be dragged 
+        //TODO MG this may work not for all LookAndFeels
+        final JInternalFrame internalFrame = getUiReference();
+        final InternalFrameUI internalFrameUI = internalFrame.getUI();
+        if (internalFrameUI instanceof BasicInternalFrameUI) {
+            final BasicInternalFrameUI ui = (BasicInternalFrameUI) getUiReference().getUI();
+            final Component northPane = ui.getNorthPane();
+            for (final MouseMotionListener listener : northPane.getListeners(MouseMotionListener.class)) {
+                northPane.removeMouseMotionListener(listener);
+            }
+        }
 
-		internalFrame.setFrameIcon(null);
-		internalFrame.getContentPane().setLayout(new BorderLayout());
-		internalFrame.setVisible(true);
-		internalFrame.setResizable(false);
-		internalFrame.getContentPane().add(BorderLayout.CENTER, tabbedPane);
+        internalFrame.setFrameIcon(null);
+        internalFrame.getContentPane().setLayout(new BorderLayout());
+        internalFrame.setVisible(true);
+        internalFrame.setResizable(false);
+        internalFrame.getContentPane().add(BorderLayout.CENTER, tabbedPane);
 
-		//set the title to the selected tab
-		this.tabbedPane.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(final ChangeEvent e) {
-				setSelectedTitle();
-			}
-		});
+        //set the title to the selected tab
+        this.tabbedPane.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(final ChangeEvent e) {
+                setSelectedTitle();
+            }
+        });
 
-		//fix the fat border for internal frame (e.g in win7)
-		final Border border = getUiReference().getBorder();
-		final Border newBorder = new Border() {
+        //fix the fat border for internal frame (e.g in win7)
+        final Border border = getUiReference().getBorder();
+        final Border newBorder = new Border() {
 
-			@Override
-			public void paintBorder(
-				final Component c,
-				final Graphics g,
-				final int x,
-				final int y,
-				final int width,
-				final int height) {
-				border.paintBorder(c, g, x, y, width, height);
-			}
+            @Override
+            public void paintBorder(
+                final Component c,
+                final Graphics g,
+                final int x,
+                final int y,
+                final int width,
+                final int height) {
+                border.paintBorder(c, g, x, y, width, height);
+            }
 
-			@Override
-			public boolean isBorderOpaque() {
-				return border.isBorderOpaque();
-			}
+            @Override
+            public boolean isBorderOpaque() {
+                return border.isBorderOpaque();
+            }
 
-			@Override
-			public Insets getBorderInsets(final Component c) {
-				final Insets boderInsets = border.getBorderInsets(c);
-				return new Insets(boderInsets.top, 4, 4, 4);
-			}
-		};
-		getUiReference().setBorder(newBorder);
+            @Override
+            public Insets getBorderInsets(final Component c) {
+                final Insets boderInsets = border.getBorderInsets(c);
+                return new Insets(boderInsets.top, 4, 4, 4);
+            }
+        };
+        getUiReference().setBorder(newBorder);
 
-		this.tabsCloseable = setup.isTabsCloseable();
-		this.widgetFactory = widgetFactory;
+        this.tabsCloseable = setup.isTabsCloseable();
+        this.widgetFactory = widgetFactory;
 
-		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-		if (setup.getTabPlacement() == TabPlacement.TOP) {
-			tabbedPane.setTabPlacement(JTabbedPane.TOP);
-		}
-		else if (setup.getTabPlacement() == TabPlacement.BOTTOM) {
-			tabbedPane.setTabPlacement(JTabbedPane.BOTTOM);
-		}
-		else {
-			throw new IllegalArgumentException("TabPlacement '" + setup.getTabPlacement() + "' is not known");
-		}
-	}
+        tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+        if (setup.getTabPlacement() == TabPlacement.TOP) {
+            tabbedPane.setTabPlacement(JTabbedPane.TOP);
+        }
+        else if (setup.getTabPlacement() == TabPlacement.BOTTOM) {
+            tabbedPane.setTabPlacement(JTabbedPane.BOTTOM);
+        }
+        else {
+            throw new IllegalArgumentException("TabPlacement '" + setup.getTabPlacement() + "' is not known");
+        }
+    }
 
-	private void setSelectedTitle() {
-		final int selectedIndex = tabbedPane.getSelectedIndex();
-		if (selectedIndex != -1) {
-			final Component selectedTabComponent = tabbedPane.getTabComponentAt(selectedIndex);
-			if (selectedTabComponent instanceof TabComponent) {
-				final JLabel label = ((TabComponent) selectedTabComponent).getLabel();
-				getUiReference().setTitle(label.getText());
-				getUiReference().setFrameIcon(label.getIcon());
-			}
-			else {
-				getUiReference().setTitle(null);
-				getUiReference().setFrameIcon(null);
-			}
-		}
-		else {
-			getUiReference().setTitle(null);
-			getUiReference().setFrameIcon(null);
-		}
-	}
+    private void setSelectedTitle() {
+        final int selectedIndex = tabbedPane.getSelectedIndex();
+        if (selectedIndex != -1) {
+            final Component selectedTabComponent = tabbedPane.getTabComponentAt(selectedIndex);
+            if (selectedTabComponent instanceof TabComponent) {
+                final JLabel label = ((TabComponent) selectedTabComponent).getLabel();
+                getUiReference().setTitle(label.getText());
+                getUiReference().setFrameIcon(label.getIcon());
+            }
+            else {
+                getUiReference().setTitle(null);
+                getUiReference().setFrameIcon(null);
+            }
+        }
+        else {
+            getUiReference().setTitle(null);
+            getUiReference().setFrameIcon(null);
+        }
+    }
 
-	@Override
-	public JInternalFrame getUiReference() {
-		return (JInternalFrame) super.getUiReference();
-	}
+    @Override
+    public JInternalFrame getUiReference() {
+        return (JInternalFrame) super.getUiReference();
+    }
 
-	@Override
-	public void removeItem(final int index) {
-		getUiReference().remove(index);
-		items.remove(index);
-		setSelectedTitle();
-	}
+    @Override
+    public void removeItem(final int index) {
+        getUiReference().remove(index);
+        items.remove(index);
+        setSelectedTitle();
+    }
 
-	@Override
-	public ITabItemSpi addItem(final ITabItemSetupSpi setup) {
-		final TabItemImpl result = new TabItemImpl(widgetFactory, tabbedPane, tabsCloseable);
-		items.add(result);
-		setSelectedTitle();
-		return result;
-	}
+    @Override
+    public ITabItemSpi addItem(final ITabItemSetupSpi setup) {
+        final TabItemImpl result = new TabItemImpl(widgetFactory, tabbedPane, tabsCloseable);
+        items.add(result);
+        setSelectedTitle();
+        return result;
+    }
 
-	@Override
-	public ITabItemSpi addItem(final int index, final ITabItemSetupSpi setup) {
-		final TabItemImpl result = new TabItemImpl(widgetFactory, tabbedPane, tabsCloseable, Integer.valueOf(index));
-		items.add(index, result);
-		setSelectedTitle();
-		return result;
-	}
+    @Override
+    public ITabItemSpi addItem(final int index, final ITabItemSetupSpi setup) {
+        final TabItemImpl result = new TabItemImpl(widgetFactory, tabbedPane, tabsCloseable, Integer.valueOf(index));
+        items.add(index, result);
+        setSelectedTitle();
+        return result;
+    }
 
-	@Override
-	public void setSelectedItem(final int index) {
-		tabbedPane.setSelectedIndex(index);
-		setSelectedTitle();
-	}
+    @Override
+    public void setSelectedItem(final int index) {
+        tabbedPane.setSelectedIndex(index);
+        setSelectedTitle();
+    }
 
-	@Override
-	public int getSelectedIndex() {
-		return tabbedPane.getSelectedIndex();
-	}
+    @Override
+    public int getSelectedIndex() {
+        return tabbedPane.getSelectedIndex();
+    }
 
-	@Override
-	public void detachItem(final ITabItemSpi item) {
-		Assert.paramNotNull(item, "item");
-		final TabItemImpl itemImpl = TypeCast.toType(item, TabItemImpl.class);
-		final int itemIndex = items.indexOf(itemImpl);
-		if (itemIndex == -1) {
-			throw new IllegalArgumentException("Item is not attached to this folder");
-		}
-		if (itemImpl.isDetached()) {
-			throw new IllegalArgumentException("Item is already detached");
-		}
+    @Override
+    public void detachItem(final ITabItemSpi item) {
+        Assert.paramNotNull(item, "item");
+        final TabItemImpl itemImpl = TypeCast.toType(item, TabItemImpl.class);
+        final int itemIndex = items.indexOf(itemImpl);
+        if (itemIndex == -1) {
+            throw new IllegalArgumentException("Item is not attached to this folder");
+        }
+        if (itemImpl.isDetached()) {
+            throw new IllegalArgumentException("Item is already detached");
+        }
 
-		items.remove(itemIndex);
-		itemImpl.detach();
-		setSelectedTitle();
-	}
+        items.remove(itemIndex);
+        itemImpl.detach();
+        setSelectedTitle();
+    }
 
-	@Override
-	public void attachItem(final ITabItemSpi item) {
-		Assert.paramNotNull(item, "item");
-		final TabItemImpl itemImpl = TypeCast.toType(item, TabItemImpl.class);
-		if (!itemImpl.isDetached()) {
-			throw new IllegalArgumentException("Item is not detached");
-		}
-		itemImpl.attach(tabbedPane, tabsCloseable, null);
-		items.add(itemImpl);
-		setSelectedTitle();
-	}
+    @Override
+    public void attachItem(final ITabItemSpi item) {
+        Assert.paramNotNull(item, "item");
+        final TabItemImpl itemImpl = TypeCast.toType(item, TabItemImpl.class);
+        if (!itemImpl.isDetached()) {
+            throw new IllegalArgumentException("Item is not detached");
+        }
+        itemImpl.attach(tabbedPane, tabsCloseable, null);
+        items.add(itemImpl);
+        setSelectedTitle();
+    }
 
-	@Override
-	public void attachItem(final int index, final ITabItemSpi item) {
-		Assert.paramNotNull(item, "item");
-		final TabItemImpl itemImpl = TypeCast.toType(item, TabItemImpl.class);
-		if (!itemImpl.isDetached()) {
-			throw new IllegalArgumentException("Item is not detached");
-		}
-		itemImpl.attach(tabbedPane, tabsCloseable, Integer.valueOf(index));
-		items.add(index, itemImpl);
-		setSelectedTitle();
-	}
+    @Override
+    public void attachItem(final int index, final ITabItemSpi item) {
+        Assert.paramNotNull(item, "item");
+        final TabItemImpl itemImpl = TypeCast.toType(item, TabItemImpl.class);
+        if (!itemImpl.isDetached()) {
+            throw new IllegalArgumentException("Item is not detached");
+        }
+        itemImpl.attach(tabbedPane, tabsCloseable, Integer.valueOf(index));
+        items.add(index, itemImpl);
+        setSelectedTitle();
+    }
 
-	@Override
-	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
-		Assert.paramNotNull(clientAreaSize, "clientAreaSize");
-		return DecorationCalc.computeDecoratedSize(getUiReference(), clientAreaSize);
-	}
+    @Override
+    public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+        Assert.paramNotNull(clientAreaSize, "clientAreaSize");
+        return DecorationCalc.computeDecoratedSize(getUiReference(), clientAreaSize);
+    }
 
 }

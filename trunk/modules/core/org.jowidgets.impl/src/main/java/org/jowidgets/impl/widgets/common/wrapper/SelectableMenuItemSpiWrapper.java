@@ -38,57 +38,57 @@ import org.jowidgets.tools.controller.ItemStateObservable;
 
 public class SelectableMenuItemSpiWrapper extends MenuItemSpiWrapper implements ISelectableMenuItemCommon {
 
-	private final ItemStateObservable itemStateObservable;
+    private final ItemStateObservable itemStateObservable;
 
-	public SelectableMenuItemSpiWrapper(final ISelectableMenuItemSpi widget, final SelectableItemModelBindingDelegate itemDelegate) {
-		super(widget, itemDelegate);
-		this.itemStateObservable = new ItemStateObservable();
-		widget.addItemListener(new IItemStateListener() {
-			@Override
-			public void itemStateChanged() {
-				getModel().setSelected(widget.isSelected());
-				itemStateObservable.fireItemStateChanged();
-			}
-		});
-	}
+    public SelectableMenuItemSpiWrapper(final ISelectableMenuItemSpi widget, final SelectableItemModelBindingDelegate itemDelegate) {
+        super(widget, itemDelegate);
+        this.itemStateObservable = new ItemStateObservable();
+        widget.addItemListener(new IItemStateListener() {
+            @Override
+            public void itemStateChanged() {
+                getModel().setSelected(widget.isSelected());
+                itemStateObservable.fireItemStateChanged();
+            }
+        });
+    }
 
-	@Override
-	public ISelectableMenuItemSpi getWidget() {
-		return (ISelectableMenuItemSpi) super.getWidget();
-	}
+    @Override
+    public ISelectableMenuItemSpi getWidget() {
+        return (ISelectableMenuItemSpi) super.getWidget();
+    }
 
-	@Override
-	protected SelectableItemModelBindingDelegate getItemModelBindingDelegate() {
-		return (SelectableItemModelBindingDelegate) super.getItemModelBindingDelegate();
-	}
+    @Override
+    protected SelectableItemModelBindingDelegate getItemModelBindingDelegate() {
+        return (SelectableItemModelBindingDelegate) super.getItemModelBindingDelegate();
+    }
 
-	public ISelectableItemModel getModel() {
-		return getItemModelBindingDelegate().getModel();
-	}
+    public ISelectableItemModel getModel() {
+        return getItemModelBindingDelegate().getModel();
+    }
 
-	@Override
-	public void addItemListener(final IItemStateListener listener) {
-		itemStateObservable.addItemListener(listener);
-	}
+    @Override
+    public void addItemListener(final IItemStateListener listener) {
+        itemStateObservable.addItemListener(listener);
+    }
 
-	@Override
-	public void removeItemListener(final IItemStateListener listener) {
-		itemStateObservable.removeItemListener(listener);
-	}
+    @Override
+    public void removeItemListener(final IItemStateListener listener) {
+        itemStateObservable.removeItemListener(listener);
+    }
 
-	@Override
-	public void setAccelerator(final Accelerator accelerator) {
-		getItemModelBindingDelegate().setAccelerator(accelerator);
-	}
+    @Override
+    public void setAccelerator(final Accelerator accelerator) {
+        getItemModelBindingDelegate().setAccelerator(accelerator);
+    }
 
-	@Override
-	public void setSelected(final boolean selected) {
-		getItemModelBindingDelegate().setSelected(selected);
-	}
+    @Override
+    public void setSelected(final boolean selected) {
+        getItemModelBindingDelegate().setSelected(selected);
+    }
 
-	@Override
-	public boolean isSelected() {
-		return getItemModelBindingDelegate().isSelected();
-	}
+    @Override
+    public boolean isSelected() {
+        return getItemModelBindingDelegate().isSelected();
+    }
 
 }

@@ -32,8 +32,8 @@ import org.jowidgets.api.layout.ILayoutFactory;
 
 public interface ITableRowLayoutFactoryBuilder {
 
-	ITableRowLayoutFactoryBuilder ignoreInCalculations(boolean ignore);
+    ITableRowLayoutFactoryBuilder ignoreInCalculations(boolean ignore);
 
-	ILayoutFactory<ITableRowLayout> build();
+    ILayoutFactory<ITableRowLayout> build();
 
 }

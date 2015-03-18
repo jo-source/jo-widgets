@@ -30,42 +30,42 @@ package org.jowidgets.common.mask;
 
 public interface ICharacterMask {
 
-	/**
-	 * Determines if the user can do some input for this character mask.
-	 * 
-	 * If false will be returned, the {@link ICharacterMask#getPlaceholder()} method
-	 * must not return null.
-	 * 
-	 * @return True if the user can input some character, false otherwise
-	 */
-	boolean isReadonly();
+    /**
+     * Determines if the user can do some input for this character mask.
+     * 
+     * If false will be returned, the {@link ICharacterMask#getPlaceholder()} method
+     * must not return null.
+     * 
+     * @return True if the user can input some character, false otherwise
+     */
+    boolean isReadonly();
 
-	/**
-	 * Gets a regular expression that describes the valid character's for this mask.
-	 * If the result is null, all character's are valid.
-	 * 
-	 * Remark: The accepting regExp will be applied before the rejecting regExp
-	 * 
-	 * @return A regular expression or null if all character's are valid
-	 */
-	String getAcceptingRegExp();
+    /**
+     * Gets a regular expression that describes the valid character's for this mask.
+     * If the result is null, all character's are valid.
+     * 
+     * Remark: The accepting regExp will be applied before the rejecting regExp
+     * 
+     * @return A regular expression or null if all character's are valid
+     */
+    String getAcceptingRegExp();
 
-	/**
-	 * Gets a regular expression that describes the invalid character's for this mask.
-	 * If the result is null, no character's are invalid.
-	 * 
-	 * Remark: The accepting regExp will be applied before the rejecting regExp
-	 * 
-	 * @return A regular expression or null if no character's are invalid
-	 */
-	String getRejectingRegExp();
+    /**
+     * Gets a regular expression that describes the invalid character's for this mask.
+     * If the result is null, no character's are invalid.
+     * 
+     * Remark: The accepting regExp will be applied before the rejecting regExp
+     * 
+     * @return A regular expression or null if no character's are invalid
+     */
+    String getRejectingRegExp();
 
-	/**
-	 * Gets the placeholder character for this mask. The placeholder would be shown, if
-	 * no character input has already been occurred.
-	 * 
-	 * @return The placeholder or null if no placeholder is defined
-	 */
-	Character getPlaceholder();
+    /**
+     * Gets the placeholder character for this mask. The placeholder would be shown, if
+     * no character input has already been occurred.
+     * 
+     * @return The placeholder or null if no placeholder is defined
+     */
+    Character getPlaceholder();
 
 }

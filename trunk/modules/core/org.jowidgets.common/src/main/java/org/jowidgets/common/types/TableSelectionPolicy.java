@@ -30,10 +30,10 @@ package org.jowidgets.common.types;
 
 public enum TableSelectionPolicy {
 
-	SINGLE_ROW_SELECTION,
+    SINGLE_ROW_SELECTION,
 
-	MULTI_ROW_SELECTION,
+    MULTI_ROW_SELECTION,
 
-	NO_SELECTION;
+    NO_SELECTION;
 
 }

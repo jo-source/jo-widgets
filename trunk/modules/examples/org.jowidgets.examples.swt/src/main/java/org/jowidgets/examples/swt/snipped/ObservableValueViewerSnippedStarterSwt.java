@@ -32,11 +32,11 @@ import org.jowidgets.examples.common.snipped.ObservableValueViewerSnipped;
 
 public final class ObservableValueViewerSnippedStarterSwt {
 
-	private ObservableValueViewerSnippedStarterSwt() {}
+    private ObservableValueViewerSnippedStarterSwt() {}
 
-	public static void main(final String[] args) throws Exception {
-		Toolkit.getApplicationRunner().run(new ObservableValueViewerSnipped());
-		System.exit(0);
-	}
+    public static void main(final String[] args) throws Exception {
+        Toolkit.getApplicationRunner().run(new ObservableValueViewerSnipped());
+        System.exit(0);
+    }
 
 }

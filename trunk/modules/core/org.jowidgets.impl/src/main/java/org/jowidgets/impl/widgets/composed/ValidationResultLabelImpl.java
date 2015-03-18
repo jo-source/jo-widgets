@@ -41,129 +41,129 @@ import org.jowidgets.validation.MessageType;
 
 public class ValidationResultLabelImpl extends ControlWrapper implements IValidationResultLabel {
 
-	private final IValidationLabelSetup setup;
-	private final ILabel label;
-	private final boolean showLabel;
+    private final IValidationLabelSetup setup;
+    private final ILabel label;
+    private final boolean showLabel;
 
-	private IValidationResult validationResult;
-	private IValidationMessage lastFirstWorst;
+    private IValidationResult validationResult;
+    private IValidationMessage lastFirstWorst;
 
-	public ValidationResultLabelImpl(final ILabel labelWidget, final IValidationLabelSetup setup) {
-		super(labelWidget);
+    public ValidationResultLabelImpl(final ILabel labelWidget, final IValidationLabelSetup setup) {
+        super(labelWidget);
 
-		this.showLabel = setup.isShowValidationMessage();
-		this.label = labelWidget;
+        this.showLabel = setup.isShowValidationMessage();
+        this.label = labelWidget;
 
-		//TOGO MG this seems to be dangerous, because setup my change, if not a single used
-		this.setup = setup;
+        //TOGO MG this seems to be dangerous, because setup my change, if not a single used
+        this.setup = setup;
 
-		ColorSettingsInvoker.setColors(setup, this);
-		VisibiliySettingsInvoker.setVisibility(setup, this);
+        ColorSettingsInvoker.setColors(setup, this);
+        VisibiliySettingsInvoker.setVisibility(setup, this);
 
-		setEmpty();
-	}
+        setEmpty();
+    }
 
-	@Override
-	public void setEmpty() {
-		this.validationResult = null;
-		this.lastFirstWorst = null;
+    @Override
+    public void setEmpty() {
+        this.validationResult = null;
+        this.lastFirstWorst = null;
 
-		label.setIcon(setup.getEmptyIcon());
-		label.setText(null);
-		label.setToolTipText(null);
-	}
+        label.setIcon(setup.getEmptyIcon());
+        label.setText(null);
+        label.setToolTipText(null);
+    }
 
-	@Override
-	public boolean isEmpty() {
-		return validationResult == null;
-	}
+    @Override
+    public boolean isEmpty() {
+        return validationResult == null;
+    }
 
-	@Override
-	public void setResult(final IValidationResult result) {
-		this.validationResult = result;
+    @Override
+    public void setResult(final IValidationResult result) {
+        this.validationResult = result;
 
-		final IValidationMessage firstWorst = result.getWorstFirst();
-		if (NullCompatibleEquivalence.equals(firstWorst, lastFirstWorst)) {
-			return;
-		}
-		else {
-			lastFirstWorst = firstWorst;
-		}
+        final IValidationMessage firstWorst = result.getWorstFirst();
+        if (NullCompatibleEquivalence.equals(firstWorst, lastFirstWorst)) {
+            return;
+        }
+        else {
+            lastFirstWorst = firstWorst;
+        }
 
-		final StringBuilder messageTextBuilder = new StringBuilder();
-		final String context = firstWorst.getContext();
-		final String text = firstWorst.getText();
+        final StringBuilder messageTextBuilder = new StringBuilder();
+        final String context = firstWorst.getContext();
+        final String text = firstWorst.getText();
 
-		if (!EmptyCheck.isEmpty(context) && !EmptyCheck.isEmpty(text)) {
-			messageTextBuilder.append(firstWorst.getContext() + ": ");
-		}
+        if (!EmptyCheck.isEmpty(context) && !EmptyCheck.isEmpty(text)) {
+            messageTextBuilder.append(firstWorst.getContext() + ": ");
+        }
 
-		if (!EmptyCheck.isEmpty(text)) {
-			messageTextBuilder.append(firstWorst.getText());
-		}
-		final String messageText = messageTextBuilder.toString();
+        if (!EmptyCheck.isEmpty(text)) {
+            messageTextBuilder.append(firstWorst.getText());
+        }
+        final String messageText = messageTextBuilder.toString();
 
-		if (firstWorst.getType() == MessageType.OK) {
-			label.setIcon(setup.getOkIcon());
-			if (showLabel) {
-				label.setMarkup(setup.getOkMarkup());
-				label.setForegroundColor(setup.getOkColor());
-				label.setText(messageText);
-			}
-			else if (!EmptyCheck.isEmpty(messageText)) {
-				label.setToolTipText(messageText);
-			}
-		}
-		else if (firstWorst.getType() == MessageType.INFO) {
-			label.setIcon(setup.getInfoIcon());
-			if (showLabel) {
-				label.setMarkup(setup.getInfoMarkup());
-				label.setForegroundColor(setup.getInfoColor());
-				label.setText(messageText);
-			}
-			else if (!EmptyCheck.isEmpty(messageText)) {
-				label.setToolTipText(messageText);
-			}
-		}
-		else if (firstWorst.getType() == MessageType.WARNING) {
-			label.setIcon(setup.getWarningIcon());
-			if (showLabel) {
-				label.setMarkup(setup.getWarningMarkup());
-				label.setForegroundColor(setup.getWarningColor());
-				label.setText(messageText);
-			}
-			else if (!EmptyCheck.isEmpty(messageText)) {
-				label.setToolTipText(messageText);
-			}
-		}
-		else if (firstWorst.getType() == MessageType.INFO_ERROR) {
-			label.setIcon(setup.getInfoErrorIcon());
-			if (showLabel) {
-				label.setMarkup(setup.getInfoErrorMarkup());
-				label.setForegroundColor(setup.getInfoErrorColor());
-				label.setText(messageText);
-			}
-			else if (!EmptyCheck.isEmpty(messageText)) {
-				label.setToolTipText(messageText);
-			}
-		}
-		else if (firstWorst.getType() == MessageType.ERROR) {
-			label.setIcon(setup.getErrorIcon());
-			if (showLabel) {
-				label.setMarkup(setup.getErrorMarkup());
-				label.setForegroundColor(setup.getErrorColor());
-				label.setText(messageText);
-			}
-			else if (!EmptyCheck.isEmpty(messageText)) {
-				label.setToolTipText(messageText);
-			}
-		}
-		label.redraw();
-	}
+        if (firstWorst.getType() == MessageType.OK) {
+            label.setIcon(setup.getOkIcon());
+            if (showLabel) {
+                label.setMarkup(setup.getOkMarkup());
+                label.setForegroundColor(setup.getOkColor());
+                label.setText(messageText);
+            }
+            else if (!EmptyCheck.isEmpty(messageText)) {
+                label.setToolTipText(messageText);
+            }
+        }
+        else if (firstWorst.getType() == MessageType.INFO) {
+            label.setIcon(setup.getInfoIcon());
+            if (showLabel) {
+                label.setMarkup(setup.getInfoMarkup());
+                label.setForegroundColor(setup.getInfoColor());
+                label.setText(messageText);
+            }
+            else if (!EmptyCheck.isEmpty(messageText)) {
+                label.setToolTipText(messageText);
+            }
+        }
+        else if (firstWorst.getType() == MessageType.WARNING) {
+            label.setIcon(setup.getWarningIcon());
+            if (showLabel) {
+                label.setMarkup(setup.getWarningMarkup());
+                label.setForegroundColor(setup.getWarningColor());
+                label.setText(messageText);
+            }
+            else if (!EmptyCheck.isEmpty(messageText)) {
+                label.setToolTipText(messageText);
+            }
+        }
+        else if (firstWorst.getType() == MessageType.INFO_ERROR) {
+            label.setIcon(setup.getInfoErrorIcon());
+            if (showLabel) {
+                label.setMarkup(setup.getInfoErrorMarkup());
+                label.setForegroundColor(setup.getInfoErrorColor());
+                label.setText(messageText);
+            }
+            else if (!EmptyCheck.isEmpty(messageText)) {
+                label.setToolTipText(messageText);
+            }
+        }
+        else if (firstWorst.getType() == MessageType.ERROR) {
+            label.setIcon(setup.getErrorIcon());
+            if (showLabel) {
+                label.setMarkup(setup.getErrorMarkup());
+                label.setForegroundColor(setup.getErrorColor());
+                label.setText(messageText);
+            }
+            else if (!EmptyCheck.isEmpty(messageText)) {
+                label.setToolTipText(messageText);
+            }
+        }
+        label.redraw();
+    }
 
-	@Override
-	public IValidationResult getResult() {
-		return validationResult;
-	}
+    @Override
+    public IValidationResult getResult() {
+        return validationResult;
+    }
 
 }

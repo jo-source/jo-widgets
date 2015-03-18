@@ -33,23 +33,23 @@ import org.jowidgets.api.widgets.ITabItem;
 
 public class TabSelectionEvent implements ITabSelectionEvent {
 
-	private final ITabItem lastSelected;
-	private final ITabItem newSelected;
+    private final ITabItem lastSelected;
+    private final ITabItem newSelected;
 
-	public TabSelectionEvent(final ITabItem lastSelected, final ITabItem newSelected) {
-		super();
-		this.lastSelected = lastSelected;
-		this.newSelected = newSelected;
-	}
+    public TabSelectionEvent(final ITabItem lastSelected, final ITabItem newSelected) {
+        super();
+        this.lastSelected = lastSelected;
+        this.newSelected = newSelected;
+    }
 
-	@Override
-	public ITabItem getLastSelected() {
-		return lastSelected;
-	}
+    @Override
+    public ITabItem getLastSelected() {
+        return lastSelected;
+    }
 
-	@Override
-	public ITabItem getNewSelected() {
-		return newSelected;
-	}
+    @Override
+    public ITabItem getNewSelected() {
+        return newSelected;
+    }
 
 }

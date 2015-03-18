@@ -31,10 +31,10 @@ import org.jowidgets.examples.common.ole.OleControlDemoApplication;
 
 public final class SwtOleControlDemoStarter {
 
-	private SwtOleControlDemoStarter() {}
+    private SwtOleControlDemoStarter() {}
 
-	public static void main(final String[] args) throws Exception {
-		new OleControlDemoApplication("Swt OLE Demo").start();
-	}
+    public static void main(final String[] args) throws Exception {
+        new OleControlDemoApplication("Swt OLE Demo").start();
+    }
 
 }

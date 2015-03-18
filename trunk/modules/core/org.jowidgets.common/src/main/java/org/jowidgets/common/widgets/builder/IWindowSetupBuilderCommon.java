@@ -27,10 +27,9 @@
  */
 package org.jowidgets.common.widgets.builder;
 
-
 public interface IWindowSetupBuilderCommon<INSTANCE_TYPE extends IWindowSetupBuilderCommon<?>> extends
-		IComponentSetupBuilderCommon<INSTANCE_TYPE> {
+        IComponentSetupBuilderCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setResizable(final boolean resizable);
+    INSTANCE_TYPE setResizable(final boolean resizable);
 
 }

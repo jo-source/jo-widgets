@@ -34,17 +34,17 @@ import org.jowidgets.api.widgets.ITreeContainer;
 
 final class TreeCheckCommand implements ICommandExecutor {
 
-	private final ITreeContainer tree;
-	private final boolean checked;
+    private final ITreeContainer tree;
+    private final boolean checked;
 
-	TreeCheckCommand(final ITreeContainer tree, final boolean checked) {
-		this.tree = tree;
-		this.checked = checked;
-	}
+    TreeCheckCommand(final ITreeContainer tree, final boolean checked) {
+        this.tree = tree;
+        this.checked = checked;
+    }
 
-	@Override
-	public void execute(final IExecutionContext executionContext) throws Exception {
-		tree.setAllChildrenChecked(checked);
-	}
+    @Override
+    public void execute(final IExecutionContext executionContext) throws Exception {
+        tree.setAllChildrenChecked(checked);
+    }
 
 }

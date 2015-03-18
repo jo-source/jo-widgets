@@ -30,18 +30,18 @@ package org.jowidgets.common.widgets.controller;
 
 public interface IPopupDetectionObservable {
 
-	/**
-	 * Adds a popup detection listener
-	 * 
-	 * @param listener The listener to add
-	 */
-	void addPopupDetectionListener(IPopupDetectionListener listener);
+    /**
+     * Adds a popup detection listener
+     * 
+     * @param listener The listener to add
+     */
+    void addPopupDetectionListener(IPopupDetectionListener listener);
 
-	/**
-	 * Removes a popup detection listener
-	 * 
-	 * @param listener The listener to remove
-	 */
-	void removePopupDetectionListener(IPopupDetectionListener listener);
+    /**
+     * Removes a popup detection listener
+     * 
+     * @param listener The listener to remove
+     */
+    void removePopupDetectionListener(IPopupDetectionListener listener);
 
 }

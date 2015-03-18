@@ -36,12 +36,12 @@ import org.jowidgets.examples.common.office.OfficeTableCalculationDemoApplicatio
 
 public final class SwingOfficeTableCalculationDemoStarter {
 
-	private SwingOfficeTableCalculationDemoStarter() {}
+    private SwingOfficeTableCalculationDemoStarter() {}
 
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		Toolkit.initialize(AwtSwtToolkitProviderFactory.create());
-		new OfficeTableCalculationDemoApplication("Swing office table calculation demo").start();
-	}
+    public static void main(final String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        Toolkit.initialize(AwtSwtToolkitProviderFactory.create());
+        new OfficeTableCalculationDemoApplication("Swing office table calculation demo").start();
+    }
 
 }

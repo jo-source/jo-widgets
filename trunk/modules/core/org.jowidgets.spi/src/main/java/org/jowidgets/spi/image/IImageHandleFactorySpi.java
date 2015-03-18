@@ -34,34 +34,34 @@ import org.jowidgets.common.image.IImageHandleFactory;
 
 public interface IImageHandleFactorySpi extends IImageHandleFactory {
 
-	/**
-	 * @return The UI's default error icon
-	 */
-	IImageHandle errorIcon();
+    /**
+     * @return The UI's default error icon
+     */
+    IImageHandle errorIcon();
 
-	/**
-	 * @return The UI's default info icon
-	 */
-	IImageHandle infoIcon();
+    /**
+     * @return The UI's default info icon
+     */
+    IImageHandle infoIcon();
 
-	/**
-	 * @return The UI's default warning icon
-	 */
-	IImageHandle warningIcon();
+    /**
+     * @return The UI's default warning icon
+     */
+    IImageHandle warningIcon();
 
-	/**
-	 * @return The UI's default question icon
-	 */
-	IImageHandle questionIcon();
+    /**
+     * @return The UI's default question icon
+     */
+    IImageHandle questionIcon();
 
-	/**
-	 * Creates an image handle from an image constant with an specific width and height
-	 * 
-	 * @param imageConstant
-	 * @param width
-	 * @param height
-	 * @return The created image handle
-	 */
-	IImageHandle createImageHandle(IImageConstant imageConstant, int width, int height);
+    /**
+     * Creates an image handle from an image constant with an specific width and height
+     * 
+     * @param imageConstant
+     * @param width
+     * @param height
+     * @return The created image handle
+     */
+    IImageHandle createImageHandle(IImageConstant imageConstant, int width, int height);
 
 }

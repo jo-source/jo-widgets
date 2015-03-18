@@ -34,19 +34,19 @@ import org.jowidgets.common.types.Position;
 
 public class JoPopupMenu extends Menu<IPopupMenu, DummyBluePrint<IPopupMenu>> implements IPopupMenu {
 
-	public JoPopupMenu() {
-		super(new DummyBluePrint<IPopupMenu>());
-	}
+    public JoPopupMenu() {
+        super(new DummyBluePrint<IPopupMenu>());
+    }
 
-	@Override
-	public void show(final Position position) {
-		checkInitialized();
-		getWidget().show(position);
-	}
+    @Override
+    public void show(final Position position) {
+        checkInitialized();
+        getWidget().show(position);
+    }
 
-	@Override
-	public IComponent getParent() {
-		return (IComponent) super.getParent();
-	}
+    @Override
+    public IComponent getParent() {
+        return (IComponent) super.getParent();
+    }
 
 }

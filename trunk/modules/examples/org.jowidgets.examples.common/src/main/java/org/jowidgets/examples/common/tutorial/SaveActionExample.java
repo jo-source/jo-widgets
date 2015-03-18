@@ -51,85 +51,85 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class SaveActionExample implements IApplication {
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
 
-		final IFrameBluePrint frameBp = BPF.frame();
-		frameBp.setSize(new Dimension(400, 300)).setTitle("Hello World");
+        final IFrameBluePrint frameBp = BPF.frame();
+        frameBp.setSize(new Dimension(400, 300)).setTitle("Hello World");
 
-		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
+        final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
 
-		frame.setLayout(new MigLayoutDescriptor("[grow]", "[][]"));
+        frame.setLayout(new MigLayoutDescriptor("[grow]", "[][]"));
 
-		final IToolBar toolBar = frame.add(BPF.toolBar(), "growx, w 0::, wrap");
+        final IToolBar toolBar = frame.add(BPF.toolBar(), "growx, w 0::, wrap");
 
-		final IButtonBluePrint buttonBp = BPF.button().setText("Hello World");
+        final IButtonBluePrint buttonBp = BPF.button().setText("Hello World");
 
-		final IButton button = frame.add(buttonBp);
+        final IButton button = frame.add(buttonBp);
 
-		button.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				//CHECKSTYLE:OFF
-				System.out.println("Hello World");
-				//CHECKSTYLE:ON
-			}
-		});
+        button.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                //CHECKSTYLE:OFF
+                System.out.println("Hello World");
+                //CHECKSTYLE:ON
+            }
+        });
 
-		//****************************************************************
-		//MENU MODEL EXAMPLE
-		//****************************************************************
-		final IMenuModel mainMenu = new MenuModel("Main menu");
+        //****************************************************************
+        //MENU MODEL EXAMPLE
+        //****************************************************************
+        final IMenuModel mainMenu = new MenuModel("Main menu");
 
-		final ICheckedItemModel checkedItem = mainMenu.addCheckedItem("CheckedItem");
-		checkedItem.setSelected(true);
-		checkedItem.addItemListener(new IItemStateListener() {
-			@Override
-			public void itemStateChanged() {
-				//CHECKSTYLE:OFF
-				System.out.println(checkedItem.isSelected());
-				//CHECKSTYLE:ON
-			}
-		});
+        final ICheckedItemModel checkedItem = mainMenu.addCheckedItem("CheckedItem");
+        checkedItem.setSelected(true);
+        checkedItem.addItemListener(new IItemStateListener() {
+            @Override
+            public void itemStateChanged() {
+                //CHECKSTYLE:OFF
+                System.out.println(checkedItem.isSelected());
+                //CHECKSTYLE:ON
+            }
+        });
 
-		final IAction saveAction = SaveActionFactory.create(checkedItem);
-		final IActionItemModel actionItem = mainMenu.addAction(saveAction);
-		actionItem.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				//CHECKSTYLE:OFF
-				System.out.println("Action Performed");
-				//CHECKSTYLE:ON
-			}
-		});
+        final IAction saveAction = SaveActionFactory.create(checkedItem);
+        final IActionItemModel actionItem = mainMenu.addAction(saveAction);
+        actionItem.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                //CHECKSTYLE:OFF
+                System.out.println("Action Performed");
+                //CHECKSTYLE:ON
+            }
+        });
 
-		mainMenu.addSeparator();
+        mainMenu.addSeparator();
 
-		final IMenuModel subMenu = mainMenu.addMenu("SubMenu");
-		final IRadioItemModel radio1 = subMenu.addRadioItem("Radio1");
-		subMenu.addRadioItem("Radio2").setSelected(true);
-		subMenu.addRadioItem("Radio3");
+        final IMenuModel subMenu = mainMenu.addMenu("SubMenu");
+        final IRadioItemModel radio1 = subMenu.addRadioItem("Radio1");
+        subMenu.addRadioItem("Radio2").setSelected(true);
+        subMenu.addRadioItem("Radio3");
 
-		radio1.addItemListener(new IItemStateListener() {
-			@Override
-			public void itemStateChanged() {
-				//CHECKSTYLE:OFF
-				System.out.println(radio1.isSelected());
-				//CHECKSTYLE:ON
-			}
-		});
+        radio1.addItemListener(new IItemStateListener() {
+            @Override
+            public void itemStateChanged() {
+                //CHECKSTYLE:OFF
+                System.out.println(radio1.isSelected());
+                //CHECKSTYLE:ON
+            }
+        });
 
-		final IMenuBarModel menuBar = frame.getMenuBarModel();
-		menuBar.addMenu(mainMenu);
+        final IMenuBarModel menuBar = frame.getMenuBarModel();
+        menuBar.addMenu(mainMenu);
 
-		frame.setPopupMenu(mainMenu);
+        frame.setPopupMenu(mainMenu);
 
-		final IToolBarModel toolBarModel = toolBar.getModel();
-		toolBarModel.addAction(saveAction);
-		toolBarModel.addItem(checkedItem);
+        final IToolBarModel toolBarModel = toolBar.getModel();
+        toolBarModel.addAction(saveAction);
+        toolBarModel.addItem(checkedItem);
 
-		//set the root frame visible
-		frame.setVisible(true);
-	}
+        //set the root frame visible
+        frame.setVisible(true);
+    }
 
 }

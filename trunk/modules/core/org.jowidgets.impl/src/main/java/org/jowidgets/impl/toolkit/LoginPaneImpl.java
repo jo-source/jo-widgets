@@ -38,55 +38,56 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
 class LoginPaneImpl implements ILoginPane {
 
-	private final IGenericWidgetFactory genericWidgetFactory;
-	private final IBluePrintFactory bluePrintFactory;
-	private final WindowProvider activeWindowProvider;
+    private final IGenericWidgetFactory genericWidgetFactory;
+    private final IBluePrintFactory bluePrintFactory;
+    private final WindowProvider activeWindowProvider;
 
-	LoginPaneImpl(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IBluePrintFactory bluePrintFactory,
-		final WindowProvider activeWindowProvider) {
-		super();
-		this.genericWidgetFactory = genericWidgetFactory;
-		this.bluePrintFactory = bluePrintFactory;
-		this.activeWindowProvider = activeWindowProvider;
-	}
+    LoginPaneImpl(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IBluePrintFactory bluePrintFactory,
+        final WindowProvider activeWindowProvider) {
+        super();
+        this.genericWidgetFactory = genericWidgetFactory;
+        this.bluePrintFactory = bluePrintFactory;
+        this.activeWindowProvider = activeWindowProvider;
+    }
 
-	@Override
-	public ILoginResult login(final ILoginInterceptor interceptor) {
-		return genericWidgetFactory.create(activeWindowProvider.getActiveWindow(), bluePrintFactory.loginDialog(interceptor)).doLogin();
-	}
+    @Override
+    public ILoginResult login(final ILoginInterceptor interceptor) {
+        return genericWidgetFactory.create(activeWindowProvider.getActiveWindow(), bluePrintFactory.loginDialog(interceptor))
+                .doLogin();
+    }
 
-	@Override
-	public ILoginResult login(final IImageConstant logo, final ILoginInterceptor interceptor) {
-		final ILoginDialogBluePrint loginBp = bluePrintFactory.loginDialog(interceptor).setLogo(logo);
-		return genericWidgetFactory.create(activeWindowProvider.getActiveWindow(), loginBp).doLogin();
-	}
+    @Override
+    public ILoginResult login(final IImageConstant logo, final ILoginInterceptor interceptor) {
+        final ILoginDialogBluePrint loginBp = bluePrintFactory.loginDialog(interceptor).setLogo(logo);
+        return genericWidgetFactory.create(activeWindowProvider.getActiveWindow(), loginBp).doLogin();
+    }
 
-	@Override
-	public ILoginResult login(final String loginLabel, final ILoginInterceptor interceptor) {
-		final ILoginDialogBluePrint loginBp = bluePrintFactory.loginDialog(interceptor);
-		loginBp.setLoginLabel(loginLabel);
-		return genericWidgetFactory.create(activeWindowProvider.getActiveWindow(), loginBp).doLogin();
-	}
+    @Override
+    public ILoginResult login(final String loginLabel, final ILoginInterceptor interceptor) {
+        final ILoginDialogBluePrint loginBp = bluePrintFactory.loginDialog(interceptor);
+        loginBp.setLoginLabel(loginLabel);
+        return genericWidgetFactory.create(activeWindowProvider.getActiveWindow(), loginBp).doLogin();
+    }
 
-	@Override
-	public ILoginResult login(final boolean decorated, final ILoginInterceptor interceptor) {
-		final ILoginDialogBluePrint loginBp = bluePrintFactory.loginDialog(interceptor).setDecorated(decorated);
-		return genericWidgetFactory.create(activeWindowProvider.getActiveWindow(), loginBp).doLogin();
-	}
+    @Override
+    public ILoginResult login(final boolean decorated, final ILoginInterceptor interceptor) {
+        final ILoginDialogBluePrint loginBp = bluePrintFactory.loginDialog(interceptor).setDecorated(decorated);
+        return genericWidgetFactory.create(activeWindowProvider.getActiveWindow(), loginBp).doLogin();
+    }
 
-	@Override
-	public ILoginResult login(final boolean decorated, final IImageConstant logo, final ILoginInterceptor interceptor) {
-		final ILoginDialogBluePrint loginBp = bluePrintFactory.loginDialog(interceptor).setLogo(logo).setDecorated(decorated);
-		return genericWidgetFactory.create(activeWindowProvider.getActiveWindow(), loginBp).doLogin();
-	}
+    @Override
+    public ILoginResult login(final boolean decorated, final IImageConstant logo, final ILoginInterceptor interceptor) {
+        final ILoginDialogBluePrint loginBp = bluePrintFactory.loginDialog(interceptor).setLogo(logo).setDecorated(decorated);
+        return genericWidgetFactory.create(activeWindowProvider.getActiveWindow(), loginBp).doLogin();
+    }
 
-	@Override
-	public ILoginResult login(final boolean decorated, final String loginLabel, final ILoginInterceptor interceptor) {
-		final ILoginDialogBluePrint loginBp = bluePrintFactory.loginDialog(interceptor);
-		loginBp.setLoginLabel(loginLabel).setDecorated(decorated);
-		return genericWidgetFactory.create(activeWindowProvider.getActiveWindow(), loginBp).doLogin();
-	}
+    @Override
+    public ILoginResult login(final boolean decorated, final String loginLabel, final ILoginInterceptor interceptor) {
+        final ILoginDialogBluePrint loginBp = bluePrintFactory.loginDialog(interceptor);
+        loginBp.setLoginLabel(loginLabel).setDecorated(decorated);
+        return genericWidgetFactory.create(activeWindowProvider.getActiveWindow(), loginBp).doLogin();
+    }
 
 }

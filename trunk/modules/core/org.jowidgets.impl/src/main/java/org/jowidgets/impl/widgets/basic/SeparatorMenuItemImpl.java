@@ -42,49 +42,51 @@ import org.jowidgets.spi.widgets.IMenuItemSpi;
 
 public class SeparatorMenuItemImpl extends MenuItemSpiWrapper implements IMenuItem {
 
-	private final IMenu parent;
-	private final MenuItemDisposableDelegate disposableDelegate;
+    private final IMenu parent;
+    private final MenuItemDisposableDelegate disposableDelegate;
 
-	public SeparatorMenuItemImpl(final IMenu parent, final IMenuItemSpi menuItemSpi) {
-		super(menuItemSpi, new ItemModelBindingDelegate(new MenuItemSpiInvoker(menuItemSpi), new SeparatorItemModelBuilder().build()));
+    public SeparatorMenuItemImpl(final IMenu parent, final IMenuItemSpi menuItemSpi) {
+        super(menuItemSpi, new ItemModelBindingDelegate(
+            new MenuItemSpiInvoker(menuItemSpi),
+            new SeparatorItemModelBuilder().build()));
 
-		this.parent = parent;
-		this.disposableDelegate = new MenuItemDisposableDelegate(this, getItemModelBindingDelegate());
-	}
+        this.parent = parent;
+        this.disposableDelegate = new MenuItemDisposableDelegate(this, getItemModelBindingDelegate());
+    }
 
-	@Override
-	public IMenu getParent() {
-		return parent;
-	}
+    @Override
+    public IMenu getParent() {
+        return parent;
+    }
 
-	@Override
-	public void dispose() {
-		disposableDelegate.dispose();
-	}
+    @Override
+    public void dispose() {
+        disposableDelegate.dispose();
+    }
 
-	@Override
-	public boolean isDisposed() {
-		return disposableDelegate.isDisposed();
-	}
+    @Override
+    public boolean isDisposed() {
+        return disposableDelegate.isDisposed();
+    }
 
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		disposableDelegate.addDisposeListener(listener);
-	}
+    @Override
+    public void addDisposeListener(final IDisposeListener listener) {
+        disposableDelegate.addDisposeListener(listener);
+    }
 
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		disposableDelegate.removeDisposeListener(listener);
-	}
+    @Override
+    public void removeDisposeListener(final IDisposeListener listener) {
+        disposableDelegate.removeDisposeListener(listener);
+    }
 
-	@Override
-	public ISeparatorItemModel getModel() {
-		return (ISeparatorItemModel) getItemModelBindingDelegate().getModel();
-	}
+    @Override
+    public ISeparatorItemModel getModel() {
+        return (ISeparatorItemModel) getItemModelBindingDelegate().getModel();
+    }
 
-	@Override
-	public void setModel(final IMenuItemModel model) {
-		getItemModelBindingDelegate().setModel(model);
-	}
+    @Override
+    public void setModel(final IMenuItemModel model) {
+        getItemModelBindingDelegate().setModel(model);
+    }
 
 }

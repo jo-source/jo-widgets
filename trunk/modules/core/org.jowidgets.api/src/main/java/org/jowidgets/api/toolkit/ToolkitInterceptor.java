@@ -40,87 +40,87 @@ import org.jowidgets.util.Assert;
 
 public final class ToolkitInterceptor {
 
-	private static CompositeToolkitInterceptorHolder compositeHolder;
+    private static CompositeToolkitInterceptorHolder compositeHolder;
 
-	private ToolkitInterceptor() {}
+    private ToolkitInterceptor() {}
 
-	public static synchronized void registerToolkitInterceptorHolder(final IToolkitInterceptorHolder holder) {
-		Assert.paramNotNull(holder, "holder");
-		getCompositeHolder().add(holder);
-	}
+    public static synchronized void registerToolkitInterceptorHolder(final IToolkitInterceptorHolder holder) {
+        Assert.paramNotNull(holder, "holder");
+        getCompositeHolder().add(holder);
+    }
 
-	/**
-	 * @deprecated Use registerToolkitInterceptorHolder instead, because this method has a type
-	 */
-	@Deprecated
-	public static synchronized void registerTollkitInterceptorHolder(final IToolkitInterceptorHolder holder) {
-		registerToolkitInterceptorHolder(holder);
-	}
+    /**
+     * @deprecated Use registerToolkitInterceptorHolder instead, because this method has a type
+     */
+    @Deprecated
+    public static synchronized void registerTollkitInterceptorHolder(final IToolkitInterceptorHolder holder) {
+        registerToolkitInterceptorHolder(holder);
+    }
 
-	private static synchronized CompositeToolkitInterceptorHolder getCompositeHolder() {
-		if (compositeHolder == null) {
-			compositeHolder = new CompositeToolkitInterceptorHolder();
-			final ServiceLoader<IToolkitInterceptorHolder> serviceLoader = ServiceLoader.load(
-					IToolkitInterceptorHolder.class,
-					SharedClassLoader.getCompositeClassLoader());
-			final Iterator<IToolkitInterceptorHolder> iterator = serviceLoader.iterator();
-			while (iterator.hasNext()) {
-				compositeHolder.add(iterator.next());
-			}
-		}
-		return compositeHolder;
-	}
+    private static synchronized CompositeToolkitInterceptorHolder getCompositeHolder() {
+        if (compositeHolder == null) {
+            compositeHolder = new CompositeToolkitInterceptorHolder();
+            final ServiceLoader<IToolkitInterceptorHolder> serviceLoader = ServiceLoader.load(
+                    IToolkitInterceptorHolder.class,
+                    SharedClassLoader.getCompositeClassLoader());
+            final Iterator<IToolkitInterceptorHolder> iterator = serviceLoader.iterator();
+            while (iterator.hasNext()) {
+                compositeHolder.add(iterator.next());
+            }
+        }
+        return compositeHolder;
+    }
 
-	public static synchronized IToolkitInterceptor getInstance() {
-		return getCompositeHolder().getToolkitInterceptor();
-	}
+    public static synchronized IToolkitInterceptor getInstance() {
+        return getCompositeHolder().getToolkitInterceptor();
+    }
 
-	public static void onToolkitCreate(final IToolkit toolkit) {
-		getInstance().onToolkitCreate(toolkit);
-	}
+    public static void onToolkitCreate(final IToolkit toolkit) {
+        getInstance().onToolkitCreate(toolkit);
+    }
 
-	private static class CompositeToolkitInterceptorHolder implements IToolkitInterceptorHolder {
+    private static class CompositeToolkitInterceptorHolder implements IToolkitInterceptorHolder {
 
-		private final List<IToolkitInterceptorHolder> holders;
+        private final List<IToolkitInterceptorHolder> holders;
 
-		private final IToolkitInterceptor toolkitInterceptor;
+        private final IToolkitInterceptor toolkitInterceptor;
 
-		CompositeToolkitInterceptorHolder() {
-			this.holders = new LinkedList<IToolkitInterceptorHolder>();
+        CompositeToolkitInterceptorHolder() {
+            this.holders = new LinkedList<IToolkitInterceptorHolder>();
 
-			this.toolkitInterceptor = new IToolkitInterceptor() {
+            this.toolkitInterceptor = new IToolkitInterceptor() {
 
-				@Override
-				public void onToolkitCreate(final IToolkit toolkit) {
-					for (final IToolkitInterceptorHolder holder : holders) {
-						holder.getToolkitInterceptor().onToolkitCreate(toolkit);
-					}
-				}
-			};
-		}
+                @Override
+                public void onToolkitCreate(final IToolkit toolkit) {
+                    for (final IToolkitInterceptorHolder holder : holders) {
+                        holder.getToolkitInterceptor().onToolkitCreate(toolkit);
+                    }
+                }
+            };
+        }
 
-		void add(final IToolkitInterceptorHolder holder) {
-			holders.add(holder);
-			Collections.sort(holders, new Comparator<IToolkitInterceptorHolder>() {
-				@Override
-				public int compare(final IToolkitInterceptorHolder provider1, final IToolkitInterceptorHolder provider2) {
-					if (provider1 != null && provider2 != null) {
-						return provider1.getOrder() - provider2.getOrder();
-					}
-					return 0;
-				}
-			});
-		}
+        void add(final IToolkitInterceptorHolder holder) {
+            holders.add(holder);
+            Collections.sort(holders, new Comparator<IToolkitInterceptorHolder>() {
+                @Override
+                public int compare(final IToolkitInterceptorHolder provider1, final IToolkitInterceptorHolder provider2) {
+                    if (provider1 != null && provider2 != null) {
+                        return provider1.getOrder() - provider2.getOrder();
+                    }
+                    return 0;
+                }
+            });
+        }
 
-		@Override
-		public IToolkitInterceptor getToolkitInterceptor() {
-			return toolkitInterceptor;
-		}
+        @Override
+        public IToolkitInterceptor getToolkitInterceptor() {
+            return toolkitInterceptor;
+        }
 
-		@Override
-		public int getOrder() {
-			return 0;
-		}
-	}
+        @Override
+        public int getOrder() {
+            return 0;
+        }
+    }
 
 }

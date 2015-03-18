@@ -34,77 +34,77 @@ import org.jowidgets.common.image.IImageConstant;
 
 public final class QuestionPane {
 
-	private QuestionPane() {}
+    private QuestionPane() {}
 
-	public static IQuestionPane get() {
-		return Toolkit.getQuestionPane();
-	}
+    public static IQuestionPane get() {
+        return Toolkit.getQuestionPane();
+    }
 
-	public static QuestionResult askYesNoQuestion(final String question) {
-		return get().askYesNoQuestion(question);
-	}
+    public static QuestionResult askYesNoQuestion(final String question) {
+        return get().askYesNoQuestion(question);
+    }
 
-	public static QuestionResult askYesNoCancelQuestion(final String question) {
-		return get().askYesNoCancelQuestion(question);
-	}
+    public static QuestionResult askYesNoCancelQuestion(final String question) {
+        return get().askYesNoCancelQuestion(question);
+    }
 
-	public static QuestionResult askYesNoQuestion(final String title, final String question) {
-		return get().askYesNoQuestion(title, question);
-	}
+    public static QuestionResult askYesNoQuestion(final String title, final String question) {
+        return get().askYesNoQuestion(title, question);
+    }
 
-	public static QuestionResult askYesNoCancelQuestion(final String title, final String question) {
-		return get().askYesNoCancelQuestion(title, question);
-	}
+    public static QuestionResult askYesNoCancelQuestion(final String title, final String question) {
+        return get().askYesNoCancelQuestion(title, question);
+    }
 
-	public static QuestionResult askYesNoQuestion(final String title, final String question, final QuestionResult defaultResult) {
-		return get().askYesNoQuestion(title, question, defaultResult);
-	}
+    public static QuestionResult askYesNoQuestion(final String title, final String question, final QuestionResult defaultResult) {
+        return get().askYesNoQuestion(title, question, defaultResult);
+    }
 
-	public static QuestionResult askYesNoCancelQuestion(
-		final String title,
-		final String question,
-		final QuestionResult defaultResult) {
-		return get().askYesNoCancelQuestion(title, question, defaultResult);
-	}
+    public static QuestionResult askYesNoCancelQuestion(
+        final String title,
+        final String question,
+        final QuestionResult defaultResult) {
+        return get().askYesNoCancelQuestion(title, question, defaultResult);
+    }
 
-	public static QuestionResult askYesNoQuestion(
-		final String title,
-		final String question,
-		final QuestionResult defaultResult,
-		final IImageConstant icon) {
-		return get().askYesNoQuestion(title, question, defaultResult, icon);
-	}
+    public static QuestionResult askYesNoQuestion(
+        final String title,
+        final String question,
+        final QuestionResult defaultResult,
+        final IImageConstant icon) {
+        return get().askYesNoQuestion(title, question, defaultResult, icon);
+    }
 
-	public static QuestionResult askYesNoCancelQuestion(
-		final String title,
-		final String question,
-		final QuestionResult defaultResult,
-		final IImageConstant icon) {
-		return get().askYesNoCancelQuestion(title, question, defaultResult, icon);
-	}
+    public static QuestionResult askYesNoCancelQuestion(
+        final String title,
+        final String question,
+        final QuestionResult defaultResult,
+        final IImageConstant icon) {
+        return get().askYesNoCancelQuestion(title, question, defaultResult, icon);
+    }
 
-	public static QuestionResult askYesNoQuestion(
-		final String title,
-		final IImageConstant titleIcon,
-		final String question,
-		final QuestionResult defaultResult,
-		final IImageConstant icon) {
-		return get().askYesNoQuestion(title, titleIcon, question, defaultResult, icon);
-	}
+    public static QuestionResult askYesNoQuestion(
+        final String title,
+        final IImageConstant titleIcon,
+        final String question,
+        final QuestionResult defaultResult,
+        final IImageConstant icon) {
+        return get().askYesNoQuestion(title, titleIcon, question, defaultResult, icon);
+    }
 
-	public static QuestionResult askYesNoCancelQuestion(
-		final String title,
-		final IImageConstant titleIcon,
-		final String question,
-		final QuestionResult defaultResult,
-		final IImageConstant icon) {
-		return get().askYesNoCancelQuestion(title, titleIcon, question, defaultResult, icon);
-	}
+    public static QuestionResult askYesNoCancelQuestion(
+        final String title,
+        final IImageConstant titleIcon,
+        final String question,
+        final QuestionResult defaultResult,
+        final IImageConstant icon) {
+        return get().askYesNoCancelQuestion(title, titleIcon, question, defaultResult, icon);
+    }
 
-	public static QuestionResult askYesNoQuestion(
-		final IExecutionContext executionContext,
-		final String question,
-		final QuestionResult defaultResult) {
-		return get().askYesNoQuestion(executionContext, question, defaultResult);
-	}
+    public static QuestionResult askYesNoQuestion(
+        final IExecutionContext executionContext,
+        final String question,
+        final QuestionResult defaultResult) {
+        return get().askYesNoQuestion(executionContext, question, defaultResult);
+    }
 }

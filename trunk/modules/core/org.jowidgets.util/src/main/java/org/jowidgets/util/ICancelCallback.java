@@ -32,6 +32,6 @@ import org.jowidgets.util.event.ICancelObservable;
 
 public interface ICancelCallback extends ICancelObservable {
 
-	boolean isCanceled();
+    boolean isCanceled();
 
 }

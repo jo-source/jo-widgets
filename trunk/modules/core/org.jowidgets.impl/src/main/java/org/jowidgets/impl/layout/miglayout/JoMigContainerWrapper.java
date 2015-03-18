@@ -33,59 +33,59 @@ import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 
 final class JoMigContainerWrapper extends JoMigComponentWrapper implements IContainerWrapperCommon {
-	JoMigContainerWrapper(final IContainer c) {
-		super(c);
-	}
+    JoMigContainerWrapper(final IContainer c) {
+        super(c);
+    }
 
-	@Override
-	public IComponentWrapperCommon[] getComponents() {
-		final IContainer c = getComponent();
-		final List<IControl> cons = c.getChildren();
-		final IComponentWrapperCommon[] cws = new IComponentWrapperCommon[cons.size()];
-		for (int i = 0; i < cws.length; i++) {
-			cws[i] = new JoMigComponentWrapper(cons.get(i));
-		}
-		return cws;
-	}
+    @Override
+    public IComponentWrapperCommon[] getComponents() {
+        final IContainer c = getComponent();
+        final List<IControl> cons = c.getChildren();
+        final IComponentWrapperCommon[] cws = new IComponentWrapperCommon[cons.size()];
+        for (int i = 0; i < cws.length; i++) {
+            cws[i] = new JoMigComponentWrapper(cons.get(i));
+        }
+        return cws;
+    }
 
-	@Override
-	public IContainer getComponent() {
-		return (IContainer) super.getComponent();
-	}
+    @Override
+    public IContainer getComponent() {
+        return (IContainer) super.getComponent();
+    }
 
-	@Override
-	public int getComponentCount() {
-		return getComponent().getChildren().size();
-	}
+    @Override
+    public int getComponentCount() {
+        return getComponent().getChildren().size();
+    }
 
-	@Override
-	public Object getLayout() {
-		// This method is used for component links. Due to the fact, that the instance cannot be determined in Jo Widgets return the wrapper
-		return this;
-	}
+    @Override
+    public Object getLayout() {
+        // This method is used for component links. Due to the fact, that the instance cannot be determined in Jo Widgets return the wrapper
+        return this;
+    }
 
-	@Override
-	public boolean isLeftToRight() {
-		// TODO MG,NM MigLayout - implement left to right and right to left support
-		return true;
-	}
+    @Override
+    public boolean isLeftToRight() {
+        // TODO MG,NM MigLayout - implement left to right and right to left support
+        return true;
+    }
 
-	@Override
-	public void paintDebugCell(final int x, final int y, final int width, final int height) {
-		// not implemented yet
-	}
+    @Override
+    public void paintDebugCell(final int x, final int y, final int width, final int height) {
+        // not implemented yet
+    }
 
-	@Override
-	public int getComponetType(final boolean disregardScrollPane) {
-		return TYPE_CONTAINER;
-	}
+    @Override
+    public int getComponetType(final boolean disregardScrollPane) {
+        return TYPE_CONTAINER;
+    }
 
-	@Override
-	public int getLayoutHashCode() {
-		final int h = super.getLayoutHashCode();
-		//	if (isLeftToRight()) {
-		//		h |= (1 << 26);
-		//	}
-		return h;
-	}
+    @Override
+    public int getLayoutHashCode() {
+        final int h = super.getLayoutHashCode();
+        //	if (isLeftToRight()) {
+        //		h |= (1 << 26);
+        //	}
+        return h;
+    }
 }

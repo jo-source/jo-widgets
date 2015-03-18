@@ -38,16 +38,16 @@ import org.jowidgets.workbench.impl.WorkbenchRunner;
 
 public final class RwtWorkbenchDemo extends RwtEntryPoint {
 
-	public RwtWorkbenchDemo() {
-		super(new Runnable() {
-			@Override
-			public void run() {
-				Toolkit.getWidgetFactory().register(
-						IMapWidgetBlueprint.class,
-						new SwtGoogleEarthWidgetFactory(MapDemoApplication.API_KEY));
-				new WorkbenchRunner().run(new WorkbenchDemo1Factory(new Dimension(1024, 650)));
-			}
-		});
-	}
+    public RwtWorkbenchDemo() {
+        super(new Runnable() {
+            @Override
+            public void run() {
+                Toolkit.getWidgetFactory().register(
+                        IMapWidgetBlueprint.class,
+                        new SwtGoogleEarthWidgetFactory(MapDemoApplication.API_KEY));
+                new WorkbenchRunner().run(new WorkbenchDemo1Factory(new Dimension(1024, 650)));
+            }
+        });
+    }
 
 }

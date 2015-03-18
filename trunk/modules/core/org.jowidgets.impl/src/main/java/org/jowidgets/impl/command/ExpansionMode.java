@@ -30,9 +30,9 @@ package org.jowidgets.impl.command;
 
 enum ExpansionMode {
 
-	EXPAND,
-	COLLAPSE,
-	EXPAND_COLLAPSE,
-	EXPAND_FILTER_ACCEPT_COLLAPSE_OTHERS;
+    EXPAND,
+    COLLAPSE,
+    EXPAND_COLLAPSE,
+    EXPAND_FILTER_ACCEPT_COLLAPSE_OTHERS;
 
 }

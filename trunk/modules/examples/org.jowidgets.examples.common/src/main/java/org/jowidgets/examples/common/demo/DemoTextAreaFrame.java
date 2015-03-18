@@ -37,29 +37,29 @@ import org.jowidgets.tools.powo.JoFrame;
 
 public class DemoTextAreaFrame extends JoFrame {
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+    private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
-	public DemoTextAreaFrame() {
-		super("Text area demo");
+    public DemoTextAreaFrame() {
+        super("Text area demo");
 
-		setLayout(MigLayoutFactory.growingInnerCellLayout());
-		final ITextArea textArea = add(BPF.textArea().setLineWrap(true), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        setLayout(MigLayoutFactory.growingInnerCellLayout());
+        final ITextArea textArea = add(BPF.textArea().setLineWrap(true), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
-		final StringBuilder textBuilder = new StringBuilder();
-		for (int i = 0; i < 40; i++) {
-			textBuilder.append("Demonstration of an text area ");
-		}
-		textArea.setText(textBuilder.toString());
-		textArea.scrollToEnd();
+        final StringBuilder textBuilder = new StringBuilder();
+        for (int i = 0; i < 40; i++) {
+            textBuilder.append("Demonstration of an text area ");
+        }
+        textArea.setText(textBuilder.toString());
+        textArea.scrollToEnd();
 
-		textArea.addInputListener(new IInputListener() {
-			@Override
-			public void inputChanged() {
-				//CHECKSTYLE:OFF
-				System.out.println("Caret pos: " + textArea.getCaretPosition());
-				//CHECKSTYLE:ON
-			}
-		});
-	}
+        textArea.addInputListener(new IInputListener() {
+            @Override
+            public void inputChanged() {
+                //CHECKSTYLE:OFF
+                System.out.println("Caret pos: " + textArea.getCaretPosition());
+                //CHECKSTYLE:ON
+            }
+        });
+    }
 
 }

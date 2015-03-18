@@ -44,148 +44,148 @@ import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 
 public class SplitCompositeImpl extends AbstractSplitCompositeSpiWrapper implements ISplitComposite {
 
-	private final ControlDelegate controlDelegate;
-	private final ContainerImpl first;
-	private final ContainerImpl second;
-	private final int dividerSize;
-	private final Orientation orientation;
+    private final ControlDelegate controlDelegate;
+    private final ContainerImpl first;
+    private final ContainerImpl second;
+    private final int dividerSize;
+    private final Orientation orientation;
 
-	private Dimension firstClientAreaMinSize;
-	private Dimension secondClientAreaMinSize;
+    private Dimension firstClientAreaMinSize;
+    private Dimension secondClientAreaMinSize;
 
-	public SplitCompositeImpl(final ISplitCompositeSpi containerWidgetSpi, final ISplitCompositeSetup setup) {
-		super(containerWidgetSpi);
-		this.controlDelegate = new ControlDelegate(containerWidgetSpi, this);
-		this.first = new ContainerImpl(getWidget().getFirst());
-		this.second = new ContainerImpl(getWidget().getSecond());
-		this.dividerSize = setup.getDividerSize();
-		this.orientation = setup.getOrientation();
-		this.first.setParent(this);
-		this.second.setParent(this);
-		VisibiliySettingsInvoker.setVisibility(setup, this);
-		ColorSettingsInvoker.setColors(setup, this);
-	}
+    public SplitCompositeImpl(final ISplitCompositeSpi containerWidgetSpi, final ISplitCompositeSetup setup) {
+        super(containerWidgetSpi);
+        this.controlDelegate = new ControlDelegate(containerWidgetSpi, this);
+        this.first = new ContainerImpl(getWidget().getFirst());
+        this.second = new ContainerImpl(getWidget().getSecond());
+        this.dividerSize = setup.getDividerSize();
+        this.orientation = setup.getOrientation();
+        this.first.setParent(this);
+        this.second.setParent(this);
+        VisibiliySettingsInvoker.setVisibility(setup, this);
+        ColorSettingsInvoker.setColors(setup, this);
+    }
 
-	@Override
-	public IContainer getParent() {
-		return controlDelegate.getParent();
-	}
+    @Override
+    public IContainer getParent() {
+        return controlDelegate.getParent();
+    }
 
-	@Override
-	public void setParent(final IContainer parent) {
-		controlDelegate.setParent(parent);
-	}
+    @Override
+    public void setParent(final IContainer parent) {
+        controlDelegate.setParent(parent);
+    }
 
-	@Override
-	public void addParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.addParentListener(listener);
-	}
+    @Override
+    public void addParentListener(final IParentListener<IContainer> listener) {
+        controlDelegate.addParentListener(listener);
+    }
 
-	@Override
-	public void removeParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.removeParentListener(listener);
-	}
+    @Override
+    public void removeParentListener(final IParentListener<IContainer> listener) {
+        controlDelegate.removeParentListener(listener);
+    }
 
-	@Override
-	public boolean isReparentable() {
-		return controlDelegate.isReparentable();
-	}
+    @Override
+    public boolean isReparentable() {
+        return controlDelegate.isReparentable();
+    }
 
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		controlDelegate.addDisposeListener(listener);
-	}
+    @Override
+    public void addDisposeListener(final IDisposeListener listener) {
+        controlDelegate.addDisposeListener(listener);
+    }
 
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		controlDelegate.removeDisposeListener(listener);
-	}
+    @Override
+    public void removeDisposeListener(final IDisposeListener listener) {
+        controlDelegate.removeDisposeListener(listener);
+    }
 
-	@Override
-	public boolean isDisposed() {
-		return controlDelegate.isDisposed();
-	}
+    @Override
+    public boolean isDisposed() {
+        return controlDelegate.isDisposed();
+    }
 
-	@Override
-	public void dispose() {
-		if (!isDisposed()) {
-			first.dispose();
-			second.dispose();
-			controlDelegate.dispose();
-		}
-	}
+    @Override
+    public void dispose() {
+        if (!isDisposed()) {
+            first.dispose();
+            second.dispose();
+            controlDelegate.dispose();
+        }
+    }
 
-	@Override
-	public IContainer getFirst() {
-		return first;
-	}
+    @Override
+    public IContainer getFirst() {
+        return first;
+    }
 
-	@Override
-	public IContainer getSecond() {
-		return second;
-	}
+    @Override
+    public IContainer getSecond() {
+        return second;
+    }
 
-	@Override
-	public void setMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
-		this.firstClientAreaMinSize = firstMinSize;
-		this.secondClientAreaMinSize = secondMinSize;
-		getWidget().setMinSizes(firstMinSize, secondMinSize);
-	}
+    @Override
+    public void setMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
+        this.firstClientAreaMinSize = firstMinSize;
+        this.secondClientAreaMinSize = secondMinSize;
+        getWidget().setMinSizes(firstMinSize, secondMinSize);
+    }
 
-	@Override
-	public Dimension getFirstMinSize() {
-		return firstClientAreaMinSize;
-	}
+    @Override
+    public Dimension getFirstMinSize() {
+        return firstClientAreaMinSize;
+    }
 
-	@Override
-	public Dimension getSecondMinSize() {
-		return secondClientAreaMinSize;
-	}
+    @Override
+    public Dimension getSecondMinSize() {
+        return secondClientAreaMinSize;
+    }
 
-	private Dimension getSize(final Dimension firstSize, final Dimension secondSize) {
-		int width = 0;
-		int height = 0;
-		if (Orientation.VERTICAL == orientation) {
-			height = height + dividerSize;
+    private Dimension getSize(final Dimension firstSize, final Dimension secondSize) {
+        int width = 0;
+        int height = 0;
+        if (Orientation.VERTICAL == orientation) {
+            height = height + dividerSize;
 
-			if (firstSize != null) {
-				width = Math.max(width, firstSize.getWidth());
-				height = height + firstSize.getHeight();
-			}
-			if (secondSize != null) {
-				width = Math.max(width, secondSize.getWidth());
-				height = height + secondSize.getHeight();
-			}
-		}
-		else {
-			width = width + dividerSize;
+            if (firstSize != null) {
+                width = Math.max(width, firstSize.getWidth());
+                height = height + firstSize.getHeight();
+            }
+            if (secondSize != null) {
+                width = Math.max(width, secondSize.getWidth());
+                height = height + secondSize.getHeight();
+            }
+        }
+        else {
+            width = width + dividerSize;
 
-			if (firstSize != null) {
-				width = width + firstSize.getWidth();
-				height = Math.max(height, firstSize.getHeight());
-			}
-			if (secondSize != null) {
-				width = width + secondSize.getWidth();
-				height = Math.max(height, secondSize.getHeight());
-			}
-		}
+            if (firstSize != null) {
+                width = width + firstSize.getWidth();
+                height = Math.max(height, firstSize.getHeight());
+            }
+            if (secondSize != null) {
+                width = width + secondSize.getWidth();
+                height = Math.max(height, secondSize.getHeight());
+            }
+        }
 
-		return new Dimension(width, height);
-	}
+        return new Dimension(width, height);
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		return getSize(first.getMinSize(), second.getMinSize());
-	}
+    @Override
+    public Dimension getMinSize() {
+        return getSize(first.getMinSize(), second.getMinSize());
+    }
 
-	@Override
-	public Dimension getPreferredSize() {
-		return getSize(first.getPreferredSize(), second.getPreferredSize());
-	}
+    @Override
+    public Dimension getPreferredSize() {
+        return getSize(first.getPreferredSize(), second.getPreferredSize());
+    }
 
-	@Override
-	public IPopupMenu createPopupMenu() {
-		return controlDelegate.createPopupMenu();
-	}
+    @Override
+    public IPopupMenu createPopupMenu() {
+        return controlDelegate.createPopupMenu();
+    }
 
 }

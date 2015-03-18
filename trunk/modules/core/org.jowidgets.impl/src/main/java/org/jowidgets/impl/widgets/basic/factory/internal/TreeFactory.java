@@ -40,22 +40,22 @@ import org.jowidgets.spi.widgets.ITreeSpi;
 
 public class TreeFactory extends AbstractWidgetFactory implements IWidgetFactory<ITree, ITreeDescriptor> {
 
-	public TreeFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+    public TreeFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider,
+        final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
-	}
+        super(genericWidgetFactory, widgetsServiceProvider, bpF);
+    }
 
-	@Override
-	public ITree create(final Object parentUiReference, final ITreeDescriptor descriptor) {
-		final ITreeBluePrintSpi treeBpSpi = getSpiBluePrintFactory().tree();
-		treeBpSpi.setSetup(descriptor);
+    @Override
+    public ITree create(final Object parentUiReference, final ITreeDescriptor descriptor) {
+        final ITreeBluePrintSpi treeBpSpi = getSpiBluePrintFactory().tree();
+        treeBpSpi.setSetup(descriptor);
 
-		final ITreeSpi treeSpi = getSpiWidgetFactory().createTree(parentUiReference, treeBpSpi);
+        final ITreeSpi treeSpi = getSpiWidgetFactory().createTree(parentUiReference, treeBpSpi);
 
-		return new TreeImpl(treeSpi, descriptor);
-	}
+        return new TreeImpl(treeSpi, descriptor);
+    }
 
 }

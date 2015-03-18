@@ -72,302 +72,302 @@ import org.jowidgets.tools.controller.WindowAdapter;
 
 public final class TestToolImpl implements ITestTool {
 
-	private final TestToolUtilities testToolUtilities;
-	private final ITestDataPersister persister;
-	private final TestDataListModel listModel;
-	private final TestPlayer player;
-	private boolean record;
-	private boolean replay;
-	private boolean appStarted;
-	private final List<ITree> trees;
-	private final List<ITabFolder> tabFolders;
+    private final TestToolUtilities testToolUtilities;
+    private final ITestDataPersister persister;
+    private final TestDataListModel listModel;
+    private final TestPlayer player;
+    private boolean record;
+    private boolean replay;
+    private boolean appStarted;
+    private final List<ITree> trees;
+    private final List<ITabFolder> tabFolders;
 
-	public TestToolImpl() {
-		this("");
-	}
+    public TestToolImpl() {
+        this("");
+    }
 
-	public TestToolImpl(final String filePath) {
-		this.persister = new TestDataXmlPersister(filePath);
-		this.testToolUtilities = new TestToolUtilities();
-		this.listModel = new TestDataListModel();
-		this.player = new TestPlayer();
-		this.record = false;
-		this.replay = false;
-		this.appStarted = false;
-		this.trees = new LinkedList<ITree>();
-		this.tabFolders = new LinkedList<ITabFolder>();
-	}
+    public TestToolImpl(final String filePath) {
+        this.persister = new TestDataXmlPersister(filePath);
+        this.testToolUtilities = new TestToolUtilities();
+        this.listModel = new TestDataListModel();
+        this.player = new TestPlayer();
+        this.record = false;
+        this.replay = false;
+        this.appStarted = false;
+        this.trees = new LinkedList<ITree>();
+        this.tabFolders = new LinkedList<ITabFolder>();
+    }
 
-	@Override
-	public void record(final IWidgetCommon widget, final UserAction action, final String id) {
-		record(widget, action, id, "");
-	}
+    @Override
+    public void record(final IWidgetCommon widget, final UserAction action, final String id) {
+        record(widget, action, id, "");
+    }
 
-	private void record(final IWidgetCommon widget, final UserAction action, final String id, final String value) {
-		if (record) {
-			final TestDataObject obj = new TestDataObject();
-			obj.setId(id);
-			obj.setAction(action);
-			obj.setType(widget.getUiReference().getClass().getSimpleName());
-			obj.setValue(value);
-			listModel.addItem(obj);
-		}
-	}
+    private void record(final IWidgetCommon widget, final UserAction action, final String id, final String value) {
+        if (record) {
+            final TestDataObject obj = new TestDataObject();
+            obj.setId(id);
+            obj.setAction(action);
+            obj.setType(widget.getUiReference().getClass().getSimpleName());
+            obj.setValue(value);
+            listModel.addItem(obj);
+        }
+    }
 
-	@Override
-	public void register(final IWidgetCommon widget) {
-		// TODO LG remove disposed widgets
-		WidgetRegistry.getInstance().addWidget(widget);
-		addListener(widget);
-	}
+    @Override
+    public void register(final IWidgetCommon widget) {
+        // TODO LG remove disposed widgets
+        WidgetRegistry.getInstance().addWidget(widget);
+        addListener(widget);
+    }
 
-	private void addListener(final IWidgetCommon widget) {
-		// TODO LG use IFrameUi
-		if (widget instanceof IFrame) {
-			final IFrame frame = (IFrame) widget;
-			frame.addWindowListener(new WindowAdapter() {
+    private void addListener(final IWidgetCommon widget) {
+        // TODO LG use IFrameUi
+        if (widget instanceof IFrame) {
+            final IFrame frame = (IFrame) widget;
+            frame.addWindowListener(new WindowAdapter() {
 
-				@Override
-				public void windowClosed() {
-					record(frame, UserAction.CLOSE, testToolUtilities.createWidgetID(frame));
-				}
+                @Override
+                public void windowClosed() {
+                    record(frame, UserAction.CLOSE, testToolUtilities.createWidgetID(frame));
+                }
 
-				@Override
-				public void windowActivated() {
-					if (!appStarted) {
-						registerTreeItems();
-						registerMenuItems(frame);
-						registerTabFolderItems();
-						appStarted = true;
-					}
-				}
-			});
-		}
-		if (widget instanceof IButtonUi) {
-			final IButtonUi button = (IButtonUi) widget;
-			button.addMouseListener(new MouseAdapter() {
+                @Override
+                public void windowActivated() {
+                    if (!appStarted) {
+                        registerTreeItems();
+                        registerMenuItems(frame);
+                        registerTabFolderItems();
+                        appStarted = true;
+                    }
+                }
+            });
+        }
+        if (widget instanceof IButtonUi) {
+            final IButtonUi button = (IButtonUi) widget;
+            button.addMouseListener(new MouseAdapter() {
 
-				@Override
-				public void mouseReleased(final IMouseButtonEvent event) {
-					record(widget, UserAction.CLICK, testToolUtilities.createWidgetID(button));
-				}
-			});
-		}
-		// TODO LG use IToolBarUi
-		if (widget instanceof IToolBar) {
-			final IListItemObservable toolBarObs = (IListItemObservable) widget;
-			toolBarObs.addItemContainerListener(new IListItemListener() {
+                @Override
+                public void mouseReleased(final IMouseButtonEvent event) {
+                    record(widget, UserAction.CLICK, testToolUtilities.createWidgetID(button));
+                }
+            });
+        }
+        // TODO LG use IToolBarUi
+        if (widget instanceof IToolBar) {
+            final IListItemObservable toolBarObs = (IListItemObservable) widget;
+            toolBarObs.addItemContainerListener(new IListItemListener() {
 
-				@Override
-				public void itemAdded(final IWidget item) {
-					WidgetRegistry.getInstance().addWidget(item);
-					if (item instanceof IToolBarButton) {
-						final IToolBarButton button = (IToolBarButton) item;
-						button.addActionListener(new IActionListener() {
-							@Override
-							public void actionPerformed() {
-								record(button, UserAction.CLICK, testToolUtilities.createWidgetID(button));
-							}
-						});
-					}
-					else if (item instanceof IToolBarToggleButton) {
-						final IToolBarToggleButton button = (IToolBarToggleButton) item;
-						button.addItemListener(new IItemStateListener() {
+                @Override
+                public void itemAdded(final IWidget item) {
+                    WidgetRegistry.getInstance().addWidget(item);
+                    if (item instanceof IToolBarButton) {
+                        final IToolBarButton button = (IToolBarButton) item;
+                        button.addActionListener(new IActionListener() {
+                            @Override
+                            public void actionPerformed() {
+                                record(button, UserAction.CLICK, testToolUtilities.createWidgetID(button));
+                            }
+                        });
+                    }
+                    else if (item instanceof IToolBarToggleButton) {
+                        final IToolBarToggleButton button = (IToolBarToggleButton) item;
+                        button.addItemListener(new IItemStateListener() {
 
-							@Override
-							public void itemStateChanged() {
-								record(button, UserAction.CLICK, testToolUtilities.createWidgetID(button));
-							}
-						});
-					}
-					else if (item instanceof IToolBarPopupButton) {
-						final IToolBarPopupButton button = (IToolBarPopupButton) item;
-						button.addActionListener(new IActionListener() {
-							@Override
-							public void actionPerformed() {
-								record(button, UserAction.CLICK, testToolUtilities.createWidgetID(button));
-							}
-						});
-					}
-					else if (item instanceof IToolBarMenu) {
-						final IToolBarMenu menu = (IToolBarMenu) item;
-						final IPopupMenu popupMenu = menu.getPopupMenu();
-						WidgetRegistry.getInstance().addWidget(popupMenu);
-						popupMenu.addMenuListener(new IMenuListener() {
+                            @Override
+                            public void itemStateChanged() {
+                                record(button, UserAction.CLICK, testToolUtilities.createWidgetID(button));
+                            }
+                        });
+                    }
+                    else if (item instanceof IToolBarPopupButton) {
+                        final IToolBarPopupButton button = (IToolBarPopupButton) item;
+                        button.addActionListener(new IActionListener() {
+                            @Override
+                            public void actionPerformed() {
+                                record(button, UserAction.CLICK, testToolUtilities.createWidgetID(button));
+                            }
+                        });
+                    }
+                    else if (item instanceof IToolBarMenu) {
+                        final IToolBarMenu menu = (IToolBarMenu) item;
+                        final IPopupMenu popupMenu = menu.getPopupMenu();
+                        WidgetRegistry.getInstance().addWidget(popupMenu);
+                        popupMenu.addMenuListener(new IMenuListener() {
 
-							@Override
-							public void menuDeactivated() {
-								record(popupMenu, UserAction.CLICK, testToolUtilities.createWidgetID(popupMenu));
-							}
+                            @Override
+                            public void menuDeactivated() {
+                                record(popupMenu, UserAction.CLICK, testToolUtilities.createWidgetID(popupMenu));
+                            }
 
-							@Override
-							public void menuActivated() {
-								record(popupMenu, UserAction.CLICK, testToolUtilities.createWidgetID(popupMenu));
-							}
-						});
-					}
-				}
+                            @Override
+                            public void menuActivated() {
+                                record(popupMenu, UserAction.CLICK, testToolUtilities.createWidgetID(popupMenu));
+                            }
+                        });
+                    }
+                }
 
-				@Override
-				public void itemRemoved(final IWidget item) {
-					WidgetRegistry.getInstance().removeWidget(item);
-				}
-			});
-		}
-		// TODO LG use ITreeUi instead of ITree
-		if (widget instanceof ITree) {
-			final ITree tree = (ITree) widget;
-			trees.add(tree);
-			tree.addTreeSelectionListener(new ITreeSelectionListener() {
+                @Override
+                public void itemRemoved(final IWidget item) {
+                    WidgetRegistry.getInstance().removeWidget(item);
+                }
+            });
+        }
+        // TODO LG use ITreeUi instead of ITree
+        if (widget instanceof ITree) {
+            final ITree tree = (ITree) widget;
+            trees.add(tree);
+            tree.addTreeSelectionListener(new ITreeSelectionListener() {
 
-				@Override
-				public void selectionChanged(final ITreeSelectionEvent event) {
-					for (final ITreeNode node : event.getSelected()) {
-						if (!WidgetRegistry.getInstance().getWidgets().contains(node)) {
-							WidgetRegistry.getInstance().addWidget(node);
-						}
-						record(widget, UserAction.SELECT, testToolUtilities.createWidgetID(node));
-					}
-				}
-			});
-			tree.addTreeListener(new TreeAdapter() {
+                @Override
+                public void selectionChanged(final ITreeSelectionEvent event) {
+                    for (final ITreeNode node : event.getSelected()) {
+                        if (!WidgetRegistry.getInstance().getWidgets().contains(node)) {
+                            WidgetRegistry.getInstance().addWidget(node);
+                        }
+                        record(widget, UserAction.SELECT, testToolUtilities.createWidgetID(node));
+                    }
+                }
+            });
+            tree.addTreeListener(new TreeAdapter() {
 
-				@Override
-				public void nodeExpanded(final ITreeNode node) {
-					if (!WidgetRegistry.getInstance().getWidgets().contains(node)) {
-						WidgetRegistry.getInstance().addWidget(node);
-					}
-					record(widget, UserAction.EXPAND, testToolUtilities.createWidgetID(node));
-				}
+                @Override
+                public void nodeExpanded(final ITreeNode node) {
+                    if (!WidgetRegistry.getInstance().getWidgets().contains(node)) {
+                        WidgetRegistry.getInstance().addWidget(node);
+                    }
+                    record(widget, UserAction.EXPAND, testToolUtilities.createWidgetID(node));
+                }
 
-				@Override
-				public void nodeCollapsed(final ITreeNode node) {
-					if (!WidgetRegistry.getInstance().getWidgets().contains(node)) {
-						WidgetRegistry.getInstance().addWidget(node);
-					}
-					record(widget, UserAction.COLLAPSE, testToolUtilities.createWidgetID(node));
-				}
-			});
-			tree.addTreePopupDetectionListener(new ITreePopupDetectionListener() {
+                @Override
+                public void nodeCollapsed(final ITreeNode node) {
+                    if (!WidgetRegistry.getInstance().getWidgets().contains(node)) {
+                        WidgetRegistry.getInstance().addWidget(node);
+                    }
+                    record(widget, UserAction.COLLAPSE, testToolUtilities.createWidgetID(node));
+                }
+            });
+            tree.addTreePopupDetectionListener(new ITreePopupDetectionListener() {
 
-				@Override
-				public void popupDetected(final ITreePopupEvent event) {
-					final ITreeNode node = event.getNode();
-					if (!WidgetRegistry.getInstance().getWidgets().contains(node)) {
-						WidgetRegistry.getInstance().addWidget(node);
-					}
-					record(widget, UserAction.CLICK, testToolUtilities.createWidgetID(node));
-				}
-			});
-		}
-		// TODO LG user ITabFolderUi
-		if (widget instanceof ITabFolder) {
-			final ITabFolder tab = (ITabFolder) widget;
-			tabFolders.add(tab);
-			// TODO LG support recording/replay of TabFolder
-		}
-		if (widget instanceof IInputField<?>) {
-			final IInputField<?> inputField = (IInputField<?>) widget;
-			inputField.addMouseListener(new MouseAdapter() {
+                @Override
+                public void popupDetected(final ITreePopupEvent event) {
+                    final ITreeNode node = event.getNode();
+                    if (!WidgetRegistry.getInstance().getWidgets().contains(node)) {
+                        WidgetRegistry.getInstance().addWidget(node);
+                    }
+                    record(widget, UserAction.CLICK, testToolUtilities.createWidgetID(node));
+                }
+            });
+        }
+        // TODO LG user ITabFolderUi
+        if (widget instanceof ITabFolder) {
+            final ITabFolder tab = (ITabFolder) widget;
+            tabFolders.add(tab);
+            // TODO LG support recording/replay of TabFolder
+        }
+        if (widget instanceof IInputField<?>) {
+            final IInputField<?> inputField = (IInputField<?>) widget;
+            inputField.addMouseListener(new MouseAdapter() {
 
-				@Override
-				public void mousePressed(final IMouseButtonEvent event) {
-					record(widget, UserAction.CLICK, testToolUtilities.createWidgetID(inputField));
-				}
-			});
-			inputField.addInputListener(new IInputListener() {
+                @Override
+                public void mousePressed(final IMouseButtonEvent event) {
+                    record(widget, UserAction.CLICK, testToolUtilities.createWidgetID(inputField));
+                }
+            });
+            inputField.addInputListener(new IInputListener() {
 
-				@Override
-				public void inputChanged() {
-					record(widget, UserAction.INPUT, testToolUtilities.createWidgetID(inputField), inputField.getText());
-				}
-			});
-		}
-		// TODO LG use ITableUi
-		// TODO LG support recording/replay of table
-	}
+                @Override
+                public void inputChanged() {
+                    record(widget, UserAction.INPUT, testToolUtilities.createWidgetID(inputField), inputField.getText());
+                }
+            });
+        }
+        // TODO LG use ITableUi
+        // TODO LG support recording/replay of table
+    }
 
-	@Override
-	public void save(final List<TestDataObject> list, final String fileName) {
-		persister.save(list, fileName);
-	}
+    @Override
+    public void save(final List<TestDataObject> list, final String fileName) {
+        persister.save(list, fileName);
+    }
 
-	@Override
-	public List<TestDataObject> load(final String fileName) {
-		return persister.load(fileName);
-	}
+    @Override
+    public List<TestDataObject> load(final String fileName) {
+        return persister.load(fileName);
+    }
 
-	@Override
-	public TestDataListModel getListModel() {
-		return listModel;
-	}
+    @Override
+    public TestDataListModel getListModel() {
+        return listModel;
+    }
 
-	@Override
-	public void activateRecordMode() {
-		this.record = true;
-		this.replay = false;
-	}
+    @Override
+    public void activateRecordMode() {
+        this.record = true;
+        this.replay = false;
+    }
 
-	@Override
-	public void activateReplayMode() {
-		this.record = false;
-		this.replay = true;
-	}
+    @Override
+    public void activateReplayMode() {
+        this.record = false;
+        this.replay = true;
+    }
 
-	@Override
-	public void deactivateReplayAndRecord() {
-		this.record = false;
-		this.replay = false;
-	}
+    @Override
+    public void deactivateReplayAndRecord() {
+        this.record = false;
+        this.replay = false;
+    }
 
-	@Override
-	public void replay(final List<TestDataObject> list, final int delay) {
-		if (replay) {
-			player.replayTest(list, delay);
-		}
-	}
+    @Override
+    public void replay(final List<TestDataObject> list, final int delay) {
+        if (replay) {
+            player.replayTest(list, delay);
+        }
+    }
 
-	private void registerTreeItems() {
-		for (final ITree tree : trees) {
-			for (final ITreeNode node : tree.getChildren()) {
-				WidgetRegistry.getInstance().addWidget(node);
-			}
-		}
-	}
+    private void registerTreeItems() {
+        for (final ITree tree : trees) {
+            for (final ITreeNode node : tree.getChildren()) {
+                WidgetRegistry.getInstance().addWidget(node);
+            }
+        }
+    }
 
-	private void registerTabFolderItems() {
-		for (final ITabFolder folder : tabFolders) {
-			for (final ITabItem item : folder.getItems()) {
-				WidgetRegistry.getInstance().addWidget(item);
-				item.addTabItemListener(new TabItemAdapter() {
+    private void registerTabFolderItems() {
+        for (final ITabFolder folder : tabFolders) {
+            for (final ITabItem item : folder.getItems()) {
+                WidgetRegistry.getInstance().addWidget(item);
+                item.addTabItemListener(new TabItemAdapter() {
 
-					@Override
-					public void selectionChanged(final boolean selected) {
-						if (item.isVisible()) {
-							record(item, UserAction.CLICK, testToolUtilities.createWidgetID(item));
-						}
-					}
+                    @Override
+                    public void selectionChanged(final boolean selected) {
+                        if (item.isVisible()) {
+                            record(item, UserAction.CLICK, testToolUtilities.createWidgetID(item));
+                        }
+                    }
 
-					@Override
-					public void onClose(final IVetoable vetoable) {}
-				});
-			}
-		}
-	}
+                    @Override
+                    public void onClose(final IVetoable vetoable) {}
+                });
+            }
+        }
+    }
 
-	private void registerMenuItems(final IFrame frame) {
-		final IMenuBarModel menuBarModel = frame.getMenuBarModel();
-		for (final IMenuModel menu : menuBarModel.getMenus()) {
-			for (final IMenuItemModel item : menu.getChildren()) {
-				// TODO LG add listeners to menu items
-				item.addItemModelListener(new IItemModelListener() {
+    private void registerMenuItems(final IFrame frame) {
+        final IMenuBarModel menuBarModel = frame.getMenuBarModel();
+        for (final IMenuModel menu : menuBarModel.getMenus()) {
+            for (final IMenuItemModel item : menu.getChildren()) {
+                // TODO LG add listeners to menu items
+                item.addItemModelListener(new IItemModelListener() {
 
-					@Override
-					public void itemChanged(final IItemModel item) {
+                    @Override
+                    public void itemChanged(final IItemModel item) {
 
-					}
-				});
-			}
-		}
-	}
+                    }
+                });
+            }
+        }
+    }
 }

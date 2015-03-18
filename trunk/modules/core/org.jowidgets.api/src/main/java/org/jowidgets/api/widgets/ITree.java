@@ -37,21 +37,21 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.ITreeCommon;
 
 public interface ITree extends
-		IControl,
-		ITreeContainer,
-		ITreeObservable,
-		ITreeSelectionObservable,
-		ITreePopupDetectionObservable,
-		ITreeCommon {
+        IControl,
+        ITreeContainer,
+        ITreeObservable,
+        ITreeSelectionObservable,
+        ITreePopupDetectionObservable,
+        ITreeCommon {
 
-	ITreeNode getNodeAt(Position position);
+    ITreeNode getNodeAt(Position position);
 
-	Collection<ITreeNode> getSelection();
+    Collection<ITreeNode> getSelection();
 
-	void setSelection(Collection<? extends ITreeNode> selection);
+    void setSelection(Collection<? extends ITreeNode> selection);
 
-	void setSelection(ITreeNode... selection);
+    void setSelection(ITreeNode... selection);
 
-	void clearSelection();
+    void clearSelection();
 
 }

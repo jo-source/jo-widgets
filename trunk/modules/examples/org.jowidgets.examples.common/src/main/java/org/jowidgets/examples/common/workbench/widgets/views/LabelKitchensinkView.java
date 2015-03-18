@@ -40,35 +40,35 @@ import org.jowidgets.workbench.api.IViewContext;
 
 public class LabelKitchensinkView extends AbstractHowToView implements IView {
 
-	public static final String ID = LabelKitchensinkView.class.getName();
-	public static final String DEFAULT_LABEL = "Labels Kitchensink";
+    public static final String ID = LabelKitchensinkView.class.getName();
+    public static final String DEFAULT_LABEL = "Labels Kitchensink";
 
-	public LabelKitchensinkView(final IViewContext context) {
-		super(context);
-	}
+    public LabelKitchensinkView(final IViewContext context) {
+        super(context);
+    }
 
-	@Override
-	public void createViewContent(final IContainer container, final IBluePrintFactory bpFactory) {
-		//set the layout
-		container.setLayout(new MigLayoutDescriptor("[]", ""));
+    @Override
+    public void createViewContent(final IContainer container, final IBluePrintFactory bpFactory) {
+        //set the layout
+        container.setLayout(new MigLayoutDescriptor("[]", ""));
 
-		//create the labels blue prints
-		final ILabelBluePrint labelBp = bpFactory.label();
-		final ILabelBluePrint strongLabelBp = bpFactory.label().setMarkup(Markup.STRONG);
-		final ILabelBluePrint emphasizedLabelBp = bpFactory.label().setMarkup(Markup.EMPHASIZED);
-		final ILabelBluePrint redLabelBp = bpFactory.label().setColor(new ColorValue(255, 0, 0));
-		final ILabelBluePrint strongColorLabelBp = bpFactory.label().setColor(Colors.STRONG);
+        //create the labels blue prints
+        final ILabelBluePrint labelBp = bpFactory.label();
+        final ILabelBluePrint strongLabelBp = bpFactory.label().setMarkup(Markup.STRONG);
+        final ILabelBluePrint emphasizedLabelBp = bpFactory.label().setMarkup(Markup.EMPHASIZED);
+        final ILabelBluePrint redLabelBp = bpFactory.label().setColor(new ColorValue(255, 0, 0));
+        final ILabelBluePrint strongColorLabelBp = bpFactory.label().setColor(Colors.STRONG);
 
-		//add the label blue prints to the container
-		container.add(strongLabelBp.setText("Strong markup"), "wrap");
-		container.add(emphasizedLabelBp.setText("Emphasized markup"), "wrap");
-		container.add(redLabelBp.setText("Red label"), "wrap");
-		container.add(strongColorLabelBp.setText("Label with logical color 'Strong'"), "wrap");
-		container.add(labelBp.setText("Next label is empty"), "wrap");
-		container.add(labelBp.setText(""), "wrap");
-		container.add(bpFactory.label().setText("Label with tooltip").setToolTipText("The tooltip of the label"), "wrap");
-		container.add(
-				labelBp.setText("First line of a multi line label\nSecond line of a multi line label\nThird line of a multi line label"),
-				"wrap");
-	}
+        //add the label blue prints to the container
+        container.add(strongLabelBp.setText("Strong markup"), "wrap");
+        container.add(emphasizedLabelBp.setText("Emphasized markup"), "wrap");
+        container.add(redLabelBp.setText("Red label"), "wrap");
+        container.add(strongColorLabelBp.setText("Label with logical color 'Strong'"), "wrap");
+        container.add(labelBp.setText("Next label is empty"), "wrap");
+        container.add(labelBp.setText(""), "wrap");
+        container.add(bpFactory.label().setText("Label with tooltip").setToolTipText("The tooltip of the label"), "wrap");
+        container.add(
+                labelBp.setText("First line of a multi line label\nSecond line of a multi line label\nThird line of a multi line label"),
+                "wrap");
+    }
 }

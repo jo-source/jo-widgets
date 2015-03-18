@@ -35,12 +35,12 @@ import org.jowidgets.api.widgets.IControl;
 
 public interface IPdfReader extends IControl {
 
-	void clear();
+    void clear();
 
-	void open(String filename);
+    void open(String filename);
 
-	void open(File file);
+    void open(File file);
 
-	void open(InputStream inputStream);
+    void open(InputStream inputStream);
 
 }

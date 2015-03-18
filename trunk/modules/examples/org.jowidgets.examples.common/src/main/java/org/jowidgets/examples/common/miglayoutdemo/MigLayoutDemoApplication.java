@@ -36,22 +36,22 @@ import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 
 public class MigLayoutDemoApplication implements IApplication {
 
-	private final String framework;
+    private final String framework;
 
-	public MigLayoutDemoApplication(final String framework) {
-		super();
-		this.framework = framework;
-	}
+    public MigLayoutDemoApplication(final String framework) {
+        super();
+        this.framework = framework;
+    }
 
-	public void start() {
-		DemoIconsInitializer.initialize();
-		Toolkit.getInstance().getApplicationRunner().run(this);
-	}
+    public void start() {
+        DemoIconsInitializer.initialize();
+        Toolkit.getInstance().getApplicationRunner().run(this);
+    }
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
-		final DemoMigLayoutFrame frame = new DemoMigLayoutFrame(framework);
-		frame.setVisible(true);
-	}
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
+        final DemoMigLayoutFrame frame = new DemoMigLayoutFrame(framework);
+        frame.setVisible(true);
+    }
 
 }

@@ -30,6 +30,6 @@ package org.jowidgets.util;
 
 public interface IConverter<SOURCE_TYPE, DESTINATION_TYPE> {
 
-	DESTINATION_TYPE convert(SOURCE_TYPE source);
+    DESTINATION_TYPE convert(SOURCE_TYPE source);
 
 }

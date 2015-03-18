@@ -59,162 +59,162 @@ import org.jowidgets.util.IProvider;
 
 public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider, IProvider<Display> {
 
-	private final Display display;
-	private final SwtImageRegistry imageRegistry;
-	private final SwtImageHandleFactorySpi imageHandleFactorySpi;
-	private final SwtImageFactory imageFactory;
-	private final SwtWidgetFactory widgetFactory;
-	private final SwtOptionalWidgetsFactory optionalWidgetsFactory;
-	private final IFactory<IApplicationRunner> applicationRunnerFactory;
-	private final IClipboardSpi clipboard;
+    private final Display display;
+    private final SwtImageRegistry imageRegistry;
+    private final SwtImageHandleFactorySpi imageHandleFactorySpi;
+    private final SwtImageFactory imageFactory;
+    private final SwtWidgetFactory widgetFactory;
+    private final SwtOptionalWidgetsFactory optionalWidgetsFactory;
+    private final IFactory<IApplicationRunner> applicationRunnerFactory;
+    private final IClipboardSpi clipboard;
 
-	private SwtUiThreadAccess uiThreadAccess;
+    private SwtUiThreadAccess uiThreadAccess;
 
-	public SwtWidgetsServiceProvider() {
-		this((Display) null);
-	}
+    public SwtWidgetsServiceProvider() {
+        this((Display) null);
+    }
 
-	public SwtWidgetsServiceProvider(final Display display) {
-		this(display, new SwtApplicationRunnerFactory());
-	}
+    public SwtWidgetsServiceProvider(final Display display) {
+        this(display, new SwtApplicationRunnerFactory());
+    }
 
-	public SwtWidgetsServiceProvider(final Display display, final IClipboardSpi clipboard) {
-		this(display, new SwtApplicationRunnerFactory(), clipboard);
-	}
+    public SwtWidgetsServiceProvider(final Display display, final IClipboardSpi clipboard) {
+        this(display, new SwtApplicationRunnerFactory(), clipboard);
+    }
 
-	public SwtWidgetsServiceProvider(final IFactory<IApplicationRunner> applicationRunnerFactory) {
-		this(null, applicationRunnerFactory);
-	}
+    public SwtWidgetsServiceProvider(final IFactory<IApplicationRunner> applicationRunnerFactory) {
+        this(null, applicationRunnerFactory);
+    }
 
-	public SwtWidgetsServiceProvider(final Display display, final IFactory<IApplicationRunner> applicationRunnerFactory) {
-		this(display, applicationRunnerFactory, null);
-	}
+    public SwtWidgetsServiceProvider(final Display display, final IFactory<IApplicationRunner> applicationRunnerFactory) {
+        this(display, applicationRunnerFactory, null);
+    }
 
-	public SwtWidgetsServiceProvider(
-		final Display display,
-		final IFactory<IApplicationRunner> applicationRunnerFactory,
-		final IClipboardSpi clipboard) {
-		Assert.paramNotNull(applicationRunnerFactory, "applicationRunnerFactory");
-		this.display = display;
-		this.applicationRunnerFactory = applicationRunnerFactory;
-		this.imageRegistry = SwtImageRegistry.getInstance();
-		this.imageHandleFactorySpi = new SwtImageHandleFactorySpi(imageRegistry);
-		this.imageFactory = new SwtImageFactory(imageRegistry, imageHandleFactorySpi, this);
-		this.widgetFactory = new SwtWidgetFactory();
-		this.optionalWidgetsFactory = new SwtOptionalWidgetsFactory();
+    public SwtWidgetsServiceProvider(
+        final Display display,
+        final IFactory<IApplicationRunner> applicationRunnerFactory,
+        final IClipboardSpi clipboard) {
+        Assert.paramNotNull(applicationRunnerFactory, "applicationRunnerFactory");
+        this.display = display;
+        this.applicationRunnerFactory = applicationRunnerFactory;
+        this.imageRegistry = SwtImageRegistry.getInstance();
+        this.imageHandleFactorySpi = new SwtImageHandleFactorySpi(imageRegistry);
+        this.imageFactory = new SwtImageFactory(imageRegistry, imageHandleFactorySpi, this);
+        this.widgetFactory = new SwtWidgetFactory();
+        this.optionalWidgetsFactory = new SwtOptionalWidgetsFactory();
 
-		if (clipboard != null) {
-			this.clipboard = clipboard;
-		}
-		else {
-			this.clipboard = new SwtClipboard(this);
-		}
-	}
+        if (clipboard != null) {
+            this.clipboard = clipboard;
+        }
+        else {
+            this.clipboard = new SwtClipboard(this);
+        }
+    }
 
-	@Override
-	public IClipboardSpi getClipboard() {
-		return clipboard;
-	}
+    @Override
+    public IClipboardSpi getClipboard() {
+        return clipboard;
+    }
 
-	@Override
-	public IImageRegistry getImageRegistry() {
-		return imageRegistry;
-	}
+    @Override
+    public IImageRegistry getImageRegistry() {
+        return imageRegistry;
+    }
 
-	@Override
-	public IImageFactorySpi getImageFactory() {
-		return imageFactory;
-	}
+    @Override
+    public IImageFactorySpi getImageFactory() {
+        return imageFactory;
+    }
 
-	@Override
-	public IImageHandleFactorySpi getImageHandleFactory() {
-		return imageHandleFactorySpi;
-	}
+    @Override
+    public IImageHandleFactorySpi getImageHandleFactory() {
+        return imageHandleFactorySpi;
+    }
 
-	@Override
-	public IWidgetFactorySpi getWidgetFactory() {
-		return widgetFactory;
-	}
+    @Override
+    public IWidgetFactorySpi getWidgetFactory() {
+        return widgetFactory;
+    }
 
-	@Override
-	public IOptionalWidgetsFactorySpi getOptionalWidgetFactory() {
-		return optionalWidgetsFactory;
-	}
+    @Override
+    public IOptionalWidgetsFactorySpi getOptionalWidgetFactory() {
+        return optionalWidgetsFactory;
+    }
 
-	@Override
-	public IUiThreadAccessCommon createUiThreadAccess() {
-		uiThreadAccess = new SwtUiThreadAccess(display);
-		return uiThreadAccess;
-	}
+    @Override
+    public IUiThreadAccessCommon createUiThreadAccess() {
+        uiThreadAccess = new SwtUiThreadAccess(display);
+        return uiThreadAccess;
+    }
 
-	@Override
-	public IApplicationRunner createApplicationRunner() {
-		return applicationRunnerFactory.create();
-	}
+    @Override
+    public IApplicationRunner createApplicationRunner() {
+        return applicationRunnerFactory.create();
+    }
 
-	@Override
-	public Object getActiveWindowUiReference() {
-		return Display.getDefault().getActiveShell();
-	}
+    @Override
+    public Object getActiveWindowUiReference() {
+        return Display.getDefault().getActiveShell();
+    }
 
-	@Override
-	public List<Object> getAllWindowsUiReference() {
-		final List<Object> result = new LinkedList<Object>();
-		final Display currentDisplay = Display.getDefault();
-		for (final Shell shell : currentDisplay.getShells()) {
-			result.add(shell);
-		}
-		return result;
-	}
+    @Override
+    public List<Object> getAllWindowsUiReference() {
+        final List<Object> result = new LinkedList<Object>();
+        final Display currentDisplay = Display.getDefault();
+        for (final Shell shell : currentDisplay.getShells()) {
+            result.add(shell);
+        }
+        return result;
+    }
 
-	@Override
-	public Position toScreen(final Position localPosition, final IComponentCommon component) {
-		final Control control;
-		if (component.getUiReference() instanceof Control) {
-			control = (Control) component.getUiReference();
-		}
-		else if (component.getUiReference() instanceof CTabItem) {
-			control = ((CTabItem) component.getUiReference()).getControl();
-		}
-		else {
-			throw new IllegalArgumentException("UiReference of component must be instance of '"
-				+ Control.class.getName()
-				+ "' or '"
-				+ CTabItem.class.getName()
-				+ "'");
-		}
+    @Override
+    public Position toScreen(final Position localPosition, final IComponentCommon component) {
+        final Control control;
+        if (component.getUiReference() instanceof Control) {
+            control = (Control) component.getUiReference();
+        }
+        else if (component.getUiReference() instanceof CTabItem) {
+            control = ((CTabItem) component.getUiReference()).getControl();
+        }
+        else {
+            throw new IllegalArgumentException("UiReference of component must be instance of '"
+                + Control.class.getName()
+                + "' or '"
+                + CTabItem.class.getName()
+                + "'");
+        }
 
-		return PositionConvert.convert(control.toDisplay(PositionConvert.convert(localPosition)));
-	}
+        return PositionConvert.convert(control.toDisplay(PositionConvert.convert(localPosition)));
+    }
 
-	@Override
-	public Position toLocal(final Position screenPosition, final IComponentCommon component) {
-		final Control control;
-		if (component.getUiReference() instanceof Control) {
-			control = (Control) component.getUiReference();
-		}
-		else if (component.getUiReference() instanceof CTabItem) {
-			control = ((CTabItem) component.getUiReference()).getControl();
-		}
-		else {
-			throw new IllegalArgumentException("UiReference of component must be instance of '"
-				+ Control.class.getName()
-				+ "' or '"
-				+ CTabItem.class.getName()
-				+ "'");
-		}
+    @Override
+    public Position toLocal(final Position screenPosition, final IComponentCommon component) {
+        final Control control;
+        if (component.getUiReference() instanceof Control) {
+            control = (Control) component.getUiReference();
+        }
+        else if (component.getUiReference() instanceof CTabItem) {
+            control = ((CTabItem) component.getUiReference()).getControl();
+        }
+        else {
+            throw new IllegalArgumentException("UiReference of component must be instance of '"
+                + Control.class.getName()
+                + "' or '"
+                + CTabItem.class.getName()
+                + "'");
+        }
 
-		return PositionConvert.convert(control.toControl(PositionConvert.convert(screenPosition)));
-	}
+        return PositionConvert.convert(control.toControl(PositionConvert.convert(screenPosition)));
+    }
 
-	@Override
-	public Display get() {
-		if (uiThreadAccess != null) {
-			return uiThreadAccess.getDisplay();
-		}
-		else {
-			return display;
-		}
-	}
+    @Override
+    public Display get() {
+        if (uiThreadAccess != null) {
+            return uiThreadAccess.getDisplay();
+        }
+        else {
+            return display;
+        }
+    }
 
 }

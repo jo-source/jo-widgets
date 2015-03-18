@@ -32,18 +32,18 @@ import org.jowidgets.common.color.IColorConstant;
 
 public interface ISimpleTableModelBuilder {
 
-	ISimpleTableModelBuilder setRowCount(int rowCount);
+    ISimpleTableModelBuilder setRowCount(int rowCount);
 
-	ISimpleTableModelBuilder setColumnCount(int columnCount);
+    ISimpleTableModelBuilder setColumnCount(int columnCount);
 
-	ISimpleTableModelBuilder setEditableDefault(boolean editable);
+    ISimpleTableModelBuilder setEditableDefault(boolean editable);
 
-	ISimpleTableModelBuilder setDefaultStripedRenderingColors();
+    ISimpleTableModelBuilder setDefaultStripedRenderingColors();
 
-	ISimpleTableModelBuilder setEvenRowsBackgroundColor(IColorConstant color);
+    ISimpleTableModelBuilder setEvenRowsBackgroundColor(IColorConstant color);
 
-	ISimpleTableModelBuilder setOddRowsBackgroundColor(IColorConstant color);
+    ISimpleTableModelBuilder setOddRowsBackgroundColor(IColorConstant color);
 
-	ISimpleTableModel build();
+    ISimpleTableModel build();
 
 }

@@ -31,6 +31,6 @@ import org.jowidgets.common.widgets.descriptor.setup.ISliderSetupCommon;
 
 public interface ISliderSetup extends ISliderSetupCommon, IComponentSetup {
 
-	Integer getValue();
+    Integer getValue();
 
 }

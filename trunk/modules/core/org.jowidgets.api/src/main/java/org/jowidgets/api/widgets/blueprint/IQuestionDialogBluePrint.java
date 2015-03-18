@@ -31,7 +31,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IQuestionDialogSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.IQuestionDialogDescriptor;
 
 public interface IQuestionDialogBluePrint extends
-		IQuestionDialogSetupBuilder<IQuestionDialogBluePrint>,
-		IQuestionDialogDescriptor {
+        IQuestionDialogSetupBuilder<IQuestionDialogBluePrint>,
+        IQuestionDialogDescriptor {
 
 }

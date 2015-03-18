@@ -37,16 +37,16 @@ import org.jowidgets.workbench.api.IViewContext;
 
 public class ViewDemo3 extends AbstractDemoView implements IView {
 
-	public static final String ID = ViewDemo3.class.getName();
-	public static final String DEFAULT_LABEL = "View3";
-	public static final String DEFAULT_TOOLTIP = "View3 tooltip";
-	public static final IImageConstant DEFAULT_ICON = SilkIcons.PALETTE;
+    public static final String ID = ViewDemo3.class.getName();
+    public static final String DEFAULT_LABEL = "View3";
+    public static final String DEFAULT_TOOLTIP = "View3 tooltip";
+    public static final IImageConstant DEFAULT_ICON = SilkIcons.PALETTE;
 
-	public ViewDemo3(final IViewContext context) {
-		super(ID);
-		new DemoTreeComposite(context.getContainer());
-		final ActionFactory actionFactory = new ActionFactory();
-		context.getToolBarMenu().addAction(actionFactory.createRemoveViewAction(context));
-	}
+    public ViewDemo3(final IViewContext context) {
+        super(ID);
+        new DemoTreeComposite(context.getContainer());
+        final ActionFactory actionFactory = new ActionFactory();
+        context.getToolBarMenu().addAction(actionFactory.createRemoveViewAction(context));
+    }
 
 }

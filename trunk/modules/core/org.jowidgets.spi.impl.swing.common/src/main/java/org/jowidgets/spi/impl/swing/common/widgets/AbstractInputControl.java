@@ -48,203 +48,203 @@ import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public abstract class AbstractInputControl extends InputObservable implements IInputControlSpi {
 
-	private final Component component;
-	private final SwingControl swingComponentDelegate;
+    private final Component component;
+    private final SwingControl swingComponentDelegate;
 
-	public AbstractInputControl(final Component component) {
-		super();
-		this.component = component;
-		this.swingComponentDelegate = new SwingControl(component, new ImmutableDropSelection(this));
-	}
+    public AbstractInputControl(final Component component) {
+        super();
+        this.component = component;
+        this.swingComponentDelegate = new SwingControl(component, new ImmutableDropSelection(this));
+    }
 
-	@Override
-	public Component getUiReference() {
-		return component;
-	}
+    @Override
+    public Component getUiReference() {
+        return component;
+    }
 
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		swingComponentDelegate.setLayoutConstraints(layoutConstraints);
-	}
+    @Override
+    public void setLayoutConstraints(final Object layoutConstraints) {
+        swingComponentDelegate.setLayoutConstraints(layoutConstraints);
+    }
 
-	@Override
-	public Object getLayoutConstraints() {
-		return swingComponentDelegate.getLayoutConstraints();
-	}
+    @Override
+    public Object getLayoutConstraints() {
+        return swingComponentDelegate.getLayoutConstraints();
+    }
 
-	@Override
-	public void redraw() {
-		swingComponentDelegate.redraw();
-	}
+    @Override
+    public void redraw() {
+        swingComponentDelegate.redraw();
+    }
 
-	@Override
-	public void setRedrawEnabled(final boolean enabled) {
-		swingComponentDelegate.setRedrawEnabled(enabled);
-	}
+    @Override
+    public void setRedrawEnabled(final boolean enabled) {
+        swingComponentDelegate.setRedrawEnabled(enabled);
+    }
 
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		swingComponentDelegate.setForegroundColor(colorValue);
-	}
+    @Override
+    public void setForegroundColor(final IColorConstant colorValue) {
+        swingComponentDelegate.setForegroundColor(colorValue);
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		swingComponentDelegate.setBackgroundColor(colorValue);
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        swingComponentDelegate.setBackgroundColor(colorValue);
+    }
 
-	@Override
-	public IColorConstant getForegroundColor() {
-		return swingComponentDelegate.getForegroundColor();
-	}
+    @Override
+    public IColorConstant getForegroundColor() {
+        return swingComponentDelegate.getForegroundColor();
+    }
 
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return swingComponentDelegate.getBackgroundColor();
-	}
+    @Override
+    public IColorConstant getBackgroundColor() {
+        return swingComponentDelegate.getBackgroundColor();
+    }
 
-	@Override
-	public void setCursor(final Cursor cursor) {
-		swingComponentDelegate.setCursor(cursor);
-	}
+    @Override
+    public void setCursor(final Cursor cursor) {
+        swingComponentDelegate.setCursor(cursor);
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		swingComponentDelegate.setVisible(visible);
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        swingComponentDelegate.setVisible(visible);
+    }
 
-	@Override
-	public boolean isVisible() {
-		return swingComponentDelegate.isVisible();
-	}
+    @Override
+    public boolean isVisible() {
+        return swingComponentDelegate.isVisible();
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		swingComponentDelegate.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        swingComponentDelegate.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return swingComponentDelegate.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return swingComponentDelegate.isEnabled();
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		return swingComponentDelegate.getMinSize();
-	}
+    @Override
+    public Dimension getMinSize() {
+        return swingComponentDelegate.getMinSize();
+    }
 
-	@Override
-	public Dimension getPreferredSize() {
-		return swingComponentDelegate.getPreferredSize();
-	}
+    @Override
+    public Dimension getPreferredSize() {
+        return swingComponentDelegate.getPreferredSize();
+    }
 
-	@Override
-	public Dimension getMaxSize() {
-		return swingComponentDelegate.getMaxSize();
-	}
+    @Override
+    public Dimension getMaxSize() {
+        return swingComponentDelegate.getMaxSize();
+    }
 
-	@Override
-	public Dimension getSize() {
-		return swingComponentDelegate.getSize();
-	}
+    @Override
+    public Dimension getSize() {
+        return swingComponentDelegate.getSize();
+    }
 
-	@Override
-	public void setSize(final Dimension size) {
-		swingComponentDelegate.setSize(size);
-	}
+    @Override
+    public void setSize(final Dimension size) {
+        swingComponentDelegate.setSize(size);
+    }
 
-	@Override
-	public Position getPosition() {
-		return swingComponentDelegate.getPosition();
-	}
+    @Override
+    public Position getPosition() {
+        return swingComponentDelegate.getPosition();
+    }
 
-	@Override
-	public void setPosition(final Position position) {
-		swingComponentDelegate.setPosition(position);
-	}
+    @Override
+    public void setPosition(final Position position) {
+        swingComponentDelegate.setPosition(position);
+    }
 
-	@Override
-	public boolean requestFocus() {
-		return swingComponentDelegate.requestFocus();
-	}
+    @Override
+    public boolean requestFocus() {
+        return swingComponentDelegate.requestFocus();
+    }
 
-	@Override
-	public void addFocusListener(final IFocusListener listener) {
-		swingComponentDelegate.addFocusListener(listener);
-	}
+    @Override
+    public void addFocusListener(final IFocusListener listener) {
+        swingComponentDelegate.addFocusListener(listener);
+    }
 
-	@Override
-	public void removeFocusListener(final IFocusListener listener) {
-		swingComponentDelegate.removeFocusListener(listener);
-	}
+    @Override
+    public void removeFocusListener(final IFocusListener listener) {
+        swingComponentDelegate.removeFocusListener(listener);
+    }
 
-	@Override
-	public void addKeyListener(final IKeyListener listener) {
-		swingComponentDelegate.addKeyListener(listener);
-	}
+    @Override
+    public void addKeyListener(final IKeyListener listener) {
+        swingComponentDelegate.addKeyListener(listener);
+    }
 
-	@Override
-	public void removeKeyListener(final IKeyListener listener) {
-		swingComponentDelegate.removeKeyListener(listener);
-	}
+    @Override
+    public void removeKeyListener(final IKeyListener listener) {
+        swingComponentDelegate.removeKeyListener(listener);
+    }
 
-	@Override
-	public void addMouseListener(final IMouseListener mouseListener) {
-		swingComponentDelegate.addMouseListener(mouseListener);
-	}
+    @Override
+    public void addMouseListener(final IMouseListener mouseListener) {
+        swingComponentDelegate.addMouseListener(mouseListener);
+    }
 
-	@Override
-	public void removeMouseListener(final IMouseListener mouseListener) {
-		swingComponentDelegate.removeMouseListener(mouseListener);
-	}
+    @Override
+    public void removeMouseListener(final IMouseListener mouseListener) {
+        swingComponentDelegate.removeMouseListener(mouseListener);
+    }
 
-	@Override
-	public void addMouseMotionListener(final IMouseMotionListener listener) {
-		swingComponentDelegate.addMouseMotionListener(listener);
-	}
+    @Override
+    public void addMouseMotionListener(final IMouseMotionListener listener) {
+        swingComponentDelegate.addMouseMotionListener(listener);
+    }
 
-	@Override
-	public void removeMouseMotionListener(final IMouseMotionListener listener) {
-		swingComponentDelegate.removeMouseMotionListener(listener);
-	}
+    @Override
+    public void removeMouseMotionListener(final IMouseMotionListener listener) {
+        swingComponentDelegate.removeMouseMotionListener(listener);
+    }
 
-	@Override
-	public void addComponentListener(final IComponentListener componentListener) {
-		swingComponentDelegate.addComponentListener(componentListener);
-	}
+    @Override
+    public void addComponentListener(final IComponentListener componentListener) {
+        swingComponentDelegate.addComponentListener(componentListener);
+    }
 
-	@Override
-	public void removeComponentListener(final IComponentListener componentListener) {
-		swingComponentDelegate.removeComponentListener(componentListener);
-	}
+    @Override
+    public void removeComponentListener(final IComponentListener componentListener) {
+        swingComponentDelegate.removeComponentListener(componentListener);
+    }
 
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return swingComponentDelegate.createPopupMenu();
-	}
+    @Override
+    public IPopupMenuSpi createPopupMenu() {
+        return swingComponentDelegate.createPopupMenu();
+    }
 
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		swingComponentDelegate.addPopupDetectionListener(listener);
-	}
+    @Override
+    public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+        swingComponentDelegate.addPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		swingComponentDelegate.removePopupDetectionListener(listener);
-	}
+    @Override
+    public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+        swingComponentDelegate.removePopupDetectionListener(listener);
+    }
 
-	@Override
-	public void setToolTipText(final String toolTip) {
-		swingComponentDelegate.setToolTipText(toolTip);
-	}
+    @Override
+    public void setToolTipText(final String toolTip) {
+        swingComponentDelegate.setToolTipText(toolTip);
+    }
 
-	@Override
-	public IDragSourceSpi getDragSource() {
-		return swingComponentDelegate.getDragSource();
-	}
+    @Override
+    public IDragSourceSpi getDragSource() {
+        return swingComponentDelegate.getDragSource();
+    }
 
-	@Override
-	public IDropTargetSpi getDropTarget() {
-		return swingComponentDelegate.getDropTarget();
-	}
+    @Override
+    public IDropTargetSpi getDropTarget() {
+        return swingComponentDelegate.getDropTarget();
+    }
 
 }

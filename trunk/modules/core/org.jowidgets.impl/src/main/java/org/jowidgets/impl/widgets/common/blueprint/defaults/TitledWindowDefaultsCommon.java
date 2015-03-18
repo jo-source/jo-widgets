@@ -32,9 +32,9 @@ import org.jowidgets.common.widgets.builder.ITitledWindowSetupBuilderCommon;
 
 public class TitledWindowDefaultsCommon implements IDefaultInitializer<ITitledWindowSetupBuilderCommon<?>> {
 
-	@Override
-	public void initialize(final ITitledWindowSetupBuilderCommon<?> builder) {
-		builder.setDecorated(true);
-	}
+    @Override
+    public void initialize(final ITitledWindowSetupBuilderCommon<?> builder) {
+        builder.setDecorated(true);
+    }
 
 }

@@ -32,25 +32,25 @@ import de.micromata.opengis.kml.v_2_2_0.Feature;
 
 public interface IMapContext {
 
-	/**
-	 * @return north, south, east, west
-	 */
-	double[] getBoundingBox();
+    /**
+     * @return north, south, east, west
+     */
+    double[] getBoundingBox();
 
-	boolean flyTo(String placemarkId, double range);
+    boolean flyTo(String placemarkId, double range);
 
-	boolean flyTo(double latitude, double longitude, double range);
+    boolean flyTo(double latitude, double longitude, double range);
 
-	boolean addFeature(final Feature feature);
+    boolean addFeature(final Feature feature);
 
-	boolean removeFeature(String featureId);
+    boolean removeFeature(String featureId);
 
-	boolean removeAllFeatures();
+    boolean removeAllFeatures();
 
-	<T> boolean startDesignation(final Class<T> type, IDesignationListener<? super T> listener);
+    <T> boolean startDesignation(final Class<T> type, IDesignationListener<? super T> listener);
 
-	boolean endDesignation();
+    boolean endDesignation();
 
-	boolean isDesignationRunning();
+    boolean isDesignationRunning();
 
 }

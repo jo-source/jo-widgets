@@ -36,40 +36,40 @@ import org.jowidgets.common.image.IImageConstant;
 
 public class JoIcon extends Control<IIcon, IIconBluePrint> implements IIcon {
 
-	public JoIcon(final IImageConstant icon) {
-		this(Toolkit.getBluePrintFactory().icon(icon));
-	}
+    public JoIcon(final IImageConstant icon) {
+        this(Toolkit.getBluePrintFactory().icon(icon));
+    }
 
-	public JoIcon(final IIconDescriptor descriptor) {
-		super(Toolkit.getBluePrintFactory().icon().setSetup(descriptor));
-	}
+    public JoIcon(final IIconDescriptor descriptor) {
+        super(Toolkit.getBluePrintFactory().icon().setSetup(descriptor));
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		if (isInitialized()) {
-			getWidget().setIcon(icon);
-		}
-		else {
-			getBluePrint().setIcon(icon);
-		}
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        if (isInitialized()) {
+            getWidget().setIcon(icon);
+        }
+        else {
+            getBluePrint().setIcon(icon);
+        }
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		if (isInitialized()) {
-			return getWidget().getIcon();
-		}
-		else {
-			return getBluePrint().getIcon();
-		}
-	}
+    @Override
+    public IImageConstant getIcon() {
+        if (isInitialized()) {
+            return getWidget().getIcon();
+        }
+        else {
+            return getBluePrint().getIcon();
+        }
+    }
 
-	public static IIconBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().icon();
-	}
+    public static IIconBluePrint bluePrint() {
+        return Toolkit.getBluePrintFactory().icon();
+    }
 
-	public static IIconBluePrint bluePrint(final IImageConstant icon) {
-		return Toolkit.getBluePrintFactory().icon(icon);
-	}
+    public static IIconBluePrint bluePrint(final IImageConstant icon) {
+        return Toolkit.getBluePrintFactory().icon(icon);
+    }
 
 }

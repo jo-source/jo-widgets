@@ -36,13 +36,13 @@ import org.jowidgets.workbench.api.IViewContext;
 
 public class EmptyView extends AbstractDemoView implements IView {
 
-	public static final String ID = EmptyView.class.getName();
-	public static final String DEFAULT_LABEL = "Empty";
-	public static final String DEFAULT_TOOLTIP = "An empty view";
-	public static final IImageConstant DEFAULT_ICON = SilkIcons.APPLICATION;
+    public static final String ID = EmptyView.class.getName();
+    public static final String DEFAULT_LABEL = "Empty";
+    public static final String DEFAULT_TOOLTIP = "An empty view";
+    public static final IImageConstant DEFAULT_ICON = SilkIcons.APPLICATION;
 
-	public EmptyView(final IViewContext context) {
-		super(ID);
-	}
+    public EmptyView(final IViewContext context) {
+        super(ID);
+    }
 
 }

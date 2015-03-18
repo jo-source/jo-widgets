@@ -41,205 +41,205 @@ import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 
 public class ComponentNode implements IComponentNode {
 
-	private final IComponentNode node;
-	private final IComponentNodeModel model;
+    private final IComponentNode node;
+    private final IComponentNodeModel model;
 
-	public ComponentNode(final IComponentFactory componentFactory) {
-		this(builder(componentFactory));
-	}
+    public ComponentNode(final IComponentFactory componentFactory) {
+        this(builder(componentFactory));
+    }
 
-	public ComponentNode(final IComponentFactory componentFactory, final String label) {
-		this(builder(componentFactory, label));
-	}
+    public ComponentNode(final IComponentFactory componentFactory, final String label) {
+        this(builder(componentFactory, label));
+    }
 
-	public ComponentNode(final IComponentFactory componentFactory, final String label, final IImageConstant icon) {
-		this(builder(componentFactory, label, icon));
-	}
+    public ComponentNode(final IComponentFactory componentFactory, final String label, final IImageConstant icon) {
+        this(builder(componentFactory, label, icon));
+    }
 
-	public ComponentNode(final IComponentFactory componentFactory, final String label, final String tooltip) {
-		this(builder(componentFactory, label, tooltip));
-	}
+    public ComponentNode(final IComponentFactory componentFactory, final String label, final String tooltip) {
+        this(builder(componentFactory, label, tooltip));
+    }
 
-	public ComponentNode(
-		final IComponentFactory componentFactory,
-		final String label,
-		final String tooltip,
-		final IImageConstant icon) {
-		this(builder(componentFactory, label, tooltip, icon));
-	}
+    public ComponentNode(
+        final IComponentFactory componentFactory,
+        final String label,
+        final String tooltip,
+        final IImageConstant icon) {
+        this(builder(componentFactory, label, tooltip, icon));
+    }
 
-	public ComponentNode(final Class<? extends IComponent> componentType) {
-		this(builder(componentType));
-	}
+    public ComponentNode(final Class<? extends IComponent> componentType) {
+        this(builder(componentType));
+    }
 
-	public ComponentNode(final Class<? extends IComponent> componentType, final String label) {
-		this(builder(componentType, label));
-	}
+    public ComponentNode(final Class<? extends IComponent> componentType, final String label) {
+        this(builder(componentType, label));
+    }
 
-	public ComponentNode(final Class<? extends IComponent> componentType, final String label, final IImageConstant icon) {
-		this(builder(componentType, label, icon));
-	}
+    public ComponentNode(final Class<? extends IComponent> componentType, final String label, final IImageConstant icon) {
+        this(builder(componentType, label, icon));
+    }
 
-	public ComponentNode(final Class<? extends IComponent> componentType, final String label, final String tooltip) {
-		this(builder(componentType, label, tooltip));
-	}
+    public ComponentNode(final Class<? extends IComponent> componentType, final String label, final String tooltip) {
+        this(builder(componentType, label, tooltip));
+    }
 
-	public ComponentNode(
-		final Class<? extends IComponent> componentType,
-		final String label,
-		final String tooltip,
-		final IImageConstant icon) {
-		this(builder(componentType, label, tooltip, icon));
-	}
+    public ComponentNode(
+        final Class<? extends IComponent> componentType,
+        final String label,
+        final String tooltip,
+        final IImageConstant icon) {
+        this(builder(componentType, label, tooltip, icon));
+    }
 
-	public ComponentNode(final String label) {
-		this(builder(label));
-	}
+    public ComponentNode(final String label) {
+        this(builder(label));
+    }
 
-	public ComponentNode(final String label, final IImageConstant icon) {
-		this(builder(label, icon));
-	}
+    public ComponentNode(final String label, final IImageConstant icon) {
+        this(builder(label, icon));
+    }
 
-	public ComponentNode(final String label, final String tooltip) {
-		this(builder(label, tooltip));
-	}
+    public ComponentNode(final String label, final String tooltip) {
+        this(builder(label, tooltip));
+    }
 
-	public ComponentNode(final String label, final String tooltip, final IImageConstant icon) {
-		this(builder(label, tooltip, icon));
-	}
+    public ComponentNode(final String label, final String tooltip, final IImageConstant icon) {
+        this(builder(label, tooltip, icon));
+    }
 
-	public ComponentNode(final IComponentNodeModelBuilder builder) {
-		this(build(builder));
-	}
+    public ComponentNode(final IComponentNodeModelBuilder builder) {
+        this(build(builder));
+    }
 
-	public ComponentNode(final IComponentNodeModel model) {
-		Assert.paramNotNull(model, "model");
-		this.node = WorkbenchToolkit.getWorkbenchPartFactory().componentNode(model);
-		this.model = model;
-	}
+    public ComponentNode(final IComponentNodeModel model) {
+        Assert.paramNotNull(model, "model");
+        this.node = WorkbenchToolkit.getWorkbenchPartFactory().componentNode(model);
+        this.model = model;
+    }
 
-	public final IComponentNodeModel getModel() {
-		return model;
-	}
+    public final IComponentNodeModel getModel() {
+        return model;
+    }
 
-	@Override
-	public final String getId() {
-		return node.getId();
-	}
+    @Override
+    public final String getId() {
+        return node.getId();
+    }
 
-	@Override
-	public final String getLabel() {
-		return node.getLabel();
-	}
+    @Override
+    public final String getLabel() {
+        return node.getLabel();
+    }
 
-	@Override
-	public final String getTooltip() {
-		return node.getTooltip();
-	}
+    @Override
+    public final String getTooltip() {
+        return node.getTooltip();
+    }
 
-	@Override
-	public final IImageConstant getIcon() {
-		return node.getIcon();
-	}
+    @Override
+    public final IImageConstant getIcon() {
+        return node.getIcon();
+    }
 
-	@Override
-	public final IComponent createComponent(final IComponentContext context) {
-		return node.createComponent(context);
-	}
+    @Override
+    public final IComponent createComponent(final IComponentContext context) {
+        return node.createComponent(context);
+    }
 
-	@Override
-	public final void onContextInitialize(final IComponentNodeContext context) {
-		node.onContextInitialize(context);
-	}
+    @Override
+    public final void onContextInitialize(final IComponentNodeContext context) {
+        node.onContextInitialize(context);
+    }
 
-	@Override
-	public void onDispose() {
-		node.onDispose();
-	}
+    @Override
+    public void onDispose() {
+        node.onDispose();
+    }
 
-	public static IComponentNodeModelBuilder builder() {
-		return WorkbenchToolkit.getWorkbenchPartBuilderFactory().componentNode();
-	}
+    public static IComponentNodeModelBuilder builder() {
+        return WorkbenchToolkit.getWorkbenchPartBuilderFactory().componentNode();
+    }
 
-	public static IComponentNodeModelBuilder builder(final String label) {
-		return builder().setLabel(label);
-	}
+    public static IComponentNodeModelBuilder builder(final String label) {
+        return builder().setLabel(label);
+    }
 
-	public static IComponentNodeModelBuilder builder(final String label, final IImageConstant icon) {
-		return builder(label).setIcon(icon);
-	}
+    public static IComponentNodeModelBuilder builder(final String label, final IImageConstant icon) {
+        return builder(label).setIcon(icon);
+    }
 
-	public static IComponentNodeModelBuilder builder(final String label, final String tooltip) {
-		return builder(label).setTooltip(tooltip);
-	}
+    public static IComponentNodeModelBuilder builder(final String label, final String tooltip) {
+        return builder(label).setTooltip(tooltip);
+    }
 
-	public static IComponentNodeModelBuilder builder(final String label, final String tooltip, final IImageConstant icon) {
-		return builder(label, tooltip).setIcon(icon);
-	}
+    public static IComponentNodeModelBuilder builder(final String label, final String tooltip, final IImageConstant icon) {
+        return builder(label, tooltip).setIcon(icon);
+    }
 
-	public static IComponentNodeModelBuilder builder(final IComponentFactory componentFactory) {
-		return builder().setComponentFactory(componentFactory);
-	}
+    public static IComponentNodeModelBuilder builder(final IComponentFactory componentFactory) {
+        return builder().setComponentFactory(componentFactory);
+    }
 
-	public static IComponentNodeModelBuilder builder(final IComponentFactory componentFactory, final String label) {
-		return builder(label).setComponentFactory(componentFactory);
-	}
+    public static IComponentNodeModelBuilder builder(final IComponentFactory componentFactory, final String label) {
+        return builder(label).setComponentFactory(componentFactory);
+    }
 
-	public static IComponentNodeModelBuilder builder(
-		final IComponentFactory componentFactory,
-		final String label,
-		final IImageConstant icon) {
-		return builder(label, icon).setComponentFactory(componentFactory);
-	}
+    public static IComponentNodeModelBuilder builder(
+        final IComponentFactory componentFactory,
+        final String label,
+        final IImageConstant icon) {
+        return builder(label, icon).setComponentFactory(componentFactory);
+    }
 
-	public static IComponentNodeModelBuilder builder(
-		final IComponentFactory componentFactory,
-		final String label,
-		final String tooltip) {
-		return builder(label, tooltip).setComponentFactory(componentFactory);
-	}
+    public static IComponentNodeModelBuilder builder(
+        final IComponentFactory componentFactory,
+        final String label,
+        final String tooltip) {
+        return builder(label, tooltip).setComponentFactory(componentFactory);
+    }
 
-	public static IComponentNodeModelBuilder builder(
-		final IComponentFactory componentFactory,
-		final String label,
-		final String tooltip,
-		final IImageConstant icon) {
-		return builder(label, tooltip, icon).setComponentFactory(componentFactory);
-	}
+    public static IComponentNodeModelBuilder builder(
+        final IComponentFactory componentFactory,
+        final String label,
+        final String tooltip,
+        final IImageConstant icon) {
+        return builder(label, tooltip, icon).setComponentFactory(componentFactory);
+    }
 
-	public static IComponentNodeModelBuilder builder(final Class<? extends IComponent> componentType) {
-		return builder().setComponentFactory(componentType);
-	}
+    public static IComponentNodeModelBuilder builder(final Class<? extends IComponent> componentType) {
+        return builder().setComponentFactory(componentType);
+    }
 
-	public static IComponentNodeModelBuilder builder(final Class<? extends IComponent> componentType, final String label) {
-		return builder(label).setComponentFactory(componentType);
-	}
+    public static IComponentNodeModelBuilder builder(final Class<? extends IComponent> componentType, final String label) {
+        return builder(label).setComponentFactory(componentType);
+    }
 
-	public static IComponentNodeModelBuilder builder(
-		final Class<? extends IComponent> componentType,
-		final String label,
-		final IImageConstant icon) {
-		return builder(label, icon).setComponentFactory(componentType);
-	}
+    public static IComponentNodeModelBuilder builder(
+        final Class<? extends IComponent> componentType,
+        final String label,
+        final IImageConstant icon) {
+        return builder(label, icon).setComponentFactory(componentType);
+    }
 
-	public static IComponentNodeModelBuilder builder(
-		final Class<? extends IComponent> componentType,
-		final String label,
-		final String tooltip) {
-		return builder(label, tooltip).setComponentFactory(componentType);
-	}
+    public static IComponentNodeModelBuilder builder(
+        final Class<? extends IComponent> componentType,
+        final String label,
+        final String tooltip) {
+        return builder(label, tooltip).setComponentFactory(componentType);
+    }
 
-	public static IComponentNodeModelBuilder builder(
-		final Class<? extends IComponent> componentType,
-		final String label,
-		final String tooltip,
-		final IImageConstant icon) {
-		return builder(label, tooltip, icon).setComponentFactory(componentType);
-	}
+    public static IComponentNodeModelBuilder builder(
+        final Class<? extends IComponent> componentType,
+        final String label,
+        final String tooltip,
+        final IImageConstant icon) {
+        return builder(label, tooltip, icon).setComponentFactory(componentType);
+    }
 
-	private static IComponentNodeModel build(final IComponentNodeModelBuilder builder) {
-		Assert.paramNotNull(builder, "builder");
-		return builder.build();
-	}
+    private static IComponentNodeModel build(final IComponentNodeModelBuilder builder) {
+        Assert.paramNotNull(builder, "builder");
+        return builder.build();
+    }
 
 }

@@ -35,38 +35,38 @@ import org.jowidgets.util.Assert;
 
 public class WidgetSpiWrapper implements IWidgetCommon {
 
-	private IWidgetSpi widget;
+    private IWidgetSpi widget;
 
-	public WidgetSpiWrapper(final IWidgetSpi widget) {
-		Assert.paramNotNull(widget, "widget");
-		this.widget = widget;
-	}
+    public WidgetSpiWrapper(final IWidgetSpi widget) {
+        Assert.paramNotNull(widget, "widget");
+        this.widget = widget;
+    }
 
-	public IWidgetSpi getWidget() {
-		return widget;
-	}
+    public IWidgetSpi getWidget() {
+        return widget;
+    }
 
-	public void setWidget(final IWidgetSpi widget) {
-		this.widget = widget;
-	}
+    public void setWidget(final IWidgetSpi widget) {
+        this.widget = widget;
+    }
 
-	public IWidget getRoot() {
-		return (IWidget) this;
-	}
+    public IWidget getRoot() {
+        return (IWidget) this;
+    }
 
-	@Override
-	public Object getUiReference() {
-		return widget.getUiReference();
-	}
+    @Override
+    public Object getUiReference() {
+        return widget.getUiReference();
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		widget.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        widget.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return widget.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return widget.isEnabled();
+    }
 
 }

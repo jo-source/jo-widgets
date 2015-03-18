@@ -32,14 +32,14 @@ import org.jowidgets.api.widgets.ITreeContainer;
 
 public final class CheckTreeAction {
 
-	private CheckTreeAction() {}
+    private CheckTreeAction() {}
 
-	public static IDefaultActionBuilder builder(final ITreeContainer tree) {
-		return DefaultActionFactory.checkTreeActionBuilder(tree);
-	}
+    public static IDefaultActionBuilder builder(final ITreeContainer tree) {
+        return DefaultActionFactory.checkTreeActionBuilder(tree);
+    }
 
-	public static IAction create(final ITreeContainer tree) {
-		return DefaultActionFactory.checkTreeAction(tree);
-	}
+    public static IAction create(final ITreeContainer tree) {
+        return DefaultActionFactory.checkTreeAction(tree);
+    }
 
 }

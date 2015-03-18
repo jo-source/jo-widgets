@@ -44,101 +44,101 @@ import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 
 public class ToolBarPopupButtonImpl extends ToolBarButtonImpl implements IToolBarPopupButtonSpi {
 
-	private final PopupDetectionObservable popupDetectionObservable;
-	private final JoArrowButton arrowButton;
+    private final PopupDetectionObservable popupDetectionObservable;
+    private final JoArrowButton arrowButton;
 
-	public ToolBarPopupButtonImpl(final JButton button, final JoArrowButton arrowButton) {
-		super(button);
+    public ToolBarPopupButtonImpl(final JButton button, final JoArrowButton arrowButton) {
+        super(button);
 
-		this.popupDetectionObservable = new PopupDetectionObservable();
-		this.arrowButton = arrowButton;
+        this.popupDetectionObservable = new PopupDetectionObservable();
+        this.arrowButton = arrowButton;
 
-		adjustArrowSize();
+        adjustArrowSize();
 
-		button.addMouseListener(new MouseAdapter() {
+        button.addMouseListener(new MouseAdapter() {
 
-			@Override
-			public void mouseReleased(final MouseEvent e) {
-				arrowButton.getModel().setSelected(false);
-			}
+            @Override
+            public void mouseReleased(final MouseEvent e) {
+                arrowButton.getModel().setSelected(false);
+            }
 
-			@Override
-			public void mousePressed(final MouseEvent e) {
-				arrowButton.getModel().setSelected(true);
-			}
+            @Override
+            public void mousePressed(final MouseEvent e) {
+                arrowButton.getModel().setSelected(true);
+            }
 
-			@Override
-			public void mouseExited(final MouseEvent e) {
-				arrowButton.getModel().setRollover(false);
-			}
+            @Override
+            public void mouseExited(final MouseEvent e) {
+                arrowButton.getModel().setRollover(false);
+            }
 
-			@Override
-			public void mouseEntered(final MouseEvent e) {
-				arrowButton.getModel().setRollover(true);
-			}
+            @Override
+            public void mouseEntered(final MouseEvent e) {
+                arrowButton.getModel().setRollover(true);
+            }
 
-		});
+        });
 
-		arrowButton.addMouseListener(new MouseAdapter() {
+        arrowButton.addMouseListener(new MouseAdapter() {
 
-			@Override
-			public void mousePressed(final MouseEvent e) {
-				final Point menuPosition = button.getLocation();
-				popupDetectionObservable.firePopupDetected(new Position(menuPosition.x, menuPosition.y + button.getHeight()));
-			}
+            @Override
+            public void mousePressed(final MouseEvent e) {
+                final Point menuPosition = button.getLocation();
+                popupDetectionObservable.firePopupDetected(new Position(menuPosition.x, menuPosition.y + button.getHeight()));
+            }
 
-			@Override
-			public void mouseExited(final MouseEvent e) {
-				button.getModel().setRollover(false);
-			}
+            @Override
+            public void mouseExited(final MouseEvent e) {
+                button.getModel().setRollover(false);
+            }
 
-			@Override
-			public void mouseEntered(final MouseEvent e) {
-				button.getModel().setRollover(true);
-			}
+            @Override
+            public void mouseEntered(final MouseEvent e) {
+                button.getModel().setRollover(true);
+            }
 
-		});
+        });
 
-	}
+    }
 
-	@Override
-	public void setText(final String text) {
-		super.setText(text);
-		adjustArrowSize();
-	}
+    @Override
+    public void setText(final String text) {
+        super.setText(text);
+        adjustArrowSize();
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		super.setIcon(icon);
-		adjustArrowSize();
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        super.setIcon(icon);
+        adjustArrowSize();
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		super.setEnabled(enabled);
-		arrowButton.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        super.setEnabled(enabled);
+        arrowButton.setEnabled(enabled);
+    }
 
-	@Override
-	public void setToolTipText(final String text) {
-		super.setToolTipText(text);
-		arrowButton.setToolTipText(text);
-	}
+    @Override
+    public void setToolTipText(final String text) {
+        super.setToolTipText(text);
+        arrowButton.setToolTipText(text);
+    }
 
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		popupDetectionObservable.addPopupDetectionListener(listener);
-	}
+    @Override
+    public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+        popupDetectionObservable.addPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		popupDetectionObservable.removePopupDetectionListener(listener);
-	}
+    @Override
+    public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+        popupDetectionObservable.removePopupDetectionListener(listener);
+    }
 
-	private void adjustArrowSize() {
-		arrowButton.setMaximumSize(new Dimension(
-			JoArrowButton.ARROW_ICON.getIconWidth() + 4,
-			getUiReference().getMaximumSize().height));
-	}
+    private void adjustArrowSize() {
+        arrowButton.setMaximumSize(new Dimension(
+            JoArrowButton.ARROW_ICON.getIconWidth() + 4,
+            getUiReference().getMaximumSize().height));
+    }
 
 }

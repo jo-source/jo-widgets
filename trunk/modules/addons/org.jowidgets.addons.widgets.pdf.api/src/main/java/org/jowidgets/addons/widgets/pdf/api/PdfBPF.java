@@ -32,10 +32,10 @@ import org.jowidgets.api.toolkit.Toolkit;
 
 public final class PdfBPF {
 
-	private PdfBPF() {}
+    private PdfBPF() {}
 
-	public static IPdfReaderBluePrint reader() {
-		return Toolkit.getBluePrintFactory().bluePrint(IPdfReaderBluePrint.class);
-	}
+    public static IPdfReaderBluePrint reader() {
+        return Toolkit.getBluePrintFactory().bluePrint(IPdfReaderBluePrint.class);
+    }
 
 }

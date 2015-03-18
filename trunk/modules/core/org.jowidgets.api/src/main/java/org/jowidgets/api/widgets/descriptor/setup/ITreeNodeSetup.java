@@ -34,17 +34,17 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ITreeNodeSetup extends IItemSetup {
 
-	@Mandatory
-	Markup getMarkup();
+    @Mandatory
+    Markup getMarkup();
 
-	@Mandatory
-	boolean isExpanded();
+    @Mandatory
+    boolean isExpanded();
 
-	@Mandatory
-	boolean isSelected();
+    @Mandatory
+    boolean isSelected();
 
-	IColorConstant getForegroundColor();
+    IColorConstant getForegroundColor();
 
-	IColorConstant getBackgroundColor();
+    IColorConstant getBackgroundColor();
 
 }

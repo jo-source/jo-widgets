@@ -32,14 +32,14 @@ import org.jowidgets.api.widgets.ITreeContainer;
 
 public final class ExpandTreeAction {
 
-	private ExpandTreeAction() {}
+    private ExpandTreeAction() {}
 
-	public static ITreeExpansionActionBuilder builder(final ITreeContainer tree) {
-		return DefaultActionFactory.expandTreeActionBuilder(tree);
-	}
+    public static ITreeExpansionActionBuilder builder(final ITreeContainer tree) {
+        return DefaultActionFactory.expandTreeActionBuilder(tree);
+    }
 
-	public static ITreeExpansionAction create(final ITreeContainer tree) {
-		return DefaultActionFactory.expandTreeAction(tree);
-	}
+    public static ITreeExpansionAction create(final ITreeContainer tree) {
+        return DefaultActionFactory.expandTreeAction(tree);
+    }
 
 }

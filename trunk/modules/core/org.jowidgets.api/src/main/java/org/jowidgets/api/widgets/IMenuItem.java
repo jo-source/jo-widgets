@@ -33,21 +33,21 @@ import org.jowidgets.common.widgets.IMenuItemCommon;
 
 public interface IMenuItem extends IItem, IMenuItemCommon {
 
-	/**
-	 * Gets the menu items models
-	 * 
-	 * @return The model, never null
-	 */
-	IMenuItemModel getModel();
+    /**
+     * Gets the menu items models
+     * 
+     * @return The model, never null
+     */
+    IMenuItemModel getModel();
 
-	/**
-	 * Sets the model of the menu
-	 * 
-	 * @param model The model to set, must not be null
-	 */
-	void setModel(IMenuItemModel model);
+    /**
+     * Sets the model of the menu
+     * 
+     * @param model The model to set, must not be null
+     */
+    void setModel(IMenuItemModel model);
 
-	@Override
-	IMenu getParent();
+    @Override
+    IMenu getParent();
 
 }

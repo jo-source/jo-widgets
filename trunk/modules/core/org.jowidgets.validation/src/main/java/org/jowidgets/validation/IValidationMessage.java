@@ -34,53 +34,53 @@ package org.jowidgets.validation;
  */
 public interface IValidationMessage {
 
-	/**
-	 * @return The message type, never null
-	 */
-	MessageType getType();
+    /**
+     * @return The message type, never null
+     */
+    MessageType getType();
 
-	/**
-	 * @return The message text, may be null
-	 */
-	String getText();
+    /**
+     * @return The message text, may be null
+     */
+    String getText();
 
-	/**
-	 * The context where the validation message has been occurred,
-	 * e.g. the property or bean label
-	 * 
-	 * @return The context, may be null
-	 */
-	String getContext();
+    /**
+     * The context where the validation message has been occurred,
+     * e.g. the property or bean label
+     * 
+     * @return The context, may be null
+     */
+    String getContext();
 
-	/**
-	 * Creates a validation message that has the given context
-	 * 
-	 * @param context The context to set on the result
-	 * 
-	 * @return A new validation message with the changed context
-	 */
-	IValidationMessage withContext(String context);
+    /**
+     * Creates a validation message that has the given context
+     * 
+     * @param context The context to set on the result
+     * 
+     * @return A new validation message with the changed context
+     */
+    IValidationMessage withContext(String context);
 
-	/**
-	 * Checks if the severity of this message is equal or worse
-	 * than the severity of the given message.
-	 * 
-	 * @param message The message to check against
-	 * 
-	 * @return True if the severity the of this message is equal or worse
-	 *         than the severity of the given message, false otherwise
-	 */
-	boolean equalOrWorse(final IValidationMessage message);
+    /**
+     * Checks if the severity of this message is equal or worse
+     * than the severity of the given message.
+     * 
+     * @param message The message to check against
+     * 
+     * @return True if the severity the of this message is equal or worse
+     *         than the severity of the given message, false otherwise
+     */
+    boolean equalOrWorse(final IValidationMessage message);
 
-	/**
-	 * Checks if the severity of this message is worse
-	 * than the severity of the given message.
-	 * 
-	 * @param message The message to check against
-	 * 
-	 * @return True if the severity the of this message is worse
-	 *         than the severity of the given message, false otherwise
-	 */
-	boolean worse(final IValidationMessage message);
+    /**
+     * Checks if the severity of this message is worse
+     * than the severity of the given message.
+     * 
+     * @param message The message to check against
+     * 
+     * @return True if the severity the of this message is worse
+     *         than the severity of the given message, false otherwise
+     */
+    boolean worse(final IValidationMessage message);
 
 }

@@ -40,83 +40,83 @@ import org.jowidgets.api.widgets.IControl;
 
 final class RecursiveListenenerManager<LISTENER_TYPE> {
 
-	private final IContainer container;
-	private final IListenerFactory<LISTENER_TYPE> listenerFactory;
-	private final IListenerRegistrationDelegate<LISTENER_TYPE> listenerRegistrationDelegate;
-	private final IContainerRegistry containerRegistry;
-	private final LISTENER_TYPE rootListener;
-	private final Map<IControl, LISTENER_TYPE> createdListeners;
+    private final IContainer container;
+    private final IListenerFactory<LISTENER_TYPE> listenerFactory;
+    private final IListenerRegistrationDelegate<LISTENER_TYPE> listenerRegistrationDelegate;
+    private final IContainerRegistry containerRegistry;
+    private final LISTENER_TYPE rootListener;
+    private final Map<IControl, LISTENER_TYPE> createdListeners;
 
-	RecursiveListenenerManager(
-		final IContainer container,
-		final IListenerFactory<LISTENER_TYPE> listenerFactory,
-		final IListenerRegistrationDelegate<LISTENER_TYPE> listenerRegistrationDelegate) {
-		this.container = container;
-		this.listenerFactory = listenerFactory;
-		this.listenerRegistrationDelegate = listenerRegistrationDelegate;
-		this.containerRegistry = new ContainerRegistry();
-		this.createdListeners = new HashMap<IControl, LISTENER_TYPE>();
+    RecursiveListenenerManager(
+        final IContainer container,
+        final IListenerFactory<LISTENER_TYPE> listenerFactory,
+        final IListenerRegistrationDelegate<LISTENER_TYPE> listenerRegistrationDelegate) {
+        this.container = container;
+        this.listenerFactory = listenerFactory;
+        this.listenerRegistrationDelegate = listenerRegistrationDelegate;
+        this.containerRegistry = new ContainerRegistry();
+        this.createdListeners = new HashMap<IControl, LISTENER_TYPE>();
 
-		this.rootListener = listenerFactory.create(container);
-		if (rootListener != null) {
-			listenerRegistrationDelegate.addListener(container, rootListener);
-		}
-		container.addContainerRegistry(containerRegistry);
-	}
+        this.rootListener = listenerFactory.create(container);
+        if (rootListener != null) {
+            listenerRegistrationDelegate.addListener(container, rootListener);
+        }
+        container.addContainerRegistry(containerRegistry);
+    }
 
-	void dispose() {
-		container.removeContainerRegistry(containerRegistry);
-		if (rootListener != null) {
-			removeListener(container, rootListener);
-		}
-		for (final Entry<IControl, LISTENER_TYPE> entry : createdListeners.entrySet()) {
-			removeListener(entry.getKey(), entry.getValue());
-		}
-		createdListeners.clear();
-	}
+    void dispose() {
+        container.removeContainerRegistry(containerRegistry);
+        if (rootListener != null) {
+            removeListener(container, rootListener);
+        }
+        for (final Entry<IControl, LISTENER_TYPE> entry : createdListeners.entrySet()) {
+            removeListener(entry.getKey(), entry.getValue());
+        }
+        createdListeners.clear();
+    }
 
-	private class ContainerRegistry implements IContainerRegistry {
+    private class ContainerRegistry implements IContainerRegistry {
 
-		@Override
-		public void register(final IControl control) {
-			if (createdListeners.get(control) == null) {
-				final LISTENER_TYPE listener = listenerFactory.create(control);
-				if (listener != null) {
-					listenerRegistrationDelegate.addListener(control, listener);
-					createdListeners.put(control, listener);
-				}
-			}
-			//else should never occur 
-		}
+        @Override
+        public void register(final IControl control) {
+            if (createdListeners.get(control) == null) {
+                final LISTENER_TYPE listener = listenerFactory.create(control);
+                if (listener != null) {
+                    listenerRegistrationDelegate.addListener(control, listener);
+                    createdListeners.put(control, listener);
+                }
+            }
+            //else should never occur 
+        }
 
-		@Override
-		public void unregister(final IControl control) {
-			final LISTENER_TYPE listener = createdListeners.remove(control);
-			if (listener != null) {
-				removeListener(control, listener);
-			}
-		}
+        @Override
+        public void unregister(final IControl control) {
+            final LISTENER_TYPE listener = createdListeners.remove(control);
+            if (listener != null) {
+                removeListener(control, listener);
+            }
+        }
 
-	}
+    }
 
-	private void removeListener(final IComponent component, final LISTENER_TYPE listener) {
-		if (!component.isDisposed()) {
-			try {
-				listenerRegistrationDelegate.removeListener(component, listener);
-			}
-			catch (final Exception e) {
-				//do nothing, maybe the ui reference was already disposed
-				//so it is no longer necessary to unregister the listnere
-			}
-		}
-	}
+    private void removeListener(final IComponent component, final LISTENER_TYPE listener) {
+        if (!component.isDisposed()) {
+            try {
+                listenerRegistrationDelegate.removeListener(component, listener);
+            }
+            catch (final Exception e) {
+                //do nothing, maybe the ui reference was already disposed
+                //so it is no longer necessary to unregister the listnere
+            }
+        }
+    }
 
-	interface IListenerRegistrationDelegate<LISTENER_TYPE> {
+    interface IListenerRegistrationDelegate<LISTENER_TYPE> {
 
-		void addListener(IComponent component, LISTENER_TYPE listener);
+        void addListener(IComponent component, LISTENER_TYPE listener);
 
-		void removeListener(IComponent component, LISTENER_TYPE listener);
+        void removeListener(IComponent component, LISTENER_TYPE listener);
 
-	}
+    }
 
 }

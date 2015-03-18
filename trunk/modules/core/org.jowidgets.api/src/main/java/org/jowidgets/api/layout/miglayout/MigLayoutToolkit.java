@@ -32,96 +32,96 @@ import org.jowidgets.api.toolkit.Toolkit;
 
 public final class MigLayoutToolkit {
 
-	private MigLayoutToolkit() {}
+    private MigLayoutToolkit() {}
 
-	/**
-	 * Gets the Mig Layout toolkit instance
-	 * 
-	 * @return The mig layout toolkit instance
-	 */
-	public static IMigLayoutToolkit getInstance() {
-		return Toolkit.getLayoutFactoryProvider().getMigLayoutToolkit();
-	}
+    /**
+     * Gets the Mig Layout toolkit instance
+     * 
+     * @return The mig layout toolkit instance
+     */
+    public static IMigLayoutToolkit getInstance() {
+        return Toolkit.getLayoutFactoryProvider().getMigLayoutToolkit();
+    }
 
-	/**
-	 * Creates column constraints
-	 * 
-	 * @return New column constraints
-	 */
-	public static IAC columnConstraints() {
-		return getInstance().columnConstraints();
-	}
+    /**
+     * Creates column constraints
+     * 
+     * @return New column constraints
+     */
+    public static IAC columnConstraints() {
+        return getInstance().columnConstraints();
+    }
 
-	/**
-	 * Creates row constraints
-	 * 
-	 * @return New row constraints
-	 */
-	public static IAC rowConstraints() {
-		return getInstance().rowConstraints();
-	}
+    /**
+     * Creates row constraints
+     * 
+     * @return New row constraints
+     */
+    public static IAC rowConstraints() {
+        return getInstance().rowConstraints();
+    }
 
-	/**
-	 * Creates layout constraints
-	 * 
-	 * @return New layout constraints
-	 */
-	public static ILC layoutConstraints() {
-		return getInstance().layoutConstraints();
-	}
+    /**
+     * Creates layout constraints
+     * 
+     * @return New layout constraints
+     */
+    public static ILC layoutConstraints() {
+        return getInstance().layoutConstraints();
+    }
 
-	/**
-	 * Creates component constraints
-	 * 
-	 * @return New component constraints
-	 */
-	public static ICC componentConstraints() {
-		return getInstance().componentConstraints();
-	}
+    /**
+     * Creates component constraints
+     * 
+     * @return New component constraints
+     */
+    public static ICC componentConstraints() {
+        return getInstance().componentConstraints();
+    }
 
-	/**
-	 * Creates component constraints
-	 * 
-	 * @return New component constraints
-	 */
-	public static ICC cc() {
-		return getInstance().cc();
-	}
+    /**
+     * Creates component constraints
+     * 
+     * @return New component constraints
+     */
+    public static ICC cc() {
+        return getInstance().cc();
+    }
 
-	/**
-	 * Creates row / column constraints
-	 * 
-	 * @return New row / column constraints
-	 */
-	public static IAC ac() {
-		return getInstance().ac();
-	}
+    /**
+     * Creates row / column constraints
+     * 
+     * @return New row / column constraints
+     */
+    public static IAC ac() {
+        return getInstance().ac();
+    }
 
-	/**
-	 * Creates layout constraints
-	 * 
-	 * @return New layout constraints
-	 */
-	public static ILC lc() {
-		return getInstance().lc();
-	}
+    /**
+     * Creates layout constraints
+     * 
+     * @return New layout constraints
+     */
+    public static ILC lc() {
+        return getInstance().lc();
+    }
 
-	/**
-	 * Gets the platform defaults
-	 * 
-	 * @return The platform defaults, never null
-	 */
-	public static IPlatformDefaults getPlatformDefaults() {
-		return getInstance().getPlatformDefaults();
-	}
+    /**
+     * Gets the platform defaults
+     * 
+     * @return The platform defaults, never null
+     */
+    public static IPlatformDefaults getPlatformDefaults() {
+        return getInstance().getPlatformDefaults();
+    }
 
-	/**
-	 * Gets the mig layout version
-	 * 
-	 * @return The mig layout version
-	 */
-	public static String getMigLayoutVersion() {
-		return getInstance().getMigLayoutVersion();
-	}
+    /**
+     * Gets the mig layout version
+     * 
+     * @return The mig layout version
+     */
+    public static String getMigLayoutVersion() {
+        return getInstance().getMigLayoutVersion();
+    }
 
 }

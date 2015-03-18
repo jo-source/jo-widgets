@@ -36,25 +36,25 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ILoginDialogSetup extends ITitledWindowSetup {
 
-	@Mandatory
-	IButtonDescriptor getLoginButton();
+    @Mandatory
+    IButtonDescriptor getLoginButton();
 
-	@Mandatory
-	IButtonDescriptor getCancelButton();
+    @Mandatory
+    IButtonDescriptor getCancelButton();
 
-	@Mandatory
-	InputDialogDefaultButtonPolicy getDefaultButtonPolicy();
+    @Mandatory
+    InputDialogDefaultButtonPolicy getDefaultButtonPolicy();
 
-	@Mandatory
-	boolean isCloseable();
+    @Mandatory
+    boolean isCloseable();
 
-	@Mandatory
-	ILoginInterceptor getInterceptor();
+    @Mandatory
+    ILoginInterceptor getInterceptor();
 
-	IImageConstant getLogo();
+    IImageConstant getLogo();
 
-	String getLoginLabel();
+    String getLoginLabel();
 
-	Dimension getMinSize();
+    Dimension getMinSize();
 
 }

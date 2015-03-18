@@ -32,10 +32,10 @@ import org.jowidgets.common.widgets.builder.IDialogSetupBuilderCommon;
 
 public class DialogDefaultsCommon implements IDefaultInitializer<IDialogSetupBuilderCommon<?>> {
 
-	@Override
-	public void initialize(final IDialogSetupBuilderCommon<?> builder) {
-		builder.setModal(true);
-		builder.setCloseOnEscape(true);
-	}
+    @Override
+    public void initialize(final IDialogSetupBuilderCommon<?> builder) {
+        builder.setModal(true);
+        builder.setCloseOnEscape(true);
+    }
 
 }

@@ -33,10 +33,10 @@ import org.jowidgets.common.widgets.builder.ITabFolderSetupBuilderCommon;
 
 public class TabFolderDefaultsCommon implements IDefaultInitializer<ITabFolderSetupBuilderCommon<?>> {
 
-	@Override
-	public void initialize(final ITabFolderSetupBuilderCommon<?> builder) {
-		builder.setTabPlacement(TabPlacement.TOP);
-		builder.setTabsCloseable(false);
-	}
+    @Override
+    public void initialize(final ITabFolderSetupBuilderCommon<?> builder) {
+        builder.setTabPlacement(TabPlacement.TOP);
+        builder.setTabsCloseable(false);
+    }
 
 }

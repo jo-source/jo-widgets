@@ -34,14 +34,14 @@ import org.jowidgets.workbench.api.LayoutScope;
 
 public interface ILayoutBuilder extends IWorkbenchPartBuilder<ILayoutBuilder> {
 
-	ILayoutBuilder setId(String id);
+    ILayoutBuilder setId(String id);
 
-	ILayoutBuilder setScope(LayoutScope scope);
+    ILayoutBuilder setScope(LayoutScope scope);
 
-	ILayoutBuilder setLayoutContainer(ILayoutContainer layoutContainer);
+    ILayoutBuilder setLayoutContainer(ILayoutContainer layoutContainer);
 
-	ILayoutBuilder setLayoutContainer(ILayoutContainerBuilder layoutContainerBuilder);
+    ILayoutBuilder setLayoutContainer(ILayoutContainerBuilder layoutContainerBuilder);
 
-	ILayout build();
+    ILayout build();
 
 }

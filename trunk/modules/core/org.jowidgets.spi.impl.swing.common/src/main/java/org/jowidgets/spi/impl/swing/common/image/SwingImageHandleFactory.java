@@ -36,9 +36,9 @@ import org.jowidgets.spi.impl.image.ImageHandle;
 
 public class SwingImageHandleFactory implements IImageHandleFactory {
 
-	@Override
-	public ImageHandle<Image> createImageHandle(final IImageDescriptor imageDescriptor) {
-		return new ImageHandle<Image>(new SwingImageLoader(imageDescriptor), imageDescriptor);
-	}
+    @Override
+    public ImageHandle<Image> createImageHandle(final IImageDescriptor imageDescriptor) {
+        return new ImageHandle<Image>(new SwingImageLoader(imageDescriptor), imageDescriptor);
+    }
 
 }

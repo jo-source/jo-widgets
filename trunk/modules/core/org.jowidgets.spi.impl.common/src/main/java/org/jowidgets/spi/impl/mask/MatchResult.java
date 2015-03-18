@@ -33,71 +33,71 @@ import java.util.List;
 
 public class MatchResult {
 
-	private final int lastMatch;
-	private final int lastMatchMaskPos;
-	private final int[] indices;
-	private final boolean matching;
+    private final int lastMatch;
+    private final int lastMatchMaskPos;
+    private final int[] indices;
+    private final boolean matching;
 
-	public MatchResult(final List<Integer> matchResult, final int length, final boolean matching) {
-		this.indices = new int[length];
+    public MatchResult(final List<Integer> matchResult, final int length, final boolean matching) {
+        this.indices = new int[length];
 
-		for (int i = 0; i < indices.length; i++) {
-			indices[i] = -1;
-		}
+        for (int i = 0; i < indices.length; i++) {
+            indices[i] = -1;
+        }
 
-		int index = 0;
-		for (final Integer integer : matchResult) {
-			indices[index] = integer.intValue();
-			index++;
-		}
+        int index = 0;
+        for (final Integer integer : matchResult) {
+            indices[index] = integer.intValue();
+            index++;
+        }
 
-		this.matching = matching;
+        this.matching = matching;
 
-		int last = -1;
-		for (int i = 0; i < indices.length; i++) {
-			if (indices[i] != -1) {
-				last = i;
-			}
-			else {
-				break;
-			}
-		}
-		this.lastMatch = last;
-		if (last > -1) {
-			this.lastMatchMaskPos = getMaskIndex(last);
-		}
-		else {
-			this.lastMatchMaskPos = -1;
-		}
-	}
+        int last = -1;
+        for (int i = 0; i < indices.length; i++) {
+            if (indices[i] != -1) {
+                last = i;
+            }
+            else {
+                break;
+            }
+        }
+        this.lastMatch = last;
+        if (last > -1) {
+            this.lastMatchMaskPos = getMaskIndex(last);
+        }
+        else {
+            this.lastMatchMaskPos = -1;
+        }
+    }
 
-	public int getMaskIndex(final int index) {
-		return indices[index];
-	}
+    public int getMaskIndex(final int index) {
+        return indices[index];
+    }
 
-	public int getLastMatch() {
-		return lastMatch;
-	}
+    public int getLastMatch() {
+        return lastMatch;
+    }
 
-	public int getLastMatchMaskPos() {
-		return lastMatchMaskPos;
-	}
+    public int getLastMatchMaskPos() {
+        return lastMatchMaskPos;
+    }
 
-	public boolean isMatching() {
-		return matching;
-	}
+    public boolean isMatching() {
+        return matching;
+    }
 
-	@Override
-	public String toString() {
-		return "MatchResult [matching="
-			+ matching
-			+ ", lastMatch="
-			+ lastMatch
-			+ ", lastMatchMaskPos="
-			+ lastMatchMaskPos
-			+ ", indices="
-			+ Arrays.toString(indices)
-			+ "]";
-	}
+    @Override
+    public String toString() {
+        return "MatchResult [matching="
+            + matching
+            + ", lastMatch="
+            + lastMatch
+            + ", lastMatchMaskPos="
+            + lastMatchMaskPos
+            + ", indices="
+            + Arrays.toString(indices)
+            + "]";
+    }
 
 }

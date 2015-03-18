@@ -33,12 +33,12 @@ import org.jowidgets.examples.common.dnd.TreeDragAndDropExample;
 
 public final class SwingTreeDragAndDropExample {
 
-	private SwingTreeDragAndDropExample() {}
+    private SwingTreeDragAndDropExample() {}
 
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		new TreeDragAndDropExample().start();
-	}
+    public static void main(final String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
+        new TreeDragAndDropExample().start();
+    }
 
 }

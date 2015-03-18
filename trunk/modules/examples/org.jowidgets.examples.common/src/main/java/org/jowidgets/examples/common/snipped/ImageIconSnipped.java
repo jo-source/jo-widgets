@@ -44,46 +44,46 @@ import org.jowidgets.util.url.UrlFactory;
 
 public final class ImageIconSnipped implements IApplication {
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
 
-		//create the root frame
-		final IFrame frame = Toolkit.createRootFrame(BPF.frame("Image Icon Snipped"), lifecycle);
-		frame.setLayout(FillLayout.get());
+        //create the root frame
+        final IFrame frame = Toolkit.createRootFrame(BPF.frame("Image Icon Snipped"), lifecycle);
+        frame.setLayout(FillLayout.get());
 
-		//create a scroll composite
-		final IScrollComposite container = frame.add(BPF.scrollComposite());
-		container.setLayout(FillLayout.get());
+        //create a scroll composite
+        final IScrollComposite container = frame.add(BPF.scrollComposite());
+        container.setLayout(FillLayout.get());
 
-		//create a image from url
-		final String url = "http://www.jowidgets.org/docu/images/widgets_hierarchy_1.gif";
-		final IImage image = ImageFactory.createImage(UrlFactory.create(url));
+        //create a image from url
+        final String url = "http://www.jowidgets.org/docu/images/widgets_hierarchy_1.gif";
+        final IImage image = ImageFactory.createImage(UrlFactory.create(url));
 
-		//use the icon widget to display the image
-		final IIcon imageIcon = container.add(BPF.icon(image));
+        //use the icon widget to display the image
+        final IIcon imageIcon = container.add(BPF.icon(image));
 
-		//remove the icon on double click from its container to test dispose
-		imageIcon.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseDoubleClicked(final IMouseButtonEvent mouseEvent) {
-				imageIcon.dispose();
-				container.layoutLater();
-			}
-		});
+        //remove the icon on double click from its container to test dispose
+        imageIcon.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseDoubleClicked(final IMouseButtonEvent mouseEvent) {
+                imageIcon.dispose();
+                container.layoutLater();
+            }
+        });
 
-		//dispose the image if it was removed from its container
-		imageIcon.addDisposeListener(new IDisposeListener() {
-			@Override
-			public void onDispose() {
-				image.dispose();
-				//CHECKSTYLE:OFF
-				System.out.println("DISPOSED IMAGE");
-				//CHECKSTYLE:ON
-			}
-		});
+        //dispose the image if it was removed from its container
+        imageIcon.addDisposeListener(new IDisposeListener() {
+            @Override
+            public void onDispose() {
+                image.dispose();
+                //CHECKSTYLE:OFF
+                System.out.println("DISPOSED IMAGE");
+                //CHECKSTYLE:ON
+            }
+        });
 
-		//set the root frame visible
-		frame.setVisible(true);
+        //set the root frame visible
+        frame.setVisible(true);
 
-	}
+    }
 }

@@ -36,90 +36,90 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.IObservableValue;
 
 class CheckBox<WIDGET_TYPE extends ICheckBox, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & ICheckBoxSetup & ICheckBoxSetupBuilder<?>> extends
-		InputControl<WIDGET_TYPE, BLUE_PRINT_TYPE, Boolean> implements ICheckBox {
+        InputControl<WIDGET_TYPE, BLUE_PRINT_TYPE, Boolean> implements ICheckBox {
 
-	CheckBox(final BLUE_PRINT_TYPE bluePrint) {
-		super(bluePrint);
-	}
+    CheckBox(final BLUE_PRINT_TYPE bluePrint) {
+        super(bluePrint);
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		if (isInitialized()) {
-			getWidget().setMarkup(markup);
-		}
-		else {
-			getBluePrint().setMarkup(markup);
-		}
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        if (isInitialized()) {
+            getWidget().setMarkup(markup);
+        }
+        else {
+            getBluePrint().setMarkup(markup);
+        }
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		if (isInitialized()) {
-			getWidget().setFontSize(size);
-		}
-		else {
-			getBluePrint().setFontSize(size);
-		}
-	}
+    @Override
+    public void setFontSize(final int size) {
+        if (isInitialized()) {
+            getWidget().setFontSize(size);
+        }
+        else {
+            getBluePrint().setFontSize(size);
+        }
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		if (isInitialized()) {
-			getWidget().setFontName(fontName);
-		}
-		else {
-			getBluePrint().setFontName(fontName);
-		}
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        if (isInitialized()) {
+            getWidget().setFontName(fontName);
+        }
+        else {
+            getBluePrint().setFontName(fontName);
+        }
+    }
 
-	@Override
-	public void setText(final String text) {
-		if (isInitialized()) {
-			getWidget().setText(text);
-		}
-		else {
-			getBluePrint().setText(text);
-		}
-	}
+    @Override
+    public void setText(final String text) {
+        if (isInitialized()) {
+            getWidget().setText(text);
+        }
+        else {
+            getBluePrint().setText(text);
+        }
+    }
 
-	@Override
-	public String getText() {
-		if (isInitialized()) {
-			return getWidget().getText();
-		}
-		else {
-			return getBluePrint().getText();
-		}
-	}
+    @Override
+    public String getText() {
+        if (isInitialized()) {
+            return getWidget().getText();
+        }
+        else {
+            return getBluePrint().getText();
+        }
+    }
 
-	@Override
-	public boolean isSelected() {
-		if (isInitialized()) {
-			return getWidget().isSelected();
-		}
-		else {
-			return getBluePrint().getInitialState();
-		}
-	}
+    @Override
+    public boolean isSelected() {
+        if (isInitialized()) {
+            return getWidget().isSelected();
+        }
+        else {
+            return getBluePrint().getInitialState();
+        }
+    }
 
-	@Override
-	public void setSelected(final boolean selected) {
-		if (isInitialized()) {
-			getWidget().setSelected(selected);
-		}
-		else {
-			getBluePrint().setInitialState(selected);
-		}
-	}
+    @Override
+    public void setSelected(final boolean selected) {
+        if (isInitialized()) {
+            getWidget().setSelected(selected);
+        }
+        else {
+            getBluePrint().setInitialState(selected);
+        }
+    }
 
-	@Override
-	public IObservableValue<Boolean> getObservableValue() {
-		if (isInitialized()) {
-			return getWidget().getObservableValue();
-		}
-		else {
-			return getBluePrint().getObservableValue();
-		}
-	}
+    @Override
+    public IObservableValue<Boolean> getObservableValue() {
+        if (isInitialized()) {
+            return getWidget().getObservableValue();
+        }
+        else {
+            return getBluePrint().getObservableValue();
+        }
+    }
 
 }

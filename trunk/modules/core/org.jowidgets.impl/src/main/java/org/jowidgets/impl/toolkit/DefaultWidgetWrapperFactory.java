@@ -41,35 +41,35 @@ import org.jowidgets.spi.IWidgetFactorySpi;
 
 public class DefaultWidgetWrapperFactory implements IWidgetWrapperFactory {
 
-	private final IGenericWidgetFactory widgetFactory;
-	private final IWidgetFactorySpi widgetFactorySpi;
+    private final IGenericWidgetFactory widgetFactory;
+    private final IWidgetFactorySpi widgetFactorySpi;
 
-	public DefaultWidgetWrapperFactory(final IGenericWidgetFactory widgetFactory, final IWidgetFactorySpi widgetFactorySpi) {
-		super();
-		this.widgetFactory = widgetFactory;
-		this.widgetFactorySpi = widgetFactorySpi;
-	}
+    public DefaultWidgetWrapperFactory(final IGenericWidgetFactory widgetFactory, final IWidgetFactorySpi widgetFactorySpi) {
+        super();
+        this.widgetFactory = widgetFactory;
+        this.widgetFactorySpi = widgetFactorySpi;
+    }
 
-	@Override
-	public boolean isConvertibleToFrame(final Object uiReference) {
-		return widgetFactorySpi.isConvertibleToFrame(uiReference);
-	}
+    @Override
+    public boolean isConvertibleToFrame(final Object uiReference) {
+        return widgetFactorySpi.isConvertibleToFrame(uiReference);
+    }
 
-	@Override
-	public IFrame createFrame(final Object uiReference) {
-		final IFrameBluePrint bp = Toolkit.getBluePrintFactory().frame().autoCenterOff();
-		return new FrameImpl(widgetFactorySpi.createFrame(widgetFactory, uiReference), bp, true);
-	}
+    @Override
+    public IFrame createFrame(final Object uiReference) {
+        final IFrameBluePrint bp = Toolkit.getBluePrintFactory().frame().autoCenterOff();
+        return new FrameImpl(widgetFactorySpi.createFrame(widgetFactory, uiReference), bp, true);
+    }
 
-	@Override
-	public IComposite createComposite(final Object uiReference) {
-		final ICompositeBluePrint bp = Toolkit.getBluePrintFactory().composite();
-		return new CompositeImpl(widgetFactorySpi.createComposite(widgetFactory, uiReference), bp, true);
-	}
+    @Override
+    public IComposite createComposite(final Object uiReference) {
+        final ICompositeBluePrint bp = Toolkit.getBluePrintFactory().composite();
+        return new CompositeImpl(widgetFactorySpi.createComposite(widgetFactory, uiReference), bp, true);
+    }
 
-	@Override
-	public boolean isConvertibleToComposite(final Object uiReference) {
-		return widgetFactorySpi.isConvertibleToComposite(uiReference);
-	}
+    @Override
+    public boolean isConvertibleToComposite(final Object uiReference) {
+        return widgetFactorySpi.isConvertibleToComposite(uiReference);
+    }
 
 }

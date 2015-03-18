@@ -54,94 +54,94 @@ import org.jowidgets.util.TypeCast;
 
 public class FrameImpl extends SwingWindow implements IFrameUiSpi {
 
-	private static final Border BORDER = new JTextField().getBorder();
+    private static final Border BORDER = new JTextField().getBorder();
 
-	public FrameImpl(final IGenericWidgetFactory factory, final SwingImageRegistry imageRegistry, final IFrameSetupSpi setup) {
-		super(factory, new JFrame(), setup.isCloseable());
+    public FrameImpl(final IGenericWidgetFactory factory, final SwingImageRegistry imageRegistry, final IFrameSetupSpi setup) {
+        super(factory, new JFrame(), setup.isCloseable());
 
-		getUiReference().setTitle(setup.getTitle());
-		getUiReference().setResizable(setup.isResizable());
-		getUiReference().setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        getUiReference().setTitle(setup.getTitle());
+        getUiReference().setResizable(setup.isResizable());
+        getUiReference().setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
-		if (!setup.isDecorated()) {
-			getUiReference().setUndecorated(true);
-			((JComponent) getUiReference().getContentPane()).setBorder(BORDER);
-		}
+        if (!setup.isDecorated()) {
+            getUiReference().setUndecorated(true);
+            ((JComponent) getUiReference().getContentPane()).setBorder(BORDER);
+        }
 
-		setIcon(setup.getIcon(), imageRegistry);
-	}
+        setIcon(setup.getIcon(), imageRegistry);
+    }
 
-	@Override
-	public JFrame getUiReference() {
-		return (JFrame) super.getUiReference();
-	}
+    @Override
+    public JFrame getUiReference() {
+        return (JFrame) super.getUiReference();
+    }
 
-	@Override
-	public Rectangle getClientArea() {
-		return DecorationCalc.getClientArea(getUiReference().getContentPane());
-	}
+    @Override
+    public Rectangle getClientArea() {
+        return DecorationCalc.getClientArea(getUiReference().getContentPane());
+    }
 
-	@Override
-	public void setTitle(final String title) {
-		getUiReference().setTitle(title);
-	}
+    @Override
+    public void setTitle(final String title) {
+        getUiReference().setTitle(title);
+    }
 
-	@Override
-	public void setDefaultButton(final IButtonCommon button) {
-		if (button != null) {
-			getUiReference().getRootPane().setDefaultButton(TypeCast.toType(button.getUiReference(), JButton.class));
-		}
-		else {
-			getUiReference().getRootPane().setDefaultButton(null);
-		}
-	}
+    @Override
+    public void setDefaultButton(final IButtonCommon button) {
+        if (button != null) {
+            getUiReference().getRootPane().setDefaultButton(TypeCast.toType(button.getUiReference(), JButton.class));
+        }
+        else {
+            getUiReference().getRootPane().setDefaultButton(null);
+        }
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		getUiReference().getContentPane().setBackground(ColorConvert.convert(colorValue));
-		super.setBackgroundColor(colorValue);
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        getUiReference().getContentPane().setBackground(ColorConvert.convert(colorValue));
+        super.setBackgroundColor(colorValue);
+    }
 
-	@Override
-	public boolean remove(final IControlCommon control) {
-		return ChildRemover.removeChild(getUiReference().getContentPane(), (Component) control.getUiReference());
-	}
+    @Override
+    public boolean remove(final IControlCommon control) {
+        return ChildRemover.removeChild(getUiReference().getContentPane(), (Component) control.getUiReference());
+    }
 
-	@Override
-	public void removeAll() {
-		getUiReference().getContentPane().removeAll();
-	}
+    @Override
+    public void removeAll() {
+        getUiReference().getContentPane().removeAll();
+    }
 
-	@Override
-	public void setMaximized(final boolean maximized) {
-		FrameUtil.setMaximized(getUiReference(), maximized);
-	}
+    @Override
+    public void setMaximized(final boolean maximized) {
+        FrameUtil.setMaximized(getUiReference(), maximized);
+    }
 
-	@Override
-	public boolean isMaximized() {
-		return FrameUtil.isMaximized(getUiReference());
-	}
+    @Override
+    public boolean isMaximized() {
+        return FrameUtil.isMaximized(getUiReference());
+    }
 
-	@Override
-	public void setIconfied(final boolean iconfied) {
-		FrameUtil.setIconfied(getUiReference(), iconfied);
-	}
+    @Override
+    public void setIconfied(final boolean iconfied) {
+        FrameUtil.setIconfied(getUiReference(), iconfied);
+    }
 
-	@Override
-	public boolean isIconfied() {
-		return FrameUtil.isIconfied(getUiReference());
-	}
+    @Override
+    public boolean isIconfied() {
+        return FrameUtil.isIconfied(getUiReference());
+    }
 
-	@Override
-	public IMenuBarSpi createMenuBar() {
-		final JMenuBar menuBar = new JMenuBar();
-		getUiReference().setJMenuBar(menuBar);
-		return new MenuBarImpl(menuBar);
-	}
+    @Override
+    public IMenuBarSpi createMenuBar() {
+        final JMenuBar menuBar = new JMenuBar();
+        getUiReference().setJMenuBar(menuBar);
+        return new MenuBarImpl(menuBar);
+    }
 
-	@Override
-	public boolean isTestable() {
-		return true;
-	}
+    @Override
+    public boolean isTestable() {
+        return true;
+    }
 
 }

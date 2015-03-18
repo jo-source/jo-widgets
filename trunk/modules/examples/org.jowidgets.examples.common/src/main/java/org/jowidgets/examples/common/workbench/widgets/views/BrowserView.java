@@ -46,44 +46,44 @@ import org.jowidgets.workbench.api.IViewContext;
 
 public class BrowserView extends AbstractHowToView implements IView {
 
-	public static final String ID = BrowserView.class.getName();
-	public static final String DEFAULT_LABEL = "Browser";
+    public static final String ID = BrowserView.class.getName();
+    public static final String DEFAULT_LABEL = "Browser";
 
-	public BrowserView(final IViewContext context) {
-		super(context);
-	}
+    public BrowserView(final IViewContext context) {
+        super(context);
+    }
 
-	@Override
-	public void createViewContent(final IContainer container, final IBluePrintFactory bpFactory) {
-		//set the layout
-		container.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[][grow, 0::]0"));
+    @Override
+    public void createViewContent(final IContainer container, final IBluePrintFactory bpFactory) {
+        //set the layout
+        container.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[][grow, 0::]0"));
 
-		//add url field
-		final ITextControl urlField = container.add(BPF.textField(), "gapleft 5, gapright 5,growx, h 0::, wrap");
+        //add url field
+        final ITextControl urlField = container.add(BPF.textField(), "gapleft 5, gapright 5,growx, h 0::, wrap");
 
-		//add browser 
-		final IBrowser browser = container.add(BrowserBPF.browser(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        //add browser 
+        final IBrowser browser = container.add(BrowserBPF.browser(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
-		//add key listener to url field
-		urlField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(final IKeyEvent event) {
-				if (event.getVirtualKey() == VirtualKey.ENTER) {
-					browser.setUrl(urlField.getText());
-				}
-			}
-		});
+        //add key listener to url field
+        urlField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(final IKeyEvent event) {
+                if (event.getVirtualKey() == VirtualKey.ENTER) {
+                    browser.setUrl(urlField.getText());
+                }
+            }
+        });
 
-		//add location listener to browser
-		browser.addLocationListener(new BrowserLocationAdapter() {
-			@Override
-			public void locationChanged(final IBrowserLocationEvent event) {
-				if (event.isTopFrameLocation()) {
-					urlField.setText(event.getLocation());
-				}
-			}
-		});
+        //add location listener to browser
+        browser.addLocationListener(new BrowserLocationAdapter() {
+            @Override
+            public void locationChanged(final IBrowserLocationEvent event) {
+                if (event.isTopFrameLocation()) {
+                    urlField.setText(event.getLocation());
+                }
+            }
+        });
 
-		browser.setUrl("http://www.gmx.de");
-	}
+        browser.setUrl("http://www.gmx.de");
+    }
 }

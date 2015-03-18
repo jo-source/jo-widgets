@@ -35,38 +35,38 @@ import org.jowidgets.api.widgets.descriptor.IRadioMenuItemDescriptor;
 import org.jowidgets.common.image.IImageConstant;
 
 public class JoRadioMenuItem extends SelectableMenuItem<ISelectableMenuItem, IRadioMenuItemBluePrint> implements
-		ISelectableMenuItem {
+        ISelectableMenuItem {
 
-	public JoRadioMenuItem(final String text, final IImageConstant icon) {
-		this(bluePrint(text, icon));
-	}
+    public JoRadioMenuItem(final String text, final IImageConstant icon) {
+        this(bluePrint(text, icon));
+    }
 
-	public JoRadioMenuItem(final String text) {
-		this(bluePrint(text));
-	}
+    public JoRadioMenuItem(final String text) {
+        this(bluePrint(text));
+    }
 
-	public JoRadioMenuItem(final String text, final String tooltipText) {
-		this(bluePrint(text, tooltipText));
-	}
+    public JoRadioMenuItem(final String text, final String tooltipText) {
+        this(bluePrint(text, tooltipText));
+    }
 
-	public JoRadioMenuItem(final IRadioMenuItemDescriptor descriptor) {
-		super(bluePrint().setSetup(descriptor));
-	}
+    public JoRadioMenuItem(final IRadioMenuItemDescriptor descriptor) {
+        super(bluePrint().setSetup(descriptor));
+    }
 
-	public static IRadioMenuItemBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().radioMenuItem();
-	}
+    public static IRadioMenuItemBluePrint bluePrint() {
+        return Toolkit.getBluePrintFactory().radioMenuItem();
+    }
 
-	public static IRadioMenuItemBluePrint bluePrint(final String text) {
-		return Toolkit.getBluePrintFactory().radioMenuItem(text);
-	}
+    public static IRadioMenuItemBluePrint bluePrint(final String text) {
+        return Toolkit.getBluePrintFactory().radioMenuItem(text);
+    }
 
-	public static IRadioMenuItemBluePrint bluePrint(final String text, final String tooltipText) {
-		return Toolkit.getBluePrintFactory().radioMenuItem(text).setToolTipText(tooltipText);
-	}
+    public static IRadioMenuItemBluePrint bluePrint(final String text, final String tooltipText) {
+        return Toolkit.getBluePrintFactory().radioMenuItem(text).setToolTipText(tooltipText);
+    }
 
-	public static IRadioMenuItemBluePrint bluePrint(final String text, final IImageConstant icon) {
-		return Toolkit.getBluePrintFactory().radioMenuItem(text).setIcon(icon);
-	}
+    public static IRadioMenuItemBluePrint bluePrint(final String text, final IImageConstant icon) {
+        return Toolkit.getBluePrintFactory().radioMenuItem(text).setIcon(icon);
+    }
 
 }

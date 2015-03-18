@@ -30,10 +30,10 @@ package org.jowidgets.workbench.api;
 
 public enum ClosePolicy {
 
-	/** Hides the workbench part when close button is pressed */
-	HIDE,
+    /** Hides the workbench part when close button is pressed */
+    HIDE,
 
-	/** Disposes the workbench part when close button is pressed */
-	DISPOSE;
+    /** Disposes the workbench part when close button is pressed */
+    DISPOSE;
 
 }

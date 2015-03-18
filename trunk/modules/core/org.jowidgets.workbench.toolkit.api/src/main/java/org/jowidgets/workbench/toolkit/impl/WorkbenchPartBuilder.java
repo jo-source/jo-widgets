@@ -33,43 +33,43 @@ import org.jowidgets.workbench.toolkit.api.IWorkbenchPartBuilder;
 
 class WorkbenchPartBuilder<BUILDER_INSTANCE_TYPE> implements IWorkbenchPartBuilder<BUILDER_INSTANCE_TYPE> {
 
-	private String label;
-	private String tooltip;
-	private IImageConstant icon;
+    private String label;
+    private String tooltip;
+    private IImageConstant icon;
 
-	WorkbenchPartBuilder() {}
+    WorkbenchPartBuilder() {}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public BUILDER_INSTANCE_TYPE setLabel(final String label) {
-		this.label = label;
-		return (BUILDER_INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public BUILDER_INSTANCE_TYPE setLabel(final String label) {
+        this.label = label;
+        return (BUILDER_INSTANCE_TYPE) this;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public BUILDER_INSTANCE_TYPE setTooltip(final String tooltip) {
-		this.tooltip = tooltip;
-		return (BUILDER_INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public BUILDER_INSTANCE_TYPE setTooltip(final String tooltip) {
+        this.tooltip = tooltip;
+        return (BUILDER_INSTANCE_TYPE) this;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public BUILDER_INSTANCE_TYPE setIcon(final IImageConstant icon) {
-		this.icon = icon;
-		return (BUILDER_INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public BUILDER_INSTANCE_TYPE setIcon(final IImageConstant icon) {
+        this.icon = icon;
+        return (BUILDER_INSTANCE_TYPE) this;
+    }
 
-	protected String getLabel() {
-		return label;
-	}
+    protected String getLabel() {
+        return label;
+    }
 
-	protected String getTooltip() {
-		return tooltip;
-	}
+    protected String getTooltip() {
+        return tooltip;
+    }
 
-	protected IImageConstant getIcon() {
-		return icon;
-	}
+    protected IImageConstant getIcon() {
+        return icon;
+    }
 
 }

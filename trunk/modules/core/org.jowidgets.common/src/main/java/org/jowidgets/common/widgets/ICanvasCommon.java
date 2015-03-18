@@ -30,26 +30,26 @@ package org.jowidgets.common.widgets;
 
 public interface ICanvasCommon extends IControlCommon {
 
-	void scroll(int sourceX, int sourceY, int sourceWidth, int sourceHeight, int destinationX, int destinationY);
+    void scroll(int sourceX, int sourceY, int sourceWidth, int sourceHeight, int destinationX, int destinationY);
 
-	void redraw(int x, int y, int width, int height);
+    void redraw(int x, int y, int width, int height);
 
-	/**
-	 * Redraws the canvas
-	 * 
-	 * @param sync true if redraw should be done immediately, false otherwise
-	 */
-	void redraw(boolean sync);
+    /**
+     * Redraws the canvas
+     * 
+     * @param sync true if redraw should be done immediately, false otherwise
+     */
+    void redraw(boolean sync);
 
-	/**
-	 * Redraws an are of the canvas
-	 * 
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 * @param sync true if redraw should be done immediately, false otherwise
-	 */
-	void redraw(int x, int y, int width, int height, boolean sync);
+    /**
+     * Redraws an are of the canvas
+     * 
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param sync true if redraw should be done immediately, false otherwise
+     */
+    void redraw(int x, int y, int width, int height, boolean sync);
 
 }

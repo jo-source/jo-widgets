@@ -32,7 +32,7 @@ import org.jowidgets.api.widgets.blueprint.builder.ISelectableItemSetupBuilder;
 import org.jowidgets.test.api.widgets.descriptor.IRadioMenuItemDescriptorUi;
 
 public interface IRadioMenuItemBluePrintUi extends
-		ISelectableItemSetupBuilder<IRadioMenuItemBluePrintUi>,
-		IRadioMenuItemDescriptorUi {
+        ISelectableItemSetupBuilder<IRadioMenuItemBluePrintUi>,
+        IRadioMenuItemDescriptorUi {
 
 }

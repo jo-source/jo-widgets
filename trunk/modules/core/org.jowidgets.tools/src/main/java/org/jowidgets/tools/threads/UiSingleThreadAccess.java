@@ -34,26 +34,26 @@ import org.jowidgets.util.concurrent.ISingleThreadAccess;
 
 public final class UiSingleThreadAccess implements ISingleThreadAccess {
 
-	private final IUiThreadAccess uiThreadAccess;
+    private final IUiThreadAccess uiThreadAccess;
 
-	public UiSingleThreadAccess() {
-		this.uiThreadAccess = Toolkit.getUiThreadAccess();
-	}
+    public UiSingleThreadAccess() {
+        this.uiThreadAccess = Toolkit.getUiThreadAccess();
+    }
 
-	@Override
-	public boolean isSingleThread() {
-		return uiThreadAccess.isUiThread();
-	}
+    @Override
+    public boolean isSingleThread() {
+        return uiThreadAccess.isUiThread();
+    }
 
-	@Override
-	public void invoke(final Runnable runnable) {
-		uiThreadAccess.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				runnable.run();
-			}
-		});
+    @Override
+    public void invoke(final Runnable runnable) {
+        uiThreadAccess.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                runnable.run();
+            }
+        });
 
-	}
+    }
 
 }

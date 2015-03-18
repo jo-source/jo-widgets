@@ -37,35 +37,35 @@ import org.jowidgets.unit.tools.UnitValue;
 import org.jowidgets.util.Assert;
 
 public final class DoubleUnitConverter extends AbstractNumberUnitConverter<Double, Double> implements
-		IUnitConverter<Double, Double> {
+        IUnitConverter<Double, Double> {
 
-	private final IUnitProvider<Double> unitProvider;
+    private final IUnitProvider<Double> unitProvider;
 
-	public DoubleUnitConverter(final IUnit defaultUnit) {
-		this(new StaticUnitProvider<Double>(defaultUnit));
-	}
+    public DoubleUnitConverter(final IUnit defaultUnit) {
+        this(new StaticUnitProvider<Double>(defaultUnit));
+    }
 
-	public DoubleUnitConverter(final IUnitProvider<Double> unitProvider) {
-		Assert.paramNotNull(unitProvider, "name");
-		this.unitProvider = unitProvider;
-	}
+    public DoubleUnitConverter(final IUnitProvider<Double> unitProvider) {
+        Assert.paramNotNull(unitProvider, "name");
+        this.unitProvider = unitProvider;
+    }
 
-	@Override
-	public Double toBaseValue(final IUnitValue<Double> unitValue) {
-		if (unitValue != null) {
-			return Double.valueOf(unitValue.getValue() * unitValue.getUnit().getConversionFactor());
-		}
-		return null;
-	}
+    @Override
+    public Double toBaseValue(final IUnitValue<Double> unitValue) {
+        if (unitValue != null) {
+            return Double.valueOf(unitValue.getValue() * unitValue.getUnit().getConversionFactor());
+        }
+        return null;
+    }
 
-	@Override
-	public IUnitValue<Double> toUnitValue(final Double baseValue) {
-		if (baseValue != null) {
-			final IUnit unit = unitProvider.getUnit(baseValue);
-			final Double unitValue = baseValue.doubleValue() / unit.getConversionFactor();
-			return new UnitValue<Double>(unitValue, unit);
-		}
-		return null;
-	}
+    @Override
+    public IUnitValue<Double> toUnitValue(final Double baseValue) {
+        if (baseValue != null) {
+            final IUnit unit = unitProvider.getUnit(baseValue);
+            final Double unitValue = baseValue.doubleValue() / unit.getConversionFactor();
+            return new UnitValue<Double>(unitValue, unit);
+        }
+        return null;
+    }
 
 }

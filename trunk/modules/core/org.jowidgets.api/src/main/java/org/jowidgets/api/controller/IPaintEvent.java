@@ -33,14 +33,14 @@ import org.jowidgets.common.types.Rectangle;
 
 public interface IPaintEvent {
 
-	/**
-	 * @return The graphic context
-	 */
-	IGraphicContext getGraphicContext();
+    /**
+     * @return The graphic context
+     */
+    IGraphicContext getGraphicContext();
 
-	/**
-	 * @return The area that needs to be repainted
-	 */
-	Rectangle getClipBounds();
+    /**
+     * @return The area that needs to be repainted
+     */
+    Rectangle getClipBounds();
 
 }

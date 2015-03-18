@@ -40,40 +40,40 @@ import org.jowidgets.util.Assert;
 
 class PdfReaderImpl extends ControlWrapper implements IPdfReader {
 
-	public PdfReaderImpl(final IBrowser browser, final IPdfReaderSetupBuilder<?> setup) {
-		super(browser);
-	}
+    public PdfReaderImpl(final IBrowser browser, final IPdfReaderSetupBuilder<?> setup) {
+        super(browser);
+    }
 
-	@Override
-	protected IBrowser getWidget() {
-		return (IBrowser) super.getWidget();
-	}
+    @Override
+    protected IBrowser getWidget() {
+        return (IBrowser) super.getWidget();
+    }
 
-	@Override
-	public void clear() {
-		getWidget().setUrl("about.blank");
-	}
+    @Override
+    public void clear() {
+        getWidget().setUrl("about.blank");
+    }
 
-	@Override
-	public void open(final String filename) {
-		Assert.paramNotNull(filename, "filename");
-		getWidget().setUrl(filename);
-	}
+    @Override
+    public void open(final String filename) {
+        Assert.paramNotNull(filename, "filename");
+        getWidget().setUrl(filename);
+    }
 
-	@Override
-	public void open(final File file) {
-		Assert.paramNotNull(file, "file");
-		try {
-			open(file.toURI().toURL().toString());
-		}
-		catch (final MalformedURLException e) {
-			throw new RuntimeException("Can not resolve file url", e);
-		}
-	}
+    @Override
+    public void open(final File file) {
+        Assert.paramNotNull(file, "file");
+        try {
+            open(file.toURI().toURL().toString());
+        }
+        catch (final MalformedURLException e) {
+            throw new RuntimeException("Can not resolve file url", e);
+        }
+    }
 
-	@Override
-	public void open(final InputStream inputStream) {
-		//TODO MG implement this with help of a temp file
-	}
+    @Override
+    public void open(final InputStream inputStream) {
+        //TODO MG implement this with help of a temp file
+    }
 
 }

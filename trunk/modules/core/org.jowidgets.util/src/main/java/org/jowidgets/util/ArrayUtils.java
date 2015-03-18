@@ -37,91 +37,91 @@ import java.util.Set;
 
 public final class ArrayUtils {
 
-	private ArrayUtils() {}
+    private ArrayUtils() {}
 
-	public static int getMin(final int[] array) {
-		if (array == null || array.length == 0) {
-			throw new IllegalArgumentException("Parameter 'array' must not be null or empty.");
-		}
-		int min = array[0];
-		for (int i = 1; i < array.length; i++) {
-			if (array[i] < min) {
-				min = array[i];
-			}
-		}
-		return min;
-	}
+    public static int getMin(final int[] array) {
+        if (array == null || array.length == 0) {
+            throw new IllegalArgumentException("Parameter 'array' must not be null or empty.");
+        }
+        int min = array[0];
+        for (int i = 1; i < array.length; i++) {
+            if (array[i] < min) {
+                min = array[i];
+            }
+        }
+        return min;
+    }
 
-	public static int getMax(final int[] array) {
-		if (array == null || array.length == 0) {
-			throw new IllegalArgumentException("Parameter 'array' must not be null or empty.");
-		}
-		int max = array[0];
-		for (int i = 1; i < array.length; i++) {
-			if (array[i] > max) {
-				max = array[i];
-			}
-		}
-		return max;
-	}
+    public static int getMax(final int[] array) {
+        if (array == null || array.length == 0) {
+            throw new IllegalArgumentException("Parameter 'array' must not be null or empty.");
+        }
+        int max = array[0];
+        for (int i = 1; i < array.length; i++) {
+            if (array[i] > max) {
+                max = array[i];
+            }
+        }
+        return max;
+    }
 
-	public static int[] toArray(final Collection<Integer> collection) {
-		if (collection == null || collection.isEmpty()) {
-			return new int[0];
-		}
-		final int[] result = new int[collection.size()];
-		int index = 0;
-		for (final Integer integer : collection) {
-			result[index] = integer.intValue();
-			index++;
-		}
-		return result;
-	}
+    public static int[] toArray(final Collection<Integer> collection) {
+        if (collection == null || collection.isEmpty()) {
+            return new int[0];
+        }
+        final int[] result = new int[collection.size()];
+        int index = 0;
+        for (final Integer integer : collection) {
+            result[index] = integer.intValue();
+            index++;
+        }
+        return result;
+    }
 
-	public static <TYPE> Set<TYPE> toSet(final TYPE[] array) {
-		if (array == null) {
-			return Collections.emptySet();
-		}
-		final Set<TYPE> result = new HashSet<TYPE>();
-		for (int i = 0; i < array.length; i++) {
-			result.add(array[i]);
-		}
-		return result;
-	}
+    public static <TYPE> Set<TYPE> toSet(final TYPE[] array) {
+        if (array == null) {
+            return Collections.emptySet();
+        }
+        final Set<TYPE> result = new HashSet<TYPE>();
+        for (int i = 0; i < array.length; i++) {
+            result.add(array[i]);
+        }
+        return result;
+    }
 
-	public static <TYPE> Iterator<TYPE> toIterator(final TYPE[] array) {
-		Assert.paramNotNull(array, "array");
-		return new Iterator<TYPE>() {
+    public static <TYPE> Iterator<TYPE> toIterator(final TYPE[] array) {
+        Assert.paramNotNull(array, "array");
+        return new Iterator<TYPE>() {
 
-			private int index = 0;
+            private int index = 0;
 
-			@Override
-			public boolean hasNext() {
-				if (index < array.length) {
-					return true;
-				}
-				else {
-					return false;
-				}
-			}
+            @Override
+            public boolean hasNext() {
+                if (index < array.length) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
 
-			@Override
-			public TYPE next() {
-				if (!hasNext()) {
-					throw new NoSuchElementException("No more elements available");
-				}
-				else {
-					return array[index++];
-				}
-			}
+            @Override
+            public TYPE next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException("No more elements available");
+                }
+                else {
+                    return array[index++];
+                }
+            }
 
-			@Override
-			public void remove() {
-				throw new UnsupportedOperationException("Cannot remove elements from the array");
-			}
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException("Cannot remove elements from the array");
+            }
 
-		};
+        };
 
-	}
+    }
 
 }

@@ -36,22 +36,22 @@ import org.jowidgets.api.toolkit.Toolkit;
 @Deprecated
 public final class SilkIconsInitializer {
 
-	private SilkIconsInitializer() {}
+    private SilkIconsInitializer() {}
 
-	/**
-	 * @deprecated use {@link SilkIconsSubstitude.substitude()} instead
-	 */
-	@Deprecated
-	public static void initialize() {
-		SilkIconsSubstitude.substitude(Toolkit.getInstance());
-	}
+    /**
+     * @deprecated use {@link SilkIconsSubstitude.substitude()} instead
+     */
+    @Deprecated
+    public static void initialize() {
+        SilkIconsSubstitude.substitude(Toolkit.getInstance());
+    }
 
-	/**
-	 * @deprecated use {@link SilkIconsSubstitude.substitude()} instead
-	 */
-	@Deprecated
-	public static void initializeFull() {
-		SilkIconsSubstitude.substitude(Toolkit.getInstance());
-	}
+    /**
+     * @deprecated use {@link SilkIconsSubstitude.substitude()} instead
+     */
+    @Deprecated
+    public static void initializeFull() {
+        SilkIconsSubstitude.substitude(Toolkit.getInstance());
+    }
 
 }

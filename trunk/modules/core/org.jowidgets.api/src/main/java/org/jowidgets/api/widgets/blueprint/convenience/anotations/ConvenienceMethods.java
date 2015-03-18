@@ -35,6 +35,6 @@ import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenience;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ConvenienceMethods {
 
-	Class<? extends ISetupBuilderConvenience<?>> value();
+    Class<? extends ISetupBuilderConvenience<?>> value();
 
 }

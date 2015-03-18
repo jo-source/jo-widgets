@@ -32,28 +32,28 @@ import org.jowidgets.api.widgets.IControl;
 
 public interface IContainerRegistry {
 
-	/**
-	 * The method will be invoked for all eventually created children
-	 * (recursively) of the container once.
-	 * 
-	 * When adding this registry to a container, all currently existing
-	 * children will be passed to this method. After that, all children
-	 * that will be added in future will be added as well.
-	 * 
-	 * @param control The control that has been added to this container
-	 *            or to one of its children
-	 */
-	void register(IControl control);
+    /**
+     * The method will be invoked for all eventually created children
+     * (recursively) of the container once.
+     * 
+     * When adding this registry to a container, all currently existing
+     * children will be passed to this method. After that, all children
+     * that will be added in future will be added as well.
+     * 
+     * @param control The control that has been added to this container
+     *            or to one of its children
+     */
+    void register(IControl control);
 
-	/**
-	 * This method will be invoked for all children (recursively) of the
-	 * container that will be removed / disposed.
-	 * 
-	 * Remark: Controls that was disposed before adding this registry to the container
-	 * will not be passed to this method
-	 * 
-	 * @param control The control before it will be removed / disposed
-	 */
-	void unregister(IControl control);
+    /**
+     * This method will be invoked for all children (recursively) of the
+     * container that will be removed / disposed.
+     * 
+     * Remark: Controls that was disposed before adding this registry to the container
+     * will not be passed to this method
+     * 
+     * @param control The control before it will be removed / disposed
+     */
+    void unregister(IControl control);
 
 }

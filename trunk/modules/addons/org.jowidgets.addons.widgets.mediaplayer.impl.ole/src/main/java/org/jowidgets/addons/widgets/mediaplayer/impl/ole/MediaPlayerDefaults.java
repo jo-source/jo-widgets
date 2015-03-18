@@ -34,8 +34,8 @@ import org.jowidgets.util.io.DefaultTempFileFactory;
 
 public final class MediaPlayerDefaults implements IDefaultInitializer<IMediaPlayerSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final IMediaPlayerSetupBuilder<?> setup) {
-		setup.setTempFileFactory(new DefaultTempFileFactory());
-	}
+    @Override
+    public void initialize(final IMediaPlayerSetupBuilder<?> setup) {
+        setup.setTempFileFactory(new DefaultTempFileFactory());
+    }
 }

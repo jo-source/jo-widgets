@@ -33,16 +33,16 @@ import org.jowidgets.common.widgets.builder.convenience.IToolBarSetupConvenience
 import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
 public class ToolBarSetupConvenienceCommon extends AbstractSetupBuilderConvenience<IToolBarSetupBuilderCommon<?>> implements
-		IToolBarSetupConvenienceCommon<IToolBarSetupBuilderCommon<?>> {
+        IToolBarSetupConvenienceCommon<IToolBarSetupBuilderCommon<?>> {
 
-	@Override
-	public IToolBarSetupBuilderCommon<?> setVertical() {
-		return getBuilder().setOrientation(Orientation.VERTICAL);
-	}
+    @Override
+    public IToolBarSetupBuilderCommon<?> setVertical() {
+        return getBuilder().setOrientation(Orientation.VERTICAL);
+    }
 
-	@Override
-	public IToolBarSetupBuilderCommon<?> setHorizontal() {
-		return getBuilder().setOrientation(Orientation.VERTICAL);
-	}
+    @Override
+    public IToolBarSetupBuilderCommon<?> setHorizontal() {
+        return getBuilder().setOrientation(Orientation.VERTICAL);
+    }
 
 }

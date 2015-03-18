@@ -30,6 +30,6 @@ package org.jowidgets.util;
 
 public interface IFunction<RESULT_TYPE, ARGUMENT_TYPE> {
 
-	RESULT_TYPE invoke(ARGUMENT_TYPE argument);
+    RESULT_TYPE invoke(ARGUMENT_TYPE argument);
 
 }

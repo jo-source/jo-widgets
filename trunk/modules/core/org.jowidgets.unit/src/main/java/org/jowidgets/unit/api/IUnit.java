@@ -30,19 +30,19 @@ package org.jowidgets.unit.api;
 
 public interface IUnit {
 
-	/**
-	 * @return The abbreviation of the unit (e.g. cm, m, km, MB, GB)
-	 */
-	String getAbbreviation();
+    /**
+     * @return The abbreviation of the unit (e.g. cm, m, km, MB, GB)
+     */
+    String getAbbreviation();
 
-	/**
-	 * @return The name of the unit or null (e.g. Centimeter, Meter, Kilometer, Megabyte, Gigabyte)
-	 */
-	String getName();
+    /**
+     * @return The name of the unit or null (e.g. Centimeter, Meter, Kilometer, Megabyte, Gigabyte)
+     */
+    String getName();
 
-	/**
-	 * @return The conversion factor for this unit
-	 */
-	double getConversionFactor();
+    /**
+     * @return The conversion factor for this unit
+     */
+    double getConversionFactor();
 
 }

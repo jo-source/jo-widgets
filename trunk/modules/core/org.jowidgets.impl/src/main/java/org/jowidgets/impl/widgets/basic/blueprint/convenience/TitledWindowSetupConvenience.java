@@ -35,13 +35,13 @@ import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderCon
 import org.jowidgets.util.Assert;
 
 public class TitledWindowSetupConvenience extends AbstractSetupBuilderConvenience<ITitledWindowSetupBuilder<?>> implements
-		ITitledWindowSetupConvenience<ITitledWindowSetupBuilder<?>> {
+        ITitledWindowSetupConvenience<ITitledWindowSetupBuilder<?>> {
 
-	@Override
-	public ITitledWindowSetupBuilder<?> setExecutionContext(final IExecutionContext executionContext) {
-		Assert.paramNotNull(executionContext, "executionContext");
-		final IAction action = executionContext.getAction();
-		return getBuilder().setTitle(action.getText()).setIcon(action.getIcon());
-	}
+    @Override
+    public ITitledWindowSetupBuilder<?> setExecutionContext(final IExecutionContext executionContext) {
+        Assert.paramNotNull(executionContext, "executionContext");
+        final IAction action = executionContext.getAction();
+        return getBuilder().setTitle(action.getText()).setIcon(action.getIcon());
+    }
 
 }

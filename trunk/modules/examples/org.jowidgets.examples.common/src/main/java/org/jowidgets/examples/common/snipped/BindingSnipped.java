@@ -47,60 +47,60 @@ import org.jowidgets.util.binding.IBinding;
 
 public final class BindingSnipped implements IApplication {
 
-	private static final int COLUMNS = 10;
-	private static final double MIN_VALUE = -1.0d;
-	private static final double MAX_VALUE = 1.0d;
-	private static final double DEFAULT_VALUE = 0.0d;
+    private static final int COLUMNS = 10;
+    private static final double MIN_VALUE = -1.0d;
+    private static final double MAX_VALUE = 1.0d;
+    private static final double DEFAULT_VALUE = 0.0d;
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
 
-		//create the root frame
-		final IFrame frame = Toolkit.createRootFrame(BPF.frame("Binding snipped"), lifecycle);
-		frame.setLayout(new MigLayoutDescriptor("wrap", StringUtils.loop("[]10", COLUMNS - 1) + "[]", "[]0[]20[]"));
+        //create the root frame
+        final IFrame frame = Toolkit.createRootFrame(BPF.frame("Binding snipped"), lifecycle);
+        frame.setLayout(new MigLayoutDescriptor("wrap", StringUtils.loop("[]10", COLUMNS - 1) + "[]", "[]0[]20[]"));
 
-		//create observable values and bindings
-		final ArrayList<IObservableValue<Double>> observableValues = new ArrayList<IObservableValue<Double>>(COLUMNS);
-		final ArrayList<IBinding> bindings = new ArrayList<IBinding>(COLUMNS - 1);
-		for (int i = 0; i < COLUMNS; i++) {
-			final IObservableValue<Double> observableValue = new ObservableValue<Double>();
-			observableValues.add(observableValue);
-			if (i > 0) {
-				//bind next value to the previous
-				final IBinding binding = Bind.bind(observableValues.get(i - 1), observableValue);
-				bindings.add(binding);
-			}
-		}
+        //create observable values and bindings
+        final ArrayList<IObservableValue<Double>> observableValues = new ArrayList<IObservableValue<Double>>(COLUMNS);
+        final ArrayList<IBinding> bindings = new ArrayList<IBinding>(COLUMNS - 1);
+        for (int i = 0; i < COLUMNS; i++) {
+            final IObservableValue<Double> observableValue = new ObservableValue<Double>();
+            observableValues.add(observableValue);
+            if (i > 0) {
+                //bind next value to the previous
+                final IBinding binding = Bind.bind(observableValues.get(i - 1), observableValue);
+                bindings.add(binding);
+            }
+        }
 
-		//add sliders
-		for (int i = 0; i < COLUMNS; i++) {
-			final ISliderViewerBluePrint<Double> sliderBp = BPF.sliderViewerDouble(MIN_VALUE, MAX_VALUE);
-			sliderBp.setVertical();
-			sliderBp.setDefaultValue(DEFAULT_VALUE);
-			sliderBp.setObservableValue(observableValues.get(i));
-			frame.add(sliderBp, "w 50::");
-		}
+        //add sliders
+        for (int i = 0; i < COLUMNS; i++) {
+            final ISliderViewerBluePrint<Double> sliderBp = BPF.sliderViewerDouble(MIN_VALUE, MAX_VALUE);
+            sliderBp.setVertical();
+            sliderBp.setDefaultValue(DEFAULT_VALUE);
+            sliderBp.setObservableValue(observableValues.get(i));
+            frame.add(sliderBp, "w 50::");
+        }
 
-		//add input fields
-		for (int i = 0; i < COLUMNS; i++) {
-			final IInputFieldBluePrint<Double> inputFieldBp = BPF.inputFieldDoubleNumber();
-			inputFieldBp.setObservableValue(observableValues.get(i));
-			frame.add(inputFieldBp, "w 50::");
-		}
+        //add input fields
+        for (int i = 0; i < COLUMNS; i++) {
+            final IInputFieldBluePrint<Double> inputFieldBp = BPF.inputFieldDoubleNumber();
+            inputFieldBp.setObservableValue(observableValues.get(i));
+            frame.add(inputFieldBp, "w 50::");
+        }
 
-		//add binding checkbox
-		final ICheckBox bindingCb = frame.add(BPF.checkBox().setText("Bind"));
-		bindingCb.setSelected(true);
-		bindingCb.addInputListener(new IInputListener() {
-			@Override
-			public void inputChanged() {
-				for (final IBinding binding : bindings) {
-					binding.setBindingState(bindingCb.isSelected());
-				}
-			}
-		});
+        //add binding checkbox
+        final ICheckBox bindingCb = frame.add(BPF.checkBox().setText("Bind"));
+        bindingCb.setSelected(true);
+        bindingCb.addInputListener(new IInputListener() {
+            @Override
+            public void inputChanged() {
+                for (final IBinding binding : bindings) {
+                    binding.setBindingState(bindingCb.isSelected());
+                }
+            }
+        });
 
-		//set the root frame visible
-		frame.setVisible(true);
-	}
+        //set the root frame visible
+        frame.setVisible(true);
+    }
 }

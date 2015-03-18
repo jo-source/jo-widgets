@@ -36,28 +36,28 @@ import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 
 public class ToolBarPopupButtonImpl extends ToolBarButtonImpl implements IToolBarPopupButtonSpi {
 
-	private final UIDObservable popupObservable;
+    private final UIDObservable popupObservable;
 
-	public ToolBarPopupButtonImpl(final AbstractUIDButton button) {
-		super(button);
-		getUiReference().addPopupDetectionListener(new IPopupDetectionListener() {
+    public ToolBarPopupButtonImpl(final AbstractUIDButton button) {
+        super(button);
+        getUiReference().addPopupDetectionListener(new IPopupDetectionListener() {
 
-			@Override
-			public void popupDetected(final Position position) {
-				popupObservable.firePopupDetected(position);
-			}
-		});
-		this.popupObservable = new UIDObservable();
-	}
+            @Override
+            public void popupDetected(final Position position) {
+                popupObservable.firePopupDetected(position);
+            }
+        });
+        this.popupObservable = new UIDObservable();
+    }
 
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		popupObservable.addPopupDetectionListener(listener);
-	}
+    @Override
+    public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+        popupObservable.addPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		popupObservable.removePopupDetectionListener(listener);
-	}
+    @Override
+    public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+        popupObservable.removePopupDetectionListener(listener);
+    }
 
 }

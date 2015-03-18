@@ -35,66 +35,66 @@ import org.jowidgets.util.parameter.ParameterWrapper;
 
 public final class SingleThreadParameter<VALUE_TYPE> extends ParameterWrapper<VALUE_TYPE> implements IParameter<VALUE_TYPE> {
 
-	private final IParameter<VALUE_TYPE> original;
+    private final IParameter<VALUE_TYPE> original;
 
-	private final ISingleThreadAccess readThreadAccess;
-	private final ISingleThreadAccess writeThreadAccess;
+    private final ISingleThreadAccess readThreadAccess;
+    private final ISingleThreadAccess writeThreadAccess;
 
-	public SingleThreadParameter(final IParameter<VALUE_TYPE> original, final ISingleThreadAccess singleThreadAccess) {
-		this(original, singleThreadAccess, singleThreadAccess);
-	}
+    public SingleThreadParameter(final IParameter<VALUE_TYPE> original, final ISingleThreadAccess singleThreadAccess) {
+        this(original, singleThreadAccess, singleThreadAccess);
+    }
 
-	public SingleThreadParameter(
-		final IParameter<VALUE_TYPE> original,
-		final ISingleThreadAccess readThreadAccess,
-		final ISingleThreadAccess writeThreadAccess) {
+    public SingleThreadParameter(
+        final IParameter<VALUE_TYPE> original,
+        final ISingleThreadAccess readThreadAccess,
+        final ISingleThreadAccess writeThreadAccess) {
 
-		super(original);
-		Assert.paramNotNull(original, "original");
+        super(original);
+        Assert.paramNotNull(original, "original");
 
-		this.original = original;
-		this.readThreadAccess = readThreadAccess;
-		this.writeThreadAccess = writeThreadAccess;
-	}
+        this.original = original;
+        this.readThreadAccess = readThreadAccess;
+        this.writeThreadAccess = writeThreadAccess;
+    }
 
-	@Override
-	public void setValue(final VALUE_TYPE value) {
-		checkWriteThread();
-		original.setValue(value);
-	}
+    @Override
+    public void setValue(final VALUE_TYPE value) {
+        checkWriteThread();
+        original.setValue(value);
+    }
 
-	@Override
-	public VALUE_TYPE getValue() {
-		checkReadThread();
-		return original.getValue();
-	}
+    @Override
+    public VALUE_TYPE getValue() {
+        checkReadThread();
+        return original.getValue();
+    }
 
-	@Override
-	public void addValueListener(final IObservableValueListener<?> listener) {
-		checkWriteThread();
-		original.addValueListener(listener);
-	}
+    @Override
+    public void addValueListener(final IObservableValueListener<?> listener) {
+        checkWriteThread();
+        original.addValueListener(listener);
+    }
 
-	@Override
-	public void removeValueListener(final IObservableValueListener<?> listener) {
-		checkWriteThread();
-		original.removeValueListener(listener);
-	}
+    @Override
+    public void removeValueListener(final IObservableValueListener<?> listener) {
+        checkWriteThread();
+        original.removeValueListener(listener);
+    }
 
-	private void checkReadThread() {
-		if (readThreadAccess != null) {
-			if (!readThreadAccess.isSingleThread()) {
-				throw new IllegalArgumentException("Operation must be invoked in read thread access!");
-			}
-		}
-	}
+    private void checkReadThread() {
+        if (readThreadAccess != null) {
+            if (!readThreadAccess.isSingleThread()) {
+                throw new IllegalArgumentException("Operation must be invoked in read thread access!");
+            }
+        }
+    }
 
-	private void checkWriteThread() {
-		if (writeThreadAccess != null) {
-			if (!writeThreadAccess.isSingleThread()) {
-				throw new IllegalArgumentException("Operation must be invoked in write thread access!");
-			}
-		}
-	}
+    private void checkWriteThread() {
+        if (writeThreadAccess != null) {
+            if (!writeThreadAccess.isSingleThread()) {
+                throw new IllegalArgumentException("Operation must be invoked in write thread access!");
+            }
+        }
+    }
 
 }

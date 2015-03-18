@@ -58,62 +58,62 @@ import org.jowidgets.workbench.tools.AbstractView;
 
 public final class PersonTableView extends AbstractView {
 
-	public static final String ID = PersonTableView.class.getName();
-	public static final String DEFAULT_LABEL = "Persons";
-	public static final String DEFAULT_TOOLTIP = "Shows all person";
-	public static final IImageConstant DEFAULT_ICON = SilkIcons.USER;
+    public static final String ID = PersonTableView.class.getName();
+    public static final String DEFAULT_LABEL = "Persons";
+    public static final String DEFAULT_TOOLTIP = "Shows all person";
+    public static final IImageConstant DEFAULT_ICON = SilkIcons.USER;
 
-	public PersonTableView(final IViewContext context, final BeanTableModel<Person> model) {
-		final IContainer container = context.getContainer();
-		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
+    public PersonTableView(final IViewContext context, final BeanTableModel<Person> model) {
+        final IContainer container = context.getContainer();
+        container.setLayout(MigLayoutFactory.growingInnerCellLayout());
 
-		final ITableBluePrint tableBp = BPF.table(model);
-		tableBp.setEditable(true);
-		tableBp.setEditor(new PersonTableCellEditorFactory(model));
-		final ITable table = container.add(tableBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		table.setRowHeight(getMaxHeight());
+        final ITableBluePrint tableBp = BPF.table(model);
+        tableBp.setEditable(true);
+        tableBp.setEditor(new PersonTableCellEditorFactory(model));
+        final ITable table = container.add(tableBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        table.setRowHeight(getMaxHeight());
 
-		final IAction createAction = CreatePersonActionFactory.create(model);
-		final IAction editAction = EditPersonActionFactory.create(model);
-		final IAction deleteAction = DeletePersonActionFactory.create(model);
+        final IAction createAction = CreatePersonActionFactory.create(model);
+        final IAction editAction = EditPersonActionFactory.create(model);
+        final IAction deleteAction = DeletePersonActionFactory.create(model);
 
-		final IToolBarModel toolBar = context.getToolBar();
-		toolBar.addAction(createAction);
-		toolBar.addAction(editAction);
-		toolBar.addAction(deleteAction);
+        final IToolBarModel toolBar = context.getToolBar();
+        toolBar.addAction(createAction);
+        toolBar.addAction(editAction);
+        toolBar.addAction(deleteAction);
 
-		final IPopupMenu tableMenu = table.createPopupMenu();
-		final IMenuModel tableMenuModel = tableMenu.getModel();
-		tableMenuModel.addAction(createAction);
+        final IPopupMenu tableMenu = table.createPopupMenu();
+        final IMenuModel tableMenuModel = tableMenu.getModel();
+        tableMenuModel.addAction(createAction);
 
-		table.addPopupDetectionListener(new IPopupDetectionListener() {
-			@Override
-			public void popupDetected(final Position position) {
-				tableMenu.show(position);
-			}
-		});
+        table.addPopupDetectionListener(new IPopupDetectionListener() {
+            @Override
+            public void popupDetected(final Position position) {
+                tableMenu.show(position);
+            }
+        });
 
-		final IPopupMenu tableCellMenu = table.createPopupMenu();
-		final IMenuModel tableCellMenuModel = tableCellMenu.getModel();
-		tableCellMenuModel.addAction(createAction);
-		tableCellMenuModel.addAction(editAction);
-		tableCellMenuModel.addAction(deleteAction);
+        final IPopupMenu tableCellMenu = table.createPopupMenu();
+        final IMenuModel tableCellMenuModel = tableCellMenu.getModel();
+        tableCellMenuModel.addAction(createAction);
+        tableCellMenuModel.addAction(editAction);
+        tableCellMenuModel.addAction(deleteAction);
 
-		table.addTableCellPopupDetectionListener(new ITableCellPopupDetectionListener() {
-			@Override
-			public void popupDetected(final ITableCellPopupEvent event) {
-				tableCellMenu.show(event.getPosition());
-			}
-		});
+        table.addTableCellPopupDetectionListener(new ITableCellPopupDetectionListener() {
+            @Override
+            public void popupDetected(final ITableCellPopupEvent event) {
+                tableCellMenu.show(event.getPosition());
+            }
+        });
 
-	}
+    }
 
-	public static int getMaxHeight() {
-		final IFrame fakeFrame = Toolkit.createRootFrame(BPF.frame());
-		final IComboBox<Gender> comboBox = fakeFrame.add(BPF.comboBoxSelection(Gender.values()));
-		final int result = comboBox.getPreferredSize().getHeight() + 1;
-		fakeFrame.dispose();
-		return result;
-	}
+    public static int getMaxHeight() {
+        final IFrame fakeFrame = Toolkit.createRootFrame(BPF.frame());
+        final IComboBox<Gender> comboBox = fakeFrame.add(BPF.comboBoxSelection(Gender.values()));
+        final int result = comboBox.getPreferredSize().getHeight() + 1;
+        fakeFrame.dispose();
+        return result;
+    }
 
 }

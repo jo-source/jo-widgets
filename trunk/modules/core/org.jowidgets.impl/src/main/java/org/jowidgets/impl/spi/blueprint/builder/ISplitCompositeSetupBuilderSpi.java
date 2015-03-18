@@ -30,6 +30,6 @@ package org.jowidgets.impl.spi.blueprint.builder;
 import org.jowidgets.common.widgets.builder.ISplitCompositeSetupBuilderCommon;
 
 public interface ISplitCompositeSetupBuilderSpi<INSTANCE_TYPE extends ISplitCompositeSetupBuilderSpi<?>> extends
-		ISplitCompositeSetupBuilderCommon<INSTANCE_TYPE> {
+        ISplitCompositeSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

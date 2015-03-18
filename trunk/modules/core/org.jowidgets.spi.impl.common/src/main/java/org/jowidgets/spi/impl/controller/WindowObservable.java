@@ -38,88 +38,88 @@ import org.jowidgets.util.ValueHolder;
 
 public class WindowObservable implements IWindowObservable {
 
-	private final Set<IWindowListener> windowListeners;
+    private final Set<IWindowListener> windowListeners;
 
-	public WindowObservable() {
-		super();
-		this.windowListeners = new HashSet<IWindowListener>();
-	}
+    public WindowObservable() {
+        super();
+        this.windowListeners = new HashSet<IWindowListener>();
+    }
 
-	@Override
-	public final void addWindowListener(final IWindowListener listener) {
-		windowListeners.add(listener);
-	}
+    @Override
+    public final void addWindowListener(final IWindowListener listener) {
+        windowListeners.add(listener);
+    }
 
-	@Override
-	public final void removeWindowListener(final IWindowListener listener) {
-		windowListeners.remove(listener);
-	}
+    @Override
+    public final void removeWindowListener(final IWindowListener listener) {
+        windowListeners.remove(listener);
+    }
 
-	public final void fireWindowActivated() {
-		for (final IWindowListener windowListener : getWindowListeners()) {
-			windowListener.windowActivated();
-		}
-	}
+    public final void fireWindowActivated() {
+        for (final IWindowListener windowListener : getWindowListeners()) {
+            windowListener.windowActivated();
+        }
+    }
 
-	public final void fireWindowDeactivated() {
-		for (final IWindowListener windowListener : getWindowListeners()) {
-			windowListener.windowDeactivated();
-		}
-	}
+    public final void fireWindowDeactivated() {
+        for (final IWindowListener windowListener : getWindowListeners()) {
+            windowListener.windowDeactivated();
+        }
+    }
 
-	public final void fireWindowIconified() {
-		for (final IWindowListener windowListener : getWindowListeners()) {
-			windowListener.windowIconified();
-		}
-	}
+    public final void fireWindowIconified() {
+        for (final IWindowListener windowListener : getWindowListeners()) {
+            windowListener.windowIconified();
+        }
+    }
 
-	public final void fireWindowDeiconified() {
-		for (final IWindowListener windowListener : getWindowListeners()) {
-			windowListener.windowDeiconified();
-		}
-	}
+    public final void fireWindowDeiconified() {
+        for (final IWindowListener windowListener : getWindowListeners()) {
+            windowListener.windowDeiconified();
+        }
+    }
 
-	public final void fireWindowClosed() {
-		for (final IWindowListener windowListener : getWindowListeners()) {
-			windowListener.windowClosed();
-		}
-	}
+    public final void fireWindowClosed() {
+        for (final IWindowListener windowListener : getWindowListeners()) {
+            windowListener.windowClosed();
+        }
+    }
 
-	public final void fireWindowClosing(final IVetoable vetoable) {
-		final ValueHolder<Boolean> veto = new ValueHolder<Boolean>(Boolean.FALSE);
-		final IVetoable innerVetoable = new IVetoable() {
-			@Override
-			public void veto() {
-				veto.set(Boolean.TRUE);
-			}
-		};
-		for (final IWindowListener windowListener : getWindowListeners()) {
-			windowListener.windowClosing(innerVetoable);
-			if (veto.get().booleanValue()) {
-				vetoable.veto();
-				break;
-			}
-		}
-	}
+    public final void fireWindowClosing(final IVetoable vetoable) {
+        final ValueHolder<Boolean> veto = new ValueHolder<Boolean>(Boolean.FALSE);
+        final IVetoable innerVetoable = new IVetoable() {
+            @Override
+            public void veto() {
+                veto.set(Boolean.TRUE);
+            }
+        };
+        for (final IWindowListener windowListener : getWindowListeners()) {
+            windowListener.windowClosing(innerVetoable);
+            if (veto.get().booleanValue()) {
+                vetoable.veto();
+                break;
+            }
+        }
+    }
 
-	public final boolean fireWindowClosing() {
-		final ValueHolder<Boolean> veto = new ValueHolder<Boolean>(Boolean.FALSE);
-		final IVetoable vetoable = new IVetoable() {
-			@Override
-			public void veto() {
-				veto.set(Boolean.TRUE);
-			}
-		};
-		for (final IWindowListener windowListener : getWindowListeners()) {
-			windowListener.windowClosing(vetoable);
-			if (veto.get().booleanValue()) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public final boolean fireWindowClosing() {
+        final ValueHolder<Boolean> veto = new ValueHolder<Boolean>(Boolean.FALSE);
+        final IVetoable vetoable = new IVetoable() {
+            @Override
+            public void veto() {
+                veto.set(Boolean.TRUE);
+            }
+        };
+        for (final IWindowListener windowListener : getWindowListeners()) {
+            windowListener.windowClosing(vetoable);
+            if (veto.get().booleanValue()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	private Set<IWindowListener> getWindowListeners() {
-		return new HashSet<IWindowListener>(windowListeners);
-	}
+    private Set<IWindowListener> getWindowListeners() {
+        return new HashSet<IWindowListener>(windowListeners);
+    }
 }

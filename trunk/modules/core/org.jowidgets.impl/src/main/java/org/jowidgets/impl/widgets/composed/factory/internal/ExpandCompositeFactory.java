@@ -38,14 +38,14 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class ExpandCompositeFactory implements IWidgetFactory<IExpandComposite, IExpandCompositeDescriptor> {
 
-	@Override
-	public IExpandComposite create(final Object parentUiReference, final IExpandCompositeDescriptor descriptor) {
-		final ICompositeBluePrint bp = BPF.composite().setBackgroundColor(descriptor.getBackgroundColor());
-		if (descriptor.getBorder()) {
-			bp.setBorder();
-		}
-		final IComposite composite = Toolkit.getWidgetFactory().create(parentUiReference, bp);
-		return new ExpandCompositeImpl(composite, descriptor);
-	}
+    @Override
+    public IExpandComposite create(final Object parentUiReference, final IExpandCompositeDescriptor descriptor) {
+        final ICompositeBluePrint bp = BPF.composite().setBackgroundColor(descriptor.getBackgroundColor());
+        if (descriptor.getBorder()) {
+            bp.setBorder();
+        }
+        final IComposite composite = Toolkit.getWidgetFactory().create(parentUiReference, bp);
+        return new ExpandCompositeImpl(composite, descriptor);
+    }
 
 }

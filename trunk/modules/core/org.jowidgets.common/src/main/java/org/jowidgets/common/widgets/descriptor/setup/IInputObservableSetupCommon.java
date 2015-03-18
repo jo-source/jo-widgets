@@ -32,7 +32,7 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IInputObservableSetupCommon {
 
-	@Mandatory
-	InputChangeEventPolicy getInputChangeEventPolicy();
+    @Mandatory
+    InputChangeEventPolicy getInputChangeEventPolicy();
 
 }

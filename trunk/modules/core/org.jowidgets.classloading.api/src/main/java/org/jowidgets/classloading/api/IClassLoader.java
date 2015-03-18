@@ -34,10 +34,10 @@ import java.util.Enumeration;
 
 public interface IClassLoader {
 
-	Class<?> findClass(String name) throws ClassNotFoundException;
+    Class<?> findClass(String name) throws ClassNotFoundException;
 
-	URL findResource(String name);
+    URL findResource(String name);
 
-	Enumeration<URL> findResources(final String name) throws IOException;
+    Enumeration<URL> findResources(final String name) throws IOException;
 
 }

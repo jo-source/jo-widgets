@@ -30,13 +30,13 @@ package org.jowidgets.spi.impl.dummy.dummyui;
 
 public class UIDToolBarToggleButton extends UIDToolBarButton {
 
-	private boolean selected = false;
+    private boolean selected = false;
 
-	public boolean isSelected() {
-		return selected;
-	}
+    public boolean isSelected() {
+        return selected;
+    }
 
-	public void setSelected(final boolean selected) {
-		this.selected = selected;
-	}
+    public void setSelected(final boolean selected) {
+        this.selected = selected;
+    }
 }

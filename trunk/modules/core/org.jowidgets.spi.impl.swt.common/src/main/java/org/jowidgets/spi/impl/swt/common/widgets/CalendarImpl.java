@@ -44,60 +44,60 @@ import org.jowidgets.util.Assert;
 
 public class CalendarImpl extends SwtControl implements ICalendarSpi {
 
-	private final InputObservable inputObservable;
+    private final InputObservable inputObservable;
 
-	private Date date;
+    private Date date;
 
-	public CalendarImpl(final Object parentUiReference, final ICalendarSetupSpi setup) {
-		super(new DateTime((Composite) parentUiReference, SWT.CALENDAR));
+    public CalendarImpl(final Object parentUiReference, final ICalendarSetupSpi setup) {
+        super(new DateTime((Composite) parentUiReference, SWT.CALENDAR));
 
-		this.inputObservable = new InputObservable();
+        this.inputObservable = new InputObservable();
 
-		getUiReference().addSelectionListener(new SelectionAdapter() {
+        getUiReference().addSelectionListener(new SelectionAdapter() {
 
-			@Override
-			public void widgetSelected(final SelectionEvent e) {
-				final Calendar calendar = new GregorianCalendar();
-				calendar.set(Calendar.YEAR, getUiReference().getYear());
-				calendar.set(Calendar.MONTH, getUiReference().getMonth());
-				calendar.set(Calendar.DAY_OF_MONTH, getUiReference().getDay());
-				calendar.set(Calendar.HOUR_OF_DAY, 0);
-				calendar.set(Calendar.MINUTE, 0);
-				calendar.set(Calendar.SECOND, 0);
-				calendar.set(Calendar.MILLISECOND, 0);
-				date = calendar.getTime();
-				inputObservable.fireInputChanged(date);
-			}
+            @Override
+            public void widgetSelected(final SelectionEvent e) {
+                final Calendar calendar = new GregorianCalendar();
+                calendar.set(Calendar.YEAR, getUiReference().getYear());
+                calendar.set(Calendar.MONTH, getUiReference().getMonth());
+                calendar.set(Calendar.DAY_OF_MONTH, getUiReference().getDay());
+                calendar.set(Calendar.HOUR_OF_DAY, 0);
+                calendar.set(Calendar.MINUTE, 0);
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MILLISECOND, 0);
+                date = calendar.getTime();
+                inputObservable.fireInputChanged(date);
+            }
 
-		});
-	}
+        });
+    }
 
-	@Override
-	public DateTime getUiReference() {
-		return (DateTime) super.getUiReference();
-	}
+    @Override
+    public DateTime getUiReference() {
+        return (DateTime) super.getUiReference();
+    }
 
-	@Override
-	public void setDate(final Date date) {
-		Assert.paramNotNull(date, "date");
-		final Calendar calendar = new GregorianCalendar();
-		calendar.setTime(date);
-		getUiReference().setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-	}
+    @Override
+    public void setDate(final Date date) {
+        Assert.paramNotNull(date, "date");
+        final Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        getUiReference().setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    }
 
-	@Override
-	public Date getDate() {
-		return date;
-	}
+    @Override
+    public Date getDate() {
+        return date;
+    }
 
-	@Override
-	public void addInputListener(final IInputListener listener) {
-		inputObservable.addInputListener(listener);
-	}
+    @Override
+    public void addInputListener(final IInputListener listener) {
+        inputObservable.addInputListener(listener);
+    }
 
-	@Override
-	public void removeInputListener(final IInputListener listener) {
-		inputObservable.removeInputListener(listener);
-	}
+    @Override
+    public void removeInputListener(final IInputListener listener) {
+        inputObservable.removeInputListener(listener);
+    }
 
 }

@@ -39,74 +39,74 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public class WindowWrapper extends ComponentWrapper implements IWindow {
 
-	public WindowWrapper(final IWindow widget) {
-		super(widget);
-	}
+    public WindowWrapper(final IWindow widget) {
+        super(widget);
+    }
 
-	@Override
-	protected IWindow getWidget() {
-		return (IWindow) super.getWidget();
-	}
+    @Override
+    protected IWindow getWidget() {
+        return (IWindow) super.getWidget();
+    }
 
-	@Override
-	public void setParent(final IWindow parent) {
-		getWidget().setParent(parent);
-	}
+    @Override
+    public void setParent(final IWindow parent) {
+        getWidget().setParent(parent);
+    }
 
-	@Override
-	public IWindow getParent() {
-		return getWidget().getParent();
-	}
+    @Override
+    public IWindow getParent() {
+        return getWidget().getParent();
+    }
 
-	@Override
-	public Rectangle getParentBounds() {
-		return getWidget().getParentBounds();
-	}
+    @Override
+    public Rectangle getParentBounds() {
+        return getWidget().getParentBounds();
+    }
 
-	@Override
-	public void pack() {
-		getWidget().pack();
-	}
+    @Override
+    public void pack() {
+        getWidget().pack();
+    }
 
-	@Override
-	public void setMinPackSize(final Dimension size) {
-		getWidget().setMinPackSize(size);
-	}
+    @Override
+    public void setMinPackSize(final Dimension size) {
+        getWidget().setMinPackSize(size);
+    }
 
-	@Override
-	public void setMaxPackSize(final Dimension size) {
-		getWidget().setMaxPackSize(size);
-	}
+    @Override
+    public void setMaxPackSize(final Dimension size) {
+        getWidget().setMaxPackSize(size);
+    }
 
-	@Override
-	public void dispose() {
-		getWidget().dispose();
-	}
+    @Override
+    public void dispose() {
+        getWidget().dispose();
+    }
 
-	@Override
-	public void addWindowListener(final IWindowListener listener) {
-		getWidget().addWindowListener(listener);
-	}
+    @Override
+    public void addWindowListener(final IWindowListener listener) {
+        getWidget().addWindowListener(listener);
+    }
 
-	@Override
-	public void removeWindowListener(final IWindowListener listener) {
-		getWidget().removeWindowListener(listener);
-	}
+    @Override
+    public void removeWindowListener(final IWindowListener listener) {
+        getWidget().removeWindowListener(listener);
+    }
 
-	@Override
-	public void centerLocation() {
-		getWidget().centerLocation();
-	}
+    @Override
+    public void centerLocation() {
+        getWidget().centerLocation();
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IDisplay, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
-		final DESCRIPTOR_TYPE descriptor) {
-		return getWidget().createChildWindow(descriptor);
-	}
+    @Override
+    public <WIDGET_TYPE extends IDisplay, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
+        final DESCRIPTOR_TYPE descriptor) {
+        return getWidget().createChildWindow(descriptor);
+    }
 
-	@Override
-	public List<IDisplay> getChildWindows() {
-		return getWidget().getChildWindows();
-	}
+    @Override
+    public List<IDisplay> getChildWindows() {
+        return getWidget().getChildWindows();
+    }
 
 }

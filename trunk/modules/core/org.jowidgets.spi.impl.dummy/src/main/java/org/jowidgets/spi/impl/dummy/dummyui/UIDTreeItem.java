@@ -33,71 +33,71 @@ import org.jowidgets.common.types.Markup;
 
 public class UIDTreeItem extends UIDComponent {
 
-	private boolean expanded;
-	private boolean checked;
-	private boolean greyed;
-	private boolean checkable;
-	private String text;
-	private IImageConstant icon;
-	private Markup markup;
+    private boolean expanded;
+    private boolean checked;
+    private boolean greyed;
+    private boolean checkable;
+    private String text;
+    private IImageConstant icon;
+    private Markup markup;
 
-	public UIDTreeItem() {
-		this.checkable = true;
-	}
+    public UIDTreeItem() {
+        this.checkable = true;
+    }
 
-	public boolean isExpanded() {
-		return expanded;
-	}
+    public boolean isExpanded() {
+        return expanded;
+    }
 
-	public void setExpanded(final boolean expanded) {
-		this.expanded = expanded;
-	}
+    public void setExpanded(final boolean expanded) {
+        this.expanded = expanded;
+    }
 
-	public String getText() {
-		return text;
-	}
+    public String getText() {
+        return text;
+    }
 
-	public void setText(final String text) {
-		this.text = text;
-	}
+    public void setText(final String text) {
+        this.text = text;
+    }
 
-	public IImageConstant getIcon() {
-		return icon;
-	}
+    public IImageConstant getIcon() {
+        return icon;
+    }
 
-	public void setIcon(final IImageConstant icon) {
-		this.icon = icon;
-	}
+    public void setIcon(final IImageConstant icon) {
+        this.icon = icon;
+    }
 
-	public Markup getMarkup() {
-		return markup;
-	}
+    public Markup getMarkup() {
+        return markup;
+    }
 
-	public void setMarkup(final Markup markup) {
-		this.markup = markup;
-	}
+    public void setMarkup(final Markup markup) {
+        this.markup = markup;
+    }
 
-	public void setChecked(final boolean checked) {
-		this.checked = checked;
-	}
+    public void setChecked(final boolean checked) {
+        this.checked = checked;
+    }
 
-	public boolean isChecked() {
-		return checked;
-	}
+    public boolean isChecked() {
+        return checked;
+    }
 
-	public void setGreyed(final boolean greyed) {
-		this.greyed = greyed;
-	}
+    public void setGreyed(final boolean greyed) {
+        this.greyed = greyed;
+    }
 
-	public boolean isGreyed() {
-		return greyed;
-	}
+    public boolean isGreyed() {
+        return greyed;
+    }
 
-	public void setCheckable(final boolean checkable) {
-		this.checkable = checkable;
-	}
+    public void setCheckable(final boolean checkable) {
+        this.checkable = checkable;
+    }
 
-	public boolean isCheckable() {
-		return checkable;
-	}
+    public boolean isCheckable() {
+        return checkable;
+    }
 }

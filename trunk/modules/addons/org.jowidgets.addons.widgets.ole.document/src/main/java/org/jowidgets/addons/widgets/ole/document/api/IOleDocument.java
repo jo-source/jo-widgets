@@ -38,22 +38,22 @@ import org.jowidgets.util.event.IChangeListener;
 
 public interface IOleDocument extends IControl {
 
-	void openNewDocument();
+    void openNewDocument();
 
-	void openDocument(File file);
+    void openDocument(File file);
 
-	void addDocumentChangeListener(IChangeListener changeListener);
+    void addDocumentChangeListener(IChangeListener changeListener);
 
-	void removeDocumentChangeListener(IChangeListener changeListener);
+    void removeDocumentChangeListener(IChangeListener changeListener);
 
-	void openDocument(InputStream inputStream);
+    void openDocument(InputStream inputStream);
 
-	boolean saveDocument(File file, boolean includeOleInfo);
+    boolean saveDocument(File file, boolean includeOleInfo);
 
-	boolean saveDocument(OutputStream outputStream);
+    boolean saveDocument(OutputStream outputStream);
 
-	boolean isDirty();
+    boolean isDirty();
 
-	IOleControl getOleControl();
+    IOleControl getOleControl();
 
 }

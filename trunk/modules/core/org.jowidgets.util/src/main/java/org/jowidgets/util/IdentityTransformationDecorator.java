@@ -30,9 +30,9 @@ package org.jowidgets.util;
 
 public final class IdentityTransformationDecorator<T> implements IDecorator<T> {
 
-	@Override
-	public T decorate(final T original) {
-		return original;
-	}
+    @Override
+    public T decorate(final T original) {
+        return original;
+    }
 
 }

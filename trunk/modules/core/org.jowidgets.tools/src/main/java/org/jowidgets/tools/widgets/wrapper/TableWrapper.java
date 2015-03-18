@@ -45,213 +45,213 @@ import org.jowidgets.util.Interval;
 
 public class TableWrapper extends ControlWrapper implements ITable {
 
-	public TableWrapper(final ITable table) {
-		super(table);
-	}
+    public TableWrapper(final ITable table) {
+        super(table);
+    }
 
-	@Override
-	protected ITable getWidget() {
-		return (ITable) super.getWidget();
-	}
+    @Override
+    protected ITable getWidget() {
+        return (ITable) super.getWidget();
+    }
 
-	@Override
-	public void pack() {
-		getWidget().pack();
-	}
+    @Override
+    public void pack() {
+        getWidget().pack();
+    }
 
-	@Override
-	public void pack(final int columnIndex) {
-		getWidget().pack(columnIndex);
-	}
+    @Override
+    public void pack(final int columnIndex) {
+        getWidget().pack(columnIndex);
+    }
 
-	@Override
-	public int getRowCount() {
-		return getWidget().getRowCount();
-	}
+    @Override
+    public int getRowCount() {
+        return getWidget().getRowCount();
+    }
 
-	@Override
-	public int getColumnCount() {
-		return getWidget().getColumnCount();
-	}
+    @Override
+    public int getColumnCount() {
+        return getWidget().getColumnCount();
+    }
 
-	@Override
-	public int convertColumnIndexToView(final int modelIndex) {
-		return getWidget().convertColumnIndexToView(modelIndex);
-	}
+    @Override
+    public int convertColumnIndexToView(final int modelIndex) {
+        return getWidget().convertColumnIndexToView(modelIndex);
+    }
 
-	@Override
-	public int convertColumnIndexToModel(final int viewIndex) {
-		return getWidget().convertColumnIndexToModel(viewIndex);
-	}
+    @Override
+    public int convertColumnIndexToModel(final int viewIndex) {
+        return getWidget().convertColumnIndexToModel(viewIndex);
+    }
 
-	@Override
-	public void moveColumn(final int oldViewIndex, final int newViewIndex) {
-		getWidget().moveColumn(oldViewIndex, newViewIndex);
-	}
+    @Override
+    public void moveColumn(final int oldViewIndex, final int newViewIndex) {
+        getWidget().moveColumn(oldViewIndex, newViewIndex);
+    }
 
-	@Override
-	public void resetColumnPermutation() {
-		getWidget().resetColumnPermutation();
-	}
+    @Override
+    public void resetColumnPermutation() {
+        getWidget().resetColumnPermutation();
+    }
 
-	@Override
-	public void resetFromModel() {
-		getWidget().resetFromModel();
-	}
+    @Override
+    public void resetFromModel() {
+        getWidget().resetFromModel();
+    }
 
-	@Override
-	public void setEditable(final boolean editable) {
-		getWidget().setEditable(editable);
-	}
+    @Override
+    public void setEditable(final boolean editable) {
+        getWidget().setEditable(editable);
+    }
 
-	@Override
-	public Position getCellPosition(final int rowIndex, final int columnIndex) {
-		return getWidget().getCellPosition(rowIndex, columnIndex);
-	}
+    @Override
+    public Position getCellPosition(final int rowIndex, final int columnIndex) {
+        return getWidget().getCellPosition(rowIndex, columnIndex);
+    }
 
-	@Override
-	public Dimension getCellSize(final int rowIndex, final int columnIndex) {
-		return getWidget().getCellSize(rowIndex, columnIndex);
-	}
+    @Override
+    public Dimension getCellSize(final int rowIndex, final int columnIndex) {
+        return getWidget().getCellSize(rowIndex, columnIndex);
+    }
 
-	@Override
-	public ArrayList<Integer> getColumnPermutation() {
-		return getWidget().getColumnPermutation();
-	}
+    @Override
+    public ArrayList<Integer> getColumnPermutation() {
+        return getWidget().getColumnPermutation();
+    }
 
-	@Override
-	public void setColumnPermutation(final List<Integer> permutation) {
-		getWidget().setColumnPermutation(permutation);
-	}
+    @Override
+    public void setColumnPermutation(final List<Integer> permutation) {
+        getWidget().setColumnPermutation(permutation);
+    }
 
-	@Override
-	public ArrayList<Integer> getSelection() {
-		return getWidget().getSelection();
-	}
+    @Override
+    public ArrayList<Integer> getSelection() {
+        return getWidget().getSelection();
+    }
 
-	@Override
-	public void setSelection(final List<Integer> selection) {
-		getWidget().setSelection(selection);
-	}
+    @Override
+    public void setSelection(final List<Integer> selection) {
+        getWidget().setSelection(selection);
+    }
 
-	@Override
-	public void scrollToSelection() {
-		getWidget().scrollToSelection();
-	}
+    @Override
+    public void scrollToSelection() {
+        getWidget().scrollToSelection();
+    }
 
-	@Override
-	public void scrollToEnd() {
-		getWidget().scrollToEnd();
-	}
+    @Override
+    public void scrollToEnd() {
+        getWidget().scrollToEnd();
+    }
 
-	@Override
-	public void scrollToRow(final int rowIndex) {
-		getWidget().scrollToRow(rowIndex);
-	}
+    @Override
+    public void scrollToRow(final int rowIndex) {
+        getWidget().scrollToRow(rowIndex);
+    }
 
-	@Override
-	public boolean isColumnPopupDetectionSupported() {
-		return getWidget().isColumnPopupDetectionSupported();
-	}
+    @Override
+    public boolean isColumnPopupDetectionSupported() {
+        return getWidget().isColumnPopupDetectionSupported();
+    }
 
-	@Override
-	public Interval<Integer> getVisibleRows() {
-		return getWidget().getVisibleRows();
-	}
+    @Override
+    public Interval<Integer> getVisibleRows() {
+        return getWidget().getVisibleRows();
+    }
 
-	@Override
-	public void pack(final TablePackPolicy policy) {
-		getWidget().pack(policy);
-	}
+    @Override
+    public void pack(final TablePackPolicy policy) {
+        getWidget().pack(policy);
+    }
 
-	@Override
-	public void pack(final int columnIndex, final TablePackPolicy policy) {
-		getWidget().pack(columnIndex, policy);
-	}
+    @Override
+    public void pack(final int columnIndex, final TablePackPolicy policy) {
+        getWidget().pack(columnIndex, policy);
+    }
 
-	@Override
-	public boolean editCell(final int row, final int column) {
-		return getWidget().editCell(row, column);
-	}
+    @Override
+    public boolean editCell(final int row, final int column) {
+        return getWidget().editCell(row, column);
+    }
 
-	@Override
-	public void stopEditing() {
-		getWidget().stopEditing();
-	}
+    @Override
+    public void stopEditing() {
+        getWidget().stopEditing();
+    }
 
-	@Override
-	public void cancelEditing() {
-		getWidget().cancelEditing();
-	}
+    @Override
+    public void cancelEditing() {
+        getWidget().cancelEditing();
+    }
 
-	@Override
-	public boolean isEditing() {
-		return getWidget().isEditing();
-	}
+    @Override
+    public boolean isEditing() {
+        return getWidget().isEditing();
+    }
 
-	@Override
-	public void addTableSelectionListener(final ITableSelectionListener listener) {
-		getWidget().addTableSelectionListener(listener);
-	}
+    @Override
+    public void addTableSelectionListener(final ITableSelectionListener listener) {
+        getWidget().addTableSelectionListener(listener);
+    }
 
-	@Override
-	public void removeTableSelectionListener(final ITableSelectionListener listener) {
-		getWidget().removeTableSelectionListener(listener);
-	}
+    @Override
+    public void removeTableSelectionListener(final ITableSelectionListener listener) {
+        getWidget().removeTableSelectionListener(listener);
+    }
 
-	@Override
-	public void addSelectionVetoListener(final IListSelectionVetoListener listener) {
-		getWidget().addSelectionVetoListener(listener);
-	}
+    @Override
+    public void addSelectionVetoListener(final IListSelectionVetoListener listener) {
+        getWidget().addSelectionVetoListener(listener);
+    }
 
-	@Override
-	public void removeSelectionVetoListener(final IListSelectionVetoListener listener) {
-		getWidget().removeSelectionVetoListener(listener);
-	}
+    @Override
+    public void removeSelectionVetoListener(final IListSelectionVetoListener listener) {
+        getWidget().removeSelectionVetoListener(listener);
+    }
 
-	@Override
-	public void addTableCellListener(final ITableCellListener listener) {
-		getWidget().addTableCellListener(listener);
-	}
+    @Override
+    public void addTableCellListener(final ITableCellListener listener) {
+        getWidget().addTableCellListener(listener);
+    }
 
-	@Override
-	public void removeTableCellListener(final ITableCellListener listener) {
-		getWidget().removeTableCellListener(listener);
-	}
+    @Override
+    public void removeTableCellListener(final ITableCellListener listener) {
+        getWidget().removeTableCellListener(listener);
+    }
 
-	@Override
-	public void addTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
-		getWidget().addTableCellPopupDetectionListener(listener);
-	}
+    @Override
+    public void addTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
+        getWidget().addTableCellPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void removeTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
-		getWidget().removeTableCellPopupDetectionListener(listener);
-	}
+    @Override
+    public void removeTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
+        getWidget().removeTableCellPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void addTableColumnListener(final ITableColumnListener listener) {
-		getWidget().addTableColumnListener(listener);
-	}
+    @Override
+    public void addTableColumnListener(final ITableColumnListener listener) {
+        getWidget().addTableColumnListener(listener);
+    }
 
-	@Override
-	public void removeTableColumnListener(final ITableColumnListener listener) {
-		getWidget().removeTableColumnListener(listener);
-	}
+    @Override
+    public void removeTableColumnListener(final ITableColumnListener listener) {
+        getWidget().removeTableColumnListener(listener);
+    }
 
-	@Override
-	public void addTableColumnPopupDetectionListener(final ITableColumnPopupDetectionListener listener) {
-		getWidget().addTableColumnPopupDetectionListener(listener);
-	}
+    @Override
+    public void addTableColumnPopupDetectionListener(final ITableColumnPopupDetectionListener listener) {
+        getWidget().addTableColumnPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void removeTableColumnPopupDetectionListener(final ITableColumnPopupDetectionListener listener) {
-		getWidget().removeTableColumnPopupDetectionListener(listener);
-	}
+    @Override
+    public void removeTableColumnPopupDetectionListener(final ITableColumnPopupDetectionListener listener) {
+        getWidget().removeTableColumnPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void setRowHeight(final int height) {
-		getWidget().setRowHeight(height);
-	}
+    @Override
+    public void setRowHeight(final int height) {
+        getWidget().setRowHeight(height);
+    }
 
 }

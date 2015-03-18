@@ -41,50 +41,50 @@ import org.jowidgets.spi.widgets.IToolBarItemSpi;
 
 public class ToolBarSeparatorItemImpl extends ToolBarItemSpiWrapper implements IToolBarItem {
 
-	private final IToolBar parent;
-	private final ToolBarItemDiposableDelegate disposableDelegate;
+    private final IToolBar parent;
+    private final ToolBarItemDiposableDelegate disposableDelegate;
 
-	public ToolBarSeparatorItemImpl(final IToolBar parent, final IToolBarItemSpi toolBarItemSpi) {
-		super(toolBarItemSpi, new ItemModelBindingDelegate(
-			new ToolBarItemSpiInvoker(toolBarItemSpi),
-			new SeparatorItemModelBuilder().build()));
-		this.parent = parent;
-		this.disposableDelegate = new ToolBarItemDiposableDelegate(this, getItemModelBindingDelegate());
-	}
+    public ToolBarSeparatorItemImpl(final IToolBar parent, final IToolBarItemSpi toolBarItemSpi) {
+        super(toolBarItemSpi, new ItemModelBindingDelegate(
+            new ToolBarItemSpiInvoker(toolBarItemSpi),
+            new SeparatorItemModelBuilder().build()));
+        this.parent = parent;
+        this.disposableDelegate = new ToolBarItemDiposableDelegate(this, getItemModelBindingDelegate());
+    }
 
-	@Override
-	public IToolBar getParent() {
-		return parent;
-	}
+    @Override
+    public IToolBar getParent() {
+        return parent;
+    }
 
-	@Override
-	public void dispose() {
-		disposableDelegate.dispose();
-	}
+    @Override
+    public void dispose() {
+        disposableDelegate.dispose();
+    }
 
-	@Override
-	public boolean isDisposed() {
-		return disposableDelegate.isDisposed();
-	}
+    @Override
+    public boolean isDisposed() {
+        return disposableDelegate.isDisposed();
+    }
 
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		disposableDelegate.addDisposeListener(listener);
-	}
+    @Override
+    public void addDisposeListener(final IDisposeListener listener) {
+        disposableDelegate.addDisposeListener(listener);
+    }
 
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		disposableDelegate.removeDisposeListener(listener);
-	}
+    @Override
+    public void removeDisposeListener(final IDisposeListener listener) {
+        disposableDelegate.removeDisposeListener(listener);
+    }
 
-	@Override
-	public void setModel(final IToolBarItemModel model) {
-		getItemModelBindingDelegate().setModel(model);
-	}
+    @Override
+    public void setModel(final IToolBarItemModel model) {
+        getItemModelBindingDelegate().setModel(model);
+    }
 
-	@Override
-	public IToolBarItemModel getModel() {
-		return (IToolBarItemModel) getItemModelBindingDelegate().getModel();
-	}
+    @Override
+    public IToolBarItemModel getModel() {
+        return (IToolBarItemModel) getItemModelBindingDelegate().getModel();
+    }
 
 }

@@ -36,35 +36,35 @@ import org.jowidgets.impl.spi.blueprint.builder.IComboBoxSelectionSetupBuilderSp
 
 public final class ComboBoxBuilderConverter {
 
-	private ComboBoxBuilderConverter() {};
+    private ComboBoxBuilderConverter() {};
 
-	public static <VALUE_TYPE> void convert(
-		final IComboBoxSelectionSetupBuilderSpi<?> builderSpi,
-		final IComboBoxSelectionSetup<VALUE_TYPE> setup) {
+    public static <VALUE_TYPE> void convert(
+        final IComboBoxSelectionSetupBuilderSpi<?> builderSpi,
+        final IComboBoxSelectionSetup<VALUE_TYPE> setup) {
 
-		final Collection<VALUE_TYPE> elements = setup.getElements();
-		final IObjectStringConverter<VALUE_TYPE> objectStringConverter = setup.getObjectStringConverter();
+        final Collection<VALUE_TYPE> elements = setup.getElements();
+        final IObjectStringConverter<VALUE_TYPE> objectStringConverter = setup.getObjectStringConverter();
 
-		final String[] spiElements = new String[elements.size()];
+        final String[] spiElements = new String[elements.size()];
 
-		int index = 0;
+        int index = 0;
 
-		for (final VALUE_TYPE element : elements) {
-			spiElements[index] = convertToString(objectStringConverter, element);
-			index++;
-		}
-		builderSpi.setElements(spiElements);
-	}
+        for (final VALUE_TYPE element : elements) {
+            spiElements[index] = convertToString(objectStringConverter, element);
+            index++;
+        }
+        builderSpi.setElements(spiElements);
+    }
 
-	private static <VALUE_TYPE> String convertToString(
-		final IObjectStringConverter<VALUE_TYPE> objectStringConverter,
-		final VALUE_TYPE value) {
-		final String result = objectStringConverter.convertToString(value);
-		if (result != null) {
-			return result;
-		}
-		else {
-			return "";
-		}
-	}
+    private static <VALUE_TYPE> String convertToString(
+        final IObjectStringConverter<VALUE_TYPE> objectStringConverter,
+        final VALUE_TYPE value) {
+        final String result = objectStringConverter.convertToString(value);
+        if (result != null) {
+            return result;
+        }
+        else {
+            return "";
+        }
+    }
 }

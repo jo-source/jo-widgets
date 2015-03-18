@@ -32,12 +32,12 @@ import org.jowidgets.api.types.QuestionResult;
 
 public interface IQuestionDialog extends IDisplay, IComponent {
 
-	/**
-	 * Shows the question dialog and blocks until the user pressed any button. After that, the
-	 * dialog will be disposed, so it can not be used a second time.
-	 * 
-	 * @return the result of the question
-	 */
-	QuestionResult question();
+    /**
+     * Shows the question dialog and blocks until the user pressed any button. After that, the
+     * dialog will be disposed, so it can not be used a second time.
+     * 
+     * @return the result of the question
+     */
+    QuestionResult question();
 
 }

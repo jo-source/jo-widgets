@@ -40,19 +40,19 @@ import org.jowidgets.spi.widgets.ICompositeSpi;
 
 public class CompositeFactory extends AbstractWidgetFactory implements IWidgetFactory<IComposite, ICompositeDescriptor> {
 
-	public CompositeFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+    public CompositeFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider,
+        final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
-	}
+        super(genericWidgetFactory, widgetsServiceProvider, bpF);
+    }
 
-	@Override
-	public IComposite create(final Object parentUiReference, final ICompositeDescriptor descriptor) {
-		final ICompositeBluePrintSpi bp = getSpiBluePrintFactory().composite().setSetup(descriptor);
-		final ICompositeSpi compositeSpi = getSpiWidgetFactory().createComposite(getGenericWidgetFactory(), parentUiReference, bp);
-		return new CompositeImpl(compositeSpi, descriptor);
-	}
+    @Override
+    public IComposite create(final Object parentUiReference, final ICompositeDescriptor descriptor) {
+        final ICompositeBluePrintSpi bp = getSpiBluePrintFactory().composite().setSetup(descriptor);
+        final ICompositeSpi compositeSpi = getSpiWidgetFactory().createComposite(getGenericWidgetFactory(), parentUiReference, bp);
+        return new CompositeImpl(compositeSpi, descriptor);
+    }
 
 }

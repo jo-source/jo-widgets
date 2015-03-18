@@ -34,77 +34,77 @@ import org.jowidgets.util.Assert;
 
 public final class AcceleratorConvert {
 
-	private AcceleratorConvert() {};
+    private AcceleratorConvert() {};
 
-	public static String acceleratorText(final Accelerator accelerator) {
-		final StringBuilder result = new StringBuilder();
-		for (final Modifier modifier : accelerator.getModifier()) {
-			result.append(acceleratorText(modifier));
-			result.append("+"); //$NON-NLS-1$
-		}
-		final Character character = accelerator.getCharacter();
-		if (character != null) {
-			result.append(character.charValue());
-		}
-		else {
-			result.append(accelerator.getVirtualKey().getLabel());
-		}
-		return result.toString();
-	}
+    public static String acceleratorText(final Accelerator accelerator) {
+        final StringBuilder result = new StringBuilder();
+        for (final Modifier modifier : accelerator.getModifier()) {
+            result.append(acceleratorText(modifier));
+            result.append("+"); //$NON-NLS-1$
+        }
+        final Character character = accelerator.getCharacter();
+        if (character != null) {
+            result.append(character.charValue());
+        }
+        else {
+            result.append(accelerator.getVirtualKey().getLabel());
+        }
+        return result.toString();
+    }
 
-	public static int convert(final Accelerator accelerator) {
-		int result;
+    public static int convert(final Accelerator accelerator) {
+        int result;
 
-		final Character character = accelerator.getCharacter();
-		if (character != null) {
-			result = character.charValue();
-		}
-		else {
-			result = VirtualKeyConvert.convert(accelerator.getVirtualKey());
-		}
+        final Character character = accelerator.getCharacter();
+        if (character != null) {
+            result = character.charValue();
+        }
+        else {
+            result = VirtualKeyConvert.convert(accelerator.getVirtualKey());
+        }
 
-		for (final Modifier modifier : accelerator.getModifier()) {
-			result += convert(modifier);
-		}
-		return result;
-	}
+        for (final Modifier modifier : accelerator.getModifier()) {
+            result += convert(modifier);
+        }
+        return result;
+    }
 
-	public static int convert(final Modifier modifier) {
-		Assert.paramNotNull(modifier, "modifier"); //$NON-NLS-1$
+    public static int convert(final Modifier modifier) {
+        Assert.paramNotNull(modifier, "modifier"); //$NON-NLS-1$
 
-		if (modifier == Modifier.ALT) {
-			return SWT.ALT;
-		}
-		else if (modifier == Modifier.CTRL) {
-			return SWT.CTRL;
-		}
-		else if (modifier == Modifier.SHIFT) {
-			return SWT.SHIFT;
-		}
+        if (modifier == Modifier.ALT) {
+            return SWT.ALT;
+        }
+        else if (modifier == Modifier.CTRL) {
+            return SWT.CTRL;
+        }
+        else if (modifier == Modifier.SHIFT) {
+            return SWT.SHIFT;
+        }
 
-		else {
-			throw new IllegalArgumentException("Modifier '" + modifier + "' is unknown"); //$NON-NLS-1$ //$NON-NLS-2$
-		}
+        else {
+            throw new IllegalArgumentException("Modifier '" + modifier + "' is unknown"); //$NON-NLS-1$ //$NON-NLS-2$
+        }
 
-	}
+    }
 
-	private static String acceleratorText(final Modifier modifier) {
-		Assert.paramNotNull(modifier, "modifier"); //$NON-NLS-1$
+    private static String acceleratorText(final Modifier modifier) {
+        Assert.paramNotNull(modifier, "modifier"); //$NON-NLS-1$
 
-		if (modifier == Modifier.ALT) {
-			return Messages.getString("AcceleratorConvert.alt"); //$NON-NLS-1$
-		}
-		else if (modifier == Modifier.CTRL) {
-			return Messages.getString("AcceleratorConvert.ctrl"); //$NON-NLS-1$
-		}
-		else if (modifier == Modifier.SHIFT) {
-			return Messages.getString("AcceleratorConvert.shift"); //$NON-NLS-1$
-		}
+        if (modifier == Modifier.ALT) {
+            return Messages.getString("AcceleratorConvert.alt"); //$NON-NLS-1$
+        }
+        else if (modifier == Modifier.CTRL) {
+            return Messages.getString("AcceleratorConvert.ctrl"); //$NON-NLS-1$
+        }
+        else if (modifier == Modifier.SHIFT) {
+            return Messages.getString("AcceleratorConvert.shift"); //$NON-NLS-1$
+        }
 
-		else {
-			throw new IllegalArgumentException("Modifier '" + modifier + "' is unknown"); //$NON-NLS-1$ //$NON-NLS-2$
-		}
+        else {
+            throw new IllegalArgumentException("Modifier '" + modifier + "' is unknown"); //$NON-NLS-1$ //$NON-NLS-2$
+        }
 
-	}
+    }
 
 }

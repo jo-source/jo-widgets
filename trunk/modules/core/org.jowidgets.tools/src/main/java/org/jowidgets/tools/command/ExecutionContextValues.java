@@ -37,19 +37,19 @@ import org.jowidgets.util.ITypedKey;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public final class ExecutionContextValues implements IExecutionContextValues {
 
-	private final Map values;
+    private final Map values;
 
-	public ExecutionContextValues() {
-		this.values = new HashMap();
-	}
+    public ExecutionContextValues() {
+        this.values = new HashMap();
+    }
 
-	public <VALUE_TYPE> void putValue(final ITypedKey<VALUE_TYPE> key, final VALUE_TYPE value) {
-		values.put(key, value);
-	}
+    public <VALUE_TYPE> void putValue(final ITypedKey<VALUE_TYPE> key, final VALUE_TYPE value) {
+        values.put(key, value);
+    }
 
-	@Override
-	public <VALUE_TYPE> VALUE_TYPE getValue(final ITypedKey<VALUE_TYPE> key) {
-		return (VALUE_TYPE) values.get(key);
-	}
+    @Override
+    public <VALUE_TYPE> VALUE_TYPE getValue(final ITypedKey<VALUE_TYPE> key) {
+        return (VALUE_TYPE) values.get(key);
+    }
 
 }

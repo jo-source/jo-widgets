@@ -41,50 +41,50 @@ import org.jowidgets.util.Assert;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class DefaultsInitializerRegistry implements IDefaultsInitializerRegistry {
 
-	private final Map map;
+    private final Map map;
 
-	public DefaultsInitializerRegistry() {
-		this.map = new HashMap();
-	}
+    public DefaultsInitializerRegistry() {
+        this.map = new HashMap();
+    }
 
-	@Override
-	public void register(final Class<? extends ISetupBuilder> setupBuilder, final IDefaultInitializer<?> defaultsImpl) {
-		Assert.paramNotNull(setupBuilder, "setupBuilder");
-		Assert.paramNotNull(defaultsImpl, "defaultsImpl");
-		List<IDefaultInitializer<?>> list = (List<IDefaultInitializer<?>>) map.get(setupBuilder);
-		if (list == null) {
-			list = new LinkedList<IDefaultInitializer<?>>();
-			map.put(setupBuilder, list);
-		}
-		list.add(defaultsImpl);
-	}
+    @Override
+    public void register(final Class<? extends ISetupBuilder> setupBuilder, final IDefaultInitializer<?> defaultsImpl) {
+        Assert.paramNotNull(setupBuilder, "setupBuilder");
+        Assert.paramNotNull(defaultsImpl, "defaultsImpl");
+        List<IDefaultInitializer<?>> list = (List<IDefaultInitializer<?>>) map.get(setupBuilder);
+        if (list == null) {
+            list = new LinkedList<IDefaultInitializer<?>>();
+            map.put(setupBuilder, list);
+        }
+        list.add(defaultsImpl);
+    }
 
-	@Override
-	public void setDefaultsInitializer(
-		final Class<? extends ISetupBuilder> setupBuilder,
-		final IDefaultInitializer<?> defaultsImpl) {
-		Assert.paramNotNull(setupBuilder, "setupBuilder");
-		map.remove(setupBuilder);
-		register(setupBuilder, defaultsImpl);
-	}
+    @Override
+    public void setDefaultsInitializer(
+        final Class<? extends ISetupBuilder> setupBuilder,
+        final IDefaultInitializer<?> defaultsImpl) {
+        Assert.paramNotNull(setupBuilder, "setupBuilder");
+        map.remove(setupBuilder);
+        register(setupBuilder, defaultsImpl);
+    }
 
-	@Override
-	public List<IDefaultInitializer<ISetupBuilder<?>>> getRegistered(final Class<? extends ISetupBuilder> setupBuilder) {
-		Assert.paramNotNull(setupBuilder, "setupBuilder");
-		List<IDefaultInitializer<ISetupBuilder<?>>> list = (List<IDefaultInitializer<ISetupBuilder<?>>>) map.get(setupBuilder);
-		if (list == null) {
-			list = new LinkedList<IDefaultInitializer<ISetupBuilder<?>>>();
-		}
-		return list;
-	}
+    @Override
+    public List<IDefaultInitializer<ISetupBuilder<?>>> getRegistered(final Class<? extends ISetupBuilder> setupBuilder) {
+        Assert.paramNotNull(setupBuilder, "setupBuilder");
+        List<IDefaultInitializer<ISetupBuilder<?>>> list = (List<IDefaultInitializer<ISetupBuilder<?>>>) map.get(setupBuilder);
+        if (list == null) {
+            list = new LinkedList<IDefaultInitializer<ISetupBuilder<?>>>();
+        }
+        return list;
+    }
 
-	@Override
-	public List<Class<ISetupBuilder>> getRegisteredSetupBuilder() {
-		final List<Class<ISetupBuilder>> result = new LinkedList<Class<ISetupBuilder>>();
-		for (final Object object : map.keySet()) {
-			result.add((Class<ISetupBuilder>) object);
-		}
-		return result;
-	}
+    @Override
+    public List<Class<ISetupBuilder>> getRegisteredSetupBuilder() {
+        final List<Class<ISetupBuilder>> result = new LinkedList<Class<ISetupBuilder>>();
+        for (final Object object : map.keySet()) {
+            result.add((Class<ISetupBuilder>) object);
+        }
+        return result;
+    }
 
 }

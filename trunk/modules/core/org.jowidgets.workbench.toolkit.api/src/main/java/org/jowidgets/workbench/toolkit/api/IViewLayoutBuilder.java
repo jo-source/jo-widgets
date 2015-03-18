@@ -36,28 +36,28 @@ import org.jowidgets.workbench.api.ViewScope;
 
 public interface IViewLayoutBuilder extends IWorkbenchPartBuilder<IViewLayoutBuilder> {
 
-	IViewLayoutBuilder setId(String id);
+    IViewLayoutBuilder setId(String id);
 
-	IViewLayoutBuilder setHidden(boolean hidden);
+    IViewLayoutBuilder setHidden(boolean hidden);
 
-	IViewLayoutBuilder setDetachable(boolean detachable);
+    IViewLayoutBuilder setDetachable(boolean detachable);
 
-	IViewLayoutBuilder setScope(ViewScope scope);
+    IViewLayoutBuilder setScope(ViewScope scope);
 
-	IViewLayoutBuilder setClosePolicy(ClosePolicy closePolicy);
+    IViewLayoutBuilder setClosePolicy(ClosePolicy closePolicy);
 
-	IViewLayoutBuilder setFolderWhitelist(List<String> folderWhiteList);
+    IViewLayoutBuilder setFolderWhitelist(List<String> folderWhiteList);
 
-	IViewLayoutBuilder setFolderWhitelist(String... folderWhiteList);
+    IViewLayoutBuilder setFolderWhitelist(String... folderWhiteList);
 
-	IViewLayoutBuilder addToFolderWhitelist(String folder);
+    IViewLayoutBuilder addToFolderWhitelist(String folder);
 
-	IViewLayoutBuilder setFolderBlacklist(List<String> folderBlackList);
+    IViewLayoutBuilder setFolderBlacklist(List<String> folderBlackList);
 
-	IViewLayoutBuilder setFolderBlacklist(String... folderBlackList);
+    IViewLayoutBuilder setFolderBlacklist(String... folderBlackList);
 
-	IViewLayoutBuilder addToFolderBlacklist(String folder);
+    IViewLayoutBuilder addToFolderBlacklist(String folder);
 
-	IViewLayout build();
+    IViewLayout build();
 
 }

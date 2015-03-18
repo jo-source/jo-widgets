@@ -37,27 +37,27 @@ import org.jowidgets.spi.widgets.IToolBarContainerItemSpi;
 
 public class ToolBarContainerItemImpl extends DummyContainer implements IToolBarContainerItemSpi {
 
-	public ToolBarContainerItemImpl(final IGenericWidgetFactory factory, final UIDContainer container) {
-		super(factory, container);
-	}
+    public ToolBarContainerItemImpl(final IGenericWidgetFactory factory, final UIDContainer container) {
+        super(factory, container);
+    }
 
-	@Override
-	public UIDToolBarContainerItem getUiReference() {
-		return (UIDToolBarContainerItem) super.getUiReference();
-	}
+    @Override
+    public UIDToolBarContainerItem getUiReference() {
+        return (UIDToolBarContainerItem) super.getUiReference();
+    }
 
-	@Override
-	public void setText(final String text) {}
+    @Override
+    public void setText(final String text) {}
 
-	@Override
-	public void setToolTipText(final String text) {}
+    @Override
+    public void setToolTipText(final String text) {}
 
-	@Override
-	public void setIcon(final IImageConstant icon) {}
+    @Override
+    public void setIcon(final IImageConstant icon) {}
 
-	@Override
-	public Position getPosition() {
-		return getUiReference().getPosition();
-	}
+    @Override
+    public Position getPosition() {
+        return getUiReference().getPosition();
+    }
 
 }

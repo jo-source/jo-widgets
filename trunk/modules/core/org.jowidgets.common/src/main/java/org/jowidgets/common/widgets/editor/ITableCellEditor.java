@@ -33,10 +33,10 @@ import org.jowidgets.common.widgets.IControlCommon;
 
 public interface ITableCellEditor extends IControlCommon {
 
-	void startEditing(ITableCell cell, int row, int column);
+    void startEditing(ITableCell cell, int row, int column);
 
-	void stopEditing(ITableCell cell, int row, int column);
+    void stopEditing(ITableCell cell, int row, int column);
 
-	void cancelEditing(ITableCell cell, int row, int column);
+    void cancelEditing(ITableCell cell, int row, int column);
 
 }

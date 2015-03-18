@@ -28,11 +28,10 @@
 
 package org.jowidgets.common.widgets.controller;
 
-
 public interface ITableCellEvent {
 
-	int getRowIndex();
+    int getRowIndex();
 
-	int getColumnIndex();
+    int getColumnIndex();
 
 }

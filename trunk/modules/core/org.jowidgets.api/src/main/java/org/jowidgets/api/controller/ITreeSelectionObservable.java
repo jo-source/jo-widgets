@@ -30,8 +30,8 @@ package org.jowidgets.api.controller;
 
 public interface ITreeSelectionObservable {
 
-	void addTreeSelectionListener(ITreeSelectionListener listener);
+    void addTreeSelectionListener(ITreeSelectionListener listener);
 
-	void removeTreeSelectionListener(ITreeSelectionListener listener);
+    void removeTreeSelectionListener(ITreeSelectionListener listener);
 
 }

@@ -48,119 +48,119 @@ import org.jowidgets.tools.command.EnabledChecker;
 
 //CHECKSTYLE:OFF
 public class TestToolViewToolbar {
-	private static final IActionBuilderFactory ABF = Toolkit.getActionBuilderFactory();
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+    private static final IActionBuilderFactory ABF = Toolkit.getActionBuilderFactory();
+    private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
-	public TestToolViewToolbar(final IFrame frame, final ITestTool testTool) {
-		final IToolBar toolBar = frame.add(BPF.toolBar(), "north, wrap");
-		final EnabledChecker playEnabledChecker = new EnabledChecker();
-		final EnabledChecker stopEnabledChecker = new EnabledChecker();
-		final EnabledChecker recordEnabledChecker = new EnabledChecker();
+    public TestToolViewToolbar(final IFrame frame, final ITestTool testTool) {
+        final IToolBar toolBar = frame.add(BPF.toolBar(), "north, wrap");
+        final EnabledChecker playEnabledChecker = new EnabledChecker();
+        final EnabledChecker stopEnabledChecker = new EnabledChecker();
+        final EnabledChecker recordEnabledChecker = new EnabledChecker();
 
-		final IActionBuilder playBuilder = ABF.create();
-		final IToolBarButton playButton = toolBar.addItem(BPF.toolBarButton());
-		playEnabledChecker.setEnabledState(EnabledState.ENABLED);
-		final ICommandExecutor playCommand = new ICommandExecutor() {
+        final IActionBuilder playBuilder = ABF.create();
+        final IToolBarButton playButton = toolBar.addItem(BPF.toolBarButton());
+        playEnabledChecker.setEnabledState(EnabledState.ENABLED);
+        final ICommandExecutor playCommand = new ICommandExecutor() {
 
-			@Override
-			public void execute(final IExecutionContext executionContext) throws Exception {
-				stopEnabledChecker.setEnabledState(EnabledState.ENABLED);
-				recordEnabledChecker.setEnabledState(EnabledState.DISABLED);
-				playEnabledChecker.setEnabledState(EnabledState.DISABLED);
-				testTool.activateReplayMode();
-				testTool.replay(getTableContent(), 150);
-			}
-		};
-		playBuilder.setCommand(playCommand, playEnabledChecker);
-		playButton.setAction(playBuilder.setText("play").build());
+            @Override
+            public void execute(final IExecutionContext executionContext) throws Exception {
+                stopEnabledChecker.setEnabledState(EnabledState.ENABLED);
+                recordEnabledChecker.setEnabledState(EnabledState.DISABLED);
+                playEnabledChecker.setEnabledState(EnabledState.DISABLED);
+                testTool.activateReplayMode();
+                testTool.replay(getTableContent(), 150);
+            }
+        };
+        playBuilder.setCommand(playCommand, playEnabledChecker);
+        playButton.setAction(playBuilder.setText("play").build());
 
-		final IActionBuilder stopBuilder = ABF.create();
-		final IToolBarButton stopButton = toolBar.addItem(BPF.toolBarButton());
-		stopEnabledChecker.setEnabledState(EnabledState.DISABLED);
-		final ICommandExecutor stopCommand = new ICommandExecutor() {
+        final IActionBuilder stopBuilder = ABF.create();
+        final IToolBarButton stopButton = toolBar.addItem(BPF.toolBarButton());
+        stopEnabledChecker.setEnabledState(EnabledState.DISABLED);
+        final ICommandExecutor stopCommand = new ICommandExecutor() {
 
-			@Override
-			public void execute(final IExecutionContext executionContext) throws Exception {
-				playEnabledChecker.setEnabledState(EnabledState.ENABLED);
-				recordEnabledChecker.setEnabledState(EnabledState.ENABLED);
-				stopEnabledChecker.setEnabledState(EnabledState.DISABLED);
-				testTool.deactivateReplayAndRecord();
-			}
-		};
-		stopBuilder.setCommand(stopCommand, stopEnabledChecker);
-		stopButton.setAction(stopBuilder.setText("stop").build());
+            @Override
+            public void execute(final IExecutionContext executionContext) throws Exception {
+                playEnabledChecker.setEnabledState(EnabledState.ENABLED);
+                recordEnabledChecker.setEnabledState(EnabledState.ENABLED);
+                stopEnabledChecker.setEnabledState(EnabledState.DISABLED);
+                testTool.deactivateReplayAndRecord();
+            }
+        };
+        stopBuilder.setCommand(stopCommand, stopEnabledChecker);
+        stopButton.setAction(stopBuilder.setText("stop").build());
 
-		final IActionBuilder recordBuilder = ABF.create();
-		final IToolBarButton recordButton = toolBar.addItem(BPF.toolBarButton());
-		recordEnabledChecker.setEnabledState(EnabledState.ENABLED);
-		final ICommandExecutor recordCommand = new ICommandExecutor() {
+        final IActionBuilder recordBuilder = ABF.create();
+        final IToolBarButton recordButton = toolBar.addItem(BPF.toolBarButton());
+        recordEnabledChecker.setEnabledState(EnabledState.ENABLED);
+        final ICommandExecutor recordCommand = new ICommandExecutor() {
 
-			@Override
-			public void execute(final IExecutionContext executionContext) throws Exception {
-				playEnabledChecker.setEnabledState(EnabledState.DISABLED);
-				stopEnabledChecker.setEnabledState(EnabledState.ENABLED);
-				recordEnabledChecker.setEnabledState(EnabledState.DISABLED);
-				testTool.activateRecordMode();
-			}
-		};
-		recordBuilder.setCommand(recordCommand, recordEnabledChecker);
-		recordButton.setAction(recordBuilder.setText("record").build());
+            @Override
+            public void execute(final IExecutionContext executionContext) throws Exception {
+                playEnabledChecker.setEnabledState(EnabledState.DISABLED);
+                stopEnabledChecker.setEnabledState(EnabledState.ENABLED);
+                recordEnabledChecker.setEnabledState(EnabledState.DISABLED);
+                testTool.activateRecordMode();
+            }
+        };
+        recordBuilder.setCommand(recordCommand, recordEnabledChecker);
+        recordButton.setAction(recordBuilder.setText("record").build());
 
-		toolBar.addSeparator();
+        toolBar.addSeparator();
 
-		final IActionBuilder deleteBuilder = ABF.create();
-		final IToolBarButton deleteButton = toolBar.addItem(BPF.toolBarButton());
-		final ICommandExecutor deleteCommand = new ICommandExecutor() {
+        final IActionBuilder deleteBuilder = ABF.create();
+        final IToolBarButton deleteButton = toolBar.addItem(BPF.toolBarButton());
+        final ICommandExecutor deleteCommand = new ICommandExecutor() {
 
-			@Override
-			public void execute(final IExecutionContext executionContext) throws Exception {
-				for (final Integer value : TestToolViewTable.getTableModel().getSelection()) {
-					TestToolViewTable.getTableModel().removeRow(value.intValue());
-				}
-			}
-		};
-		deleteBuilder.setCommand(deleteCommand);
-		deleteButton.setAction(deleteBuilder.setText("delete").build());
+            @Override
+            public void execute(final IExecutionContext executionContext) throws Exception {
+                for (final Integer value : TestToolViewTable.getTableModel().getSelection()) {
+                    TestToolViewTable.getTableModel().removeRow(value.intValue());
+                }
+            }
+        };
+        deleteBuilder.setCommand(deleteCommand);
+        deleteButton.setAction(deleteBuilder.setText("delete").build());
 
-		final IActionBuilder deleteAllBuilder = ABF.create();
-		final IToolBarButton deleteAllButton = toolBar.addItem(BPF.toolBarButton());
-		final ICommandExecutor deleteAllCommand = new ICommandExecutor() {
+        final IActionBuilder deleteAllBuilder = ABF.create();
+        final IToolBarButton deleteAllButton = toolBar.addItem(BPF.toolBarButton());
+        final ICommandExecutor deleteAllCommand = new ICommandExecutor() {
 
-			@Override
-			public void execute(final IExecutionContext executionContext) throws Exception {
-				TestToolViewTable.getTableModel().removeAllRows();
-			}
-		};
-		deleteAllBuilder.setCommand(deleteAllCommand);
-		deleteAllButton.setAction(deleteAllBuilder.setText("delete all").build());
+            @Override
+            public void execute(final IExecutionContext executionContext) throws Exception {
+                TestToolViewTable.getTableModel().removeAllRows();
+            }
+        };
+        deleteAllBuilder.setCommand(deleteAllCommand);
+        deleteAllButton.setAction(deleteAllBuilder.setText("delete all").build());
 
-		toolBar.addSeparator();
+        toolBar.addSeparator();
 
-		final IActionBuilder showBuilder = ABF.create();
-		final IToolBarButton showButton = toolBar.addItem(BPF.toolBarButton().setText("show"));
-		final ICommandExecutor showCommand = new ICommandExecutor() {
+        final IActionBuilder showBuilder = ABF.create();
+        final IToolBarButton showButton = toolBar.addItem(BPF.toolBarButton().setText("show"));
+        final ICommandExecutor showCommand = new ICommandExecutor() {
 
-			@Override
-			public void execute(final IExecutionContext executionContext) throws Exception {
-				// TODO LG show the current widget, when a table item is selected
-			}
-		};
-		showBuilder.setCommand(showCommand);
-		showButton.setAction(showBuilder.setText("show").build());
-	}
+            @Override
+            public void execute(final IExecutionContext executionContext) throws Exception {
+                // TODO LG show the current widget, when a table item is selected
+            }
+        };
+        showBuilder.setCommand(showCommand);
+        showButton.setAction(showBuilder.setText("show").build());
+    }
 
-	private List<TestDataObject> getTableContent() {
-		final List<TestDataObject> result = new LinkedList<TestDataObject>();
-		for (int rowIndex = 0; rowIndex < TestToolViewTable.getTableModel().getRowCount(); rowIndex++) {
-			final TestDataObject obj = new TestDataObject();
-			obj.setType(TestToolViewTable.getTableModel().getCell(rowIndex, 1).getText());
-			final String action = TestToolViewTable.getTableModel().getCell(rowIndex, 2).getText();
-			obj.setAction(UserAction.valueOf(action));
-			final String value = TestToolViewTable.getTableModel().getCell(rowIndex, 3).getText();
-			obj.setValue(value);
-			obj.setId(TestToolViewTable.getTableModel().getCell(rowIndex, 5).getText());
-			result.add(obj);
-		}
-		return result;
-	}
+    private List<TestDataObject> getTableContent() {
+        final List<TestDataObject> result = new LinkedList<TestDataObject>();
+        for (int rowIndex = 0; rowIndex < TestToolViewTable.getTableModel().getRowCount(); rowIndex++) {
+            final TestDataObject obj = new TestDataObject();
+            obj.setType(TestToolViewTable.getTableModel().getCell(rowIndex, 1).getText());
+            final String action = TestToolViewTable.getTableModel().getCell(rowIndex, 2).getText();
+            obj.setAction(UserAction.valueOf(action));
+            final String value = TestToolViewTable.getTableModel().getCell(rowIndex, 3).getText();
+            obj.setValue(value);
+            obj.setId(TestToolViewTable.getTableModel().getCell(rowIndex, 5).getText());
+            result.add(obj);
+        }
+        return result;
+    }
 }

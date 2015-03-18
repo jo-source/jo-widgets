@@ -51,84 +51,84 @@ import org.jowidgets.spi.impl.dummy.threads.DummyUiThreadAccess;
 
 public class DummyWidgetsServiceProvider implements IWidgetsServiceProvider {
 
-	private final DummyImageHandleFactorySpi imageHandleFactorySpi;
-	private final DummyImageRegistry imageRegistry;
-	private final DummyImageFactory imageFactory;
-	private final DummyWidgetFactory widgetFactory;
-	private final DummyOptionalWidgetsFactory optionalWidgetsFactory;
-	private final IClipboardSpi clipboard;
+    private final DummyImageHandleFactorySpi imageHandleFactorySpi;
+    private final DummyImageRegistry imageRegistry;
+    private final DummyImageFactory imageFactory;
+    private final DummyWidgetFactory widgetFactory;
+    private final DummyOptionalWidgetsFactory optionalWidgetsFactory;
+    private final IClipboardSpi clipboard;
 
-	public DummyWidgetsServiceProvider() {
-		super();
-		this.imageRegistry = new DummyImageRegistry(new DummyImageHandleFactory());
-		this.imageHandleFactorySpi = new DummyImageHandleFactorySpi(imageRegistry);
-		this.widgetFactory = new DummyWidgetFactory(imageRegistry);
-		this.imageFactory = new DummyImageFactory(imageHandleFactorySpi);
-		this.optionalWidgetsFactory = new DummyOptionalWidgetsFactory();
-		this.clipboard = new ApplicationLocalClipboard();
-	}
+    public DummyWidgetsServiceProvider() {
+        super();
+        this.imageRegistry = new DummyImageRegistry(new DummyImageHandleFactory());
+        this.imageHandleFactorySpi = new DummyImageHandleFactorySpi(imageRegistry);
+        this.widgetFactory = new DummyWidgetFactory(imageRegistry);
+        this.imageFactory = new DummyImageFactory(imageHandleFactorySpi);
+        this.optionalWidgetsFactory = new DummyOptionalWidgetsFactory();
+        this.clipboard = new ApplicationLocalClipboard();
+    }
 
-	@Override
-	public IImageRegistry getImageRegistry() {
-		return imageRegistry;
-	}
+    @Override
+    public IImageRegistry getImageRegistry() {
+        return imageRegistry;
+    }
 
-	@Override
-	public IImageHandleFactorySpi getImageHandleFactory() {
-		return imageHandleFactorySpi;
-	}
+    @Override
+    public IImageHandleFactorySpi getImageHandleFactory() {
+        return imageHandleFactorySpi;
+    }
 
-	@Override
-	public DummyImageFactory getImageFactory() {
-		return imageFactory;
-	}
+    @Override
+    public DummyImageFactory getImageFactory() {
+        return imageFactory;
+    }
 
-	@Override
-	public IWidgetFactorySpi getWidgetFactory() {
-		return widgetFactory;
-	}
+    @Override
+    public IWidgetFactorySpi getWidgetFactory() {
+        return widgetFactory;
+    }
 
-	@Override
-	public IOptionalWidgetsFactorySpi getOptionalWidgetFactory() {
-		return optionalWidgetsFactory;
-	}
+    @Override
+    public IOptionalWidgetsFactorySpi getOptionalWidgetFactory() {
+        return optionalWidgetsFactory;
+    }
 
-	@Override
-	public IUiThreadAccessCommon createUiThreadAccess() {
-		return new DummyUiThreadAccess();
-	}
+    @Override
+    public IUiThreadAccessCommon createUiThreadAccess() {
+        return new DummyUiThreadAccess();
+    }
 
-	@Override
-	public IApplicationRunner createApplicationRunner() {
-		return new DummyApplicationRunner();
-	}
+    @Override
+    public IApplicationRunner createApplicationRunner() {
+        return new DummyApplicationRunner();
+    }
 
-	@Override
-	public Object getActiveWindowUiReference() {
-		//TODO LG active window must be simulated
-		return null;
-	}
+    @Override
+    public Object getActiveWindowUiReference() {
+        //TODO LG active window must be simulated
+        return null;
+    }
 
-	@Override
-	public List<Object> getAllWindowsUiReference() {
-		return Collections.emptyList();
-	}
+    @Override
+    public List<Object> getAllWindowsUiReference() {
+        return Collections.emptyList();
+    }
 
-	@Override
-	public Position toScreen(final Position localPosition, final IComponentCommon component) {
-		// TODO LG implement
-		return null;
-	}
+    @Override
+    public Position toScreen(final Position localPosition, final IComponentCommon component) {
+        // TODO LG implement
+        return null;
+    }
 
-	@Override
-	public Position toLocal(final Position screenPosition, final IComponentCommon component) {
-		// TODO LG implement
-		return null;
-	}
+    @Override
+    public Position toLocal(final Position screenPosition, final IComponentCommon component) {
+        // TODO LG implement
+        return null;
+    }
 
-	@Override
-	public IClipboardSpi getClipboard() {
-		return clipboard;
-	}
+    @Override
+    public IClipboardSpi getClipboard() {
+        return clipboard;
+    }
 
 }

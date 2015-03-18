@@ -34,65 +34,65 @@ import org.jowidgets.util.Assert;
 
 public final class TransferObject implements Serializable {
 
-	public static final String MIME_TYPE = "application/x-jowidgets-transfer-container";
+    public static final String MIME_TYPE = "application/x-jowidgets-transfer-container";
 
-	private static final long serialVersionUID = 7633172392759619262L;
+    private static final long serialVersionUID = 7633172392759619262L;
 
-	private final TransferTypeSpi transferType;
-	private final Object data;
+    private final TransferTypeSpi transferType;
+    private final Object data;
 
-	public TransferObject(final TransferTypeSpi transferType, final Object data) {
-		Assert.paramNotNull(transferType, "transferType");
-		this.transferType = transferType;
-		this.data = data;
-	}
+    public TransferObject(final TransferTypeSpi transferType, final Object data) {
+        Assert.paramNotNull(transferType, "transferType");
+        this.transferType = transferType;
+        this.data = data;
+    }
 
-	public TransferTypeSpi getTransferType() {
-		return transferType;
-	}
+    public TransferTypeSpi getTransferType() {
+        return transferType;
+    }
 
-	public Object getData() {
-		return data;
-	}
+    public Object getData() {
+        return data;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((data == null) ? 0 : data.hashCode());
-		result = prime * result + ((transferType == null) ? 0 : transferType.hashCode());
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((data == null) ? 0 : data.hashCode());
+        result = prime * result + ((transferType == null) ? 0 : transferType.hashCode());
+        return result;
+    }
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof TransferObject)) {
-			return false;
-		}
-		final TransferObject other = (TransferObject) obj;
-		if (data == null) {
-			if (other.data != null) {
-				return false;
-			}
-		}
-		else if (!data.equals(other.data)) {
-			return false;
-		}
-		if (transferType == null) {
-			if (other.transferType != null) {
-				return false;
-			}
-		}
-		else if (!transferType.equals(other.transferType)) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof TransferObject)) {
+            return false;
+        }
+        final TransferObject other = (TransferObject) obj;
+        if (data == null) {
+            if (other.data != null) {
+                return false;
+            }
+        }
+        else if (!data.equals(other.data)) {
+            return false;
+        }
+        if (transferType == null) {
+            if (other.transferType != null) {
+                return false;
+            }
+        }
+        else if (!transferType.equals(other.transferType)) {
+            return false;
+        }
+        return true;
+    }
 
 }

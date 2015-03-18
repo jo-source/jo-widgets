@@ -38,73 +38,73 @@ import org.jowidgets.util.concurrent.DaemonThreadFactory;
 
 public abstract class AbstractPollingClipboardObservableSpi extends ClipboardObservableSpi {
 
-	private final ScheduledExecutorService scheduledExecutor;
-	private final Runnable pollingExecutor;
-	private final Long delay;
+    private final ScheduledExecutorService scheduledExecutor;
+    private final Runnable pollingExecutor;
+    private final Long delay;
 
-	private ScheduledFuture<?> scheduledFuture;
+    private ScheduledFuture<?> scheduledFuture;
 
-	protected AbstractPollingClipboardObservableSpi(final Long delay) {
-		this.delay = delay;
-		if (delay != null) {
-			this.scheduledExecutor = Executors.newSingleThreadScheduledExecutor(new DaemonThreadFactory());
-			this.pollingExecutor = new PollingExecutor();
-		}
-		else {
-			this.scheduledExecutor = null;
-			this.pollingExecutor = null;
-		}
-	}
+    protected AbstractPollingClipboardObservableSpi(final Long delay) {
+        this.delay = delay;
+        if (delay != null) {
+            this.scheduledExecutor = Executors.newSingleThreadScheduledExecutor(new DaemonThreadFactory());
+            this.pollingExecutor = new PollingExecutor();
+        }
+        else {
+            this.scheduledExecutor = null;
+            this.pollingExecutor = null;
+        }
+    }
 
-	protected abstract void checkContentChanged();
+    protected abstract void checkContentChanged();
 
-	@Override
-	public void addClipboardListener(final IClipboardListenerSpi listener) {
-		final int lastSize = getSize();
-		super.addClipboardListener(listener);
-		if (lastSize == 0) {
-			startPolling();
-		}
-	}
+    @Override
+    public void addClipboardListener(final IClipboardListenerSpi listener) {
+        final int lastSize = getSize();
+        super.addClipboardListener(listener);
+        if (lastSize == 0) {
+            startPolling();
+        }
+    }
 
-	@Override
-	public void removeClipboardListener(final IClipboardListenerSpi listener) {
-		final int lastSize = getSize();
-		super.removeClipboardListener(listener);
-		if (lastSize > 0 && getSize() == 1) {
-			stopPolling();
-		}
-	}
+    @Override
+    public void removeClipboardListener(final IClipboardListenerSpi listener) {
+        final int lastSize = getSize();
+        super.removeClipboardListener(listener);
+        if (lastSize > 0 && getSize() == 1) {
+            stopPolling();
+        }
+    }
 
-	private synchronized void startPolling() {
-		if (scheduledExecutor != null && scheduledFuture == null) {
-			scheduledFuture = scheduledExecutor.scheduleAtFixedRate(pollingExecutor, delay, delay, TimeUnit.MILLISECONDS);
-		}
-	}
+    private synchronized void startPolling() {
+        if (scheduledExecutor != null && scheduledFuture == null) {
+            scheduledFuture = scheduledExecutor.scheduleAtFixedRate(pollingExecutor, delay, delay, TimeUnit.MILLISECONDS);
+        }
+    }
 
-	private synchronized void stopPolling() {
-		if (scheduledFuture != null) {
-			scheduledFuture.cancel(false);
-			scheduledFuture = null;
-		}
-	}
+    private synchronized void stopPolling() {
+        if (scheduledFuture != null) {
+            scheduledFuture.cancel(false);
+            scheduledFuture = null;
+        }
+    }
 
-	protected void dispose() {
-		stopPolling();
-	}
+    protected void dispose() {
+        stopPolling();
+    }
 
-	private final class PollingExecutor implements Runnable {
-		@Override
-		public void run() {
-			try {
-				checkContentChanged();
-			}
-			catch (final Exception e) {
-				//CHECKSTYLE:OFF
-				//TODO Use uncaught exception handler
-				e.printStackTrace();
-				//CHECKSTYLE:ON
-			}
-		}
-	}
+    private final class PollingExecutor implements Runnable {
+        @Override
+        public void run() {
+            try {
+                checkContentChanged();
+            }
+            catch (final Exception e) {
+                //CHECKSTYLE:OFF
+                //TODO Use uncaught exception handler
+                e.printStackTrace();
+                //CHECKSTYLE:ON
+            }
+        }
+    }
 }

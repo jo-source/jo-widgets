@@ -32,11 +32,11 @@ import org.jowidgets.common.widgets.builder.ITextAreaSetupBuilderCommon;
 
 public class TextAreaDefaultsCommon implements IDefaultInitializer<ITextAreaSetupBuilderCommon<?>> {
 
-	@Override
-	public void initialize(final ITextAreaSetupBuilderCommon<?> builder) {
-		builder.setAlwaysShowBars(false);
-		builder.setLineWrap(true);
-		builder.setBorder(true);
-	}
+    @Override
+    public void initialize(final ITextAreaSetupBuilderCommon<?> builder) {
+        builder.setAlwaysShowBars(false);
+        builder.setLineWrap(true);
+        builder.setBorder(true);
+    }
 
 }

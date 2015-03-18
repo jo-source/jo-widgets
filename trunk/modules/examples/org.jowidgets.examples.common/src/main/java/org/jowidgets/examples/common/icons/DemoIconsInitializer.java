@@ -37,19 +37,19 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
 public final class DemoIconsInitializer {
 
-	private DemoIconsInitializer() {}
+    private DemoIconsInitializer() {}
 
-	public static void initialize() {
-		Toolkit.getImageRegistry().registerImageConstant(IconsSmall.OK, SilkIcons.TICK);
+    public static void initialize() {
+        Toolkit.getImageRegistry().registerImageConstant(IconsSmall.OK, SilkIcons.TICK);
 
-		Toolkit.getBluePrintFactory().addDefaultsInitializer(
-				ITreeBluePrint.class,
-				new IDefaultInitializer<ITreeSetupBuilder<?>>() {
-					@Override
-					public void initialize(final ITreeSetupBuilder<?> setupBuilder) {
-						setupBuilder.setDefaultIcons();
-					}
-				});
+        Toolkit.getBluePrintFactory().addDefaultsInitializer(
+                ITreeBluePrint.class,
+                new IDefaultInitializer<ITreeSetupBuilder<?>>() {
+                    @Override
+                    public void initialize(final ITreeSetupBuilder<?> setupBuilder) {
+                        setupBuilder.setDefaultIcons();
+                    }
+                });
 
-	}
+    }
 }

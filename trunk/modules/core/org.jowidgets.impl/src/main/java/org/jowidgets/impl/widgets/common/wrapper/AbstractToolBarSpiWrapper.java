@@ -33,18 +33,18 @@ import org.jowidgets.spi.widgets.IToolBarSpi;
 
 public abstract class AbstractToolBarSpiWrapper extends AbstractControlSpiWrapper implements IToolBarCommon {
 
-	public AbstractToolBarSpiWrapper(final IToolBarSpi component) {
-		super(component);
-	}
+    public AbstractToolBarSpiWrapper(final IToolBarSpi component) {
+        super(component);
+    }
 
-	@Override
-	public IToolBarSpi getWidget() {
-		return (IToolBarSpi) super.getWidget();
-	}
+    @Override
+    public IToolBarSpi getWidget() {
+        return (IToolBarSpi) super.getWidget();
+    }
 
-	@Override
-	public void pack() {
-		getWidget().pack();
-	}
+    @Override
+    public void pack() {
+        getWidget().pack();
+    }
 
 }

@@ -48,139 +48,139 @@ import org.jowidgets.spi.widgets.ICanvasSpi;
 
 public class CanvasImpl extends SwingComposite implements ICanvasSpi {
 
-	public CanvasImpl(final IGenericWidgetFactory factory, final ICanvasSetupCommon setup) {
-		super(factory, new CanvasPanel());
-		getUiReference().setBackground(null);
-	}
+    public CanvasImpl(final IGenericWidgetFactory factory, final ICanvasSetupCommon setup) {
+        super(factory, new CanvasPanel());
+        getUiReference().setBackground(null);
+    }
 
-	@Override
-	public CanvasPanel getUiReference() {
-		return (CanvasPanel) super.getUiReference();
-	}
+    @Override
+    public CanvasPanel getUiReference() {
+        return (CanvasPanel) super.getUiReference();
+    }
 
-	@Override
-	public void addPaintListener(final IPaintListenerSpi listener) {
-		getUiReference().addPaintListener(listener);
-	}
+    @Override
+    public void addPaintListener(final IPaintListenerSpi listener) {
+        getUiReference().addPaintListener(listener);
+    }
 
-	@Override
-	public void removePaintListener(final IPaintListenerSpi listener) {
-		getUiReference().removePaintListener(listener);
-	}
+    @Override
+    public void removePaintListener(final IPaintListenerSpi listener) {
+        getUiReference().removePaintListener(listener);
+    }
 
-	@Override
-	public void scroll(
-		final int sourceX,
-		final int sourceY,
-		final int sourceWidth,
-		final int sourceHeight,
-		final int destinationX,
-		final int destinationY) {
+    @Override
+    public void scroll(
+        final int sourceX,
+        final int sourceY,
+        final int sourceWidth,
+        final int sourceHeight,
+        final int destinationX,
+        final int destinationY) {
 
-		final Graphics graphics = getUiReference().getGraphics();
+        final Graphics graphics = getUiReference().getGraphics();
 
-		final int dx = destinationX - sourceX;
-		final int dy = destinationY - sourceY;
+        final int dx = destinationX - sourceX;
+        final int dy = destinationY - sourceY;
 
-		final int dirtyX;
-		final int dirtyWidth;
-		final int dirtyY;
-		final int dirtyHeight;
-		if (dx != 0 && dy != 0) {
-			dirtyX = sourceX;
-			dirtyWidth = sourceWidth;
-			dirtyY = sourceY;
-			dirtyHeight = sourceHeight;
-		}
-		else if (dx < 0 && dy == 0) {
-			dirtyX = sourceX + sourceWidth + dx;
-			dirtyWidth = -dx;
-			dirtyY = sourceY;
-			dirtyHeight = sourceHeight;
-		}
-		else if (dx > 0 && dy == 0) {
-			dirtyX = sourceX;
-			dirtyWidth = dx;
-			dirtyY = sourceY;
-			dirtyHeight = sourceHeight;
-		}
-		else if (dy < 0 && dx == 0) {
-			dirtyX = sourceX;
-			dirtyWidth = sourceWidth;
-			dirtyY = sourceY + sourceHeight + dx;
-			dirtyHeight = -dy;
-		}
-		else if (dy > 0 && dx == 0) {
-			dirtyX = sourceX;
-			dirtyWidth = sourceWidth;
-			dirtyY = sourceY;
-			dirtyHeight = dy;
-		}
-		else {//no scroll, deltas all 0
-			return;
-		}
+        final int dirtyX;
+        final int dirtyWidth;
+        final int dirtyY;
+        final int dirtyHeight;
+        if (dx != 0 && dy != 0) {
+            dirtyX = sourceX;
+            dirtyWidth = sourceWidth;
+            dirtyY = sourceY;
+            dirtyHeight = sourceHeight;
+        }
+        else if (dx < 0 && dy == 0) {
+            dirtyX = sourceX + sourceWidth + dx;
+            dirtyWidth = -dx;
+            dirtyY = sourceY;
+            dirtyHeight = sourceHeight;
+        }
+        else if (dx > 0 && dy == 0) {
+            dirtyX = sourceX;
+            dirtyWidth = dx;
+            dirtyY = sourceY;
+            dirtyHeight = sourceHeight;
+        }
+        else if (dy < 0 && dx == 0) {
+            dirtyX = sourceX;
+            dirtyWidth = sourceWidth;
+            dirtyY = sourceY + sourceHeight + dx;
+            dirtyHeight = -dy;
+        }
+        else if (dy > 0 && dx == 0) {
+            dirtyX = sourceX;
+            dirtyWidth = sourceWidth;
+            dirtyY = sourceY;
+            dirtyHeight = dy;
+        }
+        else {//no scroll, deltas all 0
+            return;
+        }
 
-		//copy the area to scroll
-		graphics.copyArea(sourceX, sourceY, sourceWidth, sourceHeight, dx, dy);
+        //copy the area to scroll
+        graphics.copyArea(sourceX, sourceY, sourceWidth, sourceHeight, dx, dy);
 
-		//redraw the dirty area
-		redraw(dirtyX, dirtyY, dirtyWidth, dirtyHeight);
-	}
+        //redraw the dirty area
+        redraw(dirtyX, dirtyY, dirtyWidth, dirtyHeight);
+    }
 
-	@Override
-	public void redraw(final int x, final int y, final int width, final int height) {
-		getUiReference().repaint(x, y, width, height);
-	}
+    @Override
+    public void redraw(final int x, final int y, final int width, final int height) {
+        getUiReference().repaint(x, y, width, height);
+    }
 
-	@Override
-	public void redraw(final boolean sync) {
-		super.redraw();
-		if (sync) {
-			Toolkit.getDefaultToolkit().sync();
-		}
-	}
+    @Override
+    public void redraw(final boolean sync) {
+        super.redraw();
+        if (sync) {
+            Toolkit.getDefaultToolkit().sync();
+        }
+    }
 
-	@Override
-	public void redraw(final int x, final int y, final int width, final int height, final boolean sync) {
-		redraw(x, y, width, height);
-		if (sync) {
-			Toolkit.getDefaultToolkit().sync();
-		}
-	}
+    @Override
+    public void redraw(final int x, final int y, final int width, final int height, final boolean sync) {
+        redraw(x, y, width, height);
+        if (sync) {
+            Toolkit.getDefaultToolkit().sync();
+        }
+    }
 
-	private static final class CanvasPanel extends JPanel implements IPaintObservableSpi {
+    private static final class CanvasPanel extends JPanel implements IPaintObservableSpi {
 
-		private static final long serialVersionUID = -6875610604989809218L;
+        private static final long serialVersionUID = -6875610604989809218L;
 
-		private final PaintObservable paintObservable;
+        private final PaintObservable paintObservable;
 
-		private CanvasPanel() {
-			this.paintObservable = new PaintObservable();
-		}
+        private CanvasPanel() {
+            this.paintObservable = new PaintObservable();
+        }
 
-		@Override
-		public void paint(final Graphics g) {
-			final Rectangle bounds = RectangleConvert.convert(getBounds());
-			final IGraphicContextSpi graphicContext = new GraphicContextSpiImpl((Graphics2D) g, bounds);
-			final IPaintEventSpi paintEvent;
-			if (g.getClipBounds() != null) {
-				paintEvent = new PaintEventSpiImpl(graphicContext, RectangleConvert.convert(g.getClipBounds()));
-			}
-			else {
-				paintEvent = new PaintEventSpiImpl(graphicContext);
-			}
-			paintObservable.firePaint(paintEvent);
-		}
+        @Override
+        public void paint(final Graphics g) {
+            final Rectangle bounds = RectangleConvert.convert(getBounds());
+            final IGraphicContextSpi graphicContext = new GraphicContextSpiImpl((Graphics2D) g, bounds);
+            final IPaintEventSpi paintEvent;
+            if (g.getClipBounds() != null) {
+                paintEvent = new PaintEventSpiImpl(graphicContext, RectangleConvert.convert(g.getClipBounds()));
+            }
+            else {
+                paintEvent = new PaintEventSpiImpl(graphicContext);
+            }
+            paintObservable.firePaint(paintEvent);
+        }
 
-		@Override
-		public void addPaintListener(final IPaintListenerSpi listener) {
-			paintObservable.addPaintListener(listener);
-		}
+        @Override
+        public void addPaintListener(final IPaintListenerSpi listener) {
+            paintObservable.addPaintListener(listener);
+        }
 
-		@Override
-		public void removePaintListener(final IPaintListenerSpi listener) {
-			paintObservable.removePaintListener(listener);
-		}
+        @Override
+        public void removePaintListener(final IPaintListenerSpi listener) {
+            paintObservable.removePaintListener(listener);
+        }
 
-	}
+    }
 }

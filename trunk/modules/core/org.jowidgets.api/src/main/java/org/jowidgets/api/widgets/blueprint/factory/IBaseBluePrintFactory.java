@@ -38,24 +38,24 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface IBaseBluePrintFactory {
 
-	<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends ISetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
-		final Class<BLUE_PRINT_TYPE> bluePrintType);
+    <WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends ISetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
+        final Class<BLUE_PRINT_TYPE> bluePrintType);
 
-	ISetupBuilderConvenienceRegistry getSetupBuilderConvenienceRegistry();
+    ISetupBuilderConvenienceRegistry getSetupBuilderConvenienceRegistry();
 
-	@SuppressWarnings("rawtypes")
-	void setSetupBuilderConvenience(
-		Class<? extends ISetupBuilder> setupBuilder,
-		ISetupBuilderConvenience<?> setupBuilderConvenience);
+    @SuppressWarnings("rawtypes")
+    void setSetupBuilderConvenience(
+        Class<? extends ISetupBuilder> setupBuilder,
+        ISetupBuilderConvenience<?> setupBuilderConvenience);
 
-	IDefaultsInitializerRegistry getDefaultsInitializerRegistry();
+    IDefaultsInitializerRegistry getDefaultsInitializerRegistry();
 
-	@SuppressWarnings("rawtypes")
-	void addDefaultsInitializer(Class<? extends ISetupBuilder> setupBuilder, IDefaultInitializer<?> defaultInitializer);
+    @SuppressWarnings("rawtypes")
+    void addDefaultsInitializer(Class<? extends ISetupBuilder> setupBuilder, IDefaultInitializer<?> defaultInitializer);
 
-	@SuppressWarnings("rawtypes")
-	void setDefaultsInitializer(Class<? extends ISetupBuilder> setupBuilder, IDefaultInitializer<?> defaultInitializer);
+    @SuppressWarnings("rawtypes")
+    void setDefaultsInitializer(Class<? extends ISetupBuilder> setupBuilder, IDefaultInitializer<?> defaultInitializer);
 
-	void setDefaultsInitializerRegistry(IDefaultsInitializerRegistry defaultInitializerRegistry);
+    void setDefaultsInitializerRegistry(IDefaultsInitializerRegistry defaultInitializerRegistry);
 
 }

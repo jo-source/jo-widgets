@@ -37,18 +37,18 @@ import org.jowidgets.util.Assert;
 
 public final class JoToSwingReference {
 
-	private JoToSwingReference() {}
+    private JoToSwingReference() {}
 
-	public static JPanel getUiReference(final IComposite composite) {
-		Assert.paramNotNull(composite, "composite");
-		return (JPanel) composite.getUiReference();
-	}
+    public static JPanel getUiReference(final IComposite composite) {
+        Assert.paramNotNull(composite, "composite");
+        return (JPanel) composite.getUiReference();
+    }
 
-	public static JFrame getUiReference(final IFrame frame) {
-		Assert.paramNotNull(frame, "frame");
-		return (JFrame) frame.getUiReference();
-	}
+    public static JFrame getUiReference(final IFrame frame) {
+        Assert.paramNotNull(frame, "frame");
+        return (JFrame) frame.getUiReference();
+    }
 
-	//TODO ANYBODY may feel free to add more convert methods
+    //TODO ANYBODY may feel free to add more convert methods
 
 }

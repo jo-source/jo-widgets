@@ -41,43 +41,43 @@ import org.jowidgets.util.NullCompatibleEquivalence;
 
 public class ComponentObservable implements IComponentObservable {
 
-	private final Set<IComponentListener> listeners;
+    private final Set<IComponentListener> listeners;
 
-	private Dimension lastSize;
-	private Position lastPosition;
+    private Dimension lastSize;
+    private Position lastPosition;
 
-	public ComponentObservable() {
-		this.listeners = new LinkedHashSet<IComponentListener>();
-	}
+    public ComponentObservable() {
+        this.listeners = new LinkedHashSet<IComponentListener>();
+    }
 
-	@Override
-	public final void addComponentListener(final IComponentListener componentListener) {
-		Assert.paramNotNull(componentListener, "componentListener");
-		listeners.add(componentListener);
-	}
+    @Override
+    public final void addComponentListener(final IComponentListener componentListener) {
+        Assert.paramNotNull(componentListener, "componentListener");
+        listeners.add(componentListener);
+    }
 
-	@Override
-	public final void removeComponentListener(final IComponentListener componentListener) {
-		Assert.paramNotNull(componentListener, "componentListener");
-		listeners.remove(componentListener);
-	}
+    @Override
+    public final void removeComponentListener(final IComponentListener componentListener) {
+        Assert.paramNotNull(componentListener, "componentListener");
+        listeners.remove(componentListener);
+    }
 
-	public final void fireSizeChanged(final Dimension size) {
-		if (!NullCompatibleEquivalence.equals(size, lastSize)) {
-			lastSize = size;
-			for (final IComponentListener listener : new LinkedList<IComponentListener>(listeners)) {
-				listener.sizeChanged();
-			}
-		}
-	}
+    public final void fireSizeChanged(final Dimension size) {
+        if (!NullCompatibleEquivalence.equals(size, lastSize)) {
+            lastSize = size;
+            for (final IComponentListener listener : new LinkedList<IComponentListener>(listeners)) {
+                listener.sizeChanged();
+            }
+        }
+    }
 
-	public final void firePositionChanged(final Position position) {
-		if (!NullCompatibleEquivalence.equals(position, lastPosition)) {
-			lastPosition = position;
-			for (final IComponentListener listener : new LinkedList<IComponentListener>(listeners)) {
-				listener.positionChanged();
-			}
-		}
-	}
+    public final void firePositionChanged(final Position position) {
+        if (!NullCompatibleEquivalence.equals(position, lastPosition)) {
+            lastPosition = position;
+            for (final IComponentListener listener : new LinkedList<IComponentListener>(listeners)) {
+                listener.positionChanged();
+            }
+        }
+    }
 
 }

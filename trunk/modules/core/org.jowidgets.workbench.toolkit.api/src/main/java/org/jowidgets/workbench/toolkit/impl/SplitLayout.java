@@ -36,53 +36,53 @@ import org.jowidgets.workbench.api.ISplitLayout;
 
 class SplitLayout implements ISplitLayout {
 
-	private final Orientation orientation;
-	private final double weight;
-	private final SplitResizePolicy resizePolicy;
-	private final ILayoutContainer firstLayoutContainer;
-	private final ILayoutContainer secondLayoutContainer;
+    private final Orientation orientation;
+    private final double weight;
+    private final SplitResizePolicy resizePolicy;
+    private final ILayoutContainer firstLayoutContainer;
+    private final ILayoutContainer secondLayoutContainer;
 
-	SplitLayout(
-		final Orientation orientation,
-		final double weight,
-		final SplitResizePolicy resizePolicy,
-		final ILayoutContainer firstLayoutContainer,
-		final ILayoutContainer secondLayoutContainer) {
+    SplitLayout(
+        final Orientation orientation,
+        final double weight,
+        final SplitResizePolicy resizePolicy,
+        final ILayoutContainer firstLayoutContainer,
+        final ILayoutContainer secondLayoutContainer) {
 
-		Assert.paramNotNull(orientation, "orientation");
-		Assert.paramNotNull(firstLayoutContainer, "firstLayoutContainer");
-		Assert.paramNotNull(secondLayoutContainer, "secondLayoutContainer");
+        Assert.paramNotNull(orientation, "orientation");
+        Assert.paramNotNull(firstLayoutContainer, "firstLayoutContainer");
+        Assert.paramNotNull(secondLayoutContainer, "secondLayoutContainer");
 
-		this.orientation = orientation;
-		this.weight = weight;
-		this.resizePolicy = resizePolicy;
-		this.firstLayoutContainer = firstLayoutContainer;
-		this.secondLayoutContainer = secondLayoutContainer;
-	}
+        this.orientation = orientation;
+        this.weight = weight;
+        this.resizePolicy = resizePolicy;
+        this.firstLayoutContainer = firstLayoutContainer;
+        this.secondLayoutContainer = secondLayoutContainer;
+    }
 
-	@Override
-	public Orientation getOrientation() {
-		return orientation;
-	}
+    @Override
+    public Orientation getOrientation() {
+        return orientation;
+    }
 
-	@Override
-	public double getWeight() {
-		return weight;
-	}
+    @Override
+    public double getWeight() {
+        return weight;
+    }
 
-	@Override
-	public SplitResizePolicy getResizePolicy() {
-		return resizePolicy;
-	}
+    @Override
+    public SplitResizePolicy getResizePolicy() {
+        return resizePolicy;
+    }
 
-	@Override
-	public ILayoutContainer getFirstContainer() {
-		return firstLayoutContainer;
-	}
+    @Override
+    public ILayoutContainer getFirstContainer() {
+        return firstLayoutContainer;
+    }
 
-	@Override
-	public ILayoutContainer getSecondContainer() {
-		return secondLayoutContainer;
-	}
+    @Override
+    public ILayoutContainer getSecondContainer() {
+        return secondLayoutContainer;
+    }
 
 }

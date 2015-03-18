@@ -34,60 +34,60 @@ import org.jowidgets.spi.widgets.setup.IComboBoxSelectionSetupSpi;
 
 public class ComboBoxSelectionImpl extends AbstractInputControl implements IComboBoxSelectionSpi {
 
-	public ComboBoxSelectionImpl(final IComboBoxSelectionSetupSpi setup) {
-		super(new UIDComboBox(setup.getElements()));
+    public ComboBoxSelectionImpl(final IComboBoxSelectionSetupSpi setup) {
+        super(new UIDComboBox(setup.getElements()));
 
-		getUiReference().addInputListener(new IInputListener() {
-			@Override
-			public void inputChanged() {
-				fireInputChanged(getUiReference().getText());
-			}
-		});
-	}
+        getUiReference().addInputListener(new IInputListener() {
+            @Override
+            public void inputChanged() {
+                fireInputChanged(getUiReference().getText());
+            }
+        });
+    }
 
-	@Override
-	public UIDComboBox getUiReference() {
-		return (UIDComboBox) super.getUiReference();
-	}
+    @Override
+    public UIDComboBox getUiReference() {
+        return (UIDComboBox) super.getUiReference();
+    }
 
-	@Override
-	public void setEditable(final boolean editable) {
-		getUiReference().setEnabled(editable);
-	}
+    @Override
+    public void setEditable(final boolean editable) {
+        getUiReference().setEnabled(editable);
+    }
 
-	@Override
-	public int getSelectedIndex() {
-		return getUiReference().getSelectedIndex();
-	}
+    @Override
+    public int getSelectedIndex() {
+        return getUiReference().getSelectedIndex();
+    }
 
-	@Override
-	public void setSelectedIndex(final int index) {
-		getUiReference().setSelectedIndex(index);
-	}
+    @Override
+    public void setSelectedIndex(final int index) {
+        getUiReference().setSelectedIndex(index);
+    }
 
-	@Override
-	public String[] getElements() {
-		return getUiReference().getElements();
-	}
+    @Override
+    public String[] getElements() {
+        return getUiReference().getElements();
+    }
 
-	@Override
-	public void setElements(final String[] elements) {
-		getUiReference().setElements(elements);
-	}
+    @Override
+    public void setElements(final String[] elements) {
+        getUiReference().setElements(elements);
+    }
 
-	@Override
-	public void select() {
-		getUiReference().select();
-	}
+    @Override
+    public void select() {
+        getUiReference().select();
+    }
 
-	@Override
-	public void setPopupVisible(final boolean visible) {
-		getUiReference().setPopupVisible(visible);
-	}
+    @Override
+    public void setPopupVisible(final boolean visible) {
+        getUiReference().setPopupVisible(visible);
+    }
 
-	@Override
-	public boolean isPopupVisible() {
-		return getUiReference().isPopopVisible();
-	}
+    @Override
+    public boolean isPopupVisible() {
+        return getUiReference().isPopopVisible();
+    }
 
 }

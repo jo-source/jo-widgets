@@ -36,21 +36,21 @@ import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 
 public interface ICollectionInputControlSetup<ELEMENT_TYPE> extends IInputComponentSetup<Collection<ELEMENT_TYPE>> {
 
-	@Mandatory
-	ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> getElementWidgetCreator();
+    @Mandatory
+    ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> getElementWidgetCreator();
 
-	@Mandatory
-	IButtonSetup getRemoveButton();
+    @Mandatory
+    IButtonSetup getRemoveButton();
 
-	@Mandatory
-	IButtonSetup getAddButton();
+    @Mandatory
+    IButtonSetup getAddButton();
 
-	Dimension getRemoveButtonSize();
+    Dimension getRemoveButtonSize();
 
-	Dimension getAddButtonSize();
+    Dimension getAddButtonSize();
 
-	IInputComponentValidationLabelSetup getValidationLabel();
+    IInputComponentValidationLabelSetup getValidationLabel();
 
-	Dimension getValidationLabelSize();
+    Dimension getValidationLabelSize();
 
 }

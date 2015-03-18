@@ -39,49 +39,49 @@ import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 
 public class TextLabelImpl extends SwtControl implements ITextLabelSpi {
 
-	public TextLabelImpl(final Object parentUiReference, final ITextLabelSetupSpi setup) {
+    public TextLabelImpl(final Object parentUiReference, final ITextLabelSetupSpi setup) {
 
-		super(new Label((Composite) parentUiReference, SWT.NONE));
+        super(new Label((Composite) parentUiReference, SWT.NONE));
 
-		setText(setup.getText());
-		setToolTipText(setup.getToolTipText());
+        setText(setup.getText());
+        setToolTipText(setup.getToolTipText());
 
-		setMarkup(setup.getMarkup());
+        setMarkup(setup.getMarkup());
 
-		getUiReference().setAlignment(AlignmentConvert.convert(setup.getAlignment()));
-	}
+        getUiReference().setAlignment(AlignmentConvert.convert(setup.getAlignment()));
+    }
 
-	@Override
-	public Label getUiReference() {
-		return (Label) super.getUiReference();
-	}
+    @Override
+    public Label getUiReference() {
+        return (Label) super.getUiReference();
+    }
 
-	@Override
-	public void setText(String text) {
-		final String oldText = getUiReference().getText();
-		if (text == null) {
-			text = "";
-		}
-		if (!text.equals(oldText)) {
-			getUiReference().setText(text);
-		}
-	}
+    @Override
+    public void setText(String text) {
+        final String oldText = getUiReference().getText();
+        if (text == null) {
+            text = "";
+        }
+        if (!text.equals(oldText)) {
+            getUiReference().setText(text);
+        }
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		final Label label = this.getUiReference();
-		final Font newFont = FontProvider.deriveFont(label.getFont(), markup);
-		label.setFont(newFont);
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        final Label label = this.getUiReference();
+        final Font newFont = FontProvider.deriveFont(label.getFont(), markup);
+        label.setFont(newFont);
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), size));
-	}
+    @Override
+    public void setFontSize(final int size) {
+        getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), size));
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), fontName));
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), fontName));
+    }
 
 }

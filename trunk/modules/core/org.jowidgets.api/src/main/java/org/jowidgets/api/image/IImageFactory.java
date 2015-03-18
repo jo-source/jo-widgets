@@ -36,65 +36,65 @@ import org.jowidgets.util.IFactory;
 
 public interface IImageFactory {
 
-	/**
-	 * Creates an image from an file.
-	 * 
-	 * The resulting image is also an image constant that will be registered at the image registry,
-	 * so it can be used as image constant, until the image will be disposed.
-	 * 
-	 * Remark: If the resulting image will be disposed, it will be unregistered from
-	 * the image registry
-	 * 
-	 * @param file The file that holds the image
-	 * 
-	 * @return The created image
-	 */
-	IImage createImage(File file);
+    /**
+     * Creates an image from an file.
+     * 
+     * The resulting image is also an image constant that will be registered at the image registry,
+     * so it can be used as image constant, until the image will be disposed.
+     * 
+     * Remark: If the resulting image will be disposed, it will be unregistered from
+     * the image registry
+     * 
+     * @param file The file that holds the image
+     * 
+     * @return The created image
+     */
+    IImage createImage(File file);
 
-	/**
-	 * Creates an image from an url.
-	 * 
-	 * The resulting image is also an image constant that will be registered at the image registry,
-	 * so it can be used as image constant, until the image will be disposed.
-	 * 
-	 * Remark: If the resulting image will be disposed, it will be unregistered from
-	 * the image registry
-	 * 
-	 * @param url The url to create the image from
-	 * 
-	 * @return The created image
-	 */
-	IImage createImage(URL url);
+    /**
+     * Creates an image from an url.
+     * 
+     * The resulting image is also an image constant that will be registered at the image registry,
+     * so it can be used as image constant, until the image will be disposed.
+     * 
+     * Remark: If the resulting image will be disposed, it will be unregistered from
+     * the image registry
+     * 
+     * @param url The url to create the image from
+     * 
+     * @return The created image
+     */
+    IImage createImage(URL url);
 
-	/**
-	 * Creates an image from an input stream factory.
-	 * 
-	 * The resulting image is also an image constant that will be registered at the image registry,
-	 * so it can be used as image constant, until the image will be disposed.
-	 * 
-	 * Remark: If the resulting image will be disposed, it will be unregistered from
-	 * the image registry
-	 * 
-	 * @param inputStream A factory for an input stream
-	 * 
-	 * @return The created image
-	 */
-	IImage createImage(IFactory<InputStream> inputStream);
+    /**
+     * Creates an image from an input stream factory.
+     * 
+     * The resulting image is also an image constant that will be registered at the image registry,
+     * so it can be used as image constant, until the image will be disposed.
+     * 
+     * Remark: If the resulting image will be disposed, it will be unregistered from
+     * the image registry
+     * 
+     * @param inputStream A factory for an input stream
+     * 
+     * @return The created image
+     */
+    IImage createImage(IFactory<InputStream> inputStream);
 
-	/**
-	 * Creates an buffered image with defined with and height.
-	 * 
-	 * The resulting image is also an image constant that will be registered at the image registry,
-	 * so it can be used as image constant, until the image will be disposed.
-	 * 
-	 * Remark: If the resulting image will be disposed, it will be unregistered from
-	 * the image registry
-	 * 
-	 * @param width The width of the image
-	 * @param height The height of the image
-	 * 
-	 * @return The created image
-	 */
-	IBufferedImage createBufferedImage(int width, int height);
+    /**
+     * Creates an buffered image with defined with and height.
+     * 
+     * The resulting image is also an image constant that will be registered at the image registry,
+     * so it can be used as image constant, until the image will be disposed.
+     * 
+     * Remark: If the resulting image will be disposed, it will be unregistered from
+     * the image registry
+     * 
+     * @param width The width of the image
+     * @param height The height of the image
+     * 
+     * @return The created image
+     */
+    IBufferedImage createBufferedImage(int width, int height);
 
 }

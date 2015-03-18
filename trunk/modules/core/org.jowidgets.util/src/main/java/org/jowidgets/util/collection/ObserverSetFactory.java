@@ -33,70 +33,70 @@ import org.jowidgets.util.collection.IObserverSetFactory.Strategy;
 
 public final class ObserverSetFactory {
 
-	private static final IObserverSetFactory INSTANCE = createInstance();
+    private static final IObserverSetFactory INSTANCE = createInstance();
 
-	private ObserverSetFactory() {}
+    private ObserverSetFactory() {}
 
-	private static IObserverSetFactory createInstance() {
-		return new DefaultObserverSetFactory();
-	}
+    private static IObserverSetFactory createInstance() {
+        return new DefaultObserverSetFactory();
+    }
 
-	public static IObserverSetFactory getInstance() {
-		return INSTANCE;
-	}
+    public static IObserverSetFactory getInstance() {
+        return INSTANCE;
+    }
 
-	public static Strategy getDefaultStrategy() {
-		return getInstance().getDefaultStrategy();
-	}
+    public static Strategy getDefaultStrategy() {
+        return getInstance().getDefaultStrategy();
+    }
 
-	public static <OBSERVER_TYPE> IObserverSet<OBSERVER_TYPE> emptySet() {
-		return getInstance().emptySet();
-	}
+    public static <OBSERVER_TYPE> IObserverSet<OBSERVER_TYPE> emptySet() {
+        return getInstance().emptySet();
+    }
 
-	public static <OBSERVER_TYPE> IObserverSet<OBSERVER_TYPE> create() {
-		return getInstance().create();
-	}
+    public static <OBSERVER_TYPE> IObserverSet<OBSERVER_TYPE> create() {
+        return getInstance().create();
+    }
 
-	public static <OBSERVER_TYPE> IObserverSet<OBSERVER_TYPE> create(final Strategy strategy) {
-		Assert.paramNotNull(strategy, "strategy");
-		return getInstance().create(strategy);
-	}
+    public static <OBSERVER_TYPE> IObserverSet<OBSERVER_TYPE> create(final Strategy strategy) {
+        Assert.paramNotNull(strategy, "strategy");
+        return getInstance().create(strategy);
+    }
 
-	private static final class DefaultObserverSetFactory implements IObserverSetFactory {
+    private static final class DefaultObserverSetFactory implements IObserverSetFactory {
 
-		private static final Strategy DEFAULT_STRATEGY = Strategy.HIGH_PERFORMANCE;
+        private static final Strategy DEFAULT_STRATEGY = Strategy.HIGH_PERFORMANCE;
 
-		private static final IObserverSet<Object> EMPTY_SET = new UnmodifableEmptyObserverSet<Object>();
+        private static final IObserverSet<Object> EMPTY_SET = new UnmodifableEmptyObserverSet<Object>();
 
-		@Override
-		public Strategy getDefaultStrategy() {
-			return DEFAULT_STRATEGY;
-		}
+        @Override
+        public Strategy getDefaultStrategy() {
+            return DEFAULT_STRATEGY;
+        }
 
-		@SuppressWarnings("unchecked")
-		@Override
-		public <OBSERVER_TYPE> IObserverSet<OBSERVER_TYPE> emptySet() {
-			return (IObserverSet<OBSERVER_TYPE>) EMPTY_SET;
-		}
+        @SuppressWarnings("unchecked")
+        @Override
+        public <OBSERVER_TYPE> IObserverSet<OBSERVER_TYPE> emptySet() {
+            return (IObserverSet<OBSERVER_TYPE>) EMPTY_SET;
+        }
 
-		@Override
-		public <OBSERVER_TYPE> IObserverSet<OBSERVER_TYPE> create() {
-			return create(DEFAULT_STRATEGY);
-		}
+        @Override
+        public <OBSERVER_TYPE> IObserverSet<OBSERVER_TYPE> create() {
+            return create(DEFAULT_STRATEGY);
+        }
 
-		@Override
-		public <OBSERVER_TYPE> IObserverSet<OBSERVER_TYPE> create(final Strategy strategy) {
-			Assert.paramNotNull(strategy, "strategy");
-			if (Strategy.HIGH_PERFORMANCE.equals(strategy)) {
-				return new ObserverSetPerformanceStrategyImpl<OBSERVER_TYPE>();
-			}
-			else if (Strategy.LOW_MEMORY.equals(strategy)) {
-				return new ObserverSetMemoryStrategyImpl<OBSERVER_TYPE>();
-			}
-			else {
-				throw new IllegalArgumentException("Stragegy '" + strategy + "' is not known");
-			}
-		}
+        @Override
+        public <OBSERVER_TYPE> IObserverSet<OBSERVER_TYPE> create(final Strategy strategy) {
+            Assert.paramNotNull(strategy, "strategy");
+            if (Strategy.HIGH_PERFORMANCE.equals(strategy)) {
+                return new ObserverSetPerformanceStrategyImpl<OBSERVER_TYPE>();
+            }
+            else if (Strategy.LOW_MEMORY.equals(strategy)) {
+                return new ObserverSetMemoryStrategyImpl<OBSERVER_TYPE>();
+            }
+            else {
+                throw new IllegalArgumentException("Stragegy '" + strategy + "' is not known");
+            }
+        }
 
-	}
+    }
 }

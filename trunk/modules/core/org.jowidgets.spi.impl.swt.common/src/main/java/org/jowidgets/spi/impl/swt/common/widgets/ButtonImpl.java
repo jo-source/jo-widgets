@@ -45,91 +45,91 @@ import org.jowidgets.test.spi.widgets.IButtonUiSpi;
 
 public class ButtonImpl extends AbstractActionControl implements IButtonUiSpi {
 
-	public ButtonImpl(final Object parentUiReference, final IButtonSetupSpi setup) {
-		super(new Button((Composite) parentUiReference, SWT.NONE));
+    public ButtonImpl(final Object parentUiReference, final IButtonSetupSpi setup) {
+        super(new Button((Composite) parentUiReference, SWT.NONE));
 
-		setText(setup.getText());
-		setToolTipText(setup.getToolTipText());
-		setIcon(setup.getIcon());
+        setText(setup.getText());
+        setToolTipText(setup.getToolTipText());
+        setIcon(setup.getIcon());
 
-		setMarkup(setup.getMarkup());
+        setMarkup(setup.getMarkup());
 
-		getUiReference().setAlignment(AlignmentConvert.convert(setup.getAlignment()));
+        getUiReference().setAlignment(AlignmentConvert.convert(setup.getAlignment()));
 
-		getUiReference().addListener(SWT.Selection, new Listener() {
-			@Override
-			public void handleEvent(final Event event) {
-				fireActionPerformed();
-			}
-		});
-	}
+        getUiReference().addListener(SWT.Selection, new Listener() {
+            @Override
+            public void handleEvent(final Event event) {
+                fireActionPerformed();
+            }
+        });
+    }
 
-	@Override
-	public Button getUiReference() {
-		return (Button) super.getUiReference();
-	}
+    @Override
+    public Button getUiReference() {
+        return (Button) super.getUiReference();
+    }
 
-	@Override
-	public void setText(final String text) {
-		if (text != null) {
-			getUiReference().setText(text);
-		}
-		else {
-			setText("");
-		}
-	}
+    @Override
+    public void setText(final String text) {
+        if (text != null) {
+            getUiReference().setText(text);
+        }
+        else {
+            setText("");
+        }
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		getUiReference().setImage(SwtImageRegistry.getInstance().getImage(icon));
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        getUiReference().setImage(SwtImageRegistry.getInstance().getImage(icon));
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		final Button button = this.getUiReference();
-		final Font newFont = FontProvider.deriveFont(button.getFont(), markup);
-		button.setFont(newFont);
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        final Button button = this.getUiReference();
+        final Font newFont = FontProvider.deriveFont(button.getFont(), markup);
+        button.setFont(newFont);
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), size));
-	}
+    @Override
+    public void setFontSize(final int size) {
+        getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), size));
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), fontName));
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), fontName));
+    }
 
-	@Override
-	public boolean isTestable() {
-		return true;
-	}
+    @Override
+    public boolean isTestable() {
+        return true;
+    }
 
-	@Override
-	public void push() {
-		final Event e = new Event();
-		final boolean focus = getUiReference().forceFocus();
-		if (focus) {
-			e.type = SWT.KeyDown;
-			e.keyCode = SWT.CR;
-			e.widget = getUiReference();
-			Display.getCurrent().post(e);
-		}
-		else {
-			// TODO LG exception handling
-			e.type = SWT.MouseMove;
-			final Point widgetPos = getUiReference().toDisplay(getUiReference().getLocation().x, getUiReference().getLocation().y);
-			e.x = widgetPos.x;
-			e.y = widgetPos.y;
-			Display.getCurrent().post(e);
+    @Override
+    public void push() {
+        final Event e = new Event();
+        final boolean focus = getUiReference().forceFocus();
+        if (focus) {
+            e.type = SWT.KeyDown;
+            e.keyCode = SWT.CR;
+            e.widget = getUiReference();
+            Display.getCurrent().post(e);
+        }
+        else {
+            // TODO LG exception handling
+            e.type = SWT.MouseMove;
+            final Point widgetPos = getUiReference().toDisplay(getUiReference().getLocation().x, getUiReference().getLocation().y);
+            e.x = widgetPos.x;
+            e.y = widgetPos.y;
+            Display.getCurrent().post(e);
 
-			e.type = SWT.MouseDown;
-			e.button = 1;
-			Display.getCurrent().post(e);
+            e.type = SWT.MouseDown;
+            e.button = 1;
+            Display.getCurrent().post(e);
 
-			e.type = SWT.MouseUp;
-			Display.getCurrent().post(e);
-		}
-	}
+            e.type = SWT.MouseUp;
+            Display.getCurrent().post(e);
+        }
+    }
 }

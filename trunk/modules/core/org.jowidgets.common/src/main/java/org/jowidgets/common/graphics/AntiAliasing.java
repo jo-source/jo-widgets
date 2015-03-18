@@ -30,19 +30,19 @@ package org.jowidgets.common.graphics;
 
 public enum AntiAliasing {
 
-	/**
-	 * No antialiasing
-	 */
-	OFF,
+    /**
+     * No antialiasing
+     */
+    OFF,
 
-	/**
-	 * Antialising is used
-	 */
-	ON,
+    /**
+     * Antialising is used
+     */
+    ON,
 
-	/**
-	 * The default of the underlying ui framework
-	 */
-	DEFAULT;
+    /**
+     * The default of the underlying ui framework
+     */
+    DEFAULT;
 
 }

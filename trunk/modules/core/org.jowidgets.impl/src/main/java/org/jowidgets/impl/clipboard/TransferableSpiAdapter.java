@@ -43,33 +43,33 @@ import org.jowidgets.util.Assert;
 
 final class TransferableSpiAdapter implements ITransferableSpi {
 
-	private final Collection<TransferTypeSpi> supportedTypes;
-	private final Map<TransferTypeSpi, Object> dataMap;
+    private final Collection<TransferTypeSpi> supportedTypes;
+    private final Map<TransferTypeSpi, Object> dataMap;
 
-	TransferableSpiAdapter(final ITransferable contents) {
-		Assert.paramNotNull(contents, "contents");
+    TransferableSpiAdapter(final ITransferable contents) {
+        Assert.paramNotNull(contents, "contents");
 
-		final Set<TransferTypeSpi> typesSet = new LinkedHashSet<TransferTypeSpi>();
-		this.dataMap = new HashMap<TransferTypeSpi, Object>();
+        final Set<TransferTypeSpi> typesSet = new LinkedHashSet<TransferTypeSpi>();
+        this.dataMap = new HashMap<TransferTypeSpi, Object>();
 
-		for (final TransferType<?> transferType : contents.getSupportedTypes()) {
-			final TransferTypeSpi transferTypeSpi = new TransferTypeSpi(transferType.getJavaType());
-			typesSet.add(transferTypeSpi);
-			dataMap.put(transferTypeSpi, contents.getData(transferType));
-		}
+        for (final TransferType<?> transferType : contents.getSupportedTypes()) {
+            final TransferTypeSpi transferTypeSpi = new TransferTypeSpi(transferType.getJavaType());
+            typesSet.add(transferTypeSpi);
+            dataMap.put(transferTypeSpi, contents.getData(transferType));
+        }
 
-		this.supportedTypes = Collections.unmodifiableSet(typesSet);
-	}
+        this.supportedTypes = Collections.unmodifiableSet(typesSet);
+    }
 
-	@Override
-	public Collection<TransferTypeSpi> getSupportedTypes() {
-		return supportedTypes;
-	}
+    @Override
+    public Collection<TransferTypeSpi> getSupportedTypes() {
+        return supportedTypes;
+    }
 
-	@Override
-	public Object getData(final TransferTypeSpi type) {
-		Assert.paramNotNull(type, "type");
-		return dataMap.get(type);
-	}
+    @Override
+    public Object getData(final TransferTypeSpi type) {
+        Assert.paramNotNull(type, "type");
+        return dataMap.get(type);
+    }
 
 }

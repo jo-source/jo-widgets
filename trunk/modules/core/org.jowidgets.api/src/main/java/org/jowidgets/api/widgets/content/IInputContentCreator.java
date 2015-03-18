@@ -31,6 +31,6 @@ import org.jowidgets.api.widgets.access.IInputValueAccessor;
 
 public interface IInputContentCreator<INPUT_TYPE> extends IInputValueAccessor<INPUT_TYPE> {
 
-	void createContent(IInputContentContainer contentContainer);
+    void createContent(IInputContentContainer contentContainer);
 
 }

@@ -32,24 +32,24 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.SelectionPolicy;
 
 public interface ITreeSetupBuilderCommon<INSTANCE_TYPE extends ITreeSetupBuilderCommon<?>> extends
-		IComponentSetupBuilderCommon<INSTANCE_TYPE> {
+        IComponentSetupBuilderCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setChecked(boolean checked);
+    INSTANCE_TYPE setChecked(boolean checked);
 
-	INSTANCE_TYPE setSelectionPolicy(SelectionPolicy selectionPolicy);
+    INSTANCE_TYPE setSelectionPolicy(SelectionPolicy selectionPolicy);
 
-	INSTANCE_TYPE setContentScrolled(boolean contentScrolled);
+    INSTANCE_TYPE setContentScrolled(boolean contentScrolled);
 
-	INSTANCE_TYPE setSelectedForegroundColor(final IColorConstant colorValue);
+    INSTANCE_TYPE setSelectedForegroundColor(final IColorConstant colorValue);
 
-	INSTANCE_TYPE setSelectedBackgroundColor(final IColorConstant colorValue);
+    INSTANCE_TYPE setSelectedBackgroundColor(final IColorConstant colorValue);
 
-	INSTANCE_TYPE setSelectedBorderColor(final IColorConstant colorValue);
+    INSTANCE_TYPE setSelectedBorderColor(final IColorConstant colorValue);
 
-	INSTANCE_TYPE setDisabledSelectedForegroundColor(final IColorConstant colorValue);
+    INSTANCE_TYPE setDisabledSelectedForegroundColor(final IColorConstant colorValue);
 
-	INSTANCE_TYPE setDisabledSelectedBackgroundColor(final IColorConstant colorValue);
+    INSTANCE_TYPE setDisabledSelectedBackgroundColor(final IColorConstant colorValue);
 
-	INSTANCE_TYPE setDisabledSelectedBorderColor(final IColorConstant colorValue);
+    INSTANCE_TYPE setDisabledSelectedBorderColor(final IColorConstant colorValue);
 
 }

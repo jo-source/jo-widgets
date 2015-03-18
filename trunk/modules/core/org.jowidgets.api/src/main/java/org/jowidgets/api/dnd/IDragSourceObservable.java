@@ -30,18 +30,18 @@ package org.jowidgets.api.dnd;
 
 public interface IDragSourceObservable {
 
-	/**
-	 * Adds a drag source listener
-	 * 
-	 * @param listener The listener to add
-	 */
-	void addDragSourceListener(IDragSourceListener listener);
+    /**
+     * Adds a drag source listener
+     * 
+     * @param listener The listener to add
+     */
+    void addDragSourceListener(IDragSourceListener listener);
 
-	/**
-	 * Removes a drag source listener
-	 * 
-	 * @param listener The listener to remove
-	 */
-	void removeDragSourceListener(IDragSourceListener listener);
+    /**
+     * Removes a drag source listener
+     * 
+     * @param listener The listener to remove
+     */
+    void removeDragSourceListener(IDragSourceListener listener);
 
 }

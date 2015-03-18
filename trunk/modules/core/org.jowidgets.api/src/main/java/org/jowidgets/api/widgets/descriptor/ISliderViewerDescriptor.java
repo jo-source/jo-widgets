@@ -32,7 +32,7 @@ import org.jowidgets.api.widgets.descriptor.setup.ISliderViewerSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface ISliderViewerDescriptor<VALUE_TYPE> extends
-		ISliderViewerSetup<VALUE_TYPE>,
-		IWidgetDescriptor<ISliderViewer<VALUE_TYPE>> {
+        ISliderViewerSetup<VALUE_TYPE>,
+        IWidgetDescriptor<ISliderViewer<VALUE_TYPE>> {
 
 }

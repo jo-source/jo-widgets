@@ -32,21 +32,21 @@ import org.jowidgets.common.widgets.controller.ITableColumnResizeEvent;
 
 public class TableColumnResizeEvent extends TableColumnEvent implements ITableColumnResizeEvent {
 
-	private final int width;
+    private final int width;
 
-	public TableColumnResizeEvent(final int columnIndex, final int width) {
-		super(columnIndex);
-		this.width = width;
-	}
+    public TableColumnResizeEvent(final int columnIndex, final int width) {
+        super(columnIndex);
+        this.width = width;
+    }
 
-	@Override
-	public int getWidth() {
-		return width;
-	}
+    @Override
+    public int getWidth() {
+        return width;
+    }
 
-	@Override
-	public String toString() {
-		return "TableColumnResizeEvent [width=" + width + ", columnIndex=" + getColumnIndex() + "]";
-	}
+    @Override
+    public String toString() {
+        return "TableColumnResizeEvent [width=" + width + ", columnIndex=" + getColumnIndex() + "]";
+    }
 
 }

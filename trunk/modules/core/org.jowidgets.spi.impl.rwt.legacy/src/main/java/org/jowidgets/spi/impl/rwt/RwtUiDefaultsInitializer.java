@@ -36,24 +36,24 @@ import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 
 public final class RwtUiDefaultsInitializer {
 
-	private RwtUiDefaultsInitializer() {}
+    private RwtUiDefaultsInitializer() {}
 
-	public static void initialize() {
-		SwtOptions.setTextFieldTruncateWorkaround(false);
-		SwtOptions.setComboTruncateWorkaround(false);
-		SwtOptions.setInputVerification(false);
-		SwtOptions.setNativeTextAreaScrollBars(true);
+    public static void initialize() {
+        SwtOptions.setTextFieldTruncateWorkaround(false);
+        SwtOptions.setComboTruncateWorkaround(false);
+        SwtOptions.setInputVerification(false);
+        SwtOptions.setNativeTextAreaScrollBars(true);
 
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		//ComboBox auto-completion don't work correctly for rwt
-		bpf.addDefaultsInitializer(
-				IComboBoxSelectionSetupBuilder.class,
-				new IDefaultInitializer<IComboBoxSelectionSetupBuilder<?, ?>>() {
-					@Override
-					public void initialize(final IComboBoxSelectionSetupBuilder<?, ?> builder) {
-						builder.setAutoCompletion(false);
-					}
-				});
-	}
+        //ComboBox auto-completion don't work correctly for rwt
+        bpf.addDefaultsInitializer(
+                IComboBoxSelectionSetupBuilder.class,
+                new IDefaultInitializer<IComboBoxSelectionSetupBuilder<?, ?>>() {
+                    @Override
+                    public void initialize(final IComboBoxSelectionSetupBuilder<?, ?> builder) {
+                        builder.setAutoCompletion(false);
+                    }
+                });
+    }
 }

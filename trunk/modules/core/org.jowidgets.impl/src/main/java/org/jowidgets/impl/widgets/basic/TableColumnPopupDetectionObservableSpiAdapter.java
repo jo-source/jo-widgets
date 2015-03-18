@@ -40,31 +40,31 @@ import org.jowidgets.util.Assert;
 
 class TableColumnPopupDetectionObservableSpiAdapter implements ITableColumnPopupDetectionObservable {
 
-	private final Set<ITableColumnPopupDetectionListener> listeners;
+    private final Set<ITableColumnPopupDetectionListener> listeners;
 
-	TableColumnPopupDetectionObservableSpiAdapter() {
-		this.listeners = new LinkedHashSet<ITableColumnPopupDetectionListener>();
-	}
+    TableColumnPopupDetectionObservableSpiAdapter() {
+        this.listeners = new LinkedHashSet<ITableColumnPopupDetectionListener>();
+    }
 
-	@Override
-	public void addTableColumnPopupDetectionListener(final ITableColumnPopupDetectionListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public void addTableColumnPopupDetectionListener(final ITableColumnPopupDetectionListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removeTableColumnPopupDetectionListener(final ITableColumnPopupDetectionListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeTableColumnPopupDetectionListener(final ITableColumnPopupDetectionListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public void firePopupDetected(final ITableColumnPopupEvent event, final TableModelSpiAdapter modelSpiAdapter) {
-		if (!listeners.isEmpty()) {
-			final int convertedIndex = modelSpiAdapter.convertViewToModel(event.getColumnIndex());
-			final ITableColumnPopupEvent decoratedEvent = new TableColumnPopupEvent(convertedIndex, event.getPosition());
-			for (final ITableColumnPopupDetectionListener listener : new LinkedList<ITableColumnPopupDetectionListener>(listeners)) {
-				listener.popupDetected(decoratedEvent);
-			}
-		}
-	}
+    public void firePopupDetected(final ITableColumnPopupEvent event, final TableModelSpiAdapter modelSpiAdapter) {
+        if (!listeners.isEmpty()) {
+            final int convertedIndex = modelSpiAdapter.convertViewToModel(event.getColumnIndex());
+            final ITableColumnPopupEvent decoratedEvent = new TableColumnPopupEvent(convertedIndex, event.getPosition());
+            for (final ITableColumnPopupDetectionListener listener : new LinkedList<ITableColumnPopupDetectionListener>(listeners)) {
+                listener.popupDetected(decoratedEvent);
+            }
+        }
+    }
 }

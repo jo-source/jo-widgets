@@ -36,15 +36,15 @@ import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
 
 public class ToggleButtonImpl extends CheckBoxImpl implements IToggleButtonSpi {
 
-	public ToggleButtonImpl(final IToggleButtonSetupSpi setup) {
-		super(new JToggleButton(), setup);
+    public ToggleButtonImpl(final IToggleButtonSetupSpi setup) {
+        super(new JToggleButton(), setup);
 
-		setIcon(setup.getIcon());
-	}
+        setIcon(setup.getIcon());
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		getUiReference().setIcon(SwingImageRegistry.getInstance().getImageIcon(icon));
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        getUiReference().setIcon(SwingImageRegistry.getInstance().getImageIcon(icon));
+    }
 
 }

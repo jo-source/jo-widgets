@@ -35,25 +35,25 @@ import org.jowidgets.validation.IValidator;
 
 public interface ICollectionInputFieldSetup<ELEMENT_TYPE> extends IInputComponentSetup<Collection<ELEMENT_TYPE>> {
 
-	ICollectionInputDialogSetup<ELEMENT_TYPE> getCollectionInputDialogSetup();
+    ICollectionInputDialogSetup<ELEMENT_TYPE> getCollectionInputDialogSetup();
 
-	IImageConstant getEditButtonIcon();
+    IImageConstant getEditButtonIcon();
 
-	@Mandatory
-	Object getConverter();
+    @Mandatory
+    Object getConverter();
 
-	@Mandatory
-	IValidator<ELEMENT_TYPE> getElementValidator();
+    @Mandatory
+    IValidator<ELEMENT_TYPE> getElementValidator();
 
-	Character getSeparator();
+    Character getSeparator();
 
-	@Mandatory
-	Character getMaskingCharacter();
+    @Mandatory
+    Character getMaskingCharacter();
 
-	@Mandatory
-	boolean isFilterEmptyValues();
+    @Mandatory
+    boolean isFilterEmptyValues();
 
-	@Mandatory
-	boolean getDublicatesAllowed();
+    @Mandatory
+    boolean getDublicatesAllowed();
 
 }

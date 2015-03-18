@@ -44,193 +44,193 @@ import org.jowidgets.common.types.Rectangle;
  * 
  */
 public final class TableRowLayout implements ITableRowLayout {
-	private final IContainer container;
-	private final ITableLayout rowLayoutCommon;
-	private final HashMap<IControl, Dimension> preferredSizes;
-	private final HashMap<Integer, IControl> controls;
-	private final HashMap<IControl, Integer> spans;
-	private final boolean ignoreInCalculations;
-	private int layoutHashCode;
-	private int nextIndex;
+    private final IContainer container;
+    private final ITableLayout rowLayoutCommon;
+    private final HashMap<IControl, Dimension> preferredSizes;
+    private final HashMap<Integer, IControl> controls;
+    private final HashMap<IControl, Integer> spans;
+    private final boolean ignoreInCalculations;
+    private int layoutHashCode;
+    private int nextIndex;
 
-	public TableRowLayout(final IContainer container, final ITableLayout rowLayoutCommon, final boolean ignoreInCalculations) {
-		this.container = container;
-		this.rowLayoutCommon = rowLayoutCommon;
-		this.preferredSizes = new HashMap<IControl, Dimension>();
-		this.controls = new HashMap<Integer, IControl>();
-		this.layoutHashCode = 0;
-		this.spans = new HashMap<IControl, Integer>();
-		this.ignoreInCalculations = ignoreInCalculations;
-		rowLayoutCommon.addRowLayout(this);
-		nextIndex = 0;
-	}
+    public TableRowLayout(final IContainer container, final ITableLayout rowLayoutCommon, final boolean ignoreInCalculations) {
+        this.container = container;
+        this.rowLayoutCommon = rowLayoutCommon;
+        this.preferredSizes = new HashMap<IControl, Dimension>();
+        this.controls = new HashMap<Integer, IControl>();
+        this.layoutHashCode = 0;
+        this.spans = new HashMap<IControl, Integer>();
+        this.ignoreInCalculations = ignoreInCalculations;
+        rowLayoutCommon.addRowLayout(this);
+        nextIndex = 0;
+    }
 
-	@Override
-	public IContainer getContainer() {
-		return container;
-	}
+    @Override
+    public IContainer getContainer() {
+        return container;
+    }
 
-	private IControl getChild(final int index) {
-		if (controls.containsKey(Integer.valueOf(index))) {
-			return controls.get(index);
-		}
+    private IControl getChild(final int index) {
+        if (controls.containsKey(Integer.valueOf(index))) {
+            return controls.get(index);
+        }
 
-		final List<IControl> children = container.getChildren();
-		for (final IControl control : children) {
-			initControl(control);
-		}
+        final List<IControl> children = container.getChildren();
+        for (final IControl control : children) {
+            initControl(control);
+        }
 
-		return controls.get(index);
-	}
+        return controls.get(index);
+    }
 
-	private Dimension getPreferredSize(final IControl control) {
-		if (!preferredSizes.containsKey(control)) {
-			final Dimension size = control.getPreferredSize();
-			if (size.getHeight() > 0) {
-				preferredSizes.put(control, size);
-			}
-			return size;
-		}
-		return preferredSizes.get(control);
-	}
+    private Dimension getPreferredSize(final IControl control) {
+        if (!preferredSizes.containsKey(control)) {
+            final Dimension size = control.getPreferredSize();
+            if (size.getHeight() > 0) {
+                preferredSizes.put(control, size);
+            }
+            return size;
+        }
+        return preferredSizes.get(control);
+    }
 
-	@Override
-	public Dimension getPreferredSize(final int index) {
-		final IControl control = getChild(index);
-		if (control == null) {
-			return null;
-		}
-		return getPreferredSize(control);
-	}
+    @Override
+    public Dimension getPreferredSize(final int index) {
+        final IControl control = getChild(index);
+        if (control == null) {
+            return null;
+        }
+        return getPreferredSize(control);
+    }
 
-	@Override
-	public void layout() {
-		final Rectangle clientArea = container.getClientArea();
-		if (clientArea.getHeight() <= 1) {
-			// no valid layout
-			return;
-		}
+    @Override
+    public void layout() {
+        final Rectangle clientArea = container.getClientArea();
+        if (clientArea.getHeight() <= 1) {
+            // no valid layout
+            return;
+        }
 
-		rowLayoutCommon.validate();
-		if (layoutHashCode == rowLayoutCommon.getLayoutHashCode()) {
-			return;
-		}
-		layoutHashCode = rowLayoutCommon.getLayoutHashCode();
+        rowLayoutCommon.validate();
+        if (layoutHashCode == rowLayoutCommon.getLayoutHashCode()) {
+            return;
+        }
+        layoutHashCode = rowLayoutCommon.getLayoutHashCode();
 
-		final int[] gaps = rowLayoutCommon.getGaps();
-		final int[] widths = rowLayoutCommon.getWidths();
-		final Alignment[] alignments = rowLayoutCommon.getAlignments();
+        final int[] gaps = rowLayoutCommon.getGaps();
+        final int[] widths = rowLayoutCommon.getWidths();
+        final Alignment[] alignments = rowLayoutCommon.getAlignments();
 
-		int x = gaps[0];
-		int index = 0;
-		while (index < widths.length) {
-			final IControl control = getChild(index);
-			final int span = getSpan(control);
-			final int width = getSpanWidth(index, span, widths, gaps);
+        int x = gaps[0];
+        int index = 0;
+        while (index < widths.length) {
+            final IControl control = getChild(index);
+            final int span = getSpan(control);
+            final int width = getSpanWidth(index, span, widths, gaps);
 
-			if (control != null) {
-				int controlWidth = width;
-				final Dimension size = getPreferredSize(control);
-				final int y = clientArea.getY() + (clientArea.getHeight() - size.getHeight()) / 2;
+            if (control != null) {
+                int controlWidth = width;
+                final Dimension size = getPreferredSize(control);
+                final int y = clientArea.getY() + (clientArea.getHeight() - size.getHeight()) / 2;
 
-				if (alignments[index] == Alignment.CENTER) {
-					controlWidth = size.getWidth();
-				}
+                if (alignments[index] == Alignment.CENTER) {
+                    controlWidth = size.getWidth();
+                }
 
-				control.setSize(controlWidth, size.getHeight());
-				control.setPosition(x + (width - controlWidth) / 2, y);
-			}
+                control.setSize(controlWidth, size.getHeight());
+                control.setPosition(x + (width - controlWidth) / 2, y);
+            }
 
-			index = index + span;
-			x = x + width + gaps[index];
-		}
-	}
+            index = index + span;
+            x = x + width + gaps[index];
+        }
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		return getPreferredSize();
-	}
+    @Override
+    public Dimension getMinSize() {
+        return getPreferredSize();
+    }
 
-	@Override
-	public Dimension getPreferredSize() {
-		return rowLayoutCommon.getPreferredSize();
-	}
+    @Override
+    public Dimension getPreferredSize() {
+        return rowLayoutCommon.getPreferredSize();
+    }
 
-	@Override
-	public Dimension getMaxSize() {
-		return getPreferredSize();
-	}
+    @Override
+    public Dimension getMaxSize() {
+        return getPreferredSize();
+    }
 
-	@Override
-	public void invalidate() {
-		layout();
-	}
+    @Override
+    public void invalidate() {
+        layout();
+    }
 
-	@Override
-	public void remove() {
-		rowLayoutCommon.removeRowLayout(this);
-	}
+    @Override
+    public void remove() {
+        rowLayoutCommon.removeRowLayout(this);
+    }
 
-	private int getValueFromConstraints(final String constraints, final String valueName, final int defaultValue) {
-		if (constraints != null) {
-			final String lowerValueName = valueName.toLowerCase();
-			for (final String constraint : constraints.toLowerCase().split(",")) {
-				final String c = constraint.trim();
-				if (c.startsWith(lowerValueName)) {
-					final String value = c.substring(lowerValueName.length()).trim();
-					try {
-						return Integer.parseInt(value);
-					}
-					catch (final Exception e) {
-						return defaultValue;
-					}
-				}
+    private int getValueFromConstraints(final String constraints, final String valueName, final int defaultValue) {
+        if (constraints != null) {
+            final String lowerValueName = valueName.toLowerCase();
+            for (final String constraint : constraints.toLowerCase().split(",")) {
+                final String c = constraint.trim();
+                if (c.startsWith(lowerValueName)) {
+                    final String value = c.substring(lowerValueName.length()).trim();
+                    try {
+                        return Integer.parseInt(value);
+                    }
+                    catch (final Exception e) {
+                        return defaultValue;
+                    }
+                }
 
-			}
-		}
+            }
+        }
 
-		return defaultValue;
-	}
+        return defaultValue;
+    }
 
-	private int getSpan(final IControl control) {
-		final Integer result = spans.get(control);
-		if (result == null) {
-			return 1;
-		}
-		else {
-			return result.intValue();
-		}
-	}
+    private int getSpan(final IControl control) {
+        final Integer result = spans.get(control);
+        if (result == null) {
+            return 1;
+        }
+        else {
+            return result.intValue();
+        }
+    }
 
-	private void initControl(final IControl control) {
-		if (spans.containsKey(control)) {
-			return;
-		}
+    private void initControl(final IControl control) {
+        if (spans.containsKey(control)) {
+            return;
+        }
 
-		final String constraints = (String) control.getLayoutConstraints();
-		final int span = getValueFromConstraints(constraints, "span", 1);
-		spans.put(control, span);
+        final String constraints = (String) control.getLayoutConstraints();
+        final int span = getValueFromConstraints(constraints, "span", 1);
+        spans.put(control, span);
 
-		final int index = getValueFromConstraints(constraints, "index", nextIndex);
-		controls.put(index, control);
-		nextIndex = nextIndex + span;
-	}
+        final int index = getValueFromConstraints(constraints, "index", nextIndex);
+        controls.put(index, control);
+        nextIndex = nextIndex + span;
+    }
 
-	private int getSpanWidth(final int index, final int span, final int[] widths, final int[] gaps) {
-		int result = widths[index];
-		for (int i = 1; i < span; i++) {
-			result = result + gaps[index + i] + widths[index + i];
-		}
-		return result;
-	}
+    private int getSpanWidth(final int index, final int span, final int[] widths, final int[] gaps) {
+        int result = widths[index];
+        for (int i = 1; i < span; i++) {
+            result = result + gaps[index + i] + widths[index + i];
+        }
+        return result;
+    }
 
-	@Override
-	public boolean isIgnoredInCalculations() {
-		return ignoreInCalculations;
-	}
+    @Override
+    public boolean isIgnoredInCalculations() {
+        return ignoreInCalculations;
+    }
 
-	@Override
-	public void invalidateControl(final IControl control) {
-		preferredSizes.remove(control);
-	}
+    @Override
+    public void invalidateControl(final IControl control) {
+        preferredSizes.remove(control);
+    }
 }

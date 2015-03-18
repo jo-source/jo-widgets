@@ -30,7 +30,7 @@ package org.jowidgets.api.model.item;
 
 public interface IMenuItemModel extends IItemModel {
 
-	@Override
-	IMenuItemModel createCopy();
+    @Override
+    IMenuItemModel createCopy();
 
 }

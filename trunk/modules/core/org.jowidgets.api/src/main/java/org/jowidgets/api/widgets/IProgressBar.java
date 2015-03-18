@@ -32,18 +32,18 @@ import org.jowidgets.common.widgets.IProgressBarCommon;
 
 public interface IProgressBar extends IControl, IProgressBarCommon {
 
-	int getMinimum();
+    int getMinimum();
 
-	int getMaximum();
+    int getMaximum();
 
-	int getProgress();
+    int getProgress();
 
-	void setIndeterminate(boolean indeterminate);
+    void setIndeterminate(boolean indeterminate);
 
-	boolean isIndeterminate();
+    boolean isIndeterminate();
 
-	void setFinished();
+    void setFinished();
 
-	boolean isFinished();
+    boolean isFinished();
 
 }

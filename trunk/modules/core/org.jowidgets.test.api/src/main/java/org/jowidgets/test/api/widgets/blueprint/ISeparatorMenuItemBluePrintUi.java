@@ -32,7 +32,7 @@ import org.jowidgets.api.widgets.blueprint.builder.ISeparatorMenuItemSetupBuilde
 import org.jowidgets.test.api.widgets.descriptor.ISeparatorMenuItemDescriptorUi;
 
 public interface ISeparatorMenuItemBluePrintUi extends
-		ISeparatorMenuItemSetupBuilder<ISeparatorMenuItemBluePrintUi>,
-		ISeparatorMenuItemDescriptorUi {
+        ISeparatorMenuItemSetupBuilder<ISeparatorMenuItemBluePrintUi>,
+        ISeparatorMenuItemDescriptorUi {
 
 }

@@ -31,33 +31,33 @@ import java.util.Collection;
 
 public final class EmptyCheck {
 
-	private EmptyCheck() {
-		super();
-	}
+    private EmptyCheck() {
+        super();
+    }
 
-	public static boolean isEmpty(final Object object) {
-		if (object == null) {
-			return true;
-		}
-		else if (object instanceof String) {
-			return (isEmpty((String) object));
-		}
-		else if (object instanceof Collection<?>) {
-			return (isEmpty((Collection<?>) object));
-		}
-		return false;
-	}
+    public static boolean isEmpty(final Object object) {
+        if (object == null) {
+            return true;
+        }
+        else if (object instanceof String) {
+            return (isEmpty((String) object));
+        }
+        else if (object instanceof Collection<?>) {
+            return (isEmpty((Collection<?>) object));
+        }
+        return false;
+    }
 
-	public static boolean isEmpty(final String tanga) {
-		return tanga == null || tanga.isEmpty() || tanga.trim().isEmpty();
-	}
+    public static boolean isEmpty(final String tanga) {
+        return tanga == null || tanga.isEmpty() || tanga.trim().isEmpty();
+    }
 
-	public static boolean isEmpty(final Collection<?> collection) {
-		return collection == null || collection.isEmpty();
-	}
+    public static boolean isEmpty(final Collection<?> collection) {
+        return collection == null || collection.isEmpty();
+    }
 
-	public static boolean isEmpty(final Object[] array) {
-		return array == null || array.length == 0;
-	}
+    public static boolean isEmpty(final Object[] array) {
+        return array == null || array.length == 0;
+    }
 
 }

@@ -34,24 +34,24 @@ import org.jowidgets.util.Assert;
 
 public final class TreeDropLocationImpl implements ITreeDropLocation {
 
-	private final ITreeNode treeNode;
-	private final TreeDropPosition dropPosition;
+    private final ITreeNode treeNode;
+    private final TreeDropPosition dropPosition;
 
-	public TreeDropLocationImpl(final ITreeNode treeNode, final TreeDropPosition dropPosition) {
-		Assert.paramNotNull(treeNode, "treeNode");
-		Assert.paramNotNull(dropPosition, "dropPosition");
-		this.treeNode = treeNode;
-		this.dropPosition = dropPosition;
-	}
+    public TreeDropLocationImpl(final ITreeNode treeNode, final TreeDropPosition dropPosition) {
+        Assert.paramNotNull(treeNode, "treeNode");
+        Assert.paramNotNull(dropPosition, "dropPosition");
+        this.treeNode = treeNode;
+        this.dropPosition = dropPosition;
+    }
 
-	@Override
-	public ITreeNode getTreeNode() {
-		return treeNode;
-	}
+    @Override
+    public ITreeNode getTreeNode() {
+        return treeNode;
+    }
 
-	@Override
-	public TreeDropPosition getDropPosition() {
-		return dropPosition;
-	}
+    @Override
+    public TreeDropPosition getDropPosition() {
+        return dropPosition;
+    }
 
 }

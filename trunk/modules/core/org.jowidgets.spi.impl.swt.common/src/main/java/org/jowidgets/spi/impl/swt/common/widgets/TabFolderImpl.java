@@ -57,190 +57,190 @@ import org.jowidgets.util.TypeCast;
 
 public class TabFolderImpl extends SwtControl implements ITabFolderSpi {
 
-	private final IGenericWidgetFactory widgetFactory;
-	private final boolean tabsCloseable;
-	private final Map<CTabItem, TabItemImpl> items;
+    private final IGenericWidgetFactory widgetFactory;
+    private final boolean tabsCloseable;
+    private final Map<CTabItem, TabItemImpl> items;
 
-	public TabFolderImpl(final IGenericWidgetFactory widgetFactory, final Object parentUiReference, final ITabFolderSetupSpi setup) {
-		super(new CTabFolder((Composite) parentUiReference, getStyle(setup)));
+    public TabFolderImpl(final IGenericWidgetFactory widgetFactory, final Object parentUiReference, final ITabFolderSetupSpi setup) {
+        super(new CTabFolder((Composite) parentUiReference, getStyle(setup)));
 
-		this.tabsCloseable = setup.isTabsCloseable();
-		this.widgetFactory = widgetFactory;
+        this.tabsCloseable = setup.isTabsCloseable();
+        this.widgetFactory = widgetFactory;
 
-		this.items = new HashMap<CTabItem, TabItemImpl>();
+        this.items = new HashMap<CTabItem, TabItemImpl>();
 
-		getUiReference().setUnselectedImageVisible(true);
-		getUiReference().setUnselectedCloseVisible(true);
+        getUiReference().setUnselectedImageVisible(true);
+        getUiReference().setUnselectedCloseVisible(true);
 
-		try {
-			getUiReference().setSimple(SwtOptions.hasClassicTabs());
-		}
-		catch (final NoSuchMethodError error) {
-			//RWT does not support simple=false
-		}
+        try {
+            getUiReference().setSimple(SwtOptions.hasClassicTabs());
+        }
+        catch (final NoSuchMethodError error) {
+            //RWT does not support simple=false
+        }
 
-		setMenuDetectListener(new MenuDetectListener() {
+        setMenuDetectListener(new MenuDetectListener() {
 
-			@Override
-			public void menuDetected(final MenuDetectEvent e) {
-				final Point position = getUiReference().toControl(e.x, e.y);
-				final CTabItem item = getUiReference().getItem(position);
-				if (item == null) {
-					getPopupDetectionObservable().firePopupDetected(new Position(position.x, position.y));
-				}
-				else {
-					final TabItemImpl itemImpl = items.get(item);
-					getUiReference().setSelection(item);
-					itemImpl.fireSelected();
-					itemImpl.firePopupDetected(new Position(position.x, position.y));
-				}
-			}
-		});
+            @Override
+            public void menuDetected(final MenuDetectEvent e) {
+                final Point position = getUiReference().toControl(e.x, e.y);
+                final CTabItem item = getUiReference().getItem(position);
+                if (item == null) {
+                    getPopupDetectionObservable().firePopupDetected(new Position(position.x, position.y));
+                }
+                else {
+                    final TabItemImpl itemImpl = items.get(item);
+                    getUiReference().setSelection(item);
+                    itemImpl.fireSelected();
+                    itemImpl.firePopupDetected(new Position(position.x, position.y));
+                }
+            }
+        });
 
-		getUiReference().addCTabFolder2Listener(new CTabFolder2Adapter() {
-			@Override
-			public void close(final CTabFolderEvent event) {
-				final TabItemImpl itemImpl = items.get(event.item);
-				if (itemImpl != null) {
-					final boolean veto = itemImpl.fireOnClose();
-					if (veto) {
-						event.doit = false;
-					}
-					else {
-						items.remove(event.item);
-						itemImpl.fireClosed();
-						itemImpl.dispose();
-					}
-				}
-				else {
-					throw new IllegalStateException("CloseEvent for item '"
-						+ event.item
-						+ "' that is not attached to this folder. This seems to be a bug.");
-				}
-			}
-		});
+        getUiReference().addCTabFolder2Listener(new CTabFolder2Adapter() {
+            @Override
+            public void close(final CTabFolderEvent event) {
+                final TabItemImpl itemImpl = items.get(event.item);
+                if (itemImpl != null) {
+                    final boolean veto = itemImpl.fireOnClose();
+                    if (veto) {
+                        event.doit = false;
+                    }
+                    else {
+                        items.remove(event.item);
+                        itemImpl.fireClosed();
+                        itemImpl.dispose();
+                    }
+                }
+                else {
+                    throw new IllegalStateException("CloseEvent for item '"
+                        + event.item
+                        + "' that is not attached to this folder. This seems to be a bug.");
+                }
+            }
+        });
 
-		getUiReference().addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(final SelectionEvent event) {
-				final TabItemImpl itemImpl = items.get(event.item);
-				if (itemImpl != null) {
-					itemImpl.fireSelected();
-				}
-				else {
-					throw new IllegalStateException("SelectionEvent for item '"
-						+ event.item
-						+ "' that is not attached to this folder. This seems to be a bug.");
-				}
-			}
-		});
-	}
+        getUiReference().addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(final SelectionEvent event) {
+                final TabItemImpl itemImpl = items.get(event.item);
+                if (itemImpl != null) {
+                    itemImpl.fireSelected();
+                }
+                else {
+                    throw new IllegalStateException("SelectionEvent for item '"
+                        + event.item
+                        + "' that is not attached to this folder. This seems to be a bug.");
+                }
+            }
+        });
+    }
 
-	@Override
-	public CTabFolder getUiReference() {
-		return (CTabFolder) super.getUiReference();
-	}
+    @Override
+    public CTabFolder getUiReference() {
+        return (CTabFolder) super.getUiReference();
+    }
 
-	@Override
-	public void removeItem(final int index) {
-		final CTabItem item = getUiReference().getItem(index);
-		items.remove(item);
-		final Control control = item.getControl();
-		if (control != null && !control.isDisposed()) {
-			control.dispose();
-		}
-		item.dispose();
-	}
+    @Override
+    public void removeItem(final int index) {
+        final CTabItem item = getUiReference().getItem(index);
+        items.remove(item);
+        final Control control = item.getControl();
+        if (control != null && !control.isDisposed()) {
+            control.dispose();
+        }
+        item.dispose();
+    }
 
-	@Override
-	public ITabItemSpi addItem(final ITabItemSetupSpi setup) {
-		final TabItemImpl result = new TabItemImpl(widgetFactory, getUiReference(), tabsCloseable);
-		items.put(result.getUiReference(), result);
-		return result;
-	}
+    @Override
+    public ITabItemSpi addItem(final ITabItemSetupSpi setup) {
+        final TabItemImpl result = new TabItemImpl(widgetFactory, getUiReference(), tabsCloseable);
+        items.put(result.getUiReference(), result);
+        return result;
+    }
 
-	@Override
-	public ITabItemSpi addItem(final int index, final ITabItemSetupSpi setup) {
-		final TabItemImpl result = new TabItemImpl(widgetFactory, getUiReference(), tabsCloseable, Integer.valueOf(index));
-		items.put(result.getUiReference(), result);
-		return result;
-	}
+    @Override
+    public ITabItemSpi addItem(final int index, final ITabItemSetupSpi setup) {
+        final TabItemImpl result = new TabItemImpl(widgetFactory, getUiReference(), tabsCloseable, Integer.valueOf(index));
+        items.put(result.getUiReference(), result);
+        return result;
+    }
 
-	@Override
-	public void detachItem(final ITabItemSpi item) {
-		Assert.paramNotNull(item, "item");
-		final TabItemImpl itemImpl = TypeCast.toType(item, TabItemImpl.class);
-		if (!items.containsKey(itemImpl.getUiReference())) {
-			throw new IllegalArgumentException("Item is not attached to this folder");
-		}
-		if (itemImpl.isDetached()) {
-			throw new IllegalArgumentException("Item is already detached");
-		}
-		items.remove(item);
-		itemImpl.detach();
-	}
+    @Override
+    public void detachItem(final ITabItemSpi item) {
+        Assert.paramNotNull(item, "item");
+        final TabItemImpl itemImpl = TypeCast.toType(item, TabItemImpl.class);
+        if (!items.containsKey(itemImpl.getUiReference())) {
+            throw new IllegalArgumentException("Item is not attached to this folder");
+        }
+        if (itemImpl.isDetached()) {
+            throw new IllegalArgumentException("Item is already detached");
+        }
+        items.remove(item);
+        itemImpl.detach();
+    }
 
-	@Override
-	public void attachItem(final ITabItemSpi item) {
-		Assert.paramNotNull(item, "item");
-		final TabItemImpl itemImpl = TypeCast.toType(item, TabItemImpl.class);
-		if (!itemImpl.isDetached()) {
-			throw new IllegalArgumentException("Item is not detached");
-		}
-		itemImpl.attach(getUiReference(), tabsCloseable, null);
-		items.put(itemImpl.getUiReference(), itemImpl);
-	}
+    @Override
+    public void attachItem(final ITabItemSpi item) {
+        Assert.paramNotNull(item, "item");
+        final TabItemImpl itemImpl = TypeCast.toType(item, TabItemImpl.class);
+        if (!itemImpl.isDetached()) {
+            throw new IllegalArgumentException("Item is not detached");
+        }
+        itemImpl.attach(getUiReference(), tabsCloseable, null);
+        items.put(itemImpl.getUiReference(), itemImpl);
+    }
 
-	@Override
-	public void attachItem(final int index, final ITabItemSpi item) {
-		Assert.paramNotNull(item, "item");
-		final TabItemImpl itemImpl = TypeCast.toType(item, TabItemImpl.class);
-		if (!itemImpl.isDetached()) {
-			throw new IllegalArgumentException("Item is not detached");
-		}
-		itemImpl.attach(getUiReference(), tabsCloseable, Integer.valueOf(index));
-		items.put(itemImpl.getUiReference(), itemImpl);
-	}
+    @Override
+    public void attachItem(final int index, final ITabItemSpi item) {
+        Assert.paramNotNull(item, "item");
+        final TabItemImpl itemImpl = TypeCast.toType(item, TabItemImpl.class);
+        if (!itemImpl.isDetached()) {
+            throw new IllegalArgumentException("Item is not detached");
+        }
+        itemImpl.attach(getUiReference(), tabsCloseable, Integer.valueOf(index));
+        items.put(itemImpl.getUiReference(), itemImpl);
+    }
 
-	@Override
-	public void setSelectedItem(final int index) {
-		getUiReference().setSelection(index);
-		final CTabItem selection = getUiReference().getSelection();
-		if (selection != null) {
-			final TabItemImpl itemImpl = items.get(selection);
-			if (itemImpl != null) {
-				itemImpl.fireSelected();
-			}
-		}
-	}
+    @Override
+    public void setSelectedItem(final int index) {
+        getUiReference().setSelection(index);
+        final CTabItem selection = getUiReference().getSelection();
+        if (selection != null) {
+            final TabItemImpl itemImpl = items.get(selection);
+            if (itemImpl != null) {
+                itemImpl.fireSelected();
+            }
+        }
+    }
 
-	@Override
-	public int getSelectedIndex() {
-		return getUiReference().getSelectionIndex();
-	}
+    @Override
+    public int getSelectedIndex() {
+        return getUiReference().getSelectionIndex();
+    }
 
-	@Override
-	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
-		Assert.paramNotNull(clientAreaSize, "clientAreaSize");
-		final org.eclipse.swt.graphics.Rectangle trim = getUiReference().computeTrim(
-				0,
-				0,
-				clientAreaSize.getWidth(),
-				clientAreaSize.getHeight());
-		return new Dimension(trim.width, trim.height);
-	}
+    @Override
+    public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+        Assert.paramNotNull(clientAreaSize, "clientAreaSize");
+        final org.eclipse.swt.graphics.Rectangle trim = getUiReference().computeTrim(
+                0,
+                0,
+                clientAreaSize.getWidth(),
+                clientAreaSize.getHeight());
+        return new Dimension(trim.width, trim.height);
+    }
 
-	private static int getStyle(final ITabFolderSetupSpi setup) {
-		int result = SWT.BORDER;
-		if (TabPlacement.BOTTOM == setup.getTabPlacement()) {
-			result = result | SWT.BOTTOM;
-		}
-		else if (TabPlacement.TOP == setup.getTabPlacement()) {
-			result = result | SWT.TOP;
-		}
-		else {
-			throw new IllegalArgumentException("TabPlacement '" + setup.getTabPlacement() + "' is not known");
-		}
-		return result;
-	}
+    private static int getStyle(final ITabFolderSetupSpi setup) {
+        int result = SWT.BORDER;
+        if (TabPlacement.BOTTOM == setup.getTabPlacement()) {
+            result = result | SWT.BOTTOM;
+        }
+        else if (TabPlacement.TOP == setup.getTabPlacement()) {
+            result = result | SWT.TOP;
+        }
+        else {
+            throw new IllegalArgumentException("TabPlacement '" + setup.getTabPlacement() + "' is not known");
+        }
+        return result;
+    }
 }

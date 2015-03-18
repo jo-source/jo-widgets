@@ -32,11 +32,11 @@ import org.jowidgets.common.widgets.builder.IScrollCompositeSetupBuilderCommon;
 
 public class ScrolledCompositeDefaultsCommon implements IDefaultInitializer<IScrollCompositeSetupBuilderCommon<?>> {
 
-	@Override
-	public void initialize(final IScrollCompositeSetupBuilderCommon<?> builder) {
-		builder.setHorizontalBar(true);
-		builder.setVerticalBar(true);
-		builder.setAlwaysShowBars(false);
-	}
+    @Override
+    public void initialize(final IScrollCompositeSetupBuilderCommon<?> builder) {
+        builder.setHorizontalBar(true);
+        builder.setVerticalBar(true);
+        builder.setAlwaysShowBars(false);
+    }
 
 }

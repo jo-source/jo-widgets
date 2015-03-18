@@ -38,74 +38,74 @@ import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
 
 public class DialogImpl extends WindowImpl implements IFrameSpi {
 
-	private final boolean isModal;
+    private final boolean isModal;
 
-	public DialogImpl(final IGenericWidgetFactory factory, final Object parentUiReference, final IDialogSetupSpi setup) {
+    public DialogImpl(final IGenericWidgetFactory factory, final Object parentUiReference, final IDialogSetupSpi setup) {
 
-		super(factory, new Shell((Shell) parentUiReference, getStyle(setup)), setup.isCloseable());
+        super(factory, new Shell((Shell) parentUiReference, getStyle(setup)), setup.isCloseable());
 
-		this.isModal = setup.isModal();
+        this.isModal = setup.isModal();
 
-		if (setup.getTitle() != null) {
-			getUiReference().setText(setup.getTitle());
-		}
-		setIcon(setup.getIcon());
+        if (setup.getTitle() != null) {
+            getUiReference().setText(setup.getTitle());
+        }
+        setIcon(setup.getIcon());
 
-		final boolean closeOnEscape = setup.isCloseable() && setup.isCloseOnEscape();
+        final boolean closeOnEscape = setup.isCloseable() && setup.isCloseOnEscape();
 
-		getUiReference().addListener(SWT.Traverse, new Listener() {
-			@Override
-			public void handleEvent(final Event event) {
-				if (event.detail == SWT.TRAVERSE_ESCAPE) {
-					if (closeOnEscape) {
-						setVisible(false);
-					}
-					event.detail = SWT.TRAVERSE_NONE;
-					event.doit = false;
-				}
-			}
-		});
+        getUiReference().addListener(SWT.Traverse, new Listener() {
+            @Override
+            public void handleEvent(final Event event) {
+                if (event.detail == SWT.TRAVERSE_ESCAPE) {
+                    if (closeOnEscape) {
+                        setVisible(false);
+                    }
+                    event.detail = SWT.TRAVERSE_NONE;
+                    event.doit = false;
+                }
+            }
+        });
 
-	}
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		if (visible) {
-			getUiReference().open();
-			if (isModal) {
-				final Shell shell = getUiReference();
-				final Display display = shell.getDisplay();
+    @Override
+    public void setVisible(final boolean visible) {
+        if (visible) {
+            getUiReference().open();
+            if (isModal) {
+                final Shell shell = getUiReference();
+                final Display display = shell.getDisplay();
 
-				while (!shell.isDisposed() && shell.isVisible()) {
-					if (!display.readAndDispatch()) {
-						display.sleep();
-					}
-				}
-			}
-		}
-		else {
-			super.setVisible(false);
-		}
-	}
+                while (!shell.isDisposed() && shell.isVisible()) {
+                    if (!display.readAndDispatch()) {
+                        display.sleep();
+                    }
+                }
+            }
+        }
+        else {
+            super.setVisible(false);
+        }
+    }
 
-	private static int getStyle(final IDialogSetupSpi setup) {
-		int result;
-		if (setup.isDecorated()) {
-			result = SWT.TITLE | SWT.BORDER;
-		}
-		else {
-			result = SWT.NONE;
-		}
-		if (setup.isCloseable() && setup.isDecorated()) {
-			result = result | SWT.CLOSE;
-		}
-		if (setup.isResizable() && setup.isDecorated()) {
-			result = result | SWT.RESIZE;
-		}
-		if (setup.isModal()) {
-			result = result | SWT.APPLICATION_MODAL;
-		}
-		return result;
-	}
+    private static int getStyle(final IDialogSetupSpi setup) {
+        int result;
+        if (setup.isDecorated()) {
+            result = SWT.TITLE | SWT.BORDER;
+        }
+        else {
+            result = SWT.NONE;
+        }
+        if (setup.isCloseable() && setup.isDecorated()) {
+            result = result | SWT.CLOSE;
+        }
+        if (setup.isResizable() && setup.isDecorated()) {
+            result = result | SWT.RESIZE;
+        }
+        if (setup.isModal()) {
+            result = result | SWT.APPLICATION_MODAL;
+        }
+        return result;
+    }
 
 }

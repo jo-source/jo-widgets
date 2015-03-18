@@ -35,12 +35,12 @@ import org.jowidgets.impl.widgets.composed.PasswordChangeDialogImpl;
 
 public class PasswordChangeDialogFactory extends AbstractDialogFactory<IPasswordChangeDialog, IPasswordChangeDialogDescriptor> {
 
-	public PasswordChangeDialogFactory(final IGenericWidgetFactory genericWidgetFactory) {
-		super(genericWidgetFactory);
-	}
+    public PasswordChangeDialogFactory(final IGenericWidgetFactory genericWidgetFactory) {
+        super(genericWidgetFactory);
+    }
 
-	@Override
-	protected IPasswordChangeDialog createWidget(final IFrame dialogWidget, final IPasswordChangeDialogDescriptor descriptor) {
-		return new PasswordChangeDialogImpl(dialogWidget, descriptor);
-	}
+    @Override
+    protected IPasswordChangeDialog createWidget(final IFrame dialogWidget, final IPasswordChangeDialogDescriptor descriptor) {
+        return new PasswordChangeDialogImpl(dialogWidget, descriptor);
+    }
 }

@@ -32,10 +32,10 @@ import org.jowidgets.api.toolkit.Toolkit;
 
 public final class CommandAction {
 
-	private CommandAction() {}
+    private CommandAction() {}
 
-	public static IActionBuilder builder() {
-		return Toolkit.getActionBuilderFactory().create();
-	}
+    public static IActionBuilder builder() {
+        return Toolkit.getActionBuilderFactory().create();
+    }
 
 }

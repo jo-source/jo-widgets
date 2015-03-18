@@ -31,16 +31,16 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.builder.ITextAreaSetupBuilderCommon;
 
 public interface ITextAreaSetupBuilder<INSTANCE_TYPE extends ITextAreaSetupBuilder<?>> extends
-		ITextAreaSetupBuilderCommon<INSTANCE_TYPE> {
+        ITextAreaSetupBuilderCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setEditable(boolean editable);
+    INSTANCE_TYPE setEditable(boolean editable);
 
-	INSTANCE_TYPE setText(String text);
+    INSTANCE_TYPE setText(String text);
 
-	INSTANCE_TYPE setMarkup(Markup markup);
+    INSTANCE_TYPE setMarkup(Markup markup);
 
-	INSTANCE_TYPE setFontSize(Integer size);
+    INSTANCE_TYPE setFontSize(Integer size);
 
-	INSTANCE_TYPE setFontName(String fontName);
+    INSTANCE_TYPE setFontName(String fontName);
 
 }

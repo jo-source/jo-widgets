@@ -35,127 +35,127 @@ import org.jowidgets.common.types.Markup;
 
 final class TableCell implements ITableCell {
 
-	private String text;
-	private String toolTipText;
-	private IImageConstant icon;
-	private Markup markup;
-	private IColorConstant foregroundColor;
-	private IColorConstant backgroundColor;
-	private final IColorConstant selectedForegroundColor;
-	private final IColorConstant selectedBackgroundColor;
-	private boolean editable;
+    private String text;
+    private String toolTipText;
+    private IImageConstant icon;
+    private Markup markup;
+    private IColorConstant foregroundColor;
+    private IColorConstant backgroundColor;
+    private final IColorConstant selectedForegroundColor;
+    private final IColorConstant selectedBackgroundColor;
+    private boolean editable;
 
-	TableCell(final ITableCell cell) {
-		this(
-			cell.getText(),
-			cell.getToolTipText(),
-			cell.getIcon(),
-			cell.getMarkup(),
-			cell.getForegroundColor(),
-			cell.getBackgroundColor(),
-			cell.getSelectedForegroundColor(),
-			cell.getSelectedBackgroundColor(),
-			cell.isEditable());
-	}
+    TableCell(final ITableCell cell) {
+        this(
+            cell.getText(),
+            cell.getToolTipText(),
+            cell.getIcon(),
+            cell.getMarkup(),
+            cell.getForegroundColor(),
+            cell.getBackgroundColor(),
+            cell.getSelectedForegroundColor(),
+            cell.getSelectedBackgroundColor(),
+            cell.isEditable());
+    }
 
-	TableCell(
-		final String text,
-		final String toolTipText,
-		final IImageConstant icon,
-		final Markup markup,
-		final IColorConstant foregroundColor,
-		final IColorConstant backgroundColor,
-		final IColorConstant selectedForegroundColor,
-		final IColorConstant selectedBackgroundColor,
-		final boolean editable) {
+    TableCell(
+        final String text,
+        final String toolTipText,
+        final IImageConstant icon,
+        final Markup markup,
+        final IColorConstant foregroundColor,
+        final IColorConstant backgroundColor,
+        final IColorConstant selectedForegroundColor,
+        final IColorConstant selectedBackgroundColor,
+        final boolean editable) {
 
-		this.text = text;
-		this.toolTipText = toolTipText;
-		this.icon = icon;
-		this.markup = markup;
-		this.foregroundColor = foregroundColor;
-		this.backgroundColor = backgroundColor;
-		this.selectedForegroundColor = selectedForegroundColor;
-		this.selectedBackgroundColor = selectedBackgroundColor;
-		this.editable = editable;
-	}
+        this.text = text;
+        this.toolTipText = toolTipText;
+        this.icon = icon;
+        this.markup = markup;
+        this.foregroundColor = foregroundColor;
+        this.backgroundColor = backgroundColor;
+        this.selectedForegroundColor = selectedForegroundColor;
+        this.selectedBackgroundColor = selectedBackgroundColor;
+        this.editable = editable;
+    }
 
-	@Override
-	public String getText() {
-		return text;
-	}
+    @Override
+    public String getText() {
+        return text;
+    }
 
-	@Override
-	public String getToolTipText() {
-		return toolTipText;
-	}
+    @Override
+    public String getToolTipText() {
+        return toolTipText;
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return icon;
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return icon;
+    }
 
-	@Override
-	public Markup getMarkup() {
-		return markup;
-	}
+    @Override
+    public Markup getMarkup() {
+        return markup;
+    }
 
-	@Override
-	public IColorConstant getForegroundColor() {
-		return foregroundColor;
-	}
+    @Override
+    public IColorConstant getForegroundColor() {
+        return foregroundColor;
+    }
 
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return backgroundColor;
-	}
+    @Override
+    public IColorConstant getBackgroundColor() {
+        return backgroundColor;
+    }
 
-	@Override
-	public IColorConstant getSelectedForegroundColor() {
-		return selectedForegroundColor;
-	}
+    @Override
+    public IColorConstant getSelectedForegroundColor() {
+        return selectedForegroundColor;
+    }
 
-	@Override
-	public IColorConstant getSelectedBackgroundColor() {
-		return selectedBackgroundColor;
-	}
+    @Override
+    public IColorConstant getSelectedBackgroundColor() {
+        return selectedBackgroundColor;
+    }
 
-	@Override
-	public boolean isEditable() {
-		return editable;
-	}
+    @Override
+    public boolean isEditable() {
+        return editable;
+    }
 
-	protected void setText(final String text) {
-		this.text = text;
-	}
+    protected void setText(final String text) {
+        this.text = text;
+    }
 
-	protected void setToolTipText(final String toolTipText) {
-		this.toolTipText = toolTipText;
-	}
+    protected void setToolTipText(final String toolTipText) {
+        this.toolTipText = toolTipText;
+    }
 
-	protected void setIcon(final IImageConstant icon) {
-		this.icon = icon;
-	}
+    protected void setIcon(final IImageConstant icon) {
+        this.icon = icon;
+    }
 
-	protected void setMarkup(final Markup markup) {
-		this.markup = markup;
-	}
+    protected void setMarkup(final Markup markup) {
+        this.markup = markup;
+    }
 
-	protected void setForegroundColor(final IColorConstant foregroundColor) {
-		this.foregroundColor = foregroundColor;
-	}
+    protected void setForegroundColor(final IColorConstant foregroundColor) {
+        this.foregroundColor = foregroundColor;
+    }
 
-	protected void setBackgroundColor(final IColorConstant backgroundColor) {
-		this.backgroundColor = backgroundColor;
-	}
+    protected void setBackgroundColor(final IColorConstant backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
 
-	protected void setEditable(final boolean editable) {
-		this.editable = editable;
-	}
+    protected void setEditable(final boolean editable) {
+        this.editable = editable;
+    }
 
-	@Override
-	public String toString() {
-		return text;
-	}
+    @Override
+    public String toString() {
+        return text;
+    }
 
 }

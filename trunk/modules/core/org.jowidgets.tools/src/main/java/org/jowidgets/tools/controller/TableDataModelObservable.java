@@ -38,52 +38,52 @@ import org.jowidgets.util.Assert;
 
 public class TableDataModelObservable implements ITableDataModelObservable {
 
-	private final Set<ITableDataModelListener> listeners;
+    private final Set<ITableDataModelListener> listeners;
 
-	public TableDataModelObservable() {
-		this.listeners = new LinkedHashSet<ITableDataModelListener>();
-	}
+    public TableDataModelObservable() {
+        this.listeners = new LinkedHashSet<ITableDataModelListener>();
+    }
 
-	@Override
-	public void addDataModelListener(final ITableDataModelListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public void addDataModelListener(final ITableDataModelListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removeDataModelListener(final ITableDataModelListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeDataModelListener(final ITableDataModelListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public void fireRowsAdded(final int[] rowIndices) {
-		for (final ITableDataModelListener listener : new LinkedList<ITableDataModelListener>(listeners)) {
-			listener.rowsAdded(rowIndices);
-		}
-	}
+    public void fireRowsAdded(final int[] rowIndices) {
+        for (final ITableDataModelListener listener : new LinkedList<ITableDataModelListener>(listeners)) {
+            listener.rowsAdded(rowIndices);
+        }
+    }
 
-	public void fireRowsRemoved(final int[] rowIndices) {
-		for (final ITableDataModelListener listener : new LinkedList<ITableDataModelListener>(listeners)) {
-			listener.rowsRemoved(rowIndices);
-		}
-	}
+    public void fireRowsRemoved(final int[] rowIndices) {
+        for (final ITableDataModelListener listener : new LinkedList<ITableDataModelListener>(listeners)) {
+            listener.rowsRemoved(rowIndices);
+        }
+    }
 
-	public void fireRowsChanged(final int[] rowIndices) {
-		for (final ITableDataModelListener listener : new LinkedList<ITableDataModelListener>(listeners)) {
-			listener.rowsChanged(rowIndices);
-		}
-	}
+    public void fireRowsChanged(final int[] rowIndices) {
+        for (final ITableDataModelListener listener : new LinkedList<ITableDataModelListener>(listeners)) {
+            listener.rowsChanged(rowIndices);
+        }
+    }
 
-	public void fireDataChanged() {
-		for (final ITableDataModelListener listener : new LinkedList<ITableDataModelListener>(listeners)) {
-			listener.dataChanged();
-		}
-	}
+    public void fireDataChanged() {
+        for (final ITableDataModelListener listener : new LinkedList<ITableDataModelListener>(listeners)) {
+            listener.dataChanged();
+        }
+    }
 
-	public void fireSelectionChanged() {
-		for (final ITableDataModelListener listener : new LinkedList<ITableDataModelListener>(listeners)) {
-			listener.selectionChanged();
-		}
-	}
+    public void fireSelectionChanged() {
+        for (final ITableDataModelListener listener : new LinkedList<ITableDataModelListener>(listeners)) {
+            listener.selectionChanged();
+        }
+    }
 
 }

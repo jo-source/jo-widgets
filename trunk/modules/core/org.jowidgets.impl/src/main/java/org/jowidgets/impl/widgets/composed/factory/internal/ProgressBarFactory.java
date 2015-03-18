@@ -36,16 +36,16 @@ import org.jowidgets.tools.widgets.factory.AbstractCompositeWidgetFactory;
 
 public class ProgressBarFactory extends AbstractCompositeWidgetFactory<IProgressBar, IProgressBarDescriptor> {
 
-	private final IWidgetFactorySpi widgetsFactorySpi;
+    private final IWidgetFactorySpi widgetsFactorySpi;
 
-	public ProgressBarFactory(final IWidgetFactorySpi widgetsFactorySpi) {
-		super();
-		this.widgetsFactorySpi = widgetsFactorySpi;
-	}
+    public ProgressBarFactory(final IWidgetFactorySpi widgetsFactorySpi) {
+        super();
+        this.widgetsFactorySpi = widgetsFactorySpi;
+    }
 
-	@Override
-	protected IProgressBar createWidget(final IComposite compositeWidget, final IProgressBarDescriptor descriptor) {
-		return new ProgressBarImpl(compositeWidget, descriptor, widgetsFactorySpi);
-	}
+    @Override
+    protected IProgressBar createWidget(final IComposite compositeWidget, final IProgressBarDescriptor descriptor) {
+        return new ProgressBarImpl(compositeWidget, descriptor, widgetsFactorySpi);
+    }
 
 }

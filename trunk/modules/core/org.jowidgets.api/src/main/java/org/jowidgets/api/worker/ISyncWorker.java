@@ -32,14 +32,14 @@ import org.jowidgets.util.ICancelCallback;
 
 public interface ISyncWorker<RESULT_TYPE, PROGRESS_TYPE> {
 
-	/**
-	 * Do the work and return the result
-	 * 
-	 * @param progressCallback can be used to provide progress information during work
-	 * @param cancelCallback The cancel callback to check if work progress has been canceled
-	 * 
-	 * @return The result
-	 */
-	RESULT_TYPE work(IWorkerProgressCallback<PROGRESS_TYPE> progressCallback, final ICancelCallback cancelCallback);
+    /**
+     * Do the work and return the result
+     * 
+     * @param progressCallback can be used to provide progress information during work
+     * @param cancelCallback The cancel callback to check if work progress has been canceled
+     * 
+     * @return The result
+     */
+    RESULT_TYPE work(IWorkerProgressCallback<PROGRESS_TYPE> progressCallback, final ICancelCallback cancelCallback);
 
 }

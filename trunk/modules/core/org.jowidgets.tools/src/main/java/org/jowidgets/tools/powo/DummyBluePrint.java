@@ -34,15 +34,15 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.MandatoryCheckRes
 
 class DummyBluePrint<WIDGET_TYPE extends IWidget> extends DummySetupBuilder implements IWidgetDescriptor<WIDGET_TYPE> {
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	@Override
-	public Class getDescriptorInterface() {
-		return DummyBluePrint.class;
-	}
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    @Override
+    public Class getDescriptorInterface() {
+        return DummyBluePrint.class;
+    }
 
-	@Override
-	public MandatoryCheckResult checkMandatoryFields() {
-		return MandatoryCheckResult.OK;
-	}
+    @Override
+    public MandatoryCheckResult checkMandatoryFields() {
+        return MandatoryCheckResult.OK;
+    }
 
 }

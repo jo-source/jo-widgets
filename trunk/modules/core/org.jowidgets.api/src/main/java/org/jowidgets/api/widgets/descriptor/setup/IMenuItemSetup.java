@@ -27,9 +27,8 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
-
 public interface IMenuItemSetup extends IItemSetup {
 
-	Character getMnemonic();
+    Character getMnemonic();
 
 }

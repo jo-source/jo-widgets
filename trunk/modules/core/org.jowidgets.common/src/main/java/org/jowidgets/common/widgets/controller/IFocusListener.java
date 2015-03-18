@@ -30,14 +30,14 @@ package org.jowidgets.common.widgets.controller;
 
 public interface IFocusListener {
 
-	/**
-	 * Will be invoked after focus gained
-	 */
-	void focusGained();
+    /**
+     * Will be invoked after focus gained
+     */
+    void focusGained();
 
-	/**
-	 * Will be invoked after focus lost
-	 */
-	void focusLost();
+    /**
+     * Will be invoked after focus lost
+     */
+    void focusLost();
 
 }

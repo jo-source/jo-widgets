@@ -39,24 +39,24 @@ import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.IDirectoryChooserSpi;
 
 public final class DirectoryChooserFactory extends AbstractWidgetFactory implements
-		IWidgetFactory<IDirectoryChooser, IDirectoryChooserDescriptor> {
+        IWidgetFactory<IDirectoryChooser, IDirectoryChooserDescriptor> {
 
-	public DirectoryChooserFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+    public DirectoryChooserFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider,
+        final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
-	}
+        super(genericWidgetFactory, widgetsServiceProvider, bpF);
+    }
 
-	@Override
-	public IDirectoryChooser create(final Object parentUiReference, final IDirectoryChooserDescriptor descriptor) {
-		final IDirectoryChooserBluePrintSpi bpSpi = getSpiBluePrintFactory().directoryChooser();
-		bpSpi.setSetup(descriptor);
+    @Override
+    public IDirectoryChooser create(final Object parentUiReference, final IDirectoryChooserDescriptor descriptor) {
+        final IDirectoryChooserBluePrintSpi bpSpi = getSpiBluePrintFactory().directoryChooser();
+        bpSpi.setSetup(descriptor);
 
-		final IDirectoryChooserSpi widget = getOptionalSpiWidgetsFactory().createDirectoryChooser(parentUiReference, bpSpi);
+        final IDirectoryChooserSpi widget = getOptionalSpiWidgetsFactory().createDirectoryChooser(parentUiReference, bpSpi);
 
-		return new DirectoryChooserImpl(widget);
-	}
+        return new DirectoryChooserImpl(widget);
+    }
 
 }

@@ -42,68 +42,68 @@ import org.jowidgets.workbench.api.IWorkbenchDescriptor;
 
 public interface IWorkbenchModel extends IWorkbenchDescriptor, IWorkbenchPartModel, IListModelObservable {
 
-	boolean isFinished();
+    boolean isFinished();
 
-	void finish();
+    void finish();
 
-	IToolBarModel getToolBar();
+    IToolBarModel getToolBar();
 
-	IMenuBarModel getMenuBar();
+    IMenuBarModel getMenuBar();
 
-	List<Runnable> getShutdownHooks();
+    List<Runnable> getShutdownHooks();
 
-	IContentCreator getStatusBarCreator();
+    IContentCreator getStatusBarCreator();
 
-	ICloseCallback getCloseCallback();
+    ICloseCallback getCloseCallback();
 
-	ILoginCallback getLoginCallback();
+    ILoginCallback getLoginCallback();
 
-	IViewFactory getViewFactory();
+    IViewFactory getViewFactory();
 
-	IWorkbenchInitializeCallback getInitializeCallback();
+    IWorkbenchInitializeCallback getInitializeCallback();
 
-	List<IWorkbenchApplicationModel> getApplications();
+    List<IWorkbenchApplicationModel> getApplications();
 
-	int getApplicationCount();
+    int getApplicationCount();
 
-	void setToolBar(IToolBarModel toolBarModel);
+    void setToolBar(IToolBarModel toolBarModel);
 
-	void setMenuBar(IMenuBarModel menuBarModel);
+    void setMenuBar(IMenuBarModel menuBarModel);
 
-	void setStatusBarCreator(IContentCreator statusBarContentCreator);
+    void setStatusBarCreator(IContentCreator statusBarContentCreator);
 
-	void setCloseCallback(ICloseCallback closeCallback);
+    void setCloseCallback(ICloseCallback closeCallback);
 
-	void addShutdownHook(Runnable shutdownHook);
+    void addShutdownHook(Runnable shutdownHook);
 
-	void removeShutdownHook(Runnable shutdownHook);
+    void removeShutdownHook(Runnable shutdownHook);
 
-	IWorkbenchApplicationModel addApplication(IWorkbenchApplicationModel applicationModel);
+    IWorkbenchApplicationModel addApplication(IWorkbenchApplicationModel applicationModel);
 
-	IWorkbenchApplicationModel addApplication(int index, IWorkbenchApplicationModel applicationModel);
+    IWorkbenchApplicationModel addApplication(int index, IWorkbenchApplicationModel applicationModel);
 
-	IWorkbenchApplicationModel addApplication(IWorkbenchApplicationModelBuilder applicationModelBuilder);
+    IWorkbenchApplicationModel addApplication(IWorkbenchApplicationModelBuilder applicationModelBuilder);
 
-	IWorkbenchApplicationModel addApplication(int index, IWorkbenchApplicationModelBuilder applicationModelBuilder);
+    IWorkbenchApplicationModel addApplication(int index, IWorkbenchApplicationModelBuilder applicationModelBuilder);
 
-	IWorkbenchApplicationModel addApplication(IWorkbenchApplicationDescriptor applicationDescriptor);
+    IWorkbenchApplicationModel addApplication(IWorkbenchApplicationDescriptor applicationDescriptor);
 
-	IWorkbenchApplicationModel addApplication(int index, IWorkbenchApplicationDescriptor applicationDescriptor);
+    IWorkbenchApplicationModel addApplication(int index, IWorkbenchApplicationDescriptor applicationDescriptor);
 
-	IWorkbenchApplicationModel addApplication(String id, String label, String tooltip, IImageConstant icon);
+    IWorkbenchApplicationModel addApplication(String id, String label, String tooltip, IImageConstant icon);
 
-	IWorkbenchApplicationModel addApplication(String id, String label, IImageConstant icon);
+    IWorkbenchApplicationModel addApplication(String id, String label, IImageConstant icon);
 
-	IWorkbenchApplicationModel addApplication(String id, String label, String tooltip);
+    IWorkbenchApplicationModel addApplication(String id, String label, String tooltip);
 
-	IWorkbenchApplicationModel addApplication(String id, String label);
+    IWorkbenchApplicationModel addApplication(String id, String label);
 
-	IWorkbenchApplicationModel addApplication(String id);
+    IWorkbenchApplicationModel addApplication(String id);
 
-	void removeApplication(int index);
+    void removeApplication(int index);
 
-	void removeApplication(IWorkbenchApplicationModel childModel);
+    void removeApplication(IWorkbenchApplicationModel childModel);
 
-	void removeAllApplications();
+    void removeAllApplications();
 
 }

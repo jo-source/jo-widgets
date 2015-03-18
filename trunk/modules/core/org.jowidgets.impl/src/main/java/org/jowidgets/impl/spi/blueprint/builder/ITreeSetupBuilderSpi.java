@@ -30,6 +30,6 @@ package org.jowidgets.impl.spi.blueprint.builder;
 import org.jowidgets.common.widgets.builder.ITreeSetupBuilderCommon;
 
 public interface ITreeSetupBuilderSpi<INSTANCE_TYPE extends ITreeSetupBuilderSpi<?>> extends
-		ITreeSetupBuilderCommon<INSTANCE_TYPE> {
+        ITreeSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

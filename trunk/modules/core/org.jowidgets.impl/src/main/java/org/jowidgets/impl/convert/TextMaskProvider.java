@@ -33,74 +33,74 @@ import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.impl.mask.TextMaskBuilderImpl;
 
 final class TextMaskProvider {
-	private TextMaskProvider() {}
+    private TextMaskProvider() {}
 
-	static ITextMask dateMaskUS() {
-		return appendDateMaskUS(new TextMaskBuilderImpl()).build();
-	}
+    static ITextMask dateMaskUS() {
+        return appendDateMaskUS(new TextMaskBuilderImpl()).build();
+    }
 
-	static ITextMask dateTimeMaskUS() {
-		final ITextMaskBuilder builder = new TextMaskBuilderImpl();
-		appendDateMaskUS(builder);
-		builder.addDelimiter(' ');
-		appendTimeMask(builder);
-		return builder.build();
-	}
+    static ITextMask dateTimeMaskUS() {
+        final ITextMaskBuilder builder = new TextMaskBuilderImpl();
+        appendDateMaskUS(builder);
+        builder.addDelimiter(' ');
+        appendTimeMask(builder);
+        return builder.build();
+    }
 
-	static ITextMask dateMaskDE() {
-		return appendDateMaskDE(new TextMaskBuilderImpl()).build();
-	}
+    static ITextMask dateMaskDE() {
+        return appendDateMaskDE(new TextMaskBuilderImpl()).build();
+    }
 
-	static ITextMask dateTimeMaskDE() {
-		final ITextMaskBuilder builder = new TextMaskBuilderImpl();
-		appendDateMaskDE(builder);
-		builder.addDelimiter(' ');
-		appendTimeMask(builder);
-		return builder.build();
-	}
+    static ITextMask dateTimeMaskDE() {
+        final ITextMaskBuilder builder = new TextMaskBuilderImpl();
+        appendDateMaskDE(builder);
+        builder.addDelimiter(' ');
+        appendTimeMask(builder);
+        return builder.build();
+    }
 
-	static ITextMask timeMask() {
-		return appendTimeMask(new TextMaskBuilderImpl()).build();
-	}
+    static ITextMask timeMask() {
+        return appendTimeMask(new TextMaskBuilderImpl()).build();
+    }
 
-	private static ITextMaskBuilder appendDateMaskUS(final ITextMaskBuilder builder) {
-		builder.addCharacterMask("[0-1]", '_');
-		builder.addNumericMask('_');
-		builder.addDelimiter('/');
-		builder.addCharacterMask("[0-3]", '_');
-		builder.addNumericMask('_');
-		builder.addDelimiter('/');
-		builder.addNumericMask('_');
-		builder.addNumericMask('_');
-		builder.addNumericMask('_');
-		builder.addNumericMask('_');
-		return builder;
-	}
+    private static ITextMaskBuilder appendDateMaskUS(final ITextMaskBuilder builder) {
+        builder.addCharacterMask("[0-1]", '_');
+        builder.addNumericMask('_');
+        builder.addDelimiter('/');
+        builder.addCharacterMask("[0-3]", '_');
+        builder.addNumericMask('_');
+        builder.addDelimiter('/');
+        builder.addNumericMask('_');
+        builder.addNumericMask('_');
+        builder.addNumericMask('_');
+        builder.addNumericMask('_');
+        return builder;
+    }
 
-	private static ITextMaskBuilder appendDateMaskDE(final ITextMaskBuilder builder) {
-		builder.addCharacterMask("[0-3]", '_');
-		builder.addNumericMask('_');
-		builder.addDelimiter('-');
-		builder.addCharacterMask("[0-1]", '_');
-		builder.addNumericMask('_');
-		builder.addDelimiter('-');
-		builder.addNumericMask('_');
-		builder.addNumericMask('_');
-		builder.addNumericMask('_');
-		builder.addNumericMask('_');
-		return builder;
-	}
+    private static ITextMaskBuilder appendDateMaskDE(final ITextMaskBuilder builder) {
+        builder.addCharacterMask("[0-3]", '_');
+        builder.addNumericMask('_');
+        builder.addDelimiter('-');
+        builder.addCharacterMask("[0-1]", '_');
+        builder.addNumericMask('_');
+        builder.addDelimiter('-');
+        builder.addNumericMask('_');
+        builder.addNumericMask('_');
+        builder.addNumericMask('_');
+        builder.addNumericMask('_');
+        return builder;
+    }
 
-	private static ITextMaskBuilder appendTimeMask(final ITextMaskBuilder builder) {
-		builder.addCharacterMask("[0-2]", '_');
-		builder.addNumericMask('_');
-		builder.addDelimiter(':');
-		builder.addCharacterMask("[0-5]", '_');
-		builder.addNumericMask('_');
-		builder.addDelimiter(':');
-		builder.addCharacterMask("[0-5]", '_');
-		builder.addNumericMask('_');
-		return builder;
-	}
+    private static ITextMaskBuilder appendTimeMask(final ITextMaskBuilder builder) {
+        builder.addCharacterMask("[0-2]", '_');
+        builder.addNumericMask('_');
+        builder.addDelimiter(':');
+        builder.addCharacterMask("[0-5]", '_');
+        builder.addNumericMask('_');
+        builder.addDelimiter(':');
+        builder.addCharacterMask("[0-5]", '_');
+        builder.addNumericMask('_');
+        return builder;
+    }
 
 }

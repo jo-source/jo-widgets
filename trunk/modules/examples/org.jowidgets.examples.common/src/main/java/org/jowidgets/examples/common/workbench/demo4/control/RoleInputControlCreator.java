@@ -41,13 +41,13 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class RoleInputControlCreator implements ICustomWidgetCreator<IInputControl<Collection<Role>>> {
 
-	@Override
-	public IInputControl<Collection<Role>> create(final ICustomWidgetFactory widgetFactory) {
-		final IObjectStringConverter<Role> converter = Toolkit.getConverterProvider().toStringConverter();
-		final ICollectionInputFieldBluePrint<Role> bp = BPF.collectionInputField(converter);
-		bp.setCollectionInputDialogSetup(BPF.collectionInputDialog(BPF.comboBoxSelection(Role.values())));
-		bp.setFilterEmptyValues(true);
-		bp.setDublicatesAllowed(false);
-		return widgetFactory.create(bp);
-	}
+    @Override
+    public IInputControl<Collection<Role>> create(final ICustomWidgetFactory widgetFactory) {
+        final IObjectStringConverter<Role> converter = Toolkit.getConverterProvider().toStringConverter();
+        final ICollectionInputFieldBluePrint<Role> bp = BPF.collectionInputField(converter);
+        bp.setCollectionInputDialogSetup(BPF.collectionInputDialog(BPF.comboBoxSelection(Role.values())));
+        bp.setFilterEmptyValues(true);
+        bp.setDublicatesAllowed(false);
+        return widgetFactory.create(bp);
+    }
 }

@@ -35,33 +35,33 @@ import org.jowidgets.util.Assert;
 
 public final class ModifierConvert {
 
-	private ModifierConvert() {};
+    private ModifierConvert() {};
 
-	public static int convert(final List<Modifier> modifiers) {
-		int result = 0;
-		for (final Modifier modifier : modifiers) {
-			result += convert(modifier);
-		}
-		return result;
-	}
+    public static int convert(final List<Modifier> modifiers) {
+        int result = 0;
+        for (final Modifier modifier : modifiers) {
+            result += convert(modifier);
+        }
+        return result;
+    }
 
-	public static int convert(final Modifier modifier) {
-		Assert.paramNotNull(modifier, "modifier");
+    public static int convert(final Modifier modifier) {
+        Assert.paramNotNull(modifier, "modifier");
 
-		if (modifier == Modifier.ALT) {
-			return InputEvent.ALT_DOWN_MASK;
-		}
-		else if (modifier == Modifier.CTRL) {
-			return InputEvent.CTRL_DOWN_MASK;
-		}
-		else if (modifier == Modifier.SHIFT) {
-			return InputEvent.SHIFT_DOWN_MASK;
-		}
+        if (modifier == Modifier.ALT) {
+            return InputEvent.ALT_DOWN_MASK;
+        }
+        else if (modifier == Modifier.CTRL) {
+            return InputEvent.CTRL_DOWN_MASK;
+        }
+        else if (modifier == Modifier.SHIFT) {
+            return InputEvent.SHIFT_DOWN_MASK;
+        }
 
-		else {
-			throw new IllegalArgumentException("Modifier '" + modifier + "' is unknown");
-		}
+        else {
+            throw new IllegalArgumentException("Modifier '" + modifier + "' is unknown");
+        }
 
-	}
+    }
 
 }

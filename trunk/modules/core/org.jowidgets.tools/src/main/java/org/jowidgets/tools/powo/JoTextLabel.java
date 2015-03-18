@@ -36,74 +36,74 @@ import org.jowidgets.common.types.Markup;
 
 public class JoTextLabel extends Control<ITextLabel, ITextLabelBluePrint> implements ITextLabel {
 
-	public JoTextLabel(final String text) {
-		this(Toolkit.getBluePrintFactory().textLabel(text));
-	}
+    public JoTextLabel(final String text) {
+        this(Toolkit.getBluePrintFactory().textLabel(text));
+    }
 
-	public JoTextLabel(final String text, final String toolTipText) {
-		this(Toolkit.getBluePrintFactory().textLabel(text).setToolTipText(toolTipText));
-	}
+    public JoTextLabel(final String text, final String toolTipText) {
+        this(Toolkit.getBluePrintFactory().textLabel(text).setToolTipText(toolTipText));
+    }
 
-	public JoTextLabel(final ITextLabelDescriptor descriptor) {
-		super(Toolkit.getBluePrintFactory().textLabel().setSetup(descriptor));
-	}
+    public JoTextLabel(final ITextLabelDescriptor descriptor) {
+        super(Toolkit.getBluePrintFactory().textLabel().setSetup(descriptor));
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		if (isInitialized()) {
-			getWidget().setMarkup(markup);
-		}
-		else {
-			getBluePrint().setMarkup(markup);
-		}
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        if (isInitialized()) {
+            getWidget().setMarkup(markup);
+        }
+        else {
+            getBluePrint().setMarkup(markup);
+        }
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		if (isInitialized()) {
-			getWidget().setFontSize(size);
-		}
-		else {
-			getBluePrint().setFontSize(size);
-		}
-	}
+    @Override
+    public void setFontSize(final int size) {
+        if (isInitialized()) {
+            getWidget().setFontSize(size);
+        }
+        else {
+            getBluePrint().setFontSize(size);
+        }
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		if (isInitialized()) {
-			getWidget().setFontName(fontName);
-		}
-		else {
-			getBluePrint().setFontName(fontName);
-		}
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        if (isInitialized()) {
+            getWidget().setFontName(fontName);
+        }
+        else {
+            getBluePrint().setFontName(fontName);
+        }
+    }
 
-	@Override
-	public void setText(final String text) {
-		if (isInitialized()) {
-			getWidget().setText(text);
-		}
-		else {
-			getBluePrint().setText(text);
-		}
-	}
+    @Override
+    public void setText(final String text) {
+        if (isInitialized()) {
+            getWidget().setText(text);
+        }
+        else {
+            getBluePrint().setText(text);
+        }
+    }
 
-	@Override
-	public String getText() {
-		if (isInitialized()) {
-			return getWidget().getText();
-		}
-		else {
-			return getBluePrint().getText();
-		}
-	}
+    @Override
+    public String getText() {
+        if (isInitialized()) {
+            return getWidget().getText();
+        }
+        else {
+            return getBluePrint().getText();
+        }
+    }
 
-	public static ITextLabelBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().textLabel();
-	}
+    public static ITextLabelBluePrint bluePrint() {
+        return Toolkit.getBluePrintFactory().textLabel();
+    }
 
-	public static ITextLabelBluePrint bluePrint(final String text) {
-		return Toolkit.getBluePrintFactory().textLabel(text);
-	}
+    public static ITextLabelBluePrint bluePrint(final String text) {
+        return Toolkit.getBluePrintFactory().textLabel(text);
+    }
 
 }

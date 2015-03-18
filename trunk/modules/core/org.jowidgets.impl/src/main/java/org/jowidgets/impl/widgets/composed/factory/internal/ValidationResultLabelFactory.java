@@ -38,31 +38,31 @@ import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
 public class ValidationResultLabelFactory implements IWidgetFactory<IValidationResultLabel, IValidationResultLabelDescriptor> {
 
-	private final IGenericWidgetFactory genericWidgetFactory;
+    private final IGenericWidgetFactory genericWidgetFactory;
 
-	public ValidationResultLabelFactory(final IGenericWidgetFactory genericWidgetFactory) {
-		super();
-		this.genericWidgetFactory = genericWidgetFactory;
-	}
+    public ValidationResultLabelFactory(final IGenericWidgetFactory genericWidgetFactory) {
+        super();
+        this.genericWidgetFactory = genericWidgetFactory;
+    }
 
-	@Override
-	public IValidationResultLabel create(final Object parentUiReference, final IValidationResultLabelDescriptor descriptor) {
+    @Override
+    public IValidationResultLabel create(final Object parentUiReference, final IValidationResultLabelDescriptor descriptor) {
 
-		final ILabelBluePrint labelDescriptor = new BluePrintFactory().label();
+        final ILabelBluePrint labelDescriptor = new BluePrintFactory().label();
 
-		final ILabel labelWidget = genericWidgetFactory.create(parentUiReference, labelDescriptor);
+        final ILabel labelWidget = genericWidgetFactory.create(parentUiReference, labelDescriptor);
 
-		if (labelWidget == null) {
-			throw new IllegalStateException("Could not create widget with descriptor interface class '"
-				+ IValidationResultLabelDescriptor.class
-				+ "' from '"
-				+ IGenericWidgetFactory.class.getName()
-				+ "'");
-		}
+        if (labelWidget == null) {
+            throw new IllegalStateException("Could not create widget with descriptor interface class '"
+                + IValidationResultLabelDescriptor.class
+                + "' from '"
+                + IGenericWidgetFactory.class.getName()
+                + "'");
+        }
 
-		final ValidationResultLabelImpl result = new ValidationResultLabelImpl(labelWidget, descriptor);
+        final ValidationResultLabelImpl result = new ValidationResultLabelImpl(labelWidget, descriptor);
 
-		return result;
-	}
+        return result;
+    }
 
 }

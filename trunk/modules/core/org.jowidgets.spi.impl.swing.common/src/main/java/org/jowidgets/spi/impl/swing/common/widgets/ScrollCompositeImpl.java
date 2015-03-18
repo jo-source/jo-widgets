@@ -60,281 +60,281 @@ import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 
 public class ScrollCompositeImpl implements IScrollCompositeSpi {
 
-	private final SwingComposite outerContainer;
-	private final SwingContainer innerContainer;
+    private final SwingComposite outerContainer;
+    private final SwingContainer innerContainer;
 
-	public ScrollCompositeImpl(final IGenericWidgetFactory factory, final IScrollCompositeSetupSpi setup) {
+    public ScrollCompositeImpl(final IGenericWidgetFactory factory, final IScrollCompositeSetupSpi setup) {
 
-		final JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBorder(BorderFactory.createEmptyBorder());
-		scrollPane.setViewportBorder(BorderConvert.convert(setup.getBorder()));
-		scrollPane.getViewport().setBackground(null);
+        final JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        scrollPane.setViewportBorder(BorderConvert.convert(setup.getBorder()));
+        scrollPane.getViewport().setBackground(null);
 
-		final int horizontalPolicy = ScrollBarSettingsConvert.convertHorizontal(setup);
-		final int verticalPolicy = ScrollBarSettingsConvert.convertVertical(setup);
+        final int horizontalPolicy = ScrollBarSettingsConvert.convertHorizontal(setup);
+        final int verticalPolicy = ScrollBarSettingsConvert.convertVertical(setup);
 
-		scrollPane.setVerticalScrollBarPolicy(verticalPolicy);
-		scrollPane.setHorizontalScrollBarPolicy(horizontalPolicy);
+        scrollPane.setVerticalScrollBarPolicy(verticalPolicy);
+        scrollPane.setHorizontalScrollBarPolicy(horizontalPolicy);
 
-		this.outerContainer = new SwingComposite(factory, scrollPane, new ImmutableDropSelection(this));
-		outerContainer.setBackgroundColor(null);
+        this.outerContainer = new SwingComposite(factory, scrollPane, new ImmutableDropSelection(this));
+        outerContainer.setBackgroundColor(null);
 
-		final JPanel innerPanel = new JPanel();
-		innerPanel.setBorder(BorderFactory.createEmptyBorder());
-		this.innerContainer = new SwingContainer(factory, innerPanel);
-		innerContainer.setBackgroundColor(null);
+        final JPanel innerPanel = new JPanel();
+        innerPanel.setBorder(BorderFactory.createEmptyBorder());
+        this.innerContainer = new SwingContainer(factory, innerPanel);
+        innerContainer.setBackgroundColor(null);
 
-		scrollPane.setViewportView(innerContainer.getUiReference());
+        scrollPane.setViewportView(innerContainer.getUiReference());
 
-	}
+    }
 
-	@Override
-	public final void setLayout(final ILayoutDescriptor layout) {
-		innerContainer.setLayout(layout);
-	}
+    @Override
+    public final void setLayout(final ILayoutDescriptor layout) {
+        innerContainer.setLayout(layout);
+    }
 
-	@Override
-	public JScrollPane getUiReference() {
-		return (JScrollPane) outerContainer.getUiReference();
-	}
+    @Override
+    public JScrollPane getUiReference() {
+        return (JScrollPane) outerContainer.getUiReference();
+    }
 
-	@Override
-	public Rectangle getClientArea() {
-		return innerContainer.getClientArea();
-	}
+    @Override
+    public Rectangle getClientArea() {
+        return innerContainer.getClientArea();
+    }
 
-	@Override
-	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
-		return outerContainer.computeDecoratedSize(clientAreaSize);
-	}
+    @Override
+    public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+        return outerContainer.computeDecoratedSize(clientAreaSize);
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		return outerContainer.getMinSize();
-	}
+    @Override
+    public Dimension getMinSize() {
+        return outerContainer.getMinSize();
+    }
 
-	@Override
-	public Dimension getPreferredSize() {
-		return outerContainer.getPreferredSize();
-	}
+    @Override
+    public Dimension getPreferredSize() {
+        return outerContainer.getPreferredSize();
+    }
 
-	@Override
-	public Dimension getMaxSize() {
-		return outerContainer.getMaxSize();
-	}
+    @Override
+    public Dimension getMaxSize() {
+        return outerContainer.getMaxSize();
+    }
 
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		outerContainer.setLayoutConstraints(layoutConstraints);
-	}
+    @Override
+    public void setLayoutConstraints(final Object layoutConstraints) {
+        outerContainer.setLayoutConstraints(layoutConstraints);
+    }
 
-	@Override
-	public Object getLayoutConstraints() {
-		return outerContainer.getLayoutConstraints();
-	}
+    @Override
+    public Object getLayoutConstraints() {
+        return outerContainer.getLayoutConstraints();
+    }
 
-	@Override
-	public void redraw() {
-		outerContainer.redraw();
-	}
+    @Override
+    public void redraw() {
+        outerContainer.redraw();
+    }
 
-	@Override
-	public void setRedrawEnabled(final boolean enabled) {
-		outerContainer.setRedrawEnabled(enabled);
-	}
+    @Override
+    public void setRedrawEnabled(final boolean enabled) {
+        outerContainer.setRedrawEnabled(enabled);
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		outerContainer.setVisible(visible);
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        outerContainer.setVisible(visible);
+    }
 
-	@Override
-	public boolean isVisible() {
-		return outerContainer.isVisible();
-	}
+    @Override
+    public boolean isVisible() {
+        return outerContainer.isVisible();
+    }
 
-	@Override
-	public Dimension getSize() {
-		return outerContainer.getSize();
-	}
+    @Override
+    public Dimension getSize() {
+        return outerContainer.getSize();
+    }
 
-	@Override
-	public void setSize(final Dimension size) {
-		outerContainer.setSize(size);
-	}
+    @Override
+    public void setSize(final Dimension size) {
+        outerContainer.setSize(size);
+    }
 
-	@Override
-	public Position getPosition() {
-		return outerContainer.getPosition();
-	}
+    @Override
+    public Position getPosition() {
+        return outerContainer.getPosition();
+    }
 
-	@Override
-	public void setPosition(final Position position) {
-		outerContainer.setPosition(position);
-	}
+    @Override
+    public void setPosition(final Position position) {
+        outerContainer.setPosition(position);
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		outerContainer.setEnabled(enabled);
-		innerContainer.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        outerContainer.setEnabled(enabled);
+        innerContainer.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return outerContainer.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return outerContainer.isEnabled();
+    }
 
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		outerContainer.setForegroundColor(colorValue);
-		innerContainer.setForegroundColor(colorValue);
-	}
+    @Override
+    public void setForegroundColor(final IColorConstant colorValue) {
+        outerContainer.setForegroundColor(colorValue);
+        innerContainer.setForegroundColor(colorValue);
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		outerContainer.setBackgroundColor(colorValue);
-		innerContainer.setBackgroundColor(colorValue);
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        outerContainer.setBackgroundColor(colorValue);
+        innerContainer.setBackgroundColor(colorValue);
+    }
 
-	@Override
-	public IColorConstant getForegroundColor() {
-		return innerContainer.getForegroundColor();
-	}
+    @Override
+    public IColorConstant getForegroundColor() {
+        return innerContainer.getForegroundColor();
+    }
 
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return innerContainer.getBackgroundColor();
-	}
+    @Override
+    public IColorConstant getBackgroundColor() {
+        return innerContainer.getBackgroundColor();
+    }
 
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return innerContainer.createPopupMenu();
-	}
+    @Override
+    public IPopupMenuSpi createPopupMenu() {
+        return innerContainer.createPopupMenu();
+    }
 
-	@Override
-	public boolean requestFocus() {
-		return innerContainer.requestFocus();
-	}
+    @Override
+    public boolean requestFocus() {
+        return innerContainer.requestFocus();
+    }
 
-	@Override
-	public void addFocusListener(final IFocusListener listener) {
-		innerContainer.addFocusListener(listener);
-	}
+    @Override
+    public void addFocusListener(final IFocusListener listener) {
+        innerContainer.addFocusListener(listener);
+    }
 
-	@Override
-	public void removeFocusListener(final IFocusListener listener) {
-		innerContainer.removeFocusListener(listener);
-	}
+    @Override
+    public void removeFocusListener(final IFocusListener listener) {
+        innerContainer.removeFocusListener(listener);
+    }
 
-	@Override
-	public void addKeyListener(final IKeyListener listener) {
-		innerContainer.addKeyListener(listener);
-	}
+    @Override
+    public void addKeyListener(final IKeyListener listener) {
+        innerContainer.addKeyListener(listener);
+    }
 
-	@Override
-	public void removeKeyListener(final IKeyListener listener) {
-		innerContainer.removeKeyListener(listener);
-	}
+    @Override
+    public void removeKeyListener(final IKeyListener listener) {
+        innerContainer.removeKeyListener(listener);
+    }
 
-	@Override
-	public void addMouseListener(final IMouseListener mouseListener) {
-		innerContainer.addMouseListener(mouseListener);
-	}
+    @Override
+    public void addMouseListener(final IMouseListener mouseListener) {
+        innerContainer.addMouseListener(mouseListener);
+    }
 
-	@Override
-	public void removeMouseListener(final IMouseListener mouseListener) {
-		innerContainer.removeMouseListener(mouseListener);
-	}
+    @Override
+    public void removeMouseListener(final IMouseListener mouseListener) {
+        innerContainer.removeMouseListener(mouseListener);
+    }
 
-	@Override
-	public void addMouseMotionListener(final IMouseMotionListener listener) {
-		innerContainer.addMouseMotionListener(listener);
-	}
+    @Override
+    public void addMouseMotionListener(final IMouseMotionListener listener) {
+        innerContainer.addMouseMotionListener(listener);
+    }
 
-	@Override
-	public void removeMouseMotionListener(final IMouseMotionListener listener) {
-		innerContainer.removeMouseMotionListener(listener);
-	}
+    @Override
+    public void removeMouseMotionListener(final IMouseMotionListener listener) {
+        innerContainer.removeMouseMotionListener(listener);
+    }
 
-	@Override
-	public void addComponentListener(final IComponentListener componentListener) {
-		innerContainer.addComponentListener(componentListener);
-	}
+    @Override
+    public void addComponentListener(final IComponentListener componentListener) {
+        innerContainer.addComponentListener(componentListener);
+    }
 
-	@Override
-	public void removeComponentListener(final IComponentListener componentListener) {
-		innerContainer.removeComponentListener(componentListener);
-	}
+    @Override
+    public void removeComponentListener(final IComponentListener componentListener) {
+        innerContainer.removeComponentListener(componentListener);
+    }
 
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		innerContainer.addPopupDetectionListener(listener);
-	}
+    @Override
+    public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+        innerContainer.addPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		innerContainer.removePopupDetectionListener(listener);
-	}
+    @Override
+    public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+        innerContainer.removePopupDetectionListener(listener);
+    }
 
-	@Override
-	public void setCursor(final Cursor cursor) {
-		outerContainer.setCursor(cursor);
-	}
+    @Override
+    public void setCursor(final Cursor cursor) {
+        outerContainer.setCursor(cursor);
+    }
 
-	@Override
-	public void setTabOrder(final Collection<? extends IControlCommon> tabOrder) {
-		innerContainer.setTabOrder(tabOrder);
-	}
+    @Override
+    public void setTabOrder(final Collection<? extends IControlCommon> tabOrder) {
+        innerContainer.setTabOrder(tabOrder);
+    }
 
-	@Override
-	public IDragSourceSpi getDragSource() {
-		return outerContainer.getDragSource();
-	}
+    @Override
+    public IDragSourceSpi getDragSource() {
+        return outerContainer.getDragSource();
+    }
 
-	@Override
-	public IDropTargetSpi getDropTarget() {
-		return outerContainer.getDropTarget();
-	}
+    @Override
+    public IDropTargetSpi getDropTarget() {
+        return outerContainer.getDropTarget();
+    }
 
-	@Override
-	public final <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
-		final Integer index,
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
-		final Object cellConstraints) {
-		return innerContainer.add(index, descriptor, cellConstraints);
-	}
+    @Override
+    public final <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+        final Integer index,
+        final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+        final Object cellConstraints) {
+        return innerContainer.add(index, descriptor, cellConstraints);
+    }
 
-	@Override
-	public final <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
-		final Integer index,
-		final ICustomWidgetCreator<WIDGET_TYPE> creator,
-		final Object cellConstraints) {
-		return innerContainer.add(index, creator, cellConstraints);
-	}
+    @Override
+    public final <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+        final Integer index,
+        final ICustomWidgetCreator<WIDGET_TYPE> creator,
+        final Object cellConstraints) {
+        return innerContainer.add(index, creator, cellConstraints);
+    }
 
-	@Override
-	public boolean remove(final IControlCommon control) {
-		return innerContainer.remove(control);
-	}
+    @Override
+    public boolean remove(final IControlCommon control) {
+        return innerContainer.remove(control);
+    }
 
-	@Override
-	public void layoutBegin() {
-		outerContainer.layoutBegin();
-	}
+    @Override
+    public void layoutBegin() {
+        outerContainer.layoutBegin();
+    }
 
-	@Override
-	public void layoutEnd() {
-		outerContainer.layoutEnd();
-	}
+    @Override
+    public void layoutEnd() {
+        outerContainer.layoutEnd();
+    }
 
-	@Override
-	public void removeAll() {
-		innerContainer.removeAll();
-	}
+    @Override
+    public void removeAll() {
+        innerContainer.removeAll();
+    }
 
-	@Override
-	public void setToolTipText(final String toolTip) {
-		innerContainer.setToolTipText(toolTip);
-	}
+    @Override
+    public void setToolTipText(final String toolTip) {
+        innerContainer.setToolTipText(toolTip);
+    }
 
 }

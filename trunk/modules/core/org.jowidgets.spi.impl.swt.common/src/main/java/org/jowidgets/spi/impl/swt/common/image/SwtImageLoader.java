@@ -43,40 +43,40 @@ import org.jowidgets.util.io.IoUtils;
 @SuppressWarnings("deprecation")
 public class SwtImageLoader implements IImageFactory<Image> {
 
-	private final IImageDescriptor imageDescriptor;
+    private final IImageDescriptor imageDescriptor;
 
-	public SwtImageLoader(final IImageDescriptor imageDescriptor) {
-		this.imageDescriptor = imageDescriptor;
-	}
+    public SwtImageLoader(final IImageDescriptor imageDescriptor) {
+        this.imageDescriptor = imageDescriptor;
+    }
 
-	@Override
-	public Image createImage() {
-		InputStream inputStream = null;
-		try {
-			inputStream = getInputStream();
-			return new Image(Display.getCurrent(), inputStream);
-		}
-		catch (final IOException e) {
-			throw new RuntimeException(e);
-		}
-		finally {
-			IoUtils.tryCloseSilent(inputStream);
-		}
-	}
+    @Override
+    public Image createImage() {
+        InputStream inputStream = null;
+        try {
+            inputStream = getInputStream();
+            return new Image(Display.getCurrent(), inputStream);
+        }
+        catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            IoUtils.tryCloseSilent(inputStream);
+        }
+    }
 
-	private InputStream getInputStream() throws IOException {
-		if (imageDescriptor instanceof IUrlImageDescriptor) {
-			return ((IUrlImageDescriptor) imageDescriptor).getImageUrl().openStream();
-		}
-		else if (imageDescriptor instanceof IStreamFactoryImageDescriptor) {
-			return ((IStreamFactoryImageDescriptor) imageDescriptor).createInputStream();
-		}
-		else if (imageDescriptor instanceof IStreamImageDescriptor) {
-			return ((IStreamImageDescriptor) imageDescriptor).getInputStream();
-		}
-		else {
-			throw new IllegalArgumentException("Image decriptor type '" + imageDescriptor + "' is not known");
-		}
-	}
+    private InputStream getInputStream() throws IOException {
+        if (imageDescriptor instanceof IUrlImageDescriptor) {
+            return ((IUrlImageDescriptor) imageDescriptor).getImageUrl().openStream();
+        }
+        else if (imageDescriptor instanceof IStreamFactoryImageDescriptor) {
+            return ((IStreamFactoryImageDescriptor) imageDescriptor).createInputStream();
+        }
+        else if (imageDescriptor instanceof IStreamImageDescriptor) {
+            return ((IStreamImageDescriptor) imageDescriptor).getInputStream();
+        }
+        else {
+            throw new IllegalArgumentException("Image decriptor type '" + imageDescriptor + "' is not known");
+        }
+    }
 
 }

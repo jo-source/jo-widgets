@@ -37,10 +37,10 @@ import org.jowidgets.common.widgets.factory.IWidgetFactory;
 
 final class OleControlFactory implements IWidgetFactory<IOleControl, IOleControlBluePrint> {
 
-	@Override
-	public IOleControl create(final Object parentUiReference, final IOleControlBluePrint bluePrint) {
-		final IAwtSwtControl awtSwtControl = AwtSwtControlFactory.getInstance().createAwtSwtControl(parentUiReference);
-		return SwtOleControlFactory.createOleControl(awtSwtControl, awtSwtControl.getSwtComposite(), bluePrint);
-	}
+    @Override
+    public IOleControl create(final Object parentUiReference, final IOleControlBluePrint bluePrint) {
+        final IAwtSwtControl awtSwtControl = AwtSwtControlFactory.getInstance().createAwtSwtControl(parentUiReference);
+        return SwtOleControlFactory.createOleControl(awtSwtControl, awtSwtControl.getSwtComposite(), bluePrint);
+    }
 
 }

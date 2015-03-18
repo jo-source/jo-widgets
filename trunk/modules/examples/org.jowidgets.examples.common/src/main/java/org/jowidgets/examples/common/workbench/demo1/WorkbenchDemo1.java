@@ -47,86 +47,86 @@ import org.jowidgets.workbench.api.IWorkbenchContext;
 
 public class WorkbenchDemo1 extends AbstractDemoWorkbench {
 
-	private final Dimension initialDimension;
+    private final Dimension initialDimension;
 
-	public WorkbenchDemo1(final Dimension initialDimension) {
-		DemoIconsInitializer.initialize();
-		this.initialDimension = initialDimension;
-	}
+    public WorkbenchDemo1(final Dimension initialDimension) {
+        DemoIconsInitializer.initialize();
+        this.initialDimension = initialDimension;
+    }
 
-	@Override
-	public void onContextInitialize(final IWorkbenchContext context) {
-		context.add(new ApplicationDemo1());
-		context.add(new ApplicationDemo2());
-		createToolBar(context);
-		createMenuBar(context);
-	}
+    @Override
+    public void onContextInitialize(final IWorkbenchContext context) {
+        context.add(new ApplicationDemo1());
+        context.add(new ApplicationDemo2());
+        createToolBar(context);
+        createMenuBar(context);
+    }
 
-	@Override
-	public String getLabel() {
-		return "Hello Workbench";
-	}
+    @Override
+    public String getLabel() {
+        return "Hello Workbench";
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return SilkIcons.EMOTICON_SMILE;
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return SilkIcons.EMOTICON_SMILE;
+    }
 
-	@Override
-	public Dimension getInitialDimension() {
-		return initialDimension;
-	}
+    @Override
+    public Dimension getInitialDimension() {
+        return initialDimension;
+    }
 
-	@Override
-	public double getInitialSplitWeight() {
-		return 0.18;
-	}
+    @Override
+    public double getInitialSplitWeight() {
+        return 0.18;
+    }
 
-	@Override
-	public boolean getApplicationsCloseable() {
-		return true;
-	}
+    @Override
+    public boolean getApplicationsCloseable() {
+        return true;
+    }
 
-	private void createToolBar(final IWorkbenchContext context) {
-		final IToolBarModel toolBar = context.getToolBar();
-		toolBar.addItem(ActionItemModel.builder().setIcon(SilkIcons.DISK).setToolTipText("Save"));
-		toolBar.addSeparator();
-		toolBar.addItem(ActionItemModel.builder().setIcon(SilkIcons.CUT).setToolTipText("Cut"));
-		toolBar.addItem(ActionItemModel.builder().setIcon(SilkIcons.PAGE_COPY).setToolTipText("Copy"));
-		toolBar.addItem(ActionItemModel.builder().setIcon(SilkIcons.PASTE_PLAIN).setToolTipText("Paste"));
-		toolBar.addSeparator();
-		toolBar.addItem(ActionItemModel.builder().setIcon(SilkIcons.PRINTER).setToolTipText("Print"));
-	}
+    private void createToolBar(final IWorkbenchContext context) {
+        final IToolBarModel toolBar = context.getToolBar();
+        toolBar.addItem(ActionItemModel.builder().setIcon(SilkIcons.DISK).setToolTipText("Save"));
+        toolBar.addSeparator();
+        toolBar.addItem(ActionItemModel.builder().setIcon(SilkIcons.CUT).setToolTipText("Cut"));
+        toolBar.addItem(ActionItemModel.builder().setIcon(SilkIcons.PAGE_COPY).setToolTipText("Copy"));
+        toolBar.addItem(ActionItemModel.builder().setIcon(SilkIcons.PASTE_PLAIN).setToolTipText("Paste"));
+        toolBar.addSeparator();
+        toolBar.addItem(ActionItemModel.builder().setIcon(SilkIcons.PRINTER).setToolTipText("Print"));
+    }
 
-	private void createMenuBar(final IWorkbenchContext context) {
-		final IMenuModel fileModel = new MenuModel("File");
-		fileModel.setMnemonic('F');
-		fileModel.addActionItem("New ");
-		fileModel.addActionItem("Open file... ");
-		fileModel.addSeparator();
-		fileModel.addActionItem("Save", SilkIcons.DISK);
-		fileModel.addActionItem("Save As...", SilkIcons.DISK);
-		fileModel.addSeparator();
-		final IActionItemModel exitAction = fileModel.addActionItem("Exit");
-		exitAction.setAccelerator(new Accelerator(VirtualKey.F4, Modifier.ALT));
-		exitAction.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				if (shouldWorkbenchFinished()) {
-					context.finish();
-				}
-			}
-		});
+    private void createMenuBar(final IWorkbenchContext context) {
+        final IMenuModel fileModel = new MenuModel("File");
+        fileModel.setMnemonic('F');
+        fileModel.addActionItem("New ");
+        fileModel.addActionItem("Open file... ");
+        fileModel.addSeparator();
+        fileModel.addActionItem("Save", SilkIcons.DISK);
+        fileModel.addActionItem("Save As...", SilkIcons.DISK);
+        fileModel.addSeparator();
+        final IActionItemModel exitAction = fileModel.addActionItem("Exit");
+        exitAction.setAccelerator(new Accelerator(VirtualKey.F4, Modifier.ALT));
+        exitAction.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                if (shouldWorkbenchFinished()) {
+                    context.finish();
+                }
+            }
+        });
 
-		final IMenuModel editModel = new MenuModel("Edit");
-		editModel.setMnemonic('E');
-		editModel.addActionItem("Cut", SilkIcons.CUT);
-		editModel.addActionItem("Copy", SilkIcons.PAGE_COPY);
-		editModel.addActionItem("Paste", SilkIcons.PASTE_PLAIN);
+        final IMenuModel editModel = new MenuModel("Edit");
+        editModel.setMnemonic('E');
+        editModel.addActionItem("Cut", SilkIcons.CUT);
+        editModel.addActionItem("Copy", SilkIcons.PAGE_COPY);
+        editModel.addActionItem("Paste", SilkIcons.PASTE_PLAIN);
 
-		final IMenuBarModel menuBarModel = context.getMenuBar();
-		menuBarModel.addMenu(fileModel);
-		menuBarModel.addMenu(editModel);
-	}
+        final IMenuBarModel menuBarModel = context.getMenuBar();
+        menuBarModel.addMenu(fileModel);
+        menuBarModel.addMenu(editModel);
+    }
 
 }

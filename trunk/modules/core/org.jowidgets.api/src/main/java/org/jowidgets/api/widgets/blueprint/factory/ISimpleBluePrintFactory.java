@@ -64,72 +64,72 @@ import org.jowidgets.unit.api.IUnitSet;
 
 public interface ISimpleBluePrintFactory extends IBasicBluePrintFactory {
 
-	ILabelBluePrint label();
+    ILabelBluePrint label();
 
-	ITextSeparatorBluePrint textSeparator();
+    ITextSeparatorBluePrint textSeparator();
 
-	IInputComponentValidationLabelBluePrint inputComponentValidationLabel(IInputComponent<?> inputComponent);
+    IInputComponentValidationLabelBluePrint inputComponentValidationLabel(IInputComponent<?> inputComponent);
 
-	IInputComponentValidationLabelBluePrint inputComponentValidationLabel();
+    IInputComponentValidationLabelBluePrint inputComponentValidationLabel();
 
-	IValidationResultLabelBluePrint validationResultLabel();
+    IValidationResultLabelBluePrint validationResultLabel();
 
-	<INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField();
+    <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField();
 
-	<INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IConverter<INPUT_TYPE> converter);
+    <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IConverter<INPUT_TYPE> converter);
 
-	<INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IObjectStringConverter<INPUT_TYPE> converter);
+    <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IObjectStringConverter<INPUT_TYPE> converter);
 
-	<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField();
+    <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField();
 
-	<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
-		Class<? extends UNIT_VALUE_TYPE> inputFieldType);
+    <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
+        Class<? extends UNIT_VALUE_TYPE> inputFieldType);
 
-	<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
-		IUnitSet unitSet,
-		IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter,
-		IInputFieldDescriptor<UNIT_VALUE_TYPE> inputField);
+    <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
+        IUnitSet unitSet,
+        IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter,
+        IInputFieldDescriptor<UNIT_VALUE_TYPE> inputField);
 
-	<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
-		IUnitSet unitSet,
-		IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter,
-		Class<? extends UNIT_VALUE_TYPE> inputFieldType);
+    <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
+        IUnitSet unitSet,
+        IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter,
+        Class<? extends UNIT_VALUE_TYPE> inputFieldType);
 
-	IMessageDialogBluePrint messageDialog();
+    IMessageDialogBluePrint messageDialog();
 
-	IQuestionDialogBluePrint questionDialog();
+    IQuestionDialogBluePrint questionDialog();
 
-	IProgressBarBluePrint progressBar();
+    IProgressBarBluePrint progressBar();
 
-	<INPUT_TYPE> IInputDialogBluePrint<INPUT_TYPE> inputDialog(final IInputContentCreator<INPUT_TYPE> contentCreator);
+    <INPUT_TYPE> IInputDialogBluePrint<INPUT_TYPE> inputDialog(final IInputContentCreator<INPUT_TYPE> contentCreator);
 
-	<INPUT_TYPE> IInputCompositeBluePrint<INPUT_TYPE> inputComposite(final IInputContentCreator<INPUT_TYPE> contentCreator);
+    <INPUT_TYPE> IInputCompositeBluePrint<INPUT_TYPE> inputComposite(final IInputContentCreator<INPUT_TYPE> contentCreator);
 
-	ILoginDialogBluePrint loginDialog(ILoginInterceptor interceptor);
+    ILoginDialogBluePrint loginDialog(ILoginInterceptor interceptor);
 
-	IPasswordChangeDialogBluePrint passwordChangeDialog(IPasswordChangeExecutor executor);
+    IPasswordChangeDialogBluePrint passwordChangeDialog(IPasswordChangeExecutor executor);
 
-	<ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(
-		ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> widgetCreator);
+    <ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(
+        ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> widgetCreator);
 
-	<ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
-		ICollectionInputControlSetup<ELEMENT_TYPE> setup);
+    <ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
+        ICollectionInputControlSetup<ELEMENT_TYPE> setup);
 
-	<ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField(IConverter<ELEMENT_TYPE> converter);
+    <ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField(IConverter<ELEMENT_TYPE> converter);
 
-	<ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField(
-		IObjectStringConverter<ELEMENT_TYPE> converter);
+    <ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField(
+        IObjectStringConverter<ELEMENT_TYPE> converter);
 
-	<ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField();
+    <ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField();
 
-	<ELEMENT_TYPE> ICombinedCollectionInputFieldBluePrint<ELEMENT_TYPE> combinedCollectionInputField(
-		ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> elementTypeCreator,
-		ICustomWidgetCreator<IInputControl<? extends Collection<ELEMENT_TYPE>>> collectionTypeCreator);
+    <ELEMENT_TYPE> ICombinedCollectionInputFieldBluePrint<ELEMENT_TYPE> combinedCollectionInputField(
+        ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> elementTypeCreator,
+        ICustomWidgetCreator<IInputControl<? extends Collection<ELEMENT_TYPE>>> collectionTypeCreator);
 
-	IExpandCompositeBluePrint expandComposite();
+    IExpandCompositeBluePrint expandComposite();
 
-	<VALUE_TYPE> ISliderViewerBluePrint<VALUE_TYPE> sliderViewer();
+    <VALUE_TYPE> ISliderViewerBluePrint<VALUE_TYPE> sliderViewer();
 
-	<VALUE_TYPE> ISliderViewerBluePrint<VALUE_TYPE> sliderViewer(ISliderViewerConverter<VALUE_TYPE> converter);
+    <VALUE_TYPE> ISliderViewerBluePrint<VALUE_TYPE> sliderViewer(ISliderViewerConverter<VALUE_TYPE> converter);
 
 }

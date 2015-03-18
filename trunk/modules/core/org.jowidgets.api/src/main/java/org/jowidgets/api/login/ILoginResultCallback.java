@@ -30,10 +30,10 @@ package org.jowidgets.api.login;
 
 public interface ILoginResultCallback {
 
-	void addCancelListener(ILoginCancelListener cancelListener);
+    void addCancelListener(ILoginCancelListener cancelListener);
 
-	void granted();
+    void granted();
 
-	void denied(String reason);
+    void denied(String reason);
 
 }

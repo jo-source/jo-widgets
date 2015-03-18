@@ -34,8 +34,8 @@ import org.jowidgets.spi.dnd.IDropTargetSpi;
 
 public interface IControlSpi extends IComponentSpi, IControlCommon {
 
-	IDragSourceSpi getDragSource();
+    IDragSourceSpi getDragSource();
 
-	IDropTargetSpi getDropTarget();
+    IDropTargetSpi getDropTarget();
 
 }

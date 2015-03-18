@@ -30,6 +30,6 @@ package org.jowidgets.api.widgets.blueprint.builder;
 import org.jowidgets.common.widgets.builder.IFileChooserSetupBuilderCommon;
 
 public interface IFileChooserSetupBuilder<INSTANCE_TYPE extends IFileChooserSetupBuilder<?>> extends
-		IFileChooserSetupBuilderCommon<INSTANCE_TYPE> {
+        IFileChooserSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

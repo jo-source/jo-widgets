@@ -32,11 +32,11 @@ import org.jowidgets.api.widgets.ITreeNode;
 
 public class DefaultTreeNodeRenderer<VALUE_TYPE> extends TreeNodeRendererAdapter<VALUE_TYPE> {
 
-	@Override
-	public void dataChanged(final VALUE_TYPE value, final ITreeNode node) {
-		if (value != null) {
-			node.setText(value.toString());
-		}
-	}
+    @Override
+    public void dataChanged(final VALUE_TYPE value, final ITreeNode node) {
+        if (value != null) {
+            node.setText(value.toString());
+        }
+    }
 
 }

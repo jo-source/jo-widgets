@@ -33,22 +33,22 @@ import org.jowidgets.api.widgets.ITreeNode;
 
 public class TreeNodeRendererAdapter<VALUE_TYPE> implements ITreeNodeRenderer<VALUE_TYPE> {
 
-	@Override
-	public void nodeCreated(final VALUE_TYPE value, final ITreeNode node) {}
+    @Override
+    public void nodeCreated(final VALUE_TYPE value, final ITreeNode node) {}
 
-	@Override
-	public void dataChanged(final VALUE_TYPE value, final ITreeNode node) {}
+    @Override
+    public void dataChanged(final VALUE_TYPE value, final ITreeNode node) {}
 
-	@Override
-	public void selectionChanged(final VALUE_TYPE value, final ITreeNode node) {}
+    @Override
+    public void selectionChanged(final VALUE_TYPE value, final ITreeNode node) {}
 
-	@Override
-	public void checkedChanged(final VALUE_TYPE value, final ITreeNode node) {}
+    @Override
+    public void checkedChanged(final VALUE_TYPE value, final ITreeNode node) {}
 
-	@Override
-	public void expansionChanged(final VALUE_TYPE value, final ITreeNode node) {}
+    @Override
+    public void expansionChanged(final VALUE_TYPE value, final ITreeNode node) {}
 
-	@Override
-	public void disposeNode(final VALUE_TYPE value, final ITreeNode node) {}
+    @Override
+    public void disposeNode(final VALUE_TYPE value, final ITreeNode node) {}
 
 }

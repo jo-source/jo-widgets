@@ -47,56 +47,56 @@ import org.junit.Test;
 
 public final class BluePrintFactoryAnnotationsTest {
 
-	private static final IBluePrintFactory BLUE_PRINT_FACTORY = Toolkit.getBluePrintFactory();
-	private DummyBluePrintFactory dummyBluePrintFactory;
+    private static final IBluePrintFactory BLUE_PRINT_FACTORY = Toolkit.getBluePrintFactory();
+    private DummyBluePrintFactory dummyBluePrintFactory;
 
-	private Hierarchy1stDefaults hierarchy1stDefault;
-	private Hierarchy2nd1Defaults hierarchy2nd1Default;
-	private Hierarchy2nd2Defaults hierarchy2nd2Default;
-	private Hierarchy3rdDefaults hierarchy3rdDefault;
-	private Hierarchy4thDefaults hierarchy4thDefault;
-	private IDefaultsInitializerRegistry defaultsInitializerRegistry;
-	private Hierarchy2nd3Defaults hierarchy2nd3Default;
+    private Hierarchy1stDefaults hierarchy1stDefault;
+    private Hierarchy2nd1Defaults hierarchy2nd1Default;
+    private Hierarchy2nd2Defaults hierarchy2nd2Default;
+    private Hierarchy3rdDefaults hierarchy3rdDefault;
+    private Hierarchy4thDefaults hierarchy4thDefault;
+    private IDefaultsInitializerRegistry defaultsInitializerRegistry;
+    private Hierarchy2nd3Defaults hierarchy2nd3Default;
 
-	@Before
-	public void setUp() {
-		defaultsInitializerRegistry = BLUE_PRINT_FACTORY.getDefaultsInitializerRegistry();
+    @Before
+    public void setUp() {
+        defaultsInitializerRegistry = BLUE_PRINT_FACTORY.getDefaultsInitializerRegistry();
 
-		hierarchy1stDefault = new Hierarchy1stDefaults();
-		hierarchy3rdDefault = new Hierarchy3rdDefaults();
-		hierarchy4thDefault = new Hierarchy4thDefaults();
-		hierarchy2nd1Default = new Hierarchy2nd1Defaults();
-		hierarchy2nd2Default = new Hierarchy2nd2Defaults();
-		hierarchy2nd3Default = new Hierarchy2nd3Defaults();
+        hierarchy1stDefault = new Hierarchy1stDefaults();
+        hierarchy3rdDefault = new Hierarchy3rdDefaults();
+        hierarchy4thDefault = new Hierarchy4thDefaults();
+        hierarchy2nd1Default = new Hierarchy2nd1Defaults();
+        hierarchy2nd2Default = new Hierarchy2nd2Defaults();
+        hierarchy2nd3Default = new Hierarchy2nd3Defaults();
 
-		dummyBluePrintFactory = new DummyBluePrintFactory(BLUE_PRINT_FACTORY);
-		dummyBluePrintFactory.setDefaultsInitializerRegistry(new DummyDefaultsInitializerRegistry(
-			hierarchy1stDefault,
-			hierarchy2nd1Default,
-			hierarchy2nd2Default,
-			hierarchy2nd3Default,
-			hierarchy3rdDefault,
-			hierarchy4thDefault));
-	}
+        dummyBluePrintFactory = new DummyBluePrintFactory(BLUE_PRINT_FACTORY);
+        dummyBluePrintFactory.setDefaultsInitializerRegistry(new DummyDefaultsInitializerRegistry(
+            hierarchy1stDefault,
+            hierarchy2nd1Default,
+            hierarchy2nd2Default,
+            hierarchy2nd3Default,
+            hierarchy3rdDefault,
+            hierarchy4thDefault));
+    }
 
-	@After
-	public void tearDown() {
-		dummyBluePrintFactory.setDefaultsInitializerRegistry(defaultsInitializerRegistry);
-	}
+    @After
+    public void tearDown() {
+        dummyBluePrintFactory.setDefaultsInitializerRegistry(defaultsInitializerRegistry);
+    }
 
-	@Test
-	public void testAnnotations() {
-		final IHierarchy2nd3BluePrint hierarchy2nd3 = dummyBluePrintFactory.hierarchy2nd3();
+    @Test
+    public void testAnnotations() {
+        final IHierarchy2nd3BluePrint hierarchy2nd3 = dummyBluePrintFactory.hierarchy2nd3();
 
-		// overwritten with annotation-based DefaultInitializer -> see IHierarchy2nd3BluePrint
-		Assert.assertEquals(666, hierarchy2nd3.getDefaultInitializerTestValue());
+        // overwritten with annotation-based DefaultInitializer -> see IHierarchy2nd3BluePrint
+        Assert.assertEquals(666, hierarchy2nd3.getDefaultInitializerTestValue());
 
-		// implementation of convenience-method injected via annotation -> see IHierarchy2nd3Convenience
-		Assert.assertEquals(0, hierarchy2nd3.getConvenienceAnnotationCalled());
-		hierarchy2nd3.introduce2nd3("");
-		Assert.assertEquals(1, hierarchy2nd3.getConvenienceAnnotationCalled());
-		hierarchy2nd3.introduce2nd3("");
-		Assert.assertEquals(2, hierarchy2nd3.getConvenienceAnnotationCalled());
-	}
+        // implementation of convenience-method injected via annotation -> see IHierarchy2nd3Convenience
+        Assert.assertEquals(0, hierarchy2nd3.getConvenienceAnnotationCalled());
+        hierarchy2nd3.introduce2nd3("");
+        Assert.assertEquals(1, hierarchy2nd3.getConvenienceAnnotationCalled());
+        hierarchy2nd3.introduce2nd3("");
+        Assert.assertEquals(2, hierarchy2nd3.getConvenienceAnnotationCalled());
+    }
 
 }

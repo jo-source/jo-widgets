@@ -44,103 +44,103 @@ import org.jowidgets.util.TypeCast;
 
 public class TabFolderImpl extends DummyControl implements ITabFolderSpi {
 
-	private final IGenericWidgetFactory factory;
-	private final List<TabItemImpl> items;
+    private final IGenericWidgetFactory factory;
+    private final List<TabItemImpl> items;
 
-	public TabFolderImpl(final IGenericWidgetFactory factory, final ITabFolderSetupSpi setup) {
-		super(new UIDTabFolder());
-		this.factory = factory;
-		getUiReference().setTabsCloseable(setup.isTabsCloseable());
-		getUiReference().setTabPlacement(setup.getTabPlacement());
-		items = new ArrayList<TabItemImpl>();
-	}
+    public TabFolderImpl(final IGenericWidgetFactory factory, final ITabFolderSetupSpi setup) {
+        super(new UIDTabFolder());
+        this.factory = factory;
+        getUiReference().setTabsCloseable(setup.isTabsCloseable());
+        getUiReference().setTabPlacement(setup.getTabPlacement());
+        items = new ArrayList<TabItemImpl>();
+    }
 
-	@Override
-	public UIDTabFolder getUiReference() {
-		return (UIDTabFolder) super.getUiReference();
-	}
+    @Override
+    public UIDTabFolder getUiReference() {
+        return (UIDTabFolder) super.getUiReference();
+    }
 
-	@Override
-	public void removeItem(final int index) {
-		getUiReference().remove(index);
-		items.remove(index);
-	}
+    @Override
+    public void removeItem(final int index) {
+        getUiReference().remove(index);
+        items.remove(index);
+    }
 
-	@Override
-	public void setSelectedItem(final int index) {
-		UIDTabItem tmp;
-		for (final UIDComponent comp : getUiReference().getComponents()) {
-			tmp = (UIDTabItem) comp;
-			tmp.setSelected(false);
-		}
-		tmp = (UIDTabItem) getUiReference().getComponents().get(index);
-		tmp.setSelected(true);
-		final TabItemImpl tabItemImpl = items.get(index);
-		if (tabItemImpl != null) {
-			tabItemImpl.fireSelectionStateChanged();
-		}
-	}
+    @Override
+    public void setSelectedItem(final int index) {
+        UIDTabItem tmp;
+        for (final UIDComponent comp : getUiReference().getComponents()) {
+            tmp = (UIDTabItem) comp;
+            tmp.setSelected(false);
+        }
+        tmp = (UIDTabItem) getUiReference().getComponents().get(index);
+        tmp.setSelected(true);
+        final TabItemImpl tabItemImpl = items.get(index);
+        if (tabItemImpl != null) {
+            tabItemImpl.fireSelectionStateChanged();
+        }
+    }
 
-	@Override
-	public int getSelectedIndex() {
-		for (int i = 0; i < getUiReference().getComponents().size(); i++) {
-			final UIDTabItem comp = (UIDTabItem) getUiReference().getComponents().get(i);
-			if (comp.isSelected()) {
-				return i;
-			}
-		}
-		// no item selected
-		return -1;
-	}
+    @Override
+    public int getSelectedIndex() {
+        for (int i = 0; i < getUiReference().getComponents().size(); i++) {
+            final UIDTabItem comp = (UIDTabItem) getUiReference().getComponents().get(i);
+            if (comp.isSelected()) {
+                return i;
+            }
+        }
+        // no item selected
+        return -1;
+    }
 
-	@Override
-	public ITabItemSpi addItem(final ITabItemSetupSpi setup) {
-		final TabItemImpl tabItemImpl = new TabItemImpl(factory, getUiReference(), getUiReference().isTabsCloseable());
-		items.add(tabItemImpl);
-		return tabItemImpl;
-	}
+    @Override
+    public ITabItemSpi addItem(final ITabItemSetupSpi setup) {
+        final TabItemImpl tabItemImpl = new TabItemImpl(factory, getUiReference(), getUiReference().isTabsCloseable());
+        items.add(tabItemImpl);
+        return tabItemImpl;
+    }
 
-	@Override
-	public ITabItemSpi addItem(final int index, final ITabItemSetupSpi setup) {
-		final TabItemImpl tabItemImpl = new TabItemImpl(factory, getUiReference(), getUiReference().isTabsCloseable());
-		getUiReference().add(tabItemImpl.getUiReference(), index);
-		items.add(index, tabItemImpl);
-		return tabItemImpl;
-	}
+    @Override
+    public ITabItemSpi addItem(final int index, final ITabItemSetupSpi setup) {
+        final TabItemImpl tabItemImpl = new TabItemImpl(factory, getUiReference(), getUiReference().isTabsCloseable());
+        getUiReference().add(tabItemImpl.getUiReference(), index);
+        items.add(index, tabItemImpl);
+        return tabItemImpl;
+    }
 
-	@Override
-	public void detachItem(final ITabItemSpi item) {
-		Assert.paramNotNull(item, "item");
-		final TabItemImpl result = TypeCast.toType(item, TabItemImpl.class);
-		if (items.contains(result.getUiReference())) {
-			throw new IllegalArgumentException("Item is not attached to this folder");
-		}
-		if (result.isDetached()) {
-			throw new IllegalArgumentException("Item is not detached");
-		}
-		result.detach();
-		items.remove(result);
-	}
+    @Override
+    public void detachItem(final ITabItemSpi item) {
+        Assert.paramNotNull(item, "item");
+        final TabItemImpl result = TypeCast.toType(item, TabItemImpl.class);
+        if (items.contains(result.getUiReference())) {
+            throw new IllegalArgumentException("Item is not attached to this folder");
+        }
+        if (result.isDetached()) {
+            throw new IllegalArgumentException("Item is not detached");
+        }
+        result.detach();
+        items.remove(result);
+    }
 
-	@Override
-	public void attachItem(final ITabItemSpi item) {
-		Assert.paramNotNull(item, "item");
-		final TabItemImpl result = TypeCast.toType(item, TabItemImpl.class);
-		if (!result.isDetached()) {
-			throw new IllegalArgumentException("Item is not detached");
-		}
-		result.attachItem(getUiReference().isTabsCloseable(), null);
-		items.add(result);
-	}
+    @Override
+    public void attachItem(final ITabItemSpi item) {
+        Assert.paramNotNull(item, "item");
+        final TabItemImpl result = TypeCast.toType(item, TabItemImpl.class);
+        if (!result.isDetached()) {
+            throw new IllegalArgumentException("Item is not detached");
+        }
+        result.attachItem(getUiReference().isTabsCloseable(), null);
+        items.add(result);
+    }
 
-	@Override
-	public void attachItem(final int index, final ITabItemSpi item) {
-		Assert.paramNotNull(item, "item");
-		final TabItemImpl result = TypeCast.toType(item, TabItemImpl.class);
-		if (!result.isDetached()) {
-			throw new IllegalArgumentException("Item is not detached");
-		}
-		result.attachItem(getUiReference().isTabsCloseable(), Integer.valueOf(index));
-		items.add(index, result);
-	}
+    @Override
+    public void attachItem(final int index, final ITabItemSpi item) {
+        Assert.paramNotNull(item, "item");
+        final TabItemImpl result = TypeCast.toType(item, TabItemImpl.class);
+        if (!result.isDetached()) {
+            throw new IllegalArgumentException("Item is not detached");
+        }
+        result.attachItem(getUiReference().isTabsCloseable(), Integer.valueOf(index));
+        items.add(index, result);
+    }
 }

@@ -28,9 +28,8 @@
 
 package org.jowidgets.spi.impl.swing.common.dnd;
 
-
 public interface IDropSelectionProvider {
 
-	Object getDropSelection(Object dropLocation);
+    Object getDropSelection(Object dropLocation);
 
 }

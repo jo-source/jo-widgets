@@ -42,18 +42,18 @@ import org.jowidgets.tools.powo.JoFrame;
 @Deprecated
 public final class SwingToJo {
 
-	private SwingToJo() {}
+    private SwingToJo() {}
 
-	public static JoComposite create(final JPanel panel) {
-		return JoComposite.toJoComposite(SwingToJoWrapper.create(panel));
-	}
+    public static JoComposite create(final JPanel panel) {
+        return JoComposite.toJoComposite(SwingToJoWrapper.create(panel));
+    }
 
-	public static JoFrame create(final JFrame frame) {
-		return JoFrame.toJoFrame(SwingToJoWrapper.create(frame));
-	}
+    public static JoFrame create(final JFrame frame) {
+        return JoFrame.toJoFrame(SwingToJoWrapper.create(frame));
+    }
 
-	public static JoDialog create(final JDialog dialog) {
-		return JoDialog.toJoDialog(SwingToJoWrapper.create(dialog));
-	}
+    public static JoDialog create(final JDialog dialog) {
+        return JoDialog.toJoDialog(SwingToJoWrapper.create(dialog));
+    }
 
 }

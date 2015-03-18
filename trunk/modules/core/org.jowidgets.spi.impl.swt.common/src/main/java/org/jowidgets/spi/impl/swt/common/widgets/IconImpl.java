@@ -38,26 +38,26 @@ import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
 
 public class IconImpl extends SwtControl implements IIconSpi {
 
-	public IconImpl(final Object parentUiReference, final IIconSetupSpi setup) {
+    public IconImpl(final Object parentUiReference, final IIconSetupSpi setup) {
 
-		super(new Label((Composite) parentUiReference, SWT.NONE));
+        super(new Label((Composite) parentUiReference, SWT.NONE));
 
-		setIcon(setup.getIcon());
-	}
+        setIcon(setup.getIcon());
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		final Image oldImage = getUiReference().getImage();
-		final Image newImage = SwtImageRegistry.getInstance().getImage(icon);
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        final Image oldImage = getUiReference().getImage();
+        final Image newImage = SwtImageRegistry.getInstance().getImage(icon);
 
-		if (oldImage != newImage) {
-			getUiReference().setImage(newImage);
-		}
-	}
+        if (oldImage != newImage) {
+            getUiReference().setImage(newImage);
+        }
+    }
 
-	@Override
-	public Label getUiReference() {
-		return (Label) super.getUiReference();
-	}
+    @Override
+    public Label getUiReference() {
+        return (Label) super.getUiReference();
+    }
 
 }

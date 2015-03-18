@@ -34,39 +34,39 @@ package org.jowidgets.impl.layout.miglayout;
  * Note! Returned arrays from this class will never be altered. This means that caching of arrays in these methods is OK.
  */
 abstract class AbstractLayoutCallbackCommon {
-	/**
-	 * Returns a position similar to the "pos" the component constraint.
-	 * 
-	 * @param comp The component wrapper that holds the actual component (JComponent is Swing and Control in SWT).
-	 *            <b>Should not be altered.</b>
-	 * @return The [x, y, x2, y2] as explained in the documentation for "pos". If <code>null</code> is returned nothing is done
-	 *         and this is the default.
-	 * @see UnitValueCommon
-	 * @see net.miginfocom.layout.ConstraintParserCommon#parseUnitValue(String, boolean)
-	 */
-	public UnitValueCommon[] getPosition(final IComponentWrapperCommon comp) {
-		return null;
-	}
+    /**
+     * Returns a position similar to the "pos" the component constraint.
+     * 
+     * @param comp The component wrapper that holds the actual component (JComponent is Swing and Control in SWT).
+     *            <b>Should not be altered.</b>
+     * @return The [x, y, x2, y2] as explained in the documentation for "pos". If <code>null</code> is returned nothing is done
+     *         and this is the default.
+     * @see UnitValueCommon
+     * @see net.miginfocom.layout.ConstraintParserCommon#parseUnitValue(String, boolean)
+     */
+    public UnitValueCommon[] getPosition(final IComponentWrapperCommon comp) {
+        return null;
+    }
 
-	/**
-	 * Returns a size similar to the "width" and "height" in the component constraint.
-	 * 
-	 * @param comp The component wrapper that holds the actual component (JComponent is Swing and Control in SWT).
-	 *            <b>Should not be altered.</b>
-	 * @return The [width, height] as explained in the documentation for "width" and "height". If <code>null</code> is returned
-	 *         nothing is done and this is the default.
-	 * @see net.miginfocom.layout.BoundSizeCommon
-	 * @see net.miginfocom.layout.ConstraintParserCommon#parseBoundSize(String, boolean, boolean)
-	 */
-	public BoundSizeCommon[] getSize(final IComponentWrapperCommon comp) {
-		return null;
-	}
+    /**
+     * Returns a size similar to the "width" and "height" in the component constraint.
+     * 
+     * @param comp The component wrapper that holds the actual component (JComponent is Swing and Control in SWT).
+     *            <b>Should not be altered.</b>
+     * @return The [width, height] as explained in the documentation for "width" and "height". If <code>null</code> is returned
+     *         nothing is done and this is the default.
+     * @see net.miginfocom.layout.BoundSizeCommon
+     * @see net.miginfocom.layout.ConstraintParserCommon#parseBoundSize(String, boolean, boolean)
+     */
+    public BoundSizeCommon[] getSize(final IComponentWrapperCommon comp) {
+        return null;
+    }
 
-	/**
-	 * A last minute change of the bounds. The bound for the layout cycle has been set and you can correct there
-	 * after any set of rules you like.
-	 * 
-	 * @param comp The component wrapper that holds the actual component (JComponent is Swing and Control in SWT).
-	 */
-	public void correctBounds(final IComponentWrapperCommon comp) {}
+    /**
+     * A last minute change of the bounds. The bound for the layout cycle has been set and you can correct there
+     * after any set of rules you like.
+     * 
+     * @param comp The component wrapper that holds the actual component (JComponent is Swing and Control in SWT).
+     */
+    public void correctBounds(final IComponentWrapperCommon comp) {}
 }

@@ -36,17 +36,17 @@ import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
 public class LoginDialogDefaults implements IDefaultInitializer<ILoginDialogSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final ILoginDialogSetupBuilder<?> builder) {
-		final BluePrintFactory bpF = new BluePrintFactory();
-		builder.setDecorated(false);
-		builder.setBackgroundColor(new ColorValue(197, 216, 226));
-		builder.setLoginButton(bpF.button(Messages.getString("LoginDialogDefaults.login"))); //$NON-NLS-1$
-		builder.setCancelButton(bpF.button(Messages.getString("LoginDialogDefaults.cancel"))); //$NON-NLS-1$
-		builder.setDefaultButtonPolicy(InputDialogDefaultButtonPolicy.OK);
-		builder.setCloseable(false);
-		builder.setResizable(false);
-		builder.setMinSize(new Dimension(400, 200));
-	}
+    @Override
+    public void initialize(final ILoginDialogSetupBuilder<?> builder) {
+        final BluePrintFactory bpF = new BluePrintFactory();
+        builder.setDecorated(false);
+        builder.setBackgroundColor(new ColorValue(197, 216, 226));
+        builder.setLoginButton(bpF.button(Messages.getString("LoginDialogDefaults.login"))); //$NON-NLS-1$
+        builder.setCancelButton(bpF.button(Messages.getString("LoginDialogDefaults.cancel"))); //$NON-NLS-1$
+        builder.setDefaultButtonPolicy(InputDialogDefaultButtonPolicy.OK);
+        builder.setCloseable(false);
+        builder.setResizable(false);
+        builder.setMinSize(new Dimension(400, 200));
+    }
 
 }

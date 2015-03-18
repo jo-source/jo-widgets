@@ -32,8 +32,8 @@ import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
 import org.jowidgets.common.widgets.builder.ISetupBuilder;
 
 public interface IHierarchy1stSetupBuilder<INSTANCE_TYPE extends IHierarchy1stSetupBuilder<?>> extends
-		ISetupBuilder<INSTANCE_TYPE>,
-		IComponentSetupBuilder<INSTANCE_TYPE> {
+        ISetupBuilder<INSTANCE_TYPE>,
+        IComponentSetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setIntro(String intro);
+    INSTANCE_TYPE setIntro(String intro);
 }

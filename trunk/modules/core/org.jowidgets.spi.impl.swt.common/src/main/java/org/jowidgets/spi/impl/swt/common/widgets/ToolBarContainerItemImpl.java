@@ -57,216 +57,216 @@ import org.jowidgets.spi.widgets.IToolBarContainerItemSpi;
 
 public class ToolBarContainerItemImpl extends ToolBarItemImpl implements IToolBarContainerItemSpi {
 
-	private final SwtComposite swtComposite;
-	private final Composite composite;
+    private final SwtComposite swtComposite;
+    private final Composite composite;
 
-	public ToolBarContainerItemImpl(final ToolItem item, final ToolBar toolBar, final IGenericWidgetFactory factory) {
-		super(item);
+    public ToolBarContainerItemImpl(final ToolItem item, final ToolBar toolBar, final IGenericWidgetFactory factory) {
+        super(item);
 
-		this.composite = new Composite(toolBar, SWT.NONE);
-		composite.setLayout(new MigLayout("", "0[grow]0", "0[grow]0"));
+        this.composite = new Composite(toolBar, SWT.NONE);
+        composite.setLayout(new MigLayout("", "0[grow]0", "0[grow]0"));
 
-		item.setControl(composite);
+        item.setControl(composite);
 
-		this.swtComposite = new SwtComposite(factory, composite);
-	}
+        this.swtComposite = new SwtComposite(factory, composite);
+    }
 
-	@Override
-	public void setTabOrder(final Collection<? extends IControlCommon> tabOrder) {
-		swtComposite.setTabOrder(tabOrder);
-	}
+    @Override
+    public void setTabOrder(final Collection<? extends IControlCommon> tabOrder) {
+        swtComposite.setTabOrder(tabOrder);
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
-		final Integer index,
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
-		final Object layoutConstraints) {
-		final WIDGET_TYPE result = swtComposite.add(index, descriptor, layoutConstraints);
+    @Override
+    public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+        final Integer index,
+        final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+        final Object layoutConstraints) {
+        final WIDGET_TYPE result = swtComposite.add(index, descriptor, layoutConstraints);
 
-		return result;
-	}
+        return result;
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
-		final Integer index,
-		final ICustomWidgetCreator<WIDGET_TYPE> creator,
-		final Object layoutConstraints) {
-		return swtComposite.add(index, creator, layoutConstraints);
-	}
+    @Override
+    public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+        final Integer index,
+        final ICustomWidgetCreator<WIDGET_TYPE> creator,
+        final Object layoutConstraints) {
+        return swtComposite.add(index, creator, layoutConstraints);
+    }
 
-	@Override
-	public boolean remove(final IControlCommon control) {
-		return swtComposite.remove(control);
-	}
+    @Override
+    public boolean remove(final IControlCommon control) {
+        return swtComposite.remove(control);
+    }
 
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return swtComposite.createPopupMenu();
-	}
+    @Override
+    public IPopupMenuSpi createPopupMenu() {
+        return swtComposite.createPopupMenu();
+    }
 
-	@Override
-	public void redraw() {
-		swtComposite.redraw();
-	}
+    @Override
+    public void redraw() {
+        swtComposite.redraw();
+    }
 
-	@Override
-	public void setRedrawEnabled(final boolean enabled) {
-		swtComposite.setRedrawEnabled(enabled);
-	}
+    @Override
+    public void setRedrawEnabled(final boolean enabled) {
+        swtComposite.setRedrawEnabled(enabled);
+    }
 
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		swtComposite.setForegroundColor(colorValue);
-	}
+    @Override
+    public void setForegroundColor(final IColorConstant colorValue) {
+        swtComposite.setForegroundColor(colorValue);
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		swtComposite.setBackgroundColor(colorValue);
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        swtComposite.setBackgroundColor(colorValue);
+    }
 
-	@Override
-	public IColorConstant getForegroundColor() {
-		return swtComposite.getForegroundColor();
-	}
+    @Override
+    public IColorConstant getForegroundColor() {
+        return swtComposite.getForegroundColor();
+    }
 
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return swtComposite.getBackgroundColor();
-	}
+    @Override
+    public IColorConstant getBackgroundColor() {
+        return swtComposite.getBackgroundColor();
+    }
 
-	@Override
-	public void setCursor(final Cursor cursor) {
-		swtComposite.setCursor(cursor);
-	}
+    @Override
+    public void setCursor(final Cursor cursor) {
+        swtComposite.setCursor(cursor);
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		swtComposite.setVisible(visible);
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        swtComposite.setVisible(visible);
+    }
 
-	@Override
-	public boolean isVisible() {
-		return swtComposite.isVisible();
-	}
+    @Override
+    public boolean isVisible() {
+        return swtComposite.isVisible();
+    }
 
-	@Override
-	public Rectangle getClientArea() {
-		return swtComposite.getClientArea();
-	}
+    @Override
+    public Rectangle getClientArea() {
+        return swtComposite.getClientArea();
+    }
 
-	@Override
-	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
-		return swtComposite.computeDecoratedSize(clientAreaSize);
-	}
+    @Override
+    public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+        return swtComposite.computeDecoratedSize(clientAreaSize);
+    }
 
-	@Override
-	public Dimension getSize() {
-		return swtComposite.getSize();
-	}
+    @Override
+    public Dimension getSize() {
+        return swtComposite.getSize();
+    }
 
-	@Override
-	public void setSize(final Dimension size) {
-		swtComposite.setSize(size);
-	}
+    @Override
+    public void setSize(final Dimension size) {
+        swtComposite.setSize(size);
+    }
 
-	@Override
-	public Position getPosition() {
-		return swtComposite.getPosition();
-	}
+    @Override
+    public Position getPosition() {
+        return swtComposite.getPosition();
+    }
 
-	@Override
-	public void setPosition(final Position position) {
-		swtComposite.setPosition(position);
-	}
+    @Override
+    public void setPosition(final Position position) {
+        swtComposite.setPosition(position);
+    }
 
-	@Override
-	public boolean requestFocus() {
-		return swtComposite.requestFocus();
-	}
+    @Override
+    public boolean requestFocus() {
+        return swtComposite.requestFocus();
+    }
 
-	@Override
-	public void addFocusListener(final IFocusListener listener) {
-		swtComposite.addFocusListener(listener);
-	}
+    @Override
+    public void addFocusListener(final IFocusListener listener) {
+        swtComposite.addFocusListener(listener);
+    }
 
-	@Override
-	public void removeFocusListener(final IFocusListener listener) {
-		swtComposite.removeFocusListener(listener);
-	}
+    @Override
+    public void removeFocusListener(final IFocusListener listener) {
+        swtComposite.removeFocusListener(listener);
+    }
 
-	@Override
-	public void addKeyListener(final IKeyListener listener) {
-		swtComposite.addKeyListener(listener);
-	}
+    @Override
+    public void addKeyListener(final IKeyListener listener) {
+        swtComposite.addKeyListener(listener);
+    }
 
-	@Override
-	public void removeKeyListener(final IKeyListener listener) {
-		swtComposite.removeKeyListener(listener);
-	}
+    @Override
+    public void removeKeyListener(final IKeyListener listener) {
+        swtComposite.removeKeyListener(listener);
+    }
 
-	@Override
-	public void addMouseListener(final IMouseListener mouseListener) {
-		swtComposite.addMouseListener(mouseListener);
-	}
+    @Override
+    public void addMouseListener(final IMouseListener mouseListener) {
+        swtComposite.addMouseListener(mouseListener);
+    }
 
-	@Override
-	public void removeMouseListener(final IMouseListener mouseListener) {
-		swtComposite.removeMouseListener(mouseListener);
-	}
+    @Override
+    public void removeMouseListener(final IMouseListener mouseListener) {
+        swtComposite.removeMouseListener(mouseListener);
+    }
 
-	@Override
-	public void addMouseMotionListener(final IMouseMotionListener listener) {
-		swtComposite.addMouseMotionListener(listener);
-	}
+    @Override
+    public void addMouseMotionListener(final IMouseMotionListener listener) {
+        swtComposite.addMouseMotionListener(listener);
+    }
 
-	@Override
-	public void removeMouseMotionListener(final IMouseMotionListener listener) {
-		swtComposite.addMouseMotionListener(listener);
-	}
+    @Override
+    public void removeMouseMotionListener(final IMouseMotionListener listener) {
+        swtComposite.addMouseMotionListener(listener);
+    }
 
-	@Override
-	public void addComponentListener(final IComponentListener componentListener) {
-		swtComposite.addComponentListener(componentListener);
-	}
+    @Override
+    public void addComponentListener(final IComponentListener componentListener) {
+        swtComposite.addComponentListener(componentListener);
+    }
 
-	@Override
-	public void removeComponentListener(final IComponentListener componentListener) {
-		swtComposite.removeComponentListener(componentListener);
-	}
+    @Override
+    public void removeComponentListener(final IComponentListener componentListener) {
+        swtComposite.removeComponentListener(componentListener);
+    }
 
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		swtComposite.addPopupDetectionListener(listener);
-	}
+    @Override
+    public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+        swtComposite.addPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		swtComposite.removePopupDetectionListener(listener);
-	}
+    @Override
+    public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+        swtComposite.removePopupDetectionListener(listener);
+    }
 
-	@Override
-	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		swtComposite.setLayout(layoutDescriptor);
-	}
+    @Override
+    public void setLayout(final ILayoutDescriptor layoutDescriptor) {
+        swtComposite.setLayout(layoutDescriptor);
+    }
 
-	@Override
-	public void layoutBegin() {
-		swtComposite.layoutBegin();
-	}
+    @Override
+    public void layoutBegin() {
+        swtComposite.layoutBegin();
+    }
 
-	@Override
-	public void layoutEnd() {
-		swtComposite.layoutEnd();
-	}
+    @Override
+    public void layoutEnd() {
+        swtComposite.layoutEnd();
+    }
 
-	@Override
-	public void removeAll() {
-		swtComposite.removeAll();
-	}
+    @Override
+    public void removeAll() {
+        swtComposite.removeAll();
+    }
 
-	public void pack() {
-		composite.pack(true);
-		getUiReference().setWidth(composite.getSize().x);
-	}
+    public void pack() {
+        composite.pack(true);
+        getUiReference().setWidth(composite.getSize().x);
+    }
 
 }

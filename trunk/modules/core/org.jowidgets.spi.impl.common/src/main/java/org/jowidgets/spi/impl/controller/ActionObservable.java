@@ -38,28 +38,28 @@ import org.jowidgets.util.Assert;
 
 public class ActionObservable implements IActionObservable {
 
-	private final Set<IActionListener> listeners;
+    private final Set<IActionListener> listeners;
 
-	public ActionObservable() {
-		this.listeners = new LinkedHashSet<IActionListener>();
-	}
+    public ActionObservable() {
+        this.listeners = new LinkedHashSet<IActionListener>();
+    }
 
-	@Override
-	public final void addActionListener(final IActionListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		this.listeners.add(listener);
-	}
+    @Override
+    public final void addActionListener(final IActionListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        this.listeners.add(listener);
+    }
 
-	@Override
-	public final void removeActionListener(final IActionListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		this.listeners.remove(listener);
-	}
+    @Override
+    public final void removeActionListener(final IActionListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        this.listeners.remove(listener);
+    }
 
-	public final void fireActionPerformed() {
-		for (final IActionListener actionListener : new LinkedList<IActionListener>(listeners)) {
-			actionListener.actionPerformed();
-		}
-	}
+    public final void fireActionPerformed() {
+        for (final IActionListener actionListener : new LinkedList<IActionListener>(listeners)) {
+            actionListener.actionPerformed();
+        }
+    }
 
 }

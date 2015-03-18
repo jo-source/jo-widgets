@@ -79,89 +79,89 @@ import org.jowidgets.common.types.FileChooserType;
 
 public interface IBasicSimpleBluePrintFactory extends IBaseBluePrintFactory {
 
-	IFrameBluePrint frame();
+    IFrameBluePrint frame();
 
-	IDialogBluePrint dialog();
+    IDialogBluePrint dialog();
 
-	IPopupDialogBluePrint popupDialog();
+    IPopupDialogBluePrint popupDialog();
 
-	IFileChooserBluePrint fileChooser(FileChooserType type);
+    IFileChooserBluePrint fileChooser(FileChooserType type);
 
-	IDirectoryChooserBluePrint directoryChooser();
+    IDirectoryChooserBluePrint directoryChooser();
 
-	ICompositeBluePrint composite();
+    ICompositeBluePrint composite();
 
-	IScrollCompositeBluePrint scrollComposite();
+    IScrollCompositeBluePrint scrollComposite();
 
-	ISplitCompositeBluePrint splitComposite();
+    ISplitCompositeBluePrint splitComposite();
 
-	ITextLabelBluePrint textLabel();
+    ITextLabelBluePrint textLabel();
 
-	IIconBluePrint icon();
+    IIconBluePrint icon();
 
-	ISeparatorBluePrint separator();
+    ISeparatorBluePrint separator();
 
-	ITextFieldBluePrint textField();
+    ITextFieldBluePrint textField();
 
-	ITextAreaBluePrint textArea();
+    ITextAreaBluePrint textArea();
 
-	IButtonBluePrint button();
+    IButtonBluePrint button();
 
-	ICheckBoxBluePrint checkBox();
+    ICheckBoxBluePrint checkBox();
 
-	IToggleButtonBluePrint toggleButton();
+    IToggleButtonBluePrint toggleButton();
 
-	<INPUT_TYPE> IComboBoxBluePrint<INPUT_TYPE> comboBox(final IConverter<INPUT_TYPE> converter);
+    <INPUT_TYPE> IComboBoxBluePrint<INPUT_TYPE> comboBox(final IConverter<INPUT_TYPE> converter);
 
-	<INPUT_TYPE> IComboBoxSelectionBluePrint<INPUT_TYPE> comboBoxSelection(
-		final IObjectStringConverter<INPUT_TYPE> objectStringConverter);
+    <INPUT_TYPE> IComboBoxSelectionBluePrint<INPUT_TYPE> comboBoxSelection(
+        final IObjectStringConverter<INPUT_TYPE> objectStringConverter);
 
-	IActionMenuItemBluePrint menuItem();
+    IActionMenuItemBluePrint menuItem();
 
-	IRadioMenuItemBluePrint radioMenuItem();
+    IRadioMenuItemBluePrint radioMenuItem();
 
-	ICheckedMenuItemBluePrint checkedMenuItem();
+    ICheckedMenuItemBluePrint checkedMenuItem();
 
-	ISubMenuBluePrint subMenu();
+    ISubMenuBluePrint subMenu();
 
-	IMainMenuBluePrint mainMenu();
+    IMainMenuBluePrint mainMenu();
 
-	ISeparatorMenuItemBluePrint menuSeparator();
+    ISeparatorMenuItemBluePrint menuSeparator();
 
-	ISeparatorToolBarItemBluePrint toolBarSeparator();
+    ISeparatorToolBarItemBluePrint toolBarSeparator();
 
-	IToolBarBluePrint toolBar();
+    IToolBarBluePrint toolBar();
 
-	IToolBarButtonBluePrint toolBarButton();
+    IToolBarButtonBluePrint toolBarButton();
 
-	IToolBarToggleButtonBluePrint toolBarToggleButton();
+    IToolBarToggleButtonBluePrint toolBarToggleButton();
 
-	IToolBarPopupButtonBluePrint toolBarPopupButton();
+    IToolBarPopupButtonBluePrint toolBarPopupButton();
 
-	IToolBarMenuBluePrint toolBarMenu();
+    IToolBarMenuBluePrint toolBarMenu();
 
-	IToolBarContainerItemBluePrint toolBarContainerItem();
+    IToolBarContainerItemBluePrint toolBarContainerItem();
 
-	ITabFolderBluePrint tabFolder();
+    ITabFolderBluePrint tabFolder();
 
-	ITabItemBluePrint tabItem();
+    ITabItemBluePrint tabItem();
 
-	ITreeBluePrint tree();
+    ITreeBluePrint tree();
 
-	<ROOT_NODE_VALUE_TYPE> ITreeViewerBluePrint<ROOT_NODE_VALUE_TYPE> treeViewer(ITreeNodeModel<ROOT_NODE_VALUE_TYPE> model);
+    <ROOT_NODE_VALUE_TYPE> ITreeViewerBluePrint<ROOT_NODE_VALUE_TYPE> treeViewer(ITreeNodeModel<ROOT_NODE_VALUE_TYPE> model);
 
-	ITreeNodeBluePrint treeNode();
+    ITreeNodeBluePrint treeNode();
 
-	ITableBluePrint table(ITableModel model);
+    ITableBluePrint table(ITableModel model);
 
-	ITableBluePrint table(ITableColumnModel columnModel, ITableDataModel dataModel);
+    ITableBluePrint table(ITableColumnModel columnModel, ITableDataModel dataModel);
 
-	ICalendarBluePrint calendar();
+    ICalendarBluePrint calendar();
 
-	ISliderBluePrint slider();
+    ISliderBluePrint slider();
 
-	ICanvasBluePrint canvas();
+    ICanvasBluePrint canvas();
 
-	ILevelMeterBluePrint levelMeter(ILevelMeterModel model);
+    ILevelMeterBluePrint levelMeter(ILevelMeterModel model);
 
 }

@@ -32,11 +32,11 @@ import org.jowidgets.examples.common.snipped.BufferedImageSnipped;
 
 public final class BufferedImageSnippedStarterSwt {
 
-	private BufferedImageSnippedStarterSwt() {}
+    private BufferedImageSnippedStarterSwt() {}
 
-	public static void main(final String[] args) throws Exception {
-		Toolkit.getApplicationRunner().run(new BufferedImageSnipped());
-		System.exit(0);
-	}
+    public static void main(final String[] args) throws Exception {
+        Toolkit.getApplicationRunner().run(new BufferedImageSnipped());
+        System.exit(0);
+    }
 
 }

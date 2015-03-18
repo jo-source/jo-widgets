@@ -39,24 +39,24 @@ import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.IFileChooserSpi;
 
 public final class FileChooserFactory extends AbstractWidgetFactory implements
-		IWidgetFactory<IFileChooser, IFileChooserDescriptor> {
+        IWidgetFactory<IFileChooser, IFileChooserDescriptor> {
 
-	public FileChooserFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+    public FileChooserFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider,
+        final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
-	}
+        super(genericWidgetFactory, widgetsServiceProvider, bpF);
+    }
 
-	@Override
-	public IFileChooser create(final Object parentUiReference, final IFileChooserDescriptor descriptor) {
-		final IFileChooserBluePrintSpi bpSpi = getSpiBluePrintFactory().fileChooser();
-		bpSpi.setSetup(descriptor);
+    @Override
+    public IFileChooser create(final Object parentUiReference, final IFileChooserDescriptor descriptor) {
+        final IFileChooserBluePrintSpi bpSpi = getSpiBluePrintFactory().fileChooser();
+        bpSpi.setSetup(descriptor);
 
-		final IFileChooserSpi widget = getOptionalSpiWidgetsFactory().createFileChooser(parentUiReference, bpSpi);
+        final IFileChooserSpi widget = getOptionalSpiWidgetsFactory().createFileChooser(parentUiReference, bpSpi);
 
-		return new FileChooserImpl(widget);
-	}
+        return new FileChooserImpl(widget);
+    }
 
 }

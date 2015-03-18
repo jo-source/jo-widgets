@@ -30,8 +30,8 @@ package org.jowidgets.util;
 
 public interface ITypedPropertiesBuilder {
 
-	<PROPERTY_TYPE> ITypedPropertiesBuilder putProperty(ITypedKey<PROPERTY_TYPE> key, PROPERTY_TYPE value);
+    <PROPERTY_TYPE> ITypedPropertiesBuilder putProperty(ITypedKey<PROPERTY_TYPE> key, PROPERTY_TYPE value);
 
-	ITypedProperties build();
+    ITypedProperties build();
 
 }

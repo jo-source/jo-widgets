@@ -53,244 +53,244 @@ import org.jowidgets.spi.widgets.controller.ITabItemListenerSpi;
 
 public class TabItemImpl extends DummyContainer implements ITabItemSpi {
 
-	private final UIDTabFolder parentfolder;
-	private final UIDTabContainer tabContainer;
-	private UIDTabItem tabItem;
-	private final UIDObservable uidObservable;
-	private final Set<PopupMenuImpl> tabPopupMenus;
+    private final UIDTabFolder parentfolder;
+    private final UIDTabContainer tabContainer;
+    private UIDTabItem tabItem;
+    private final UIDObservable uidObservable;
+    private final Set<PopupMenuImpl> tabPopupMenus;
 
-	private String text;
-	private String toolTipText;
-	private IImageConstant icon;
-	private boolean detached;
+    private String text;
+    private String toolTipText;
+    private IImageConstant icon;
+    private boolean detached;
 
-	public TabItemImpl(final IGenericWidgetFactory factory, final UIDTabFolder parentFolder, final boolean closeable) {
-		this(factory, parentFolder, closeable, null);
-	}
+    public TabItemImpl(final IGenericWidgetFactory factory, final UIDTabFolder parentFolder, final boolean closeable) {
+        this(factory, parentFolder, closeable, null);
+    }
 
-	public TabItemImpl(
-		final IGenericWidgetFactory factory,
-		final UIDTabFolder parentFolder,
-		final boolean closeable,
-		final Integer index) {
+    public TabItemImpl(
+        final IGenericWidgetFactory factory,
+        final UIDTabFolder parentFolder,
+        final boolean closeable,
+        final Integer index) {
 
-		super(factory, parentFolder);
-		this.parentfolder = parentFolder;
-		this.detached = false;
+        super(factory, parentFolder);
+        this.parentfolder = parentFolder;
+        this.detached = false;
 
-		this.uidObservable = new UIDObservable();
-		this.tabContainer = new UIDTabContainer();
-		this.tabPopupMenus = new HashSet<PopupMenuImpl>();
+        this.uidObservable = new UIDObservable();
+        this.tabContainer = new UIDTabContainer();
+        this.tabPopupMenus = new HashSet<PopupMenuImpl>();
 
-		tabItem = new UIDTabItem();
+        tabItem = new UIDTabItem();
 
-		parentFolder.add(tabContainer);
-	}
+        parentFolder.add(tabContainer);
+    }
 
-	@Override
-	public UIDTabItem getUiReference() {
-		return (UIDTabItem) super.getUiReference();
-	}
+    @Override
+    public UIDTabItem getUiReference() {
+        return (UIDTabItem) super.getUiReference();
+    }
 
-	@Override
-	public void addTabPopupDetectionListener(final IPopupDetectionListener listener) {
-		uidObservable.addPopupDetectionListener(listener);
-	}
+    @Override
+    public void addTabPopupDetectionListener(final IPopupDetectionListener listener) {
+        uidObservable.addPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void removeTabPopupDetectionListener(final IPopupDetectionListener listener) {
-		uidObservable.removePopupDetectionListener(listener);
-	}
+    @Override
+    public void removeTabPopupDetectionListener(final IPopupDetectionListener listener) {
+        uidObservable.removePopupDetectionListener(listener);
+    }
 
-	@Override
-	public IPopupMenuSpi createTabPopupMenu() {
-		final PopupMenuImpl menu = new PopupMenuImpl(parentfolder);
-		tabPopupMenus.add(menu);
-		return menu;
-	}
+    @Override
+    public IPopupMenuSpi createTabPopupMenu() {
+        final PopupMenuImpl menu = new PopupMenuImpl(parentfolder);
+        tabPopupMenus.add(menu);
+        return menu;
+    }
 
-	@Override
-	public void setText(final String text) {
-		this.text = text;
-		getUiReference().setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        this.text = text;
+        getUiReference().setText(text);
+    }
 
-	@Override
-	public boolean isReparentable() {
-		return true;
-	}
+    @Override
+    public boolean isReparentable() {
+        return true;
+    }
 
-	@Override
-	public void setToolTipText(final String text) {
-		this.toolTipText = text;
-		getUiReference().setToolTipText(text);
-	}
+    @Override
+    public void setToolTipText(final String text) {
+        this.toolTipText = text;
+        getUiReference().setToolTipText(text);
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		this.icon = icon;
-		getUiReference().setIcon(icon);
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        this.icon = icon;
+        getUiReference().setIcon(icon);
 
-	}
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		tabContainer.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        tabContainer.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return tabContainer.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return tabContainer.isEnabled();
+    }
 
-	@Override
-	public boolean remove(final IControlCommon control) {
-		return tabContainer.remove((UIDComponent) control);
-	}
+    @Override
+    public boolean remove(final IControlCommon control) {
+        return tabContainer.remove((UIDComponent) control);
+    }
 
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return new PopupMenuImpl(getUiReference());
-	}
+    @Override
+    public IPopupMenuSpi createPopupMenu() {
+        return new PopupMenuImpl(getUiReference());
+    }
 
-	@Override
-	public void redraw() {
-		tabContainer.redraw();
-	}
+    @Override
+    public void redraw() {
+        tabContainer.redraw();
+    }
 
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		tabContainer.setForegroundColor(colorValue);
-	}
+    @Override
+    public void setForegroundColor(final IColorConstant colorValue) {
+        tabContainer.setForegroundColor(colorValue);
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		tabContainer.setBackgroundColor(colorValue);
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        tabContainer.setBackgroundColor(colorValue);
+    }
 
-	@Override
-	public IColorConstant getForegroundColor() {
-		return tabContainer.getForegroundColor();
-	}
+    @Override
+    public IColorConstant getForegroundColor() {
+        return tabContainer.getForegroundColor();
+    }
 
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return tabContainer.getBackgroundColor();
-	}
+    @Override
+    public IColorConstant getBackgroundColor() {
+        return tabContainer.getBackgroundColor();
+    }
 
-	@Override
-	public void setCursor(final Cursor cursor) {
-		tabContainer.setCursor(cursor);
-	}
+    @Override
+    public void setCursor(final Cursor cursor) {
+        tabContainer.setCursor(cursor);
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		tabContainer.setVisible(visible);
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        tabContainer.setVisible(visible);
+    }
 
-	@Override
-	public boolean isVisible() {
-		return tabContainer.isVisible();
-	}
+    @Override
+    public boolean isVisible() {
+        return tabContainer.isVisible();
+    }
 
-	@Override
-	public Dimension getSize() {
-		return tabContainer.getSize();
-	}
+    @Override
+    public Dimension getSize() {
+        return tabContainer.getSize();
+    }
 
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		tabContainer.addPopupDetectionListener(listener);
-	}
+    @Override
+    public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+        tabContainer.addPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		tabContainer.removePopupDetectionListener(listener);
-	}
+    @Override
+    public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+        tabContainer.removePopupDetectionListener(listener);
+    }
 
-	@Override
-	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		tabContainer.setLayoutConstraints(layoutDescriptor);
-	}
+    @Override
+    public void setLayout(final ILayoutDescriptor layoutDescriptor) {
+        tabContainer.setLayoutConstraints(layoutDescriptor);
+    }
 
-	@Override
-	public void layoutBegin() {
-		// do nothing
-	}
+    @Override
+    public void layoutBegin() {
+        // do nothing
+    }
 
-	@Override
-	public void layoutEnd() {
-		redraw();
-	}
+    @Override
+    public void layoutEnd() {
+        redraw();
+    }
 
-	@Override
-	public void removeAll() {
-		tabContainer.removeAll();
-	}
+    @Override
+    public void removeAll() {
+        tabContainer.removeAll();
+    }
 
-	@Override
-	public void addTabItemListener(final ITabItemListenerSpi listener) {
-		uidObservable.addTabItemListener(listener);
-	}
+    @Override
+    public void addTabItemListener(final ITabItemListenerSpi listener) {
+        uidObservable.addTabItemListener(listener);
+    }
 
-	@Override
-	public void removeTabItemListener(final ITabItemListenerSpi listener) {
-		uidObservable.removeTabItemListener(listener);
-	}
+    @Override
+    public void removeTabItemListener(final ITabItemListenerSpi listener) {
+        uidObservable.removeTabItemListener(listener);
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
-		final Integer index,
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
-		final Object cellConstraints) {
+    @Override
+    public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+        final Integer index,
+        final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+        final Object cellConstraints) {
 
-		//TODO MG consider index
-		final WIDGET_TYPE result = getGenericWidgetFactory().create(getUiReference(), descriptor);
-		tabContainer.add((UIDComponent) result.getUiReference(), cellConstraints);
-		return result;
-	}
+        //TODO MG consider index
+        final WIDGET_TYPE result = getGenericWidgetFactory().create(getUiReference(), descriptor);
+        tabContainer.add((UIDComponent) result.getUiReference(), cellConstraints);
+        return result;
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
-		final Integer index,
-		final ICustomWidgetCreator<WIDGET_TYPE> creator,
-		final Object cellConstraints) {
+    @Override
+    public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+        final Integer index,
+        final ICustomWidgetCreator<WIDGET_TYPE> creator,
+        final Object cellConstraints) {
 
-		final ICustomWidgetFactory customWidgetFactory = createCustomWidgetFactory();
+        final ICustomWidgetFactory customWidgetFactory = createCustomWidgetFactory();
 
-		//TODO MG consider index
-		final WIDGET_TYPE result = creator.create(customWidgetFactory);
-		tabContainer.add((UIDComponent) result.getUiReference(), cellConstraints);
-		return result;
-	}
+        //TODO MG consider index
+        final WIDGET_TYPE result = creator.create(customWidgetFactory);
+        tabContainer.add((UIDComponent) result.getUiReference(), cellConstraints);
+        return result;
+    }
 
-	public void attachItem(final boolean closeable, final Integer index) {
-		tabItem = new UIDTabItem();
-		tabItem.setText(this.text);
-		tabItem.setToolTipText(this.toolTipText);
-		tabItem.setIcon(this.icon);
-		tabItem.setCloseable(closeable);
+    public void attachItem(final boolean closeable, final Integer index) {
+        tabItem = new UIDTabItem();
+        tabItem.setText(this.text);
+        tabItem.setToolTipText(this.toolTipText);
+        tabItem.setIcon(this.icon);
+        tabItem.setCloseable(closeable);
 
-		detached = false;
-		if (index != null) {
-			tabContainer.add(tabItem, index.intValue());
-		}
-		else {
-			tabContainer.add(tabItem);
-		}
-	}
+        detached = false;
+        if (index != null) {
+            tabContainer.add(tabItem, index.intValue());
+        }
+        else {
+            tabContainer.add(tabItem);
+        }
+    }
 
-	public void detach() {
-		detached = true;
-		tabItem = null;
-	}
+    public void detach() {
+        detached = true;
+        tabItem = null;
+    }
 
-	public boolean isDetached() {
-		return detached;
-	}
+    public boolean isDetached() {
+        return detached;
+    }
 
-	void fireSelectionStateChanged() {
-		uidObservable.fireTabItemSelected();
-	}
+    void fireSelectionStateChanged() {
+        uidObservable.fireTabItemSelected();
+    }
 
 }

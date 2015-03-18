@@ -30,6 +30,8 @@ package org.jowidgets.addons.widgets.office.api;
 
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public interface IOfficeTableCalculationBluePrint extends IOfficeControlSetupBuilder<IOfficeTableCalculationBluePrint>, IWidgetDescriptor<IOfficeControl> {
+public interface IOfficeTableCalculationBluePrint extends
+        IOfficeControlSetupBuilder<IOfficeTableCalculationBluePrint>,
+        IWidgetDescriptor<IOfficeControl> {
 
 }

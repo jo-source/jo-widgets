@@ -32,10 +32,10 @@ import org.jowidgets.workbench.api.ILifecycleCallback;
 
 public class LifecycleCallbackAdapter extends CloseCallbackAdapter implements ILifecycleCallback {
 
-	@Override
-	public void onActiveStateChanged(final boolean active) {}
+    @Override
+    public void onActiveStateChanged(final boolean active) {}
 
-	@Override
-	public void onVisibleStateChanged(final boolean visible) {}
+    @Override
+    public void onVisibleStateChanged(final boolean visible) {}
 
 }

@@ -40,19 +40,19 @@ import org.jowidgets.spi.widgets.ICanvasSpi;
 
 public class CanvasFactory extends AbstractWidgetFactory implements IWidgetFactory<ICanvas, ICanvasDescriptor> {
 
-	public CanvasFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+    public CanvasFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider,
+        final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
-	}
+        super(genericWidgetFactory, widgetsServiceProvider, bpF);
+    }
 
-	@Override
-	public ICanvas create(final Object parentUiReference, final ICanvasDescriptor descriptor) {
-		final ICanvasBluePrintSpi bp = getSpiBluePrintFactory().canvas().setSetup(descriptor);
-		final ICanvasSpi canvasSpi = getSpiWidgetFactory().createCanvas(getGenericWidgetFactory(), parentUiReference, bp);
-		return new CanvasImpl(canvasSpi, descriptor);
-	}
+    @Override
+    public ICanvas create(final Object parentUiReference, final ICanvasDescriptor descriptor) {
+        final ICanvasBluePrintSpi bp = getSpiBluePrintFactory().canvas().setSetup(descriptor);
+        final ICanvasSpi canvasSpi = getSpiWidgetFactory().createCanvas(getGenericWidgetFactory(), parentUiReference, bp);
+        return new CanvasImpl(canvasSpi, descriptor);
+    }
 
 }

@@ -36,20 +36,20 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public class DemoSliderFrame extends JoFrame {
 
-	public DemoSliderFrame() {
-		super("Slider demo");
+    public DemoSliderFrame() {
+        super("Slider demo");
 
-		setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[]0"));
-		final ISlider slider = add(BPF.slider(), "growx, w 0::");
+        setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[]0"));
+        final ISlider slider = add(BPF.slider(), "growx, w 0::");
 
-		slider.addInputListener(new IInputListener() {
-			@Override
-			public void inputChanged() {
-				//CHECKSTYLE:OFF
-				System.out.println("Selection: " + slider.getSelection());
-				//CHECKSTYLE:ON
-			}
-		});
-	}
+        slider.addInputListener(new IInputListener() {
+            @Override
+            public void inputChanged() {
+                //CHECKSTYLE:OFF
+                System.out.println("Selection: " + slider.getSelection());
+                //CHECKSTYLE:ON
+            }
+        });
+    }
 
 }

@@ -33,9 +33,9 @@ import org.jowidgets.common.widgets.builder.IInputObservableSetupBuilderCommon;
 
 public class InputObservableDefaultsCommon implements IDefaultInitializer<IInputObservableSetupBuilderCommon<?>> {
 
-	@Override
-	public void initialize(final IInputObservableSetupBuilderCommon<?> builder) {
-		builder.setInputChangeEventPolicy(InputChangeEventPolicy.ANY_CHANGE);
-	}
+    @Override
+    public void initialize(final IInputObservableSetupBuilderCommon<?> builder) {
+        builder.setInputChangeEventPolicy(InputChangeEventPolicy.ANY_CHANGE);
+    }
 
 }

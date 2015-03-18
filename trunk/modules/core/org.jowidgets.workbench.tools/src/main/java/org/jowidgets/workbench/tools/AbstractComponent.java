@@ -34,16 +34,16 @@ import org.jowidgets.workbench.api.IFolderContext;
 
 public abstract class AbstractComponent implements IComponent {
 
-	@Override
-	public void onActivation() {}
+    @Override
+    public void onActivation() {}
 
-	@Override
-	public void onDeactivation(final IVetoable vetoable) {}
+    @Override
+    public void onDeactivation(final IVetoable vetoable) {}
 
-	@Override
-	public void onFolderCreated(final IFolderContext folderContext) {}
+    @Override
+    public void onFolderCreated(final IFolderContext folderContext) {}
 
-	@Override
-	public void onDispose() {}
+    @Override
+    public void onDispose() {}
 
 }

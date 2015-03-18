@@ -33,14 +33,14 @@ import org.jowidgets.spi.impl.rwt.RwtEntryPoint;
 
 public final class HelloWorldStarterRwt extends RwtEntryPoint {
 
-	//URL: http://127.0.0.1:8080/helloWorldRwt/HelloWorld
-	public HelloWorldStarterRwt() {
-		super(new Runnable() {
-			@Override
-			public void run() {
-				Toolkit.getApplicationRunner().run(new HelloWorldApplication());
-			}
-		});
-	}
+    //URL: http://127.0.0.1:8080/helloWorldRwt/HelloWorld
+    public HelloWorldStarterRwt() {
+        super(new Runnable() {
+            @Override
+            public void run() {
+                Toolkit.getApplicationRunner().run(new HelloWorldApplication());
+            }
+        });
+    }
 
 }

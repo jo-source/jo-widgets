@@ -44,45 +44,45 @@ import org.jowidgets.validation.tools.MandatoryValidator;
 
 public class HelloContentCreator2 implements IInputContentCreator<String> {
 
-	@Override
-	public void createContent(final IInputContentContainer widgetContainer) {
-		widgetContainer.setLayout(new MigLayoutDescriptor("[grow]", "[][][][]"));
+    @Override
+    public void createContent(final IInputContentContainer widgetContainer) {
+        widgetContainer.setLayout(new MigLayoutDescriptor("[grow]", "[][][][]"));
 
-		final IToolkit toolkit = Toolkit.getInstance();
+        final IToolkit toolkit = Toolkit.getInstance();
 
-		final IBluePrintFactory bpF = toolkit.getBluePrintFactory();
-		final IConverterProvider converter = toolkit.getConverterProvider();
+        final IBluePrintFactory bpF = toolkit.getBluePrintFactory();
+        final IConverterProvider converter = toolkit.getConverterProvider();
 
-		IToggleButtonBluePrint toggleButtonBluePrint = bpF.toggleButton();
-		toggleButtonBluePrint.setText("Text").setToolTipText("ToolTiptext").alignCenter();
-		widgetContainer.add("Text", toggleButtonBluePrint, "wrap, growx");
+        IToggleButtonBluePrint toggleButtonBluePrint = bpF.toggleButton();
+        toggleButtonBluePrint.setText("Text").setToolTipText("ToolTiptext").alignCenter();
+        widgetContainer.add("Text", toggleButtonBluePrint, "wrap, growx");
 
-		toggleButtonBluePrint = bpF.toggleButton();
-		toggleButtonBluePrint.setText("Text2").setToolTipText("ToolTiptext").setIcon(IconsSmall.OK).alignCenter();
-		widgetContainer.add("Text2", toggleButtonBluePrint, "wrap, growx");
+        toggleButtonBluePrint = bpF.toggleButton();
+        toggleButtonBluePrint.setText("Text2").setToolTipText("ToolTiptext").setIcon(IconsSmall.OK).alignCenter();
+        widgetContainer.add("Text2", toggleButtonBluePrint, "wrap, growx");
 
-		final ICheckBoxBluePrint checkBoxBp = bpF.checkBox().setText("Checkbox").setToolTipText("Tooltip");
-		widgetContainer.add("Checkbox", checkBoxBp, "wrap, growx");
+        final ICheckBoxBluePrint checkBoxBp = bpF.checkBox().setText("Checkbox").setToolTipText("Tooltip");
+        widgetContainer.add("Checkbox", checkBoxBp, "wrap, growx");
 
-		final IComboBoxSelectionBluePrint<String> comboBoxBp1 = bpF.comboBoxSelection(" ", "one", "two", "three");
-		widgetContainer.add("cBox1", comboBoxBp1, "wrap, growx");
+        final IComboBoxSelectionBluePrint<String> comboBoxBp1 = bpF.comboBoxSelection(" ", "one", "two", "three");
+        widgetContainer.add("cBox1", comboBoxBp1, "wrap, growx");
 
-		final IComboBoxBluePrint<String> comboBoxBp2 = bpF.comboBox("red", "green", "blue");
-		final IComboBox<String> cBox2 = widgetContainer.add("cBox2", comboBoxBp2, "wrap, growx");
-		cBox2.addValidator(new MandatoryValidator<String>("mandatory"));
+        final IComboBoxBluePrint<String> comboBoxBp2 = bpF.comboBox("red", "green", "blue");
+        final IComboBox<String> cBox2 = widgetContainer.add("cBox2", comboBoxBp2, "wrap, growx");
+        cBox2.addValidator(new MandatoryValidator<String>("mandatory"));
 
-		final IComboBoxBluePrint<Long> comboBoxBp3 = bpF.comboBox(converter.longNumber());
-		comboBoxBp3.setElements(Long.valueOf(23456), Long.valueOf(15468), Long.valueOf(5345519));
-		final IComboBox<Long> cBox3 = widgetContainer.add("cBox3", comboBoxBp3, "wrap, growx");
-		cBox3.addValidator(new MandatoryValidator<Long>("mandatory"));
-	}
+        final IComboBoxBluePrint<Long> comboBoxBp3 = bpF.comboBox(converter.longNumber());
+        comboBoxBp3.setElements(Long.valueOf(23456), Long.valueOf(15468), Long.valueOf(5345519));
+        final IComboBox<Long> cBox3 = widgetContainer.add("cBox3", comboBoxBp3, "wrap, growx");
+        cBox3.addValidator(new MandatoryValidator<Long>("mandatory"));
+    }
 
-	@Override
-	public void setValue(final String content) {}
+    @Override
+    public void setValue(final String content) {}
 
-	@Override
-	public String getValue() {
-		return null;
-	}
+    @Override
+    public String getValue() {
+        return null;
+    }
 
 }

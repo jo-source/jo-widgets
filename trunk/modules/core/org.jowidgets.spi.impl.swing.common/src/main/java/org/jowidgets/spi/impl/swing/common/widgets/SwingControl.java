@@ -47,98 +47,98 @@ import org.jowidgets.util.Tuple;
 
 public class SwingControl extends SwingComponent implements IControlSpi {
 
-	private final SwingDragSource dragSource;
-	private final SwingDropTarget dropTarget;
+    private final SwingDragSource dragSource;
+    private final SwingDropTarget dropTarget;
 
-	public SwingControl(final Tuple<Component, Component> component) {
-		this(component, null);
-	}
+    public SwingControl(final Tuple<Component, Component> component) {
+        this(component, null);
+    }
 
-	public SwingControl(final Tuple<Component, Component> component, final IDropSelectionProvider dropSelectionProvider) {
-		this(component.getFirst(), component.getSecond(), dropSelectionProvider);
-	}
+    public SwingControl(final Tuple<Component, Component> component, final IDropSelectionProvider dropSelectionProvider) {
+        this(component.getFirst(), component.getSecond(), dropSelectionProvider);
+    }
 
-	public SwingControl(final Component component) {
-		this(component, null);
-	}
+    public SwingControl(final Component component) {
+        this(component, null);
+    }
 
-	public SwingControl(final Component component, final IDropSelectionProvider dropSelectionProvider) {
-		this(component, component, dropSelectionProvider);
-	}
+    public SwingControl(final Component component, final IDropSelectionProvider dropSelectionProvider) {
+        this(component, component, dropSelectionProvider);
+    }
 
-	public SwingControl(final Component component, final Component innerComponent, IDropSelectionProvider dropSelectionProvider) {
-		super(component, innerComponent);
-		dragSource = new SwingDragSource(innerComponent);
-		if (dropSelectionProvider == null) {
-			if (this instanceof IDropSelectionProvider) {
-				dropSelectionProvider = (IDropSelectionProvider) this;
-			}
-			else {
-				dropSelectionProvider = new ImmutableDropSelection(this);
-			}
-		}
-		dropTarget = new SwingDropTarget(innerComponent, dropSelectionProvider);
-	}
+    public SwingControl(final Component component, final Component innerComponent, IDropSelectionProvider dropSelectionProvider) {
+        super(component, innerComponent);
+        dragSource = new SwingDragSource(innerComponent);
+        if (dropSelectionProvider == null) {
+            if (this instanceof IDropSelectionProvider) {
+                dropSelectionProvider = (IDropSelectionProvider) this;
+            }
+            else {
+                dropSelectionProvider = new ImmutableDropSelection(this);
+            }
+        }
+        dropTarget = new SwingDropTarget(innerComponent, dropSelectionProvider);
+    }
 
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		final LayoutManager layoutManager = getParentLayout();
-		if (layoutManager instanceof MigLayout) {
-			((MigLayout) layoutManager).setComponentConstraints(getUiReference(), layoutConstraints);
-		}
-		else if (layoutManager instanceof LayoutManagerImpl) {
-			((LayoutManagerImpl) layoutManager).addLayoutComponent(getUiReference(), layoutConstraints);
-		}
-		else {
-			throw new IllegalStateException("MigLayout expected");
-		}
-	}
+    @Override
+    public void setLayoutConstraints(final Object layoutConstraints) {
+        final LayoutManager layoutManager = getParentLayout();
+        if (layoutManager instanceof MigLayout) {
+            ((MigLayout) layoutManager).setComponentConstraints(getUiReference(), layoutConstraints);
+        }
+        else if (layoutManager instanceof LayoutManagerImpl) {
+            ((LayoutManagerImpl) layoutManager).addLayoutComponent(getUiReference(), layoutConstraints);
+        }
+        else {
+            throw new IllegalStateException("MigLayout expected");
+        }
+    }
 
-	@Override
-	public Object getLayoutConstraints() {
-		final LayoutManager layoutManager = getParentLayout();
-		if (layoutManager instanceof MigLayout) {
-			return ((MigLayout) layoutManager).getComponentConstraints(getUiReference());
-		}
-		if (layoutManager instanceof LayoutManager) {
-			return ((LayoutManagerImpl) layoutManager).getLayoutConstraints(getUiReference());
-		}
-		else {
-			throw new IllegalStateException("MigLayout expected");
-		}
-	}
+    @Override
+    public Object getLayoutConstraints() {
+        final LayoutManager layoutManager = getParentLayout();
+        if (layoutManager instanceof MigLayout) {
+            return ((MigLayout) layoutManager).getComponentConstraints(getUiReference());
+        }
+        if (layoutManager instanceof LayoutManager) {
+            return ((LayoutManagerImpl) layoutManager).getLayoutConstraints(getUiReference());
+        }
+        else {
+            throw new IllegalStateException("MigLayout expected");
+        }
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		return DimensionConvert.convert(getUiReference().getMinimumSize());
-	}
+    @Override
+    public Dimension getMinSize() {
+        return DimensionConvert.convert(getUiReference().getMinimumSize());
+    }
 
-	@Override
-	public Dimension getPreferredSize() {
-		return DimensionConvert.convert(getUiReference().getPreferredSize());
-	}
+    @Override
+    public Dimension getPreferredSize() {
+        return DimensionConvert.convert(getUiReference().getPreferredSize());
+    }
 
-	@Override
-	public Dimension getMaxSize() {
-		return DimensionConvert.convert(getUiReference().getMaximumSize());
-	}
+    @Override
+    public Dimension getMaxSize() {
+        return DimensionConvert.convert(getUiReference().getMaximumSize());
+    }
 
-	@Override
-	public IDragSourceSpi getDragSource() {
-		return dragSource;
-	}
+    @Override
+    public IDragSourceSpi getDragSource() {
+        return dragSource;
+    }
 
-	@Override
-	public IDropTargetSpi getDropTarget() {
-		return dropTarget;
-	}
+    @Override
+    public IDropTargetSpi getDropTarget() {
+        return dropTarget;
+    }
 
-	private LayoutManager getParentLayout() {
-		final Container container = getUiReference().getParent();
-		if (container != null) {
-			return container.getLayout();
-		}
-		return null;
-	}
+    private LayoutManager getParentLayout() {
+        final Container container = getUiReference().getParent();
+        if (container != null) {
+            return container.getLayout();
+        }
+        return null;
+    }
 
 }

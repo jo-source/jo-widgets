@@ -39,66 +39,66 @@ import org.jowidgets.common.application.IApplicationRunner;
 
 public class SwingApplicationRunner implements IApplicationRunner {
 
-	private Thread eventDispatcherThread;
+    private Thread eventDispatcherThread;
 
-	@Override
-	public void run(final IApplication application) {
+    @Override
+    public void run(final IApplication application) {
 
-		if (SwingUtilities.isEventDispatchThread()) {
-			throw new IllegalStateException(
-				"The current thread is the EventDispatcherThread. A ApplicationRunner must not be used from the EventDispatcherThread");
-		}
+        if (SwingUtilities.isEventDispatchThread()) {
+            throw new IllegalStateException(
+                "The current thread is the EventDispatcherThread. A ApplicationRunner must not be used from the EventDispatcherThread");
+        }
 
-		//Create a lifecycle that disposes all windows when finished
-		final IApplicationLifecycle lifecycle = new IApplicationLifecycle() {
+        //Create a lifecycle that disposes all windows when finished
+        final IApplicationLifecycle lifecycle = new IApplicationLifecycle() {
 
-			private boolean isRunning = true;
+            private boolean isRunning = true;
 
-			@Override
-			public synchronized void finish() {
-				if (isRunning) {
-					isRunning = false;
+            @Override
+            public synchronized void finish() {
+                if (isRunning) {
+                    isRunning = false;
 
-					//dispose all windows
-					for (final Window window : Window.getWindows()) {
-						window.dispose();
-					}
+                    //dispose all windows
+                    for (final Window window : Window.getWindows()) {
+                        window.dispose();
+                    }
 
-					//stop event dispatching
-					try {
-						final Class<?> edtClass = Class.forName("java.awt.EventDispatchThread");
-						final Method method = edtClass.getDeclaredMethod("stopDispatching");
-						method.setAccessible(true);
-						method.invoke(eventDispatcherThread);
-					}
-					catch (final Exception e) {
-						throw new RuntimeException(e);
-					}
-				}
-			}
-		};
+                    //stop event dispatching
+                    try {
+                        final Class<?> edtClass = Class.forName("java.awt.EventDispatchThread");
+                        final Method method = edtClass.getDeclaredMethod("stopDispatching");
+                        method.setAccessible(true);
+                        method.invoke(eventDispatcherThread);
+                    }
+                    catch (final Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        };
 
-		//start the application
-		try {
-			SwingUtilities.invokeAndWait(new Runnable() {
-				@Override
-				public void run() {
-					eventDispatcherThread = Thread.currentThread();
-					application.start(lifecycle);
-				}
-			});
-		}
-		catch (final Exception e) {
-			throw new RuntimeException(e);
-		}
+        //start the application
+        try {
+            SwingUtilities.invokeAndWait(new Runnable() {
+                @Override
+                public void run() {
+                    eventDispatcherThread = Thread.currentThread();
+                    application.start(lifecycle);
+                }
+            });
+        }
+        catch (final Exception e) {
+            throw new RuntimeException(e);
+        }
 
-		//wait until the event dispatcher has finished
-		try {
-			eventDispatcherThread.join();
-		}
-		catch (final InterruptedException e) {
-			throw new RuntimeException(e);
-		}
+        //wait until the event dispatcher has finished
+        try {
+            eventDispatcherThread.join();
+        }
+        catch (final InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
-	}
+    }
 }

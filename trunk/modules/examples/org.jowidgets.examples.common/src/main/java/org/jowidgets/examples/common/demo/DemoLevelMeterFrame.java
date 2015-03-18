@@ -43,70 +43,70 @@ import org.jowidgets.util.concurrent.DaemonThreadFactory;
 
 public class DemoLevelMeterFrame extends JoFrame {
 
-	private static final int NUMBER_OF_BARS = 10;
+    private static final int NUMBER_OF_BARS = 10;
 
-	public DemoLevelMeterFrame() {
-		super("Level meter demo");
+    public DemoLevelMeterFrame() {
+        super("Level meter demo");
 
-		final String migLayoutColumnDescriptor = getColumnDescriptor();
+        final String migLayoutColumnDescriptor = getColumnDescriptor();
 
-		setLayout(new MigLayoutDescriptor(migLayoutColumnDescriptor, "[grow, 0::]"));
+        setLayout(new MigLayoutDescriptor(migLayoutColumnDescriptor, "[grow, 0::]"));
 
-		final IMutableLevelMeterModel[] models = new IMutableLevelMeterModel[NUMBER_OF_BARS];
+        final IMutableLevelMeterModel[] models = new IMutableLevelMeterModel[NUMBER_OF_BARS];
 
-		for (int i = 0; i < NUMBER_OF_BARS; i++) {
-			models[i] = MutableLevelMeterModel.create();
-			add(BPF.levelMeter(models[i]).setLetteringVisible(true), "growx, w 70!, growy, h 0::");
-		}
+        for (int i = 0; i < NUMBER_OF_BARS; i++) {
+            models[i] = MutableLevelMeterModel.create();
+            add(BPF.levelMeter(models[i]).setLetteringVisible(true), "growx, w 70!, growy, h 0::");
+        }
 
-		final ScheduledExecutorService threadPool = Executors.newScheduledThreadPool(1, new DaemonThreadFactory());
+        final ScheduledExecutorService threadPool = Executors.newScheduledThreadPool(1, new DaemonThreadFactory());
 
-		final IUiThreadAccess uiThreadAccess = Toolkit.getUiThreadAccess();
-		final Runnable modelChangeRunnable = new Runnable() {
+        final IUiThreadAccess uiThreadAccess = Toolkit.getUiThreadAccess();
+        final Runnable modelChangeRunnable = new Runnable() {
 
-			@Override
-			public void run() {
-				uiThreadAccess.invokeLater(new Runnable() {
-					@Override
-					public void run() {
-						for (int i = 0; i < NUMBER_OF_BARS; i++) {
-							final double oldLevel = models[i].getLevel();
-							if (oldLevel == 0) {
-								models[i].setLevel(Math.random());
-							}
-							else {
-								final double variance = Math.random() / 10;
-								double newLevel = oldLevel;
-								double plusMinus = Math.random();
-								if (oldLevel > 0.89) {
-									plusMinus = 0.0;
-								}
-								if (oldLevel < 0.11) {
-									plusMinus = 1.0;
-								}
-								if (plusMinus < 0.5) {
-									newLevel = newLevel - variance;
-								}
-								else {
-									newLevel = newLevel + variance;
-								}
-								models[i].setLevel(newLevel);
-							}
-						}
-					}
-				});
-			}
-		};
+            @Override
+            public void run() {
+                uiThreadAccess.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (int i = 0; i < NUMBER_OF_BARS; i++) {
+                            final double oldLevel = models[i].getLevel();
+                            if (oldLevel == 0) {
+                                models[i].setLevel(Math.random());
+                            }
+                            else {
+                                final double variance = Math.random() / 10;
+                                double newLevel = oldLevel;
+                                double plusMinus = Math.random();
+                                if (oldLevel > 0.89) {
+                                    plusMinus = 0.0;
+                                }
+                                if (oldLevel < 0.11) {
+                                    plusMinus = 1.0;
+                                }
+                                if (plusMinus < 0.5) {
+                                    newLevel = newLevel - variance;
+                                }
+                                else {
+                                    newLevel = newLevel + variance;
+                                }
+                                models[i].setLevel(newLevel);
+                            }
+                        }
+                    }
+                });
+            }
+        };
 
-		threadPool.scheduleWithFixedDelay(modelChangeRunnable, 0, 100, TimeUnit.MILLISECONDS);
+        threadPool.scheduleWithFixedDelay(modelChangeRunnable, 0, 100, TimeUnit.MILLISECONDS);
 
-	}
+    }
 
-	private String getColumnDescriptor() {
-		final StringBuilder stringBuilder = new StringBuilder();
-		for (int i = 0; i < NUMBER_OF_BARS; i++) {
-			stringBuilder.append("[70!]");
-		}
-		return stringBuilder.toString();
-	}
+    private String getColumnDescriptor() {
+        final StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < NUMBER_OF_BARS; i++) {
+            stringBuilder.append("[70!]");
+        }
+        return stringBuilder.toString();
+    }
 }

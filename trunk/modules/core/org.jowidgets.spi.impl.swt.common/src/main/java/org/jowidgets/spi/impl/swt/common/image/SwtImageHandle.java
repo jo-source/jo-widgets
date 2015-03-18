@@ -35,26 +35,26 @@ import org.jowidgets.spi.impl.image.ImageHandle;
 
 public final class SwtImageHandle extends ImageHandle<Image> {
 
-	public SwtImageHandle(final IImageFactory<Image> imageFactory, final IImageDescriptor imageDescriptor) {
-		super(imageFactory, imageDescriptor);
-	}
+    public SwtImageHandle(final IImageFactory<Image> imageFactory, final IImageDescriptor imageDescriptor) {
+        super(imageFactory, imageDescriptor);
+    }
 
-	public SwtImageHandle(final IImageFactory<Image> imageFactory) {
-		super(imageFactory);
-	}
+    public SwtImageHandle(final IImageFactory<Image> imageFactory) {
+        super(imageFactory);
+    }
 
-	public SwtImageHandle(final Image image) {
-		super(image);
-	}
+    public SwtImageHandle(final Image image) {
+        super(image);
+    }
 
-	@Override
-	public synchronized void dispose() {
-		if (isInitialized()) {
-			final Image image = getImage();
-			if (image != null && !image.isDisposed()) {
-				image.dispose();
-			}
-		}
-		super.dispose();
-	}
+    @Override
+    public synchronized void dispose() {
+        if (isInitialized()) {
+            final Image image = getImage();
+            if (image != null && !image.isDisposed()) {
+                image.dispose();
+            }
+        }
+        super.dispose();
+    }
 }

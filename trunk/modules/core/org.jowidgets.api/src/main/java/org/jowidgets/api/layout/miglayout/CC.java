@@ -28,18 +28,17 @@
 
 package org.jowidgets.api.layout.miglayout;
 
-
 public final class CC {
 
-	private CC() {}
+    private CC() {}
 
-	/**
-	 * Creates a new ICC instance
-	 * 
-	 * @return a new ICC instance
-	 */
-	public static ICC create() {
-		return MigLayoutToolkit.cc();
-	}
+    /**
+     * Creates a new ICC instance
+     * 
+     * @return a new ICC instance
+     */
+    public static ICC create() {
+        return MigLayoutToolkit.cc();
+    }
 
 }

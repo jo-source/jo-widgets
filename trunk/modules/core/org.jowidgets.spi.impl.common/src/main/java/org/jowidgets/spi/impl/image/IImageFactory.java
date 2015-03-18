@@ -30,6 +30,6 @@ package org.jowidgets.spi.impl.image;
 
 public interface IImageFactory<IMAGE_TYPE> {
 
-	IMAGE_TYPE createImage();
+    IMAGE_TYPE createImage();
 
 }

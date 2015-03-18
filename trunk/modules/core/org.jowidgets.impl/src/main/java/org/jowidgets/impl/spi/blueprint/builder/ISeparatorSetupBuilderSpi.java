@@ -30,6 +30,6 @@ package org.jowidgets.impl.spi.blueprint.builder;
 import org.jowidgets.common.widgets.builder.ISeparatorSetupBuilderCommon;
 
 public interface ISeparatorSetupBuilderSpi<INSTANCE_TYPE extends ISeparatorSetupBuilderSpi<?>> extends
-		ISeparatorSetupBuilderCommon<INSTANCE_TYPE> {
+        ISeparatorSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

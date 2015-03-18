@@ -37,10 +37,10 @@ import org.jowidgets.common.widgets.factory.IWidgetFactory;
 
 final class OleDocumentFactory implements IWidgetFactory<IOleDocument, IOleDocumentBluePrint> {
 
-	@Override
-	public IOleDocument create(final Object parentUiReference, final IOleDocumentBluePrint bluePrint) {
-		final IOleControl oleControl = Toolkit.getWidgetFactory().create(parentUiReference, OleBPF.oleControl());
-		return new OleDocumentImpl(oleControl, bluePrint);
-	}
+    @Override
+    public IOleDocument create(final Object parentUiReference, final IOleDocumentBluePrint bluePrint) {
+        final IOleControl oleControl = Toolkit.getWidgetFactory().create(parentUiReference, OleBPF.oleControl());
+        return new OleDocumentImpl(oleControl, bluePrint);
+    }
 
 }

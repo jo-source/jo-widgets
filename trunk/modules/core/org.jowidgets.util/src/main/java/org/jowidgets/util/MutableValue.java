@@ -40,49 +40,49 @@ import java.util.Set;
  */
 public final class MutableValue<VALUE_TYPE> implements IMutableValue<VALUE_TYPE> {
 
-	private final Set<IMutableValueListener<VALUE_TYPE>> valueListeners;
+    private final Set<IMutableValueListener<VALUE_TYPE>> valueListeners;
 
-	private VALUE_TYPE value;
+    private VALUE_TYPE value;
 
-	public MutableValue() {
-		this(null);
-	}
+    public MutableValue() {
+        this(null);
+    }
 
-	public MutableValue(final VALUE_TYPE value) {
-		this.valueListeners = new LinkedHashSet<IMutableValueListener<VALUE_TYPE>>();
-		this.value = value;
-	}
+    public MutableValue(final VALUE_TYPE value) {
+        this.valueListeners = new LinkedHashSet<IMutableValueListener<VALUE_TYPE>>();
+        this.value = value;
+    }
 
-	@Override
-	public void addMutableValueListener(final IMutableValueListener<VALUE_TYPE> listener) {
-		Assert.paramNotNull(valueListeners, "valueListeners");
-		this.valueListeners.add(listener);
-	}
+    @Override
+    public void addMutableValueListener(final IMutableValueListener<VALUE_TYPE> listener) {
+        Assert.paramNotNull(valueListeners, "valueListeners");
+        this.valueListeners.add(listener);
+    }
 
-	@Override
-	public void removeMutableValueListener(final IMutableValueListener<VALUE_TYPE> listener) {
-		Assert.paramNotNull(valueListeners, "valueListeners");
-		this.valueListeners.remove(listener);
-	}
+    @Override
+    public void removeMutableValueListener(final IMutableValueListener<VALUE_TYPE> listener) {
+        Assert.paramNotNull(valueListeners, "valueListeners");
+        this.valueListeners.remove(listener);
+    }
 
-	@Override
-	public VALUE_TYPE getValue() {
-		return value;
-	}
+    @Override
+    public VALUE_TYPE getValue() {
+        return value;
+    }
 
-	public void setValue(final VALUE_TYPE value) {
-		final VALUE_TYPE oldValue = this.value;
-		if (!NullCompatibleEquivalence.equals(oldValue, value)) {
-			this.value = value;
-			fireChangedEvent(oldValue, value);
-		}
-	}
+    public void setValue(final VALUE_TYPE value) {
+        final VALUE_TYPE oldValue = this.value;
+        if (!NullCompatibleEquivalence.equals(oldValue, value)) {
+            this.value = value;
+            fireChangedEvent(oldValue, value);
+        }
+    }
 
-	private void fireChangedEvent(final VALUE_TYPE oldValue, final VALUE_TYPE newValue) {
-		final IValueChangedEvent<VALUE_TYPE> event = new ValueChangedEventImpl<VALUE_TYPE>(oldValue, value, this);
-		for (final IMutableValueListener<VALUE_TYPE> listener : new LinkedList<IMutableValueListener<VALUE_TYPE>>(valueListeners)) {
-			listener.changed(event);
-		}
-	}
+    private void fireChangedEvent(final VALUE_TYPE oldValue, final VALUE_TYPE newValue) {
+        final IValueChangedEvent<VALUE_TYPE> event = new ValueChangedEventImpl<VALUE_TYPE>(oldValue, value, this);
+        for (final IMutableValueListener<VALUE_TYPE> listener : new LinkedList<IMutableValueListener<VALUE_TYPE>>(valueListeners)) {
+            listener.changed(event);
+        }
+    }
 
 }

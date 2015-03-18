@@ -64,369 +64,369 @@ import org.jowidgets.spi.widgets.ITabItemSpi;
 
 public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
-	private CTabItem cTabItem;
-	private boolean detached;
-	private Control detachedControl;
-	private String text;
-	private String toolTipText;
-	private IImageConstant icon;
+    private CTabItem cTabItem;
+    private boolean detached;
+    private Control detachedControl;
+    private String text;
+    private String toolTipText;
+    private IImageConstant icon;
 
-	private final CTabFolder parentFolder;
-	private final SwtContainer swtContainer;
-	private final Set<IPopupDetectionListener> tabPopupDetectionListeners;
-	private final Set<PopupMenuImpl> tabPopupMenus;
+    private final CTabFolder parentFolder;
+    private final SwtContainer swtContainer;
+    private final Set<IPopupDetectionListener> tabPopupDetectionListeners;
+    private final Set<PopupMenuImpl> tabPopupMenus;
 
-	public TabItemImpl(final IGenericWidgetFactory genericWidgetFactory, final CTabFolder parentFolder, final boolean closeable) {
-		this(genericWidgetFactory, parentFolder, closeable, null);
-	}
+    public TabItemImpl(final IGenericWidgetFactory genericWidgetFactory, final CTabFolder parentFolder, final boolean closeable) {
+        this(genericWidgetFactory, parentFolder, closeable, null);
+    }
 
-	public TabItemImpl(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final CTabFolder parentFolder,
-		final boolean closeable,
-		final Integer index) {
+    public TabItemImpl(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final CTabFolder parentFolder,
+        final boolean closeable,
+        final Integer index) {
 
-		this.detached = false;
-		this.parentFolder = parentFolder;
+        this.detached = false;
+        this.parentFolder = parentFolder;
 
-		this.tabPopupDetectionListeners = new HashSet<IPopupDetectionListener>();
-		this.tabPopupMenus = new HashSet<PopupMenuImpl>();
+        this.tabPopupDetectionListeners = new HashSet<IPopupDetectionListener>();
+        this.tabPopupMenus = new HashSet<PopupMenuImpl>();
 
-		cTabItem = createItem(parentFolder, closeable, index);
+        cTabItem = createItem(parentFolder, closeable, index);
 
-		final Composite composite = new Composite(parentFolder, SWT.NONE);
-		composite.setLayout(new MigLayout("", "[]", "[]"));
+        final Composite composite = new Composite(parentFolder, SWT.NONE);
+        composite.setLayout(new MigLayout("", "[]", "[]"));
 
-		swtContainer = new SwtComposite(genericWidgetFactory, composite);
+        swtContainer = new SwtComposite(genericWidgetFactory, composite);
 
-		cTabItem.setControl(swtContainer.getUiReference());
-	}
+        cTabItem.setControl(swtContainer.getUiReference());
+    }
 
-	void dispose() {
-		if (detachedControl != null && !detachedControl.isDisposed()) {
-			detachedControl.dispose();
-		}
-		final Control control = cTabItem.getControl();
-		if (control != null && !control.isDisposed()) {
-			control.dispose();
-		}
-	}
+    void dispose() {
+        if (detachedControl != null && !detachedControl.isDisposed()) {
+            detachedControl.dispose();
+        }
+        final Control control = cTabItem.getControl();
+        if (control != null && !control.isDisposed()) {
+            control.dispose();
+        }
+    }
 
-	@Override
-	public CTabItem getUiReference() {
-		return cTabItem;
-	}
+    @Override
+    public CTabItem getUiReference() {
+        return cTabItem;
+    }
 
-	public void detach() {
-		detached = true;
-		detachedControl = cTabItem.getControl();
-		cTabItem.setControl(null);
-		cTabItem.dispose();
-		cTabItem = null;
-	}
+    public void detach() {
+        detached = true;
+        detachedControl = cTabItem.getControl();
+        cTabItem.setControl(null);
+        cTabItem.dispose();
+        cTabItem = null;
+    }
 
-	public boolean isDetached() {
-		return detached;
-	}
+    public boolean isDetached() {
+        return detached;
+    }
 
-	public void attach(final CTabFolder parentFolder, final boolean closeable, final Integer index) {
-		cTabItem = createItem(parentFolder, closeable, index);
-		setText(text);
-		setToolTipText(toolTipText);
-		setIcon(icon);
+    public void attach(final CTabFolder parentFolder, final boolean closeable, final Integer index) {
+        cTabItem = createItem(parentFolder, closeable, index);
+        setText(text);
+        setToolTipText(toolTipText);
+        setIcon(icon);
 
-		final Composite composite = (Composite) detachedControl;
-		if (composite.getParent() != parentFolder) {
-			if (composite.isReparentable()) {
-				composite.setParent(parentFolder);
-				for (final PopupMenuImpl popupMenu : tabPopupMenus) {
-					popupMenu.setParent(parentFolder);
-				}
-			}
-			else {
-				throw new IllegalArgumentException("Content is not reparentable");
-			}
-		}
-		detached = false;
-		cTabItem.setControl(composite);
-		swtContainer.setComposite(composite);
-	}
+        final Composite composite = (Composite) detachedControl;
+        if (composite.getParent() != parentFolder) {
+            if (composite.isReparentable()) {
+                composite.setParent(parentFolder);
+                for (final PopupMenuImpl popupMenu : tabPopupMenus) {
+                    popupMenu.setParent(parentFolder);
+                }
+            }
+            else {
+                throw new IllegalArgumentException("Content is not reparentable");
+            }
+        }
+        detached = false;
+        cTabItem.setControl(composite);
+        swtContainer.setComposite(composite);
+    }
 
-	@Override
-	public boolean isReparentable() {
-		final Control control = cTabItem.getControl();
-		if (control != null) {
-			return control.isReparentable();
-		}
-		else {
-			//workaround to test if potential items can be reparented
-			final Composite testComposite = new Composite(parentFolder, SWT.NONE);
-			final boolean result = testComposite.isReparentable();
-			testComposite.dispose();
-			return result;
-		}
-	}
+    @Override
+    public boolean isReparentable() {
+        final Control control = cTabItem.getControl();
+        if (control != null) {
+            return control.isReparentable();
+        }
+        else {
+            //workaround to test if potential items can be reparented
+            final Composite testComposite = new Composite(parentFolder, SWT.NONE);
+            final boolean result = testComposite.isReparentable();
+            testComposite.dispose();
+            return result;
+        }
+    }
 
-	@Override
-	public void setText(final String text) {
-		this.text = text;
-		if (text != null) {
-			getUiReference().setText(text);
-		}
-		else {
-			getUiReference().setText(String.valueOf(""));
-		}
-	}
+    @Override
+    public void setText(final String text) {
+        this.text = text;
+        if (text != null) {
+            getUiReference().setText(text);
+        }
+        else {
+            getUiReference().setText(String.valueOf(""));
+        }
+    }
 
-	@Override
-	public void setToolTipText(final String toolTipText) {
-		this.toolTipText = toolTipText;
-		getUiReference().setToolTipText(toolTipText);
-	}
+    @Override
+    public void setToolTipText(final String toolTipText) {
+        this.toolTipText = toolTipText;
+        getUiReference().setToolTipText(toolTipText);
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		this.icon = icon;
-		final Image oldImage = getUiReference().getImage();
-		final Image newImage = SwtImageRegistry.getInstance().getImage(icon);
-		if (oldImage != newImage) {
-			getUiReference().setImage(newImage);
-		}
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        this.icon = icon;
+        final Image oldImage = getUiReference().getImage();
+        final Image newImage = SwtImageRegistry.getInstance().getImage(icon);
+        if (oldImage != newImage) {
+            getUiReference().setImage(newImage);
+        }
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		swtContainer.setVisible(visible);
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        swtContainer.setVisible(visible);
+    }
 
-	@Override
-	public boolean isVisible() {
-		return swtContainer.isVisible();
-	}
+    @Override
+    public boolean isVisible() {
+        return swtContainer.isVisible();
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		swtContainer.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        swtContainer.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return swtContainer.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return swtContainer.isEnabled();
+    }
 
-	@Override
-	public void setTabOrder(final Collection<? extends IControlCommon> tabOrder) {
-		swtContainer.setTabOrder(tabOrder);
-	}
+    @Override
+    public void setTabOrder(final Collection<? extends IControlCommon> tabOrder) {
+        swtContainer.setTabOrder(tabOrder);
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
-		final Integer index,
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
-		final Object layoutConstraints) {
-		return swtContainer.add(index, descriptor, layoutConstraints);
-	}
+    @Override
+    public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+        final Integer index,
+        final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+        final Object layoutConstraints) {
+        return swtContainer.add(index, descriptor, layoutConstraints);
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
-		final Integer index,
-		final ICustomWidgetCreator<WIDGET_TYPE> creator,
-		final Object layoutConstraints) {
-		return swtContainer.add(index, creator, layoutConstraints);
-	}
+    @Override
+    public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+        final Integer index,
+        final ICustomWidgetCreator<WIDGET_TYPE> creator,
+        final Object layoutConstraints) {
+        return swtContainer.add(index, creator, layoutConstraints);
+    }
 
-	@Override
-	public boolean remove(final IControlCommon control) {
-		return swtContainer.remove(control);
-	}
+    @Override
+    public boolean remove(final IControlCommon control) {
+        return swtContainer.remove(control);
+    }
 
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return swtContainer.createPopupMenu();
-	}
+    @Override
+    public IPopupMenuSpi createPopupMenu() {
+        return swtContainer.createPopupMenu();
+    }
 
-	@Override
-	public IPopupMenuSpi createTabPopupMenu() {
-		final PopupMenuImpl result = new PopupMenuImpl(parentFolder);
-		tabPopupMenus.add(result);
-		return result;
-	}
+    @Override
+    public IPopupMenuSpi createTabPopupMenu() {
+        final PopupMenuImpl result = new PopupMenuImpl(parentFolder);
+        tabPopupMenus.add(result);
+        return result;
+    }
 
-	@Override
-	public void redraw() {
-		swtContainer.redraw();
-	}
+    @Override
+    public void redraw() {
+        swtContainer.redraw();
+    }
 
-	@Override
-	public void setRedrawEnabled(final boolean enabled) {
-		swtContainer.setRedrawEnabled(enabled);
-	}
+    @Override
+    public void setRedrawEnabled(final boolean enabled) {
+        swtContainer.setRedrawEnabled(enabled);
+    }
 
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		swtContainer.setForegroundColor(colorValue);
-	}
+    @Override
+    public void setForegroundColor(final IColorConstant colorValue) {
+        swtContainer.setForegroundColor(colorValue);
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		swtContainer.setBackgroundColor(colorValue);
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        swtContainer.setBackgroundColor(colorValue);
+    }
 
-	@Override
-	public IColorConstant getForegroundColor() {
-		return swtContainer.getBackgroundColor();
-	}
+    @Override
+    public IColorConstant getForegroundColor() {
+        return swtContainer.getBackgroundColor();
+    }
 
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return swtContainer.getBackgroundColor();
-	}
+    @Override
+    public IColorConstant getBackgroundColor() {
+        return swtContainer.getBackgroundColor();
+    }
 
-	@Override
-	public void setCursor(final Cursor cursor) {
-		swtContainer.setCursor(cursor);
-	}
+    @Override
+    public void setCursor(final Cursor cursor) {
+        swtContainer.setCursor(cursor);
+    }
 
-	@Override
-	public Rectangle getClientArea() {
-		return swtContainer.getClientArea();
-	}
+    @Override
+    public Rectangle getClientArea() {
+        return swtContainer.getClientArea();
+    }
 
-	@Override
-	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
-		return swtContainer.computeDecoratedSize(clientAreaSize);
-	}
+    @Override
+    public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+        return swtContainer.computeDecoratedSize(clientAreaSize);
+    }
 
-	@Override
-	public Dimension getSize() {
-		return swtContainer.getSize();
-	}
+    @Override
+    public Dimension getSize() {
+        return swtContainer.getSize();
+    }
 
-	@Override
-	public void setSize(final Dimension size) {
-		swtContainer.setSize(size);
-	}
+    @Override
+    public void setSize(final Dimension size) {
+        swtContainer.setSize(size);
+    }
 
-	@Override
-	public Position getPosition() {
-		return swtContainer.getPosition();
-	}
+    @Override
+    public Position getPosition() {
+        return swtContainer.getPosition();
+    }
 
-	@Override
-	public void setPosition(final Position position) {
-		swtContainer.setPosition(position);
-	}
+    @Override
+    public void setPosition(final Position position) {
+        swtContainer.setPosition(position);
+    }
 
-	@Override
-	public boolean requestFocus() {
-		return swtContainer.requestFocus();
-	}
+    @Override
+    public boolean requestFocus() {
+        return swtContainer.requestFocus();
+    }
 
-	@Override
-	public void addFocusListener(final IFocusListener listener) {
-		swtContainer.addFocusListener(listener);
-	}
+    @Override
+    public void addFocusListener(final IFocusListener listener) {
+        swtContainer.addFocusListener(listener);
+    }
 
-	@Override
-	public void removeFocusListener(final IFocusListener listener) {
-		swtContainer.removeFocusListener(listener);
-	}
+    @Override
+    public void removeFocusListener(final IFocusListener listener) {
+        swtContainer.removeFocusListener(listener);
+    }
 
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		swtContainer.addPopupDetectionListener(listener);
-	}
+    @Override
+    public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+        swtContainer.addPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void addKeyListener(final IKeyListener listener) {
-		swtContainer.addKeyListener(listener);
-	}
+    @Override
+    public void addKeyListener(final IKeyListener listener) {
+        swtContainer.addKeyListener(listener);
+    }
 
-	@Override
-	public void removeKeyListener(final IKeyListener listener) {
-		swtContainer.removeKeyListener(listener);
-	}
+    @Override
+    public void removeKeyListener(final IKeyListener listener) {
+        swtContainer.removeKeyListener(listener);
+    }
 
-	@Override
-	public void addMouseListener(final IMouseListener mouseListener) {
-		swtContainer.addMouseListener(mouseListener);
-	}
+    @Override
+    public void addMouseListener(final IMouseListener mouseListener) {
+        swtContainer.addMouseListener(mouseListener);
+    }
 
-	@Override
-	public void removeMouseListener(final IMouseListener mouseListener) {
-		swtContainer.removeMouseListener(mouseListener);
-	}
+    @Override
+    public void removeMouseListener(final IMouseListener mouseListener) {
+        swtContainer.removeMouseListener(mouseListener);
+    }
 
-	@Override
-	public void addMouseMotionListener(final IMouseMotionListener listener) {
-		swtContainer.addMouseMotionListener(listener);
-	}
+    @Override
+    public void addMouseMotionListener(final IMouseMotionListener listener) {
+        swtContainer.addMouseMotionListener(listener);
+    }
 
-	@Override
-	public void removeMouseMotionListener(final IMouseMotionListener listener) {
-		swtContainer.addMouseMotionListener(listener);
-	}
+    @Override
+    public void removeMouseMotionListener(final IMouseMotionListener listener) {
+        swtContainer.addMouseMotionListener(listener);
+    }
 
-	@Override
-	public void addComponentListener(final IComponentListener componentListener) {
-		swtContainer.addComponentListener(componentListener);
-	}
+    @Override
+    public void addComponentListener(final IComponentListener componentListener) {
+        swtContainer.addComponentListener(componentListener);
+    }
 
-	@Override
-	public void removeComponentListener(final IComponentListener componentListener) {
-		swtContainer.removeComponentListener(componentListener);
-	}
+    @Override
+    public void removeComponentListener(final IComponentListener componentListener) {
+        swtContainer.removeComponentListener(componentListener);
+    }
 
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		swtContainer.removePopupDetectionListener(listener);
-	}
+    @Override
+    public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+        swtContainer.removePopupDetectionListener(listener);
+    }
 
-	@Override
-	public void addTabPopupDetectionListener(final IPopupDetectionListener listener) {
-		tabPopupDetectionListeners.add(listener);
-	}
+    @Override
+    public void addTabPopupDetectionListener(final IPopupDetectionListener listener) {
+        tabPopupDetectionListeners.add(listener);
+    }
 
-	@Override
-	public void removeTabPopupDetectionListener(final IPopupDetectionListener listener) {
-		tabPopupDetectionListeners.remove(listener);
-	}
+    @Override
+    public void removeTabPopupDetectionListener(final IPopupDetectionListener listener) {
+        tabPopupDetectionListeners.remove(listener);
+    }
 
-	@Override
-	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		swtContainer.setLayout(layoutDescriptor);
-	}
+    @Override
+    public void setLayout(final ILayoutDescriptor layoutDescriptor) {
+        swtContainer.setLayout(layoutDescriptor);
+    }
 
-	@Override
-	public void layoutBegin() {
-		swtContainer.layoutBegin();
-	}
+    @Override
+    public void layoutBegin() {
+        swtContainer.layoutBegin();
+    }
 
-	@Override
-	public void layoutEnd() {
-		swtContainer.layoutEnd();
-	}
+    @Override
+    public void layoutEnd() {
+        swtContainer.layoutEnd();
+    }
 
-	@Override
-	public void removeAll() {
-		swtContainer.removeAll();
-	}
+    @Override
+    public void removeAll() {
+        swtContainer.removeAll();
+    }
 
-	protected void firePopupDetected(final Position position) {
-		for (final IPopupDetectionListener listener : tabPopupDetectionListeners) {
-			listener.popupDetected(position);
-		}
-	}
+    protected void firePopupDetected(final Position position) {
+        for (final IPopupDetectionListener listener : tabPopupDetectionListeners) {
+            listener.popupDetected(position);
+        }
+    }
 
-	private static CTabItem createItem(final CTabFolder parentFolder, final boolean closeable, final Integer index) {
-		CTabItem result;
-		if (index != null) {
-			result = new CTabItem(parentFolder, closeable ? SWT.CLOSE : SWT.NONE, index.intValue());
-		}
-		else {
-			result = new CTabItem(parentFolder, closeable ? SWT.CLOSE : SWT.NONE);
-		}
-		return result;
-	}
+    private static CTabItem createItem(final CTabFolder parentFolder, final boolean closeable, final Integer index) {
+        CTabItem result;
+        if (index != null) {
+            result = new CTabItem(parentFolder, closeable ? SWT.CLOSE : SWT.NONE, index.intValue());
+        }
+        else {
+            result = new CTabItem(parentFolder, closeable ? SWT.CLOSE : SWT.NONE);
+        }
+        return result;
+    }
 
 }

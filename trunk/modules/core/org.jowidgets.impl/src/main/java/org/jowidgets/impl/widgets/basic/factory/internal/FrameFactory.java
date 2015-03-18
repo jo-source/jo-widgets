@@ -40,19 +40,19 @@ import org.jowidgets.spi.widgets.IFrameSpi;
 
 public class FrameFactory extends AbstractWidgetFactory implements IWidgetFactory<IFrame, IFrameDescriptor> {
 
-	public FrameFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+    public FrameFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider,
+        final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
-	}
+        super(genericWidgetFactory, widgetsServiceProvider, bpF);
+    }
 
-	@Override
-	public IFrame create(final Object parentUiReference, final IFrameDescriptor descriptor) {
-		final IFrameBluePrintSpi bp = getSpiBluePrintFactory().frame().setSetup(descriptor);
-		final IFrameSpi frameSpi = getSpiWidgetFactory().createFrame(getGenericWidgetFactory(), bp);
-		return new FrameImpl(frameSpi, descriptor);
-	}
+    @Override
+    public IFrame create(final Object parentUiReference, final IFrameDescriptor descriptor) {
+        final IFrameBluePrintSpi bp = getSpiBluePrintFactory().frame().setSetup(descriptor);
+        final IFrameSpi frameSpi = getSpiWidgetFactory().createFrame(getGenericWidgetFactory(), bp);
+        return new FrameImpl(frameSpi, descriptor);
+    }
 
 }

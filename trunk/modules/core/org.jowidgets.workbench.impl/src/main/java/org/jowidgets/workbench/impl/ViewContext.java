@@ -42,85 +42,85 @@ import org.jowidgets.workbench.api.ViewScope;
 
 public class ViewContext implements IViewContext {
 
-	private final ITabFolder tabFolder;
-	private final ITabItem tabItem;
-	private final ViewScope viewScope;
-	private final ViewWithToolBar viewWithToolBar;
+    private final ITabFolder tabFolder;
+    private final ITabItem tabItem;
+    private final ViewScope viewScope;
+    private final ViewWithToolBar viewWithToolBar;
 
-	private final IComponentContext componentContext;
+    private final IComponentContext componentContext;
 
-	public ViewContext(
-		final ITabFolder tabFolder,
-		final ITabItem tabItem,
-		final ViewScope viewScope,
-		final IComponentContext componentContext) {
-		super();
-		this.tabFolder = tabFolder;
-		this.tabItem = tabItem;
-		this.viewScope = viewScope;
-		this.componentContext = componentContext;
+    public ViewContext(
+        final ITabFolder tabFolder,
+        final ITabItem tabItem,
+        final ViewScope viewScope,
+        final IComponentContext componentContext) {
+        super();
+        this.tabFolder = tabFolder;
+        this.tabItem = tabItem;
+        this.viewScope = viewScope;
+        this.componentContext = componentContext;
 
-		this.viewWithToolBar = new ViewWithToolBar(tabItem);
-	}
+        this.viewWithToolBar = new ViewWithToolBar(tabItem);
+    }
 
-	@Override
-	public void activate() {
-		tabFolder.setSelectedItem(tabItem);
-	}
+    @Override
+    public void activate() {
+        tabFolder.setSelectedItem(tabItem);
+    }
 
-	@Override
-	public void setHidden(final boolean hidden) {
-		// TODO MG implement hide / unhide
-	}
+    @Override
+    public void setHidden(final boolean hidden) {
+        // TODO MG implement hide / unhide
+    }
 
-	@Override
-	public void dispose() {
-		// TODO MG implement dispose
-		tabFolder.removeItem(tabItem);
-	}
+    @Override
+    public void dispose() {
+        // TODO MG implement dispose
+        tabFolder.removeItem(tabItem);
+    }
 
-	@Override
-	public IContainer getContainer() {
-		return viewWithToolBar.getViewContent();
-	}
+    @Override
+    public IContainer getContainer() {
+        return viewWithToolBar.getViewContent();
+    }
 
-	@Override
-	public IToolBarModel getToolBar() {
-		return viewWithToolBar.getToolBarModel();
-	}
+    @Override
+    public IToolBarModel getToolBar() {
+        return viewWithToolBar.getToolBarModel();
+    }
 
-	@Override
-	public IMenuModel getToolBarMenu() {
-		return viewWithToolBar.getToolBarMenuModel();
-	}
+    @Override
+    public IMenuModel getToolBarMenu() {
+        return viewWithToolBar.getToolBarMenuModel();
+    }
 
-	@Override
-	public ViewScope getScope() {
-		return viewScope;
-	}
+    @Override
+    public ViewScope getScope() {
+        return viewScope;
+    }
 
-	@Override
-	public IComponentContext getComponentContext() {
-		return componentContext;
-	}
+    @Override
+    public IComponentContext getComponentContext() {
+        return componentContext;
+    }
 
-	@Override
-	public IComponentNodeContext getComponentNodeContext() {
-		return componentContext.getComponentNodeContext();
-	}
+    @Override
+    public IComponentNodeContext getComponentNodeContext() {
+        return componentContext.getComponentNodeContext();
+    }
 
-	@Override
-	public IWorkbenchApplicationContext getWorkbenchApplicationContext() {
-		return componentContext.getWorkbenchApplicationContext();
-	}
+    @Override
+    public IWorkbenchApplicationContext getWorkbenchApplicationContext() {
+        return componentContext.getWorkbenchApplicationContext();
+    }
 
-	@Override
-	public IWorkbenchContext getWorkbenchContext() {
-		return componentContext.getWorkbenchContext();
-	}
+    @Override
+    public IWorkbenchContext getWorkbenchContext() {
+        return componentContext.getWorkbenchContext();
+    }
 
-	public void packToolBar() {
-		viewWithToolBar.pack();
-	}
+    public void packToolBar() {
+        viewWithToolBar.pack();
+    }
 
 }

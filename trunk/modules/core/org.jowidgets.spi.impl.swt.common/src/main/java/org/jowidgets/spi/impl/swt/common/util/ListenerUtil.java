@@ -34,17 +34,17 @@ import org.eclipse.swt.widgets.Control;
 
 public final class ListenerUtil {
 
-	private ListenerUtil() {}
+    private ListenerUtil() {}
 
-	public static void addRecursiveTraverseListener(final Control control, final TraverseListener listener) {
-		control.addTraverseListener(listener);
-		if (control instanceof Composite) {
-			final Composite composite = (Composite) control;
-			for (final Control child : composite.getChildren()) {
-				addRecursiveTraverseListener(child, listener);
-			}
-		}
+    public static void addRecursiveTraverseListener(final Control control, final TraverseListener listener) {
+        control.addTraverseListener(listener);
+        if (control instanceof Composite) {
+            final Composite composite = (Composite) control;
+            for (final Control child : composite.getChildren()) {
+                addRecursiveTraverseListener(child, listener);
+            }
+        }
 
-	}
+    }
 
 }

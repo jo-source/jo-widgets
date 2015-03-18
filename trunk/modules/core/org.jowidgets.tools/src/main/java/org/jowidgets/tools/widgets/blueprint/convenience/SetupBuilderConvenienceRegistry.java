@@ -39,23 +39,23 @@ import org.jowidgets.util.Assert;
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class SetupBuilderConvenienceRegistry implements ISetupBuilderConvenienceRegistry {
 
-	private final Map map;
+    private final Map map;
 
-	public SetupBuilderConvenienceRegistry() {
-		this.map = new HashMap();
-	}
+    public SetupBuilderConvenienceRegistry() {
+        this.map = new HashMap();
+    }
 
-	@Override
-	public void register(final Class<? extends ISetupBuilder> setupBuilder, final ISetupBuilderConvenience<?> convenienceImpl) {
-		Assert.paramNotNull(setupBuilder, "setupBuilder");
-		Assert.paramNotNull(convenienceImpl, "convenienceImpl");
-		map.put(setupBuilder, convenienceImpl);
-	}
+    @Override
+    public void register(final Class<? extends ISetupBuilder> setupBuilder, final ISetupBuilderConvenience<?> convenienceImpl) {
+        Assert.paramNotNull(setupBuilder, "setupBuilder");
+        Assert.paramNotNull(convenienceImpl, "convenienceImpl");
+        map.put(setupBuilder, convenienceImpl);
+    }
 
-	@Override
-	public ISetupBuilderConvenience<ISetupBuilder<?>> getRegistered(final Class<? extends ISetupBuilder> setupBuilder) {
-		Assert.paramNotNull(setupBuilder, "setupBuilder");
-		return (ISetupBuilderConvenience<ISetupBuilder<?>>) map.get(setupBuilder);
-	}
+    @Override
+    public ISetupBuilderConvenience<ISetupBuilder<?>> getRegistered(final Class<? extends ISetupBuilder> setupBuilder) {
+        Assert.paramNotNull(setupBuilder, "setupBuilder");
+        return (ISetupBuilderConvenience<ISetupBuilder<?>>) map.get(setupBuilder);
+    }
 
 }

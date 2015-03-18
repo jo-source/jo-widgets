@@ -32,14 +32,14 @@ import org.jowidgets.unit.api.IUnitValue;
 
 public class IdentityUnitConverter<UNIT_VALUE_TYPE> extends AbstractUnitConverter<IUnitValue<UNIT_VALUE_TYPE>, UNIT_VALUE_TYPE> {
 
-	@Override
-	public IUnitValue<UNIT_VALUE_TYPE> toBaseValue(final IUnitValue<UNIT_VALUE_TYPE> value) {
-		return value;
-	}
+    @Override
+    public IUnitValue<UNIT_VALUE_TYPE> toBaseValue(final IUnitValue<UNIT_VALUE_TYPE> value) {
+        return value;
+    }
 
-	@Override
-	public IUnitValue<UNIT_VALUE_TYPE> toUnitValue(final IUnitValue<UNIT_VALUE_TYPE> value) {
-		return value;
-	}
+    @Override
+    public IUnitValue<UNIT_VALUE_TYPE> toUnitValue(final IUnitValue<UNIT_VALUE_TYPE> value) {
+        return value;
+    }
 
 }

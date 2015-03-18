@@ -46,60 +46,60 @@ import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.tools.layout.MigLayoutFactory;
 
 public class CollectionInputDialogFactory<ELEMENT_TYPE> implements
-		IWidgetFactory<IInputDialog<Collection<ELEMENT_TYPE>>, ICollectionInputDialogDescriptor<ELEMENT_TYPE>> {
+        IWidgetFactory<IInputDialog<Collection<ELEMENT_TYPE>>, ICollectionInputDialogDescriptor<ELEMENT_TYPE>> {
 
-	@Override
-	public IInputDialog<Collection<ELEMENT_TYPE>> create(
-		final Object parentUiReference,
-		final ICollectionInputDialogDescriptor<ELEMENT_TYPE> descriptor) {
+    @Override
+    public IInputDialog<Collection<ELEMENT_TYPE>> create(
+        final Object parentUiReference,
+        final ICollectionInputDialogDescriptor<ELEMENT_TYPE> descriptor) {
 
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		final IGenericWidgetFactory widgetFactory = Toolkit.getWidgetFactory();
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+        final IGenericWidgetFactory widgetFactory = Toolkit.getWidgetFactory();
 
-		final IInputContentCreator<Collection<ELEMENT_TYPE>> inputCreatorBp = createContentCreator(
-				bpf,
-				descriptor.getCollectionInputControlSetup());
+        final IInputContentCreator<Collection<ELEMENT_TYPE>> inputCreatorBp = createContentCreator(
+                bpf,
+                descriptor.getCollectionInputControlSetup());
 
-		final IInputDialogBluePrint<Collection<ELEMENT_TYPE>> dialogBp = bpf.inputDialog(inputCreatorBp);
-		dialogBp.setSetup(descriptor).setContentCreator(inputCreatorBp);
+        final IInputDialogBluePrint<Collection<ELEMENT_TYPE>> dialogBp = bpf.inputDialog(inputCreatorBp);
+        dialogBp.setSetup(descriptor).setContentCreator(inputCreatorBp);
 
-		final IInputDialog<Collection<ELEMENT_TYPE>> dialogWidget = widgetFactory.create(parentUiReference, dialogBp);
+        final IInputDialog<Collection<ELEMENT_TYPE>> dialogWidget = widgetFactory.create(parentUiReference, dialogBp);
 
-		return dialogWidget;
-	}
+        return dialogWidget;
+    }
 
-	private IInputContentCreator<Collection<ELEMENT_TYPE>> createContentCreator(
-		final IBluePrintFactory bpf,
-		final ICollectionInputControlSetup<ELEMENT_TYPE> setup) {
+    private IInputContentCreator<Collection<ELEMENT_TYPE>> createContentCreator(
+        final IBluePrintFactory bpf,
+        final ICollectionInputControlSetup<ELEMENT_TYPE> setup) {
 
-		final ICollectionInputControlBluePrint<ELEMENT_TYPE> inputControlBp = bpf.collectionInputControl(
-				new ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>>() {
-					@Override
-					public IInputControl<ELEMENT_TYPE> create(final ICustomWidgetFactory widgetFactory) {
-						return setup.getElementWidgetCreator().create(widgetFactory);
-					}
-				}).setSetup(setup);
+        final ICollectionInputControlBluePrint<ELEMENT_TYPE> inputControlBp = bpf.collectionInputControl(
+                new ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>>() {
+                    @Override
+                    public IInputControl<ELEMENT_TYPE> create(final ICustomWidgetFactory widgetFactory) {
+                        return setup.getElementWidgetCreator().create(widgetFactory);
+                    }
+                }).setSetup(setup);
 
-		return new IInputContentCreator<Collection<ELEMENT_TYPE>>() {
+        return new IInputContentCreator<Collection<ELEMENT_TYPE>>() {
 
-			private IInputControl<Collection<ELEMENT_TYPE>> control;
+            private IInputControl<Collection<ELEMENT_TYPE>> control;
 
-			@Override
-			public void createContent(final IInputContentContainer container) {
-				container.setLayout(MigLayoutFactory.growingCellLayout());
-				this.control = container.add(inputControlBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-			}
+            @Override
+            public void createContent(final IInputContentContainer container) {
+                container.setLayout(MigLayoutFactory.growingCellLayout());
+                this.control = container.add(inputControlBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+            }
 
-			@Override
-			public void setValue(final Collection<ELEMENT_TYPE> value) {
-				control.setValue(value);
-			}
+            @Override
+            public void setValue(final Collection<ELEMENT_TYPE> value) {
+                control.setValue(value);
+            }
 
-			@Override
-			public Collection<ELEMENT_TYPE> getValue() {
-				return control.getValue();
-			}
+            @Override
+            public Collection<ELEMENT_TYPE> getValue() {
+                return control.getValue();
+            }
 
-		};
-	}
+        };
+    }
 }

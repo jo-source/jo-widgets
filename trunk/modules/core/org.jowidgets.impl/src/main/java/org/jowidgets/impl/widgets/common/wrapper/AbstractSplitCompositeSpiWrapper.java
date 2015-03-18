@@ -33,13 +33,13 @@ import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 
 public abstract class AbstractSplitCompositeSpiWrapper extends AbstractControlSpiWrapper implements ISplitCompositeCommon {
 
-	public AbstractSplitCompositeSpiWrapper(final ISplitCompositeSpi widget) {
-		super(widget);
-	}
+    public AbstractSplitCompositeSpiWrapper(final ISplitCompositeSpi widget) {
+        super(widget);
+    }
 
-	@Override
-	public ISplitCompositeSpi getWidget() {
-		return (ISplitCompositeSpi) super.getWidget();
-	}
+    @Override
+    public ISplitCompositeSpi getWidget() {
+        return (ISplitCompositeSpi) super.getWidget();
+    }
 
 }

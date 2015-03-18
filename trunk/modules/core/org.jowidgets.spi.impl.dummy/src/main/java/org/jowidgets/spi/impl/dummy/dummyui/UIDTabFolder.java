@@ -32,22 +32,22 @@ import org.jowidgets.common.types.TabPlacement;
 
 public class UIDTabFolder extends UIDTabItem {
 
-	private boolean tabsCloseable;
-	private TabPlacement tabPlacement;
+    private boolean tabsCloseable;
+    private TabPlacement tabPlacement;
 
-	public boolean isTabsCloseable() {
-		return tabsCloseable;
-	}
+    public boolean isTabsCloseable() {
+        return tabsCloseable;
+    }
 
-	public void setTabsCloseable(final boolean tabsCloseable) {
-		this.tabsCloseable = tabsCloseable;
-	}
+    public void setTabsCloseable(final boolean tabsCloseable) {
+        this.tabsCloseable = tabsCloseable;
+    }
 
-	public TabPlacement getTabPlacement() {
-		return tabPlacement;
-	}
+    public TabPlacement getTabPlacement() {
+        return tabPlacement;
+    }
 
-	public void setTabPlacement(final TabPlacement tabPlacement) {
-		this.tabPlacement = tabPlacement;
-	}
+    public void setTabPlacement(final TabPlacement tabPlacement) {
+        this.tabPlacement = tabPlacement;
+    }
 }

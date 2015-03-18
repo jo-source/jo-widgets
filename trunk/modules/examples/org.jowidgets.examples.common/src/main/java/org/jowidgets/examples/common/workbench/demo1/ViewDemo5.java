@@ -38,15 +38,15 @@ import org.jowidgets.workbench.api.IViewContext;
 
 public class ViewDemo5 extends AbstractDemoView implements IView {
 
-	public static final String ID = ViewDemo5.class.getName();
-	public static final String DEFAULT_LABEL = "Demos";
-	public static final String DEFAULT_TOOLTIP = "Demos view";
-	public static final IImageConstant DEFAULT_ICON = SilkIcons.CHART_PIE;
+    public static final String ID = ViewDemo5.class.getName();
+    public static final String DEFAULT_LABEL = "Demos";
+    public static final String DEFAULT_TOOLTIP = "Demos view";
+    public static final IImageConstant DEFAULT_ICON = SilkIcons.CHART_PIE;
 
-	public ViewDemo5(final IViewContext context) {
-		super(ID);
-		final IContainer container = context.getContainer();
-		new DemoMainComposite(container);
-	}
+    public ViewDemo5(final IViewContext context) {
+        super(ID);
+        final IContainer container = context.getContainer();
+        new DemoMainComposite(container);
+    }
 
 }

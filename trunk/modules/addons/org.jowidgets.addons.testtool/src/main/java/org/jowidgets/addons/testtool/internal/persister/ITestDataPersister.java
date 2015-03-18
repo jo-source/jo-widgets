@@ -34,7 +34,7 @@ import org.jowidgets.addons.testtool.internal.TestDataObject;
 
 public interface ITestDataPersister {
 
-	void save(List<TestDataObject> list, String fileName);
+    void save(List<TestDataObject> list, String fileName);
 
-	List<TestDataObject> load(String fileName);
+    List<TestDataObject> load(String fileName);
 }

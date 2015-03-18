@@ -40,70 +40,70 @@ import org.jowidgets.spi.impl.swing.common.util.DimensionConvert;
 
 public class LayoutManagerImpl implements LayoutManager2 {
 
-	private final Container container;
-	private final ILayouter layouter;
-	private final Map<Component, Object> components;
+    private final Container container;
+    private final ILayouter layouter;
+    private final Map<Component, Object> components;
 
-	public LayoutManagerImpl(final Container container, final ILayouter layouter) {
-		this.container = container;
-		this.layouter = layouter;
-		this.components = new HashMap<Component, Object>();
-	}
+    public LayoutManagerImpl(final Container container, final ILayouter layouter) {
+        this.container = container;
+        this.layouter = layouter;
+        this.components = new HashMap<Component, Object>();
+    }
 
-	@Override
-	public void addLayoutComponent(final String name, final Component comp) {
-		components.put(comp, name);
-	}
+    @Override
+    public void addLayoutComponent(final String name, final Component comp) {
+        components.put(comp, name);
+    }
 
-	@Override
-	public void removeLayoutComponent(final Component comp) {
-		components.remove(comp);
-	}
+    @Override
+    public void removeLayoutComponent(final Component comp) {
+        components.remove(comp);
+    }
 
-	@Override
-	public void addLayoutComponent(final Component comp, final Object constraints) {
-		components.put(comp, constraints);
-	}
+    @Override
+    public void addLayoutComponent(final Component comp, final Object constraints) {
+        components.put(comp, constraints);
+    }
 
-	public Object getLayoutConstraints(final Component component) {
-		return components.get(component);
-	}
+    public Object getLayoutConstraints(final Component component) {
+        return components.get(component);
+    }
 
-	@Override
-	public Dimension preferredLayoutSize(final Container parent) {
-		return DimensionConvert.convert(layouter.getPreferredSize());
-	}
+    @Override
+    public Dimension preferredLayoutSize(final Container parent) {
+        return DimensionConvert.convert(layouter.getPreferredSize());
+    }
 
-	@Override
-	public Dimension minimumLayoutSize(final Container parent) {
-		return DimensionConvert.convert(layouter.getMinSize());
-	}
+    @Override
+    public Dimension minimumLayoutSize(final Container parent) {
+        return DimensionConvert.convert(layouter.getMinSize());
+    }
 
-	@Override
-	public Dimension maximumLayoutSize(final Container target) {
-		return DimensionConvert.convert(layouter.getMaxSize());
-	}
+    @Override
+    public Dimension maximumLayoutSize(final Container target) {
+        return DimensionConvert.convert(layouter.getMaxSize());
+    }
 
-	@Override
-	public void layoutContainer(final Container parent) {
-		synchronized (container.getTreeLock()) {
-			layouter.layout();
-		}
-	}
+    @Override
+    public void layoutContainer(final Container parent) {
+        synchronized (container.getTreeLock()) {
+            layouter.layout();
+        }
+    }
 
-	@Override
-	public float getLayoutAlignmentX(final Container target) {
-		return 0;
-	}
+    @Override
+    public float getLayoutAlignmentX(final Container target) {
+        return 0;
+    }
 
-	@Override
-	public float getLayoutAlignmentY(final Container target) {
-		return 0;
-	}
+    @Override
+    public float getLayoutAlignmentY(final Container target) {
+        return 0;
+    }
 
-	@Override
-	public void invalidateLayout(final Container target) {
-		layouter.invalidate();
-	}
+    @Override
+    public void invalidateLayout(final Container target) {
+        layouter.invalidate();
+    }
 
 }

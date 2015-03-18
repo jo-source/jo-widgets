@@ -31,12 +31,12 @@ import org.jowidgets.api.model.table.ITableColumnModel;
 import org.jowidgets.common.widgets.builder.ITableSetupBuilderCommon;
 
 public interface ITableSetupBuilder<INSTANCE_TYPE extends ITableSetupBuilder<?>> extends
-		IComponentSetupBuilder<INSTANCE_TYPE>,
-		ITableSetupBuilderCommon<INSTANCE_TYPE> {
+        IComponentSetupBuilder<INSTANCE_TYPE>,
+        ITableSetupBuilderCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setColumnModel(ITableColumnModel model);
+    INSTANCE_TYPE setColumnModel(ITableColumnModel model);
 
-	INSTANCE_TYPE setEditable(boolean editable);
+    INSTANCE_TYPE setEditable(boolean editable);
 
-	INSTANCE_TYPE setColumnMaxPackWidth(int width);
+    INSTANCE_TYPE setColumnMaxPackWidth(int width);
 }

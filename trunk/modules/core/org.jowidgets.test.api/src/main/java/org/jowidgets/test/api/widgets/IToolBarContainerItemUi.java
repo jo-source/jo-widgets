@@ -32,9 +32,9 @@ import org.jowidgets.api.widgets.IToolBarContainerItem;
 import org.jowidgets.test.common.widgets.IToolBarContainerItemUiCommon;
 
 public interface IToolBarContainerItemUi extends
-		IToolBarItemUi,
-		IContainerUi,
-		IToolBarContainerItemUiCommon,
-		IToolBarContainerItem {
+        IToolBarItemUi,
+        IContainerUi,
+        IToolBarContainerItemUiCommon,
+        IToolBarContainerItem {
 
 }

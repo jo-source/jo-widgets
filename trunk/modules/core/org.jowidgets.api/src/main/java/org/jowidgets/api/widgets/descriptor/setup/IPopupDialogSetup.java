@@ -32,7 +32,7 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IPopupDialogSetup extends IContainerSetup, IPopupDialogSetupCommon {
 
-	@Mandatory
-	boolean isAutoDispose();
+    @Mandatory
+    boolean isAutoDispose();
 
 }

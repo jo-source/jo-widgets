@@ -31,9 +31,9 @@ import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
 
 public interface ITextFieldSetupBuilderSpi<INSTANCE_TYPE extends ITextFieldSetupBuilderSpi<?>> extends
-		ITextComponentSetupBuilderSpi<INSTANCE_TYPE>,
-		ITextFieldSetupBuilderCommon<INSTANCE_TYPE> {
+        ITextComponentSetupBuilderSpi<INSTANCE_TYPE>,
+        ITextFieldSetupBuilderCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setMask(final ITextMask textMask);
+    INSTANCE_TYPE setMask(final ITextMask textMask);
 
 }

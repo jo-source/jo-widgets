@@ -39,40 +39,40 @@ import org.jowidgets.util.Assert;
 
 public class TableCellObservable implements ITableCellObservable {
 
-	private final Set<ITableCellListener> listeners;
+    private final Set<ITableCellListener> listeners;
 
-	public TableCellObservable() {
-		this.listeners = new LinkedHashSet<ITableCellListener>();
-	}
+    public TableCellObservable() {
+        this.listeners = new LinkedHashSet<ITableCellListener>();
+    }
 
-	@Override
-	public void addTableCellListener(final ITableCellListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public void addTableCellListener(final ITableCellListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removeTableCellListener(final ITableCellListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeTableCellListener(final ITableCellListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public void fireMousePressed(final ITableCellMouseEvent event) {
-		for (final ITableCellListener listener : new LinkedList<ITableCellListener>(listeners)) {
-			listener.mousePressed(event);
-		}
-	}
+    public void fireMousePressed(final ITableCellMouseEvent event) {
+        for (final ITableCellListener listener : new LinkedList<ITableCellListener>(listeners)) {
+            listener.mousePressed(event);
+        }
+    }
 
-	public void fireMouseReleased(final ITableCellMouseEvent event) {
-		for (final ITableCellListener listener : new LinkedList<ITableCellListener>(listeners)) {
-			listener.mouseReleased(event);
-		}
-	}
+    public void fireMouseReleased(final ITableCellMouseEvent event) {
+        for (final ITableCellListener listener : new LinkedList<ITableCellListener>(listeners)) {
+            listener.mouseReleased(event);
+        }
+    }
 
-	public void fireMouseDoubleClicked(final ITableCellMouseEvent event) {
-		for (final ITableCellListener listener : new LinkedList<ITableCellListener>(listeners)) {
-			listener.mouseDoubleClicked(event);
-		}
-	}
+    public void fireMouseDoubleClicked(final ITableCellMouseEvent event) {
+        for (final ITableCellListener listener : new LinkedList<ITableCellListener>(listeners)) {
+            listener.mouseDoubleClicked(event);
+        }
+    }
 
 }

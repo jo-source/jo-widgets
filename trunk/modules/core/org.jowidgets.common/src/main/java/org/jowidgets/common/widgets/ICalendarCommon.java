@@ -34,8 +34,8 @@ import org.jowidgets.common.widgets.controller.IInputObservable;
 
 public interface ICalendarCommon extends IControlCommon, IInputObservable {
 
-	void setDate(Date date);
+    void setDate(Date date);
 
-	Date getDate();
+    Date getDate();
 
 }

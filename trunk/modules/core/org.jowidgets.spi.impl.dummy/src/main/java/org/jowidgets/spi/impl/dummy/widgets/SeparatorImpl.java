@@ -33,13 +33,13 @@ import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
 
 public class SeparatorImpl extends DummyControl implements IControlSpi {
 
-	public SeparatorImpl(final ISeparatorSetupSpi setup) {
-		super(new UIDSeparator(setup.getOrientation()));
-	}
+    public SeparatorImpl(final ISeparatorSetupSpi setup) {
+        super(new UIDSeparator(setup.getOrientation()));
+    }
 
-	@Override
-	public UIDSeparator getUiReference() {
-		return (UIDSeparator) super.getUiReference();
-	}
+    @Override
+    public UIDSeparator getUiReference() {
+        return (UIDSeparator) super.getUiReference();
+    }
 
 }

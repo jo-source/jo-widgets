@@ -37,41 +37,41 @@ import org.jowidgets.util.Assert;
 
 public class DisposableDelegate {
 
-	private final Set<IDisposeListener> listeners;
+    private final Set<IDisposeListener> listeners;
 
-	private boolean disposed;
+    private boolean disposed;
 
-	public DisposableDelegate() {
-		this.listeners = new LinkedHashSet<IDisposeListener>();
-		this.disposed = false;
-	};
+    public DisposableDelegate() {
+        this.listeners = new LinkedHashSet<IDisposeListener>();
+        this.disposed = false;
+    };
 
-	public void addDisposeListener(final IDisposeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    public void addDisposeListener(final IDisposeListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	public void removeDisposeListener(final IDisposeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    public void removeDisposeListener(final IDisposeListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public void dispose() {
-		if (!disposed) {
-			fireOnDispose();
-			this.disposed = true;
-			listeners.clear();
-		}
-	}
+    public void dispose() {
+        if (!disposed) {
+            fireOnDispose();
+            this.disposed = true;
+            listeners.clear();
+        }
+    }
 
-	public boolean isDisposed() {
-		return disposed;
-	}
+    public boolean isDisposed() {
+        return disposed;
+    }
 
-	public void fireOnDispose() {
-		for (final IDisposeListener listener : new ArrayList<IDisposeListener>(listeners)) {
-			listener.onDispose();
-		}
-	}
+    public void fireOnDispose() {
+        for (final IDisposeListener listener : new ArrayList<IDisposeListener>(listeners)) {
+            listener.onDispose();
+        }
+    }
 
 }

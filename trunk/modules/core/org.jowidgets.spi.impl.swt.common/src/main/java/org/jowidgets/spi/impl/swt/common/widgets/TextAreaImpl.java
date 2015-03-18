@@ -53,229 +53,229 @@ import org.jowidgets.util.EmptyCheck;
 
 public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaSpi {
 
-	private final Text textArea;
-	private final ScrolledComposite scrolledComposite;
-	private final boolean isLineWrap;
+    private final Text textArea;
+    private final ScrolledComposite scrolledComposite;
+    private final boolean isLineWrap;
 
-	private int lastLineCount;
+    private int lastLineCount;
 
-	public TextAreaImpl(final Object parentUiReference, final ITextAreaSetupSpi setup) {
-		super(new ScrolledComposite((Composite) parentUiReference, getScrollCompositeStyle(setup)));
+    public TextAreaImpl(final Object parentUiReference, final ITextAreaSetupSpi setup) {
+        super(new ScrolledComposite((Composite) parentUiReference, getScrollCompositeStyle(setup)));
 
-		lastLineCount = 0;
-		isLineWrap = setup.isLineWrap();
+        lastLineCount = 0;
+        isLineWrap = setup.isLineWrap();
 
-		scrolledComposite = getUiReference();
+        scrolledComposite = getUiReference();
 
-		scrolledComposite.setExpandHorizontal(true);
-		scrolledComposite.setExpandVertical(true);
-		scrolledComposite.setAlwaysShowScrollBars(setup.isAlwaysShowBars());
+        scrolledComposite.setExpandHorizontal(true);
+        scrolledComposite.setExpandVertical(true);
+        scrolledComposite.setAlwaysShowScrollBars(setup.isAlwaysShowBars());
 
-		textArea = new Text(getUiReference(), getTextStyle(setup));
+        textArea = new Text(getUiReference(), getTextStyle(setup));
 
-		if (SwtOptions.hasInputVerification()) {
-			final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(null, setup);
-			if (inputVerifier != null) {
-				textArea.addVerifyListener(new VerifyListener() {
-					@Override
-					public void verifyText(final VerifyEvent verifyEvent) {
-						verifyEvent.doit = inputVerifier.verify(
-								textArea.getText(),
-								verifyEvent.text,
-								verifyEvent.start,
-								verifyEvent.end);
-					}
-				});
-			}
-		}
+        if (SwtOptions.hasInputVerification()) {
+            final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(null, setup);
+            if (inputVerifier != null) {
+                textArea.addVerifyListener(new VerifyListener() {
+                    @Override
+                    public void verifyText(final VerifyEvent verifyEvent) {
+                        verifyEvent.doit = inputVerifier.verify(
+                                textArea.getText(),
+                                verifyEvent.text,
+                                verifyEvent.start,
+                                verifyEvent.end);
+                    }
+                });
+            }
+        }
 
-		if (setup.getMaxLength() != null) {
-			textArea.setTextLimit(setup.getMaxLength().intValue());
-		}
+        if (setup.getMaxLength() != null) {
+            textArea.setTextLimit(setup.getMaxLength().intValue());
+        }
 
-		scrolledComposite.setContent(textArea);
+        scrolledComposite.setContent(textArea);
 
-		registerTextControl(textArea, setup.getInputChangeEventPolicy());
+        registerTextControl(textArea, setup.getInputChangeEventPolicy());
 
-		scrolledComposite.addControlListener(new ControlAdapter() {
-			@Override
-			public void controlResized(final ControlEvent e) {
-				scrolledComposite.setMinSize(calcMinSize());
-			}
-		});
+        scrolledComposite.addControlListener(new ControlAdapter() {
+            @Override
+            public void controlResized(final ControlEvent e) {
+                scrolledComposite.setMinSize(calcMinSize());
+            }
+        });
 
-		textArea.addModifyListener(new ModifyListener() {
-			@Override
-			public void modifyText(final ModifyEvent e) {
-				checkScrollBars();
-			}
-		});
-	}
+        textArea.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                checkScrollBars();
+            }
+        });
+    }
 
-	private Point calcMinSize() {
-		if (isLineWrap) {
-			final ScrollBar bar = scrolledComposite.getVerticalBar();
-			int verticalSize = 0;
-			if (bar != null) {
-				verticalSize = bar.getSize().x + 10;
-			}
-			return textArea.computeSize(scrolledComposite.getSize().x - verticalSize, SWT.DEFAULT, false);
-		}
-		else {
-			return textArea.computeSize(SWT.DEFAULT, SWT.DEFAULT, false);
-		}
-	}
+    private Point calcMinSize() {
+        if (isLineWrap) {
+            final ScrollBar bar = scrolledComposite.getVerticalBar();
+            int verticalSize = 0;
+            if (bar != null) {
+                verticalSize = bar.getSize().x + 10;
+            }
+            return textArea.computeSize(scrolledComposite.getSize().x - verticalSize, SWT.DEFAULT, false);
+        }
+        else {
+            return textArea.computeSize(SWT.DEFAULT, SWT.DEFAULT, false);
+        }
+    }
 
-	private void checkScrollBars() {
-		if (isLineWrap && lineCountChanged()) {
-			scrolledComposite.setRedraw(false);
-			scrolledComposite.setMinSize(calcMinSize());
+    private void checkScrollBars() {
+        if (isLineWrap && lineCountChanged()) {
+            scrolledComposite.setRedraw(false);
+            scrolledComposite.setMinSize(calcMinSize());
 
-			//TODO NM evaluate only to scroll if its is really necessary
-			scrollToCaretPosition();
-			scrolledComposite.setRedraw(true);
-		}
-	}
+            //TODO NM evaluate only to scroll if its is really necessary
+            scrollToCaretPosition();
+            scrolledComposite.setRedraw(true);
+        }
+    }
 
-	private boolean lineCountChanged() {
-		try {
-			if (lastLineCount != textArea.getLineCount()) {
-				lastLineCount = textArea.getLineCount();
-				return true;
-			}
-		}
-		catch (final NoSuchMethodError e) {
-			//RWT does not support getLineCount()
-			return true;
-		}
-		return false;
-	}
+    private boolean lineCountChanged() {
+        try {
+            if (lastLineCount != textArea.getLineCount()) {
+                lastLineCount = textArea.getLineCount();
+                return true;
+            }
+        }
+        catch (final NoSuchMethodError e) {
+            //RWT does not support getLineCount()
+            return true;
+        }
+        return false;
+    }
 
-	@Override
-	public ScrolledComposite getUiReference() {
-		return (ScrolledComposite) super.getUiReference();
-	}
+    @Override
+    public ScrolledComposite getUiReference() {
+        return (ScrolledComposite) super.getUiReference();
+    }
 
-	@Override
-	public String getText() {
-		return textArea.getText();
-	}
+    @Override
+    public String getText() {
+        return textArea.getText();
+    }
 
-	@Override
-	public void setText(final String text) {
-		if (text != null) {
-			textArea.setText(text);
-		}
-		else {
-			textArea.setText("");
-		}
-		checkScrollBars();
-		if (!getUiReference().isFocusControl()) {
-			fireInputChanged(getText());
-		}
-	}
+    @Override
+    public void setText(final String text) {
+        if (text != null) {
+            textArea.setText(text);
+        }
+        else {
+            textArea.setText("");
+        }
+        checkScrollBars();
+        if (!getUiReference().isFocusControl()) {
+            fireInputChanged(getText());
+        }
+    }
 
-	@Override
-	public void append(final String text) {
-		if (!EmptyCheck.isEmpty(text)) {
-			textArea.append(text);
-			checkScrollBars();
-			if (!getUiReference().isFocusControl()) {
-				fireInputChanged(getText());
-			}
-		}
-	}
+    @Override
+    public void append(final String text) {
+        if (!EmptyCheck.isEmpty(text)) {
+            textArea.append(text);
+            checkScrollBars();
+            if (!getUiReference().isFocusControl()) {
+                fireInputChanged(getText());
+            }
+        }
+    }
 
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		super.setForegroundColor(colorValue);
-		textArea.setForeground(ColorCache.getInstance().getColor(colorValue));
-	}
+    @Override
+    public void setForegroundColor(final IColorConstant colorValue) {
+        super.setForegroundColor(colorValue);
+        textArea.setForeground(ColorCache.getInstance().getColor(colorValue));
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		super.setBackgroundColor(colorValue);
-		textArea.setBackground(ColorCache.getInstance().getColor(colorValue));
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        super.setBackgroundColor(colorValue);
+        textArea.setBackground(ColorCache.getInstance().getColor(colorValue));
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		textArea.setFont(FontProvider.deriveFont(textArea.getFont(), size));
-	}
+    @Override
+    public void setFontSize(final int size) {
+        textArea.setFont(FontProvider.deriveFont(textArea.getFont(), size));
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		textArea.setFont(FontProvider.deriveFont(textArea.getFont(), fontName));
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        textArea.setFont(FontProvider.deriveFont(textArea.getFont(), fontName));
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		textArea.setFont(FontProvider.deriveFont(textArea.getFont(), markup));
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        textArea.setFont(FontProvider.deriveFont(textArea.getFont(), markup));
+    }
 
-	@Override
-	public void setSelection(final int start, final int end) {
-		textArea.setSelection(start, end);
-	}
+    @Override
+    public void setSelection(final int start, final int end) {
+        textArea.setSelection(start, end);
+    }
 
-	@Override
-	public void select() {
-		textArea.selectAll();
-	}
+    @Override
+    public void select() {
+        textArea.selectAll();
+    }
 
-	@Override
-	public void setCaretPosition(final int pos) {
-		textArea.setSelection(pos, pos);
-	}
+    @Override
+    public void setCaretPosition(final int pos) {
+        textArea.setSelection(pos, pos);
+    }
 
-	@Override
-	public int getCaretPosition() {
-		return textArea.getCaretPosition();
-	}
+    @Override
+    public int getCaretPosition() {
+        return textArea.getCaretPosition();
+    }
 
-	@Override
-	public void setEditable(final boolean editable) {
-		textArea.setEditable(editable);
-	}
+    @Override
+    public void setEditable(final boolean editable) {
+        textArea.setEditable(editable);
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		textArea.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        textArea.setEnabled(enabled);
+    }
 
-	@Override
-	public void scrollToCaretPosition() {
-		try {
-			final Point caretPosition = textArea.getCaretLocation();
-			scrolledComposite.setOrigin(caretPosition.x - 20, caretPosition.y - 20);
-		}
-		catch (final NoSuchMethodError e) {
-			//RWT does not support getCaretLocation()
-		}
-	}
+    @Override
+    public void scrollToCaretPosition() {
+        try {
+            final Point caretPosition = textArea.getCaretLocation();
+            scrolledComposite.setOrigin(caretPosition.x - 20, caretPosition.y - 20);
+        }
+        catch (final NoSuchMethodError e) {
+            //RWT does not support getCaretLocation()
+        }
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		return new Dimension(35, 32);
-	}
+    @Override
+    public Dimension getMinSize() {
+        return new Dimension(35, 32);
+    }
 
-	private static int getScrollCompositeStyle(final ITextAreaSetupSpi setup) {
-		int result = SWT.V_SCROLL;
-		if (!setup.isLineWrap()) {
-			result = result | SWT.H_SCROLL;
-		}
-		if (setup.hasBorder()) {
-			result = result | SWT.BORDER;
-		}
-		return result;
-	}
+    private static int getScrollCompositeStyle(final ITextAreaSetupSpi setup) {
+        int result = SWT.V_SCROLL;
+        if (!setup.isLineWrap()) {
+            result = result | SWT.H_SCROLL;
+        }
+        if (setup.hasBorder()) {
+            result = result | SWT.BORDER;
+        }
+        return result;
+    }
 
-	private static int getTextStyle(final ITextAreaSetupSpi setup) {
-		int result = SWT.MULTI;
-		if (setup.isLineWrap()) {
-			result = result | SWT.WRAP;
-		}
-		return result;
-	}
+    private static int getTextStyle(final ITextAreaSetupSpi setup) {
+        int result = SWT.MULTI;
+        if (setup.isLineWrap()) {
+            result = result | SWT.WRAP;
+        }
+        return result;
+    }
 
 }

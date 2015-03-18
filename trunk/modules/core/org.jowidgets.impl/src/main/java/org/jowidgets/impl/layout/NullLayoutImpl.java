@@ -35,32 +35,32 @@ import org.jowidgets.util.Assert;
 
 final class NullLayoutImpl implements ILayouter {
 
-	private final IContainer container;
+    private final IContainer container;
 
-	NullLayoutImpl(final IContainer container) {
-		Assert.paramNotNull(container, "container");
-		this.container = container;
-	}
+    NullLayoutImpl(final IContainer container) {
+        Assert.paramNotNull(container, "container");
+        this.container = container;
+    }
 
-	@Override
-	public void layout() {}
+    @Override
+    public void layout() {}
 
-	@Override
-	public Dimension getMinSize() {
-		return container.getSize();
-	}
+    @Override
+    public Dimension getMinSize() {
+        return container.getSize();
+    }
 
-	@Override
-	public Dimension getPreferredSize() {
-		return container.getSize();
-	}
+    @Override
+    public Dimension getPreferredSize() {
+        return container.getSize();
+    }
 
-	@Override
-	public Dimension getMaxSize() {
-		return container.getSize();
-	}
+    @Override
+    public Dimension getMaxSize() {
+        return container.getSize();
+    }
 
-	@Override
-	public void invalidate() {}
+    @Override
+    public void invalidate() {}
 
 }

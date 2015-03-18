@@ -30,10 +30,10 @@ package org.jowidgets.common.dnd;
 
 public enum DropAction {
 
-	NONE,
-	DEFAULT,
-	MOVE,
-	COPY,
-	LINK;
+    NONE,
+    DEFAULT,
+    MOVE,
+    COPY,
+    LINK;
 
 }

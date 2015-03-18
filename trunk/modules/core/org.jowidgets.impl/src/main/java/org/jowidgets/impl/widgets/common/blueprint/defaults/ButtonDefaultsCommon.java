@@ -34,10 +34,10 @@ import org.jowidgets.common.widgets.builder.IButtonSetupBuilderCommon;
 
 public class ButtonDefaultsCommon implements IDefaultInitializer<IButtonSetupBuilderCommon<?>> {
 
-	@Override
-	public void initialize(final IButtonSetupBuilderCommon<?> builder) {
-		builder.setAlignment(AlignmentHorizontal.CENTER);
-		builder.setMarkup(Markup.DEFAULT);
-	}
+    @Override
+    public void initialize(final IButtonSetupBuilderCommon<?> builder) {
+        builder.setAlignment(AlignmentHorizontal.CENTER);
+        builder.setMarkup(Markup.DEFAULT);
+    }
 
 }

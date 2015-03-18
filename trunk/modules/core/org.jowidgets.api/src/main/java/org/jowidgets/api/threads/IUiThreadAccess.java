@@ -32,14 +32,14 @@ import org.jowidgets.common.threads.IUiThreadAccessCommon;
 
 public interface IUiThreadAccess extends IUiThreadAccessCommon {
 
-	/**
-	 * Disables all windows, executes the runnable and after that enables all windows again.
-	 * 
-	 * Remark: This method will be invoked in the event dispatcher thread, so the runnable should
-	 * not do long lasting things.
-	 * 
-	 * @param runnable The runnable to run
-	 */
-	void disableAllWindowsWhile(Runnable runnable);
+    /**
+     * Disables all windows, executes the runnable and after that enables all windows again.
+     * 
+     * Remark: This method will be invoked in the event dispatcher thread, so the runnable should
+     * not do long lasting things.
+     * 
+     * @param runnable The runnable to run
+     */
+    void disableAllWindowsWhile(Runnable runnable);
 
 }

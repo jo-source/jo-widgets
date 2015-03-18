@@ -31,12 +31,12 @@ import org.jowidgets.api.command.IExecutionContext;
 
 public interface ITitledWindowSetupConvenience<INSTANCE_TYPE> {
 
-	/**
-	 * Sets the title and the icon to those of the execution context
-	 * 
-	 * @param executionContext the context to set
-	 * @return The builder instance
-	 */
-	INSTANCE_TYPE setExecutionContext(IExecutionContext executionContext);
+    /**
+     * Sets the title and the icon to those of the execution context
+     * 
+     * @param executionContext the context to set
+     * @return The builder instance
+     */
+    INSTANCE_TYPE setExecutionContext(IExecutionContext executionContext);
 
 }

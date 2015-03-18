@@ -32,46 +32,46 @@ import org.jowidgets.common.types.Dimension;
 
 public interface IControlCommon extends IComponentCommon {
 
-	/**
-	 * Sets the tooltip text for the control
-	 * 
-	 * @param toolTip The tooltip text or null if the control should not show any tooltip
-	 */
-	void setToolTipText(String toolTip);
+    /**
+     * Sets the tooltip text for the control
+     * 
+     * @param toolTip The tooltip text or null if the control should not show any tooltip
+     */
+    void setToolTipText(String toolTip);
 
-	/**
-	 * Sets the layout constraints of the control
-	 * 
-	 * @param layoutConstraints The layout constraints, may be null
-	 */
-	void setLayoutConstraints(Object layoutConstraints);
+    /**
+     * Sets the layout constraints of the control
+     * 
+     * @param layoutConstraints The layout constraints, may be null
+     */
+    void setLayoutConstraints(Object layoutConstraints);
 
-	/**
-	 * Gets the layout constraints of the control
-	 * 
-	 * @return The layout constraints or null if no layout constraints was set before
-	 */
-	Object getLayoutConstraints();
+    /**
+     * Gets the layout constraints of the control
+     * 
+     * @return The layout constraints or null if no layout constraints was set before
+     */
+    Object getLayoutConstraints();
 
-	/**
-	 * Gets the minimal size of the control.
-	 * 
-	 * @return The minimal size of the control, never null
-	 */
-	Dimension getMinSize();
+    /**
+     * Gets the minimal size of the control.
+     * 
+     * @return The minimal size of the control, never null
+     */
+    Dimension getMinSize();
 
-	/**
-	 * Gets the preferred size of the control.
-	 * 
-	 * @return The preferred size of the control, never null
-	 */
-	Dimension getPreferredSize();
+    /**
+     * Gets the preferred size of the control.
+     * 
+     * @return The preferred size of the control, never null
+     */
+    Dimension getPreferredSize();
 
-	/**
-	 * Gets the maximal size of the control.
-	 * 
-	 * @return The maximal size of the control, never null
-	 */
-	Dimension getMaxSize();
+    /**
+     * Gets the maximal size of the control.
+     * 
+     * @return The maximal size of the control, never null
+     */
+    Dimension getMaxSize();
 
 }

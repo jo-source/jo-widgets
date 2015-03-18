@@ -28,7 +28,6 @@
 
 package org.jowidgets.spi.impl.dummy.dummyui;
 
-
 public class UIDRadioMenuItem extends UIDMenuItem {
 
 }

@@ -32,10 +32,10 @@ import org.jowidgets.api.toolkit.Toolkit;
 
 public final class Transferable {
 
-	private Transferable() {}
+    private Transferable() {}
 
-	public static ITransferableBuilder builder() {
-		return Toolkit.createTransferableBuilder();
-	}
+    public static ITransferableBuilder builder() {
+        return Toolkit.createTransferableBuilder();
+    }
 
 }

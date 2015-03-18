@@ -39,32 +39,32 @@ package org.jowidgets.util;
  */
 public class MandatoryObservableValue<VALUE_TYPE> extends ObservableValue<VALUE_TYPE> {
 
-	private final VALUE_TYPE defaultValue;
+    private final VALUE_TYPE defaultValue;
 
-	public MandatoryObservableValue(final VALUE_TYPE defaultValue) {
-		Assert.paramNotNull(defaultValue, "defaultValue");
-		this.defaultValue = defaultValue;
-	}
+    public MandatoryObservableValue(final VALUE_TYPE defaultValue) {
+        Assert.paramNotNull(defaultValue, "defaultValue");
+        this.defaultValue = defaultValue;
+    }
 
-	@Override
-	public void setValue(final VALUE_TYPE value) {
-		if (value != null) {
-			super.setValue(value);
-		}
-		else {
-			super.setValue(defaultValue);
-		}
-	}
+    @Override
+    public void setValue(final VALUE_TYPE value) {
+        if (value != null) {
+            super.setValue(value);
+        }
+        else {
+            super.setValue(defaultValue);
+        }
+    }
 
-	@Override
-	public VALUE_TYPE getValue() {
-		final VALUE_TYPE superResult = super.getValue();
-		if (superResult != null) {
-			return superResult;
-		}
-		else {
-			return defaultValue;
-		}
-	}
+    @Override
+    public VALUE_TYPE getValue() {
+        final VALUE_TYPE superResult = super.getValue();
+        if (superResult != null) {
+            return superResult;
+        }
+        else {
+            return defaultValue;
+        }
+    }
 
 }

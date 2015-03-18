@@ -36,26 +36,26 @@ import org.jowidgets.util.ITypedKey;
 
 public class ExecutionContextWrapper implements IExecutionContext {
 
-	private final IExecutionContext executionContext;
+    private final IExecutionContext executionContext;
 
-	public ExecutionContextWrapper(final IExecutionContext executionContext) {
-		Assert.paramNotNull(executionContext, "executionContext");
-		this.executionContext = executionContext;
-	}
+    public ExecutionContextWrapper(final IExecutionContext executionContext) {
+        Assert.paramNotNull(executionContext, "executionContext");
+        this.executionContext = executionContext;
+    }
 
-	@Override
-	public <VALUE_TYPE> VALUE_TYPE getValue(final ITypedKey<VALUE_TYPE> key) {
-		return executionContext.getValue(key);
-	}
+    @Override
+    public <VALUE_TYPE> VALUE_TYPE getValue(final ITypedKey<VALUE_TYPE> key) {
+        return executionContext.getValue(key);
+    }
 
-	@Override
-	public IAction getAction() {
-		return executionContext.getAction();
-	}
+    @Override
+    public IAction getAction() {
+        return executionContext.getAction();
+    }
 
-	@Override
-	public IWidget getSource() {
-		return executionContext.getSource();
-	}
+    @Override
+    public IWidget getSource() {
+        return executionContext.getSource();
+    }
 
 }

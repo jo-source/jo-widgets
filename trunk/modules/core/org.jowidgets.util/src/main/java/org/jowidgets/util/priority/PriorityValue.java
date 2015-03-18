@@ -31,70 +31,70 @@ package org.jowidgets.util.priority;
 import org.jowidgets.util.Assert;
 
 public final class PriorityValue<VALUE_TYPE, PRIORITY_TYPE extends Comparable<PRIORITY_TYPE>> implements
-		IPriorityValue<VALUE_TYPE, PRIORITY_TYPE> {
+        IPriorityValue<VALUE_TYPE, PRIORITY_TYPE> {
 
-	private final VALUE_TYPE value;
-	private final PRIORITY_TYPE priority;
+    private final VALUE_TYPE value;
+    private final PRIORITY_TYPE priority;
 
-	public PriorityValue(final VALUE_TYPE value, final PRIORITY_TYPE priority) {
-		Assert.paramNotNull(priority, "priority");
-		this.value = value;
-		this.priority = priority;
-	}
+    public PriorityValue(final VALUE_TYPE value, final PRIORITY_TYPE priority) {
+        Assert.paramNotNull(priority, "priority");
+        this.value = value;
+        this.priority = priority;
+    }
 
-	@Override
-	public VALUE_TYPE getValue() {
-		return value;
-	}
+    @Override
+    public VALUE_TYPE getValue() {
+        return value;
+    }
 
-	@Override
-	public PRIORITY_TYPE getPriority() {
-		return priority;
-	}
+    @Override
+    public PRIORITY_TYPE getPriority() {
+        return priority;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((priority == null) ? 0 : priority.hashCode());
-		result = prime * result + ((value == null) ? 0 : value.hashCode());
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((priority == null) ? 0 : priority.hashCode());
+        result = prime * result + ((value == null) ? 0 : value.hashCode());
+        return result;
+    }
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof PriorityValue)) {
-			return false;
-		}
-		final IPriorityValue<?, ?> other = (IPriorityValue<?, ?>) obj;
-		if (priority == null) {
-			if (other.getPriority() != null) {
-				return false;
-			}
-		}
-		else if (!priority.equals(other.getPriority())) {
-			return false;
-		}
-		if (value == null) {
-			if (other.getValue() != null) {
-				return false;
-			}
-		}
-		else if (!value.equals(other.getValue())) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof PriorityValue)) {
+            return false;
+        }
+        final IPriorityValue<?, ?> other = (IPriorityValue<?, ?>) obj;
+        if (priority == null) {
+            if (other.getPriority() != null) {
+                return false;
+            }
+        }
+        else if (!priority.equals(other.getPriority())) {
+            return false;
+        }
+        if (value == null) {
+            if (other.getValue() != null) {
+                return false;
+            }
+        }
+        else if (!value.equals(other.getValue())) {
+            return false;
+        }
+        return true;
+    }
 
-	@Override
-	public String toString() {
-		return "PriorityValue [value=" + value + ", priority=" + priority + "]";
-	}
+    @Override
+    public String toString() {
+        return "PriorityValue [value=" + value + ", priority=" + priority + "]";
+    }
 
 }

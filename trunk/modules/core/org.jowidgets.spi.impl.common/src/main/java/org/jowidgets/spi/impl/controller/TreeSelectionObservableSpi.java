@@ -38,29 +38,29 @@ import org.jowidgets.util.Assert;
 
 public class TreeSelectionObservableSpi implements ITreeSelectionObservableSpi {
 
-	private final Set<ITreeSelectionListenerSpi> listeners;
+    private final Set<ITreeSelectionListenerSpi> listeners;
 
-	public TreeSelectionObservableSpi() {
-		super();
-		this.listeners = new LinkedHashSet<ITreeSelectionListenerSpi>();
-	}
+    public TreeSelectionObservableSpi() {
+        super();
+        this.listeners = new LinkedHashSet<ITreeSelectionListenerSpi>();
+    }
 
-	@Override
-	public void addTreeSelectionListener(final ITreeSelectionListenerSpi listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public void addTreeSelectionListener(final ITreeSelectionListenerSpi listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removeTreeSelectionListener(final ITreeSelectionListenerSpi listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeTreeSelectionListener(final ITreeSelectionListenerSpi listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public void fireSelectionChanged() {
-		for (final ITreeSelectionListenerSpi listener : new LinkedList<ITreeSelectionListenerSpi>(listeners)) {
-			listener.selectionChanged();
-		}
-	}
+    public void fireSelectionChanged() {
+        for (final ITreeSelectionListenerSpi listener : new LinkedList<ITreeSelectionListenerSpi>(listeners)) {
+            listener.selectionChanged();
+        }
+    }
 
 }

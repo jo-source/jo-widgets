@@ -38,27 +38,27 @@ import org.junit.Test;
 
 public class BluePrintFactoryProblematicDescriptorTest {
 
-	private static final IBluePrintFactory BLUE_PRINT_FACTORY = Toolkit.getBluePrintFactory();
-	private DescriptorProblematicBluePrintFactory problematicDescriptorBluePrintFactory;
+    private static final IBluePrintFactory BLUE_PRINT_FACTORY = Toolkit.getBluePrintFactory();
+    private DescriptorProblematicBluePrintFactory problematicDescriptorBluePrintFactory;
 
-	@Before
-	public void setUp() {
-		problematicDescriptorBluePrintFactory = new DescriptorProblematicBluePrintFactory(BLUE_PRINT_FACTORY);
-	}
+    @Before
+    public void setUp() {
+        problematicDescriptorBluePrintFactory = new DescriptorProblematicBluePrintFactory(BLUE_PRINT_FACTORY);
+    }
 
-	@After
-	public void tearDown() {}
+    @After
+    public void tearDown() {}
 
-	@Test
-	public void testProblematicBluePrint() {
-		try {
-			problematicDescriptorBluePrintFactory.problematicDescriptor();
-		}
-		catch (final IllegalArgumentException ex) {
-			// Correct behavior, there should be an exception with this problematic blueprint-type
-			return;
-		}
-		Assert.fail("There is a problematic blueprint, this should throw an exception. But it did not!");
-	}
+    @Test
+    public void testProblematicBluePrint() {
+        try {
+            problematicDescriptorBluePrintFactory.problematicDescriptor();
+        }
+        catch (final IllegalArgumentException ex) {
+            // Correct behavior, there should be an exception with this problematic blueprint-type
+            return;
+        }
+        Assert.fail("There is a problematic blueprint, this should throw an exception. But it did not!");
+    }
 
 }

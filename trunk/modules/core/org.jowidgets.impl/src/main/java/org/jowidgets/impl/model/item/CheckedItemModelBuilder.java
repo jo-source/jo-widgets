@@ -32,19 +32,19 @@ import org.jowidgets.api.model.item.ICheckedItemModel;
 import org.jowidgets.api.model.item.ICheckedItemModelBuilder;
 
 public class CheckedItemModelBuilder extends AbstractSelectableItemModelBuilder<ICheckedItemModelBuilder, ICheckedItemModel> implements
-		ICheckedItemModelBuilder {
+        ICheckedItemModelBuilder {
 
-	@Override
-	public ICheckedItemModel build() {
-		return new CheckedItemModelImpl(
-			getId(),
-			getText(),
-			getToolTipText(),
-			getIcon(),
-			getAccelerator(),
-			getMnemonic(),
-			isEnabled(),
-			isSelected());
-	}
+    @Override
+    public ICheckedItemModel build() {
+        return new CheckedItemModelImpl(
+            getId(),
+            getText(),
+            getToolTipText(),
+            getIcon(),
+            getAccelerator(),
+            getMnemonic(),
+            isEnabled(),
+            isSelected());
+    }
 
 }

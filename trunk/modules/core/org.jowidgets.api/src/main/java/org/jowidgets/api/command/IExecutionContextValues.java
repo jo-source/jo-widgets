@@ -32,13 +32,13 @@ import org.jowidgets.util.ITypedKey;
 
 public interface IExecutionContextValues {
 
-	/**
-	 * Gets the value for a given key
-	 * 
-	 * @param key The key to get the value for, must not be null
-	 * 
-	 * @return The value for the key, may be null
-	 */
-	<VALUE_TYPE> VALUE_TYPE getValue(final ITypedKey<VALUE_TYPE> key);
+    /**
+     * Gets the value for a given key
+     * 
+     * @param key The key to get the value for, must not be null
+     * 
+     * @return The value for the key, may be null
+     */
+    <VALUE_TYPE> VALUE_TYPE getValue(final ITypedKey<VALUE_TYPE> key);
 
 }

@@ -36,8 +36,8 @@ import org.jowidgets.spi.clipboard.TransferTypeSpi;
 
 public interface IDragSourceSpi extends IDragSourceObservableSpi {
 
-	void setTransferTypes(Collection<TransferTypeSpi> supportedTypes);
+    void setTransferTypes(Collection<TransferTypeSpi> supportedTypes);
 
-	void setActions(Set<DropAction> actions);
+    void setActions(Set<DropAction> actions);
 
 }

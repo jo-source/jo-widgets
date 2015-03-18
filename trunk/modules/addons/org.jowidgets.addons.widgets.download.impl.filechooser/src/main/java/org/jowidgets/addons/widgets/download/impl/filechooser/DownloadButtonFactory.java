@@ -38,11 +38,11 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 final class DownloadButtonFactory implements IWidgetFactory<IDownloadButton, IDownloadButtonBluePrint> {
 
-	@Override
-	public IDownloadButton create(final Object parentUiReference, final IDownloadButtonBluePrint bluePrint) {
-		final IButtonBluePrint bp = BPF.button().setSetup(bluePrint);
-		final IButton button = Toolkit.getWidgetFactory().create(parentUiReference, bp);
-		return new DownloadButtonImpl(button, bluePrint);
-	}
+    @Override
+    public IDownloadButton create(final Object parentUiReference, final IDownloadButtonBluePrint bluePrint) {
+        final IButtonBluePrint bp = BPF.button().setSetup(bluePrint);
+        final IButton button = Toolkit.getWidgetFactory().create(parentUiReference, bp);
+        return new DownloadButtonImpl(button, bluePrint);
+    }
 
 }

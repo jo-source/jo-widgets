@@ -45,44 +45,44 @@ import org.jowidgets.workbench.tools.Layout;
 
 public class ImportantComponentDemo1 extends AbstractDemoComponent implements IComponent {
 
-	public static final String DEFAULT_LAYOUT_ID = "DEFAULT_LAYOUT_ID";
-	public static final String MASTER_FOLDER_ID = "MASTER_FOLDER_ID";
+    public static final String DEFAULT_LAYOUT_ID = "DEFAULT_LAYOUT_ID";
+    public static final String MASTER_FOLDER_ID = "MASTER_FOLDER_ID";
 
-	public ImportantComponentDemo1(final IComponentContext context) {
-		final ILayout defaultLayout = new Layout(DEFAULT_LAYOUT_ID, createMasterFolder());
-		context.setLayout(defaultLayout);
-		final IMenuModel popupMenu = context.getComponentNodeContext().getPopupMenu();
-		popupMenu.addSeparator();
-		popupMenu.addAction(new ActionFactory().createResetLayoutAction(context, defaultLayout));
-	}
+    public ImportantComponentDemo1(final IComponentContext context) {
+        final ILayout defaultLayout = new Layout(DEFAULT_LAYOUT_ID, createMasterFolder());
+        context.setLayout(defaultLayout);
+        final IMenuModel popupMenu = context.getComponentNodeContext().getPopupMenu();
+        popupMenu.addSeparator();
+        popupMenu.addAction(new ActionFactory().createResetLayoutAction(context, defaultLayout));
+    }
 
-	@Override
-	public IView createView(final String viewId, final IViewContext context) {
-		if (ImportantViewDemo1.ID.equals(viewId)) {
-			return new ImportantViewDemo1(context);
-		}
-		else {
-			throw new IllegalArgumentException("View id '" + viewId + "' is not known.");
-		}
-	}
+    @Override
+    public IView createView(final String viewId, final IViewContext context) {
+        if (ImportantViewDemo1.ID.equals(viewId)) {
+            return new ImportantViewDemo1(context);
+        }
+        else {
+            throw new IllegalArgumentException("View id '" + viewId + "' is not known.");
+        }
+    }
 
-	@Override
-	public void onDeactivation(final IVetoable vetoable) {
-		final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to quit the component?");
-		if (result != QuestionResult.YES) {
-			vetoable.veto();
-		}
-	}
+    @Override
+    public void onDeactivation(final IVetoable vetoable) {
+        final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to quit the component?");
+        if (result != QuestionResult.YES) {
+            vetoable.veto();
+        }
+    }
 
-	private IFolderLayout createMasterFolder() {
-		final IFolderLayoutBuilder folderLayoutBuilder = new FolderLayoutBuilder(MASTER_FOLDER_ID);
+    private IFolderLayout createMasterFolder() {
+        final IFolderLayoutBuilder folderLayoutBuilder = new FolderLayoutBuilder(MASTER_FOLDER_ID);
 
-		folderLayoutBuilder.addView(
-				ImportantViewDemo1.ID,
-				ImportantViewDemo1.DEFAULT_LABEL,
-				ImportantViewDemo1.DEFAULT_TOOLTIP,
-				ImportantViewDemo1.DEFAULT_ICON);
+        folderLayoutBuilder.addView(
+                ImportantViewDemo1.ID,
+                ImportantViewDemo1.DEFAULT_LABEL,
+                ImportantViewDemo1.DEFAULT_TOOLTIP,
+                ImportantViewDemo1.DEFAULT_ICON);
 
-		return folderLayoutBuilder.build();
-	}
+        return folderLayoutBuilder.build();
+    }
 }

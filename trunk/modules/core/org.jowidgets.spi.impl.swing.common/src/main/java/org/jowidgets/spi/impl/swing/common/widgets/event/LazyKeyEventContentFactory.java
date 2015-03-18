@@ -39,51 +39,51 @@ import org.jowidgets.spi.impl.swing.common.util.VirtualKeyConvert;
 
 public class LazyKeyEventContentFactory implements ILazyKeyEventContentFactory {
 
-	private final KeyEvent keyEvent;
+    private final KeyEvent keyEvent;
 
-	public LazyKeyEventContentFactory(final KeyEvent keyEvent) {
-		super();
-		this.keyEvent = keyEvent;
-	}
+    public LazyKeyEventContentFactory(final KeyEvent keyEvent) {
+        super();
+        this.keyEvent = keyEvent;
+    }
 
-	@Override
-	public VirtualKey createVirtualKey() {
-		return VirtualKeyConvert.convert(keyEvent.getKeyCode());
-	}
+    @Override
+    public VirtualKey createVirtualKey() {
+        return VirtualKeyConvert.convert(keyEvent.getKeyCode());
+    }
 
-	@Override
-	public Character createCharacter() {
-		if (KeyEvent.CHAR_UNDEFINED != keyEvent.getKeyChar()) {
-			return Character.valueOf((char) keyEvent.getKeyCode());
-		}
-		else {
-			return null;
-		}
-	}
+    @Override
+    public Character createCharacter() {
+        if (KeyEvent.CHAR_UNDEFINED != keyEvent.getKeyChar()) {
+            return Character.valueOf((char) keyEvent.getKeyCode());
+        }
+        else {
+            return null;
+        }
+    }
 
-	@Override
-	public Character createResultingCharacter() {
-		if (KeyEvent.CHAR_UNDEFINED != keyEvent.getKeyChar()) {
-			return Character.valueOf(keyEvent.getKeyChar());
-		}
-		else {
-			return null;
-		}
-	}
+    @Override
+    public Character createResultingCharacter() {
+        if (KeyEvent.CHAR_UNDEFINED != keyEvent.getKeyChar()) {
+            return Character.valueOf(keyEvent.getKeyChar());
+        }
+        else {
+            return null;
+        }
+    }
 
-	@Override
-	public Set<Modifier> createModifier() {
-		final Set<Modifier> result = new HashSet<Modifier>();
-		if (keyEvent.isAltDown() && keyEvent.getKeyCode() != KeyEvent.VK_ALT) {
-			result.add(Modifier.ALT);
-		}
-		if (keyEvent.isShiftDown() && keyEvent.getKeyCode() != KeyEvent.VK_SHIFT) {
-			result.add(Modifier.SHIFT);
-		}
-		if (keyEvent.isControlDown() && keyEvent.getKeyCode() != KeyEvent.VK_CONTROL) {
-			result.add(Modifier.CTRL);
-		}
-		return result;
-	}
+    @Override
+    public Set<Modifier> createModifier() {
+        final Set<Modifier> result = new HashSet<Modifier>();
+        if (keyEvent.isAltDown() && keyEvent.getKeyCode() != KeyEvent.VK_ALT) {
+            result.add(Modifier.ALT);
+        }
+        if (keyEvent.isShiftDown() && keyEvent.getKeyCode() != KeyEvent.VK_SHIFT) {
+            result.add(Modifier.SHIFT);
+        }
+        if (keyEvent.isControlDown() && keyEvent.getKeyCode() != KeyEvent.VK_CONTROL) {
+            result.add(Modifier.CTRL);
+        }
+        return result;
+    }
 
 }

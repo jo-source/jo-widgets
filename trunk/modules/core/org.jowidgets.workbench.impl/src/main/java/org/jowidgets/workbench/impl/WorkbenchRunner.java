@@ -40,28 +40,28 @@ import org.jowidgets.workbench.api.IWorkbenchRunner;
 
 public class WorkbenchRunner implements IWorkbenchRunner {
 
-	@Override
-	public void run(final IWorkbenchFactory workbenchFactory) {
-		run(workbenchFactory, new DefaultConfigurationService());
-	}
+    @Override
+    public void run(final IWorkbenchFactory workbenchFactory) {
+        run(workbenchFactory, new DefaultConfigurationService());
+    }
 
-	@Override
-	public void run(final IWorkbenchFactory workbenchFactory, final IWorkbenchConfigurationService configurationService) {
-		Assert.paramNotNull(workbenchFactory, "workbenchFactory");
-		Toolkit.getApplicationRunner().run(new IApplication() {
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
-				final IWorkbench workbench = workbenchFactory.create();
-				final VetoHolder vetoHolder = new VetoHolder();
-				workbench.onLogin(vetoHolder);
-				if (!vetoHolder.hasVeto()) {
-					new WorkbenchContext(workbench, lifecycle).run();
-				}
-				else {
-					lifecycle.finish();
-				}
-			}
-		});
-	}
+    @Override
+    public void run(final IWorkbenchFactory workbenchFactory, final IWorkbenchConfigurationService configurationService) {
+        Assert.paramNotNull(workbenchFactory, "workbenchFactory");
+        Toolkit.getApplicationRunner().run(new IApplication() {
+            @Override
+            public void start(final IApplicationLifecycle lifecycle) {
+                final IWorkbench workbench = workbenchFactory.create();
+                final VetoHolder vetoHolder = new VetoHolder();
+                workbench.onLogin(vetoHolder);
+                if (!vetoHolder.hasVeto()) {
+                    new WorkbenchContext(workbench, lifecycle).run();
+                }
+                else {
+                    lifecycle.finish();
+                }
+            }
+        });
+    }
 
 }

@@ -46,55 +46,55 @@ import org.jowidgets.util.url.UrlFactory;
 
 public final class ImageCanvasSnipped implements IApplication {
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
 
-		//create the root frame
-		final IFrame frame = Toolkit.createRootFrame(BPF.frame("Image Canvas Snipped"), lifecycle);
-		frame.setLayout(FillLayout.get());
+        //create the root frame
+        final IFrame frame = Toolkit.createRootFrame(BPF.frame("Image Canvas Snipped"), lifecycle);
+        frame.setLayout(FillLayout.get());
 
-		//create a scroll composite
-		final IScrollComposite container = frame.add(BPF.scrollComposite());
-		container.setLayout(FillLayout.get());
+        //create a scroll composite
+        final IScrollComposite container = frame.add(BPF.scrollComposite());
+        container.setLayout(FillLayout.get());
 
-		//create a image from url
-		final String url = "http://www.jowidgets.org/docu/images/widgets_hierarchy_1.gif";
-		final IImage image = ImageFactory.createImage(UrlFactory.create(url));
+        //create a image from url
+        final String url = "http://www.jowidgets.org/docu/images/widgets_hierarchy_1.gif";
+        final IImage image = ImageFactory.createImage(UrlFactory.create(url));
 
-		//use a canvas to display the image
-		final ICanvas canvas = container.add(BPF.canvas());
+        //use a canvas to display the image
+        final ICanvas canvas = container.add(BPF.canvas());
 
-		//set the preferred size of the canvas to the image size
-		canvas.setPreferredSize(image.getSize());
+        //set the preferred size of the canvas to the image size
+        canvas.setPreferredSize(image.getSize());
 
-		//add a paint listener to draw the image and an arrow
-		canvas.addPaintListener(new IPaintListener() {
-			@Override
-			public void paint(final IPaintEvent event) {
-				final IGraphicContext gc = event.getGraphicContext();
+        //add a paint listener to draw the image and an arrow
+        canvas.addPaintListener(new IPaintListener() {
+            @Override
+            public void paint(final IPaintEvent event) {
+                final IGraphicContext gc = event.getGraphicContext();
 
-				//draw the image
-				gc.drawImage(image);
+                //draw the image
+                gc.drawImage(image);
 
-				//draw with green color
-				gc.setForegroundColor(Colors.GREEN);
+                //draw with green color
+                gc.setForegroundColor(Colors.GREEN);
 
-				//define a polygon that shapes an arrow
-				final Point p1 = new Point(438, 205);
-				final Point p2 = new Point(464, 205);
-				final Point p3 = new Point(464, 199);
-				final Point p4 = new Point(486, 211);
-				final Point p5 = new Point(464, 223);
-				final Point p6 = new Point(464, 217);
-				final Point p7 = new Point(438, 217);
-				final Point[] polygon = new Point[] {p1, p2, p3, p4, p5, p6, p7, p1};
+                //define a polygon that shapes an arrow
+                final Point p1 = new Point(438, 205);
+                final Point p2 = new Point(464, 205);
+                final Point p3 = new Point(464, 199);
+                final Point p4 = new Point(486, 211);
+                final Point p5 = new Point(464, 223);
+                final Point p6 = new Point(464, 217);
+                final Point p7 = new Point(438, 217);
+                final Point[] polygon = new Point[] {p1, p2, p3, p4, p5, p6, p7, p1};
 
-				//fill the polygon 
-				gc.fillPolygon(polygon);
-			}
-		});
+                //fill the polygon 
+                gc.fillPolygon(polygon);
+            }
+        });
 
-		//set the root frame visible
-		frame.setVisible(true);
-	}
+        //set the root frame visible
+        frame.setVisible(true);
+    }
 }

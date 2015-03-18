@@ -30,6 +30,6 @@ package org.jowidgets.util.context;
 
 public interface IContextSingletonFactory<VALUE_TYPE, CONTEXT_TYPE> {
 
-	VALUE_TYPE create(CONTEXT_TYPE context, IContextSingletonProvider singletonProvider);
+    VALUE_TYPE create(CONTEXT_TYPE context, IContextSingletonProvider singletonProvider);
 
 }

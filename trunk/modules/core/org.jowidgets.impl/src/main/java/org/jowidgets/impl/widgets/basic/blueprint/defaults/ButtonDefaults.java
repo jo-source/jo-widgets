@@ -32,9 +32,9 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
 public class ButtonDefaults implements IDefaultInitializer<IButtonSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final IButtonSetupBuilder<?> builder) {
-		builder.setEnabled(true);
-	}
+    @Override
+    public void initialize(final IButtonSetupBuilder<?> builder) {
+        builder.setEnabled(true);
+    }
 
 }

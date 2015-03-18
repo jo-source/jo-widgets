@@ -42,162 +42,162 @@ import org.jowidgets.common.widgets.controller.IActionListener;
 
 public class JoButton extends Control<IButton, IButtonBluePrint> implements IButton {
 
-	private final Set<IActionListener> actionListeners;
+    private final Set<IActionListener> actionListeners;
 
-	private IAction action;
+    private IAction action;
 
-	public JoButton(final IImageConstant icon, final String text) {
-		this(Toolkit.getBluePrintFactory().button().setIcon(icon).setText(text));
-	}
+    public JoButton(final IImageConstant icon, final String text) {
+        this(Toolkit.getBluePrintFactory().button().setIcon(icon).setText(text));
+    }
 
-	public JoButton(final IImageConstant icon) {
-		this(Toolkit.getBluePrintFactory().button().setIcon(icon));
-	}
+    public JoButton(final IImageConstant icon) {
+        this(Toolkit.getBluePrintFactory().button().setIcon(icon));
+    }
 
-	public JoButton(final String text) {
-		this(bluePrint(text));
-	}
+    public JoButton(final String text) {
+        this(bluePrint(text));
+    }
 
-	public JoButton(final String text, final String tooltipText) {
-		this(bluePrint(text, tooltipText));
-	}
+    public JoButton(final String text, final String tooltipText) {
+        this(bluePrint(text, tooltipText));
+    }
 
-	public JoButton(final IButtonDescriptor descriptor) {
-		super(Toolkit.getBluePrintFactory().button().setSetup(descriptor));
-		this.actionListeners = new HashSet<IActionListener>();
-	}
+    public JoButton(final IButtonDescriptor descriptor) {
+        super(Toolkit.getBluePrintFactory().button().setSetup(descriptor));
+        this.actionListeners = new HashSet<IActionListener>();
+    }
 
-	@Override
-	void initialize(final IButton widget) {
-		super.initialize(widget);
-		if (action != null) {
-			widget.setAction(action);
-		}
-		for (final IActionListener actionListener : actionListeners) {
-			widget.addActionListener(actionListener);
-		}
-	}
+    @Override
+    void initialize(final IButton widget) {
+        super.initialize(widget);
+        if (action != null) {
+            widget.setAction(action);
+        }
+        for (final IActionListener actionListener : actionListeners) {
+            widget.addActionListener(actionListener);
+        }
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		if (isInitialized()) {
-			getWidget().setMarkup(markup);
-		}
-		else {
-			getBluePrint().setMarkup(markup);
-		}
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        if (isInitialized()) {
+            getWidget().setMarkup(markup);
+        }
+        else {
+            getBluePrint().setMarkup(markup);
+        }
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		if (isInitialized()) {
-			getWidget().setFontSize(size);
-		}
-		else {
-			getBluePrint().setFontSize(size);
-		}
-	}
+    @Override
+    public void setFontSize(final int size) {
+        if (isInitialized()) {
+            getWidget().setFontSize(size);
+        }
+        else {
+            getBluePrint().setFontSize(size);
+        }
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		if (isInitialized()) {
-			getWidget().setFontName(fontName);
-		}
-		else {
-			getBluePrint().setFontName(fontName);
-		}
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        if (isInitialized()) {
+            getWidget().setFontName(fontName);
+        }
+        else {
+            getBluePrint().setFontName(fontName);
+        }
+    }
 
-	@Override
-	public void setText(final String text) {
-		if (isInitialized()) {
-			getWidget().setText(text);
-		}
-		else {
-			getBluePrint().setText(text);
-		}
-	}
+    @Override
+    public void setText(final String text) {
+        if (isInitialized()) {
+            getWidget().setText(text);
+        }
+        else {
+            getBluePrint().setText(text);
+        }
+    }
 
-	@Override
-	public String getText() {
-		if (isInitialized()) {
-			return getWidget().getText();
-		}
-		else {
-			return getBluePrint().getText();
-		}
-	}
+    @Override
+    public String getText() {
+        if (isInitialized()) {
+            return getWidget().getText();
+        }
+        else {
+            return getBluePrint().getText();
+        }
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		if (isInitialized()) {
-			getWidget().setIcon(icon);
-		}
-		else {
-			getBluePrint().setIcon(icon);
-		}
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        if (isInitialized()) {
+            getWidget().setIcon(icon);
+        }
+        else {
+            getBluePrint().setIcon(icon);
+        }
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		if (isInitialized()) {
-			return getWidget().getIcon();
-		}
-		else {
-			return getBluePrint().getIcon();
-		}
-	}
+    @Override
+    public IImageConstant getIcon() {
+        if (isInitialized()) {
+            return getWidget().getIcon();
+        }
+        else {
+            return getBluePrint().getIcon();
+        }
+    }
 
-	@Override
-	public void setAction(final IAction action) {
-		if (isInitialized()) {
-			getWidget().setAction(action);
-		}
-		else {
-			this.action = action;
-		}
-	}
+    @Override
+    public void setAction(final IAction action) {
+        if (isInitialized()) {
+            getWidget().setAction(action);
+        }
+        else {
+            this.action = action;
+        }
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		if (isInitialized()) {
-			getWidget().setEnabled(enabled);
-		}
-		else {
-			getBluePrint().setEnabled(enabled);
-		}
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        if (isInitialized()) {
+            getWidget().setEnabled(enabled);
+        }
+        else {
+            getBluePrint().setEnabled(enabled);
+        }
+    }
 
-	@Override
-	public void addActionListener(final IActionListener actionListener) {
-		if (isInitialized()) {
-			getWidget().addActionListener(actionListener);
-		}
-		else {
-			actionListeners.add(actionListener);
-		}
-	}
+    @Override
+    public void addActionListener(final IActionListener actionListener) {
+        if (isInitialized()) {
+            getWidget().addActionListener(actionListener);
+        }
+        else {
+            actionListeners.add(actionListener);
+        }
+    }
 
-	@Override
-	public void removeActionListener(final IActionListener actionListener) {
-		if (isInitialized()) {
-			getWidget().removeActionListener(actionListener);
-		}
-		else {
-			actionListeners.remove(actionListener);
-		}
-	}
+    @Override
+    public void removeActionListener(final IActionListener actionListener) {
+        if (isInitialized()) {
+            getWidget().removeActionListener(actionListener);
+        }
+        else {
+            actionListeners.remove(actionListener);
+        }
+    }
 
-	public static IButtonBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().button();
-	}
+    public static IButtonBluePrint bluePrint() {
+        return Toolkit.getBluePrintFactory().button();
+    }
 
-	public static IButtonBluePrint bluePrint(final String text) {
-		return Toolkit.getBluePrintFactory().button().setText(text);
-	}
+    public static IButtonBluePrint bluePrint(final String text) {
+        return Toolkit.getBluePrintFactory().button().setText(text);
+    }
 
-	public static IButtonBluePrint bluePrint(final String text, final String tooltipText) {
-		return Toolkit.getBluePrintFactory().button().setText(text).setToolTipText(tooltipText);
-	}
+    public static IButtonBluePrint bluePrint(final String text, final String tooltipText) {
+        return Toolkit.getBluePrintFactory().button().setText(text).setToolTipText(tooltipText);
+    }
 
 }

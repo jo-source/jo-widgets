@@ -28,11 +28,10 @@
 
 package org.jowidgets.api.controller;
 
-
 public interface IListSelectionVetoObservable {
 
-	void addSelectionVetoListener(IListSelectionVetoListener listener);
+    void addSelectionVetoListener(IListSelectionVetoListener listener);
 
-	void removeSelectionVetoListener(IListSelectionVetoListener listener);
+    void removeSelectionVetoListener(IListSelectionVetoListener listener);
 
 }

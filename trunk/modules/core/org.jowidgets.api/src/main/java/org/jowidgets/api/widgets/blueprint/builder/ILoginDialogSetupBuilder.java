@@ -34,22 +34,22 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 
 public interface ILoginDialogSetupBuilder<INSTANCE_TYPE extends ILoginDialogSetupBuilder<?>> extends
-		ITitledWindowSetupBuilder<INSTANCE_TYPE> {
+        ITitledWindowSetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setLoginButton(final IButtonDescriptor buttonDescriptor);
+    INSTANCE_TYPE setLoginButton(final IButtonDescriptor buttonDescriptor);
 
-	INSTANCE_TYPE setCancelButton(final IButtonDescriptor buttonDescriptor);
+    INSTANCE_TYPE setCancelButton(final IButtonDescriptor buttonDescriptor);
 
-	INSTANCE_TYPE setDefaultButtonPolicy(InputDialogDefaultButtonPolicy policy);
+    INSTANCE_TYPE setDefaultButtonPolicy(InputDialogDefaultButtonPolicy policy);
 
-	INSTANCE_TYPE setCloseable(boolean closeable);
+    INSTANCE_TYPE setCloseable(boolean closeable);
 
-	INSTANCE_TYPE setInterceptor(ILoginInterceptor interceptor);
+    INSTANCE_TYPE setInterceptor(ILoginInterceptor interceptor);
 
-	INSTANCE_TYPE setLogo(IImageConstant logo);
+    INSTANCE_TYPE setLogo(IImageConstant logo);
 
-	INSTANCE_TYPE setLoginLabel(String label);
+    INSTANCE_TYPE setLoginLabel(String label);
 
-	INSTANCE_TYPE setMinSize(Dimension size);
+    INSTANCE_TYPE setMinSize(Dimension size);
 
 }

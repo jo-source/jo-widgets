@@ -37,34 +37,34 @@ import org.jowidgets.workbench.api.IViewLayout;
 
 public abstract class AbstractFolderLayout implements IFolderLayout {
 
-	@Override
-	public String getTooltip() {
-		return null;
-	}
+    @Override
+    public String getTooltip() {
+        return null;
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return null;
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return null;
+    }
 
-	@Override
-	public String getGroupId() {
-		return null;
-	}
+    @Override
+    public String getGroupId() {
+        return null;
+    }
 
-	@Override
-	public List<? extends IViewLayout> getViews() {
-		return Collections.emptyList();
-	}
+    @Override
+    public List<? extends IViewLayout> getViews() {
+        return Collections.emptyList();
+    }
 
-	@Override
-	public boolean isDetachable() {
-		return true;
-	}
+    @Override
+    public boolean isDetachable() {
+        return true;
+    }
 
-	@Override
-	public boolean getViewsCloseable() {
-		return true;
-	}
+    @Override
+    public boolean getViewsCloseable() {
+        return true;
+    }
 
 }

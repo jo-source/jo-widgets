@@ -31,7 +31,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IItemSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.IToolBarToggleButtonDescriptor;
 
 public interface IToolBarToggleButtonBluePrint extends
-		IItemSetupBuilder<IToolBarToggleButtonBluePrint>,
-		IToolBarToggleButtonDescriptor {
+        IItemSetupBuilder<IToolBarToggleButtonBluePrint>,
+        IToolBarToggleButtonDescriptor {
 
 }

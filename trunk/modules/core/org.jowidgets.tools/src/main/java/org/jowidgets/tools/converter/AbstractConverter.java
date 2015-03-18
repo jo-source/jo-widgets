@@ -31,11 +31,11 @@ package org.jowidgets.tools.converter;
 import org.jowidgets.api.convert.IConverter;
 
 public abstract class AbstractConverter<OBJECT_TYPE> extends AbstractStringObjectConverter<OBJECT_TYPE> implements
-		IConverter<OBJECT_TYPE> {
+        IConverter<OBJECT_TYPE> {
 
-	@Override
-	public String getDescription(final OBJECT_TYPE value) {
-		return null;
-	}
+    @Override
+    public String getDescription(final OBJECT_TYPE value) {
+        return null;
+    }
 
 }

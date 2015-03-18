@@ -36,27 +36,27 @@ import org.jowidgets.api.widgets.IContainer;
 
 public final class TableRowLayoutFactoryBuilder implements ITableRowLayoutFactoryBuilder {
 
-	private final ITableLayout common;
-	private boolean ignore;
+    private final ITableLayout common;
+    private boolean ignore;
 
-	public TableRowLayoutFactoryBuilder(final ITableLayout common) {
-		this.common = common;
-	}
+    public TableRowLayoutFactoryBuilder(final ITableLayout common) {
+        this.common = common;
+    }
 
-	@Override
-	public ITableRowLayoutFactoryBuilder ignoreInCalculations(final boolean ignore) {
-		this.ignore = ignore;
-		return this;
-	}
+    @Override
+    public ITableRowLayoutFactoryBuilder ignoreInCalculations(final boolean ignore) {
+        this.ignore = ignore;
+        return this;
+    }
 
-	@Override
-	public ILayoutFactory<ITableRowLayout> build() {
-		return new ILayoutFactory<ITableRowLayout>() {
-			@Override
-			public ITableRowLayout create(final IContainer container) {
-				return new TableRowLayout(container, common, ignore);
-			}
-		};
-	}
+    @Override
+    public ILayoutFactory<ITableRowLayout> build() {
+        return new ILayoutFactory<ITableRowLayout>() {
+            @Override
+            public ITableRowLayout create(final IContainer container) {
+                return new TableRowLayout(container, common, ignore);
+            }
+        };
+    }
 
 }

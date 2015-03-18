@@ -32,12 +32,12 @@ import org.jowidgets.common.types.IVetoable;
 
 public interface ITabItemListener {
 
-	void onDeselection(IVetoable vetoable);
+    void onDeselection(IVetoable vetoable);
 
-	void selectionChanged(boolean selected);
+    void selectionChanged(boolean selected);
 
-	void onClose(IVetoable vetoable);
+    void onClose(IVetoable vetoable);
 
-	void closed();
+    void closed();
 
 }

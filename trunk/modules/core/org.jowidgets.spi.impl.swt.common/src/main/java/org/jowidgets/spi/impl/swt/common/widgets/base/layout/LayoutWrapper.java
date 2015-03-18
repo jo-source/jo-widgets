@@ -40,81 +40,81 @@ import org.jowidgets.util.Assert;
 
 public class LayoutWrapper extends Layout {
 
-	private final Layout layout;
-	private final Method computeSizeMethod;
-	private final Method layoutMethod;
-	private final Set<ILayoutListener> layoutListeners;
+    private final Layout layout;
+    private final Method computeSizeMethod;
+    private final Method layoutMethod;
+    private final Set<ILayoutListener> layoutListeners;
 
-	public LayoutWrapper(final Layout layout) {
-		super();
-		Assert.paramNotNull(layout, "layout");
-		this.layout = new FormLayout();
-		this.layoutListeners = new HashSet<ILayoutListener>();
-		try {
-			this.computeSizeMethod = layout.getClass().getDeclaredMethod(
-					"computeSize",
-					Composite.class,
-					int.class,
-					int.class,
-					boolean.class);
-			this.computeSizeMethod.setAccessible(true);
+    public LayoutWrapper(final Layout layout) {
+        super();
+        Assert.paramNotNull(layout, "layout");
+        this.layout = new FormLayout();
+        this.layoutListeners = new HashSet<ILayoutListener>();
+        try {
+            this.computeSizeMethod = layout.getClass().getDeclaredMethod(
+                    "computeSize",
+                    Composite.class,
+                    int.class,
+                    int.class,
+                    boolean.class);
+            this.computeSizeMethod.setAccessible(true);
 
-			this.layoutMethod = layout.getClass().getDeclaredMethod("layout", Composite.class, boolean.class);
-			this.layoutMethod.setAccessible(true);
+            this.layoutMethod = layout.getClass().getDeclaredMethod("layout", Composite.class, boolean.class);
+            this.layoutMethod.setAccessible(true);
 
-		}
-		catch (final Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+        }
+        catch (final Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	public void addLayoutListener(final ILayoutListener layoutListener) {
-		layoutListeners.add(layoutListener);
-	}
+    public void addLayoutListener(final ILayoutListener layoutListener) {
+        layoutListeners.add(layoutListener);
+    }
 
-	public void removeLayoutListener(final ILayoutListener layoutListener) {
-		layoutListeners.remove(layoutListener);
-	}
+    public void removeLayoutListener(final ILayoutListener layoutListener) {
+        layoutListeners.remove(layoutListener);
+    }
 
-	@Override
-	protected Point computeSize(final Composite composite, final int wHint, final int hHint, final boolean flushCache) {
-		fireBeforeComputeSize();
-		try {
-			return (Point) computeSizeMethod.invoke(layout, composite, wHint, hHint, flushCache);
-		}
-		catch (final Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+    @Override
+    protected Point computeSize(final Composite composite, final int wHint, final int hHint, final boolean flushCache) {
+        fireBeforeComputeSize();
+        try {
+            return (Point) computeSizeMethod.invoke(layout, composite, wHint, hHint, flushCache);
+        }
+        catch (final Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	@Override
-	protected void layout(final Composite composite, final boolean flushCache) {
-		fireBeforeLayout();
-		try {
-			layoutMethod.invoke(layout, composite, flushCache);
-		}
-		catch (final Exception e) {
-			throw new RuntimeException(e);
-		}
-		fireAfterLayout();
-	}
+    @Override
+    protected void layout(final Composite composite, final boolean flushCache) {
+        fireBeforeLayout();
+        try {
+            layoutMethod.invoke(layout, composite, flushCache);
+        }
+        catch (final Exception e) {
+            throw new RuntimeException(e);
+        }
+        fireAfterLayout();
+    }
 
-	private void fireBeforeComputeSize() {
-		for (final ILayoutListener listener : layoutListeners) {
-			listener.beforeComputeSize();
-		}
-	}
+    private void fireBeforeComputeSize() {
+        for (final ILayoutListener listener : layoutListeners) {
+            listener.beforeComputeSize();
+        }
+    }
 
-	private void fireBeforeLayout() {
-		for (final ILayoutListener listener : layoutListeners) {
-			listener.beforeLayout();
-		}
-	}
+    private void fireBeforeLayout() {
+        for (final ILayoutListener listener : layoutListeners) {
+            listener.beforeLayout();
+        }
+    }
 
-	private void fireAfterLayout() {
-		for (final ILayoutListener listener : layoutListeners) {
-			listener.afterLayout();
-		}
-	}
+    private void fireAfterLayout() {
+        for (final ILayoutListener listener : layoutListeners) {
+            listener.afterLayout();
+        }
+    }
 
 }

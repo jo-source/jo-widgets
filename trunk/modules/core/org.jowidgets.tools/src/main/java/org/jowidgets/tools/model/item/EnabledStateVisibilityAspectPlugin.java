@@ -32,14 +32,14 @@ import org.jowidgets.api.model.item.IActionItemVisibilityAspect;
 
 public final class EnabledStateVisibilityAspectPlugin extends AbstractActionItemVisibilityAspectPlugin {
 
-	@Override
-	protected IActionItemVisibilityAspect createVisibilityAspect() {
-		return new EnabledStateVisibilityAspect();
-	}
+    @Override
+    protected IActionItemVisibilityAspect createVisibilityAspect() {
+        return new EnabledStateVisibilityAspect();
+    }
 
-	@Override
-	public int getOrder() {
-		return 0;
-	}
+    @Override
+    public int getOrder() {
+        return 0;
+    }
 
 }

@@ -33,9 +33,9 @@ import org.jowidgets.util.IFactory;
 
 public final class BridgedSwtAwtApplicationRunnerFactory implements IFactory<IApplicationRunner> {
 
-	@Override
-	public IApplicationRunner create() {
-		return new BridgedSwtAwtApplicationRunner();
-	}
+    @Override
+    public IApplicationRunner create() {
+        return new BridgedSwtAwtApplicationRunner();
+    }
 
 }

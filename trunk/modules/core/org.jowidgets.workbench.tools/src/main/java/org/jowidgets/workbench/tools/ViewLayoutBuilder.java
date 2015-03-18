@@ -39,116 +39,116 @@ import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 
 public class ViewLayoutBuilder implements IViewLayoutBuilder {
 
-	private final IViewLayoutBuilder builder;
+    private final IViewLayoutBuilder builder;
 
-	public ViewLayoutBuilder() {
-		this(builder());
-	}
+    public ViewLayoutBuilder() {
+        this(builder());
+    }
 
-	public ViewLayoutBuilder(final String id) {
-		this(builder(id));
-	}
+    public ViewLayoutBuilder(final String id) {
+        this(builder(id));
+    }
 
-	public ViewLayoutBuilder(final IViewLayoutBuilder builder) {
-		super();
-		this.builder = builder;
-	}
+    public ViewLayoutBuilder(final IViewLayoutBuilder builder) {
+        super();
+        this.builder = builder;
+    }
 
-	@Override
-	public final IViewLayoutBuilder setLabel(final String label) {
-		builder.setLabel(label);
-		return this;
-	}
+    @Override
+    public final IViewLayoutBuilder setLabel(final String label) {
+        builder.setLabel(label);
+        return this;
+    }
 
-	@Override
-	public final IViewLayoutBuilder setTooltip(final String toolTiptext) {
-		builder.setTooltip(toolTiptext);
-		return this;
-	}
+    @Override
+    public final IViewLayoutBuilder setTooltip(final String toolTiptext) {
+        builder.setTooltip(toolTiptext);
+        return this;
+    }
 
-	@Override
-	public final IViewLayoutBuilder setIcon(final IImageConstant icon) {
-		builder.setIcon(icon);
-		return this;
-	}
+    @Override
+    public final IViewLayoutBuilder setIcon(final IImageConstant icon) {
+        builder.setIcon(icon);
+        return this;
+    }
 
-	@Override
-	public final IViewLayoutBuilder setId(final String id) {
-		builder.setId(id);
-		return this;
-	}
+    @Override
+    public final IViewLayoutBuilder setId(final String id) {
+        builder.setId(id);
+        return this;
+    }
 
-	@Override
-	public final IViewLayoutBuilder setHidden(final boolean hidden) {
-		builder.setHidden(hidden);
-		return this;
-	}
+    @Override
+    public final IViewLayoutBuilder setHidden(final boolean hidden) {
+        builder.setHidden(hidden);
+        return this;
+    }
 
-	@Override
-	public final IViewLayoutBuilder setDetachable(final boolean detachable) {
-		builder.setDetachable(detachable);
-		return this;
-	}
+    @Override
+    public final IViewLayoutBuilder setDetachable(final boolean detachable) {
+        builder.setDetachable(detachable);
+        return this;
+    }
 
-	@Override
-	public IViewLayoutBuilder setScope(final ViewScope scope) {
-		builder.setScope(scope);
-		return this;
-	}
+    @Override
+    public IViewLayoutBuilder setScope(final ViewScope scope) {
+        builder.setScope(scope);
+        return this;
+    }
 
-	@Override
-	public IViewLayoutBuilder setClosePolicy(final ClosePolicy closePolicy) {
-		builder.setClosePolicy(closePolicy);
-		return this;
-	}
+    @Override
+    public IViewLayoutBuilder setClosePolicy(final ClosePolicy closePolicy) {
+        builder.setClosePolicy(closePolicy);
+        return this;
+    }
 
-	@Override
-	public final IViewLayoutBuilder setFolderWhitelist(final List<String> folderWhiteList) {
-		builder.setFolderWhitelist(folderWhiteList);
-		return this;
-	}
+    @Override
+    public final IViewLayoutBuilder setFolderWhitelist(final List<String> folderWhiteList) {
+        builder.setFolderWhitelist(folderWhiteList);
+        return this;
+    }
 
-	@Override
-	public final IViewLayoutBuilder setFolderWhitelist(final String... folderWhiteList) {
-		builder.setFolderWhitelist(folderWhiteList);
-		return this;
-	}
+    @Override
+    public final IViewLayoutBuilder setFolderWhitelist(final String... folderWhiteList) {
+        builder.setFolderWhitelist(folderWhiteList);
+        return this;
+    }
 
-	@Override
-	public final IViewLayoutBuilder addToFolderWhitelist(final String folder) {
-		builder.addToFolderWhitelist(folder);
-		return this;
-	}
+    @Override
+    public final IViewLayoutBuilder addToFolderWhitelist(final String folder) {
+        builder.addToFolderWhitelist(folder);
+        return this;
+    }
 
-	@Override
-	public final IViewLayoutBuilder setFolderBlacklist(final List<String> folderBlackList) {
-		builder.setFolderBlacklist(folderBlackList);
-		return this;
-	}
+    @Override
+    public final IViewLayoutBuilder setFolderBlacklist(final List<String> folderBlackList) {
+        builder.setFolderBlacklist(folderBlackList);
+        return this;
+    }
 
-	@Override
-	public final IViewLayoutBuilder setFolderBlacklist(final String... folderBlackList) {
-		builder.setFolderBlacklist(folderBlackList);
-		return this;
-	}
+    @Override
+    public final IViewLayoutBuilder setFolderBlacklist(final String... folderBlackList) {
+        builder.setFolderBlacklist(folderBlackList);
+        return this;
+    }
 
-	@Override
-	public final IViewLayoutBuilder addToFolderBlacklist(final String folder) {
-		builder.addToFolderBlacklist(folder);
-		return this;
-	}
+    @Override
+    public final IViewLayoutBuilder addToFolderBlacklist(final String folder) {
+        builder.addToFolderBlacklist(folder);
+        return this;
+    }
 
-	@Override
-	public final IViewLayout build() {
-		return builder.build();
-	}
+    @Override
+    public final IViewLayout build() {
+        return builder.build();
+    }
 
-	public static IViewLayoutBuilder builder() {
-		return WorkbenchToolkit.getLayoutBuilderFactory().view();
-	}
+    public static IViewLayoutBuilder builder() {
+        return WorkbenchToolkit.getLayoutBuilderFactory().view();
+    }
 
-	public static IViewLayoutBuilder builder(final String id) {
-		return builder().setId(id);
-	}
+    public static IViewLayoutBuilder builder(final String id) {
+        return builder().setId(id);
+    }
 
 }

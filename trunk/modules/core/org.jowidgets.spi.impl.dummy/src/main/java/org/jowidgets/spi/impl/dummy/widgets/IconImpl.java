@@ -35,23 +35,23 @@ import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
 
 public class IconImpl extends DummyControl implements IIconSpi {
 
-	private final DummyImageRegistry imageRegistry;
+    private final DummyImageRegistry imageRegistry;
 
-	public IconImpl(final DummyImageRegistry imageRegistry, final IIconSetupSpi setup) {
-		super(new UIDIcon());
+    public IconImpl(final DummyImageRegistry imageRegistry, final IIconSetupSpi setup) {
+        super(new UIDIcon());
 
-		this.imageRegistry = imageRegistry;
-		setIcon(setup.getIcon());
-	}
+        this.imageRegistry = imageRegistry;
+        setIcon(setup.getIcon());
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		getUiReference().setIcon(imageRegistry.getImageIcon(icon));
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        getUiReference().setIcon(imageRegistry.getImageIcon(icon));
+    }
 
-	@Override
-	public UIDIcon getUiReference() {
-		return (UIDIcon) super.getUiReference();
-	}
+    @Override
+    public UIDIcon getUiReference() {
+        return (UIDIcon) super.getUiReference();
+    }
 
 }

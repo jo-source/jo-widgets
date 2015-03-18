@@ -34,121 +34,121 @@ import org.jowidgets.util.Assert;
 
 public final class Unit {
 
-	private Unit() {}
+    private Unit() {}
 
-	public static IUnit create(final String abbreviation) {
-		return builder().abbreviation(abbreviation).build();
-	}
+    public static IUnit create(final String abbreviation) {
+        return builder().abbreviation(abbreviation).build();
+    }
 
-	public static IUnit create(final String abbreviation, final String name) {
-		return builder().abbreviation(abbreviation).name(name).build();
-	}
+    public static IUnit create(final String abbreviation, final String name) {
+        return builder().abbreviation(abbreviation).name(name).build();
+    }
 
-	public static IUnit create(final String abbreviation, final long conversionFactor) {
-		return builder().abbreviation(abbreviation).conversionFactor(conversionFactor).build();
-	}
+    public static IUnit create(final String abbreviation, final long conversionFactor) {
+        return builder().abbreviation(abbreviation).conversionFactor(conversionFactor).build();
+    }
 
-	public static IUnit create(final String abbreviation, final double conversionFactor) {
-		return builder().abbreviation(abbreviation).conversionFactor(conversionFactor).build();
-	}
+    public static IUnit create(final String abbreviation, final double conversionFactor) {
+        return builder().abbreviation(abbreviation).conversionFactor(conversionFactor).build();
+    }
 
-	public static IUnit create(final String abbreviation, final String name, final long conversionFactor) {
-		return builder().abbreviation(abbreviation).name(name).conversionFactor(conversionFactor).build();
-	}
+    public static IUnit create(final String abbreviation, final String name, final long conversionFactor) {
+        return builder().abbreviation(abbreviation).name(name).conversionFactor(conversionFactor).build();
+    }
 
-	public static IUnit create(final String abbreviation, final String name, final double conversionFactor) {
-		return builder().abbreviation(abbreviation).name(name).conversionFactor(conversionFactor).build();
-	}
+    public static IUnit create(final String abbreviation, final String name, final double conversionFactor) {
+        return builder().abbreviation(abbreviation).name(name).conversionFactor(conversionFactor).build();
+    }
 
-	public static IUnitBuilder builder() {
-		return new UnitBuilderImpl();
-	}
+    public static IUnitBuilder builder() {
+        return new UnitBuilderImpl();
+    }
 
-	private static final class UnitBuilderImpl implements IUnitBuilder {
+    private static final class UnitBuilderImpl implements IUnitBuilder {
 
-		private IMessage abbreviation;
-		private IMessage name = new StaticMessage(null);
-		private double conversionFactor = 1.0;
+        private IMessage abbreviation;
+        private IMessage name = new StaticMessage(null);
+        private double conversionFactor = 1.0;
 
-		@Override
-		public IUnitBuilder abbreviation(final IMessage abbreviation) {
-			Assert.paramNotNull(abbreviation, "abbreviation");
-			this.abbreviation = abbreviation;
-			return this;
-		}
+        @Override
+        public IUnitBuilder abbreviation(final IMessage abbreviation) {
+            Assert.paramNotNull(abbreviation, "abbreviation");
+            this.abbreviation = abbreviation;
+            return this;
+        }
 
-		@Override
-		public IUnitBuilder name(final IMessage name) {
-			Assert.paramNotNull(name, "name");
-			this.name = name;
-			return this;
-		}
+        @Override
+        public IUnitBuilder name(final IMessage name) {
+            Assert.paramNotNull(name, "name");
+            this.name = name;
+            return this;
+        }
 
-		@Override
-		public IUnitBuilder abbreviation(final String abbreviation) {
-			Assert.paramNotEmpty(abbreviation, "abbreviation");
-			return abbreviation(new StaticMessage(abbreviation));
-		}
+        @Override
+        public IUnitBuilder abbreviation(final String abbreviation) {
+            Assert.paramNotEmpty(abbreviation, "abbreviation");
+            return abbreviation(new StaticMessage(abbreviation));
+        }
 
-		@Override
-		public IUnitBuilder name(final String name) {
-			return abbreviation(new StaticMessage(name));
-		}
+        @Override
+        public IUnitBuilder name(final String name) {
+            return abbreviation(new StaticMessage(name));
+        }
 
-		@Override
-		public IUnitBuilder conversionFactor(final double conversionFactor) {
-			this.conversionFactor = conversionFactor;
-			return this;
-		}
+        @Override
+        public IUnitBuilder conversionFactor(final double conversionFactor) {
+            this.conversionFactor = conversionFactor;
+            return this;
+        }
 
-		@Override
-		public IUnitBuilder conversionFactor(final long conversionFactor) {
-			this.conversionFactor = conversionFactor;
-			return this;
-		}
+        @Override
+        public IUnitBuilder conversionFactor(final long conversionFactor) {
+            this.conversionFactor = conversionFactor;
+            return this;
+        }
 
-		@Override
-		public IUnit build() {
-			return new UnitImpl(abbreviation, name, conversionFactor);
-		}
+        @Override
+        public IUnit build() {
+            return new UnitImpl(abbreviation, name, conversionFactor);
+        }
 
-	}
+    }
 
-	private static final class UnitImpl implements IUnit {
+    private static final class UnitImpl implements IUnit {
 
-		private final IMessage abbreviation;
-		private final IMessage name;
-		private final double conversionFactor;
+        private final IMessage abbreviation;
+        private final IMessage name;
+        private final double conversionFactor;
 
-		public UnitImpl(final IMessage abbreviation, final IMessage name, final double conversionFactor) {
-			Assert.paramNotNull(abbreviation, "abbreviation");
-			Assert.paramNotNull(name, "name");
+        public UnitImpl(final IMessage abbreviation, final IMessage name, final double conversionFactor) {
+            Assert.paramNotNull(abbreviation, "abbreviation");
+            Assert.paramNotNull(name, "name");
 
-			this.abbreviation = abbreviation;
-			this.name = name;
-			this.conversionFactor = conversionFactor;
-		}
+            this.abbreviation = abbreviation;
+            this.name = name;
+            this.conversionFactor = conversionFactor;
+        }
 
-		@Override
-		public String getAbbreviation() {
-			return abbreviation.get();
-		}
+        @Override
+        public String getAbbreviation() {
+            return abbreviation.get();
+        }
 
-		@Override
-		public String getName() {
-			return name.get();
-		}
+        @Override
+        public String getName() {
+            return name.get();
+        }
 
-		@Override
-		public double getConversionFactor() {
-			return conversionFactor;
-		}
+        @Override
+        public double getConversionFactor() {
+            return conversionFactor;
+        }
 
-		@Override
-		public String toString() {
-			return getAbbreviation();
-		}
+        @Override
+        public String toString() {
+            return getAbbreviation();
+        }
 
-	}
+    }
 
 }

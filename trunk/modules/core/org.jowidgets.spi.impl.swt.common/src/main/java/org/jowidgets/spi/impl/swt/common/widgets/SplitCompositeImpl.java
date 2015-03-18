@@ -40,50 +40,50 @@ import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;
 
 public class SplitCompositeImpl extends SwtControl implements ISplitCompositeSpi {
 
-	private final ICompositeSpi first;
-	private final ICompositeSpi second;
-	private final int dividerSize;
+    private final ICompositeSpi first;
+    private final ICompositeSpi second;
+    private final int dividerSize;
 
-	public SplitCompositeImpl(
-		final IGenericWidgetFactory factory,
-		final Object parentUiReference,
-		final ISplitCompositeSetupSpi setup) {
-		super(new JoSashForm((Composite) parentUiReference, setup));
+    public SplitCompositeImpl(
+        final IGenericWidgetFactory factory,
+        final Object parentUiReference,
+        final ISplitCompositeSetupSpi setup) {
+        super(new JoSashForm((Composite) parentUiReference, setup));
 
-		final JoSashForm sashForm = getUiReference();
+        final JoSashForm sashForm = getUiReference();
 
-		final Composite content1 = BorderToComposite.convert(sashForm, setup.getFirstBorder());
-		final Composite content2 = BorderToComposite.convert(sashForm, setup.getSecondBorder());
-		first = new SwtComposite(factory, content1);
-		second = new SwtComposite(factory, content2);
+        final Composite content1 = BorderToComposite.convert(sashForm, setup.getFirstBorder());
+        final Composite content2 = BorderToComposite.convert(sashForm, setup.getSecondBorder());
+        first = new SwtComposite(factory, content1);
+        second = new SwtComposite(factory, content2);
 
-		first.setLayout(setup.getFirstLayout());
-		second.setLayout(setup.getSecondLayout());
+        first.setLayout(setup.getFirstLayout());
+        second.setLayout(setup.getSecondLayout());
 
-		this.dividerSize = setup.getDividerSize();
+        this.dividerSize = setup.getDividerSize();
 
-		sashForm.setWeight(setup.getWeight());
-		sashForm.setSashSize(dividerSize);
-	}
+        sashForm.setWeight(setup.getWeight());
+        sashForm.setSashSize(dividerSize);
+    }
 
-	@Override
-	public ICompositeSpi getFirst() {
-		return first;
-	}
+    @Override
+    public ICompositeSpi getFirst() {
+        return first;
+    }
 
-	@Override
-	public ICompositeSpi getSecond() {
-		return second;
-	}
+    @Override
+    public ICompositeSpi getSecond() {
+        return second;
+    }
 
-	@Override
-	public void setMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
-		getUiReference().setMinSizes(DimensionConvert.convert(firstMinSize), DimensionConvert.convert(secondMinSize));
-	}
+    @Override
+    public void setMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
+        getUiReference().setMinSizes(DimensionConvert.convert(firstMinSize), DimensionConvert.convert(secondMinSize));
+    }
 
-	@Override
-	public JoSashForm getUiReference() {
-		return (JoSashForm) super.getUiReference();
-	}
+    @Override
+    public JoSashForm getUiReference() {
+        return (JoSashForm) super.getUiReference();
+    }
 
 }

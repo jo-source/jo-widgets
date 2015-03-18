@@ -50,165 +50,168 @@ import org.jowidgets.workbench.tools.SplitLayoutBuilder;
 
 public class ComponentDemo1 extends AbstractDemoComponent implements IComponent {
 
-	public static final String DEFAULT_LAYOUT_ID = "DEFAULT_LAYOUT_ID";
-	public static final String MASTER_FOLDER_ID = "MASTER_FOLDER_ID";
-	public static final String DETAIL1_FOLDER_ID = "DETAIL1_FOLDER_ID";
-	public static final String DETAIL2_FOLDER_ID = "DETAIL2_FOLDER_ID";
-	public static final String MAIL_FOLDER_ID = "DETAIL3_FOLDER_ID";
+    public static final String DEFAULT_LAYOUT_ID = "DEFAULT_LAYOUT_ID";
+    public static final String MASTER_FOLDER_ID = "MASTER_FOLDER_ID";
+    public static final String DETAIL1_FOLDER_ID = "DETAIL1_FOLDER_ID";
+    public static final String DETAIL2_FOLDER_ID = "DETAIL2_FOLDER_ID";
+    public static final String MAIL_FOLDER_ID = "DETAIL3_FOLDER_ID";
 
-	private final DemoMenuProvider menuProvider;
-	private ISimpleTableModel tableModel;
+    private final DemoMenuProvider menuProvider;
+    private ISimpleTableModel tableModel;
 
-	public ComponentDemo1(final IComponentContext componentContext) {
-		this.menuProvider = new DemoMenuProvider(true);
+    public ComponentDemo1(final IComponentContext componentContext) {
+        this.menuProvider = new DemoMenuProvider(true);
 
-		final ILayout defaultLayout = new Layout(DEFAULT_LAYOUT_ID, createMainSplit());
-		componentContext.setLayout(defaultLayout);
+        final ILayout defaultLayout = new Layout(DEFAULT_LAYOUT_ID, createMainSplit());
+        componentContext.setLayout(defaultLayout);
 
-		final IMenuModel popupMenu = componentContext.getComponentNodeContext().getPopupMenu();
-		popupMenu.addSeparator();
-		popupMenu.addAction(new ActionFactory().createResetLayoutAction(componentContext, defaultLayout));
-	}
+        final IMenuModel popupMenu = componentContext.getComponentNodeContext().getPopupMenu();
+        popupMenu.addSeparator();
+        popupMenu.addAction(new ActionFactory().createResetLayoutAction(componentContext, defaultLayout));
+    }
 
-	@Override
-	public IView createView(final String viewId, final IViewContext context) {
-		if (ViewDemo1.ID.equals(viewId)) {
-			return new ViewDemo1(context, menuProvider, getTableModelLazy());
-		}
-		else if (ViewDemo2.ID.equals(viewId)) {
-			return new ViewDemo2(context, menuProvider);
-		}
-		else if (ViewDemo4.ID.equals(viewId)) {
-			return new ViewDemo4(context, getTableModelLazy());
-		}
-		else if (ViewDemo5.ID.equals(viewId)) {
-			return new ViewDemo5(context);
-		}
-		else if (ViewDemo6.ID.equals(viewId)) {
-			return new ViewDemo6(context, menuProvider);
-		}
-		else if (ViewDemo7.ID.equals(viewId)) {
-			return new ViewDemo7(context);
-		}
-		else if (viewId.startsWith(DynamicViewDemo.ID_PREFIX)) {
-			return new DynamicViewDemo(viewId, context);
-		}
-		else if (ViewDemo3.ID.equals(viewId)) {
-			// CHECKSTYLE:OFF
-			System.err.println("Warning: " + ViewDemo3.ID + " is created by component, not by application");
-			// CHECKSTYLE:ON
-			return new ViewDemo3(context);
-		}
-		throw new IllegalArgumentException("View id '" + viewId + "' is not known.");
-	}
+    @Override
+    public IView createView(final String viewId, final IViewContext context) {
+        if (ViewDemo1.ID.equals(viewId)) {
+            return new ViewDemo1(context, menuProvider, getTableModelLazy());
+        }
+        else if (ViewDemo2.ID.equals(viewId)) {
+            return new ViewDemo2(context, menuProvider);
+        }
+        else if (ViewDemo4.ID.equals(viewId)) {
+            return new ViewDemo4(context, getTableModelLazy());
+        }
+        else if (ViewDemo5.ID.equals(viewId)) {
+            return new ViewDemo5(context);
+        }
+        else if (ViewDemo6.ID.equals(viewId)) {
+            return new ViewDemo6(context, menuProvider);
+        }
+        else if (ViewDemo7.ID.equals(viewId)) {
+            return new ViewDemo7(context);
+        }
+        else if (viewId.startsWith(DynamicViewDemo.ID_PREFIX)) {
+            return new DynamicViewDemo(viewId, context);
+        }
+        else if (ViewDemo3.ID.equals(viewId)) {
+            // CHECKSTYLE:OFF
+            System.err.println("Warning: " + ViewDemo3.ID + " is created by component, not by application");
+            // CHECKSTYLE:ON
+            return new ViewDemo3(context);
+        }
+        throw new IllegalArgumentException("View id '" + viewId + "' is not known.");
+    }
 
-	@Override
-	public void onFolderCreated(final IFolderContext folderContext) {
-		if (DETAIL2_FOLDER_ID.equals(folderContext.getOriginalFolderId())) {
-			final ActionFactory actionFactory = new ActionFactory();
-			folderContext.getPopupMenu().addAction(actionFactory.createAddViewAction(folderContext));
-		}
-	}
+    @Override
+    public void onFolderCreated(final IFolderContext folderContext) {
+        if (DETAIL2_FOLDER_ID.equals(folderContext.getOriginalFolderId())) {
+            final ActionFactory actionFactory = new ActionFactory();
+            folderContext.getPopupMenu().addAction(actionFactory.createAddViewAction(folderContext));
+        }
+    }
 
-	private ISplitLayoutBuilder createMainSplit() {
-		final ISplitLayoutBuilder result = new SplitLayoutBuilder();
-		result.setHorizontal().setWeight(0.78).setResizeFirst();
-		result.setFirstContainer(createMasterDetailSplit());
-		result.setSecondContainer(createMailFolder());
-		return result;
-	}
+    private ISplitLayoutBuilder createMainSplit() {
+        final ISplitLayoutBuilder result = new SplitLayoutBuilder();
+        result.setHorizontal().setWeight(0.78).setResizeFirst();
+        result.setFirstContainer(createMasterDetailSplit());
+        result.setSecondContainer(createMailFolder());
+        return result;
+    }
 
-	private ISplitLayoutBuilder createMasterDetailSplit() {
-		final ISplitLayoutBuilder result = new SplitLayoutBuilder();
-		result.setVertical().setWeight(0.55).setResizeFirst();
-		result.setFirstContainer(createMasterFolder());
-		result.setSecondContainer(createDetailSplit());
-		return result;
-	}
+    private ISplitLayoutBuilder createMasterDetailSplit() {
+        final ISplitLayoutBuilder result = new SplitLayoutBuilder();
+        result.setVertical().setWeight(0.55).setResizeFirst();
+        result.setFirstContainer(createMasterFolder());
+        result.setSecondContainer(createDetailSplit());
+        return result;
+    }
 
-	private IFolderLayoutBuilder createMasterFolder() {
-		final IFolderLayoutBuilder result = new FolderLayoutBuilder(MASTER_FOLDER_ID);
-		result.addView(ViewDemo1.ID, ViewDemo1.DEFAULT_LABEL, ViewDemo1.DEFAULT_TOOLTIP, ViewDemo1.DEFAULT_ICON);
-		return result;
-	}
+    private IFolderLayoutBuilder createMasterFolder() {
+        final IFolderLayoutBuilder result = new FolderLayoutBuilder(MASTER_FOLDER_ID);
+        result.addView(ViewDemo1.ID, ViewDemo1.DEFAULT_LABEL, ViewDemo1.DEFAULT_TOOLTIP, ViewDemo1.DEFAULT_ICON);
+        return result;
+    }
 
-	private ISplitLayoutBuilder createDetailSplit() {
-		final ISplitLayoutBuilder result = new SplitLayoutBuilder();
-		result.setHorizontal().setWeight(0.28).setResizeSecond();
-		result.setFirstContainer(createDetail1Folder());
-		result.setSecondContainer(createDetail2Folder());
-		return result;
-	}
+    private ISplitLayoutBuilder createDetailSplit() {
+        final ISplitLayoutBuilder result = new SplitLayoutBuilder();
+        result.setHorizontal().setWeight(0.28).setResizeSecond();
+        result.setFirstContainer(createDetail1Folder());
+        result.setSecondContainer(createDetail2Folder());
+        return result;
+    }
 
-	private IFolderLayoutBuilder createDetail1Folder() {
-		final IFolderLayoutBuilder result = new FolderLayoutBuilder(DETAIL1_FOLDER_ID);
-		result.addView(ViewDemo2.ID, ViewDemo2.DEFAULT_LABEL, ViewDemo2.DEFAULT_TOOLTIP, ViewDemo2.DEFAULT_ICON);
-		final IViewLayoutBuilder view3lb = WorkbenchToolkit.getInstance().getLayoutBuilderFactory().view();
-		view3lb.setId(ViewDemo3.ID).setLabel(ViewDemo3.DEFAULT_LABEL).setTooltip(ViewDemo3.DEFAULT_TOOLTIP).setIcon(
-				ViewDemo3.DEFAULT_ICON).setScope(ViewScope.WORKBENCH_APPLICATION);
-		result.addView(view3lb.build());
-		return result;
-	}
+    private IFolderLayoutBuilder createDetail1Folder() {
+        final IFolderLayoutBuilder result = new FolderLayoutBuilder(DETAIL1_FOLDER_ID);
+        result.addView(ViewDemo2.ID, ViewDemo2.DEFAULT_LABEL, ViewDemo2.DEFAULT_TOOLTIP, ViewDemo2.DEFAULT_ICON);
+        final IViewLayoutBuilder view3lb = WorkbenchToolkit.getInstance().getLayoutBuilderFactory().view();
+        view3lb.setId(ViewDemo3.ID)
+                .setLabel(ViewDemo3.DEFAULT_LABEL)
+                .setTooltip(ViewDemo3.DEFAULT_TOOLTIP)
+                .setIcon(ViewDemo3.DEFAULT_ICON)
+                .setScope(ViewScope.WORKBENCH_APPLICATION);
+        result.addView(view3lb.build());
+        return result;
+    }
 
-	private IFolderLayoutBuilder createDetail2Folder() {
-		final IFolderLayoutBuilder result = new FolderLayoutBuilder(DETAIL2_FOLDER_ID);
-		result.addView(ViewDemo4.ID, ViewDemo4.DEFAULT_LABEL, ViewDemo4.DEFAULT_TOOLTIP, ViewDemo4.DEFAULT_ICON);
-		result.addView(ViewDemo5.ID, ViewDemo5.DEFAULT_LABEL, ViewDemo5.DEFAULT_TOOLTIP, ViewDemo5.DEFAULT_ICON);
-		result.addView(ViewDemo6.ID, ViewDemo6.DEFAULT_LABEL, ViewDemo6.DEFAULT_TOOLTIP, ViewDemo6.DEFAULT_ICON);
-		return result;
-	}
+    private IFolderLayoutBuilder createDetail2Folder() {
+        final IFolderLayoutBuilder result = new FolderLayoutBuilder(DETAIL2_FOLDER_ID);
+        result.addView(ViewDemo4.ID, ViewDemo4.DEFAULT_LABEL, ViewDemo4.DEFAULT_TOOLTIP, ViewDemo4.DEFAULT_ICON);
+        result.addView(ViewDemo5.ID, ViewDemo5.DEFAULT_LABEL, ViewDemo5.DEFAULT_TOOLTIP, ViewDemo5.DEFAULT_ICON);
+        result.addView(ViewDemo6.ID, ViewDemo6.DEFAULT_LABEL, ViewDemo6.DEFAULT_TOOLTIP, ViewDemo6.DEFAULT_ICON);
+        return result;
+    }
 
-	private IFolderLayoutBuilder createMailFolder() {
-		final IFolderLayoutBuilder result = new FolderLayoutBuilder(MAIL_FOLDER_ID);
-		result.addView(ViewDemo7.ID, ViewDemo7.DEFAULT_LABEL, ViewDemo7.DEFAULT_TOOLTIP, ViewDemo7.DEFAULT_ICON);
-		return result;
-	}
+    private IFolderLayoutBuilder createMailFolder() {
+        final IFolderLayoutBuilder result = new FolderLayoutBuilder(MAIL_FOLDER_ID);
+        result.addView(ViewDemo7.ID, ViewDemo7.DEFAULT_LABEL, ViewDemo7.DEFAULT_TOOLTIP, ViewDemo7.DEFAULT_ICON);
+        return result;
+    }
 
-	private ISimpleTableModel getTableModelLazy() {
-		if (tableModel == null) {
-			tableModel = createTableModel();
-		}
-		return tableModel;
-	}
+    private ISimpleTableModel getTableModelLazy() {
+        if (tableModel == null) {
+            tableModel = createTableModel();
+        }
+        return tableModel;
+    }
 
-	private ISimpleTableModel createTableModel() {
+    private ISimpleTableModel createTableModel() {
 
-		final ISimpleTableModel result = new SimpleTableModelBuilder().setEditableDefault(true).build();
-		result.addColumn("Gender");
-		result.addColumn("Firstname");
-		result.addColumn("Lastname");
-		result.addColumn("Street");
-		result.addColumn("Postal code");
-		result.addColumn("City");
-		result.addColumn("Country");
-		result.addColumn("Phone number");
-		result.addColumn("Email");
+        final ISimpleTableModel result = new SimpleTableModelBuilder().setEditableDefault(true).build();
+        result.addColumn("Gender");
+        result.addColumn("Firstname");
+        result.addColumn("Lastname");
+        result.addColumn("Street");
+        result.addColumn("Postal code");
+        result.addColumn("City");
+        result.addColumn("Country");
+        result.addColumn("Phone number");
+        result.addColumn("Email");
 
-		result.addRow(
-				"Male",
-				"Pete",
-				"Brown",
-				"Audubon Ave 34",
-				"76453",
-				"New York",
-				"USA",
-				"47634826",
-				"hans.maier@gtzservice.com");
+        result.addRow(
+                "Male",
+                "Pete",
+                "Brown",
+                "Audubon Ave 34",
+                "76453",
+                "New York",
+                "USA",
+                "47634826",
+                "hans.maier@gtzservice.com");
 
-		result.addRow("Male", "Steve", "Miller", "Convent Ave 25", "53453", "New York", "USA", "4354354", "steve.miller@gjk.com");
+        result.addRow("Male", "Steve", "Miller", "Convent Ave 25", "53453", "New York", "USA", "4354354", "steve.miller@gjk.com");
 
-		result.addRow(
-				"Female",
-				"Laura",
-				"Brixton",
-				"West End Ave 2",
-				"53453",
-				"New York",
-				"USA",
-				"435345345",
-				"laura.brixton@gjk.com");
+        result.addRow(
+                "Female",
+                "Laura",
+                "Brixton",
+                "West End Ave 2",
+                "53453",
+                "New York",
+                "USA",
+                "435345345",
+                "laura.brixton@gjk.com");
 
-		return result;
-	}
+        return result;
+    }
 
 }

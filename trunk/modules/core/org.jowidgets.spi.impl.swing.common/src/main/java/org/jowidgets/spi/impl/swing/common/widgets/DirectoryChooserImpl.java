@@ -40,61 +40,61 @@ import org.jowidgets.util.Assert;
 
 public class DirectoryChooserImpl implements IDirectoryChooserSpi {
 
-	private final JFileChooser fileChooser;
-	private final Component parent;
+    private final JFileChooser fileChooser;
+    private final Component parent;
 
-	public DirectoryChooserImpl(final Object parentUiReference, final IDirectoryChooserSetupSpi setup) {
-		this.parent = (Component) parentUiReference;
-		this.fileChooser = new JFileChooser();
+    public DirectoryChooserImpl(final Object parentUiReference, final IDirectoryChooserSetupSpi setup) {
+        this.parent = (Component) parentUiReference;
+        this.fileChooser = new JFileChooser();
 
-		if (setup.getTitle() != null) {
-			fileChooser.setDialogTitle(setup.getTitle());
-		}
+        if (setup.getTitle() != null) {
+            fileChooser.setDialogTitle(setup.getTitle());
+        }
 
-		fileChooser.setMultiSelectionEnabled(false);
+        fileChooser.setMultiSelectionEnabled(false);
 
-		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		fileChooser.setAcceptAllFileFilterUsed(false);
-	}
+        fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+    }
 
-	@Override
-	public Object getUiReference() {
-		return fileChooser;
-	}
+    @Override
+    public Object getUiReference() {
+        return fileChooser;
+    }
 
-	@Override
-	public void setDirectory(final File file) {
-		Assert.paramNotNull(file, "file");
-		fileChooser.setSelectedFile(file);
-	}
+    @Override
+    public void setDirectory(final File file) {
+        Assert.paramNotNull(file, "file");
+        fileChooser.setSelectedFile(file);
+    }
 
-	@Override
-	public DialogResult open() {
-		final int result = fileChooser.showOpenDialog(parent);
+    @Override
+    public DialogResult open() {
+        final int result = fileChooser.showOpenDialog(parent);
 
-		if (result == JFileChooser.APPROVE_OPTION) {
-			return DialogResult.OK;
-		}
-		else {
-			return DialogResult.CANCEL;
-		}
-	}
+        if (result == JFileChooser.APPROVE_OPTION) {
+            return DialogResult.OK;
+        }
+        else {
+            return DialogResult.CANCEL;
+        }
+    }
 
-	@Override
-	public File getDirectory() {
-		return fileChooser.getSelectedFile();
-	}
+    @Override
+    public File getDirectory() {
+        return fileChooser.getSelectedFile();
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		if (!enabled) {
-			throw new IllegalArgumentException("Can not disable a file chooser");
-		}
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        if (!enabled) {
+            throw new IllegalArgumentException("Can not disable a file chooser");
+        }
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
 }

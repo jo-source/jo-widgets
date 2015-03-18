@@ -39,62 +39,62 @@ import org.jowidgets.util.Assert;
 
 class SingleControlContent<INPUT_TYPE> implements IInputContentCreator<INPUT_TYPE> {
 
-	private final String label;
-	private final IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor;
-	private final String layoutConstraints;
+    private final String label;
+    private final IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor;
+    private final String layoutConstraints;
 
-	private IInputControl<INPUT_TYPE> control;
-	private INPUT_TYPE value;
+    private IInputControl<INPUT_TYPE> control;
+    private INPUT_TYPE value;
 
-	SingleControlContent(
-		final String label,
-		final IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor,
-		final String layoutConstraints) {
+    SingleControlContent(
+        final String label,
+        final IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor,
+        final String layoutConstraints) {
 
-		Assert.paramNotNull(label, "label");
-		Assert.paramNotNull(descriptor, "descriptor");
-		this.label = label;
-		this.descriptor = descriptor;
-		if (layoutConstraints != null) {
-			this.layoutConstraints = layoutConstraints;
-		}
-		else {
-			this.layoutConstraints = "w 150::, grow";
-		}
-	}
+        Assert.paramNotNull(label, "label");
+        Assert.paramNotNull(descriptor, "descriptor");
+        this.label = label;
+        this.descriptor = descriptor;
+        if (layoutConstraints != null) {
+            this.layoutConstraints = layoutConstraints;
+        }
+        else {
+            this.layoutConstraints = "w 150::, grow";
+        }
+    }
 
-	@Override
-	public void createContent(final IInputContentContainer contentContainer) {
-		if (control != null) {
-			throw new IllegalStateException("Content must only be created once");
-		}
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		contentContainer.setLayout(new MigLayoutDescriptor("[][grow, 0::]", "[]"));
-		contentContainer.add(bpf.textLabel(label), "");
-		control = contentContainer.add(descriptor, layoutConstraints);
-		if (value != null) {
-			control.setValue(value);
-		}
-	}
+    @Override
+    public void createContent(final IInputContentContainer contentContainer) {
+        if (control != null) {
+            throw new IllegalStateException("Content must only be created once");
+        }
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+        contentContainer.setLayout(new MigLayoutDescriptor("[][grow, 0::]", "[]"));
+        contentContainer.add(bpf.textLabel(label), "");
+        control = contentContainer.add(descriptor, layoutConstraints);
+        if (value != null) {
+            control.setValue(value);
+        }
+    }
 
-	@Override
-	public void setValue(final INPUT_TYPE value) {
-		if (control != null) {
-			control.setValue(value);
-		}
-		else {
-			this.value = value;
-		}
-	}
+    @Override
+    public void setValue(final INPUT_TYPE value) {
+        if (control != null) {
+            control.setValue(value);
+        }
+        else {
+            this.value = value;
+        }
+    }
 
-	@Override
-	public INPUT_TYPE getValue() {
-		if (control != null) {
-			return control.getValue();
-		}
-		else {
-			return this.value;
-		}
-	}
+    @Override
+    public INPUT_TYPE getValue() {
+        if (control != null) {
+            return control.getValue();
+        }
+        else {
+            return this.value;
+        }
+    }
 
 }

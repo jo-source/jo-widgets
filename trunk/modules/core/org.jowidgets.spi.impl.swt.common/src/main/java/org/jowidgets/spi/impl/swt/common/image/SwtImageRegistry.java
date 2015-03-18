@@ -34,33 +34,33 @@ import org.jowidgets.spi.impl.image.ImageRegistry;
 
 public final class SwtImageRegistry extends ImageRegistry {
 
-	private static final SwtImageRegistry INSTANCE = new SwtImageRegistry(new SwtImageHandleFactory());
+    private static final SwtImageRegistry INSTANCE = new SwtImageRegistry(new SwtImageHandleFactory());
 
-	private SwtImageRegistry(final SwtImageHandleFactory imageHandleFactory) {
-		super(imageHandleFactory);
-	}
+    private SwtImageRegistry(final SwtImageHandleFactory imageHandleFactory) {
+        super(imageHandleFactory);
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public synchronized ImageHandle<Image> getImageHandle(final IImageConstant key) {
-		return (ImageHandle<Image>) super.getImageHandle(key);
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public synchronized ImageHandle<Image> getImageHandle(final IImageConstant key) {
+        return (ImageHandle<Image>) super.getImageHandle(key);
+    }
 
-	public synchronized Image getImage(final IImageConstant key) {
-		if (key == null) {
-			return null;
-		}
-		final ImageHandle<Image> imageHandle = getImageHandle(key);
-		if (imageHandle != null) {
-			return imageHandle.getImage();
-		}
-		else {
-			throw new IllegalArgumentException("No image found for the image constant '" + key + "'");
-		}
-	}
+    public synchronized Image getImage(final IImageConstant key) {
+        if (key == null) {
+            return null;
+        }
+        final ImageHandle<Image> imageHandle = getImageHandle(key);
+        if (imageHandle != null) {
+            return imageHandle.getImage();
+        }
+        else {
+            throw new IllegalArgumentException("No image found for the image constant '" + key + "'");
+        }
+    }
 
-	public static SwtImageRegistry getInstance() {
-		return INSTANCE;
-	}
+    public static SwtImageRegistry getInstance() {
+        return INSTANCE;
+    }
 
 }

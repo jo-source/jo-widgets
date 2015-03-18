@@ -33,20 +33,20 @@ import org.jowidgets.unit.api.IUnit;
 
 final class UnitConverter extends AbstractObjectStringConverter<IUnit> {
 
-	@Override
-	public String convertToString(final IUnit value) {
-		if (value != null) {
-			return value.getAbbreviation();
-		}
-		return null;
-	}
+    @Override
+    public String convertToString(final IUnit value) {
+        if (value != null) {
+            return value.getAbbreviation();
+        }
+        return null;
+    }
 
-	@Override
-	public String getDescription(final IUnit value) {
-		if (value != null) {
-			return value.getName();
-		}
-		return null;
-	}
+    @Override
+    public String getDescription(final IUnit value) {
+        if (value != null) {
+            return value.getName();
+        }
+        return null;
+    }
 
 }

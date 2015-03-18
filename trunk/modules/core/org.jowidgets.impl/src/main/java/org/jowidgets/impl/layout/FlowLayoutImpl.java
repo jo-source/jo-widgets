@@ -39,175 +39,175 @@ import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.util.Assert;
 
 final class FlowLayoutImpl extends AbstractCachingLayout implements ILayouter {
-	private final IContainer container;
-	private final int gap;
-	private final Orientation orientation;
+    private final IContainer container;
+    private final int gap;
+    private final Orientation orientation;
 
-	FlowLayoutImpl(final IContainer container, final int gap, final Orientation orientation) {
-		Assert.paramNotNull(container, "container");
-		this.container = container;
-		this.gap = gap;
-		this.orientation = orientation;
-	}
+    FlowLayoutImpl(final IContainer container, final int gap, final Orientation orientation) {
+        Assert.paramNotNull(container, "container");
+        this.container = container;
+        this.gap = gap;
+        this.orientation = orientation;
+    }
 
-	@Override
-	public void layout() {
-		final Rectangle clientArea = container.getClientArea();
-		final int availableHeight = clientArea.getHeight();
-		final int availableWidth = clientArea.getWidth();
+    @Override
+    public void layout() {
+        final Rectangle clientArea = container.getClientArea();
+        final int availableHeight = clientArea.getHeight();
+        final int availableWidth = clientArea.getWidth();
 
-		int x = clientArea.getX();
-		int y = clientArea.getY();
+        int x = clientArea.getX();
+        int y = clientArea.getY();
 
-		final List<IControl> children = container.getChildren();
-		final int[] widths;
-		final int[] heights;
+        final List<IControl> children = container.getChildren();
+        final int[] widths;
+        final int[] heights;
 
-		if (Orientation.HORIZONTAL == orientation) {
-			heights = new int[children.size()];
-			final int[] minWidths = new int[children.size()];
-			final int[] prefWidths = new int[children.size()];
+        if (Orientation.HORIZONTAL == orientation) {
+            heights = new int[children.size()];
+            final int[] minWidths = new int[children.size()];
+            final int[] prefWidths = new int[children.size()];
 
-			for (int i = 0; i < children.size(); i++) {
-				final IControl control = children.get(i);
+            for (int i = 0; i < children.size(); i++) {
+                final IControl control = children.get(i);
 
-				final Dimension minSize = getControlMinSize(control);
-				final Dimension prefSize = getControlPrefSize(control);
-				minWidths[i] = minSize.getWidth();
-				prefWidths[i] = prefSize.getWidth();
+                final Dimension minSize = getControlMinSize(control);
+                final Dimension prefSize = getControlPrefSize(control);
+                minWidths[i] = minSize.getWidth();
+                prefWidths[i] = prefSize.getWidth();
 
-				if (availableHeight > prefSize.getHeight()) {
-					heights[i] = prefSize.getHeight();
-				}
-				else if (availableHeight > minSize.getHeight()) {
-					heights[i] = availableHeight;
-				}
-				else {
-					heights[i] = minSize.getHeight();
-				}
-			}
+                if (availableHeight > prefSize.getHeight()) {
+                    heights[i] = prefSize.getHeight();
+                }
+                else if (availableHeight > minSize.getHeight()) {
+                    heights[i] = availableHeight;
+                }
+                else {
+                    heights[i] = minSize.getHeight();
+                }
+            }
 
-			widths = calcRatio(minWidths, prefWidths, availableWidth - (minWidths.length - 1) * gap);
+            widths = calcRatio(minWidths, prefWidths, availableWidth - (minWidths.length - 1) * gap);
 
-			for (int i = 0; i < children.size(); i++) {
-				final IControl control = children.get(i);
-				control.setSize(widths[i], heights[i]);
-				control.setPosition(x, y);
-				x = x + gap + widths[i];
-			}
-		}
-		else {
-			widths = new int[children.size()];
-			final int[] minHeights = new int[children.size()];
-			final int[] prefHeights = new int[children.size()];
+            for (int i = 0; i < children.size(); i++) {
+                final IControl control = children.get(i);
+                control.setSize(widths[i], heights[i]);
+                control.setPosition(x, y);
+                x = x + gap + widths[i];
+            }
+        }
+        else {
+            widths = new int[children.size()];
+            final int[] minHeights = new int[children.size()];
+            final int[] prefHeights = new int[children.size()];
 
-			for (int i = 0; i < children.size(); i++) {
-				final IControl control = children.get(i);
-				final Dimension minSize = getControlMinSize(control);
-				final Dimension prefSize = getControlPrefSize(control);
-				minHeights[i] = minSize.getHeight();
-				prefHeights[i] = prefSize.getHeight();
+            for (int i = 0; i < children.size(); i++) {
+                final IControl control = children.get(i);
+                final Dimension minSize = getControlMinSize(control);
+                final Dimension prefSize = getControlPrefSize(control);
+                minHeights[i] = minSize.getHeight();
+                prefHeights[i] = prefSize.getHeight();
 
-				if (availableWidth > prefSize.getWidth()) {
-					widths[i] = prefSize.getWidth();
-				}
-				else if (availableWidth > minSize.getWidth()) {
-					widths[i] = availableWidth;
-				}
-				else {
-					widths[i] = minSize.getWidth();
-				}
-			}
-			heights = calcRatio(minHeights, prefHeights, availableHeight - (minHeights.length - 1) * gap);
+                if (availableWidth > prefSize.getWidth()) {
+                    widths[i] = prefSize.getWidth();
+                }
+                else if (availableWidth > minSize.getWidth()) {
+                    widths[i] = availableWidth;
+                }
+                else {
+                    widths[i] = minSize.getWidth();
+                }
+            }
+            heights = calcRatio(minHeights, prefHeights, availableHeight - (minHeights.length - 1) * gap);
 
-			for (int i = 0; i < children.size(); i++) {
-				final IControl control = children.get(i);
-				control.setSize(widths[i], heights[i]);
-				control.setPosition(x, y);
-				y = y + gap + heights[i];
-			}
-		}
-	}
+            for (int i = 0; i < children.size(); i++) {
+                final IControl control = children.get(i);
+                control.setSize(widths[i], heights[i]);
+                control.setPosition(x, y);
+                y = y + gap + heights[i];
+            }
+        }
+    }
 
-	private int[] calcRatio(final int[] mins, final int[] prefs, final int availableSize) {
-		if (mins.length == 0) {
-			return mins;
-		}
+    private int[] calcRatio(final int[] mins, final int[] prefs, final int availableSize) {
+        if (mins.length == 0) {
+            return mins;
+        }
 
-		int minSize = 0;
-		int prefSize = 0;
-		int delta = 0;
-		final int[] deltas = new int[mins.length];
-		for (int i = 0; i < mins.length; i++) {
-			minSize = minSize + mins[i];
-			prefSize = prefSize + prefs[i];
-			deltas[i] = (prefs[i] - mins[i]);
-			delta = delta + deltas[i];
-		}
+        int minSize = 0;
+        int prefSize = 0;
+        int delta = 0;
+        final int[] deltas = new int[mins.length];
+        for (int i = 0; i < mins.length; i++) {
+            minSize = minSize + mins[i];
+            prefSize = prefSize + prefs[i];
+            deltas[i] = (prefs[i] - mins[i]);
+            delta = delta + deltas[i];
+        }
 
-		if (availableSize <= minSize) {
-			return mins;
-		}
-		if (availableSize >= prefSize) {
-			return prefs;
-		}
+        if (availableSize <= minSize) {
+            return mins;
+        }
+        if (availableSize >= prefSize) {
+            return prefs;
+        }
 
-		final int ratioSize = availableSize - minSize;
-		if (ratioSize < 0) {
-			throw new IllegalStateException("ratio size < 0");
-		}
+        final int ratioSize = availableSize - minSize;
+        if (ratioSize < 0) {
+            throw new IllegalStateException("ratio size < 0");
+        }
 
-		final int[] result = new int[mins.length];
-		int usedSize = 0;
-		for (int i = 0; i < result.length - 1; i++) {
-			result[i] = Math.min(prefs[i], mins[i] + (int) (ratioSize * (double) deltas[i] / delta));
-			usedSize = usedSize + result[i];
-		}
-		result[result.length - 1] = Math.min(prefs[result.length - 1], availableSize - usedSize);
-		return result;
-	}
+        final int[] result = new int[mins.length];
+        int usedSize = 0;
+        for (int i = 0; i < result.length - 1; i++) {
+            result[i] = Math.min(prefs[i], mins[i] + (int) (ratioSize * (double) deltas[i] / delta));
+            usedSize = usedSize + result[i];
+        }
+        result[result.length - 1] = Math.min(prefs[result.length - 1], availableSize - usedSize);
+        return result;
+    }
 
-	@Override
-	protected Dimension calculateMinSize() {
-		return calcDecoratedSize(minimumPolicy());
-	}
+    @Override
+    protected Dimension calculateMinSize() {
+        return calcDecoratedSize(minimumPolicy());
+    }
 
-	@Override
-	public Dimension calculatePreferredSize() {
-		return calcDecoratedSize(preferredPolicy());
-	}
+    @Override
+    public Dimension calculatePreferredSize() {
+        return calcDecoratedSize(preferredPolicy());
+    }
 
-	private Dimension calcDecoratedSize(final ISizeProvider policy) {
-		return container.computeDecoratedSize(calcControlsSize(policy));
-	}
+    private Dimension calcDecoratedSize(final ISizeProvider policy) {
+        return container.computeDecoratedSize(calcControlsSize(policy));
+    }
 
-	private Dimension calcControlsSize(final ISizeProvider policy) {
-		int width = 0;
-		int height = 0;
-		final List<IControl> children = container.getChildren();
+    private Dimension calcControlsSize(final ISizeProvider policy) {
+        int width = 0;
+        int height = 0;
+        final List<IControl> children = container.getChildren();
 
-		if (Orientation.HORIZONTAL == orientation) {
-			for (final IControl control : children) {
-				final Dimension size = policy.getSize(control);
-				width = width + gap + size.getWidth();
-				height = Math.max(height, size.getHeight());
-			}
-			if (children.size() > 0) {
-				width = width - gap;
-			}
-		}
-		else {
-			for (final IControl control : children) {
-				final Dimension size = policy.getSize(control);
-				height = height + gap + size.getHeight();
-				width = Math.max(width, size.getWidth());
-			}
-			if (children.size() > 0) {
-				height = height - gap;
-			}
-		}
+        if (Orientation.HORIZONTAL == orientation) {
+            for (final IControl control : children) {
+                final Dimension size = policy.getSize(control);
+                width = width + gap + size.getWidth();
+                height = Math.max(height, size.getHeight());
+            }
+            if (children.size() > 0) {
+                width = width - gap;
+            }
+        }
+        else {
+            for (final IControl control : children) {
+                final Dimension size = policy.getSize(control);
+                height = height + gap + size.getHeight();
+                width = Math.max(width, size.getWidth());
+            }
+            if (children.size() > 0) {
+                height = height - gap;
+            }
+        }
 
-		return new Dimension(width, height);
-	}
+        return new Dimension(width, height);
+    }
 
 }

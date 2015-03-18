@@ -33,14 +33,14 @@ import org.jowidgets.spi.graphics.IGraphicContextSpi;
 
 public interface IPaintEventSpi {
 
-	/**
-	 * @return The graphic context
-	 */
-	IGraphicContextSpi getGraphicContext();
+    /**
+     * @return The graphic context
+     */
+    IGraphicContextSpi getGraphicContext();
 
-	/**
-	 * @return The area that needs to be repainted
-	 */
-	Rectangle getClipBounds();
+    /**
+     * @return The area that needs to be repainted
+     */
+    Rectangle getClipBounds();
 
 }

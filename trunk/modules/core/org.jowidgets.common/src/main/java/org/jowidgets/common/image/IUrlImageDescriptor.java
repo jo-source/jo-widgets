@@ -35,11 +35,11 @@ import java.net.URL;
  */
 public interface IUrlImageDescriptor extends IImageDescriptor {
 
-	/**
-	 * Gets the url that provides the image data
-	 * 
-	 * @return The url, never null
-	 */
-	URL getImageUrl();
+    /**
+     * Gets the url that provides the image data
+     * 
+     * @return The url, never null
+     */
+    URL getImageUrl();
 
 }

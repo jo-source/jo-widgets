@@ -30,9 +30,9 @@ package org.jowidgets.util.cache;
 
 public interface ICacheable extends ICacheableObservable {
 
-	/**
-	 * Releases the cacheable from the cache
-	 */
-	void release();
+    /**
+     * Releases the cacheable from the cache
+     */
+    void release();
 
 }

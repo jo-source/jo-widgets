@@ -32,7 +32,7 @@ import org.jowidgets.common.widgets.IPopupMenuCommon;
 
 public interface IPopupMenu extends IMenu, IPopupMenuCommon {
 
-	@Override
-	IComponent getParent();
+    @Override
+    IComponent getParent();
 
 }

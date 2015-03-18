@@ -42,9 +42,9 @@ import org.jowidgets.common.widgets.layout.ILayouter;
  */
 public interface ICachedFillLayout extends ILayouter {
 
-	/**
-	 * Clear's the cache of the layouter, e.g. after container changed
-	 */
-	void clearCache();
+    /**
+     * Clear's the cache of the layouter, e.g. after container changed
+     */
+    void clearCache();
 
 }

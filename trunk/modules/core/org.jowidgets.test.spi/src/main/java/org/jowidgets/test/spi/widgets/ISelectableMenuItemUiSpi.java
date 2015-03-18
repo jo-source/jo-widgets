@@ -32,9 +32,9 @@ import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 import org.jowidgets.test.common.widgets.ISelectableMenuItemUiCommon;
 
 public interface ISelectableMenuItemUiSpi extends
-		IMenuItemUiSpi,
-		ISelectableItemUiSpi,
-		ISelectableMenuItemUiCommon,
-		ISelectableMenuItemSpi {
+        IMenuItemUiSpi,
+        ISelectableItemUiSpi,
+        ISelectableMenuItemUiCommon,
+        ISelectableMenuItemSpi {
 
 }

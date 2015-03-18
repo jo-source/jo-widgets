@@ -53,211 +53,211 @@ import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModelListener;
 
 class Workbench implements IWorkbench {
 
-	private final IWorkbenchModel model;
-	private final Runnable shutdownHook;
+    private final IWorkbenchModel model;
+    private final Runnable shutdownHook;
 
-	private final List<WorkbenchApplication> createdApplications;
+    private final List<WorkbenchApplication> createdApplications;
 
-	private IContentCreator statusBarCreator;
-	private IToolBarModel toolBar;
-	private IMenuBarModel menuBar;
+    private IContentCreator statusBarCreator;
+    private IToolBarModel toolBar;
+    private IMenuBarModel menuBar;
 
-	Workbench(final IWorkbenchModel model) {
-		Assert.paramNotNull(model, "model");
+    Workbench(final IWorkbenchModel model) {
+        Assert.paramNotNull(model, "model");
 
-		this.model = model;
-		this.createdApplications = new LinkedList<WorkbenchApplication>();
+        this.model = model;
+        this.createdApplications = new LinkedList<WorkbenchApplication>();
 
-		this.shutdownHook = new Runnable() {
-			@Override
-			public void run() {
-				if (model.getShutdownHooks() != null) {
-					for (final Runnable runnable : model.getShutdownHooks()) {
-						runnable.run();
-					}
-				}
-			}
-		};
-	}
+        this.shutdownHook = new Runnable() {
+            @Override
+            public void run() {
+                if (model.getShutdownHooks() != null) {
+                    for (final Runnable runnable : model.getShutdownHooks()) {
+                        runnable.run();
+                    }
+                }
+            }
+        };
+    }
 
-	@Override
-	public void onContextInitialize(final IWorkbenchContext context) {
-		context.addShutdownHook(shutdownHook);
-		for (final IWorkbenchApplicationModel applicationModel : model.getApplications()) {
-			final WorkbenchApplication application = new WorkbenchApplication(applicationModel);
-			context.add(application);
-			createdApplications.add(application);
-		}
+    @Override
+    public void onContextInitialize(final IWorkbenchContext context) {
+        context.addShutdownHook(shutdownHook);
+        for (final IWorkbenchApplicationModel applicationModel : model.getApplications()) {
+            final WorkbenchApplication application = new WorkbenchApplication(applicationModel);
+            context.add(application);
+            createdApplications.add(application);
+        }
 
-		model.addListModelListener(new ListModelAdapter() {
-			@Override
-			public void afterChildRemoved(final int index) {
-				final WorkbenchApplication application = createdApplications.remove(index);
-				if (application != null) {
-					context.remove(application);
-					application.dispose();
-				}
-			}
+        model.addListModelListener(new ListModelAdapter() {
+            @Override
+            public void afterChildRemoved(final int index) {
+                final WorkbenchApplication application = createdApplications.remove(index);
+                if (application != null) {
+                    context.remove(application);
+                    application.dispose();
+                }
+            }
 
-			@Override
-			public void afterChildAdded(final int index) {
-				final IWorkbenchApplicationModel applicationModel = model.getApplications().get(index);
-				final WorkbenchApplication application = new WorkbenchApplication(applicationModel);
-				context.add(index, application);
-				createdApplications.add(index, application);
-			}
-		});
+            @Override
+            public void afterChildAdded(final int index) {
+                final IWorkbenchApplicationModel applicationModel = model.getApplications().get(index);
+                final WorkbenchApplication application = new WorkbenchApplication(applicationModel);
+                context.add(index, application);
+                createdApplications.add(index, application);
+            }
+        });
 
-		model.addWorkbenchPartModelListener(new IWorkbenchPartModelListener() {
-			@Override
-			public void modelChanged() {
-				onModelChanged(context);
-			}
-		});
+        model.addWorkbenchPartModelListener(new IWorkbenchPartModelListener() {
+            @Override
+            public void modelChanged() {
+                onModelChanged(context);
+            }
+        });
 
-		onModelChanged(context);
+        onModelChanged(context);
 
-		if (model.getInitializeCallback() != null) {
-			model.getInitializeCallback().onContextInitialize(model, new ModelBasedWorkbenchContext(model, context));
-		}
-	}
+        if (model.getInitializeCallback() != null) {
+            model.getInitializeCallback().onContextInitialize(model, new ModelBasedWorkbenchContext(model, context));
+        }
+    }
 
-	@Override
-	public IView createView(final String viewId, final IViewContext viewContext) {
-		if (model.getViewFactory() != null) {
-			return model.getViewFactory().createView(viewId, viewContext);
-		}
-		return null;
-	}
+    @Override
+    public IView createView(final String viewId, final IViewContext viewContext) {
+        if (model.getViewFactory() != null) {
+            return model.getViewFactory().createView(viewId, viewContext);
+        }
+        return null;
+    }
 
-	@Override
-	public Dimension getInitialDimension() {
-		return model.getInitialDimension();
-	}
+    @Override
+    public Dimension getInitialDimension() {
+        return model.getInitialDimension();
+    }
 
-	@Override
-	public boolean isInitialMaximized() {
-		return model.isInitialMaximized();
-	}
+    @Override
+    public boolean isInitialMaximized() {
+        return model.isInitialMaximized();
+    }
 
-	@Override
-	public boolean isDecorated() {
-		return model.isDecorated();
-	}
+    @Override
+    public boolean isDecorated() {
+        return model.isDecorated();
+    }
 
-	@Override
-	public Position getInitialPosition() {
-		return model.getInitialPosition();
-	}
+    @Override
+    public Position getInitialPosition() {
+        return model.getInitialPosition();
+    }
 
-	@Override
-	public double getInitialSplitWeight() {
-		return model.getInitialSplitWeight();
-	}
+    @Override
+    public double getInitialSplitWeight() {
+        return model.getInitialSplitWeight();
+    }
 
-	@Override
-	public boolean hasApplicationNavigator() {
-		return model.hasApplicationNavigator();
-	}
+    @Override
+    public boolean hasApplicationNavigator() {
+        return model.hasApplicationNavigator();
+    }
 
-	@Override
-	public boolean getApplicationsCloseable() {
-		return model.getApplicationsCloseable();
-	}
+    @Override
+    public boolean getApplicationsCloseable() {
+        return model.getApplicationsCloseable();
+    }
 
-	@Override
-	public String getLabel() {
-		return model.getLabel();
-	}
+    @Override
+    public String getLabel() {
+        return model.getLabel();
+    }
 
-	@Override
-	public String getTooltip() {
-		return model.getTooltip();
-	}
+    @Override
+    public String getTooltip() {
+        return model.getTooltip();
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return model.getIcon();
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return model.getIcon();
+    }
 
-	@Override
-	public void onClose(final IVetoable vetoable) {
-		final ICloseCallback closeCallback = model.getCloseCallback();
-		if (closeCallback != null) {
-			closeCallback.onClose(vetoable);
-		}
-	}
+    @Override
+    public void onClose(final IVetoable vetoable) {
+        final ICloseCallback closeCallback = model.getCloseCallback();
+        if (closeCallback != null) {
+            closeCallback.onClose(vetoable);
+        }
+    }
 
-	@Override
-	public void onLogin(final IVetoable vetoable) {
-		final ILoginCallback loginCallback = model.getLoginCallback();
-		if (loginCallback != null) {
-			loginCallback.onLogin(vetoable);
-		}
-	}
+    @Override
+    public void onLogin(final IVetoable vetoable) {
+        final ILoginCallback loginCallback = model.getLoginCallback();
+        if (loginCallback != null) {
+            loginCallback.onLogin(vetoable);
+        }
+    }
 
-	@Override
-	public void onDispose() {
-		final ICloseCallback closeCallback = model.getCloseCallback();
-		if (closeCallback != null) {
-			closeCallback.onDispose();
-		}
-	}
+    @Override
+    public void onDispose() {
+        final ICloseCallback closeCallback = model.getCloseCallback();
+        if (closeCallback != null) {
+            closeCallback.onDispose();
+        }
+    }
 
-	private void onModelChanged(final IWorkbenchContext context) {
-		if (statusBarCreator != model.getStatusBarCreator()) {
-			onStatusBarChanged(context);
-		}
-		if (toolBar != model.getToolBar()) {
-			onToolBarChanged(context);
-		}
-		if (menuBar != model.getMenuBar()) {
-			onMenuBarChanged(context);
-		}
-		if (model.isFinished()) {
-			context.finish();
-		}
-	}
+    private void onModelChanged(final IWorkbenchContext context) {
+        if (statusBarCreator != model.getStatusBarCreator()) {
+            onStatusBarChanged(context);
+        }
+        if (toolBar != model.getToolBar()) {
+            onToolBarChanged(context);
+        }
+        if (menuBar != model.getMenuBar()) {
+            onMenuBarChanged(context);
+        }
+        if (model.isFinished()) {
+            context.finish();
+        }
+    }
 
-	private void onStatusBarChanged(final IWorkbenchContext context) {
-		//Do not create the status bar for the context, if model never had
-		//a status bar	
-		if (model.getStatusBarCreator() != null || statusBarCreator != null) {
-			final IContainer statusBar = context.getStatusBar();
-			statusBar.layoutBegin();
-			statusBar.removeAll();
-			if (model.getStatusBarCreator() != null) {
-				model.getStatusBarCreator().createContent(statusBar);
-			}
-			statusBar.layoutEnd();
-		}
-		statusBarCreator = model.getStatusBarCreator();
-	}
+    private void onStatusBarChanged(final IWorkbenchContext context) {
+        //Do not create the status bar for the context, if model never had
+        //a status bar	
+        if (model.getStatusBarCreator() != null || statusBarCreator != null) {
+            final IContainer statusBar = context.getStatusBar();
+            statusBar.layoutBegin();
+            statusBar.removeAll();
+            if (model.getStatusBarCreator() != null) {
+                model.getStatusBarCreator().createContent(statusBar);
+            }
+            statusBar.layoutEnd();
+        }
+        statusBarCreator = model.getStatusBarCreator();
+    }
 
-	private void onToolBarChanged(final IWorkbenchContext context) {
-		if (toolBar != null) {
-			toolBar.unbind(context.getToolBar());
-		}
-		if (model.getToolBar() != null) {
-			model.getToolBar().bind(context.getToolBar());
-		}
-		else {
-			context.getToolBar().removeAllItems();
-		}
-		toolBar = model.getToolBar();
-	}
+    private void onToolBarChanged(final IWorkbenchContext context) {
+        if (toolBar != null) {
+            toolBar.unbind(context.getToolBar());
+        }
+        if (model.getToolBar() != null) {
+            model.getToolBar().bind(context.getToolBar());
+        }
+        else {
+            context.getToolBar().removeAllItems();
+        }
+        toolBar = model.getToolBar();
+    }
 
-	private void onMenuBarChanged(final IWorkbenchContext context) {
-		if (menuBar != null) {
-			menuBar.unbind(context.getMenuBar());
-		}
-		if (model.getMenuBar() != null) {
-			model.getMenuBar().bind(context.getMenuBar());
-		}
-		else {
-			context.getMenuBar().removeAllMenus();
-		}
-		menuBar = model.getMenuBar();
-	}
+    private void onMenuBarChanged(final IWorkbenchContext context) {
+        if (menuBar != null) {
+            menuBar.unbind(context.getMenuBar());
+        }
+        if (model.getMenuBar() != null) {
+            model.getMenuBar().bind(context.getMenuBar());
+        }
+        else {
+            context.getMenuBar().removeAllMenus();
+        }
+        menuBar = model.getMenuBar();
+    }
 
 }

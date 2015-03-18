@@ -34,10 +34,10 @@ import org.jowidgets.api.model.table.ITableModelFactory;
 
 public interface IModelFactoryProvider {
 
-	IItemModelFactory getItemModelFactory();
+    IItemModelFactory getItemModelFactory();
 
-	ITableModelFactory getTableModelFactory();
+    ITableModelFactory getTableModelFactory();
 
-	ILevelMeterModelFactory getLevelMeterModelFactory();
+    ILevelMeterModelFactory getLevelMeterModelFactory();
 
 }

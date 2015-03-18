@@ -32,35 +32,35 @@ import java.awt.Frame;
 
 public final class FrameUtil {
 
-	private FrameUtil() {}
+    private FrameUtil() {}
 
-	public static void setMaximized(final Frame frame, final boolean maximized) {
-		final int extendedState = frame.getExtendedState();
-		if (maximized) {
-			frame.setExtendedState(extendedState | Frame.MAXIMIZED_BOTH);
-		}
-		else {
-			frame.setExtendedState(extendedState & ~Frame.MAXIMIZED_BOTH);
-		}
+    public static void setMaximized(final Frame frame, final boolean maximized) {
+        final int extendedState = frame.getExtendedState();
+        if (maximized) {
+            frame.setExtendedState(extendedState | Frame.MAXIMIZED_BOTH);
+        }
+        else {
+            frame.setExtendedState(extendedState & ~Frame.MAXIMIZED_BOTH);
+        }
 
-	}
+    }
 
-	public static boolean isMaximized(final Frame frame) {
-		return (frame.getExtendedState() & Frame.MAXIMIZED_BOTH) == Frame.MAXIMIZED_BOTH;
-	}
+    public static boolean isMaximized(final Frame frame) {
+        return (frame.getExtendedState() & Frame.MAXIMIZED_BOTH) == Frame.MAXIMIZED_BOTH;
+    }
 
-	public static void setIconfied(final Frame frame, final boolean iconfied) {
-		final int extendedState = frame.getExtendedState();
-		if (iconfied) {
-			frame.setExtendedState(extendedState | Frame.ICONIFIED);
-		}
-		else {
-			frame.setExtendedState(extendedState & ~Frame.ICONIFIED);
-		}
-	}
+    public static void setIconfied(final Frame frame, final boolean iconfied) {
+        final int extendedState = frame.getExtendedState();
+        if (iconfied) {
+            frame.setExtendedState(extendedState | Frame.ICONIFIED);
+        }
+        else {
+            frame.setExtendedState(extendedState & ~Frame.ICONIFIED);
+        }
+    }
 
-	public static boolean isIconfied(final Frame frame) {
-		return (frame.getExtendedState() & Frame.ICONIFIED) == Frame.ICONIFIED;
-	}
+    public static boolean isIconfied(final Frame frame) {
+        return (frame.getExtendedState() & Frame.ICONIFIED) == Frame.ICONIFIED;
+    }
 
 }

@@ -37,37 +37,37 @@ import org.jowidgets.validation.ValidationResult;
 
 public class InputComponentValidationLabelDefaults implements IDefaultInitializer<IInputComponentValidationLabelSetupBuilder<?>> {
 
-	private static final IDecorator<IValidationResult> INITIAL_VALIDATION_DECORATOR = createDefaultInitialDecorator();
-	private static final IDecorator<IValidationResult> UNMODIFIED_VALIDATION_DECORATOR = createUnmodifiedInitialDecorator();
+    private static final IDecorator<IValidationResult> INITIAL_VALIDATION_DECORATOR = createDefaultInitialDecorator();
+    private static final IDecorator<IValidationResult> UNMODIFIED_VALIDATION_DECORATOR = createUnmodifiedInitialDecorator();
 
-	@Override
-	public void initialize(final IInputComponentValidationLabelSetupBuilder<?> builder) {
-		builder.setInitialValidationDecorator(INITIAL_VALIDATION_DECORATOR);
-		builder.setUnmodifiedValidationDecorator(UNMODIFIED_VALIDATION_DECORATOR);
-	}
+    @Override
+    public void initialize(final IInputComponentValidationLabelSetupBuilder<?> builder) {
+        builder.setInitialValidationDecorator(INITIAL_VALIDATION_DECORATOR);
+        builder.setUnmodifiedValidationDecorator(UNMODIFIED_VALIDATION_DECORATOR);
+    }
 
-	private static IDecorator<IValidationResult> createDefaultInitialDecorator() {
-		return new IDecorator<IValidationResult>() {
-			@Override
-			public IValidationResult decorate(final IValidationResult original) {
-				//do not do initial validation by default
-				return null;
-			}
-		};
-	}
+    private static IDecorator<IValidationResult> createDefaultInitialDecorator() {
+        return new IDecorator<IValidationResult>() {
+            @Override
+            public IValidationResult decorate(final IValidationResult original) {
+                //do not do initial validation by default
+                return null;
+            }
+        };
+    }
 
-	private static IDecorator<IValidationResult> createUnmodifiedInitialDecorator() {
-		return new IDecorator<IValidationResult>() {
-			@Override
-			public IValidationResult decorate(final IValidationResult original) {
-				final IValidationMessage worstFirst = original.getWorstFirst();
-				if (worstFirst.getType().equalOrWorse(MessageType.WARNING)) {
-					return original;
-				}
-				else {
-					return ValidationResult.create().withInfo(null);
-				}
-			}
-		};
-	}
+    private static IDecorator<IValidationResult> createUnmodifiedInitialDecorator() {
+        return new IDecorator<IValidationResult>() {
+            @Override
+            public IValidationResult decorate(final IValidationResult original) {
+                final IValidationMessage worstFirst = original.getWorstFirst();
+                if (worstFirst.getType().equalOrWorse(MessageType.WARNING)) {
+                    return original;
+                }
+                else {
+                    return ValidationResult.create().withInfo(null);
+                }
+            }
+        };
+    }
 }

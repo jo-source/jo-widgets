@@ -50,262 +50,262 @@ import org.jowidgets.util.Assert;
 
 public class ToolBarModel implements IToolBarModel {
 
-	private final IToolBarModel model;
+    private final IToolBarModel model;
 
-	public ToolBarModel() {
-		this(createInstance());
-	}
+    public ToolBarModel() {
+        this(createInstance());
+    }
 
-	private ToolBarModel(final IToolBarModel model) {
-		Assert.paramNotNull(model, "model");
-		this.model = model;
-	}
+    private ToolBarModel(final IToolBarModel model) {
+        Assert.paramNotNull(model, "model");
+        this.model = model;
+    }
 
-	@Override
-	public final void addListModelListener(final IListModelListener listener) {
-		model.addListModelListener(listener);
-	}
+    @Override
+    public final void addListModelListener(final IListModelListener listener) {
+        model.addListModelListener(listener);
+    }
 
-	@Override
-	public final void removeListModelListener(final IListModelListener listener) {
-		model.removeListModelListener(listener);
-	}
+    @Override
+    public final void removeListModelListener(final IListModelListener listener) {
+        model.removeListModelListener(listener);
+    }
 
-	@Override
-	public final void bind(final IToolBarModel model) {
-		this.model.bind(model);
-	}
+    @Override
+    public final void bind(final IToolBarModel model) {
+        this.model.bind(model);
+    }
 
-	@Override
-	public final void unbind(final IToolBarModel model) {
-		this.model.unbind(model);
-	}
+    @Override
+    public final void unbind(final IToolBarModel model) {
+        this.model.unbind(model);
+    }
 
-	@Override
-	public final void addItemsOfModel(final IToolBarModel model) {
-		this.model.addItemsOfModel(model);
-	}
+    @Override
+    public final void addItemsOfModel(final IToolBarModel model) {
+        this.model.addItemsOfModel(model);
+    }
 
-	@Override
-	public final void addItem(final IToolBarItemModel item) {
-		model.addItem(item);
-	}
+    @Override
+    public final void addItem(final IToolBarItemModel item) {
+        model.addItem(item);
+    }
 
-	@Override
-	public final void addItem(final int index, final IToolBarItemModel item) {
-		model.addItem(index, item);
-	}
+    @Override
+    public final void addItem(final int index, final IToolBarItemModel item) {
+        model.addItem(index, item);
+    }
 
-	@Override
-	public final <MODEL_TYPE extends IToolBarItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
-		final BUILDER_TYPE itemBuilder) {
-		return model.addItem(itemBuilder);
-	}
+    @Override
+    public final <MODEL_TYPE extends IToolBarItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
+        final BUILDER_TYPE itemBuilder) {
+        return model.addItem(itemBuilder);
+    }
 
-	@Override
-	public final <MODEL_TYPE extends IToolBarItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
-		final int index,
-		final BUILDER_TYPE itemBuilder) {
-		return model.addItem(index, itemBuilder);
-	}
+    @Override
+    public final <MODEL_TYPE extends IToolBarItemModel, BUILDER_TYPE extends IItemModelBuilder<?, MODEL_TYPE>> MODEL_TYPE addItem(
+        final int index,
+        final BUILDER_TYPE itemBuilder) {
+        return model.addItem(index, itemBuilder);
+    }
 
-	@Override
-	public final void addAfter(final IToolBarItemModel newItem, final String id) {
-		model.addAfter(newItem, id);
-	}
+    @Override
+    public final void addAfter(final IToolBarItemModel newItem, final String id) {
+        model.addAfter(newItem, id);
+    }
 
-	@Override
-	public final void addBefore(final IToolBarItemModel newItem, final String id) {
-		model.addBefore(newItem, id);
-	}
+    @Override
+    public final void addBefore(final IToolBarItemModel newItem, final String id) {
+        model.addBefore(newItem, id);
+    }
 
-	@Override
-	public final IActionItemModel addAction(final IAction action) {
-		return model.addAction(action);
-	}
+    @Override
+    public final IActionItemModel addAction(final IAction action) {
+        return model.addAction(action);
+    }
 
-	@Override
-	public final IActionItemModel addAction(final int index, final IAction action) {
-		return model.addAction(index, action);
-	}
+    @Override
+    public final IActionItemModel addAction(final int index, final IAction action) {
+        return model.addAction(index, action);
+    }
 
-	@Override
-	public final IActionItemModel addActionItem() {
-		return model.addActionItem();
-	}
+    @Override
+    public final IActionItemModel addActionItem() {
+        return model.addActionItem();
+    }
 
-	@Override
-	public final IActionItemModel addActionItem(final String text) {
-		return model.addActionItem(text);
-	}
+    @Override
+    public final IActionItemModel addActionItem(final String text) {
+        return model.addActionItem(text);
+    }
 
-	@Override
-	public final IActionItemModel addActionItem(final String text, final String toolTipText) {
-		return model.addActionItem(text, toolTipText);
-	}
+    @Override
+    public final IActionItemModel addActionItem(final String text, final String toolTipText) {
+        return model.addActionItem(text, toolTipText);
+    }
 
-	@Override
-	public final IActionItemModel addActionItem(final String text, final IImageConstant icon) {
-		return model.addActionItem(text, icon);
-	}
+    @Override
+    public final IActionItemModel addActionItem(final String text, final IImageConstant icon) {
+        return model.addActionItem(text, icon);
+    }
 
-	@Override
-	public final IActionItemModel addActionItem(final String text, final String toolTipText, final IImageConstant icon) {
-		return model.addActionItem(text, toolTipText, icon);
-	}
+    @Override
+    public final IActionItemModel addActionItem(final String text, final String toolTipText, final IImageConstant icon) {
+        return model.addActionItem(text, toolTipText, icon);
+    }
 
-	@Override
-	public final IActionItemModel addActionItem(final IImageConstant icon, final String toolTipText) {
-		return model.addActionItem(icon, toolTipText);
-	}
+    @Override
+    public final IActionItemModel addActionItem(final IImageConstant icon, final String toolTipText) {
+        return model.addActionItem(icon, toolTipText);
+    }
 
-	@Override
-	public final IPopupActionItemModel addPopupActionItem() {
-		return model.addPopupActionItem();
-	}
+    @Override
+    public final IPopupActionItemModel addPopupActionItem() {
+        return model.addPopupActionItem();
+    }
 
-	@Override
-	public final IPopupActionItemModel addPopupActionItem(final String text) {
-		return model.addPopupActionItem(text);
-	}
+    @Override
+    public final IPopupActionItemModel addPopupActionItem(final String text) {
+        return model.addPopupActionItem(text);
+    }
 
-	@Override
-	public final IPopupActionItemModel addPopupActionItem(final String text, final String toolTipText) {
-		return model.addPopupActionItem(text, toolTipText);
-	}
+    @Override
+    public final IPopupActionItemModel addPopupActionItem(final String text, final String toolTipText) {
+        return model.addPopupActionItem(text, toolTipText);
+    }
 
-	@Override
-	public final IPopupActionItemModel addPopupActionItem(final String text, final IImageConstant icon) {
-		return model.addPopupActionItem(text, icon);
-	}
+    @Override
+    public final IPopupActionItemModel addPopupActionItem(final String text, final IImageConstant icon) {
+        return model.addPopupActionItem(text, icon);
+    }
 
-	@Override
-	public final IPopupActionItemModel addPopupActionItem(final String text, final String toolTipText, final IImageConstant icon) {
-		return model.addPopupActionItem(text, toolTipText, icon);
-	}
+    @Override
+    public final IPopupActionItemModel addPopupActionItem(final String text, final String toolTipText, final IImageConstant icon) {
+        return model.addPopupActionItem(text, toolTipText, icon);
+    }
 
-	@Override
-	public final IPopupActionItemModel addPopupActionItem(final IImageConstant icon, final String toolTipText) {
-		return model.addPopupActionItem(icon, toolTipText);
-	}
+    @Override
+    public final IPopupActionItemModel addPopupActionItem(final IImageConstant icon, final String toolTipText) {
+        return model.addPopupActionItem(icon, toolTipText);
+    }
 
-	@Override
-	public final IContainerItemModel addContainer() {
-		return model.addContainer();
-	}
+    @Override
+    public final IContainerItemModel addContainer() {
+        return model.addContainer();
+    }
 
-	@Override
-	public final IPopupActionItemModel addPopupAction(final IAction action, final IMenuModel popupMenu) {
-		return model.addPopupAction(action, popupMenu);
-	}
+    @Override
+    public final IPopupActionItemModel addPopupAction(final IAction action, final IMenuModel popupMenu) {
+        return model.addPopupAction(action, popupMenu);
+    }
 
-	@Override
-	public final IPopupActionItemModel addPopupAction(final int index, final IAction action, final IMenuModel popupMenu) {
-		return model.addPopupAction(index, action, popupMenu);
-	}
+    @Override
+    public final IPopupActionItemModel addPopupAction(final int index, final IAction action, final IMenuModel popupMenu) {
+        return model.addPopupAction(index, action, popupMenu);
+    }
 
-	@Override
-	public final IContainerItemModel addContainer(final IContainerContentCreator contentCreator) {
-		return model.addContainer(contentCreator);
-	}
+    @Override
+    public final IContainerItemModel addContainer(final IContainerContentCreator contentCreator) {
+        return model.addContainer(contentCreator);
+    }
 
-	@Override
-	public IContainerItemModel addContainer(final IWidgetDescriptor<? extends IControl> descriptor, final Object layoutConstraints) {
-		return model.addContainer(descriptor, layoutConstraints);
-	}
+    @Override
+    public IContainerItemModel addContainer(final IWidgetDescriptor<? extends IControl> descriptor, final Object layoutConstraints) {
+        return model.addContainer(descriptor, layoutConstraints);
+    }
 
-	@Override
-	public IContainerItemModel addTextLabel(final String text) {
-		return model.addTextLabel(text);
-	}
+    @Override
+    public IContainerItemModel addTextLabel(final String text) {
+        return model.addTextLabel(text);
+    }
 
-	@Override
-	public final ICheckedItemModel addCheckedItem() {
-		return model.addCheckedItem();
-	}
+    @Override
+    public final ICheckedItemModel addCheckedItem() {
+        return model.addCheckedItem();
+    }
 
-	@Override
-	public final ICheckedItemModel addCheckedItem(final String text) {
-		return model.addCheckedItem(text);
-	}
+    @Override
+    public final ICheckedItemModel addCheckedItem(final String text) {
+        return model.addCheckedItem(text);
+    }
 
-	@Override
-	public final ICheckedItemModel addCheckedItem(final String text, final String toolTipText) {
-		return model.addCheckedItem(text, toolTipText);
-	}
+    @Override
+    public final ICheckedItemModel addCheckedItem(final String text, final String toolTipText) {
+        return model.addCheckedItem(text, toolTipText);
+    }
 
-	@Override
-	public final ICheckedItemModel addCheckedItem(final String text, final IImageConstant icon) {
-		return model.addCheckedItem(text, icon);
-	}
+    @Override
+    public final ICheckedItemModel addCheckedItem(final String text, final IImageConstant icon) {
+        return model.addCheckedItem(text, icon);
+    }
 
-	@Override
-	public final ICheckedItemModel addCheckedItem(final String text, final String toolTipText, final IImageConstant icon) {
-		return model.addCheckedItem(text, toolTipText, icon);
-	}
+    @Override
+    public final ICheckedItemModel addCheckedItem(final String text, final String toolTipText, final IImageConstant icon) {
+        return model.addCheckedItem(text, toolTipText, icon);
+    }
 
-	@Override
-	public final ICheckedItemModel addCheckedItem(final IImageConstant icon, final String toolTipText) {
-		return model.addCheckedItem(icon, toolTipText);
-	}
+    @Override
+    public final ICheckedItemModel addCheckedItem(final IImageConstant icon, final String toolTipText) {
+        return model.addCheckedItem(icon, toolTipText);
+    }
 
-	@Override
-	public final ISeparatorItemModel addSeparator() {
-		return model.addSeparator();
-	}
+    @Override
+    public final ISeparatorItemModel addSeparator() {
+        return model.addSeparator();
+    }
 
-	@Override
-	public final ISeparatorItemModel addSeparator(final String id) {
-		return model.addSeparator(id);
-	}
+    @Override
+    public final ISeparatorItemModel addSeparator(final String id) {
+        return model.addSeparator(id);
+    }
 
-	@Override
-	public final ISeparatorItemModel addSeparator(final int index) {
-		return model.addSeparator(index);
-	}
+    @Override
+    public final ISeparatorItemModel addSeparator(final int index) {
+        return model.addSeparator(index);
+    }
 
-	@Override
-	public final void removeItem(final IToolBarItemModel item) {
-		model.removeItem(item);
-	}
+    @Override
+    public final void removeItem(final IToolBarItemModel item) {
+        model.removeItem(item);
+    }
 
-	@Override
-	public final void removeItem(final int index) {
-		model.removeItem(index);
-	}
+    @Override
+    public final void removeItem(final int index) {
+        model.removeItem(index);
+    }
 
-	@Override
-	public final void removeAllItems() {
-		model.removeAllItems();
-	}
+    @Override
+    public final void removeAllItems() {
+        model.removeAllItems();
+    }
 
-	@Override
-	public final void removeAction(final IAction action) {
-		model.removeAction(action);
-	}
+    @Override
+    public final void removeAction(final IAction action) {
+        model.removeAction(action);
+    }
 
-	@Override
-	public final void removeItemsOfModel(final IToolBarModel toolBarModel) {
-		model.removeItemsOfModel(toolBarModel);
-	}
+    @Override
+    public final void removeItemsOfModel(final IToolBarModel toolBarModel) {
+        model.removeItemsOfModel(toolBarModel);
+    }
 
-	@Override
-	public final IToolBarItemModel findItemById(final String id) {
-		return model.findItemById(id);
-	}
+    @Override
+    public final IToolBarItemModel findItemById(final String id) {
+        return model.findItemById(id);
+    }
 
-	@Override
-	public final List<IToolBarItemModel> getItems() {
-		return model.getItems();
-	}
+    @Override
+    public final List<IToolBarItemModel> getItems() {
+        return model.getItems();
+    }
 
-	@Override
-	public final IToolBarModel createCopy() {
-		return model.createCopy();
-	}
+    @Override
+    public final IToolBarModel createCopy() {
+        return model.createCopy();
+    }
 
-	private static IToolBarModel createInstance() {
-		return Toolkit.getModelFactoryProvider().getItemModelFactory().toolBar();
-	}
+    private static IToolBarModel createInstance() {
+        return Toolkit.getModelFactoryProvider().getItemModelFactory().toolBar();
+    }
 
 }

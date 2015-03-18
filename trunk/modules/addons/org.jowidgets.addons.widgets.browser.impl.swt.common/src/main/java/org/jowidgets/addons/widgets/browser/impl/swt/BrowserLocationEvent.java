@@ -33,29 +33,29 @@ import org.jowidgets.addons.widgets.browser.api.IBrowserLocationEvent;
 
 final class BrowserLocationEvent implements IBrowserLocationEvent {
 
-	private final LocationEvent locationEvent;
-	private final String location;
-	private final boolean isTopFrameLocation;
+    private final LocationEvent locationEvent;
+    private final String location;
+    private final boolean isTopFrameLocation;
 
-	BrowserLocationEvent(final LocationEvent locationEvent) {
-		this.locationEvent = locationEvent;
-		this.location = locationEvent.location;
-		this.isTopFrameLocation = locationEvent.top;
-	}
+    BrowserLocationEvent(final LocationEvent locationEvent) {
+        this.locationEvent = locationEvent;
+        this.location = locationEvent.location;
+        this.isTopFrameLocation = locationEvent.top;
+    }
 
-	@Override
-	public String getLocation() {
-		return location;
-	}
+    @Override
+    public String getLocation() {
+        return location;
+    }
 
-	@Override
-	public boolean isTopFrameLocation() {
-		return isTopFrameLocation;
-	}
+    @Override
+    public boolean isTopFrameLocation() {
+        return isTopFrameLocation;
+    }
 
-	@Override
-	public String toString() {
-		return "BrowserLocationEvent [locationEvent=" + locationEvent + ", location=" + location + "]";
-	}
+    @Override
+    public String toString() {
+        return "BrowserLocationEvent [locationEvent=" + locationEvent + ", location=" + location + "]";
+    }
 
 }

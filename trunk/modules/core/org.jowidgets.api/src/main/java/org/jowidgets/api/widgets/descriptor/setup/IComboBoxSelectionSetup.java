@@ -37,18 +37,18 @@ import org.jowidgets.util.IObservableValue;
 
 public interface IComboBoxSelectionSetup<INPUT_TYPE> extends IInputComponentSetup<INPUT_TYPE>, IComboBoxSelectionSetupCommon {
 
-	@Mandatory
-	IObjectStringConverter<INPUT_TYPE> getObjectStringConverter();
+    @Mandatory
+    IObjectStringConverter<INPUT_TYPE> getObjectStringConverter();
 
-	@Mandatory
-	Collection<INPUT_TYPE> getElements();
+    @Mandatory
+    Collection<INPUT_TYPE> getElements();
 
-	@Mandatory
-	AutoSelectionPolicy getAutoSelectionPolicy();
+    @Mandatory
+    AutoSelectionPolicy getAutoSelectionPolicy();
 
-	@Mandatory
-	boolean isLenient();
+    @Mandatory
+    boolean isLenient();
 
-	IObservableValue<INPUT_TYPE> getObservableValue();
+    IObservableValue<INPUT_TYPE> getObservableValue();
 
 }

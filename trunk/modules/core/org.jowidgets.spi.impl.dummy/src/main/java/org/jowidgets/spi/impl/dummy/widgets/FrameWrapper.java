@@ -35,23 +35,23 @@ import org.jowidgets.spi.widgets.IMenuBarSpi;
 
 public class FrameWrapper extends DummyWindow implements IFrameSpi {
 
-	public FrameWrapper(final IGenericWidgetFactory factory, final UIDWindow uiReference) {
-		super(factory, uiReference);
-	}
+    public FrameWrapper(final IGenericWidgetFactory factory, final UIDWindow uiReference) {
+        super(factory, uiReference);
+    }
 
-	@Override
-	public UIDWindow getUiReference() {
-		return super.getUiReference();
-	}
+    @Override
+    public UIDWindow getUiReference() {
+        return super.getUiReference();
+    }
 
-	@Override
-	public IMenuBarSpi createMenuBar() {
-		return new MenuBarImpl(new UIDMenuItem());
-	}
+    @Override
+    public IMenuBarSpi createMenuBar() {
+        return new MenuBarImpl(new UIDMenuItem());
+    }
 
-	@Override
-	public void setTitle(final String title) {
-		getUiReference().setTitle(title);
-	}
+    @Override
+    public void setTitle(final String title) {
+        getUiReference().setTitle(title);
+    }
 
 }

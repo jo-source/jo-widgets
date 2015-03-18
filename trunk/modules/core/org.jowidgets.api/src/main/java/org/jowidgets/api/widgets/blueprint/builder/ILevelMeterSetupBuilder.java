@@ -31,80 +31,80 @@ import org.jowidgets.api.model.levelmeter.ILevelMeterModel;
 import org.jowidgets.common.color.IColorConstant;
 
 public interface ILevelMeterSetupBuilder<INSTANCE_TYPE extends ILevelMeterSetupBuilder<?>> extends
-		IComponentSetupBuilder<INSTANCE_TYPE> {
+        IComponentSetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setModel(ILevelMeterModel model);
+    INSTANCE_TYPE setModel(ILevelMeterModel model);
 
-	/**
-	 * Sets the lettering visible or invisible
-	 * 
-	 * @param visible visibility
-	 * @return This builder
-	 */
-	INSTANCE_TYPE setLetteringVisible(boolean visible);
+    /**
+     * Sets the lettering visible or invisible
+     * 
+     * @param visible visibility
+     * @return This builder
+     */
+    INSTANCE_TYPE setLetteringVisible(boolean visible);
 
-	/**
-	 * Sets the size of the gaps between the colored boxes
-	 * 
-	 * @param gapSize size of the gaps (in pixels)
-	 * @return This builder
-	 */
-	INSTANCE_TYPE setGapSize(int gapSize);
+    /**
+     * Sets the size of the gaps between the colored boxes
+     * 
+     * @param gapSize size of the gaps (in pixels)
+     * @return This builder
+     */
+    INSTANCE_TYPE setGapSize(int gapSize);
 
-	/**
-	 * Sets the height of the small colored boxes indicating the level
-	 * 
-	 * @param boxHeight height of the boxes (in pixels)
-	 * @return This builder
-	 */
-	INSTANCE_TYPE setBoxHeight(int boxHeight);
+    /**
+     * Sets the height of the small colored boxes indicating the level
+     * 
+     * @param boxHeight height of the boxes (in pixels)
+     * @return This builder
+     */
+    INSTANCE_TYPE setBoxHeight(int boxHeight);
 
-	/**
-	 * Sets the foreground color of the low peak range (from 0.0 to highPeakTreshold)
-	 * 
-	 * @param color The foreground color
-	 * @return This builder
-	 */
-	INSTANCE_TYPE setLowPeakColor(IColorConstant color);
+    /**
+     * Sets the foreground color of the low peak range (from 0.0 to highPeakTreshold)
+     * 
+     * @param color The foreground color
+     * @return This builder
+     */
+    INSTANCE_TYPE setLowPeakColor(IColorConstant color);
 
-	/**
-	 * Sets the foreground color of the high peak range (from highPeakThreshold to clipPeakThreshold)
-	 * 
-	 * @param color The foreground color
-	 * @return This builder
-	 */
-	INSTANCE_TYPE setHighPeakColor(IColorConstant color);
+    /**
+     * Sets the foreground color of the high peak range (from highPeakThreshold to clipPeakThreshold)
+     * 
+     * @param color The foreground color
+     * @return This builder
+     */
+    INSTANCE_TYPE setHighPeakColor(IColorConstant color);
 
-	/**
-	 * Sets the foreground color of the low peak range (from clipPeakThreshold to 1.0)
-	 * 
-	 * @param color The foreground color
-	 * @return This builder
-	 */
-	INSTANCE_TYPE setClipPeakColor(IColorConstant color);
+    /**
+     * Sets the foreground color of the low peak range (from clipPeakThreshold to 1.0)
+     * 
+     * @param color The foreground color
+     * @return This builder
+     */
+    INSTANCE_TYPE setClipPeakColor(IColorConstant color);
 
-	/**
-	 * Sets the color for boxes that are not filled
-	 * 
-	 * @param color The base box color
-	 * @return This builder
-	 */
-	INSTANCE_TYPE setNoPeakColor(IColorConstant color);
+    /**
+     * Sets the color for boxes that are not filled
+     * 
+     * @param color The base box color
+     * @return This builder
+     */
+    INSTANCE_TYPE setNoPeakColor(IColorConstant color);
 
-	/**
-	 * Sets the threshold that defines a high peak
-	 * 
-	 * @param threshold The threshold to set (0.0 <= highPeakThreshold < clipPeakThreshold)
-	 * @return This builder
-	 */
-	INSTANCE_TYPE setHighPeakThreshold(double threshold);
+    /**
+     * Sets the threshold that defines a high peak
+     * 
+     * @param threshold The threshold to set (0.0 <= highPeakThreshold < clipPeakThreshold)
+     * @return This builder
+     */
+    INSTANCE_TYPE setHighPeakThreshold(double threshold);
 
-	/**
-	 * Sets the threshold that defines a clip peak
-	 * 
-	 * @param threshold The threshold to set (highPeakThreshold <= clipPeakThreshold <= 1.0)
-	 * @return This builder
-	 */
-	INSTANCE_TYPE setClipPeakThreshold(double threshold);
+    /**
+     * Sets the threshold that defines a clip peak
+     * 
+     * @param threshold The threshold to set (highPeakThreshold <= clipPeakThreshold <= 1.0)
+     * @return This builder
+     */
+    INSTANCE_TYPE setClipPeakThreshold(double threshold);
 
 }

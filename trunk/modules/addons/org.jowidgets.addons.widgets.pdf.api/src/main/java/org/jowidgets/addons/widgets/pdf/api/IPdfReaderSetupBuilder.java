@@ -34,12 +34,12 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 import org.jowidgets.util.io.ITempFileFactory;
 
 public interface IPdfReaderSetupBuilder<INSTANCE_TYPE extends IPdfReaderSetupBuilder<?>> extends
-		IComponentSetup,
-		IComponentSetupBuilder<INSTANCE_TYPE> {
+        IComponentSetup,
+        IComponentSetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setTempFileFactory(ITempFileFactory factory);
+    INSTANCE_TYPE setTempFileFactory(ITempFileFactory factory);
 
-	@Mandatory
-	ITempFileFactory getTempFileFactory();
+    @Mandatory
+    ITempFileFactory getTempFileFactory();
 
 }

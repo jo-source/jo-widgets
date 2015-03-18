@@ -36,12 +36,12 @@ import org.jowidgets.workbench.impl.WorkbenchRunner;
 
 public final class SwingWorkbenchDemo4Starter {
 
-	private SwingWorkbenchDemo4Starter() {}
+    private SwingWorkbenchDemo4Starter() {}
 
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		SwingOptions.setJoWidgetsTabLayout(true);
-		new WorkbenchRunner().run(new Demo4Workbench());
-	}
+    public static void main(final String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
+        SwingOptions.setJoWidgetsTabLayout(true);
+        new WorkbenchRunner().run(new Demo4Workbench());
+    }
 }

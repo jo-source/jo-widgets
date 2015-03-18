@@ -36,86 +36,86 @@ import org.jowidgets.util.CollectionUtils;
 
 final class ObserverSetMemoryStrategyImpl<OBSERVER_TYPE> implements IObserverSet<OBSERVER_TYPE> {
 
-	private OBSERVER_TYPE[] listeners;
+    private OBSERVER_TYPE[] listeners;
 
-	@Override
-	public Iterator<OBSERVER_TYPE> iterator() {
-		if (listeners == null) {
-			return CollectionUtils.unmodifiableEmptyIterator();
-		}
-		else {
-			return CollectionUtils.unmodifiableIterator(Arrays.asList(listeners).iterator());
-		}
-	}
+    @Override
+    public Iterator<OBSERVER_TYPE> iterator() {
+        if (listeners == null) {
+            return CollectionUtils.unmodifiableEmptyIterator();
+        }
+        else {
+            return CollectionUtils.unmodifiableIterator(Arrays.asList(listeners).iterator());
+        }
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public void add(final OBSERVER_TYPE observer) {
-		Assert.paramNotNull(observer, "observer");
-		if (listeners == null) {
-			listeners = (OBSERVER_TYPE[]) new Object[1];
-			listeners[0] = observer;
-		}
-		else {
-			if (indexOf(observer) == -1) {//only add if not already done
-				final Object[] oldListeners = listeners;
-				listeners = (OBSERVER_TYPE[]) new Object[oldListeners.length + 1];
-				System.arraycopy(oldListeners, 0, listeners, 0, oldListeners.length);
-				listeners[listeners.length - 1] = observer;
-			}
-		}
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public void add(final OBSERVER_TYPE observer) {
+        Assert.paramNotNull(observer, "observer");
+        if (listeners == null) {
+            listeners = (OBSERVER_TYPE[]) new Object[1];
+            listeners[0] = observer;
+        }
+        else {
+            if (indexOf(observer) == -1) {//only add if not already done
+                final Object[] oldListeners = listeners;
+                listeners = (OBSERVER_TYPE[]) new Object[oldListeners.length + 1];
+                System.arraycopy(oldListeners, 0, listeners, 0, oldListeners.length);
+                listeners[listeners.length - 1] = observer;
+            }
+        }
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public boolean remove(final OBSERVER_TYPE observer) {
-		Assert.paramNotNull(observer, "observer");
-		if (listeners != null) {
-			//listeners.length is at least 1
-			if (listeners.length == 1) {
-				if (listeners[0].equals(observer)) {
-					listeners = null;
-					return true;
-				}
-			}
-			else {//listeners.length > 1
-				final int removeIndex = indexOf(observer);
-				if (removeIndex != -1) {
-					final Object[] oldListeners = listeners;
-					listeners = (OBSERVER_TYPE[]) new Object[oldListeners.length - 1];
-					if (removeIndex == 0) {//first removed
-						System.arraycopy(oldListeners, 1, listeners, 0, listeners.length);
-					}
-					else if (removeIndex == oldListeners.length - 1) {//last removed
-						System.arraycopy(oldListeners, 0, listeners, 0, listeners.length);
-					}
-					else {//removed in the middle
-						final int indexAfter = removeIndex + 1;
-						System.arraycopy(oldListeners, 0, listeners, 0, removeIndex);
-						System.arraycopy(oldListeners, indexAfter, listeners, removeIndex, listeners.length - removeIndex);
-					}
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean remove(final OBSERVER_TYPE observer) {
+        Assert.paramNotNull(observer, "observer");
+        if (listeners != null) {
+            //listeners.length is at least 1
+            if (listeners.length == 1) {
+                if (listeners[0].equals(observer)) {
+                    listeners = null;
+                    return true;
+                }
+            }
+            else {//listeners.length > 1
+                final int removeIndex = indexOf(observer);
+                if (removeIndex != -1) {
+                    final Object[] oldListeners = listeners;
+                    listeners = (OBSERVER_TYPE[]) new Object[oldListeners.length - 1];
+                    if (removeIndex == 0) {//first removed
+                        System.arraycopy(oldListeners, 1, listeners, 0, listeners.length);
+                    }
+                    else if (removeIndex == oldListeners.length - 1) {//last removed
+                        System.arraycopy(oldListeners, 0, listeners, 0, listeners.length);
+                    }
+                    else {//removed in the middle
+                        final int indexAfter = removeIndex + 1;
+                        System.arraycopy(oldListeners, 0, listeners, 0, removeIndex);
+                        System.arraycopy(oldListeners, indexAfter, listeners, removeIndex, listeners.length - removeIndex);
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-	private int indexOf(final OBSERVER_TYPE observer) {
-		if (listeners != null) {
-			for (int index = 0; index < listeners.length; index++) {
-				//by contract there are no null elements so this works
-				if (listeners[index].equals(observer)) {
-					return index;
-				}
-			}
-		}
-		return -1;
-	}
+    private int indexOf(final OBSERVER_TYPE observer) {
+        if (listeners != null) {
+            for (int index = 0; index < listeners.length; index++) {
+                //by contract there are no null elements so this works
+                if (listeners[index].equals(observer)) {
+                    return index;
+                }
+            }
+        }
+        return -1;
+    }
 
-	@Override
-	public void clear() {
-		listeners = null;
-	}
+    @Override
+    public void clear() {
+        listeners = null;
+    }
 
 }

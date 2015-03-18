@@ -36,46 +36,46 @@ import org.jowidgets.validation.IValidator;
 
 public class ConverterWrapper<FROM_TYPE> implements IConverter<FROM_TYPE> {
 
-	private final IConverter<FROM_TYPE> original;
+    private final IConverter<FROM_TYPE> original;
 
-	public ConverterWrapper(final IConverter<FROM_TYPE> original) {
-		Assert.paramNotNull(original, "original");
-		this.original = original;
-	}
+    public ConverterWrapper(final IConverter<FROM_TYPE> original) {
+        Assert.paramNotNull(original, "original");
+        this.original = original;
+    }
 
-	@Override
-	public String convertToString(final FROM_TYPE value) {
-		return original.convertToString(value);
-	}
+    @Override
+    public String convertToString(final FROM_TYPE value) {
+        return original.convertToString(value);
+    }
 
-	@Override
-	public FROM_TYPE convertToObject(final String string) {
-		return original.convertToObject(string);
-	}
+    @Override
+    public FROM_TYPE convertToObject(final String string) {
+        return original.convertToObject(string);
+    }
 
-	@Override
-	public String getDescription(final FROM_TYPE value) {
-		return original.getDescription(value);
-	}
+    @Override
+    public String getDescription(final FROM_TYPE value) {
+        return original.getDescription(value);
+    }
 
-	@Override
-	public IValidator<String> getStringValidator() {
-		return original.getStringValidator();
-	}
+    @Override
+    public IValidator<String> getStringValidator() {
+        return original.getStringValidator();
+    }
 
-	@Override
-	public IInputVerifier getInputVerifier() {
-		return original.getInputVerifier();
-	}
+    @Override
+    public IInputVerifier getInputVerifier() {
+        return original.getInputVerifier();
+    }
 
-	@Override
-	public String getAcceptingRegExp() {
-		return original.getAcceptingRegExp();
-	}
+    @Override
+    public String getAcceptingRegExp() {
+        return original.getAcceptingRegExp();
+    }
 
-	@Override
-	public ITextMask getMask() {
-		return original.getMask();
-	}
+    @Override
+    public ITextMask getMask() {
+        return original.getMask();
+    }
 
 }

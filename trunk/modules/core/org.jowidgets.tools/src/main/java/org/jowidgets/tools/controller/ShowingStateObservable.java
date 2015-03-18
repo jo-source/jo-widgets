@@ -38,34 +38,34 @@ import org.jowidgets.util.Assert;
 
 public class ShowingStateObservable implements IShowingStateObservable {
 
-	private final Set<IShowingStateListener> listeners;
+    private final Set<IShowingStateListener> listeners;
 
-	private boolean lastShowingState;
+    private boolean lastShowingState;
 
-	public ShowingStateObservable(final boolean isShowing) {
-		this.listeners = new LinkedHashSet<IShowingStateListener>();
-		this.lastShowingState = isShowing;
-	}
+    public ShowingStateObservable(final boolean isShowing) {
+        this.listeners = new LinkedHashSet<IShowingStateListener>();
+        this.lastShowingState = isShowing;
+    }
 
-	@Override
-	public void addShowingStateListener(final IShowingStateListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public void addShowingStateListener(final IShowingStateListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removeShowingStateListener(final IShowingStateListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeShowingStateListener(final IShowingStateListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public void fireShowingStateChanged(final boolean isShowing) {
-		if (lastShowingState != isShowing) {
-			for (final IShowingStateListener listener : new LinkedList<IShowingStateListener>(listeners)) {
-				listener.showingStateChanged(isShowing);
-			}
-			lastShowingState = isShowing;
-		}
-	}
+    public void fireShowingStateChanged(final boolean isShowing) {
+        if (lastShowingState != isShowing) {
+            for (final IShowingStateListener listener : new LinkedList<IShowingStateListener>(listeners)) {
+                listener.showingStateChanged(isShowing);
+            }
+            lastShowingState = isShowing;
+        }
+    }
 
 }

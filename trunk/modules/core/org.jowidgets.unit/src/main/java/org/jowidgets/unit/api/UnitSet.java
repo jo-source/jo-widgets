@@ -36,84 +36,84 @@ import org.jowidgets.util.collection.UnmodifieableArrayWrapper;
 
 public final class UnitSet {
 
-	private UnitSet() {}
+    private UnitSet() {}
 
-	public static IUnitSetBuilder builder() {
-		return new UnitSetBuilderImpl();
-	}
+    public static IUnitSetBuilder builder() {
+        return new UnitSetBuilderImpl();
+    }
 
-	private static final class UnitSetBuilderImpl implements IUnitSetBuilder {
+    private static final class UnitSetBuilderImpl implements IUnitSetBuilder {
 
-		private final IUnmodifiableArrayBuilder<IUnit> arrayBuilder = UnmodifiableArray.builder();
+        private final IUnmodifiableArrayBuilder<IUnit> arrayBuilder = UnmodifiableArray.builder();
 
-		@Override
-		public IUnitSetBuilder add(final IUnit unit) {
-			Assert.paramNotNull(unit, "unit");
-			arrayBuilder.add(unit);
-			return this;
-		}
+        @Override
+        public IUnitSetBuilder add(final IUnit unit) {
+            Assert.paramNotNull(unit, "unit");
+            arrayBuilder.add(unit);
+            return this;
+        }
 
-		@Override
-		public IUnitSetBuilder add(final IUnitBuilder unitBuilder) {
-			Assert.paramNotNull(unitBuilder, "unitBuilder");
-			return add(unitBuilder.build());
-		}
+        @Override
+        public IUnitSetBuilder add(final IUnitBuilder unitBuilder) {
+            Assert.paramNotNull(unitBuilder, "unitBuilder");
+            return add(unitBuilder.build());
+        }
 
-		@Override
-		public IUnitSetBuilder add(final String abbreviation, final String name, final double conversionFactor) {
-			return add(Unit.create(abbreviation, name, conversionFactor));
-		}
+        @Override
+        public IUnitSetBuilder add(final String abbreviation, final String name, final double conversionFactor) {
+            return add(Unit.create(abbreviation, name, conversionFactor));
+        }
 
-		@Override
-		public IUnitSetBuilder add(final String abbreviation, final String name, final long conversionFactor) {
-			return add(Unit.create(abbreviation, name, conversionFactor));
-		}
+        @Override
+        public IUnitSetBuilder add(final String abbreviation, final String name, final long conversionFactor) {
+            return add(Unit.create(abbreviation, name, conversionFactor));
+        }
 
-		@Override
-		public IUnitSetBuilder add(final String abbreviation, final double conversionFactor) {
-			return add(Unit.create(abbreviation, conversionFactor));
-		}
+        @Override
+        public IUnitSetBuilder add(final String abbreviation, final double conversionFactor) {
+            return add(Unit.create(abbreviation, conversionFactor));
+        }
 
-		@Override
-		public IUnitSetBuilder add(final String abbreviation, final long conversionFactor) {
-			return add(Unit.create(abbreviation, conversionFactor));
-		}
+        @Override
+        public IUnitSetBuilder add(final String abbreviation, final long conversionFactor) {
+            return add(Unit.create(abbreviation, conversionFactor));
+        }
 
-		@Override
-		public IUnitSetBuilder add(final String abbreviation, final String name) {
-			return add(Unit.create(abbreviation, name));
-		}
+        @Override
+        public IUnitSetBuilder add(final String abbreviation, final String name) {
+            return add(Unit.create(abbreviation, name));
+        }
 
-		@Override
-		public IUnitSetBuilder add(final String abbreviation) {
-			return add(Unit.create(abbreviation));
-		}
+        @Override
+        public IUnitSetBuilder add(final String abbreviation) {
+            return add(Unit.create(abbreviation));
+        }
 
-		@Override
-		public IUnitSet build() {
-			return new UnitSetImpl(arrayBuilder.build());
-		}
+        @Override
+        public IUnitSet build() {
+            return new UnitSetImpl(arrayBuilder.build());
+        }
 
-	}
+    }
 
-	private static final class UnitSetImpl extends UnmodifieableArrayWrapper<IUnit> implements IUnitSet {
+    private static final class UnitSetImpl extends UnmodifieableArrayWrapper<IUnit> implements IUnitSet {
 
-		public UnitSetImpl(final IUnmodifiableArray<IUnit> original) {
-			super(original);
-		}
+        public UnitSetImpl(final IUnmodifiableArray<IUnit> original) {
+            super(original);
+        }
 
-		@Override
-		public int hashCode() {
-			//do not use hash code from super, because unit sets should not be equal if they are similar
-			return System.identityHashCode(this);
-		}
+        @Override
+        public int hashCode() {
+            //do not use hash code from super, because unit sets should not be equal if they are similar
+            return System.identityHashCode(this);
+        }
 
-		@Override
-		public boolean equals(final Object obj) {
-			//do not use equals from super, because unit sets should not be equal if they are similar
-			return this == obj;
-		}
+        @Override
+        public boolean equals(final Object obj) {
+            //do not use equals from super, because unit sets should not be equal if they are similar
+            return this == obj;
+        }
 
-	}
+    }
 
 }

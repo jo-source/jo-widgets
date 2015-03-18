@@ -34,61 +34,61 @@ import org.jowidgets.workbench.api.ILifecycleCallback;
 import org.jowidgets.workbench.api.IWorkbenchApplicationDescriptor;
 
 public interface IWorkbenchApplicationModel extends
-		IWorkbenchApplicationDescriptor,
-		IComponentNodeContainerModel,
-		IWorkbenchPartModel {
+        IWorkbenchApplicationDescriptor,
+        IComponentNodeContainerModel,
+        IWorkbenchPartModel {
 
-	IWorkbenchApplicationInitializeCallback getInitializeCallback();
+    IWorkbenchApplicationInitializeCallback getInitializeCallback();
 
-	IMenuModel getPopupMenu();
+    IMenuModel getPopupMenu();
 
-	IToolBarModel getToolBar();
+    IToolBarModel getToolBar();
 
-	IMenuModel getToolBarMenu();
+    IMenuModel getToolBarMenu();
 
-	IViewFactory getViewFactory();
+    IViewFactory getViewFactory();
 
-	ILifecycleCallback getLifecycleCallback();
+    ILifecycleCallback getLifecycleCallback();
 
-	void setPopupMenu(IMenuModel menuModel);
+    void setPopupMenu(IMenuModel menuModel);
 
-	void setToolBar(IToolBarModel toolBarModel);
+    void setToolBar(IToolBarModel toolBarModel);
 
-	void setToolBarMenu(IMenuModel toolBarMenu);
+    void setToolBarMenu(IMenuModel toolBarMenu);
 
-	void setLifecycleCallback(ILifecycleCallback lifecycleCallback);
+    void setLifecycleCallback(ILifecycleCallback lifecycleCallback);
 
-	IWorkbenchModel getWorkbench();
+    IWorkbenchModel getWorkbench();
 
-	/**
-	 * Sets the workbench of this application. This method will be invoked
-	 * by the API implementation, when this application will be added as a child to an workbench or
-	 * when it was removed from its workbench.
-	 * 
-	 * If this method will be invoked by the API user (client code) the following happens:
-	 * 
-	 * 1. If this application is already associated with a workbench, it will be removed from it.
-	 * 
-	 * 2. If the given workbench is not null and this application is not already a child of the given workbench,
-	 * this application will be appended to the given workbench.
-	 * 
-	 * @param workbench The workbench to set or null if the application was/should be removed from its workbench
-	 */
-	void setWorkbench(IWorkbenchModel workbench);
+    /**
+     * Sets the workbench of this application. This method will be invoked
+     * by the API implementation, when this application will be added as a child to an workbench or
+     * when it was removed from its workbench.
+     * 
+     * If this method will be invoked by the API user (client code) the following happens:
+     * 
+     * 1. If this application is already associated with a workbench, it will be removed from it.
+     * 
+     * 2. If the given workbench is not null and this application is not already a child of the given workbench,
+     * this application will be appended to the given workbench.
+     * 
+     * @param workbench The workbench to set or null if the application was/should be removed from its workbench
+     */
+    void setWorkbench(IWorkbenchModel workbench);
 
-	/**
-	 * Gets the unwrapped instance of this object.
-	 * 
-	 * If this interface is implemented directly without wrapping another implementation,
-	 * 'this' will be returned (return this;);
-	 * 
-	 * If this object will be wrapped (wrapper pattern) to extend functionality, the wrapper have to return
-	 * the getUnwrappedThis() of the wrapped object.
-	 * 
-	 * So this method will always return the base instance nevertheless how many wrapping layers exists.
-	 * 
-	 * @return The unwrapped instance of this object
-	 */
-	IWorkbenchApplicationModel getUnwrappedThis();
+    /**
+     * Gets the unwrapped instance of this object.
+     * 
+     * If this interface is implemented directly without wrapping another implementation,
+     * 'this' will be returned (return this;);
+     * 
+     * If this object will be wrapped (wrapper pattern) to extend functionality, the wrapper have to return
+     * the getUnwrappedThis() of the wrapped object.
+     * 
+     * So this method will always return the base instance nevertheless how many wrapping layers exists.
+     * 
+     * @return The unwrapped instance of this object
+     */
+    IWorkbenchApplicationModel getUnwrappedThis();
 
 }

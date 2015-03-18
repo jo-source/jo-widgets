@@ -34,17 +34,17 @@ import org.jowidgets.common.color.ColorValue;
 
 public class LevelMeterDefaults implements IDefaultInitializer<ILevelMeterSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final ILevelMeterSetupBuilder<?> builder) {
-		builder.setLetteringVisible(false);
-		builder.setBackgroundColor(new ColorValue(225, 225, 225));
-		builder.setLowPeakColor(new ColorValue(49, 160, 45));
-		builder.setHighPeakColor(Colors.WARNING);
-		builder.setClipPeakColor(Colors.ERROR);
-		builder.setNoPeakColor(new ColorValue(192, 192, 192));
-		builder.setHighPeakThreshold(0.7d);
-		builder.setClipPeakThreshold(0.9d);
-		builder.setBoxHeight(2);
-		builder.setGapSize(1);
-	}
+    @Override
+    public void initialize(final ILevelMeterSetupBuilder<?> builder) {
+        builder.setLetteringVisible(false);
+        builder.setBackgroundColor(new ColorValue(225, 225, 225));
+        builder.setLowPeakColor(new ColorValue(49, 160, 45));
+        builder.setHighPeakColor(Colors.WARNING);
+        builder.setClipPeakColor(Colors.ERROR);
+        builder.setNoPeakColor(new ColorValue(192, 192, 192));
+        builder.setHighPeakThreshold(0.7d);
+        builder.setClipPeakThreshold(0.9d);
+        builder.setBoxHeight(2);
+        builder.setGapSize(1);
+    }
 }

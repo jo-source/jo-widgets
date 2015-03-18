@@ -30,22 +30,22 @@ package org.jowidgets.api.model.table;
 
 public interface ITableModelFactory {
 
-	IDefaultTableColumnModel columnModel();
+    IDefaultTableColumnModel columnModel();
 
-	IDefaultTableColumnModel columnModel(int columnCount);
+    IDefaultTableColumnModel columnModel(int columnCount);
 
-	IDefaultTableColumnBuilder columnBuilder();
+    IDefaultTableColumnBuilder columnBuilder();
 
-	IDefaultTableColumn column();
+    IDefaultTableColumn column();
 
-	ISimpleTableModel simpleTableModel();
+    ISimpleTableModel simpleTableModel();
 
-	ISimpleTableModel simpleTableModel(int columnCount);
+    ISimpleTableModel simpleTableModel(int columnCount);
 
-	ISimpleTableModel simpleTableModel(int rowCount, int columnCount);
+    ISimpleTableModel simpleTableModel(int rowCount, int columnCount);
 
-	ISimpleTableModelBuilder simpleTableModelBuilder();
+    ISimpleTableModelBuilder simpleTableModelBuilder();
 
-	ITableCellBuilder cellBuilder();
+    ITableCellBuilder cellBuilder();
 
 }

@@ -32,10 +32,10 @@ import org.jowidgets.api.toolkit.Toolkit;
 
 public final class MutableLevelMeterModel {
 
-	private MutableLevelMeterModel() {}
+    private MutableLevelMeterModel() {}
 
-	public static IMutableLevelMeterModel create() {
-		return Toolkit.getModelFactoryProvider().getLevelMeterModelFactory().createMutableModel();
-	}
+    public static IMutableLevelMeterModel create() {
+        return Toolkit.getModelFactoryProvider().getLevelMeterModelFactory().createMutableModel();
+    }
 
 }

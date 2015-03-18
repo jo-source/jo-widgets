@@ -39,25 +39,25 @@ import org.jowidgets.util.Assert;
 
 public final class SwingToJoWrapper {
 
-	private SwingToJoWrapper() {}
+    private SwingToJoWrapper() {}
 
-	public static IComposite create(final JPanel panel) {
-		Assert.paramNotNull(panel, "panel");
-		//TODO observe information when panel was disposed (removed from its parent) and
-		//invoke dispose on the result
-		return Toolkit.getWidgetWrapperFactory().createComposite(panel);
-	}
+    public static IComposite create(final JPanel panel) {
+        Assert.paramNotNull(panel, "panel");
+        //TODO observe information when panel was disposed (removed from its parent) and
+        //invoke dispose on the result
+        return Toolkit.getWidgetWrapperFactory().createComposite(panel);
+    }
 
-	public static IFrame create(final JFrame frame) {
-		Assert.paramNotNull(frame, "frame");
-		//TODO observe information when frame was disposed and invoke dispose on the result
-		return Toolkit.getWidgetWrapperFactory().createFrame(frame);
-	}
+    public static IFrame create(final JFrame frame) {
+        Assert.paramNotNull(frame, "frame");
+        //TODO observe information when frame was disposed and invoke dispose on the result
+        return Toolkit.getWidgetWrapperFactory().createFrame(frame);
+    }
 
-	public static IFrame create(final JDialog dialog) {
-		Assert.paramNotNull(dialog, "dialog");
-		//TODO observe information when dialog was disposed and invoke dispose on the result
-		return Toolkit.getWidgetWrapperFactory().createFrame(dialog);
-	}
+    public static IFrame create(final JDialog dialog) {
+        Assert.paramNotNull(dialog, "dialog");
+        //TODO observe information when dialog was disposed and invoke dispose on the result
+        return Toolkit.getWidgetWrapperFactory().createFrame(dialog);
+    }
 
 }

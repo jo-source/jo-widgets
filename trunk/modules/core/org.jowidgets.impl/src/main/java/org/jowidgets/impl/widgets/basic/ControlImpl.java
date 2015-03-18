@@ -39,61 +39,61 @@ import org.jowidgets.spi.widgets.IControlSpi;
 
 public class ControlImpl extends AbstractControlSpiWrapper implements IControl {
 
-	private final ControlDelegate controlDelegate;
+    private final ControlDelegate controlDelegate;
 
-	public ControlImpl(final IControlSpi widgetSpi) {
-		super(widgetSpi);
-		this.controlDelegate = new ControlDelegate(widgetSpi, this);
-	}
+    public ControlImpl(final IControlSpi widgetSpi) {
+        super(widgetSpi);
+        this.controlDelegate = new ControlDelegate(widgetSpi, this);
+    }
 
-	@Override
-	public IContainer getParent() {
-		return controlDelegate.getParent();
-	}
+    @Override
+    public IContainer getParent() {
+        return controlDelegate.getParent();
+    }
 
-	@Override
-	public void setParent(final IContainer parent) {
-		controlDelegate.setParent(parent);
-	}
+    @Override
+    public void setParent(final IContainer parent) {
+        controlDelegate.setParent(parent);
+    }
 
-	@Override
-	public void addParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.addParentListener(listener);
-	}
+    @Override
+    public void addParentListener(final IParentListener<IContainer> listener) {
+        controlDelegate.addParentListener(listener);
+    }
 
-	@Override
-	public void removeParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.removeParentListener(listener);
-	}
+    @Override
+    public void removeParentListener(final IParentListener<IContainer> listener) {
+        controlDelegate.removeParentListener(listener);
+    }
 
-	@Override
-	public boolean isReparentable() {
-		return controlDelegate.isReparentable();
-	}
+    @Override
+    public boolean isReparentable() {
+        return controlDelegate.isReparentable();
+    }
 
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		controlDelegate.addDisposeListener(listener);
-	}
+    @Override
+    public void addDisposeListener(final IDisposeListener listener) {
+        controlDelegate.addDisposeListener(listener);
+    }
 
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		controlDelegate.removeDisposeListener(listener);
-	}
+    @Override
+    public void removeDisposeListener(final IDisposeListener listener) {
+        controlDelegate.removeDisposeListener(listener);
+    }
 
-	@Override
-	public boolean isDisposed() {
-		return controlDelegate.isDisposed();
-	}
+    @Override
+    public boolean isDisposed() {
+        return controlDelegate.isDisposed();
+    }
 
-	@Override
-	public void dispose() {
-		controlDelegate.dispose();
-	}
+    @Override
+    public void dispose() {
+        controlDelegate.dispose();
+    }
 
-	@Override
-	public IPopupMenu createPopupMenu() {
-		return controlDelegate.createPopupMenu();
-	}
+    @Override
+    public IPopupMenu createPopupMenu() {
+        return controlDelegate.createPopupMenu();
+    }
 
 }

@@ -31,24 +31,24 @@ package org.jowidgets.impl.model.item;
 import org.jowidgets.api.model.item.ISelectableItemModelBuilder;
 
 public abstract class AbstractSelectableItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> extends
-		AbstractItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> implements ISelectableItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> {
+        AbstractItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> implements ISelectableItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> {
 
-	private boolean selected;
+    private boolean selected;
 
-	public AbstractSelectableItemModelBuilder() {
-		super();
-		this.selected = false;
-	}
+    public AbstractSelectableItemModelBuilder() {
+        super();
+        this.selected = false;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public INSTANCE_TYPE setSelected(final boolean selected) {
-		this.selected = selected;
-		return (INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public INSTANCE_TYPE setSelected(final boolean selected) {
+        this.selected = selected;
+        return (INSTANCE_TYPE) this;
+    }
 
-	protected boolean isSelected() {
-		return selected;
-	}
+    protected boolean isSelected() {
+        return selected;
+    }
 
 }

@@ -34,13 +34,13 @@ import org.jowidgets.validation.Validator;
 
 public class InputFieldDefaults implements IDefaultInitializer<IInputFieldSetupBuilder<?, Object>> {
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
-	@Override
-	public void initialize(final IInputFieldSetupBuilder<?, Object> builder) {
-		final IValidator okValidator = Validator.okValidator();
-		builder.setValidator(okValidator);
-		builder.setPasswordPresentation(false);
-		builder.setBorder(true);
-		builder.setMaxLength(2000);
-	}
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @Override
+    public void initialize(final IInputFieldSetupBuilder<?, Object> builder) {
+        final IValidator okValidator = Validator.okValidator();
+        builder.setValidator(okValidator);
+        builder.setPasswordPresentation(false);
+        builder.setBorder(true);
+        builder.setMaxLength(2000);
+    }
 }

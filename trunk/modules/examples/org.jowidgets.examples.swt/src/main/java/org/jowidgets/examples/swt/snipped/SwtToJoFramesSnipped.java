@@ -44,55 +44,55 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class SwtToJoFramesSnipped {
 
-	private SwtToJoFramesSnipped() {}
+    private SwtToJoFramesSnipped() {}
 
-	public static void main(final String[] args) throws Exception {
-		final Display display = new Display();
+    public static void main(final String[] args) throws Exception {
+        final Display display = new Display();
 
-		final Shell shell = new Shell(display);
-		shell.setSize(1024, 768);
-		shell.setLayout(new MigLayout("", "[]", "[][]"));
+        final Shell shell = new Shell(display);
+        shell.setSize(1024, 768);
+        shell.setLayout(new MigLayout("", "[]", "[][]"));
 
-		//add button to open a jowidgets root frame
-		final Button frameButton = new Button(shell, SWT.NONE);
-		frameButton.setText("Create root frame");
-		frameButton.addSelectionListener(new SelectionAdapter() {
+        //add button to open a jowidgets root frame
+        final Button frameButton = new Button(shell, SWT.NONE);
+        frameButton.setText("Create root frame");
+        frameButton.addSelectionListener(new SelectionAdapter() {
 
-			@Override
-			public void widgetSelected(final SelectionEvent e) {
-				final IFrameBluePrint frameBp = BPF.frame("Jowidgets Root Frame");
-				frameBp.setSize(new Dimension(400, 300));
-				frameBp.setAutoDispose(true);
-				final IFrame frame = Toolkit.createRootFrame(frameBp);
-				frame.add(BPF.textLabel("This is a jowidgets root frame"));
-				frame.setVisible(true);
-			}
+            @Override
+            public void widgetSelected(final SelectionEvent e) {
+                final IFrameBluePrint frameBp = BPF.frame("Jowidgets Root Frame");
+                frameBp.setSize(new Dimension(400, 300));
+                frameBp.setAutoDispose(true);
+                final IFrame frame = Toolkit.createRootFrame(frameBp);
+                frame.add(BPF.textLabel("This is a jowidgets root frame"));
+                frame.setVisible(true);
+            }
 
-		});
+        });
 
-		//add button to open a jowidgets modal dialog
-		final Button dialogButton = new Button(shell, SWT.NONE);
-		dialogButton.setText("Create dialog");
-		dialogButton.addSelectionListener(new SelectionAdapter() {
+        //add button to open a jowidgets modal dialog
+        final Button dialogButton = new Button(shell, SWT.NONE);
+        dialogButton.setText("Create dialog");
+        dialogButton.addSelectionListener(new SelectionAdapter() {
 
-			@Override
-			public void widgetSelected(final SelectionEvent e) {
-				final IDialogBluePrint dialogBp = BPF.dialog("Jowidgets dialog");
-				dialogBp.setSize(new Dimension(400, 300));
-				final IFrame dialog = Toolkit.getWidgetFactory().create(shell, dialogBp);
-				dialog.add(BPF.textLabel("This is a jowidgets modal dialog"));
-				dialog.setVisible(true);
-			}
+            @Override
+            public void widgetSelected(final SelectionEvent e) {
+                final IDialogBluePrint dialogBp = BPF.dialog("Jowidgets dialog");
+                dialogBp.setSize(new Dimension(400, 300));
+                final IFrame dialog = Toolkit.getWidgetFactory().create(shell, dialogBp);
+                dialog.add(BPF.textLabel("This is a jowidgets modal dialog"));
+                dialog.setVisible(true);
+            }
 
-		});
+        });
 
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-		display.dispose();
-	}
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) {
+                display.sleep();
+            }
+        }
+        display.dispose();
+    }
 
 }

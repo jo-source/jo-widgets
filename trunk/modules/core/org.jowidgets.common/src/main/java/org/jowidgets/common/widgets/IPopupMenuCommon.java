@@ -32,13 +32,13 @@ import org.jowidgets.common.types.Position;
 
 public interface IPopupMenuCommon extends IMenuCommon {
 
-	/**
-	 * Opens the popup menu at the given position.
-	 * 
-	 * The position must be given in the components coordinate system.
-	 * 
-	 * @param position The position to open the popup menu at, must not be null
-	 */
-	void show(Position position);
+    /**
+     * Opens the popup menu at the given position.
+     * 
+     * The position must be given in the components coordinate system.
+     * 
+     * @param position The position to open the popup menu at, must not be null
+     */
+    void show(Position position);
 
 }

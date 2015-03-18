@@ -35,17 +35,17 @@ import org.jowidgets.util.IObservableValue;
 
 public interface ISliderViewerSetup<VALUE_TYPE> extends ISliderSetupCommon, IComponentSetup {
 
-	@Mandatory
-	ISliderViewerConverter<VALUE_TYPE> getConverter();
+    @Mandatory
+    ISliderViewerConverter<VALUE_TYPE> getConverter();
 
-	@Mandatory
-	IObservableValue<VALUE_TYPE> getObservableValue();
+    @Mandatory
+    IObservableValue<VALUE_TYPE> getObservableValue();
 
-	VALUE_TYPE getValue();
+    VALUE_TYPE getValue();
 
-	VALUE_TYPE getDefaultValue();
+    VALUE_TYPE getDefaultValue();
 
-	@Mandatory
-	IMouseButtonEventMatcher getDefaultValueMatcher();
+    @Mandatory
+    IMouseButtonEventMatcher getDefaultValueMatcher();
 
 }

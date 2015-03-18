@@ -35,9 +35,9 @@ import org.jowidgets.tools.widgets.factory.AbstractCompositeWidgetFactory;
 
 public final class LevelMeterFactory extends AbstractCompositeWidgetFactory<ILevelMeter, ILevelMeterDescriptor> {
 
-	@Override
-	protected ILevelMeter createWidget(final IComposite compositeWidget, final ILevelMeterDescriptor descriptor) {
-		return new LevelMeterImpl(compositeWidget, descriptor);
-	}
+    @Override
+    protected ILevelMeter createWidget(final IComposite compositeWidget, final ILevelMeterDescriptor descriptor) {
+        return new LevelMeterImpl(compositeWidget, descriptor);
+    }
 
 }

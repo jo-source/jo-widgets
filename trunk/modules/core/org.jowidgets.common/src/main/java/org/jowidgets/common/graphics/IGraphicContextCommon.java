@@ -36,83 +36,83 @@ import org.jowidgets.common.types.Rectangle;
 
 public interface IGraphicContextCommon {
 
-	void setAntiAliasing(AntiAliasing antiAliasing);
+    void setAntiAliasing(AntiAliasing antiAliasing);
 
-	void setTextAntiAliasing(AntiAliasing antiAliasing);
+    void setTextAntiAliasing(AntiAliasing antiAliasing);
 
-	void setLineWidth(int width);
+    void setLineWidth(int width);
 
-	void setDashedLine(float[] pattern, float offset);
+    void setDashedLine(float[] pattern, float offset);
 
-	void setLineCap(LineCap lineCap);
+    void setLineCap(LineCap lineCap);
 
-	void setLineJoin(LineJoin lineJoin);
+    void setLineJoin(LineJoin lineJoin);
 
-	void setFontSize(int size);
+    void setFontSize(int size);
 
-	void setFontName(String fontName);
+    void setFontName(String fontName);
 
-	void setTextMarkup(Markup markup);
+    void setTextMarkup(Markup markup);
 
-	void setForegroundColor(IColorConstant color);
+    void setForegroundColor(IColorConstant color);
 
-	void setBackgroundColor(IColorConstant color);
+    void setBackgroundColor(IColorConstant color);
 
-	void clearRectangle(int x, int y, int width, int height);
+    void clearRectangle(int x, int y, int width, int height);
 
-	void drawPoint(int x, int y);
+    void drawPoint(int x, int y);
 
-	void drawLine(int x1, int y1, int x2, int y2);
+    void drawLine(int x1, int y1, int x2, int y2);
 
-	void drawRectangle(int x, int y, int width, int height);
+    void drawRectangle(int x, int y, int width, int height);
 
-	void drawPolygon(Point[] points);
+    void drawPolygon(Point[] points);
 
-	void drawPolyline(Point[] points);
+    void drawPolyline(Point[] points);
 
-	void drawOval(int x, int y, int width, int height);
+    void drawOval(int x, int y, int width, int height);
 
-	void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle);
+    void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle);
 
-	void fillRectangle(int x, int y, int width, int height);
+    void fillRectangle(int x, int y, int width, int height);
 
-	void fillPolygon(Point[] points);
+    void fillPolygon(Point[] points);
 
-	void fillOval(int x, int y, int width, int height);
+    void fillOval(int x, int y, int width, int height);
 
-	void fillArc(int x, int y, int width, int height, int startAngle, int arcAngle);
+    void fillArc(int x, int y, int width, int height, int startAngle, int arcAngle);
 
-	void drawText(String text, int x, int y);
+    void drawText(String text, int x, int y);
 
-	void copyArea(
-		final int sourceX,
-		final int sourceY,
-		final int sourceWidth,
-		final int sourceHeight,
-		final int destinationX,
-		final int destinationY);
+    void copyArea(
+        final int sourceX,
+        final int sourceY,
+        final int sourceWidth,
+        final int sourceHeight,
+        final int destinationX,
+        final int destinationY);
 
-	void drawImage(
-		IImageConstant image,
-		final int sourceX,
-		final int sourceY,
-		final int sourceWidth,
-		final int sourceHeight,
-		final int destinationX,
-		final int destinationY,
-		final int destinationWidth,
-		final int destinationHeight);
+    void drawImage(
+        IImageConstant image,
+        final int sourceX,
+        final int sourceY,
+        final int sourceWidth,
+        final int sourceHeight,
+        final int destinationX,
+        final int destinationY,
+        final int destinationWidth,
+        final int destinationHeight);
 
-	void drawImage(final IImageConstant image, final int x, final int y);
+    void drawImage(final IImageConstant image, final int x, final int y);
 
-	Rectangle getBounds();
+    Rectangle getBounds();
 
-	IColorConstant getForegroundColor();
+    IColorConstant getForegroundColor();
 
-	IColorConstant getBackgroundColor();
+    IColorConstant getBackgroundColor();
 
-	IFontMetrics getFontMetrics();
+    IFontMetrics getFontMetrics();
 
-	int getTextWidth(String text);
+    int getTextWidth(String text);
 
 }

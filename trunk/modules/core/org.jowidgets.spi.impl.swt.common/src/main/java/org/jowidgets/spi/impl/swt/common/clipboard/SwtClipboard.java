@@ -52,157 +52,157 @@ import org.jowidgets.util.Tuple;
 
 public final class SwtClipboard extends AbstractPollingClipboardObservableSpi implements IClipboardSpi {
 
-	private static final Transfer TEXT_TRANSFER = TextTransfer.getInstance();
-	private static final Transfer OBJECT_TRANSFER = ObjectTransfer.getInstance();
+    private static final Transfer TEXT_TRANSFER = TextTransfer.getInstance();
+    private static final Transfer OBJECT_TRANSFER = ObjectTransfer.getInstance();
 
-	private final IProvider<Display> displayProvider;
+    private final IProvider<Display> displayProvider;
 
-	private Clipboard systemClipboard;
+    private Clipboard systemClipboard;
 
-	private ITransferableSpi lastContents;
+    private ITransferableSpi lastContents;
 
-	public SwtClipboard(final IProvider<Display> displayProvider) {
-		super(SwtOptions.getClipbaordPollingMillis());
-		this.displayProvider = displayProvider;
-	}
+    public SwtClipboard(final IProvider<Display> displayProvider) {
+        super(SwtOptions.getClipbaordPollingMillis());
+        this.displayProvider = displayProvider;
+    }
 
-	@Override
-	public void setContents(final ITransferableSpi contents) {
-		final Clipboard clipboard = getClipboard();
-		if (clipboard != null) {
-			if (contents != null) {
-				setContentsImpl(clipboard, contents);
-			}
-			else {
-				clipboard.clearContents();
-			}
-			checkContentChangedInUiThread();
-		}
-	}
+    @Override
+    public void setContents(final ITransferableSpi contents) {
+        final Clipboard clipboard = getClipboard();
+        if (clipboard != null) {
+            if (contents != null) {
+                setContentsImpl(clipboard, contents);
+            }
+            else {
+                clipboard.clearContents();
+            }
+            checkContentChangedInUiThread();
+        }
+    }
 
-	private void setContentsImpl(final Clipboard clipboard, final ITransferableSpi contents) {
-		final Collection<TransferTypeSpi> typesSpi = contents.getSupportedTypes();
+    private void setContentsImpl(final Clipboard clipboard, final ITransferableSpi contents) {
+        final Collection<TransferTypeSpi> typesSpi = contents.getSupportedTypes();
 
-		final List<Tuple<Transfer, Object>> transferTupleList = new LinkedList<Tuple<Transfer, Object>>();
-		final List<TransferObject> transferObjectsList = new LinkedList<TransferObject>();
+        final List<Tuple<Transfer, Object>> transferTupleList = new LinkedList<Tuple<Transfer, Object>>();
+        final List<TransferObject> transferObjectsList = new LinkedList<TransferObject>();
 
-		for (final TransferTypeSpi typeSpi : typesSpi) {
-			if (String.class.equals(typeSpi.getJavaType())) {
-				transferTupleList.add(new Tuple<Transfer, Object>(TEXT_TRANSFER, contents.getData(typeSpi)));
-			}
-			else {
-				transferObjectsList.add(new TransferObject(typeSpi, contents.getData(typeSpi)));
-			}
-		}
+        for (final TransferTypeSpi typeSpi : typesSpi) {
+            if (String.class.equals(typeSpi.getJavaType())) {
+                transferTupleList.add(new Tuple<Transfer, Object>(TEXT_TRANSFER, contents.getData(typeSpi)));
+            }
+            else {
+                transferObjectsList.add(new TransferObject(typeSpi, contents.getData(typeSpi)));
+            }
+        }
 
-		if (transferObjectsList != null) {
-			transferTupleList.add(new Tuple<Transfer, Object>(OBJECT_TRANSFER, new TransferContainer(transferObjectsList)));
-		}
+        if (transferObjectsList != null) {
+            transferTupleList.add(new Tuple<Transfer, Object>(OBJECT_TRANSFER, new TransferContainer(transferObjectsList)));
+        }
 
-		final Transfer[] transfers = new Transfer[transferTupleList.size()];
-		final Object[] data = new Object[transferTupleList.size()];
+        final Transfer[] transfers = new Transfer[transferTupleList.size()];
+        final Object[] data = new Object[transferTupleList.size()];
 
-		int index = 0;
-		for (final Tuple<Transfer, Object> tuple : transferTupleList) {
-			transfers[index] = tuple.getFirst();
-			data[index] = tuple.getSecond();
-			index++;
-		}
+        int index = 0;
+        for (final Tuple<Transfer, Object> tuple : transferTupleList) {
+            transfers[index] = tuple.getFirst();
+            data[index] = tuple.getSecond();
+            index++;
+        }
 
-		clipboard.setContents(data, transfers);
-	}
+        clipboard.setContents(data, transfers);
+    }
 
-	@Override
-	public ITransferableSpi getContents() {
-		final Clipboard clipboard = getClipboard();
-		if (clipboard != null) {
-			return getContents(clipboard);
-		}
-		else {
-			return null;
-		}
-	}
+    @Override
+    public ITransferableSpi getContents() {
+        final Clipboard clipboard = getClipboard();
+        if (clipboard != null) {
+            return getContents(clipboard);
+        }
+        else {
+            return null;
+        }
+    }
 
-	private ITransferableSpi getContents(final Clipboard clipboard) {
-		final Map<TransferTypeSpi, Object> transferMap = new LinkedHashMap<TransferTypeSpi, Object>();
-		for (final TransferData transferData : clipboard.getAvailableTypes()) {
-			if (TEXT_TRANSFER.isSupportedType(transferData)) {
-				transferMap.put(new TransferTypeSpi(String.class), clipboard.getContents(TEXT_TRANSFER));
-			}
-			else if (OBJECT_TRANSFER.isSupportedType(transferData)) {
-				final Object data = clipboard.getContents(OBJECT_TRANSFER);
-				if (data instanceof TransferContainer) {
-					for (final TransferObject transferObject : ((TransferContainer) data).getTransferObjetcs()) {
-						transferMap.put(transferObject.getTransferType(), transferObject.getData());
-					}
-				}
-			}
-		}
-		if (!transferMap.isEmpty()) {
-			return new TransferableSpiAdapter(transferMap);
-		}
-		else {
-			return null;
-		}
-	}
+    private ITransferableSpi getContents(final Clipboard clipboard) {
+        final Map<TransferTypeSpi, Object> transferMap = new LinkedHashMap<TransferTypeSpi, Object>();
+        for (final TransferData transferData : clipboard.getAvailableTypes()) {
+            if (TEXT_TRANSFER.isSupportedType(transferData)) {
+                transferMap.put(new TransferTypeSpi(String.class), clipboard.getContents(TEXT_TRANSFER));
+            }
+            else if (OBJECT_TRANSFER.isSupportedType(transferData)) {
+                final Object data = clipboard.getContents(OBJECT_TRANSFER);
+                if (data instanceof TransferContainer) {
+                    for (final TransferObject transferObject : ((TransferContainer) data).getTransferObjetcs()) {
+                        transferMap.put(transferObject.getTransferType(), transferObject.getData());
+                    }
+                }
+            }
+        }
+        if (!transferMap.isEmpty()) {
+            return new TransferableSpiAdapter(transferMap);
+        }
+        else {
+            return null;
+        }
+    }
 
-	@Override
-	protected synchronized void checkContentChanged() {
-		final Display display = displayProvider.get();
-		if (display == null || display.isDisposed()) {
-			return;
-		}
-		display.asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				checkContentChangedInUiThread();
-			}
-		});
+    @Override
+    protected synchronized void checkContentChanged() {
+        final Display display = displayProvider.get();
+        if (display == null || display.isDisposed()) {
+            return;
+        }
+        display.asyncExec(new Runnable() {
+            @Override
+            public void run() {
+                checkContentChangedInUiThread();
+            }
+        });
 
-	}
+    }
 
-	protected synchronized void checkContentChangedInUiThread() {
-		final Clipboard clipboard = getClipboard();
-		if (clipboard == null) {
-			return;
-		}
-		final ITransferableSpi contents = getContents();
-		if (!NullCompatibleEquivalence.equals(contents, lastContents)) {
-			fireClipboardChanged();
-		}
-		lastContents = contents;
-	}
+    protected synchronized void checkContentChangedInUiThread() {
+        final Clipboard clipboard = getClipboard();
+        if (clipboard == null) {
+            return;
+        }
+        final ITransferableSpi contents = getContents();
+        if (!NullCompatibleEquivalence.equals(contents, lastContents)) {
+            fireClipboardChanged();
+        }
+        lastContents = contents;
+    }
 
-	private boolean isUiThread(final Display display) {
-		final Display currentDisplay = Display.getCurrent();
-		return currentDisplay != null && currentDisplay == display;
-	}
+    private boolean isUiThread(final Display display) {
+        final Display currentDisplay = Display.getCurrent();
+        return currentDisplay != null && currentDisplay == display;
+    }
 
-	@Override
-	public void dispose() {
-		super.dispose();
-		systemClipboard.dispose();
-	}
+    @Override
+    public void dispose() {
+        super.dispose();
+        systemClipboard.dispose();
+    }
 
-	private synchronized Clipboard getClipboard() {
-		if (systemClipboard == null && displayProvider.get() != null) {
-			final Display display = displayProvider.get();
-			if (isUiThread(display)) {
-				systemClipboard = new Clipboard(displayProvider.get());
-				lastContents = getContents(systemClipboard);
-			}
-			else {
-				display.asyncExec(new Runnable() {
-					@Override
-					public void run() {
-						systemClipboard = new Clipboard(displayProvider.get());
-						lastContents = getContents(systemClipboard);
-					}
-				});
-				return null;
-			}
-		}
-		return systemClipboard;
-	}
+    private synchronized Clipboard getClipboard() {
+        if (systemClipboard == null && displayProvider.get() != null) {
+            final Display display = displayProvider.get();
+            if (isUiThread(display)) {
+                systemClipboard = new Clipboard(displayProvider.get());
+                lastContents = getContents(systemClipboard);
+            }
+            else {
+                display.asyncExec(new Runnable() {
+                    @Override
+                    public void run() {
+                        systemClipboard = new Clipboard(displayProvider.get());
+                        lastContents = getContents(systemClipboard);
+                    }
+                });
+                return null;
+            }
+        }
+        return systemClipboard;
+    }
 
 }

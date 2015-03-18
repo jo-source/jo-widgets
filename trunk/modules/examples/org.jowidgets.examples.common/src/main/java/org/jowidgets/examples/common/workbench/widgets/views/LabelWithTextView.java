@@ -37,22 +37,22 @@ import org.jowidgets.workbench.api.IViewContext;
 
 public class LabelWithTextView extends AbstractHowToView implements IView {
 
-	public static final String ID = LabelWithTextView.class.getName();
-	public static final String DEFAULT_LABEL = "Label with text";
+    public static final String ID = LabelWithTextView.class.getName();
+    public static final String DEFAULT_LABEL = "Label with text";
 
-	public LabelWithTextView(final IViewContext context) {
-		super(context);
-	}
+    public LabelWithTextView(final IViewContext context) {
+        super(context);
+    }
 
-	@Override
-	public void createViewContent(final IContainer container, final IBluePrintFactory bpFactory) {
-		//set the layout
-		container.setLayout(new MigLayoutDescriptor("[]", "[]"));
+    @Override
+    public void createViewContent(final IContainer container, final IBluePrintFactory bpFactory) {
+        //set the layout
+        container.setLayout(new MigLayoutDescriptor("[]", "[]"));
 
-		//create the labels blue print
-		final ILabelBluePrint labelBp = bpFactory.label().setText("The label text");
+        //create the labels blue print
+        final ILabelBluePrint labelBp = bpFactory.label().setText("The label text");
 
-		//add the label blue print to the container
-		container.add(labelBp, "");
-	}
+        //add the label blue print to the container
+        container.add(labelBp, "");
+    }
 }

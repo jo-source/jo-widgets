@@ -36,26 +36,26 @@ import org.jowidgets.util.Assert;
 
 public class SwingUiThreadAccess implements IUiThreadAccessCommon {
 
-	@Override
-	public void invokeLater(final Runnable runnable) {
-		Assert.paramNotNull(runnable, "runnable");
-		SwingUtilities.invokeLater(runnable);
-	}
+    @Override
+    public void invokeLater(final Runnable runnable) {
+        Assert.paramNotNull(runnable, "runnable");
+        SwingUtilities.invokeLater(runnable);
+    }
 
-	@Override
-	public void invokeAndWait(final Runnable runnable) throws InterruptedException {
-		Assert.paramNotNull(runnable, "runnable");
-		try {
-			SwingUtilities.invokeAndWait(runnable);
-		}
-		catch (final InvocationTargetException e) {
-			throw new RuntimeException("InvocationTargetException while invoke and wait", e);
-		}
-	}
+    @Override
+    public void invokeAndWait(final Runnable runnable) throws InterruptedException {
+        Assert.paramNotNull(runnable, "runnable");
+        try {
+            SwingUtilities.invokeAndWait(runnable);
+        }
+        catch (final InvocationTargetException e) {
+            throw new RuntimeException("InvocationTargetException while invoke and wait", e);
+        }
+    }
 
-	@Override
-	public boolean isUiThread() {
-		return SwingUtilities.isEventDispatchThread();
-	}
+    @Override
+    public boolean isUiThread() {
+        return SwingUtilities.isEventDispatchThread();
+    }
 
 }

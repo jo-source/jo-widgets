@@ -34,16 +34,16 @@ import org.jowidgets.util.Assert;
 
 public final class PositionConvert {
 
-	private PositionConvert() {};
+    private PositionConvert() {};
 
-	public static Point convert(final Position position) {
-		Assert.paramNotNull(position, "position");
-		return new Point(position.getX(), position.getY());
-	}
+    public static Point convert(final Position position) {
+        Assert.paramNotNull(position, "position");
+        return new Point(position.getX(), position.getY());
+    }
 
-	public static Position convert(final Point point) {
-		Assert.paramNotNull(point, "point");
-		return new Position(point.x, point.y);
-	}
+    public static Position convert(final Point point) {
+        Assert.paramNotNull(point, "point");
+        return new Position(point.x, point.y);
+    }
 
 }

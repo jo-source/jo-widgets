@@ -38,13 +38,13 @@ import org.jowidgets.workbench.api.IViewContext;
 
 public class ViewDemo4 extends AbstractDemoView implements IView {
 
-	public static final String ID = ViewDemo4.class.getName();
-	public static final String DEFAULT_LABEL = "Person";
-	public static final String DEFAULT_TOOLTIP = "Person View";
-	public static final IImageConstant DEFAULT_ICON = SilkIcons.APPLICATION_FORM;
+    public static final String ID = ViewDemo4.class.getName();
+    public static final String DEFAULT_LABEL = "Person";
+    public static final String DEFAULT_TOOLTIP = "Person View";
+    public static final IImageConstant DEFAULT_ICON = SilkIcons.APPLICATION_FORM;
 
-	public ViewDemo4(final IViewContext context, final ISimpleTableModel tableModel) {
-		super(ID);
-		DemoForm1Creator.createDemoForm1(context.getContainer());
-	}
+    public ViewDemo4(final IViewContext context, final ISimpleTableModel tableModel) {
+        super(ID);
+        DemoForm1Creator.createDemoForm1(context.getContainer());
+    }
 }

@@ -35,11 +35,11 @@ import org.jowidgets.examples.common.office.OfficeTextDemoApplication;
 
 public final class SwingOfficeTextDemoStarter {
 
-	private SwingOfficeTextDemoStarter() {}
+    private SwingOfficeTextDemoStarter() {}
 
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		Toolkit.initialize(AwtSwtToolkitProviderFactory.create());
-		new OfficeTextDemoApplication("Swing office text demo").start();
-	}
+    public static void main(final String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        Toolkit.initialize(AwtSwtToolkitProviderFactory.create());
+        new OfficeTextDemoApplication("Swing office text demo").start();
+    }
 }

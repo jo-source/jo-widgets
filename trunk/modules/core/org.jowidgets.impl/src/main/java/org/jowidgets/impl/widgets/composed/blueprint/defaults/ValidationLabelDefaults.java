@@ -35,25 +35,25 @@ import org.jowidgets.common.types.Markup;
 
 public class ValidationLabelDefaults implements IDefaultInitializer<IValidationLabelSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final IValidationLabelSetupBuilder<?> builder) {
-		builder.setShowValidationMessage(true);
+    @Override
+    public void initialize(final IValidationLabelSetupBuilder<?> builder) {
+        builder.setShowValidationMessage(true);
 
-		builder.setOkMarkup(Markup.STRONG);
-		builder.setInfoMarkup(Markup.DEFAULT);
-		builder.setWarningMarkup(Markup.STRONG);
-		builder.setInfoErrorMarkup(Markup.STRONG);
-		builder.setErrorMarkup(Markup.STRONG);
+        builder.setOkMarkup(Markup.STRONG);
+        builder.setInfoMarkup(Markup.DEFAULT);
+        builder.setWarningMarkup(Markup.STRONG);
+        builder.setInfoErrorMarkup(Markup.STRONG);
+        builder.setErrorMarkup(Markup.STRONG);
 
-		builder.setOkColor(Colors.DEFAULT);
-		builder.setInfoColor(Colors.STRONG);
-		builder.setInfoErrorColor(Colors.STRONG);
-		builder.setErrorColor(Colors.ERROR);
-		builder.setWarningColor(Colors.DEFAULT);
+        builder.setOkColor(Colors.DEFAULT);
+        builder.setInfoColor(Colors.STRONG);
+        builder.setInfoErrorColor(Colors.STRONG);
+        builder.setErrorColor(Colors.ERROR);
+        builder.setWarningColor(Colors.DEFAULT);
 
-		builder.setOkIcon(IconsSmall.OK);
-		builder.setWarningIcon(IconsSmall.WARNING);
-		builder.setErrorIcon(IconsSmall.ERROR);
-	}
+        builder.setOkIcon(IconsSmall.OK);
+        builder.setWarningIcon(IconsSmall.WARNING);
+        builder.setErrorIcon(IconsSmall.ERROR);
+    }
 
 }

@@ -32,18 +32,18 @@ import org.jowidgets.api.model.item.ISeparatorItemModel;
 import org.jowidgets.api.model.item.ISeparatorItemModelBuilder;
 
 public class SeparatorItemModelBuilder extends AbstractItemModelBuilder<ISeparatorItemModelBuilder, ISeparatorItemModel> implements
-		ISeparatorItemModelBuilder {
+        ISeparatorItemModelBuilder {
 
-	@Override
-	public ISeparatorItemModel build() {
-		return new SeparatorItemModelImpl(
-			getId(),
-			getText(),
-			getToolTipText(),
-			getIcon(),
-			getAccelerator(),
-			getMnemonic(),
-			isEnabled());
-	}
+    @Override
+    public ISeparatorItemModel build() {
+        return new SeparatorItemModelImpl(
+            getId(),
+            getText(),
+            getToolTipText(),
+            getIcon(),
+            getAccelerator(),
+            getMnemonic(),
+            isEnabled());
+    }
 
 }

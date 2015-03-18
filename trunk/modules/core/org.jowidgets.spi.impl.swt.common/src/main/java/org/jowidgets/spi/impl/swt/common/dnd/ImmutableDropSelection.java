@@ -35,21 +35,21 @@ import org.jowidgets.util.Assert;
 
 public final class ImmutableDropSelection implements IDropSelectionProvider {
 
-	private final Object selection;
+    private final Object selection;
 
-	public ImmutableDropSelection(final Object selection) {
-		Assert.paramNotNull(selection, "selection");
-		this.selection = selection;
-	}
+    public ImmutableDropSelection(final Object selection) {
+        Assert.paramNotNull(selection, "selection");
+        this.selection = selection;
+    }
 
-	@Override
-	public Integer getFeedback(final Widget item, final Position position, final DropMode dropMode) {
-		return null;
-	}
+    @Override
+    public Integer getFeedback(final Widget item, final Position position, final DropMode dropMode) {
+        return null;
+    }
 
-	@Override
-	public Object getDropSelection(final Widget item, final Position position, final int dropFeedback) {
-		return selection;
-	}
+    @Override
+    public Object getDropSelection(final Widget item, final Position position, final int dropFeedback) {
+        return selection;
+    }
 
 }

@@ -41,143 +41,143 @@ import de.micromata.opengis.kml.v_2_2_0.Feature;
 
 final class MapContextAdapter implements IMapContext {
 
-	private final Display display;
-	private final IMapContext context;
+    private final Display display;
+    private final IMapContext context;
 
-	MapContextAdapter(final Display display, final IMapContext context) {
-		this.display = display;
-		this.context = context;
-	}
+    MapContextAdapter(final Display display, final IMapContext context) {
+        this.display = display;
+        this.context = context;
+    }
 
-	private <T> T call(final Callable<T> callable) {
-		if (!Toolkit.getUiThreadAccess().isUiThread()) {
-			throw new IllegalStateException("method must be called in UI thread");
-		}
-		final AtomicReference<T> result = new AtomicReference<T>();
-		final AtomicReference<Throwable> exception = new AtomicReference<Throwable>();
-		display.syncExec(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					result.set(callable.call());
-				}
-				catch (final Throwable t) {
-					exception.set(t);
-				}
-			}
-		});
-		if (exception.get() == null) {
-			return result.get();
-		}
-		final Throwable t = exception.get();
-		if (t instanceof Error) {
-			throw (Error) t;
-		}
-		if (t instanceof RuntimeException) {
-			throw (RuntimeException) t;
-		}
-		throw new RuntimeException(t);
-	}
+    private <T> T call(final Callable<T> callable) {
+        if (!Toolkit.getUiThreadAccess().isUiThread()) {
+            throw new IllegalStateException("method must be called in UI thread");
+        }
+        final AtomicReference<T> result = new AtomicReference<T>();
+        final AtomicReference<Throwable> exception = new AtomicReference<Throwable>();
+        display.syncExec(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    result.set(callable.call());
+                }
+                catch (final Throwable t) {
+                    exception.set(t);
+                }
+            }
+        });
+        if (exception.get() == null) {
+            return result.get();
+        }
+        final Throwable t = exception.get();
+        if (t instanceof Error) {
+            throw (Error) t;
+        }
+        if (t instanceof RuntimeException) {
+            throw (RuntimeException) t;
+        }
+        throw new RuntimeException(t);
+    }
 
-	@Override
-	public double[] getBoundingBox() {
-		return call(new Callable<double[]>() {
-			@Override
-			public double[] call() throws Exception {
-				return context.getBoundingBox();
-			}
-		});
-	}
+    @Override
+    public double[] getBoundingBox() {
+        return call(new Callable<double[]>() {
+            @Override
+            public double[] call() throws Exception {
+                return context.getBoundingBox();
+            }
+        });
+    }
 
-	@Override
-	public boolean flyTo(final String placemarkId, final double range) {
-		return call(new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return context.flyTo(placemarkId, range);
-			}
-		});
-	}
+    @Override
+    public boolean flyTo(final String placemarkId, final double range) {
+        return call(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return context.flyTo(placemarkId, range);
+            }
+        });
+    }
 
-	@Override
-	public boolean flyTo(final double latitude, final double longitude, final double range) {
-		return call(new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return context.flyTo(latitude, longitude, range);
-			}
-		});
-	}
+    @Override
+    public boolean flyTo(final double latitude, final double longitude, final double range) {
+        return call(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return context.flyTo(latitude, longitude, range);
+            }
+        });
+    }
 
-	@Override
-	public boolean addFeature(final Feature feature) {
-		return call(new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return context.addFeature(feature);
-			}
-		});
-	}
+    @Override
+    public boolean addFeature(final Feature feature) {
+        return call(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return context.addFeature(feature);
+            }
+        });
+    }
 
-	@Override
-	public boolean removeFeature(final String featureId) {
-		return call(new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return context.removeFeature(featureId);
-			}
-		});
-	}
+    @Override
+    public boolean removeFeature(final String featureId) {
+        return call(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return context.removeFeature(featureId);
+            }
+        });
+    }
 
-	@Override
-	public boolean removeAllFeatures() {
-		return call(new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return context.removeAllFeatures();
-			}
-		});
-	}
+    @Override
+    public boolean removeAllFeatures() {
+        return call(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return context.removeAllFeatures();
+            }
+        });
+    }
 
-	@Override
-	public <T> boolean startDesignation(final Class<T> type, final IDesignationListener<? super T> listener) {
-		final IUiThreadAccess uiThreadAccess = Toolkit.getUiThreadAccess();
-		return call(new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return context.startDesignation(type, new IDesignationListener<T>() {
-					@Override
-					public void onDesignation(final T object) {
-						uiThreadAccess.invokeLater(new Runnable() {
-							@Override
-							public void run() {
-								listener.onDesignation(object);
-							}
-						});
-					};
-				});
-			}
-		});
-	}
+    @Override
+    public <T> boolean startDesignation(final Class<T> type, final IDesignationListener<? super T> listener) {
+        final IUiThreadAccess uiThreadAccess = Toolkit.getUiThreadAccess();
+        return call(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return context.startDesignation(type, new IDesignationListener<T>() {
+                    @Override
+                    public void onDesignation(final T object) {
+                        uiThreadAccess.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                listener.onDesignation(object);
+                            }
+                        });
+                    };
+                });
+            }
+        });
+    }
 
-	@Override
-	public boolean endDesignation() {
-		return call(new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return context.endDesignation();
-			}
-		});
-	}
+    @Override
+    public boolean endDesignation() {
+        return call(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return context.endDesignation();
+            }
+        });
+    }
 
-	@Override
-	public boolean isDesignationRunning() {
-		return call(new Callable<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				return context.isDesignationRunning();
-			}
-		});
-	}
+    @Override
+    public boolean isDesignationRunning() {
+        return call(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return context.isDesignationRunning();
+            }
+        });
+    }
 
 }

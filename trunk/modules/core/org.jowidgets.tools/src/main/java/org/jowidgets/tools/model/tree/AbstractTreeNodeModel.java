@@ -34,83 +34,83 @@ import org.jowidgets.util.Assert;
 
 public abstract class AbstractTreeNodeModel<VALUE_TYPE> extends TreeNodeModelObservable implements ITreeNodeModel<VALUE_TYPE> {
 
-	private CheckedState checkedState;
+    private CheckedState checkedState;
 
-	private boolean selected;
-	private boolean expanded;
-	private boolean visible;
+    private boolean selected;
+    private boolean expanded;
+    private boolean visible;
 
-	private boolean checkable;
+    private boolean checkable;
 
-	public AbstractTreeNodeModel() {
-		this.checkedState = CheckedState.UNCHECKED;
-		this.checkable = true;
-	}
+    public AbstractTreeNodeModel() {
+        this.checkedState = CheckedState.UNCHECKED;
+        this.checkable = true;
+    }
 
-	@Override
-	public final boolean isSelected() {
-		return selected;
-	}
+    @Override
+    public final boolean isSelected() {
+        return selected;
+    }
 
-	@Override
-	public final void setSelected(final boolean selected) {
-		if (this.selected != selected) {
-			this.selected = selected;
-			fireSelectionChanged();
-		}
-	}
+    @Override
+    public final void setSelected(final boolean selected) {
+        if (this.selected != selected) {
+            this.selected = selected;
+            fireSelectionChanged();
+        }
+    }
 
-	@Override
-	public final boolean isExpanded() {
-		return expanded;
-	}
+    @Override
+    public final boolean isExpanded() {
+        return expanded;
+    }
 
-	@Override
-	public boolean isVisible() {
-		return visible;
-	}
+    @Override
+    public boolean isVisible() {
+        return visible;
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		if (this.visible != visible) {
-			this.visible = visible;
-			fireVisibilityChanged();
-		}
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        if (this.visible != visible) {
+            this.visible = visible;
+            fireVisibilityChanged();
+        }
+    }
 
-	@Override
-	public CheckedState getCheckedState() {
-		return checkedState;
-	}
+    @Override
+    public CheckedState getCheckedState() {
+        return checkedState;
+    }
 
-	@Override
-	public void setCheckedState(final CheckedState state) {
-		Assert.paramNotNull(state, "state");
-		if (!this.checkedState.equals(state)) {
-			this.checkedState = state;
-			fireCheckedChanged();
-		}
-	}
+    @Override
+    public void setCheckedState(final CheckedState state) {
+        Assert.paramNotNull(state, "state");
+        if (!this.checkedState.equals(state)) {
+            this.checkedState = state;
+            fireCheckedChanged();
+        }
+    }
 
-	@Override
-	public void setCheckable(final boolean checkable) {
-		if (this.checkable != checkable) {
-			this.checkable = checkable;
-			fireCheckableChanged();
-		}
-	}
+    @Override
+    public void setCheckable(final boolean checkable) {
+        if (this.checkable != checkable) {
+            this.checkable = checkable;
+            fireCheckableChanged();
+        }
+    }
 
-	@Override
-	public boolean isCheckable() {
-		return checkable;
-	}
+    @Override
+    public boolean isCheckable() {
+        return checkable;
+    }
 
-	@Override
-	public final void setExpanded(final boolean expanded) {
-		if (this.expanded != expanded) {
-			this.expanded = expanded;
-			fireExpansionChanged();
-		}
-	}
+    @Override
+    public final void setExpanded(final boolean expanded) {
+        if (this.expanded != expanded) {
+            this.expanded = expanded;
+            fireExpansionChanged();
+        }
+    }
 
 }

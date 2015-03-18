@@ -44,57 +44,58 @@ import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 
 public class ApplicationDemo2 extends AbstractDemoApplication {
 
-	private static final String ID = ApplicationDemo2.class.getName();
+    private static final String ID = ApplicationDemo2.class.getName();
 
-	private IWorkbenchApplicationContext context;
+    private IWorkbenchApplicationContext context;
 
-	public ApplicationDemo2() {
-		super(ID);
-	}
+    public ApplicationDemo2() {
+        super(ID);
+    }
 
-	@Override
-	public void onContextInitialize(final IWorkbenchApplicationContext context) {
-		this.context = context;
+    @Override
+    public void onContextInitialize(final IWorkbenchApplicationContext context) {
+        this.context = context;
 
-		final ActionFactory actionFactory = new ActionFactory();
-		final IAction addFolderAction = actionFactory.createAddFolderAction(context);
+        final ActionFactory actionFactory = new ActionFactory();
+        final IAction addFolderAction = actionFactory.createAddFolderAction(context);
 
-		//create menus
-		context.getPopupMenu().addAction(addFolderAction);
+        //create menus
+        context.getPopupMenu().addAction(addFolderAction);
 
-		final List<IComponentNode> componentList3 = new LinkedList<IComponentNode>();
-		componentList3.add(new ImportantComponentTreeNodeDemo1("IMPORTANT1", "Important"));
-		final FolderNodeDemo folderNode2 = new FolderNodeDemo("MISC", "Misc", componentList3);
-		context.add(folderNode2);
-	}
+        final List<IComponentNode> componentList3 = new LinkedList<IComponentNode>();
+        componentList3.add(new ImportantComponentTreeNodeDemo1("IMPORTANT1", "Important"));
+        final FolderNodeDemo folderNode2 = new FolderNodeDemo("MISC", "Misc", componentList3);
+        context.add(folderNode2);
+    }
 
-	@Override
-	public String getLabel() {
-		return "App 2";
-	}
+    @Override
+    public String getLabel() {
+        return "App 2";
+    }
 
-	@Override
-	public String getTooltip() {
-		return "Application Demo 2";
-	}
+    @Override
+    public String getTooltip() {
+        return "Application Demo 2";
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return SilkIcons.USER_RED;
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return SilkIcons.USER_RED;
+    }
 
-	@Override
-	public void onClose(final IVetoable vetoable) {
-		final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to quit the application?");
-		if (result != QuestionResult.YES) {
-			vetoable.veto();
-		}
-		else {
-			final ITrayItem trayItem = context.getWorkbenchContext().getTrayItem();
-			if (trayItem != null) {
-				trayItem.showWarning("Application closed", "You really have closed the application!");
-			}
-		}
-	}
+    @Override
+    public void onClose(final IVetoable vetoable) {
+        final QuestionResult result = Toolkit.getQuestionPane()
+                .askYesNoQuestion("Would you really like to quit the application?");
+        if (result != QuestionResult.YES) {
+            vetoable.veto();
+        }
+        else {
+            final ITrayItem trayItem = context.getWorkbenchContext().getTrayItem();
+            if (trayItem != null) {
+                trayItem.showWarning("Application closed", "You really have closed the application!");
+            }
+        }
+    }
 
 }

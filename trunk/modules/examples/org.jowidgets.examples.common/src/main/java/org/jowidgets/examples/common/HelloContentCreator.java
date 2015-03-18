@@ -44,74 +44,74 @@ import org.jowidgets.validation.tools.MandatoryValidator;
 
 public class HelloContentCreator implements IInputContentCreator<String> {
 
-	private final int textFieldCount = 10;
+    private final int textFieldCount = 10;
 
-	@SuppressWarnings("unchecked")
-	private final IInputComponent<String>[] widgets = new IInputComponent[textFieldCount];
+    @SuppressWarnings("unchecked")
+    private final IInputComponent<String>[] widgets = new IInputComponent[textFieldCount];
 
-	@Override
-	public void createContent(final IInputContentContainer widgetContainer) {
-		final IBluePrintFactory bpF = Toolkit.getInstance().getBluePrintFactory();
+    @Override
+    public void createContent(final IInputContentContainer widgetContainer) {
+        final IBluePrintFactory bpF = Toolkit.getInstance().getBluePrintFactory();
 
-		final IValidator<String> characterLenghtValidator = new IValidator<String>() {
-			@Override
-			public IValidationResult validate(final String validationInput) {
-				if (validationInput != null && validationInput.length() > 15) {
-					return ValidationResult.error("Only 15 characters allowed");
-				}
-				return ValidationResult.ok();
-			}
-		};
+        final IValidator<String> characterLenghtValidator = new IValidator<String>() {
+            @Override
+            public IValidationResult validate(final String validationInput) {
+                if (validationInput != null && validationInput.length() > 15) {
+                    return ValidationResult.error("Only 15 characters allowed");
+                }
+                return ValidationResult.ok();
+            }
+        };
 
-		widgetContainer.setLayout(new MigLayoutDescriptor("[][grow, 250:250:800][250::800]", ""));
-		for (int i = 0; i < widgets.length; i++) {
+        widgetContainer.setLayout(new MigLayoutDescriptor("[][grow, 250:250:800][250::800]", ""));
+        for (int i = 0; i < widgets.length; i++) {
 
-			final boolean mandatory = i <= 5;
-			final String mandatoryMarker = mandatory ? "*" : "";
+            final boolean mandatory = i <= 5;
+            final String mandatoryMarker = mandatory ? "*" : "";
 
-			final String label = "Field" + i;
+            final String label = "Field" + i;
 
-			widgetContainer.add(bpF.textLabel(label + mandatoryMarker), "");
+            widgetContainer.add(bpF.textLabel(label + mandatoryMarker), "");
 
-			final IInputFieldBluePrint<String> textFieldBp = bpF.inputFieldString();
+            final IInputFieldBluePrint<String> textFieldBp = bpF.inputFieldString();
 
-			textFieldBp.setValidator(characterLenghtValidator);
+            textFieldBp.setValidator(characterLenghtValidator);
 
-			widgets[i] = widgetContainer.add(label, textFieldBp, "growx");
-			if (mandatory) {
-				widgets[i].addValidator(new MandatoryValidator<String>("*mandatory field"));
-			}
+            widgets[i] = widgetContainer.add(label, textFieldBp, "growx");
+            if (mandatory) {
+                widgets[i].addValidator(new MandatoryValidator<String>("*mandatory field"));
+            }
 
-			final IDecorator<IValidationResult> initialDecorator = new IDecorator<IValidationResult>() {
-				@Override
-				public IValidationResult decorate(final IValidationResult original) {
-					final IValidationMessage worstFirst = original.getWorstFirst();
-					if (worstFirst.getType().equalOrWorse(MessageType.ERROR)) {
-						return ValidationResult.infoError("*mandatory field");
-					}
-					else {
-						return ValidationResult.create().withInfo("optional");
-					}
-				}
-			};
+            final IDecorator<IValidationResult> initialDecorator = new IDecorator<IValidationResult>() {
+                @Override
+                public IValidationResult decorate(final IValidationResult original) {
+                    final IValidationMessage worstFirst = original.getWorstFirst();
+                    if (worstFirst.getType().equalOrWorse(MessageType.ERROR)) {
+                        return ValidationResult.infoError("*mandatory field");
+                    }
+                    else {
+                        return ValidationResult.create().withInfo("optional");
+                    }
+                }
+            };
 
-			widgetContainer.add(
-					bpF.inputComponentValidationLabel(widgets[i]).setInitialValidationDecorator(initialDecorator),
-					"wrap");
-		}
+            widgetContainer.add(
+                    bpF.inputComponentValidationLabel(widgets[i]).setInitialValidationDecorator(initialDecorator),
+                    "wrap");
+        }
 
-	}
+    }
 
-	@Override
-	public void setValue(final String content) {}
+    @Override
+    public void setValue(final String content) {}
 
-	@Override
-	public String getValue() {
-		final StringBuilder builder = new StringBuilder();
-		for (int i = 0; i < widgets.length; i++) {
-			builder.append(widgets[i].getValue() + "\n");
-		}
-		return builder.toString();
-	}
+    @Override
+    public String getValue() {
+        final StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < widgets.length; i++) {
+            builder.append(widgets[i].getValue() + "\n");
+        }
+        return builder.toString();
+    }
 
 }

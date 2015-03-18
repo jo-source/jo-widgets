@@ -32,7 +32,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IValidationLabelSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.IValidationResultLabelDescriptor;
 
 public interface IValidationResultLabelBluePrint extends
-		IValidationLabelSetupBuilder<IValidationResultLabelBluePrint>,
-		IValidationResultLabelDescriptor {
+        IValidationLabelSetupBuilder<IValidationResultLabelBluePrint>,
+        IValidationResultLabelDescriptor {
 
 }

@@ -44,105 +44,105 @@ import org.jowidgets.spi.impl.swt.common.clipboard.ObjectTransfer;
 
 final class DragDropUtil {
 
-	private static final Transfer TEXT_TRANSFER = TextTransfer.getInstance();
-	private static final Transfer OBJECT_TRANSFER = ObjectTransfer.getInstance();
+    private static final Transfer TEXT_TRANSFER = TextTransfer.getInstance();
+    private static final Transfer OBJECT_TRANSFER = ObjectTransfer.getInstance();
 
-	private DragDropUtil() {}
+    private DragDropUtil() {}
 
-	static Transfer[] createTransfers(final Collection<TransferTypeSpi> supportedTypes) {
-		final Set<Transfer> result = new LinkedHashSet<Transfer>();
-		for (final TransferTypeSpi type : supportedTypes) {
-			if (String.class.equals(type.getJavaType())) {
-				result.add(TEXT_TRANSFER);
-			}
-			else {
-				result.add(OBJECT_TRANSFER);
-			}
-			if (result.size() == 2) {
-				break;
-			}
-		}
-		return result.toArray(new Transfer[result.size()]);
-	}
+    static Transfer[] createTransfers(final Collection<TransferTypeSpi> supportedTypes) {
+        final Set<Transfer> result = new LinkedHashSet<Transfer>();
+        for (final TransferTypeSpi type : supportedTypes) {
+            if (String.class.equals(type.getJavaType())) {
+                result.add(TEXT_TRANSFER);
+            }
+            else {
+                result.add(OBJECT_TRANSFER);
+            }
+            if (result.size() == 2) {
+                break;
+            }
+        }
+        return result.toArray(new Transfer[result.size()]);
+    }
 
-	static int createOperations(final Set<DropAction> actions) {
-		int result = 0;
-		if (actions.contains(DropAction.NONE)) {
-			result = result | DND.DROP_NONE;
-		}
-		if (actions.contains(DropAction.DEFAULT)) {
-			result = result | DND.DROP_DEFAULT;
-		}
-		if (actions.contains(DropAction.COPY)) {
-			result = result | DND.DROP_COPY;
-		}
-		if (actions.contains(DropAction.MOVE)) {
-			result = result | DND.DROP_MOVE;
-		}
-		if (actions.contains(DropAction.LINK)) {
-			result = result | DND.DROP_LINK;
-		}
-		return result;
-	}
+    static int createOperations(final Set<DropAction> actions) {
+        int result = 0;
+        if (actions.contains(DropAction.NONE)) {
+            result = result | DND.DROP_NONE;
+        }
+        if (actions.contains(DropAction.DEFAULT)) {
+            result = result | DND.DROP_DEFAULT;
+        }
+        if (actions.contains(DropAction.COPY)) {
+            result = result | DND.DROP_COPY;
+        }
+        if (actions.contains(DropAction.MOVE)) {
+            result = result | DND.DROP_MOVE;
+        }
+        if (actions.contains(DropAction.LINK)) {
+            result = result | DND.DROP_LINK;
+        }
+        return result;
+    }
 
-	static Set<DropAction> createActions(final int operations) {
-		final Set<DropAction> result = new HashSet<DropAction>();
-		if ((operations & DND.DROP_NONE) != 0) {
-			result.add(DropAction.NONE);
-		}
-		if ((operations & DND.DROP_DEFAULT) != 0) {
-			result.add(DropAction.DEFAULT);
-		}
-		if ((operations & DND.DROP_COPY) != 0) {
-			result.add(DropAction.COPY);
-		}
-		if ((operations & DND.DROP_MOVE) != 0) {
-			result.add(DropAction.MOVE);
-		}
-		if ((operations & DND.DROP_LINK) != 0) {
-			result.add(DropAction.LINK);
-		}
-		return result;
-	}
+    static Set<DropAction> createActions(final int operations) {
+        final Set<DropAction> result = new HashSet<DropAction>();
+        if ((operations & DND.DROP_NONE) != 0) {
+            result.add(DropAction.NONE);
+        }
+        if ((operations & DND.DROP_DEFAULT) != 0) {
+            result.add(DropAction.DEFAULT);
+        }
+        if ((operations & DND.DROP_COPY) != 0) {
+            result.add(DropAction.COPY);
+        }
+        if ((operations & DND.DROP_MOVE) != 0) {
+            result.add(DropAction.MOVE);
+        }
+        if ((operations & DND.DROP_LINK) != 0) {
+            result.add(DropAction.LINK);
+        }
+        return result;
+    }
 
-	static DropAction getDropAction(final int detail) {
-		if (detail == DND.DROP_NONE) {
-			return DropAction.NONE;
-		}
-		else if (detail == DND.DROP_DEFAULT) {
-			return DropAction.DEFAULT;
-		}
-		else if (detail == DND.DROP_COPY) {
-			return DropAction.COPY;
-		}
-		else if (detail == DND.DROP_MOVE) {
-			return DropAction.MOVE;
-		}
-		else if (detail == DND.DROP_LINK) {
-			return DropAction.LINK;
-		}
-		else {
-			return DropAction.NONE;
-		}
-	}
+    static DropAction getDropAction(final int detail) {
+        if (detail == DND.DROP_NONE) {
+            return DropAction.NONE;
+        }
+        else if (detail == DND.DROP_DEFAULT) {
+            return DropAction.DEFAULT;
+        }
+        else if (detail == DND.DROP_COPY) {
+            return DropAction.COPY;
+        }
+        else if (detail == DND.DROP_MOVE) {
+            return DropAction.MOVE;
+        }
+        else if (detail == DND.DROP_LINK) {
+            return DropAction.LINK;
+        }
+        else {
+            return DropAction.NONE;
+        }
+    }
 
-	static TransferTypeSpi getStringTransferType(final Collection<TransferTypeSpi> supportedTypes) {
-		for (final TransferTypeSpi type : supportedTypes) {
-			if (String.class.equals(type.getJavaType())) {
-				return type;
-			}
-		}
-		return null;
-	}
+    static TransferTypeSpi getStringTransferType(final Collection<TransferTypeSpi> supportedTypes) {
+        for (final TransferTypeSpi type : supportedTypes) {
+            if (String.class.equals(type.getJavaType())) {
+                return type;
+            }
+        }
+        return null;
+    }
 
-	static Collection<TransferTypeSpi> getTransferObjectTypes(final Collection<TransferTypeSpi> supportedTypes) {
-		final List<TransferTypeSpi> result = new LinkedList<TransferTypeSpi>();
-		for (final TransferTypeSpi type : supportedTypes) {
-			if (!String.class.equals(type.getJavaType())) {
-				result.add(type);
-			}
-		}
-		return result;
-	}
+    static Collection<TransferTypeSpi> getTransferObjectTypes(final Collection<TransferTypeSpi> supportedTypes) {
+        final List<TransferTypeSpi> result = new LinkedList<TransferTypeSpi>();
+        for (final TransferTypeSpi type : supportedTypes) {
+            if (!String.class.equals(type.getJavaType())) {
+                result.add(type);
+            }
+        }
+        return result;
+    }
 
 }

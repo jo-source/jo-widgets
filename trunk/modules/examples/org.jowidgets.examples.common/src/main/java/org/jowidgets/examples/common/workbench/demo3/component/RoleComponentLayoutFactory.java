@@ -38,42 +38,42 @@ import org.jowidgets.workbench.tools.SplitLayoutBuilder;
 
 public final class RoleComponentLayoutFactory {
 
-	private static final String DEFAULT_LAYOUT_ID = "DEFAULT_LAYOUT_ID";
-	private static final String MASTER_FOLDER_ID = "MASTER_FOLDER_ID";
-	private static final String DETAIL_FOLDER_ID = "DETAIL_FOLDER_ID";
+    private static final String DEFAULT_LAYOUT_ID = "DEFAULT_LAYOUT_ID";
+    private static final String MASTER_FOLDER_ID = "MASTER_FOLDER_ID";
+    private static final String DETAIL_FOLDER_ID = "DETAIL_FOLDER_ID";
 
-	private RoleComponentLayoutFactory() {}
+    private RoleComponentLayoutFactory() {}
 
-	public static ILayout create() {
-		final ILayoutBuilder builder = new LayoutBuilder();
-		builder.setId(DEFAULT_LAYOUT_ID).setLayoutContainer(createMasterDetailSplit());
-		return builder.build();
-	}
+    public static ILayout create() {
+        final ILayoutBuilder builder = new LayoutBuilder();
+        builder.setId(DEFAULT_LAYOUT_ID).setLayoutContainer(createMasterDetailSplit());
+        return builder.build();
+    }
 
-	private static ISplitLayoutBuilder createMasterDetailSplit() {
-		final ISplitLayoutBuilder result = new SplitLayoutBuilder();
-		result.setVertical().setWeight(0.5).setResizeSecond();
-		result.setFirstContainer(createMasterFolder());
-		result.setSecondContainer(createDetailFolder());
-		return result;
-	}
+    private static ISplitLayoutBuilder createMasterDetailSplit() {
+        final ISplitLayoutBuilder result = new SplitLayoutBuilder();
+        result.setVertical().setWeight(0.5).setResizeSecond();
+        result.setFirstContainer(createMasterFolder());
+        result.setSecondContainer(createDetailFolder());
+        return result;
+    }
 
-	private static IFolderLayoutBuilder createMasterFolder() {
-		final IFolderLayoutBuilder result = new FolderLayoutBuilder(MASTER_FOLDER_ID);
-		result.setViewsCloseable(false);
-		result.addView(RoleTableView.ID, RoleTableView.DEFAULT_LABEL, RoleTableView.DEFAULT_TOOLTIP, RoleTableView.DEFAULT_ICON);
-		return result;
-	}
+    private static IFolderLayoutBuilder createMasterFolder() {
+        final IFolderLayoutBuilder result = new FolderLayoutBuilder(MASTER_FOLDER_ID);
+        result.setViewsCloseable(false);
+        result.addView(RoleTableView.ID, RoleTableView.DEFAULT_LABEL, RoleTableView.DEFAULT_TOOLTIP, RoleTableView.DEFAULT_ICON);
+        return result;
+    }
 
-	private static IFolderLayoutBuilder createDetailFolder() {
-		final IFolderLayoutBuilder result = new FolderLayoutBuilder(DETAIL_FOLDER_ID);
-		result.setViewsCloseable(false);
-		result.addView(
-				RoleDetailView.ID,
-				RoleDetailView.DEFAULT_LABEL,
-				RoleDetailView.DEFAULT_TOOLTIP,
-				RoleDetailView.DEFAULT_ICON);
-		return result;
-	}
+    private static IFolderLayoutBuilder createDetailFolder() {
+        final IFolderLayoutBuilder result = new FolderLayoutBuilder(DETAIL_FOLDER_ID);
+        result.setViewsCloseable(false);
+        result.addView(
+                RoleDetailView.ID,
+                RoleDetailView.DEFAULT_LABEL,
+                RoleDetailView.DEFAULT_TOOLTIP,
+                RoleDetailView.DEFAULT_ICON);
+        return result;
+    }
 
 }

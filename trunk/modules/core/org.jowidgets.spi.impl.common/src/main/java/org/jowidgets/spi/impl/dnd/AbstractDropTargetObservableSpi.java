@@ -40,77 +40,77 @@ import org.jowidgets.util.Assert;
 
 public abstract class AbstractDropTargetObservableSpi implements IDropTargetObservableSpi {
 
-	private final Set<IDropTargetListenerSpi> listeners;
+    private final Set<IDropTargetListenerSpi> listeners;
 
-	private boolean active;
+    private boolean active;
 
-	public AbstractDropTargetObservableSpi() {
-		this.listeners = new LinkedHashSet<IDropTargetListenerSpi>();
-		this.active = false;
-	}
+    public AbstractDropTargetObservableSpi() {
+        this.listeners = new LinkedHashSet<IDropTargetListenerSpi>();
+        this.active = false;
+    }
 
-	@Override
-	public final void addDropTargetListenerSpi(final IDropTargetListenerSpi listener) {
-		Assert.paramNotNull(listener, "listener");
-		final int lastSize = listeners.size();
-		listeners.add(listener);
-		if (lastSize == 0) {
-			this.active = true;
-			setActive(true);
-		}
-	}
+    @Override
+    public final void addDropTargetListenerSpi(final IDropTargetListenerSpi listener) {
+        Assert.paramNotNull(listener, "listener");
+        final int lastSize = listeners.size();
+        listeners.add(listener);
+        if (lastSize == 0) {
+            this.active = true;
+            setActive(true);
+        }
+    }
 
-	@Override
-	public final void removeDropTargetListenerSpi(final IDropTargetListenerSpi listener) {
-		Assert.paramNotNull(listener, "listener");
-		final int lastSize = listeners.size();
-		listeners.remove(listener);
-		if (lastSize == 1 && listeners.size() == 0) {
-			this.active = false;
-			setActive(false);
-		}
-	}
+    @Override
+    public final void removeDropTargetListenerSpi(final IDropTargetListenerSpi listener) {
+        Assert.paramNotNull(listener, "listener");
+        final int lastSize = listeners.size();
+        listeners.remove(listener);
+        if (lastSize == 1 && listeners.size() == 0) {
+            this.active = false;
+            setActive(false);
+        }
+    }
 
-	public final void fireDragEnter(final IDropEventSpi event, final IDropResponseSpi response) {
-		for (final IDropTargetListenerSpi listener : new LinkedList<IDropTargetListenerSpi>(listeners)) {
-			listener.dragEnter(event, response);
-		}
-	}
+    public final void fireDragEnter(final IDropEventSpi event, final IDropResponseSpi response) {
+        for (final IDropTargetListenerSpi listener : new LinkedList<IDropTargetListenerSpi>(listeners)) {
+            listener.dragEnter(event, response);
+        }
+    }
 
-	public final void fireDragOver(final IDropEventSpi event, final IDropResponseSpi response) {
-		for (final IDropTargetListenerSpi listener : new LinkedList<IDropTargetListenerSpi>(listeners)) {
-			listener.dragOver(event, response);
-		}
-	}
+    public final void fireDragOver(final IDropEventSpi event, final IDropResponseSpi response) {
+        for (final IDropTargetListenerSpi listener : new LinkedList<IDropTargetListenerSpi>(listeners)) {
+            listener.dragOver(event, response);
+        }
+    }
 
-	public final void fireDragOperationChanged(final IDropEventSpi event, final IDropResponseSpi response) {
-		for (final IDropTargetListenerSpi listener : new LinkedList<IDropTargetListenerSpi>(listeners)) {
-			listener.dragOperationChanged(event, response);
-		}
-	}
+    public final void fireDragOperationChanged(final IDropEventSpi event, final IDropResponseSpi response) {
+        for (final IDropTargetListenerSpi listener : new LinkedList<IDropTargetListenerSpi>(listeners)) {
+            listener.dragOperationChanged(event, response);
+        }
+    }
 
-	public final void fireDragExit() {
-		for (final IDropTargetListenerSpi listener : new LinkedList<IDropTargetListenerSpi>(listeners)) {
-			listener.dragExit();
-		}
-	}
+    public final void fireDragExit() {
+        for (final IDropTargetListenerSpi listener : new LinkedList<IDropTargetListenerSpi>(listeners)) {
+            listener.dragExit();
+        }
+    }
 
-	public final void fireDropAccept(final IDropEventSpi event, final IDropResponseSpi response) {
-		for (final IDropTargetListenerSpi listener : new LinkedList<IDropTargetListenerSpi>(listeners)) {
-			listener.dropAccept(event, response);
-		}
-	}
+    public final void fireDropAccept(final IDropEventSpi event, final IDropResponseSpi response) {
+        for (final IDropTargetListenerSpi listener : new LinkedList<IDropTargetListenerSpi>(listeners)) {
+            listener.dropAccept(event, response);
+        }
+    }
 
-	public final void fireDrop(final IDropEventSpi event) {
-		for (final IDropTargetListenerSpi listener : new LinkedList<IDropTargetListenerSpi>(listeners)) {
-			listener.drop(event);
-		}
-	}
+    public final void fireDrop(final IDropEventSpi event) {
+        for (final IDropTargetListenerSpi listener : new LinkedList<IDropTargetListenerSpi>(listeners)) {
+            listener.drop(event);
+        }
+    }
 
-	protected boolean isActive() {
-		return active;
-	}
+    protected boolean isActive() {
+        return active;
+    }
 
-	protected abstract void setActive(boolean active);
+    protected abstract void setActive(boolean active);
 
 }

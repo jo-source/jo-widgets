@@ -28,7 +28,6 @@
 
 package org.jowidgets.api.model.item;
 
-
 public interface ISelectableMenuItemModel extends IMenuItemModel, ISelectableItemModel {
 
 }

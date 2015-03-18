@@ -30,32 +30,32 @@ package org.jowidgets.util;
 
 public interface IObservableValue<VALUE_TYPE> {
 
-	/**
-	 * Sets the value
-	 * 
-	 * @param value The value to set
-	 */
-	void setValue(VALUE_TYPE value);
+    /**
+     * Sets the value
+     * 
+     * @param value The value to set
+     */
+    void setValue(VALUE_TYPE value);
 
-	/**
-	 * Gets the value
-	 * 
-	 * @return The value
-	 */
-	VALUE_TYPE getValue();
+    /**
+     * Gets the value
+     * 
+     * @return The value
+     */
+    VALUE_TYPE getValue();
 
-	/**
-	 * Adds a value listener
-	 * 
-	 * @param listener The listener to add
-	 */
-	void addValueListener(IObservableValueListener<?> listener);
+    /**
+     * Adds a value listener
+     * 
+     * @param listener The listener to add
+     */
+    void addValueListener(IObservableValueListener<?> listener);
 
-	/**
-	 * Removes a value listener
-	 * 
-	 * @param listener The listener to remove
-	 */
-	void removeValueListener(IObservableValueListener<?> listener);
+    /**
+     * Removes a value listener
+     * 
+     * @param listener The listener to remove
+     */
+    void removeValueListener(IObservableValueListener<?> listener);
 
 }

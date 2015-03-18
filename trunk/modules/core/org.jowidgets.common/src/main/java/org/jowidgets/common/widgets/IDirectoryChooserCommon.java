@@ -34,26 +34,26 @@ import org.jowidgets.common.types.DialogResult;
 
 public interface IDirectoryChooserCommon extends IDisplayCommon {
 
-	/**
-	 * Sets the directory of the chooser that will be shown
-	 * when the chooser will be opened the first time.
-	 * 
-	 * @param file The file or directory to set
-	 */
-	void setDirectory(File file);
+    /**
+     * Sets the directory of the chooser that will be shown
+     * when the chooser will be opened the first time.
+     * 
+     * @param file The file or directory to set
+     */
+    void setDirectory(File file);
 
-	/**
-	 * Opens the chooser and blocks until the user has pressed OK or CANCEL
-	 * 
-	 * @return DialogResult.OK or DialogResult.CANCEL
-	 */
-	DialogResult open();
+    /**
+     * Opens the chooser and blocks until the user has pressed OK or CANCEL
+     * 
+     * @return DialogResult.OK or DialogResult.CANCEL
+     */
+    DialogResult open();
 
-	/**
-	 * Gets the directory that was selected by the user.
-	 * 
-	 * @return The directory that was selected by the user or an empty list.
-	 */
-	File getDirectory();
+    /**
+     * Gets the directory that was selected by the user.
+     * 
+     * @return The directory that was selected by the user or an empty list.
+     */
+    File getDirectory();
 
 }

@@ -40,84 +40,84 @@ import org.jowidgets.util.IFactory;
  */
 public final class ImageFactory {
 
-	private ImageFactory() {}
+    private ImageFactory() {}
 
-	/**
-	 * Gets the image factory instance
-	 * 
-	 * @return The image factory instance
-	 */
-	public static IImageFactory getInstance() {
-		return Toolkit.getImageFactory();
-	}
+    /**
+     * Gets the image factory instance
+     * 
+     * @return The image factory instance
+     */
+    public static IImageFactory getInstance() {
+        return Toolkit.getImageFactory();
+    }
 
-	/**
-	 * Creates an image from an file.
-	 * 
-	 * The resulting image is also an image constant that will be registered at the image registry,
-	 * so it can be used as image constant, until the image will be disposed.
-	 * 
-	 * Remark: If the resulting image will be disposed, it will be unregistered from
-	 * the image registry
-	 * 
-	 * @param file The file that holds the image
-	 * 
-	 * @return The created image
-	 */
-	public static IImage createImage(final File file) {
-		return getInstance().createImage(file);
-	}
+    /**
+     * Creates an image from an file.
+     * 
+     * The resulting image is also an image constant that will be registered at the image registry,
+     * so it can be used as image constant, until the image will be disposed.
+     * 
+     * Remark: If the resulting image will be disposed, it will be unregistered from
+     * the image registry
+     * 
+     * @param file The file that holds the image
+     * 
+     * @return The created image
+     */
+    public static IImage createImage(final File file) {
+        return getInstance().createImage(file);
+    }
 
-	/**
-	 * Creates an image from an url.
-	 * 
-	 * The resulting image is also an image constant that will be registered at the image registry,
-	 * so it can be used as image constant, until the image will be disposed.
-	 * 
-	 * Remark: If the resulting image will be disposed, it will be unregistered from
-	 * the image registry
-	 * 
-	 * @param url The url to create the image from
-	 * 
-	 * @return The created image
-	 */
-	public static IImage createImage(final URL url) {
-		return getInstance().createImage(url);
-	}
+    /**
+     * Creates an image from an url.
+     * 
+     * The resulting image is also an image constant that will be registered at the image registry,
+     * so it can be used as image constant, until the image will be disposed.
+     * 
+     * Remark: If the resulting image will be disposed, it will be unregistered from
+     * the image registry
+     * 
+     * @param url The url to create the image from
+     * 
+     * @return The created image
+     */
+    public static IImage createImage(final URL url) {
+        return getInstance().createImage(url);
+    }
 
-	/**
-	 * Creates an image from an input stream factory.
-	 * 
-	 * The resulting image is also an image constant that will be registered at the image registry,
-	 * so it can be used as image constant, until the image will be disposed.
-	 * 
-	 * Remark: If the resulting image will be disposed, it will be unregistered from
-	 * the image registry
-	 * 
-	 * @param inputStream A factory for an input stream
-	 * 
-	 * @return The created image
-	 */
-	public static IImage createImage(final IFactory<InputStream> inputStream) {
-		return getInstance().createImage(inputStream);
-	}
+    /**
+     * Creates an image from an input stream factory.
+     * 
+     * The resulting image is also an image constant that will be registered at the image registry,
+     * so it can be used as image constant, until the image will be disposed.
+     * 
+     * Remark: If the resulting image will be disposed, it will be unregistered from
+     * the image registry
+     * 
+     * @param inputStream A factory for an input stream
+     * 
+     * @return The created image
+     */
+    public static IImage createImage(final IFactory<InputStream> inputStream) {
+        return getInstance().createImage(inputStream);
+    }
 
-	/**
-	 * Creates an buffered image with defined with and height.
-	 * 
-	 * The resulting image is also an image constant that will be registered at the image registry,
-	 * so it can be used as image constant, until the image will be disposed.
-	 * 
-	 * Remark: If the resulting image will be disposed, it will be unregistered from
-	 * the image registry
-	 * 
-	 * @param width The width of the image
-	 * @param height The height of the image
-	 * 
-	 * @return The created image
-	 */
-	public static IBufferedImage createBufferedImage(final int width, final int height) {
-		return getInstance().createBufferedImage(width, height);
-	}
+    /**
+     * Creates an buffered image with defined with and height.
+     * 
+     * The resulting image is also an image constant that will be registered at the image registry,
+     * so it can be used as image constant, until the image will be disposed.
+     * 
+     * Remark: If the resulting image will be disposed, it will be unregistered from
+     * the image registry
+     * 
+     * @param width The width of the image
+     * @param height The height of the image
+     * 
+     * @return The created image
+     */
+    public static IBufferedImage createBufferedImage(final int width, final int height) {
+        return getInstance().createBufferedImage(width, height);
+    }
 
 }

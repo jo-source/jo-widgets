@@ -42,169 +42,169 @@ import org.jowidgets.common.widgets.layout.ILayouter;
 
 public interface IContainer extends IComponent, IContainerObservable, IRecursiveContainerObservable, IContainerCommon {
 
-	/**
-	 * Sets the layouter for this container defined by a layout factory
-	 * 
-	 * @param layoutFactory The layout to set
-	 * 
-	 * @return The layouter created from the factory
-	 */
-	<LAYOUT_TYPE extends ILayouter> LAYOUT_TYPE setLayout(ILayoutFactory<LAYOUT_TYPE> layoutFactory);
+    /**
+     * Sets the layouter for this container defined by a layout factory
+     * 
+     * @param layoutFactory The layout to set
+     * 
+     * @return The layouter created from the factory
+     */
+    <LAYOUT_TYPE extends ILayouter> LAYOUT_TYPE setLayout(ILayoutFactory<LAYOUT_TYPE> layoutFactory);
 
-	/**
-	 * Layouts the container
-	 */
-	void layout();
+    /**
+     * Layouts the container
+     */
+    void layout();
 
-	/**
-	 * Layouts the container later in the event queue.
-	 * If this method will be invoked more than once before the layout
-	 * occurs, only one layout invocation will be done on this container.
-	 */
-	void layoutLater();
+    /**
+     * Layouts the container later in the event queue.
+     * If this method will be invoked more than once before the layout
+     * occurs, only one layout invocation will be done on this container.
+     */
+    void layoutLater();
 
-	/**
-	 * Adds a container registry recursively.
-	 * 
-	 * With help of a container registry its is possible to get an access to all children
-	 * of the container currently existing and all eventually added or removed children
-	 * in the future
-	 * 
-	 * @param registry The registry to add
-	 */
-	void addContainerRegistry(IContainerRegistry registry);
+    /**
+     * Adds a container registry recursively.
+     * 
+     * With help of a container registry its is possible to get an access to all children
+     * of the container currently existing and all eventually added or removed children
+     * in the future
+     * 
+     * @param registry The registry to add
+     */
+    void addContainerRegistry(IContainerRegistry registry);
 
-	/**
-	 * Removes a container registry
-	 * 
-	 * @param registry The registry to remove
-	 */
-	void removeContainerRegistry(IContainerRegistry registry);
+    /**
+     * Removes a container registry
+     * 
+     * @param registry The registry to remove
+     */
+    void removeContainerRegistry(IContainerRegistry registry);
 
-	/**
-	 * Gets the containers children
-	 * 
-	 * @return a unmodifiable copy of the containers children
-	 */
-	List<IControl> getChildren();
+    /**
+     * Gets the containers children
+     * 
+     * @return a unmodifiable copy of the containers children
+     */
+    List<IControl> getChildren();
 
-	/**
-	 * Removes a control from this container.
-	 * 
-	 * Removing controls should be nested with layoutBegin() - layoutEnd() to ensure
-	 * that the container revalidates its layout.
-	 * 
-	 * The removed controls will be disposed an can no longer be used
-	 * 
-	 * @param control The control to remove
-	 * 
-	 * @return true if the widget was removed, false otherwise
-	 */
-	boolean remove(IControl control);
+    /**
+     * Removes a control from this container.
+     * 
+     * Removing controls should be nested with layoutBegin() - layoutEnd() to ensure
+     * that the container revalidates its layout.
+     * 
+     * The removed controls will be disposed an can no longer be used
+     * 
+     * @param control The control to remove
+     * 
+     * @return true if the widget was removed, false otherwise
+     */
+    boolean remove(IControl control);
 
-	/**
-	 * Creates and adds an control to this container.
-	 * 
-	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
-	 * @param index The index at which the control should be added in the container
-	 * @param descriptor The descriptor that describes the control to add
-	 * @param layoutConstraints The layout constraints / data for the added control
-	 * 
-	 * @return the created and added control
-	 */
-	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		int index,
-		IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
-		Object layoutConstraints);
+    /**
+     * Creates and adds an control to this container.
+     * 
+     * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
+     * @param index The index at which the control should be added in the container
+     * @param descriptor The descriptor that describes the control to add
+     * @param layoutConstraints The layout constraints / data for the added control
+     * 
+     * @return the created and added control
+     */
+    <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+        int index,
+        IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+        Object layoutConstraints);
 
-	/**
-	 * Creates and adds an control to this container.
-	 * 
-	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
-	 * @param index The index at which the control should be added in the container
-	 * @param descriptor The descriptor that describes the control to add
-	 * 
-	 * @return the created and added control
-	 */
-	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(int index, IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
+    /**
+     * Creates and adds an control to this container.
+     * 
+     * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
+     * @param index The index at which the control should be added in the container
+     * @param descriptor The descriptor that describes the control to add
+     * 
+     * @return the created and added control
+     */
+    <WIDGET_TYPE extends IControl> WIDGET_TYPE add(int index, IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
 
-	/**
-	 * Creates and adds an control to this container
-	 * 
-	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
-	 * @param index The index at which the control should be added in the container
-	 * @param creator The creator that creates the control
-	 * @param layoutConstraints The layout constraints / data for the added control
-	 * 
-	 * @return the created and added control
-	 */
-	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(int index, ICustomWidgetCreator<WIDGET_TYPE> creator, Object layoutConstraints);
+    /**
+     * Creates and adds an control to this container
+     * 
+     * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
+     * @param index The index at which the control should be added in the container
+     * @param creator The creator that creates the control
+     * @param layoutConstraints The layout constraints / data for the added control
+     * 
+     * @return the created and added control
+     */
+    <WIDGET_TYPE extends IControl> WIDGET_TYPE add(int index, ICustomWidgetCreator<WIDGET_TYPE> creator, Object layoutConstraints);
 
-	/**
-	 * Creates and adds an control to this container
-	 * 
-	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
-	 * @param index The index at which the control should be added in the container
-	 * @param creator The creator that creates the control
-	 * 
-	 * @return the created and added control
-	 */
-	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(int index, ICustomWidgetCreator<WIDGET_TYPE> creator);
+    /**
+     * Creates and adds an control to this container
+     * 
+     * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
+     * @param index The index at which the control should be added in the container
+     * @param creator The creator that creates the control
+     * 
+     * @return the created and added control
+     */
+    <WIDGET_TYPE extends IControl> WIDGET_TYPE add(int index, ICustomWidgetCreator<WIDGET_TYPE> creator);
 
-	/**
-	 * Creates and adds an control to this container.
-	 * 
-	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
-	 * @param descriptor The descriptor that describes the control to add
-	 * @param layoutConstraints The layout constraints / data for the added control
-	 * 
-	 * @return the created and added control
-	 */
-	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(IWidgetDescriptor<? extends WIDGET_TYPE> descriptor, Object layoutConstraints);
+    /**
+     * Creates and adds an control to this container.
+     * 
+     * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
+     * @param descriptor The descriptor that describes the control to add
+     * @param layoutConstraints The layout constraints / data for the added control
+     * 
+     * @return the created and added control
+     */
+    <WIDGET_TYPE extends IControl> WIDGET_TYPE add(IWidgetDescriptor<? extends WIDGET_TYPE> descriptor, Object layoutConstraints);
 
-	/**
-	 * Creates and adds an control to this container
-	 * 
-	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
-	 * @param creator The creator that creates the control
-	 * @param layoutConstraints The layout constraints / data for the added control
-	 * 
-	 * @return the created and added control
-	 */
-	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(ICustomWidgetCreator<WIDGET_TYPE> creator, Object layoutConstraints);
+    /**
+     * Creates and adds an control to this container
+     * 
+     * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
+     * @param creator The creator that creates the control
+     * @param layoutConstraints The layout constraints / data for the added control
+     * 
+     * @return the created and added control
+     */
+    <WIDGET_TYPE extends IControl> WIDGET_TYPE add(ICustomWidgetCreator<WIDGET_TYPE> creator, Object layoutConstraints);
 
-	/**
-	 * Creates and adds an control to this container.
-	 * 
-	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
-	 * @param descriptor The descriptor that describes the control to add
-	 * 
-	 * @return the created and added control
-	 */
-	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
+    /**
+     * Creates and adds an control to this container.
+     * 
+     * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
+     * @param descriptor The descriptor that describes the control to add
+     * 
+     * @return the created and added control
+     */
+    <WIDGET_TYPE extends IControl> WIDGET_TYPE add(IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
 
-	/**
-	 * Creates and adds an control to this container
-	 * 
-	 * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
-	 * @param creator The creator that creates the control
-	 * 
-	 * @return the created and added control
-	 */
-	<WIDGET_TYPE extends IControl> WIDGET_TYPE add(ICustomWidgetCreator<WIDGET_TYPE> creator);
+    /**
+     * Creates and adds an control to this container
+     * 
+     * @param <WIDGET_TYPE> The type of the widget that is created, added and returned
+     * @param creator The creator that creates the control
+     * 
+     * @return the created and added control
+     */
+    <WIDGET_TYPE extends IControl> WIDGET_TYPE add(ICustomWidgetCreator<WIDGET_TYPE> creator);
 
-	/**
-	 * Sets the tab order of the container's controls.
-	 * 
-	 * @param tabOrder the tab order to set or null to set the default tab behavior.
-	 */
-	void setTabOrder(Collection<? extends IControl> tabOrder);
+    /**
+     * Sets the tab order of the container's controls.
+     * 
+     * @param tabOrder the tab order to set or null to set the default tab behavior.
+     */
+    void setTabOrder(Collection<? extends IControl> tabOrder);
 
-	/**
-	 * Sets the tab order of the container's controls.
-	 * 
-	 * @param tabOrder the tab order to set or null to set the default tab behavior.
-	 */
-	void setTabOrder(IControl... controls);
+    /**
+     * Sets the tab order of the container's controls.
+     * 
+     * @param tabOrder the tab order to set or null to set the default tab behavior.
+     */
+    void setTabOrder(IControl... controls);
 
 }

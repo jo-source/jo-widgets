@@ -30,140 +30,140 @@ package org.jowidgets.util;
 
 public final class Interval<NUMBER_TYPE extends Number> {
 
-	private final NUMBER_TYPE leftBoundary;
-	private final boolean leftOpen;
+    private final NUMBER_TYPE leftBoundary;
+    private final boolean leftOpen;
 
-	private final NUMBER_TYPE rightBoundary;
-	private final boolean rightOpen;
+    private final NUMBER_TYPE rightBoundary;
+    private final boolean rightOpen;
 
-	private String stringRepresentation;
+    private String stringRepresentation;
 
-	public Interval(final NUMBER_TYPE leftBoundary, final NUMBER_TYPE rightBoundary) {
-		this(leftBoundary, false, rightBoundary, false);
-	}
+    public Interval(final NUMBER_TYPE leftBoundary, final NUMBER_TYPE rightBoundary) {
+        this(leftBoundary, false, rightBoundary, false);
+    }
 
-	public Interval(
-		final NUMBER_TYPE leftBoundary,
-		final boolean leftOpen,
-		final NUMBER_TYPE rightBoundary,
-		final boolean rightOpen) {
+    public Interval(
+        final NUMBER_TYPE leftBoundary,
+        final boolean leftOpen,
+        final NUMBER_TYPE rightBoundary,
+        final boolean rightOpen) {
 
-		this.leftBoundary = leftBoundary;
-		this.leftOpen = leftOpen;
-		this.rightBoundary = rightBoundary;
-		this.rightOpen = rightOpen;
-	}
+        this.leftBoundary = leftBoundary;
+        this.leftOpen = leftOpen;
+        this.rightBoundary = rightBoundary;
+        this.rightOpen = rightOpen;
+    }
 
-	public NUMBER_TYPE getLeftBoundary() {
-		return leftBoundary;
-	}
+    public NUMBER_TYPE getLeftBoundary() {
+        return leftBoundary;
+    }
 
-	public boolean isLeftOpen() {
-		return leftOpen;
-	}
+    public boolean isLeftOpen() {
+        return leftOpen;
+    }
 
-	public NUMBER_TYPE getRightBoundary() {
-		return rightBoundary;
-	}
+    public NUMBER_TYPE getRightBoundary() {
+        return rightBoundary;
+    }
 
-	public boolean isRightOpen() {
-		return rightOpen;
-	}
+    public boolean isRightOpen() {
+        return rightOpen;
+    }
 
-	/**
-	 * Calculates the intersection of this interval and the given interval
-	 * 
-	 * If the intersection is the empty interval, null will be returned
-	 * 
-	 * @param interval The interval to intersect with
-	 * 
-	 * @return The intersection interval or null, if the intersection is empty
-	 */
-	public Interval<NUMBER_TYPE> intersect(final Interval<NUMBER_TYPE> interval) {
-		Assert.paramNotNull(interval, "interval");
+    /**
+     * Calculates the intersection of this interval and the given interval
+     * 
+     * If the intersection is the empty interval, null will be returned
+     * 
+     * @param interval The interval to intersect with
+     * 
+     * @return The intersection interval or null, if the intersection is empty
+     */
+    public Interval<NUMBER_TYPE> intersect(final Interval<NUMBER_TYPE> interval) {
+        Assert.paramNotNull(interval, "interval");
 
-		final NUMBER_TYPE min = NumberUtils.max(leftBoundary, interval.getLeftBoundary());
-		final NUMBER_TYPE max = NumberUtils.min(rightBoundary, interval.getRightBoundary());
+        final NUMBER_TYPE min = NumberUtils.max(leftBoundary, interval.getLeftBoundary());
+        final NUMBER_TYPE max = NumberUtils.min(rightBoundary, interval.getRightBoundary());
 
-		if (min != null && max != null && NumberUtils.compareTo(min, max) < 0) {
-			return new Interval<NUMBER_TYPE>(min, max);
-		}
-		else {
-			return null;
-		}
-	}
+        if (min != null && max != null && NumberUtils.compareTo(min, max) < 0) {
+            return new Interval<NUMBER_TYPE>(min, max);
+        }
+        else {
+            return null;
+        }
+    }
 
-	/**
-	 * Calculates the union of this interval and the given interval
-	 * 
-	 * If the union can not be calculated, e.g. its not a single interval, null will be returned
-	 * 
-	 * @param interval The interval to calculate the union with
-	 * 
-	 * @return The union interval or null
-	 */
-	public Interval<NUMBER_TYPE> union(final Interval<NUMBER_TYPE> interval) {
-		Assert.paramNotNull(interval, "interval");
+    /**
+     * Calculates the union of this interval and the given interval
+     * 
+     * If the union can not be calculated, e.g. its not a single interval, null will be returned
+     * 
+     * @param interval The interval to calculate the union with
+     * 
+     * @return The union interval or null
+     */
+    public Interval<NUMBER_TYPE> union(final Interval<NUMBER_TYPE> interval) {
+        Assert.paramNotNull(interval, "interval");
 
-		if (intersect(interval) == null) {
-			return null;
-		}
+        if (intersect(interval) == null) {
+            return null;
+        }
 
-		final NUMBER_TYPE min = NumberUtils.min(leftBoundary, interval.getLeftBoundary());
-		final NUMBER_TYPE max = NumberUtils.max(rightBoundary, interval.getRightBoundary());
+        final NUMBER_TYPE min = NumberUtils.min(leftBoundary, interval.getLeftBoundary());
+        final NUMBER_TYPE max = NumberUtils.max(rightBoundary, interval.getRightBoundary());
 
-		if (min != null && max != null) {
-			return new Interval<NUMBER_TYPE>(min, max);
-		}
-		else {
-			return null;
-		}
-	}
+        if (min != null && max != null) {
+            return new Interval<NUMBER_TYPE>(min, max);
+        }
+        else {
+            return null;
+        }
+    }
 
-	/**
-	 * Checks if a number is contained in an interval
-	 * 
-	 * @param number The number to check
-	 * 
-	 * @return True if contained, false otherwise
-	 */
-	public boolean contains(final NUMBER_TYPE number) {
-		return NumberUtils.compareTo(number, leftBoundary) >= 0 && NumberUtils.compareTo(number, rightBoundary) <= 0;
-	}
+    /**
+     * Checks if a number is contained in an interval
+     * 
+     * @param number The number to check
+     * 
+     * @return True if contained, false otherwise
+     */
+    public boolean contains(final NUMBER_TYPE number) {
+        return NumberUtils.compareTo(number, leftBoundary) >= 0 && NumberUtils.compareTo(number, rightBoundary) <= 0;
+    }
 
-	@Override
-	public String toString() {
-		if (stringRepresentation == null) {
-			final StringBuilder builder = new StringBuilder();
-			if (leftOpen) {
-				builder.append("(");
-			}
-			else {
-				builder.append("[");
-			}
-			if (leftBoundary != null) {
-				builder.append(leftBoundary);
-			}
-			else {
-				builder.append("UNDEFINED");
-			}
-			builder.append(",");
-			if (rightBoundary != null) {
-				builder.append(rightBoundary);
-			}
-			else {
-				builder.append("UNDEFINED");
-			}
-			if (rightOpen) {
-				builder.append(")");
-			}
-			else {
-				builder.append("]");
-			}
-			stringRepresentation = builder.toString();
-		}
+    @Override
+    public String toString() {
+        if (stringRepresentation == null) {
+            final StringBuilder builder = new StringBuilder();
+            if (leftOpen) {
+                builder.append("(");
+            }
+            else {
+                builder.append("[");
+            }
+            if (leftBoundary != null) {
+                builder.append(leftBoundary);
+            }
+            else {
+                builder.append("UNDEFINED");
+            }
+            builder.append(",");
+            if (rightBoundary != null) {
+                builder.append(rightBoundary);
+            }
+            else {
+                builder.append("UNDEFINED");
+            }
+            if (rightOpen) {
+                builder.append(")");
+            }
+            else {
+                builder.append("]");
+            }
+            stringRepresentation = builder.toString();
+        }
 
-		return stringRepresentation;
-	}
+        return stringRepresentation;
+    }
 
 }

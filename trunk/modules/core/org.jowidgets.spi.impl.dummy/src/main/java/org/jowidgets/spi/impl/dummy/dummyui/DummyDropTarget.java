@@ -39,19 +39,19 @@ import org.jowidgets.spi.dnd.IDropTargetSpi;
 
 final class DummyDropTarget implements IDropTargetSpi {
 
-	@Override
-	public void addDropTargetListenerSpi(final IDropTargetListenerSpi listener) {}
+    @Override
+    public void addDropTargetListenerSpi(final IDropTargetListenerSpi listener) {}
 
-	@Override
-	public void removeDropTargetListenerSpi(final IDropTargetListenerSpi listener) {}
+    @Override
+    public void removeDropTargetListenerSpi(final IDropTargetListenerSpi listener) {}
 
-	@Override
-	public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {}
+    @Override
+    public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {}
 
-	@Override
-	public void setActions(final Set<DropAction> actions) {}
+    @Override
+    public void setActions(final Set<DropAction> actions) {}
 
-	@Override
-	public void setDefaultDropMode(final DropMode dropMode) {}
+    @Override
+    public void setDefaultDropMode(final DropMode dropMode) {}
 
 }

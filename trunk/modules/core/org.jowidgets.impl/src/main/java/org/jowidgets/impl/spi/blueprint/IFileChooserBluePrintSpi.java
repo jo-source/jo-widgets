@@ -31,5 +31,5 @@ import org.jowidgets.impl.spi.blueprint.builder.IFileChooserSetupBuilderSpi;
 import org.jowidgets.impl.spi.descriptor.IFileChooserDescriptorSpi;
 
 public interface IFileChooserBluePrintSpi extends
-		IFileChooserSetupBuilderSpi<IFileChooserBluePrintSpi>,
-		IFileChooserDescriptorSpi {}
+        IFileChooserSetupBuilderSpi<IFileChooserBluePrintSpi>,
+        IFileChooserDescriptorSpi {}

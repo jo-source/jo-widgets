@@ -33,26 +33,26 @@ import org.jowidgets.common.types.Border;
 import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
 public class InputCompositeSetupConvenience extends AbstractSetupBuilderConvenience<IInputCompositeSetupBuilder<?, ?>> implements
-		IInputCompositeSetupConvenience<IInputCompositeSetupBuilder<?, ?>> {
+        IInputCompositeSetupConvenience<IInputCompositeSetupBuilder<?, ?>> {
 
-	@Override
-	public IInputCompositeSetupBuilder<?, ?> setBorder(final String borderTitle) {
-		return getBuilder().setBorder(new Border(borderTitle));
-	}
+    @Override
+    public IInputCompositeSetupBuilder<?, ?> setBorder(final String borderTitle) {
+        return getBuilder().setBorder(new Border(borderTitle));
+    }
 
-	@Override
-	public IInputCompositeSetupBuilder<?, ?> setBorder() {
-		return getBuilder().setBorder(new Border());
-	}
+    @Override
+    public IInputCompositeSetupBuilder<?, ?> setBorder() {
+        return getBuilder().setBorder(new Border());
+    }
 
-	@Override
-	public IInputCompositeSetupBuilder<?, ?> setContentBorder(final String borderTitle) {
-		return getBuilder().setContentBorder(new Border(borderTitle));
-	}
+    @Override
+    public IInputCompositeSetupBuilder<?, ?> setContentBorder(final String borderTitle) {
+        return getBuilder().setContentBorder(new Border(borderTitle));
+    }
 
-	@Override
-	public IInputCompositeSetupBuilder<?, ?> setContentBorder() {
-		return getBuilder().setContentBorder(new Border());
-	}
+    @Override
+    public IInputCompositeSetupBuilder<?, ?> setContentBorder() {
+        return getBuilder().setContentBorder(new Border());
+    }
 
 }

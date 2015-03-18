@@ -36,26 +36,26 @@ import org.jowidgets.common.widgets.layout.ILayouter;
 
 final class ListLayoutFactoryBuilder implements IListLayoutFactoryBuilder {
 
-	private IColorConstant[] backgroundColors;
+    private IColorConstant[] backgroundColors;
 
-	ListLayoutFactoryBuilder() {
-		backgroundColors = new IColorConstant[0];
-	}
+    ListLayoutFactoryBuilder() {
+        backgroundColors = new IColorConstant[0];
+    }
 
-	@Override
-	public IListLayoutFactoryBuilder backgroundColors(final IColorConstant[] backgroundColors) {
-		this.backgroundColors = backgroundColors;
-		return this;
-	}
+    @Override
+    public IListLayoutFactoryBuilder backgroundColors(final IColorConstant[] backgroundColors) {
+        this.backgroundColors = backgroundColors;
+        return this;
+    }
 
-	@Override
-	public ILayoutFactory<ILayouter> build() {
-		return new ILayoutFactory<ILayouter>() {
-			@Override
-			public ILayouter create(final IContainer container) {
-				return new ListLayout(container, backgroundColors);
-			}
-		};
-	}
+    @Override
+    public ILayoutFactory<ILayouter> build() {
+        return new ILayoutFactory<ILayouter>() {
+            @Override
+            public ILayouter create(final IContainer container) {
+                return new ListLayout(container, backgroundColors);
+            }
+        };
+    }
 
 }

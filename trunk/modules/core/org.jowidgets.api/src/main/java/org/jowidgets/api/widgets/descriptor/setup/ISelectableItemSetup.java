@@ -31,7 +31,7 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ISelectableItemSetup extends IAccelerateableMenuItemSetup {
 
-	@Mandatory
-	boolean isSelected();
+    @Mandatory
+    boolean isSelected();
 
 }

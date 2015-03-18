@@ -38,55 +38,55 @@ import org.eclipse.swt.widgets.Shell;
 
 abstract class AbstractSwtThread<T> extends Thread {
 
-	interface IWidgetCallback<T> {
-		void onWidgetCreated(T widget);
-	}
+    interface IWidgetCallback<T> {
+        void onWidgetCreated(T widget);
+    }
 
-	private final Canvas canvas;
-	private final IWidgetCallback<T> callback;
+    private final Canvas canvas;
+    private final IWidgetCallback<T> callback;
 
-	AbstractSwtThread(final Canvas canvas, final IWidgetCallback<T> callback) {
-		this.canvas = canvas;
-		this.callback = callback;
-		setName("swt-" + System.currentTimeMillis());
-		setDaemon(true);
-	}
+    AbstractSwtThread(final Canvas canvas, final IWidgetCallback<T> callback) {
+        this.canvas = canvas;
+        this.callback = callback;
+        setName("swt-" + System.currentTimeMillis());
+        setDaemon(true);
+    }
 
-	@Override
-	public void run() {
-		while (!canvas.isDisplayable()) {
-			try {
-				Thread.sleep(100);
-			}
-			catch (final InterruptedException e) {
-				Thread.currentThread().interrupt();
-				return;
-			}
-		}
-		final Display display = new Display();
-		try {
-			final Shell shell = SWT_AWT.new_Shell(display, canvas);
-			shell.setLayout(new FillLayout());
-			final T widget = createWidget(shell);
-			final Dimension canvasSize = canvas.getSize();
-			shell.setSize(canvasSize.width, canvasSize.height);
-			display.asyncExec(new Runnable() {
-				@Override
-				public void run() {
-					callback.onWidgetCreated(widget);
-				}
-			});
-			while (!shell.isDisposed()) {
-				if (!display.readAndDispatch()) {
-					display.sleep();
-				}
-			}
-		}
-		finally {
-			display.dispose();
-		}
-	}
+    @Override
+    public void run() {
+        while (!canvas.isDisplayable()) {
+            try {
+                Thread.sleep(100);
+            }
+            catch (final InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return;
+            }
+        }
+        final Display display = new Display();
+        try {
+            final Shell shell = SWT_AWT.new_Shell(display, canvas);
+            shell.setLayout(new FillLayout());
+            final T widget = createWidget(shell);
+            final Dimension canvasSize = canvas.getSize();
+            shell.setSize(canvasSize.width, canvasSize.height);
+            display.asyncExec(new Runnable() {
+                @Override
+                public void run() {
+                    callback.onWidgetCreated(widget);
+                }
+            });
+            while (!shell.isDisposed()) {
+                if (!display.readAndDispatch()) {
+                    display.sleep();
+                }
+            }
+        }
+        finally {
+            display.dispose();
+        }
+    }
 
-	protected abstract T createWidget(Shell shell);
+    protected abstract T createWidget(Shell shell);
 
 }

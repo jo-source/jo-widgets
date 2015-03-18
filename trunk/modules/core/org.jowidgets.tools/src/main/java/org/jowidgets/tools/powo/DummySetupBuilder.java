@@ -33,9 +33,9 @@ import org.jowidgets.common.widgets.descriptor.setup.IComponentSetupCommon;
 
 public class DummySetupBuilder implements ISetupBuilder<DummySetupBuilder> {
 
-	@Override
-	public DummySetupBuilder setSetup(final IComponentSetupCommon descriptor) {
-		return this;
-	}
+    @Override
+    public DummySetupBuilder setSetup(final IComponentSetupCommon descriptor) {
+        return this;
+    }
 
 }

@@ -28,6 +28,6 @@
 package org.jowidgets.api.widgets.blueprint.builder;
 
 public interface ISeparatorToolBarItemSetupBuilder<INSTANCE_TYPE extends ISeparatorToolBarItemSetupBuilder<?>> extends
-		IItemSetupBuilder<INSTANCE_TYPE> {
+        IItemSetupBuilder<INSTANCE_TYPE> {
 
 }

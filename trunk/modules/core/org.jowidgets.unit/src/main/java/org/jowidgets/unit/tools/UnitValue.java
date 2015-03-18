@@ -36,72 +36,72 @@ import org.jowidgets.util.Assert;
 
 public final class UnitValue<VALUE_TYPE> implements IUnitValue<VALUE_TYPE>, Serializable {
 
-	private static final long serialVersionUID = 2535546200656003911L;
+    private static final long serialVersionUID = 2535546200656003911L;
 
-	private final VALUE_TYPE value;
-	private final IUnit unit;
+    private final VALUE_TYPE value;
+    private final IUnit unit;
 
-	public UnitValue(final VALUE_TYPE value, final IUnit unit) {
-		Assert.paramNotNull(value, "value");
-		Assert.paramNotNull(unit, "unit");
+    public UnitValue(final VALUE_TYPE value, final IUnit unit) {
+        Assert.paramNotNull(value, "value");
+        Assert.paramNotNull(unit, "unit");
 
-		this.value = value;
-		this.unit = unit;
-	}
+        this.value = value;
+        this.unit = unit;
+    }
 
-	@Override
-	public VALUE_TYPE getValue() {
-		return value;
-	}
+    @Override
+    public VALUE_TYPE getValue() {
+        return value;
+    }
 
-	@Override
-	public IUnit getUnit() {
-		return unit;
-	}
+    @Override
+    public IUnit getUnit() {
+        return unit;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((unit == null) ? 0 : unit.hashCode());
-		result = prime * result + ((value == null) ? 0 : value.hashCode());
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((unit == null) ? 0 : unit.hashCode());
+        result = prime * result + ((value == null) ? 0 : value.hashCode());
+        return result;
+    }
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof UnitValue)) {
-			return false;
-		}
-		final IUnitValue<?> other = (IUnitValue<?>) obj;
-		if (unit == null) {
-			if (other.getUnit() != null) {
-				return false;
-			}
-		}
-		else if (!unit.equals(other.getUnit())) {
-			return false;
-		}
-		if (value == null) {
-			if (other.getValue() != null) {
-				return false;
-			}
-		}
-		else if (!value.equals(other.getValue())) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof UnitValue)) {
+            return false;
+        }
+        final IUnitValue<?> other = (IUnitValue<?>) obj;
+        if (unit == null) {
+            if (other.getUnit() != null) {
+                return false;
+            }
+        }
+        else if (!unit.equals(other.getUnit())) {
+            return false;
+        }
+        if (value == null) {
+            if (other.getValue() != null) {
+                return false;
+            }
+        }
+        else if (!value.equals(other.getValue())) {
+            return false;
+        }
+        return true;
+    }
 
-	@Override
-	public String toString() {
-		return "UnitValue [value=" + value + ", unit=" + unit + "]";
-	}
+    @Override
+    public String toString() {
+        return "UnitValue [value=" + value + ", unit=" + unit + "]";
+    }
 
 }

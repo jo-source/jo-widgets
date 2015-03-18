@@ -59,235 +59,235 @@ import org.jowidgets.util.CollectionUtils;
 
 public class BasicBluePrintFactory extends BasicSimpleBluePrintFactory implements IBasicBluePrintFactory {
 
-	public BasicBluePrintFactory(
-		final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry,
-		final IDefaultsInitializerRegistry defaultInitializerRegistry) {
-		super(setupBuilderConvenienceRegistry, defaultInitializerRegistry);
-	}
+    public BasicBluePrintFactory(
+        final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry,
+        final IDefaultsInitializerRegistry defaultInitializerRegistry) {
+        super(setupBuilderConvenienceRegistry, defaultInitializerRegistry);
+    }
 
-	/////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////some convenience methods starting here///////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////some convenience methods starting here///////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
 
-	@Override
-	public final IFrameBluePrint frame(final String title) {
-		return frame().setTitle(title);
-	}
+    @Override
+    public final IFrameBluePrint frame(final String title) {
+        return frame().setTitle(title);
+    }
 
-	@Override
-	public final IFrameBluePrint frame(final String title, final IImageConstant icon) {
-		return frame(title).setIcon(icon);
-	}
+    @Override
+    public final IFrameBluePrint frame(final String title, final IImageConstant icon) {
+        return frame(title).setIcon(icon);
+    }
 
-	@Override
-	public final IDialogBluePrint dialog(final String title) {
-		return dialog().setTitle(title);
-	}
+    @Override
+    public final IDialogBluePrint dialog(final String title) {
+        return dialog().setTitle(title);
+    }
 
-	@Override
-	public final IDialogBluePrint dialog(final String title, final IImageConstant icon) {
-		return dialog(title).setIcon(icon);
-	}
+    @Override
+    public final IDialogBluePrint dialog(final String title, final IImageConstant icon) {
+        return dialog(title).setIcon(icon);
+    }
 
-	@Override
-	public final ICompositeBluePrint compositeWithBorder() {
-		return composite().setBorder();
-	}
+    @Override
+    public final ICompositeBluePrint compositeWithBorder() {
+        return composite().setBorder();
+    }
 
-	@Override
-	public final ICompositeBluePrint composite(final String borderTitle) {
-		return composite().setBorder(borderTitle);
-	}
+    @Override
+    public final ICompositeBluePrint composite(final String borderTitle) {
+        return composite().setBorder(borderTitle);
+    }
 
-	@Override
-	public ISplitCompositeBluePrint splitHorizontal() {
-		return splitComposite().setOrientation(Orientation.HORIZONTAL);
-	}
+    @Override
+    public ISplitCompositeBluePrint splitHorizontal() {
+        return splitComposite().setOrientation(Orientation.HORIZONTAL);
+    }
 
-	@Override
-	public ISplitCompositeBluePrint splitVertical() {
-		return splitComposite().setOrientation(Orientation.VERTICAL);
-	}
+    @Override
+    public ISplitCompositeBluePrint splitVertical() {
+        return splitComposite().setOrientation(Orientation.VERTICAL);
+    }
 
-	@Override
-	public final IButtonBluePrint button(final String text) {
-		return button().setText(text);
-	}
+    @Override
+    public final IButtonBluePrint button(final String text) {
+        return button().setText(text);
+    }
 
-	@Override
-	public final IButtonBluePrint button(final String text, final String toolTipText) {
-		return button(text).setToolTipText(toolTipText);
-	}
+    @Override
+    public final IButtonBluePrint button(final String text, final String toolTipText) {
+        return button(text).setToolTipText(toolTipText);
+    }
 
-	@Override
-	public IButtonBluePrint buttonOk() {
-		return button(Messages.getString("BasicBluePrintFactory.ok"));
-	}
+    @Override
+    public IButtonBluePrint buttonOk() {
+        return button(Messages.getString("BasicBluePrintFactory.ok"));
+    }
 
-	@Override
-	public IButtonBluePrint buttonSave() {
-		return button(Messages.getString("BasicBluePrintFactory.save"));
-	}
+    @Override
+    public IButtonBluePrint buttonSave() {
+        return button(Messages.getString("BasicBluePrintFactory.save"));
+    }
 
-	@Override
-	public IButtonBluePrint buttonCancel() {
-		return button(Messages.getString("BasicBluePrintFactory.cancel"));
-	}
+    @Override
+    public IButtonBluePrint buttonCancel() {
+        return button(Messages.getString("BasicBluePrintFactory.cancel"));
+    }
 
-	@Override
-	public IButtonBluePrint buttonClose() {
-		return button(Messages.getString("BasicBluePrintFactory.close"));
-	}
+    @Override
+    public IButtonBluePrint buttonClose() {
+        return button(Messages.getString("BasicBluePrintFactory.close"));
+    }
 
-	@Override
-	public IButtonBluePrint buttonDetails() {
-		return button(Messages.getString("BasicBluePrintFactory.details"));
-	}
+    @Override
+    public IButtonBluePrint buttonDetails() {
+        return button(Messages.getString("BasicBluePrintFactory.details"));
+    }
 
-	@Override
-	public final IIconBluePrint icon(final IImageConstant icon) {
-		return icon().setIcon(icon);
-	}
+    @Override
+    public final IIconBluePrint icon(final IImageConstant icon) {
+        return icon().setIcon(icon);
+    }
 
-	@Override
-	public final ITextLabelBluePrint textLabel(final String text) {
-		return textLabel().setText(text);
-	}
+    @Override
+    public final ITextLabelBluePrint textLabel(final String text) {
+        return textLabel().setText(text);
+    }
 
-	@Override
-	public final ITextLabelBluePrint textLabel(final String text, final String tooltipText) {
-		return textLabel(text).setToolTipText(tooltipText);
-	}
+    @Override
+    public final ITextLabelBluePrint textLabel(final String text, final String tooltipText) {
+        return textLabel(text).setToolTipText(tooltipText);
+    }
 
-	@Override
-	public final IComboBoxBluePrint<String> comboBox() {
-		return comboBox(Toolkit.getConverterProvider().string());
-	}
+    @Override
+    public final IComboBoxBluePrint<String> comboBox() {
+        return comboBox(Toolkit.getConverterProvider().string());
+    }
 
-	@Override
-	public final IComboBoxBluePrint<String> comboBox(final String... elements) {
-		return comboBox().setElements(elements);
-	}
+    @Override
+    public final IComboBoxBluePrint<String> comboBox(final String... elements) {
+        return comboBox().setElements(elements);
+    }
 
-	@Override
-	public IComboBoxBluePrint<String> comboBox(final List<String> elements) {
-		return comboBox().setElements(elements);
-	}
+    @Override
+    public IComboBoxBluePrint<String> comboBox(final List<String> elements) {
+        return comboBox().setElements(elements);
+    }
 
-	@Override
-	public final IComboBoxSelectionBluePrint<String> comboBoxSelection() {
-		return comboBoxSelection(Toolkit.getConverterProvider().string());
-	}
+    @Override
+    public final IComboBoxSelectionBluePrint<String> comboBoxSelection() {
+        return comboBoxSelection(Toolkit.getConverterProvider().string());
+    }
 
-	@Override
-	public final IComboBoxSelectionBluePrint<String> comboBoxSelection(final String... elements) {
-		return comboBoxSelection().setElements(elements);
-	}
+    @Override
+    public final IComboBoxSelectionBluePrint<String> comboBoxSelection(final String... elements) {
+        return comboBoxSelection().setElements(elements);
+    }
 
-	@Override
-	public IComboBoxSelectionBluePrint<String> comboBoxSelection(final List<String> elements) {
-		return comboBoxSelection().setElements(elements);
-	}
+    @Override
+    public IComboBoxSelectionBluePrint<String> comboBoxSelection(final List<String> elements) {
+        return comboBoxSelection().setElements(elements);
+    }
 
-	@Override
-	public final <ENUM_TYPE extends Enum<?>> IComboBoxSelectionBluePrint<ENUM_TYPE> comboBoxSelection(
-		final ENUM_TYPE... enumValues) {
-		final IObjectStringConverter<ENUM_TYPE> converter = DefaultObjectStringConverter.getInstance();
-		return comboBoxSelection(converter).setElements(enumValues);
-	}
+    @Override
+    public final <ENUM_TYPE extends Enum<?>> IComboBoxSelectionBluePrint<ENUM_TYPE> comboBoxSelection(
+        final ENUM_TYPE... enumValues) {
+        final IObjectStringConverter<ENUM_TYPE> converter = DefaultObjectStringConverter.getInstance();
+        return comboBoxSelection(converter).setElements(enumValues);
+    }
 
-	@Override
-	public <VALUE_TYPE> IComboBoxSelectionBluePrint<VALUE_TYPE> comboBoxSelection(final Collection<VALUE_TYPE> elements) {
-		final IObjectStringConverter<VALUE_TYPE> converter = DefaultObjectStringConverter.getInstance();
-		return comboBoxSelection(converter).setElements(elements);
-	}
+    @Override
+    public <VALUE_TYPE> IComboBoxSelectionBluePrint<VALUE_TYPE> comboBoxSelection(final Collection<VALUE_TYPE> elements) {
+        final IObjectStringConverter<VALUE_TYPE> converter = DefaultObjectStringConverter.getInstance();
+        return comboBoxSelection(converter).setElements(elements);
+    }
 
-	@Override
-	public IComboBoxSelectionBluePrint<IUnit> comboBoxSelection(final IUnitSet unitSet) {
-		final IObjectStringConverter<IUnit> converter = Toolkit.getConverterProvider().unitConverter();
-		return comboBoxSelection(converter).setElements(CollectionUtils.toCollection(unitSet));
-	}
+    @Override
+    public IComboBoxSelectionBluePrint<IUnit> comboBoxSelection(final IUnitSet unitSet) {
+        final IObjectStringConverter<IUnit> converter = Toolkit.getConverterProvider().unitConverter();
+        return comboBoxSelection(converter).setElements(CollectionUtils.toCollection(unitSet));
+    }
 
-	@Override
-	public IComboBoxBluePrint<String> comboBoxString() {
-		return comboBox(Toolkit.getConverterProvider().string());
-	}
+    @Override
+    public IComboBoxBluePrint<String> comboBoxString() {
+        return comboBox(Toolkit.getConverterProvider().string());
+    }
 
-	@Override
-	public IComboBoxBluePrint<Long> comboBoxLongNumber() {
-		return comboBox(Toolkit.getConverterProvider().longNumber());
-	}
+    @Override
+    public IComboBoxBluePrint<Long> comboBoxLongNumber() {
+        return comboBox(Toolkit.getConverterProvider().longNumber());
+    }
 
-	@Override
-	public IComboBoxBluePrint<Integer> comboBoxIntegerNumber() {
-		return comboBox(Toolkit.getConverterProvider().integerNumber());
-	}
+    @Override
+    public IComboBoxBluePrint<Integer> comboBoxIntegerNumber() {
+        return comboBox(Toolkit.getConverterProvider().integerNumber());
+    }
 
-	@Override
-	public IComboBoxBluePrint<Short> comboBoxShortNumber() {
-		return comboBox(Toolkit.getConverterProvider().shortNumber());
-	}
+    @Override
+    public IComboBoxBluePrint<Short> comboBoxShortNumber() {
+        return comboBox(Toolkit.getConverterProvider().shortNumber());
+    }
 
-	@Override
-	public IComboBoxSelectionBluePrint<String> comboBoxSelectionString() {
-		return comboBoxSelection(Toolkit.getConverterProvider().string());
-	}
+    @Override
+    public IComboBoxSelectionBluePrint<String> comboBoxSelectionString() {
+        return comboBoxSelection(Toolkit.getConverterProvider().string());
+    }
 
-	@Override
-	public IComboBoxSelectionBluePrint<Long> comboBoxSelectionLongNumber() {
-		return comboBoxSelection(Toolkit.getConverterProvider().longNumber());
-	}
+    @Override
+    public IComboBoxSelectionBluePrint<Long> comboBoxSelectionLongNumber() {
+        return comboBoxSelection(Toolkit.getConverterProvider().longNumber());
+    }
 
-	@Override
-	public IComboBoxSelectionBluePrint<Integer> comboBoxSelectionIntegerNumber() {
-		return comboBoxSelection(Toolkit.getConverterProvider().integerNumber());
-	}
+    @Override
+    public IComboBoxSelectionBluePrint<Integer> comboBoxSelectionIntegerNumber() {
+        return comboBoxSelection(Toolkit.getConverterProvider().integerNumber());
+    }
 
-	@Override
-	public IComboBoxSelectionBluePrint<Short> comboBoxSelectionShortNumber() {
-		return comboBoxSelection(Toolkit.getConverterProvider().shortNumber());
-	}
+    @Override
+    public IComboBoxSelectionBluePrint<Short> comboBoxSelectionShortNumber() {
+        return comboBoxSelection(Toolkit.getConverterProvider().shortNumber());
+    }
 
-	@Override
-	public IComboBoxSelectionBluePrint<Boolean> comboBoxSelectionBoolean() {
-		final IComboBoxSelectionBluePrint<Boolean> result = comboBoxSelection(Toolkit.getConverterProvider().boolLong());
-		result.setElements(Boolean.TRUE, Boolean.FALSE);
-		return result;
-	}
+    @Override
+    public IComboBoxSelectionBluePrint<Boolean> comboBoxSelectionBoolean() {
+        final IComboBoxSelectionBluePrint<Boolean> result = comboBoxSelection(Toolkit.getConverterProvider().boolLong());
+        result.setElements(Boolean.TRUE, Boolean.FALSE);
+        return result;
+    }
 
-	@Override
-	public final IScrollCompositeBluePrint scrollCompositeWithBorder() {
-		return scrollComposite().setBorder();
-	}
+    @Override
+    public final IScrollCompositeBluePrint scrollCompositeWithBorder() {
+        return scrollComposite().setBorder();
+    }
 
-	@Override
-	public final IScrollCompositeBluePrint scrollComposite(final String borderTitle) {
-		return scrollComposite().setBorder(borderTitle);
-	}
+    @Override
+    public final IScrollCompositeBluePrint scrollComposite(final String borderTitle) {
+        return scrollComposite().setBorder(borderTitle);
+    }
 
-	@Override
-	public IActionMenuItemBluePrint menuItem(final String text) {
-		return menuItem().setText(text);
-	}
+    @Override
+    public IActionMenuItemBluePrint menuItem(final String text) {
+        return menuItem().setText(text);
+    }
 
-	@Override
-	public IRadioMenuItemBluePrint radioMenuItem(final String text) {
-		return radioMenuItem().setText(text);
-	}
+    @Override
+    public IRadioMenuItemBluePrint radioMenuItem(final String text) {
+        return radioMenuItem().setText(text);
+    }
 
-	@Override
-	public ICheckedMenuItemBluePrint checkedMenuItem(final String text) {
-		return checkedMenuItem().setText(text);
-	}
+    @Override
+    public ICheckedMenuItemBluePrint checkedMenuItem(final String text) {
+        return checkedMenuItem().setText(text);
+    }
 
-	@Override
-	public ISubMenuBluePrint subMenu(final String text) {
-		return subMenu().setText(text);
-	}
+    @Override
+    public ISubMenuBluePrint subMenu(final String text) {
+        return subMenu().setText(text);
+    }
 
-	@Override
-	public IMainMenuBluePrint mainMenu(final String text) {
-		return mainMenu().setText(text);
-	}
+    @Override
+    public IMainMenuBluePrint mainMenu(final String text) {
+        return mainMenu().setText(text);
+    }
 
 }

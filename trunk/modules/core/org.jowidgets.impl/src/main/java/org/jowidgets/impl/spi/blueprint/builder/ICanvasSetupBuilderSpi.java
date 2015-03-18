@@ -30,6 +30,6 @@ package org.jowidgets.impl.spi.blueprint.builder;
 import org.jowidgets.common.widgets.builder.ICanvasSetupBuilderCommon;
 
 public interface ICanvasSetupBuilderSpi<INSTANCE_TYPE extends ICanvasSetupBuilderSpi<?>> extends
-		ICanvasSetupBuilderCommon<INSTANCE_TYPE> {
+        ICanvasSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

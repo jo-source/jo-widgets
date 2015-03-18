@@ -32,70 +32,70 @@ import org.jowidgets.util.Assert;
 
 final class CircularBufferImpl<ELEMENT_TYPE> implements ICircularBuffer<ELEMENT_TYPE> {
 
-	private final int capacity;
+    private final int capacity;
 
-	private ELEMENT_TYPE[] buffer;
-	private int insertIndex;
-	private boolean shiftMode;
+    private ELEMENT_TYPE[] buffer;
+    private int insertIndex;
+    private boolean shiftMode;
 
-	CircularBufferImpl(final int capacity) {
-		if (capacity < 1) {
-			throw new IllegalArgumentException("Buffer must have at least capacity of one.");
-		}
-		this.capacity = capacity;
-		clear();
-	}
+    CircularBufferImpl(final int capacity) {
+        if (capacity < 1) {
+            throw new IllegalArgumentException("Buffer must have at least capacity of one.");
+        }
+        this.capacity = capacity;
+        clear();
+    }
 
-	@Override
-	public int capacity() {
-		return capacity;
-	}
+    @Override
+    public int capacity() {
+        return capacity;
+    }
 
-	@Override
-	public int size() {
-		if (!shiftMode) {
-			return insertIndex;
-		}
-		else {
-			return capacity;
-		}
-	}
+    @Override
+    public int size() {
+        if (!shiftMode) {
+            return insertIndex;
+        }
+        else {
+            return capacity;
+        }
+    }
 
-	@Override
-	public void add(final ELEMENT_TYPE element) {
-		if (insertIndex < capacity) {
-			buffer[insertIndex] = element;
-			insertIndex++;
-		}
-		else {
-			shiftMode = true;
-			insertIndex = 0;
-			buffer[insertIndex] = element;
-			insertIndex++;
-		}
-	}
+    @Override
+    public void add(final ELEMENT_TYPE element) {
+        if (insertIndex < capacity) {
+            buffer[insertIndex] = element;
+            insertIndex++;
+        }
+        else {
+            shiftMode = true;
+            insertIndex = 0;
+            buffer[insertIndex] = element;
+            insertIndex++;
+        }
+    }
 
-	@Override
-	public ELEMENT_TYPE get(final int index) {
-		Assert.paramInBounds(capacity - 1, index, "index");
-		if (!shiftMode) {
-			return buffer[index];
-		}
-		else {
-			int shiftedIndex = insertIndex + index;
-			if (shiftedIndex >= capacity) {
-				shiftedIndex = shiftedIndex - capacity;
-			}
-			return buffer[shiftedIndex];
-		}
-	}
+    @Override
+    public ELEMENT_TYPE get(final int index) {
+        Assert.paramInBounds(capacity - 1, index, "index");
+        if (!shiftMode) {
+            return buffer[index];
+        }
+        else {
+            int shiftedIndex = insertIndex + index;
+            if (shiftedIndex >= capacity) {
+                shiftedIndex = shiftedIndex - capacity;
+            }
+            return buffer[shiftedIndex];
+        }
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public void clear() {
-		this.buffer = (ELEMENT_TYPE[]) new Object[capacity];
-		insertIndex = 0;
-		shiftMode = false;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public void clear() {
+        this.buffer = (ELEMENT_TYPE[]) new Object[capacity];
+        insertIndex = 0;
+        shiftMode = false;
+    }
 
 }

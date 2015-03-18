@@ -44,122 +44,122 @@ import org.jowidgets.util.io.ITempFileFactory;
 
 class OleDocumentImpl extends ControlWrapper implements IOleDocument {
 
-	private final String progId;
-	private final ChangeObservable documentChangeObservable;
-	private final ITempFileFactory tempFileFactory;
+    private final String progId;
+    private final ChangeObservable documentChangeObservable;
+    private final ITempFileFactory tempFileFactory;
 
-	public OleDocumentImpl(final IOleControl oleControl, final IOleDocumentSetupBuilder<?> setup) {
-		super(oleControl);
-		Assert.paramNotNull(setup.getTempFileFactory(), "setup.getTempFileFactory()");
-		Assert.paramNotNull(setup.getProgId(), "setup.getProgId()");
+    public OleDocumentImpl(final IOleControl oleControl, final IOleDocumentSetupBuilder<?> setup) {
+        super(oleControl);
+        Assert.paramNotNull(setup.getTempFileFactory(), "setup.getTempFileFactory()");
+        Assert.paramNotNull(setup.getProgId(), "setup.getProgId()");
 
-		this.progId = setup.getProgId();
-		this.tempFileFactory = setup.getTempFileFactory();
-		this.documentChangeObservable = new ChangeObservable();
+        this.progId = setup.getProgId();
+        this.tempFileFactory = setup.getTempFileFactory();
+        this.documentChangeObservable = new ChangeObservable();
 
-		if (progId != null) {
-			oleControl.setDocument(progId);
-		}
-	}
+        if (progId != null) {
+            oleControl.setDocument(progId);
+        }
+    }
 
-	@Override
-	protected IOleControl getWidget() {
-		return (IOleControl) super.getWidget();
-	}
+    @Override
+    protected IOleControl getWidget() {
+        return (IOleControl) super.getWidget();
+    }
 
-	@Override
-	public boolean saveDocument(final File file, final boolean includeOleInfo) {
-		Assert.paramNotNull(file, "file");
-		return getWidget().saveCurrentDocument(file, includeOleInfo);
-	}
+    @Override
+    public boolean saveDocument(final File file, final boolean includeOleInfo) {
+        Assert.paramNotNull(file, "file");
+        return getWidget().saveCurrentDocument(file, includeOleInfo);
+    }
 
-	@Override
-	public boolean saveDocument(final OutputStream outputStream) {
-		Assert.paramNotNull(outputStream, "outputStream");
-		File tempFile = null;
-		try {
-			tempFile = createTempFile();
-			final boolean saved = getWidget().saveCurrentDocument(tempFile, true);
-			if (saved) {
-				FileUtils.fileToOutputStream(tempFile, outputStream);
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-		finally {
-			deleteFile(tempFile);
-		}
-	}
+    @Override
+    public boolean saveDocument(final OutputStream outputStream) {
+        Assert.paramNotNull(outputStream, "outputStream");
+        File tempFile = null;
+        try {
+            tempFile = createTempFile();
+            final boolean saved = getWidget().saveCurrentDocument(tempFile, true);
+            if (saved) {
+                FileUtils.fileToOutputStream(tempFile, outputStream);
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        finally {
+            deleteFile(tempFile);
+        }
+    }
 
-	@Override
-	public void openNewDocument() {
-		if (progId != null) {
-			getWidget().setDocument(progId);
-		}
-		else {
-			getWidget().clearDocument();
-		}
-		documentChangeObservable.fireChangedEvent();
-	}
+    @Override
+    public void openNewDocument() {
+        if (progId != null) {
+            getWidget().setDocument(progId);
+        }
+        else {
+            getWidget().clearDocument();
+        }
+        documentChangeObservable.fireChangedEvent();
+    }
 
-	@Override
-	public void openDocument(final File file) {
-		Assert.paramNotNull(file, "file");
-		if (progId != null) {
-			getWidget().setDocument(progId, file);
-		}
-		else {
-			getWidget().setDocument(file);
-		}
-		documentChangeObservable.fireChangedEvent();
-	}
+    @Override
+    public void openDocument(final File file) {
+        Assert.paramNotNull(file, "file");
+        if (progId != null) {
+            getWidget().setDocument(progId, file);
+        }
+        else {
+            getWidget().setDocument(file);
+        }
+        documentChangeObservable.fireChangedEvent();
+    }
 
-	@Override
-	public void openDocument(final InputStream inputStream) {
-		Assert.paramNotNull(inputStream, "inputStream");
-		File tempFile = null;
-		try {
-			tempFile = createTempFile();
-			FileUtils.inputStreamToFile(inputStream, tempFile);
-			openDocument(tempFile);
-		}
-		finally {
-			deleteFile(tempFile);
-		}
-	}
+    @Override
+    public void openDocument(final InputStream inputStream) {
+        Assert.paramNotNull(inputStream, "inputStream");
+        File tempFile = null;
+        try {
+            tempFile = createTempFile();
+            FileUtils.inputStreamToFile(inputStream, tempFile);
+            openDocument(tempFile);
+        }
+        finally {
+            deleteFile(tempFile);
+        }
+    }
 
-	@Override
-	public boolean isDirty() {
-		return getWidget().isDirty();
-	}
+    @Override
+    public boolean isDirty() {
+        return getWidget().isDirty();
+    }
 
-	@Override
-	public IOleControl getOleControl() {
-		return getWidget();
-	}
+    @Override
+    public IOleControl getOleControl() {
+        return getWidget();
+    }
 
-	@Override
-	public void addDocumentChangeListener(final IChangeListener changeListener) {
-		documentChangeObservable.addChangeListener(changeListener);
-	}
+    @Override
+    public void addDocumentChangeListener(final IChangeListener changeListener) {
+        documentChangeObservable.addChangeListener(changeListener);
+    }
 
-	@Override
-	public void removeDocumentChangeListener(final IChangeListener changeListener) {
-		documentChangeObservable.removeChangeListener(changeListener);
-	}
+    @Override
+    public void removeDocumentChangeListener(final IChangeListener changeListener) {
+        documentChangeObservable.removeChangeListener(changeListener);
+    }
 
-	private File createTempFile() {
-		return tempFileFactory.create("OleDocumentTemp", "");
-	}
+    private File createTempFile() {
+        return tempFileFactory.create("OleDocumentTemp", "");
+    }
 
-	private static void deleteFile(final File file) {
-		if (file != null && file.exists()) {
-			if (!file.delete()) {
-				throw new RuntimeException("Tempfile could not be deleted");
-			}
-		}
-	}
+    private static void deleteFile(final File file) {
+        if (file != null && file.exists()) {
+            if (!file.delete()) {
+                throw new RuntimeException("Tempfile could not be deleted");
+            }
+        }
+    }
 
 }

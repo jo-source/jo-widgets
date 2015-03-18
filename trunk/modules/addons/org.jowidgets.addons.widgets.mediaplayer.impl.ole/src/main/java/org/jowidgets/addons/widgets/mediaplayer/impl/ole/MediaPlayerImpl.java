@@ -43,104 +43,104 @@ import org.jowidgets.util.io.ITempFileFactory;
 
 class MediaPlayerImpl extends ControlWrapper implements IMediaPlayer {
 
-	private static final String PROPERTY_URL = "URL";
-	private static final String PROPERTY_CONTROLS = "controls";
-	private static final String PROPERTY_CURRENT_POSITION = "CurrentPosition";
-	private static final String METHOD_STOP = "stop";
-	private static final String METHOD_CLOSE = "close";
-	private static final String WM_PLAYER_PROG_ID = "WMPlayer.OCX";
+    private static final String PROPERTY_URL = "URL";
+    private static final String PROPERTY_CONTROLS = "controls";
+    private static final String PROPERTY_CURRENT_POSITION = "CurrentPosition";
+    private static final String METHOD_STOP = "stop";
+    private static final String METHOD_CLOSE = "close";
+    private static final String WM_PLAYER_PROG_ID = "WMPlayer.OCX";
 
-	private final ITempFileFactory tempFileFactory;
-	private File tmpFile;
+    private final ITempFileFactory tempFileFactory;
+    private File tmpFile;
 
-	MediaPlayerImpl(final IOleControl oleControl, final IMediaPlayerSetupBuilder<?> setup) {
-		super(oleControl);
-		this.tempFileFactory = setup.getTempFileFactory();
-		oleControl.setDocument(WM_PLAYER_PROG_ID);
-	}
+    MediaPlayerImpl(final IOleControl oleControl, final IMediaPlayerSetupBuilder<?> setup) {
+        super(oleControl);
+        this.tempFileFactory = setup.getTempFileFactory();
+        oleControl.setDocument(WM_PLAYER_PROG_ID);
+    }
 
-	@Override
-	protected IOleControl getWidget() {
-		return (IOleControl) super.getWidget();
-	}
+    @Override
+    protected IOleControl getWidget() {
+        return (IOleControl) super.getWidget();
+    }
 
-	@Override
-	public void clear() {
-		final IOleControl oleControl = getWidget();
-		final IOleAutomation controls = oleControl.getAutomation().getProperty(PROPERTY_CONTROLS);
-		controls.invoke(METHOD_STOP);
-		oleControl.getAutomation().invoke(METHOD_CLOSE);
-		oleControl.setDocument(WM_PLAYER_PROG_ID);
-		controls.dispose();
+    @Override
+    public void clear() {
+        final IOleControl oleControl = getWidget();
+        final IOleAutomation controls = oleControl.getAutomation().getProperty(PROPERTY_CONTROLS);
+        controls.invoke(METHOD_STOP);
+        oleControl.getAutomation().invoke(METHOD_CLOSE);
+        oleControl.setDocument(WM_PLAYER_PROG_ID);
+        controls.dispose();
 
-		deleteTempFile();
-	}
+        deleteTempFile();
+    }
 
-	@Override
-	public void open(final String url) {
-		Assert.paramNotNull(url, "url");
-		getWidget().getAutomation().setProperty(PROPERTY_URL, url);
-		//TODO MG enhance player with more media lifecycle methods
-		//		getWidget().getAutomation().addEventListener(EventIds.MEDIA_CHANGE, new IOleEventListener() {
-		//			@Override
-		//			public void handleEvent(final IOleEvent event) {
-		//				final IOleAutomation media = getWidget().getAutomation().getProperty("currentMedia");
-		//				final Double duration = media.getProperty("duration");
-		//CHECKSTYLE:OFF
-		//				System.out.println("Duration: " + duration / 60 + "Minutes");
-		//CHECKSTYLE:ON
-		//			}
-		//		});
-	}
+    @Override
+    public void open(final String url) {
+        Assert.paramNotNull(url, "url");
+        getWidget().getAutomation().setProperty(PROPERTY_URL, url);
+        //TODO MG enhance player with more media lifecycle methods
+        //		getWidget().getAutomation().addEventListener(EventIds.MEDIA_CHANGE, new IOleEventListener() {
+        //			@Override
+        //			public void handleEvent(final IOleEvent event) {
+        //				final IOleAutomation media = getWidget().getAutomation().getProperty("currentMedia");
+        //				final Double duration = media.getProperty("duration");
+        //CHECKSTYLE:OFF
+        //				System.out.println("Duration: " + duration / 60 + "Minutes");
+        //CHECKSTYLE:ON
+        //			}
+        //		});
+    }
 
-	@Override
-	public void open(final File file) {
-		Assert.paramNotNull(file, "file");
-		try {
-			open(file.toURI().toURL().toString());
-		}
-		catch (final MalformedURLException e) {
-			throw new RuntimeException("Can not resolve file url", e);
-		}
-	}
+    @Override
+    public void open(final File file) {
+        Assert.paramNotNull(file, "file");
+        try {
+            open(file.toURI().toURL().toString());
+        }
+        catch (final MalformedURLException e) {
+            throw new RuntimeException("Can not resolve file url", e);
+        }
+    }
 
-	@Override
-	public void open(final InputStream inputStream) {
-		Assert.paramNotNull(inputStream, "inputStream");
-		deleteTempFile();
-		final File tmp = tempFileFactory.create("MediaPlayerTemp", ".wmv");
-		FileUtils.inputStreamToFile(inputStream, tmp);
-		open(tmp);
-		tmpFile = tmp;
-	}
+    @Override
+    public void open(final InputStream inputStream) {
+        Assert.paramNotNull(inputStream, "inputStream");
+        deleteTempFile();
+        final File tmp = tempFileFactory.create("MediaPlayerTemp", ".wmv");
+        FileUtils.inputStreamToFile(inputStream, tmp);
+        open(tmp);
+        tmpFile = tmp;
+    }
 
-	@Override
-	public long getCurrentPosition() {
-		final IOleAutomation controls = getWidget().getAutomation().getProperty(PROPERTY_CONTROLS);
-		if (controls != null) {
-			final Double result = controls.getProperty(PROPERTY_CURRENT_POSITION);
-			if (result != null) {
-				return (long) (result * 1000d);
-			}
-		}
-		return -1;
-	}
+    @Override
+    public long getCurrentPosition() {
+        final IOleAutomation controls = getWidget().getAutomation().getProperty(PROPERTY_CONTROLS);
+        if (controls != null) {
+            final Double result = controls.getProperty(PROPERTY_CURRENT_POSITION);
+            if (result != null) {
+                return (long) (result * 1000d);
+            }
+        }
+        return -1;
+    }
 
-	@Override
-	public void dispose() {
-		final IOleControl oleControl = getWidget();
-		final IOleAutomation controls = oleControl.getAutomation().getProperty(PROPERTY_CONTROLS);
-		controls.invoke(METHOD_STOP);
-		oleControl.getAutomation().invoke(METHOD_CLOSE);
-		controls.dispose();
-		deleteTempFile();
-		super.dispose();
-	}
+    @Override
+    public void dispose() {
+        final IOleControl oleControl = getWidget();
+        final IOleAutomation controls = oleControl.getAutomation().getProperty(PROPERTY_CONTROLS);
+        controls.invoke(METHOD_STOP);
+        oleControl.getAutomation().invoke(METHOD_CLOSE);
+        controls.dispose();
+        deleteTempFile();
+        super.dispose();
+    }
 
-	private void deleteTempFile() {
-		if (tmpFile != null) {
-			tmpFile.delete();
-		}
-	}
+    private void deleteTempFile() {
+        if (tmpFile != null) {
+            tmpFile.delete();
+        }
+    }
 
 }

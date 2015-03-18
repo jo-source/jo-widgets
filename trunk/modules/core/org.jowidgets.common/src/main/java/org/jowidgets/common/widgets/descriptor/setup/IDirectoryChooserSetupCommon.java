@@ -28,9 +28,8 @@
 
 package org.jowidgets.common.widgets.descriptor.setup;
 
-
 public interface IDirectoryChooserSetupCommon {
 
-	String getTitle();
+    String getTitle();
 
 }

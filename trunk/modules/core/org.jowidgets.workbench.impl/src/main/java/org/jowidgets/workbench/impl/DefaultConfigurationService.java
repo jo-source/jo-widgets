@@ -34,15 +34,15 @@ import org.jowidgets.workbench.api.IWorkbenchConfigurationService;
 
 public class DefaultConfigurationService implements IWorkbenchConfigurationService {
 
-	@Override
-	public Serializable loadConfiguration() {
-		//TODO MG implement workbench config service
-		return null;
-	}
+    @Override
+    public Serializable loadConfiguration() {
+        //TODO MG implement workbench config service
+        return null;
+    }
 
-	@Override
-	public void saveConfiguration(final Serializable configuration) {
-		//TODO MG implement workbench config service
-	}
+    @Override
+    public void saveConfiguration(final Serializable configuration) {
+        //TODO MG implement workbench config service
+    }
 
 }

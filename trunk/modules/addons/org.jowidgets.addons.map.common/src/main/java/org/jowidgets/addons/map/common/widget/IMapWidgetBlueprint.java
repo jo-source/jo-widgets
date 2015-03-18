@@ -33,6 +33,6 @@ import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface IMapWidgetBlueprint extends
-		IComponentSetupBuilder<IMapWidgetBlueprint>,
-		IComponentSetup,
-		IWidgetDescriptor<IMapWidget> {}
+        IComponentSetupBuilder<IMapWidgetBlueprint>,
+        IComponentSetup,
+        IWidgetDescriptor<IMapWidget> {}

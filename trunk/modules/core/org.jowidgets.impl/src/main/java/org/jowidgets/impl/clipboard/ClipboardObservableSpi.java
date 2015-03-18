@@ -38,28 +38,28 @@ import org.jowidgets.util.Assert;
 
 public class ClipboardObservableSpi implements IClipboardObservableSpi {
 
-	private final Set<IClipboardListenerSpi> listeners;
+    private final Set<IClipboardListenerSpi> listeners;
 
-	public ClipboardObservableSpi() {
-		this.listeners = new LinkedHashSet<IClipboardListenerSpi>();
-	}
+    public ClipboardObservableSpi() {
+        this.listeners = new LinkedHashSet<IClipboardListenerSpi>();
+    }
 
-	@Override
-	public final void addClipboardListener(final IClipboardListenerSpi listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public final void addClipboardListener(final IClipboardListenerSpi listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public final void removeClipboardListener(final IClipboardListenerSpi listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public final void removeClipboardListener(final IClipboardListenerSpi listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public final void fireClipboardChanged() {
-		for (final IClipboardListenerSpi listener : new LinkedList<IClipboardListenerSpi>(listeners)) {
-			listener.clipboardChanged();
-		}
-	}
+    public final void fireClipboardChanged() {
+        for (final IClipboardListenerSpi listener : new LinkedList<IClipboardListenerSpi>(listeners)) {
+            listener.clipboardChanged();
+        }
+    }
 
 }

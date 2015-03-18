@@ -30,8 +30,8 @@ package org.jowidgets.common.widgets.editor;
 
 public enum EditActivation {
 
-	OFF,
-	SINGLE_CLICK,
-	DOUBLE_CLICK,
+    OFF,
+    SINGLE_CLICK,
+    DOUBLE_CLICK,
 
 }

@@ -37,29 +37,29 @@ import org.jowidgets.validation.IValidationResult;
 
 public class InputDialogDefaults implements IDefaultInitializer<IInputDialogSetupBuilder<?, ?>> {
 
-	@Override
-	public void initialize(final IInputDialogSetupBuilder<?, ?> builder) {
-		builder.setContentScrolled(true);
-		final BluePrintFactory bpF = new BluePrintFactory();
-		builder.setOkButton(bpF.button(Messages.getString("InputDialogDefaults.ok"))); //$NON-NLS-1$
-		builder.setCancelButton(bpF.button(Messages.getString("InputDialogDefaults.cancel"))); //$NON-NLS-1$
-		builder.setValidationLabel(bpF.inputComponentValidationLabel());
-		builder.setDefaultButtonPolicy(InputDialogDefaultButtonPolicy.OK);
-		builder.setCloseable(true);
-		builder.setCloseOnEscape(true);
+    @Override
+    public void initialize(final IInputDialogSetupBuilder<?, ?> builder) {
+        builder.setContentScrolled(true);
+        final BluePrintFactory bpF = new BluePrintFactory();
+        builder.setOkButton(bpF.button(Messages.getString("InputDialogDefaults.ok"))); //$NON-NLS-1$
+        builder.setCancelButton(bpF.button(Messages.getString("InputDialogDefaults.cancel"))); //$NON-NLS-1$
+        builder.setValidationLabel(bpF.inputComponentValidationLabel());
+        builder.setDefaultButtonPolicy(InputDialogDefaultButtonPolicy.OK);
+        builder.setCloseable(true);
+        builder.setCloseOnEscape(true);
 
-		final IInputComponentValidationLabelBluePrint validationLabelBp = bpF.inputComponentValidationLabel();
-		validationLabelBp.setInitialValidationDecorator(new IDecorator<IValidationResult>() {
-			@Override
-			public IValidationResult decorate(final IValidationResult original) {
-				if (!original.isValid()) {
-					return original;
-				}
-				return null;
-			}
-		});
+        final IInputComponentValidationLabelBluePrint validationLabelBp = bpF.inputComponentValidationLabel();
+        validationLabelBp.setInitialValidationDecorator(new IDecorator<IValidationResult>() {
+            @Override
+            public IValidationResult decorate(final IValidationResult original) {
+                if (!original.isValid()) {
+                    return original;
+                }
+                return null;
+            }
+        });
 
-		builder.setValidationLabel(validationLabelBp);
-	}
+        builder.setValidationLabel(validationLabelBp);
+    }
 
 }

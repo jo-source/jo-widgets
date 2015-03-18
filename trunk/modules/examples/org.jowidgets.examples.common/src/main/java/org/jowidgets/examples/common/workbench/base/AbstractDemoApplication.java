@@ -38,60 +38,61 @@ import org.jowidgets.workbench.api.IWorkbenchApplication;
 
 public abstract class AbstractDemoApplication implements IWorkbenchApplication {
 
-	private final String id;
+    private final String id;
 
-	public AbstractDemoApplication(final String id) {
-		super();
-		this.id = id;
-	}
+    public AbstractDemoApplication(final String id) {
+        super();
+        this.id = id;
+    }
 
-	@Override
-	public final String getId() {
-		return id;
-	}
+    @Override
+    public final String getId() {
+        return id;
+    }
 
-	@Override
-	public String getTooltip() {
-		return null;
-	}
+    @Override
+    public String getTooltip() {
+        return null;
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return null;
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return null;
+    }
 
-	@Override
-	public void onActiveStateChanged(final boolean active) {
-		// CHECKSTYLE:OFF
-		System.out.println("activated= " + active + ", " + id);
-		// CHECKSTYLE:ON
-	}
+    @Override
+    public void onActiveStateChanged(final boolean active) {
+        // CHECKSTYLE:OFF
+        System.out.println("activated= " + active + ", " + id);
+        // CHECKSTYLE:ON
+    }
 
-	@Override
-	public void onVisibleStateChanged(final boolean visible) {
-		// CHECKSTYLE:OFF
-		System.out.println("visibility= " + visible + ", " + id);
-		// CHECKSTYLE:ON
-	}
+    @Override
+    public void onVisibleStateChanged(final boolean visible) {
+        // CHECKSTYLE:OFF
+        System.out.println("visibility= " + visible + ", " + id);
+        // CHECKSTYLE:ON
+    }
 
-	@Override
-	public void onDispose() {
-		// CHECKSTYLE:OFF
-		System.out.println(getId() + " onDispose");
-		// CHECKSTYLE:ON
-	}
+    @Override
+    public void onDispose() {
+        // CHECKSTYLE:OFF
+        System.out.println(getId() + " onDispose");
+        // CHECKSTYLE:ON
+    }
 
-	@Override
-	public void onClose(final IVetoable vetoable) {
-		final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to quit the application?");
-		if (result != QuestionResult.YES) {
-			vetoable.veto();
-		}
-	}
+    @Override
+    public void onClose(final IVetoable vetoable) {
+        final QuestionResult result = Toolkit.getQuestionPane()
+                .askYesNoQuestion("Would you really like to quit the application?");
+        if (result != QuestionResult.YES) {
+            vetoable.veto();
+        }
+    }
 
-	@Override
-	public IView createView(final String viewId, final IViewContext viewContext) {
-		return null;
-	}
+    @Override
+    public IView createView(final String viewId, final IViewContext viewContext) {
+        return null;
+    }
 
 }

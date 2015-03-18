@@ -30,6 +30,6 @@ package org.jowidgets.impl.spi.blueprint.builder;
 import org.jowidgets.common.widgets.builder.ICalendarSetupBuilderCommon;
 
 public interface ICalendarSetupBuilderSpi<INSTANCE_TYPE extends ICalendarSetupBuilderSpi<?>> extends
-		ICalendarSetupBuilderCommon<INSTANCE_TYPE> {
+        ICalendarSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

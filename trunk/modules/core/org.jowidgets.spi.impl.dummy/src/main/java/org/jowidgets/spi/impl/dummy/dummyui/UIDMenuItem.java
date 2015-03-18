@@ -33,50 +33,50 @@ import org.jowidgets.common.types.Accelerator;
 
 public class UIDMenuItem extends UIDContainer {
 
-	private boolean selected;
-	private IImageConstant icon;
-	private String text;
-	private Accelerator accelerator;
-	private char mnemonic;
+    private boolean selected;
+    private IImageConstant icon;
+    private String text;
+    private Accelerator accelerator;
+    private char mnemonic;
 
-	public void setIcon(final IImageConstant icon) {
-		this.icon = icon;
-	}
+    public void setIcon(final IImageConstant icon) {
+        this.icon = icon;
+    }
 
-	public void setText(final String text) {
-		this.text = text;
-	}
+    public void setText(final String text) {
+        this.text = text;
+    }
 
-	public void setAccelerator(final Accelerator accelerator) {
-		this.accelerator = accelerator;
-	}
+    public void setAccelerator(final Accelerator accelerator) {
+        this.accelerator = accelerator;
+    }
 
-	public void setMnemonic(final char mnemonic) {
-		this.mnemonic = mnemonic;
-	}
+    public void setMnemonic(final char mnemonic) {
+        this.mnemonic = mnemonic;
+    }
 
-	public IImageConstant getIcon() {
-		return icon;
-	}
+    public IImageConstant getIcon() {
+        return icon;
+    }
 
-	public String getText() {
-		return text;
-	}
+    public String getText() {
+        return text;
+    }
 
-	public Accelerator getAccelerator() {
-		return accelerator;
-	}
+    public Accelerator getAccelerator() {
+        return accelerator;
+    }
 
-	public char getMnemonic() {
-		return mnemonic;
-	}
+    public char getMnemonic() {
+        return mnemonic;
+    }
 
-	public boolean isSelected() {
-		return selected;
-	}
+    public boolean isSelected() {
+        return selected;
+    }
 
-	public void setSelected(final boolean selected) {
-		this.selected = selected;
-	}
+    public void setSelected(final boolean selected) {
+        this.selected = selected;
+    }
 
 }

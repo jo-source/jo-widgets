@@ -32,11 +32,11 @@ import org.jowidgets.examples.common.snipped.BindingSnipped;
 
 public final class BindingSnippedStarterSwt {
 
-	private BindingSnippedStarterSwt() {}
+    private BindingSnippedStarterSwt() {}
 
-	public static void main(final String[] args) throws Exception {
-		Toolkit.getApplicationRunner().run(new BindingSnipped());
-		System.exit(0);
-	}
+    public static void main(final String[] args) throws Exception {
+        Toolkit.getApplicationRunner().run(new BindingSnipped());
+        System.exit(0);
+    }
 
 }

@@ -38,61 +38,61 @@ import org.jowidgets.validation.IValidator;
 
 public final class Converter<TYPE> implements IConverter<TYPE> {
 
-	private final IObjectStringConverter<TYPE> objectStringConverter;
-	private final IStringObjectConverter<TYPE> stringObjectConverter;
+    private final IObjectStringConverter<TYPE> objectStringConverter;
+    private final IStringObjectConverter<TYPE> stringObjectConverter;
 
-	public Converter(
-		final IObjectStringConverter<TYPE> objectStringConverter,
-		final IStringObjectConverter<TYPE> stringObjectConverter) {
-		super();
-		Assert.paramNotNull(objectStringConverter, "objectStringConverter");
-		Assert.paramNotNull(stringObjectConverter, "stringObjectConverter");
-		this.objectStringConverter = objectStringConverter;
-		this.stringObjectConverter = stringObjectConverter;
-	}
+    public Converter(
+        final IObjectStringConverter<TYPE> objectStringConverter,
+        final IStringObjectConverter<TYPE> stringObjectConverter) {
+        super();
+        Assert.paramNotNull(objectStringConverter, "objectStringConverter");
+        Assert.paramNotNull(stringObjectConverter, "stringObjectConverter");
+        this.objectStringConverter = objectStringConverter;
+        this.stringObjectConverter = stringObjectConverter;
+    }
 
-	@Override
-	public TYPE convertToObject(final String string) {
-		return stringObjectConverter.convertToObject(string);
-	}
+    @Override
+    public TYPE convertToObject(final String string) {
+        return stringObjectConverter.convertToObject(string);
+    }
 
-	@Override
-	public String convertToString(final TYPE value) {
-		return objectStringConverter.convertToString(value);
-	}
+    @Override
+    public String convertToString(final TYPE value) {
+        return objectStringConverter.convertToString(value);
+    }
 
-	@Override
-	public String getDescription(final TYPE value) {
-		return objectStringConverter.getDescription(value);
-	}
+    @Override
+    public String getDescription(final TYPE value) {
+        return objectStringConverter.getDescription(value);
+    }
 
-	@Override
-	public IValidator<String> getStringValidator() {
-		return stringObjectConverter.getStringValidator();
-	}
+    @Override
+    public IValidator<String> getStringValidator() {
+        return stringObjectConverter.getStringValidator();
+    }
 
-	@Override
-	public IInputVerifier getInputVerifier() {
-		return stringObjectConverter.getInputVerifier();
-	}
+    @Override
+    public IInputVerifier getInputVerifier() {
+        return stringObjectConverter.getInputVerifier();
+    }
 
-	@Override
-	public String getAcceptingRegExp() {
-		return stringObjectConverter.getAcceptingRegExp();
-	}
+    @Override
+    public String getAcceptingRegExp() {
+        return stringObjectConverter.getAcceptingRegExp();
+    }
 
-	@Override
-	public ITextMask getMask() {
-		return stringObjectConverter.getMask();
-	}
+    @Override
+    public ITextMask getMask() {
+        return stringObjectConverter.getMask();
+    }
 
-	@Override
-	public String toString() {
-		return "Converter [objectStringConverter="
-			+ objectStringConverter
-			+ ", stringObjectConverter="
-			+ stringObjectConverter
-			+ "]";
-	}
+    @Override
+    public String toString() {
+        return "Converter [objectStringConverter="
+            + objectStringConverter
+            + ", stringObjectConverter="
+            + stringObjectConverter
+            + "]";
+    }
 
 }

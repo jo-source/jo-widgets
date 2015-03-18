@@ -57,112 +57,112 @@ import org.jowidgets.util.TypeCast;
 
 public class DialogImpl extends SwingWindow implements IFrameSpi {
 
-	private static final Border BORDER = new JTextField().getBorder();
+    private static final Border BORDER = new JTextField().getBorder();
 
-	public DialogImpl(
-		final IGenericWidgetFactory factory,
-		final SwingImageRegistry imageRegistry,
-		final Object parentUiReference,
-		final IDialogSetupSpi setup) {
-		super(factory, new JDialog((Window) parentUiReference), setup.isCloseable());
+    public DialogImpl(
+        final IGenericWidgetFactory factory,
+        final SwingImageRegistry imageRegistry,
+        final Object parentUiReference,
+        final IDialogSetupSpi setup) {
+        super(factory, new JDialog((Window) parentUiReference), setup.isCloseable());
 
-		getUiReference().setTitle(setup.getTitle());
-		getUiReference().setResizable(setup.isResizable());
-		getUiReference().setModal(setup.isModal());
+        getUiReference().setTitle(setup.getTitle());
+        getUiReference().setResizable(setup.isResizable());
+        getUiReference().setModal(setup.isModal());
 
-		getUiReference().setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        getUiReference().setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
-		if (!setup.isDecorated()) {
-			getUiReference().setUndecorated(true);
-			((JComponent) getUiReference().getContentPane()).setBorder(BORDER);
-		}
+        if (!setup.isDecorated()) {
+            getUiReference().setUndecorated(true);
+            ((JComponent) getUiReference().getContentPane()).setBorder(BORDER);
+        }
 
-		final boolean closeOnEscape = setup.isCloseable() && setup.isCloseOnEscape();
-		if (closeOnEscape) {
-			final ActionListener actionListener = new ActionListener() {
-				@Override
-				public void actionPerformed(final ActionEvent e) {
-					setVisible(false);
-				}
-			};
+        final boolean closeOnEscape = setup.isCloseable() && setup.isCloseOnEscape();
+        if (closeOnEscape) {
+            final ActionListener actionListener = new ActionListener() {
+                @Override
+                public void actionPerformed(final ActionEvent e) {
+                    setVisible(false);
+                }
+            };
 
-			getUiReference().getRootPane().registerKeyboardAction(
-					actionListener,
-					KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
-					JComponent.WHEN_IN_FOCUSED_WINDOW);
-		}
+            getUiReference().getRootPane().registerKeyboardAction(
+                    actionListener,
+                    KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+                    JComponent.WHEN_IN_FOCUSED_WINDOW);
+        }
 
-		setIcon(setup.getIcon(), imageRegistry);
-	}
+        setIcon(setup.getIcon(), imageRegistry);
+    }
 
-	@Override
-	public JDialog getUiReference() {
-		return (JDialog) super.getUiReference();
-	}
+    @Override
+    public JDialog getUiReference() {
+        return (JDialog) super.getUiReference();
+    }
 
-	@Override
-	public void setDefaultButton(final IButtonCommon button) {
-		if (button != null) {
-			getUiReference().getRootPane().setDefaultButton(TypeCast.toType(button.getUiReference(), JButton.class));
-		}
-		else {
-			getUiReference().getRootPane().setDefaultButton(null);
-		}
-	}
+    @Override
+    public void setDefaultButton(final IButtonCommon button) {
+        if (button != null) {
+            getUiReference().getRootPane().setDefaultButton(TypeCast.toType(button.getUiReference(), JButton.class));
+        }
+        else {
+            getUiReference().getRootPane().setDefaultButton(null);
+        }
+    }
 
-	@Override
-	public Rectangle getClientArea() {
-		return DecorationCalc.getClientArea(getUiReference().getContentPane());
-	}
+    @Override
+    public Rectangle getClientArea() {
+        return DecorationCalc.getClientArea(getUiReference().getContentPane());
+    }
 
-	@Override
-	public void setTitle(final String title) {
-		getUiReference().setTitle(title);
-	}
+    @Override
+    public void setTitle(final String title) {
+        getUiReference().setTitle(title);
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		getUiReference().getContentPane().setBackground(ColorConvert.convert(colorValue));
-		super.setBackgroundColor(colorValue);
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        getUiReference().getContentPane().setBackground(ColorConvert.convert(colorValue));
+        super.setBackgroundColor(colorValue);
+    }
 
-	@Override
-	public boolean remove(final IControlCommon control) {
-		return ChildRemover.removeChild(getUiReference().getContentPane(), (Component) control.getUiReference());
-	}
+    @Override
+    public boolean remove(final IControlCommon control) {
+        return ChildRemover.removeChild(getUiReference().getContentPane(), (Component) control.getUiReference());
+    }
 
-	@Override
-	public void removeAll() {
-		getUiReference().getContentPane().removeAll();
-	}
+    @Override
+    public void removeAll() {
+        getUiReference().getContentPane().removeAll();
+    }
 
-	@Override
-	public IMenuBarSpi createMenuBar() {
-		final JMenuBar menuBar = new JMenuBar();
-		getUiReference().setJMenuBar(menuBar);
-		return new MenuBarImpl(menuBar);
-	}
+    @Override
+    public IMenuBarSpi createMenuBar() {
+        final JMenuBar menuBar = new JMenuBar();
+        getUiReference().setJMenuBar(menuBar);
+        return new MenuBarImpl(menuBar);
+    }
 
-	@Override
-	public void setMaximized(final boolean maximized) {
-		// NOT SUPPORTED FOR SWING
-	}
+    @Override
+    public void setMaximized(final boolean maximized) {
+        // NOT SUPPORTED FOR SWING
+    }
 
-	@Override
-	public boolean isMaximized() {
-		// NOT SUPPORTED FOR SWING
-		return false;
-	}
+    @Override
+    public boolean isMaximized() {
+        // NOT SUPPORTED FOR SWING
+        return false;
+    }
 
-	@Override
-	public void setIconfied(final boolean iconfied) {
-		// NOT SUPPORTED FOR SWING
-	}
+    @Override
+    public void setIconfied(final boolean iconfied) {
+        // NOT SUPPORTED FOR SWING
+    }
 
-	@Override
-	public boolean isIconfied() {
-		// NOT SUPPORTED FOR SWING
-		return false;
-	}
+    @Override
+    public boolean isIconfied() {
+        // NOT SUPPORTED FOR SWING
+        return false;
+    }
 
 }

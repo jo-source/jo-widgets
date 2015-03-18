@@ -34,41 +34,41 @@ import org.jowidgets.spi.dnd.IDropResponseSpi;
 
 public final class DropResponseSpiImpl implements IDropResponseSpi {
 
-	private DropAction accepted;
-	private boolean rejected;
-	private DropMode dropMode;
+    private DropAction accepted;
+    private boolean rejected;
+    private DropMode dropMode;
 
-	public DropResponseSpiImpl() {
-		this.rejected = false;
-	}
+    public DropResponseSpiImpl() {
+        this.rejected = false;
+    }
 
-	@Override
-	public void accept(final DropAction accepted) {
-		this.accepted = accepted;
-		this.rejected = false;
-	}
+    @Override
+    public void accept(final DropAction accepted) {
+        this.accepted = accepted;
+        this.rejected = false;
+    }
 
-	@Override
-	public void reject() {
-		this.accepted = null;
-		this.rejected = true;
-	}
+    @Override
+    public void reject() {
+        this.accepted = null;
+        this.rejected = true;
+    }
 
-	@Override
-	public void setDropMode(final DropMode dropMode) {
-		this.dropMode = dropMode;
-	}
+    @Override
+    public void setDropMode(final DropMode dropMode) {
+        this.dropMode = dropMode;
+    }
 
-	public DropAction getAccepted() {
-		return accepted;
-	}
+    public DropAction getAccepted() {
+        return accepted;
+    }
 
-	public boolean isRejected() {
-		return rejected;
-	}
+    public boolean isRejected() {
+        return rejected;
+    }
 
-	public DropMode getDropMode() {
-		return dropMode;
-	}
+    public DropMode getDropMode() {
+        return dropMode;
+    }
 
 }

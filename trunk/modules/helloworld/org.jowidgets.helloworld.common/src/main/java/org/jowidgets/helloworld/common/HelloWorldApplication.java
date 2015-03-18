@@ -41,36 +41,36 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class HelloWorldApplication implements IApplication {
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
 
-		//Create a frame BluePrint with help of the BluePrintFactory (BPF)
-		final IFrameBluePrint frameBp = BPF.frame();
-		frameBp.setSize(new Dimension(400, 300)).setTitle("Hello World");
+        //Create a frame BluePrint with help of the BluePrintFactory (BPF)
+        final IFrameBluePrint frameBp = BPF.frame();
+        frameBp.setSize(new Dimension(400, 300)).setTitle("Hello World");
 
-		//Create a frame with help of the Toolkit and BluePrint. 
-		//This convenience method finishes the ApplicationLifecycle when 
-		//the root frame will be closed.
-		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
+        //Create a frame with help of the Toolkit and BluePrint. 
+        //This convenience method finishes the ApplicationLifecycle when 
+        //the root frame will be closed.
+        final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
 
-		//Use a simple MigLayout with one column and one row 
-		frame.setLayout(new MigLayoutDescriptor("[]", "[]"));
+        //Use a simple MigLayout with one column and one row 
+        frame.setLayout(new MigLayoutDescriptor("[]", "[]"));
 
-		//Create a button BluePrint with help of the BluePrintFactory (BPF)
-		final IButtonBluePrint buttonBp = BPF.button().setText("Hello World");
+        //Create a button BluePrint with help of the BluePrintFactory (BPF)
+        final IButtonBluePrint buttonBp = BPF.button().setText("Hello World");
 
-		//Add the button defined by the BluePrint to the frame
-		final IButton button = frame.add(buttonBp);
+        //Add the button defined by the BluePrint to the frame
+        final IButton button = frame.add(buttonBp);
 
-		//Add an ActionListener to the button
-		button.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				System.out.println("Hello World");
-			}
-		});
+        //Add an ActionListener to the button
+        button.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                System.out.println("Hello World");
+            }
+        });
 
-		//set the root frame visible
-		frame.setVisible(true);
-	}
+        //set the root frame visible
+        frame.setVisible(true);
+    }
 }

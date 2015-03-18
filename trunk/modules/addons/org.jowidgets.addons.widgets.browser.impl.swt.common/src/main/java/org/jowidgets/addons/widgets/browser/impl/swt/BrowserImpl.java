@@ -62,222 +62,222 @@ import org.jowidgets.util.Assert;
 
 class BrowserImpl extends ControlWrapper implements IBrowser {
 
-	private final Set<IBrowserLocationListener> locationListeners;
-	private final Set<IBrowserProgressListener> progressListeners;
+    private final Set<IBrowserLocationListener> locationListeners;
+    private final Set<IBrowserProgressListener> progressListeners;
 
-	private final Browser swtBrowser;
+    private final Browser swtBrowser;
 
-	BrowserImpl(final IControl control, final Composite swtComposite, final IBrowserSetupBuilder<?> setup) {
-		super(control);
+    BrowserImpl(final IControl control, final Composite swtComposite, final IBrowserSetupBuilder<?> setup) {
+        super(control);
 
-		this.locationListeners = new LinkedHashSet<IBrowserLocationListener>();
-		this.progressListeners = new LinkedHashSet<IBrowserProgressListener>();
+        this.locationListeners = new LinkedHashSet<IBrowserLocationListener>();
+        this.progressListeners = new LinkedHashSet<IBrowserProgressListener>();
 
-		final Composite content;
-		if (setup.hasBorder()) {
-			swtComposite.setLayout(new FillLayout());
-			content = new Composite(swtComposite, SWT.BORDER);
-		}
-		else {
-			content = swtComposite;
-		}
-		content.setLayout(new MigLayout("", "0[grow, 0::]0", "0[grow, 0::]0"));
+        final Composite content;
+        if (setup.hasBorder()) {
+            swtComposite.setLayout(new FillLayout());
+            content = new Composite(swtComposite, SWT.BORDER);
+        }
+        else {
+            content = swtComposite;
+        }
+        content.setLayout(new MigLayout("", "0[grow, 0::]0", "0[grow, 0::]0"));
 
-		content.addControlListener(new ControlAdapter() {
-			@Override
-			public void controlResized(final ControlEvent e) {
-				final IWindow activeWindow = Toolkit.getActiveWindow();
-				if (activeWindow != null) {
-					activeWindow.redraw();
-				}
-			}
-		});
+        content.addControlListener(new ControlAdapter() {
+            @Override
+            public void controlResized(final ControlEvent e) {
+                final IWindow activeWindow = Toolkit.getActiveWindow();
+                if (activeWindow != null) {
+                    activeWindow.redraw();
+                }
+            }
+        });
 
-		this.swtBrowser = new Browser(content, SWT.NONE);
-		swtBrowser.setLayoutData("growx, growy, w 0::, h 0::");
+        this.swtBrowser = new Browser(content, SWT.NONE);
+        swtBrowser.setLayoutData("growx, growy, w 0::, h 0::");
 
-		swtBrowser.addLocationListener(new LocationListenerImpl());
-		swtBrowser.addProgressListener(new ProgressListenerImpl());
+        swtBrowser.addLocationListener(new LocationListenerImpl());
+        swtBrowser.addProgressListener(new ProgressListenerImpl());
 
-		if (setup.isVisible() != null) {
-			setVisible(setup.isVisible().booleanValue());
-		}
+        if (setup.isVisible() != null) {
+            setVisible(setup.isVisible().booleanValue());
+        }
 
-		if (setup.getBackgroundColor() != null) {
-			swtBrowser.setBackground(ColorCache.getInstance().getColor(setup.getBackgroundColor()));
-		}
+        if (setup.getBackgroundColor() != null) {
+            swtBrowser.setBackground(ColorCache.getInstance().getColor(setup.getBackgroundColor()));
+        }
 
-		if (setup.getForegroundColor() != null) {
-			swtBrowser.setForeground(ColorCache.getInstance().getColor(setup.getForegroundColor()));
-		}
-	}
+        if (setup.getForegroundColor() != null) {
+            swtBrowser.setForeground(ColorCache.getInstance().getColor(setup.getForegroundColor()));
+        }
+    }
 
-	final Browser getSwtBrowser() {
-		return swtBrowser;
-	}
+    final Browser getSwtBrowser() {
+        return swtBrowser;
+    }
 
-	@Override
-	public final void setUrl(String url) {
-		if (url == null) {
-			url = "";
-		}
-		swtBrowser.setText("");
-		swtBrowser.setUrl(url);
-	}
+    @Override
+    public final void setUrl(String url) {
+        if (url == null) {
+            url = "";
+        }
+        swtBrowser.setText("");
+        swtBrowser.setUrl(url);
+    }
 
-	@Override
-	public final void setHtml(String html) {
-		if (html == null) {
-			html = "";
-		}
-		swtBrowser.setUrl("");
-		swtBrowser.setText(html);
-	}
+    @Override
+    public final void setHtml(String html) {
+        if (html == null) {
+            html = "";
+        }
+        swtBrowser.setUrl("");
+        swtBrowser.setText(html);
+    }
 
-	@Override
-	public final Object evaluateScript(final String javaScript) {
-		Assert.paramNotNull(javaScript, "javaScript");
-		return swtBrowser.evaluate(javaScript);
-	}
+    @Override
+    public final Object evaluateScript(final String javaScript) {
+        Assert.paramNotNull(javaScript, "javaScript");
+        return swtBrowser.evaluate(javaScript);
+    }
 
-	@Override
-	public final boolean executeScript(final String javaScript) {
-		Assert.paramNotNull(javaScript, "javaScript");
-		return swtBrowser.execute(javaScript);
-	}
+    @Override
+    public final boolean executeScript(final String javaScript) {
+        Assert.paramNotNull(javaScript, "javaScript");
+        return swtBrowser.execute(javaScript);
+    }
 
-	@Override
-	public IBrowserFunctionHandle createBrowserFunction(final String functionName, final IBrowserFunction function) {
-		Assert.paramNotEmpty(functionName, "functionName");
-		Assert.paramNotNull(function, "function");
-		return new BrowserFunctionHandle(functionName, new BrowserFunctionAdapter(getSwtBrowser(), functionName, function));
-	}
+    @Override
+    public IBrowserFunctionHandle createBrowserFunction(final String functionName, final IBrowserFunction function) {
+        Assert.paramNotEmpty(functionName, "functionName");
+        Assert.paramNotNull(function, "function");
+        return new BrowserFunctionHandle(functionName, new BrowserFunctionAdapter(getSwtBrowser(), functionName, function));
+    }
 
-	@Override
-	public final void addLocationListener(final IBrowserLocationListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		locationListeners.add(listener);
-	}
+    @Override
+    public final void addLocationListener(final IBrowserLocationListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        locationListeners.add(listener);
+    }
 
-	@Override
-	public final void removeLocationListener(final IBrowserLocationListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		locationListeners.remove(listener);
-	}
+    @Override
+    public final void removeLocationListener(final IBrowserLocationListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        locationListeners.remove(listener);
+    }
 
-	@Override
-	public final void addProgressListener(final IBrowserProgressListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		progressListeners.add(listener);
-	}
+    @Override
+    public final void addProgressListener(final IBrowserProgressListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        progressListeners.add(listener);
+    }
 
-	@Override
-	public final void removeProgressListener(final IBrowserProgressListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		progressListeners.remove(listener);
-	}
+    @Override
+    public final void removeProgressListener(final IBrowserProgressListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        progressListeners.remove(listener);
+    }
 
-	private final class LocationListenerImpl implements LocationListener {
+    private final class LocationListenerImpl implements LocationListener {
 
-		@Override
-		public void changing(final LocationEvent event) {
-			if (fireOnLocationChange(event)) {
-				event.doit = false;
-			}
-		}
+        @Override
+        public void changing(final LocationEvent event) {
+            if (fireOnLocationChange(event)) {
+                event.doit = false;
+            }
+        }
 
-		@Override
-		public void changed(final LocationEvent event) {
-			fireLocationChanged(event);
-		}
+        @Override
+        public void changed(final LocationEvent event) {
+            fireLocationChanged(event);
+        }
 
-		/**
-		 * Fires an on location change event.
-		 * 
-		 * @param swtEvent
-		 * @return true, if a veto occurred
-		 */
-		private boolean fireOnLocationChange(final LocationEvent swtEvent) {
-			if (locationListeners.size() > 0) {
-				final IBrowserLocationEvent event = new BrowserLocationEvent(swtEvent);
-				final VetoHolder vetoHolder = new VetoHolder();
-				for (final IBrowserLocationListener listener : new LinkedList<IBrowserLocationListener>(locationListeners)) {
-					listener.onLocationChange(event, vetoHolder);
-					if (vetoHolder.hasVeto()) {
-						return true;
-					}
-				}
-			}
-			return false;
-		}
+        /**
+         * Fires an on location change event.
+         * 
+         * @param swtEvent
+         * @return true, if a veto occurred
+         */
+        private boolean fireOnLocationChange(final LocationEvent swtEvent) {
+            if (locationListeners.size() > 0) {
+                final IBrowserLocationEvent event = new BrowserLocationEvent(swtEvent);
+                final VetoHolder vetoHolder = new VetoHolder();
+                for (final IBrowserLocationListener listener : new LinkedList<IBrowserLocationListener>(locationListeners)) {
+                    listener.onLocationChange(event, vetoHolder);
+                    if (vetoHolder.hasVeto()) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
 
-		private void fireLocationChanged(final LocationEvent swtEvent) {
-			if (locationListeners.size() > 0) {
-				final IBrowserLocationEvent event = new BrowserLocationEvent(swtEvent);
-				for (final IBrowserLocationListener listener : new LinkedList<IBrowserLocationListener>(locationListeners)) {
-					listener.locationChanged(event);
-				}
-			}
-		}
-	}
+        private void fireLocationChanged(final LocationEvent swtEvent) {
+            if (locationListeners.size() > 0) {
+                final IBrowserLocationEvent event = new BrowserLocationEvent(swtEvent);
+                for (final IBrowserLocationListener listener : new LinkedList<IBrowserLocationListener>(locationListeners)) {
+                    listener.locationChanged(event);
+                }
+            }
+        }
+    }
 
-	private final class ProgressListenerImpl implements ProgressListener {
+    private final class ProgressListenerImpl implements ProgressListener {
 
-		@Override
-		public void changed(final ProgressEvent event) {
-			for (final IBrowserProgressListener listener : new LinkedList<IBrowserProgressListener>(progressListeners)) {
-				listener.loadProgressChanged(event.current, event.total);
-			}
-		}
+        @Override
+        public void changed(final ProgressEvent event) {
+            for (final IBrowserProgressListener listener : new LinkedList<IBrowserProgressListener>(progressListeners)) {
+                listener.loadProgressChanged(event.current, event.total);
+            }
+        }
 
-		@Override
-		public void completed(final ProgressEvent event) {
-			for (final IBrowserProgressListener listener : new LinkedList<IBrowserProgressListener>(progressListeners)) {
-				listener.loadFinished();
-			}
-		}
+        @Override
+        public void completed(final ProgressEvent event) {
+            for (final IBrowserProgressListener listener : new LinkedList<IBrowserProgressListener>(progressListeners)) {
+                listener.loadFinished();
+            }
+        }
 
-	}
+    }
 
-	private final class BrowserFunctionAdapter extends BrowserFunction {
+    private final class BrowserFunctionAdapter extends BrowserFunction {
 
-		private final IBrowserFunction function;
+        private final IBrowserFunction function;
 
-		public BrowserFunctionAdapter(final Browser browser, final String functionName, final IBrowserFunction function) {
-			super(browser, functionName);
-			this.function = function;
-		}
+        public BrowserFunctionAdapter(final Browser browser, final String functionName, final IBrowserFunction function) {
+            super(browser, functionName);
+            this.function = function;
+        }
 
-		@Override
-		public Object function(final Object[] arguments) {
-			return function.invoke(arguments);
-		}
-	}
+        @Override
+        public Object function(final Object[] arguments) {
+            return function.invoke(arguments);
+        }
+    }
 
-	private final class BrowserFunctionHandle implements IBrowserFunctionHandle {
+    private final class BrowserFunctionHandle implements IBrowserFunctionHandle {
 
-		private final String functionName;
-		private final BrowserFunction browserFunction;
+        private final String functionName;
+        private final BrowserFunction browserFunction;
 
-		private BrowserFunctionHandle(final String functionName, final BrowserFunction browserFunction) {
-			this.functionName = functionName;
-			this.browserFunction = browserFunction;
-		}
+        private BrowserFunctionHandle(final String functionName, final BrowserFunction browserFunction) {
+            this.functionName = functionName;
+            this.browserFunction = browserFunction;
+        }
 
-		@Override
-		public void dispose() {
-			browserFunction.dispose();
-		}
+        @Override
+        public void dispose() {
+            browserFunction.dispose();
+        }
 
-		@Override
-		public boolean isDisposed() {
-			return browserFunction.isDisposed();
-		}
+        @Override
+        public boolean isDisposed() {
+            return browserFunction.isDisposed();
+        }
 
-		@Override
-		public String getFunctionName() {
-			return functionName;
-		}
+        @Override
+        public String getFunctionName() {
+            return functionName;
+        }
 
-	}
+    }
 }

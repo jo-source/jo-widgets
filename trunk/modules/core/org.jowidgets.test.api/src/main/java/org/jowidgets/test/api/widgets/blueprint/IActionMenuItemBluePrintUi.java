@@ -32,7 +32,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IAccelerateableMenuItemSetupB
 import org.jowidgets.test.api.widgets.descriptor.IActionMenuItemDescriptorUi;
 
 public interface IActionMenuItemBluePrintUi extends
-		IAccelerateableMenuItemSetupBuilder<IActionMenuItemBluePrintUi>,
-		IActionMenuItemDescriptorUi {
+        IAccelerateableMenuItemSetupBuilder<IActionMenuItemBluePrintUi>,
+        IActionMenuItemDescriptorUi {
 
 }

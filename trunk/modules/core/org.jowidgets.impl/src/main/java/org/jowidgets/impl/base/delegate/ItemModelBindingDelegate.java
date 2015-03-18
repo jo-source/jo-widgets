@@ -38,180 +38,180 @@ import org.jowidgets.util.NullCompatibleEquivalence;
 
 public class ItemModelBindingDelegate {
 
-	private final IItemSpiInvoker widget;
-	private final IItemModelListener itemModelListener;
+    private final IItemSpiInvoker widget;
+    private final IItemModelListener itemModelListener;
 
-	private String text;
-	private String toolTipText;
-	private IImageConstant icon;
-	private Accelerator accelerator;
-	private Character mnemonic;
-	private boolean enabled;
+    private String text;
+    private String toolTipText;
+    private IImageConstant icon;
+    private Accelerator accelerator;
+    private Character mnemonic;
+    private boolean enabled;
 
-	private IItemModel model;
+    private IItemModel model;
 
-	public ItemModelBindingDelegate(final IItemSpiInvoker widget, final IItemModel model) {
-		Assert.paramNotNull(model, "model");
+    public ItemModelBindingDelegate(final IItemSpiInvoker widget, final IItemModel model) {
+        Assert.paramNotNull(model, "model");
 
-		this.itemModelListener = new IItemModelListener() {
-			@Override
-			public void itemChanged(final IItemModel item) {
-				updateFromModel();
-			}
-		};
+        this.itemModelListener = new IItemModelListener() {
+            @Override
+            public void itemChanged(final IItemModel item) {
+                updateFromModel();
+            }
+        };
 
-		this.widget = widget;
-		this.model = model;
-		this.enabled = true;
-		updateFromModel();
-	}
+        this.widget = widget;
+        this.model = model;
+        this.enabled = true;
+        updateFromModel();
+    }
 
-	public IItemSpiInvoker getWidget() {
-		return widget;
-	}
+    public IItemSpiInvoker getWidget() {
+        return widget;
+    }
 
-	public IItemModel getModel() {
-		return model;
-	}
+    public IItemModel getModel() {
+        return model;
+    }
 
-	public void dispose() {
-		unRegisterModel();
-	}
+    public void dispose() {
+        unRegisterModel();
+    }
 
-	public void setText(final String text) {
-		setTextValue(text);
-		unRegisterModel();
-		model.setText(text);
-		registerModel();
-	}
+    public void setText(final String text) {
+        setTextValue(text);
+        unRegisterModel();
+        model.setText(text);
+        registerModel();
+    }
 
-	public void setToolTipText(final String toolTipText) {
-		setToolTipTextValue(toolTipText);
-		unRegisterModel();
-		model.setToolTipText(toolTipText);
-		registerModel();
-	}
+    public void setToolTipText(final String toolTipText) {
+        setToolTipTextValue(toolTipText);
+        unRegisterModel();
+        model.setToolTipText(toolTipText);
+        registerModel();
+    }
 
-	public void setIcon(final IImageConstant icon) {
-		setIconValue(icon);
-		unRegisterModel();
-		model.setIcon(icon);
-		registerModel();
-	}
+    public void setIcon(final IImageConstant icon) {
+        setIconValue(icon);
+        unRegisterModel();
+        model.setIcon(icon);
+        registerModel();
+    }
 
-	public void setAccelerator(final Accelerator accelerator) {
-		setAcceleratorValue(accelerator);
-		unRegisterModel();
-		model.setAccelerator(accelerator);
-		registerModel();
-	}
+    public void setAccelerator(final Accelerator accelerator) {
+        setAcceleratorValue(accelerator);
+        unRegisterModel();
+        model.setAccelerator(accelerator);
+        registerModel();
+    }
 
-	public void setMnemonic(final Character mnemonic) {
-		setMnemonicValue(mnemonic);
-		unRegisterModel();
-		model.setMnemonic(mnemonic);
-		registerModel();
-	}
+    public void setMnemonic(final Character mnemonic) {
+        setMnemonicValue(mnemonic);
+        unRegisterModel();
+        model.setMnemonic(mnemonic);
+        registerModel();
+    }
 
-	public void setEnabled(final boolean enabled) {
-		setEnabledValue(enabled);
-		unRegisterModel();
-		model.setEnabled(enabled);
-		registerModel();
-	}
+    public void setEnabled(final boolean enabled) {
+        setEnabledValue(enabled);
+        unRegisterModel();
+        model.setEnabled(enabled);
+        registerModel();
+    }
 
-	public String getText() {
-		return text;
-	}
+    public String getText() {
+        return text;
+    }
 
-	public String getToolTipText() {
-		return toolTipText;
-	}
+    public String getToolTipText() {
+        return toolTipText;
+    }
 
-	public IImageConstant getIcon() {
-		return icon;
-	}
+    public IImageConstant getIcon() {
+        return icon;
+    }
 
-	public Accelerator getAccelerator() {
-		return accelerator;
-	}
+    public Accelerator getAccelerator() {
+        return accelerator;
+    }
 
-	public Character getMnemonic() {
-		return mnemonic;
-	}
+    public Character getMnemonic() {
+        return mnemonic;
+    }
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+    public boolean isEnabled() {
+        return enabled;
+    }
 
-	public void setModel(final IItemModel model) {
-		if (this.model != null) {
-			model.removeItemModelListener(itemModelListener);
-		}
-		this.model = model;
-		updateFromModel();
-		registerModel();
-	}
+    public void setModel(final IItemModel model) {
+        if (this.model != null) {
+            model.removeItemModelListener(itemModelListener);
+        }
+        this.model = model;
+        updateFromModel();
+        registerModel();
+    }
 
-	protected final void registerModel() {
-		model.addItemModelListener(itemModelListener);
-	}
+    protected final void registerModel() {
+        model.addItemModelListener(itemModelListener);
+    }
 
-	protected final void unRegisterModel() {
-		model.removeItemModelListener(itemModelListener);
-	}
+    protected final void unRegisterModel() {
+        model.removeItemModelListener(itemModelListener);
+    }
 
-	protected void updateFromModel() {
-		setTextValue(model.getText());
-		setToolTipTextValue(model.getToolTipText());
-		setIconValue(model.getIcon());
-		setAcceleratorValue(model.getAccelerator());
-		setMnemonicValue(model.getMnemonic());
-		setEnabledValue(model.isEnabled());
-	}
+    protected void updateFromModel() {
+        setTextValue(model.getText());
+        setToolTipTextValue(model.getToolTipText());
+        setIconValue(model.getIcon());
+        setAcceleratorValue(model.getAccelerator());
+        setMnemonicValue(model.getMnemonic());
+        setEnabledValue(model.isEnabled());
+    }
 
-	private void setTextValue(final String text) {
-		if (!NullCompatibleEquivalence.equals(this.text, text)) {
-			this.text = text;
-			getWidget().setText(text);
-		}
-	}
+    private void setTextValue(final String text) {
+        if (!NullCompatibleEquivalence.equals(this.text, text)) {
+            this.text = text;
+            getWidget().setText(text);
+        }
+    }
 
-	private void setToolTipTextValue(final String toolTipText) {
-		if (!NullCompatibleEquivalence.equals(this.toolTipText, toolTipText)) {
-			this.toolTipText = toolTipText;
-			getWidget().setToolTipText(toolTipText);
-		}
-	}
+    private void setToolTipTextValue(final String toolTipText) {
+        if (!NullCompatibleEquivalence.equals(this.toolTipText, toolTipText)) {
+            this.toolTipText = toolTipText;
+            getWidget().setToolTipText(toolTipText);
+        }
+    }
 
-	private void setIconValue(final IImageConstant icon) {
-		if (this.icon != icon) {
-			this.icon = icon;
-			getWidget().setIcon(icon);
-		}
-	}
+    private void setIconValue(final IImageConstant icon) {
+        if (this.icon != icon) {
+            this.icon = icon;
+            getWidget().setIcon(icon);
+        }
+    }
 
-	private void setAcceleratorValue(final Accelerator accelerator) {
-		if (!NullCompatibleEquivalence.equals(this.accelerator, accelerator)) {
-			if (accelerator != null) {
-				this.accelerator = accelerator;
-				getWidget().setAccelerator(accelerator);
-			}
-		}
-	}
+    private void setAcceleratorValue(final Accelerator accelerator) {
+        if (!NullCompatibleEquivalence.equals(this.accelerator, accelerator)) {
+            if (accelerator != null) {
+                this.accelerator = accelerator;
+                getWidget().setAccelerator(accelerator);
+            }
+        }
+    }
 
-	private void setMnemonicValue(final Character mnemonic) {
-		if (!NullCompatibleEquivalence.equals(this.mnemonic, mnemonic)) {
-			this.mnemonic = mnemonic;
-			getWidget().setMnemonic(mnemonic);
-		}
-	}
+    private void setMnemonicValue(final Character mnemonic) {
+        if (!NullCompatibleEquivalence.equals(this.mnemonic, mnemonic)) {
+            this.mnemonic = mnemonic;
+            getWidget().setMnemonic(mnemonic);
+        }
+    }
 
-	private void setEnabledValue(final boolean enabled) {
-		if (this.enabled != enabled) {
-			this.enabled = enabled;
-			getWidget().setEnabled(enabled);
-		}
-	}
+    private void setEnabledValue(final boolean enabled) {
+        if (this.enabled != enabled) {
+            this.enabled = enabled;
+            getWidget().setEnabled(enabled);
+        }
+    }
 
 }

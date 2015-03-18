@@ -31,5 +31,5 @@ import org.jowidgets.impl.spi.blueprint.builder.IProgressBarSetupBuilderSpi;
 import org.jowidgets.impl.spi.descriptor.IProgressBarDescriptorSpi;
 
 public interface IProgressBarBluePrintSpi extends
-		IProgressBarSetupBuilderSpi<IProgressBarBluePrintSpi>,
-		IProgressBarDescriptorSpi {}
+        IProgressBarSetupBuilderSpi<IProgressBarBluePrintSpi>,
+        IProgressBarDescriptorSpi {}

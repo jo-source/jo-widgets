@@ -34,48 +34,48 @@ import org.jowidgets.util.Assert;
 
 public final class TransferTypeSpi implements Serializable {
 
-	public static final TransferTypeSpi UNKNOWN_TYPE = new TransferTypeSpi(UnknownTransferTypeClassSpi.class);
+    public static final TransferTypeSpi UNKNOWN_TYPE = new TransferTypeSpi(UnknownTransferTypeClassSpi.class);
 
-	private static final long serialVersionUID = 3536962082573394080L;
+    private static final long serialVersionUID = 3536962082573394080L;
 
-	private final Class<?> javaType;
-	private final String className;
+    private final Class<?> javaType;
+    private final String className;
 
-	public TransferTypeSpi(final Class<?> javaType) {
-		Assert.paramNotNull(javaType, "javaType");
-		this.javaType = javaType;
-		this.className = javaType.getName();
-	}
+    public TransferTypeSpi(final Class<?> javaType) {
+        Assert.paramNotNull(javaType, "javaType");
+        this.javaType = javaType;
+        this.className = javaType.getName();
+    }
 
-	public Class<?> getJavaType() {
-		return javaType;
-	}
+    public Class<?> getJavaType() {
+        return javaType;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((className == null) ? 0 : className.hashCode());
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((className == null) ? 0 : className.hashCode());
+        return result;
+    }
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof TransferTypeSpi)) {
-			return false;
-		}
-		final TransferTypeSpi other = (TransferTypeSpi) obj;
-		return className.equals(other.getJavaType().getName());
-	}
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof TransferTypeSpi)) {
+            return false;
+        }
+        final TransferTypeSpi other = (TransferTypeSpi) obj;
+        return className.equals(other.getJavaType().getName());
+    }
 
-	private static final class UnknownTransferTypeClassSpi implements Serializable {
-		private static final long serialVersionUID = -2369206887803864740L;
-	}
+    private static final class UnknownTransferTypeClassSpi implements Serializable {
+        private static final long serialVersionUID = -2369206887803864740L;
+    }
 
 }

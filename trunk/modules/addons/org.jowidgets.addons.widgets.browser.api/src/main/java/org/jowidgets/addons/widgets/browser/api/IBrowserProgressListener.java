@@ -30,8 +30,8 @@ package org.jowidgets.addons.widgets.browser.api;
 
 public interface IBrowserProgressListener {
 
-	void loadProgressChanged(int progress, int totalAmount);
+    void loadProgressChanged(int progress, int totalAmount);
 
-	void loadFinished();
+    void loadFinished();
 
 }

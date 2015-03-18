@@ -35,22 +35,22 @@ import org.jowidgets.common.types.VirtualKey;
 
 public interface IDefaultActionBuilder {
 
-	IDefaultActionBuilder setText(String text);
+    IDefaultActionBuilder setText(String text);
 
-	IDefaultActionBuilder setToolTipText(final String toolTipText);
+    IDefaultActionBuilder setToolTipText(final String toolTipText);
 
-	IDefaultActionBuilder setIcon(IImageConstant icon);
+    IDefaultActionBuilder setIcon(IImageConstant icon);
 
-	IDefaultActionBuilder setMnemonic(final Character mnemonic);
+    IDefaultActionBuilder setMnemonic(final Character mnemonic);
 
-	IDefaultActionBuilder setMnemonic(final char mnemonic);
+    IDefaultActionBuilder setMnemonic(final char mnemonic);
 
-	IDefaultActionBuilder setAccelerator(Accelerator accelerator);
+    IDefaultActionBuilder setAccelerator(Accelerator accelerator);
 
-	IDefaultActionBuilder setAccelerator(final char key, final Modifier... modifier);
+    IDefaultActionBuilder setAccelerator(final char key, final Modifier... modifier);
 
-	IDefaultActionBuilder setAccelerator(final VirtualKey virtualKey, final Modifier... modifier);
+    IDefaultActionBuilder setAccelerator(final VirtualKey virtualKey, final Modifier... modifier);
 
-	IAction build();
+    IAction build();
 
 }

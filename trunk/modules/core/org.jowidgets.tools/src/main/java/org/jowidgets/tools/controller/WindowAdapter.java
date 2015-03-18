@@ -33,22 +33,22 @@ import org.jowidgets.common.widgets.controller.IWindowListener;
 
 public class WindowAdapter implements IWindowListener {
 
-	@Override
-	public void windowActivated() {}
+    @Override
+    public void windowActivated() {}
 
-	@Override
-	public void windowDeactivated() {}
+    @Override
+    public void windowDeactivated() {}
 
-	@Override
-	public void windowIconified() {}
+    @Override
+    public void windowIconified() {}
 
-	@Override
-	public void windowDeiconified() {}
+    @Override
+    public void windowDeiconified() {}
 
-	@Override
-	public void windowClosed() {}
+    @Override
+    public void windowClosed() {}
 
-	@Override
-	public void windowClosing(final IVetoable vetoable) {}
+    @Override
+    public void windowClosing(final IVetoable vetoable) {}
 
 }

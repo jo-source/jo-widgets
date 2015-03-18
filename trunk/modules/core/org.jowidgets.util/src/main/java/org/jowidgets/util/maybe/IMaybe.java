@@ -36,30 +36,30 @@ package org.jowidgets.util.maybe;
  */
 public interface IMaybe<TYPE> {
 
-	/**
-	 * @return The value of the maybe
-	 */
-	TYPE getValue();
+    /**
+     * @return The value of the maybe
+     */
+    TYPE getValue();
 
-	/**
-	 * @return true if the maybe is nothing, not even undefined
-	 *         Remark: isSomething() == true implies isNothing() == false and vice versa.
-	 */
-	boolean isNothing();
+    /**
+     * @return true if the maybe is nothing, not even undefined
+     *         Remark: isSomething() == true implies isNothing() == false and vice versa.
+     */
+    boolean isNothing();
 
-	/**
-	 * @return true, if the maybe is something.
-	 *         Remark: isSomething() == true implies isNothing() == false and vice versa.
-	 */
-	boolean isSomething();
+    /**
+     * @return true, if the maybe is something.
+     *         Remark: isSomething() == true implies isNothing() == false and vice versa.
+     */
+    boolean isSomething();
 
-	/**
-	 * Gets the value of the maybe, if the maybe is not nothing, else
-	 * the default is returned
-	 * 
-	 * @param defaultValue the default value
-	 * @return the value if the maybe is not nothing and else the default
-	 */
-	TYPE getValueOrElse(TYPE defaultValue);
+    /**
+     * Gets the value of the maybe, if the maybe is not nothing, else
+     * the default is returned
+     * 
+     * @param defaultValue the default value
+     * @return the value if the maybe is not nothing and else the default
+     */
+    TYPE getValueOrElse(TYPE defaultValue);
 
 }

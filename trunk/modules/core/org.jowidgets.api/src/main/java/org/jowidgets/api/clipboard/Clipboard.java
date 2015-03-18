@@ -32,34 +32,34 @@ import org.jowidgets.api.toolkit.Toolkit;
 
 public final class Clipboard {
 
-	private Clipboard() {}
+    private Clipboard() {}
 
-	public static IClipboard getInstance() {
-		return Toolkit.getClipboard();
-	}
+    public static IClipboard getInstance() {
+        return Toolkit.getClipboard();
+    }
 
-	public static void setContents(final ITransferable contents) {
-		getInstance().setContents(contents);
-	}
+    public static void setContents(final ITransferable contents) {
+        getInstance().setContents(contents);
+    }
 
-	public static ITransferable getContents() {
-		return getInstance().getContents();
-	}
+    public static ITransferable getContents() {
+        return getInstance().getContents();
+    }
 
-	public static <JAVA_TYPE> JAVA_TYPE getData(final TransferType<JAVA_TYPE> type) {
-		return getInstance().getData(type);
-	}
+    public static <JAVA_TYPE> JAVA_TYPE getData(final TransferType<JAVA_TYPE> type) {
+        return getInstance().getData(type);
+    }
 
-	public static void addClipbaordListener(final IClipboardListener listener) {
-		getInstance().addClipboardListener(listener);
-	}
+    public static void addClipbaordListener(final IClipboardListener listener) {
+        getInstance().addClipboardListener(listener);
+    }
 
-	public static void removeClipbaordListener(final IClipboardListener listener) {
-		getInstance().removeClipboardListener(listener);
-	}
+    public static void removeClipbaordListener(final IClipboardListener listener) {
+        getInstance().removeClipboardListener(listener);
+    }
 
-	public static void dispose() {
-		getInstance().dispose();
-	}
+    public static void dispose() {
+        getInstance().dispose();
+    }
 
 }

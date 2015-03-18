@@ -50,154 +50,154 @@ import org.jowidgets.util.Assert;
 
 public final class PersonTableCellEditorFactory extends AbstractTableCellEditorFactory<ITableCellEditor> {
 
-	private final BeanTableModel<Person> model;
+    private final BeanTableModel<Person> model;
 
-	public PersonTableCellEditorFactory(final BeanTableModel<Person> model) {
-		Assert.paramNotNull(model, "model");
-		this.model = model;
-	}
+    public PersonTableCellEditorFactory(final BeanTableModel<Person> model) {
+        Assert.paramNotNull(model, "model");
+        this.model = model;
+    }
 
-	@Override
-	public ITableCellEditor create(
-		final ITableCell cell,
-		final int row,
-		final int column,
-		final ICustomWidgetFactory widgetFactory) {
+    @Override
+    public ITableCellEditor create(
+        final ITableCell cell,
+        final int row,
+        final int column,
+        final ICustomWidgetFactory widgetFactory) {
 
-		if (column == 0) {
-			return new NameEditor(widgetFactory);
-		}
-		else if (column == 1) {
-			return new DayOfBirthEditor(widgetFactory);
-		}
-		else if (column == 2) {
-			return new GenderEditor(widgetFactory);
-		}
-		else if (column == 3) {
-			return new QuotaEditor(widgetFactory);
-		}
-		else if (column == 4) {
-			return new RolesEditor(widgetFactory);
-		}
+        if (column == 0) {
+            return new NameEditor(widgetFactory);
+        }
+        else if (column == 1) {
+            return new DayOfBirthEditor(widgetFactory);
+        }
+        else if (column == 2) {
+            return new GenderEditor(widgetFactory);
+        }
+        else if (column == 3) {
+            return new QuotaEditor(widgetFactory);
+        }
+        else if (column == 4) {
+            return new RolesEditor(widgetFactory);
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	private final class NameEditor extends AbstractTableCellEditor {
+    private final class NameEditor extends AbstractTableCellEditor {
 
-		private final IInputField<String> editor;
+        private final IInputField<String> editor;
 
-		@SuppressWarnings("unchecked")
-		private NameEditor(final ICustomWidgetFactory widgetFactory) {
-			super(widgetFactory.create(BPF.inputFieldString()));
-			this.editor = (IInputField<String>) super.getWidget();
-		}
+        @SuppressWarnings("unchecked")
+        private NameEditor(final ICustomWidgetFactory widgetFactory) {
+            super(widgetFactory.create(BPF.inputFieldString()));
+            this.editor = (IInputField<String>) super.getWidget();
+        }
 
-		@Override
-		public void startEditing(final ITableCell cell, final int row, final int column) {
-			editor.setValue(model.getBean(row).getName());
-			editor.selectAll();
-		}
+        @Override
+        public void startEditing(final ITableCell cell, final int row, final int column) {
+            editor.setValue(model.getBean(row).getName());
+            editor.selectAll();
+        }
 
-		@Override
-		public void stopEditing(final ITableCell cell, final int row, final int column) {
-			model.getBean(row).setName(editor.getValue());
-			model.fireDataChanged();
-		}
+        @Override
+        public void stopEditing(final ITableCell cell, final int row, final int column) {
+            model.getBean(row).setName(editor.getValue());
+            model.fireDataChanged();
+        }
 
-	}
+    }
 
-	private final class DayOfBirthEditor extends AbstractTableCellEditor {
+    private final class DayOfBirthEditor extends AbstractTableCellEditor {
 
-		private final IInputField<Date> editor;
+        private final IInputField<Date> editor;
 
-		@SuppressWarnings("unchecked")
-		private DayOfBirthEditor(final ICustomWidgetFactory widgetFactory) {
-			super(widgetFactory.create(BPF.inputFieldDate()));
-			this.editor = (IInputField<Date>) super.getWidget();
-		}
+        @SuppressWarnings("unchecked")
+        private DayOfBirthEditor(final ICustomWidgetFactory widgetFactory) {
+            super(widgetFactory.create(BPF.inputFieldDate()));
+            this.editor = (IInputField<Date>) super.getWidget();
+        }
 
-		@Override
-		public void startEditing(final ITableCell cell, final int row, final int column) {
-			editor.setValue(model.getBean(row).getDayOfBirth());
-			editor.selectAll();
-		}
+        @Override
+        public void startEditing(final ITableCell cell, final int row, final int column) {
+            editor.setValue(model.getBean(row).getDayOfBirth());
+            editor.selectAll();
+        }
 
-		@Override
-		public void stopEditing(final ITableCell cell, final int row, final int column) {
-			model.getBean(row).setDayOfBirth(editor.getValue());
-			model.fireDataChanged();
-		}
+        @Override
+        public void stopEditing(final ITableCell cell, final int row, final int column) {
+            model.getBean(row).setDayOfBirth(editor.getValue());
+            model.fireDataChanged();
+        }
 
-	}
+    }
 
-	private final class GenderEditor extends AbstractTableCellEditor {
+    private final class GenderEditor extends AbstractTableCellEditor {
 
-		private final IInputControl<Gender> editor;
+        private final IInputControl<Gender> editor;
 
-		@SuppressWarnings("unchecked")
-		private GenderEditor(final ICustomWidgetFactory widgetFactory) {
-			super(widgetFactory.create(BPF.comboBoxSelection(Gender.values())));
-			this.editor = (IInputControl<Gender>) getWidget();
-		}
+        @SuppressWarnings("unchecked")
+        private GenderEditor(final ICustomWidgetFactory widgetFactory) {
+            super(widgetFactory.create(BPF.comboBoxSelection(Gender.values())));
+            this.editor = (IInputControl<Gender>) getWidget();
+        }
 
-		@Override
-		public void startEditing(final ITableCell cell, final int row, final int column) {
-			editor.setValue(model.getBean(row).getGender());
-		}
+        @Override
+        public void startEditing(final ITableCell cell, final int row, final int column) {
+            editor.setValue(model.getBean(row).getGender());
+        }
 
-		@Override
-		public void stopEditing(final ITableCell cell, final int row, final int column) {
-			model.getBean(row).setGender(editor.getValue());
-			model.fireDataChanged();
-		}
+        @Override
+        public void stopEditing(final ITableCell cell, final int row, final int column) {
+            model.getBean(row).setGender(editor.getValue());
+            model.fireDataChanged();
+        }
 
-	}
+    }
 
-	private final class QuotaEditor extends AbstractTableCellEditor {
+    private final class QuotaEditor extends AbstractTableCellEditor {
 
-		private final IInputControl<ByteValue> editor;
+        private final IInputControl<ByteValue> editor;
 
-		@SuppressWarnings("unchecked")
-		private QuotaEditor(final ICustomWidgetFactory widgetFactory) {
-			super(new ByteValueControl(widgetFactory.create(BPF.composite())));
-			this.editor = (IInputControl<ByteValue>) getWidget();
-		}
+        @SuppressWarnings("unchecked")
+        private QuotaEditor(final ICustomWidgetFactory widgetFactory) {
+            super(new ByteValueControl(widgetFactory.create(BPF.composite())));
+            this.editor = (IInputControl<ByteValue>) getWidget();
+        }
 
-		@Override
-		public void startEditing(final ITableCell cell, final int row, final int column) {
-			editor.setValue(model.getBean(row).getQuota());
-		}
+        @Override
+        public void startEditing(final ITableCell cell, final int row, final int column) {
+            editor.setValue(model.getBean(row).getQuota());
+        }
 
-		@Override
-		public void stopEditing(final ITableCell cell, final int row, final int column) {
-			model.getBean(row).setQuota(editor.getValue());
-			model.fireDataChanged();
-		}
+        @Override
+        public void stopEditing(final ITableCell cell, final int row, final int column) {
+            model.getBean(row).setQuota(editor.getValue());
+            model.fireDataChanged();
+        }
 
-	}
+    }
 
-	private final class RolesEditor extends AbstractTableCellEditor {
+    private final class RolesEditor extends AbstractTableCellEditor {
 
-		private final IInputControl<List<Role>> editor;
+        private final IInputControl<List<Role>> editor;
 
-		@SuppressWarnings("unchecked")
-		private RolesEditor(final ICustomWidgetFactory widgetFactory) {
-			super(new RoleInputControlCreator().create(widgetFactory));
-			this.editor = (IInputControl<List<Role>>) getWidget();
-		}
+        @SuppressWarnings("unchecked")
+        private RolesEditor(final ICustomWidgetFactory widgetFactory) {
+            super(new RoleInputControlCreator().create(widgetFactory));
+            this.editor = (IInputControl<List<Role>>) getWidget();
+        }
 
-		@Override
-		public void startEditing(final ITableCell cell, final int row, final int column) {
-			editor.setValue(model.getBean(row).getRoles());
-		}
+        @Override
+        public void startEditing(final ITableCell cell, final int row, final int column) {
+            editor.setValue(model.getBean(row).getRoles());
+        }
 
-		@Override
-		public void stopEditing(final ITableCell cell, final int row, final int column) {
-			model.getBean(row).setRoles(editor.getValue());
-			model.fireDataChanged();
-		}
+        @Override
+        public void stopEditing(final ITableCell cell, final int row, final int column) {
+            model.getBean(row).setRoles(editor.getValue());
+            model.fireDataChanged();
+        }
 
-	}
+    }
 
 }

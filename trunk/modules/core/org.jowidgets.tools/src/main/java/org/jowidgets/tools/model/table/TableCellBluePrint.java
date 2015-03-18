@@ -37,65 +37,65 @@ import org.jowidgets.util.Assert;
 
 public final class TableCellBluePrint implements ITableCellBluePrint {
 
-	private final ITableCellBuilder builder;
+    private final ITableCellBuilder builder;
 
-	public TableCellBluePrint(final ITableCellBuilder builder) {
-		Assert.paramNotNull(builder, "builder");
-		this.builder = builder;
-	}
+    public TableCellBluePrint(final ITableCellBuilder builder) {
+        Assert.paramNotNull(builder, "builder");
+        this.builder = builder;
+    }
 
-	@Override
-	public ITableCellBluePrint setForegroundColor(final IColorConstant foregroundColor) {
-		builder.setForegroundColor(foregroundColor);
-		return this;
-	}
+    @Override
+    public ITableCellBluePrint setForegroundColor(final IColorConstant foregroundColor) {
+        builder.setForegroundColor(foregroundColor);
+        return this;
+    }
 
-	@Override
-	public ITableCellBluePrint setBackgroundColor(final IColorConstant backgroundColor) {
-		builder.setBackgroundColor(backgroundColor);
-		return this;
-	}
+    @Override
+    public ITableCellBluePrint setBackgroundColor(final IColorConstant backgroundColor) {
+        builder.setBackgroundColor(backgroundColor);
+        return this;
+    }
 
-	@Override
-	public ITableCellBluePrint setSelectedForegroundColor(final IColorConstant foregroundColor) {
-		builder.setSelectedForegroundColor(foregroundColor);
-		return this;
-	}
+    @Override
+    public ITableCellBluePrint setSelectedForegroundColor(final IColorConstant foregroundColor) {
+        builder.setSelectedForegroundColor(foregroundColor);
+        return this;
+    }
 
-	@Override
-	public ITableCellBluePrint setSelectedBackgroundColor(final IColorConstant backgroundColor) {
-		builder.setSelectedBackgroundColor(backgroundColor);
-		return this;
-	}
+    @Override
+    public ITableCellBluePrint setSelectedBackgroundColor(final IColorConstant backgroundColor) {
+        builder.setSelectedBackgroundColor(backgroundColor);
+        return this;
+    }
 
-	@Override
-	public ITableCellBluePrint setMarkup(final Markup markup) {
-		builder.setMarkup(markup);
-		return this;
-	}
+    @Override
+    public ITableCellBluePrint setMarkup(final Markup markup) {
+        builder.setMarkup(markup);
+        return this;
+    }
 
-	@Override
-	public ITableCellBluePrint setText(final String text) {
-		builder.setText(text);
-		return this;
-	}
+    @Override
+    public ITableCellBluePrint setText(final String text) {
+        builder.setText(text);
+        return this;
+    }
 
-	@Override
-	public ITableCellBluePrint setToolTipText(final String toolTipText) {
-		builder.setToolTipText(toolTipText);
-		return this;
-	}
+    @Override
+    public ITableCellBluePrint setToolTipText(final String toolTipText) {
+        builder.setToolTipText(toolTipText);
+        return this;
+    }
 
-	@Override
-	public ITableCellBluePrint setIcon(final IImageConstant icon) {
-		builder.setIcon(icon);
-		return this;
-	}
+    @Override
+    public ITableCellBluePrint setIcon(final IImageConstant icon) {
+        builder.setIcon(icon);
+        return this;
+    }
 
-	@Override
-	public ITableCellBluePrint setEditable(final boolean editable) {
-		builder.setEditable(editable);
-		return this;
-	}
+    @Override
+    public ITableCellBluePrint setEditable(final boolean editable) {
+        builder.setEditable(editable);
+        return this;
+    }
 
 }

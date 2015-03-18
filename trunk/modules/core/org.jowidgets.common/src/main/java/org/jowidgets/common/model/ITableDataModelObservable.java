@@ -30,8 +30,8 @@ package org.jowidgets.common.model;
 
 public interface ITableDataModelObservable {
 
-	void addDataModelListener(ITableDataModelListener listener);
+    void addDataModelListener(ITableDataModelListener listener);
 
-	void removeDataModelListener(ITableDataModelListener listener);
+    void removeDataModelListener(ITableDataModelListener listener);
 
 }

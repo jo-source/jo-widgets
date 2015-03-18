@@ -31,10 +31,10 @@ import org.jowidgets.examples.common.office.OfficeTextDemoApplication;
 
 public final class SwtOfficeTextDemoStarter {
 
-	private SwtOfficeTextDemoStarter() {}
+    private SwtOfficeTextDemoStarter() {}
 
-	public static void main(final String[] args) throws Exception {
-		new OfficeTextDemoApplication("Swt office text Demo").start();
-	}
+    public static void main(final String[] args) throws Exception {
+        new OfficeTextDemoApplication("Swt office text Demo").start();
+    }
 
 }

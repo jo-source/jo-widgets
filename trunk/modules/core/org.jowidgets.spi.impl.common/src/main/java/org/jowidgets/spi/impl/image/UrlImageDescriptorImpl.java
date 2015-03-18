@@ -35,21 +35,21 @@ import org.jowidgets.util.Assert;
 
 public final class UrlImageDescriptorImpl implements IUrlImageDescriptor {
 
-	private final URL url;
+    private final URL url;
 
-	public UrlImageDescriptorImpl(final URL url) {
-		Assert.paramNotNull(url, "url");
-		this.url = url;
-	}
+    public UrlImageDescriptorImpl(final URL url) {
+        Assert.paramNotNull(url, "url");
+        this.url = url;
+    }
 
-	@Override
-	public URL getImageUrl() {
-		return url;
-	}
+    @Override
+    public URL getImageUrl() {
+        return url;
+    }
 
-	@Override
-	public String toString() {
-		return "UrlImageDescriptorImpl [url=" + url + "]";
-	}
+    @Override
+    public String toString() {
+        return "UrlImageDescriptorImpl [url=" + url + "]";
+    }
 
 }

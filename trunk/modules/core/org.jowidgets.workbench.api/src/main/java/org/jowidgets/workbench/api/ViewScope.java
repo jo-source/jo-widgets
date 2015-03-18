@@ -30,19 +30,19 @@ package org.jowidgets.workbench.api;
 
 public enum ViewScope {
 
-	/**
-	 * The view will be created by the component
-	 */
-	COMPONENT,
+    /**
+     * The view will be created by the component
+     */
+    COMPONENT,
 
-	/**
-	 * The view will be created by the workbench application
-	 */
-	WORKBENCH_APPLICATION,
+    /**
+     * The view will be created by the workbench application
+     */
+    WORKBENCH_APPLICATION,
 
-	/**
-	 * The view will be created by the workbench
-	 */
-	WORKBENCH;
+    /**
+     * The view will be created by the workbench
+     */
+    WORKBENCH;
 
 }

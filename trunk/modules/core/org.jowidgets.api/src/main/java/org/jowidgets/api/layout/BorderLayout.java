@@ -47,49 +47,49 @@ import org.jowidgets.common.widgets.layout.ILayouter;
  */
 public final class BorderLayout {
 
-	/**
-	 * The center region
-	 */
-	public static final BorderLayoutConstraints CENTER = BorderLayoutConstraints.CENTER;
+    /**
+     * The center region
+     */
+    public static final BorderLayoutConstraints CENTER = BorderLayoutConstraints.CENTER;
 
-	/**
-	 * The left region
-	 */
-	public static final BorderLayoutConstraints LEFT = BorderLayoutConstraints.LEFT;
+    /**
+     * The left region
+     */
+    public static final BorderLayoutConstraints LEFT = BorderLayoutConstraints.LEFT;
 
-	/**
-	 * The right region
-	 */
-	public static final BorderLayoutConstraints RIGHT = BorderLayoutConstraints.RIGHT;
+    /**
+     * The right region
+     */
+    public static final BorderLayoutConstraints RIGHT = BorderLayoutConstraints.RIGHT;
 
-	/**
-	 * The top region
-	 */
-	public static final BorderLayoutConstraints TOP = BorderLayoutConstraints.TOP;
+    /**
+     * The top region
+     */
+    public static final BorderLayoutConstraints TOP = BorderLayoutConstraints.TOP;
 
-	/**
-	 * The bottom region
-	 */
-	public static final BorderLayoutConstraints BOTTOM = BorderLayoutConstraints.BOTTOM;
+    /**
+     * The bottom region
+     */
+    public static final BorderLayoutConstraints BOTTOM = BorderLayoutConstraints.BOTTOM;
 
-	private BorderLayout() {}
+    private BorderLayout() {}
 
-	/**
-	 * Gets a layout factory for an 'BorderLayout'
-	 * 
-	 * @return A layout factory that produces 'BorderLayout'
-	 */
-	public static ILayoutFactory<ILayouter> get() {
-		return Toolkit.getLayoutFactoryProvider().borderLayout();
-	}
+    /**
+     * Gets a layout factory for an 'BorderLayout'
+     * 
+     * @return A layout factory that produces 'BorderLayout'
+     */
+    public static ILayoutFactory<ILayouter> get() {
+        return Toolkit.getLayoutFactoryProvider().borderLayout();
+    }
 
-	/**
-	 * Gets a builder for an layout factory of an 'BorderLayout'
-	 * 
-	 * @return A builder for an layout factory of an 'BorderLayout'
-	 */
-	public static IBorderLayoutFactoryBuilder builder() {
-		return Toolkit.getLayoutFactoryProvider().borderLayoutBuilder();
-	}
+    /**
+     * Gets a builder for an layout factory of an 'BorderLayout'
+     * 
+     * @return A builder for an layout factory of an 'BorderLayout'
+     */
+    public static IBorderLayoutFactoryBuilder builder() {
+        return Toolkit.getLayoutFactoryProvider().borderLayoutBuilder();
+    }
 
 }

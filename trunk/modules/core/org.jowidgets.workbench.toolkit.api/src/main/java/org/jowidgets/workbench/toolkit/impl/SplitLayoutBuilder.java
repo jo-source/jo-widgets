@@ -38,94 +38,94 @@ import org.jowidgets.workbench.toolkit.api.ISplitLayoutBuilder;
 
 final class SplitLayoutBuilder implements ISplitLayoutBuilder {
 
-	private Orientation orientation;
-	private double weight;
-	private SplitResizePolicy splitResizePolicy;
-	private ILayoutContainer firstContainer;
-	private ILayoutContainer secondContainer;
+    private Orientation orientation;
+    private double weight;
+    private SplitResizePolicy splitResizePolicy;
+    private ILayoutContainer firstContainer;
+    private ILayoutContainer secondContainer;
 
-	SplitLayoutBuilder() {
-		super();
-		this.weight = 0.5;
-		this.orientation = Orientation.VERTICAL;
-	}
+    SplitLayoutBuilder() {
+        super();
+        this.weight = 0.5;
+        this.orientation = Orientation.VERTICAL;
+    }
 
-	@Override
-	public ISplitLayoutBuilder setOrientation(final Orientation orientation) {
-		Assert.paramNotNull(orientation, "orientation");
-		this.orientation = orientation;
-		return this;
-	}
+    @Override
+    public ISplitLayoutBuilder setOrientation(final Orientation orientation) {
+        Assert.paramNotNull(orientation, "orientation");
+        this.orientation = orientation;
+        return this;
+    }
 
-	@Override
-	public ISplitLayoutBuilder setHorizontal() {
-		return setOrientation(Orientation.HORIZONTAL);
-	}
+    @Override
+    public ISplitLayoutBuilder setHorizontal() {
+        return setOrientation(Orientation.HORIZONTAL);
+    }
 
-	@Override
-	public ISplitLayoutBuilder setVertical() {
-		return setOrientation(Orientation.VERTICAL);
-	}
+    @Override
+    public ISplitLayoutBuilder setVertical() {
+        return setOrientation(Orientation.VERTICAL);
+    }
 
-	@Override
-	public ISplitLayoutBuilder setWeight(final double weigth) {
-		this.weight = weigth;
-		return this;
-	}
+    @Override
+    public ISplitLayoutBuilder setWeight(final double weigth) {
+        this.weight = weigth;
+        return this;
+    }
 
-	@Override
-	public ISplitLayoutBuilder setResizePolicy(final SplitResizePolicy splitResizePolicy) {
-		Assert.paramNotNull(splitResizePolicy, "splitResizePolicy");
-		this.splitResizePolicy = splitResizePolicy;
-		return this;
-	}
+    @Override
+    public ISplitLayoutBuilder setResizePolicy(final SplitResizePolicy splitResizePolicy) {
+        Assert.paramNotNull(splitResizePolicy, "splitResizePolicy");
+        this.splitResizePolicy = splitResizePolicy;
+        return this;
+    }
 
-	@Override
-	public ISplitLayoutBuilder setResizeFirst() {
-		return setResizePolicy(SplitResizePolicy.RESIZE_FIRST);
-	}
+    @Override
+    public ISplitLayoutBuilder setResizeFirst() {
+        return setResizePolicy(SplitResizePolicy.RESIZE_FIRST);
+    }
 
-	@Override
-	public ISplitLayoutBuilder setResizeSecond() {
-		return setResizePolicy(SplitResizePolicy.RESIZE_SECOND);
-	}
+    @Override
+    public ISplitLayoutBuilder setResizeSecond() {
+        return setResizePolicy(SplitResizePolicy.RESIZE_SECOND);
+    }
 
-	@Override
-	public ISplitLayoutBuilder setResizeBoth() {
-		return setResizePolicy(SplitResizePolicy.RESIZE_BOTH);
-	}
+    @Override
+    public ISplitLayoutBuilder setResizeBoth() {
+        return setResizePolicy(SplitResizePolicy.RESIZE_BOTH);
+    }
 
-	@Override
-	public ISplitLayoutBuilder setFirstContainer(final ILayoutContainer firstContainer) {
-		Assert.paramNotNull(firstContainer, "firstContainer");
-		this.firstContainer = firstContainer;
-		return this;
-	}
+    @Override
+    public ISplitLayoutBuilder setFirstContainer(final ILayoutContainer firstContainer) {
+        Assert.paramNotNull(firstContainer, "firstContainer");
+        this.firstContainer = firstContainer;
+        return this;
+    }
 
-	@Override
-	public ISplitLayoutBuilder setFirstContainer(final ILayoutContainerBuilder firstContainerBuilder) {
-		Assert.paramNotNull(firstContainerBuilder, "firstContainerBuilder");
-		this.firstContainer = firstContainerBuilder.build();
-		return this;
-	}
+    @Override
+    public ISplitLayoutBuilder setFirstContainer(final ILayoutContainerBuilder firstContainerBuilder) {
+        Assert.paramNotNull(firstContainerBuilder, "firstContainerBuilder");
+        this.firstContainer = firstContainerBuilder.build();
+        return this;
+    }
 
-	@Override
-	public ISplitLayoutBuilder setSecondContainer(final ILayoutContainer secondContainer) {
-		Assert.paramNotNull(secondContainer, "secondContainer");
-		this.secondContainer = secondContainer;
-		return this;
-	}
+    @Override
+    public ISplitLayoutBuilder setSecondContainer(final ILayoutContainer secondContainer) {
+        Assert.paramNotNull(secondContainer, "secondContainer");
+        this.secondContainer = secondContainer;
+        return this;
+    }
 
-	@Override
-	public ISplitLayoutBuilder setSecondContainer(final ILayoutContainerBuilder secondContainerBuilder) {
-		Assert.paramNotNull(secondContainerBuilder, "secondContainerBuilder");
-		this.secondContainer = secondContainerBuilder.build();
-		return this;
-	}
+    @Override
+    public ISplitLayoutBuilder setSecondContainer(final ILayoutContainerBuilder secondContainerBuilder) {
+        Assert.paramNotNull(secondContainerBuilder, "secondContainerBuilder");
+        this.secondContainer = secondContainerBuilder.build();
+        return this;
+    }
 
-	@Override
-	public ISplitLayout build() {
-		return new SplitLayout(orientation, weight, splitResizePolicy, firstContainer, secondContainer);
-	}
+    @Override
+    public ISplitLayout build() {
+        return new SplitLayout(orientation, weight, splitResizePolicy, firstContainer, secondContainer);
+    }
 
 }

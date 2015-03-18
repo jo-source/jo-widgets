@@ -31,7 +31,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IUnitValueFieldSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.IUnitValueFieldDescriptor;
 
 public interface IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> extends
-		IUnitValueFieldSetupBuilder<IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE>, BASE_VALUE_TYPE, UNIT_VALUE_TYPE>,
-		IUnitValueFieldDescriptor<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> {
+        IUnitValueFieldSetupBuilder<IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE>, BASE_VALUE_TYPE, UNIT_VALUE_TYPE>,
+        IUnitValueFieldDescriptor<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> {
 
 }

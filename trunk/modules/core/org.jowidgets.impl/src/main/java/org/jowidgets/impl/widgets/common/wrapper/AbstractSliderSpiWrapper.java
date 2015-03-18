@@ -33,23 +33,23 @@ import org.jowidgets.spi.widgets.ISliderSpi;
 
 public abstract class AbstractSliderSpiWrapper extends AbstractControlSpiWrapper implements ISliderCommon {
 
-	public AbstractSliderSpiWrapper(final ISliderSpi widget) {
-		super(widget);
-	}
+    public AbstractSliderSpiWrapper(final ISliderSpi widget) {
+        super(widget);
+    }
 
-	@Override
-	public ISliderSpi getWidget() {
-		return (ISliderSpi) super.getWidget();
-	}
+    @Override
+    public ISliderSpi getWidget() {
+        return (ISliderSpi) super.getWidget();
+    }
 
-	@Override
-	public int getSelection() {
-		return getWidget().getSelection();
-	}
+    @Override
+    public int getSelection() {
+        return getWidget().getSelection();
+    }
 
-	@Override
-	public void setSelection(final int value) {
-		getWidget().setSelection(value);
-	}
+    @Override
+    public void setSelection(final int value) {
+        getWidget().setSelection(value);
+    }
 
 }

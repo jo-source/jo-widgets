@@ -28,7 +28,7 @@
 package org.jowidgets.common.widgets.builder;
 
 public interface IComboBoxSetupBuilderCommon<INSTANCE_TYPE extends IComboBoxSetupBuilderCommon<?>> extends
-		IComboBoxSelectionSetupBuilderCommon<INSTANCE_TYPE>,
-		ITextComponentSetupBuilderCommon<INSTANCE_TYPE> {
+        IComboBoxSelectionSetupBuilderCommon<INSTANCE_TYPE>,
+        ITextComponentSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

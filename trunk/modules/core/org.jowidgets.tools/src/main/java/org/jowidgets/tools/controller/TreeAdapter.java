@@ -33,16 +33,16 @@ import org.jowidgets.api.widgets.ITreeNode;
 
 public class TreeAdapter implements ITreeListener {
 
-	@Override
-	public void nodeExpanded(final ITreeNode node) {}
+    @Override
+    public void nodeExpanded(final ITreeNode node) {}
 
-	@Override
-	public void nodeCollapsed(final ITreeNode node) {}
+    @Override
+    public void nodeCollapsed(final ITreeNode node) {}
 
-	@Override
-	public void nodeChecked(final ITreeNode node) {}
+    @Override
+    public void nodeChecked(final ITreeNode node) {}
 
-	@Override
-	public void nodeUnchecked(final ITreeNode node) {}
+    @Override
+    public void nodeUnchecked(final ITreeNode node) {}
 
 }

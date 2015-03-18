@@ -34,22 +34,22 @@ import org.jowidgets.common.types.Markup;
 
 public interface ITableCell {
 
-	IColorConstant getForegroundColor();
+    IColorConstant getForegroundColor();
 
-	IColorConstant getBackgroundColor();
+    IColorConstant getBackgroundColor();
 
-	IColorConstant getSelectedForegroundColor();
+    IColorConstant getSelectedForegroundColor();
 
-	IColorConstant getSelectedBackgroundColor();
+    IColorConstant getSelectedBackgroundColor();
 
-	Markup getMarkup();
+    Markup getMarkup();
 
-	String getText();
+    String getText();
 
-	String getToolTipText();
+    String getToolTipText();
 
-	IImageConstant getIcon();
+    IImageConstant getIcon();
 
-	boolean isEditable();
+    boolean isEditable();
 
 }

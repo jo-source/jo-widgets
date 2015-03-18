@@ -32,37 +32,37 @@ import org.jowidgets.common.widgets.IWidgetCommon;
 
 public interface IWidget extends IWidgetCommon, IDisposeObservable {
 
-	/**
-	 * Gets the parent of the widget
-	 * 
-	 * @return The widgets parent or null, if the widget has no parent
-	 */
-	IWidget getParent();
+    /**
+     * Gets the parent of the widget
+     * 
+     * @return The widgets parent or null, if the widget has no parent
+     */
+    IWidget getParent();
 
-	/**
-	 * Gets the root widget of the widget
-	 * 
-	 * If the widget is a composed widget, the root widget
-	 * of the composed widget will be returned.
-	 * 
-	 * If the widget is not composed, 'this' widget will be returned.
-	 * 
-	 * @return the root widget, never null
-	 */
-	IWidget getRoot();
+    /**
+     * Gets the root widget of the widget
+     * 
+     * If the widget is a composed widget, the root widget
+     * of the composed widget will be returned.
+     * 
+     * If the widget is not composed, 'this' widget will be returned.
+     * 
+     * @return the root widget, never null
+     */
+    IWidget getRoot();
 
-	/**
-	 * Disposes the widgets.
-	 * 
-	 * After a widget was disposed, it can longer be used.
-	 */
-	void dispose();
+    /**
+     * Disposes the widgets.
+     * 
+     * After a widget was disposed, it can longer be used.
+     */
+    void dispose();
 
-	/**
-	 * Checks if a widget is disposed
-	 * 
-	 * @return True if the widget is disposed, false otherwise
-	 */
-	boolean isDisposed();
+    /**
+     * Checks if a widget is disposed
+     * 
+     * @return True if the widget is disposed, false otherwise
+     */
+    boolean isDisposed();
 
 }

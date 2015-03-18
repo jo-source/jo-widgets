@@ -34,35 +34,35 @@ import org.jowidgets.common.image.IImageConstant;
 
 public interface IQuestionPane {
 
-	QuestionResult askYesNoQuestion(String question);
+    QuestionResult askYesNoQuestion(String question);
 
-	QuestionResult askYesNoCancelQuestion(String question);
+    QuestionResult askYesNoCancelQuestion(String question);
 
-	QuestionResult askYesNoQuestion(String title, String question);
+    QuestionResult askYesNoQuestion(String title, String question);
 
-	QuestionResult askYesNoCancelQuestion(String title, String question);
+    QuestionResult askYesNoCancelQuestion(String title, String question);
 
-	QuestionResult askYesNoQuestion(String title, String question, QuestionResult defaultResult);
+    QuestionResult askYesNoQuestion(String title, String question, QuestionResult defaultResult);
 
-	QuestionResult askYesNoCancelQuestion(String title, String question, QuestionResult defaultResult);
+    QuestionResult askYesNoCancelQuestion(String title, String question, QuestionResult defaultResult);
 
-	QuestionResult askYesNoQuestion(String title, String question, QuestionResult defaultResult, IImageConstant icon);
+    QuestionResult askYesNoQuestion(String title, String question, QuestionResult defaultResult, IImageConstant icon);
 
-	QuestionResult askYesNoCancelQuestion(String title, String question, QuestionResult defaultResult, IImageConstant icon);
+    QuestionResult askYesNoCancelQuestion(String title, String question, QuestionResult defaultResult, IImageConstant icon);
 
-	QuestionResult askYesNoQuestion(
-		String title,
-		IImageConstant titleIcon,
-		String question,
-		QuestionResult defaultResult,
-		IImageConstant icon);
+    QuestionResult askYesNoQuestion(
+        String title,
+        IImageConstant titleIcon,
+        String question,
+        QuestionResult defaultResult,
+        IImageConstant icon);
 
-	QuestionResult askYesNoCancelQuestion(
-		String title,
-		IImageConstant titleIcon,
-		String question,
-		QuestionResult defaultResult,
-		IImageConstant icon);
+    QuestionResult askYesNoCancelQuestion(
+        String title,
+        IImageConstant titleIcon,
+        String question,
+        QuestionResult defaultResult,
+        IImageConstant icon);
 
-	QuestionResult askYesNoQuestion(IExecutionContext executionContext, String question, QuestionResult defaultResult);
+    QuestionResult askYesNoQuestion(IExecutionContext executionContext, String question, QuestionResult defaultResult);
 }

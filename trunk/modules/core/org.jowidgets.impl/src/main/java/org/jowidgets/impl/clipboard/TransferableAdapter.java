@@ -43,35 +43,35 @@ import org.jowidgets.util.Assert;
 
 final class TransferableAdapter implements ITransferable {
 
-	private final Collection<TransferType<?>> supportedTypes;
-	private final Map<TransferType<?>, Object> dataMap;
+    private final Collection<TransferType<?>> supportedTypes;
+    private final Map<TransferType<?>, Object> dataMap;
 
-	TransferableAdapter(final ITransferableSpi contents) {
-		Assert.paramNotNull(contents, "contents");
+    TransferableAdapter(final ITransferableSpi contents) {
+        Assert.paramNotNull(contents, "contents");
 
-		final Set<TransferType<?>> typesSet = new LinkedHashSet<TransferType<?>>();
-		this.dataMap = new HashMap<TransferType<?>, Object>();
+        final Set<TransferType<?>> typesSet = new LinkedHashSet<TransferType<?>>();
+        this.dataMap = new HashMap<TransferType<?>, Object>();
 
-		for (final TransferTypeSpi transferTypeSpi : contents.getSupportedTypes()) {
-			@SuppressWarnings("unchecked")
-			final TransferType<?> transferType = new TransferType<Object>((Class<Object>) transferTypeSpi.getJavaType());
-			typesSet.add(transferType);
-			dataMap.put(transferType, contents.getData(transferTypeSpi));
-		}
+        for (final TransferTypeSpi transferTypeSpi : contents.getSupportedTypes()) {
+            @SuppressWarnings("unchecked")
+            final TransferType<?> transferType = new TransferType<Object>((Class<Object>) transferTypeSpi.getJavaType());
+            typesSet.add(transferType);
+            dataMap.put(transferType, contents.getData(transferTypeSpi));
+        }
 
-		this.supportedTypes = Collections.unmodifiableSet(typesSet);
-	}
+        this.supportedTypes = Collections.unmodifiableSet(typesSet);
+    }
 
-	@Override
-	public Collection<TransferType<?>> getSupportedTypes() {
-		return supportedTypes;
-	}
+    @Override
+    public Collection<TransferType<?>> getSupportedTypes() {
+        return supportedTypes;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <JAVA_TYPE> JAVA_TYPE getData(final TransferType<JAVA_TYPE> type) {
-		Assert.paramNotNull(type, "type");
-		return (JAVA_TYPE) dataMap.get(type);
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public <JAVA_TYPE> JAVA_TYPE getData(final TransferType<JAVA_TYPE> type) {
+        Assert.paramNotNull(type, "type");
+        return (JAVA_TYPE) dataMap.get(type);
+    }
 
 }

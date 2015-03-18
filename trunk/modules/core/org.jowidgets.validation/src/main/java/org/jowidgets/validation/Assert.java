@@ -29,14 +29,14 @@ package org.jowidgets.validation;
 
 final class Assert {
 
-	private Assert() {
-		super();
-	}
+    private Assert() {
+        super();
+    }
 
-	static void paramNotNull(final Object object, final String name) {
-		if (object == null) {
-			throw new IllegalArgumentException("The parameter '" + name + "' must not be null!");
-		}
-	}
+    static void paramNotNull(final Object object, final String name) {
+        if (object == null) {
+            throw new IllegalArgumentException("The parameter '" + name + "' must not be null!");
+        }
+    }
 
 }

@@ -32,30 +32,30 @@ import org.jowidgets.spi.widgets.IWidgetSpi;
 
 public class SwtWidget implements IWidgetSpi {
 
-	private Control control;
+    private Control control;
 
-	public SwtWidget(final Control control) {
-		super();
-		this.control = control;
-	}
+    public SwtWidget(final Control control) {
+        super();
+        this.control = control;
+    }
 
-	@Override
-	public Control getUiReference() {
-		return control;
-	}
+    @Override
+    public Control getUiReference() {
+        return control;
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		control.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        control.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return control.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return control.isEnabled();
+    }
 
-	public void setControl(final Control control) {
-		this.control = control;
-	}
+    public void setControl(final Control control) {
+        this.control = control;
+    }
 
 }

@@ -38,69 +38,69 @@ import org.jowidgets.util.Assert;
 
 public final class DefaultActionFactoryImpl implements IDefaultActionFactory {
 
-	@Override
-	public ITreeExpansionActionBuilder collapseTreeActionBuilder(final ITreeContainer tree) {
-		Assert.paramNotNull(tree, "tree");
-		return new CollapseTreeActionBuilder(tree);
-	}
+    @Override
+    public ITreeExpansionActionBuilder collapseTreeActionBuilder(final ITreeContainer tree) {
+        Assert.paramNotNull(tree, "tree");
+        return new CollapseTreeActionBuilder(tree);
+    }
 
-	@Override
-	public ITreeExpansionAction collapseTreeAction(final ITreeContainer tree) {
-		Assert.paramNotNull(tree, "tree");
-		return collapseTreeActionBuilder(tree).build();
-	}
+    @Override
+    public ITreeExpansionAction collapseTreeAction(final ITreeContainer tree) {
+        Assert.paramNotNull(tree, "tree");
+        return collapseTreeActionBuilder(tree).build();
+    }
 
-	@Override
-	public ITreeExpansionActionBuilder expandTreeActionBuilder(final ITreeContainer tree) {
-		return new ExpandTreeActionBuilder(tree);
-	}
+    @Override
+    public ITreeExpansionActionBuilder expandTreeActionBuilder(final ITreeContainer tree) {
+        return new ExpandTreeActionBuilder(tree);
+    }
 
-	@Override
-	public ITreeExpansionAction expandTreeAction(final ITreeContainer tree) {
-		Assert.paramNotNull(tree, "tree");
-		return expandTreeActionBuilder(tree).build();
-	}
+    @Override
+    public ITreeExpansionAction expandTreeAction(final ITreeContainer tree) {
+        Assert.paramNotNull(tree, "tree");
+        return expandTreeActionBuilder(tree).build();
+    }
 
-	@Override
-	public ITreeExpansionActionBuilder expandCollapseTreeActionBuilder(final ITreeContainer tree) {
-		return new ExpandCollapseTreeActionBuilder(tree);
-	}
+    @Override
+    public ITreeExpansionActionBuilder expandCollapseTreeActionBuilder(final ITreeContainer tree) {
+        return new ExpandCollapseTreeActionBuilder(tree);
+    }
 
-	@Override
-	public ITreeExpansionAction expandCollapseTreeAction(final ITreeContainer tree) {
-		Assert.paramNotNull(tree, "tree");
-		return expandCollapseTreeActionBuilder(tree).build();
-	}
+    @Override
+    public ITreeExpansionAction expandCollapseTreeAction(final ITreeContainer tree) {
+        Assert.paramNotNull(tree, "tree");
+        return expandCollapseTreeActionBuilder(tree).build();
+    }
 
-	@Override
-	public ITreeExpansionActionBuilder expandCheckedNodesTreeActionBuilder(final ITreeContainer tree) {
-		return new ExpandCheckedNodesTreeActionBuilder(tree);
-	}
+    @Override
+    public ITreeExpansionActionBuilder expandCheckedNodesTreeActionBuilder(final ITreeContainer tree) {
+        return new ExpandCheckedNodesTreeActionBuilder(tree);
+    }
 
-	@Override
-	public ITreeExpansionAction expandCheckedNodesTreeAction(final ITreeContainer tree) {
-		Assert.paramNotNull(tree, "tree");
-		return expandCheckedNodesTreeActionBuilder(tree).build();
-	}
+    @Override
+    public ITreeExpansionAction expandCheckedNodesTreeAction(final ITreeContainer tree) {
+        Assert.paramNotNull(tree, "tree");
+        return expandCheckedNodesTreeActionBuilder(tree).build();
+    }
 
-	@Override
-	public IDefaultActionBuilder checkTreeActionBuilder(final ITreeContainer tree) {
-		return new CheckTreeActionBuilder(tree);
-	}
+    @Override
+    public IDefaultActionBuilder checkTreeActionBuilder(final ITreeContainer tree) {
+        return new CheckTreeActionBuilder(tree);
+    }
 
-	@Override
-	public IAction checkTreeAction(final ITreeContainer tree) {
-		return checkTreeActionBuilder(tree).build();
-	}
+    @Override
+    public IAction checkTreeAction(final ITreeContainer tree) {
+        return checkTreeActionBuilder(tree).build();
+    }
 
-	@Override
-	public IDefaultActionBuilder uncheckTreeActionBuilder(final ITreeContainer tree) {
-		return new UncheckTreeActionBuilder(tree);
-	}
+    @Override
+    public IDefaultActionBuilder uncheckTreeActionBuilder(final ITreeContainer tree) {
+        return new UncheckTreeActionBuilder(tree);
+    }
 
-	@Override
-	public IAction uncheckTreeAction(final ITreeContainer tree) {
-		return uncheckTreeActionBuilder(tree).build();
-	}
+    @Override
+    public IAction uncheckTreeAction(final ITreeContainer tree) {
+        return uncheckTreeActionBuilder(tree).build();
+    }
 
 }

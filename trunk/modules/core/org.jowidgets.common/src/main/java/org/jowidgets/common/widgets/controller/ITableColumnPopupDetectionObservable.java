@@ -30,8 +30,8 @@ package org.jowidgets.common.widgets.controller;
 
 public interface ITableColumnPopupDetectionObservable {
 
-	void addTableColumnPopupDetectionListener(ITableColumnPopupDetectionListener listener);
+    void addTableColumnPopupDetectionListener(ITableColumnPopupDetectionListener listener);
 
-	void removeTableColumnPopupDetectionListener(ITableColumnPopupDetectionListener listener);
+    void removeTableColumnPopupDetectionListener(ITableColumnPopupDetectionListener listener);
 
 }

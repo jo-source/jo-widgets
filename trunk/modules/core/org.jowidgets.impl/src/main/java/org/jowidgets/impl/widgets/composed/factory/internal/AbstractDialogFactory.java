@@ -36,32 +36,32 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 
 public abstract class AbstractDialogFactory<WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> implements
-		IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> {
+        IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> {
 
-	private final IGenericWidgetFactory genericWidgetFactory;
+    private final IGenericWidgetFactory genericWidgetFactory;
 
-	public AbstractDialogFactory(final IGenericWidgetFactory genericWidgetFactory) {
-		super();
-		this.genericWidgetFactory = genericWidgetFactory;
-	}
+    public AbstractDialogFactory(final IGenericWidgetFactory genericWidgetFactory) {
+        super();
+        this.genericWidgetFactory = genericWidgetFactory;
+    }
 
-	protected abstract WIDGET_TYPE createWidget(IFrame dialogWidget, DESCRIPTOR_TYPE descriptor);
+    protected abstract WIDGET_TYPE createWidget(IFrame dialogWidget, DESCRIPTOR_TYPE descriptor);
 
-	@Override
-	public WIDGET_TYPE create(final Object parentUiReference, final DESCRIPTOR_TYPE descriptor) {
+    @Override
+    public WIDGET_TYPE create(final Object parentUiReference, final DESCRIPTOR_TYPE descriptor) {
 
-		final IFrame dialogWidget = genericWidgetFactory.create(
-				parentUiReference,
-				Toolkit.getBluePrintFactory().dialog().setSetup(descriptor));
+        final IFrame dialogWidget = genericWidgetFactory.create(parentUiReference, Toolkit.getBluePrintFactory()
+                .dialog()
+                .setSetup(descriptor));
 
-		if (dialogWidget == null) {
-			throw new IllegalStateException("Could not create widget with descriptor interface class '"
-				+ ICompositeSetup.class
-				+ "' from '"
-				+ IGenericWidgetFactory.class.getName()
-				+ "'");
-		}
+        if (dialogWidget == null) {
+            throw new IllegalStateException("Could not create widget with descriptor interface class '"
+                + ICompositeSetup.class
+                + "' from '"
+                + IGenericWidgetFactory.class.getName()
+                + "'");
+        }
 
-		return createWidget(dialogWidget, descriptor);
-	}
+        return createWidget(dialogWidget, descriptor);
+    }
 }

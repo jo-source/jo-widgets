@@ -34,13 +34,13 @@ import org.jowidgets.examples.common.snipped.MenuModelKeyBindingSnipped;
 
 public final class MenuModelKeyBindingSnippedStarterSwing {
 
-	private MenuModelKeyBindingSnippedStarterSwing() {}
+    private MenuModelKeyBindingSnippedStarterSwing() {}
 
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		Toolkit.getApplicationRunner().run(new MenuModelKeyBindingSnipped());
-		System.exit(0);
-	}
+    public static void main(final String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
+        Toolkit.getApplicationRunner().run(new MenuModelKeyBindingSnipped());
+        System.exit(0);
+    }
 
 }

@@ -40,50 +40,50 @@ import org.jowidgets.util.ValueHolder;
 
 public class TabItemObservable implements ITabItemObservable {
 
-	private final Set<ITabItemListener> listeners;
+    private final Set<ITabItemListener> listeners;
 
-	public TabItemObservable() {
-		this.listeners = new LinkedHashSet<ITabItemListener>();
-	}
+    public TabItemObservable() {
+        this.listeners = new LinkedHashSet<ITabItemListener>();
+    }
 
-	@Override
-	public void addTabItemListener(final ITabItemListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public void addTabItemListener(final ITabItemListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removeTabItemListener(final ITabItemListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeTabItemListener(final ITabItemListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public void fireSelectionChanged(final boolean selected) {
-		for (final ITabItemListener listener : new LinkedList<ITabItemListener>(listeners)) {
-			listener.selectionChanged(selected);
-		}
-	}
+    public void fireSelectionChanged(final boolean selected) {
+        for (final ITabItemListener listener : new LinkedList<ITabItemListener>(listeners)) {
+            listener.selectionChanged(selected);
+        }
+    }
 
-	public void fireOnClose(final IVetoable vetoable) {
-		for (final ITabItemListener listener : new LinkedList<ITabItemListener>(listeners)) {
-			listener.onClose(vetoable);
-		}
-	}
+    public void fireOnClose(final IVetoable vetoable) {
+        for (final ITabItemListener listener : new LinkedList<ITabItemListener>(listeners)) {
+            listener.onClose(vetoable);
+        }
+    }
 
-	public boolean fireOnClose() {
-		final ValueHolder<Boolean> veto = new ValueHolder<Boolean>(Boolean.FALSE);
-		for (final ITabItemListener listener : new LinkedList<ITabItemListener>(listeners)) {
-			listener.onClose(new IVetoable() {
-				@Override
-				public void veto() {
-					veto.set(Boolean.TRUE);
-				}
-			});
-			if (veto.get().booleanValue()) {
-				break;
-			}
-		}
-		return veto.get().booleanValue();
-	}
+    public boolean fireOnClose() {
+        final ValueHolder<Boolean> veto = new ValueHolder<Boolean>(Boolean.FALSE);
+        for (final ITabItemListener listener : new LinkedList<ITabItemListener>(listeners)) {
+            listener.onClose(new IVetoable() {
+                @Override
+                public void veto() {
+                    veto.set(Boolean.TRUE);
+                }
+            });
+            if (veto.get().booleanValue()) {
+                break;
+            }
+        }
+        return veto.get().booleanValue();
+    }
 
 }

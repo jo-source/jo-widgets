@@ -44,146 +44,146 @@ import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public abstract class AbstractActionComponent extends AbstractActionWidget implements IActionWidgetSpi, IComponentSpi {
 
-	private final DummyComponent dummyComponentDelegate;
+    private final DummyComponent dummyComponentDelegate;
 
-	public AbstractActionComponent(final UIDComponent component) {
-		super(component);
-		this.dummyComponentDelegate = new DummyComponent(component);
-	}
+    public AbstractActionComponent(final UIDComponent component) {
+        super(component);
+        this.dummyComponentDelegate = new DummyComponent(component);
+    }
 
-	@Override
-	public void redraw() {
-		dummyComponentDelegate.redraw();
-	}
+    @Override
+    public void redraw() {
+        dummyComponentDelegate.redraw();
+    }
 
-	@Override
-	public void setRedrawEnabled(final boolean enabled) {
-		dummyComponentDelegate.setRedrawEnabled(enabled);
-	}
+    @Override
+    public void setRedrawEnabled(final boolean enabled) {
+        dummyComponentDelegate.setRedrawEnabled(enabled);
+    }
 
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		dummyComponentDelegate.setForegroundColor(colorValue);
-	}
+    @Override
+    public void setForegroundColor(final IColorConstant colorValue) {
+        dummyComponentDelegate.setForegroundColor(colorValue);
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		dummyComponentDelegate.setBackgroundColor(colorValue);
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        dummyComponentDelegate.setBackgroundColor(colorValue);
+    }
 
-	@Override
-	public IColorConstant getForegroundColor() {
-		return dummyComponentDelegate.getForegroundColor();
-	}
+    @Override
+    public IColorConstant getForegroundColor() {
+        return dummyComponentDelegate.getForegroundColor();
+    }
 
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return dummyComponentDelegate.getBackgroundColor();
-	}
+    @Override
+    public IColorConstant getBackgroundColor() {
+        return dummyComponentDelegate.getBackgroundColor();
+    }
 
-	@Override
-	public void setCursor(final Cursor cursor) {
-		dummyComponentDelegate.setCursor(cursor);
-	}
+    @Override
+    public void setCursor(final Cursor cursor) {
+        dummyComponentDelegate.setCursor(cursor);
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		dummyComponentDelegate.setVisible(visible);
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        dummyComponentDelegate.setVisible(visible);
+    }
 
-	@Override
-	public boolean isVisible() {
-		return dummyComponentDelegate.isVisible();
-	}
+    @Override
+    public boolean isVisible() {
+        return dummyComponentDelegate.isVisible();
+    }
 
-	@Override
-	public Dimension getSize() {
-		return dummyComponentDelegate.getSize();
-	}
+    @Override
+    public Dimension getSize() {
+        return dummyComponentDelegate.getSize();
+    }
 
-	@Override
-	public void setSize(final Dimension size) {
-		dummyComponentDelegate.setSize(size);
-	}
+    @Override
+    public void setSize(final Dimension size) {
+        dummyComponentDelegate.setSize(size);
+    }
 
-	@Override
-	public Position getPosition() {
-		return dummyComponentDelegate.getPosition();
-	}
+    @Override
+    public Position getPosition() {
+        return dummyComponentDelegate.getPosition();
+    }
 
-	@Override
-	public void setPosition(final Position position) {
-		dummyComponentDelegate.setPosition(position);
-	}
+    @Override
+    public void setPosition(final Position position) {
+        dummyComponentDelegate.setPosition(position);
+    }
 
-	@Override
-	public boolean requestFocus() {
-		return dummyComponentDelegate.requestFocus();
-	}
+    @Override
+    public boolean requestFocus() {
+        return dummyComponentDelegate.requestFocus();
+    }
 
-	@Override
-	public void addFocusListener(final IFocusListener listener) {
-		dummyComponentDelegate.addFocusListener(listener);
-	}
+    @Override
+    public void addFocusListener(final IFocusListener listener) {
+        dummyComponentDelegate.addFocusListener(listener);
+    }
 
-	@Override
-	public void removeFocusListener(final IFocusListener listener) {
-		dummyComponentDelegate.removeFocusListener(listener);
-	}
+    @Override
+    public void removeFocusListener(final IFocusListener listener) {
+        dummyComponentDelegate.removeFocusListener(listener);
+    }
 
-	@Override
-	public void addKeyListener(final IKeyListener listener) {
-		dummyComponentDelegate.addKeyListener(listener);
-	}
+    @Override
+    public void addKeyListener(final IKeyListener listener) {
+        dummyComponentDelegate.addKeyListener(listener);
+    }
 
-	@Override
-	public void removeKeyListener(final IKeyListener listener) {
-		dummyComponentDelegate.removeKeyListener(listener);
-	}
+    @Override
+    public void removeKeyListener(final IKeyListener listener) {
+        dummyComponentDelegate.removeKeyListener(listener);
+    }
 
-	@Override
-	public void addComponentListener(final IComponentListener componentListener) {
-		dummyComponentDelegate.addComponentListener(componentListener);
-	}
+    @Override
+    public void addComponentListener(final IComponentListener componentListener) {
+        dummyComponentDelegate.addComponentListener(componentListener);
+    }
 
-	@Override
-	public void removeComponentListener(final IComponentListener componentListener) {
-		dummyComponentDelegate.removeComponentListener(componentListener);
-	}
+    @Override
+    public void removeComponentListener(final IComponentListener componentListener) {
+        dummyComponentDelegate.removeComponentListener(componentListener);
+    }
 
-	@Override
-	public void addMouseListener(final IMouseListener mouseListener) {
-		dummyComponentDelegate.addMouseListener(mouseListener);
-	}
+    @Override
+    public void addMouseListener(final IMouseListener mouseListener) {
+        dummyComponentDelegate.addMouseListener(mouseListener);
+    }
 
-	@Override
-	public void removeMouseListener(final IMouseListener mouseListener) {
-		dummyComponentDelegate.removeMouseListener(mouseListener);
-	}
+    @Override
+    public void removeMouseListener(final IMouseListener mouseListener) {
+        dummyComponentDelegate.removeMouseListener(mouseListener);
+    }
 
-	@Override
-	public void addMouseMotionListener(final IMouseMotionListener listener) {
-		dummyComponentDelegate.addMouseMotionListener(listener);
-	}
+    @Override
+    public void addMouseMotionListener(final IMouseMotionListener listener) {
+        dummyComponentDelegate.addMouseMotionListener(listener);
+    }
 
-	@Override
-	public void removeMouseMotionListener(final IMouseMotionListener listener) {
-		dummyComponentDelegate.removeMouseMotionListener(listener);
-	}
+    @Override
+    public void removeMouseMotionListener(final IMouseMotionListener listener) {
+        dummyComponentDelegate.removeMouseMotionListener(listener);
+    }
 
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return dummyComponentDelegate.createPopupMenu();
-	}
+    @Override
+    public IPopupMenuSpi createPopupMenu() {
+        return dummyComponentDelegate.createPopupMenu();
+    }
 
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		dummyComponentDelegate.addPopupDetectionListener(listener);
-	}
+    @Override
+    public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+        dummyComponentDelegate.addPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		dummyComponentDelegate.removePopupDetectionListener(listener);
-	}
+    @Override
+    public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+        dummyComponentDelegate.removePopupDetectionListener(listener);
+    }
 
 }

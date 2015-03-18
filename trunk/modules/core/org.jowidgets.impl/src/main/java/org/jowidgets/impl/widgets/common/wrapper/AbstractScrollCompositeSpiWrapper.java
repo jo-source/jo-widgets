@@ -33,28 +33,28 @@ import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 
 public abstract class AbstractScrollCompositeSpiWrapper extends AbstractContainerSpiWrapper implements IScrollCompositeCommon {
 
-	public AbstractScrollCompositeSpiWrapper(final IScrollCompositeSpi widget) {
-		super(widget);
-	}
+    public AbstractScrollCompositeSpiWrapper(final IScrollCompositeSpi widget) {
+        super(widget);
+    }
 
-	@Override
-	public IScrollCompositeSpi getWidget() {
-		return (IScrollCompositeSpi) super.getWidget();
-	}
+    @Override
+    public IScrollCompositeSpi getWidget() {
+        return (IScrollCompositeSpi) super.getWidget();
+    }
 
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		getWidget().setLayoutConstraints(layoutConstraints);
-	}
+    @Override
+    public void setLayoutConstraints(final Object layoutConstraints) {
+        getWidget().setLayoutConstraints(layoutConstraints);
+    }
 
-	@Override
-	public Object getLayoutConstraints() {
-		return getWidget().getLayoutConstraints();
-	}
+    @Override
+    public Object getLayoutConstraints() {
+        return getWidget().getLayoutConstraints();
+    }
 
-	@Override
-	public void setToolTipText(final String toolTip) {
-		getWidget().setToolTipText(toolTip);
-	}
+    @Override
+    public void setToolTipText(final String toolTip) {
+        getWidget().setToolTipText(toolTip);
+    }
 
 }

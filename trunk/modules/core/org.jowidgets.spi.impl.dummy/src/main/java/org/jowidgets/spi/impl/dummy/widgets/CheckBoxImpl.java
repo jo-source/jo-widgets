@@ -35,64 +35,64 @@ import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
 
 public class CheckBoxImpl extends AbstractInputControl implements ICheckBoxSpi {
 
-	public CheckBoxImpl(final ICheckBoxSetupSpi setup) {
-		this(new UIDToggleButton(), setup);
-	}
+    public CheckBoxImpl(final ICheckBoxSetupSpi setup) {
+        this(new UIDToggleButton(), setup);
+    }
 
-	public CheckBoxImpl(final UIDToggleButton toggleButton, final ICheckBoxSetupSpi descriptor) {
-		super(toggleButton);
+    public CheckBoxImpl(final UIDToggleButton toggleButton, final ICheckBoxSetupSpi descriptor) {
+        super(toggleButton);
 
-		setText(descriptor.getText());
-		setToolTipText(descriptor.getToolTipText());
-		setMarkup(descriptor.getMarkup());
-		getUiReference().setHorizontalAlignment(descriptor.getAlignment());
+        setText(descriptor.getText());
+        setToolTipText(descriptor.getToolTipText());
+        setMarkup(descriptor.getMarkup());
+        getUiReference().setHorizontalAlignment(descriptor.getAlignment());
 
-		getUiReference().addInputListener(new IInputListener() {
-			@Override
-			public void inputChanged() {
-				fireInputChanged(getUiReference().isSelected());
-			}
-		});
-	}
+        getUiReference().addInputListener(new IInputListener() {
+            @Override
+            public void inputChanged() {
+                fireInputChanged(getUiReference().isSelected());
+            }
+        });
+    }
 
-	@Override
-	public UIDToggleButton getUiReference() {
-		return (UIDToggleButton) super.getUiReference();
-	}
+    @Override
+    public UIDToggleButton getUiReference() {
+        return (UIDToggleButton) super.getUiReference();
+    }
 
-	@Override
-	public void setEditable(final boolean editable) {
-		getUiReference().setEnabled(editable);
-	}
+    @Override
+    public void setEditable(final boolean editable) {
+        getUiReference().setEnabled(editable);
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		getUiReference().setMarkup(markup);
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        getUiReference().setMarkup(markup);
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		getUiReference().setFontSize(size);
-	}
+    @Override
+    public void setFontSize(final int size) {
+        getUiReference().setFontSize(size);
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		getUiReference().setFontName(fontName);
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        getUiReference().setFontName(fontName);
+    }
 
-	@Override
-	public void setText(final String text) {
-		getUiReference().setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        getUiReference().setText(text);
+    }
 
-	@Override
-	public boolean isSelected() {
-		return getUiReference().isSelected();
-	}
+    @Override
+    public boolean isSelected() {
+        return getUiReference().isSelected();
+    }
 
-	@Override
-	public void setSelected(final boolean selected) {
-		getUiReference().setSelected(selected);
-	}
+    @Override
+    public void setSelected(final boolean selected) {
+        getUiReference().setSelected(selected);
+    }
 
 }

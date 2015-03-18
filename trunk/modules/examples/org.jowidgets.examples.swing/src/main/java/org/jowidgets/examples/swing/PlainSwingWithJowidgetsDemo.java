@@ -44,45 +44,45 @@ import org.jowidgets.spi.impl.swing.addons.SwingToJoWrapper;
 
 public final class PlainSwingWithJowidgetsDemo {
 
-	private PlainSwingWithJowidgetsDemo() {}
+    private PlainSwingWithJowidgetsDemo() {}
 
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		DemoIconsInitializer.initialize();
+    public static void main(final String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        DemoIconsInitializer.initialize();
 
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				createAndShowJFrame();
-			}
-		});
-	}
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                createAndShowJFrame();
+            }
+        });
+    }
 
-	private static void createAndShowJFrame() {
-		//create the root frame with swing
-		final JFrame frame = new JFrame();
-		frame.setSize(450, 350);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    private static void createAndShowJFrame() {
+        //create the root frame with swing
+        final JFrame frame = new JFrame();
+        frame.setSize(450, 350);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		//setting the border layout for the content pane
-		final Container contentPane = frame.getContentPane();
-		contentPane.setLayout(new BorderLayout());
+        //setting the border layout for the content pane
+        final Container contentPane = frame.getContentPane();
+        contentPane.setLayout(new BorderLayout());
 
-		//adding a label in swing
-		final JLabel swingLabel = new JLabel("JLabel created with Swing");
-		contentPane.add(BorderLayout.NORTH, swingLabel);
+        //adding a label in swing
+        final JLabel swingLabel = new JLabel("JLabel created with Swing");
+        contentPane.add(BorderLayout.NORTH, swingLabel);
 
-		//creating the center panel with swing and adding it to the content pane
-		final JPanel centerPanel = new JPanel();
-		contentPane.add(BorderLayout.CENTER, centerPanel);
+        //creating the center panel with swing and adding it to the content pane
+        final JPanel centerPanel = new JPanel();
+        contentPane.add(BorderLayout.CENTER, centerPanel);
 
-		//now a jowidgets composite will be created with help of the swing panel
-		//and the demo form 1 from examples common will be added 
-		final IComposite centerComposite = SwingToJoWrapper.create(centerPanel);
-		DemoForm1Creator.createDemoForm1(centerComposite);
+        //now a jowidgets composite will be created with help of the swing panel
+        //and the demo form 1 from examples common will be added 
+        final IComposite centerComposite = SwingToJoWrapper.create(centerPanel);
+        DemoForm1Creator.createDemoForm1(centerComposite);
 
-		//show the frame
-		frame.setVisible(true);
-	}
+        //show the frame
+        frame.setVisible(true);
+    }
 
 }

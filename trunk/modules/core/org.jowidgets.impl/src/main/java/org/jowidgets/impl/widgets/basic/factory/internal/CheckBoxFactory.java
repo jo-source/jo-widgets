@@ -40,19 +40,19 @@ import org.jowidgets.spi.widgets.ICheckBoxSpi;
 
 public class CheckBoxFactory extends AbstractWidgetFactory implements IWidgetFactory<ICheckBox, ICheckBoxDescriptor> {
 
-	public CheckBoxFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+    public CheckBoxFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider,
+        final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
-	}
+        super(genericWidgetFactory, widgetsServiceProvider, bpF);
+    }
 
-	@Override
-	public ICheckBox create(final Object parentUiReference, final ICheckBoxDescriptor descriptor) {
-		final ICheckBoxBluePrintSpi bp = getSpiBluePrintFactory().checkBox().setSetup(descriptor);
-		final ICheckBoxSpi widget = getSpiWidgetFactory().createCheckBox(parentUiReference, bp);
-		return new CheckBoxImpl(widget, descriptor);
-	}
+    @Override
+    public ICheckBox create(final Object parentUiReference, final ICheckBoxDescriptor descriptor) {
+        final ICheckBoxBluePrintSpi bp = getSpiBluePrintFactory().checkBox().setSetup(descriptor);
+        final ICheckBoxSpi widget = getSpiWidgetFactory().createCheckBox(parentUiReference, bp);
+        return new CheckBoxImpl(widget, descriptor);
+    }
 
 }

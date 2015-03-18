@@ -32,6 +32,6 @@ import org.jowidgets.common.model.ITableColumnSpi;
 
 public interface ITableColumn extends ITableColumnSpi {
 
-	boolean isVisible();
+    boolean isVisible();
 
 }

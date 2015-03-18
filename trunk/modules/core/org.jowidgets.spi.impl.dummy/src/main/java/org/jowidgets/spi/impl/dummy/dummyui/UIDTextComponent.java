@@ -28,17 +28,16 @@
 
 package org.jowidgets.spi.impl.dummy.dummyui;
 
-
 public class UIDTextComponent extends UIDComponent {
 
-	private String text;
+    private String text;
 
-	public String getText() {
-		return text;
-	}
+    public String getText() {
+        return text;
+    }
 
-	public void setText(final String text) {
-		this.text = text;
-	}
+    public void setText(final String text) {
+        this.text = text;
+    }
 
 }

@@ -36,26 +36,26 @@ import org.jowidgets.tools.controller.TableDataModelAdapter;
 
 public final class SingleSelectionEnabledChecker extends AbstractEnabledChecker {
 
-	private final BeanTableModel<?> model;
+    private final BeanTableModel<?> model;
 
-	public SingleSelectionEnabledChecker(final BeanTableModel<?> model) {
-		this.model = model;
+    public SingleSelectionEnabledChecker(final BeanTableModel<?> model) {
+        this.model = model;
 
-		model.addDataModelListener(new TableDataModelAdapter() {
-			@Override
-			public void selectionChanged() {
-				fireEnabledStateChanged();
-			}
-		});
-	}
+        model.addDataModelListener(new TableDataModelAdapter() {
+            @Override
+            public void selectionChanged() {
+                fireEnabledStateChanged();
+            }
+        });
+    }
 
-	@Override
-	public IEnabledState getEnabledState() {
-		if (model.getSelection().size() == 1) {
-			return EnabledState.ENABLED;
-		}
-		else {
-			return EnabledState.disabled("Exactly one dataset must be selected!");
-		}
-	}
+    @Override
+    public IEnabledState getEnabledState() {
+        if (model.getSelection().size() == 1) {
+            return EnabledState.ENABLED;
+        }
+        else {
+            return EnabledState.disabled("Exactly one dataset must be selected!");
+        }
+    }
 }

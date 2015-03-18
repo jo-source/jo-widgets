@@ -33,10 +33,10 @@ import org.jowidgets.common.image.IImageConstant;
 
 public interface IActionWidget extends IWidget {
 
-	void setText(String text);
+    void setText(String text);
 
-	void setToolTipText(String toolTipText);
+    void setToolTipText(String toolTipText);
 
-	void setIcon(IImageConstant icon);
+    void setIcon(IImageConstant icon);
 
 }

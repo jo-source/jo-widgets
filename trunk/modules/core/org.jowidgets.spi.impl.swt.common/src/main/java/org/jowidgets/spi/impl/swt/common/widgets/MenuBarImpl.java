@@ -36,23 +36,23 @@ import org.jowidgets.spi.widgets.IMenuBarSpi;
 
 public class MenuBarImpl extends SwtMenu implements IMenuBarSpi {
 
-	public MenuBarImpl(final Menu menu) {
-		super(menu);
-	}
+    public MenuBarImpl(final Menu menu) {
+        super(menu);
+    }
 
-	@Override
-	public IMainMenuSpi addMenu(final Integer index) {
-		MenuItem menuItem = null;
-		if (index != null) {
-			menuItem = new MenuItem(getUiReference(), SWT.CASCADE, index.intValue());
-		}
-		else {
-			menuItem = new MenuItem(getUiReference(), SWT.CASCADE);
-		}
+    @Override
+    public IMainMenuSpi addMenu(final Integer index) {
+        MenuItem menuItem = null;
+        if (index != null) {
+            menuItem = new MenuItem(getUiReference(), SWT.CASCADE, index.intValue());
+        }
+        else {
+            menuItem = new MenuItem(getUiReference(), SWT.CASCADE);
+        }
 
-		final Menu menu = new Menu(getUiReference().getShell(), SWT.DROP_DOWN);
-		menuItem.setMenu(menu);
-		return new MainMenuImpl(menuItem, menu);
-	}
+        final Menu menu = new Menu(getUiReference().getShell(), SWT.DROP_DOWN);
+        menuItem.setMenu(menu);
+        return new MainMenuImpl(menuItem, menu);
+    }
 
 }

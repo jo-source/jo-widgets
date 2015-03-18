@@ -34,25 +34,25 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ITreeSetupCommon extends IComponentSetupCommon {
 
-	@Mandatory
-	SelectionPolicy getSelectionPolicy();
+    @Mandatory
+    SelectionPolicy getSelectionPolicy();
 
-	@Mandatory
-	boolean isContentScrolled();
+    @Mandatory
+    boolean isContentScrolled();
 
-	@Mandatory
-	boolean isChecked();
+    @Mandatory
+    boolean isChecked();
 
-	IColorConstant getSelectedForegroundColor();
+    IColorConstant getSelectedForegroundColor();
 
-	IColorConstant getSelectedBackgroundColor();
+    IColorConstant getSelectedBackgroundColor();
 
-	IColorConstant getSelectedBorderColor();
+    IColorConstant getSelectedBorderColor();
 
-	IColorConstant getDisabledSelectedForegroundColor();
+    IColorConstant getDisabledSelectedForegroundColor();
 
-	IColorConstant getDisabledSelectedBackgroundColor();
+    IColorConstant getDisabledSelectedBackgroundColor();
 
-	IColorConstant getDisabledSelectedBorderColor();
+    IColorConstant getDisabledSelectedBorderColor();
 
 }

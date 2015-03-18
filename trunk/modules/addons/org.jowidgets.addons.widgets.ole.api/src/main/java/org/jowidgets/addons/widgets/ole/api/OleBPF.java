@@ -32,10 +32,10 @@ import org.jowidgets.api.toolkit.Toolkit;
 
 public final class OleBPF {
 
-	private OleBPF() {}
+    private OleBPF() {}
 
-	public static IOleControlBluePrint oleControl() {
-		return Toolkit.getBluePrintFactory().bluePrint(IOleControlBluePrint.class);
-	}
+    public static IOleControlBluePrint oleControl() {
+        return Toolkit.getBluePrintFactory().bluePrint(IOleControlBluePrint.class);
+    }
 
 }

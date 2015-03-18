@@ -33,11 +33,11 @@ import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IBrowserSetupBuilder<INSTANCE_TYPE extends IBrowserSetupBuilder<?>> extends
-		IComponentSetup,
-		IComponentSetupBuilder<INSTANCE_TYPE> {
+        IComponentSetup,
+        IComponentSetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setBorder(boolean border);
+    INSTANCE_TYPE setBorder(boolean border);
 
-	@Mandatory
-	boolean hasBorder();
+    @Mandatory
+    boolean hasBorder();
 }

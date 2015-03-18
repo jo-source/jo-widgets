@@ -48,127 +48,127 @@ import org.jowidgets.util.event.IChangeListener;
 
 final class OfficeControlImpl extends OleDocumentWrapper implements IOfficeControl {
 
-	private static final String COUNT = "Count";
-	private static final String VISIBLE = "Visible";
-	private static final String COMMAND_BARS = "CommandBars";
+    private static final String COUNT = "Count";
+    private static final String VISIBLE = "Visible";
+    private static final String COMMAND_BARS = "CommandBars";
 
-	private final ChangeObservable dirtyStateChangeObservable;
-	private final ScheduledExecutorService executorService;
-	private final DirtyCheckRunnable dirtyCheckRunnable;
-	private final int dirtyCheckInterval;
-	private final boolean toolbarVisible;
+    private final ChangeObservable dirtyStateChangeObservable;
+    private final ScheduledExecutorService executorService;
+    private final DirtyCheckRunnable dirtyCheckRunnable;
+    private final int dirtyCheckInterval;
+    private final boolean toolbarVisible;
 
-	private ScheduledFuture<?> dirtyCheckSchedule;
+    private ScheduledFuture<?> dirtyCheckSchedule;
 
-	OfficeControlImpl(final IOleDocument oleDocument, final IOfficeControlSetupBuilder<?> setup) {
-		super(oleDocument);
+    OfficeControlImpl(final IOleDocument oleDocument, final IOfficeControlSetupBuilder<?> setup) {
+        super(oleDocument);
 
-		this.dirtyStateChangeObservable = new ChangeObservable();
-		this.executorService = Executors.newScheduledThreadPool(1, new DaemonThreadFactory());
-		this.toolbarVisible = setup.getToolbarVisible();
-		this.dirtyCheckInterval = setup.getDirtyCheckIntervalMs();
-		this.dirtyCheckRunnable = new DirtyCheckRunnable();
+        this.dirtyStateChangeObservable = new ChangeObservable();
+        this.executorService = Executors.newScheduledThreadPool(1, new DaemonThreadFactory());
+        this.toolbarVisible = setup.getToolbarVisible();
+        this.dirtyCheckInterval = setup.getDirtyCheckIntervalMs();
+        this.dirtyCheckRunnable = new DirtyCheckRunnable();
 
-		oleDocument.addDocumentChangeListener(new DocumenChangetListener());
-		oleDocument.getOleControl().addFocusListener(new DirtyListener());
+        oleDocument.addDocumentChangeListener(new DocumenChangetListener());
+        oleDocument.getOleControl().addFocusListener(new DirtyListener());
 
-		setToolbarVisibility();
-	}
+        setToolbarVisibility();
+    }
 
-	private void setToolbarVisibility() {
-		if (!toolbarVisible) {
-			final IOleControl oleControl = getOleControl();
-			final IOleAutomation commandBars = oleControl.getAutomation().getProperty(COMMAND_BARS);
-			if (commandBars != null) {
-				final Integer commandBarsCount = commandBars.getProperty(COUNT);
-				if (commandBarsCount != null) {
-					for (int i = 0; i < commandBarsCount.intValue(); i++) {
-						final IOleAutomation commandBar = oleControl.getAutomation().getProperty(COMMAND_BARS, i);
-						if (commandBar != null) {
-							commandBar.setProperty(VISIBLE, toolbarVisible);
-							commandBar.dispose();
-						}
-					}
-				}
-				commandBars.dispose();
-			}
-		}
-	}
+    private void setToolbarVisibility() {
+        if (!toolbarVisible) {
+            final IOleControl oleControl = getOleControl();
+            final IOleAutomation commandBars = oleControl.getAutomation().getProperty(COMMAND_BARS);
+            if (commandBars != null) {
+                final Integer commandBarsCount = commandBars.getProperty(COUNT);
+                if (commandBarsCount != null) {
+                    for (int i = 0; i < commandBarsCount.intValue(); i++) {
+                        final IOleAutomation commandBar = oleControl.getAutomation().getProperty(COMMAND_BARS, i);
+                        if (commandBar != null) {
+                            commandBar.setProperty(VISIBLE, toolbarVisible);
+                            commandBar.dispose();
+                        }
+                    }
+                }
+                commandBars.dispose();
+            }
+        }
+    }
 
-	@Override
-	public void addDirtyStateListener(final IChangeListener changeListener) {
-		dirtyStateChangeObservable.addChangeListener(changeListener);
-	}
+    @Override
+    public void addDirtyStateListener(final IChangeListener changeListener) {
+        dirtyStateChangeObservable.addChangeListener(changeListener);
+    }
 
-	@Override
-	public void removeDirtyStateListener(final IChangeListener changeListener) {
-		dirtyStateChangeObservable.removeChangeListener(changeListener);
-	}
+    @Override
+    public void removeDirtyStateListener(final IChangeListener changeListener) {
+        dirtyStateChangeObservable.removeChangeListener(changeListener);
+    }
 
-	private class DirtyListener implements IFocusListener {
-		@Override
-		public void focusGained() {
-			startDirtyChecking();
-		}
+    private class DirtyListener implements IFocusListener {
+        @Override
+        public void focusGained() {
+            startDirtyChecking();
+        }
 
-		@Override
-		public void focusLost() {
-			stopDirtyChecking();
-		}
-	}
+        @Override
+        public void focusLost() {
+            stopDirtyChecking();
+        }
+    }
 
-	private void startDirtyChecking() {
-		if (dirtyCheckSchedule == null) {
-			dirtyCheckSchedule = executorService.scheduleAtFixedRate(
-					dirtyCheckRunnable,
-					0,
-					dirtyCheckInterval,
-					TimeUnit.MILLISECONDS);
-		}
-	}
+    private void startDirtyChecking() {
+        if (dirtyCheckSchedule == null) {
+            dirtyCheckSchedule = executorService.scheduleAtFixedRate(
+                    dirtyCheckRunnable,
+                    0,
+                    dirtyCheckInterval,
+                    TimeUnit.MILLISECONDS);
+        }
+    }
 
-	private void stopDirtyChecking() {
-		if (dirtyCheckSchedule != null) {
-			dirtyCheckSchedule.cancel(true);
-			dirtyCheckSchedule = null;
-		}
-	}
+    private void stopDirtyChecking() {
+        if (dirtyCheckSchedule != null) {
+            dirtyCheckSchedule.cancel(true);
+            dirtyCheckSchedule = null;
+        }
+    }
 
-	private final class DirtyCheckRunnable implements Runnable {
+    private final class DirtyCheckRunnable implements Runnable {
 
-		private final IUiThreadAccess uiThreadAccess;
-		private boolean currentDirtyState;
+        private final IUiThreadAccess uiThreadAccess;
+        private boolean currentDirtyState;
 
-		private DirtyCheckRunnable() {
-			this.uiThreadAccess = Toolkit.getUiThreadAccess();
-			this.currentDirtyState = isDirty();
-		}
+        private DirtyCheckRunnable() {
+            this.uiThreadAccess = Toolkit.getUiThreadAccess();
+            this.currentDirtyState = isDirty();
+        }
 
-		@Override
-		public void run() {
-			uiThreadAccess.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					if (isDisposed()) {
-						dirtyCheckSchedule.cancel(true);
-					}
-					else {
-						final boolean newDirtyState = getOleControl().isDirty();
-						if (currentDirtyState != newDirtyState) {
-							currentDirtyState = newDirtyState;
-							dirtyStateChangeObservable.fireChangedEvent();
-						}
-					}
-				}
-			});
-		}
-	}
+        @Override
+        public void run() {
+            uiThreadAccess.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    if (isDisposed()) {
+                        dirtyCheckSchedule.cancel(true);
+                    }
+                    else {
+                        final boolean newDirtyState = getOleControl().isDirty();
+                        if (currentDirtyState != newDirtyState) {
+                            currentDirtyState = newDirtyState;
+                            dirtyStateChangeObservable.fireChangedEvent();
+                        }
+                    }
+                }
+            });
+        }
+    }
 
-	private class DocumenChangetListener implements IChangeListener {
-		@Override
-		public void changed() {
-			setToolbarVisibility();
-		}
-	}
+    private class DocumenChangetListener implements IChangeListener {
+        @Override
+        public void changed() {
+            setToolbarVisibility();
+        }
+    }
 
 }

@@ -34,9 +34,9 @@ import org.jowidgets.workbench.toolkit.api.IViewFactory;
 
 public class DummyViewFactory implements IViewFactory {
 
-	@Override
-	public IView createView(final String viewId, final IViewContext viewContext) {
-		return null;
-	}
+    @Override
+    public IView createView(final String viewId, final IViewContext viewContext) {
+        return null;
+    }
 
 }

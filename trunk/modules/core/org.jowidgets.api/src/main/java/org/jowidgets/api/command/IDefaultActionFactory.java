@@ -32,28 +32,28 @@ import org.jowidgets.api.widgets.ITreeContainer;
 
 public interface IDefaultActionFactory {
 
-	ITreeExpansionActionBuilder collapseTreeActionBuilder(ITreeContainer tree);
+    ITreeExpansionActionBuilder collapseTreeActionBuilder(ITreeContainer tree);
 
-	ITreeExpansionAction collapseTreeAction(ITreeContainer tree);
+    ITreeExpansionAction collapseTreeAction(ITreeContainer tree);
 
-	ITreeExpansionActionBuilder expandTreeActionBuilder(ITreeContainer tree);
+    ITreeExpansionActionBuilder expandTreeActionBuilder(ITreeContainer tree);
 
-	ITreeExpansionAction expandTreeAction(ITreeContainer tree);
+    ITreeExpansionAction expandTreeAction(ITreeContainer tree);
 
-	ITreeExpansionActionBuilder expandCollapseTreeActionBuilder(ITreeContainer tree);
+    ITreeExpansionActionBuilder expandCollapseTreeActionBuilder(ITreeContainer tree);
 
-	ITreeExpansionAction expandCollapseTreeAction(ITreeContainer tree);
+    ITreeExpansionAction expandCollapseTreeAction(ITreeContainer tree);
 
-	ITreeExpansionActionBuilder expandCheckedNodesTreeActionBuilder(ITreeContainer tree);
+    ITreeExpansionActionBuilder expandCheckedNodesTreeActionBuilder(ITreeContainer tree);
 
-	ITreeExpansionAction expandCheckedNodesTreeAction(ITreeContainer tree);
+    ITreeExpansionAction expandCheckedNodesTreeAction(ITreeContainer tree);
 
-	IDefaultActionBuilder checkTreeActionBuilder(ITreeContainer tree);
+    IDefaultActionBuilder checkTreeActionBuilder(ITreeContainer tree);
 
-	IAction checkTreeAction(ITreeContainer tree);
+    IAction checkTreeAction(ITreeContainer tree);
 
-	IDefaultActionBuilder uncheckTreeActionBuilder(ITreeContainer tree);
+    IDefaultActionBuilder uncheckTreeActionBuilder(ITreeContainer tree);
 
-	IAction uncheckTreeAction(ITreeContainer tree);
+    IAction uncheckTreeAction(ITreeContainer tree);
 
 }

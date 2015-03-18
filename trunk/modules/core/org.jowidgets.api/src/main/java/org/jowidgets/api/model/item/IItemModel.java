@@ -35,140 +35,140 @@ import org.jowidgets.common.types.VirtualKey;
 
 public interface IItemModel extends IItemModelObservable {
 
-	/**
-	 * Gets the id of the item
-	 * 
-	 * @return The id of the item, never null
-	 */
-	String getId();
+    /**
+     * Gets the id of the item
+     * 
+     * @return The id of the item, never null
+     */
+    String getId();
 
-	/**
-	 * Sets the items label text
-	 * 
-	 * @param text The label text of the item, may be null
-	 */
-	void setText(final String text);
+    /**
+     * Sets the items label text
+     * 
+     * @param text The label text of the item, may be null
+     */
+    void setText(final String text);
 
-	/**
-	 * Gets the items label text
-	 * 
-	 * @return The label text of the item, may be null
-	 */
-	String getText();
+    /**
+     * Gets the items label text
+     * 
+     * @return The label text of the item, may be null
+     */
+    String getText();
 
-	/**
-	 * Sets the tooltip text for the item
-	 * 
-	 * @param toolTipText The tooltip text to set, may be null
-	 */
-	void setToolTipText(String toolTipText);
+    /**
+     * Sets the tooltip text for the item
+     * 
+     * @param toolTipText The tooltip text to set, may be null
+     */
+    void setToolTipText(String toolTipText);
 
-	/**
-	 * Gets the tooltip text of the item
-	 * 
-	 * @return The tooltip text, may be null
-	 */
-	String getToolTipText();
+    /**
+     * Gets the tooltip text of the item
+     * 
+     * @return The tooltip text, may be null
+     */
+    String getToolTipText();
 
-	/**
-	 * Sets the items icon
-	 * 
-	 * @param icon The icon to set, may be null
-	 */
-	void setIcon(IImageConstant icon);
+    /**
+     * Sets the items icon
+     * 
+     * @param icon The icon to set, may be null
+     */
+    void setIcon(IImageConstant icon);
 
-	/**
-	 * Gets the items icon
-	 * 
-	 * @return The icon, may be null
-	 */
-	IImageConstant getIcon();
+    /**
+     * Gets the items icon
+     * 
+     * @return The icon, may be null
+     */
+    IImageConstant getIcon();
 
-	/**
-	 * Sets the key accelerator that should be used for the item
-	 * 
-	 * @param accelerator The accelerator to set, may be null
-	 */
-	void setAccelerator(Accelerator accelerator);
+    /**
+     * Sets the key accelerator that should be used for the item
+     * 
+     * @param accelerator The accelerator to set, may be null
+     */
+    void setAccelerator(Accelerator accelerator);
 
-	/**
-	 * Sets the key accelerator that should be used for the item
-	 * 
-	 * @param key The character to use
-	 * @param modifier The modifier to use
-	 */
-	void setAccelerator(final VirtualKey key, final Modifier... modifier);
+    /**
+     * Sets the key accelerator that should be used for the item
+     * 
+     * @param key The character to use
+     * @param modifier The modifier to use
+     */
+    void setAccelerator(final VirtualKey key, final Modifier... modifier);
 
-	/**
-	 * Gets the key accelerator that should be used for the item
-	 * 
-	 * @return The key accelerator, may be null
-	 */
-	Accelerator getAccelerator();
+    /**
+     * Gets the key accelerator that should be used for the item
+     * 
+     * @return The key accelerator, may be null
+     */
+    Accelerator getAccelerator();
 
-	/**
-	 * Sets the mnemonic character
-	 * 
-	 * @param mnemonic The mnemonic character to set, may be null
-	 */
-	void setMnemonic(Character mnemonic);
+    /**
+     * Sets the mnemonic character
+     * 
+     * @param mnemonic The mnemonic character to set, may be null
+     */
+    void setMnemonic(Character mnemonic);
 
-	/**
-	 * Sets the mnemonic character
-	 * 
-	 * @param mnemonic The mnemonic character to set
-	 */
-	void setMnemonic(char mnemonic);
+    /**
+     * Sets the mnemonic character
+     * 
+     * @param mnemonic The mnemonic character to set
+     */
+    void setMnemonic(char mnemonic);
 
-	/**
-	 * Gets the mnemonic character
-	 * 
-	 * @return The mnemonic character, may be null
-	 */
-	Character getMnemonic();
+    /**
+     * Gets the mnemonic character
+     * 
+     * @return The mnemonic character, may be null
+     */
+    Character getMnemonic();
 
-	/**
-	 * Sets the enabled state of the item.
-	 * 
-	 * Remark: Not all bound items may support to become disabled
-	 * 
-	 * @param enabled The enabled state to set
-	 */
-	void setEnabled(boolean enabled);
+    /**
+     * Sets the enabled state of the item.
+     * 
+     * Remark: Not all bound items may support to become disabled
+     * 
+     * @param enabled The enabled state to set
+     */
+    void setEnabled(boolean enabled);
 
-	/**
-	 * Gets the enabled state of the item
-	 * 
-	 * Remark: Not all bound items may support to become disabled
-	 * 
-	 * @return true if enabled, false otherwise
-	 */
-	boolean isEnabled();
+    /**
+     * Gets the enabled state of the item
+     * 
+     * Remark: Not all bound items may support to become disabled
+     * 
+     * @return true if enabled, false otherwise
+     */
+    boolean isEnabled();
 
-	/**
-	 * Sets the visible state of an item
-	 * 
-	 * Items that was set invisible will be hidden in their container
-	 * 
-	 * @param visible The visible state to set
-	 */
-	void setVisible(boolean visible);
+    /**
+     * Sets the visible state of an item
+     * 
+     * Items that was set invisible will be hidden in their container
+     * 
+     * @param visible The visible state to set
+     */
+    void setVisible(boolean visible);
 
-	/**
-	 * Gets the visible state of the item
-	 * 
-	 * @return True if visible, false otherwise
-	 */
-	boolean isVisible();
+    /**
+     * Gets the visible state of the item
+     * 
+     * @return True if visible, false otherwise
+     */
+    boolean isVisible();
 
-	/**
-	 * Creates a deep copy of the item and its children.
-	 * 
-	 * Remark: Registered listeners on items won't be copied, so the result has no
-	 * registered listeners for the first time.
-	 * 
-	 * @return A new instance that is a clone of this instance
-	 */
-	IItemModel createCopy();
+    /**
+     * Creates a deep copy of the item and its children.
+     * 
+     * Remark: Registered listeners on items won't be copied, so the result has no
+     * registered listeners for the first time.
+     * 
+     * @return A new instance that is a clone of this instance
+     */
+    IItemModel createCopy();
 
 }

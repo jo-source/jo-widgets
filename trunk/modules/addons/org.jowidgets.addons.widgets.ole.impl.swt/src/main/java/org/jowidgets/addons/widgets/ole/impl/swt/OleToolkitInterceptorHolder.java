@@ -33,9 +33,9 @@ import org.jowidgets.tools.toolkit.AbstractToolkitInterceptorHolder;
 
 public final class OleToolkitInterceptorHolder extends AbstractToolkitInterceptorHolder {
 
-	@Override
-	protected IToolkitInterceptor createToolkitInterceptor() {
-		return new OleToolkitInterceptor();
-	}
+    @Override
+    protected IToolkitInterceptor createToolkitInterceptor() {
+        return new OleToolkitInterceptor();
+    }
 
 }

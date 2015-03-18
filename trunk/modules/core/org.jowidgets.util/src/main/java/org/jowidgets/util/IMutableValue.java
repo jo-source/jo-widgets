@@ -35,10 +35,10 @@ package org.jowidgets.util;
  */
 public interface IMutableValue<VALUE_TYPE> {
 
-	void addMutableValueListener(IMutableValueListener<VALUE_TYPE> listener);
+    void addMutableValueListener(IMutableValueListener<VALUE_TYPE> listener);
 
-	void removeMutableValueListener(IMutableValueListener<VALUE_TYPE> listener);
+    void removeMutableValueListener(IMutableValueListener<VALUE_TYPE> listener);
 
-	VALUE_TYPE getValue();
+    VALUE_TYPE getValue();
 
 }

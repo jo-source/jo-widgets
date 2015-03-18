@@ -32,7 +32,7 @@ import org.jowidgets.impl.widgets.common.blueprint.defaults.registry.CommonDefau
 
 public class SpiDefaultsInitializerRegistry extends CommonDefaultsInitializerRegistry {
 
-	public SpiDefaultsInitializerRegistry() {
-		super();
-	}
+    public SpiDefaultsInitializerRegistry() {
+        super();
+    }
 }

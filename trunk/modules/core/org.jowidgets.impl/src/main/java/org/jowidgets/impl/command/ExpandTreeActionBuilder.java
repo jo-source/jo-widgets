@@ -37,27 +37,27 @@ import org.jowidgets.util.IFilter;
 
 final class ExpandTreeActionBuilder extends TreeExpansionActionBuilder {
 
-	private static final IMessage EXPAND_ALL_MESSAGE = Messages.getMessage("ExpandTreeActionBuilder.expandAllLabel");
-	private static final IMessage EXPAND_ALL_BOUND_MESSAGE = Messages.getMessage("ExpandTreeActionBuilder.expandAllBoundLabel");
+    private static final IMessage EXPAND_ALL_MESSAGE = Messages.getMessage("ExpandTreeActionBuilder.expandAllLabel");
+    private static final IMessage EXPAND_ALL_BOUND_MESSAGE = Messages.getMessage("ExpandTreeActionBuilder.expandAllBoundLabel");
 
-	ExpandTreeActionBuilder(final ITreeContainer tree) {
-		super(tree, ExpansionMode.EXPAND);
+    ExpandTreeActionBuilder(final ITreeContainer tree) {
+        super(tree, ExpansionMode.EXPAND);
 
-		setText(EXPAND_ALL_MESSAGE.get());
-		setBoundPivotLevelText(EXPAND_ALL_BOUND_MESSAGE.get());
-		setIcon(IconsSmall.EXPAND_ALL);
-	}
+        setText(EXPAND_ALL_MESSAGE.get());
+        setBoundPivotLevelText(EXPAND_ALL_BOUND_MESSAGE.get());
+        setIcon(IconsSmall.EXPAND_ALL);
+    }
 
-	@Override
-	public ITreeExpansionActionBuilder addFilter(final IFilter<ITreeNode> filter) {
-		throw new UnsupportedOperationException(
-			"Filters are not supported for this action at the moment. Feel free to contribute a implementation");
-	}
+    @Override
+    public ITreeExpansionActionBuilder addFilter(final IFilter<ITreeNode> filter) {
+        throw new UnsupportedOperationException(
+            "Filters are not supported for this action at the moment. Feel free to contribute a implementation");
+    }
 
-	@Override
-	public ITreeExpansionActionBuilder setFilter(final IFilter<ITreeNode> filter) {
-		throw new UnsupportedOperationException(
-			"Filters are not supported for this action at the moment. Feel free to contribute a implementation");
-	}
+    @Override
+    public ITreeExpansionActionBuilder setFilter(final IFilter<ITreeNode> filter) {
+        throw new UnsupportedOperationException(
+            "Filters are not supported for this action at the moment. Feel free to contribute a implementation");
+    }
 
 }

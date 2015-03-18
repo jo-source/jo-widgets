@@ -32,7 +32,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
 import org.jowidgets.common.widgets.builder.ISetupBuilder;
 
 public interface IProblematicDescriptorSetupBuilder<INSTANCE_TYPE extends IProblematicDescriptorSetupBuilder<?>> extends
-		ISetupBuilder<INSTANCE_TYPE>,
-		IComponentSetupBuilder<INSTANCE_TYPE> {
+        ISetupBuilder<INSTANCE_TYPE>,
+        IComponentSetupBuilder<INSTANCE_TYPE> {
 
 }

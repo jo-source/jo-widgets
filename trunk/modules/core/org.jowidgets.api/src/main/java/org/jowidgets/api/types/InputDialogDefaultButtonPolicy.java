@@ -30,8 +30,8 @@ package org.jowidgets.api.types;
 
 public enum InputDialogDefaultButtonPolicy {
 
-	OK,
-	CANCEL,
-	DISABLED;
+    OK,
+    CANCEL,
+    DISABLED;
 
 }

@@ -30,6 +30,6 @@ package org.jowidgets.impl.spi.blueprint.builder;
 import org.jowidgets.common.widgets.builder.IDialogSetupBuilderCommon;
 
 public interface IDialogSetupBuilderSpi<INSTANCE_TYPE extends IDialogSetupBuilderSpi<?>> extends
-		IDialogSetupBuilderCommon<INSTANCE_TYPE> {
+        IDialogSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

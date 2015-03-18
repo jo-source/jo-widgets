@@ -33,21 +33,21 @@ import org.jowidgets.common.widgets.controller.ITableColumnPopupEvent;
 
 public class TableColumnPopupEvent extends TableColumnEvent implements ITableColumnPopupEvent {
 
-	private final Position position;
+    private final Position position;
 
-	public TableColumnPopupEvent(final int columnIndex, final Position position) {
-		super(columnIndex);
-		this.position = position;
-	}
+    public TableColumnPopupEvent(final int columnIndex, final Position position) {
+        super(columnIndex);
+        this.position = position;
+    }
 
-	@Override
-	public Position getPosition() {
-		return position;
-	}
+    @Override
+    public Position getPosition() {
+        return position;
+    }
 
-	@Override
-	public String toString() {
-		return "TableColumnPopupEvent [position=" + position + ", columnIndex=" + getColumnIndex() + "]";
-	}
+    @Override
+    public String toString() {
+        return "TableColumnPopupEvent [position=" + position + ", columnIndex=" + getColumnIndex() + "]";
+    }
 
 }

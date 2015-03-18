@@ -33,30 +33,30 @@ import org.jowidgets.common.widgets.IToolBarContainerItemCommon;
 import org.jowidgets.spi.widgets.IToolBarContainerItemSpi;
 
 public abstract class AbstractToolBarContainerItemSpiWrapper extends AbstractContainerSpiWrapper implements
-		IToolBarContainerItemCommon {
+        IToolBarContainerItemCommon {
 
-	public AbstractToolBarContainerItemSpiWrapper(final IToolBarContainerItemSpi component) {
-		super(component);
-	}
+    public AbstractToolBarContainerItemSpiWrapper(final IToolBarContainerItemSpi component) {
+        super(component);
+    }
 
-	@Override
-	public IToolBarContainerItemSpi getWidget() {
-		return (IToolBarContainerItemSpi) super.getWidget();
-	}
+    @Override
+    public IToolBarContainerItemSpi getWidget() {
+        return (IToolBarContainerItemSpi) super.getWidget();
+    }
 
-	@Override
-	public void setText(final String text) {
-		getWidget().setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        getWidget().setText(text);
+    }
 
-	@Override
-	public void setToolTipText(final String text) {
-		getWidget().setToolTipText(text);
-	}
+    @Override
+    public void setToolTipText(final String text) {
+        getWidget().setToolTipText(text);
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		getWidget().setIcon(icon);
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        getWidget().setIcon(icon);
+    }
 
 }

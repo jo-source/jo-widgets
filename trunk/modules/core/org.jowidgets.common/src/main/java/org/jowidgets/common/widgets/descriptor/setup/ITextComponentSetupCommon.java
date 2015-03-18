@@ -33,10 +33,10 @@ import org.jowidgets.common.verify.IInputVerifier;
 
 public interface ITextComponentSetupCommon extends IComponentSetupCommon, IInputObservableSetupCommon {
 
-	IInputVerifier getInputVerifier();
+    IInputVerifier getInputVerifier();
 
-	List<String> getAcceptingRegExps();
+    List<String> getAcceptingRegExps();
 
-	Integer getMaxLength();
+    Integer getMaxLength();
 
 }

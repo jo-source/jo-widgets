@@ -40,58 +40,58 @@ import org.jowidgets.spi.widgets.IToolBarItemSpi;
 
 public class ToolBarItemImpl implements IToolBarItemSpi {
 
-	private final AbstractButton button;
+    private final AbstractButton button;
 
-	public ToolBarItemImpl(final AbstractButton button) {
-		super();
-		this.button = button;
+    public ToolBarItemImpl(final AbstractButton button) {
+        super();
+        this.button = button;
 
-		this.button.setFocusable(false);
-	}
+        this.button.setFocusable(false);
+    }
 
-	@Override
-	public AbstractButton getUiReference() {
-		return button;
-	}
+    @Override
+    public AbstractButton getUiReference() {
+        return button;
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		button.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        button.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return button.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return button.isEnabled();
+    }
 
-	@Override
-	public void setText(final String text) {
-		if (text != null) {
-			button.setText(text);
-		}
-		else {
-			button.setText("");
-		}
-	}
+    @Override
+    public void setText(final String text) {
+        if (text != null) {
+            button.setText(text);
+        }
+        else {
+            button.setText("");
+        }
+    }
 
-	@Override
-	public void setToolTipText(final String text) {
-		button.setToolTipText(text);
-	}
+    @Override
+    public void setToolTipText(final String text) {
+        button.setToolTipText(text);
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		button.setIcon(SwingImageRegistry.getInstance().getImageIcon(icon));
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        button.setIcon(SwingImageRegistry.getInstance().getImageIcon(icon));
+    }
 
-	@Override
-	public Position getPosition() {
-		return PositionConvert.convert(button.getLocation());
-	}
+    @Override
+    public Position getPosition() {
+        return PositionConvert.convert(button.getLocation());
+    }
 
-	@Override
-	public Dimension getSize() {
-		return DimensionConvert.convert(button.getSize());
-	}
+    @Override
+    public Dimension getSize() {
+        return DimensionConvert.convert(button.getSize());
+    }
 
 }

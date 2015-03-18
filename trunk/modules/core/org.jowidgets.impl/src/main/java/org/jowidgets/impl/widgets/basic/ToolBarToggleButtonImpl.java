@@ -43,68 +43,68 @@ import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
 
 public class ToolBarToggleButtonImpl extends ToolBarToggleButtonSpiWrapper implements IToolBarToggleButton {
 
-	private final IToolBar parent;
-	private final ToolBarItemDiposableDelegate disposableDelegate;
+    private final IToolBar parent;
+    private final ToolBarItemDiposableDelegate disposableDelegate;
 
-	public ToolBarToggleButtonImpl(
-		final IToolBar parent,
-		final IToolBarToggleButtonSpi toolBarToggleButtonSpi,
-		final IItemSetup setup) {
-		super(toolBarToggleButtonSpi, new SelectableItemModelBindingDelegate(new ToolBarToggleButtonSpiInvoker(
-			toolBarToggleButtonSpi), new CheckedItemModelBuilder().build()));
+    public ToolBarToggleButtonImpl(
+        final IToolBar parent,
+        final IToolBarToggleButtonSpi toolBarToggleButtonSpi,
+        final IItemSetup setup) {
+        super(toolBarToggleButtonSpi, new SelectableItemModelBindingDelegate(new ToolBarToggleButtonSpiInvoker(
+            toolBarToggleButtonSpi), new CheckedItemModelBuilder().build()));
 
-		this.parent = parent;
-		this.disposableDelegate = new ToolBarItemDiposableDelegate(this, getItemModelBindingDelegate());
+        this.parent = parent;
+        this.disposableDelegate = new ToolBarItemDiposableDelegate(this, getItemModelBindingDelegate());
 
-		setText(setup.getText());
-		setToolTipText(setup.getToolTipText());
-		setIcon(setup.getIcon());
+        setText(setup.getText());
+        setToolTipText(setup.getToolTipText());
+        setIcon(setup.getIcon());
 
-	}
+    }
 
-	@Override
-	public IToolBar getParent() {
-		return parent;
-	}
+    @Override
+    public IToolBar getParent() {
+        return parent;
+    }
 
-	@Override
-	public void dispose() {
-		disposableDelegate.dispose();
-	}
+    @Override
+    public void dispose() {
+        disposableDelegate.dispose();
+    }
 
-	@Override
-	public boolean isDisposed() {
-		return disposableDelegate.isDisposed();
-	}
+    @Override
+    public boolean isDisposed() {
+        return disposableDelegate.isDisposed();
+    }
 
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		disposableDelegate.addDisposeListener(listener);
-	}
+    @Override
+    public void addDisposeListener(final IDisposeListener listener) {
+        disposableDelegate.addDisposeListener(listener);
+    }
 
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		disposableDelegate.removeDisposeListener(listener);
-	}
+    @Override
+    public void removeDisposeListener(final IDisposeListener listener) {
+        disposableDelegate.removeDisposeListener(listener);
+    }
 
-	@Override
-	public ICheckedItemModel getModel() {
-		return (ICheckedItemModel) getItemModelBindingDelegate().getModel();
-	}
+    @Override
+    public ICheckedItemModel getModel() {
+        return (ICheckedItemModel) getItemModelBindingDelegate().getModel();
+    }
 
-	@Override
-	public void setModel(final ICheckedItemModel model) {
-		getItemModelBindingDelegate().setModel(model);
-	}
+    @Override
+    public void setModel(final ICheckedItemModel model) {
+        getItemModelBindingDelegate().setModel(model);
+    }
 
-	@Override
-	public void setModel(final IToolBarItemModel model) {
-		if (model instanceof ICheckedItemModel) {
-			setModel((ICheckedItemModel) model);
-		}
-		else {
-			throw new IllegalArgumentException("Model type '" + ICheckedItemModel.class.getName() + "' expected");
-		}
-	}
+    @Override
+    public void setModel(final IToolBarItemModel model) {
+        if (model instanceof ICheckedItemModel) {
+            setModel((ICheckedItemModel) model);
+        }
+        else {
+            throw new IllegalArgumentException("Model type '" + ICheckedItemModel.class.getName() + "' expected");
+        }
+    }
 
 }

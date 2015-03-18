@@ -35,22 +35,22 @@ import org.jowidgets.tools.model.tree.DefaultTreeNodeRenderer;
 
 abstract class AbstractStringNodeModel extends AbstractTreeNodeModel<String> implements ITreeNodeModel<String> {
 
-	private static final ITreeNodeRenderer<String> RENDERER = new DefaultTreeNodeRenderer<String>();
+    private static final ITreeNodeRenderer<String> RENDERER = new DefaultTreeNodeRenderer<String>();
 
-	private final String data;
+    private final String data;
 
-	AbstractStringNodeModel(final String data) {
-		this.data = data;
-	}
+    AbstractStringNodeModel(final String data) {
+        this.data = data;
+    }
 
-	@Override
-	public final ITreeNodeRenderer<String> getRenderer() {
-		return RENDERER;
-	}
+    @Override
+    public final ITreeNodeRenderer<String> getRenderer() {
+        return RENDERER;
+    }
 
-	@Override
-	public final String getData() {
-		return data;
-	}
+    @Override
+    public final String getData() {
+        return data;
+    }
 
 }

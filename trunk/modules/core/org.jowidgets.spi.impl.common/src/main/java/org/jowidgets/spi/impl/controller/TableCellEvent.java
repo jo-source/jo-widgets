@@ -32,28 +32,28 @@ import org.jowidgets.common.widgets.controller.ITableCellEvent;
 
 public class TableCellEvent implements ITableCellEvent {
 
-	private final int rowIndex;
-	private final int columnIndex;
+    private final int rowIndex;
+    private final int columnIndex;
 
-	public TableCellEvent(final int rowIndex, final int columnIndex) {
-		super();
-		this.rowIndex = rowIndex;
-		this.columnIndex = columnIndex;
-	}
+    public TableCellEvent(final int rowIndex, final int columnIndex) {
+        super();
+        this.rowIndex = rowIndex;
+        this.columnIndex = columnIndex;
+    }
 
-	@Override
-	public int getRowIndex() {
-		return rowIndex;
-	}
+    @Override
+    public int getRowIndex() {
+        return rowIndex;
+    }
 
-	@Override
-	public int getColumnIndex() {
-		return columnIndex;
-	}
+    @Override
+    public int getColumnIndex() {
+        return columnIndex;
+    }
 
-	@Override
-	public String toString() {
-		return "TableCellEvent [rowIndex=" + rowIndex + ", columnIndex=" + columnIndex + "]";
-	}
+    @Override
+    public String toString() {
+        return "TableCellEvent [rowIndex=" + rowIndex + ", columnIndex=" + columnIndex + "]";
+    }
 
 }

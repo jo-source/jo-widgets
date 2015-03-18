@@ -39,37 +39,37 @@ import org.jowidgets.util.Assert;
 
 public class PopupMenuCreationDelegate {
 
-	private final IPopupFactory popupFactory;
-	private final List<IPopupMenu> popupMenus;
+    private final IPopupFactory popupFactory;
+    private final List<IPopupMenu> popupMenus;
 
-	public PopupMenuCreationDelegate(final IComponentSpi componentSpi, final IComponent component) {
-		this(new IPopupFactory() {
-			@Override
-			public IPopupMenu create() {
-				return new PopupMenuImpl(componentSpi.createPopupMenu(), component);
-			}
-		});
-	}
+    public PopupMenuCreationDelegate(final IComponentSpi componentSpi, final IComponent component) {
+        this(new IPopupFactory() {
+            @Override
+            public IPopupMenu create() {
+                return new PopupMenuImpl(componentSpi.createPopupMenu(), component);
+            }
+        });
+    }
 
-	public PopupMenuCreationDelegate(final IPopupFactory popupFactory) {
-		Assert.paramNotNull(popupFactory, "popupFactory");
-		this.popupFactory = popupFactory;
-		this.popupMenus = new LinkedList<IPopupMenu>();
-	}
+    public PopupMenuCreationDelegate(final IPopupFactory popupFactory) {
+        Assert.paramNotNull(popupFactory, "popupFactory");
+        this.popupFactory = popupFactory;
+        this.popupMenus = new LinkedList<IPopupMenu>();
+    }
 
-	public IPopupMenu createPopupMenu() {
-		final IPopupMenu result = popupFactory.create();
-		popupMenus.add(result);
-		return result;
-	}
+    public IPopupMenu createPopupMenu() {
+        final IPopupMenu result = popupFactory.create();
+        popupMenus.add(result);
+        return result;
+    }
 
-	public void dispose() {
-		for (final IPopupMenu popupMenu : popupMenus) {
-			popupMenu.dispose();
-		}
-	}
+    public void dispose() {
+        for (final IPopupMenu popupMenu : popupMenus) {
+            popupMenu.dispose();
+        }
+    }
 
-	public interface IPopupFactory {
-		IPopupMenu create();
-	}
+    public interface IPopupFactory {
+        IPopupMenu create();
+    }
 }

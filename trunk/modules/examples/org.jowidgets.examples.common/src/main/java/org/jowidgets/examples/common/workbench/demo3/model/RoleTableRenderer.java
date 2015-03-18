@@ -37,41 +37,41 @@ import org.jowidgets.tools.model.table.TableCell;
 
 public final class RoleTableRenderer implements IBeanTableRenderer<Role>, ITableColumnModel {
 
-	@Override
-	public ITableCell getCell(final int rowIndex, final int columnIndex, final Role bean) {
-		if (columnIndex == 0) {
-			return new TableCell(bean.getId());
-		}
-		else if (columnIndex == 1) {
-			if (bean.getDescription() != null) {
-				return new TableCell("" + bean.getDescription());
-			}
-			else {
-				return new TableCell();
-			}
-		}
-		return null;
-	}
+    @Override
+    public ITableCell getCell(final int rowIndex, final int columnIndex, final Role bean) {
+        if (columnIndex == 0) {
+            return new TableCell(bean.getId());
+        }
+        else if (columnIndex == 1) {
+            if (bean.getDescription() != null) {
+                return new TableCell("" + bean.getDescription());
+            }
+            else {
+                return new TableCell();
+            }
+        }
+        return null;
+    }
 
-	@Override
-	public int getColumnCount() {
-		return 2;
-	}
+    @Override
+    public int getColumnCount() {
+        return 2;
+    }
 
-	@Override
-	public ITableColumn getColumn(final int columnIndex) {
-		if (columnIndex == 0) {
-			return new DefaultTableColumn("Id");
-		}
-		else if (columnIndex == 1) {
-			return new DefaultTableColumn("Description");
-		}
-		return null;
-	}
+    @Override
+    public ITableColumn getColumn(final int columnIndex) {
+        if (columnIndex == 0) {
+            return new DefaultTableColumn("Id");
+        }
+        else if (columnIndex == 1) {
+            return new DefaultTableColumn("Description");
+        }
+        return null;
+    }
 
-	@Override
-	public ITableColumnModelObservable getTableColumnModelObservable() {
-		return null;
-	}
+    @Override
+    public ITableColumnModelObservable getTableColumnModelObservable() {
+        return null;
+    }
 
 }

@@ -36,23 +36,23 @@ import org.jowidgets.spi.widgets.IToolBarItemSpi;
 
 public class ToolBarItemSpiWrapper extends ModelBasedItemSpiWrapper implements IToolBarItemCommon {
 
-	public ToolBarItemSpiWrapper(final IToolBarItemSpi component, final ItemModelBindingDelegate itemDelegate) {
-		super(component, itemDelegate);
-	}
+    public ToolBarItemSpiWrapper(final IToolBarItemSpi component, final ItemModelBindingDelegate itemDelegate) {
+        super(component, itemDelegate);
+    }
 
-	@Override
-	public IToolBarItemSpi getWidget() {
-		return (IToolBarItemSpi) super.getWidget();
-	}
+    @Override
+    public IToolBarItemSpi getWidget() {
+        return (IToolBarItemSpi) super.getWidget();
+    }
 
-	@Override
-	public Position getPosition() {
-		return getWidget().getPosition();
-	}
+    @Override
+    public Position getPosition() {
+        return getWidget().getPosition();
+    }
 
-	@Override
-	public Dimension getSize() {
-		return getWidget().getSize();
-	}
+    @Override
+    public Dimension getSize() {
+        return getWidget().getSize();
+    }
 
 }

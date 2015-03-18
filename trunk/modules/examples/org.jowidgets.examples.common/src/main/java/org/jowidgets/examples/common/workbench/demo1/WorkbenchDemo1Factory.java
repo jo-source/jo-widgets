@@ -34,24 +34,24 @@ import org.jowidgets.workbench.api.IWorkbenchFactory;
 
 public class WorkbenchDemo1Factory implements IWorkbenchFactory {
 
-	private final Dimension initialDimension;
+    private final Dimension initialDimension;
 
-	public WorkbenchDemo1Factory() {
-		this(null);
-	}
+    public WorkbenchDemo1Factory() {
+        this(null);
+    }
 
-	public WorkbenchDemo1Factory(final Dimension initialDimension) {
-		if (initialDimension != null) {
-			this.initialDimension = initialDimension;
-		}
-		else {
-			this.initialDimension = new Dimension(1280, 900);
-		}
-	}
+    public WorkbenchDemo1Factory(final Dimension initialDimension) {
+        if (initialDimension != null) {
+            this.initialDimension = initialDimension;
+        }
+        else {
+            this.initialDimension = new Dimension(1280, 900);
+        }
+    }
 
-	@Override
-	public IWorkbench create() {
-		return new WorkbenchDemo1(initialDimension);
-	}
+    @Override
+    public IWorkbench create() {
+        return new WorkbenchDemo1(initialDimension);
+    }
 
 }

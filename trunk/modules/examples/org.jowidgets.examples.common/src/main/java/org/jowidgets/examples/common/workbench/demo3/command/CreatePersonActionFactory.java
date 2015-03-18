@@ -45,37 +45,37 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class CreatePersonActionFactory {
 
-	private CreatePersonActionFactory() {}
+    private CreatePersonActionFactory() {}
 
-	public static IAction create(final BeanTableModel<Person> model) {
-		final IActionBuilder builder = CommandAction.builder();
-		builder.setText("Create person ...");
-		builder.setIcon(SilkIcons.USER_ADD);
-		builder.setCommand(new CreatePersonCommand(model));
-		return builder.build();
-	}
+    public static IAction create(final BeanTableModel<Person> model) {
+        final IActionBuilder builder = CommandAction.builder();
+        builder.setText("Create person ...");
+        builder.setIcon(SilkIcons.USER_ADD);
+        builder.setCommand(new CreatePersonCommand(model));
+        return builder.build();
+    }
 
-	private static final class CreatePersonCommand implements ICommandExecutor {
+    private static final class CreatePersonCommand implements ICommandExecutor {
 
-		private final BeanTableModel<Person> model;
+        private final BeanTableModel<Person> model;
 
-		private CreatePersonCommand(final BeanTableModel<Person> model) {
-			this.model = model;
-		}
+        private CreatePersonCommand(final BeanTableModel<Person> model) {
+            this.model = model;
+        }
 
-		@Override
-		public void execute(final IExecutionContext executionContext) throws Exception {
-			final IInputDialogBluePrint<Person> dialogBp = BPF.inputDialog(new PersonContentCreator(false));
-			dialogBp.setMinPackSize(new Dimension(640, 480));
-			dialogBp.setExecutionContext(executionContext);
-			final IInputDialog<Person> dialog = Toolkit.getActiveWindow().createChildWindow(dialogBp);
-			dialog.setVisible(true);
-			if (dialog.isOkPressed()) {
-				final Person person = dialog.getValue();
-				model.addBean(person, true);
-			}
-		}
+        @Override
+        public void execute(final IExecutionContext executionContext) throws Exception {
+            final IInputDialogBluePrint<Person> dialogBp = BPF.inputDialog(new PersonContentCreator(false));
+            dialogBp.setMinPackSize(new Dimension(640, 480));
+            dialogBp.setExecutionContext(executionContext);
+            final IInputDialog<Person> dialog = Toolkit.getActiveWindow().createChildWindow(dialogBp);
+            dialog.setVisible(true);
+            if (dialog.isOkPressed()) {
+                final Person person = dialog.getValue();
+                model.addBean(person, true);
+            }
+        }
 
-	}
+    }
 
 }

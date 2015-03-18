@@ -30,28 +30,28 @@ package org.jowidgets.api.types;
 
 public enum TreeViewerCreationPolicy {
 
-	/**
-	 * Creates the complete tree on initialization.
-	 * This may not scale for large trees.
-	 */
-	CREATE_COMPLETE,
+    /**
+     * Creates the complete tree on initialization.
+     * This may not scale for large trees.
+     */
+    CREATE_COMPLETE,
 
-	/**
-	 * Creates child nodes only for expanded parent nodes.
-	 * Nodes once created will not be disposed on collapse of parent.
-	 * 
-	 * REMARK: This may lead to unexpected behavior in combination with auto check mode, because
-	 * model nodes will become checked only of the corresponding tree node was created.
-	 */
-	CREATE_ON_EXPAND,
+    /**
+     * Creates child nodes only for expanded parent nodes.
+     * Nodes once created will not be disposed on collapse of parent.
+     * 
+     * REMARK: This may lead to unexpected behavior in combination with auto check mode, because
+     * model nodes will become checked only of the corresponding tree node was created.
+     */
+    CREATE_ON_EXPAND,
 
-	/**
-	 * Creates child nodes only for expanded parent nodes.
-	 * Nodes once created will be disposed on collapse of parent.
-	 * 
-	 * REMARK: This may lead to unexpected behavior in combination with auto check mode, because
-	 * model nodes will become checked only of the corresponding tree node was created.
-	 */
-	CREATE_ON_EXPAND_DISPOSE_ON_COLLAPSE;
+    /**
+     * Creates child nodes only for expanded parent nodes.
+     * Nodes once created will be disposed on collapse of parent.
+     * 
+     * REMARK: This may lead to unexpected behavior in combination with auto check mode, because
+     * model nodes will become checked only of the corresponding tree node was created.
+     */
+    CREATE_ON_EXPAND_DISPOSE_ON_COLLAPSE;
 
 }

@@ -34,24 +34,24 @@ import org.jowidgets.util.CollectionUtils;
 
 final class UnmodifableEmptyObserverSet<OBSERVER_TYPE> implements IObserverSet<OBSERVER_TYPE> {
 
-	@Override
-	public Iterator<OBSERVER_TYPE> iterator() {
-		return CollectionUtils.unmodifiableEmptyIterator();
-	}
+    @Override
+    public Iterator<OBSERVER_TYPE> iterator() {
+        return CollectionUtils.unmodifiableEmptyIterator();
+    }
 
-	@Override
-	public void add(final OBSERVER_TYPE observer) {
-		throw new UnsupportedOperationException("This collection is imutable and empty");
-	}
+    @Override
+    public void add(final OBSERVER_TYPE observer) {
+        throw new UnsupportedOperationException("This collection is imutable and empty");
+    }
 
-	@Override
-	public boolean remove(final OBSERVER_TYPE observer) {
-		throw new UnsupportedOperationException("This collection is imutable and empty");
-	}
+    @Override
+    public boolean remove(final OBSERVER_TYPE observer) {
+        throw new UnsupportedOperationException("This collection is imutable and empty");
+    }
 
-	@Override
-	public void clear() {
-		throw new UnsupportedOperationException("This collection is imutable and empty");
-	}
+    @Override
+    public void clear() {
+        throw new UnsupportedOperationException("This collection is imutable and empty");
+    }
 
 }

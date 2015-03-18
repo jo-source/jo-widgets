@@ -77,314 +77,314 @@ import org.jowidgets.util.Assert;
 
 public class MenuDelegate extends DisposableDelegate {
 
-	private final IMenuSpi menuSpi;
-	private final IMenu menu;
-	private final ItemModelBindingDelegate itemDelegate;
-	private final List<IMenuItem> children;
-	private final IListModelListener listModelListener;
-	private final IItemModelListener itemModelListener;
-	private final ModelViewIndexConverter<IItemModel> modelViewConverter;
+    private final IMenuSpi menuSpi;
+    private final IMenu menu;
+    private final ItemModelBindingDelegate itemDelegate;
+    private final List<IMenuItem> children;
+    private final IListModelListener listModelListener;
+    private final IItemModelListener itemModelListener;
+    private final ModelViewIndexConverter<IItemModel> modelViewConverter;
 
-	private IMenuModel model;
-	private boolean onRemoveByDispose;
+    private IMenuModel model;
+    private boolean onRemoveByDispose;
 
-	public MenuDelegate(
-		final IMenu menu,
-		final IMenuSpi menuSpi,
-		final IMenuModel model,
-		final ItemModelBindingDelegate itemDelegate) {
-		Assert.paramNotNull(menu, "menu");
-		Assert.paramNotNull(menuSpi, "menuSpi");
+    public MenuDelegate(
+        final IMenu menu,
+        final IMenuSpi menuSpi,
+        final IMenuModel model,
+        final ItemModelBindingDelegate itemDelegate) {
+        Assert.paramNotNull(menu, "menu");
+        Assert.paramNotNull(menuSpi, "menuSpi");
 
-		this.children = new ArrayList<IMenuItem>();
-		this.menu = menu;
-		this.menuSpi = menuSpi;
-		this.itemDelegate = itemDelegate;
-		this.onRemoveByDispose = false;
+        this.children = new ArrayList<IMenuItem>();
+        this.menu = menu;
+        this.menuSpi = menuSpi;
+        this.itemDelegate = itemDelegate;
+        this.onRemoveByDispose = false;
 
-		this.modelViewConverter = new ModelViewIndexConverter<IItemModel>();
+        this.modelViewConverter = new ModelViewIndexConverter<IItemModel>();
 
-		this.listModelListener = new ListModelAdapter() {
+        this.listModelListener = new ListModelAdapter() {
 
-			@Override
-			public void beforeChildRemove(final int index) {
-				final IMenuItemModel childModel = getModel().getChildren().get(index);
-				final int viewIndex = modelViewConverter.removeModel(childModel, index);
-				childModel.removeItemModelListener(itemModelListener);
-				if (viewIndex != -1) {
-					removeItem(viewIndex);
-				}
-			}
+            @Override
+            public void beforeChildRemove(final int index) {
+                final IMenuItemModel childModel = getModel().getChildren().get(index);
+                final int viewIndex = modelViewConverter.removeModel(childModel, index);
+                childModel.removeItemModelListener(itemModelListener);
+                if (viewIndex != -1) {
+                    removeItem(viewIndex);
+                }
+            }
 
-			@Override
-			public void afterChildAdded(final int index) {
-				final IMenuItemModel addedModel = getModel().getChildren().get(index);
-				addChild(index, addedModel);
-			}
-		};
+            @Override
+            public void afterChildAdded(final int index) {
+                final IMenuItemModel addedModel = getModel().getChildren().get(index);
+                addChild(index, addedModel);
+            }
+        };
 
-		this.itemModelListener = new IItemModelListener() {
-			@Override
-			public void itemChanged(final IItemModel item) {
-				final boolean visible = item.isVisible();
-				final int viewIndex = modelViewConverter.markVisibility(item, visible);
-				if (viewIndex != -1) {
-					if (visible) {
-						addChildToView(viewIndex, (IMenuItemModel) item);
-					}
-					else {
-						removeItem(viewIndex);
-					}
-				}
-			}
-		};
+        this.itemModelListener = new IItemModelListener() {
+            @Override
+            public void itemChanged(final IItemModel item) {
+                final boolean visible = item.isVisible();
+                final int viewIndex = modelViewConverter.markVisibility(item, visible);
+                if (viewIndex != -1) {
+                    if (visible) {
+                        addChildToView(viewIndex, (IMenuItemModel) item);
+                    }
+                    else {
+                        removeItem(viewIndex);
+                    }
+                }
+            }
+        };
 
-		setModel(model);
-	}
+        setModel(model);
+    }
 
-	public IMenuItem addSeparator() {
-		final IMenuItem result = new SeparatorMenuItemImpl(menu, menuSpi.addSeparator(null));
-		children.add(result);
-		addToModel(getModel().getChildren().size(), result);
-		return result;
-	}
+    public IMenuItem addSeparator() {
+        final IMenuItem result = new SeparatorMenuItemImpl(menu, menuSpi.addSeparator(null));
+        children.add(result);
+        addToModel(getModel().getChildren().size(), result);
+        return result;
+    }
 
-	public IMenuItem addSeparator(final int index) {
-		final IMenuItem result = new SeparatorMenuItemImpl(menu, menuSpi.addSeparator(index));
-		children.add(index, result);
-		addToModel(index, result);
-		return result;
-	}
+    public IMenuItem addSeparator(final int index) {
+        final IMenuItem result = new SeparatorMenuItemImpl(menu, menuSpi.addSeparator(index));
+        children.add(index, result);
+        addToModel(index, result);
+        return result;
+    }
 
-	public <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addMenuItem(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
-		final WIDGET_TYPE result = addMenuItemInternal(null, descriptor);
-		addToModel(getModel().getChildren().size(), result);
-		return result;
-	}
+    public <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addMenuItem(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+        final WIDGET_TYPE result = addMenuItemInternal(null, descriptor);
+        addToModel(getModel().getChildren().size(), result);
+        return result;
+    }
 
-	public <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addMenuItem(
-		final int index,
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+    public <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addMenuItem(
+        final int index,
+        final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
 
-		if (index < 0 || index > children.size()) {
-			throw new IllegalArgumentException("Index must be between '0' and '" + children.size() + "'.");
-		}
+        if (index < 0 || index > children.size()) {
+            throw new IllegalArgumentException("Index must be between '0' and '" + children.size() + "'.");
+        }
 
-		final WIDGET_TYPE result = addMenuItemInternal(Integer.valueOf(index), descriptor);
-		addToModel(index, result);
-		return result;
-	}
+        final WIDGET_TYPE result = addMenuItemInternal(Integer.valueOf(index), descriptor);
+        addToModel(index, result);
+        return result;
+    }
 
-	@SuppressWarnings("unchecked")
-	private <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addMenuItemInternal(
-		final Integer index,
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+    @SuppressWarnings("unchecked")
+    private <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addMenuItemInternal(
+        final Integer index,
+        final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
 
-		Assert.paramNotNull(descriptor, "descriptor");
+        Assert.paramNotNull(descriptor, "descriptor");
 
-		WIDGET_TYPE result = null;
+        WIDGET_TYPE result = null;
 
-		if (ISubMenuDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
-			final ISubMenuSpi subMenuSpi = menuSpi.addSubMenu(index);
-			final ISubMenu subMenuItem = new SubMenuImpl(subMenuSpi, menu, (IMenuItemSetup) descriptor);
-			result = (WIDGET_TYPE) subMenuItem;
-		}
-		else if (IActionMenuItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
-			final IActionMenuItemSpi actionMenuItemSpi = menuSpi.addActionItem(index);
-			final IActionMenuItem actionMenuItem = new ActionMenuItemImpl(
-				menu,
-				actionMenuItemSpi,
-				(IAccelerateableMenuItemSetup) descriptor);
-			result = (WIDGET_TYPE) actionMenuItem;
-		}
-		else if (ICheckedMenuItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
-			final ISelectableMenuItemSpi selectableMenuItemSpi = menuSpi.addCheckedItem(index);
-			final ISelectableMenuItem selectableMenuItem = new SelectableMenuItemImpl(
-				menu,
-				selectableMenuItemSpi,
-				(ISelectableItemSetup) descriptor,
-				new SelectableItemModelBindingDelegate(
-					new SelectableMenuItemSpiInvoker(selectableMenuItemSpi),
-					new CheckedItemModelBuilder().build()));
-			result = (WIDGET_TYPE) selectableMenuItem;
-		}
-		else if (IRadioMenuItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
-			final ISelectableMenuItemSpi selectableMenuItemSpi = menuSpi.addRadioItem(index);
-			final ISelectableMenuItem selectableMenuItem = new SelectableMenuItemImpl(
-				menu,
-				selectableMenuItemSpi,
-				(ISelectableItemSetup) descriptor,
-				new SelectableItemModelBindingDelegate(
-					new SelectableMenuItemSpiInvoker(selectableMenuItemSpi),
-					new RadioItemModelBuilder().build()));
-			result = (WIDGET_TYPE) selectableMenuItem;
-		}
-		else if (ISeparatorMenuItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
-			final IMenuItemSpi separatorMenuItemSpi = menuSpi.addSeparator(index);
-			final IMenuItem separatorMenuItem = new SeparatorMenuItemImpl(menu, separatorMenuItemSpi);
-			result = (WIDGET_TYPE) separatorMenuItem;
-		}
-		else {
-			throw new IllegalArgumentException("Descriptor with type '"
-				+ descriptor.getDescriptorInterface().getName()
-				+ "' is not supported");
-		}
+        if (ISubMenuDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
+            final ISubMenuSpi subMenuSpi = menuSpi.addSubMenu(index);
+            final ISubMenu subMenuItem = new SubMenuImpl(subMenuSpi, menu, (IMenuItemSetup) descriptor);
+            result = (WIDGET_TYPE) subMenuItem;
+        }
+        else if (IActionMenuItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
+            final IActionMenuItemSpi actionMenuItemSpi = menuSpi.addActionItem(index);
+            final IActionMenuItem actionMenuItem = new ActionMenuItemImpl(
+                menu,
+                actionMenuItemSpi,
+                (IAccelerateableMenuItemSetup) descriptor);
+            result = (WIDGET_TYPE) actionMenuItem;
+        }
+        else if (ICheckedMenuItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
+            final ISelectableMenuItemSpi selectableMenuItemSpi = menuSpi.addCheckedItem(index);
+            final ISelectableMenuItem selectableMenuItem = new SelectableMenuItemImpl(
+                menu,
+                selectableMenuItemSpi,
+                (ISelectableItemSetup) descriptor,
+                new SelectableItemModelBindingDelegate(
+                    new SelectableMenuItemSpiInvoker(selectableMenuItemSpi),
+                    new CheckedItemModelBuilder().build()));
+            result = (WIDGET_TYPE) selectableMenuItem;
+        }
+        else if (IRadioMenuItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
+            final ISelectableMenuItemSpi selectableMenuItemSpi = menuSpi.addRadioItem(index);
+            final ISelectableMenuItem selectableMenuItem = new SelectableMenuItemImpl(
+                menu,
+                selectableMenuItemSpi,
+                (ISelectableItemSetup) descriptor,
+                new SelectableItemModelBindingDelegate(
+                    new SelectableMenuItemSpiInvoker(selectableMenuItemSpi),
+                    new RadioItemModelBuilder().build()));
+            result = (WIDGET_TYPE) selectableMenuItem;
+        }
+        else if (ISeparatorMenuItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
+            final IMenuItemSpi separatorMenuItemSpi = menuSpi.addSeparator(index);
+            final IMenuItem separatorMenuItem = new SeparatorMenuItemImpl(menu, separatorMenuItemSpi);
+            result = (WIDGET_TYPE) separatorMenuItem;
+        }
+        else {
+            throw new IllegalArgumentException("Descriptor with type '"
+                + descriptor.getDescriptorInterface().getName()
+                + "' is not supported");
+        }
 
-		addToChildren(index, result);
+        addToChildren(index, result);
 
-		return result;
-	}
+        return result;
+    }
 
-	private void addToChildren(final Integer index, final IMenuItem menuItem) {
-		if (index != null) {
-			children.add(index.intValue(), menuItem);
-		}
-		else {
-			children.add(menuItem);
-		}
-	}
+    private void addToChildren(final Integer index, final IMenuItem menuItem) {
+        if (index != null) {
+            children.add(index.intValue(), menuItem);
+        }
+        else {
+            children.add(menuItem);
+        }
+    }
 
-	private void addToModel(final Integer index, final IMenuItem menuItem) {
-		model.removeListModelListener(listModelListener);
-		if (index != null) {
-			getModel().addItem(index.intValue(), menuItem.getModel());
-		}
-		else {
-			getModel().addItem(menuItem.getModel());
-		}
-		model.addListModelListener(listModelListener);
-	}
+    private void addToModel(final Integer index, final IMenuItem menuItem) {
+        model.removeListModelListener(listModelListener);
+        if (index != null) {
+            getModel().addItem(index.intValue(), menuItem.getModel());
+        }
+        else {
+            getModel().addItem(menuItem.getModel());
+        }
+        model.addListModelListener(listModelListener);
+    }
 
-	private void addChild(final int modelIndex, final IMenuItemModel model) {
-		final int viewIndex = modelViewConverter.addModel(model, model.isVisible(), modelIndex);
-		addChildToView(viewIndex, model);
+    private void addChild(final int modelIndex, final IMenuItemModel model) {
+        final int viewIndex = modelViewConverter.addModel(model, model.isVisible(), modelIndex);
+        addChildToView(viewIndex, model);
 
-		model.addItemModelListener(itemModelListener);
-	}
+        model.addItemModelListener(itemModelListener);
+    }
 
-	private void addChildToView(final int viewIndex, final IMenuItemModel model) {
-		if (viewIndex != -1) {
-			final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-			if (model instanceof IRadioItemModel) {
-				addMenuItemInternal(viewIndex, bpf.radioMenuItem()).setModel(model);
-			}
-			else if (model instanceof ICheckedItemModel) {
-				addMenuItemInternal(viewIndex, bpf.checkedMenuItem()).setModel(model);
-			}
-			else if (model instanceof IActionItemModel) {
-				addMenuItemInternal(viewIndex, bpf.menuItem()).setModel(model);
-			}
-			else if (model instanceof IMenuModel) {
-				addMenuItemInternal(viewIndex, bpf.subMenu()).setModel(model);
-			}
-			else if (model instanceof ISeparatorItemModel) {
-				addMenuItemInternal(viewIndex, bpf.menuSeparator()).setModel(model);
-			}
-		}
-	}
+    private void addChildToView(final int viewIndex, final IMenuItemModel model) {
+        if (viewIndex != -1) {
+            final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+            if (model instanceof IRadioItemModel) {
+                addMenuItemInternal(viewIndex, bpf.radioMenuItem()).setModel(model);
+            }
+            else if (model instanceof ICheckedItemModel) {
+                addMenuItemInternal(viewIndex, bpf.checkedMenuItem()).setModel(model);
+            }
+            else if (model instanceof IActionItemModel) {
+                addMenuItemInternal(viewIndex, bpf.menuItem()).setModel(model);
+            }
+            else if (model instanceof IMenuModel) {
+                addMenuItemInternal(viewIndex, bpf.subMenu()).setModel(model);
+            }
+            else if (model instanceof ISeparatorItemModel) {
+                addMenuItemInternal(viewIndex, bpf.menuSeparator()).setModel(model);
+            }
+        }
+    }
 
-	public List<IMenuItem> getChildren() {
-		return Collections.unmodifiableList(new LinkedList<IMenuItem>(children));
-	}
+    public List<IMenuItem> getChildren() {
+        return Collections.unmodifiableList(new LinkedList<IMenuItem>(children));
+    }
 
-	public boolean remove(final IMenuItem item) {
-		Assert.paramNotNull(item, "item");
+    public boolean remove(final IMenuItem item) {
+        Assert.paramNotNull(item, "item");
 
-		final int index = children.indexOf(item);
-		if (index != -1) {
-			removeItem(index);
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+        final int index = children.indexOf(item);
+        if (index != -1) {
+            removeItem(index);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
-	public void removeItem(final int index) {
-		final IMenuItem item = children.get(index);
-		children.remove(index);
-		item.dispose();
-		menuSpi.remove(index);
-	}
+    public void removeItem(final int index) {
+        final IMenuItem item = children.get(index);
+        children.remove(index);
+        item.dispose();
+        menuSpi.remove(index);
+    }
 
-	public void removeAll() {
-		for (final IMenuItem item : getChildren()) {
-			remove(item);
-		}
-	}
+    public void removeAll() {
+        for (final IMenuItem item : getChildren()) {
+            remove(item);
+        }
+    }
 
-	public IActionMenuItem addAction(final int index, final IAction action) {
-		final IActionMenuItem result = menu.addItem(index, Toolkit.getBluePrintFactory().menuItem());
-		result.setAction(action);
-		return result;
-	}
+    public IActionMenuItem addAction(final int index, final IAction action) {
+        final IActionMenuItem result = menu.addItem(index, Toolkit.getBluePrintFactory().menuItem());
+        result.setAction(action);
+        return result;
+    }
 
-	public IActionMenuItem addAction(final IAction action) {
-		final IActionMenuItem result = menu.addItem(Toolkit.getBluePrintFactory().menuItem());
-		result.setAction(action);
-		return result;
-	}
+    public IActionMenuItem addAction(final IAction action) {
+        final IActionMenuItem result = menu.addItem(Toolkit.getBluePrintFactory().menuItem());
+        result.setAction(action);
+        return result;
+    }
 
-	public IMenuModel getModel() {
-		return model;
-	}
+    public IMenuModel getModel() {
+        return model;
+    }
 
-	public void setModel(final IMenuModel model) {
-		modelViewConverter.clear();
-		if (this.model != null) {
-			this.model.removeListModelListener(listModelListener);
-			for (final IItemModel child : model.getChildren()) {
-				child.removeItemModelListener(itemModelListener);
-			}
-			removeAll();
-		}
-		this.model = model;
-		int childModelIndex = 0;
-		for (final IMenuItemModel childModel : model.getChildren()) {
-			addChild(childModelIndex, childModel);
-			childModelIndex++;
-		}
+    public void setModel(final IMenuModel model) {
+        modelViewConverter.clear();
+        if (this.model != null) {
+            this.model.removeListModelListener(listModelListener);
+            for (final IItemModel child : model.getChildren()) {
+                child.removeItemModelListener(itemModelListener);
+            }
+            removeAll();
+        }
+        this.model = model;
+        int childModelIndex = 0;
+        for (final IMenuItemModel childModel : model.getChildren()) {
+            addChild(childModelIndex, childModel);
+            childModelIndex++;
+        }
 
-		model.addListModelListener(listModelListener);
-	}
+        model.addListModelListener(listModelListener);
+    }
 
-	@Override
-	public void dispose() {
-		if (!isDisposed()) {
-			this.model.removeListModelListener(listModelListener);
-			for (final IItemModel child : model.getChildren()) {
-				child.removeItemModelListener(itemModelListener);
-			}
-			if (menu.getParent() instanceof IMenu
-				&& menu.getParent() != null
-				&& ((IMenu) menu.getParent()).getChildren().contains(menu)
-				&& !onRemoveByDispose) {
+    @Override
+    public void dispose() {
+        if (!isDisposed()) {
+            this.model.removeListModelListener(listModelListener);
+            for (final IItemModel child : model.getChildren()) {
+                child.removeItemModelListener(itemModelListener);
+            }
+            if (menu.getParent() instanceof IMenu
+                && menu.getParent() != null
+                && ((IMenu) menu.getParent()).getChildren().contains(menu)
+                && !onRemoveByDispose) {
 
-				onRemoveByDispose = true;
-				((IMenu) menu.getParent()).remove((IMenuItem) menu); //this will invoke dispose by the parent menu
-				onRemoveByDispose = false;
-			}
-			else if (menu.getParent() instanceof IMenuBar
-				&& menu.getParent() != null
-				&& ((IMenuBar) menu.getParent()).getMenus().contains(menu)
-				&& !onRemoveByDispose) {
+                onRemoveByDispose = true;
+                ((IMenu) menu.getParent()).remove((IMenuItem) menu); //this will invoke dispose by the parent menu
+                onRemoveByDispose = false;
+            }
+            else if (menu.getParent() instanceof IMenuBar
+                && menu.getParent() != null
+                && ((IMenuBar) menu.getParent()).getMenus().contains(menu)
+                && !onRemoveByDispose) {
 
-				onRemoveByDispose = true;
-				((IMenuBar) menu.getParent()).remove(menu); //this will invoke dispose by the parent menu bar
-				onRemoveByDispose = false;
-			}
-			else {
-				itemDelegate.dispose();
-				final List<IMenuItem> childrenCopy = new LinkedList<IMenuItem>(children);
-				//clear the children to avoid that children will be removed
-				//unnecessarily from its parent container on dispose invocation
-				children.clear();
-				for (final IMenuItem child : childrenCopy) {
-					child.dispose();
-				}
-				super.dispose();
-			}
-			modelViewConverter.dispose();
-		}
-	}
+                onRemoveByDispose = true;
+                ((IMenuBar) menu.getParent()).remove(menu); //this will invoke dispose by the parent menu bar
+                onRemoveByDispose = false;
+            }
+            else {
+                itemDelegate.dispose();
+                final List<IMenuItem> childrenCopy = new LinkedList<IMenuItem>(children);
+                //clear the children to avoid that children will be removed
+                //unnecessarily from its parent container on dispose invocation
+                children.clear();
+                for (final IMenuItem child : childrenCopy) {
+                    child.dispose();
+                }
+                super.dispose();
+            }
+            modelViewConverter.dispose();
+        }
+    }
 }

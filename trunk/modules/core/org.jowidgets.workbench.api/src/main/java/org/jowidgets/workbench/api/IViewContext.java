@@ -33,77 +33,77 @@ import org.jowidgets.api.widgets.IContainer;
 
 public interface IViewContext {
 
-	void activate();
+    void activate();
 
-	/**
-	 * Hides / shows the tab item in the folder.
-	 * 
-	 * @param hidden
-	 */
-	void setHidden(boolean hidden);
+    /**
+     * Hides / shows the tab item in the folder.
+     * 
+     * @param hidden
+     */
+    void setHidden(boolean hidden);
 
-	void dispose();
+    void dispose();
 
-	/**
-	 * Gets the container this view can paint into
-	 * 
-	 * @return the views container
-	 */
-	IContainer getContainer();
+    /**
+     * Gets the container this view can paint into
+     * 
+     * @return the views container
+     */
+    IContainer getContainer();
 
-	/**
-	 * Gets the toolBar model. If no toolBar already exists, a toolBar will be created
-	 * 
-	 * @return the toolBar model
-	 */
-	IToolBarModel getToolBar();
+    /**
+     * Gets the toolBar model. If no toolBar already exists, a toolBar will be created
+     * 
+     * @return the toolBar model
+     */
+    IToolBarModel getToolBar();
 
-	/**
-	 * Gets the toolBar menu model. If no toolBar menu model already exists, a toolBar menu model will be created
-	 * 
-	 * @return the toolBar menu model
-	 */
-	IMenuModel getToolBarMenu();
+    /**
+     * Gets the toolBar menu model. If no toolBar menu model already exists, a toolBar menu model will be created
+     * 
+     * @return the toolBar menu model
+     */
+    IMenuModel getToolBarMenu();
 
-	/**
-	 * Gets the scope of the view.
-	 * If the scope is COMPONENT, the view will be created by its component.
-	 * If the scope is WORKBENCH_APPLICATION, the view will be created by its workbench application.
-	 * If the scope is WORKBENCH, the view will be created by the workbench.
-	 * 
-	 * @return The scope of the view
-	 */
-	ViewScope getScope();
+    /**
+     * Gets the scope of the view.
+     * If the scope is COMPONENT, the view will be created by its component.
+     * If the scope is WORKBENCH_APPLICATION, the view will be created by its workbench application.
+     * If the scope is WORKBENCH, the view will be created by the workbench.
+     * 
+     * @return The scope of the view
+     */
+    ViewScope getScope();
 
-	/**
-	 * Gets the component context if the scope of the view is COMPONENT,
-	 * else null will be returned.
-	 * 
-	 * @return The component context or null
-	 */
-	IComponentContext getComponentContext();
+    /**
+     * Gets the component context if the scope of the view is COMPONENT,
+     * else null will be returned.
+     * 
+     * @return The component context or null
+     */
+    IComponentContext getComponentContext();
 
-	/**
-	 * Gets the component node context if the scope of the view is COMPONENT,
-	 * else null will be returned.
-	 * 
-	 * @return The component node context or null
-	 */
-	IComponentNodeContext getComponentNodeContext();
+    /**
+     * Gets the component node context if the scope of the view is COMPONENT,
+     * else null will be returned.
+     * 
+     * @return The component node context or null
+     */
+    IComponentNodeContext getComponentNodeContext();
 
-	/**
-	 * Gets the workbench application context if the scope of the view is
-	 * COMPONENT or WORKBENCH_APPLICATION, else null will be returned.
-	 * 
-	 * @return The workbench application context or null
-	 */
-	IWorkbenchApplicationContext getWorkbenchApplicationContext();
+    /**
+     * Gets the workbench application context if the scope of the view is
+     * COMPONENT or WORKBENCH_APPLICATION, else null will be returned.
+     * 
+     * @return The workbench application context or null
+     */
+    IWorkbenchApplicationContext getWorkbenchApplicationContext();
 
-	/**
-	 * Gets the workbench context.
-	 * 
-	 * @return The workbench context (never null)
-	 */
-	IWorkbenchContext getWorkbenchContext();
+    /**
+     * Gets the workbench context.
+     * 
+     * @return The workbench context (never null)
+     */
+    IWorkbenchContext getWorkbenchContext();
 
 }

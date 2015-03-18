@@ -29,16 +29,16 @@ package org.jowidgets.util;
 
 public final class EmptyCompatibleEquivalence {
 
-	private EmptyCompatibleEquivalence() {}
+    private EmptyCompatibleEquivalence() {}
 
-	public static boolean equals(final Object object1, final Object object2) {
-		if (EmptyCheck.isEmpty(object1) && EmptyCheck.isEmpty(object2)) {
-			return true;
-		}
-		else if (EmptyCheck.isEmpty(object1) || EmptyCheck.isEmpty(object2)) {// only one of them is empty
-			return false;
-		}
-		return object1.equals(object2);
-	}
+    public static boolean equals(final Object object1, final Object object2) {
+        if (EmptyCheck.isEmpty(object1) && EmptyCheck.isEmpty(object2)) {
+            return true;
+        }
+        else if (EmptyCheck.isEmpty(object1) || EmptyCheck.isEmpty(object2)) {// only one of them is empty
+            return false;
+        }
+        return object1.equals(object2);
+    }
 
 }

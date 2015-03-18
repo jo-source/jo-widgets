@@ -30,5 +30,5 @@ package org.jowidgets.addons.testtool.internal;
 
 public interface IListModelListener {
 
-	void listChanged(TestDataObject item);
+    void listChanged(TestDataObject item);
 }

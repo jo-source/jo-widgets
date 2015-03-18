@@ -32,15 +32,15 @@ import org.jowidgets.common.widgets.IComponentCommon;
 
 public final class ColorSettingsInvoker {
 
-	private ColorSettingsInvoker() {}
+    private ColorSettingsInvoker() {}
 
-	public static void setColors(final IComponentSetup setup, final IComponentCommon widget) {
-		if (setup.getForegroundColor() != null) {
-			widget.setForegroundColor(setup.getForegroundColor());
-		}
-		if (setup.getBackgroundColor() != null) {
-			widget.setBackgroundColor(setup.getBackgroundColor());
-		}
-	}
+    public static void setColors(final IComponentSetup setup, final IComponentCommon widget) {
+        if (setup.getForegroundColor() != null) {
+            widget.setForegroundColor(setup.getForegroundColor());
+        }
+        if (setup.getBackgroundColor() != null) {
+            widget.setBackgroundColor(setup.getBackgroundColor());
+        }
+    }
 
 }

@@ -30,6 +30,6 @@ package org.jowidgets.util;
 
 public interface IProvider<VALUE_TYPE> {
 
-	VALUE_TYPE get();
+    VALUE_TYPE get();
 
 }

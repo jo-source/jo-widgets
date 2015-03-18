@@ -30,6 +30,6 @@ package org.jowidgets.impl.spi.blueprint.builder;
 import org.jowidgets.common.widgets.builder.ILabelSetupBuilderCommon;
 
 public interface IButtonSetupBuilderSpi<INSTANCE_TYPE extends IButtonSetupBuilderSpi<?>> extends
-		ILabelSetupBuilderCommon<INSTANCE_TYPE> {
+        ILabelSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

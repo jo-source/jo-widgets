@@ -38,26 +38,26 @@ import org.jowidgets.impl.widgets.composed.MessageDialogImpl;
 
 public class MessageDialogFactory implements IWidgetFactory<IMessageDialog, IMessageDialogDescriptor> {
 
-	private final IGenericWidgetFactory genericWidgetFactory;
+    private final IGenericWidgetFactory genericWidgetFactory;
 
-	public MessageDialogFactory(final IGenericWidgetFactory genericWidgetFactory) {
-		this.genericWidgetFactory = genericWidgetFactory;
-	}
+    public MessageDialogFactory(final IGenericWidgetFactory genericWidgetFactory) {
+        this.genericWidgetFactory = genericWidgetFactory;
+    }
 
-	@Override
-	public IMessageDialog create(final Object parentUiReference, final IMessageDialogDescriptor descriptor) {
-		final IDialogBluePrint dialogBp = Toolkit.getBluePrintFactory().dialog().setTitle(descriptor.getTitle());
-		dialogBp.setIcon(descriptor.getTitleIcon()).setResizable(false).setCloseable(false);
-		final IFrame dialogWidget = genericWidgetFactory.create(parentUiReference, dialogBp);
+    @Override
+    public IMessageDialog create(final Object parentUiReference, final IMessageDialogDescriptor descriptor) {
+        final IDialogBluePrint dialogBp = Toolkit.getBluePrintFactory().dialog().setTitle(descriptor.getTitle());
+        dialogBp.setIcon(descriptor.getTitleIcon()).setResizable(false).setCloseable(false);
+        final IFrame dialogWidget = genericWidgetFactory.create(parentUiReference, dialogBp);
 
-		if (dialogWidget == null) {
-			throw new IllegalStateException("Could not create widget with descriptor interface class '"
-				+ IMessageDialogDescriptor.class
-				+ "' from '"
-				+ IGenericWidgetFactory.class.getName()
-				+ "'");
-		}
+        if (dialogWidget == null) {
+            throw new IllegalStateException("Could not create widget with descriptor interface class '"
+                + IMessageDialogDescriptor.class
+                + "' from '"
+                + IGenericWidgetFactory.class.getName()
+                + "'");
+        }
 
-		return new MessageDialogImpl(dialogWidget, descriptor);
-	}
+        return new MessageDialogImpl(dialogWidget, descriptor);
+    }
 }

@@ -41,20 +41,20 @@ import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
 
 public class SeparatorFactory extends AbstractWidgetFactory implements IWidgetFactory<IControl, ISeparatorDescriptor> {
 
-	public SeparatorFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+    public SeparatorFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider,
+        final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
-	}
+        super(genericWidgetFactory, widgetsServiceProvider, bpF);
+    }
 
-	@Override
-	public IControl create(final Object parentUiReference, final ISeparatorDescriptor descriptor) {
-		final ISeparatorBluePrintSpi bp = getSpiBluePrintFactory().separator().setSetup(descriptor);
-		final IControlSpi widget = getSpiWidgetFactory().createSeparator(parentUiReference, bp);
-		ColorSettingsInvoker.setColors(descriptor, widget);
-		return new ControlImpl(widget);
-	}
+    @Override
+    public IControl create(final Object parentUiReference, final ISeparatorDescriptor descriptor) {
+        final ISeparatorBluePrintSpi bp = getSpiBluePrintFactory().separator().setSetup(descriptor);
+        final IControlSpi widget = getSpiWidgetFactory().createSeparator(parentUiReference, bp);
+        ColorSettingsInvoker.setColors(descriptor, widget);
+        return new ControlImpl(widget);
+    }
 
 }

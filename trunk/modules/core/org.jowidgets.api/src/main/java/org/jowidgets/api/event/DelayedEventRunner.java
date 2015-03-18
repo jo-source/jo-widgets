@@ -32,13 +32,13 @@ import org.jowidgets.api.toolkit.Toolkit;
 
 public final class DelayedEventRunner {
 
-	private DelayedEventRunner() {}
+    private DelayedEventRunner() {}
 
-	public static IDelayedEventRunner create() {
-		return builder().build();
-	}
+    public static IDelayedEventRunner create() {
+        return builder().build();
+    }
 
-	public static IDelayedEventRunnerBuilder builder() {
-		return Toolkit.getDelayedEventRunnerBuilder();
-	}
+    public static IDelayedEventRunnerBuilder builder() {
+        return Toolkit.getDelayedEventRunnerBuilder();
+    }
 }

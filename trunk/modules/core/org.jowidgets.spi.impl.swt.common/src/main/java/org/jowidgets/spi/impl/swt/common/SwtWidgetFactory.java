@@ -106,182 +106,182 @@ import org.jowidgets.util.Assert;
 
 public final class SwtWidgetFactory implements IWidgetFactorySpi {
 
-	public SwtWidgetFactory() {
-		super();
-	}
+    public SwtWidgetFactory() {
+        super();
+    }
 
-	@Override
-	public boolean hasMigLayoutSupport() {
-		return SwtOptions.hasNativeMigLayout();
-	}
+    @Override
+    public boolean hasMigLayoutSupport() {
+        return SwtOptions.hasNativeMigLayout();
+    }
 
-	@Override
-	public boolean isConvertibleToFrame(final Object uiReference) {
-		return uiReference instanceof Shell;
-	}
+    @Override
+    public boolean isConvertibleToFrame(final Object uiReference) {
+        return uiReference instanceof Shell;
+    }
 
-	@Override
-	public IFrameSpi createFrame(final IGenericWidgetFactory factory, final Object uiReference) {
-		Assert.paramNotNull(uiReference, "uiReference");
-		if (uiReference instanceof Shell) {
-			return new FrameWrapper(factory, (Shell) uiReference);
-		}
-		throw new IllegalArgumentException("UiReference must be instanceof of '" + Shell.class.getName() + "'");
-	}
+    @Override
+    public IFrameSpi createFrame(final IGenericWidgetFactory factory, final Object uiReference) {
+        Assert.paramNotNull(uiReference, "uiReference");
+        if (uiReference instanceof Shell) {
+            return new FrameWrapper(factory, (Shell) uiReference);
+        }
+        throw new IllegalArgumentException("UiReference must be instanceof of '" + Shell.class.getName() + "'");
+    }
 
-	@Override
-	public boolean isConvertibleToComposite(final Object uiReference) {
-		return uiReference instanceof Composite;
-	}
+    @Override
+    public boolean isConvertibleToComposite(final Object uiReference) {
+        return uiReference instanceof Composite;
+    }
 
-	@Override
-	public ICompositeSpi createComposite(final IGenericWidgetFactory factory, final Object uiReference) {
-		Assert.paramNotNull(uiReference, "uiReference");
-		if (uiReference instanceof Composite) {
-			return new CompositeWrapper(factory, (Composite) uiReference);
-		}
-		throw new IllegalArgumentException("UiReference must be instanceof of '" + Composite.class.getName() + "'");
-	}
+    @Override
+    public ICompositeSpi createComposite(final IGenericWidgetFactory factory, final Object uiReference) {
+        Assert.paramNotNull(uiReference, "uiReference");
+        if (uiReference instanceof Composite) {
+            return new CompositeWrapper(factory, (Composite) uiReference);
+        }
+        throw new IllegalArgumentException("UiReference must be instanceof of '" + Composite.class.getName() + "'");
+    }
 
-	@Override
-	public IFrameSpi createFrame(final IGenericWidgetFactory factory, final IFrameSetupSpi setup) {
-		return new FrameImpl(factory, setup);
-	}
+    @Override
+    public IFrameSpi createFrame(final IGenericWidgetFactory factory, final IFrameSetupSpi setup) {
+        return new FrameImpl(factory, setup);
+    }
 
-	@Override
-	public IFrameSpi createDialog(final IGenericWidgetFactory factory, final Object parentUiReference, final IDialogSetupSpi setup) {
-		return new DialogImpl(factory, parentUiReference, setup);
-	}
+    @Override
+    public IFrameSpi createDialog(final IGenericWidgetFactory factory, final Object parentUiReference, final IDialogSetupSpi setup) {
+        return new DialogImpl(factory, parentUiReference, setup);
+    }
 
-	@Override
-	public IPopupDialogSpi createPopupDialog(
-		final IGenericWidgetFactory factory,
-		final Object parentUiReference,
-		final IPopupDialogSetupSpi setup) {
-		return new PopupDialogImpl(factory, parentUiReference, setup);
-	}
+    @Override
+    public IPopupDialogSpi createPopupDialog(
+        final IGenericWidgetFactory factory,
+        final Object parentUiReference,
+        final IPopupDialogSetupSpi setup) {
+        return new PopupDialogImpl(factory, parentUiReference, setup);
+    }
 
-	@Override
-	public ICompositeSpi createComposite(
-		final IGenericWidgetFactory factory,
-		final Object parentUiReference,
-		final ICompositeSetupSpi setup) {
-		return new CompositeImpl(factory, parentUiReference, setup);
-	}
+    @Override
+    public ICompositeSpi createComposite(
+        final IGenericWidgetFactory factory,
+        final Object parentUiReference,
+        final ICompositeSetupSpi setup) {
+        return new CompositeImpl(factory, parentUiReference, setup);
+    }
 
-	@Override
-	public IScrollCompositeSpi createScrollComposite(
-		final IGenericWidgetFactory factory,
-		final Object parentUiReference,
-		final IScrollCompositeSetupSpi setup) {
-		return new ScrollCompositeImpl(factory, parentUiReference, setup);
-	}
+    @Override
+    public IScrollCompositeSpi createScrollComposite(
+        final IGenericWidgetFactory factory,
+        final Object parentUiReference,
+        final IScrollCompositeSetupSpi setup) {
+        return new ScrollCompositeImpl(factory, parentUiReference, setup);
+    }
 
-	@Override
-	public ISplitCompositeSpi createSplitComposite(
-		final IGenericWidgetFactory factory,
-		final Object parentUiReference,
-		final ISplitCompositeSetupSpi setup) {
-		return new SplitCompositeImpl(factory, parentUiReference, setup);
-	}
+    @Override
+    public ISplitCompositeSpi createSplitComposite(
+        final IGenericWidgetFactory factory,
+        final Object parentUiReference,
+        final ISplitCompositeSetupSpi setup) {
+        return new SplitCompositeImpl(factory, parentUiReference, setup);
+    }
 
-	@Override
-	public ITextControlSpi createTextField(final Object parentUiReference, final ITextFieldSetupSpi setup) {
-		return new TextFieldImpl(parentUiReference, setup);
-	}
+    @Override
+    public ITextControlSpi createTextField(final Object parentUiReference, final ITextFieldSetupSpi setup) {
+        return new TextFieldImpl(parentUiReference, setup);
+    }
 
-	@Override
-	public ITextAreaSpi createTextArea(final Object parentUiReference, final ITextAreaSetupSpi setup) {
-		if (SwtOptions.hasNativeTextAreaScrollBars() || setup.isAlwaysShowBars()) {
-			return new TextAreaNativeScrollBarImpl(parentUiReference, setup);
-		}
-		else {
-			return new TextAreaImpl(parentUiReference, setup);
-		}
-	}
+    @Override
+    public ITextAreaSpi createTextArea(final Object parentUiReference, final ITextAreaSetupSpi setup) {
+        if (SwtOptions.hasNativeTextAreaScrollBars() || setup.isAlwaysShowBars()) {
+            return new TextAreaNativeScrollBarImpl(parentUiReference, setup);
+        }
+        else {
+            return new TextAreaImpl(parentUiReference, setup);
+        }
+    }
 
-	@Override
-	public ITextLabelSpi createTextLabel(final Object parentUiReference, final ITextLabelSetupSpi setup) {
-		return new TextLabelImpl(parentUiReference, setup);
-	}
+    @Override
+    public ITextLabelSpi createTextLabel(final Object parentUiReference, final ITextLabelSetupSpi setup) {
+        return new TextLabelImpl(parentUiReference, setup);
+    }
 
-	@Override
-	public IIconSpi createIcon(final Object parentUiReference, final IIconSetupSpi setup) {
-		return new IconImpl(parentUiReference, setup);
-	}
+    @Override
+    public IIconSpi createIcon(final Object parentUiReference, final IIconSetupSpi setup) {
+        return new IconImpl(parentUiReference, setup);
+    }
 
-	@Override
-	public IButtonSpi createButton(final Object parentUiReference, final IButtonSetupSpi setup) {
-		return new ButtonImpl(parentUiReference, setup);
-	}
+    @Override
+    public IButtonSpi createButton(final Object parentUiReference, final IButtonSetupSpi setup) {
+        return new ButtonImpl(parentUiReference, setup);
+    }
 
-	@Override
-	public IControlSpi createSeparator(final Object parentUiReference, final ISeparatorSetupSpi setup) {
-		return new SeparatorImpl(parentUiReference, setup);
-	}
+    @Override
+    public IControlSpi createSeparator(final Object parentUiReference, final ISeparatorSetupSpi setup) {
+        return new SeparatorImpl(parentUiReference, setup);
+    }
 
-	@Override
-	public ICheckBoxSpi createCheckBox(final Object parentUiReference, final ICheckBoxSetupSpi setup) {
-		return new CheckBoxImpl(parentUiReference, setup);
-	}
+    @Override
+    public ICheckBoxSpi createCheckBox(final Object parentUiReference, final ICheckBoxSetupSpi setup) {
+        return new CheckBoxImpl(parentUiReference, setup);
+    }
 
-	@Override
-	public IToggleButtonSpi createToggleButton(final Object parentUiReference, final IToggleButtonSetupSpi setup) {
-		return new ToggleButtonImpl(parentUiReference, setup);
-	}
+    @Override
+    public IToggleButtonSpi createToggleButton(final Object parentUiReference, final IToggleButtonSetupSpi setup) {
+        return new ToggleButtonImpl(parentUiReference, setup);
+    }
 
-	@Override
-	public IComboBoxSelectionSpi createComboBoxSelection(final Object parentUiReference, final IComboBoxSelectionSetupSpi setup) {
-		return new ComboBoxImpl(parentUiReference, setup);
-	}
+    @Override
+    public IComboBoxSelectionSpi createComboBoxSelection(final Object parentUiReference, final IComboBoxSelectionSetupSpi setup) {
+        return new ComboBoxImpl(parentUiReference, setup);
+    }
 
-	@Override
-	public IComboBoxSpi createComboBox(final Object parentUiReference, final IComboBoxSetupSpi setup) {
-		return new ComboBoxImpl(parentUiReference, setup);
-	}
+    @Override
+    public IComboBoxSpi createComboBox(final Object parentUiReference, final IComboBoxSetupSpi setup) {
+        return new ComboBoxImpl(parentUiReference, setup);
+    }
 
-	@Override
-	public IProgressBarSpi createProgressBar(final Object parentUiReference, final IProgressBarSetupSpi setup) {
-		return new ProgressBarImpl(parentUiReference, setup);
-	}
+    @Override
+    public IProgressBarSpi createProgressBar(final Object parentUiReference, final IProgressBarSetupSpi setup) {
+        return new ProgressBarImpl(parentUiReference, setup);
+    }
 
-	@Override
-	public IToolBarSpi createToolBar(
-		final IGenericWidgetFactory factory,
-		final Object parentUiReference,
-		final IToolBarSetupSpi setup) {
-		return new ToolBarImpl(factory, parentUiReference, setup);
-	}
+    @Override
+    public IToolBarSpi createToolBar(
+        final IGenericWidgetFactory factory,
+        final Object parentUiReference,
+        final IToolBarSetupSpi setup) {
+        return new ToolBarImpl(factory, parentUiReference, setup);
+    }
 
-	@Override
-	public ITabFolderSpi createTabFolder(
-		final IGenericWidgetFactory factory,
-		final Object parentUiReference,
-		final ITabFolderSetupSpi setup) {
-		return new TabFolderImpl(factory, parentUiReference, setup);
-	}
+    @Override
+    public ITabFolderSpi createTabFolder(
+        final IGenericWidgetFactory factory,
+        final Object parentUiReference,
+        final ITabFolderSetupSpi setup) {
+        return new TabFolderImpl(factory, parentUiReference, setup);
+    }
 
-	@Override
-	public ITreeSpi createTree(final Object parentUiReference, final ITreeSetupSpi setup) {
-		return new TreeImpl(parentUiReference, setup);
-	}
+    @Override
+    public ITreeSpi createTree(final Object parentUiReference, final ITreeSetupSpi setup) {
+        return new TreeImpl(parentUiReference, setup);
+    }
 
-	@Override
-	public ITableSpi createTable(final IGenericWidgetFactory factory, final Object parentUiReference, final ITableSetupSpi setup) {
-		return new TableImpl(factory, parentUiReference, setup);
-	}
+    @Override
+    public ITableSpi createTable(final IGenericWidgetFactory factory, final Object parentUiReference, final ITableSetupSpi setup) {
+        return new TableImpl(factory, parentUiReference, setup);
+    }
 
-	@Override
-	public ISliderSpi createSlider(final Object parentUiReference, final ISliderSetupSpi setup) {
-		return new SliderImpl(parentUiReference, setup);
-	}
+    @Override
+    public ISliderSpi createSlider(final Object parentUiReference, final ISliderSetupSpi setup) {
+        return new SliderImpl(parentUiReference, setup);
+    }
 
-	@Override
-	public ICanvasSpi createCanvas(
-		final IGenericWidgetFactory factory,
-		final Object parentUiReference,
-		final ICanvasSetupSpi setup) {
-		return new CanvasImpl(factory, parentUiReference, setup);
-	}
+    @Override
+    public ICanvasSpi createCanvas(
+        final IGenericWidgetFactory factory,
+        final Object parentUiReference,
+        final ICanvasSetupSpi setup) {
+        return new CanvasImpl(factory, parentUiReference, setup);
+    }
 
 }

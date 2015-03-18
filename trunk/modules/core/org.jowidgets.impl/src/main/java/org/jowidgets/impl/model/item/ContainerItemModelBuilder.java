@@ -33,28 +33,28 @@ import org.jowidgets.api.model.item.IContainerItemModel;
 import org.jowidgets.api.model.item.IContainerItemModelBuilder;
 
 public class ContainerItemModelBuilder extends AbstractActionItemModelBuilder<IContainerItemModelBuilder, IContainerItemModel> implements
-		IContainerItemModelBuilder {
+        IContainerItemModelBuilder {
 
-	private IContainerContentCreator contentCreator;
+    private IContainerContentCreator contentCreator;
 
-	@Override
-	public IContainerItemModel build() {
-		return new ContainerItemModelImpl(
-			getId(),
-			getText(),
-			getToolTipText(),
-			getIcon(),
-			getAccelerator(),
-			getMnemonic(),
-			isEnabled(),
-			getAction(),
-			contentCreator);
-	}
+    @Override
+    public IContainerItemModel build() {
+        return new ContainerItemModelImpl(
+            getId(),
+            getText(),
+            getToolTipText(),
+            getIcon(),
+            getAccelerator(),
+            getMnemonic(),
+            isEnabled(),
+            getAction(),
+            contentCreator);
+    }
 
-	@Override
-	public IContainerItemModelBuilder setContentCreator(final IContainerContentCreator contentCreator) {
-		this.contentCreator = contentCreator;
-		return this;
-	}
+    @Override
+    public IContainerItemModelBuilder setContentCreator(final IContainerContentCreator contentCreator) {
+        this.contentCreator = contentCreator;
+        return this;
+    }
 
 }

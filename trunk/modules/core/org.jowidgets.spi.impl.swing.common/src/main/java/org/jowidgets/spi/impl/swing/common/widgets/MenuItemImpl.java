@@ -39,50 +39,50 @@ import org.jowidgets.spi.widgets.IMenuItemSpi;
 
 public class MenuItemImpl extends SwingWidget implements IMenuItemSpi {
 
-	public MenuItemImpl() {
-		this(new JMenuItem());
-	}
+    public MenuItemImpl() {
+        this(new JMenuItem());
+    }
 
-	public MenuItemImpl(final JMenuItem menuItem) {
-		super(menuItem);
-	}
+    public MenuItemImpl(final JMenuItem menuItem) {
+        super(menuItem);
+    }
 
-	@Override
-	public JMenuItem getUiReference() {
-		return (JMenuItem) super.getUiReference();
-	}
+    @Override
+    public JMenuItem getUiReference() {
+        return (JMenuItem) super.getUiReference();
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		getUiReference().setIcon(SwingImageRegistry.getInstance().getImageIcon(icon));
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        getUiReference().setIcon(SwingImageRegistry.getInstance().getImageIcon(icon));
+    }
 
-	@Override
-	public void setText(final String text) {
-		getUiReference().setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        getUiReference().setText(text);
+    }
 
-	@Override
-	public void setToolTipText(final String text) {
-		getUiReference().setToolTipText(text);
-	}
+    @Override
+    public void setToolTipText(final String text) {
+        getUiReference().setToolTipText(text);
+    }
 
-	@Override
-	public void setMnemonic(final char mnemonic) {
-		getUiReference().setMnemonic(mnemonic);
-	}
+    @Override
+    public void setMnemonic(final char mnemonic) {
+        getUiReference().setMnemonic(mnemonic);
+    }
 
-	public void setAccelerator(final Accelerator accelerator) {
-		getUiReference().setAccelerator(getKeyStroke(accelerator));
-	}
+    public void setAccelerator(final Accelerator accelerator) {
+        getUiReference().setAccelerator(getKeyStroke(accelerator));
+    }
 
-	private KeyStroke getKeyStroke(final Accelerator accelerator) {
-		final int modfifier = ModifierConvert.convert(accelerator.getModifier());
-		if (accelerator.getCharacter() != null) {
-			return KeyStroke.getKeyStroke(accelerator.getCharacter(), modfifier);
-		}
-		else {
-			return KeyStroke.getKeyStroke(VirtualKeyConvert.convert(accelerator.getVirtualKey()), modfifier);
-		}
-	}
+    private KeyStroke getKeyStroke(final Accelerator accelerator) {
+        final int modfifier = ModifierConvert.convert(accelerator.getModifier());
+        if (accelerator.getCharacter() != null) {
+            return KeyStroke.getKeyStroke(accelerator.getCharacter(), modfifier);
+        }
+        else {
+            return KeyStroke.getKeyStroke(VirtualKeyConvert.convert(accelerator.getVirtualKey()), modfifier);
+        }
+    }
 }

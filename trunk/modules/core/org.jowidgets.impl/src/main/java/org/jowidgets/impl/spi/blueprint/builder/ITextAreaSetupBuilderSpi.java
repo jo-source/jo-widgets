@@ -30,6 +30,6 @@ package org.jowidgets.impl.spi.blueprint.builder;
 import org.jowidgets.common.widgets.builder.ITextAreaSetupBuilderCommon;
 
 public interface ITextAreaSetupBuilderSpi<INSTANCE_TYPE extends ITextAreaSetupBuilderSpi<?>> extends
-		ITextAreaSetupBuilderCommon<INSTANCE_TYPE> {
+        ITextAreaSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

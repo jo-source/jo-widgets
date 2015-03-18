@@ -33,9 +33,9 @@ import org.jowidgets.tools.toolkit.AbstractToolkitInterceptorHolder;
 
 public final class MediaplayerToolkitInterceptorHolder extends AbstractToolkitInterceptorHolder {
 
-	@Override
-	protected IToolkitInterceptor createToolkitInterceptor() {
-		return new MediaplayerToolkitInterceptor();
-	}
+    @Override
+    protected IToolkitInterceptor createToolkitInterceptor() {
+        return new MediaplayerToolkitInterceptor();
+    }
 
 }

@@ -36,34 +36,34 @@ import org.jowidgets.spi.impl.controller.MenuObservable;
 
 public class JoPopupMenu extends JPopupMenu implements IMenuObservable {
 
-	private static final long serialVersionUID = -8739364795296901533L;
+    private static final long serialVersionUID = -8739364795296901533L;
 
-	private final MenuObservable menuObservable;
+    private final MenuObservable menuObservable;
 
-	public JoPopupMenu() {
-		super();
-		this.menuObservable = new MenuObservable();
-	}
+    public JoPopupMenu() {
+        super();
+        this.menuObservable = new MenuObservable();
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		super.setVisible(visible);
-		if (visible) {
-			menuObservable.fireMenuActivated();
-		}
-		else {
-			menuObservable.fireMenuDeactivated();
-		}
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        super.setVisible(visible);
+        if (visible) {
+            menuObservable.fireMenuActivated();
+        }
+        else {
+            menuObservable.fireMenuDeactivated();
+        }
+    }
 
-	@Override
-	public void addMenuListener(final IMenuListener listener) {
-		menuObservable.addMenuListener(listener);
-	}
+    @Override
+    public void addMenuListener(final IMenuListener listener) {
+        menuObservable.addMenuListener(listener);
+    }
 
-	@Override
-	public void removeMenuListener(final IMenuListener listener) {
-		menuObservable.removeMenuListener(listener);
-	}
+    @Override
+    public void removeMenuListener(final IMenuListener listener) {
+        menuObservable.removeMenuListener(listener);
+    }
 
 }

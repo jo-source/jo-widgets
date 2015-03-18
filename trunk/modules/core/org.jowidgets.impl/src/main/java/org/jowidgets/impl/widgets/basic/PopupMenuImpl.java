@@ -47,97 +47,97 @@ import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public class PopupMenuImpl extends PopupMenuSpiWrapper implements IPopupMenu {
 
-	private final MenuDelegate menuDelegate;
-	private final IComponent parent;
+    private final MenuDelegate menuDelegate;
+    private final IComponent parent;
 
-	public PopupMenuImpl(final IPopupMenuSpi popupMenuSpi, final IComponent parent) {
-		super(popupMenuSpi, new ItemModelBindingDelegate(new PopupMenuSpiInvoker(popupMenuSpi), new MenuModelBuilder().build()));
+    public PopupMenuImpl(final IPopupMenuSpi popupMenuSpi, final IComponent parent) {
+        super(popupMenuSpi, new ItemModelBindingDelegate(new PopupMenuSpiInvoker(popupMenuSpi), new MenuModelBuilder().build()));
 
-		this.menuDelegate = new MenuDelegate(this, popupMenuSpi, getModel(), getItemModelBindingDelegate());
-		this.parent = parent;
-	}
+        this.menuDelegate = new MenuDelegate(this, popupMenuSpi, getModel(), getItemModelBindingDelegate());
+        this.parent = parent;
+    }
 
-	@Override
-	public List<IMenuItem> getChildren() {
-		return menuDelegate.getChildren();
-	}
+    @Override
+    public List<IMenuItem> getChildren() {
+        return menuDelegate.getChildren();
+    }
 
-	@Override
-	public boolean remove(final IMenuItem item) {
-		return menuDelegate.remove(item);
-	}
+    @Override
+    public boolean remove(final IMenuItem item) {
+        return menuDelegate.remove(item);
+    }
 
-	@Override
-	public void removeAll() {
-		menuDelegate.removeAll();
-	}
+    @Override
+    public void removeAll() {
+        menuDelegate.removeAll();
+    }
 
-	@Override
-	public IMenuItem addSeparator() {
-		return menuDelegate.addSeparator();
-	}
+    @Override
+    public IMenuItem addSeparator() {
+        return menuDelegate.addSeparator();
+    }
 
-	@Override
-	public IMenuItem addSeparator(final int index) {
-		return menuDelegate.addSeparator(index);
-	}
+    @Override
+    public IMenuItem addSeparator(final int index) {
+        return menuDelegate.addSeparator(index);
+    }
 
-	@Override
-	public IActionMenuItem addAction(final IAction action) {
-		return menuDelegate.addAction(action);
-	}
+    @Override
+    public IActionMenuItem addAction(final IAction action) {
+        return menuDelegate.addAction(action);
+    }
 
-	@Override
-	public IActionMenuItem addAction(final int index, final IAction action) {
-		return menuDelegate.addAction(index, action);
-	}
+    @Override
+    public IActionMenuItem addAction(final int index, final IAction action) {
+        return menuDelegate.addAction(index, action);
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addItem(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
-		return menuDelegate.addMenuItem(descriptor);
-	}
+    @Override
+    public <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addItem(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+        return menuDelegate.addMenuItem(descriptor);
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addItem(
-		final int index,
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
-		return menuDelegate.addMenuItem(index, descriptor);
-	}
+    @Override
+    public <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addItem(
+        final int index,
+        final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+        return menuDelegate.addMenuItem(index, descriptor);
+    }
 
-	@Override
-	public IMenuModel getModel() {
-		return (IMenuModel) getItemModelBindingDelegate().getModel();
-	}
+    @Override
+    public IMenuModel getModel() {
+        return (IMenuModel) getItemModelBindingDelegate().getModel();
+    }
 
-	@Override
-	public void setModel(final IMenuModel model) {
-		getItemModelBindingDelegate().setModel(model);
-		menuDelegate.setModel(model);
-	}
+    @Override
+    public void setModel(final IMenuModel model) {
+        getItemModelBindingDelegate().setModel(model);
+        menuDelegate.setModel(model);
+    }
 
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		menuDelegate.addDisposeListener(listener);
-	}
+    @Override
+    public void addDisposeListener(final IDisposeListener listener) {
+        menuDelegate.addDisposeListener(listener);
+    }
 
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		menuDelegate.removeDisposeListener(listener);
-	}
+    @Override
+    public void removeDisposeListener(final IDisposeListener listener) {
+        menuDelegate.removeDisposeListener(listener);
+    }
 
-	@Override
-	public void dispose() {
-		menuDelegate.dispose();
-	}
+    @Override
+    public void dispose() {
+        menuDelegate.dispose();
+    }
 
-	@Override
-	public boolean isDisposed() {
-		return menuDelegate.isDisposed();
-	}
+    @Override
+    public boolean isDisposed() {
+        return menuDelegate.isDisposed();
+    }
 
-	@Override
-	public IComponent getParent() {
-		return parent;
-	}
+    @Override
+    public IComponent getParent() {
+        return parent;
+    }
 
 }

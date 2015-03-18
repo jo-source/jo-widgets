@@ -30,8 +30,8 @@ package org.jowidgets.common.model;
 
 public interface ITableColumnModelObservable {
 
-	void addColumnModelListener(ITableColumnModelListener listener);
+    void addColumnModelListener(ITableColumnModelListener listener);
 
-	void removeColumnModelListener(ITableColumnModelListener listener);
+    void removeColumnModelListener(ITableColumnModelListener listener);
 
 }

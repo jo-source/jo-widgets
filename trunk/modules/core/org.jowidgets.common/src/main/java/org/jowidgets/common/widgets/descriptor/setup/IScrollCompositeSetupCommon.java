@@ -27,13 +27,12 @@
  */
 package org.jowidgets.common.widgets.descriptor.setup;
 
-
 public interface IScrollCompositeSetupCommon extends IContainerSetupCommon, ICompositeSetupCommon {
 
-	boolean hasVerticalBar();
+    boolean hasVerticalBar();
 
-	boolean hasHorizontalBar();
+    boolean hasHorizontalBar();
 
-	boolean isAlwaysShowBars();
+    boolean isAlwaysShowBars();
 
 }

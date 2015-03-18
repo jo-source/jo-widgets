@@ -34,15 +34,15 @@ import org.jowidgets.spi.widgets.ITextControlSpi;
 
 public final class TextMaskVerifierFactory {
 
-	private TextMaskVerifierFactory() {}
+    private TextMaskVerifierFactory() {}
 
-	public static IInputVerifier create(final ITextControlSpi textControl, final ITextMask textMask) {
+    public static IInputVerifier create(final ITextControlSpi textControl, final ITextMask textMask) {
 
-		if (textMask == null) {
-			return null;
-		}
-		else {
-			return new TextMaskVerifier(textControl, textMask);
-		}
-	}
+        if (textMask == null) {
+            return null;
+        }
+        else {
+            return new TextMaskVerifier(textControl, textMask);
+        }
+    }
 }

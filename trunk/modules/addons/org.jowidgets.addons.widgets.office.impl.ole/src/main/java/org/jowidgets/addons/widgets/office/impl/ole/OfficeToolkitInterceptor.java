@@ -37,13 +37,13 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
 final class OfficeToolkitInterceptor implements IToolkitInterceptor {
 
-	@Override
-	public void onToolkitCreate(final IToolkit toolkit) {
-		final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
+    @Override
+    public void onToolkitCreate(final IToolkit toolkit) {
+        final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
 
-		widgetFactory.register(IOfficeTextBluePrint.class, new OfficeTextControlFactory());
-		widgetFactory.register(IOfficeTableCalculationBluePrint.class, new OfficeTableCalculationControlFactory());
+        widgetFactory.register(IOfficeTextBluePrint.class, new OfficeTextControlFactory());
+        widgetFactory.register(IOfficeTableCalculationBluePrint.class, new OfficeTableCalculationControlFactory());
 
-		toolkit.getBluePrintFactory().addDefaultsInitializer(IOfficeControlSetupBuilder.class, new OfficeControlDefaults());
-	}
+        toolkit.getBluePrintFactory().addDefaultsInitializer(IOfficeControlSetupBuilder.class, new OfficeControlDefaults());
+    }
 }

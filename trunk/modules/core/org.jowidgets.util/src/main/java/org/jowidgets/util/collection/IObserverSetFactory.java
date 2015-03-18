@@ -30,46 +30,46 @@ package org.jowidgets.util.collection;
 
 public interface IObserverSetFactory {
 
-	enum Strategy {
+    enum Strategy {
 
-		/**
-		 * Uses more memory for a better performance
-		 */
-		HIGH_PERFORMANCE,
+        /**
+         * Uses more memory for a better performance
+         */
+        HIGH_PERFORMANCE,
 
-		/**
-		 * Needs more computing power for a better memory management
-		 */
-		LOW_MEMORY;
+        /**
+         * Needs more computing power for a better memory management
+         */
+        LOW_MEMORY;
 
-	}
+    }
 
-	/**
-	 * @return The default strategy of this factory
-	 */
-	Strategy getDefaultStrategy();
+    /**
+     * @return The default strategy of this factory
+     */
+    Strategy getDefaultStrategy();
 
-	/**
-	 * Creates an observer set with the default strategy
-	 * 
-	 * @return The created observer set
-	 */
-	<OBSERVER_TYPE> IObserverSet<OBSERVER_TYPE> create();
+    /**
+     * Creates an observer set with the default strategy
+     * 
+     * @return The created observer set
+     */
+    <OBSERVER_TYPE> IObserverSet<OBSERVER_TYPE> create();
 
-	/**
-	 * Creates an observer set for the given strategy
-	 * 
-	 * @param strategy The strategy to use, must not be null
-	 * 
-	 * @return The created observer set
-	 */
-	<OBSERVER_TYPE> IObserverSet<OBSERVER_TYPE> create(Strategy strategy);
+    /**
+     * Creates an observer set for the given strategy
+     * 
+     * @param strategy The strategy to use, must not be null
+     * 
+     * @return The created observer set
+     */
+    <OBSERVER_TYPE> IObserverSet<OBSERVER_TYPE> create(Strategy strategy);
 
-	/**
-	 * Gets a singleton instance of an unmodifiable empty set
-	 * 
-	 * @return An unmodifiable empty set
-	 */
-	<OBSERVER_TYPE> IObserverSet<OBSERVER_TYPE> emptySet();
+    /**
+     * Gets a singleton instance of an unmodifiable empty set
+     * 
+     * @return An unmodifiable empty set
+     */
+    <OBSERVER_TYPE> IObserverSet<OBSERVER_TYPE> emptySet();
 
 }

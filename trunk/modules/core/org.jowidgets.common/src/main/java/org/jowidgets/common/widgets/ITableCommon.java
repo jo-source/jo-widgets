@@ -42,73 +42,73 @@ import org.jowidgets.common.widgets.controller.ITableSelectionObservable;
 import org.jowidgets.util.Interval;
 
 public interface ITableCommon extends
-		ITableSelectionObservable,
-		ITableCellObservable,
-		ITableCellPopupDetectionObservable,
-		ITableColumnObservable,
-		ITableColumnPopupDetectionObservable,
-		IControlCommon {
+        ITableSelectionObservable,
+        ITableCellObservable,
+        ITableCellPopupDetectionObservable,
+        ITableColumnObservable,
+        ITableColumnPopupDetectionObservable,
+        IControlCommon {
 
-	/**
-	 * Sets the tables global editable property. The global editable state and the cells editable state will
-	 * be conjuncted with a logical AND
-	 * 
-	 * @param editable The editable state to set
-	 */
-	void setEditable(boolean editable);
+    /**
+     * Sets the tables global editable property. The global editable state and the cells editable state will
+     * be conjuncted with a logical AND
+     * 
+     * @param editable The editable state to set
+     */
+    void setEditable(boolean editable);
 
-	/**
-	 * Set the edit mode for a cell.
-	 * 
-	 * @param row the row index of the cell
-	 * @param column the column index of the cell
-	 * @return true if the edit mode could be set, false otherwise (e.g. no editor is defined or cell is not editable)
-	 */
-	boolean editCell(int row, int column);
+    /**
+     * Set the edit mode for a cell.
+     * 
+     * @param row the row index of the cell
+     * @param column the column index of the cell
+     * @return true if the edit mode could be set, false otherwise (e.g. no editor is defined or cell is not editable)
+     */
+    boolean editCell(int row, int column);
 
-	void stopEditing();
+    void stopEditing();
 
-	void cancelEditing();
+    void cancelEditing();
 
-	boolean isEditing();
+    boolean isEditing();
 
-	void resetFromModel();
+    void resetFromModel();
 
-	void setRowHeight(int height);
+    void setRowHeight(int height);
 
-	Position getCellPosition(int rowIndex, int columnIndex);
+    Position getCellPosition(int rowIndex, int columnIndex);
 
-	Dimension getCellSize(int rowIndex, int columnIndex);
+    Dimension getCellSize(int rowIndex, int columnIndex);
 
-	ArrayList<Integer> getColumnPermutation();
+    ArrayList<Integer> getColumnPermutation();
 
-	void setColumnPermutation(List<Integer> permutation);
+    void setColumnPermutation(List<Integer> permutation);
 
-	ArrayList<Integer> getSelection();
+    ArrayList<Integer> getSelection();
 
-	void setSelection(List<Integer> selection);
+    void setSelection(List<Integer> selection);
 
-	/**
-	 * Scrolls the viewport to the given row, if the row is not shown in the viewport.
-	 * If the given row is already visible in the viewport, nothing happens.
-	 * 
-	 * @param rowIndex The row to scroll to
-	 */
-	void scrollToRow(int rowIndex);
+    /**
+     * Scrolls the viewport to the given row, if the row is not shown in the viewport.
+     * If the given row is already visible in the viewport, nothing happens.
+     * 
+     * @param rowIndex The row to scroll to
+     */
+    void scrollToRow(int rowIndex);
 
-	void pack(TablePackPolicy policy);
+    void pack(TablePackPolicy policy);
 
-	void pack(int columnIndex, TablePackPolicy policy);
+    void pack(int columnIndex, TablePackPolicy policy);
 
-	boolean isColumnPopupDetectionSupported();
+    boolean isColumnPopupDetectionSupported();
 
-	/**
-	 * Gets the interval of the visible rows (visible in viewport).
-	 * 
-	 * Remark: If the table is empty or now row is visible, the left and the right boundary is null.
-	 * 
-	 * @return The interval of the visible rows
-	 */
-	Interval<Integer> getVisibleRows();
+    /**
+     * Gets the interval of the visible rows (visible in viewport).
+     * 
+     * Remark: If the table is empty or now row is visible, the left and the right boundary is null.
+     * 
+     * @return The interval of the visible rows
+     */
+    Interval<Integer> getVisibleRows();
 
 }

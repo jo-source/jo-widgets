@@ -60,99 +60,99 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class CommandActionSnipped implements IApplication {
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
 
-		//create a root frame
-		final IFrameBluePrint frameBp = BPF.frame();
-		frameBp.setSize(new Dimension(400, 300)).setTitle("Command actions");
-		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
+        //create a root frame
+        final IFrameBluePrint frameBp = BPF.frame();
+        frameBp.setSize(new Dimension(400, 300)).setTitle("Command actions");
+        final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
 
-		//Create the menu bar
-		final IMenuBarModel menuBar = frame.getMenuBarModel();
+        //Create the menu bar
+        final IMenuBarModel menuBar = frame.getMenuBarModel();
 
-		//Use a border layout
-		frame.setLayout(BorderLayout.builder().gap(0).build());
+        //Use a border layout
+        frame.setLayout(BorderLayout.builder().gap(0).build());
 
-		//add a toolbar to the top
-		final IToolBarModel toolBar = frame.add(BPF.toolBar(), BorderLayout.TOP).getModel();
+        //add a toolbar to the top
+        final IToolBarModel toolBar = frame.add(BPF.toolBar(), BorderLayout.TOP).getModel();
 
-		//add a composite to the center
-		final IComposite composite = frame.add(BPF.composite().setBorder(), BorderLayout.CENTER);
-		composite.setLayout(new MigLayoutDescriptor("[grow][]", "[]"));
+        //add a composite to the center
+        final IComposite composite = frame.add(BPF.composite().setBorder(), BorderLayout.CENTER);
+        composite.setLayout(new MigLayoutDescriptor("[grow][]", "[]"));
 
-		//add a input field and save button to the composite
-		final IInputField<String> inputField = composite.add(BPF.inputFieldString(), "growx");
-		final IButton saveButton = composite.add(BPF.button());
+        //add a input field and save button to the composite
+        final IInputField<String> inputField = composite.add(BPF.inputFieldString(), "growx");
+        final IButton saveButton = composite.add(BPF.button());
 
-		//create save action 
-		final IAction saveAction = createSaveAction(inputField);
+        //create save action 
+        final IAction saveAction = createSaveAction(inputField);
 
-		//create a menu and add save action
-		final MenuModel menu = new MenuModel("File");
-		menu.addAction(saveAction);
+        //create a menu and add save action
+        final MenuModel menu = new MenuModel("File");
+        menu.addAction(saveAction);
 
-		//add the menu to the menu bar
-		menuBar.addMenu(menu);
+        //add the menu to the menu bar
+        menuBar.addMenu(menu);
 
-		//add the action to the toolbar
-		toolBar.addAction(saveAction);
+        //add the action to the toolbar
+        toolBar.addAction(saveAction);
 
-		//bind the action to the save button
-		saveButton.setAction(saveAction);
+        //bind the action to the save button
+        saveButton.setAction(saveAction);
 
-		//set the root frame visible
-		frame.setVisible(true);
-	}
+        //set the root frame visible
+        frame.setVisible(true);
+    }
 
-	private static IAction createSaveAction(final IInputComponent<String> inputComponent) {
-		final IActionBuilder builder = Action.builder();
-		builder.setText("Save");
-		builder.setToolTipText("Saves the text");
-		builder.setAccelerator(VirtualKey.S, Modifier.CTRL);
-		builder.setIcon(IconsSmall.DISK);
+    private static IAction createSaveAction(final IInputComponent<String> inputComponent) {
+        final IActionBuilder builder = Action.builder();
+        builder.setText("Save");
+        builder.setToolTipText("Saves the text");
+        builder.setAccelerator(VirtualKey.S, Modifier.CTRL);
+        builder.setIcon(IconsSmall.DISK);
 
-		//save command implements ICommandExecutor and IEnabledChecker,
-		//so set them both
-		final SaveCommand saveCommand = new SaveCommand(inputComponent);
-		builder.setCommand(saveCommand, saveCommand);
+        //save command implements ICommandExecutor and IEnabledChecker,
+        //so set them both
+        final SaveCommand saveCommand = new SaveCommand(inputComponent);
+        builder.setCommand(saveCommand, saveCommand);
 
-		return builder.build();
-	}
+        return builder.build();
+    }
 
-	private static final class SaveCommand extends AbstractEnabledChecker implements ICommandExecutor, IEnabledChecker {
+    private static final class SaveCommand extends AbstractEnabledChecker implements ICommandExecutor, IEnabledChecker {
 
-		private final IInputComponent<?> inputComponent;
+        private final IInputComponent<?> inputComponent;
 
-		private SaveCommand(final IInputComponent<?> inputComponent) {
-			this.inputComponent = inputComponent;
+        private SaveCommand(final IInputComponent<?> inputComponent) {
+            this.inputComponent = inputComponent;
 
-			inputComponent.addInputListener(new IInputListener() {
-				@Override
-				public void inputChanged() {
-					fireEnabledStateChanged();
-				}
-			});
-		}
+            inputComponent.addInputListener(new IInputListener() {
+                @Override
+                public void inputChanged() {
+                    fireEnabledStateChanged();
+                }
+            });
+        }
 
-		@Override
-		public void execute(final IExecutionContext executionContext) throws Exception {
-			inputComponent.resetModificationState();
-			fireEnabledStateChanged();
-			final String message = "'" + inputComponent.getValue() + "' saved!";
-			MessagePane.showInfo(executionContext, message);
-		}
+        @Override
+        public void execute(final IExecutionContext executionContext) throws Exception {
+            inputComponent.resetModificationState();
+            fireEnabledStateChanged();
+            final String message = "'" + inputComponent.getValue() + "' saved!";
+            MessagePane.showInfo(executionContext, message);
+        }
 
-		@Override
-		public IEnabledState getEnabledState() {
-			if (!inputComponent.hasModifications()) {
-				return EnabledState.disabled("No changes to save");
-			}
-			else {
-				return EnabledState.ENABLED;
-			}
-		}
+        @Override
+        public IEnabledState getEnabledState() {
+            if (!inputComponent.hasModifications()) {
+                return EnabledState.disabled("No changes to save");
+            }
+            else {
+                return EnabledState.ENABLED;
+            }
+        }
 
-	}
+    }
 
 }

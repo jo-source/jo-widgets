@@ -32,32 +32,32 @@ import org.jowidgets.api.types.CheckedState;
 
 public interface ITreeNodeModel<VALUE_TYPE> extends ITreeNodeModelObservable {
 
-	int getChildrenCount();
+    int getChildrenCount();
 
-	ITreeNodeModel<?> getChildNode(int index);
+    ITreeNodeModel<?> getChildNode(int index);
 
-	ITreeNodeRenderer<VALUE_TYPE> getRenderer();
+    ITreeNodeRenderer<VALUE_TYPE> getRenderer();
 
-	VALUE_TYPE getData();
+    VALUE_TYPE getData();
 
-	boolean isSelected();
+    boolean isSelected();
 
-	void setSelected(boolean selected);
+    void setSelected(boolean selected);
 
-	CheckedState getCheckedState();
+    CheckedState getCheckedState();
 
-	void setCheckedState(CheckedState state);
+    void setCheckedState(CheckedState state);
 
-	void setCheckable(boolean checkable);
+    void setCheckable(boolean checkable);
 
-	boolean isCheckable();
+    boolean isCheckable();
 
-	boolean isExpanded();
+    boolean isExpanded();
 
-	void setExpanded(boolean expanded);
+    void setExpanded(boolean expanded);
 
-	boolean isVisible();
+    boolean isVisible();
 
-	void setVisible(boolean visible);
+    void setVisible(boolean visible);
 
 }

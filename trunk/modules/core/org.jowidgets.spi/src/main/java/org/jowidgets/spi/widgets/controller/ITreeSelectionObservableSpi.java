@@ -30,8 +30,8 @@ package org.jowidgets.spi.widgets.controller;
 
 public interface ITreeSelectionObservableSpi {
 
-	void addTreeSelectionListener(ITreeSelectionListenerSpi listener);
+    void addTreeSelectionListener(ITreeSelectionListenerSpi listener);
 
-	void removeTreeSelectionListener(ITreeSelectionListenerSpi listener);
+    void removeTreeSelectionListener(ITreeSelectionListenerSpi listener);
 
 }

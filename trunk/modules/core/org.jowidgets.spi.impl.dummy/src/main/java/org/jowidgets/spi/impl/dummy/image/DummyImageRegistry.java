@@ -35,42 +35,42 @@ import org.jowidgets.spi.impl.image.ImageRegistry;
 
 public class DummyImageRegistry extends ImageRegistry {
 
-	private static final DummyImageRegistry INSTANCE = new DummyImageRegistry(new DummyImageHandleFactory());
+    private static final DummyImageRegistry INSTANCE = new DummyImageRegistry(new DummyImageHandleFactory());
 
-	public DummyImageRegistry(final IImageHandleFactory imageHandleFactory) {
-		super(imageHandleFactory);
-	}
+    public DummyImageRegistry(final IImageHandleFactory imageHandleFactory) {
+        super(imageHandleFactory);
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public synchronized ImageHandle<UIDImage> getImageHandle(final IImageConstant key) {
-		return (ImageHandle<UIDImage>) super.getImageHandle(key);
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public synchronized ImageHandle<UIDImage> getImageHandle(final IImageConstant key) {
+        return (ImageHandle<UIDImage>) super.getImageHandle(key);
+    }
 
-	public synchronized UIDImage getImage(final IImageConstant key) {
-		if (key == null) {
-			return null;
-		}
-		final ImageHandle<UIDImage> imageHandle = getImageHandle(key);
-		if (imageHandle != null) {
-			return imageHandle.getImage();
-		}
-		else {
-			throw new IllegalArgumentException("No icon found for the image constant '" + key + "'");
-		}
-	}
+    public synchronized UIDImage getImage(final IImageConstant key) {
+        if (key == null) {
+            return null;
+        }
+        final ImageHandle<UIDImage> imageHandle = getImageHandle(key);
+        if (imageHandle != null) {
+            return imageHandle.getImage();
+        }
+        else {
+            throw new IllegalArgumentException("No icon found for the image constant '" + key + "'");
+        }
+    }
 
-	public synchronized UIDImage getImageIcon(final IImageConstant key) {
-		if (key == null) {
-			return null;
-		}
-		else {
-			return getImage(key);
-		}
-	}
+    public synchronized UIDImage getImageIcon(final IImageConstant key) {
+        if (key == null) {
+            return null;
+        }
+        else {
+            return getImage(key);
+        }
+    }
 
-	public static DummyImageRegistry getInstance() {
-		return INSTANCE;
-	}
+    public static DummyImageRegistry getInstance() {
+        return INSTANCE;
+    }
 
 }

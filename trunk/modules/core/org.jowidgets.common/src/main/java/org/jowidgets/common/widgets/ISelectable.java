@@ -30,6 +30,6 @@ package org.jowidgets.common.widgets;
 
 public interface ISelectable {
 
-	void select();
+    void select();
 
 }

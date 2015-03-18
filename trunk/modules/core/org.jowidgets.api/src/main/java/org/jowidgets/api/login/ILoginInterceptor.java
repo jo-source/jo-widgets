@@ -30,17 +30,17 @@ package org.jowidgets.api.login;
 
 public interface ILoginInterceptor {
 
-	/**
-	 * Does the login.
-	 * 
-	 * REMARK: This will NOT run in the event dispatcher thread
-	 * 
-	 * @param resultCallback A callback to set the login result.
-	 *            The callbacks need not to run in the event dispatcher thread.
-	 * 
-	 * @param username The username set in the login dialog
-	 * @param password The password set in the login dialog
-	 */
-	void login(ILoginResultCallback resultCallback, String username, String password);
+    /**
+     * Does the login.
+     * 
+     * REMARK: This will NOT run in the event dispatcher thread
+     * 
+     * @param resultCallback A callback to set the login result.
+     *            The callbacks need not to run in the event dispatcher thread.
+     * 
+     * @param username The username set in the login dialog
+     * @param password The password set in the login dialog
+     */
+    void login(ILoginResultCallback resultCallback, String username, String password);
 
 }

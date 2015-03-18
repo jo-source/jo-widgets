@@ -30,10 +30,10 @@ package org.jowidgets.common.widgets;
 
 public interface IProgressBarCommon extends IControlCommon {
 
-	void setMinimum(int min);
+    void setMinimum(int min);
 
-	void setMaximum(int max);
+    void setMaximum(int max);
 
-	void setProgress(int progress);
+    void setProgress(int progress);
 
 }

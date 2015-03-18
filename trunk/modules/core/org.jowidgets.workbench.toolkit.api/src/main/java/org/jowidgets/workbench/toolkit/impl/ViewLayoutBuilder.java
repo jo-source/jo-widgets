@@ -40,112 +40,112 @@ import org.jowidgets.workbench.toolkit.api.IViewLayoutBuilder;
 
 class ViewLayoutBuilder extends WorkbenchPartBuilder<IViewLayoutBuilder> implements IViewLayoutBuilder {
 
-	private String id;
-	private boolean hidden;
-	private boolean detachable;
-	private ViewScope scope;
-	private ClosePolicy closePolicy;
-	private final List<String> folderWhiteList;
-	private final List<String> folderBlackList;
+    private String id;
+    private boolean hidden;
+    private boolean detachable;
+    private ViewScope scope;
+    private ClosePolicy closePolicy;
+    private final List<String> folderWhiteList;
+    private final List<String> folderBlackList;
 
-	ViewLayoutBuilder() {
-		super();
-		this.hidden = false;
-		this.detachable = true;
-		this.scope = ViewScope.COMPONENT;
-		this.closePolicy = ClosePolicy.HIDE;
-		this.folderWhiteList = new LinkedList<String>();
-		this.folderBlackList = new LinkedList<String>();
-	}
+    ViewLayoutBuilder() {
+        super();
+        this.hidden = false;
+        this.detachable = true;
+        this.scope = ViewScope.COMPONENT;
+        this.closePolicy = ClosePolicy.HIDE;
+        this.folderWhiteList = new LinkedList<String>();
+        this.folderBlackList = new LinkedList<String>();
+    }
 
-	@Override
-	public IViewLayoutBuilder setId(final String id) {
-		Assert.paramNotEmpty(id, "id");
-		this.id = id;
-		return this;
-	}
+    @Override
+    public IViewLayoutBuilder setId(final String id) {
+        Assert.paramNotEmpty(id, "id");
+        this.id = id;
+        return this;
+    }
 
-	@Override
-	public IViewLayoutBuilder setHidden(final boolean hidden) {
-		this.hidden = hidden;
-		return this;
-	}
+    @Override
+    public IViewLayoutBuilder setHidden(final boolean hidden) {
+        this.hidden = hidden;
+        return this;
+    }
 
-	@Override
-	public IViewLayoutBuilder setDetachable(final boolean detachable) {
-		this.detachable = detachable;
-		return this;
-	}
+    @Override
+    public IViewLayoutBuilder setDetachable(final boolean detachable) {
+        this.detachable = detachable;
+        return this;
+    }
 
-	@Override
-	public IViewLayoutBuilder setScope(final ViewScope scope) {
-		Assert.paramNotNull(scope, "scope");
-		this.scope = scope;
-		return this;
-	}
+    @Override
+    public IViewLayoutBuilder setScope(final ViewScope scope) {
+        Assert.paramNotNull(scope, "scope");
+        this.scope = scope;
+        return this;
+    }
 
-	@Override
-	public IViewLayoutBuilder setClosePolicy(final ClosePolicy closePolicy) {
-		Assert.paramNotNull(closePolicy, "closePolicy");
-		this.closePolicy = closePolicy;
-		return this;
-	}
+    @Override
+    public IViewLayoutBuilder setClosePolicy(final ClosePolicy closePolicy) {
+        Assert.paramNotNull(closePolicy, "closePolicy");
+        this.closePolicy = closePolicy;
+        return this;
+    }
 
-	@Override
-	public IViewLayoutBuilder setFolderWhitelist(final List<String> folderWhiteList) {
-		Assert.paramNotNull(folderWhiteList, "folderWhiteList");
-		this.folderWhiteList.clear();
-		this.folderWhiteList.addAll(folderWhiteList);
-		return this;
-	}
+    @Override
+    public IViewLayoutBuilder setFolderWhitelist(final List<String> folderWhiteList) {
+        Assert.paramNotNull(folderWhiteList, "folderWhiteList");
+        this.folderWhiteList.clear();
+        this.folderWhiteList.addAll(folderWhiteList);
+        return this;
+    }
 
-	@Override
-	public IViewLayoutBuilder setFolderWhitelist(final String... folderWhiteList) {
-		Assert.paramNotNull(folderWhiteList, "folderWhiteList");
-		return setFolderWhitelist(Arrays.asList(folderWhiteList));
-	}
+    @Override
+    public IViewLayoutBuilder setFolderWhitelist(final String... folderWhiteList) {
+        Assert.paramNotNull(folderWhiteList, "folderWhiteList");
+        return setFolderWhitelist(Arrays.asList(folderWhiteList));
+    }
 
-	@Override
-	public IViewLayoutBuilder addToFolderWhitelist(final String folder) {
-		Assert.paramNotEmpty(folder, "folder");
-		this.folderWhiteList.add(folder);
-		return this;
-	}
+    @Override
+    public IViewLayoutBuilder addToFolderWhitelist(final String folder) {
+        Assert.paramNotEmpty(folder, "folder");
+        this.folderWhiteList.add(folder);
+        return this;
+    }
 
-	@Override
-	public IViewLayoutBuilder setFolderBlacklist(final List<String> folderBlackList) {
-		Assert.paramNotNull(folderBlackList, "folderBlackList");
-		this.folderBlackList.clear();
-		this.folderBlackList.addAll(folderBlackList);
-		return this;
-	}
+    @Override
+    public IViewLayoutBuilder setFolderBlacklist(final List<String> folderBlackList) {
+        Assert.paramNotNull(folderBlackList, "folderBlackList");
+        this.folderBlackList.clear();
+        this.folderBlackList.addAll(folderBlackList);
+        return this;
+    }
 
-	@Override
-	public IViewLayoutBuilder setFolderBlacklist(final String... folderBlackList) {
-		Assert.paramNotNull(folderBlackList, "folderBlackList");
-		return setFolderBlacklist(Arrays.asList(folderBlackList));
-	}
+    @Override
+    public IViewLayoutBuilder setFolderBlacklist(final String... folderBlackList) {
+        Assert.paramNotNull(folderBlackList, "folderBlackList");
+        return setFolderBlacklist(Arrays.asList(folderBlackList));
+    }
 
-	@Override
-	public IViewLayoutBuilder addToFolderBlacklist(final String folder) {
-		Assert.paramNotEmpty(folder, "folder");
-		this.folderBlackList.add(folder);
-		return this;
-	}
+    @Override
+    public IViewLayoutBuilder addToFolderBlacklist(final String folder) {
+        Assert.paramNotEmpty(folder, "folder");
+        this.folderBlackList.add(folder);
+        return this;
+    }
 
-	@Override
-	public IViewLayout build() {
-		return new ViewLayout(
-			id,
-			getLabel(),
-			getTooltip(),
-			getIcon(),
-			hidden,
-			detachable,
-			scope,
-			closePolicy,
-			folderWhiteList,
-			folderBlackList);
-	}
+    @Override
+    public IViewLayout build() {
+        return new ViewLayout(
+            id,
+            getLabel(),
+            getTooltip(),
+            getIcon(),
+            hidden,
+            detachable,
+            scope,
+            closePolicy,
+            folderWhiteList,
+            folderBlackList);
+    }
 
 }

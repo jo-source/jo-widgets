@@ -35,58 +35,58 @@ import org.jowidgets.common.types.AlignmentHorizontal;
 
 class DefaultTableColumnBuilder implements IDefaultTableColumnBuilder {
 
-	private String text;
-	private String toolTipText;
-	private IImageConstant icon;
-	private int width;
-	private AlignmentHorizontal alignment;
-	private boolean visible;
+    private String text;
+    private String toolTipText;
+    private IImageConstant icon;
+    private int width;
+    private AlignmentHorizontal alignment;
+    private boolean visible;
 
-	DefaultTableColumnBuilder() {
-		this.alignment = AlignmentHorizontal.LEFT;
-		this.width = -1;
-		this.visible = true;
-	}
+    DefaultTableColumnBuilder() {
+        this.alignment = AlignmentHorizontal.LEFT;
+        this.width = -1;
+        this.visible = true;
+    }
 
-	@Override
-	public IDefaultTableColumnBuilder setText(final String text) {
-		this.text = text;
-		return this;
-	}
+    @Override
+    public IDefaultTableColumnBuilder setText(final String text) {
+        this.text = text;
+        return this;
+    }
 
-	@Override
-	public IDefaultTableColumnBuilder setToolTipText(final String toolTipText) {
-		this.toolTipText = toolTipText;
-		return this;
-	}
+    @Override
+    public IDefaultTableColumnBuilder setToolTipText(final String toolTipText) {
+        this.toolTipText = toolTipText;
+        return this;
+    }
 
-	@Override
-	public IDefaultTableColumnBuilder setIcon(final IImageConstant icon) {
-		this.icon = icon;
-		return this;
-	}
+    @Override
+    public IDefaultTableColumnBuilder setIcon(final IImageConstant icon) {
+        this.icon = icon;
+        return this;
+    }
 
-	@Override
-	public IDefaultTableColumnBuilder setWidth(final int width) {
-		this.width = width;
-		return this;
-	}
+    @Override
+    public IDefaultTableColumnBuilder setWidth(final int width) {
+        this.width = width;
+        return this;
+    }
 
-	@Override
-	public IDefaultTableColumnBuilder setAlignment(final AlignmentHorizontal alignment) {
-		this.alignment = alignment;
-		return this;
-	}
+    @Override
+    public IDefaultTableColumnBuilder setAlignment(final AlignmentHorizontal alignment) {
+        this.alignment = alignment;
+        return this;
+    }
 
-	@Override
-	public IDefaultTableColumnBuilder setVisible(final boolean visible) {
-		this.visible = visible;
-		return this;
-	}
+    @Override
+    public IDefaultTableColumnBuilder setVisible(final boolean visible) {
+        this.visible = visible;
+        return this;
+    }
 
-	@Override
-	public IDefaultTableColumn build() {
-		return new DefaultTableColumn(text, toolTipText, icon, width, alignment, visible);
-	}
+    @Override
+    public IDefaultTableColumn build() {
+        return new DefaultTableColumn(text, toolTipText, icon, width, alignment, visible);
+    }
 
 }

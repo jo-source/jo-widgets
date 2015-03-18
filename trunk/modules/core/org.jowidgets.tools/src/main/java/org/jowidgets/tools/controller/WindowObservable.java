@@ -40,87 +40,87 @@ import org.jowidgets.util.ValueHolder;
 
 public class WindowObservable implements IWindowObservable {
 
-	private final Set<IWindowListener> listeners;
+    private final Set<IWindowListener> listeners;
 
-	public WindowObservable() {
-		super();
-		this.listeners = new LinkedHashSet<IWindowListener>();
-	}
+    public WindowObservable() {
+        super();
+        this.listeners = new LinkedHashSet<IWindowListener>();
+    }
 
-	@Override
-	public final void addWindowListener(final IWindowListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public final void addWindowListener(final IWindowListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public final void removeWindowListener(final IWindowListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public final void removeWindowListener(final IWindowListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public final void fireWindowActivated() {
-		for (final IWindowListener windowListener : new LinkedList<IWindowListener>(listeners)) {
-			windowListener.windowActivated();
-		}
-	}
+    public final void fireWindowActivated() {
+        for (final IWindowListener windowListener : new LinkedList<IWindowListener>(listeners)) {
+            windowListener.windowActivated();
+        }
+    }
 
-	public final void fireWindowDeactivated() {
-		for (final IWindowListener windowListener : new LinkedList<IWindowListener>(listeners)) {
-			windowListener.windowDeactivated();
-		}
-	}
+    public final void fireWindowDeactivated() {
+        for (final IWindowListener windowListener : new LinkedList<IWindowListener>(listeners)) {
+            windowListener.windowDeactivated();
+        }
+    }
 
-	public final void fireWindowIconified() {
-		for (final IWindowListener windowListener : new LinkedList<IWindowListener>(listeners)) {
-			windowListener.windowIconified();
-		}
-	}
+    public final void fireWindowIconified() {
+        for (final IWindowListener windowListener : new LinkedList<IWindowListener>(listeners)) {
+            windowListener.windowIconified();
+        }
+    }
 
-	public final void fireWindowDeiconified() {
-		for (final IWindowListener windowListener : new LinkedList<IWindowListener>(listeners)) {
-			windowListener.windowDeiconified();
-		}
-	}
+    public final void fireWindowDeiconified() {
+        for (final IWindowListener windowListener : new LinkedList<IWindowListener>(listeners)) {
+            windowListener.windowDeiconified();
+        }
+    }
 
-	public final void fireWindowClosed() {
-		for (final IWindowListener windowListener : new LinkedList<IWindowListener>(listeners)) {
-			windowListener.windowClosed();
-		}
-	}
+    public final void fireWindowClosed() {
+        for (final IWindowListener windowListener : new LinkedList<IWindowListener>(listeners)) {
+            windowListener.windowClosed();
+        }
+    }
 
-	public final void fireWindowClosing(final IVetoable vetoable) {
-		final ValueHolder<Boolean> veto = new ValueHolder<Boolean>(Boolean.FALSE);
-		final IVetoable innerVetoable = new IVetoable() {
-			@Override
-			public void veto() {
-				veto.set(Boolean.TRUE);
-			}
-		};
-		for (final IWindowListener windowListener : new LinkedList<IWindowListener>(listeners)) {
-			windowListener.windowClosing(innerVetoable);
-			if (veto.get().booleanValue()) {
-				vetoable.veto();
-				break;
-			}
-		}
-	}
+    public final void fireWindowClosing(final IVetoable vetoable) {
+        final ValueHolder<Boolean> veto = new ValueHolder<Boolean>(Boolean.FALSE);
+        final IVetoable innerVetoable = new IVetoable() {
+            @Override
+            public void veto() {
+                veto.set(Boolean.TRUE);
+            }
+        };
+        for (final IWindowListener windowListener : new LinkedList<IWindowListener>(listeners)) {
+            windowListener.windowClosing(innerVetoable);
+            if (veto.get().booleanValue()) {
+                vetoable.veto();
+                break;
+            }
+        }
+    }
 
-	public final boolean fireWindowClosing() {
-		final ValueHolder<Boolean> veto = new ValueHolder<Boolean>(Boolean.FALSE);
-		final IVetoable vetoable = new IVetoable() {
-			@Override
-			public void veto() {
-				veto.set(Boolean.TRUE);
-			}
-		};
-		for (final IWindowListener windowListener : new LinkedList<IWindowListener>(listeners)) {
-			windowListener.windowClosing(vetoable);
-			if (veto.get().booleanValue()) {
-				return true;
-			}
-		}
-		return false;
-	}
+    public final boolean fireWindowClosing() {
+        final ValueHolder<Boolean> veto = new ValueHolder<Boolean>(Boolean.FALSE);
+        final IVetoable vetoable = new IVetoable() {
+            @Override
+            public void veto() {
+                veto.set(Boolean.TRUE);
+            }
+        };
+        for (final IWindowListener windowListener : new LinkedList<IWindowListener>(listeners)) {
+            windowListener.windowClosing(vetoable);
+            if (veto.get().booleanValue()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

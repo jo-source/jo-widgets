@@ -39,89 +39,89 @@ import org.jowidgets.util.Assert;
 
 final class DropEventImpl implements IDropEvent {
 
-	private final Position position;
-	private final Set<DropAction> supportedActions;
-	private final DropAction dropAction;
-	private final Object dropSelection;
-	private final Object data;
-	private final TransferType<?> transferType;
+    private final Position position;
+    private final Set<DropAction> supportedActions;
+    private final DropAction dropAction;
+    private final Object dropSelection;
+    private final Object data;
+    private final TransferType<?> transferType;
 
-	DropEventImpl(final IDropEventSpi dropEventSpi, final Object dropSelection, final TransferType<?> transferType) {
-		this(
-			dropEventSpi.getPosition(),
-			dropEventSpi.getSupportedActions(),
-			dropEventSpi.getDropAction(),
-			dropEventSpi.getData(),
-			dropSelection,
-			transferType);
-	}
+    DropEventImpl(final IDropEventSpi dropEventSpi, final Object dropSelection, final TransferType<?> transferType) {
+        this(
+            dropEventSpi.getPosition(),
+            dropEventSpi.getSupportedActions(),
+            dropEventSpi.getDropAction(),
+            dropEventSpi.getData(),
+            dropSelection,
+            transferType);
+    }
 
-	DropEventImpl(
-		final Position position,
-		final Set<DropAction> supportedActions,
-		final DropAction dropAction,
-		final Object data,
-		final Object dropSelection,
-		final TransferType<?> transferType) {
+    DropEventImpl(
+        final Position position,
+        final Set<DropAction> supportedActions,
+        final DropAction dropAction,
+        final Object data,
+        final Object dropSelection,
+        final TransferType<?> transferType) {
 
-		Assert.paramNotNull(position, "position");
-		Assert.paramNotNull(supportedActions, "supportedActions");
-		Assert.paramNotNull(dropAction, "dropAction");
-		Assert.paramNotNull(transferType, "transferType");
+        Assert.paramNotNull(position, "position");
+        Assert.paramNotNull(supportedActions, "supportedActions");
+        Assert.paramNotNull(dropAction, "dropAction");
+        Assert.paramNotNull(transferType, "transferType");
 
-		this.position = position;
-		this.supportedActions = supportedActions;
-		this.dropAction = dropAction;
-		this.data = data;
-		this.dropSelection = dropSelection;
-		this.transferType = transferType;
-	}
+        this.position = position;
+        this.supportedActions = supportedActions;
+        this.dropAction = dropAction;
+        this.data = data;
+        this.dropSelection = dropSelection;
+        this.transferType = transferType;
+    }
 
-	@Override
-	public Position getPosition() {
-		return position;
-	}
+    @Override
+    public Position getPosition() {
+        return position;
+    }
 
-	@Override
-	public Set<DropAction> getSupportedActions() {
-		return supportedActions;
-	}
+    @Override
+    public Set<DropAction> getSupportedActions() {
+        return supportedActions;
+    }
 
-	@Override
-	public DropAction getDropAction() {
-		return dropAction;
-	}
+    @Override
+    public DropAction getDropAction() {
+        return dropAction;
+    }
 
-	@Override
-	public Object getDropSelection() {
-		return dropSelection;
-	}
+    @Override
+    public Object getDropSelection() {
+        return dropSelection;
+    }
 
-	@Override
-	public Object getData() {
-		return data;
-	}
+    @Override
+    public Object getData() {
+        return data;
+    }
 
-	@Override
-	public TransferType<?> getTransferType() {
-		return transferType;
-	}
+    @Override
+    public TransferType<?> getTransferType() {
+        return transferType;
+    }
 
-	@Override
-	public String toString() {
-		return "DropEventImpl [position="
-			+ position
-			+ ", supportedActions="
-			+ supportedActions
-			+ ", dropAction="
-			+ dropAction
-			+ ", dropSelection="
-			+ dropSelection
-			+ ", data="
-			+ data
-			+ ", transferType="
-			+ transferType
-			+ "]";
-	}
+    @Override
+    public String toString() {
+        return "DropEventImpl [position="
+            + position
+            + ", supportedActions="
+            + supportedActions
+            + ", dropAction="
+            + dropAction
+            + ", dropSelection="
+            + dropSelection
+            + ", data="
+            + data
+            + ", transferType="
+            + transferType
+            + "]";
+    }
 
 }

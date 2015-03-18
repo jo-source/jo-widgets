@@ -35,25 +35,25 @@ import org.jowidgets.util.Assert;
 
 final class DragEventImpl implements IDragEvent {
 
-	private final Position position;
+    private final Position position;
 
-	DragEventImpl(final IDragEventSpi dragEventSpi) {
-		this(dragEventSpi.getPosition());
-	}
+    DragEventImpl(final IDragEventSpi dragEventSpi) {
+        this(dragEventSpi.getPosition());
+    }
 
-	DragEventImpl(final Position position) {
-		Assert.paramNotNull(position, "position");
-		this.position = position;
-	}
+    DragEventImpl(final Position position) {
+        Assert.paramNotNull(position, "position");
+        this.position = position;
+    }
 
-	@Override
-	public Position getPosition() {
-		return position;
-	}
+    @Override
+    public Position getPosition() {
+        return position;
+    }
 
-	@Override
-	public String toString() {
-		return "DragEventImpl [position=" + position + "]";
-	}
+    @Override
+    public String toString() {
+        return "DragEventImpl [position=" + position + "]";
+    }
 
 }

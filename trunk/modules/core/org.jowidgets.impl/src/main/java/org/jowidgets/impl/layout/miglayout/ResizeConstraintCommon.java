@@ -39,63 +39,63 @@ import java.io.ObjectStreamException;
  * grow compared to other entities.
  */
 final class ResizeConstraintCommon implements Externalizable {
-	static final Float WEIGHT_100 = new Float(100);
+    static final Float WEIGHT_100 = new Float(100);
 
-	/**
-	 * How flexilble the entity should be, relative to other entities, when it comes to growing. <code>null</code> or
-	 * zero mean it will never grow. An entity that has twise the growWeight compared to another entity will get twice
-	 * as much of available space.
-	 * <p>
-	 * "grow" are only compared within the same "growPrio".
-	 */
-	//CHECKSTYLE:OFF
-	Float grow = null;
-	//CHECKSTYLE:ON
+    /**
+     * How flexilble the entity should be, relative to other entities, when it comes to growing. <code>null</code> or
+     * zero mean it will never grow. An entity that has twise the growWeight compared to another entity will get twice
+     * as much of available space.
+     * <p>
+     * "grow" are only compared within the same "growPrio".
+     */
+    //CHECKSTYLE:OFF
+    Float grow = null;
+    //CHECKSTYLE:ON
 
-	/**
-	 * The relative priority used for determining which entities gets the extra space first.
-	 */
-	//CHECKSTYLE:OFF
-	int growPrio = 100;
-	//CHECKSTYLE:ON
+    /**
+     * The relative priority used for determining which entities gets the extra space first.
+     */
+    //CHECKSTYLE:OFF
+    int growPrio = 100;
+    //CHECKSTYLE:ON
 
-	//CHECKSTYLE:OFF
-	Float shrink = WEIGHT_100;
-	//CHECKSTYLE:ON
+    //CHECKSTYLE:OFF
+    Float shrink = WEIGHT_100;
+    //CHECKSTYLE:ON
 
-	//CHECKSTYLE:OFF
-	int shrinkPrio = 100;
+    //CHECKSTYLE:OFF
+    int shrinkPrio = 100;
 
-	//CHECKSTYLE:ON
+    //CHECKSTYLE:ON
 
-	public ResizeConstraintCommon() // For Externalizable
-	{}
+    public ResizeConstraintCommon() // For Externalizable
+    {}
 
-	ResizeConstraintCommon(final int shrinkPrio, final Float shrinkWeight, final int growPrio, final Float growWeight) {
-		this.shrinkPrio = shrinkPrio;
-		this.shrink = shrinkWeight;
-		this.growPrio = growPrio;
-		this.grow = growWeight;
-	}
+    ResizeConstraintCommon(final int shrinkPrio, final Float shrinkWeight, final int growPrio, final Float growWeight) {
+        this.shrinkPrio = shrinkPrio;
+        this.shrink = shrinkWeight;
+        this.growPrio = growPrio;
+        this.grow = growWeight;
+    }
 
-	// ************************************************
-	// Persistence Delegate and Serializable combined.
-	// ************************************************
+    // ************************************************
+    // Persistence Delegate and Serializable combined.
+    // ************************************************
 
-	private Object readResolve() throws ObjectStreamException {
-		return MigLayoutToolkitImpl.getMigLayoutUtil().getSerializedObject(this);
-	}
+    private Object readResolve() throws ObjectStreamException {
+        return MigLayoutToolkitImpl.getMigLayoutUtil().getSerializedObject(this);
+    }
 
-	@Override
-	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
-		final LayoutUtilCommon layoutUtil = MigLayoutToolkitImpl.getMigLayoutUtil();
-		layoutUtil.setSerializedObject(this, layoutUtil.readAsXML(in));
-	}
+    @Override
+    public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
+        final LayoutUtilCommon layoutUtil = MigLayoutToolkitImpl.getMigLayoutUtil();
+        layoutUtil.setSerializedObject(this, layoutUtil.readAsXML(in));
+    }
 
-	@Override
-	public void writeExternal(final ObjectOutput out) throws IOException {
-		if (getClass() == ResizeConstraintCommon.class) {
-			MigLayoutToolkitImpl.getMigLayoutUtil().writeAsXML(out, this);
-		}
-	}
+    @Override
+    public void writeExternal(final ObjectOutput out) throws IOException {
+        if (getClass() == ResizeConstraintCommon.class) {
+            MigLayoutToolkitImpl.getMigLayoutUtil().writeAsXML(out, this);
+        }
+    }
 }

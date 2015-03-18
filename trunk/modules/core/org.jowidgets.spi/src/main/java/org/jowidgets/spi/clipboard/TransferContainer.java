@@ -37,50 +37,50 @@ import org.jowidgets.util.Assert;
 
 public final class TransferContainer implements Serializable {
 
-	public static final String MIME_TYPE = "application/x-jowidgets-transfer-container";
+    public static final String MIME_TYPE = "application/x-jowidgets-transfer-container";
 
-	private static final long serialVersionUID = 7633172392759619262L;
+    private static final long serialVersionUID = 7633172392759619262L;
 
-	private final Collection<TransferObject> transferObjects;
+    private final Collection<TransferObject> transferObjects;
 
-	public TransferContainer(final Collection<TransferObject> transferObjects) {
-		Assert.paramNotNull(transferObjects, "transferObjects");
-		this.transferObjects = Collections.unmodifiableList(new LinkedList<TransferObject>(transferObjects));
-	}
+    public TransferContainer(final Collection<TransferObject> transferObjects) {
+        Assert.paramNotNull(transferObjects, "transferObjects");
+        this.transferObjects = Collections.unmodifiableList(new LinkedList<TransferObject>(transferObjects));
+    }
 
-	public Collection<TransferObject> getTransferObjetcs() {
-		return transferObjects;
-	}
+    public Collection<TransferObject> getTransferObjetcs() {
+        return transferObjects;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((transferObjects == null) ? 0 : transferObjects.hashCode());
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((transferObjects == null) ? 0 : transferObjects.hashCode());
+        return result;
+    }
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof TransferContainer)) {
-			return false;
-		}
-		final TransferContainer other = (TransferContainer) obj;
-		if (transferObjects == null) {
-			if (other.transferObjects != null) {
-				return false;
-			}
-		}
-		else if (!transferObjects.equals(other.transferObjects)) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof TransferContainer)) {
+            return false;
+        }
+        final TransferContainer other = (TransferContainer) obj;
+        if (transferObjects == null) {
+            if (other.transferObjects != null) {
+                return false;
+            }
+        }
+        else if (!transferObjects.equals(other.transferObjects)) {
+            return false;
+        }
+        return true;
+    }
 
 }

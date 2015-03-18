@@ -32,8 +32,8 @@ import org.jowidgets.common.types.IVetoable;
 
 public interface ITabFolderListener {
 
-	void itemSelected(ITabSelectionEvent selectionEvent);
+    void itemSelected(ITabSelectionEvent selectionEvent);
 
-	void onDeselection(IVetoable vetoable, ITabSelectionEvent item);
+    void onDeselection(IVetoable vetoable, ITabSelectionEvent item);
 
 }

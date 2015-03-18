@@ -34,13 +34,13 @@ import org.jowidgets.util.priority.LowHighPriority;
 
 public interface IActionItemVisibilityAspect {
 
-	/**
-	 * Gets a visibility suggestion.
-	 * 
-	 * @param action The current action
-	 * 
-	 * @return A prioritizes visibility suggestion or null
-	 */
-	IPriorityValue<Boolean, LowHighPriority> getVisibility(IAction action);
+    /**
+     * Gets a visibility suggestion.
+     * 
+     * @param action The current action
+     * 
+     * @return A prioritizes visibility suggestion or null
+     */
+    IPriorityValue<Boolean, LowHighPriority> getVisibility(IAction action);
 
 }

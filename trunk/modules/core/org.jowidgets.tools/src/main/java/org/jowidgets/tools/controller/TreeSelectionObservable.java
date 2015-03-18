@@ -39,29 +39,29 @@ import org.jowidgets.util.Assert;
 
 public class TreeSelectionObservable implements ITreeSelectionObservable {
 
-	private final Set<ITreeSelectionListener> listeners;
+    private final Set<ITreeSelectionListener> listeners;
 
-	public TreeSelectionObservable() {
-		this.listeners = new LinkedHashSet<ITreeSelectionListener>();
-	}
+    public TreeSelectionObservable() {
+        this.listeners = new LinkedHashSet<ITreeSelectionListener>();
+    }
 
-	@Override
-	public void addTreeSelectionListener(final ITreeSelectionListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public void addTreeSelectionListener(final ITreeSelectionListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removeTreeSelectionListener(final ITreeSelectionListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeTreeSelectionListener(final ITreeSelectionListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public void fireSelectionChanged(final ITreeSelectionEvent event) {
-		Assert.paramNotNull(event, "event");
-		for (final ITreeSelectionListener listener : new LinkedList<ITreeSelectionListener>(listeners)) {
-			listener.selectionChanged(event);
-		}
-	}
+    public void fireSelectionChanged(final ITreeSelectionEvent event) {
+        Assert.paramNotNull(event, "event");
+        for (final ITreeSelectionListener listener : new LinkedList<ITreeSelectionListener>(listeners)) {
+            listener.selectionChanged(event);
+        }
+    }
 
 }

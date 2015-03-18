@@ -34,23 +34,23 @@ import org.jowidgets.workbench.api.IWorkbenchApplication;
 
 public abstract class AbstractWorkbenchApplication implements IWorkbenchApplication {
 
-	@Override
-	public String getTooltip() {
-		return null;
-	}
+    @Override
+    public String getTooltip() {
+        return null;
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return null;
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return null;
+    }
 
-	@Override
-	public void onActiveStateChanged(final boolean active) {}
+    @Override
+    public void onActiveStateChanged(final boolean active) {}
 
-	@Override
-	public void onVisibleStateChanged(final boolean visible) {}
+    @Override
+    public void onVisibleStateChanged(final boolean visible) {}
 
-	@Override
-	public void onClose(final IVetoable vetoable) {}
+    @Override
+    public void onClose(final IVetoable vetoable) {}
 
 }

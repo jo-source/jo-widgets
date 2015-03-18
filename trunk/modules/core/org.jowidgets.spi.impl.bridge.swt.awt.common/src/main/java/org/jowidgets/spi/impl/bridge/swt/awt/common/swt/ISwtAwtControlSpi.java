@@ -34,6 +34,6 @@ import org.jowidgets.spi.widgets.IControlSpi;
 
 public interface ISwtAwtControlSpi extends IControlSpi {
 
-	Container getAwtContainer();
+    Container getAwtContainer();
 
 }

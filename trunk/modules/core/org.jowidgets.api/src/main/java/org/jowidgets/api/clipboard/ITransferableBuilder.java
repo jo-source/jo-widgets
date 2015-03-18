@@ -30,10 +30,10 @@ package org.jowidgets.api.clipboard;
 
 public interface ITransferableBuilder {
 
-	<JAVA_TYPE> ITransferableBuilder add(TransferType<JAVA_TYPE> type, JAVA_TYPE data);
+    <JAVA_TYPE> ITransferableBuilder add(TransferType<JAVA_TYPE> type, JAVA_TYPE data);
 
-	<JAVA_TYPE> ITransferableBuilder add(Class<JAVA_TYPE> type, JAVA_TYPE data);
+    <JAVA_TYPE> ITransferableBuilder add(Class<JAVA_TYPE> type, JAVA_TYPE data);
 
-	ITransferable build();
+    ITransferable build();
 
 }

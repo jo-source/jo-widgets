@@ -35,13 +35,13 @@ import org.jowidgets.common.widgets.IToolBarButtonCommon;
 
 public interface IToolBarButton extends IToolBarItem, IToolBarButtonCommon {
 
-	void setAction(IAction action);
+    void setAction(IAction action);
 
-	void setAction(IAction action, ActionStyle style);
+    void setAction(IAction action, ActionStyle style);
 
-	void setModel(IActionItemModel model);
+    void setModel(IActionItemModel model);
 
-	@Override
-	IActionItemModel getModel();
+    @Override
+    IActionItemModel getModel();
 
 }

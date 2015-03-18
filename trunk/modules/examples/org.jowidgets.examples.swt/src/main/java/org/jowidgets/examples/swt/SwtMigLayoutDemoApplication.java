@@ -32,11 +32,11 @@ import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 
 public final class SwtMigLayoutDemoApplication {
 
-	private SwtMigLayoutDemoApplication() {}
+    private SwtMigLayoutDemoApplication() {}
 
-	public static void main(final String[] args) throws Exception {
-		SwtOptions.setClassicTabs(true);
-		new MigLayoutDemoApplication("Swt").start();
-	}
+    public static void main(final String[] args) throws Exception {
+        SwtOptions.setClassicTabs(true);
+        new MigLayoutDemoApplication("Swt").start();
+    }
 
 }

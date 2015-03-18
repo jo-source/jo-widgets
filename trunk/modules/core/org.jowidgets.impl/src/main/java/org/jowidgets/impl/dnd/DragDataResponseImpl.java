@@ -34,16 +34,16 @@ import org.jowidgets.util.Assert;
 
 final class DragDataResponseImpl implements IDragDataResponse {
 
-	private final IDragDataResponseSpi dragDataResponseSpi;
+    private final IDragDataResponseSpi dragDataResponseSpi;
 
-	DragDataResponseImpl(final IDragDataResponseSpi dragDataResponseSpi) {
-		Assert.paramNotNull(dragDataResponseSpi, "dragDataResponseSpi");
-		this.dragDataResponseSpi = dragDataResponseSpi;
-	}
+    DragDataResponseImpl(final IDragDataResponseSpi dragDataResponseSpi) {
+        Assert.paramNotNull(dragDataResponseSpi, "dragDataResponseSpi");
+        this.dragDataResponseSpi = dragDataResponseSpi;
+    }
 
-	@Override
-	public void setData(final Object data) {
-		dragDataResponseSpi.setData(data);
-	}
+    @Override
+    public void setData(final Object data) {
+        dragDataResponseSpi.setData(data);
+    }
 
 }

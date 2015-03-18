@@ -33,30 +33,30 @@ import org.jowidgets.workbench.api.IWorkbenchPart;
 
 class WorkbenchPart implements IWorkbenchPart {
 
-	private final String label;
-	private final String tooltip;
-	private final IImageConstant icon;
+    private final String label;
+    private final String tooltip;
+    private final IImageConstant icon;
 
-	WorkbenchPart(final String label, final String tooltip, final IImageConstant icon) {
+    WorkbenchPart(final String label, final String tooltip, final IImageConstant icon) {
 
-		this.label = label;
-		this.tooltip = tooltip;
-		this.icon = icon;
-	}
+        this.label = label;
+        this.tooltip = tooltip;
+        this.icon = icon;
+    }
 
-	@Override
-	public String getLabel() {
-		return label;
-	}
+    @Override
+    public String getLabel() {
+        return label;
+    }
 
-	@Override
-	public String getTooltip() {
-		return tooltip;
-	}
+    @Override
+    public String getTooltip() {
+        return tooltip;
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return icon;
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return icon;
+    }
 
 }

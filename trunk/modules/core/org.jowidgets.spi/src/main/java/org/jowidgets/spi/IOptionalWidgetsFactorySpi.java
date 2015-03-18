@@ -36,39 +36,39 @@ import org.jowidgets.spi.widgets.setup.IFileChooserSetupSpi;
 
 public interface IOptionalWidgetsFactorySpi {
 
-	/**
-	 * @return true, if this spi supports a file chooser, false otherwise
-	 */
-	boolean hasFileChooser();
+    /**
+     * @return true, if this spi supports a file chooser, false otherwise
+     */
+    boolean hasFileChooser();
 
-	/**
-	 * @param parentUiReference
-	 * @param setup
-	 * @return The file chooser or null if {@link IOptionalWidgetsFactorySpi#hasFileChooser()} returns true
-	 */
-	IFileChooserSpi createFileChooser(Object parentUiReference, IFileChooserSetupSpi setup);
+    /**
+     * @param parentUiReference
+     * @param setup
+     * @return The file chooser or null if {@link IOptionalWidgetsFactorySpi#hasFileChooser()} returns true
+     */
+    IFileChooserSpi createFileChooser(Object parentUiReference, IFileChooserSetupSpi setup);
 
-	/**
-	 * @return true, if this spi supports a directory chooser, false otherwise
-	 */
-	boolean hasDirectoryChooser();
+    /**
+     * @return true, if this spi supports a directory chooser, false otherwise
+     */
+    boolean hasDirectoryChooser();
 
-	/**
-	 * @param parentUiReference
-	 * @param setup
-	 * @return The directory chooser or null if {@link IOptionalWidgetsFactorySpi#hasDirectoryChooser()} returns true
-	 */
-	IDirectoryChooserSpi createDirectoryChooser(Object parentUiReference, IDirectoryChooserSetupSpi setup);
+    /**
+     * @param parentUiReference
+     * @param setup
+     * @return The directory chooser or null if {@link IOptionalWidgetsFactorySpi#hasDirectoryChooser()} returns true
+     */
+    IDirectoryChooserSpi createDirectoryChooser(Object parentUiReference, IDirectoryChooserSetupSpi setup);
 
-	/**
-	 * @return true, if this spi supports a calendar, false otherwise
-	 */
-	boolean hasCalendar();
+    /**
+     * @return true, if this spi supports a calendar, false otherwise
+     */
+    boolean hasCalendar();
 
-	/**
-	 * @param parentUiReference
-	 * @param setup
-	 * @return The calendar or null if {@link IOptionalWidgetsFactorySpi#hasCalendar()} returns true
-	 */
-	ICalendarSpi createCalendar(Object parentUiReference, ICalendarSetupSpi setup);
+    /**
+     * @param parentUiReference
+     * @param setup
+     * @return The calendar or null if {@link IOptionalWidgetsFactorySpi#hasCalendar()} returns true
+     */
+    ICalendarSpi createCalendar(Object parentUiReference, ICalendarSetupSpi setup);
 }

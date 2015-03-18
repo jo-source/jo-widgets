@@ -32,38 +32,38 @@ import org.jowidgets.api.command.ITreeExpansionAction;
 
 public interface IItemModelFactory {
 
-	IMenuModelBuilder menuBuilder();
+    IMenuModelBuilder menuBuilder();
 
-	IActionItemModelBuilder actionItemBuilder();
+    IActionItemModelBuilder actionItemBuilder();
 
-	ICheckedItemModelBuilder checkedItemBuilder();
+    ICheckedItemModelBuilder checkedItemBuilder();
 
-	IRadioItemModelBuilder radioItemBuilder();
+    IRadioItemModelBuilder radioItemBuilder();
 
-	ISeparatorItemModelBuilder separatorBuilder();
+    ISeparatorItemModelBuilder separatorBuilder();
 
-	IPopupActionItemModel popupActionItem();
+    IPopupActionItemModel popupActionItem();
 
-	IPopupActionItemModelBuilder popupActionItemBuilder();
+    IPopupActionItemModelBuilder popupActionItemBuilder();
 
-	IContainerItemModel containerItem();
+    IContainerItemModel containerItem();
 
-	IContainerItemModelBuilder containerItemBuilder();
+    IContainerItemModelBuilder containerItemBuilder();
 
-	IMenuModel menu();
+    IMenuModel menu();
 
-	IActionItemModel actionItem();
+    IActionItemModel actionItem();
 
-	ICheckedItemModel checkedItem();
+    ICheckedItemModel checkedItem();
 
-	IRadioItemModel radioItem();
+    IRadioItemModel radioItem();
 
-	ISeparatorItemModel separator();
+    ISeparatorItemModel separator();
 
-	IMenuBarModel menuBar();
+    IMenuBarModel menuBar();
 
-	IToolBarModel toolBar();
+    IToolBarModel toolBar();
 
-	ITreeExpansionToolbarItemModelBuilder treeExpansionToolbarItemBuilder(ITreeExpansionAction action);
+    ITreeExpansionToolbarItemModelBuilder treeExpansionToolbarItemBuilder(ITreeExpansionAction action);
 
 }

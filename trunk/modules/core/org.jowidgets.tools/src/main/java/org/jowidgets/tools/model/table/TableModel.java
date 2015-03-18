@@ -42,58 +42,58 @@ import org.jowidgets.util.Assert;
 
 public final class TableModel implements ITableModel {
 
-	private final ITableColumnModel columnModel;
-	private final ITableDataModel tableDataModel;
+    private final ITableColumnModel columnModel;
+    private final ITableDataModel tableDataModel;
 
-	public TableModel(final ITableColumnModel columnModel, final ITableDataModel tableDataModel) {
-		Assert.paramNotNull(columnModel, "columnModel");
-		Assert.paramNotNull(tableDataModel, "tableDataModel");
-		this.columnModel = columnModel;
-		this.tableDataModel = tableDataModel;
-	}
+    public TableModel(final ITableColumnModel columnModel, final ITableDataModel tableDataModel) {
+        Assert.paramNotNull(columnModel, "columnModel");
+        Assert.paramNotNull(tableDataModel, "tableDataModel");
+        this.columnModel = columnModel;
+        this.tableDataModel = tableDataModel;
+    }
 
-	@Override
-	public int getColumnCount() {
-		return columnModel.getColumnCount();
-	}
+    @Override
+    public int getColumnCount() {
+        return columnModel.getColumnCount();
+    }
 
-	@Override
-	public ITableColumn getColumn(final int columnIndex) {
-		return columnModel.getColumn(columnIndex);
-	}
+    @Override
+    public ITableColumn getColumn(final int columnIndex) {
+        return columnModel.getColumn(columnIndex);
+    }
 
-	@Override
-	public ITableColumnModelObservable getTableColumnModelObservable() {
-		return columnModel.getTableColumnModelObservable();
-	}
+    @Override
+    public ITableColumnModelObservable getTableColumnModelObservable() {
+        return columnModel.getTableColumnModelObservable();
+    }
 
-	public ITableColumnModel getColumnModel() {
-		return columnModel;
-	}
+    public ITableColumnModel getColumnModel() {
+        return columnModel;
+    }
 
-	@Override
-	public int getRowCount() {
-		return tableDataModel.getRowCount();
-	}
+    @Override
+    public int getRowCount() {
+        return tableDataModel.getRowCount();
+    }
 
-	@Override
-	public ITableCell getCell(final int rowIndex, final int columnIndex) {
-		return tableDataModel.getCell(rowIndex, columnIndex);
-	}
+    @Override
+    public ITableCell getCell(final int rowIndex, final int columnIndex) {
+        return tableDataModel.getCell(rowIndex, columnIndex);
+    }
 
-	@Override
-	public ArrayList<Integer> getSelection() {
-		return tableDataModel.getSelection();
-	}
+    @Override
+    public ArrayList<Integer> getSelection() {
+        return tableDataModel.getSelection();
+    }
 
-	@Override
-	public void setSelection(final Collection<Integer> selection) {
-		tableDataModel.setSelection(selection);
-	}
+    @Override
+    public void setSelection(final Collection<Integer> selection) {
+        tableDataModel.setSelection(selection);
+    }
 
-	@Override
-	public ITableDataModelObservable getTableDataModelObservable() {
-		return tableDataModel.getTableDataModelObservable();
-	}
+    @Override
+    public ITableDataModelObservable getTableDataModelObservable() {
+        return tableDataModel.getTableDataModelObservable();
+    }
 
 }

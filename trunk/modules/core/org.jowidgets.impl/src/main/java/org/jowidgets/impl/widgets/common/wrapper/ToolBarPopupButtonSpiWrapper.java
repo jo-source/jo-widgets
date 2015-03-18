@@ -37,43 +37,43 @@ import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 
 public class ToolBarPopupButtonSpiWrapper extends ToolBarItemSpiWrapper implements IToolBarPopupButtonCommon {
 
-	public ToolBarPopupButtonSpiWrapper(final IToolBarPopupButtonSpi component, final ItemModelBindingDelegate itemDelegate) {
-		super(component, itemDelegate);
-		component.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				getModel().actionPerformed();
-			}
-		});
-	}
+    public ToolBarPopupButtonSpiWrapper(final IToolBarPopupButtonSpi component, final ItemModelBindingDelegate itemDelegate) {
+        super(component, itemDelegate);
+        component.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                getModel().actionPerformed();
+            }
+        });
+    }
 
-	@Override
-	public IToolBarPopupButtonSpi getWidget() {
-		return (IToolBarPopupButtonSpi) super.getWidget();
-	}
+    @Override
+    public IToolBarPopupButtonSpi getWidget() {
+        return (IToolBarPopupButtonSpi) super.getWidget();
+    }
 
-	public IPopupActionItemModel getModel() {
-		return (IPopupActionItemModel) getItemModelBindingDelegate().getModel();
-	}
+    public IPopupActionItemModel getModel() {
+        return (IPopupActionItemModel) getItemModelBindingDelegate().getModel();
+    }
 
-	@Override
-	public void addActionListener(final IActionListener actionListener) {
-		getWidget().addActionListener(actionListener);
-	}
+    @Override
+    public void addActionListener(final IActionListener actionListener) {
+        getWidget().addActionListener(actionListener);
+    }
 
-	@Override
-	public void removeActionListener(final IActionListener actionListener) {
-		getWidget().removeActionListener(actionListener);
-	}
+    @Override
+    public void removeActionListener(final IActionListener actionListener) {
+        getWidget().removeActionListener(actionListener);
+    }
 
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		getWidget().addPopupDetectionListener(listener);
-	}
+    @Override
+    public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+        getWidget().addPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		getWidget().removePopupDetectionListener(listener);
-	}
+    @Override
+    public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+        getWidget().removePopupDetectionListener(listener);
+    }
 
 }

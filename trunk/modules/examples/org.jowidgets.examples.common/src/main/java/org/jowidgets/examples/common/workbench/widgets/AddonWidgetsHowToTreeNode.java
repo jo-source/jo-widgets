@@ -38,21 +38,21 @@ import org.jowidgets.workbench.api.IComponentNodeContext;
 
 public class AddonWidgetsHowToTreeNode extends AbstractDemoComponentNode {
 
-	public static final String ID = AddonWidgetsHowToTreeNode.class.getName();
+    public static final String ID = AddonWidgetsHowToTreeNode.class.getName();
 
-	public AddonWidgetsHowToTreeNode() {
-		super(ID, "Addons", null, SilkIcons.FOLDER);
-	}
+    public AddonWidgetsHowToTreeNode() {
+        super(ID, "Addons", null, SilkIcons.FOLDER);
+    }
 
-	@Override
-	public void onContextInitialize(final IComponentNodeContext context) {
-		context.add(new SingleViewTreeNode(BrowserView.class, BrowserView.ID, BrowserView.DEFAULT_LABEL));
-		context.add(new SingleViewTreeNode(MapView.class, MapView.ID, MapView.DEFAULT_LABEL));
-	}
+    @Override
+    public void onContextInitialize(final IComponentNodeContext context) {
+        context.add(new SingleViewTreeNode(BrowserView.class, BrowserView.ID, BrowserView.DEFAULT_LABEL));
+        context.add(new SingleViewTreeNode(MapView.class, MapView.ID, MapView.DEFAULT_LABEL));
+    }
 
-	@Override
-	public IComponent createComponent(final IComponentContext context) {
-		return null;
-	}
+    @Override
+    public IComponent createComponent(final IComponentContext context) {
+        return null;
+    }
 
 }

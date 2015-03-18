@@ -32,50 +32,50 @@ import java.io.Serializable;
 
 public final class TypedKey<VALUE_TYPE> implements ITypedKey<VALUE_TYPE>, Serializable {
 
-	private static final long serialVersionUID = -1474949310655885458L;
+    private static final long serialVersionUID = -1474949310655885458L;
 
-	private final Object key;
+    private final Object key;
 
-	public TypedKey(final Object key) {
-		Assert.paramNotNull(key, "key");
-		this.key = key;
-	}
+    public TypedKey(final Object key) {
+        Assert.paramNotNull(key, "key");
+        this.key = key;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((key == null) ? 0 : key.hashCode());
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((key == null) ? 0 : key.hashCode());
+        return result;
+    }
 
-	@SuppressWarnings("rawtypes")
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof TypedKey)) {
-			return false;
-		}
-		final TypedKey other = (TypedKey) obj;
-		if (key == null) {
-			if (other.key != null) {
-				return false;
-			}
-		}
-		else if (!key.equals(other.key)) {
-			return false;
-		}
-		return true;
-	}
+    @SuppressWarnings("rawtypes")
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof TypedKey)) {
+            return false;
+        }
+        final TypedKey other = (TypedKey) obj;
+        if (key == null) {
+            if (other.key != null) {
+                return false;
+            }
+        }
+        else if (!key.equals(other.key)) {
+            return false;
+        }
+        return true;
+    }
 
-	@Override
-	public String toString() {
-		return "TypedKey [key=" + key + "]";
-	}
+    @Override
+    public String toString() {
+        return "TypedKey [key=" + key + "]";
+    }
 
 }

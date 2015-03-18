@@ -30,11 +30,11 @@ package org.jowidgets.api.widgets.blueprint.builder;
 import org.jowidgets.common.widgets.builder.ITextLabelSetupBuilderCommon;
 
 public interface ITextLabelSetupBuilder<INSTANCE_TYPE extends ITextLabelSetupBuilder<?>> extends
-		ITextLabelSetupBuilderCommon<INSTANCE_TYPE>,
-		IComponentSetupBuilder<INSTANCE_TYPE> {
+        ITextLabelSetupBuilderCommon<INSTANCE_TYPE>,
+        IComponentSetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setFontSize(Integer size);
+    INSTANCE_TYPE setFontSize(Integer size);
 
-	INSTANCE_TYPE setFontName(String fontName);
+    INSTANCE_TYPE setFontName(String fontName);
 
 }

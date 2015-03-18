@@ -38,28 +38,28 @@ import org.jowidgets.util.Assert;
 
 public class LevelObservable implements ILevelObservable {
 
-	private final Set<ILevelListener> listeners;
+    private final Set<ILevelListener> listeners;
 
-	public LevelObservable() {
-		listeners = new LinkedHashSet<ILevelListener>();
-	}
+    public LevelObservable() {
+        listeners = new LinkedHashSet<ILevelListener>();
+    }
 
-	@Override
-	public final void addLevelListener(final ILevelListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public final void addLevelListener(final ILevelListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public final void removesLevelListener(final ILevelListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public final void removesLevelListener(final ILevelListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public final void fireLevelChanged(final double oldValue, final double newValue) {
-		for (final ILevelListener listener : new LinkedList<ILevelListener>(listeners)) {
-			listener.levelChanged(oldValue, newValue);
-		}
-	}
+    public final void fireLevelChanged(final double oldValue, final double newValue) {
+        for (final ILevelListener listener : new LinkedList<ILevelListener>(listeners)) {
+            listener.levelChanged(oldValue, newValue);
+        }
+    }
 
 }

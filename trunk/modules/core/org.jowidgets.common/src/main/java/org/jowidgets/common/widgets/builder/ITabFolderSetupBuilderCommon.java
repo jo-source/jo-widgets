@@ -32,11 +32,11 @@ import org.jowidgets.common.types.TabPlacement;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ITabFolderSetupBuilderCommon<INSTANCE_TYPE extends ITabFolderSetupBuilderCommon<?>> extends
-		IComponentSetupBuilderCommon<INSTANCE_TYPE> {
+        IComponentSetupBuilderCommon<INSTANCE_TYPE> {
 
-	@Mandatory
-	INSTANCE_TYPE setTabPlacement(TabPlacement tabPlacement);
+    @Mandatory
+    INSTANCE_TYPE setTabPlacement(TabPlacement tabPlacement);
 
-	INSTANCE_TYPE setTabsCloseable(boolean closeable);
+    INSTANCE_TYPE setTabsCloseable(boolean closeable);
 
 }

@@ -32,7 +32,7 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ICompositeSetupCommon extends IContainerSetupCommon {
 
-	@Mandatory
-	Border getBorder();
+    @Mandatory
+    Border getBorder();
 
 }

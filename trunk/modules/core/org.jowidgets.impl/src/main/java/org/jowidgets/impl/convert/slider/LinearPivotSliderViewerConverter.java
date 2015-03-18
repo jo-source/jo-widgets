@@ -33,62 +33,62 @@ import org.jowidgets.util.Assert;
 
 final class LinearPivotSliderViewerConverter<VALUE_TYPE extends Number> implements ISliderViewerConverter<VALUE_TYPE> {
 
-	private final VALUE_TYPE pivot;
-	private final double ratio;
-	private final LinearSliderViewerConverter<VALUE_TYPE> lowerConverter;
-	private final LinearSliderViewerConverter<VALUE_TYPE> upperConverter;
+    private final VALUE_TYPE pivot;
+    private final double ratio;
+    private final LinearSliderViewerConverter<VALUE_TYPE> lowerConverter;
+    private final LinearSliderViewerConverter<VALUE_TYPE> upperConverter;
 
-	LinearPivotSliderViewerConverter(
-		final VALUE_TYPE minValue,
-		final VALUE_TYPE maxValue,
-		final VALUE_TYPE pivot,
-		final double ratio) {
+    LinearPivotSliderViewerConverter(
+        final VALUE_TYPE minValue,
+        final VALUE_TYPE maxValue,
+        final VALUE_TYPE pivot,
+        final double ratio) {
 
-		Assert.paramNotNull(maxValue, "maxValue");
-		Assert.paramNotNull(pivot, "pivot");
+        Assert.paramNotNull(maxValue, "maxValue");
+        Assert.paramNotNull(pivot, "pivot");
 
-		Assert.paramInBounds(0.0d, 1.0d, ratio, "ratio");
+        Assert.paramInBounds(0.0d, 1.0d, ratio, "ratio");
 
-		if (minValue != null) {
-			Assert.paramLess(minValue.doubleValue(), maxValue.doubleValue(), "minValue", "maxValue");
-			Assert.paramInBounds(minValue.doubleValue(), maxValue.doubleValue(), pivot.doubleValue(), "pivot");
-		}
-		else {
-			Assert.paramInBounds(0.0d, maxValue.doubleValue(), pivot.doubleValue(), "pivot");
-			Assert.paramGreater(maxValue.doubleValue(), 0.0d, "maxValue", "minValue(default=0)");
-		}
+        if (minValue != null) {
+            Assert.paramLess(minValue.doubleValue(), maxValue.doubleValue(), "minValue", "maxValue");
+            Assert.paramInBounds(minValue.doubleValue(), maxValue.doubleValue(), pivot.doubleValue(), "pivot");
+        }
+        else {
+            Assert.paramInBounds(0.0d, maxValue.doubleValue(), pivot.doubleValue(), "pivot");
+            Assert.paramGreater(maxValue.doubleValue(), 0.0d, "maxValue", "minValue(default=0)");
+        }
 
-		this.pivot = pivot;
-		this.ratio = ratio;
+        this.pivot = pivot;
+        this.ratio = ratio;
 
-		this.lowerConverter = new LinearSliderViewerConverter<VALUE_TYPE>(minValue, pivot);
-		this.upperConverter = new LinearSliderViewerConverter<VALUE_TYPE>(pivot, maxValue);
-	}
+        this.lowerConverter = new LinearSliderViewerConverter<VALUE_TYPE>(minValue, pivot);
+        this.upperConverter = new LinearSliderViewerConverter<VALUE_TYPE>(pivot, maxValue);
+    }
 
-	@Override
-	public VALUE_TYPE getModelValue(final int sliderMin, final int sliderMax, final int sliderValue) {
-		final int sliderPivot = (int) (sliderMin + ((sliderMax - sliderMin)) * ratio);
-		if (sliderValue < sliderPivot) {
-			return lowerConverter.getModelValue(sliderMin, sliderPivot, sliderValue);
-		}
-		else {
-			return upperConverter.getModelValue(sliderPivot, sliderMax, sliderValue);
-		}
-	}
+    @Override
+    public VALUE_TYPE getModelValue(final int sliderMin, final int sliderMax, final int sliderValue) {
+        final int sliderPivot = (int) (sliderMin + ((sliderMax - sliderMin)) * ratio);
+        if (sliderValue < sliderPivot) {
+            return lowerConverter.getModelValue(sliderMin, sliderPivot, sliderValue);
+        }
+        else {
+            return upperConverter.getModelValue(sliderPivot, sliderMax, sliderValue);
+        }
+    }
 
-	@Override
-	public int getSliderValue(final int sliderMin, final int sliderMax, final VALUE_TYPE modelValue) {
-		if (modelValue != null) {
-			final int sliderPivot = (int) (sliderMin + ((sliderMax - sliderMin)) * ratio);
-			if (modelValue.doubleValue() < pivot.doubleValue()) {
-				return lowerConverter.getSliderValue(sliderMin, sliderPivot, modelValue);
-			}
-			else {
-				return upperConverter.getSliderValue(sliderPivot, sliderMax, modelValue);
-			}
-		}
-		else {
-			return sliderMin;
-		}
-	}
+    @Override
+    public int getSliderValue(final int sliderMin, final int sliderMax, final VALUE_TYPE modelValue) {
+        if (modelValue != null) {
+            final int sliderPivot = (int) (sliderMin + ((sliderMax - sliderMin)) * ratio);
+            if (modelValue.doubleValue() < pivot.doubleValue()) {
+                return lowerConverter.getSliderValue(sliderMin, sliderPivot, modelValue);
+            }
+            else {
+                return upperConverter.getSliderValue(sliderPivot, sliderMax, modelValue);
+            }
+        }
+        else {
+            return sliderMin;
+        }
+    }
 }

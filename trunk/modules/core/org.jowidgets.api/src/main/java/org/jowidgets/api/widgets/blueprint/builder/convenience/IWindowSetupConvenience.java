@@ -29,22 +29,22 @@ package org.jowidgets.api.widgets.blueprint.builder.convenience;
 
 public interface IWindowSetupConvenience<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE autoPackOnce();
+    INSTANCE_TYPE autoPackOnce();
 
-	INSTANCE_TYPE autoPackAlways();
+    INSTANCE_TYPE autoPackAlways();
 
-	INSTANCE_TYPE autoPackOff();
+    INSTANCE_TYPE autoPackOff();
 
-	INSTANCE_TYPE autoPositionCorrectionOnce();
+    INSTANCE_TYPE autoPositionCorrectionOnce();
 
-	INSTANCE_TYPE autoPositionCorrectionAlways();
+    INSTANCE_TYPE autoPositionCorrectionAlways();
 
-	INSTANCE_TYPE autoPositionCorrectionOff();
+    INSTANCE_TYPE autoPositionCorrectionOff();
 
-	INSTANCE_TYPE autoCenterOnce();
+    INSTANCE_TYPE autoCenterOnce();
 
-	INSTANCE_TYPE autoCenterAlways();
+    INSTANCE_TYPE autoCenterAlways();
 
-	INSTANCE_TYPE autoCenterOff();
+    INSTANCE_TYPE autoCenterOff();
 
 }

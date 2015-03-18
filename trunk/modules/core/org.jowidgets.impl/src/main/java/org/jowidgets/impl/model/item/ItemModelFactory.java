@@ -50,89 +50,89 @@ import org.jowidgets.api.model.item.ITreeExpansionToolbarItemModelBuilder;
 
 public class ItemModelFactory implements IItemModelFactory {
 
-	@Override
-	public IMenuModelBuilder menuBuilder() {
-		return new MenuModelBuilder();
-	}
+    @Override
+    public IMenuModelBuilder menuBuilder() {
+        return new MenuModelBuilder();
+    }
 
-	@Override
-	public IActionItemModelBuilder actionItemBuilder() {
-		return new ActionItemModelBuilder();
-	}
+    @Override
+    public IActionItemModelBuilder actionItemBuilder() {
+        return new ActionItemModelBuilder();
+    }
 
-	@Override
-	public ICheckedItemModelBuilder checkedItemBuilder() {
-		return new CheckedItemModelBuilder();
-	}
+    @Override
+    public ICheckedItemModelBuilder checkedItemBuilder() {
+        return new CheckedItemModelBuilder();
+    }
 
-	@Override
-	public IRadioItemModelBuilder radioItemBuilder() {
-		return new RadioItemModelBuilder();
-	}
+    @Override
+    public IRadioItemModelBuilder radioItemBuilder() {
+        return new RadioItemModelBuilder();
+    }
 
-	@Override
-	public ISeparatorItemModelBuilder separatorBuilder() {
-		return new SeparatorItemModelBuilder();
-	}
+    @Override
+    public ISeparatorItemModelBuilder separatorBuilder() {
+        return new SeparatorItemModelBuilder();
+    }
 
-	@Override
-	public IPopupActionItemModelBuilder popupActionItemBuilder() {
-		return new PopupActionItemModelBuilder();
-	}
+    @Override
+    public IPopupActionItemModelBuilder popupActionItemBuilder() {
+        return new PopupActionItemModelBuilder();
+    }
 
-	@Override
-	public IContainerItemModelBuilder containerItemBuilder() {
-		return new ContainerItemModelBuilder();
-	}
+    @Override
+    public IContainerItemModelBuilder containerItemBuilder() {
+        return new ContainerItemModelBuilder();
+    }
 
-	@Override
-	public IMenuModel menu() {
-		return menuBuilder().build();
-	}
+    @Override
+    public IMenuModel menu() {
+        return menuBuilder().build();
+    }
 
-	@Override
-	public IActionItemModel actionItem() {
-		return actionItemBuilder().build();
-	}
+    @Override
+    public IActionItemModel actionItem() {
+        return actionItemBuilder().build();
+    }
 
-	@Override
-	public ICheckedItemModel checkedItem() {
-		return checkedItemBuilder().build();
-	}
+    @Override
+    public ICheckedItemModel checkedItem() {
+        return checkedItemBuilder().build();
+    }
 
-	@Override
-	public IRadioItemModel radioItem() {
-		return radioItemBuilder().build();
-	}
+    @Override
+    public IRadioItemModel radioItem() {
+        return radioItemBuilder().build();
+    }
 
-	@Override
-	public IPopupActionItemModel popupActionItem() {
-		return popupActionItemBuilder().build();
-	}
+    @Override
+    public IPopupActionItemModel popupActionItem() {
+        return popupActionItemBuilder().build();
+    }
 
-	@Override
-	public IContainerItemModel containerItem() {
-		return containerItemBuilder().build();
-	}
+    @Override
+    public IContainerItemModel containerItem() {
+        return containerItemBuilder().build();
+    }
 
-	@Override
-	public ISeparatorItemModel separator() {
-		return separatorBuilder().build();
-	}
+    @Override
+    public ISeparatorItemModel separator() {
+        return separatorBuilder().build();
+    }
 
-	@Override
-	public IMenuBarModel menuBar() {
-		return new MenuBarModelImpl();
-	}
+    @Override
+    public IMenuBarModel menuBar() {
+        return new MenuBarModelImpl();
+    }
 
-	@Override
-	public IToolBarModel toolBar() {
-		return new ToolBarModelImpl();
-	}
+    @Override
+    public IToolBarModel toolBar() {
+        return new ToolBarModelImpl();
+    }
 
-	@Override
-	public ITreeExpansionToolbarItemModelBuilder treeExpansionToolbarItemBuilder(final ITreeExpansionAction action) {
-		return new TreeExpansionToolbarActionModelBuilderImpl(action);
-	}
+    @Override
+    public ITreeExpansionToolbarItemModelBuilder treeExpansionToolbarItemBuilder(final ITreeExpansionAction action) {
+        return new TreeExpansionToolbarActionModelBuilderImpl(action);
+    }
 
 }

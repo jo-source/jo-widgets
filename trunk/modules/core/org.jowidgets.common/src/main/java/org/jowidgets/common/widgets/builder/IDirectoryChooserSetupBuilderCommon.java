@@ -27,10 +27,9 @@
  */
 package org.jowidgets.common.widgets.builder;
 
-
 public interface IDirectoryChooserSetupBuilderCommon<INSTANCE_TYPE extends IDirectoryChooserSetupBuilderCommon<?>> extends
-		ISetupBuilder<INSTANCE_TYPE> {
+        ISetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setTitle(String title);
+    INSTANCE_TYPE setTitle(String title);
 
 }

@@ -46,56 +46,56 @@ import org.jowidgets.util.binding.IBinding;
 
 final class DemoBindingFrame extends JoFrame {
 
-	private static final int COLUMNS = 10;
-	private static final double MIN_VALUE = -1.0d;
-	private static final double MAX_VALUE = 1.0d;
-	private static final double DEFAULT_VALUE = 0.0d;
+    private static final int COLUMNS = 10;
+    private static final double MIN_VALUE = -1.0d;
+    private static final double MAX_VALUE = 1.0d;
+    private static final double DEFAULT_VALUE = 0.0d;
 
-	DemoBindingFrame() {
-		super("Binding demo");
+    DemoBindingFrame() {
+        super("Binding demo");
 
-		setLayout(new MigLayoutDescriptor("wrap", StringUtils.loop("[]10", COLUMNS - 1) + "[]", "[]0[]20[]"));
+        setLayout(new MigLayoutDescriptor("wrap", StringUtils.loop("[]10", COLUMNS - 1) + "[]", "[]0[]20[]"));
 
-		//create observable values and bindings
-		final ArrayList<IObservableValue<Double>> observableValues = new ArrayList<IObservableValue<Double>>(COLUMNS);
-		final ArrayList<IBinding> bindings = new ArrayList<IBinding>(COLUMNS - 1);
-		for (int i = 0; i < COLUMNS; i++) {
-			final IObservableValue<Double> observableValue = new ObservableValue<Double>();
-			observableValues.add(observableValue);
-			if (i > 0) {
-				//bind next value to the previous
-				final IBinding binding = Bind.bind(observableValues.get(i - 1), observableValue);
-				bindings.add(binding);
-			}
-		}
+        //create observable values and bindings
+        final ArrayList<IObservableValue<Double>> observableValues = new ArrayList<IObservableValue<Double>>(COLUMNS);
+        final ArrayList<IBinding> bindings = new ArrayList<IBinding>(COLUMNS - 1);
+        for (int i = 0; i < COLUMNS; i++) {
+            final IObservableValue<Double> observableValue = new ObservableValue<Double>();
+            observableValues.add(observableValue);
+            if (i > 0) {
+                //bind next value to the previous
+                final IBinding binding = Bind.bind(observableValues.get(i - 1), observableValue);
+                bindings.add(binding);
+            }
+        }
 
-		//add sliders
-		for (int i = 0; i < COLUMNS; i++) {
-			final ISliderViewerBluePrint<Double> sliderBp = BPF.sliderViewerDouble(MIN_VALUE, MAX_VALUE);
-			sliderBp.setVertical();
-			sliderBp.setDefaultValue(DEFAULT_VALUE);
-			sliderBp.setObservableValue(observableValues.get(i));
-			add(sliderBp, "sgx g1");
-		}
+        //add sliders
+        for (int i = 0; i < COLUMNS; i++) {
+            final ISliderViewerBluePrint<Double> sliderBp = BPF.sliderViewerDouble(MIN_VALUE, MAX_VALUE);
+            sliderBp.setVertical();
+            sliderBp.setDefaultValue(DEFAULT_VALUE);
+            sliderBp.setObservableValue(observableValues.get(i));
+            add(sliderBp, "sgx g1");
+        }
 
-		//add input fields
-		for (int i = 0; i < COLUMNS; i++) {
-			final IInputFieldBluePrint<Double> inputFieldBp = BPF.inputFieldDoubleNumber();
-			inputFieldBp.setObservableValue(observableValues.get(i));
-			add(inputFieldBp, "sgx g1");
-		}
+        //add input fields
+        for (int i = 0; i < COLUMNS; i++) {
+            final IInputFieldBluePrint<Double> inputFieldBp = BPF.inputFieldDoubleNumber();
+            inputFieldBp.setObservableValue(observableValues.get(i));
+            add(inputFieldBp, "sgx g1");
+        }
 
-		//add binding checkbox
-		final ObservableBoolean booleanValue = new ObservableBoolean(true);
-		final ICheckBox bindingCb = add(BPF.checkBox().setText("Bind").setValue(true).setObservableValue(booleanValue));
-		bindingCb.addInputListener(new IInputListener() {
-			@Override
-			public void inputChanged() {
-				for (final IBinding binding : bindings) {
-					binding.setBindingState(bindingCb.isSelected());
-				}
-			}
-		});
+        //add binding checkbox
+        final ObservableBoolean booleanValue = new ObservableBoolean(true);
+        final ICheckBox bindingCb = add(BPF.checkBox().setText("Bind").setValue(true).setObservableValue(booleanValue));
+        bindingCb.addInputListener(new IInputListener() {
+            @Override
+            public void inputChanged() {
+                for (final IBinding binding : bindings) {
+                    binding.setBindingState(bindingCb.isSelected());
+                }
+            }
+        });
 
-	}
+    }
 }

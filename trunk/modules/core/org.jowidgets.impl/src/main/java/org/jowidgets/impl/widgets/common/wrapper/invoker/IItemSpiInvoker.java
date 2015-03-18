@@ -33,16 +33,16 @@ import org.jowidgets.common.types.Accelerator;
 
 public interface IItemSpiInvoker {
 
-	void setText(final String text);
+    void setText(final String text);
 
-	void setToolTipText(String toolTipText);
+    void setToolTipText(String toolTipText);
 
-	void setIcon(IImageConstant icon);
+    void setIcon(IImageConstant icon);
 
-	void setAccelerator(Accelerator accelerator);
+    void setAccelerator(Accelerator accelerator);
 
-	void setMnemonic(Character mnemonic);
+    void setMnemonic(Character mnemonic);
 
-	void setEnabled(boolean enabled);
+    void setEnabled(boolean enabled);
 
 }

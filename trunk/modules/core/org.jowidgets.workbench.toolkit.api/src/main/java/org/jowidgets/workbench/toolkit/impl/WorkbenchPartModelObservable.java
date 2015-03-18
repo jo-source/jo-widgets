@@ -36,26 +36,26 @@ import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModelObservable;
 
 class WorkbenchPartModelObservable implements IWorkbenchPartModelObservable {
 
-	private final Set<IWorkbenchPartModelListener> listeners;
+    private final Set<IWorkbenchPartModelListener> listeners;
 
-	WorkbenchPartModelObservable() {
-		this.listeners = new HashSet<IWorkbenchPartModelListener>();
-	}
+    WorkbenchPartModelObservable() {
+        this.listeners = new HashSet<IWorkbenchPartModelListener>();
+    }
 
-	@Override
-	public void addWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
-		listeners.add(listener);
-	}
+    @Override
+    public void addWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removeWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
+        listeners.remove(listener);
+    }
 
-	protected void fireModelChanged() {
-		for (final IWorkbenchPartModelListener listener : listeners) {
-			listener.modelChanged();
-		}
-	}
+    protected void fireModelChanged() {
+        for (final IWorkbenchPartModelListener listener : listeners) {
+            listener.modelChanged();
+        }
+    }
 
 }

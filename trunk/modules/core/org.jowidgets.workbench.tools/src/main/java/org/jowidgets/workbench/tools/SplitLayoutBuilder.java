@@ -38,96 +38,96 @@ import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 
 public class SplitLayoutBuilder implements ISplitLayoutBuilder {
 
-	private final ISplitLayoutBuilder builder;
+    private final ISplitLayoutBuilder builder;
 
-	public SplitLayoutBuilder() {
-		this(builder());
-	}
+    public SplitLayoutBuilder() {
+        this(builder());
+    }
 
-	public SplitLayoutBuilder(final ISplitLayoutBuilder builder) {
-		super();
-		this.builder = builder;
-	}
+    public SplitLayoutBuilder(final ISplitLayoutBuilder builder) {
+        super();
+        this.builder = builder;
+    }
 
-	@Override
-	public final ISplitLayoutBuilder setOrientation(final Orientation orientation) {
-		builder.setOrientation(orientation);
-		return this;
-	}
+    @Override
+    public final ISplitLayoutBuilder setOrientation(final Orientation orientation) {
+        builder.setOrientation(orientation);
+        return this;
+    }
 
-	@Override
-	public final ISplitLayoutBuilder setHorizontal() {
-		builder.setHorizontal();
-		return this;
-	}
+    @Override
+    public final ISplitLayoutBuilder setHorizontal() {
+        builder.setHorizontal();
+        return this;
+    }
 
-	@Override
-	public final ISplitLayoutBuilder setVertical() {
-		builder.setVertical();
-		return this;
-	}
+    @Override
+    public final ISplitLayoutBuilder setVertical() {
+        builder.setVertical();
+        return this;
+    }
 
-	@Override
-	public final ISplitLayoutBuilder setWeight(final double weigth) {
-		builder.setWeight(weigth);
-		return this;
-	}
+    @Override
+    public final ISplitLayoutBuilder setWeight(final double weigth) {
+        builder.setWeight(weigth);
+        return this;
+    }
 
-	@Override
-	public final ISplitLayoutBuilder setResizePolicy(final SplitResizePolicy splitResizePolicy) {
-		builder.setResizePolicy(splitResizePolicy);
-		return this;
-	}
+    @Override
+    public final ISplitLayoutBuilder setResizePolicy(final SplitResizePolicy splitResizePolicy) {
+        builder.setResizePolicy(splitResizePolicy);
+        return this;
+    }
 
-	@Override
-	public final ISplitLayoutBuilder setResizeFirst() {
-		builder.setResizeFirst();
-		return this;
-	}
+    @Override
+    public final ISplitLayoutBuilder setResizeFirst() {
+        builder.setResizeFirst();
+        return this;
+    }
 
-	@Override
-	public final ISplitLayoutBuilder setResizeSecond() {
-		builder.setResizeSecond();
-		return this;
-	}
+    @Override
+    public final ISplitLayoutBuilder setResizeSecond() {
+        builder.setResizeSecond();
+        return this;
+    }
 
-	@Override
-	public final ISplitLayoutBuilder setResizeBoth() {
-		builder.setResizeBoth();
-		return this;
-	}
+    @Override
+    public final ISplitLayoutBuilder setResizeBoth() {
+        builder.setResizeBoth();
+        return this;
+    }
 
-	@Override
-	public final ISplitLayoutBuilder setFirstContainer(final ILayoutContainer firstContainer) {
-		builder.setFirstContainer(firstContainer);
-		return this;
-	}
+    @Override
+    public final ISplitLayoutBuilder setFirstContainer(final ILayoutContainer firstContainer) {
+        builder.setFirstContainer(firstContainer);
+        return this;
+    }
 
-	@Override
-	public final ISplitLayoutBuilder setFirstContainer(final ILayoutContainerBuilder firstContainerBuilder) {
-		builder.setFirstContainer(firstContainerBuilder);
-		return this;
-	}
+    @Override
+    public final ISplitLayoutBuilder setFirstContainer(final ILayoutContainerBuilder firstContainerBuilder) {
+        builder.setFirstContainer(firstContainerBuilder);
+        return this;
+    }
 
-	@Override
-	public final ISplitLayoutBuilder setSecondContainer(final ILayoutContainer secondContainer) {
-		builder.setSecondContainer(secondContainer);
-		return this;
-	}
+    @Override
+    public final ISplitLayoutBuilder setSecondContainer(final ILayoutContainer secondContainer) {
+        builder.setSecondContainer(secondContainer);
+        return this;
+    }
 
-	@Override
-	public final ISplitLayoutBuilder setSecondContainer(final ILayoutContainerBuilder secondContainerBuilder) {
-		builder.setSecondContainer(secondContainerBuilder);
-		return this;
-	}
+    @Override
+    public final ISplitLayoutBuilder setSecondContainer(final ILayoutContainerBuilder secondContainerBuilder) {
+        builder.setSecondContainer(secondContainerBuilder);
+        return this;
+    }
 
-	@Override
-	public final ISplitLayout build() {
-		return builder.build();
-	}
+    @Override
+    public final ISplitLayout build() {
+        return builder.build();
+    }
 
-	public static ISplitLayoutBuilder builder() {
-		return WorkbenchToolkit.getLayoutBuilderFactory().split();
-	}
+    public static ISplitLayoutBuilder builder() {
+        return WorkbenchToolkit.getLayoutBuilderFactory().split();
+    }
 
 }

@@ -31,6 +31,6 @@ import org.jowidgets.common.widgets.ITextLabelCommon;
 
 public interface ITextLabel extends IControl, ITextLabelCommon {
 
-	String getText();
+    String getText();
 
 }

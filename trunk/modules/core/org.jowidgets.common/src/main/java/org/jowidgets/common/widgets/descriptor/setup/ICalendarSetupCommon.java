@@ -28,7 +28,6 @@
 
 package org.jowidgets.common.widgets.descriptor.setup;
 
-
 public interface ICalendarSetupCommon extends IComponentSetupCommon {
 
 }

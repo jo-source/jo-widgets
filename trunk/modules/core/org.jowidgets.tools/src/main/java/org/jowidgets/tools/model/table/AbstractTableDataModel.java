@@ -39,64 +39,64 @@ import org.jowidgets.util.CollectionUtils;
 
 public abstract class AbstractTableDataModel implements ITableDataModel, ITableDataModelObservable {
 
-	private final TableDataModelObservable dataModelObservable;
+    private final TableDataModelObservable dataModelObservable;
 
-	private ArrayList<Integer> selection;
+    private ArrayList<Integer> selection;
 
-	public AbstractTableDataModel() {
-		this.dataModelObservable = new TableDataModelObservable();
-		this.selection = new ArrayList<Integer>();
-	}
+    public AbstractTableDataModel() {
+        this.dataModelObservable = new TableDataModelObservable();
+        this.selection = new ArrayList<Integer>();
+    }
 
-	@Override
-	public final ArrayList<Integer> getSelection() {
-		return CollectionUtils.unmodifiableArrayList(selection);
-	}
+    @Override
+    public final ArrayList<Integer> getSelection() {
+        return CollectionUtils.unmodifiableArrayList(selection);
+    }
 
-	@Override
-	public final void setSelection(Collection<Integer> newSelection) {
-		if (newSelection == null) {
-			newSelection = new ArrayList<Integer>();
-		}
-		if (!CollectionUtils.elementsEqual(selection, newSelection)) {
-			this.selection = new ArrayList<Integer>(newSelection);
-			fireSelectionChanged();
-		}
-	}
+    @Override
+    public final void setSelection(Collection<Integer> newSelection) {
+        if (newSelection == null) {
+            newSelection = new ArrayList<Integer>();
+        }
+        if (!CollectionUtils.elementsEqual(selection, newSelection)) {
+            this.selection = new ArrayList<Integer>(newSelection);
+            fireSelectionChanged();
+        }
+    }
 
-	@Override
-	public final ITableDataModelObservable getTableDataModelObservable() {
-		return this;
-	}
+    @Override
+    public final ITableDataModelObservable getTableDataModelObservable() {
+        return this;
+    }
 
-	@Override
-	public final void addDataModelListener(final ITableDataModelListener listener) {
-		dataModelObservable.addDataModelListener(listener);
-	}
+    @Override
+    public final void addDataModelListener(final ITableDataModelListener listener) {
+        dataModelObservable.addDataModelListener(listener);
+    }
 
-	@Override
-	public final void removeDataModelListener(final ITableDataModelListener listener) {
-		dataModelObservable.removeDataModelListener(listener);
-	}
+    @Override
+    public final void removeDataModelListener(final ITableDataModelListener listener) {
+        dataModelObservable.removeDataModelListener(listener);
+    }
 
-	public final void fireRowsAdded(final int[] rowIndices) {
-		dataModelObservable.fireRowsAdded(rowIndices);
-	}
+    public final void fireRowsAdded(final int[] rowIndices) {
+        dataModelObservable.fireRowsAdded(rowIndices);
+    }
 
-	public final void fireRowsRemoved(final int[] rowIndices) {
-		dataModelObservable.fireRowsRemoved(rowIndices);
-	}
+    public final void fireRowsRemoved(final int[] rowIndices) {
+        dataModelObservable.fireRowsRemoved(rowIndices);
+    }
 
-	public final void fireRowsChanged(final int[] rowIndices) {
-		dataModelObservable.fireRowsChanged(rowIndices);
-	}
+    public final void fireRowsChanged(final int[] rowIndices) {
+        dataModelObservable.fireRowsChanged(rowIndices);
+    }
 
-	public final void fireDataChanged() {
-		dataModelObservable.fireDataChanged();
-	}
+    public final void fireDataChanged() {
+        dataModelObservable.fireDataChanged();
+    }
 
-	private void fireSelectionChanged() {
-		dataModelObservable.fireSelectionChanged();
-	}
+    private void fireSelectionChanged() {
+        dataModelObservable.fireSelectionChanged();
+    }
 
 }

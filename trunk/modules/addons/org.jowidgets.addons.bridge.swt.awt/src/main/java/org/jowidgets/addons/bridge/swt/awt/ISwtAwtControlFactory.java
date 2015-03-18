@@ -28,9 +28,8 @@
 
 package org.jowidgets.addons.bridge.swt.awt;
 
-
 public interface ISwtAwtControlFactory {
 
-	ISwtAwtControl createSwtAwtControl(final Object parentUiReference);
+    ISwtAwtControl createSwtAwtControl(final Object parentUiReference);
 
 }

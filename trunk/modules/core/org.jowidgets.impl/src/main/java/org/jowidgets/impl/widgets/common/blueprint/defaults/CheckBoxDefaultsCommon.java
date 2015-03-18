@@ -32,9 +32,9 @@ import org.jowidgets.common.widgets.builder.ICheckBoxSetupBuilderCommon;
 
 public class CheckBoxDefaultsCommon implements IDefaultInitializer<ICheckBoxSetupBuilderCommon<?>> {
 
-	@Override
-	public void initialize(final ICheckBoxSetupBuilderCommon<?> builder) {
-		builder.setInitialState(false);
-	}
+    @Override
+    public void initialize(final ICheckBoxSetupBuilderCommon<?> builder) {
+        builder.setInitialState(false);
+    }
 
 }

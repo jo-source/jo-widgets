@@ -30,5 +30,5 @@ package org.jowidgets.api.test.blueprint.convenience;
 
 public interface IHierarchy2nd2Convenience<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE introduce(String title);
+    INSTANCE_TYPE introduce(String title);
 }

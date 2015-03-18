@@ -34,13 +34,13 @@ import org.jowidgets.examples.common.snipped.ColorTableSnipped;
 
 public final class ColorTableSnippedStarterSwing {
 
-	private ColorTableSnippedStarterSwing() {}
+    private ColorTableSnippedStarterSwing() {}
 
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		Toolkit.getApplicationRunner().run(new ColorTableSnipped());
-		System.exit(0);
-	}
+    public static void main(final String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
+        Toolkit.getApplicationRunner().run(new ColorTableSnipped());
+        System.exit(0);
+    }
 
 }

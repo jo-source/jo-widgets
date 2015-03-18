@@ -42,143 +42,143 @@ import org.jowidgets.util.concurrent.SingleThreadParameter;
 
 public final class Parameterized {
 
-	private Parameterized() {}
+    private Parameterized() {}
 
-	public static IParameterizedBuilder builder() {
-		return new ParameterizedBuilderImpl();
-	}
+    public static IParameterizedBuilder builder() {
+        return new ParameterizedBuilderImpl();
+    }
 
-	private static final class ParameterizedBuilderImpl implements IParameterizedBuilder {
+    private static final class ParameterizedBuilderImpl implements IParameterizedBuilder {
 
-		private final Map<ITypedKey<?>, IParameter<?>> parameters;
+        private final Map<ITypedKey<?>, IParameter<?>> parameters;
 
-		private ISingleThreadAccess readThreadAccess;
-		private ISingleThreadAccess writeThreadAccess;
+        private ISingleThreadAccess readThreadAccess;
+        private ISingleThreadAccess writeThreadAccess;
 
-		private ParameterizedBuilderImpl() {
-			this.parameters = new LinkedHashMap<ITypedKey<?>, IParameter<?>>();
-		}
+        private ParameterizedBuilderImpl() {
+            this.parameters = new LinkedHashMap<ITypedKey<?>, IParameter<?>>();
+        }
 
-		@Override
-		public IParameterizedBuilder setReadThreadAccess(final ISingleThreadAccess singleThreadAccess) {
-			this.readThreadAccess = singleThreadAccess;
-			return this;
-		}
+        @Override
+        public IParameterizedBuilder setReadThreadAccess(final ISingleThreadAccess singleThreadAccess) {
+            this.readThreadAccess = singleThreadAccess;
+            return this;
+        }
 
-		@Override
-		public IParameterizedBuilder setWriteThreadAccess(final ISingleThreadAccess singleThreadAccess) {
-			this.writeThreadAccess = singleThreadAccess;
-			return this;
-		}
+        @Override
+        public IParameterizedBuilder setWriteThreadAccess(final ISingleThreadAccess singleThreadAccess) {
+            this.writeThreadAccess = singleThreadAccess;
+            return this;
+        }
 
-		@Override
-		public IParameterizedBuilder setReadWriteThreadAccess(final ISingleThreadAccess singleThreadAccess) {
-			setReadThreadAccess(singleThreadAccess);
-			setWriteThreadAccess(singleThreadAccess);
-			return this;
-		}
+        @Override
+        public IParameterizedBuilder setReadWriteThreadAccess(final ISingleThreadAccess singleThreadAccess) {
+            setReadThreadAccess(singleThreadAccess);
+            setWriteThreadAccess(singleThreadAccess);
+            return this;
+        }
 
-		@Override
-		public <VALUE_TYPE> IParameterizedBuilder addParameter(
-			final ITypedKey<VALUE_TYPE> key,
-			final IParameter<VALUE_TYPE> parameter) {
-			Assert.paramNotNull(key, "key");
-			Assert.paramNotNull(parameter, "parameter");
-			parameters.put(key, parameter);
-			return this;
-		}
+        @Override
+        public <VALUE_TYPE> IParameterizedBuilder addParameter(
+            final ITypedKey<VALUE_TYPE> key,
+            final IParameter<VALUE_TYPE> parameter) {
+            Assert.paramNotNull(key, "key");
+            Assert.paramNotNull(parameter, "parameter");
+            parameters.put(key, parameter);
+            return this;
+        }
 
-		@Override
-		public <VALUE_TYPE> IParameterizedBuilder addParameter(final ITypedKey<VALUE_TYPE> key, final Class<VALUE_TYPE> valueType) {
-			return addParameter(key, Parameter.create(valueType));
-		}
+        @Override
+        public <VALUE_TYPE> IParameterizedBuilder addParameter(final ITypedKey<VALUE_TYPE> key, final Class<VALUE_TYPE> valueType) {
+            return addParameter(key, Parameter.create(valueType));
+        }
 
-		@Override
-		public <VALUE_TYPE> IParameterizedBuilder addParameter(
-			final ITypedKey<VALUE_TYPE> key,
-			final Class<VALUE_TYPE> valueType,
-			final String label) {
-			return addParameter(key, Parameter.create(valueType, label));
-		}
+        @Override
+        public <VALUE_TYPE> IParameterizedBuilder addParameter(
+            final ITypedKey<VALUE_TYPE> key,
+            final Class<VALUE_TYPE> valueType,
+            final String label) {
+            return addParameter(key, Parameter.create(valueType, label));
+        }
 
-		@Override
-		public <VALUE_TYPE> IParameterizedBuilder addParameter(
-			final ITypedKey<VALUE_TYPE> key,
-			final Class<VALUE_TYPE> valueType,
-			final VALUE_TYPE defaultValue,
-			final String label,
-			final String description) {
-			return addParameter(key, Parameter.create(valueType, label, description, defaultValue));
-		}
+        @Override
+        public <VALUE_TYPE> IParameterizedBuilder addParameter(
+            final ITypedKey<VALUE_TYPE> key,
+            final Class<VALUE_TYPE> valueType,
+            final VALUE_TYPE defaultValue,
+            final String label,
+            final String description) {
+            return addParameter(key, Parameter.create(valueType, label, description, defaultValue));
+        }
 
-		@Override
-		public <VALUE_TYPE> IParameterizedBuilder addParameter(
-			final ITypedKey<VALUE_TYPE> key,
-			final Class<VALUE_TYPE> valueType,
-			final String label,
-			final String description) {
-			return addParameter(key, Parameter.create(valueType, label, description));
-		}
+        @Override
+        public <VALUE_TYPE> IParameterizedBuilder addParameter(
+            final ITypedKey<VALUE_TYPE> key,
+            final Class<VALUE_TYPE> valueType,
+            final String label,
+            final String description) {
+            return addParameter(key, Parameter.create(valueType, label, description));
+        }
 
-		@Override
-		public <VALUE_TYPE> IParameterizedBuilder addParameter(
-			final ITypedKey<VALUE_TYPE> key,
-			final Class<VALUE_TYPE> valueType,
-			final VALUE_TYPE defaultValue,
-			final String label) {
-			return addParameter(key, Parameter.create(valueType, label, null, defaultValue));
-		}
+        @Override
+        public <VALUE_TYPE> IParameterizedBuilder addParameter(
+            final ITypedKey<VALUE_TYPE> key,
+            final Class<VALUE_TYPE> valueType,
+            final VALUE_TYPE defaultValue,
+            final String label) {
+            return addParameter(key, Parameter.create(valueType, label, null, defaultValue));
+        }
 
-		@SuppressWarnings({"rawtypes", "unchecked"})
-		@Override
-		public IParameterized build() {
-			final Map<ITypedKey<?>, IParameter<?>> parametersForImpl;
-			if (readThreadAccess != null || writeThreadAccess != null) {
-				parametersForImpl = new LinkedHashMap<ITypedKey<?>, IParameter<?>>();
-				for (final Entry<ITypedKey<?>, IParameter<?>> entry : parameters.entrySet()) {
-					final IParameter<?> synchronizedParameter = new SingleThreadParameter(
-						entry.getValue(),
-						readThreadAccess,
-						writeThreadAccess);
-					parametersForImpl.put(entry.getKey(), synchronizedParameter);
-				}
-			}
-			else {
-				parametersForImpl = new LinkedHashMap<ITypedKey<?>, IParameter<?>>(parameters);
-			}
-			return new ParameterizedImpl(parametersForImpl);
-		}
-	}
+        @SuppressWarnings({"rawtypes", "unchecked"})
+        @Override
+        public IParameterized build() {
+            final Map<ITypedKey<?>, IParameter<?>> parametersForImpl;
+            if (readThreadAccess != null || writeThreadAccess != null) {
+                parametersForImpl = new LinkedHashMap<ITypedKey<?>, IParameter<?>>();
+                for (final Entry<ITypedKey<?>, IParameter<?>> entry : parameters.entrySet()) {
+                    final IParameter<?> synchronizedParameter = new SingleThreadParameter(
+                        entry.getValue(),
+                        readThreadAccess,
+                        writeThreadAccess);
+                    parametersForImpl.put(entry.getKey(), synchronizedParameter);
+                }
+            }
+            else {
+                parametersForImpl = new LinkedHashMap<ITypedKey<?>, IParameter<?>>(parameters);
+            }
+            return new ParameterizedImpl(parametersForImpl);
+        }
+    }
 
-	private static final class ParameterizedImpl implements IParameterized {
+    private static final class ParameterizedImpl implements IParameterized {
 
-		private final Map<ITypedKey<?>, IParameter<?>> parameters;
-		private final List<ITypedKey<?>> availableParameters;
+        private final Map<ITypedKey<?>, IParameter<?>> parameters;
+        private final List<ITypedKey<?>> availableParameters;
 
-		private ParameterizedImpl(final Map<ITypedKey<?>, IParameter<?>> parameters) {
-			Assert.paramNotNull(parameters, "parameters");
-			this.parameters = parameters;
-			this.availableParameters = Collections.unmodifiableList(new LinkedList<ITypedKey<?>>(parameters.keySet()));
-		}
+        private ParameterizedImpl(final Map<ITypedKey<?>, IParameter<?>> parameters) {
+            Assert.paramNotNull(parameters, "parameters");
+            this.parameters = parameters;
+            this.availableParameters = Collections.unmodifiableList(new LinkedList<ITypedKey<?>>(parameters.keySet()));
+        }
 
-		@Override
-		public List<ITypedKey<?>> getAvailableParameters() {
-			return availableParameters;
-		}
+        @Override
+        public List<ITypedKey<?>> getAvailableParameters() {
+            return availableParameters;
+        }
 
-		@Override
-		public <VALUE_TYPE> IParameter<VALUE_TYPE> getParameter(final ITypedKey<VALUE_TYPE> key) {
-			Assert.paramNotNull(key, "key");
-			@SuppressWarnings("unchecked")
-			final IParameter<VALUE_TYPE> result = (IParameter<VALUE_TYPE>) parameters.get(key);
-			if (result != null) {
-				return result;
-			}
-			else {
-				throw new IllegalArgumentException("The parameter '" + key + "' is not known");
-			}
-		}
+        @Override
+        public <VALUE_TYPE> IParameter<VALUE_TYPE> getParameter(final ITypedKey<VALUE_TYPE> key) {
+            Assert.paramNotNull(key, "key");
+            @SuppressWarnings("unchecked")
+            final IParameter<VALUE_TYPE> result = (IParameter<VALUE_TYPE>) parameters.get(key);
+            if (result != null) {
+                return result;
+            }
+            else {
+                throw new IllegalArgumentException("The parameter '" + key + "' is not known");
+            }
+        }
 
-	}
+    }
 
 }

@@ -34,13 +34,13 @@ import org.jowidgets.common.widgets.controller.ITableColumnResizeEvent;
 
 public class TableColumnAdapter implements ITableColumnListener {
 
-	@Override
-	public void mouseClicked(final ITableColumnMouseEvent event) {}
+    @Override
+    public void mouseClicked(final ITableColumnMouseEvent event) {}
 
-	@Override
-	public void columnResized(final ITableColumnResizeEvent event) {}
+    @Override
+    public void columnResized(final ITableColumnResizeEvent event) {}
 
-	@Override
-	public void columnPermutationChanged() {}
+    @Override
+    public void columnPermutationChanged() {}
 
 }

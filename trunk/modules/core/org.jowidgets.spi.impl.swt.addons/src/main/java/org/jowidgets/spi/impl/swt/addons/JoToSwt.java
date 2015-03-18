@@ -39,14 +39,14 @@ import org.jowidgets.api.widgets.IFrame;
 @Deprecated
 public final class JoToSwt {
 
-	private JoToSwt() {}
+    private JoToSwt() {}
 
-	public static Composite convert(final IComposite composite) {
-		return JoToSwtReference.getUiReference(composite);
-	}
+    public static Composite convert(final IComposite composite) {
+        return JoToSwtReference.getUiReference(composite);
+    }
 
-	public static Shell convert(final IFrame frame) {
-		return JoToSwtReference.getUiReference(frame);
-	}
+    public static Shell convert(final IFrame frame) {
+        return JoToSwtReference.getUiReference(frame);
+    }
 
 }

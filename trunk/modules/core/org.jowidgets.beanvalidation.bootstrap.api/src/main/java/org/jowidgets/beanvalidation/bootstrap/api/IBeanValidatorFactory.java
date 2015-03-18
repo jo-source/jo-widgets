@@ -32,6 +32,6 @@ import javax.validation.Validator;
 
 public interface IBeanValidatorFactory {
 
-	Validator create();
+    Validator create();
 
 }

@@ -31,6 +31,6 @@ import org.jowidgets.common.types.IVetoable;
 
 public interface ICloseCallback extends IDisposeCallback {
 
-	void onClose(IVetoable vetoable);
+    void onClose(IVetoable vetoable);
 
 }

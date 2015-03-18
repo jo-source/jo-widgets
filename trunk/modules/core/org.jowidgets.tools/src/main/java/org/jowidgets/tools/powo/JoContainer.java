@@ -36,28 +36,28 @@ import org.jowidgets.util.Assert;
 
 public class JoContainer extends Container<IContainer, ICompositeBluePrint> implements IContainer {
 
-	JoContainer(final IContainer widget) {
-		this(bluePrint());
-		Assert.paramNotNull(widget, "widget");
-		initialize(widget);
-	}
+    JoContainer(final IContainer widget) {
+        this(bluePrint());
+        Assert.paramNotNull(widget, "widget");
+        initialize(widget);
+    }
 
-	JoContainer(final ICompositeDescriptor descriptor) {
-		super(bluePrint().setSetup(descriptor));
-	}
+    JoContainer(final ICompositeDescriptor descriptor) {
+        super(bluePrint().setSetup(descriptor));
+    }
 
-	private static ICompositeBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().composite();
-	}
+    private static ICompositeBluePrint bluePrint() {
+        return Toolkit.getBluePrintFactory().composite();
+    }
 
-	public static JoContainer toJoContainer(final IContainer widget) {
-		Assert.paramNotNull(widget, "widget");
-		if (widget instanceof JoContainer) {
-			return (JoContainer) widget;
-		}
-		else {
-			return new JoContainer(widget);
-		}
-	}
+    public static JoContainer toJoContainer(final IContainer widget) {
+        Assert.paramNotNull(widget, "widget");
+        if (widget instanceof JoContainer) {
+            return (JoContainer) widget;
+        }
+        else {
+            return new JoContainer(widget);
+        }
+    }
 
 }

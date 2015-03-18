@@ -31,8 +31,8 @@ import org.jowidgets.common.widgets.ISliderCommon;
 
 public interface ISlider extends IInputControl<Integer>, ISliderCommon, IObservableValueViewer<Integer> {
 
-	int getMinimum();
+    int getMinimum();
 
-	int getMaximum();
+    int getMaximum();
 
 }

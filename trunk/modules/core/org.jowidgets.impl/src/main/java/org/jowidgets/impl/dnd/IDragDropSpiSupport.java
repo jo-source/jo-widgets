@@ -36,8 +36,8 @@ import org.jowidgets.spi.clipboard.TransferTypeSpi;
 
 interface IDragDropSpiSupport {
 
-	void setTransferTypesSpi(Collection<TransferTypeSpi> supportedTypes);
+    void setTransferTypesSpi(Collection<TransferTypeSpi> supportedTypes);
 
-	void setActionsSpi(Set<DropAction> actions);
+    void setActionsSpi(Set<DropAction> actions);
 
 }

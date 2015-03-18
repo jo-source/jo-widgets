@@ -30,10 +30,10 @@ package org.jowidgets.util;
 
 public interface IValueChangedEvent<VALUE_TYPE> {
 
-	VALUE_TYPE getOldValue();
+    VALUE_TYPE getOldValue();
 
-	VALUE_TYPE getNewValue();
+    VALUE_TYPE getNewValue();
 
-	IMutableValue<VALUE_TYPE> getSource();
+    IMutableValue<VALUE_TYPE> getSource();
 
 }

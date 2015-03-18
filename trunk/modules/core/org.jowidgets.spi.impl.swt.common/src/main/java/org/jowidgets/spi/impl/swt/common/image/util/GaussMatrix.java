@@ -33,65 +33,65 @@ import java.util.Map;
 
 public final class GaussMatrix {
 
-	public static final int MAX_DEPTH = 25;
+    public static final int MAX_DEPTH = 25;
 
-	private static long[][] binominalCoeff = new long[MAX_DEPTH + 1][];
-	private static Map<Integer, Object> matrices = new HashMap<Integer, Object>();
+    private static long[][] binominalCoeff = new long[MAX_DEPTH + 1][];
+    private static Map<Integer, Object> matrices = new HashMap<Integer, Object>();
 
-	private GaussMatrix() {};
+    private GaussMatrix() {};
 
-	private static long[] getBinominalCoeff(final int depth) {
-		if (depth > MAX_DEPTH) {
-			throw new IllegalArgumentException("parameter 'depth' must be less than '" + MAX_DEPTH + "'.");
-		}
-		if (binominalCoeff[depth] != null) {
-			return binominalCoeff[depth];
-		}
-		else if (depth == 0) {
-			binominalCoeff[0] = new long[1];
-			binominalCoeff[0][0] = 1;
-			return binominalCoeff[0];
-		}
-		else {
-			final long[] parentCoeff = getBinominalCoeff(depth - 1);
-			final long[] result = new long[parentCoeff.length + 1];
-			result[0] = 1;
-			result[result.length - 1] = 1;
-			for (int i = 0; i < parentCoeff.length - 1; i++) {
-				result[i + 1] = parentCoeff[i] + parentCoeff[i + 1];
-			}
-			binominalCoeff[depth] = result;
-			return binominalCoeff[depth];
-		}
-	}
+    private static long[] getBinominalCoeff(final int depth) {
+        if (depth > MAX_DEPTH) {
+            throw new IllegalArgumentException("parameter 'depth' must be less than '" + MAX_DEPTH + "'.");
+        }
+        if (binominalCoeff[depth] != null) {
+            return binominalCoeff[depth];
+        }
+        else if (depth == 0) {
+            binominalCoeff[0] = new long[1];
+            binominalCoeff[0][0] = 1;
+            return binominalCoeff[0];
+        }
+        else {
+            final long[] parentCoeff = getBinominalCoeff(depth - 1);
+            final long[] result = new long[parentCoeff.length + 1];
+            result[0] = 1;
+            result[result.length - 1] = 1;
+            for (int i = 0; i < parentCoeff.length - 1; i++) {
+                result[i + 1] = parentCoeff[i] + parentCoeff[i + 1];
+            }
+            binominalCoeff[depth] = result;
+            return binominalCoeff[depth];
+        }
+    }
 
-	public static Double[][] getGaussMatrix(final int n) {
-		final Object value = matrices.get(Integer.valueOf(n));
-		if (value instanceof Double[][]) {
-			return (Double[][]) value;
-		}
-		else {
-			final Double[][] result = new Double[n][n];
-			final long[] binomCoeff = getBinominalCoeff(n - 1);
+    public static Double[][] getGaussMatrix(final int n) {
+        final Object value = matrices.get(Integer.valueOf(n));
+        if (value instanceof Double[][]) {
+            return (Double[][]) value;
+        }
+        else {
+            final Double[][] result = new Double[n][n];
+            final long[] binomCoeff = getBinominalCoeff(n - 1);
 
-			long scaleFactor = 0;
+            long scaleFactor = 0;
 
-			for (int x = 0; x < n; x++) {
-				for (int y = 0; y < n; y++) {
-					result[x][y] = (double) (binomCoeff[x] * binomCoeff[y]);
-					scaleFactor += result[x][y];
-				}
-			}
+            for (int x = 0; x < n; x++) {
+                for (int y = 0; y < n; y++) {
+                    result[x][y] = (double) (binomCoeff[x] * binomCoeff[y]);
+                    scaleFactor += result[x][y];
+                }
+            }
 
-			for (int x = 0; x < n; x++) {
-				for (int y = 0; y < n; y++) {
-					result[x][y] = result[x][y] / scaleFactor;
-				}
-			}
+            for (int x = 0; x < n; x++) {
+                for (int y = 0; y < n; y++) {
+                    result[x][y] = result[x][y] / scaleFactor;
+                }
+            }
 
-			matrices.put(Integer.valueOf(n), result);
-			return result;
-		}
-	}
+            matrices.put(Integer.valueOf(n), result);
+            return result;
+        }
+    }
 
 }

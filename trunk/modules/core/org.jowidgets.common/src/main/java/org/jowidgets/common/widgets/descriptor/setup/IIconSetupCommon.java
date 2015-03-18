@@ -31,6 +31,6 @@ import org.jowidgets.common.image.IImageConstant;
 
 public interface IIconSetupCommon extends IComponentSetupCommon {
 
-	IImageConstant getIcon();
+    IImageConstant getIcon();
 
 }

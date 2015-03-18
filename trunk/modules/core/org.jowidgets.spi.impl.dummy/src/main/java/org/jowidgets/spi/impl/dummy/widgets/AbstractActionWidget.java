@@ -33,26 +33,26 @@ import org.jowidgets.spi.widgets.IActionWidgetSpi;
 
 public abstract class AbstractActionWidget extends ActionObservable implements IActionWidgetSpi {
 
-	private final DummyWidget mockComponentDelegate;
+    private final DummyWidget mockComponentDelegate;
 
-	public AbstractActionWidget(final UIDComponent component) {
-		super();
-		this.mockComponentDelegate = new DummyWidget(component);
-	}
+    public AbstractActionWidget(final UIDComponent component) {
+        super();
+        this.mockComponentDelegate = new DummyWidget(component);
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		mockComponentDelegate.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        mockComponentDelegate.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return mockComponentDelegate.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return mockComponentDelegate.isEnabled();
+    }
 
-	@Override
-	public UIDComponent getUiReference() {
-		return mockComponentDelegate.getUiReference();
-	}
+    @Override
+    public UIDComponent getUiReference() {
+        return mockComponentDelegate.getUiReference();
+    }
 
 }

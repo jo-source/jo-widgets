@@ -53,86 +53,86 @@ import org.jowidgets.util.Assert;
 
 public final class ColorTableSnipped implements IApplication {
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
 
-		//create a frame with fill layout
-		final IFrameBluePrint frameBp = BPF.frame().setTitle("Colors table");
-		frameBp.setSize(new Dimension(400, 600));
-		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
-		frame.setLayout(FillLayout.get());
+        //create a frame with fill layout
+        final IFrameBluePrint frameBp = BPF.frame().setTitle("Colors table");
+        frameBp.setSize(new Dimension(400, 600));
+        final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
+        frame.setLayout(FillLayout.get());
 
-		//Create the table
-		final ITable table = frame.add(BPF.table(new ColorTableModel(Colors.class)));
-		table.setRowHeight(20);
+        //Create the table
+        final ITable table = frame.add(BPF.table(new ColorTableModel(Colors.class)));
+        table.setRowHeight(20);
 
-		//set the root frame visible
-		frame.setVisible(true);
+        //set the root frame visible
+        frame.setVisible(true);
 
-		//pack the table after it has become visible
-		table.pack();
-	}
+        //pack the table after it has become visible
+        table.pack();
+    }
 
-	private final class ColorTableModel extends AbstractTableModel {
+    private final class ColorTableModel extends AbstractTableModel {
 
-		private final IColorConstant[] colors;
+        private final IColorConstant[] colors;
 
-		private ColorTableModel(final Class<? extends Enum<? extends IColorConstant>> colorsClass) {
-			this((IColorConstant[]) Assert.getParamNotNull(colorsClass, "colorsClass").getEnumConstants());
-		}
+        private ColorTableModel(final Class<? extends Enum<? extends IColorConstant>> colorsClass) {
+            this((IColorConstant[]) Assert.getParamNotNull(colorsClass, "colorsClass").getEnumConstants());
+        }
 
-		private ColorTableModel(final IColorConstant[] colors) {
-			Assert.paramNotNull(colors, "colors");
+        private ColorTableModel(final IColorConstant[] colors) {
+            Assert.paramNotNull(colors, "colors");
 
-			this.colors = new IColorConstant[colors.length];
-			System.arraycopy(colors, 0, this.colors, 0, colors.length);
-			Arrays.sort(this.colors, new Comparator<IColorConstant>() {
-				@Override
-				public int compare(final IColorConstant o1, final IColorConstant o2) {
-					return o1.toString().compareTo(o2.toString());
-				}
-			});
-		}
+            this.colors = new IColorConstant[colors.length];
+            System.arraycopy(colors, 0, this.colors, 0, colors.length);
+            Arrays.sort(this.colors, new Comparator<IColorConstant>() {
+                @Override
+                public int compare(final IColorConstant o1, final IColorConstant o2) {
+                    return o1.toString().compareTo(o2.toString());
+                }
+            });
+        }
 
-		@Override
-		public int getColumnCount() {
-			return 2;
-		}
+        @Override
+        public int getColumnCount() {
+            return 2;
+        }
 
-		@Override
-		public ITableColumn getColumn(final int columnIndex) {
-			final IDefaultTableColumnBuilder columnBuilder = DefaultTableColumn.builder();
-			if (columnIndex == 0) {
-				columnBuilder.setAlignment(AlignmentHorizontal.CENTER);
-				return columnBuilder.setText("Color").build();
-			}
-			else if (columnIndex == 1) {
-				return columnBuilder.setText("Name").build();
-			}
-			else {
-				return null;
-			}
-		}
+        @Override
+        public ITableColumn getColumn(final int columnIndex) {
+            final IDefaultTableColumnBuilder columnBuilder = DefaultTableColumn.builder();
+            if (columnIndex == 0) {
+                columnBuilder.setAlignment(AlignmentHorizontal.CENTER);
+                return columnBuilder.setText("Color").build();
+            }
+            else if (columnIndex == 1) {
+                return columnBuilder.setText("Name").build();
+            }
+            else {
+                return null;
+            }
+        }
 
-		@Override
-		public int getRowCount() {
-			return colors.length;
-		}
+        @Override
+        public int getRowCount() {
+            return colors.length;
+        }
 
-		@Override
-		public ITableCell getCell(final int rowIndex, final int columnIndex) {
-			final ITableCellBuilder builder = TableCell.builder();
-			if (columnIndex == 0) {
-				return builder.setBackgroundColor(colors[rowIndex]).build();
-			}
-			else if (columnIndex == 1) {
-				return builder.setText(colors[rowIndex].toString()).build();
-			}
-			else {
-				return null;
-			}
+        @Override
+        public ITableCell getCell(final int rowIndex, final int columnIndex) {
+            final ITableCellBuilder builder = TableCell.builder();
+            if (columnIndex == 0) {
+                return builder.setBackgroundColor(colors[rowIndex]).build();
+            }
+            else if (columnIndex == 1) {
+                return builder.setText(colors[rowIndex].toString()).build();
+            }
+            else {
+                return null;
+            }
 
-		}
+        }
 
-	}
+    }
 }

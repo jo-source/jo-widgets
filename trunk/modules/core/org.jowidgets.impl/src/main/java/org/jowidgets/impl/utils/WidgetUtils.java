@@ -35,21 +35,21 @@ import org.jowidgets.util.Assert;
 
 public final class WidgetUtils implements IWidgetUtils {
 
-	@Override
-	public IWindow getWindowAncestor(final IWidget widget) {
-		Assert.paramNotNull(widget, "widget");
+    @Override
+    public IWindow getWindowAncestor(final IWidget widget) {
+        Assert.paramNotNull(widget, "widget");
 
-		if (widget instanceof IWindow) {
-			return (IWindow) widget;
-		}
+        if (widget instanceof IWindow) {
+            return (IWindow) widget;
+        }
 
-		final IWidget childWidget = widget;
-		final IWidget widgetParent = childWidget.getParent();
-		if (widgetParent != null) {
-			return getWindowAncestor(widgetParent);
-		}
+        final IWidget childWidget = widget;
+        final IWidget widgetParent = childWidget.getParent();
+        if (widgetParent != null) {
+            return getWindowAncestor(widgetParent);
+        }
 
-		return null;
-	}
+        return null;
+    }
 
 }

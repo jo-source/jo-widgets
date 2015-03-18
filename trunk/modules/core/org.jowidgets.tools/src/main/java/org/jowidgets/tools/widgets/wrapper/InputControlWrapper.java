@@ -36,74 +36,74 @@ import org.jowidgets.validation.IValidator;
 
 public class InputControlWrapper<VALUE_TYPE> extends ControlWrapper implements IInputControl<VALUE_TYPE> {
 
-	public InputControlWrapper(final IInputControl<VALUE_TYPE> widget) {
-		super(widget);
-	}
+    public InputControlWrapper(final IInputControl<VALUE_TYPE> widget) {
+        super(widget);
+    }
 
-	@Override
-	@SuppressWarnings("unchecked")
-	protected IInputControl<VALUE_TYPE> getWidget() {
-		return (IInputControl<VALUE_TYPE>) super.getWidget();
-	}
+    @Override
+    @SuppressWarnings("unchecked")
+    protected IInputControl<VALUE_TYPE> getWidget() {
+        return (IInputControl<VALUE_TYPE>) super.getWidget();
+    }
 
-	@Override
-	public void addValidator(final IValidator<VALUE_TYPE> validator) {
-		getWidget().addValidator(validator);
-	}
+    @Override
+    public void addValidator(final IValidator<VALUE_TYPE> validator) {
+        getWidget().addValidator(validator);
+    }
 
-	@Override
-	public boolean hasModifications() {
-		return getWidget().hasModifications();
-	}
+    @Override
+    public boolean hasModifications() {
+        return getWidget().hasModifications();
+    }
 
-	@Override
-	public void resetModificationState() {
-		getWidget().resetModificationState();
-	}
+    @Override
+    public void resetModificationState() {
+        getWidget().resetModificationState();
+    }
 
-	@Override
-	public void setValue(final VALUE_TYPE value) {
-		getWidget().setValue(value);
-	}
+    @Override
+    public void setValue(final VALUE_TYPE value) {
+        getWidget().setValue(value);
+    }
 
-	@Override
-	public VALUE_TYPE getValue() {
-		return getWidget().getValue();
-	}
+    @Override
+    public VALUE_TYPE getValue() {
+        return getWidget().getValue();
+    }
 
-	@Override
-	public IValidationResult validate() {
-		return getWidget().validate();
-	}
+    @Override
+    public IValidationResult validate() {
+        return getWidget().validate();
+    }
 
-	@Override
-	public void addValidationConditionListener(final IValidationConditionListener listener) {
-		getWidget().addValidationConditionListener(listener);
-	}
+    @Override
+    public void addValidationConditionListener(final IValidationConditionListener listener) {
+        getWidget().addValidationConditionListener(listener);
+    }
 
-	@Override
-	public void removeValidationConditionListener(final IValidationConditionListener listener) {
-		getWidget().removeValidationConditionListener(listener);
-	}
+    @Override
+    public void removeValidationConditionListener(final IValidationConditionListener listener) {
+        getWidget().removeValidationConditionListener(listener);
+    }
 
-	@Override
-	public void setEditable(final boolean editable) {
-		getWidget().setEditable(editable);
-	}
+    @Override
+    public void setEditable(final boolean editable) {
+        getWidget().setEditable(editable);
+    }
 
-	@Override
-	public void addInputListener(final IInputListener listener) {
-		getWidget().addInputListener(listener);
-	}
+    @Override
+    public void addInputListener(final IInputListener listener) {
+        getWidget().addInputListener(listener);
+    }
 
-	@Override
-	public void removeInputListener(final IInputListener listener) {
-		getWidget().removeInputListener(listener);
-	}
+    @Override
+    public void removeInputListener(final IInputListener listener) {
+        getWidget().removeInputListener(listener);
+    }
 
-	@Override
-	public boolean isEditable() {
-		return getWidget().isEditable();
-	}
+    @Override
+    public boolean isEditable() {
+        return getWidget().isEditable();
+    }
 
 }

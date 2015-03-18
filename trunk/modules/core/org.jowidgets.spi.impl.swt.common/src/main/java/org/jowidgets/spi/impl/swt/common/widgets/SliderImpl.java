@@ -39,73 +39,73 @@ import org.jowidgets.util.Assert;
 
 public final class SliderImpl extends AbstractInputControl implements ISliderSpi {
 
-	private final Orientation orientation;
+    private final Orientation orientation;
 
-	public SliderImpl(final Object parentUiReference, final ISliderSetupSpi setup) {
-		super(new Scale((Composite) parentUiReference, getStyle(setup)));
+    public SliderImpl(final Object parentUiReference, final ISliderSetupSpi setup) {
+        super(new Scale((Composite) parentUiReference, getStyle(setup)));
 
-		this.orientation = setup.getOrientation();
+        this.orientation = setup.getOrientation();
 
-		final Scale scale = getUiReference();
+        final Scale scale = getUiReference();
 
-		scale.setMaximum(setup.getMaximum());
-		scale.setMinimum(setup.getMinimum());
-		scale.setSelection(setup.getMinimum());
-		scale.setPageIncrement(setup.getTickSpacing());
-		scale.setToolTipText(setup.getToolTipText());
+        scale.setMaximum(setup.getMaximum());
+        scale.setMinimum(setup.getMinimum());
+        scale.setSelection(setup.getMinimum());
+        scale.setPageIncrement(setup.getTickSpacing());
+        scale.setToolTipText(setup.getToolTipText());
 
-		scale.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(final SelectionEvent e) {
-				fireInputChanged(getSelection());
-			}
-		});
-	}
+        scale.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(final SelectionEvent e) {
+                fireInputChanged(getSelection());
+            }
+        });
+    }
 
-	@Override
-	public Scale getUiReference() {
-		return (Scale) super.getUiReference();
-	}
+    @Override
+    public Scale getUiReference() {
+        return (Scale) super.getUiReference();
+    }
 
-	private static int getStyle(final ISliderSetupSpi setup) {
-		Assert.paramNotNull(setup.getOrientation(), "setup.getOrientation()");
-		int result = SWT.NONE;
-		if (setup.getOrientation() == Orientation.HORIZONTAL) {
-			result = result | SWT.HORIZONTAL;
-		}
-		else if (setup.getOrientation() == Orientation.VERTICAL) {
-			result = result | SWT.VERTICAL;
-		}
-		else {
-			throw new IllegalArgumentException("The orientation '" + setup.getOrientation() + "' is not supported");
-		}
-		return result;
-	}
+    private static int getStyle(final ISliderSetupSpi setup) {
+        Assert.paramNotNull(setup.getOrientation(), "setup.getOrientation()");
+        int result = SWT.NONE;
+        if (setup.getOrientation() == Orientation.HORIZONTAL) {
+            result = result | SWT.HORIZONTAL;
+        }
+        else if (setup.getOrientation() == Orientation.VERTICAL) {
+            result = result | SWT.VERTICAL;
+        }
+        else {
+            throw new IllegalArgumentException("The orientation '" + setup.getOrientation() + "' is not supported");
+        }
+        return result;
+    }
 
-	@Override
-	public void setEditable(final boolean editable) {
-		getUiReference().setEnabled(editable);
-	}
+    @Override
+    public void setEditable(final boolean editable) {
+        getUiReference().setEnabled(editable);
+    }
 
-	@Override
-	public int getSelection() {
-		if (orientation == Orientation.HORIZONTAL) {
-			return getUiReference().getSelection();
-		}
-		else {
-			return getUiReference().getMaximum() - getUiReference().getSelection();
-		}
-	}
+    @Override
+    public int getSelection() {
+        if (orientation == Orientation.HORIZONTAL) {
+            return getUiReference().getSelection();
+        }
+        else {
+            return getUiReference().getMaximum() - getUiReference().getSelection();
+        }
+    }
 
-	@Override
-	public void setSelection(final int value) {
-		if (orientation == Orientation.HORIZONTAL) {
-			getUiReference().setSelection(value);
-		}
-		else {
-			getUiReference().setSelection(getUiReference().getMaximum() - value);
-		}
-		fireInputChanged(getSelection());
-	}
+    @Override
+    public void setSelection(final int value) {
+        if (orientation == Orientation.HORIZONTAL) {
+            getUiReference().setSelection(value);
+        }
+        else {
+            getUiReference().setSelection(getUiReference().getMaximum() - value);
+        }
+        fireInputChanged(getSelection());
+    }
 
 }

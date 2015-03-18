@@ -40,284 +40,284 @@ import org.jowidgets.common.types.Position;
 
 class JoMigComponentWrapper implements IComponentWrapperCommon {
 
-	// TODO MG,NM MigLayout - change screen size when Jo Widgets supports screen information
-	private static Dimension screenSize;
+    // TODO MG,NM MigLayout - change screen size when Jo Widgets supports screen information
+    private static Dimension screenSize;
 
-	private static boolean isUseVisualPadding;
+    private static boolean isUseVisualPadding;
 
-	private final IComponent component;
-	private int compType = TYPE_UNSET;
+    private final IComponent component;
+    private int compType = TYPE_UNSET;
 
-	@SuppressWarnings("unused")
-	private Dimension preferredSize;
+    @SuppressWarnings("unused")
+    private Dimension preferredSize;
 
-	JoMigComponentWrapper(final IComponent component) {
-		this.component = component;
-	}
+    JoMigComponentWrapper(final IComponent component) {
+        this.component = component;
+    }
 
-	@Override
-	public final int getBaseline(final int width, final int height) {
-		return -1;
-	}
+    @Override
+    public final int getBaseline(final int width, final int height) {
+        return -1;
+    }
 
-	@Override
-	public IComponent getComponent() {
-		return component;
-	}
+    @Override
+    public IComponent getComponent() {
+        return component;
+    }
 
-	@Override
-	public final float getPixelUnitFactor(final boolean isHor) {
-		// TODO MG,NM Miglayout - implement correct pixel unit factor calculation
-		return 1f;
-	}
+    @Override
+    public final float getPixelUnitFactor(final boolean isHor) {
+        // TODO MG,NM Miglayout - implement correct pixel unit factor calculation
+        return 1f;
+    }
 
-	@Override
-	public final int getX() {
-		return component.getPosition().getX();
-	}
+    @Override
+    public final int getX() {
+        return component.getPosition().getX();
+    }
 
-	@Override
-	public final int getY() {
-		return component.getPosition().getY();
-	}
+    @Override
+    public final int getY() {
+        return component.getPosition().getY();
+    }
 
-	@Override
-	public final int getWidth() {
-		return component.getSize().getWidth();
-	}
+    @Override
+    public final int getWidth() {
+        return component.getSize().getWidth();
+    }
 
-	@Override
-	public final int getHeight() {
-		return component.getSize().getHeight();
-	}
+    @Override
+    public final int getHeight() {
+        return component.getSize().getHeight();
+    }
 
-	@Override
-	public final int getScreenLocationX() {
-		return component.toScreen(new Position(0, 0)).getX();
-	}
+    @Override
+    public final int getScreenLocationX() {
+        return component.toScreen(new Position(0, 0)).getX();
+    }
 
-	@Override
-	public final int getScreenLocationY() {
-		return component.toScreen(new Position(0, 0)).getY();
-	}
+    @Override
+    public final int getScreenLocationY() {
+        return component.toScreen(new Position(0, 0)).getY();
+    }
 
-	@Override
-	public final int getMinimumHeight(final int sz) {
-		if (component instanceof IControl) {
-			final IControl control = (IControl) component;
-			return control.getMinSize().getHeight();
-		}
+    @Override
+    public final int getMinimumHeight(final int sz) {
+        if (component instanceof IControl) {
+            final IControl control = (IControl) component;
+            return control.getMinSize().getHeight();
+        }
 
-		throw new IllegalStateException("Unkown minimum size of " + component.getClass().getName());
-	}
+        throw new IllegalStateException("Unkown minimum size of " + component.getClass().getName());
+    }
 
-	@Override
-	public final int getMinimumWidth(final int sz) {
-		if (component instanceof IControl) {
-			final IControl control = (IControl) component;
-			return control.getMinSize().getWidth();
-		}
+    @Override
+    public final int getMinimumWidth(final int sz) {
+        if (component instanceof IControl) {
+            final IControl control = (IControl) component;
+            return control.getMinSize().getWidth();
+        }
 
-		throw new IllegalStateException("Unkown minimum size of " + component.getClass().getName());
-	}
+        throw new IllegalStateException("Unkown minimum size of " + component.getClass().getName());
+    }
 
-	@Override
-	public final int getPreferredHeight(final int sz) {
-		if (component instanceof IControl) {
-			final IControl control = (IControl) component;
-			return control.getPreferredSize().getHeight();
-		}
+    @Override
+    public final int getPreferredHeight(final int sz) {
+        if (component instanceof IControl) {
+            final IControl control = (IControl) component;
+            return control.getPreferredSize().getHeight();
+        }
 
-		throw new IllegalStateException("Unkown preferred size of " + component.getClass().getName());
-	}
+        throw new IllegalStateException("Unkown preferred size of " + component.getClass().getName());
+    }
 
-	@Override
-	public final int getPreferredWidth(final int sz) {
-		if (component instanceof IControl) {
-			final IControl control = (IControl) component;
-			return control.getPreferredSize().getWidth();
-		}
+    @Override
+    public final int getPreferredWidth(final int sz) {
+        if (component instanceof IControl) {
+            final IControl control = (IControl) component;
+            return control.getPreferredSize().getWidth();
+        }
 
-		throw new IllegalStateException("Unkown preferred size of " + component.getClass().getName());
-	}
+        throw new IllegalStateException("Unkown preferred size of " + component.getClass().getName());
+    }
 
-	@Override
-	public final int getMaximumHeight(final int sz) {
-		if (component instanceof IControl) {
-			final IControl control = (IControl) component;
-			return control.getMaxSize().getHeight();
-		}
+    @Override
+    public final int getMaximumHeight(final int sz) {
+        if (component instanceof IControl) {
+            final IControl control = (IControl) component;
+            return control.getMaxSize().getHeight();
+        }
 
-		throw new IllegalStateException("Unkown maximum size of " + component.getClass().getName());
-	}
+        throw new IllegalStateException("Unkown maximum size of " + component.getClass().getName());
+    }
 
-	@Override
-	public final int getMaximumWidth(final int sz) {
-		if (component instanceof IControl) {
-			final IControl control = (IControl) component;
-			return control.getMaxSize().getWidth();
-		}
+    @Override
+    public final int getMaximumWidth(final int sz) {
+        if (component instanceof IControl) {
+            final IControl control = (IControl) component;
+            return control.getMaxSize().getWidth();
+        }
 
-		throw new IllegalStateException("Unkown maximum size of " + component.getClass().getName());
-	}
+        throw new IllegalStateException("Unkown maximum size of " + component.getClass().getName());
+    }
 
-	@Override
-	public final IContainerWrapperCommon getParent() {
-		if (component.getParent() == null) {
-			return null;
-		}
-		else if (component.getParent() instanceof IToolBar) {
-			return null;
-		}
-		else if (component.getParent() instanceof IContainer) {
-			return new JoMigContainerWrapper((IContainer) component.getParent());
-		}
-		else if (component.getParent() instanceof ITabFolder) {
-			// workaround: if the parent is a tab folder use its parent
-			return new JoMigContainerWrapper((IContainer) component.getParent().getParent());
-		}
-		else if (component.getParent() instanceof ISplitComposite) {
-			// workaround: if the parent is a split composite use its parent
-			return new JoMigContainerWrapper((IContainer) component.getParent().getParent());
-		}
-		else {
-			throw new IllegalStateException("Don't know how to handle '"
-				+ component.getParent().getClass().getName()
-				+ "' as a parent.");
-		}
-	}
+    @Override
+    public final IContainerWrapperCommon getParent() {
+        if (component.getParent() == null) {
+            return null;
+        }
+        else if (component.getParent() instanceof IToolBar) {
+            return null;
+        }
+        else if (component.getParent() instanceof IContainer) {
+            return new JoMigContainerWrapper((IContainer) component.getParent());
+        }
+        else if (component.getParent() instanceof ITabFolder) {
+            // workaround: if the parent is a tab folder use its parent
+            return new JoMigContainerWrapper((IContainer) component.getParent().getParent());
+        }
+        else if (component.getParent() instanceof ISplitComposite) {
+            // workaround: if the parent is a split composite use its parent
+            return new JoMigContainerWrapper((IContainer) component.getParent().getParent());
+        }
+        else {
+            throw new IllegalStateException("Don't know how to handle '"
+                + component.getParent().getClass().getName()
+                + "' as a parent.");
+        }
+    }
 
-	@Override
-	public int getHorizontalScreenDPI() {
-		// TODO MG,NM MigLayout - return horizontal screen dpi
-		return 72;
-	}
+    @Override
+    public int getHorizontalScreenDPI() {
+        // TODO MG,NM MigLayout - return horizontal screen dpi
+        return 72;
+    }
 
-	@Override
-	public int getVerticalScreenDPI() {
-		// TODO MG,NM MigLayout - return vertical screen dpi
-		return 72;
-	}
+    @Override
+    public int getVerticalScreenDPI() {
+        // TODO MG,NM MigLayout - return vertical screen dpi
+        return 72;
+    }
 
-	private IWindow getTopLevelWindow() {
-		IWidget item = component;
-		while (item.getParent() != null) {
-			item = item.getParent();
-		}
+    private IWindow getTopLevelWindow() {
+        IWidget item = component;
+        while (item.getParent() != null) {
+            item = item.getParent();
+        }
 
-		if (item instanceof IWindow) {
-			return (IWindow) item;
-		}
-		else {
-			return null;
-		}
-	}
+        if (item instanceof IWindow) {
+            return (IWindow) item;
+        }
+        else {
+            return null;
+        }
+    }
 
-	@Override
-	public final int getScreenWidth() {
-		// TODO MG,NM MigLayout - improve way to get screen width
-		if (screenSize == null) {
-			final IWindow topLevelWindow = getTopLevelWindow();
-			if (topLevelWindow == null) {
-				return -1;
-			}
+    @Override
+    public final int getScreenWidth() {
+        // TODO MG,NM MigLayout - improve way to get screen width
+        if (screenSize == null) {
+            final IWindow topLevelWindow = getTopLevelWindow();
+            if (topLevelWindow == null) {
+                return -1;
+            }
 
-			screenSize = topLevelWindow.getParentBounds().getSize();
-		}
+            screenSize = topLevelWindow.getParentBounds().getSize();
+        }
 
-		return screenSize.getWidth();
-	}
+        return screenSize.getWidth();
+    }
 
-	@Override
-	public final int getScreenHeight() {
-		// TODO MG,NM MigLayout - improve way to get screen height
-		if (screenSize == null) {
-			final IWindow topLevelWindow = getTopLevelWindow();
-			if (topLevelWindow == null) {
-				return -1;
-			}
+    @Override
+    public final int getScreenHeight() {
+        // TODO MG,NM MigLayout - improve way to get screen height
+        if (screenSize == null) {
+            final IWindow topLevelWindow = getTopLevelWindow();
+            if (topLevelWindow == null) {
+                return -1;
+            }
 
-			screenSize = topLevelWindow.getParentBounds().getSize();
-		}
+            screenSize = topLevelWindow.getParentBounds().getSize();
+        }
 
-		return screenSize.getHeight();
-	}
+        return screenSize.getHeight();
+    }
 
-	@Override
-	public final boolean hasBaseline() {
-		return false;
-	}
+    @Override
+    public final boolean hasBaseline() {
+        return false;
+    }
 
-	@Override
-	public final String getLinkId() {
-		return null;
-	}
+    @Override
+    public final String getLinkId() {
+        return null;
+    }
 
-	@Override
-	public final void setBounds(final int x, final int y, final int width, final int height) {
-		component.setPosition(x, y);
-		component.setSize(width, height);
-	}
+    @Override
+    public final void setBounds(final int x, final int y, final int width, final int height) {
+        component.setPosition(x, y);
+        component.setSize(width, height);
+    }
 
-	@Override
-	public boolean isVisible() {
-		return component.isVisible();
-	}
+    @Override
+    public boolean isVisible() {
+        return component.isVisible();
+    }
 
-	@Override
-	public final int[] getVisualPadding() {
-		return null;
-	}
+    @Override
+    public final int[] getVisualPadding() {
+        return null;
+    }
 
-	public static boolean isUseVisualPadding() {
-		return isUseVisualPadding;
-	}
+    public static boolean isUseVisualPadding() {
+        return isUseVisualPadding;
+    }
 
-	public static void setUseVisualPadding(final boolean b) {
-		isUseVisualPadding = b;
-	}
+    public static void setUseVisualPadding(final boolean b) {
+        isUseVisualPadding = b;
+    }
 
-	@Override
-	public int getLayoutHashCode() {
-		final int h = 0;
-		//CHECKSTYLE:OFF
-		if (component.isVisible()) {
-			//h |= (1 << 25);
-		}
+    @Override
+    public int getLayoutHashCode() {
+        final int h = 0;
+        //CHECKSTYLE:OFF
+        if (component.isVisible()) {
+            //h |= (1 << 25);
+        }
 
-		final String id = getLinkId();
-		if (id != null) {
-			//h += id.hashCode();
-		}
-		return h;
-	}
+        final String id = getLinkId();
+        if (id != null) {
+            //h += id.hashCode();
+        }
+        return h;
+    }
 
-	@Override
-	public final void paintDebugOutline() {
-		// not supported yet
-	}
+    @Override
+    public final void paintDebugOutline() {
+        // not supported yet
+    }
 
-	@Override
-	public int getComponetType(final boolean disregardScrollPane) {
-		if (compType == TYPE_UNSET) {
-			compType = ComponentTypeUtil.getType(component);
-		}
+    @Override
+    public int getComponetType(final boolean disregardScrollPane) {
+        if (compType == TYPE_UNSET) {
+            compType = ComponentTypeUtil.getType(component);
+        }
 
-		return compType;
-	}
+        return compType;
+    }
 
-	@Override
-	public final int hashCode() {
-		return component.hashCode();
-	}
+    @Override
+    public final int hashCode() {
+        return component.hashCode();
+    }
 
-	@Override
-	public final boolean equals(final Object o) {
-		if (o == null || o instanceof JoMigComponentWrapper == false) {
-			return false;
-		}
+    @Override
+    public final boolean equals(final Object o) {
+        if (o == null || o instanceof JoMigComponentWrapper == false) {
+            return false;
+        }
 
-		return getComponent().equals(((JoMigComponentWrapper) o).getComponent());
-	}
+        return getComponent().equals(((JoMigComponentWrapper) o).getComponent());
+    }
 
 }

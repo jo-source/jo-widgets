@@ -34,13 +34,13 @@ import org.jowidgets.examples.common.map.MapDemoApplication;
 
 public final class SwtMapDemoStarter {
 
-	private SwtMapDemoStarter() {}
+    private SwtMapDemoStarter() {}
 
-	public static void main(final String[] args) throws Exception {
-		Toolkit.getWidgetFactory().register(
-				IMapWidgetBlueprint.class,
-				new SwtGoogleEarthWidgetFactory(MapDemoApplication.API_KEY));
-		new MapDemoApplication().start();
-	}
+    public static void main(final String[] args) throws Exception {
+        Toolkit.getWidgetFactory().register(
+                IMapWidgetBlueprint.class,
+                new SwtGoogleEarthWidgetFactory(MapDemoApplication.API_KEY));
+        new MapDemoApplication().start();
+    }
 
 }

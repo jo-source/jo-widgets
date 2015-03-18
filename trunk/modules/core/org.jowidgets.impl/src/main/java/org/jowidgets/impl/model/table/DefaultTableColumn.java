@@ -37,111 +37,111 @@ import org.jowidgets.util.event.IChangeListener;
 // TODO NM: How to handle width when invisible
 class DefaultTableColumn implements IDefaultTableColumn {
 
-	private final ChangeObservable changeObservable;
+    private final ChangeObservable changeObservable;
 
-	private String text;
-	private String toolTipText;
-	private IImageConstant icon;
-	private int width;
-	private AlignmentHorizontal alignment;
-	private boolean visible;
+    private String text;
+    private String toolTipText;
+    private IImageConstant icon;
+    private int width;
+    private AlignmentHorizontal alignment;
+    private boolean visible;
 
-	DefaultTableColumn(
-		final String text,
-		final String toolTipText,
-		final IImageConstant icon,
-		final int width,
-		final AlignmentHorizontal alignment,
-		final boolean visible) {
+    DefaultTableColumn(
+        final String text,
+        final String toolTipText,
+        final IImageConstant icon,
+        final int width,
+        final AlignmentHorizontal alignment,
+        final boolean visible) {
 
-		this.changeObservable = new ChangeObservable();
+        this.changeObservable = new ChangeObservable();
 
-		this.text = text;
-		this.toolTipText = toolTipText;
-		this.icon = icon;
-		this.width = width;
-		this.alignment = alignment;
-		this.visible = visible;
-	}
+        this.text = text;
+        this.toolTipText = toolTipText;
+        this.icon = icon;
+        this.width = width;
+        this.alignment = alignment;
+        this.visible = visible;
+    }
 
-	@Override
-	public String getText() {
-		return text;
-	}
+    @Override
+    public String getText() {
+        return text;
+    }
 
-	@Override
-	public void setText(final String text) {
-		this.text = text;
-		changeObservable.fireChangedEvent();
-	}
+    @Override
+    public void setText(final String text) {
+        this.text = text;
+        changeObservable.fireChangedEvent();
+    }
 
-	@Override
-	public String getToolTipText() {
-		return toolTipText;
-	}
+    @Override
+    public String getToolTipText() {
+        return toolTipText;
+    }
 
-	@Override
-	public void setToolTipText(final String toolTipText) {
-		this.toolTipText = toolTipText;
-		changeObservable.fireChangedEvent();
-	}
+    @Override
+    public void setToolTipText(final String toolTipText) {
+        this.toolTipText = toolTipText;
+        changeObservable.fireChangedEvent();
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return icon;
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return icon;
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		this.icon = icon;
-		changeObservable.fireChangedEvent();
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        this.icon = icon;
+        changeObservable.fireChangedEvent();
+    }
 
-	@Override
-	public int getWidth() {
-		return width;
-	}
+    @Override
+    public int getWidth() {
+        return width;
+    }
 
-	@Override
-	public void setWidth(final int width) {
-		this.width = width;
-		changeObservable.fireChangedEvent();
-	}
+    @Override
+    public void setWidth(final int width) {
+        this.width = width;
+        changeObservable.fireChangedEvent();
+    }
 
-	@Override
-	public AlignmentHorizontal getAlignment() {
-		return alignment;
-	}
+    @Override
+    public AlignmentHorizontal getAlignment() {
+        return alignment;
+    }
 
-	@Override
-	public void setAlignment(final AlignmentHorizontal alignment) {
-		this.alignment = alignment;
-		changeObservable.fireChangedEvent();
-	}
+    @Override
+    public void setAlignment(final AlignmentHorizontal alignment) {
+        this.alignment = alignment;
+        changeObservable.fireChangedEvent();
+    }
 
-	@Override
-	public boolean isVisible() {
-		return visible;
-	}
+    @Override
+    public boolean isVisible() {
+        return visible;
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		if (this.visible == visible) {
-			return;
-		}
+    @Override
+    public void setVisible(final boolean visible) {
+        if (this.visible == visible) {
+            return;
+        }
 
-		this.visible = visible;
-		changeObservable.fireChangedEvent();
-	}
+        this.visible = visible;
+        changeObservable.fireChangedEvent();
+    }
 
-	@Override
-	public void addChangeListener(final IChangeListener listener) {
-		changeObservable.addChangeListener(listener);
-	}
+    @Override
+    public void addChangeListener(final IChangeListener listener) {
+        changeObservable.addChangeListener(listener);
+    }
 
-	@Override
-	public void removeChangeListener(final IChangeListener listener) {
-		changeObservable.removeChangeListener(listener);
-	}
+    @Override
+    public void removeChangeListener(final IChangeListener listener) {
+        changeObservable.removeChangeListener(listener);
+    }
 
 }

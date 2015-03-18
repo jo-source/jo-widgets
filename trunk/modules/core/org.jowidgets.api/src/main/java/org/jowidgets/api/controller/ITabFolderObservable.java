@@ -30,8 +30,8 @@ package org.jowidgets.api.controller;
 
 public interface ITabFolderObservable {
 
-	void addTabFolderListener(ITabFolderListener listener);
+    void addTabFolderListener(ITabFolderListener listener);
 
-	void removeTabFolderListener(ITabFolderListener listener);
+    void removeTabFolderListener(ITabFolderListener listener);
 
 }

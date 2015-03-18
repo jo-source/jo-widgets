@@ -33,29 +33,29 @@ import org.jowidgets.util.Assert;
 
 public class RegExpInputVerifier implements IInputVerifier {
 
-	private final String regExp;
+    private final String regExp;
 
-	public RegExpInputVerifier(final String regExp) {
-		Assert.paramNotNull(regExp, "regExp");
-		this.regExp = regExp;
-	}
+    public RegExpInputVerifier(final String regExp) {
+        Assert.paramNotNull(regExp, "regExp");
+        this.regExp = regExp;
+    }
 
-	@Override
-	public boolean verify(final String currentValue, final String input, final int start, final int end) {
-		final String first = currentValue.substring(0, start);
-		String second = "";
-		if (end < currentValue.length() && end >= 0) {
-			second = currentValue.substring(end, currentValue.length());
-		}
+    @Override
+    public boolean verify(final String currentValue, final String input, final int start, final int end) {
+        final String first = currentValue.substring(0, start);
+        String second = "";
+        if (end < currentValue.length() && end >= 0) {
+            second = currentValue.substring(end, currentValue.length());
+        }
 
-		final String newValue = first + input + second;
+        final String newValue = first + input + second;
 
-		if (newValue.matches(regExp)) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+        if (newValue.matches(regExp)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
 }

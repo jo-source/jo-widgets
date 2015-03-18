@@ -28,7 +28,7 @@
 package org.jowidgets.common.widgets.builder;
 
 public interface IToggleButtonSetupBuilderCommon<INSTANCE_TYPE extends IToggleButtonSetupBuilderCommon<?>> extends
-		ICheckBoxSetupBuilderCommon<INSTANCE_TYPE>,
-		IIconSetupBuilderCommon<INSTANCE_TYPE> {
+        ICheckBoxSetupBuilderCommon<INSTANCE_TYPE>,
+        IIconSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

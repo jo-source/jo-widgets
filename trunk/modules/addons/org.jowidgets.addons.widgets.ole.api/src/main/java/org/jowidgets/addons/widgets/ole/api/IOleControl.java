@@ -34,24 +34,24 @@ import org.jowidgets.api.widgets.IControl;
 
 public interface IOleControl extends IControl {
 
-	void setDocument(String progId);
+    void setDocument(String progId);
 
-	void setDocument(String progId, File file);
+    void setDocument(String progId, File file);
 
-	void setDocument(File file);
+    void setDocument(File file);
 
-	boolean saveCurrentDocument(File file, boolean includeOleInfo);
+    boolean saveCurrentDocument(File file, boolean includeOleInfo);
 
-	void clearDocument();
+    void clearDocument();
 
-	boolean isDirty();
+    boolean isDirty();
 
-	void execute(OleCommand command, Object in, OleCommandOption... options);
+    void execute(OleCommand command, Object in, OleCommandOption... options);
 
-	void addEventListener(int eventID, IOleEventListener listener);
+    void addEventListener(int eventID, IOleEventListener listener);
 
-	void removeEventListener(int eventID, IOleEventListener listener);
+    void removeEventListener(int eventID, IOleEventListener listener);
 
-	IOleAutomation getAutomation();
+    IOleAutomation getAutomation();
 
 }

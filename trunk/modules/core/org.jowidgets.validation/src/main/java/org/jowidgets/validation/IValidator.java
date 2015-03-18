@@ -34,13 +34,13 @@ package org.jowidgets.validation;
  */
 public interface IValidator<VALUE_TYPE> {
 
-	/**
-	 * Do the validation for a given value
-	 * 
-	 * @param value The value to validate, may be null
-	 * 
-	 * @return The validation result, never null
-	 */
-	IValidationResult validate(VALUE_TYPE value);
+    /**
+     * Do the validation for a given value
+     * 
+     * @param value The value to validate, may be null
+     * 
+     * @return The validation result, never null
+     */
+    IValidationResult validate(VALUE_TYPE value);
 
 }

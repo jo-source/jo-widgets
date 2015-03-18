@@ -33,75 +33,75 @@ import org.jowidgets.common.types.Accelerator;
 
 public interface IAction {
 
-	/**
-	 * Gets the action label text
-	 * 
-	 * @return The actions label text, may be null or empty
-	 */
-	String getText();
+    /**
+     * Gets the action label text
+     * 
+     * @return The actions label text, may be null or empty
+     */
+    String getText();
 
-	/**
-	 * Gets the actions tooltip text
-	 * 
-	 * @return The actions tooltip text, may be null or empty
-	 */
-	String getToolTipText();
+    /**
+     * Gets the actions tooltip text
+     * 
+     * @return The actions tooltip text, may be null or empty
+     */
+    String getToolTipText();
 
-	/**
-	 * Gets the action icon
-	 * 
-	 * @return The actions icon, may be null
-	 */
-	IImageConstant getIcon();
+    /**
+     * Gets the action icon
+     * 
+     * @return The actions icon, may be null
+     */
+    IImageConstant getIcon();
 
-	/**
-	 * Gets the action mnemonic
-	 * 
-	 * @return The mnemonic key, may be null
-	 */
-	Character getMnemonic();
+    /**
+     * Gets the action mnemonic
+     * 
+     * @return The mnemonic key, may be null
+     */
+    Character getMnemonic();
 
-	/**
-	 * Gets the actions accelerator
-	 * 
-	 * @return The accelerator, may be null
-	 */
-	Accelerator getAccelerator();
+    /**
+     * Gets the actions accelerator
+     * 
+     * @return The accelerator, may be null
+     */
+    Accelerator getAccelerator();
 
-	/**
-	 * Gets the enabled state of the action.
-	 * 
-	 * A action that is not enabled can not be executed
-	 * 
-	 * @return True if the action is enabled, false otherwise
-	 */
-	boolean isEnabled();
+    /**
+     * Gets the enabled state of the action.
+     * 
+     * A action that is not enabled can not be executed
+     * 
+     * @return True if the action is enabled, false otherwise
+     */
+    boolean isEnabled();
 
-	/**
-	 * Executes the action
-	 * 
-	 * @param executionContext The execution context
-	 * 
-	 * @throws Exception
-	 */
-	void execute(IExecutionContext executionContext) throws Exception;
+    /**
+     * Executes the action
+     * 
+     * @param executionContext The execution context
+     * 
+     * @throws Exception
+     */
+    void execute(IExecutionContext executionContext) throws Exception;
 
-	/**
-	 * Gets the ExceptionHandler of this action. If no ExceptionHandler is defined,
-	 * a default exception handler will be used.
-	 * 
-	 * @return exceptionHandler The exception handler or null, if no handler is defined
-	 */
-	IExceptionHandler getExceptionHandler();
+    /**
+     * Gets the ExceptionHandler of this action. If no ExceptionHandler is defined,
+     * a default exception handler will be used.
+     * 
+     * @return exceptionHandler The exception handler or null, if no handler is defined
+     */
+    IExceptionHandler getExceptionHandler();
 
-	/**
-	 * For mutable actions, an observable can be implemented to recognize changes
-	 * on this action.
-	 * 
-	 * The following properties can be mutable: text, toolTipText, icon, enabled
-	 * 
-	 * @return The observable if the action is mutable or null if the action is immutable
-	 */
-	IActionChangeObservable getActionChangeObservable();
+    /**
+     * For mutable actions, an observable can be implemented to recognize changes
+     * on this action.
+     * 
+     * The following properties can be mutable: text, toolTipText, icon, enabled
+     * 
+     * @return The observable if the action is mutable or null if the action is immutable
+     */
+    IActionChangeObservable getActionChangeObservable();
 
 }

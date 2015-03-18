@@ -57,160 +57,160 @@ import org.jowidgets.util.io.FileUtils;
 
 class DownloadButtonImpl extends ButtonWrapper implements IDownloadButton {
 
-	private static final IMessage OVERRIDE_TITLE = Messages.getMessage("DownloadButtonImpl.override_title");
-	private static final IMessage OVERRIDE_CONFIRMATION = Messages.getMessage("DownloadButtonImpl.override_confirmation");
+    private static final IMessage OVERRIDE_TITLE = Messages.getMessage("DownloadButtonImpl.override_title");
+    private static final IMessage OVERRIDE_CONFIRMATION = Messages.getMessage("DownloadButtonImpl.override_confirmation");
 
-	private final IButton button;
+    private final IButton button;
 
-	private String urlString;
-	private File lastFolder;
+    private String urlString;
+    private File lastFolder;
 
-	public DownloadButtonImpl(final IButton button, final IDownloadButtonBluePrint bluePrint) {
-		super(button);
-		this.button = getWidget();
+    public DownloadButtonImpl(final IButton button, final IDownloadButtonBluePrint bluePrint) {
+        super(button);
+        this.button = getWidget();
 
-		button.addActionListener(new DownloadActionListener());
-		button.setEnabled(false);
+        button.addActionListener(new DownloadActionListener());
+        button.setEnabled(false);
 
-		if (!EmptyCheck.isEmpty(bluePrint.getUrl())) {
-			setUrl(bluePrint.getUrl());
-		}
-	}
+        if (!EmptyCheck.isEmpty(bluePrint.getUrl())) {
+            setUrl(bluePrint.getUrl());
+        }
+    }
 
-	@Override
-	protected IButton getWidget() {
-		return super.getWidget();
-	}
+    @Override
+    protected IButton getWidget() {
+        return super.getWidget();
+    }
 
-	@Override
-	public void setUrl(final String url) {
-		try {
-			new URL(url);
-			this.urlString = url;
-		}
-		catch (final MalformedURLException e) {
-			this.urlString = null;
-		}
-		button.setEnabled(!EmptyCheck.isEmpty(this.urlString));
-	}
+    @Override
+    public void setUrl(final String url) {
+        try {
+            new URL(url);
+            this.urlString = url;
+        }
+        catch (final MalformedURLException e) {
+            this.urlString = null;
+        }
+        button.setEnabled(!EmptyCheck.isEmpty(this.urlString));
+    }
 
-	@Override
-	public String getUrl() {
-		return urlString;
-	}
+    @Override
+    public String getUrl() {
+        return urlString;
+    }
 
-	@Override
-	public void download() {
-		if (!EmptyCheck.isEmpty(urlString)) {
-			try {
-				download(new URL(urlString));
-			}
-			catch (final MalformedURLException e) {
-			}
-		}
+    @Override
+    public void download() {
+        if (!EmptyCheck.isEmpty(urlString)) {
+            try {
+                download(new URL(urlString));
+            }
+            catch (final MalformedURLException e) {
+            }
+        }
 
-	}
+    }
 
-	private void download(final URL url) {
-		final IFileChooserBluePrint fileChooserBp = BPF.fileChooser(FileChooserType.SAVE);
-		final IFileChooser fileChooser = Toolkit.getActiveWindow().createChildWindow(fileChooserBp);
+    private void download(final URL url) {
+        final IFileChooserBluePrint fileChooserBp = BPF.fileChooser(FileChooserType.SAVE);
+        final IFileChooser fileChooser = Toolkit.getActiveWindow().createChildWindow(fileChooserBp);
 
-		final String fileName = url.getPath();
-		if (!EmptyCheck.isEmpty(fileName)) {
-			final File file = new File(fileName);
-			final File simpleFile;
-			if (lastFolder != null) {
-				final String parent = lastFolder.getParent();
-				if (parent != null) {
-					simpleFile = new File(parent, file.getName());
-				}
-				else {
-					simpleFile = new File(file.getName());
-				}
-			}
-			else {
-				simpleFile = new File(file.getName());
-			}
-			fileChooser.setSelectedFile(simpleFile);
-		}
-		if (DialogResult.OK == fileChooser.open()) {
-			final List<File> selectedFiles = fileChooser.getSelectedFiles();
-			if (!EmptyCheck.isEmpty(selectedFiles)) {
-				this.lastFolder = selectedFiles.iterator().next();
-				download(url, lastFolder);
-			}
-		}
-	}
+        final String fileName = url.getPath();
+        if (!EmptyCheck.isEmpty(fileName)) {
+            final File file = new File(fileName);
+            final File simpleFile;
+            if (lastFolder != null) {
+                final String parent = lastFolder.getParent();
+                if (parent != null) {
+                    simpleFile = new File(parent, file.getName());
+                }
+                else {
+                    simpleFile = new File(file.getName());
+                }
+            }
+            else {
+                simpleFile = new File(file.getName());
+            }
+            fileChooser.setSelectedFile(simpleFile);
+        }
+        if (DialogResult.OK == fileChooser.open()) {
+            final List<File> selectedFiles = fileChooser.getSelectedFiles();
+            if (!EmptyCheck.isEmpty(selectedFiles)) {
+                this.lastFolder = selectedFiles.iterator().next();
+                download(url, lastFolder);
+            }
+        }
+    }
 
-	private void download(final URL url, final File file) {
-		if (file.exists()) {
-			final String title = OVERRIDE_TITLE.get();
-			final String question = OVERRIDE_CONFIRMATION.get();
-			final QuestionResult questionResult = Toolkit.getQuestionPane().askYesNoQuestion(title, question);
-			if (QuestionResult.NO == questionResult) {
-				return;
-			}
-		}
-		try {
-			download(url.openStream(), file);
-		}
-		catch (final IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    private void download(final URL url, final File file) {
+        if (file.exists()) {
+            final String title = OVERRIDE_TITLE.get();
+            final String question = OVERRIDE_CONFIRMATION.get();
+            final QuestionResult questionResult = Toolkit.getQuestionPane().askYesNoQuestion(title, question);
+            if (QuestionResult.NO == questionResult) {
+                return;
+            }
+        }
+        try {
+            download(url.openStream(), file);
+        }
+        catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	private void download(final InputStream inputStream, final File file) {
-		//TODO MG use a dialog that shows the progress and that can be canceled
-		final IUiThreadAccess uiThreadAccess = Toolkit.getUiThreadAccess();
-		final Thread worker = new Thread(new Runnable() {
+    private void download(final InputStream inputStream, final File file) {
+        //TODO MG use a dialog that shows the progress and that can be canceled
+        final IUiThreadAccess uiThreadAccess = Toolkit.getUiThreadAccess();
+        final Thread worker = new Thread(new Runnable() {
 
-			@Override
-			public void run() {
-				try {
-					FileUtils.inputStreamToFile(inputStream, file);
-				}
-				catch (final Exception e) {
-					final String title = "Failed";
-					final String message = "Download failed!\n" + e.getLocalizedMessage();
-					showMessageInUiThread(uiThreadAccess, Icons.ERROR, title, message);
-				}
-				finally {
-					FileUtils.tryCloseSilent(inputStream);
-				}
+            @Override
+            public void run() {
+                try {
+                    FileUtils.inputStreamToFile(inputStream, file);
+                }
+                catch (final Exception e) {
+                    final String title = "Failed";
+                    final String message = "Download failed!\n" + e.getLocalizedMessage();
+                    showMessageInUiThread(uiThreadAccess, Icons.ERROR, title, message);
+                }
+                finally {
+                    FileUtils.tryCloseSilent(inputStream);
+                }
 
-				final String title = "Finished";
-				final String message = "File downloaded successfully!";
-				showMessageInUiThread(uiThreadAccess, Icons.INFO, title, message);
-			}
-		});
+                final String title = "Finished";
+                final String message = "File downloaded successfully!";
+                showMessageInUiThread(uiThreadAccess, Icons.INFO, title, message);
+            }
+        });
 
-		worker.setDaemon(true);
-		worker.start();
-	}
+        worker.setDaemon(true);
+        worker.start();
+    }
 
-	private void showMessageInUiThread(
-		final IUiThreadAccess uiThreadAccess,
-		final IImageConstant icon,
-		final String title,
-		final String message) {
-		uiThreadAccess.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				Toolkit.getMessagePane().showMessage(title, message, icon);
-			}
-		});
-	}
+    private void showMessageInUiThread(
+        final IUiThreadAccess uiThreadAccess,
+        final IImageConstant icon,
+        final String title,
+        final String message) {
+        uiThreadAccess.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                Toolkit.getMessagePane().showMessage(title, message, icon);
+            }
+        });
+    }
 
-	@Override
-	public void setAction(final IAction action) {
-		throw new UnsupportedOperationException("setAction() is not possible for a DownloadButton");
-	}
+    @Override
+    public void setAction(final IAction action) {
+        throw new UnsupportedOperationException("setAction() is not possible for a DownloadButton");
+    }
 
-	private class DownloadActionListener implements IActionListener {
-		@Override
-		public void actionPerformed() {
-			download();
-		}
-	}
+    private class DownloadActionListener implements IActionListener {
+        @Override
+        public void actionPerformed() {
+            download();
+        }
+    }
 
 }

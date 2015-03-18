@@ -37,26 +37,26 @@ import org.jowidgets.util.ObservableValue;
 
 public class SliderViewerDefaults implements IDefaultInitializer<ISliderViewerSetupBuilder<?, ?>> {
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
-	@Override
-	public void initialize(final ISliderViewerSetupBuilder<?, ?> builder) {
-		builder.setMinimum(0);
-		builder.setMaximum(1000);
-		builder.setTickSpacing(100);
-		builder.setObservableValue(new ObservableValue());
-		builder.setDefaultValueMatcher(new IMouseButtonEventMatcher() {
-			@Override
-			public boolean matches(final IMouseButtonEvent event, final boolean doubleClick) {
-				if (!doubleClick
-					&& event.getMouseButton() == MouseButton.LEFT
-					&& event.getModifiers().contains(Modifier.CTRL)
-					&& event.getModifiers().size() == 1) {
-					return true;
-				}
-				else {
-					return false;
-				}
-			}
-		});
-	}
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @Override
+    public void initialize(final ISliderViewerSetupBuilder<?, ?> builder) {
+        builder.setMinimum(0);
+        builder.setMaximum(1000);
+        builder.setTickSpacing(100);
+        builder.setObservableValue(new ObservableValue());
+        builder.setDefaultValueMatcher(new IMouseButtonEventMatcher() {
+            @Override
+            public boolean matches(final IMouseButtonEvent event, final boolean doubleClick) {
+                if (!doubleClick
+                    && event.getMouseButton() == MouseButton.LEFT
+                    && event.getModifiers().contains(Modifier.CTRL)
+                    && event.getModifiers().size() == 1) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+        });
+    }
 }

@@ -30,6 +30,6 @@ package org.jowidgets.impl.spi.blueprint.builder;
 import org.jowidgets.common.widgets.builder.IFrameSetupBuilderCommon;
 
 public interface IFrameSetupBuilderSpi<INSTANCE_TYPE extends IFrameSetupBuilderSpi<?>> extends
-		IFrameSetupBuilderCommon<INSTANCE_TYPE> {
+        IFrameSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

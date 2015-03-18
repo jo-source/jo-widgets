@@ -36,18 +36,18 @@ import org.jowidgets.spi.impl.swing.common.SwingWidgetsServiceProvider;
 
 public final class AwtSwtToolkitProviderFactory {
 
-	private AwtSwtToolkitProviderFactory() {}
+    private AwtSwtToolkitProviderFactory() {}
 
-	public static IToolkitProvider create() {
-		return new IToolkitProvider() {
+    public static IToolkitProvider create() {
+        return new IToolkitProvider() {
 
-			private final IToolkit toolkit = new DefaultToolkit(new SwingWidgetsServiceProvider(
-				new BridgedSwtAwtApplicationRunnerFactory()));
+            private final IToolkit toolkit = new DefaultToolkit(new SwingWidgetsServiceProvider(
+                new BridgedSwtAwtApplicationRunnerFactory()));
 
-			@Override
-			public IToolkit get() {
-				return toolkit;
-			}
-		};
-	}
+            @Override
+            public IToolkit get() {
+                return toolkit;
+            }
+        };
+    }
 }

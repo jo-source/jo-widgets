@@ -40,41 +40,41 @@ import org.jowidgets.util.Assert;
 @Deprecated
 public final class CachedFillLayout implements ICachedFillLayout {
 
-	private final ICachedFillLayout original;
+    private final ICachedFillLayout original;
 
-	public CachedFillLayout(final IContainer container) {
-		Assert.paramNotNull(container, "container");
-		this.original = Toolkit.getLayoutFactoryProvider().cachedFillLayout().create(container);
-	}
+    public CachedFillLayout(final IContainer container) {
+        Assert.paramNotNull(container, "container");
+        this.original = Toolkit.getLayoutFactoryProvider().cachedFillLayout().create(container);
+    }
 
-	@Override
-	public void layout() {
-		original.layout();
-	}
+    @Override
+    public void layout() {
+        original.layout();
+    }
 
-	@Override
-	public void invalidate() {
-		original.invalidate();
-	}
+    @Override
+    public void invalidate() {
+        original.invalidate();
+    }
 
-	@Override
-	public Dimension getPreferredSize() {
-		return original.getPreferredSize();
-	}
+    @Override
+    public Dimension getPreferredSize() {
+        return original.getPreferredSize();
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		return original.getMinSize();
-	}
+    @Override
+    public Dimension getMinSize() {
+        return original.getMinSize();
+    }
 
-	@Override
-	public Dimension getMaxSize() {
-		return original.getMaxSize();
-	}
+    @Override
+    public Dimension getMaxSize() {
+        return original.getMaxSize();
+    }
 
-	@Override
-	public void clearCache() {
-		original.clearCache();
-	}
+    @Override
+    public void clearCache() {
+        original.clearCache();
+    }
 
 }

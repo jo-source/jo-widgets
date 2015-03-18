@@ -32,27 +32,27 @@ import org.jowidgets.tools.converter.AbstractConverter;
 
 class DefaultLongConverter extends AbstractConverter<Long> implements IConverter<Long> {
 
-	@Override
-	public Long convertToObject(final String string) {
-		try {
-			return Long.valueOf(Long.parseLong(string));
-		}
-		catch (final NumberFormatException e) {
-			return null;
-		}
-	}
+    @Override
+    public Long convertToObject(final String string) {
+        try {
+            return Long.valueOf(Long.parseLong(string));
+        }
+        catch (final NumberFormatException e) {
+            return null;
+        }
+    }
 
-	@Override
-	public String convertToString(final Long value) {
-		if (value != null) {
-			return value.toString();
-		}
-		return null;
-	}
+    @Override
+    public String convertToString(final Long value) {
+        if (value != null) {
+            return value.toString();
+        }
+        return null;
+    }
 
-	@Override
-	public String getAcceptingRegExp() {
-		return "-?(([0-9]{0,19}))";
-	}
+    @Override
+    public String getAcceptingRegExp() {
+        return "-?(([0-9]{0,19}))";
+    }
 
 }

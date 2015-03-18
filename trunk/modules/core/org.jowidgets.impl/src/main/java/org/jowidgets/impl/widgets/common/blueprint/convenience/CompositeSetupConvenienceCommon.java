@@ -33,16 +33,16 @@ import org.jowidgets.common.widgets.builder.convenience.ICompositeSetupConvenien
 import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
 public class CompositeSetupConvenienceCommon extends AbstractSetupBuilderConvenience<ICompositeSetupBuilderCommon<?>> implements
-		ICompositeSetupConvenienceCommon<ICompositeSetupBuilderCommon<?>> {
+        ICompositeSetupConvenienceCommon<ICompositeSetupBuilderCommon<?>> {
 
-	@Override
-	public ICompositeSetupBuilderCommon<?> setBorder(final String borderTitle) {
-		return getBuilder().setBorder(new Border(borderTitle));
-	}
+    @Override
+    public ICompositeSetupBuilderCommon<?> setBorder(final String borderTitle) {
+        return getBuilder().setBorder(new Border(borderTitle));
+    }
 
-	@Override
-	public ICompositeSetupBuilderCommon<?> setBorder() {
-		return getBuilder().setBorder(new Border());
-	}
+    @Override
+    public ICompositeSetupBuilderCommon<?> setBorder() {
+        return getBuilder().setBorder(new Border());
+    }
 
 }

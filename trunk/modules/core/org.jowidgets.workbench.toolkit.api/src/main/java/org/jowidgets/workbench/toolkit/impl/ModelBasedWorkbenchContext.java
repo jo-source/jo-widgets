@@ -46,107 +46,107 @@ import org.jowidgets.workbench.toolkit.api.IWorkbenchModel;
 
 class ModelBasedWorkbenchContext implements IWorkbenchContext {
 
-	private final IWorkbenchModel workbenchModel;
-	private final IWorkbenchContext workbenchContext;
-	private final List<IWorkbenchApplication> addedApplications;
+    private final IWorkbenchModel workbenchModel;
+    private final IWorkbenchContext workbenchContext;
+    private final List<IWorkbenchApplication> addedApplications;
 
-	ModelBasedWorkbenchContext(final IWorkbenchModel workbenchModel, final IWorkbenchContext workbenchContext) {
-		super();
-		this.workbenchModel = workbenchModel;
-		this.workbenchContext = workbenchContext;
+    ModelBasedWorkbenchContext(final IWorkbenchModel workbenchModel, final IWorkbenchContext workbenchContext) {
+        super();
+        this.workbenchModel = workbenchModel;
+        this.workbenchContext = workbenchContext;
 
-		this.addedApplications = new LinkedList<IWorkbenchApplication>();
-	}
+        this.addedApplications = new LinkedList<IWorkbenchApplication>();
+    }
 
-	@Override
-	public void add(final int index, final IWorkbenchApplication workbenchApplication) {
-		Assert.paramNotNull(workbenchApplication, "workbenchApplication");
+    @Override
+    public void add(final int index, final IWorkbenchApplication workbenchApplication) {
+        Assert.paramNotNull(workbenchApplication, "workbenchApplication");
 
-		final WorkbenchApplicationModelBuilder modelBuilder = new WorkbenchApplicationModelBuilder();
-		modelBuilder.setId(workbenchApplication.getId());
-		modelBuilder.setLabel(workbenchApplication.getLabel());
-		modelBuilder.setTooltip(workbenchApplication.getTooltip());
-		modelBuilder.setIcon(workbenchApplication.getIcon());
+        final WorkbenchApplicationModelBuilder modelBuilder = new WorkbenchApplicationModelBuilder();
+        modelBuilder.setId(workbenchApplication.getId());
+        modelBuilder.setLabel(workbenchApplication.getLabel());
+        modelBuilder.setTooltip(workbenchApplication.getTooltip());
+        modelBuilder.setIcon(workbenchApplication.getIcon());
 
-		modelBuilder.setInitializeCallback(new IWorkbenchApplicationInitializeCallback() {
-			@Override
-			public void onContextInitialize(final IWorkbenchApplicationContext context) {
-				workbenchApplication.onContextInitialize(context);
-			}
-		});
+        modelBuilder.setInitializeCallback(new IWorkbenchApplicationInitializeCallback() {
+            @Override
+            public void onContextInitialize(final IWorkbenchApplicationContext context) {
+                workbenchApplication.onContextInitialize(context);
+            }
+        });
 
-		modelBuilder.setLifecycleCallback(new ILifecycleCallback() {
-			@Override
-			public void onClose(final IVetoable vetoable) {
-				workbenchApplication.onClose(vetoable);
-			}
+        modelBuilder.setLifecycleCallback(new ILifecycleCallback() {
+            @Override
+            public void onClose(final IVetoable vetoable) {
+                workbenchApplication.onClose(vetoable);
+            }
 
-			@Override
-			public void onDispose() {
-				workbenchApplication.onDispose();
-			}
+            @Override
+            public void onDispose() {
+                workbenchApplication.onDispose();
+            }
 
-			@Override
-			public void onVisibleStateChanged(final boolean visible) {
-				workbenchApplication.onVisibleStateChanged(visible);
-			}
+            @Override
+            public void onVisibleStateChanged(final boolean visible) {
+                workbenchApplication.onVisibleStateChanged(visible);
+            }
 
-			@Override
-			public void onActiveStateChanged(final boolean active) {
-				workbenchApplication.onActiveStateChanged(active);
-			}
-		});
+            @Override
+            public void onActiveStateChanged(final boolean active) {
+                workbenchApplication.onActiveStateChanged(active);
+            }
+        });
 
-		addedApplications.add(index, workbenchApplication);
-		workbenchModel.addApplication(index, modelBuilder);
-	}
+        addedApplications.add(index, workbenchApplication);
+        workbenchModel.addApplication(index, modelBuilder);
+    }
 
-	@Override
-	public void add(final IWorkbenchApplication workbenchApplication) {
-		add(addedApplications.size(), workbenchApplication);
-	}
+    @Override
+    public void add(final IWorkbenchApplication workbenchApplication) {
+        add(addedApplications.size(), workbenchApplication);
+    }
 
-	@Override
-	public void remove(final IWorkbenchApplication workbenchApplication) {
-		final int index = addedApplications.indexOf(workbenchApplication);
-		if (index != -1) {
-			workbenchModel.removeApplication(index);
-		}
-	}
+    @Override
+    public void remove(final IWorkbenchApplication workbenchApplication) {
+        final int index = addedApplications.indexOf(workbenchApplication);
+        if (index != -1) {
+            workbenchModel.removeApplication(index);
+        }
+    }
 
-	@Override
-	public void finish() {
-		workbenchContext.finish();
-	}
+    @Override
+    public void finish() {
+        workbenchContext.finish();
+    }
 
-	@Override
-	public IToolBarModel getToolBar() {
-		return workbenchModel.getToolBar();
-	}
+    @Override
+    public IToolBarModel getToolBar() {
+        return workbenchModel.getToolBar();
+    }
 
-	@Override
-	public IMenuBarModel getMenuBar() {
-		return workbenchModel.getMenuBar();
-	}
+    @Override
+    public IMenuBarModel getMenuBar() {
+        return workbenchModel.getMenuBar();
+    }
 
-	@Override
-	public IContainer getStatusBar() {
-		return workbenchContext.getStatusBar();
-	}
+    @Override
+    public IContainer getStatusBar() {
+        return workbenchContext.getStatusBar();
+    }
 
-	@Override
-	public ITrayItem getTrayItem() {
-		return workbenchContext.getTrayItem();
-	}
+    @Override
+    public ITrayItem getTrayItem() {
+        return workbenchContext.getTrayItem();
+    }
 
-	@Override
-	public void addShutdownHook(final Runnable shutdownHook) {
-		workbenchModel.addShutdownHook(shutdownHook);
-	}
+    @Override
+    public void addShutdownHook(final Runnable shutdownHook) {
+        workbenchModel.addShutdownHook(shutdownHook);
+    }
 
-	@Override
-	public void removeShutdownHook(final Runnable shutdownHook) {
-		workbenchModel.removeShutdownHook(shutdownHook);
-	}
+    @Override
+    public void removeShutdownHook(final Runnable shutdownHook) {
+        workbenchModel.removeShutdownHook(shutdownHook);
+    }
 
 }

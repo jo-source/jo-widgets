@@ -32,13 +32,13 @@ import org.jowidgets.common.widgets.controller.IInputObservable;
 
 public interface IInputComponentCommon extends IComponentCommon, IInputObservable {
 
-	/**
-	 * Sets the editable state of the input component.
-	 * 
-	 * A input component that is not editable can not be changed by the user
-	 * 
-	 * @param editable The editable state to set
-	 */
-	void setEditable(boolean editable);
+    /**
+     * Sets the editable state of the input component.
+     * 
+     * A input component that is not editable can not be changed by the user
+     * 
+     * @param editable The editable state to set
+     */
+    void setEditable(boolean editable);
 
 }

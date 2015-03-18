@@ -31,24 +31,24 @@ import org.jowidgets.common.types.Rectangle;
 
 public final class RectangleConvert {
 
-	private RectangleConvert() {};
+    private RectangleConvert() {};
 
-	public static java.awt.Rectangle convert(final Rectangle dimension) {
-		if (dimension != null) {
-			return new java.awt.Rectangle(dimension.getX(), dimension.getY(), dimension.getWidth(), dimension.getHeight());
-		}
-		else {
-			return null;
-		}
-	}
+    public static java.awt.Rectangle convert(final Rectangle dimension) {
+        if (dimension != null) {
+            return new java.awt.Rectangle(dimension.getX(), dimension.getY(), dimension.getWidth(), dimension.getHeight());
+        }
+        else {
+            return null;
+        }
+    }
 
-	public static Rectangle convert(final java.awt.Rectangle dimension) {
-		if (dimension != null) {
-			return new Rectangle(dimension.x, dimension.y, dimension.width, dimension.height);
-		}
-		else {
-			return null;
-		}
-	}
+    public static Rectangle convert(final java.awt.Rectangle dimension) {
+        if (dimension != null) {
+            return new Rectangle(dimension.x, dimension.y, dimension.width, dimension.height);
+        }
+        else {
+            return null;
+        }
+    }
 
 }

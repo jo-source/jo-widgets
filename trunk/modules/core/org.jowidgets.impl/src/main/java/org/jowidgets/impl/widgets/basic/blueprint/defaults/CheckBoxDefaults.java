@@ -32,9 +32,9 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
 public class CheckBoxDefaults implements IDefaultInitializer<ICheckBoxSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final ICheckBoxSetupBuilder<?> builder) {
+    @Override
+    public void initialize(final ICheckBoxSetupBuilder<?> builder) {
 
-	}
+    }
 
 }

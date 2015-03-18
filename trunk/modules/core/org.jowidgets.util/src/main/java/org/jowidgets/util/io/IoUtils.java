@@ -38,45 +38,45 @@ import org.jowidgets.util.Assert;
 
 public final class IoUtils {
 
-	private IoUtils() {}
+    private IoUtils() {}
 
-	public static void tryCloseSilent(final Closeable closeable) {
-		try {
-			if (closeable != null) {
-				closeable.close();
-			}
-		}
-		catch (final IOException e) {
-			//do silent
-		}
-	}
+    public static void tryCloseSilent(final Closeable closeable) {
+        try {
+            if (closeable != null) {
+                closeable.close();
+            }
+        }
+        catch (final IOException e) {
+            //do silent
+        }
+    }
 
-	public static byte[] toByteArray(final InputStream inputStream) {
-		Assert.paramNotNull(inputStream, "inputStream");
-		final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		inputStreamToOutputStream(inputStream, outputStream);
-		try {
-			outputStream.flush();
-		}
-		catch (final IOException e) {
-			throw new RuntimeException(e);
-		}
-		final byte[] result = outputStream.toByteArray();
-		tryCloseSilent(outputStream);
-		return result;
-	}
+    public static byte[] toByteArray(final InputStream inputStream) {
+        Assert.paramNotNull(inputStream, "inputStream");
+        final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        inputStreamToOutputStream(inputStream, outputStream);
+        try {
+            outputStream.flush();
+        }
+        catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+        final byte[] result = outputStream.toByteArray();
+        tryCloseSilent(outputStream);
+        return result;
+    }
 
-	public static void inputStreamToOutputStream(final InputStream inputStream, final OutputStream outputStream) {
-		try {
-			final byte[] buf = new byte[1024];
-			int length;
-			while ((length = inputStream.read(buf)) > 0) {
-				outputStream.write(buf, 0, length);
-			}
-		}
-		catch (final Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public static void inputStreamToOutputStream(final InputStream inputStream, final OutputStream outputStream) {
+        try {
+            final byte[] buf = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buf)) > 0) {
+                outputStream.write(buf, 0, length);
+            }
+        }
+        catch (final Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

@@ -32,10 +32,10 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
 public class TableDefaults implements IDefaultInitializer<ITableSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final ITableSetupBuilder<?> builder) {
-		builder.setEditable(false);
-		builder.setColumnMaxPackWidth(1000);
-	}
+    @Override
+    public void initialize(final ITableSetupBuilder<?> builder) {
+        builder.setEditable(false);
+        builder.setColumnMaxPackWidth(1000);
+    }
 
 }

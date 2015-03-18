@@ -33,14 +33,14 @@ import org.jowidgets.workbench.api.ISplitLayout;
 
 public abstract class AbstractSplitLayout implements ISplitLayout {
 
-	@Override
-	public double getWeight() {
-		return 0.5;
-	}
+    @Override
+    public double getWeight() {
+        return 0.5;
+    }
 
-	@Override
-	public SplitResizePolicy getResizePolicy() {
-		return SplitResizePolicy.RESIZE_BOTH;
-	}
+    @Override
+    public SplitResizePolicy getResizePolicy() {
+        return SplitResizePolicy.RESIZE_BOTH;
+    }
 
 }

@@ -33,12 +33,12 @@ import org.jowidgets.examples.common.tree.demo1.TreeViewerDemo1;
 
 public final class SwingTreeViewerDemoStarter {
 
-	private SwingTreeViewerDemoStarter() {}
+    private SwingTreeViewerDemoStarter() {}
 
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		new TreeViewerDemo1().start();
-	}
+    public static void main(final String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
+        new TreeViewerDemo1().start();
+    }
 
 }

@@ -30,10 +30,10 @@ package org.jowidgets.common.widgets;
 
 public interface ITabFolderCommon extends IControlCommon {
 
-	void removeItem(int index);
+    void removeItem(int index);
 
-	void setSelectedItem(int index);
+    void setSelectedItem(int index);
 
-	int getSelectedIndex();
+    int getSelectedIndex();
 
 }

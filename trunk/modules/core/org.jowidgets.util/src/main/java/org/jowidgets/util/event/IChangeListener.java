@@ -30,9 +30,9 @@ package org.jowidgets.util.event;
 
 public interface IChangeListener {
 
-	/**
-	 * Invoked after the change observable has been changed
-	 */
-	void changed();
+    /**
+     * Invoked after the change observable has been changed
+     */
+    void changed();
 
 }

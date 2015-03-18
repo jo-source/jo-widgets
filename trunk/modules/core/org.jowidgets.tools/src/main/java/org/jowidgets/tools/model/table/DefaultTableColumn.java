@@ -38,124 +38,124 @@ import org.jowidgets.util.event.IChangeListener;
 
 public class DefaultTableColumn implements IDefaultTableColumn {
 
-	private final IDefaultTableColumn column;
+    private final IDefaultTableColumn column;
 
-	public DefaultTableColumn() {
-		this(builder());
-	}
+    public DefaultTableColumn() {
+        this(builder());
+    }
 
-	public DefaultTableColumn(final String text) {
-		this(builder(text));
-	}
+    public DefaultTableColumn(final String text) {
+        this(builder(text));
+    }
 
-	public DefaultTableColumn(final String text, final String toolTipText) {
-		this(builder(text, toolTipText));
-	}
+    public DefaultTableColumn(final String text, final String toolTipText) {
+        this(builder(text, toolTipText));
+    }
 
-	public DefaultTableColumn(final String text, final AlignmentHorizontal alignment) {
-		this(builder(text, alignment));
-	}
+    public DefaultTableColumn(final String text, final AlignmentHorizontal alignment) {
+        this(builder(text, alignment));
+    }
 
-	public DefaultTableColumn(final String text, final String toolTipText, final AlignmentHorizontal alignment) {
-		this(builder(text, toolTipText, alignment));
-	}
+    public DefaultTableColumn(final String text, final String toolTipText, final AlignmentHorizontal alignment) {
+        this(builder(text, toolTipText, alignment));
+    }
 
-	public DefaultTableColumn(final IDefaultTableColumnBuilder columnBuilder) {
-		Assert.paramNotNull(columnBuilder, "columnBuilder");
-		this.column = columnBuilder.build();
-	}
+    public DefaultTableColumn(final IDefaultTableColumnBuilder columnBuilder) {
+        Assert.paramNotNull(columnBuilder, "columnBuilder");
+        this.column = columnBuilder.build();
+    }
 
-	@Override
-	public final String getText() {
-		return column.getText();
-	}
+    @Override
+    public final String getText() {
+        return column.getText();
+    }
 
-	@Override
-	public final String getToolTipText() {
-		return column.getToolTipText();
-	}
+    @Override
+    public final String getToolTipText() {
+        return column.getToolTipText();
+    }
 
-	@Override
-	public final IImageConstant getIcon() {
-		return column.getIcon();
-	}
+    @Override
+    public final IImageConstant getIcon() {
+        return column.getIcon();
+    }
 
-	@Override
-	public final void setWidth(final int width) {
-		column.setWidth(width);
-	}
+    @Override
+    public final void setWidth(final int width) {
+        column.setWidth(width);
+    }
 
-	@Override
-	public final int getWidth() {
-		return column.getWidth();
-	}
+    @Override
+    public final int getWidth() {
+        return column.getWidth();
+    }
 
-	@Override
-	public final AlignmentHorizontal getAlignment() {
-		return column.getAlignment();
-	}
+    @Override
+    public final AlignmentHorizontal getAlignment() {
+        return column.getAlignment();
+    }
 
-	@Override
-	public final void setText(final String text) {
-		column.setText(text);
-	}
+    @Override
+    public final void setText(final String text) {
+        column.setText(text);
+    }
 
-	@Override
-	public final void setToolTipText(final String tooltipText) {
-		column.setToolTipText(tooltipText);
-	}
+    @Override
+    public final void setToolTipText(final String tooltipText) {
+        column.setToolTipText(tooltipText);
+    }
 
-	@Override
-	public final void setIcon(final IImageConstant icon) {
-		column.setIcon(icon);
-	}
+    @Override
+    public final void setIcon(final IImageConstant icon) {
+        column.setIcon(icon);
+    }
 
-	@Override
-	public final void setAlignment(final AlignmentHorizontal alignment) {
-		column.setAlignment(alignment);
-	}
+    @Override
+    public final void setAlignment(final AlignmentHorizontal alignment) {
+        column.setAlignment(alignment);
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		column.setVisible(visible);
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        column.setVisible(visible);
+    }
 
-	@Override
-	public boolean isVisible() {
-		return column.isVisible();
-	}
+    @Override
+    public boolean isVisible() {
+        return column.isVisible();
+    }
 
-	@Override
-	public final void addChangeListener(final IChangeListener listener) {
-		column.addChangeListener(listener);
-	}
+    @Override
+    public final void addChangeListener(final IChangeListener listener) {
+        column.addChangeListener(listener);
+    }
 
-	@Override
-	public final void removeChangeListener(final IChangeListener listener) {
-		column.removeChangeListener(listener);
-	}
+    @Override
+    public final void removeChangeListener(final IChangeListener listener) {
+        column.removeChangeListener(listener);
+    }
 
-	public static IDefaultTableColumnBuilder builder() {
-		return Toolkit.getModelFactoryProvider().getTableModelFactory().columnBuilder();
-	}
+    public static IDefaultTableColumnBuilder builder() {
+        return Toolkit.getModelFactoryProvider().getTableModelFactory().columnBuilder();
+    }
 
-	public static IDefaultTableColumnBuilder builder(final String text) {
-		return builder().setText(text);
-	}
+    public static IDefaultTableColumnBuilder builder(final String text) {
+        return builder().setText(text);
+    }
 
-	public static IDefaultTableColumnBuilder builder(final String text, final String toolTipText) {
-		return builder(text).setToolTipText(toolTipText);
-	}
+    public static IDefaultTableColumnBuilder builder(final String text, final String toolTipText) {
+        return builder(text).setToolTipText(toolTipText);
+    }
 
-	public static IDefaultTableColumnBuilder builder(final String text, final AlignmentHorizontal alignment) {
-		return builder(text).setAlignment(alignment);
-	}
+    public static IDefaultTableColumnBuilder builder(final String text, final AlignmentHorizontal alignment) {
+        return builder(text).setAlignment(alignment);
+    }
 
-	public static IDefaultTableColumnBuilder builder(
-		final String text,
-		final String toolTipText,
-		final AlignmentHorizontal alignment) {
-		return builder(text, toolTipText).setAlignment(alignment);
-	}
+    public static IDefaultTableColumnBuilder builder(
+        final String text,
+        final String toolTipText,
+        final AlignmentHorizontal alignment) {
+        return builder(text, toolTipText).setAlignment(alignment);
+    }
 
 }

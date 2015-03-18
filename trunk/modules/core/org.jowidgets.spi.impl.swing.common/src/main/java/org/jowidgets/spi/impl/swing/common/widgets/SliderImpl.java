@@ -38,57 +38,57 @@ import org.jowidgets.util.Assert;
 
 public final class SliderImpl extends AbstractInputControl implements ISliderSpi {
 
-	public SliderImpl(final ISliderSetupSpi setup) {
-		super(new JSlider(getOrientation(setup)));
+    public SliderImpl(final ISliderSetupSpi setup) {
+        super(new JSlider(getOrientation(setup)));
 
-		final JSlider slider = getUiReference();
+        final JSlider slider = getUiReference();
 
-		slider.setMinimum(setup.getMinimum());
-		slider.setValue(setup.getMinimum());
-		slider.setMaximum(setup.getMaximum());
-		slider.setMajorTickSpacing(setup.getTickSpacing());
-		slider.setPaintTicks(setup.getRenderTicks());
-		slider.setToolTipText(setup.getToolTipText());
+        slider.setMinimum(setup.getMinimum());
+        slider.setValue(setup.getMinimum());
+        slider.setMaximum(setup.getMaximum());
+        slider.setMajorTickSpacing(setup.getTickSpacing());
+        slider.setPaintTicks(setup.getRenderTicks());
+        slider.setToolTipText(setup.getToolTipText());
 
-		slider.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(final ChangeEvent e) {
-				fireInputChanged(getSelection());
-			}
-		});
-	}
+        slider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(final ChangeEvent e) {
+                fireInputChanged(getSelection());
+            }
+        });
+    }
 
-	private static int getOrientation(final ISliderSetupSpi setup) {
-		Assert.paramNotNull(setup.getOrientation(), "setup.getOrientation()");
-		if (setup.getOrientation() == Orientation.HORIZONTAL) {
-			return JSlider.HORIZONTAL;
-		}
-		else if (setup.getOrientation() == Orientation.VERTICAL) {
-			return JSlider.VERTICAL;
-		}
-		else {
-			throw new IllegalArgumentException("The orientation '" + setup.getOrientation() + "' is not supported");
-		}
-	}
+    private static int getOrientation(final ISliderSetupSpi setup) {
+        Assert.paramNotNull(setup.getOrientation(), "setup.getOrientation()");
+        if (setup.getOrientation() == Orientation.HORIZONTAL) {
+            return JSlider.HORIZONTAL;
+        }
+        else if (setup.getOrientation() == Orientation.VERTICAL) {
+            return JSlider.VERTICAL;
+        }
+        else {
+            throw new IllegalArgumentException("The orientation '" + setup.getOrientation() + "' is not supported");
+        }
+    }
 
-	@Override
-	public JSlider getUiReference() {
-		return (JSlider) super.getUiReference();
-	}
+    @Override
+    public JSlider getUiReference() {
+        return (JSlider) super.getUiReference();
+    }
 
-	@Override
-	public int getSelection() {
-		return getUiReference().getValue();
-	}
+    @Override
+    public int getSelection() {
+        return getUiReference().getValue();
+    }
 
-	@Override
-	public void setSelection(final int value) {
-		getUiReference().setValue(value);
-	}
+    @Override
+    public void setSelection(final int value) {
+        getUiReference().setValue(value);
+    }
 
-	@Override
-	public void setEditable(final boolean editable) {
-		getUiReference().setEnabled(editable);
-	}
+    @Override
+    public void setEditable(final boolean editable) {
+        getUiReference().setEnabled(editable);
+    }
 
 }

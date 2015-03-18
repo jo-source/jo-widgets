@@ -41,104 +41,104 @@ import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModelBuilder;
 
 class WorkbenchApplicationModelBuilder extends ComponentNodeContainerModelBuilder<IWorkbenchApplicationModelBuilder> implements
-		IWorkbenchApplicationModelBuilder {
+        IWorkbenchApplicationModelBuilder {
 
-	private String label;
-	private String tooltip;
-	private IImageConstant icon;
-	private IMenuModel popupMenu;
-	private IToolBarModel toolBarModel;
-	private IMenuModel toolBarMenu;
-	private ILifecycleCallback lifecycleCallback;
-	private IWorkbenchApplicationInitializeCallback initializeCallback;
-	private IViewFactory viewFactory;
+    private String label;
+    private String tooltip;
+    private IImageConstant icon;
+    private IMenuModel popupMenu;
+    private IToolBarModel toolBarModel;
+    private IMenuModel toolBarMenu;
+    private ILifecycleCallback lifecycleCallback;
+    private IWorkbenchApplicationInitializeCallback initializeCallback;
+    private IViewFactory viewFactory;
 
-	WorkbenchApplicationModelBuilder() {
-		super();
-		this.popupMenu = Toolkit.getModelFactoryProvider().getItemModelFactory().menu();
-		this.toolBarMenu = Toolkit.getModelFactoryProvider().getItemModelFactory().menu();
-		this.toolBarModel = Toolkit.getModelFactoryProvider().getItemModelFactory().toolBar();
-		this.viewFactory = new DummyViewFactory();
-	}
+    WorkbenchApplicationModelBuilder() {
+        super();
+        this.popupMenu = Toolkit.getModelFactoryProvider().getItemModelFactory().menu();
+        this.toolBarMenu = Toolkit.getModelFactoryProvider().getItemModelFactory().menu();
+        this.toolBarModel = Toolkit.getModelFactoryProvider().getItemModelFactory().toolBar();
+        this.viewFactory = new DummyViewFactory();
+    }
 
-	@Override
-	public IWorkbenchApplicationModelBuilder setLabel(final String label) {
-		this.label = label;
-		return this;
-	}
+    @Override
+    public IWorkbenchApplicationModelBuilder setLabel(final String label) {
+        this.label = label;
+        return this;
+    }
 
-	@Override
-	public IWorkbenchApplicationModelBuilder setTooltip(final String tooltip) {
-		this.tooltip = tooltip;
-		return this;
-	}
+    @Override
+    public IWorkbenchApplicationModelBuilder setTooltip(final String tooltip) {
+        this.tooltip = tooltip;
+        return this;
+    }
 
-	@Override
-	public IWorkbenchApplicationModelBuilder setIcon(final IImageConstant icon) {
-		this.icon = icon;
-		return this;
-	}
+    @Override
+    public IWorkbenchApplicationModelBuilder setIcon(final IImageConstant icon) {
+        this.icon = icon;
+        return this;
+    }
 
-	@Override
-	public IWorkbenchApplicationModelBuilder setDescriptor(final IWorkbenchApplicationDescriptor descriptor) {
-		Assert.paramNotNull(descriptor, "descriptor");
-		setId(descriptor.getId()).setLabel(descriptor.getLabel());
-		setTooltip(descriptor.getTooltip()).setIcon(descriptor.getIcon());
-		return this;
-	}
+    @Override
+    public IWorkbenchApplicationModelBuilder setDescriptor(final IWorkbenchApplicationDescriptor descriptor) {
+        Assert.paramNotNull(descriptor, "descriptor");
+        setId(descriptor.getId()).setLabel(descriptor.getLabel());
+        setTooltip(descriptor.getTooltip()).setIcon(descriptor.getIcon());
+        return this;
+    }
 
-	@Override
-	public IWorkbenchApplicationModelBuilder setPopupMenu(final IMenuModel popupMenu) {
-		this.popupMenu = popupMenu;
-		return this;
-	}
+    @Override
+    public IWorkbenchApplicationModelBuilder setPopupMenu(final IMenuModel popupMenu) {
+        this.popupMenu = popupMenu;
+        return this;
+    }
 
-	@Override
-	public IWorkbenchApplicationModelBuilder setToolBar(final IToolBarModel toolBarModel) {
-		this.toolBarModel = toolBarModel;
-		return this;
-	}
+    @Override
+    public IWorkbenchApplicationModelBuilder setToolBar(final IToolBarModel toolBarModel) {
+        this.toolBarModel = toolBarModel;
+        return this;
+    }
 
-	@Override
-	public IWorkbenchApplicationModelBuilder setToolBarMenu(final IMenuModel toolBarMenu) {
-		this.toolBarMenu = toolBarMenu;
-		return this;
-	}
+    @Override
+    public IWorkbenchApplicationModelBuilder setToolBarMenu(final IMenuModel toolBarMenu) {
+        this.toolBarMenu = toolBarMenu;
+        return this;
+    }
 
-	@Override
-	public IWorkbenchApplicationModelBuilder setViewFactoy(final IViewFactory viewFactory) {
-		Assert.paramNotNull(viewFactory, "viewFactory");
-		this.viewFactory = viewFactory;
-		return this;
-	}
+    @Override
+    public IWorkbenchApplicationModelBuilder setViewFactoy(final IViewFactory viewFactory) {
+        Assert.paramNotNull(viewFactory, "viewFactory");
+        this.viewFactory = viewFactory;
+        return this;
+    }
 
-	@Override
-	public IWorkbenchApplicationModelBuilder setLifecycleCallback(final ILifecycleCallback lifecycleCallback) {
-		this.lifecycleCallback = lifecycleCallback;
-		return this;
-	}
+    @Override
+    public IWorkbenchApplicationModelBuilder setLifecycleCallback(final ILifecycleCallback lifecycleCallback) {
+        this.lifecycleCallback = lifecycleCallback;
+        return this;
+    }
 
-	@Override
-	public IWorkbenchApplicationModelBuilder setInitializeCallback(
-		final IWorkbenchApplicationInitializeCallback initializeCallback) {
-		this.initializeCallback = initializeCallback;
-		return this;
-	}
+    @Override
+    public IWorkbenchApplicationModelBuilder setInitializeCallback(
+        final IWorkbenchApplicationInitializeCallback initializeCallback) {
+        this.initializeCallback = initializeCallback;
+        return this;
+    }
 
-	@Override
-	public IWorkbenchApplicationModel build() {
-		return new WorkbenchApplicationModel(
-			getId(),
-			label,
-			tooltip,
-			icon,
-			popupMenu,
-			toolBarModel,
-			toolBarMenu,
-			lifecycleCallback,
-			initializeCallback,
-			viewFactory,
-			getChildren());
-	}
+    @Override
+    public IWorkbenchApplicationModel build() {
+        return new WorkbenchApplicationModel(
+            getId(),
+            label,
+            tooltip,
+            icon,
+            popupMenu,
+            toolBarModel,
+            toolBarMenu,
+            lifecycleCallback,
+            initializeCallback,
+            viewFactory,
+            getChildren());
+    }
 
 }

@@ -38,22 +38,22 @@ import org.jowidgets.util.Assert;
 
 final class TransferableImpl implements ITransferable {
 
-	private final Map<TransferType<?>, Object> transferMap;
+    private final Map<TransferType<?>, Object> transferMap;
 
-	TransferableImpl(final Map<TransferType<?>, Object> transferMap) {
-		Assert.paramNotNull(transferMap, "transferMap");
-		this.transferMap = new HashMap<TransferType<?>, Object>(transferMap);
-	}
+    TransferableImpl(final Map<TransferType<?>, Object> transferMap) {
+        Assert.paramNotNull(transferMap, "transferMap");
+        this.transferMap = new HashMap<TransferType<?>, Object>(transferMap);
+    }
 
-	@Override
-	public Collection<TransferType<?>> getSupportedTypes() {
-		return transferMap.keySet();
-	}
+    @Override
+    public Collection<TransferType<?>> getSupportedTypes() {
+        return transferMap.keySet();
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <JAVA_TYPE> JAVA_TYPE getData(final TransferType<JAVA_TYPE> type) {
-		return (JAVA_TYPE) transferMap.get(type);
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public <JAVA_TYPE> JAVA_TYPE getData(final TransferType<JAVA_TYPE> type) {
+        return (JAVA_TYPE) transferMap.get(type);
+    }
 
 }

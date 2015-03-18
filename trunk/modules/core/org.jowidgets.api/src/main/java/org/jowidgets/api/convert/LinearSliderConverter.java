@@ -30,54 +30,54 @@ package org.jowidgets.api.convert;
 
 public final class LinearSliderConverter {
 
-	private LinearSliderConverter() {}
+    private LinearSliderConverter() {}
 
-	public static <VALUE_TYPE extends Number> ILinearSliderConverterBuilder<VALUE_TYPE> builder() {
-		return SliderConverterFactory.linearConverterBuilder();
-	}
+    public static <VALUE_TYPE extends Number> ILinearSliderConverterBuilder<VALUE_TYPE> builder() {
+        return SliderConverterFactory.linearConverterBuilder();
+    }
 
-	public static <VALUE_TYPE extends Number> ISliderViewerConverter<VALUE_TYPE> create(final VALUE_TYPE max) {
-		return SliderConverterFactory.linearConverter(max);
-	}
+    public static <VALUE_TYPE extends Number> ISliderViewerConverter<VALUE_TYPE> create(final VALUE_TYPE max) {
+        return SliderConverterFactory.linearConverter(max);
+    }
 
-	public static <VALUE_TYPE extends Number> ISliderViewerConverter<VALUE_TYPE> create(final VALUE_TYPE min, final VALUE_TYPE max) {
-		return SliderConverterFactory.linearConverter(min, max);
-	}
+    public static <VALUE_TYPE extends Number> ISliderViewerConverter<VALUE_TYPE> create(final VALUE_TYPE min, final VALUE_TYPE max) {
+        return SliderConverterFactory.linearConverter(min, max);
+    }
 
-	public static ISliderViewerConverter<Double> create() {
-		return SliderConverterFactory.linearConverter();
-	}
+    public static ISliderViewerConverter<Double> create() {
+        return SliderConverterFactory.linearConverter();
+    }
 
-	public static ISliderViewerConverter<Double> create(final double max) {
-		return SliderConverterFactory.linearConverter(max);
-	}
+    public static ISliderViewerConverter<Double> create(final double max) {
+        return SliderConverterFactory.linearConverter(max);
+    }
 
-	public static ISliderViewerConverter<Double> create(final double min, final double max) {
-		return SliderConverterFactory.linearConverter(min, max);
-	}
+    public static ISliderViewerConverter<Double> create(final double min, final double max) {
+        return SliderConverterFactory.linearConverter(min, max);
+    }
 
-	public static ISliderViewerConverter<Float> create(final float max) {
-		return SliderConverterFactory.linearConverter(max);
-	}
+    public static ISliderViewerConverter<Float> create(final float max) {
+        return SliderConverterFactory.linearConverter(max);
+    }
 
-	public static ISliderViewerConverter<Float> create(final float min, final float max) {
-		return SliderConverterFactory.linearConverter(min, max);
-	}
+    public static ISliderViewerConverter<Float> create(final float min, final float max) {
+        return SliderConverterFactory.linearConverter(min, max);
+    }
 
-	public static ISliderViewerConverter<Integer> create(final int max) {
-		return SliderConverterFactory.linearConverter(max);
-	}
+    public static ISliderViewerConverter<Integer> create(final int max) {
+        return SliderConverterFactory.linearConverter(max);
+    }
 
-	public static ISliderViewerConverter<Integer> create(final int min, final int max) {
-		return SliderConverterFactory.linearConverter(min, max);
-	}
+    public static ISliderViewerConverter<Integer> create(final int min, final int max) {
+        return SliderConverterFactory.linearConverter(min, max);
+    }
 
-	public static ISliderViewerConverter<Long> create(final long max) {
-		return SliderConverterFactory.linearConverter(max);
-	}
+    public static ISliderViewerConverter<Long> create(final long max) {
+        return SliderConverterFactory.linearConverter(max);
+    }
 
-	public static ISliderViewerConverter<Long> create(final long min, final long max) {
-		return SliderConverterFactory.linearConverter(min, max);
-	}
+    public static ISliderViewerConverter<Long> create(final long min, final long max) {
+        return SliderConverterFactory.linearConverter(min, max);
+    }
 
 }

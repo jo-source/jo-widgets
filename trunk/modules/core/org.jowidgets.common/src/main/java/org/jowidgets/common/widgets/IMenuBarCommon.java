@@ -28,7 +28,6 @@
 
 package org.jowidgets.common.widgets;
 
-
 public interface IMenuBarCommon extends IWidgetCommon {
 
 }

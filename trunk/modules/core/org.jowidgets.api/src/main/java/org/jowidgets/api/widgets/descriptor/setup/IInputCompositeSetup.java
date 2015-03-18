@@ -34,23 +34,23 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IInputCompositeSetup<INPUT_TYPE> extends IInputComponentSetup<INPUT_TYPE> {
 
-	@Mandatory
-	IInputContentCreator<INPUT_TYPE> getContentCreator();
+    @Mandatory
+    IInputContentCreator<INPUT_TYPE> getContentCreator();
 
-	@Mandatory
-	boolean isContentScrolled();
+    @Mandatory
+    boolean isContentScrolled();
 
-	Border getBorder();
+    Border getBorder();
 
-	Border getContentBorder();
+    Border getContentBorder();
 
-	IInputComponentValidationLabelSetup getValidationLabel();
+    IInputComponentValidationLabelSetup getValidationLabel();
 
-	IColorConstant getValidationLabelBackground();
+    IColorConstant getValidationLabelBackground();
 
-	@Mandatory
-	int getValidationLabelHeight();
+    @Mandatory
+    int getValidationLabelHeight();
 
-	String getMissingInputHint();
+    String getMissingInputHint();
 
 }

@@ -34,60 +34,60 @@ import org.jowidgets.util.Assert;
 
 public class WidgetWrapper implements IWidget {
 
-	private final IWidget widget;
+    private final IWidget widget;
 
-	public WidgetWrapper(final IWidget widget) {
-		Assert.paramNotNull(widget, "widget");
-		this.widget = widget;
-	}
+    public WidgetWrapper(final IWidget widget) {
+        Assert.paramNotNull(widget, "widget");
+        this.widget = widget;
+    }
 
-	protected IWidget getWidget() {
-		return widget;
-	}
+    protected IWidget getWidget() {
+        return widget;
+    }
 
-	@Override
-	public Object getUiReference() {
-		return widget.getUiReference();
-	}
+    @Override
+    public Object getUiReference() {
+        return widget.getUiReference();
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		widget.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        widget.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return widget.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return widget.isEnabled();
+    }
 
-	@Override
-	public IWidget getParent() {
-		return widget.getParent();
-	}
+    @Override
+    public IWidget getParent() {
+        return widget.getParent();
+    }
 
-	@Override
-	public IWidget getRoot() {
-		return widget.getRoot();
-	}
+    @Override
+    public IWidget getRoot() {
+        return widget.getRoot();
+    }
 
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		widget.addDisposeListener(listener);
-	}
+    @Override
+    public void addDisposeListener(final IDisposeListener listener) {
+        widget.addDisposeListener(listener);
+    }
 
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		widget.removeDisposeListener(listener);
-	}
+    @Override
+    public void removeDisposeListener(final IDisposeListener listener) {
+        widget.removeDisposeListener(listener);
+    }
 
-	@Override
-	public void dispose() {
-		widget.dispose();
-	}
+    @Override
+    public void dispose() {
+        widget.dispose();
+    }
 
-	@Override
-	public boolean isDisposed() {
-		return widget.isDisposed();
-	}
+    @Override
+    public boolean isDisposed() {
+        return widget.isDisposed();
+    }
 
 }

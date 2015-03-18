@@ -37,79 +37,79 @@ import org.jowidgets.common.types.Markup;
 
 public class TableCell implements ITableCell {
 
-	private final ITableCell cell;
+    private final ITableCell cell;
 
-	public TableCell() {
-		this(builder());
-	}
+    public TableCell() {
+        this(builder());
+    }
 
-	public TableCell(final String text) {
-		this(builder(text));
-	}
+    public TableCell(final String text) {
+        this(builder(text));
+    }
 
-	public TableCell(final String text, final String toolTipText) {
-		this(builder(text, toolTipText));
-	}
+    public TableCell(final String text, final String toolTipText) {
+        this(builder(text, toolTipText));
+    }
 
-	public TableCell(final ITableCellBuilder cellBuilder) {
-		super();
-		this.cell = cellBuilder.build();
-	}
+    public TableCell(final ITableCellBuilder cellBuilder) {
+        super();
+        this.cell = cellBuilder.build();
+    }
 
-	@Override
-	public final String getText() {
-		return cell.getText();
-	}
+    @Override
+    public final String getText() {
+        return cell.getText();
+    }
 
-	@Override
-	public final String getToolTipText() {
-		return cell.getToolTipText();
-	}
+    @Override
+    public final String getToolTipText() {
+        return cell.getToolTipText();
+    }
 
-	@Override
-	public final IImageConstant getIcon() {
-		return cell.getIcon();
-	}
+    @Override
+    public final IImageConstant getIcon() {
+        return cell.getIcon();
+    }
 
-	@Override
-	public final IColorConstant getForegroundColor() {
-		return cell.getForegroundColor();
-	}
+    @Override
+    public final IColorConstant getForegroundColor() {
+        return cell.getForegroundColor();
+    }
 
-	@Override
-	public final IColorConstant getBackgroundColor() {
-		return cell.getBackgroundColor();
-	}
+    @Override
+    public final IColorConstant getBackgroundColor() {
+        return cell.getBackgroundColor();
+    }
 
-	@Override
-	public IColorConstant getSelectedForegroundColor() {
-		return cell.getSelectedForegroundColor();
-	}
+    @Override
+    public IColorConstant getSelectedForegroundColor() {
+        return cell.getSelectedForegroundColor();
+    }
 
-	@Override
-	public IColorConstant getSelectedBackgroundColor() {
-		return cell.getSelectedBackgroundColor();
-	}
+    @Override
+    public IColorConstant getSelectedBackgroundColor() {
+        return cell.getSelectedBackgroundColor();
+    }
 
-	@Override
-	public final Markup getMarkup() {
-		return cell.getMarkup();
-	}
+    @Override
+    public final Markup getMarkup() {
+        return cell.getMarkup();
+    }
 
-	@Override
-	public final boolean isEditable() {
-		return cell.isEditable();
-	}
+    @Override
+    public final boolean isEditable() {
+        return cell.isEditable();
+    }
 
-	public static ITableCellBuilder builder() {
-		return Toolkit.getModelFactoryProvider().getTableModelFactory().cellBuilder();
-	}
+    public static ITableCellBuilder builder() {
+        return Toolkit.getModelFactoryProvider().getTableModelFactory().cellBuilder();
+    }
 
-	public static ITableCellBuilder builder(final String text) {
-		return builder().setText(text);
-	}
+    public static ITableCellBuilder builder(final String text) {
+        return builder().setText(text);
+    }
 
-	public static ITableCellBuilder builder(final String text, final String toolTipText) {
-		return builder(text).setToolTipText(toolTipText);
-	}
+    public static ITableCellBuilder builder(final String text, final String toolTipText) {
+        return builder(text).setToolTipText(toolTipText);
+    }
 }

@@ -47,96 +47,96 @@ import org.jowidgets.spi.widgets.IToolBarButtonSpi;
 
 public class ToolBarMenuImpl extends ToolBarItemSpiWrapper implements IToolBarMenu {
 
-	private final IToolBar parent;
-	private final IPopupMenu popupMenu;
-	private final ToolBarItemDiposableDelegate disposableDelegate;
+    private final IToolBar parent;
+    private final IPopupMenu popupMenu;
+    private final ToolBarItemDiposableDelegate disposableDelegate;
 
-	public ToolBarMenuImpl(final IToolBar parent, final IToolBarButtonSpi toolBarButtonSpi, final IItemSetup setup) {
-		super(toolBarButtonSpi, new ItemModelBindingDelegate(
-			new ToolBarMenuSpiInvoker(toolBarButtonSpi, setup.getIcon()),
-			new MenuModelBuilder().build()));
+    public ToolBarMenuImpl(final IToolBar parent, final IToolBarButtonSpi toolBarButtonSpi, final IItemSetup setup) {
+        super(toolBarButtonSpi, new ItemModelBindingDelegate(
+            new ToolBarMenuSpiInvoker(toolBarButtonSpi, setup.getIcon()),
+            new MenuModelBuilder().build()));
 
-		this.parent = parent;
-		this.disposableDelegate = new ToolBarItemDiposableDelegate(this, getItemModelBindingDelegate());
+        this.parent = parent;
+        this.disposableDelegate = new ToolBarItemDiposableDelegate(this, getItemModelBindingDelegate());
 
-		setText(setup.getText());
-		setToolTipText(setup.getToolTipText());
-		setIcon(setup.getIcon());
+        setText(setup.getText());
+        setToolTipText(setup.getToolTipText());
+        setIcon(setup.getIcon());
 
-		this.popupMenu = parent.createPopupMenu();
-		this.popupMenu.setModel(getModel());
+        this.popupMenu = parent.createPopupMenu();
+        this.popupMenu.setModel(getModel());
 
-		toolBarButtonSpi.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final Position position = toolBarButtonSpi.getPosition();
-				final Dimension size = toolBarButtonSpi.getSize();
+        toolBarButtonSpi.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final Position position = toolBarButtonSpi.getPosition();
+                final Dimension size = toolBarButtonSpi.getSize();
 
-				if (popupMenu != null) {
-					popupMenu.show(new Position(position.getX(), position.getY() + size.getHeight()));
-				}
-			}
-		});
+                if (popupMenu != null) {
+                    popupMenu.show(new Position(position.getX(), position.getY() + size.getHeight()));
+                }
+            }
+        });
 
-	}
+    }
 
-	@Override
-	public IToolBarButtonSpi getWidget() {
-		return (IToolBarButtonSpi) super.getWidget();
-	}
+    @Override
+    public IToolBarButtonSpi getWidget() {
+        return (IToolBarButtonSpi) super.getWidget();
+    }
 
-	@Override
-	public void dispose() {
-		if (!isDisposed()) {
-			popupMenu.dispose();
-			disposableDelegate.dispose();
-		}
-	}
+    @Override
+    public void dispose() {
+        if (!isDisposed()) {
+            popupMenu.dispose();
+            disposableDelegate.dispose();
+        }
+    }
 
-	@Override
-	public boolean isDisposed() {
-		return disposableDelegate.isDisposed();
-	}
+    @Override
+    public boolean isDisposed() {
+        return disposableDelegate.isDisposed();
+    }
 
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		disposableDelegate.addDisposeListener(listener);
-	}
+    @Override
+    public void addDisposeListener(final IDisposeListener listener) {
+        disposableDelegate.addDisposeListener(listener);
+    }
 
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		disposableDelegate.removeDisposeListener(listener);
-	}
+    @Override
+    public void removeDisposeListener(final IDisposeListener listener) {
+        disposableDelegate.removeDisposeListener(listener);
+    }
 
-	@Override
-	public IToolBar getParent() {
-		return parent;
-	}
+    @Override
+    public IToolBar getParent() {
+        return parent;
+    }
 
-	@Override
-	public IPopupMenu getPopupMenu() {
-		return popupMenu;
-	}
+    @Override
+    public IPopupMenu getPopupMenu() {
+        return popupMenu;
+    }
 
-	@Override
-	public IMenuModel getModel() {
-		return (IMenuModel) getItemModelBindingDelegate().getModel();
-	}
+    @Override
+    public IMenuModel getModel() {
+        return (IMenuModel) getItemModelBindingDelegate().getModel();
+    }
 
-	@Override
-	public void setModel(final IMenuModel model) {
-		getItemModelBindingDelegate().setModel(model);
-		popupMenu.setModel(model);
-	}
+    @Override
+    public void setModel(final IMenuModel model) {
+        getItemModelBindingDelegate().setModel(model);
+        popupMenu.setModel(model);
+    }
 
-	@Override
-	public void setModel(final IToolBarItemModel model) {
-		if (model instanceof IMenuModel) {
-			setModel((IMenuModel) model);
-		}
-		else {
-			throw new IllegalArgumentException("Model type '" + IMenuModel.class.getName() + "' expected");
-		}
-	}
+    @Override
+    public void setModel(final IToolBarItemModel model) {
+        if (model instanceof IMenuModel) {
+            setModel((IMenuModel) model);
+        }
+        else {
+            throw new IllegalArgumentException("Model type '" + IMenuModel.class.getName() + "' expected");
+        }
+    }
 
 }

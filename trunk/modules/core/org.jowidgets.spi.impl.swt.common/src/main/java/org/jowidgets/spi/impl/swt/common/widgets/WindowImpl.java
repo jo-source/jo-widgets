@@ -36,75 +36,75 @@ import org.jowidgets.spi.widgets.IWindowSpi;
 
 public class WindowImpl extends SwtWindow implements IWindowSpi {
 
-	private boolean programaticDispose;
+    private boolean programaticDispose;
 
-	public WindowImpl(final IGenericWidgetFactory factory, final Shell window, final boolean isCloseable) {
-		super(factory, window);
+    public WindowImpl(final IGenericWidgetFactory factory, final Shell window, final boolean isCloseable) {
+        super(factory, window);
 
-		this.programaticDispose = false;
+        this.programaticDispose = false;
 
-		getUiReference().addShellListener(new ShellListener() {
+        getUiReference().addShellListener(new ShellListener() {
 
-			@Override
-			public void shellActivated(final ShellEvent e) {
-				getWindowObservableDelegate().fireWindowActivated();
-			}
+            @Override
+            public void shellActivated(final ShellEvent e) {
+                getWindowObservableDelegate().fireWindowActivated();
+            }
 
-			@Override
-			public void shellDeactivated(final ShellEvent e) {
-				getWindowObservableDelegate().fireWindowDeactivated();
-			}
+            @Override
+            public void shellDeactivated(final ShellEvent e) {
+                getWindowObservableDelegate().fireWindowDeactivated();
+            }
 
-			@Override
-			public void shellIconified(final ShellEvent e) {
-				getWindowObservableDelegate().fireWindowIconified();
-			}
+            @Override
+            public void shellIconified(final ShellEvent e) {
+                getWindowObservableDelegate().fireWindowIconified();
+            }
 
-			@Override
-			public void shellDeiconified(final ShellEvent e) {
-				getWindowObservableDelegate().fireWindowDeiconified();
-			}
+            @Override
+            public void shellDeiconified(final ShellEvent e) {
+                getWindowObservableDelegate().fireWindowDeiconified();
+            }
 
-			@Override
-			public void shellClosed(final ShellEvent e) {
-				//Do not close the shell when 'X' is pressed, except
-				//dispose method was invoked
-				if (!programaticDispose) {
-					e.doit = false;
-					if (isCloseable) {
-						final boolean veto = getWindowObservableDelegate().fireWindowClosing();
-						if (!veto && !getUiReference().isDisposed()) {
-							getUiReference().setVisible(false);
-						}
-						else {
-							return;
-						}
-					}
-					else {
-						return;
-					}
-				}
-				getWindowObservableDelegate().fireWindowClosed();
-			}
-		});
+            @Override
+            public void shellClosed(final ShellEvent e) {
+                //Do not close the shell when 'X' is pressed, except
+                //dispose method was invoked
+                if (!programaticDispose) {
+                    e.doit = false;
+                    if (isCloseable) {
+                        final boolean veto = getWindowObservableDelegate().fireWindowClosing();
+                        if (!veto && !getUiReference().isDisposed()) {
+                            getUiReference().setVisible(false);
+                        }
+                        else {
+                            return;
+                        }
+                    }
+                    else {
+                        return;
+                    }
+                }
+                getWindowObservableDelegate().fireWindowClosed();
+            }
+        });
 
-		getUiReference().setBackgroundMode(SWT.INHERIT_DEFAULT);
-	}
+        getUiReference().setBackgroundMode(SWT.INHERIT_DEFAULT);
+    }
 
-	@Override
-	public void dispose() {
-		if (!getUiReference().isDisposed()) {
-			programaticDispose = true;
-			if (isVisible()) {
-				setVisible(false);
-			}
-			getUiReference().dispose();
-			programaticDispose = false;
-		}
-	}
+    @Override
+    public void dispose() {
+        if (!getUiReference().isDisposed()) {
+            programaticDispose = true;
+            if (isVisible()) {
+                setVisible(false);
+            }
+            getUiReference().dispose();
+            programaticDispose = false;
+        }
+    }
 
-	@Override
-	public boolean isVisible() {
-		return getUiReference().isVisible();
-	}
+    @Override
+    public boolean isVisible() {
+        return getUiReference().isVisible();
+    }
 }

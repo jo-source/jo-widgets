@@ -36,95 +36,95 @@ import org.jowidgets.classloading.api.SharedClassLoader;
 
 public final class LocaleHolder {
 
-	private static ILocaleHolder instance;
+    private static ILocaleHolder instance;
 
-	private LocaleHolder() {}
+    private LocaleHolder() {}
 
-	/**
-	 * The the instance of the value holder. The previously used instance will be overridden.
-	 * 
-	 * @param localeProvider The locale provider to set
-	 */
-	public static void setInstance(final ILocaleHolder localeProvider) {
-		instance = localeProvider;
-	}
+    /**
+     * The the instance of the value holder. The previously used instance will be overridden.
+     * 
+     * @param localeProvider The locale provider to set
+     */
+    public static void setInstance(final ILocaleHolder localeProvider) {
+        instance = localeProvider;
+    }
 
-	/**
-	 * @return The user locale of the currently set LocaleHolder
-	 */
-	public static Locale getUserLocale() {
-		return getInstance().getUserLocale();
-	}
+    /**
+     * @return The user locale of the currently set LocaleHolder
+     */
+    public static Locale getUserLocale() {
+        return getInstance().getUserLocale();
+    }
 
-	/**
-	 * Sets the user locale on the currently set LocaleHolder
-	 * 
-	 * @param userLocale The locale to set, may be null
-	 */
-	public static void setUserLocale(final Locale userLocale) {
-		getInstance().setUserLocale(userLocale);
-	}
+    /**
+     * Sets the user locale on the currently set LocaleHolder
+     * 
+     * @param userLocale The locale to set, may be null
+     */
+    public static void setUserLocale(final Locale userLocale) {
+        getInstance().setUserLocale(userLocale);
+    }
 
-	/**
-	 * Clears the user locale on the currently set LocaleHolder
-	 */
-	public static void clearUserLocale() {
-		getInstance().clearUserLocale();
-	}
+    /**
+     * Clears the user locale on the currently set LocaleHolder
+     */
+    public static void clearUserLocale() {
+        getInstance().clearUserLocale();
+    }
 
-	/**
-	 * Gets the instance of the currently set value holder. If no value holder was injected before, an
-	 * default implementation will be returned
-	 * 
-	 * @return The currently set value holder
-	 */
-	public static synchronized ILocaleHolder getInstance() {
-		if (instance == null) {
-			final ServiceLoader<ILocaleHolder> loader = ServiceLoader.load(
-					ILocaleHolder.class,
-					SharedClassLoader.getCompositeClassLoader());
-			final Iterator<ILocaleHolder> iterator = loader.iterator();
+    /**
+     * Gets the instance of the currently set value holder. If no value holder was injected before, an
+     * default implementation will be returned
+     * 
+     * @return The currently set value holder
+     */
+    public static synchronized ILocaleHolder getInstance() {
+        if (instance == null) {
+            final ServiceLoader<ILocaleHolder> loader = ServiceLoader.load(
+                    ILocaleHolder.class,
+                    SharedClassLoader.getCompositeClassLoader());
+            final Iterator<ILocaleHolder> iterator = loader.iterator();
 
-			if (!iterator.hasNext()) {
-				instance = new DefaultUserLocaleProvider();
-			}
-			else {
-				instance = iterator.next();
-				if (iterator.hasNext()) {
-					throw new IllegalStateException("More than one implementation found for '"
-						+ ILocaleHolder.class.getName()
-						+ "'");
-				}
-			}
+            if (!iterator.hasNext()) {
+                instance = new DefaultUserLocaleProvider();
+            }
+            else {
+                instance = iterator.next();
+                if (iterator.hasNext()) {
+                    throw new IllegalStateException("More than one implementation found for '"
+                        + ILocaleHolder.class.getName()
+                        + "'");
+                }
+            }
 
-		}
-		return instance;
-	}
+        }
+        return instance;
+    }
 
-	private static final class DefaultUserLocaleProvider implements ILocaleHolder {
+    private static final class DefaultUserLocaleProvider implements ILocaleHolder {
 
-		private Locale userLocale;
+        private Locale userLocale;
 
-		@Override
-		public Locale getUserLocale() {
-			if (userLocale != null) {
-				return userLocale;
-			}
-			else {
-				return Locale.getDefault();
-			}
-		}
+        @Override
+        public Locale getUserLocale() {
+            if (userLocale != null) {
+                return userLocale;
+            }
+            else {
+                return Locale.getDefault();
+            }
+        }
 
-		@Override
-		public void setUserLocale(final Locale userLocale) {
-			this.userLocale = userLocale;
-		}
+        @Override
+        public void setUserLocale(final Locale userLocale) {
+            this.userLocale = userLocale;
+        }
 
-		@Override
-		public void clearUserLocale() {
-			this.userLocale = null;
-		}
+        @Override
+        public void clearUserLocale() {
+            this.userLocale = null;
+        }
 
-	}
+    }
 
 }

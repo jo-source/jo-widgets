@@ -40,25 +40,25 @@ import org.jowidgets.spi.widgets.ITabFolderSpi;
 
 public class TabFolderFactory extends AbstractWidgetFactory implements IWidgetFactory<ITabFolder, ITabFolderDescriptor> {
 
-	public TabFolderFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+    public TabFolderFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider,
+        final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
-	}
+        super(genericWidgetFactory, widgetsServiceProvider, bpF);
+    }
 
-	@Override
-	public ITabFolder create(final Object parentUiReference, final ITabFolderDescriptor descriptor) {
-		final ITabFolderBluePrintSpi tabFolderBpSpi = getSpiBluePrintFactory().tabFolder();
-		tabFolderBpSpi.setSetup(descriptor);
+    @Override
+    public ITabFolder create(final Object parentUiReference, final ITabFolderDescriptor descriptor) {
+        final ITabFolderBluePrintSpi tabFolderBpSpi = getSpiBluePrintFactory().tabFolder();
+        tabFolderBpSpi.setSetup(descriptor);
 
-		final ITabFolderSpi tabFolderSpi = getSpiWidgetFactory().createTabFolder(
-				getGenericWidgetFactory(),
-				parentUiReference,
-				tabFolderBpSpi);
+        final ITabFolderSpi tabFolderSpi = getSpiWidgetFactory().createTabFolder(
+                getGenericWidgetFactory(),
+                parentUiReference,
+                tabFolderBpSpi);
 
-		return new TabFolderImpl(tabFolderSpi, descriptor);
-	}
+        return new TabFolderImpl(tabFolderSpi, descriptor);
+    }
 
 }

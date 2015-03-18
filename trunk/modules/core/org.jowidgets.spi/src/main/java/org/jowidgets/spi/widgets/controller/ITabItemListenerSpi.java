@@ -32,10 +32,10 @@ import org.jowidgets.common.types.IVetoable;
 
 public interface ITabItemListenerSpi {
 
-	void selected();
+    void selected();
 
-	void onClose(IVetoable vetoable);
+    void onClose(IVetoable vetoable);
 
-	void closed();
+    void closed();
 
 }

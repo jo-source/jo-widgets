@@ -32,8 +32,8 @@ import java.util.Collection;
 
 public interface ITypedProperties {
 
-	<PROPERTY_TYPE> PROPERTY_TYPE getProperty(ITypedKey<PROPERTY_TYPE> key);
+    <PROPERTY_TYPE> PROPERTY_TYPE getProperty(ITypedKey<PROPERTY_TYPE> key);
 
-	Collection<ITypedKey<?>> getKeys();
+    Collection<ITypedKey<?>> getKeys();
 
 }

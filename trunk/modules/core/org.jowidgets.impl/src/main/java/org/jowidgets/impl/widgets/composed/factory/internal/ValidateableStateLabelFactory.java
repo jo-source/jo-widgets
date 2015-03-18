@@ -37,33 +37,36 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.widgets.composed.InputComponentValidationStateLabelImpl;
 
-public class ValidateableStateLabelFactory implements IWidgetFactory<IInputComponentValidationLabel, IInputComponentValidationLabelDescriptor> {
+public class ValidateableStateLabelFactory implements
+        IWidgetFactory<IInputComponentValidationLabel, IInputComponentValidationLabelDescriptor> {
 
-	private final IGenericWidgetFactory genericWidgetFactory;
+    private final IGenericWidgetFactory genericWidgetFactory;
 
-	public ValidateableStateLabelFactory(final IGenericWidgetFactory genericWidgetFactory) {
-		super();
-		this.genericWidgetFactory = genericWidgetFactory;
-	}
+    public ValidateableStateLabelFactory(final IGenericWidgetFactory genericWidgetFactory) {
+        super();
+        this.genericWidgetFactory = genericWidgetFactory;
+    }
 
-	@Override
-	public IInputComponentValidationLabel create(final Object parentUiReference, final IInputComponentValidationLabelDescriptor descriptor) {
-		final IValidationResultLabelBluePrint validationResultLabelBp = Toolkit.getBluePrintFactory().validationResultLabel();
-		validationResultLabelBp.setSetup(descriptor);
+    @Override
+    public IInputComponentValidationLabel create(
+        final Object parentUiReference,
+        final IInputComponentValidationLabelDescriptor descriptor) {
+        final IValidationResultLabelBluePrint validationResultLabelBp = Toolkit.getBluePrintFactory().validationResultLabel();
+        validationResultLabelBp.setSetup(descriptor);
 
-		final IValidationResultLabel validationResultLabel = genericWidgetFactory.create(
-				parentUiReference,
-				validationResultLabelBp);
+        final IValidationResultLabel validationResultLabel = genericWidgetFactory.create(
+                parentUiReference,
+                validationResultLabelBp);
 
-		if (validationResultLabel == null) {
-			throw new IllegalStateException("Could not create widget with descriptor interface class '"
-				+ IValidationResultLabelDescriptor.class
-				+ "' from '"
-				+ IGenericWidgetFactory.class.getName()
-				+ "'");
-		}
+        if (validationResultLabel == null) {
+            throw new IllegalStateException("Could not create widget with descriptor interface class '"
+                + IValidationResultLabelDescriptor.class
+                + "' from '"
+                + IGenericWidgetFactory.class.getName()
+                + "'");
+        }
 
-		return new InputComponentValidationStateLabelImpl(validationResultLabel, descriptor);
-	}
+        return new InputComponentValidationStateLabelImpl(validationResultLabel, descriptor);
+    }
 
 }

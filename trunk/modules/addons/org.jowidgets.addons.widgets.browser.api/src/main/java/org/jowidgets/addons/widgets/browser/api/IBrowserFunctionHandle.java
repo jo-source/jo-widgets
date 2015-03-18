@@ -30,23 +30,23 @@ package org.jowidgets.addons.widgets.browser.api;
 
 public interface IBrowserFunctionHandle {
 
-	/**
-	 * The creator of a browser function is responsible to dispose the function handle.
-	 * The {@link IBrowserLocationListener#locationChanged(IBrowserLocationEvent)} method
-	 * seems to be a good place where this can be done.
-	 * 
-	 * Remark: Disposing the browser will dispose all browser functions.
-	 */
-	void dispose();
+    /**
+     * The creator of a browser function is responsible to dispose the function handle.
+     * The {@link IBrowserLocationListener#locationChanged(IBrowserLocationEvent)} method
+     * seems to be a good place where this can be done.
+     * 
+     * Remark: Disposing the browser will dispose all browser functions.
+     */
+    void dispose();
 
-	/**
-	 * @return True if the function is already disposed, false otherwise
-	 */
-	boolean isDisposed();
+    /**
+     * @return True if the function is already disposed, false otherwise
+     */
+    boolean isDisposed();
 
-	/**
-	 * @return The name of the browser function
-	 */
-	String getFunctionName();
+    /**
+     * @return The name of the browser function
+     */
+    String getFunctionName();
 
 }

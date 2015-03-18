@@ -41,77 +41,77 @@ import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 class ActionMenuItem<WIDGET_TYPE extends IActionMenuItem, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & IAccelerateableMenuItemSetupBuilder<?> & IAccelerateableMenuItemSetup> extends
-		MenuItem<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IActionMenuItem {
+        MenuItem<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IActionMenuItem {
 
-	private final Set<IActionListener> actionListeners;
-	private IAction action;
+    private final Set<IActionListener> actionListeners;
+    private IAction action;
 
-	ActionMenuItem(final BLUE_PRINT_TYPE bluePrint) {
-		super(bluePrint);
-		this.actionListeners = new HashSet<IActionListener>();
-	}
+    ActionMenuItem(final BLUE_PRINT_TYPE bluePrint) {
+        super(bluePrint);
+        this.actionListeners = new HashSet<IActionListener>();
+    }
 
-	@Override
-	void initialize(final WIDGET_TYPE widget) {
-		super.initialize(widget);
-		for (final IActionListener listener : actionListeners) {
-			getWidget().addActionListener(listener);
-		}
-		if (action != null) {
-			getWidget().setAction(action);
-		}
-	}
+    @Override
+    void initialize(final WIDGET_TYPE widget) {
+        super.initialize(widget);
+        for (final IActionListener listener : actionListeners) {
+            getWidget().addActionListener(listener);
+        }
+        if (action != null) {
+            getWidget().setAction(action);
+        }
+    }
 
-	@Override
-	public void addActionListener(final IActionListener actionListener) {
-		if (isInitialized()) {
-			getWidget().addActionListener(actionListener);
-		}
-		else {
-			this.actionListeners.add(actionListener);
-		}
-	}
+    @Override
+    public void addActionListener(final IActionListener actionListener) {
+        if (isInitialized()) {
+            getWidget().addActionListener(actionListener);
+        }
+        else {
+            this.actionListeners.add(actionListener);
+        }
+    }
 
-	@Override
-	public void removeActionListener(final IActionListener actionListener) {
-		if (isInitialized()) {
-			getWidget().removeActionListener(actionListener);
-		}
-		else {
-			this.actionListeners.remove(actionListener);
-		}
-	}
+    @Override
+    public void removeActionListener(final IActionListener actionListener) {
+        if (isInitialized()) {
+            getWidget().removeActionListener(actionListener);
+        }
+        else {
+            this.actionListeners.remove(actionListener);
+        }
+    }
 
-	@Override
-	public void setAccelerator(final Accelerator accelerator) {
-		if (isInitialized()) {
-			getWidget().setAccelerator(accelerator);
-		}
-		else {
-			getBluePrint().setAccelerator(accelerator);
-		}
-	}
+    @Override
+    public void setAccelerator(final Accelerator accelerator) {
+        if (isInitialized()) {
+            getWidget().setAccelerator(accelerator);
+        }
+        else {
+            getBluePrint().setAccelerator(accelerator);
+        }
+    }
 
-	@Override
-	public void setAction(final IAction action) {
-		if (isInitialized()) {
-			getWidget().setAction(action);
-		}
-		else {
-			this.action = action;
-		}
-	}
+    @Override
+    public void setAction(final IAction action) {
+        if (isInitialized()) {
+            getWidget().setAction(action);
+        }
+        else {
+            this.action = action;
+        }
+    }
 
-	@Override
-	public void setModel(final IActionItemModel model) {
-		checkInitialized();
-		getWidget().setModel(model);
-	}
+    @Override
+    public void setModel(final IActionItemModel model) {
+        checkInitialized();
+        getWidget().setModel(model);
+    }
 
-	@Override
-	public IActionItemModel getModel() {
-		checkInitialized();
-		return getWidget().getModel();
-	}
+    @Override
+    public IActionItemModel getModel() {
+        checkInitialized();
+        return getWidget().getModel();
+    }
 
 }

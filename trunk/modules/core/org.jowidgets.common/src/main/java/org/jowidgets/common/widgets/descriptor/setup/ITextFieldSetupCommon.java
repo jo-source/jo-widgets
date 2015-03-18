@@ -31,9 +31,9 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ITextFieldSetupCommon extends ITextComponentSetupCommon {
 
-	@Mandatory
-	boolean isPasswordPresentation();
+    @Mandatory
+    boolean isPasswordPresentation();
 
-	boolean hasBorder();
+    boolean hasBorder();
 
 }

@@ -46,83 +46,83 @@ import org.jowidgets.tools.model.tree.DefaultTreeNodeRenderer;
 
 class StringNodeModel extends AbstractTreeNodeModel<String> implements ITreeNodeModel<String> {
 
-	private final ITreeNodeRenderer<String> renderer;
-	private final String data;
-	private final ICheckedItemModel checkableItem;
-	private final ArrayList<ITreeNodeModel<String>> children;
+    private final ITreeNodeRenderer<String> renderer;
+    private final String data;
+    private final ICheckedItemModel checkableItem;
+    private final ArrayList<ITreeNodeModel<String>> children;
 
-	@SuppressWarnings("unchecked")
-	StringNodeModel() {
-		this(null, Collections.EMPTY_LIST);
-	}
+    @SuppressWarnings("unchecked")
+    StringNodeModel() {
+        this(null, Collections.EMPTY_LIST);
+    }
 
-	StringNodeModel(final String data, final List<ITreeNodeModel<String>> children) {
-		this.data = data;
-		this.checkableItem = createCheckableItem();
-		this.renderer = new TreeNodeRenderer();
-		this.children = new ArrayList<ITreeNodeModel<String>>(children);
-	}
+    StringNodeModel(final String data, final List<ITreeNodeModel<String>> children) {
+        this.data = data;
+        this.checkableItem = createCheckableItem();
+        this.renderer = new TreeNodeRenderer();
+        this.children = new ArrayList<ITreeNodeModel<String>>(children);
+    }
 
-	private ICheckedItemModel createCheckableItem() {
-		final CheckedItemModel result = new CheckedItemModel("Checkable");
-		result.setSelected(isCheckable());
-		result.addItemModelListener(new IItemModelListener() {
-			@Override
-			public void itemChanged(final IItemModel item) {
-				setCheckable(result.isSelected());
-			}
-		});
-		return result;
-	}
+    private ICheckedItemModel createCheckableItem() {
+        final CheckedItemModel result = new CheckedItemModel("Checkable");
+        result.setSelected(isCheckable());
+        result.addItemModelListener(new IItemModelListener() {
+            @Override
+            public void itemChanged(final IItemModel item) {
+                setCheckable(result.isSelected());
+            }
+        });
+        return result;
+    }
 
-	@Override
-	public final ITreeNodeRenderer<String> getRenderer() {
-		return renderer;
-	}
+    @Override
+    public final ITreeNodeRenderer<String> getRenderer() {
+        return renderer;
+    }
 
-	@Override
-	public final String getData() {
-		return data;
-	}
+    @Override
+    public final String getData() {
+        return data;
+    }
 
-	@Override
-	public void setCheckable(final boolean checkable) {
-		super.setCheckable(checkable);
-		if (checkableItem.isSelected() != checkable) {
-			checkableItem.setSelected(checkable);
-		}
-	}
+    @Override
+    public void setCheckable(final boolean checkable) {
+        super.setCheckable(checkable);
+        if (checkableItem.isSelected() != checkable) {
+            checkableItem.setSelected(checkable);
+        }
+    }
 
-	@Override
-	public int getChildrenCount() {
-		return children.size();
-	}
+    @Override
+    public int getChildrenCount() {
+        return children.size();
+    }
 
-	@Override
-	public ITreeNodeModel<?> getChildNode(final int index) {
-		return children.get(index);
-	}
+    @Override
+    public ITreeNodeModel<?> getChildNode(final int index) {
+        return children.get(index);
+    }
 
-	protected void setChildren(final List<ITreeNodeModel<String>> children) {
-		this.children.clear();
-		this.children.addAll(children);
-		fireChildrenChanged();
-	}
+    protected void setChildren(final List<ITreeNodeModel<String>> children) {
+        this.children.clear();
+        this.children.addAll(children);
+        fireChildrenChanged();
+    }
 
-	private final class TreeNodeRenderer extends DefaultTreeNodeRenderer<String> {
+    private final class TreeNodeRenderer extends DefaultTreeNodeRenderer<String> {
 
-		@Override
-		public void nodeCreated(final String value, final ITreeNode node) {
-			super.nodeCreated(value, node);
-			node.setPopupMenu(createNodeMenu(node));
-		}
+        @Override
+        public void nodeCreated(final String value, final ITreeNode node) {
+            super.nodeCreated(value, node);
+            node.setPopupMenu(createNodeMenu(node));
+        }
 
-		private IMenuModel createNodeMenu(final ITreeNode node) {
-			final MenuModel result = new MenuModel();
-			result.addItem(checkableItem);
-			return result;
-		}
+        private IMenuModel createNodeMenu(final ITreeNode node) {
+            final MenuModel result = new MenuModel();
+            result.addItem(checkableItem);
+            return result;
+        }
 
-	}
+    }
 
 }

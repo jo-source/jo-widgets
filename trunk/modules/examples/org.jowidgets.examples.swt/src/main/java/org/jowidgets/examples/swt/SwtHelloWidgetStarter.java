@@ -31,10 +31,10 @@ import org.jowidgets.examples.common.HelloWidgetApplication;
 
 public final class SwtHelloWidgetStarter {
 
-	private SwtHelloWidgetStarter() {}
+    private SwtHelloWidgetStarter() {}
 
-	public static void main(final String[] args) throws Exception {
-		new HelloWidgetApplication("Hello Widgets SWT").start();
-	}
+    public static void main(final String[] args) throws Exception {
+        new HelloWidgetApplication("Hello Widgets SWT").start();
+    }
 
 }

@@ -39,32 +39,32 @@ import org.jowidgets.examples.common.workbench.demo3.model.Person;
 
 public final class DeletePersonActionFactory {
 
-	private DeletePersonActionFactory() {}
+    private DeletePersonActionFactory() {}
 
-	public static IAction create(final BeanTableModel<Person> model) {
-		final IActionBuilder builder = CommandAction.builder();
-		builder.setText("Delete person");
-		builder.setIcon(SilkIcons.USER_DELETE);
-		builder.setCommand(new DeletePersonCommand(model));
-		return builder.build();
-	}
+    public static IAction create(final BeanTableModel<Person> model) {
+        final IActionBuilder builder = CommandAction.builder();
+        builder.setText("Delete person");
+        builder.setIcon(SilkIcons.USER_DELETE);
+        builder.setCommand(new DeletePersonCommand(model));
+        return builder.build();
+    }
 
-	private static final class DeletePersonCommand implements ICommandExecutor {
+    private static final class DeletePersonCommand implements ICommandExecutor {
 
-		private final BeanTableModel<Person> model;
+        private final BeanTableModel<Person> model;
 
-		private DeletePersonCommand(final BeanTableModel<Person> model) {
-			this.model = model;
-		}
+        private DeletePersonCommand(final BeanTableModel<Person> model) {
+            this.model = model;
+        }
 
-		@Override
-		public void execute(final IExecutionContext executionContext) throws Exception {
-			final Person person = model.getSelectedBean();
-			if (person != null) {
-				model.removeBean(person);
-			}
-		}
+        @Override
+        public void execute(final IExecutionContext executionContext) throws Exception {
+            final Person person = model.getSelectedBean();
+            if (person != null) {
+                model.removeBean(person);
+            }
+        }
 
-	}
+    }
 
 }

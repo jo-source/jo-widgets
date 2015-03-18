@@ -30,18 +30,18 @@ package org.jowidgets.common.widgets.controller;
 
 public interface IItemStateObservable {
 
-	/**
-	 * Adds an item state listener
-	 * 
-	 * @param listener The listener to add
-	 */
-	void addItemListener(final IItemStateListener listener);
+    /**
+     * Adds an item state listener
+     * 
+     * @param listener The listener to add
+     */
+    void addItemListener(final IItemStateListener listener);
 
-	/**
-	 * Removes an item state listener
-	 * 
-	 * @param listener The listener to remove
-	 */
-	void removeItemListener(final IItemStateListener listener);
+    /**
+     * Removes an item state listener
+     * 
+     * @param listener The listener to remove
+     */
+    void removeItemListener(final IItemStateListener listener);
 
 }

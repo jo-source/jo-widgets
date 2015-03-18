@@ -30,8 +30,8 @@ package org.jowidgets.addons.widgets.browser.api;
 
 public interface IBrowserDocumentListener {
 
-	void titleChanged(String title);
+    void titleChanged(String title);
 
-	void statusTextChanged(String statusText);
+    void statusTextChanged(String statusText);
 
 }

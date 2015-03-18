@@ -30,25 +30,25 @@ package org.jowidgets.api.model;
 
 public interface IListModelListener {
 
-	/**
-	 * Will be invoked after a child was added
-	 * 
-	 * @param index The index where the child was added
-	 */
-	void afterChildAdded(int index);
+    /**
+     * Will be invoked after a child was added
+     * 
+     * @param index The index where the child was added
+     */
+    void afterChildAdded(int index);
 
-	/**
-	 * Will be invoked before a child will be removed
-	 * 
-	 * @param index The index of the child to remove
-	 */
-	void beforeChildRemove(int index);
+    /**
+     * Will be invoked before a child will be removed
+     * 
+     * @param index The index of the child to remove
+     */
+    void beforeChildRemove(int index);
 
-	/**
-	 * Will be invoked after a child was removed
-	 * 
-	 * @param index The index of the removed child
-	 */
-	void afterChildRemoved(int index);
+    /**
+     * Will be invoked after a child was removed
+     * 
+     * @param index The index of the removed child
+     */
+    void afterChildRemoved(int index);
 
 }

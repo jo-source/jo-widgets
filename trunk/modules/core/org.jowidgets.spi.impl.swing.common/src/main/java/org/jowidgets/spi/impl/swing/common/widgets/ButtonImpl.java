@@ -46,84 +46,84 @@ import org.jowidgets.test.spi.widgets.IButtonUiSpi;
 
 public class ButtonImpl extends AbstractActionControl implements IButtonUiSpi {
 
-	public ButtonImpl(final IButtonSetupSpi setup) {
-		super(new JButton());
+    public ButtonImpl(final IButtonSetupSpi setup) {
+        super(new JButton());
 
-		setText(setup.getText());
-		setToolTipText(setup.getToolTipText());
-		setIcon(setup.getIcon());
+        setText(setup.getText());
+        setToolTipText(setup.getToolTipText());
+        setIcon(setup.getIcon());
 
-		setMarkup(setup.getMarkup());
+        setMarkup(setup.getMarkup());
 
-		final Insets insets = getUiReference().getInsets();
-		getUiReference().setMargin(new Insets(insets.top, insets.bottom, insets.bottom, insets.bottom));
+        final Insets insets = getUiReference().getInsets();
+        getUiReference().setMargin(new Insets(insets.top, insets.bottom, insets.bottom, insets.bottom));
 
-		getUiReference().setHorizontalAlignment(AlignmentConvert.convert(setup.getAlignment()));
+        getUiReference().setHorizontalAlignment(AlignmentConvert.convert(setup.getAlignment()));
 
-		getUiReference().addActionListener(new ActionListener() {
+        getUiReference().addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(final ActionEvent e) {
-				fireActionPerformed();
-			}
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                fireActionPerformed();
+            }
 
-		});
-	}
+        });
+    }
 
-	@Override
-	public JButton getUiReference() {
-		return (JButton) super.getUiReference();
-	}
+    @Override
+    public JButton getUiReference() {
+        return (JButton) super.getUiReference();
+    }
 
-	@Override
-	public void setText(final String text) {
-		getUiReference().setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        getUiReference().setText(text);
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		getUiReference().setIcon(SwingImageRegistry.getInstance().getImageIcon(icon));
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        getUiReference().setIcon(SwingImageRegistry.getInstance().getImageIcon(icon));
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		final JButton button = getUiReference();
-		button.setFont(FontProvider.deriveFont(button.getFont(), markup));
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        final JButton button = getUiReference();
+        button.setFont(FontProvider.deriveFont(button.getFont(), markup));
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), size));
-	}
+    @Override
+    public void setFontSize(final int size) {
+        getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), size));
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), fontName));
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), fontName));
+    }
 
-	@Override
-	public boolean isTestable() {
-		return true;
-	}
+    @Override
+    public boolean isTestable() {
+        return true;
+    }
 
-	@Override
-	public void push() {
-		Robot robo = null;
-		try {
-			robo = new Robot();
-		}
-		catch (final AWTException e) {
-			// CHECKSTYLE:OFF
-			e.printStackTrace();
-			// CHECKSTYLE:ON
-			return;
-		}
-		final JButton button = getUiReference();
-		robo.mouseMove(
-				button.getLocationOnScreen().x + button.getWidth() / 2,
-				button.getLocationOnScreen().y + button.getHeight() / 2);
-		robo.mousePress(InputEvent.BUTTON1_MASK);
-		robo.mouseRelease(InputEvent.BUTTON1_MASK);
-	}
+    @Override
+    public void push() {
+        Robot robo = null;
+        try {
+            robo = new Robot();
+        }
+        catch (final AWTException e) {
+            // CHECKSTYLE:OFF
+            e.printStackTrace();
+            // CHECKSTYLE:ON
+            return;
+        }
+        final JButton button = getUiReference();
+        robo.mouseMove(
+                button.getLocationOnScreen().x + button.getWidth() / 2,
+                button.getLocationOnScreen().y + button.getHeight() / 2);
+        robo.mousePress(InputEvent.BUTTON1_MASK);
+        robo.mouseRelease(InputEvent.BUTTON1_MASK);
+    }
 
 }

@@ -30,6 +30,6 @@ package org.jowidgets.addons.map.common;
 
 public interface IDesignationListener<T> {
 
-	void onDesignation(T object);
+    void onDesignation(T object);
 
 }

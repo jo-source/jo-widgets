@@ -41,62 +41,62 @@ import org.jowidgets.validation.IValidationResult;
 
 public class InputComponentValidationStateLabelImpl extends ControlWrapper implements IInputComponentValidationLabel {
 
-	private final IValidationResultLabel resultLabel;
-	private final IInputComponent<?> inputComponent;
-	private final IDecorator<IValidationResult> initialDecorator;
-	private final IDecorator<IValidationResult> unmodifiedDecorator;
+    private final IValidationResultLabel resultLabel;
+    private final IInputComponent<?> inputComponent;
+    private final IDecorator<IValidationResult> initialDecorator;
+    private final IDecorator<IValidationResult> unmodifiedDecorator;
 
-	public InputComponentValidationStateLabelImpl(
-		final IValidationResultLabel resultLabel,
-		final IInputComponentValidationLabelSetup setup) {
-		super(resultLabel);
-		Assert.paramNotNull(setup.getInputComponent(), "setup.getInputComponent()");
+    public InputComponentValidationStateLabelImpl(
+        final IValidationResultLabel resultLabel,
+        final IInputComponentValidationLabelSetup setup) {
+        super(resultLabel);
+        Assert.paramNotNull(setup.getInputComponent(), "setup.getInputComponent()");
 
-		this.initialDecorator = setup.getInitialValidationDecorator();
-		this.unmodifiedDecorator = setup.getUnmodifiedValidationDecorator();
+        this.initialDecorator = setup.getInitialValidationDecorator();
+        this.unmodifiedDecorator = setup.getUnmodifiedValidationDecorator();
 
-		this.resultLabel = resultLabel;
+        this.resultLabel = resultLabel;
 
-		ColorSettingsInvoker.setColors(setup, this);
-		VisibiliySettingsInvoker.setVisibility(setup, this);
+        ColorSettingsInvoker.setColors(setup, this);
+        VisibiliySettingsInvoker.setVisibility(setup, this);
 
-		this.inputComponent = setup.getInputComponent();
+        this.inputComponent = setup.getInputComponent();
 
-		inputComponent.addValidationConditionListener(new IValidationConditionListener() {
-			@Override
-			public void validationConditionsChanged() {
-				IValidationResult validationResult = inputComponent.validate();
-				if (!inputComponent.hasModifications() && unmodifiedDecorator != null) {
-					validationResult = unmodifiedDecorator.decorate(validationResult);
-				}
-				if (validationResult != null) {
-					resultLabel.setResult(validationResult);
-				}
-				else {
-					resultLabel.setEmpty();
-				}
-			}
-		});
+        inputComponent.addValidationConditionListener(new IValidationConditionListener() {
+            @Override
+            public void validationConditionsChanged() {
+                IValidationResult validationResult = inputComponent.validate();
+                if (!inputComponent.hasModifications() && unmodifiedDecorator != null) {
+                    validationResult = unmodifiedDecorator.decorate(validationResult);
+                }
+                if (validationResult != null) {
+                    resultLabel.setResult(validationResult);
+                }
+                else {
+                    resultLabel.setEmpty();
+                }
+            }
+        });
 
-		resetValidation();
-	}
+        resetValidation();
+    }
 
-	@Override
-	public void resetValidation() {
-		initialValidation();
-	}
+    @Override
+    public void resetValidation() {
+        initialValidation();
+    }
 
-	private void initialValidation() {
-		IValidationResult validationResult = inputComponent.validate();
-		if (initialDecorator != null) {
-			validationResult = initialDecorator.decorate(validationResult);
-		}
-		if (validationResult != null) {
-			resultLabel.setResult(validationResult);
-		}
-		else {
-			resultLabel.setEmpty();
-		}
-	}
+    private void initialValidation() {
+        IValidationResult validationResult = inputComponent.validate();
+        if (initialDecorator != null) {
+            validationResult = initialDecorator.decorate(validationResult);
+        }
+        if (validationResult != null) {
+            resultLabel.setResult(validationResult);
+        }
+        else {
+            resultLabel.setEmpty();
+        }
+    }
 
 }

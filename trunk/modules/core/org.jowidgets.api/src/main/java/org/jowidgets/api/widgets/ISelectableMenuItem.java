@@ -33,9 +33,9 @@ import org.jowidgets.common.widgets.ISelectableMenuItemCommon;
 
 public interface ISelectableMenuItem extends IMenuItem, ISelectableMenuItemCommon {
 
-	@Override
-	ISelectableMenuItemModel getModel();
+    @Override
+    ISelectableMenuItemModel getModel();
 
-	void setModel(ISelectableMenuItemModel model);
+    void setModel(ISelectableMenuItemModel model);
 
 }

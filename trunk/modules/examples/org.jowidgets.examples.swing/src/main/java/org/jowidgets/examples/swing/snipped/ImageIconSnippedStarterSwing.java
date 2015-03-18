@@ -34,13 +34,13 @@ import org.jowidgets.examples.common.snipped.ImageIconSnipped;
 
 public final class ImageIconSnippedStarterSwing {
 
-	private ImageIconSnippedStarterSwing() {}
+    private ImageIconSnippedStarterSwing() {}
 
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		Toolkit.getApplicationRunner().run(new ImageIconSnipped());
-		System.exit(0);
-	}
+    public static void main(final String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
+        Toolkit.getApplicationRunner().run(new ImageIconSnipped());
+        System.exit(0);
+    }
 
 }

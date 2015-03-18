@@ -46,48 +46,48 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class OleControlDemoApplication implements IApplication {
 
-	private static final String INITIAL_URL = "www.google.de";
+    private static final String INITIAL_URL = "www.google.de";
 
-	private final String title;
+    private final String title;
 
-	public OleControlDemoApplication(final String title) {
-		this.title = title;
-	}
+    public OleControlDemoApplication(final String title) {
+        this.title = title;
+    }
 
-	public void start() {
-		Toolkit.getApplicationRunner().run(this);
-	}
+    public void start() {
+        Toolkit.getApplicationRunner().run(this);
+    }
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
-		final IFrame frame = Toolkit.createRootFrame(BPF.frame().setTitle(title).autoPackOff(), lifecycle);
-		frame.setBackgroundColor(Colors.WHITE);
-		frame.setSize(1024, 768);
-		frame.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "[][]0[grow, 0::]0"));
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
+        final IFrame frame = Toolkit.createRootFrame(BPF.frame().setTitle(title).autoPackOff(), lifecycle);
+        frame.setBackgroundColor(Colors.WHITE);
+        frame.setSize(1024, 768);
+        frame.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "[][]0[grow, 0::]0"));
 
-		//add url field
-		final ITextControl urlField = frame.add(BPF.textField().setText(INITIAL_URL), "gapleft 5, gapright 5,growx, h 0::, wrap");
-		frame.add(BPF.separator(), "growx, h 0::, wrap");
+        //add url field
+        final ITextControl urlField = frame.add(BPF.textField().setText(INITIAL_URL), "gapleft 5, gapright 5,growx, h 0::, wrap");
+        frame.add(BPF.separator(), "growx, h 0::, wrap");
 
-		//add ole content
-		final IOleControl oleControl = frame.add(OleBPF.oleControl(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        //add ole content
+        final IOleControl oleControl = frame.add(OleBPF.oleControl(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
-		oleControl.setDocument("Shell.Explorer");
-		onUrlChange(oleControl, urlField);
+        oleControl.setDocument("Shell.Explorer");
+        onUrlChange(oleControl, urlField);
 
-		urlField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(final IKeyEvent event) {
-				if (event.getVirtualKey() == VirtualKey.ENTER) {
-					onUrlChange(oleControl, urlField);
-				}
-			}
-		});
+        urlField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(final IKeyEvent event) {
+                if (event.getVirtualKey() == VirtualKey.ENTER) {
+                    onUrlChange(oleControl, urlField);
+                }
+            }
+        });
 
-		frame.setVisible(true);
-	}
+        frame.setVisible(true);
+    }
 
-	private void onUrlChange(final IOleControl oleControl, final ITextControl urlField) {
-		oleControl.getAutomation().invoke("Navigate", InvocationParameter.create("URL", urlField.getText()));
-	}
+    private void onUrlChange(final IOleControl oleControl, final ITextControl urlField) {
+        oleControl.getAutomation().invoke("Navigate", InvocationParameter.create("URL", urlField.getText()));
+    }
 }

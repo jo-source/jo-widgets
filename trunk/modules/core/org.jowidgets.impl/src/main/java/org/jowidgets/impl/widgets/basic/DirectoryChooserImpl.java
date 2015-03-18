@@ -41,64 +41,64 @@ import org.jowidgets.spi.widgets.IDirectoryChooserSpi;
 
 public class DirectoryChooserImpl extends WidgetSpiWrapper implements IDirectoryChooser {
 
-	private final DisplayDelegate displayDelegate;
+    private final DisplayDelegate displayDelegate;
 
-	public DirectoryChooserImpl(final IDirectoryChooserSpi widget) {
-		super(widget);
-		this.displayDelegate = new DisplayDelegate();
-	}
+    public DirectoryChooserImpl(final IDirectoryChooserSpi widget) {
+        super(widget);
+        this.displayDelegate = new DisplayDelegate();
+    }
 
-	@Override
-	public IDirectoryChooserSpi getWidget() {
-		return (IDirectoryChooserSpi) super.getWidget();
-	}
+    @Override
+    public IDirectoryChooserSpi getWidget() {
+        return (IDirectoryChooserSpi) super.getWidget();
+    }
 
-	@Override
-	public void setParent(final IWindow parent) {
-		displayDelegate.setParent(parent);
-	}
+    @Override
+    public void setParent(final IWindow parent) {
+        displayDelegate.setParent(parent);
+    }
 
-	@Override
-	public IWindow getParent() {
-		return displayDelegate.getParent();
-	}
+    @Override
+    public IWindow getParent() {
+        return displayDelegate.getParent();
+    }
 
-	@Override
-	public DialogResult open() {
-		WidgetCheck.check(this);
-		final DialogResult result = getWidget().open();
-		dispose();
-		return result;
-	}
+    @Override
+    public DialogResult open() {
+        WidgetCheck.check(this);
+        final DialogResult result = getWidget().open();
+        dispose();
+        return result;
+    }
 
-	@Override
-	public void dispose() {
-		displayDelegate.dispose();
-	}
+    @Override
+    public void dispose() {
+        displayDelegate.dispose();
+    }
 
-	@Override
-	public boolean isDisposed() {
-		return displayDelegate.isDisposed();
-	}
+    @Override
+    public boolean isDisposed() {
+        return displayDelegate.isDisposed();
+    }
 
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		displayDelegate.addDisposeListener(listener);
-	}
+    @Override
+    public void addDisposeListener(final IDisposeListener listener) {
+        displayDelegate.addDisposeListener(listener);
+    }
 
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		displayDelegate.removeDisposeListener(listener);
-	}
+    @Override
+    public void removeDisposeListener(final IDisposeListener listener) {
+        displayDelegate.removeDisposeListener(listener);
+    }
 
-	@Override
-	public void setDirectory(final File file) {
-		getWidget().setDirectory(file);
-	}
+    @Override
+    public void setDirectory(final File file) {
+        getWidget().setDirectory(file);
+    }
 
-	@Override
-	public File getDirectory() {
-		return getWidget().getDirectory();
-	}
+    @Override
+    public File getDirectory() {
+        return getWidget().getDirectory();
+    }
 
 }

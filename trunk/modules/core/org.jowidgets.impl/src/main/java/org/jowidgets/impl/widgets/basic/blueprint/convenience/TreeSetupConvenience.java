@@ -36,59 +36,59 @@ import org.jowidgets.common.types.SelectionPolicy;
 import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
 public class TreeSetupConvenience extends AbstractSetupBuilderConvenience<ITreeSetupBuilder<?>> implements
-		ITreeSetupConvenience<ITreeSetupBuilder<?>> {
+        ITreeSetupConvenience<ITreeSetupBuilder<?>> {
 
-	@Override
-	public ITreeSetupBuilder<?> multiSelection() {
-		return getBuilder().setSelectionPolicy(SelectionPolicy.MULTI_SELECTION);
-	}
+    @Override
+    public ITreeSetupBuilder<?> multiSelection() {
+        return getBuilder().setSelectionPolicy(SelectionPolicy.MULTI_SELECTION);
+    }
 
-	@Override
-	public ITreeSetupBuilder<?> singleSelection() {
-		return getBuilder().setSelectionPolicy(SelectionPolicy.SINGLE_SELECTION);
-	}
+    @Override
+    public ITreeSetupBuilder<?> singleSelection() {
+        return getBuilder().setSelectionPolicy(SelectionPolicy.SINGLE_SELECTION);
+    }
 
-	@Override
-	public ITreeSetupBuilder<?> setAutoCheckMode(final boolean autoCheckMode) {
-		if (autoCheckMode) {
-			getBuilder().setAutoCheckPolicy(TreeAutoCheckPolicy.MULTI_PATH);
-		}
-		else {
-			getBuilder().setAutoCheckPolicy(TreeAutoCheckPolicy.OFF);
-		}
-		return getBuilder();
-	}
+    @Override
+    public ITreeSetupBuilder<?> setAutoCheckMode(final boolean autoCheckMode) {
+        if (autoCheckMode) {
+            getBuilder().setAutoCheckPolicy(TreeAutoCheckPolicy.MULTI_PATH);
+        }
+        else {
+            getBuilder().setAutoCheckPolicy(TreeAutoCheckPolicy.OFF);
+        }
+        return getBuilder();
+    }
 
-	@Override
-	public ITreeSetupBuilder<?> setDefaultIcons() {
-		final ITreeSetupBuilder<?> builder = getBuilder();
-		builder.setDefaultInnerIcon(IconsSmall.FOLDER);
-		builder.setDefaultLeafIcon(IconsSmall.PAGE_WHITE);
-		return null;
-	}
+    @Override
+    public ITreeSetupBuilder<?> setDefaultIcons() {
+        final ITreeSetupBuilder<?> builder = getBuilder();
+        builder.setDefaultInnerIcon(IconsSmall.FOLDER);
+        builder.setDefaultLeafIcon(IconsSmall.PAGE_WHITE);
+        return null;
+    }
 
-	@Override
-	public ITreeSetupBuilder<?> setClassicSelectionColors() {
-		getBuilder().setSelectedForegroundColor(new ColorValue(255, 255, 255));
-		getBuilder().setSelectedBackgroundColor(new ColorValue(51, 153, 255));
-		getBuilder().setSelectedBorderColor(new ColorValue(60, 60, 60));
+    @Override
+    public ITreeSetupBuilder<?> setClassicSelectionColors() {
+        getBuilder().setSelectedForegroundColor(new ColorValue(255, 255, 255));
+        getBuilder().setSelectedBackgroundColor(new ColorValue(51, 153, 255));
+        getBuilder().setSelectedBorderColor(new ColorValue(60, 60, 60));
 
-		getBuilder().setDisabledSelectedForegroundColor(new ColorValue(130, 130, 130));
-		getBuilder().setDisabledSelectedBackgroundColor(new ColorValue(255, 255, 255));
-		getBuilder().setDisabledSelectedBorderColor(new ColorValue(130, 130, 130));
-		return getBuilder();
-	}
+        getBuilder().setDisabledSelectedForegroundColor(new ColorValue(130, 130, 130));
+        getBuilder().setDisabledSelectedBackgroundColor(new ColorValue(255, 255, 255));
+        getBuilder().setDisabledSelectedBorderColor(new ColorValue(130, 130, 130));
+        return getBuilder();
+    }
 
-	@Override
-	public ITreeSetupBuilder<?> setWinSelectionColors() {
-		getBuilder().setSelectedForegroundColor(new ColorValue(0, 0, 0));
-		getBuilder().setSelectedBackgroundColor(new ColorValue(203, 232, 246));
-		getBuilder().setSelectedBorderColor(new ColorValue(38, 160, 218));
+    @Override
+    public ITreeSetupBuilder<?> setWinSelectionColors() {
+        getBuilder().setSelectedForegroundColor(new ColorValue(0, 0, 0));
+        getBuilder().setSelectedBackgroundColor(new ColorValue(203, 232, 246));
+        getBuilder().setSelectedBorderColor(new ColorValue(38, 160, 218));
 
-		getBuilder().setDisabledSelectedForegroundColor(new ColorValue(130, 130, 130));
-		getBuilder().setDisabledSelectedBackgroundColor(new ColorValue(255, 255, 255));
-		getBuilder().setDisabledSelectedBorderColor(new ColorValue(130, 130, 130));
-		return getBuilder();
-	}
+        getBuilder().setDisabledSelectedForegroundColor(new ColorValue(130, 130, 130));
+        getBuilder().setDisabledSelectedBackgroundColor(new ColorValue(255, 255, 255));
+        getBuilder().setDisabledSelectedBorderColor(new ColorValue(130, 130, 130));
+        return getBuilder();
+    }
 
 }

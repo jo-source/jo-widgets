@@ -34,9 +34,9 @@ import org.junit.Test;
 
 public class ToolkitTest {
 
-	@Test
-	public void createToolkitTest() {
-		Assert.assertNotNull(Toolkit.getInstance());
-	}
+    @Test
+    public void createToolkitTest() {
+        Assert.assertNotNull(Toolkit.getInstance());
+    }
 
 }

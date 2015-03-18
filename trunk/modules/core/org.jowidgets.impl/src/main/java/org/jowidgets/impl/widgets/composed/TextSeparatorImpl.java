@@ -46,132 +46,132 @@ import org.jowidgets.util.Assert;
 
 public class TextSeparatorImpl extends ControlWrapper implements ITextLabel {
 
-	private final IComposite composite;
-	private final ITextLabel textLabelWidget;
-	private String text;
+    private final IComposite composite;
+    private final ITextLabel textLabelWidget;
+    private String text;
 
-	public TextSeparatorImpl(final IComposite composite, final ITextSeparatorDescriptor descriptor) {
-		super(composite);
-		Assert.paramNotNull(composite, "composite");
-		Assert.paramNotNull(descriptor, "descriptor");
+    public TextSeparatorImpl(final IComposite composite, final ITextSeparatorDescriptor descriptor) {
+        super(composite);
+        Assert.paramNotNull(composite, "composite");
+        Assert.paramNotNull(descriptor, "descriptor");
 
-		this.composite = composite;
+        this.composite = composite;
 
-		final BluePrintFactory bpF = new BluePrintFactory();
+        final BluePrintFactory bpF = new BluePrintFactory();
 
-		final ITextLabelDescriptor textLabelDescriptor = bpF.textLabel().setSetup(descriptor);
+        final ITextLabelDescriptor textLabelDescriptor = bpF.textLabel().setSetup(descriptor);
 
-		if (AlignmentHorizontal.LEFT.equals(descriptor.getAlignment())) {
-			this.composite.setLayout(new MigLayoutDescriptor("0[][grow]0", "0[]0"));
-			textLabelWidget = composite.add(textLabelDescriptor, "");
-			composite.add(bpF.separator(), "growx");
-		}
-		else if (AlignmentHorizontal.RIGHT.equals(descriptor.getAlignment())) {
-			this.composite.setLayout(new MigLayoutDescriptor("0[grow][]0", "0[]0"));
-			composite.add(bpF.separator(), "growx");
-			textLabelWidget = composite.add(textLabelDescriptor, "");
-		}
-		else if (AlignmentHorizontal.CENTER.equals(descriptor.getAlignment())) {
-			this.composite.setLayout(new MigLayoutDescriptor("0[grow][][grow]0", "0[]0"));
-			composite.add(bpF.separator(), "growx");
-			textLabelWidget = composite.add(textLabelDescriptor, "");
-			composite.add(bpF.separator(), "growx");
-		}
-		else {
-			throw new IllegalArgumentException("Alignment '" + descriptor.getAlignment() + "' is unknown.");
-		}
+        if (AlignmentHorizontal.LEFT.equals(descriptor.getAlignment())) {
+            this.composite.setLayout(new MigLayoutDescriptor("0[][grow]0", "0[]0"));
+            textLabelWidget = composite.add(textLabelDescriptor, "");
+            composite.add(bpF.separator(), "growx");
+        }
+        else if (AlignmentHorizontal.RIGHT.equals(descriptor.getAlignment())) {
+            this.composite.setLayout(new MigLayoutDescriptor("0[grow][]0", "0[]0"));
+            composite.add(bpF.separator(), "growx");
+            textLabelWidget = composite.add(textLabelDescriptor, "");
+        }
+        else if (AlignmentHorizontal.CENTER.equals(descriptor.getAlignment())) {
+            this.composite.setLayout(new MigLayoutDescriptor("0[grow][][grow]0", "0[]0"));
+            composite.add(bpF.separator(), "growx");
+            textLabelWidget = composite.add(textLabelDescriptor, "");
+            composite.add(bpF.separator(), "growx");
+        }
+        else {
+            throw new IllegalArgumentException("Alignment '" + descriptor.getAlignment() + "' is unknown.");
+        }
 
-		if (descriptor.getForegroundColor() == null) {
-			setForegroundColor(Colors.STRONG);
-		}
-	}
+        if (descriptor.getForegroundColor() == null) {
+            setForegroundColor(Colors.STRONG);
+        }
+    }
 
-	@Override
-	public void setText(final String text) {
-		this.text = text;
-		textLabelWidget.setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        this.text = text;
+        textLabelWidget.setText(text);
+    }
 
-	@Override
-	public String getText() {
-		return text;
-	}
+    @Override
+    public String getText() {
+        return text;
+    }
 
-	@Override
-	public void setToolTipText(final String text) {
-		textLabelWidget.setToolTipText(text);
-	}
+    @Override
+    public void setToolTipText(final String text) {
+        textLabelWidget.setToolTipText(text);
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		textLabelWidget.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        textLabelWidget.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return textLabelWidget.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return textLabelWidget.isEnabled();
+    }
 
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		textLabelWidget.setForegroundColor(colorValue);
-	}
+    @Override
+    public void setForegroundColor(final IColorConstant colorValue) {
+        textLabelWidget.setForegroundColor(colorValue);
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		textLabelWidget.setBackgroundColor(colorValue);
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        textLabelWidget.setBackgroundColor(colorValue);
+    }
 
-	@Override
-	public IColorConstant getForegroundColor() {
-		return textLabelWidget.getForegroundColor();
-	}
+    @Override
+    public IColorConstant getForegroundColor() {
+        return textLabelWidget.getForegroundColor();
+    }
 
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return textLabelWidget.getBackgroundColor();
-	}
+    @Override
+    public IColorConstant getBackgroundColor() {
+        return textLabelWidget.getBackgroundColor();
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		textLabelWidget.setMarkup(markup);
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        textLabelWidget.setMarkup(markup);
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		textLabelWidget.setFontSize(size);
-	}
+    @Override
+    public void setFontSize(final int size) {
+        textLabelWidget.setFontSize(size);
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		textLabelWidget.setFontName(fontName);
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        textLabelWidget.setFontName(fontName);
+    }
 
-	@Override
-	public void setPopupMenu(final IMenuModel popupMenu) {
-		//TODO MG this might not work, popup must be set on inner widgets
-		//For that, inner widgets must be api widgets 
-		composite.setPopupMenu(popupMenu);
-	}
+    @Override
+    public void setPopupMenu(final IMenuModel popupMenu) {
+        //TODO MG this might not work, popup must be set on inner widgets
+        //For that, inner widgets must be api widgets 
+        composite.setPopupMenu(popupMenu);
+    }
 
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		composite.addPopupDetectionListener(listener);
-	}
+    @Override
+    public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+        composite.addPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		composite.removePopupDetectionListener(listener);
-	}
+    @Override
+    public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+        composite.removePopupDetectionListener(listener);
+    }
 
-	@Override
-	public IDragSource getDragSource() {
-		return textLabelWidget.getDragSource();
-	}
+    @Override
+    public IDragSource getDragSource() {
+        return textLabelWidget.getDragSource();
+    }
 
-	@Override
-	public IDropTarget getDropTarget() {
-		return textLabelWidget.getDropTarget();
-	}
+    @Override
+    public IDropTarget getDropTarget() {
+        return textLabelWidget.getDropTarget();
+    }
 
 }

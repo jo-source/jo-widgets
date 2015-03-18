@@ -45,53 +45,53 @@ import org.jowidgets.tools.layout.MigLayoutFactory;
 
 public final class PlainSwingBrowserDemo {
 
-	private PlainSwingBrowserDemo() {}
+    private PlainSwingBrowserDemo() {}
 
-	public static void main(final String[] args) throws Exception {
-		//set the swing system look and feel
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    public static void main(final String[] args) throws Exception {
+        //set the swing system look and feel
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
-		//the swt event loop must be initialized before the swing context will be created
-		final BridgedSwtEventLoop swtEventLoop = new BridgedSwtEventLoop();
+        //the swt event loop must be initialized before the swing context will be created
+        final BridgedSwtEventLoop swtEventLoop = new BridgedSwtEventLoop();
 
-		//The swing context must be created before the swt event loops starts
-		SwingUtilities.invokeAndWait(new Runnable() {
-			@Override
-			public void run() {
-				createSwingContext(swtEventLoop);
-			}
-		});
+        //The swing context must be created before the swt event loops starts
+        SwingUtilities.invokeAndWait(new Runnable() {
+            @Override
+            public void run() {
+                createSwingContext(swtEventLoop);
+            }
+        });
 
-		//The swt event loop will be started after the swing context was created
-		swtEventLoop.start();
+        //The swt event loop will be started after the swing context was created
+        swtEventLoop.start();
 
-	}
+    }
 
-	private static void createSwingContext(final BridgedSwtEventLoop swtEventLoop) {
-		final JFrame frame = new JFrame();
-		frame.setTitle("Plain swing browser demo");
-		frame.setSize(1024, 768);
-		frame.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(final WindowEvent e) {
-				//the swt event loop must be stopped before the root frame will be disposed
-				swtEventLoop.stop();
-				frame.dispose();
-				System.exit(0);
-			}
-		});
+    private static void createSwingContext(final BridgedSwtEventLoop swtEventLoop) {
+        final JFrame frame = new JFrame();
+        frame.setTitle("Plain swing browser demo");
+        frame.setSize(1024, 768);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(final WindowEvent e) {
+                //the swt event loop must be stopped before the root frame will be disposed
+                swtEventLoop.stop();
+                frame.dispose();
+                System.exit(0);
+            }
+        });
 
-		//convert the content pane to a jo widgets composite
-		final JPanel contentPane = (JPanel) frame.getContentPane();
-		final IComposite composite = SwingToJoWrapper.create(contentPane);
+        //convert the content pane to a jo widgets composite
+        final JPanel contentPane = (JPanel) frame.getContentPane();
+        final IComposite composite = SwingToJoWrapper.create(contentPane);
 
-		//add the browser widget to the composite
-		composite.setLayout(MigLayoutFactory.growingInnerCellLayout());
-		final IBrowser browser = composite.add(BrowserBPF.browser(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		browser.setUrl("http://www.google.de/");
+        //add the browser widget to the composite
+        composite.setLayout(MigLayoutFactory.growingInnerCellLayout());
+        final IBrowser browser = composite.add(BrowserBPF.browser(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        browser.setUrl("http://www.google.de/");
 
-		//make the root frame visible
-		frame.setVisible(true);
-	}
+        //make the root frame visible
+        frame.setVisible(true);
+    }
 
 }

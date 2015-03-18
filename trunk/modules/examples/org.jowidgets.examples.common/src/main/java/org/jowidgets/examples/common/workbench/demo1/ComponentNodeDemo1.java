@@ -42,39 +42,39 @@ import org.jowidgets.workbench.api.IComponentNodeContext;
 
 public class ComponentNodeDemo1 extends AbstractDemoComponentNode {
 
-	public ComponentNodeDemo1(final String id, final String label) {
-		this(id, label, "Tooltip for " + label, SilkIcons.PAGE_WHITE, new LinkedList<IComponentNode>());
-	}
+    public ComponentNodeDemo1(final String id, final String label) {
+        this(id, label, "Tooltip for " + label, SilkIcons.PAGE_WHITE, new LinkedList<IComponentNode>());
+    }
 
-	public ComponentNodeDemo1(final String id, final String label, final List<IComponentNode> children) {
-		this(id, label, "Tooltip for " + label, SilkIcons.PAGE_WHITE, children);
-	}
+    public ComponentNodeDemo1(final String id, final String label, final List<IComponentNode> children) {
+        this(id, label, "Tooltip for " + label, SilkIcons.PAGE_WHITE, children);
+    }
 
-	public ComponentNodeDemo1(
-		final String id,
-		final String label,
-		final String tooltip,
-		final IImageConstant icon,
-		final List<IComponentNode> children) {
+    public ComponentNodeDemo1(
+        final String id,
+        final String label,
+        final String tooltip,
+        final IImageConstant icon,
+        final List<IComponentNode> children) {
 
-		super(id, label, tooltip, icon);
-	}
+        super(id, label, tooltip, icon);
+    }
 
-	@Override
-	public void onContextInitialize(final IComponentNodeContext context) {
-		final ActionFactory actionFactory = new ActionFactory();
-		final IMenuModel popupMenu = context.getPopupMenu();
-		popupMenu.addAction(actionFactory.createAddComponentAction(context.getParent()));
-		popupMenu.addAction(actionFactory.createAddFolderAction(context));
-		popupMenu.addAction(actionFactory.createDeleteAction(context, this, "Delete " + getLabel(), SilkIcons.APPLICATION_DELETE));
-		popupMenu.addSeparator();
-		popupMenu.addAction(actionFactory.createRenameComponentTreeNode(context));
-		popupMenu.addAction(actionFactory.createSelectParentNode(context));
-	}
+    @Override
+    public void onContextInitialize(final IComponentNodeContext context) {
+        final ActionFactory actionFactory = new ActionFactory();
+        final IMenuModel popupMenu = context.getPopupMenu();
+        popupMenu.addAction(actionFactory.createAddComponentAction(context.getParent()));
+        popupMenu.addAction(actionFactory.createAddFolderAction(context));
+        popupMenu.addAction(actionFactory.createDeleteAction(context, this, "Delete " + getLabel(), SilkIcons.APPLICATION_DELETE));
+        popupMenu.addSeparator();
+        popupMenu.addAction(actionFactory.createRenameComponentTreeNode(context));
+        popupMenu.addAction(actionFactory.createSelectParentNode(context));
+    }
 
-	@Override
-	public IComponent createComponent(final IComponentContext context) {
-		return new ComponentDemo1(context);
-	}
+    @Override
+    public IComponent createComponent(final IComponentContext context) {
+        return new ComponentDemo1(context);
+    }
 
 }

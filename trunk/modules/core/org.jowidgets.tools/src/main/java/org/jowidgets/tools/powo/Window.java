@@ -44,120 +44,120 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
 
 class Window<WIDGET_TYPE extends IWindow & IContainer, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IContainerSetupBuilder<BLUE_PRINT_TYPE> & IWindowSetupBuilder<BLUE_PRINT_TYPE>> extends
-		Container<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IWindow {
+        Container<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IWindow {
 
-	Window(final BLUE_PRINT_TYPE bluePrint, final WIDGET_TYPE widget) {
-		this(null, bluePrint, widget);
-	}
+    Window(final BLUE_PRINT_TYPE bluePrint, final WIDGET_TYPE widget) {
+        this(null, bluePrint, widget);
+    }
 
-	Window(final BLUE_PRINT_TYPE bluePrint) {
-		this(null, bluePrint);
-	}
+    Window(final BLUE_PRINT_TYPE bluePrint) {
+        this(null, bluePrint);
+    }
 
-	Window(final IWindow parent, final BLUE_PRINT_TYPE bluePrint) {
-		this(parent, bluePrint, null);
-	}
+    Window(final IWindow parent, final BLUE_PRINT_TYPE bluePrint) {
+        this(parent, bluePrint, null);
+    }
 
-	Window(final IWindow parent, final BLUE_PRINT_TYPE bluePrint, final WIDGET_TYPE widget) {
-		super(bluePrint);
-		Assert.paramNotNull(bluePrint, "bluePrint");
-		if (widget == null) {
-			if (parent != null) {
-				initialize(parent.createChildWindow(bluePrint));
-			}
-			else {
-				initialize(Toolkit.getWidgetFactory().create(bluePrint));
-			}
-		}
-		else {
-			initialize(widget);
-		}
-	}
+    Window(final IWindow parent, final BLUE_PRINT_TYPE bluePrint, final WIDGET_TYPE widget) {
+        super(bluePrint);
+        Assert.paramNotNull(bluePrint, "bluePrint");
+        if (widget == null) {
+            if (parent != null) {
+                initialize(parent.createChildWindow(bluePrint));
+            }
+            else {
+                initialize(Toolkit.getWidgetFactory().create(bluePrint));
+            }
+        }
+        else {
+            initialize(widget);
+        }
+    }
 
-	@Override
-	public <M_WIDGET_TYPE extends IDisplay, DESCRIPTOR_TYPE extends IWidgetDescriptor<M_WIDGET_TYPE>> M_WIDGET_TYPE createChildWindow(
-		final DESCRIPTOR_TYPE descriptor) {
-		return getWidget().createChildWindow(descriptor);
-	}
+    @Override
+    public <M_WIDGET_TYPE extends IDisplay, DESCRIPTOR_TYPE extends IWidgetDescriptor<M_WIDGET_TYPE>> M_WIDGET_TYPE createChildWindow(
+        final DESCRIPTOR_TYPE descriptor) {
+        return getWidget().createChildWindow(descriptor);
+    }
 
-	@Override
-	public final void addWindowListener(final IWindowListener listener) {
-		getWidget().addWindowListener(listener);
-	}
+    @Override
+    public final void addWindowListener(final IWindowListener listener) {
+        getWidget().addWindowListener(listener);
+    }
 
-	@Override
-	public final void removeWindowListener(final IWindowListener listener) {
-		getWidget().removeWindowListener(listener);
-	}
+    @Override
+    public final void removeWindowListener(final IWindowListener listener) {
+        getWidget().removeWindowListener(listener);
+    }
 
-	@Override
-	public final void setPosition(final Position position) {
-		getWidget().setPosition(position);
-	}
+    @Override
+    public final void setPosition(final Position position) {
+        getWidget().setPosition(position);
+    }
 
-	@Override
-	public final Position getPosition() {
-		return getWidget().getPosition();
-	}
+    @Override
+    public final Position getPosition() {
+        return getWidget().getPosition();
+    }
 
-	@Override
-	public final void setSize(final Dimension size) {
-		getWidget().setSize(size);
-	}
+    @Override
+    public final void setSize(final Dimension size) {
+        getWidget().setSize(size);
+    }
 
-	@Override
-	public final Dimension getSize() {
-		return getWidget().getSize();
-	}
+    @Override
+    public final Dimension getSize() {
+        return getWidget().getSize();
+    }
 
-	@Override
-	public final Rectangle getParentBounds() {
-		return getWidget().getParentBounds();
-	}
+    @Override
+    public final Rectangle getParentBounds() {
+        return getWidget().getParentBounds();
+    }
 
-	@Override
-	public void setMinPackSize(final Dimension size) {
-		getWidget().setMinPackSize(size);
-	}
+    @Override
+    public void setMinPackSize(final Dimension size) {
+        getWidget().setMinPackSize(size);
+    }
 
-	@Override
-	public void setMaxPackSize(final Dimension size) {
-		getWidget().setMaxPackSize(size);
-	}
+    @Override
+    public void setMaxPackSize(final Dimension size) {
+        getWidget().setMaxPackSize(size);
+    }
 
-	@Override
-	public final void pack() {
-		getWidget().pack();
-	}
+    @Override
+    public final void pack() {
+        getWidget().pack();
+    }
 
-	@Override
-	public final void dispose() {
-		getWidget().dispose();
-	}
+    @Override
+    public final void dispose() {
+        getWidget().dispose();
+    }
 
-	@Override
-	public final void centerLocation() {
-		getWidget().centerLocation();
-	}
+    @Override
+    public final void centerLocation() {
+        getWidget().centerLocation();
+    }
 
-	@Override
-	public final IWindow getParent() {
-		return getWidget().getParent();
-	}
+    @Override
+    public final IWindow getParent() {
+        return getWidget().getParent();
+    }
 
-	@Override
-	public void setParent(final IWindow parent) {
-		getWidget().setParent(parent);
-	}
+    @Override
+    public void setParent(final IWindow parent) {
+        getWidget().setParent(parent);
+    }
 
-	@Override
-	public List<IDisplay> getChildWindows() {
-		return getWidget().getChildWindows();
-	}
+    @Override
+    public List<IDisplay> getChildWindows() {
+        return getWidget().getChildWindows();
+    }
 
-	@Override
-	public boolean isReparentable() {
-		return getWidget().isReparentable();
-	}
+    @Override
+    public boolean isReparentable() {
+        return getWidget().isReparentable();
+    }
 
 }

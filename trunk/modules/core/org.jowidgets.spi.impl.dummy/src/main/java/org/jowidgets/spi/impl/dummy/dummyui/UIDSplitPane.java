@@ -33,54 +33,54 @@ import org.jowidgets.common.types.SplitResizePolicy;
 
 public class UIDSplitPane extends UIDComponent {
 
-	private final Orientation orientation;
-	private final double weight;
-	private final SplitResizePolicy resizePolicy;
+    private final Orientation orientation;
+    private final double weight;
+    private final SplitResizePolicy resizePolicy;
 
-	private int dividerSize;
-	private UIDContainer first;
-	private UIDContainer second;
+    private int dividerSize;
+    private UIDContainer first;
+    private UIDContainer second;
 
-	public UIDSplitPane(final Orientation orientation, final double weight, final SplitResizePolicy resizePolicy) {
-		this.orientation = orientation;
-		this.weight = weight;
-		this.resizePolicy = resizePolicy;
-	}
+    public UIDSplitPane(final Orientation orientation, final double weight, final SplitResizePolicy resizePolicy) {
+        this.orientation = orientation;
+        this.weight = weight;
+        this.resizePolicy = resizePolicy;
+    }
 
-	public Orientation getOrientation() {
-		return orientation;
-	}
+    public Orientation getOrientation() {
+        return orientation;
+    }
 
-	public double getWeight() {
-		return weight;
-	}
+    public double getWeight() {
+        return weight;
+    }
 
-	public SplitResizePolicy getResizePolicy() {
-		return resizePolicy;
-	}
+    public SplitResizePolicy getResizePolicy() {
+        return resizePolicy;
+    }
 
-	public int getDividerSize() {
-		return dividerSize;
-	}
+    public int getDividerSize() {
+        return dividerSize;
+    }
 
-	public void setDividerSize(final int dividerSize) {
-		this.dividerSize = dividerSize;
-	}
+    public void setDividerSize(final int dividerSize) {
+        this.dividerSize = dividerSize;
+    }
 
-	public UIDContainer getFirst() {
-		return first;
-	}
+    public UIDContainer getFirst() {
+        return first;
+    }
 
-	public void setFirst(final UIDContainer first) {
-		this.first = first;
-	}
+    public void setFirst(final UIDContainer first) {
+        this.first = first;
+    }
 
-	public UIDContainer getSecond() {
-		return second;
-	}
+    public UIDContainer getSecond() {
+        return second;
+    }
 
-	public void setSecond(final UIDContainer second) {
-		this.second = second;
-	}
+    public void setSecond(final UIDContainer second) {
+        this.second = second;
+    }
 
 }

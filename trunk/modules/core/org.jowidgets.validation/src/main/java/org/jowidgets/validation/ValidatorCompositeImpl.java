@@ -35,20 +35,20 @@ import java.util.List;
 
 final class ValidatorCompositeImpl<VALUE_TYPE> implements IValidator<VALUE_TYPE>, Serializable {
 
-	private static final long serialVersionUID = 8768733808468454079L;
+    private static final long serialVersionUID = 8768733808468454079L;
 
-	private final List<IValidator<VALUE_TYPE>> validators;
+    private final List<IValidator<VALUE_TYPE>> validators;
 
-	ValidatorCompositeImpl(final Collection<IValidator<VALUE_TYPE>> validators) {
-		this.validators = new ArrayList<IValidator<VALUE_TYPE>>(validators);
-	}
+    ValidatorCompositeImpl(final Collection<IValidator<VALUE_TYPE>> validators) {
+        this.validators = new ArrayList<IValidator<VALUE_TYPE>>(validators);
+    }
 
-	@Override
-	public IValidationResult validate(final VALUE_TYPE value) {
-		final IValidationResultBuilder builder = ValidationResult.builder();
-		for (final IValidator<VALUE_TYPE> validator : validators) {
-			builder.addResult(validator.validate(value));
-		}
-		return builder.build();
-	}
+    @Override
+    public IValidationResult validate(final VALUE_TYPE value) {
+        final IValidationResultBuilder builder = ValidationResult.builder();
+        for (final IValidator<VALUE_TYPE> validator : validators) {
+            builder.addResult(validator.validate(value));
+        }
+        return builder.build();
+    }
 }

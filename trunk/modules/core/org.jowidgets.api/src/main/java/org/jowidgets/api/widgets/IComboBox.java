@@ -33,23 +33,23 @@ import java.util.List;
 import org.jowidgets.common.widgets.ISelectable;
 
 public interface IComboBox<VALUE_TYPE> extends
-		IControl,
-		IInputControl<VALUE_TYPE>,
-		IObservableValueViewer<VALUE_TYPE>,
-		ISelectable {
+        IControl,
+        IInputControl<VALUE_TYPE>,
+        IObservableValueViewer<VALUE_TYPE>,
+        ISelectable {
 
-	List<VALUE_TYPE> getElements();
+    List<VALUE_TYPE> getElements();
 
-	void setElements(Collection<? extends VALUE_TYPE> elements);
+    void setElements(Collection<? extends VALUE_TYPE> elements);
 
-	void setElements(VALUE_TYPE... elements);
+    void setElements(VALUE_TYPE... elements);
 
-	int getSelectedIndex();
+    int getSelectedIndex();
 
-	void setSelectedIndex(int index);
+    void setSelectedIndex(int index);
 
-	void setPopupVisible(boolean visible);
+    void setPopupVisible(boolean visible);
 
-	boolean isPopupVisible();
+    boolean isPopupVisible();
 
 }

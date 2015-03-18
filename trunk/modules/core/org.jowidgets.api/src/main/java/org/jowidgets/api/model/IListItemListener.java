@@ -32,7 +32,7 @@ import org.jowidgets.api.widgets.IWidget;
 
 public interface IListItemListener {
 
-	void itemAdded(IWidget item);
+    void itemAdded(IWidget item);
 
-	void itemRemoved(IWidget item);
+    void itemRemoved(IWidget item);
 }

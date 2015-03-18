@@ -36,26 +36,26 @@ import org.jowidgets.util.Assert;
 
 final class DropResponseImpl implements IDropResponse {
 
-	private final IDropResponseSpi dropResponseSpi;
+    private final IDropResponseSpi dropResponseSpi;
 
-	DropResponseImpl(final IDropResponseSpi dropResponseSpi) {
-		Assert.paramNotNull(dropResponseSpi, "dropResponseSpi");
-		this.dropResponseSpi = dropResponseSpi;
-	}
+    DropResponseImpl(final IDropResponseSpi dropResponseSpi) {
+        Assert.paramNotNull(dropResponseSpi, "dropResponseSpi");
+        this.dropResponseSpi = dropResponseSpi;
+    }
 
-	@Override
-	public void accept(final DropAction operation) {
-		dropResponseSpi.accept(operation);
-	}
+    @Override
+    public void accept(final DropAction operation) {
+        dropResponseSpi.accept(operation);
+    }
 
-	@Override
-	public void reject() {
-		dropResponseSpi.reject();
-	}
+    @Override
+    public void reject() {
+        dropResponseSpi.reject();
+    }
 
-	@Override
-	public void setDropMode(final DropMode dropMode) {
-		dropResponseSpi.setDropMode(dropMode);
-	}
+    @Override
+    public void setDropMode(final DropMode dropMode) {
+        dropResponseSpi.setDropMode(dropMode);
+    }
 
 }

@@ -32,8 +32,8 @@ import java.util.Collection;
 import org.jowidgets.api.widgets.descriptor.setup.ICollectionInputControlSetup;
 
 public interface ICollectionInputDialogSetupBuilder<INSTANCE_TYPE extends ICollectionInputDialogSetupBuilder<?, ?>, ELEMENT_TYPE> extends
-		IInputDialogSetupBuilder<INSTANCE_TYPE, Collection<ELEMENT_TYPE>> {
+        IInputDialogSetupBuilder<INSTANCE_TYPE, Collection<ELEMENT_TYPE>> {
 
-	INSTANCE_TYPE setCollectionInputControlSetup(ICollectionInputControlSetup<ELEMENT_TYPE> setup);
+    INSTANCE_TYPE setCollectionInputControlSetup(ICollectionInputControlSetup<ELEMENT_TYPE> setup);
 
 }

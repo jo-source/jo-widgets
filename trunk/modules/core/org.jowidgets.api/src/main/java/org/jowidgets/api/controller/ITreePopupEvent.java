@@ -33,8 +33,8 @@ import org.jowidgets.common.types.Position;
 
 public interface ITreePopupEvent {
 
-	Position getPosition();
+    Position getPosition();
 
-	ITreeNode getNode();
+    ITreeNode getNode();
 
 }

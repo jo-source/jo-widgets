@@ -38,24 +38,24 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class DemoDownloadComposite {
 
-	public DemoDownloadComposite(final IContainer container) {
+    public DemoDownloadComposite(final IContainer container) {
 
-		container.setLayout(new MigLayoutDescriptor("[][grow][]", ""));
+        container.setLayout(new MigLayoutDescriptor("[][grow][]", ""));
 
-		container.add(BPF.textLabel("URL"));
+        container.add(BPF.textLabel("URL"));
 
-		final IInputField<String> url = container.add(BPF.inputFieldString(), "growx, w 0::");
+        final IInputField<String> url = container.add(BPF.inputFieldString(), "growx, w 0::");
 
-		final IDownloadButton button = container.add(DownloadBPF.button().setText("Download"));
+        final IDownloadButton button = container.add(DownloadBPF.button().setText("Download"));
 
-		url.addInputListener(new IInputListener() {
-			@Override
-			public void inputChanged() {
-				button.setUrl(url.getText());
-			}
-		});
+        url.addInputListener(new IInputListener() {
+            @Override
+            public void inputChanged() {
+                button.setUrl(url.getText());
+            }
+        });
 
-	}
+    }
 
-	public void foo() {}
+    public void foo() {}
 }

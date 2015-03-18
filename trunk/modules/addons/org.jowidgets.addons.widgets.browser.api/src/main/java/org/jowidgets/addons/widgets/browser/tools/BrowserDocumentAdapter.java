@@ -32,10 +32,10 @@ import org.jowidgets.addons.widgets.browser.api.IBrowserDocumentListener;
 
 public class BrowserDocumentAdapter implements IBrowserDocumentListener {
 
-	@Override
-	public void titleChanged(final String title) {}
+    @Override
+    public void titleChanged(final String title) {}
 
-	@Override
-	public void statusTextChanged(final String statusText) {}
+    @Override
+    public void statusTextChanged(final String statusText) {}
 
 }

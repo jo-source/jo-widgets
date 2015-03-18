@@ -30,32 +30,32 @@ package org.jowidgets.spi.impl.dummy.dummyui;
 
 public class UIDFrame extends UIDWindow {
 
-	private String title;
-	private boolean resizable;
+    private String title;
+    private boolean resizable;
 
-	public UIDFrame() {
-		this(null);
-	}
+    public UIDFrame() {
+        this(null);
+    }
 
-	public UIDFrame(final UIDWindow parent) {
-		super(parent);
-	}
+    public UIDFrame(final UIDWindow parent) {
+        super(parent);
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	@Override
-	public void setTitle(final String title) {
-		this.title = title;
-	}
+    @Override
+    public void setTitle(final String title) {
+        this.title = title;
+    }
 
-	public boolean isResizable() {
-		return resizable;
-	}
+    public boolean isResizable() {
+        return resizable;
+    }
 
-	public void setResizable(final boolean resizable) {
-		this.resizable = resizable;
-	}
+    public void setResizable(final boolean resizable) {
+        this.resizable = resizable;
+    }
 
 }

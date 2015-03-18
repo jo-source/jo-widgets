@@ -31,17 +31,17 @@ import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenience;
 import org.jowidgets.common.widgets.builder.ISetupBuilder;
 
 public abstract class AbstractSetupBuilderConvenience<BUILDER_TYPE extends ISetupBuilder<?>> implements
-		ISetupBuilderConvenience<BUILDER_TYPE> {
+        ISetupBuilderConvenience<BUILDER_TYPE> {
 
-	private BUILDER_TYPE builder;
+    private BUILDER_TYPE builder;
 
-	@Override
-	public final void setBuilder(final BUILDER_TYPE builder) {
-		this.builder = builder;
-	}
+    @Override
+    public final void setBuilder(final BUILDER_TYPE builder) {
+        this.builder = builder;
+    }
 
-	protected BUILDER_TYPE getBuilder() {
-		return builder;
-	}
+    protected BUILDER_TYPE getBuilder() {
+        return builder;
+    }
 
 }

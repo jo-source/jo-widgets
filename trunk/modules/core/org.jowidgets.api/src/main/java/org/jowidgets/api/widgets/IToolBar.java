@@ -37,28 +37,28 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface IToolBar extends IControl, IToolBarCommon {
 
-	IToolBarModel getModel();
+    IToolBarModel getModel();
 
-	void setModel(IToolBarModel model);
+    void setModel(IToolBarModel model);
 
-	List<IToolBarItem> getChildren();
+    List<IToolBarItem> getChildren();
 
-	boolean remove(IToolBarItem item);
+    boolean remove(IToolBarItem item);
 
-	void remove(int index);
+    void remove(int index);
 
-	void removeAll();
+    void removeAll();
 
-	IToolBarItem addSeparator();
+    IToolBarItem addSeparator();
 
-	IToolBarItem addSeparator(int index);
+    IToolBarItem addSeparator(int index);
 
-	<WIDGET_TYPE extends IToolBarItem> WIDGET_TYPE addItem(IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
+    <WIDGET_TYPE extends IToolBarItem> WIDGET_TYPE addItem(IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
 
-	<WIDGET_TYPE extends IToolBarItem> WIDGET_TYPE addItem(int index, IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
+    <WIDGET_TYPE extends IToolBarItem> WIDGET_TYPE addItem(int index, IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
 
-	IToolBarButton addAction(IAction action);
+    IToolBarButton addAction(IAction action);
 
-	IToolBarButton addAction(int index, IAction action);
+    IToolBarButton addAction(int index, IAction action);
 
 }

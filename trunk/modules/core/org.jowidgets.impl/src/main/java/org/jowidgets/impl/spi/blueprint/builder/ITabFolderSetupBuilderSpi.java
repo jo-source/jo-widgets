@@ -30,6 +30,6 @@ package org.jowidgets.impl.spi.blueprint.builder;
 import org.jowidgets.common.widgets.builder.ITabFolderSetupBuilderCommon;
 
 public interface ITabFolderSetupBuilderSpi<INSTANCE_TYPE extends ITabFolderSetupBuilderSpi<?>> extends
-		ITabFolderSetupBuilderCommon<INSTANCE_TYPE> {
+        ITabFolderSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

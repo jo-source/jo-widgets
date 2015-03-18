@@ -60,143 +60,143 @@ import org.jowidgets.impl.widgets.common.blueprint.convenience.registry.CommonSe
 
 public class SpiBluePrintFactory extends AbstractBluePrintFactory implements ISpiBluePrintFactory {
 
-	public SpiBluePrintFactory() {
-		super(new CommonSetupConvenienceRegistry(), new SpiDefaultsInitializerRegistry());
-	}
+    public SpiBluePrintFactory() {
+        super(new CommonSetupConvenienceRegistry(), new SpiDefaultsInitializerRegistry());
+    }
 
-	@Override
-	public IFrameBluePrintSpi frame() {
-		return createProxy(IFrameBluePrintSpi.class);
-	}
+    @Override
+    public IFrameBluePrintSpi frame() {
+        return createProxy(IFrameBluePrintSpi.class);
+    }
 
-	@Override
-	public IDialogBluePrintSpi dialog() {
-		return createProxy(IDialogBluePrintSpi.class);
-	}
+    @Override
+    public IDialogBluePrintSpi dialog() {
+        return createProxy(IDialogBluePrintSpi.class);
+    }
 
-	@Override
-	public IPopupDialogBluePrintSpi popupDialog() {
-		return createProxy(IPopupDialogBluePrintSpi.class);
-	}
+    @Override
+    public IPopupDialogBluePrintSpi popupDialog() {
+        return createProxy(IPopupDialogBluePrintSpi.class);
+    }
 
-	@Override
-	public IFileChooserBluePrintSpi fileChooser() {
-		return createProxy(IFileChooserBluePrintSpi.class);
-	}
+    @Override
+    public IFileChooserBluePrintSpi fileChooser() {
+        return createProxy(IFileChooserBluePrintSpi.class);
+    }
 
-	@Override
-	public IDirectoryChooserBluePrintSpi directoryChooser() {
-		return createProxy(IDirectoryChooserBluePrintSpi.class);
-	}
+    @Override
+    public IDirectoryChooserBluePrintSpi directoryChooser() {
+        return createProxy(IDirectoryChooserBluePrintSpi.class);
+    }
 
-	@Override
-	public ICompositeBluePrintSpi composite() {
-		return createProxy(ICompositeBluePrintSpi.class);
-	}
+    @Override
+    public ICompositeBluePrintSpi composite() {
+        return createProxy(ICompositeBluePrintSpi.class);
+    }
 
-	@Override
-	public IScrollCompositeBluePrintSpi scrollComposite() {
-		return createProxy(IScrollCompositeBluePrintSpi.class);
-	}
+    @Override
+    public IScrollCompositeBluePrintSpi scrollComposite() {
+        return createProxy(IScrollCompositeBluePrintSpi.class);
+    }
 
-	@Override
-	public ISplitCompositeBluePrintSpi splitComposite() {
-		return createProxy(ISplitCompositeBluePrintSpi.class);
-	}
+    @Override
+    public ISplitCompositeBluePrintSpi splitComposite() {
+        return createProxy(ISplitCompositeBluePrintSpi.class);
+    }
 
-	@Override
-	public ITextLabelBluePrintSpi textLabel() {
-		return createProxy(ITextLabelBluePrintSpi.class);
-	}
+    @Override
+    public ITextLabelBluePrintSpi textLabel() {
+        return createProxy(ITextLabelBluePrintSpi.class);
+    }
 
-	@Override
-	public IIconBluePrintSpi icon() {
-		return createProxy(IIconBluePrintSpi.class);
-	}
+    @Override
+    public IIconBluePrintSpi icon() {
+        return createProxy(IIconBluePrintSpi.class);
+    }
 
-	@Override
-	public ISeparatorBluePrintSpi separator() {
-		return createProxy(ISeparatorBluePrintSpi.class);
-	}
+    @Override
+    public ISeparatorBluePrintSpi separator() {
+        return createProxy(ISeparatorBluePrintSpi.class);
+    }
 
-	@Override
-	public ITextFieldBluePrintSpi textField() {
-		return createProxy(ITextFieldBluePrintSpi.class);
-	}
+    @Override
+    public ITextFieldBluePrintSpi textField() {
+        return createProxy(ITextFieldBluePrintSpi.class);
+    }
 
-	@Override
-	public ITextAreaBluePrintSpi textArea() {
-		return createProxy(ITextAreaBluePrintSpi.class);
-	}
+    @Override
+    public ITextAreaBluePrintSpi textArea() {
+        return createProxy(ITextAreaBluePrintSpi.class);
+    }
 
-	@Override
-	public IButtonBluePrintSpi button() {
-		return createProxy(IButtonBluePrintSpi.class);
-	}
+    @Override
+    public IButtonBluePrintSpi button() {
+        return createProxy(IButtonBluePrintSpi.class);
+    }
 
-	@Override
-	public ICheckBoxBluePrintSpi checkBox() {
-		return createProxy(ICheckBoxBluePrintSpi.class);
-	}
+    @Override
+    public ICheckBoxBluePrintSpi checkBox() {
+        return createProxy(ICheckBoxBluePrintSpi.class);
+    }
 
-	@Override
-	public IToggleButtonBluePrintSpi toggleButton() {
-		return createProxy(IToggleButtonBluePrintSpi.class);
-	}
+    @Override
+    public IToggleButtonBluePrintSpi toggleButton() {
+        return createProxy(IToggleButtonBluePrintSpi.class);
+    }
 
-	@Override
-	public IComboBoxBluePrintSpi comboBox() {
-		return createProxy(IComboBoxBluePrintSpi.class);
-	}
+    @Override
+    public IComboBoxBluePrintSpi comboBox() {
+        return createProxy(IComboBoxBluePrintSpi.class);
+    }
 
-	@Override
-	public IComboBoxSelectionBluePrintSpi comboBoxSelection() {
-		return createProxy(IComboBoxSelectionBluePrintSpi.class);
-	}
+    @Override
+    public IComboBoxSelectionBluePrintSpi comboBoxSelection() {
+        return createProxy(IComboBoxSelectionBluePrintSpi.class);
+    }
 
-	@Override
-	public IProgressBarBluePrintSpi progressBar() {
-		return createProxy(IProgressBarBluePrintSpi.class);
-	}
+    @Override
+    public IProgressBarBluePrintSpi progressBar() {
+        return createProxy(IProgressBarBluePrintSpi.class);
+    }
 
-	@Override
-	public ITabFolderBluePrintSpi tabFolder() {
-		return createProxy(ITabFolderBluePrintSpi.class);
-	}
+    @Override
+    public ITabFolderBluePrintSpi tabFolder() {
+        return createProxy(ITabFolderBluePrintSpi.class);
+    }
 
-	@Override
-	public ITabItemBluePrintSpi tabItem() {
-		return createProxy(ITabItemBluePrintSpi.class);
-	}
+    @Override
+    public ITabItemBluePrintSpi tabItem() {
+        return createProxy(ITabItemBluePrintSpi.class);
+    }
 
-	@Override
-	public IToolBarBluePrintSpi toolBar() {
-		return createProxy(IToolBarBluePrintSpi.class);
-	}
+    @Override
+    public IToolBarBluePrintSpi toolBar() {
+        return createProxy(IToolBarBluePrintSpi.class);
+    }
 
-	@Override
-	public ITreeBluePrintSpi tree() {
-		return createProxy(ITreeBluePrintSpi.class);
-	}
+    @Override
+    public ITreeBluePrintSpi tree() {
+        return createProxy(ITreeBluePrintSpi.class);
+    }
 
-	@Override
-	public ITableBluePrintSpi table() {
-		return createProxy(ITableBluePrintSpi.class);
-	}
+    @Override
+    public ITableBluePrintSpi table() {
+        return createProxy(ITableBluePrintSpi.class);
+    }
 
-	@Override
-	public ICalendarBluePrintSpi calendar() {
-		return createProxy(ICalendarBluePrintSpi.class);
-	}
+    @Override
+    public ICalendarBluePrintSpi calendar() {
+        return createProxy(ICalendarBluePrintSpi.class);
+    }
 
-	@Override
-	public ISliderBluePrintSpi slider() {
-		return createProxy(ISliderBluePrintSpi.class);
-	}
+    @Override
+    public ISliderBluePrintSpi slider() {
+        return createProxy(ISliderBluePrintSpi.class);
+    }
 
-	@Override
-	public ICanvasBluePrintSpi canvas() {
-		return createProxy(ICanvasBluePrintSpi.class);
-	}
+    @Override
+    public ICanvasBluePrintSpi canvas() {
+        return createProxy(ICanvasBluePrintSpi.class);
+    }
 
 }

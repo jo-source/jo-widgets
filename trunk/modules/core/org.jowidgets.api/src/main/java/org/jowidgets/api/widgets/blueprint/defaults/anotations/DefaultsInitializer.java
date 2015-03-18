@@ -36,6 +36,6 @@ import org.jowidgets.common.widgets.builder.ISetupBuilder;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DefaultsInitializer {
 
-	Class<? extends IDefaultInitializer<? extends ISetupBuilder<?>>> value();
+    Class<? extends IDefaultInitializer<? extends ISetupBuilder<?>>> value();
 
 }

@@ -53,167 +53,167 @@ import org.jowidgets.spi.widgets.setup.IToolBarSetupSpi;
 
 public class ToolBarImpl extends SwingControl implements IToolBarSpi {
 
-	private final IGenericWidgetFactory factory;
+    private final IGenericWidgetFactory factory;
 
-	public ToolBarImpl(final IGenericWidgetFactory factory, final IToolBarSetupSpi setup) {
-		super(new JToolBar());
-		this.factory = factory;
+    public ToolBarImpl(final IGenericWidgetFactory factory, final IToolBarSetupSpi setup) {
+        super(new JToolBar());
+        this.factory = factory;
 
-		if (Orientation.HORIZONTAL == setup.getOrientation()) {
-			getUiReference().setOrientation(JToolBar.HORIZONTAL);
-		}
-		else if (Orientation.VERTICAL == setup.getOrientation()) {
-			getUiReference().setOrientation(JToolBar.VERTICAL);
-		}
-		else {
-			throw new IllegalArgumentException("Orientation '" + setup.getOrientation() + "' is not known.");
-		}
-		getUiReference().setFloatable(false);
-		getUiReference().setBorderPainted(false);
-		getUiReference().setRollover(true);
-	}
+        if (Orientation.HORIZONTAL == setup.getOrientation()) {
+            getUiReference().setOrientation(JToolBar.HORIZONTAL);
+        }
+        else if (Orientation.VERTICAL == setup.getOrientation()) {
+            getUiReference().setOrientation(JToolBar.VERTICAL);
+        }
+        else {
+            throw new IllegalArgumentException("Orientation '" + setup.getOrientation() + "' is not known.");
+        }
+        getUiReference().setFloatable(false);
+        getUiReference().setBorderPainted(false);
+        getUiReference().setRollover(true);
+    }
 
-	@Override
-	public JToolBar getUiReference() {
-		return (JToolBar) super.getUiReference();
-	}
+    @Override
+    public JToolBar getUiReference() {
+        return (JToolBar) super.getUiReference();
+    }
 
-	@Override
-	public IToolBarButtonSpi addToolBarButton(final Integer index) {
-		final JButton button = new JButton();
+    @Override
+    public IToolBarButtonSpi addToolBarButton(final Integer index) {
+        final JButton button = new JButton();
 
-		if (index != null) {
-			getUiReference().add(button, getCorrectedIndex(index.intValue()));
-		}
-		else {
-			getUiReference().add(button);
-		}
-		return new ToolBarButtonImpl(button);
-	}
+        if (index != null) {
+            getUiReference().add(button, getCorrectedIndex(index.intValue()));
+        }
+        else {
+            getUiReference().add(button);
+        }
+        return new ToolBarButtonImpl(button);
+    }
 
-	@Override
-	public IToolBarToggleButtonSpi addToolBarToggleButton(final Integer index) {
-		final JToggleButton button = new JToggleButton();
+    @Override
+    public IToolBarToggleButtonSpi addToolBarToggleButton(final Integer index) {
+        final JToggleButton button = new JToggleButton();
 
-		if (index != null) {
-			getUiReference().add(button, getCorrectedIndex(index.intValue()));
-		}
-		else {
-			getUiReference().add(button);
-		}
-		return new ToolBarToggleButtonImpl(button);
-	}
+        if (index != null) {
+            getUiReference().add(button, getCorrectedIndex(index.intValue()));
+        }
+        else {
+            getUiReference().add(button);
+        }
+        return new ToolBarToggleButtonImpl(button);
+    }
 
-	@Override
-	public IToolBarPopupButtonSpi addToolBarPopupButton(final Integer index) {
-		final JButton button = new JButton();
-		final JoArrowButton arrowButton = new JoArrowButton();
+    @Override
+    public IToolBarPopupButtonSpi addToolBarPopupButton(final Integer index) {
+        final JButton button = new JButton();
+        final JoArrowButton arrowButton = new JoArrowButton();
 
-		if (index != null) {
-			final int correctedIndex = getCorrectedIndex(index.intValue());
-			getUiReference().add(arrowButton, correctedIndex);
-			getUiReference().add(button, correctedIndex);
-		}
-		else {
-			getUiReference().add(button);
-			getUiReference().add(arrowButton);
-		}
-		return new ToolBarPopupButtonImpl(button, arrowButton);
-	}
+        if (index != null) {
+            final int correctedIndex = getCorrectedIndex(index.intValue());
+            getUiReference().add(arrowButton, correctedIndex);
+            getUiReference().add(button, correctedIndex);
+        }
+        else {
+            getUiReference().add(button);
+            getUiReference().add(arrowButton);
+        }
+        return new ToolBarPopupButtonImpl(button, arrowButton);
+    }
 
-	@Override
-	public IToolBarContainerItemSpi addToolBarContainer(final Integer index) {
-		final JPanel panel = new JPanel();
+    @Override
+    public IToolBarContainerItemSpi addToolBarContainer(final Integer index) {
+        final JPanel panel = new JPanel();
 
-		if (index != null) {
-			getUiReference().add(panel, getCorrectedIndex(index.intValue()));
-		}
-		else {
-			getUiReference().add(panel);
-		}
-		return new ToolBarContainerItemImpl(factory, panel);
-	}
+        if (index != null) {
+            getUiReference().add(panel, getCorrectedIndex(index.intValue()));
+        }
+        else {
+            getUiReference().add(panel);
+        }
+        return new ToolBarContainerItemImpl(factory, panel);
+    }
 
-	@Override
-	public IToolBarItemSpi addSeparator(final Integer index) {
-		final JToolBar.Separator separator = new JToolBar.Separator();
+    @Override
+    public IToolBarItemSpi addSeparator(final Integer index) {
+        final JToolBar.Separator separator = new JToolBar.Separator();
 
-		if (index != null) {
-			getUiReference().add(separator, getCorrectedIndex(index.intValue()));
-		}
-		else {
-			getUiReference().add(separator);
-		}
-		return new IToolBarItemSpi() {
-			@Override
-			public void setToolTipText(final String text) {}
+        if (index != null) {
+            getUiReference().add(separator, getCorrectedIndex(index.intValue()));
+        }
+        else {
+            getUiReference().add(separator);
+        }
+        return new IToolBarItemSpi() {
+            @Override
+            public void setToolTipText(final String text) {}
 
-			@Override
-			public void setText(final String text) {}
+            @Override
+            public void setText(final String text) {}
 
-			@Override
-			public void setIcon(final IImageConstant icon) {}
+            @Override
+            public void setIcon(final IImageConstant icon) {}
 
-			@Override
-			public void setEnabled(final boolean enabled) {
-				separator.setEnabled(enabled);
-			}
+            @Override
+            public void setEnabled(final boolean enabled) {
+                separator.setEnabled(enabled);
+            }
 
-			@Override
-			public boolean isEnabled() {
-				return separator.isEnabled();
-			}
+            @Override
+            public boolean isEnabled() {
+                return separator.isEnabled();
+            }
 
-			@Override
-			public Object getUiReference() {
-				return separator;
-			}
+            @Override
+            public Object getUiReference() {
+                return separator;
+            }
 
-			@Override
-			public Position getPosition() {
-				return PositionConvert.convert(separator.getLocation());
-			}
+            @Override
+            public Position getPosition() {
+                return PositionConvert.convert(separator.getLocation());
+            }
 
-			@Override
-			public Dimension getSize() {
-				return DimensionConvert.convert(separator.getSize());
-			}
-		};
-	}
+            @Override
+            public Dimension getSize() {
+                return DimensionConvert.convert(separator.getSize());
+            }
+        };
+    }
 
-	@Override
-	public void remove(final int index) {
-		final int correctedIndex = getCorrectedIndex(index);
-		final Container container = getUiReference();
-		container.remove(correctedIndex);
+    @Override
+    public void remove(final int index) {
+        final int correctedIndex = getCorrectedIndex(index);
+        final Container container = getUiReference();
+        container.remove(correctedIndex);
 
-		//if the removed item was a popup button, remove the arrow button from the toolbar
-		if (container.getComponentCount() < correctedIndex && container.getComponent(correctedIndex) instanceof JoArrowButton) {
-			container.remove(correctedIndex);
-		}
-	}
+        //if the removed item was a popup button, remove the arrow button from the toolbar
+        if (container.getComponentCount() < correctedIndex && container.getComponent(correctedIndex) instanceof JoArrowButton) {
+            container.remove(correctedIndex);
+        }
+    }
 
-	/**
-	 * The given index is potentially wrong, because popup buttons need two button for implementation
-	 * This corrects the index in that way, that for every popup button before this index, 1 (one) will be added
-	 * to the result index.
-	 * 
-	 * @param index The given index
-	 * @return The corrected index
-	 */
-	private int getCorrectedIndex(final int index) {
-		int result = index;
-		for (int i = 0; i < getUiReference().getComponentCount(); i++) {
-			if (getUiReference().getComponent(i) instanceof JoArrowButton) {
-				result++;
-			}
-		}
-		return result;
-	}
+    /**
+     * The given index is potentially wrong, because popup buttons need two button for implementation
+     * This corrects the index in that way, that for every popup button before this index, 1 (one) will be added
+     * to the result index.
+     * 
+     * @param index The given index
+     * @return The corrected index
+     */
+    private int getCorrectedIndex(final int index) {
+        int result = index;
+        for (int i = 0; i < getUiReference().getComponentCount(); i++) {
+            if (getUiReference().getComponent(i) instanceof JoArrowButton) {
+                result++;
+            }
+        }
+        return result;
+    }
 
-	@Override
-	public void pack() {
-		//nothing to do
-	}
+    @Override
+    public void pack() {
+        //nothing to do
+    }
 
 }

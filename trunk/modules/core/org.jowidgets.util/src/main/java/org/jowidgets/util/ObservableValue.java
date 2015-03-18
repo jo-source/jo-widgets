@@ -34,62 +34,62 @@ import org.jowidgets.util.collection.ObserverSetFactory;
 
 public class ObservableValue<VALUE_TYPE> implements IObservableValue<VALUE_TYPE> {
 
-	private final IObserverSet<IObservableValueListener<?>> listeners;
+    private final IObserverSet<IObservableValueListener<?>> listeners;
 
-	private VALUE_TYPE value;
+    private VALUE_TYPE value;
 
-	/**
-	 * Creates a new observable value
-	 */
-	public ObservableValue() {
-		this(null);
-	}
+    /**
+     * Creates a new observable value
+     */
+    public ObservableValue() {
+        this(null);
+    }
 
-	/**
-	 * Creates a new observable value
-	 * 
-	 * @param value The initial value of the observable value
-	 */
-	public ObservableValue(final VALUE_TYPE value) {
-		this.value = value;
-		this.listeners = ObserverSetFactory.create(Strategy.LOW_MEMORY);
-	}
+    /**
+     * Creates a new observable value
+     * 
+     * @param value The initial value of the observable value
+     */
+    public ObservableValue(final VALUE_TYPE value) {
+        this.value = value;
+        this.listeners = ObserverSetFactory.create(Strategy.LOW_MEMORY);
+    }
 
-	@Override
-	public void setValue(final VALUE_TYPE value) {
-		if (!NullCompatibleEquivalence.equals(this.value, value)) {
-			this.value = value;
-			fireChanged();
-		}
-	}
+    @Override
+    public void setValue(final VALUE_TYPE value) {
+        if (!NullCompatibleEquivalence.equals(this.value, value)) {
+            this.value = value;
+            fireChanged();
+        }
+    }
 
-	@Override
-	public VALUE_TYPE getValue() {
-		return value;
-	}
+    @Override
+    public VALUE_TYPE getValue() {
+        return value;
+    }
 
-	@Override
-	public final void addValueListener(final IObservableValueListener<?> listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public final void addValueListener(final IObservableValueListener<?> listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public final void removeValueListener(final IObservableValueListener<?> listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public final void removeValueListener(final IObservableValueListener<?> listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
-	private void fireChanged() {
-		for (final IObservableValueListener listener : listeners) {
-			listener.changed(this, value);
-		}
-	}
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    private void fireChanged() {
+        for (final IObservableValueListener listener : listeners) {
+            listener.changed(this, value);
+        }
+    }
 
-	@Override
-	public String toString() {
-		return "ObservableValue [value=" + value + "]";
-	}
+    @Override
+    public String toString() {
+        return "ObservableValue [value=" + value + "]";
+    }
 
 }

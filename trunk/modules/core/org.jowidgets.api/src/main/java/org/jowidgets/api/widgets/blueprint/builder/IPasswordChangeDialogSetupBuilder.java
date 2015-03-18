@@ -34,22 +34,22 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.validation.IValidator;
 
 public interface IPasswordChangeDialogSetupBuilder<INSTANCE_TYPE extends IPasswordChangeDialogSetupBuilder<?>> extends
-		ITitledWindowSetupBuilder<INSTANCE_TYPE> {
+        ITitledWindowSetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setOkButton(final IButtonDescriptor buttonDescriptor);
+    INSTANCE_TYPE setOkButton(final IButtonDescriptor buttonDescriptor);
 
-	INSTANCE_TYPE setCancelButton(final IButtonDescriptor buttonDescriptor);
+    INSTANCE_TYPE setCancelButton(final IButtonDescriptor buttonDescriptor);
 
-	INSTANCE_TYPE setDefaultButtonPolicy(InputDialogDefaultButtonPolicy policy);
+    INSTANCE_TYPE setDefaultButtonPolicy(InputDialogDefaultButtonPolicy policy);
 
-	INSTANCE_TYPE setCloseable(boolean closeable);
+    INSTANCE_TYPE setCloseable(boolean closeable);
 
-	INSTANCE_TYPE setExecutor(IPasswordChangeExecutor executor);
+    INSTANCE_TYPE setExecutor(IPasswordChangeExecutor executor);
 
-	INSTANCE_TYPE setPasswordValidator(IValidator<String> validator);
+    INSTANCE_TYPE setPasswordValidator(IValidator<String> validator);
 
-	INSTANCE_TYPE setMinSize(Dimension size);
+    INSTANCE_TYPE setMinSize(Dimension size);
 
-	INSTANCE_TYPE setPasswordMaxLength(int length);
+    INSTANCE_TYPE setPasswordMaxLength(int length);
 
 }

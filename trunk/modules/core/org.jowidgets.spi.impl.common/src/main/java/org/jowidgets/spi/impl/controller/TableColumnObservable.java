@@ -40,41 +40,41 @@ import org.jowidgets.util.Assert;
 
 public class TableColumnObservable implements ITableColumnObservable {
 
-	private final Set<ITableColumnListener> listeners;
+    private final Set<ITableColumnListener> listeners;
 
-	public TableColumnObservable() {
-		super();
-		this.listeners = new LinkedHashSet<ITableColumnListener>();
-	}
+    public TableColumnObservable() {
+        super();
+        this.listeners = new LinkedHashSet<ITableColumnListener>();
+    }
 
-	@Override
-	public void addTableColumnListener(final ITableColumnListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public void addTableColumnListener(final ITableColumnListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removeTableColumnListener(final ITableColumnListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeTableColumnListener(final ITableColumnListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public void fireMouseClicked(final ITableColumnMouseEvent event) {
-		for (final ITableColumnListener listener : new LinkedList<ITableColumnListener>(listeners)) {
-			listener.mouseClicked(event);
-		}
-	}
+    public void fireMouseClicked(final ITableColumnMouseEvent event) {
+        for (final ITableColumnListener listener : new LinkedList<ITableColumnListener>(listeners)) {
+            listener.mouseClicked(event);
+        }
+    }
 
-	public void fireColumnResized(final ITableColumnResizeEvent event) {
-		for (final ITableColumnListener listener : new LinkedList<ITableColumnListener>(listeners)) {
-			listener.columnResized(event);
-		}
-	}
+    public void fireColumnResized(final ITableColumnResizeEvent event) {
+        for (final ITableColumnListener listener : new LinkedList<ITableColumnListener>(listeners)) {
+            listener.columnResized(event);
+        }
+    }
 
-	public void fireColumnPermutationChanged() {
-		for (final ITableColumnListener listener : new LinkedList<ITableColumnListener>(listeners)) {
-			listener.columnPermutationChanged();
-		}
-	}
+    public void fireColumnPermutationChanged() {
+        for (final ITableColumnListener listener : new LinkedList<ITableColumnListener>(listeners)) {
+            listener.columnPermutationChanged();
+        }
+    }
 
 }

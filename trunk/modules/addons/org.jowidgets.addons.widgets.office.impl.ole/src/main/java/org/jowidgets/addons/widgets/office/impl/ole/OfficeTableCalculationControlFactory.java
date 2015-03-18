@@ -38,12 +38,12 @@ import org.jowidgets.common.widgets.factory.IWidgetFactory;
 
 final class OfficeTableCalculationControlFactory implements IWidgetFactory<IOfficeControl, IOfficeTableCalculationBluePrint> {
 
-	@Override
-	public IOfficeControl create(final Object parentUiReference, final IOfficeTableCalculationBluePrint bluePrint) {
-		final IOleDocumentBluePrint documentBp = OleDocumentBPF.document("Excel.Sheet");
-		documentBp.setSetup(bluePrint);
-		final IOleDocument document = Toolkit.getWidgetFactory().create(parentUiReference, documentBp);
-		return new OfficeControlImpl(document, bluePrint);
-	}
+    @Override
+    public IOfficeControl create(final Object parentUiReference, final IOfficeTableCalculationBluePrint bluePrint) {
+        final IOleDocumentBluePrint documentBp = OleDocumentBPF.document("Excel.Sheet");
+        documentBp.setSetup(bluePrint);
+        final IOleDocument document = Toolkit.getWidgetFactory().create(parentUiReference, documentBp);
+        return new OfficeControlImpl(document, bluePrint);
+    }
 
 }

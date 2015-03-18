@@ -34,22 +34,22 @@ import org.jowidgets.util.Assert;
 
 public final class SplitOrientationConvert {
 
-	private SplitOrientationConvert() {};
+    private SplitOrientationConvert() {};
 
-	public static int convert(final Orientation orientation) {
-		Assert.paramNotNull(orientation, "orientation");
+    public static int convert(final Orientation orientation) {
+        Assert.paramNotNull(orientation, "orientation");
 
-		if (Orientation.HORIZONTAL.equals(orientation)) {
-			return JSplitPane.HORIZONTAL_SPLIT;
-		}
-		else if (Orientation.VERTICAL.equals(orientation)) {
-			return JSplitPane.VERTICAL_SPLIT;
-		}
+        if (Orientation.HORIZONTAL.equals(orientation)) {
+            return JSplitPane.HORIZONTAL_SPLIT;
+        }
+        else if (Orientation.VERTICAL.equals(orientation)) {
+            return JSplitPane.VERTICAL_SPLIT;
+        }
 
-		else {
-			throw new IllegalArgumentException("Orientation '" + orientation + "' is unknown");
-		}
+        else {
+            throw new IllegalArgumentException("Orientation '" + orientation + "' is unknown");
+        }
 
-	}
+    }
 
 }

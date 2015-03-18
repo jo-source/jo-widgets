@@ -33,8 +33,8 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
 public final class BrowserDefaults implements IDefaultInitializer<IBrowserSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final IBrowserSetupBuilder<?> setup) {
-		setup.setBorder(false);
-	}
+    @Override
+    public void initialize(final IBrowserSetupBuilder<?> setup) {
+        setup.setBorder(false);
+    }
 }

@@ -33,11 +33,11 @@ import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 
 public final class ApplicationExample {
 
-	private ApplicationExample() {}
+    private ApplicationExample() {}
 
-	public static void main(final String[] args) throws Exception {
-		DemoIconsInitializer.initialize();
-		new TestToolRunner(new DemoApplication("Swt widgets demo application")).run();
-	}
+    public static void main(final String[] args) throws Exception {
+        DemoIconsInitializer.initialize();
+        new TestToolRunner(new DemoApplication("Swt widgets demo application")).run();
+    }
 
 }

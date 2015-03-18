@@ -30,7 +30,7 @@ package org.jowidgets.api.widgets.blueprint.builder;
 import org.jowidgets.common.widgets.builder.ITabFolderSetupBuilderCommon;
 
 public interface ITabFolderSetupBuilder<INSTANCE_TYPE extends ITabFolderSetupBuilder<?>> extends
-		IComponentSetupBuilder<INSTANCE_TYPE>,
-		ITabFolderSetupBuilderCommon<INSTANCE_TYPE> {
+        IComponentSetupBuilder<INSTANCE_TYPE>,
+        ITabFolderSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

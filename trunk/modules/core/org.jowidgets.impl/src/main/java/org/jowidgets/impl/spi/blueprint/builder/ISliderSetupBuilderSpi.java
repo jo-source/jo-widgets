@@ -30,6 +30,6 @@ package org.jowidgets.impl.spi.blueprint.builder;
 import org.jowidgets.common.widgets.builder.ISliderSetupBuilderCommon;
 
 public interface ISliderSetupBuilderSpi<INSTANCE_TYPE extends ISliderSetupBuilderSpi<?>> extends
-		ISliderSetupBuilderCommon<INSTANCE_TYPE> {
+        ISliderSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

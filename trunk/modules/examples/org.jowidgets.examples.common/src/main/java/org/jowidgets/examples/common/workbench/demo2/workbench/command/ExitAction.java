@@ -33,13 +33,13 @@ import org.jowidgets.tools.command.CommandAction;
 
 public class ExitAction extends CommandAction {
 
-	public ExitAction() {
-		super(new ActionBuilder() {
-			{
-				setText("Exit");
-				setToolTipText("Exit the workbench");
-			}
-		});
-	}
+    public ExitAction() {
+        super(new ActionBuilder() {
+            {
+                setText("Exit");
+                setToolTipText("Exit the workbench");
+            }
+        });
+    }
 
 }

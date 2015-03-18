@@ -33,16 +33,16 @@ import org.jowidgets.common.types.IVetoable;
 
 public class TabItemAdapter implements ITabItemListener {
 
-	@Override
-	public void onDeselection(final IVetoable vetoable) {}
+    @Override
+    public void onDeselection(final IVetoable vetoable) {}
 
-	@Override
-	public void onClose(final IVetoable vetoable) {}
+    @Override
+    public void onClose(final IVetoable vetoable) {}
 
-	@Override
-	public void selectionChanged(final boolean selected) {}
+    @Override
+    public void selectionChanged(final boolean selected) {}
 
-	@Override
-	public void closed() {}
+    @Override
+    public void closed() {}
 
 }

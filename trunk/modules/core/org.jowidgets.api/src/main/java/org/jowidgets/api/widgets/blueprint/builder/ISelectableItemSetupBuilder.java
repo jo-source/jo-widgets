@@ -28,8 +28,8 @@
 package org.jowidgets.api.widgets.blueprint.builder;
 
 public interface ISelectableItemSetupBuilder<INSTANCE_TYPE extends ISelectableItemSetupBuilder<?>> extends
-		IAccelerateableMenuItemSetupBuilder<INSTANCE_TYPE> {
+        IAccelerateableMenuItemSetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setSelected(boolean selected);
+    INSTANCE_TYPE setSelected(boolean selected);
 
 }

@@ -35,17 +35,17 @@ import org.jowidgets.tools.command.CommandAction;
 
 public class SaveAction extends CommandAction {
 
-	public SaveAction() {
-		super(new ActionBuilder() {
-			{
-				setText("Save");
-				setToolTipText("Save the modified data");
-				setIcon(SilkIcons.DISK);
-				setAccelerator('S', Modifier.CTRL);
-				setMnemonic('S');
-			}
-		});
+    public SaveAction() {
+        super(new ActionBuilder() {
+            {
+                setText("Save");
+                setToolTipText("Save the modified data");
+                setIcon(SilkIcons.DISK);
+                setAccelerator('S', Modifier.CTRL);
+                setMnemonic('S');
+            }
+        });
 
-	}
+    }
 
 }

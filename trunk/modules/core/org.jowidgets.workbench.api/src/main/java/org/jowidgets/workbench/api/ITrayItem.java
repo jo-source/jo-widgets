@@ -33,16 +33,16 @@ import org.jowidgets.common.image.IImageConstant;
 
 public interface ITrayItem {
 
-	void setMenu(IMenuModel menu);
+    void setMenu(IMenuModel menu);
 
-	void setIcon(IImageConstant imageKey);
+    void setIcon(IImageConstant imageKey);
 
-	void setTooltip(String tooltip);
+    void setTooltip(String tooltip);
 
-	void showInfo(String title, String message);
+    void showInfo(String title, String message);
 
-	void showWarning(String title, String message);
+    void showWarning(String title, String message);
 
-	void showError(String title, String message);
+    void showError(String title, String message);
 
 }

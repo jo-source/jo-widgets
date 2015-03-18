@@ -38,29 +38,29 @@ import org.jowidgets.util.Assert;
 
 public class InputObservable implements IInputObservable {
 
-	private final Set<IInputListener> inputListeners;
+    private final Set<IInputListener> inputListeners;
 
-	public InputObservable() {
-		super();
-		this.inputListeners = new LinkedHashSet<IInputListener>();
-	}
+    public InputObservable() {
+        super();
+        this.inputListeners = new LinkedHashSet<IInputListener>();
+    }
 
-	@Override
-	public final void addInputListener(final IInputListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		this.inputListeners.add(listener);
-	}
+    @Override
+    public final void addInputListener(final IInputListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        this.inputListeners.add(listener);
+    }
 
-	@Override
-	public final void removeInputListener(final IInputListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		this.inputListeners.remove(listener);
-	}
+    @Override
+    public final void removeInputListener(final IInputListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        this.inputListeners.remove(listener);
+    }
 
-	public final void fireInputChanged() {
-		for (final IInputListener inputListener : new LinkedList<IInputListener>(inputListeners)) {
-			inputListener.inputChanged();
-		}
-	}
+    public final void fireInputChanged() {
+        for (final IInputListener inputListener : new LinkedList<IInputListener>(inputListeners)) {
+            inputListener.inputChanged();
+        }
+    }
 
 }

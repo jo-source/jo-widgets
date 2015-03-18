@@ -32,10 +32,10 @@ import org.jowidgets.api.toolkit.Toolkit;
 
 public final class TextMask {
 
-	private TextMask() {}
+    private TextMask() {}
 
-	public static ITextMaskBuilder builder() {
-		return Toolkit.createTextMaskBuilder();
-	}
+    public static ITextMaskBuilder builder() {
+        return Toolkit.createTextMaskBuilder();
+    }
 
 }

@@ -39,15 +39,15 @@ import org.jowidgets.workbench.impl.WorkbenchRunner;
 
 public final class SwtWorkbenchDemo1ClassicTabsStarter {
 
-	private SwtWorkbenchDemo1ClassicTabsStarter() {}
+    private SwtWorkbenchDemo1ClassicTabsStarter() {}
 
-	public static void main(final String[] args) throws Exception {
-		SwtOptions.setClassicTabs(true);
-		SwtOptions.setSplitLayoutMode(SplitlayoutMode.ON_MOUSE_MOVE);
-		Toolkit.getWidgetFactory().register(
-				IMapWidgetBlueprint.class,
-				new SwtGoogleEarthWidgetFactory(MapDemoApplication.API_KEY));
-		new WorkbenchRunner().run(new WorkbenchDemo1Factory());
-	}
+    public static void main(final String[] args) throws Exception {
+        SwtOptions.setClassicTabs(true);
+        SwtOptions.setSplitLayoutMode(SplitlayoutMode.ON_MOUSE_MOVE);
+        Toolkit.getWidgetFactory().register(
+                IMapWidgetBlueprint.class,
+                new SwtGoogleEarthWidgetFactory(MapDemoApplication.API_KEY));
+        new WorkbenchRunner().run(new WorkbenchDemo1Factory());
+    }
 
 }

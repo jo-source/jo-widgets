@@ -44,81 +44,81 @@ import org.jowidgets.util.Assert;
 
 public final class DragSourceImpl extends AbstractDragSourceObservable implements IDragSource {
 
-	private final IDragSourceSpi dragSourceSpi;
-	private final IDragSourceListenerSpi dragSourceListenerSpi;
-	private final DragDropDelegate dragDropDelegate;
+    private final IDragSourceSpi dragSourceSpi;
+    private final IDragSourceListenerSpi dragSourceListenerSpi;
+    private final DragDropDelegate dragDropDelegate;
 
-	public DragSourceImpl(final IDragSourceSpi dragSourceSpi) {
-		Assert.paramNotNull(dragSourceSpi, "dragSourceSpi");
+    public DragSourceImpl(final IDragSourceSpi dragSourceSpi) {
+        Assert.paramNotNull(dragSourceSpi, "dragSourceSpi");
 
-		this.dragSourceSpi = dragSourceSpi;
-		this.dragSourceListenerSpi = new DragSourceListenerSpi();
-		this.dragDropDelegate = new DragDropDelegate(new IDragDropSpiSupport() {
+        this.dragSourceSpi = dragSourceSpi;
+        this.dragSourceListenerSpi = new DragSourceListenerSpi();
+        this.dragDropDelegate = new DragDropDelegate(new IDragDropSpiSupport() {
 
-			@Override
-			public void setTransferTypesSpi(final Collection<TransferTypeSpi> supportedTypes) {
-				dragSourceSpi.setTransferTypes(supportedTypes);
-			}
+            @Override
+            public void setTransferTypesSpi(final Collection<TransferTypeSpi> supportedTypes) {
+                dragSourceSpi.setTransferTypes(supportedTypes);
+            }
 
-			@Override
-			public void setActionsSpi(final Set<DropAction> actions) {
-				dragSourceSpi.setActions(actions);
-			}
-		});
-	}
+            @Override
+            public void setActionsSpi(final Set<DropAction> actions) {
+                dragSourceSpi.setActions(actions);
+            }
+        });
+    }
 
-	@Override
-	public void setTransferTypes(final Collection<TransferType<?>> types) {
-		dragDropDelegate.setTransferTypes(types);
-	}
+    @Override
+    public void setTransferTypes(final Collection<TransferType<?>> types) {
+        dragDropDelegate.setTransferTypes(types);
+    }
 
-	@Override
-	public void setTransferTypes(final TransferType<?>... supportedTypes) {
-		dragDropDelegate.setTransferTypes(supportedTypes);
-	}
+    @Override
+    public void setTransferTypes(final TransferType<?>... supportedTypes) {
+        dragDropDelegate.setTransferTypes(supportedTypes);
+    }
 
-	@Override
-	public void setActions(final Set<DropAction> actions) {
-		dragDropDelegate.setActions(actions);
-	}
+    @Override
+    public void setActions(final Set<DropAction> actions) {
+        dragDropDelegate.setActions(actions);
+    }
 
-	@Override
-	public void setActions(final DropAction... actions) {
-		dragDropDelegate.setActions(actions);
-	}
+    @Override
+    public void setActions(final DropAction... actions) {
+        dragDropDelegate.setActions(actions);
+    }
 
-	@Override
-	protected void setActive(final boolean active) {
-		if (active) {
-			dragSourceSpi.addDragSourceListenerSpi(dragSourceListenerSpi);
-		}
-		else {
-			dragSourceSpi.removeDragSourceListenerSpi(dragSourceListenerSpi);
-		}
-	}
+    @Override
+    protected void setActive(final boolean active) {
+        if (active) {
+            dragSourceSpi.addDragSourceListenerSpi(dragSourceListenerSpi);
+        }
+        else {
+            dragSourceSpi.removeDragSourceListenerSpi(dragSourceListenerSpi);
+        }
+    }
 
-	private final class DragSourceListenerSpi implements IDragSourceListenerSpi {
+    private final class DragSourceListenerSpi implements IDragSourceListenerSpi {
 
-		@Override
-		public void dragStart(final IDragEventSpi event, final IVetoable veto) {
-			fireDragStart(new DragEventImpl(event), veto);
-		}
+        @Override
+        public void dragStart(final IDragEventSpi event, final IVetoable veto) {
+            fireDragStart(new DragEventImpl(event), veto);
+        }
 
-		@Override
-		public void dragSetData(
-			final IDragEventSpi event,
-			final IVetoable veto,
-			final TransferTypeSpi transferTypeSpi,
-			final IDragDataResponseSpi dragData) {
-			final TransferType<?> transferType = dragDropDelegate.getTransferType(transferTypeSpi);
-			fireDragSetData(new DragEventImpl(event), veto, transferType, new DragDataResponseImpl(dragData));
-		}
+        @Override
+        public void dragSetData(
+            final IDragEventSpi event,
+            final IVetoable veto,
+            final TransferTypeSpi transferTypeSpi,
+            final IDragDataResponseSpi dragData) {
+            final TransferType<?> transferType = dragDropDelegate.getTransferType(transferTypeSpi);
+            fireDragSetData(new DragEventImpl(event), veto, transferType, new DragDataResponseImpl(dragData));
+        }
 
-		@Override
-		public void dragFinished(final IDragEventSpi event, final DropAction dropAction) {
-			fireDragFinished(new DragEventImpl(event), dropAction);
-		}
+        @Override
+        public void dragFinished(final IDragEventSpi event, final DropAction dropAction) {
+            fireDragFinished(new DragEventImpl(event), dropAction);
+        }
 
-	}
+    }
 
 }

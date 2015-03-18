@@ -35,16 +35,16 @@ import org.eclipse.swt.widgets.Display;
 
 public class FontCache implements IFontCache {
 
-	private final Map<FontDataKey, Font> fontMap = new HashMap<FontDataKey, Font>();
+    private final Map<FontDataKey, Font> fontMap = new HashMap<FontDataKey, Font>();
 
-	@Override
-	public Font getFont(final FontDataKey fontData) {
-		Font font = fontMap.get(fontData);
-		if (font == null) {
-			font = new Font(Display.getDefault(), fontData.getFontData());
-			fontMap.put(fontData, font);
-		}
-		return font;
-	}
+    @Override
+    public Font getFont(final FontDataKey fontData) {
+        Font font = fontMap.get(fontData);
+        if (font == null) {
+            font = new Font(Display.getDefault(), fontData.getFontData());
+            fontMap.put(fontData, font);
+        }
+        return font;
+    }
 
 }

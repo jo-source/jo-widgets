@@ -34,46 +34,46 @@ import org.jowidgets.addons.map.common.IDesignationListener;
 
 public abstract class AbstractDesignationCallback<T> implements IDesignationCallback<T> {
 
-	private BrowserFunction browserFunction;
+    private BrowserFunction browserFunction;
 
-	@Override
-	public final boolean register(final Browser browser, final IDesignationListener<? super T> listener) {
-		browserFunction = new BrowserFunction(browser, getCallbackName()) {
-			@Override
-			public Object function(final Object[] arguments) {
-				super.function(arguments);
-				final T result = createResult(arguments);
-				getBrowser().getDisplay().asyncExec(new Runnable() {
-					@Override
-					public void run() {
-						listener.onDesignation(result);
-					}
-				});
-				return null;
-			}
-		};
-		return browser.execute(getJsStartFunctionName() + "('" + getCallbackName() + "');");
-	}
+    @Override
+    public final boolean register(final Browser browser, final IDesignationListener<? super T> listener) {
+        browserFunction = new BrowserFunction(browser, getCallbackName()) {
+            @Override
+            public Object function(final Object[] arguments) {
+                super.function(arguments);
+                final T result = createResult(arguments);
+                getBrowser().getDisplay().asyncExec(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.onDesignation(result);
+                    }
+                });
+                return null;
+            }
+        };
+        return browser.execute(getJsStartFunctionName() + "('" + getCallbackName() + "');");
+    }
 
-	@Override
-	public final boolean unregister() {
-		try {
-			return browserFunction.getBrowser().execute(getJsEndFunctionName() + "();");
-		}
-		finally {
-			browserFunction.dispose();
-			browserFunction = null;
-		}
-	}
+    @Override
+    public final boolean unregister() {
+        try {
+            return browserFunction.getBrowser().execute(getJsEndFunctionName() + "();");
+        }
+        finally {
+            browserFunction.dispose();
+            browserFunction = null;
+        }
+    }
 
-	protected String getCallbackName() {
-		return getClass().getSimpleName();
-	}
+    protected String getCallbackName() {
+        return getClass().getSimpleName();
+    }
 
-	protected abstract String getJsStartFunctionName();
+    protected abstract String getJsStartFunctionName();
 
-	protected abstract String getJsEndFunctionName();
+    protected abstract String getJsEndFunctionName();
 
-	protected abstract T createResult(final Object[] arguments);
+    protected abstract T createResult(final Object[] arguments);
 
 }

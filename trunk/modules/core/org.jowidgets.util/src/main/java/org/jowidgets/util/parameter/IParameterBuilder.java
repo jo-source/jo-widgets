@@ -30,16 +30,16 @@ package org.jowidgets.util.parameter;
 
 public interface IParameterBuilder<VALUE_TYPE> {
 
-	IParameterBuilder<VALUE_TYPE> setValueType(Class<VALUE_TYPE> valueType);
+    IParameterBuilder<VALUE_TYPE> setValueType(Class<VALUE_TYPE> valueType);
 
-	IParameterBuilder<VALUE_TYPE> setValue(VALUE_TYPE value);
+    IParameterBuilder<VALUE_TYPE> setValue(VALUE_TYPE value);
 
-	IParameterBuilder<VALUE_TYPE> setDefaultValue(VALUE_TYPE value);
+    IParameterBuilder<VALUE_TYPE> setDefaultValue(VALUE_TYPE value);
 
-	IParameterBuilder<VALUE_TYPE> setLabel(String label);
+    IParameterBuilder<VALUE_TYPE> setLabel(String label);
 
-	IParameterBuilder<VALUE_TYPE> setDescription(String description);
+    IParameterBuilder<VALUE_TYPE> setDescription(String description);
 
-	IParameter<VALUE_TYPE> build();
+    IParameter<VALUE_TYPE> build();
 
 }

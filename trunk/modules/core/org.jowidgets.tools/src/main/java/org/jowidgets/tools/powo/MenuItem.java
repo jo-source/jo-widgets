@@ -36,38 +36,38 @@ import org.jowidgets.api.widgets.descriptor.setup.IMenuItemSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 class MenuItem<WIDGET_TYPE extends IMenuItem, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & IMenuItemSetupBuilder<?> & IMenuItemSetup> extends
-		Item<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IMenuItem {
+        Item<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IMenuItem {
 
-	MenuItem(final BLUE_PRINT_TYPE bluePrint) {
-		super(bluePrint);
-	}
+    MenuItem(final BLUE_PRINT_TYPE bluePrint) {
+        super(bluePrint);
+    }
 
-	@Override
-	public void setMnemonic(final char mnemonic) {
-		if (isInitialized()) {
-			getWidget().setMnemonic(mnemonic);
-		}
-		else {
-			getBluePrint().setMnemonic(mnemonic);
-		}
-	}
+    @Override
+    public void setMnemonic(final char mnemonic) {
+        if (isInitialized()) {
+            getWidget().setMnemonic(mnemonic);
+        }
+        else {
+            getBluePrint().setMnemonic(mnemonic);
+        }
+    }
 
-	@Override
-	public IMenu getParent() {
-		checkInitialized();
-		return getWidget().getParent();
-	}
+    @Override
+    public IMenu getParent() {
+        checkInitialized();
+        return getWidget().getParent();
+    }
 
-	@Override
-	public IMenuItemModel getModel() {
-		checkInitialized();
-		return getWidget().getModel();
-	}
+    @Override
+    public IMenuItemModel getModel() {
+        checkInitialized();
+        return getWidget().getModel();
+    }
 
-	@Override
-	public void setModel(final IMenuItemModel model) {
-		checkInitialized();
-		getWidget().setModel(model);
-	}
+    @Override
+    public void setModel(final IMenuItemModel model) {
+        checkInitialized();
+        getWidget().setModel(model);
+    }
 
 }

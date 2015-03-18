@@ -38,12 +38,12 @@ import org.jowidgets.common.widgets.factory.IWidgetFactory;
 
 final class PdfReaderFactory implements IWidgetFactory<IPdfReader, IPdfReaderBluePrint> {
 
-	@Override
-	public IPdfReader create(final Object parentUiReference, final IPdfReaderBluePrint bluePrint) {
-		final IBrowserBluePrint browserBp = BrowserBPF.browser();
-		browserBp.setSetup(bluePrint);
-		final IBrowser browser = Toolkit.getWidgetFactory().create(parentUiReference, browserBp);
-		return new PdfReaderImpl(browser, bluePrint);
-	}
+    @Override
+    public IPdfReader create(final Object parentUiReference, final IPdfReaderBluePrint bluePrint) {
+        final IBrowserBluePrint browserBp = BrowserBPF.browser();
+        browserBp.setSetup(bluePrint);
+        final IBrowser browser = Toolkit.getWidgetFactory().create(parentUiReference, browserBp);
+        return new PdfReaderImpl(browser, bluePrint);
+    }
 
 }

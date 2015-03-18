@@ -34,6 +34,6 @@ import org.jowidgets.api.widgets.IControl;
 
 public interface ISwtAwtControl extends IControl {
 
-	Container getAwtContainer();
+    Container getAwtContainer();
 
 }

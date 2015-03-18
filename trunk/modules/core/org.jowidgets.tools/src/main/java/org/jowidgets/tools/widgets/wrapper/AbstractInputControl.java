@@ -44,68 +44,68 @@ import org.jowidgets.validation.tools.CompoundValidator;
 
 public abstract class AbstractInputControl<VALUE_TYPE> extends ControlWrapper implements IInputControl<VALUE_TYPE> {
 
-	private final ValidationCache validationCache;
-	private final CompoundValidator<VALUE_TYPE> compoundValidator;
-	private final InputObservable inputObservable;
+    private final ValidationCache validationCache;
+    private final CompoundValidator<VALUE_TYPE> compoundValidator;
+    private final InputObservable inputObservable;
 
-	public AbstractInputControl(final IControl control) {
-		super(control);
+    public AbstractInputControl(final IControl control) {
+        super(control);
 
-		this.inputObservable = new InputObservable();
+        this.inputObservable = new InputObservable();
 
-		this.compoundValidator = new CompoundValidator<VALUE_TYPE>();
-		this.validationCache = new ValidationCache(new IValidationResultCreator() {
-			@Override
-			public IValidationResult createValidationResult() {
-				final IValidationResultBuilder builder = ValidationResult.builder();
+        this.compoundValidator = new CompoundValidator<VALUE_TYPE>();
+        this.validationCache = new ValidationCache(new IValidationResultCreator() {
+            @Override
+            public IValidationResult createValidationResult() {
+                final IValidationResultBuilder builder = ValidationResult.builder();
 
-				builder.addResult(AbstractInputControl.this.createValidationResult());
+                builder.addResult(AbstractInputControl.this.createValidationResult());
 
-				builder.addResult(compoundValidator.validate(getValue()));
-				return builder.build();
-			}
-		});
+                builder.addResult(compoundValidator.validate(getValue()));
+                return builder.build();
+            }
+        });
 
-	}
+    }
 
-	protected abstract IValidationResult createValidationResult();
+    protected abstract IValidationResult createValidationResult();
 
-	@Override
-	public final void addValidator(final IValidator<VALUE_TYPE> validator) {
-		Assert.paramNotNull(validator, "validator");
-		compoundValidator.addValidator(validator);
-	}
+    @Override
+    public final void addValidator(final IValidator<VALUE_TYPE> validator) {
+        Assert.paramNotNull(validator, "validator");
+        compoundValidator.addValidator(validator);
+    }
 
-	@Override
-	public final IValidationResult validate() {
-		return validationCache.validate();
-	}
+    @Override
+    public final IValidationResult validate() {
+        return validationCache.validate();
+    }
 
-	@Override
-	public final void addValidationConditionListener(final IValidationConditionListener listener) {
-		validationCache.addValidationConditionListener(listener);
-	}
+    @Override
+    public final void addValidationConditionListener(final IValidationConditionListener listener) {
+        validationCache.addValidationConditionListener(listener);
+    }
 
-	@Override
-	public final void removeValidationConditionListener(final IValidationConditionListener listener) {
-		validationCache.removeValidationConditionListener(listener);
-	}
+    @Override
+    public final void removeValidationConditionListener(final IValidationConditionListener listener) {
+        validationCache.removeValidationConditionListener(listener);
+    }
 
-	@Override
-	public final void addInputListener(final IInputListener listener) {
-		inputObservable.addInputListener(listener);
-	}
+    @Override
+    public final void addInputListener(final IInputListener listener) {
+        inputObservable.addInputListener(listener);
+    }
 
-	@Override
-	public final void removeInputListener(final IInputListener listener) {
-		inputObservable.removeInputListener(listener);
-	}
+    @Override
+    public final void removeInputListener(final IInputListener listener) {
+        inputObservable.removeInputListener(listener);
+    }
 
-	protected final void setValidationCacheDirty() {
-		validationCache.setDirty();
-	}
+    protected final void setValidationCacheDirty() {
+        validationCache.setDirty();
+    }
 
-	protected final void fireInputChanged() {
-		inputObservable.fireInputChanged();
-	}
+    protected final void fireInputChanged() {
+        inputObservable.fireInputChanged();
+    }
 }

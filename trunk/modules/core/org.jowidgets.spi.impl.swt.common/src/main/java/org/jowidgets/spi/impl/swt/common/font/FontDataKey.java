@@ -34,41 +34,41 @@ import org.jowidgets.util.Assert;
 
 public class FontDataKey {
 
-	private final FontData[] fontData;
+    private final FontData[] fontData;
 
-	public FontDataKey(final FontData[] fontData) {
-		Assert.paramNotNull(fontData, "fontData");
-		this.fontData = fontData;
-	}
+    public FontDataKey(final FontData[] fontData) {
+        Assert.paramNotNull(fontData, "fontData");
+        this.fontData = fontData;
+    }
 
-	public FontData[] getFontData() {
-		return fontData;
-	}
+    public FontData[] getFontData() {
+        return fontData;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Arrays.hashCode(fontData);
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + Arrays.hashCode(fontData);
+        return result;
+    }
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final FontDataKey other = (FontDataKey) obj;
-		if (!Arrays.equals(fontData, other.fontData)) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final FontDataKey other = (FontDataKey) obj;
+        if (!Arrays.equals(fontData, other.fontData)) {
+            return false;
+        }
+        return true;
+    }
 
 }

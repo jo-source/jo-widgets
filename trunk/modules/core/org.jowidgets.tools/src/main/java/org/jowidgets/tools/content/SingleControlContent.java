@@ -36,32 +36,32 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public class SingleControlContent<INPUT_TYPE> implements IInputContentCreator<INPUT_TYPE> {
 
-	private final IInputContentCreator<INPUT_TYPE> contentCreator;
+    private final IInputContentCreator<INPUT_TYPE> contentCreator;
 
-	public SingleControlContent(
-		final String label,
-		final IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor,
-		final int fieldMinWidth) {
-		contentCreator = Toolkit.getInputContentCreatorFactory().singleControlContent(label, descriptor, fieldMinWidth);
-	}
+    public SingleControlContent(
+        final String label,
+        final IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor,
+        final int fieldMinWidth) {
+        contentCreator = Toolkit.getInputContentCreatorFactory().singleControlContent(label, descriptor, fieldMinWidth);
+    }
 
-	public SingleControlContent(final String label, final IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor) {
-		contentCreator = Toolkit.getInputContentCreatorFactory().singleControlContent(label, descriptor);
-	}
+    public SingleControlContent(final String label, final IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor) {
+        contentCreator = Toolkit.getInputContentCreatorFactory().singleControlContent(label, descriptor);
+    }
 
-	@Override
-	public void createContent(final IInputContentContainer contentContainer) {
-		contentCreator.createContent(contentContainer);
-	}
+    @Override
+    public void createContent(final IInputContentContainer contentContainer) {
+        contentCreator.createContent(contentContainer);
+    }
 
-	@Override
-	public void setValue(final INPUT_TYPE value) {
-		contentCreator.setValue(value);
-	}
+    @Override
+    public void setValue(final INPUT_TYPE value) {
+        contentCreator.setValue(value);
+    }
 
-	@Override
-	public INPUT_TYPE getValue() {
-		return contentCreator.getValue();
-	}
+    @Override
+    public INPUT_TYPE getValue() {
+        return contentCreator.getValue();
+    }
 
 }

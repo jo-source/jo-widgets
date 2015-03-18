@@ -47,96 +47,96 @@ import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 
 public interface IBluePrintFactory extends ISimpleBluePrintFactory {
 
-	////////////////////////////////////////////////////////////////////////////////////////////////
-	//////////////////////// some input fields here/////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////// some input fields here/////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
-	IInputFieldBluePrint<String> inputFieldString();
+    IInputFieldBluePrint<String> inputFieldString();
 
-	IInputFieldBluePrint<Long> inputFieldLongNumber();
+    IInputFieldBluePrint<Long> inputFieldLongNumber();
 
-	IInputFieldBluePrint<Integer> inputFieldIntegerNumber();
+    IInputFieldBluePrint<Integer> inputFieldIntegerNumber();
 
-	IInputFieldBluePrint<Short> inputFieldShortNumber();
+    IInputFieldBluePrint<Short> inputFieldShortNumber();
 
-	IInputFieldBluePrint<Double> inputFieldDoubleNumber();
+    IInputFieldBluePrint<Double> inputFieldDoubleNumber();
 
-	IInputFieldBluePrint<Double> inputFieldDoubleNumber(int minFractionDigits, int maxFractionDigits);
+    IInputFieldBluePrint<Double> inputFieldDoubleNumber(int minFractionDigits, int maxFractionDigits);
 
-	IInputFieldBluePrint<Date> inputFieldDate(DateFormat dateFormat, String formatHint, ITextMask mask);
+    IInputFieldBluePrint<Date> inputFieldDate(DateFormat dateFormat, String formatHint, ITextMask mask);
 
-	IInputFieldBluePrint<Date> inputFieldDate(DateFormat dateFormat, String formatHint);
+    IInputFieldBluePrint<Date> inputFieldDate(DateFormat dateFormat, String formatHint);
 
-	IInputFieldBluePrint<Date> inputFieldDate();
+    IInputFieldBluePrint<Date> inputFieldDate();
 
-	IInputFieldBluePrint<Date> inputFieldDateTime();
+    IInputFieldBluePrint<Date> inputFieldDateTime();
 
-	IInputFieldBluePrint<Date> inputFieldTime();
+    IInputFieldBluePrint<Date> inputFieldTime();
 
-	/////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////some convenience methods starting here///////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////some convenience methods starting here///////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
 
-	ILabelBluePrint label(final IImageConstant icon);
+    ILabelBluePrint label(final IImageConstant icon);
 
-	ILabelBluePrint label(final IImageConstant icon, final String text);
+    ILabelBluePrint label(final IImageConstant icon, final String text);
 
-	ILabelBluePrint label(final IImageConstant icon, final String text, final String toolTiptext);
+    ILabelBluePrint label(final IImageConstant icon, final String text, final String toolTiptext);
 
-	ITextSeparatorBluePrint textSeparator(final String text);
+    ITextSeparatorBluePrint textSeparator(final String text);
 
-	ITextSeparatorBluePrint textSeparator(final String text, final String tooltipText);
+    ITextSeparatorBluePrint textSeparator(final String text, final String tooltipText);
 
-	IQuestionDialogBluePrint yesNoQuestion();
+    IQuestionDialogBluePrint yesNoQuestion();
 
-	IQuestionDialogBluePrint yesNoCancelQuestion();
+    IQuestionDialogBluePrint yesNoCancelQuestion();
 
-	IQuestionDialogBluePrint yesNoQuestion(String question);
+    IQuestionDialogBluePrint yesNoQuestion(String question);
 
-	IQuestionDialogBluePrint yesNoCancelQuestion(String question);
+    IQuestionDialogBluePrint yesNoCancelQuestion(String question);
 
-	IMessageDialogBluePrint infoDialog();
+    IMessageDialogBluePrint infoDialog();
 
-	IMessageDialogBluePrint warningDialog();
+    IMessageDialogBluePrint warningDialog();
 
-	IMessageDialogBluePrint errorDialog();
+    IMessageDialogBluePrint errorDialog();
 
-	IMessageDialogBluePrint infoDialog(String message);
+    IMessageDialogBluePrint infoDialog(String message);
 
-	IMessageDialogBluePrint warningDialog(String message);
+    IMessageDialogBluePrint warningDialog(String message);
 
-	IMessageDialogBluePrint errorDialog(String message);
+    IMessageDialogBluePrint errorDialog(String message);
 
-	IProgressBarBluePrint progressBar(int minimum, int maximum);
+    IProgressBarBluePrint progressBar(int minimum, int maximum);
 
-	IProgressBarBluePrint progressBar(int maximum);
+    IProgressBarBluePrint progressBar(int maximum);
 
-	<ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(
-		IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>> descriptor);
+    <ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(
+        IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>> descriptor);
 
-	<ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
-		ICustomWidgetCreator<? extends IInputControl<ELEMENT_TYPE>> widgetCreator);
+    <ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
+        ICustomWidgetCreator<? extends IInputControl<ELEMENT_TYPE>> widgetCreator);
 
-	<ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
-		IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>> descriptor);
+    <ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
+        IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>> descriptor);
 
-	ISliderViewerBluePrint<Double> sliderViewerDouble();
+    ISliderViewerBluePrint<Double> sliderViewerDouble();
 
-	ISliderViewerBluePrint<Double> sliderViewerDouble(double max);
+    ISliderViewerBluePrint<Double> sliderViewerDouble(double max);
 
-	ISliderViewerBluePrint<Double> sliderViewerDouble(double min, double max);
+    ISliderViewerBluePrint<Double> sliderViewerDouble(double min, double max);
 
-	ISliderViewerBluePrint<Float> sliderViewerFloat();
+    ISliderViewerBluePrint<Float> sliderViewerFloat();
 
-	ISliderViewerBluePrint<Float> sliderViewerFloat(float max);
+    ISliderViewerBluePrint<Float> sliderViewerFloat(float max);
 
-	ISliderViewerBluePrint<Float> sliderViewerFloat(float min, float max);
+    ISliderViewerBluePrint<Float> sliderViewerFloat(float min, float max);
 
-	ISliderViewerBluePrint<Integer> sliderViewerInteger(int max);
+    ISliderViewerBluePrint<Integer> sliderViewerInteger(int max);
 
-	ISliderViewerBluePrint<Integer> sliderViewerInteger(int min, int max);
+    ISliderViewerBluePrint<Integer> sliderViewerInteger(int min, int max);
 
-	ISliderViewerBluePrint<Long> sliderViewerLong(long max);
+    ISliderViewerBluePrint<Long> sliderViewerLong(long max);
 
-	ISliderViewerBluePrint<Long> sliderViewerLong(long min, long max);
+    ISliderViewerBluePrint<Long> sliderViewerLong(long min, long max);
 }

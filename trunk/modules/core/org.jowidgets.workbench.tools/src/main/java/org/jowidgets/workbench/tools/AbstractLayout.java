@@ -34,24 +34,24 @@ import org.jowidgets.workbench.api.LayoutScope;
 
 public abstract class AbstractLayout implements ILayout {
 
-	@Override
-	public String getLabel() {
-		return null;
-	}
+    @Override
+    public String getLabel() {
+        return null;
+    }
 
-	@Override
-	public String getTooltip() {
-		return null;
-	}
+    @Override
+    public String getTooltip() {
+        return null;
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return null;
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return null;
+    }
 
-	@Override
-	public LayoutScope getScope() {
-		return LayoutScope.COMPONENT;
-	}
+    @Override
+    public LayoutScope getScope() {
+        return LayoutScope.COMPONENT;
+    }
 
 }

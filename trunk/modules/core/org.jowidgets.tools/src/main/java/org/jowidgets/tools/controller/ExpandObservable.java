@@ -38,34 +38,34 @@ import org.jowidgets.util.Assert;
 
 public class ExpandObservable implements IExpandObservable {
 
-	private final Set<IExpandListener> listeners;
+    private final Set<IExpandListener> listeners;
 
-	private boolean lastExpanded;
+    private boolean lastExpanded;
 
-	public ExpandObservable(final boolean isExpanded) {
-		this.listeners = new LinkedHashSet<IExpandListener>();
-		this.lastExpanded = isExpanded;
-	}
+    public ExpandObservable(final boolean isExpanded) {
+        this.listeners = new LinkedHashSet<IExpandListener>();
+        this.lastExpanded = isExpanded;
+    }
 
-	@Override
-	public void addExpandListener(final IExpandListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public void addExpandListener(final IExpandListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removeExpandListener(final IExpandListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeExpandListener(final IExpandListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public void fireExpandedChanged(final boolean isExpanded) {
-		if (lastExpanded != isExpanded) {
-			for (final IExpandListener listener : new LinkedList<IExpandListener>(listeners)) {
-				listener.expandedChanged(isExpanded);
-			}
-			lastExpanded = isExpanded;
-		}
-	}
+    public void fireExpandedChanged(final boolean isExpanded) {
+        if (lastExpanded != isExpanded) {
+            for (final IExpandListener listener : new LinkedList<IExpandListener>(listeners)) {
+                listener.expandedChanged(isExpanded);
+            }
+            lastExpanded = isExpanded;
+        }
+    }
 
 }

@@ -31,20 +31,20 @@ import org.jowidgets.common.types.IVetoable;
 
 public interface IComponent extends IDisposeCallback {
 
-	void onActivation();
+    void onActivation();
 
-	void onDeactivation(IVetoable vetoable);
+    void onDeactivation(IVetoable vetoable);
 
-	void onFolderCreated(IFolderContext folderContext);
+    void onFolderCreated(IFolderContext folderContext);
 
-	/**
-	 * Creates a view for a given ID.
-	 * The scope of the view is COMPONENT.
-	 * 
-	 * @param viewId The id to get the view for
-	 * @param viewContext The view context
-	 * @return The created view
-	 */
-	IView createView(String viewId, IViewContext viewContext);
+    /**
+     * Creates a view for a given ID.
+     * The scope of the view is COMPONENT.
+     * 
+     * @param viewId The id to get the view for
+     * @param viewContext The view context
+     * @return The created view
+     */
+    IView createView(String viewId, IViewContext viewContext);
 
 }

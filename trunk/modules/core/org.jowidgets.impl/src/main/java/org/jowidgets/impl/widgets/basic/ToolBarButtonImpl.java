@@ -51,134 +51,134 @@ import org.jowidgets.spi.widgets.IToolBarButtonSpi;
 
 public class ToolBarButtonImpl extends ToolBarButtonSpiWrapper implements IToolBarButton, IActionWidget {
 
-	private final IToolBar parent;
-	private final IItemModelListener modelListener;
-	private final ToolBarItemDiposableDelegate disposableDelegate;
+    private final IToolBar parent;
+    private final IItemModelListener modelListener;
+    private final ToolBarItemDiposableDelegate disposableDelegate;
 
-	private ActionWidgetSync actionWidgetSync;
-	private ActionExecuter actionExecuter;
-	private IAction action;
+    private ActionWidgetSync actionWidgetSync;
+    private ActionExecuter actionExecuter;
+    private IAction action;
 
-	public ToolBarButtonImpl(final IToolBar parent, final IToolBarButtonSpi toolBarButtonSpi, final IItemSetup setup) {
-		super(toolBarButtonSpi, new ItemModelBindingDelegate(
-			new ToolBarItemSpiInvoker(toolBarButtonSpi),
-			new ActionItemModelBuilder().build()));
+    public ToolBarButtonImpl(final IToolBar parent, final IToolBarButtonSpi toolBarButtonSpi, final IItemSetup setup) {
+        super(toolBarButtonSpi, new ItemModelBindingDelegate(
+            new ToolBarItemSpiInvoker(toolBarButtonSpi),
+            new ActionItemModelBuilder().build()));
 
-		this.parent = parent;
-		this.disposableDelegate = new ToolBarItemDiposableDelegate(this, getItemModelBindingDelegate());
+        this.parent = parent;
+        this.disposableDelegate = new ToolBarItemDiposableDelegate(this, getItemModelBindingDelegate());
 
-		setText(setup.getText());
-		setToolTipText(setup.getToolTipText());
-		setIcon(setup.getIcon());
+        setText(setup.getText());
+        setToolTipText(setup.getToolTipText());
+        setIcon(setup.getIcon());
 
-		this.modelListener = new IItemModelListener() {
-			@Override
-			public void itemChanged(final IItemModel item) {
-				if (getModel().getAction() != action) {
-					setActionValue(action, ActionStyle.OMIT_TEXT);
-				}
-			}
-		};
+        this.modelListener = new IItemModelListener() {
+            @Override
+            public void itemChanged(final IItemModel item) {
+                if (getModel().getAction() != action) {
+                    setActionValue(action, ActionStyle.OMIT_TEXT);
+                }
+            }
+        };
 
-		getModel().addItemModelListener(modelListener);
+        getModel().addItemModelListener(modelListener);
 
-		addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				if (actionExecuter != null) {
-					actionExecuter.execute();
-				}
-			}
-		});
+        addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                if (actionExecuter != null) {
+                    actionExecuter.execute();
+                }
+            }
+        });
 
-	}
+    }
 
-	@Override
-	public IToolBar getParent() {
-		return parent;
-	}
+    @Override
+    public IToolBar getParent() {
+        return parent;
+    }
 
-	@Override
-	public void setAction(final IAction action) {
-		setAction(action, ActionStyle.OMIT_TEXT);
-	}
+    @Override
+    public void setAction(final IAction action) {
+        setAction(action, ActionStyle.OMIT_TEXT);
+    }
 
-	@Override
-	public void setAction(final IAction action, final ActionStyle style) {
-		setActionValue(action, style);
-		getModel().removeItemModelListener(modelListener);
-		getModel().setAction(action);
-		getModel().addItemModelListener(modelListener);
-	}
+    @Override
+    public void setAction(final IAction action, final ActionStyle style) {
+        setActionValue(action, style);
+        getModel().removeItemModelListener(modelListener);
+        getModel().setAction(action);
+        getModel().addItemModelListener(modelListener);
+    }
 
-	private void setActionValue(final IAction action, final ActionStyle style) {
-		if (this.action != action) {
-			//dispose the old sync if exists
-			disposeActionWidgetSync();
+    private void setActionValue(final IAction action, final ActionStyle style) {
+        if (this.action != action) {
+            //dispose the old sync if exists
+            disposeActionWidgetSync();
 
-			actionWidgetSync = new ActionWidgetSync(action, style, this);
-			actionWidgetSync.setActive(true);
+            actionWidgetSync = new ActionWidgetSync(action, style, this);
+            actionWidgetSync.setActive(true);
 
-			actionExecuter = new ActionExecuter(action, this);
+            actionExecuter = new ActionExecuter(action, this);
 
-			this.action = action;
-		}
-	}
+            this.action = action;
+        }
+    }
 
-	@Override
-	public boolean isDisposed() {
-		return disposableDelegate.isDisposed();
-	}
+    @Override
+    public boolean isDisposed() {
+        return disposableDelegate.isDisposed();
+    }
 
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		disposableDelegate.addDisposeListener(listener);
-	}
+    @Override
+    public void addDisposeListener(final IDisposeListener listener) {
+        disposableDelegate.addDisposeListener(listener);
+    }
 
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		disposableDelegate.removeDisposeListener(listener);
-	}
+    @Override
+    public void removeDisposeListener(final IDisposeListener listener) {
+        disposableDelegate.removeDisposeListener(listener);
+    }
 
-	@Override
-	public void dispose() {
-		if (!isDisposed()) {
-			getModel().removeItemModelListener(modelListener);
-			disposeActionWidgetSync();
-			disposableDelegate.dispose();
-		}
-	}
+    @Override
+    public void dispose() {
+        if (!isDisposed()) {
+            getModel().removeItemModelListener(modelListener);
+            disposeActionWidgetSync();
+            disposableDelegate.dispose();
+        }
+    }
 
-	private void disposeActionWidgetSync() {
-		if (actionWidgetSync != null) {
-			actionWidgetSync.dispose();
-			actionWidgetSync = null;
-		}
-	}
+    private void disposeActionWidgetSync() {
+        if (actionWidgetSync != null) {
+            actionWidgetSync.dispose();
+            actionWidgetSync = null;
+        }
+    }
 
-	@Override
-	public IActionItemModel getModel() {
-		return (IActionItemModel) getItemModelBindingDelegate().getModel();
-	}
+    @Override
+    public IActionItemModel getModel() {
+        return (IActionItemModel) getItemModelBindingDelegate().getModel();
+    }
 
-	@Override
-	public void setModel(final IActionItemModel model) {
-		if (getModel() != null) {
-			getModel().removeItemModelListener(modelListener);
-		}
-		getItemModelBindingDelegate().setModel(model);
-		setActionValue(model.getAction(), ActionStyle.OMIT_TEXT);
-		model.addItemModelListener(modelListener);
-	}
+    @Override
+    public void setModel(final IActionItemModel model) {
+        if (getModel() != null) {
+            getModel().removeItemModelListener(modelListener);
+        }
+        getItemModelBindingDelegate().setModel(model);
+        setActionValue(model.getAction(), ActionStyle.OMIT_TEXT);
+        model.addItemModelListener(modelListener);
+    }
 
-	@Override
-	public void setModel(final IToolBarItemModel model) {
-		if (model instanceof IActionItemModel) {
-			setModel((IActionItemModel) model);
-		}
-		else {
-			throw new IllegalArgumentException("Model type '" + IActionItemModel.class.getName() + "' expected");
-		}
-	}
+    @Override
+    public void setModel(final IToolBarItemModel model) {
+        if (model instanceof IActionItemModel) {
+            setModel((IActionItemModel) model);
+        }
+        else {
+            throw new IllegalArgumentException("Model type '" + IActionItemModel.class.getName() + "' expected");
+        }
+    }
 
 }

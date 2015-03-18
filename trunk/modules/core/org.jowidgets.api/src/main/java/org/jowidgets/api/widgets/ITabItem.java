@@ -33,17 +33,17 @@ import org.jowidgets.common.widgets.ITabItemCommon;
 
 public interface ITabItem extends IItem, IContainer, ITabItemObservable, ITabItemCommon {
 
-	boolean isDetached();
+    boolean isDetached();
 
-	IPopupMenu createTabPopupMenu();
+    IPopupMenu createTabPopupMenu();
 
-	@Override
-	ITabFolder getParent();
+    @Override
+    ITabFolder getParent();
 
-	void setParent(ITabFolder folder);
+    void setParent(ITabFolder folder);
 
-	void select();
+    void select();
 
-	boolean isSelected();
+    boolean isSelected();
 
 }

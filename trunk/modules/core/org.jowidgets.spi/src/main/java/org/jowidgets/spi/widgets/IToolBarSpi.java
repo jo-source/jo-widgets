@@ -32,16 +32,16 @@ import org.jowidgets.common.widgets.IToolBarCommon;
 
 public interface IToolBarSpi extends IControlSpi, IToolBarCommon {
 
-	void remove(int index);
+    void remove(int index);
 
-	IToolBarButtonSpi addToolBarButton(Integer index);
+    IToolBarButtonSpi addToolBarButton(Integer index);
 
-	IToolBarToggleButtonSpi addToolBarToggleButton(Integer index);
+    IToolBarToggleButtonSpi addToolBarToggleButton(Integer index);
 
-	IToolBarPopupButtonSpi addToolBarPopupButton(Integer index);
+    IToolBarPopupButtonSpi addToolBarPopupButton(Integer index);
 
-	IToolBarContainerItemSpi addToolBarContainer(Integer index);
+    IToolBarContainerItemSpi addToolBarContainer(Integer index);
 
-	IToolBarItemSpi addSeparator(Integer index);
+    IToolBarItemSpi addSeparator(Integer index);
 
 }

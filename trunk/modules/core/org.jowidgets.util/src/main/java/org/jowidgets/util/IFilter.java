@@ -30,6 +30,6 @@ package org.jowidgets.util;
 
 public interface IFilter<VALUE_TYPE> {
 
-	boolean accept(VALUE_TYPE value);
+    boolean accept(VALUE_TYPE value);
 
 }

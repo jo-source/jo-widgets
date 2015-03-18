@@ -36,16 +36,16 @@ import org.jowidgets.tools.toolkit.AbstractToolkitInterceptorHolder;
 
 public final class DownloadToolkitInterceptorHolder extends AbstractToolkitInterceptorHolder {
 
-	@Override
-	protected IToolkitInterceptor createToolkitInterceptor() {
-		return new DownloadToolkitInterceptor();
-	}
+    @Override
+    protected IToolkitInterceptor createToolkitInterceptor() {
+        return new DownloadToolkitInterceptor();
+    }
 
-	private static final class DownloadToolkitInterceptor implements IToolkitInterceptor {
-		@Override
-		public void onToolkitCreate(final IToolkit toolkit) {
-			final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
-			widgetFactory.register(IDownloadButtonBluePrint.class, new DownloadButtonFactory());
-		}
-	}
+    private static final class DownloadToolkitInterceptor implements IToolkitInterceptor {
+        @Override
+        public void onToolkitCreate(final IToolkit toolkit) {
+            final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
+            widgetFactory.register(IDownloadButtonBluePrint.class, new DownloadButtonFactory());
+        }
+    }
 }

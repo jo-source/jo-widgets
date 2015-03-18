@@ -34,38 +34,38 @@ import org.jowidgets.spi.widgets.IInputControlSpi;
 
 public abstract class AbstractInputControlSpiWrapper extends AbstractControlSpiWrapper implements IInputControlCommon {
 
-	public AbstractInputControlSpiWrapper(final IInputControlSpi widget) {
-		super(widget);
-	}
+    public AbstractInputControlSpiWrapper(final IInputControlSpi widget) {
+        super(widget);
+    }
 
-	@Override
-	public IInputControlSpi getWidget() {
-		return (IInputControlSpi) super.getWidget();
-	}
+    @Override
+    public IInputControlSpi getWidget() {
+        return (IInputControlSpi) super.getWidget();
+    }
 
-	@Override
-	public void addInputListener(final IInputListener listener) {
-		getWidget().addInputListener(listener);
-	}
+    @Override
+    public void addInputListener(final IInputListener listener) {
+        getWidget().addInputListener(listener);
+    }
 
-	@Override
-	public void removeInputListener(final IInputListener listener) {
-		getWidget().removeInputListener(listener);
-	}
+    @Override
+    public void removeInputListener(final IInputListener listener) {
+        getWidget().removeInputListener(listener);
+    }
 
-	@Override
-	public void setEditable(final boolean editable) {
-		getWidget().setEditable(editable);
-	}
+    @Override
+    public void setEditable(final boolean editable) {
+        getWidget().setEditable(editable);
+    }
 
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		getWidget().setLayoutConstraints(layoutConstraints);
-	}
+    @Override
+    public void setLayoutConstraints(final Object layoutConstraints) {
+        getWidget().setLayoutConstraints(layoutConstraints);
+    }
 
-	@Override
-	public Object getLayoutConstraints() {
-		return getWidget().getLayoutConstraints();
-	}
+    @Override
+    public Object getLayoutConstraints() {
+        return getWidget().getLayoutConstraints();
+    }
 
 }

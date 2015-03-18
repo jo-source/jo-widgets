@@ -34,15 +34,15 @@ import org.jowidgets.util.IObservableValue;
 
 public interface IInputFieldSetup<INPUT_TYPE> extends IInputComponentSetup<INPUT_TYPE>, ITextFieldSetupCommon {
 
-	@Mandatory
-	Object getConverter();
+    @Mandatory
+    Object getConverter();
 
-	IObservableValue<INPUT_TYPE> getObservableValue();
+    IObservableValue<INPUT_TYPE> getObservableValue();
 
-	Markup getMarkup();
+    Markup getMarkup();
 
-	Integer getFontSize();
+    Integer getFontSize();
 
-	String getFontName();
+    String getFontName();
 
 }

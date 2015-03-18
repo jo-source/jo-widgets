@@ -44,48 +44,48 @@ import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 
 final class SwtGoogleEarthWidget extends ControlWrapper implements IMapWidget {
 
-	private final IMap map;
+    private final IMap map;
 
-	SwtGoogleEarthWidget(final Composite parent, final IMapWidgetBlueprint descriptor, final String apiKey) {
-		super(Toolkit.getWidgetWrapperFactory().createComposite(new GoogleEarth(parent, apiKey)));
-		map = (IMap) getWidget().getUiReference();
-		VisibiliySettingsInvoker.setVisibility(descriptor, this);
-		ColorSettingsInvoker.setColors(descriptor, this);
-	}
+    SwtGoogleEarthWidget(final Composite parent, final IMapWidgetBlueprint descriptor, final String apiKey) {
+        super(Toolkit.getWidgetWrapperFactory().createComposite(new GoogleEarth(parent, apiKey)));
+        map = (IMap) getWidget().getUiReference();
+        VisibiliySettingsInvoker.setVisibility(descriptor, this);
+        ColorSettingsInvoker.setColors(descriptor, this);
+    }
 
-	@Override
-	public void setLanguage(final String language) {
-		map.setLanguage(language);
-	}
+    @Override
+    public void setLanguage(final String language) {
+        map.setLanguage(language);
+    }
 
-	@Override
-	public void initialize(final IAvailableCallback callback) {
-		map.initialize(callback);
-	}
+    @Override
+    public void initialize(final IAvailableCallback callback) {
+        map.initialize(callback);
+    }
 
-	@Override
-	public boolean isInitialized() {
-		return map.isInitialized();
-	}
+    @Override
+    public boolean isInitialized() {
+        return map.isInitialized();
+    }
 
-	@Override
-	public boolean isAvailable() {
-		return map.isAvailable();
-	}
+    @Override
+    public boolean isAvailable() {
+        return map.isAvailable();
+    }
 
-	@Override
-	public void addViewChangeListener(final IViewChangeListener listener) {
-		map.addViewChangeListener(listener);
-	}
+    @Override
+    public void addViewChangeListener(final IViewChangeListener listener) {
+        map.addViewChangeListener(listener);
+    }
 
-	@Override
-	public boolean removeViewChangeListener(final IViewChangeListener listener) {
-		return map.removeViewChangeListener(listener);
-	}
+    @Override
+    public boolean removeViewChangeListener(final IViewChangeListener listener) {
+        return map.removeViewChangeListener(listener);
+    }
 
-	@Override
-	public Set<Class<?>> getSupportedDesignationClasses() {
-		return map.getSupportedDesignationClasses();
-	}
+    @Override
+    public Set<Class<?>> getSupportedDesignationClasses() {
+        return map.getSupportedDesignationClasses();
+    }
 
 }

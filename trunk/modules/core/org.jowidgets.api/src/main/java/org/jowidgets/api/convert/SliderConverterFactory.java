@@ -32,59 +32,59 @@ import org.jowidgets.api.toolkit.Toolkit;
 
 public final class SliderConverterFactory {
 
-	private SliderConverterFactory() {}
+    private SliderConverterFactory() {}
 
-	public static ISliderConverterFactory getInstance() {
-		return Toolkit.getSliderConverterFactory();
-	}
+    public static ISliderConverterFactory getInstance() {
+        return Toolkit.getSliderConverterFactory();
+    }
 
-	public static <VALUE_TYPE extends Number> ILinearSliderConverterBuilder<VALUE_TYPE> linearConverterBuilder() {
-		return getInstance().linearConverterBuilder();
-	}
+    public static <VALUE_TYPE extends Number> ILinearSliderConverterBuilder<VALUE_TYPE> linearConverterBuilder() {
+        return getInstance().linearConverterBuilder();
+    }
 
-	public static <VALUE_TYPE extends Number> ISliderViewerConverter<VALUE_TYPE> linearConverter(final VALUE_TYPE max) {
-		return getInstance().linearConverter(max);
-	}
+    public static <VALUE_TYPE extends Number> ISliderViewerConverter<VALUE_TYPE> linearConverter(final VALUE_TYPE max) {
+        return getInstance().linearConverter(max);
+    }
 
-	public static <VALUE_TYPE extends Number> ISliderViewerConverter<VALUE_TYPE> linearConverter(
-		final VALUE_TYPE min,
-		final VALUE_TYPE max) {
-		return getInstance().linearConverter(min, max);
-	}
+    public static <VALUE_TYPE extends Number> ISliderViewerConverter<VALUE_TYPE> linearConverter(
+        final VALUE_TYPE min,
+        final VALUE_TYPE max) {
+        return getInstance().linearConverter(min, max);
+    }
 
-	public static ISliderViewerConverter<Double> linearConverter() {
-		return getInstance().linearConverter();
-	}
+    public static ISliderViewerConverter<Double> linearConverter() {
+        return getInstance().linearConverter();
+    }
 
-	public static ISliderViewerConverter<Double> linearConverter(final double max) {
-		return getInstance().linearConverter(max);
-	}
+    public static ISliderViewerConverter<Double> linearConverter(final double max) {
+        return getInstance().linearConverter(max);
+    }
 
-	public static ISliderViewerConverter<Double> linearConverter(final double min, final double max) {
-		return getInstance().linearConverter(min, max);
-	}
+    public static ISliderViewerConverter<Double> linearConverter(final double min, final double max) {
+        return getInstance().linearConverter(min, max);
+    }
 
-	public static ISliderViewerConverter<Float> linearConverter(final float max) {
-		return getInstance().linearConverter(max);
-	}
+    public static ISliderViewerConverter<Float> linearConverter(final float max) {
+        return getInstance().linearConverter(max);
+    }
 
-	public static ISliderViewerConverter<Float> linearConverter(final float min, final float max) {
-		return getInstance().linearConverter(min, max);
-	}
+    public static ISliderViewerConverter<Float> linearConverter(final float min, final float max) {
+        return getInstance().linearConverter(min, max);
+    }
 
-	public static ISliderViewerConverter<Integer> linearConverter(final int max) {
-		return getInstance().linearConverter(max);
-	}
+    public static ISliderViewerConverter<Integer> linearConverter(final int max) {
+        return getInstance().linearConverter(max);
+    }
 
-	public static ISliderViewerConverter<Integer> linearConverter(final int min, final int max) {
-		return getInstance().linearConverter(min, max);
-	}
+    public static ISliderViewerConverter<Integer> linearConverter(final int min, final int max) {
+        return getInstance().linearConverter(min, max);
+    }
 
-	public static ISliderViewerConverter<Long> linearConverter(final long max) {
-		return getInstance().linearConverter(max);
-	}
+    public static ISliderViewerConverter<Long> linearConverter(final long max) {
+        return getInstance().linearConverter(max);
+    }
 
-	public static ISliderViewerConverter<Long> linearConverter(final long min, final long max) {
-		return getInstance().linearConverter(min, max);
-	}
+    public static ISliderViewerConverter<Long> linearConverter(final long min, final long max) {
+        return getInstance().linearConverter(min, max);
+    }
 }

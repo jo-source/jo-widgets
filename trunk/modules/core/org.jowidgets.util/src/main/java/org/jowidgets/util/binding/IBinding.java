@@ -30,41 +30,41 @@ package org.jowidgets.util.binding;
 
 public interface IBinding {
 
-	/**
-	 * Sets the binding state
-	 * 
-	 * @param bind If true, the referenced values will be bound, if false they will be unbound
-	 */
-	void setBindingState(boolean bind);
+    /**
+     * Sets the binding state
+     * 
+     * @param bind If true, the referenced values will be bound, if false they will be unbound
+     */
+    void setBindingState(boolean bind);
 
-	/**
-	 * Gets the binding state
-	 * 
-	 * @return True if bound, false otherwise
-	 */
-	boolean isBound();
+    /**
+     * Gets the binding state
+     * 
+     * @return True if bound, false otherwise
+     */
+    boolean isBound();
 
-	/**
-	 * Unbinds the bound values.
-	 * 
-	 * After that, the observables are no longer bound but still referenced to bind them again later
-	 */
-	void unbind();
+    /**
+     * Unbinds the bound values.
+     * 
+     * After that, the observables are no longer bound but still referenced to bind them again later
+     */
+    void unbind();
 
-	/**
-	 * Binds the referenced values. This this only necessary if the values was unbound before using the unbind() method
-	 */
-	void bind();
+    /**
+     * Binds the referenced values. This this only necessary if the values was unbound before using the unbind() method
+     */
+    void bind();
 
-	/**
-	 * @return True if the binding is disposed, false otherwise
-	 */
-	boolean isDisposed();
+    /**
+     * @return True if the binding is disposed, false otherwise
+     */
+    boolean isDisposed();
 
-	/**
-	 * Disposes the binding. After that, the observables are no longer bound and referenced.
-	 * Using the binding is no longer possible.
-	 */
-	void dispose();
+    /**
+     * Disposes the binding. After that, the observables are no longer bound and referenced.
+     * Using the binding is no longer possible.
+     */
+    void dispose();
 
 }

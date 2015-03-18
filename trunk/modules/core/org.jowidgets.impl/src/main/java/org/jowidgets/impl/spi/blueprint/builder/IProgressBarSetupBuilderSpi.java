@@ -30,6 +30,6 @@ package org.jowidgets.impl.spi.blueprint.builder;
 import org.jowidgets.common.widgets.builder.IProgressBarSetupBuilderCommon;
 
 public interface IProgressBarSetupBuilderSpi<INSTANCE_TYPE extends IProgressBarSetupBuilderSpi<?>> extends
-		IProgressBarSetupBuilderCommon<INSTANCE_TYPE> {
+        IProgressBarSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

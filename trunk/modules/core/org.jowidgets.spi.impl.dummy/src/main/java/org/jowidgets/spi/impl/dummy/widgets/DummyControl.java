@@ -35,43 +35,43 @@ import org.jowidgets.spi.widgets.IControlSpi;
 
 public class DummyControl extends DummyComponent implements IControlSpi {
 
-	public DummyControl(final UIDComponent component) {
-		super(component);
-	}
+    public DummyControl(final UIDComponent component) {
+        super(component);
+    }
 
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		getUiReference().setLayoutConstraints(layoutConstraints);
-	}
+    @Override
+    public void setLayoutConstraints(final Object layoutConstraints) {
+        getUiReference().setLayoutConstraints(layoutConstraints);
+    }
 
-	@Override
-	public Object getLayoutConstraints() {
-		return getUiReference().getLayoutConstraints();
-	}
+    @Override
+    public Object getLayoutConstraints() {
+        return getUiReference().getLayoutConstraints();
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		return getUiReference().getMinSize();
-	}
+    @Override
+    public Dimension getMinSize() {
+        return getUiReference().getMinSize();
+    }
 
-	@Override
-	public Dimension getPreferredSize() {
-		return getUiReference().getPreferredSize();
-	}
+    @Override
+    public Dimension getPreferredSize() {
+        return getUiReference().getPreferredSize();
+    }
 
-	@Override
-	public Dimension getMaxSize() {
-		return getUiReference().getMaxSize();
-	}
+    @Override
+    public Dimension getMaxSize() {
+        return getUiReference().getMaxSize();
+    }
 
-	@Override
-	public IDragSourceSpi getDragSource() {
-		return getUiReference().getDragSource();
-	}
+    @Override
+    public IDragSourceSpi getDragSource() {
+        return getUiReference().getDragSource();
+    }
 
-	@Override
-	public IDropTargetSpi getDropTarget() {
-		return getUiReference().getDropTarget();
-	}
+    @Override
+    public IDropTargetSpi getDropTarget() {
+        return getUiReference().getDropTarget();
+    }
 
 }

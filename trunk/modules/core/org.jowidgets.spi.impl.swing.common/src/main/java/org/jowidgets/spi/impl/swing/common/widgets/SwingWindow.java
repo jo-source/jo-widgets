@@ -48,141 +48,141 @@ import org.jowidgets.spi.widgets.IWindowSpi;
 
 public class SwingWindow extends SwingContainer implements IWindowSpi {
 
-	private final WindowObservable windowObservableDelegate;
+    private final WindowObservable windowObservableDelegate;
 
-	public SwingWindow(final IGenericWidgetFactory factory, final Window window, final boolean closeable) {
-		super(factory, window);
+    public SwingWindow(final IGenericWidgetFactory factory, final Window window, final boolean closeable) {
+        super(factory, window);
 
-		this.windowObservableDelegate = new WindowObservable();
+        this.windowObservableDelegate = new WindowObservable();
 
-		getUiReference().addWindowListener(new WindowListener() {
+        getUiReference().addWindowListener(new WindowListener() {
 
-			@Override
-			public void windowActivated(final WindowEvent e) {
-				windowObservableDelegate.fireWindowActivated();
-			}
+            @Override
+            public void windowActivated(final WindowEvent e) {
+                windowObservableDelegate.fireWindowActivated();
+            }
 
-			@Override
-			public void windowDeactivated(final WindowEvent e) {
-				windowObservableDelegate.fireWindowDeactivated();
-			}
+            @Override
+            public void windowDeactivated(final WindowEvent e) {
+                windowObservableDelegate.fireWindowDeactivated();
+            }
 
-			@Override
-			public void windowIconified(final WindowEvent e) {
-				windowObservableDelegate.fireWindowIconified();
-			}
+            @Override
+            public void windowIconified(final WindowEvent e) {
+                windowObservableDelegate.fireWindowIconified();
+            }
 
-			@Override
-			public void windowDeiconified(final WindowEvent e) {
-				windowObservableDelegate.fireWindowDeiconified();
-			}
+            @Override
+            public void windowDeiconified(final WindowEvent e) {
+                windowObservableDelegate.fireWindowDeiconified();
+            }
 
-			@Override
-			public void windowClosed(final WindowEvent e) {}
+            @Override
+            public void windowClosed(final WindowEvent e) {}
 
-			@Override
-			public void windowClosing(final WindowEvent e) {
-				final boolean veto = windowObservableDelegate.fireWindowClosing();
-				if (!veto && closeable) {
-					setVisible(false);
-				}
-			}
+            @Override
+            public void windowClosing(final WindowEvent e) {
+                final boolean veto = windowObservableDelegate.fireWindowClosing();
+                if (!veto && closeable) {
+                    setVisible(false);
+                }
+            }
 
-			@Override
-			public void windowOpened(final WindowEvent e) {}
+            @Override
+            public void windowOpened(final WindowEvent e) {}
 
-		});
-	}
+        });
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		final boolean wasVisible = isVisible();
-		super.setVisible(visible);
-		if (wasVisible && !visible) {
-			windowObservableDelegate.fireWindowClosed();
-		}
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        final boolean wasVisible = isVisible();
+        super.setVisible(visible);
+        if (wasVisible && !visible) {
+            windowObservableDelegate.fireWindowClosed();
+        }
+    }
 
-	@Override
-	public Window getUiReference() {
-		return (Window) super.getUiReference();
-	}
+    @Override
+    public Window getUiReference() {
+        return (Window) super.getUiReference();
+    }
 
-	@Override
-	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
-		if (!getUiReference().isDisplayable()) {
-			getUiReference().addNotify();
-		}
-		return super.computeDecoratedSize(clientAreaSize);
-	}
+    @Override
+    public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+        if (!getUiReference().isDisplayable()) {
+            getUiReference().addNotify();
+        }
+        return super.computeDecoratedSize(clientAreaSize);
+    }
 
-	@Override
-	public void pack() {
-		getUiReference().pack();
-	}
+    @Override
+    public void pack() {
+        getUiReference().pack();
+    }
 
-	@Override
-	public final void setPosition(final Position position) {
-		getUiReference().setLocation(PositionConvert.convert(position));
-	}
+    @Override
+    public final void setPosition(final Position position) {
+        getUiReference().setLocation(PositionConvert.convert(position));
+    }
 
-	@Override
-	public final Position getPosition() {
-		return PositionConvert.convert(getUiReference().getLocation());
-	}
+    @Override
+    public final Position getPosition() {
+        return PositionConvert.convert(getUiReference().getLocation());
+    }
 
-	public void setMinSize(final Dimension minSize) {
-		getUiReference().setMinimumSize(DimensionConvert.convert(minSize));
-	}
+    public void setMinSize(final Dimension minSize) {
+        getUiReference().setMinimumSize(DimensionConvert.convert(minSize));
+    }
 
-	@Override
-	public final void setSize(final Dimension size) {
-		getUiReference().setSize(DimensionConvert.convert(size));
-	}
+    @Override
+    public final void setSize(final Dimension size) {
+        getUiReference().setSize(DimensionConvert.convert(size));
+    }
 
-	@Override
-	public final Dimension getSize() {
-		return DimensionConvert.convert(getUiReference().getSize());
-	}
+    @Override
+    public final Dimension getSize() {
+        return DimensionConvert.convert(getUiReference().getSize());
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IDisplayCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
-		final DESCRIPTOR_TYPE descriptor) {
-		return getGenericWidgetFactory().create(getUiReference(), descriptor);
-	}
+    @Override
+    public <WIDGET_TYPE extends IDisplayCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
+        final DESCRIPTOR_TYPE descriptor) {
+        return getGenericWidgetFactory().create(getUiReference(), descriptor);
+    }
 
-	protected void setIcon(final IImageConstant icon, final SwingImageRegistry imageRegistry) {
-		getUiReference().setIconImage(imageRegistry.getImage(icon));
-	}
+    protected void setIcon(final IImageConstant icon, final SwingImageRegistry imageRegistry) {
+        getUiReference().setIconImage(imageRegistry.getImage(icon));
+    }
 
-	@Override
-	public Rectangle getParentBounds() {
-		Dimension parentSize;
-		Position parentPosition = new Position(0, 0);
-		if (getUiReference().getParent() != null) {
-			parentPosition = PositionConvert.convert(getUiReference().getParent().getLocation());
-			parentSize = DimensionConvert.convert(getUiReference().getParent().getSize());
-		}
-		else {
-			parentSize = DimensionConvert.convert(Toolkit.getDefaultToolkit().getScreenSize());
-		}
-		return new Rectangle(parentPosition, parentSize);
-	}
+    @Override
+    public Rectangle getParentBounds() {
+        Dimension parentSize;
+        Position parentPosition = new Position(0, 0);
+        if (getUiReference().getParent() != null) {
+            parentPosition = PositionConvert.convert(getUiReference().getParent().getLocation());
+            parentSize = DimensionConvert.convert(getUiReference().getParent().getSize());
+        }
+        else {
+            parentSize = DimensionConvert.convert(Toolkit.getDefaultToolkit().getScreenSize());
+        }
+        return new Rectangle(parentPosition, parentSize);
+    }
 
-	@Override
-	public void addWindowListener(final IWindowListener listener) {
-		windowObservableDelegate.addWindowListener(listener);
-	}
+    @Override
+    public void addWindowListener(final IWindowListener listener) {
+        windowObservableDelegate.addWindowListener(listener);
+    }
 
-	@Override
-	public void removeWindowListener(final IWindowListener listener) {
-		windowObservableDelegate.removeWindowListener(listener);
-	}
+    @Override
+    public void removeWindowListener(final IWindowListener listener) {
+        windowObservableDelegate.removeWindowListener(listener);
+    }
 
-	@Override
-	public void dispose() {
-		setVisible(false);
-		getUiReference().dispose();
-	}
+    @Override
+    public void dispose() {
+        setVisible(false);
+        getUiReference().dispose();
+    }
 
 }

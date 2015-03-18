@@ -37,36 +37,36 @@ import org.jowidgets.util.Assert;
 
 public final class SingleTypeTransfer<SINGLE_JAVA_TYPE> implements ITransferable {
 
-	@SuppressWarnings("rawtypes")
-	private final Collection supportedTypes;
-	private final SINGLE_JAVA_TYPE data;
+    @SuppressWarnings("rawtypes")
+    private final Collection supportedTypes;
+    private final SINGLE_JAVA_TYPE data;
 
-	public SingleTypeTransfer(final Class<SINGLE_JAVA_TYPE> javaType, final SINGLE_JAVA_TYPE data) {
-		this(new TransferType<SINGLE_JAVA_TYPE>(javaType), data);
-	}
+    public SingleTypeTransfer(final Class<SINGLE_JAVA_TYPE> javaType, final SINGLE_JAVA_TYPE data) {
+        this(new TransferType<SINGLE_JAVA_TYPE>(javaType), data);
+    }
 
-	public SingleTypeTransfer(final TransferType<SINGLE_JAVA_TYPE> transferType, final SINGLE_JAVA_TYPE data) {
-		Assert.paramNotNull(transferType, "transferType");
-		this.supportedTypes = Collections.singleton(transferType);
-		this.data = data;
-	}
+    public SingleTypeTransfer(final TransferType<SINGLE_JAVA_TYPE> transferType, final SINGLE_JAVA_TYPE data) {
+        Assert.paramNotNull(transferType, "transferType");
+        this.supportedTypes = Collections.singleton(transferType);
+        this.data = data;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public Collection<TransferType<?>> getSupportedTypes() {
-		return supportedTypes;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public Collection<TransferType<?>> getSupportedTypes() {
+        return supportedTypes;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <JAVA_TYPE> JAVA_TYPE getData(final TransferType<JAVA_TYPE> type) {
-		Assert.paramNotNull(type, "type");
-		if (supportedTypes.contains(type)) {
-			return (JAVA_TYPE) data;
-		}
-		else {
-			return null;
-		}
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public <JAVA_TYPE> JAVA_TYPE getData(final TransferType<JAVA_TYPE> type) {
+        Assert.paramNotNull(type, "type");
+        if (supportedTypes.contains(type)) {
+            return (JAVA_TYPE) data;
+        }
+        else {
+            return null;
+        }
+    }
 
 }

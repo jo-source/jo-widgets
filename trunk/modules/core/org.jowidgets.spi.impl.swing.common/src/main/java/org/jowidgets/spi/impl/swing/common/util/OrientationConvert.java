@@ -34,22 +34,22 @@ import org.jowidgets.util.Assert;
 
 public final class OrientationConvert {
 
-	private OrientationConvert() {};
+    private OrientationConvert() {};
 
-	public static int convert(final Orientation orientation) {
-		Assert.paramNotNull(orientation, "orientation");
+    public static int convert(final Orientation orientation) {
+        Assert.paramNotNull(orientation, "orientation");
 
-		if (Orientation.HORIZONTAL.equals(orientation)) {
-			return SwingConstants.HORIZONTAL;
-		}
-		else if (Orientation.VERTICAL.equals(orientation)) {
-			return SwingConstants.VERTICAL;
-		}
+        if (Orientation.HORIZONTAL.equals(orientation)) {
+            return SwingConstants.HORIZONTAL;
+        }
+        else if (Orientation.VERTICAL.equals(orientation)) {
+            return SwingConstants.VERTICAL;
+        }
 
-		else {
-			throw new IllegalArgumentException("Orientation '" + orientation + "' is unknown");
-		}
+        else {
+            throw new IllegalArgumentException("Orientation '" + orientation + "' is unknown");
+        }
 
-	}
+    }
 
 }

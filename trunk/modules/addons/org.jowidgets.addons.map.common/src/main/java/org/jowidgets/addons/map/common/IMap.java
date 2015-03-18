@@ -32,18 +32,18 @@ import java.util.Set;
 
 public interface IMap {
 
-	void setLanguage(String language);
+    void setLanguage(String language);
 
-	void initialize(IAvailableCallback callback);
+    void initialize(IAvailableCallback callback);
 
-	boolean isInitialized();
+    boolean isInitialized();
 
-	boolean isAvailable();
+    boolean isAvailable();
 
-	void addViewChangeListener(IViewChangeListener listener);
+    void addViewChangeListener(IViewChangeListener listener);
 
-	boolean removeViewChangeListener(IViewChangeListener listener);
+    boolean removeViewChangeListener(IViewChangeListener listener);
 
-	Set<Class<?>> getSupportedDesignationClasses();
+    Set<Class<?>> getSupportedDesignationClasses();
 
 }

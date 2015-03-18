@@ -28,8 +28,7 @@
 
 package org.jowidgets.common.widgets.builder;
 
-
 public interface ICalendarSetupBuilderCommon<INSTANCE_TYPE extends ICalendarSetupBuilderCommon<?>> extends
-		IComponentSetupBuilderCommon<INSTANCE_TYPE> {
+        IComponentSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

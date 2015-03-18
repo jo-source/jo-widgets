@@ -29,8 +29,8 @@ package org.jowidgets.common.types;
 
 public enum Orientation {
 
-	HORIZONTAL,
+    HORIZONTAL,
 
-	VERTICAL;
+    VERTICAL;
 
 }

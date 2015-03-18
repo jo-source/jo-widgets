@@ -84,240 +84,240 @@ import org.jowidgets.util.Assert;
 
 public class BasicSimpleBluePrintFactory extends AbstractBluePrintFactory implements IBasicSimpleBluePrintFactory {
 
-	public BasicSimpleBluePrintFactory(
-		final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry,
-		final IDefaultsInitializerRegistry defaultInitializerRegistry) {
-		super(setupBuilderConvenienceRegistry, defaultInitializerRegistry);
-	}
+    public BasicSimpleBluePrintFactory(
+        final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry,
+        final IDefaultsInitializerRegistry defaultInitializerRegistry) {
+        super(setupBuilderConvenienceRegistry, defaultInitializerRegistry);
+    }
 
-	@Override
-	public final IFrameBluePrint frame() {
-		return createProxy(IFrameBluePrint.class);
-	}
+    @Override
+    public final IFrameBluePrint frame() {
+        return createProxy(IFrameBluePrint.class);
+    }
 
-	@Override
-	public final IDialogBluePrint dialog() {
-		return createProxy(IDialogBluePrint.class);
-	}
+    @Override
+    public final IDialogBluePrint dialog() {
+        return createProxy(IDialogBluePrint.class);
+    }
 
-	@Override
-	public IPopupDialogBluePrint popupDialog() {
-		return createProxy(IPopupDialogBluePrint.class);
-	}
+    @Override
+    public IPopupDialogBluePrint popupDialog() {
+        return createProxy(IPopupDialogBluePrint.class);
+    }
 
-	@Override
-	public IFileChooserBluePrint fileChooser(final FileChooserType type) {
-		Assert.paramNotNull(type, "type");
-		final IFileChooserBluePrint result = createProxy(IFileChooserBluePrint.class);
-		result.setType(type);
-		return result;
-	}
+    @Override
+    public IFileChooserBluePrint fileChooser(final FileChooserType type) {
+        Assert.paramNotNull(type, "type");
+        final IFileChooserBluePrint result = createProxy(IFileChooserBluePrint.class);
+        result.setType(type);
+        return result;
+    }
 
-	@Override
-	public IDirectoryChooserBluePrint directoryChooser() {
-		return createProxy(IDirectoryChooserBluePrint.class);
-	}
+    @Override
+    public IDirectoryChooserBluePrint directoryChooser() {
+        return createProxy(IDirectoryChooserBluePrint.class);
+    }
 
-	@Override
-	public final ICompositeBluePrint composite() {
-		return createProxy(ICompositeBluePrint.class);
-	}
+    @Override
+    public final ICompositeBluePrint composite() {
+        return createProxy(ICompositeBluePrint.class);
+    }
 
-	@Override
-	public final IScrollCompositeBluePrint scrollComposite() {
-		return createProxy(IScrollCompositeBluePrint.class);
-	}
+    @Override
+    public final IScrollCompositeBluePrint scrollComposite() {
+        return createProxy(IScrollCompositeBluePrint.class);
+    }
 
-	@Override
-	public ISplitCompositeBluePrint splitComposite() {
-		return createProxy(ISplitCompositeBluePrint.class);
-	}
+    @Override
+    public ISplitCompositeBluePrint splitComposite() {
+        return createProxy(ISplitCompositeBluePrint.class);
+    }
 
-	@Override
-	public final ITextLabelBluePrint textLabel() {
-		return createProxy(ITextLabelBluePrint.class);
-	}
+    @Override
+    public final ITextLabelBluePrint textLabel() {
+        return createProxy(ITextLabelBluePrint.class);
+    }
 
-	@Override
-	public final IIconBluePrint icon() {
-		return createProxy(IIconBluePrint.class);
-	}
+    @Override
+    public final IIconBluePrint icon() {
+        return createProxy(IIconBluePrint.class);
+    }
 
-	@Override
-	public final ISeparatorBluePrint separator() {
-		return createProxy(ISeparatorBluePrint.class);
-	}
+    @Override
+    public final ISeparatorBluePrint separator() {
+        return createProxy(ISeparatorBluePrint.class);
+    }
 
-	@Override
-	public final ITextFieldBluePrint textField() {
-		return createProxy(ITextFieldBluePrint.class);
-	}
+    @Override
+    public final ITextFieldBluePrint textField() {
+        return createProxy(ITextFieldBluePrint.class);
+    }
 
-	@Override
-	public ITextAreaBluePrint textArea() {
-		return createProxy(ITextAreaBluePrint.class);
-	}
+    @Override
+    public ITextAreaBluePrint textArea() {
+        return createProxy(ITextAreaBluePrint.class);
+    }
 
-	@Override
-	public final IButtonBluePrint button() {
-		return createProxy(IButtonBluePrint.class);
-	}
+    @Override
+    public final IButtonBluePrint button() {
+        return createProxy(IButtonBluePrint.class);
+    }
 
-	@Override
-	public final ICheckBoxBluePrint checkBox() {
-		return createProxy(ICheckBoxBluePrint.class);
-	}
+    @Override
+    public final ICheckBoxBluePrint checkBox() {
+        return createProxy(ICheckBoxBluePrint.class);
+    }
 
-	@Override
-	public final IToggleButtonBluePrint toggleButton() {
-		return createProxy(IToggleButtonBluePrint.class);
-	}
+    @Override
+    public final IToggleButtonBluePrint toggleButton() {
+        return createProxy(IToggleButtonBluePrint.class);
+    }
 
-	@Override
-	public final <INPUT_TYPE> IComboBoxBluePrint<INPUT_TYPE> comboBox(final IConverter<INPUT_TYPE> converter) {
+    @Override
+    public final <INPUT_TYPE> IComboBoxBluePrint<INPUT_TYPE> comboBox(final IConverter<INPUT_TYPE> converter) {
 
-		final IComboBoxBluePrint<INPUT_TYPE> result = createProxy(IComboBoxBluePrint.class);
+        final IComboBoxBluePrint<INPUT_TYPE> result = createProxy(IComboBoxBluePrint.class);
 
-		return result.setObjectStringConverter(converter).setStringObjectConverter(converter);
-	}
+        return result.setObjectStringConverter(converter).setStringObjectConverter(converter);
+    }
 
-	@Override
-	public final <INPUT_TYPE> IComboBoxSelectionBluePrint<INPUT_TYPE> comboBoxSelection(
-		final IObjectStringConverter<INPUT_TYPE> objectStringConverter) {
+    @Override
+    public final <INPUT_TYPE> IComboBoxSelectionBluePrint<INPUT_TYPE> comboBoxSelection(
+        final IObjectStringConverter<INPUT_TYPE> objectStringConverter) {
 
-		final IComboBoxSelectionBluePrint<INPUT_TYPE> result = createProxy(IComboBoxSelectionBluePrint.class);
+        final IComboBoxSelectionBluePrint<INPUT_TYPE> result = createProxy(IComboBoxSelectionBluePrint.class);
 
-		return result.setObjectStringConverter(objectStringConverter);
-	}
+        return result.setObjectStringConverter(objectStringConverter);
+    }
 
-	@Override
-	public IActionMenuItemBluePrint menuItem() {
-		return createProxy(IActionMenuItemBluePrint.class);
-	}
+    @Override
+    public IActionMenuItemBluePrint menuItem() {
+        return createProxy(IActionMenuItemBluePrint.class);
+    }
 
-	@Override
-	public IRadioMenuItemBluePrint radioMenuItem() {
-		return createProxy(IRadioMenuItemBluePrint.class);
-	}
+    @Override
+    public IRadioMenuItemBluePrint radioMenuItem() {
+        return createProxy(IRadioMenuItemBluePrint.class);
+    }
 
-	@Override
-	public ICheckedMenuItemBluePrint checkedMenuItem() {
-		return createProxy(ICheckedMenuItemBluePrint.class);
-	}
+    @Override
+    public ICheckedMenuItemBluePrint checkedMenuItem() {
+        return createProxy(ICheckedMenuItemBluePrint.class);
+    }
 
-	@Override
-	public ISubMenuBluePrint subMenu() {
-		return createProxy(ISubMenuBluePrint.class);
-	}
+    @Override
+    public ISubMenuBluePrint subMenu() {
+        return createProxy(ISubMenuBluePrint.class);
+    }
 
-	@Override
-	public IMainMenuBluePrint mainMenu() {
-		return createProxy(IMainMenuBluePrint.class);
-	}
+    @Override
+    public IMainMenuBluePrint mainMenu() {
+        return createProxy(IMainMenuBluePrint.class);
+    }
 
-	@Override
-	public IToolBarBluePrint toolBar() {
-		return createProxy(IToolBarBluePrint.class);
-	}
+    @Override
+    public IToolBarBluePrint toolBar() {
+        return createProxy(IToolBarBluePrint.class);
+    }
 
-	@Override
-	public IToolBarButtonBluePrint toolBarButton() {
-		return createProxy(IToolBarButtonBluePrint.class);
-	}
+    @Override
+    public IToolBarButtonBluePrint toolBarButton() {
+        return createProxy(IToolBarButtonBluePrint.class);
+    }
 
-	@Override
-	public IToolBarToggleButtonBluePrint toolBarToggleButton() {
-		return createProxy(IToolBarToggleButtonBluePrint.class);
-	}
+    @Override
+    public IToolBarToggleButtonBluePrint toolBarToggleButton() {
+        return createProxy(IToolBarToggleButtonBluePrint.class);
+    }
 
-	@Override
-	public IToolBarPopupButtonBluePrint toolBarPopupButton() {
-		return createProxy(IToolBarPopupButtonBluePrint.class);
-	}
+    @Override
+    public IToolBarPopupButtonBluePrint toolBarPopupButton() {
+        return createProxy(IToolBarPopupButtonBluePrint.class);
+    }
 
-	@Override
-	public IToolBarMenuBluePrint toolBarMenu() {
-		return createProxy(IToolBarMenuBluePrint.class);
-	}
+    @Override
+    public IToolBarMenuBluePrint toolBarMenu() {
+        return createProxy(IToolBarMenuBluePrint.class);
+    }
 
-	@Override
-	public IToolBarContainerItemBluePrint toolBarContainerItem() {
-		return createProxy(IToolBarContainerItemBluePrint.class);
-	}
+    @Override
+    public IToolBarContainerItemBluePrint toolBarContainerItem() {
+        return createProxy(IToolBarContainerItemBluePrint.class);
+    }
 
-	@Override
-	public ISeparatorMenuItemBluePrint menuSeparator() {
-		return createProxy(ISeparatorMenuItemBluePrint.class);
-	}
+    @Override
+    public ISeparatorMenuItemBluePrint menuSeparator() {
+        return createProxy(ISeparatorMenuItemBluePrint.class);
+    }
 
-	@Override
-	public ISeparatorToolBarItemBluePrint toolBarSeparator() {
-		return createProxy(ISeparatorToolBarItemBluePrint.class);
-	}
+    @Override
+    public ISeparatorToolBarItemBluePrint toolBarSeparator() {
+        return createProxy(ISeparatorToolBarItemBluePrint.class);
+    }
 
-	@Override
-	public ITabFolderBluePrint tabFolder() {
-		return createProxy(ITabFolderBluePrint.class);
-	}
+    @Override
+    public ITabFolderBluePrint tabFolder() {
+        return createProxy(ITabFolderBluePrint.class);
+    }
 
-	@Override
-	public ITabItemBluePrint tabItem() {
-		return createProxy(ITabItemBluePrint.class);
-	}
+    @Override
+    public ITabItemBluePrint tabItem() {
+        return createProxy(ITabItemBluePrint.class);
+    }
 
-	@Override
-	public ITreeBluePrint tree() {
-		return createProxy(ITreeBluePrint.class);
-	}
+    @Override
+    public ITreeBluePrint tree() {
+        return createProxy(ITreeBluePrint.class);
+    }
 
-	@Override
-	public <ROOT_NODE_VALUE_TYPE> ITreeViewerBluePrint<ROOT_NODE_VALUE_TYPE> treeViewer(
-		final ITreeNodeModel<ROOT_NODE_VALUE_TYPE> model) {
-		final ITreeViewerBluePrint<ROOT_NODE_VALUE_TYPE> result = createProxy(ITreeViewerBluePrint.class);
-		result.setRootNodeModel(model);
-		return result;
-	}
+    @Override
+    public <ROOT_NODE_VALUE_TYPE> ITreeViewerBluePrint<ROOT_NODE_VALUE_TYPE> treeViewer(
+        final ITreeNodeModel<ROOT_NODE_VALUE_TYPE> model) {
+        final ITreeViewerBluePrint<ROOT_NODE_VALUE_TYPE> result = createProxy(ITreeViewerBluePrint.class);
+        result.setRootNodeModel(model);
+        return result;
+    }
 
-	@Override
-	public ITreeNodeBluePrint treeNode() {
-		return createProxy(ITreeNodeBluePrint.class);
-	}
+    @Override
+    public ITreeNodeBluePrint treeNode() {
+        return createProxy(ITreeNodeBluePrint.class);
+    }
 
-	@Override
-	public ITableBluePrint table(final ITableModel model) {
-		Assert.paramNotNull(model, "model");
-		return table(model, model);
-	}
+    @Override
+    public ITableBluePrint table(final ITableModel model) {
+        Assert.paramNotNull(model, "model");
+        return table(model, model);
+    }
 
-	@Override
-	public ITableBluePrint table(final ITableColumnModel columnModel, final ITableDataModel dataModel) {
-		Assert.paramNotNull(columnModel, "columnModel");
-		Assert.paramNotNull(dataModel, "dataModel");
-		final ITableBluePrint result = createProxy(ITableBluePrint.class);
-		result.setColumnModel(columnModel).setDataModel(dataModel);
-		return result;
-	}
+    @Override
+    public ITableBluePrint table(final ITableColumnModel columnModel, final ITableDataModel dataModel) {
+        Assert.paramNotNull(columnModel, "columnModel");
+        Assert.paramNotNull(dataModel, "dataModel");
+        final ITableBluePrint result = createProxy(ITableBluePrint.class);
+        result.setColumnModel(columnModel).setDataModel(dataModel);
+        return result;
+    }
 
-	@Override
-	public ICalendarBluePrint calendar() {
-		return createProxy(ICalendarBluePrint.class);
-	}
+    @Override
+    public ICalendarBluePrint calendar() {
+        return createProxy(ICalendarBluePrint.class);
+    }
 
-	@Override
-	public ISliderBluePrint slider() {
-		return createProxy(ISliderBluePrint.class);
-	}
+    @Override
+    public ISliderBluePrint slider() {
+        return createProxy(ISliderBluePrint.class);
+    }
 
-	@Override
-	public ICanvasBluePrint canvas() {
-		return createProxy(ICanvasBluePrint.class);
-	}
+    @Override
+    public ICanvasBluePrint canvas() {
+        return createProxy(ICanvasBluePrint.class);
+    }
 
-	@Override
-	public ILevelMeterBluePrint levelMeter(final ILevelMeterModel model) {
-		final ILevelMeterBluePrint result = createProxy(ILevelMeterBluePrint.class);
-		result.setModel(model);
-		return result;
-	}
+    @Override
+    public ILevelMeterBluePrint levelMeter(final ILevelMeterModel model) {
+        final ILevelMeterBluePrint result = createProxy(ILevelMeterBluePrint.class);
+        result.setModel(model);
+        return result;
+    }
 
 }

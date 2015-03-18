@@ -33,31 +33,31 @@ import org.jowidgets.common.widgets.controller.IActionObservable;
 
 public interface IPopupActionItemModel extends IToolBarItemModel, IActionObservable {
 
-	IAction getAction();
+    IAction getAction();
 
-	void setAction(IAction action);
+    void setAction(IAction action);
 
-	void actionPerformed();
+    void actionPerformed();
 
-	/**
-	 * Sets a popup menu for this tool bar popup button.
-	 * The popup menu will be shown, when the popup button is pressed.
-	 * 
-	 * @param menuModel
-	 *            The model of the popup menu or null, if no popup should be shown on popup events
-	 */
-	void setPopupMenu(IMenuModel popupMenu);
+    /**
+     * Sets a popup menu for this tool bar popup button.
+     * The popup menu will be shown, when the popup button is pressed.
+     * 
+     * @param menuModel
+     *            The model of the popup menu or null, if no popup should be shown on popup events
+     */
+    void setPopupMenu(IMenuModel popupMenu);
 
-	IMenuModel getPopupMenu();
+    IMenuModel getPopupMenu();
 
-	/**
-	 * Makes a deep copy of the item.
-	 * Registered listeners on items won't be copied.
-	 * The Action won't be cloned.
-	 * 
-	 * @return A new instance that is a clone of this instance
-	 */
-	@Override
-	IPopupActionItemModel createCopy();
+    /**
+     * Makes a deep copy of the item.
+     * Registered listeners on items won't be copied.
+     * The Action won't be cloned.
+     * 
+     * @return A new instance that is a clone of this instance
+     */
+    @Override
+    IPopupActionItemModel createCopy();
 
 }

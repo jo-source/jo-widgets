@@ -34,74 +34,74 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Event;
 
 final class SashOrientationUtil {
-	static final ISashOrientationUtil HORIZONTAL = new HorizontalSashCalculator();
-	static final ISashOrientationUtil VERTICAL = new VerticalSashCalculator();
+    static final ISashOrientationUtil HORIZONTAL = new HorizontalSashCalculator();
+    static final ISashOrientationUtil VERTICAL = new VerticalSashCalculator();
 
-	private SashOrientationUtil() {}
+    private SashOrientationUtil() {}
 
-	private static final class HorizontalSashCalculator implements ISashOrientationUtil {
+    private static final class HorizontalSashCalculator implements ISashOrientationUtil {
 
-		@Override
-		public int getPosition(final Rectangle bounds) {
-			return bounds.x;
-		}
+        @Override
+        public int getPosition(final Rectangle bounds) {
+            return bounds.x;
+        }
 
-		@Override
-		public int getSize(final Rectangle bounds) {
-			return bounds.width;
-		}
+        @Override
+        public int getSize(final Rectangle bounds) {
+            return bounds.width;
+        }
 
-		@Override
-		public int getSize(final Point size) {
-			return size.x;
-		}
+        @Override
+        public int getSize(final Point size) {
+            return size.x;
+        }
 
-		@Override
-		public Rectangle createBounds(final Rectangle parentArea, final int position, final int size) {
-			return new Rectangle(position, parentArea.y, size, parentArea.height);
-		}
+        @Override
+        public Rectangle createBounds(final Rectangle parentArea, final int position, final int size) {
+            return new Rectangle(position, parentArea.y, size, parentArea.height);
+        }
 
-		@Override
-		public int getEventPos(final Event event) {
-			return event.x;
-		}
+        @Override
+        public int getEventPos(final Event event) {
+            return event.x;
+        }
 
-		@Override
-		public int getOrientation() {
-			return SWT.HORIZONTAL;
-		}
-	}
+        @Override
+        public int getOrientation() {
+            return SWT.HORIZONTAL;
+        }
+    }
 
-	private static final class VerticalSashCalculator implements ISashOrientationUtil {
+    private static final class VerticalSashCalculator implements ISashOrientationUtil {
 
-		@Override
-		public int getPosition(final Rectangle bounds) {
-			return bounds.y;
-		}
+        @Override
+        public int getPosition(final Rectangle bounds) {
+            return bounds.y;
+        }
 
-		@Override
-		public int getSize(final Rectangle bounds) {
-			return bounds.height;
-		}
+        @Override
+        public int getSize(final Rectangle bounds) {
+            return bounds.height;
+        }
 
-		@Override
-		public int getSize(final Point size) {
-			return size.y;
-		}
+        @Override
+        public int getSize(final Point size) {
+            return size.y;
+        }
 
-		@Override
-		public Rectangle createBounds(final Rectangle parentArea, final int position, final int size) {
-			return new Rectangle(parentArea.x, position, parentArea.width, size);
-		}
+        @Override
+        public Rectangle createBounds(final Rectangle parentArea, final int position, final int size) {
+            return new Rectangle(parentArea.x, position, parentArea.width, size);
+        }
 
-		@Override
-		public int getEventPos(final Event event) {
-			return event.y;
-		}
+        @Override
+        public int getEventPos(final Event event) {
+            return event.y;
+        }
 
-		@Override
-		public int getOrientation() {
-			return SWT.VERTICAL;
-		}
-	}
+        @Override
+        public int getOrientation() {
+            return SWT.VERTICAL;
+        }
+    }
 }

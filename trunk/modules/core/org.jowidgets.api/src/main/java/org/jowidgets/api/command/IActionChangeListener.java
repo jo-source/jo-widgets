@@ -30,12 +30,12 @@ package org.jowidgets.api.command;
 
 public interface IActionChangeListener {
 
-	void textChanged();
+    void textChanged();
 
-	void toolTipTextChanged();
+    void toolTipTextChanged();
 
-	void iconChanged();
+    void iconChanged();
 
-	void enabledChanged();
+    void enabledChanged();
 
 }

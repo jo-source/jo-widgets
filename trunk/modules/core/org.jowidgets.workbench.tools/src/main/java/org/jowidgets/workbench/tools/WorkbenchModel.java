@@ -53,282 +53,282 @@ import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 
 public class WorkbenchModel implements IWorkbenchModel {
 
-	private final IWorkbenchModel model;
+    private final IWorkbenchModel model;
 
-	public WorkbenchModel() {
-		this(builder());
-	}
+    public WorkbenchModel() {
+        this(builder());
+    }
 
-	public WorkbenchModel(final IWorkbenchDescriptor descriptor) {
-		this(builder(descriptor));
-	}
+    public WorkbenchModel(final IWorkbenchDescriptor descriptor) {
+        this(builder(descriptor));
+    }
 
-	public WorkbenchModel(final String label) {
-		this(builder(label));
-	}
+    public WorkbenchModel(final String label) {
+        this(builder(label));
+    }
 
-	public WorkbenchModel(final String label, final IImageConstant icon) {
-		this(builder(label, icon));
-	}
+    public WorkbenchModel(final String label, final IImageConstant icon) {
+        this(builder(label, icon));
+    }
 
-	public WorkbenchModel(final IWorkbenchModelBuilder modelBuilder) {
-		super();
-		this.model = modelBuilder.build();
-	}
+    public WorkbenchModel(final IWorkbenchModelBuilder modelBuilder) {
+        super();
+        this.model = modelBuilder.build();
+    }
 
-	@Override
-	public final Dimension getInitialDimension() {
-		return model.getInitialDimension();
-	}
+    @Override
+    public final Dimension getInitialDimension() {
+        return model.getInitialDimension();
+    }
 
-	@Override
-	public boolean isInitialMaximized() {
-		return model.isInitialMaximized();
-	}
+    @Override
+    public boolean isInitialMaximized() {
+        return model.isInitialMaximized();
+    }
 
-	@Override
-	public boolean isDecorated() {
-		return model.isDecorated();
-	}
+    @Override
+    public boolean isDecorated() {
+        return model.isDecorated();
+    }
 
-	@Override
-	public final Position getInitialPosition() {
-		return model.getInitialPosition();
-	}
+    @Override
+    public final Position getInitialPosition() {
+        return model.getInitialPosition();
+    }
 
-	@Override
-	public final double getInitialSplitWeight() {
-		return model.getInitialSplitWeight();
-	}
+    @Override
+    public final double getInitialSplitWeight() {
+        return model.getInitialSplitWeight();
+    }
 
-	@Override
-	public final boolean hasApplicationNavigator() {
-		return model.hasApplicationNavigator();
-	}
+    @Override
+    public final boolean hasApplicationNavigator() {
+        return model.hasApplicationNavigator();
+    }
 
-	@Override
-	public final boolean getApplicationsCloseable() {
-		return model.getApplicationsCloseable();
-	}
+    @Override
+    public final boolean getApplicationsCloseable() {
+        return model.getApplicationsCloseable();
+    }
 
-	@Override
-	public final String getLabel() {
-		return model.getLabel();
-	}
+    @Override
+    public final String getLabel() {
+        return model.getLabel();
+    }
 
-	@Override
-	public final String getTooltip() {
-		return model.getTooltip();
-	}
+    @Override
+    public final String getTooltip() {
+        return model.getTooltip();
+    }
 
-	@Override
-	public final IImageConstant getIcon() {
-		return model.getIcon();
-	}
+    @Override
+    public final IImageConstant getIcon() {
+        return model.getIcon();
+    }
 
-	@Override
-	public final void addWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
-		model.addWorkbenchPartModelListener(listener);
-	}
+    @Override
+    public final void addWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
+        model.addWorkbenchPartModelListener(listener);
+    }
 
-	@Override
-	public final void removeWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
-		model.removeWorkbenchPartModelListener(listener);
-	}
+    @Override
+    public final void removeWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
+        model.removeWorkbenchPartModelListener(listener);
+    }
 
-	@Override
-	public final void addListModelListener(final IListModelListener listener) {
-		model.addListModelListener(listener);
-	}
+    @Override
+    public final void addListModelListener(final IListModelListener listener) {
+        model.addListModelListener(listener);
+    }
 
-	@Override
-	public final void removeListModelListener(final IListModelListener listener) {
-		model.removeListModelListener(listener);
-	}
+    @Override
+    public final void removeListModelListener(final IListModelListener listener) {
+        model.removeListModelListener(listener);
+    }
 
-	@Override
-	public final IToolBarModel getToolBar() {
-		return model.getToolBar();
-	}
+    @Override
+    public final IToolBarModel getToolBar() {
+        return model.getToolBar();
+    }
 
-	@Override
-	public final IMenuBarModel getMenuBar() {
-		return model.getMenuBar();
-	}
+    @Override
+    public final IMenuBarModel getMenuBar() {
+        return model.getMenuBar();
+    }
 
-	@Override
-	public final List<Runnable> getShutdownHooks() {
-		return model.getShutdownHooks();
-	}
+    @Override
+    public final List<Runnable> getShutdownHooks() {
+        return model.getShutdownHooks();
+    }
 
-	@Override
-	public final IContentCreator getStatusBarCreator() {
-		return model.getStatusBarCreator();
-	}
+    @Override
+    public final IContentCreator getStatusBarCreator() {
+        return model.getStatusBarCreator();
+    }
 
-	@Override
-	public ILoginCallback getLoginCallback() {
-		return model.getLoginCallback();
-	}
+    @Override
+    public ILoginCallback getLoginCallback() {
+        return model.getLoginCallback();
+    }
 
-	@Override
-	public final ICloseCallback getCloseCallback() {
-		return model.getCloseCallback();
-	}
+    @Override
+    public final ICloseCallback getCloseCallback() {
+        return model.getCloseCallback();
+    }
 
-	@Override
-	public final IViewFactory getViewFactory() {
-		return model.getViewFactory();
-	}
+    @Override
+    public final IViewFactory getViewFactory() {
+        return model.getViewFactory();
+    }
 
-	@Override
-	public final boolean isFinished() {
-		return model.isFinished();
-	}
+    @Override
+    public final boolean isFinished() {
+        return model.isFinished();
+    }
 
-	@Override
-	public final void finish() {
-		model.finish();
-	}
+    @Override
+    public final void finish() {
+        model.finish();
+    }
 
-	@Override
-	public final IWorkbenchInitializeCallback getInitializeCallback() {
-		return model.getInitializeCallback();
-	}
+    @Override
+    public final IWorkbenchInitializeCallback getInitializeCallback() {
+        return model.getInitializeCallback();
+    }
 
-	@Override
-	public final List<IWorkbenchApplicationModel> getApplications() {
-		return model.getApplications();
-	}
+    @Override
+    public final List<IWorkbenchApplicationModel> getApplications() {
+        return model.getApplications();
+    }
 
-	@Override
-	public final int getApplicationCount() {
-		return model.getApplicationCount();
-	}
+    @Override
+    public final int getApplicationCount() {
+        return model.getApplicationCount();
+    }
 
-	@Override
-	public final void setToolBar(final IToolBarModel toolBarModel) {
-		model.setToolBar(toolBarModel);
-	}
+    @Override
+    public final void setToolBar(final IToolBarModel toolBarModel) {
+        model.setToolBar(toolBarModel);
+    }
 
-	@Override
-	public final void setMenuBar(final IMenuBarModel menuBarModel) {
-		model.setMenuBar(menuBarModel);
-	}
+    @Override
+    public final void setMenuBar(final IMenuBarModel menuBarModel) {
+        model.setMenuBar(menuBarModel);
+    }
 
-	@Override
-	public final void setStatusBarCreator(final IContentCreator statusBarContentCreator) {
-		model.setStatusBarCreator(statusBarContentCreator);
-	}
+    @Override
+    public final void setStatusBarCreator(final IContentCreator statusBarContentCreator) {
+        model.setStatusBarCreator(statusBarContentCreator);
+    }
 
-	@Override
-	public final void setCloseCallback(final ICloseCallback closeCallback) {
-		model.setCloseCallback(closeCallback);
-	}
+    @Override
+    public final void setCloseCallback(final ICloseCallback closeCallback) {
+        model.setCloseCallback(closeCallback);
+    }
 
-	@Override
-	public final void addShutdownHook(final Runnable shutdownHook) {
-		model.addShutdownHook(shutdownHook);
-	}
+    @Override
+    public final void addShutdownHook(final Runnable shutdownHook) {
+        model.addShutdownHook(shutdownHook);
+    }
 
-	@Override
-	public final void removeShutdownHook(final Runnable shutdownHook) {
-		model.removeShutdownHook(shutdownHook);
-	}
+    @Override
+    public final void removeShutdownHook(final Runnable shutdownHook) {
+        model.removeShutdownHook(shutdownHook);
+    }
 
-	@Override
-	public final IWorkbenchApplicationModel addApplication(final IWorkbenchApplicationModel applicationModel) {
-		return model.addApplication(applicationModel);
-	}
+    @Override
+    public final IWorkbenchApplicationModel addApplication(final IWorkbenchApplicationModel applicationModel) {
+        return model.addApplication(applicationModel);
+    }
 
-	@Override
-	public final IWorkbenchApplicationModel addApplication(final int index, final IWorkbenchApplicationModel applicationModel) {
-		return model.addApplication(index, applicationModel);
-	}
+    @Override
+    public final IWorkbenchApplicationModel addApplication(final int index, final IWorkbenchApplicationModel applicationModel) {
+        return model.addApplication(index, applicationModel);
+    }
 
-	@Override
-	public final IWorkbenchApplicationModel addApplication(final IWorkbenchApplicationModelBuilder applicationModelBuilder) {
-		return model.addApplication(applicationModelBuilder);
-	}
+    @Override
+    public final IWorkbenchApplicationModel addApplication(final IWorkbenchApplicationModelBuilder applicationModelBuilder) {
+        return model.addApplication(applicationModelBuilder);
+    }
 
-	@Override
-	public final IWorkbenchApplicationModel addApplication(
-		final int index,
-		final IWorkbenchApplicationModelBuilder applicationModelBuilder) {
-		return model.addApplication(index, applicationModelBuilder);
-	}
+    @Override
+    public final IWorkbenchApplicationModel addApplication(
+        final int index,
+        final IWorkbenchApplicationModelBuilder applicationModelBuilder) {
+        return model.addApplication(index, applicationModelBuilder);
+    }
 
-	@Override
-	public final IWorkbenchApplicationModel addApplication(final IWorkbenchApplicationDescriptor applicationDescriptor) {
-		return model.addApplication(applicationDescriptor);
-	}
+    @Override
+    public final IWorkbenchApplicationModel addApplication(final IWorkbenchApplicationDescriptor applicationDescriptor) {
+        return model.addApplication(applicationDescriptor);
+    }
 
-	@Override
-	public final IWorkbenchApplicationModel addApplication(
-		final int index,
-		final IWorkbenchApplicationDescriptor applicationDescriptor) {
-		return model.addApplication(index, applicationDescriptor);
-	}
+    @Override
+    public final IWorkbenchApplicationModel addApplication(
+        final int index,
+        final IWorkbenchApplicationDescriptor applicationDescriptor) {
+        return model.addApplication(index, applicationDescriptor);
+    }
 
-	@Override
-	public final IWorkbenchApplicationModel addApplication(
-		final String id,
-		final String label,
-		final String tooltip,
-		final IImageConstant icon) {
-		return model.addApplication(id, label, tooltip, icon);
-	}
+    @Override
+    public final IWorkbenchApplicationModel addApplication(
+        final String id,
+        final String label,
+        final String tooltip,
+        final IImageConstant icon) {
+        return model.addApplication(id, label, tooltip, icon);
+    }
 
-	@Override
-	public final IWorkbenchApplicationModel addApplication(final String id, final String label, final IImageConstant icon) {
-		return model.addApplication(id, label, icon);
-	}
+    @Override
+    public final IWorkbenchApplicationModel addApplication(final String id, final String label, final IImageConstant icon) {
+        return model.addApplication(id, label, icon);
+    }
 
-	@Override
-	public final IWorkbenchApplicationModel addApplication(final String id, final String label, final String tooltip) {
-		return model.addApplication(id, label, tooltip);
-	}
+    @Override
+    public final IWorkbenchApplicationModel addApplication(final String id, final String label, final String tooltip) {
+        return model.addApplication(id, label, tooltip);
+    }
 
-	@Override
-	public final IWorkbenchApplicationModel addApplication(final String id, final String label) {
-		return model.addApplication(id, label);
-	}
+    @Override
+    public final IWorkbenchApplicationModel addApplication(final String id, final String label) {
+        return model.addApplication(id, label);
+    }
 
-	@Override
-	public final IWorkbenchApplicationModel addApplication(final String id) {
-		return model.addApplication(id);
-	}
+    @Override
+    public final IWorkbenchApplicationModel addApplication(final String id) {
+        return model.addApplication(id);
+    }
 
-	@Override
-	public final void removeApplication(final int index) {
-		model.removeApplication(index);
-	}
+    @Override
+    public final void removeApplication(final int index) {
+        model.removeApplication(index);
+    }
 
-	@Override
-	public final void removeApplication(final IWorkbenchApplicationModel childModel) {
-		model.removeApplication(childModel);
-	}
+    @Override
+    public final void removeApplication(final IWorkbenchApplicationModel childModel) {
+        model.removeApplication(childModel);
+    }
 
-	@Override
-	public final void removeAllApplications() {
-		model.removeAllApplications();
-	}
+    @Override
+    public final void removeAllApplications() {
+        model.removeAllApplications();
+    }
 
-	public static IWorkbenchModelBuilder builder() {
-		return WorkbenchToolkit.getWorkbenchPartBuilderFactory().workbench();
-	}
+    public static IWorkbenchModelBuilder builder() {
+        return WorkbenchToolkit.getWorkbenchPartBuilderFactory().workbench();
+    }
 
-	public static IWorkbenchModelBuilder builder(final String label) {
-		return builder().setLabel(label);
-	}
+    public static IWorkbenchModelBuilder builder(final String label) {
+        return builder().setLabel(label);
+    }
 
-	public static IWorkbenchModelBuilder builder(final String label, final IImageConstant icon) {
-		return builder(label).setIcon(icon);
-	}
+    public static IWorkbenchModelBuilder builder(final String label, final IImageConstant icon) {
+        return builder(label).setIcon(icon);
+    }
 
-	public static IWorkbenchModelBuilder builder(final IWorkbenchDescriptor descriptor) {
-		Assert.paramNotNull(descriptor, "descriptor");
-		return builder().setDescriptor(descriptor);
-	}
+    public static IWorkbenchModelBuilder builder(final IWorkbenchDescriptor descriptor) {
+        Assert.paramNotNull(descriptor, "descriptor");
+        return builder().setDescriptor(descriptor);
+    }
 
 }

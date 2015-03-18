@@ -33,47 +33,47 @@ import org.jowidgets.common.widgets.layout.ILayouter;
 
 public interface IFlowLayoutFactoryBuilder {
 
-	/**
-	 * Sets the gap between the controls
-	 * 
-	 * The default gap is 4
-	 * 
-	 * @param gap The gap to set
-	 * 
-	 * @return This builder
-	 */
-	IFlowLayoutFactoryBuilder gap(int gap);
+    /**
+     * Sets the gap between the controls
+     * 
+     * The default gap is 4
+     * 
+     * @param gap The gap to set
+     * 
+     * @return This builder
+     */
+    IFlowLayoutFactoryBuilder gap(int gap);
 
-	/**
-	 * Sets the orientation of the layout.
-	 * 
-	 * The default orientation is Orientation.HORIZONTAL
-	 * 
-	 * @param orientation The orientation to set, never null
-	 * 
-	 * @return This builder
-	 */
-	IFlowLayoutFactoryBuilder orientation(Orientation orientation);
+    /**
+     * Sets the orientation of the layout.
+     * 
+     * The default orientation is Orientation.HORIZONTAL
+     * 
+     * @param orientation The orientation to set, never null
+     * 
+     * @return This builder
+     */
+    IFlowLayoutFactoryBuilder orientation(Orientation orientation);
 
-	/**
-	 * Sets the orientation to Orientation.VERTICAL
-	 * 
-	 * @return The builder
-	 */
-	IFlowLayoutFactoryBuilder vertical();
+    /**
+     * Sets the orientation to Orientation.VERTICAL
+     * 
+     * @return The builder
+     */
+    IFlowLayoutFactoryBuilder vertical();
 
-	/**
-	 * Sets the orientation to Orientation.HORIZONTAL
-	 * 
-	 * @return The builder
-	 */
-	IFlowLayoutFactoryBuilder horizontal();
+    /**
+     * Sets the orientation to Orientation.HORIZONTAL
+     * 
+     * @return The builder
+     */
+    IFlowLayoutFactoryBuilder horizontal();
 
-	/**
-	 * Creates a new layout factory for 'FlowLayouts'
-	 * 
-	 * @return A new layout factory for 'FlowLayouts', never null
-	 */
-	ILayoutFactory<ILayouter> build();
+    /**
+     * Creates a new layout factory for 'FlowLayouts'
+     * 
+     * @return A new layout factory for 'FlowLayouts', never null
+     */
+    ILayoutFactory<ILayouter> build();
 
 }

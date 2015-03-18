@@ -49,71 +49,71 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class BrowserDemoApplication implements IApplication {
 
-	private static final String HOME_URL = "http://www.gmx.de/";
+    private static final String HOME_URL = "http://www.gmx.de/";
 
-	private final String title;
+    private final String title;
 
-	public BrowserDemoApplication(final String title) {
-		this.title = title;
-	}
+    public BrowserDemoApplication(final String title) {
+        this.title = title;
+    }
 
-	public void start() {
-		DemoIconsInitializer.initialize();
-		Toolkit.getInstance().getApplicationRunner().run(this);
-	}
+    public void start() {
+        DemoIconsInitializer.initialize();
+        Toolkit.getInstance().getApplicationRunner().run(this);
+    }
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
-		final IFrame frame = Toolkit.createRootFrame(BPF.frame().setTitle(title).autoPackOff(), lifecycle);
-		frame.setBackgroundColor(Colors.WHITE);
-		frame.setSize(1024, 768);
-		frame.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "[][]0[grow, 0::]0"));
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
+        final IFrame frame = Toolkit.createRootFrame(BPF.frame().setTitle(title).autoPackOff(), lifecycle);
+        frame.setBackgroundColor(Colors.WHITE);
+        frame.setSize(1024, 768);
+        frame.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "[][]0[grow, 0::]0"));
 
-		//add url field
-		final ITextControl urlField = frame.add(BPF.textField(), "gapleft 5, gapright 5,growx, h 0::, wrap");
-		frame.add(BPF.separator(), "growx, h 0::, wrap");
+        //add url field
+        final ITextControl urlField = frame.add(BPF.textField(), "gapleft 5, gapright 5,growx, h 0::, wrap");
+        frame.add(BPF.separator(), "growx, h 0::, wrap");
 
-		//add browser content
-		final IBrowser browser = frame.add(BrowserBPF.browser(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        //add browser content
+        final IBrowser browser = frame.add(BrowserBPF.browser(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
-		urlField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(final IKeyEvent event) {
-				if (event.getVirtualKey() == VirtualKey.ENTER) {
-					browser.setUrl(urlField.getText());
-				}
-			}
-		});
+        urlField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(final IKeyEvent event) {
+                if (event.getVirtualKey() == VirtualKey.ENTER) {
+                    browser.setUrl(urlField.getText());
+                }
+            }
+        });
 
-		browser.addLocationListener(new BrowserLocationAdapter() {
+        browser.addLocationListener(new BrowserLocationAdapter() {
 
-			@Override
-			public void locationChanged(final IBrowserLocationEvent event) {
-				if (event.isTopFrameLocation()) {
-					urlField.setText(event.getLocation());
-				}
-			}
+            @Override
+            public void locationChanged(final IBrowserLocationEvent event) {
+                if (event.isTopFrameLocation()) {
+                    urlField.setText(event.getLocation());
+                }
+            }
 
-		});
+        });
 
-		browser.addProgressListener(new IBrowserProgressListener() {
-			@Override
-			public void loadProgressChanged(final int progress, final int totalAmount) {
-				//CHECKSTYLE:OFF
-				System.out.println("LOAD PROGRESS CHANGED: " + progress + " / " + totalAmount);
-				//CHECKSTYLE:ON
-			}
+        browser.addProgressListener(new IBrowserProgressListener() {
+            @Override
+            public void loadProgressChanged(final int progress, final int totalAmount) {
+                //CHECKSTYLE:OFF
+                System.out.println("LOAD PROGRESS CHANGED: " + progress + " / " + totalAmount);
+                //CHECKSTYLE:ON
+            }
 
-			@Override
-			public void loadFinished() {
-				//CHECKSTYLE:OFF
-				System.out.println("LOAD FINISHED");
-				//CHECKSTYLE:ON
-			}
-		});
+            @Override
+            public void loadFinished() {
+                //CHECKSTYLE:OFF
+                System.out.println("LOAD FINISHED");
+                //CHECKSTYLE:ON
+            }
+        });
 
-		browser.setUrl(HOME_URL);
+        browser.setUrl(HOME_URL);
 
-		frame.setVisible(true);
-	}
+        frame.setVisible(true);
+    }
 }

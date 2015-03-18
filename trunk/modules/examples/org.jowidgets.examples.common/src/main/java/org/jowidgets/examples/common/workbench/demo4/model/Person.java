@@ -33,83 +33,83 @@ import java.util.List;
 
 public final class Person {
 
-	private String name;
-	private Date dayOfBirth;
-	private Gender gender;
-	private ByteValue quota;
-	private List<Role> roles;
+    private String name;
+    private Date dayOfBirth;
+    private Gender gender;
+    private ByteValue quota;
+    private List<Role> roles;
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(final String name) {
-		this.name = name;
-	}
+    public void setName(final String name) {
+        this.name = name;
+    }
 
-	public Date getDayOfBirth() {
-		return dayOfBirth;
-	}
+    public Date getDayOfBirth() {
+        return dayOfBirth;
+    }
 
-	public void setDayOfBirth(final Date dayOfBirth) {
-		this.dayOfBirth = dayOfBirth;
-	}
+    public void setDayOfBirth(final Date dayOfBirth) {
+        this.dayOfBirth = dayOfBirth;
+    }
 
-	public Gender getGender() {
-		return gender;
-	}
+    public Gender getGender() {
+        return gender;
+    }
 
-	public void setGender(final Gender gender) {
-		this.gender = gender;
-	}
+    public void setGender(final Gender gender) {
+        this.gender = gender;
+    }
 
-	public ByteValue getQuota() {
-		return quota;
-	}
+    public ByteValue getQuota() {
+        return quota;
+    }
 
-	public void setQuota(final ByteValue quota) {
-		this.quota = quota;
-	}
+    public void setQuota(final ByteValue quota) {
+        this.quota = quota;
+    }
 
-	public List<Role> getRoles() {
-		return roles;
-	}
+    public List<Role> getRoles() {
+        return roles;
+    }
 
-	public void setRoles(final List<Role> tags) {
-		this.roles = tags;
-	}
+    public void setRoles(final List<Role> tags) {
+        this.roles = tags;
+    }
 
-	public Person createCopy() {
-		final Person result = new Person();
-		result.setName(name);
-		result.setDayOfBirth(dayOfBirth);
-		result.setGender(gender);
-		result.setQuota(quota);
-		result.setRoles(roles);
-		return result;
-	}
+    public Person createCopy() {
+        final Person result = new Person();
+        result.setName(name);
+        result.setDayOfBirth(dayOfBirth);
+        result.setGender(gender);
+        result.setQuota(quota);
+        result.setRoles(roles);
+        return result;
+    }
 
-	public void setPerson(final Person person) {
-		name = person.getName();
-		dayOfBirth = person.getDayOfBirth();
-		gender = person.getGender();
-		quota = person.getQuota();
-		roles = person.getRoles();
-	}
+    public void setPerson(final Person person) {
+        name = person.getName();
+        dayOfBirth = person.getDayOfBirth();
+        gender = person.getGender();
+        quota = person.getQuota();
+        roles = person.getRoles();
+    }
 
-	@Override
-	public String toString() {
-		return "Person [name="
-			+ name
-			+ ", dayOfBirth="
-			+ dayOfBirth
-			+ ", gender="
-			+ gender
-			+ ", quota="
-			+ quota
-			+ ", roles="
-			+ roles
-			+ "]";
-	}
+    @Override
+    public String toString() {
+        return "Person [name="
+            + name
+            + ", dayOfBirth="
+            + dayOfBirth
+            + ", gender="
+            + gender
+            + ", quota="
+            + quota
+            + ", roles="
+            + roles
+            + "]";
+    }
 
 }

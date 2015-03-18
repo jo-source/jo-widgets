@@ -32,9 +32,9 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
 public class Hierarchy1stDefaults implements IDefaultInitializer<IHierarchy1stSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final IHierarchy1stSetupBuilder<?> builder) {
-		builder.setIntro("Default Intro one");
-	}
+    @Override
+    public void initialize(final IHierarchy1stSetupBuilder<?> builder) {
+        builder.setIntro("Default Intro one");
+    }
 
 }

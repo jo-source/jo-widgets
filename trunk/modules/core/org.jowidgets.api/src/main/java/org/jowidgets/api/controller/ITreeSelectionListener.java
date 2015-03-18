@@ -30,6 +30,6 @@ package org.jowidgets.api.controller;
 
 public interface ITreeSelectionListener {
 
-	void selectionChanged(ITreeSelectionEvent event);
+    void selectionChanged(ITreeSelectionEvent event);
 
 }

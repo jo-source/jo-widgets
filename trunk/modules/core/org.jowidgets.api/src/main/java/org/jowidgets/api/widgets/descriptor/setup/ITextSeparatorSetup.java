@@ -27,7 +27,6 @@
  */
 package org.jowidgets.api.widgets.descriptor.setup;
 
-
 public interface ITextSeparatorSetup extends ITextLabelSetup {
 
 }

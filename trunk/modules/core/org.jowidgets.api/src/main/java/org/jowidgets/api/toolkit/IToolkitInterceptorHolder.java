@@ -30,16 +30,16 @@ package org.jowidgets.api.toolkit;
 
 public interface IToolkitInterceptorHolder {
 
-	/**
-	 * The default order for toolkit interceptors.
-	 * 
-	 * Uses values below this order to do interception before interceptors with default order.
-	 * 
-	 * Use value above this order to do interception after interceptors with default order.
-	 */
-	int DEFAULT_ORDER = 2;
+    /**
+     * The default order for toolkit interceptors.
+     * 
+     * Uses values below this order to do interception before interceptors with default order.
+     * 
+     * Use value above this order to do interception after interceptors with default order.
+     */
+    int DEFAULT_ORDER = 2;
 
-	IToolkitInterceptor getToolkitInterceptor();
+    IToolkitInterceptor getToolkitInterceptor();
 
-	int getOrder();
+    int getOrder();
 }

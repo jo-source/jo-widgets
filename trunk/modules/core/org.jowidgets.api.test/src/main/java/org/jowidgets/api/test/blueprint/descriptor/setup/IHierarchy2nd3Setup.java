@@ -35,10 +35,10 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IHierarchy2nd3Setup extends IHierarchy1stSetup {
 
-	@Mandatory
-	String getIntroPartTwoThree();
+    @Mandatory
+    String getIntroPartTwoThree();
 
-	int getConvenienceAnnotationCalled();
+    int getConvenienceAnnotationCalled();
 
-	int getDefaultInitializerTestValue();
+    int getDefaultInitializerTestValue();
 }

@@ -31,6 +31,6 @@ import org.eclipse.swt.graphics.Font;
 
 public interface IFontCache {
 
-	Font getFont(FontDataKey fontData);
+    Font getFont(FontDataKey fontData);
 
 }

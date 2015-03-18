@@ -32,10 +32,10 @@ import org.jowidgets.addons.widgets.browser.api.IBrowserProgressListener;
 
 public class BrowserProgressAdapter implements IBrowserProgressListener {
 
-	@Override
-	public void loadProgressChanged(final int progress, final int totalAmount) {}
+    @Override
+    public void loadProgressChanged(final int progress, final int totalAmount) {}
 
-	@Override
-	public void loadFinished() {}
+    @Override
+    public void loadFinished() {}
 
 }

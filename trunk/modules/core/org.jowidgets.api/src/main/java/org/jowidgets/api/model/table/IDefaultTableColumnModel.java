@@ -36,51 +36,51 @@ import org.jowidgets.common.types.AlignmentHorizontal;
 
 public interface IDefaultTableColumnModel extends ITableColumnModel, ITableColumnModelObservable {
 
-	@Override
-	IDefaultTableColumn getColumn(int columnIndex);
+    @Override
+    IDefaultTableColumn getColumn(int columnIndex);
 
-	ArrayList<IDefaultTableColumn> getColumns();
+    ArrayList<IDefaultTableColumn> getColumns();
 
-	IDefaultTableColumn addColumn();
+    IDefaultTableColumn addColumn();
 
-	IDefaultTableColumn addColumn(final int columnIndex);
+    IDefaultTableColumn addColumn(final int columnIndex);
 
-	void addColumn(IDefaultTableColumn column);
+    void addColumn(IDefaultTableColumn column);
 
-	void addColumn(final int columnIndex, IDefaultTableColumn column);
+    void addColumn(final int columnIndex, IDefaultTableColumn column);
 
-	IDefaultTableColumn addColumn(IDefaultTableColumnBuilder columnBuilder);
+    IDefaultTableColumn addColumn(IDefaultTableColumnBuilder columnBuilder);
 
-	IDefaultTableColumn addColumn(final int columnIndex, IDefaultTableColumnBuilder columnBuilder);
+    IDefaultTableColumn addColumn(final int columnIndex, IDefaultTableColumnBuilder columnBuilder);
 
-	IDefaultTableColumn addColumn(String text);
+    IDefaultTableColumn addColumn(String text);
 
-	IDefaultTableColumn addColumn(String text, String toolTipText);
+    IDefaultTableColumn addColumn(String text, String toolTipText);
 
-	void removeColumn(final int columnIndex);
+    void removeColumn(final int columnIndex);
 
-	void removeColumns(final int fromColumnIndex, final int toColumnIndex);
+    void removeColumns(final int fromColumnIndex, final int toColumnIndex);
 
-	void removeColumns(final int... columns);
+    void removeColumns(final int... columns);
 
-	void removeAllColumns();
+    void removeAllColumns();
 
-	void modifyModelStart();
+    void modifyModelStart();
 
-	void modifyModelEnd();
+    void modifyModelEnd();
 
-	void setFireEvents(boolean fireEvents);
+    void setFireEvents(boolean fireEvents);
 
-	void setColumn(final int columnIndex, final IDefaultTableColumn column);
+    void setColumn(final int columnIndex, final IDefaultTableColumn column);
 
-	IDefaultTableColumn setColumn(final int columnIndex, final IDefaultTableColumnBuilder columnBuilder);
+    IDefaultTableColumn setColumn(final int columnIndex, final IDefaultTableColumnBuilder columnBuilder);
 
-	void setColumnText(final int columnIndex, String text);
+    void setColumnText(final int columnIndex, String text);
 
-	void setColumnToolTipText(final int columnIndex, String tooltipText);
+    void setColumnToolTipText(final int columnIndex, String tooltipText);
 
-	void setColumnIcon(final int columnIndex, IImageConstant icon);
+    void setColumnIcon(final int columnIndex, IImageConstant icon);
 
-	void setColumnAlignment(final int columnIndex, AlignmentHorizontal alignment);
+    void setColumnAlignment(final int columnIndex, AlignmentHorizontal alignment);
 
 }

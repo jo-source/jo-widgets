@@ -32,14 +32,14 @@ import org.jowidgets.api.command.ICommandAction;
 
 public final class WorkbenchActions {
 
-	public static final ICommandAction NEW_DOCUMENT_ACTION = new NewDocumentAction();
-	public static final ICommandAction SAVE_ACTION = new SaveAction();
-	public static final ICommandAction SAVE_AS_ACTION = new SaveAsAction();
-	public static final ICommandAction CUT_ACTION = new CutAction();
-	public static final ICommandAction COPY_ACTION = new CopyAction();
-	public static final ICommandAction PASTE_ACTION = new PasteAction();
-	public static final ICommandAction PRINT_ACTION = new PrintAction();
+    public static final ICommandAction NEW_DOCUMENT_ACTION = new NewDocumentAction();
+    public static final ICommandAction SAVE_ACTION = new SaveAction();
+    public static final ICommandAction SAVE_AS_ACTION = new SaveAsAction();
+    public static final ICommandAction CUT_ACTION = new CutAction();
+    public static final ICommandAction COPY_ACTION = new CopyAction();
+    public static final ICommandAction PASTE_ACTION = new PasteAction();
+    public static final ICommandAction PRINT_ACTION = new PrintAction();
 
-	private WorkbenchActions() {}
+    private WorkbenchActions() {}
 
 }

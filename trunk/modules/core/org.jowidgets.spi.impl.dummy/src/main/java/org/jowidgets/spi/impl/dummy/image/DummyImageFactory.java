@@ -48,58 +48,58 @@ import org.jowidgets.util.IFactory;
 
 public final class DummyImageFactory implements IImageFactorySpi {
 
-	private final DummyImageHandleFactory imageHandleFactory;
+    private final DummyImageHandleFactory imageHandleFactory;
 
-	public DummyImageFactory(final DummyImageHandleFactory imageHandleFactory) {
-		Assert.paramNotNull(imageHandleFactory, "imageHandleFactory");
-		this.imageHandleFactory = imageHandleFactory;
-	}
+    public DummyImageFactory(final DummyImageHandleFactory imageHandleFactory) {
+        Assert.paramNotNull(imageHandleFactory, "imageHandleFactory");
+        this.imageHandleFactory = imageHandleFactory;
+    }
 
-	@Override
-	public IBufferedImageSpi createBufferedImage(final int width, final int height) {
-		return new BufferedImageSpi(new UIDImage("BuffredImageDummy - " + UUID.randomUUID().toString()));
-	}
+    @Override
+    public IBufferedImageSpi createBufferedImage(final int width, final int height) {
+        return new BufferedImageSpi(new UIDImage("BuffredImageDummy - " + UUID.randomUUID().toString()));
+    }
 
-	@Override
-	public IImageSpi createImage(final IFactory<InputStream> inputStream) {
-		Assert.paramNotNull(inputStream, "inputStream");
-		final IImageDescriptor descriptor = new StreamFactoryImageDecriptorImpl(inputStream);
-		return new ImageSpiImpl<UIDImage>(imageHandleFactory.createImageHandle(descriptor));
-	}
+    @Override
+    public IImageSpi createImage(final IFactory<InputStream> inputStream) {
+        Assert.paramNotNull(inputStream, "inputStream");
+        final IImageDescriptor descriptor = new StreamFactoryImageDecriptorImpl(inputStream);
+        return new ImageSpiImpl<UIDImage>(imageHandleFactory.createImageHandle(descriptor));
+    }
 
-	@Override
-	public IImageSpi createImage(final URL url) {
-		Assert.paramNotNull(url, "url");
-		final IImageDescriptor descriptor = new UrlImageDescriptorImpl(url);
-		return new ImageSpiImpl<UIDImage>(imageHandleFactory.createImageHandle(descriptor));
-	}
+    @Override
+    public IImageSpi createImage(final URL url) {
+        Assert.paramNotNull(url, "url");
+        final IImageDescriptor descriptor = new UrlImageDescriptorImpl(url);
+        return new ImageSpiImpl<UIDImage>(imageHandleFactory.createImageHandle(descriptor));
+    }
 
-	private class ImageSpiImpl<IMAGE_TYPE extends UIDImage> extends AbstractImageSpiImpl<IMAGE_TYPE> {
+    private class ImageSpiImpl<IMAGE_TYPE extends UIDImage> extends AbstractImageSpiImpl<IMAGE_TYPE> {
 
-		ImageSpiImpl(final ImageHandle<IMAGE_TYPE> imageHandle) {
-			super(imageHandle);
-		}
+        ImageSpiImpl(final ImageHandle<IMAGE_TYPE> imageHandle) {
+            super(imageHandle);
+        }
 
-		@Override
-		public Dimension getSize() {
-			checkDisposed();
-			return new Dimension(-1, -1);
-		}
+        @Override
+        public Dimension getSize() {
+            checkDisposed();
+            return new Dimension(-1, -1);
+        }
 
-	}
+    }
 
-	private final class BufferedImageSpi extends ImageSpiImpl<UIDImage> implements IBufferedImageSpi {
+    private final class BufferedImageSpi extends ImageSpiImpl<UIDImage> implements IBufferedImageSpi {
 
-		public BufferedImageSpi(final UIDImage image) {
-			super(new ImageHandle<UIDImage>(image));
-		}
+        public BufferedImageSpi(final UIDImage image) {
+            super(new ImageHandle<UIDImage>(image));
+        }
 
-		@Override
-		public synchronized IGraphicContextSpi getGraphicContext() {
-			//TODO graphics context dummy must be implemented
-			return null;
-		}
+        @Override
+        public synchronized IGraphicContextSpi getGraphicContext() {
+            //TODO graphics context dummy must be implemented
+            return null;
+        }
 
-	}
+    }
 
 }

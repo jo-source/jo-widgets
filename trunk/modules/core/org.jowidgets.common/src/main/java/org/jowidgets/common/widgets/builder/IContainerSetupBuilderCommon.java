@@ -27,8 +27,7 @@
  */
 package org.jowidgets.common.widgets.builder;
 
-
 public interface IContainerSetupBuilderCommon<INSTANCE_TYPE extends IContainerSetupBuilderCommon<?>> extends
-		IComponentSetupBuilderCommon<INSTANCE_TYPE> {
+        IComponentSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

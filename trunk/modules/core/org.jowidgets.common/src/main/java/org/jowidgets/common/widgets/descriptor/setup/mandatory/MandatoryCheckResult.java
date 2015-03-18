@@ -29,26 +29,26 @@ package org.jowidgets.common.widgets.descriptor.setup.mandatory;
 
 public final class MandatoryCheckResult {
 
-	public static final MandatoryCheckResult OK = new MandatoryCheckResult();
+    public static final MandatoryCheckResult OK = new MandatoryCheckResult();
 
-	private final boolean ok;
-	private String resultText;
+    private final boolean ok;
+    private String resultText;
 
-	public MandatoryCheckResult(final String resultText) {
-		this.ok = false;
-		this.resultText = resultText;
-	}
+    public MandatoryCheckResult(final String resultText) {
+        this.ok = false;
+        this.resultText = resultText;
+    }
 
-	public MandatoryCheckResult() {
-		this.ok = true;
-	}
+    public MandatoryCheckResult() {
+        this.ok = true;
+    }
 
-	public boolean isOk() {
-		return ok;
-	}
+    public boolean isOk() {
+        return ok;
+    }
 
-	public String getResultText() {
-		return resultText;
-	}
+    public String getResultText() {
+        return resultText;
+    }
 
 }

@@ -30,8 +30,8 @@ package org.jowidgets.impl.widgets.common.wrapper.invoker;
 
 public interface ISelectableItemSpiInvoker extends IItemSpiInvoker {
 
-	void setSelected(boolean selected);
+    void setSelected(boolean selected);
 
-	boolean isSelected();
+    boolean isSelected();
 
 }

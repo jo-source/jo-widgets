@@ -40,83 +40,83 @@ import org.jowidgets.common.widgets.controller.IItemStateListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 class SelectableMenuItem<WIDGET_TYPE extends ISelectableMenuItem, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & ISelectableItemSetupBuilder<?> & ISelectableItemSetup> extends
-		MenuItem<WIDGET_TYPE, BLUE_PRINT_TYPE> implements ISelectableMenuItem {
+        MenuItem<WIDGET_TYPE, BLUE_PRINT_TYPE> implements ISelectableMenuItem {
 
-	private final Set<IItemStateListener> itemListeners;
+    private final Set<IItemStateListener> itemListeners;
 
-	SelectableMenuItem(final BLUE_PRINT_TYPE bluePrint) {
-		super(bluePrint);
-		this.itemListeners = new HashSet<IItemStateListener>();
-	}
+    SelectableMenuItem(final BLUE_PRINT_TYPE bluePrint) {
+        super(bluePrint);
+        this.itemListeners = new HashSet<IItemStateListener>();
+    }
 
-	@Override
-	void initialize(final WIDGET_TYPE widget) {
-		super.initialize(widget);
-		for (final IItemStateListener listener : itemListeners) {
-			getWidget().addItemListener(listener);
-		}
-	}
+    @Override
+    void initialize(final WIDGET_TYPE widget) {
+        super.initialize(widget);
+        for (final IItemStateListener listener : itemListeners) {
+            getWidget().addItemListener(listener);
+        }
+    }
 
-	@Override
-	public void addItemListener(final IItemStateListener listener) {
-		if (isInitialized()) {
-			getWidget().addItemListener(listener);
-		}
-		else {
-			itemListeners.add(listener);
-		}
-	}
+    @Override
+    public void addItemListener(final IItemStateListener listener) {
+        if (isInitialized()) {
+            getWidget().addItemListener(listener);
+        }
+        else {
+            itemListeners.add(listener);
+        }
+    }
 
-	@Override
-	public void removeItemListener(final IItemStateListener listener) {
-		if (isInitialized()) {
-			getWidget().removeItemListener(listener);
-		}
-		else {
-			itemListeners.remove(listener);
-		}
-	}
+    @Override
+    public void removeItemListener(final IItemStateListener listener) {
+        if (isInitialized()) {
+            getWidget().removeItemListener(listener);
+        }
+        else {
+            itemListeners.remove(listener);
+        }
+    }
 
-	@Override
-	public void setAccelerator(final Accelerator accelerator) {
-		if (isInitialized()) {
-			getWidget().setAccelerator(accelerator);
-		}
-		else {
-			getBluePrint().setAccelerator(accelerator);
-		}
-	}
+    @Override
+    public void setAccelerator(final Accelerator accelerator) {
+        if (isInitialized()) {
+            getWidget().setAccelerator(accelerator);
+        }
+        else {
+            getBluePrint().setAccelerator(accelerator);
+        }
+    }
 
-	@Override
-	public boolean isSelected() {
-		if (isInitialized()) {
-			return getWidget().isSelected();
-		}
-		else {
-			return getBluePrint().isSelected();
-		}
-	}
+    @Override
+    public boolean isSelected() {
+        if (isInitialized()) {
+            return getWidget().isSelected();
+        }
+        else {
+            return getBluePrint().isSelected();
+        }
+    }
 
-	@Override
-	public void setSelected(final boolean selected) {
-		if (isInitialized()) {
-			getWidget().setSelected(selected);
-		}
-		else {
-			getBluePrint().setSelected(selected);
-		}
-	}
+    @Override
+    public void setSelected(final boolean selected) {
+        if (isInitialized()) {
+            getWidget().setSelected(selected);
+        }
+        else {
+            getBluePrint().setSelected(selected);
+        }
+    }
 
-	@Override
-	public void setModel(final ISelectableMenuItemModel model) {
-		checkInitialized();
-		getWidget().setModel(model);
-	}
+    @Override
+    public void setModel(final ISelectableMenuItemModel model) {
+        checkInitialized();
+        getWidget().setModel(model);
+    }
 
-	@Override
-	public ISelectableMenuItemModel getModel() {
-		checkInitialized();
-		return getWidget().getModel();
-	}
+    @Override
+    public ISelectableMenuItemModel getModel() {
+        checkInitialized();
+        return getWidget().getModel();
+    }
 
 }

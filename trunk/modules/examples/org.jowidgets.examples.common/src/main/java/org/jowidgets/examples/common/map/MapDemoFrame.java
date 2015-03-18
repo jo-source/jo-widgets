@@ -46,45 +46,45 @@ import de.micromata.opengis.kml.v_2_2_0.Point;
 
 final class MapDemoFrame extends JoFrame {
 
-	MapDemoFrame(final IApplicationLifecycle lifecycle) {
-		super("Map Demo", SilkIcons.WORLD);
-		setLayout(Toolkit.getLayoutFactoryProvider().fillLayout());
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosed() {
-				lifecycle.finish();
-			}
-		});
-		final IMapWidget map = add(Toolkit.getBluePrintFactory().bluePrint(IMapWidgetBlueprint.class));
-		map.setLanguage("en");
-		map.initialize(new IAvailableCallback() {
-			@Override
-			public void onAvailable(final IMapContext mapContext) {
-				final Placemark placemark = KmlFactory.createPlacemark();
-				placemark.setId("placemark1");
-				placemark.setName("A Placemarker!");
-				placemark.setDescription("This is the placemarker description");
-				final Point point = placemark.createAndSetPoint();
-				point.setAltitudeMode(AltitudeMode.CLAMP_TO_GROUND);
-				point.addToCoordinates(9, 51);
-				mapContext.addFeature(placemark);
-				mapContext.flyTo("placemark1", 500000);
+    MapDemoFrame(final IApplicationLifecycle lifecycle) {
+        super("Map Demo", SilkIcons.WORLD);
+        setLayout(Toolkit.getLayoutFactoryProvider().fillLayout());
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed() {
+                lifecycle.finish();
+            }
+        });
+        final IMapWidget map = add(Toolkit.getBluePrintFactory().bluePrint(IMapWidgetBlueprint.class));
+        map.setLanguage("en");
+        map.initialize(new IAvailableCallback() {
+            @Override
+            public void onAvailable(final IMapContext mapContext) {
+                final Placemark placemark = KmlFactory.createPlacemark();
+                placemark.setId("placemark1");
+                placemark.setName("A Placemarker!");
+                placemark.setDescription("This is the placemarker description");
+                final Point point = placemark.createAndSetPoint();
+                point.setAltitudeMode(AltitudeMode.CLAMP_TO_GROUND);
+                point.addToCoordinates(9, 51);
+                mapContext.addFeature(placemark);
+                mapContext.flyTo("placemark1", 500000);
 
-				final int[] count = {0};
-				mapContext.startDesignation(Point.class, new IDesignationListener<Point>() {
-					@Override
-					public void onDesignation(final Point point) {
-						final Placemark placemark = KmlFactory.createPlacemark();
-						placemark.setName("No. " + ++count[0]);
-						placemark.setGeometry(point);
-						mapContext.addFeature(placemark);
-						if (count[0] == 10) {
-							mapContext.endDesignation();
-						}
-					}
-				});
-			}
-		});
-	}
+                final int[] count = {0};
+                mapContext.startDesignation(Point.class, new IDesignationListener<Point>() {
+                    @Override
+                    public void onDesignation(final Point point) {
+                        final Placemark placemark = KmlFactory.createPlacemark();
+                        placemark.setName("No. " + ++count[0]);
+                        placemark.setGeometry(point);
+                        mapContext.addFeature(placemark);
+                        if (count[0] == 10) {
+                            mapContext.endDesignation();
+                        }
+                    }
+                });
+            }
+        });
+    }
 
 }

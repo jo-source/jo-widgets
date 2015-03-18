@@ -67,262 +67,262 @@ import org.jowidgets.util.Assert;
 
 public class ScrollCompositeImpl extends AbstractScrollCompositeSpiWrapper implements IScrollComposite {
 
-	private final ControlDelegate controlDelegate;
-	private final ContainerDelegate containerDelegate;
-	private final IDragSource dragSource;
-	private final IDropTarget dropTarget;
+    private final ControlDelegate controlDelegate;
+    private final ContainerDelegate containerDelegate;
+    private final IDragSource dragSource;
+    private final IDropTarget dropTarget;
 
-	private Dimension minSize;
+    private Dimension minSize;
 
-	public ScrollCompositeImpl(final IScrollCompositeSpi containerWidgetSpi, final IScrollCompositeSetup setup) {
-		super(containerWidgetSpi);
-		this.controlDelegate = new ControlDelegate(containerWidgetSpi, this);
-		this.containerDelegate = new ContainerDelegate(containerWidgetSpi, this);
-		this.dragSource = new DragSourceImpl(containerWidgetSpi.getDragSource());
-		this.dropTarget = new DropTargetImpl(containerWidgetSpi.getDropTarget(), new ImmutableDropSelection(this));
-		VisibiliySettingsInvoker.setVisibility(setup, this);
-		ColorSettingsInvoker.setColors(setup, this);
-		LayoutSettingsInvoker.setLayout(setup, this);
-	}
+    public ScrollCompositeImpl(final IScrollCompositeSpi containerWidgetSpi, final IScrollCompositeSetup setup) {
+        super(containerWidgetSpi);
+        this.controlDelegate = new ControlDelegate(containerWidgetSpi, this);
+        this.containerDelegate = new ContainerDelegate(containerWidgetSpi, this);
+        this.dragSource = new DragSourceImpl(containerWidgetSpi.getDragSource());
+        this.dropTarget = new DropTargetImpl(containerWidgetSpi.getDropTarget(), new ImmutableDropSelection(this));
+        VisibiliySettingsInvoker.setVisibility(setup, this);
+        ColorSettingsInvoker.setColors(setup, this);
+        LayoutSettingsInvoker.setLayout(setup, this);
+    }
 
-	@Override
-	public IControl getRoot() {
-		return (IControl) super.getRoot();
-	}
+    @Override
+    public IControl getRoot() {
+        return (IControl) super.getRoot();
+    }
 
-	@Override
-	public <LAYOUT_TYPE extends ILayouter> LAYOUT_TYPE setLayout(final ILayoutFactory<LAYOUT_TYPE> layoutFactory) {
-		Assert.paramNotNull(layoutFactory, "layoutFactory");
-		final LAYOUT_TYPE result = layoutFactory.create(this);
-		setLayout(result);
-		return result;
-	}
+    @Override
+    public <LAYOUT_TYPE extends ILayouter> LAYOUT_TYPE setLayout(final ILayoutFactory<LAYOUT_TYPE> layoutFactory) {
+        Assert.paramNotNull(layoutFactory, "layoutFactory");
+        final LAYOUT_TYPE result = layoutFactory.create(this);
+        setLayout(result);
+        return result;
+    }
 
-	@Override
-	public void setMinSize(final Dimension minSize) {
-		this.minSize = minSize;
-	}
+    @Override
+    public void setMinSize(final Dimension minSize) {
+        this.minSize = minSize;
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		if (minSize != null) {
-			return minSize;
-		}
-		else {
-			return Dimension.MIN;
-		}
-	}
+    @Override
+    public Dimension getMinSize() {
+        if (minSize != null) {
+            return minSize;
+        }
+        else {
+            return Dimension.MIN;
+        }
+    }
 
-	@Override
-	public void addContainerListener(final IContainerListener listener) {
-		containerDelegate.addContainerListener(listener);
-	}
+    @Override
+    public void addContainerListener(final IContainerListener listener) {
+        containerDelegate.addContainerListener(listener);
+    }
 
-	@Override
-	public void removeContainerListener(final IContainerListener listener) {
-		containerDelegate.removeContainerListener(listener);
-	}
+    @Override
+    public void removeContainerListener(final IContainerListener listener) {
+        containerDelegate.removeContainerListener(listener);
+    }
 
-	@Override
-	public void addContainerRegistry(final IContainerRegistry registry) {
-		containerDelegate.addContainerRegistry(registry);
-	}
+    @Override
+    public void addContainerRegistry(final IContainerRegistry registry) {
+        containerDelegate.addContainerRegistry(registry);
+    }
 
-	@Override
-	public void removeContainerRegistry(final IContainerRegistry registry) {
-		containerDelegate.removeContainerRegistry(registry);
-	}
+    @Override
+    public void removeContainerRegistry(final IContainerRegistry registry) {
+        containerDelegate.removeContainerRegistry(registry);
+    }
 
-	@Override
-	public void addComponentListenerRecursive(final IListenerFactory<IComponentListener> listenerFactory) {
-		containerDelegate.addComponentListenerRecursive(listenerFactory);
-	}
+    @Override
+    public void addComponentListenerRecursive(final IListenerFactory<IComponentListener> listenerFactory) {
+        containerDelegate.addComponentListenerRecursive(listenerFactory);
+    }
 
-	@Override
-	public void removeComponentListenerRecursive(final IListenerFactory<IComponentListener> listenerFactory) {
-		containerDelegate.removeComponentListenerRecursive(listenerFactory);
-	}
+    @Override
+    public void removeComponentListenerRecursive(final IListenerFactory<IComponentListener> listenerFactory) {
+        containerDelegate.removeComponentListenerRecursive(listenerFactory);
+    }
 
-	@Override
-	public void addFocusListenerRecursive(final IListenerFactory<IFocusListener> listenerFactory) {
-		containerDelegate.addFocusListenerRecursive(listenerFactory);
-	}
+    @Override
+    public void addFocusListenerRecursive(final IListenerFactory<IFocusListener> listenerFactory) {
+        containerDelegate.addFocusListenerRecursive(listenerFactory);
+    }
 
-	@Override
-	public void removeFocusListenerRecursive(final IListenerFactory<IFocusListener> listenerFactory) {
-		containerDelegate.removeFocusListenerRecursive(listenerFactory);
-	}
+    @Override
+    public void removeFocusListenerRecursive(final IListenerFactory<IFocusListener> listenerFactory) {
+        containerDelegate.removeFocusListenerRecursive(listenerFactory);
+    }
 
-	@Override
-	public void addKeyListenerRecursive(final IListenerFactory<IKeyListener> listenerFactory) {
-		containerDelegate.addKeyListenerRecursive(listenerFactory);
-	}
+    @Override
+    public void addKeyListenerRecursive(final IListenerFactory<IKeyListener> listenerFactory) {
+        containerDelegate.addKeyListenerRecursive(listenerFactory);
+    }
 
-	@Override
-	public void removeKeyListenerRecursive(final IListenerFactory<IKeyListener> listenerFactory) {
-		containerDelegate.removeKeyListenerRecursive(listenerFactory);
-	}
+    @Override
+    public void removeKeyListenerRecursive(final IListenerFactory<IKeyListener> listenerFactory) {
+        containerDelegate.removeKeyListenerRecursive(listenerFactory);
+    }
 
-	@Override
-	public void addMouseListenerRecursive(final IListenerFactory<IMouseListener> listenerFactory) {
-		containerDelegate.addMouseListenerRecursive(listenerFactory);
-	}
+    @Override
+    public void addMouseListenerRecursive(final IListenerFactory<IMouseListener> listenerFactory) {
+        containerDelegate.addMouseListenerRecursive(listenerFactory);
+    }
 
-	@Override
-	public void removeMouseListenerRecursive(final IListenerFactory<IMouseListener> listenerFactory) {
-		containerDelegate.removeMouseListenerRecursive(listenerFactory);
-	}
+    @Override
+    public void removeMouseListenerRecursive(final IListenerFactory<IMouseListener> listenerFactory) {
+        containerDelegate.removeMouseListenerRecursive(listenerFactory);
+    }
 
-	@Override
-	public void addPopupDetectionListenerRecursive(final IListenerFactory<IPopupDetectionListener> listenerFactory) {
-		containerDelegate.addPopupDetectionListenerRecursive(listenerFactory);
-	}
+    @Override
+    public void addPopupDetectionListenerRecursive(final IListenerFactory<IPopupDetectionListener> listenerFactory) {
+        containerDelegate.addPopupDetectionListenerRecursive(listenerFactory);
+    }
 
-	@Override
-	public void removePopupDetectionListenerRecursive(final IListenerFactory<IPopupDetectionListener> listenerFactory) {
-		containerDelegate.removePopupDetectionListenerRecursive(listenerFactory);
-	}
+    @Override
+    public void removePopupDetectionListenerRecursive(final IListenerFactory<IPopupDetectionListener> listenerFactory) {
+        containerDelegate.removePopupDetectionListenerRecursive(listenerFactory);
+    }
 
-	@Override
-	public void layoutLater() {
-		containerDelegate.layoutLater();
-	}
+    @Override
+    public void layoutLater() {
+        containerDelegate.layoutLater();
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final int index,
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
-		final Object layoutConstraints) {
-		return containerDelegate.add(index, descriptor, layoutConstraints);
-	}
+    @Override
+    public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+        final int index,
+        final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+        final Object layoutConstraints) {
+        return containerDelegate.add(index, descriptor, layoutConstraints);
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final int index,
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
-		return containerDelegate.add(index, descriptor);
-	}
+    @Override
+    public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+        final int index,
+        final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+        return containerDelegate.add(index, descriptor);
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final int index,
-		final ICustomWidgetCreator<WIDGET_TYPE> creator,
-		final Object layoutConstraints) {
-		return containerDelegate.add(index, creator, layoutConstraints);
-	}
+    @Override
+    public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+        final int index,
+        final ICustomWidgetCreator<WIDGET_TYPE> creator,
+        final Object layoutConstraints) {
+        return containerDelegate.add(index, creator, layoutConstraints);
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final int index, final ICustomWidgetCreator<WIDGET_TYPE> creator) {
-		return containerDelegate.add(index, creator);
-	}
+    @Override
+    public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final int index, final ICustomWidgetCreator<WIDGET_TYPE> creator) {
+        return containerDelegate.add(index, creator);
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
-		final Object layoutConstraints) {
-		return containerDelegate.add(descriptor, layoutConstraints);
-	}
+    @Override
+    public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+        final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+        final Object layoutConstraints) {
+        return containerDelegate.add(descriptor, layoutConstraints);
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final ICustomWidgetCreator<WIDGET_TYPE> creator,
-		final Object layoutConstraints) {
-		return containerDelegate.add(creator, layoutConstraints);
-	}
+    @Override
+    public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+        final ICustomWidgetCreator<WIDGET_TYPE> creator,
+        final Object layoutConstraints) {
+        return containerDelegate.add(creator, layoutConstraints);
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
-		return containerDelegate.add(descriptor);
-	}
+    @Override
+    public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+        return containerDelegate.add(descriptor);
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final ICustomWidgetCreator<WIDGET_TYPE> creator) {
-		return containerDelegate.add(creator);
-	}
+    @Override
+    public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final ICustomWidgetCreator<WIDGET_TYPE> creator) {
+        return containerDelegate.add(creator);
+    }
 
-	@Override
-	public void setTabOrder(final Collection<? extends IControl> tabOrder) {
-		containerDelegate.setTabOrder(tabOrder);
-	}
+    @Override
+    public void setTabOrder(final Collection<? extends IControl> tabOrder) {
+        containerDelegate.setTabOrder(tabOrder);
+    }
 
-	@Override
-	public void setTabOrder(final IControl... controls) {
-		containerDelegate.setTabOrder(controls);
-	}
+    @Override
+    public void setTabOrder(final IControl... controls) {
+        containerDelegate.setTabOrder(controls);
+    }
 
-	@Override
-	public List<IControl> getChildren() {
-		return containerDelegate.getChildren();
-	}
+    @Override
+    public List<IControl> getChildren() {
+        return containerDelegate.getChildren();
+    }
 
-	@Override
-	public void removeAll() {
-		containerDelegate.removeAll();
-	}
+    @Override
+    public void removeAll() {
+        containerDelegate.removeAll();
+    }
 
-	@Override
-	public boolean remove(final IControl control) {
-		return containerDelegate.remove(control);
-	}
+    @Override
+    public boolean remove(final IControl control) {
+        return containerDelegate.remove(control);
+    }
 
-	@Override
-	public IContainer getParent() {
-		return controlDelegate.getParent();
-	}
+    @Override
+    public IContainer getParent() {
+        return controlDelegate.getParent();
+    }
 
-	@Override
-	public void setParent(final IContainer parent) {
-		controlDelegate.setParent(parent);
-	}
+    @Override
+    public void setParent(final IContainer parent) {
+        controlDelegate.setParent(parent);
+    }
 
-	@Override
-	public void addParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.addParentListener(listener);
-	}
+    @Override
+    public void addParentListener(final IParentListener<IContainer> listener) {
+        controlDelegate.addParentListener(listener);
+    }
 
-	@Override
-	public void removeParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.removeParentListener(listener);
-	}
+    @Override
+    public void removeParentListener(final IParentListener<IContainer> listener) {
+        controlDelegate.removeParentListener(listener);
+    }
 
-	@Override
-	public boolean isReparentable() {
-		return controlDelegate.isReparentable();
-	}
+    @Override
+    public boolean isReparentable() {
+        return controlDelegate.isReparentable();
+    }
 
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		containerDelegate.addDisposeListener(listener);
-	}
+    @Override
+    public void addDisposeListener(final IDisposeListener listener) {
+        containerDelegate.addDisposeListener(listener);
+    }
 
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		containerDelegate.removeDisposeListener(listener);
-	}
+    @Override
+    public void removeDisposeListener(final IDisposeListener listener) {
+        containerDelegate.removeDisposeListener(listener);
+    }
 
-	@Override
-	public boolean isDisposed() {
-		return containerDelegate.isDisposed();
-	}
+    @Override
+    public boolean isDisposed() {
+        return containerDelegate.isDisposed();
+    }
 
-	@Override
-	public void dispose() {
-		containerDelegate.dispose();
-	}
+    @Override
+    public void dispose() {
+        containerDelegate.dispose();
+    }
 
-	@Override
-	public IPopupMenu createPopupMenu() {
-		return containerDelegate.createPopupMenu();
-	}
+    @Override
+    public IPopupMenu createPopupMenu() {
+        return containerDelegate.createPopupMenu();
+    }
 
-	@Override
-	public IDragSource getDragSource() {
-		return dragSource;
-	}
+    @Override
+    public IDragSource getDragSource() {
+        return dragSource;
+    }
 
-	@Override
-	public IDropTarget getDropTarget() {
-		return dropTarget;
-	}
+    @Override
+    public IDropTarget getDropTarget() {
+        return dropTarget;
+    }
 
 }

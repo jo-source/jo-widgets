@@ -42,26 +42,26 @@ import org.jowidgets.i18n.api.IMessage;
  */
 public final class StaticMessage implements IMessage, Serializable {
 
-	private static final long serialVersionUID = 4966413540403838737L;
+    private static final long serialVersionUID = 4966413540403838737L;
 
-	private final String message;
+    private final String message;
 
-	public StaticMessage() {
-		this(null);
-	}
+    public StaticMessage() {
+        this(null);
+    }
 
-	public StaticMessage(final String message) {
-		this.message = message;
-	}
+    public StaticMessage(final String message) {
+        this.message = message;
+    }
 
-	@Override
-	public String get() {
-		return message;
-	}
+    @Override
+    public String get() {
+        return message;
+    }
 
-	@Override
-	public String toString() {
-		return "StaticMessage [message=" + message + "]";
-	}
+    @Override
+    public String toString() {
+        return "StaticMessage [message=" + message + "]";
+    }
 
 }

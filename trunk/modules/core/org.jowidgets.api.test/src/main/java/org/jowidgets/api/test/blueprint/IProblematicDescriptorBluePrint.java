@@ -32,8 +32,8 @@ import org.jowidgets.api.test.blueprint.descriptor.IProblematicDescriptorOne;
 import org.jowidgets.api.test.blueprint.descriptor.IProblematicDescriptorTwo;
 
 public interface IProblematicDescriptorBluePrint extends
-		IProblematicDescriptorSetupBuilder<IProblematicDescriptorBluePrint>,
-		IProblematicDescriptorOne,
-		IProblematicDescriptorTwo {
+        IProblematicDescriptorSetupBuilder<IProblematicDescriptorBluePrint>,
+        IProblematicDescriptorOne,
+        IProblematicDescriptorTwo {
 
 }

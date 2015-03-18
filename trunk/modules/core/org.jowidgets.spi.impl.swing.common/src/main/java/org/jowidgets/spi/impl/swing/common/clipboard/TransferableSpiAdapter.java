@@ -44,54 +44,54 @@ import org.jowidgets.util.Assert;
 
 final class TransferableSpiAdapter implements ITransferableSpi {
 
-	private static final DataFlavor TRANSFER_CONTAINER_FLAVOR = SwingClipboard.TRANSFER_CONTAINER_FLAVOR;
+    private static final DataFlavor TRANSFER_CONTAINER_FLAVOR = SwingClipboard.TRANSFER_CONTAINER_FLAVOR;
 
-	private final Map<TransferTypeSpi, Object> dataMap;
+    private final Map<TransferTypeSpi, Object> dataMap;
 
-	TransferableSpiAdapter(final Transferable contents) {
-		Assert.paramNotNull(contents, "contents");
+    TransferableSpiAdapter(final Transferable contents) {
+        Assert.paramNotNull(contents, "contents");
 
-		this.dataMap = new HashMap<TransferTypeSpi, Object>();
+        this.dataMap = new HashMap<TransferTypeSpi, Object>();
 
-		for (final DataFlavor flavor : contents.getTransferDataFlavors()) {
-			if (DataFlavor.stringFlavor.equals(flavor)) {
-				try {
-					final TransferTypeSpi transferType = new TransferTypeSpi(String.class);
-					final Object transferData = contents.getTransferData(flavor);
-					dataMap.put(transferType, transferData);
-				}
-				catch (final Exception e) {
-				}
-			}
-			else if (TRANSFER_CONTAINER_FLAVOR.equals(flavor)) {
-				try {
-					final Object transferData = contents.getTransferData(flavor);
-					if (transferData instanceof InputStream) {
-						final InputStream inputStream = (InputStream) transferData;
-						inputStream.reset();
-						final Object deserialized = Serializer.deserialize(inputStream);
-						if (deserialized instanceof TransferContainer) {
-							final TransferContainer transferContainer = (TransferContainer) deserialized;
-							for (final TransferObject transferObject : transferContainer.getTransferObjetcs()) {
-								dataMap.put(transferObject.getTransferType(), transferObject.getData());
-							}
-						}
-					}
-				}
-				catch (final Exception e) {
-				}
-			}
-		}
-	}
+        for (final DataFlavor flavor : contents.getTransferDataFlavors()) {
+            if (DataFlavor.stringFlavor.equals(flavor)) {
+                try {
+                    final TransferTypeSpi transferType = new TransferTypeSpi(String.class);
+                    final Object transferData = contents.getTransferData(flavor);
+                    dataMap.put(transferType, transferData);
+                }
+                catch (final Exception e) {
+                }
+            }
+            else if (TRANSFER_CONTAINER_FLAVOR.equals(flavor)) {
+                try {
+                    final Object transferData = contents.getTransferData(flavor);
+                    if (transferData instanceof InputStream) {
+                        final InputStream inputStream = (InputStream) transferData;
+                        inputStream.reset();
+                        final Object deserialized = Serializer.deserialize(inputStream);
+                        if (deserialized instanceof TransferContainer) {
+                            final TransferContainer transferContainer = (TransferContainer) deserialized;
+                            for (final TransferObject transferObject : transferContainer.getTransferObjetcs()) {
+                                dataMap.put(transferObject.getTransferType(), transferObject.getData());
+                            }
+                        }
+                    }
+                }
+                catch (final Exception e) {
+                }
+            }
+        }
+    }
 
-	@Override
-	public Collection<TransferTypeSpi> getSupportedTypes() {
-		return dataMap.keySet();
-	}
+    @Override
+    public Collection<TransferTypeSpi> getSupportedTypes() {
+        return dataMap.keySet();
+    }
 
-	@Override
-	public Object getData(final TransferTypeSpi type) {
-		return dataMap.get(type);
-	}
+    @Override
+    public Object getData(final TransferTypeSpi type) {
+        return dataMap.get(type);
+    }
 
 }

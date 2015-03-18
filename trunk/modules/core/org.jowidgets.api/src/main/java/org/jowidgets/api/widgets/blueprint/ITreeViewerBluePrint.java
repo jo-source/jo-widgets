@@ -31,7 +31,7 @@ import org.jowidgets.api.widgets.blueprint.builder.ITreeViewerSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.ITreeViewerDescriptor;
 
 public interface ITreeViewerBluePrint<ROOT_NODE_VALUE_TYPE> extends
-		ITreeViewerSetupBuilder<ITreeViewerBluePrint<ROOT_NODE_VALUE_TYPE>, ROOT_NODE_VALUE_TYPE>,
-		ITreeViewerDescriptor<ROOT_NODE_VALUE_TYPE> {
+        ITreeViewerSetupBuilder<ITreeViewerBluePrint<ROOT_NODE_VALUE_TYPE>, ROOT_NODE_VALUE_TYPE>,
+        ITreeViewerDescriptor<ROOT_NODE_VALUE_TYPE> {
 
 }

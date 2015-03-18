@@ -36,74 +36,74 @@ import org.junit.Test;
 
 public class FileUtilsTest {
 
-	private static final String SEP = File.separator;
+    private static final String SEP = File.separator;
 
-	@Test
-	public void getRelativePathTest1() {
-		final String rootPath = "a" + SEP + "b" + SEP + "c";
-		final String path = "a" + SEP + "b" + SEP + "c" + SEP + "d" + SEP + "e";
-		final String relativePath = FileUtils.getRelativePath(rootPath, path);
-		Assert.assertEquals("d" + SEP + "e", relativePath);
-	}
+    @Test
+    public void getRelativePathTest1() {
+        final String rootPath = "a" + SEP + "b" + SEP + "c";
+        final String path = "a" + SEP + "b" + SEP + "c" + SEP + "d" + SEP + "e";
+        final String relativePath = FileUtils.getRelativePath(rootPath, path);
+        Assert.assertEquals("d" + SEP + "e", relativePath);
+    }
 
-	@Test
-	public void getRelativePathTest2() {
-		final String rootPath = "a" + SEP + "b" + SEP + "c" + SEP;
-		final String path = "a" + SEP + "b" + SEP + "c" + SEP + "d" + SEP + "e";
-		final String relativePath = FileUtils.getRelativePath(rootPath, path);
-		Assert.assertEquals("d" + SEP + "e", relativePath);
-	}
+    @Test
+    public void getRelativePathTest2() {
+        final String rootPath = "a" + SEP + "b" + SEP + "c" + SEP;
+        final String path = "a" + SEP + "b" + SEP + "c" + SEP + "d" + SEP + "e";
+        final String relativePath = FileUtils.getRelativePath(rootPath, path);
+        Assert.assertEquals("d" + SEP + "e", relativePath);
+    }
 
-	@Test
-	public void getRelativePathTest3() {
-		final String rootPath = SEP + "a" + SEP + "b" + SEP + "c" + SEP;
-		final String path = SEP + "a" + SEP + "b" + SEP + "c" + SEP + "d" + SEP + "e";
-		final String relativePath = FileUtils.getRelativePath(rootPath, path);
-		Assert.assertEquals("d" + SEP + "e", relativePath);
-	}
+    @Test
+    public void getRelativePathTest3() {
+        final String rootPath = SEP + "a" + SEP + "b" + SEP + "c" + SEP;
+        final String path = SEP + "a" + SEP + "b" + SEP + "c" + SEP + "d" + SEP + "e";
+        final String relativePath = FileUtils.getRelativePath(rootPath, path);
+        Assert.assertEquals("d" + SEP + "e", relativePath);
+    }
 
-	@Test
-	public void getRelativePathTest4() {
-		final String rootPath = "a" + SEP + "b" + SEP + "c";
-		final String path = "a" + SEP + "b" + SEP + "c" + SEP + "d";
-		final String relativePath = FileUtils.getRelativePath(rootPath, path);
-		Assert.assertEquals("d", relativePath);
-	}
+    @Test
+    public void getRelativePathTest4() {
+        final String rootPath = "a" + SEP + "b" + SEP + "c";
+        final String path = "a" + SEP + "b" + SEP + "c" + SEP + "d";
+        final String relativePath = FileUtils.getRelativePath(rootPath, path);
+        Assert.assertEquals("d", relativePath);
+    }
 
-	@Test
-	public void getRelativePathTest5() {
-		final String rootPath = "a" + SEP + "b" + SEP + "c";
-		final String path = "a" + SEP + "b" + SEP + "c" + SEP;
-		final String relativePath = FileUtils.getRelativePath(rootPath, path);
-		Assert.assertEquals("", relativePath);
-	}
+    @Test
+    public void getRelativePathTest5() {
+        final String rootPath = "a" + SEP + "b" + SEP + "c";
+        final String path = "a" + SEP + "b" + SEP + "c" + SEP;
+        final String relativePath = FileUtils.getRelativePath(rootPath, path);
+        Assert.assertEquals("", relativePath);
+    }
 
-	@Test
-	public void getRelativePathTest6() {
-		final String rootPath = "a" + SEP + "b" + SEP + "c";
-		final String path = "a" + SEP + "b" + SEP + "c";
-		final String relativePath = FileUtils.getRelativePath(rootPath, path);
-		Assert.assertEquals("", relativePath);
-	}
+    @Test
+    public void getRelativePathTest6() {
+        final String rootPath = "a" + SEP + "b" + SEP + "c";
+        final String path = "a" + SEP + "b" + SEP + "c";
+        final String relativePath = FileUtils.getRelativePath(rootPath, path);
+        Assert.assertEquals("", relativePath);
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void getRelativePathTestFailure1() {
-		final String rootPath = "a" + SEP + "b" + SEP + "c";
-		final String path = "a" + SEP + "b" + SEP;
-		FileUtils.getRelativePath(rootPath, path);
-	}
+    @Test(expected = IllegalArgumentException.class)
+    public void getRelativePathTestFailure1() {
+        final String rootPath = "a" + SEP + "b" + SEP + "c";
+        final String path = "a" + SEP + "b" + SEP;
+        FileUtils.getRelativePath(rootPath, path);
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void getRelativePathTestFailure2() {
-		final String rootPath = "a" + SEP + "b" + SEP + "c";
-		final String path = "x" + SEP + "b" + SEP + "c" + SEP + "d" + SEP + "e";
-		FileUtils.getRelativePath(rootPath, path);
-	}
+    @Test(expected = IllegalArgumentException.class)
+    public void getRelativePathTestFailure2() {
+        final String rootPath = "a" + SEP + "b" + SEP + "c";
+        final String path = "x" + SEP + "b" + SEP + "c" + SEP + "d" + SEP + "e";
+        FileUtils.getRelativePath(rootPath, path);
+    }
 
-	@Test(expected = IllegalArgumentException.class)
-	public void getRelativePathTestFailure3() {
-		final String rootPath = "a" + SEP + "b" + SEP + "c";
-		final String path = "a" + SEP + "b" + SEP + "x" + SEP + "d" + SEP + "e";
-		FileUtils.getRelativePath(rootPath, path);
-	}
+    @Test(expected = IllegalArgumentException.class)
+    public void getRelativePathTestFailure3() {
+        final String rootPath = "a" + SEP + "b" + SEP + "c";
+        final String path = "a" + SEP + "b" + SEP + "x" + SEP + "d" + SEP + "e";
+        FileUtils.getRelativePath(rootPath, path);
+    }
 }

@@ -39,71 +39,71 @@ import org.jowidgets.util.Assert;
 
 public class KeyObservable implements IKeyObservable {
 
-	private static final IKeyObservableCallback DUMMY_KEY_OBSERVABLE_CALLBACK = new DummyKeyObservableCallback();
+    private static final IKeyObservableCallback DUMMY_KEY_OBSERVABLE_CALLBACK = new DummyKeyObservableCallback();
 
-	private final Set<IKeyListener> listeners;
-	private final IKeyObservableCallback observableCallback;
+    private final Set<IKeyListener> listeners;
+    private final IKeyObservableCallback observableCallback;
 
-	public KeyObservable() {
-		this(DUMMY_KEY_OBSERVABLE_CALLBACK);
-	}
+    public KeyObservable() {
+        this(DUMMY_KEY_OBSERVABLE_CALLBACK);
+    }
 
-	public KeyObservable(final IKeyObservableCallback observableCallback) {
-		Assert.paramNotNull(observableCallback, "observableCallback");
-		this.listeners = new LinkedHashSet<IKeyListener>();
-		this.observableCallback = observableCallback;
-	}
+    public KeyObservable(final IKeyObservableCallback observableCallback) {
+        Assert.paramNotNull(observableCallback, "observableCallback");
+        this.listeners = new LinkedHashSet<IKeyListener>();
+        this.observableCallback = observableCallback;
+    }
 
-	@Override
-	public final void addKeyListener(final IKeyListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-		if (listeners.size() == 1) {
-			observableCallback.onFirstRegistered();
-		}
-	}
+    @Override
+    public final void addKeyListener(final IKeyListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+        if (listeners.size() == 1) {
+            observableCallback.onFirstRegistered();
+        }
+    }
 
-	@Override
-	public final void removeKeyListener(final IKeyListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-		if (listeners.size() == 0) {
-			observableCallback.onLastUnregistered();
-		}
-	}
+    @Override
+    public final void removeKeyListener(final IKeyListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+        if (listeners.size() == 0) {
+            observableCallback.onLastUnregistered();
+        }
+    }
 
-	public final void fireKeyPressed(final IKeyEvent event) {
-		for (final IKeyListener listener : new LinkedList<IKeyListener>(listeners)) {
-			listener.keyPressed(event);
-		}
-	}
+    public final void fireKeyPressed(final IKeyEvent event) {
+        for (final IKeyListener listener : new LinkedList<IKeyListener>(listeners)) {
+            listener.keyPressed(event);
+        }
+    }
 
-	public final void fireKeyReleased(final IKeyEvent event) {
-		for (final IKeyListener listener : new LinkedList<IKeyListener>(listeners)) {
-			listener.keyReleased(event);
-		}
-	}
+    public final void fireKeyReleased(final IKeyEvent event) {
+        for (final IKeyListener listener : new LinkedList<IKeyListener>(listeners)) {
+            listener.keyReleased(event);
+        }
+    }
 
-	public final int size() {
-		return listeners.size();
-	}
+    public final int size() {
+        return listeners.size();
+    }
 
-	public interface IKeyObservableCallback {
+    public interface IKeyObservableCallback {
 
-		void onFirstRegistered();
+        void onFirstRegistered();
 
-		void onLastUnregistered();
+        void onLastUnregistered();
 
-	}
+    }
 
-	public static final class DummyKeyObservableCallback implements IKeyObservableCallback {
+    public static final class DummyKeyObservableCallback implements IKeyObservableCallback {
 
-		@Override
-		public void onFirstRegistered() {}
+        @Override
+        public void onFirstRegistered() {}
 
-		@Override
-		public void onLastUnregistered() {}
+        @Override
+        public void onLastUnregistered() {}
 
-	}
+    }
 
 }

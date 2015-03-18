@@ -32,12 +32,12 @@ import org.jowidgets.api.widgets.ITreeNode;
 
 public interface ITreeListener {
 
-	void nodeExpanded(ITreeNode node);
+    void nodeExpanded(ITreeNode node);
 
-	void nodeCollapsed(ITreeNode node);
+    void nodeCollapsed(ITreeNode node);
 
-	void nodeChecked(ITreeNode node);
+    void nodeChecked(ITreeNode node);
 
-	void nodeUnchecked(ITreeNode node);
+    void nodeUnchecked(ITreeNode node);
 
 }

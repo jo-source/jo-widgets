@@ -30,6 +30,6 @@ package org.jowidgets.util.event;
 
 public interface ICancelListener {
 
-	void canceled();
+    void canceled();
 
 }

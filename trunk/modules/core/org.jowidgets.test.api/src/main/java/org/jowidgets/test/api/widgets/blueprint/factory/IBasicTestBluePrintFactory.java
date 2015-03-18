@@ -43,38 +43,38 @@ import org.jowidgets.test.api.widgets.blueprint.ITextLabelBluePrintUi;
 
 public interface IBasicTestBluePrintFactory extends IBasicSimpleTestBluePrintFactory {
 
-	/////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////some convenience methods starting here///////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////some convenience methods starting here///////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
 
-	IFrameBluePrintUi frame(final String title);
+    IFrameBluePrintUi frame(final String title);
 
-	IFrameBluePrintUi frame(final String title, final IImageConstant icon);
+    IFrameBluePrintUi frame(final String title, final IImageConstant icon);
 
-	IDialogBluePrintUi dialog(final String title);
+    IDialogBluePrintUi dialog(final String title);
 
-	IDialogBluePrintUi dialog(final String title, final IImageConstant icon);
+    IDialogBluePrintUi dialog(final String title, final IImageConstant icon);
 
-	ICompositeBluePrintUi composite(final String borderTitle);
+    ICompositeBluePrintUi composite(final String borderTitle);
 
-	IScrollCompositeBluePrintUi scrollComposite(final String borderTitle);
+    IScrollCompositeBluePrintUi scrollComposite(final String borderTitle);
 
-	IButtonBluePrintUi button(final String text);
+    IButtonBluePrintUi button(final String text);
 
-	IButtonBluePrintUi button(final String text, final String toolTipText);
+    IButtonBluePrintUi button(final String text, final String toolTipText);
 
-	IIconBluePrintUi icon(final IImageConstant icon);
+    IIconBluePrintUi icon(final IImageConstant icon);
 
-	ITextLabelBluePrintUi textLabel(final String text);
+    ITextLabelBluePrintUi textLabel(final String text);
 
-	ITextLabelBluePrintUi textLabel(final String text, final String tooltipText);
+    ITextLabelBluePrintUi textLabel(final String text, final String tooltipText);
 
-	IActionMenuItemBluePrintUi menuItem(String text);
+    IActionMenuItemBluePrintUi menuItem(String text);
 
-	IRadioMenuItemBluePrintUi radioMenuItem(String text);
+    IRadioMenuItemBluePrintUi radioMenuItem(String text);
 
-	ICheckedMenuItemBluePrintUi checkedMenuItem(String text);
+    ICheckedMenuItemBluePrintUi checkedMenuItem(String text);
 
-	IMainMenuBluePrintUi mainMenu(String text);
+    IMainMenuBluePrintUi mainMenu(String text);
 
 }

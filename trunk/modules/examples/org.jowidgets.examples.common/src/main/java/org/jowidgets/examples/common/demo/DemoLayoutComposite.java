@@ -38,84 +38,84 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
 public final class DemoLayoutComposite {
 
-	public DemoLayoutComposite(final IContainer parentContainer) {
+    public DemoLayoutComposite(final IContainer parentContainer) {
 
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		parentContainer.setLayout(new MigLayoutDescriptor("[300::, grow]", ""));
+        parentContainer.setLayout(new MigLayoutDescriptor("[300::, grow]", ""));
 
-		final IButton nullLayoutButton = parentContainer.add(bpf.button("Null layout"), "grow, sg bg, wrap");
-		nullLayoutButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IFrame frame = new DemoNullLayoutFrame();
-				frame.setVisible(true);
-			}
-		});
+        final IButton nullLayoutButton = parentContainer.add(bpf.button("Null layout"), "grow, sg bg, wrap");
+        nullLayoutButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IFrame frame = new DemoNullLayoutFrame();
+                frame.setVisible(true);
+            }
+        });
 
-		final IButton preferredSizeLayoutButton = parentContainer.add(bpf.button("Preffered size layout"), "grow, sg bg, wrap");
-		preferredSizeLayoutButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IFrame frame = new DemoPreferredSizeLayoutFrame();
-				frame.setVisible(true);
-			}
-		});
+        final IButton preferredSizeLayoutButton = parentContainer.add(bpf.button("Preffered size layout"), "grow, sg bg, wrap");
+        preferredSizeLayoutButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IFrame frame = new DemoPreferredSizeLayoutFrame();
+                frame.setVisible(true);
+            }
+        });
 
-		final IButton flowLayoutButton = parentContainer.add(bpf.button("Flow layout"), "grow, sg bg, wrap");
-		flowLayoutButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IFrame frame = new DemoFlowLayoutFrame();
-				frame.setVisible(true);
-			}
-		});
+        final IButton flowLayoutButton = parentContainer.add(bpf.button("Flow layout"), "grow, sg bg, wrap");
+        flowLayoutButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IFrame frame = new DemoFlowLayoutFrame();
+                frame.setVisible(true);
+            }
+        });
 
-		final IButton fillLayoutButton = parentContainer.add(bpf.button("Fill layout"), "grow, sg bg, wrap");
-		fillLayoutButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IFrame frame = new DemoFillLayoutFrame();
-				frame.setVisible(true);
-			}
-		});
+        final IButton fillLayoutButton = parentContainer.add(bpf.button("Fill layout"), "grow, sg bg, wrap");
+        fillLayoutButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IFrame frame = new DemoFillLayoutFrame();
+                frame.setVisible(true);
+            }
+        });
 
-		final IButton fillLayoutMarginButton = parentContainer.add(bpf.button("Fill layout (margin)"), "grow, sg bg, wrap");
-		fillLayoutMarginButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IFrame frame = new DemoFillLayoutMarginFrame();
-				frame.setVisible(true);
-			}
-		});
+        final IButton fillLayoutMarginButton = parentContainer.add(bpf.button("Fill layout (margin)"), "grow, sg bg, wrap");
+        fillLayoutMarginButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IFrame frame = new DemoFillLayoutMarginFrame();
+                frame.setVisible(true);
+            }
+        });
 
-		final IButton borderLayoutButton = parentContainer.add(bpf.button("Border layout"), "grow, sg bg, wrap");
-		borderLayoutButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IFrame frame = new DemoBorderLayoutFrame();
-				frame.setVisible(true);
-			}
-		});
+        final IButton borderLayoutButton = parentContainer.add(bpf.button("Border layout"), "grow, sg bg, wrap");
+        borderLayoutButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IFrame frame = new DemoBorderLayoutFrame();
+                frame.setVisible(true);
+            }
+        });
 
-		final IButton borderLayoutButton2 = parentContainer.add(bpf.button("Border layout 2"), "grow, sg bg, wrap");
-		borderLayoutButton2.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IFrame frame = new DemoBorderLayoutFrame2();
-				frame.setVisible(true);
-			}
-		});
+        final IButton borderLayoutButton2 = parentContainer.add(bpf.button("Border layout 2"), "grow, sg bg, wrap");
+        borderLayoutButton2.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IFrame frame = new DemoBorderLayoutFrame2();
+                frame.setVisible(true);
+            }
+        });
 
-		final IButton migLayoutButton = parentContainer.add(bpf.button("MigLayout"), "grow, sg bg, wrap");
-		migLayoutButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IFrame frame = new DemoMigLayoutFrame();
-				frame.setVisible(true);
-			}
-		});
-	}
+        final IButton migLayoutButton = parentContainer.add(bpf.button("MigLayout"), "grow, sg bg, wrap");
+        migLayoutButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IFrame frame = new DemoMigLayoutFrame();
+                frame.setVisible(true);
+            }
+        });
+    }
 
-	public void foo() {}
+    public void foo() {}
 }

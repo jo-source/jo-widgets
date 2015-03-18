@@ -33,9 +33,9 @@ import org.jowidgets.common.model.ITableColumnModelObservable;
 
 public abstract class AbstractTableModel extends AbstractTableDataModel implements ITableModel {
 
-	@Override
-	public ITableColumnModelObservable getTableColumnModelObservable() {
-		return null;
-	}
+    @Override
+    public ITableColumnModelObservable getTableColumnModelObservable() {
+        return null;
+    }
 
 }

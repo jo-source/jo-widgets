@@ -29,9 +29,9 @@
 package org.jowidgets.api.test.blueprint.builder;
 
 public interface IHierarchy4thSetupBuilder<INSTANCE_TYPE extends IHierarchy4thSetupBuilder<?>> extends
-		IHierarchy2nd1SetupBuilder<INSTANCE_TYPE>,
-		IHierarchy3rdSetupBuilder<INSTANCE_TYPE>,
-		IHierarchy2nd3SetupBuilder<INSTANCE_TYPE> {
+        IHierarchy2nd1SetupBuilder<INSTANCE_TYPE>,
+        IHierarchy3rdSetupBuilder<INSTANCE_TYPE>,
+        IHierarchy2nd3SetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setIntroPartFour(String intro);
+    INSTANCE_TYPE setIntroPartFour(String intro);
 }

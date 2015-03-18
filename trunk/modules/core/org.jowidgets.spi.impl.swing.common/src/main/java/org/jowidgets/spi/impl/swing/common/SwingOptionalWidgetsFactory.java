@@ -40,33 +40,33 @@ import org.jowidgets.spi.widgets.setup.IFileChooserSetupSpi;
 
 public class SwingOptionalWidgetsFactory implements IOptionalWidgetsFactorySpi {
 
-	@Override
-	public boolean hasFileChooser() {
-		return true;
-	}
+    @Override
+    public boolean hasFileChooser() {
+        return true;
+    }
 
-	@Override
-	public IFileChooserSpi createFileChooser(final Object parentUiReference, final IFileChooserSetupSpi setup) {
-		return new FileChooserImpl(parentUiReference, setup);
-	}
+    @Override
+    public IFileChooserSpi createFileChooser(final Object parentUiReference, final IFileChooserSetupSpi setup) {
+        return new FileChooserImpl(parentUiReference, setup);
+    }
 
-	@Override
-	public boolean hasDirectoryChooser() {
-		return true;
-	}
+    @Override
+    public boolean hasDirectoryChooser() {
+        return true;
+    }
 
-	@Override
-	public IDirectoryChooserSpi createDirectoryChooser(final Object parentUiReference, final IDirectoryChooserSetupSpi setup) {
-		return new DirectoryChooserImpl(parentUiReference, setup);
-	}
+    @Override
+    public IDirectoryChooserSpi createDirectoryChooser(final Object parentUiReference, final IDirectoryChooserSetupSpi setup) {
+        return new DirectoryChooserImpl(parentUiReference, setup);
+    }
 
-	@Override
-	public boolean hasCalendar() {
-		return false;
-	}
+    @Override
+    public boolean hasCalendar() {
+        return false;
+    }
 
-	@Override
-	public ICalendarSpi createCalendar(final Object parentUiReference, final ICalendarSetupSpi setup) {
-		return null;
-	}
+    @Override
+    public ICalendarSpi createCalendar(final Object parentUiReference, final ICalendarSetupSpi setup) {
+        return null;
+    }
 }

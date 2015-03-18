@@ -37,26 +37,26 @@ import org.jowidgets.util.IIterationCallback;
 
 public final class AnnotationUtils {
 
-	private AnnotationUtils() {}
+    private AnnotationUtils() {}
 
-	public static <ANNOTATION_TYPE extends Annotation> List<ANNOTATION_TYPE> getTypeAnnotationsFromHierarchy(
-		final Class<?> type,
-		final Class<ANNOTATION_TYPE> annotationType) {
+    public static <ANNOTATION_TYPE extends Annotation> List<ANNOTATION_TYPE> getTypeAnnotationsFromHierarchy(
+        final Class<?> type,
+        final Class<ANNOTATION_TYPE> annotationType) {
 
-		Assert.paramNotNull(type, "type");
-		Assert.paramNotNull(annotationType, "annotationType");
+        Assert.paramNotNull(type, "type");
+        Assert.paramNotNull(annotationType, "annotationType");
 
-		final List<ANNOTATION_TYPE> result = new LinkedList<ANNOTATION_TYPE>();
-		ReflectionUtils.iterateHierarchy(type, new IIterationCallback<Class<?>>() {
-			@Override
-			public void next(final Class<?> type) {
-				final ANNOTATION_TYPE annotation = type.getAnnotation(annotationType);
-				if (annotation != null) {
-					result.add(annotation);
-				}
-			}
-		});
-		return result;
-	}
+        final List<ANNOTATION_TYPE> result = new LinkedList<ANNOTATION_TYPE>();
+        ReflectionUtils.iterateHierarchy(type, new IIterationCallback<Class<?>>() {
+            @Override
+            public void next(final Class<?> type) {
+                final ANNOTATION_TYPE annotation = type.getAnnotation(annotationType);
+                if (annotation != null) {
+                    result.add(annotation);
+                }
+            }
+        });
+        return result;
+    }
 
 }

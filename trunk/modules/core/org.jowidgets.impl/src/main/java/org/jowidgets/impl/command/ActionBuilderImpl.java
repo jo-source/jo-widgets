@@ -41,124 +41,124 @@ import org.jowidgets.common.types.VirtualKey;
 
 final class ActionBuilderImpl implements IActionBuilder {
 
-	private String text;
-	private String toolTipText;
-	private IImageConstant icon;
-	private char mnemonic;
-	private Accelerator accelerator;
-	private boolean enabled;
+    private String text;
+    private String toolTipText;
+    private IImageConstant icon;
+    private char mnemonic;
+    private Accelerator accelerator;
+    private boolean enabled;
 
-	private ICommand command;
+    private ICommand command;
 
-	private IExceptionHandler exceptionHandler;
+    private IExceptionHandler exceptionHandler;
 
-	public ActionBuilderImpl() {
-		this.enabled = true;
-	}
+    public ActionBuilderImpl() {
+        this.enabled = true;
+    }
 
-	@Override
-	public IActionBuilder setText(final String text) {
-		this.text = text;
-		return this;
-	}
+    @Override
+    public IActionBuilder setText(final String text) {
+        this.text = text;
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setToolTipText(final String toolTipText) {
-		this.toolTipText = toolTipText;
-		return this;
-	}
+    @Override
+    public IActionBuilder setToolTipText(final String toolTipText) {
+        this.toolTipText = toolTipText;
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setIcon(final IImageConstant icon) {
-		this.icon = icon;
-		return this;
-	}
+    @Override
+    public IActionBuilder setIcon(final IImageConstant icon) {
+        this.icon = icon;
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setMnemonic(final Character mnemonic) {
-		this.mnemonic = mnemonic;
-		return null;
-	}
+    @Override
+    public IActionBuilder setMnemonic(final Character mnemonic) {
+        this.mnemonic = mnemonic;
+        return null;
+    }
 
-	@Override
-	public IActionBuilder setMnemonic(final char mnemonic) {
-		this.mnemonic = Character.valueOf(mnemonic);
-		return this;
-	}
+    @Override
+    public IActionBuilder setMnemonic(final char mnemonic) {
+        this.mnemonic = Character.valueOf(mnemonic);
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setAccelerator(final Accelerator accelerator) {
-		this.accelerator = accelerator;
-		return this;
-	}
+    @Override
+    public IActionBuilder setAccelerator(final Accelerator accelerator) {
+        this.accelerator = accelerator;
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setAccelerator(final char key, final Modifier... modifier) {
-		return setAccelerator(new Accelerator(key, modifier));
-	}
+    @Override
+    public IActionBuilder setAccelerator(final char key, final Modifier... modifier) {
+        return setAccelerator(new Accelerator(key, modifier));
+    }
 
-	@Override
-	public IActionBuilder setAccelerator(final VirtualKey virtualKey, final Modifier... modifier) {
-		return setAccelerator(new Accelerator(virtualKey, modifier));
-	}
+    @Override
+    public IActionBuilder setAccelerator(final VirtualKey virtualKey, final Modifier... modifier) {
+        return setAccelerator(new Accelerator(virtualKey, modifier));
+    }
 
-	@Override
-	public IActionBuilder setEnabled(final boolean enabled) {
-		this.enabled = enabled;
-		return this;
-	}
+    @Override
+    public IActionBuilder setEnabled(final boolean enabled) {
+        this.enabled = enabled;
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setCommand(final ICommand command) {
-		this.command = command;
-		return this;
-	}
+    @Override
+    public IActionBuilder setCommand(final ICommand command) {
+        this.command = command;
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setCommand(final ICommandExecutor executor) {
-		this.command = new Command(executor);
-		return this;
-	}
+    @Override
+    public IActionBuilder setCommand(final ICommandExecutor executor) {
+        this.command = new Command(executor);
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setCommand(final ICommandExecutor executor, final IEnabledChecker executableStateChecker) {
-		this.command = new Command(executor, executableStateChecker);
-		return this;
-	}
+    @Override
+    public IActionBuilder setCommand(final ICommandExecutor executor, final IEnabledChecker executableStateChecker) {
+        this.command = new Command(executor, executableStateChecker);
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setCommand(final ICommandExecutor executor, final IExceptionHandler exceptionHandler) {
-		this.command = new Command(executor, exceptionHandler);
-		return this;
-	}
+    @Override
+    public IActionBuilder setCommand(final ICommandExecutor executor, final IExceptionHandler exceptionHandler) {
+        this.command = new Command(executor, exceptionHandler);
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setCommand(
-		final ICommandExecutor executor,
-		final IEnabledChecker enabledChecker,
-		final IExceptionHandler exceptionHandler) {
-		this.command = new Command(executor, enabledChecker, exceptionHandler);
-		return this;
-	}
+    @Override
+    public IActionBuilder setCommand(
+        final ICommandExecutor executor,
+        final IEnabledChecker enabledChecker,
+        final IExceptionHandler exceptionHandler) {
+        this.command = new Command(executor, enabledChecker, exceptionHandler);
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setActionExceptionHandler(final IExceptionHandler exceptionHandler) {
-		this.exceptionHandler = exceptionHandler;
-		return this;
-	}
+    @Override
+    public IActionBuilder setActionExceptionHandler(final IExceptionHandler exceptionHandler) {
+        this.exceptionHandler = exceptionHandler;
+        return this;
+    }
 
-	@Override
-	public ICommandAction build() {
-		final ICommandAction result = new CommandActionImpl(
-			text,
-			toolTipText,
-			icon,
-			mnemonic,
-			accelerator,
-			enabled,
-			command,
-			exceptionHandler);
-		return result;
-	}
+    @Override
+    public ICommandAction build() {
+        final ICommandAction result = new CommandActionImpl(
+            text,
+            toolTipText,
+            icon,
+            mnemonic,
+            accelerator,
+            enabled,
+            command,
+            exceptionHandler);
+        return result;
+    }
 
 }

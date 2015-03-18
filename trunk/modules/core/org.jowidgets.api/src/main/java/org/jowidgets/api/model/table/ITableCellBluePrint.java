@@ -28,7 +28,6 @@
 
 package org.jowidgets.api.model.table;
 
-
 public interface ITableCellBluePrint extends IAbstractTableCellBluePrint<ITableCellBluePrint> {
 
 }

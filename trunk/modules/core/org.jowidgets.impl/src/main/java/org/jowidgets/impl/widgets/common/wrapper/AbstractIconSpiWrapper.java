@@ -34,25 +34,25 @@ import org.jowidgets.spi.widgets.IIconSpi;
 
 public abstract class AbstractIconSpiWrapper extends AbstractControlSpiWrapper implements IIconCommon {
 
-	private IImageConstant icon;
+    private IImageConstant icon;
 
-	public AbstractIconSpiWrapper(final IIconSpi widget) {
-		super(widget);
-	}
+    public AbstractIconSpiWrapper(final IIconSpi widget) {
+        super(widget);
+    }
 
-	@Override
-	public IIconSpi getWidget() {
-		return (IIconSpi) super.getWidget();
-	}
+    @Override
+    public IIconSpi getWidget() {
+        return (IIconSpi) super.getWidget();
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		this.icon = icon;
-		getWidget().setIcon(icon);
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        this.icon = icon;
+        getWidget().setIcon(icon);
+    }
 
-	public IImageConstant getIcon() {
-		return icon;
-	}
+    public IImageConstant getIcon() {
+        return icon;
+    }
 
 }

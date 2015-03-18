@@ -39,67 +39,67 @@ import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
 public class SelectableMenuItemImpl extends MenuItemImpl implements ISelectableMenuItemSpi {
 
-	private final ItemStateObservable itemStateObservable;
+    private final ItemStateObservable itemStateObservable;
 
-	public SelectableMenuItemImpl(final MenuItem menuItem) {
-		super(menuItem);
+    public SelectableMenuItemImpl(final MenuItem menuItem) {
+        super(menuItem);
 
-		this.itemStateObservable = new ItemStateObservable();
-		menuItem.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(final SelectionEvent e) {
-				itemStateObservable.fireItemStateChanged(isSelected());
-			}
-		});
-	}
+        this.itemStateObservable = new ItemStateObservable();
+        menuItem.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(final SelectionEvent e) {
+                itemStateObservable.fireItemStateChanged(isSelected());
+            }
+        });
+    }
 
-	@Override
-	public boolean isSelected() {
-		return getUiReference().getSelection();
-	}
+    @Override
+    public boolean isSelected() {
+        return getUiReference().getSelection();
+    }
 
-	private static boolean isRadio(final MenuItem menuItem) {
-		return (menuItem.getStyle() & SWT.RADIO) == SWT.RADIO;
-	}
+    private static boolean isRadio(final MenuItem menuItem) {
+        return (menuItem.getStyle() & SWT.RADIO) == SWT.RADIO;
+    }
 
-	private static void unselectItem(final MenuItem menuItem) {
-		if (menuItem.getSelection()) {
-			menuItem.setSelection(false);
-			menuItem.notifyListeners(SWT.Selection, new Event());
-		}
-	}
+    private static void unselectItem(final MenuItem menuItem) {
+        if (menuItem.getSelection()) {
+            menuItem.setSelection(false);
+            menuItem.notifyListeners(SWT.Selection, new Event());
+        }
+    }
 
-	@Override
-	public void setSelected(final boolean selected) {
-		// TODO MG please check if code is ok
-		if (selected && isRadio(getUiReference())) {
-			final Menu menu = getUiReference().getParent();
-			final MenuItem[] items = menu.getItems();
-			final int index = menu.indexOf(getUiReference());
+    @Override
+    public void setSelected(final boolean selected) {
+        // TODO MG please check if code is ok
+        if (selected && isRadio(getUiReference())) {
+            final Menu menu = getUiReference().getParent();
+            final MenuItem[] items = menu.getItems();
+            final int index = menu.indexOf(getUiReference());
 
-			int i = index - 1;
-			while (i >= 0 && isRadio(items[i])) {
-				unselectItem(items[i]);
-				i--;
-			}
+            int i = index - 1;
+            while (i >= 0 && isRadio(items[i])) {
+                unselectItem(items[i]);
+                i--;
+            }
 
-			i = index + 1;
-			while (i < menu.getItemCount() && isRadio(items[i])) {
-				unselectItem(items[i]);
-				i++;
-			}
-		}
-		getUiReference().setSelection(selected);
-	}
+            i = index + 1;
+            while (i < menu.getItemCount() && isRadio(items[i])) {
+                unselectItem(items[i]);
+                i++;
+            }
+        }
+        getUiReference().setSelection(selected);
+    }
 
-	@Override
-	public void addItemListener(final IItemStateListener listener) {
-		itemStateObservable.addItemListener(listener);
-	}
+    @Override
+    public void addItemListener(final IItemStateListener listener) {
+        itemStateObservable.addItemListener(listener);
+    }
 
-	@Override
-	public void removeItemListener(final IItemStateListener listener) {
-		itemStateObservable.removeItemListener(listener);
-	}
+    @Override
+    public void removeItemListener(final IItemStateListener listener) {
+        itemStateObservable.removeItemListener(listener);
+    }
 
 }

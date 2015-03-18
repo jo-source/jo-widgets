@@ -36,35 +36,35 @@ import org.jowidgets.util.Assert;
 
 public final class ClassLoaderAdapter {
 
-	private ClassLoaderAdapter() {}
+    private ClassLoaderAdapter() {}
 
-	public static IClassLoader create(final ClassLoader classLoader) {
-		return new ClassLoaderAdapterImpl(classLoader);
-	}
+    public static IClassLoader create(final ClassLoader classLoader) {
+        return new ClassLoaderAdapterImpl(classLoader);
+    }
 
-	private static final class ClassLoaderAdapterImpl implements IClassLoader {
+    private static final class ClassLoaderAdapterImpl implements IClassLoader {
 
-		private final ClassLoader original;
+        private final ClassLoader original;
 
-		private ClassLoaderAdapterImpl(final ClassLoader original) {
-			Assert.paramNotNull(original, "original");
-			this.original = original;
-		}
+        private ClassLoaderAdapterImpl(final ClassLoader original) {
+            Assert.paramNotNull(original, "original");
+            this.original = original;
+        }
 
-		@Override
-		public Class<?> findClass(final String name) throws ClassNotFoundException {
-			return original.loadClass(name);
-		}
+        @Override
+        public Class<?> findClass(final String name) throws ClassNotFoundException {
+            return original.loadClass(name);
+        }
 
-		@Override
-		public URL findResource(final String name) {
-			return original.getResource(name);
-		}
+        @Override
+        public URL findResource(final String name) {
+            return original.getResource(name);
+        }
 
-		@Override
-		public Enumeration<URL> findResources(final String name) throws IOException {
-			return original.getResources(name);
-		}
+        @Override
+        public Enumeration<URL> findResources(final String name) throws IOException {
+            return original.getResources(name);
+        }
 
-	}
+    }
 }

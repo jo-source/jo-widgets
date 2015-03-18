@@ -76,41 +76,41 @@ import org.jowidgets.spi.IWidgetsServiceProvider;
 
 public class GenericWidgetFactory extends BasicGenericWidgetFactory {
 
-	public GenericWidgetFactory(final IWidgetsServiceProvider widgetsServiceProvider) {
-		super(widgetsServiceProvider);
-		registerCustomWidgetFactories();
-		registerFallbackWidgets();
-	}
+    public GenericWidgetFactory(final IWidgetsServiceProvider widgetsServiceProvider) {
+        super(widgetsServiceProvider);
+        registerCustomWidgetFactories();
+        registerFallbackWidgets();
+    }
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	private void registerCustomWidgetFactories() {
-		register(IInputFieldDescriptor.class, new InputFieldFactory(this));
-		register(IUnitValueFieldDescriptor.class, new UnitValueFieldFactory());
-		register(ILabelDescriptor.class, new LabelFactory());
-		register(ITextSeparatorDescriptor.class, new TextSeparatorFactory());
-		register(IMessageDialogDescriptor.class, new MessageDialogFactory(this));
-		register(IQuestionDialogDescriptor.class, new QuestionDialogFactory(this));
-		register(IInputDialogDescriptor.class, new InputDialogFactory(this));
-		register(ILoginDialogDescriptor.class, new LoginDialogFactory(this));
-		register(IPasswordChangeDialogDescriptor.class, new PasswordChangeDialogFactory(this));
-		register(IInputCompositeDescriptor.class, new InputCompositeFactory());
-		register(IValidationResultLabelDescriptor.class, new ValidationResultLabelFactory(this));
-		register(IInputComponentValidationLabelDescriptor.class, new ValidateableStateLabelFactory(this));
-		register(IProgressBarDescriptor.class, new ProgressBarFactory(getSpiWidgetFactory()));
-		register(ICollectionInputControlDescriptor.class, new CollectionInputControlFactory());
-		register(ICollectionInputDialogDescriptor.class, new CollectionInputDialogFactory());
-		register(ICollectionInputFieldDescriptor.class, new CollectionInputFieldFactory());
-		register(ICombinedCollectionInputFieldDescriptor.class, new CombinedCollectionInputFieldFactory());
-		register(IExpandCompositeDescriptor.class, new ExpandCompositeFactory());
-		register(ILevelMeterDescriptor.class, new LevelMeterFactory());
-		register(ITreeViewerDescriptor.class, new TreeViewerFactory<Object>());
-		register(ISliderViewerDescriptor.class, new SliderViewerFactory<Object>(this));
-	}
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private void registerCustomWidgetFactories() {
+        register(IInputFieldDescriptor.class, new InputFieldFactory(this));
+        register(IUnitValueFieldDescriptor.class, new UnitValueFieldFactory());
+        register(ILabelDescriptor.class, new LabelFactory());
+        register(ITextSeparatorDescriptor.class, new TextSeparatorFactory());
+        register(IMessageDialogDescriptor.class, new MessageDialogFactory(this));
+        register(IQuestionDialogDescriptor.class, new QuestionDialogFactory(this));
+        register(IInputDialogDescriptor.class, new InputDialogFactory(this));
+        register(ILoginDialogDescriptor.class, new LoginDialogFactory(this));
+        register(IPasswordChangeDialogDescriptor.class, new PasswordChangeDialogFactory(this));
+        register(IInputCompositeDescriptor.class, new InputCompositeFactory());
+        register(IValidationResultLabelDescriptor.class, new ValidationResultLabelFactory(this));
+        register(IInputComponentValidationLabelDescriptor.class, new ValidateableStateLabelFactory(this));
+        register(IProgressBarDescriptor.class, new ProgressBarFactory(getSpiWidgetFactory()));
+        register(ICollectionInputControlDescriptor.class, new CollectionInputControlFactory());
+        register(ICollectionInputDialogDescriptor.class, new CollectionInputDialogFactory());
+        register(ICollectionInputFieldDescriptor.class, new CollectionInputFieldFactory());
+        register(ICombinedCollectionInputFieldDescriptor.class, new CombinedCollectionInputFieldFactory());
+        register(IExpandCompositeDescriptor.class, new ExpandCompositeFactory());
+        register(ILevelMeterDescriptor.class, new LevelMeterFactory());
+        register(ITreeViewerDescriptor.class, new TreeViewerFactory<Object>());
+        register(ISliderViewerDescriptor.class, new SliderViewerFactory<Object>(this));
+    }
 
-	private void registerFallbackWidgets() {
-		if (getFactory(ICalendarDescriptor.class) == null) {
-			register(ICalendarDescriptor.class, new CustomCalendarFactory());
-		}
-	}
+    private void registerFallbackWidgets() {
+        if (getFactory(ICalendarDescriptor.class) == null) {
+            register(ICalendarDescriptor.class, new CustomCalendarFactory());
+        }
+    }
 
 }

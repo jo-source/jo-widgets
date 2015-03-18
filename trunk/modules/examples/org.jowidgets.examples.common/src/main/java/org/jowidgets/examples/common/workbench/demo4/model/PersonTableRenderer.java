@@ -39,87 +39,87 @@ import org.jowidgets.util.StringUtils;
 
 public final class PersonTableRenderer implements IBeanTableRenderer<Person>, ITableColumnModel {
 
-	@Override
-	public ITableCell getCell(final int rowIndex, final int columnIndex, final Person bean) {
-		if (columnIndex == 0) {
-			return builder().setText(bean.getName()).build();
-		}
-		else if (columnIndex == 1) {
-			if (bean.getDayOfBirth() != null) {
-				return builder().setText("" + bean.getDayOfBirth()).build();
-			}
-			else {
-				return builder().build();
-			}
-		}
-		else if (columnIndex == 2) {
-			if (bean.getGender() != null) {
-				return builder().setText("" + bean.getGender()).build();
-			}
-			else {
-				return builder().build();
-			}
-		}
-		else if (columnIndex == 2) {
-			if (bean.getGender() != null) {
-				return builder().setText("" + bean.getGender()).build();
-			}
-			else {
-				return builder().build();
-			}
-		}
-		else if (columnIndex == 3) {
-			if (bean.getQuota() != null) {
-				return builder().setText("" + bean.getQuota()).build();
-			}
-			else {
-				return builder().build();
-			}
-		}
-		else if (columnIndex == 4) {
-			if (bean.getRoles() != null) {
-				StringUtils.concatElementsSeparatedByComma(bean.getRoles());
-				return builder().setText(StringUtils.concatElementsSeparatedByComma(bean.getRoles())).build();
-			}
-			else {
-				return builder().build();
-			}
-		}
-		return null;
-	}
+    @Override
+    public ITableCell getCell(final int rowIndex, final int columnIndex, final Person bean) {
+        if (columnIndex == 0) {
+            return builder().setText(bean.getName()).build();
+        }
+        else if (columnIndex == 1) {
+            if (bean.getDayOfBirth() != null) {
+                return builder().setText("" + bean.getDayOfBirth()).build();
+            }
+            else {
+                return builder().build();
+            }
+        }
+        else if (columnIndex == 2) {
+            if (bean.getGender() != null) {
+                return builder().setText("" + bean.getGender()).build();
+            }
+            else {
+                return builder().build();
+            }
+        }
+        else if (columnIndex == 2) {
+            if (bean.getGender() != null) {
+                return builder().setText("" + bean.getGender()).build();
+            }
+            else {
+                return builder().build();
+            }
+        }
+        else if (columnIndex == 3) {
+            if (bean.getQuota() != null) {
+                return builder().setText("" + bean.getQuota()).build();
+            }
+            else {
+                return builder().build();
+            }
+        }
+        else if (columnIndex == 4) {
+            if (bean.getRoles() != null) {
+                StringUtils.concatElementsSeparatedByComma(bean.getRoles());
+                return builder().setText(StringUtils.concatElementsSeparatedByComma(bean.getRoles())).build();
+            }
+            else {
+                return builder().build();
+            }
+        }
+        return null;
+    }
 
-	private static ITableCellBuilder builder() {
-		return TableCell.builder().setEditable(true);
-	}
+    private static ITableCellBuilder builder() {
+        return TableCell.builder().setEditable(true);
+    }
 
-	@Override
-	public int getColumnCount() {
-		return 5;
-	}
+    @Override
+    public int getColumnCount() {
+        return 5;
+    }
 
-	@Override
-	public ITableColumn getColumn(final int columnIndex) {
-		if (columnIndex == 0) {
-			return DefaultTableColumn.builder("Name").setWidth(150).build();
-		}
-		else if (columnIndex == 1) {
-			return DefaultTableColumn.builder("Day of birth").setWidth(150).build();
-		}
-		else if (columnIndex == 2) {
-			return DefaultTableColumn.builder("Gender").setWidth(150).build();
-		}
-		else if (columnIndex == 3) {
-			return DefaultTableColumn.builder("Quota").setWidth(150).build();
-		}
-		else if (columnIndex == 4) {
-			return DefaultTableColumn.builder("Tags").setWidth(150).build();
-		}
-		return null;
-	}
+    @Override
+    public ITableColumn getColumn(final int columnIndex) {
+        if (columnIndex == 0) {
+            return DefaultTableColumn.builder("Name").setWidth(150).build();
+        }
+        else if (columnIndex == 1) {
+            return DefaultTableColumn.builder("Day of birth").setWidth(150).build();
+        }
+        else if (columnIndex == 2) {
+            return DefaultTableColumn.builder("Gender").setWidth(150).build();
+        }
+        else if (columnIndex == 3) {
+            return DefaultTableColumn.builder("Quota").setWidth(150).build();
+        }
+        else if (columnIndex == 4) {
+            return DefaultTableColumn.builder("Tags").setWidth(150).build();
+        }
+        return null;
+    }
 
-	@Override
-	public ITableColumnModelObservable getTableColumnModelObservable() {
-		return null;
-	}
+    @Override
+    public ITableColumnModelObservable getTableColumnModelObservable() {
+        return null;
+    }
 
 }

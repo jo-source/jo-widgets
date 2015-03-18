@@ -32,18 +32,18 @@ import org.jowidgets.api.widgets.IWidget;
 
 public interface IParentObservable<PARENT_TYPE extends IWidget> {
 
-	/**
-	 * Adds a parent listener
-	 * 
-	 * @param listener The listener to add
-	 */
-	void addParentListener(IParentListener<PARENT_TYPE> listener);
+    /**
+     * Adds a parent listener
+     * 
+     * @param listener The listener to add
+     */
+    void addParentListener(IParentListener<PARENT_TYPE> listener);
 
-	/**
-	 * Removes a parent listener
-	 * 
-	 * @param listener The listener to remove
-	 */
-	void removeParentListener(IParentListener<PARENT_TYPE> listener);
+    /**
+     * Removes a parent listener
+     * 
+     * @param listener The listener to remove
+     */
+    void removeParentListener(IParentListener<PARENT_TYPE> listener);
 
 }

@@ -30,8 +30,8 @@ package org.jowidgets.common.types;
 
 public enum SelectionPolicy {
 
-	SINGLE_SELECTION,
+    SINGLE_SELECTION,
 
-	MULTI_SELECTION;
+    MULTI_SELECTION;
 
 }

@@ -32,9 +32,9 @@ import org.jowidgets.common.image.IImageHandleFactory;
 
 public class SwtImageHandleFactory implements IImageHandleFactory {
 
-	@Override
-	public SwtImageHandle createImageHandle(final IImageDescriptor imageDescriptor) {
-		return new SwtImageHandle(new SwtImageLoader(imageDescriptor), imageDescriptor);
-	}
+    @Override
+    public SwtImageHandle createImageHandle(final IImageDescriptor imageDescriptor) {
+        return new SwtImageHandle(new SwtImageLoader(imageDescriptor), imageDescriptor);
+    }
 
 }

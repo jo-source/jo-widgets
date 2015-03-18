@@ -40,27 +40,27 @@ import org.jowidgets.util.Assert;
 
 public final class SwingDragSource extends AbstractDragSourceObservableSpi implements IDragSourceSpi {
 
-	@SuppressWarnings("unused")
-	private final Component component;
+    @SuppressWarnings("unused")
+    private final Component component;
 
-	public SwingDragSource(final Component component) {
-		Assert.paramNotNull(component, "component");
-		this.component = component;
-	}
+    public SwingDragSource(final Component component) {
+        Assert.paramNotNull(component, "component");
+        this.component = component;
+    }
 
-	@Override
-	public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {
-		// TODO MG must be implemented
-	}
+    @Override
+    public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {
+        // TODO MG must be implemented
+    }
 
-	@Override
-	public void setActions(final Set<DropAction> actions) {
-		// TODO MG must be implemented
-	}
+    @Override
+    public void setActions(final Set<DropAction> actions) {
+        // TODO MG must be implemented
+    }
 
-	@Override
-	protected void setActive(final boolean active) {
-		// TODO MG must be implemented
-	}
+    @Override
+    protected void setActive(final boolean active) {
+        // TODO MG must be implemented
+    }
 
 }

@@ -32,16 +32,16 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IProgressBarSetupCommon extends IComponentSetupCommon {
 
-	@Mandatory
-	Orientation getOrientation();
+    @Mandatory
+    Orientation getOrientation();
 
-	@Mandatory
-	int getMinimum();
+    @Mandatory
+    int getMinimum();
 
-	@Mandatory
-	int getMaximum();
+    @Mandatory
+    int getMaximum();
 
-	@Mandatory
-	boolean isIndeterminate();
+    @Mandatory
+    boolean isIndeterminate();
 
 }

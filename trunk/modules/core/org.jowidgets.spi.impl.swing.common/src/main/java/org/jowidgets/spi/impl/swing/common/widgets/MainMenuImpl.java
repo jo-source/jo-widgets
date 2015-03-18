@@ -33,36 +33,36 @@ import org.jowidgets.spi.widgets.IMainMenuSpi;
 
 public class MainMenuImpl extends AbstractSwingMenu implements IMainMenuSpi {
 
-	private final MenuItemImpl menuItemDelegate;
+    private final MenuItemImpl menuItemDelegate;
 
-	public MainMenuImpl() {
-		super(new JoMenu());
-		this.menuItemDelegate = new MenuItemImpl(getUiReference());
-	}
+    public MainMenuImpl() {
+        super(new JoMenu());
+        this.menuItemDelegate = new MenuItemImpl(getUiReference());
+    }
 
-	@Override
-	public JoMenu getUiReference() {
-		return (JoMenu) super.getUiReference();
-	}
+    @Override
+    public JoMenu getUiReference() {
+        return (JoMenu) super.getUiReference();
+    }
 
-	@Override
-	public void setText(final String text) {
-		menuItemDelegate.setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        menuItemDelegate.setText(text);
+    }
 
-	@Override
-	public void setMnemonic(final char mnemonic) {
-		menuItemDelegate.setMnemonic(mnemonic);
-	}
+    @Override
+    public void setMnemonic(final char mnemonic) {
+        menuItemDelegate.setMnemonic(mnemonic);
+    }
 
-	@Override
-	public void addMenuListener(final IMenuListener listener) {
-		getUiReference().addMenuListener(listener);
-	}
+    @Override
+    public void addMenuListener(final IMenuListener listener) {
+        getUiReference().addMenuListener(listener);
+    }
 
-	@Override
-	public void removeMenuListener(final IMenuListener listener) {
-		getUiReference().removeMenuListener(listener);
-	}
+    @Override
+    public void removeMenuListener(final IMenuListener listener) {
+        getUiReference().removeMenuListener(listener);
+    }
 
 }

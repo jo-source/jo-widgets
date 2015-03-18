@@ -32,12 +32,12 @@ import org.jowidgets.workbench.api.IComponent;
 
 public interface IWorkbenchToolkit {
 
-	ILayoutBuilderFactory getLayoutBuilderFactory();
+    ILayoutBuilderFactory getLayoutBuilderFactory();
 
-	IWorkbenchPartBuilderFactory getWorkbenchPartBuilderFactory();
+    IWorkbenchPartBuilderFactory getWorkbenchPartBuilderFactory();
 
-	IWorkbenchPartFactory getWorkbenchPartFactory();
+    IWorkbenchPartFactory getWorkbenchPartFactory();
 
-	IComponentFactory createComponentFactory(Class<? extends IComponent> componentType);
+    IComponentFactory createComponentFactory(Class<? extends IComponent> componentType);
 
 }

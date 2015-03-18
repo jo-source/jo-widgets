@@ -37,18 +37,18 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
 public class DemoProgressBarComposite {
 
-	public DemoProgressBarComposite(final IContainer parentContainer, final IWindow parentWindow) {
+    public DemoProgressBarComposite(final IContainer parentContainer, final IWindow parentWindow) {
 
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+        final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
-		parentContainer.setLayout(new MigLayoutDescriptor("[grow]", "[grow]"));
-		final IComposite compositeWidget = parentContainer.add(bpF.scrollComposite(), "growx, growy");
+        parentContainer.setLayout(new MigLayoutDescriptor("[grow]", "[grow]"));
+        final IComposite compositeWidget = parentContainer.add(bpF.scrollComposite(), "growx, growy");
 
-		compositeWidget.setLayout(new MigLayoutDescriptor("[grow]", "[][][][][][][][][][]"));
+        compositeWidget.setLayout(new MigLayoutDescriptor("[grow]", "[][][][][][][][][][]"));
 
-		for (int i = 0; i < 10; i++) {
-			final IComposite progressBarComposite = compositeWidget.add(bpF.composite(), "growx, wrap");
-			new DemoProgressBar(progressBarComposite, parentWindow);
-		}
-	}
+        for (int i = 0; i < 10; i++) {
+            final IComposite progressBarComposite = compositeWidget.add(bpF.composite(), "growx, wrap");
+            new DemoProgressBar(progressBarComposite, parentWindow);
+        }
+    }
 }

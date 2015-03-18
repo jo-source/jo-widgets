@@ -32,14 +32,14 @@ import java.io.File;
 
 public interface ITempFileFactory {
 
-	/**
-	 * Creates an empty existing unique file in an temp directory.
-	 * 
-	 * @param filenamePrefix The filenames prefix
-	 * @param filenameSuffix The filenames suffix (e.g.: '.xml', '.html', ...). If suffix is null, .tmp will be used
-	 * 
-	 * @return The created file
-	 */
-	File create(String filenamePrefix, String filenameSuffix);
+    /**
+     * Creates an empty existing unique file in an temp directory.
+     * 
+     * @param filenamePrefix The filenames prefix
+     * @param filenameSuffix The filenames suffix (e.g.: '.xml', '.html', ...). If suffix is null, .tmp will be used
+     * 
+     * @return The created file
+     */
+    File create(String filenamePrefix, String filenameSuffix);
 
 }

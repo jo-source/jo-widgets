@@ -38,15 +38,15 @@ import org.jowidgets.impl.widgets.composed.CustomCalendarImpl;
 
 public class CustomCalendarFactory implements IWidgetFactory<ICalendar, ICalendarDescriptor> {
 
-	@Override
-	public ICalendar create(final Object parentUiReference, final ICalendarDescriptor descriptor) {
+    @Override
+    public ICalendar create(final Object parentUiReference, final ICalendarDescriptor descriptor) {
 
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
-		final IGenericWidgetFactory gwF = Toolkit.getWidgetFactory();
+        final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+        final IGenericWidgetFactory gwF = Toolkit.getWidgetFactory();
 
-		final IComposite compositeWidget = gwF.create(parentUiReference, bpF.composite());
+        final IComposite compositeWidget = gwF.create(parentUiReference, bpF.composite());
 
-		return new CustomCalendarImpl(compositeWidget, descriptor);
-	}
+        return new CustomCalendarImpl(compositeWidget, descriptor);
+    }
 
 }

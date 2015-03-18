@@ -38,148 +38,148 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
 
 class Widget<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & ISetupBuilder<?>> implements
-		IWidget {
+        IWidget {
 
-	private final BLUE_PRINT_TYPE bluePrint;
-	private final Set<IDisposeListener> disposeListeners;
-	private WIDGET_TYPE widget;
-	private Boolean enabled;
-	private boolean disposed;
+    private final BLUE_PRINT_TYPE bluePrint;
+    private final Set<IDisposeListener> disposeListeners;
+    private WIDGET_TYPE widget;
+    private Boolean enabled;
+    private boolean disposed;
 
-	Widget(final BLUE_PRINT_TYPE bluePrint) {
-		this.bluePrint = bluePrint;
-		this.disposeListeners = new HashSet<IDisposeListener>();
-		this.disposed = false;
-	}
+    Widget(final BLUE_PRINT_TYPE bluePrint) {
+        this.bluePrint = bluePrint;
+        this.disposeListeners = new HashSet<IDisposeListener>();
+        this.disposed = false;
+    }
 
-	public final boolean isInitialized() {
-		return widget != null;
-	}
+    public final boolean isInitialized() {
+        return widget != null;
+    }
 
-	void initialize(final WIDGET_TYPE widget) {
-		Assert.paramNotNull(widget, "widget");
-		checkNotInitialized();
-		if (disposed) {
-			throw new IllegalStateException("Widget is disposed!");
-		}
-		this.widget = widget;
-		if (enabled != null) {
-			widget.setEnabled(enabled.booleanValue());
-		}
-		for (final IDisposeListener listener : disposeListeners) {
-			widget.addDisposeListener(listener);
-		}
-	}
+    void initialize(final WIDGET_TYPE widget) {
+        Assert.paramNotNull(widget, "widget");
+        checkNotInitialized();
+        if (disposed) {
+            throw new IllegalStateException("Widget is disposed!");
+        }
+        this.widget = widget;
+        if (enabled != null) {
+            widget.setEnabled(enabled.booleanValue());
+        }
+        for (final IDisposeListener listener : disposeListeners) {
+            widget.addDisposeListener(listener);
+        }
+    }
 
-	final IWidgetDescriptor<? extends WIDGET_TYPE> getDescriptor() {
-		return bluePrint;
-	}
+    final IWidgetDescriptor<? extends WIDGET_TYPE> getDescriptor() {
+        return bluePrint;
+    }
 
-	@Override
-	public IWidget getRoot() {
-		if (isInitialized()) {
-			return widget.getRoot();
-		}
-		else {
-			return this;
-		}
-	}
+    @Override
+    public IWidget getRoot() {
+        if (isInitialized()) {
+            return widget.getRoot();
+        }
+        else {
+            return this;
+        }
+    }
 
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		if (isInitialized()) {
-			widget.addDisposeListener(listener);
-		}
-		else {
-			disposeListeners.add(listener);
-		}
-	}
+    @Override
+    public void addDisposeListener(final IDisposeListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        if (isInitialized()) {
+            widget.addDisposeListener(listener);
+        }
+        else {
+            disposeListeners.add(listener);
+        }
+    }
 
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		if (isInitialized()) {
-			widget.removeDisposeListener(listener);
-		}
-		else {
-			disposeListeners.remove(listener);
-		}
-	}
+    @Override
+    public void removeDisposeListener(final IDisposeListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        if (isInitialized()) {
+            widget.removeDisposeListener(listener);
+        }
+        else {
+            disposeListeners.remove(listener);
+        }
+    }
 
-	@Override
-	public void dispose() {
-		if (isInitialized()) {
-			widget.dispose();
-		}
-		else {
-			for (final IDisposeListener listener : disposeListeners) {
-				listener.onDispose();
-			}
-			this.disposed = true;
-		}
-	}
+    @Override
+    public void dispose() {
+        if (isInitialized()) {
+            widget.dispose();
+        }
+        else {
+            for (final IDisposeListener listener : disposeListeners) {
+                listener.onDispose();
+            }
+            this.disposed = true;
+        }
+    }
 
-	@Override
-	public boolean isDisposed() {
-		if (isInitialized()) {
-			return widget.isDisposed();
-		}
-		else {
-			return disposed;
-		}
-	}
+    @Override
+    public boolean isDisposed() {
+        if (isInitialized()) {
+            return widget.isDisposed();
+        }
+        else {
+            return disposed;
+        }
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		if (isInitialized()) {
-			widget.setEnabled(enabled);
-		}
-		else {
-			this.enabled = Boolean.valueOf(enabled);
-		}
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        if (isInitialized()) {
+            widget.setEnabled(enabled);
+        }
+        else {
+            this.enabled = Boolean.valueOf(enabled);
+        }
+    }
 
-	@Override
-	public boolean isEnabled() {
-		if (isInitialized()) {
-			return widget.isEnabled();
-		}
-		else {
-			return enabled == null || enabled.booleanValue();
-		}
-	}
+    @Override
+    public boolean isEnabled() {
+        if (isInitialized()) {
+            return widget.isEnabled();
+        }
+        else {
+            return enabled == null || enabled.booleanValue();
+        }
+    }
 
-	@Override
-	public final Object getUiReference() {
-		checkInitialized();
-		return widget.getUiReference();
-	}
+    @Override
+    public final Object getUiReference() {
+        checkInitialized();
+        return widget.getUiReference();
+    }
 
-	@Override
-	public IWidget getParent() {
-		checkInitialized();
-		return getWidget().getParent();
-	}
+    @Override
+    public IWidget getParent() {
+        checkInitialized();
+        return getWidget().getParent();
+    }
 
-	final BLUE_PRINT_TYPE getBluePrint() {
-		return bluePrint;
-	}
+    final BLUE_PRINT_TYPE getBluePrint() {
+        return bluePrint;
+    }
 
-	final WIDGET_TYPE getWidget() {
-		return widget;
-	}
+    final WIDGET_TYPE getWidget() {
+        return widget;
+    }
 
-	final void checkInitialized() {
-		if (!isInitialized()) {
-			throw new WidgetNotInitializedException("Widget is not yet initialized (was not added to a parent)");
-		}
-	}
+    final void checkInitialized() {
+        if (!isInitialized()) {
+            throw new WidgetNotInitializedException("Widget is not yet initialized (was not added to a parent)");
+        }
+    }
 
-	final void checkNotInitialized() {
-		if (isInitialized()) {
-			throw new WidgetAlreadyInitializedException("Widget is already initialized (was already added to a parent)");
-		}
-	}
+    final void checkNotInitialized() {
+        if (isInitialized()) {
+            throw new WidgetAlreadyInitializedException("Widget is already initialized (was already added to a parent)");
+        }
+    }
 
 }

@@ -44,49 +44,49 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class SwingToJoCompositeSnipped {
 
-	private SwingToJoCompositeSnipped() {}
+    private SwingToJoCompositeSnipped() {}
 
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				createAndShowJFrame();
-			}
-		});
-	}
+    public static void main(final String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                createAndShowJFrame();
+            }
+        });
+    }
 
-	private static void createAndShowJFrame() {
-		//create the root frame with swing
-		final JFrame frame = new JFrame("SwingToJo composite snipped");
-		frame.setSize(400, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLayout(new MigLayout("", "0[grow]0", "0[grow]0"));
+    private static void createAndShowJFrame() {
+        //create the root frame with swing
+        final JFrame frame = new JFrame("SwingToJo composite snipped");
+        frame.setSize(400, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new MigLayout("", "0[grow]0", "0[grow]0"));
 
-		//create a jpanel
-		final JPanel panel = new JPanel();
-		frame.add(panel, "growx, growy");
+        //create a jpanel
+        final JPanel panel = new JPanel();
+        frame.add(panel, "growx, growy");
 
-		//create a jowidgets composite wrapper and do some jowidgets stuff
-		final IComposite joComposite = SwingToJoWrapper.create(panel);
-		joComposite.setLayout(new MigLayoutDescriptor("[][grow]", "[]"));
+        //create a jowidgets composite wrapper and do some jowidgets stuff
+        final IComposite joComposite = SwingToJoWrapper.create(panel);
+        joComposite.setLayout(new MigLayoutDescriptor("[][grow]", "[]"));
 
-		//add a label
-		joComposite.add(BPF.textLabel("Name"));
+        //add a label
+        joComposite.add(BPF.textLabel("Name"));
 
-		//add a input field for double values
-		final IInputField<String> nameField = joComposite.add(BPF.inputFieldString(), "grow x");
-		nameField.addInputListener(new IInputListener() {
-			@Override
-			public void inputChanged() {
-				//CHECKSTYLE:OFF
-				System.out.println("Hello " + nameField.getValue());
-				//CHECKSTYLE:ON
-			}
-		});
+        //add a input field for double values
+        final IInputField<String> nameField = joComposite.add(BPF.inputFieldString(), "grow x");
+        nameField.addInputListener(new IInputListener() {
+            @Override
+            public void inputChanged() {
+                //CHECKSTYLE:OFF
+                System.out.println("Hello " + nameField.getValue());
+                //CHECKSTYLE:ON
+            }
+        });
 
-		//show the frame
-		frame.setVisible(true);
-	}
+        //show the frame
+        frame.setVisible(true);
+    }
 
 }

@@ -30,18 +30,18 @@ package org.jowidgets.common.widgets.controller;
 
 public interface IMouseMotionListener {
 
-	/**
-	 * Will be invoked after the mouse moved
-	 * 
-	 * @param event The mouse event
-	 */
-	void mouseMoved(IMouseEvent event);
+    /**
+     * Will be invoked after the mouse moved
+     * 
+     * @param event The mouse event
+     */
+    void mouseMoved(IMouseEvent event);
 
-	/**
-	 * Will be invoked if the mouse was dragged
-	 * 
-	 * @param event The mouse button event
-	 */
-	void mouseDragged(IMouseButtonEvent event);
+    /**
+     * Will be invoked if the mouse was dragged
+     * 
+     * @param event The mouse button event
+     */
+    void mouseDragged(IMouseButtonEvent event);
 
 }

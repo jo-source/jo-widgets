@@ -37,54 +37,54 @@ import org.jowidgets.util.Assert;
  */
 public final class ContextSingletonProvider {
 
-	private static final IContextSingletonProvider INSTANCE = new DefaultContextSingletonProvider();
+    private static final IContextSingletonProvider INSTANCE = new DefaultContextSingletonProvider();
 
-	private ContextSingletonProvider() {}
+    private ContextSingletonProvider() {}
 
-	public static IContextSingletonProvider getInstance() {
-		return INSTANCE;
-	}
+    public static IContextSingletonProvider getInstance() {
+        return INSTANCE;
+    }
 
-	public static <VALUE_TYPE, CONTEXT_TYPE> VALUE_TYPE get(
-		final CONTEXT_TYPE context,
-		final IContextSingletonFactory<VALUE_TYPE, CONTEXT_TYPE> factory) {
-		return getInstance().get(context, factory);
-	}
+    public static <VALUE_TYPE, CONTEXT_TYPE> VALUE_TYPE get(
+        final CONTEXT_TYPE context,
+        final IContextSingletonFactory<VALUE_TYPE, CONTEXT_TYPE> factory) {
+        return getInstance().get(context, factory);
+    }
 
-	public static void removeReference(final Object context) {
-		getInstance().removeReference(context);
-	}
+    public static void removeReference(final Object context) {
+        getInstance().removeReference(context);
+    }
 
-	private static final class DefaultContextSingletonProvider implements IContextSingletonProvider {
+    private static final class DefaultContextSingletonProvider implements IContextSingletonProvider {
 
-		private final Map<Object, Object> singletons;
+        private final Map<Object, Object> singletons;
 
-		private DefaultContextSingletonProvider() {
-			this.singletons = new HashMap<Object, Object>();
-		}
+        private DefaultContextSingletonProvider() {
+            this.singletons = new HashMap<Object, Object>();
+        }
 
-		@SuppressWarnings("unchecked")
-		@Override
-		public synchronized <VALUE_TYPE, CONTEXT_TYPE> VALUE_TYPE get(
-			final CONTEXT_TYPE context,
-			final IContextSingletonFactory<VALUE_TYPE, CONTEXT_TYPE> factory) {
-			Assert.paramNotNull(context, "context");
-			Assert.paramNotNull(factory, "factory");
+        @SuppressWarnings("unchecked")
+        @Override
+        public synchronized <VALUE_TYPE, CONTEXT_TYPE> VALUE_TYPE get(
+            final CONTEXT_TYPE context,
+            final IContextSingletonFactory<VALUE_TYPE, CONTEXT_TYPE> factory) {
+            Assert.paramNotNull(context, "context");
+            Assert.paramNotNull(factory, "factory");
 
-			Object result = singletons.get(context);
-			if (result == null) {
-				result = factory.create(context, this);
-				singletons.put(context, result);
-			}
+            Object result = singletons.get(context);
+            if (result == null) {
+                result = factory.create(context, this);
+                singletons.put(context, result);
+            }
 
-			return (VALUE_TYPE) result;
-		}
+            return (VALUE_TYPE) result;
+        }
 
-		@Override
-		public void removeReference(final Object context) {
-			Assert.paramNotNull(context, "context");
-			singletons.remove(context);
-		}
+        @Override
+        public void removeReference(final Object context) {
+            Assert.paramNotNull(context, "context");
+            singletons.remove(context);
+        }
 
-	}
+    }
 }

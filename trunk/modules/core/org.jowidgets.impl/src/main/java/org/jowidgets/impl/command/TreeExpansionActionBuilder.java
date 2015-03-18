@@ -42,75 +42,75 @@ import org.jowidgets.util.IFilter;
 
 class TreeExpansionActionBuilder extends AbstractDefaultActionBuilder implements ITreeExpansionActionBuilder {
 
-	private final ITreeContainer tree;
-	private final ExpansionMode expansionMode;
-	private final Collection<IFilter<ITreeNode>> filters;
+    private final ITreeContainer tree;
+    private final ExpansionMode expansionMode;
+    private final Collection<IFilter<ITreeNode>> filters;
 
-	private Integer level;
-	private boolean enabledChecking;
-	private String boundPivotLevelText;
+    private Integer level;
+    private boolean enabledChecking;
+    private String boundPivotLevelText;
 
-	TreeExpansionActionBuilder(final ITreeContainer tree, final ExpansionMode expansionMode) {
-		Assert.paramNotNull(tree, "tree");
-		this.tree = tree;
-		this.enabledChecking = true;
-		this.expansionMode = expansionMode;
-		this.filters = new LinkedList<IFilter<ITreeNode>>();
-	}
+    TreeExpansionActionBuilder(final ITreeContainer tree, final ExpansionMode expansionMode) {
+        Assert.paramNotNull(tree, "tree");
+        this.tree = tree;
+        this.enabledChecking = true;
+        this.expansionMode = expansionMode;
+        this.filters = new LinkedList<IFilter<ITreeNode>>();
+    }
 
-	@Override
-	public ITreeExpansionActionBuilder setPivotLevel(final int level) {
-		return setPivotLevel(Integer.valueOf(level));
-	}
+    @Override
+    public ITreeExpansionActionBuilder setPivotLevel(final int level) {
+        return setPivotLevel(Integer.valueOf(level));
+    }
 
-	@Override
-	public ITreeExpansionActionBuilder setPivotLevel(final Integer level) {
-		this.level = level;
-		return this;
-	}
+    @Override
+    public ITreeExpansionActionBuilder setPivotLevel(final Integer level) {
+        this.level = level;
+        return this;
+    }
 
-	@Override
-	public ITreeExpansionActionBuilder setBoundPivotLevelText(final String text) {
-		this.boundPivotLevelText = text;
-		return this;
-	}
+    @Override
+    public ITreeExpansionActionBuilder setBoundPivotLevelText(final String text) {
+        this.boundPivotLevelText = text;
+        return this;
+    }
 
-	@Override
-	public ITreeExpansionActionBuilder setEnabledChecking(final boolean enabledChecking) {
-		this.enabledChecking = enabledChecking;
-		return this;
-	}
+    @Override
+    public ITreeExpansionActionBuilder setEnabledChecking(final boolean enabledChecking) {
+        this.enabledChecking = enabledChecking;
+        return this;
+    }
 
-	@Override
-	public ITreeExpansionActionBuilder addFilter(final IFilter<ITreeNode> filter) {
-		Assert.paramNotNull(filter, "filter");
-		filters.add(filter);
-		return this;
-	}
+    @Override
+    public ITreeExpansionActionBuilder addFilter(final IFilter<ITreeNode> filter) {
+        Assert.paramNotNull(filter, "filter");
+        filters.add(filter);
+        return this;
+    }
 
-	@Override
-	public ITreeExpansionActionBuilder setFilter(final IFilter<ITreeNode> filter) {
-		Assert.paramNotNull(filter, "filter");
-		filters.clear();
-		return addFilter(filter);
-	}
+    @Override
+    public ITreeExpansionActionBuilder setFilter(final IFilter<ITreeNode> filter) {
+        Assert.paramNotNull(filter, "filter");
+        filters.clear();
+        return addFilter(filter);
+    }
 
-	@Override
-	public ITreeExpansionAction build() {
-		return (ITreeExpansionAction) super.build();
-	}
+    @Override
+    public ITreeExpansionAction build() {
+        return (ITreeExpansionAction) super.build();
+    }
 
-	@Override
-	protected ITreeExpansionAction doBuild(final IActionBuilder original) {
-		return new TreeExpansionAction(
-			original,
-			tree,
-			expansionMode,
-			FilterComposite.create(filters),
-			enabledChecking,
-			level,
-			getText(),
-			boundPivotLevelText);
-	}
+    @Override
+    protected ITreeExpansionAction doBuild(final IActionBuilder original) {
+        return new TreeExpansionAction(
+            original,
+            tree,
+            expansionMode,
+            FilterComposite.create(filters),
+            enabledChecking,
+            level,
+            getText(),
+            boundPivotLevelText);
+    }
 
 }

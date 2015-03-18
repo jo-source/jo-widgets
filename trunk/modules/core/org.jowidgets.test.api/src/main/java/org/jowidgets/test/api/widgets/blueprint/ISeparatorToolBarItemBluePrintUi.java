@@ -32,7 +32,7 @@ import org.jowidgets.api.widgets.blueprint.builder.ISeparatorToolBarItemSetupBui
 import org.jowidgets.test.api.widgets.descriptor.ISeparatorToolBarItemDescriptorUi;
 
 public interface ISeparatorToolBarItemBluePrintUi extends
-		ISeparatorToolBarItemSetupBuilder<ISeparatorToolBarItemBluePrintUi>,
-		ISeparatorToolBarItemDescriptorUi {
+        ISeparatorToolBarItemSetupBuilder<ISeparatorToolBarItemBluePrintUi>,
+        ISeparatorToolBarItemDescriptorUi {
 
 }

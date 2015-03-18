@@ -38,20 +38,20 @@ import org.jowidgets.util.IConverter;
 
 final class SwtAwtConverterFactoryImpl implements ISwtAwtConverterFactory {
 
-	@Override
-	public IConverter<IComposite, Container> createCompositeConverter() {
-		return new IConverter<IComposite, Container>() {
-			@Override
-			public Container convert(final IComposite source) {
-				Assert.paramNotNull(source, "source");
-				Assert.paramHasType(source.getUiReference(), Composite.class, "source.getUiReference()");
-				source.setLayout(MigLayoutFactory.growingInnerCellLayout());
-				final ISwtAwtControl result;
-				result = SwtAwtControlFactory.getInstance().createSwtAwtControl(source.getUiReference());
-				result.setLayoutConstraints(MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-				return result.getAwtContainer();
-			}
-		};
-	}
+    @Override
+    public IConverter<IComposite, Container> createCompositeConverter() {
+        return new IConverter<IComposite, Container>() {
+            @Override
+            public Container convert(final IComposite source) {
+                Assert.paramNotNull(source, "source");
+                Assert.paramHasType(source.getUiReference(), Composite.class, "source.getUiReference()");
+                source.setLayout(MigLayoutFactory.growingInnerCellLayout());
+                final ISwtAwtControl result;
+                result = SwtAwtControlFactory.getInstance().createSwtAwtControl(source.getUiReference());
+                result.setLayoutConstraints(MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+                return result.getAwtContainer();
+            }
+        };
+    }
 
 }

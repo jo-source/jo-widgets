@@ -37,11 +37,11 @@ import org.jowidgets.util.IObservableValue;
  */
 public interface IObservableValueViewer<VALUE_TYPE> {
 
-	/**
-	 * Gets the observable value
-	 * 
-	 * @return The observable value, never null
-	 */
-	IObservableValue<VALUE_TYPE> getObservableValue();
+    /**
+     * Gets the observable value
+     * 
+     * @return The observable value, never null
+     */
+    IObservableValue<VALUE_TYPE> getObservableValue();
 
 }

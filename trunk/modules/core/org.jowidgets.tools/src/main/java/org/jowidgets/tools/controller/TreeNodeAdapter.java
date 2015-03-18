@@ -32,13 +32,13 @@ import org.jowidgets.common.widgets.controller.ITreeNodeListener;
 
 public class TreeNodeAdapter implements ITreeNodeListener {
 
-	@Override
-	public void selectionChanged(final boolean selected) {}
+    @Override
+    public void selectionChanged(final boolean selected) {}
 
-	@Override
-	public void expandedChanged(final boolean expanded) {}
+    @Override
+    public void expandedChanged(final boolean expanded) {}
 
-	@Override
-	public void checkedChanged(final boolean checked) {}
+    @Override
+    public void checkedChanged(final boolean checked) {}
 
 }

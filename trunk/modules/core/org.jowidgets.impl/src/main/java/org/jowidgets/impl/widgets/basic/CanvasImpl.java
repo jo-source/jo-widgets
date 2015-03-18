@@ -46,99 +46,99 @@ import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 
 public final class CanvasImpl extends AbstractCanvasSpiWrapper implements ICanvas {
 
-	private final ControlDelegate controlDelegate;
-	private final PaintObservable paintObservable;
+    private final ControlDelegate controlDelegate;
+    private final PaintObservable paintObservable;
 
-	public CanvasImpl(final ICanvasSpi canvasSpi, final ICanvasDescriptor descriptor) {
-		super(canvasSpi);
+    public CanvasImpl(final ICanvasSpi canvasSpi, final ICanvasDescriptor descriptor) {
+        super(canvasSpi);
 
-		this.controlDelegate = new ControlDelegate(canvasSpi, this);
-		this.paintObservable = new PaintObservable();
+        this.controlDelegate = new ControlDelegate(canvasSpi, this);
+        this.paintObservable = new PaintObservable();
 
-		VisibiliySettingsInvoker.setVisibility(descriptor, this);
-		ColorSettingsInvoker.setColors(descriptor, this);
+        VisibiliySettingsInvoker.setVisibility(descriptor, this);
+        ColorSettingsInvoker.setColors(descriptor, this);
 
-		canvasSpi.addPaintListener(new IPaintListenerSpi() {
-			@Override
-			public void paint(final IPaintEventSpi paintEventSpi) {
-				paintObservable.firePaint(paintEventSpi);
-			}
-		});
-	}
+        canvasSpi.addPaintListener(new IPaintListenerSpi() {
+            @Override
+            public void paint(final IPaintEventSpi paintEventSpi) {
+                paintObservable.firePaint(paintEventSpi);
+            }
+        });
+    }
 
-	@Override
-	public IContainer getParent() {
-		return controlDelegate.getParent();
-	}
+    @Override
+    public IContainer getParent() {
+        return controlDelegate.getParent();
+    }
 
-	@Override
-	public void setParent(final IContainer parent) {
-		controlDelegate.setParent(parent);
-	}
+    @Override
+    public void setParent(final IContainer parent) {
+        controlDelegate.setParent(parent);
+    }
 
-	@Override
-	public void addParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.addParentListener(listener);
-	}
+    @Override
+    public void addParentListener(final IParentListener<IContainer> listener) {
+        controlDelegate.addParentListener(listener);
+    }
 
-	@Override
-	public void removeParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.removeParentListener(listener);
-	}
+    @Override
+    public void removeParentListener(final IParentListener<IContainer> listener) {
+        controlDelegate.removeParentListener(listener);
+    }
 
-	@Override
-	public boolean isReparentable() {
-		return controlDelegate.isReparentable();
-	}
+    @Override
+    public boolean isReparentable() {
+        return controlDelegate.isReparentable();
+    }
 
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		controlDelegate.addDisposeListener(listener);
-	}
+    @Override
+    public void addDisposeListener(final IDisposeListener listener) {
+        controlDelegate.addDisposeListener(listener);
+    }
 
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		controlDelegate.removeDisposeListener(listener);
-	}
+    @Override
+    public void removeDisposeListener(final IDisposeListener listener) {
+        controlDelegate.removeDisposeListener(listener);
+    }
 
-	@Override
-	public boolean isDisposed() {
-		return controlDelegate.isDisposed();
-	}
+    @Override
+    public boolean isDisposed() {
+        return controlDelegate.isDisposed();
+    }
 
-	@Override
-	public void dispose() {
-		controlDelegate.dispose();
-	}
+    @Override
+    public void dispose() {
+        controlDelegate.dispose();
+    }
 
-	@Override
-	public IPopupMenu createPopupMenu() {
-		return controlDelegate.createPopupMenu();
-	}
+    @Override
+    public IPopupMenu createPopupMenu() {
+        return controlDelegate.createPopupMenu();
+    }
 
-	@Override
-	public void redraw(final int x, final int y, final int width, final int height) {
-		getWidget().redraw(x, y, width, height);
-	}
+    @Override
+    public void redraw(final int x, final int y, final int width, final int height) {
+        getWidget().redraw(x, y, width, height);
+    }
 
-	@Override
-	public void redraw(final boolean sync) {
-		getWidget().redraw(sync);
-	}
+    @Override
+    public void redraw(final boolean sync) {
+        getWidget().redraw(sync);
+    }
 
-	@Override
-	public void redraw(final int x, final int y, final int width, final int height, final boolean sync) {
-		getWidget().redraw(x, y, width, height, sync);
-	}
+    @Override
+    public void redraw(final int x, final int y, final int width, final int height, final boolean sync) {
+        getWidget().redraw(x, y, width, height, sync);
+    }
 
-	@Override
-	public void addPaintListener(final IPaintListener listener) {
-		paintObservable.addPaintListener(listener);
-	}
+    @Override
+    public void addPaintListener(final IPaintListener listener) {
+        paintObservable.addPaintListener(listener);
+    }
 
-	@Override
-	public void removePaintListener(final IPaintListener listener) {
-		paintObservable.removePaintListener(listener);
-	}
+    @Override
+    public void removePaintListener(final IPaintListener listener) {
+        paintObservable.removePaintListener(listener);
+    }
 
 }

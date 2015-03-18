@@ -30,8 +30,8 @@ package org.jowidgets.api.controller;
 
 public interface ITreeNodeCheckableObservable {
 
-	void addCheckableListener(ITreeNodeCheckableListener listener);
+    void addCheckableListener(ITreeNodeCheckableListener listener);
 
-	void removeCheckableListener(ITreeNodeCheckableListener listener);
+    void removeCheckableListener(ITreeNodeCheckableListener listener);
 
 }

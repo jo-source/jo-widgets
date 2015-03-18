@@ -57,182 +57,182 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public class TreeDragAndDropExample implements IApplication {
 
-	private static final int LEVEL_ONE_COUNT = 3;
-	private static final int LEVEL_TWO_COUNT = 3;
-	private static final int LEVEL_TREE_COUNT = 3;
+    private static final int LEVEL_ONE_COUNT = 3;
+    private static final int LEVEL_TWO_COUNT = 3;
+    private static final int LEVEL_TREE_COUNT = 3;
 
-	public void start() {
-		DemoIconsInitializer.initialize();
-		Toolkit.getInstance().getApplicationRunner().run(this);
-	}
+    public void start() {
+        DemoIconsInitializer.initialize();
+        Toolkit.getInstance().getApplicationRunner().run(this);
+    }
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
-		final IFrame rootFrame = Toolkit.createRootFrame(BPF.frame().setTitle("Drag and Drop Tree"), lifecycle);
-		rootFrame.setLayout(MigLayoutFactory.growingInnerCellLayout());
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
+        final IFrame rootFrame = Toolkit.createRootFrame(BPF.frame().setTitle("Drag and Drop Tree"), lifecycle);
+        rootFrame.setLayout(MigLayoutFactory.growingInnerCellLayout());
 
-		final ISplitComposite splitComposite = rootFrame.add(BPF.splitHorizontal(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        final ISplitComposite splitComposite = rootFrame.add(BPF.splitHorizontal(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
-		final ITree tree1 = addTree(splitComposite.getFirst());
-		addDragSource(tree1);
-		addDropTarget(tree1);
+        final ITree tree1 = addTree(splitComposite.getFirst());
+        addDragSource(tree1);
+        addDropTarget(tree1);
 
-		final ITree tree2 = addTree(splitComposite.getSecond());
-		addDropTarget(tree2);
+        final ITree tree2 = addTree(splitComposite.getSecond());
+        addDropTarget(tree2);
 
-		rootFrame.setSize(800, 800);
-		rootFrame.setVisible(true);
-	}
+        rootFrame.setSize(800, 800);
+        rootFrame.setVisible(true);
+    }
 
-	private void addDragSource(final ITree tree) {
-		final IDragSource dragSource = tree.getDragSource();
-		dragSource.setActions(DropAction.MOVE, DropAction.COPY);
-		dragSource.setTransferTypes(TransferType.STRING_TYPE);
+    private void addDragSource(final ITree tree) {
+        final IDragSource dragSource = tree.getDragSource();
+        dragSource.setActions(DropAction.MOVE, DropAction.COPY);
+        dragSource.setTransferTypes(TransferType.STRING_TYPE);
 
-		dragSource.addDragSourceListener(new IDragSourceListener() {
+        dragSource.addDragSourceListener(new IDragSourceListener() {
 
-			private ITreeNode dragItem;
+            private ITreeNode dragItem;
 
-			@Override
-			public void dragStart(final IDragEvent event, final IVetoable veto) {
-				dragItem = tree.getNodeAt(event.getPosition());
-			}
+            @Override
+            public void dragStart(final IDragEvent event, final IVetoable veto) {
+                dragItem = tree.getNodeAt(event.getPosition());
+            }
 
-			@Override
-			public void dragSetData(
-				final IDragEvent event,
-				final IVetoable veto,
-				final TransferType<?> transferType,
-				final IDragDataResponse dragData) {
+            @Override
+            public void dragSetData(
+                final IDragEvent event,
+                final IVetoable veto,
+                final TransferType<?> transferType,
+                final IDragDataResponse dragData) {
 
-				if (dragItem != null && TransferType.STRING_TYPE.equals(transferType)) {
-					dragData.setData(dragItem.getText());
-				}
-			}
+                if (dragItem != null && TransferType.STRING_TYPE.equals(transferType)) {
+                    dragData.setData(dragItem.getText());
+                }
+            }
 
-			@Override
-			public void dragFinished(final IDragEvent event, final DropAction dropAction) {
-				if (DropAction.MOVE.equals(dropAction) && dragItem != null) {
-					dragItem.dispose();
-				}
-			}
-		});
+            @Override
+            public void dragFinished(final IDragEvent event, final DropAction dropAction) {
+                if (DropAction.MOVE.equals(dropAction) && dragItem != null) {
+                    dragItem.dispose();
+                }
+            }
+        });
 
-	}
+    }
 
-	//CHECKSTYLE:OFF
-	private void addDropTarget(final ITree tree) {
-		final IDropTarget dropTarget = tree.getDropTarget();
-		dropTarget.setActions(DropAction.COPY, DropAction.MOVE);
-		dropTarget.setTransferTypes(TransferType.STRING_TYPE);
-		dropTarget.setDefaultDropMode(DropMode.SELECT_OR_INSERT);
+    //CHECKSTYLE:OFF
+    private void addDropTarget(final ITree tree) {
+        final IDropTarget dropTarget = tree.getDropTarget();
+        dropTarget.setActions(DropAction.COPY, DropAction.MOVE);
+        dropTarget.setTransferTypes(TransferType.STRING_TYPE);
+        dropTarget.setDefaultDropMode(DropMode.SELECT_OR_INSERT);
 
-		dropTarget.addDropTargetListener(new IDropTargetListener() {
+        dropTarget.addDropTargetListener(new IDropTargetListener() {
 
-			@Override
-			public void dropAccept(final IDropEvent event, final IDropResponse response) {
-				System.out.println("DROP ACCEPT: " + event);
-			}
+            @Override
+            public void dropAccept(final IDropEvent event, final IDropResponse response) {
+                System.out.println("DROP ACCEPT: " + event);
+            }
 
-			@Override
-			public void drop(final IDropEvent event) {
-				System.out.println("DROP: " + event);
-				if (TransferType.STRING_TYPE.equals(event.getTransferType())) {
-					final String text = (String) event.getData();
+            @Override
+            public void drop(final IDropEvent event) {
+                System.out.println("DROP: " + event);
+                if (TransferType.STRING_TYPE.equals(event.getTransferType())) {
+                    final String text = (String) event.getData();
 
-					final ITreeNode treeNode = (ITreeNode) event.getDropSelection();
-					if (treeNode != null) {
-						final ITreeNode parentNode = treeNode.getParent();
-						if (parentNode != null) {
-							final int indexOfItem = getIndexOfItem(parentNode, treeNode);
-							if (indexOfItem != -1) {
-								final ITreeNode newNode = parentNode.addNode(indexOfItem + 1);
-								newNode.setText(text);
-							}
-						}
-					}
-				}
+                    final ITreeNode treeNode = (ITreeNode) event.getDropSelection();
+                    if (treeNode != null) {
+                        final ITreeNode parentNode = treeNode.getParent();
+                        if (parentNode != null) {
+                            final int indexOfItem = getIndexOfItem(parentNode, treeNode);
+                            if (indexOfItem != -1) {
+                                final ITreeNode newNode = parentNode.addNode(indexOfItem + 1);
+                                newNode.setText(text);
+                            }
+                        }
+                    }
+                }
 
-			}
+            }
 
-			private int getIndexOfItem(final ITreeNode parent, final ITreeNode node) {
-				int result = 0;
-				for (final ITreeNode child : parent.getChildren()) {
-					if (child == node) {
-						return result;
-					}
-					result++;
-				}
-				return -1;
-			}
+            private int getIndexOfItem(final ITreeNode parent, final ITreeNode node) {
+                int result = 0;
+                for (final ITreeNode child : parent.getChildren()) {
+                    if (child == node) {
+                        return result;
+                    }
+                    result++;
+                }
+                return -1;
+            }
 
-			@Override
-			public void dragOver(final IDropEvent event, final IDropResponse response) {
-				System.out.println("DRAG OVER: " + event);
-			}
+            @Override
+            public void dragOver(final IDropEvent event, final IDropResponse response) {
+                System.out.println("DRAG OVER: " + event);
+            }
 
-			@Override
-			public void dragOperationChanged(final IDropEvent event, final IDropResponse response) {
-				System.out.println("DRAG OPERATION CHANGED: " + event);
-			}
+            @Override
+            public void dragOperationChanged(final IDropEvent event, final IDropResponse response) {
+                System.out.println("DRAG OPERATION CHANGED: " + event);
+            }
 
-			@Override
-			public void dragExit() {
-				System.out.println("DRAG EXIT");
-			}
+            @Override
+            public void dragExit() {
+                System.out.println("DRAG EXIT");
+            }
 
-			@Override
-			public void dragEnter(final IDropEvent event, final IDropResponse response) {
-				System.out.println("DRAG ENTER: " + event);
-			}
+            @Override
+            public void dragEnter(final IDropEvent event, final IDropResponse response) {
+                System.out.println("DRAG ENTER: " + event);
+            }
 
-		});
+        });
 
-	}
+    }
 
-	//CHECKSTYLE:ON
+    //CHECKSTYLE:ON
 
-	private ITree addTree(final IContainer container) {
-		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
-		final ITree tree = container.add(BPF.tree(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		for (int i = 0; i < LEVEL_ONE_COUNT; i++) {
-			final ITreeNode levelOneNode = addNode(tree, "Level A, Node ", i);
-			for (int j = 0; j < LEVEL_TWO_COUNT; j++) {
-				final ITreeNode levelTwoNode = addNode(levelOneNode, "Level B, Node ", j);
-				for (int k = 0; k < LEVEL_TREE_COUNT; k++) {
-					addNode(levelTwoNode, "Level C, Node ", k);
-				}
-				levelTwoNode.setExpanded(true);
-			}
-			levelOneNode.setExpanded(true);
-		}
+    private ITree addTree(final IContainer container) {
+        container.setLayout(MigLayoutFactory.growingInnerCellLayout());
+        final ITree tree = container.add(BPF.tree(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        for (int i = 0; i < LEVEL_ONE_COUNT; i++) {
+            final ITreeNode levelOneNode = addNode(tree, "Level A, Node ", i);
+            for (int j = 0; j < LEVEL_TWO_COUNT; j++) {
+                final ITreeNode levelTwoNode = addNode(levelOneNode, "Level B, Node ", j);
+                for (int k = 0; k < LEVEL_TREE_COUNT; k++) {
+                    addNode(levelTwoNode, "Level C, Node ", k);
+                }
+                levelTwoNode.setExpanded(true);
+            }
+            levelOneNode.setExpanded(true);
+        }
 
-		tree.addMouseListener(new MouseAdapter() {
+        tree.addMouseListener(new MouseAdapter() {
 
-			@Override
-			public void mousePressed(final IMouseButtonEvent event) {
-				final ITreeNode nodeAtPosition = tree.getNodeAt(event.getPosition());
-				if (nodeAtPosition != null) {
-					//CHECKSTYLE:OFF
-					System.out.println("NODE AT POSITION: " + nodeAtPosition.getText());
-					//CHECKSTYLE:ON
-				}
-				else {
-					//CHECKSTYLE:OFF
-					System.out.println("NULL");
-					//CHECKSTYLE:ON
-				}
-			}
+            @Override
+            public void mousePressed(final IMouseButtonEvent event) {
+                final ITreeNode nodeAtPosition = tree.getNodeAt(event.getPosition());
+                if (nodeAtPosition != null) {
+                    //CHECKSTYLE:OFF
+                    System.out.println("NODE AT POSITION: " + nodeAtPosition.getText());
+                    //CHECKSTYLE:ON
+                }
+                else {
+                    //CHECKSTYLE:OFF
+                    System.out.println("NULL");
+                    //CHECKSTYLE:ON
+                }
+            }
 
-		});
+        });
 
-		return tree;
-	}
+        return tree;
+    }
 
-	private ITreeNode addNode(final ITreeContainer parent, final String prefix, final int index) {
-		final ITreeNode node = parent.addNode();
-		node.setText(prefix + " " + index);
-		return node;
-	}
+    private ITreeNode addNode(final ITreeContainer parent, final String prefix, final int index) {
+        final ITreeNode node = parent.addNode();
+        node.setText(prefix + " " + index);
+        return node;
+    }
 
 }

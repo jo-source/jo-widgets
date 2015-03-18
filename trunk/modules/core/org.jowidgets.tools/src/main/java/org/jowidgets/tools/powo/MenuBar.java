@@ -41,154 +41,154 @@ import org.jowidgets.util.Assert;
 
 class MenuBar extends Widget<IMenuBar, DummyBluePrint<IMenuBar>> implements IMenuBar {
 
-	private final List<JoMainMenu> menus;
+    private final List<JoMainMenu> menus;
 
-	MenuBar() {
-		super(new DummyBluePrint<IMenuBar>());
-		this.menus = new LinkedList<JoMainMenu>();
-	}
+    MenuBar() {
+        super(new DummyBluePrint<IMenuBar>());
+        this.menus = new LinkedList<JoMainMenu>();
+    }
 
-	@Override
-	void initialize(final IMenuBar widget) {
-		super.initialize(widget);
-		for (final JoMainMenu menu : menus) {
-			final IMainMenu newMenu = widget.addMenu(menu.getBluePrint());
-			menu.initialize(newMenu);
-		}
-	}
+    @Override
+    void initialize(final IMenuBar widget) {
+        super.initialize(widget);
+        for (final JoMainMenu menu : menus) {
+            final IMainMenu newMenu = widget.addMenu(menu.getBluePrint());
+            menu.initialize(newMenu);
+        }
+    }
 
-	public final void addMenu(final JoMainMenu mainMenu) {
-		Assert.paramNotNull(mainMenu, "mainMenu");
-		if (isInitialized()) {
-			final IMainMenu result = getWidget().addMenu(mainMenu.getBluePrint());
-			mainMenu.initialize(result);
-		}
-		else {
-			menus.add(mainMenu);
-		}
-	}
+    public final void addMenu(final JoMainMenu mainMenu) {
+        Assert.paramNotNull(mainMenu, "mainMenu");
+        if (isInitialized()) {
+            final IMainMenu result = getWidget().addMenu(mainMenu.getBluePrint());
+            mainMenu.initialize(result);
+        }
+        else {
+            menus.add(mainMenu);
+        }
+    }
 
-	public final void addMenu(final int index, final JoMainMenu mainMenu) {
-		Assert.paramNotNull(mainMenu, "mainMenu");
-		if (isInitialized()) {
-			final IMainMenu result = getWidget().addMenu(index, mainMenu.getBluePrint());
-			mainMenu.initialize(result);
-		}
-		else {
-			menus.add(index, mainMenu);
-		}
-	}
+    public final void addMenu(final int index, final JoMainMenu mainMenu) {
+        Assert.paramNotNull(mainMenu, "mainMenu");
+        if (isInitialized()) {
+            final IMainMenu result = getWidget().addMenu(index, mainMenu.getBluePrint());
+            mainMenu.initialize(result);
+        }
+        else {
+            menus.add(index, mainMenu);
+        }
+    }
 
-	@Override
-	public List<IMenu> getMenus() {
-		if (isInitialized()) {
-			return getWidget().getMenus();
-		}
-		else {
-			return Collections.unmodifiableList(new LinkedList<IMenu>(menus));
-		}
-	}
+    @Override
+    public List<IMenu> getMenus() {
+        if (isInitialized()) {
+            return getWidget().getMenus();
+        }
+        else {
+            return Collections.unmodifiableList(new LinkedList<IMenu>(menus));
+        }
+    }
 
-	@Override
-	public boolean remove(final IMenu menu) {
-		if (isInitialized()) {
-			return getWidget().remove(menu);
-		}
-		else {
-			return menus.remove(menu);
-		}
-	}
+    @Override
+    public boolean remove(final IMenu menu) {
+        if (isInitialized()) {
+            return getWidget().remove(menu);
+        }
+        else {
+            return menus.remove(menu);
+        }
+    }
 
-	@Override
-	public void remove(final int index) {
-		if (isInitialized()) {
-			getWidget().remove(index);
-		}
-		else {
-			menus.remove(index);
-		}
-	}
+    @Override
+    public void remove(final int index) {
+        if (isInitialized()) {
+            getWidget().remove(index);
+        }
+        else {
+            menus.remove(index);
+        }
+    }
 
-	@Override
-	public void removeAll() {
-		if (isInitialized()) {
-			getWidget().removeAll();
-		}
-		else {
-			menus.clear();
-		}
-	}
+    @Override
+    public void removeAll() {
+        if (isInitialized()) {
+            getWidget().removeAll();
+        }
+        else {
+            menus.clear();
+        }
+    }
 
-	@Override
-	public IMainMenu addMenu(final String name) {
-		if (isInitialized()) {
-			return getWidget().addMenu(name);
-		}
-		else {
-			final JoMainMenu result = new JoMainMenu(name);
-			menus.add(result);
-			return result;
-		}
-	}
+    @Override
+    public IMainMenu addMenu(final String name) {
+        if (isInitialized()) {
+            return getWidget().addMenu(name);
+        }
+        else {
+            final JoMainMenu result = new JoMainMenu(name);
+            menus.add(result);
+            return result;
+        }
+    }
 
-	@Override
-	public IMainMenu addMenu(final String name, final char mnemonic) {
-		if (isInitialized()) {
-			return getWidget().addMenu(name, mnemonic);
-		}
-		else {
-			final JoMainMenu result = new JoMainMenu(name, mnemonic);
-			menus.add(result);
-			return result;
-		}
-	}
+    @Override
+    public IMainMenu addMenu(final String name, final char mnemonic) {
+        if (isInitialized()) {
+            return getWidget().addMenu(name, mnemonic);
+        }
+        else {
+            final JoMainMenu result = new JoMainMenu(name, mnemonic);
+            menus.add(result);
+            return result;
+        }
+    }
 
-	@Override
-	public IMainMenu addMenu(final int index, final String name) {
-		if (isInitialized()) {
-			return getWidget().addMenu(index, name);
-		}
-		else {
-			final JoMainMenu result = new JoMainMenu(name);
-			menus.add(index, result);
-			return result;
-		}
-	}
+    @Override
+    public IMainMenu addMenu(final int index, final String name) {
+        if (isInitialized()) {
+            return getWidget().addMenu(index, name);
+        }
+        else {
+            final JoMainMenu result = new JoMainMenu(name);
+            menus.add(index, result);
+            return result;
+        }
+    }
 
-	@Override
-	public IMainMenu addMenu(final IMainMenuDescriptor descriptor) {
-		if (isInitialized()) {
-			return getWidget().addMenu(descriptor);
-		}
-		else {
-			final JoMainMenu result = new JoMainMenu(descriptor);
-			menus.add(result);
-			return result;
-		}
-	}
+    @Override
+    public IMainMenu addMenu(final IMainMenuDescriptor descriptor) {
+        if (isInitialized()) {
+            return getWidget().addMenu(descriptor);
+        }
+        else {
+            final JoMainMenu result = new JoMainMenu(descriptor);
+            menus.add(result);
+            return result;
+        }
+    }
 
-	@Override
-	public IMainMenu addMenu(final int index, final IMainMenuDescriptor descriptor) {
-		if (isInitialized()) {
-			return getWidget().addMenu(index, descriptor);
-		}
-		else {
-			final JoMainMenu result = new JoMainMenu(descriptor);
-			menus.add(index, result);
-			return result;
-		}
-	}
+    @Override
+    public IMainMenu addMenu(final int index, final IMainMenuDescriptor descriptor) {
+        if (isInitialized()) {
+            return getWidget().addMenu(index, descriptor);
+        }
+        else {
+            final JoMainMenu result = new JoMainMenu(descriptor);
+            menus.add(index, result);
+            return result;
+        }
+    }
 
-	@Override
-	public void setModel(final IMenuBarModel model) {
-		checkInitialized();
-		getWidget().setModel(model);
-	}
+    @Override
+    public void setModel(final IMenuBarModel model) {
+        checkInitialized();
+        getWidget().setModel(model);
+    }
 
-	@Override
-	public IMenuBarModel getModel() {
-		checkInitialized();
-		return getModel();
-	}
+    @Override
+    public IMenuBarModel getModel() {
+        checkInitialized();
+        return getModel();
+    }
 
 }

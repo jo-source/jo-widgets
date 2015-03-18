@@ -46,150 +46,150 @@ import org.junit.Test;
 
 public class ContainerRegistryTest {
 
-	@Test
-	public void testSimpleRegistration() {
-		Toolkit.getApplicationRunner().run(new IApplication() {
+    @Test
+    public void testSimpleRegistration() {
+        Toolkit.getApplicationRunner().run(new IApplication() {
 
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
+            @Override
+            public void start(final IApplicationLifecycle lifecycle) {
 
-				final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
+                final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
 
-				final ContainerRegistry registry = new ContainerRegistry();
+                final ContainerRegistry registry = new ContainerRegistry();
 
-				frame.addContainerRegistry(registry);
-				frame.setVisible(true);
+                frame.addContainerRegistry(registry);
+                frame.setVisible(true);
 
-				Assert.assertEquals(0, registry.getControls().size());
+                Assert.assertEquals(0, registry.getControls().size());
 
-				final ILabel label = frame.add(BPF.label());
+                final ILabel label = frame.add(BPF.label());
 
-				Assert.assertTrue(registry.getControls().contains(label));
+                Assert.assertTrue(registry.getControls().contains(label));
 
-				final ContainerRegistry registry2 = new ContainerRegistry();
-				frame.addContainerRegistry(registry2);
+                final ContainerRegistry registry2 = new ContainerRegistry();
+                frame.addContainerRegistry(registry2);
 
-				Assert.assertTrue(registry.getControls().contains(label));
+                Assert.assertTrue(registry.getControls().contains(label));
 
-				frame.dispose();
+                frame.dispose();
 
-				Assert.assertFalse(registry.getControls().contains(label));
-				Assert.assertFalse(registry.getControls().contains(label));
-			}
-		});
-	}
+                Assert.assertFalse(registry.getControls().contains(label));
+                Assert.assertFalse(registry.getControls().contains(label));
+            }
+        });
+    }
 
-	@Test
-	public void testSimpleRecursiveRegistration() {
-		Toolkit.getApplicationRunner().run(new IApplication() {
+    @Test
+    public void testSimpleRecursiveRegistration() {
+        Toolkit.getApplicationRunner().run(new IApplication() {
 
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
+            @Override
+            public void start(final IApplicationLifecycle lifecycle) {
 
-				final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
+                final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
 
-				final ContainerRegistry registry = new ContainerRegistry();
+                final ContainerRegistry registry = new ContainerRegistry();
 
-				frame.addContainerRegistry(registry);
-				frame.setVisible(true);
+                frame.addContainerRegistry(registry);
+                frame.setVisible(true);
 
-				Assert.assertEquals(0, registry.getControls().size());
+                Assert.assertEquals(0, registry.getControls().size());
 
-				final IContainer subContainer = frame.add(BPF.composite());
-				final ILabel label = subContainer.add(BPF.label());
+                final IContainer subContainer = frame.add(BPF.composite());
+                final ILabel label = subContainer.add(BPF.label());
 
-				Assert.assertTrue(registry.getControls().contains(subContainer));
-				Assert.assertTrue(registry.getControls().contains(label));
+                Assert.assertTrue(registry.getControls().contains(subContainer));
+                Assert.assertTrue(registry.getControls().contains(label));
 
-				final ContainerRegistry registry2 = new ContainerRegistry();
-				frame.addContainerRegistry(registry2);
+                final ContainerRegistry registry2 = new ContainerRegistry();
+                frame.addContainerRegistry(registry2);
 
-				Assert.assertTrue(registry2.getControls().contains(subContainer));
-				Assert.assertTrue(registry2.getControls().contains(label));
+                Assert.assertTrue(registry2.getControls().contains(subContainer));
+                Assert.assertTrue(registry2.getControls().contains(label));
 
-				frame.dispose();
+                frame.dispose();
 
-				Assert.assertFalse(registry.getControls().contains(subContainer));
-				Assert.assertFalse(registry.getControls().contains(label));
+                Assert.assertFalse(registry.getControls().contains(subContainer));
+                Assert.assertFalse(registry.getControls().contains(label));
 
-				Assert.assertFalse(registry2.getControls().contains(subContainer));
-				Assert.assertFalse(registry2.getControls().contains(label));
-			}
-		});
-	}
+                Assert.assertFalse(registry2.getControls().contains(subContainer));
+                Assert.assertFalse(registry2.getControls().contains(label));
+            }
+        });
+    }
 
-	@Test
-	public void testRecursiveRegistration() {
-		Toolkit.getApplicationRunner().run(new IApplication() {
+    @Test
+    public void testRecursiveRegistration() {
+        Toolkit.getApplicationRunner().run(new IApplication() {
 
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
+            @Override
+            public void start(final IApplicationLifecycle lifecycle) {
 
-				final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
+                final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
 
-				final ContainerRegistry registry = new ContainerRegistry();
+                final ContainerRegistry registry = new ContainerRegistry();
 
-				frame.addContainerRegistry(registry);
-				frame.setVisible(true);
+                frame.addContainerRegistry(registry);
+                frame.setVisible(true);
 
-				Assert.assertEquals(0, registry.getControls().size());
+                Assert.assertEquals(0, registry.getControls().size());
 
-				final IContainer subContainer = frame.add(BPF.composite());
-				final IContainer subSubContainer = subContainer.add(BPF.scrollComposite());
-				final ILabel label1 = subSubContainer.add(BPF.label());
-				final ILabel label2 = subContainer.add(BPF.label());
-				final ILabel label3 = frame.add(BPF.label());
+                final IContainer subContainer = frame.add(BPF.composite());
+                final IContainer subSubContainer = subContainer.add(BPF.scrollComposite());
+                final ILabel label1 = subSubContainer.add(BPF.label());
+                final ILabel label2 = subContainer.add(BPF.label());
+                final ILabel label3 = frame.add(BPF.label());
 
-				Assert.assertTrue(registry.getControls().contains(subContainer));
-				Assert.assertTrue(registry.getControls().contains(subSubContainer));
-				Assert.assertTrue(registry.getControls().contains(label1));
-				Assert.assertTrue(registry.getControls().contains(label2));
-				Assert.assertTrue(registry.getControls().contains(label3));
+                Assert.assertTrue(registry.getControls().contains(subContainer));
+                Assert.assertTrue(registry.getControls().contains(subSubContainer));
+                Assert.assertTrue(registry.getControls().contains(label1));
+                Assert.assertTrue(registry.getControls().contains(label2));
+                Assert.assertTrue(registry.getControls().contains(label3));
 
-				final ContainerRegistry registry2 = new ContainerRegistry();
-				frame.addContainerRegistry(registry2);
+                final ContainerRegistry registry2 = new ContainerRegistry();
+                frame.addContainerRegistry(registry2);
 
-				Assert.assertTrue(registry2.getControls().contains(subContainer));
-				Assert.assertTrue(registry2.getControls().contains(subSubContainer));
-				Assert.assertTrue(registry2.getControls().contains(label1));
-				Assert.assertTrue(registry2.getControls().contains(label2));
-				Assert.assertTrue(registry2.getControls().contains(label3));
+                Assert.assertTrue(registry2.getControls().contains(subContainer));
+                Assert.assertTrue(registry2.getControls().contains(subSubContainer));
+                Assert.assertTrue(registry2.getControls().contains(label1));
+                Assert.assertTrue(registry2.getControls().contains(label2));
+                Assert.assertTrue(registry2.getControls().contains(label3));
 
-				frame.dispose();
+                frame.dispose();
 
-				Assert.assertFalse(registry.getControls().contains(subContainer));
-				Assert.assertFalse(registry.getControls().contains(subSubContainer));
-				Assert.assertFalse(registry.getControls().contains(label1));
-				Assert.assertFalse(registry.getControls().contains(label2));
-				Assert.assertFalse(registry.getControls().contains(label3));
+                Assert.assertFalse(registry.getControls().contains(subContainer));
+                Assert.assertFalse(registry.getControls().contains(subSubContainer));
+                Assert.assertFalse(registry.getControls().contains(label1));
+                Assert.assertFalse(registry.getControls().contains(label2));
+                Assert.assertFalse(registry.getControls().contains(label3));
 
-				Assert.assertFalse(registry2.getControls().contains(subContainer));
-				Assert.assertFalse(registry2.getControls().contains(subSubContainer));
-				Assert.assertFalse(registry2.getControls().contains(label1));
-				Assert.assertFalse(registry2.getControls().contains(label2));
-				Assert.assertFalse(registry2.getControls().contains(label3));
-			}
-		});
-	}
+                Assert.assertFalse(registry2.getControls().contains(subContainer));
+                Assert.assertFalse(registry2.getControls().contains(subSubContainer));
+                Assert.assertFalse(registry2.getControls().contains(label1));
+                Assert.assertFalse(registry2.getControls().contains(label2));
+                Assert.assertFalse(registry2.getControls().contains(label3));
+            }
+        });
+    }
 
-	final class ContainerRegistry implements IContainerRegistry {
+    final class ContainerRegistry implements IContainerRegistry {
 
-		private final List<IControl> controls = new LinkedList<IControl>();
+        private final List<IControl> controls = new LinkedList<IControl>();
 
-		@Override
-		public void register(final IControl control) {
-			controls.add(control);
-		}
+        @Override
+        public void register(final IControl control) {
+            controls.add(control);
+        }
 
-		@Override
-		public void unregister(final IControl control) {
-			controls.remove(control);
-		}
+        @Override
+        public void unregister(final IControl control) {
+            controls.remove(control);
+        }
 
-		protected List<IControl> getControls() {
-			return controls;
-		}
+        protected List<IControl> getControls() {
+            return controls;
+        }
 
-	}
+    }
 
 }

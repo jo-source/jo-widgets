@@ -32,6 +32,6 @@ import org.jowidgets.util.event.ICancelObservable;
 
 public interface IPasswordChangeExecutor {
 
-	void changePassword(IPasswordChangeResult result, String oldPassword, String newPassword, ICancelObservable cancelObsersable);
+    void changePassword(IPasswordChangeResult result, String oldPassword, String newPassword, ICancelObservable cancelObsersable);
 
 }

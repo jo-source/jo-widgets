@@ -33,115 +33,115 @@ import org.jowidgets.common.types.Rectangle;
 
 class MonthLayoutCache {
 
-	private int separatorHeight = -1;
-	private Dimension headerMaxSize;
-	private Dimension maxDaySize;
-	private Dimension preferredSize;
-	private Rectangle[][] dayButtonsBounds;
-	private Rectangle[] headerButtonsBounds;
+    private int separatorHeight = -1;
+    private Dimension headerMaxSize;
+    private Dimension maxDaySize;
+    private Dimension preferredSize;
+    private Rectangle[][] dayButtonsBounds;
+    private Rectangle[] headerButtonsBounds;
 
-	private Rectangle dayLabelBounds;
-	private Rectangle dayLabelBorderBounds;
-	private Rectangle headerLabelBounds;
-	private Rectangle headerLabelBorderBounds;
-	private Rectangle separatorBounds;
+    private Rectangle dayLabelBounds;
+    private Rectangle dayLabelBorderBounds;
+    private Rectangle headerLabelBounds;
+    private Rectangle headerLabelBorderBounds;
+    private Rectangle separatorBounds;
 
-	private String[] headerButtonsNames;
+    private String[] headerButtonsNames;
 
-	protected Dimension getHeaderMaxSize() {
-		return headerMaxSize;
-	}
+    protected Dimension getHeaderMaxSize() {
+        return headerMaxSize;
+    }
 
-	protected void setHeaderMaxSize(final Dimension headerMaxSize) {
-		this.headerMaxSize = headerMaxSize;
-	}
+    protected void setHeaderMaxSize(final Dimension headerMaxSize) {
+        this.headerMaxSize = headerMaxSize;
+    }
 
-	protected Dimension getMaxDaySize() {
-		return maxDaySize;
-	}
+    protected Dimension getMaxDaySize() {
+        return maxDaySize;
+    }
 
-	protected void setMaxDaySize(final Dimension maxDaySize) {
-		this.maxDaySize = maxDaySize;
-	}
+    protected void setMaxDaySize(final Dimension maxDaySize) {
+        this.maxDaySize = maxDaySize;
+    }
 
-	protected Dimension getPreferredSize() {
-		return preferredSize;
-	}
+    protected Dimension getPreferredSize() {
+        return preferredSize;
+    }
 
-	protected void setPreferredSize(final Dimension preferredSize) {
-		this.preferredSize = preferredSize;
-	}
+    protected void setPreferredSize(final Dimension preferredSize) {
+        this.preferredSize = preferredSize;
+    }
 
-	protected Rectangle[][] getDayButtonsBounds() {
-		return dayButtonsBounds;
-	}
+    protected Rectangle[][] getDayButtonsBounds() {
+        return dayButtonsBounds;
+    }
 
-	protected void setDayButtonsBounds(final Rectangle[][] dayButtonsBounds) {
-		this.dayButtonsBounds = dayButtonsBounds;
-	}
+    protected void setDayButtonsBounds(final Rectangle[][] dayButtonsBounds) {
+        this.dayButtonsBounds = dayButtonsBounds;
+    }
 
-	protected Rectangle[] getHeaderButtonsBounds() {
-		return headerButtonsBounds;
-	}
+    protected Rectangle[] getHeaderButtonsBounds() {
+        return headerButtonsBounds;
+    }
 
-	protected void setHeaderButtonsBounds(final Rectangle[] headerButtonsBounds) {
-		this.headerButtonsBounds = headerButtonsBounds;
-	}
+    protected void setHeaderButtonsBounds(final Rectangle[] headerButtonsBounds) {
+        this.headerButtonsBounds = headerButtonsBounds;
+    }
 
-	protected Rectangle getDayLabelBounds() {
-		return dayLabelBounds;
-	}
+    protected Rectangle getDayLabelBounds() {
+        return dayLabelBounds;
+    }
 
-	protected void setDayLabelBounds(final Rectangle dayLabelBounds) {
-		this.dayLabelBounds = dayLabelBounds;
-	}
+    protected void setDayLabelBounds(final Rectangle dayLabelBounds) {
+        this.dayLabelBounds = dayLabelBounds;
+    }
 
-	protected Rectangle getDayLabelBorderBounds() {
-		return dayLabelBorderBounds;
-	}
+    protected Rectangle getDayLabelBorderBounds() {
+        return dayLabelBorderBounds;
+    }
 
-	protected void setDayLabelBorderBounds(final Rectangle dayLabelBorderBounds) {
-		this.dayLabelBorderBounds = dayLabelBorderBounds;
-	}
+    protected void setDayLabelBorderBounds(final Rectangle dayLabelBorderBounds) {
+        this.dayLabelBorderBounds = dayLabelBorderBounds;
+    }
 
-	protected Rectangle getHeaderLabelBounds() {
-		return headerLabelBounds;
-	}
+    protected Rectangle getHeaderLabelBounds() {
+        return headerLabelBounds;
+    }
 
-	protected void setHeaderLabelBounds(final Rectangle headerLabelBounds) {
-		this.headerLabelBounds = headerLabelBounds;
-	}
+    protected void setHeaderLabelBounds(final Rectangle headerLabelBounds) {
+        this.headerLabelBounds = headerLabelBounds;
+    }
 
-	protected Rectangle getHeaderLabelBorderBounds() {
-		return headerLabelBorderBounds;
-	}
+    protected Rectangle getHeaderLabelBorderBounds() {
+        return headerLabelBorderBounds;
+    }
 
-	protected void setHeaderLabelBorderBounds(final Rectangle headerLabelBorderBounds) {
-		this.headerLabelBorderBounds = headerLabelBorderBounds;
-	}
+    protected void setHeaderLabelBorderBounds(final Rectangle headerLabelBorderBounds) {
+        this.headerLabelBorderBounds = headerLabelBorderBounds;
+    }
 
-	protected Rectangle getSeparatorBounds() {
-		return separatorBounds;
-	}
+    protected Rectangle getSeparatorBounds() {
+        return separatorBounds;
+    }
 
-	protected void setSeparatorBounds(final Rectangle separatorBounds) {
-		this.separatorBounds = separatorBounds;
-	}
+    protected void setSeparatorBounds(final Rectangle separatorBounds) {
+        this.separatorBounds = separatorBounds;
+    }
 
-	protected String[] getHeaderButtonsNames() {
-		return headerButtonsNames;
-	}
+    protected String[] getHeaderButtonsNames() {
+        return headerButtonsNames;
+    }
 
-	protected void setHeaderButtonsNames(final String[] headerButtonsNames) {
-		this.headerButtonsNames = headerButtonsNames;
-	}
+    protected void setHeaderButtonsNames(final String[] headerButtonsNames) {
+        this.headerButtonsNames = headerButtonsNames;
+    }
 
-	protected int getSeparatorHeight() {
-		return separatorHeight;
-	}
+    protected int getSeparatorHeight() {
+        return separatorHeight;
+    }
 
-	protected void setSeparatorHeight(final int separatorHeight) {
-		this.separatorHeight = separatorHeight;
-	}
+    protected void setSeparatorHeight(final int separatorHeight) {
+        this.separatorHeight = separatorHeight;
+    }
 
 }

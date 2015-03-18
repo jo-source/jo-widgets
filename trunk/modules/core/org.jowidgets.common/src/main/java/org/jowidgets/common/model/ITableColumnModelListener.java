@@ -30,10 +30,10 @@ package org.jowidgets.common.model;
 
 public interface ITableColumnModelListener {
 
-	void columnsAdded(int[] columnIndices);
+    void columnsAdded(int[] columnIndices);
 
-	void columnsRemoved(int[] columnIndices);
+    void columnsRemoved(int[] columnIndices);
 
-	void columnsChanged(int[] columnIndices);
+    void columnsChanged(int[] columnIndices);
 
 }

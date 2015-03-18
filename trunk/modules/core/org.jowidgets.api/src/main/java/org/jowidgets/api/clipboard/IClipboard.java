@@ -30,12 +30,12 @@ package org.jowidgets.api.clipboard;
 
 public interface IClipboard extends IClipboardObservable {
 
-	void setContents(ITransferable contents);
+    void setContents(ITransferable contents);
 
-	ITransferable getContents();
+    ITransferable getContents();
 
-	<JAVA_TYPE> JAVA_TYPE getData(TransferType<JAVA_TYPE> type);
+    <JAVA_TYPE> JAVA_TYPE getData(TransferType<JAVA_TYPE> type);
 
-	void dispose();
+    void dispose();
 
 }

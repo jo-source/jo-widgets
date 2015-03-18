@@ -32,19 +32,19 @@ import org.jowidgets.common.types.IVetoable;
 
 public class VetoHolder implements IVetoable {
 
-	private boolean veto;
+    private boolean veto;
 
-	public VetoHolder() {
-		this.veto = false;
-	}
+    public VetoHolder() {
+        this.veto = false;
+    }
 
-	@Override
-	public void veto() {
-		this.veto = true;
-	}
+    @Override
+    public void veto() {
+        this.veto = true;
+    }
 
-	public boolean hasVeto() {
-		return veto;
-	}
+    public boolean hasVeto() {
+        return veto;
+    }
 
 }

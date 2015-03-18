@@ -67,172 +67,172 @@ import org.jowidgets.workbench.api.IViewContext;
 
 public class BigTableView extends AbstractDemoView implements IView {
 
-	public static final String ID = BigTableView.class.getName();
-	public static final String DEFAULT_LABEL = "Big table";
-	public static final String DEFAULT_TOOLTIP = "Table with a lot of data";
-	public static final IImageConstant DEFAULT_ICON = SilkIcons.TABLE;
+    public static final String ID = BigTableView.class.getName();
+    public static final String DEFAULT_LABEL = "Big table";
+    public static final String DEFAULT_TOOLTIP = "Table with a lot of data";
+    public static final IImageConstant DEFAULT_ICON = SilkIcons.TABLE;
 
-	private int rowCount;
-	private final int columnCount;
+    private int rowCount;
+    private final int columnCount;
 
-	private final ITable table;
-	private final AbstractTableDataModel dataModel;
+    private final ITable table;
+    private final AbstractTableDataModel dataModel;
 
-	private final IAction fitColumnsAction;
-	private final IAction resetPermutationAction;
-	private final IAction changeRowCountAction;
+    private final IAction fitColumnsAction;
+    private final IAction resetPermutationAction;
+    private final IAction changeRowCountAction;
 
-	public BigTableView(final IViewContext context) {
-		super(ID);
+    public BigTableView(final IViewContext context) {
+        super(ID);
 
-		this.rowCount = 2000;
-		this.columnCount = 20;
+        this.rowCount = 2000;
+        this.columnCount = 20;
 
-		this.fitColumnsAction = createFitColumnsAction();
-		this.resetPermutationAction = createResetPermutationAction();
-		this.changeRowCountAction = createSetRowCountAction();
+        this.fitColumnsAction = createFitColumnsAction();
+        this.resetPermutationAction = createResetPermutationAction();
+        this.changeRowCountAction = createSetRowCountAction();
 
-		context.getToolBar().addAction(changeRowCountAction);
-		context.getToolBar().addAction(resetPermutationAction);
-		context.getToolBar().addAction(fitColumnsAction);
+        context.getToolBar().addAction(changeRowCountAction);
+        context.getToolBar().addAction(resetPermutationAction);
+        context.getToolBar().addAction(fitColumnsAction);
 
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		final IContainer container = context.getContainer();
-		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+        final IContainer container = context.getContainer();
+        container.setLayout(MigLayoutFactory.growingInnerCellLayout());
 
-		final ITableColumnModel columnModel = createColumnModel();
-		dataModel = createDataModel();
+        final ITableColumnModel columnModel = createColumnModel();
+        dataModel = createDataModel();
 
-		this.table = container.add(bpf.table(columnModel, dataModel), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		addPopupMenu(table);
-	}
+        this.table = container.add(bpf.table(columnModel, dataModel), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        addPopupMenu(table);
+    }
 
-	private ITableColumnModel createColumnModel() {
-		final IDefaultTableColumnModel columnModel = new DefaultTableColumnModel(columnCount);
-		for (int columnIndex = 0; columnIndex < columnModel.getColumnCount(); columnIndex++) {
-			final IDefaultTableColumnBuilder columnBuilder = new DefaultTableColumnBuilder();
-			columnBuilder.setText("Column " + columnIndex);
-			columnBuilder.setToolTipText("Tooltip of column " + columnIndex);
-			columnBuilder.setWidth(100);
-			columnModel.setColumn(columnIndex, columnBuilder);
-		}
-		return columnModel;
-	}
+    private ITableColumnModel createColumnModel() {
+        final IDefaultTableColumnModel columnModel = new DefaultTableColumnModel(columnCount);
+        for (int columnIndex = 0; columnIndex < columnModel.getColumnCount(); columnIndex++) {
+            final IDefaultTableColumnBuilder columnBuilder = new DefaultTableColumnBuilder();
+            columnBuilder.setText("Column " + columnIndex);
+            columnBuilder.setToolTipText("Tooltip of column " + columnIndex);
+            columnBuilder.setWidth(100);
+            columnModel.setColumn(columnIndex, columnBuilder);
+        }
+        return columnModel;
+    }
 
-	private AbstractTableDataModel createDataModel() {
-		return new AbstractTableDataModel() {
+    private AbstractTableDataModel createDataModel() {
+        return new AbstractTableDataModel() {
 
-			@Override
-			public int getRowCount() {
-				return rowCount;
-			}
+            @Override
+            public int getRowCount() {
+                return rowCount;
+            }
 
-			@Override
-			public ITableCell getCell(final int rowIndex, final int columnIndex) {
-				final ITableCellBuilder cellBuilder = new TableCellBuilder();
-				cellBuilder.setText("Cell (" + rowIndex + " / " + columnIndex + ")");
-				if (rowIndex % 2 == 0) {
-					cellBuilder.setBackgroundColor(Colors.DEFAULT_TABLE_EVEN_BACKGROUND_COLOR);
-				}
-				return cellBuilder.build();
-			}
-		};
-	}
+            @Override
+            public ITableCell getCell(final int rowIndex, final int columnIndex) {
+                final ITableCellBuilder cellBuilder = new TableCellBuilder();
+                cellBuilder.setText("Cell (" + rowIndex + " / " + columnIndex + ")");
+                if (rowIndex % 2 == 0) {
+                    cellBuilder.setBackgroundColor(Colors.DEFAULT_TABLE_EVEN_BACKGROUND_COLOR);
+                }
+                return cellBuilder.build();
+            }
+        };
+    }
 
-	private void addPopupMenu(final ITable table) {
-		final IMenuModel menuModel = new MenuModel();
-		menuModel.addAction(fitColumnsAction);
-		menuModel.addAction(resetPermutationAction);
-		menuModel.addAction(changeRowCountAction);
+    private void addPopupMenu(final ITable table) {
+        final IMenuModel menuModel = new MenuModel();
+        menuModel.addAction(fitColumnsAction);
+        menuModel.addAction(resetPermutationAction);
+        menuModel.addAction(changeRowCountAction);
 
-		final IPopupMenu popupMenu = table.createPopupMenu();
-		popupMenu.setModel(menuModel);
+        final IPopupMenu popupMenu = table.createPopupMenu();
+        popupMenu.setModel(menuModel);
 
-		table.addTableCellPopupDetectionListener(new ITableCellPopupDetectionListener() {
-			@Override
-			public void popupDetected(final ITableCellPopupEvent event) {
-				popupMenu.show(event.getPosition());
-			}
-		});
-	}
+        table.addTableCellPopupDetectionListener(new ITableCellPopupDetectionListener() {
+            @Override
+            public void popupDetected(final ITableCellPopupEvent event) {
+                popupMenu.show(event.getPosition());
+            }
+        });
+    }
 
-	private IAction createFitColumnsAction() {
-		final IActionBuilder builder = new ActionBuilder();
-		builder.setText("Fit columns");
-		builder.setToolTipText("Fits all columns of the table");
-		builder.setIcon(SilkIcons.ARROW_INOUT);
+    private IAction createFitColumnsAction() {
+        final IActionBuilder builder = new ActionBuilder();
+        builder.setText("Fit columns");
+        builder.setToolTipText("Fits all columns of the table");
+        builder.setIcon(SilkIcons.ARROW_INOUT);
 
-		builder.setCommand(new ICommandExecutor() {
-			@Override
-			public void execute(final IExecutionContext executionContext) throws Exception {
-				table.pack();
-			}
-		});
-		return builder.build();
-	}
+        builder.setCommand(new ICommandExecutor() {
+            @Override
+            public void execute(final IExecutionContext executionContext) throws Exception {
+                table.pack();
+            }
+        });
+        return builder.build();
+    }
 
-	private IAction createResetPermutationAction() {
-		final IActionBuilder builder = new ActionBuilder();
-		builder.setText("Reset column order");
-		builder.setToolTipText("Sets all columns to its origin position");
-		builder.setIcon(SilkIcons.ARROW_UNDO);
+    private IAction createResetPermutationAction() {
+        final IActionBuilder builder = new ActionBuilder();
+        builder.setText("Reset column order");
+        builder.setToolTipText("Sets all columns to its origin position");
+        builder.setIcon(SilkIcons.ARROW_UNDO);
 
-		builder.setCommand(new ICommandExecutor() {
-			@Override
-			public void execute(final IExecutionContext executionContext) throws Exception {
-				table.resetColumnPermutation();
-			}
-		});
-		return builder.build();
-	}
+        builder.setCommand(new ICommandExecutor() {
+            @Override
+            public void execute(final IExecutionContext executionContext) throws Exception {
+                table.resetColumnPermutation();
+            }
+        });
+        return builder.build();
+    }
 
-	private IAction createSetRowCountAction() {
-		final IActionBuilder builder = new ActionBuilder();
-		builder.setText("Set row count");
-		builder.setToolTipText("Sets the row count to a new value");
-		builder.setIcon(SilkIcons.TABLE_EDIT);
+    private IAction createSetRowCountAction() {
+        final IActionBuilder builder = new ActionBuilder();
+        builder.setText("Set row count");
+        builder.setToolTipText("Sets the row count to a new value");
+        builder.setIcon(SilkIcons.TABLE_EDIT);
 
-		builder.setCommand(new ICommandExecutor() {
-			@Override
-			public void execute(final IExecutionContext executionContext) throws Exception {
-				final IInputDialog<Integer> inputDialog = createRowCountInputDialog(executionContext);
-				inputDialog.setVisible(true);
-				if (inputDialog.isOkPressed()) {
-					rowCount = inputDialog.getValue();
-					dataModel.fireDataChanged();
-				}
-				inputDialog.dispose();
-			}
-		});
-		return builder.build();
-	}
+        builder.setCommand(new ICommandExecutor() {
+            @Override
+            public void execute(final IExecutionContext executionContext) throws Exception {
+                final IInputDialog<Integer> inputDialog = createRowCountInputDialog(executionContext);
+                inputDialog.setVisible(true);
+                if (inputDialog.isOkPressed()) {
+                    rowCount = inputDialog.getValue();
+                    dataModel.fireDataChanged();
+                }
+                inputDialog.dispose();
+            }
+        });
+        return builder.build();
+    }
 
-	private IInputDialog<Integer> createRowCountInputDialog(final IExecutionContext executionContext) {
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+    private IInputDialog<Integer> createRowCountInputDialog(final IExecutionContext executionContext) {
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		final SingleControlContent<Integer> content = new SingleControlContent<Integer>(
-			"Row count",
-			bpf.inputFieldIntegerNumber(),
-			200);
+        final SingleControlContent<Integer> content = new SingleControlContent<Integer>(
+            "Row count",
+            bpf.inputFieldIntegerNumber(),
+            200);
 
-		final IInputDialogBluePrint<Integer> inputDialogBp = bpf.inputDialog(content).setExecutionContext(executionContext);
+        final IInputDialogBluePrint<Integer> inputDialogBp = bpf.inputDialog(content).setExecutionContext(executionContext);
 
-		inputDialogBp.setValidator(new IValidator<Integer>() {
-			@Override
-			public IValidationResult validate(final Integer validationInput) {
-				if (validationInput != null && validationInput > 100000000) {
-					return ValidationResult.error("Row count must be less than '" + 100000000 + "'");
-				}
-				if (validationInput != null && validationInput < 0) {
-					return ValidationResult.error("Row count must be greater than '" + 0 + "'");
-				}
-				return ValidationResult.ok();
-			}
-		});
+        inputDialogBp.setValidator(new IValidator<Integer>() {
+            @Override
+            public IValidationResult validate(final Integer validationInput) {
+                if (validationInput != null && validationInput > 100000000) {
+                    return ValidationResult.error("Row count must be less than '" + 100000000 + "'");
+                }
+                if (validationInput != null && validationInput < 0) {
+                    return ValidationResult.error("Row count must be greater than '" + 0 + "'");
+                }
+                return ValidationResult.ok();
+            }
+        });
 
-		inputDialogBp.setMissingInputHint("Please input the new row count!");
-		inputDialogBp.setResizable(false);
-		inputDialogBp.setValue(rowCount);
-		return Toolkit.getActiveWindow().createChildWindow(inputDialogBp);
-	}
+        inputDialogBp.setMissingInputHint("Please input the new row count!");
+        inputDialogBp.setResizable(false);
+        inputDialogBp.setValue(rowCount);
+        return Toolkit.getActiveWindow().createChildWindow(inputDialogBp);
+    }
 }

@@ -38,39 +38,39 @@ import org.jowidgets.util.Assert;
 
 public class TreeNodeObservable implements ITreeNodeObservable {
 
-	private final Set<ITreeNodeListener> listeners;
+    private final Set<ITreeNodeListener> listeners;
 
-	public TreeNodeObservable() {
-		this.listeners = new LinkedHashSet<ITreeNodeListener>();
-	}
+    public TreeNodeObservable() {
+        this.listeners = new LinkedHashSet<ITreeNodeListener>();
+    }
 
-	@Override
-	public void addTreeNodeListener(final ITreeNodeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public void addTreeNodeListener(final ITreeNodeListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removeTreeNodeListener(final ITreeNodeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeTreeNodeListener(final ITreeNodeListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public void fireSelectionChanged(final boolean selected) {
-		for (final ITreeNodeListener listener : new LinkedList<ITreeNodeListener>(listeners)) {
-			listener.selectionChanged(selected);
-		}
-	}
+    public void fireSelectionChanged(final boolean selected) {
+        for (final ITreeNodeListener listener : new LinkedList<ITreeNodeListener>(listeners)) {
+            listener.selectionChanged(selected);
+        }
+    }
 
-	public void fireExpandedChanged(final boolean expanded) {
-		for (final ITreeNodeListener listener : new LinkedList<ITreeNodeListener>(listeners)) {
-			listener.expandedChanged(expanded);
-		}
-	}
+    public void fireExpandedChanged(final boolean expanded) {
+        for (final ITreeNodeListener listener : new LinkedList<ITreeNodeListener>(listeners)) {
+            listener.expandedChanged(expanded);
+        }
+    }
 
-	public void fireCheckedChanged(final boolean checked) {
-		for (final ITreeNodeListener listener : new LinkedList<ITreeNodeListener>(listeners)) {
-			listener.checkedChanged(checked);
-		}
-	}
+    public void fireCheckedChanged(final boolean checked) {
+        for (final ITreeNodeListener listener : new LinkedList<ITreeNodeListener>(listeners)) {
+            listener.checkedChanged(checked);
+        }
+    }
 }

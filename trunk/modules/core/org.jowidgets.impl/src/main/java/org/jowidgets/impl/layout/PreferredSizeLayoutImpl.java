@@ -37,60 +37,60 @@ import org.jowidgets.util.Assert;
 
 final class PreferredSizeLayoutImpl implements ILayouter {
 
-	private final IContainer container;
+    private final IContainer container;
 
-	private Dimension preferredSize;
-	private boolean layoutNeeded;
+    private Dimension preferredSize;
+    private boolean layoutNeeded;
 
-	PreferredSizeLayoutImpl(final IContainer container) {
-		Assert.paramNotNull(container, "container");
-		this.container = container;
-		this.layoutNeeded = true;
-	}
+    PreferredSizeLayoutImpl(final IContainer container) {
+        Assert.paramNotNull(container, "container");
+        this.container = container;
+        this.layoutNeeded = true;
+    }
 
-	@Override
-	public void layout() {
-		if (layoutNeeded) {
-			for (final IControl control : container.getChildren()) {
-				control.setSize(control.getPreferredSize());
-			}
-			layoutNeeded = false;
-		}
-	}
+    @Override
+    public void layout() {
+        if (layoutNeeded) {
+            for (final IControl control : container.getChildren()) {
+                control.setSize(control.getPreferredSize());
+            }
+            layoutNeeded = false;
+        }
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		return getPreferredSize();
-	}
+    @Override
+    public Dimension getMinSize() {
+        return getPreferredSize();
+    }
 
-	@Override
-	public Dimension getPreferredSize() {
-		if (preferredSize == null) {
-			this.preferredSize = calcPreferredSize();
-		}
-		return preferredSize;
-	}
+    @Override
+    public Dimension getPreferredSize() {
+        if (preferredSize == null) {
+            this.preferredSize = calcPreferredSize();
+        }
+        return preferredSize;
+    }
 
-	@Override
-	public Dimension getMaxSize() {
-		return getPreferredSize();
-	}
+    @Override
+    public Dimension getMaxSize() {
+        return getPreferredSize();
+    }
 
-	@Override
-	public void invalidate() {
-		preferredSize = null;
-		layoutNeeded = true;
-	}
+    @Override
+    public void invalidate() {
+        preferredSize = null;
+        layoutNeeded = true;
+    }
 
-	private Dimension calcPreferredSize() {
-		int maxX = 0;
-		int maxY = 0;
-		for (final IControl control : container.getChildren()) {
-			final Dimension controlSize = control.getPreferredSize();
-			final Position controlPos = control.getPosition();
-			maxX = Math.max(maxX, controlPos.getX() + controlSize.getWidth());
-			maxY = Math.max(maxY, controlPos.getY() + controlSize.getHeight());
-		}
-		return container.computeDecoratedSize(new Dimension(maxX, maxY));
-	}
+    private Dimension calcPreferredSize() {
+        int maxX = 0;
+        int maxY = 0;
+        for (final IControl control : container.getChildren()) {
+            final Dimension controlSize = control.getPreferredSize();
+            final Position controlPos = control.getPosition();
+            maxX = Math.max(maxX, controlPos.getX() + controlSize.getWidth());
+            maxY = Math.max(maxY, controlPos.getY() + controlSize.getHeight());
+        }
+        return container.computeDecoratedSize(new Dimension(maxX, maxY));
+    }
 }

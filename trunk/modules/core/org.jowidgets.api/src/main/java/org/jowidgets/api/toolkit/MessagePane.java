@@ -33,76 +33,76 @@ import org.jowidgets.common.image.IImageConstant;
 
 public final class MessagePane {
 
-	private MessagePane() {}
+    private MessagePane() {}
 
-	public static IMessagePane get() {
-		return Toolkit.getMessagePane();
-	}
+    public static IMessagePane get() {
+        return Toolkit.getMessagePane();
+    }
 
-	public static void showInfo(final String message) {
-		get().showInfo(message);
-	}
+    public static void showInfo(final String message) {
+        get().showInfo(message);
+    }
 
-	public static void showWarning(final String message) {
-		get().showWarning(message);
-	}
+    public static void showWarning(final String message) {
+        get().showWarning(message);
+    }
 
-	public static void showError(final String message) {
-		get().showError(message);
-	}
+    public static void showError(final String message) {
+        get().showError(message);
+    }
 
-	public static void showInfo(final String title, final String message) {
-		get().showInfo(title, message);
-	}
+    public static void showInfo(final String title, final String message) {
+        get().showInfo(title, message);
+    }
 
-	public static void showWarning(final String title, final String message) {
-		get().showWarning(title, message);
-	}
+    public static void showWarning(final String title, final String message) {
+        get().showWarning(title, message);
+    }
 
-	public static void showError(final String title, final String message) {
-		get().showError(title, message);
-	}
+    public static void showError(final String title, final String message) {
+        get().showError(title, message);
+    }
 
-	public static void showInfo(final String title, final IImageConstant titleIcon, final String message) {
-		get().showInfo(title, titleIcon, message);
-	}
+    public static void showInfo(final String title, final IImageConstant titleIcon, final String message) {
+        get().showInfo(title, titleIcon, message);
+    }
 
-	public static void showInfo(final IExecutionContext executionContext, final String message) {
-		get().showInfo(executionContext, message);
-	}
+    public static void showInfo(final IExecutionContext executionContext, final String message) {
+        get().showInfo(executionContext, message);
+    }
 
-	public static void showWarning(final String title, final IImageConstant titleIcon, final String message) {
-		get().showWarning(title, titleIcon, message);
-	}
+    public static void showWarning(final String title, final IImageConstant titleIcon, final String message) {
+        get().showWarning(title, titleIcon, message);
+    }
 
-	public static void showWarning(final IExecutionContext executionContext, final String message) {
-		get().showWarning(executionContext, message);
-	}
+    public static void showWarning(final IExecutionContext executionContext, final String message) {
+        get().showWarning(executionContext, message);
+    }
 
-	public static void showError(final String title, final IImageConstant titleIcon, final String message) {
-		get().showError(title, titleIcon, message);
-	}
+    public static void showError(final String title, final IImageConstant titleIcon, final String message) {
+        get().showError(title, titleIcon, message);
+    }
 
-	public static void showError(final IExecutionContext executionContext, final String message) {
-		get().showError(executionContext, message);
-	}
+    public static void showError(final IExecutionContext executionContext, final String message) {
+        get().showError(executionContext, message);
+    }
 
-	public static void showMessage(final String title, final String message, final IImageConstant messageIcon) {
-		get().showMessage(title, message, messageIcon);
-	}
+    public static void showMessage(final String title, final String message, final IImageConstant messageIcon) {
+        get().showMessage(title, message, messageIcon);
+    }
 
-	public static void showMessage(
-		final String title,
-		final IImageConstant titleIcon,
-		final String message,
-		final IImageConstant messageIcon) {
-		get().showMessage(title, titleIcon, message, messageIcon);
-	}
+    public static void showMessage(
+        final String title,
+        final IImageConstant titleIcon,
+        final String message,
+        final IImageConstant messageIcon) {
+        get().showMessage(title, titleIcon, message, messageIcon);
+    }
 
-	public static void showMessage(
-		final IExecutionContext executionContext,
-		final String message,
-		final IImageConstant messageIcon) {
-		get().showMessage(executionContext, message, messageIcon);
-	}
+    public static void showMessage(
+        final IExecutionContext executionContext,
+        final String message,
+        final IImageConstant messageIcon) {
+        get().showMessage(executionContext, message, messageIcon);
+    }
 }

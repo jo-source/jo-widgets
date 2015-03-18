@@ -36,30 +36,30 @@ import org.jowidgets.common.widgets.ITabFolderCommon;
 
 public interface ITabFolder extends IControl, ITabFolderCommon, ITabFolderObservable {
 
-	ITabItem addItem(final ITabItemDescriptor descriptor);
+    ITabItem addItem(final ITabItemDescriptor descriptor);
 
-	ITabItem addItem(int index, final ITabItemDescriptor descriptor);
+    ITabItem addItem(int index, final ITabItemDescriptor descriptor);
 
-	void removeItem(ITabItem item);
+    void removeItem(ITabItem item);
 
-	void removeAllItems();
+    void removeAllItems();
 
-	ITabItem getItem(int index);
+    ITabItem getItem(int index);
 
-	int getIndex(ITabItem item);
+    int getIndex(ITabItem item);
 
-	List<ITabItem> getItems();
+    List<ITabItem> getItems();
 
-	void setSelectedItem(ITabItem item);
+    void setSelectedItem(ITabItem item);
 
-	ITabItem getSelectedItem();
+    ITabItem getSelectedItem();
 
-	void detachItem(ITabItem item);
+    void detachItem(ITabItem item);
 
-	void attachItem(ITabItem item);
+    void attachItem(ITabItem item);
 
-	void attachItem(int index, ITabItem item);
+    void attachItem(int index, ITabItem item);
 
-	void changeItemIndex(ITabItem tabItem, int newIndex);
+    void changeItemIndex(ITabItem tabItem, int newIndex);
 
 }

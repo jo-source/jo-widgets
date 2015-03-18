@@ -40,37 +40,37 @@ import org.jowidgets.util.Tuple;
 @SuppressWarnings({"unchecked", "rawtypes"})
 public final class AnnotationCache {
 
-	private static final Map<Tuple<Class, Class>, List<Annotation>> ANNOTATIONS_CACHE = new ConcurrentHashMap<Tuple<Class, Class>, List<Annotation>>();
+    private static final Map<Tuple<Class, Class>, List<Annotation>> ANNOTATIONS_CACHE = new ConcurrentHashMap<Tuple<Class, Class>, List<Annotation>>();
 
-	private AnnotationCache() {}
+    private AnnotationCache() {}
 
-	public static <ANNOTATION_TYPE extends Annotation> ANNOTATION_TYPE getTypeAnnotationFromHierarchy(
-		final Class<?> type,
-		final Class<ANNOTATION_TYPE> annotationType) {
-		final List<ANNOTATION_TYPE> resultList = getTypeAnnotationsFromHierarchy(type, annotationType);
-		if (resultList.size() > 0) {
-			return resultList.iterator().next();
-		}
-		else {
-			return null;
-		}
-	}
+    public static <ANNOTATION_TYPE extends Annotation> ANNOTATION_TYPE getTypeAnnotationFromHierarchy(
+        final Class<?> type,
+        final Class<ANNOTATION_TYPE> annotationType) {
+        final List<ANNOTATION_TYPE> resultList = getTypeAnnotationsFromHierarchy(type, annotationType);
+        if (resultList.size() > 0) {
+            return resultList.iterator().next();
+        }
+        else {
+            return null;
+        }
+    }
 
-	public static <ANNOTATION_TYPE extends Annotation> List<ANNOTATION_TYPE> getTypeAnnotationsFromHierarchy(
-		final Class<?> type,
-		final Class<ANNOTATION_TYPE> annotationType) {
+    public static <ANNOTATION_TYPE extends Annotation> List<ANNOTATION_TYPE> getTypeAnnotationsFromHierarchy(
+        final Class<?> type,
+        final Class<ANNOTATION_TYPE> annotationType) {
 
-		Assert.paramNotNull(type, "type");
-		Assert.paramNotNull(annotationType, "annotationType");
+        Assert.paramNotNull(type, "type");
+        Assert.paramNotNull(annotationType, "annotationType");
 
-		final Tuple<Class, Class> key = new Tuple<Class, Class>(type, annotationType);
+        final Tuple<Class, Class> key = new Tuple<Class, Class>(type, annotationType);
 
-		List<ANNOTATION_TYPE> result = (List<ANNOTATION_TYPE>) ANNOTATIONS_CACHE.get(key);
-		if (result == null) {
-			result = Collections.unmodifiableList(AnnotationUtils.getTypeAnnotationsFromHierarchy(type, annotationType));
-			ANNOTATIONS_CACHE.put(key, (List<Annotation>) result);
-		}
+        List<ANNOTATION_TYPE> result = (List<ANNOTATION_TYPE>) ANNOTATIONS_CACHE.get(key);
+        if (result == null) {
+            result = Collections.unmodifiableList(AnnotationUtils.getTypeAnnotationsFromHierarchy(type, annotationType));
+            ANNOTATIONS_CACHE.put(key, (List<Annotation>) result);
+        }
 
-		return result;
-	}
+        return result;
+    }
 }

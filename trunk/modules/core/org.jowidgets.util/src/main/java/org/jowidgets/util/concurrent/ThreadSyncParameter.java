@@ -36,128 +36,128 @@ import org.jowidgets.util.parameter.ParameterWrapper;
 
 public final class ThreadSyncParameter<VALUE_TYPE> extends ParameterWrapper<VALUE_TYPE> implements IParameter<VALUE_TYPE> {
 
-	private final IParameter<VALUE_TYPE> originalParameter;
-	private final ISingleThreadAccess originalThreadAccess;
-	private final ISingleThreadAccess newThreadAccess;
+    private final IParameter<VALUE_TYPE> originalParameter;
+    private final ISingleThreadAccess originalThreadAccess;
+    private final ISingleThreadAccess newThreadAccess;
 
-	private final IObservableValueListener<VALUE_TYPE> originalValueListener;
-	private final IObservableValueListener<VALUE_TYPE> newValueListener;
+    private final IObservableValueListener<VALUE_TYPE> originalValueListener;
+    private final IObservableValueListener<VALUE_TYPE> newValueListener;
 
-	public ThreadSyncParameter(
-		final IParameter<VALUE_TYPE> original,
-		final ISingleThreadAccess originalThreadAccess,
-		final ISingleThreadAccess newThreadAccess) {
-		super(Parameter.create(
-				original.getValueType(),
-				original.getLabel(),
-				original.getDescription(),
-				original.getDefaultValue()));
+    public ThreadSyncParameter(
+        final IParameter<VALUE_TYPE> original,
+        final ISingleThreadAccess originalThreadAccess,
+        final ISingleThreadAccess newThreadAccess) {
+        super(Parameter.create(
+                original.getValueType(),
+                original.getLabel(),
+                original.getDescription(),
+                original.getDefaultValue()));
 
-		this.originalParameter = original;
-		this.originalThreadAccess = originalThreadAccess;
-		this.newThreadAccess = newThreadAccess;
+        this.originalParameter = original;
+        this.originalThreadAccess = originalThreadAccess;
+        this.newThreadAccess = newThreadAccess;
 
-		this.originalValueListener = new OriginalValueListener();
-		this.newValueListener = new NewValueListener();
+        this.originalValueListener = new OriginalValueListener();
+        this.newValueListener = new NewValueListener();
 
-		originalThreadAccess.invoke(new Runnable() {
-			@Override
-			public void run() {
-				updateNew(originalParameter.getValue());
-				originalParameter.addValueListener(originalValueListener);
-			}
-		});
+        originalThreadAccess.invoke(new Runnable() {
+            @Override
+            public void run() {
+                updateNew(originalParameter.getValue());
+                originalParameter.addValueListener(originalValueListener);
+            }
+        });
 
-		addValueListener(newValueListener);
-	}
+        addValueListener(newValueListener);
+    }
 
-	@Override
-	public void setValue(final VALUE_TYPE value) {
-		checkThread();
-		super.setValue(value);
-	}
+    @Override
+    public void setValue(final VALUE_TYPE value) {
+        checkThread();
+        super.setValue(value);
+    }
 
-	@Override
-	public VALUE_TYPE getValue() {
-		checkThread();
-		return super.getValue();
-	}
+    @Override
+    public VALUE_TYPE getValue() {
+        checkThread();
+        return super.getValue();
+    }
 
-	@Override
-	public void addValueListener(final IObservableValueListener<?> listener) {
-		checkThread();
-		super.addValueListener(listener);
-	}
+    @Override
+    public void addValueListener(final IObservableValueListener<?> listener) {
+        checkThread();
+        super.addValueListener(listener);
+    }
 
-	@Override
-	public void removeValueListener(final IObservableValueListener<?> listener) {
-		checkThread();
-		super.removeValueListener(listener);
-	}
+    @Override
+    public void removeValueListener(final IObservableValueListener<?> listener) {
+        checkThread();
+        super.removeValueListener(listener);
+    }
 
-	public void dispose() {
-		removeValueListener(newValueListener);
-		originalThreadAccess.invoke(new Runnable() {
-			@Override
-			public void run() {
-				originalParameter.removeValueListener(originalValueListener);
-			}
-		});
-	}
+    public void dispose() {
+        removeValueListener(newValueListener);
+        originalThreadAccess.invoke(new Runnable() {
+            @Override
+            public void run() {
+                originalParameter.removeValueListener(originalValueListener);
+            }
+        });
+    }
 
-	private void updateOriginal(final VALUE_TYPE value) {
-		originalThreadAccess.invoke(new Runnable() {
-			@Override
-			public void run() {
-				originalParameter.removeValueListener(originalValueListener);
-				originalParameter.setValue(value);
-				originalParameter.addValueListener(originalValueListener);
-			}
-		});
-	}
+    private void updateOriginal(final VALUE_TYPE value) {
+        originalThreadAccess.invoke(new Runnable() {
+            @Override
+            public void run() {
+                originalParameter.removeValueListener(originalValueListener);
+                originalParameter.setValue(value);
+                originalParameter.addValueListener(originalValueListener);
+            }
+        });
+    }
 
-	private void updateNew(final VALUE_TYPE value) {
-		newThreadAccess.invoke(new Runnable() {
-			@Override
-			public void run() {
-				removeValueListener(newValueListener);
-				setValue(value);
-				addValueListener(newValueListener);
-			}
-		});
-	}
+    private void updateNew(final VALUE_TYPE value) {
+        newThreadAccess.invoke(new Runnable() {
+            @Override
+            public void run() {
+                removeValueListener(newValueListener);
+                setValue(value);
+                addValueListener(newValueListener);
+            }
+        });
+    }
 
-	private void checkThread() {
-		if (!newThreadAccess.isSingleThread()) {
-			throw new IllegalArgumentException("Operation must be invoked in write thread access!");
-		}
-	}
+    private void checkThread() {
+        if (!newThreadAccess.isSingleThread()) {
+            throw new IllegalArgumentException("Operation must be invoked in write thread access!");
+        }
+    }
 
-	@Override
-	public String toString() {
-		if (originalThreadAccess.isSingleThread()) {
-			return originalParameter.toString();
-		}
-		else if (newThreadAccess.isSingleThread()) {
-			return super.toString();
-		}
-		else {
-			return "toString() invoked in wrong thread!";
-		}
-	}
+    @Override
+    public String toString() {
+        if (originalThreadAccess.isSingleThread()) {
+            return originalParameter.toString();
+        }
+        else if (newThreadAccess.isSingleThread()) {
+            return super.toString();
+        }
+        else {
+            return "toString() invoked in wrong thread!";
+        }
+    }
 
-	private final class OriginalValueListener implements IObservableValueListener<VALUE_TYPE> {
-		@Override
-		public void changed(final IObservableValue<VALUE_TYPE> observableValue, final VALUE_TYPE value) {
-			updateNew(value);
-		}
-	}
+    private final class OriginalValueListener implements IObservableValueListener<VALUE_TYPE> {
+        @Override
+        public void changed(final IObservableValue<VALUE_TYPE> observableValue, final VALUE_TYPE value) {
+            updateNew(value);
+        }
+    }
 
-	private final class NewValueListener implements IObservableValueListener<VALUE_TYPE> {
-		@Override
-		public void changed(final IObservableValue<VALUE_TYPE> observableValue, final VALUE_TYPE value) {
-			updateOriginal(value);
-		}
-	}
+    private final class NewValueListener implements IObservableValueListener<VALUE_TYPE> {
+        @Override
+        public void changed(final IObservableValue<VALUE_TYPE> observableValue, final VALUE_TYPE value) {
+            updateOriginal(value);
+        }
+    }
 
 }

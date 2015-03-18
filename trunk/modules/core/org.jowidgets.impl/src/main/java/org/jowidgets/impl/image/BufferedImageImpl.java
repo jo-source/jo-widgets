@@ -36,21 +36,21 @@ import org.jowidgets.spi.image.IBufferedImageSpi;
 
 final class BufferedImageImpl extends ImageImpl implements IBufferedImage {
 
-	private final IBufferedImageSpi imageSpi;
+    private final IBufferedImageSpi imageSpi;
 
-	private IGraphicContext graphicContext;
+    private IGraphicContext graphicContext;
 
-	public BufferedImageImpl(final IBufferedImageSpi imageSpi, final IImageRegistry imageRegistry) {
-		super(imageSpi, imageRegistry);
-		this.imageSpi = imageSpi;
-	}
+    public BufferedImageImpl(final IBufferedImageSpi imageSpi, final IImageRegistry imageRegistry) {
+        super(imageSpi, imageRegistry);
+        this.imageSpi = imageSpi;
+    }
 
-	@Override
-	public synchronized IGraphicContext getGraphicContext() {
-		if (graphicContext == null) {
-			graphicContext = new GraphicContextAdapter(imageSpi.getGraphicContext());
-		}
-		return graphicContext;
-	}
+    @Override
+    public synchronized IGraphicContext getGraphicContext() {
+        if (graphicContext == null) {
+            graphicContext = new GraphicContextAdapter(imageSpi.getGraphicContext());
+        }
+        return graphicContext;
+    }
 
 }

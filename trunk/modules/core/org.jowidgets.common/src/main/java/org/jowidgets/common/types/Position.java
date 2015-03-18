@@ -29,101 +29,101 @@ package org.jowidgets.common.types;
 
 public final class Position {
 
-	private final int x;
-	private final int y;
+    private final int x;
+    private final int y;
 
-	/**
-	 * Creates a new position
-	 * 
-	 * @param x The x coordinate
-	 * @param y The y coordinate
-	 */
-	public Position(final int x, final int y) {
-		super();
-		this.x = x;
-		this.y = y;
-	}
+    /**
+     * Creates a new position
+     * 
+     * @param x The x coordinate
+     * @param y The y coordinate
+     */
+    public Position(final int x, final int y) {
+        super();
+        this.x = x;
+        this.y = y;
+    }
 
-	/**
-	 * Gets the x coordinate
-	 * 
-	 * @return The x coordinate
-	 */
-	public int getX() {
-		return x;
-	}
+    /**
+     * Gets the x coordinate
+     * 
+     * @return The x coordinate
+     */
+    public int getX() {
+        return x;
+    }
 
-	/**
-	 * Gets the y coordinate
-	 * 
-	 * @return The y coordinate
-	 */
-	public int getY() {
-		return y;
-	}
+    /**
+     * Gets the y coordinate
+     * 
+     * @return The y coordinate
+     */
+    public int getY() {
+        return y;
+    }
 
-	/**
-	 * Gets the absolute value of the position.
-	 * 
-	 * The absolute value is defined by sqrt(x^2 + y^2)
-	 * 
-	 * @return
-	 */
-	public int getAbsoluteValue() {
-		return (int) (Math.sqrt(x * x + y * y));
-	}
+    /**
+     * Gets the absolute value of the position.
+     * 
+     * The absolute value is defined by sqrt(x^2 + y^2)
+     * 
+     * @return
+     */
+    public int getAbsoluteValue() {
+        return (int) (Math.sqrt(x * x + y * y));
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + x;
-		result = prime * result + y;
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + x;
+        result = prime * result + y;
+        return result;
+    }
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final Position other = (Position) obj;
-		if (x != other.x) {
-			return false;
-		}
-		if (y != other.y) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Position other = (Position) obj;
+        if (x != other.x) {
+            return false;
+        }
+        if (y != other.y) {
+            return false;
+        }
+        return true;
+    }
 
-	@Override
-	public String toString() {
-		return "Position [x=" + x + ", y=" + y + "]";
-	}
+    @Override
+    public String toString() {
+        return "Position [x=" + x + ", y=" + y + "]";
+    }
 
-	public static Position subtract(final Position minuend, final Position subtrahend) {
-		return new Position(minuend.x - subtrahend.x, minuend.y - subtrahend.y);
-	}
+    public static Position subtract(final Position minuend, final Position subtrahend) {
+        return new Position(minuend.x - subtrahend.x, minuend.y - subtrahend.y);
+    }
 
-	public static Position add(final Position... addends) {
-		int x = 0;
-		int y = 0;
-		for (final Position addend : addends) {
-			x = x + addend.x;
-			y = y + addend.y;
-		}
-		return new Position(x, y);
-	}
+    public static Position add(final Position... addends) {
+        int x = 0;
+        int y = 0;
+        for (final Position addend : addends) {
+            x = x + addend.x;
+            y = y + addend.y;
+        }
+        return new Position(x, y);
+    }
 
-	public static Position convert(final Dimension dimension) {
-		return new Position(dimension.getWidth(), dimension.getHeight());
-	}
+    public static Position convert(final Dimension dimension) {
+        return new Position(dimension.getWidth(), dimension.getHeight());
+    }
 
 }

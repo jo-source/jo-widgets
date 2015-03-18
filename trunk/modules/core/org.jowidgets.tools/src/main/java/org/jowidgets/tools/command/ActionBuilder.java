@@ -42,117 +42,117 @@ import org.jowidgets.common.types.VirtualKey;
 
 public class ActionBuilder implements IActionBuilder {
 
-	private final IActionBuilder builder;
+    private final IActionBuilder builder;
 
-	public ActionBuilder() {
-		this(builder());
-	}
+    public ActionBuilder() {
+        this(builder());
+    }
 
-	public ActionBuilder(final IActionBuilder builder) {
-		super();
-		this.builder = builder;
-	}
+    public ActionBuilder(final IActionBuilder builder) {
+        super();
+        this.builder = builder;
+    }
 
-	@Override
-	public IActionBuilder setText(final String text) {
-		builder.setText(text);
-		return this;
-	}
+    @Override
+    public IActionBuilder setText(final String text) {
+        builder.setText(text);
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setToolTipText(final String toolTipText) {
-		builder.setToolTipText(toolTipText);
-		return this;
-	}
+    @Override
+    public IActionBuilder setToolTipText(final String toolTipText) {
+        builder.setToolTipText(toolTipText);
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setIcon(final IImageConstant icon) {
-		builder.setIcon(icon);
-		return this;
-	}
+    @Override
+    public IActionBuilder setIcon(final IImageConstant icon) {
+        builder.setIcon(icon);
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setMnemonic(final Character mnemonic) {
-		builder.setMnemonic(mnemonic);
-		return this;
-	}
+    @Override
+    public IActionBuilder setMnemonic(final Character mnemonic) {
+        builder.setMnemonic(mnemonic);
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setMnemonic(final char mnemonic) {
-		builder.setMnemonic(mnemonic);
-		return this;
-	}
+    @Override
+    public IActionBuilder setMnemonic(final char mnemonic) {
+        builder.setMnemonic(mnemonic);
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setAccelerator(final Accelerator accelerator) {
-		builder.setAccelerator(accelerator);
-		return this;
-	}
+    @Override
+    public IActionBuilder setAccelerator(final Accelerator accelerator) {
+        builder.setAccelerator(accelerator);
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setAccelerator(final char key, final Modifier... modifier) {
-		builder.setAccelerator(key, modifier);
-		return this;
-	}
+    @Override
+    public IActionBuilder setAccelerator(final char key, final Modifier... modifier) {
+        builder.setAccelerator(key, modifier);
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setAccelerator(final VirtualKey virtualKey, final Modifier... modifier) {
-		builder.setAccelerator(virtualKey, modifier);
-		return this;
-	}
+    @Override
+    public IActionBuilder setAccelerator(final VirtualKey virtualKey, final Modifier... modifier) {
+        builder.setAccelerator(virtualKey, modifier);
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setEnabled(final boolean enabled) {
-		builder.setEnabled(enabled);
-		return this;
-	}
+    @Override
+    public IActionBuilder setEnabled(final boolean enabled) {
+        builder.setEnabled(enabled);
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setCommand(final ICommand command) {
-		builder.setCommand(command);
-		return this;
-	}
+    @Override
+    public IActionBuilder setCommand(final ICommand command) {
+        builder.setCommand(command);
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setCommand(final ICommandExecutor command) {
-		builder.setCommand(command);
-		return this;
-	}
+    @Override
+    public IActionBuilder setCommand(final ICommandExecutor command) {
+        builder.setCommand(command);
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setCommand(final ICommandExecutor command, final IEnabledChecker executableStateChecker) {
-		builder.setCommand(command, executableStateChecker);
-		return this;
-	}
+    @Override
+    public IActionBuilder setCommand(final ICommandExecutor command, final IEnabledChecker executableStateChecker) {
+        builder.setCommand(command, executableStateChecker);
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setCommand(final ICommandExecutor command, final IExceptionHandler exceptionHandler) {
-		builder.setCommand(command, exceptionHandler);
-		return this;
-	}
+    @Override
+    public IActionBuilder setCommand(final ICommandExecutor command, final IExceptionHandler exceptionHandler) {
+        builder.setCommand(command, exceptionHandler);
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setCommand(
-		final ICommandExecutor command,
-		final IEnabledChecker enabledChecker,
-		final IExceptionHandler exceptionHandler) {
-		builder.setCommand(command, enabledChecker, exceptionHandler);
-		return this;
-	}
+    @Override
+    public IActionBuilder setCommand(
+        final ICommandExecutor command,
+        final IEnabledChecker enabledChecker,
+        final IExceptionHandler exceptionHandler) {
+        builder.setCommand(command, enabledChecker, exceptionHandler);
+        return this;
+    }
 
-	@Override
-	public IActionBuilder setActionExceptionHandler(final IExceptionHandler exceptionHandler) {
-		builder.setActionExceptionHandler(exceptionHandler);
-		return this;
-	}
+    @Override
+    public IActionBuilder setActionExceptionHandler(final IExceptionHandler exceptionHandler) {
+        builder.setActionExceptionHandler(exceptionHandler);
+        return this;
+    }
 
-	@Override
-	public ICommandAction build() {
-		return builder.build();
-	}
+    @Override
+    public ICommandAction build() {
+        return builder.build();
+    }
 
-	public static IActionBuilder builder() {
-		return Toolkit.getActionBuilderFactory().create();
-	}
+    public static IActionBuilder builder() {
+        return Toolkit.getActionBuilderFactory().create();
+    }
 
 }

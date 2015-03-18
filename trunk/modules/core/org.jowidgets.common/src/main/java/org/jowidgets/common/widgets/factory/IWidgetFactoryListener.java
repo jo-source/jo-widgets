@@ -32,6 +32,6 @@ import org.jowidgets.common.widgets.IWidgetCommon;
 
 public interface IWidgetFactoryListener {
 
-	void widgetCreated(IWidgetCommon widget);
+    void widgetCreated(IWidgetCommon widget);
 
 }

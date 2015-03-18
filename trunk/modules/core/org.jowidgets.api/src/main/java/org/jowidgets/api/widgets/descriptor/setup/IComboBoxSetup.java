@@ -33,7 +33,7 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IComboBoxSetup<INPUT_TYPE> extends IComboBoxSelectionSetup<INPUT_TYPE>, IComboBoxSetupCommon {
 
-	@Mandatory
-	IStringObjectConverter<INPUT_TYPE> getStringObjectConverter();
+    @Mandatory
+    IStringObjectConverter<INPUT_TYPE> getStringObjectConverter();
 
 }

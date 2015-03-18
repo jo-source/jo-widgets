@@ -32,11 +32,11 @@ import org.jowidgets.examples.common.snipped.MenuModelKeyBindingSnipped;
 
 public final class MenuModelKeyBindingSnippedStarterSwt {
 
-	private MenuModelKeyBindingSnippedStarterSwt() {}
+    private MenuModelKeyBindingSnippedStarterSwt() {}
 
-	public static void main(final String[] args) throws Exception {
-		Toolkit.getApplicationRunner().run(new MenuModelKeyBindingSnipped());
-		System.exit(0);
-	}
+    public static void main(final String[] args) throws Exception {
+        Toolkit.getApplicationRunner().run(new MenuModelKeyBindingSnipped());
+        System.exit(0);
+    }
 
 }

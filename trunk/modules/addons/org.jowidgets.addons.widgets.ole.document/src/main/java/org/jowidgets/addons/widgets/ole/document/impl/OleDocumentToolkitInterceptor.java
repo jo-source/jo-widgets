@@ -36,11 +36,11 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
 final class OleDocumentToolkitInterceptor implements IToolkitInterceptor {
 
-	@Override
-	public void onToolkitCreate(final IToolkit toolkit) {
-		final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
-		widgetFactory.register(IOleDocumentBluePrint.class, new OleDocumentFactory());
-		toolkit.getBluePrintFactory().addDefaultsInitializer(IOleDocumentSetupBuilder.class, new OleDocumentDefaults());
-	}
+    @Override
+    public void onToolkitCreate(final IToolkit toolkit) {
+        final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
+        widgetFactory.register(IOleDocumentBluePrint.class, new OleDocumentFactory());
+        toolkit.getBluePrintFactory().addDefaultsInitializer(IOleDocumentSetupBuilder.class, new OleDocumentDefaults());
+    }
 
 }

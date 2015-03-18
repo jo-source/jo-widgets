@@ -30,6 +30,6 @@ package org.jowidgets.api.worker;
 
 public class WorkerCanceledException extends RuntimeException {
 
-	private static final long serialVersionUID = -5851575434938818176L;
+    private static final long serialVersionUID = -5851575434938818176L;
 
 }

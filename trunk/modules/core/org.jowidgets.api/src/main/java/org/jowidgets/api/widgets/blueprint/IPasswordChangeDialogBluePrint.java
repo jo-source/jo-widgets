@@ -31,7 +31,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IPasswordChangeDialogSetupBui
 import org.jowidgets.api.widgets.descriptor.IPasswordChangeDialogDescriptor;
 
 public interface IPasswordChangeDialogBluePrint extends
-		IPasswordChangeDialogSetupBuilder<IPasswordChangeDialogBluePrint>,
-		IPasswordChangeDialogDescriptor {
+        IPasswordChangeDialogSetupBuilder<IPasswordChangeDialogBluePrint>,
+        IPasswordChangeDialogDescriptor {
 
 }

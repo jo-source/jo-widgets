@@ -32,17 +32,17 @@ import org.jowidgets.common.color.IColorConstant;
 
 public enum Colors implements IColorConstant {
 
-	BORDER_TITLE(new ColorValue(0, 70, 213));
+    BORDER_TITLE(new ColorValue(0, 70, 213));
 
-	private ColorValue colorValue;
+    private ColorValue colorValue;
 
-	private Colors(final ColorValue colorValue) {
-		this.colorValue = colorValue;
-	}
+    private Colors(final ColorValue colorValue) {
+        this.colorValue = colorValue;
+    }
 
-	@Override
-	public ColorValue getDefaultValue() {
-		return colorValue;
-	}
+    @Override
+    public ColorValue getDefaultValue() {
+        return colorValue;
+    }
 
 }

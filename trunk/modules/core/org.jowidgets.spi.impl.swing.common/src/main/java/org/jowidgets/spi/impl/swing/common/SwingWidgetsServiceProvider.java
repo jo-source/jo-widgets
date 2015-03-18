@@ -61,133 +61,133 @@ import org.jowidgets.util.IFactory;
 
 public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
 
-	private final IFactory<IApplicationRunner> applicationRunnerFactory;
-	private final SwingImageHandleFactorySpi imageHandleFactorySpi;
-	private final SwingImageRegistry imageRegistry;
-	private final SwingImageFactory imageFactory;
-	private final SwingWidgetFactory widgetFactory;
-	private final SwingOptionalWidgetsFactory optionalWidgetsFactory;
+    private final IFactory<IApplicationRunner> applicationRunnerFactory;
+    private final SwingImageHandleFactorySpi imageHandleFactorySpi;
+    private final SwingImageRegistry imageRegistry;
+    private final SwingImageFactory imageFactory;
+    private final SwingWidgetFactory widgetFactory;
+    private final SwingOptionalWidgetsFactory optionalWidgetsFactory;
 
-	private SwingClipboard clipboard;
+    private SwingClipboard clipboard;
 
-	public SwingWidgetsServiceProvider() {
-		this(new SwingApplicationRunnerFactory());
-	}
+    public SwingWidgetsServiceProvider() {
+        this(new SwingApplicationRunnerFactory());
+    }
 
-	public SwingWidgetsServiceProvider(final IFactory<IApplicationRunner> applicationRunnerFactory) {
-		Assert.paramNotNull(applicationRunnerFactory, "applicationRunnerFactory");
-		this.applicationRunnerFactory = applicationRunnerFactory;
-		this.imageRegistry = SwingImageRegistry.getInstance();
-		this.imageHandleFactorySpi = new SwingImageHandleFactorySpi(imageRegistry);
-		this.imageFactory = new SwingImageFactory(imageHandleFactorySpi);
-		this.widgetFactory = new SwingWidgetFactory(imageRegistry);
-		this.optionalWidgetsFactory = new SwingOptionalWidgetsFactory();
-	}
+    public SwingWidgetsServiceProvider(final IFactory<IApplicationRunner> applicationRunnerFactory) {
+        Assert.paramNotNull(applicationRunnerFactory, "applicationRunnerFactory");
+        this.applicationRunnerFactory = applicationRunnerFactory;
+        this.imageRegistry = SwingImageRegistry.getInstance();
+        this.imageHandleFactorySpi = new SwingImageHandleFactorySpi(imageRegistry);
+        this.imageFactory = new SwingImageFactory(imageHandleFactorySpi);
+        this.widgetFactory = new SwingWidgetFactory(imageRegistry);
+        this.optionalWidgetsFactory = new SwingOptionalWidgetsFactory();
+    }
 
-	@Override
-	public IClipboardSpi getClipboard() {
-		if (!SwingUtilities.isEventDispatchThread()) {
-			throw new IllegalStateException("The clipboard must be created in the events dispatcher thread");
-		}
-		if (clipboard == null) {
-			this.clipboard = new SwingClipboard();
-		}
-		return clipboard;
-	}
+    @Override
+    public IClipboardSpi getClipboard() {
+        if (!SwingUtilities.isEventDispatchThread()) {
+            throw new IllegalStateException("The clipboard must be created in the events dispatcher thread");
+        }
+        if (clipboard == null) {
+            this.clipboard = new SwingClipboard();
+        }
+        return clipboard;
+    }
 
-	@Override
-	public IImageRegistry getImageRegistry() {
-		return imageRegistry;
-	}
+    @Override
+    public IImageRegistry getImageRegistry() {
+        return imageRegistry;
+    }
 
-	@Override
-	public IImageHandleFactorySpi getImageHandleFactory() {
-		return imageHandleFactorySpi;
-	}
+    @Override
+    public IImageHandleFactorySpi getImageHandleFactory() {
+        return imageHandleFactorySpi;
+    }
 
-	@Override
-	public IImageFactorySpi getImageFactory() {
-		return imageFactory;
-	}
+    @Override
+    public IImageFactorySpi getImageFactory() {
+        return imageFactory;
+    }
 
-	@Override
-	public IWidgetFactorySpi getWidgetFactory() {
-		return widgetFactory;
-	}
+    @Override
+    public IWidgetFactorySpi getWidgetFactory() {
+        return widgetFactory;
+    }
 
-	@Override
-	public IOptionalWidgetsFactorySpi getOptionalWidgetFactory() {
-		return optionalWidgetsFactory;
-	}
+    @Override
+    public IOptionalWidgetsFactorySpi getOptionalWidgetFactory() {
+        return optionalWidgetsFactory;
+    }
 
-	@Override
-	public IUiThreadAccessCommon createUiThreadAccess() {
-		return new SwingUiThreadAccess();
-	}
+    @Override
+    public IUiThreadAccessCommon createUiThreadAccess() {
+        return new SwingUiThreadAccess();
+    }
 
-	@Override
-	public IApplicationRunner createApplicationRunner() {
-		return applicationRunnerFactory.create();
-	}
+    @Override
+    public IApplicationRunner createApplicationRunner() {
+        return applicationRunnerFactory.create();
+    }
 
-	@Override
-	public Object getActiveWindowUiReference() {
-		for (final Window window : Window.getWindows()) {
-			if (window.isActive()) {
-				return window;
-			}
-		}
-		return null;
-	}
+    @Override
+    public Object getActiveWindowUiReference() {
+        for (final Window window : Window.getWindows()) {
+            if (window.isActive()) {
+                return window;
+            }
+        }
+        return null;
+    }
 
-	@Override
-	public List<Object> getAllWindowsUiReference() {
-		final List<Object> result = new LinkedList<Object>();
-		for (final Window window : Window.getWindows()) {
-			if (window.isDisplayable()) {
-				result.add(window);
-			}
-		}
-		return result;
-	}
+    @Override
+    public List<Object> getAllWindowsUiReference() {
+        final List<Object> result = new LinkedList<Object>();
+        for (final Window window : Window.getWindows()) {
+            if (window.isDisplayable()) {
+                result.add(window);
+            }
+        }
+        return result;
+    }
 
-	@Override
-	public Position toScreen(final Position localPosition, final IComponentCommon component) {
-		final Point result = PositionConvert.convert(localPosition);
+    @Override
+    public Position toScreen(final Position localPosition, final IComponentCommon component) {
+        final Point result = PositionConvert.convert(localPosition);
 
-		if ((component.getUiReference() instanceof JFrame)) {
-			SwingUtilities.convertPointToScreen(result, ((JFrame) component.getUiReference()).getContentPane());
-		}
-		else if ((component.getUiReference() instanceof JDialog)) {
-			SwingUtilities.convertPointToScreen(result, ((JDialog) component.getUiReference()).getContentPane());
-		}
-		else if ((component.getUiReference() instanceof Component)) {
-			SwingUtilities.convertPointToScreen(result, (Component) component.getUiReference());
-		}
-		else {
-			throw new IllegalArgumentException("UiReference of component must be instance of '" + Component.class.getName() + "'");
-		}
+        if ((component.getUiReference() instanceof JFrame)) {
+            SwingUtilities.convertPointToScreen(result, ((JFrame) component.getUiReference()).getContentPane());
+        }
+        else if ((component.getUiReference() instanceof JDialog)) {
+            SwingUtilities.convertPointToScreen(result, ((JDialog) component.getUiReference()).getContentPane());
+        }
+        else if ((component.getUiReference() instanceof Component)) {
+            SwingUtilities.convertPointToScreen(result, (Component) component.getUiReference());
+        }
+        else {
+            throw new IllegalArgumentException("UiReference of component must be instance of '" + Component.class.getName() + "'");
+        }
 
-		return PositionConvert.convert(result);
-	}
+        return PositionConvert.convert(result);
+    }
 
-	@Override
-	public Position toLocal(final Position screenPosition, final IComponentCommon component) {
-		final Point result = PositionConvert.convert(screenPosition);
+    @Override
+    public Position toLocal(final Position screenPosition, final IComponentCommon component) {
+        final Point result = PositionConvert.convert(screenPosition);
 
-		if ((component.getUiReference() instanceof JFrame)) {
-			SwingUtilities.convertPointFromScreen(result, ((JFrame) component.getUiReference()).getContentPane());
-		}
-		else if ((component.getUiReference() instanceof JDialog)) {
-			SwingUtilities.convertPointFromScreen(result, ((JDialog) component.getUiReference()).getContentPane());
-		}
-		else if ((component.getUiReference() instanceof Component)) {
-			SwingUtilities.convertPointFromScreen(result, (Component) component.getUiReference());
-		}
-		else {
-			throw new IllegalArgumentException("UiReference of component must be instance of '" + Component.class.getName() + "'");
-		}
+        if ((component.getUiReference() instanceof JFrame)) {
+            SwingUtilities.convertPointFromScreen(result, ((JFrame) component.getUiReference()).getContentPane());
+        }
+        else if ((component.getUiReference() instanceof JDialog)) {
+            SwingUtilities.convertPointFromScreen(result, ((JDialog) component.getUiReference()).getContentPane());
+        }
+        else if ((component.getUiReference() instanceof Component)) {
+            SwingUtilities.convertPointFromScreen(result, (Component) component.getUiReference());
+        }
+        else {
+            throw new IllegalArgumentException("UiReference of component must be instance of '" + Component.class.getName() + "'");
+        }
 
-		return PositionConvert.convert(result);
-	}
+        return PositionConvert.convert(result);
+    }
 }

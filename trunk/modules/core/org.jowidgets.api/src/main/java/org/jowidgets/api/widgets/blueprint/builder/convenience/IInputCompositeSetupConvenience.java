@@ -27,15 +27,14 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder.convenience;
 
-
 public interface IInputCompositeSetupConvenience<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setBorder(final String borderTitle);
+    INSTANCE_TYPE setBorder(final String borderTitle);
 
-	INSTANCE_TYPE setBorder();
+    INSTANCE_TYPE setBorder();
 
-	INSTANCE_TYPE setContentBorder(final String borderTitle);
+    INSTANCE_TYPE setContentBorder(final String borderTitle);
 
-	INSTANCE_TYPE setContentBorder();
+    INSTANCE_TYPE setContentBorder();
 
 }

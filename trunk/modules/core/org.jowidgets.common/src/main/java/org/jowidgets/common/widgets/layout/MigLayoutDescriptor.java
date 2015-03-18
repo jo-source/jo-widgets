@@ -31,39 +31,39 @@ import org.jowidgets.util.Assert;
 
 public final class MigLayoutDescriptor implements ILayoutDescriptor {
 
-	private final String layoutConstraints;
-	private final String columnConstraints;
-	private final String rowConstraints;
+    private final String layoutConstraints;
+    private final String columnConstraints;
+    private final String rowConstraints;
 
-	public MigLayoutDescriptor() {
-		this("", "");
-	}
+    public MigLayoutDescriptor() {
+        this("", "");
+    }
 
-	public MigLayoutDescriptor(final String columnConstraints, final String rowConstraints) {
-		this("", columnConstraints, rowConstraints);
-	}
+    public MigLayoutDescriptor(final String columnConstraints, final String rowConstraints) {
+        this("", columnConstraints, rowConstraints);
+    }
 
-	public MigLayoutDescriptor(final String layoutConstraints, final String columnConstraints, final String rowConstraints) {
-		super();
-		Assert.paramNotNull(layoutConstraints, "layoutConstraints");
-		Assert.paramNotNull(columnConstraints, "columnConstraints");
-		Assert.paramNotNull(rowConstraints, "rowConstraints");
+    public MigLayoutDescriptor(final String layoutConstraints, final String columnConstraints, final String rowConstraints) {
+        super();
+        Assert.paramNotNull(layoutConstraints, "layoutConstraints");
+        Assert.paramNotNull(columnConstraints, "columnConstraints");
+        Assert.paramNotNull(rowConstraints, "rowConstraints");
 
-		this.layoutConstraints = layoutConstraints;
-		this.columnConstraints = columnConstraints;
-		this.rowConstraints = rowConstraints;
-	}
+        this.layoutConstraints = layoutConstraints;
+        this.columnConstraints = columnConstraints;
+        this.rowConstraints = rowConstraints;
+    }
 
-	public String getLayoutConstraints() {
-		return layoutConstraints;
-	}
+    public String getLayoutConstraints() {
+        return layoutConstraints;
+    }
 
-	public String getColumnConstraints() {
-		return columnConstraints;
-	}
+    public String getColumnConstraints() {
+        return columnConstraints;
+    }
 
-	public String getRowConstraints() {
-		return rowConstraints;
-	}
+    public String getRowConstraints() {
+        return rowConstraints;
+    }
 
 }

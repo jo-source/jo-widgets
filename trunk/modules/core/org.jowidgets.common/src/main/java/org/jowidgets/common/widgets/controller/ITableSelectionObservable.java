@@ -30,8 +30,8 @@ package org.jowidgets.common.widgets.controller;
 
 public interface ITableSelectionObservable {
 
-	void addTableSelectionListener(ITableSelectionListener listener);
+    void addTableSelectionListener(ITableSelectionListener listener);
 
-	void removeTableSelectionListener(ITableSelectionListener listener);
+    void removeTableSelectionListener(ITableSelectionListener listener);
 
 }

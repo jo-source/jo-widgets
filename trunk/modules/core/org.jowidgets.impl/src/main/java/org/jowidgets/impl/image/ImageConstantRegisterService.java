@@ -34,17 +34,17 @@ import org.jowidgets.common.image.IImageRegistry;
 
 class ImageConstantRegisterService {
 
-	private final IImageRegistry imageRegistry;
-	private final String rootPath;
+    private final IImageRegistry imageRegistry;
+    private final String rootPath;
 
-	ImageConstantRegisterService(final String rootPath, final IImageRegistry imageRegistry) {
-		this.rootPath = rootPath;
-		this.imageRegistry = imageRegistry;
-	}
+    ImageConstantRegisterService(final String rootPath, final IImageRegistry imageRegistry) {
+        this.rootPath = rootPath;
+        this.imageRegistry = imageRegistry;
+    }
 
-	final void registerImage(final IImageConstant imageConstant, final String relPath) {
-		final URL url = getClass().getClassLoader().getResource(rootPath + relPath);
-		imageRegistry.registerImageConstant(imageConstant, url);
-	}
+    final void registerImage(final IImageConstant imageConstant, final String relPath) {
+        final URL url = getClass().getClassLoader().getResource(rootPath + relPath);
+        imageRegistry.registerImageConstant(imageConstant, url);
+    }
 
 }

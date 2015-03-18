@@ -35,57 +35,57 @@ import org.jowidgets.spi.widgets.IItemSpi;
 
 public class ModelBasedItemSpiWrapper extends WidgetSpiWrapper implements IItemCommon {
 
-	private final ItemModelBindingDelegate itemModelBindingDelegate;
+    private final ItemModelBindingDelegate itemModelBindingDelegate;
 
-	public ModelBasedItemSpiWrapper(final IItemSpi component, final ItemModelBindingDelegate itemModelBindingDelegate) {
-		super(component);
-		this.itemModelBindingDelegate = itemModelBindingDelegate;
-	}
+    public ModelBasedItemSpiWrapper(final IItemSpi component, final ItemModelBindingDelegate itemModelBindingDelegate) {
+        super(component);
+        this.itemModelBindingDelegate = itemModelBindingDelegate;
+    }
 
-	@Override
-	public IItemSpi getWidget() {
-		return (IItemSpi) super.getWidget();
-	}
+    @Override
+    public IItemSpi getWidget() {
+        return (IItemSpi) super.getWidget();
+    }
 
-	protected ItemModelBindingDelegate getItemModelBindingDelegate() {
-		return itemModelBindingDelegate;
-	}
+    protected ItemModelBindingDelegate getItemModelBindingDelegate() {
+        return itemModelBindingDelegate;
+    }
 
-	@Override
-	public void setText(final String text) {
-		itemModelBindingDelegate.setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        itemModelBindingDelegate.setText(text);
+    }
 
-	@Override
-	public void setToolTipText(final String toolTipText) {
-		itemModelBindingDelegate.setToolTipText(toolTipText);
-	}
+    @Override
+    public void setToolTipText(final String toolTipText) {
+        itemModelBindingDelegate.setToolTipText(toolTipText);
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		itemModelBindingDelegate.setIcon(icon);
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        itemModelBindingDelegate.setIcon(icon);
+    }
 
-	public String getText() {
-		return itemModelBindingDelegate.getText();
-	}
+    public String getText() {
+        return itemModelBindingDelegate.getText();
+    }
 
-	public String getToolTipText() {
-		return itemModelBindingDelegate.getToolTipText();
-	}
+    public String getToolTipText() {
+        return itemModelBindingDelegate.getToolTipText();
+    }
 
-	public IImageConstant getIcon() {
-		return itemModelBindingDelegate.getIcon();
-	}
+    public IImageConstant getIcon() {
+        return itemModelBindingDelegate.getIcon();
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		itemModelBindingDelegate.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        itemModelBindingDelegate.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return itemModelBindingDelegate.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return itemModelBindingDelegate.isEnabled();
+    }
 
 }

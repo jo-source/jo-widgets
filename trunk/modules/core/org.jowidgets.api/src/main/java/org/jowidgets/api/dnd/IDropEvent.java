@@ -36,16 +36,16 @@ import org.jowidgets.common.types.Position;
 
 public interface IDropEvent {
 
-	Position getPosition();
+    Position getPosition();
 
-	Set<DropAction> getSupportedActions();
+    Set<DropAction> getSupportedActions();
 
-	DropAction getDropAction();
+    DropAction getDropAction();
 
-	Object getDropSelection();
+    Object getDropSelection();
 
-	Object getData();
+    Object getData();
 
-	TransferType<?> getTransferType();
+    TransferType<?> getTransferType();
 
 }

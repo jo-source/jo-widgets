@@ -39,14 +39,14 @@ import org.jowidgets.common.widgets.layout.ILayouter;
  */
 public interface ITableRowLayout extends ILayouter {
 
-	void remove();
+    void remove();
 
-	IContainer getContainer();
+    IContainer getContainer();
 
-	Dimension getPreferredSize(int index);
+    Dimension getPreferredSize(int index);
 
-	boolean isIgnoredInCalculations();
+    boolean isIgnoredInCalculations();
 
-	void invalidateControl(IControl control);
+    void invalidateControl(IControl control);
 
 }

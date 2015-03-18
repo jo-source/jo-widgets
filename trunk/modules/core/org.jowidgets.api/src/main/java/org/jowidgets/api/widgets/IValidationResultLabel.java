@@ -31,12 +31,12 @@ import org.jowidgets.validation.IValidationResult;
 
 public interface IValidationResultLabel extends IControl {
 
-	void setEmpty();
+    void setEmpty();
 
-	boolean isEmpty();
+    boolean isEmpty();
 
-	void setResult(IValidationResult result);
+    void setResult(IValidationResult result);
 
-	IValidationResult getResult();
+    IValidationResult getResult();
 
 }

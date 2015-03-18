@@ -34,12 +34,12 @@ import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
 public class QuestionDialogDefaults implements IDefaultInitializer<IQuestionDialogSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final IQuestionDialogSetupBuilder<?> builder) {
-		final BluePrintFactory bpF = new BluePrintFactory();
-		builder.setYesButton(bpF.button(Messages.getString("QuestionDialogDefaults.yes"))); //$NON-NLS-1$
-		builder.setNoButton(bpF.button(Messages.getString("QuestionDialogDefaults.no"))); //$NON-NLS-1$
-		builder.setIcon(Icons.QUESTION);
-	}
+    @Override
+    public void initialize(final IQuestionDialogSetupBuilder<?> builder) {
+        final BluePrintFactory bpF = new BluePrintFactory();
+        builder.setYesButton(bpF.button(Messages.getString("QuestionDialogDefaults.yes"))); //$NON-NLS-1$
+        builder.setNoButton(bpF.button(Messages.getString("QuestionDialogDefaults.no"))); //$NON-NLS-1$
+        builder.setIcon(Icons.QUESTION);
+    }
 
 }

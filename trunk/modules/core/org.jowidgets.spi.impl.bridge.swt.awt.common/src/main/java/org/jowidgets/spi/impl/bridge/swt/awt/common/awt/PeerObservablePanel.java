@@ -38,54 +38,54 @@ import org.jowidgets.util.Assert;
 
 class PeerObservablePanel extends JPanel {
 
-	private static final long serialVersionUID = 8389471995812491758L;
+    private static final long serialVersionUID = 8389471995812491758L;
 
-	private final Set<IPeerListener> peerListeners;
+    private final Set<IPeerListener> peerListeners;
 
-	PeerObservablePanel() {
-		this.peerListeners = new LinkedHashSet<IPeerListener>();
-	}
+    PeerObservablePanel() {
+        this.peerListeners = new LinkedHashSet<IPeerListener>();
+    }
 
-	@Override
-	public void addNotify() {
-		super.addNotify();
-		fireAfterPeerAdd();
-	}
+    @Override
+    public void addNotify() {
+        super.addNotify();
+        fireAfterPeerAdd();
+    }
 
-	@Override
-	public void removeNotify() {
-		fireBeforePeerRemove();
-		super.removeNotify();
-	}
+    @Override
+    public void removeNotify() {
+        fireBeforePeerRemove();
+        super.removeNotify();
+    }
 
-	void addPeerListener(final IPeerListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		peerListeners.add(listener);
-	}
+    void addPeerListener(final IPeerListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        peerListeners.add(listener);
+    }
 
-	void removePeerListener(final IPeerListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		peerListeners.remove(listener);
-	}
+    void removePeerListener(final IPeerListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        peerListeners.remove(listener);
+    }
 
-	private void fireAfterPeerAdd() {
-		for (final IPeerListener peerListener : new LinkedList<IPeerListener>(peerListeners)) {
-			peerListener.afterPeerAdd();
-		}
-	}
+    private void fireAfterPeerAdd() {
+        for (final IPeerListener peerListener : new LinkedList<IPeerListener>(peerListeners)) {
+            peerListener.afterPeerAdd();
+        }
+    }
 
-	private void fireBeforePeerRemove() {
-		for (final IPeerListener peerListener : new LinkedList<IPeerListener>(peerListeners)) {
-			peerListener.beforePeerRemove();
-		}
-	}
+    private void fireBeforePeerRemove() {
+        for (final IPeerListener peerListener : new LinkedList<IPeerListener>(peerListeners)) {
+            peerListener.beforePeerRemove();
+        }
+    }
 
-	interface IPeerListener {
+    interface IPeerListener {
 
-		void afterPeerAdd();
+        void afterPeerAdd();
 
-		void beforePeerRemove();
+        void beforePeerRemove();
 
-	}
+    }
 
 }

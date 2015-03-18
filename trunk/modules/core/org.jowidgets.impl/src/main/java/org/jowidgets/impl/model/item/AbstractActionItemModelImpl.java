@@ -47,140 +47,140 @@ import org.jowidgets.util.priority.PrioritizedResultCreator;
 
 abstract class AbstractActionItemModelImpl extends ItemModelImpl {
 
-	private final ActionObservable actionObservable;
-	private final List<IDecorator<IAction>> decorators;
-	private final IActionChangeListener actionChangeListener;
-	private final ActionItemVisibilityAspectComposite visibilityAspect;
+    private final ActionObservable actionObservable;
+    private final List<IDecorator<IAction>> decorators;
+    private final IActionChangeListener actionChangeListener;
+    private final ActionItemVisibilityAspectComposite visibilityAspect;
 
-	private IAction action;
-	private IAction decoratedAction;
-	private boolean decoratorsDirty;
+    private IAction action;
+    private IAction decoratedAction;
+    private boolean decoratorsDirty;
 
-	protected AbstractActionItemModelImpl() {
-		this(null, null, null, null, null, null, true, null, null);
-	}
+    protected AbstractActionItemModelImpl() {
+        this(null, null, null, null, null, null, true, null, null);
+    }
 
-	protected AbstractActionItemModelImpl(
-		final String id,
-		final String text,
-		final String toolTipText,
-		final IImageConstant icon,
-		final Accelerator accelerator,
-		final Character mnemonic,
-		final boolean enabled,
-		final IAction action,
-		final ActionItemVisibilityAspectComposite visibilityAspect) {
-		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled);
+    protected AbstractActionItemModelImpl(
+        final String id,
+        final String text,
+        final String toolTipText,
+        final IImageConstant icon,
+        final Accelerator accelerator,
+        final Character mnemonic,
+        final boolean enabled,
+        final IAction action,
+        final ActionItemVisibilityAspectComposite visibilityAspect) {
+        super(id, text, toolTipText, icon, accelerator, mnemonic, enabled);
 
-		this.decorators = new LinkedList<IDecorator<IAction>>();
-		this.actionObservable = new ActionObservable();
-		this.action = action;
-		this.decoratedAction = action;
-		this.decoratorsDirty = false;
-		this.visibilityAspect = visibilityAspect;
-		this.actionChangeListener = new ActionChangeAdapter() {
-			@Override
-			public void enabledChanged() {
-				final boolean oldVisible = isVisible();
-				setVisibilityFromAspects();
-				if (oldVisible != isVisible()) {
-					fireItemChanged();
-				}
-			}
-		};
+        this.decorators = new LinkedList<IDecorator<IAction>>();
+        this.actionObservable = new ActionObservable();
+        this.action = action;
+        this.decoratedAction = action;
+        this.decoratorsDirty = false;
+        this.visibilityAspect = visibilityAspect;
+        this.actionChangeListener = new ActionChangeAdapter() {
+            @Override
+            public void enabledChanged() {
+                final boolean oldVisible = isVisible();
+                setVisibilityFromAspects();
+                if (oldVisible != isVisible()) {
+                    fireItemChanged();
+                }
+            }
+        };
 
-		setActionImpl(action);
-	}
+        setActionImpl(action);
+    }
 
-	protected void setContent(final AbstractActionItemModelImpl source) {
-		super.setContent(source);
-		setActionImpl(source.getAction());
-	}
+    protected void setContent(final AbstractActionItemModelImpl source) {
+        super.setContent(source);
+        setActionImpl(source.getAction());
+    }
 
-	public IAction getAction() {
-		return getDecoratedAction();
-	}
+    public IAction getAction() {
+        return getDecoratedAction();
+    }
 
-	private IAction getDecoratedAction() {
-		if (action == null) {
-			return null;
-		}
-		if (decoratorsDirty) {
-			decoratedAction = action;
-			for (final IDecorator<IAction> decorator : decorators) {
-				decoratedAction = decorator.decorate(decoratedAction);
-			}
-			decoratorsDirty = false;
-		}
-		return decoratedAction;
-	}
+    private IAction getDecoratedAction() {
+        if (action == null) {
+            return null;
+        }
+        if (decoratorsDirty) {
+            decoratedAction = action;
+            for (final IDecorator<IAction> decorator : decorators) {
+                decoratedAction = decorator.decorate(decoratedAction);
+            }
+            decoratorsDirty = false;
+        }
+        return decoratedAction;
+    }
 
-	public void setAction(final IAction action) {
-		setActionImpl(action);
-		fireItemChanged();
-	}
+    public void setAction(final IAction action) {
+        setActionImpl(action);
+        fireItemChanged();
+    }
 
-	private void setActionImpl(final IAction action) {
-		if (this.action != null) {
-			final IActionChangeObservable actionChangeObservable = this.action.getActionChangeObservable();
-			if (actionChangeObservable != null) {
-				actionChangeObservable.removeActionChangeListener(actionChangeListener);
-			}
-		}
-		if (action != null) {
-			final IActionChangeObservable actionChangeObservable = action.getActionChangeObservable();
-			if (actionChangeObservable != null) {
-				actionChangeObservable.addActionChangeListener(actionChangeListener);
-			}
-		}
-		this.action = action;
-		decoratorsDirty = true;
+    private void setActionImpl(final IAction action) {
+        if (this.action != null) {
+            final IActionChangeObservable actionChangeObservable = this.action.getActionChangeObservable();
+            if (actionChangeObservable != null) {
+                actionChangeObservable.removeActionChangeListener(actionChangeListener);
+            }
+        }
+        if (action != null) {
+            final IActionChangeObservable actionChangeObservable = action.getActionChangeObservable();
+            if (actionChangeObservable != null) {
+                actionChangeObservable.addActionChangeListener(actionChangeListener);
+            }
+        }
+        this.action = action;
+        decoratorsDirty = true;
 
-		setVisibilityFromAspects();
-	}
+        setVisibilityFromAspects();
+    }
 
-	private void setVisibilityFromAspects() {
-		final PrioritizedResultCreator<Boolean, LowHighPriority> resultCreator;
-		resultCreator = new PrioritizedResultCreator<Boolean, LowHighPriority>(LowHighPriority.HIGH);
+    private void setVisibilityFromAspects() {
+        final PrioritizedResultCreator<Boolean, LowHighPriority> resultCreator;
+        resultCreator = new PrioritizedResultCreator<Boolean, LowHighPriority>(LowHighPriority.HIGH);
 
-		if (visibilityAspect != null) {
-			resultCreator.addResult(visibilityAspect.getVisibility(getAction()));
-		}
-		if (!resultCreator.hasMaxPrio()) {
-			resultCreator.addResult(ActionItemVisibilityAspectPlugin.getVisibility(getAction()));
-		}
+        if (visibilityAspect != null) {
+            resultCreator.addResult(visibilityAspect.getVisibility(getAction()));
+        }
+        if (!resultCreator.hasMaxPrio()) {
+            resultCreator.addResult(ActionItemVisibilityAspectPlugin.getVisibility(getAction()));
+        }
 
-		final IPriorityValue<Boolean, LowHighPriority> visibility = resultCreator.getResult();
-		if (visibility != null) {
-			final Boolean visibiliyValue = visibility.getValue();
-			if (visibiliyValue != null) {
-				setVisibleImpl(visibiliyValue.booleanValue(), false);
-			}
-		}
-	}
+        final IPriorityValue<Boolean, LowHighPriority> visibility = resultCreator.getResult();
+        if (visibility != null) {
+            final Boolean visibiliyValue = visibility.getValue();
+            if (visibiliyValue != null) {
+                setVisibleImpl(visibiliyValue.booleanValue(), false);
+            }
+        }
+    }
 
-	public void addDecorator(final IDecorator<IAction> decorator) {
-		decorators.add(decorator);
-		decoratorsDirty = true;
-		fireItemChanged();
-	}
+    public void addDecorator(final IDecorator<IAction> decorator) {
+        decorators.add(decorator);
+        decoratorsDirty = true;
+        fireItemChanged();
+    }
 
-	public void removeDecorator(final IDecorator<IAction> decorator) {
-		decorators.remove(decorator);
-		decoratorsDirty = true;
-		fireItemChanged();
-	}
+    public void removeDecorator(final IDecorator<IAction> decorator) {
+        decorators.remove(decorator);
+        decoratorsDirty = true;
+        fireItemChanged();
+    }
 
-	public void addActionListener(final IActionListener listener) {
-		actionObservable.addActionListener(listener);
-	}
+    public void addActionListener(final IActionListener listener) {
+        actionObservable.addActionListener(listener);
+    }
 
-	public void removeActionListener(final IActionListener listener) {
-		actionObservable.removeActionListener(listener);
-	}
+    public void removeActionListener(final IActionListener listener) {
+        actionObservable.removeActionListener(listener);
+    }
 
-	public void actionPerformed() {
-		actionObservable.fireActionPerformed();
-	}
+    public void actionPerformed() {
+        actionObservable.fireActionPerformed();
+    }
 
 }

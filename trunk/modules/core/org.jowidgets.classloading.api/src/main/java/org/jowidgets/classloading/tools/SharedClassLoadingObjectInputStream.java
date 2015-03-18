@@ -38,19 +38,19 @@ import org.jowidgets.util.Assert;
 
 public final class SharedClassLoadingObjectInputStream extends ObjectInputStream {
 
-	public SharedClassLoadingObjectInputStream(final InputStream in) throws IOException {
-		super(Assert.getParamNotNull(in, "in"));
-	}
+    public SharedClassLoadingObjectInputStream(final InputStream in) throws IOException {
+        super(Assert.getParamNotNull(in, "in"));
+    }
 
-	@Override
-	protected Class<?> resolveClass(final ObjectStreamClass objectStreamClass) throws IOException, ClassNotFoundException {
-		try {
-			return SharedClassLoader.getCompositeClassLoader().loadClass(objectStreamClass.getName());
-		}
-		catch (final Exception e) {
-			//no exception handling, some objectStreamClasses like 'long' won't be found by classloaders
-			return super.resolveClass(objectStreamClass);
-		}
-	}
+    @Override
+    protected Class<?> resolveClass(final ObjectStreamClass objectStreamClass) throws IOException, ClassNotFoundException {
+        try {
+            return SharedClassLoader.getCompositeClassLoader().loadClass(objectStreamClass.getName());
+        }
+        catch (final Exception e) {
+            //no exception handling, some objectStreamClasses like 'long' won't be found by classloaders
+            return super.resolveClass(objectStreamClass);
+        }
+    }
 
 }

@@ -39,60 +39,60 @@ import org.jowidgets.test.api.widgets.IWidgetUi;
 
 @SuppressWarnings("rawtypes")
 public class UiWidgetFactory<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> implements
-		IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> {
+        IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> {
 
-	private final IGenericWidgetFactory genericWidgetFactory;
-	private final Class<?> uiWidgetType;
-	private final Class bluePrintType;
+    private final IGenericWidgetFactory genericWidgetFactory;
+    private final Class<?> uiWidgetType;
+    private final Class bluePrintType;
 
-	public UiWidgetFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final Class<?> uiWidgetType,
-		final Class bluePrintType) {
+    public UiWidgetFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final Class<?> uiWidgetType,
+        final Class bluePrintType) {
 
-		this.genericWidgetFactory = genericWidgetFactory;
-		this.uiWidgetType = uiWidgetType;
-		this.bluePrintType = bluePrintType;
-	}
+        this.genericWidgetFactory = genericWidgetFactory;
+        this.uiWidgetType = uiWidgetType;
+        this.bluePrintType = bluePrintType;
+    }
 
-	// TODO LG better exception descriptions
-	@SuppressWarnings("unchecked")
-	@Override
-	public WIDGET_TYPE create(final Object parentUiReference, final DESCRIPTOR_TYPE descriptor) {
-		final IBluePrintFactory factory = Toolkit.getBluePrintFactory();
+    // TODO LG better exception descriptions
+    @SuppressWarnings("unchecked")
+    @Override
+    public WIDGET_TYPE create(final Object parentUiReference, final DESCRIPTOR_TYPE descriptor) {
+        final IBluePrintFactory factory = Toolkit.getBluePrintFactory();
 
-		// Don't remove cast from Object to IComponentSetupBuilder, its necessary for sun compiler. 
-		// Its not possible to set this cast before factory.bluePrint(...) 
-		// because save action of eclipse think its a unnecessary cast and will remove it.
-		final Object obj = factory.bluePrint(bluePrintType);
-		final IComponentSetupBuilder<?> bluePrint = (IComponentSetupBuilder<?>) obj;
-		final IWidgetDescriptor<?> uiBluePrint = (IWidgetDescriptor<?>) bluePrint.setSetup(descriptor);
+        // Don't remove cast from Object to IComponentSetupBuilder, its necessary for sun compiler. 
+        // Its not possible to set this cast before factory.bluePrint(...) 
+        // because save action of eclipse think its a unnecessary cast and will remove it.
+        final Object obj = factory.bluePrint(bluePrintType);
+        final IComponentSetupBuilder<?> bluePrint = (IComponentSetupBuilder<?>) obj;
+        final IWidgetDescriptor<?> uiBluePrint = (IWidgetDescriptor<?>) bluePrint.setSetup(descriptor);
 
-		final Object result = genericWidgetFactory.create(parentUiReference, uiBluePrint);
+        final Object result = genericWidgetFactory.create(parentUiReference, uiBluePrint);
 
-		if (result != null) {
-			if (uiWidgetType.isAssignableFrom(result.getClass())) {
+        if (result != null) {
+            if (uiWidgetType.isAssignableFrom(result.getClass())) {
 
-				if (result instanceof IWidgetUi) {
-					if (((IWidgetUi) result).isTestable()) {
-						return (WIDGET_TYPE) result;
-					}
-					else {
-						throw new IllegalStateException("The created Widget is not testable.");
-					}
-				}
-				else {
-					throw new IllegalStateException("The created Widget is a unknown UiWidget.");
-				}
+                if (result instanceof IWidgetUi) {
+                    if (((IWidgetUi) result).isTestable()) {
+                        return (WIDGET_TYPE) result;
+                    }
+                    else {
+                        throw new IllegalStateException("The created Widget is not testable.");
+                    }
+                }
+                else {
+                    throw new IllegalStateException("The created Widget is a unknown UiWidget.");
+                }
 
-			}
-			else {
-				throw new IllegalStateException("The created Widget is no UiWidget.");
-			}
-		}
-		else {
-			throw new IllegalStateException("Error while creating Widget.");
-		}
-	}
+            }
+            else {
+                throw new IllegalStateException("The created Widget is no UiWidget.");
+            }
+        }
+        else {
+            throw new IllegalStateException("Error while creating Widget.");
+        }
+    }
 
 }

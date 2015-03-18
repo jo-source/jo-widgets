@@ -36,20 +36,20 @@ import org.jowidgets.tools.powo.JoFrame;
 
 public class DemoMenuFrame extends JoFrame {
 
-	public DemoMenuFrame() {
-		super(bluePrint("Menu demo").autoPackOff());
+    public DemoMenuFrame() {
+        super(bluePrint("Menu demo").autoPackOff());
 
-		final DemoMenuProvider menuProvider = new DemoMenuProvider(false);
+        final DemoMenuProvider menuProvider = new DemoMenuProvider(false);
 
-		getMenuBarModel().addMenu(menuProvider.getMenuModel());
-		setPopupMenu(menuProvider.getMenuModel());
+        getMenuBarModel().addMenu(menuProvider.getMenuModel());
+        setPopupMenu(menuProvider.getMenuModel());
 
-		setLayout(new MigLayoutDescriptor("0[grow, 0 ::]0", "0[]0[0]0[grow]0"));
+        setLayout(new MigLayoutDescriptor("0[grow, 0 ::]0", "0[]0[0]0[grow]0"));
 
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		add(bpf.toolBar(), "w 0::, wrap").setModel(menuProvider.getToolBarModel());
-		add(bpf.separator(), "growx, wrap");
-		add(bpf.composite().setBackgroundColor(Colors.WHITE), "growx, growy").setPopupMenu(menuProvider.getMenuModel());
-	}
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+        add(bpf.toolBar(), "w 0::, wrap").setModel(menuProvider.getToolBarModel());
+        add(bpf.separator(), "growx, wrap");
+        add(bpf.composite().setBackgroundColor(Colors.WHITE), "growx, growy").setPopupMenu(menuProvider.getMenuModel());
+    }
 
 }

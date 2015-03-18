@@ -33,34 +33,34 @@ import org.jowidgets.common.image.IImageConstant;
 
 public interface IMessagePane {
 
-	void showInfo(String message);
+    void showInfo(String message);
 
-	void showWarning(String message);
+    void showWarning(String message);
 
-	void showError(String message);
+    void showError(String message);
 
-	void showInfo(String title, String message);
+    void showInfo(String title, String message);
 
-	void showWarning(String title, String message);
+    void showWarning(String title, String message);
 
-	void showError(String title, String message);
+    void showError(String title, String message);
 
-	void showInfo(String title, IImageConstant titleIcon, String message);
+    void showInfo(String title, IImageConstant titleIcon, String message);
 
-	void showInfo(IExecutionContext executionContext, String message);
+    void showInfo(IExecutionContext executionContext, String message);
 
-	void showWarning(String title, IImageConstant titleIcon, String message);
+    void showWarning(String title, IImageConstant titleIcon, String message);
 
-	void showWarning(IExecutionContext executionContext, String message);
+    void showWarning(IExecutionContext executionContext, String message);
 
-	void showError(String title, IImageConstant titleIcon, String message);
+    void showError(String title, IImageConstant titleIcon, String message);
 
-	void showError(IExecutionContext executionContext, String message);
+    void showError(IExecutionContext executionContext, String message);
 
-	void showMessage(String title, String message, IImageConstant messageIcon);
+    void showMessage(String title, String message, IImageConstant messageIcon);
 
-	void showMessage(String title, IImageConstant titleIcon, String message, IImageConstant messageIcon);
+    void showMessage(String title, IImageConstant titleIcon, String message, IImageConstant messageIcon);
 
-	void showMessage(IExecutionContext executionContext, String message, IImageConstant messageIcon);
+    void showMessage(IExecutionContext executionContext, String message, IImageConstant messageIcon);
 
 }

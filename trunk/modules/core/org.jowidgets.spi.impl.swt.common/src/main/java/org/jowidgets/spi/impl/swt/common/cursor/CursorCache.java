@@ -37,37 +37,37 @@ import org.jowidgets.util.Assert;
 
 public final class CursorCache {
 
-	private static Map<Cursor, org.eclipse.swt.graphics.Cursor> cursorMap;
+    private static Map<Cursor, org.eclipse.swt.graphics.Cursor> cursorMap;
 
-	private CursorCache() {}
+    private CursorCache() {}
 
-	public static org.eclipse.swt.graphics.Cursor getCursor(final Cursor cursor) {
-		Assert.paramNotNull(cursor, "cursor");
-		final org.eclipse.swt.graphics.Cursor result = getMap().get(cursor);
+    public static org.eclipse.swt.graphics.Cursor getCursor(final Cursor cursor) {
+        Assert.paramNotNull(cursor, "cursor");
+        final org.eclipse.swt.graphics.Cursor result = getMap().get(cursor);
 
-		if (result == null && cursor != Cursor.DEFAULT) {
-			throw new IllegalArgumentException("Cursor '" + cursor + "' is unknown");
-		}
+        if (result == null && cursor != Cursor.DEFAULT) {
+            throw new IllegalArgumentException("Cursor '" + cursor + "' is unknown");
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	private static Map<Cursor, org.eclipse.swt.graphics.Cursor> getMap() {
-		if (cursorMap == null) {
-			cursorMap = new HashMap<Cursor, org.eclipse.swt.graphics.Cursor>();
-			cursorMap.put(Cursor.DEFAULT, null);
-			cursorMap.put(Cursor.WAIT, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_WAIT));
-			cursorMap.put(Cursor.ARROW, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_ARROW));
-			cursorMap.put(Cursor.CROSS, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_CROSS));
-			cursorMap.put(Cursor.SIZENS, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_SIZENS));
-			cursorMap.put(Cursor.SIZEWE, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_SIZEWE));
-			cursorMap.put(Cursor.SIZENE, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_SIZENE));
-			cursorMap.put(Cursor.SIZESE, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_SIZESE));
-			cursorMap.put(Cursor.SIZESW, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_SIZESW));
-			cursorMap.put(Cursor.SIZENW, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_SIZENW));
-			cursorMap.put(Cursor.HAND, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_HAND));
-		}
-		return cursorMap;
-	}
+    private static Map<Cursor, org.eclipse.swt.graphics.Cursor> getMap() {
+        if (cursorMap == null) {
+            cursorMap = new HashMap<Cursor, org.eclipse.swt.graphics.Cursor>();
+            cursorMap.put(Cursor.DEFAULT, null);
+            cursorMap.put(Cursor.WAIT, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_WAIT));
+            cursorMap.put(Cursor.ARROW, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_ARROW));
+            cursorMap.put(Cursor.CROSS, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_CROSS));
+            cursorMap.put(Cursor.SIZENS, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_SIZENS));
+            cursorMap.put(Cursor.SIZEWE, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_SIZEWE));
+            cursorMap.put(Cursor.SIZENE, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_SIZENE));
+            cursorMap.put(Cursor.SIZESE, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_SIZESE));
+            cursorMap.put(Cursor.SIZESW, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_SIZESW));
+            cursorMap.put(Cursor.SIZENW, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_SIZENW));
+            cursorMap.put(Cursor.HAND, new org.eclipse.swt.graphics.Cursor(Display.getDefault(), SWT.CURSOR_HAND));
+        }
+        return cursorMap;
+    }
 
 }

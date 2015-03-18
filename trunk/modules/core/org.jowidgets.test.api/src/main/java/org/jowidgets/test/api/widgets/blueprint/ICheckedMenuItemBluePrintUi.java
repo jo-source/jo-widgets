@@ -32,7 +32,7 @@ import org.jowidgets.api.widgets.blueprint.builder.ISelectableItemSetupBuilder;
 import org.jowidgets.test.api.widgets.descriptor.ICheckedMenuItemDescriptorUi;
 
 public interface ICheckedMenuItemBluePrintUi extends
-		ISelectableItemSetupBuilder<ICheckedMenuItemBluePrintUi>,
-		ICheckedMenuItemDescriptorUi {
+        ISelectableItemSetupBuilder<ICheckedMenuItemBluePrintUi>,
+        ICheckedMenuItemDescriptorUi {
 
 }

@@ -52,194 +52,194 @@ import org.jowidgets.validation.tools.CompoundValidator;
 
 public final class SliderImpl extends AbstractSliderSpiWrapper implements ISlider {
 
-	private final ControlDelegate controlDelegate;
+    private final ControlDelegate controlDelegate;
 
-	private final CompoundValidator<Integer> compoundValidator;
-	private final ValidationCache validationCache;
-	private final InputObservable inputObservable;
+    private final CompoundValidator<Integer> compoundValidator;
+    private final ValidationCache validationCache;
+    private final InputObservable inputObservable;
 
-	private final int minimum;
-	private final int maximum;
+    private final int minimum;
+    private final int maximum;
 
-	private final IObservableValue<Integer> observableValue;
+    private final IObservableValue<Integer> observableValue;
 
-	private int lastUnmodifiedValue;
+    private int lastUnmodifiedValue;
 
-	private boolean editable;
+    private boolean editable;
 
-	public SliderImpl(final ISliderSpi buttonSpi, final ISliderDescriptor descriptor) {
-		super(buttonSpi);
+    public SliderImpl(final ISliderSpi buttonSpi, final ISliderDescriptor descriptor) {
+        super(buttonSpi);
 
-		this.minimum = descriptor.getMinimum();
-		this.maximum = descriptor.getMaximum();
+        this.minimum = descriptor.getMinimum();
+        this.maximum = descriptor.getMaximum();
 
-		this.controlDelegate = new ControlDelegate(buttonSpi, this);
+        this.controlDelegate = new ControlDelegate(buttonSpi, this);
 
-		VisibiliySettingsInvoker.setVisibility(descriptor, this);
-		ColorSettingsInvoker.setColors(descriptor, this);
+        VisibiliySettingsInvoker.setVisibility(descriptor, this);
+        ColorSettingsInvoker.setColors(descriptor, this);
 
-		this.inputObservable = new InputObservable();
-		this.compoundValidator = new CompoundValidator<Integer>();
+        this.inputObservable = new InputObservable();
+        this.compoundValidator = new CompoundValidator<Integer>();
 
-		this.validationCache = new ValidationCache(new IValidationResultCreator() {
-			@Override
-			public IValidationResult createValidationResult() {
-				return compoundValidator.validate(getValue());
-			}
-		});
+        this.validationCache = new ValidationCache(new IValidationResultCreator() {
+            @Override
+            public IValidationResult createValidationResult() {
+                return compoundValidator.validate(getValue());
+            }
+        });
 
-		buttonSpi.addInputListener(new IInputListener() {
-			@Override
-			public void inputChanged() {
-				inputObservable.fireInputChanged();
-				validationCache.setDirty();
-			}
-		});
+        buttonSpi.addInputListener(new IInputListener() {
+            @Override
+            public void inputChanged() {
+                inputObservable.fireInputChanged();
+                validationCache.setDirty();
+            }
+        });
 
-		final Integer value = descriptor.getValue();
-		if (value != null) {
-			setSelection(value.intValue());
-		}
-		else {
-			setSelection(descriptor.getMinimum());
-		}
+        final Integer value = descriptor.getValue();
+        if (value != null) {
+            setSelection(value.intValue());
+        }
+        else {
+            setSelection(descriptor.getMinimum());
+        }
 
-		this.editable = true;
+        this.editable = true;
 
-		this.observableValue = InputComponentBind.bind(this);
+        this.observableValue = InputComponentBind.bind(this);
 
-		resetModificationState();
-	}
+        resetModificationState();
+    }
 
-	@Override
-	public IObservableValue<Integer> getObservableValue() {
-		return observableValue;
-	}
+    @Override
+    public IObservableValue<Integer> getObservableValue() {
+        return observableValue;
+    }
 
-	@Override
-	public IContainer getParent() {
-		return controlDelegate.getParent();
-	}
+    @Override
+    public IContainer getParent() {
+        return controlDelegate.getParent();
+    }
 
-	@Override
-	public void setParent(final IContainer parent) {
-		controlDelegate.setParent(parent);
-	}
+    @Override
+    public void setParent(final IContainer parent) {
+        controlDelegate.setParent(parent);
+    }
 
-	@Override
-	public void addParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.addParentListener(listener);
-	}
+    @Override
+    public void addParentListener(final IParentListener<IContainer> listener) {
+        controlDelegate.addParentListener(listener);
+    }
 
-	@Override
-	public void removeParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.removeParentListener(listener);
-	}
+    @Override
+    public void removeParentListener(final IParentListener<IContainer> listener) {
+        controlDelegate.removeParentListener(listener);
+    }
 
-	@Override
-	public boolean isReparentable() {
-		return controlDelegate.isReparentable();
-	}
+    @Override
+    public boolean isReparentable() {
+        return controlDelegate.isReparentable();
+    }
 
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		controlDelegate.addDisposeListener(listener);
-	}
+    @Override
+    public void addDisposeListener(final IDisposeListener listener) {
+        controlDelegate.addDisposeListener(listener);
+    }
 
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		controlDelegate.removeDisposeListener(listener);
-	}
+    @Override
+    public void removeDisposeListener(final IDisposeListener listener) {
+        controlDelegate.removeDisposeListener(listener);
+    }
 
-	@Override
-	public boolean isDisposed() {
-		return controlDelegate.isDisposed();
-	}
+    @Override
+    public boolean isDisposed() {
+        return controlDelegate.isDisposed();
+    }
 
-	@Override
-	public void dispose() {
-		controlDelegate.dispose();
-	}
+    @Override
+    public void dispose() {
+        controlDelegate.dispose();
+    }
 
-	@Override
-	public IPopupMenu createPopupMenu() {
-		return controlDelegate.createPopupMenu();
-	}
+    @Override
+    public IPopupMenu createPopupMenu() {
+        return controlDelegate.createPopupMenu();
+    }
 
-	@Override
-	public void addValidator(final IValidator<Integer> validator) {
-		compoundValidator.addValidator(validator);
-	}
+    @Override
+    public void addValidator(final IValidator<Integer> validator) {
+        compoundValidator.addValidator(validator);
+    }
 
-	@Override
-	public IValidationResult validate() {
-		return validationCache.validate();
-	}
+    @Override
+    public IValidationResult validate() {
+        return validationCache.validate();
+    }
 
-	@Override
-	public void addValidationConditionListener(final IValidationConditionListener listener) {
-		validationCache.addValidationConditionListener(listener);
-	}
+    @Override
+    public void addValidationConditionListener(final IValidationConditionListener listener) {
+        validationCache.addValidationConditionListener(listener);
+    }
 
-	@Override
-	public void removeValidationConditionListener(final IValidationConditionListener listener) {
-		validationCache.removeValidationConditionListener(listener);
-	}
+    @Override
+    public void removeValidationConditionListener(final IValidationConditionListener listener) {
+        validationCache.removeValidationConditionListener(listener);
+    }
 
-	@Override
-	public void addInputListener(final IInputListener listener) {
-		inputObservable.addInputListener(listener);
-	}
+    @Override
+    public void addInputListener(final IInputListener listener) {
+        inputObservable.addInputListener(listener);
+    }
 
-	@Override
-	public void removeInputListener(final IInputListener listener) {
-		inputObservable.removeInputListener(listener);
-	}
+    @Override
+    public void removeInputListener(final IInputListener listener) {
+        inputObservable.removeInputListener(listener);
+    }
 
-	@Override
-	public boolean hasModifications() {
-		return lastUnmodifiedValue != getSelection();
-	}
+    @Override
+    public boolean hasModifications() {
+        return lastUnmodifiedValue != getSelection();
+    }
 
-	@Override
-	public void resetModificationState() {
-		lastUnmodifiedValue = getSelection();
-	}
+    @Override
+    public void resetModificationState() {
+        lastUnmodifiedValue = getSelection();
+    }
 
-	@Override
-	public int getMinimum() {
-		return minimum;
-	}
+    @Override
+    public int getMinimum() {
+        return minimum;
+    }
 
-	@Override
-	public int getMaximum() {
-		return maximum;
-	}
+    @Override
+    public int getMaximum() {
+        return maximum;
+    }
 
-	@Override
-	public void setValue(final Integer value) {
-		if (value != null) {
-			setSelection(value.intValue());
-		}
-		else {
-			setSelection(getMinimum());
-		}
-	}
+    @Override
+    public void setValue(final Integer value) {
+        if (value != null) {
+            setSelection(value.intValue());
+        }
+        else {
+            setSelection(getMinimum());
+        }
+    }
 
-	@Override
-	public Integer getValue() {
-		return Integer.valueOf(getSelection());
-	}
+    @Override
+    public Integer getValue() {
+        return Integer.valueOf(getSelection());
+    }
 
-	@Override
-	public void setEditable(final boolean editable) {
-		this.editable = editable;
-		getWidget().setEditable(editable);
-	}
+    @Override
+    public void setEditable(final boolean editable) {
+        this.editable = editable;
+        getWidget().setEditable(editable);
+    }
 
-	@Override
-	public boolean isEditable() {
-		return editable;
-	}
+    @Override
+    public boolean isEditable() {
+        return editable;
+    }
 
 }

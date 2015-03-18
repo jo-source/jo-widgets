@@ -35,49 +35,49 @@ import org.jowidgets.api.command.IExceptionHandler;
 
 public class Command implements ICommand {
 
-	private final ICommandExecutor command;
-	private final IEnabledChecker executableStateChecker;
-	private final IExceptionHandler exceptionHandler;
+    private final ICommandExecutor command;
+    private final IEnabledChecker executableStateChecker;
+    private final IExceptionHandler exceptionHandler;
 
-	public Command() {
-		this(null, null, null);
-	}
+    public Command() {
+        this(null, null, null);
+    }
 
-	public Command(final ICommandExecutor command) {
-		this(command, null, null);
-	}
+    public Command(final ICommandExecutor command) {
+        this(command, null, null);
+    }
 
-	public Command(final ICommandExecutor command, final IExceptionHandler exceptionHandler) {
-		this(command, null, exceptionHandler);
-	}
+    public Command(final ICommandExecutor command, final IExceptionHandler exceptionHandler) {
+        this(command, null, exceptionHandler);
+    }
 
-	public Command(final ICommandExecutor command, final IEnabledChecker executableStateChecker) {
-		this(command, executableStateChecker, null);
-	}
+    public Command(final ICommandExecutor command, final IEnabledChecker executableStateChecker) {
+        this(command, executableStateChecker, null);
+    }
 
-	public Command(
-		final ICommandExecutor command,
-		final IEnabledChecker executableStateChecker,
-		final IExceptionHandler exceptionHandler) {
-		super();
-		this.command = command;
-		this.executableStateChecker = executableStateChecker;
-		this.exceptionHandler = exceptionHandler;
-	}
+    public Command(
+        final ICommandExecutor command,
+        final IEnabledChecker executableStateChecker,
+        final IExceptionHandler exceptionHandler) {
+        super();
+        this.command = command;
+        this.executableStateChecker = executableStateChecker;
+        this.exceptionHandler = exceptionHandler;
+    }
 
-	@Override
-	public ICommandExecutor getCommandExecutor() {
-		return command;
-	}
+    @Override
+    public ICommandExecutor getCommandExecutor() {
+        return command;
+    }
 
-	@Override
-	public IEnabledChecker getEnabledChecker() {
-		return executableStateChecker;
-	}
+    @Override
+    public IEnabledChecker getEnabledChecker() {
+        return executableStateChecker;
+    }
 
-	@Override
-	public IExceptionHandler getExceptionHandler() {
-		return exceptionHandler;
-	}
+    @Override
+    public IExceptionHandler getExceptionHandler() {
+        return exceptionHandler;
+    }
 
 }

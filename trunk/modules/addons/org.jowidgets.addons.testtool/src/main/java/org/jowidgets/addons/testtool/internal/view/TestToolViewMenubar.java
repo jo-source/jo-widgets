@@ -51,102 +51,102 @@ import org.jowidgets.tools.model.item.MenuModel;
 //CHECKSTYLE:OFF
 public class TestToolViewMenubar {
 
-	private static final String DEFAULT_FILEPATH = System.getProperty("user.dir")
-		+ File.separator
-		+ "resources"
-		+ File.separator
-		+ "testtool";
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+    private static final String DEFAULT_FILEPATH = System.getProperty("user.dir")
+        + File.separator
+        + "resources"
+        + File.separator
+        + "testtool";
+    private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
-	public TestToolViewMenubar(final IFrame parent, final ITestTool testTool) {
-		final IMenuBarModel menuBarModel = parent.getMenuBarModel();
-		final IMenuModel fileModel = new MenuModel("File");
-		fileModel.setMnemonic('F');
+    public TestToolViewMenubar(final IFrame parent, final ITestTool testTool) {
+        final IMenuBarModel menuBarModel = parent.getMenuBarModel();
+        final IMenuModel fileModel = new MenuModel("File");
+        fileModel.setMnemonic('F');
 
-		final IActionItemModel saveActionItem = fileModel.addActionItem("Save Test As...");
-		saveActionItem.addActionListener(new IActionListener() {
+        final IActionItemModel saveActionItem = fileModel.addActionItem("Save Test As...");
+        saveActionItem.addActionListener(new IActionListener() {
 
-			@Override
-			public void actionPerformed() {
-				final List<TestDataObject> list = new LinkedList<TestDataObject>();
-				if (!(TestToolViewTable.getTableModel().getRowCount() <= 0)) {
-					for (int rowIndex = 0; rowIndex < TestToolViewTable.getTableModel().getRowCount(); rowIndex++) {
-						final TestDataObject obj = new TestDataObject();
-						obj.setType(TestToolViewTable.getTableModel().getCell(rowIndex, 1).getText());
-						final String action = TestToolViewTable.getTableModel().getCell(rowIndex, 2).getText();
-						obj.setAction(UserAction.valueOf(action));
-						final String value = TestToolViewTable.getTableModel().getCell(rowIndex, 3).getText();
-						obj.setValue(value);
-						obj.setId(TestToolViewTable.getTableModel().getCell(rowIndex, 5).getText());
-						list.add(obj);
-					}
-					final IFileChooserBluePrint fileChooserBp = BPF.fileChooser(FileChooserType.SAVE);
-					final IFileChooser fileChooser = parent.createChildWindow(fileChooserBp);
-					final DialogResult result = fileChooser.open();
-					if (result == DialogResult.OK) {
-						for (final File file : fileChooser.getSelectedFiles()) {
-							testTool.save(list, file.getName());
-							Toolkit.getMessagePane().showInfo("Test successfully saved!");
-						}
-					}
-				}
-				else {
-					Toolkit.getMessagePane().showWarning("There is nothing to save.");
-				}
-			}
-		});
-		final IActionItemModel loadActionItem = fileModel.addActionItem("Load Test...");
-		loadActionItem.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final List<TestDataObject> list = new LinkedList<TestDataObject>();
+                if (!(TestToolViewTable.getTableModel().getRowCount() <= 0)) {
+                    for (int rowIndex = 0; rowIndex < TestToolViewTable.getTableModel().getRowCount(); rowIndex++) {
+                        final TestDataObject obj = new TestDataObject();
+                        obj.setType(TestToolViewTable.getTableModel().getCell(rowIndex, 1).getText());
+                        final String action = TestToolViewTable.getTableModel().getCell(rowIndex, 2).getText();
+                        obj.setAction(UserAction.valueOf(action));
+                        final String value = TestToolViewTable.getTableModel().getCell(rowIndex, 3).getText();
+                        obj.setValue(value);
+                        obj.setId(TestToolViewTable.getTableModel().getCell(rowIndex, 5).getText());
+                        list.add(obj);
+                    }
+                    final IFileChooserBluePrint fileChooserBp = BPF.fileChooser(FileChooserType.SAVE);
+                    final IFileChooser fileChooser = parent.createChildWindow(fileChooserBp);
+                    final DialogResult result = fileChooser.open();
+                    if (result == DialogResult.OK) {
+                        for (final File file : fileChooser.getSelectedFiles()) {
+                            testTool.save(list, file.getName());
+                            Toolkit.getMessagePane().showInfo("Test successfully saved!");
+                        }
+                    }
+                }
+                else {
+                    Toolkit.getMessagePane().showWarning("There is nothing to save.");
+                }
+            }
+        });
+        final IActionItemModel loadActionItem = fileModel.addActionItem("Load Test...");
+        loadActionItem.addActionListener(new IActionListener() {
 
-			@Override
-			public void actionPerformed() {
-				final IFileChooserBluePrint fileChooserBf = BPF.fileChooser(FileChooserType.OPEN_FILE);
-				final IFileChooser fileChooser = parent.createChildWindow(fileChooserBf);
-				fileChooser.setSelectedFile(new File(DEFAULT_FILEPATH));
-				final DialogResult result = fileChooser.open();
-				if (result == DialogResult.OK) {
-					for (final File file : fileChooser.getSelectedFiles()) {
-						List<TestDataObject> results = new LinkedList<TestDataObject>();
-						String fileName = file.getName();
-						if (file.getName().contains(".xml")) {
-							fileName = file.getName();
-							fileName = fileName.replace(".xml", "");
-						}
-						results = testTool.load(fileName);
-						if (results != null) {
-							for (final TestDataObject item : results) {
-								TestToolViewTable.getTableModel().addRow(
-										Integer.toString(TestToolViewTable.getTableModel().getRowCount()),
-										item.getType(),
-										item.getAction().name(),
-										item.getValue(),
-										getWidgetProperty(item),
-										item.getId());
-							}
-							Toolkit.getMessagePane().showInfo("Loading tests was successfull!");
-						}
-						else {
-							Toolkit.getMessagePane().showError("couldn't find tests for the given filename");
-						}
-					}
-				}
-			}
-		});
+            @Override
+            public void actionPerformed() {
+                final IFileChooserBluePrint fileChooserBf = BPF.fileChooser(FileChooserType.OPEN_FILE);
+                final IFileChooser fileChooser = parent.createChildWindow(fileChooserBf);
+                fileChooser.setSelectedFile(new File(DEFAULT_FILEPATH));
+                final DialogResult result = fileChooser.open();
+                if (result == DialogResult.OK) {
+                    for (final File file : fileChooser.getSelectedFiles()) {
+                        List<TestDataObject> results = new LinkedList<TestDataObject>();
+                        String fileName = file.getName();
+                        if (file.getName().contains(".xml")) {
+                            fileName = file.getName();
+                            fileName = fileName.replace(".xml", "");
+                        }
+                        results = testTool.load(fileName);
+                        if (results != null) {
+                            for (final TestDataObject item : results) {
+                                TestToolViewTable.getTableModel().addRow(
+                                        Integer.toString(TestToolViewTable.getTableModel().getRowCount()),
+                                        item.getType(),
+                                        item.getAction().name(),
+                                        item.getValue(),
+                                        getWidgetProperty(item),
+                                        item.getId());
+                            }
+                            Toolkit.getMessagePane().showInfo("Loading tests was successfull!");
+                        }
+                        else {
+                            Toolkit.getMessagePane().showError("couldn't find tests for the given filename");
+                        }
+                    }
+                }
+            }
+        });
 
-		fileModel.addSeparator();
-		final IActionItemModel exitActionItem = fileModel.addActionItem("Exit");
-		exitActionItem.addActionListener(new IActionListener() {
+        fileModel.addSeparator();
+        final IActionItemModel exitActionItem = fileModel.addActionItem("Exit");
+        exitActionItem.addActionListener(new IActionListener() {
 
-			@Override
-			public void actionPerformed() {
-				System.exit(0);
-			}
-		});
-		menuBarModel.addMenu(fileModel);
-	}
+            @Override
+            public void actionPerformed() {
+                System.exit(0);
+            }
+        });
+        menuBarModel.addMenu(fileModel);
+    }
 
-	private String getWidgetProperty(final TestDataObject item) {
-		final String id = item.getId();
-		return id.substring(id.lastIndexOf(":") + 1, id.length());
-	}
+    private String getWidgetProperty(final TestDataObject item) {
+        final String id = item.getId();
+        return id.substring(id.lastIndexOf(":") + 1, id.length());
+    }
 }

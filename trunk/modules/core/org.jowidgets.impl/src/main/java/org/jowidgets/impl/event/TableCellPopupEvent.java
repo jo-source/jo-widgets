@@ -33,27 +33,27 @@ import org.jowidgets.common.widgets.controller.ITableCellPopupEvent;
 
 public class TableCellPopupEvent extends TableCellEvent implements ITableCellPopupEvent {
 
-	private final Position position;
+    private final Position position;
 
-	public TableCellPopupEvent(final int rowIndex, final int columnIndex, final Position position) {
-		super(rowIndex, columnIndex);
-		this.position = position;
-	}
+    public TableCellPopupEvent(final int rowIndex, final int columnIndex, final Position position) {
+        super(rowIndex, columnIndex);
+        this.position = position;
+    }
 
-	@Override
-	public Position getPosition() {
-		return position;
-	}
+    @Override
+    public Position getPosition() {
+        return position;
+    }
 
-	@Override
-	public String toString() {
-		return "TableCellPopupEvent [position="
-			+ position
-			+ ", rowIndex="
-			+ getRowIndex()
-			+ ", columnIndex="
-			+ getColumnIndex()
-			+ "]";
-	}
+    @Override
+    public String toString() {
+        return "TableCellPopupEvent [position="
+            + position
+            + ", rowIndex="
+            + getRowIndex()
+            + ", columnIndex="
+            + getColumnIndex()
+            + "]";
+    }
 
 }

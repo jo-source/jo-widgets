@@ -36,25 +36,25 @@ import org.jowidgets.util.Assert;
 
 public final class InputVerifierComposite implements IInputVerifier {
 
-	private final List<IInputVerifier> inputVerifiers;
+    private final List<IInputVerifier> inputVerifiers;
 
-	public InputVerifierComposite() {
-		this.inputVerifiers = new LinkedList<IInputVerifier>();
-	}
+    public InputVerifierComposite() {
+        this.inputVerifiers = new LinkedList<IInputVerifier>();
+    }
 
-	@Override
-	public boolean verify(final String currentValue, final String input, final int start, final int end) {
-		for (final IInputVerifier inputVerifier : inputVerifiers) {
-			if (!inputVerifier.verify(currentValue, input, start, end)) {
-				return false;
-			}
-		}
-		return true;
-	}
+    @Override
+    public boolean verify(final String currentValue, final String input, final int start, final int end) {
+        for (final IInputVerifier inputVerifier : inputVerifiers) {
+            if (!inputVerifier.verify(currentValue, input, start, end)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-	public void addVerifier(final IInputVerifier inputVerifier) {
-		Assert.paramNotNull(inputVerifier, "inputVerifier");
-		inputVerifiers.add(inputVerifier);
-	}
+    public void addVerifier(final IInputVerifier inputVerifier) {
+        Assert.paramNotNull(inputVerifier, "inputVerifier");
+        inputVerifiers.add(inputVerifier);
+    }
 
 }

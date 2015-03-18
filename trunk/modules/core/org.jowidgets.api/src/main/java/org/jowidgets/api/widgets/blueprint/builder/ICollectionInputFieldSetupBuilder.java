@@ -36,24 +36,24 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.validation.IValidator;
 
 public interface ICollectionInputFieldSetupBuilder<INSTANCE_TYPE extends ICollectionInputFieldSetupBuilder<?, ?>, ELEMENT_TYPE> extends
-		IInputComponentSetupBuilder<INSTANCE_TYPE, Collection<ELEMENT_TYPE>> {
+        IInputComponentSetupBuilder<INSTANCE_TYPE, Collection<ELEMENT_TYPE>> {
 
-	INSTANCE_TYPE setCollectionInputDialogSetup(final ICollectionInputDialogSetup<ELEMENT_TYPE> setup);
+    INSTANCE_TYPE setCollectionInputDialogSetup(final ICollectionInputDialogSetup<ELEMENT_TYPE> setup);
 
-	INSTANCE_TYPE setEditButtonIcon(IImageConstant icon);
+    INSTANCE_TYPE setEditButtonIcon(IImageConstant icon);
 
-	INSTANCE_TYPE setConverter(IConverter<ELEMENT_TYPE> converter);
+    INSTANCE_TYPE setConverter(IConverter<ELEMENT_TYPE> converter);
 
-	INSTANCE_TYPE setConverter(IObjectStringConverter<ELEMENT_TYPE> converter);
+    INSTANCE_TYPE setConverter(IObjectStringConverter<ELEMENT_TYPE> converter);
 
-	INSTANCE_TYPE setElementValidator(IValidator<ELEMENT_TYPE> validator);
+    INSTANCE_TYPE setElementValidator(IValidator<ELEMENT_TYPE> validator);
 
-	INSTANCE_TYPE setSeparator(Character separator);
+    INSTANCE_TYPE setSeparator(Character separator);
 
-	INSTANCE_TYPE setMaskingCharacter(Character mask);
+    INSTANCE_TYPE setMaskingCharacter(Character mask);
 
-	INSTANCE_TYPE setFilterEmptyValues(boolean filter);
+    INSTANCE_TYPE setFilterEmptyValues(boolean filter);
 
-	INSTANCE_TYPE setDublicatesAllowed(boolean dublicatesAllowed);
+    INSTANCE_TYPE setDublicatesAllowed(boolean dublicatesAllowed);
 
 }

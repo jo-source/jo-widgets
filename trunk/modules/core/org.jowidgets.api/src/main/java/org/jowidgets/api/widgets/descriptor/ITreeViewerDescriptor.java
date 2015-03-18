@@ -32,7 +32,7 @@ import org.jowidgets.api.widgets.descriptor.setup.ITreeViewerSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface ITreeViewerDescriptor<ROOT_NODE_VALUE_TYPE> extends
-		ITreeViewerSetup<ROOT_NODE_VALUE_TYPE>,
-		IWidgetDescriptor<ITreeViewer<ROOT_NODE_VALUE_TYPE>> {
+        ITreeViewerSetup<ROOT_NODE_VALUE_TYPE>,
+        IWidgetDescriptor<ITreeViewer<ROOT_NODE_VALUE_TYPE>> {
 
 }

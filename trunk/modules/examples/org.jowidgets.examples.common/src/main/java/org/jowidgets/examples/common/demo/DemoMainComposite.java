@@ -52,343 +52,343 @@ import org.jowidgets.validation.ValidationResult;
 
 public final class DemoMainComposite {
 
-	private final IContainer parentContainer;
+    private final IContainer parentContainer;
 
-	public DemoMainComposite(final IContainer parentContainer) {
-		this.parentContainer = parentContainer;
+    public DemoMainComposite(final IContainer parentContainer) {
+        this.parentContainer = parentContainer;
 
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+        final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
-		parentContainer.setLayout(new MigLayoutDescriptor("[300::, grow]", "[][][][]"));
+        parentContainer.setLayout(new MigLayoutDescriptor("[300::, grow]", "[][][][]"));
 
-		final IInputDialog<List<String>> inputDialog1 = new DemoInputDialog1(getParentWindow()).getInputDialog();
-		final IButton inputDialog1Button = parentContainer.add(
-				bpF.button("Input dialog demo", "Shows an simple input dialog"),
-				"grow, sg bg, wrap");
-		inputDialog1Button.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				inputDialog1.setValue(null);
-				inputDialog1.setVisible(true);
-			}
-		});
+        final IInputDialog<List<String>> inputDialog1 = new DemoInputDialog1(getParentWindow()).getInputDialog();
+        final IButton inputDialog1Button = parentContainer.add(
+                bpF.button("Input dialog demo", "Shows an simple input dialog"),
+                "grow, sg bg, wrap");
+        inputDialog1Button.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                inputDialog1.setValue(null);
+                inputDialog1.setVisible(true);
+            }
+        });
 
-		final IButton listInputDemoButton = parentContainer.add(bpF.button("List input demo"), "grow, sg bg, wrap");
-		listInputDemoButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
+        final IButton listInputDemoButton = parentContainer.add(bpF.button("List input demo"), "grow, sg bg, wrap");
+        listInputDemoButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
 
-				final IInputFieldBluePrint<Integer> inputFieldBp = bpF.inputFieldIntegerNumber().setValidator(
-						new IValidator<Integer>() {
-							@Override
-							public IValidationResult validate(final Integer value) {
-								if (value == null) {
-									return ValidationResult.create().withError("Must not be empty");
-								}
-								if (value != null && value == 303) {
-									return ValidationResult.create().withError("Cool numbers are not supported");
-								}
-								else {
-									return ValidationResult.ok();
-								}
-							}
-						});
+                final IInputFieldBluePrint<Integer> inputFieldBp = bpF.inputFieldIntegerNumber().setValidator(
+                        new IValidator<Integer>() {
+                            @Override
+                            public IValidationResult validate(final Integer value) {
+                                if (value == null) {
+                                    return ValidationResult.create().withError("Must not be empty");
+                                }
+                                if (value != null && value == 303) {
+                                    return ValidationResult.create().withError("Cool numbers are not supported");
+                                }
+                                else {
+                                    return ValidationResult.ok();
+                                }
+                            }
+                        });
 
-				final ICollectionInputDialogBluePrint<Integer> dialogBp = bpF.collectionInputDialog(inputFieldBp);
-				dialogBp.setValidator(new IValidator<Collection<Integer>>() {
+                final ICollectionInputDialogBluePrint<Integer> dialogBp = bpF.collectionInputDialog(inputFieldBp);
+                dialogBp.setValidator(new IValidator<Collection<Integer>>() {
 
-					@Override
-					public IValidationResult validate(final Collection<Integer> value) {
-						if (value == null || value.size() == 0) {
-							return ValidationResult.error("Input must not be empty");
-						}
-						else {
-							if (value.size() != new HashSet<Integer>(value).size()) {
-								return ValidationResult.error("Input must not contain duplicates");
-							}
-						}
-						return null;
-					}
-				});
+                    @Override
+                    public IValidationResult validate(final Collection<Integer> value) {
+                        if (value == null || value.size() == 0) {
+                            return ValidationResult.error("Input must not be empty");
+                        }
+                        else {
+                            if (value.size() != new HashSet<Integer>(value).size()) {
+                                return ValidationResult.error("Input must not contain duplicates");
+                            }
+                        }
+                        return null;
+                    }
+                });
 
-				final List<Integer> values = new LinkedList<Integer>();
-				values.add(null);
+                final List<Integer> values = new LinkedList<Integer>();
+                values.add(null);
 
-				dialogBp.setValue(values);
-				dialogBp.setMissingInputHint("Please edit the list");
+                dialogBp.setValue(values);
+                dialogBp.setMissingInputHint("Please edit the list");
 
-				final IInputDialog<Collection<Integer>> inputDialog = getParentWindow().createChildWindow(dialogBp);
+                final IInputDialog<Collection<Integer>> inputDialog = getParentWindow().createChildWindow(dialogBp);
 
-				inputDialog.setSize(new Dimension(300, 300));
-				inputDialog.setVisible(true);
-			}
-		});
+                inputDialog.setSize(new Dimension(300, 300));
+                inputDialog.setVisible(true);
+            }
+        });
 
-		final IButton expandCompositeButton = parentContainer.add(
-				bpF.button("Expand composite demo", "Shows an expand composite"),
-				"grow, sg bg, wrap");
-		expandCompositeButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IFrame frame = new DemoExpandComposite();
-				frame.setSize(new Dimension(400, 600));
-				frame.setVisible(true);
-			}
-		});
+        final IButton expandCompositeButton = parentContainer.add(
+                bpF.button("Expand composite demo", "Shows an expand composite"),
+                "grow, sg bg, wrap");
+        expandCompositeButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IFrame frame = new DemoExpandComposite();
+                frame.setSize(new Dimension(400, 600));
+                frame.setVisible(true);
+            }
+        });
 
-		final IButton textAreaDemoButton = parentContainer.add(
-				bpF.button("Text area demo", "Shows a text area with line wrapping"),
-				"grow, sg bg, wrap");
-		textAreaDemoButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IFrame menuDemoFrame = new DemoTextAreaFrame();
-				menuDemoFrame.setSize(new Dimension(300, 300));
-				menuDemoFrame.setVisible(true);
-			}
-		});
+        final IButton textAreaDemoButton = parentContainer.add(
+                bpF.button("Text area demo", "Shows a text area with line wrapping"),
+                "grow, sg bg, wrap");
+        textAreaDemoButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IFrame menuDemoFrame = new DemoTextAreaFrame();
+                menuDemoFrame.setSize(new Dimension(300, 300));
+                menuDemoFrame.setVisible(true);
+            }
+        });
 
-		final IButton scrollCompositeDemoButton = parentContainer.add(
-				bpF.button("Scroll composite demo", "Shows a simple scroll composite with growing content"),
-				"grow, sg bg, wrap");
-		scrollCompositeDemoButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IFrame menuDemoFrame = new DemoScrollCompositeFrame();
-				menuDemoFrame.setSize(new Dimension(300, 300));
-				menuDemoFrame.setVisible(true);
-			}
-		});
+        final IButton scrollCompositeDemoButton = parentContainer.add(
+                bpF.button("Scroll composite demo", "Shows a simple scroll composite with growing content"),
+                "grow, sg bg, wrap");
+        scrollCompositeDemoButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IFrame menuDemoFrame = new DemoScrollCompositeFrame();
+                menuDemoFrame.setSize(new Dimension(300, 300));
+                menuDemoFrame.setVisible(true);
+            }
+        });
 
-		final IButton menuDemoButton = parentContainer.add(
-				bpF.button("Menu demo", "Shows an frame with menus and popup menus"),
-				"grow, sg bg, wrap");
-		menuDemoButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IFrame menuDemoFrame = new DemoMenuFrame();
-				menuDemoFrame.setSize(new Dimension(800, 600));
-				menuDemoFrame.setVisible(true);
-			}
-		});
+        final IButton menuDemoButton = parentContainer.add(
+                bpF.button("Menu demo", "Shows an frame with menus and popup menus"),
+                "grow, sg bg, wrap");
+        menuDemoButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IFrame menuDemoFrame = new DemoMenuFrame();
+                menuDemoFrame.setSize(new Dimension(800, 600));
+                menuDemoFrame.setVisible(true);
+            }
+        });
 
-		final IButton splitDemoButton = parentContainer.add(
-				bpF.button("Split demo", "Shows an frame with split composites"),
-				"grow, sg bg, wrap");
-		splitDemoButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IFrame splitDemoFrame = getParentWindow().createChildWindow(bpF.frame("Split demo").autoPackOff());
-				splitDemoFrame.setSize(new Dimension(800, 600));
-				new DemoSplitComposite(splitDemoFrame);
-				splitDemoFrame.setVisible(true);
-			}
-		});
+        final IButton splitDemoButton = parentContainer.add(
+                bpF.button("Split demo", "Shows an frame with split composites"),
+                "grow, sg bg, wrap");
+        splitDemoButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IFrame splitDemoFrame = getParentWindow().createChildWindow(bpF.frame("Split demo").autoPackOff());
+                splitDemoFrame.setSize(new Dimension(800, 600));
+                new DemoSplitComposite(splitDemoFrame);
+                splitDemoFrame.setVisible(true);
+            }
+        });
 
-		final IButton tabDemoButton = parentContainer.add(
-				bpF.button("Tab folder demo", "Shows an frame with a tab folder"),
-				"grow, sg bg, wrap");
-		tabDemoButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IFrame tabDemoFrame = getParentWindow().createChildWindow(bpF.frame("Tab folder demo").autoPackOff());
-				tabDemoFrame.setSize(new Dimension(1024, 768));
-				new DemoTabFolderComposite(tabDemoFrame);
-				tabDemoFrame.setVisible(true);
-			}
-		});
+        final IButton tabDemoButton = parentContainer.add(
+                bpF.button("Tab folder demo", "Shows an frame with a tab folder"),
+                "grow, sg bg, wrap");
+        tabDemoButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IFrame tabDemoFrame = getParentWindow().createChildWindow(bpF.frame("Tab folder demo").autoPackOff());
+                tabDemoFrame.setSize(new Dimension(1024, 768));
+                new DemoTabFolderComposite(tabDemoFrame);
+                tabDemoFrame.setVisible(true);
+            }
+        });
 
-		final IButton treeDemoButton = parentContainer.add(
-				bpF.button("Tree demo", "Shows an frame with a tree"),
-				"grow, sg bg, wrap");
-		treeDemoButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IFrame treeDemoFrame = getParentWindow().createChildWindow(bpF.frame("Tree demo").autoPackOff());
-				treeDemoFrame.setSize(new Dimension(800, 600));
-				new DemoTreeComposite(treeDemoFrame);
-				treeDemoFrame.setVisible(true);
-			}
-		});
+        final IButton treeDemoButton = parentContainer.add(
+                bpF.button("Tree demo", "Shows an frame with a tree"),
+                "grow, sg bg, wrap");
+        treeDemoButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IFrame treeDemoFrame = getParentWindow().createChildWindow(bpF.frame("Tree demo").autoPackOff());
+                treeDemoFrame.setSize(new Dimension(800, 600));
+                new DemoTreeComposite(treeDemoFrame);
+                treeDemoFrame.setVisible(true);
+            }
+        });
 
-		final IButton tableDemoButton = parentContainer.add(
-				bpF.button("Table demo", "Shows an frame with a table"),
-				"grow, sg bg, wrap");
-		tableDemoButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IFrame tableDemoFrame = getParentWindow().createChildWindow(bpF.frame("Table demo").autoPackOff());
-				tableDemoFrame.setSize(new Dimension(800, 600));
-				new DemoTableComposite(tableDemoFrame);
-				tableDemoFrame.setVisible(true);
-			}
-		});
+        final IButton tableDemoButton = parentContainer.add(
+                bpF.button("Table demo", "Shows an frame with a table"),
+                "grow, sg bg, wrap");
+        tableDemoButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IFrame tableDemoFrame = getParentWindow().createChildWindow(bpF.frame("Table demo").autoPackOff());
+                tableDemoFrame.setSize(new Dimension(800, 600));
+                new DemoTableComposite(tableDemoFrame);
+                tableDemoFrame.setVisible(true);
+            }
+        });
 
-		final IButton progressBarDialogButton = parentContainer.add(
-				bpF.button("Progress bar demo", "Opens the progress bar demo"),
-				"grow, sg bg, wrap");
-		progressBarDialogButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IFrame progressBarDialog = getParentWindow().createChildWindow(bpF.dialog("Progress bar demo"));
-				new DemoProgressBarComposite(progressBarDialog, progressBarDialog);
-				progressBarDialog.setVisible(true);
-				progressBarDialog.dispose();
-			}
-		});
+        final IButton progressBarDialogButton = parentContainer.add(
+                bpF.button("Progress bar demo", "Opens the progress bar demo"),
+                "grow, sg bg, wrap");
+        progressBarDialogButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IFrame progressBarDialog = getParentWindow().createChildWindow(bpF.dialog("Progress bar demo"));
+                new DemoProgressBarComposite(progressBarDialog, progressBarDialog);
+                progressBarDialog.setVisible(true);
+                progressBarDialog.dispose();
+            }
+        });
 
-		final IButton sliderDialogButton = parentContainer.add(
-				bpF.button("Slider demo", "Opens the slider demo"),
-				"grow, sg bg, wrap");
-		sliderDialogButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IFrame sliderDemoFrame = new DemoSliderFrame();
-				sliderDemoFrame.setSize(new Dimension(300, 300));
-				sliderDemoFrame.setVisible(true);
-			}
-		});
+        final IButton sliderDialogButton = parentContainer.add(
+                bpF.button("Slider demo", "Opens the slider demo"),
+                "grow, sg bg, wrap");
+        sliderDialogButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IFrame sliderDemoFrame = new DemoSliderFrame();
+                sliderDemoFrame.setSize(new Dimension(300, 300));
+                sliderDemoFrame.setVisible(true);
+            }
+        });
 
-		final IButton sliderViewerDialogButton = parentContainer.add(
-				bpF.button("Slider viewer demo", "Opens the slider viewer demo"),
-				"grow, sg bg, wrap");
-		sliderViewerDialogButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IFrame sliderViewerDemoFrame = new DemoSliderViewerFrame();
-				sliderViewerDemoFrame.setSize(new Dimension(300, 300));
-				sliderViewerDemoFrame.setVisible(true);
-			}
-		});
+        final IButton sliderViewerDialogButton = parentContainer.add(
+                bpF.button("Slider viewer demo", "Opens the slider viewer demo"),
+                "grow, sg bg, wrap");
+        sliderViewerDialogButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IFrame sliderViewerDemoFrame = new DemoSliderViewerFrame();
+                sliderViewerDemoFrame.setSize(new Dimension(300, 300));
+                sliderViewerDemoFrame.setVisible(true);
+            }
+        });
 
-		final IButton bindingDialogButton = parentContainer.add(
-				bpF.button("Binding demo", "Opens the binding demo"),
-				"grow, sg bg, wrap");
-		bindingDialogButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IFrame bindingDemoFrame = new DemoBindingFrame();
-				bindingDemoFrame.setVisible(true);
-			}
-		});
+        final IButton bindingDialogButton = parentContainer.add(
+                bpF.button("Binding demo", "Opens the binding demo"),
+                "grow, sg bg, wrap");
+        bindingDialogButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IFrame bindingDemoFrame = new DemoBindingFrame();
+                bindingDemoFrame.setVisible(true);
+            }
+        });
 
-		final IButton canvasDialogButton = parentContainer.add(
-				bpF.button("Canvas demo", "Opens the canvas demo"),
-				"grow, sg bg, wrap");
-		canvasDialogButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IFrame frame = new DemoCanvasFrame();
-				frame.setSize(new Dimension(800, 600));
-				frame.setVisible(true);
-			}
-		});
+        final IButton canvasDialogButton = parentContainer.add(
+                bpF.button("Canvas demo", "Opens the canvas demo"),
+                "grow, sg bg, wrap");
+        canvasDialogButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IFrame frame = new DemoCanvasFrame();
+                frame.setSize(new Dimension(800, 600));
+                frame.setVisible(true);
+            }
+        });
 
-		final IButton levelMeterDialogButton = parentContainer.add(
-				bpF.button("Level meter demo", "Opens the level meter demo"),
-				"grow, sg bg, wrap");
-		levelMeterDialogButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IFrame frame = new DemoLevelMeterFrame();
-				frame.setSize(new Dimension(400, 300));
-				frame.setVisible(true);
-			}
-		});
+        final IButton levelMeterDialogButton = parentContainer.add(
+                bpF.button("Level meter demo", "Opens the level meter demo"),
+                "grow, sg bg, wrap");
+        levelMeterDialogButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IFrame frame = new DemoLevelMeterFrame();
+                frame.setSize(new Dimension(400, 300));
+                frame.setVisible(true);
+            }
+        });
 
-		final IButton chooserDemoButton = parentContainer.add(
-				bpF.button("Chooser demo", "Demonstrates choosers"),
-				"grow, sg bg, wrap");
-		chooserDemoButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IFrame popupDialogDemoFrame = new DemoChooserFrame();
-				popupDialogDemoFrame.setSize(new Dimension(400, 300));
-				popupDialogDemoFrame.setVisible(true);
-			}
-		});
+        final IButton chooserDemoButton = parentContainer.add(
+                bpF.button("Chooser demo", "Demonstrates choosers"),
+                "grow, sg bg, wrap");
+        chooserDemoButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IFrame popupDialogDemoFrame = new DemoChooserFrame();
+                popupDialogDemoFrame.setSize(new Dimension(400, 300));
+                popupDialogDemoFrame.setVisible(true);
+            }
+        });
 
-		final IFrame fileChooserDialog = getParentWindow().createChildWindow(bpF.dialog("File chooser demo"));
-		new DemoFileChooserComposite(fileChooserDialog);
-		final IButton fileChooserDialogButton = parentContainer.add(
-				bpF.button("File / Directory chooser demo", "Opens the file / directory chooser demo"),
-				"grow, sg bg, wrap");
-		fileChooserDialogButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				fileChooserDialog.setVisible(true);
-			}
-		});
+        final IFrame fileChooserDialog = getParentWindow().createChildWindow(bpF.dialog("File chooser demo"));
+        new DemoFileChooserComposite(fileChooserDialog);
+        final IButton fileChooserDialogButton = parentContainer.add(
+                bpF.button("File / Directory chooser demo", "Opens the file / directory chooser demo"),
+                "grow, sg bg, wrap");
+        fileChooserDialogButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                fileChooserDialog.setVisible(true);
+            }
+        });
 
-		final IButton downloadDialogButton = parentContainer.add(bpF.button("Download button demo"), "grow, sg bg, wrap");
-		downloadDialogButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IDialogBluePrint downloadDemoDialogBp = bpF.dialog("Download button demo");
-				downloadDemoDialogBp.setMinPackSize(new Dimension(800, 0));
-				final IFrame dowloadDemoDiaolg = getParentWindow().createChildWindow(downloadDemoDialogBp);
-				new DemoDownloadComposite(dowloadDemoDiaolg);
-				dowloadDemoDiaolg.setVisible(true);
-				dowloadDemoDiaolg.dispose();
-			}
-		});
+        final IButton downloadDialogButton = parentContainer.add(bpF.button("Download button demo"), "grow, sg bg, wrap");
+        downloadDialogButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IDialogBluePrint downloadDemoDialogBp = bpF.dialog("Download button demo");
+                downloadDemoDialogBp.setMinPackSize(new Dimension(800, 0));
+                final IFrame dowloadDemoDiaolg = getParentWindow().createChildWindow(downloadDemoDialogBp);
+                new DemoDownloadComposite(dowloadDemoDiaolg);
+                dowloadDemoDiaolg.setVisible(true);
+                dowloadDemoDiaolg.dispose();
+            }
+        });
 
-		final IFrame messagesDemoDialog = getParentWindow().createChildWindow(bpF.dialog("Messages demo"));
-		new DemoMessagesComposite(messagesDemoDialog);
-		final IButton messagesDialogButton = parentContainer.add(
-				bpF.button("Messages demo", "Opens the messages demo"),
-				"grow, sg bg, wrap");
-		messagesDialogButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				messagesDemoDialog.setVisible(true);
-			}
-		});
+        final IFrame messagesDemoDialog = getParentWindow().createChildWindow(bpF.dialog("Messages demo"));
+        new DemoMessagesComposite(messagesDemoDialog);
+        final IButton messagesDialogButton = parentContainer.add(
+                bpF.button("Messages demo", "Opens the messages demo"),
+                "grow, sg bg, wrap");
+        messagesDialogButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                messagesDemoDialog.setVisible(true);
+            }
+        });
 
-		final IFrame layoutDemoDialog = getParentWindow().createChildWindow(bpF.frame("Layout demo"));
-		new DemoLayoutComposite(layoutDemoDialog);
-		final IButton layoutTestButton = parentContainer.add(bpF.button("Layout demo"), "grow, sg bg, wrap");
-		layoutTestButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				layoutDemoDialog.setVisible(true);
-			}
-		});
+        final IFrame layoutDemoDialog = getParentWindow().createChildWindow(bpF.frame("Layout demo"));
+        new DemoLayoutComposite(layoutDemoDialog);
+        final IButton layoutTestButton = parentContainer.add(bpF.button("Layout demo"), "grow, sg bg, wrap");
+        layoutTestButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                layoutDemoDialog.setVisible(true);
+            }
+        });
 
-		final IButton maximizeButton = parentContainer.add(bpF.button("Toggle maximized"), "grow, sg bg, wrap");
-		maximizeButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IWindow parentWindow = getParentWindow();
-				if (parentWindow instanceof IFrame) {
-					final IFrame frame = (IFrame) parentWindow;
-					frame.setMaximized(!frame.isMaximized());
-				}
-			}
-		});
+        final IButton maximizeButton = parentContainer.add(bpF.button("Toggle maximized"), "grow, sg bg, wrap");
+        maximizeButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IWindow parentWindow = getParentWindow();
+                if (parentWindow instanceof IFrame) {
+                    final IFrame frame = (IFrame) parentWindow;
+                    frame.setMaximized(!frame.isMaximized());
+                }
+            }
+        });
 
-		final IButton iconfyButton = parentContainer.add(bpF.button("Iconfy"), "grow, sg bg, wrap");
-		iconfyButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IWindow parentWindow = getParentWindow();
-				if (parentWindow instanceof IFrame) {
-					final IFrame frame = (IFrame) parentWindow;
-					frame.setIconfied(true);
-				}
-			}
-		});
+        final IButton iconfyButton = parentContainer.add(bpF.button("Iconfy"), "grow, sg bg, wrap");
+        iconfyButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IWindow parentWindow = getParentWindow();
+                if (parentWindow instanceof IFrame) {
+                    final IFrame frame = (IFrame) parentWindow;
+                    frame.setIconfied(true);
+                }
+            }
+        });
 
-	}
+    }
 
-	public void foo() {}
+    public void foo() {}
 
-	private IWindow getParentWindow() {
-		IWindow parentWindow = Toolkit.getWidgetUtils().getWindowAncestor(parentContainer);
-		if (parentWindow == null) {
-			parentWindow = Toolkit.getActiveWindow();
-		}
-		return parentWindow;
-	}
+    private IWindow getParentWindow() {
+        IWindow parentWindow = Toolkit.getWidgetUtils().getWindowAncestor(parentContainer);
+        if (parentWindow == null) {
+            parentWindow = Toolkit.getActiveWindow();
+        }
+        return parentWindow;
+    }
 
 }

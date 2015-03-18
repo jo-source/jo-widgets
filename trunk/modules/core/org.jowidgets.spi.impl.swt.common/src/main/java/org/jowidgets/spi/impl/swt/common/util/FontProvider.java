@@ -38,54 +38,54 @@ import org.jowidgets.util.Assert;
 
 public final class FontProvider {
 
-	private static final IFontCache FONT_CACHE = new FontCache();
+    private static final IFontCache FONT_CACHE = new FontCache();
 
-	private FontProvider() {};
+    private FontProvider() {};
 
-	public static Font deriveFont(final Font baseFont, final Markup markup) {
-		Assert.paramNotNull(baseFont, "baseFont");
-		Assert.paramNotNull(markup, "markup");
-		return deriveFont(baseFont, null, null, markup);
-	}
+    public static Font deriveFont(final Font baseFont, final Markup markup) {
+        Assert.paramNotNull(baseFont, "baseFont");
+        Assert.paramNotNull(markup, "markup");
+        return deriveFont(baseFont, null, null, markup);
+    }
 
-	public static Font deriveFont(final Font baseFont, final String fontName) {
-		Assert.paramNotNull(baseFont, "baseFont");
-		Assert.paramNotNull(fontName, "fontName");
-		return deriveFont(baseFont, fontName, null, null);
-	}
+    public static Font deriveFont(final Font baseFont, final String fontName) {
+        Assert.paramNotNull(baseFont, "baseFont");
+        Assert.paramNotNull(fontName, "fontName");
+        return deriveFont(baseFont, fontName, null, null);
+    }
 
-	public static Font deriveFont(final Font baseFont, final int height) {
-		Assert.paramNotNull(baseFont, "baseFont");
-		return deriveFont(baseFont, null, Integer.valueOf(height), null);
-	}
+    public static Font deriveFont(final Font baseFont, final int height) {
+        Assert.paramNotNull(baseFont, "baseFont");
+        return deriveFont(baseFont, null, Integer.valueOf(height), null);
+    }
 
-	public static Font deriveFont(final Font baseFont, final String newFontName, final Integer newHeight, final Markup newMarkup) {
-		Assert.paramNotNull(baseFont, "baseFont");
+    public static Font deriveFont(final Font baseFont, final String newFontName, final Integer newHeight, final Markup newMarkup) {
+        Assert.paramNotNull(baseFont, "baseFont");
 
-		Integer newStyle = null;
-		if (Markup.DEFAULT.equals(newMarkup)) {
-			newStyle = Integer.valueOf(SWT.NORMAL);
-		}
-		else if (Markup.STRONG.equals(newMarkup)) {
-			newStyle = Integer.valueOf(SWT.BOLD);
-		}
-		else if (Markup.EMPHASIZED.equals(newMarkup)) {
-			newStyle = Integer.valueOf(SWT.ITALIC);
-		}
-		else if (newMarkup != null) {
-			throw new IllegalArgumentException("The markup '" + newMarkup + "' is unknown.");
-		}
+        Integer newStyle = null;
+        if (Markup.DEFAULT.equals(newMarkup)) {
+            newStyle = Integer.valueOf(SWT.NORMAL);
+        }
+        else if (Markup.STRONG.equals(newMarkup)) {
+            newStyle = Integer.valueOf(SWT.BOLD);
+        }
+        else if (Markup.EMPHASIZED.equals(newMarkup)) {
+            newStyle = Integer.valueOf(SWT.ITALIC);
+        }
+        else if (newMarkup != null) {
+            throw new IllegalArgumentException("The markup '" + newMarkup + "' is unknown.");
+        }
 
-		final FontData[] oldFontData = baseFont.getFontData();
-		final FontData[] newFontData = new FontData[oldFontData.length];
+        final FontData[] oldFontData = baseFont.getFontData();
+        final FontData[] newFontData = new FontData[oldFontData.length];
 
-		for (int i = 0; i < oldFontData.length; i++) {
-			final String fontName = newFontName != null ? newFontName : oldFontData[i].getName();
-			final int fontHeight = newHeight != null ? newHeight.intValue() : oldFontData[i].getHeight();
-			final int style = newStyle != null ? newStyle.intValue() : oldFontData[i].getStyle();
-			newFontData[i] = new FontData(fontName, fontHeight, style);
-		}
+        for (int i = 0; i < oldFontData.length; i++) {
+            final String fontName = newFontName != null ? newFontName : oldFontData[i].getName();
+            final int fontHeight = newHeight != null ? newHeight.intValue() : oldFontData[i].getHeight();
+            final int style = newStyle != null ? newStyle.intValue() : oldFontData[i].getStyle();
+            newFontData[i] = new FontData(fontName, fontHeight, style);
+        }
 
-		return FONT_CACHE.getFont(new FontDataKey(newFontData));
-	}
+        return FONT_CACHE.getFont(new FontDataKey(newFontData));
+    }
 }

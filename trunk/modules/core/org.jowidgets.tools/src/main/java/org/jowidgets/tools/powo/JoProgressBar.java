@@ -35,124 +35,124 @@ import org.jowidgets.api.widgets.descriptor.IProgressBarDescriptor;
 
 public class JoProgressBar extends Control<IProgressBar, IProgressBarBluePrint> implements IProgressBar {
 
-	public JoProgressBar() {
-		super(Toolkit.getBluePrintFactory().progressBar());
-	}
+    public JoProgressBar() {
+        super(Toolkit.getBluePrintFactory().progressBar());
+    }
 
-	public JoProgressBar(final boolean indeterminate) {
-		super(Toolkit.getBluePrintFactory().progressBar().setIndeterminate(indeterminate));
-	}
+    public JoProgressBar(final boolean indeterminate) {
+        super(Toolkit.getBluePrintFactory().progressBar().setIndeterminate(indeterminate));
+    }
 
-	public JoProgressBar(final int maximum) {
-		super(Toolkit.getBluePrintFactory().progressBar(maximum));
-	}
+    public JoProgressBar(final int maximum) {
+        super(Toolkit.getBluePrintFactory().progressBar(maximum));
+    }
 
-	public JoProgressBar(final int minimum, final int maximum) {
-		super(Toolkit.getBluePrintFactory().progressBar(minimum, maximum));
-	}
+    public JoProgressBar(final int minimum, final int maximum) {
+        super(Toolkit.getBluePrintFactory().progressBar(minimum, maximum));
+    }
 
-	public JoProgressBar(final IProgressBarDescriptor descriptor) {
-		super(Toolkit.getBluePrintFactory().progressBar().setSetup(descriptor));
-	}
+    public JoProgressBar(final IProgressBarDescriptor descriptor) {
+        super(Toolkit.getBluePrintFactory().progressBar().setSetup(descriptor));
+    }
 
-	@Override
-	public void setMinimum(final int min) {
-		if (isInitialized()) {
-			getWidget().setMinimum(min);
-		}
-		else {
-			getBluePrint().setMinimum(min);
-		}
-	}
+    @Override
+    public void setMinimum(final int min) {
+        if (isInitialized()) {
+            getWidget().setMinimum(min);
+        }
+        else {
+            getBluePrint().setMinimum(min);
+        }
+    }
 
-	@Override
-	public void setMaximum(final int max) {
-		if (isInitialized()) {
-			getWidget().setMaximum(max);
-		}
-		else {
-			getBluePrint().setMaximum(max);
-		}
-	}
+    @Override
+    public void setMaximum(final int max) {
+        if (isInitialized()) {
+            getWidget().setMaximum(max);
+        }
+        else {
+            getBluePrint().setMaximum(max);
+        }
+    }
 
-	@Override
-	public int getMinimum() {
-		if (isInitialized()) {
-			return getWidget().getMinimum();
-		}
-		else {
-			return getBluePrint().getMinimum();
-		}
-	}
+    @Override
+    public int getMinimum() {
+        if (isInitialized()) {
+            return getWidget().getMinimum();
+        }
+        else {
+            return getBluePrint().getMinimum();
+        }
+    }
 
-	@Override
-	public int getMaximum() {
-		if (isInitialized()) {
-			return getWidget().getMaximum();
-		}
-		else {
-			return getBluePrint().getMaximum();
-		}
-	}
+    @Override
+    public int getMaximum() {
+        if (isInitialized()) {
+            return getWidget().getMaximum();
+        }
+        else {
+            return getBluePrint().getMaximum();
+        }
+    }
 
-	@Override
-	public void setIndeterminate(final boolean indeterminate) {
-		if (isInitialized()) {
-			getWidget().setIndeterminate(indeterminate);
-		}
-		else {
-			getBluePrint().setIndeterminate(indeterminate);
-		}
-	}
+    @Override
+    public void setIndeterminate(final boolean indeterminate) {
+        if (isInitialized()) {
+            getWidget().setIndeterminate(indeterminate);
+        }
+        else {
+            getBluePrint().setIndeterminate(indeterminate);
+        }
+    }
 
-	@Override
-	public boolean isIndeterminate() {
-		if (isInitialized()) {
-			return getWidget().isIndeterminate();
-		}
-		else {
-			return getBluePrint().isIndeterminate();
-		}
-	}
+    @Override
+    public boolean isIndeterminate() {
+        if (isInitialized()) {
+            return getWidget().isIndeterminate();
+        }
+        else {
+            return getBluePrint().isIndeterminate();
+        }
+    }
 
-	@Override
-	public void setProgress(final int progress) {
-		if (isInitialized()) {
-			getWidget().setProgress(progress);
-		}
-		else {
-			getBluePrint().setProgress(progress);
-		}
-	}
+    @Override
+    public void setProgress(final int progress) {
+        if (isInitialized()) {
+            getWidget().setProgress(progress);
+        }
+        else {
+            getBluePrint().setProgress(progress);
+        }
+    }
 
-	@Override
-	public int getProgress() {
-		if (isInitialized()) {
-			return getWidget().getProgress();
-		}
-		else {
-			return getBluePrint().getProgress();
-		}
-	}
+    @Override
+    public int getProgress() {
+        if (isInitialized()) {
+            return getWidget().getProgress();
+        }
+        else {
+            return getBluePrint().getProgress();
+        }
+    }
 
-	@Override
-	public void setFinished() {
-		checkInitialized();
-		getWidget().setFinished();
-	}
+    @Override
+    public void setFinished() {
+        checkInitialized();
+        getWidget().setFinished();
+    }
 
-	@Override
-	public boolean isFinished() {
-		checkInitialized();
-		return getWidget().isFinished();
-	}
+    @Override
+    public boolean isFinished() {
+        checkInitialized();
+        return getWidget().isFinished();
+    }
 
-	public static IProgressBarBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().progressBar();
-	}
+    public static IProgressBarBluePrint bluePrint() {
+        return Toolkit.getBluePrintFactory().progressBar();
+    }
 
-	public static IProgressBarBluePrint bluePrint(final int maximum) {
-		return Toolkit.getBluePrintFactory().progressBar(maximum);
-	}
+    public static IProgressBarBluePrint bluePrint(final int maximum) {
+        return Toolkit.getBluePrintFactory().progressBar(maximum);
+    }
 
 }

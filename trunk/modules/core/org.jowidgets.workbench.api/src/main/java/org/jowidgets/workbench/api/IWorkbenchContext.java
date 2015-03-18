@@ -33,39 +33,39 @@ import org.jowidgets.api.widgets.IContainer;
 
 public interface IWorkbenchContext {
 
-	void add(IWorkbenchApplication workbenchApplication);
+    void add(IWorkbenchApplication workbenchApplication);
 
-	void add(int index, IWorkbenchApplication workbenchApplication);
+    void add(int index, IWorkbenchApplication workbenchApplication);
 
-	void remove(IWorkbenchApplication workbenchApplication);
+    void remove(IWorkbenchApplication workbenchApplication);
 
-	void finish();
+    void finish();
 
-	/**
-	 * Gets the toolBar model. If no toolBar already exists, a toolBar will be created
-	 * 
-	 * @return the toolBar model
-	 */
-	IToolBarModel getToolBar();
+    /**
+     * Gets the toolBar model. If no toolBar already exists, a toolBar will be created
+     * 
+     * @return the toolBar model
+     */
+    IToolBarModel getToolBar();
 
-	/**
-	 * Gets the menuBar model. If no menuBar already exists, a menuBar will be created
-	 * 
-	 * @return the menuBar model
-	 */
-	IMenuBarModel getMenuBar();
+    /**
+     * Gets the menuBar model. If no menuBar already exists, a menuBar will be created
+     * 
+     * @return the menuBar model
+     */
+    IMenuBarModel getMenuBar();
 
-	/**
-	 * Gets the statusBar. If no statusBar already exists, a statusBar will be created
-	 * 
-	 * @return the menuBar model
-	 */
-	IContainer getStatusBar();
+    /**
+     * Gets the statusBar. If no statusBar already exists, a statusBar will be created
+     * 
+     * @return the menuBar model
+     */
+    IContainer getStatusBar();
 
-	ITrayItem getTrayItem();
+    ITrayItem getTrayItem();
 
-	void addShutdownHook(Runnable shutdownHook);
+    void addShutdownHook(Runnable shutdownHook);
 
-	void removeShutdownHook(Runnable shutdownHook);
+    void removeShutdownHook(Runnable shutdownHook);
 
 }

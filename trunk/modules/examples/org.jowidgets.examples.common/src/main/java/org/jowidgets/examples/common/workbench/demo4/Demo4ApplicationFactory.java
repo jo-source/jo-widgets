@@ -39,30 +39,30 @@ import org.jowidgets.workbench.tools.WorkbenchApplicationModelBuilder;
 
 public final class Demo4ApplicationFactory {
 
-	private Demo4ApplicationFactory() {}
+    private Demo4ApplicationFactory() {}
 
-	public static IWorkbenchApplicationModel create() {
-		final IWorkbenchApplicationModelBuilder builder = new WorkbenchApplicationModelBuilder();
-		builder.setId(Demo4ApplicationFactory.class.getName());
-		builder.setLabel("Admin");
-		builder.setTooltip("User administration");
-		builder.setIcon(SilkIcons.GROUP);
-		createComponentTree(builder);
-		return builder.build();
-	}
+    public static IWorkbenchApplicationModel create() {
+        final IWorkbenchApplicationModelBuilder builder = new WorkbenchApplicationModelBuilder();
+        builder.setId(Demo4ApplicationFactory.class.getName());
+        builder.setLabel("Admin");
+        builder.setTooltip("User administration");
+        builder.setIcon(SilkIcons.GROUP);
+        createComponentTree(builder);
+        return builder.build();
+    }
 
-	private static void createComponentTree(final IWorkbenchApplicationModelBuilder builder) {
-		builder.addChild(createPersonNode());
-	}
+    private static void createComponentTree(final IWorkbenchApplicationModelBuilder builder) {
+        builder.addChild(createPersonNode());
+    }
 
-	private static IComponentNodeModel createPersonNode() {
-		final IComponentNodeModelBuilder builder = new ComponentNodeModelBuilder();
-		builder.setId(PersonComponent.class.getName());
-		builder.setLabel("Persons");
-		builder.setIcon(SilkIcons.USER);
-		builder.setComponentFactory(PersonComponent.class);
-		builder.setSelected(true);
-		return builder.build();
-	}
+    private static IComponentNodeModel createPersonNode() {
+        final IComponentNodeModelBuilder builder = new ComponentNodeModelBuilder();
+        builder.setId(PersonComponent.class.getName());
+        builder.setLabel("Persons");
+        builder.setIcon(SilkIcons.USER);
+        builder.setComponentFactory(PersonComponent.class);
+        builder.setSelected(true);
+        return builder.build();
+    }
 
 }

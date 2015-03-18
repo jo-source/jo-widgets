@@ -42,63 +42,63 @@ import org.jowidgets.util.concurrent.DaemonThreadFactory;
 
 final class DelayedEventRunnerBuilderImpl implements IDelayedEventRunnerBuilder {
 
-	private static final int DEFAULT_DELAY = 50;
-	private static final ITypedKey<ScheduledExecutorService> DEFAULT_EXECUTOR_KEY = new ITypedKey<ScheduledExecutorService>() {};
+    private static final int DEFAULT_DELAY = 50;
+    private static final ITypedKey<ScheduledExecutorService> DEFAULT_EXECUTOR_KEY = new ITypedKey<ScheduledExecutorService>() {};
 
-	private ScheduledExecutorService executor;
-	private long delay;
-	private TimeUnit timeUnit;
-	private boolean cancelPrevious;
+    private ScheduledExecutorService executor;
+    private long delay;
+    private TimeUnit timeUnit;
+    private boolean cancelPrevious;
 
-	DelayedEventRunnerBuilderImpl() {
-		this.delay = DEFAULT_DELAY;
-		this.timeUnit = TimeUnit.MILLISECONDS;
-		this.cancelPrevious = true;
-	}
+    DelayedEventRunnerBuilderImpl() {
+        this.delay = DEFAULT_DELAY;
+        this.timeUnit = TimeUnit.MILLISECONDS;
+        this.cancelPrevious = true;
+    }
 
-	@Override
-	public IDelayedEventRunnerBuilder setExecutor(final ScheduledExecutorService executor) {
-		this.executor = executor;
-		return this;
-	}
+    @Override
+    public IDelayedEventRunnerBuilder setExecutor(final ScheduledExecutorService executor) {
+        this.executor = executor;
+        return this;
+    }
 
-	@Override
-	public IDelayedEventRunnerBuilder setDelay(final long delay, final TimeUnit timeUnit) {
-		Assert.paramNotNull(timeUnit, "timeUnit");
-		this.delay = delay;
-		this.timeUnit = timeUnit;
-		return this;
-	}
+    @Override
+    public IDelayedEventRunnerBuilder setDelay(final long delay, final TimeUnit timeUnit) {
+        Assert.paramNotNull(timeUnit, "timeUnit");
+        this.delay = delay;
+        this.timeUnit = timeUnit;
+        return this;
+    }
 
-	@Override
-	public IDelayedEventRunnerBuilder setDelay(final long delay) {
-		return setDelay(delay, TimeUnit.MILLISECONDS);
-	}
+    @Override
+    public IDelayedEventRunnerBuilder setDelay(final long delay) {
+        return setDelay(delay, TimeUnit.MILLISECONDS);
+    }
 
-	@Override
-	public IDelayedEventRunnerBuilder setCancelPrevious(final boolean cancelPrevious) {
-		this.cancelPrevious = cancelPrevious;
-		return this;
-	}
+    @Override
+    public IDelayedEventRunnerBuilder setCancelPrevious(final boolean cancelPrevious) {
+        this.cancelPrevious = cancelPrevious;
+        return this;
+    }
 
-	private ScheduledExecutorService getExecutor() {
-		if (executor != null) {
-			return executor;
-		}
-		else {
-			ScheduledExecutorService executorService = Toolkit.getValue(DEFAULT_EXECUTOR_KEY);
-			if (executorService == null) {
-				executorService = Executors.newScheduledThreadPool(1, new DaemonThreadFactory());
-				Toolkit.setValue(DEFAULT_EXECUTOR_KEY, executorService);
-			}
-			return executorService;
-		}
-	}
+    private ScheduledExecutorService getExecutor() {
+        if (executor != null) {
+            return executor;
+        }
+        else {
+            ScheduledExecutorService executorService = Toolkit.getValue(DEFAULT_EXECUTOR_KEY);
+            if (executorService == null) {
+                executorService = Executors.newScheduledThreadPool(1, new DaemonThreadFactory());
+                Toolkit.setValue(DEFAULT_EXECUTOR_KEY, executorService);
+            }
+            return executorService;
+        }
+    }
 
-	@Override
-	public IDelayedEventRunner build() {
-		final IUiThreadAccess uiThreadAccess = Toolkit.getUiThreadAccess();
-		return new DelayedEventRunnerImpl(uiThreadAccess, getExecutor(), delay, timeUnit, cancelPrevious);
-	}
+    @Override
+    public IDelayedEventRunner build() {
+        final IUiThreadAccess uiThreadAccess = Toolkit.getUiThreadAccess();
+        return new DelayedEventRunnerImpl(uiThreadAccess, getExecutor(), delay, timeUnit, cancelPrevious);
+    }
 
 }

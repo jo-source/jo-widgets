@@ -32,18 +32,18 @@ import java.util.List;
 
 public interface IWorkerProgressDelay<PROGRESS_TYPE> {
 
-	/**
-	 * @return The delay in ms
-	 */
-	long getDelay();
+    /**
+     * @return The delay in ms
+     */
+    long getDelay();
 
-	/**
-	 * Gets the progress from the accumulated progress
-	 * 
-	 * @param accumulatedProgress
-	 * 
-	 * @return The progress
-	 */
-	PROGRESS_TYPE getProgress(List<PROGRESS_TYPE> accumulatedProgress);
+    /**
+     * Gets the progress from the accumulated progress
+     * 
+     * @param accumulatedProgress
+     * 
+     * @return The progress
+     */
+    PROGRESS_TYPE getProgress(List<PROGRESS_TYPE> accumulatedProgress);
 
 }

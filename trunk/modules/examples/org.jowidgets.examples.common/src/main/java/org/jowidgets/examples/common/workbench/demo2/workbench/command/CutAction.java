@@ -35,17 +35,17 @@ import org.jowidgets.tools.command.CommandAction;
 
 public class CutAction extends CommandAction {
 
-	public CutAction() {
-		super(new ActionBuilder() {
-			{
-				setText("Cut");
-				setToolTipText("Cut");
-				setIcon(SilkIcons.CUT);
-				setAccelerator('X', Modifier.CTRL);
-			}
-		});
+    public CutAction() {
+        super(new ActionBuilder() {
+            {
+                setText("Cut");
+                setToolTipText("Cut");
+                setIcon(SilkIcons.CUT);
+                setAccelerator('X', Modifier.CTRL);
+            }
+        });
 
-		setCommand(new DummyCommandExecuter());
-	}
+        setCommand(new DummyCommandExecuter());
+    }
 
 }

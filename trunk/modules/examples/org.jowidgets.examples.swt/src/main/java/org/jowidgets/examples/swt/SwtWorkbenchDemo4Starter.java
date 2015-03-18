@@ -33,10 +33,10 @@ import org.jowidgets.workbench.impl.WorkbenchRunner;
 
 public final class SwtWorkbenchDemo4Starter {
 
-	private SwtWorkbenchDemo4Starter() {}
+    private SwtWorkbenchDemo4Starter() {}
 
-	public static void main(final String[] args) throws Exception {
-		new WorkbenchRunner().run(new Demo4Workbench());
-	}
+    public static void main(final String[] args) throws Exception {
+        new WorkbenchRunner().run(new Demo4Workbench());
+    }
 
 }

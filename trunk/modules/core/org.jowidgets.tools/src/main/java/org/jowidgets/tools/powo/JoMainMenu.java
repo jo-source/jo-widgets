@@ -35,48 +35,48 @@ import org.jowidgets.api.widgets.descriptor.IMainMenuDescriptor;
 
 public class JoMainMenu extends Menu<IMainMenu, IMainMenuBluePrint> implements IMainMenu {
 
-	public JoMainMenu(final String text) {
-		this(bluePrint(text));
-	}
+    public JoMainMenu(final String text) {
+        this(bluePrint(text));
+    }
 
-	public JoMainMenu(final String text, final char mnemonic) {
-		this(bluePrint(text, mnemonic));
-	}
+    public JoMainMenu(final String text, final char mnemonic) {
+        this(bluePrint(text, mnemonic));
+    }
 
-	public JoMainMenu(final IMainMenuDescriptor descriptor) {
-		super(bluePrint().setSetup(descriptor));
-	}
+    public JoMainMenu(final IMainMenuDescriptor descriptor) {
+        super(bluePrint().setSetup(descriptor));
+    }
 
-	@Override
-	public void setText(final String text) {
-		if (isInitialized()) {
-			getWidget().setText(text);
-		}
-		else {
-			getBluePrint().setText(text);
-		}
-	}
+    @Override
+    public void setText(final String text) {
+        if (isInitialized()) {
+            getWidget().setText(text);
+        }
+        else {
+            getBluePrint().setText(text);
+        }
+    }
 
-	@Override
-	public void setMnemonic(final char mnemonic) {
-		if (isInitialized()) {
-			getWidget().setMnemonic(mnemonic);
-		}
-		else {
-			getBluePrint().setMnemonic(mnemonic);
-		}
-	}
+    @Override
+    public void setMnemonic(final char mnemonic) {
+        if (isInitialized()) {
+            getWidget().setMnemonic(mnemonic);
+        }
+        else {
+            getBluePrint().setMnemonic(mnemonic);
+        }
+    }
 
-	public static IMainMenuBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().mainMenu();
-	}
+    public static IMainMenuBluePrint bluePrint() {
+        return Toolkit.getBluePrintFactory().mainMenu();
+    }
 
-	public static IMainMenuBluePrint bluePrint(final String text) {
-		return bluePrint().setText(text);
-	}
+    public static IMainMenuBluePrint bluePrint(final String text) {
+        return bluePrint().setText(text);
+    }
 
-	public static IMainMenuBluePrint bluePrint(final String text, final char mnemonic) {
-		return bluePrint(text).setMnemonic(mnemonic);
-	}
+    public static IMainMenuBluePrint bluePrint(final String text, final char mnemonic) {
+        return bluePrint(text).setMnemonic(mnemonic);
+    }
 
 }

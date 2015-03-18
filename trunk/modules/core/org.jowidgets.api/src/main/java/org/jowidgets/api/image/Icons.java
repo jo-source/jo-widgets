@@ -31,9 +31,9 @@ import org.jowidgets.common.image.IImageConstant;
 
 public enum Icons implements IImageConstant {
 
-	INFO,
-	QUESTION,
-	WARNING,
-	ERROR;
+    INFO,
+    QUESTION,
+    WARNING,
+    ERROR;
 
 }

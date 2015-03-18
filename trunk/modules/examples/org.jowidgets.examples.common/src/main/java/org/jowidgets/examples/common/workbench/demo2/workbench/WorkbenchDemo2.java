@@ -58,93 +58,93 @@ import org.jowidgets.workbench.tools.WorkbenchModelBuilder;
 
 public class WorkbenchDemo2 implements IWorkbenchFactory {
 
-	@Override
-	public IWorkbench create() {
-		DemoIconsInitializer.initialize();
+    @Override
+    public IWorkbench create() {
+        DemoIconsInitializer.initialize();
 
-		final WorkbenchModelBuilder builder = new WorkbenchModelBuilder();
-		builder.setLabel("Workbench Demo2");
-		builder.setIcon(SilkIcons.EMOTICON_SMILE);
-		builder.setInitialDimension(new Dimension(1280, 900));
-		builder.setInitialSplitWeight(0.18);
-		builder.setCloseCallback(createCloseCallback());
+        final WorkbenchModelBuilder builder = new WorkbenchModelBuilder();
+        builder.setLabel("Workbench Demo2");
+        builder.setIcon(SilkIcons.EMOTICON_SMILE);
+        builder.setInitialDimension(new Dimension(1280, 900));
+        builder.setInitialSplitWeight(0.18);
+        builder.setCloseCallback(createCloseCallback());
 
-		final IWorkbenchModel model = builder.build();
-		final IAction exitAction = createExitAction(model);
+        final IWorkbenchModel model = builder.build();
+        final IAction exitAction = createExitAction(model);
 
-		model.setToolBar(createToolBar());
-		model.setMenuBar(createMenuBar(exitAction));
+        model.setToolBar(createToolBar());
+        model.setMenuBar(createMenuBar(exitAction));
 
-		model.addApplication(new Application1().getModel());
-		model.addApplication(new Application2().getModel());
+        model.addApplication(new Application1().getModel());
+        model.addApplication(new Application2().getModel());
 
-		return WorkbenchToolkit.getWorkbenchPartFactory().workbench(model);
-	}
+        return WorkbenchToolkit.getWorkbenchPartFactory().workbench(model);
+    }
 
-	private IToolBarModel createToolBar() {
-		final IToolBarModel toolBar = new ToolBarModel();
-		toolBar.addAction(WorkbenchActions.SAVE_ACTION);
-		toolBar.addSeparator();
-		toolBar.addAction(WorkbenchActions.CUT_ACTION);
-		toolBar.addAction(WorkbenchActions.COPY_ACTION);
-		toolBar.addAction(WorkbenchActions.PASTE_ACTION);
-		toolBar.addSeparator();
-		toolBar.addAction(WorkbenchActions.PRINT_ACTION);
-		return toolBar;
-	}
+    private IToolBarModel createToolBar() {
+        final IToolBarModel toolBar = new ToolBarModel();
+        toolBar.addAction(WorkbenchActions.SAVE_ACTION);
+        toolBar.addSeparator();
+        toolBar.addAction(WorkbenchActions.CUT_ACTION);
+        toolBar.addAction(WorkbenchActions.COPY_ACTION);
+        toolBar.addAction(WorkbenchActions.PASTE_ACTION);
+        toolBar.addSeparator();
+        toolBar.addAction(WorkbenchActions.PRINT_ACTION);
+        return toolBar;
+    }
 
-	private IMenuBarModel createMenuBar(final IAction exitAction) {
-		final IMenuBarModel menuBarModel = new MenuBarModel();
+    private IMenuBarModel createMenuBar(final IAction exitAction) {
+        final IMenuBarModel menuBarModel = new MenuBarModel();
 
-		final IMenuModel fileMenu = new MenuModel("File");
-		fileMenu.addAction(WorkbenchActions.NEW_DOCUMENT_ACTION);
-		fileMenu.addAction(WorkbenchActions.SAVE_ACTION);
-		fileMenu.addAction(WorkbenchActions.SAVE_AS_ACTION);
-		fileMenu.addAction(WorkbenchActions.PRINT_ACTION);
-		fileMenu.addAction(exitAction);
+        final IMenuModel fileMenu = new MenuModel("File");
+        fileMenu.addAction(WorkbenchActions.NEW_DOCUMENT_ACTION);
+        fileMenu.addAction(WorkbenchActions.SAVE_ACTION);
+        fileMenu.addAction(WorkbenchActions.SAVE_AS_ACTION);
+        fileMenu.addAction(WorkbenchActions.PRINT_ACTION);
+        fileMenu.addAction(exitAction);
 
-		final IMenuModel editMenu = new MenuModel("Edit");
-		editMenu.setMnemonic('E');
-		editMenu.addAction(WorkbenchActions.CUT_ACTION);
-		editMenu.addAction(WorkbenchActions.COPY_ACTION);
-		editMenu.addAction(WorkbenchActions.PASTE_ACTION);
+        final IMenuModel editMenu = new MenuModel("Edit");
+        editMenu.setMnemonic('E');
+        editMenu.addAction(WorkbenchActions.CUT_ACTION);
+        editMenu.addAction(WorkbenchActions.COPY_ACTION);
+        editMenu.addAction(WorkbenchActions.PASTE_ACTION);
 
-		menuBarModel.addMenu(fileMenu);
-		menuBarModel.addMenu(editMenu);
+        menuBarModel.addMenu(fileMenu);
+        menuBarModel.addMenu(editMenu);
 
-		return menuBarModel;
-	}
+        return menuBarModel;
+    }
 
-	private ICloseCallback createCloseCallback() {
-		return new CloseCallbackAdapter() {
-			@Override
-			public void onClose(final IVetoable vetoable) {
-				if (!shouldWorkbenchFinished()) {
-					vetoable.veto();
-				}
-			}
-		};
-	}
+    private ICloseCallback createCloseCallback() {
+        return new CloseCallbackAdapter() {
+            @Override
+            public void onClose(final IVetoable vetoable) {
+                if (!shouldWorkbenchFinished()) {
+                    vetoable.veto();
+                }
+            }
+        };
+    }
 
-	private IAction createExitAction(final IWorkbenchModel model) {
-		final ICommandAction result = new ExitAction();
-		result.setCommand(new ICommandExecutor() {
-			@Override
-			public void execute(final IExecutionContext executionContext) throws Exception {
-				if (shouldWorkbenchFinished()) {
-					model.finish();
-				}
-			}
-		});
-		return result;
-	}
+    private IAction createExitAction(final IWorkbenchModel model) {
+        final ICommandAction result = new ExitAction();
+        result.setCommand(new ICommandExecutor() {
+            @Override
+            public void execute(final IExecutionContext executionContext) throws Exception {
+                if (shouldWorkbenchFinished()) {
+                    model.finish();
+                }
+            }
+        });
+        return result;
+    }
 
-	private boolean shouldWorkbenchFinished() {
-		final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to quit the workbench?");
-		if (result != QuestionResult.YES) {
-			return false;
-		}
-		return true;
-	}
+    private boolean shouldWorkbenchFinished() {
+        final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to quit the workbench?");
+        if (result != QuestionResult.YES) {
+            return false;
+        }
+        return true;
+    }
 
 }

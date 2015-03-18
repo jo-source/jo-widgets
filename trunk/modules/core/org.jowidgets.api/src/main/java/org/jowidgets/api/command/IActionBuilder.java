@@ -35,164 +35,164 @@ import org.jowidgets.common.types.VirtualKey;
 
 public interface IActionBuilder {
 
-	/**
-	 * Sets the actions label text
-	 * 
-	 * @param text The text to set
-	 * 
-	 * @return This builder
-	 */
-	IActionBuilder setText(String text);
+    /**
+     * Sets the actions label text
+     * 
+     * @param text The text to set
+     * 
+     * @return This builder
+     */
+    IActionBuilder setText(String text);
 
-	/**
-	 * Sets the actions tooltip text
-	 * 
-	 * @param toolTipText The text to set
-	 * 
-	 * @return This builder
-	 */
-	IActionBuilder setToolTipText(String toolTipText);
+    /**
+     * Sets the actions tooltip text
+     * 
+     * @param toolTipText The text to set
+     * 
+     * @return This builder
+     */
+    IActionBuilder setToolTipText(String toolTipText);
 
-	/**
-	 * Sets the actions icon
-	 * 
-	 * @param icon The icon to set
-	 * 
-	 * @return This builder
-	 */
-	IActionBuilder setIcon(IImageConstant icon);
+    /**
+     * Sets the actions icon
+     * 
+     * @param icon The icon to set
+     * 
+     * @return This builder
+     */
+    IActionBuilder setIcon(IImageConstant icon);
 
-	/**
-	 * Sets the actions mnemonic
-	 * 
-	 * @param mnemonic The mnemonic to set, may be null
-	 * 
-	 * @return This builder
-	 */
-	IActionBuilder setMnemonic(Character mnemonic);
+    /**
+     * Sets the actions mnemonic
+     * 
+     * @param mnemonic The mnemonic to set, may be null
+     * 
+     * @return This builder
+     */
+    IActionBuilder setMnemonic(Character mnemonic);
 
-	/**
-	 * Sets the actions mnemonic
-	 * 
-	 * @param mnemonic The mnemonic to set
-	 * 
-	 * @return This builder
-	 */
-	IActionBuilder setMnemonic(char mnemonic);
+    /**
+     * Sets the actions mnemonic
+     * 
+     * @param mnemonic The mnemonic to set
+     * 
+     * @return This builder
+     */
+    IActionBuilder setMnemonic(char mnemonic);
 
-	/**
-	 * Sets the actions accelerator
-	 * 
-	 * @param mnemonic The accelerator to set
-	 * 
-	 * @return This builder
-	 */
-	IActionBuilder setAccelerator(Accelerator accelerator);
+    /**
+     * Sets the actions accelerator
+     * 
+     * @param mnemonic The accelerator to set
+     * 
+     * @return This builder
+     */
+    IActionBuilder setAccelerator(Accelerator accelerator);
 
-	/**
-	 * Sets the actions accelerator
-	 * 
-	 * @param key The accelerator key
-	 * @param modifier The accelerator modifier
-	 * 
-	 * @return This builder
-	 */
-	IActionBuilder setAccelerator(char key, Modifier... modifier);
+    /**
+     * Sets the actions accelerator
+     * 
+     * @param key The accelerator key
+     * @param modifier The accelerator modifier
+     * 
+     * @return This builder
+     */
+    IActionBuilder setAccelerator(char key, Modifier... modifier);
 
-	/**
-	 * Sets the actions accelerator
-	 * 
-	 * @param virtualKey The accelerator key
-	 * @param modifier The accelerator modifier
-	 * 
-	 * @return This builder
-	 */
-	IActionBuilder setAccelerator(VirtualKey virtualKey, Modifier... modifier);
+    /**
+     * Sets the actions accelerator
+     * 
+     * @param virtualKey The accelerator key
+     * @param modifier The accelerator modifier
+     * 
+     * @return This builder
+     */
+    IActionBuilder setAccelerator(VirtualKey virtualKey, Modifier... modifier);
 
-	/**
-	 * Sets the enabled state of the action
-	 * 
-	 * @param enabled The enabled state to set
-	 * 
-	 * @return This builder
-	 */
-	IActionBuilder setEnabled(boolean enabled);
+    /**
+     * Sets the enabled state of the action
+     * 
+     * @param enabled The enabled state to set
+     * 
+     * @return This builder
+     */
+    IActionBuilder setEnabled(boolean enabled);
 
-	/**
-	 * Sets the actions command
-	 * 
-	 * @param command The command to set, may be null if the action should not have a command
-	 * 
-	 * @return This builder
-	 */
-	IActionBuilder setCommand(ICommand command);
+    /**
+     * Sets the actions command
+     * 
+     * @param command The command to set, may be null if the action should not have a command
+     * 
+     * @return This builder
+     */
+    IActionBuilder setCommand(ICommand command);
 
-	/**
-	 * Sets the actions command defined by a command executor
-	 * 
-	 * The command that will be set has no enabled checker and no exception handler
-	 * 
-	 * @param command The executor of the command to set
-	 * 
-	 * @return This builder
-	 */
-	IActionBuilder setCommand(ICommandExecutor command);
+    /**
+     * Sets the actions command defined by a command executor
+     * 
+     * The command that will be set has no enabled checker and no exception handler
+     * 
+     * @param command The executor of the command to set
+     * 
+     * @return This builder
+     */
+    IActionBuilder setCommand(ICommandExecutor command);
 
-	/**
-	 * Sets the actions command defined by a command executor and enabled checker
-	 * 
-	 * The command that will be set has no exception handler
-	 * 
-	 * @param command The executor of the command to set
-	 * @param enabledChecker The enabled checker of the command to set
-	 * 
-	 * @return This builder
-	 */
-	IActionBuilder setCommand(ICommandExecutor command, IEnabledChecker executableStateChecker);
+    /**
+     * Sets the actions command defined by a command executor and enabled checker
+     * 
+     * The command that will be set has no exception handler
+     * 
+     * @param command The executor of the command to set
+     * @param enabledChecker The enabled checker of the command to set
+     * 
+     * @return This builder
+     */
+    IActionBuilder setCommand(ICommandExecutor command, IEnabledChecker executableStateChecker);
 
-	/**
-	 * Sets the actions command defined by a command executor and exception handler
-	 * 
-	 * The command that will be set has no enabled checker
-	 * 
-	 * @param command The executor of the command to set
-	 * @param exceptionHandler The exception handler of the command to set
-	 * 
-	 * @return This builder
-	 */
-	IActionBuilder setCommand(ICommandExecutor command, IExceptionHandler exceptionHandler);
+    /**
+     * Sets the actions command defined by a command executor and exception handler
+     * 
+     * The command that will be set has no enabled checker
+     * 
+     * @param command The executor of the command to set
+     * @param exceptionHandler The exception handler of the command to set
+     * 
+     * @return This builder
+     */
+    IActionBuilder setCommand(ICommandExecutor command, IExceptionHandler exceptionHandler);
 
-	/**
-	 * Sets the actions command defined by a command executor, enabled checker and exception handler
-	 * 
-	 * @param command The executor of the command to set
-	 * @param enabledChecker The enabled checker of the command to set
-	 * @param exceptionHandler The exception handler of the command to set
-	 * 
-	 * @return This builder
-	 */
-	IActionBuilder setCommand(ICommandExecutor command, IEnabledChecker enabledChecker, IExceptionHandler exceptionHandler);
+    /**
+     * Sets the actions command defined by a command executor, enabled checker and exception handler
+     * 
+     * @param command The executor of the command to set
+     * @param enabledChecker The enabled checker of the command to set
+     * @param exceptionHandler The exception handler of the command to set
+     * 
+     * @return This builder
+     */
+    IActionBuilder setCommand(ICommandExecutor command, IEnabledChecker enabledChecker, IExceptionHandler exceptionHandler);
 
-	/**
-	 * Set's the ExceptionHandler of the action. The actions ExceptionHandler handles exceptions that are not
-	 * handled by the command's exception handler.
-	 * 
-	 * The actions ExceptionHandler should be implemented independently of the current command. If exception handling
-	 * is command specific, the commands exception handler should be used for that.
-	 * 
-	 * If no exception handler is set, a default handler will be used for the action.
-	 * 
-	 * @param exceptionHandler The ExceptionHandler to set
-	 * 
-	 * @return This builder
-	 */
-	IActionBuilder setActionExceptionHandler(IExceptionHandler exceptionHandler);
+    /**
+     * Set's the ExceptionHandler of the action. The actions ExceptionHandler handles exceptions that are not
+     * handled by the command's exception handler.
+     * 
+     * The actions ExceptionHandler should be implemented independently of the current command. If exception handling
+     * is command specific, the commands exception handler should be used for that.
+     * 
+     * If no exception handler is set, a default handler will be used for the action.
+     * 
+     * @param exceptionHandler The ExceptionHandler to set
+     * 
+     * @return This builder
+     */
+    IActionBuilder setActionExceptionHandler(IExceptionHandler exceptionHandler);
 
-	/**
-	 * Creates a new command action defined by the builder setup
-	 * 
-	 * @return A new command action, never null
-	 */
-	ICommandAction build();
+    /**
+     * Creates a new command action defined by the builder setup
+     * 
+     * @return A new command action, never null
+     */
+    ICommandAction build();
 
 }

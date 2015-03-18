@@ -70,26 +70,26 @@ import org.jowidgets.tools.widgets.blueprint.defaults.DefaultsInitializerRegistr
 
 public class CommonDefaultsInitializerRegistry extends DefaultsInitializerRegistry {
 
-	public CommonDefaultsInitializerRegistry() {
-		super();
-		register(IButtonSetupBuilderCommon.class, new ButtonDefaultsCommon());
-		register(ICheckBoxSetupBuilderCommon.class, new CheckBoxDefaultsCommon());
-		register(IWindowSetupBuilderCommon.class, new WindowDefaultsCommon());
-		register(IFrameSetupBuilderCommon.class, new FrameDefaultsCommon());
-		register(IDialogSetupBuilderCommon.class, new DialogDefaultsCommon());
-		register(IScrollCompositeSetupBuilderCommon.class, new ScrolledCompositeDefaultsCommon());
-		register(ISeparatorSetupBuilderCommon.class, new SeparatorDefaultsCommon());
-		register(ITextLabelSetupBuilderCommon.class, new TextLabelDefaultsCommon());
-		register(ITextFieldSetupBuilderCommon.class, new TextFieldDefaultsCommon());
-		register(ITextAreaSetupBuilderCommon.class, new TextAreaDefaultsCommon());
-		register(ITabFolderSetupBuilderCommon.class, new TabFolderDefaultsCommon());
-		register(ITreeSetupBuilderCommon.class, new TreeDefaultsCommon());
-		register(ITableSetupBuilderCommon.class, new TableDefaultsCommon());
-		register(IToolBarSetupBuilderCommon.class, new ToolBarDefaultsCommon());
-		register(IPopupDialogSetupBuilderCommon.class, new PopupDialogDefaultsCommon());
-		register(ITextComponentSetupBuilderCommon.class, new TextComponentDefaultsCommon());
-		register(IInputObservableSetupBuilderCommon.class, new InputObservableDefaultsCommon());
-		register(ITitledWindowSetupBuilderCommon.class, new TitledWindowDefaultsCommon());
-		register(ISliderSetupBuilderCommon.class, new SliderDefaultsCommon());
-	}
+    public CommonDefaultsInitializerRegistry() {
+        super();
+        register(IButtonSetupBuilderCommon.class, new ButtonDefaultsCommon());
+        register(ICheckBoxSetupBuilderCommon.class, new CheckBoxDefaultsCommon());
+        register(IWindowSetupBuilderCommon.class, new WindowDefaultsCommon());
+        register(IFrameSetupBuilderCommon.class, new FrameDefaultsCommon());
+        register(IDialogSetupBuilderCommon.class, new DialogDefaultsCommon());
+        register(IScrollCompositeSetupBuilderCommon.class, new ScrolledCompositeDefaultsCommon());
+        register(ISeparatorSetupBuilderCommon.class, new SeparatorDefaultsCommon());
+        register(ITextLabelSetupBuilderCommon.class, new TextLabelDefaultsCommon());
+        register(ITextFieldSetupBuilderCommon.class, new TextFieldDefaultsCommon());
+        register(ITextAreaSetupBuilderCommon.class, new TextAreaDefaultsCommon());
+        register(ITabFolderSetupBuilderCommon.class, new TabFolderDefaultsCommon());
+        register(ITreeSetupBuilderCommon.class, new TreeDefaultsCommon());
+        register(ITableSetupBuilderCommon.class, new TableDefaultsCommon());
+        register(IToolBarSetupBuilderCommon.class, new ToolBarDefaultsCommon());
+        register(IPopupDialogSetupBuilderCommon.class, new PopupDialogDefaultsCommon());
+        register(ITextComponentSetupBuilderCommon.class, new TextComponentDefaultsCommon());
+        register(IInputObservableSetupBuilderCommon.class, new InputObservableDefaultsCommon());
+        register(ITitledWindowSetupBuilderCommon.class, new TitledWindowDefaultsCommon());
+        register(ISliderSetupBuilderCommon.class, new SliderDefaultsCommon());
+    }
 }

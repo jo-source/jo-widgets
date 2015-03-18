@@ -33,63 +33,63 @@ import org.jowidgets.api.widgets.ITreeContainer;
 
 public final class DefaultActionFactory {
 
-	private static IDefaultActionFactory instance;
+    private static IDefaultActionFactory instance;
 
-	private DefaultActionFactory() {}
+    private DefaultActionFactory() {}
 
-	public static IDefaultActionFactory getInstance() {
-		if (instance == null) {
-			instance = Toolkit.getDefaultActionFactory();
-		}
-		return instance;
-	}
+    public static IDefaultActionFactory getInstance() {
+        if (instance == null) {
+            instance = Toolkit.getDefaultActionFactory();
+        }
+        return instance;
+    }
 
-	public static ITreeExpansionActionBuilder collapseTreeActionBuilder(final ITreeContainer tree) {
-		return getInstance().collapseTreeActionBuilder(tree);
-	}
+    public static ITreeExpansionActionBuilder collapseTreeActionBuilder(final ITreeContainer tree) {
+        return getInstance().collapseTreeActionBuilder(tree);
+    }
 
-	public static ITreeExpansionAction collapseTreeAction(final ITreeContainer tree) {
-		return getInstance().collapseTreeAction(tree);
-	}
+    public static ITreeExpansionAction collapseTreeAction(final ITreeContainer tree) {
+        return getInstance().collapseTreeAction(tree);
+    }
 
-	public static ITreeExpansionActionBuilder expandTreeActionBuilder(final ITreeContainer tree) {
-		return getInstance().expandTreeActionBuilder(tree);
-	}
+    public static ITreeExpansionActionBuilder expandTreeActionBuilder(final ITreeContainer tree) {
+        return getInstance().expandTreeActionBuilder(tree);
+    }
 
-	public static ITreeExpansionAction expandTreeAction(final ITreeContainer tree) {
-		return getInstance().expandTreeAction(tree);
-	}
+    public static ITreeExpansionAction expandTreeAction(final ITreeContainer tree) {
+        return getInstance().expandTreeAction(tree);
+    }
 
-	public static ITreeExpansionActionBuilder expandCollapseTreeActionBuilder(final ITreeContainer tree) {
-		return getInstance().expandCollapseTreeActionBuilder(tree);
-	}
+    public static ITreeExpansionActionBuilder expandCollapseTreeActionBuilder(final ITreeContainer tree) {
+        return getInstance().expandCollapseTreeActionBuilder(tree);
+    }
 
-	public static ITreeExpansionAction expandCollapseTreeAction(final ITreeContainer tree) {
-		return getInstance().expandCollapseTreeAction(tree);
-	}
+    public static ITreeExpansionAction expandCollapseTreeAction(final ITreeContainer tree) {
+        return getInstance().expandCollapseTreeAction(tree);
+    }
 
-	public static ITreeExpansionActionBuilder expandCheckedNodesTreeActionBuilder(final ITreeContainer tree) {
-		return getInstance().expandCheckedNodesTreeActionBuilder(tree);
-	}
+    public static ITreeExpansionActionBuilder expandCheckedNodesTreeActionBuilder(final ITreeContainer tree) {
+        return getInstance().expandCheckedNodesTreeActionBuilder(tree);
+    }
 
-	public static ITreeExpansionAction expandCheckedNodesTreeAction(final ITreeContainer tree) {
-		return getInstance().expandCheckedNodesTreeAction(tree);
-	}
+    public static ITreeExpansionAction expandCheckedNodesTreeAction(final ITreeContainer tree) {
+        return getInstance().expandCheckedNodesTreeAction(tree);
+    }
 
-	public static IDefaultActionBuilder checkTreeActionBuilder(final ITreeContainer tree) {
-		return getInstance().checkTreeActionBuilder(tree);
-	}
+    public static IDefaultActionBuilder checkTreeActionBuilder(final ITreeContainer tree) {
+        return getInstance().checkTreeActionBuilder(tree);
+    }
 
-	public static IAction checkTreeAction(final ITreeContainer tree) {
-		return getInstance().checkTreeAction(tree);
-	}
+    public static IAction checkTreeAction(final ITreeContainer tree) {
+        return getInstance().checkTreeAction(tree);
+    }
 
-	public static IDefaultActionBuilder uncheckTreeActionBuilder(final ITreeContainer tree) {
-		return getInstance().uncheckTreeActionBuilder(tree);
-	}
+    public static IDefaultActionBuilder uncheckTreeActionBuilder(final ITreeContainer tree) {
+        return getInstance().uncheckTreeActionBuilder(tree);
+    }
 
-	public static IAction uncheckTreeAction(final ITreeContainer tree) {
-		return getInstance().uncheckTreeAction(tree);
-	}
+    public static IAction uncheckTreeAction(final ITreeContainer tree) {
+        return getInstance().uncheckTreeAction(tree);
+    }
 
 }

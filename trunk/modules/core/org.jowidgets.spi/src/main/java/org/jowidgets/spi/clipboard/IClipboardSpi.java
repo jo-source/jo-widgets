@@ -33,23 +33,23 @@ package org.jowidgets.spi.clipboard;
  */
 public interface IClipboardSpi extends IClipboardObservableSpi {
 
-	/**
-	 * Sets the contents into the clipboard
-	 * 
-	 * @param content The contents to set, may be null
-	 */
-	void setContents(ITransferableSpi contents);
+    /**
+     * Sets the contents into the clipboard
+     * 
+     * @param content The contents to set, may be null
+     */
+    void setContents(ITransferableSpi contents);
 
-	/**
-	 * Gets the contents from the clipboard
-	 * 
-	 * @return The contents or null, if no content is set
-	 */
-	ITransferableSpi getContents();
+    /**
+     * Gets the contents from the clipboard
+     * 
+     * @return The contents or null, if no content is set
+     */
+    ITransferableSpi getContents();
 
-	/**
-	 * Disposes the clipboard
-	 */
-	void dispose();
+    /**
+     * Disposes the clipboard
+     */
+    void dispose();
 
 }

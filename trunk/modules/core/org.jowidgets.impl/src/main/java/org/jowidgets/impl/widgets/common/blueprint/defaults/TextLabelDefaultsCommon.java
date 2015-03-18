@@ -34,10 +34,10 @@ import org.jowidgets.common.widgets.builder.ITextLabelSetupBuilderCommon;
 
 public class TextLabelDefaultsCommon implements IDefaultInitializer<ITextLabelSetupBuilderCommon<?>> {
 
-	@Override
-	public void initialize(final ITextLabelSetupBuilderCommon<?> builder) {
-		builder.setAlignment(AlignmentHorizontal.LEFT);
-		builder.setMarkup(Markup.DEFAULT);
-	}
+    @Override
+    public void initialize(final ITextLabelSetupBuilderCommon<?> builder) {
+        builder.setAlignment(AlignmentHorizontal.LEFT);
+        builder.setMarkup(Markup.DEFAULT);
+    }
 
 }

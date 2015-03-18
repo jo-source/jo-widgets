@@ -31,24 +31,24 @@ import org.jowidgets.common.types.Dimension;
 
 public final class DimensionConvert {
 
-	private DimensionConvert() {};
+    private DimensionConvert() {};
 
-	public static java.awt.Dimension convert(final Dimension dimension) {
-		if (dimension != null) {
-			return new java.awt.Dimension(dimension.getWidth(), dimension.getHeight());
-		}
-		else {
-			return null;
-		}
-	}
+    public static java.awt.Dimension convert(final Dimension dimension) {
+        if (dimension != null) {
+            return new java.awt.Dimension(dimension.getWidth(), dimension.getHeight());
+        }
+        else {
+            return null;
+        }
+    }
 
-	public static Dimension convert(final java.awt.Dimension dimension) {
-		if (dimension != null) {
-			return new Dimension(dimension.width, dimension.height);
-		}
-		else {
-			return null;
-		}
-	}
+    public static Dimension convert(final java.awt.Dimension dimension) {
+        if (dimension != null) {
+            return new Dimension(dimension.width, dimension.height);
+        }
+        else {
+            return null;
+        }
+    }
 
 }

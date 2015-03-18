@@ -30,8 +30,8 @@ package org.jowidgets.common.graphics;
 
 public enum LineCap {
 
-	FLAT,
-	ROUND,
-	SQUARE;
+    FLAT,
+    ROUND,
+    SQUARE;
 
 }

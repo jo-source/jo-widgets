@@ -40,46 +40,46 @@ import org.jowidgets.test.api.widgets.descriptor.IFrameDescriptorUi;
 
 public final class TestToolkit {
 
-	private static ITestToolkit toolkit;
+    private static ITestToolkit toolkit;
 
-	private TestToolkit() {
+    private TestToolkit() {
 
-	}
+    }
 
-	public static synchronized ITestToolkit getInstance() {
-		if (toolkit == null) {
-			final ServiceLoader<ITestToolkit> toolkitProviderLoader = ServiceLoader.load(
-					ITestToolkit.class,
-					SharedClassLoader.getCompositeClassLoader());
-			final Iterator<ITestToolkit> iterator = toolkitProviderLoader.iterator();
+    public static synchronized ITestToolkit getInstance() {
+        if (toolkit == null) {
+            final ServiceLoader<ITestToolkit> toolkitProviderLoader = ServiceLoader.load(
+                    ITestToolkit.class,
+                    SharedClassLoader.getCompositeClassLoader());
+            final Iterator<ITestToolkit> iterator = toolkitProviderLoader.iterator();
 
-			if (!iterator.hasNext()) {
-				throw new IllegalStateException("No implementation found for '" + ITestToolkit.class.getName() + "'");
-			}
+            if (!iterator.hasNext()) {
+                throw new IllegalStateException("No implementation found for '" + ITestToolkit.class.getName() + "'");
+            }
 
-			TestToolkit.toolkit = iterator.next();
+            TestToolkit.toolkit = iterator.next();
 
-			if (iterator.hasNext()) {
-				throw new IllegalStateException("More than one implementation found for '" + ITestToolkit.class.getName() + "'");
-			}
+            if (iterator.hasNext()) {
+                throw new IllegalStateException("More than one implementation found for '" + ITestToolkit.class.getName() + "'");
+            }
 
-		}
-		return toolkit;
-	}
+        }
+        return toolkit;
+    }
 
-	public static IGenericWidgetFactory getWidgetFactory() {
-		return getInstance().getWidgetFactory();
-	}
+    public static IGenericWidgetFactory getWidgetFactory() {
+        return getInstance().getWidgetFactory();
+    }
 
-	public static IBasicSimpleTestBluePrintFactory getBluePrintFactory() {
-		return getInstance().getBluePrintFactory();
-	}
+    public static IBasicSimpleTestBluePrintFactory getBluePrintFactory() {
+        return getInstance().getBluePrintFactory();
+    }
 
-	public static IFrameUi createRootFrame(final IFrameDescriptorUi descriptor) {
-		return getInstance().createRootFrame(descriptor);
-	}
+    public static IFrameUi createRootFrame(final IFrameDescriptorUi descriptor) {
+        return getInstance().createRootFrame(descriptor);
+    }
 
-	public static IFrameUi createRootFrame(final IFrameDescriptorUi descriptor, final IApplicationLifecycle lifecycle) {
-		return getInstance().createRootFrame(descriptor, lifecycle);
-	}
+    public static IFrameUi createRootFrame(final IFrameDescriptorUi descriptor, final IApplicationLifecycle lifecycle) {
+        return getInstance().createRootFrame(descriptor, lifecycle);
+    }
 }

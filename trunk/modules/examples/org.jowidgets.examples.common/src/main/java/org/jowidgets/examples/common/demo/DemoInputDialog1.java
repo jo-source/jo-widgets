@@ -39,27 +39,27 @@ import org.jowidgets.common.image.IImageConstant;
 
 public class DemoInputDialog1 {
 
-	private final IInputDialog<List<String>> inputDialog;
+    private final IInputDialog<List<String>> inputDialog;
 
-	public DemoInputDialog1(final IWindow parentWindow) {
-		this(parentWindow, "Input dialog demo", null);
-	}
+    public DemoInputDialog1(final IWindow parentWindow) {
+        this(parentWindow, "Input dialog demo", null);
+    }
 
-	public DemoInputDialog1(final String title, final IImageConstant icon) {
-		this(Toolkit.getActiveWindow(), title, icon);
-	}
+    public DemoInputDialog1(final String title, final IImageConstant icon) {
+        this(Toolkit.getActiveWindow(), title, icon);
+    }
 
-	public DemoInputDialog1(final IWindow parentWindow, final String title, final IImageConstant icon) {
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
-		final IInputDialogBluePrint<List<String>> inputDialogBp = bpF.inputDialog(new DemoForm1ContentCreator());
-		inputDialogBp.setTitle(title);
-		inputDialogBp.setIcon(icon);
-		inputDialogBp.setMissingInputHint("Please fill out all mandatory (*) fields");
-		inputDialog = parentWindow.createChildWindow(inputDialogBp);
-	}
+    public DemoInputDialog1(final IWindow parentWindow, final String title, final IImageConstant icon) {
+        final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+        final IInputDialogBluePrint<List<String>> inputDialogBp = bpF.inputDialog(new DemoForm1ContentCreator());
+        inputDialogBp.setTitle(title);
+        inputDialogBp.setIcon(icon);
+        inputDialogBp.setMissingInputHint("Please fill out all mandatory (*) fields");
+        inputDialog = parentWindow.createChildWindow(inputDialogBp);
+    }
 
-	public IInputDialog<List<String>> getInputDialog() {
-		return inputDialog;
-	}
+    public IInputDialog<List<String>> getInputDialog() {
+        return inputDialog;
+    }
 
 }

@@ -39,16 +39,16 @@ package org.jowidgets.i18n.api;
  */
 public interface ILocaleLocal<VALUE_TYPE> {
 
-	/**
-	 * @return The value for the currently set locale provided from the LocaleHolder
-	 */
-	VALUE_TYPE get();
+    /**
+     * @return The value for the currently set locale provided from the LocaleHolder
+     */
+    VALUE_TYPE get();
 
-	/**
-	 * Sets the value for the currently set locale provided from the locale LocaleHolder
-	 * 
-	 * @param value The value to set
-	 */
-	void setValue(VALUE_TYPE value);
+    /**
+     * Sets the value for the currently set locale provided from the locale LocaleHolder
+     * 
+     * @param value The value to set
+     */
+    void setValue(VALUE_TYPE value);
 
 }

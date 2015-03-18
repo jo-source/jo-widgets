@@ -44,58 +44,58 @@ import org.jowidgets.workbench.tools.AbstractComponent;
 
 public final class PersonComponent extends AbstractComponent {
 
-	private final BeanTableModel<Person> model;
+    private final BeanTableModel<Person> model;
 
-	public PersonComponent(final IComponentContext componentContext) {
-		componentContext.setLayout(PersonComponentLayoutFactory.create());
+    public PersonComponent(final IComponentContext componentContext) {
+        componentContext.setLayout(PersonComponentLayoutFactory.create());
 
-		this.model = createModel();
-	}
+        this.model = createModel();
+    }
 
-	@Override
-	public IView createView(final String viewId, final IViewContext context) {
-		if (PersonTableView.ID.equals(viewId)) {
-			return new PersonTableView(context, model);
-		}
-		else if (PersonDetailView.ID.equals(viewId)) {
-			return new PersonDetailView(context, model);
-		}
-		else {
-			throw new IllegalArgumentException("View id '" + viewId + "' is not known.");
-		}
-	}
+    @Override
+    public IView createView(final String viewId, final IViewContext context) {
+        if (PersonTableView.ID.equals(viewId)) {
+            return new PersonTableView(context, model);
+        }
+        else if (PersonDetailView.ID.equals(viewId)) {
+            return new PersonDetailView(context, model);
+        }
+        else {
+            throw new IllegalArgumentException("View id '" + viewId + "' is not known.");
+        }
+    }
 
-	private static BeanTableModel<Person> createModel() {
-		final BeanTableModel<Person> result = new BeanTableModel<Person>(new PersonTableRenderer());
+    private static BeanTableModel<Person> createModel() {
+        final BeanTableModel<Person> result = new BeanTableModel<Person>(new PersonTableRenderer());
 
-		Person person = new Person();
-		person.setName("Ben Zien");
-		person.setGender(Gender.MALE);
-		person.setQuota(new ByteValue(100, ByteUnit.GB));
-		person.setRoles(Arrays.asList(Role.ADMIN, Role.USER, Role.GUEST));
-		result.addBean(person);
+        Person person = new Person();
+        person.setName("Ben Zien");
+        person.setGender(Gender.MALE);
+        person.setQuota(new ByteValue(100, ByteUnit.GB));
+        person.setRoles(Arrays.asList(Role.ADMIN, Role.USER, Role.GUEST));
+        result.addBean(person);
 
-		person = new Person();
-		person.setName("Ben Ebelt");
-		person.setGender(Gender.MALE);
-		person.setQuota(new ByteValue(50, ByteUnit.GB));
-		person.setRoles(Arrays.asList(Role.MANAGER));
-		result.addBean(person);
+        person = new Person();
+        person.setName("Ben Ebelt");
+        person.setGender(Gender.MALE);
+        person.setQuota(new ByteValue(50, ByteUnit.GB));
+        person.setRoles(Arrays.asList(Role.MANAGER));
+        result.addBean(person);
 
-		person = new Person();
-		person.setName("Klara Fall");
-		person.setGender(Gender.FEMALE);
-		person.setQuota(new ByteValue(1, ByteUnit.TB));
-		result.addBean(person);
+        person = new Person();
+        person.setName("Klara Fall");
+        person.setGender(Gender.FEMALE);
+        person.setQuota(new ByteValue(1, ByteUnit.TB));
+        result.addBean(person);
 
-		for (int i = 0; i < 1000; i++) {
-			person = new Person();
-			person.setName("Name " + i);
-			person.setGender(Gender.FEMALE);
-			result.addBean(person);
-		}
+        for (int i = 0; i < 1000; i++) {
+            person = new Person();
+            person.setName("Name " + i);
+            person.setGender(Gender.FEMALE);
+            result.addBean(person);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

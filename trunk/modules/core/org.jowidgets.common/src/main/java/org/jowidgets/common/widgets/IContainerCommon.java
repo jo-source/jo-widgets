@@ -33,47 +33,47 @@ import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
 public interface IContainerCommon extends IComponentCommon {
 
-	/**
-	 * Sets the layout for this container
-	 * 
-	 * @param layoutDescriptor The layout to set
-	 */
-	void setLayout(ILayoutDescriptor layoutDescriptor);
+    /**
+     * Sets the layout for this container
+     * 
+     * @param layoutDescriptor The layout to set
+     */
+    void setLayout(ILayoutDescriptor layoutDescriptor);
 
-	/**
-	 * Informs that more than one operation on the containers children be
-	 * done and that now redraw should be done until layout end will be invoked
-	 * to avoid flickering.
-	 */
-	void layoutBegin();
+    /**
+     * Informs that more than one operation on the containers children be
+     * done and that now redraw should be done until layout end will be invoked
+     * to avoid flickering.
+     */
+    void layoutBegin();
 
-	/**
-	 * Layouts the container
-	 */
-	void layoutEnd();
+    /**
+     * Layouts the container
+     */
+    void layoutEnd();
 
-	/**
-	 * Removes all child controls from the container.
-	 * 
-	 * The removed controls will be disposed
-	 */
-	void removeAll();
+    /**
+     * Removes all child controls from the container.
+     * 
+     * The removed controls will be disposed
+     */
+    void removeAll();
 
-	/**
-	 * Gets the client area of the container.
-	 * Thats the area where child controls can be layouted into.
-	 * 
-	 * @return The client area, never null
-	 */
-	Rectangle getClientArea();
+    /**
+     * Gets the client area of the container.
+     * Thats the area where child controls can be layouted into.
+     * 
+     * @return The client area, never null
+     */
+    Rectangle getClientArea();
 
-	/**
-	 * Gets the decorated size (size with border / insets ) for a given client area size
-	 * 
-	 * @param clientAreaSize The client area size to get the decorated size for.
-	 * 
-	 * @return The decorated size
-	 */
-	Dimension computeDecoratedSize(Dimension clientAreaSize);
+    /**
+     * Gets the decorated size (size with border / insets ) for a given client area size
+     * 
+     * @param clientAreaSize The client area size to get the decorated size for.
+     * 
+     * @return The decorated size
+     */
+    Dimension computeDecoratedSize(Dimension clientAreaSize);
 
 }

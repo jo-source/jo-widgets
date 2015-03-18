@@ -36,48 +36,50 @@ import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
 
 public class ToolBarToggleButtonSpiWrapper extends ToolBarItemSpiWrapper implements IToolBarToggleButtonCommon {
 
-	public ToolBarToggleButtonSpiWrapper(final IToolBarToggleButtonSpi component, final SelectableItemModelBindingDelegate itemDelegate) {
-		super(component, itemDelegate);
-		component.addItemListener(new IItemStateListener() {
-			@Override
-			public void itemStateChanged() {
-				getModel().setSelected(component.isSelected());
-			}
-		});
-	}
+    public ToolBarToggleButtonSpiWrapper(
+        final IToolBarToggleButtonSpi component,
+        final SelectableItemModelBindingDelegate itemDelegate) {
+        super(component, itemDelegate);
+        component.addItemListener(new IItemStateListener() {
+            @Override
+            public void itemStateChanged() {
+                getModel().setSelected(component.isSelected());
+            }
+        });
+    }
 
-	@Override
-	public IToolBarToggleButtonSpi getWidget() {
-		return (IToolBarToggleButtonSpi) super.getWidget();
-	}
+    @Override
+    public IToolBarToggleButtonSpi getWidget() {
+        return (IToolBarToggleButtonSpi) super.getWidget();
+    }
 
-	@Override
-	protected SelectableItemModelBindingDelegate getItemModelBindingDelegate() {
-		return (SelectableItemModelBindingDelegate) super.getItemModelBindingDelegate();
-	}
+    @Override
+    protected SelectableItemModelBindingDelegate getItemModelBindingDelegate() {
+        return (SelectableItemModelBindingDelegate) super.getItemModelBindingDelegate();
+    }
 
-	public ICheckedItemModel getModel() {
-		return (ICheckedItemModel) getItemModelBindingDelegate().getModel();
-	}
+    public ICheckedItemModel getModel() {
+        return (ICheckedItemModel) getItemModelBindingDelegate().getModel();
+    }
 
-	@Override
-	public void addItemListener(final IItemStateListener listener) {
-		getWidget().addItemListener(listener);
-	}
+    @Override
+    public void addItemListener(final IItemStateListener listener) {
+        getWidget().addItemListener(listener);
+    }
 
-	@Override
-	public void removeItemListener(final IItemStateListener listener) {
-		getWidget().removeItemListener(listener);
-	}
+    @Override
+    public void removeItemListener(final IItemStateListener listener) {
+        getWidget().removeItemListener(listener);
+    }
 
-	@Override
-	public void setSelected(final boolean selected) {
-		getItemModelBindingDelegate().setSelected(selected);
-	}
+    @Override
+    public void setSelected(final boolean selected) {
+        getItemModelBindingDelegate().setSelected(selected);
+    }
 
-	@Override
-	public boolean isSelected() {
-		return getItemModelBindingDelegate().isSelected();
-	}
+    @Override
+    public boolean isSelected() {
+        return getItemModelBindingDelegate().isSelected();
+    }
 
 }

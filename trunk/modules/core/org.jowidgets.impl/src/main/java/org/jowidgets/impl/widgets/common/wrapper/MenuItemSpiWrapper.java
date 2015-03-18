@@ -34,18 +34,18 @@ import org.jowidgets.spi.widgets.IMenuItemSpi;
 
 public class MenuItemSpiWrapper extends ModelBasedItemSpiWrapper implements IMenuItemCommon {
 
-	public MenuItemSpiWrapper(final IMenuItemSpi component, final ItemModelBindingDelegate itemDelegate) {
-		super(component, itemDelegate);
-	}
+    public MenuItemSpiWrapper(final IMenuItemSpi component, final ItemModelBindingDelegate itemDelegate) {
+        super(component, itemDelegate);
+    }
 
-	@Override
-	public IMenuItemSpi getWidget() {
-		return (IMenuItemSpi) super.getWidget();
-	}
+    @Override
+    public IMenuItemSpi getWidget() {
+        return (IMenuItemSpi) super.getWidget();
+    }
 
-	@Override
-	public void setMnemonic(final char mnemonic) {
-		getItemModelBindingDelegate().setMnemonic(mnemonic);
-	}
+    @Override
+    public void setMnemonic(final char mnemonic) {
+        getItemModelBindingDelegate().setMnemonic(mnemonic);
+    }
 
 }

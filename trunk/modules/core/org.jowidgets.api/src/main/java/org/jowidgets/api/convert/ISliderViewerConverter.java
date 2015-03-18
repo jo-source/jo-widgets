@@ -30,8 +30,8 @@ package org.jowidgets.api.convert;
 
 public interface ISliderViewerConverter<VALUE_TYPE> {
 
-	VALUE_TYPE getModelValue(int sliderMin, int sliderMax, int sliderValue);
+    VALUE_TYPE getModelValue(int sliderMin, int sliderMax, int sliderValue);
 
-	int getSliderValue(int sliderMin, int sliderMax, VALUE_TYPE modelValue);
+    int getSliderValue(int sliderMin, int sliderMax, VALUE_TYPE modelValue);
 
 }

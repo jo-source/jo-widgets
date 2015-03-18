@@ -32,41 +32,41 @@ import org.jowidgets.common.mask.ICharacterMask;
 
 final class CharacterMask implements ICharacterMask {
 
-	private final boolean readonly;
-	private final String acceptingRegExp;
-	private final String rejectingRegExp;
-	private Character placeholder;
+    private final boolean readonly;
+    private final String acceptingRegExp;
+    private final String rejectingRegExp;
+    private Character placeholder;
 
-	CharacterMask(final boolean readonly, final String acceptingRegExp, final String rejectingRegExp, final Character placeholder) {
-		this.readonly = readonly;
-		this.acceptingRegExp = acceptingRegExp;
-		this.rejectingRegExp = rejectingRegExp;
-		this.placeholder = placeholder;
-	}
+    CharacterMask(final boolean readonly, final String acceptingRegExp, final String rejectingRegExp, final Character placeholder) {
+        this.readonly = readonly;
+        this.acceptingRegExp = acceptingRegExp;
+        this.rejectingRegExp = rejectingRegExp;
+        this.placeholder = placeholder;
+    }
 
-	@Override
-	public boolean isReadonly() {
-		return readonly;
-	}
+    @Override
+    public boolean isReadonly() {
+        return readonly;
+    }
 
-	@Override
-	public String getAcceptingRegExp() {
-		return acceptingRegExp;
-	}
+    @Override
+    public String getAcceptingRegExp() {
+        return acceptingRegExp;
+    }
 
-	@Override
-	public String getRejectingRegExp() {
-		return rejectingRegExp;
-	}
+    @Override
+    public String getRejectingRegExp() {
+        return rejectingRegExp;
+    }
 
-	@Override
-	public Character getPlaceholder() {
-		return placeholder;
-	}
+    @Override
+    public Character getPlaceholder() {
+        return placeholder;
+    }
 
-	void setDefaultPlaceholder(final Character defaultPlaceholder) {
-		if (placeholder == null) {
-			this.placeholder = defaultPlaceholder;
-		}
-	}
+    void setDefaultPlaceholder(final Character defaultPlaceholder) {
+        if (placeholder == null) {
+            this.placeholder = defaultPlaceholder;
+        }
+    }
 }

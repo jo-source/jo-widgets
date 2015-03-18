@@ -33,46 +33,46 @@ import org.jowidgets.api.toolkit.IToolkitInterceptorHolder;
 
 public abstract class AbstractToolkitInterceptorHolder implements IToolkitInterceptorHolder {
 
-	public static final int DEFAULT_ORDER = IToolkitInterceptorHolder.DEFAULT_ORDER;
+    public static final int DEFAULT_ORDER = IToolkitInterceptorHolder.DEFAULT_ORDER;
 
-	private final int order;
+    private final int order;
 
-	private IToolkitInterceptor toolkitInterceptor;
+    private IToolkitInterceptor toolkitInterceptor;
 
-	/**
-	 * Creates a new instance with default order
-	 */
-	protected AbstractToolkitInterceptorHolder() {
-		this(DEFAULT_ORDER);
-	}
+    /**
+     * Creates a new instance with default order
+     */
+    protected AbstractToolkitInterceptorHolder() {
+        this(DEFAULT_ORDER);
+    }
 
-	/**
-	 * Creates a new instance with given order
-	 * 
-	 * @param order The order of this holder to use
-	 */
-	protected AbstractToolkitInterceptorHolder(final int order) {
-		this.order = order;
-	}
+    /**
+     * Creates a new instance with given order
+     * 
+     * @param order The order of this holder to use
+     */
+    protected AbstractToolkitInterceptorHolder(final int order) {
+        this.order = order;
+    }
 
-	/**
-	 * Creates the toolkit interceptor. This method will only be invoked once.
-	 * 
-	 * @return A new toolkit interceptor, never null
-	 */
-	protected abstract IToolkitInterceptor createToolkitInterceptor();
+    /**
+     * Creates the toolkit interceptor. This method will only be invoked once.
+     * 
+     * @return A new toolkit interceptor, never null
+     */
+    protected abstract IToolkitInterceptor createToolkitInterceptor();
 
-	@Override
-	public final IToolkitInterceptor getToolkitInterceptor() {
-		if (toolkitInterceptor == null) {
-			toolkitInterceptor = createToolkitInterceptor();
-		}
-		return toolkitInterceptor;
-	}
+    @Override
+    public final IToolkitInterceptor getToolkitInterceptor() {
+        if (toolkitInterceptor == null) {
+            toolkitInterceptor = createToolkitInterceptor();
+        }
+        return toolkitInterceptor;
+    }
 
-	@Override
-	public final int getOrder() {
-		return order;
-	}
+    @Override
+    public final int getOrder() {
+        return order;
+    }
 
 }

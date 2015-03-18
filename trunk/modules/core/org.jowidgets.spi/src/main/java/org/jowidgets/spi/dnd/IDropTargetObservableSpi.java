@@ -30,8 +30,8 @@ package org.jowidgets.spi.dnd;
 
 public interface IDropTargetObservableSpi {
 
-	void addDropTargetListenerSpi(IDropTargetListenerSpi listener);
+    void addDropTargetListenerSpi(IDropTargetListenerSpi listener);
 
-	void removeDropTargetListenerSpi(IDropTargetListenerSpi listener);
+    void removeDropTargetListenerSpi(IDropTargetListenerSpi listener);
 
 }

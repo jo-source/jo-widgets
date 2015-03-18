@@ -34,41 +34,41 @@ import org.jowidgets.spi.widgets.IMenuItemSpi;
 
 public class MenuItemImpl extends DummyWidget implements IMenuItemSpi {
 
-	public MenuItemImpl() {
-		this(new UIDMenuItem());
-	}
+    public MenuItemImpl() {
+        this(new UIDMenuItem());
+    }
 
-	public MenuItemImpl(final UIDMenuItem menuItem) {
-		super(menuItem);
-	}
+    public MenuItemImpl(final UIDMenuItem menuItem) {
+        super(menuItem);
+    }
 
-	@Override
-	public UIDMenuItem getUiReference() {
-		return (UIDMenuItem) super.getUiReference();
-	}
+    @Override
+    public UIDMenuItem getUiReference() {
+        return (UIDMenuItem) super.getUiReference();
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		getUiReference().setIcon(icon);
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        getUiReference().setIcon(icon);
+    }
 
-	@Override
-	public void setText(final String text) {
-		getUiReference().setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        getUiReference().setText(text);
+    }
 
-	@Override
-	public void setToolTipText(final String text) {
-		getUiReference().setToolTipText(text);
-	}
+    @Override
+    public void setToolTipText(final String text) {
+        getUiReference().setToolTipText(text);
+    }
 
-	public void setAccelerator(final Accelerator accelerator) {
-		getUiReference().setAccelerator(accelerator);
-	}
+    public void setAccelerator(final Accelerator accelerator) {
+        getUiReference().setAccelerator(accelerator);
+    }
 
-	@Override
-	public void setMnemonic(final char mnemonic) {
-		getUiReference().setMnemonic(mnemonic);
-	}
+    @Override
+    public void setMnemonic(final char mnemonic) {
+        getUiReference().setMnemonic(mnemonic);
+    }
 
 }

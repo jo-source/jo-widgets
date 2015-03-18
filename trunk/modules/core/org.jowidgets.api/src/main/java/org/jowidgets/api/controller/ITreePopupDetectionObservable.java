@@ -30,8 +30,8 @@ package org.jowidgets.api.controller;
 
 public interface ITreePopupDetectionObservable {
 
-	void addTreePopupDetectionListener(ITreePopupDetectionListener listener);
+    void addTreePopupDetectionListener(ITreePopupDetectionListener listener);
 
-	void removeTreePopupDetectionListener(ITreePopupDetectionListener listener);
+    void removeTreePopupDetectionListener(ITreePopupDetectionListener listener);
 
 }

@@ -35,32 +35,32 @@ import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
 public interface ISplitCompositeSetupCommon extends IComponentSetupCommon {
 
-	@Mandatory
-	Orientation getOrientation();
+    @Mandatory
+    Orientation getOrientation();
 
-	/**
-	 * @return The size of the divider in pixel
-	 */
-	@Mandatory
-	int getDividerSize();
+    /**
+     * @return The size of the divider in pixel
+     */
+    @Mandatory
+    int getDividerSize();
 
-	/**
-	 * @return The weight of the divider between 0.0 and 1.0
-	 */
-	@Mandatory
-	double getWeight();
+    /**
+     * @return The weight of the divider between 0.0 and 1.0
+     */
+    @Mandatory
+    double getWeight();
 
-	@Mandatory
-	SplitResizePolicy getResizePolicy();
+    @Mandatory
+    SplitResizePolicy getResizePolicy();
 
-	@Mandatory
-	ILayoutDescriptor getFirstLayout();
+    @Mandatory
+    ILayoutDescriptor getFirstLayout();
 
-	@Mandatory
-	ILayoutDescriptor getSecondLayout();
+    @Mandatory
+    ILayoutDescriptor getSecondLayout();
 
-	Border getFirstBorder();
+    Border getFirstBorder();
 
-	Border getSecondBorder();
+    Border getSecondBorder();
 
 }

@@ -34,13 +34,13 @@ import org.jowidgets.common.types.IFileChooserFilter;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IFileChooserSetupBuilderCommon<INSTANCE_TYPE extends IFileChooserSetupBuilderCommon<?>> extends
-		ISetupBuilder<INSTANCE_TYPE> {
+        ISetupBuilder<INSTANCE_TYPE> {
 
-	@Mandatory
-	INSTANCE_TYPE setType(FileChooserType type);
+    @Mandatory
+    INSTANCE_TYPE setType(FileChooserType type);
 
-	INSTANCE_TYPE setTitle(String title);
+    INSTANCE_TYPE setTitle(String title);
 
-	INSTANCE_TYPE setFilterList(List<? extends IFileChooserFilter> filterList);
+    INSTANCE_TYPE setFilterList(List<? extends IFileChooserFilter> filterList);
 
 }

@@ -32,18 +32,18 @@ import org.eclipse.swt.widgets.Control;
 
 public final class SwtUtil {
 
-	private SwtUtil() {}
+    private SwtUtil() {}
 
-	public static boolean isAncestor(final Control toTest, final Control ancestor) {
-		if (toTest == ancestor) {
-			return true;
-		}
-		else if (toTest.getParent() != null) {
-			return isAncestor(toTest.getParent(), ancestor);
-		}
-		else {
-			return false;
-		}
-	}
+    public static boolean isAncestor(final Control toTest, final Control ancestor) {
+        if (toTest == ancestor) {
+            return true;
+        }
+        else if (toTest.getParent() != null) {
+            return isAncestor(toTest.getParent(), ancestor);
+        }
+        else {
+            return false;
+        }
+    }
 
 }

@@ -37,57 +37,57 @@ import org.jowidgets.unit.api.UnitSet;
 
 public final class HertzUnitSet {
 
-	public static final IUnit H = h();
-	public static final IUnit KH = kh();
-	public static final IUnit MH = mh();
-	public static final IUnit GH = gh();
+    public static final IUnit H = h();
+    public static final IUnit KH = kh();
+    public static final IUnit MH = mh();
+    public static final IUnit GH = gh();
 
-	private static final IUnitSet INSTANCE = createInstance();
+    private static final IUnitSet INSTANCE = createInstance();
 
-	private HertzUnitSet() {}
+    private HertzUnitSet() {}
 
-	private static IUnit h() {
-		final IUnitBuilder builder = Unit.builder();
-		builder.abbreviation(Messages.getMessage("HertzUnitSet.h_abbreviation"));
-		builder.name(Messages.getMessage("HertzUnitSet.h_name"));
-		return builder.build();
-	}
+    private static IUnit h() {
+        final IUnitBuilder builder = Unit.builder();
+        builder.abbreviation(Messages.getMessage("HertzUnitSet.h_abbreviation"));
+        builder.name(Messages.getMessage("HertzUnitSet.h_name"));
+        return builder.build();
+    }
 
-	private static IUnit kh() {
-		final IUnitBuilder builder = Unit.builder();
-		builder.abbreviation(Messages.getMessage("HertzUnitSet.kh_abbreviation"));
-		builder.name(Messages.getMessage("HertzUnitSet.kh_name"));
-		builder.conversionFactor(1000);
-		return builder.build();
-	}
+    private static IUnit kh() {
+        final IUnitBuilder builder = Unit.builder();
+        builder.abbreviation(Messages.getMessage("HertzUnitSet.kh_abbreviation"));
+        builder.name(Messages.getMessage("HertzUnitSet.kh_name"));
+        builder.conversionFactor(1000);
+        return builder.build();
+    }
 
-	private static IUnit mh() {
-		final IUnitBuilder builder = Unit.builder();
-		builder.abbreviation(Messages.getMessage("HertzUnitSet.mh_abbreviation"));
-		builder.name(Messages.getMessage("HertzUnitSet.mh_name"));
-		builder.conversionFactor(1000 * 1000);
-		return builder.build();
-	}
+    private static IUnit mh() {
+        final IUnitBuilder builder = Unit.builder();
+        builder.abbreviation(Messages.getMessage("HertzUnitSet.mh_abbreviation"));
+        builder.name(Messages.getMessage("HertzUnitSet.mh_name"));
+        builder.conversionFactor(1000 * 1000);
+        return builder.build();
+    }
 
-	private static IUnit gh() {
-		final IUnitBuilder builder = Unit.builder();
-		builder.abbreviation(Messages.getMessage("HertzUnitSet.gh_abbreviation"));
-		builder.name(Messages.getMessage("HertzUnitSet.gh_name"));
-		builder.conversionFactor(1000 * 1000 * 1000);
-		return builder.build();
-	}
+    private static IUnit gh() {
+        final IUnitBuilder builder = Unit.builder();
+        builder.abbreviation(Messages.getMessage("HertzUnitSet.gh_abbreviation"));
+        builder.name(Messages.getMessage("HertzUnitSet.gh_name"));
+        builder.conversionFactor(1000 * 1000 * 1000);
+        return builder.build();
+    }
 
-	private static IUnitSet createInstance() {
-		final IUnitSetBuilder builder = UnitSet.builder();
-		builder.add(H);
-		builder.add(KH);
-		builder.add(MH);
-		builder.add(GH);
-		return builder.build();
-	}
+    private static IUnitSet createInstance() {
+        final IUnitSetBuilder builder = UnitSet.builder();
+        builder.add(H);
+        builder.add(KH);
+        builder.add(MH);
+        builder.add(GH);
+        return builder.build();
+    }
 
-	public static IUnitSet instance() {
-		return INSTANCE;
-	}
+    public static IUnitSet instance() {
+        return INSTANCE;
+    }
 
 }

@@ -35,12 +35,12 @@ import org.jowidgets.api.test.blueprint.builder.IHierarchy2nd2SetupBuilder;
 import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
 public class Hierarchy2nd2Convenience extends
-		AbstractSetupBuilderConvenience<IHierarchy2nd2SetupBuilder<IHierarchy2nd2SetupBuilder<?>>> implements
-		IHierarchy2nd2Convenience<IHierarchy2nd2SetupBuilder<?>> {
+        AbstractSetupBuilderConvenience<IHierarchy2nd2SetupBuilder<IHierarchy2nd2SetupBuilder<?>>> implements
+        IHierarchy2nd2Convenience<IHierarchy2nd2SetupBuilder<?>> {
 
-	@Override
-	public IHierarchy2nd2SetupBuilder<IHierarchy2nd2SetupBuilder<?>> introduce(final String title) {
-		getBuilder().setIntro(title + "");
-		return getBuilder();
-	}
+    @Override
+    public IHierarchy2nd2SetupBuilder<IHierarchy2nd2SetupBuilder<?>> introduce(final String title) {
+        getBuilder().setIntro(title + "");
+        return getBuilder();
+    }
 }

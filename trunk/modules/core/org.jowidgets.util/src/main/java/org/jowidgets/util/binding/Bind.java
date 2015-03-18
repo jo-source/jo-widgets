@@ -38,232 +38,232 @@ import org.jowidgets.util.NullCompatibleEquivalence;
  */
 public final class Bind {
 
-	@SuppressWarnings("rawtypes")
-	private static final IBindingConverter IDENTITY_BINDING_CONVERTER = new IdentityBindingConverter<Object>();
+    @SuppressWarnings("rawtypes")
+    private static final IBindingConverter IDENTITY_BINDING_CONVERTER = new IdentityBindingConverter<Object>();
 
-	private static final IBind INSTANCE = new BindImpl();
+    private static final IBind INSTANCE = new BindImpl();
 
-	private Bind() {}
+    private Bind() {}
 
-	/**
-	 * Gets the bind instance
-	 * 
-	 * @return The bind instance, never null
-	 */
-	public static IBind getInstance() {
-		return INSTANCE;
-	}
+    /**
+     * Gets the bind instance
+     * 
+     * @return The bind instance, never null
+     */
+    public static IBind getInstance() {
+        return INSTANCE;
+    }
 
-	/**
-	 * Binds two observable values with same type bidirectional.
-	 * 
-	 * If the source and destination value differs when bound,
-	 * the destination value becomes the source value.
-	 * 
-	 * If the source value changes later, the destination value will be changed to the source.
-	 * If the destination value changes later, the source value will be changed to the destination.
-	 * 
-	 * @param source The source value to bind, must not be null
-	 * @param destination The destination value to bind, must not be null
-	 * 
-	 * @return The binding reference for the created binding
-	 */
-	public static <VALUE_TYPE> IBinding bind(
-		final IObservableValue<VALUE_TYPE> source,
-		final IObservableValue<VALUE_TYPE> destination) {
-		return getInstance().bind(source, destination);
-	}
+    /**
+     * Binds two observable values with same type bidirectional.
+     * 
+     * If the source and destination value differs when bound,
+     * the destination value becomes the source value.
+     * 
+     * If the source value changes later, the destination value will be changed to the source.
+     * If the destination value changes later, the source value will be changed to the destination.
+     * 
+     * @param source The source value to bind, must not be null
+     * @param destination The destination value to bind, must not be null
+     * 
+     * @return The binding reference for the created binding
+     */
+    public static <VALUE_TYPE> IBinding bind(
+        final IObservableValue<VALUE_TYPE> source,
+        final IObservableValue<VALUE_TYPE> destination) {
+        return getInstance().bind(source, destination);
+    }
 
-	/**
-	 * Binds two observable values with potentially different type bidirectional using a
-	 * binding converter.
-	 * 
-	 * If the source and destination value differs when bound,
-	 * the destination value becomes the source value.
-	 * 
-	 * If the source value changes later, the destination value will be changed to the source.
-	 * If the destination value changes later, the source value will be changed to the destination.
-	 * 
-	 * @param source The source value to bind, must not be null
-	 * @param destination The destination value to bind, must not be null
-	 * @param converter The binding converter to use, must not be null
-	 * 
-	 * @return The binding reference for the created binding
-	 */
-	public static <SOURCE_TYPE, DESTINATION_TYPE> IBinding bind(
-		final IObservableValue<SOURCE_TYPE> source,
-		final IObservableValue<DESTINATION_TYPE> destination,
-		final IBindingConverter<SOURCE_TYPE, DESTINATION_TYPE> converter) {
-		return getInstance().bind(source, destination, converter);
-	}
+    /**
+     * Binds two observable values with potentially different type bidirectional using a
+     * binding converter.
+     * 
+     * If the source and destination value differs when bound,
+     * the destination value becomes the source value.
+     * 
+     * If the source value changes later, the destination value will be changed to the source.
+     * If the destination value changes later, the source value will be changed to the destination.
+     * 
+     * @param source The source value to bind, must not be null
+     * @param destination The destination value to bind, must not be null
+     * @param converter The binding converter to use, must not be null
+     * 
+     * @return The binding reference for the created binding
+     */
+    public static <SOURCE_TYPE, DESTINATION_TYPE> IBinding bind(
+        final IObservableValue<SOURCE_TYPE> source,
+        final IObservableValue<DESTINATION_TYPE> destination,
+        final IBindingConverter<SOURCE_TYPE, DESTINATION_TYPE> converter) {
+        return getInstance().bind(source, destination, converter);
+    }
 
-	private static final class BindImpl implements IBind {
+    private static final class BindImpl implements IBind {
 
-		@SuppressWarnings("unchecked")
-		@Override
-		public <VALUE_TYPE> IBinding bind(
-			final IObservableValue<VALUE_TYPE> source,
-			final IObservableValue<VALUE_TYPE> destination) {
-			return new BindingImpl<VALUE_TYPE, VALUE_TYPE>(source, destination, IDENTITY_BINDING_CONVERTER);
-		}
+        @SuppressWarnings("unchecked")
+        @Override
+        public <VALUE_TYPE> IBinding bind(
+            final IObservableValue<VALUE_TYPE> source,
+            final IObservableValue<VALUE_TYPE> destination) {
+            return new BindingImpl<VALUE_TYPE, VALUE_TYPE>(source, destination, IDENTITY_BINDING_CONVERTER);
+        }
 
-		@Override
-		public <SOURCE_TYPE, DESTINATION_TYPE> IBinding bind(
-			final IObservableValue<SOURCE_TYPE> source,
-			final IObservableValue<DESTINATION_TYPE> destination,
-			final IBindingConverter<SOURCE_TYPE, DESTINATION_TYPE> converter) {
-			return new BindingImpl<SOURCE_TYPE, DESTINATION_TYPE>(source, destination, converter);
-		}
+        @Override
+        public <SOURCE_TYPE, DESTINATION_TYPE> IBinding bind(
+            final IObservableValue<SOURCE_TYPE> source,
+            final IObservableValue<DESTINATION_TYPE> destination,
+            final IBindingConverter<SOURCE_TYPE, DESTINATION_TYPE> converter) {
+            return new BindingImpl<SOURCE_TYPE, DESTINATION_TYPE>(source, destination, converter);
+        }
 
-	}
+    }
 
-	private static final class BindingImpl<SOURCE_TYPE, DESTINATION_TYPE> implements IBinding {
+    private static final class BindingImpl<SOURCE_TYPE, DESTINATION_TYPE> implements IBinding {
 
-		private final IObservableValueListener<SOURCE_TYPE> sourceListener;
-		private final IObservableValueListener<DESTINATION_TYPE> destinationListener;
+        private final IObservableValueListener<SOURCE_TYPE> sourceListener;
+        private final IObservableValueListener<DESTINATION_TYPE> destinationListener;
 
-		private IObservableValue<SOURCE_TYPE> source;
-		private IObservableValue<DESTINATION_TYPE> destination;
-		private IBindingConverter<SOURCE_TYPE, DESTINATION_TYPE> converter;
+        private IObservableValue<SOURCE_TYPE> source;
+        private IObservableValue<DESTINATION_TYPE> destination;
+        private IBindingConverter<SOURCE_TYPE, DESTINATION_TYPE> converter;
 
-		private boolean bound;
-		private boolean disposed;
-		private boolean onSourceSet;
-		private boolean onDestinationSet;
+        private boolean bound;
+        private boolean disposed;
+        private boolean onSourceSet;
+        private boolean onDestinationSet;
 
-		private BindingImpl(
-			final IObservableValue<SOURCE_TYPE> source,
-			final IObservableValue<DESTINATION_TYPE> destination,
-			final IBindingConverter<SOURCE_TYPE, DESTINATION_TYPE> converter) {
+        private BindingImpl(
+            final IObservableValue<SOURCE_TYPE> source,
+            final IObservableValue<DESTINATION_TYPE> destination,
+            final IBindingConverter<SOURCE_TYPE, DESTINATION_TYPE> converter) {
 
-			Assert.paramNotNull(source, "source");
-			Assert.paramNotNull(destination, "destination");
-			Assert.paramNotNull(converter, "converter");
+            Assert.paramNotNull(source, "source");
+            Assert.paramNotNull(destination, "destination");
+            Assert.paramNotNull(converter, "converter");
 
-			this.source = source;
-			this.destination = destination;
-			this.converter = converter;
+            this.source = source;
+            this.destination = destination;
+            this.converter = converter;
 
-			this.disposed = false;
-			this.onSourceSet = false;
-			this.onDestinationSet = false;
+            this.disposed = false;
+            this.onSourceSet = false;
+            this.onDestinationSet = false;
 
-			this.sourceListener = new IObservableValueListener<SOURCE_TYPE>() {
-				@Override
-				public void changed(final IObservableValue<SOURCE_TYPE> observableValue, final SOURCE_TYPE value) {
-					setSourceToDestination();
-				}
-			};
+            this.sourceListener = new IObservableValueListener<SOURCE_TYPE>() {
+                @Override
+                public void changed(final IObservableValue<SOURCE_TYPE> observableValue, final SOURCE_TYPE value) {
+                    setSourceToDestination();
+                }
+            };
 
-			this.destinationListener = new IObservableValueListener<DESTINATION_TYPE>() {
-				@Override
-				public void changed(final IObservableValue<DESTINATION_TYPE> observableValue, final DESTINATION_TYPE value) {
-					setDestinationToSource();
-				}
-			};
+            this.destinationListener = new IObservableValueListener<DESTINATION_TYPE>() {
+                @Override
+                public void changed(final IObservableValue<DESTINATION_TYPE> observableValue, final DESTINATION_TYPE value) {
+                    setDestinationToSource();
+                }
+            };
 
-			bind();
-		}
+            bind();
+        }
 
-		private void setSourceToDestination() {
-			if (onSourceSet || onDestinationSet) {
-				return;
-			}
-			final DESTINATION_TYPE convertedSource = converter.convertSource(source.getValue());
-			if (!NullCompatibleEquivalence.equals(convertedSource, destination.getValue())) {
-				onDestinationSet = true;
-				try {
-					destination.setValue(convertedSource);
-				}
-				finally {
-					onDestinationSet = false;
-				}
-			}
-		}
+        private void setSourceToDestination() {
+            if (onSourceSet || onDestinationSet) {
+                return;
+            }
+            final DESTINATION_TYPE convertedSource = converter.convertSource(source.getValue());
+            if (!NullCompatibleEquivalence.equals(convertedSource, destination.getValue())) {
+                onDestinationSet = true;
+                try {
+                    destination.setValue(convertedSource);
+                }
+                finally {
+                    onDestinationSet = false;
+                }
+            }
+        }
 
-		private void setDestinationToSource() {
-			if (onSourceSet || onDestinationSet) {
-				return;
-			}
-			final SOURCE_TYPE convertedDestination = converter.convertDestination(destination.getValue());
-			if (!NullCompatibleEquivalence.equals(convertedDestination, source.getValue())) {
-				onSourceSet = true;
-				try {
-					source.setValue(convertedDestination);
-				}
-				finally {
-					onSourceSet = false;
-				}
-			}
-		}
+        private void setDestinationToSource() {
+            if (onSourceSet || onDestinationSet) {
+                return;
+            }
+            final SOURCE_TYPE convertedDestination = converter.convertDestination(destination.getValue());
+            if (!NullCompatibleEquivalence.equals(convertedDestination, source.getValue())) {
+                onSourceSet = true;
+                try {
+                    source.setValue(convertedDestination);
+                }
+                finally {
+                    onSourceSet = false;
+                }
+            }
+        }
 
-		@Override
-		public void setBindingState(final boolean bind) {
-			checkDisposed();
-			if (bind) {
-				bind();
-			}
-			else {
-				unbind();
-			}
-		}
+        @Override
+        public void setBindingState(final boolean bind) {
+            checkDisposed();
+            if (bind) {
+                bind();
+            }
+            else {
+                unbind();
+            }
+        }
 
-		@Override
-		public boolean isBound() {
-			return bound;
-		}
+        @Override
+        public boolean isBound() {
+            return bound;
+        }
 
-		@Override
-		public void bind() {
-			checkDisposed();
-			bound = true;
-			setSourceToDestination();
-			source.addValueListener(sourceListener);
-			destination.addValueListener(destinationListener);
-		}
+        @Override
+        public void bind() {
+            checkDisposed();
+            bound = true;
+            setSourceToDestination();
+            source.addValueListener(sourceListener);
+            destination.addValueListener(destinationListener);
+        }
 
-		@Override
-		public void unbind() {
-			checkDisposed();
-			bound = false;
-			source.removeValueListener(sourceListener);
-			destination.removeValueListener(destinationListener);
-		}
+        @Override
+        public void unbind() {
+            checkDisposed();
+            bound = false;
+            source.removeValueListener(sourceListener);
+            destination.removeValueListener(destinationListener);
+        }
 
-		@Override
-		public boolean isDisposed() {
-			return disposed;
-		}
+        @Override
+        public boolean isDisposed() {
+            return disposed;
+        }
 
-		@Override
-		public void dispose() {
-			checkDisposed();
-			unbind();
-			disposed = true;
-			source = null;
-			destination = null;
-			converter = null;
-		}
+        @Override
+        public void dispose() {
+            checkDisposed();
+            unbind();
+            disposed = true;
+            source = null;
+            destination = null;
+            converter = null;
+        }
 
-		private void checkDisposed() {
-			if (disposed) {
-				throw new IllegalStateException("Binding is disposed");
-			}
-		}
-	}
+        private void checkDisposed() {
+            if (disposed) {
+                throw new IllegalStateException("Binding is disposed");
+            }
+        }
+    }
 
-	private static final class IdentityBindingConverter<VALUE_TYPE> implements IBindingConverter<VALUE_TYPE, VALUE_TYPE> {
+    private static final class IdentityBindingConverter<VALUE_TYPE> implements IBindingConverter<VALUE_TYPE, VALUE_TYPE> {
 
-		@Override
-		public VALUE_TYPE convertSource(final VALUE_TYPE sourceValue) {
-			return sourceValue;
-		}
+        @Override
+        public VALUE_TYPE convertSource(final VALUE_TYPE sourceValue) {
+            return sourceValue;
+        }
 
-		@Override
-		public VALUE_TYPE convertDestination(final VALUE_TYPE destinationValue) {
-			return destinationValue;
-		}
+        @Override
+        public VALUE_TYPE convertDestination(final VALUE_TYPE destinationValue) {
+            return destinationValue;
+        }
 
-	}
+    }
 
 }

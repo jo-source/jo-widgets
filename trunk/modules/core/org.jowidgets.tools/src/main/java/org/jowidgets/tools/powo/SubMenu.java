@@ -37,59 +37,59 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 class SubMenu<WIDGET_TYPE extends ISubMenu, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & IMenuItemSetupBuilder<?> & IMenuItemSetup> extends
-		Menu<WIDGET_TYPE, BLUE_PRINT_TYPE> implements ISubMenu {
+        Menu<WIDGET_TYPE, BLUE_PRINT_TYPE> implements ISubMenu {
 
-	private final MenuItem<WIDGET_TYPE, BLUE_PRINT_TYPE> menuItemDelegate;
+    private final MenuItem<WIDGET_TYPE, BLUE_PRINT_TYPE> menuItemDelegate;
 
-	SubMenu(final BLUE_PRINT_TYPE bluePrint) {
-		super(bluePrint);
-		this.menuItemDelegate = new MenuItem<WIDGET_TYPE, BLUE_PRINT_TYPE>(bluePrint);
-	}
+    SubMenu(final BLUE_PRINT_TYPE bluePrint) {
+        super(bluePrint);
+        this.menuItemDelegate = new MenuItem<WIDGET_TYPE, BLUE_PRINT_TYPE>(bluePrint);
+    }
 
-	@Override
-	public void setText(final String text) {
-		menuItemDelegate.setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        menuItemDelegate.setText(text);
+    }
 
-	@Override
-	public void setToolTipText(final String text) {
-		menuItemDelegate.setToolTipText(text);
-	}
+    @Override
+    public void setToolTipText(final String text) {
+        menuItemDelegate.setToolTipText(text);
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		menuItemDelegate.setIcon(icon);
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        menuItemDelegate.setIcon(icon);
+    }
 
-	@Override
-	public void setMnemonic(final char mnemonic) {
-		menuItemDelegate.setMnemonic(mnemonic);
-	}
+    @Override
+    public void setMnemonic(final char mnemonic) {
+        menuItemDelegate.setMnemonic(mnemonic);
+    }
 
-	@Override
-	public IMenu getParent() {
-		return menuItemDelegate.getParent();
-	}
+    @Override
+    public IMenu getParent() {
+        return menuItemDelegate.getParent();
+    }
 
-	@Override
-	public String getText() {
-		return menuItemDelegate.getText();
-	}
+    @Override
+    public String getText() {
+        return menuItemDelegate.getText();
+    }
 
-	@Override
-	public String getToolTipText() {
-		return menuItemDelegate.getToolTipText();
-	}
+    @Override
+    public String getToolTipText() {
+        return menuItemDelegate.getToolTipText();
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return menuItemDelegate.getIcon();
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return menuItemDelegate.getIcon();
+    }
 
-	@Override
-	public void setModel(final IMenuItemModel model) {
-		checkInitialized();
-		getWidget().setModel(model);
-	}
+    @Override
+    public void setModel(final IMenuItemModel model) {
+        checkInitialized();
+        getWidget().setModel(model);
+    }
 
 }

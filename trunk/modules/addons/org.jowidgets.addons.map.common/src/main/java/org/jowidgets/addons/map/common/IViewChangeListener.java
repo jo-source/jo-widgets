@@ -30,6 +30,6 @@ package org.jowidgets.addons.map.common;
 
 public interface IViewChangeListener {
 
-	void onViewChange(double north, double south, double east, double west);
+    void onViewChange(double north, double south, double east, double west);
 
 }

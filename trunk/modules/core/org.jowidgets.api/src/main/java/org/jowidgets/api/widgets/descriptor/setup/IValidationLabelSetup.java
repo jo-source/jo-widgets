@@ -34,49 +34,49 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IValidationLabelSetup extends IComponentSetup {
 
-	@Mandatory
-	boolean isShowValidationMessage();
+    @Mandatory
+    boolean isShowValidationMessage();
 
-	@Mandatory
-	Markup getOkMarkup();
+    @Mandatory
+    Markup getOkMarkup();
 
-	@Mandatory
-	Markup getInfoMarkup();
+    @Mandatory
+    Markup getInfoMarkup();
 
-	@Mandatory
-	Markup getWarningMarkup();
+    @Mandatory
+    Markup getWarningMarkup();
 
-	@Mandatory
-	Markup getInfoErrorMarkup();
+    @Mandatory
+    Markup getInfoErrorMarkup();
 
-	@Mandatory
-	Markup getErrorMarkup();
+    @Mandatory
+    Markup getErrorMarkup();
 
-	@Mandatory
-	IColorConstant getOkColor();
+    @Mandatory
+    IColorConstant getOkColor();
 
-	@Mandatory
-	IColorConstant getInfoColor();
+    @Mandatory
+    IColorConstant getInfoColor();
 
-	@Mandatory
-	IColorConstant getWarningColor();
+    @Mandatory
+    IColorConstant getWarningColor();
 
-	@Mandatory
-	IColorConstant getInfoErrorColor();
+    @Mandatory
+    IColorConstant getInfoErrorColor();
 
-	@Mandatory
-	IColorConstant getErrorColor();
+    @Mandatory
+    IColorConstant getErrorColor();
 
-	IImageConstant getEmptyIcon();
+    IImageConstant getEmptyIcon();
 
-	IImageConstant getOkIcon();
+    IImageConstant getOkIcon();
 
-	IImageConstant getInfoIcon();
+    IImageConstant getInfoIcon();
 
-	IImageConstant getWarningIcon();
+    IImageConstant getWarningIcon();
 
-	IImageConstant getInfoErrorIcon();
+    IImageConstant getInfoErrorIcon();
 
-	IImageConstant getErrorIcon();
+    IImageConstant getErrorIcon();
 
 }

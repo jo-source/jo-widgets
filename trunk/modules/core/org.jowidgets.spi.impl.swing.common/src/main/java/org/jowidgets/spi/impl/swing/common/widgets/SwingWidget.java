@@ -33,30 +33,30 @@ import org.jowidgets.spi.widgets.IWidgetSpi;
 
 public class SwingWidget implements IWidgetSpi {
 
-	private Component component;
+    private Component component;
 
-	public SwingWidget(final Component component) {
-		super();
-		this.component = component;
-	}
+    public SwingWidget(final Component component) {
+        super();
+        this.component = component;
+    }
 
-	@Override
-	public Component getUiReference() {
-		return component;
-	}
+    @Override
+    public Component getUiReference() {
+        return component;
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		component.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        component.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return component.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return component.isEnabled();
+    }
 
-	public void setComponent(final Component component) {
-		this.component = component;
-	}
+    public void setComponent(final Component component) {
+        this.component = component;
+    }
 
 }

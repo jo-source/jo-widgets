@@ -29,8 +29,8 @@ package org.jowidgets.common.widgets.builder.convenience;
 
 public interface IToolBarSetupConvenienceCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setVertical();
+    INSTANCE_TYPE setVertical();
 
-	INSTANCE_TYPE setHorizontal();
+    INSTANCE_TYPE setHorizontal();
 
 }

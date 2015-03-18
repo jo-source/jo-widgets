@@ -36,36 +36,36 @@ import org.jowidgets.common.image.IImageConstant;
 
 public class JoSubMenu extends SubMenu<ISubMenu, ISubMenuBluePrint> implements ISubMenu {
 
-	public JoSubMenu(final String text, final IImageConstant icon) {
-		this(bluePrint(text, icon));
-	}
+    public JoSubMenu(final String text, final IImageConstant icon) {
+        this(bluePrint(text, icon));
+    }
 
-	public JoSubMenu(final String text) {
-		this(bluePrint(text));
-	}
+    public JoSubMenu(final String text) {
+        this(bluePrint(text));
+    }
 
-	public JoSubMenu(final String text, final String tooltipText) {
-		this(bluePrint(text, tooltipText));
-	}
+    public JoSubMenu(final String text, final String tooltipText) {
+        this(bluePrint(text, tooltipText));
+    }
 
-	public JoSubMenu(final ISubMenuDescriptor descriptor) {
-		super(bluePrint().setSetup(descriptor));
-	}
+    public JoSubMenu(final ISubMenuDescriptor descriptor) {
+        super(bluePrint().setSetup(descriptor));
+    }
 
-	public static ISubMenuBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().subMenu();
-	}
+    public static ISubMenuBluePrint bluePrint() {
+        return Toolkit.getBluePrintFactory().subMenu();
+    }
 
-	public static ISubMenuBluePrint bluePrint(final String text) {
-		return Toolkit.getBluePrintFactory().subMenu(text);
-	}
+    public static ISubMenuBluePrint bluePrint(final String text) {
+        return Toolkit.getBluePrintFactory().subMenu(text);
+    }
 
-	public static ISubMenuBluePrint bluePrint(final String text, final String tooltipText) {
-		return Toolkit.getBluePrintFactory().subMenu(text).setToolTipText(tooltipText);
-	}
+    public static ISubMenuBluePrint bluePrint(final String text, final String tooltipText) {
+        return Toolkit.getBluePrintFactory().subMenu(text).setToolTipText(tooltipText);
+    }
 
-	public static ISubMenuBluePrint bluePrint(final String text, final IImageConstant icon) {
-		return Toolkit.getBluePrintFactory().subMenu(text).setIcon(icon);
-	}
+    public static ISubMenuBluePrint bluePrint(final String text, final IImageConstant icon) {
+        return Toolkit.getBluePrintFactory().subMenu(text).setIcon(icon);
+    }
 
 }

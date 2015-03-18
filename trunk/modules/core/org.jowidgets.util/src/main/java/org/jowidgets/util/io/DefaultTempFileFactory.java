@@ -33,14 +33,14 @@ import java.io.IOException;
 
 public final class DefaultTempFileFactory implements ITempFileFactory {
 
-	@Override
-	public File create(final String filenamePrefix, final String filenameSuffix) {
-		try {
-			return File.createTempFile(filenamePrefix, filenameSuffix);
-		}
-		catch (final IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    @Override
+    public File create(final String filenamePrefix, final String filenameSuffix) {
+        try {
+            return File.createTempFile(filenamePrefix, filenameSuffix);
+        }
+        catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

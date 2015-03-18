@@ -37,22 +37,22 @@ import org.jowidgets.util.Assert;
 
 final class UncheckTreeActionBuilder extends AbstractDefaultActionBuilder {
 
-	private static final IMessage UNCHECK_ALL_MESSAGE = Messages.getMessage("UncheckTreeActionBuilder.uncheckAllLabel");
+    private static final IMessage UNCHECK_ALL_MESSAGE = Messages.getMessage("UncheckTreeActionBuilder.uncheckAllLabel");
 
-	private final ITreeContainer tree;
+    private final ITreeContainer tree;
 
-	UncheckTreeActionBuilder(final ITreeContainer tree) {
-		Assert.paramNotNull(tree, "tree");
-		this.tree = tree;
+    UncheckTreeActionBuilder(final ITreeContainer tree) {
+        Assert.paramNotNull(tree, "tree");
+        this.tree = tree;
 
-		setText(UNCHECK_ALL_MESSAGE.get());
-		setIcon(IconsSmall.UNCHECK_ALL);
-	}
+        setText(UNCHECK_ALL_MESSAGE.get());
+        setIcon(IconsSmall.UNCHECK_ALL);
+    }
 
-	@Override
-	protected IAction doBuild(final IActionBuilder superBuilder) {
-		superBuilder.setCommand(new TreeCheckCommand(tree, false), new TreeCheckedEnabledChecker(tree, false));
-		return superBuilder.build();
-	}
+    @Override
+    protected IAction doBuild(final IActionBuilder superBuilder) {
+        superBuilder.setCommand(new TreeCheckCommand(tree, false), new TreeCheckedEnabledChecker(tree, false));
+        return superBuilder.build();
+    }
 
 }

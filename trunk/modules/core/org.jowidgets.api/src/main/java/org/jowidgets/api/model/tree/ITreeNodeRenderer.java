@@ -32,16 +32,16 @@ import org.jowidgets.api.widgets.ITreeNode;
 
 public interface ITreeNodeRenderer<VALUE_TYPE> {
 
-	void nodeCreated(VALUE_TYPE value, ITreeNode node);
+    void nodeCreated(VALUE_TYPE value, ITreeNode node);
 
-	void dataChanged(VALUE_TYPE value, ITreeNode node);
+    void dataChanged(VALUE_TYPE value, ITreeNode node);
 
-	void selectionChanged(VALUE_TYPE value, ITreeNode node);
+    void selectionChanged(VALUE_TYPE value, ITreeNode node);
 
-	void checkedChanged(VALUE_TYPE value, ITreeNode node);
+    void checkedChanged(VALUE_TYPE value, ITreeNode node);
 
-	void expansionChanged(VALUE_TYPE value, ITreeNode node);
+    void expansionChanged(VALUE_TYPE value, ITreeNode node);
 
-	void disposeNode(VALUE_TYPE value, ITreeNode node);
+    void disposeNode(VALUE_TYPE value, ITreeNode node);
 
 }

@@ -29,20 +29,20 @@ package org.jowidgets.api.convert;
 
 public interface IObjectStringConverter<FROM_TYPE> {
 
-	/**
-	 * Converts the value to an string representation
-	 * 
-	 * @param value The value to convert
-	 * @return the string representation
-	 */
-	String convertToString(FROM_TYPE value);
+    /**
+     * Converts the value to an string representation
+     * 
+     * @param value The value to convert
+     * @return the string representation
+     */
+    String convertToString(FROM_TYPE value);
 
-	/**
-	 * Gets an description for an value
-	 * 
-	 * @param value the value to get the description for
-	 * @return the description or null if there is no description
-	 */
-	String getDescription(FROM_TYPE value);
+    /**
+     * Gets an description for an value
+     * 
+     * @param value the value to get the description for
+     * @return the description or null if there is no description
+     */
+    String getDescription(FROM_TYPE value);
 
 }

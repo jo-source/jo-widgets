@@ -42,154 +42,154 @@ import org.jowidgets.common.types.Accelerator;
 
 public class CommandAction implements ICommandAction {
 
-	private final ICommandAction action;
+    private final ICommandAction action;
 
-	public CommandAction() {
-		this(builder());
-	}
+    public CommandAction() {
+        this(builder());
+    }
 
-	public CommandAction(final String text) {
-		this(builder(text));
-	}
+    public CommandAction(final String text) {
+        this(builder(text));
+    }
 
-	public CommandAction(final String text, final IImageConstant icon) {
-		this(builder(text, icon));
-	}
+    public CommandAction(final String text, final IImageConstant icon) {
+        this(builder(text, icon));
+    }
 
-	public CommandAction(final String text, final String toolTipText) {
-		this(builder(text, toolTipText));
-	}
+    public CommandAction(final String text, final String toolTipText) {
+        this(builder(text, toolTipText));
+    }
 
-	public CommandAction(final String text, final String toolTipText, final IImageConstant icon) {
-		this(builder(text, toolTipText, icon));
-	}
+    public CommandAction(final String text, final String toolTipText, final IImageConstant icon) {
+        this(builder(text, toolTipText, icon));
+    }
 
-	public CommandAction(final IActionBuilder builder) {
-		super();
-		this.action = builder.build();
-	}
+    public CommandAction(final IActionBuilder builder) {
+        super();
+        this.action = builder.build();
+    }
 
-	@Override
-	public final void setText(final String text) {
-		action.setText(text);
-	}
+    @Override
+    public final void setText(final String text) {
+        action.setText(text);
+    }
 
-	@Override
-	public final String getText() {
-		return action.getText();
-	}
+    @Override
+    public final String getText() {
+        return action.getText();
+    }
 
-	@Override
-	public final void setToolTipText(final String toolTipText) {
-		action.setToolTipText(toolTipText);
-	}
+    @Override
+    public final void setToolTipText(final String toolTipText) {
+        action.setToolTipText(toolTipText);
+    }
 
-	@Override
-	public final String getToolTipText() {
-		return action.getToolTipText();
-	}
+    @Override
+    public final String getToolTipText() {
+        return action.getToolTipText();
+    }
 
-	@Override
-	public final IImageConstant getIcon() {
-		return action.getIcon();
-	}
+    @Override
+    public final IImageConstant getIcon() {
+        return action.getIcon();
+    }
 
-	@Override
-	public final void setIcon(final IImageConstant icon) {
-		action.setIcon(icon);
-	}
+    @Override
+    public final void setIcon(final IImageConstant icon) {
+        action.setIcon(icon);
+    }
 
-	@Override
-	public final Character getMnemonic() {
-		return action.getMnemonic();
-	}
+    @Override
+    public final Character getMnemonic() {
+        return action.getMnemonic();
+    }
 
-	@Override
-	public final void setEnabled(final boolean enabled) {
-		action.setEnabled(enabled);
-	}
+    @Override
+    public final void setEnabled(final boolean enabled) {
+        action.setEnabled(enabled);
+    }
 
-	@Override
-	public final Accelerator getAccelerator() {
-		return action.getAccelerator();
-	}
+    @Override
+    public final Accelerator getAccelerator() {
+        return action.getAccelerator();
+    }
 
-	@Override
-	public final void setCommand(final ICommand command) {
-		action.setCommand(command);
-	}
+    @Override
+    public final void setCommand(final ICommand command) {
+        action.setCommand(command);
+    }
 
-	@Override
-	public ICommand getCommand() {
-		return action.getCommand();
-	}
+    @Override
+    public ICommand getCommand() {
+        return action.getCommand();
+    }
 
-	@Override
-	public final boolean isEnabled() {
-		return action.isEnabled();
-	}
+    @Override
+    public final boolean isEnabled() {
+        return action.isEnabled();
+    }
 
-	@Override
-	public final void execute(final IExecutionContext actionEvent) throws Exception {
-		action.execute(actionEvent);
-	}
+    @Override
+    public final void execute(final IExecutionContext actionEvent) throws Exception {
+        action.execute(actionEvent);
+    }
 
-	@Override
-	public final void setCommand(final ICommandExecutor command) {
-		action.setCommand(command);
-	}
+    @Override
+    public final void setCommand(final ICommandExecutor command) {
+        action.setCommand(command);
+    }
 
-	@Override
-	public final void setCommand(final ICommandExecutor command, final IEnabledChecker enabledChecker) {
-		action.setCommand(command, enabledChecker);
-	}
+    @Override
+    public final void setCommand(final ICommandExecutor command, final IEnabledChecker enabledChecker) {
+        action.setCommand(command, enabledChecker);
+    }
 
-	@Override
-	public final IExceptionHandler getExceptionHandler() {
-		return action.getExceptionHandler();
-	}
+    @Override
+    public final IExceptionHandler getExceptionHandler() {
+        return action.getExceptionHandler();
+    }
 
-	@Override
-	public final void setCommand(final ICommandExecutor command, final IExceptionHandler exceptionHandler) {
-		action.setCommand(command, exceptionHandler);
-	}
+    @Override
+    public final void setCommand(final ICommandExecutor command, final IExceptionHandler exceptionHandler) {
+        action.setCommand(command, exceptionHandler);
+    }
 
-	@Override
-	public final void setCommand(
-		final ICommandExecutor command,
-		final IEnabledChecker enabledChecker,
-		final IExceptionHandler exceptionHandler) {
-		action.setCommand(command, enabledChecker, exceptionHandler);
-	}
+    @Override
+    public final void setCommand(
+        final ICommandExecutor command,
+        final IEnabledChecker enabledChecker,
+        final IExceptionHandler exceptionHandler) {
+        action.setCommand(command, enabledChecker, exceptionHandler);
+    }
 
-	@Override
-	public final void setActionExceptionHandler(final IExceptionHandler exceptionHandler) {
-		action.setActionExceptionHandler(exceptionHandler);
-	}
+    @Override
+    public final void setActionExceptionHandler(final IExceptionHandler exceptionHandler) {
+        action.setActionExceptionHandler(exceptionHandler);
+    }
 
-	@Override
-	public final IActionChangeObservable getActionChangeObservable() {
-		return action.getActionChangeObservable();
-	}
+    @Override
+    public final IActionChangeObservable getActionChangeObservable() {
+        return action.getActionChangeObservable();
+    }
 
-	public static IActionBuilder builder() {
-		return Toolkit.getActionBuilderFactory().create();
-	}
+    public static IActionBuilder builder() {
+        return Toolkit.getActionBuilderFactory().create();
+    }
 
-	public static IActionBuilder builder(final String text) {
-		return builder().setText(text);
-	}
+    public static IActionBuilder builder(final String text) {
+        return builder().setText(text);
+    }
 
-	public static IActionBuilder builder(final String text, final IImageConstant icon) {
-		return builder().setText(text).setIcon(icon);
-	}
+    public static IActionBuilder builder(final String text, final IImageConstant icon) {
+        return builder().setText(text).setIcon(icon);
+    }
 
-	public static IActionBuilder builder(final String text, final String toolTipText) {
-		return builder().setText(text).setToolTipText(toolTipText);
-	}
+    public static IActionBuilder builder(final String text, final String toolTipText) {
+        return builder().setText(text).setToolTipText(toolTipText);
+    }
 
-	public static IActionBuilder builder(final String text, final String toolTipText, final IImageConstant icon) {
-		return builder().setText(text).setToolTipText(toolTipText).setIcon(icon);
-	}
+    public static IActionBuilder builder(final String text, final String toolTipText, final IImageConstant icon) {
+        return builder().setText(text).setToolTipText(toolTipText).setIcon(icon);
+    }
 
 }

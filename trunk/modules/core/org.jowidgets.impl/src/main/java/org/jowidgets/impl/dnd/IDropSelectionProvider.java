@@ -28,9 +28,8 @@
 
 package org.jowidgets.impl.dnd;
 
-
 public interface IDropSelectionProvider {
 
-	Object getDropSelection(Object spiSelection);
+    Object getDropSelection(Object spiSelection);
 
 }

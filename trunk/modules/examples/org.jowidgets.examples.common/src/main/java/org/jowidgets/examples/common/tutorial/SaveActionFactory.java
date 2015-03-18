@@ -43,46 +43,46 @@ import org.jowidgets.tools.command.AbstractEnabledChecker;
 
 public final class SaveActionFactory {
 
-	private SaveActionFactory() {}
+    private SaveActionFactory() {}
 
-	public static IAction create(final ICheckedItemModel checkedItem) {
-		final IActionBuilder builder = CommandAction.builder();
-		builder.setText("Save");
-		builder.setIcon(IconsSmall.DISK);
-		builder.setCommand(new SaveCommand(), new SaveEnabledChecker(checkedItem));
-		return builder.build();
-	}
+    public static IAction create(final ICheckedItemModel checkedItem) {
+        final IActionBuilder builder = CommandAction.builder();
+        builder.setText("Save");
+        builder.setIcon(IconsSmall.DISK);
+        builder.setCommand(new SaveCommand(), new SaveEnabledChecker(checkedItem));
+        return builder.build();
+    }
 
-	private static final class SaveCommand implements ICommandExecutor {
-		@Override
-		public void execute(final IExecutionContext executionContext) throws Exception {
-			Toolkit.getMessagePane().showInfo(executionContext, "Save done!");
-		}
-	}
+    private static final class SaveCommand implements ICommandExecutor {
+        @Override
+        public void execute(final IExecutionContext executionContext) throws Exception {
+            Toolkit.getMessagePane().showInfo(executionContext, "Save done!");
+        }
+    }
 
-	private static final class SaveEnabledChecker extends AbstractEnabledChecker {
+    private static final class SaveEnabledChecker extends AbstractEnabledChecker {
 
-		private final ICheckedItemModel checkedItem;
+        private final ICheckedItemModel checkedItem;
 
-		private SaveEnabledChecker(final ICheckedItemModel checkedItem) {
-			this.checkedItem = checkedItem;
-			checkedItem.addItemListener(new IItemStateListener() {
-				@Override
-				public void itemStateChanged() {
-					fireChangedEvent();
-				}
-			});
-		}
+        private SaveEnabledChecker(final ICheckedItemModel checkedItem) {
+            this.checkedItem = checkedItem;
+            checkedItem.addItemListener(new IItemStateListener() {
+                @Override
+                public void itemStateChanged() {
+                    fireChangedEvent();
+                }
+            });
+        }
 
-		@Override
-		public IEnabledState getEnabledState() {
-			if (!checkedItem.isSelected()) {
-				return EnabledState.disabled("Checked item must be enabled");
-			}
-			else {
-				return EnabledState.ENABLED;
-			}
-		}
-	}
+        @Override
+        public IEnabledState getEnabledState() {
+            if (!checkedItem.isSelected()) {
+                return EnabledState.disabled("Checked item must be enabled");
+            }
+            else {
+                return EnabledState.ENABLED;
+            }
+        }
+    }
 
 }

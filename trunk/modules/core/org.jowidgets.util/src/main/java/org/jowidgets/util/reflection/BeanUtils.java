@@ -40,77 +40,77 @@ import org.jowidgets.util.Assert;
 
 public final class BeanUtils {
 
-	private BeanUtils() {}
+    private BeanUtils() {}
 
-	public static void setProperty(final Object bean, final String propertyName, final Object value) {
-		Assert.paramNotNull(bean, "bean");
-		Assert.paramNotNull(propertyName, "propertyName");
-		final Method writeMethod = IntrospectionCache.getWriteMethodFromHierarchy(bean.getClass(), propertyName);
-		if (writeMethod != null) {
-			try {
-				writeMethod.invoke(bean, value);
-			}
-			catch (final Exception e) {
-				throw new RuntimeException(e);
-			}
-		}
-		else {
-			throw new IllegalArgumentException("No write method found for property '"
-				+ propertyName
-				+ "' on bean '"
-				+ bean
-				+ "'.");
-		}
-	}
+    public static void setProperty(final Object bean, final String propertyName, final Object value) {
+        Assert.paramNotNull(bean, "bean");
+        Assert.paramNotNull(propertyName, "propertyName");
+        final Method writeMethod = IntrospectionCache.getWriteMethodFromHierarchy(bean.getClass(), propertyName);
+        if (writeMethod != null) {
+            try {
+                writeMethod.invoke(bean, value);
+            }
+            catch (final Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else {
+            throw new IllegalArgumentException("No write method found for property '"
+                + propertyName
+                + "' on bean '"
+                + bean
+                + "'.");
+        }
+    }
 
-	public static Object getProperty(final Object bean, final String propertyName) {
-		Assert.paramNotNull(bean, "bean");
-		Assert.paramNotNull(propertyName, "propertyName");
-		final Method readMethod = IntrospectionCache.getReadMethodFromHierarchy(bean.getClass(), propertyName);
-		if (readMethod != null) {
-			try {
-				return readMethod.invoke(bean);
-			}
-			catch (final Exception e) {
-				throw new RuntimeException(e);
-			}
-		}
-		else {
-			throw new IllegalArgumentException("No read method found for property '" + propertyName + "' on bean '" + bean + "'.");
-		}
-	}
+    public static Object getProperty(final Object bean, final String propertyName) {
+        Assert.paramNotNull(bean, "bean");
+        Assert.paramNotNull(propertyName, "propertyName");
+        final Method readMethod = IntrospectionCache.getReadMethodFromHierarchy(bean.getClass(), propertyName);
+        if (readMethod != null) {
+            try {
+                return readMethod.invoke(bean);
+            }
+            catch (final Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        else {
+            throw new IllegalArgumentException("No read method found for property '" + propertyName + "' on bean '" + bean + "'.");
+        }
+    }
 
-	public static List<String> getProperties(final Class<?> beanType) {
-		Assert.paramNotNull(beanType, "beanType");
-		try {
-			final BeanInfo beanInfo = Introspector.getBeanInfo(beanType);
-			final List<String> result = new LinkedList<String>();
-			for (final PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
-				final String propertyName = propertyDescriptor.getName();
-				result.add(propertyName);
-			}
-			return result;
-		}
-		catch (final IntrospectionException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public static List<String> getProperties(final Class<?> beanType) {
+        Assert.paramNotNull(beanType, "beanType");
+        try {
+            final BeanInfo beanInfo = Introspector.getBeanInfo(beanType);
+            final List<String> result = new LinkedList<String>();
+            for (final PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
+                final String propertyName = propertyDescriptor.getName();
+                result.add(propertyName);
+            }
+            return result;
+        }
+        catch (final IntrospectionException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	public static List<String> getReadableProperties(final Class<?> beanType) {
-		Assert.paramNotNull(beanType, "beanType");
-		try {
-			final BeanInfo beanInfo = Introspector.getBeanInfo(beanType);
-			final List<String> result = new LinkedList<String>();
-			for (final PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
-				final String propertyName = propertyDescriptor.getName();
-				if (propertyDescriptor.getReadMethod() != null) {
-					result.add(propertyName);
-				}
-			}
-			return result;
-		}
-		catch (final IntrospectionException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public static List<String> getReadableProperties(final Class<?> beanType) {
+        Assert.paramNotNull(beanType, "beanType");
+        try {
+            final BeanInfo beanInfo = Introspector.getBeanInfo(beanType);
+            final List<String> result = new LinkedList<String>();
+            for (final PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
+                final String propertyName = propertyDescriptor.getName();
+                if (propertyDescriptor.getReadMethod() != null) {
+                    result.add(propertyName);
+                }
+            }
+            return result;
+        }
+        catch (final IntrospectionException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

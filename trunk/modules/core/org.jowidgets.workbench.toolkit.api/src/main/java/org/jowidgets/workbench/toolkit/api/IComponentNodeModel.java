@@ -36,58 +36,58 @@ import org.jowidgets.workbench.api.IComponentNodeDescriptor;
 import org.jowidgets.workbench.api.IDisposeCallback;
 
 public interface IComponentNodeModel extends
-		IComponentNodeDescriptor,
-		IComponentNodeContainerModel,
-		IWorkbenchPartModel,
-		ITreeNodeObservable,
-		IWrapper<IComponentNodeModel> {
+        IComponentNodeDescriptor,
+        IComponentNodeContainerModel,
+        IWorkbenchPartModel,
+        ITreeNodeObservable,
+        IWrapper<IComponentNodeModel> {
 
-	boolean isSelected();
+    boolean isSelected();
 
-	boolean isExpanded();
+    boolean isExpanded();
 
-	IMenuModel getPopupMenu();
+    IMenuModel getPopupMenu();
 
-	IComponentFactory getComponentFactory();
+    IComponentFactory getComponentFactory();
 
-	IComponentNodeInitializeCallback getInitializeCallback();
+    IComponentNodeInitializeCallback getInitializeCallback();
 
-	IDisposeCallback getDisposeCallback();
+    IDisposeCallback getDisposeCallback();
 
-	void setLabel(String label);
+    void setLabel(String label);
 
-	void setTooltip(String toolTip);
+    void setTooltip(String toolTip);
 
-	void setIcon(IImageConstant icon);
+    void setIcon(IImageConstant icon);
 
-	void setSelected(boolean selected);
+    void setSelected(boolean selected);
 
-	void setExpanded(boolean expanded);
+    void setExpanded(boolean expanded);
 
-	void setPopupMenu(IMenuModel popupMenu);
+    void setPopupMenu(IMenuModel popupMenu);
 
-	String getPathId();
+    String getPathId();
 
-	/**
-	 * Sets the parent container of this component node. This method will be invoked
-	 * by the API implementation, when this node will be added as a child to another container or
-	 * when it was removed from its parent.
-	 * 
-	 * If this method will be invoked by the API user (client code) the following happens:
-	 * 
-	 * 1. If this node already has a parent, it will be removed from this.
-	 * 
-	 * 2. If the given parent is not null and this node is not already a child of the given parent,
-	 * this node will be appended to the given parent.
-	 * 
-	 * @param parentContainer The parent to set or null if the node was/should be removed from its parent
-	 */
-	void setParentContainer(IComponentNodeContainerModel parentContainer);
+    /**
+     * Sets the parent container of this component node. This method will be invoked
+     * by the API implementation, when this node will be added as a child to another container or
+     * when it was removed from its parent.
+     * 
+     * If this method will be invoked by the API user (client code) the following happens:
+     * 
+     * 1. If this node already has a parent, it will be removed from this.
+     * 
+     * 2. If the given parent is not null and this node is not already a child of the given parent,
+     * this node will be appended to the given parent.
+     * 
+     * @param parentContainer The parent to set or null if the node was/should be removed from its parent
+     */
+    void setParentContainer(IComponentNodeContainerModel parentContainer);
 
-	IComponentNodeModel getParent();
+    IComponentNodeModel getParent();
 
-	IWorkbenchApplicationModel getApplication();
+    IWorkbenchApplicationModel getApplication();
 
-	IWorkbenchModel getWorkbench();
+    IWorkbenchModel getWorkbench();
 
 }

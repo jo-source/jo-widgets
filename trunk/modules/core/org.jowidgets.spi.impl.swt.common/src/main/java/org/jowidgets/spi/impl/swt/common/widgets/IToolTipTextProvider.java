@@ -30,6 +30,6 @@ package org.jowidgets.spi.impl.swt.common.widgets;
 
 public interface IToolTipTextProvider {
 
-	String getToolTipText();
+    String getToolTipText();
 
 }

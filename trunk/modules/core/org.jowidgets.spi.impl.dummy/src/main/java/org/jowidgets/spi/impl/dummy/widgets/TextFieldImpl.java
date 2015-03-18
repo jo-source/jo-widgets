@@ -33,65 +33,65 @@ import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 
 public class TextFieldImpl extends AbstractTextInputControl {
 
-	public TextFieldImpl(final ITextFieldSetupSpi setup) {
-		super(new UIDTextField(setup.getInputVerifier()));
+    public TextFieldImpl(final ITextFieldSetupSpi setup) {
+        super(new UIDTextField(setup.getInputVerifier()));
 
-		registerTextComponent(getUiReference());
-	}
+        registerTextComponent(getUiReference());
+    }
 
-	@Override
-	public UIDTextField getUiReference() {
-		return (UIDTextField) super.getUiReference();
-	}
+    @Override
+    public UIDTextField getUiReference() {
+        return (UIDTextField) super.getUiReference();
+    }
 
-	@Override
-	public String getText() {
-		return getUiReference().getText();
-	}
+    @Override
+    public String getText() {
+        return getUiReference().getText();
+    }
 
-	@Override
-	public void setText(final String text) {
-		getUiReference().setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        getUiReference().setText(text);
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		getUiReference().setFontSize(size);
-	}
+    @Override
+    public void setFontSize(final int size) {
+        getUiReference().setFontSize(size);
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		getUiReference().setFontName(fontName);
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        getUiReference().setFontName(fontName);
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		getUiReference().setMarkup(markup);
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        getUiReference().setMarkup(markup);
+    }
 
-	@Override
-	public void setEditable(final boolean editable) {
-		getUiReference().setEditable(editable);
-	}
+    @Override
+    public void setEditable(final boolean editable) {
+        getUiReference().setEditable(editable);
+    }
 
-	@Override
-	public void setSelection(final int start, final int end) {
-		getUiReference().setSelection(start, end);
-	}
+    @Override
+    public void setSelection(final int start, final int end) {
+        getUiReference().setSelection(start, end);
+    }
 
-	@Override
-	public void select() {
-		getUiReference().select();
-	}
+    @Override
+    public void select() {
+        getUiReference().select();
+    }
 
-	@Override
-	public void setCaretPosition(final int pos) {
-		setSelection(pos, pos);
-	}
+    @Override
+    public void setCaretPosition(final int pos) {
+        setSelection(pos, pos);
+    }
 
-	@Override
-	public int getCaretPosition() {
-		return getUiReference().getCaretPosition();
-	}
+    @Override
+    public int getCaretPosition() {
+        return getUiReference().getCaretPosition();
+    }
 
 }

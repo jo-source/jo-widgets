@@ -32,47 +32,47 @@ import java.util.Collection;
 
 public final class Filter {
 
-	private static final IFilter<Object> ACCEPT_ALL = new AcceptAllFilter<Object>();
+    private static final IFilter<Object> ACCEPT_ALL = new AcceptAllFilter<Object>();
 
-	private static final IFilter<Object> REJECT_ALL = new RejectAllFilter<Object>();
+    private static final IFilter<Object> REJECT_ALL = new RejectAllFilter<Object>();
 
-	private Filter() {}
+    private Filter() {}
 
-	@SuppressWarnings("unchecked")
-	public static <VALUE_TYPE> IFilter<VALUE_TYPE> acceptAll() {
-		return (IFilter<VALUE_TYPE>) ACCEPT_ALL;
-	}
+    @SuppressWarnings("unchecked")
+    public static <VALUE_TYPE> IFilter<VALUE_TYPE> acceptAll() {
+        return (IFilter<VALUE_TYPE>) ACCEPT_ALL;
+    }
 
-	@SuppressWarnings("unchecked")
-	public static <VALUE_TYPE> IFilter<VALUE_TYPE> rejectAll() {
-		return (IFilter<VALUE_TYPE>) REJECT_ALL;
-	}
+    @SuppressWarnings("unchecked")
+    public static <VALUE_TYPE> IFilter<VALUE_TYPE> rejectAll() {
+        return (IFilter<VALUE_TYPE>) REJECT_ALL;
+    }
 
-	public static <VALUE_TYPE> IFilter<VALUE_TYPE> and(final IFilter<VALUE_TYPE> filter1, final IFilter<VALUE_TYPE> filter2) {
-		return FilterComposite.create(filter1, filter2);
-	}
+    public static <VALUE_TYPE> IFilter<VALUE_TYPE> and(final IFilter<VALUE_TYPE> filter1, final IFilter<VALUE_TYPE> filter2) {
+        return FilterComposite.create(filter1, filter2);
+    }
 
-	public static <FILTER_VALUE_TYPE> IFilter<FILTER_VALUE_TYPE> and(final IFilter<FILTER_VALUE_TYPE>... filters) {
-		return FilterComposite.create(filters);
-	}
+    public static <FILTER_VALUE_TYPE> IFilter<FILTER_VALUE_TYPE> and(final IFilter<FILTER_VALUE_TYPE>... filters) {
+        return FilterComposite.create(filters);
+    }
 
-	public static <FILTER_VALUE_TYPE> IFilter<FILTER_VALUE_TYPE> and(
-		final Collection<? extends IFilter<FILTER_VALUE_TYPE>> filters) {
-		return FilterComposite.create(filters);
-	}
+    public static <FILTER_VALUE_TYPE> IFilter<FILTER_VALUE_TYPE> and(
+        final Collection<? extends IFilter<FILTER_VALUE_TYPE>> filters) {
+        return FilterComposite.create(filters);
+    }
 
-	private static final class AcceptAllFilter<VALUE_TYPE> implements IFilter<VALUE_TYPE> {
-		@Override
-		public boolean accept(final VALUE_TYPE value) {
-			return true;
-		}
-	}
+    private static final class AcceptAllFilter<VALUE_TYPE> implements IFilter<VALUE_TYPE> {
+        @Override
+        public boolean accept(final VALUE_TYPE value) {
+            return true;
+        }
+    }
 
-	private static final class RejectAllFilter<VALUE_TYPE> implements IFilter<VALUE_TYPE> {
-		@Override
-		public boolean accept(final VALUE_TYPE value) {
-			return false;
-		}
-	}
+    private static final class RejectAllFilter<VALUE_TYPE> implements IFilter<VALUE_TYPE> {
+        @Override
+        public boolean accept(final VALUE_TYPE value) {
+            return false;
+        }
+    }
 
 }

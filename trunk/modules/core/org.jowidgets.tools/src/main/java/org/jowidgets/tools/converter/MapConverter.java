@@ -38,53 +38,53 @@ import org.jowidgets.validation.IValidator;
 
 public final class MapConverter<OBJECT_TYPE> implements IConverter<OBJECT_TYPE> {
 
-	private final IConverter<OBJECT_TYPE> converter;
+    private final IConverter<OBJECT_TYPE> converter;
 
-	public MapConverter(
-		final Map<? extends OBJECT_TYPE, String> objectToString,
-		final Map<String, ? extends OBJECT_TYPE> stringToObject,
-		final String hint) {
-		this.converter = Toolkit.getConverterProvider().mapConverter(objectToString, stringToObject, hint);
-	}
+    public MapConverter(
+        final Map<? extends OBJECT_TYPE, String> objectToString,
+        final Map<String, ? extends OBJECT_TYPE> stringToObject,
+        final String hint) {
+        this.converter = Toolkit.getConverterProvider().mapConverter(objectToString, stringToObject, hint);
+    }
 
-	@Override
-	public String convertToString(final OBJECT_TYPE value) {
-		return converter.convertToString(value);
-	}
+    @Override
+    public String convertToString(final OBJECT_TYPE value) {
+        return converter.convertToString(value);
+    }
 
-	@Override
-	public OBJECT_TYPE convertToObject(final String string) {
-		return converter.convertToObject(string);
-	}
+    @Override
+    public OBJECT_TYPE convertToObject(final String string) {
+        return converter.convertToObject(string);
+    }
 
-	@Override
-	public String getDescription(final OBJECT_TYPE value) {
-		return converter.getDescription(value);
-	}
+    @Override
+    public String getDescription(final OBJECT_TYPE value) {
+        return converter.getDescription(value);
+    }
 
-	@Override
-	public IValidator<String> getStringValidator() {
-		return converter.getStringValidator();
-	}
+    @Override
+    public IValidator<String> getStringValidator() {
+        return converter.getStringValidator();
+    }
 
-	@Override
-	public IInputVerifier getInputVerifier() {
-		return converter.getInputVerifier();
-	}
+    @Override
+    public IInputVerifier getInputVerifier() {
+        return converter.getInputVerifier();
+    }
 
-	@Override
-	public String getAcceptingRegExp() {
-		return converter.getAcceptingRegExp();
-	}
+    @Override
+    public String getAcceptingRegExp() {
+        return converter.getAcceptingRegExp();
+    }
 
-	@Override
-	public ITextMask getMask() {
-		return converter.getMask();
-	}
+    @Override
+    public ITextMask getMask() {
+        return converter.getMask();
+    }
 
-	@Override
-	public String toString() {
-		return converter.toString();
-	}
+    @Override
+    public String toString() {
+        return converter.toString();
+    }
 
 }

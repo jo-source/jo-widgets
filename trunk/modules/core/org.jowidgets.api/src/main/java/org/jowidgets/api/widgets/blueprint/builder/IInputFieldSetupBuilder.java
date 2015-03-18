@@ -34,19 +34,19 @@ import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
 import org.jowidgets.util.IObservableValue;
 
 public interface IInputFieldSetupBuilder<INSTANCE_TYPE extends IInputFieldSetupBuilder<?, ?>, INPUT_TYPE> extends
-		IInputComponentSetupBuilder<INSTANCE_TYPE, INPUT_TYPE>,
-		ITextFieldSetupBuilderCommon<INSTANCE_TYPE> {
+        IInputComponentSetupBuilder<INSTANCE_TYPE, INPUT_TYPE>,
+        ITextFieldSetupBuilderCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setConverter(IConverter<INPUT_TYPE> converter);
+    INSTANCE_TYPE setConverter(IConverter<INPUT_TYPE> converter);
 
-	INSTANCE_TYPE setConverter(IObjectStringConverter<INPUT_TYPE> converter);
+    INSTANCE_TYPE setConverter(IObjectStringConverter<INPUT_TYPE> converter);
 
-	INSTANCE_TYPE setObservableValue(IObservableValue<INPUT_TYPE> observableValue);
+    INSTANCE_TYPE setObservableValue(IObservableValue<INPUT_TYPE> observableValue);
 
-	INSTANCE_TYPE setMarkup(Markup markup);
+    INSTANCE_TYPE setMarkup(Markup markup);
 
-	INSTANCE_TYPE setFontSize(Integer size);
+    INSTANCE_TYPE setFontSize(Integer size);
 
-	INSTANCE_TYPE setFontName(String fontName);
+    INSTANCE_TYPE setFontName(String fontName);
 
 }

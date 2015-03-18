@@ -52,15 +52,15 @@ import org.jowidgets.api.toolkit.Toolkit;
  */
 public final class CachedFillLayout {
 
-	private CachedFillLayout() {}
+    private CachedFillLayout() {}
 
-	/**
-	 * Gets a layout factory for an 'CachedFillLayout'
-	 * 
-	 * @return A layout factory that produces 'CachedFillLayout'
-	 */
-	public static ILayoutFactory<ICachedFillLayout> get() {
-		return Toolkit.getLayoutFactoryProvider().cachedFillLayout();
-	}
+    /**
+     * Gets a layout factory for an 'CachedFillLayout'
+     * 
+     * @return A layout factory that produces 'CachedFillLayout'
+     */
+    public static ILayoutFactory<ICachedFillLayout> get() {
+        return Toolkit.getLayoutFactoryProvider().cachedFillLayout();
+    }
 
 }

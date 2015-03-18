@@ -35,63 +35,63 @@ import org.jowidgets.common.verify.IInputVerifier;
 
 public class UIDTextField extends UIDTextComponent {
 
-	private final IInputVerifier inputVerifier;
+    private final IInputVerifier inputVerifier;
 
-	private boolean editable;
+    private boolean editable;
 
-	public UIDTextField(final IInputVerifier inputVerifier) {
-		this.inputVerifier = inputVerifier;
-	}
+    public UIDTextField(final IInputVerifier inputVerifier) {
+        this.inputVerifier = inputVerifier;
+    }
 
-	public void setEditable(final boolean editable) {
-		this.editable = editable;
-	}
+    public void setEditable(final boolean editable) {
+        this.editable = editable;
+    }
 
-	public boolean isEditable() {
-		return editable;
-	}
+    public boolean isEditable() {
+        return editable;
+    }
 
-	@SuppressWarnings("unused")
-	private boolean allowInsert(final int offs, final String str) {
-		final String currentText = getText();
-		if (inputVerifier.verify(currentText, str, offs, offs + str.length())) {
-			return true;
-		}
-		return false;
-	}
+    @SuppressWarnings("unused")
+    private boolean allowInsert(final int offs, final String str) {
+        final String currentText = getText();
+        if (inputVerifier.verify(currentText, str, offs, offs + str.length())) {
+            return true;
+        }
+        return false;
+    }
 
-	@SuppressWarnings("unused")
-	private boolean allowRemove(final int offs, final int len) throws BadLocationException {
-		final String currentText = getText();
-		if (inputVerifier.verify(currentText, "", offs, offs + len)) {
-			return true;
-		}
-		return false;
-	}
+    @SuppressWarnings("unused")
+    private boolean allowRemove(final int offs, final int len) throws BadLocationException {
+        final String currentText = getText();
+        if (inputVerifier.verify(currentText, "", offs, offs + len)) {
+            return true;
+        }
+        return false;
+    }
 
-	public void setSelection(final int start, final int end) {
-		//TODO LG implement setSelection()
-	}
+    public void setSelection(final int start, final int end) {
+        //TODO LG implement setSelection()
+    }
 
-	public int getCaretPosition() {
-		// TODO LG implement getCaretPosition
-		return 0;
-	}
+    public int getCaretPosition() {
+        // TODO LG implement getCaretPosition
+        return 0;
+    }
 
-	public void setFontSize(final int size) {
-		// TODO LG implement setFontSize
-	}
+    public void setFontSize(final int size) {
+        // TODO LG implement setFontSize
+    }
 
-	public void setFontName(final String fontName) {
-		// TODO LG implement setFontName
-	}
+    public void setFontName(final String fontName) {
+        // TODO LG implement setFontName
+    }
 
-	public void setMarkup(final Markup markup) {
-		// TODO LG implement setMarkup
-	}
+    public void setMarkup(final Markup markup) {
+        // TODO LG implement setMarkup
+    }
 
-	public void select() {
-		// TODO LG implement select
-	}
+    public void select() {
+        // TODO LG implement select
+    }
 
 }

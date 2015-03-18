@@ -35,27 +35,27 @@ import org.jowidgets.util.Assert;
 
 public final class TreePopupEvent implements ITreePopupEvent {
 
-	private final Position position;
-	private final ITreeNode node;
+    private final Position position;
+    private final ITreeNode node;
 
-	public TreePopupEvent(final Position position, final ITreeNode node) {
-		Assert.paramNotNull(position, "position");
-		this.position = position;
-		this.node = node;
-	}
+    public TreePopupEvent(final Position position, final ITreeNode node) {
+        Assert.paramNotNull(position, "position");
+        this.position = position;
+        this.node = node;
+    }
 
-	@Override
-	public Position getPosition() {
-		return position;
-	}
+    @Override
+    public Position getPosition() {
+        return position;
+    }
 
-	@Override
-	public ITreeNode getNode() {
-		return node;
-	}
+    @Override
+    public ITreeNode getNode() {
+        return node;
+    }
 
-	@Override
-	public String toString() {
-		return TreePopupEvent.class.getSimpleName() + " Position: " + position + " Node: " + node;
-	}
+    @Override
+    public String toString() {
+        return TreePopupEvent.class.getSimpleName() + " Position: " + position + " Node: " + node;
+    }
 }

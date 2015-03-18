@@ -36,52 +36,52 @@ import org.jowidgets.spi.impl.swing.common.options.SwingOptions;
 
 public class JoSplitPane extends JSplitPane {
 
-	private static final long serialVersionUID = 5117985872625236987L;
+    private static final long serialVersionUID = 5117985872625236987L;
 
-	private boolean initialized = false;
-	private final double dividerWeight;
-	private final double resizeWeight;
+    private boolean initialized = false;
+    private final double dividerWeight;
+    private final double resizeWeight;
 
-	public JoSplitPane(final int orientation, final double dividerWeigth, final double resizeWeight) {
-		super(orientation);
-		this.initialized = false;
-		this.dividerWeight = dividerWeigth;
-		this.resizeWeight = resizeWeight;
-		setOneTouchExpandable(SwingOptions.isOneTouchExpandableSplits());
-	}
+    public JoSplitPane(final int orientation, final double dividerWeigth, final double resizeWeight) {
+        super(orientation);
+        this.initialized = false;
+        this.dividerWeight = dividerWeigth;
+        this.resizeWeight = resizeWeight;
+        setOneTouchExpandable(SwingOptions.isOneTouchExpandableSplits());
+    }
 
-	@Override
-	public void setDividerSize(int newSize) {
-		if (SwingOptions.isOneTouchExpandableSplits()) {
-			newSize = Math.max(newSize, 8);
-		}
-		super.setDividerSize(newSize);
-	}
+    @Override
+    public void setDividerSize(int newSize) {
+        if (SwingOptions.isOneTouchExpandableSplits()) {
+            newSize = Math.max(newSize, 8);
+        }
+        super.setDividerSize(newSize);
+    }
 
-	@Override
-	public void doLayout() {
-		if (!initialized && this.isDisplayable()) {
-			final boolean horizontalInitialized = getOrientation() == JSplitPane.HORIZONTAL_SPLIT && getSize().width != 0;
-			final boolean verticalInitialized = getOrientation() == JSplitPane.VERTICAL_SPLIT && getSize().height != 0;
-			if (horizontalInitialized || verticalInitialized) {
-				initialized = true;
-				setDividerLocation(dividerWeight);
-				setResizeWeight(resizeWeight);
-			}
-		}
-		super.doLayout();
-	}
+    @Override
+    public void doLayout() {
+        if (!initialized && this.isDisplayable()) {
+            final boolean horizontalInitialized = getOrientation() == JSplitPane.HORIZONTAL_SPLIT && getSize().width != 0;
+            final boolean verticalInitialized = getOrientation() == JSplitPane.VERTICAL_SPLIT && getSize().height != 0;
+            if (horizontalInitialized || verticalInitialized) {
+                initialized = true;
+                setDividerLocation(dividerWeight);
+                setResizeWeight(resizeWeight);
+            }
+        }
+        super.doLayout();
+    }
 
-	@Override
-	public void updateUI() {
-		super.updateUI();
+    @Override
+    public void updateUI() {
+        super.updateUI();
 
-		final SplitPaneUI splitPaneUI = getUI();
-		this.setBorder(BorderFactory.createEmptyBorder());
-		if (splitPaneUI instanceof BasicSplitPaneUI) {
-			final BasicSplitPaneUI basicUI = (BasicSplitPaneUI) splitPaneUI;
-			basicUI.getDivider().setBorder(BorderFactory.createEmptyBorder());
-		}
-	}
+        final SplitPaneUI splitPaneUI = getUI();
+        this.setBorder(BorderFactory.createEmptyBorder());
+        if (splitPaneUI instanceof BasicSplitPaneUI) {
+            final BasicSplitPaneUI basicUI = (BasicSplitPaneUI) splitPaneUI;
+            basicUI.getDivider().setBorder(BorderFactory.createEmptyBorder());
+        }
+    }
 
 }

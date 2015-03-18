@@ -35,22 +35,22 @@ import org.jowidgets.util.Assert;
 
 public class ObjectStringMapConverter<OBJECT_TYPE> extends AbstractObjectStringConverter<OBJECT_TYPE> {
 
-	private final Map<OBJECT_TYPE, String> objectToString;
+    private final Map<OBJECT_TYPE, String> objectToString;
 
-	public ObjectStringMapConverter(final Map<? extends OBJECT_TYPE, String> objectToString) {
-		super();
-		Assert.paramNotNull(objectToString, "objectToString");
-		this.objectToString = new HashMap<OBJECT_TYPE, String>(objectToString);
-	}
+    public ObjectStringMapConverter(final Map<? extends OBJECT_TYPE, String> objectToString) {
+        super();
+        Assert.paramNotNull(objectToString, "objectToString");
+        this.objectToString = new HashMap<OBJECT_TYPE, String>(objectToString);
+    }
 
-	@Override
-	public String convertToString(final OBJECT_TYPE value) {
-		return objectToString.get(value);
-	}
+    @Override
+    public String convertToString(final OBJECT_TYPE value) {
+        return objectToString.get(value);
+    }
 
-	@Override
-	public String toString() {
-		return "ObjectStringMapConverter [objectToString=" + objectToString + "]";
-	}
+    @Override
+    public String toString() {
+        return "ObjectStringMapConverter [objectToString=" + objectToString + "]";
+    }
 
 }

@@ -34,97 +34,97 @@ import org.jowidgets.util.IConverter;
 
 final class LinearSliderViewerConverter<VALUE_TYPE extends Number> implements ISliderViewerConverter<VALUE_TYPE> {
 
-	private final VALUE_TYPE minValue;
-	private final VALUE_TYPE maxValue;
+    private final VALUE_TYPE minValue;
+    private final VALUE_TYPE maxValue;
 
-	private final IConverter<Double, VALUE_TYPE> converter;
+    private final IConverter<Double, VALUE_TYPE> converter;
 
-	private final double scale;
-	private final double size;
+    private final double scale;
+    private final double size;
 
-	@SuppressWarnings("unchecked")
-	LinearSliderViewerConverter(final VALUE_TYPE minValue, final VALUE_TYPE maxValue) {
-		Assert.paramNotNull(maxValue, "maxValue");
+    @SuppressWarnings("unchecked")
+    LinearSliderViewerConverter(final VALUE_TYPE minValue, final VALUE_TYPE maxValue) {
+        Assert.paramNotNull(maxValue, "maxValue");
 
-		if (minValue != null) {
-			Assert.paramLess(minValue.doubleValue(), maxValue.doubleValue(), "minValue", "maxValue");
-		}
-		else {
-			Assert.paramGreater(maxValue.doubleValue(), 0.0d, "maxValue", "minValue(default=0)");
-		}
+        if (minValue != null) {
+            Assert.paramLess(minValue.doubleValue(), maxValue.doubleValue(), "minValue", "maxValue");
+        }
+        else {
+            Assert.paramGreater(maxValue.doubleValue(), 0.0d, "maxValue", "minValue(default=0)");
+        }
 
-		this.minValue = minValue;
-		this.maxValue = maxValue;
+        this.minValue = minValue;
+        this.maxValue = maxValue;
 
-		final Class<?> type = maxValue.getClass();
+        final Class<?> type = maxValue.getClass();
 
-		if (Double.class.isAssignableFrom(type)) {
-			converter = (IConverter<Double, VALUE_TYPE>) new IConverter<Double, Double>() {
-				@Override
-				public Double convert(final Double source) {
-					return source;
-				}
-			};
-		}
-		else if (Float.class.isAssignableFrom(type)) {
-			converter = (IConverter<Double, VALUE_TYPE>) new IConverter<Double, Float>() {
-				@Override
-				public Float convert(final Double source) {
-					return Float.valueOf(source.floatValue());
-				}
-			};
-		}
-		else if (Integer.class.isAssignableFrom(type)) {
-			converter = (IConverter<Double, VALUE_TYPE>) new IConverter<Double, Integer>() {
-				@Override
-				public Integer convert(final Double source) {
-					return Integer.valueOf(source.intValue());
-				}
-			};
-		}
-		else if (Long.class.isAssignableFrom(type)) {
-			converter = (IConverter<Double, VALUE_TYPE>) new IConverter<Double, Long>() {
-				@Override
-				public Long convert(final Double source) {
-					return Long.valueOf(source.longValue());
-				}
-			};
-		}
-		else {
-			throw new IllegalArgumentException("Only Double, Float, Integer, Long is supported. Feel free to support more types");
-		}
+        if (Double.class.isAssignableFrom(type)) {
+            converter = (IConverter<Double, VALUE_TYPE>) new IConverter<Double, Double>() {
+                @Override
+                public Double convert(final Double source) {
+                    return source;
+                }
+            };
+        }
+        else if (Float.class.isAssignableFrom(type)) {
+            converter = (IConverter<Double, VALUE_TYPE>) new IConverter<Double, Float>() {
+                @Override
+                public Float convert(final Double source) {
+                    return Float.valueOf(source.floatValue());
+                }
+            };
+        }
+        else if (Integer.class.isAssignableFrom(type)) {
+            converter = (IConverter<Double, VALUE_TYPE>) new IConverter<Double, Integer>() {
+                @Override
+                public Integer convert(final Double source) {
+                    return Integer.valueOf(source.intValue());
+                }
+            };
+        }
+        else if (Long.class.isAssignableFrom(type)) {
+            converter = (IConverter<Double, VALUE_TYPE>) new IConverter<Double, Long>() {
+                @Override
+                public Long convert(final Double source) {
+                    return Long.valueOf(source.longValue());
+                }
+            };
+        }
+        else {
+            throw new IllegalArgumentException("Only Double, Float, Integer, Long is supported. Feel free to support more types");
+        }
 
-		Assert.paramLessOrEqual(getMin(), getMax(), "minValue", "maxValue");
+        Assert.paramLessOrEqual(getMin(), getMax(), "minValue", "maxValue");
 
-		this.size = getMax() - getMin();
-		this.scale = 1.0d / size;
-	}
+        this.size = getMax() - getMin();
+        this.scale = 1.0d / size;
+    }
 
-	@Override
-	public int getSliderValue(final int sliderMin, final int sliderMax, final VALUE_TYPE modelValue) {
-		if (modelValue != null) {
-			return (int) (sliderMin + ((sliderMax - sliderMin) * (scale * (modelValue.doubleValue() - getMin()))));
-		}
-		else {
-			return sliderMin;
-		}
-	}
+    @Override
+    public int getSliderValue(final int sliderMin, final int sliderMax, final VALUE_TYPE modelValue) {
+        if (modelValue != null) {
+            return (int) (sliderMin + ((sliderMax - sliderMin) * (scale * (modelValue.doubleValue() - getMin()))));
+        }
+        else {
+            return sliderMin;
+        }
+    }
 
-	@Override
-	public VALUE_TYPE getModelValue(final int sliderMin, final int sliderMax, final int sliderValue) {
-		return createValue(getMin() + size * (((1.0d / (sliderMax - sliderMin)) * (sliderValue - sliderMin))));
-	}
+    @Override
+    public VALUE_TYPE getModelValue(final int sliderMin, final int sliderMax, final int sliderValue) {
+        return createValue(getMin() + size * (((1.0d / (sliderMax - sliderMin)) * (sliderValue - sliderMin))));
+    }
 
-	private VALUE_TYPE createValue(final double value) {
-		return converter.convert(value);
-	}
+    private VALUE_TYPE createValue(final double value) {
+        return converter.convert(value);
+    }
 
-	private double getMin() {
-		return minValue != null ? minValue.doubleValue() : 0.0d;
-	}
+    private double getMin() {
+        return minValue != null ? minValue.doubleValue() : 0.0d;
+    }
 
-	private double getMax() {
-		return maxValue.doubleValue();
-	}
+    private double getMax() {
+        return maxValue.doubleValue();
+    }
 
 }

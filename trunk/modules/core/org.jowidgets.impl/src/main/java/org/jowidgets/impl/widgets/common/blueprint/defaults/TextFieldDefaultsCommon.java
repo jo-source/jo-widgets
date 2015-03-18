@@ -32,10 +32,10 @@ import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
 
 public class TextFieldDefaultsCommon implements IDefaultInitializer<ITextFieldSetupBuilderCommon<?>> {
 
-	@Override
-	public void initialize(final ITextFieldSetupBuilderCommon<?> builder) {
-		builder.setPasswordPresentation(false);
-		builder.setBorder(true);
-	}
+    @Override
+    public void initialize(final ITextFieldSetupBuilderCommon<?> builder) {
+        builder.setPasswordPresentation(false);
+        builder.setBorder(true);
+    }
 
 }

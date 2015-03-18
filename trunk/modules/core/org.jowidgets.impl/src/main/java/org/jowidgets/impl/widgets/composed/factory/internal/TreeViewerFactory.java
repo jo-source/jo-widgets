@@ -37,18 +37,18 @@ import org.jowidgets.impl.widgets.composed.TreeViewerImpl;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class TreeViewerFactory<ROOT_NODE_VALUE_TYPE> implements
-		IWidgetFactory<ITreeViewer<ROOT_NODE_VALUE_TYPE>, ITreeViewerDescriptor<ROOT_NODE_VALUE_TYPE>> {
+        IWidgetFactory<ITreeViewer<ROOT_NODE_VALUE_TYPE>, ITreeViewerDescriptor<ROOT_NODE_VALUE_TYPE>> {
 
-	@Override
-	public ITreeViewer<ROOT_NODE_VALUE_TYPE> create(
-		final Object parentUiReference,
-		final ITreeViewerDescriptor<ROOT_NODE_VALUE_TYPE> setup) {
+    @Override
+    public ITreeViewer<ROOT_NODE_VALUE_TYPE> create(
+        final Object parentUiReference,
+        final ITreeViewerDescriptor<ROOT_NODE_VALUE_TYPE> setup) {
 
-		final ITreeBluePrint bluePrint = BPF.tree();
-		bluePrint.setSetup(setup);
+        final ITreeBluePrint bluePrint = BPF.tree();
+        bluePrint.setSetup(setup);
 
-		final ITree tree = Toolkit.getWidgetFactory().create(parentUiReference, bluePrint);
-		return new TreeViewerImpl<ROOT_NODE_VALUE_TYPE>(tree, setup);
-	}
+        final ITree tree = Toolkit.getWidgetFactory().create(parentUiReference, bluePrint);
+        return new TreeViewerImpl<ROOT_NODE_VALUE_TYPE>(tree, setup);
+    }
 
 }

@@ -33,7 +33,7 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.test.api.widgets.IComboBoxUi;
 
 public interface IComboBoxSelectionDescriptorUi<INPUT_TYPE> extends
-		IComboBoxSelectionSetup<INPUT_TYPE>,
-		IWidgetDescriptor<IComboBoxUi<INPUT_TYPE>> {
+        IComboBoxSelectionSetup<INPUT_TYPE>,
+        IWidgetDescriptor<IComboBoxUi<INPUT_TYPE>> {
 
 }

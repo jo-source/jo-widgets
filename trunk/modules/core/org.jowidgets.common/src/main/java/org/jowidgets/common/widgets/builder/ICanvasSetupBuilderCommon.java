@@ -27,8 +27,7 @@
  */
 package org.jowidgets.common.widgets.builder;
 
-
 public interface ICanvasSetupBuilderCommon<INSTANCE_TYPE extends ICanvasSetupBuilderCommon<?>> extends
-		IComponentSetupBuilderCommon<INSTANCE_TYPE> {
+        IComponentSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

@@ -38,89 +38,89 @@ import org.jowidgets.tools.model.tree.TreeNodeModelAdapter;
 
 public final class RootNodeModel extends StringNodeModel {
 
-	private static final int LEVEL_1_COUNT = 5;
-	private static final String LEVEL_1_PREFIX = "Level 1, Node ";
+    private static final int LEVEL_1_COUNT = 5;
+    private static final String LEVEL_1_PREFIX = "Level 1, Node ";
 
-	private static final int LEVEL_2_COUNT = 3;
-	private static final String LEVEL_2_PREFIX = "Level 2, Node ";
+    private static final int LEVEL_2_COUNT = 3;
+    private static final String LEVEL_2_PREFIX = "Level 2, Node ";
 
-	private static final int LEVEL_3_COUNT = 3;
-	private static final String LEVEL_3_PREFIX = "Level 3, Node ";
+    private static final int LEVEL_3_COUNT = 3;
+    private static final String LEVEL_3_PREFIX = "Level 3, Node ";
 
-	private static final int LEVEL_4_COUNT = 10;
-	private static final String LEVEL_4_PREFIX = "Level 4, Node ";
+    private static final int LEVEL_4_COUNT = 10;
+    private static final String LEVEL_4_PREFIX = "Level 4, Node ";
 
-	private static final int LEVEL_5_COUNT = 205;
-	private static final String LEVEL_5_PREFIX = "Level 5, Node ";
+    private static final int LEVEL_5_COUNT = 205;
+    private static final String LEVEL_5_PREFIX = "Level 5, Node ";
 
-	RootNodeModel() {
-		super();
-		setChildren(createChildren());
-		setCheckedState(CheckedState.CHECKED);
-	}
+    RootNodeModel() {
+        super();
+        setChildren(createChildren());
+        setCheckedState(CheckedState.CHECKED);
+    }
 
-	private List<ITreeNodeModel<String>> createChildren() {
-		final List<ITreeNodeModel<String>> result = new ArrayList<ITreeNodeModel<String>>(LEVEL_1_COUNT);
-		for (int i = 0; i < LEVEL_1_COUNT; i++) {
-			final TreeNodeModelAdapter childCheckedListener = new TreeNodeModelAdapter() {
-				@Override
-				public void checkedChanged() {
-					fireCheckedChanged();
-				}
-			};
+    private List<ITreeNodeModel<String>> createChildren() {
+        final List<ITreeNodeModel<String>> result = new ArrayList<ITreeNodeModel<String>>(LEVEL_1_COUNT);
+        for (int i = 0; i < LEVEL_1_COUNT; i++) {
+            final TreeNodeModelAdapter childCheckedListener = new TreeNodeModelAdapter() {
+                @Override
+                public void checkedChanged() {
+                    fireCheckedChanged();
+                }
+            };
 
-			final ITreeNodeModel<String> level1Node = createLevel1Node(i, childCheckedListener);
-			level1Node.addTreeNodeModelListener(childCheckedListener);
-			result.add(level1Node);
-		}
-		return result;
-	}
+            final ITreeNodeModel<String> level1Node = createLevel1Node(i, childCheckedListener);
+            level1Node.addTreeNodeModelListener(childCheckedListener);
+            result.add(level1Node);
+        }
+        return result;
+    }
 
-	private ITreeNodeModel<String> createLevel1Node(final int index, final TreeNodeModelAdapter checkedListener) {
-		final List<ITreeNodeModel<String>> children = new ArrayList<ITreeNodeModel<String>>(LEVEL_2_COUNT);
-		for (int i = 0; i < LEVEL_2_COUNT; i++) {
-			final ITreeNodeModel<String> childNode = createLevel2Node(i, checkedListener);
-			childNode.addTreeNodeModelListener(checkedListener);
-			children.add(childNode);
-		}
-		return new StringNodeModel(LEVEL_1_PREFIX + index, children);
-	}
+    private ITreeNodeModel<String> createLevel1Node(final int index, final TreeNodeModelAdapter checkedListener) {
+        final List<ITreeNodeModel<String>> children = new ArrayList<ITreeNodeModel<String>>(LEVEL_2_COUNT);
+        for (int i = 0; i < LEVEL_2_COUNT; i++) {
+            final ITreeNodeModel<String> childNode = createLevel2Node(i, checkedListener);
+            childNode.addTreeNodeModelListener(checkedListener);
+            children.add(childNode);
+        }
+        return new StringNodeModel(LEVEL_1_PREFIX + index, children);
+    }
 
-	private ITreeNodeModel<String> createLevel2Node(final int index, final TreeNodeModelAdapter checkedListener) {
-		final List<ITreeNodeModel<String>> children = new ArrayList<ITreeNodeModel<String>>(LEVEL_3_COUNT);
-		for (int i = 0; i < LEVEL_3_COUNT; i++) {
-			final ITreeNodeModel<String> childNode = createLevel3Node(i, checkedListener);
-			childNode.addTreeNodeModelListener(checkedListener);
-			children.add(childNode);
-		}
-		return new StringNodeModel(LEVEL_2_PREFIX + index, children);
-	}
+    private ITreeNodeModel<String> createLevel2Node(final int index, final TreeNodeModelAdapter checkedListener) {
+        final List<ITreeNodeModel<String>> children = new ArrayList<ITreeNodeModel<String>>(LEVEL_3_COUNT);
+        for (int i = 0; i < LEVEL_3_COUNT; i++) {
+            final ITreeNodeModel<String> childNode = createLevel3Node(i, checkedListener);
+            childNode.addTreeNodeModelListener(checkedListener);
+            children.add(childNode);
+        }
+        return new StringNodeModel(LEVEL_2_PREFIX + index, children);
+    }
 
-	private ITreeNodeModel<String> createLevel3Node(final int index, final TreeNodeModelAdapter checkedListener) {
-		final List<ITreeNodeModel<String>> children = new ArrayList<ITreeNodeModel<String>>(LEVEL_4_COUNT);
-		for (int i = 0; i < LEVEL_4_COUNT; i++) {
-			final ITreeNodeModel<String> childNode = createLevel4Node(i, checkedListener);
-			childNode.addTreeNodeModelListener(checkedListener);
-			children.add(childNode);
-		}
-		return new StringNodeModel(LEVEL_3_PREFIX + index, children);
-	}
+    private ITreeNodeModel<String> createLevel3Node(final int index, final TreeNodeModelAdapter checkedListener) {
+        final List<ITreeNodeModel<String>> children = new ArrayList<ITreeNodeModel<String>>(LEVEL_4_COUNT);
+        for (int i = 0; i < LEVEL_4_COUNT; i++) {
+            final ITreeNodeModel<String> childNode = createLevel4Node(i, checkedListener);
+            childNode.addTreeNodeModelListener(checkedListener);
+            children.add(childNode);
+        }
+        return new StringNodeModel(LEVEL_3_PREFIX + index, children);
+    }
 
-	private ITreeNodeModel<String> createLevel4Node(final int index, final TreeNodeModelAdapter checkedListener) {
-		final List<ITreeNodeModel<String>> children = new ArrayList<ITreeNodeModel<String>>(LEVEL_5_COUNT);
-		for (int i = 0; i < LEVEL_5_COUNT; i++) {
-			final ITreeNodeModel<String> childNode = createLevel5Node(i, checkedListener);
-			childNode.addTreeNodeModelListener(checkedListener);
-			children.add(childNode);
-		}
-		return new StringNodeModel(LEVEL_4_PREFIX + index, children);
-	}
+    private ITreeNodeModel<String> createLevel4Node(final int index, final TreeNodeModelAdapter checkedListener) {
+        final List<ITreeNodeModel<String>> children = new ArrayList<ITreeNodeModel<String>>(LEVEL_5_COUNT);
+        for (int i = 0; i < LEVEL_5_COUNT; i++) {
+            final ITreeNodeModel<String> childNode = createLevel5Node(i, checkedListener);
+            childNode.addTreeNodeModelListener(checkedListener);
+            children.add(childNode);
+        }
+        return new StringNodeModel(LEVEL_4_PREFIX + index, children);
+    }
 
-	private ITreeNodeModel<String> createLevel5Node(final int index, final TreeNodeModelAdapter checkedListener) {
-		final List<ITreeNodeModel<String>> children = Collections.emptyList();
-		final StringNodeModel result = new StringNodeModel(LEVEL_5_PREFIX + index, children);
-		result.addTreeNodeModelListener(checkedListener);
-		return result;
-	}
+    private ITreeNodeModel<String> createLevel5Node(final int index, final TreeNodeModelAdapter checkedListener) {
+        final List<ITreeNodeModel<String>> children = Collections.emptyList();
+        final StringNodeModel result = new StringNodeModel(LEVEL_5_PREFIX + index, children);
+        result.addTreeNodeModelListener(checkedListener);
+        return result;
+    }
 
 }

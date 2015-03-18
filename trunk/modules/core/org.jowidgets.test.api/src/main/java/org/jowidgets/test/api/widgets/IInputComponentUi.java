@@ -35,10 +35,10 @@ import org.jowidgets.test.common.widgets.IInputComponentUiCommon;
 import org.jowidgets.validation.IValidateable;
 
 public interface IInputComponentUi<VALUE_TYPE> extends
-		IComponent,
-		IInputValueAccessor<VALUE_TYPE>,
-		IValidateable,
-		IInputComponentUiCommon,
-		IInputComponent<VALUE_TYPE> {
+        IComponent,
+        IInputValueAccessor<VALUE_TYPE>,
+        IValidateable,
+        IInputComponentUiCommon,
+        IInputComponent<VALUE_TYPE> {
 
 }

@@ -36,56 +36,56 @@ import org.jowidgets.common.types.Border;
 
 public class UIDContainer extends UIDComponent {
 
-	private final List<UIDComponent> components;
-	private final List<UIDComponent> componentsUnmodifieable;
-	private Object layout;
-	private Border border;
+    private final List<UIDComponent> components;
+    private final List<UIDComponent> componentsUnmodifieable;
+    private Object layout;
+    private Border border;
 
-	public UIDContainer() {
-		super();
-		this.components = new LinkedList<UIDComponent>();
-		this.componentsUnmodifieable = Collections.unmodifiableList(components);
-	}
+    public UIDContainer() {
+        super();
+        this.components = new LinkedList<UIDComponent>();
+        this.componentsUnmodifieable = Collections.unmodifiableList(components);
+    }
 
-	public UIDComponent add(final UIDComponent component) {
-		components.add(component);
-		return component;
-	}
+    public UIDComponent add(final UIDComponent component) {
+        components.add(component);
+        return component;
+    }
 
-	public void add(final UIDComponent component, final Object constraints) {
-		add(component);
-	}
+    public void add(final UIDComponent component, final Object constraints) {
+        add(component);
+    }
 
-	public void setLayout(final Object layout) {
-		this.layout = layout;
-	}
+    public void setLayout(final Object layout) {
+        this.layout = layout;
+    }
 
-	public Object getLayout() {
-		return layout;
-	}
+    public Object getLayout() {
+        return layout;
+    }
 
-	public void removeAll() {
-		components.clear();
-	}
+    public void removeAll() {
+        components.clear();
+    }
 
-	public boolean remove(final UIDComponent component) {
-		return components.remove(component);
-	}
+    public boolean remove(final UIDComponent component) {
+        return components.remove(component);
+    }
 
-	public void setBorder(final Border border) {
-		this.border = border;
-	}
+    public void setBorder(final Border border) {
+        this.border = border;
+    }
 
-	public List<UIDComponent> getComponents() {
-		return componentsUnmodifieable;
-	}
+    public List<UIDComponent> getComponents() {
+        return componentsUnmodifieable;
+    }
 
-	public Border getBorder() {
-		return border;
-	}
+    public Border getBorder() {
+        return border;
+    }
 
-	public void remove(final int index) {
-		components.remove(index);
-	}
+    public void remove(final int index) {
+        components.remove(index);
+    }
 
 }

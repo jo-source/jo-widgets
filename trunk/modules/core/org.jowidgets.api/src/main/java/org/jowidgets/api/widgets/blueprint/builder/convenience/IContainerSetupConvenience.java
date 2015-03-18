@@ -29,8 +29,8 @@ package org.jowidgets.api.widgets.blueprint.builder.convenience;
 
 public interface IContainerSetupConvenience<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setMigLayout(String columnConstraints, String rowConstraints);
+    INSTANCE_TYPE setMigLayout(String columnConstraints, String rowConstraints);
 
-	INSTANCE_TYPE setMigLayout(String layoutConstraints, String columnConstraints, String rowConstraints);
+    INSTANCE_TYPE setMigLayout(String layoutConstraints, String columnConstraints, String rowConstraints);
 
 }

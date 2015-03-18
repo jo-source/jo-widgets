@@ -52,50 +52,50 @@ import org.jowidgets.workbench.tools.AbstractView;
 
 public final class RoleTableView extends AbstractView {
 
-	public static final String ID = RoleTableView.class.getName();
-	public static final String DEFAULT_LABEL = "Roles";
-	public static final String DEFAULT_TOOLTIP = "Shows all roles";
-	public static final IImageConstant DEFAULT_ICON = SilkIcons.GROUP;
+    public static final String ID = RoleTableView.class.getName();
+    public static final String DEFAULT_LABEL = "Roles";
+    public static final String DEFAULT_TOOLTIP = "Shows all roles";
+    public static final IImageConstant DEFAULT_ICON = SilkIcons.GROUP;
 
-	public RoleTableView(final IViewContext context, final BeanTableModel<Role> model) {
-		final IContainer container = context.getContainer();
-		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
+    public RoleTableView(final IViewContext context, final BeanTableModel<Role> model) {
+        final IContainer container = context.getContainer();
+        container.setLayout(MigLayoutFactory.growingInnerCellLayout());
 
-		final ITable table = container.add(BPF.table(model), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		table.pack();
+        final ITable table = container.add(BPF.table(model), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        table.pack();
 
-		final IAction createAction = CreateRoleActionFactory.create(model);
-		final IAction editAction = EditRoleActionFactory.create(model);
-		final IAction deleteAction = DeleteRoleActionFactory.create(model);
+        final IAction createAction = CreateRoleActionFactory.create(model);
+        final IAction editAction = EditRoleActionFactory.create(model);
+        final IAction deleteAction = DeleteRoleActionFactory.create(model);
 
-		final IToolBarModel toolBar = context.getToolBar();
-		toolBar.addAction(createAction);
-		toolBar.addAction(editAction);
-		toolBar.addAction(deleteAction);
+        final IToolBarModel toolBar = context.getToolBar();
+        toolBar.addAction(createAction);
+        toolBar.addAction(editAction);
+        toolBar.addAction(deleteAction);
 
-		final IPopupMenu tableMenu = table.createPopupMenu();
-		final IMenuModel tableMenuModel = tableMenu.getModel();
-		tableMenuModel.addAction(createAction);
+        final IPopupMenu tableMenu = table.createPopupMenu();
+        final IMenuModel tableMenuModel = tableMenu.getModel();
+        tableMenuModel.addAction(createAction);
 
-		table.addPopupDetectionListener(new IPopupDetectionListener() {
-			@Override
-			public void popupDetected(final Position position) {
-				tableMenu.show(position);
-			}
-		});
+        table.addPopupDetectionListener(new IPopupDetectionListener() {
+            @Override
+            public void popupDetected(final Position position) {
+                tableMenu.show(position);
+            }
+        });
 
-		final IPopupMenu tableCellMenu = table.createPopupMenu();
-		final IMenuModel tableCellMenuModel = tableCellMenu.getModel();
-		tableCellMenuModel.addAction(createAction);
-		tableCellMenuModel.addAction(editAction);
-		tableCellMenuModel.addAction(deleteAction);
+        final IPopupMenu tableCellMenu = table.createPopupMenu();
+        final IMenuModel tableCellMenuModel = tableCellMenu.getModel();
+        tableCellMenuModel.addAction(createAction);
+        tableCellMenuModel.addAction(editAction);
+        tableCellMenuModel.addAction(deleteAction);
 
-		table.addTableCellPopupDetectionListener(new ITableCellPopupDetectionListener() {
-			@Override
-			public void popupDetected(final ITableCellPopupEvent event) {
-				tableCellMenu.show(event.getPosition());
-			}
-		});
-	}
+        table.addTableCellPopupDetectionListener(new ITableCellPopupDetectionListener() {
+            @Override
+            public void popupDetected(final ITableCellPopupEvent event) {
+                tableCellMenu.show(event.getPosition());
+            }
+        });
+    }
 
 }

@@ -44,87 +44,87 @@ import org.junit.Test;
 
 public class ToolBarTest {
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
-	private static final String DEFAULT_ITEM_TEXT = "test";
-	private static final String DEFAULT_ITEM_TOOLTIP_TEXT = "tooltipp";
+    private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+    private static final String DEFAULT_ITEM_TEXT = "test";
+    private static final String DEFAULT_ITEM_TOOLTIP_TEXT = "tooltipp";
 
-	// TODO LG make more tests!
-	@Test
-	public void createToolBarTest() {
-		Toolkit.getApplicationRunner().run(new IApplication() {
+    // TODO LG make more tests!
+    @Test
+    public void createToolBarTest() {
+        Toolkit.getApplicationRunner().run(new IApplication() {
 
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
-				final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
-				frame.setVisible(true);
+            @Override
+            public void start(final IApplicationLifecycle lifecycle) {
+                final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
+                frame.setVisible(true);
 
-				final IToolBar toolBar = frame.add(BPF.toolBar(), "");
+                final IToolBar toolBar = frame.add(BPF.toolBar(), "");
 
-				// test toolBarButton
-				IToolBarButton toolBarButton = toolBar.addItem(BPF.toolBarButton());
-				Assert.assertTrue(toolBar.getChildren().contains(toolBarButton));
-				Assert.assertTrue(toolBar.getChildren().size() == 1);
-				testToolBarItem(toolBarButton);
+                // test toolBarButton
+                IToolBarButton toolBarButton = toolBar.addItem(BPF.toolBarButton());
+                Assert.assertTrue(toolBar.getChildren().contains(toolBarButton));
+                Assert.assertTrue(toolBar.getChildren().size() == 1);
+                testToolBarItem(toolBarButton);
 
-				IToolBarToggleButton toolBarToggleButton = toolBar.addItem(BPF.toolBarToggleButton());
-				Assert.assertTrue(toolBar.getChildren().contains(toolBarToggleButton));
-				Assert.assertTrue(toolBar.getChildren().size() == 2);
-				testToolBarItem(toolBarToggleButton);
-				// test toggleButton selected/deselected
-				toolBarToggleButton.setSelected(true);
-				Assert.assertTrue(toolBarToggleButton.isSelected());
-				toolBarToggleButton.setSelected(false);
-				Assert.assertTrue(!toolBarToggleButton.isSelected());
+                IToolBarToggleButton toolBarToggleButton = toolBar.addItem(BPF.toolBarToggleButton());
+                Assert.assertTrue(toolBar.getChildren().contains(toolBarToggleButton));
+                Assert.assertTrue(toolBar.getChildren().size() == 2);
+                testToolBarItem(toolBarToggleButton);
+                // test toggleButton selected/deselected
+                toolBarToggleButton.setSelected(true);
+                Assert.assertTrue(toolBarToggleButton.isSelected());
+                toolBarToggleButton.setSelected(false);
+                Assert.assertTrue(!toolBarToggleButton.isSelected());
 
-				IToolBarPopupButton toolBarPopupButton = toolBar.addItem(BPF.toolBarPopupButton());
-				Assert.assertTrue(toolBar.getChildren().contains(toolBarPopupButton));
-				Assert.assertTrue(toolBar.getChildren().size() == 3);
-				testToolBarItem(toolBarPopupButton);
+                IToolBarPopupButton toolBarPopupButton = toolBar.addItem(BPF.toolBarPopupButton());
+                Assert.assertTrue(toolBar.getChildren().contains(toolBarPopupButton));
+                Assert.assertTrue(toolBar.getChildren().size() == 3);
+                testToolBarItem(toolBarPopupButton);
 
-				IToolBarContainerItem toolBarContainerItem = toolBar.addItem(BPF.toolBarContainerItem());
-				Assert.assertTrue(toolBar.getChildren().contains(toolBarContainerItem));
-				Assert.assertTrue(toolBar.getChildren().size() == 4);
+                IToolBarContainerItem toolBarContainerItem = toolBar.addItem(BPF.toolBarContainerItem());
+                Assert.assertTrue(toolBar.getChildren().contains(toolBarContainerItem));
+                Assert.assertTrue(toolBar.getChildren().size() == 4);
 
-				IToolBarItem separator = toolBar.addSeparator();
-				Assert.assertTrue(toolBar.getChildren().contains(separator));
-				Assert.assertTrue(toolBar.getChildren().size() == 5);
-				testToolBarItem(separator);
+                IToolBarItem separator = toolBar.addSeparator();
+                Assert.assertTrue(toolBar.getChildren().contains(separator));
+                Assert.assertTrue(toolBar.getChildren().size() == 5);
+                testToolBarItem(separator);
 
-				// remove items from toolBar
-				testRemoveToolBarItem(toolBar, toolBarButton);
-				testRemoveToolBarItem(toolBar, toolBarPopupButton);
-				testRemoveToolBarItem(toolBar, toolBarToggleButton);
-				testRemoveToolBarItem(toolBar, toolBarContainerItem);
-				testRemoveToolBarItem(toolBar, separator);
+                // remove items from toolBar
+                testRemoveToolBarItem(toolBar, toolBarButton);
+                testRemoveToolBarItem(toolBar, toolBarPopupButton);
+                testRemoveToolBarItem(toolBar, toolBarToggleButton);
+                testRemoveToolBarItem(toolBar, toolBarContainerItem);
+                testRemoveToolBarItem(toolBar, separator);
 
-				// add items at specific positions
-				toolBarButton = toolBar.addItem(0, BPF.toolBarButton());
-				toolBarContainerItem = toolBar.addItem(1, BPF.toolBarContainerItem());
-				toolBarPopupButton = toolBar.addItem(2, BPF.toolBarPopupButton());
-				toolBarToggleButton = toolBar.addItem(3, BPF.toolBarToggleButton());
-				separator = toolBar.addItem(4, BPF.toolBarSeparator());
+                // add items at specific positions
+                toolBarButton = toolBar.addItem(0, BPF.toolBarButton());
+                toolBarContainerItem = toolBar.addItem(1, BPF.toolBarContainerItem());
+                toolBarPopupButton = toolBar.addItem(2, BPF.toolBarPopupButton());
+                toolBarToggleButton = toolBar.addItem(3, BPF.toolBarToggleButton());
+                separator = toolBar.addItem(4, BPF.toolBarSeparator());
 
-				frame.dispose();
-			}
-		});
-	}
+                frame.dispose();
+            }
+        });
+    }
 
-	private <T extends IToolBarItem> void testToolBarItem(final T item) {
-		item.setText(DEFAULT_ITEM_TEXT);
-		item.setToolTipText(DEFAULT_ITEM_TOOLTIP_TEXT);
+    private <T extends IToolBarItem> void testToolBarItem(final T item) {
+        item.setText(DEFAULT_ITEM_TEXT);
+        item.setToolTipText(DEFAULT_ITEM_TOOLTIP_TEXT);
 
-		item.setEnabled(true);
-		Assert.assertTrue(item.isEnabled());
+        item.setEnabled(true);
+        Assert.assertTrue(item.isEnabled());
 
-		item.setEnabled(false);
-		Assert.assertTrue(!item.isEnabled());
-	}
+        item.setEnabled(false);
+        Assert.assertTrue(!item.isEnabled());
+    }
 
-	private <T extends IToolBarItem> void testRemoveToolBarItem(final IToolBar parent, final T item) {
-		final int oldSize = parent.getChildren().size();
-		parent.remove(item);
-		Assert.assertFalse(parent.getChildren().contains(item));
-		Assert.assertTrue((parent.getChildren().size() + 1) == oldSize);
-	}
+    private <T extends IToolBarItem> void testRemoveToolBarItem(final IToolBar parent, final T item) {
+        final int oldSize = parent.getChildren().size();
+        parent.remove(item);
+        Assert.assertFalse(parent.getChildren().contains(item));
+        Assert.assertTrue((parent.getChildren().size() + 1) == oldSize);
+    }
 
 }

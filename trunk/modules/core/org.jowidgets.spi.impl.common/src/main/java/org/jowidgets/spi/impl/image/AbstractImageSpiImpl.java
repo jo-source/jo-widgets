@@ -33,37 +33,37 @@ import org.jowidgets.util.Assert;
 
 public abstract class AbstractImageSpiImpl<IMAGE_TYPE> implements IImageSpi {
 
-	private ImageHandle<? extends IMAGE_TYPE> imageHandle;
-	private boolean disposed;
+    private ImageHandle<? extends IMAGE_TYPE> imageHandle;
+    private boolean disposed;
 
-	public AbstractImageSpiImpl(final ImageHandle<? extends IMAGE_TYPE> imageHandle) {
+    public AbstractImageSpiImpl(final ImageHandle<? extends IMAGE_TYPE> imageHandle) {
 
-		Assert.paramNotNull(imageHandle, "imageHandle");
+        Assert.paramNotNull(imageHandle, "imageHandle");
 
-		this.imageHandle = imageHandle;
-		this.disposed = false;
-	}
+        this.imageHandle = imageHandle;
+        this.disposed = false;
+    }
 
-	@Override
-	public void dispose() {
-		checkDisposed();
-		if (!disposed && !imageHandle.isDisposed()) {
-			imageHandle.dispose();
-			imageHandle = null;
-		}
-		disposed = true;
-	}
+    @Override
+    public void dispose() {
+        checkDisposed();
+        if (!disposed && !imageHandle.isDisposed()) {
+            imageHandle.dispose();
+            imageHandle = null;
+        }
+        disposed = true;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public ImageHandle<IMAGE_TYPE> getImageHandle() {
-		checkDisposed();
-		return (ImageHandle<IMAGE_TYPE>) imageHandle;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public ImageHandle<IMAGE_TYPE> getImageHandle() {
+        checkDisposed();
+        return (ImageHandle<IMAGE_TYPE>) imageHandle;
+    }
 
-	protected void checkDisposed() {
-		if (disposed) {
-			throw new IllegalStateException("Image is disposed");
-		}
-	}
+    protected void checkDisposed() {
+        if (disposed) {
+            throw new IllegalStateException("Image is disposed");
+        }
+    }
 }

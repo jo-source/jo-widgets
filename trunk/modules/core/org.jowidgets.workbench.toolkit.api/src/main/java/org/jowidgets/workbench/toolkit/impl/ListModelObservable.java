@@ -36,38 +36,38 @@ import org.jowidgets.api.model.IListModelObservable;
 
 class ListModelObservable implements IListModelObservable {
 
-	private final Set<IListModelListener> listeners;
+    private final Set<IListModelListener> listeners;
 
-	ListModelObservable() {
-		this.listeners = new HashSet<IListModelListener>();
-	}
+    ListModelObservable() {
+        this.listeners = new HashSet<IListModelListener>();
+    }
 
-	@Override
-	public void addListModelListener(final IListModelListener listener) {
-		listeners.add(listener);
-	}
+    @Override
+    public void addListModelListener(final IListModelListener listener) {
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removeListModelListener(final IListModelListener listener) {
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeListModelListener(final IListModelListener listener) {
+        listeners.remove(listener);
+    }
 
-	public void fireAfterChildAdded(final int index) {
-		for (final IListModelListener listener : listeners) {
-			listener.afterChildAdded(index);
-		}
-	}
+    public void fireAfterChildAdded(final int index) {
+        for (final IListModelListener listener : listeners) {
+            listener.afterChildAdded(index);
+        }
+    }
 
-	public void fireBeforeChildRemove(final int index) {
-		for (final IListModelListener listener : listeners) {
-			listener.beforeChildRemove(index);
-		}
-	}
+    public void fireBeforeChildRemove(final int index) {
+        for (final IListModelListener listener : listeners) {
+            listener.beforeChildRemove(index);
+        }
+    }
 
-	public void fireAfterChildRemoved(final int index) {
-		for (final IListModelListener listener : listeners) {
-			listener.afterChildRemoved(index);
-		}
-	}
+    public void fireAfterChildRemoved(final int index) {
+        for (final IListModelListener listener : listeners) {
+            listener.afterChildRemoved(index);
+        }
+    }
 
 }

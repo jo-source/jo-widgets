@@ -34,11 +34,11 @@ import org.jowidgets.validation.IValidationResult;
 
 public interface IInputComponentValidationLabelSetup extends IValidationLabelSetup {
 
-	@Mandatory
-	IInputComponent<?> getInputComponent();
+    @Mandatory
+    IInputComponent<?> getInputComponent();
 
-	IDecorator<IValidationResult> getUnmodifiedValidationDecorator();
+    IDecorator<IValidationResult> getUnmodifiedValidationDecorator();
 
-	IDecorator<IValidationResult> getInitialValidationDecorator();
+    IDecorator<IValidationResult> getInitialValidationDecorator();
 
 }

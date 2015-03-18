@@ -30,20 +30,20 @@ package org.jowidgets.api.model.tree;
 
 public interface ITreeNodeModelListener {
 
-	void dataChanged();
+    void dataChanged();
 
-	void childrenChanged();
+    void childrenChanged();
 
-	void selectionChanged();
+    void selectionChanged();
 
-	void checkedChanged();
+    void checkedChanged();
 
-	void checkableChanged();
+    void checkableChanged();
 
-	void expansionChanged();
+    void expansionChanged();
 
-	void visibilityChanged();
+    void visibilityChanged();
 
-	void dispose();
+    void dispose();
 
 }

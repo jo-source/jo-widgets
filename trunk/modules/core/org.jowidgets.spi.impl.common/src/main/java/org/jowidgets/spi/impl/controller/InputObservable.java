@@ -39,33 +39,33 @@ import org.jowidgets.util.NullCompatibleEquivalence;
 
 public class InputObservable implements IInputObservable {
 
-	private final Set<IInputListener> inputListeners;
+    private final Set<IInputListener> inputListeners;
 
-	private Object lastValue;
+    private Object lastValue;
 
-	public InputObservable() {
-		this.inputListeners = new LinkedHashSet<IInputListener>();
-	}
+    public InputObservable() {
+        this.inputListeners = new LinkedHashSet<IInputListener>();
+    }
 
-	@Override
-	public final void addInputListener(final IInputListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		this.inputListeners.add(listener);
-	}
+    @Override
+    public final void addInputListener(final IInputListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        this.inputListeners.add(listener);
+    }
 
-	@Override
-	public final void removeInputListener(final IInputListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		this.inputListeners.remove(listener);
-	}
+    @Override
+    public final void removeInputListener(final IInputListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        this.inputListeners.remove(listener);
+    }
 
-	public void fireInputChanged(final Object value) {
-		if (!NullCompatibleEquivalence.equals(value, lastValue)) {
-			for (final IInputListener inputListener : new LinkedList<IInputListener>(inputListeners)) {
-				inputListener.inputChanged();
-			}
-			lastValue = value;
-		}
-	}
+    public void fireInputChanged(final Object value) {
+        if (!NullCompatibleEquivalence.equals(value, lastValue)) {
+            for (final IInputListener inputListener : new LinkedList<IInputListener>(inputListeners)) {
+                inputListener.inputChanged();
+            }
+            lastValue = value;
+        }
+    }
 
 }

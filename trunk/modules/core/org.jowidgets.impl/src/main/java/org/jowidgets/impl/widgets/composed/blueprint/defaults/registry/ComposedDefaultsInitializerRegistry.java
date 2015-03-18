@@ -70,26 +70,26 @@ import org.jowidgets.impl.widgets.composed.blueprint.defaults.ValidationLabelDef
 
 public class ComposedDefaultsInitializerRegistry extends BasicDefaultsInitializerRegistry {
 
-	public ComposedDefaultsInitializerRegistry() {
-		super();
-		register(IInputCompositeSetupBuilder.class, new InputCompositeDefaults());
-		register(ICollectionInputControlSetupBuilder.class, new CollectionInputControlDefaults());
-		register(IMessageDialogSetupBuilder.class, new MessageDialogDefaults());
-		register(IQuestionDialogSetupBuilder.class, new QuestionDialogDefaults());
-		register(IProgressBarSetupBuilder.class, new ProgressBarDefaults());
-		register(IInputDialogSetupBuilder.class, new InputDialogDefaults());
-		register(ILoginDialogSetupBuilder.class, new LoginDialogDefaults());
-		register(IPasswordChangeDialogSetupBuilder.class, new PasswordChangeDialogDefaults());
-		register(IInputFieldSetupBuilder.class, new InputFieldDefaults());
-		register(IUnitValueFieldSetupBuilder.class, new UnitValueFieldDefaults());
-		register(IValidationLabelSetupBuilder.class, new ValidationLabelDefaults());
-		register(IInputComponentValidationLabelSetupBuilder.class, new InputComponentValidationLabelDefaults());
-		register(ICollectionInputDialogSetupBuilder.class, new CollectionInputDialogDefaults());
-		register(ICollectionInputFieldSetupBuilder.class, new CollectionInputFieldDefaults());
-		register(IExpandCompositeBluePrint.class, new ExpandCompositeDefaults());
-		register(ILevelMeterBluePrint.class, new LevelMeterDefaults());
-		register(ITreeSetupBuilder.class, new TreeDefaults());
-		register(ISliderViewerSetupBuilder.class, new SliderViewerDefaults());
-		register(ITreeViewerSetupBuilder.class, new TreeViewerDefaults());
-	}
+    public ComposedDefaultsInitializerRegistry() {
+        super();
+        register(IInputCompositeSetupBuilder.class, new InputCompositeDefaults());
+        register(ICollectionInputControlSetupBuilder.class, new CollectionInputControlDefaults());
+        register(IMessageDialogSetupBuilder.class, new MessageDialogDefaults());
+        register(IQuestionDialogSetupBuilder.class, new QuestionDialogDefaults());
+        register(IProgressBarSetupBuilder.class, new ProgressBarDefaults());
+        register(IInputDialogSetupBuilder.class, new InputDialogDefaults());
+        register(ILoginDialogSetupBuilder.class, new LoginDialogDefaults());
+        register(IPasswordChangeDialogSetupBuilder.class, new PasswordChangeDialogDefaults());
+        register(IInputFieldSetupBuilder.class, new InputFieldDefaults());
+        register(IUnitValueFieldSetupBuilder.class, new UnitValueFieldDefaults());
+        register(IValidationLabelSetupBuilder.class, new ValidationLabelDefaults());
+        register(IInputComponentValidationLabelSetupBuilder.class, new InputComponentValidationLabelDefaults());
+        register(ICollectionInputDialogSetupBuilder.class, new CollectionInputDialogDefaults());
+        register(ICollectionInputFieldSetupBuilder.class, new CollectionInputFieldDefaults());
+        register(IExpandCompositeBluePrint.class, new ExpandCompositeDefaults());
+        register(ILevelMeterBluePrint.class, new LevelMeterDefaults());
+        register(ITreeSetupBuilder.class, new TreeDefaults());
+        register(ISliderViewerSetupBuilder.class, new SliderViewerDefaults());
+        register(ITreeViewerSetupBuilder.class, new TreeViewerDefaults());
+    }
 }

@@ -35,19 +35,19 @@ import org.jowidgets.workbench.toolkit.api.IWorkbenchPartBuilderFactory;
 
 class WorkbenchPartBuilderFactory implements IWorkbenchPartBuilderFactory {
 
-	@Override
-	public IWorkbenchModelBuilder workbench() {
-		return new WorkbenchModelBuilder();
-	}
+    @Override
+    public IWorkbenchModelBuilder workbench() {
+        return new WorkbenchModelBuilder();
+    }
 
-	@Override
-	public IWorkbenchApplicationModelBuilder application() {
-		return new WorkbenchApplicationModelBuilder();
-	}
+    @Override
+    public IWorkbenchApplicationModelBuilder application() {
+        return new WorkbenchApplicationModelBuilder();
+    }
 
-	@Override
-	public IComponentNodeModelBuilder componentNode() {
-		return new ComponentNodeModelBuilder();
-	}
+    @Override
+    public IComponentNodeModelBuilder componentNode() {
+        return new ComponentNodeModelBuilder();
+    }
 
 }

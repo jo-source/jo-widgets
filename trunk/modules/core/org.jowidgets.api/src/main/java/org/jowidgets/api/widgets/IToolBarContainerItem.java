@@ -33,9 +33,9 @@ import org.jowidgets.common.widgets.IToolBarContainerItemCommon;
 
 public interface IToolBarContainerItem extends IToolBarItem, IContainer, IToolBarContainerItemCommon {
 
-	void setModel(IContainerItemModel model);
+    void setModel(IContainerItemModel model);
 
-	@Override
-	IContainerItemModel getModel();
+    @Override
+    IContainerItemModel getModel();
 
 }

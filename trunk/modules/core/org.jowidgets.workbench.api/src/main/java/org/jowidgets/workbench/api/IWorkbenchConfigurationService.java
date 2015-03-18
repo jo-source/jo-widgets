@@ -31,18 +31,18 @@ import java.io.Serializable;
 
 public interface IWorkbenchConfigurationService {
 
-	/**
-	 * Loads the configuration from a repository.
-	 * 
-	 * @return The loaded configuration, or null if no configuration exists
-	 */
-	Serializable loadConfiguration();
+    /**
+     * Loads the configuration from a repository.
+     * 
+     * @return The loaded configuration, or null if no configuration exists
+     */
+    Serializable loadConfiguration();
 
-	/**
-	 * Saves the configuration into a repository
-	 * 
-	 * @param configuration The configuration to save
-	 */
-	void saveConfiguration(Serializable configuration);
+    /**
+     * Saves the configuration into a repository
+     * 
+     * @param configuration The configuration to save
+     */
+    void saveConfiguration(Serializable configuration);
 
 }

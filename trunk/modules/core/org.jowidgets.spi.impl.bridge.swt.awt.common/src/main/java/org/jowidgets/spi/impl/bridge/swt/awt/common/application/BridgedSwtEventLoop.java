@@ -38,139 +38,139 @@ import org.jowidgets.util.Assert;
 
 public final class BridgedSwtEventLoop {
 
-	private final AtomicBoolean isRunning;;
-	private final long sleepMillis;
-	private final int swtEventsCountInSuccession;
+    private final AtomicBoolean isRunning;;
+    private final long sleepMillis;
+    private final int swtEventsCountInSuccession;
 
-	private Display display;
-	private Thread eventDispatchingThread;
-	private Runnable stoppedCallback;
+    private Display display;
+    private Thread eventDispatchingThread;
+    private Runnable stoppedCallback;
 
-	public BridgedSwtEventLoop() {
-		this(10, 10);
-	}
+    public BridgedSwtEventLoop() {
+        this(10, 10);
+    }
 
-	public BridgedSwtEventLoop(final long sleepMillis, final int swtEventsCountInSuccession) {
-		checkNotUiThread();
-		this.sleepMillis = sleepMillis;
-		this.swtEventsCountInSuccession = swtEventsCountInSuccession;
-		this.isRunning = new AtomicBoolean(false);
-		try {
-			SwingUtilities.invokeAndWait(new Runnable() {
-				@Override
-				public void run() {
-					eventDispatchingThread = Thread.currentThread();
-					display = Display.getDefault();
-				}
-			});
-		}
-		catch (final Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public BridgedSwtEventLoop(final long sleepMillis, final int swtEventsCountInSuccession) {
+        checkNotUiThread();
+        this.sleepMillis = sleepMillis;
+        this.swtEventsCountInSuccession = swtEventsCountInSuccession;
+        this.isRunning = new AtomicBoolean(false);
+        try {
+            SwingUtilities.invokeAndWait(new Runnable() {
+                @Override
+                public void run() {
+                    eventDispatchingThread = Thread.currentThread();
+                    display = Display.getDefault();
+                }
+            });
+        }
+        catch (final Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	/**
-	 * Starts the swt event loop. This must NOT be invoked in the awt(swing) event thread.
-	 */
-	public void start() {
-		checkNotUiThread();
-		if (!isRunning.getAndSet(true)) {
-			isRunning.set(true);
-		}
-		else {
-			return;
-		}
-		while (isRunning.get()) {
-			final CountDownLatch latch = new CountDownLatch(1);
-			SwingUtilities.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					final Display currentDisplay = getCurrentDisplay();
-					boolean hasMoreSwtEvents = true;
-					int swtEventCount = 0;
-					while (hasMoreSwtEvents
-						&& swtEventCount < swtEventsCountInSuccession
-						&& !currentDisplay.isDisposed()
-						&& Display.getCurrent() != null
-						&& isRunning.get()) {
-						hasMoreSwtEvents = currentDisplay.readAndDispatch();
-						swtEventCount++;
-					}
-					latch.countDown();
-				}
-			});
-			try {
-				latch.await();
-				Thread.sleep(sleepMillis);
-			}
-			catch (final Exception e) {
-				throw new RuntimeException(e);
-			}
-		}
+    /**
+     * Starts the swt event loop. This must NOT be invoked in the awt(swing) event thread.
+     */
+    public void start() {
+        checkNotUiThread();
+        if (!isRunning.getAndSet(true)) {
+            isRunning.set(true);
+        }
+        else {
+            return;
+        }
+        while (isRunning.get()) {
+            final CountDownLatch latch = new CountDownLatch(1);
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    final Display currentDisplay = getCurrentDisplay();
+                    boolean hasMoreSwtEvents = true;
+                    int swtEventCount = 0;
+                    while (hasMoreSwtEvents
+                        && swtEventCount < swtEventsCountInSuccession
+                        && !currentDisplay.isDisposed()
+                        && Display.getCurrent() != null
+                        && isRunning.get()) {
+                        hasMoreSwtEvents = currentDisplay.readAndDispatch();
+                        swtEventCount++;
+                    }
+                    latch.countDown();
+                }
+            });
+            try {
+                latch.await();
+                Thread.sleep(sleepMillis);
+            }
+            catch (final Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
 
-		if (stoppedCallback != null) {
-			SwingUtilities.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						stoppedCallback.run();
-					}
-					finally {
-						stoppedCallback = null;
-					}
-				}
-			});
-		}
-	}
+        if (stoppedCallback != null) {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        stoppedCallback.run();
+                    }
+                    finally {
+                        stoppedCallback = null;
+                    }
+                }
+            });
+        }
+    }
 
-	public void stop() {
-		stop(new Runnable() {
-			@Override
-			public void run() {}
-		});
-	}
+    public void stop() {
+        stop(new Runnable() {
+            @Override
+            public void run() {}
+        });
+    }
 
-	public void stop(final Runnable stoppedCallback) {
-		checkUiThread();
-		Assert.paramNotNull(stoppedCallback, "stoppedCallback");
-		if (this.stoppedCallback == null) {
-			this.stoppedCallback = stoppedCallback;
-			isRunning.set(false);
-		}
-	}
+    public void stop(final Runnable stoppedCallback) {
+        checkUiThread();
+        Assert.paramNotNull(stoppedCallback, "stoppedCallback");
+        if (this.stoppedCallback == null) {
+            this.stoppedCallback = stoppedCallback;
+            isRunning.set(false);
+        }
+    }
 
-	public boolean isRunning() {
-		return isRunning.get();
-	}
+    public boolean isRunning() {
+        return isRunning.get();
+    }
 
-	public Thread getEventDispatchingThread() {
-		return eventDispatchingThread;
-	}
+    public Thread getEventDispatchingThread() {
+        return eventDispatchingThread;
+    }
 
-	private void checkNotUiThread() {
-		if (SwingUtilities.isEventDispatchThread()) {
-			throw new IllegalStateException("The swt event loop must not be started from the awt event thread");
-		}
-	}
+    private void checkNotUiThread() {
+        if (SwingUtilities.isEventDispatchThread()) {
+            throw new IllegalStateException("The swt event loop must not be started from the awt event thread");
+        }
+    }
 
-	private void checkUiThread() {
-		if (!SwingUtilities.isEventDispatchThread()) {
-			throw new IllegalStateException("The swt event loop must be stopped from the awt event thread");
-		}
-	}
+    private void checkUiThread() {
+        if (!SwingUtilities.isEventDispatchThread()) {
+            throw new IllegalStateException("The swt event loop must be stopped from the awt event thread");
+        }
+    }
 
-	private Display getCurrentDisplay() {
-		if (display == null) {
-			if (SwingUtilities.isEventDispatchThread()) {
-				display = Display.getCurrent();
-				if (display == null) {
-					throw new IllegalStateException("The swt display was not initialized");
-				}
-			}
-			else {
-				throw new IllegalStateException("The display must be created in the awt(swing) event dispatch thread");
-			}
-		}
-		return display;
-	}
+    private Display getCurrentDisplay() {
+        if (display == null) {
+            if (SwingUtilities.isEventDispatchThread()) {
+                display = Display.getCurrent();
+                if (display == null) {
+                    throw new IllegalStateException("The swt display was not initialized");
+                }
+            }
+            else {
+                throw new IllegalStateException("The display must be created in the awt(swing) event dispatch thread");
+            }
+        }
+        return display;
+    }
 }

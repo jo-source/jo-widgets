@@ -32,9 +32,9 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
 public class SelectableItemDefaults implements IDefaultInitializer<ISelectableItemSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final ISelectableItemSetupBuilder<?> builder) {
-		builder.setSelected(false);
-	}
+    @Override
+    public void initialize(final ISelectableItemSetupBuilder<?> builder) {
+        builder.setSelected(false);
+    }
 
 }

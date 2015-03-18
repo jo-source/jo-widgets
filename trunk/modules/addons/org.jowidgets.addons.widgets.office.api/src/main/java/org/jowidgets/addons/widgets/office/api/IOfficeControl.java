@@ -33,8 +33,8 @@ import org.jowidgets.util.event.IChangeListener;
 
 public interface IOfficeControl extends IOleDocument {
 
-	void addDirtyStateListener(IChangeListener changeListener);
+    void addDirtyStateListener(IChangeListener changeListener);
 
-	void removeDirtyStateListener(IChangeListener changeListener);
+    void removeDirtyStateListener(IChangeListener changeListener);
 
 }

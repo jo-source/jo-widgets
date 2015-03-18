@@ -36,10 +36,10 @@ import org.jowidgets.spi.widgets.controller.ITreeSelectionObservableSpi;
 
 public interface ITreeSpi extends IControlSpi, ITreeSelectionObservableSpi, ITreeCommon {
 
-	ITreeNodeSpi getRootNode();
+    ITreeNodeSpi getRootNode();
 
-	ITreeNodeSpi getNodeAt(Position position);
+    ITreeNodeSpi getNodeAt(Position position);
 
-	List<ITreeNodeSpi> getSelectedNodes();
+    List<ITreeNodeSpi> getSelectedNodes();
 
 }

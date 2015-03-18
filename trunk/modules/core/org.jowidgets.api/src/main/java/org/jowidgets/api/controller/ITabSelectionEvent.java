@@ -32,8 +32,8 @@ import org.jowidgets.api.widgets.ITabItem;
 
 public interface ITabSelectionEvent {
 
-	ITabItem getLastSelected();
+    ITabItem getLastSelected();
 
-	ITabItem getNewSelected();
+    ITabItem getNewSelected();
 
 }

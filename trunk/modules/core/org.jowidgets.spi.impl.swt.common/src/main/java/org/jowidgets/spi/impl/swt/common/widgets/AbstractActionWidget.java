@@ -33,26 +33,26 @@ import org.jowidgets.spi.widgets.IActionWidgetSpi;
 
 public abstract class AbstractActionWidget extends ActionObservable implements IActionWidgetSpi {
 
-	private final SwtWidget swtWidgetDelegate;
+    private final SwtWidget swtWidgetDelegate;
 
-	public AbstractActionWidget(final Control control) {
-		super();
-		this.swtWidgetDelegate = new SwtWidget(control);
-	}
+    public AbstractActionWidget(final Control control) {
+        super();
+        this.swtWidgetDelegate = new SwtWidget(control);
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		swtWidgetDelegate.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        swtWidgetDelegate.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return swtWidgetDelegate.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return swtWidgetDelegate.isEnabled();
+    }
 
-	@Override
-	public Control getUiReference() {
-		return swtWidgetDelegate.getUiReference();
-	}
+    @Override
+    public Control getUiReference() {
+        return swtWidgetDelegate.getUiReference();
+    }
 
 }

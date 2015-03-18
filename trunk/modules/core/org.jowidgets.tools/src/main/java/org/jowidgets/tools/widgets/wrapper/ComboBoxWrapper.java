@@ -36,58 +36,58 @@ import org.jowidgets.util.IObservableValue;
 
 public class ComboBoxWrapper<VALUE_TYPE> extends InputControlWrapper<VALUE_TYPE> implements IComboBox<VALUE_TYPE> {
 
-	public ComboBoxWrapper(final IComboBox<VALUE_TYPE> widget) {
-		super(widget);
-	}
+    public ComboBoxWrapper(final IComboBox<VALUE_TYPE> widget) {
+        super(widget);
+    }
 
-	@Override
-	protected IComboBox<VALUE_TYPE> getWidget() {
-		return (IComboBox<VALUE_TYPE>) super.getWidget();
-	}
+    @Override
+    protected IComboBox<VALUE_TYPE> getWidget() {
+        return (IComboBox<VALUE_TYPE>) super.getWidget();
+    }
 
-	@Override
-	public IObservableValue<VALUE_TYPE> getObservableValue() {
-		return getWidget().getObservableValue();
-	}
+    @Override
+    public IObservableValue<VALUE_TYPE> getObservableValue() {
+        return getWidget().getObservableValue();
+    }
 
-	@Override
-	public List<VALUE_TYPE> getElements() {
-		return getWidget().getElements();
-	}
+    @Override
+    public List<VALUE_TYPE> getElements() {
+        return getWidget().getElements();
+    }
 
-	@Override
-	public void setElements(final Collection<? extends VALUE_TYPE> elements) {
-		getWidget().setElements(elements);
-	}
+    @Override
+    public void setElements(final Collection<? extends VALUE_TYPE> elements) {
+        getWidget().setElements(elements);
+    }
 
-	@Override
-	public void setElements(final VALUE_TYPE... elements) {
-		getWidget().setElements(elements);
-	}
+    @Override
+    public void setElements(final VALUE_TYPE... elements) {
+        getWidget().setElements(elements);
+    }
 
-	@Override
-	public int getSelectedIndex() {
-		return getWidget().getSelectedIndex();
-	}
+    @Override
+    public int getSelectedIndex() {
+        return getWidget().getSelectedIndex();
+    }
 
-	@Override
-	public void setSelectedIndex(final int index) {
-		getWidget().setSelectedIndex(index);
-	}
+    @Override
+    public void setSelectedIndex(final int index) {
+        getWidget().setSelectedIndex(index);
+    }
 
-	@Override
-	public void select() {
-		getWidget().select();
-	}
+    @Override
+    public void select() {
+        getWidget().select();
+    }
 
-	@Override
-	public void setPopupVisible(final boolean visible) {
-		getWidget().setPopupVisible(visible);
-	}
+    @Override
+    public void setPopupVisible(final boolean visible) {
+        getWidget().setPopupVisible(visible);
+    }
 
-	@Override
-	public boolean isPopupVisible() {
-		return getWidget().isPopupVisible();
-	}
+    @Override
+    public boolean isPopupVisible() {
+        return getWidget().isPopupVisible();
+    }
 
 }

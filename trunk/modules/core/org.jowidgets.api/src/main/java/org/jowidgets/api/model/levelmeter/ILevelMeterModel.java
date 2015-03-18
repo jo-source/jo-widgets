@@ -30,6 +30,6 @@ package org.jowidgets.api.model.levelmeter;
 
 public interface ILevelMeterModel extends ILevelObservable {
 
-	double getLevel();
+    double getLevel();
 
 }

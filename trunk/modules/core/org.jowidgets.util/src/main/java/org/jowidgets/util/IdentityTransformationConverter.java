@@ -30,9 +30,9 @@ package org.jowidgets.util;
 
 public final class IdentityTransformationConverter<TYPE> implements IConverter<TYPE, TYPE> {
 
-	@Override
-	public TYPE convert(final TYPE source) {
-		return source;
-	}
+    @Override
+    public TYPE convert(final TYPE source) {
+        return source;
+    }
 
 }

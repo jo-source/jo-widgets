@@ -38,81 +38,81 @@ import org.jowidgets.util.Assert;
  */
 public final class MigLayout {
 
-	private MigLayout() {}
+    private MigLayout() {}
 
-	/**
-	 * Gets a layout factory for an default 'MigLayout'
-	 * 
-	 * @return A layout factory that produces 'MigLayout', never null
-	 */
-	public static ILayoutFactory<IMigLayout> get() {
-		return Toolkit.getLayoutFactoryProvider().migLayout();
-	}
+    /**
+     * Gets a layout factory for an default 'MigLayout'
+     * 
+     * @return A layout factory that produces 'MigLayout', never null
+     */
+    public static ILayoutFactory<IMigLayout> get() {
+        return Toolkit.getLayoutFactoryProvider().migLayout();
+    }
 
-	/**
-	 * Creates a layout factory for default 'MigLayout' with given constraints
-	 * 
-	 * @param layoutConstraints The layout constraints to use
-	 * 
-	 * @return A layout factory that produces 'MigLayout', never null
-	 */
-	public static ILayoutFactory<IMigLayout> create(final String layoutConstraints) {
-		return builder().constraints(layoutConstraints).build();
-	}
+    /**
+     * Creates a layout factory for default 'MigLayout' with given constraints
+     * 
+     * @param layoutConstraints The layout constraints to use
+     * 
+     * @return A layout factory that produces 'MigLayout', never null
+     */
+    public static ILayoutFactory<IMigLayout> create(final String layoutConstraints) {
+        return builder().constraints(layoutConstraints).build();
+    }
 
-	/**
-	 * Creates a layout factory for 'MigLayout' with given constraints
-	 * 
-	 * @param columnConstraints The column constraints to use
-	 * @param rowConstraints The row constraints to use
-	 * 
-	 * @return A layout factory that produces 'MigLayout', never null
-	 */
-	public static ILayoutFactory<IMigLayout> create(final String columnConstraints, final String rowConstraints) {
-		return builder().columnConstraints(columnConstraints).rowConstraints(rowConstraints).build();
-	}
+    /**
+     * Creates a layout factory for 'MigLayout' with given constraints
+     * 
+     * @param columnConstraints The column constraints to use
+     * @param rowConstraints The row constraints to use
+     * 
+     * @return A layout factory that produces 'MigLayout', never null
+     */
+    public static ILayoutFactory<IMigLayout> create(final String columnConstraints, final String rowConstraints) {
+        return builder().columnConstraints(columnConstraints).rowConstraints(rowConstraints).build();
+    }
 
-	/**
-	 * Creates a layout factory for 'MigLayout' with given constraints
-	 * 
-	 * @param layoutConstraints The layout constraints to use
-	 * @param columnConstraints The column constraints to use
-	 * @param rowConstraints The row constraints to use
-	 * 
-	 * @return A layout factory that produces 'MigLayout', never null
-	 */
-	public static ILayoutFactory<IMigLayout> create(
-		final String layoutConstraints,
-		final String columnConstraints,
-		final String rowConstraints) {
+    /**
+     * Creates a layout factory for 'MigLayout' with given constraints
+     * 
+     * @param layoutConstraints The layout constraints to use
+     * @param columnConstraints The column constraints to use
+     * @param rowConstraints The row constraints to use
+     * 
+     * @return A layout factory that produces 'MigLayout', never null
+     */
+    public static ILayoutFactory<IMigLayout> create(
+        final String layoutConstraints,
+        final String columnConstraints,
+        final String rowConstraints) {
 
-		final IMigLayoutFactoryBuilder builder = builder();
-		builder.constraints(layoutConstraints);
-		builder.columnConstraints(columnConstraints);
-		builder.rowConstraints(rowConstraints);
-		return builder.build();
-	}
+        final IMigLayoutFactoryBuilder builder = builder();
+        builder.constraints(layoutConstraints);
+        builder.columnConstraints(columnConstraints);
+        builder.rowConstraints(rowConstraints);
+        return builder.build();
+    }
 
-	/**
-	 * Creates a layout factory for 'MigLayout' with given
-	 * constraints defined by a {@link MigLayoutDescriptor}
-	 * 
-	 * @param descriptor The mig layout descriptor to use
-	 * 
-	 * @return A layout factory that produces 'MigLayout', never null
-	 */
-	public static ILayoutFactory<IMigLayout> create(final MigLayoutDescriptor descriptor) {
-		Assert.paramNotNull(descriptor, "descriptor");
-		return builder().descriptor(descriptor).build();
-	}
+    /**
+     * Creates a layout factory for 'MigLayout' with given
+     * constraints defined by a {@link MigLayoutDescriptor}
+     * 
+     * @param descriptor The mig layout descriptor to use
+     * 
+     * @return A layout factory that produces 'MigLayout', never null
+     */
+    public static ILayoutFactory<IMigLayout> create(final MigLayoutDescriptor descriptor) {
+        Assert.paramNotNull(descriptor, "descriptor");
+        return builder().descriptor(descriptor).build();
+    }
 
-	/**
-	 * Gets a builder for an layout factory of an 'FlowLayout'
-	 * 
-	 * @return A builder for an layout factory of an 'FlowLayout'
-	 */
-	public static IMigLayoutFactoryBuilder builder() {
-		return Toolkit.getLayoutFactoryProvider().migLayoutBuilder();
-	}
+    /**
+     * Gets a builder for an layout factory of an 'FlowLayout'
+     * 
+     * @return A builder for an layout factory of an 'FlowLayout'
+     */
+    public static IMigLayoutFactoryBuilder builder() {
+        return Toolkit.getLayoutFactoryProvider().migLayoutBuilder();
+    }
 
 }

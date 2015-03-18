@@ -46,14 +46,14 @@ import org.jowidgets.impl.widgets.common.blueprint.convenience.registry.CommonSe
 
 public class BasicSetupConvenienceRegistry extends CommonSetupConvenienceRegistry {
 
-	public BasicSetupConvenienceRegistry() {
-		super();
-		register(IComboBoxSelectionSetupBuilder.class, new ComboBoxSelectionSetupConvenience());
-		register(IWindowSetupBuilder.class, new WindowSetupConvenience());
-		register(IComponentSetupBuilder.class, new WidgetSetupConvenience());
-		register(ISplitCompositeSetupBuilder.class, new SplitCompositeSetupConvenience());
-		register(ITreeSetupBuilder.class, new TreeSetupConvenience());
-		register(ITitledWindowSetupBuilder.class, new TitledWindowSetupConvenience());
-		register(IContainerSetupBuilderCommon.class, new ContainerSetupConvenience());
-	}
+    public BasicSetupConvenienceRegistry() {
+        super();
+        register(IComboBoxSelectionSetupBuilder.class, new ComboBoxSelectionSetupConvenience());
+        register(IWindowSetupBuilder.class, new WindowSetupConvenience());
+        register(IComponentSetupBuilder.class, new WidgetSetupConvenience());
+        register(ISplitCompositeSetupBuilder.class, new SplitCompositeSetupConvenience());
+        register(ITreeSetupBuilder.class, new TreeSetupConvenience());
+        register(ITitledWindowSetupBuilder.class, new TitledWindowSetupConvenience());
+        register(IContainerSetupBuilderCommon.class, new ContainerSetupConvenience());
+    }
 }

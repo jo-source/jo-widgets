@@ -46,158 +46,158 @@ import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 
 public final class LevelMeterImpl extends ControlWrapper implements ILevelMeter {
 
-	private static final String UPPER_SCALE_LETTERING = "0db";
-	private static final String LOWER_SCALE_LETTERING = "-" + Character.toString('\u221E');
-	private static final int GAP_BETWEEN_SCALE_TEXT_AND_SCALE_LINE = 2;
-	private static final int LENGTH_OF_LONGER_SCALE_LINE = 7;
-	private static final int LENGTH_OF_SMALLER_SCALE_LINE = 3;
-	private static final int GAP_BETWEEN_SCALE_AND_BAR = 7;
+    private static final String UPPER_SCALE_LETTERING = "0db";
+    private static final String LOWER_SCALE_LETTERING = "-" + Character.toString('\u221E');
+    private static final int GAP_BETWEEN_SCALE_TEXT_AND_SCALE_LINE = 2;
+    private static final int LENGTH_OF_LONGER_SCALE_LINE = 7;
+    private static final int LENGTH_OF_SMALLER_SCALE_LINE = 3;
+    private static final int GAP_BETWEEN_SCALE_AND_BAR = 7;
 
-	private final ILevelMeterModel model;
-	private final ILevelListener levelListener;
+    private final ILevelMeterModel model;
+    private final ILevelListener levelListener;
 
-	private final ILevelMeterSetup setup;
+    private final ILevelMeterSetup setup;
 
-	private final ICanvas canvas;
+    private final ICanvas canvas;
 
-	private double lastLevel;
+    private double lastLevel;
 
-	public LevelMeterImpl(final IComposite composite, final ILevelMeterSetup setup) {
-		super(composite);
+    public LevelMeterImpl(final IComposite composite, final ILevelMeterSetup setup) {
+        super(composite);
 
-		this.model = setup.getModel();
-		this.setup = setup;
-		this.lastLevel = -1;
+        this.model = setup.getModel();
+        this.setup = setup;
+        this.lastLevel = -1;
 
-		VisibiliySettingsInvoker.setVisibility(setup, this);
-		ColorSettingsInvoker.setColors(setup, this);
+        VisibiliySettingsInvoker.setVisibility(setup, this);
+        ColorSettingsInvoker.setColors(setup, this);
 
-		composite.setLayout(MigLayoutFactory.growingInnerCellLayout());
-		canvas = composite.add(BPF.canvas(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        composite.setLayout(MigLayoutFactory.growingInnerCellLayout());
+        canvas = composite.add(BPF.canvas(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
-		this.levelListener = new ILevelListener() {
-			@Override
-			public void levelChanged(final double oldValue, final double newValue) {
-				if (lastLevel == -1 || lastLevel != newValue) {
-					canvas.redraw();
-					lastLevel = newValue;
-				}
-			}
-		};
-		model.addLevelListener(levelListener);
+        this.levelListener = new ILevelListener() {
+            @Override
+            public void levelChanged(final double oldValue, final double newValue) {
+                if (lastLevel == -1 || lastLevel != newValue) {
+                    canvas.redraw();
+                    lastLevel = newValue;
+                }
+            }
+        };
+        model.addLevelListener(levelListener);
 
-		canvas.addPaintListener(new IPaintListener() {
-			@Override
-			public void paint(final IPaintEvent paintEvent) {
-				final IGraphicContext gc = paintEvent.getGraphicContext();
-				paintCanvas(gc);
-			}
-		});
+        canvas.addPaintListener(new IPaintListener() {
+            @Override
+            public void paint(final IPaintEvent paintEvent) {
+                final IGraphicContext gc = paintEvent.getGraphicContext();
+                paintCanvas(gc);
+            }
+        });
 
-	}
+    }
 
-	@Override
-	public ILevelMeterModel getModel() {
-		return model;
-	}
+    @Override
+    public ILevelMeterModel getModel() {
+        return model;
+    }
 
-	@Override
-	public void dispose() {
-		model.removesLevelListener(levelListener);
-		super.dispose();
-	}
+    @Override
+    public void dispose() {
+        model.removesLevelListener(levelListener);
+        super.dispose();
+    }
 
-	private void paintCanvas(final IGraphicContext gc) {
+    private void paintCanvas(final IGraphicContext gc) {
 
-		final int gapSize = setup.getGapSize();
-		final int boxHeight = setup.getBoxHeight();
+        final int gapSize = setup.getGapSize();
+        final int boxHeight = setup.getBoxHeight();
 
-		final int canvasHeight = gc.getBounds().getHeight();
-		final int canvasWidth = gc.getBounds().getWidth();
-		final int baseline = canvasHeight;
+        final int canvasHeight = gc.getBounds().getHeight();
+        final int canvasWidth = gc.getBounds().getWidth();
+        final int baseline = canvasHeight;
 
-		//clear canvas
-		gc.clearRectangle(0, 0, canvasWidth, canvasHeight);
-		gc.setForegroundColor(setup.getBackgroundColor());
-		gc.fillRectangle(0, 0, canvasWidth, canvasHeight);
+        //clear canvas
+        gc.clearRectangle(0, 0, canvasWidth, canvasHeight);
+        gc.setForegroundColor(setup.getBackgroundColor());
+        gc.fillRectangle(0, 0, canvasWidth, canvasHeight);
 
-		//calculate box data depending on canvas height
-		final int numberOfBoxes = calculateNumberOfBoxes(canvasHeight, boxHeight, gapSize);
-		final int numberOfActiveBoxes = (int) Math.round(numberOfBoxes * model.getLevel());
-		final int numberOfLowPeakBoxes = (int) Math.round(numberOfBoxes * setup.getHighPeakThreshold());
-		final int numberOfHighPeakBoxes = (int) Math.round(numberOfBoxes * setup.getClipPeakThreshold());
+        //calculate box data depending on canvas height
+        final int numberOfBoxes = calculateNumberOfBoxes(canvasHeight, boxHeight, gapSize);
+        final int numberOfActiveBoxes = (int) Math.round(numberOfBoxes * model.getLevel());
+        final int numberOfLowPeakBoxes = (int) Math.round(numberOfBoxes * setup.getHighPeakThreshold());
+        final int numberOfHighPeakBoxes = (int) Math.round(numberOfBoxes * setup.getClipPeakThreshold());
 
-		int letteringWidth = 0;
+        int letteringWidth = 0;
 
-		//draw scale of configured to do so
-		if (setup.isLetteringVisible()) {
-			gc.setForegroundColor(Colors.BLACK);
-			final int heightOfOneScaleSector = canvasHeight / 10;
-			final int lengthOfLongestScaleLettering = gc.getTextWidth(UPPER_SCALE_LETTERING);
-			letteringWidth = lengthOfLongestScaleLettering
-				+ GAP_BETWEEN_SCALE_TEXT_AND_SCALE_LINE
-				+ LENGTH_OF_LONGER_SCALE_LINE
-				+ GAP_BETWEEN_SCALE_AND_BAR;
-			for (int i = 0; i < 11; i++) {
-				if (i == 0 || i == 5 || i == 10) {
-					gc.setLineWidth(2);
-					gc.drawLine(lengthOfLongestScaleLettering + GAP_BETWEEN_SCALE_TEXT_AND_SCALE_LINE, baseline
-						- 1
-						- (i * heightOfOneScaleSector), lengthOfLongestScaleLettering
-						+ GAP_BETWEEN_SCALE_TEXT_AND_SCALE_LINE
-						+ LENGTH_OF_LONGER_SCALE_LINE, baseline - 1 - (i * heightOfOneScaleSector));
-				}
-				else {
-					gc.setLineWidth(1);
-					gc.drawLine(lengthOfLongestScaleLettering + GAP_BETWEEN_SCALE_TEXT_AND_SCALE_LINE + 2, baseline
-						- 1
-						- (i * heightOfOneScaleSector), lengthOfLongestScaleLettering
-						+ GAP_BETWEEN_SCALE_TEXT_AND_SCALE_LINE
-						+ 2
-						+ LENGTH_OF_SMALLER_SCALE_LINE, baseline - 1 - (i * heightOfOneScaleSector));
-				}
-				if (i == 0) {
-					final int fontHeight = gc.getFontMetrics().getHeight();
-					gc.drawText(LOWER_SCALE_LETTERING, 0, baseline - fontHeight - 2 - (i * heightOfOneScaleSector));
-				}
-				if (i == 10) {
-					final int fontHeight = gc.getFontMetrics().getHeight();
-					gc.drawText(UPPER_SCALE_LETTERING, 0, baseline - fontHeight / 2 - 2 - (i * heightOfOneScaleSector));
-				}
-			}
-		}
+        //draw scale of configured to do so
+        if (setup.isLetteringVisible()) {
+            gc.setForegroundColor(Colors.BLACK);
+            final int heightOfOneScaleSector = canvasHeight / 10;
+            final int lengthOfLongestScaleLettering = gc.getTextWidth(UPPER_SCALE_LETTERING);
+            letteringWidth = lengthOfLongestScaleLettering
+                + GAP_BETWEEN_SCALE_TEXT_AND_SCALE_LINE
+                + LENGTH_OF_LONGER_SCALE_LINE
+                + GAP_BETWEEN_SCALE_AND_BAR;
+            for (int i = 0; i < 11; i++) {
+                if (i == 0 || i == 5 || i == 10) {
+                    gc.setLineWidth(2);
+                    gc.drawLine(lengthOfLongestScaleLettering + GAP_BETWEEN_SCALE_TEXT_AND_SCALE_LINE, baseline
+                        - 1
+                        - (i * heightOfOneScaleSector), lengthOfLongestScaleLettering
+                        + GAP_BETWEEN_SCALE_TEXT_AND_SCALE_LINE
+                        + LENGTH_OF_LONGER_SCALE_LINE, baseline - 1 - (i * heightOfOneScaleSector));
+                }
+                else {
+                    gc.setLineWidth(1);
+                    gc.drawLine(lengthOfLongestScaleLettering + GAP_BETWEEN_SCALE_TEXT_AND_SCALE_LINE + 2, baseline
+                        - 1
+                        - (i * heightOfOneScaleSector), lengthOfLongestScaleLettering
+                        + GAP_BETWEEN_SCALE_TEXT_AND_SCALE_LINE
+                        + 2
+                        + LENGTH_OF_SMALLER_SCALE_LINE, baseline - 1 - (i * heightOfOneScaleSector));
+                }
+                if (i == 0) {
+                    final int fontHeight = gc.getFontMetrics().getHeight();
+                    gc.drawText(LOWER_SCALE_LETTERING, 0, baseline - fontHeight - 2 - (i * heightOfOneScaleSector));
+                }
+                if (i == 10) {
+                    final int fontHeight = gc.getFontMetrics().getHeight();
+                    gc.drawText(UPPER_SCALE_LETTERING, 0, baseline - fontHeight / 2 - 2 - (i * heightOfOneScaleSector));
+                }
+            }
+        }
 
-		IColorConstant boxColor = setup.getLowPeakColor();
+        IColorConstant boxColor = setup.getLowPeakColor();
 
-		//draw boxes
-		for (int i = 0; i < numberOfBoxes; i++) {
-			if (i + 1 > numberOfLowPeakBoxes) {
-				boxColor = setup.getHighPeakColor();
-			}
-			if (i + 1 > numberOfHighPeakBoxes) {
-				boxColor = setup.getClipPeakColor();
-			}
-			if (i + 1 > numberOfActiveBoxes) {
-				boxColor = setup.getNoPeakColor();
-			}
-			final int y = baseline - i * (gapSize + boxHeight) - boxHeight - gapSize;
-			gc.setForegroundColor(boxColor);
-			gc.fillRectangle(letteringWidth + gapSize, y, canvasWidth - 2 * gapSize, boxHeight);
-		}
+        //draw boxes
+        for (int i = 0; i < numberOfBoxes; i++) {
+            if (i + 1 > numberOfLowPeakBoxes) {
+                boxColor = setup.getHighPeakColor();
+            }
+            if (i + 1 > numberOfHighPeakBoxes) {
+                boxColor = setup.getClipPeakColor();
+            }
+            if (i + 1 > numberOfActiveBoxes) {
+                boxColor = setup.getNoPeakColor();
+            }
+            final int y = baseline - i * (gapSize + boxHeight) - boxHeight - gapSize;
+            gc.setForegroundColor(boxColor);
+            gc.fillRectangle(letteringWidth + gapSize, y, canvasWidth - 2 * gapSize, boxHeight);
+        }
 
-	}
+    }
 
-	private int calculateNumberOfBoxes(final int canvasHeight, final int boxHeight, final int gapSize) {
-		int result = canvasHeight / (boxHeight + gapSize);
-		if (result * boxHeight + ((result + 1) * gapSize) > canvasHeight) {
-			result--;
-		}
-		return result;
-	}
+    private int calculateNumberOfBoxes(final int canvasHeight, final int boxHeight, final int gapSize) {
+        int result = canvasHeight / (boxHeight + gapSize);
+        if (result * boxHeight + ((result + 1) * gapSize) > canvasHeight) {
+            result--;
+        }
+        return result;
+    }
 
-	@Override
-	public void setToolTipText(final String toolTip) {
-		canvas.setToolTipText(toolTip);
-	}
+    @Override
+    public void setToolTipText(final String toolTip) {
+        canvas.setToolTipText(toolTip);
+    }
 
 }

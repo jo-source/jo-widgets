@@ -30,6 +30,6 @@ package org.jowidgets.api.worker;
 
 public interface IWorkerProgress<PROGRESS_TYPE> {
 
-	void setProgress(PROGRESS_TYPE progress);
+    void setProgress(PROGRESS_TYPE progress);
 
 }

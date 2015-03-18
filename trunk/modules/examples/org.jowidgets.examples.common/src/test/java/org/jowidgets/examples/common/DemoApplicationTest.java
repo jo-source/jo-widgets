@@ -37,22 +37,22 @@ import org.junit.Test;
 
 public class DemoApplicationTest {
 
-	@Test
-	public void testApplication() {
-		Toolkit.getApplicationRunner().run(new IApplication() {
+    @Test
+    public void testApplication() {
+        Toolkit.getApplicationRunner().run(new IApplication() {
 
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
+            @Override
+            public void start(final IApplicationLifecycle lifecycle) {
 
-				final DemoApplication testApplication = new DemoApplication("Demo application test");
-				testApplication.start(lifecycle);
-				Assert.assertTrue(testApplication.getRootFrame().isVisible());
+                final DemoApplication testApplication = new DemoApplication("Demo application test");
+                testApplication.start(lifecycle);
+                Assert.assertTrue(testApplication.getRootFrame().isVisible());
 
-				testApplication.getRootFrame().dispose();
+                testApplication.getRootFrame().dispose();
 
-			}
-		});
+            }
+        });
 
-	}
+    }
 
 }

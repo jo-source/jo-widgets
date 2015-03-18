@@ -45,37 +45,37 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class CreateRoleActionFactory {
 
-	private CreateRoleActionFactory() {}
+    private CreateRoleActionFactory() {}
 
-	public static IAction create(final BeanTableModel<Role> model) {
-		final IActionBuilder builder = CommandAction.builder();
-		builder.setText("Create role ...");
-		builder.setIcon(SilkIcons.GROUP_ADD);
-		builder.setCommand(new CreateRoleCommand(model));
-		return builder.build();
-	}
+    public static IAction create(final BeanTableModel<Role> model) {
+        final IActionBuilder builder = CommandAction.builder();
+        builder.setText("Create role ...");
+        builder.setIcon(SilkIcons.GROUP_ADD);
+        builder.setCommand(new CreateRoleCommand(model));
+        return builder.build();
+    }
 
-	private static final class CreateRoleCommand implements ICommandExecutor {
+    private static final class CreateRoleCommand implements ICommandExecutor {
 
-		private final BeanTableModel<Role> model;
+        private final BeanTableModel<Role> model;
 
-		private CreateRoleCommand(final BeanTableModel<Role> model) {
-			this.model = model;
-		}
+        private CreateRoleCommand(final BeanTableModel<Role> model) {
+            this.model = model;
+        }
 
-		@Override
-		public void execute(final IExecutionContext executionContext) throws Exception {
-			final IInputDialogBluePrint<Role> dialogBp = BPF.inputDialog(new RoleContentCreator(false));
-			dialogBp.setMinPackSize(new Dimension(640, 480));
-			dialogBp.setExecutionContext(executionContext);
-			final IInputDialog<Role> dialog = Toolkit.getActiveWindow().createChildWindow(dialogBp);
-			dialog.setVisible(true);
-			if (dialog.isOkPressed()) {
-				final Role role = dialog.getValue();
-				model.addBean(role, true);
-			}
-		}
+        @Override
+        public void execute(final IExecutionContext executionContext) throws Exception {
+            final IInputDialogBluePrint<Role> dialogBp = BPF.inputDialog(new RoleContentCreator(false));
+            dialogBp.setMinPackSize(new Dimension(640, 480));
+            dialogBp.setExecutionContext(executionContext);
+            final IInputDialog<Role> dialog = Toolkit.getActiveWindow().createChildWindow(dialogBp);
+            dialog.setVisible(true);
+            if (dialog.isOkPressed()) {
+                final Role role = dialog.getValue();
+                model.addBean(role, true);
+            }
+        }
 
-	}
+    }
 
 }

@@ -35,29 +35,29 @@ import org.jowidgets.unit.api.IUnitValue;
 import org.jowidgets.util.Assert;
 
 final class UnitObjectStringConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> extends AbstractObjectStringConverter<BASE_VALUE_TYPE> implements
-		IObjectStringConverter<BASE_VALUE_TYPE> {
+        IObjectStringConverter<BASE_VALUE_TYPE> {
 
-	private final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitConverter;
-	private final IObjectStringConverter<UNIT_VALUE_TYPE> unitValueConverter;
+    private final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitConverter;
+    private final IObjectStringConverter<UNIT_VALUE_TYPE> unitValueConverter;
 
-	@SuppressWarnings("unchecked")
-	UnitObjectStringConverter(
-		final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitConverter,
-		final IObjectStringConverter<? extends UNIT_VALUE_TYPE> unitValueConverter) {
-		Assert.paramNotNull(unitConverter, "unitConverter");
-		this.unitConverter = unitConverter;
-		this.unitValueConverter = (IObjectStringConverter<UNIT_VALUE_TYPE>) unitValueConverter;
-	}
+    @SuppressWarnings("unchecked")
+    UnitObjectStringConverter(
+        final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitConverter,
+        final IObjectStringConverter<? extends UNIT_VALUE_TYPE> unitValueConverter) {
+        Assert.paramNotNull(unitConverter, "unitConverter");
+        this.unitConverter = unitConverter;
+        this.unitValueConverter = (IObjectStringConverter<UNIT_VALUE_TYPE>) unitValueConverter;
+    }
 
-	@Override
-	public String convertToString(final BASE_VALUE_TYPE value) {
-		if (value != null) {
-			final IUnitValue<UNIT_VALUE_TYPE> unitValue = unitConverter.toUnitValue(value);
-			if (unitValue != null && unitValue.getValue() != null) {
-				return unitValueConverter.convertToString(unitValue.getValue()) + " " + unitValue.getUnit().getAbbreviation();
-			}
-		}
-		return null;
-	}
+    @Override
+    public String convertToString(final BASE_VALUE_TYPE value) {
+        if (value != null) {
+            final IUnitValue<UNIT_VALUE_TYPE> unitValue = unitConverter.toUnitValue(value);
+            if (unitValue != null && unitValue.getValue() != null) {
+                return unitValueConverter.convertToString(unitValue.getValue()) + " " + unitValue.getUnit().getAbbreviation();
+            }
+        }
+        return null;
+    }
 
 }

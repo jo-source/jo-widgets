@@ -31,8 +31,8 @@ import org.jowidgets.common.widgets.controller.IWindowObservable;
 
 public interface IPopupDialogCommon extends IDisplayCommon, IContainerCommon, IWindowObservable {
 
-	void pack();
+    void pack();
 
-	void dispose();
+    void dispose();
 
 }

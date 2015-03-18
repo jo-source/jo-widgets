@@ -32,12 +32,12 @@ import org.jowidgets.api.widgets.IWidget;
 
 public interface IParentListener<PARENT_TYPE extends IWidget> {
 
-	/**
-	 * Will be invoked if the parent has been changed
-	 * 
-	 * @param oldParent The old parent
-	 * @param newParent The new parent
-	 */
-	void parentChanged(PARENT_TYPE oldParent, PARENT_TYPE newParent);
+    /**
+     * Will be invoked if the parent has been changed
+     * 
+     * @param oldParent The old parent
+     * @param newParent The new parent
+     */
+    void parentChanged(PARENT_TYPE oldParent, PARENT_TYPE newParent);
 
 }

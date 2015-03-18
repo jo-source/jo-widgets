@@ -30,6 +30,6 @@ package org.jowidgets.util;
 
 public interface ICallback<PARAM_TYPE> {
 
-	void call(PARAM_TYPE parameter);
+    void call(PARAM_TYPE parameter);
 
 }

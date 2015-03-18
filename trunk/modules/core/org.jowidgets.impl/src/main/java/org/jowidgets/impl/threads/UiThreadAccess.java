@@ -36,66 +36,66 @@ import org.jowidgets.spi.IWidgetsServiceProvider;
 
 public class UiThreadAccess implements IUiThreadAccess {
 
-	private final IUiThreadAccessCommon uiThreadAccessCommon;
+    private final IUiThreadAccessCommon uiThreadAccessCommon;
 
-	public UiThreadAccess(final IWidgetsServiceProvider widgetsServiceProvider) {
-		super();
-		this.uiThreadAccessCommon = widgetsServiceProvider.createUiThreadAccess();
-	}
+    public UiThreadAccess(final IWidgetsServiceProvider widgetsServiceProvider) {
+        super();
+        this.uiThreadAccessCommon = widgetsServiceProvider.createUiThreadAccess();
+    }
 
-	@Override
-	public boolean isUiThread() {
-		return uiThreadAccessCommon.isUiThread();
-	}
+    @Override
+    public boolean isUiThread() {
+        return uiThreadAccessCommon.isUiThread();
+    }
 
-	@Override
-	public void invokeLater(final Runnable runnable) {
-		uiThreadAccessCommon.invokeLater(runnable);
-	}
+    @Override
+    public void invokeLater(final Runnable runnable) {
+        uiThreadAccessCommon.invokeLater(runnable);
+    }
 
-	@Override
-	public void invokeAndWait(final Runnable runnable) throws InterruptedException {
-		uiThreadAccessCommon.invokeAndWait(runnable);
-	}
+    @Override
+    public void invokeAndWait(final Runnable runnable) throws InterruptedException {
+        uiThreadAccessCommon.invokeAndWait(runnable);
+    }
 
-	@Override
-	public void disableAllWindowsWhile(final Runnable runnable) {
-		if (isUiThread()) {
-			blockEvents(runnable);
-		}
-		else {
-			try {
-				invokeAndWait(new Runnable() {
-					@Override
-					public void run() {
-						blockEvents(runnable);
-					}
-				});
-			}
-			catch (final InterruptedException e) {
-				throw new RuntimeException("Error while blocking events");
-			}
-		}
-	}
+    @Override
+    public void disableAllWindowsWhile(final Runnable runnable) {
+        if (isUiThread()) {
+            blockEvents(runnable);
+        }
+        else {
+            try {
+                invokeAndWait(new Runnable() {
+                    @Override
+                    public void run() {
+                        blockEvents(runnable);
+                    }
+                });
+            }
+            catch (final InterruptedException e) {
+                throw new RuntimeException("Error while blocking events");
+            }
+        }
+    }
 
-	private void blockEvents(final Runnable runnable) {
-		for (final IWindow window : Toolkit.getAllWindows()) {
-			window.setEnabled(false);
-		}
-		try {
-			runnable.run();
-		}
-		catch (final RuntimeException e) {
-			throw e;
-		}
-		catch (final Exception e) {
-			throw new RuntimeException("Error while blocking events.", e);
-		}
-		finally {
-			for (final IWindow window : Toolkit.getAllWindows()) {
-				window.setEnabled(true);
-			}
-		}
-	}
+    private void blockEvents(final Runnable runnable) {
+        for (final IWindow window : Toolkit.getAllWindows()) {
+            window.setEnabled(false);
+        }
+        try {
+            runnable.run();
+        }
+        catch (final RuntimeException e) {
+            throw e;
+        }
+        catch (final Exception e) {
+            throw new RuntimeException("Error while blocking events.", e);
+        }
+        finally {
+            for (final IWindow window : Toolkit.getAllWindows()) {
+                window.setEnabled(true);
+            }
+        }
+    }
 
 }

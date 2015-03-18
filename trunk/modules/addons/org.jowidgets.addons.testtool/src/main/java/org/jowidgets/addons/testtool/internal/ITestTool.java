@@ -34,21 +34,21 @@ import org.jowidgets.common.widgets.IWidgetCommon;
 
 public interface ITestTool {
 
-	void register(IWidgetCommon widget);
+    void register(IWidgetCommon widget);
 
-	void record(IWidgetCommon widget, UserAction action, String id);
+    void record(IWidgetCommon widget, UserAction action, String id);
 
-	void replay(List<TestDataObject> list, int delay);
+    void replay(List<TestDataObject> list, int delay);
 
-	void save(final List<TestDataObject> list, final String fileName);
+    void save(final List<TestDataObject> list, final String fileName);
 
-	List<TestDataObject> load(String fileName);
+    List<TestDataObject> load(String fileName);
 
-	TestDataListModel getListModel();
+    TestDataListModel getListModel();
 
-	void activateRecordMode();
+    void activateRecordMode();
 
-	void activateReplayMode();
+    void activateReplayMode();
 
-	void deactivateReplayAndRecord();
+    void deactivateReplayAndRecord();
 }

@@ -61,59 +61,59 @@ import org.jowidgets.test.api.widgets.blueprint.IToolBarPopupButtonBluePrintUi;
 import org.jowidgets.test.api.widgets.blueprint.IToolBarToggleButtonBluePrintUi;
 
 public interface IBasicSimpleTestBluePrintFactory {
-	<WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends ISetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
-		final Class<BLUE_PRINT_TYPE> bluePrintType);
+    <WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends ISetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
+        final Class<BLUE_PRINT_TYPE> bluePrintType);
 
-	IFrameBluePrintUi frame();
+    IFrameBluePrintUi frame();
 
-	IDialogBluePrintUi dialog();
+    IDialogBluePrintUi dialog();
 
-	ICompositeBluePrintUi composite();
+    ICompositeBluePrintUi composite();
 
-	IScrollCompositeBluePrintUi scrollComposite();
+    IScrollCompositeBluePrintUi scrollComposite();
 
-	ISplitCompositeBluePrintUi splitComposite();
+    ISplitCompositeBluePrintUi splitComposite();
 
-	ITextLabelBluePrintUi textLabel();
+    ITextLabelBluePrintUi textLabel();
 
-	IIconBluePrintUi icon();
+    IIconBluePrintUi icon();
 
-	ISeparatorBluePrintUi separator();
+    ISeparatorBluePrintUi separator();
 
-	ITextFieldBluePrintUi textField();
+    ITextFieldBluePrintUi textField();
 
-	IButtonBluePrintUi button();
+    IButtonBluePrintUi button();
 
-	ICheckBoxBluePrintUi checkBox();
+    ICheckBoxBluePrintUi checkBox();
 
-	IToggleButtonBluePrintUi toggleButton();
+    IToggleButtonBluePrintUi toggleButton();
 
-	<INPUT_TYPE> IComboBoxBluePrintUi<INPUT_TYPE> comboBox(final IConverter<INPUT_TYPE> converter);
+    <INPUT_TYPE> IComboBoxBluePrintUi<INPUT_TYPE> comboBox(final IConverter<INPUT_TYPE> converter);
 
-	<INPUT_TYPE> IComboBoxSelectionBluePrintUi<INPUT_TYPE> comboBoxSelection(
-		final IObjectStringConverter<INPUT_TYPE> objectStringConverter);
+    <INPUT_TYPE> IComboBoxSelectionBluePrintUi<INPUT_TYPE> comboBoxSelection(
+        final IObjectStringConverter<INPUT_TYPE> objectStringConverter);
 
-	IActionMenuItemBluePrintUi menuItem();
+    IActionMenuItemBluePrintUi menuItem();
 
-	IRadioMenuItemBluePrintUi radioMenuItem();
+    IRadioMenuItemBluePrintUi radioMenuItem();
 
-	ICheckedMenuItemBluePrintUi checkedMenuItem();
+    ICheckedMenuItemBluePrintUi checkedMenuItem();
 
-	ISubMenuBluePrintUi subMenu();
+    ISubMenuBluePrintUi subMenu();
 
-	IMainMenuBluePrintUi mainMenu();
+    IMainMenuBluePrintUi mainMenu();
 
-	ISeparatorMenuItemBluePrintUi menuSeparator();
+    ISeparatorMenuItemBluePrintUi menuSeparator();
 
-	ISeparatorToolBarItemBluePrintUi toolBarSeparator();
+    ISeparatorToolBarItemBluePrintUi toolBarSeparator();
 
-	IToolBarBluePrintUi toolBar();
+    IToolBarBluePrintUi toolBar();
 
-	IToolBarButtonBluePrintUi toolBarButton();
+    IToolBarButtonBluePrintUi toolBarButton();
 
-	IToolBarToggleButtonBluePrintUi toolBarToggleButton();
+    IToolBarToggleButtonBluePrintUi toolBarToggleButton();
 
-	IToolBarPopupButtonBluePrintUi toolBarPopupButton();
+    IToolBarPopupButtonBluePrintUi toolBarPopupButton();
 
-	IToolBarContainerItemBluePrintUi toolBarContainerItem();
+    IToolBarContainerItemBluePrintUi toolBarContainerItem();
 }

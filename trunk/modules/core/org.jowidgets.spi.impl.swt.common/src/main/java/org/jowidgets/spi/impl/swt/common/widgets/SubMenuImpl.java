@@ -34,41 +34,41 @@ import org.jowidgets.spi.widgets.ISubMenuSpi;
 
 public class SubMenuImpl extends SwtMenu implements ISubMenuSpi, IToolTipTextProvider {
 
-	private final MenuItemImpl menuItemDelegate;
+    private final MenuItemImpl menuItemDelegate;
 
-	public SubMenuImpl(final MenuItem menuItem, final Menu menu) {
-		super(menu);
-		this.menuItemDelegate = new MenuItemImpl(menuItem);
-	}
+    public SubMenuImpl(final MenuItem menuItem, final Menu menu) {
+        super(menu);
+        this.menuItemDelegate = new MenuItemImpl(menuItem);
+    }
 
-	@Override
-	public Menu getUiReference() {
-		return super.getUiReference();
-	}
+    @Override
+    public Menu getUiReference() {
+        return super.getUiReference();
+    }
 
-	@Override
-	public void setText(final String text) {
-		menuItemDelegate.setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        menuItemDelegate.setText(text);
+    }
 
-	@Override
-	public String getToolTipText() {
-		return menuItemDelegate.getToolTipText();
-	}
+    @Override
+    public String getToolTipText() {
+        return menuItemDelegate.getToolTipText();
+    }
 
-	@Override
-	public void setToolTipText(final String text) {
-		menuItemDelegate.setToolTipText(text);
-	}
+    @Override
+    public void setToolTipText(final String text) {
+        menuItemDelegate.setToolTipText(text);
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		menuItemDelegate.setIcon(icon);
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        menuItemDelegate.setIcon(icon);
+    }
 
-	@Override
-	public void setMnemonic(final char mnemonic) {
-		menuItemDelegate.setMnemonic(mnemonic);
-	}
+    @Override
+    public void setMnemonic(final char mnemonic) {
+        menuItemDelegate.setMnemonic(mnemonic);
+    }
 
 }

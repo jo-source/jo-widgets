@@ -33,12 +33,12 @@ import org.jowidgets.common.widgets.builder.IContainerSetupBuilderCommon;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
 public interface IContainerSetupBuilder<INSTANCE_TYPE extends IContainerSetupBuilder<?>> extends
-		IContainerSetupBuilderCommon<INSTANCE_TYPE>,
-		IContainerSetupConvenience<INSTANCE_TYPE>,
-		IComponentSetupBuilder<INSTANCE_TYPE> {
+        IContainerSetupBuilderCommon<INSTANCE_TYPE>,
+        IContainerSetupConvenience<INSTANCE_TYPE>,
+        IComponentSetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setLayout(ILayoutDescriptor layoutDescriptor);
+    INSTANCE_TYPE setLayout(ILayoutDescriptor layoutDescriptor);
 
-	INSTANCE_TYPE setLayoutFactory(ILayoutFactory<?> layoutFactory);
+    INSTANCE_TYPE setLayoutFactory(ILayoutFactory<?> layoutFactory);
 
 }

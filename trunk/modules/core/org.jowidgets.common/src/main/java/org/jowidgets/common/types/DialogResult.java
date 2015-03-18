@@ -30,8 +30,8 @@ package org.jowidgets.common.types;
 
 public enum DialogResult {
 
-	OK,
+    OK,
 
-	CANCEL;
+    CANCEL;
 
 }

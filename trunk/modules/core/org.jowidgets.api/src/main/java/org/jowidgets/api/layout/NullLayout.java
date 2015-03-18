@@ -40,15 +40,15 @@ import org.jowidgets.common.widgets.layout.ILayouter;
  */
 public final class NullLayout {
 
-	private NullLayout() {}
+    private NullLayout() {}
 
-	/**
-	 * Gets a layout factory for an 'NullLayouts'
-	 * 
-	 * @return A layout factory that produces 'NullLayouts'
-	 */
-	public static ILayoutFactory<ILayouter> get() {
-		return Toolkit.getLayoutFactoryProvider().nullLayout();
-	}
+    /**
+     * Gets a layout factory for an 'NullLayouts'
+     * 
+     * @return A layout factory that produces 'NullLayouts'
+     */
+    public static ILayoutFactory<ILayouter> get() {
+        return Toolkit.getLayoutFactoryProvider().nullLayout();
+    }
 
 }

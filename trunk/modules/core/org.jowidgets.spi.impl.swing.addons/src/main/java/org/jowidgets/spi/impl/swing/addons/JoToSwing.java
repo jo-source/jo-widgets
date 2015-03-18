@@ -40,14 +40,14 @@ import org.jowidgets.api.widgets.IFrame;
 @Deprecated
 public final class JoToSwing {
 
-	private JoToSwing() {}
+    private JoToSwing() {}
 
-	public static JPanel convert(final IComposite composite) {
-		return JoToSwingReference.getUiReference(composite);
-	}
+    public static JPanel convert(final IComposite composite) {
+        return JoToSwingReference.getUiReference(composite);
+    }
 
-	public static JFrame convert(final IFrame frame) {
-		return JoToSwingReference.getUiReference(frame);
-	}
+    public static JFrame convert(final IFrame frame) {
+        return JoToSwingReference.getUiReference(frame);
+    }
 
 }

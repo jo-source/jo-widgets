@@ -37,120 +37,120 @@ import org.jowidgets.util.wrapper.WrapperUtil;
 
 public final class UnmodifieableArrayToCollectionWrapper<ELEMENT_TYPE> implements Collection<ELEMENT_TYPE> {
 
-	private final IUnmodifiableArray<ELEMENT_TYPE> original;
+    private final IUnmodifiableArray<ELEMENT_TYPE> original;
 
-	public UnmodifieableArrayToCollectionWrapper(final IUnmodifiableArray<ELEMENT_TYPE> original) {
-		Assert.paramNotNull(original, "original");
-		this.original = original;
-	}
+    public UnmodifieableArrayToCollectionWrapper(final IUnmodifiableArray<ELEMENT_TYPE> original) {
+        Assert.paramNotNull(original, "original");
+        this.original = original;
+    }
 
-	@Override
-	public int size() {
-		return original.size();
-	}
+    @Override
+    public int size() {
+        return original.size();
+    }
 
-	@Override
-	public boolean isEmpty() {
-		return size() == 0;
-	}
+    @Override
+    public boolean isEmpty() {
+        return size() == 0;
+    }
 
-	@Override
-	public Iterator<ELEMENT_TYPE> iterator() {
-		return original.iterator();
-	}
+    @Override
+    public Iterator<ELEMENT_TYPE> iterator() {
+        return original.iterator();
+    }
 
-	@Override
-	public boolean contains(final Object object) {
-		for (final ELEMENT_TYPE element : original) {
-			if (NullCompatibleEquivalence.equals(element, object)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    @Override
+    public boolean contains(final Object object) {
+        for (final ELEMENT_TYPE element : original) {
+            if (NullCompatibleEquivalence.equals(element, object)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	@Override
-	public boolean containsAll(final Collection<?> c) {
-		Assert.paramNotNull(c, "c");
-		for (final Object object : c) {
-			if (!contains(object)) {
-				return false;
-			}
-		}
-		return true;
-	}
+    @Override
+    public boolean containsAll(final Collection<?> c) {
+        Assert.paramNotNull(c, "c");
+        for (final Object object : c) {
+            if (!contains(object)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-	@Override
-	public Object[] toArray() {
-		return toArrayImpl(new Object[original.size()]);
-	}
+    @Override
+    public Object[] toArray() {
+        return toArrayImpl(new Object[original.size()]);
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <T> T[] toArray(final T[] a) {
-		if (size() < a.length) {
-			return toArrayImpl(a);
-		}
-		else {
-			return (T[]) toArray();
-		}
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public <T> T[] toArray(final T[] a) {
+        if (size() < a.length) {
+            return toArrayImpl(a);
+        }
+        else {
+            return (T[]) toArray();
+        }
+    }
 
-	@SuppressWarnings("unchecked")
-	private <T> T[] toArrayImpl(final T[] result) {
-		@SuppressWarnings("rawtypes")
-		final Iterator iterator = original.iterator();
-		for (int i = 0; i < result.length; i++) {
-			final T next;
-			if (iterator.hasNext()) {
-				next = (T) iterator.next();
-			}
-			else {
-				next = null;
-			}
-			result[i] = next;
-		}
-		return result;
-	}
+    @SuppressWarnings("unchecked")
+    private <T> T[] toArrayImpl(final T[] result) {
+        @SuppressWarnings("rawtypes")
+        final Iterator iterator = original.iterator();
+        for (int i = 0; i < result.length; i++) {
+            final T next;
+            if (iterator.hasNext()) {
+                next = (T) iterator.next();
+            }
+            else {
+                next = null;
+            }
+            result[i] = next;
+        }
+        return result;
+    }
 
-	@Override
-	public boolean add(final ELEMENT_TYPE e) {
-		throw new UnsupportedOperationException("add is not supported");
-	}
+    @Override
+    public boolean add(final ELEMENT_TYPE e) {
+        throw new UnsupportedOperationException("add is not supported");
+    }
 
-	@Override
-	public boolean remove(final Object o) {
-		throw new UnsupportedOperationException("remove not supported");
-	}
+    @Override
+    public boolean remove(final Object o) {
+        throw new UnsupportedOperationException("remove not supported");
+    }
 
-	@Override
-	public boolean addAll(final Collection<? extends ELEMENT_TYPE> c) {
-		throw new UnsupportedOperationException("addAll not supported");
-	}
+    @Override
+    public boolean addAll(final Collection<? extends ELEMENT_TYPE> c) {
+        throw new UnsupportedOperationException("addAll not supported");
+    }
 
-	@Override
-	public boolean removeAll(final Collection<?> c) {
-		throw new UnsupportedOperationException("removeAll not supported");
-	}
+    @Override
+    public boolean removeAll(final Collection<?> c) {
+        throw new UnsupportedOperationException("removeAll not supported");
+    }
 
-	@Override
-	public boolean retainAll(final Collection<?> c) {
-		throw new UnsupportedOperationException("retainAll not supported");
-	}
+    @Override
+    public boolean retainAll(final Collection<?> c) {
+        throw new UnsupportedOperationException("retainAll not supported");
+    }
 
-	@Override
-	public void clear() {
-		throw new UnsupportedOperationException("clear not supported");
-	}
+    @Override
+    public void clear() {
+        throw new UnsupportedOperationException("clear not supported");
+    }
 
-	@Override
-	public int hashCode() {
-		return WrapperUtil.unwrap(original).hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return WrapperUtil.unwrap(original).hashCode();
+    }
 
-	@Override
-	public boolean equals(final Object obj) {
-		return WrapperUtil.nullCompatibleEquivalence(this, obj);
-	}
+    @Override
+    public boolean equals(final Object obj) {
+        return WrapperUtil.nullCompatibleEquivalence(this, obj);
+    }
 
 }

@@ -30,18 +30,18 @@ package org.jowidgets.examples.common.workbench.demo4.model;
 
 public enum Gender {
 
-	MALE("Male"),
-	FEMALE("Female");
+    MALE("Male"),
+    FEMALE("Female");
 
-	private final String string;
+    private final String string;
 
-	private Gender(final String string) {
-		this.string = string;
-	}
+    private Gender(final String string) {
+        this.string = string;
+    }
 
-	@Override
-	public String toString() {
-		return string;
-	}
+    @Override
+    public String toString() {
+        return string;
+    }
 
 }

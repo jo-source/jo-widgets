@@ -32,40 +32,40 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
 
 public interface IValidationLabelSetupBuilder<INSTANCE_TYPE extends IValidationLabelSetupBuilder<?>> extends
-		IComponentSetupBuilder<INSTANCE_TYPE> {
+        IComponentSetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setShowValidationMessage(boolean showValidationMessage);
+    INSTANCE_TYPE setShowValidationMessage(boolean showValidationMessage);
 
-	INSTANCE_TYPE setOkMarkup(Markup markup);
+    INSTANCE_TYPE setOkMarkup(Markup markup);
 
-	INSTANCE_TYPE setInfoMarkup(Markup markup);
+    INSTANCE_TYPE setInfoMarkup(Markup markup);
 
-	INSTANCE_TYPE setWarningMarkup(Markup markup);
+    INSTANCE_TYPE setWarningMarkup(Markup markup);
 
-	INSTANCE_TYPE setInfoErrorMarkup(Markup markup);
+    INSTANCE_TYPE setInfoErrorMarkup(Markup markup);
 
-	INSTANCE_TYPE setErrorMarkup(Markup markup);
+    INSTANCE_TYPE setErrorMarkup(Markup markup);
 
-	INSTANCE_TYPE setOkColor(IColorConstant color);
+    INSTANCE_TYPE setOkColor(IColorConstant color);
 
-	INSTANCE_TYPE setInfoColor(IColorConstant color);
+    INSTANCE_TYPE setInfoColor(IColorConstant color);
 
-	INSTANCE_TYPE setWarningColor(IColorConstant color);
+    INSTANCE_TYPE setWarningColor(IColorConstant color);
 
-	INSTANCE_TYPE setInfoErrorColor(IColorConstant color);
+    INSTANCE_TYPE setInfoErrorColor(IColorConstant color);
 
-	INSTANCE_TYPE setErrorColor(IColorConstant color);
+    INSTANCE_TYPE setErrorColor(IColorConstant color);
 
-	INSTANCE_TYPE setEmptyIcon(IImageConstant icon);
+    INSTANCE_TYPE setEmptyIcon(IImageConstant icon);
 
-	INSTANCE_TYPE setOkIcon(IImageConstant icon);
+    INSTANCE_TYPE setOkIcon(IImageConstant icon);
 
-	INSTANCE_TYPE setInfoIcon(IImageConstant icon);
+    INSTANCE_TYPE setInfoIcon(IImageConstant icon);
 
-	INSTANCE_TYPE setWarningIcon(IImageConstant icon);
+    INSTANCE_TYPE setWarningIcon(IImageConstant icon);
 
-	INSTANCE_TYPE setInfoErrorIcon(IImageConstant icon);
+    INSTANCE_TYPE setInfoErrorIcon(IImageConstant icon);
 
-	INSTANCE_TYPE setErrorIcon(IImageConstant icon);
+    INSTANCE_TYPE setErrorIcon(IImageConstant icon);
 
 }

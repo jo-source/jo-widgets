@@ -38,114 +38,114 @@ import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 import org.jowidgets.util.Assert;
 
 public class JoInputField<VALUE_TYPE> extends InputControl<IInputField<VALUE_TYPE>, IInputFieldBluePrint<VALUE_TYPE>, VALUE_TYPE> implements
-		IInputControl<VALUE_TYPE> {
+        IInputControl<VALUE_TYPE> {
 
-	public JoInputField(final IConverter<VALUE_TYPE> converter) {
-		this(bluePrint(converter));
-	}
+    public JoInputField(final IConverter<VALUE_TYPE> converter) {
+        this(bluePrint(converter));
+    }
 
-	public JoInputField(final IObjectStringConverter<VALUE_TYPE> converter) {
-		this(bluePrint(converter));
-	}
+    public JoInputField(final IObjectStringConverter<VALUE_TYPE> converter) {
+        this(bluePrint(converter));
+    }
 
-	public JoInputField(final IInputFieldDescriptor<VALUE_TYPE> descriptor) {
-		super(bluePrint(descriptor));
-	}
+    public JoInputField(final IInputFieldDescriptor<VALUE_TYPE> descriptor) {
+        super(bluePrint(descriptor));
+    }
 
-	@SuppressWarnings("unchecked")
-	private static <VALUE_TYPE> IInputFieldBluePrint<VALUE_TYPE> bluePrint(final IInputFieldDescriptor<VALUE_TYPE> descriptor) {
-		final Object converterObject = descriptor.getConverter();
-		Assert.paramNotNull(descriptor.getConverter(), "descriptor.getConverter()");
-		if (converterObject instanceof IConverter<?>) {
-			final IConverter<VALUE_TYPE> converter = (IConverter<VALUE_TYPE>) converterObject;
-			return bluePrint(converter).setSetup(descriptor);
-		}
-		else if (converterObject instanceof IObjectStringConverter<?>) {
-			final IObjectStringConverter<VALUE_TYPE> converter = (IObjectStringConverter<VALUE_TYPE>) converterObject;
-			return bluePrint(converter).setSetup(descriptor);
-		}
+    @SuppressWarnings("unchecked")
+    private static <VALUE_TYPE> IInputFieldBluePrint<VALUE_TYPE> bluePrint(final IInputFieldDescriptor<VALUE_TYPE> descriptor) {
+        final Object converterObject = descriptor.getConverter();
+        Assert.paramNotNull(descriptor.getConverter(), "descriptor.getConverter()");
+        if (converterObject instanceof IConverter<?>) {
+            final IConverter<VALUE_TYPE> converter = (IConverter<VALUE_TYPE>) converterObject;
+            return bluePrint(converter).setSetup(descriptor);
+        }
+        else if (converterObject instanceof IObjectStringConverter<?>) {
+            final IObjectStringConverter<VALUE_TYPE> converter = (IObjectStringConverter<VALUE_TYPE>) converterObject;
+            return bluePrint(converter).setSetup(descriptor);
+        }
 
-		else {
-			throw new IllegalArgumentException("Converter type'" + descriptor.getConverter().getClass() + "' is not supported.");
-		}
-	}
+        else {
+            throw new IllegalArgumentException("Converter type'" + descriptor.getConverter().getClass() + "' is not supported.");
+        }
+    }
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	//some static blue print creation for convenience purpose from here
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	public static <VALUE_TYPE> IInputFieldBluePrint<VALUE_TYPE> bluePrint(final IConverter<VALUE_TYPE> converter) {
-		return Toolkit.getBluePrintFactory().inputField(converter);
-	}
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    //some static blue print creation for convenience purpose from here
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    public static <VALUE_TYPE> IInputFieldBluePrint<VALUE_TYPE> bluePrint(final IConverter<VALUE_TYPE> converter) {
+        return Toolkit.getBluePrintFactory().inputField(converter);
+    }
 
-	public static <VALUE_TYPE> IInputFieldBluePrint<VALUE_TYPE> bluePrint(final IObjectStringConverter<VALUE_TYPE> converter) {
-		return Toolkit.getBluePrintFactory().inputField(converter);
-	}
+    public static <VALUE_TYPE> IInputFieldBluePrint<VALUE_TYPE> bluePrint(final IObjectStringConverter<VALUE_TYPE> converter) {
+        return Toolkit.getBluePrintFactory().inputField(converter);
+    }
 
-	public static IInputFieldBluePrint<String> bluePrintString() {
-		return Toolkit.getBluePrintFactory().inputFieldString();
-	}
+    public static IInputFieldBluePrint<String> bluePrintString() {
+        return Toolkit.getBluePrintFactory().inputFieldString();
+    }
 
-	public static IInputFieldBluePrint<Integer> bluePrintInteger() {
-		return Toolkit.getBluePrintFactory().inputFieldIntegerNumber();
-	}
+    public static IInputFieldBluePrint<Integer> bluePrintInteger() {
+        return Toolkit.getBluePrintFactory().inputFieldIntegerNumber();
+    }
 
-	public static IInputFieldBluePrint<Long> bluePrintLong() {
-		return Toolkit.getBluePrintFactory().inputFieldLongNumber();
-	}
+    public static IInputFieldBluePrint<Long> bluePrintLong() {
+        return Toolkit.getBluePrintFactory().inputFieldLongNumber();
+    }
 
-	public static IInputFieldBluePrint<Short> bluePrintShort() {
-		return Toolkit.getBluePrintFactory().inputFieldShortNumber();
-	}
+    public static IInputFieldBluePrint<Short> bluePrintShort() {
+        return Toolkit.getBluePrintFactory().inputFieldShortNumber();
+    }
 
-	public static IInputFieldBluePrint<String> bluePrintString(final int maxLength) {
-		return Toolkit.getBluePrintFactory().inputFieldString().setMaxLength(maxLength);
-	}
+    public static IInputFieldBluePrint<String> bluePrintString(final int maxLength) {
+        return Toolkit.getBluePrintFactory().inputFieldString().setMaxLength(maxLength);
+    }
 
-	public static IInputFieldBluePrint<Integer> bluePrintInteger(final int maxLength) {
-		return Toolkit.getBluePrintFactory().inputFieldIntegerNumber().setMaxLength(maxLength);
-	}
+    public static IInputFieldBluePrint<Integer> bluePrintInteger(final int maxLength) {
+        return Toolkit.getBluePrintFactory().inputFieldIntegerNumber().setMaxLength(maxLength);
+    }
 
-	public static IInputFieldBluePrint<Long> bluePrintLong(final int maxLength) {
-		return Toolkit.getBluePrintFactory().inputFieldLongNumber().setMaxLength(maxLength);
-	}
+    public static IInputFieldBluePrint<Long> bluePrintLong(final int maxLength) {
+        return Toolkit.getBluePrintFactory().inputFieldLongNumber().setMaxLength(maxLength);
+    }
 
-	public static IInputFieldBluePrint<Short> bluePrintShort(final int maxLength) {
-		return Toolkit.getBluePrintFactory().inputFieldShortNumber().setMaxLength(maxLength);
-	}
+    public static IInputFieldBluePrint<Short> bluePrintShort(final int maxLength) {
+        return Toolkit.getBluePrintFactory().inputFieldShortNumber().setMaxLength(maxLength);
+    }
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	//some static JoInputField creation for convenience purpose from here
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	public static JoInputField<String> inputFieldString() {
-		return new JoInputField<String>(bluePrintString());
-	}
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    //some static JoInputField creation for convenience purpose from here
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    public static JoInputField<String> inputFieldString() {
+        return new JoInputField<String>(bluePrintString());
+    }
 
-	public static JoInputField<Integer> inputFieldInteger() {
-		return new JoInputField<Integer>(bluePrintInteger());
-	}
+    public static JoInputField<Integer> inputFieldInteger() {
+        return new JoInputField<Integer>(bluePrintInteger());
+    }
 
-	public static JoInputField<Long> inputFieldLong() {
-		return new JoInputField<Long>(bluePrintLong());
-	}
+    public static JoInputField<Long> inputFieldLong() {
+        return new JoInputField<Long>(bluePrintLong());
+    }
 
-	public static JoInputField<Short> inputFieldShort() {
-		return new JoInputField<Short>(bluePrintShort());
-	}
+    public static JoInputField<Short> inputFieldShort() {
+        return new JoInputField<Short>(bluePrintShort());
+    }
 
-	public static JoInputField<String> inputFieldString(final int maxLength) {
-		return new JoInputField<String>(bluePrintString(maxLength));
-	}
+    public static JoInputField<String> inputFieldString(final int maxLength) {
+        return new JoInputField<String>(bluePrintString(maxLength));
+    }
 
-	public static JoInputField<Integer> inputFieldInteger(final int maxLength) {
-		return new JoInputField<Integer>(bluePrintInteger(maxLength));
-	}
+    public static JoInputField<Integer> inputFieldInteger(final int maxLength) {
+        return new JoInputField<Integer>(bluePrintInteger(maxLength));
+    }
 
-	public static JoInputField<Long> inputFieldLong(final int maxLength) {
-		return new JoInputField<Long>(bluePrintLong(maxLength));
-	}
+    public static JoInputField<Long> inputFieldLong(final int maxLength) {
+        return new JoInputField<Long>(bluePrintLong(maxLength));
+    }
 
-	public static JoInputField<Short> inputFieldShort(final int maxLength) {
-		return new JoInputField<Short>(bluePrintShort(maxLength));
-	}
+    public static JoInputField<Short> inputFieldShort(final int maxLength) {
+        return new JoInputField<Short>(bluePrintShort(maxLength));
+    }
 
 }

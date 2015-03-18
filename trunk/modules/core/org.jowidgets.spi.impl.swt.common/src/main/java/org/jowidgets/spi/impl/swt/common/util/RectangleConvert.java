@@ -32,20 +32,20 @@ import org.jowidgets.util.Assert;
 
 public final class RectangleConvert {
 
-	private RectangleConvert() {};
+    private RectangleConvert() {};
 
-	public static org.eclipse.swt.graphics.Rectangle convert(final Rectangle rectangle) {
-		Assert.paramNotNull(rectangle, "rectangle");
-		return new org.eclipse.swt.graphics.Rectangle(
-			rectangle.getX(),
-			rectangle.getY(),
-			rectangle.getWidth(),
-			rectangle.getHeight());
-	}
+    public static org.eclipse.swt.graphics.Rectangle convert(final Rectangle rectangle) {
+        Assert.paramNotNull(rectangle, "rectangle");
+        return new org.eclipse.swt.graphics.Rectangle(
+            rectangle.getX(),
+            rectangle.getY(),
+            rectangle.getWidth(),
+            rectangle.getHeight());
+    }
 
-	public static Rectangle convert(final org.eclipse.swt.graphics.Rectangle rectangle) {
-		Assert.paramNotNull(rectangle, "rectangle");
-		return new Rectangle(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
-	}
+    public static Rectangle convert(final org.eclipse.swt.graphics.Rectangle rectangle) {
+        Assert.paramNotNull(rectangle, "rectangle");
+        return new Rectangle(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+    }
 
 }

@@ -30,14 +30,14 @@ package org.jowidgets.api.command;
 
 public interface IExceptionHandler {
 
-	/**
-	 * Handles an exception of an action
-	 * 
-	 * @param executionContext The execution context of the underlying action
-	 * @param exception The exception to handle
-	 * 
-	 * @throws Exception If the exception can not be handled
-	 */
-	void handleException(IExecutionContext executionContext, final Exception exception) throws Exception;
+    /**
+     * Handles an exception of an action
+     * 
+     * @param executionContext The execution context of the underlying action
+     * @param exception The exception to handle
+     * 
+     * @throws Exception If the exception can not be handled
+     */
+    void handleException(IExecutionContext executionContext, final Exception exception) throws Exception;
 
 }

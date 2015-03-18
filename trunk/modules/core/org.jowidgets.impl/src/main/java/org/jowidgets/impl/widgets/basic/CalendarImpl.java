@@ -45,94 +45,94 @@ import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 
 public class CalendarImpl extends AbstractControlSpiWrapper implements ICalendar {
 
-	private final ControlDelegate controlDelegate;
+    private final ControlDelegate controlDelegate;
 
-	public CalendarImpl(final ICalendarSpi widgetSpi, final ICalendarDescriptor setup) {
-		super(widgetSpi);
+    public CalendarImpl(final ICalendarSpi widgetSpi, final ICalendarDescriptor setup) {
+        super(widgetSpi);
 
-		this.controlDelegate = new ControlDelegate(widgetSpi, this);
+        this.controlDelegate = new ControlDelegate(widgetSpi, this);
 
-		VisibiliySettingsInvoker.setVisibility(setup, this);
-		ColorSettingsInvoker.setColors(setup, this);
+        VisibiliySettingsInvoker.setVisibility(setup, this);
+        ColorSettingsInvoker.setColors(setup, this);
 
-		if (setup.getDate() != null) {
-			setDate(setup.getDate());
-		}
-	}
+        if (setup.getDate() != null) {
+            setDate(setup.getDate());
+        }
+    }
 
-	@Override
-	public ICalendarSpi getWidget() {
-		return (ICalendarSpi) super.getWidget();
-	}
+    @Override
+    public ICalendarSpi getWidget() {
+        return (ICalendarSpi) super.getWidget();
+    }
 
-	@Override
-	public IContainer getParent() {
-		return controlDelegate.getParent();
-	}
+    @Override
+    public IContainer getParent() {
+        return controlDelegate.getParent();
+    }
 
-	@Override
-	public void setParent(final IContainer parent) {
-		controlDelegate.setParent(parent);
-	}
+    @Override
+    public void setParent(final IContainer parent) {
+        controlDelegate.setParent(parent);
+    }
 
-	@Override
-	public void addParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.addParentListener(listener);
-	}
+    @Override
+    public void addParentListener(final IParentListener<IContainer> listener) {
+        controlDelegate.addParentListener(listener);
+    }
 
-	@Override
-	public void removeParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.removeParentListener(listener);
-	}
+    @Override
+    public void removeParentListener(final IParentListener<IContainer> listener) {
+        controlDelegate.removeParentListener(listener);
+    }
 
-	@Override
-	public boolean isReparentable() {
-		return controlDelegate.isReparentable();
-	}
+    @Override
+    public boolean isReparentable() {
+        return controlDelegate.isReparentable();
+    }
 
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		controlDelegate.addDisposeListener(listener);
-	}
+    @Override
+    public void addDisposeListener(final IDisposeListener listener) {
+        controlDelegate.addDisposeListener(listener);
+    }
 
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		controlDelegate.removeDisposeListener(listener);
-	}
+    @Override
+    public void removeDisposeListener(final IDisposeListener listener) {
+        controlDelegate.removeDisposeListener(listener);
+    }
 
-	@Override
-	public boolean isDisposed() {
-		return controlDelegate.isDisposed();
-	}
+    @Override
+    public boolean isDisposed() {
+        return controlDelegate.isDisposed();
+    }
 
-	@Override
-	public void dispose() {
-		controlDelegate.dispose();
-	}
+    @Override
+    public void dispose() {
+        controlDelegate.dispose();
+    }
 
-	@Override
-	public IPopupMenu createPopupMenu() {
-		return controlDelegate.createPopupMenu();
-	}
+    @Override
+    public IPopupMenu createPopupMenu() {
+        return controlDelegate.createPopupMenu();
+    }
 
-	@Override
-	public void setDate(final Date date) {
-		getWidget().setDate(date);
-	}
+    @Override
+    public void setDate(final Date date) {
+        getWidget().setDate(date);
+    }
 
-	@Override
-	public Date getDate() {
-		return getWidget().getDate();
-	}
+    @Override
+    public Date getDate() {
+        return getWidget().getDate();
+    }
 
-	@Override
-	public void addInputListener(final IInputListener listener) {
-		getWidget().addInputListener(listener);
-	}
+    @Override
+    public void addInputListener(final IInputListener listener) {
+        getWidget().addInputListener(listener);
+    }
 
-	@Override
-	public void removeInputListener(final IInputListener listener) {
-		getWidget().removeInputListener(listener);
-	}
+    @Override
+    public void removeInputListener(final IInputListener listener) {
+        getWidget().removeInputListener(listener);
+    }
 
 }

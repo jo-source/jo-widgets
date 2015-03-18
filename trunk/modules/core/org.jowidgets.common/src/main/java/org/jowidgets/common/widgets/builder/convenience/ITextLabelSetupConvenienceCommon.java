@@ -29,12 +29,12 @@ package org.jowidgets.common.widgets.builder.convenience;
 
 public interface ITextLabelSetupConvenienceCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE alignLeft();
+    INSTANCE_TYPE alignLeft();
 
-	INSTANCE_TYPE alignCenter();
+    INSTANCE_TYPE alignCenter();
 
-	INSTANCE_TYPE alignRight();
+    INSTANCE_TYPE alignRight();
 
-	INSTANCE_TYPE setStrong();
+    INSTANCE_TYPE setStrong();
 
 }

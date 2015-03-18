@@ -44,29 +44,29 @@ import org.jowidgets.tools.model.table.DefaultTableColumnBuilder;
 // CHECKSTYLE:OFF
 public class TestToolViewTable {
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
-	private static ISimpleTableModel tableDataModel;
+    private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+    private static ISimpleTableModel tableDataModel;
 
-	public TestToolViewTable(final IFrame frame) {
-		final ITabFolder folder = frame.add(BPF.tabFolder(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		folder.setSize(new Dimension(200, 300));
-		final ITabItem item = folder.addItem(BPF.tabItem().setText("Test Data"));
-		tableDataModel = Toolkit.getModelFactoryProvider().getTableModelFactory().simpleTableModel();
-		final DefaultTableColumnBuilder colBuilder = new DefaultTableColumnBuilder();
-		tableDataModel.addColumn(colBuilder.setText("Step").build());
-		tableDataModel.addColumn(colBuilder.setText("Widget").build());
-		tableDataModel.addColumn(colBuilder.setText("User Action").build());
-		final ITableBluePrint tableBluePrint = BPF.table(tableDataModel);
-		item.setLayout(MigLayoutFactory.growingInnerCellLayout());
-		final ITable table = item.add(tableBluePrint, "grow");
-		item.setBackgroundColor(Colors.WHITE);
-		table.pack();
-		tableDataModel.addColumn(colBuilder.setText("Value").setWidth(100).build());
-		tableDataModel.addColumn(colBuilder.setText("Property").setWidth(100).build());
-		tableDataModel.addColumn(colBuilder.setText("ID").setWidth(200).build());
-	}
+    public TestToolViewTable(final IFrame frame) {
+        final ITabFolder folder = frame.add(BPF.tabFolder(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        folder.setSize(new Dimension(200, 300));
+        final ITabItem item = folder.addItem(BPF.tabItem().setText("Test Data"));
+        tableDataModel = Toolkit.getModelFactoryProvider().getTableModelFactory().simpleTableModel();
+        final DefaultTableColumnBuilder colBuilder = new DefaultTableColumnBuilder();
+        tableDataModel.addColumn(colBuilder.setText("Step").build());
+        tableDataModel.addColumn(colBuilder.setText("Widget").build());
+        tableDataModel.addColumn(colBuilder.setText("User Action").build());
+        final ITableBluePrint tableBluePrint = BPF.table(tableDataModel);
+        item.setLayout(MigLayoutFactory.growingInnerCellLayout());
+        final ITable table = item.add(tableBluePrint, "grow");
+        item.setBackgroundColor(Colors.WHITE);
+        table.pack();
+        tableDataModel.addColumn(colBuilder.setText("Value").setWidth(100).build());
+        tableDataModel.addColumn(colBuilder.setText("Property").setWidth(100).build());
+        tableDataModel.addColumn(colBuilder.setText("ID").setWidth(200).build());
+    }
 
-	public static ISimpleTableModel getTableModel() {
-		return tableDataModel;
-	}
+    public static ISimpleTableModel getTableModel() {
+        return tableDataModel;
+    }
 }

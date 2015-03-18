@@ -30,34 +30,34 @@ package org.jowidgets.common.mask;
 
 public interface ITextMask extends Iterable<ICharacterMask> {
 
-	/**
-	 * Gets the length of the mask.
-	 * 
-	 * @return the length
-	 */
-	int getLength();
+    /**
+     * Gets the length of the mask.
+     * 
+     * @return the length
+     */
+    int getLength();
 
-	/**
-	 * Gets a non null character mask for all valid indices.
-	 * 
-	 * @param index The index to get the character mask for
-	 * @return Return a null null character mask
-	 * 
-	 * @throws IndexOutOfBoundsException if the index is not between 0 and getLength()-1
-	 */
-	ICharacterMask getCharacterMask(int index);
+    /**
+     * Gets a non null character mask for all valid indices.
+     * 
+     * @param index The index to get the character mask for
+     * @return Return a null null character mask
+     * 
+     * @throws IndexOutOfBoundsException if the index is not between 0 and getLength()-1
+     */
+    ICharacterMask getCharacterMask(int index);
 
-	/**
-	 * Gets the placeholder of the whole text mask. This mask may be shown, when no
-	 * input has been done already.
-	 * 
-	 * @return The placeholder of the mask
-	 */
-	String getPlaceholder();
+    /**
+     * Gets the placeholder of the whole text mask. This mask may be shown, when no
+     * input has been done already.
+     * 
+     * @return The placeholder of the mask
+     */
+    String getPlaceholder();
 
-	/**
-	 * @return The text mask mode
-	 */
-	TextMaskMode getMode();
+    /**
+     * @return The text mask mode
+     */
+    TextMaskMode getMode();
 
 }

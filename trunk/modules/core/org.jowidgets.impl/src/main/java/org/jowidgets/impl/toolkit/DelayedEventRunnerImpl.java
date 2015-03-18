@@ -38,61 +38,61 @@ import org.jowidgets.util.Assert;
 
 final class DelayedEventRunnerImpl implements IDelayedEventRunner {
 
-	private final IUiThreadAccess uiThreadAccess;
-	private final ScheduledExecutorService executor;
-	private final long delay;
-	private final TimeUnit timeUnit;
-	private final boolean cancelPrevious;
+    private final IUiThreadAccess uiThreadAccess;
+    private final ScheduledExecutorService executor;
+    private final long delay;
+    private final TimeUnit timeUnit;
+    private final boolean cancelPrevious;
 
-	private ScheduledFuture<?> scheduledFuture;
+    private ScheduledFuture<?> scheduledFuture;
 
-	DelayedEventRunnerImpl(
-		final IUiThreadAccess uiThreadAccess,
-		final ScheduledExecutorService executor,
-		final long delay,
-		final TimeUnit timeUnit,
-		final boolean cancelPrevious) {
+    DelayedEventRunnerImpl(
+        final IUiThreadAccess uiThreadAccess,
+        final ScheduledExecutorService executor,
+        final long delay,
+        final TimeUnit timeUnit,
+        final boolean cancelPrevious) {
 
-		Assert.paramNotNull(uiThreadAccess, "uiThreadAcccess");
-		Assert.paramNotNull(executor, "executor");
-		Assert.paramNotNull(timeUnit, "timeUnit");
+        Assert.paramNotNull(uiThreadAccess, "uiThreadAcccess");
+        Assert.paramNotNull(executor, "executor");
+        Assert.paramNotNull(timeUnit, "timeUnit");
 
-		this.uiThreadAccess = uiThreadAccess;
-		this.executor = executor;
-		this.delay = delay;
-		this.timeUnit = timeUnit;
-		this.cancelPrevious = cancelPrevious;
-	}
+        this.uiThreadAccess = uiThreadAccess;
+        this.executor = executor;
+        this.delay = delay;
+        this.timeUnit = timeUnit;
+        this.cancelPrevious = cancelPrevious;
+    }
 
-	@Override
-	public void run(final Runnable event) {
-		if (!uiThreadAccess.isUiThread()) {
-			throw new IllegalStateException("This method must be invoked in the uiThread");
-		}
-		if (cancelPrevious && scheduledFuture != null && !scheduledFuture.isCancelled() && !scheduledFuture.isDone()) {
-			scheduledFuture.cancel(false);
-		}
-		scheduledFuture = executor.schedule(new DelayedRunnable(event), delay, timeUnit);
-	}
+    @Override
+    public void run(final Runnable event) {
+        if (!uiThreadAccess.isUiThread()) {
+            throw new IllegalStateException("This method must be invoked in the uiThread");
+        }
+        if (cancelPrevious && scheduledFuture != null && !scheduledFuture.isCancelled() && !scheduledFuture.isDone()) {
+            scheduledFuture.cancel(false);
+        }
+        scheduledFuture = executor.schedule(new DelayedRunnable(event), delay, timeUnit);
+    }
 
-	private final class DelayedRunnable implements Runnable {
+    private final class DelayedRunnable implements Runnable {
 
-		private final Runnable original;
+        private final Runnable original;
 
-		public DelayedRunnable(final Runnable original) {
-			this.original = original;
-		}
+        public DelayedRunnable(final Runnable original) {
+            this.original = original;
+        }
 
-		@Override
-		public void run() {
-			uiThreadAccess.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					original.run();
-				}
-			});
-		}
+        @Override
+        public void run() {
+            uiThreadAccess.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    original.run();
+                }
+            });
+        }
 
-	}
+    }
 
 }

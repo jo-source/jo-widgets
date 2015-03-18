@@ -43,54 +43,54 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class BufferedImageSnipped implements IApplication {
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
 
-		//create the root frame
-		final IFrameBluePrint frameBp = BPF.frame("Buffered Image Snipped");
-		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
-		frame.setSize(300, 200);
-		frame.setBackgroundColor(Colors.WHITE);
-		frame.setLayout(FillLayout.builder().margin(10).build());
+        //create the root frame
+        final IFrameBluePrint frameBp = BPF.frame("Buffered Image Snipped");
+        final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
+        frame.setSize(300, 200);
+        frame.setBackgroundColor(Colors.WHITE);
+        frame.setLayout(FillLayout.builder().margin(10).build());
 
-		//create a arrow buffered image
-		final IBufferedImage image = createArrowImage();
+        //create a arrow buffered image
+        final IBufferedImage image = createArrowImage();
 
-		//create a label using the buffered image as icon
-		frame.add(BPF.label().setIcon(image).setText("Hello world"));
+        //create a label using the buffered image as icon
+        frame.add(BPF.label().setIcon(image).setText("Hello world"));
 
-		//set the root frame visible
-		frame.setVisible(true);
-	}
+        //set the root frame visible
+        frame.setVisible(true);
+    }
 
-	private static IBufferedImage createArrowImage() {
-		//create a buffered image
-		final IBufferedImage image = ImageFactory.createBufferedImage(52, 26);
-		final IGraphicContext gc = image.getGraphicContext();
+    private static IBufferedImage createArrowImage() {
+        //create a buffered image
+        final IBufferedImage image = ImageFactory.createBufferedImage(52, 26);
+        final IGraphicContext gc = image.getGraphicContext();
 
-		//use anti aliasing
-		gc.setAntiAliasing(AntiAliasing.ON);
+        //use anti aliasing
+        gc.setAntiAliasing(AntiAliasing.ON);
 
-		//define a polygon that shapes an arrow
-		final Point p1 = new Point(0, 6);
-		final Point p2 = new Point(26, 6);
-		final Point p3 = new Point(26, 0);
-		final Point p4 = new Point(48, 12);
-		final Point p5 = new Point(26, 24);
-		final Point p6 = new Point(26, 18);
-		final Point p7 = new Point(0, 18);
-		final Point[] polygon = new Point[] {p1, p2, p3, p4, p5, p6, p7, p1};
+        //define a polygon that shapes an arrow
+        final Point p1 = new Point(0, 6);
+        final Point p2 = new Point(26, 6);
+        final Point p3 = new Point(26, 0);
+        final Point p4 = new Point(48, 12);
+        final Point p5 = new Point(26, 24);
+        final Point p6 = new Point(26, 18);
+        final Point p7 = new Point(0, 18);
+        final Point[] polygon = new Point[] {p1, p2, p3, p4, p5, p6, p7, p1};
 
-		//use white background for the image
-		gc.setBackgroundColor(Colors.WHITE);
-		gc.clear();
+        //use white background for the image
+        gc.setBackgroundColor(Colors.WHITE);
+        gc.clear();
 
-		//draw with green color
-		gc.setForegroundColor(Colors.GREEN);
+        //draw with green color
+        gc.setForegroundColor(Colors.GREEN);
 
-		//fill the polygon 
-		gc.fillPolygon(polygon);
+        //fill the polygon 
+        gc.fillPolygon(polygon);
 
-		return image;
-	}
+        return image;
+    }
 }

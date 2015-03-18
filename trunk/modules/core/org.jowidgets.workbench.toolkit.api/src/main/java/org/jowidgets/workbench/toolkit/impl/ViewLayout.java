@@ -39,74 +39,74 @@ import org.jowidgets.workbench.api.ViewScope;
 
 final class ViewLayout extends WorkbenchPart implements IViewLayout {
 
-	private final String id;
-	private final boolean hidden;
-	private final boolean detachable;
-	private final ViewScope scope;
-	private final ClosePolicy closePolicy;
-	private final List<String> folderWhitelist;
-	private final List<String> folderBlacklist;
+    private final String id;
+    private final boolean hidden;
+    private final boolean detachable;
+    private final ViewScope scope;
+    private final ClosePolicy closePolicy;
+    private final List<String> folderWhitelist;
+    private final List<String> folderBlacklist;
 
-	ViewLayout(
-		final String id,
-		final String label,
-		final String tooltip,
-		final IImageConstant icon,
-		final boolean hidden,
-		final boolean detachable,
-		final ViewScope scope,
-		final ClosePolicy closePolicy,
-		final List<String> folderWhitelist,
-		final List<String> folderBlacklist) {
+    ViewLayout(
+        final String id,
+        final String label,
+        final String tooltip,
+        final IImageConstant icon,
+        final boolean hidden,
+        final boolean detachable,
+        final ViewScope scope,
+        final ClosePolicy closePolicy,
+        final List<String> folderWhitelist,
+        final List<String> folderBlacklist) {
 
-		super(label, tooltip, icon);
+        super(label, tooltip, icon);
 
-		Assert.paramNotEmpty(id, "id");
-		Assert.paramNotNull(folderWhitelist, "folderWhitelist");
-		Assert.paramNotNull(folderBlacklist, "folderBlacklist");
+        Assert.paramNotEmpty(id, "id");
+        Assert.paramNotNull(folderWhitelist, "folderWhitelist");
+        Assert.paramNotNull(folderBlacklist, "folderBlacklist");
 
-		this.id = id;
-		this.hidden = hidden;
-		this.detachable = detachable;
-		this.scope = scope;
-		this.closePolicy = closePolicy;
-		this.folderWhitelist = folderWhitelist;
-		this.folderBlacklist = folderBlacklist;
-	}
+        this.id = id;
+        this.hidden = hidden;
+        this.detachable = detachable;
+        this.scope = scope;
+        this.closePolicy = closePolicy;
+        this.folderWhitelist = folderWhitelist;
+        this.folderBlacklist = folderBlacklist;
+    }
 
-	@Override
-	public String getId() {
-		return id;
-	}
+    @Override
+    public String getId() {
+        return id;
+    }
 
-	@Override
-	public boolean isHidden() {
-		return hidden;
-	}
+    @Override
+    public boolean isHidden() {
+        return hidden;
+    }
 
-	@Override
-	public boolean isDetachable() {
-		return detachable;
-	}
+    @Override
+    public boolean isDetachable() {
+        return detachable;
+    }
 
-	@Override
-	public ViewScope getScope() {
-		return scope;
-	}
+    @Override
+    public ViewScope getScope() {
+        return scope;
+    }
 
-	@Override
-	public ClosePolicy getClosePolicy() {
-		return closePolicy;
-	}
+    @Override
+    public ClosePolicy getClosePolicy() {
+        return closePolicy;
+    }
 
-	@Override
-	public List<String> getFolderWhitelist() {
-		return new LinkedList<String>(folderWhitelist);
-	}
+    @Override
+    public List<String> getFolderWhitelist() {
+        return new LinkedList<String>(folderWhitelist);
+    }
 
-	@Override
-	public List<String> getFolderBlacklist() {
-		return new LinkedList<String>(folderBlacklist);
-	}
+    @Override
+    public List<String> getFolderBlacklist() {
+        return new LinkedList<String>(folderBlacklist);
+    }
 
 }

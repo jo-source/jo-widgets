@@ -31,7 +31,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IComboBoxSelectionSetupBuilde
 import org.jowidgets.api.widgets.descriptor.IComboBoxSelectionDescriptor;
 
 public interface IComboBoxSelectionBluePrint<INPUT_TYPE> extends
-		IComboBoxSelectionSetupBuilder<IComboBoxSelectionBluePrint<INPUT_TYPE>, INPUT_TYPE>,
-		IComboBoxSelectionDescriptor<INPUT_TYPE> {
+        IComboBoxSelectionSetupBuilder<IComboBoxSelectionBluePrint<INPUT_TYPE>, INPUT_TYPE>,
+        IComboBoxSelectionDescriptor<INPUT_TYPE> {
 
 }

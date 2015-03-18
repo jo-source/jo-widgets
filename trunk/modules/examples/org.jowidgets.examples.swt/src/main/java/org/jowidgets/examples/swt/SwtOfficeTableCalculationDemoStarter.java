@@ -32,10 +32,10 @@ import org.jowidgets.examples.common.office.OfficeTableCalculationDemoApplicatio
 
 public final class SwtOfficeTableCalculationDemoStarter {
 
-	private SwtOfficeTableCalculationDemoStarter() {}
+    private SwtOfficeTableCalculationDemoStarter() {}
 
-	public static void main(final String[] args) throws Exception {
-		new OfficeTableCalculationDemoApplication("Swt office text Demo").start();
-	}
+    public static void main(final String[] args) throws Exception {
+        new OfficeTableCalculationDemoApplication("Swt office text Demo").start();
+    }
 
 }

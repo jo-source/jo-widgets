@@ -35,12 +35,12 @@ import org.jowidgets.examples.common.browser.MainBrowserDemoApplication;
 
 public final class SwingMainBrowserDemoStarter {
 
-	private SwingMainBrowserDemoStarter() {}
+    private SwingMainBrowserDemoStarter() {}
 
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		Toolkit.initialize(AwtSwtToolkitProviderFactory.create());
-		new MainBrowserDemoApplication("Swing Main Browser Demo").start();
-	}
+    public static void main(final String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
+        Toolkit.initialize(AwtSwtToolkitProviderFactory.create());
+        new MainBrowserDemoApplication("Swing Main Browser Demo").start();
+    }
 }

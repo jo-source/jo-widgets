@@ -47,219 +47,219 @@ import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 
 public class ComponentWrapper extends WidgetWrapper implements IComponent {
 
-	public ComponentWrapper(final IComponent widget) {
-		super(widget);
-	}
+    public ComponentWrapper(final IComponent widget) {
+        super(widget);
+    }
 
-	@Override
-	protected IComponent getWidget() {
-		return (IComponent) super.getWidget();
-	}
+    @Override
+    protected IComponent getWidget() {
+        return (IComponent) super.getWidget();
+    }
 
-	@Override
-	public void redraw() {
-		getWidget().redraw();
-	}
+    @Override
+    public void redraw() {
+        getWidget().redraw();
+    }
 
-	@Override
-	public void setRedrawEnabled(final boolean enabled) {
-		getWidget().setRedrawEnabled(enabled);
-	}
+    @Override
+    public void setRedrawEnabled(final boolean enabled) {
+        getWidget().setRedrawEnabled(enabled);
+    }
 
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		getWidget().setForegroundColor(colorValue);
-	}
+    @Override
+    public void setForegroundColor(final IColorConstant colorValue) {
+        getWidget().setForegroundColor(colorValue);
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		getWidget().setBackgroundColor(colorValue);
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        getWidget().setBackgroundColor(colorValue);
+    }
 
-	@Override
-	public IColorConstant getForegroundColor() {
-		return getWidget().getForegroundColor();
-	}
+    @Override
+    public IColorConstant getForegroundColor() {
+        return getWidget().getForegroundColor();
+    }
 
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return getWidget().getBackgroundColor();
-	}
+    @Override
+    public IColorConstant getBackgroundColor() {
+        return getWidget().getBackgroundColor();
+    }
 
-	@Override
-	public void setCursor(final Cursor cursor) {
-		getWidget().setCursor(cursor);
-	}
+    @Override
+    public void setCursor(final Cursor cursor) {
+        getWidget().setCursor(cursor);
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		getWidget().setVisible(visible);
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        getWidget().setVisible(visible);
+    }
 
-	@Override
-	public boolean isVisible() {
-		return getWidget().isVisible();
-	}
+    @Override
+    public boolean isVisible() {
+        return getWidget().isVisible();
+    }
 
-	@Override
-	public boolean isShowing() {
-		return getWidget().isShowing();
-	}
+    @Override
+    public boolean isShowing() {
+        return getWidget().isShowing();
+    }
 
-	@Override
-	public Dimension getSize() {
-		return getWidget().getSize();
-	}
+    @Override
+    public Dimension getSize() {
+        return getWidget().getSize();
+    }
 
-	@Override
-	public void setSize(final Dimension size) {
-		getWidget().setSize(size);
-	}
+    @Override
+    public void setSize(final Dimension size) {
+        getWidget().setSize(size);
+    }
 
-	@Override
-	public void setSize(final int width, final int height) {
-		getWidget().setSize(width, height);
-	}
+    @Override
+    public void setSize(final int width, final int height) {
+        getWidget().setSize(width, height);
+    }
 
-	@Override
-	public void setPosition(final int x, final int y) {
-		getWidget().setPosition(x, y);
-	}
+    @Override
+    public void setPosition(final int x, final int y) {
+        getWidget().setPosition(x, y);
+    }
 
-	@Override
-	public Position getPosition() {
-		return getWidget().getPosition();
-	}
+    @Override
+    public Position getPosition() {
+        return getWidget().getPosition();
+    }
 
-	@Override
-	public void setPosition(final Position position) {
-		getWidget().setPosition(position);
-	}
+    @Override
+    public void setPosition(final Position position) {
+        getWidget().setPosition(position);
+    }
 
-	@Override
-	public Rectangle getBounds() {
-		return getWidget().getBounds();
-	}
+    @Override
+    public Rectangle getBounds() {
+        return getWidget().getBounds();
+    }
 
-	@Override
-	public void setBounds(final Rectangle bounds) {
-		getWidget().setBounds(bounds);
-	}
+    @Override
+    public void setBounds(final Rectangle bounds) {
+        getWidget().setBounds(bounds);
+    }
 
-	@Override
-	public Position toScreen(final Position localPosition) {
-		return getWidget().toScreen(localPosition);
-	}
+    @Override
+    public Position toScreen(final Position localPosition) {
+        return getWidget().toScreen(localPosition);
+    }
 
-	@Override
-	public Position toLocal(final Position screenPosition) {
-		return getWidget().toLocal(screenPosition);
-	}
+    @Override
+    public Position toLocal(final Position screenPosition) {
+        return getWidget().toLocal(screenPosition);
+    }
 
-	@Override
-	public Position fromComponent(final IComponentCommon component, final Position componentPosition) {
-		return getWidget().fromComponent(component, componentPosition);
-	}
+    @Override
+    public Position fromComponent(final IComponentCommon component, final Position componentPosition) {
+        return getWidget().fromComponent(component, componentPosition);
+    }
 
-	@Override
-	public Position toComponent(final Position componentPosition, final IComponentCommon component) {
-		return getWidget().toComponent(componentPosition, component);
-	}
+    @Override
+    public Position toComponent(final Position componentPosition, final IComponentCommon component) {
+        return getWidget().toComponent(componentPosition, component);
+    }
 
-	@Override
-	public boolean isReparentable() {
-		return getWidget().isReparentable();
-	}
+    @Override
+    public boolean isReparentable() {
+        return getWidget().isReparentable();
+    }
 
-	@Override
-	public boolean requestFocus() {
-		return getWidget().requestFocus();
-	}
+    @Override
+    public boolean requestFocus() {
+        return getWidget().requestFocus();
+    }
 
-	@Override
-	public boolean hasFocus() {
-		return getWidget().hasFocus();
-	}
+    @Override
+    public boolean hasFocus() {
+        return getWidget().hasFocus();
+    }
 
-	@Override
-	public void addKeyListener(final IKeyListener listener) {
-		getWidget().addKeyListener(listener);
-	}
+    @Override
+    public void addKeyListener(final IKeyListener listener) {
+        getWidget().addKeyListener(listener);
+    }
 
-	@Override
-	public void removeKeyListener(final IKeyListener listener) {
-		getWidget().removeKeyListener(listener);
-	}
+    @Override
+    public void removeKeyListener(final IKeyListener listener) {
+        getWidget().removeKeyListener(listener);
+    }
 
-	@Override
-	public void addMouseListener(final IMouseListener mouseListener) {
-		getWidget().addMouseListener(mouseListener);
-	}
+    @Override
+    public void addMouseListener(final IMouseListener mouseListener) {
+        getWidget().addMouseListener(mouseListener);
+    }
 
-	@Override
-	public void removeMouseListener(final IMouseListener mouseListener) {
-		getWidget().removeMouseListener(mouseListener);
-	}
+    @Override
+    public void removeMouseListener(final IMouseListener mouseListener) {
+        getWidget().removeMouseListener(mouseListener);
+    }
 
-	@Override
-	public void addMouseMotionListener(final IMouseMotionListener listener) {
-		getWidget().addMouseMotionListener(listener);
-	}
+    @Override
+    public void addMouseMotionListener(final IMouseMotionListener listener) {
+        getWidget().addMouseMotionListener(listener);
+    }
 
-	@Override
-	public void removeMouseMotionListener(final IMouseMotionListener mouseListener) {
-		getWidget().removeMouseMotionListener(mouseListener);
-	}
+    @Override
+    public void removeMouseMotionListener(final IMouseMotionListener mouseListener) {
+        getWidget().removeMouseMotionListener(mouseListener);
+    }
 
-	@Override
-	public void addComponentListener(final IComponentListener componentListener) {
-		getWidget().addComponentListener(componentListener);
-	}
+    @Override
+    public void addComponentListener(final IComponentListener componentListener) {
+        getWidget().addComponentListener(componentListener);
+    }
 
-	@Override
-	public void removeComponentListener(final IComponentListener componentListener) {
-		getWidget().removeComponentListener(componentListener);
-	}
+    @Override
+    public void removeComponentListener(final IComponentListener componentListener) {
+        getWidget().removeComponentListener(componentListener);
+    }
 
-	@Override
-	public void addFocusListener(final IFocusListener listener) {
-		getWidget().addFocusListener(listener);
-	}
+    @Override
+    public void addFocusListener(final IFocusListener listener) {
+        getWidget().addFocusListener(listener);
+    }
 
-	@Override
-	public void removeFocusListener(final IFocusListener listener) {
-		getWidget().removeFocusListener(listener);
-	}
+    @Override
+    public void removeFocusListener(final IFocusListener listener) {
+        getWidget().removeFocusListener(listener);
+    }
 
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		getWidget().addPopupDetectionListener(listener);
-	}
+    @Override
+    public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+        getWidget().addPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		getWidget().removePopupDetectionListener(listener);
-	}
+    @Override
+    public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+        getWidget().removePopupDetectionListener(listener);
+    }
 
-	@Override
-	public void addShowingStateListener(final IShowingStateListener listener) {
-		getWidget().addShowingStateListener(listener);
+    @Override
+    public void addShowingStateListener(final IShowingStateListener listener) {
+        getWidget().addShowingStateListener(listener);
 
-	}
+    }
 
-	@Override
-	public void removeShowingStateListener(final IShowingStateListener listener) {
-		getWidget().removeShowingStateListener(listener);
-	}
+    @Override
+    public void removeShowingStateListener(final IShowingStateListener listener) {
+        getWidget().removeShowingStateListener(listener);
+    }
 
-	@Override
-	public IPopupMenu createPopupMenu() {
-		return getWidget().createPopupMenu();
-	}
+    @Override
+    public IPopupMenu createPopupMenu() {
+        return getWidget().createPopupMenu();
+    }
 
-	@Override
-	public void setPopupMenu(final IMenuModel menuModel) {
-		getWidget().setPopupMenu(menuModel);
-	}
+    @Override
+    public void setPopupMenu(final IMenuModel menuModel) {
+        getWidget().setPopupMenu(menuModel);
+    }
 
 }

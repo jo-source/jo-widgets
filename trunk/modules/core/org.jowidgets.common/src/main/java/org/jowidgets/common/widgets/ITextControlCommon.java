@@ -32,20 +32,20 @@ import org.jowidgets.common.types.Markup;
 
 public interface ITextControlCommon extends IInputControlCommon, ISelectable {
 
-	String getText();
+    String getText();
 
-	void setText(String text);
+    void setText(String text);
 
-	void setFontSize(int size);
+    void setFontSize(int size);
 
-	void setFontName(String fontName);
+    void setFontName(String fontName);
 
-	void setMarkup(Markup markup);
+    void setMarkup(Markup markup);
 
-	void setSelection(int start, int end);
+    void setSelection(int start, int end);
 
-	void setCaretPosition(int pos);
+    void setCaretPosition(int pos);
 
-	int getCaretPosition();
+    int getCaretPosition();
 
 }

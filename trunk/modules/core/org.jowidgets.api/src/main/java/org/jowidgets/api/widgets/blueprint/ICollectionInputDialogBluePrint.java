@@ -31,7 +31,7 @@ import org.jowidgets.api.widgets.blueprint.builder.ICollectionInputDialogSetupBu
 import org.jowidgets.api.widgets.descriptor.ICollectionInputDialogDescriptor;
 
 public interface ICollectionInputDialogBluePrint<ELEMENT_TYPE> extends
-		ICollectionInputDialogSetupBuilder<ICollectionInputDialogBluePrint<ELEMENT_TYPE>, ELEMENT_TYPE>,
-		ICollectionInputDialogDescriptor<ELEMENT_TYPE> {
+        ICollectionInputDialogSetupBuilder<ICollectionInputDialogBluePrint<ELEMENT_TYPE>, ELEMENT_TYPE>,
+        ICollectionInputDialogDescriptor<ELEMENT_TYPE> {
 
 }

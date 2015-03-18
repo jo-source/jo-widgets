@@ -30,8 +30,8 @@ package org.jowidgets.spi.impl.dummy.dummyui;
 
 public class UIDPopupMenu extends UIDMenuItem {
 
-	public void show(final UIDComponent parent, final int x, final int y) {
+    public void show(final UIDComponent parent, final int x, final int y) {
 
-	}
+    }
 
 }

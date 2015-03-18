@@ -40,63 +40,63 @@ import org.jowidgets.tools.controller.TreeAdapter;
 
 final class TreeCheckedEnabledChecker extends AbstractEnabledChecker implements IEnabledChecker {
 
-	private static final IMessage NODES_ALREADY_CHECKED = Messages.getMessage("TreeCheckedEnabledChecker.nodesAlreadyChecked");
-	private static final IMessage NODES_ALREADY_UNCHECKED = Messages.getMessage("TreeCheckedEnabledChecker.nodesAlreadyUnchecked");
+    private static final IMessage NODES_ALREADY_CHECKED = Messages.getMessage("TreeCheckedEnabledChecker.nodesAlreadyChecked");
+    private static final IMessage NODES_ALREADY_UNCHECKED = Messages.getMessage("TreeCheckedEnabledChecker.nodesAlreadyUnchecked");
 
-	private final ITreeContainer treeContainer;
-	private final boolean checked;
+    private final ITreeContainer treeContainer;
+    private final boolean checked;
 
-	TreeCheckedEnabledChecker(final ITreeContainer treeContainer, final boolean checked) {
-		this.treeContainer = treeContainer;
-		this.checked = checked;
+    TreeCheckedEnabledChecker(final ITreeContainer treeContainer, final boolean checked) {
+        this.treeContainer = treeContainer;
+        this.checked = checked;
 
-		getParentTree(treeContainer).addTreeListener(new TreeAdapter() {
+        getParentTree(treeContainer).addTreeListener(new TreeAdapter() {
 
-			@Override
-			public void nodeChecked(final ITreeNode node) {
-				fireChangedEvent();
-			}
+            @Override
+            public void nodeChecked(final ITreeNode node) {
+                fireChangedEvent();
+            }
 
-			@Override
-			public void nodeUnchecked(final ITreeNode node) {
-				fireChangedEvent();
-			}
+            @Override
+            public void nodeUnchecked(final ITreeNode node) {
+                fireChangedEvent();
+            }
 
-		});
-	}
+        });
+    }
 
-	private static ITree getParentTree(final ITreeContainer treeContainer) {
-		if (treeContainer instanceof ITree) {
-			return (ITree) treeContainer;
-		}
-		else {
-			return getParentTree(treeContainer.getParentContainer());
-		}
-	}
+    private static ITree getParentTree(final ITreeContainer treeContainer) {
+        if (treeContainer instanceof ITree) {
+            return (ITree) treeContainer;
+        }
+        else {
+            return getParentTree(treeContainer.getParentContainer());
+        }
+    }
 
-	@Override
-	public IEnabledState getEnabledState() {
-		if (hasNodeThatWillBeChanged(treeContainer)) {
-			return EnabledState.ENABLED;
-		}
-		else if (checked) {
-			return EnabledState.disabled(NODES_ALREADY_CHECKED.get());
-		}
-		else {
-			return EnabledState.disabled(NODES_ALREADY_UNCHECKED.get());
-		}
-	}
+    @Override
+    public IEnabledState getEnabledState() {
+        if (hasNodeThatWillBeChanged(treeContainer)) {
+            return EnabledState.ENABLED;
+        }
+        else if (checked) {
+            return EnabledState.disabled(NODES_ALREADY_CHECKED.get());
+        }
+        else {
+            return EnabledState.disabled(NODES_ALREADY_UNCHECKED.get());
+        }
+    }
 
-	private boolean hasNodeThatWillBeChanged(final ITreeContainer tree) {
-		for (final ITreeNode childNode : tree.getChildren()) {
-			if (childNode.isChecked() != checked) {
-				return true;
-			}
-			if (hasNodeThatWillBeChanged(childNode)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    private boolean hasNodeThatWillBeChanged(final ITreeContainer tree) {
+        for (final ITreeNode childNode : tree.getChildren()) {
+            if (childNode.isChecked() != checked) {
+                return true;
+            }
+            if (hasNodeThatWillBeChanged(childNode)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

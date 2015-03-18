@@ -40,33 +40,33 @@ import org.jowidgets.util.Assert;
 
 public class ListSelectionVetoObservable implements IListSelectionVetoObservable {
 
-	private final Set<IListSelectionVetoListener> listeners;
+    private final Set<IListSelectionVetoListener> listeners;
 
-	public ListSelectionVetoObservable() {
-		this.listeners = new LinkedHashSet<IListSelectionVetoListener>();
-	}
+    public ListSelectionVetoObservable() {
+        this.listeners = new LinkedHashSet<IListSelectionVetoListener>();
+    }
 
-	@Override
-	public void addSelectionVetoListener(final IListSelectionVetoListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public void addSelectionVetoListener(final IListSelectionVetoListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removeSelectionVetoListener(final IListSelectionVetoListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeSelectionVetoListener(final IListSelectionVetoListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public boolean allowSelectionChange(final List<Integer> newSelection) {
-		final VetoHolder vetoHolder = new VetoHolder();
-		for (final IListSelectionVetoListener listener : new LinkedList<IListSelectionVetoListener>(listeners)) {
-			listener.beforeSelectionChange(newSelection, vetoHolder);
-			if (vetoHolder.hasVeto()) {
-				return false;
-			}
-		}
-		return true;
-	}
+    public boolean allowSelectionChange(final List<Integer> newSelection) {
+        final VetoHolder vetoHolder = new VetoHolder();
+        for (final IListSelectionVetoListener listener : new LinkedList<IListSelectionVetoListener>(listeners)) {
+            listener.beforeSelectionChange(newSelection, vetoHolder);
+            if (vetoHolder.hasVeto()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 }

@@ -34,50 +34,50 @@ import org.jowidgets.util.IDecorator;
 
 public interface IActionItemModel extends IMenuItemModel, IToolBarItemModel, IActionObservable {
 
-	/**
-	 * Sets an action that should be bound to the model
-	 * 
-	 * @param action The action to bind, may be null
-	 */
-	void setAction(IAction action);
+    /**
+     * Sets an action that should be bound to the model
+     * 
+     * @param action The action to bind, may be null
+     */
+    void setAction(IAction action);
 
-	/**
-	 * Gets the bound action of the item
-	 * 
-	 * @return The bound action or null, if no action is bound
-	 */
-	IAction getAction();
+    /**
+     * Gets the bound action of the item
+     * 
+     * @return The bound action or null, if no action is bound
+     */
+    IAction getAction();
 
-	/**
-	 * Adds a decorator to the model.
-	 * 
-	 * The decorator will decorate the action of the model.
-	 * If action will be changed, the changed model will be decorated.
-	 * 
-	 * @param decorator The decorator to add
-	 */
-	void addDecorator(IDecorator<IAction> decorator);
+    /**
+     * Adds a decorator to the model.
+     * 
+     * The decorator will decorate the action of the model.
+     * If action will be changed, the changed model will be decorated.
+     * 
+     * @param decorator The decorator to add
+     */
+    void addDecorator(IDecorator<IAction> decorator);
 
-	/**
-	 * Removes a decorator from the model.
-	 * 
-	 * After removing a decorator, the current action, if set,
-	 * will decorated again without the removed decorator.
-	 * If the last decorator will be removed, the original (undecorated) action
-	 * will be used.
-	 * 
-	 * @param decorator The decorator to add
-	 */
-	void removeDecorator(IDecorator<IAction> decorator);
+    /**
+     * Removes a decorator from the model.
+     * 
+     * After removing a decorator, the current action, if set,
+     * will decorated again without the removed decorator.
+     * If the last decorator will be removed, the original (undecorated) action
+     * will be used.
+     * 
+     * @param decorator The decorator to add
+     */
+    void removeDecorator(IDecorator<IAction> decorator);
 
-	/**
-	 * This fires an action performed event for the item.
-	 * 
-	 * This method is for internal use only.
-	 */
-	void actionPerformed();
+    /**
+     * This fires an action performed event for the item.
+     * 
+     * This method is for internal use only.
+     */
+    void actionPerformed();
 
-	@Override
-	IActionItemModel createCopy();
+    @Override
+    IActionItemModel createCopy();
 
 }

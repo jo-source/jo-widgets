@@ -29,8 +29,8 @@ package org.jowidgets.common.types;
 
 public enum AlignmentVertical {
 
-	TOP,
-	BOTTOM,
-	CENTER;
+    TOP,
+    BOTTOM,
+    CENTER;
 
 }

@@ -34,8 +34,8 @@ import org.jowidgets.spi.widgets.IFrameSpi;
 
 public class DialogImpl extends FrameImpl implements IFrame {
 
-	public DialogImpl(final IFrameSpi frameWidgetSpi, final IDialogSetup setup) {
-		super(frameWidgetSpi, setup);
-	}
+    public DialogImpl(final IFrameSpi frameWidgetSpi, final IDialogSetup setup) {
+        super(frameWidgetSpi, setup);
+    }
 
 }

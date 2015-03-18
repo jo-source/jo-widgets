@@ -30,16 +30,16 @@ package org.jowidgets.util.concurrent;
 
 public interface ISingleThreadAccess {
 
-	/**
-	 * @return True if the current thread is the single thread of this thread access, false otherwise
-	 */
-	boolean isSingleThread();
+    /**
+     * @return True if the current thread is the single thread of this thread access, false otherwise
+     */
+    boolean isSingleThread();
 
-	/**
-	 * Invokes a runnable in the single thread.
-	 * 
-	 * @param runnable The runnable to invoke
-	 */
-	void invoke(Runnable runnable);
+    /**
+     * Invokes a runnable in the single thread.
+     * 
+     * @param runnable The runnable to invoke
+     */
+    void invoke(Runnable runnable);
 
 }

@@ -31,8 +31,8 @@ import org.jowidgets.common.types.InputChangeEventPolicy;
 import org.jowidgets.common.widgets.builder.ISetupBuilder;
 
 public interface IInputObservableSetupBuilderCommon<INSTANCE_TYPE extends IInputObservableSetupBuilderCommon<?>> extends
-		ISetupBuilder<INSTANCE_TYPE> {
+        ISetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setInputChangeEventPolicy(InputChangeEventPolicy policy);
+    INSTANCE_TYPE setInputChangeEventPolicy(InputChangeEventPolicy policy);
 
 }

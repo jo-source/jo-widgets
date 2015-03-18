@@ -35,36 +35,36 @@ import org.jowidgets.common.image.IImageConstant;
 
 public interface IComponentNodeContainerModel extends IListModelObservable {
 
-	String getId();
+    String getId();
 
-	IComponentNodeContainerModel getParentContainer();
+    IComponentNodeContainerModel getParentContainer();
 
-	List<IComponentNodeModel> getChildren();
+    List<IComponentNodeModel> getChildren();
 
-	int getChildrenCount();
+    int getChildrenCount();
 
-	IComponentNodeModel addChild(IComponentNodeModel childModel);
+    IComponentNodeModel addChild(IComponentNodeModel childModel);
 
-	IComponentNodeModel addChild(int index, IComponentNodeModel childModel);
+    IComponentNodeModel addChild(int index, IComponentNodeModel childModel);
 
-	IComponentNodeModel addChild(IComponentNodeModelBuilder childModelBuilder);
+    IComponentNodeModel addChild(IComponentNodeModelBuilder childModelBuilder);
 
-	IComponentNodeModel addChild(int index, IComponentNodeModelBuilder childModelBuilder);
+    IComponentNodeModel addChild(int index, IComponentNodeModelBuilder childModelBuilder);
 
-	IComponentNodeModel addChild(String id, String label, String tooltip, IImageConstant icon);
+    IComponentNodeModel addChild(String id, String label, String tooltip, IImageConstant icon);
 
-	IComponentNodeModel addChild(String id, String label, IImageConstant icon);
+    IComponentNodeModel addChild(String id, String label, IImageConstant icon);
 
-	IComponentNodeModel addChild(String id, String label, String tooltip);
+    IComponentNodeModel addChild(String id, String label, String tooltip);
 
-	IComponentNodeModel addChild(String id, String label);
+    IComponentNodeModel addChild(String id, String label);
 
-	IComponentNodeModel addChild(String id);
+    IComponentNodeModel addChild(String id);
 
-	void remove(int index);
+    void remove(int index);
 
-	void remove(IComponentNodeModel childModel);
+    void remove(IComponentNodeModel childModel);
 
-	void removeAll();
+    void removeAll();
 
 }

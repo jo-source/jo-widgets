@@ -37,37 +37,37 @@ import org.jowidgets.util.Assert;
 
 class ImageImpl extends DisposableDelegate implements IImage {
 
-	private final IImageSpi imageSpi;
-	private final IImageRegistry imageRegistry;
+    private final IImageSpi imageSpi;
+    private final IImageRegistry imageRegistry;
 
-	public ImageImpl(final IImageSpi imageSpi, final IImageRegistry imageRegistry) {
-		Assert.paramNotNull(imageSpi, "imageSpi");
-		Assert.paramNotNull(imageRegistry, "imageRegistry");
+    public ImageImpl(final IImageSpi imageSpi, final IImageRegistry imageRegistry) {
+        Assert.paramNotNull(imageSpi, "imageSpi");
+        Assert.paramNotNull(imageRegistry, "imageRegistry");
 
-		this.imageSpi = imageSpi;
-		this.imageRegistry = imageRegistry;
-		this.imageRegistry.registerImageConstant(this, imageSpi.getImageHandle());
-	}
+        this.imageSpi = imageSpi;
+        this.imageRegistry = imageRegistry;
+        this.imageRegistry.registerImageConstant(this, imageSpi.getImageHandle());
+    }
 
-	@Override
-	public Dimension getSize() {
-		return imageSpi.getSize();
-	}
+    @Override
+    public Dimension getSize() {
+        return imageSpi.getSize();
+    }
 
-	@Override
-	public void initialize() {
-		//for calculating the size, the image must be initialized
-		getSize();
-	}
+    @Override
+    public void initialize() {
+        //for calculating the size, the image must be initialized
+        getSize();
+    }
 
-	@Override
-	public void dispose() {
-		super.dispose();
-		if (imageRegistry.getImageHandle(this) != null) {
-			imageRegistry.unRegisterImage(this);
-		}
-		else {
-			imageSpi.dispose();
-		}
-	}
+    @Override
+    public void dispose() {
+        super.dispose();
+        if (imageRegistry.getImageHandle(this) != null) {
+            imageRegistry.unRegisterImage(this);
+        }
+        else {
+            imageSpi.dispose();
+        }
+    }
 }

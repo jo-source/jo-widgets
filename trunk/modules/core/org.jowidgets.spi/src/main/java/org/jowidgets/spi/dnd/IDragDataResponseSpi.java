@@ -30,6 +30,6 @@ package org.jowidgets.spi.dnd;
 
 public interface IDragDataResponseSpi {
 
-	void setData(Object data);
+    void setData(Object data);
 
 }

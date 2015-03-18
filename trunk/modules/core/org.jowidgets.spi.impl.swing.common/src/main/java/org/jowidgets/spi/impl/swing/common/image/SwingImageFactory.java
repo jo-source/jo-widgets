@@ -51,75 +51,75 @@ import org.jowidgets.util.IFactory;
 
 public final class SwingImageFactory implements IImageFactorySpi {
 
-	private final SwingImageHandleFactory imageHandleFactory;
+    private final SwingImageHandleFactory imageHandleFactory;
 
-	public SwingImageFactory(final SwingImageHandleFactory imageHandleFactory) {
-		Assert.paramNotNull(imageHandleFactory, "imageHandleFactory");
-		this.imageHandleFactory = imageHandleFactory;
-	}
+    public SwingImageFactory(final SwingImageHandleFactory imageHandleFactory) {
+        Assert.paramNotNull(imageHandleFactory, "imageHandleFactory");
+        this.imageHandleFactory = imageHandleFactory;
+    }
 
-	@Override
-	public IBufferedImageSpi createBufferedImage(final int width, final int height) {
-		return new BufferedImageSpi(new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB));
-	}
+    @Override
+    public IBufferedImageSpi createBufferedImage(final int width, final int height) {
+        return new BufferedImageSpi(new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB));
+    }
 
-	@Override
-	public IImageSpi createImage(final IFactory<InputStream> inputStream) {
-		Assert.paramNotNull(inputStream, "inputStream");
-		final IImageDescriptor descriptor = new StreamFactoryImageDecriptorImpl(inputStream);
-		return new ImageSpiImpl<Image>(imageHandleFactory.createImageHandle(descriptor));
-	}
+    @Override
+    public IImageSpi createImage(final IFactory<InputStream> inputStream) {
+        Assert.paramNotNull(inputStream, "inputStream");
+        final IImageDescriptor descriptor = new StreamFactoryImageDecriptorImpl(inputStream);
+        return new ImageSpiImpl<Image>(imageHandleFactory.createImageHandle(descriptor));
+    }
 
-	@Override
-	public IImageSpi createImage(final URL url) {
-		Assert.paramNotNull(url, "url");
-		final IImageDescriptor descriptor = new UrlImageDescriptorImpl(url);
-		return new ImageSpiImpl<Image>(imageHandleFactory.createImageHandle(descriptor));
-	}
+    @Override
+    public IImageSpi createImage(final URL url) {
+        Assert.paramNotNull(url, "url");
+        final IImageDescriptor descriptor = new UrlImageDescriptorImpl(url);
+        return new ImageSpiImpl<Image>(imageHandleFactory.createImageHandle(descriptor));
+    }
 
-	private class ImageSpiImpl<IMAGE_TYPE extends Image> extends AbstractImageSpiImpl<IMAGE_TYPE> {
+    private class ImageSpiImpl<IMAGE_TYPE extends Image> extends AbstractImageSpiImpl<IMAGE_TYPE> {
 
-		ImageSpiImpl(final ImageHandle<IMAGE_TYPE> imageHandle) {
-			super(imageHandle);
-		}
+        ImageSpiImpl(final ImageHandle<IMAGE_TYPE> imageHandle) {
+            super(imageHandle);
+        }
 
-		@Override
-		public Dimension getSize() {
-			checkDisposed();
-			final Image image = getImageHandle().getImage();
-			return new Dimension(image.getWidth(null), image.getHeight(null));
-		}
+        @Override
+        public Dimension getSize() {
+            checkDisposed();
+            final Image image = getImageHandle().getImage();
+            return new Dimension(image.getWidth(null), image.getHeight(null));
+        }
 
-	}
+    }
 
-	private final class BufferedImageSpi extends ImageSpiImpl<BufferedImage> implements IBufferedImageSpi {
+    private final class BufferedImageSpi extends ImageSpiImpl<BufferedImage> implements IBufferedImageSpi {
 
-		private BufferedImage image;
-		private GraphicContextSpiImpl graphicContext;
+        private BufferedImage image;
+        private GraphicContextSpiImpl graphicContext;
 
-		public BufferedImageSpi(final BufferedImage image) {
-			super(new ImageHandle<BufferedImage>(image));
-			this.image = image;
-		}
+        public BufferedImageSpi(final BufferedImage image) {
+            super(new ImageHandle<BufferedImage>(image));
+            this.image = image;
+        }
 
-		@Override
-		public synchronized IGraphicContextSpi getGraphicContext() {
-			if (graphicContext == null) {
-				graphicContext = createGraphicContext();
-			}
-			return graphicContext;
-		}
+        @Override
+        public synchronized IGraphicContextSpi getGraphicContext() {
+            if (graphicContext == null) {
+                graphicContext = createGraphicContext();
+            }
+            return graphicContext;
+        }
 
-		private GraphicContextSpiImpl createGraphicContext() {
-			return new GraphicContextSpiImpl(image.createGraphics(), new Rectangle(new Position(0, 0), getSize()));
-		}
+        private GraphicContextSpiImpl createGraphicContext() {
+            return new GraphicContextSpiImpl(image.createGraphics(), new Rectangle(new Position(0, 0), getSize()));
+        }
 
-		@Override
-		public void dispose() {
-			super.dispose();
-			image = null;
-		}
+        @Override
+        public void dispose() {
+            super.dispose();
+            image = null;
+        }
 
-	}
+    }
 
 }

@@ -30,6 +30,6 @@ package org.jowidgets.api.controller;
 
 public interface ITreeNodeCheckableListener {
 
-	void checkableChanged(boolean checkable);
+    void checkableChanged(boolean checkable);
 
 }

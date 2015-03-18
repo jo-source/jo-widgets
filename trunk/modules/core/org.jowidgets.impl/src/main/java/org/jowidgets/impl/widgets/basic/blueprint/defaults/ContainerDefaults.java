@@ -33,9 +33,9 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
 public class ContainerDefaults implements IDefaultInitializer<IContainerSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final IContainerSetupBuilder<?> builder) {
-		builder.setLayoutFactory(Toolkit.getLayoutFactoryProvider().flowLayout());
-	}
+    @Override
+    public void initialize(final IContainerSetupBuilder<?> builder) {
+        builder.setLayoutFactory(Toolkit.getLayoutFactoryProvider().flowLayout());
+    }
 
 }

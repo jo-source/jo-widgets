@@ -30,11 +30,11 @@ package org.jowidgets.util;
 
 public interface IFutureValueCallback<VALUE_TYPE> {
 
-	/**
-	 * This method will be invoked after the value was initialized
-	 * 
-	 * @param value The initialized value, may be null
-	 */
-	void initialized(VALUE_TYPE value);
+    /**
+     * This method will be invoked after the value was initialized
+     * 
+     * @param value The initialized value, may be null
+     */
+    void initialized(VALUE_TYPE value);
 
 }

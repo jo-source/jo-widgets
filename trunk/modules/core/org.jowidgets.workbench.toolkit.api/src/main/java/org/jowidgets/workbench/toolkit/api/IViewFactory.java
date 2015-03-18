@@ -33,6 +33,6 @@ import org.jowidgets.workbench.api.IViewContext;
 
 public interface IViewFactory {
 
-	IView createView(String viewId, IViewContext viewContext);
+    IView createView(String viewId, IViewContext viewContext);
 
 }

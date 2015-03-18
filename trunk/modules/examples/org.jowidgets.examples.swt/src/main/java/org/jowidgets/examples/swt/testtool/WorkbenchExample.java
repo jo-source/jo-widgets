@@ -35,11 +35,11 @@ import org.jowidgets.workbench.impl.WorkbenchRunner;
 
 public final class WorkbenchExample {
 
-	private WorkbenchExample() {}
+    private WorkbenchExample() {}
 
-	public static void main(final String[] args) throws Exception {
-		DemoIconsInitializer.initialize();
-		new TestToolRunner(new WorkbenchRunner(), new WorkbenchDemo1Factory()).run();
-	}
+    public static void main(final String[] args) throws Exception {
+        DemoIconsInitializer.initialize();
+        new TestToolRunner(new WorkbenchRunner(), new WorkbenchDemo1Factory()).run();
+    }
 
 }

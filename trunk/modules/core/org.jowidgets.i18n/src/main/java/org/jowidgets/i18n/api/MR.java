@@ -32,29 +32,29 @@ import java.util.List;
 
 public final class MR {
 
-	private MR() {}
+    private MR() {}
 
-	/**
-	 * Replaces all variables (%1, ..., %n) with the given string parameters
-	 * 
-	 * @param message The message that contains variables
-	 * @param parameter The parameters to insert
-	 * 
-	 * @return A new string where the variables was replaced with the parameters
-	 */
-	public static String replace(final String message, final String... parameter) {
-		return MessageReplacer.replace(message, parameter);
-	}
+    /**
+     * Replaces all variables (%1, ..., %n) with the given string parameters
+     * 
+     * @param message The message that contains variables
+     * @param parameter The parameters to insert
+     * 
+     * @return A new string where the variables was replaced with the parameters
+     */
+    public static String replace(final String message, final String... parameter) {
+        return MessageReplacer.replace(message, parameter);
+    }
 
-	/**
-	 * Replaces all variables (%1, ..., %n) with the given string parameters
-	 * 
-	 * @param message The message that contains variables
-	 * @param parameter The parameters to insert
-	 * 
-	 * @return A new string where the variables was replaced with the parameters
-	 */
-	public static String replace(final String message, final List<String> parameter) {
-		return MessageReplacer.replace(message, parameter);
-	}
+    /**
+     * Replaces all variables (%1, ..., %n) with the given string parameters
+     * 
+     * @param message The message that contains variables
+     * @param parameter The parameters to insert
+     * 
+     * @return A new string where the variables was replaced with the parameters
+     */
+    public static String replace(final String message, final List<String> parameter) {
+        return MessageReplacer.replace(message, parameter);
+    }
 }

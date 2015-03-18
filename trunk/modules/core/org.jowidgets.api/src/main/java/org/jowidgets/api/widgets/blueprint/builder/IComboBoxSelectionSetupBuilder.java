@@ -36,27 +36,27 @@ import org.jowidgets.common.widgets.builder.IComboBoxSelectionSetupBuilderCommon
 import org.jowidgets.util.IObservableValue;
 
 public interface IComboBoxSelectionSetupBuilder<INSTANCE_TYPE extends IComboBoxSelectionSetupBuilder<?, ?>, INPUT_TYPE> extends
-		IInputComponentSetupBuilder<INSTANCE_TYPE, INPUT_TYPE>,
-		IComboBoxSelectionSetupConvenience<INSTANCE_TYPE, INPUT_TYPE>,
-		IComboBoxSelectionSetupBuilderCommon<INSTANCE_TYPE> {
+        IInputComponentSetupBuilder<INSTANCE_TYPE, INPUT_TYPE>,
+        IComboBoxSelectionSetupConvenience<INSTANCE_TYPE, INPUT_TYPE>,
+        IComboBoxSelectionSetupBuilderCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setAutoSelectionPolicy(AutoSelectionPolicy autoSelectionPolicy);
+    INSTANCE_TYPE setAutoSelectionPolicy(AutoSelectionPolicy autoSelectionPolicy);
 
-	INSTANCE_TYPE setElements(Collection<? extends INPUT_TYPE> elements);
+    INSTANCE_TYPE setElements(Collection<? extends INPUT_TYPE> elements);
 
-	INSTANCE_TYPE setObjectStringConverter(IObjectStringConverter<INPUT_TYPE> objectStringConverter);
+    INSTANCE_TYPE setObjectStringConverter(IObjectStringConverter<INPUT_TYPE> objectStringConverter);
 
-	INSTANCE_TYPE setObservableValue(IObservableValue<INPUT_TYPE> observableValue);
+    INSTANCE_TYPE setObservableValue(IObservableValue<INPUT_TYPE> observableValue);
 
-	/**
-	 * A lenient combobox allows to set values that are not contained in the elements list.
-	 * If such a value is set, the elements list shows the new value at the end of the list.
-	 * The method getValue() returns the (invalid) value. If a new value is set, the added value
-	 * will be removed from the list
-	 * 
-	 * @param lenient true for lenient mode, false otherwise
-	 * 
-	 * @return this builder
-	 */
-	INSTANCE_TYPE setLenient(boolean lenient);
+    /**
+     * A lenient combobox allows to set values that are not contained in the elements list.
+     * If such a value is set, the elements list shows the new value at the end of the list.
+     * The method getValue() returns the (invalid) value. If a new value is set, the added value
+     * will be removed from the list
+     * 
+     * @param lenient true for lenient mode, false otherwise
+     * 
+     * @return this builder
+     */
+    INSTANCE_TYPE setLenient(boolean lenient);
 }

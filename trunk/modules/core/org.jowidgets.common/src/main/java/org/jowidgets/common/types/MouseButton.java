@@ -30,14 +30,14 @@ package org.jowidgets.common.types;
 
 public enum MouseButton {
 
-	/**
-	 * The left mouse button
-	 */
-	LEFT,
+    /**
+     * The left mouse button
+     */
+    LEFT,
 
-	/**
-	 * The right mouse button
-	 */
-	RIGHT;
+    /**
+     * The right mouse button
+     */
+    RIGHT;
 
 }

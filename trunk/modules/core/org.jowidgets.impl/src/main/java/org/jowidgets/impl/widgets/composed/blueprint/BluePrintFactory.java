@@ -57,243 +57,243 @@ import org.jowidgets.util.Assert;
 
 public final class BluePrintFactory extends SimpleBluePrintFactory implements IBluePrintFactory {
 
-	public BluePrintFactory() {
-		super(new ComposedSetupConvenienceRegistry(), new ComposedDefaultsInitializerRegistry());
-	}
+    public BluePrintFactory() {
+        super(new ComposedSetupConvenienceRegistry(), new ComposedDefaultsInitializerRegistry());
+    }
 
-	////////////////////////////////////////////////////////////////////////////
-	////////////////////////input fields here///////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
+    ////////////////////////input fields here///////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
 
-	@Override
-	public IInputFieldBluePrint<String> inputFieldString() {
-		return inputField(Toolkit.getConverterProvider().string());
-	}
+    @Override
+    public IInputFieldBluePrint<String> inputFieldString() {
+        return inputField(Toolkit.getConverterProvider().string());
+    }
 
-	@Override
-	public IInputFieldBluePrint<Long> inputFieldLongNumber() {
-		return inputField(Toolkit.getConverterProvider().longNumber());
-	}
+    @Override
+    public IInputFieldBluePrint<Long> inputFieldLongNumber() {
+        return inputField(Toolkit.getConverterProvider().longNumber());
+    }
 
-	@Override
-	public IInputFieldBluePrint<Short> inputFieldShortNumber() {
-		return inputField(Toolkit.getConverterProvider().shortNumber());
-	}
+    @Override
+    public IInputFieldBluePrint<Short> inputFieldShortNumber() {
+        return inputField(Toolkit.getConverterProvider().shortNumber());
+    }
 
-	@Override
-	public IInputFieldBluePrint<Integer> inputFieldIntegerNumber() {
-		return inputField(Toolkit.getConverterProvider().integerNumber());
-	}
+    @Override
+    public IInputFieldBluePrint<Integer> inputFieldIntegerNumber() {
+        return inputField(Toolkit.getConverterProvider().integerNumber());
+    }
 
-	@Override
-	public IInputFieldBluePrint<Double> inputFieldDoubleNumber() {
-		return inputField(Toolkit.getConverterProvider().doubleNumber());
-	}
+    @Override
+    public IInputFieldBluePrint<Double> inputFieldDoubleNumber() {
+        return inputField(Toolkit.getConverterProvider().doubleNumber());
+    }
 
-	@Override
-	public IInputFieldBluePrint<Double> inputFieldDoubleNumber(final int minFractionDigits, final int maxFractionDigits) {
-		return inputField(Toolkit.getConverterProvider().doubleNumber(minFractionDigits, maxFractionDigits));
-	}
+    @Override
+    public IInputFieldBluePrint<Double> inputFieldDoubleNumber(final int minFractionDigits, final int maxFractionDigits) {
+        return inputField(Toolkit.getConverterProvider().doubleNumber(minFractionDigits, maxFractionDigits));
+    }
 
-	@Override
-	public IInputFieldBluePrint<Date> inputFieldDate(final DateFormat dateFormat, final String formatHint, final ITextMask mask) {
-		return inputField(Toolkit.getConverterProvider().date(dateFormat, formatHint, mask));
-	}
+    @Override
+    public IInputFieldBluePrint<Date> inputFieldDate(final DateFormat dateFormat, final String formatHint, final ITextMask mask) {
+        return inputField(Toolkit.getConverterProvider().date(dateFormat, formatHint, mask));
+    }
 
-	@Override
-	public IInputFieldBluePrint<Date> inputFieldDate(final DateFormat dateFormat, final String formatHint) {
-		return inputField(Toolkit.getConverterProvider().date(dateFormat, formatHint));
-	}
+    @Override
+    public IInputFieldBluePrint<Date> inputFieldDate(final DateFormat dateFormat, final String formatHint) {
+        return inputField(Toolkit.getConverterProvider().date(dateFormat, formatHint));
+    }
 
-	@Override
-	public IInputFieldBluePrint<Date> inputFieldDate() {
-		return inputField(Toolkit.getConverterProvider().date());
-	}
+    @Override
+    public IInputFieldBluePrint<Date> inputFieldDate() {
+        return inputField(Toolkit.getConverterProvider().date());
+    }
 
-	@Override
-	public IInputFieldBluePrint<Date> inputFieldDateTime() {
-		return inputField(Toolkit.getConverterProvider().dateTime());
-	}
+    @Override
+    public IInputFieldBluePrint<Date> inputFieldDateTime() {
+        return inputField(Toolkit.getConverterProvider().dateTime());
+    }
 
-	@Override
-	public IInputFieldBluePrint<Date> inputFieldTime() {
-		return inputField(Toolkit.getConverterProvider().time());
-	}
+    @Override
+    public IInputFieldBluePrint<Date> inputFieldTime() {
+        return inputField(Toolkit.getConverterProvider().time());
+    }
 
-	/////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////some convenience methods starting here///////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////some convenience methods starting here///////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
 
-	@Override
-	public ILabelBluePrint label(final IImageConstant icon) {
-		return label().setIcon(icon);
-	}
+    @Override
+    public ILabelBluePrint label(final IImageConstant icon) {
+        return label().setIcon(icon);
+    }
 
-	@Override
-	public ILabelBluePrint label(final IImageConstant icon, final String text) {
-		return label().setIcon(icon).setText(text);
-	}
+    @Override
+    public ILabelBluePrint label(final IImageConstant icon, final String text) {
+        return label().setIcon(icon).setText(text);
+    }
 
-	@Override
-	public ILabelBluePrint label(final IImageConstant icon, final String text, final String toolTiptext) {
-		return label().setIcon(icon).setText(text).setToolTipText(toolTiptext);
-	}
+    @Override
+    public ILabelBluePrint label(final IImageConstant icon, final String text, final String toolTiptext) {
+        return label().setIcon(icon).setText(text).setToolTipText(toolTiptext);
+    }
 
-	@Override
-	public ITextSeparatorBluePrint textSeparator(final String text, final String tooltipText) {
-		return textSeparator(text).setToolTipText(tooltipText);
-	}
+    @Override
+    public ITextSeparatorBluePrint textSeparator(final String text, final String tooltipText) {
+        return textSeparator(text).setToolTipText(tooltipText);
+    }
 
-	@Override
-	public ITextSeparatorBluePrint textSeparator(final String text) {
-		return textSeparator().setText(text);
-	}
+    @Override
+    public ITextSeparatorBluePrint textSeparator(final String text) {
+        return textSeparator().setText(text);
+    }
 
-	@Override
-	public IMessageDialogBluePrint infoDialog() {
-		return messageDialog().setIcon(Icons.INFO);
-	}
+    @Override
+    public IMessageDialogBluePrint infoDialog() {
+        return messageDialog().setIcon(Icons.INFO);
+    }
 
-	@Override
-	public IMessageDialogBluePrint warningDialog() {
-		return messageDialog().setIcon(Icons.WARNING);
-	}
+    @Override
+    public IMessageDialogBluePrint warningDialog() {
+        return messageDialog().setIcon(Icons.WARNING);
+    }
 
-	@Override
-	public IMessageDialogBluePrint errorDialog() {
-		return messageDialog().setIcon(Icons.ERROR);
-	}
+    @Override
+    public IMessageDialogBluePrint errorDialog() {
+        return messageDialog().setIcon(Icons.ERROR);
+    }
 
-	@Override
-	public IMessageDialogBluePrint infoDialog(final String message) {
-		return infoDialog().setText(message);
-	}
+    @Override
+    public IMessageDialogBluePrint infoDialog(final String message) {
+        return infoDialog().setText(message);
+    }
 
-	@Override
-	public IMessageDialogBluePrint warningDialog(final String message) {
-		return warningDialog().setText(message);
-	}
+    @Override
+    public IMessageDialogBluePrint warningDialog(final String message) {
+        return warningDialog().setText(message);
+    }
 
-	@Override
-	public IMessageDialogBluePrint errorDialog(final String message) {
-		return errorDialog().setText(message);
-	}
+    @Override
+    public IMessageDialogBluePrint errorDialog(final String message) {
+        return errorDialog().setText(message);
+    }
 
-	@Override
-	public IQuestionDialogBluePrint yesNoQuestion() {
-		return questionDialog();
-	}
+    @Override
+    public IQuestionDialogBluePrint yesNoQuestion() {
+        return questionDialog();
+    }
 
-	@Override
-	public IQuestionDialogBluePrint yesNoCancelQuestion() {
-		return questionDialog().setCancelButton(BPF.buttonCancel());
-	}
+    @Override
+    public IQuestionDialogBluePrint yesNoCancelQuestion() {
+        return questionDialog().setCancelButton(BPF.buttonCancel());
+    }
 
-	@Override
-	public IQuestionDialogBluePrint yesNoQuestion(final String question) {
-		return yesNoQuestion().setText(question);
-	}
+    @Override
+    public IQuestionDialogBluePrint yesNoQuestion(final String question) {
+        return yesNoQuestion().setText(question);
+    }
 
-	@Override
-	public IQuestionDialogBluePrint yesNoCancelQuestion(final String question) {
-		return yesNoCancelQuestion().setText(question);
-	}
+    @Override
+    public IQuestionDialogBluePrint yesNoCancelQuestion(final String question) {
+        return yesNoCancelQuestion().setText(question);
+    }
 
-	@Override
-	public IProgressBarBluePrint progressBar(final int minimum, final int maximum) {
-		return progressBar(maximum).setMinimum(minimum);
-	}
+    @Override
+    public IProgressBarBluePrint progressBar(final int minimum, final int maximum) {
+        return progressBar(maximum).setMinimum(minimum);
+    }
 
-	@Override
-	public IProgressBarBluePrint progressBar(final int maximum) {
-		return progressBar().setIndeterminate(false).setMaximum(maximum);
-	}
+    @Override
+    public IProgressBarBluePrint progressBar(final int maximum) {
+        return progressBar().setIndeterminate(false).setMaximum(maximum);
+    }
 
-	@Override
-	public <ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(
-		final IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>> descriptor) {
-		Assert.paramNotNull(descriptor, "descriptor"); //$NON-NLS-1$
-		return collectionInputControl(new ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>>() {
-			@Override
-			public IInputControl<ELEMENT_TYPE> create(final ICustomWidgetFactory widgetFactory) {
-				return widgetFactory.create(descriptor);
-			}
-		});
-	}
+    @Override
+    public <ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(
+        final IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>> descriptor) {
+        Assert.paramNotNull(descriptor, "descriptor"); //$NON-NLS-1$
+        return collectionInputControl(new ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>>() {
+            @Override
+            public IInputControl<ELEMENT_TYPE> create(final ICustomWidgetFactory widgetFactory) {
+                return widgetFactory.create(descriptor);
+            }
+        });
+    }
 
-	@Override
-	public <ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
-		final ICustomWidgetCreator<? extends IInputControl<ELEMENT_TYPE>> widgetCreator) {
-		@SuppressWarnings("unchecked")
-		final ICollectionInputControlSetup<ELEMENT_TYPE> collectionInputControlSetup = collectionInputControl((ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>>) widgetCreator);
-		return collectionInputDialog(collectionInputControlSetup);
-	}
+    @Override
+    public <ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
+        final ICustomWidgetCreator<? extends IInputControl<ELEMENT_TYPE>> widgetCreator) {
+        @SuppressWarnings("unchecked")
+        final ICollectionInputControlSetup<ELEMENT_TYPE> collectionInputControlSetup = collectionInputControl((ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>>) widgetCreator);
+        return collectionInputDialog(collectionInputControlSetup);
+    }
 
-	@Override
-	public <ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
-		final IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>> descriptor) {
-		final ICollectionInputControlSetup<ELEMENT_TYPE> collectionInputControlSetup = collectionInputControl(descriptor);
-		return collectionInputDialog(collectionInputControlSetup);
-	}
+    @Override
+    public <ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
+        final IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>> descriptor) {
+        final ICollectionInputControlSetup<ELEMENT_TYPE> collectionInputControlSetup = collectionInputControl(descriptor);
+        return collectionInputDialog(collectionInputControlSetup);
+    }
 
-	@Override
-	public ISliderViewerBluePrint<Double> sliderViewerDouble() {
-		final ISliderViewerBluePrint<Double> result = sliderViewer();
-		return result.setConverter(LinearSliderConverter.create());
-	}
+    @Override
+    public ISliderViewerBluePrint<Double> sliderViewerDouble() {
+        final ISliderViewerBluePrint<Double> result = sliderViewer();
+        return result.setConverter(LinearSliderConverter.create());
+    }
 
-	@Override
-	public ISliderViewerBluePrint<Double> sliderViewerDouble(final double max) {
-		final ISliderViewerBluePrint<Double> result = sliderViewer();
-		return result.setConverter(LinearSliderConverter.create(max));
-	}
+    @Override
+    public ISliderViewerBluePrint<Double> sliderViewerDouble(final double max) {
+        final ISliderViewerBluePrint<Double> result = sliderViewer();
+        return result.setConverter(LinearSliderConverter.create(max));
+    }
 
-	@Override
-	public ISliderViewerBluePrint<Double> sliderViewerDouble(final double min, final double max) {
-		final ISliderViewerBluePrint<Double> result = sliderViewer();
-		return result.setConverter(LinearSliderConverter.create(min, max));
-	}
+    @Override
+    public ISliderViewerBluePrint<Double> sliderViewerDouble(final double min, final double max) {
+        final ISliderViewerBluePrint<Double> result = sliderViewer();
+        return result.setConverter(LinearSliderConverter.create(min, max));
+    }
 
-	@Override
-	public ISliderViewerBluePrint<Float> sliderViewerFloat() {
-		final ISliderViewerBluePrint<Float> result = sliderViewer();
-		return result.setConverter(LinearSliderConverter.create(1.0f));
-	}
+    @Override
+    public ISliderViewerBluePrint<Float> sliderViewerFloat() {
+        final ISliderViewerBluePrint<Float> result = sliderViewer();
+        return result.setConverter(LinearSliderConverter.create(1.0f));
+    }
 
-	@Override
-	public ISliderViewerBluePrint<Float> sliderViewerFloat(final float max) {
-		final ISliderViewerBluePrint<Float> result = sliderViewer();
-		return result.setConverter(LinearSliderConverter.create(max));
-	}
+    @Override
+    public ISliderViewerBluePrint<Float> sliderViewerFloat(final float max) {
+        final ISliderViewerBluePrint<Float> result = sliderViewer();
+        return result.setConverter(LinearSliderConverter.create(max));
+    }
 
-	@Override
-	public ISliderViewerBluePrint<Float> sliderViewerFloat(final float min, final float max) {
-		final ISliderViewerBluePrint<Float> result = sliderViewer();
-		return result.setConverter(LinearSliderConverter.create(min, max));
-	}
+    @Override
+    public ISliderViewerBluePrint<Float> sliderViewerFloat(final float min, final float max) {
+        final ISliderViewerBluePrint<Float> result = sliderViewer();
+        return result.setConverter(LinearSliderConverter.create(min, max));
+    }
 
-	@Override
-	public ISliderViewerBluePrint<Integer> sliderViewerInteger(final int max) {
-		final ISliderViewerBluePrint<Integer> result = sliderViewer();
-		return result.setConverter(LinearSliderConverter.create(max));
-	}
+    @Override
+    public ISliderViewerBluePrint<Integer> sliderViewerInteger(final int max) {
+        final ISliderViewerBluePrint<Integer> result = sliderViewer();
+        return result.setConverter(LinearSliderConverter.create(max));
+    }
 
-	@Override
-	public ISliderViewerBluePrint<Integer> sliderViewerInteger(final int min, final int max) {
-		final ISliderViewerBluePrint<Integer> result = sliderViewer();
-		return result.setConverter(LinearSliderConverter.create(min, max));
-	}
+    @Override
+    public ISliderViewerBluePrint<Integer> sliderViewerInteger(final int min, final int max) {
+        final ISliderViewerBluePrint<Integer> result = sliderViewer();
+        return result.setConverter(LinearSliderConverter.create(min, max));
+    }
 
-	@Override
-	public ISliderViewerBluePrint<Long> sliderViewerLong(final long max) {
-		final ISliderViewerBluePrint<Long> result = sliderViewer();
-		return result.setConverter(LinearSliderConverter.create(max));
-	}
+    @Override
+    public ISliderViewerBluePrint<Long> sliderViewerLong(final long max) {
+        final ISliderViewerBluePrint<Long> result = sliderViewer();
+        return result.setConverter(LinearSliderConverter.create(max));
+    }
 
-	@Override
-	public ISliderViewerBluePrint<Long> sliderViewerLong(final long min, final long max) {
-		final ISliderViewerBluePrint<Long> result = sliderViewer();
-		return result.setConverter(LinearSliderConverter.create(min, max));
-	}
+    @Override
+    public ISliderViewerBluePrint<Long> sliderViewerLong(final long min, final long max) {
+        final ISliderViewerBluePrint<Long> result = sliderViewer();
+        return result.setConverter(LinearSliderConverter.create(min, max));
+    }
 
 }

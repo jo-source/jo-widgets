@@ -34,16 +34,16 @@ import org.jowidgets.common.image.IImageConstant;
 
 public interface ILoginPane {
 
-	ILoginResult login(ILoginInterceptor interceptor);
+    ILoginResult login(ILoginInterceptor interceptor);
 
-	ILoginResult login(IImageConstant logo, ILoginInterceptor interceptor);
+    ILoginResult login(IImageConstant logo, ILoginInterceptor interceptor);
 
-	ILoginResult login(String loginLabel, ILoginInterceptor interceptor);
+    ILoginResult login(String loginLabel, ILoginInterceptor interceptor);
 
-	ILoginResult login(boolean decorated, ILoginInterceptor interceptor);
+    ILoginResult login(boolean decorated, ILoginInterceptor interceptor);
 
-	ILoginResult login(boolean decorated, IImageConstant logo, ILoginInterceptor interceptor);
+    ILoginResult login(boolean decorated, IImageConstant logo, ILoginInterceptor interceptor);
 
-	ILoginResult login(boolean decorated, String loginLabel, ILoginInterceptor interceptor);
+    ILoginResult login(boolean decorated, String loginLabel, ILoginInterceptor interceptor);
 
 }

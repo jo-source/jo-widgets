@@ -30,17 +30,17 @@ package org.jowidgets.i18n.api;
 
 final class Messages {
 
-	private static final IMessageProvider MESSAGE_PROVIDER = MessageProvider.create(
-			"org.jowidgets.i18n.api.messages",
-			Messages.class);
+    private static final IMessageProvider MESSAGE_PROVIDER = MessageProvider.create(
+            "org.jowidgets.i18n.api.messages",
+            Messages.class);
 
-	private Messages() {}
+    private Messages() {}
 
-	static String getString(final String key) {
-		return MESSAGE_PROVIDER.getString(key);
-	}
+    static String getString(final String key) {
+        return MESSAGE_PROVIDER.getString(key);
+    }
 
-	static IMessage getMessage(final String key) {
-		return MESSAGE_PROVIDER.getMessage(key);
-	}
+    static IMessage getMessage(final String key) {
+        return MESSAGE_PROVIDER.getMessage(key);
+    }
 }

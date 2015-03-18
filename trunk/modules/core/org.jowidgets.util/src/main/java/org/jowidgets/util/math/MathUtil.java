@@ -30,42 +30,42 @@ package org.jowidgets.util.math;
 
 public final class MathUtil {
 
-	private MathUtil() {}
+    private MathUtil() {}
 
-	public static <NUMBER_TYPE extends Number> NUMBER_TYPE min(final NUMBER_TYPE number1, final NUMBER_TYPE number2) {
-		if (number1 == null && number2 == null) {
-			return null;
-		}
-		else if (number1 == null) {
-			return number2;
-		}
-		else if (number2 == null) {
-			return number1;
-		}
-		else if (number1.doubleValue() < number2.doubleValue()) {
-			return number1;
-		}
-		else {
-			return number2;
-		}
-	}
+    public static <NUMBER_TYPE extends Number> NUMBER_TYPE min(final NUMBER_TYPE number1, final NUMBER_TYPE number2) {
+        if (number1 == null && number2 == null) {
+            return null;
+        }
+        else if (number1 == null) {
+            return number2;
+        }
+        else if (number2 == null) {
+            return number1;
+        }
+        else if (number1.doubleValue() < number2.doubleValue()) {
+            return number1;
+        }
+        else {
+            return number2;
+        }
+    }
 
-	public static <NUMBER_TYPE extends Number> NUMBER_TYPE max(final NUMBER_TYPE number1, final NUMBER_TYPE number2) {
-		if (number1 == null && number2 == null) {
-			return null;
-		}
-		else if (number1 == null) {
-			return number2;
-		}
-		else if (number2 == null) {
-			return number1;
-		}
-		else if (number1.doubleValue() > number2.doubleValue()) {
-			return number1;
-		}
-		else {
-			return number2;
-		}
-	}
+    public static <NUMBER_TYPE extends Number> NUMBER_TYPE max(final NUMBER_TYPE number1, final NUMBER_TYPE number2) {
+        if (number1 == null && number2 == null) {
+            return null;
+        }
+        else if (number1 == null) {
+            return number2;
+        }
+        else if (number2 == null) {
+            return number1;
+        }
+        else if (number1.doubleValue() > number2.doubleValue()) {
+            return number1;
+        }
+        else {
+            return number2;
+        }
+    }
 
 }

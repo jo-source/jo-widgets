@@ -41,61 +41,61 @@ import org.jowidgets.util.Assert;
 
 public class BluePrintProxyProvider<BLUE_PRINT_TYPE extends ISetupBuilder<?>> {
 
-	private static final Map<ClassLoader, BluePrintProxyClassLoader> BLUE_PRINT_CLASS_LOADERS = new HashMap<ClassLoader, BluePrintProxyClassLoader>();
+    private static final Map<ClassLoader, BluePrintProxyClassLoader> BLUE_PRINT_CLASS_LOADERS = new HashMap<ClassLoader, BluePrintProxyClassLoader>();
 
-	private final BLUE_PRINT_TYPE proxy;
+    private final BLUE_PRINT_TYPE proxy;
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	public BluePrintProxyProvider(
-		final Class<? extends IWidgetDescriptor> bluePrintType,
-		final ISetupBuilderConvenienceRegistry convenienceRegistry,
-		final IDefaultsInitializerRegistry defaultsRegistry) {
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public BluePrintProxyProvider(
+        final Class<? extends IWidgetDescriptor> bluePrintType,
+        final ISetupBuilderConvenienceRegistry convenienceRegistry,
+        final IDefaultsInitializerRegistry defaultsRegistry) {
 
-		Assert.paramNotNull(bluePrintType, "bluePrintType");
+        Assert.paramNotNull(bluePrintType, "bluePrintType");
 
-		final BluePrintProxyInvocationHandler invocationHandler = new BluePrintProxyInvocationHandler();
+        final BluePrintProxyInvocationHandler invocationHandler = new BluePrintProxyInvocationHandler();
 
-		proxy = (BLUE_PRINT_TYPE) Proxy.newProxyInstance(
-				getBluePrintClassLoader(bluePrintType.getClassLoader()),
-				new Class[] {bluePrintType},
-				invocationHandler);
+        proxy = (BLUE_PRINT_TYPE) Proxy.newProxyInstance(
+                getBluePrintClassLoader(bluePrintType.getClassLoader()),
+                new Class[] {bluePrintType},
+                invocationHandler);
 
-		invocationHandler.initialize(proxy, bluePrintType, convenienceRegistry, defaultsRegistry);
+        invocationHandler.initialize(proxy, bluePrintType, convenienceRegistry, defaultsRegistry);
 
-	}
+    }
 
-	public BLUE_PRINT_TYPE getBluePrint() {
-		return proxy;
-	}
+    public BLUE_PRINT_TYPE getBluePrint() {
+        return proxy;
+    }
 
-	private static BluePrintProxyClassLoader getBluePrintClassLoader(final ClassLoader original) {
-		BluePrintProxyClassLoader result = BLUE_PRINT_CLASS_LOADERS.get(original);
-		if (result == null) {
-			result = new BluePrintProxyClassLoader(original);
-			BLUE_PRINT_CLASS_LOADERS.put(original, result);
-		}
-		return result;
-	}
+    private static BluePrintProxyClassLoader getBluePrintClassLoader(final ClassLoader original) {
+        BluePrintProxyClassLoader result = BLUE_PRINT_CLASS_LOADERS.get(original);
+        if (result == null) {
+            result = new BluePrintProxyClassLoader(original);
+            BLUE_PRINT_CLASS_LOADERS.put(original, result);
+        }
+        return result;
+    }
 
-	private static final class BluePrintProxyClassLoader extends ClassLoader {
+    private static final class BluePrintProxyClassLoader extends ClassLoader {
 
-		private final ClassLoader original;
+        private final ClassLoader original;
 
-		private BluePrintProxyClassLoader(final ClassLoader classLoader) {
-			this.original = classLoader;
-		}
+        private BluePrintProxyClassLoader(final ClassLoader classLoader) {
+            this.original = classLoader;
+        }
 
-		@Override
-		protected Class<?> findClass(final String name) throws ClassNotFoundException {
-			try {
-				return original.loadClass(name);
-			}
-			catch (final Exception e) {
-				//Nothing to do, this loader may not know the class
-			}
-			return SharedClassLoader.getCompositeClassLoader().loadClass(name);
-		}
+        @Override
+        protected Class<?> findClass(final String name) throws ClassNotFoundException {
+            try {
+                return original.loadClass(name);
+            }
+            catch (final Exception e) {
+                //Nothing to do, this loader may not know the class
+            }
+            return SharedClassLoader.getCompositeClassLoader().loadClass(name);
+        }
 
-	}
+    }
 
 }

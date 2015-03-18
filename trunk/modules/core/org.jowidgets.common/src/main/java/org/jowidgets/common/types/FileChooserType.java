@@ -30,10 +30,10 @@ package org.jowidgets.common.types;
 
 public enum FileChooserType {
 
-	SAVE,
+    SAVE,
 
-	OPEN_FILE,
+    OPEN_FILE,
 
-	OPEN_FILE_LIST;
+    OPEN_FILE_LIST;
 
 }

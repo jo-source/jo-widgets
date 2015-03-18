@@ -34,39 +34,39 @@ import org.jowidgets.util.Assert;
 
 public final class ScrollBarSettingsConvert {
 
-	private ScrollBarSettingsConvert() {};
+    private ScrollBarSettingsConvert() {};
 
-	public static int convertVertical(final IScrollCompositeSetupSpi setup) {
-		Assert.paramNotNull(setup, "setup");
+    public static int convertVertical(final IScrollCompositeSetupSpi setup) {
+        Assert.paramNotNull(setup, "setup");
 
-		if (setup.hasVerticalBar()) {
-			if (setup.isAlwaysShowBars()) {
-				return JScrollPane.VERTICAL_SCROLLBAR_ALWAYS;
-			}
-			else {
-				return JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED;
-			}
-		}
-		else {
-			return JScrollPane.VERTICAL_SCROLLBAR_NEVER;
-		}
-	}
+        if (setup.hasVerticalBar()) {
+            if (setup.isAlwaysShowBars()) {
+                return JScrollPane.VERTICAL_SCROLLBAR_ALWAYS;
+            }
+            else {
+                return JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED;
+            }
+        }
+        else {
+            return JScrollPane.VERTICAL_SCROLLBAR_NEVER;
+        }
+    }
 
-	public static int convertHorizontal(final IScrollCompositeSetupSpi setup) {
-		Assert.paramNotNull(setup, "setup");
+    public static int convertHorizontal(final IScrollCompositeSetupSpi setup) {
+        Assert.paramNotNull(setup, "setup");
 
-		if (setup.hasHorizontalBar()) {
-			if (setup.isAlwaysShowBars()) {
-				return JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS;
-			}
-			else {
-				return JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED;
-			}
-		}
-		else {
-			return JScrollPane.HORIZONTAL_SCROLLBAR_NEVER;
-		}
+        if (setup.hasHorizontalBar()) {
+            if (setup.isAlwaysShowBars()) {
+                return JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS;
+            }
+            else {
+                return JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED;
+            }
+        }
+        else {
+            return JScrollPane.HORIZONTAL_SCROLLBAR_NEVER;
+        }
 
-	}
+    }
 
 }

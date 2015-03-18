@@ -40,71 +40,71 @@ import org.jowidgets.util.Assert;
 
 public class InputModifierDocument extends PlainDocument {
 
-	private static final InputObservable DUMMY_INPUT_OBSERVABLE = new InputObservable();
+    private static final InputObservable DUMMY_INPUT_OBSERVABLE = new InputObservable();
 
-	private static final long serialVersionUID = 6900501331487160350L;
+    private static final long serialVersionUID = 6900501331487160350L;
 
-	private final JTextComponent textComponent;
-	private final IInputVerifier inputVerifier;
-	private InputObservable inputObservable;
-	private final Integer maxLength;
+    private final JTextComponent textComponent;
+    private final IInputVerifier inputVerifier;
+    private InputObservable inputObservable;
+    private final Integer maxLength;
 
-	private boolean programaticChangeState;
+    private boolean programaticChangeState;
 
-	public InputModifierDocument(
-		final JTextComponent textComponent,
-		final IInputVerifier inputVerifier,
-		final InputObservable inputObservable,
-		final Integer maxLength) {
-		super();
-		Assert.paramNotNull(textComponent, "textComponent");
+    public InputModifierDocument(
+        final JTextComponent textComponent,
+        final IInputVerifier inputVerifier,
+        final InputObservable inputObservable,
+        final Integer maxLength) {
+        super();
+        Assert.paramNotNull(textComponent, "textComponent");
 
-		this.programaticChangeState = false;
-		this.textComponent = textComponent;
-		this.inputVerifier = inputVerifier;
-		this.maxLength = maxLength;
-		setInputObservable(inputObservable);
-	}
+        this.programaticChangeState = false;
+        this.textComponent = textComponent;
+        this.inputVerifier = inputVerifier;
+        this.maxLength = maxLength;
+        setInputObservable(inputObservable);
+    }
 
-	@Override
-	public void remove(final int offs, final int len) throws BadLocationException {
-		final String currentText = textComponent.getText();
-		if (inputVerifier == null || inputVerifier.verify(currentText, "", offs, offs + len) || programaticChangeState) {
-			super.remove(offs, len);
-			inputObservable.fireInputChanged(textComponent.getText());
-		}
-	}
+    @Override
+    public void remove(final int offs, final int len) throws BadLocationException {
+        final String currentText = textComponent.getText();
+        if (inputVerifier == null || inputVerifier.verify(currentText, "", offs, offs + len) || programaticChangeState) {
+            super.remove(offs, len);
+            inputObservable.fireInputChanged(textComponent.getText());
+        }
+    }
 
-	@Override
-	public void replace(final int offset, final int length, final String text, final AttributeSet attrs) throws BadLocationException {
-		final String currentText = textComponent.getText();
+    @Override
+    public void replace(final int offset, final int length, final String text, final AttributeSet attrs) throws BadLocationException {
+        final String currentText = textComponent.getText();
 
-		if (maxLength != null) {
-			int entireLength = currentText != null ? currentText.length() : 0;
-			entireLength = entireLength + (text != null ? text.length() : 0) - length;
-			if (entireLength > maxLength.intValue()) {
-				Toolkit.getDefaultToolkit().beep();
-				return;
-			}
-		}
+        if (maxLength != null) {
+            int entireLength = currentText != null ? currentText.length() : 0;
+            entireLength = entireLength + (text != null ? text.length() : 0) - length;
+            if (entireLength > maxLength.intValue()) {
+                Toolkit.getDefaultToolkit().beep();
+                return;
+            }
+        }
 
-		if (inputVerifier == null || inputVerifier.verify(currentText, text, offset, offset + length) || programaticChangeState) {
-			super.replace(offset, length, text, attrs);
-			inputObservable.fireInputChanged(textComponent.getText());
-		}
-	}
+        if (inputVerifier == null || inputVerifier.verify(currentText, text, offset, offset + length) || programaticChangeState) {
+            super.replace(offset, length, text, attrs);
+            inputObservable.fireInputChanged(textComponent.getText());
+        }
+    }
 
-	public void setInputObservable(final InputObservable inputObservable) {
-		if (inputObservable == null) {
-			this.inputObservable = DUMMY_INPUT_OBSERVABLE;
-		}
-		else {
-			this.inputObservable = inputObservable;
-		}
-	}
+    public void setInputObservable(final InputObservable inputObservable) {
+        if (inputObservable == null) {
+            this.inputObservable = DUMMY_INPUT_OBSERVABLE;
+        }
+        else {
+            this.inputObservable = inputObservable;
+        }
+    }
 
-	public void setProgramaticChangeState(final boolean programaticChangeState) {
-		this.programaticChangeState = programaticChangeState;
-	}
+    public void setProgramaticChangeState(final boolean programaticChangeState) {
+        this.programaticChangeState = programaticChangeState;
+    }
 
 }

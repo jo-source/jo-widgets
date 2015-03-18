@@ -39,32 +39,32 @@ import org.jowidgets.util.Assert;
  */
 public final class JoToSwtReference {
 
-	private JoToSwtReference() {}
+    private JoToSwtReference() {}
 
-	/**
-	 * Gets the swt composite for a jowidgets composite
-	 * 
-	 * @param composite The jowidgets composite to get the swt composite for
-	 * 
-	 * @return The swt composite, never null
-	 */
-	public static Composite getUiReference(final IComposite composite) {
-		Assert.paramNotNull(composite, "composite");
-		return (Composite) composite.getUiReference();
-	}
+    /**
+     * Gets the swt composite for a jowidgets composite
+     * 
+     * @param composite The jowidgets composite to get the swt composite for
+     * 
+     * @return The swt composite, never null
+     */
+    public static Composite getUiReference(final IComposite composite) {
+        Assert.paramNotNull(composite, "composite");
+        return (Composite) composite.getUiReference();
+    }
 
-	/**
-	 * Gets the swt shell reference for a jowidgets frame
-	 * 
-	 * @param frame The jowidgets frame to get the swt shell for
-	 * 
-	 * @return the swt shell, never null
-	 */
-	public static Shell getUiReference(final IFrame frame) {
-		Assert.paramNotNull(frame, "frame");
-		return (Shell) frame.getUiReference();
-	}
+    /**
+     * Gets the swt shell reference for a jowidgets frame
+     * 
+     * @param frame The jowidgets frame to get the swt shell for
+     * 
+     * @return the swt shell, never null
+     */
+    public static Shell getUiReference(final IFrame frame) {
+        Assert.paramNotNull(frame, "frame");
+        return (Shell) frame.getUiReference();
+    }
 
-	//TODO ANYBODY may feel free to add more convert methods
+    //TODO ANYBODY may feel free to add more convert methods
 
 }

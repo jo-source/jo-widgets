@@ -36,27 +36,27 @@ import org.jowidgets.validation.IValidator;
 
 public interface IPasswordChangeDialogSetup extends ITitledWindowSetup {
 
-	@Mandatory
-	IButtonDescriptor getOkButton();
+    @Mandatory
+    IButtonDescriptor getOkButton();
 
-	@Mandatory
-	IButtonDescriptor getCancelButton();
+    @Mandatory
+    IButtonDescriptor getCancelButton();
 
-	@Mandatory
-	InputDialogDefaultButtonPolicy getDefaultButtonPolicy();
+    @Mandatory
+    InputDialogDefaultButtonPolicy getDefaultButtonPolicy();
 
-	@Mandatory
-	boolean isCloseable();
+    @Mandatory
+    boolean isCloseable();
 
-	@Mandatory
-	IPasswordChangeExecutor getExecutor();
+    @Mandatory
+    IPasswordChangeExecutor getExecutor();
 
-	@Mandatory
-	IValidator<String> getPasswordValidator();
+    @Mandatory
+    IValidator<String> getPasswordValidator();
 
-	@Mandatory
-	int getPasswordMaxLength();
+    @Mandatory
+    int getPasswordMaxLength();
 
-	Dimension getMinSize();
+    Dimension getMinSize();
 
 }

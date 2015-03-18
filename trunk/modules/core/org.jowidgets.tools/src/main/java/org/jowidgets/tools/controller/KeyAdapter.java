@@ -33,10 +33,10 @@ import org.jowidgets.common.widgets.controller.IKeyListener;
 
 public class KeyAdapter implements IKeyListener {
 
-	@Override
-	public void keyPressed(final IKeyEvent event) {}
+    @Override
+    public void keyPressed(final IKeyEvent event) {}
 
-	@Override
-	public void keyReleased(final IKeyEvent event) {}
+    @Override
+    public void keyReleased(final IKeyEvent event) {}
 
 }

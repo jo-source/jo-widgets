@@ -30,6 +30,6 @@ package org.jowidgets.api.toolkit;
 
 public interface IToolkitProvider {
 
-	IToolkit get();
+    IToolkit get();
 
 }

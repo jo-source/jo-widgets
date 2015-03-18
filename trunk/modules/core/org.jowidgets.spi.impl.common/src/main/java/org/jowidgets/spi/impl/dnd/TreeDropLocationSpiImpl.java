@@ -34,24 +34,24 @@ import org.jowidgets.util.Assert;
 
 public final class TreeDropLocationSpiImpl implements ITreeDropLocationSpi {
 
-	private final ITreeNodeSpi treeNode;
-	private final TreeDropPositionSpi dropPosition;
+    private final ITreeNodeSpi treeNode;
+    private final TreeDropPositionSpi dropPosition;
 
-	public TreeDropLocationSpiImpl(final ITreeNodeSpi treeNode, final TreeDropPositionSpi dropPosition) {
-		Assert.paramNotNull(treeNode, "treeNode");
-		Assert.paramNotNull(dropPosition, "dropPosition");
-		this.treeNode = treeNode;
-		this.dropPosition = dropPosition;
-	}
+    public TreeDropLocationSpiImpl(final ITreeNodeSpi treeNode, final TreeDropPositionSpi dropPosition) {
+        Assert.paramNotNull(treeNode, "treeNode");
+        Assert.paramNotNull(dropPosition, "dropPosition");
+        this.treeNode = treeNode;
+        this.dropPosition = dropPosition;
+    }
 
-	@Override
-	public ITreeNodeSpi getTreeNode() {
-		return treeNode;
-	}
+    @Override
+    public ITreeNodeSpi getTreeNode() {
+        return treeNode;
+    }
 
-	@Override
-	public TreeDropPositionSpi getDropPosition() {
-		return dropPosition;
-	}
+    @Override
+    public TreeDropPositionSpi getDropPosition() {
+        return dropPosition;
+    }
 
 }

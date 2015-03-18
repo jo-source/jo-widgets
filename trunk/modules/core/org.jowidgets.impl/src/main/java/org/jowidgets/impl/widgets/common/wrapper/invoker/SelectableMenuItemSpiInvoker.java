@@ -34,33 +34,33 @@ import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
 public class SelectableMenuItemSpiInvoker extends MenuItemSpiInvoker implements ISelectableItemSpiInvoker {
 
-	public SelectableMenuItemSpiInvoker(final ISelectableMenuItemSpi item) {
-		super(item);
-	}
+    public SelectableMenuItemSpiInvoker(final ISelectableMenuItemSpi item) {
+        super(item);
+    }
 
-	@Override
-	public ISelectableMenuItemSpi getItem() {
-		return (ISelectableMenuItemSpi) super.getItem();
-	}
+    @Override
+    public ISelectableMenuItemSpi getItem() {
+        return (ISelectableMenuItemSpi) super.getItem();
+    }
 
-	@Override
-	public void setAccelerator(final Accelerator accelerator) {
-		getItem().setAccelerator(accelerator);
-	}
+    @Override
+    public void setAccelerator(final Accelerator accelerator) {
+        getItem().setAccelerator(accelerator);
+    }
 
-	@Override
-	public void setSelected(final boolean selected) {
-		getItem().setSelected(selected);
-	}
+    @Override
+    public void setSelected(final boolean selected) {
+        getItem().setSelected(selected);
+    }
 
-	@Override
-	public boolean isSelected() {
-		return getItem().isSelected();
-	}
+    @Override
+    public boolean isSelected() {
+        return getItem().isSelected();
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		//Do not set the icon for selectable item, because they have a default icon
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        //Do not set the icon for selectable item, because they have a default icon
+    }
 
 }

@@ -32,18 +32,18 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
 
 public interface ITextFieldSetupBuilder<INSTANCE_TYPE extends ITextFieldSetupBuilder<?>> extends
-		ITextFieldSetupBuilderCommon<INSTANCE_TYPE> {
+        ITextFieldSetupBuilderCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setEditable(boolean editable);
+    INSTANCE_TYPE setEditable(boolean editable);
 
-	INSTANCE_TYPE setText(String text);
+    INSTANCE_TYPE setText(String text);
 
-	INSTANCE_TYPE setMask(final ITextMask textMask);
+    INSTANCE_TYPE setMask(final ITextMask textMask);
 
-	INSTANCE_TYPE setMarkup(Markup markup);
+    INSTANCE_TYPE setMarkup(Markup markup);
 
-	INSTANCE_TYPE setFontSize(Integer size);
+    INSTANCE_TYPE setFontSize(Integer size);
 
-	INSTANCE_TYPE setFontName(String fontName);
+    INSTANCE_TYPE setFontName(String fontName);
 
 }

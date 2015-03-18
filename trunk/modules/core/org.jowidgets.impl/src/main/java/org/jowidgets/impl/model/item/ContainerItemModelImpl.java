@@ -37,47 +37,47 @@ import org.jowidgets.util.Assert;
 
 class ContainerItemModelImpl extends AbstractActionItemModelImpl implements IContainerItemModel {
 
-	private IContainerContentCreator contentCreator;
+    private IContainerContentCreator contentCreator;
 
-	protected ContainerItemModelImpl() {
-		this(null, null, null, null, null, null, true, null, null);
-	}
+    protected ContainerItemModelImpl() {
+        this(null, null, null, null, null, null, true, null, null);
+    }
 
-	protected ContainerItemModelImpl(
-		final String id,
-		final String text,
-		final String toolTipText,
-		final IImageConstant icon,
-		final Accelerator accelerator,
-		final Character mnemonic,
-		final boolean enabled,
-		final IAction action,
-		final IContainerContentCreator contentCreator) {
-		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled, action, null);
+    protected ContainerItemModelImpl(
+        final String id,
+        final String text,
+        final String toolTipText,
+        final IImageConstant icon,
+        final Accelerator accelerator,
+        final Character mnemonic,
+        final boolean enabled,
+        final IAction action,
+        final IContainerContentCreator contentCreator) {
+        super(id, text, toolTipText, icon, accelerator, mnemonic, enabled, action, null);
 
-		this.contentCreator = contentCreator;
-	}
+        this.contentCreator = contentCreator;
+    }
 
-	@Override
-	public IContainerItemModel createCopy() {
-		final ContainerItemModelImpl result = new ContainerItemModelImpl();
-		result.setContent(this);
-		return result;
-	}
+    @Override
+    public IContainerItemModel createCopy() {
+        final ContainerItemModelImpl result = new ContainerItemModelImpl();
+        result.setContent(this);
+        return result;
+    }
 
-	protected void setContent(final ContainerItemModelImpl source) {
-		super.setContent(source);
-		this.contentCreator = source.getContentCreator();
-	}
+    protected void setContent(final ContainerItemModelImpl source) {
+        super.setContent(source);
+        this.contentCreator = source.getContentCreator();
+    }
 
-	@Override
-	public IContainerContentCreator getContentCreator() {
-		return contentCreator;
-	}
+    @Override
+    public IContainerContentCreator getContentCreator() {
+        return contentCreator;
+    }
 
-	@Override
-	public void setContentCreator(final IContainerContentCreator contentCreator) {
-		Assert.paramNotNull(contentCreator, "contentCreator");
-		this.contentCreator = contentCreator;
-	}
+    @Override
+    public void setContentCreator(final IContainerContentCreator contentCreator) {
+        Assert.paramNotNull(contentCreator, "contentCreator");
+        this.contentCreator = contentCreator;
+    }
 }

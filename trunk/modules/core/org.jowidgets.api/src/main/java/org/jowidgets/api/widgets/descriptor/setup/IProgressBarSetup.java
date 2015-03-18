@@ -32,7 +32,7 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IProgressBarSetup extends IProgressBarSetupCommon, IComponentSetup {
 
-	@Mandatory
-	int getProgress();
+    @Mandatory
+    int getProgress();
 
 }

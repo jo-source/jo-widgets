@@ -44,29 +44,29 @@ import org.jowidgets.workbench.tools.AbstractView;
 
 public final class PersonDetailView extends AbstractView {
 
-	public static final String ID = PersonDetailView.class.getName();
-	public static final String DEFAULT_LABEL = "Person form";
-	public static final String DEFAULT_TOOLTIP = "Shows the detail form of the person";
-	public static final IImageConstant DEFAULT_ICON = SilkIcons.USER;
+    public static final String ID = PersonDetailView.class.getName();
+    public static final String DEFAULT_LABEL = "Person form";
+    public static final String DEFAULT_TOOLTIP = "Shows the detail form of the person";
+    public static final IImageConstant DEFAULT_ICON = SilkIcons.USER;
 
-	public PersonDetailView(final IViewContext context, final BeanTableModel<Person> model) {
-		final IContainer container = context.getContainer();
-		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
+    public PersonDetailView(final IViewContext context, final BeanTableModel<Person> model) {
+        final IContainer container = context.getContainer();
+        container.setLayout(MigLayoutFactory.growingInnerCellLayout());
 
-		final IInputCompositeBluePrint<Person> inputCompositeBp = BPF.inputComposite(new PersonContentCreator(true));
-		final IInputComposite<Person> inputComposite = container.add(inputCompositeBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		inputComposite.setEditable(false);
+        final IInputCompositeBluePrint<Person> inputCompositeBp = BPF.inputComposite(new PersonContentCreator(true));
+        final IInputComposite<Person> inputComposite = container.add(inputCompositeBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        inputComposite.setEditable(false);
 
-		model.addDataModelListener(new TableDataModelAdapter() {
-			@Override
-			public void selectionChanged() {
-				inputComposite.setValue(model.getSelectedBean());
-			}
+        model.addDataModelListener(new TableDataModelAdapter() {
+            @Override
+            public void selectionChanged() {
+                inputComposite.setValue(model.getSelectedBean());
+            }
 
-			@Override
-			public void dataChanged() {
-				inputComposite.setValue(model.getSelectedBean());
-			}
-		});
-	}
+            @Override
+            public void dataChanged() {
+                inputComposite.setValue(model.getSelectedBean());
+            }
+        });
+    }
 }

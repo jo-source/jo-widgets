@@ -30,8 +30,8 @@ package org.jowidgets.api.controller;
 
 public interface ITabItemObservable {
 
-	void addTabItemListener(ITabItemListener listener);
+    void addTabItemListener(ITabItemListener listener);
 
-	void removeTabItemListener(ITabItemListener listener);
+    void removeTabItemListener(ITabItemListener listener);
 
 }

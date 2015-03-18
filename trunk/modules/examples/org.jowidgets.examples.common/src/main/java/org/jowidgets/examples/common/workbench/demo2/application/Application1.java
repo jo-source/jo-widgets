@@ -39,42 +39,42 @@ import org.jowidgets.workbench.tools.WorkbenchApplicationModelBuilder;
 
 public class Application1 {
 
-	private final IWorkbenchApplicationModel model;
+    private final IWorkbenchApplicationModel model;
 
-	public Application1() {
-		final IWorkbenchApplicationModelBuilder builder = new WorkbenchApplicationModelBuilder();
-		builder.setId(Application1.class.getName());
-		builder.setLabel("App 1");
-		builder.setTooltip("Application 1");
-		builder.setIcon(SilkIcons.USER_GREEN);
-		this.model = builder.build();
+    public Application1() {
+        final IWorkbenchApplicationModelBuilder builder = new WorkbenchApplicationModelBuilder();
+        builder.setId(Application1.class.getName());
+        builder.setLabel("App 1");
+        builder.setTooltip("Application 1");
+        builder.setIcon(SilkIcons.USER_GREEN);
+        this.model = builder.build();
 
-		createComponentTree(model);
-	}
+        createComponentTree(model);
+    }
 
-	public IWorkbenchApplicationModel getModel() {
-		return model;
-	}
+    public IWorkbenchApplicationModel getModel() {
+        return model;
+    }
 
-	private void createComponentTree(final IWorkbenchApplicationModel model) {
-		final IComponentNodeModel folder1 = model.addChild("FOLDER_1_ID", "Folder 1", SilkIcons.FOLDER);
+    private void createComponentTree(final IWorkbenchApplicationModel model) {
+        final IComponentNodeModel folder1 = model.addChild("FOLDER_1_ID", "Folder 1", SilkIcons.FOLDER);
 
-		for (int i = 0; i < 5; i++) {
-			final IComponentNodeModelBuilder nodeModelBuilder = new ComponentNodeModelBuilder();
-			nodeModelBuilder.setId(ComponentDemo2.class.getName() + i);
-			nodeModelBuilder.setLabel("Simple Component " + (i + 1));
-			nodeModelBuilder.setComponentFactory(ComponentDemo2.class);
-			folder1.addChild(nodeModelBuilder.build());
-		}
+        for (int i = 0; i < 5; i++) {
+            final IComponentNodeModelBuilder nodeModelBuilder = new ComponentNodeModelBuilder();
+            nodeModelBuilder.setId(ComponentDemo2.class.getName() + i);
+            nodeModelBuilder.setLabel("Simple Component " + (i + 1));
+            nodeModelBuilder.setComponentFactory(ComponentDemo2.class);
+            folder1.addChild(nodeModelBuilder.build());
+        }
 
-		final IComponentNodeModel folder2 = model.addChild("FOLDER_2_ID", "Folder 2", SilkIcons.FOLDER);
-		for (int i = 0; i < 5; i++) {
-			final IComponentNodeModelBuilder nodeModelBuilder = new ComponentNodeModelBuilder();
-			nodeModelBuilder.setId(ComponentDemo2.class.getName() + i);
-			nodeModelBuilder.setLabel("Simple Component " + (i + 1));
-			nodeModelBuilder.setComponentFactory(ComponentDemo2.class);
-			folder2.addChild(nodeModelBuilder.build());
-		}
-	}
+        final IComponentNodeModel folder2 = model.addChild("FOLDER_2_ID", "Folder 2", SilkIcons.FOLDER);
+        for (int i = 0; i < 5; i++) {
+            final IComponentNodeModelBuilder nodeModelBuilder = new ComponentNodeModelBuilder();
+            nodeModelBuilder.setId(ComponentDemo2.class.getName() + i);
+            nodeModelBuilder.setLabel("Simple Component " + (i + 1));
+            nodeModelBuilder.setComponentFactory(ComponentDemo2.class);
+            folder2.addChild(nodeModelBuilder.build());
+        }
+    }
 
 }

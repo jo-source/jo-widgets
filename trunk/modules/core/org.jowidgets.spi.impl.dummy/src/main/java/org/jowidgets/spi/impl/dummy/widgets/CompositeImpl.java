@@ -33,14 +33,14 @@ import org.jowidgets.spi.impl.dummy.dummyui.UIDContainer;
 
 public class CompositeImpl extends DummyComposite {
 
-	public CompositeImpl(final IGenericWidgetFactory factory, final ICompositeSetupCommon setup) {
-		super(factory, new UIDContainer());
-		getUiReference().setBorder(setup.getBorder());
-	}
+    public CompositeImpl(final IGenericWidgetFactory factory, final ICompositeSetupCommon setup) {
+        super(factory, new UIDContainer());
+        getUiReference().setBorder(setup.getBorder());
+    }
 
-	@Override
-	public UIDContainer getUiReference() {
-		return super.getUiReference();
-	}
+    @Override
+    public UIDContainer getUiReference() {
+        return super.getUiReference();
+    }
 
 }

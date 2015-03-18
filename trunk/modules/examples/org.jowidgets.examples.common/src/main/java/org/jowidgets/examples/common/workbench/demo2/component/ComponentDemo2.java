@@ -54,77 +54,77 @@ import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
 
 public class ComponentDemo2 extends AbstractDemoComponent implements IComponent {
 
-	private final IComponentNodeModel componentNodeModel;
+    private final IComponentNodeModel componentNodeModel;
 
-	private final ICommandExecutor saveCommand;
-	private final IAction addUserAction;
+    private final ICommandExecutor saveCommand;
+    private final IAction addUserAction;
 
-	public ComponentDemo2(final IComponentNodeModel componentNodeModel, final IComponentContext componentContext) {
-		this.componentNodeModel = componentNodeModel;
+    public ComponentDemo2(final IComponentNodeModel componentNodeModel, final IComponentContext componentContext) {
+        this.componentNodeModel = componentNodeModel;
 
-		this.addUserAction = createAddUserAction(componentNodeModel);
-		this.saveCommand = createSaveCommand(componentNodeModel);
-		componentContext.setLayout(new ComponentDemo2Layout(LayoutScope.COMPONENT).getLayout());
-	}
+        this.addUserAction = createAddUserAction(componentNodeModel);
+        this.saveCommand = createSaveCommand(componentNodeModel);
+        componentContext.setLayout(new ComponentDemo2Layout(LayoutScope.COMPONENT).getLayout());
+    }
 
-	@Override
-	public IView createView(final String viewId, final IViewContext context) {
-		if (BigTableView.ID.equals(viewId)) {
-			return new BigTableView(context);
-		}
-		else if (MediaView.ID.equals(viewId)) {
-			return new MediaView(context);
-		}
-		else if (UserTableView.ID.equals(viewId)) {
-			return new UserTableView(context);
-		}
-		else if (EmptyView.ID.equals(viewId)) {
-			return new EmptyView(context);
-		}
-		else if (ReportsView.ID.equals(viewId)) {
-			return new ReportsView(context);
-		}
-		else if (CalendarView.ID.equals(viewId)) {
-			return new CalendarView(context);
-		}
-		else {
-			throw new IllegalArgumentException("View id '" + viewId + "' is not known.");
-		}
-	}
+    @Override
+    public IView createView(final String viewId, final IViewContext context) {
+        if (BigTableView.ID.equals(viewId)) {
+            return new BigTableView(context);
+        }
+        else if (MediaView.ID.equals(viewId)) {
+            return new MediaView(context);
+        }
+        else if (UserTableView.ID.equals(viewId)) {
+            return new UserTableView(context);
+        }
+        else if (EmptyView.ID.equals(viewId)) {
+            return new EmptyView(context);
+        }
+        else if (ReportsView.ID.equals(viewId)) {
+            return new ReportsView(context);
+        }
+        else if (CalendarView.ID.equals(viewId)) {
+            return new CalendarView(context);
+        }
+        else {
+            throw new IllegalArgumentException("View id '" + viewId + "' is not known.");
+        }
+    }
 
-	@Override
-	public void onActivation() {
-		super.onActivation();
-		WorkbenchActions.SAVE_ACTION.setCommand(saveCommand);
-		componentNodeModel.getWorkbench().getToolBar().addAction(addUserAction);
-	}
+    @Override
+    public void onActivation() {
+        super.onActivation();
+        WorkbenchActions.SAVE_ACTION.setCommand(saveCommand);
+        componentNodeModel.getWorkbench().getToolBar().addAction(addUserAction);
+    }
 
-	@Override
-	public void onDeactivation(final IVetoable vetoable) {
-		WorkbenchActions.SAVE_ACTION.setCommand((ICommand) null);
-		componentNodeModel.getWorkbench().getToolBar().removeAction(addUserAction);
-	}
+    @Override
+    public void onDeactivation(final IVetoable vetoable) {
+        WorkbenchActions.SAVE_ACTION.setCommand((ICommand) null);
+        componentNodeModel.getWorkbench().getToolBar().removeAction(addUserAction);
+    }
 
-	private ICommandExecutor createSaveCommand(final IComponentNodeModel nodeModel) {
-		return new ICommandExecutor() {
-			@Override
-			public void execute(final IExecutionContext executionContext) throws Exception {
-				Toolkit.getMessagePane().showInfo(executionContext, "Saved data of component: " + nodeModel.getLabel());
-			}
-		};
-	}
+    private ICommandExecutor createSaveCommand(final IComponentNodeModel nodeModel) {
+        return new ICommandExecutor() {
+            @Override
+            public void execute(final IExecutionContext executionContext) throws Exception {
+                Toolkit.getMessagePane().showInfo(executionContext, "Saved data of component: " + nodeModel.getLabel());
+            }
+        };
+    }
 
-	private IAction createAddUserAction(final IComponentNodeModel nodeModel) {
-		final IActionBuilder builder = new ActionBuilder();
-		builder.setText("Add user");
-		builder.setIcon(SilkIcons.USER_ADD);
+    private IAction createAddUserAction(final IComponentNodeModel nodeModel) {
+        final IActionBuilder builder = new ActionBuilder();
+        builder.setText("Add user");
+        builder.setIcon(SilkIcons.USER_ADD);
 
-		builder.setCommand(new ICommandExecutor() {
-			@Override
-			public void execute(final IExecutionContext executionContext) throws Exception {
-				Toolkit.getMessagePane().showInfo(executionContext, "Add user action of component: " + nodeModel.getLabel());
-			}
-		});
-		return builder.build();
-	}
+        builder.setCommand(new ICommandExecutor() {
+            @Override
+            public void execute(final IExecutionContext executionContext) throws Exception {
+                Toolkit.getMessagePane().showInfo(executionContext, "Add user action of component: " + nodeModel.getLabel());
+            }
+        });
+        return builder.build();
+    }
 }

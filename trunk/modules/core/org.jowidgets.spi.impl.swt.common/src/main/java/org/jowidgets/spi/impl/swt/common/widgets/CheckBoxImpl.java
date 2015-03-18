@@ -41,74 +41,74 @@ import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
 
 public class CheckBoxImpl extends AbstractInputControl implements ICheckBoxSpi {
 
-	public CheckBoxImpl(final Object parentUiReference, final ICheckBoxSetupSpi setup) {
-		this(new Button((Composite) parentUiReference, SWT.NONE | SWT.CHECK), setup);
-	}
+    public CheckBoxImpl(final Object parentUiReference, final ICheckBoxSetupSpi setup) {
+        this(new Button((Composite) parentUiReference, SWT.NONE | SWT.CHECK), setup);
+    }
 
-	public CheckBoxImpl(final Button button, final ICheckBoxSetupSpi setup) {
-		super(button);
+    public CheckBoxImpl(final Button button, final ICheckBoxSetupSpi setup) {
+        super(button);
 
-		setText(setup.getText());
-		setToolTipText(setup.getToolTipText());
+        setText(setup.getText());
+        setToolTipText(setup.getToolTipText());
 
-		setMarkup(setup.getMarkup());
+        setMarkup(setup.getMarkup());
 
-		getUiReference().setAlignment(AlignmentConvert.convert(setup.getAlignment()));
+        getUiReference().setAlignment(AlignmentConvert.convert(setup.getAlignment()));
 
-		getUiReference().addListener(SWT.Selection, new Listener() {
-			@Override
-			public void handleEvent(final Event event) {
-				fireInputChanged(getUiReference().getSelection());
-			}
-		});
-	}
+        getUiReference().addListener(SWT.Selection, new Listener() {
+            @Override
+            public void handleEvent(final Event event) {
+                fireInputChanged(getUiReference().getSelection());
+            }
+        });
+    }
 
-	@Override
-	public Button getUiReference() {
-		return (Button) super.getUiReference();
-	}
+    @Override
+    public Button getUiReference() {
+        return (Button) super.getUiReference();
+    }
 
-	@Override
-	public void setEditable(final boolean editable) {
-		getUiReference().setEnabled(editable);
-	}
+    @Override
+    public void setEditable(final boolean editable) {
+        getUiReference().setEnabled(editable);
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		final Button button = this.getUiReference();
-		final Font newFont = FontProvider.deriveFont(button.getFont(), markup);
-		button.setFont(newFont);
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        final Button button = this.getUiReference();
+        final Font newFont = FontProvider.deriveFont(button.getFont(), markup);
+        button.setFont(newFont);
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), size));
-	}
+    @Override
+    public void setFontSize(final int size) {
+        getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), size));
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), fontName));
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), fontName));
+    }
 
-	@Override
-	public void setText(final String text) {
-		if (text != null) {
-			getUiReference().setText(text);
-		}
-		else {
-			setText("");
-		}
-	}
+    @Override
+    public void setText(final String text) {
+        if (text != null) {
+            getUiReference().setText(text);
+        }
+        else {
+            setText("");
+        }
+    }
 
-	@Override
-	public boolean isSelected() {
-		return getUiReference().getSelection();
-	}
+    @Override
+    public boolean isSelected() {
+        return getUiReference().getSelection();
+    }
 
-	@Override
-	public void setSelected(final boolean selected) {
-		getUiReference().setSelection(selected);
-		fireInputChanged(selected);
-	}
+    @Override
+    public void setSelected(final boolean selected) {
+        getUiReference().setSelection(selected);
+        fireInputChanged(selected);
+    }
 
 }

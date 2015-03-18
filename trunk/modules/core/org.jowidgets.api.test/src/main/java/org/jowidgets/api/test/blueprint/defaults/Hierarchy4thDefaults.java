@@ -32,10 +32,10 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
 public class Hierarchy4thDefaults implements IDefaultInitializer<IHierarchy4thSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final IHierarchy4thSetupBuilder<?> builder) {
-		builder.setIntro("4th Part");
-		builder.setIntroPartFour("Default Intro Part Four");
-	}
+    @Override
+    public void initialize(final IHierarchy4thSetupBuilder<?> builder) {
+        builder.setIntro("4th Part");
+        builder.setIntroPartFour("Default Intro Part Four");
+    }
 
 }

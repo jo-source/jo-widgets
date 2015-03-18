@@ -32,32 +32,32 @@ import org.jowidgets.api.widgets.IToolBarItem;
 
 public class ToolBarItemDiposableDelegate extends DisposableDelegate {
 
-	private final IToolBarItem toolbarItem;
-	private final ItemModelBindingDelegate itemModelBindingDelegate;
+    private final IToolBarItem toolbarItem;
+    private final ItemModelBindingDelegate itemModelBindingDelegate;
 
-	private boolean onRemoveByDispose = false;
+    private boolean onRemoveByDispose = false;
 
-	public ToolBarItemDiposableDelegate(final IToolBarItem toolbarItem, final ItemModelBindingDelegate itemModelBindingDelegate) {
-		super();
-		this.toolbarItem = toolbarItem;
-		this.itemModelBindingDelegate = itemModelBindingDelegate;
-	}
+    public ToolBarItemDiposableDelegate(final IToolBarItem toolbarItem, final ItemModelBindingDelegate itemModelBindingDelegate) {
+        super();
+        this.toolbarItem = toolbarItem;
+        this.itemModelBindingDelegate = itemModelBindingDelegate;
+    }
 
-	@Override
-	public void dispose() {
-		if (!isDisposed()) {
-			if (toolbarItem.getParent() != null
-				&& toolbarItem.getParent().getChildren().contains(toolbarItem)
-				&& !onRemoveByDispose) {
-				onRemoveByDispose = true;
-				toolbarItem.getParent().getChildren().remove(toolbarItem); //this will invoke dispose by the parent menu
-				onRemoveByDispose = false;
-			}
-			else {
-				itemModelBindingDelegate.dispose();
-				super.dispose();
-			}
-		}
-	}
+    @Override
+    public void dispose() {
+        if (!isDisposed()) {
+            if (toolbarItem.getParent() != null
+                && toolbarItem.getParent().getChildren().contains(toolbarItem)
+                && !onRemoveByDispose) {
+                onRemoveByDispose = true;
+                toolbarItem.getParent().getChildren().remove(toolbarItem); //this will invoke dispose by the parent menu
+                onRemoveByDispose = false;
+            }
+            else {
+                itemModelBindingDelegate.dispose();
+                super.dispose();
+            }
+        }
+    }
 
 }

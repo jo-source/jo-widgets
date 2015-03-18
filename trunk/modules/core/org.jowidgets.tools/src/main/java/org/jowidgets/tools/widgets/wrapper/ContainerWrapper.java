@@ -51,200 +51,200 @@ import org.jowidgets.common.widgets.layout.ILayouter;
 
 public class ContainerWrapper extends ComponentWrapper implements IContainer {
 
-	public ContainerWrapper(final IContainer widget) {
-		super(widget);
-	}
+    public ContainerWrapper(final IContainer widget) {
+        super(widget);
+    }
 
-	@Override
-	protected IContainer getWidget() {
-		return (IContainer) super.getWidget();
-	}
+    @Override
+    protected IContainer getWidget() {
+        return (IContainer) super.getWidget();
+    }
 
-	@Override
-	public Rectangle getClientArea() {
-		return getWidget().getClientArea();
-	}
+    @Override
+    public Rectangle getClientArea() {
+        return getWidget().getClientArea();
+    }
 
-	@Override
-	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
-		return getWidget().computeDecoratedSize(clientAreaSize);
-	}
+    @Override
+    public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+        return getWidget().computeDecoratedSize(clientAreaSize);
+    }
 
-	@Override
-	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		getWidget().setLayout(layoutDescriptor);
-	}
+    @Override
+    public void setLayout(final ILayoutDescriptor layoutDescriptor) {
+        getWidget().setLayout(layoutDescriptor);
+    }
 
-	@Override
-	public <LAYOUT_TYPE extends ILayouter> LAYOUT_TYPE setLayout(final ILayoutFactory<LAYOUT_TYPE> layoutFactory) {
-		return getWidget().setLayout(layoutFactory);
-	}
+    @Override
+    public <LAYOUT_TYPE extends ILayouter> LAYOUT_TYPE setLayout(final ILayoutFactory<LAYOUT_TYPE> layoutFactory) {
+        return getWidget().setLayout(layoutFactory);
+    }
 
-	@Override
-	public void layoutBegin() {
-		getWidget().layoutBegin();
-	}
+    @Override
+    public void layoutBegin() {
+        getWidget().layoutBegin();
+    }
 
-	@Override
-	public void layout() {
-		getWidget().layout();
-	}
+    @Override
+    public void layout() {
+        getWidget().layout();
+    }
 
-	@Override
-	public void layoutEnd() {
-		getWidget().layoutEnd();
-	}
+    @Override
+    public void layoutEnd() {
+        getWidget().layoutEnd();
+    }
 
-	@Override
-	public void layoutLater() {
-		getWidget().layoutLater();
-	}
+    @Override
+    public void layoutLater() {
+        getWidget().layoutLater();
+    }
 
-	@Override
-	public void removeAll() {
-		getWidget().removeAll();
-	}
+    @Override
+    public void removeAll() {
+        getWidget().removeAll();
+    }
 
-	@Override
-	public List<IControl> getChildren() {
-		return getWidget().getChildren();
-	}
+    @Override
+    public List<IControl> getChildren() {
+        return getWidget().getChildren();
+    }
 
-	@Override
-	public boolean remove(final IControl control) {
-		return getWidget().remove(control);
-	}
+    @Override
+    public boolean remove(final IControl control) {
+        return getWidget().remove(control);
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final int index,
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
-		final Object layoutConstraints) {
-		return getWidget().add(index, descriptor, layoutConstraints);
-	}
+    @Override
+    public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+        final int index,
+        final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+        final Object layoutConstraints) {
+        return getWidget().add(index, descriptor, layoutConstraints);
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final int index,
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
-		return getWidget().add(index, descriptor);
-	}
+    @Override
+    public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+        final int index,
+        final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+        return getWidget().add(index, descriptor);
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final int index,
-		final ICustomWidgetCreator<WIDGET_TYPE> creator,
-		final Object layoutConstraints) {
-		return getWidget().add(index, creator, layoutConstraints);
-	}
+    @Override
+    public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+        final int index,
+        final ICustomWidgetCreator<WIDGET_TYPE> creator,
+        final Object layoutConstraints) {
+        return getWidget().add(index, creator, layoutConstraints);
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final int index, final ICustomWidgetCreator<WIDGET_TYPE> creator) {
-		return getWidget().add(index, creator);
-	}
+    @Override
+    public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final int index, final ICustomWidgetCreator<WIDGET_TYPE> creator) {
+        return getWidget().add(index, creator);
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
-		final Object layoutConstraints) {
-		return getWidget().add(descriptor, layoutConstraints);
-	}
+    @Override
+    public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+        final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+        final Object layoutConstraints) {
+        return getWidget().add(descriptor, layoutConstraints);
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
-		final ICustomWidgetCreator<WIDGET_TYPE> creator,
-		final Object layoutConstraints) {
-		return getWidget().add(creator, layoutConstraints);
-	}
+    @Override
+    public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(
+        final ICustomWidgetCreator<WIDGET_TYPE> creator,
+        final Object layoutConstraints) {
+        return getWidget().add(creator, layoutConstraints);
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
-		return getWidget().add(descriptor);
-	}
+    @Override
+    public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+        return getWidget().add(descriptor);
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final ICustomWidgetCreator<WIDGET_TYPE> creator) {
-		return getWidget().add(creator);
-	}
+    @Override
+    public <WIDGET_TYPE extends IControl> WIDGET_TYPE add(final ICustomWidgetCreator<WIDGET_TYPE> creator) {
+        return getWidget().add(creator);
+    }
 
-	@Override
-	public void setTabOrder(final Collection<? extends IControl> tabOrder) {
-		getWidget().setTabOrder(tabOrder);
-	}
+    @Override
+    public void setTabOrder(final Collection<? extends IControl> tabOrder) {
+        getWidget().setTabOrder(tabOrder);
+    }
 
-	@Override
-	public void setTabOrder(final IControl... controls) {
-		getWidget().setTabOrder(controls);
-	}
+    @Override
+    public void setTabOrder(final IControl... controls) {
+        getWidget().setTabOrder(controls);
+    }
 
-	@Override
-	public void addContainerListener(final IContainerListener listener) {
-		getWidget().addContainerListener(listener);
-	}
+    @Override
+    public void addContainerListener(final IContainerListener listener) {
+        getWidget().addContainerListener(listener);
+    }
 
-	@Override
-	public void removeContainerListener(final IContainerListener listener) {
-		getWidget().removeContainerListener(listener);
-	}
+    @Override
+    public void removeContainerListener(final IContainerListener listener) {
+        getWidget().removeContainerListener(listener);
+    }
 
-	@Override
-	public void addContainerRegistry(final IContainerRegistry registry) {
-		getWidget().addContainerRegistry(registry);
-	}
+    @Override
+    public void addContainerRegistry(final IContainerRegistry registry) {
+        getWidget().addContainerRegistry(registry);
+    }
 
-	@Override
-	public void removeContainerRegistry(final IContainerRegistry registry) {
-		getWidget().removeContainerRegistry(registry);
-	}
+    @Override
+    public void removeContainerRegistry(final IContainerRegistry registry) {
+        getWidget().removeContainerRegistry(registry);
+    }
 
-	@Override
-	public void addComponentListenerRecursive(final IListenerFactory<IComponentListener> listenerFactory) {
-		getWidget().addComponentListenerRecursive(listenerFactory);
-	}
+    @Override
+    public void addComponentListenerRecursive(final IListenerFactory<IComponentListener> listenerFactory) {
+        getWidget().addComponentListenerRecursive(listenerFactory);
+    }
 
-	@Override
-	public void removeComponentListenerRecursive(final IListenerFactory<IComponentListener> listenerFactory) {
-		getWidget().removeComponentListenerRecursive(listenerFactory);
-	}
+    @Override
+    public void removeComponentListenerRecursive(final IListenerFactory<IComponentListener> listenerFactory) {
+        getWidget().removeComponentListenerRecursive(listenerFactory);
+    }
 
-	@Override
-	public void addFocusListenerRecursive(final IListenerFactory<IFocusListener> listenerFactory) {
-		getWidget().addFocusListenerRecursive(listenerFactory);
-	}
+    @Override
+    public void addFocusListenerRecursive(final IListenerFactory<IFocusListener> listenerFactory) {
+        getWidget().addFocusListenerRecursive(listenerFactory);
+    }
 
-	@Override
-	public void removeFocusListenerRecursive(final IListenerFactory<IFocusListener> listenerFactory) {
-		getWidget().removeFocusListenerRecursive(listenerFactory);
-	}
+    @Override
+    public void removeFocusListenerRecursive(final IListenerFactory<IFocusListener> listenerFactory) {
+        getWidget().removeFocusListenerRecursive(listenerFactory);
+    }
 
-	@Override
-	public void addKeyListenerRecursive(final IListenerFactory<IKeyListener> listenerFactory) {
-		getWidget().addKeyListenerRecursive(listenerFactory);
-	}
+    @Override
+    public void addKeyListenerRecursive(final IListenerFactory<IKeyListener> listenerFactory) {
+        getWidget().addKeyListenerRecursive(listenerFactory);
+    }
 
-	@Override
-	public void removeKeyListenerRecursive(final IListenerFactory<IKeyListener> listenerFactory) {
-		getWidget().removeKeyListenerRecursive(listenerFactory);
-	}
+    @Override
+    public void removeKeyListenerRecursive(final IListenerFactory<IKeyListener> listenerFactory) {
+        getWidget().removeKeyListenerRecursive(listenerFactory);
+    }
 
-	@Override
-	public void addMouseListenerRecursive(final IListenerFactory<IMouseListener> listenerFactory) {
-		getWidget().addMouseListenerRecursive(listenerFactory);
-	}
+    @Override
+    public void addMouseListenerRecursive(final IListenerFactory<IMouseListener> listenerFactory) {
+        getWidget().addMouseListenerRecursive(listenerFactory);
+    }
 
-	@Override
-	public void removeMouseListenerRecursive(final IListenerFactory<IMouseListener> listenerFactory) {
-		getWidget().removeMouseListenerRecursive(listenerFactory);
-	}
+    @Override
+    public void removeMouseListenerRecursive(final IListenerFactory<IMouseListener> listenerFactory) {
+        getWidget().removeMouseListenerRecursive(listenerFactory);
+    }
 
-	@Override
-	public void addPopupDetectionListenerRecursive(final IListenerFactory<IPopupDetectionListener> listenerFactory) {
-		getWidget().addPopupDetectionListenerRecursive(listenerFactory);
-	}
+    @Override
+    public void addPopupDetectionListenerRecursive(final IListenerFactory<IPopupDetectionListener> listenerFactory) {
+        getWidget().addPopupDetectionListenerRecursive(listenerFactory);
+    }
 
-	@Override
-	public void removePopupDetectionListenerRecursive(final IListenerFactory<IPopupDetectionListener> listenerFactory) {
-		getWidget().removePopupDetectionListenerRecursive(listenerFactory);
-	}
+    @Override
+    public void removePopupDetectionListenerRecursive(final IListenerFactory<IPopupDetectionListener> listenerFactory) {
+        getWidget().removePopupDetectionListenerRecursive(listenerFactory);
+    }
 
 }

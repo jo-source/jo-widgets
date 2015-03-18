@@ -30,8 +30,8 @@ package org.jowidgets.api.controller;
 
 public interface IExpandObservable {
 
-	void addExpandListener(IExpandListener listener);
+    void addExpandListener(IExpandListener listener);
 
-	void removeExpandListener(IExpandListener listener);
+    void removeExpandListener(IExpandListener listener);
 
 }

@@ -37,27 +37,27 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 
 public abstract class AbstractCompositeWidgetFactory<WIDGET_TYPE extends IWidget, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> implements
-		IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> {
+        IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> {
 
-	protected abstract WIDGET_TYPE createWidget(IComposite composite, DESCRIPTOR_TYPE descriptor);
+    protected abstract WIDGET_TYPE createWidget(IComposite composite, DESCRIPTOR_TYPE descriptor);
 
-	@Override
-	public WIDGET_TYPE create(final Object parentUiReference, final DESCRIPTOR_TYPE descriptor) {
+    @Override
+    public WIDGET_TYPE create(final Object parentUiReference, final DESCRIPTOR_TYPE descriptor) {
 
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
-		final IGenericWidgetFactory gwF = Toolkit.getWidgetFactory();
+        final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+        final IGenericWidgetFactory gwF = Toolkit.getWidgetFactory();
 
-		final IComposite compositeWidget = gwF.create(parentUiReference, bpF.composite());
+        final IComposite compositeWidget = gwF.create(parentUiReference, bpF.composite());
 
-		if (compositeWidget == null) {
-			throw new IllegalStateException("Could not create widget with descriptor interface class '"
-				+ ICompositeDescriptor.class
-				+ "' from '"
-				+ IGenericWidgetFactory.class.getName()
-				+ "'");
-		}
+        if (compositeWidget == null) {
+            throw new IllegalStateException("Could not create widget with descriptor interface class '"
+                + ICompositeDescriptor.class
+                + "' from '"
+                + IGenericWidgetFactory.class.getName()
+                + "'");
+        }
 
-		return createWidget(compositeWidget, descriptor);
-	}
+        return createWidget(compositeWidget, descriptor);
+    }
 
 }

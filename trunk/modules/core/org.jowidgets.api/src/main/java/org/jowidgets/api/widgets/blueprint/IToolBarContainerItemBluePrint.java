@@ -31,7 +31,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IToolBarContainerItemSetupBui
 import org.jowidgets.api.widgets.descriptor.IToolBarContainerItemDescriptor;
 
 public interface IToolBarContainerItemBluePrint extends
-		IToolBarContainerItemSetupBuilder<IToolBarContainerItemBluePrint>,
-		IToolBarContainerItemDescriptor {
+        IToolBarContainerItemSetupBuilder<IToolBarContainerItemBluePrint>,
+        IToolBarContainerItemDescriptor {
 
 }

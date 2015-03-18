@@ -37,43 +37,45 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
 public class DemoSplitComposite {
 
-	public DemoSplitComposite(final IContainer parentContainer) {
+    public DemoSplitComposite(final IContainer parentContainer) {
 
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+        final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
-		final ILayoutDescriptor fillLayoutDescriptor = new MigLayoutDescriptor("0[grow]0", "0[grow]0");
+        final ILayoutDescriptor fillLayoutDescriptor = new MigLayoutDescriptor("0[grow]0", "0[grow]0");
 
-		parentContainer.setLayout(fillLayoutDescriptor);
+        parentContainer.setLayout(fillLayoutDescriptor);
 
-		final ISplitComposite split1 = parentContainer.add(
-				bpF.splitHorizontal().setWeight(0.2).disableSecondBorder().resizeSecondPolicy(),
-				"growx, growy");
+        final ISplitComposite split1 = parentContainer.add(bpF.splitHorizontal()
+                .setWeight(0.2)
+                .disableSecondBorder()
+                .resizeSecondPolicy(), "growx, growy");
 
-		final IContainer split1First = split1.getFirst();
-		final IContainer split1Second = split1.getSecond();
-		split1First.setLayout(fillLayoutDescriptor);
-		split1Second.setLayout(fillLayoutDescriptor);
+        final IContainer split1First = split1.getFirst();
+        final IContainer split1Second = split1.getSecond();
+        split1First.setLayout(fillLayoutDescriptor);
+        split1Second.setLayout(fillLayoutDescriptor);
 
-		split1First.add(bpF.textLabel("Content1"), "align center");
-		final ISplitComposite split2 = split1Second.add(
-				bpF.splitHorizontal().setWeight(1 - 0.2 / 0.8).disableFirstBorder().resizeFirstPolicy(),
-				"growx, growy");
+        split1First.add(bpF.textLabel("Content1"), "align center");
+        final ISplitComposite split2 = split1Second.add(bpF.splitHorizontal()
+                .setWeight(1 - 0.2 / 0.8)
+                .disableFirstBorder()
+                .resizeFirstPolicy(), "growx, growy");
 
-		final IContainer split2First = split2.getFirst();
-		final IContainer split2Second = split2.getSecond();
-		split2First.setLayout(fillLayoutDescriptor);
-		split2Second.setLayout(fillLayoutDescriptor);
+        final IContainer split2First = split2.getFirst();
+        final IContainer split2Second = split2.getSecond();
+        split2First.setLayout(fillLayoutDescriptor);
+        split2Second.setLayout(fillLayoutDescriptor);
 
-		final ISplitComposite split3 = split2First.add(bpF.splitVertical().resizeFirstPolicy(), "growx, growy");
-		split2Second.add(bpF.textLabel("Content2"), "align center");
+        final ISplitComposite split3 = split2First.add(bpF.splitVertical().resizeFirstPolicy(), "growx, growy");
+        split2Second.add(bpF.textLabel("Content2"), "align center");
 
-		final IContainer split3First = split3.getFirst();
-		final IContainer split3Second = split3.getSecond();
-		split3First.setLayout(fillLayoutDescriptor);
-		split3Second.setLayout(fillLayoutDescriptor);
+        final IContainer split3First = split3.getFirst();
+        final IContainer split3Second = split3.getSecond();
+        split3First.setLayout(fillLayoutDescriptor);
+        split3Second.setLayout(fillLayoutDescriptor);
 
-		split3First.add(bpF.textLabel("Content3"), "align center");
-		split3Second.add(bpF.textLabel("Content4"), "align center");
+        split3First.add(bpF.textLabel("Content3"), "align center");
+        split3Second.add(bpF.textLabel("Content4"), "align center");
 
-	}
+    }
 }

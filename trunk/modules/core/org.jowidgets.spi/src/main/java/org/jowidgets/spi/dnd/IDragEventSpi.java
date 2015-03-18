@@ -32,6 +32,6 @@ import org.jowidgets.common.types.Position;
 
 public interface IDragEventSpi {
 
-	Position getPosition();
+    Position getPosition();
 
 }

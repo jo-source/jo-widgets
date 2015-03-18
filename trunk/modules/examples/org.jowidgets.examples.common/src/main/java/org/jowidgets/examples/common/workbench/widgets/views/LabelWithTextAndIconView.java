@@ -38,22 +38,22 @@ import org.jowidgets.workbench.api.IViewContext;
 
 public class LabelWithTextAndIconView extends AbstractHowToView implements IView {
 
-	public static final String ID = LabelWithTextAndIconView.class.getName();
-	public static final String DEFAULT_LABEL = "Label with icon and text";
+    public static final String ID = LabelWithTextAndIconView.class.getName();
+    public static final String DEFAULT_LABEL = "Label with icon and text";
 
-	public LabelWithTextAndIconView(final IViewContext context) {
-		super(context);
-	}
+    public LabelWithTextAndIconView(final IViewContext context) {
+        super(context);
+    }
 
-	@Override
-	public void createViewContent(final IContainer container, final IBluePrintFactory bpFactory) {
-		//set the layout
-		container.setLayout(new MigLayoutDescriptor("[]", "[]"));
+    @Override
+    public void createViewContent(final IContainer container, final IBluePrintFactory bpFactory) {
+        //set the layout
+        container.setLayout(new MigLayoutDescriptor("[]", "[]"));
 
-		//create the labels blue print
-		final ILabelBluePrint labelBp = bpFactory.label().setText("The label text").setIcon(IconsSmall.QUESTION);
+        //create the labels blue print
+        final ILabelBluePrint labelBp = bpFactory.label().setText("The label text").setIcon(IconsSmall.QUESTION);
 
-		//add the label blue print to the container
-		container.add(labelBp, "");
-	}
+        //add the label blue print to the container
+        container.add(labelBp, "");
+    }
 }

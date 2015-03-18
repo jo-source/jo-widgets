@@ -35,15 +35,15 @@ import org.jowidgets.validation.Validator;
 
 public class CollectionInputFieldDefaults implements IDefaultInitializer<ICollectionInputFieldSetupBuilder<?, ?>> {
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	@Override
-	public void initialize(final ICollectionInputFieldSetupBuilder<?, ?> builder) {
-		builder.setEditButtonIcon(IconsSmall.EDIT);
-		builder.setMaskingCharacter(Character.valueOf('"'));
-		builder.setFilterEmptyValues(true);
-		builder.setDublicatesAllowed(false);
-		final IValidator okValidator = Validator.okValidator();
-		builder.setElementValidator(okValidator);
-	}
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    @Override
+    public void initialize(final ICollectionInputFieldSetupBuilder<?, ?> builder) {
+        builder.setEditButtonIcon(IconsSmall.EDIT);
+        builder.setMaskingCharacter(Character.valueOf('"'));
+        builder.setFilterEmptyValues(true);
+        builder.setDublicatesAllowed(false);
+        final IValidator okValidator = Validator.okValidator();
+        builder.setElementValidator(okValidator);
+    }
 
 }

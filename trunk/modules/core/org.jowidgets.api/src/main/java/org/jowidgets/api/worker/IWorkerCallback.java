@@ -30,23 +30,23 @@ package org.jowidgets.api.worker;
 
 public interface IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> extends IWorkerProgressCallback<PROGRESS_TYPE> {
 
-	/**
-	 * Will be invoked after the worker has finished.
-	 * 
-	 * @param result The result of the worker
-	 */
-	void finished(RESULT_TYPE result);
+    /**
+     * Will be invoked after the worker has finished.
+     * 
+     * @param result The result of the worker
+     */
+    void finished(RESULT_TYPE result);
 
-	/**
-	 * Will be invoked if the worker was canceled before finishing
-	 */
-	void canceled();
+    /**
+     * Will be invoked if the worker was canceled before finishing
+     */
+    void canceled();
 
-	/**
-	 * Will be invoked if an exception has been occurred
-	 * 
-	 * @param exception The exception that has been occurred
-	 */
-	void exception(Throwable exception);
+    /**
+     * Will be invoked if an exception has been occurred
+     * 
+     * @param exception The exception that has been occurred
+     */
+    void exception(Throwable exception);
 
 }

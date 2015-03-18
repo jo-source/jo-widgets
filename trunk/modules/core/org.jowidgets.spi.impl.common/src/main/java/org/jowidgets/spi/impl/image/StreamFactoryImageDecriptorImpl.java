@@ -36,16 +36,16 @@ import org.jowidgets.util.IFactory;
 
 public final class StreamFactoryImageDecriptorImpl implements IStreamFactoryImageDescriptor {
 
-	private final IFactory<InputStream> inputStreamFactory;
+    private final IFactory<InputStream> inputStreamFactory;
 
-	public StreamFactoryImageDecriptorImpl(final IFactory<InputStream> inputStreamFactory) {
-		Assert.paramNotNull(inputStreamFactory, "inputStreamFactory");
-		this.inputStreamFactory = inputStreamFactory;
-	}
+    public StreamFactoryImageDecriptorImpl(final IFactory<InputStream> inputStreamFactory) {
+        Assert.paramNotNull(inputStreamFactory, "inputStreamFactory");
+        this.inputStreamFactory = inputStreamFactory;
+    }
 
-	@Override
-	public InputStream createInputStream() {
-		return inputStreamFactory.create();
-	}
+    @Override
+    public InputStream createInputStream() {
+        return inputStreamFactory.create();
+    }
 
 }

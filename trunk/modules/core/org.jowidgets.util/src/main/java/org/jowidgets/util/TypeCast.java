@@ -29,30 +29,30 @@ package org.jowidgets.util;
 
 public final class TypeCast {
 
-	private TypeCast() {
-		super();
-	}
+    private TypeCast() {
+        super();
+    }
 
-	/**
-	 * Converts an object to an specific type if possible. Else an IllegalStateException is thrown.
-	 * 
-	 * @param <RESULT_TYPE> The type to convert to
-	 * @param obj The object to cast, maybe null
-	 * @param type The type to convert to
-	 * @return The casted object
-	 * @throws IllegalStateException if object could not be casted
-	 */
-	@SuppressWarnings("unchecked")
-	public static <RESULT_TYPE> RESULT_TYPE toType(final Object obj, final Class<RESULT_TYPE> type) {
-		Assert.paramNotNull(type, "type");
-		if (obj != null && !type.isAssignableFrom(obj.getClass())) {
-			throw new IllegalStateException("Type '"
-				+ type.getName()
-				+ "' expected, but type is '"
-				+ obj.getClass().getName()
-				+ "'.");
-		}
-		return (RESULT_TYPE) obj;
-	}
+    /**
+     * Converts an object to an specific type if possible. Else an IllegalStateException is thrown.
+     * 
+     * @param <RESULT_TYPE> The type to convert to
+     * @param obj The object to cast, maybe null
+     * @param type The type to convert to
+     * @return The casted object
+     * @throws IllegalStateException if object could not be casted
+     */
+    @SuppressWarnings("unchecked")
+    public static <RESULT_TYPE> RESULT_TYPE toType(final Object obj, final Class<RESULT_TYPE> type) {
+        Assert.paramNotNull(type, "type");
+        if (obj != null && !type.isAssignableFrom(obj.getClass())) {
+            throw new IllegalStateException("Type '"
+                + type.getName()
+                + "' expected, but type is '"
+                + obj.getClass().getName()
+                + "'.");
+        }
+        return (RESULT_TYPE) obj;
+    }
 
 }

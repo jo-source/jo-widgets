@@ -32,24 +32,24 @@ import java.util.Collection;
 
 public interface IMessageReplacer {
 
-	/**
-	 * Replaces all variables (%1, ..., %n) with the given string parameters
-	 * 
-	 * @param message The message that contains variables
-	 * @param parameter The parameters to insert
-	 * 
-	 * @return A new string where the variables was replaced with the parameters
-	 */
-	String replace(String message, String... parameter);
+    /**
+     * Replaces all variables (%1, ..., %n) with the given string parameters
+     * 
+     * @param message The message that contains variables
+     * @param parameter The parameters to insert
+     * 
+     * @return A new string where the variables was replaced with the parameters
+     */
+    String replace(String message, String... parameter);
 
-	/**
-	 * Replaces all variables (%1, ..., %n) with the given string parameters
-	 * 
-	 * @param message The message that contains variables
-	 * @param parameter The parameters to insert
-	 * 
-	 * @return A new string where the variables was replaced with the parameters
-	 */
-	String replace(String message, Collection<String> parameter);
+    /**
+     * Replaces all variables (%1, ..., %n) with the given string parameters
+     * 
+     * @param message The message that contains variables
+     * @param parameter The parameters to insert
+     * 
+     * @return A new string where the variables was replaced with the parameters
+     */
+    String replace(String message, Collection<String> parameter);
 
 }

@@ -30,9 +30,9 @@ package org.jowidgets.addons.widgets.ole.api;
 
 public enum OleCommandOption {
 
-	DODEFAULT,
-	PROMPTUSER,
-	DONTPROMPTUSER,
-	SHOWHELP;
+    DODEFAULT,
+    PROMPTUSER,
+    DONTPROMPTUSER,
+    SHOWHELP;
 
 }

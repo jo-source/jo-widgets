@@ -36,12 +36,12 @@ import org.jowidgets.tools.widgets.blueprint.BluePrintFactoryWrapper;
 
 public class DescriptorProblematicBluePrintFactory extends BluePrintFactoryWrapper {
 
-	public DescriptorProblematicBluePrintFactory(final IBluePrintFactory bluePrintFactory) {
-		super(bluePrintFactory);
-	}
+    public DescriptorProblematicBluePrintFactory(final IBluePrintFactory bluePrintFactory) {
+        super(bluePrintFactory);
+    }
 
-	public final IProblematicDescriptorBluePrint problematicDescriptor() {
-		return bluePrint(IProblematicDescriptorBluePrint.class);
-	}
+    public final IProblematicDescriptorBluePrint problematicDescriptor() {
+        return bluePrint(IProblematicDescriptorBluePrint.class);
+    }
 
 }

@@ -32,11 +32,11 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
 public class Hierarchy2nd3AnnotationBasedDefaults implements IDefaultInitializer<IHierarchy2nd3SetupBuilder<?>> {
 
-	@Override
-	public void initialize(final IHierarchy2nd3SetupBuilder<?> builder) {
-		builder.setIntro("2nd Part (3)");
-		builder.setConvenienceAnnotationCalled(0);
-		builder.setDefaultInitializerTestValue(666);
-	}
+    @Override
+    public void initialize(final IHierarchy2nd3SetupBuilder<?> builder) {
+        builder.setIntro("2nd Part (3)");
+        builder.setConvenienceAnnotationCalled(0);
+        builder.setDefaultInitializerTestValue(666);
+    }
 
 }

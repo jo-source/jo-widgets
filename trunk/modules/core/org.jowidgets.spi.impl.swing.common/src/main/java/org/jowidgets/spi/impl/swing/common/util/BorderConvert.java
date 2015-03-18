@@ -40,34 +40,34 @@ import org.jowidgets.spi.impl.swing.common.widgets.defaults.Colors;
 
 public final class BorderConvert {
 
-	private static final javax.swing.border.Border BORDER = createBorder();
-	private static final javax.swing.border.Border EMPTY_BORDER = BorderFactory.createEmptyBorder();
+    private static final javax.swing.border.Border BORDER = createBorder();
+    private static final javax.swing.border.Border EMPTY_BORDER = BorderFactory.createEmptyBorder();
 
-	private BorderConvert() {};
+    private BorderConvert() {};
 
-	public static javax.swing.border.Border convert(final Border border) {
-		if (border != null) {
-			final String title = border.getTitle();
-			if (title != null && !title.isEmpty()) {
-				final TitledBorder result = BorderFactory.createTitledBorder(title);
-				result.setTitleColor(ColorConvert.convert(Colors.BORDER_TITLE));
-				return result;
-			}
-			else {
-				return BORDER;
-			}
-		}
-		else {
-			return EMPTY_BORDER;
-		}
+    public static javax.swing.border.Border convert(final Border border) {
+        if (border != null) {
+            final String title = border.getTitle();
+            if (title != null && !title.isEmpty()) {
+                final TitledBorder result = BorderFactory.createTitledBorder(title);
+                result.setTitleColor(ColorConvert.convert(Colors.BORDER_TITLE));
+                return result;
+            }
+            else {
+                return BORDER;
+            }
+        }
+        else {
+            return EMPTY_BORDER;
+        }
 
-	}
+    }
 
-	private static javax.swing.border.Border createBorder() {
-		javax.swing.border.Border textFieldBorder = UIManager.getBorder("TextField.border");
-		if (textFieldBorder == null) {
-			textFieldBorder = BorderFactory.createLineBorder(Color.gray, 1);
-		}
-		return new CompoundBorder(textFieldBorder, new EmptyBorder(1, 1, 1, 1));
-	}
+    private static javax.swing.border.Border createBorder() {
+        javax.swing.border.Border textFieldBorder = UIManager.getBorder("TextField.border");
+        if (textFieldBorder == null) {
+            textFieldBorder = BorderFactory.createLineBorder(Color.gray, 1);
+        }
+        return new CompoundBorder(textFieldBorder, new EmptyBorder(1, 1, 1, 1));
+    }
 }

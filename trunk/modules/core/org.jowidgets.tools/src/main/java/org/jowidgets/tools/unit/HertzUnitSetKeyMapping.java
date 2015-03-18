@@ -38,21 +38,21 @@ import org.jowidgets.unit.tools.units.HertzUnitSet;
 
 public final class HertzUnitSetKeyMapping {
 
-	private static final Map<VirtualKey, IUnit> INSTANCE = createInstance();
+    private static final Map<VirtualKey, IUnit> INSTANCE = createInstance();
 
-	private HertzUnitSetKeyMapping() {}
+    private HertzUnitSetKeyMapping() {}
 
-	private static Map<VirtualKey, IUnit> createInstance() {
-		final Map<VirtualKey, IUnit> result = new HashMap<VirtualKey, IUnit>();
-		result.put(VirtualKey.H, HertzUnitSet.H);
-		result.put(VirtualKey.K, HertzUnitSet.KH);
-		result.put(VirtualKey.M, HertzUnitSet.MH);
-		result.put(VirtualKey.G, HertzUnitSet.GH);
-		return Collections.unmodifiableMap(result);
-	}
+    private static Map<VirtualKey, IUnit> createInstance() {
+        final Map<VirtualKey, IUnit> result = new HashMap<VirtualKey, IUnit>();
+        result.put(VirtualKey.H, HertzUnitSet.H);
+        result.put(VirtualKey.K, HertzUnitSet.KH);
+        result.put(VirtualKey.M, HertzUnitSet.MH);
+        result.put(VirtualKey.G, HertzUnitSet.GH);
+        return Collections.unmodifiableMap(result);
+    }
 
-	public static Map<VirtualKey, IUnit> instance() {
-		return INSTANCE;
-	}
+    public static Map<VirtualKey, IUnit> instance() {
+        return INSTANCE;
+    }
 
 }

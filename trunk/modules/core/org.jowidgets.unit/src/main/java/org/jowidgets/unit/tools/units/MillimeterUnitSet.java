@@ -37,57 +37,57 @@ import org.jowidgets.unit.api.UnitSet;
 
 public final class MillimeterUnitSet {
 
-	public static final IUnit MILLI_METER = mm();
-	public static final IUnit CENTI_METER = cm();
-	public static final IUnit METER = m();
-	public static final IUnit KILO_METER = km();
+    public static final IUnit MILLI_METER = mm();
+    public static final IUnit CENTI_METER = cm();
+    public static final IUnit METER = m();
+    public static final IUnit KILO_METER = km();
 
-	private static final IUnitSet INSTANCE = createInstance();
+    private static final IUnitSet INSTANCE = createInstance();
 
-	private MillimeterUnitSet() {}
+    private MillimeterUnitSet() {}
 
-	private static IUnit mm() {
-		final IUnitBuilder builder = Unit.builder();
-		builder.abbreviation(Messages.getMessage("MillimeterBaseUnitSet.mm_abbreviation"));
-		builder.name(Messages.getMessage("MillimeterBaseUnitSet.mm_name"));
-		return builder.build();
-	}
+    private static IUnit mm() {
+        final IUnitBuilder builder = Unit.builder();
+        builder.abbreviation(Messages.getMessage("MillimeterBaseUnitSet.mm_abbreviation"));
+        builder.name(Messages.getMessage("MillimeterBaseUnitSet.mm_name"));
+        return builder.build();
+    }
 
-	private static IUnit cm() {
-		final IUnitBuilder builder = Unit.builder();
-		builder.abbreviation(Messages.getMessage("MillimeterBaseUnitSet.cm_abbreviation"));
-		builder.name(Messages.getMessage("MillimeterBaseUnitSet.cm_name"));
-		builder.conversionFactor(10);
-		return builder.build();
-	}
+    private static IUnit cm() {
+        final IUnitBuilder builder = Unit.builder();
+        builder.abbreviation(Messages.getMessage("MillimeterBaseUnitSet.cm_abbreviation"));
+        builder.name(Messages.getMessage("MillimeterBaseUnitSet.cm_name"));
+        builder.conversionFactor(10);
+        return builder.build();
+    }
 
-	private static IUnit m() {
-		final IUnitBuilder builder = Unit.builder();
-		builder.abbreviation(Messages.getMessage("MillimeterBaseUnitSet.m_abbreviation"));
-		builder.name(Messages.getMessage("MillimeterBaseUnitSet.m_name"));
-		builder.conversionFactor(1000);
-		return builder.build();
-	}
+    private static IUnit m() {
+        final IUnitBuilder builder = Unit.builder();
+        builder.abbreviation(Messages.getMessage("MillimeterBaseUnitSet.m_abbreviation"));
+        builder.name(Messages.getMessage("MillimeterBaseUnitSet.m_name"));
+        builder.conversionFactor(1000);
+        return builder.build();
+    }
 
-	private static IUnit km() {
-		final IUnitBuilder builder = Unit.builder();
-		builder.abbreviation(Messages.getMessage("MillimeterBaseUnitSet.km_abbreviation"));
-		builder.name(Messages.getMessage("MillimeterBaseUnitSet.km_name"));
-		builder.conversionFactor(1000000);
-		return builder.build();
-	}
+    private static IUnit km() {
+        final IUnitBuilder builder = Unit.builder();
+        builder.abbreviation(Messages.getMessage("MillimeterBaseUnitSet.km_abbreviation"));
+        builder.name(Messages.getMessage("MillimeterBaseUnitSet.km_name"));
+        builder.conversionFactor(1000000);
+        return builder.build();
+    }
 
-	private static IUnitSet createInstance() {
-		final IUnitSetBuilder builder = UnitSet.builder();
-		builder.add(MILLI_METER);
-		builder.add(CENTI_METER);
-		builder.add(METER);
-		builder.add(KILO_METER);
-		return builder.build();
-	}
+    private static IUnitSet createInstance() {
+        final IUnitSetBuilder builder = UnitSet.builder();
+        builder.add(MILLI_METER);
+        builder.add(CENTI_METER);
+        builder.add(METER);
+        builder.add(KILO_METER);
+        return builder.build();
+    }
 
-	public static IUnitSet instance() {
-		return INSTANCE;
-	}
+    public static IUnitSet instance() {
+        return INSTANCE;
+    }
 
 }

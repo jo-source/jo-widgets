@@ -45,54 +45,54 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public class DemoCanvasFrame extends JoFrame {
 
-	public DemoCanvasFrame() {
-		super("Canvas demo");
+    public DemoCanvasFrame() {
+        super("Canvas demo");
 
-		setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
-		final ICanvas canvas = add(BPF.canvas(), "growx, w 0::, growy, h 0::");
+        setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
+        final ICanvas canvas = add(BPF.canvas(), "growx, w 0::, growy, h 0::");
 
-		canvas.addPaintListener(new IPaintListener() {
-			@Override
-			public void paint(final IPaintEvent paintEvent) {
-				final IGraphicContext gc = paintEvent.getGraphicContext();
-				gc.setAntiAliasing(AntiAliasing.ON);
-				gc.setTextAntiAliasing(AntiAliasing.ON);
+        canvas.addPaintListener(new IPaintListener() {
+            @Override
+            public void paint(final IPaintEvent paintEvent) {
+                final IGraphicContext gc = paintEvent.getGraphicContext();
+                gc.setAntiAliasing(AntiAliasing.ON);
+                gc.setTextAntiAliasing(AntiAliasing.ON);
 
-				gc.setLineWidth(10);
+                gc.setLineWidth(10);
 
-				gc.setForegroundColor(Colors.ERROR);
-				gc.drawRectangle(10, 10, 200, 70);
+                gc.setForegroundColor(Colors.ERROR);
+                gc.drawRectangle(10, 10, 200, 70);
 
-				gc.setForegroundColor(Colors.STRONG);
-				gc.fillOval(30, 70, 40, 40);
-				gc.fillOval(150, 70, 40, 40);
+                gc.setForegroundColor(Colors.STRONG);
+                gc.fillOval(30, 70, 40, 40);
+                gc.fillOval(150, 70, 40, 40);
 
-				gc.setForegroundColor(Colors.BLACK);
-				final Point[] polyline = new Point[] {new Point(10, 115), new Point(220, 115), new Point(400, 60)};
-				gc.drawPolyline(polyline);
+                gc.setForegroundColor(Colors.BLACK);
+                final Point[] polyline = new Point[] {new Point(10, 115), new Point(220, 115), new Point(400, 60)};
+                gc.drawPolyline(polyline);
 
-				gc.setFontSize(20);
-				gc.setFontName("Arial");
-				gc.setTextMarkup(Markup.STRONG);
-				gc.drawText("Canvas Demo", 18, 25);
-			}
-		});
+                gc.setFontSize(20);
+                gc.setFontName("Arial");
+                gc.setTextMarkup(Markup.STRONG);
+                gc.drawText("Canvas Demo", 18, 25);
+            }
+        });
 
-		canvas.addMouseMotionListener(new IMouseMotionListener() {
+        canvas.addMouseMotionListener(new IMouseMotionListener() {
 
-			@Override
-			public void mouseMoved(final IMouseEvent event) {
-				//CHECKSTYLE:OFF
-				System.out.println("MOUSE MOVED: " + event);
-				//CHECKSTYLE:ON
-			}
+            @Override
+            public void mouseMoved(final IMouseEvent event) {
+                //CHECKSTYLE:OFF
+                System.out.println("MOUSE MOVED: " + event);
+                //CHECKSTYLE:ON
+            }
 
-			@Override
-			public void mouseDragged(final IMouseButtonEvent event) {
-				//CHECKSTYLE:OFF
-				System.out.println("MOUSE DRAGGED: " + event);
-				//CHECKSTYLE:ON
-			}
-		});
-	}
+            @Override
+            public void mouseDragged(final IMouseButtonEvent event) {
+                //CHECKSTYLE:OFF
+                System.out.println("MOUSE DRAGGED: " + event);
+                //CHECKSTYLE:ON
+            }
+        });
+    }
 }

@@ -37,102 +37,102 @@ import org.jowidgets.api.widgets.descriptor.ITabItemDescriptor;
 
 public class TabFolderWrapper extends ControlWrapper implements ITabFolder {
 
-	public TabFolderWrapper(final ITabFolder widget) {
-		super(widget);
-	}
+    public TabFolderWrapper(final ITabFolder widget) {
+        super(widget);
+    }
 
-	@Override
-	protected ITabFolder getWidget() {
-		return (ITabFolder) super.getWidget();
-	}
+    @Override
+    protected ITabFolder getWidget() {
+        return (ITabFolder) super.getWidget();
+    }
 
-	@Override
-	public void addTabFolderListener(final ITabFolderListener listener) {
-		getWidget().addTabFolderListener(listener);
-	}
+    @Override
+    public void addTabFolderListener(final ITabFolderListener listener) {
+        getWidget().addTabFolderListener(listener);
+    }
 
-	@Override
-	public void removeTabFolderListener(final ITabFolderListener listener) {
-		getWidget().removeTabFolderListener(listener);
-	}
+    @Override
+    public void removeTabFolderListener(final ITabFolderListener listener) {
+        getWidget().removeTabFolderListener(listener);
+    }
 
-	@Override
-	public void removeItem(final int index) {
-		getWidget().removeItem(index);
-	}
+    @Override
+    public void removeItem(final int index) {
+        getWidget().removeItem(index);
+    }
 
-	@Override
-	public void setSelectedItem(final int index) {
-		getWidget().setSelectedItem(index);
-	}
+    @Override
+    public void setSelectedItem(final int index) {
+        getWidget().setSelectedItem(index);
+    }
 
-	@Override
-	public int getSelectedIndex() {
-		return getWidget().getSelectedIndex();
-	}
+    @Override
+    public int getSelectedIndex() {
+        return getWidget().getSelectedIndex();
+    }
 
-	@Override
-	public ITabItem addItem(final ITabItemDescriptor descriptor) {
-		return getWidget().addItem(descriptor);
-	}
+    @Override
+    public ITabItem addItem(final ITabItemDescriptor descriptor) {
+        return getWidget().addItem(descriptor);
+    }
 
-	@Override
-	public ITabItem addItem(final int index, final ITabItemDescriptor descriptor) {
-		return getWidget().addItem(index, descriptor);
-	}
+    @Override
+    public ITabItem addItem(final int index, final ITabItemDescriptor descriptor) {
+        return getWidget().addItem(index, descriptor);
+    }
 
-	@Override
-	public void removeItem(final ITabItem item) {
-		getWidget().removeItem(item);
-	}
+    @Override
+    public void removeItem(final ITabItem item) {
+        getWidget().removeItem(item);
+    }
 
-	@Override
-	public void removeAllItems() {
-		getWidget().removeAllItems();
-	}
+    @Override
+    public void removeAllItems() {
+        getWidget().removeAllItems();
+    }
 
-	@Override
-	public ITabItem getItem(final int index) {
-		return getWidget().getItem(index);
-	}
+    @Override
+    public ITabItem getItem(final int index) {
+        return getWidget().getItem(index);
+    }
 
-	@Override
-	public int getIndex(final ITabItem item) {
-		return getWidget().getIndex(item);
-	}
+    @Override
+    public int getIndex(final ITabItem item) {
+        return getWidget().getIndex(item);
+    }
 
-	@Override
-	public List<ITabItem> getItems() {
-		return getWidget().getItems();
-	}
+    @Override
+    public List<ITabItem> getItems() {
+        return getWidget().getItems();
+    }
 
-	@Override
-	public void setSelectedItem(final ITabItem item) {
-		getWidget().setSelectedItem(item);
-	}
+    @Override
+    public void setSelectedItem(final ITabItem item) {
+        getWidget().setSelectedItem(item);
+    }
 
-	@Override
-	public ITabItem getSelectedItem() {
-		return getWidget().getSelectedItem();
-	}
+    @Override
+    public ITabItem getSelectedItem() {
+        return getWidget().getSelectedItem();
+    }
 
-	@Override
-	public void detachItem(final ITabItem item) {
-		getWidget().detachItem(item);
-	}
+    @Override
+    public void detachItem(final ITabItem item) {
+        getWidget().detachItem(item);
+    }
 
-	@Override
-	public void attachItem(final ITabItem item) {
-		getWidget().attachItem(item);
-	}
+    @Override
+    public void attachItem(final ITabItem item) {
+        getWidget().attachItem(item);
+    }
 
-	@Override
-	public void attachItem(final int index, final ITabItem item) {
-		getWidget().attachItem(index, item);
-	}
+    @Override
+    public void attachItem(final int index, final ITabItem item) {
+        getWidget().attachItem(index, item);
+    }
 
-	@Override
-	public void changeItemIndex(final ITabItem tabItem, final int newIndex) {
-		getWidget().changeItemIndex(tabItem, newIndex);
-	}
+    @Override
+    public void changeItemIndex(final ITabItem tabItem, final int newIndex) {
+        getWidget().changeItemIndex(tabItem, newIndex);
+    }
 }

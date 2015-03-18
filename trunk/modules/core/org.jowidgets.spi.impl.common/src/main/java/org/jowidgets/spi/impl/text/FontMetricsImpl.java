@@ -32,38 +32,38 @@ import org.jowidgets.common.text.IFontMetrics;
 
 final class FontMetricsImpl implements IFontMetrics {
 
-	private final int ascent;
-	private final int descent;
-	private final int height;
-	private final int leading;
+    private final int ascent;
+    private final int descent;
+    private final int height;
+    private final int leading;
 
-	FontMetricsImpl(final int leading, final int ascent, final int descent, final int height) {
-		super();
-		this.ascent = ascent;
+    FontMetricsImpl(final int leading, final int ascent, final int descent, final int height) {
+        super();
+        this.ascent = ascent;
 
-		this.descent = descent;
-		this.height = height;
-		this.leading = leading;
-	}
+        this.descent = descent;
+        this.height = height;
+        this.leading = leading;
+    }
 
-	@Override
-	public int getLeading() {
-		return leading;
-	}
+    @Override
+    public int getLeading() {
+        return leading;
+    }
 
-	@Override
-	public int getAscent() {
-		return ascent;
-	}
+    @Override
+    public int getAscent() {
+        return ascent;
+    }
 
-	@Override
-	public int getDescent() {
-		return descent;
-	}
+    @Override
+    public int getDescent() {
+        return descent;
+    }
 
-	@Override
-	public int getHeight() {
-		return height;
-	}
+    @Override
+    public int getHeight() {
+        return height;
+    }
 
 }

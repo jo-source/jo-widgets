@@ -30,25 +30,25 @@ package org.jowidgets.api.command;
 
 public interface ICommand {
 
-	/**
-	 * Gets the commands executer.
-	 * 
-	 * @return The executer
-	 */
-	ICommandExecutor getCommandExecutor();
+    /**
+     * Gets the commands executer.
+     * 
+     * @return The executer
+     */
+    ICommandExecutor getCommandExecutor();
 
-	/**
-	 * Gets the EnabledChecker for the command.
-	 * 
-	 * @return The EnabledChecker or null
-	 */
-	IEnabledChecker getEnabledChecker();
+    /**
+     * Gets the EnabledChecker for the command.
+     * 
+     * @return The EnabledChecker or null
+     */
+    IEnabledChecker getEnabledChecker();
 
-	/**
-	 * Gets the commands ExceptionHandler
-	 * 
-	 * @return The ExceptionHandler handler or null
-	 */
-	IExceptionHandler getExceptionHandler();
+    /**
+     * Gets the commands ExceptionHandler
+     * 
+     * @return The ExceptionHandler handler or null
+     */
+    IExceptionHandler getExceptionHandler();
 
 }

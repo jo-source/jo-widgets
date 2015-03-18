@@ -34,6 +34,6 @@ import org.jowidgets.common.types.Modifier;
 
 public interface ITableColumnMouseEvent extends ITableColumnEvent {
 
-	Set<Modifier> getModifiers();
+    Set<Modifier> getModifiers();
 
 }

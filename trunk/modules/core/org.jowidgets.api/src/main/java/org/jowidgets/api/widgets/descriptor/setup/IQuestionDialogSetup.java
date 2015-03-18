@@ -35,17 +35,17 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IQuestionDialogSetup extends ILabelSetup {
 
-	@Mandatory
-	IButtonDescriptor getYesButton();
+    @Mandatory
+    IButtonDescriptor getYesButton();
 
-	IButtonDescriptor getNoButton();
+    IButtonDescriptor getNoButton();
 
-	IButtonDescriptor getCancelButton();
+    IButtonDescriptor getCancelButton();
 
-	QuestionResult getDefaultResult();
+    QuestionResult getDefaultResult();
 
-	String getTitle();
+    String getTitle();
 
-	IImageConstant getTitleIcon();
+    IImageConstant getTitleIcon();
 
 }

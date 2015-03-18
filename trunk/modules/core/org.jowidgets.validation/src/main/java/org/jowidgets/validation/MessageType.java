@@ -29,84 +29,84 @@ package org.jowidgets.validation;
 
 public enum MessageType {
 
-	/**
-	 * Input is ok
-	 */
-	OK(true),
+    /**
+     * Input is ok
+     */
+    OK(true),
 
-	/**
-	 * Input is valid but some info should be given to the user (e.g. at initial state)
-	 */
-	INFO(true),
+    /**
+     * Input is valid but some info should be given to the user (e.g. at initial state)
+     */
+    INFO(true),
 
-	/**
-	 * Input is valid but seems to be unusual
-	 */
-	WARNING(true),
+    /**
+     * Input is valid but seems to be unusual
+     */
+    WARNING(true),
 
-	/**
-	 * Input not valid, but user did not make any mistake yet
-	 * (e.g. field is mandatory and empty or input could be completed to an valid input)
-	 */
-	INFO_ERROR(false),
+    /**
+     * Input not valid, but user did not make any mistake yet
+     * (e.g. field is mandatory and empty or input could be completed to an valid input)
+     */
+    INFO_ERROR(false),
 
-	/**
-	 * Input is not valid because of a invalid user input
-	 */
-	ERROR(false);
+    /**
+     * Input is not valid because of a invalid user input
+     */
+    ERROR(false);
 
-	private final boolean valid;
+    private final boolean valid;
 
-	private MessageType(final boolean valid) {
-		this.valid = valid;
-	}
+    private MessageType(final boolean valid) {
+        this.valid = valid;
+    }
 
-	public boolean isValid() {
-		return valid;
-	}
+    public boolean isValid() {
+        return valid;
+    }
 
-	/**
-	 * Checks if the severity of this type is equal or worse
-	 * than the severity of the given type.
-	 * 
-	 * @param message The type to check against
-	 * 
-	 * @return True if the severity the of this type is equal or worse
-	 *         than the severity of the given type, false otherwise
-	 */
-	public boolean equalOrWorse(final MessageType messageType) {
-		Assert.paramNotNull(messageType, "messageType");
-		return (this == messageType || worse(messageType));
-	}
+    /**
+     * Checks if the severity of this type is equal or worse
+     * than the severity of the given type.
+     * 
+     * @param message The type to check against
+     * 
+     * @return True if the severity the of this type is equal or worse
+     *         than the severity of the given type, false otherwise
+     */
+    public boolean equalOrWorse(final MessageType messageType) {
+        Assert.paramNotNull(messageType, "messageType");
+        return (this == messageType || worse(messageType));
+    }
 
-	/**
-	 * Checks if the severity of this type is worse
-	 * than the severity of the given type.
-	 * 
-	 * @param message The type to check against
-	 * 
-	 * @return True if the severity the of this type is worse
-	 *         than the severity of the given type, false otherwise
-	 */
-	public boolean worse(final MessageType messageType) {
-		Assert.paramNotNull(messageType, "messageType");
-		if (this == OK) {
-			return false;
-		}
-		if (this == INFO) {
-			return messageType == OK;
-		}
-		else if (this == WARNING) {
-			return messageType == INFO || messageType == OK;
-		}
-		else if (this == INFO_ERROR) {
-			return messageType == INFO || messageType == OK || messageType == WARNING;
-		}
-		else if (this == ERROR) {
-			return messageType == INFO || messageType == OK || messageType == WARNING || messageType == INFO_ERROR;
-		}
-		else {
-			throw new IllegalArgumentException("MessageType '" + messageType + "' is not known");
-		}
-	}
+    /**
+     * Checks if the severity of this type is worse
+     * than the severity of the given type.
+     * 
+     * @param message The type to check against
+     * 
+     * @return True if the severity the of this type is worse
+     *         than the severity of the given type, false otherwise
+     */
+    public boolean worse(final MessageType messageType) {
+        Assert.paramNotNull(messageType, "messageType");
+        if (this == OK) {
+            return false;
+        }
+        if (this == INFO) {
+            return messageType == OK;
+        }
+        else if (this == WARNING) {
+            return messageType == INFO || messageType == OK;
+        }
+        else if (this == INFO_ERROR) {
+            return messageType == INFO || messageType == OK || messageType == WARNING;
+        }
+        else if (this == ERROR) {
+            return messageType == INFO || messageType == OK || messageType == WARNING || messageType == INFO_ERROR;
+        }
+        else {
+            throw new IllegalArgumentException("MessageType '" + messageType + "' is not known");
+        }
+    }
 }

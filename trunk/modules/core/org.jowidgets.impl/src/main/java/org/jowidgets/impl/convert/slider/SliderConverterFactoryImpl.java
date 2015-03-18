@@ -34,76 +34,76 @@ import org.jowidgets.api.convert.ISliderViewerConverter;
 
 public final class SliderConverterFactoryImpl implements ISliderConverterFactory {
 
-	private static final SliderConverterFactoryImpl INSTANCE = new SliderConverterFactoryImpl();
+    private static final SliderConverterFactoryImpl INSTANCE = new SliderConverterFactoryImpl();
 
-	private SliderConverterFactoryImpl() {}
+    private SliderConverterFactoryImpl() {}
 
-	public static ISliderConverterFactory getInstance() {
-		return INSTANCE;
-	}
+    public static ISliderConverterFactory getInstance() {
+        return INSTANCE;
+    }
 
-	@Override
-	public <VALUE_TYPE extends Number> ILinearSliderConverterBuilder<VALUE_TYPE> linearConverterBuilder() {
-		return new LinearSliderConverterBuilderImpl<VALUE_TYPE>();
-	}
+    @Override
+    public <VALUE_TYPE extends Number> ILinearSliderConverterBuilder<VALUE_TYPE> linearConverterBuilder() {
+        return new LinearSliderConverterBuilderImpl<VALUE_TYPE>();
+    }
 
-	@Override
-	public <VALUE_TYPE extends Number> ISliderViewerConverter<VALUE_TYPE> linearConverter(final VALUE_TYPE max) {
-		final ILinearSliderConverterBuilder<VALUE_TYPE> result = linearConverterBuilder();
-		return result.setMaxValue(max).build();
-	}
+    @Override
+    public <VALUE_TYPE extends Number> ISliderViewerConverter<VALUE_TYPE> linearConverter(final VALUE_TYPE max) {
+        final ILinearSliderConverterBuilder<VALUE_TYPE> result = linearConverterBuilder();
+        return result.setMaxValue(max).build();
+    }
 
-	@Override
-	public <VALUE_TYPE extends Number> ISliderViewerConverter<VALUE_TYPE> linearConverter(
-		final VALUE_TYPE min,
-		final VALUE_TYPE max) {
-		final ILinearSliderConverterBuilder<VALUE_TYPE> result = linearConverterBuilder();
-		return result.setMinValue(min).setMaxValue(max).build();
-	}
+    @Override
+    public <VALUE_TYPE extends Number> ISliderViewerConverter<VALUE_TYPE> linearConverter(
+        final VALUE_TYPE min,
+        final VALUE_TYPE max) {
+        final ILinearSliderConverterBuilder<VALUE_TYPE> result = linearConverterBuilder();
+        return result.setMinValue(min).setMaxValue(max).build();
+    }
 
-	@Override
-	public ISliderViewerConverter<Double> linearConverter() {
-		return linearConverter(1.0d);
-	}
+    @Override
+    public ISliderViewerConverter<Double> linearConverter() {
+        return linearConverter(1.0d);
+    }
 
-	@Override
-	public ISliderViewerConverter<Double> linearConverter(final double max) {
-		return linearConverter(Double.valueOf(max));
-	}
+    @Override
+    public ISliderViewerConverter<Double> linearConverter(final double max) {
+        return linearConverter(Double.valueOf(max));
+    }
 
-	@Override
-	public ISliderViewerConverter<Double> linearConverter(final double min, final double max) {
-		return linearConverter(Double.valueOf(min), Double.valueOf(max));
-	}
+    @Override
+    public ISliderViewerConverter<Double> linearConverter(final double min, final double max) {
+        return linearConverter(Double.valueOf(min), Double.valueOf(max));
+    }
 
-	@Override
-	public ISliderViewerConverter<Float> linearConverter(final float max) {
-		return linearConverter(Float.valueOf(max));
-	}
+    @Override
+    public ISliderViewerConverter<Float> linearConverter(final float max) {
+        return linearConverter(Float.valueOf(max));
+    }
 
-	@Override
-	public ISliderViewerConverter<Float> linearConverter(final float min, final float max) {
-		return linearConverter(Float.valueOf(min), Float.valueOf(max));
-	}
+    @Override
+    public ISliderViewerConverter<Float> linearConverter(final float min, final float max) {
+        return linearConverter(Float.valueOf(min), Float.valueOf(max));
+    }
 
-	@Override
-	public ISliderViewerConverter<Integer> linearConverter(final int max) {
-		return linearConverter(Integer.valueOf(max));
-	}
+    @Override
+    public ISliderViewerConverter<Integer> linearConverter(final int max) {
+        return linearConverter(Integer.valueOf(max));
+    }
 
-	@Override
-	public ISliderViewerConverter<Integer> linearConverter(final int min, final int max) {
-		return linearConverter(Integer.valueOf(min), Integer.valueOf(max));
-	}
+    @Override
+    public ISliderViewerConverter<Integer> linearConverter(final int min, final int max) {
+        return linearConverter(Integer.valueOf(min), Integer.valueOf(max));
+    }
 
-	@Override
-	public ISliderViewerConverter<Long> linearConverter(final long max) {
-		return linearConverter(Long.valueOf(max));
-	}
+    @Override
+    public ISliderViewerConverter<Long> linearConverter(final long max) {
+        return linearConverter(Long.valueOf(max));
+    }
 
-	@Override
-	public ISliderViewerConverter<Long> linearConverter(final long min, final long max) {
-		return linearConverter(Long.valueOf(min), Long.valueOf(max));
-	}
+    @Override
+    public ISliderViewerConverter<Long> linearConverter(final long min, final long max) {
+        return linearConverter(Long.valueOf(min), Long.valueOf(max));
+    }
 
 }

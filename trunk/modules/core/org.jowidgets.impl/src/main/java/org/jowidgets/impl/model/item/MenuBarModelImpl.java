@@ -44,154 +44,154 @@ import org.jowidgets.util.Assert;
 
 class MenuBarModelImpl implements IMenuBarModel {
 
-	private final ListModelDelegate listModelDelegate;
-	private final Set<IMenuBarModel> boundModels;
+    private final ListModelDelegate listModelDelegate;
+    private final Set<IMenuBarModel> boundModels;
 
-	protected MenuBarModelImpl() {
-		super();
-		this.listModelDelegate = new ListModelDelegate();
-		this.boundModels = new HashSet<IMenuBarModel>();
+    protected MenuBarModelImpl() {
+        super();
+        this.listModelDelegate = new ListModelDelegate();
+        this.boundModels = new HashSet<IMenuBarModel>();
 
-		this.addListModelListener(new ListModelAdapter() {
+        this.addListModelListener(new ListModelAdapter() {
 
-			@Override
-			public void afterChildRemoved(final int index) {
-				for (final IMenuBarModel boundModel : boundModels) {
-					boundModel.removeMenu(index);
-				}
-			}
+            @Override
+            public void afterChildRemoved(final int index) {
+                for (final IMenuBarModel boundModel : boundModels) {
+                    boundModel.removeMenu(index);
+                }
+            }
 
-			@Override
-			public void afterChildAdded(final int index) {
-				for (final IMenuBarModel boundModel : boundModels) {
-					boundModel.addMenu(getMenus().get(index));
-				}
-			}
-		});
-	}
+            @Override
+            public void afterChildAdded(final int index) {
+                for (final IMenuBarModel boundModel : boundModels) {
+                    boundModel.addMenu(getMenus().get(index));
+                }
+            }
+        });
+    }
 
-	@Override
-	public MenuBarModelImpl createCopy() {
-		final MenuBarModelImpl result = new MenuBarModelImpl();
-		result.setContent(this);
-		return result;
-	}
+    @Override
+    public MenuBarModelImpl createCopy() {
+        final MenuBarModelImpl result = new MenuBarModelImpl();
+        result.setContent(this);
+        return result;
+    }
 
-	protected void setContent(final IMenuBarModel source) {
-		listModelDelegate.setContent(source);
-	}
+    protected void setContent(final IMenuBarModel source) {
+        listModelDelegate.setContent(source);
+    }
 
-	@Override
-	public void addAfter(final IMenuModel newMenu, final String id) {
-		listModelDelegate.addAfter(newMenu, id);
-	}
+    @Override
+    public void addAfter(final IMenuModel newMenu, final String id) {
+        listModelDelegate.addAfter(newMenu, id);
+    }
 
-	@Override
-	public void addBefore(final IMenuModel newMenu, final String id) {
-		listModelDelegate.addBefore(newMenu, id);
-	}
+    @Override
+    public void addBefore(final IMenuModel newMenu, final String id) {
+        listModelDelegate.addBefore(newMenu, id);
+    }
 
-	@Override
-	public void bind(final IMenuBarModel model) {
-		Assert.paramNotNull(model, "model");
-		model.removeAllMenus();
-		model.addMenusOfModel(this);
-		boundModels.add(model);
-	}
+    @Override
+    public void bind(final IMenuBarModel model) {
+        Assert.paramNotNull(model, "model");
+        model.removeAllMenus();
+        model.addMenusOfModel(this);
+        boundModels.add(model);
+    }
 
-	@Override
-	public void unbind(final IMenuBarModel model) {
-		Assert.paramNotNull(model, "model");
-		boundModels.remove(model);
-	}
+    @Override
+    public void unbind(final IMenuBarModel model) {
+        Assert.paramNotNull(model, "model");
+        boundModels.remove(model);
+    }
 
-	@Override
-	public void addMenusOfModel(final IMenuBarModel model) {
-		Assert.paramNotNull(model, "model");
-		for (final IMenuModel menu : model.getMenus()) {
-			addMenu(menu);
-		}
-	}
+    @Override
+    public void addMenusOfModel(final IMenuBarModel model) {
+        Assert.paramNotNull(model, "model");
+        for (final IMenuModel menu : model.getMenus()) {
+            addMenu(menu);
+        }
+    }
 
-	@Override
-	public void addMenu(final IMenuModel menu) {
-		listModelDelegate.addItem(menu);
-	}
+    @Override
+    public void addMenu(final IMenuModel menu) {
+        listModelDelegate.addItem(menu);
+    }
 
-	@Override
-	public void addMenu(final int index, final IMenuModel menu) {
-		listModelDelegate.addItem(index, menu);
-	}
+    @Override
+    public void addMenu(final int index, final IMenuModel menu) {
+        listModelDelegate.addItem(index, menu);
+    }
 
-	@Override
-	public IMenuModel addMenu(final IMenuModelBuilder menuBuilder) {
-		return listModelDelegate.addItem(menuBuilder);
-	}
+    @Override
+    public IMenuModel addMenu(final IMenuModelBuilder menuBuilder) {
+        return listModelDelegate.addItem(menuBuilder);
+    }
 
-	@Override
-	public IMenuModel addMenu(final int index, final IMenuModelBuilder menuBuilder) {
-		return listModelDelegate.addItem(index, menuBuilder);
-	}
+    @Override
+    public IMenuModel addMenu(final int index, final IMenuModelBuilder menuBuilder) {
+        return listModelDelegate.addItem(index, menuBuilder);
+    }
 
-	@Override
-	public IMenuModel addMenu() {
-		return listModelDelegate.addMenu();
-	}
+    @Override
+    public IMenuModel addMenu() {
+        return listModelDelegate.addMenu();
+    }
 
-	@Override
-	public IMenuModel addMenu(final String text) {
-		return listModelDelegate.addMenu(text);
-	}
+    @Override
+    public IMenuModel addMenu(final String text) {
+        return listModelDelegate.addMenu(text);
+    }
 
-	@Override
-	public IMenuModel addMenu(final String text, final String toolTipText) {
-		return listModelDelegate.addMenu(text, toolTipText);
-	}
+    @Override
+    public IMenuModel addMenu(final String text, final String toolTipText) {
+        return listModelDelegate.addMenu(text, toolTipText);
+    }
 
-	@Override
-	public IMenuModel addMenu(final String text, final IImageConstant icon) {
-		return listModelDelegate.addMenu(text, icon);
-	}
+    @Override
+    public IMenuModel addMenu(final String text, final IImageConstant icon) {
+        return listModelDelegate.addMenu(text, icon);
+    }
 
-	@Override
-	public IMenuModel addMenu(final String text, final String toolTipText, final IImageConstant icon) {
-		return listModelDelegate.addMenu(text, toolTipText, icon);
-	}
+    @Override
+    public IMenuModel addMenu(final String text, final String toolTipText, final IImageConstant icon) {
+        return listModelDelegate.addMenu(text, toolTipText, icon);
+    }
 
-	@Override
-	public IMenuModel findMenuById(final String id) {
-		return (IMenuModel) listModelDelegate.findItemByPath(id);
-	}
+    @Override
+    public IMenuModel findMenuById(final String id) {
+        return (IMenuModel) listModelDelegate.findItemByPath(id);
+    }
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	@Override
-	public List<IMenuModel> getMenus() {
-		return Collections.unmodifiableList(new LinkedList(listModelDelegate.getChildren()));
-	}
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    @Override
+    public List<IMenuModel> getMenus() {
+        return Collections.unmodifiableList(new LinkedList(listModelDelegate.getChildren()));
+    }
 
-	@Override
-	public void removeMenu(final IMenuModel item) {
-		listModelDelegate.removeItem(item);
-	}
+    @Override
+    public void removeMenu(final IMenuModel item) {
+        listModelDelegate.removeItem(item);
+    }
 
-	@Override
-	public void removeMenu(final int index) {
-		listModelDelegate.removeItem(index);
-	}
+    @Override
+    public void removeMenu(final int index) {
+        listModelDelegate.removeItem(index);
+    }
 
-	@Override
-	public void removeAllMenus() {
-		listModelDelegate.removeAllItems();
-	}
+    @Override
+    public void removeAllMenus() {
+        listModelDelegate.removeAllItems();
+    }
 
-	@Override
-	public void addListModelListener(final IListModelListener listener) {
-		listModelDelegate.addListModelListener(listener);
-	}
+    @Override
+    public void addListModelListener(final IListModelListener listener) {
+        listModelDelegate.addListModelListener(listener);
+    }
 
-	@Override
-	public void removeListModelListener(final IListModelListener listener) {
-		listModelDelegate.removeListModelListener(listener);
-	}
+    @Override
+    public void removeListModelListener(final IListModelListener listener) {
+        listModelDelegate.removeListModelListener(listener);
+    }
 
 }

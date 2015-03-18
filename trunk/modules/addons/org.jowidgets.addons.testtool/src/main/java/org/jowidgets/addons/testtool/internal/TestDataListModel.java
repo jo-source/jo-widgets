@@ -33,26 +33,26 @@ import java.util.List;
 
 public class TestDataListModel {
 
-	private final List<TestDataObject> list;
-	private final List<IListModelListener> listeners;
+    private final List<TestDataObject> list;
+    private final List<IListModelListener> listeners;
 
-	public TestDataListModel() {
-		this.list = new LinkedList<TestDataObject>();
-		this.listeners = new LinkedList<IListModelListener>();
-	}
+    public TestDataListModel() {
+        this.list = new LinkedList<TestDataObject>();
+        this.listeners = new LinkedList<IListModelListener>();
+    }
 
-	public void addItem(final TestDataObject item) {
-		list.add(item);
-		for (final IListModelListener listener : listeners) {
-			listener.listChanged(item);
-		}
-	}
+    public void addItem(final TestDataObject item) {
+        list.add(item);
+        for (final IListModelListener listener : listeners) {
+            listener.listChanged(item);
+        }
+    }
 
-	public List<TestDataObject> getItems() {
-		return list;
-	}
+    public List<TestDataObject> getItems() {
+        return list;
+    }
 
-	public void addListener(final IListModelListener listener) {
-		this.listeners.add(listener);
-	}
+    public void addListener(final IListModelListener listener) {
+        this.listeners.add(listener);
+    }
 }

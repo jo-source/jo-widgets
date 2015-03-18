@@ -58,159 +58,159 @@ import org.jowidgets.validation.tools.MandatoryValidator;
 
 public final class ValidationExample2 implements IApplication {
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
 
-		final IFrameBluePrint frameBp = BPF.frame();
-		frameBp.setSize(new Dimension(800, 600)).setTitle("Hello World");
-		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
-		frame.setLayout(new MigLayoutDescriptor("wrap", "0[grow, 0::]0", "0[][]0"));
+        final IFrameBluePrint frameBp = BPF.frame();
+        frameBp.setSize(new Dimension(800, 600)).setTitle("Hello World");
+        final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
+        frame.setLayout(new MigLayoutDescriptor("wrap", "0[grow, 0::]0", "0[][]0"));
 
-		final IInputComposite<Person> inputComposite = frame.add(BPF.inputComposite(new PersonContentCreator()), "growx, w 0::");
-		inputComposite.addInputListener(new IInputListener() {
-			@Override
-			public void inputChanged() {
-				//CHECKSTYLE:OFF
-				System.out.println(inputComposite.getValue());
-				//CHECKSTYLE:ON
-			}
-		});
+        final IInputComposite<Person> inputComposite = frame.add(BPF.inputComposite(new PersonContentCreator()), "growx, w 0::");
+        inputComposite.addInputListener(new IInputListener() {
+            @Override
+            public void inputChanged() {
+                //CHECKSTYLE:OFF
+                System.out.println(inputComposite.getValue());
+                //CHECKSTYLE:ON
+            }
+        });
 
-		final IButton button = frame.add(BPF.button("Open Dialog"), "w 100!, alignx c");
-		button.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IInputDialogBluePrint<Person> dialogBp = BPF.inputDialog(new PersonContentCreator());
-				dialogBp.setMinPackSize(new Dimension(800, 600));
-				dialogBp.setTitle("Edit Person ...");
-				dialogBp.setValue(inputComposite.getValue());
-				final IInputDialog<Person> dialog = frame.createChildWindow(dialogBp);
-				dialog.setVisible(true);
-				if (dialog.isOkPressed()) {
-					final Person person = dialog.getValue();
-					inputComposite.setValue(person);
-				}
-			}
-		});
+        final IButton button = frame.add(BPF.button("Open Dialog"), "w 100!, alignx c");
+        button.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IInputDialogBluePrint<Person> dialogBp = BPF.inputDialog(new PersonContentCreator());
+                dialogBp.setMinPackSize(new Dimension(800, 600));
+                dialogBp.setTitle("Edit Person ...");
+                dialogBp.setValue(inputComposite.getValue());
+                final IInputDialog<Person> dialog = frame.createChildWindow(dialogBp);
+                dialog.setVisible(true);
+                if (dialog.isOkPressed()) {
+                    final Person person = dialog.getValue();
+                    inputComposite.setValue(person);
+                }
+            }
+        });
 
-		//set the root frame visible
-		frame.setVisible(true);
-	}
+        //set the root frame visible
+        frame.setVisible(true);
+    }
 
-	private enum State {
-		ADMIN,
-		USER,
-		DEVELOPER;
-	}
+    private enum State {
+        ADMIN,
+        USER,
+        DEVELOPER;
+    }
 
-	private final class Person {
-		private String name;
-		private Date dayOfBirth;
-		private State state;
+    private final class Person {
+        private String name;
+        private Date dayOfBirth;
+        private State state;
 
-		public String getName() {
-			return name;
-		}
+        public String getName() {
+            return name;
+        }
 
-		public void setName(final String name) {
-			this.name = name;
-		}
+        public void setName(final String name) {
+            this.name = name;
+        }
 
-		public Date getDayOfBirth() {
-			return dayOfBirth;
-		}
+        public Date getDayOfBirth() {
+            return dayOfBirth;
+        }
 
-		public void setDayOfBirth(final Date dayOfBirth) {
-			this.dayOfBirth = dayOfBirth;
-		}
+        public void setDayOfBirth(final Date dayOfBirth) {
+            this.dayOfBirth = dayOfBirth;
+        }
 
-		public State getState() {
-			return state;
-		}
+        public State getState() {
+            return state;
+        }
 
-		public void setState(final State state) {
-			this.state = state;
-		}
+        public void setState(final State state) {
+            this.state = state;
+        }
 
-		@Override
-		public String toString() {
-			return "Person [name=" + name + ", dayOfBirth=" + dayOfBirth + ", state=" + state + "]";
-		}
+        @Override
+        public String toString() {
+            return "Person [name=" + name + ", dayOfBirth=" + dayOfBirth + ", state=" + state + "]";
+        }
 
-	}
+    }
 
-	private final class PersonContentCreator implements IInputContentCreator<Person> {
+    private final class PersonContentCreator implements IInputContentCreator<Person> {
 
-		private IInputField<String> nameField;
-		private IInputField<Date> dateField;
-		private IComboBox<State> stateCmb;
+        private IInputField<String> nameField;
+        private IInputField<Date> dateField;
+        private IComboBox<State> stateCmb;
 
-		@Override
-		public void setValue(final Person person) {
-			nameField.setValue(person != null ? person.getName() : null);
-			dateField.setValue(person != null ? person.getDayOfBirth() : null);
-			stateCmb.setValue(person != null ? person.getState() : null);
-		}
+        @Override
+        public void setValue(final Person person) {
+            nameField.setValue(person != null ? person.getName() : null);
+            dateField.setValue(person != null ? person.getDayOfBirth() : null);
+            stateCmb.setValue(person != null ? person.getState() : null);
+        }
 
-		@Override
-		public Person getValue() {
-			final Person result = new Person();
-			result.setName(nameField.getValue());
-			result.setState(stateCmb.getValue());
-			result.setDayOfBirth(dateField.getValue());
-			return result;
-		}
+        @Override
+        public Person getValue() {
+            final Person result = new Person();
+            result.setName(nameField.getValue());
+            result.setState(stateCmb.getValue());
+            result.setDayOfBirth(dateField.getValue());
+            return result;
+        }
 
-		@Override
-		public void createContent(final IInputContentContainer content) {
-			content.setLayout(new MigLayoutDescriptor("wrap", "[][grow, 0::][20!]", "[][][]"));
+        @Override
+        public void createContent(final IInputContentContainer content) {
+            content.setLayout(new MigLayoutDescriptor("wrap", "[][grow, 0::][20!]", "[][][]"));
 
-			final ITextLabelBluePrint textLabelBp = BPF.textLabel().alignRight();
-			final IInputComponentValidationLabelBluePrint validationLabelBp = BPF.inputComponentValidationLabel();
-			validationLabelBp.setShowValidationMessage(false);
+            final ITextLabelBluePrint textLabelBp = BPF.textLabel().alignRight();
+            final IInputComponentValidationLabelBluePrint validationLabelBp = BPF.inputComponentValidationLabel();
+            validationLabelBp.setShowValidationMessage(false);
 
-			//Name field
-			content.add(textLabelBp.setText("Name"));
-			nameField = content.add(BPF.inputFieldString(), "growx, w 0::");
-			content.add(validationLabelBp.setInputComponent(nameField), "growx, w 0::");
-			nameField.addValidator(new MandatoryValidator<String>(createMandatoryResult("Name")));
+            //Name field
+            content.add(textLabelBp.setText("Name"));
+            nameField = content.add(BPF.inputFieldString(), "growx, w 0::");
+            content.add(validationLabelBp.setInputComponent(nameField), "growx, w 0::");
+            nameField.addValidator(new MandatoryValidator<String>(createMandatoryResult("Name")));
 
-			//Day of birth field
-			content.add(textLabelBp.setText("Day of birth"));
-			dateField = content.add(BPF.inputFieldDate(), "growx, w 0::");
-			content.add(validationLabelBp.setInputComponent(dateField), "growx, w 0::");
-			dateField.addValidator(new DateTestValidator());
+            //Day of birth field
+            content.add(textLabelBp.setText("Day of birth"));
+            dateField = content.add(BPF.inputFieldDate(), "growx, w 0::");
+            content.add(validationLabelBp.setInputComponent(dateField), "growx, w 0::");
+            dateField.addValidator(new DateTestValidator());
 
-			//Day of birth field
-			content.add(textLabelBp.setText("State"));
-			stateCmb = content.add(BPF.comboBoxSelection(State.values()), "growx, w 0::");
-			content.add(validationLabelBp.setInputComponent(stateCmb), "growx, w 0::");
-		}
+            //Day of birth field
+            content.add(textLabelBp.setText("State"));
+            stateCmb = content.add(BPF.comboBoxSelection(State.values()), "growx, w 0::");
+            content.add(validationLabelBp.setInputComponent(stateCmb), "growx, w 0::");
+        }
 
-		private IValidationResult createMandatoryResult(final String propName) {
-			return ValidationResult.infoError("Please enter value for " + propName + "!");
-		}
-	}
+        private IValidationResult createMandatoryResult(final String propName) {
+            return ValidationResult.infoError("Please enter value for " + propName + "!");
+        }
+    }
 
-	private final class DateTestValidator implements IValidator<Date> {
-		@Override
-		public IValidationResult validate(final Date value) {
-			final IValidationResultBuilder builder = ValidationResult.builder();
-			if (value != null) {
-				final Calendar calendar = Calendar.getInstance();
-				calendar.setTime(value);
-				final int year = calendar.get(Calendar.YEAR);
-				final int month = calendar.get(Calendar.MONTH);
-				final int day = calendar.get(Calendar.DAY_OF_MONTH);
-				if (year < 1972) {
-					builder.addError("Sorry, too old!");
-				}
-				else if (year == 1972 && month == 2 && day == 1) {
-					builder.addInfo("Happy birthday!");
-				}
-			}
-			return builder.build();
-		}
-	}
+    private final class DateTestValidator implements IValidator<Date> {
+        @Override
+        public IValidationResult validate(final Date value) {
+            final IValidationResultBuilder builder = ValidationResult.builder();
+            if (value != null) {
+                final Calendar calendar = Calendar.getInstance();
+                calendar.setTime(value);
+                final int year = calendar.get(Calendar.YEAR);
+                final int month = calendar.get(Calendar.MONTH);
+                final int day = calendar.get(Calendar.DAY_OF_MONTH);
+                if (year < 1972) {
+                    builder.addError("Sorry, too old!");
+                }
+                else if (year == 1972 && month == 2 && day == 1) {
+                    builder.addInfo("Happy birthday!");
+                }
+            }
+            return builder.build();
+        }
+    }
 
 }

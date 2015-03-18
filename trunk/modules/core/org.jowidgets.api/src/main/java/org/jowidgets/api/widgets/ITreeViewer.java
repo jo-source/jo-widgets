@@ -32,6 +32,6 @@ import org.jowidgets.api.model.tree.ITreeNodeModel;
 
 public interface ITreeViewer<ROOT_NODE_VALUE_TYPE> extends ITree {
 
-	ITreeNodeModel<ROOT_NODE_VALUE_TYPE> getRootNodeModel();
+    ITreeNodeModel<ROOT_NODE_VALUE_TYPE> getRootNodeModel();
 
 }

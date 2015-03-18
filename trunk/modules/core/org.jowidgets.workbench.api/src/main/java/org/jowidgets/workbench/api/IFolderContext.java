@@ -32,37 +32,37 @@ import org.jowidgets.api.model.item.IMenuModel;
 
 public interface IFolderContext {
 
-	/**
-	 * @return The id of the corresponding folder
-	 */
-	String getFolderId();
+    /**
+     * @return The id of the corresponding folder
+     */
+    String getFolderId();
 
-	/**
-	 * Gets the id of the original folder in the layout, if this folder was cloned.
-	 * If this folder is not a clone, the id is returned.
-	 * 
-	 * @return The id of the original folder for clones or the id of this folder, if folder is not a clone.
-	 */
-	String getOriginalFolderId();
+    /**
+     * Gets the id of the original folder in the layout, if this folder was cloned.
+     * If this folder is not a clone, the id is returned.
+     * 
+     * @return The id of the original folder for clones or the id of this folder, if folder is not a clone.
+     */
+    String getOriginalFolderId();
 
-	void addView(IViewLayout viewLayout);
+    void addView(IViewLayout viewLayout);
 
-	void addView(boolean addToFront, IViewLayout viewLayout);
+    void addView(boolean addToFront, IViewLayout viewLayout);
 
-	/**
-	 * Gets the folders popup menu model.
-	 * If no popup menu model already exists for the folder, a popup menu model will be created
-	 * 
-	 * @return the popup menu model for a folder or null if the folder is not known
-	 */
-	IMenuModel getPopupMenu();
+    /**
+     * Gets the folders popup menu model.
+     * If no popup menu model already exists for the folder, a popup menu model will be created
+     * 
+     * @return the popup menu model for a folder or null if the folder is not known
+     */
+    IMenuModel getPopupMenu();
 
-	IComponentContext getComponentContext();
+    IComponentContext getComponentContext();
 
-	IComponentNodeContext getComponentNodeContext();
+    IComponentNodeContext getComponentNodeContext();
 
-	IWorkbenchApplicationContext getWorkbenchApplicationContext();
+    IWorkbenchApplicationContext getWorkbenchApplicationContext();
 
-	IWorkbenchContext getWorkbenchContext();
+    IWorkbenchContext getWorkbenchContext();
 
 }

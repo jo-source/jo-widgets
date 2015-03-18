@@ -39,25 +39,25 @@ import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 
 public class ScrollCompositeFactory extends AbstractWidgetFactory implements
-		IWidgetFactory<IScrollComposite, IScrollCompositeDescriptor> {
+        IWidgetFactory<IScrollComposite, IScrollCompositeDescriptor> {
 
-	public ScrollCompositeFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+    public ScrollCompositeFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider,
+        final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
-	}
+        super(genericWidgetFactory, widgetsServiceProvider, bpF);
+    }
 
-	@Override
-	public IScrollComposite create(final Object parentUiReference, final IScrollCompositeDescriptor descriptor) {
-		final IScrollCompositeBluePrintSpi bp = getSpiBluePrintFactory().scrollComposite().setSetup(descriptor);
-		final IScrollCompositeSpi scrollContainerSpi = getSpiWidgetFactory().createScrollComposite(
-				getGenericWidgetFactory(),
-				parentUiReference,
-				bp);
+    @Override
+    public IScrollComposite create(final Object parentUiReference, final IScrollCompositeDescriptor descriptor) {
+        final IScrollCompositeBluePrintSpi bp = getSpiBluePrintFactory().scrollComposite().setSetup(descriptor);
+        final IScrollCompositeSpi scrollContainerSpi = getSpiWidgetFactory().createScrollComposite(
+                getGenericWidgetFactory(),
+                parentUiReference,
+                bp);
 
-		return new ScrollCompositeImpl(scrollContainerSpi, descriptor);
-	}
+        return new ScrollCompositeImpl(scrollContainerSpi, descriptor);
+    }
 
 }

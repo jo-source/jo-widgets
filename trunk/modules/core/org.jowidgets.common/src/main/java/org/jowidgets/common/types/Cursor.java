@@ -30,16 +30,16 @@ package org.jowidgets.common.types;
 
 public enum Cursor {
 
-	DEFAULT,
-	WAIT,
-	ARROW,
-	CROSS,
-	SIZENS,
-	SIZEWE,
-	SIZENE,
-	SIZESE,
-	SIZESW,
-	SIZENW,
-	HAND;
+    DEFAULT,
+    WAIT,
+    ARROW,
+    CROSS,
+    SIZENS,
+    SIZEWE,
+    SIZENE,
+    SIZESE,
+    SIZESW,
+    SIZENW,
+    HAND;
 
 }

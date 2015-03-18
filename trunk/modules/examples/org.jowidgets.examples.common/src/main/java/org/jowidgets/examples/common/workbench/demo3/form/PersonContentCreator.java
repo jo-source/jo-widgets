@@ -44,74 +44,74 @@ import org.jowidgets.validation.tools.MandatoryValidator;
 
 public final class PersonContentCreator implements IInputContentCreator<Person> {
 
-	private final boolean readonly;
+    private final boolean readonly;
 
-	private IInputField<String> nameField;
-	private IInputField<Date> dayOfBirthField;
-	private IComboBox<Gender> genderCmb;
+    private IInputField<String> nameField;
+    private IInputField<Date> dayOfBirthField;
+    private IComboBox<Gender> genderCmb;
 
-	public PersonContentCreator(final boolean readonly) {
-		this.readonly = readonly;
-	}
+    public PersonContentCreator(final boolean readonly) {
+        this.readonly = readonly;
+    }
 
-	@Override
-	public void setValue(final Person person) {
-		if (person != null) {
-			nameField.setValue(person.getName());
-			dayOfBirthField.setValue(person.getDayOfBirth());
-			genderCmb.setValue(person.getGender());
-		}
-		else {
-			nameField.setValue(null);
-			dayOfBirthField.setValue(null);
-			genderCmb.setValue(null);
-		}
-	}
+    @Override
+    public void setValue(final Person person) {
+        if (person != null) {
+            nameField.setValue(person.getName());
+            dayOfBirthField.setValue(person.getDayOfBirth());
+            genderCmb.setValue(person.getGender());
+        }
+        else {
+            nameField.setValue(null);
+            dayOfBirthField.setValue(null);
+            genderCmb.setValue(null);
+        }
+    }
 
-	@Override
-	public Person getValue() {
-		final Person result = new Person();
-		result.setName(nameField.getValue());
-		result.setDayOfBirth(dayOfBirthField.getValue());
-		result.setGender(genderCmb.getValue());
-		return result;
-	}
+    @Override
+    public Person getValue() {
+        final Person result = new Person();
+        result.setName(nameField.getValue());
+        result.setDayOfBirth(dayOfBirthField.getValue());
+        result.setGender(genderCmb.getValue());
+        return result;
+    }
 
-	@Override
-	public void createContent(final IInputContentContainer content) {
-		if (readonly) {
-			content.setLayout(new MigLayoutDescriptor("wrap", "[][grow, 0::]", "[][][]"));
-		}
-		else {
-			content.setLayout(new MigLayoutDescriptor("wrap", "[][grow, 0::][]", "[][][]"));
-		}
+    @Override
+    public void createContent(final IInputContentContainer content) {
+        if (readonly) {
+            content.setLayout(new MigLayoutDescriptor("wrap", "[][grow, 0::]", "[][][]"));
+        }
+        else {
+            content.setLayout(new MigLayoutDescriptor("wrap", "[][grow, 0::][]", "[][][]"));
+        }
 
-		final ITextLabelBluePrint labelBp = BPF.textLabel().alignRight();
+        final ITextLabelBluePrint labelBp = BPF.textLabel().alignRight();
 
-		final IInputComponentValidationLabelBluePrint validationLabelBp = BPF.inputComponentValidationLabel();
-		validationLabelBp.setShowValidationMessage(false);
+        final IInputComponentValidationLabelBluePrint validationLabelBp = BPF.inputComponentValidationLabel();
+        validationLabelBp.setShowValidationMessage(false);
 
-		//name property
-		content.add(labelBp.setText("Name"), "alignx r");
-		nameField = content.add("Name", BPF.inputFieldString(), "growx, w 0::");
-		if (!readonly) {
-			nameField.addValidator(new MandatoryValidator<String>("Name must not empty!"));
-			content.add(validationLabelBp.setInputComponent(nameField));
-		}
+        //name property
+        content.add(labelBp.setText("Name"), "alignx r");
+        nameField = content.add("Name", BPF.inputFieldString(), "growx, w 0::");
+        if (!readonly) {
+            nameField.addValidator(new MandatoryValidator<String>("Name must not empty!"));
+            content.add(validationLabelBp.setInputComponent(nameField));
+        }
 
-		//day of birth property
-		content.add(labelBp.setText("Day of birth"), "alignx r");
-		dayOfBirthField = content.add("Day of birth", BPF.inputFieldDate(), "growx, w 0::");
-		if (!readonly) {
-			content.add(validationLabelBp.setInputComponent(dayOfBirthField));
-		}
+        //day of birth property
+        content.add(labelBp.setText("Day of birth"), "alignx r");
+        dayOfBirthField = content.add("Day of birth", BPF.inputFieldDate(), "growx, w 0::");
+        if (!readonly) {
+            content.add(validationLabelBp.setInputComponent(dayOfBirthField));
+        }
 
-		//gender property
-		content.add(labelBp.setText("Gender"), "alignx r");
-		genderCmb = content.add("Gender", BPF.comboBoxSelection(Gender.values()), "growx, w 0::");
-		if (!readonly) {
-			content.add(validationLabelBp.setInputComponent(genderCmb));
-		}
+        //gender property
+        content.add(labelBp.setText("Gender"), "alignx r");
+        genderCmb = content.add("Gender", BPF.comboBoxSelection(Gender.values()), "growx, w 0::");
+        if (!readonly) {
+            content.add(validationLabelBp.setInputComponent(genderCmb));
+        }
 
-	}
+    }
 }
