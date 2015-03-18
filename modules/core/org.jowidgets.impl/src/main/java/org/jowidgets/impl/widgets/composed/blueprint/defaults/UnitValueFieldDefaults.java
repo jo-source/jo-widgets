@@ -34,11 +34,11 @@ import org.jowidgets.validation.Validator;
 
 public class UnitValueFieldDefaults implements IDefaultInitializer<IUnitValueFieldSetupBuilder<?, Object, Object>> {
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
-	@Override
-	public void initialize(final IUnitValueFieldSetupBuilder<?, Object, Object> builder) {
-		final IValidator okValidator = Validator.okValidator();
-		builder.setValidator(okValidator);
-		builder.setEditable(true);
-	}
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @Override
+    public void initialize(final IUnitValueFieldSetupBuilder<?, Object, Object> builder) {
+        final IValidator okValidator = Validator.okValidator();
+        builder.setValidator(okValidator);
+        builder.setEditable(true);
+    }
 }

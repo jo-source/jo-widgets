@@ -37,27 +37,27 @@ import org.jowidgets.util.IFilter;
 
 final class CollapseTreeActionBuilder extends TreeExpansionActionBuilder {
 
-	private static final IMessage COLLAPSE_ALL_MESSAGE = Messages.getMessage("CollapseTreeActionBuilder.collapseAllLabel");
-	private static final IMessage COLLAPSE_ALL_BOUND_MESSAGE = Messages.getMessage("CollapseTreeActionBuilder.collapseAllBoundLabel");
+    private static final IMessage COLLAPSE_ALL_MESSAGE = Messages.getMessage("CollapseTreeActionBuilder.collapseAllLabel");
+    private static final IMessage COLLAPSE_ALL_BOUND_MESSAGE = Messages.getMessage("CollapseTreeActionBuilder.collapseAllBoundLabel");
 
-	CollapseTreeActionBuilder(final ITreeContainer tree) {
-		super(tree, ExpansionMode.COLLAPSE);
+    CollapseTreeActionBuilder(final ITreeContainer tree) {
+        super(tree, ExpansionMode.COLLAPSE);
 
-		setText(COLLAPSE_ALL_MESSAGE.get());
-		setBoundPivotLevelText(COLLAPSE_ALL_BOUND_MESSAGE.get());
-		setIcon(IconsSmall.COLLAPSE_ALL);
-	}
+        setText(COLLAPSE_ALL_MESSAGE.get());
+        setBoundPivotLevelText(COLLAPSE_ALL_BOUND_MESSAGE.get());
+        setIcon(IconsSmall.COLLAPSE_ALL);
+    }
 
-	@Override
-	public ITreeExpansionActionBuilder addFilter(final IFilter<ITreeNode> filter) {
-		throw new UnsupportedOperationException(
-			"Filters are not supported for this action at the moment. Feel free to contribute a implementation");
-	}
+    @Override
+    public ITreeExpansionActionBuilder addFilter(final IFilter<ITreeNode> filter) {
+        throw new UnsupportedOperationException(
+            "Filters are not supported for this action at the moment. Feel free to contribute a implementation");
+    }
 
-	@Override
-	public ITreeExpansionActionBuilder setFilter(final IFilter<ITreeNode> filter) {
-		throw new UnsupportedOperationException(
-			"Filters are not supported for this action at the moment. Feel free to contribute a implementation");
-	}
+    @Override
+    public ITreeExpansionActionBuilder setFilter(final IFilter<ITreeNode> filter) {
+        throw new UnsupportedOperationException(
+            "Filters are not supported for this action at the moment. Feel free to contribute a implementation");
+    }
 
 }

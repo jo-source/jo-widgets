@@ -31,7 +31,7 @@ import org.jowidgets.api.widgets.blueprint.builder.ISliderViewerSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.ISliderViewerDescriptor;
 
 public interface ISliderViewerBluePrint<VALUE_TYPE> extends
-		ISliderViewerSetupBuilder<ISliderViewerBluePrint<VALUE_TYPE>, VALUE_TYPE>,
-		ISliderViewerDescriptor<VALUE_TYPE> {
+        ISliderViewerSetupBuilder<ISliderViewerBluePrint<VALUE_TYPE>, VALUE_TYPE>,
+        ISliderViewerDescriptor<VALUE_TYPE> {
 
 }

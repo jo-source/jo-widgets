@@ -36,83 +36,83 @@ import org.jowidgets.util.Assert;
 
 final class CachedFillLayoutImpl implements ICachedFillLayout {
 
-	private final IContainer container;
+    private final IContainer container;
 
-	private Dimension preferredSize;
-	private Dimension minSize;
-	private Dimension maxSize;
+    private Dimension preferredSize;
+    private Dimension minSize;
+    private Dimension maxSize;
 
-	CachedFillLayoutImpl(final IContainer container) {
-		Assert.paramNotNull(container, "container");
-		this.container = container;
-	}
+    CachedFillLayoutImpl(final IContainer container) {
+        Assert.paramNotNull(container, "container");
+        this.container = container;
+    }
 
-	@Override
-	public void layout() {
-		final IControl control = getFirstVisibleControl();
-		if (control != null) {
-			control.setBounds(container.getClientArea());
-		}
-	}
+    @Override
+    public void layout() {
+        final IControl control = getFirstVisibleControl();
+        if (control != null) {
+            control.setBounds(container.getClientArea());
+        }
+    }
 
-	@Override
-	public void invalidate() {}
+    @Override
+    public void invalidate() {}
 
-	@Override
-	public Dimension getPreferredSize() {
-		final IControl control = getFirstVisibleControl();
-		if (control != null) {
-			if (preferredSize == null) {
-				preferredSize = control.getPreferredSize();
-			}
-			return container.computeDecoratedSize(preferredSize);
-		}
-		else {
-			return container.computeDecoratedSize(Dimension.MIN);
-		}
-	}
+    @Override
+    public Dimension getPreferredSize() {
+        final IControl control = getFirstVisibleControl();
+        if (control != null) {
+            if (preferredSize == null) {
+                preferredSize = control.getPreferredSize();
+            }
+            return container.computeDecoratedSize(preferredSize);
+        }
+        else {
+            return container.computeDecoratedSize(Dimension.MIN);
+        }
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		final IControl control = getFirstVisibleControl();
-		if (control != null) {
-			if (minSize == null) {
-				minSize = control.getMinSize();
-			}
-			return container.computeDecoratedSize(minSize);
-		}
-		else {
-			return container.computeDecoratedSize(Dimension.MIN);
-		}
-	}
+    @Override
+    public Dimension getMinSize() {
+        final IControl control = getFirstVisibleControl();
+        if (control != null) {
+            if (minSize == null) {
+                minSize = control.getMinSize();
+            }
+            return container.computeDecoratedSize(minSize);
+        }
+        else {
+            return container.computeDecoratedSize(Dimension.MIN);
+        }
+    }
 
-	@Override
-	public Dimension getMaxSize() {
-		final IControl control = getFirstVisibleControl();
-		if (control != null) {
-			if (maxSize == null) {
-				maxSize = control.getMaxSize();
-			}
-			return container.computeDecoratedSize(maxSize);
-		}
-		else {
-			return container.computeDecoratedSize(Dimension.MIN);
-		}
-	}
+    @Override
+    public Dimension getMaxSize() {
+        final IControl control = getFirstVisibleControl();
+        if (control != null) {
+            if (maxSize == null) {
+                maxSize = control.getMaxSize();
+            }
+            return container.computeDecoratedSize(maxSize);
+        }
+        else {
+            return container.computeDecoratedSize(Dimension.MIN);
+        }
+    }
 
-	@Override
-	public void clearCache() {
-		minSize = null;
-		maxSize = null;
-		preferredSize = null;
-	}
+    @Override
+    public void clearCache() {
+        minSize = null;
+        maxSize = null;
+        preferredSize = null;
+    }
 
-	private IControl getFirstVisibleControl() {
-		for (final IControl control : container.getChildren()) {
-			if (control.isVisible()) {
-				return control;
-			}
-		}
-		return null;
-	}
+    private IControl getFirstVisibleControl() {
+        for (final IControl control : container.getChildren()) {
+            if (control.isVisible()) {
+                return control;
+            }
+        }
+        return null;
+    }
 }

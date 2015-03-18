@@ -35,15 +35,15 @@ import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
 public class PasswordChangeDialogDefaults implements IDefaultInitializer<IPasswordChangeDialogSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final IPasswordChangeDialogSetupBuilder<?> builder) {
-		final BluePrintFactory bpF = new BluePrintFactory();
-		builder.setOkButton(bpF.buttonOk());
-		builder.setCancelButton(bpF.buttonCancel());
-		builder.setDefaultButtonPolicy(InputDialogDefaultButtonPolicy.OK);
-		builder.setCloseable(false);
-		builder.setPasswordMaxLength(20);
-		builder.setMinSize(new Dimension(350, 230));
-		builder.setMinPackSize(new Dimension(350, 230));
-	}
+    @Override
+    public void initialize(final IPasswordChangeDialogSetupBuilder<?> builder) {
+        final BluePrintFactory bpF = new BluePrintFactory();
+        builder.setOkButton(bpF.buttonOk());
+        builder.setCancelButton(bpF.buttonCancel());
+        builder.setDefaultButtonPolicy(InputDialogDefaultButtonPolicy.OK);
+        builder.setCloseable(false);
+        builder.setPasswordMaxLength(20);
+        builder.setMinSize(new Dimension(350, 230));
+        builder.setMinPackSize(new Dimension(350, 230));
+    }
 }

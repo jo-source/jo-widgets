@@ -31,5 +31,5 @@ import org.jowidgets.impl.spi.blueprint.builder.ISplitCompositeSetupBuilderSpi;
 import org.jowidgets.impl.spi.descriptor.ISplitCompositeDescriptorSpi;
 
 public interface ISplitCompositeBluePrintSpi extends
-		ISplitCompositeSetupBuilderSpi<ISplitCompositeBluePrintSpi>,
-		ISplitCompositeDescriptorSpi {}
+        ISplitCompositeSetupBuilderSpi<ISplitCompositeBluePrintSpi>,
+        ISplitCompositeDescriptorSpi {}

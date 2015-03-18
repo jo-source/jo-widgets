@@ -33,8 +33,8 @@ import org.jowidgets.util.event.IChangeObservable;
 
 public interface IWaitAnimationProcessor extends IChangeObservable {
 
-	IImageConstant getWaitIcon();
+    IImageConstant getWaitIcon();
 
-	String getWaitText();
+    String getWaitText();
 
 }

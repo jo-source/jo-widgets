@@ -38,101 +38,101 @@ import org.jowidgets.util.Assert;
 
 public final class TextMaskBuilder {
 
-	private final List<CharacterMask> characterMasks;
-	private Character defaultPlaceholder;
-	private TextMaskMode mode;
+    private final List<CharacterMask> characterMasks;
+    private Character defaultPlaceholder;
+    private TextMaskMode mode;
 
-	public TextMaskBuilder() {
-		this.characterMasks = new LinkedList<CharacterMask>();
-		this.mode = TextMaskMode.FULL_MASK;
-	}
+    public TextMaskBuilder() {
+        this.characterMasks = new LinkedList<CharacterMask>();
+        this.mode = TextMaskMode.FULL_MASK;
+    }
 
-	public TextMaskBuilder defaultPlaceholder(final char placeholder) {
-		this.defaultPlaceholder = Character.valueOf(placeholder);
-		return this;
-	}
+    public TextMaskBuilder defaultPlaceholder(final char placeholder) {
+        this.defaultPlaceholder = Character.valueOf(placeholder);
+        return this;
+    }
 
-	public TextMaskBuilder setMode(final TextMaskMode mode) {
-		Assert.paramNotNull(mode, "mode");
-		this.mode = mode;
-		return this;
-	}
+    public TextMaskBuilder setMode(final TextMaskMode mode) {
+        Assert.paramNotNull(mode, "mode");
+        this.mode = mode;
+        return this;
+    }
 
-	public TextMaskBuilder addDelimiter(final char placeholder) {
-		characterMasks.add(new CharacterMask(true, null, null, Character.valueOf(placeholder)));
-		return this;
-	}
+    public TextMaskBuilder addDelimiter(final char placeholder) {
+        characterMasks.add(new CharacterMask(true, null, null, Character.valueOf(placeholder)));
+        return this;
+    }
 
-	public TextMaskBuilder addCharacterMask(final char placeholder) {
-		characterMasks.add(new CharacterMask(false, null, null, Character.valueOf(placeholder)));
-		return this;
-	}
+    public TextMaskBuilder addCharacterMask(final char placeholder) {
+        characterMasks.add(new CharacterMask(false, null, null, Character.valueOf(placeholder)));
+        return this;
+    }
 
-	public TextMaskBuilder addCharacterMask(final String acceptingRegExp, final char placeholder) {
-		characterMasks.add(new CharacterMask(false, acceptingRegExp, null, Character.valueOf(placeholder)));
-		return this;
-	}
+    public TextMaskBuilder addCharacterMask(final String acceptingRegExp, final char placeholder) {
+        characterMasks.add(new CharacterMask(false, acceptingRegExp, null, Character.valueOf(placeholder)));
+        return this;
+    }
 
-	public TextMaskBuilder addCharacterMask(final String acceptingRegExp, final String rejectingRegExp, final char placeholder) {
-		characterMasks.add(new CharacterMask(false, acceptingRegExp, rejectingRegExp, Character.valueOf(placeholder)));
-		return this;
-	}
+    public TextMaskBuilder addCharacterMask(final String acceptingRegExp, final String rejectingRegExp, final char placeholder) {
+        characterMasks.add(new CharacterMask(false, acceptingRegExp, rejectingRegExp, Character.valueOf(placeholder)));
+        return this;
+    }
 
-	public TextMaskBuilder addCharacterMask() {
-		characterMasks.add(new CharacterMask(false, null, null, null));
-		return this;
-	}
+    public TextMaskBuilder addCharacterMask() {
+        characterMasks.add(new CharacterMask(false, null, null, null));
+        return this;
+    }
 
-	public TextMaskBuilder addCharacterMask(final String acceptingRegExp) {
-		characterMasks.add(new CharacterMask(false, acceptingRegExp, null, null));
-		return this;
-	}
+    public TextMaskBuilder addCharacterMask(final String acceptingRegExp) {
+        characterMasks.add(new CharacterMask(false, acceptingRegExp, null, null));
+        return this;
+    }
 
-	public TextMaskBuilder addCharacterMask(final String acceptingRegExp, final String rejectingRegExp) {
-		characterMasks.add(new CharacterMask(false, acceptingRegExp, rejectingRegExp, null));
-		return this;
-	}
+    public TextMaskBuilder addCharacterMask(final String acceptingRegExp, final String rejectingRegExp) {
+        characterMasks.add(new CharacterMask(false, acceptingRegExp, rejectingRegExp, null));
+        return this;
+    }
 
-	public TextMaskBuilder addNumericMask(final char placeholder) {
-		return addCharacterMask("[0-9]", placeholder);
-	}
+    public TextMaskBuilder addNumericMask(final char placeholder) {
+        return addCharacterMask("[0-9]", placeholder);
+    }
 
-	public TextMaskBuilder addNumericMask() {
-		return addCharacterMask("[0-9]");
-	}
+    public TextMaskBuilder addNumericMask() {
+        return addCharacterMask("[0-9]");
+    }
 
-	public TextMaskBuilder addAlphabeticMask(final char placeholder) {
-		return addCharacterMask("[A-Z]", placeholder);
-	}
+    public TextMaskBuilder addAlphabeticMask(final char placeholder) {
+        return addCharacterMask("[A-Z]", placeholder);
+    }
 
-	public TextMaskBuilder addAlphaNumericMask(final char placeholder) {
-		return addCharacterMask("[A-Z]|[0-9]", placeholder);
-	}
+    public TextMaskBuilder addAlphaNumericMask(final char placeholder) {
+        return addCharacterMask("[A-Z]|[0-9]", placeholder);
+    }
 
-	public TextMaskBuilder addAlphabeticMask() {
-		return addCharacterMask("[A-Z]");
-	}
+    public TextMaskBuilder addAlphabeticMask() {
+        return addCharacterMask("[A-Z]");
+    }
 
-	public TextMaskBuilder addAlphaNumericMask() {
-		return addCharacterMask("[A-Z]|[0-9]");
-	}
+    public TextMaskBuilder addAlphaNumericMask() {
+        return addCharacterMask("[A-Z]|[0-9]");
+    }
 
-	public TextMaskBuilder addCharacterMask(final ICharacterMask mask) {
-		characterMasks.add(new CharacterMask(
-			mask.isReadonly(),
-			mask.getAcceptingRegExp(),
-			mask.getRejectingRegExp(),
-			mask.getPlaceholder()));
-		return this;
-	}
+    public TextMaskBuilder addCharacterMask(final ICharacterMask mask) {
+        characterMasks.add(new CharacterMask(
+            mask.isReadonly(),
+            mask.getAcceptingRegExp(),
+            mask.getRejectingRegExp(),
+            mask.getPlaceholder()));
+        return this;
+    }
 
-	public ITextMask build() {
-		if (defaultPlaceholder != null) {
-			for (final CharacterMask characterMask : characterMasks) {
-				characterMask.setDefaultPlaceholder(defaultPlaceholder);
-			}
-		}
-		return new TextMask(characterMasks, mode);
-	}
+    public ITextMask build() {
+        if (defaultPlaceholder != null) {
+            for (final CharacterMask characterMask : characterMasks) {
+                characterMask.setDefaultPlaceholder(defaultPlaceholder);
+            }
+        }
+        return new TextMask(characterMasks, mode);
+    }
 
 }

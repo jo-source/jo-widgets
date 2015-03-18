@@ -30,8 +30,8 @@ package org.jowidgets.api.model.tree;
 
 public interface ITreeNodeModelObservable {
 
-	void addTreeNodeModelListener(ITreeNodeModelListener listener);
+    void addTreeNodeModelListener(ITreeNodeModelListener listener);
 
-	void removeTreeNodeModelListener(ITreeNodeModelListener listener);
+    void removeTreeNodeModelListener(ITreeNodeModelListener listener);
 
 }

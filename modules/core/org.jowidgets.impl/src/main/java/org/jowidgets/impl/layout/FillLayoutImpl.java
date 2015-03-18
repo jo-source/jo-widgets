@@ -37,122 +37,122 @@ import org.jowidgets.util.Assert;
 
 final class FillLayoutImpl implements ILayouter {
 
-	private final IContainer container;
+    private final IContainer container;
 
-	private final int marginTop;
-	private final int marginBottom;
-	private final int marginLeft;
-	private final int marginRight;
+    private final int marginTop;
+    private final int marginBottom;
+    private final int marginLeft;
+    private final int marginRight;
 
-	private Dimension minSize;
-	private Dimension preferredSize;
+    private Dimension minSize;
+    private Dimension preferredSize;
 
-	private Dimension controlMinSize;
+    private Dimension controlMinSize;
 
-	FillLayoutImpl(
-		final IContainer container,
-		final int marginLeft,
-		final int marginRight,
-		final int marginTop,
-		final int marginBottom) {
-		Assert.paramNotNull(container, "container");
-		this.container = container;
+    FillLayoutImpl(
+        final IContainer container,
+        final int marginLeft,
+        final int marginRight,
+        final int marginTop,
+        final int marginBottom) {
+        Assert.paramNotNull(container, "container");
+        this.container = container;
 
-		this.marginTop = marginTop;
-		this.marginLeft = marginLeft;
-		this.marginRight = marginRight;
-		this.marginBottom = marginBottom;
-	}
+        this.marginTop = marginTop;
+        this.marginLeft = marginLeft;
+        this.marginRight = marginRight;
+        this.marginBottom = marginBottom;
+    }
 
-	@Override
-	public void layout() {
-		final IControl control = getFirstControl();
-		if (control != null) {
-			final Rectangle clientArea = container.getClientArea();
+    @Override
+    public void layout() {
+        final IControl control = getFirstControl();
+        if (control != null) {
+            final Rectangle clientArea = container.getClientArea();
 
-			control.setPosition(clientArea.getX() + marginLeft, clientArea.getY() + marginTop);
+            control.setPosition(clientArea.getX() + marginLeft, clientArea.getY() + marginTop);
 
-			final Dimension clientSize = clientArea.getSize();
-			final Dimension ctrlMinSize = getControlMinSize();
+            final Dimension clientSize = clientArea.getSize();
+            final Dimension ctrlMinSize = getControlMinSize();
 
-			final int width = Math.max(ctrlMinSize.getWidth(), clientSize.getWidth() - marginRight - marginLeft);
-			final int height = Math.max(ctrlMinSize.getHeight(), clientSize.getHeight() - marginBottom - marginTop);
+            final int width = Math.max(ctrlMinSize.getWidth(), clientSize.getWidth() - marginRight - marginLeft);
+            final int height = Math.max(ctrlMinSize.getHeight(), clientSize.getHeight() - marginBottom - marginTop);
 
-			control.setSize(width, height);
-		}
-	}
+            control.setSize(width, height);
+        }
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		if (minSize == null) {
-			this.minSize = calcMinSize();
-		}
-		return minSize;
-	}
+    @Override
+    public Dimension getMinSize() {
+        if (minSize == null) {
+            this.minSize = calcMinSize();
+        }
+        return minSize;
+    }
 
-	@Override
-	public Dimension getPreferredSize() {
-		if (preferredSize == null) {
-			this.preferredSize = calcPreferredSize();
-		}
-		return preferredSize;
-	}
+    @Override
+    public Dimension getPreferredSize() {
+        if (preferredSize == null) {
+            this.preferredSize = calcPreferredSize();
+        }
+        return preferredSize;
+    }
 
-	@Override
-	public Dimension getMaxSize() {
-		return Dimension.MAX;
-	}
+    @Override
+    public Dimension getMaxSize() {
+        return Dimension.MAX;
+    }
 
-	@Override
-	public void invalidate() {
-		minSize = null;
-		preferredSize = null;
-		controlMinSize = null;
-	}
+    @Override
+    public void invalidate() {
+        minSize = null;
+        preferredSize = null;
+        controlMinSize = null;
+    }
 
-	private Dimension getControlMinSize() {
-		if (controlMinSize == null) {
-			this.controlMinSize = getFirstControl().getMinSize();
-		}
-		return controlMinSize;
-	}
+    private Dimension getControlMinSize() {
+        if (controlMinSize == null) {
+            this.controlMinSize = getFirstControl().getMinSize();
+        }
+        return controlMinSize;
+    }
 
-	private Dimension calcMinSize() {
-		final IControl control = getFirstControl();
+    private Dimension calcMinSize() {
+        final IControl control = getFirstControl();
 
-		int width = marginLeft + marginRight;
-		int height = marginTop + marginBottom;
+        int width = marginLeft + marginRight;
+        int height = marginTop + marginBottom;
 
-		if (control != null) {
-			final Dimension size = control.getMinSize();
-			width = width + size.getWidth();
-			height = height + size.getHeight();
-		}
+        if (control != null) {
+            final Dimension size = control.getMinSize();
+            width = width + size.getWidth();
+            height = height + size.getHeight();
+        }
 
-		return container.computeDecoratedSize(new Dimension(width, height));
-	}
+        return container.computeDecoratedSize(new Dimension(width, height));
+    }
 
-	private Dimension calcPreferredSize() {
-		final IControl control = getFirstControl();
+    private Dimension calcPreferredSize() {
+        final IControl control = getFirstControl();
 
-		int width = marginLeft + marginRight;
-		int height = marginTop + marginBottom;
+        int width = marginLeft + marginRight;
+        int height = marginTop + marginBottom;
 
-		if (control != null) {
-			final Dimension size = control.getPreferredSize();
-			width = width + size.getWidth();
-			height = height + size.getHeight();
-		}
+        if (control != null) {
+            final Dimension size = control.getPreferredSize();
+            width = width + size.getWidth();
+            height = height + size.getHeight();
+        }
 
-		return container.computeDecoratedSize(new Dimension(width, height));
-	}
+        return container.computeDecoratedSize(new Dimension(width, height));
+    }
 
-	private IControl getFirstControl() {
-		for (final IControl control : container.getChildren()) {
-			if (control.isVisible()) {
-				return control;
-			}
-		}
-		return null;
-	}
+    private IControl getFirstControl() {
+        for (final IControl control : container.getChildren()) {
+            if (control.isVisible()) {
+                return control;
+            }
+        }
+        return null;
+    }
 }

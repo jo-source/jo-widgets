@@ -28,18 +28,17 @@
 
 package org.jowidgets.api.layout.miglayout;
 
-
 public final class LC {
 
-	private LC() {}
+    private LC() {}
 
-	/**
-	 * Creates a new ILC instance
-	 * 
-	 * @return a new ILC instance
-	 */
-	public static ILC create() {
-		return MigLayoutToolkit.lc();
-	}
+    /**
+     * Creates a new ILC instance
+     * 
+     * @return a new ILC instance
+     */
+    public static ILC create() {
+        return MigLayoutToolkit.lc();
+    }
 
 }

@@ -34,16 +34,16 @@ import org.jowidgets.util.Assert;
 
 public final class StaticUnitProvider<BASE_VALUE_TYPE> implements IUnitProvider<BASE_VALUE_TYPE> {
 
-	private final IUnit unit;
+    private final IUnit unit;
 
-	public StaticUnitProvider(final IUnit unit) {
-		Assert.paramNotNull(unit, "unit");
-		this.unit = unit;
-	}
+    public StaticUnitProvider(final IUnit unit) {
+        Assert.paramNotNull(unit, "unit");
+        this.unit = unit;
+    }
 
-	@Override
-	public IUnit getUnit(final BASE_VALUE_TYPE value) {
-		return unit;
-	}
+    @Override
+    public IUnit getUnit(final BASE_VALUE_TYPE value) {
+        return unit;
+    }
 
 }

@@ -32,9 +32,9 @@ import org.jowidgets.common.widgets.builder.IPopupDialogSetupBuilderCommon;
 
 public class PopupDialogDefaultsCommon implements IDefaultInitializer<IPopupDialogSetupBuilderCommon<?>> {
 
-	@Override
-	public void initialize(final IPopupDialogSetupBuilderCommon<?> builder) {
-		builder.setBorder(true);
-	}
+    @Override
+    public void initialize(final IPopupDialogSetupBuilderCommon<?> builder) {
+        builder.setBorder(true);
+    }
 
 }

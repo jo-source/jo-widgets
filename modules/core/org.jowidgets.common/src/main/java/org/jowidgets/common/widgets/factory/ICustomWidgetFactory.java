@@ -33,6 +33,6 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface ICustomWidgetFactory {
 
-	<WIDGET_TYPE extends IControlCommon> WIDGET_TYPE create(IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
+    <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE create(IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
 
 }

@@ -35,30 +35,30 @@ import org.jowidgets.workbench.api.ISplitLayout;
 
 public interface ISplitLayoutBuilder extends ILayoutContainerBuilder {
 
-	ISplitLayoutBuilder setOrientation(Orientation orientation);
+    ISplitLayoutBuilder setOrientation(Orientation orientation);
 
-	ISplitLayoutBuilder setHorizontal();
+    ISplitLayoutBuilder setHorizontal();
 
-	ISplitLayoutBuilder setVertical();
+    ISplitLayoutBuilder setVertical();
 
-	ISplitLayoutBuilder setWeight(double weigth);
+    ISplitLayoutBuilder setWeight(double weigth);
 
-	ISplitLayoutBuilder setResizePolicy(SplitResizePolicy splitResizePolicy);
+    ISplitLayoutBuilder setResizePolicy(SplitResizePolicy splitResizePolicy);
 
-	ISplitLayoutBuilder setResizeFirst();
+    ISplitLayoutBuilder setResizeFirst();
 
-	ISplitLayoutBuilder setResizeSecond();
+    ISplitLayoutBuilder setResizeSecond();
 
-	ISplitLayoutBuilder setResizeBoth();
+    ISplitLayoutBuilder setResizeBoth();
 
-	ISplitLayoutBuilder setFirstContainer(ILayoutContainer firstContainer);
+    ISplitLayoutBuilder setFirstContainer(ILayoutContainer firstContainer);
 
-	ISplitLayoutBuilder setFirstContainer(ILayoutContainerBuilder firstContainerBuilder);
+    ISplitLayoutBuilder setFirstContainer(ILayoutContainerBuilder firstContainerBuilder);
 
-	ISplitLayoutBuilder setSecondContainer(ILayoutContainer secondContainer);
+    ISplitLayoutBuilder setSecondContainer(ILayoutContainer secondContainer);
 
-	ISplitLayoutBuilder setSecondContainer(ILayoutContainerBuilder secondContainerBuilder);
+    ISplitLayoutBuilder setSecondContainer(ILayoutContainerBuilder secondContainerBuilder);
 
-	@Override
-	ISplitLayout build();
+    @Override
+    ISplitLayout build();
 }

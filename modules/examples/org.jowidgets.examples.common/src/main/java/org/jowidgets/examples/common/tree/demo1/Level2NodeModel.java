@@ -32,21 +32,21 @@ import org.jowidgets.api.model.tree.ITreeNodeModel;
 
 public final class Level2NodeModel extends AbstractStringNodeModel {
 
-	private static final int CHILD_COUNT = 2;
-	private static final String PREFIX = "Level 3, Node ";
+    private static final int CHILD_COUNT = 2;
+    private static final String PREFIX = "Level 3, Node ";
 
-	Level2NodeModel(final String data) {
-		super(data);
-	}
+    Level2NodeModel(final String data) {
+        super(data);
+    }
 
-	@Override
-	public int getChildrenCount() {
-		return CHILD_COUNT;
-	}
+    @Override
+    public int getChildrenCount() {
+        return CHILD_COUNT;
+    }
 
-	@Override
-	public ITreeNodeModel<String> getChildNode(final int index) {
-		return new Level3NodeModel(PREFIX + (index + 1));
-	}
+    @Override
+    public ITreeNodeModel<String> getChildNode(final int index) {
+        return new Level3NodeModel(PREFIX + (index + 1));
+    }
 
 }

@@ -42,35 +42,35 @@ import org.jowidgets.spi.widgets.IToolBarContainerItemSpi;
 
 public class ToolBarContainerItemImpl extends SwingContainer implements IToolBarContainerItemSpi {
 
-	public ToolBarContainerItemImpl(final IGenericWidgetFactory factory, final JPanel panel) {
-		super(factory, panel);
+    public ToolBarContainerItemImpl(final IGenericWidgetFactory factory, final JPanel panel) {
+        super(factory, panel);
 
-		getUiReference().setLayout(new MigLayout("", "0[grow]0", "0[grow]0"));
-		getUiReference().setAlignmentY(JPanel.CENTER_ALIGNMENT);
-	}
+        getUiReference().setLayout(new MigLayout("", "0[grow]0", "0[grow]0"));
+        getUiReference().setAlignmentY(JPanel.CENTER_ALIGNMENT);
+    }
 
-	@Override
-	public JPanel getUiReference() {
-		return (JPanel) super.getUiReference();
-	}
+    @Override
+    public JPanel getUiReference() {
+        return (JPanel) super.getUiReference();
+    }
 
-	@Override
-	public void setText(final String text) {}
+    @Override
+    public void setText(final String text) {}
 
-	@Override
-	public void setToolTipText(final String text) {}
+    @Override
+    public void setToolTipText(final String text) {}
 
-	@Override
-	public void setIcon(final IImageConstant icon) {}
+    @Override
+    public void setIcon(final IImageConstant icon) {}
 
-	@Override
-	public Position getPosition() {
-		return PositionConvert.convert(getUiReference().getLocation());
-	}
+    @Override
+    public Position getPosition() {
+        return PositionConvert.convert(getUiReference().getLocation());
+    }
 
-	@Override
-	public Dimension getSize() {
-		return DimensionConvert.convert(getUiReference().getSize());
-	}
+    @Override
+    public Dimension getSize() {
+        return DimensionConvert.convert(getUiReference().getSize());
+    }
 
 }

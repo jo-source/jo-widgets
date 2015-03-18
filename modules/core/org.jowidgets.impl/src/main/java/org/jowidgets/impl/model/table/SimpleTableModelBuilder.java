@@ -35,59 +35,59 @@ import org.jowidgets.common.color.IColorConstant;
 
 class SimpleTableModelBuilder implements ISimpleTableModelBuilder {
 
-	private int rowCount;
-	private int columnCount;
-	private IColorConstant evenBackgroundColor;
-	private IColorConstant oddBackgroundColor;
-	private boolean cellsEditableDefault;
+    private int rowCount;
+    private int columnCount;
+    private IColorConstant evenBackgroundColor;
+    private IColorConstant oddBackgroundColor;
+    private boolean cellsEditableDefault;
 
-	SimpleTableModelBuilder() {
-		this.rowCount = 0;
-		this.columnCount = 0;
-		this.cellsEditableDefault = false;
-		this.evenBackgroundColor = Colors.DEFAULT_TABLE_EVEN_BACKGROUND_COLOR;
-	}
+    SimpleTableModelBuilder() {
+        this.rowCount = 0;
+        this.columnCount = 0;
+        this.cellsEditableDefault = false;
+        this.evenBackgroundColor = Colors.DEFAULT_TABLE_EVEN_BACKGROUND_COLOR;
+    }
 
-	@Override
-	public ISimpleTableModelBuilder setRowCount(final int rowCount) {
-		this.rowCount = rowCount;
-		return this;
-	}
+    @Override
+    public ISimpleTableModelBuilder setRowCount(final int rowCount) {
+        this.rowCount = rowCount;
+        return this;
+    }
 
-	@Override
-	public ISimpleTableModelBuilder setColumnCount(final int columnCount) {
-		this.columnCount = columnCount;
-		return this;
-	}
+    @Override
+    public ISimpleTableModelBuilder setColumnCount(final int columnCount) {
+        this.columnCount = columnCount;
+        return this;
+    }
 
-	@Override
-	public ISimpleTableModelBuilder setEditableDefault(final boolean editable) {
-		this.cellsEditableDefault = editable;
-		return this;
-	}
+    @Override
+    public ISimpleTableModelBuilder setEditableDefault(final boolean editable) {
+        this.cellsEditableDefault = editable;
+        return this;
+    }
 
-	@Override
-	public ISimpleTableModelBuilder setDefaultStripedRenderingColors() {
-		this.oddBackgroundColor = null;
-		this.evenBackgroundColor = Colors.DEFAULT_TABLE_EVEN_BACKGROUND_COLOR;
-		return this;
-	}
+    @Override
+    public ISimpleTableModelBuilder setDefaultStripedRenderingColors() {
+        this.oddBackgroundColor = null;
+        this.evenBackgroundColor = Colors.DEFAULT_TABLE_EVEN_BACKGROUND_COLOR;
+        return this;
+    }
 
-	@Override
-	public ISimpleTableModelBuilder setEvenRowsBackgroundColor(final IColorConstant color) {
-		this.evenBackgroundColor = color;
-		return this;
-	}
+    @Override
+    public ISimpleTableModelBuilder setEvenRowsBackgroundColor(final IColorConstant color) {
+        this.evenBackgroundColor = color;
+        return this;
+    }
 
-	@Override
-	public ISimpleTableModelBuilder setOddRowsBackgroundColor(final IColorConstant color) {
-		this.oddBackgroundColor = color;
-		return this;
-	}
+    @Override
+    public ISimpleTableModelBuilder setOddRowsBackgroundColor(final IColorConstant color) {
+        this.oddBackgroundColor = color;
+        return this;
+    }
 
-	@Override
-	public ISimpleTableModel build() {
-		return new SimpleTableModel(rowCount, columnCount, cellsEditableDefault, evenBackgroundColor, oddBackgroundColor);
-	}
+    @Override
+    public ISimpleTableModel build() {
+        return new SimpleTableModel(rowCount, columnCount, cellsEditableDefault, evenBackgroundColor, oddBackgroundColor);
+    }
 
 }

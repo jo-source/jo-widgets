@@ -37,87 +37,87 @@ import org.jowidgets.common.types.SplitResizePolicy;
 
 final class JoSashFormLayout extends Layout {
 
-	private final JoSashForm parent;
-	private final ISashOrientationUtil sashUtil;
+    private final JoSashForm parent;
+    private final ISashOrientationUtil sashUtil;
 
-	private boolean initialized;
-	private int fixedChildRegularSize = 0;
+    private boolean initialized;
+    private int fixedChildRegularSize = 0;
 
-	public JoSashFormLayout(final JoSashForm parent, final ISashOrientationUtil calculator) {
-		this.parent = parent;
-		this.sashUtil = calculator;
-		initialized = false;
-	}
+    public JoSashFormLayout(final JoSashForm parent, final ISashOrientationUtil calculator) {
+        this.parent = parent;
+        this.sashUtil = calculator;
+        initialized = false;
+    }
 
-	@Override
-	protected Point computeSize(final Composite composite, final int wHint, final int hHint, final boolean flushCache) {
-		return new Point(SWT.DEFAULT, SWT.DEFAULT);
-	}
+    @Override
+    protected Point computeSize(final Composite composite, final int wHint, final int hHint, final boolean flushCache) {
+        return new Point(SWT.DEFAULT, SWT.DEFAULT);
+    }
 
-	@Override
-	protected void layout(final Composite composite, final boolean flushCache) {
-		final Rectangle area = parent.getClientArea();
+    @Override
+    protected void layout(final Composite composite, final boolean flushCache) {
+        final Rectangle area = parent.getClientArea();
 
-		int firstSize;
-		int secondSize;
-		final int firstMinSize = sashUtil.getSize(parent.getFirstMinSize());
-		final int secondMinSize = sashUtil.getSize(parent.getSecondMinSize());
+        int firstSize;
+        int secondSize;
+        final int firstMinSize = sashUtil.getSize(parent.getFirstMinSize());
+        final int secondMinSize = sashUtil.getSize(parent.getSecondMinSize());
 
-		final int effectiveSize = sashUtil.getSize(area) - parent.getSashSize();
-		if (effectiveSize <= 0) {
-			// no reasonable parent size set, so do not layout anything
-			return;
-		}
+        final int effectiveSize = sashUtil.getSize(area) - parent.getSashSize();
+        if (effectiveSize <= 0) {
+            // no reasonable parent size set, so do not layout anything
+            return;
+        }
 
-		final Rectangle firstBounds = parent.getFirst().getBounds();
-		final Rectangle secondBounds = parent.getSecond().getBounds();
+        final Rectangle firstBounds = parent.getFirst().getBounds();
+        final Rectangle secondBounds = parent.getSecond().getBounds();
 
-		// always use weight when layouting first time
-		if (!initialized || (parent.getResizePolicy() == SplitResizePolicy.RESIZE_BOTH)) {
-			initialized = true;
+        // always use weight when layouting first time
+        if (!initialized || (parent.getResizePolicy() == SplitResizePolicy.RESIZE_BOTH)) {
+            initialized = true;
 
-			firstSize = (int) (parent.getWeight() * effectiveSize);
-			secondSize = effectiveSize - firstSize;
-		}
-		else if (parent.getResizePolicy() == SplitResizePolicy.RESIZE_FIRST) {
-			secondSize = Math.max(sashUtil.getSize(secondBounds), fixedChildRegularSize);
-			firstSize = effectiveSize - secondSize;
+            firstSize = (int) (parent.getWeight() * effectiveSize);
+            secondSize = effectiveSize - firstSize;
+        }
+        else if (parent.getResizePolicy() == SplitResizePolicy.RESIZE_FIRST) {
+            secondSize = Math.max(sashUtil.getSize(secondBounds), fixedChildRegularSize);
+            firstSize = effectiveSize - secondSize;
 
-			if (firstSize < firstMinSize) {
-				fixedChildRegularSize = Math.max(fixedChildRegularSize, secondSize);
-			}
-			else {
-				fixedChildRegularSize = 0;
-			}
-		}
-		else if (parent.getResizePolicy() == SplitResizePolicy.RESIZE_SECOND) {
-			firstSize = Math.max(sashUtil.getSize(firstBounds), fixedChildRegularSize);
-			secondSize = effectiveSize - firstSize;
+            if (firstSize < firstMinSize) {
+                fixedChildRegularSize = Math.max(fixedChildRegularSize, secondSize);
+            }
+            else {
+                fixedChildRegularSize = 0;
+            }
+        }
+        else if (parent.getResizePolicy() == SplitResizePolicy.RESIZE_SECOND) {
+            firstSize = Math.max(sashUtil.getSize(firstBounds), fixedChildRegularSize);
+            secondSize = effectiveSize - firstSize;
 
-			if (secondSize < secondMinSize) {
-				fixedChildRegularSize = Math.max(fixedChildRegularSize, firstSize);
-			}
-			else {
-				fixedChildRegularSize = 0;
-			}
-		}
-		else {
-			throw new IllegalStateException("Wrong Orientation is set");
-		}
+            if (secondSize < secondMinSize) {
+                fixedChildRegularSize = Math.max(fixedChildRegularSize, firstSize);
+            }
+            else {
+                fixedChildRegularSize = 0;
+            }
+        }
+        else {
+            throw new IllegalStateException("Wrong Orientation is set");
+        }
 
-		if (firstSize < firstMinSize) {
-			secondSize = secondSize - (firstMinSize - firstSize);
-			firstSize = firstMinSize;
-		}
-		if (secondSize < secondMinSize) {
-			firstSize = Math.max(firstMinSize, firstSize - (secondMinSize - secondSize));
-			secondSize = secondMinSize;
-		}
+        if (firstSize < firstMinSize) {
+            secondSize = secondSize - (firstMinSize - firstSize);
+            firstSize = firstMinSize;
+        }
+        if (secondSize < secondMinSize) {
+            firstSize = Math.max(firstMinSize, firstSize - (secondMinSize - secondSize));
+            secondSize = secondMinSize;
+        }
 
-		parent.setChildrenBounds(area, firstSize, secondSize);
-	}
+        parent.setChildrenBounds(area, firstSize, secondSize);
+    }
 
-	void resetRemeberedSize() {
-		fixedChildRegularSize = 0;
-	}
+    void resetRemeberedSize() {
+        fixedChildRegularSize = 0;
+    }
 }

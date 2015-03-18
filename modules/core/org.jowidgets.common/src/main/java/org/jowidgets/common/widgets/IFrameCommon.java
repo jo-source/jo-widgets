@@ -31,16 +31,16 @@ import org.jowidgets.common.types.Dimension;
 
 public interface IFrameCommon extends IWindowCommon, IContainerCommon {
 
-	void setMinSize(final Dimension minSize);
+    void setMinSize(final Dimension minSize);
 
-	void setTitle(String title);
+    void setTitle(String title);
 
-	void setMaximized(boolean maximized);
+    void setMaximized(boolean maximized);
 
-	boolean isMaximized();
+    boolean isMaximized();
 
-	void setIconfied(boolean iconfied);
+    void setIconfied(boolean iconfied);
 
-	boolean isIconfied();
+    boolean isIconfied();
 
 }

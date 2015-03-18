@@ -47,115 +47,115 @@ import org.jowidgets.impl.layout.tablelayout.TableLayoutBuilder;
 
 public class LayoutFactoryProvider implements ILayoutFactoryProvider {
 
-	private static final ILayoutFactory<ILayouter> NULL_LAYOUT_FACTORY = createNullLayoutFactory();
-	private static final ILayoutFactory<ILayouter> PREFERRED_SIZE_LAYOUT_FACTORY = createPreferredSizeLayoutFactory();
-	private static final ILayoutFactory<ICachedFillLayout> CACHED_FILL_LAYOUT_FACTORY = createChachedFillLayoutFactory();
+    private static final ILayoutFactory<ILayouter> NULL_LAYOUT_FACTORY = createNullLayoutFactory();
+    private static final ILayoutFactory<ILayouter> PREFERRED_SIZE_LAYOUT_FACTORY = createPreferredSizeLayoutFactory();
+    private static final ILayoutFactory<ICachedFillLayout> CACHED_FILL_LAYOUT_FACTORY = createChachedFillLayoutFactory();
 
-	private IMigLayoutToolkit migLayoutConstraintsToolkit;
+    private IMigLayoutToolkit migLayoutConstraintsToolkit;
 
-	@Override
-	public ILayoutFactory<ILayouter> nullLayout() {
-		return NULL_LAYOUT_FACTORY;
-	}
+    @Override
+    public ILayoutFactory<ILayouter> nullLayout() {
+        return NULL_LAYOUT_FACTORY;
+    }
 
-	@Override
-	public ILayoutFactory<ILayouter> preferredSizeLayout() {
-		return PREFERRED_SIZE_LAYOUT_FACTORY;
-	}
+    @Override
+    public ILayoutFactory<ILayouter> preferredSizeLayout() {
+        return PREFERRED_SIZE_LAYOUT_FACTORY;
+    }
 
-	@Override
-	public ILayoutFactory<ILayouter> flowLayout() {
-		return flowLayoutBuilder().build();
-	}
+    @Override
+    public ILayoutFactory<ILayouter> flowLayout() {
+        return flowLayoutBuilder().build();
+    }
 
-	@Override
-	public IFlowLayoutFactoryBuilder flowLayoutBuilder() {
-		return new FlowLayoutFactoryBuilder();
-	}
+    @Override
+    public IFlowLayoutFactoryBuilder flowLayoutBuilder() {
+        return new FlowLayoutFactoryBuilder();
+    }
 
-	@Override
-	public ILayoutFactory<ILayouter> fillLayout() {
-		return fillLayoutBuilder().build();
-	}
+    @Override
+    public ILayoutFactory<ILayouter> fillLayout() {
+        return fillLayoutBuilder().build();
+    }
 
-	@Override
-	public IFillLayoutFactoryBuilder fillLayoutBuilder() {
-		return new FillLayoutFactoryBuilder();
-	}
+    @Override
+    public IFillLayoutFactoryBuilder fillLayoutBuilder() {
+        return new FillLayoutFactoryBuilder();
+    }
 
-	@Override
-	public ILayoutFactory<ICachedFillLayout> cachedFillLayout() {
-		return CACHED_FILL_LAYOUT_FACTORY;
-	}
+    @Override
+    public ILayoutFactory<ICachedFillLayout> cachedFillLayout() {
+        return CACHED_FILL_LAYOUT_FACTORY;
+    }
 
-	@Override
-	public ILayoutFactory<ILayouter> borderLayout() {
-		return borderLayoutBuilder().build();
-	}
+    @Override
+    public ILayoutFactory<ILayouter> borderLayout() {
+        return borderLayoutBuilder().build();
+    }
 
-	@Override
-	public IBorderLayoutFactoryBuilder borderLayoutBuilder() {
-		return new BorderLayoutFactoryBuilder();
-	}
+    @Override
+    public IBorderLayoutFactoryBuilder borderLayoutBuilder() {
+        return new BorderLayoutFactoryBuilder();
+    }
 
-	@Override
-	public ILayoutFactory<ILayouter> listLayout() {
-		return listLayoutBuilder().build();
-	}
+    @Override
+    public ILayoutFactory<ILayouter> listLayout() {
+        return listLayoutBuilder().build();
+    }
 
-	@Override
-	public IListLayoutFactoryBuilder listLayoutBuilder() {
-		return new ListLayoutFactoryBuilder();
-	}
+    @Override
+    public IListLayoutFactoryBuilder listLayoutBuilder() {
+        return new ListLayoutFactoryBuilder();
+    }
 
-	@Override
-	public ILayoutFactory<IMigLayout> migLayout() {
-		return migLayoutBuilder().build();
-	}
+    @Override
+    public ILayoutFactory<IMigLayout> migLayout() {
+        return migLayoutBuilder().build();
+    }
 
-	@Override
-	public IMigLayoutFactoryBuilder migLayoutBuilder() {
-		return new MigLayoutFactoryBuilder();
-	}
+    @Override
+    public IMigLayoutFactoryBuilder migLayoutBuilder() {
+        return new MigLayoutFactoryBuilder();
+    }
 
-	@Override
-	public IMigLayoutToolkit getMigLayoutToolkit() {
-		if (migLayoutConstraintsToolkit == null) {
-			migLayoutConstraintsToolkit = new MigLayoutToolkitImpl();
-		}
-		return migLayoutConstraintsToolkit;
-	}
+    @Override
+    public IMigLayoutToolkit getMigLayoutToolkit() {
+        if (migLayoutConstraintsToolkit == null) {
+            migLayoutConstraintsToolkit = new MigLayoutToolkitImpl();
+        }
+        return migLayoutConstraintsToolkit;
+    }
 
-	private static ILayoutFactory<ILayouter> createNullLayoutFactory() {
-		return new ILayoutFactory<ILayouter>() {
-			@Override
-			public ILayouter create(final IContainer container) {
-				return new NullLayoutImpl(container);
-			}
-		};
-	}
+    private static ILayoutFactory<ILayouter> createNullLayoutFactory() {
+        return new ILayoutFactory<ILayouter>() {
+            @Override
+            public ILayouter create(final IContainer container) {
+                return new NullLayoutImpl(container);
+            }
+        };
+    }
 
-	private static ILayoutFactory<ILayouter> createPreferredSizeLayoutFactory() {
-		return new ILayoutFactory<ILayouter>() {
-			@Override
-			public ILayouter create(final IContainer container) {
-				return new PreferredSizeLayoutImpl(container);
-			}
-		};
-	}
+    private static ILayoutFactory<ILayouter> createPreferredSizeLayoutFactory() {
+        return new ILayoutFactory<ILayouter>() {
+            @Override
+            public ILayouter create(final IContainer container) {
+                return new PreferredSizeLayoutImpl(container);
+            }
+        };
+    }
 
-	private static ILayoutFactory<ICachedFillLayout> createChachedFillLayoutFactory() {
-		return new ILayoutFactory<ICachedFillLayout>() {
-			@Override
-			public ICachedFillLayout create(final IContainer container) {
-				return new CachedFillLayoutImpl(container);
-			}
-		};
-	}
+    private static ILayoutFactory<ICachedFillLayout> createChachedFillLayoutFactory() {
+        return new ILayoutFactory<ICachedFillLayout>() {
+            @Override
+            public ICachedFillLayout create(final IContainer container) {
+                return new CachedFillLayoutImpl(container);
+            }
+        };
+    }
 
-	@Override
-	public ITableLayoutBuilder tableLayoutBuilder() {
-		return new TableLayoutBuilder();
-	}
+    @Override
+    public ITableLayoutBuilder tableLayoutBuilder() {
+        return new TableLayoutBuilder();
+    }
 
 }

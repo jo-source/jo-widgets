@@ -35,6 +35,6 @@ import org.jowidgets.util.IConverter;
 
 public interface ISwtAwtConverterFactory {
 
-	IConverter<IComposite, Container> createCompositeConverter();
+    IConverter<IComposite, Container> createCompositeConverter();
 
 }

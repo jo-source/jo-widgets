@@ -35,12 +35,12 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
 public class WindowDefaults implements IDefaultInitializer<ITitledWindowSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final ITitledWindowSetupBuilder<?> builder) {
-		builder.setAutoPackPolicy(AutoPackPolicy.ONCE);
-		builder.setAutoPositionCorrectionPolicy(AutoPositionCorrectionPolicy.ONCE);
-		builder.setAutoCenterPolicy(AutoCenterPolicy.ONCE);
-		builder.setAutoDispose(false);
-	}
+    @Override
+    public void initialize(final ITitledWindowSetupBuilder<?> builder) {
+        builder.setAutoPackPolicy(AutoPackPolicy.ONCE);
+        builder.setAutoPositionCorrectionPolicy(AutoPositionCorrectionPolicy.ONCE);
+        builder.setAutoCenterPolicy(AutoCenterPolicy.ONCE);
+        builder.setAutoDispose(false);
+    }
 
 }

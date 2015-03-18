@@ -45,53 +45,53 @@ import org.jowidgets.workbench.api.IViewContext;
 
 public class ViewDemo2 extends AbstractDemoView implements IView {
 
-	public static final String ID = ViewDemo2.class.getName();
-	public static final String DEFAULT_LABEL = "Media";
-	public static final String DEFAULT_TOOLTIP = "Media View";
-	public static final IImageConstant DEFAULT_ICON = SilkIcons.ATTACH;
+    public static final String ID = ViewDemo2.class.getName();
+    public static final String DEFAULT_LABEL = "Media";
+    public static final String DEFAULT_TOOLTIP = "Media View";
+    public static final IImageConstant DEFAULT_ICON = SilkIcons.ATTACH;
 
-	public ViewDemo2(final IViewContext context, final DemoMenuProvider menuProvider) {
-		super(ID);
-		context.getToolBar().addItemsOfModel(menuProvider.getToolBarModel());
-		context.getToolBarMenu().addItemsOfModel(menuProvider.getMenuModel());
+    public ViewDemo2(final IViewContext context, final DemoMenuProvider menuProvider) {
+        super(ID);
+        context.getToolBar().addItemsOfModel(menuProvider.getToolBarModel());
+        context.getToolBarMenu().addItemsOfModel(menuProvider.getMenuModel());
 
-		final IContainer container = context.getContainer();
-		container.setLayout(MigLayoutFactory.growingCellLayout());
+        final IContainer container = context.getContainer();
+        container.setLayout(MigLayoutFactory.growingCellLayout());
 
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		final ITreeBluePrint treeBp = bpf.tree();
+        final ITreeBluePrint treeBp = bpf.tree();
 
-		final ITree tree = container.add(treeBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		tree.setBackgroundColor(Colors.WHITE);
-		container.setBackgroundColor(Colors.WHITE);
+        final ITree tree = container.add(treeBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        tree.setBackgroundColor(Colors.WHITE);
+        container.setBackgroundColor(Colors.WHITE);
 
-		final ITreeNode cdNode = tree.addNode(bpf.treeNode().setText("CD").setIcon(SilkIcons.CD));
-		final ITreeNode dvdNode = tree.addNode(bpf.treeNode().setText("DVD").setIcon(SilkIcons.DVD));
-		final ITreeNode diskNode = tree.addNode(bpf.treeNode().setText("Drive").setIcon(SilkIcons.DRIVE));
-		final ITreeNode floppyNode = tree.addNode(bpf.treeNode().setText("Floppy").setIcon(SilkIcons.DISK));
+        final ITreeNode cdNode = tree.addNode(bpf.treeNode().setText("CD").setIcon(SilkIcons.CD));
+        final ITreeNode dvdNode = tree.addNode(bpf.treeNode().setText("DVD").setIcon(SilkIcons.DVD));
+        final ITreeNode diskNode = tree.addNode(bpf.treeNode().setText("Drive").setIcon(SilkIcons.DRIVE));
+        final ITreeNode floppyNode = tree.addNode(bpf.treeNode().setText("Floppy").setIcon(SilkIcons.DISK));
 
-		cdNode.addNode(bpf.treeNode().setText("Bugs").setIcon(SilkIcons.BUG));
-		cdNode.addNode(bpf.treeNode().setText("Charts").setIcon(SilkIcons.CHART_BAR));
-		cdNode.addNode(bpf.treeNode().setText("Camera").setIcon(SilkIcons.CAMERA));
-		cdNode.addNode(bpf.treeNode().setText("Organization").setIcon(SilkIcons.CHART_ORGANISATION));
+        cdNode.addNode(bpf.treeNode().setText("Bugs").setIcon(SilkIcons.BUG));
+        cdNode.addNode(bpf.treeNode().setText("Charts").setIcon(SilkIcons.CHART_BAR));
+        cdNode.addNode(bpf.treeNode().setText("Camera").setIcon(SilkIcons.CAMERA));
+        cdNode.addNode(bpf.treeNode().setText("Organization").setIcon(SilkIcons.CHART_ORGANISATION));
 
-		dvdNode.addNode(bpf.treeNode().setText("Bugs").setIcon(SilkIcons.BUG));
-		dvdNode.addNode(bpf.treeNode().setText("Charts").setIcon(SilkIcons.CHART_BAR));
-		dvdNode.addNode(bpf.treeNode().setText("Camera").setIcon(SilkIcons.CAMERA));
-		dvdNode.addNode(bpf.treeNode().setText("Organization").setIcon(SilkIcons.CHART_ORGANISATION));
+        dvdNode.addNode(bpf.treeNode().setText("Bugs").setIcon(SilkIcons.BUG));
+        dvdNode.addNode(bpf.treeNode().setText("Charts").setIcon(SilkIcons.CHART_BAR));
+        dvdNode.addNode(bpf.treeNode().setText("Camera").setIcon(SilkIcons.CAMERA));
+        dvdNode.addNode(bpf.treeNode().setText("Organization").setIcon(SilkIcons.CHART_ORGANISATION));
 
-		diskNode.addNode(bpf.treeNode().setText("Bugs").setIcon(SilkIcons.BUG));
-		diskNode.addNode(bpf.treeNode().setText("Charts").setIcon(SilkIcons.CHART_BAR));
-		diskNode.addNode(bpf.treeNode().setText("Camera").setIcon(SilkIcons.CAMERA));
-		diskNode.addNode(bpf.treeNode().setText("Organization").setIcon(SilkIcons.CHART_ORGANISATION));
+        diskNode.addNode(bpf.treeNode().setText("Bugs").setIcon(SilkIcons.BUG));
+        diskNode.addNode(bpf.treeNode().setText("Charts").setIcon(SilkIcons.CHART_BAR));
+        diskNode.addNode(bpf.treeNode().setText("Camera").setIcon(SilkIcons.CAMERA));
+        diskNode.addNode(bpf.treeNode().setText("Organization").setIcon(SilkIcons.CHART_ORGANISATION));
 
-		floppyNode.addNode(bpf.treeNode().setText("Bugs").setIcon(SilkIcons.BUG));
-		floppyNode.addNode(bpf.treeNode().setText("Charts").setIcon(SilkIcons.CHART_BAR));
-		floppyNode.addNode(bpf.treeNode().setText("Camera").setIcon(SilkIcons.CAMERA));
-		floppyNode.addNode(bpf.treeNode().setText("Organization").setIcon(SilkIcons.CHART_ORGANISATION));
+        floppyNode.addNode(bpf.treeNode().setText("Bugs").setIcon(SilkIcons.BUG));
+        floppyNode.addNode(bpf.treeNode().setText("Charts").setIcon(SilkIcons.CHART_BAR));
+        floppyNode.addNode(bpf.treeNode().setText("Camera").setIcon(SilkIcons.CAMERA));
+        floppyNode.addNode(bpf.treeNode().setText("Organization").setIcon(SilkIcons.CHART_ORGANISATION));
 
-		diskNode.setExpanded(true);
-	}
+        diskNode.setExpanded(true);
+    }
 
 }

@@ -32,11 +32,11 @@ import org.jowidgets.helloworld.common.HelloWorldApplication;
 
 public final class HelloWorldStarterSwt {
 
-	private HelloWorldStarterSwt() {}
+    private HelloWorldStarterSwt() {}
 
-	public static void main(final String[] args) throws Exception {
-		Toolkit.getApplicationRunner().run(new HelloWorldApplication());
-		System.exit(0);
-	}
+    public static void main(final String[] args) throws Exception {
+        Toolkit.getApplicationRunner().run(new HelloWorldApplication());
+        System.exit(0);
+    }
 
 }

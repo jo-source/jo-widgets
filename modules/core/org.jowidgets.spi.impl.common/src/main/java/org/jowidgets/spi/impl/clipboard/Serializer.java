@@ -39,37 +39,37 @@ import org.jowidgets.util.io.IoUtils;
 
 public final class Serializer {
 
-	private Serializer() {}
+    private Serializer() {}
 
-	public static byte[] serialize(final Object obj) {
-		try {
-			final ByteArrayOutputStream b = new ByteArrayOutputStream();
-			final ObjectOutputStream o = new ObjectOutputStream(b);
-			o.writeObject(obj);
-			return b.toByteArray();
-		}
-		catch (final Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public static byte[] serialize(final Object obj) {
+        try {
+            final ByteArrayOutputStream b = new ByteArrayOutputStream();
+            final ObjectOutputStream o = new ObjectOutputStream(b);
+            o.writeObject(obj);
+            return b.toByteArray();
+        }
+        catch (final Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	public static Object deserialize(final byte[] bytes) {
-		return deserialize(new ByteArrayInputStream(bytes));
-	}
+    public static Object deserialize(final byte[] bytes) {
+        return deserialize(new ByteArrayInputStream(bytes));
+    }
 
-	public static Object deserialize(final InputStream inputStream) {
-		Assert.paramNotNull(inputStream, "inputStream");
-		SharedClassLoadingObjectInputStream objectInputStream = null;
-		try {
-			objectInputStream = new SharedClassLoadingObjectInputStream(inputStream);
-			return objectInputStream.readObject();
-		}
-		catch (final Exception e) {
-			return null;
-		}
-		finally {
-			IoUtils.tryCloseSilent(objectInputStream);
-		}
-	}
+    public static Object deserialize(final InputStream inputStream) {
+        Assert.paramNotNull(inputStream, "inputStream");
+        SharedClassLoadingObjectInputStream objectInputStream = null;
+        try {
+            objectInputStream = new SharedClassLoadingObjectInputStream(inputStream);
+            return objectInputStream.readObject();
+        }
+        catch (final Exception e) {
+            return null;
+        }
+        finally {
+            IoUtils.tryCloseSilent(objectInputStream);
+        }
+    }
 
 }

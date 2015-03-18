@@ -30,89 +30,89 @@ package org.jowidgets.api.command;
 
 public final class EnabledState implements IEnabledState {
 
-	/**
-	 * A enabled state constant for enabled = true
-	 */
-	public static final EnabledState ENABLED = new EnabledState();
+    /**
+     * A enabled state constant for enabled = true
+     */
+    public static final EnabledState ENABLED = new EnabledState();
 
-	/**
-	 * A enabled state constant for enabled = false. This enabled state has no reason!
-	 * For better usability of the application provide information why its is disabled
-	 * to the user with help of the method {@link #disabled(String)}
-	 */
-	public static final EnabledState DISABLED = new EnabledState(false, null);
+    /**
+     * A enabled state constant for enabled = false. This enabled state has no reason!
+     * For better usability of the application provide information why its is disabled
+     * to the user with help of the method {@link #disabled(String)}
+     */
+    public static final EnabledState DISABLED = new EnabledState(false, null);
 
-	private final boolean enabled;
-	private final String reason;
+    private final boolean enabled;
+    private final String reason;
 
-	private EnabledState() {
-		this(true, null);
-	}
+    private EnabledState() {
+        this(true, null);
+    }
 
-	private EnabledState(final boolean enabled, final String reason) {
-		this.enabled = enabled;
-		this.reason = reason;
-	}
+    private EnabledState(final boolean enabled, final String reason) {
+        this.enabled = enabled;
+        this.reason = reason;
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return enabled;
-	}
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
 
-	@Override
-	public String getReason() {
-		return reason;
-	}
+    @Override
+    public String getReason() {
+        return reason;
+    }
 
-	/**
-	 * Creates a new enabled state that is disabled
-	 * 
-	 * @param reason The reason why it is disabled
-	 * 
-	 * @return The created enabled state
-	 */
-	public static EnabledState disabled(final String reason) {
-		return new EnabledState(false, reason);
-	}
+    /**
+     * Creates a new enabled state that is disabled
+     * 
+     * @param reason The reason why it is disabled
+     * 
+     * @return The created enabled state
+     */
+    public static EnabledState disabled(final String reason) {
+        return new EnabledState(false, reason);
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (enabled ? 1231 : 1237);
-		result = prime * result + ((reason == null) ? 0 : reason.hashCode());
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (enabled ? 1231 : 1237);
+        result = prime * result + ((reason == null) ? 0 : reason.hashCode());
+        return result;
+    }
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final EnabledState other = (EnabledState) obj;
-		if (enabled != other.enabled) {
-			return false;
-		}
-		if (reason == null) {
-			if (other.reason != null) {
-				return false;
-			}
-		}
-		else if (!reason.equals(other.reason)) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final EnabledState other = (EnabledState) obj;
+        if (enabled != other.enabled) {
+            return false;
+        }
+        if (reason == null) {
+            if (other.reason != null) {
+                return false;
+            }
+        }
+        else if (!reason.equals(other.reason)) {
+            return false;
+        }
+        return true;
+    }
 
-	@Override
-	public String toString() {
-		return "EnabledState [enabled=" + enabled + ", reason=" + reason + "]";
-	}
+    @Override
+    public String toString() {
+        return "EnabledState [enabled=" + enabled + ", reason=" + reason + "]";
+    }
 
 }

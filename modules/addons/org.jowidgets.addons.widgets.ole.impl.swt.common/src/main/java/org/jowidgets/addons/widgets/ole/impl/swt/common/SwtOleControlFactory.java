@@ -35,13 +35,13 @@ import org.jowidgets.api.widgets.IControl;
 
 public final class SwtOleControlFactory {
 
-	private SwtOleControlFactory() {}
+    private SwtOleControlFactory() {}
 
-	public static IOleControl createOleControl(
-		final IControl control,
-		final Composite swtComposite,
-		final IOleControlBluePrint bluePrint) {
-		return new OleControlImpl(control, swtComposite, bluePrint);
-	}
+    public static IOleControl createOleControl(
+        final IControl control,
+        final Composite swtComposite,
+        final IOleControlBluePrint bluePrint) {
+        return new OleControlImpl(control, swtComposite, bluePrint);
+    }
 
 }

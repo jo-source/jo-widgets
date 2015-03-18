@@ -30,8 +30,8 @@ package org.jowidgets.util.event;
 
 public interface IObservableCallback {
 
-	void onFirstRegistered();
+    void onFirstRegistered();
 
-	void onLastUnregistered();
+    void onLastUnregistered();
 
 }

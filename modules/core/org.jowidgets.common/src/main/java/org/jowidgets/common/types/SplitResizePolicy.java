@@ -30,8 +30,8 @@ package org.jowidgets.common.types;
 
 public enum SplitResizePolicy {
 
-	RESIZE_FIRST,
-	RESIZE_SECOND,
-	RESIZE_BOTH;
+    RESIZE_FIRST,
+    RESIZE_SECOND,
+    RESIZE_BOTH;
 
 }

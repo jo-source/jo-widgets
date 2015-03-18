@@ -31,6 +31,6 @@ import org.jowidgets.common.widgets.builder.ISetupBuilder;
 
 public interface ISetupBuilderConvenience<BUILDER_TYPE extends ISetupBuilder<?>> {
 
-	void setBuilder(BUILDER_TYPE builder);
+    void setBuilder(BUILDER_TYPE builder);
 
 }

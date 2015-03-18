@@ -34,16 +34,16 @@ import org.jowidgets.common.types.Rectangle;
 
 public final class TranslatedTruncatedGraphicContext extends TranslatedGraphicContext {
 
-	private final Rectangle bounds;
+    private final Rectangle bounds;
 
-	public TranslatedTruncatedGraphicContext(final IGraphicContext original, final Rectangle bounds) {
-		super(original, bounds.getX(), bounds.getY());
-		this.bounds = new Rectangle(new Position(0, 0), bounds.getSize());
-	}
+    public TranslatedTruncatedGraphicContext(final IGraphicContext original, final Rectangle bounds) {
+        super(original, bounds.getX(), bounds.getY());
+        this.bounds = new Rectangle(new Position(0, 0), bounds.getSize());
+    }
 
-	@Override
-	public Rectangle getBounds() {
-		return bounds;
-	}
+    @Override
+    public Rectangle getBounds() {
+        return bounds;
+    }
 
 }

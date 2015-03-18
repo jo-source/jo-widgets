@@ -33,6 +33,6 @@ import org.jowidgets.common.image.IImageConstant;
 
 public interface IObjectLabelConverter<FROM_TYPE> extends IObjectStringConverter<FROM_TYPE> {
 
-	IImageConstant getIcon(FROM_TYPE value);
+    IImageConstant getIcon(FROM_TYPE value);
 
 }

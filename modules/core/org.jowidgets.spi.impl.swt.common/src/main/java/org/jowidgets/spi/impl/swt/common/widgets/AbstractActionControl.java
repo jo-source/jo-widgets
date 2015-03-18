@@ -36,61 +36,61 @@ import org.jowidgets.spi.widgets.IControlSpi;
 
 public abstract class AbstractActionControl extends AbstractActionComponent implements IControlSpi {
 
-	private final SwtControl swtControlDelegate;
+    private final SwtControl swtControlDelegate;
 
-	public AbstractActionControl(final Control control) {
-		super(control);
-		this.swtControlDelegate = new SwtControl(control, new ImmutableDropSelection(this));
-	}
+    public AbstractActionControl(final Control control) {
+        super(control);
+        this.swtControlDelegate = new SwtControl(control, new ImmutableDropSelection(this));
+    }
 
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		swtControlDelegate.setLayoutConstraints(layoutConstraints);
-	}
+    @Override
+    public void setLayoutConstraints(final Object layoutConstraints) {
+        swtControlDelegate.setLayoutConstraints(layoutConstraints);
+    }
 
-	@Override
-	public Object getLayoutConstraints() {
-		return swtControlDelegate.getLayoutConstraints();
-	}
+    @Override
+    public Object getLayoutConstraints() {
+        return swtControlDelegate.getLayoutConstraints();
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		return swtControlDelegate.getMinSize();
-	}
+    @Override
+    public Dimension getMinSize() {
+        return swtControlDelegate.getMinSize();
+    }
 
-	@Override
-	public Dimension getPreferredSize() {
-		return swtControlDelegate.getPreferredSize();
-	}
+    @Override
+    public Dimension getPreferredSize() {
+        return swtControlDelegate.getPreferredSize();
+    }
 
-	@Override
-	public Dimension getMaxSize() {
-		return swtControlDelegate.getMaxSize();
-	}
+    @Override
+    public Dimension getMaxSize() {
+        return swtControlDelegate.getMaxSize();
+    }
 
-	@Override
-	public void setToolTipText(final String toolTip) {
-		swtControlDelegate.setToolTipText(toolTip);
-	}
+    @Override
+    public void setToolTipText(final String toolTip) {
+        swtControlDelegate.setToolTipText(toolTip);
+    }
 
-	@Override
-	public IDragSourceSpi getDragSource() {
-		return swtControlDelegate.getDragSource();
-	}
+    @Override
+    public IDragSourceSpi getDragSource() {
+        return swtControlDelegate.getDragSource();
+    }
 
-	@Override
-	public IDropTargetSpi getDropTarget() {
-		return swtControlDelegate.getDropTarget();
-	}
+    @Override
+    public IDropTargetSpi getDropTarget() {
+        return swtControlDelegate.getDropTarget();
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		swtControlDelegate.setVisible(visible);
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        swtControlDelegate.setVisible(visible);
+    }
 
-	@Override
-	public boolean isVisible() {
-		return swtControlDelegate.isVisible();
-	}
+    @Override
+    public boolean isVisible() {
+        return swtControlDelegate.isVisible();
+    }
 
 }

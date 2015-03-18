@@ -38,27 +38,27 @@ import org.jowidgets.util.Assert;
 
 public final class TransferableBuilderImpl implements ITransferableBuilder {
 
-	private final Map<TransferType<?>, Object> transferMap;
+    private final Map<TransferType<?>, Object> transferMap;
 
-	public TransferableBuilderImpl() {
-		this.transferMap = new HashMap<TransferType<?>, Object>();
-	}
+    public TransferableBuilderImpl() {
+        this.transferMap = new HashMap<TransferType<?>, Object>();
+    }
 
-	@Override
-	public <JAVA_TYPE> ITransferableBuilder add(final TransferType<JAVA_TYPE> type, final JAVA_TYPE data) {
-		Assert.paramNotNull(type, "type");
-		transferMap.put(type, data);
-		return this;
-	}
+    @Override
+    public <JAVA_TYPE> ITransferableBuilder add(final TransferType<JAVA_TYPE> type, final JAVA_TYPE data) {
+        Assert.paramNotNull(type, "type");
+        transferMap.put(type, data);
+        return this;
+    }
 
-	@Override
-	public <JAVA_TYPE> ITransferableBuilder add(final Class<JAVA_TYPE> type, final JAVA_TYPE data) {
-		return add(new TransferType<JAVA_TYPE>(type), data);
-	}
+    @Override
+    public <JAVA_TYPE> ITransferableBuilder add(final Class<JAVA_TYPE> type, final JAVA_TYPE data) {
+        return add(new TransferType<JAVA_TYPE>(type), data);
+    }
 
-	@Override
-	public ITransferable build() {
-		return new TransferableImpl(transferMap);
-	}
+    @Override
+    public ITransferable build() {
+        return new TransferableImpl(transferMap);
+    }
 
 }

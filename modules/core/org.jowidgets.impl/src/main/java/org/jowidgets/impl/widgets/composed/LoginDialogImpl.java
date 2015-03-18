@@ -59,224 +59,224 @@ import org.jowidgets.validation.ValidationResult;
 
 public class LoginDialogImpl extends WindowWrapper implements ILoginDialog {
 
-	private static final IMessage USERNAME = Messages.getMessage("LoginDialogImpl.username");
-	private static final IMessage PASSWORD = Messages.getMessage("LoginDialogImpl.password");
+    private static final IMessage USERNAME = Messages.getMessage("LoginDialogImpl.username");
+    private static final IMessage PASSWORD = Messages.getMessage("LoginDialogImpl.password");
 
-	private final IUiThreadAccess uiThreadAccess;
-	private final Set<ILoginCancelListener> cancelListeners;
+    private final IUiThreadAccess uiThreadAccess;
+    private final Set<ILoginCancelListener> cancelListeners;
 
-	private final IFrame frame;
-	private final ILoginInterceptor loginInterceptor;
+    private final IFrame frame;
+    private final ILoginInterceptor loginInterceptor;
 
-	private final IValidationResultLabel validationResultLabel;
-	private final IInputField<String> usernameField;
-	private final IInputField<String> passwordField;
-	private final IButton loginButton;
-	private final IButton cancelButton;
-	private final IProgressBar progressBar;
+    private final IValidationResultLabel validationResultLabel;
+    private final IInputField<String> usernameField;
+    private final IInputField<String> passwordField;
+    private final IButton loginButton;
+    private final IButton cancelButton;
+    private final IProgressBar progressBar;
 
-	private ILoginResult result;
-	private boolean disposed;
-	private boolean loginButtonPressed;
+    private ILoginResult result;
+    private boolean disposed;
+    private boolean loginButtonPressed;
 
-	public LoginDialogImpl(final IFrame frame, final ILoginDialogSetup setup) {
-		super(frame);
-		Assert.paramNotNull(frame, "frame");
-		Assert.paramNotNull(setup, "setup");
-		Assert.paramNotNull(setup.getInterceptor(), "setup.getInterceptor()");
+    public LoginDialogImpl(final IFrame frame, final ILoginDialogSetup setup) {
+        super(frame);
+        Assert.paramNotNull(frame, "frame");
+        Assert.paramNotNull(setup, "setup");
+        Assert.paramNotNull(setup.getInterceptor(), "setup.getInterceptor()");
 
-		this.uiThreadAccess = Toolkit.getUiThreadAccess();
-		this.cancelListeners = new HashSet<ILoginCancelListener>();
-		this.frame = frame;
-		this.loginInterceptor = setup.getInterceptor();
+        this.uiThreadAccess = Toolkit.getUiThreadAccess();
+        this.cancelListeners = new HashSet<ILoginCancelListener>();
+        this.frame = frame;
+        this.loginInterceptor = setup.getInterceptor();
 
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		frame.setLayout(new MigLayoutDescriptor("0[grow]0", "0[]0[grow]0[12!]0"));
+        frame.setLayout(new MigLayoutDescriptor("0[grow]0", "0[]0[grow]0[12!]0"));
 
-		if (setup.getMinSize() != null) {
-			frame.setMinSize(setup.getMinSize());
-		}
+        if (setup.getMinSize() != null) {
+            frame.setMinSize(setup.getMinSize());
+        }
 
-		//set logo, or if not exists
-		if (setup.getLogo() != null) {
-			frame.add(bpf.icon(setup.getLogo()), "growx, growy, wrap");
-		}
-		//set login label
-		else {
-			if (setup.getLoginLabel() != null) {
-				final IComposite labelComposite = frame.add(bpf.composite().setBackgroundColor(Colors.WHITE), "grow, wrap");
-				labelComposite.setLayout(new MigLayoutDescriptor("15[grow]15", "15[grow]15"));
-				final ITextLabelBluePrint labelBp = bpf.textLabel().setFontSize(25).setStrong().setFontName("Arial");
-				labelBp.setText(setup.getLoginLabel()).setMarkup(Markup.DEFAULT);
-				labelBp.setForegroundColor(Colors.DARK_GREY);
-				labelComposite.add(labelBp, "grow");
-			}
-			else {
-				frame.add(bpf.textLabel(""), "grow, wrap");
-			}
-		}
+        //set logo, or if not exists
+        if (setup.getLogo() != null) {
+            frame.add(bpf.icon(setup.getLogo()), "growx, growy, wrap");
+        }
+        //set login label
+        else {
+            if (setup.getLoginLabel() != null) {
+                final IComposite labelComposite = frame.add(bpf.composite().setBackgroundColor(Colors.WHITE), "grow, wrap");
+                labelComposite.setLayout(new MigLayoutDescriptor("15[grow]15", "15[grow]15"));
+                final ITextLabelBluePrint labelBp = bpf.textLabel().setFontSize(25).setStrong().setFontName("Arial");
+                labelBp.setText(setup.getLoginLabel()).setMarkup(Markup.DEFAULT);
+                labelBp.setForegroundColor(Colors.DARK_GREY);
+                labelComposite.add(labelBp, "grow");
+            }
+            else {
+                frame.add(bpf.textLabel(""), "grow, wrap");
+            }
+        }
 
-		//create content pane
-		final IComposite content = frame.add(bpf.composite(), "alignx r, wrap");
-		content.setLayout(new MigLayoutDescriptor("20[grow]8[grow, 200!]20", "20[20!]15[][]45[grow]10"));
+        //create content pane
+        final IComposite content = frame.add(bpf.composite(), "alignx r, wrap");
+        content.setLayout(new MigLayoutDescriptor("20[grow]8[grow, 200!]20", "20[20!]15[][]45[grow]10"));
 
-		//validation label
-		validationResultLabel = content.add(bpf.validationResultLabel(), "span2, growx, wrap");
+        //validation label
+        validationResultLabel = content.add(bpf.validationResultLabel(), "span2, growx, wrap");
 
-		//input fields
-		content.add(bpf.textLabel(USERNAME.get()).alignRight(), "alignx r");
-		usernameField = content.add(bpf.inputFieldString(), "growx, wrap");
-		content.add(bpf.textLabel(PASSWORD.get()).alignRight(), "alignx r");
-		passwordField = content.add(bpf.inputFieldString().setPasswordPresentation(true), "growx, wrap");
+        //input fields
+        content.add(bpf.textLabel(USERNAME.get()).alignRight(), "alignx r");
+        usernameField = content.add(bpf.inputFieldString(), "growx, wrap");
+        content.add(bpf.textLabel(PASSWORD.get()).alignRight(), "alignx r");
+        passwordField = content.add(bpf.inputFieldString().setPasswordPresentation(true), "growx, wrap");
 
-		//button bar
-		final IComposite buttonBar = content.add(bpf.composite(), "span2, alignx r, growy");
-		buttonBar.setLayout(new MigLayoutDescriptor("0[][]0", "0[]0"));
-		this.loginButton = buttonBar.add(setup.getLoginButton(), "w 80::, aligny b, sg bg");
-		this.cancelButton = buttonBar.add(setup.getCancelButton(), "w 80::, aligny b, sg bg");
-		loginButton.setBackgroundColor(frame.getBackgroundColor());
-		cancelButton.setBackgroundColor(frame.getBackgroundColor());
-		frame.setDefaultButton(loginButton);
+        //button bar
+        final IComposite buttonBar = content.add(bpf.composite(), "span2, alignx r, growy");
+        buttonBar.setLayout(new MigLayoutDescriptor("0[][]0", "0[]0"));
+        this.loginButton = buttonBar.add(setup.getLoginButton(), "w 80::, aligny b, sg bg");
+        this.cancelButton = buttonBar.add(setup.getCancelButton(), "w 80::, aligny b, sg bg");
+        loginButton.setBackgroundColor(frame.getBackgroundColor());
+        cancelButton.setBackgroundColor(frame.getBackgroundColor());
+        frame.setDefaultButton(loginButton);
 
-		//progress bar
-		this.progressBar = frame.add(bpf.progressBar().setIndeterminate(true), "growx, growy, aligny b");
-		progressBar.setVisible(false);
+        //progress bar
+        this.progressBar = frame.add(bpf.progressBar().setIndeterminate(true), "growx, growy, aligny b");
+        progressBar.setVisible(false);
 
-		//register listeners
-		usernameField.addInputListener(new ValidationInputListener());
-		passwordField.addInputListener(new ValidationInputListener());
-		loginButton.addActionListener(new LoginActionListener());
-		cancelButton.addActionListener(new CancelActionListener());
+        //register listeners
+        usernameField.addInputListener(new ValidationInputListener());
+        passwordField.addInputListener(new ValidationInputListener());
+        loginButton.addActionListener(new LoginActionListener());
+        cancelButton.addActionListener(new CancelActionListener());
 
-		usernameField.requestFocus();
-	}
+        usernameField.requestFocus();
+    }
 
-	@Override
-	public ILoginResult doLogin() {
-		setVisible(true);
-		return result;
-	}
+    @Override
+    public ILoginResult doLogin() {
+        setVisible(true);
+        return result;
+    }
 
-	@Override
-	public void dispose() {
-		if (!disposed) {
-			this.disposed = true;
-			super.dispose();
-		}
-	}
+    @Override
+    public void dispose() {
+        if (!disposed) {
+            this.disposed = true;
+            super.dispose();
+        }
+    }
 
-	private void loginButtonPressed() {
-		loginButtonPressed = true;
-		loginButton.setEnabled(false);
-		usernameField.setEnabled(false);
-		passwordField.setEnabled(false);
-		progressBar.setIndeterminate(true);
-		progressBar.setVisible(true);
-		validationResultLabel.setEmpty();
-	}
+    private void loginButtonPressed() {
+        loginButtonPressed = true;
+        loginButton.setEnabled(false);
+        usernameField.setEnabled(false);
+        passwordField.setEnabled(false);
+        progressBar.setIndeterminate(true);
+        progressBar.setVisible(true);
+        validationResultLabel.setEmpty();
+    }
 
-	private void loginGranted() {
-		uiThreadAccess.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				result = new LoginResult(true);
-				dispose();
-			}
-		});
-	}
+    private void loginGranted() {
+        uiThreadAccess.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                result = new LoginResult(true);
+                dispose();
+            }
+        });
+    }
 
-	private void loginDenied(final String reason) {
-		uiThreadAccess.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				if (!disposed) {
-					validationResultLabel.setResult(ValidationResult.error(reason));
-					loginButtonPressed = false;
-					loginButton.setEnabled(true);
-					usernameField.setEnabled(true);
-					passwordField.setEnabled(true);
-					progressBar.setVisible(false);
-					frame.layoutBegin();
-					frame.layoutEnd();
-					frame.setDefaultButton(loginButton);
-				}
-			}
-		});
-	}
+    private void loginDenied(final String reason) {
+        uiThreadAccess.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (!disposed) {
+                    validationResultLabel.setResult(ValidationResult.error(reason));
+                    loginButtonPressed = false;
+                    loginButton.setEnabled(true);
+                    usernameField.setEnabled(true);
+                    passwordField.setEnabled(true);
+                    progressBar.setVisible(false);
+                    frame.layoutBegin();
+                    frame.layoutEnd();
+                    frame.setDefaultButton(loginButton);
+                }
+            }
+        });
+    }
 
-	private final class LoginActionListener implements IActionListener {
+    private final class LoginActionListener implements IActionListener {
 
-		@Override
-		public void actionPerformed() {
-			if (!loginButtonPressed) {
-				loginButtonPressed();
+        @Override
+        public void actionPerformed() {
+            if (!loginButtonPressed) {
+                loginButtonPressed();
 
-				final String username = usernameField.getValue();
-				final String password = passwordField.getValue();
+                final String username = usernameField.getValue();
+                final String password = passwordField.getValue();
 
-				final Thread thread = new Thread(new Runnable() {
-					@Override
-					public void run() {
-						loginInterceptor.login(new LoginResultCallback(), username, password);
-					}
-				});
-				thread.setDaemon(true);
-				thread.start();
-			}
-		}
-	}
+                final Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loginInterceptor.login(new LoginResultCallback(), username, password);
+                    }
+                });
+                thread.setDaemon(true);
+                thread.start();
+            }
+        }
+    }
 
-	private final class LoginResultCallback implements ILoginResultCallback {
+    private final class LoginResultCallback implements ILoginResultCallback {
 
-		@Override
-		public void granted() {
-			loginGranted();
-		}
+        @Override
+        public void granted() {
+            loginGranted();
+        }
 
-		@Override
-		public void denied(final String reason) {
-			loginDenied(reason);
-		}
+        @Override
+        public void denied(final String reason) {
+            loginDenied(reason);
+        }
 
-		@Override
-		public void addCancelListener(final ILoginCancelListener cancelListener) {
-			cancelListeners.add(cancelListener);
-		}
+        @Override
+        public void addCancelListener(final ILoginCancelListener cancelListener) {
+            cancelListeners.add(cancelListener);
+        }
 
-	}
+    }
 
-	private final class CancelActionListener implements IActionListener {
-		@Override
-		public void actionPerformed() {
-			result = new LoginResult(false);
-			for (final ILoginCancelListener listener : cancelListeners) {
-				listener.canceled();
-			}
-			dispose();
-		}
-	}
+    private final class CancelActionListener implements IActionListener {
+        @Override
+        public void actionPerformed() {
+            result = new LoginResult(false);
+            for (final ILoginCancelListener listener : cancelListeners) {
+                listener.canceled();
+            }
+            dispose();
+        }
+    }
 
-	private final class ValidationInputListener implements IInputListener {
-		@Override
-		public void inputChanged() {
-			validationResultLabel.setEmpty();
-		}
-	}
+    private final class ValidationInputListener implements IInputListener {
+        @Override
+        public void inputChanged() {
+            validationResultLabel.setEmpty();
+        }
+    }
 
-	private final class LoginResult implements ILoginResult {
+    private final class LoginResult implements ILoginResult {
 
-		private final boolean isLoggedOn;
+        private final boolean isLoggedOn;
 
-		private LoginResult(final boolean isLoggedOn) {
-			this.isLoggedOn = isLoggedOn;
-		}
+        private LoginResult(final boolean isLoggedOn) {
+            this.isLoggedOn = isLoggedOn;
+        }
 
-		@Override
-		public boolean isLoggedOn() {
-			return isLoggedOn;
-		}
+        @Override
+        public boolean isLoggedOn() {
+            return isLoggedOn;
+        }
 
-	}
+    }
 
 }

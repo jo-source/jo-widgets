@@ -53,86 +53,86 @@ import org.jowidgets.util.Assert;
 
 public final class IconTableSnipped implements IApplication {
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
 
-		//create a frame with fill layout
-		final IFrameBluePrint frameBp = BPF.frame().setTitle("Silk icons table");
-		frameBp.setSize(new Dimension(400, 600));
-		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
-		frame.setLayout(FillLayout.get());
+        //create a frame with fill layout
+        final IFrameBluePrint frameBp = BPF.frame().setTitle("Silk icons table");
+        frameBp.setSize(new Dimension(400, 600));
+        final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
+        frame.setLayout(FillLayout.get());
 
-		//Create the table
-		final ITable table = frame.add(BPF.table(new IconTableModel(SilkIcons.class)));
-		table.setRowHeight(20);
+        //Create the table
+        final ITable table = frame.add(BPF.table(new IconTableModel(SilkIcons.class)));
+        table.setRowHeight(20);
 
-		//set the root frame visible
-		frame.setVisible(true);
+        //set the root frame visible
+        frame.setVisible(true);
 
-		//pack the table after it has become visible
-		table.pack();
-	}
+        //pack the table after it has become visible
+        table.pack();
+    }
 
-	private final class IconTableModel extends AbstractTableModel {
+    private final class IconTableModel extends AbstractTableModel {
 
-		private final IImageConstant[] icons;
+        private final IImageConstant[] icons;
 
-		private IconTableModel(final Class<? extends Enum<? extends IImageConstant>> iconsClazz) {
-			this((IImageConstant[]) Assert.getParamNotNull(iconsClazz, "iconsClazz").getEnumConstants());
-		}
+        private IconTableModel(final Class<? extends Enum<? extends IImageConstant>> iconsClazz) {
+            this((IImageConstant[]) Assert.getParamNotNull(iconsClazz, "iconsClazz").getEnumConstants());
+        }
 
-		private IconTableModel(final IImageConstant[] icons) {
-			Assert.paramNotNull(icons, "icons");
+        private IconTableModel(final IImageConstant[] icons) {
+            Assert.paramNotNull(icons, "icons");
 
-			this.icons = new IImageConstant[icons.length];
-			System.arraycopy(icons, 0, this.icons, 0, icons.length);
-			Arrays.sort(this.icons, new Comparator<IImageConstant>() {
-				@Override
-				public int compare(final IImageConstant o1, final IImageConstant o2) {
-					return o1.toString().compareTo(o2.toString());
-				}
-			});
-		}
+            this.icons = new IImageConstant[icons.length];
+            System.arraycopy(icons, 0, this.icons, 0, icons.length);
+            Arrays.sort(this.icons, new Comparator<IImageConstant>() {
+                @Override
+                public int compare(final IImageConstant o1, final IImageConstant o2) {
+                    return o1.toString().compareTo(o2.toString());
+                }
+            });
+        }
 
-		@Override
-		public int getColumnCount() {
-			return 2;
-		}
+        @Override
+        public int getColumnCount() {
+            return 2;
+        }
 
-		@Override
-		public ITableColumn getColumn(final int columnIndex) {
-			final IDefaultTableColumnBuilder columnBuilder = DefaultTableColumn.builder();
-			if (columnIndex == 0) {
-				columnBuilder.setAlignment(AlignmentHorizontal.CENTER);
-				return columnBuilder.setText("Icon").build();
-			}
-			else if (columnIndex == 1) {
-				return columnBuilder.setText("Name").build();
-			}
-			else {
-				return null;
-			}
-		}
+        @Override
+        public ITableColumn getColumn(final int columnIndex) {
+            final IDefaultTableColumnBuilder columnBuilder = DefaultTableColumn.builder();
+            if (columnIndex == 0) {
+                columnBuilder.setAlignment(AlignmentHorizontal.CENTER);
+                return columnBuilder.setText("Icon").build();
+            }
+            else if (columnIndex == 1) {
+                return columnBuilder.setText("Name").build();
+            }
+            else {
+                return null;
+            }
+        }
 
-		@Override
-		public int getRowCount() {
-			return icons.length;
-		}
+        @Override
+        public int getRowCount() {
+            return icons.length;
+        }
 
-		@Override
-		public ITableCell getCell(final int rowIndex, final int columnIndex) {
-			final ITableCellBuilder builder = TableCell.builder();
-			if (columnIndex == 0) {
-				return builder.setIcon(icons[rowIndex]).build();
-			}
-			else if (columnIndex == 1) {
-				return builder.setText(icons[rowIndex].toString()).build();
-			}
-			else {
-				return null;
-			}
+        @Override
+        public ITableCell getCell(final int rowIndex, final int columnIndex) {
+            final ITableCellBuilder builder = TableCell.builder();
+            if (columnIndex == 0) {
+                return builder.setIcon(icons[rowIndex]).build();
+            }
+            else if (columnIndex == 1) {
+                return builder.setText(icons[rowIndex].toString()).build();
+            }
+            else {
+                return null;
+            }
 
-		}
+        }
 
-	}
+    }
 }

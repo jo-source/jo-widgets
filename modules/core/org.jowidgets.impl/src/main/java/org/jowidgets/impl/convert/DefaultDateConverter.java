@@ -43,75 +43,75 @@ import org.jowidgets.validation.ValidationResult;
 
 final class DefaultDateConverter extends AbstractConverter<Date> implements IConverter<Date> {
 
-	private final DateFormat dateFormat;
-	private final ITextMask textMask;
-	private final String formatHint;
+    private final DateFormat dateFormat;
+    private final ITextMask textMask;
+    private final String formatHint;
 
-	DefaultDateConverter(final DateFormat dateFormat, final ITextMask textMask, final String formatHint) {
-		Assert.paramNotNull(dateFormat, "dateFormat");
-		this.dateFormat = dateFormat;
-		this.textMask = textMask;
+    DefaultDateConverter(final DateFormat dateFormat, final ITextMask textMask, final String formatHint) {
+        Assert.paramNotNull(dateFormat, "dateFormat");
+        this.dateFormat = dateFormat;
+        this.textMask = textMask;
 
-		if (formatHint != null) {
-			this.formatHint = formatHint;
-		}
-		else if (dateFormat instanceof SimpleDateFormat) {
-			this.formatHint = ((SimpleDateFormat) dateFormat).toPattern();
-		}
-		else {
-			this.formatHint = null;
-		}
-	}
+        if (formatHint != null) {
+            this.formatHint = formatHint;
+        }
+        else if (dateFormat instanceof SimpleDateFormat) {
+            this.formatHint = ((SimpleDateFormat) dateFormat).toPattern();
+        }
+        else {
+            this.formatHint = null;
+        }
+    }
 
-	@Override
-	public Date convertToObject(final String string) {
-		if (string != null) {
-			try {
-				return dateFormat.parse(string);
-			}
-			catch (final ParseException e) {
-				return null;
-			}
-		}
-		else {
-			return null;
-		}
-	}
+    @Override
+    public Date convertToObject(final String string) {
+        if (string != null) {
+            try {
+                return dateFormat.parse(string);
+            }
+            catch (final ParseException e) {
+                return null;
+            }
+        }
+        else {
+            return null;
+        }
+    }
 
-	@Override
-	public String convertToString(final Date value) {
-		if (value != null) {
-			return dateFormat.format(value);
-		}
-		return "";
-	}
+    @Override
+    public String convertToString(final Date value) {
+        if (value != null) {
+            return dateFormat.format(value);
+        }
+        return "";
+    }
 
-	@Override
-	public IValidator<String> getStringValidator() {
-		return new IValidator<String>() {
-			@Override
-			public IValidationResult validate(final String input) {
-				if (input != null && !input.trim().isEmpty() && (textMask == null || !textMask.getPlaceholder().equals(input))) {
-					try {
-						dateFormat.parse(input);
-					}
-					catch (final ParseException e) {
-						if (formatHint != null) {
-							return ValidationResult.error(MessageReplacer.replace("Must have the format '%1'", formatHint));
-						}
-						else {
-							return ValidationResult.error("Is not a valid date or time");
-						}
-					}
-				}
-				return ValidationResult.ok();
-			}
-		};
-	}
+    @Override
+    public IValidator<String> getStringValidator() {
+        return new IValidator<String>() {
+            @Override
+            public IValidationResult validate(final String input) {
+                if (input != null && !input.trim().isEmpty() && (textMask == null || !textMask.getPlaceholder().equals(input))) {
+                    try {
+                        dateFormat.parse(input);
+                    }
+                    catch (final ParseException e) {
+                        if (formatHint != null) {
+                            return ValidationResult.error(MessageReplacer.replace("Must have the format '%1'", formatHint));
+                        }
+                        else {
+                            return ValidationResult.error("Is not a valid date or time");
+                        }
+                    }
+                }
+                return ValidationResult.ok();
+            }
+        };
+    }
 
-	@Override
-	public ITextMask getMask() {
-		return textMask;
-	}
+    @Override
+    public ITextMask getMask() {
+        return textMask;
+    }
 
 }

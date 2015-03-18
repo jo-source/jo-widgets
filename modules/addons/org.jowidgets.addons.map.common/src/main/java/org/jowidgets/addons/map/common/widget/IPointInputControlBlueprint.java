@@ -35,6 +35,6 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import de.micromata.opengis.kml.v_2_2_0.Point;
 
 public interface IPointInputControlBlueprint extends
-		IInputComponentSetupBuilder<IPointInputControlBlueprint, Point>,
-		IInputComponentSetup<Point>,
-		IWidgetDescriptor<IPointInputControl> {}
+        IInputComponentSetupBuilder<IPointInputControlBlueprint, Point>,
+        IInputComponentSetup<Point>,
+        IWidgetDescriptor<IPointInputControl> {}

@@ -31,7 +31,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IInputFieldSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 
 public interface IInputFieldBluePrint<INPUT_TYPE> extends
-		IInputFieldSetupBuilder<IInputFieldBluePrint<INPUT_TYPE>, INPUT_TYPE>,
-		IInputFieldDescriptor<INPUT_TYPE> {
+        IInputFieldSetupBuilder<IInputFieldBluePrint<INPUT_TYPE>, INPUT_TYPE>,
+        IInputFieldDescriptor<INPUT_TYPE> {
 
 }

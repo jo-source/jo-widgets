@@ -33,22 +33,22 @@ import org.jowidgets.spi.widgets.controller.ITabItemObservableSpi;
 
 public interface ITabItemSpi extends IItemSpi, IContainerSpi, ITabItemObservableSpi, ITabItemCommon {
 
-	/**
-	 * Detaches the content from this item. The detached content can be attached later on another item.
-	 * If the content should be attached to an item of another folder, this item must be reparentable.
-	 * 
-	 * @return The content reference of the item.
-	 */
-	//Object detachContent();
+    /**
+     * Detaches the content from this item. The detached content can be attached later on another item.
+     * If the content should be attached to an item of another folder, this item must be reparentable.
+     * 
+     * @return The content reference of the item.
+     */
+    //Object detachContent();
 
-	/**
-	 * Attaches a content detached from another item to this item. If the content to set was detached from
-	 * an item of another folder, the source item must be reparentable.
-	 * 
-	 * @param content The content to set. Content must not be null.
-	 */
-	//void attachContent(Object content);
+    /**
+     * Attaches a content detached from another item to this item. If the content to set was detached from
+     * an item of another folder, the source item must be reparentable.
+     * 
+     * @param content The content to set. Content must not be null.
+     */
+    //void attachContent(Object content);
 
-	IPopupMenuSpi createTabPopupMenu();
+    IPopupMenuSpi createTabPopupMenu();
 
 }

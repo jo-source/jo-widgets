@@ -38,60 +38,60 @@ import org.jowidgets.validation.ValidationResult;
 
 public final class MandatoryValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE>, Serializable {
 
-	private static final long serialVersionUID = 8029380657803427107L;
+    private static final long serialVersionUID = 8029380657803427107L;
 
-	private static final IMessage MUST_NOT_BE_EMPTY = Messages.getMessage("MandatoryValidator.must_not_be_empty");
-	private static final IMessage PLEASE_INSERT_VALUE = Messages.getMessage("MandatoryValidator.please_insert_value");
+    private static final IMessage MUST_NOT_BE_EMPTY = Messages.getMessage("MandatoryValidator.must_not_be_empty");
+    private static final IMessage PLEASE_INSERT_VALUE = Messages.getMessage("MandatoryValidator.please_insert_value");
 
-	private final IValidationResult result;
+    private final IValidationResult result;
 
-	public enum MandatoryMessageType {
-		ERROR,
-		INFO_ERROR;
-	}
+    public enum MandatoryMessageType {
+        ERROR,
+        INFO_ERROR;
+    }
 
-	public MandatoryValidator(final MandatoryMessageType messageType) {
-		this(getValidationResult(messageType));
-	}
+    public MandatoryValidator(final MandatoryMessageType messageType) {
+        this(getValidationResult(messageType));
+    }
 
-	public MandatoryValidator() {
-		this(MUST_NOT_BE_EMPTY.get());
-	}
+    public MandatoryValidator() {
+        this(MUST_NOT_BE_EMPTY.get());
+    }
 
-	public MandatoryValidator(final String messageText) {
-		this(ValidationResult.error(messageText));
-	}
+    public MandatoryValidator(final String messageText) {
+        this(ValidationResult.error(messageText));
+    }
 
-	public MandatoryValidator(final IValidationResult errorResult) {
-		Assert.paramNotNull(errorResult, "errorResult");
-		this.result = errorResult;
-	}
+    public MandatoryValidator(final IValidationResult errorResult) {
+        Assert.paramNotNull(errorResult, "errorResult");
+        this.result = errorResult;
+    }
 
-	private static IValidationResult getValidationResult(final MandatoryMessageType messageType) {
-		Assert.paramNotNull(messageType, "messageType");
-		if (MandatoryMessageType.ERROR.equals(messageType)) {
-			return ValidationResult.error(MUST_NOT_BE_EMPTY.get());
-		}
-		else if (MandatoryMessageType.INFO_ERROR.equals(messageType)) {
-			return ValidationResult.infoError(PLEASE_INSERT_VALUE.get());
-		}
-		else {
-			throw new IllegalArgumentException("MandatoryMessageType '" + messageType + "' is not known");
-		}
-	}
+    private static IValidationResult getValidationResult(final MandatoryMessageType messageType) {
+        Assert.paramNotNull(messageType, "messageType");
+        if (MandatoryMessageType.ERROR.equals(messageType)) {
+            return ValidationResult.error(MUST_NOT_BE_EMPTY.get());
+        }
+        else if (MandatoryMessageType.INFO_ERROR.equals(messageType)) {
+            return ValidationResult.infoError(PLEASE_INSERT_VALUE.get());
+        }
+        else {
+            throw new IllegalArgumentException("MandatoryMessageType '" + messageType + "' is not known");
+        }
+    }
 
-	@Override
-	public IValidationResult validate(final VALIDATION_INPUT_TYPE validationInput) {
-		if (validationInput == null) {
-			return result;
-		}
-		else if (validationInput instanceof String && ((String) validationInput).trim().isEmpty()) {
-			return result;
-		}
-		else if (validationInput instanceof Collection<?> && ((Collection<?>) validationInput).isEmpty()) {
-			return result;
-		}
-		return ValidationResult.ok();
-	}
+    @Override
+    public IValidationResult validate(final VALIDATION_INPUT_TYPE validationInput) {
+        if (validationInput == null) {
+            return result;
+        }
+        else if (validationInput instanceof String && ((String) validationInput).trim().isEmpty()) {
+            return result;
+        }
+        else if (validationInput instanceof Collection<?> && ((Collection<?>) validationInput).isEmpty()) {
+            return result;
+        }
+        return ValidationResult.ok();
+    }
 
 }

@@ -37,92 +37,92 @@ import org.jowidgets.api.toolkit.Toolkit;
 
 public final class MigLayoutToolkitImpl implements IMigLayoutToolkit {
 
-	private LayoutUtilCommon layoutUtil;
-	private PlatformDefaultsCommon platformDefaults;
-	private UnitValueToolkitCommon unitValueToolkit;
-	private LinkHandlerCommon linkHandler;
+    private LayoutUtilCommon layoutUtil;
+    private PlatformDefaultsCommon platformDefaults;
+    private UnitValueToolkitCommon unitValueToolkit;
+    private LinkHandlerCommon linkHandler;
 
-	public MigLayoutToolkitImpl() {}
+    public MigLayoutToolkitImpl() {}
 
-	private static MigLayoutToolkitImpl getToolkit() {
-		return (MigLayoutToolkitImpl) Toolkit.getLayoutFactoryProvider().getMigLayoutToolkit();
-	}
+    private static MigLayoutToolkitImpl getToolkit() {
+        return (MigLayoutToolkitImpl) Toolkit.getLayoutFactoryProvider().getMigLayoutToolkit();
+    }
 
-	static LayoutUtilCommon getMigLayoutUtil() {
-		final MigLayoutToolkitImpl toolkit = getToolkit();
-		if (toolkit.layoutUtil == null) {
-			toolkit.layoutUtil = new LayoutUtilCommon();
-		}
-		return toolkit.layoutUtil;
-	}
+    static LayoutUtilCommon getMigLayoutUtil() {
+        final MigLayoutToolkitImpl toolkit = getToolkit();
+        if (toolkit.layoutUtil == null) {
+            toolkit.layoutUtil = new LayoutUtilCommon();
+        }
+        return toolkit.layoutUtil;
+    }
 
-	static PlatformDefaultsCommon getMigPlatformDefaults() {
-		final MigLayoutToolkitImpl toolkit = getToolkit();
-		if (toolkit.platformDefaults == null) {
-			toolkit.platformDefaults = new PlatformDefaultsCommon();
-		}
-		return toolkit.platformDefaults;
-	}
+    static PlatformDefaultsCommon getMigPlatformDefaults() {
+        final MigLayoutToolkitImpl toolkit = getToolkit();
+        if (toolkit.platformDefaults == null) {
+            toolkit.platformDefaults = new PlatformDefaultsCommon();
+        }
+        return toolkit.platformDefaults;
+    }
 
-	static UnitValueToolkitCommon getMigUnitValueToolkit() {
-		final MigLayoutToolkitImpl toolkit = getToolkit();
-		if (toolkit.unitValueToolkit == null) {
-			toolkit.unitValueToolkit = new UnitValueToolkitCommon();
-		}
-		return toolkit.unitValueToolkit;
-	}
+    static UnitValueToolkitCommon getMigUnitValueToolkit() {
+        final MigLayoutToolkitImpl toolkit = getToolkit();
+        if (toolkit.unitValueToolkit == null) {
+            toolkit.unitValueToolkit = new UnitValueToolkitCommon();
+        }
+        return toolkit.unitValueToolkit;
+    }
 
-	static LinkHandlerCommon getMigLinkHandler() {
-		final MigLayoutToolkitImpl toolkit = getToolkit();
-		if (toolkit.linkHandler == null) {
-			toolkit.linkHandler = new LinkHandlerCommon();
-		}
-		return toolkit.linkHandler;
-	}
+    static LinkHandlerCommon getMigLinkHandler() {
+        final MigLayoutToolkitImpl toolkit = getToolkit();
+        if (toolkit.linkHandler == null) {
+            toolkit.linkHandler = new LinkHandlerCommon();
+        }
+        return toolkit.linkHandler;
+    }
 
-	@Override
-	public IAC columnConstraints() {
-		return ac();
-	}
+    @Override
+    public IAC columnConstraints() {
+        return ac();
+    }
 
-	@Override
-	public IAC rowConstraints() {
-		return ac();
-	}
+    @Override
+    public IAC rowConstraints() {
+        return ac();
+    }
 
-	@Override
-	public ILC layoutConstraints() {
-		return lc();
-	}
+    @Override
+    public ILC layoutConstraints() {
+        return lc();
+    }
 
-	@Override
-	public ICC componentConstraints() {
-		return cc();
-	}
+    @Override
+    public ICC componentConstraints() {
+        return cc();
+    }
 
-	@Override
-	public ICC cc() {
-		return new CCWrapper();
-	}
+    @Override
+    public ICC cc() {
+        return new CCWrapper();
+    }
 
-	@Override
-	public IAC ac() {
-		return new ACWrapper();
-	}
+    @Override
+    public IAC ac() {
+        return new ACWrapper();
+    }
 
-	@Override
-	public ILC lc() {
-		return new LCWrapper();
-	}
+    @Override
+    public ILC lc() {
+        return new LCWrapper();
+    }
 
-	@Override
-	public IPlatformDefaults getPlatformDefaults() {
-		return getMigPlatformDefaults();
-	}
+    @Override
+    public IPlatformDefaults getPlatformDefaults() {
+        return getMigPlatformDefaults();
+    }
 
-	@Override
-	public String getMigLayoutVersion() {
-		return getMigLayoutUtil().getVersion();
-	}
+    @Override
+    public String getMigLayoutVersion() {
+        return getMigLayoutUtil().getVersion();
+    }
 
 }

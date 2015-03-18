@@ -30,18 +30,18 @@ package org.jowidgets.common.widgets.controller;
 
 public interface IWindowObservable {
 
-	/**
-	 * Adds a window listener
-	 * 
-	 * @param listener The listener to add
-	 */
-	void addWindowListener(IWindowListener listener);
+    /**
+     * Adds a window listener
+     * 
+     * @param listener The listener to add
+     */
+    void addWindowListener(IWindowListener listener);
 
-	/**
-	 * Removes a window listener
-	 * 
-	 * @param listener The listener to remove
-	 */
-	void removeWindowListener(IWindowListener listener);
+    /**
+     * Removes a window listener
+     * 
+     * @param listener The listener to remove
+     */
+    void removeWindowListener(IWindowListener listener);
 
 }

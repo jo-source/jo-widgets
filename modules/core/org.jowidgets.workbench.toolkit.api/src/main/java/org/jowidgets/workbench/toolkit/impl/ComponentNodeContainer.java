@@ -40,62 +40,62 @@ import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
 
 class ComponentNodeContainer {
 
-	private final IComponentNodeContainerModel model;
-	private final List<ComponentNode> createdChildren;
+    private final IComponentNodeContainerModel model;
+    private final List<ComponentNode> createdChildren;
 
-	private IListModelListener listModelListener;
-	private IComponentNodeContainerContext context;
+    private IListModelListener listModelListener;
+    private IComponentNodeContainerContext context;
 
-	ComponentNodeContainer(final IComponentNodeContainerModel model) {
-		Assert.paramNotNull(model, "model");
-		this.createdChildren = new LinkedList<ComponentNode>();
+    ComponentNodeContainer(final IComponentNodeContainerModel model) {
+        Assert.paramNotNull(model, "model");
+        this.createdChildren = new LinkedList<ComponentNode>();
 
-		this.model = model;
-	}
+        this.model = model;
+    }
 
-	void initialize(final IComponentNodeContainerContext context) {
-		if (this.context != null) {
-			throw new IllegalStateException("Container already initialized!");
-		}
-		this.context = context;
+    void initialize(final IComponentNodeContainerContext context) {
+        if (this.context != null) {
+            throw new IllegalStateException("Container already initialized!");
+        }
+        this.context = context;
 
-		for (final IComponentNodeModel nodeModel : model.getChildren()) {
-			final ComponentNode componentNode = new ComponentNode(nodeModel);
-			createdChildren.add(componentNode);
-			context.add(componentNode);
-		}
+        for (final IComponentNodeModel nodeModel : model.getChildren()) {
+            final ComponentNode componentNode = new ComponentNode(nodeModel);
+            createdChildren.add(componentNode);
+            context.add(componentNode);
+        }
 
-		listModelListener = new ListModelAdapter() {
-			@Override
-			public void afterChildRemoved(final int index) {
-				final ComponentNode componentNode = createdChildren.remove(index);
-				if (componentNode != null) {
-					context.remove(componentNode);
-					componentNode.dispose();
-				}
-			}
+        listModelListener = new ListModelAdapter() {
+            @Override
+            public void afterChildRemoved(final int index) {
+                final ComponentNode componentNode = createdChildren.remove(index);
+                if (componentNode != null) {
+                    context.remove(componentNode);
+                    componentNode.dispose();
+                }
+            }
 
-			@Override
-			public void afterChildAdded(final int index) {
-				final IComponentNodeModel nodeModel = model.getChildren().get(index);
-				final ComponentNode componentNode = new ComponentNode(nodeModel);
-				createdChildren.add(index, componentNode);
-				context.add(index, componentNode);
-			}
-		};
+            @Override
+            public void afterChildAdded(final int index) {
+                final IComponentNodeModel nodeModel = model.getChildren().get(index);
+                final ComponentNode componentNode = new ComponentNode(nodeModel);
+                createdChildren.add(index, componentNode);
+                context.add(index, componentNode);
+            }
+        };
 
-		model.addListModelListener(listModelListener);
-	}
+        model.addListModelListener(listModelListener);
+    }
 
-	void dispose() {
-		for (final ComponentNode childNode : createdChildren) {
-			childNode.dispose();
-		}
-		model.removeListModelListener(listModelListener);
-	}
+    void dispose() {
+        for (final ComponentNode childNode : createdChildren) {
+            childNode.dispose();
+        }
+        model.removeListModelListener(listModelListener);
+    }
 
-	protected IComponentNodeContainerModel getModel() {
-		return model;
-	}
+    protected IComponentNodeContainerModel getModel() {
+        return model;
+    }
 
 }

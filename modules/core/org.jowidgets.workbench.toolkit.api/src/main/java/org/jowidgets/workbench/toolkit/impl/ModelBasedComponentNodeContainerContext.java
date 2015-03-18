@@ -43,49 +43,49 @@ import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
 
 class ModelBasedComponentNodeContainerContext {
 
-	private final IComponentNodeContainerModel nodeModel;
-	private final List<IComponentNode> addedComponentNodes;
+    private final IComponentNodeContainerModel nodeModel;
+    private final List<IComponentNode> addedComponentNodes;
 
-	ModelBasedComponentNodeContainerContext(final IComponentNodeContainerModel nodeModel) {
-		Assert.paramNotNull(nodeModel, "nodeModel");
-		this.nodeModel = nodeModel;
-		this.addedComponentNodes = new LinkedList<IComponentNode>();
-	}
+    ModelBasedComponentNodeContainerContext(final IComponentNodeContainerModel nodeModel) {
+        Assert.paramNotNull(nodeModel, "nodeModel");
+        this.nodeModel = nodeModel;
+        this.addedComponentNodes = new LinkedList<IComponentNode>();
+    }
 
-	public final void add(final int index, final IComponentNode componentNode) {
-		Assert.paramNotNull(componentNode, "componentNode");
+    public final void add(final int index, final IComponentNode componentNode) {
+        Assert.paramNotNull(componentNode, "componentNode");
 
-		final ComponentNodeModelBuilder modelBuilder = new ComponentNodeModelBuilder();
-		modelBuilder.setId(componentNode.getId());
-		modelBuilder.setLabel(componentNode.getLabel());
-		modelBuilder.setTooltip(componentNode.getTooltip());
-		modelBuilder.setIcon(componentNode.getIcon());
-		modelBuilder.setComponentFactory(new IComponentFactory() {
-			@Override
-			public IComponent createComponent(final IComponentNodeModel treeNodeModel, final IComponentContext context) {
-				return componentNode.createComponent(context);
-			}
-		});
-		modelBuilder.setInitializeCallback(new IComponentNodeInitializeCallback() {
-			@Override
-			public void onContextInitialize(final IComponentNodeContext context) {
-				componentNode.onContextInitialize(context);
-			}
-		});
+        final ComponentNodeModelBuilder modelBuilder = new ComponentNodeModelBuilder();
+        modelBuilder.setId(componentNode.getId());
+        modelBuilder.setLabel(componentNode.getLabel());
+        modelBuilder.setTooltip(componentNode.getTooltip());
+        modelBuilder.setIcon(componentNode.getIcon());
+        modelBuilder.setComponentFactory(new IComponentFactory() {
+            @Override
+            public IComponent createComponent(final IComponentNodeModel treeNodeModel, final IComponentContext context) {
+                return componentNode.createComponent(context);
+            }
+        });
+        modelBuilder.setInitializeCallback(new IComponentNodeInitializeCallback() {
+            @Override
+            public void onContextInitialize(final IComponentNodeContext context) {
+                componentNode.onContextInitialize(context);
+            }
+        });
 
-		addedComponentNodes.add(index, componentNode);
-		nodeModel.addChild(index, modelBuilder);
-	}
+        addedComponentNodes.add(index, componentNode);
+        nodeModel.addChild(index, modelBuilder);
+    }
 
-	public final void add(final IComponentNode componentNode) {
-		add(addedComponentNodes.size(), componentNode);
-	}
+    public final void add(final IComponentNode componentNode) {
+        add(addedComponentNodes.size(), componentNode);
+    }
 
-	public final void remove(final IComponentNode componentNode) {
-		final int index = addedComponentNodes.indexOf(componentNode);
-		if (index != -1) {
-			nodeModel.remove(index);
-		}
-	}
+    public final void remove(final IComponentNode componentNode) {
+        final int index = addedComponentNodes.indexOf(componentNode);
+        if (index != -1) {
+            nodeModel.remove(index);
+        }
+    }
 
 }

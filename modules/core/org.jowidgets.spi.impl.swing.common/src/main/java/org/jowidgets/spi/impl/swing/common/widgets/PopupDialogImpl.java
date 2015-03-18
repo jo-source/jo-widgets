@@ -48,49 +48,49 @@ import org.jowidgets.spi.widgets.setup.IPopupDialogSetupSpi;
 
 public class PopupDialogImpl extends SwingWindow implements IPopupDialogSpi {
 
-	private static final Border BORDER = new JTextField().getBorder();
+    private static final Border BORDER = new JTextField().getBorder();
 
-	public PopupDialogImpl(
-		final IGenericWidgetFactory factory,
-		final SwingImageRegistry imageRegistry,
-		final Object parentUiReference,
-		final IPopupDialogSetupSpi setup) {
-		super(factory, new JDialog((Window) parentUiReference), false);
+    public PopupDialogImpl(
+        final IGenericWidgetFactory factory,
+        final SwingImageRegistry imageRegistry,
+        final Object parentUiReference,
+        final IPopupDialogSetupSpi setup) {
+        super(factory, new JDialog((Window) parentUiReference), false);
 
-		getUiReference().setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-		getUiReference().setUndecorated(true);
-		getUiReference().setModal(false);
+        getUiReference().setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        getUiReference().setUndecorated(true);
+        getUiReference().setModal(false);
 
-		if (setup.hasBorder() && getUiReference().getContentPane() instanceof JComponent) {
-			((JComponent) getUiReference().getContentPane()).setBorder(BORDER);
-		}
+        if (setup.hasBorder() && getUiReference().getContentPane() instanceof JComponent) {
+            ((JComponent) getUiReference().getContentPane()).setBorder(BORDER);
+        }
 
-	}
+    }
 
-	@Override
-	public JDialog getUiReference() {
-		return (JDialog) super.getUiReference();
-	}
+    @Override
+    public JDialog getUiReference() {
+        return (JDialog) super.getUiReference();
+    }
 
-	@Override
-	public Rectangle getClientArea() {
-		return DecorationCalc.getClientArea(getUiReference().getContentPane());
-	}
+    @Override
+    public Rectangle getClientArea() {
+        return DecorationCalc.getClientArea(getUiReference().getContentPane());
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		getUiReference().getContentPane().setBackground(ColorConvert.convert(colorValue));
-		super.setBackgroundColor(colorValue);
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        getUiReference().getContentPane().setBackground(ColorConvert.convert(colorValue));
+        super.setBackgroundColor(colorValue);
+    }
 
-	@Override
-	public boolean remove(final IControlCommon control) {
-		return ChildRemover.removeChild(getUiReference().getContentPane(), (Component) control.getUiReference());
-	}
+    @Override
+    public boolean remove(final IControlCommon control) {
+        return ChildRemover.removeChild(getUiReference().getContentPane(), (Component) control.getUiReference());
+    }
 
-	@Override
-	public void removeAll() {
-		getUiReference().getContentPane().removeAll();
-	}
+    @Override
+    public void removeAll() {
+        getUiReference().getContentPane().removeAll();
+    }
 
 }

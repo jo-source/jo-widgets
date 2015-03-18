@@ -63,293 +63,293 @@ import org.jowidgets.spi.widgets.controller.ITreeSelectionListenerSpi;
 import org.jowidgets.spi.widgets.controller.ITreeSelectionObservableSpi;
 
 public class UIDObservable implements
-		IActionObservable,
-		IInputObservable,
-		IWindowObservable,
-		IItemStateObservable,
-		IMenuObservable,
-		IPopupDetectionObservable,
-		ITreeNodeObservable,
-		ITreeSelectionObservableSpi,
-		ITabItemObservableSpi,
-		IFocusObservable,
-		IKeyObservable,
-		IMouseObservable,
-		IMouseMotionObservable,
-		IComponentObservable {
+        IActionObservable,
+        IInputObservable,
+        IWindowObservable,
+        IItemStateObservable,
+        IMenuObservable,
+        IPopupDetectionObservable,
+        ITreeNodeObservable,
+        ITreeSelectionObservableSpi,
+        ITabItemObservableSpi,
+        IFocusObservable,
+        IKeyObservable,
+        IMouseObservable,
+        IMouseMotionObservable,
+        IComponentObservable {
 
-	private final Set<IInputListener> inputListeners;
-	private final Set<IActionListener> actionListeners;
-	private final Set<IWindowListener> windowListeners;
-	private final Set<IItemStateListener> itemStateListeners;
-	private final Set<IMenuListener> menuListeners;
-	private final Set<IPopupDetectionListener> popupListeners;
-	private final Set<ITabItemListenerSpi> tabItemListeners;
-	private final Set<ITreeNodeListener> treeNodeListeners;
-	private final Set<ITreeSelectionListenerSpi> treeSelectionListeners;
-	private final Set<IFocusListener> focusListeners;
-	private final Set<IKeyListener> keyListeners;
-	private final Set<IMouseListener> mouseListeners;
-	private final Set<IMouseMotionListener> mouseMotionListeners;
-	private final Set<IComponentListener> componentListeners;
+    private final Set<IInputListener> inputListeners;
+    private final Set<IActionListener> actionListeners;
+    private final Set<IWindowListener> windowListeners;
+    private final Set<IItemStateListener> itemStateListeners;
+    private final Set<IMenuListener> menuListeners;
+    private final Set<IPopupDetectionListener> popupListeners;
+    private final Set<ITabItemListenerSpi> tabItemListeners;
+    private final Set<ITreeNodeListener> treeNodeListeners;
+    private final Set<ITreeSelectionListenerSpi> treeSelectionListeners;
+    private final Set<IFocusListener> focusListeners;
+    private final Set<IKeyListener> keyListeners;
+    private final Set<IMouseListener> mouseListeners;
+    private final Set<IMouseMotionListener> mouseMotionListeners;
+    private final Set<IComponentListener> componentListeners;
 
-	public UIDObservable() {
-		super();
-		this.inputListeners = new HashSet<IInputListener>();
-		this.actionListeners = new HashSet<IActionListener>();
-		this.windowListeners = new HashSet<IWindowListener>();
-		this.itemStateListeners = new HashSet<IItemStateListener>();
-		this.menuListeners = new HashSet<IMenuListener>();
-		this.popupListeners = new HashSet<IPopupDetectionListener>();
-		this.tabItemListeners = new HashSet<ITabItemListenerSpi>();
-		this.treeNodeListeners = new HashSet<ITreeNodeListener>();
-		this.treeSelectionListeners = new HashSet<ITreeSelectionListenerSpi>();
-		this.focusListeners = new HashSet<IFocusListener>();
-		this.keyListeners = new HashSet<IKeyListener>();
-		this.mouseListeners = new HashSet<IMouseListener>();
-		this.mouseMotionListeners = new HashSet<IMouseMotionListener>();
-		this.componentListeners = new HashSet<IComponentListener>();
-	}
+    public UIDObservable() {
+        super();
+        this.inputListeners = new HashSet<IInputListener>();
+        this.actionListeners = new HashSet<IActionListener>();
+        this.windowListeners = new HashSet<IWindowListener>();
+        this.itemStateListeners = new HashSet<IItemStateListener>();
+        this.menuListeners = new HashSet<IMenuListener>();
+        this.popupListeners = new HashSet<IPopupDetectionListener>();
+        this.tabItemListeners = new HashSet<ITabItemListenerSpi>();
+        this.treeNodeListeners = new HashSet<ITreeNodeListener>();
+        this.treeSelectionListeners = new HashSet<ITreeSelectionListenerSpi>();
+        this.focusListeners = new HashSet<IFocusListener>();
+        this.keyListeners = new HashSet<IKeyListener>();
+        this.mouseListeners = new HashSet<IMouseListener>();
+        this.mouseMotionListeners = new HashSet<IMouseMotionListener>();
+        this.componentListeners = new HashSet<IComponentListener>();
+    }
 
-	@Override
-	public void addActionListener(final IActionListener listener) {
-		actionListeners.add(listener);
-	}
+    @Override
+    public void addActionListener(final IActionListener listener) {
+        actionListeners.add(listener);
+    }
 
-	@Override
-	public void removeActionListener(final IActionListener listener) {
-		actionListeners.remove(listener);
-	}
+    @Override
+    public void removeActionListener(final IActionListener listener) {
+        actionListeners.remove(listener);
+    }
 
-	@Override
-	public void addInputListener(final IInputListener listener) {
-		inputListeners.add(listener);
-	}
+    @Override
+    public void addInputListener(final IInputListener listener) {
+        inputListeners.add(listener);
+    }
 
-	@Override
-	public void removeInputListener(final IInputListener listener) {
-		inputListeners.remove(listener);
-	}
+    @Override
+    public void removeInputListener(final IInputListener listener) {
+        inputListeners.remove(listener);
+    }
 
-	@Override
-	public void addWindowListener(final IWindowListener listener) {
-		windowListeners.add(listener);
-	}
+    @Override
+    public void addWindowListener(final IWindowListener listener) {
+        windowListeners.add(listener);
+    }
 
-	@Override
-	public void removeWindowListener(final IWindowListener listener) {
-		windowListeners.remove(listener);
-	}
+    @Override
+    public void removeWindowListener(final IWindowListener listener) {
+        windowListeners.remove(listener);
+    }
 
-	@Override
-	public void addItemListener(final IItemStateListener listener) {
-		itemStateListeners.add(listener);
-	}
+    @Override
+    public void addItemListener(final IItemStateListener listener) {
+        itemStateListeners.add(listener);
+    }
 
-	@Override
-	public void removeItemListener(final IItemStateListener listener) {
-		itemStateListeners.remove(listener);
-	}
+    @Override
+    public void removeItemListener(final IItemStateListener listener) {
+        itemStateListeners.remove(listener);
+    }
 
-	@Override
-	public void addMenuListener(final IMenuListener listener) {
-		menuListeners.add(listener);
-	}
+    @Override
+    public void addMenuListener(final IMenuListener listener) {
+        menuListeners.add(listener);
+    }
 
-	@Override
-	public void removeMenuListener(final IMenuListener listener) {
-		menuListeners.remove(listener);
-	}
+    @Override
+    public void removeMenuListener(final IMenuListener listener) {
+        menuListeners.remove(listener);
+    }
 
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		popupListeners.add(listener);
-	}
+    @Override
+    public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+        popupListeners.add(listener);
+    }
 
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		popupListeners.remove(listener);
-	}
+    @Override
+    public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+        popupListeners.remove(listener);
+    }
 
-	@Override
-	public void addTabItemListener(final ITabItemListenerSpi listener) {
-		tabItemListeners.add(listener);
-	}
+    @Override
+    public void addTabItemListener(final ITabItemListenerSpi listener) {
+        tabItemListeners.add(listener);
+    }
 
-	@Override
-	public void removeTabItemListener(final ITabItemListenerSpi listener) {
-		tabItemListeners.remove(listener);
-	}
+    @Override
+    public void removeTabItemListener(final ITabItemListenerSpi listener) {
+        tabItemListeners.remove(listener);
+    }
 
-	@Override
-	public void addTreeNodeListener(final ITreeNodeListener listener) {
-		treeNodeListeners.add(listener);
-	}
+    @Override
+    public void addTreeNodeListener(final ITreeNodeListener listener) {
+        treeNodeListeners.add(listener);
+    }
 
-	@Override
-	public void removeTreeNodeListener(final ITreeNodeListener listener) {
-		treeNodeListeners.remove(listener);
-	}
+    @Override
+    public void removeTreeNodeListener(final ITreeNodeListener listener) {
+        treeNodeListeners.remove(listener);
+    }
 
-	@Override
-	public void addTreeSelectionListener(final ITreeSelectionListenerSpi listener) {
-		treeSelectionListeners.add(listener);
-	}
+    @Override
+    public void addTreeSelectionListener(final ITreeSelectionListenerSpi listener) {
+        treeSelectionListeners.add(listener);
+    }
 
-	@Override
-	public void removeTreeSelectionListener(final ITreeSelectionListenerSpi listener) {
-		treeSelectionListeners.remove(listener);
-	}
+    @Override
+    public void removeTreeSelectionListener(final ITreeSelectionListenerSpi listener) {
+        treeSelectionListeners.remove(listener);
+    }
 
-	@Override
-	public void addFocusListener(final IFocusListener listener) {
-		focusListeners.add(listener);
-	}
+    @Override
+    public void addFocusListener(final IFocusListener listener) {
+        focusListeners.add(listener);
+    }
 
-	@Override
-	public void removeFocusListener(final IFocusListener listener) {
-		focusListeners.remove(listener);
-	}
+    @Override
+    public void removeFocusListener(final IFocusListener listener) {
+        focusListeners.remove(listener);
+    }
 
-	@Override
-	public void addKeyListener(final IKeyListener listener) {
-		keyListeners.add(listener);
-	}
+    @Override
+    public void addKeyListener(final IKeyListener listener) {
+        keyListeners.add(listener);
+    }
 
-	@Override
-	public void removeKeyListener(final IKeyListener listener) {
-		keyListeners.remove(listener);
-	}
+    @Override
+    public void removeKeyListener(final IKeyListener listener) {
+        keyListeners.remove(listener);
+    }
 
-	@Override
-	public void addMouseListener(final IMouseListener mouseListener) {
-		mouseListeners.add(mouseListener);
-	}
+    @Override
+    public void addMouseListener(final IMouseListener mouseListener) {
+        mouseListeners.add(mouseListener);
+    }
 
-	@Override
-	public void removeMouseListener(final IMouseListener mouseListener) {
-		mouseListeners.remove(mouseListener);
-	}
+    @Override
+    public void removeMouseListener(final IMouseListener mouseListener) {
+        mouseListeners.remove(mouseListener);
+    }
 
-	@Override
-	public void addMouseMotionListener(final IMouseMotionListener listener) {
-		mouseMotionListeners.add(listener);
-	}
+    @Override
+    public void addMouseMotionListener(final IMouseMotionListener listener) {
+        mouseMotionListeners.add(listener);
+    }
 
-	@Override
-	public void removeMouseMotionListener(final IMouseMotionListener listener) {
-		mouseMotionListeners.remove(listener);
-	}
+    @Override
+    public void removeMouseMotionListener(final IMouseMotionListener listener) {
+        mouseMotionListeners.remove(listener);
+    }
 
-	@Override
-	public void addComponentListener(final IComponentListener componentListener) {
-		componentListeners.add(componentListener);
-	}
+    @Override
+    public void addComponentListener(final IComponentListener componentListener) {
+        componentListeners.add(componentListener);
+    }
 
-	@Override
-	public void removeComponentListener(final IComponentListener componentListener) {
-		componentListeners.remove(componentListener);
-	}
+    @Override
+    public void removeComponentListener(final IComponentListener componentListener) {
+        componentListeners.remove(componentListener);
+    }
 
-	public void fireTabItemSelected() {
-		for (final ITabItemListenerSpi listener : new LinkedList<ITabItemListenerSpi>(tabItemListeners)) {
-			listener.selected();
-		}
-	}
+    public void fireTabItemSelected() {
+        for (final ITabItemListenerSpi listener : new LinkedList<ITabItemListenerSpi>(tabItemListeners)) {
+            listener.selected();
+        }
+    }
 
-	public void fireActionPerformed() {
-		for (final IActionListener listener : actionListeners) {
-			listener.actionPerformed();
-		}
-	}
+    public void fireActionPerformed() {
+        for (final IActionListener listener : actionListeners) {
+            listener.actionPerformed();
+        }
+    }
 
-	public void fireItemStateChanged() {
-		for (final IItemStateListener listener : itemStateListeners) {
-			listener.itemStateChanged();
-		}
-	}
+    public void fireItemStateChanged() {
+        for (final IItemStateListener listener : itemStateListeners) {
+            listener.itemStateChanged();
+        }
+    }
 
-	public void fireInputChanged() {
-		for (final IInputListener listener : inputListeners) {
-			listener.inputChanged();
-		}
-	}
+    public void fireInputChanged() {
+        for (final IInputListener listener : inputListeners) {
+            listener.inputChanged();
+        }
+    }
 
-	public void firePopupDetected(final Position position) {
-		for (final IPopupDetectionListener listener : popupListeners) {
-			listener.popupDetected(position);
-		}
-	}
+    public void firePopupDetected(final Position position) {
+        for (final IPopupDetectionListener listener : popupListeners) {
+            listener.popupDetected(position);
+        }
+    }
 
-	void fireWindowActivated() {
-		for (final IWindowListener listener : windowListeners) {
-			listener.windowActivated();
-		}
-	}
+    void fireWindowActivated() {
+        for (final IWindowListener listener : windowListeners) {
+            listener.windowActivated();
+        }
+    }
 
-	void fireWindowDeactivated() {
-		for (final IWindowListener listener : windowListeners) {
-			listener.windowDeactivated();
-		}
-	}
+    void fireWindowDeactivated() {
+        for (final IWindowListener listener : windowListeners) {
+            listener.windowDeactivated();
+        }
+    }
 
-	void fireWindowIconified() {
-		for (final IWindowListener listener : windowListeners) {
-			listener.windowIconified();
-		}
-	}
+    void fireWindowIconified() {
+        for (final IWindowListener listener : windowListeners) {
+            listener.windowIconified();
+        }
+    }
 
-	void fireWindowDeiconified() {
-		for (final IWindowListener listener : windowListeners) {
-			listener.windowDeiconified();
-		}
-	}
+    void fireWindowDeiconified() {
+        for (final IWindowListener listener : windowListeners) {
+            listener.windowDeiconified();
+        }
+    }
 
-	void fireWindowClosed() {
-		for (final IWindowListener listener : windowListeners) {
-			listener.windowClosed();
-		}
-	}
+    void fireWindowClosed() {
+        for (final IWindowListener listener : windowListeners) {
+            listener.windowClosed();
+        }
+    }
 
-	void fireMenuActivated() {
-		for (final IMenuListener listener : menuListeners) {
-			listener.menuActivated();
-		}
-	}
+    void fireMenuActivated() {
+        for (final IMenuListener listener : menuListeners) {
+            listener.menuActivated();
+        }
+    }
 
-	void fireMenuDeactivated() {
-		for (final IMenuListener listener : menuListeners) {
-			listener.menuDeactivated();
-		}
-	}
+    void fireMenuDeactivated() {
+        for (final IMenuListener listener : menuListeners) {
+            listener.menuDeactivated();
+        }
+    }
 
-	void fireTreeNodeSelectionChanged(final boolean selected) {
-		for (final ITreeNodeListener listener : treeNodeListeners) {
-			listener.selectionChanged(selected);
-		}
-	}
+    void fireTreeNodeSelectionChanged(final boolean selected) {
+        for (final ITreeNodeListener listener : treeNodeListeners) {
+            listener.selectionChanged(selected);
+        }
+    }
 
-	void fireTreeNodeExpanded(final boolean expanded) {
-		for (final ITreeNodeListener listener : treeNodeListeners) {
-			listener.expandedChanged(expanded);
-		}
-	}
+    void fireTreeNodeExpanded(final boolean expanded) {
+        for (final ITreeNodeListener listener : treeNodeListeners) {
+            listener.expandedChanged(expanded);
+        }
+    }
 
-	void fireTreeSelectionChanged() {
-		for (final ITreeSelectionListenerSpi listener : treeSelectionListeners) {
-			listener.selectionChanged();
-		}
-	}
+    void fireTreeSelectionChanged() {
+        for (final ITreeSelectionListenerSpi listener : treeSelectionListeners) {
+            listener.selectionChanged();
+        }
+    }
 
-	void fireFocusGained() {
-		for (final IFocusListener listener : focusListeners) {
-			listener.focusGained();
-		}
-	}
+    void fireFocusGained() {
+        for (final IFocusListener listener : focusListeners) {
+            listener.focusGained();
+        }
+    }
 
-	void fireFocusLost() {
-		for (final IFocusListener listener : focusListeners) {
-			listener.focusLost();
-		}
-	}
+    void fireFocusLost() {
+        for (final IFocusListener listener : focusListeners) {
+            listener.focusLost();
+        }
+    }
 }

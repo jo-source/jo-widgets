@@ -32,18 +32,18 @@ import org.jowidgets.api.model.tree.ITreeNodeModel;
 
 public final class Level5NodeModel extends AbstractStringNodeModel {
 
-	Level5NodeModel(final String data) {
-		super(data);
-	}
+    Level5NodeModel(final String data) {
+        super(data);
+    }
 
-	@Override
-	public int getChildrenCount() {
-		return 0;
-	}
+    @Override
+    public int getChildrenCount() {
+        return 0;
+    }
 
-	@Override
-	public ITreeNodeModel<String> getChildNode(final int index) {
-		return null;
-	}
+    @Override
+    public ITreeNodeModel<String> getChildNode(final int index) {
+        return null;
+    }
 
 }

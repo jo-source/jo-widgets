@@ -36,31 +36,31 @@ import org.jowidgets.tools.widgets.blueprint.BluePrintFactoryWrapper;
 
 public class DummyBluePrintFactory extends BluePrintFactoryWrapper {
 
-	public DummyBluePrintFactory(final IBluePrintFactory bluePrintFactory) {
-		super(bluePrintFactory);
-	}
+    public DummyBluePrintFactory(final IBluePrintFactory bluePrintFactory) {
+        super(bluePrintFactory);
+    }
 
-	public final IHierarchy1stBluePrint hierarchy1st() {
-		return bluePrint(IHierarchy1stBluePrint.class);
-	}
+    public final IHierarchy1stBluePrint hierarchy1st() {
+        return bluePrint(IHierarchy1stBluePrint.class);
+    }
 
-	public final IHierarchy2nd1BluePrint hierarchy2nd1() {
-		return bluePrint(IHierarchy2nd1BluePrint.class);
-	}
+    public final IHierarchy2nd1BluePrint hierarchy2nd1() {
+        return bluePrint(IHierarchy2nd1BluePrint.class);
+    }
 
-	public final IHierarchy2nd2BluePrint hierarchy2nd2() {
-		return bluePrint(IHierarchy2nd2BluePrint.class);
-	}
+    public final IHierarchy2nd2BluePrint hierarchy2nd2() {
+        return bluePrint(IHierarchy2nd2BluePrint.class);
+    }
 
-	public final IHierarchy2nd3BluePrint hierarchy2nd3() {
-		return bluePrint(IHierarchy2nd3BluePrint.class);
-	}
+    public final IHierarchy2nd3BluePrint hierarchy2nd3() {
+        return bluePrint(IHierarchy2nd3BluePrint.class);
+    }
 
-	public final IHierarchy3rdBluePrint hierarchy3rd() {
-		return bluePrint(IHierarchy3rdBluePrint.class);
-	}
+    public final IHierarchy3rdBluePrint hierarchy3rd() {
+        return bluePrint(IHierarchy3rdBluePrint.class);
+    }
 
-	public final IHierarchy4thBluePrint hierarchy4th() {
-		return bluePrint(IHierarchy4thBluePrint.class);
-	}
+    public final IHierarchy4thBluePrint hierarchy4th() {
+        return bluePrint(IHierarchy4thBluePrint.class);
+    }
 }

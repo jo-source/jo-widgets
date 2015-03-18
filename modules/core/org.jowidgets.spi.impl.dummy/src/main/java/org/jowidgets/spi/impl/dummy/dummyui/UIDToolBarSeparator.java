@@ -32,17 +32,17 @@ import org.jowidgets.common.types.Orientation;
 
 public class UIDToolBarSeparator extends UIDSeparator {
 
-	private String text;
+    private String text;
 
-	public UIDToolBarSeparator(final Orientation orientation) {
-		super(orientation);
-	}
+    public UIDToolBarSeparator(final Orientation orientation) {
+        super(orientation);
+    }
 
-	public String getText() {
-		return text;
-	}
+    public String getText() {
+        return text;
+    }
 
-	public void setText(final String text) {
-		this.text = text;
-	}
+    public void setText(final String text) {
+        this.text = text;
+    }
 }

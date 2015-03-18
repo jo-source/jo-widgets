@@ -53,155 +53,155 @@ import org.jowidgets.util.TypeCast;
 
 public class SwtWindow extends SwtContainer implements IWindowSpi {
 
-	private final WindowObservable windowObservableDelegate;
+    private final WindowObservable windowObservableDelegate;
 
-	public SwtWindow(final IGenericWidgetFactory factory, final Shell window) {
-		super(factory, window);
+    public SwtWindow(final IGenericWidgetFactory factory, final Shell window) {
+        super(factory, window);
 
-		this.windowObservableDelegate = new WindowObservable();
-	}
+        this.windowObservableDelegate = new WindowObservable();
+    }
 
-	@Override
-	public Shell getUiReference() {
-		return (Shell) super.getUiReference();
-	}
+    @Override
+    public Shell getUiReference() {
+        return (Shell) super.getUiReference();
+    }
 
-	public void setDefaultButton(final IButtonCommon button) {
-		if (button != null) {
-			getUiReference().setDefaultButton(TypeCast.toType(button.getUiReference(), Button.class));
-		}
-		else {
-			getUiReference().setDefaultButton(null);
-		}
-	}
+    public void setDefaultButton(final IButtonCommon button) {
+        if (button != null) {
+            getUiReference().setDefaultButton(TypeCast.toType(button.getUiReference(), Button.class));
+        }
+        else {
+            getUiReference().setDefaultButton(null);
+        }
+    }
 
-	@Override
-	public void pack() {
-		getUiReference().pack();
-	}
+    @Override
+    public void pack() {
+        getUiReference().pack();
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		final boolean wasVisible = isVisible();
-		if (visible) {
-			getUiReference().open();
-		}
-		else {
-			getUiReference().setVisible(false);
-			if (wasVisible) {
-				windowObservableDelegate.fireWindowClosed();
-			}
-		}
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        final boolean wasVisible = isVisible();
+        if (visible) {
+            getUiReference().open();
+        }
+        else {
+            getUiReference().setVisible(false);
+            if (wasVisible) {
+                windowObservableDelegate.fireWindowClosed();
+            }
+        }
+    }
 
-	public void setTitle(final String title) {
-		if (title != null) {
-			getUiReference().setText(title);
-		}
-		else {
-			getUiReference().setText("");
-		}
-	}
+    public void setTitle(final String title) {
+        if (title != null) {
+            getUiReference().setText(title);
+        }
+        else {
+            getUiReference().setText("");
+        }
+    }
 
-	@Override
-	public void dispose() {
-		getUiReference().dispose();
-	}
+    @Override
+    public void dispose() {
+        getUiReference().dispose();
+    }
 
-	@Override
-	public boolean isVisible() {
-		return getUiReference().isVisible();
-	}
+    @Override
+    public boolean isVisible() {
+        return getUiReference().isVisible();
+    }
 
-	@Override
-	public final void setPosition(final Position position) {
-		getUiReference().setLocation(PositionConvert.convert(position));
-	}
+    @Override
+    public final void setPosition(final Position position) {
+        getUiReference().setLocation(PositionConvert.convert(position));
+    }
 
-	@Override
-	public final Position getPosition() {
-		return PositionConvert.convert(getUiReference().getLocation());
-	}
+    @Override
+    public final Position getPosition() {
+        return PositionConvert.convert(getUiReference().getLocation());
+    }
 
-	@Override
-	public final void setSize(final Dimension size) {
-		getUiReference().setSize(DimensionConvert.convert(size));
-	}
+    @Override
+    public final void setSize(final Dimension size) {
+        getUiReference().setSize(DimensionConvert.convert(size));
+    }
 
-	public void setMinSize(final Dimension minSize) {
-		if (minSize == null) {
-			getUiReference().setMinimumSize(Short.MAX_VALUE, Short.MAX_VALUE);
-		}
-		else {
-			getUiReference().setMinimumSize(DimensionConvert.convert(minSize));
-		}
-	}
+    public void setMinSize(final Dimension minSize) {
+        if (minSize == null) {
+            getUiReference().setMinimumSize(Short.MAX_VALUE, Short.MAX_VALUE);
+        }
+        else {
+            getUiReference().setMinimumSize(DimensionConvert.convert(minSize));
+        }
+    }
 
-	@Override
-	public final Dimension getSize() {
-		return DimensionConvert.convert(getUiReference().getSize());
-	}
+    @Override
+    public final Dimension getSize() {
+        return DimensionConvert.convert(getUiReference().getSize());
+    }
 
-	public void setIcon(final IImageConstant icon) {
-		getUiReference().setImage(SwtImageRegistry.getInstance().getImage(icon));
-	}
+    public void setIcon(final IImageConstant icon) {
+        getUiReference().setImage(SwtImageRegistry.getInstance().getImage(icon));
+    }
 
-	@Override
-	public Rectangle getParentBounds() {
-		final Shell shell = getUiReference();
-		final Composite parentShell = shell.getParent();
+    @Override
+    public Rectangle getParentBounds() {
+        final Shell shell = getUiReference();
+        final Composite parentShell = shell.getParent();
 
-		if (parentShell == null) {
-			final org.eclipse.swt.graphics.Rectangle clientArea = Display.getCurrent().getPrimaryMonitor().getClientArea();
-			return new Rectangle(new Position(clientArea.x, clientArea.y), new Dimension(clientArea.width, clientArea.height));
-		}
-		else {
-			final Point location = parentShell.getLocation();
-			final Point size = parentShell.getSize();
-			return new Rectangle(new Position(location.x, location.y), new Dimension(size.x, size.y));
-		}
-	}
+        if (parentShell == null) {
+            final org.eclipse.swt.graphics.Rectangle clientArea = Display.getCurrent().getPrimaryMonitor().getClientArea();
+            return new Rectangle(new Position(clientArea.x, clientArea.y), new Dimension(clientArea.width, clientArea.height));
+        }
+        else {
+            final Point location = parentShell.getLocation();
+            final Point size = parentShell.getSize();
+            return new Rectangle(new Position(location.x, location.y), new Dimension(size.x, size.y));
+        }
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IDisplayCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
-		final DESCRIPTOR_TYPE descriptor) {
-		return getGenericWidgetFactory().create(getUiReference(), descriptor);
-	}
+    @Override
+    public <WIDGET_TYPE extends IDisplayCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
+        final DESCRIPTOR_TYPE descriptor) {
+        return getGenericWidgetFactory().create(getUiReference(), descriptor);
+    }
 
-	@Override
-	public void addWindowListener(final IWindowListener listener) {
-		windowObservableDelegate.addWindowListener(listener);
-	}
+    @Override
+    public void addWindowListener(final IWindowListener listener) {
+        windowObservableDelegate.addWindowListener(listener);
+    }
 
-	@Override
-	public void removeWindowListener(final IWindowListener listener) {
-		windowObservableDelegate.removeWindowListener(listener);
-	}
+    @Override
+    public void removeWindowListener(final IWindowListener listener) {
+        windowObservableDelegate.removeWindowListener(listener);
+    }
 
-	public IMenuBarSpi createMenuBar() {
-		final Menu menuBar = new Menu(getUiReference(), SWT.BAR);
-		getUiReference().setMenuBar(menuBar);
-		return new MenuBarImpl(menuBar);
-	}
+    public IMenuBarSpi createMenuBar() {
+        final Menu menuBar = new Menu(getUiReference(), SWT.BAR);
+        getUiReference().setMenuBar(menuBar);
+        return new MenuBarImpl(menuBar);
+    }
 
-	protected WindowObservable getWindowObservableDelegate() {
-		return windowObservableDelegate;
-	}
+    protected WindowObservable getWindowObservableDelegate() {
+        return windowObservableDelegate;
+    }
 
-	public void setMaximized(final boolean maximized) {
-		getUiReference().setMaximized(maximized);
-	}
+    public void setMaximized(final boolean maximized) {
+        getUiReference().setMaximized(maximized);
+    }
 
-	public boolean isMaximized() {
-		return getUiReference().getMaximized();
-	}
+    public boolean isMaximized() {
+        return getUiReference().getMaximized();
+    }
 
-	public void setIconfied(final boolean iconfied) {
-		getUiReference().setMinimized(iconfied);
-	}
+    public void setIconfied(final boolean iconfied) {
+        getUiReference().setMinimized(iconfied);
+    }
 
-	public boolean isIconfied() {
-		return getUiReference().getMinimized();
-	}
+    public boolean isIconfied() {
+        return getUiReference().getMinimized();
+    }
 
 }

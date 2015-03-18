@@ -32,34 +32,34 @@ import java.util.concurrent.TimeUnit;
 
 public interface IAnimationRunner extends IAnimationScheduler {
 
-	/**
-	 * Starts the animation runner
-	 */
-	void start();
+    /**
+     * Starts the animation runner
+     */
+    void start();
 
-	/**
-	 * Stops the animation runner
-	 */
-	void stop();
+    /**
+     * Stops the animation runner
+     */
+    void stop();
 
-	/**
-	 * Sets the delay
-	 * 
-	 * @param delay The delay
-	 * @param timeUnit The time unit
-	 */
-	void setDelay(long delay, TimeUnit timeUnit);
+    /**
+     * Sets the delay
+     * 
+     * @param delay The delay
+     * @param timeUnit The time unit
+     */
+    void setDelay(long delay, TimeUnit timeUnit);
 
-	/**
-	 * Sets the delay with TimeUnit.MILLISECONDS
-	 * 
-	 * @param delay The delay in millisecons
-	 */
-	void setDelay(long delay);
+    /**
+     * Sets the delay with TimeUnit.MILLISECONDS
+     * 
+     * @param delay The delay in millisecons
+     */
+    void setDelay(long delay);
 
-	/**
-	 * @return true if the animation is currently running
-	 */
-	boolean isRunning();
+    /**
+     * @return true if the animation is currently running
+     */
+    boolean isRunning();
 
 }

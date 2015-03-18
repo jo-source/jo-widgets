@@ -36,40 +36,40 @@ import org.jowidgets.workbench.api.LayoutScope;
 
 final class Layout extends WorkbenchPart implements ILayout {
 
-	private final String id;
-	private final LayoutScope scope;
-	private final ILayoutContainer layoutContainer;
+    private final String id;
+    private final LayoutScope scope;
+    private final ILayoutContainer layoutContainer;
 
-	Layout(
-		final String id,
-		final LayoutScope scope,
-		final String label,
-		final String tooltip,
-		final IImageConstant icon,
-		final ILayoutContainer layoutContainer) {
-		super(label, tooltip, icon);
+    Layout(
+        final String id,
+        final LayoutScope scope,
+        final String label,
+        final String tooltip,
+        final IImageConstant icon,
+        final ILayoutContainer layoutContainer) {
+        super(label, tooltip, icon);
 
-		Assert.paramNotEmpty(id, "id");
-		Assert.paramNotNull(layoutContainer, "layoutContainer");
+        Assert.paramNotEmpty(id, "id");
+        Assert.paramNotNull(layoutContainer, "layoutContainer");
 
-		this.id = id;
-		this.scope = scope;
-		this.layoutContainer = layoutContainer;
-	}
+        this.id = id;
+        this.scope = scope;
+        this.layoutContainer = layoutContainer;
+    }
 
-	@Override
-	public String getId() {
-		return id;
-	}
+    @Override
+    public String getId() {
+        return id;
+    }
 
-	@Override
-	public LayoutScope getScope() {
-		return scope;
-	}
+    @Override
+    public LayoutScope getScope() {
+        return scope;
+    }
 
-	@Override
-	public ILayoutContainer getLayoutContainer() {
-		return layoutContainer;
-	}
+    @Override
+    public ILayoutContainer getLayoutContainer() {
+        return layoutContainer;
+    }
 
 }

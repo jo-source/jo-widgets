@@ -33,166 +33,166 @@ import org.jowidgets.util.Assert;
 
 public final class TableLayoutBuilder implements ITableLayoutBuilder {
 
-	private int columnCount;
-	private int[] widths;
-	private int[] gaps;
-	private ColumnMode[] modes;
-	private Alignment[] alignments;
-	private int verticalGap;
-	private int layoutMinRows;
+    private int columnCount;
+    private int[] widths;
+    private int[] gaps;
+    private ColumnMode[] modes;
+    private Alignment[] alignments;
+    private int verticalGap;
+    private int layoutMinRows;
 
-	public TableLayoutBuilder() {
-		layoutMinRows = 1;
-	}
+    public TableLayoutBuilder() {
+        layoutMinRows = 1;
+    }
 
-	@Override
-	public TableLayoutBuilder verticalGap(final int verticalGap) {
-		this.verticalGap = verticalGap;
-		return this;
-	}
+    @Override
+    public TableLayoutBuilder verticalGap(final int verticalGap) {
+        this.verticalGap = verticalGap;
+        return this;
+    }
 
-	@Override
-	public TableLayoutBuilder layoutMinRows(final int layoutMinRows) {
-		this.layoutMinRows = layoutMinRows;
-		return this;
-	}
+    @Override
+    public TableLayoutBuilder layoutMinRows(final int layoutMinRows) {
+        this.layoutMinRows = layoutMinRows;
+        return this;
+    }
 
-	@Override
-	public TableLayoutBuilder columnCount(final int columnCount) {
-		this.columnCount = columnCount;
-		initializeArrays();
-		return this;
-	}
+    @Override
+    public TableLayoutBuilder columnCount(final int columnCount) {
+        this.columnCount = columnCount;
+        initializeArrays();
+        return this;
+    }
 
-	private void initializeArrays() {
-		if (widths == null) {
-			widths = new int[columnCount];
-		}
-		if (gaps == null) {
-			gaps = new int[columnCount + 1];
-		}
-		if (modes == null) {
-			modes = new ColumnMode[columnCount];
-			for (int i = 0; i < modes.length; i++) {
-				modes[i] = ColumnMode.PREFERRED;
-			}
-		}
-		if (alignments == null) {
-			alignments = new Alignment[columnCount];
-			for (int i = 0; i < alignments.length; i++) {
-				alignments[i] = Alignment.LEFT;
-			}
-		}
-	}
+    private void initializeArrays() {
+        if (widths == null) {
+            widths = new int[columnCount];
+        }
+        if (gaps == null) {
+            gaps = new int[columnCount + 1];
+        }
+        if (modes == null) {
+            modes = new ColumnMode[columnCount];
+            for (int i = 0; i < modes.length; i++) {
+                modes[i] = ColumnMode.PREFERRED;
+            }
+        }
+        if (alignments == null) {
+            alignments = new Alignment[columnCount];
+            for (int i = 0; i < alignments.length; i++) {
+                alignments[i] = Alignment.LEFT;
+            }
+        }
+    }
 
-	@Override
-	public TableLayoutBuilder widths(final int[] widths) {
-		Assert.paramNotNull(widths, "widths");
-		if ((columnCount > 0) && (widths.length != columnCount)) {
-			throw new IllegalArgumentException("Column count does not match.");
-		}
+    @Override
+    public TableLayoutBuilder widths(final int[] widths) {
+        Assert.paramNotNull(widths, "widths");
+        if ((columnCount > 0) && (widths.length != columnCount)) {
+            throw new IllegalArgumentException("Column count does not match.");
+        }
 
-		if (columnCount == 0) {
-			columnCount = widths.length;
-			initializeArrays();
-		}
-		this.widths = widths;
-		return this;
-	}
+        if (columnCount == 0) {
+            columnCount = widths.length;
+            initializeArrays();
+        }
+        this.widths = widths;
+        return this;
+    }
 
-	@Override
-	public TableLayoutBuilder gaps(final int[] gaps) {
-		Assert.paramNotNull(gaps, "gaps");
-		if ((columnCount > 0) && (gaps.length != columnCount + 1)) {
-			throw new IllegalArgumentException("Column count does not match.");
-		}
+    @Override
+    public TableLayoutBuilder gaps(final int[] gaps) {
+        Assert.paramNotNull(gaps, "gaps");
+        if ((columnCount > 0) && (gaps.length != columnCount + 1)) {
+            throw new IllegalArgumentException("Column count does not match.");
+        }
 
-		if (columnCount == 0) {
-			columnCount = gaps.length - 1;
-			initializeArrays();
-		}
-		this.gaps = gaps;
-		return this;
-	}
+        if (columnCount == 0) {
+            columnCount = gaps.length - 1;
+            initializeArrays();
+        }
+        this.gaps = gaps;
+        return this;
+    }
 
-	@Override
-	public TableLayoutBuilder modes(final ColumnMode[] modes) {
-		Assert.paramNotNull(modes, "modes");
-		if ((columnCount > 0) && (modes.length != columnCount)) {
-			throw new IllegalArgumentException("Column count does not match.");
-		}
+    @Override
+    public TableLayoutBuilder modes(final ColumnMode[] modes) {
+        Assert.paramNotNull(modes, "modes");
+        if ((columnCount > 0) && (modes.length != columnCount)) {
+            throw new IllegalArgumentException("Column count does not match.");
+        }
 
-		if (columnCount == 0) {
-			columnCount = modes.length;
-			initializeArrays();
-		}
-		this.modes = modes;
-		return this;
-	}
+        if (columnCount == 0) {
+            columnCount = modes.length;
+            initializeArrays();
+        }
+        this.modes = modes;
+        return this;
+    }
 
-	@Override
-	public TableLayoutBuilder alignments(final Alignment[] alignments) {
-		Assert.paramNotNull(alignments, "alignments");
-		if ((columnCount > 0) && (alignments.length != columnCount)) {
-			throw new IllegalArgumentException("Column count does not match.");
-		}
+    @Override
+    public TableLayoutBuilder alignments(final Alignment[] alignments) {
+        Assert.paramNotNull(alignments, "alignments");
+        if ((columnCount > 0) && (alignments.length != columnCount)) {
+            throw new IllegalArgumentException("Column count does not match.");
+        }
 
-		if (columnCount == 0) {
-			columnCount = alignments.length;
-			initializeArrays();
-		}
-		this.alignments = alignments;
-		return this;
-	}
+        if (columnCount == 0) {
+            columnCount = alignments.length;
+            initializeArrays();
+        }
+        this.alignments = alignments;
+        return this;
+    }
 
-	@Override
-	public TableLayoutBuilder fixedColumnWidth(final int column, final int width) {
-		widths[column] = width;
-		modes[column] = ColumnMode.FIXED;
-		return this;
-	}
+    @Override
+    public TableLayoutBuilder fixedColumnWidth(final int column, final int width) {
+        widths[column] = width;
+        modes[column] = ColumnMode.FIXED;
+        return this;
+    }
 
-	@Override
-	public TableLayoutBuilder columnMode(final int column, final ColumnMode mode) {
-		modes[column] = mode;
-		return this;
-	}
+    @Override
+    public TableLayoutBuilder columnMode(final int column, final ColumnMode mode) {
+        modes[column] = mode;
+        return this;
+    }
 
-	@Override
-	public TableLayoutBuilder columnAlignment(final int column, final Alignment alignment) {
-		alignments[column] = alignment;
-		return this;
-	}
+    @Override
+    public TableLayoutBuilder columnAlignment(final int column, final Alignment alignment) {
+        alignments[column] = alignment;
+        return this;
+    }
 
-	@Override
-	public TableLayoutBuilder gap(final int gap) {
-		for (int i = 0; i < gaps.length; i++) {
-			gaps[i] = gap;
-		}
-		return this;
-	}
+    @Override
+    public TableLayoutBuilder gap(final int gap) {
+        for (int i = 0; i < gaps.length; i++) {
+            gaps[i] = gap;
+        }
+        return this;
+    }
 
-	@Override
-	public TableLayoutBuilder gapBeforeColumn(final int column, final int gap) {
-		gaps[column] = gap;
-		return this;
-	}
+    @Override
+    public TableLayoutBuilder gapBeforeColumn(final int column, final int gap) {
+        gaps[column] = gap;
+        return this;
+    }
 
-	@Override
-	public TableLayoutBuilder gapAfterColumn(final int column, final int gap) {
-		gaps[column + 1] = gap;
-		return this;
-	}
+    @Override
+    public TableLayoutBuilder gapAfterColumn(final int column, final int gap) {
+        gaps[column + 1] = gap;
+        return this;
+    }
 
-	@Override
-	public TableLayoutBuilder alignment(final int index, final Alignment alignment) {
-		alignments[index] = alignment;
-		return this;
-	}
+    @Override
+    public TableLayoutBuilder alignment(final int index, final Alignment alignment) {
+        alignments[index] = alignment;
+        return this;
+    }
 
-	@Override
-	public TableLayoutImpl build() {
-		return new TableLayoutImpl(widths, gaps, modes, alignments, verticalGap, layoutMinRows);
-	}
+    @Override
+    public TableLayoutImpl build() {
+        return new TableLayoutImpl(widths, gaps, modes, alignments, verticalGap, layoutMinRows);
+    }
 
 }

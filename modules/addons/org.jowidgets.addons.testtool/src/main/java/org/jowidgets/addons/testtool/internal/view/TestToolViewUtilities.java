@@ -42,54 +42,54 @@ import org.jowidgets.util.Assert;
 
 public class TestToolViewUtilities {
 
-	private boolean mainWindowFound;
+    private boolean mainWindowFound;
 
-	// TODO LG when supported add a resize and move window listener to dock TestToolView permanent to main window.
-	public void setPositionRelativeToMainWindow(final IFrame frame) {
-		mainWindowFound = false;
-		Toolkit.getWidgetFactory().addWidgetFactoryListener(new IWidgetFactoryListener() {
+    // TODO LG when supported add a resize and move window listener to dock TestToolView permanent to main window.
+    public void setPositionRelativeToMainWindow(final IFrame frame) {
+        mainWindowFound = false;
+        Toolkit.getWidgetFactory().addWidgetFactoryListener(new IWidgetFactoryListener() {
 
-			@Override
-			public void widgetCreated(final IWidgetCommon widget) {
-				if (widget instanceof IFrame) {
-					final IFrame main = (IFrame) widget;
-					main.addWindowListener(new WindowAdapter() {
+            @Override
+            public void widgetCreated(final IWidgetCommon widget) {
+                if (widget instanceof IFrame) {
+                    final IFrame main = (IFrame) widget;
+                    main.addWindowListener(new WindowAdapter() {
 
-						@Override
-						public void windowActivated() {
-							if (!mainWindowFound) {
-								final Position mainWinPos = main.getPosition();
-								final Position childWinPos = new Position(
-									mainWinPos.getX() + main.getSize().getWidth(),
-									mainWinPos.getY());
-								frame.setPosition(childWinPos);
-								frame.setVisible(true);
-								mainWindowFound = true;
-							}
-						}
-					});
-				}
-			}
-		});
-	}
+                        @Override
+                        public void windowActivated() {
+                            if (!mainWindowFound) {
+                                final Position mainWinPos = main.getPosition();
+                                final Position childWinPos = new Position(
+                                    mainWinPos.getX() + main.getSize().getWidth(),
+                                    mainWinPos.getY());
+                                frame.setPosition(childWinPos);
+                                frame.setVisible(true);
+                                mainWindowFound = true;
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
 
-	public void setupTestTool(final ITestTool testTool) {
-		final TestDataListModel listModel = testTool.getListModel();
-		listModel.addListener(new IListModelListener() {
+    public void setupTestTool(final ITestTool testTool) {
+        final TestDataListModel listModel = testTool.getListModel();
+        listModel.addListener(new IListModelListener() {
 
-			@Override
-			public void listChanged(final TestDataObject item) {
-				Assert.paramNotNull(item, "item");
-				final String id = item.getId();
-				final String property = id.substring(id.lastIndexOf(":") + 1, id.length());
-				TestToolViewTable.getTableModel().addRow(
-						Integer.toString(TestToolViewTable.getTableModel().getRowCount()),
-						item.getType(),
-						item.getAction().name(),
-						item.getValue(),
-						property,
-						item.getId());
-			}
-		});
-	}
+            @Override
+            public void listChanged(final TestDataObject item) {
+                Assert.paramNotNull(item, "item");
+                final String id = item.getId();
+                final String property = id.substring(id.lastIndexOf(":") + 1, id.length());
+                TestToolViewTable.getTableModel().addRow(
+                        Integer.toString(TestToolViewTable.getTableModel().getRowCount()),
+                        item.getType(),
+                        item.getAction().name(),
+                        item.getValue(),
+                        property,
+                        item.getId());
+            }
+        });
+    }
 }

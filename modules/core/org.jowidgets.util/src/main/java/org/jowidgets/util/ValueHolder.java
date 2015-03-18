@@ -30,22 +30,22 @@ package org.jowidgets.util;
 
 public final class ValueHolder<VALUE_TYPE> {
 
-	private VALUE_TYPE value;
+    private VALUE_TYPE value;
 
-	public ValueHolder() {
-		this(null);
-	}
+    public ValueHolder() {
+        this(null);
+    }
 
-	public ValueHolder(final VALUE_TYPE value) {
-		this.value = value;
-	}
+    public ValueHolder(final VALUE_TYPE value) {
+        this.value = value;
+    }
 
-	public VALUE_TYPE get() {
-		return value;
-	}
+    public VALUE_TYPE get() {
+        return value;
+    }
 
-	public void set(final VALUE_TYPE value) {
-		this.value = value;
-	}
+    public void set(final VALUE_TYPE value) {
+        this.value = value;
+    }
 
 }

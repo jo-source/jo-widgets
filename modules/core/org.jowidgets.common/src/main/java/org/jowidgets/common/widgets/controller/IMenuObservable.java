@@ -30,18 +30,18 @@ package org.jowidgets.common.widgets.controller;
 
 public interface IMenuObservable {
 
-	/**
-	 * Adds a menu listener
-	 * 
-	 * @param listener The listener to add
-	 */
-	void addMenuListener(IMenuListener listener);
+    /**
+     * Adds a menu listener
+     * 
+     * @param listener The listener to add
+     */
+    void addMenuListener(IMenuListener listener);
 
-	/**
-	 * Removes a menu listener
-	 * 
-	 * @param listener The listener to remove
-	 */
-	void removeMenuListener(IMenuListener listener);
+    /**
+     * Removes a menu listener
+     * 
+     * @param listener The listener to remove
+     */
+    void removeMenuListener(IMenuListener listener);
 
 }

@@ -34,18 +34,18 @@ import org.jowidgets.util.ITypedKey;
 
 public interface IParameterized {
 
-	/**
-	 * @return A list of the available parameters, never null
-	 */
-	List<ITypedKey<?>> getAvailableParameters();
+    /**
+     * @return A list of the available parameters, never null
+     */
+    List<ITypedKey<?>> getAvailableParameters();
 
-	/**
-	 * Gets the parameter for a defined key
-	 * 
-	 * @param key the key of the parameter, must not be null
-	 * 
-	 * @return The parameter that can be modified and observed. Must not be null if the key is defined for this object
-	 */
-	<VALUE_TYPE> IParameter<VALUE_TYPE> getParameter(ITypedKey<VALUE_TYPE> key);
+    /**
+     * Gets the parameter for a defined key
+     * 
+     * @param key the key of the parameter, must not be null
+     * 
+     * @return The parameter that can be modified and observed. Must not be null if the key is defined for this object
+     */
+    <VALUE_TYPE> IParameter<VALUE_TYPE> getParameter(ITypedKey<VALUE_TYPE> key);
 
 }

@@ -34,30 +34,30 @@ import org.jowidgets.workbench.api.IWorkbenchApplication;
 
 public final class WorkbenchPartFactory {
 
-	private WorkbenchPartFactory() {}
+    private WorkbenchPartFactory() {}
 
-	public static IWorkbench workbench(final IWorkbenchModel model) {
-		return WorkbenchToolkit.getWorkbenchPartFactory().workbench(model);
-	}
+    public static IWorkbench workbench(final IWorkbenchModel model) {
+        return WorkbenchToolkit.getWorkbenchPartFactory().workbench(model);
+    }
 
-	public static IWorkbenchApplication application(final IWorkbenchApplicationModel model) {
-		return WorkbenchToolkit.getWorkbenchPartFactory().application(model);
-	}
+    public static IWorkbenchApplication application(final IWorkbenchApplicationModel model) {
+        return WorkbenchToolkit.getWorkbenchPartFactory().application(model);
+    }
 
-	public static IComponentNode componentNode(final IComponentNodeModel model) {
-		return WorkbenchToolkit.getWorkbenchPartFactory().componentNode(model);
-	}
+    public static IComponentNode componentNode(final IComponentNodeModel model) {
+        return WorkbenchToolkit.getWorkbenchPartFactory().componentNode(model);
+    }
 
-	public static IWorkbench workbench(final IWorkbenchModelBuilder modelBuilder) {
-		return WorkbenchToolkit.getWorkbenchPartFactory().workbench(modelBuilder);
-	}
+    public static IWorkbench workbench(final IWorkbenchModelBuilder modelBuilder) {
+        return WorkbenchToolkit.getWorkbenchPartFactory().workbench(modelBuilder);
+    }
 
-	public static IWorkbenchApplication application(final IWorkbenchApplicationModelBuilder modelBuilder) {
-		return WorkbenchToolkit.getWorkbenchPartFactory().application(modelBuilder);
-	}
+    public static IWorkbenchApplication application(final IWorkbenchApplicationModelBuilder modelBuilder) {
+        return WorkbenchToolkit.getWorkbenchPartFactory().application(modelBuilder);
+    }
 
-	public static IComponentNode componentNode(final IComponentNodeModelBuilder modelBuilder) {
-		return WorkbenchToolkit.getWorkbenchPartFactory().componentNode(modelBuilder);
-	}
+    public static IComponentNode componentNode(final IComponentNodeModelBuilder modelBuilder) {
+        return WorkbenchToolkit.getWorkbenchPartFactory().componentNode(modelBuilder);
+    }
 
 }

@@ -38,34 +38,34 @@ import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 
 public class ActionMenuItemImpl extends MenuItemImpl implements IActionMenuItemSpi {
 
-	private final ActionObservable actionObservable;
+    private final ActionObservable actionObservable;
 
-	public ActionMenuItemImpl() {
-		this(new JMenuItem());
-	}
+    public ActionMenuItemImpl() {
+        this(new JMenuItem());
+    }
 
-	public ActionMenuItemImpl(final JMenuItem menuItem) {
-		super(menuItem);
+    public ActionMenuItemImpl(final JMenuItem menuItem) {
+        super(menuItem);
 
-		this.actionObservable = new ActionObservable();
+        this.actionObservable = new ActionObservable();
 
-		getUiReference().addActionListener(new ActionListener() {
+        getUiReference().addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(final ActionEvent e) {
-				actionObservable.fireActionPerformed();
-			}
-		});
-	}
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                actionObservable.fireActionPerformed();
+            }
+        });
+    }
 
-	@Override
-	public void addActionListener(final IActionListener actionListener) {
-		actionObservable.addActionListener(actionListener);
-	}
+    @Override
+    public void addActionListener(final IActionListener actionListener) {
+        actionObservable.addActionListener(actionListener);
+    }
 
-	@Override
-	public void removeActionListener(final IActionListener actionListener) {
-		actionObservable.removeActionListener(actionListener);
-	}
+    @Override
+    public void removeActionListener(final IActionListener actionListener) {
+        actionObservable.removeActionListener(actionListener);
+    }
 
 }

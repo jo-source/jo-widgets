@@ -44,79 +44,79 @@ import org.jowidgets.test.api.widgets.blueprint.factory.IBasicTestBluePrintFacto
 
 public class BasicTestBluePrintFactory extends BasicSimpleTestBluePrintFactory implements IBasicTestBluePrintFactory {
 
-	@Override
-	public IFrameBluePrintUi frame(final String title) {
-		return frame().setTitle(title);
-	}
+    @Override
+    public IFrameBluePrintUi frame(final String title) {
+        return frame().setTitle(title);
+    }
 
-	@Override
-	public IFrameBluePrintUi frame(final String title, final IImageConstant icon) {
-		return frame().setTitle(title).setIcon(icon);
-	}
+    @Override
+    public IFrameBluePrintUi frame(final String title, final IImageConstant icon) {
+        return frame().setTitle(title).setIcon(icon);
+    }
 
-	@Override
-	public IDialogBluePrintUi dialog(final String title) {
-		return dialog().setTitle(title);
-	}
+    @Override
+    public IDialogBluePrintUi dialog(final String title) {
+        return dialog().setTitle(title);
+    }
 
-	@Override
-	public IDialogBluePrintUi dialog(final String title, final IImageConstant icon) {
-		return dialog().setTitle(title).setIcon(icon);
-	}
+    @Override
+    public IDialogBluePrintUi dialog(final String title, final IImageConstant icon) {
+        return dialog().setTitle(title).setIcon(icon);
+    }
 
-	@Override
-	public ICompositeBluePrintUi composite(final String borderTitle) {
-		return composite().setBorder(borderTitle);
-	}
+    @Override
+    public ICompositeBluePrintUi composite(final String borderTitle) {
+        return composite().setBorder(borderTitle);
+    }
 
-	@Override
-	public IScrollCompositeBluePrintUi scrollComposite(final String borderTitle) {
-		return scrollComposite().setBorder(borderTitle);
-	}
+    @Override
+    public IScrollCompositeBluePrintUi scrollComposite(final String borderTitle) {
+        return scrollComposite().setBorder(borderTitle);
+    }
 
-	@Override
-	public IButtonBluePrintUi button(final String text) {
-		return button().setText(text);
-	}
+    @Override
+    public IButtonBluePrintUi button(final String text) {
+        return button().setText(text);
+    }
 
-	@Override
-	public IButtonBluePrintUi button(final String text, final String toolTipText) {
-		return button().setText(text).setToolTipText(toolTipText);
-	}
+    @Override
+    public IButtonBluePrintUi button(final String text, final String toolTipText) {
+        return button().setText(text).setToolTipText(toolTipText);
+    }
 
-	@Override
-	public IIconBluePrintUi icon(final IImageConstant icon) {
-		return icon().setIcon(icon);
-	}
+    @Override
+    public IIconBluePrintUi icon(final IImageConstant icon) {
+        return icon().setIcon(icon);
+    }
 
-	@Override
-	public ITextLabelBluePrintUi textLabel(final String text) {
-		return textLabel().setText(text);
-	}
+    @Override
+    public ITextLabelBluePrintUi textLabel(final String text) {
+        return textLabel().setText(text);
+    }
 
-	@Override
-	public ITextLabelBluePrintUi textLabel(final String text, final String tooltipText) {
-		return textLabel().setText(text).setToolTipText(tooltipText);
-	}
+    @Override
+    public ITextLabelBluePrintUi textLabel(final String text, final String tooltipText) {
+        return textLabel().setText(text).setToolTipText(tooltipText);
+    }
 
-	@Override
-	public IActionMenuItemBluePrintUi menuItem(final String text) {
-		return menuItem().setText(text);
-	}
+    @Override
+    public IActionMenuItemBluePrintUi menuItem(final String text) {
+        return menuItem().setText(text);
+    }
 
-	@Override
-	public IRadioMenuItemBluePrintUi radioMenuItem(final String text) {
-		return radioMenuItem().setText(text);
-	}
+    @Override
+    public IRadioMenuItemBluePrintUi radioMenuItem(final String text) {
+        return radioMenuItem().setText(text);
+    }
 
-	@Override
-	public ICheckedMenuItemBluePrintUi checkedMenuItem(final String text) {
-		return checkedMenuItem().setText(text);
-	}
+    @Override
+    public ICheckedMenuItemBluePrintUi checkedMenuItem(final String text) {
+        return checkedMenuItem().setText(text);
+    }
 
-	@Override
-	public IMainMenuBluePrintUi mainMenu(final String text) {
-		return mainMenu().setText(text);
-	}
+    @Override
+    public IMainMenuBluePrintUi mainMenu(final String text) {
+        return mainMenu().setText(text);
+    }
 
 }

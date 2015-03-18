@@ -43,54 +43,54 @@ import org.jowidgets.util.Assert;
 
 abstract class AbstractDragSourceObservable implements IDragSourceObservable {
 
-	private final Set<IDragSourceListener> listeners;
+    private final Set<IDragSourceListener> listeners;
 
-	public AbstractDragSourceObservable() {
-		this.listeners = new LinkedHashSet<IDragSourceListener>();
-	}
+    public AbstractDragSourceObservable() {
+        this.listeners = new LinkedHashSet<IDragSourceListener>();
+    }
 
-	@Override
-	public final void addDragSourceListener(final IDragSourceListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		final int lastSize = listeners.size();
-		listeners.add(listener);
-		if (lastSize == 0) {
-			setActive(true);
-		}
-	}
+    @Override
+    public final void addDragSourceListener(final IDragSourceListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        final int lastSize = listeners.size();
+        listeners.add(listener);
+        if (lastSize == 0) {
+            setActive(true);
+        }
+    }
 
-	@Override
-	public final void removeDragSourceListener(final IDragSourceListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		final int lastSize = listeners.size();
-		listeners.remove(listener);
-		if (lastSize == 1 && listeners.size() == 0) {
-			setActive(false);
-		}
-	}
+    @Override
+    public final void removeDragSourceListener(final IDragSourceListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        final int lastSize = listeners.size();
+        listeners.remove(listener);
+        if (lastSize == 1 && listeners.size() == 0) {
+            setActive(false);
+        }
+    }
 
-	final void fireDragStart(final IDragEvent event, final IVetoable veto) {
-		for (final IDragSourceListener listener : new LinkedList<IDragSourceListener>(listeners)) {
-			listener.dragStart(event, veto);
-		}
-	}
+    final void fireDragStart(final IDragEvent event, final IVetoable veto) {
+        for (final IDragSourceListener listener : new LinkedList<IDragSourceListener>(listeners)) {
+            listener.dragStart(event, veto);
+        }
+    }
 
-	final void fireDragSetData(
-		final IDragEvent event,
-		final IVetoable veto,
-		final TransferType<?> transferType,
-		final IDragDataResponse dragData) {
-		for (final IDragSourceListener listener : new LinkedList<IDragSourceListener>(listeners)) {
-			listener.dragSetData(event, veto, transferType, dragData);
-		}
-	}
+    final void fireDragSetData(
+        final IDragEvent event,
+        final IVetoable veto,
+        final TransferType<?> transferType,
+        final IDragDataResponse dragData) {
+        for (final IDragSourceListener listener : new LinkedList<IDragSourceListener>(listeners)) {
+            listener.dragSetData(event, veto, transferType, dragData);
+        }
+    }
 
-	final void fireDragFinished(final IDragEvent event, final DropAction dropAction) {
-		for (final IDragSourceListener listener : new LinkedList<IDragSourceListener>(listeners)) {
-			listener.dragFinished(event, dropAction);
-		}
-	}
+    final void fireDragFinished(final IDragEvent event, final DropAction dropAction) {
+        for (final IDragSourceListener listener : new LinkedList<IDragSourceListener>(listeners)) {
+            listener.dragFinished(event, dropAction);
+        }
+    }
 
-	protected abstract void setActive(boolean active);
+    protected abstract void setActive(boolean active);
 
 }

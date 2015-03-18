@@ -40,20 +40,20 @@ import org.jowidgets.spi.widgets.ITextControlSpi;
 
 public class TextFieldFactory extends AbstractWidgetFactory implements IWidgetFactory<ITextControl, ITextFieldDescriptor> {
 
-	public TextFieldFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+    public TextFieldFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider,
+        final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
-	}
+        super(genericWidgetFactory, widgetsServiceProvider, bpF);
+    }
 
-	@Override
-	public ITextControl create(final Object parentUiReference, final ITextFieldDescriptor descriptor) {
-		final ITextFieldBluePrintSpi bp = getSpiBluePrintFactory().textField().setSetup(descriptor);
-		final ITextControlSpi textFieldSpi = getSpiWidgetFactory().createTextField(parentUiReference, bp);
+    @Override
+    public ITextControl create(final Object parentUiReference, final ITextFieldDescriptor descriptor) {
+        final ITextFieldBluePrintSpi bp = getSpiBluePrintFactory().textField().setSetup(descriptor);
+        final ITextControlSpi textFieldSpi = getSpiWidgetFactory().createTextField(parentUiReference, bp);
 
-		final ITextControl result = new TextFieldImpl(textFieldSpi, descriptor);
-		return result;
-	}
+        final ITextControl result = new TextFieldImpl(textFieldSpi, descriptor);
+        return result;
+    }
 }

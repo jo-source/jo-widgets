@@ -38,38 +38,38 @@ import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
 
 public class DialogImpl extends DummyWindow implements IFrameSpi {
 
-	public DialogImpl(
-		final IGenericWidgetFactory factory,
-		final DummyImageRegistry imageRegistry,
-		final Object parentUiReference,
-		final IDialogSetupSpi setup) {
-		super(factory, new UIDDialog((UIDWindow) parentUiReference));
+    public DialogImpl(
+        final IGenericWidgetFactory factory,
+        final DummyImageRegistry imageRegistry,
+        final Object parentUiReference,
+        final IDialogSetupSpi setup) {
+        super(factory, new UIDDialog((UIDWindow) parentUiReference));
 
-		getUiReference().setTitle(setup.getTitle());
-		getUiReference().setResizable(setup.isResizable());
-		getUiReference().setModal(true);
+        getUiReference().setTitle(setup.getTitle());
+        getUiReference().setResizable(setup.isResizable());
+        getUiReference().setModal(true);
 
-		setIcon(setup.getIcon(), imageRegistry);
-	}
+        setIcon(setup.getIcon(), imageRegistry);
+    }
 
-	@Override
-	public UIDDialog getUiReference() {
-		return (UIDDialog) super.getUiReference();
-	}
+    @Override
+    public UIDDialog getUiReference() {
+        return (UIDDialog) super.getUiReference();
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		getUiReference().setVisible(visible);
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        getUiReference().setVisible(visible);
+    }
 
-	@Override
-	public void setTitle(final String title) {
-		getUiReference().setTitle(title);
-	}
+    @Override
+    public void setTitle(final String title) {
+        getUiReference().setTitle(title);
+    }
 
-	@Override
-	public IMenuBarSpi createMenuBar() {
-		return new MenuBarImpl(new UIDMenuItem());
-	}
+    @Override
+    public IMenuBarSpi createMenuBar() {
+        return new MenuBarImpl(new UIDMenuItem());
+    }
 
 }

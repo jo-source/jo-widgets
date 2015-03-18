@@ -37,26 +37,26 @@ import org.jowidgets.util.IFilter;
 
 final class ExpandCollapseTreeActionBuilder extends TreeExpansionActionBuilder {
 
-	private static final IMessage EXPAND_ALL_MESSAGE = Messages.getMessage("ExpandCollapseTreeActionBuilder.expandAllLabel");
-	private static final IMessage EXPAND_ALL_BOUND_MESSAGE = Messages.getMessage("ExpandCollapseTreeActionBuilder.expandAllBoundLabel");
+    private static final IMessage EXPAND_ALL_MESSAGE = Messages.getMessage("ExpandCollapseTreeActionBuilder.expandAllLabel");
+    private static final IMessage EXPAND_ALL_BOUND_MESSAGE = Messages.getMessage("ExpandCollapseTreeActionBuilder.expandAllBoundLabel");
 
-	ExpandCollapseTreeActionBuilder(final ITreeContainer tree) {
-		super(tree, ExpansionMode.EXPAND_COLLAPSE);
+    ExpandCollapseTreeActionBuilder(final ITreeContainer tree) {
+        super(tree, ExpansionMode.EXPAND_COLLAPSE);
 
-		setText(EXPAND_ALL_MESSAGE.get());
-		setBoundPivotLevelText(EXPAND_ALL_BOUND_MESSAGE.get());
-		setIcon(IconsSmall.EXPAND_COLLAPSE_ALL);
-	}
+        setText(EXPAND_ALL_MESSAGE.get());
+        setBoundPivotLevelText(EXPAND_ALL_BOUND_MESSAGE.get());
+        setIcon(IconsSmall.EXPAND_COLLAPSE_ALL);
+    }
 
-	@Override
-	public ITreeExpansionActionBuilder addFilter(final IFilter<ITreeNode> filter) {
-		throw new UnsupportedOperationException(
-			"Filters are not supported for this action at the moment. Feel free to contribute a implementation");
-	}
+    @Override
+    public ITreeExpansionActionBuilder addFilter(final IFilter<ITreeNode> filter) {
+        throw new UnsupportedOperationException(
+            "Filters are not supported for this action at the moment. Feel free to contribute a implementation");
+    }
 
-	@Override
-	public ITreeExpansionActionBuilder setFilter(final IFilter<ITreeNode> filter) {
-		throw new UnsupportedOperationException(
-			"Filters are not supported for this action at the moment. Feel free to contribute a implementation");
-	}
+    @Override
+    public ITreeExpansionActionBuilder setFilter(final IFilter<ITreeNode> filter) {
+        throw new UnsupportedOperationException(
+            "Filters are not supported for this action at the moment. Feel free to contribute a implementation");
+    }
 }

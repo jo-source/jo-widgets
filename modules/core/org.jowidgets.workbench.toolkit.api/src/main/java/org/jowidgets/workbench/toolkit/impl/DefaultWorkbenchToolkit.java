@@ -37,37 +37,37 @@ import org.jowidgets.workbench.toolkit.api.IWorkbenchToolkit;
 
 public class DefaultWorkbenchToolkit implements IWorkbenchToolkit {
 
-	private ILayoutBuilderFactory layoutBuilderFactory;
-	private IWorkbenchPartBuilderFactory workbenchPartBuilderFactory;
-	private IWorkbenchPartFactory workbenchPartFactory;
+    private ILayoutBuilderFactory layoutBuilderFactory;
+    private IWorkbenchPartBuilderFactory workbenchPartBuilderFactory;
+    private IWorkbenchPartFactory workbenchPartFactory;
 
-	@Override
-	public ILayoutBuilderFactory getLayoutBuilderFactory() {
-		if (layoutBuilderFactory == null) {
-			this.layoutBuilderFactory = new LayoutBuilderFactory();
-		}
-		return layoutBuilderFactory;
-	}
+    @Override
+    public ILayoutBuilderFactory getLayoutBuilderFactory() {
+        if (layoutBuilderFactory == null) {
+            this.layoutBuilderFactory = new LayoutBuilderFactory();
+        }
+        return layoutBuilderFactory;
+    }
 
-	@Override
-	public IWorkbenchPartBuilderFactory getWorkbenchPartBuilderFactory() {
-		if (workbenchPartBuilderFactory == null) {
-			workbenchPartBuilderFactory = new WorkbenchPartBuilderFactory();
-		}
-		return workbenchPartBuilderFactory;
-	}
+    @Override
+    public IWorkbenchPartBuilderFactory getWorkbenchPartBuilderFactory() {
+        if (workbenchPartBuilderFactory == null) {
+            workbenchPartBuilderFactory = new WorkbenchPartBuilderFactory();
+        }
+        return workbenchPartBuilderFactory;
+    }
 
-	@Override
-	public IWorkbenchPartFactory getWorkbenchPartFactory() {
-		if (workbenchPartFactory == null) {
-			workbenchPartFactory = new WorkbenchPartFactory();
-		}
-		return workbenchPartFactory;
-	}
+    @Override
+    public IWorkbenchPartFactory getWorkbenchPartFactory() {
+        if (workbenchPartFactory == null) {
+            workbenchPartFactory = new WorkbenchPartFactory();
+        }
+        return workbenchPartFactory;
+    }
 
-	@Override
-	public IComponentFactory createComponentFactory(final Class<? extends IComponent> componentType) {
-		return new TypeBasedComponentFactory(componentType);
-	}
+    @Override
+    public IComponentFactory createComponentFactory(final Class<? extends IComponent> componentType) {
+        return new TypeBasedComponentFactory(componentType);
+    }
 
 }

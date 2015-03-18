@@ -32,32 +32,32 @@ import org.jowidgets.common.text.IFontMetrics;
 
 public final class FontMetricsBuilder {
 
-	private int ascent;
-	private int descent;
-	private int height;
-	private int leading;
+    private int ascent;
+    private int descent;
+    private int height;
+    private int leading;
 
-	public FontMetricsBuilder setAscent(final int ascent) {
-		this.ascent = ascent;
-		return this;
-	}
+    public FontMetricsBuilder setAscent(final int ascent) {
+        this.ascent = ascent;
+        return this;
+    }
 
-	public FontMetricsBuilder setDescent(final int descent) {
-		this.descent = descent;
-		return this;
-	}
+    public FontMetricsBuilder setDescent(final int descent) {
+        this.descent = descent;
+        return this;
+    }
 
-	public FontMetricsBuilder setHeight(final int height) {
-		this.height = height;
-		return this;
-	}
+    public FontMetricsBuilder setHeight(final int height) {
+        this.height = height;
+        return this;
+    }
 
-	public FontMetricsBuilder setLeading(final int leading) {
-		this.leading = leading;
-		return this;
-	}
+    public FontMetricsBuilder setLeading(final int leading) {
+        this.leading = leading;
+        return this;
+    }
 
-	public IFontMetrics build() {
-		return new FontMetricsImpl(leading, ascent, descent, height);
-	}
+    public IFontMetrics build() {
+        return new FontMetricsImpl(leading, ascent, descent, height);
+    }
 }

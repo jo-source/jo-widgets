@@ -45,83 +45,83 @@ import org.jowidgets.tools.widgets.invoker.LayoutSettingsInvoker;
 
 public class CompositeImpl extends ContainerImpl implements IComposite {
 
-	private final ControlDelegate controlDelegate;
-	private final IDragSource dragSource;
-	private final IDropTarget dropTarget;
+    private final ControlDelegate controlDelegate;
+    private final IDragSource dragSource;
+    private final IDropTarget dropTarget;
 
-	public CompositeImpl(final ICompositeSpi containerSpi, final ICompositeSetup setup) {
-		this(containerSpi, setup, false);
-	}
+    public CompositeImpl(final ICompositeSpi containerSpi, final ICompositeSetup setup) {
+        this(containerSpi, setup, false);
+    }
 
-	public CompositeImpl(final ICompositeSpi containerSpi, final ICompositeSetup setup, final boolean wrapperMode) {
-		super(containerSpi, setup.isVisible());
-		if (!wrapperMode) {
-			ColorSettingsInvoker.setColors(setup, this);
-			LayoutSettingsInvoker.setLayout(setup, this);
-		}
-		this.controlDelegate = new ControlDelegate(containerSpi, this);
-		this.dragSource = new DragSourceImpl(containerSpi.getDragSource());
-		this.dropTarget = new DropTargetImpl(containerSpi.getDropTarget(), new ImmutableDropSelection(this));
-	}
+    public CompositeImpl(final ICompositeSpi containerSpi, final ICompositeSetup setup, final boolean wrapperMode) {
+        super(containerSpi, setup.isVisible());
+        if (!wrapperMode) {
+            ColorSettingsInvoker.setColors(setup, this);
+            LayoutSettingsInvoker.setLayout(setup, this);
+        }
+        this.controlDelegate = new ControlDelegate(containerSpi, this);
+        this.dragSource = new DragSourceImpl(containerSpi.getDragSource());
+        this.dropTarget = new DropTargetImpl(containerSpi.getDropTarget(), new ImmutableDropSelection(this));
+    }
 
-	@Override
-	public ICompositeSpi getWidget() {
-		return (ICompositeSpi) super.getWidget();
-	}
+    @Override
+    public ICompositeSpi getWidget() {
+        return (ICompositeSpi) super.getWidget();
+    }
 
-	@Override
-	public IControl getRoot() {
-		return (IControl) super.getRoot();
-	}
+    @Override
+    public IControl getRoot() {
+        return (IControl) super.getRoot();
+    }
 
-	@Override
-	public IContainer getParent() {
-		return controlDelegate.getParent();
-	}
+    @Override
+    public IContainer getParent() {
+        return controlDelegate.getParent();
+    }
 
-	@Override
-	public void addParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.addParentListener(listener);
-	}
+    @Override
+    public void addParentListener(final IParentListener<IContainer> listener) {
+        controlDelegate.addParentListener(listener);
+    }
 
-	@Override
-	public void removeParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.removeParentListener(listener);
-	}
+    @Override
+    public void removeParentListener(final IParentListener<IContainer> listener) {
+        controlDelegate.removeParentListener(listener);
+    }
 
-	@Override
-	public void setParent(final IContainer parent) {
-		controlDelegate.setParent(parent);
-	}
+    @Override
+    public void setParent(final IContainer parent) {
+        controlDelegate.setParent(parent);
+    }
 
-	@Override
-	public boolean isReparentable() {
-		return controlDelegate.isReparentable();
-	}
+    @Override
+    public boolean isReparentable() {
+        return controlDelegate.isReparentable();
+    }
 
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		getWidget().setLayoutConstraints(layoutConstraints);
-	}
+    @Override
+    public void setLayoutConstraints(final Object layoutConstraints) {
+        getWidget().setLayoutConstraints(layoutConstraints);
+    }
 
-	@Override
-	public Object getLayoutConstraints() {
-		return getWidget().getLayoutConstraints();
-	}
+    @Override
+    public Object getLayoutConstraints() {
+        return getWidget().getLayoutConstraints();
+    }
 
-	@Override
-	public void setToolTipText(final String toolTip) {
-		getWidget().setToolTipText(toolTip);
-	}
+    @Override
+    public void setToolTipText(final String toolTip) {
+        getWidget().setToolTipText(toolTip);
+    }
 
-	@Override
-	public IDragSource getDragSource() {
-		return dragSource;
-	}
+    @Override
+    public IDragSource getDragSource() {
+        return dragSource;
+    }
 
-	@Override
-	public IDropTarget getDropTarget() {
-		return dropTarget;
-	}
+    @Override
+    public IDropTarget getDropTarget() {
+        return dropTarget;
+    }
 
 }

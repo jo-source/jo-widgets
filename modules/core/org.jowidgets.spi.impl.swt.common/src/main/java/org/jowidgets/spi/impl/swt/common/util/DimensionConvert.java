@@ -32,24 +32,24 @@ import org.jowidgets.common.types.Dimension;
 
 public final class DimensionConvert {
 
-	private DimensionConvert() {};
+    private DimensionConvert() {};
 
-	public static Point convert(final Dimension dimension) {
-		if (dimension != null) {
-			return new Point(dimension.getWidth(), dimension.getHeight());
-		}
-		else {
-			return null;
-		}
-	}
+    public static Point convert(final Dimension dimension) {
+        if (dimension != null) {
+            return new Point(dimension.getWidth(), dimension.getHeight());
+        }
+        else {
+            return null;
+        }
+    }
 
-	public static Dimension convert(final Point point) {
-		if (point != null) {
-			return new Dimension(point.x, point.y);
-		}
-		else {
-			return null;
-		}
-	}
+    public static Dimension convert(final Point point) {
+        if (point != null) {
+            return new Dimension(point.x, point.y);
+        }
+        else {
+            return null;
+        }
+    }
 
 }

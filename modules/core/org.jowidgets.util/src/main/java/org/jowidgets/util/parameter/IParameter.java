@@ -32,17 +32,17 @@ import org.jowidgets.util.IObservableValue;
 
 public interface IParameter<VALUE_TYPE> extends IObservableValue<VALUE_TYPE> {
 
-	/**
-	 * Gets the type of the parameter
-	 * 
-	 * @return The type, never null
-	 */
-	Class<VALUE_TYPE> getValueType();
+    /**
+     * Gets the type of the parameter
+     * 
+     * @return The type, never null
+     */
+    Class<VALUE_TYPE> getValueType();
 
-	String getLabel();
+    String getLabel();
 
-	String getDescription();
+    String getDescription();
 
-	VALUE_TYPE getDefaultValue();
+    VALUE_TYPE getDefaultValue();
 
 }

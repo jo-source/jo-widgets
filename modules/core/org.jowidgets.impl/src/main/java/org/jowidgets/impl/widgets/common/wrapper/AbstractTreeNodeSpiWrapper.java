@@ -35,77 +35,77 @@ import org.jowidgets.spi.widgets.ITreeNodeSpi;
 
 public abstract class AbstractTreeNodeSpiWrapper extends ItemSpiWrapper implements ITreeNodeCommon {
 
-	public AbstractTreeNodeSpiWrapper(final ITreeNodeSpi component) {
-		super(component);
-	}
+    public AbstractTreeNodeSpiWrapper(final ITreeNodeSpi component) {
+        super(component);
+    }
 
-	@Override
-	public ITreeNodeSpi getWidget() {
-		return (ITreeNodeSpi) super.getWidget();
-	}
+    @Override
+    public ITreeNodeSpi getWidget() {
+        return (ITreeNodeSpi) super.getWidget();
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		getWidget().setMarkup(markup);
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        getWidget().setMarkup(markup);
+    }
 
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		getWidget().setForegroundColor(colorValue);
-	}
+    @Override
+    public void setForegroundColor(final IColorConstant colorValue) {
+        getWidget().setForegroundColor(colorValue);
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		getWidget().setBackgroundColor(colorValue);
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        getWidget().setBackgroundColor(colorValue);
+    }
 
-	@Override
-	public void setExpanded(final boolean expanded) {
-		if (isExpanded() != expanded) {
-			getWidget().setExpanded(expanded);
-		}
-	}
+    @Override
+    public void setExpanded(final boolean expanded) {
+        if (isExpanded() != expanded) {
+            getWidget().setExpanded(expanded);
+        }
+    }
 
-	@Override
-	public boolean isExpanded() {
-		return getWidget().isExpanded();
-	}
+    @Override
+    public boolean isExpanded() {
+        return getWidget().isExpanded();
+    }
 
-	@Override
-	public void setSelected(final boolean selected) {
-		if (isSelected() != selected) {
-			getWidget().setSelected(selected);
-		}
-	}
+    @Override
+    public void setSelected(final boolean selected) {
+        if (isSelected() != selected) {
+            getWidget().setSelected(selected);
+        }
+    }
 
-	@Override
-	public boolean isSelected() {
-		return getWidget().isSelected();
-	}
+    @Override
+    public boolean isSelected() {
+        return getWidget().isSelected();
+    }
 
-	@Override
-	public void setChecked(final boolean checked) {
-		if (isGreyed() || isChecked() != checked) {
-			getWidget().setGreyed(false);
-			getWidget().setChecked(checked);
-		}
-	}
+    @Override
+    public void setChecked(final boolean checked) {
+        if (isGreyed() || isChecked() != checked) {
+            getWidget().setGreyed(false);
+            getWidget().setChecked(checked);
+        }
+    }
 
-	@Override
-	public boolean isChecked() {
-		return getWidget().isChecked() && !getWidget().isGreyed();
-	}
+    @Override
+    public boolean isChecked() {
+        return getWidget().isChecked() && !getWidget().isGreyed();
+    }
 
-	public void setGreyed(final boolean greyed) {
-		getWidget().setGreyed(greyed);
-		if (greyed && !getWidget().isChecked()) {
-			getWidget().setChecked(true);
-		}
-	}
+    public void setGreyed(final boolean greyed) {
+        getWidget().setGreyed(greyed);
+        if (greyed && !getWidget().isChecked()) {
+            getWidget().setChecked(true);
+        }
+    }
 
-	@Override
-	public boolean isGreyed() {
-		return getWidget().isGreyed();
-	}
+    @Override
+    public boolean isGreyed() {
+        return getWidget().isGreyed();
+    }
 
 }

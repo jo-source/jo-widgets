@@ -31,22 +31,22 @@ import org.jowidgets.i18n.api.IMessage;
 
 public enum AlignmentHorizontal {
 
-	LEFT(Messages.getMessage("AlignmentHorizontal.left")), //$NON-NLS-1$
-	RIGHT(Messages.getMessage("AlignmentHorizontal.right")), //$NON-NLS-1$
-	CENTER(Messages.getMessage("AlignmentHorizontal.center")); //$NON-NLS-1$
+    LEFT(Messages.getMessage("AlignmentHorizontal.left")), //$NON-NLS-1$
+    RIGHT(Messages.getMessage("AlignmentHorizontal.right")), //$NON-NLS-1$
+    CENTER(Messages.getMessage("AlignmentHorizontal.center")); //$NON-NLS-1$
 
-	private IMessage label;
+    private IMessage label;
 
-	private AlignmentHorizontal(final IMessage label) {
-		this.label = label;
-	}
+    private AlignmentHorizontal(final IMessage label) {
+        this.label = label;
+    }
 
-	public String getLabel() {
-		return label.get();
-	}
+    public String getLabel() {
+        return label.get();
+    }
 
-	@Override
-	public String toString() {
-		return label.get();
-	}
+    @Override
+    public String toString() {
+        return label.get();
+    }
 }

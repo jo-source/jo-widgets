@@ -32,7 +32,7 @@ import org.jowidgets.api.widgets.blueprint.builder.ISplitCompositeSetupBuilder;
 import org.jowidgets.test.api.widgets.descriptor.ISplitCompositeDescriptorUi;
 
 public interface ISplitCompositeBluePrintUi extends
-		ISplitCompositeSetupBuilder<ISplitCompositeBluePrintUi>,
-		ISplitCompositeDescriptorUi {
+        ISplitCompositeSetupBuilder<ISplitCompositeBluePrintUi>,
+        ISplitCompositeDescriptorUi {
 
 }

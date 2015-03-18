@@ -38,70 +38,70 @@ import org.jowidgets.util.maybe.Some;
 
 public final class FutureValue<VALUE_TYPE> implements IFutureValue<VALUE_TYPE> {
 
-	private final Set<IFutureValueCallback<VALUE_TYPE>> callbacks;
+    private final Set<IFutureValueCallback<VALUE_TYPE>> callbacks;
 
-	private IMaybe<VALUE_TYPE> value;
+    private IMaybe<VALUE_TYPE> value;
 
-	public FutureValue() {
-		this.callbacks = new LinkedHashSet<IFutureValueCallback<VALUE_TYPE>>();
-		this.value = Nothing.getInstance();
-	}
+    public FutureValue() {
+        this.callbacks = new LinkedHashSet<IFutureValueCallback<VALUE_TYPE>>();
+        this.value = Nothing.getInstance();
+    }
 
-	public FutureValue(final VALUE_TYPE value) {
-		this();
-		initialize(value);
-	}
+    public FutureValue(final VALUE_TYPE value) {
+        this();
+        initialize(value);
+    }
 
-	@Override
-	public void addFutureCallback(final IFutureValueCallback<VALUE_TYPE> callback) {
-		Assert.paramNotNull(callback, "callback");
-		if (isInitialized()) {
-			callback.initialized(value.getValue());
-		}
-		else {
-			callbacks.add(callback);
-		}
-	}
+    @Override
+    public void addFutureCallback(final IFutureValueCallback<VALUE_TYPE> callback) {
+        Assert.paramNotNull(callback, "callback");
+        if (isInitialized()) {
+            callback.initialized(value.getValue());
+        }
+        else {
+            callbacks.add(callback);
+        }
+    }
 
-	@Override
-	public void removeFutureCallback(final IFutureValueCallback<VALUE_TYPE> callback) {
-		Assert.paramNotNull(callback, "callback");
-		callbacks.remove(callback);
-	}
+    @Override
+    public void removeFutureCallback(final IFutureValueCallback<VALUE_TYPE> callback) {
+        Assert.paramNotNull(callback, "callback");
+        callbacks.remove(callback);
+    }
 
-	@Override
-	public boolean isInitialized() {
-		return !value.isNothing();
-	}
+    @Override
+    public boolean isInitialized() {
+        return !value.isNothing();
+    }
 
-	@Override
-	public VALUE_TYPE getValue() {
-		if (isInitialized()) {
-			return value.getValue();
-		}
-		else {
-			throw new IllegalStateException("The future is not already initialized");
-		}
-	}
+    @Override
+    public VALUE_TYPE getValue() {
+        if (isInitialized()) {
+            return value.getValue();
+        }
+        else {
+            throw new IllegalStateException("The future is not already initialized");
+        }
+    }
 
-	/**
-	 * Initializes the future with a defined value. This can only be done once.
-	 * 
-	 * @param value The value to initialize the future with, may be null
-	 * @throws IllegalStateException if the future was already initialized
-	 */
-	public void initialize(final VALUE_TYPE value) {
-		if (isInitialized()) {
-			throw new IllegalStateException("Value must not be created twice");
-		}
-		else {
-			this.value = new Some<VALUE_TYPE>(value);
-			for (final IFutureValueCallback<VALUE_TYPE> callback : new LinkedList<IFutureValueCallback<VALUE_TYPE>>(callbacks)) {
-				callback.initialized(value);
-			}
-			//the callbacks are no longer needed, so do not hold references longer on them
-			callbacks.clear();
-		}
-	}
+    /**
+     * Initializes the future with a defined value. This can only be done once.
+     * 
+     * @param value The value to initialize the future with, may be null
+     * @throws IllegalStateException if the future was already initialized
+     */
+    public void initialize(final VALUE_TYPE value) {
+        if (isInitialized()) {
+            throw new IllegalStateException("Value must not be created twice");
+        }
+        else {
+            this.value = new Some<VALUE_TYPE>(value);
+            for (final IFutureValueCallback<VALUE_TYPE> callback : new LinkedList<IFutureValueCallback<VALUE_TYPE>>(callbacks)) {
+                callback.initialized(value);
+            }
+            //the callbacks are no longer needed, so do not hold references longer on them
+            callbacks.clear();
+        }
+    }
 
 }

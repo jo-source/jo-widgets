@@ -38,71 +38,71 @@ import org.jowidgets.spi.widgets.ICompositeSpi;
 
 public class SwtComposite extends SwtContainer implements ICompositeSpi {
 
-	private final SwtControl swtControlDelegate;
+    private final SwtControl swtControlDelegate;
 
-	public SwtComposite(final IGenericWidgetFactory factory, final Composite composite) {
-		this(factory, composite, null);
-	}
+    public SwtComposite(final IGenericWidgetFactory factory, final Composite composite) {
+        this(factory, composite, null);
+    }
 
-	public SwtComposite(
-		final IGenericWidgetFactory factory,
-		final Composite composite,
-		IDropSelectionProvider dropSelectionProvider) {
-		super(factory, composite);
-		if (dropSelectionProvider == null) {
-			if (this instanceof IDropSelectionProvider) {
-				dropSelectionProvider = (IDropSelectionProvider) this;
-			}
-			else {
-				dropSelectionProvider = new ImmutableDropSelection(this);
-			}
-		}
-		this.swtControlDelegate = new SwtControl(composite, dropSelectionProvider);
-	}
+    public SwtComposite(
+        final IGenericWidgetFactory factory,
+        final Composite composite,
+        IDropSelectionProvider dropSelectionProvider) {
+        super(factory, composite);
+        if (dropSelectionProvider == null) {
+            if (this instanceof IDropSelectionProvider) {
+                dropSelectionProvider = (IDropSelectionProvider) this;
+            }
+            else {
+                dropSelectionProvider = new ImmutableDropSelection(this);
+            }
+        }
+        this.swtControlDelegate = new SwtControl(composite, dropSelectionProvider);
+    }
 
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		swtControlDelegate.setLayoutConstraints(layoutConstraints);
-	}
+    @Override
+    public void setLayoutConstraints(final Object layoutConstraints) {
+        swtControlDelegate.setLayoutConstraints(layoutConstraints);
+    }
 
-	@Override
-	public Object getLayoutConstraints() {
-		return swtControlDelegate.getLayoutConstraints();
-	}
+    @Override
+    public Object getLayoutConstraints() {
+        return swtControlDelegate.getLayoutConstraints();
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		return swtControlDelegate.getMinSize();
-	}
+    @Override
+    public Dimension getMinSize() {
+        return swtControlDelegate.getMinSize();
+    }
 
-	@Override
-	public Dimension getPreferredSize() {
-		return swtControlDelegate.getPreferredSize();
-	}
+    @Override
+    public Dimension getPreferredSize() {
+        return swtControlDelegate.getPreferredSize();
+    }
 
-	@Override
-	public Dimension getMaxSize() {
-		return swtControlDelegate.getMaxSize();
-	}
+    @Override
+    public Dimension getMaxSize() {
+        return swtControlDelegate.getMaxSize();
+    }
 
-	@Override
-	public IDragSourceSpi getDragSource() {
-		return swtControlDelegate.getDragSource();
-	}
+    @Override
+    public IDragSourceSpi getDragSource() {
+        return swtControlDelegate.getDragSource();
+    }
 
-	@Override
-	public IDropTargetSpi getDropTarget() {
-		return swtControlDelegate.getDropTarget();
-	}
+    @Override
+    public IDropTargetSpi getDropTarget() {
+        return swtControlDelegate.getDropTarget();
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		swtControlDelegate.setVisible(visible);
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        swtControlDelegate.setVisible(visible);
+    }
 
-	@Override
-	public boolean isVisible() {
-		return swtControlDelegate.isVisible();
-	}
+    @Override
+    public boolean isVisible() {
+        return swtControlDelegate.isVisible();
+    }
 
 }

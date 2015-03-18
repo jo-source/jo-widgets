@@ -39,40 +39,40 @@ import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
 
 public class ToolBarToggleButtonImpl extends ToolBarItemImpl implements IToolBarToggleButtonSpi {
 
-	private final ItemStateObservable itemStateObservable;
+    private final ItemStateObservable itemStateObservable;
 
-	public ToolBarToggleButtonImpl(final JToggleButton button) {
-		super(button);
+    public ToolBarToggleButtonImpl(final JToggleButton button) {
+        super(button);
 
-		getUiReference().addItemListener(new ItemListener() {
+        getUiReference().addItemListener(new ItemListener() {
 
-			@Override
-			public void itemStateChanged(final ItemEvent e) {
-				itemStateObservable.fireItemStateChanged(isSelected());
-			}
-		});
+            @Override
+            public void itemStateChanged(final ItemEvent e) {
+                itemStateObservable.fireItemStateChanged(isSelected());
+            }
+        });
 
-		this.itemStateObservable = new ItemStateObservable();
-	}
+        this.itemStateObservable = new ItemStateObservable();
+    }
 
-	@Override
-	public boolean isSelected() {
-		return getUiReference().isSelected();
-	}
+    @Override
+    public boolean isSelected() {
+        return getUiReference().isSelected();
+    }
 
-	@Override
-	public void setSelected(final boolean selected) {
-		getUiReference().setSelected(selected);
-	}
+    @Override
+    public void setSelected(final boolean selected) {
+        getUiReference().setSelected(selected);
+    }
 
-	@Override
-	public void addItemListener(final IItemStateListener listener) {
-		itemStateObservable.addItemListener(listener);
-	}
+    @Override
+    public void addItemListener(final IItemStateListener listener) {
+        itemStateObservable.addItemListener(listener);
+    }
 
-	@Override
-	public void removeItemListener(final IItemStateListener listener) {
-		itemStateObservable.removeItemListener(listener);
-	}
+    @Override
+    public void removeItemListener(final IItemStateListener listener) {
+        itemStateObservable.removeItemListener(listener);
+    }
 
 }

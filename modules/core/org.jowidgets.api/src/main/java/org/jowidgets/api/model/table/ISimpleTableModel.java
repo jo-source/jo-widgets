@@ -37,70 +37,70 @@ import org.jowidgets.common.model.ITableDataModelObservable;
 
 public interface ISimpleTableModel extends ITableModel, IDefaultTableColumnModel, ITableDataModelObservable {
 
-	ArrayList<ITableCell> getRow(int rowIndex);
+    ArrayList<ITableCell> getRow(int rowIndex);
 
-	ArrayList<String> getRowTexts(int rowIndex);
+    ArrayList<String> getRowTexts(int rowIndex);
 
-	int getFirstSelectedRow();
+    int getFirstSelectedRow();
 
-	int getLastSelectedRow();
+    int getLastSelectedRow();
 
-	void addRow();
+    void addRow();
 
-	void addRow(int rowIndex);
+    void addRow(int rowIndex);
 
-	void addRows(int rowIndex, int rowCount);
+    void addRows(int rowIndex, int rowCount);
 
-	void addRow(ITableCell... cells);
+    void addRow(ITableCell... cells);
 
-	void addRow(int rowIndex, ITableCell... cells);
+    void addRow(int rowIndex, ITableCell... cells);
 
-	void addRow(ITableCellBuilder... cellBuilders);
+    void addRow(ITableCellBuilder... cellBuilders);
 
-	void addRow(int rowIndex, ITableCellBuilder... cellBuilders);
+    void addRow(int rowIndex, ITableCellBuilder... cellBuilders);
 
-	void addRow(String... cellTexts);
+    void addRow(String... cellTexts);
 
-	void addRow(List<String> cellTexts);
+    void addRow(List<String> cellTexts);
 
-	void addRow(int rowIndex, String... cellTexts);
+    void addRow(int rowIndex, String... cellTexts);
 
-	void addRow(int rowIndex, List<String> cellTexts);
+    void addRow(int rowIndex, List<String> cellTexts);
 
-	void removeRow(int index);
+    void removeRow(int index);
 
-	void removeRows(int fromIndex, int toIndex);
+    void removeRows(int fromIndex, int toIndex);
 
-	void removeRows(int... rows);
+    void removeRows(int... rows);
 
-	void removeRows(List<Integer> rows);
+    void removeRows(List<Integer> rows);
 
-	void removeAllRows();
+    void removeAllRows();
 
-	void setCell(int rowIndex, int columnIndex, ITableCell cell);
+    void setCell(int rowIndex, int columnIndex, ITableCell cell);
 
-	void setCell(int rowIndex, int columnIndex, ITableCellBuilder cellBuilder);
+    void setCell(int rowIndex, int columnIndex, ITableCellBuilder cellBuilder);
 
-	void setCell(int rowIndex, int columnIndex, String text);
+    void setCell(int rowIndex, int columnIndex, String text);
 
-	void setCell(int rowIndex, int columnIndex, String text, IImageConstant icon);
+    void setCell(int rowIndex, int columnIndex, String text, IImageConstant icon);
 
-	void setCell(int rowIndex, int columnIndex, String text, boolean editable);
+    void setCell(int rowIndex, int columnIndex, String text, boolean editable);
 
-	void setRow(int rowIndex, ITableCell... cells);
+    void setRow(int rowIndex, ITableCell... cells);
 
-	void setRow(int rowIndex, ITableCellBuilder... cellBuilders);
+    void setRow(int rowIndex, ITableCellBuilder... cellBuilders);
 
-	void setCellText(int rowIndex, int columnIndex, String text);
+    void setCellText(int rowIndex, int columnIndex, String text);
 
-	void setCellTooltipText(int rowIndex, int columnIndex, String tooltipText);
+    void setCellTooltipText(int rowIndex, int columnIndex, String tooltipText);
 
-	void setCellIcon(int rowIndex, int columnIndex, IImageConstant icon);
+    void setCellIcon(int rowIndex, int columnIndex, IImageConstant icon);
 
-	void setCellEditable(int rowIndex, int columnIndex, boolean editable);
+    void setCellEditable(int rowIndex, int columnIndex, boolean editable);
 
-	void setRowTexts(int rowIndex, String... cellTexts);
+    void setRowTexts(int rowIndex, String... cellTexts);
 
-	void setRowTexts(int rowIndex, List<String> cellTexts);
+    void setRowTexts(int rowIndex, List<String> cellTexts);
 
 }

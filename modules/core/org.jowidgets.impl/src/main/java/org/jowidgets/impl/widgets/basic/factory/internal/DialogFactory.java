@@ -40,19 +40,19 @@ import org.jowidgets.spi.widgets.IFrameSpi;
 
 public class DialogFactory extends AbstractWidgetFactory implements IWidgetFactory<IFrame, IDialogDescriptor> {
 
-	public DialogFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+    public DialogFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider,
+        final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
-	}
+        super(genericWidgetFactory, widgetsServiceProvider, bpF);
+    }
 
-	@Override
-	public IFrame create(final Object parentUiReference, final IDialogDescriptor descriptor) {
-		final IDialogBluePrintSpi bp = getSpiBluePrintFactory().dialog().setSetup(descriptor);
-		final IFrameSpi frameSpi = getSpiWidgetFactory().createDialog(getGenericWidgetFactory(), parentUiReference, bp);
-		return new DialogImpl(frameSpi, descriptor);
-	}
+    @Override
+    public IFrame create(final Object parentUiReference, final IDialogDescriptor descriptor) {
+        final IDialogBluePrintSpi bp = getSpiBluePrintFactory().dialog().setSetup(descriptor);
+        final IFrameSpi frameSpi = getSpiWidgetFactory().createDialog(getGenericWidgetFactory(), parentUiReference, bp);
+        return new DialogImpl(frameSpi, descriptor);
+    }
 
 }

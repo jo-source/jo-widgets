@@ -37,11 +37,11 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
 final class BrowserToolkitInterceptor implements IToolkitInterceptor {
 
-	@Override
-	public void onToolkitCreate(final IToolkit toolkit) {
-		final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
-		widgetFactory.register(IBrowserBluePrint.class, new BrowserFactory());
-		widgetFactory.register(IMainBrowserBluePrint.class, new MainBrowserFactory());
-		toolkit.getBluePrintFactory().addDefaultsInitializer(IBrowserSetupBuilder.class, new BrowserDefaults());
-	}
+    @Override
+    public void onToolkitCreate(final IToolkit toolkit) {
+        final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
+        widgetFactory.register(IBrowserBluePrint.class, new BrowserFactory());
+        widgetFactory.register(IMainBrowserBluePrint.class, new MainBrowserFactory());
+        toolkit.getBluePrintFactory().addDefaultsInitializer(IBrowserSetupBuilder.class, new BrowserDefaults());
+    }
 }

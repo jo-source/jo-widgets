@@ -33,10 +33,10 @@ import org.jowidgets.workbench.api.ICloseCallback;
 
 public class CloseCallbackAdapter implements ICloseCallback {
 
-	@Override
-	public void onDispose() {}
+    @Override
+    public void onDispose() {}
 
-	@Override
-	public void onClose(final IVetoable vetoable) {}
+    @Override
+    public void onClose(final IVetoable vetoable) {}
 
 }

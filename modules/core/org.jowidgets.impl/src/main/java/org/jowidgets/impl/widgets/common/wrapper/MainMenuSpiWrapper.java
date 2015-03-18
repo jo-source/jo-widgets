@@ -35,40 +35,40 @@ import org.jowidgets.spi.widgets.IMainMenuSpi;
 
 public class MainMenuSpiWrapper extends WidgetSpiWrapper implements IMainMenuCommon {
 
-	private final ItemModelBindingDelegate itemDelegate;
+    private final ItemModelBindingDelegate itemDelegate;
 
-	public MainMenuSpiWrapper(final IMainMenuSpi widget, final ItemModelBindingDelegate itemDelegate) {
-		super(widget);
-		this.itemDelegate = itemDelegate;
-	}
+    public MainMenuSpiWrapper(final IMainMenuSpi widget, final ItemModelBindingDelegate itemDelegate) {
+        super(widget);
+        this.itemDelegate = itemDelegate;
+    }
 
-	@Override
-	public IMainMenuSpi getWidget() {
-		return (IMainMenuSpi) super.getWidget();
-	}
+    @Override
+    public IMainMenuSpi getWidget() {
+        return (IMainMenuSpi) super.getWidget();
+    }
 
-	protected ItemModelBindingDelegate getItemDelegate() {
-		return itemDelegate;
-	}
+    protected ItemModelBindingDelegate getItemDelegate() {
+        return itemDelegate;
+    }
 
-	@Override
-	public void setText(final String text) {
-		itemDelegate.setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        itemDelegate.setText(text);
+    }
 
-	@Override
-	public void setMnemonic(final char mnemonic) {
-		itemDelegate.setMnemonic(mnemonic);
-	}
+    @Override
+    public void setMnemonic(final char mnemonic) {
+        itemDelegate.setMnemonic(mnemonic);
+    }
 
-	@Override
-	public void addMenuListener(final IMenuListener listener) {
-		getWidget().addMenuListener(listener);
-	}
+    @Override
+    public void addMenuListener(final IMenuListener listener) {
+        getWidget().addMenuListener(listener);
+    }
 
-	@Override
-	public void removeMenuListener(final IMenuListener listener) {
-		getWidget().removeMenuListener(listener);
-	}
+    @Override
+    public void removeMenuListener(final IMenuListener listener) {
+        getWidget().removeMenuListener(listener);
+    }
 
 }

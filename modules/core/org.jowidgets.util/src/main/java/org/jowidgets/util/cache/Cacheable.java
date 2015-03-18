@@ -30,9 +30,9 @@ package org.jowidgets.util.cache;
 
 public class Cacheable extends CacheableObservable implements ICacheable {
 
-	@Override
-	public void release() {
-		fireOnRelease();
-	}
+    @Override
+    public void release() {
+        fireOnRelease();
+    }
 
 }

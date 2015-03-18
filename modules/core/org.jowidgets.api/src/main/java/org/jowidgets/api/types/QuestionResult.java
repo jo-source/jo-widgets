@@ -30,8 +30,8 @@ package org.jowidgets.api.types;
 
 public enum QuestionResult {
 
-	YES,
-	NO,
-	CANCEL;
+    YES,
+    NO,
+    CANCEL;
 
 }

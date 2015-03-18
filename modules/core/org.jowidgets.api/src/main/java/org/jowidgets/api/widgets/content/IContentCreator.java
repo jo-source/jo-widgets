@@ -31,6 +31,6 @@ import org.jowidgets.api.widgets.IContainer;
 
 public interface IContentCreator {
 
-	void createContent(IContainer container);
+    void createContent(IContainer container);
 
 }

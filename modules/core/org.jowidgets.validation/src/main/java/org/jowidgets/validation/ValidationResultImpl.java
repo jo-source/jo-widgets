@@ -35,264 +35,264 @@ import java.util.List;
 
 final class ValidationResultImpl implements IValidationResult, Serializable {
 
-	private static final long serialVersionUID = -6306348636538693857L;
+    private static final long serialVersionUID = -6306348636538693857L;
 
-	private final IValidationResult inheritedResult;
-	private final IValidationResult newResult;
-	private final IValidationMessage newMessage;
-	private final String newContext;
-	private final IValidationMessage worstFirst;
+    private final IValidationResult inheritedResult;
+    private final IValidationResult newResult;
+    private final IValidationMessage newMessage;
+    private final String newContext;
+    private final IValidationMessage worstFirst;
 
-	private List<IValidationMessage> messages;
-	private List<IValidationMessage> errors;
-	private List<IValidationMessage> infoErrors;
-	private List<IValidationMessage> warnings;
-	private List<IValidationMessage> infos;
+    private List<IValidationMessage> messages;
+    private List<IValidationMessage> errors;
+    private List<IValidationMessage> infoErrors;
+    private List<IValidationMessage> warnings;
+    private List<IValidationMessage> infos;
 
-	ValidationResultImpl() {
-		this(null, null, null, null);
-	}
+    ValidationResultImpl() {
+        this(null, null, null, null);
+    }
 
-	private ValidationResultImpl(
-		final IValidationResult inheritedResult,
-		final IValidationResult newResult,
-		final IValidationMessage newMessage,
-		final String newContext) {
+    private ValidationResultImpl(
+        final IValidationResult inheritedResult,
+        final IValidationResult newResult,
+        final IValidationMessage newMessage,
+        final String newContext) {
 
-		this.inheritedResult = inheritedResult;
-		this.newResult = newResult;
-		this.newMessage = newMessage;
-		this.newContext = newContext;
+        this.inheritedResult = inheritedResult;
+        this.newResult = newResult;
+        this.newMessage = newMessage;
+        this.newContext = newContext;
 
-		final IValidationMessage firstWorst = inheritedResult != null ? inheritedResult.getWorstFirst() : ValidationMessage.ok();
-		final IValidationMessage secondWorst = newResult != null ? newResult.getWorstFirst() : ValidationMessage.ok();
-		final IValidationMessage thirdWorst = newMessage != null ? newMessage : ValidationMessage.ok();
+        final IValidationMessage firstWorst = inheritedResult != null ? inheritedResult.getWorstFirst() : ValidationMessage.ok();
+        final IValidationMessage secondWorst = newResult != null ? newResult.getWorstFirst() : ValidationMessage.ok();
+        final IValidationMessage thirdWorst = newMessage != null ? newMessage : ValidationMessage.ok();
 
-		IValidationMessage worst = firstWorst;
-		if (secondWorst.worse(worst)) {
-			worst = secondWorst;
-		}
-		if (thirdWorst.worse(worst)) {
-			worst = thirdWorst;
-		}
-		this.worstFirst = getMessage(worst, newContext);
-	}
+        IValidationMessage worst = firstWorst;
+        if (secondWorst.worse(worst)) {
+            worst = secondWorst;
+        }
+        if (thirdWorst.worse(worst)) {
+            worst = thirdWorst;
+        }
+        this.worstFirst = getMessage(worst, newContext);
+    }
 
-	@Override
-	public List<IValidationMessage> getAll() {
-		if (messages == null) {
-			initializeLazy();
-		}
-		return messages;
-	}
+    @Override
+    public List<IValidationMessage> getAll() {
+        if (messages == null) {
+            initializeLazy();
+        }
+        return messages;
+    }
 
-	@Override
-	public List<IValidationMessage> getErrors() {
-		if (errors == null) {
-			initializeLazy();
-		}
-		return errors;
-	}
+    @Override
+    public List<IValidationMessage> getErrors() {
+        if (errors == null) {
+            initializeLazy();
+        }
+        return errors;
+    }
 
-	@Override
-	public List<IValidationMessage> getInfoErrors() {
-		if (infoErrors == null) {
-			initializeLazy();
-		}
-		return infoErrors;
-	}
+    @Override
+    public List<IValidationMessage> getInfoErrors() {
+        if (infoErrors == null) {
+            initializeLazy();
+        }
+        return infoErrors;
+    }
 
-	@Override
-	public List<IValidationMessage> getWarnings() {
-		if (warnings == null) {
-			initializeLazy();
-		}
-		return warnings;
-	}
+    @Override
+    public List<IValidationMessage> getWarnings() {
+        if (warnings == null) {
+            initializeLazy();
+        }
+        return warnings;
+    }
 
-	@Override
-	public List<IValidationMessage> getInfos() {
-		if (infos == null) {
-			initializeLazy();
-		}
-		return infos;
-	}
+    @Override
+    public List<IValidationMessage> getInfos() {
+        if (infos == null) {
+            initializeLazy();
+        }
+        return infos;
+    }
 
-	@Override
-	public IValidationMessage getWorstFirst() {
-		return worstFirst;
-	}
+    @Override
+    public IValidationMessage getWorstFirst() {
+        return worstFirst;
+    }
 
-	@Override
-	public boolean isValid() {
-		return worstFirst.getType().isValid();
-	}
+    @Override
+    public boolean isValid() {
+        return worstFirst.getType().isValid();
+    }
 
-	@Override
-	public boolean isOk() {
-		return MessageType.OK == worstFirst.getType();
-	}
+    @Override
+    public boolean isOk() {
+        return MessageType.OK == worstFirst.getType();
+    }
 
-	@Override
-	public IValidationResult withMessage(final IValidationMessage message) {
-		Assert.paramNotNull(message, "messages");
-		if (MessageType.OK.equals(message.getType())) {
-			return this;
-		}
-		else {
-			return new ValidationResultImpl(this, null, message, null);
-		}
-	}
+    @Override
+    public IValidationResult withMessage(final IValidationMessage message) {
+        Assert.paramNotNull(message, "messages");
+        if (MessageType.OK.equals(message.getType())) {
+            return this;
+        }
+        else {
+            return new ValidationResultImpl(this, null, message, null);
+        }
+    }
 
-	@Override
-	public IValidationResult withContext(final String context) {
-		if (NullCompatibleEquivalence.equals(context, newContext)) {
-			return this;
-		}
-		else {
-			return new ValidationResultImpl(this, null, null, context);
-		}
-	}
+    @Override
+    public IValidationResult withContext(final String context) {
+        if (NullCompatibleEquivalence.equals(context, newContext)) {
+            return this;
+        }
+        else {
+            return new ValidationResultImpl(this, null, null, context);
+        }
+    }
 
-	@Override
-	public IValidationResult withResult(final IValidationResult result) {
-		if (result == null || result.isOk()) {
-			return this;
-		}
-		else {
-			return new ValidationResultImpl(this, result, null, null);
-		}
-	}
+    @Override
+    public IValidationResult withResult(final IValidationResult result) {
+        if (result == null || result.isOk()) {
+            return this;
+        }
+        else {
+            return new ValidationResultImpl(this, result, null, null);
+        }
+    }
 
-	@Override
-	public IValidationResult withError(final String message) {
-		return withMessage(ValidationMessage.error(message));
-	}
+    @Override
+    public IValidationResult withError(final String message) {
+        return withMessage(ValidationMessage.error(message));
+    }
 
-	@Override
-	public IValidationResult withInfoError(final String message) {
-		return withMessage(ValidationMessage.infoError(message));
-	}
+    @Override
+    public IValidationResult withInfoError(final String message) {
+        return withMessage(ValidationMessage.infoError(message));
+    }
 
-	@Override
-	public IValidationResult withWarning(final String message) {
-		return withMessage(ValidationMessage.warning(message));
-	}
+    @Override
+    public IValidationResult withWarning(final String message) {
+        return withMessage(ValidationMessage.warning(message));
+    }
 
-	@Override
-	public IValidationResult withInfo(final String message) {
-		return withMessage(ValidationMessage.info(message));
-	}
+    @Override
+    public IValidationResult withInfo(final String message) {
+        return withMessage(ValidationMessage.info(message));
+    }
 
-	@Override
-	public IValidationResult withError(final String context, final String message) {
-		return withMessage(ValidationMessage.error(context, message));
-	}
+    @Override
+    public IValidationResult withError(final String context, final String message) {
+        return withMessage(ValidationMessage.error(context, message));
+    }
 
-	@Override
-	public IValidationResult withInfoError(final String context, final String message) {
-		return withMessage(ValidationMessage.infoError(context, message));
-	}
+    @Override
+    public IValidationResult withInfoError(final String context, final String message) {
+        return withMessage(ValidationMessage.infoError(context, message));
+    }
 
-	@Override
-	public IValidationResult withWarning(final String context, final String message) {
-		return withMessage(ValidationMessage.warning(context, message));
-	}
+    @Override
+    public IValidationResult withWarning(final String context, final String message) {
+        return withMessage(ValidationMessage.warning(context, message));
+    }
 
-	@Override
-	public IValidationResult withInfo(final String context, final String message) {
-		return withMessage(ValidationMessage.info(context, message));
-	}
+    @Override
+    public IValidationResult withInfo(final String context, final String message) {
+        return withMessage(ValidationMessage.info(context, message));
+    }
 
-	@Override
-	public String toString() {
-		return "ValidationResultImpl [worstFirst=" + worstFirst + "]";
-	}
+    @Override
+    public String toString() {
+        return "ValidationResultImpl [worstFirst=" + worstFirst + "]";
+    }
 
-	private void initializeLazy() {
-		final ArrayList<IValidationMessage> messagesMutable = new ArrayList<IValidationMessage>();
-		final ArrayList<IValidationMessage> errorsMutable = new ArrayList<IValidationMessage>();
-		final ArrayList<IValidationMessage> infoErrorsMutable = new ArrayList<IValidationMessage>();
-		final ArrayList<IValidationMessage> warningsMutable = new ArrayList<IValidationMessage>();
-		final ArrayList<IValidationMessage> infosMutable = new ArrayList<IValidationMessage>();
+    private void initializeLazy() {
+        final ArrayList<IValidationMessage> messagesMutable = new ArrayList<IValidationMessage>();
+        final ArrayList<IValidationMessage> errorsMutable = new ArrayList<IValidationMessage>();
+        final ArrayList<IValidationMessage> infoErrorsMutable = new ArrayList<IValidationMessage>();
+        final ArrayList<IValidationMessage> warningsMutable = new ArrayList<IValidationMessage>();
+        final ArrayList<IValidationMessage> infosMutable = new ArrayList<IValidationMessage>();
 
-		if (inheritedResult != null) {
-			addMessages(
-					inheritedResult.getAll(),
-					messagesMutable,
-					errorsMutable,
-					infoErrorsMutable,
-					warningsMutable,
-					infosMutable);
-		}
+        if (inheritedResult != null) {
+            addMessages(
+                    inheritedResult.getAll(),
+                    messagesMutable,
+                    errorsMutable,
+                    infoErrorsMutable,
+                    warningsMutable,
+                    infosMutable);
+        }
 
-		if (newResult != null) {
-			addMessages(newResult.getAll(), messagesMutable, errorsMutable, infoErrorsMutable, warningsMutable, infosMutable);
-		}
+        if (newResult != null) {
+            addMessages(newResult.getAll(), messagesMutable, errorsMutable, infoErrorsMutable, warningsMutable, infosMutable);
+        }
 
-		if (newMessage != null) {
-			addMessage(newMessage, messagesMutable, errorsMutable, infoErrorsMutable, warningsMutable, infosMutable);
-		}
+        if (newMessage != null) {
+            addMessage(newMessage, messagesMutable, errorsMutable, infoErrorsMutable, warningsMutable, infosMutable);
+        }
 
-		messagesMutable.trimToSize();
-		errorsMutable.trimToSize();
-		infoErrorsMutable.trimToSize();
-		warningsMutable.trimToSize();
-		infosMutable.trimToSize();
+        messagesMutable.trimToSize();
+        errorsMutable.trimToSize();
+        infoErrorsMutable.trimToSize();
+        warningsMutable.trimToSize();
+        infosMutable.trimToSize();
 
-		messages = Collections.unmodifiableList(messagesMutable);
-		errors = Collections.unmodifiableList(errorsMutable);
-		infoErrors = Collections.unmodifiableList(infoErrorsMutable);
-		warnings = Collections.unmodifiableList(warningsMutable);
-		infos = Collections.unmodifiableList(infosMutable);
-	}
+        messages = Collections.unmodifiableList(messagesMutable);
+        errors = Collections.unmodifiableList(errorsMutable);
+        infoErrors = Collections.unmodifiableList(infoErrorsMutable);
+        warnings = Collections.unmodifiableList(warningsMutable);
+        infos = Collections.unmodifiableList(infosMutable);
+    }
 
-	private void addMessages(
-		final List<IValidationMessage> source,
-		final List<IValidationMessage> messages,
-		final List<IValidationMessage> errors,
-		final List<IValidationMessage> infoErrors,
-		final List<IValidationMessage> warnings,
-		final List<IValidationMessage> infos) {
-		for (final IValidationMessage message : source) {
-			addMessage(message, messages, errors, infoErrors, warnings, infos);
-		}
-	}
+    private void addMessages(
+        final List<IValidationMessage> source,
+        final List<IValidationMessage> messages,
+        final List<IValidationMessage> errors,
+        final List<IValidationMessage> infoErrors,
+        final List<IValidationMessage> warnings,
+        final List<IValidationMessage> infos) {
+        for (final IValidationMessage message : source) {
+            addMessage(message, messages, errors, infoErrors, warnings, infos);
+        }
+    }
 
-	private void addMessage(
-		IValidationMessage message,
-		final List<IValidationMessage> messages,
-		final List<IValidationMessage> errors,
-		final List<IValidationMessage> infoErrors,
-		final List<IValidationMessage> warnings,
-		final List<IValidationMessage> infos) {
+    private void addMessage(
+        IValidationMessage message,
+        final List<IValidationMessage> messages,
+        final List<IValidationMessage> errors,
+        final List<IValidationMessage> infoErrors,
+        final List<IValidationMessage> warnings,
+        final List<IValidationMessage> infos) {
 
-		message = getMessage(message, newContext);
-		if (MessageType.ERROR == message.getType()) {
-			messages.add(message);
-			errors.add(message);
-		}
-		else if (MessageType.INFO_ERROR == message.getType()) {
-			messages.add(message);
-			infoErrors.add(message);
-		}
-		else if (MessageType.WARNING == message.getType()) {
-			messages.add(message);
-			warnings.add(message);
-		}
-		else if (MessageType.INFO == message.getType()) {
-			messages.add(message);
-			infos.add(message);
-		}
-	}
+        message = getMessage(message, newContext);
+        if (MessageType.ERROR == message.getType()) {
+            messages.add(message);
+            errors.add(message);
+        }
+        else if (MessageType.INFO_ERROR == message.getType()) {
+            messages.add(message);
+            infoErrors.add(message);
+        }
+        else if (MessageType.WARNING == message.getType()) {
+            messages.add(message);
+            warnings.add(message);
+        }
+        else if (MessageType.INFO == message.getType()) {
+            messages.add(message);
+            infos.add(message);
+        }
+    }
 
-	private IValidationMessage getMessage(final IValidationMessage original, final String newContext) {
-		if (newContext != null) {
-			return original.withContext(newContext);
-		}
-		else {
-			return original;
-		}
-	}
+    private IValidationMessage getMessage(final IValidationMessage original, final String newContext) {
+        if (newContext != null) {
+            return original.withContext(newContext);
+        }
+        else {
+            return original;
+        }
+    }
 
 }

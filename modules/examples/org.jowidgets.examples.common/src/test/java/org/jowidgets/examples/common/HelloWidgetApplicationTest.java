@@ -36,22 +36,22 @@ import org.junit.Test;
 
 public class HelloWidgetApplicationTest {
 
-	@Test
-	public void testApplication() {
-		Toolkit.getApplicationRunner().run(new IApplication() {
+    @Test
+    public void testApplication() {
+        Toolkit.getApplicationRunner().run(new IApplication() {
 
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
+            @Override
+            public void start(final IApplicationLifecycle lifecycle) {
 
-				final HelloWidgetApplication testApplication = new HelloWidgetApplication("Hello widgets application test");
-				testApplication.start(lifecycle);
-				Assert.assertTrue(testApplication.getRootFrame().isVisible());
+                final HelloWidgetApplication testApplication = new HelloWidgetApplication("Hello widgets application test");
+                testApplication.start(lifecycle);
+                Assert.assertTrue(testApplication.getRootFrame().isVisible());
 
-				testApplication.getRootFrame().dispose();
+                testApplication.getRootFrame().dispose();
 
-			}
-		});
+            }
+        });
 
-	}
+    }
 
 }

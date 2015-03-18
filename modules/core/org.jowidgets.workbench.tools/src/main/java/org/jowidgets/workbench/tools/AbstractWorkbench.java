@@ -33,7 +33,7 @@ import org.jowidgets.workbench.api.IWorkbench;
 
 public abstract class AbstractWorkbench extends AbstractWorkbenchDescriptor implements IWorkbench {
 
-	@Override
-	public void onClose(final IVetoable vetoable) {}
+    @Override
+    public void onClose(final IVetoable vetoable) {}
 
 }

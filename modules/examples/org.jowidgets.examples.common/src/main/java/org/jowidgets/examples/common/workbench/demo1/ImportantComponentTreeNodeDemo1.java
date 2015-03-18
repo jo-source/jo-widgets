@@ -42,30 +42,30 @@ import org.jowidgets.workbench.api.IComponentNodeContext;
 
 public class ImportantComponentTreeNodeDemo1 extends AbstractDemoComponentNode {
 
-	public ImportantComponentTreeNodeDemo1(final String id, final String label) {
-		super(id, label, "Component that ask user to be deactivated", IconsSmall.WARNING);
-	}
+    public ImportantComponentTreeNodeDemo1(final String id, final String label) {
+        super(id, label, "Component that ask user to be deactivated", IconsSmall.WARNING);
+    }
 
-	public ImportantComponentTreeNodeDemo1(
-		final String id,
-		final String label,
-		final String tooltip,
-		final IImageConstant icon,
-		final List<IComponentNode> children) {
+    public ImportantComponentTreeNodeDemo1(
+        final String id,
+        final String label,
+        final String tooltip,
+        final IImageConstant icon,
+        final List<IComponentNode> children) {
 
-		super(id, label, tooltip, icon);
-	}
+        super(id, label, tooltip, icon);
+    }
 
-	@Override
-	public void onContextInitialize(final IComponentNodeContext context) {
-		final ActionFactory actionFactory = new ActionFactory();
-		final IMenuModel popupMenu = context.getPopupMenu();
-		popupMenu.addAction(actionFactory.createDeleteAction(context, this, "Delete " + getLabel(), SilkIcons.APPLICATION_DELETE));
-	}
+    @Override
+    public void onContextInitialize(final IComponentNodeContext context) {
+        final ActionFactory actionFactory = new ActionFactory();
+        final IMenuModel popupMenu = context.getPopupMenu();
+        popupMenu.addAction(actionFactory.createDeleteAction(context, this, "Delete " + getLabel(), SilkIcons.APPLICATION_DELETE));
+    }
 
-	@Override
-	public IComponent createComponent(final IComponentContext context) {
-		return new ImportantComponentDemo1(context);
-	}
+    @Override
+    public IComponent createComponent(final IComponentContext context) {
+        return new ImportantComponentDemo1(context);
+    }
 
 }

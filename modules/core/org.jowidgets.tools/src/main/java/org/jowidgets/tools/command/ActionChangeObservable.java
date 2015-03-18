@@ -38,45 +38,45 @@ import org.jowidgets.util.Assert;
 
 public class ActionChangeObservable implements IActionChangeObservable {
 
-	private final Set<IActionChangeListener> listeners;
+    private final Set<IActionChangeListener> listeners;
 
-	public ActionChangeObservable() {
-		this.listeners = new LinkedHashSet<IActionChangeListener>();
-	}
+    public ActionChangeObservable() {
+        this.listeners = new LinkedHashSet<IActionChangeListener>();
+    }
 
-	@Override
-	public void addActionChangeListener(final IActionChangeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public void addActionChangeListener(final IActionChangeListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removeActionChangeListener(final IActionChangeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeActionChangeListener(final IActionChangeListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	protected void fireTextChanged() {
-		for (final IActionChangeListener listener : new LinkedList<IActionChangeListener>(listeners)) {
-			listener.textChanged();
-		}
-	}
+    protected void fireTextChanged() {
+        for (final IActionChangeListener listener : new LinkedList<IActionChangeListener>(listeners)) {
+            listener.textChanged();
+        }
+    }
 
-	protected void fireToolTipTextChanged() {
-		for (final IActionChangeListener listener : new LinkedList<IActionChangeListener>(listeners)) {
-			listener.toolTipTextChanged();
-		}
-	}
+    protected void fireToolTipTextChanged() {
+        for (final IActionChangeListener listener : new LinkedList<IActionChangeListener>(listeners)) {
+            listener.toolTipTextChanged();
+        }
+    }
 
-	protected void fireIconChanged() {
-		for (final IActionChangeListener listener : new LinkedList<IActionChangeListener>(listeners)) {
-			listener.iconChanged();
-		}
-	}
+    protected void fireIconChanged() {
+        for (final IActionChangeListener listener : new LinkedList<IActionChangeListener>(listeners)) {
+            listener.iconChanged();
+        }
+    }
 
-	protected void fireEnabledChanged() {
-		for (final IActionChangeListener listener : new LinkedList<IActionChangeListener>(listeners)) {
-			listener.enabledChanged();
-		}
-	}
+    protected void fireEnabledChanged() {
+        for (final IActionChangeListener listener : new LinkedList<IActionChangeListener>(listeners)) {
+            listener.enabledChanged();
+        }
+    }
 }

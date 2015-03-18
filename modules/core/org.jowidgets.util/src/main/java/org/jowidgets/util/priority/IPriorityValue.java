@@ -30,14 +30,14 @@ package org.jowidgets.util.priority;
 
 public interface IPriorityValue<VALUE_TYPE, PRIORITY_TYPE extends Comparable<PRIORITY_TYPE>> {
 
-	/**
-	 * @return The value, may be null
-	 */
-	VALUE_TYPE getValue();
+    /**
+     * @return The value, may be null
+     */
+    VALUE_TYPE getValue();
 
-	/**
-	 * @return The priority, may be null. The priority of null is the lowest priority.
-	 */
-	PRIORITY_TYPE getPriority();
+    /**
+     * @return The priority, may be null. The priority of null is the lowest priority.
+     */
+    PRIORITY_TYPE getPriority();
 
 }

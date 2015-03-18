@@ -38,69 +38,69 @@ import org.jowidgets.common.widgets.IWindowCommon;
 
 public class JoMessageDialog extends Component<IMessageDialog, IMessageDialogBluePrint> implements IMessageDialog {
 
-	public JoMessageDialog(final IWindowCommon parent, final IImageConstant icon, final String message) {
-		this(parent, bluePrint().setIcon(icon).setText(message));
-	}
+    public JoMessageDialog(final IWindowCommon parent, final IImageConstant icon, final String message) {
+        this(parent, bluePrint().setIcon(icon).setText(message));
+    }
 
-	public JoMessageDialog(final IWindowCommon parent, final String title, final IImageConstant icon, final String message) {
-		this(parent, bluePrint().setTitle(title).setIcon(icon).setText(message));
-	}
+    public JoMessageDialog(final IWindowCommon parent, final String title, final IImageConstant icon, final String message) {
+        this(parent, bluePrint().setTitle(title).setIcon(icon).setText(message));
+    }
 
-	public JoMessageDialog(
-		final IWindowCommon parent,
-		final IImageConstant titleIcon,
-		final String title,
-		final IImageConstant icon,
-		final String message) {
-		this(parent, bluePrint().setTitleIcon(titleIcon).setTitle(title).setIcon(icon).setText(message));
-	}
+    public JoMessageDialog(
+        final IWindowCommon parent,
+        final IImageConstant titleIcon,
+        final String title,
+        final IImageConstant icon,
+        final String message) {
+        this(parent, bluePrint().setTitleIcon(titleIcon).setTitle(title).setIcon(icon).setText(message));
+    }
 
-	public JoMessageDialog(final IWindowCommon parent, final IMessageDialogDescriptor descriptor) {
-		super(bluePrint().setSetup(descriptor));
-		initialize(Toolkit.getWidgetFactory().create(parent.getUiReference(), descriptor));
-	}
+    public JoMessageDialog(final IWindowCommon parent, final IMessageDialogDescriptor descriptor) {
+        super(bluePrint().setSetup(descriptor));
+        initialize(Toolkit.getWidgetFactory().create(parent.getUiReference(), descriptor));
+    }
 
-	@Override
-	public void showMessage() {
-		getWidget().showMessage();
-	}
+    @Override
+    public void showMessage() {
+        getWidget().showMessage();
+    }
 
-	@Override
-	public IWindow getParent() {
-		return getWidget().getParent();
-	}
+    @Override
+    public IWindow getParent() {
+        return getWidget().getParent();
+    }
 
-	@Override
-	public void setParent(final IWindow parent) {
-		getWidget().setParent(parent);
-	}
+    @Override
+    public void setParent(final IWindow parent) {
+        getWidget().setParent(parent);
+    }
 
-	public static IMessageDialogBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().messageDialog();
-	}
+    public static IMessageDialogBluePrint bluePrint() {
+        return Toolkit.getBluePrintFactory().messageDialog();
+    }
 
-	public static IMessageDialogBluePrint bluePrintInfo() {
-		return Toolkit.getBluePrintFactory().infoDialog();
-	}
+    public static IMessageDialogBluePrint bluePrintInfo() {
+        return Toolkit.getBluePrintFactory().infoDialog();
+    }
 
-	public static IMessageDialogBluePrint bluePrintWarning() {
-		return Toolkit.getBluePrintFactory().warningDialog();
-	}
+    public static IMessageDialogBluePrint bluePrintWarning() {
+        return Toolkit.getBluePrintFactory().warningDialog();
+    }
 
-	public static IMessageDialogBluePrint bluePrintError() {
-		return Toolkit.getBluePrintFactory().errorDialog();
-	}
+    public static IMessageDialogBluePrint bluePrintError() {
+        return Toolkit.getBluePrintFactory().errorDialog();
+    }
 
-	public static IMessageDialogBluePrint bluePrintInfo(final String message) {
-		return Toolkit.getBluePrintFactory().infoDialog(message);
-	}
+    public static IMessageDialogBluePrint bluePrintInfo(final String message) {
+        return Toolkit.getBluePrintFactory().infoDialog(message);
+    }
 
-	public static IMessageDialogBluePrint bluePrintWarning(final String message) {
-		return Toolkit.getBluePrintFactory().warningDialog(message);
-	}
+    public static IMessageDialogBluePrint bluePrintWarning(final String message) {
+        return Toolkit.getBluePrintFactory().warningDialog(message);
+    }
 
-	public static IMessageDialogBluePrint bluePrintError(final String message) {
-		return Toolkit.getBluePrintFactory().errorDialog(message);
-	}
+    public static IMessageDialogBluePrint bluePrintError(final String message) {
+        return Toolkit.getBluePrintFactory().errorDialog(message);
+    }
 
 }

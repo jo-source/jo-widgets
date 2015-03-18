@@ -30,11 +30,11 @@ package org.jowidgets.util;
 
 public interface IMutableValueListener<VALUE_TYPE> {
 
-	/**
-	 * This method will be invoked after the value has been changed
-	 * 
-	 * @param event holds the changed event
-	 */
-	void changed(IValueChangedEvent<VALUE_TYPE> event);
+    /**
+     * This method will be invoked after the value has been changed
+     * 
+     * @param event holds the changed event
+     */
+    void changed(IValueChangedEvent<VALUE_TYPE> event);
 
 }

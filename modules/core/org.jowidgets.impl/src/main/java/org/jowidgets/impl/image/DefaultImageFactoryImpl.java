@@ -42,40 +42,40 @@ import org.jowidgets.util.IFactory;
 
 public final class DefaultImageFactoryImpl implements IImageFactory {
 
-	private final IImageFactorySpi factorySpi;
-	private final IImageRegistry imageRegistry;
+    private final IImageFactorySpi factorySpi;
+    private final IImageRegistry imageRegistry;
 
-	public DefaultImageFactoryImpl(final IImageFactorySpi factorySpi, final IImageRegistry imageRegistry) {
-		Assert.paramNotNull(factorySpi, "factorySpi");
-		Assert.paramNotNull(imageRegistry, "imageRegistry");
-		this.imageRegistry = imageRegistry;
-		this.factorySpi = factorySpi;
-	}
+    public DefaultImageFactoryImpl(final IImageFactorySpi factorySpi, final IImageRegistry imageRegistry) {
+        Assert.paramNotNull(factorySpi, "factorySpi");
+        Assert.paramNotNull(imageRegistry, "imageRegistry");
+        this.imageRegistry = imageRegistry;
+        this.factorySpi = factorySpi;
+    }
 
-	@Override
-	public IImage createImage(final File file) {
-		Assert.paramNotNull(file, "file");
-		try {
-			return createImage(file.toURI().toURL());
-		}
-		catch (final Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+    @Override
+    public IImage createImage(final File file) {
+        Assert.paramNotNull(file, "file");
+        try {
+            return createImage(file.toURI().toURL());
+        }
+        catch (final Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	@Override
-	public IImage createImage(final URL url) {
-		return new ImageImpl(factorySpi.createImage(url), imageRegistry);
-	}
+    @Override
+    public IImage createImage(final URL url) {
+        return new ImageImpl(factorySpi.createImage(url), imageRegistry);
+    }
 
-	@Override
-	public IImage createImage(final IFactory<InputStream> inputStream) {
-		return new ImageImpl(factorySpi.createImage(inputStream), imageRegistry);
-	}
+    @Override
+    public IImage createImage(final IFactory<InputStream> inputStream) {
+        return new ImageImpl(factorySpi.createImage(inputStream), imageRegistry);
+    }
 
-	@Override
-	public IBufferedImage createBufferedImage(final int width, final int height) {
-		return new BufferedImageImpl(factorySpi.createBufferedImage(width, height), imageRegistry);
-	}
+    @Override
+    public IBufferedImage createBufferedImage(final int width, final int height) {
+        return new BufferedImageImpl(factorySpi.createBufferedImage(width, height), imageRegistry);
+    }
 
 }

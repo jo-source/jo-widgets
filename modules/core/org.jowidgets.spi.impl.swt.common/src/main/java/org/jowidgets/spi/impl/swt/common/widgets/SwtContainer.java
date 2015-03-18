@@ -62,344 +62,344 @@ import org.jowidgets.util.Assert;
 
 public class SwtContainer implements IContainerSpi {
 
-	private final IGenericWidgetFactory factory;
-	private final SwtComponent swtComponentDelegate;
+    private final IGenericWidgetFactory factory;
+    private final SwtComponent swtComponentDelegate;
 
-	private Composite composite;
+    private Composite composite;
 
-	public SwtContainer(final IGenericWidgetFactory factory, final Composite composite) {
+    public SwtContainer(final IGenericWidgetFactory factory, final Composite composite) {
 
-		Assert.paramNotNull(factory, "factory");
-		Assert.paramNotNull(composite, "composite");
+        Assert.paramNotNull(factory, "factory");
+        Assert.paramNotNull(composite, "composite");
 
-		this.factory = factory;
-		this.composite = composite;
-		this.swtComponentDelegate = new SwtComponent(composite);
+        this.factory = factory;
+        this.composite = composite;
+        this.swtComponentDelegate = new SwtComponent(composite);
 
-	}
+    }
 
-	public void setComposite(final Composite composite) {
-		this.composite = composite;
-		swtComponentDelegate.setControl(composite);
-	}
+    public void setComposite(final Composite composite) {
+        this.composite = composite;
+        swtComponentDelegate.setControl(composite);
+    }
 
-	@Override
-	public void setLayout(final ILayoutDescriptor layout) {
-		Assert.paramNotNull(layout, "layoutDescriptor");
-		if (layout instanceof MigLayoutDescriptor) {
-			final MigLayoutDescriptor migLayoutManager = (MigLayoutDescriptor) layout;
-			composite.setLayout(new MigLayout(
-				migLayoutManager.getLayoutConstraints(),
-				migLayoutManager.getColumnConstraints(),
-				migLayoutManager.getRowConstraints()));
-		}
-		else if (layout instanceof ILayouter) {
-			composite.setLayout(new LayoutImpl((ILayouter) layout));
-		}
-		else {
-			throw new IllegalArgumentException("LayoutDescriptor of type '" + layout.getClass().getName() + "' is not supported");
-		}
-	}
+    @Override
+    public void setLayout(final ILayoutDescriptor layout) {
+        Assert.paramNotNull(layout, "layoutDescriptor");
+        if (layout instanceof MigLayoutDescriptor) {
+            final MigLayoutDescriptor migLayoutManager = (MigLayoutDescriptor) layout;
+            composite.setLayout(new MigLayout(
+                migLayoutManager.getLayoutConstraints(),
+                migLayoutManager.getColumnConstraints(),
+                migLayoutManager.getRowConstraints()));
+        }
+        else if (layout instanceof ILayouter) {
+            composite.setLayout(new LayoutImpl((ILayouter) layout));
+        }
+        else {
+            throw new IllegalArgumentException("LayoutDescriptor of type '" + layout.getClass().getName() + "' is not supported");
+        }
+    }
 
-	@Override
-	public Composite getUiReference() {
-		return composite;
-	}
+    @Override
+    public Composite getUiReference() {
+        return composite;
+    }
 
-	@Override
-	public void redraw() {
-		swtComponentDelegate.redraw();
-	}
+    @Override
+    public void redraw() {
+        swtComponentDelegate.redraw();
+    }
 
-	@Override
-	public void setRedrawEnabled(final boolean enabled) {
-		swtComponentDelegate.setRedrawEnabled(enabled);
-	}
+    @Override
+    public void setRedrawEnabled(final boolean enabled) {
+        swtComponentDelegate.setRedrawEnabled(enabled);
+    }
 
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		swtComponentDelegate.setForegroundColor(colorValue);
-	}
+    @Override
+    public void setForegroundColor(final IColorConstant colorValue) {
+        swtComponentDelegate.setForegroundColor(colorValue);
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		swtComponentDelegate.setBackgroundColor(colorValue);
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        swtComponentDelegate.setBackgroundColor(colorValue);
+    }
 
-	@Override
-	public IColorConstant getForegroundColor() {
-		return swtComponentDelegate.getForegroundColor();
-	}
+    @Override
+    public IColorConstant getForegroundColor() {
+        return swtComponentDelegate.getForegroundColor();
+    }
 
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return swtComponentDelegate.getBackgroundColor();
-	}
+    @Override
+    public IColorConstant getBackgroundColor() {
+        return swtComponentDelegate.getBackgroundColor();
+    }
 
-	@Override
-	public void setCursor(final Cursor cursor) {
-		swtComponentDelegate.setCursor(cursor);
-	}
+    @Override
+    public void setCursor(final Cursor cursor) {
+        swtComponentDelegate.setCursor(cursor);
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		swtComponentDelegate.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        swtComponentDelegate.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return swtComponentDelegate.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return swtComponentDelegate.isEnabled();
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		swtComponentDelegate.setVisible(visible);
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        swtComponentDelegate.setVisible(visible);
+    }
 
-	@Override
-	public boolean isVisible() {
-		return swtComponentDelegate.isVisible();
-	}
+    @Override
+    public boolean isVisible() {
+        return swtComponentDelegate.isVisible();
+    }
 
-	@Override
-	public Rectangle getClientArea() {
-		return RectangleConvert.convert(getUiReference().getClientArea());
-	}
+    @Override
+    public Rectangle getClientArea() {
+        return RectangleConvert.convert(getUiReference().getClientArea());
+    }
 
-	@Override
-	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
-		Assert.paramNotNull(clientAreaSize, "clientAreaSize");
-		final org.eclipse.swt.graphics.Rectangle trim = getUiReference().computeTrim(
-				0,
-				0,
-				clientAreaSize.getWidth(),
-				clientAreaSize.getHeight());
-		return new Dimension(trim.width, trim.height);
-	}
+    @Override
+    public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+        Assert.paramNotNull(clientAreaSize, "clientAreaSize");
+        final org.eclipse.swt.graphics.Rectangle trim = getUiReference().computeTrim(
+                0,
+                0,
+                clientAreaSize.getWidth(),
+                clientAreaSize.getHeight());
+        return new Dimension(trim.width, trim.height);
+    }
 
-	@Override
-	public Dimension getSize() {
-		return swtComponentDelegate.getSize();
-	}
+    @Override
+    public Dimension getSize() {
+        return swtComponentDelegate.getSize();
+    }
 
-	@Override
-	public void setSize(final Dimension size) {
-		swtComponentDelegate.setSize(size);
-	}
+    @Override
+    public void setSize(final Dimension size) {
+        swtComponentDelegate.setSize(size);
+    }
 
-	@Override
-	public Position getPosition() {
-		return swtComponentDelegate.getPosition();
-	}
+    @Override
+    public Position getPosition() {
+        return swtComponentDelegate.getPosition();
+    }
 
-	@Override
-	public void setPosition(final Position position) {
-		swtComponentDelegate.setPosition(position);
-	}
+    @Override
+    public void setPosition(final Position position) {
+        swtComponentDelegate.setPosition(position);
+    }
 
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return swtComponentDelegate.createPopupMenu();
-	}
+    @Override
+    public IPopupMenuSpi createPopupMenu() {
+        return swtComponentDelegate.createPopupMenu();
+    }
 
-	@Override
-	public boolean requestFocus() {
-		return swtComponentDelegate.requestFocus();
-	}
+    @Override
+    public boolean requestFocus() {
+        return swtComponentDelegate.requestFocus();
+    }
 
-	@Override
-	public void addFocusListener(final IFocusListener listener) {
-		swtComponentDelegate.addFocusListener(listener);
-	}
+    @Override
+    public void addFocusListener(final IFocusListener listener) {
+        swtComponentDelegate.addFocusListener(listener);
+    }
 
-	@Override
-	public void removeFocusListener(final IFocusListener listener) {
-		swtComponentDelegate.removeFocusListener(listener);
-	}
+    @Override
+    public void removeFocusListener(final IFocusListener listener) {
+        swtComponentDelegate.removeFocusListener(listener);
+    }
 
-	@Override
-	public void addKeyListener(final IKeyListener listener) {
-		swtComponentDelegate.addKeyListener(listener);
-	}
+    @Override
+    public void addKeyListener(final IKeyListener listener) {
+        swtComponentDelegate.addKeyListener(listener);
+    }
 
-	@Override
-	public void removeKeyListener(final IKeyListener listener) {
-		swtComponentDelegate.removeKeyListener(listener);
-	}
+    @Override
+    public void removeKeyListener(final IKeyListener listener) {
+        swtComponentDelegate.removeKeyListener(listener);
+    }
 
-	@Override
-	public void addMouseListener(final IMouseListener mouseListener) {
-		swtComponentDelegate.addMouseListener(mouseListener);
-	}
+    @Override
+    public void addMouseListener(final IMouseListener mouseListener) {
+        swtComponentDelegate.addMouseListener(mouseListener);
+    }
 
-	@Override
-	public void removeMouseListener(final IMouseListener mouseListener) {
-		swtComponentDelegate.removeMouseListener(mouseListener);
-	}
+    @Override
+    public void removeMouseListener(final IMouseListener mouseListener) {
+        swtComponentDelegate.removeMouseListener(mouseListener);
+    }
 
-	@Override
-	public void addMouseMotionListener(final IMouseMotionListener listener) {
-		swtComponentDelegate.addMouseMotionListener(listener);
-	}
+    @Override
+    public void addMouseMotionListener(final IMouseMotionListener listener) {
+        swtComponentDelegate.addMouseMotionListener(listener);
+    }
 
-	@Override
-	public void removeMouseMotionListener(final IMouseMotionListener listener) {
-		swtComponentDelegate.addMouseMotionListener(listener);
-	}
+    @Override
+    public void removeMouseMotionListener(final IMouseMotionListener listener) {
+        swtComponentDelegate.addMouseMotionListener(listener);
+    }
 
-	@Override
-	public void addComponentListener(final IComponentListener componentListener) {
-		swtComponentDelegate.addComponentListener(componentListener);
-	}
+    @Override
+    public void addComponentListener(final IComponentListener componentListener) {
+        swtComponentDelegate.addComponentListener(componentListener);
+    }
 
-	@Override
-	public void removeComponentListener(final IComponentListener componentListener) {
-		swtComponentDelegate.removeComponentListener(componentListener);
-	}
+    @Override
+    public void removeComponentListener(final IComponentListener componentListener) {
+        swtComponentDelegate.removeComponentListener(componentListener);
+    }
 
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		swtComponentDelegate.addPopupDetectionListener(listener);
-	}
+    @Override
+    public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+        swtComponentDelegate.addPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		swtComponentDelegate.removePopupDetectionListener(listener);
-	}
+    @Override
+    public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+        swtComponentDelegate.removePopupDetectionListener(listener);
+    }
 
-	public void setToolTipText(final String toolTip) {
-		swtComponentDelegate.setToolTipText(toolTip);
-	}
+    public void setToolTipText(final String toolTip) {
+        swtComponentDelegate.setToolTipText(toolTip);
+    }
 
-	@Override
-	public void setTabOrder(final Collection<? extends IControlCommon> tabOrder) {
-		if (tabOrder == null) {
-			getUiReference().setTabList(null);
-		}
-		else {
-			final Control[] tabList = new Control[tabOrder.size()];
-			int index = 0;
-			for (final IControlCommon control : tabOrder) {
-				tabList[index] = (Control) control.getUiReference();
-				index++;
-			}
-			getUiReference().setTabList(tabList);
-		}
-	}
+    @Override
+    public void setTabOrder(final Collection<? extends IControlCommon> tabOrder) {
+        if (tabOrder == null) {
+            getUiReference().setTabList(null);
+        }
+        else {
+            final Control[] tabList = new Control[tabOrder.size()];
+            int index = 0;
+            for (final IControlCommon control : tabOrder) {
+                tabList[index] = (Control) control.getUiReference();
+                index++;
+            }
+            getUiReference().setTabList(tabList);
+        }
+    }
 
-	@Override
-	public final <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
-		final Integer index,
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
-		final Object cellConstraints) {
+    @Override
+    public final <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+        final Integer index,
+        final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+        final Object cellConstraints) {
 
-		final WIDGET_TYPE result = factory.create(getUiReference(), descriptor);
-		afterChildCreation(index, result, cellConstraints);
-		return result;
-	}
+        final WIDGET_TYPE result = factory.create(getUiReference(), descriptor);
+        afterChildCreation(index, result, cellConstraints);
+        return result;
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
-		final Integer index,
-		final ICustomWidgetCreator<WIDGET_TYPE> widgetCreator,
-		final Object cellConstraints) {
+    @Override
+    public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+        final Integer index,
+        final ICustomWidgetCreator<WIDGET_TYPE> widgetCreator,
+        final Object cellConstraints) {
 
-		final ICustomWidgetFactory customWidgetFactory = createCustomWidgetFactory();
+        final ICustomWidgetFactory customWidgetFactory = createCustomWidgetFactory();
 
-		final WIDGET_TYPE result = widgetCreator.create(customWidgetFactory);
-		afterChildCreation(index, result, cellConstraints);
-		return result;
-	}
+        final WIDGET_TYPE result = widgetCreator.create(customWidgetFactory);
+        afterChildCreation(index, result, cellConstraints);
+        return result;
+    }
 
-	private ICustomWidgetFactory createCustomWidgetFactory() {
-		return new ICustomWidgetFactory() {
-			@Override
-			public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE create(
-				final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
-				return factory.create(getUiReference(), descriptor);
-			}
-		};
-	}
+    private ICustomWidgetFactory createCustomWidgetFactory() {
+        return new ICustomWidgetFactory() {
+            @Override
+            public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE create(
+                final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+                return factory.create(getUiReference(), descriptor);
+            }
+        };
+    }
 
-	@Override
-	public boolean remove(final IControlCommon control) {
-		if (isChild(control)) {
-			((Widget) control.getUiReference()).dispose();
-			return true;
-		}
-		return false;
-	}
+    @Override
+    public boolean remove(final IControlCommon control) {
+        if (isChild(control)) {
+            ((Widget) control.getUiReference()).dispose();
+            return true;
+        }
+        return false;
+    }
 
-	private boolean isChild(final IControlCommon control) {
-		for (final Control child : getUiReference().getChildren()) {
-			if (child == control.getUiReference()) {
-				return true;
-			}
-		}
-		return false;
-	}
+    private boolean isChild(final IControlCommon control) {
+        for (final Control child : getUiReference().getChildren()) {
+            if (child == control.getUiReference()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	@Override
-	public void layoutBegin() {
-		composite.setRedraw(false);
-	}
+    @Override
+    public void layoutBegin() {
+        composite.setRedraw(false);
+    }
 
-	@Override
-	public void layoutEnd() {
-		composite.layout(true, true);
-		composite.setRedraw(true);
-	}
+    @Override
+    public void layoutEnd() {
+        composite.layout(true, true);
+        composite.setRedraw(true);
+    }
 
-	private void afterChildCreation(final Integer index, final IWidgetCommon child, final Object layoutConstraints) {
-		setLayoutConstraints(child, layoutConstraints);
-		correctIndex(index, child);
-	}
+    private void afterChildCreation(final Integer index, final IWidgetCommon child, final Object layoutConstraints) {
+        setLayoutConstraints(child, layoutConstraints);
+        correctIndex(index, child);
+    }
 
-	private void setLayoutConstraints(final IWidgetCommon widget, final Object layoutConstraints) {
-		final Object object = widget.getUiReference();
-		if (object instanceof Control) {
-			final Control control = (Control) object;
-			control.setLayoutData(layoutConstraints);
-		}
-		else {
-			throw new IllegalArgumentException("'"
-				+ Control.class
-				+ "' excpected, but '"
-				+ object.getClass().getName()
-				+ "' found.");
-		}
-	}
+    private void setLayoutConstraints(final IWidgetCommon widget, final Object layoutConstraints) {
+        final Object object = widget.getUiReference();
+        if (object instanceof Control) {
+            final Control control = (Control) object;
+            control.setLayoutData(layoutConstraints);
+        }
+        else {
+            throw new IllegalArgumentException("'"
+                + Control.class
+                + "' excpected, but '"
+                + object.getClass().getName()
+                + "' found.");
+        }
+    }
 
-	private void correctIndex(final Integer index, final IWidgetCommon widget) {
-		if (index != null) {
-			final int indexInt = index.intValue();
-			if (indexInt >= 0 && indexInt < composite.getChildren().length - 1) {
-				((Control) widget.getUiReference()).moveAbove(composite.getChildren()[indexInt]);
-			}
-			else if (indexInt < 0 || indexInt > composite.getChildren().length - 1) {
-				throw new IndexOutOfBoundsException("Index '" + indexInt + "' is out of range");
-			}
-			//else {control is already at the last position}
-		}
-	}
+    private void correctIndex(final Integer index, final IWidgetCommon widget) {
+        if (index != null) {
+            final int indexInt = index.intValue();
+            if (indexInt >= 0 && indexInt < composite.getChildren().length - 1) {
+                ((Control) widget.getUiReference()).moveAbove(composite.getChildren()[indexInt]);
+            }
+            else if (indexInt < 0 || indexInt > composite.getChildren().length - 1) {
+                throw new IndexOutOfBoundsException("Index '" + indexInt + "' is out of range");
+            }
+            //else {control is already at the last position}
+        }
+    }
 
-	protected IGenericWidgetFactory getGenericWidgetFactory() {
-		return factory;
-	}
+    protected IGenericWidgetFactory getGenericWidgetFactory() {
+        return factory;
+    }
 
-	@Override
-	public void removeAll() {
-		disposeChildren(composite);
-		composite.layout(true, true);
-	}
+    @Override
+    public void removeAll() {
+        disposeChildren(composite);
+        composite.layout(true, true);
+    }
 
-	private void disposeChildren(final Composite composite) {
-		for (final Control childControl : composite.getChildren()) {
-			if (childControl instanceof Composite) {
-				disposeChildren((Composite) childControl);
-			}
-			childControl.dispose();
-		}
-	}
+    private void disposeChildren(final Composite composite) {
+        for (final Control childControl : composite.getChildren()) {
+            if (childControl instanceof Composite) {
+                disposeChildren((Composite) childControl);
+            }
+            childControl.dispose();
+        }
+    }
 
 }

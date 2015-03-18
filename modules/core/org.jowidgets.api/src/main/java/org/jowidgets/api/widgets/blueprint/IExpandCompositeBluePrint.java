@@ -31,7 +31,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IExpandCompositeSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.IExpandCompositeDescriptor;
 
 public interface IExpandCompositeBluePrint extends
-		IExpandCompositeSetupBuilder<IExpandCompositeBluePrint>,
-		IExpandCompositeDescriptor {
+        IExpandCompositeSetupBuilder<IExpandCompositeBluePrint>,
+        IExpandCompositeDescriptor {
 
 }

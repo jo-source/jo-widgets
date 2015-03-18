@@ -39,126 +39,126 @@ import org.jowidgets.util.Assert;
 
 class MessagePaneImpl implements IMessagePane {
 
-	private final IGenericWidgetFactory genericWidgetFactory;
-	private final IBluePrintFactory bluePrintFactory;
-	private final WindowProvider activeWindowProvider;
+    private final IGenericWidgetFactory genericWidgetFactory;
+    private final IBluePrintFactory bluePrintFactory;
+    private final WindowProvider activeWindowProvider;
 
-	MessagePaneImpl(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IBluePrintFactory bluePrintFactory,
-		final WindowProvider activeWindowProvider) {
-		super();
-		this.genericWidgetFactory = genericWidgetFactory;
-		this.bluePrintFactory = bluePrintFactory;
-		this.activeWindowProvider = activeWindowProvider;
-	}
+    MessagePaneImpl(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IBluePrintFactory bluePrintFactory,
+        final WindowProvider activeWindowProvider) {
+        super();
+        this.genericWidgetFactory = genericWidgetFactory;
+        this.bluePrintFactory = bluePrintFactory;
+        this.activeWindowProvider = activeWindowProvider;
+    }
 
-	@Override
-	public void showInfo(final String message) {
-		final IMessageDialogBluePrint bp = bluePrintFactory.infoDialog().setText(message);
-		showMessage(bp);
-	}
+    @Override
+    public void showInfo(final String message) {
+        final IMessageDialogBluePrint bp = bluePrintFactory.infoDialog().setText(message);
+        showMessage(bp);
+    }
 
-	@Override
-	public void showWarning(final String message) {
-		final IMessageDialogBluePrint bp = bluePrintFactory.warningDialog().setText(message);
-		showMessage(bp);
-	}
+    @Override
+    public void showWarning(final String message) {
+        final IMessageDialogBluePrint bp = bluePrintFactory.warningDialog().setText(message);
+        showMessage(bp);
+    }
 
-	@Override
-	public void showError(final String message) {
-		final IMessageDialogBluePrint bp = bluePrintFactory.errorDialog().setText(message);
-		showMessage(bp);
-	}
+    @Override
+    public void showError(final String message) {
+        final IMessageDialogBluePrint bp = bluePrintFactory.errorDialog().setText(message);
+        showMessage(bp);
+    }
 
-	@Override
-	public void showInfo(final String title, final String message) {
-		final IMessageDialogBluePrint bp = bluePrintFactory.infoDialog().setTitle(title).setText(message);
-		showMessage(bp);
-	}
+    @Override
+    public void showInfo(final String title, final String message) {
+        final IMessageDialogBluePrint bp = bluePrintFactory.infoDialog().setTitle(title).setText(message);
+        showMessage(bp);
+    }
 
-	@Override
-	public void showWarning(final String title, final String message) {
-		final IMessageDialogBluePrint bp = bluePrintFactory.warningDialog().setTitle(title).setText(message);
-		showMessage(bp);
-	}
+    @Override
+    public void showWarning(final String title, final String message) {
+        final IMessageDialogBluePrint bp = bluePrintFactory.warningDialog().setTitle(title).setText(message);
+        showMessage(bp);
+    }
 
-	@Override
-	public void showError(final String title, final String message) {
-		final IMessageDialogBluePrint bp = bluePrintFactory.errorDialog().setTitle(title).setText(message);
-		showMessage(bp);
-	}
+    @Override
+    public void showError(final String title, final String message) {
+        final IMessageDialogBluePrint bp = bluePrintFactory.errorDialog().setTitle(title).setText(message);
+        showMessage(bp);
+    }
 
-	@Override
-	public void showInfo(final String title, final IImageConstant titleIcon, final String message) {
-		final IMessageDialogBluePrint bp = bluePrintFactory.infoDialog().setTitle(title).setText(message);
-		bp.setTitleIcon(titleIcon);
-		showMessage(bp);
-	}
+    @Override
+    public void showInfo(final String title, final IImageConstant titleIcon, final String message) {
+        final IMessageDialogBluePrint bp = bluePrintFactory.infoDialog().setTitle(title).setText(message);
+        bp.setTitleIcon(titleIcon);
+        showMessage(bp);
+    }
 
-	@Override
-	public void showWarning(final String title, final IImageConstant titleIcon, final String message) {
-		final IMessageDialogBluePrint bp = bluePrintFactory.warningDialog().setTitle(title).setText(message);
-		bp.setTitleIcon(titleIcon);
-		showMessage(bp);
-	}
+    @Override
+    public void showWarning(final String title, final IImageConstant titleIcon, final String message) {
+        final IMessageDialogBluePrint bp = bluePrintFactory.warningDialog().setTitle(title).setText(message);
+        bp.setTitleIcon(titleIcon);
+        showMessage(bp);
+    }
 
-	@Override
-	public void showError(final String title, final IImageConstant titleIcon, final String message) {
-		final IMessageDialogBluePrint bp = bluePrintFactory.errorDialog().setTitle(title).setText(message);
-		bp.setTitleIcon(titleIcon);
-		showMessage(bp);
-	}
+    @Override
+    public void showError(final String title, final IImageConstant titleIcon, final String message) {
+        final IMessageDialogBluePrint bp = bluePrintFactory.errorDialog().setTitle(title).setText(message);
+        bp.setTitleIcon(titleIcon);
+        showMessage(bp);
+    }
 
-	@Override
-	public void showMessage(final String title, final String message, final IImageConstant icon) {
-		final IMessageDialogBluePrint bp = bluePrintFactory.messageDialog().setTitle(title).setText(message).setIcon(icon);
-		showMessage(bp);
-	}
+    @Override
+    public void showMessage(final String title, final String message, final IImageConstant icon) {
+        final IMessageDialogBluePrint bp = bluePrintFactory.messageDialog().setTitle(title).setText(message).setIcon(icon);
+        showMessage(bp);
+    }
 
-	@Override
-	public void showInfo(final IExecutionContext executionContext, final String message) {
-		Assert.paramNotNull(executionContext, "executionContext");
-		showInfo(executionContext.getAction().getText(), executionContext.getAction().getIcon(), message);
-	}
+    @Override
+    public void showInfo(final IExecutionContext executionContext, final String message) {
+        Assert.paramNotNull(executionContext, "executionContext");
+        showInfo(executionContext.getAction().getText(), executionContext.getAction().getIcon(), message);
+    }
 
-	@Override
-	public void showWarning(final IExecutionContext executionContext, final String message) {
-		Assert.paramNotNull(executionContext, "executionContext");
-		showWarning(executionContext.getAction().getText(), executionContext.getAction().getIcon(), message);
-	}
+    @Override
+    public void showWarning(final IExecutionContext executionContext, final String message) {
+        Assert.paramNotNull(executionContext, "executionContext");
+        showWarning(executionContext.getAction().getText(), executionContext.getAction().getIcon(), message);
+    }
 
-	@Override
-	public void showError(final IExecutionContext executionContext, final String message) {
-		Assert.paramNotNull(executionContext, "executionContext");
-		showError(executionContext.getAction().getText(), executionContext.getAction().getIcon(), message);
-	}
+    @Override
+    public void showError(final IExecutionContext executionContext, final String message) {
+        Assert.paramNotNull(executionContext, "executionContext");
+        showError(executionContext.getAction().getText(), executionContext.getAction().getIcon(), message);
+    }
 
-	@Override
-	public void showMessage(final IExecutionContext executionContext, final String message, final IImageConstant messageIcon) {
-		Assert.paramNotNull(executionContext, "executionContext");
-		showMessage(executionContext.getAction().getText(), executionContext.getAction().getIcon(), message, messageIcon);
-	}
+    @Override
+    public void showMessage(final IExecutionContext executionContext, final String message, final IImageConstant messageIcon) {
+        Assert.paramNotNull(executionContext, "executionContext");
+        showMessage(executionContext.getAction().getText(), executionContext.getAction().getIcon(), message, messageIcon);
+    }
 
-	@Override
-	public void showMessage(
-		final String title,
-		final IImageConstant titleIcon,
-		final String message,
-		final IImageConstant messageIcon) {
-		final IMessageDialogBluePrint bp = bluePrintFactory.messageDialog().setTitle(title).setText(message).setIcon(messageIcon);
-		bp.setTitleIcon(titleIcon);
-		showMessage(bp);
-	}
+    @Override
+    public void showMessage(
+        final String title,
+        final IImageConstant titleIcon,
+        final String message,
+        final IImageConstant messageIcon) {
+        final IMessageDialogBluePrint bp = bluePrintFactory.messageDialog().setTitle(title).setText(message).setIcon(messageIcon);
+        bp.setTitleIcon(titleIcon);
+        showMessage(bp);
+    }
 
-	private void showMessage(final IMessageDialogBluePrint messageDialogBluePrint) {
-		final IWindow activeWindow = activeWindowProvider.getActiveWindow();
-		if (activeWindow != null) {
-			activeWindow.createChildWindow(messageDialogBluePrint).showMessage();
-		}
-		else {
-			genericWidgetFactory.create(messageDialogBluePrint).showMessage();
-		}
-	}
+    private void showMessage(final IMessageDialogBluePrint messageDialogBluePrint) {
+        final IWindow activeWindow = activeWindowProvider.getActiveWindow();
+        if (activeWindow != null) {
+            activeWindow.createChildWindow(messageDialogBluePrint).showMessage();
+        }
+        else {
+            genericWidgetFactory.create(messageDialogBluePrint).showMessage();
+        }
+    }
 
 }

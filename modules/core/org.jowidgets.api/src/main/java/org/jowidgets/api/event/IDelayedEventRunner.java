@@ -30,11 +30,11 @@ package org.jowidgets.api.event;
 
 public interface IDelayedEventRunner {
 
-	/**
-	 * Runs an event after a delay in the ui thread.
-	 * 
-	 * @param event The event to run
-	 */
-	void run(Runnable event);
+    /**
+     * Runs an event after a delay in the ui thread.
+     * 
+     * @param event The event to run
+     */
+    void run(Runnable event);
 
 }

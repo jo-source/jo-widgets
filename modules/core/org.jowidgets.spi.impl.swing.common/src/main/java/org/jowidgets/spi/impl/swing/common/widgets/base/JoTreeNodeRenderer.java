@@ -40,52 +40,52 @@ import org.jowidgets.spi.impl.swing.common.util.FontProvider;
 
 public class JoTreeNodeRenderer extends DefaultTreeCellRenderer {
 
-	private static final long serialVersionUID = -8485841535553785779L;
+    private static final long serialVersionUID = -8485841535553785779L;
 
-	private static final Color TREE_BACKGROUND = javax.swing.UIManager.getDefaults().getColor("Tree.textBackground");
-	private static final Color TREE_SELECTION_FOREGROUND = javax.swing.UIManager.getDefaults().getColor(
-			"Tree.selectionForeground");
+    private static final Color TREE_BACKGROUND = javax.swing.UIManager.getDefaults().getColor("Tree.textBackground");
+    private static final Color TREE_SELECTION_FOREGROUND = javax.swing.UIManager.getDefaults().getColor(
+            "Tree.selectionForeground");
 
-	@Override
-	public Component getTreeCellRendererComponent(
-		final JTree tree,
-		final Object value,
-		final boolean selected,
-		final boolean expanded,
-		final boolean leaf,
-		final int row,
-		final boolean hasFocus) {
+    @Override
+    public Component getTreeCellRendererComponent(
+        final JTree tree,
+        final Object value,
+        final boolean selected,
+        final boolean expanded,
+        final boolean leaf,
+        final int row,
+        final boolean hasFocus) {
 
-		final Component result = super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
+        final Component result = super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);
 
-		if (value instanceof JoTreeNode) {
-			final JoTreeNode joTreeNode = ((JoTreeNode) value);
-			setText(joTreeNode.getText());
-			setToolTipText(joTreeNode.getToolTipText());
-			setIcon(SwingImageRegistry.getInstance().getImageIcon(joTreeNode.getIcon()));
+        if (value instanceof JoTreeNode) {
+            final JoTreeNode joTreeNode = ((JoTreeNode) value);
+            setText(joTreeNode.getText());
+            setToolTipText(joTreeNode.getToolTipText());
+            setIcon(SwingImageRegistry.getInstance().getImageIcon(joTreeNode.getIcon()));
 
-			if (joTreeNode.getMarkup() != null) {
-				setFont(FontProvider.deriveFont(getFont(), joTreeNode.getMarkup()));
-			}
+            if (joTreeNode.getMarkup() != null) {
+                setFont(FontProvider.deriveFont(getFont(), joTreeNode.getMarkup()));
+            }
 
-			if (!selected && joTreeNode.getBackgroundColor() != null) {
-				setBackgroundNonSelectionColor(ColorConvert.convert(joTreeNode.getBackgroundColor()));
-			}
-			else {
-				setBackgroundNonSelectionColor(TREE_BACKGROUND);
-			}
+            if (!selected && joTreeNode.getBackgroundColor() != null) {
+                setBackgroundNonSelectionColor(ColorConvert.convert(joTreeNode.getBackgroundColor()));
+            }
+            else {
+                setBackgroundNonSelectionColor(TREE_BACKGROUND);
+            }
 
-			if (!selected && joTreeNode.getForegroundColor() != null) {
-				setForeground(ColorConvert.convert(joTreeNode.getForegroundColor()));
-			}
-			else if (selected) {
-				setForeground(TREE_SELECTION_FOREGROUND);
-			}
-			else {
-				setForeground(null);
-			}
-		}
-		return result;
-	}
+            if (!selected && joTreeNode.getForegroundColor() != null) {
+                setForeground(ColorConvert.convert(joTreeNode.getForegroundColor()));
+            }
+            else if (selected) {
+                setForeground(TREE_SELECTION_FOREGROUND);
+            }
+            else {
+                setForeground(null);
+            }
+        }
+        return result;
+    }
 
 }

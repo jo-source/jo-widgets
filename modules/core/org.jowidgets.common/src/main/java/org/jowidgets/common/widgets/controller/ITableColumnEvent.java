@@ -28,9 +28,8 @@
 
 package org.jowidgets.common.widgets.controller;
 
-
 public interface ITableColumnEvent {
 
-	int getColumnIndex();
+    int getColumnIndex();
 
 }

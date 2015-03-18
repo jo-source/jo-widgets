@@ -33,40 +33,40 @@ import org.jowidgets.common.types.Markup;
 
 public class UIDTextLabel extends UIDComponent {
 
-	private String text;
-	private Markup markup;
-	private AlignmentHorizontal horizontalAlignment;
+    private String text;
+    private Markup markup;
+    private AlignmentHorizontal horizontalAlignment;
 
-	public String getText() {
-		return text;
-	}
+    public String getText() {
+        return text;
+    }
 
-	public void setText(final String text) {
-		this.text = text;
-	}
+    public void setText(final String text) {
+        this.text = text;
+    }
 
-	public Markup getMarkup() {
-		return markup;
-	}
+    public Markup getMarkup() {
+        return markup;
+    }
 
-	public void setMarkup(final Markup markup) {
-		this.markup = markup;
-	}
+    public void setMarkup(final Markup markup) {
+        this.markup = markup;
+    }
 
-	public AlignmentHorizontal getHorizontalAlignment() {
-		return horizontalAlignment;
-	}
+    public AlignmentHorizontal getHorizontalAlignment() {
+        return horizontalAlignment;
+    }
 
-	public void setHorizontalAlignment(final AlignmentHorizontal horizontalAlignment) {
-		this.horizontalAlignment = horizontalAlignment;
-	}
+    public void setHorizontalAlignment(final AlignmentHorizontal horizontalAlignment) {
+        this.horizontalAlignment = horizontalAlignment;
+    }
 
-	public void setFontSize(final int size) {
-		// TODO LG implement setFontSize
-	}
+    public void setFontSize(final int size) {
+        // TODO LG implement setFontSize
+    }
 
-	public void setFontName(final String fontName) {
-		// TODO LG implement setFontName
-	}
+    public void setFontName(final String fontName) {
+        // TODO LG implement setFontName
+    }
 
 }

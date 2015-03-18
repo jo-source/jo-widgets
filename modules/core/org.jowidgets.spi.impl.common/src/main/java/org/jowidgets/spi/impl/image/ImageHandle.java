@@ -33,73 +33,73 @@ import org.jowidgets.util.Assert;
 
 public class ImageHandle<IMAGE_TYPE> implements IImageHandle {
 
-	private final IImageFactory<IMAGE_TYPE> imageFactory;
-	private final IImageDescriptor imageDescriptor;
+    private final IImageFactory<IMAGE_TYPE> imageFactory;
+    private final IImageDescriptor imageDescriptor;
 
-	private boolean disposed;
+    private boolean disposed;
 
-	private IMAGE_TYPE image;
+    private IMAGE_TYPE image;
 
-	public ImageHandle(final IMAGE_TYPE image) {
-		this(new IImageFactory<IMAGE_TYPE>() {
-			@Override
-			public IMAGE_TYPE createImage() {
-				return image;
-			}
-		}, null);
-	}
+    public ImageHandle(final IMAGE_TYPE image) {
+        this(new IImageFactory<IMAGE_TYPE>() {
+            @Override
+            public IMAGE_TYPE createImage() {
+                return image;
+            }
+        }, null);
+    }
 
-	public ImageHandle(final IImageFactory<IMAGE_TYPE> imageFactory) {
-		this(imageFactory, null);
-	}
+    public ImageHandle(final IImageFactory<IMAGE_TYPE> imageFactory) {
+        this(imageFactory, null);
+    }
 
-	public ImageHandle(final IImageFactory<IMAGE_TYPE> imageFactory, final IImageDescriptor imageDescriptor) {
-		Assert.paramNotNull(imageFactory, "imageFactory");
-		this.imageFactory = imageFactory;
-		this.imageDescriptor = imageDescriptor;
+    public ImageHandle(final IImageFactory<IMAGE_TYPE> imageFactory, final IImageDescriptor imageDescriptor) {
+        Assert.paramNotNull(imageFactory, "imageFactory");
+        this.imageFactory = imageFactory;
+        this.imageDescriptor = imageDescriptor;
 
-		this.disposed = false;
-	}
+        this.disposed = false;
+    }
 
-	@Override
-	public final synchronized IMAGE_TYPE getImage() {
-		checkDisposed();
-		if (image == null) {
-			image = imageFactory.createImage();
-		}
-		return image;
-	}
+    @Override
+    public final synchronized IMAGE_TYPE getImage() {
+        checkDisposed();
+        if (image == null) {
+            image = imageFactory.createImage();
+        }
+        return image;
+    }
 
-	@Override
-	public final IImageDescriptor getImageDescriptor() {
-		checkDisposed();
-		return imageDescriptor;
-	}
+    @Override
+    public final IImageDescriptor getImageDescriptor() {
+        checkDisposed();
+        return imageDescriptor;
+    }
 
-	@Override
-	public final synchronized boolean isInitialized() {
-		return !isDisposed() && image != null;
-	}
+    @Override
+    public final synchronized boolean isInitialized() {
+        return !isDisposed() && image != null;
+    }
 
-	public final synchronized boolean isDisposed() {
-		return disposed;
-	}
+    public final synchronized boolean isDisposed() {
+        return disposed;
+    }
 
-	public synchronized void dispose() {
-		checkDisposed();
-		disposed = true;
-		image = null;
-	}
+    public synchronized void dispose() {
+        checkDisposed();
+        disposed = true;
+        image = null;
+    }
 
-	private void checkDisposed() {
-		if (disposed) {
-			throw new IllegalStateException("Image handle is disposed");
-		}
-	}
+    private void checkDisposed() {
+        if (disposed) {
+            throw new IllegalStateException("Image handle is disposed");
+        }
+    }
 
-	@Override
-	public String toString() {
-		return "ImageHandle [imageDescriptor=" + imageDescriptor + ", disposed=" + disposed + ", image=" + image + "]";
-	}
+    @Override
+    public String toString() {
+        return "ImageHandle [imageDescriptor=" + imageDescriptor + ", disposed=" + disposed + ", image=" + image + "]";
+    }
 
 }

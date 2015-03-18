@@ -30,16 +30,16 @@ package org.jowidgets.spi.impl.dummy.application;
 
 public class DummyEvent extends AbstractDummyEvent {
 
-	private final Runnable runnable;
+    private final Runnable runnable;
 
-	public DummyEvent(final Runnable runnable) {
-		super();
-		this.runnable = runnable;
-	}
+    public DummyEvent(final Runnable runnable) {
+        super();
+        this.runnable = runnable;
+    }
 
-	@Override
-	public void run() {
-		runnable.run();
-	}
+    @Override
+    public void run() {
+        runnable.run();
+    }
 
 }

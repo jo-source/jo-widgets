@@ -32,11 +32,11 @@ import org.jowidgets.examples.common.snipped.IconTableSnipped;
 
 public final class IconTableSnippedStarterSwt {
 
-	private IconTableSnippedStarterSwt() {}
+    private IconTableSnippedStarterSwt() {}
 
-	public static void main(final String[] args) throws Exception {
-		Toolkit.getApplicationRunner().run(new IconTableSnipped());
-		System.exit(0);
-	}
+    public static void main(final String[] args) throws Exception {
+        Toolkit.getApplicationRunner().run(new IconTableSnipped());
+        System.exit(0);
+    }
 
 }

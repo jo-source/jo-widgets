@@ -43,143 +43,143 @@ import org.jowidgets.common.types.Position;
 
 public class TreeWrapper extends ControlWrapper implements ITree {
 
-	public TreeWrapper(final ITree widget) {
-		super(widget);
-	}
+    public TreeWrapper(final ITree widget) {
+        super(widget);
+    }
 
-	@Override
-	protected ITree getWidget() {
-		return (ITree) super.getWidget();
-	}
+    @Override
+    protected ITree getWidget() {
+        return (ITree) super.getWidget();
+    }
 
-	@Override
-	public ITreeNode addNode() {
-		return getWidget().addNode();
-	}
+    @Override
+    public ITreeNode addNode() {
+        return getWidget().addNode();
+    }
 
-	@Override
-	public ITreeNode addNode(final int index) {
-		return getWidget().addNode(index);
-	}
+    @Override
+    public ITreeNode addNode(final int index) {
+        return getWidget().addNode(index);
+    }
 
-	@Override
-	public ITreeNode addNode(final ITreeNodeDescriptor descriptor) {
-		return getWidget().addNode(descriptor);
-	}
+    @Override
+    public ITreeNode addNode(final ITreeNodeDescriptor descriptor) {
+        return getWidget().addNode(descriptor);
+    }
 
-	@Override
-	public ITreeNode addNode(final int index, final ITreeNodeDescriptor descriptor) {
-		return getWidget().addNode(index, descriptor);
-	}
+    @Override
+    public ITreeNode addNode(final int index, final ITreeNodeDescriptor descriptor) {
+        return getWidget().addNode(index, descriptor);
+    }
 
-	@Override
-	public void removeNode(final ITreeNode node) {
-		getWidget().removeNode(node);
-	}
+    @Override
+    public void removeNode(final ITreeNode node) {
+        getWidget().removeNode(node);
+    }
 
-	@Override
-	public void removeNode(final int index) {
-		getWidget().removeNode(index);
-	}
+    @Override
+    public void removeNode(final int index) {
+        getWidget().removeNode(index);
+    }
 
-	@Override
-	public void removeAllNodes() {
-		getWidget().removeAllNodes();
-	}
+    @Override
+    public void removeAllNodes() {
+        getWidget().removeAllNodes();
+    }
 
-	@Override
-	public List<ITreeNode> getChildren() {
-		return getWidget().getChildren();
-	}
+    @Override
+    public List<ITreeNode> getChildren() {
+        return getWidget().getChildren();
+    }
 
-	@Override
-	public ITreeContainer getParentContainer() {
-		return getWidget().getParentContainer();
-	}
+    @Override
+    public ITreeContainer getParentContainer() {
+        return getWidget().getParentContainer();
+    }
 
-	@Override
-	public void setAllChildrenExpanded(final boolean expanded) {
-		getWidget().setAllChildrenExpanded(expanded);
-	}
+    @Override
+    public void setAllChildrenExpanded(final boolean expanded) {
+        getWidget().setAllChildrenExpanded(expanded);
+    }
 
-	@Override
-	public void setAllChildrenExpanded(final Integer pivotLevel, final boolean expanded) {
-		getWidget().setAllChildrenExpanded(pivotLevel, expanded);
-	}
+    @Override
+    public void setAllChildrenExpanded(final Integer pivotLevel, final boolean expanded) {
+        getWidget().setAllChildrenExpanded(pivotLevel, expanded);
+    }
 
-	@Override
-	public void setAllChildrenBelowExpandedAboveCollapsed(final int pivotLevel) {
-		getWidget().setAllChildrenBelowExpandedAboveCollapsed(pivotLevel);
-	}
+    @Override
+    public void setAllChildrenBelowExpandedAboveCollapsed(final int pivotLevel) {
+        getWidget().setAllChildrenBelowExpandedAboveCollapsed(pivotLevel);
+    }
 
-	@Override
-	public void setAllChildrenChecked(final boolean checked) {
-		getWidget().setAllChildrenChecked(checked);
-	}
+    @Override
+    public void setAllChildrenChecked(final boolean checked) {
+        getWidget().setAllChildrenChecked(checked);
+    }
 
-	@Override
-	public int getLevel() {
-		return getWidget().getLevel();
-	}
+    @Override
+    public int getLevel() {
+        return getWidget().getLevel();
+    }
 
-	@Override
-	public boolean accept(final ITreeNodeVisitor visitor) {
-		return getWidget().accept(visitor);
-	}
+    @Override
+    public boolean accept(final ITreeNodeVisitor visitor) {
+        return getWidget().accept(visitor);
+    }
 
-	@Override
-	public void addTreeListener(final ITreeListener listener) {
-		getWidget().addTreeListener(listener);
-	}
+    @Override
+    public void addTreeListener(final ITreeListener listener) {
+        getWidget().addTreeListener(listener);
+    }
 
-	@Override
-	public void removeTreeListener(final ITreeListener listener) {
-		getWidget().removeTreeListener(listener);
-	}
+    @Override
+    public void removeTreeListener(final ITreeListener listener) {
+        getWidget().removeTreeListener(listener);
+    }
 
-	@Override
-	public void addTreeSelectionListener(final ITreeSelectionListener listener) {
-		getWidget().addTreeSelectionListener(listener);
-	}
+    @Override
+    public void addTreeSelectionListener(final ITreeSelectionListener listener) {
+        getWidget().addTreeSelectionListener(listener);
+    }
 
-	@Override
-	public void removeTreeSelectionListener(final ITreeSelectionListener listener) {
-		getWidget().removeTreeSelectionListener(listener);
-	}
+    @Override
+    public void removeTreeSelectionListener(final ITreeSelectionListener listener) {
+        getWidget().removeTreeSelectionListener(listener);
+    }
 
-	@Override
-	public void addTreePopupDetectionListener(final ITreePopupDetectionListener listener) {
-		getWidget().addTreePopupDetectionListener(listener);
-	}
+    @Override
+    public void addTreePopupDetectionListener(final ITreePopupDetectionListener listener) {
+        getWidget().addTreePopupDetectionListener(listener);
+    }
 
-	@Override
-	public void removeTreePopupDetectionListener(final ITreePopupDetectionListener listener) {
-		getWidget().removeTreePopupDetectionListener(listener);
-	}
+    @Override
+    public void removeTreePopupDetectionListener(final ITreePopupDetectionListener listener) {
+        getWidget().removeTreePopupDetectionListener(listener);
+    }
 
-	@Override
-	public ITreeNode getNodeAt(final Position position) {
-		return getWidget().getNodeAt(position);
-	}
+    @Override
+    public ITreeNode getNodeAt(final Position position) {
+        return getWidget().getNodeAt(position);
+    }
 
-	@Override
-	public Collection<ITreeNode> getSelection() {
-		return getWidget().getSelection();
-	}
+    @Override
+    public Collection<ITreeNode> getSelection() {
+        return getWidget().getSelection();
+    }
 
-	@Override
-	public void setSelection(final Collection<? extends ITreeNode> selection) {
-		getWidget().setSelection(selection);
-	}
+    @Override
+    public void setSelection(final Collection<? extends ITreeNode> selection) {
+        getWidget().setSelection(selection);
+    }
 
-	@Override
-	public void setSelection(final ITreeNode... selection) {
-		getWidget().setSelection(selection);
-	}
+    @Override
+    public void setSelection(final ITreeNode... selection) {
+        getWidget().setSelection(selection);
+    }
 
-	@Override
-	public void clearSelection() {
-		getWidget().clearSelection();
-	}
+    @Override
+    public void clearSelection() {
+        getWidget().clearSelection();
+    }
 
 }

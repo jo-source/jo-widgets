@@ -40,100 +40,100 @@ import org.jowidgets.impl.dnd.ImmutableDropSelection;
 import org.jowidgets.spi.widgets.IControlSpi;
 
 public abstract class AbstractControlSpiWrapper extends AbstractComponentSpiWrapper implements IControlCommon {
-	private static final Dimension INFINITE_SIZE = new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
+    private static final Dimension INFINITE_SIZE = new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
 
-	private final IDragSource dragSource;
-	private final IDropTarget dropTarget;
+    private final IDragSource dragSource;
+    private final IDropTarget dropTarget;
 
-	private Dimension minSize;
-	private Dimension prefferedSize;
-	private Dimension maxSize;
+    private Dimension minSize;
+    private Dimension prefferedSize;
+    private Dimension maxSize;
 
-	public AbstractControlSpiWrapper(final IControlSpi control) {
-		super(control);
-		final IDropSelectionProvider dropSelectionProvider;
-		if (this instanceof IDropSelectionProvider) {
-			dropSelectionProvider = (IDropSelectionProvider) this;
-		}
-		else {
-			dropSelectionProvider = new ImmutableDropSelection(this);
-		}
-		this.dragSource = new DragSourceImpl(control.getDragSource());
-		this.dropTarget = new DropTargetImpl(control.getDropTarget(), dropSelectionProvider);
-	}
+    public AbstractControlSpiWrapper(final IControlSpi control) {
+        super(control);
+        final IDropSelectionProvider dropSelectionProvider;
+        if (this instanceof IDropSelectionProvider) {
+            dropSelectionProvider = (IDropSelectionProvider) this;
+        }
+        else {
+            dropSelectionProvider = new ImmutableDropSelection(this);
+        }
+        this.dragSource = new DragSourceImpl(control.getDragSource());
+        this.dropTarget = new DropTargetImpl(control.getDropTarget(), dropSelectionProvider);
+    }
 
-	@Override
-	public IControlSpi getWidget() {
-		return (IControlSpi) super.getWidget();
-	}
+    @Override
+    public IControlSpi getWidget() {
+        return (IControlSpi) super.getWidget();
+    }
 
-	@Override
-	public IControl getRoot() {
-		return (IControl) super.getRoot();
-	}
+    @Override
+    public IControl getRoot() {
+        return (IControl) super.getRoot();
+    }
 
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		getWidget().setLayoutConstraints(layoutConstraints);
-	}
+    @Override
+    public void setLayoutConstraints(final Object layoutConstraints) {
+        getWidget().setLayoutConstraints(layoutConstraints);
+    }
 
-	@Override
-	public Object getLayoutConstraints() {
-		return getWidget().getLayoutConstraints();
-	}
+    @Override
+    public Object getLayoutConstraints() {
+        return getWidget().getLayoutConstraints();
+    }
 
-	public void setMinSize(final Dimension minSize) {
-		this.minSize = minSize;
-	}
+    public void setMinSize(final Dimension minSize) {
+        this.minSize = minSize;
+    }
 
-	public void setPreferredSize(final Dimension preferredSize) {
-		this.prefferedSize = preferredSize;
-	}
+    public void setPreferredSize(final Dimension preferredSize) {
+        this.prefferedSize = preferredSize;
+    }
 
-	public void setMaxSize(final Dimension maxSize) {
-		this.maxSize = maxSize;
-	}
+    public void setMaxSize(final Dimension maxSize) {
+        this.maxSize = maxSize;
+    }
 
-	@Override
-	public void setToolTipText(final String toolTip) {
-		getWidget().setToolTipText(toolTip);
-	}
+    @Override
+    public void setToolTipText(final String toolTip) {
+        getWidget().setToolTipText(toolTip);
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		if (minSize != null) {
-			return minSize;
-		}
-		else {
-			return getWidget().getMinSize();
-		}
-	}
+    @Override
+    public Dimension getMinSize() {
+        if (minSize != null) {
+            return minSize;
+        }
+        else {
+            return getWidget().getMinSize();
+        }
+    }
 
-	@Override
-	public Dimension getPreferredSize() {
-		if (prefferedSize != null) {
-			return prefferedSize;
-		}
-		else {
-			return getWidget().getPreferredSize();
-		}
-	}
+    @Override
+    public Dimension getPreferredSize() {
+        if (prefferedSize != null) {
+            return prefferedSize;
+        }
+        else {
+            return getWidget().getPreferredSize();
+        }
+    }
 
-	@Override
-	public Dimension getMaxSize() {
-		if (maxSize != null) {
-			return maxSize;
-		}
-		else {
-			return INFINITE_SIZE;
-		}
-	}
+    @Override
+    public Dimension getMaxSize() {
+        if (maxSize != null) {
+            return maxSize;
+        }
+        else {
+            return INFINITE_SIZE;
+        }
+    }
 
-	public IDragSource getDragSource() {
-		return dragSource;
-	}
+    public IDragSource getDragSource() {
+        return dragSource;
+    }
 
-	public IDropTarget getDropTarget() {
-		return dropTarget;
-	}
+    public IDropTarget getDropTarget() {
+        return dropTarget;
+    }
 }

@@ -47,256 +47,256 @@ import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModelListener;
 
 class ComponentNodeModel extends ComponentNodeContainerModel implements IComponentNodeModel {
 
-	private final WorkbenchPartModelObservable workbenchPartModelObservable;
-	private final Set<ITreeNodeListener> treeNodeListeners;
+    private final WorkbenchPartModelObservable workbenchPartModelObservable;
+    private final Set<ITreeNodeListener> treeNodeListeners;
 
-	private String label;
-	private String tooltip;
-	private IImageConstant icon;
-	private boolean selected;
-	private boolean expanded;
-	private IMenuModel popupMenu;
-	private final IComponentFactory componentFactory;
-	private final IComponentNodeInitializeCallback initializeCallback;
-	private final IDisposeCallback disposeCallback;
+    private String label;
+    private String tooltip;
+    private IImageConstant icon;
+    private boolean selected;
+    private boolean expanded;
+    private IMenuModel popupMenu;
+    private final IComponentFactory componentFactory;
+    private final IComponentNodeInitializeCallback initializeCallback;
+    private final IDisposeCallback disposeCallback;
 
-	private IComponentNodeContainerModel parentContainer;
+    private IComponentNodeContainerModel parentContainer;
 
-	ComponentNodeModel(
-		final String id,
-		final String label,
-		final String tooltip,
-		final IImageConstant icon,
-		final boolean selected,
-		final boolean expanded,
-		final IMenuModel popupMenu,
-		final IComponentFactory componentFactory,
-		final IComponentNodeInitializeCallback initializeCallback,
-		final IDisposeCallback disposeCallback,
-		final List<IComponentNodeModel> children) {
-		super(id, children);
+    ComponentNodeModel(
+        final String id,
+        final String label,
+        final String tooltip,
+        final IImageConstant icon,
+        final boolean selected,
+        final boolean expanded,
+        final IMenuModel popupMenu,
+        final IComponentFactory componentFactory,
+        final IComponentNodeInitializeCallback initializeCallback,
+        final IDisposeCallback disposeCallback,
+        final List<IComponentNodeModel> children) {
+        super(id, children);
 
-		this.workbenchPartModelObservable = new WorkbenchPartModelObservable();
-		this.treeNodeListeners = new HashSet<ITreeNodeListener>();
+        this.workbenchPartModelObservable = new WorkbenchPartModelObservable();
+        this.treeNodeListeners = new HashSet<ITreeNodeListener>();
 
-		this.label = label;
-		this.tooltip = tooltip;
-		this.icon = icon;
-		this.selected = selected;
-		this.expanded = expanded;
-		this.popupMenu = popupMenu;
-		this.componentFactory = componentFactory;
-		this.initializeCallback = initializeCallback;
-		this.disposeCallback = disposeCallback;
-	}
+        this.label = label;
+        this.tooltip = tooltip;
+        this.icon = icon;
+        this.selected = selected;
+        this.expanded = expanded;
+        this.popupMenu = popupMenu;
+        this.componentFactory = componentFactory;
+        this.initializeCallback = initializeCallback;
+        this.disposeCallback = disposeCallback;
+    }
 
-	@Override
-	public String getLabel() {
-		return label;
-	}
+    @Override
+    public String getLabel() {
+        return label;
+    }
 
-	@Override
-	public String getTooltip() {
-		return tooltip;
-	}
+    @Override
+    public String getTooltip() {
+        return tooltip;
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return icon;
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return icon;
+    }
 
-	@Override
-	public boolean isSelected() {
-		return selected;
-	}
+    @Override
+    public boolean isSelected() {
+        return selected;
+    }
 
-	@Override
-	public boolean isExpanded() {
-		return expanded;
-	}
+    @Override
+    public boolean isExpanded() {
+        return expanded;
+    }
 
-	@Override
-	public IMenuModel getPopupMenu() {
-		return popupMenu;
-	}
+    @Override
+    public IMenuModel getPopupMenu() {
+        return popupMenu;
+    }
 
-	@Override
-	public IComponentFactory getComponentFactory() {
-		return componentFactory;
-	}
+    @Override
+    public IComponentFactory getComponentFactory() {
+        return componentFactory;
+    }
 
-	@Override
-	public IComponentNodeInitializeCallback getInitializeCallback() {
-		return initializeCallback;
-	}
+    @Override
+    public IComponentNodeInitializeCallback getInitializeCallback() {
+        return initializeCallback;
+    }
 
-	@Override
-	public IDisposeCallback getDisposeCallback() {
-		return disposeCallback;
-	}
+    @Override
+    public IDisposeCallback getDisposeCallback() {
+        return disposeCallback;
+    }
 
-	@Override
-	public void setLabel(final String label) {
-		this.label = label;
-		fireModelChanged();
-	}
+    @Override
+    public void setLabel(final String label) {
+        this.label = label;
+        fireModelChanged();
+    }
 
-	@Override
-	public void setTooltip(final String tooltip) {
-		this.tooltip = tooltip;
-		fireModelChanged();
-	}
+    @Override
+    public void setTooltip(final String tooltip) {
+        this.tooltip = tooltip;
+        fireModelChanged();
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		this.icon = icon;
-		fireModelChanged();
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        this.icon = icon;
+        fireModelChanged();
+    }
 
-	@Override
-	public void setSelected(final boolean selected) {
-		this.selected = selected;
-		fireModelChanged();
-		fireSelectionChanged(selected);
-	}
+    @Override
+    public void setSelected(final boolean selected) {
+        this.selected = selected;
+        fireModelChanged();
+        fireSelectionChanged(selected);
+    }
 
-	@Override
-	public void setExpanded(final boolean expanded) {
-		this.expanded = expanded;
-		fireModelChanged();
-		fireExpandedChanged(expanded);
-	}
+    @Override
+    public void setExpanded(final boolean expanded) {
+        this.expanded = expanded;
+        fireModelChanged();
+        fireExpandedChanged(expanded);
+    }
 
-	@Override
-	public void setPopupMenu(final IMenuModel popupMenu) {
-		this.popupMenu = popupMenu;
-		fireModelChanged();
-	}
+    @Override
+    public void setPopupMenu(final IMenuModel popupMenu) {
+        this.popupMenu = popupMenu;
+        fireModelChanged();
+    }
 
-	@Override
-	public String getPathId() {
-		final LinkedList<IComponentNodeContainerModel> containerList = new LinkedList<IComponentNodeContainerModel>();
-		IComponentNodeContainerModel container = this;
-		containerList.add(this);
-		while (container.getParentContainer() != null) {
-			container = container.getParentContainer();
-			containerList.addFirst(container);
-		}
-		final StringBuilder result = new StringBuilder();
-		for (final IComponentNodeContainerModel containerModel : containerList) {
-			result.append(containerModel.getId().toString() + "#");
-		}
-		return result.substring(0, result.length() - 1);
-	}
+    @Override
+    public String getPathId() {
+        final LinkedList<IComponentNodeContainerModel> containerList = new LinkedList<IComponentNodeContainerModel>();
+        IComponentNodeContainerModel container = this;
+        containerList.add(this);
+        while (container.getParentContainer() != null) {
+            container = container.getParentContainer();
+            containerList.addFirst(container);
+        }
+        final StringBuilder result = new StringBuilder();
+        for (final IComponentNodeContainerModel containerModel : containerList) {
+            result.append(containerModel.getId().toString() + "#");
+        }
+        return result.substring(0, result.length() - 1);
+    }
 
-	@Override
-	public void setParentContainer(final IComponentNodeContainerModel parentContainer) {
-		if (this.parentContainer != parentContainer) {
-			if (this.parentContainer != null) {
-				this.parentContainer.remove(this);
-			}
-			if (parentContainer != null) {
-				if (!parentContainer.getChildren().contains(this)) {
-					parentContainer.addChild(this);
-				}
-			}
-			this.parentContainer = parentContainer;
-		}
-	}
+    @Override
+    public void setParentContainer(final IComponentNodeContainerModel parentContainer) {
+        if (this.parentContainer != parentContainer) {
+            if (this.parentContainer != null) {
+                this.parentContainer.remove(this);
+            }
+            if (parentContainer != null) {
+                if (!parentContainer.getChildren().contains(this)) {
+                    parentContainer.addChild(this);
+                }
+            }
+            this.parentContainer = parentContainer;
+        }
+    }
 
-	@Override
-	public IComponentNodeContainerModel getParentContainer() {
-		return parentContainer;
-	}
+    @Override
+    public IComponentNodeContainerModel getParentContainer() {
+        return parentContainer;
+    }
 
-	@Override
-	public IComponentNodeModel getParent() {
-		final IComponentNodeContainerModel parent = getParentContainer();
-		if (parent instanceof IComponentNodeModel) {
-			return (IComponentNodeModel) parent;
-		}
-		return null;
-	}
+    @Override
+    public IComponentNodeModel getParent() {
+        final IComponentNodeContainerModel parent = getParentContainer();
+        if (parent instanceof IComponentNodeModel) {
+            return (IComponentNodeModel) parent;
+        }
+        return null;
+    }
 
-	@Override
-	public IWorkbenchApplicationModel getApplication() {
-		IComponentNodeContainerModel parent = getParentContainer();
-		while (parent.getParentContainer() != null) {
-			parent = parent.getParentContainer();
-		}
-		if (parent instanceof IWorkbenchApplicationModel) {
-			return (IWorkbenchApplicationModel) parent;
-		}
-		return null;
-	}
+    @Override
+    public IWorkbenchApplicationModel getApplication() {
+        IComponentNodeContainerModel parent = getParentContainer();
+        while (parent.getParentContainer() != null) {
+            parent = parent.getParentContainer();
+        }
+        if (parent instanceof IWorkbenchApplicationModel) {
+            return (IWorkbenchApplicationModel) parent;
+        }
+        return null;
+    }
 
-	@Override
-	public IWorkbenchModel getWorkbench() {
-		final IWorkbenchApplicationModel application = getApplication();
-		if (application != null) {
-			return application.getWorkbench();
-		}
-		return null;
-	}
+    @Override
+    public IWorkbenchModel getWorkbench() {
+        final IWorkbenchApplicationModel application = getApplication();
+        if (application != null) {
+            return application.getWorkbench();
+        }
+        return null;
+    }
 
-	@Override
-	public void addWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
-		workbenchPartModelObservable.addWorkbenchPartModelListener(listener);
-	}
+    @Override
+    public void addWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
+        workbenchPartModelObservable.addWorkbenchPartModelListener(listener);
+    }
 
-	@Override
-	public void removeWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
-		workbenchPartModelObservable.removeWorkbenchPartModelListener(listener);
-	}
+    @Override
+    public void removeWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
+        workbenchPartModelObservable.removeWorkbenchPartModelListener(listener);
+    }
 
-	@Override
-	public void addTreeNodeListener(final ITreeNodeListener listener) {
-		treeNodeListeners.add(listener);
-	}
+    @Override
+    public void addTreeNodeListener(final ITreeNodeListener listener) {
+        treeNodeListeners.add(listener);
+    }
 
-	@Override
-	public void removeTreeNodeListener(final ITreeNodeListener listener) {
-		treeNodeListeners.remove(listener);
-	}
+    @Override
+    public void removeTreeNodeListener(final ITreeNodeListener listener) {
+        treeNodeListeners.remove(listener);
+    }
 
-	@Override
-	public IComponentNodeModel unwrap() {
-		return this;
-	}
+    @Override
+    public IComponentNodeModel unwrap() {
+        return this;
+    }
 
-	private void fireSelectionChanged(final boolean selected) {
-		for (final ITreeNodeListener listener : treeNodeListeners) {
-			listener.selectionChanged(selected);
-		}
-	}
+    private void fireSelectionChanged(final boolean selected) {
+        for (final ITreeNodeListener listener : treeNodeListeners) {
+            listener.selectionChanged(selected);
+        }
+    }
 
-	private void fireExpandedChanged(final boolean expanded) {
-		for (final ITreeNodeListener listener : treeNodeListeners) {
-			listener.expandedChanged(expanded);
-		}
-	}
+    private void fireExpandedChanged(final boolean expanded) {
+        for (final ITreeNodeListener listener : treeNodeListeners) {
+            listener.expandedChanged(expanded);
+        }
+    }
 
-	private void fireModelChanged() {
-		workbenchPartModelObservable.fireModelChanged();
-	}
+    private void fireModelChanged() {
+        workbenchPartModelObservable.fireModelChanged();
+    }
 
-	@Override
-	public int hashCode() {
-		return unwrap().hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return unwrap().hashCode();
+    }
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof IComponentNodeModel)) {
-			return false;
-		}
-		final IComponentNodeModel other = (IComponentNodeModel) obj;
-		return unwrap() == other.unwrap();
-	}
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof IComponentNodeModel)) {
+            return false;
+        }
+        final IComponentNodeModel other = (IComponentNodeModel) obj;
+        return unwrap() == other.unwrap();
+    }
 }

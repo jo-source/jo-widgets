@@ -33,9 +33,9 @@ import org.jowidgets.api.model.item.IItemModelBuilder;
 
 public class ItemModelBuilder extends AbstractItemModelBuilder<IItemModelBuilder<ItemModelBuilder, IItemModel>, IItemModel> {
 
-	@Override
-	public IItemModel build() {
-		return new ItemModelImpl(getId(), getText(), getToolTipText(), getIcon(), getAccelerator(), getMnemonic(), isEnabled());
-	}
+    @Override
+    public IItemModel build() {
+        return new ItemModelImpl(getId(), getText(), getToolTipText(), getIcon(), getAccelerator(), getMnemonic(), isEnabled());
+    }
 
 }

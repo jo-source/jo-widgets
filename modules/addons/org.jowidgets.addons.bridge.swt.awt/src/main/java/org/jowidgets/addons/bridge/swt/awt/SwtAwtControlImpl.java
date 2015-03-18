@@ -34,17 +34,17 @@ import org.jowidgets.spi.impl.bridge.swt.awt.common.swt.ISwtAwtControlSpi;
 
 class SwtAwtControlImpl extends ControlImpl implements ISwtAwtControl {
 
-	public SwtAwtControlImpl(final ISwtAwtControlSpi compositeSpi) {
-		super(compositeSpi);
-	}
+    public SwtAwtControlImpl(final ISwtAwtControlSpi compositeSpi) {
+        super(compositeSpi);
+    }
 
-	@Override
-	public ISwtAwtControlSpi getWidget() {
-		return (ISwtAwtControlSpi) super.getWidget();
-	}
+    @Override
+    public ISwtAwtControlSpi getWidget() {
+        return (ISwtAwtControlSpi) super.getWidget();
+    }
 
-	@Override
-	public Container getAwtContainer() {
-		return getWidget().getAwtContainer();
-	}
+    @Override
+    public Container getAwtContainer() {
+        return getWidget().getAwtContainer();
+    }
 }

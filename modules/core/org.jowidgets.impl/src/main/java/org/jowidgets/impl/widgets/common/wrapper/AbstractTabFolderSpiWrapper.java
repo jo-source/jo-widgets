@@ -33,28 +33,28 @@ import org.jowidgets.spi.widgets.ITabFolderSpi;
 
 public abstract class AbstractTabFolderSpiWrapper extends AbstractControlSpiWrapper implements ITabFolderCommon {
 
-	public AbstractTabFolderSpiWrapper(final ITabFolderSpi widget) {
-		super(widget);
-	}
+    public AbstractTabFolderSpiWrapper(final ITabFolderSpi widget) {
+        super(widget);
+    }
 
-	@Override
-	public ITabFolderSpi getWidget() {
-		return (ITabFolderSpi) super.getWidget();
-	}
+    @Override
+    public ITabFolderSpi getWidget() {
+        return (ITabFolderSpi) super.getWidget();
+    }
 
-	@Override
-	public void removeItem(final int index) {
-		getWidget().removeItem(index);
-	}
+    @Override
+    public void removeItem(final int index) {
+        getWidget().removeItem(index);
+    }
 
-	@Override
-	public void setSelectedItem(final int index) {
-		getWidget().setSelectedItem(index);
-	}
+    @Override
+    public void setSelectedItem(final int index) {
+        getWidget().setSelectedItem(index);
+    }
 
-	@Override
-	public int getSelectedIndex() {
-		return getWidget().getSelectedIndex();
-	}
+    @Override
+    public int getSelectedIndex() {
+        return getWidget().getSelectedIndex();
+    }
 
 }

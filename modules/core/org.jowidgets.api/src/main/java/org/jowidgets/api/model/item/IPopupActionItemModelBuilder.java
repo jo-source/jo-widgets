@@ -32,8 +32,8 @@ import org.jowidgets.api.command.IAction;
 
 public interface IPopupActionItemModelBuilder extends IItemModelBuilder<IPopupActionItemModelBuilder, IPopupActionItemModel> {
 
-	IPopupActionItemModelBuilder setAction(IAction action);
+    IPopupActionItemModelBuilder setAction(IAction action);
 
-	IPopupActionItemModelBuilder setPopupMenu(IMenuModel popupMenu);
+    IPopupActionItemModelBuilder setPopupMenu(IMenuModel popupMenu);
 
 }

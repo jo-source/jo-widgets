@@ -40,39 +40,39 @@ import org.jowidgets.workbench.tools.WorkbenchApplicationModelBuilder;
 
 public final class UserAdminApplicationFactory {
 
-	private UserAdminApplicationFactory() {}
+    private UserAdminApplicationFactory() {}
 
-	public static IWorkbenchApplicationModel create() {
-		final IWorkbenchApplicationModelBuilder builder = new WorkbenchApplicationModelBuilder();
-		builder.setId(UserAdminApplicationFactory.class.getName());
-		builder.setLabel("Admin");
-		builder.setTooltip("User administration");
-		builder.setIcon(SilkIcons.GROUP);
-		createComponentTree(builder);
-		return builder.build();
-	}
+    public static IWorkbenchApplicationModel create() {
+        final IWorkbenchApplicationModelBuilder builder = new WorkbenchApplicationModelBuilder();
+        builder.setId(UserAdminApplicationFactory.class.getName());
+        builder.setLabel("Admin");
+        builder.setTooltip("User administration");
+        builder.setIcon(SilkIcons.GROUP);
+        createComponentTree(builder);
+        return builder.build();
+    }
 
-	private static void createComponentTree(final IWorkbenchApplicationModelBuilder builder) {
-		builder.addChild(createPersonNode());
-		builder.addChild(createRoleNode());
-	}
+    private static void createComponentTree(final IWorkbenchApplicationModelBuilder builder) {
+        builder.addChild(createPersonNode());
+        builder.addChild(createRoleNode());
+    }
 
-	private static IComponentNodeModel createPersonNode() {
-		final IComponentNodeModelBuilder builder = new ComponentNodeModelBuilder();
-		builder.setId(PersonComponent.class.getName());
-		builder.setLabel("Persons");
-		builder.setIcon(SilkIcons.USER);
-		builder.setComponentFactory(PersonComponent.class);
-		builder.setSelected(true);
-		return builder.build();
-	}
+    private static IComponentNodeModel createPersonNode() {
+        final IComponentNodeModelBuilder builder = new ComponentNodeModelBuilder();
+        builder.setId(PersonComponent.class.getName());
+        builder.setLabel("Persons");
+        builder.setIcon(SilkIcons.USER);
+        builder.setComponentFactory(PersonComponent.class);
+        builder.setSelected(true);
+        return builder.build();
+    }
 
-	private static IComponentNodeModel createRoleNode() {
-		final IComponentNodeModelBuilder builder = new ComponentNodeModelBuilder();
-		builder.setId(RoleComponent.class.getName());
-		builder.setLabel("Roles");
-		builder.setIcon(SilkIcons.GROUP);
-		builder.setComponentFactory(RoleComponent.class);
-		return builder.build();
-	}
+    private static IComponentNodeModel createRoleNode() {
+        final IComponentNodeModelBuilder builder = new ComponentNodeModelBuilder();
+        builder.setId(RoleComponent.class.getName());
+        builder.setLabel("Roles");
+        builder.setIcon(SilkIcons.GROUP);
+        builder.setComponentFactory(RoleComponent.class);
+        return builder.build();
+    }
 }

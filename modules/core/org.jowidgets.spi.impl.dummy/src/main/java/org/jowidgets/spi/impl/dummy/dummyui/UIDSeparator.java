@@ -32,14 +32,14 @@ import org.jowidgets.common.types.Orientation;
 
 public class UIDSeparator extends UIDComponent {
 
-	private final Orientation orientation;
+    private final Orientation orientation;
 
-	public UIDSeparator(final Orientation orientation) {
-		this.orientation = orientation;
-	}
+    public UIDSeparator(final Orientation orientation) {
+        this.orientation = orientation;
+    }
 
-	public Orientation getOrientation() {
-		return orientation;
-	}
+    public Orientation getOrientation() {
+        return orientation;
+    }
 
 }

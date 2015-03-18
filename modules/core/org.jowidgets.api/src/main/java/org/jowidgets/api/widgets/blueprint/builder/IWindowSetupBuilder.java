@@ -36,31 +36,31 @@ import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.builder.IWindowSetupBuilderCommon;
 
 public interface IWindowSetupBuilder<INSTANCE_TYPE extends IWindowSetupBuilder<?>> extends
-		IComponentSetupBuilder<INSTANCE_TYPE>,
-		IWindowSetupConvenience<INSTANCE_TYPE>,
-		IWindowSetupBuilderCommon<INSTANCE_TYPE> {
+        IComponentSetupBuilder<INSTANCE_TYPE>,
+        IWindowSetupConvenience<INSTANCE_TYPE>,
+        IWindowSetupBuilderCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setAutoPackPolicy(final AutoPackPolicy autoPackPolicy);
+    INSTANCE_TYPE setAutoPackPolicy(final AutoPackPolicy autoPackPolicy);
 
-	INSTANCE_TYPE setAutoCenterPolicy(final AutoCenterPolicy autoCenterPolicy);
+    INSTANCE_TYPE setAutoCenterPolicy(final AutoCenterPolicy autoCenterPolicy);
 
-	INSTANCE_TYPE setAutoPositionCorrectionPolicy(final AutoPositionCorrectionPolicy autoPositionCorrectionPolicy);
+    INSTANCE_TYPE setAutoPositionCorrectionPolicy(final AutoPositionCorrectionPolicy autoPositionCorrectionPolicy);
 
-	INSTANCE_TYPE setMinPackSize(Dimension size);
+    INSTANCE_TYPE setMinPackSize(Dimension size);
 
-	INSTANCE_TYPE setMaxPackSize(Dimension size);
+    INSTANCE_TYPE setMaxPackSize(Dimension size);
 
-	INSTANCE_TYPE setSize(Dimension size);
+    INSTANCE_TYPE setSize(Dimension size);
 
-	INSTANCE_TYPE setPosition(Position position);
+    INSTANCE_TYPE setPosition(Position position);
 
-	/**
-	 * If auto dispose is set, the window will be disposed, when it was closed.
-	 * 
-	 * @param autoDispose True if window should be automatically disposed, false otherwise
-	 * 
-	 * @return This builder
-	 */
-	INSTANCE_TYPE setAutoDispose(boolean autoDispose);
+    /**
+     * If auto dispose is set, the window will be disposed, when it was closed.
+     * 
+     * @param autoDispose True if window should be automatically disposed, false otherwise
+     * 
+     * @return This builder
+     */
+    INSTANCE_TYPE setAutoDispose(boolean autoDispose);
 
 }

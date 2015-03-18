@@ -35,34 +35,34 @@ import org.jowidgets.util.IFilter;
 
 public final class ExpandCheckedNodesTreeAction {
 
-	private ExpandCheckedNodesTreeAction() {}
+    private ExpandCheckedNodesTreeAction() {}
 
-	public static ITreeExpansionActionBuilder builder(final ITreeContainer tree) {
-		return DefaultActionFactory.expandCheckedNodesTreeActionBuilder(tree);
-	}
+    public static ITreeExpansionActionBuilder builder(final ITreeContainer tree) {
+        return DefaultActionFactory.expandCheckedNodesTreeActionBuilder(tree);
+    }
 
-	public static ITreeExpansionAction create(final ITreeContainer tree) {
-		return DefaultActionFactory.expandCheckedNodesTreeAction(tree);
-	}
+    public static ITreeExpansionAction create(final ITreeContainer tree) {
+        return DefaultActionFactory.expandCheckedNodesTreeAction(tree);
+    }
 
-	public static ITreeExpansionActionBuilder builder(final ITreeContainer tree, final boolean acceptGreyedOnly) {
-		if (acceptGreyedOnly) {
-			final ITreeExpansionActionBuilder builder = builder(tree);
-			builder.setFilter(new IFilter<ITreeNode>() {
-				@Override
-				public boolean accept(final ITreeNode value) {
-					return CheckedState.GREYED.equals(value.getCheckedState());
-				}
-			});
-			return builder;
-		}
-		else {
-			return builder(tree);
-		}
-	}
+    public static ITreeExpansionActionBuilder builder(final ITreeContainer tree, final boolean acceptGreyedOnly) {
+        if (acceptGreyedOnly) {
+            final ITreeExpansionActionBuilder builder = builder(tree);
+            builder.setFilter(new IFilter<ITreeNode>() {
+                @Override
+                public boolean accept(final ITreeNode value) {
+                    return CheckedState.GREYED.equals(value.getCheckedState());
+                }
+            });
+            return builder;
+        }
+        else {
+            return builder(tree);
+        }
+    }
 
-	public static ITreeExpansionAction create(final ITreeContainer tree, final boolean acceptGreyedOnly) {
-		return builder(tree, acceptGreyedOnly).build();
-	}
+    public static ITreeExpansionAction create(final ITreeContainer tree, final boolean acceptGreyedOnly) {
+        return builder(tree, acceptGreyedOnly).build();
+    }
 
 }

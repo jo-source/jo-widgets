@@ -36,31 +36,31 @@ import org.jowidgets.spi.widgets.IToolBarItemSpi;
 
 public class ToolBarSeparatorImpl extends DummyWidget implements IToolBarItemSpi {
 
-	public ToolBarSeparatorImpl(final UIDToolBarSeparator separator) {
-		super(separator);
-	}
+    public ToolBarSeparatorImpl(final UIDToolBarSeparator separator) {
+        super(separator);
+    }
 
-	@Override
-	public UIDToolBarSeparator getUiReference() {
-		return (UIDToolBarSeparator) super.getUiReference();
-	}
+    @Override
+    public UIDToolBarSeparator getUiReference() {
+        return (UIDToolBarSeparator) super.getUiReference();
+    }
 
-	@Override
-	public void setText(final String text) {}
+    @Override
+    public void setText(final String text) {}
 
-	@Override
-	public void setToolTipText(final String text) {}
+    @Override
+    public void setToolTipText(final String text) {}
 
-	@Override
-	public void setIcon(final IImageConstant icon) {}
+    @Override
+    public void setIcon(final IImageConstant icon) {}
 
-	@Override
-	public Position getPosition() {
-		return getUiReference().getPosition();
-	}
+    @Override
+    public Position getPosition() {
+        return getUiReference().getPosition();
+    }
 
-	@Override
-	public Dimension getSize() {
-		return getUiReference().getSize();
-	}
+    @Override
+    public Dimension getSize() {
+        return getUiReference().getSize();
+    }
 }

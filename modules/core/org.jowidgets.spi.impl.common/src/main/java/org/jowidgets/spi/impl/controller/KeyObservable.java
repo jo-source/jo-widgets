@@ -40,83 +40,83 @@ import org.jowidgets.util.event.IObservableCallback;
 
 public class KeyObservable implements IKeyObservable {
 
-	private static final IEventInvoker KEY_PRESSED_INVOKER = new KeyPressedInvoker();
-	private static final IEventInvoker KEY_RELEASED_INVOKER = new KeyReleasedInvoker();
+    private static final IEventInvoker KEY_PRESSED_INVOKER = new KeyPressedInvoker();
+    private static final IEventInvoker KEY_RELEASED_INVOKER = new KeyReleasedInvoker();
 
-	private final Set<IKeyListener> listeners;
-	private final IObservableCallback observableCallback;
-	private boolean onFire;
+    private final Set<IKeyListener> listeners;
+    private final IObservableCallback observableCallback;
+    private boolean onFire;
 
-	public KeyObservable(final IObservableCallback observableCallback) {
-		Assert.paramNotNull(observableCallback, "observableCallback");
-		this.listeners = new LinkedHashSet<IKeyListener>();
-		this.observableCallback = observableCallback;
-		this.onFire = false;
-	}
+    public KeyObservable(final IObservableCallback observableCallback) {
+        Assert.paramNotNull(observableCallback, "observableCallback");
+        this.listeners = new LinkedHashSet<IKeyListener>();
+        this.observableCallback = observableCallback;
+        this.onFire = false;
+    }
 
-	@Override
-	public final void addKeyListener(final IKeyListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-		if (!onFire && listeners.size() == 1) {
-			observableCallback.onFirstRegistered();
-		}
-	}
+    @Override
+    public final void addKeyListener(final IKeyListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+        if (!onFire && listeners.size() == 1) {
+            observableCallback.onFirstRegistered();
+        }
+    }
 
-	@Override
-	public final void removeKeyListener(final IKeyListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-		if (!onFire && listeners.size() == 0) {
-			observableCallback.onLastUnregistered();
-		}
-	}
+    @Override
+    public final void removeKeyListener(final IKeyListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+        if (!onFire && listeners.size() == 0) {
+            observableCallback.onLastUnregistered();
+        }
+    }
 
-	public final void fireKeyPressed(final ILazyKeyEventContentFactory contentFactory) {
-		fireKeyEvent(contentFactory, KEY_PRESSED_INVOKER);
-	}
+    public final void fireKeyPressed(final ILazyKeyEventContentFactory contentFactory) {
+        fireKeyEvent(contentFactory, KEY_PRESSED_INVOKER);
+    }
 
-	public final void fireKeyReleased(final ILazyKeyEventContentFactory contentFactory) {
-		fireKeyEvent(contentFactory, KEY_RELEASED_INVOKER);
-	}
+    public final void fireKeyReleased(final ILazyKeyEventContentFactory contentFactory) {
+        fireKeyEvent(contentFactory, KEY_RELEASED_INVOKER);
+    }
 
-	private void fireKeyEvent(final ILazyKeyEventContentFactory contentFactory, final IEventInvoker eventInvoker) {
-		if (listeners.size() > 0) {
-			final int lastSize = listeners.size();
-			onFire = true;
-			try {
-				final IKeyEvent event = new KeyEvent(contentFactory);
-				for (final IKeyListener listener : new LinkedList<IKeyListener>(listeners)) {
-					eventInvoker.fireEvent(listener, event);
-				}
-			}
-			finally {
-				onFire = false;
-				if (lastSize > 0 && listeners.size() == 0) {
-					observableCallback.onLastUnregistered();
-				}
-				else if (lastSize == 0 && listeners.size() > 0) {
-					observableCallback.onFirstRegistered();
-				}
-			}
-		}
-	}
+    private void fireKeyEvent(final ILazyKeyEventContentFactory contentFactory, final IEventInvoker eventInvoker) {
+        if (listeners.size() > 0) {
+            final int lastSize = listeners.size();
+            onFire = true;
+            try {
+                final IKeyEvent event = new KeyEvent(contentFactory);
+                for (final IKeyListener listener : new LinkedList<IKeyListener>(listeners)) {
+                    eventInvoker.fireEvent(listener, event);
+                }
+            }
+            finally {
+                onFire = false;
+                if (lastSize > 0 && listeners.size() == 0) {
+                    observableCallback.onLastUnregistered();
+                }
+                else if (lastSize == 0 && listeners.size() > 0) {
+                    observableCallback.onFirstRegistered();
+                }
+            }
+        }
+    }
 
-	private interface IEventInvoker {
-		void fireEvent(IKeyListener listener, IKeyEvent event);
-	}
+    private interface IEventInvoker {
+        void fireEvent(IKeyListener listener, IKeyEvent event);
+    }
 
-	private static final class KeyReleasedInvoker implements IEventInvoker {
-		@Override
-		public void fireEvent(final IKeyListener listener, final IKeyEvent event) {
-			listener.keyReleased(event);
-		}
-	}
+    private static final class KeyReleasedInvoker implements IEventInvoker {
+        @Override
+        public void fireEvent(final IKeyListener listener, final IKeyEvent event) {
+            listener.keyReleased(event);
+        }
+    }
 
-	private static final class KeyPressedInvoker implements IEventInvoker {
-		@Override
-		public void fireEvent(final IKeyListener listener, final IKeyEvent event) {
-			listener.keyPressed(event);
-		}
-	}
+    private static final class KeyPressedInvoker implements IEventInvoker {
+        @Override
+        public void fireEvent(final IKeyListener listener, final IKeyEvent event) {
+            listener.keyPressed(event);
+        }
+    }
 }

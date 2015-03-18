@@ -35,55 +35,55 @@ import java.util.Map;
 
 public final class LocaleLocal {
 
-	private LocaleLocal() {}
+    private LocaleLocal() {}
 
-	public interface IValueFactory<VALUE_TYPE> {
-		VALUE_TYPE create();
-	}
+    public interface IValueFactory<VALUE_TYPE> {
+        VALUE_TYPE create();
+    }
 
-	public static <VALUE_TYPE> ILocaleLocal<VALUE_TYPE> create() {
-		return create(null);
-	}
+    public static <VALUE_TYPE> ILocaleLocal<VALUE_TYPE> create() {
+        return create(null);
+    }
 
-	/**
-	 * Creates a new LocaleLocal.
-	 * 
-	 * @param factory The factory that will be used to create new values for each different set locale
-	 * 
-	 * @return The new created LocaleLocal object
-	 */
-	public static <VALUE_TYPE> ILocaleLocal<VALUE_TYPE> create(final IValueFactory<VALUE_TYPE> factory) {
-		return new LocaleLocalImpl<VALUE_TYPE>(factory);
-	}
+    /**
+     * Creates a new LocaleLocal.
+     * 
+     * @param factory The factory that will be used to create new values for each different set locale
+     * 
+     * @return The new created LocaleLocal object
+     */
+    public static <VALUE_TYPE> ILocaleLocal<VALUE_TYPE> create(final IValueFactory<VALUE_TYPE> factory) {
+        return new LocaleLocalImpl<VALUE_TYPE>(factory);
+    }
 
-	private static final class LocaleLocalImpl<VALUE_TYPE> implements ILocaleLocal<VALUE_TYPE>, Serializable {
+    private static final class LocaleLocalImpl<VALUE_TYPE> implements ILocaleLocal<VALUE_TYPE>, Serializable {
 
-		private static final long serialVersionUID = 8869656349804898576L;
+        private static final long serialVersionUID = 8869656349804898576L;
 
-		private final IValueFactory<VALUE_TYPE> valueFactory;
-		private final Map<Locale, VALUE_TYPE> values;
+        private final IValueFactory<VALUE_TYPE> valueFactory;
+        private final Map<Locale, VALUE_TYPE> values;
 
-		private LocaleLocalImpl(final IValueFactory<VALUE_TYPE> valueFactory) {
-			this.valueFactory = valueFactory;
-			this.values = new HashMap<Locale, VALUE_TYPE>();
-		}
+        private LocaleLocalImpl(final IValueFactory<VALUE_TYPE> valueFactory) {
+            this.valueFactory = valueFactory;
+            this.values = new HashMap<Locale, VALUE_TYPE>();
+        }
 
-		@Override
-		public VALUE_TYPE get() {
-			final Locale locale = LocaleHolder.getUserLocale();
-			VALUE_TYPE result = values.get(locale);
-			if (result == null && valueFactory != null) {
-				result = valueFactory.create();
-				values.put(locale, result);
-			}
-			return result;
-		}
+        @Override
+        public VALUE_TYPE get() {
+            final Locale locale = LocaleHolder.getUserLocale();
+            VALUE_TYPE result = values.get(locale);
+            if (result == null && valueFactory != null) {
+                result = valueFactory.create();
+                values.put(locale, result);
+            }
+            return result;
+        }
 
-		@Override
-		public void setValue(final VALUE_TYPE value) {
-			values.put(LocaleHolder.getUserLocale(), value);
-		}
+        @Override
+        public void setValue(final VALUE_TYPE value) {
+            values.put(LocaleHolder.getUserLocale(), value);
+        }
 
-	}
+    }
 
 }

@@ -30,21 +30,21 @@ package org.jowidgets.examples.common.workbench.demo4.model;
 
 public enum Role {
 
-	ADMIN("Admin"),
-	DEVELOPER("Developer"),
-	USER("User"),
-	MANAGER("Manager"),
-	GUEST("Guest");
+    ADMIN("Admin"),
+    DEVELOPER("Developer"),
+    USER("User"),
+    MANAGER("Manager"),
+    GUEST("Guest");
 
-	private final String string;
+    private final String string;
 
-	private Role(final String string) {
-		this.string = string;
-	}
+    private Role(final String string) {
+        this.string = string;
+    }
 
-	@Override
-	public String toString() {
-		return string;
-	}
+    @Override
+    public String toString() {
+        return string;
+    }
 
 }

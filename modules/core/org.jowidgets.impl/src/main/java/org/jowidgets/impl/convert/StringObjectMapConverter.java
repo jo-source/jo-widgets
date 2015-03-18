@@ -38,43 +38,43 @@ import org.jowidgets.validation.ValidationResult;
 
 public class StringObjectMapConverter<OBJECT_TYPE> extends AbstractStringObjectConverter<OBJECT_TYPE> {
 
-	private final Map<String, OBJECT_TYPE> stringToObject;
-	private final IValidator<String> stringValidator;
+    private final Map<String, OBJECT_TYPE> stringToObject;
+    private final IValidator<String> stringValidator;
 
-	public StringObjectMapConverter(final Map<String, ? extends OBJECT_TYPE> stringToObject, final String hint) {
-		super();
-		Assert.paramNotNull(stringToObject, "stringToObject");
-		this.stringToObject = new HashMap<String, OBJECT_TYPE>(stringToObject);
-		this.stringValidator = new IValidator<String>() {
+    public StringObjectMapConverter(final Map<String, ? extends OBJECT_TYPE> stringToObject, final String hint) {
+        super();
+        Assert.paramNotNull(stringToObject, "stringToObject");
+        this.stringToObject = new HashMap<String, OBJECT_TYPE>(stringToObject);
+        this.stringValidator = new IValidator<String>() {
 
-			@Override
-			public IValidationResult validate(final String input) {
-				if (input != null && !input.isEmpty() && convertToObject(input) == null) {
-					if (hint != null && !hint.isEmpty()) {
-						return ValidationResult.error(hint);
-					}
-					else {
-						return ValidationResult.error("Input not valid");
-					}
-				}
-				return ValidationResult.ok();
-			}
-		};
-	}
+            @Override
+            public IValidationResult validate(final String input) {
+                if (input != null && !input.isEmpty() && convertToObject(input) == null) {
+                    if (hint != null && !hint.isEmpty()) {
+                        return ValidationResult.error(hint);
+                    }
+                    else {
+                        return ValidationResult.error("Input not valid");
+                    }
+                }
+                return ValidationResult.ok();
+            }
+        };
+    }
 
-	@Override
-	public OBJECT_TYPE convertToObject(final String string) {
-		return stringToObject.get(string);
-	}
+    @Override
+    public OBJECT_TYPE convertToObject(final String string) {
+        return stringToObject.get(string);
+    }
 
-	@Override
-	public IValidator<String> getStringValidator() {
-		return stringValidator;
-	}
+    @Override
+    public IValidator<String> getStringValidator() {
+        return stringValidator;
+    }
 
-	@Override
-	public String toString() {
-		return "StringObjectMapConverter [stringToObject=" + stringToObject + ", stringValidator=" + stringValidator + "]";
-	}
+    @Override
+    public String toString() {
+        return "StringObjectMapConverter [stringToObject=" + stringToObject + ", stringValidator=" + stringValidator + "]";
+    }
 
 }

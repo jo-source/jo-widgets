@@ -60,368 +60,368 @@ import org.junit.Test;
 
 public class WidgetDisposeTest {
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
-	private List<DisposeListener> disposeListeners;
+    private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+    private List<DisposeListener> disposeListeners;
 
-	@Before
-	public void before() {
-		disposeListeners = new LinkedList<DisposeListener>();
-	}
+    @Before
+    public void before() {
+        disposeListeners = new LinkedList<DisposeListener>();
+    }
 
-	@After
-	public void after() {
-		disposeListeners = null;
-	}
+    @After
+    public void after() {
+        disposeListeners = null;
+    }
 
-	@Test
-	public void testAddAndDispose() {
-		Toolkit.getApplicationRunner().run(new IApplication() {
+    @Test
+    public void testAddAndDispose() {
+        Toolkit.getApplicationRunner().run(new IApplication() {
 
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
+            @Override
+            public void start(final IApplicationLifecycle lifecycle) {
 
-				final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
-				frame.addDisposeListener(new DisposeListener(frame));
+                final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
+                frame.addDisposeListener(new DisposeListener(frame));
 
-				frame.setVisible(true);
+                frame.setVisible(true);
 
-				final IButton button = createWidget(frame, BPF.button());
-				final int sizeBefore = frame.getChildren().size();
-				button.dispose();
+                final IButton button = createWidget(frame, BPF.button());
+                final int sizeBefore = frame.getChildren().size();
+                button.dispose();
 
-				Assert.assertEquals(sizeBefore - 1, frame.getChildren().size());
-				Assert.assertFalse(frame.getChildren().contains(button));
+                Assert.assertEquals(sizeBefore - 1, frame.getChildren().size());
+                Assert.assertFalse(frame.getChildren().contains(button));
 
-				frame.dispose();
+                frame.dispose();
 
-				testDisposeListenerCount();
-			}
-		});
-	}
+                testDisposeListenerCount();
+            }
+        });
+    }
 
-	@Test
-	public void testMultipleDisposal() {
-		Toolkit.getApplicationRunner().run(new IApplication() {
+    @Test
+    public void testMultipleDisposal() {
+        Toolkit.getApplicationRunner().run(new IApplication() {
 
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
+            @Override
+            public void start(final IApplicationLifecycle lifecycle) {
 
-				final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
-				frame.addDisposeListener(new DisposeListener(frame));
+                final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
+                frame.addDisposeListener(new DisposeListener(frame));
 
-				frame.setVisible(true);
+                frame.setVisible(true);
 
-				final IButton button = createWidget(frame, BPF.button());
-				button.dispose();
-				button.dispose();
+                final IButton button = createWidget(frame, BPF.button());
+                button.dispose();
+                button.dispose();
 
-				frame.dispose();
+                frame.dispose();
 
-				testDisposeListenerCount();
-			}
-		});
-	}
+                testDisposeListenerCount();
+            }
+        });
+    }
 
-	@Test
-	public void testChildWindowDisposal() {
-		Toolkit.getApplicationRunner().run(new IApplication() {
+    @Test
+    public void testChildWindowDisposal() {
+        Toolkit.getApplicationRunner().run(new IApplication() {
 
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
+            @Override
+            public void start(final IApplicationLifecycle lifecycle) {
 
-				final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
-				frame.addDisposeListener(new DisposeListener(frame));
+                final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
+                frame.addDisposeListener(new DisposeListener(frame));
 
-				frame.setVisible(true);
+                frame.setVisible(true);
 
-				final IFrame childWindow = frame.createChildWindow(BPF.frame());
-				childWindow.addDisposeListener(new DisposeListener(childWindow));
+                final IFrame childWindow = frame.createChildWindow(BPF.frame());
+                childWindow.addDisposeListener(new DisposeListener(childWindow));
 
-				createWidget(childWindow, BPF.button());
-				createWidget(childWindow, BPF.textLabel());
+                createWidget(childWindow, BPF.button());
+                createWidget(childWindow, BPF.textLabel());
 
-				frame.dispose();
+                frame.dispose();
 
-				testDisposeListenerCount();
-			}
-		});
-	}
+                testDisposeListenerCount();
+            }
+        });
+    }
 
-	@Test
-	public void testMenuBarDisposal() {
-		Toolkit.getApplicationRunner().run(new IApplication() {
+    @Test
+    public void testMenuBarDisposal() {
+        Toolkit.getApplicationRunner().run(new IApplication() {
 
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
+            @Override
+            public void start(final IApplicationLifecycle lifecycle) {
 
-				final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
+                final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
 
-				frame.setVisible(true);
-				frame.addDisposeListener(new DisposeListener(frame));
+                frame.setVisible(true);
+                frame.addDisposeListener(new DisposeListener(frame));
 
-				final IMenuBar menuBar = frame.createMenuBar();
-				menuBar.addDisposeListener(new DisposeListener(menuBar));
+                final IMenuBar menuBar = frame.createMenuBar();
+                menuBar.addDisposeListener(new DisposeListener(menuBar));
 
-				final IMainMenu menu1 = createMenu(menuBar, "Menu 1");
-				final IMainMenu menu2 = createMenu(menuBar, "Menu 2");
-				final IMenuItem item1 = createMenuItem(menu1, BPF.menuItem("Item 1"));
+                final IMainMenu menu1 = createMenu(menuBar, "Menu 1");
+                final IMainMenu menu2 = createMenu(menuBar, "Menu 2");
+                final IMenuItem item1 = createMenuItem(menu1, BPF.menuItem("Item 1"));
 
-				// TODO MG,NM don't know how to create a cascaded menu without models
+                // TODO MG,NM don't know how to create a cascaded menu without models
 
-				menu1.dispose();
-				Assert.assertTrue(item1.isDisposed());
+                menu1.dispose();
+                Assert.assertTrue(item1.isDisposed());
 
-				Assert.assertFalse(menu2.isDisposed());
-				menuBar.dispose();
-				Assert.assertTrue(menu2.isDisposed());
+                Assert.assertFalse(menu2.isDisposed());
+                menuBar.dispose();
+                Assert.assertTrue(menu2.isDisposed());
 
-				frame.dispose();
+                frame.dispose();
 
-				testDisposeListenerCount();
-			}
+                testDisposeListenerCount();
+            }
 
-		});
-	}
+        });
+    }
 
-	@Test
-	public void testDisposeMenuItem() {
-		Toolkit.getApplicationRunner().run(new IApplication() {
+    @Test
+    public void testDisposeMenuItem() {
+        Toolkit.getApplicationRunner().run(new IApplication() {
 
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
+            @Override
+            public void start(final IApplicationLifecycle lifecycle) {
 
-				final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
+                final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
 
-				frame.setVisible(true);
+                frame.setVisible(true);
 
-				final IMenuBar menuBar = frame.createMenuBar();
+                final IMenuBar menuBar = frame.createMenuBar();
 
-				final IMainMenu menu = menuBar.addMenu("menu");
-				Assert.assertTrue(menuBar.getMenus().contains(menu));
+                final IMainMenu menu = menuBar.addMenu("menu");
+                Assert.assertTrue(menuBar.getMenus().contains(menu));
 
-				final IActionMenuItem item = menu.addItem(BPF.menuItem());
-				Assert.assertTrue(menu.getChildren().contains(item));
+                final IActionMenuItem item = menu.addItem(BPF.menuItem());
+                Assert.assertTrue(menu.getChildren().contains(item));
 
-				item.dispose();
-				Assert.assertFalse(menu.getChildren().contains(item));
+                item.dispose();
+                Assert.assertFalse(menu.getChildren().contains(item));
 
-				menu.dispose();
-				Assert.assertFalse(menuBar.getMenus().contains(menu));
+                menu.dispose();
+                Assert.assertFalse(menuBar.getMenus().contains(menu));
 
-				frame.dispose();
-			}
+                frame.dispose();
+            }
 
-		});
-	}
+        });
+    }
 
-	@Test
-	public void testMenuModel() {
-		Toolkit.getApplicationRunner().run(new IApplication() {
+    @Test
+    public void testMenuModel() {
+        Toolkit.getApplicationRunner().run(new IApplication() {
 
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
+            @Override
+            public void start(final IApplicationLifecycle lifecycle) {
 
-				final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
+                final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
 
-				frame.setVisible(true);
-				frame.addDisposeListener(new DisposeListener(frame));
+                frame.setVisible(true);
+                frame.addDisposeListener(new DisposeListener(frame));
 
-				// TODO MG,NM don't know how to add a model and dispose the items then:
-				// add model several times, dispose one menu, check if other menus still work
+                // TODO MG,NM don't know how to add a model and dispose the items then:
+                // add model several times, dispose one menu, check if other menus still work
 
-				frame.dispose();
+                frame.dispose();
 
-				testDisposeListenerCount();
-			}
+                testDisposeListenerCount();
+            }
 
-		});
-	}
+        });
+    }
 
-	@Test
-	public void testManyWidgetsDisposal() {
-		Toolkit.getApplicationRunner().run(new IApplication() {
+    @Test
+    public void testManyWidgetsDisposal() {
+        Toolkit.getApplicationRunner().run(new IApplication() {
 
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
+            @Override
+            public void start(final IApplicationLifecycle lifecycle) {
 
-				final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
-				frame.addDisposeListener(new DisposeListener(frame));
+                final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
+                frame.addDisposeListener(new DisposeListener(frame));
 
-				frame.setVisible(true);
+                frame.setVisible(true);
 
-				createWidget(frame, BPF.button());
-				createWidget(frame, BPF.calendar());
-				createWidget(frame, BPF.checkBox());
-				createWidget(frame, BPF.comboBox());
-				createWidget(frame, BPF.composite());
-				createWidget(frame, BPF.inputFieldDate());
-				createWidget(frame, BPF.label());
-				createWidget(frame, BPF.scrollComposite());
+                createWidget(frame, BPF.button());
+                createWidget(frame, BPF.calendar());
+                createWidget(frame, BPF.checkBox());
+                createWidget(frame, BPF.comboBox());
+                createWidget(frame, BPF.composite());
+                createWidget(frame, BPF.inputFieldDate());
+                createWidget(frame, BPF.label());
+                createWidget(frame, BPF.scrollComposite());
 
-				final ITabFolder tabFolder = createWidget(frame, BPF.tabFolder());
-				final ITabItem tabItem1 = createTabItem(tabFolder, BPF.tabItem());
-				createTabItem(tabFolder, BPF.tabItem());
-				createTabItem(tabFolder, BPF.tabItem());
-				createTabItem(tabFolder, BPF.tabItem());
+                final ITabFolder tabFolder = createWidget(frame, BPF.tabFolder());
+                final ITabItem tabItem1 = createTabItem(tabFolder, BPF.tabItem());
+                createTabItem(tabFolder, BPF.tabItem());
+                createTabItem(tabFolder, BPF.tabItem());
+                createTabItem(tabFolder, BPF.tabItem());
 
-				tabItem1.dispose();
+                tabItem1.dispose();
 
-				frame.dispose();
+                frame.dispose();
 
-				testDisposeListenerCount();
-			}
-		});
-	}
+                testDisposeListenerCount();
+            }
+        });
+    }
 
-	@Test
-	public void testMultiContainerDisposal() {
-		Toolkit.getApplicationRunner().run(new IApplication() {
+    @Test
+    public void testMultiContainerDisposal() {
+        Toolkit.getApplicationRunner().run(new IApplication() {
 
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
+            @Override
+            public void start(final IApplicationLifecycle lifecycle) {
 
-				final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
-				frame.addDisposeListener(new DisposeListener(frame));
+                final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
+                frame.addDisposeListener(new DisposeListener(frame));
 
-				frame.setVisible(true);
+                frame.setVisible(true);
 
-				final IComposite parentComposite = frame.add(BPF.composite());
-				parentComposite.addDisposeListener(new DisposeListener(parentComposite));
+                final IComposite parentComposite = frame.add(BPF.composite());
+                parentComposite.addDisposeListener(new DisposeListener(parentComposite));
 
-				final IComposite childComposite = parentComposite.add(BPF.composite());
-				childComposite.addDisposeListener(new DisposeListener(childComposite));
+                final IComposite childComposite = parentComposite.add(BPF.composite());
+                childComposite.addDisposeListener(new DisposeListener(childComposite));
 
-				childComposite.dispose();
+                childComposite.dispose();
 
-				Assert.assertFalse(parentComposite.getChildren().contains(childComposite));
+                Assert.assertFalse(parentComposite.getChildren().contains(childComposite));
 
-				frame.dispose();
-				testDisposeListenerCount();
-			}
-		});
-	}
+                frame.dispose();
+                testDisposeListenerCount();
+            }
+        });
+    }
 
-	@Test
-	public void testTree() {
-		Toolkit.getApplicationRunner().run(new IApplication() {
+    @Test
+    public void testTree() {
+        Toolkit.getApplicationRunner().run(new IApplication() {
 
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
+            @Override
+            public void start(final IApplicationLifecycle lifecycle) {
 
-				final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
-				frame.addDisposeListener(new DisposeListener(frame));
+                final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
+                frame.addDisposeListener(new DisposeListener(frame));
 
-				frame.setVisible(true);
+                frame.setVisible(true);
 
-				final ITree tree = createWidget(frame, BPF.tree());
-				final ITreeNode rootNode = createNode(tree);
-				createNode(createNode(rootNode));
-				createNode(createNode(rootNode));
-				createNode(createNode(rootNode));
+                final ITree tree = createWidget(frame, BPF.tree());
+                final ITreeNode rootNode = createNode(tree);
+                createNode(createNode(rootNode));
+                createNode(createNode(rootNode));
+                createNode(createNode(rootNode));
 
-				final ITreeNode subNode1 = createNode(rootNode);
-				final ITreeNode subSubNode1 = createNode(subNode1);
-				final ITreeNode subSubSubNode1 = createNode(subSubNode1);
+                final ITreeNode subNode1 = createNode(rootNode);
+                final ITreeNode subSubNode1 = createNode(subNode1);
+                final ITreeNode subSubSubNode1 = createNode(subSubNode1);
 
-				subNode1.dispose();
-				Assert.assertTrue(subSubNode1.isDisposed());
-				Assert.assertTrue(subSubSubNode1.isDisposed());
+                subNode1.dispose();
+                Assert.assertTrue(subSubNode1.isDisposed());
+                Assert.assertTrue(subSubSubNode1.isDisposed());
 
-				frame.dispose();
+                frame.dispose();
 
-				testDisposeListenerCount();
-			}
-		});
-	}
+                testDisposeListenerCount();
+            }
+        });
+    }
 
-	@Test
-	public void testTabFolder() {
-		Toolkit.getApplicationRunner().run(new IApplication() {
+    @Test
+    public void testTabFolder() {
+        Toolkit.getApplicationRunner().run(new IApplication() {
 
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
+            @Override
+            public void start(final IApplicationLifecycle lifecycle) {
 
-				final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
-				frame.addDisposeListener(new DisposeListener(frame));
+                final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
+                frame.addDisposeListener(new DisposeListener(frame));
 
-				frame.setVisible(true);
+                frame.setVisible(true);
 
-				final ITabFolder tabFolder = createWidget(frame, BPF.tabFolder());
-				final ITabItem tabItem1 = createTabItem(tabFolder, BPF.tabItem());
-				createTabItem(tabFolder, BPF.tabItem());
-				createTabItem(tabFolder, BPF.tabItem());
+                final ITabFolder tabFolder = createWidget(frame, BPF.tabFolder());
+                final ITabItem tabItem1 = createTabItem(tabFolder, BPF.tabItem());
+                createTabItem(tabFolder, BPF.tabItem());
+                createTabItem(tabFolder, BPF.tabItem());
 
-				final IControl control = createWidget(tabItem1, BPF.button());
+                final IControl control = createWidget(tabItem1, BPF.button());
 
-				Assert.assertFalse(control.isDisposed());
-				tabItem1.dispose();
-				Assert.assertTrue(control.isDisposed());
+                Assert.assertFalse(control.isDisposed());
+                tabItem1.dispose();
+                Assert.assertTrue(control.isDisposed());
 
-				frame.dispose();
+                frame.dispose();
 
-				testDisposeListenerCount();
-			}
-		});
-	}
+                testDisposeListenerCount();
+            }
+        });
+    }
 
-	private <WIDGET_TYPE extends IControl> WIDGET_TYPE createWidget(
-		final IContainer container,
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
-		final WIDGET_TYPE result = container.add(descriptor);
-		result.addDisposeListener(new DisposeListener(result));
-		return result;
-	}
+    private <WIDGET_TYPE extends IControl> WIDGET_TYPE createWidget(
+        final IContainer container,
+        final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+        final WIDGET_TYPE result = container.add(descriptor);
+        result.addDisposeListener(new DisposeListener(result));
+        return result;
+    }
 
-	private ITabItem createTabItem(final ITabFolder tabFolder, final ITabItemBluePrint descriptor) {
-		final ITabItem result = tabFolder.addItem(descriptor);
-		result.addDisposeListener(new DisposeListener(result));
-		return result;
-	}
+    private ITabItem createTabItem(final ITabFolder tabFolder, final ITabItemBluePrint descriptor) {
+        final ITabItem result = tabFolder.addItem(descriptor);
+        result.addDisposeListener(new DisposeListener(result));
+        return result;
+    }
 
-	private ITreeNode createNode(final ITree tree) {
-		final ITreeNode result = tree.addNode();
-		result.addDisposeListener(new DisposeListener(result));
-		return result;
-	}
+    private ITreeNode createNode(final ITree tree) {
+        final ITreeNode result = tree.addNode();
+        result.addDisposeListener(new DisposeListener(result));
+        return result;
+    }
 
-	private ITreeNode createNode(final ITreeNode treeNode) {
-		final ITreeNode result = treeNode.addNode();
-		result.addDisposeListener(new DisposeListener(result));
-		return result;
-	}
+    private ITreeNode createNode(final ITreeNode treeNode) {
+        final ITreeNode result = treeNode.addNode();
+        result.addDisposeListener(new DisposeListener(result));
+        return result;
+    }
 
-	private IMainMenu createMenu(final IMenuBar menuBar, final String text) {
-		final IMainMenu result = menuBar.addMenu(text);
-		result.addDisposeListener(new DisposeListener(result));
-		return result;
-	}
+    private IMainMenu createMenu(final IMenuBar menuBar, final String text) {
+        final IMainMenu result = menuBar.addMenu(text);
+        result.addDisposeListener(new DisposeListener(result));
+        return result;
+    }
 
-	private IMenuItem createMenuItem(final IMainMenu menu1, final IActionMenuItemBluePrint menuItemBp) {
-		final IMenuItem result = menu1.addItem(menuItemBp);
-		result.addDisposeListener(new DisposeListener(result));
-		return result;
-	}
+    private IMenuItem createMenuItem(final IMainMenu menu1, final IActionMenuItemBluePrint menuItemBp) {
+        final IMenuItem result = menu1.addItem(menuItemBp);
+        result.addDisposeListener(new DisposeListener(result));
+        return result;
+    }
 
-	private void testDisposeListenerCount() {
-		for (final DisposeListener disposeListener : disposeListeners) {
-			Assert.assertEquals(1, disposeListener.disposeCount);
-		}
-	}
+    private void testDisposeListenerCount() {
+        for (final DisposeListener disposeListener : disposeListeners) {
+            Assert.assertEquals(1, disposeListener.disposeCount);
+        }
+    }
 
-	final class DisposeListener implements IDisposeListener {
-		private final IWidget widget;
-		private int disposeCount;
+    final class DisposeListener implements IDisposeListener {
+        private final IWidget widget;
+        private int disposeCount;
 
-		DisposeListener(final IWidget widget) {
-			disposeListeners.add(this);
-			this.widget = widget;
-			this.disposeCount = 0;
-		}
+        DisposeListener(final IWidget widget) {
+            disposeListeners.add(this);
+            this.widget = widget;
+            this.disposeCount = 0;
+        }
 
-		@Override
-		public void onDispose() {
-			Assert.assertFalse(widget.isDisposed());
-			disposeCount++;
-		}
-	}
+        @Override
+        public void onDispose() {
+            Assert.assertFalse(widget.isDisposed());
+            disposeCount++;
+        }
+    }
 }

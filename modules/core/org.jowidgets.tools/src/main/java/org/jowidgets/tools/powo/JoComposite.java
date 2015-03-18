@@ -38,57 +38,57 @@ import org.jowidgets.util.Assert;
 
 public class JoComposite extends Composite<IComposite, ICompositeBluePrint> implements IComposite {
 
-	JoComposite(final IComposite widget) {
-		this(bluePrint());
-		Assert.paramNotNull(widget, "widget");
-		initialize(widget);
-	}
+    JoComposite(final IComposite widget) {
+        this(bluePrint());
+        Assert.paramNotNull(widget, "widget");
+        initialize(widget);
+    }
 
-	public JoComposite() {
-		this(bluePrint());
-	}
+    public JoComposite() {
+        this(bluePrint());
+    }
 
-	public JoComposite(final String borderTitle) {
-		this(bluePrint(borderTitle));
-	}
+    public JoComposite(final String borderTitle) {
+        this(bluePrint(borderTitle));
+    }
 
-	public JoComposite(final boolean border) {
-		this(bluePrint(border));
-	}
+    public JoComposite(final boolean border) {
+        this(bluePrint(border));
+    }
 
-	public JoComposite(final ILayoutDescriptor layout) {
-		this(bluePrint(layout));
-	}
+    public JoComposite(final ILayoutDescriptor layout) {
+        this(bluePrint(layout));
+    }
 
-	public JoComposite(final ICompositeDescriptor descriptor) {
-		super(bluePrint().setSetup(descriptor));
-	}
+    public JoComposite(final ICompositeDescriptor descriptor) {
+        super(bluePrint().setSetup(descriptor));
+    }
 
-	public static JoComposite toJoComposite(final IComposite widget) {
-		Assert.paramNotNull(widget, "widget");
-		if (widget instanceof JoComposite) {
-			return (JoComposite) widget;
-		}
-		else {
-			return new JoComposite(widget);
-		}
-	}
+    public static JoComposite toJoComposite(final IComposite widget) {
+        Assert.paramNotNull(widget, "widget");
+        if (widget instanceof JoComposite) {
+            return (JoComposite) widget;
+        }
+        else {
+            return new JoComposite(widget);
+        }
+    }
 
-	public static ICompositeBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().composite();
-	}
+    public static ICompositeBluePrint bluePrint() {
+        return Toolkit.getBluePrintFactory().composite();
+    }
 
-	public static ICompositeBluePrint bluePrint(final ILayoutDescriptor layout) {
-		Assert.paramNotNull(layout, "layout");
-		return bluePrint().setLayout(layout);
-	}
+    public static ICompositeBluePrint bluePrint(final ILayoutDescriptor layout) {
+        Assert.paramNotNull(layout, "layout");
+        return bluePrint().setLayout(layout);
+    }
 
-	public static ICompositeBluePrint bluePrint(final String borderTitle) {
-		return bluePrint().setBorder(new Border(borderTitle));
-	}
+    public static ICompositeBluePrint bluePrint(final String borderTitle) {
+        return bluePrint().setBorder(new Border(borderTitle));
+    }
 
-	public static ICompositeBluePrint bluePrint(final boolean border) {
-		return border ? Toolkit.getBluePrintFactory().compositeWithBorder() : bluePrint();
-	}
+    public static ICompositeBluePrint bluePrint(final boolean border) {
+        return border ? Toolkit.getBluePrintFactory().compositeWithBorder() : bluePrint();
+    }
 
 }

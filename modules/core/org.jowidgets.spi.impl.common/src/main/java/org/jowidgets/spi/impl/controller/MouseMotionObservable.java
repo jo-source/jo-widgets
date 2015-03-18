@@ -42,49 +42,49 @@ import org.jowidgets.util.event.IObservableCallback;
 
 public class MouseMotionObservable implements IMouseMotionObservable {
 
-	private final Set<IMouseMotionListener> listeners;
-	private final IObservableCallback observableCallback;
+    private final Set<IMouseMotionListener> listeners;
+    private final IObservableCallback observableCallback;
 
-	public MouseMotionObservable(final IObservableCallback observableCallback) {
-		Assert.paramNotNull(observableCallback, "observableCallback");
-		this.listeners = new LinkedHashSet<IMouseMotionListener>();
-		this.observableCallback = observableCallback;
-	}
+    public MouseMotionObservable(final IObservableCallback observableCallback) {
+        Assert.paramNotNull(observableCallback, "observableCallback");
+        this.listeners = new LinkedHashSet<IMouseMotionListener>();
+        this.observableCallback = observableCallback;
+    }
 
-	@Override
-	public void addMouseMotionListener(final IMouseMotionListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-		if (listeners.size() == 1) {
-			observableCallback.onFirstRegistered();
-		}
-	}
+    @Override
+    public void addMouseMotionListener(final IMouseMotionListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+        if (listeners.size() == 1) {
+            observableCallback.onFirstRegistered();
+        }
+    }
 
-	@Override
-	public void removeMouseMotionListener(final IMouseMotionListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-		if (listeners.size() == 0) {
-			observableCallback.onLastUnregistered();
-		}
-	}
+    @Override
+    public void removeMouseMotionListener(final IMouseMotionListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+        if (listeners.size() == 0) {
+            observableCallback.onLastUnregistered();
+        }
+    }
 
-	public final void fireMouseMoved(final Position position) {
-		fireMouseMoved(new MouseEvent(position));
-	}
+    public final void fireMouseMoved(final Position position) {
+        fireMouseMoved(new MouseEvent(position));
+    }
 
-	public final void fireMouseMoved(final IMouseEvent event) {
-		Assert.paramNotNull(event, "event");
-		for (final IMouseMotionListener listener : new LinkedList<IMouseMotionListener>(listeners)) {
-			listener.mouseMoved(event);
-		}
-	}
+    public final void fireMouseMoved(final IMouseEvent event) {
+        Assert.paramNotNull(event, "event");
+        for (final IMouseMotionListener listener : new LinkedList<IMouseMotionListener>(listeners)) {
+            listener.mouseMoved(event);
+        }
+    }
 
-	public final void fireMouseDragged(final IMouseButtonEvent event) {
-		Assert.paramNotNull(event, "event");
-		for (final IMouseMotionListener listener : new LinkedList<IMouseMotionListener>(listeners)) {
-			listener.mouseDragged(event);
-		}
-	}
+    public final void fireMouseDragged(final IMouseButtonEvent event) {
+        Assert.paramNotNull(event, "event");
+        for (final IMouseMotionListener listener : new LinkedList<IMouseMotionListener>(listeners)) {
+            listener.mouseDragged(event);
+        }
+    }
 
 }

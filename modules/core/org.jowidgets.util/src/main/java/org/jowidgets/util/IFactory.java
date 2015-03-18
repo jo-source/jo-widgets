@@ -30,6 +30,6 @@ package org.jowidgets.util;
 
 public interface IFactory<VALUE_TYPE> {
 
-	VALUE_TYPE create();
+    VALUE_TYPE create();
 
 }

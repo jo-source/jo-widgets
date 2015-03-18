@@ -29,21 +29,21 @@
 package org.jowidgets.examples.common.data;
 
 public final class Languages {
-	public static final String[] LANGUAGES = new String[] {
-			"Afrikaans", "Albanian", "Amharic", "Arabic", "Armenian", "Assamese", "Aymara", "Azerbaijani", "Basque",
-			"Belarusian", "Bengali", "Bislama", "Bosnian", "Bulgarian", "Burmese", "Catalan", "Chinese, Mandarin",
-			"Chinese, Cantonese", "Croatian", "Czech", "Danish", "Dhivehi", "Dutch", "Dzongkha", "English", "Estonian", "Fijian",
-			"Filipino", "Finnish", "French", "Frisian (West)", "Gagauz", "Galician", "Georgian", "German", "Greek", "Guaraní",
-			"Gujarati", "Haitian Creole", "Hebrew", "Hindi", "Hiri Motu", "Hungarian", "Icelandic", "Indonesian", "Inuinnaqtun",
-			"Inuktitut", "Irish", "Italian", "Japanese", "Kannada", "Kashmiri", "Kazakh", "Khmer", "Korean", "Kurdish", "Kyrgyz",
-			"Lao", "Latin", "Latvian", "Lithuanian", "Luxembourgish", "Macedonian", "Malagasy", "Malay", "Malayalam", "Maltese",
-			"Manx Gaelic", "Maori", "Marathi", "Mayan", "Mongolian", "Montenegrin", "Náhuatl", "Ndebele", "Nepali",
-			"New Zealand Sign Language", "Northern Sotho", "Norwegian", "Occitan", "Oriya", "Ossetian", "Papiamento", "Pashto",
-			"Persian", "Polish", "Portuguese", "Punjabi", "Quechua", "Romanian", "Romansh", "Russian", "Sanskrit", "Sarikoli",
-			"Scottish Gaelic", "Serbian", "Shona", "Sindhi", "Sinhala", "Slovak", "Slovene", "Somali", "Sotho", "Spanish",
-			"Sranan Tongo", "Swahili", "Swati", "Swedish", "Tagalog", "Tamil", "Telugu", "Tetum", "Thai", "Tok Pisin", "Tsonga",
-			"Tswana", "Turkish", "Turkmen", "Ukrainian", "Urdu", "Uzbek", "Venda", "Vietnamese", "Welsh", "Xhosa", "Yiddish",
-			"Yoruba", "Zulu",};
+    public static final String[] LANGUAGES = new String[] {
+            "Afrikaans", "Albanian", "Amharic", "Arabic", "Armenian", "Assamese", "Aymara", "Azerbaijani", "Basque",
+            "Belarusian", "Bengali", "Bislama", "Bosnian", "Bulgarian", "Burmese", "Catalan", "Chinese, Mandarin",
+            "Chinese, Cantonese", "Croatian", "Czech", "Danish", "Dhivehi", "Dutch", "Dzongkha", "English", "Estonian", "Fijian",
+            "Filipino", "Finnish", "French", "Frisian (West)", "Gagauz", "Galician", "Georgian", "German", "Greek", "Guaraní",
+            "Gujarati", "Haitian Creole", "Hebrew", "Hindi", "Hiri Motu", "Hungarian", "Icelandic", "Indonesian", "Inuinnaqtun",
+            "Inuktitut", "Irish", "Italian", "Japanese", "Kannada", "Kashmiri", "Kazakh", "Khmer", "Korean", "Kurdish", "Kyrgyz",
+            "Lao", "Latin", "Latvian", "Lithuanian", "Luxembourgish", "Macedonian", "Malagasy", "Malay", "Malayalam", "Maltese",
+            "Manx Gaelic", "Maori", "Marathi", "Mayan", "Mongolian", "Montenegrin", "Náhuatl", "Ndebele", "Nepali",
+            "New Zealand Sign Language", "Northern Sotho", "Norwegian", "Occitan", "Oriya", "Ossetian", "Papiamento", "Pashto",
+            "Persian", "Polish", "Portuguese", "Punjabi", "Quechua", "Romanian", "Romansh", "Russian", "Sanskrit", "Sarikoli",
+            "Scottish Gaelic", "Serbian", "Shona", "Sindhi", "Sinhala", "Slovak", "Slovene", "Somali", "Sotho", "Spanish",
+            "Sranan Tongo", "Swahili", "Swati", "Swedish", "Tagalog", "Tamil", "Telugu", "Tetum", "Thai", "Tok Pisin", "Tsonga",
+            "Tswana", "Turkish", "Turkmen", "Ukrainian", "Urdu", "Uzbek", "Venda", "Vietnamese", "Welsh", "Xhosa", "Yiddish",
+            "Yoruba", "Zulu",};
 
-	private Languages() {}
+    private Languages() {}
 }

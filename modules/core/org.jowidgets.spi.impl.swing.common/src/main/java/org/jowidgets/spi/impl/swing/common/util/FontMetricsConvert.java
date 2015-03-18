@@ -34,20 +34,20 @@ import org.jowidgets.spi.impl.text.FontMetricsBuilder;
 
 public final class FontMetricsConvert {
 
-	private FontMetricsConvert() {};
+    private FontMetricsConvert() {};
 
-	public static IFontMetrics convert(final FontMetrics fontMetrics) {
-		if (fontMetrics != null) {
-			final FontMetricsBuilder builder = new FontMetricsBuilder();
-			builder.setAscent(fontMetrics.getAscent());
-			builder.setDescent(fontMetrics.getDescent());
-			builder.setHeight(fontMetrics.getHeight());
-			builder.setLeading(fontMetrics.getLeading());
-			return builder.build();
-		}
-		else {
-			return null;
-		}
-	}
+    public static IFontMetrics convert(final FontMetrics fontMetrics) {
+        if (fontMetrics != null) {
+            final FontMetricsBuilder builder = new FontMetricsBuilder();
+            builder.setAscent(fontMetrics.getAscent());
+            builder.setDescent(fontMetrics.getDescent());
+            builder.setHeight(fontMetrics.getHeight());
+            builder.setLeading(fontMetrics.getLeading());
+            return builder.build();
+        }
+        else {
+            return null;
+        }
+    }
 
 }

@@ -47,203 +47,203 @@ import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public abstract class AbstractInputControl extends InputObservable implements IInputControlSpi {
 
-	private final Control control;
-	private final SwtControl swtControlDelegate;
+    private final Control control;
+    private final SwtControl swtControlDelegate;
 
-	public AbstractInputControl(final Control control) {
-		super();
-		this.control = control;
-		this.swtControlDelegate = new SwtControl(control, new ImmutableDropSelection(this));
-	}
+    public AbstractInputControl(final Control control) {
+        super();
+        this.control = control;
+        this.swtControlDelegate = new SwtControl(control, new ImmutableDropSelection(this));
+    }
 
-	@Override
-	public Control getUiReference() {
-		return control;
-	}
+    @Override
+    public Control getUiReference() {
+        return control;
+    }
 
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		swtControlDelegate.setLayoutConstraints(layoutConstraints);
-	}
+    @Override
+    public void setLayoutConstraints(final Object layoutConstraints) {
+        swtControlDelegate.setLayoutConstraints(layoutConstraints);
+    }
 
-	@Override
-	public Object getLayoutConstraints() {
-		return swtControlDelegate.getLayoutConstraints();
-	}
+    @Override
+    public Object getLayoutConstraints() {
+        return swtControlDelegate.getLayoutConstraints();
+    }
 
-	@Override
-	public void redraw() {
-		swtControlDelegate.redraw();
-	}
+    @Override
+    public void redraw() {
+        swtControlDelegate.redraw();
+    }
 
-	@Override
-	public void setRedrawEnabled(final boolean enabled) {
-		swtControlDelegate.setRedrawEnabled(enabled);
-	}
+    @Override
+    public void setRedrawEnabled(final boolean enabled) {
+        swtControlDelegate.setRedrawEnabled(enabled);
+    }
 
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		swtControlDelegate.setForegroundColor(colorValue);
-	}
+    @Override
+    public void setForegroundColor(final IColorConstant colorValue) {
+        swtControlDelegate.setForegroundColor(colorValue);
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		swtControlDelegate.setBackgroundColor(colorValue);
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        swtControlDelegate.setBackgroundColor(colorValue);
+    }
 
-	@Override
-	public IColorConstant getForegroundColor() {
-		return swtControlDelegate.getForegroundColor();
-	}
+    @Override
+    public IColorConstant getForegroundColor() {
+        return swtControlDelegate.getForegroundColor();
+    }
 
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return swtControlDelegate.getBackgroundColor();
-	}
+    @Override
+    public IColorConstant getBackgroundColor() {
+        return swtControlDelegate.getBackgroundColor();
+    }
 
-	@Override
-	public void setCursor(final Cursor cursor) {
-		swtControlDelegate.setCursor(cursor);
-	}
+    @Override
+    public void setCursor(final Cursor cursor) {
+        swtControlDelegate.setCursor(cursor);
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		swtControlDelegate.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        swtControlDelegate.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return swtControlDelegate.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return swtControlDelegate.isEnabled();
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		swtControlDelegate.setVisible(visible);
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        swtControlDelegate.setVisible(visible);
+    }
 
-	@Override
-	public boolean isVisible() {
-		return swtControlDelegate.isVisible();
-	}
+    @Override
+    public boolean isVisible() {
+        return swtControlDelegate.isVisible();
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		return swtControlDelegate.getMinSize();
-	}
+    @Override
+    public Dimension getMinSize() {
+        return swtControlDelegate.getMinSize();
+    }
 
-	@Override
-	public Dimension getPreferredSize() {
-		return swtControlDelegate.getPreferredSize();
-	}
+    @Override
+    public Dimension getPreferredSize() {
+        return swtControlDelegate.getPreferredSize();
+    }
 
-	@Override
-	public Dimension getMaxSize() {
-		return swtControlDelegate.getMaxSize();
-	}
+    @Override
+    public Dimension getMaxSize() {
+        return swtControlDelegate.getMaxSize();
+    }
 
-	@Override
-	public Dimension getSize() {
-		return swtControlDelegate.getSize();
-	}
+    @Override
+    public Dimension getSize() {
+        return swtControlDelegate.getSize();
+    }
 
-	@Override
-	public void setSize(final Dimension size) {
-		swtControlDelegate.setSize(size);
-	}
+    @Override
+    public void setSize(final Dimension size) {
+        swtControlDelegate.setSize(size);
+    }
 
-	@Override
-	public Position getPosition() {
-		return swtControlDelegate.getPosition();
-	}
+    @Override
+    public Position getPosition() {
+        return swtControlDelegate.getPosition();
+    }
 
-	@Override
-	public void setPosition(final Position position) {
-		swtControlDelegate.setPosition(position);
-	}
+    @Override
+    public void setPosition(final Position position) {
+        swtControlDelegate.setPosition(position);
+    }
 
-	@Override
-	public boolean requestFocus() {
-		return swtControlDelegate.requestFocus();
-	}
+    @Override
+    public boolean requestFocus() {
+        return swtControlDelegate.requestFocus();
+    }
 
-	@Override
-	public void addFocusListener(final IFocusListener listener) {
-		swtControlDelegate.addFocusListener(listener);
-	}
+    @Override
+    public void addFocusListener(final IFocusListener listener) {
+        swtControlDelegate.addFocusListener(listener);
+    }
 
-	@Override
-	public void removeFocusListener(final IFocusListener listener) {
-		swtControlDelegate.removeFocusListener(listener);
-	}
+    @Override
+    public void removeFocusListener(final IFocusListener listener) {
+        swtControlDelegate.removeFocusListener(listener);
+    }
 
-	@Override
-	public void addKeyListener(final IKeyListener listener) {
-		swtControlDelegate.addKeyListener(listener);
-	}
+    @Override
+    public void addKeyListener(final IKeyListener listener) {
+        swtControlDelegate.addKeyListener(listener);
+    }
 
-	@Override
-	public void removeKeyListener(final IKeyListener listener) {
-		swtControlDelegate.removeKeyListener(listener);
-	}
+    @Override
+    public void removeKeyListener(final IKeyListener listener) {
+        swtControlDelegate.removeKeyListener(listener);
+    }
 
-	@Override
-	public void addMouseListener(final IMouseListener mouseListener) {
-		swtControlDelegate.addMouseListener(mouseListener);
-	}
+    @Override
+    public void addMouseListener(final IMouseListener mouseListener) {
+        swtControlDelegate.addMouseListener(mouseListener);
+    }
 
-	@Override
-	public void removeMouseListener(final IMouseListener mouseListener) {
-		swtControlDelegate.removeMouseListener(mouseListener);
-	}
+    @Override
+    public void removeMouseListener(final IMouseListener mouseListener) {
+        swtControlDelegate.removeMouseListener(mouseListener);
+    }
 
-	@Override
-	public void addMouseMotionListener(final IMouseMotionListener listener) {
-		swtControlDelegate.addMouseMotionListener(listener);
-	}
+    @Override
+    public void addMouseMotionListener(final IMouseMotionListener listener) {
+        swtControlDelegate.addMouseMotionListener(listener);
+    }
 
-	@Override
-	public void removeMouseMotionListener(final IMouseMotionListener listener) {
-		swtControlDelegate.addMouseMotionListener(listener);
-	}
+    @Override
+    public void removeMouseMotionListener(final IMouseMotionListener listener) {
+        swtControlDelegate.addMouseMotionListener(listener);
+    }
 
-	@Override
-	public void addComponentListener(final IComponentListener componentListener) {
-		swtControlDelegate.addComponentListener(componentListener);
-	}
+    @Override
+    public void addComponentListener(final IComponentListener componentListener) {
+        swtControlDelegate.addComponentListener(componentListener);
+    }
 
-	@Override
-	public void removeComponentListener(final IComponentListener componentListener) {
-		swtControlDelegate.removeComponentListener(componentListener);
-	}
+    @Override
+    public void removeComponentListener(final IComponentListener componentListener) {
+        swtControlDelegate.removeComponentListener(componentListener);
+    }
 
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return swtControlDelegate.createPopupMenu();
-	}
+    @Override
+    public IPopupMenuSpi createPopupMenu() {
+        return swtControlDelegate.createPopupMenu();
+    }
 
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		swtControlDelegate.addPopupDetectionListener(listener);
-	}
+    @Override
+    public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+        swtControlDelegate.addPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		swtControlDelegate.removePopupDetectionListener(listener);
-	}
+    @Override
+    public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+        swtControlDelegate.removePopupDetectionListener(listener);
+    }
 
-	@Override
-	public void setToolTipText(final String toolTip) {
-		swtControlDelegate.setToolTipText(toolTip);
-	}
+    @Override
+    public void setToolTipText(final String toolTip) {
+        swtControlDelegate.setToolTipText(toolTip);
+    }
 
-	@Override
-	public IDragSourceSpi getDragSource() {
-		return swtControlDelegate.getDragSource();
-	}
+    @Override
+    public IDragSourceSpi getDragSource() {
+        return swtControlDelegate.getDragSource();
+    }
 
-	@Override
-	public IDropTargetSpi getDropTarget() {
-		return swtControlDelegate.getDropTarget();
-	}
+    @Override
+    public IDropTargetSpi getDropTarget() {
+        return swtControlDelegate.getDropTarget();
+    }
 
 }

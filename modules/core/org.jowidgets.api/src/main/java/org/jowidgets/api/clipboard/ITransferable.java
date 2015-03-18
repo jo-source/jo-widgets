@@ -32,8 +32,8 @@ import java.util.Collection;
 
 public interface ITransferable {
 
-	Collection<TransferType<?>> getSupportedTypes();
+    Collection<TransferType<?>> getSupportedTypes();
 
-	<JAVA_TYPE> JAVA_TYPE getData(TransferType<JAVA_TYPE> type);
+    <JAVA_TYPE> JAVA_TYPE getData(TransferType<JAVA_TYPE> type);
 
 }

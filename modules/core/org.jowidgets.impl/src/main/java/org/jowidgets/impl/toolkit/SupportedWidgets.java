@@ -33,20 +33,20 @@ import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
 
 final class SupportedWidgets implements ISupportedWidgets {
 
-	private final IOptionalWidgetsFactorySpi optionalWidgetsFactorySpi;
+    private final IOptionalWidgetsFactorySpi optionalWidgetsFactorySpi;
 
-	SupportedWidgets(final IOptionalWidgetsFactorySpi optionalWidgetsFactorySpi) {
-		this.optionalWidgetsFactorySpi = optionalWidgetsFactorySpi;
-	}
+    SupportedWidgets(final IOptionalWidgetsFactorySpi optionalWidgetsFactorySpi) {
+        this.optionalWidgetsFactorySpi = optionalWidgetsFactorySpi;
+    }
 
-	@Override
-	public boolean hasFileChooser() {
-		return optionalWidgetsFactorySpi == null ? false : optionalWidgetsFactorySpi.hasFileChooser();
-	}
+    @Override
+    public boolean hasFileChooser() {
+        return optionalWidgetsFactorySpi == null ? false : optionalWidgetsFactorySpi.hasFileChooser();
+    }
 
-	@Override
-	public boolean hasDirectoryChooser() {
-		return optionalWidgetsFactorySpi == null ? false : optionalWidgetsFactorySpi.hasDirectoryChooser();
-	}
+    @Override
+    public boolean hasDirectoryChooser() {
+        return optionalWidgetsFactorySpi == null ? false : optionalWidgetsFactorySpi.hasDirectoryChooser();
+    }
 
 }

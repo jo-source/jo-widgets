@@ -57,271 +57,271 @@ import org.jowidgets.util.Assert;
 
 public class DummyContainer implements IContainerSpi {
 
-	private final IGenericWidgetFactory factory;
-	private final UIDContainer container;
-	private final DummyComponent dummyComponentDelegate;
+    private final IGenericWidgetFactory factory;
+    private final UIDContainer container;
+    private final DummyComponent dummyComponentDelegate;
 
-	public DummyContainer(final IGenericWidgetFactory factory, final UIDContainer container) {
-		Assert.paramNotNull(factory, "factory");
-		Assert.paramNotNull(container, "container");
+    public DummyContainer(final IGenericWidgetFactory factory, final UIDContainer container) {
+        Assert.paramNotNull(factory, "factory");
+        Assert.paramNotNull(container, "container");
 
-		this.factory = factory;
-		this.container = container;
-		this.dummyComponentDelegate = new DummyComponent(container);
-	}
+        this.factory = factory;
+        this.container = container;
+        this.dummyComponentDelegate = new DummyComponent(container);
+    }
 
-	@Override
-	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		Assert.paramNotNull(layoutDescriptor, "layoutManager");
-		if (layoutDescriptor instanceof MigLayoutDescriptor) {
-			container.setLayout(layoutDescriptor);
-		}
-		else if (layoutDescriptor instanceof ILayouter) {
-			container.setLayout(layoutDescriptor);
-		}
-		else {
-			throw new IllegalArgumentException("Layout Manager of type '"
-				+ layoutDescriptor.getClass().getName()
-				+ "' is not supported");
-		}
-	}
+    @Override
+    public void setLayout(final ILayoutDescriptor layoutDescriptor) {
+        Assert.paramNotNull(layoutDescriptor, "layoutManager");
+        if (layoutDescriptor instanceof MigLayoutDescriptor) {
+            container.setLayout(layoutDescriptor);
+        }
+        else if (layoutDescriptor instanceof ILayouter) {
+            container.setLayout(layoutDescriptor);
+        }
+        else {
+            throw new IllegalArgumentException("Layout Manager of type '"
+                + layoutDescriptor.getClass().getName()
+                + "' is not supported");
+        }
+    }
 
-	@Override
-	public UIDContainer getUiReference() {
-		return container;
-	}
+    @Override
+    public UIDContainer getUiReference() {
+        return container;
+    }
 
-	@Override
-	public void redraw() {
-		dummyComponentDelegate.redraw();
-	}
+    @Override
+    public void redraw() {
+        dummyComponentDelegate.redraw();
+    }
 
-	@Override
-	public void setRedrawEnabled(final boolean enabled) {
-		dummyComponentDelegate.setRedrawEnabled(enabled);
-	}
+    @Override
+    public void setRedrawEnabled(final boolean enabled) {
+        dummyComponentDelegate.setRedrawEnabled(enabled);
+    }
 
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		dummyComponentDelegate.setForegroundColor(colorValue);
-	}
+    @Override
+    public void setForegroundColor(final IColorConstant colorValue) {
+        dummyComponentDelegate.setForegroundColor(colorValue);
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		dummyComponentDelegate.setBackgroundColor(colorValue);
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        dummyComponentDelegate.setBackgroundColor(colorValue);
+    }
 
-	@Override
-	public IColorConstant getForegroundColor() {
-		return dummyComponentDelegate.getForegroundColor();
-	}
+    @Override
+    public IColorConstant getForegroundColor() {
+        return dummyComponentDelegate.getForegroundColor();
+    }
 
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return dummyComponentDelegate.getBackgroundColor();
-	}
+    @Override
+    public IColorConstant getBackgroundColor() {
+        return dummyComponentDelegate.getBackgroundColor();
+    }
 
-	@Override
-	public void setCursor(final Cursor cursor) {
-		dummyComponentDelegate.setCursor(cursor);
-	}
+    @Override
+    public void setCursor(final Cursor cursor) {
+        dummyComponentDelegate.setCursor(cursor);
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		dummyComponentDelegate.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        dummyComponentDelegate.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return dummyComponentDelegate.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return dummyComponentDelegate.isEnabled();
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		dummyComponentDelegate.setVisible(visible);
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        dummyComponentDelegate.setVisible(visible);
+    }
 
-	@Override
-	public boolean isVisible() {
-		return dummyComponentDelegate.isVisible();
-	}
+    @Override
+    public boolean isVisible() {
+        return dummyComponentDelegate.isVisible();
+    }
 
-	@Override
-	public Rectangle getClientArea() {
-		return dummyComponentDelegate.getClientArea();
-	}
+    @Override
+    public Rectangle getClientArea() {
+        return dummyComponentDelegate.getClientArea();
+    }
 
-	@Override
-	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
-		return dummyComponentDelegate.computeDecoratedSize(clientAreaSize);
-	}
+    @Override
+    public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+        return dummyComponentDelegate.computeDecoratedSize(clientAreaSize);
+    }
 
-	@Override
-	public Dimension getSize() {
-		return dummyComponentDelegate.getSize();
-	}
+    @Override
+    public Dimension getSize() {
+        return dummyComponentDelegate.getSize();
+    }
 
-	@Override
-	public void setSize(final Dimension size) {
-		dummyComponentDelegate.setSize(size);
-	}
+    @Override
+    public void setSize(final Dimension size) {
+        dummyComponentDelegate.setSize(size);
+    }
 
-	@Override
-	public Position getPosition() {
-		return dummyComponentDelegate.getPosition();
-	}
+    @Override
+    public Position getPosition() {
+        return dummyComponentDelegate.getPosition();
+    }
 
-	@Override
-	public void setPosition(final Position position) {
-		dummyComponentDelegate.setPosition(position);
-	}
+    @Override
+    public void setPosition(final Position position) {
+        dummyComponentDelegate.setPosition(position);
+    }
 
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return dummyComponentDelegate.createPopupMenu();
-	}
+    @Override
+    public IPopupMenuSpi createPopupMenu() {
+        return dummyComponentDelegate.createPopupMenu();
+    }
 
-	@Override
-	public boolean requestFocus() {
-		return dummyComponentDelegate.requestFocus();
-	}
+    @Override
+    public boolean requestFocus() {
+        return dummyComponentDelegate.requestFocus();
+    }
 
-	@Override
-	public void addFocusListener(final IFocusListener listener) {
-		dummyComponentDelegate.addFocusListener(listener);
-	}
+    @Override
+    public void addFocusListener(final IFocusListener listener) {
+        dummyComponentDelegate.addFocusListener(listener);
+    }
 
-	@Override
-	public void removeFocusListener(final IFocusListener listener) {
-		dummyComponentDelegate.removeFocusListener(listener);
-	}
+    @Override
+    public void removeFocusListener(final IFocusListener listener) {
+        dummyComponentDelegate.removeFocusListener(listener);
+    }
 
-	@Override
-	public void addKeyListener(final IKeyListener listener) {
-		dummyComponentDelegate.addKeyListener(listener);
-	}
+    @Override
+    public void addKeyListener(final IKeyListener listener) {
+        dummyComponentDelegate.addKeyListener(listener);
+    }
 
-	@Override
-	public void removeKeyListener(final IKeyListener listener) {
-		dummyComponentDelegate.removeKeyListener(listener);
-	}
+    @Override
+    public void removeKeyListener(final IKeyListener listener) {
+        dummyComponentDelegate.removeKeyListener(listener);
+    }
 
-	@Override
-	public void addMouseListener(final IMouseListener mouseListener) {
-		dummyComponentDelegate.addMouseListener(mouseListener);
-	}
+    @Override
+    public void addMouseListener(final IMouseListener mouseListener) {
+        dummyComponentDelegate.addMouseListener(mouseListener);
+    }
 
-	@Override
-	public void removeMouseListener(final IMouseListener mouseListener) {
-		dummyComponentDelegate.removeMouseListener(mouseListener);
-	}
+    @Override
+    public void removeMouseListener(final IMouseListener mouseListener) {
+        dummyComponentDelegate.removeMouseListener(mouseListener);
+    }
 
-	@Override
-	public void addMouseMotionListener(final IMouseMotionListener listener) {
-		dummyComponentDelegate.addMouseMotionListener(listener);
-	}
+    @Override
+    public void addMouseMotionListener(final IMouseMotionListener listener) {
+        dummyComponentDelegate.addMouseMotionListener(listener);
+    }
 
-	@Override
-	public void removeMouseMotionListener(final IMouseMotionListener listener) {
-		dummyComponentDelegate.removeMouseMotionListener(listener);
-	}
+    @Override
+    public void removeMouseMotionListener(final IMouseMotionListener listener) {
+        dummyComponentDelegate.removeMouseMotionListener(listener);
+    }
 
-	@Override
-	public void addComponentListener(final IComponentListener componentListener) {
-		dummyComponentDelegate.addComponentListener(componentListener);
-	}
+    @Override
+    public void addComponentListener(final IComponentListener componentListener) {
+        dummyComponentDelegate.addComponentListener(componentListener);
+    }
 
-	@Override
-	public void removeComponentListener(final IComponentListener componentListener) {
-		dummyComponentDelegate.removeComponentListener(componentListener);
-	}
+    @Override
+    public void removeComponentListener(final IComponentListener componentListener) {
+        dummyComponentDelegate.removeComponentListener(componentListener);
+    }
 
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		dummyComponentDelegate.addPopupDetectionListener(listener);
-	}
+    @Override
+    public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+        dummyComponentDelegate.addPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		dummyComponentDelegate.removePopupDetectionListener(listener);
-	}
+    @Override
+    public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+        dummyComponentDelegate.removePopupDetectionListener(listener);
+    }
 
-	public void setToolTipText(final String toolTip) {
-		dummyComponentDelegate.setToolTipText(toolTip);
-	}
+    public void setToolTipText(final String toolTip) {
+        dummyComponentDelegate.setToolTipText(toolTip);
+    }
 
-	@Override
-	public void setTabOrder(final Collection<? extends IControlCommon> tabOrder) {
+    @Override
+    public void setTabOrder(final Collection<? extends IControlCommon> tabOrder) {
 
-	}
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
-		final Integer index,
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
-		final Object cellConstraints) {
+    @Override
+    public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+        final Integer index,
+        final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor,
+        final Object cellConstraints) {
 
-		//TODO MG consider index
-		final WIDGET_TYPE result = factory.create(getUiReference(), descriptor);
-		addToContainer(result, cellConstraints);
-		return result;
-	}
+        //TODO MG consider index
+        final WIDGET_TYPE result = factory.create(getUiReference(), descriptor);
+        addToContainer(result, cellConstraints);
+        return result;
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
-		final Integer index,
-		final ICustomWidgetCreator<WIDGET_TYPE> creator,
-		final Object cellConstraints) {
+    @Override
+    public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE add(
+        final Integer index,
+        final ICustomWidgetCreator<WIDGET_TYPE> creator,
+        final Object cellConstraints) {
 
-		final ICustomWidgetFactory customWidgetFactory = createCustomWidgetFactory();
+        final ICustomWidgetFactory customWidgetFactory = createCustomWidgetFactory();
 
-		//TODO MG consider index
-		final WIDGET_TYPE result = creator.create(customWidgetFactory);
-		addToContainer(result, cellConstraints);
-		return result;
-	}
+        //TODO MG consider index
+        final WIDGET_TYPE result = creator.create(customWidgetFactory);
+        addToContainer(result, cellConstraints);
+        return result;
+    }
 
-	protected ICustomWidgetFactory createCustomWidgetFactory() {
-		return new ICustomWidgetFactory() {
-			@Override
-			public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE create(
-				final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
-				return factory.create(getUiReference(), descriptor);
-			}
-		};
-	}
+    protected ICustomWidgetFactory createCustomWidgetFactory() {
+        return new ICustomWidgetFactory() {
+            @Override
+            public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE create(
+                final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+                return factory.create(getUiReference(), descriptor);
+            }
+        };
+    }
 
-	@Override
-	public boolean remove(final IControlCommon control) {
-		return getUiReference().remove((UIDComponent) control.getUiReference());
-	}
+    @Override
+    public boolean remove(final IControlCommon control) {
+        return getUiReference().remove((UIDComponent) control.getUiReference());
+    }
 
-	@Override
-	public void layoutBegin() {
-		//do nothing here
-	}
+    @Override
+    public void layoutBegin() {
+        //do nothing here
+    }
 
-	@Override
-	public void layoutEnd() {
-		redraw();
-	}
+    @Override
+    public void layoutEnd() {
+        redraw();
+    }
 
-	@Override
-	public void removeAll() {
-		container.removeAll();
-	}
+    @Override
+    public void removeAll() {
+        container.removeAll();
+    }
 
-	protected IGenericWidgetFactory getGenericWidgetFactory() {
-		return factory;
-	}
+    protected IGenericWidgetFactory getGenericWidgetFactory() {
+        return factory;
+    }
 
-	private void addToContainer(final IWidgetCommon widget, final Object cellConstraints) {
-		if (cellConstraints != null) {
-			container.add((UIDComponent) (widget.getUiReference()), cellConstraints);
-		}
-		else {
-			container.add((UIDComponent) (widget.getUiReference()));
-		}
-	}
+    private void addToContainer(final IWidgetCommon widget, final Object cellConstraints) {
+        if (cellConstraints != null) {
+            container.add((UIDComponent) (widget.getUiReference()), cellConstraints);
+        }
+        else {
+            container.add((UIDComponent) (widget.getUiReference()));
+        }
+    }
 
 }

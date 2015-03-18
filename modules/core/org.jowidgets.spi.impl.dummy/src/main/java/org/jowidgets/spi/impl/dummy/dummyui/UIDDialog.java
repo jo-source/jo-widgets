@@ -30,44 +30,44 @@ package org.jowidgets.spi.impl.dummy.dummyui;
 
 public class UIDDialog extends UIDWindow {
 
-	private String title;
-	private boolean resizable;
-	private boolean modal;
+    private String title;
+    private boolean resizable;
+    private boolean modal;
 
-	public UIDDialog(final UIDWindow parent) {
-		super(parent);
-	}
+    public UIDDialog(final UIDWindow parent) {
+        super(parent);
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public void setTitle(final String title) {
-		this.title = title;
-	}
+    public void setTitle(final String title) {
+        this.title = title;
+    }
 
-	public boolean isResizable() {
-		return resizable;
-	}
+    public boolean isResizable() {
+        return resizable;
+    }
 
-	public void setResizable(final boolean resizable) {
-		this.resizable = resizable;
-	}
+    public void setResizable(final boolean resizable) {
+        this.resizable = resizable;
+    }
 
-	public boolean isModal() {
-		return modal;
-	}
+    public boolean isModal() {
+        return modal;
+    }
 
-	public void setModal(final boolean modal) {
-		this.modal = modal;
-	}
+    public void setModal(final boolean modal) {
+        this.modal = modal;
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		//TODO LG this must block, until the dialog becomes invisible,
-		//but the event dispatcher thread must not block and pump 
-		//other events may be done on this dialog
-		super.setVisible(visible);
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        //TODO LG this must block, until the dialog becomes invisible,
+        //but the event dispatcher thread must not block and pump 
+        //other events may be done on this dialog
+        super.setVisible(visible);
+    }
 
 }

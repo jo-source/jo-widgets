@@ -41,176 +41,176 @@ import org.junit.Test;
 
 public class BindingTest {
 
-	private static String STRING_1 = "STRING_1";
-	private static String STRING_2 = "STRING_2";
-	private static String STRING_3 = "STRING_3";
-	private static String STRING_4 = "STRING_4";
-	private static String STRING_5 = "STRING_5";
-	private static String STRING_6 = "STRING_6";
-	private static String STRING_7 = "STRING_7";
-	private static String STRING_8 = "STRING_8";
-	private static String STRING_9 = "STRING_9";
-	private static String STRING_10 = "STRING_10";
+    private static String STRING_1 = "STRING_1";
+    private static String STRING_2 = "STRING_2";
+    private static String STRING_3 = "STRING_3";
+    private static String STRING_4 = "STRING_4";
+    private static String STRING_5 = "STRING_5";
+    private static String STRING_6 = "STRING_6";
+    private static String STRING_7 = "STRING_7";
+    private static String STRING_8 = "STRING_8";
+    private static String STRING_9 = "STRING_9";
+    private static String STRING_10 = "STRING_10";
 
-	@Test
-	public void testBinding() {
-		//Create two observable values
-		final ObservableValue<String> source = new ObservableValue<String>(STRING_1);
-		final ObservableValue<String> destination = new ObservableValue<String>(STRING_2);
+    @Test
+    public void testBinding() {
+        //Create two observable values
+        final ObservableValue<String> source = new ObservableValue<String>(STRING_1);
+        final ObservableValue<String> destination = new ObservableValue<String>(STRING_2);
 
-		//create a new binding
-		final IBinding binding = Bind.bind(source, destination);
+        //create a new binding
+        final IBinding binding = Bind.bind(source, destination);
 
-		//binding is bound by default
-		Assert.assertTrue(binding.isBound());
+        //binding is bound by default
+        Assert.assertTrue(binding.isBound());
 
-		//must be equal and must be STRING_1 (source before binding)
-		testEquality(source, destination, STRING_1);
+        //must be equal and must be STRING_1 (source before binding)
+        testEquality(source, destination, STRING_1);
 
-		//change source must change destination
-		source.setValue(STRING_3);
+        //change source must change destination
+        source.setValue(STRING_3);
 
-		//must be equal and STRING_3
-		testEquality(source, destination, STRING_3);
+        //must be equal and STRING_3
+        testEquality(source, destination, STRING_3);
 
-		//change destination must change source
-		destination.setValue(STRING_4);
+        //change destination must change source
+        destination.setValue(STRING_4);
 
-		//must be equal and STRING_4
-		testEquality(source, destination, STRING_4);
+        //must be equal and STRING_4
+        testEquality(source, destination, STRING_4);
 
-		//unbind the values
-		binding.unbind();
+        //unbind the values
+        binding.unbind();
 
-		//binding state is false now
-		Assert.assertFalse(binding.isBound());
+        //binding state is false now
+        Assert.assertFalse(binding.isBound());
 
-		//unbind must not modify values
-		testEquality(source, destination, STRING_4);
+        //unbind must not modify values
+        testEquality(source, destination, STRING_4);
 
-		//after unbind, change source, destination changes not
-		source.setValue(STRING_5);
-		Assert.assertEquals(STRING_5, source.getValue());
-		Assert.assertEquals(STRING_4, destination.getValue());
+        //after unbind, change source, destination changes not
+        source.setValue(STRING_5);
+        Assert.assertEquals(STRING_5, source.getValue());
+        Assert.assertEquals(STRING_4, destination.getValue());
 
-		//after unbind, change destination, source changes not
-		destination.setValue(STRING_6);
-		Assert.assertEquals(STRING_6, destination.getValue());
-		Assert.assertEquals(STRING_5, source.getValue());
+        //after unbind, change destination, source changes not
+        destination.setValue(STRING_6);
+        Assert.assertEquals(STRING_6, destination.getValue());
+        Assert.assertEquals(STRING_5, source.getValue());
 
-		//bind the values again
-		binding.bind();
+        //bind the values again
+        binding.bind();
 
-		//binding is bound by default
-		Assert.assertTrue(binding.isBound());
+        //binding is bound by default
+        Assert.assertTrue(binding.isBound());
 
-		//must be equal and STRING_5 (last source value)
-		testEquality(source, destination, STRING_5);
+        //must be equal and STRING_5 (last source value)
+        testEquality(source, destination, STRING_5);
 
-		//change source must change destination
-		source.setValue(STRING_7);
+        //change source must change destination
+        source.setValue(STRING_7);
 
-		//must be equal and STRING_7
-		testEquality(source, destination, STRING_7);
+        //must be equal and STRING_7
+        testEquality(source, destination, STRING_7);
 
-		//change destination must change source
-		destination.setValue(STRING_8);
+        //change destination must change source
+        destination.setValue(STRING_8);
 
-		//must be equal and STRING_8
-		testEquality(source, destination, STRING_8);
+        //must be equal and STRING_8
+        testEquality(source, destination, STRING_8);
 
-		//dispose the binding
-		binding.dispose();
+        //dispose the binding
+        binding.dispose();
 
-		//binding is disposed
-		Assert.assertTrue(binding.isDisposed());
+        //binding is disposed
+        Assert.assertTrue(binding.isDisposed());
 
-		//dispose must not change values
-		testEquality(source, destination, STRING_8);
+        //dispose must not change values
+        testEquality(source, destination, STRING_8);
 
-		//after dispose, change source, destination changes not
-		source.setValue(STRING_9);
-		Assert.assertEquals(STRING_9, source.getValue());
-		Assert.assertEquals(STRING_8, destination.getValue());
+        //after dispose, change source, destination changes not
+        source.setValue(STRING_9);
+        Assert.assertEquals(STRING_9, source.getValue());
+        Assert.assertEquals(STRING_8, destination.getValue());
 
-		//after dispose, change destination, source changes not
-		destination.setValue(STRING_10);
-		Assert.assertEquals(STRING_10, destination.getValue());
-		Assert.assertEquals(STRING_9, source.getValue());
+        //after dispose, change destination, source changes not
+        destination.setValue(STRING_10);
+        Assert.assertEquals(STRING_10, destination.getValue());
+        Assert.assertEquals(STRING_9, source.getValue());
 
-		//bind after dispose must throw exception
-		boolean exception = false;
-		try {
-			binding.bind();
-		}
-		catch (final Exception e) {
-			exception = true;
-		}
-		Assert.assertTrue(exception);
-	}
+        //bind after dispose must throw exception
+        boolean exception = false;
+        try {
+            binding.bind();
+        }
+        catch (final Exception e) {
+            exception = true;
+        }
+        Assert.assertTrue(exception);
+    }
 
-	private void testEquality(
-		final IObservableValue<String> source,
-		final IObservableValue<String> destination,
-		final String expectedValue) {
+    private void testEquality(
+        final IObservableValue<String> source,
+        final IObservableValue<String> destination,
+        final String expectedValue) {
 
-		//the values of the observable value must be equal
-		Assert.assertEquals(source.getValue(), destination.getValue());
+        //the values of the observable value must be equal
+        Assert.assertEquals(source.getValue(), destination.getValue());
 
-		//the source must be the expected value
-		Assert.assertEquals(expectedValue, source.getValue());
+        //the source must be the expected value
+        Assert.assertEquals(expectedValue, source.getValue());
 
-		//the destination must be the expected value
-		Assert.assertEquals(expectedValue, destination.getValue());
-	}
+        //the destination must be the expected value
+        Assert.assertEquals(expectedValue, destination.getValue());
+    }
 
-	@Test
-	public void testBindingConverter() {
+    @Test
+    public void testBindingConverter() {
 
-		final ObservableValue<List<String>> source = new ObservableValue<List<String>>();
-		final ObservableValue<String[]> destination = new ObservableValue<String[]>();
+        final ObservableValue<List<String>> source = new ObservableValue<List<String>>();
+        final ObservableValue<String[]> destination = new ObservableValue<String[]>();
 
-		Bind.bind(source, destination, new ListArrayBindingConverter());
+        Bind.bind(source, destination, new ListArrayBindingConverter());
 
-		//create an set list and check if bound to the destination
-		final List<String> list = new ArrayList<String>(3);
-		for (int i = 0; i < 3; i++) {
-			list.add("String_of_list_" + i);
-		}
-		source.setValue(list);
-		Assert.assertTrue(CollectionUtils.elementsEqual(source.getValue(), Arrays.asList(destination.getValue())));
+        //create an set list and check if bound to the destination
+        final List<String> list = new ArrayList<String>(3);
+        for (int i = 0; i < 3; i++) {
+            list.add("String_of_list_" + i);
+        }
+        source.setValue(list);
+        Assert.assertTrue(CollectionUtils.elementsEqual(source.getValue(), Arrays.asList(destination.getValue())));
 
-		//create an set array and check if bound to the source
-		final String[] array = new String[3];
-		for (int i = 0; i < 3; i++) {
-			array[i] = "String_of_array_" + i;
-		}
-		destination.setValue(array);
-		Assert.assertTrue(CollectionUtils.elementsEqual(source.getValue(), Arrays.asList(destination.getValue())));
-	}
+        //create an set array and check if bound to the source
+        final String[] array = new String[3];
+        for (int i = 0; i < 3; i++) {
+            array[i] = "String_of_array_" + i;
+        }
+        destination.setValue(array);
+        Assert.assertTrue(CollectionUtils.elementsEqual(source.getValue(), Arrays.asList(destination.getValue())));
+    }
 
-	private class ListArrayBindingConverter implements IBindingConverter<List<String>, String[]> {
+    private class ListArrayBindingConverter implements IBindingConverter<List<String>, String[]> {
 
-		@Override
-		public String[] convertSource(final List<String> collection) {
-			if (collection != null) {
-				return collection.toArray(new String[collection.size()]);
-			}
-			else {
-				return null;
-			}
-		}
+        @Override
+        public String[] convertSource(final List<String> collection) {
+            if (collection != null) {
+                return collection.toArray(new String[collection.size()]);
+            }
+            else {
+                return null;
+            }
+        }
 
-		@Override
-		public List<String> convertDestination(final String[] destinationValue) {
-			if (destinationValue != null) {
-				return new ArrayList<String>(Arrays.asList(destinationValue));
-			}
-			else {
-				return null;
-			}
-		}
+        @Override
+        public List<String> convertDestination(final String[] destinationValue) {
+            if (destinationValue != null) {
+                return new ArrayList<String>(Arrays.asList(destinationValue));
+            }
+            else {
+                return null;
+            }
+        }
 
-	}
+    }
 
 }

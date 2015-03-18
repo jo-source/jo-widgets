@@ -31,10 +31,10 @@ import org.jowidgets.examples.common.dnd.TreeDragAndDropExample;
 
 public final class SwtTreeDragAndDropExample {
 
-	private SwtTreeDragAndDropExample() {}
+    private SwtTreeDragAndDropExample() {}
 
-	public static void main(final String[] args) throws Exception {
-		new TreeDragAndDropExample().start();
-	}
+    public static void main(final String[] args) throws Exception {
+        new TreeDragAndDropExample().start();
+    }
 
 }

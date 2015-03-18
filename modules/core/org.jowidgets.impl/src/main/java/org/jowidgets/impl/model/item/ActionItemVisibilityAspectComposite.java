@@ -40,31 +40,31 @@ import org.jowidgets.util.priority.PrioritizedResultCreator;
 
 final class ActionItemVisibilityAspectComposite {
 
-	private final List<IActionItemVisibilityAspect> allAspects;
+    private final List<IActionItemVisibilityAspect> allAspects;
 
-	ActionItemVisibilityAspectComposite(final List<IActionItemVisibilityAspect> visibilityAspects) {
-		this.allAspects = new LinkedList<IActionItemVisibilityAspect>();
-		this.allAspects.addAll(visibilityAspects);
-	}
+    ActionItemVisibilityAspectComposite(final List<IActionItemVisibilityAspect> visibilityAspects) {
+        this.allAspects = new LinkedList<IActionItemVisibilityAspect>();
+        this.allAspects.addAll(visibilityAspects);
+    }
 
-	IPriorityValue<Boolean, LowHighPriority> getVisibility(final IAction action) {
-		return getVisibility(action, allAspects);
-	}
+    IPriorityValue<Boolean, LowHighPriority> getVisibility(final IAction action) {
+        return getVisibility(action, allAspects);
+    }
 
-	private IPriorityValue<Boolean, LowHighPriority> getVisibility(
-		final IAction action,
-		final List<IActionItemVisibilityAspect> aspects) {
-		if (aspects.size() > 0) {
-			final PrioritizedResultCreator<Boolean, LowHighPriority> resultCreator;
-			resultCreator = new PrioritizedResultCreator<Boolean, LowHighPriority>(LowHighPriority.HIGH);
-			final Iterator<IActionItemVisibilityAspect> iterator = aspects.iterator();
-			while (iterator.hasNext() && !resultCreator.hasMaxPrio()) {
-				resultCreator.addResult(iterator.next().getVisibility(action));
-			}
-			return resultCreator.getResult();
-		}
-		else {
-			return null;
-		}
-	}
+    private IPriorityValue<Boolean, LowHighPriority> getVisibility(
+        final IAction action,
+        final List<IActionItemVisibilityAspect> aspects) {
+        if (aspects.size() > 0) {
+            final PrioritizedResultCreator<Boolean, LowHighPriority> resultCreator;
+            resultCreator = new PrioritizedResultCreator<Boolean, LowHighPriority>(LowHighPriority.HIGH);
+            final Iterator<IActionItemVisibilityAspect> iterator = aspects.iterator();
+            while (iterator.hasNext() && !resultCreator.hasMaxPrio()) {
+                resultCreator.addResult(iterator.next().getVisibility(action));
+            }
+            return resultCreator.getResult();
+        }
+        else {
+            return null;
+        }
+    }
 }

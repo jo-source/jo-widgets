@@ -64,346 +64,346 @@ import org.jowidgets.workbench.api.IWorkbenchContext;
 
 public class WorkbenchContext implements IWorkbenchContext {
 
-	private final IWorkbench workbench;
-	private final IApplicationLifecycle lifecycle;
-	private final List<Runnable> shutdownHooks;
-	private final IBluePrintFactory bpf;
-	private final IWindowListener windowListener;
+    private final IWorkbench workbench;
+    private final IApplicationLifecycle lifecycle;
+    private final List<Runnable> shutdownHooks;
+    private final IBluePrintFactory bpf;
+    private final IWindowListener windowListener;
 
-	private final List<IWorkbenchApplication> addedApplications;
-	private final List<WorkbenchApplicationContext> addedApplicationContexts;
-	private final List<ITabItem> addedTabItems;
+    private final List<IWorkbenchApplication> addedApplications;
+    private final List<WorkbenchApplicationContext> addedApplicationContexts;
+    private final List<ITabItem> addedTabItems;
 
-	private final IFrame rootFrame;
-	private final IContainer rootContainer;
-	private final IContainer statusBar;
-	private final WorkbenchToolbar toolBar;
+    private final IFrame rootFrame;
+    private final IContainer rootContainer;
+    private final IContainer statusBar;
+    private final WorkbenchToolbar toolBar;
 
-	private final IToolBarModel toolBarModel;
-	private final IContainer workbenchContentContainer;
-	private final WorkbenchContentPanel workbenchContentPanel;
+    private final IToolBarModel toolBarModel;
+    private final IContainer workbenchContentContainer;
+    private final WorkbenchContentPanel workbenchContentPanel;
 
-	private IMenuBarModel menuBarModel;
-	private ITabFolder applicationTabFolder;
-	private boolean disposed;
-	private boolean onComponentChange;
-	private boolean lastToolbarVisible;
+    private IMenuBarModel menuBarModel;
+    private ITabFolder applicationTabFolder;
+    private boolean disposed;
+    private boolean onComponentChange;
+    private boolean lastToolbarVisible;
 
-	public WorkbenchContext(final IWorkbench workbench, final IApplicationLifecycle lifecycle) {
+    public WorkbenchContext(final IWorkbench workbench, final IApplicationLifecycle lifecycle) {
 
-		this.workbench = workbench;
+        this.workbench = workbench;
 
-		this.disposed = false;
-		this.onComponentChange = false;
+        this.disposed = false;
+        this.onComponentChange = false;
 
-		this.bpf = Toolkit.getBluePrintFactory();
-		this.addedApplications = new LinkedList<IWorkbenchApplication>();
-		this.addedApplicationContexts = new LinkedList<WorkbenchApplicationContext>();
-		this.addedTabItems = new LinkedList<ITabItem>();
+        this.bpf = Toolkit.getBluePrintFactory();
+        this.addedApplications = new LinkedList<IWorkbenchApplication>();
+        this.addedApplicationContexts = new LinkedList<WorkbenchApplicationContext>();
+        this.addedTabItems = new LinkedList<ITabItem>();
 
-		this.lifecycle = lifecycle;
-		this.shutdownHooks = new LinkedList<Runnable>();
-		this.windowListener = createWindowListener(workbench);
-		this.rootFrame = createRootFrame(workbench);
-		this.rootContainer = createRootContainer();
+        this.lifecycle = lifecycle;
+        this.shutdownHooks = new LinkedList<Runnable>();
+        this.windowListener = createWindowListener(workbench);
+        this.rootFrame = createRootFrame(workbench);
+        this.rootContainer = createRootContainer();
 
-		this.toolBar = createToolBar();
-		this.toolBarModel = toolBar.getToolBarModel();
+        this.toolBar = createToolBar();
+        this.toolBarModel = toolBar.getToolBarModel();
 
-		this.workbenchContentContainer = createWorkbenchContentContainer(workbench);
-		this.workbenchContentPanel = new WorkbenchContentPanel(workbenchContentContainer);
+        this.workbenchContentContainer = createWorkbenchContentContainer(workbench);
+        this.workbenchContentPanel = new WorkbenchContentPanel(workbenchContentContainer);
 
-		this.statusBar = createStatusBar();
+        this.statusBar = createStatusBar();
 
-		applicationTabFolder.addTabFolderListener(createTabFolderListener());
+        applicationTabFolder.addTabFolderListener(createTabFolderListener());
 
-		workbench.onContextInitialize(this);
-	}
+        workbench.onContextInitialize(this);
+    }
 
-	@Override
-	public IContainer getStatusBar() {
-		return statusBar;
-	}
+    @Override
+    public IContainer getStatusBar() {
+        return statusBar;
+    }
 
-	@Override
-	public IToolBarModel getToolBar() {
-		return toolBarModel;
-	}
+    @Override
+    public IToolBarModel getToolBar() {
+        return toolBarModel;
+    }
 
-	@Override
-	public IMenuBarModel getMenuBar() {
-		if (this.menuBarModel == null) {
-			this.menuBarModel = new MenuBarModel();
-			rootFrame.setMenuBar(menuBarModel);
-		}
-		return menuBarModel;
-	}
+    @Override
+    public IMenuBarModel getMenuBar() {
+        if (this.menuBarModel == null) {
+            this.menuBarModel = new MenuBarModel();
+            rootFrame.setMenuBar(menuBarModel);
+        }
+        return menuBarModel;
+    }
 
-	@Override
-	public void add(final IWorkbenchApplication application) {
-		add(addedApplications.size(), application);
-	}
+    @Override
+    public void add(final IWorkbenchApplication application) {
+        add(addedApplications.size(), application);
+    }
 
-	@Override
-	public void add(final int index, final IWorkbenchApplication application) {
-		Assert.paramNotNull(application, "application");
+    @Override
+    public void add(final int index, final IWorkbenchApplication application) {
+        Assert.paramNotNull(application, "application");
 
-		final ITabItemBluePrint tabItemBp = bpf.tabItem();
-		tabItemBp.setText(application.getLabel());
-		tabItemBp.setToolTipText(application.getTooltip());
-		tabItemBp.setIcon(application.getIcon());
+        final ITabItemBluePrint tabItemBp = bpf.tabItem();
+        tabItemBp.setText(application.getLabel());
+        tabItemBp.setToolTipText(application.getTooltip());
+        tabItemBp.setIcon(application.getIcon());
 
-		final ITabItem tabItem = applicationTabFolder.addItem(index, tabItemBp);
-		final WorkbenchApplicationContext applicationContext = new WorkbenchApplicationContext(this, tabItem, application);
+        final ITabItem tabItem = applicationTabFolder.addItem(index, tabItemBp);
+        final WorkbenchApplicationContext applicationContext = new WorkbenchApplicationContext(this, tabItem, application);
 
-		addedTabItems.add(tabItem);
-		addedApplications.add(index, application);
-		addedApplicationContexts.add(index, applicationContext);
+        addedTabItems.add(tabItem);
+        addedApplications.add(index, application);
+        addedApplicationContexts.add(index, applicationContext);
 
-		application.onContextInitialize(applicationContext);
-	}
+        application.onContextInitialize(applicationContext);
+    }
 
-	@Override
-	public void remove(final IWorkbenchApplication workbenchApplication) {
-		Assert.paramNotNull(workbenchApplication, "workbenchApplication");
-		final int index = addedApplications.indexOf(workbenchApplication);
-		if (index != -1) {
-			addedApplications.remove(index);
-			final WorkbenchApplicationContext applicationContext = addedApplicationContexts.remove(index);
-			applicationContext.dispose();
-			final ITabItem tabItem = addedTabItems.remove(index);
-			applicationTabFolder.removeItem(tabItem);
-			if (addedTabItems.size() == 0) {
-				selectComponentNode(null);
-			}
-		}
-	}
+    @Override
+    public void remove(final IWorkbenchApplication workbenchApplication) {
+        Assert.paramNotNull(workbenchApplication, "workbenchApplication");
+        final int index = addedApplications.indexOf(workbenchApplication);
+        if (index != -1) {
+            addedApplications.remove(index);
+            final WorkbenchApplicationContext applicationContext = addedApplicationContexts.remove(index);
+            applicationContext.dispose();
+            final ITabItem tabItem = addedTabItems.remove(index);
+            applicationTabFolder.removeItem(tabItem);
+            if (addedTabItems.size() == 0) {
+                selectComponentNode(null);
+            }
+        }
+    }
 
-	@Override
-	public void addShutdownHook(final Runnable shutdownHook) {
-		shutdownHooks.add(shutdownHook);
-	}
+    @Override
+    public void addShutdownHook(final Runnable shutdownHook) {
+        shutdownHooks.add(shutdownHook);
+    }
 
-	@Override
-	public void removeShutdownHook(final Runnable shutdownHook) {
-		shutdownHooks.remove(shutdownHook);
-	}
+    @Override
+    public void removeShutdownHook(final Runnable shutdownHook) {
+        shutdownHooks.remove(shutdownHook);
+    }
 
-	@Override
-	public void finish() {
-		if (!disposed) {
-			dispose();
-		}
-	}
+    @Override
+    public void finish() {
+        if (!disposed) {
+            dispose();
+        }
+    }
 
-	@Override
-	public ITrayItem getTrayItem() {
-		// TODO MG support trayItem
-		return null;
-	}
+    @Override
+    public ITrayItem getTrayItem() {
+        // TODO MG support trayItem
+        return null;
+    }
 
-	public void run() {
-		if (!this.rootFrame.isVisible()) {
-			this.rootFrame.setVisible(true);
-			if (workbench.isInitialMaximized()) {
-				rootFrame.setMaximized(true);
-			}
-		}
-	}
+    public void run() {
+        if (!this.rootFrame.isVisible()) {
+            this.rootFrame.setVisible(true);
+            if (workbench.isInitialMaximized()) {
+                rootFrame.setMaximized(true);
+            }
+        }
+    }
 
-	protected void unregsiterApplication(final ITabItem item) {
-		final int index = addedTabItems.indexOf(item);
-		if (index != -1) {
-			addedApplications.remove(index);
-			addedTabItems.remove(index);
-			addedApplicationContexts.remove(index);
-		}
-		if (addedTabItems.size() == 0) {
-			selectComponentNode(null);
-		}
-	}
+    protected void unregsiterApplication(final ITabItem item) {
+        final int index = addedTabItems.indexOf(item);
+        if (index != -1) {
+            addedApplications.remove(index);
+            addedTabItems.remove(index);
+            addedApplicationContexts.remove(index);
+        }
+        if (addedTabItems.size() == 0) {
+            selectComponentNode(null);
+        }
+    }
 
-	protected void beforeComponentChange() {
-		if (!onComponentChange) {
-			lastToolbarVisible = toolBar.isVisible();
-			rootContainer.setRedrawEnabled(false);
-			rootFrame.setCursor(Cursor.WAIT);
-			onComponentChange = true;
-		}
-	}
+    protected void beforeComponentChange() {
+        if (!onComponentChange) {
+            lastToolbarVisible = toolBar.isVisible();
+            rootContainer.setRedrawEnabled(false);
+            rootFrame.setCursor(Cursor.WAIT);
+            onComponentChange = true;
+        }
+    }
 
-	protected void selectComponentNode(final ComponentNodeContext newComponentNode) {
-		beforeComponentChange();
+    protected void selectComponentNode(final ComponentNodeContext newComponentNode) {
+        beforeComponentChange();
 
-		if (newComponentNode != null) {
-			if (!newComponentNode.isActive()) {
-				newComponentNode.activate();
-			}
-		}
-		else {
-			workbenchContentPanel.setEmptyContent();
-		}
+        if (newComponentNode != null) {
+            if (!newComponentNode.isActive()) {
+                newComponentNode.activate();
+            }
+        }
+        else {
+            workbenchContentPanel.setEmptyContent();
+        }
 
-		afterComponentChange();
-	}
+        afterComponentChange();
+    }
 
-	protected void afterComponentChange() {
-		if (onComponentChange) {
-			if (lastToolbarVisible != toolBar.isVisible()) {
-				rootContainer.layoutEnd();
-			}
-			rootContainer.setRedrawEnabled(true);
-			rootFrame.setCursor(Cursor.DEFAULT);
-			onComponentChange = false;
-		}
-	}
+    protected void afterComponentChange() {
+        if (onComponentChange) {
+            if (lastToolbarVisible != toolBar.isVisible()) {
+                rootContainer.layoutEnd();
+            }
+            rootContainer.setRedrawEnabled(true);
+            rootFrame.setCursor(Cursor.DEFAULT);
+            onComponentChange = false;
+        }
+    }
 
-	protected WorkbenchContentPanel getWorkbenchContentPanel() {
-		return workbenchContentPanel;
-	}
+    protected WorkbenchContentPanel getWorkbenchContentPanel() {
+        return workbenchContentPanel;
+    }
 
-	private IFrame createRootFrame(final IWorkbench workbench) {
-		final IFrameBluePrint rootFrameBp = bpf.frame();
-		rootFrameBp.setTitle(workbench.getLabel());
-		rootFrameBp.setIcon(workbench.getIcon());
-		rootFrameBp.setPosition(workbench.getInitialPosition());
-		rootFrameBp.setSize(workbench.getInitialDimension());
-		rootFrameBp.setDecorated(workbench.isDecorated());
-		final IFrame result = Toolkit.createRootFrame(rootFrameBp);
-		result.setLayout(MigLayoutFactory.growingInnerCellLayout());
-		result.addWindowListener(windowListener);
-		return result;
-	}
+    private IFrame createRootFrame(final IWorkbench workbench) {
+        final IFrameBluePrint rootFrameBp = bpf.frame();
+        rootFrameBp.setTitle(workbench.getLabel());
+        rootFrameBp.setIcon(workbench.getIcon());
+        rootFrameBp.setPosition(workbench.getInitialPosition());
+        rootFrameBp.setSize(workbench.getInitialDimension());
+        rootFrameBp.setDecorated(workbench.isDecorated());
+        final IFrame result = Toolkit.createRootFrame(rootFrameBp);
+        result.setLayout(MigLayoutFactory.growingInnerCellLayout());
+        result.addWindowListener(windowListener);
+        return result;
+    }
 
-	private IContainer createRootContainer() {
-		final IContainer result = rootFrame.add(bpf.composite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		result.setLayout(new MigLayoutDescriptor("2[grow]2", "1[]1[grow]1[]1"));
-		return result;
-	}
+    private IContainer createRootContainer() {
+        final IContainer result = rootFrame.add(bpf.composite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        result.setLayout(new MigLayoutDescriptor("2[grow]2", "1[]1[grow]1[]1"));
+        return result;
+    }
 
-	private WorkbenchToolbar createToolBar() {
-		final IContainer toolBarContainer = rootContainer.add(bpf.composite(), "hidemode 2, w 0::, grow, wrap");
-		toolBarContainer.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
-		return new WorkbenchToolbar(toolBarContainer);
-	}
+    private WorkbenchToolbar createToolBar() {
+        final IContainer toolBarContainer = rootContainer.add(bpf.composite(), "hidemode 2, w 0::, grow, wrap");
+        toolBarContainer.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
+        return new WorkbenchToolbar(toolBarContainer);
+    }
 
-	private IContainer createWorkbenchContentContainer(final IWorkbench workbench) {
-		IContainer result;
+    private IContainer createWorkbenchContentContainer(final IWorkbench workbench) {
+        IContainer result;
 
-		final IComposite contentComposite = rootContainer.add(bpf.composite(), "growx, growy, w 0::, h 0::, wrap");
-		contentComposite.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
+        final IComposite contentComposite = rootContainer.add(bpf.composite(), "growx, growy, w 0::, h 0::, wrap");
+        contentComposite.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
 
-		if (workbench.hasApplicationNavigator()) {
-			final ISplitCompositeBluePrint splitCompositeBp = bpf.splitHorizontal().disableBorders();
-			splitCompositeBp.setResizePolicy(SplitResizePolicy.RESIZE_SECOND);
-			splitCompositeBp.setWeight(workbench.getInitialSplitWeight());
-			final ISplitComposite splitComposite = contentComposite.add(splitCompositeBp, "growx, growy, h 0::, w 0::");
+        if (workbench.hasApplicationNavigator()) {
+            final ISplitCompositeBluePrint splitCompositeBp = bpf.splitHorizontal().disableBorders();
+            splitCompositeBp.setResizePolicy(SplitResizePolicy.RESIZE_SECOND);
+            splitCompositeBp.setWeight(workbench.getInitialSplitWeight());
+            final ISplitComposite splitComposite = contentComposite.add(splitCompositeBp, "growx, growy, h 0::, w 0::");
 
-			final IContainer applicationsContainer = splitComposite.getFirst();
-			applicationsContainer.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
-			applicationsContainer.setVisible(workbench.hasApplicationNavigator());
-			applicationTabFolder = applicationsContainer.add(
-					bpf.tabFolder().setTabsCloseable(workbench.getApplicationsCloseable()),
-					"growx, growy, h 0::, w 0::");
+            final IContainer applicationsContainer = splitComposite.getFirst();
+            applicationsContainer.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
+            applicationsContainer.setVisible(workbench.hasApplicationNavigator());
+            applicationTabFolder = applicationsContainer.add(
+                    bpf.tabFolder().setTabsCloseable(workbench.getApplicationsCloseable()),
+                    "growx, growy, h 0::, w 0::");
 
-			result = splitComposite.getSecond();
-		}
-		else {
-			applicationTabFolder = contentComposite.add(
-					bpf.tabFolder().setTabsCloseable(workbench.getApplicationsCloseable()),
-					"hidemode 3, growx, growy, h 0::, w 0::");
-			applicationTabFolder.setVisible(false);
-			result = contentComposite;
-		}
-		return result;
-	}
+            result = splitComposite.getSecond();
+        }
+        else {
+            applicationTabFolder = contentComposite.add(
+                    bpf.tabFolder().setTabsCloseable(workbench.getApplicationsCloseable()),
+                    "hidemode 3, growx, growy, h 0::, w 0::");
+            applicationTabFolder.setVisible(false);
+            result = contentComposite;
+        }
+        return result;
+    }
 
-	private IContainer createStatusBar() {
-		return new WorkbenchStatusBar(rootContainer.add(bpf.composite(), "hidemode 2, growx"));
-	}
+    private IContainer createStatusBar() {
+        return new WorkbenchStatusBar(rootContainer.add(bpf.composite(), "hidemode 2, growx"));
+    }
 
-	private ITabFolderListener createTabFolderListener() {
-		return new ITabFolderListener() {
+    private ITabFolderListener createTabFolderListener() {
+        return new ITabFolderListener() {
 
-			@Override
-			public void itemSelected(final ITabSelectionEvent selectionEvent) {
-				final ITabItem selectedTab = selectionEvent.getNewSelected();
-				if (selectedTab != null) {
-					final int selectedIndex = addedTabItems.indexOf(selectedTab);
-					if (selectedIndex != -1) {
-						final WorkbenchApplicationContext applicationContext = addedApplicationContexts.get(selectedIndex);
-						applicationContext.getApplication().onVisibleStateChanged(true);
-						selectComponentNode(applicationContext.getSelectedNodeContext());
-					}
-					//else{this can happen if the application was just added}
-				}
-			}
+            @Override
+            public void itemSelected(final ITabSelectionEvent selectionEvent) {
+                final ITabItem selectedTab = selectionEvent.getNewSelected();
+                if (selectedTab != null) {
+                    final int selectedIndex = addedTabItems.indexOf(selectedTab);
+                    if (selectedIndex != -1) {
+                        final WorkbenchApplicationContext applicationContext = addedApplicationContexts.get(selectedIndex);
+                        applicationContext.getApplication().onVisibleStateChanged(true);
+                        selectComponentNode(applicationContext.getSelectedNodeContext());
+                    }
+                    //else{this can happen if the application was just added}
+                }
+            }
 
-			@Override
-			public void onDeselection(final IVetoable vetoable, final ITabSelectionEvent selectionEvent) {
-				final ITabItem selectedTab = selectionEvent.getLastSelected();
-				if (selectedTab != null) {
-					final int selectedIndex = addedTabItems.indexOf(selectedTab);
-					if (selectedIndex != -1) {
-						final WorkbenchApplicationContext applicationContext = addedApplicationContexts.get(selectedIndex);
-						final ComponentNodeContext selectedNodeContext = applicationContext.getSelectedNodeContext();
-						if (selectedNodeContext != null && selectedNodeContext.isActive()) {
-							final VetoHolder vetoHolder = selectedNodeContext.tryDeactivate();
-							if (vetoHolder.hasVeto()) {
-								vetoable.veto();
-								return;
-							}
-						}
-						applicationContext.getApplication().onVisibleStateChanged(false);
-					}
-				}
-			}
+            @Override
+            public void onDeselection(final IVetoable vetoable, final ITabSelectionEvent selectionEvent) {
+                final ITabItem selectedTab = selectionEvent.getLastSelected();
+                if (selectedTab != null) {
+                    final int selectedIndex = addedTabItems.indexOf(selectedTab);
+                    if (selectedIndex != -1) {
+                        final WorkbenchApplicationContext applicationContext = addedApplicationContexts.get(selectedIndex);
+                        final ComponentNodeContext selectedNodeContext = applicationContext.getSelectedNodeContext();
+                        if (selectedNodeContext != null && selectedNodeContext.isActive()) {
+                            final VetoHolder vetoHolder = selectedNodeContext.tryDeactivate();
+                            if (vetoHolder.hasVeto()) {
+                                vetoable.veto();
+                                return;
+                            }
+                        }
+                        applicationContext.getApplication().onVisibleStateChanged(false);
+                    }
+                }
+            }
 
-		};
-	}
+        };
+    }
 
-	private IWindowListener createWindowListener(final IWorkbench workbench) {
-		return new WindowAdapter() {
+    private IWindowListener createWindowListener(final IWorkbench workbench) {
+        return new WindowAdapter() {
 
-			@Override
-			public void windowClosing(final IVetoable windowCloseVetoable) {
-				final VetoHolder vetoHolder = new VetoHolder();
+            @Override
+            public void windowClosing(final IVetoable windowCloseVetoable) {
+                final VetoHolder vetoHolder = new VetoHolder();
 
-				workbench.onClose(vetoHolder);
-				if (vetoHolder.hasVeto()) {
-					windowCloseVetoable.veto();
-				}
-				else {
-					dispose();
-				}
-			}
+                workbench.onClose(vetoHolder);
+                if (vetoHolder.hasVeto()) {
+                    windowCloseVetoable.veto();
+                }
+                else {
+                    dispose();
+                }
+            }
 
-		};
-	}
+        };
+    }
 
-	private void dispose() {
-		if (!disposed) {
-			disposed = true;
+    private void dispose() {
+        if (!disposed) {
+            disposed = true;
 
-			rootFrame.removeWindowListener(windowListener);
+            rootFrame.removeWindowListener(windowListener);
 
-			//dispose the application
-			for (final WorkbenchApplicationContext applicationContext : addedApplicationContexts) {
-				applicationContext.dispose();
-			}
+            //dispose the application
+            for (final WorkbenchApplicationContext applicationContext : addedApplicationContexts) {
+                applicationContext.dispose();
+            }
 
-			runShutdownHooks();
+            runShutdownHooks();
 
-			rootFrame.dispose();
+            rootFrame.dispose();
 
-			lifecycle.finish();
-		}
-	}
+            lifecycle.finish();
+        }
+    }
 
-	private void runShutdownHooks() {
-		for (final Runnable shutdownHook : shutdownHooks) {
-			shutdownHook.run();
-		}
-	}
+    private void runShutdownHooks() {
+        for (final Runnable shutdownHook : shutdownHooks) {
+            shutdownHook.run();
+        }
+    }
 
 }

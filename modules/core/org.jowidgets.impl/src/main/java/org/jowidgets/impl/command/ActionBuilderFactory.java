@@ -33,9 +33,9 @@ import org.jowidgets.api.command.IActionBuilderFactory;
 
 public class ActionBuilderFactory implements IActionBuilderFactory {
 
-	@Override
-	public IActionBuilder create() {
-		return new ActionBuilderImpl();
-	}
+    @Override
+    public IActionBuilder create() {
+        return new ActionBuilderImpl();
+    }
 
 }

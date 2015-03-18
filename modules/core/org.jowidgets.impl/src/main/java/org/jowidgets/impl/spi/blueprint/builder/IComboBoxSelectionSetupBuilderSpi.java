@@ -30,8 +30,8 @@ package org.jowidgets.impl.spi.blueprint.builder;
 import org.jowidgets.common.widgets.builder.IComboBoxSelectionSetupBuilderCommon;
 
 public interface IComboBoxSelectionSetupBuilderSpi<INSTANCE_TYPE extends IComboBoxSelectionSetupBuilderSpi<?>> extends
-		IComboBoxSelectionSetupBuilderCommon<INSTANCE_TYPE> {
+        IComboBoxSelectionSetupBuilderCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setElements(String[] elements);
+    INSTANCE_TYPE setElements(String[] elements);
 
 }

@@ -56,182 +56,182 @@ import org.jowidgets.tools.model.table.TableCell;
 
 public final class DemoTableComposite {
 
-	private final TableModel tableModel;
-	private final ITable table;
+    private final TableModel tableModel;
+    private final ITable table;
 
-	private int popupColumn;
+    private int popupColumn;
 
-	public DemoTableComposite(final IContainer parentContainer) {
-		tableModel = new TableModel();
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+    public DemoTableComposite(final IContainer parentContainer) {
+        tableModel = new TableModel();
+        final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
-		final ILayoutDescriptor fillLayoutDescriptor = new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0");
-		parentContainer.setLayout(fillLayoutDescriptor);
+        final ILayoutDescriptor fillLayoutDescriptor = new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0");
+        parentContainer.setLayout(fillLayoutDescriptor);
 
-		table = parentContainer.add(bpF.table(tableModel), "growx, growy, w 0::, h 0::");
+        table = parentContainer.add(bpF.table(tableModel), "growx, growy, w 0::, h 0::");
 
-		final IPopupMenu columnPopupMenu = table.createPopupMenu();
-		columnPopupMenu.addAction(createHideColumnAction());
-		columnPopupMenu.addAction(createUnhideAllColumnAction());
-		columnPopupMenu.addSeparator();
-		columnPopupMenu.addAction(createNewColumnAction());
-		columnPopupMenu.addAction(createRemoveColumnAction());
+        final IPopupMenu columnPopupMenu = table.createPopupMenu();
+        columnPopupMenu.addAction(createHideColumnAction());
+        columnPopupMenu.addAction(createUnhideAllColumnAction());
+        columnPopupMenu.addSeparator();
+        columnPopupMenu.addAction(createNewColumnAction());
+        columnPopupMenu.addAction(createRemoveColumnAction());
 
-		table.addTableColumnPopupDetectionListener(new ITableColumnPopupDetectionListener() {
+        table.addTableColumnPopupDetectionListener(new ITableColumnPopupDetectionListener() {
 
-			@Override
-			public void popupDetected(final ITableColumnPopupEvent event) {
-				popupColumn = event.getColumnIndex();
-				columnPopupMenu.show(event.getPosition());
-			}
-		});
-	}
+            @Override
+            public void popupDetected(final ITableColumnPopupEvent event) {
+                popupColumn = event.getColumnIndex();
+                columnPopupMenu.show(event.getPosition());
+            }
+        });
+    }
 
-	private IAction createHideColumnAction() {
-		final IActionBuilder builder = Toolkit.getActionBuilderFactory().create();
-		builder.setText("Hide column");
-		builder.setCommand(new ICommandExecutor() {
-			@Override
-			public void execute(final IExecutionContext executionContext) throws Exception {
-				tableModel.hideColumn(popupColumn);
-			}
-		});
-		return builder.build();
-	}
+    private IAction createHideColumnAction() {
+        final IActionBuilder builder = Toolkit.getActionBuilderFactory().create();
+        builder.setText("Hide column");
+        builder.setCommand(new ICommandExecutor() {
+            @Override
+            public void execute(final IExecutionContext executionContext) throws Exception {
+                tableModel.hideColumn(popupColumn);
+            }
+        });
+        return builder.build();
+    }
 
-	private IAction createUnhideAllColumnAction() {
-		final IActionBuilder builder = Toolkit.getActionBuilderFactory().create();
-		builder.setText("Unhide all columns");
-		builder.setCommand(new ICommandExecutor() {
-			@Override
-			public void execute(final IExecutionContext executionContext) throws Exception {
-				tableModel.showAllColumns();
-			}
-		});
-		return builder.build();
-	}
+    private IAction createUnhideAllColumnAction() {
+        final IActionBuilder builder = Toolkit.getActionBuilderFactory().create();
+        builder.setText("Unhide all columns");
+        builder.setCommand(new ICommandExecutor() {
+            @Override
+            public void execute(final IExecutionContext executionContext) throws Exception {
+                tableModel.showAllColumns();
+            }
+        });
+        return builder.build();
+    }
 
-	private IAction createNewColumnAction() {
-		final IActionBuilder builder = Toolkit.getActionBuilderFactory().create();
-		builder.setText("New column after current");
-		builder.setCommand(new ICommandExecutor() {
-			@Override
-			public void execute(final IExecutionContext executionContext) throws Exception {
-				tableModel.addColumnAfter(popupColumn);
-			}
-		});
-		return builder.build();
-	}
+    private IAction createNewColumnAction() {
+        final IActionBuilder builder = Toolkit.getActionBuilderFactory().create();
+        builder.setText("New column after current");
+        builder.setCommand(new ICommandExecutor() {
+            @Override
+            public void execute(final IExecutionContext executionContext) throws Exception {
+                tableModel.addColumnAfter(popupColumn);
+            }
+        });
+        return builder.build();
+    }
 
-	private IAction createRemoveColumnAction() {
-		final IActionBuilder builder = Toolkit.getActionBuilderFactory().create();
-		builder.setText("Remove column");
-		builder.setCommand(new ICommandExecutor() {
-			@Override
-			public void execute(final IExecutionContext executionContext) throws Exception {
-				tableModel.removeColumn(popupColumn);
-			}
-		});
-		return builder.build();
-	}
+    private IAction createRemoveColumnAction() {
+        final IActionBuilder builder = Toolkit.getActionBuilderFactory().create();
+        builder.setText("Remove column");
+        builder.setCommand(new ICommandExecutor() {
+            @Override
+            public void execute(final IExecutionContext executionContext) throws Exception {
+                tableModel.removeColumn(popupColumn);
+            }
+        });
+        return builder.build();
+    }
 
-	private final class TableModel implements ITableModel {
+    private final class TableModel implements ITableModel {
 
-		private final TableDataModelObservable tableDataModelObservable;
-		private final TableColumnModelObservable tableColumnModelObservable;
+        private final TableDataModelObservable tableDataModelObservable;
+        private final TableColumnModelObservable tableColumnModelObservable;
 
-		private final ArrayList<DefaultTableColumn> columns;
+        private final ArrayList<DefaultTableColumn> columns;
 
-		private final int rows = 2000;
-		private char nextColumn;
+        private final int rows = 2000;
+        private char nextColumn;
 
-		private TableModel() {
-			tableDataModelObservable = new TableDataModelObservable();
-			tableColumnModelObservable = new TableColumnModelObservable();
+        private TableModel() {
+            tableDataModelObservable = new TableDataModelObservable();
+            tableColumnModelObservable = new TableColumnModelObservable();
 
-			columns = new ArrayList<DefaultTableColumn>();
+            columns = new ArrayList<DefaultTableColumn>();
 
-			nextColumn = 'A';
+            nextColumn = 'A';
 
-			columns.add(createColumn());
-			columns.add(createColumn());
-			columns.add(createColumn());
-			columns.add(createColumn());
-		}
+            columns.add(createColumn());
+            columns.add(createColumn());
+            columns.add(createColumn());
+            columns.add(createColumn());
+        }
 
-		public void removeColumn(final int popupColumn) {
-			columns.remove(popupColumn);
-			tableColumnModelObservable.fireColumnsRemoved(new int[] {popupColumn});
-		}
+        public void removeColumn(final int popupColumn) {
+            columns.remove(popupColumn);
+            tableColumnModelObservable.fireColumnsRemoved(new int[] {popupColumn});
+        }
 
-		public void addColumnAfter(final int popupColumn) {
-			columns.add(popupColumn + 1, createColumn());
-			tableColumnModelObservable.fireColumnsAdded(new int[] {popupColumn + 1});
-		}
+        public void addColumnAfter(final int popupColumn) {
+            columns.add(popupColumn + 1, createColumn());
+            tableColumnModelObservable.fireColumnsAdded(new int[] {popupColumn + 1});
+        }
 
-		public void showAllColumns() {
-			for (final DefaultTableColumn column : columns) {
-				if (column.isVisible()) {
-					continue;
-				}
+        public void showAllColumns() {
+            for (final DefaultTableColumn column : columns) {
+                if (column.isVisible()) {
+                    continue;
+                }
 
-				column.setVisible(true);
-				tableColumnModelObservable.fireColumnsChanged(new int[] {columns.indexOf(column)});
-			}
-		}
+                column.setVisible(true);
+                tableColumnModelObservable.fireColumnsChanged(new int[] {columns.indexOf(column)});
+            }
+        }
 
-		public void hideColumn(final int popupColumn) {
-			columns.get(popupColumn).setVisible(false);
-			tableColumnModelObservable.fireColumnsChanged(new int[] {popupColumn});
-		}
+        public void hideColumn(final int popupColumn) {
+            columns.get(popupColumn).setVisible(false);
+            tableColumnModelObservable.fireColumnsChanged(new int[] {popupColumn});
+        }
 
-		private DefaultTableColumn createColumn() {
-			final DefaultTableColumn result = new DefaultTableColumn(String.valueOf(nextColumn));
-			nextColumn = (char) (nextColumn + 1);
-			return result;
-		}
+        private DefaultTableColumn createColumn() {
+            final DefaultTableColumn result = new DefaultTableColumn(String.valueOf(nextColumn));
+            nextColumn = (char) (nextColumn + 1);
+            return result;
+        }
 
-		@Override
-		public int getColumnCount() {
-			return columns.size();
-		}
+        @Override
+        public int getColumnCount() {
+            return columns.size();
+        }
 
-		@Override
-		public ITableColumn getColumn(final int columnIndex) {
-			return columns.get(columnIndex);
-		}
+        @Override
+        public ITableColumn getColumn(final int columnIndex) {
+            return columns.get(columnIndex);
+        }
 
-		@Override
-		public ITableColumnModelObservable getTableColumnModelObservable() {
-			return tableColumnModelObservable;
-		}
+        @Override
+        public ITableColumnModelObservable getTableColumnModelObservable() {
+            return tableColumnModelObservable;
+        }
 
-		@Override
-		public int getRowCount() {
-			return rows;
-		}
+        @Override
+        public int getRowCount() {
+            return rows;
+        }
 
-		@Override
-		public ITableCell getCell(final int rowIndex, final int columnIndex) {
-			return new TableCell(columns.get(columnIndex).getText() + rowIndex, "Tooltip for " + rowIndex + "/" + columnIndex);
-		}
+        @Override
+        public ITableCell getCell(final int rowIndex, final int columnIndex) {
+            return new TableCell(columns.get(columnIndex).getText() + rowIndex, "Tooltip for " + rowIndex + "/" + columnIndex);
+        }
 
-		@Override
-		public ArrayList<Integer> getSelection() {
-			return null;
-		}
+        @Override
+        public ArrayList<Integer> getSelection() {
+            return null;
+        }
 
-		@Override
-		public void setSelection(final Collection<Integer> selection) {}
+        @Override
+        public void setSelection(final Collection<Integer> selection) {}
 
-		@Override
-		public ITableDataModelObservable getTableDataModelObservable() {
-			return tableDataModelObservable;
-		}
+        @Override
+        public ITableDataModelObservable getTableDataModelObservable() {
+            return tableDataModelObservable;
+        }
 
-	}
+    }
 
-	public void foo() {
+    public void foo() {
 
-	}
+    }
 }

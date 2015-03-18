@@ -36,61 +36,61 @@ import org.jowidgets.common.widgets.IControlCommon;
 
 public interface IControl extends IComponent, IControlCommon, IParentObservable<IContainer> {
 
-	/**
-	 * Sets the parent of the container.
-	 * 
-	 * If the parent is already set and the control is not reparentable an
-	 * IllegalStateException will be thrown.
-	 * 
-	 * @param parent The parent to set
-	 */
-	void setParent(IContainer parent);
+    /**
+     * Sets the parent of the container.
+     * 
+     * If the parent is already set and the control is not reparentable an
+     * IllegalStateException will be thrown.
+     * 
+     * @param parent The parent to set
+     */
+    void setParent(IContainer parent);
 
-	@Override
-	IContainer getParent();
+    @Override
+    IContainer getParent();
 
-	@Override
-	IControl getRoot();
+    @Override
+    IControl getRoot();
 
-	/**
-	 * Gets the drag source of the control
-	 * 
-	 * @return The drag source, never null
-	 */
-	IDragSource getDragSource();
+    /**
+     * Gets the drag source of the control
+     * 
+     * @return The drag source, never null
+     */
+    IDragSource getDragSource();
 
-	/**
-	 * Gets the drop target of the control
-	 * 
-	 * @return The drop target, never null
-	 */
-	IDropTarget getDropTarget();
+    /**
+     * Gets the drop target of the control
+     * 
+     * @return The drop target, never null
+     */
+    IDropTarget getDropTarget();
 
-	/**
-	 * Sets the minimum size of this control.
-	 * 
-	 * If set to null, the default minimum size will be used.
-	 * 
-	 * @param minSize The minimum size to set or null for default min size
-	 */
-	void setMinSize(final Dimension minSize);
+    /**
+     * Sets the minimum size of this control.
+     * 
+     * If set to null, the default minimum size will be used.
+     * 
+     * @param minSize The minimum size to set or null for default min size
+     */
+    void setMinSize(final Dimension minSize);
 
-	/**
-	 * Sets the preferred size of this control.
-	 * 
-	 * If set to null, the default preferred size will be used
-	 * 
-	 * @param preferredSize The preferred size to set or null for default preferred size
-	 */
-	void setPreferredSize(Dimension preferredSize);
+    /**
+     * Sets the preferred size of this control.
+     * 
+     * If set to null, the default preferred size will be used
+     * 
+     * @param preferredSize The preferred size to set or null for default preferred size
+     */
+    void setPreferredSize(Dimension preferredSize);
 
-	/**
-	 * Sets the maximal size
-	 * 
-	 * If set to null, the default maximal size will be used
-	 * 
-	 * @param maxSize The maximal size to set or null for default max size
-	 */
-	void setMaxSize(Dimension maxSize);
+    /**
+     * Sets the maximal size
+     * 
+     * If set to null, the default maximal size will be used
+     * 
+     * @param maxSize The maximal size to set or null for default max size
+     */
+    void setMaxSize(Dimension maxSize);
 
 }

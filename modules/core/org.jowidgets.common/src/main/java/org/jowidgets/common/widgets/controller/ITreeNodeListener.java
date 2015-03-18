@@ -30,10 +30,10 @@ package org.jowidgets.common.widgets.controller;
 
 public interface ITreeNodeListener {
 
-	void selectionChanged(boolean selected);
+    void selectionChanged(boolean selected);
 
-	void expandedChanged(boolean expanded);
+    void expandedChanged(boolean expanded);
 
-	void checkedChanged(boolean checked);
+    void checkedChanged(boolean checked);
 
 }

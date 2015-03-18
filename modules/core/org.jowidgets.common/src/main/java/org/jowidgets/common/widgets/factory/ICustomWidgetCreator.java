@@ -31,13 +31,13 @@ import org.jowidgets.common.widgets.IWidgetCommon;
 
 public interface ICustomWidgetCreator<WIDGET_TYPE extends IWidgetCommon> {
 
-	/**
-	 * Creates a widget
-	 * 
-	 * @param widgetFactory The widget factory that can be used
-	 * 
-	 * @return The created widget, never null
-	 */
-	WIDGET_TYPE create(ICustomWidgetFactory widgetFactory);
+    /**
+     * Creates a widget
+     * 
+     * @param widgetFactory The widget factory that can be used
+     * 
+     * @return The created widget, never null
+     */
+    WIDGET_TYPE create(ICustomWidgetFactory widgetFactory);
 
 }

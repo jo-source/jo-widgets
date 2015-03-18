@@ -52,133 +52,133 @@ import org.jowidgets.workbench.api.IWorkbenchContext;
 
 public class FolderPanel implements ILayoutPanel {
 
-	private final ITabFolder tabFolder;
-	private ComponentContext currentComponent;
+    private final ITabFolder tabFolder;
+    private ComponentContext currentComponent;
 
-	public FolderPanel(final IFolderLayout folderLayout, final IContainer parentContainer, final ComponentContext component) {
-		super();
+    public FolderPanel(final IFolderLayout folderLayout, final IContainer parentContainer, final ComponentContext component) {
+        super();
 
-		this.currentComponent = component;
+        this.currentComponent = component;
 
-		parentContainer.setLayout(MigLayoutFactory.growingInnerCellLayout());
+        parentContainer.setLayout(MigLayoutFactory.growingInnerCellLayout());
 
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		final ITabFolderBluePrint tabFolderBluePrint = bpf.tabFolder();
-		tabFolderBluePrint.setTabsCloseable(folderLayout.getViewsCloseable());
+        final ITabFolderBluePrint tabFolderBluePrint = bpf.tabFolder();
+        tabFolderBluePrint.setTabsCloseable(folderLayout.getViewsCloseable());
 
-		this.tabFolder = parentContainer.add(tabFolderBluePrint, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        this.tabFolder = parentContainer.add(tabFolderBluePrint, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
-		for (final IViewLayout viewLayout : folderLayout.getViews()) {
-			createTabItem(null, viewLayout);
-		}
+        for (final IViewLayout viewLayout : folderLayout.getViews()) {
+            createTabItem(null, viewLayout);
+        }
 
-		//TODO MG onFolderCreated must be implemented better later
-		currentComponent.getComponent().onFolderCreated(new IFolderContext() {
+        //TODO MG onFolderCreated must be implemented better later
+        currentComponent.getComponent().onFolderCreated(new IFolderContext() {
 
-			private final IMenuModel popupMenu;
+            private final IMenuModel popupMenu;
 
-			{
-				popupMenu = new MenuModel();
-				tabFolder.setPopupMenu(popupMenu);
-			}
+            {
+                popupMenu = new MenuModel();
+                tabFolder.setPopupMenu(popupMenu);
+            }
 
-			@Override
-			public IWorkbenchContext getWorkbenchContext() {
-				return getWorkbenchContext();
-			}
+            @Override
+            public IWorkbenchContext getWorkbenchContext() {
+                return getWorkbenchContext();
+            }
 
-			@Override
-			public IWorkbenchApplicationContext getWorkbenchApplicationContext() {
-				return getWorkbenchApplicationContext();
-			}
+            @Override
+            public IWorkbenchApplicationContext getWorkbenchApplicationContext() {
+                return getWorkbenchApplicationContext();
+            }
 
-			@Override
-			public IMenuModel getPopupMenu() {
-				return popupMenu;
-			}
+            @Override
+            public IMenuModel getPopupMenu() {
+                return popupMenu;
+            }
 
-			@Override
-			public String getOriginalFolderId() {
-				return folderLayout.getId();
-			}
+            @Override
+            public String getOriginalFolderId() {
+                return folderLayout.getId();
+            }
 
-			@Override
-			public String getFolderId() {
-				return folderLayout.getId();
-			}
+            @Override
+            public String getFolderId() {
+                return folderLayout.getId();
+            }
 
-			@Override
-			public IComponentNodeContext getComponentNodeContext() {
-				return getComponentNodeContext();
-			}
+            @Override
+            public IComponentNodeContext getComponentNodeContext() {
+                return getComponentNodeContext();
+            }
 
-			@Override
-			public IComponentContext getComponentContext() {
-				return getComponentContext();
-			}
+            @Override
+            public IComponentContext getComponentContext() {
+                return getComponentContext();
+            }
 
-			@Override
-			public void addView(final boolean addToFront, final IViewLayout viewLayout) {
-				createTabItem(Integer.valueOf(0), viewLayout);
-			}
+            @Override
+            public void addView(final boolean addToFront, final IViewLayout viewLayout) {
+                createTabItem(Integer.valueOf(0), viewLayout);
+            }
 
-			@Override
-			public void addView(final IViewLayout viewLayout) {
-				createTabItem(Integer.valueOf(tabFolder.getItems().size()), viewLayout);
-			}
-		});
+            @Override
+            public void addView(final IViewLayout viewLayout) {
+                createTabItem(Integer.valueOf(tabFolder.getItems().size()), viewLayout);
+            }
+        });
 
-	}
+    }
 
-	private ITabItem createTabItem(final Integer index, final IViewLayout viewLayout) {
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		final ITabItemBluePrint tabItemBp = bpf.tabItem();
-		tabItemBp.setText(viewLayout.getLabel());
-		tabItemBp.setToolTipText(viewLayout.getTooltip());
-		tabItemBp.setIcon(viewLayout.getIcon());
+    private ITabItem createTabItem(final Integer index, final IViewLayout viewLayout) {
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+        final ITabItemBluePrint tabItemBp = bpf.tabItem();
+        tabItemBp.setText(viewLayout.getLabel());
+        tabItemBp.setToolTipText(viewLayout.getTooltip());
+        tabItemBp.setIcon(viewLayout.getIcon());
 
-		final ITabItem tabItem;
-		if (index != null) {
-			tabItem = tabFolder.addItem(index.intValue(), tabItemBp);
-		}
-		else {
-			tabItem = tabFolder.addItem(tabItemBp);
-		}
+        final ITabItem tabItem;
+        if (index != null) {
+            tabItem = tabFolder.addItem(index.intValue(), tabItemBp);
+        }
+        else {
+            tabItem = tabFolder.addItem(tabItemBp);
+        }
 
-		//TODO MG this must be done lazily (later)
-		final ViewContext viewContext = new ViewContext(tabFolder, tabItem, viewLayout.getScope(), currentComponent);
-		final IView view = currentComponent.getComponent().createView(viewLayout.getId(), viewContext);
+        //TODO MG this must be done lazily (later)
+        final ViewContext viewContext = new ViewContext(tabFolder, tabItem, viewLayout.getScope(), currentComponent);
+        final IView view = currentComponent.getComponent().createView(viewLayout.getId(), viewContext);
 
-		tabItem.layout();
-		viewContext.packToolBar();
+        tabItem.layout();
+        viewContext.packToolBar();
 
-		tabItem.addTabItemListener(new TabItemAdapter() {
+        tabItem.addTabItemListener(new TabItemAdapter() {
 
-			@Override
-			public void selectionChanged(final boolean selected) {
-				view.onVisibleStateChanged(selected);
-				viewContext.packToolBar();
-				tabItem.layoutBegin();
-				tabItem.layoutEnd();
-			}
+            @Override
+            public void selectionChanged(final boolean selected) {
+                view.onVisibleStateChanged(selected);
+                viewContext.packToolBar();
+                tabItem.layoutBegin();
+                tabItem.layoutEnd();
+            }
 
-			@Override
-			public void onClose(final IVetoable vetoable) {
-				final VetoHolder vetoHolder = new VetoHolder();
-				view.onClose(vetoHolder);
-				if (vetoHolder.hasVeto()) {
-					vetoable.veto();
-				}
-			}
-		});
+            @Override
+            public void onClose(final IVetoable vetoable) {
+                final VetoHolder vetoHolder = new VetoHolder();
+                view.onClose(vetoHolder);
+                if (vetoHolder.hasVeto()) {
+                    vetoable.veto();
+                }
+            }
+        });
 
-		return tabItem;
-	}
+        return tabItem;
+    }
 
-	@Override
-	public void setComponent(final ComponentContext component) {
-		currentComponent = component;
-	}
+    @Override
+    public void setComponent(final ComponentContext component) {
+        currentComponent = component;
+    }
 
 }

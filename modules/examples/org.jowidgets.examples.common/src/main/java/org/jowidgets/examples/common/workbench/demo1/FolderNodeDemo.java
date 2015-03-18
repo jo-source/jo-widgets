@@ -42,52 +42,52 @@ import org.jowidgets.workbench.api.IComponentNodeContext;
 
 public class FolderNodeDemo extends AbstractDemoComponentNode {
 
-	private final List<IComponentNode> children;
+    private final List<IComponentNode> children;
 
-	public FolderNodeDemo(final String id, final String label) {
-		this(id, label, null, SilkIcons.FOLDER, new LinkedList<IComponentNode>());
-	}
+    public FolderNodeDemo(final String id, final String label) {
+        this(id, label, null, SilkIcons.FOLDER, new LinkedList<IComponentNode>());
+    }
 
-	public FolderNodeDemo(final String id, final String label, final List<IComponentNode> children) {
-		this(id, label, null, SilkIcons.FOLDER, children);
-	}
+    public FolderNodeDemo(final String id, final String label, final List<IComponentNode> children) {
+        this(id, label, null, SilkIcons.FOLDER, children);
+    }
 
-	public FolderNodeDemo(
-		final String id,
-		final String label,
-		final String tooltip,
-		final IImageConstant icon,
-		final List<IComponentNode> children) {
+    public FolderNodeDemo(
+        final String id,
+        final String label,
+        final String tooltip,
+        final IImageConstant icon,
+        final List<IComponentNode> children) {
 
-		super(id, label, tooltip, icon);
+        super(id, label, tooltip, icon);
 
-		this.children = children;
-	}
+        this.children = children;
+    }
 
-	@Override
-	public void onContextInitialize(final IComponentNodeContext context) {
-		//create menus
-		final ActionFactory actionFactory = new ActionFactory();
-		final IMenuModel popupMenu = context.getPopupMenu();
-		popupMenu.addAction(actionFactory.createAddFolderAction(context));
-		popupMenu.addAction(actionFactory.createAddComponentAction(context));
-		popupMenu.addAction(actionFactory.createDeleteAction(context, this, "Delete " + getLabel(), SilkIcons.FOLDER_DELETE));
-		popupMenu.addSeparator();
-		popupMenu.addAction(actionFactory.createRenameComponentTreeNode(context));
-		popupMenu.addAction(actionFactory.createSelectParentNode(context));
-		popupMenu.addSeparator();
-		popupMenu.addAction(actionFactory.createExpandNode(context));
-		popupMenu.addAction(actionFactory.createCollapseNode(context));
+    @Override
+    public void onContextInitialize(final IComponentNodeContext context) {
+        //create menus
+        final ActionFactory actionFactory = new ActionFactory();
+        final IMenuModel popupMenu = context.getPopupMenu();
+        popupMenu.addAction(actionFactory.createAddFolderAction(context));
+        popupMenu.addAction(actionFactory.createAddComponentAction(context));
+        popupMenu.addAction(actionFactory.createDeleteAction(context, this, "Delete " + getLabel(), SilkIcons.FOLDER_DELETE));
+        popupMenu.addSeparator();
+        popupMenu.addAction(actionFactory.createRenameComponentTreeNode(context));
+        popupMenu.addAction(actionFactory.createSelectParentNode(context));
+        popupMenu.addSeparator();
+        popupMenu.addAction(actionFactory.createExpandNode(context));
+        popupMenu.addAction(actionFactory.createCollapseNode(context));
 
-		//add children
-		for (final IComponentNode componentTreeNode : children) {
-			context.add(componentTreeNode);
-		}
-	}
+        //add children
+        for (final IComponentNode componentTreeNode : children) {
+            context.add(componentTreeNode);
+        }
+    }
 
-	@Override
-	public IComponent createComponent(final IComponentContext context) {
-		return null;
-	}
+    @Override
+    public IComponent createComponent(final IComponentContext context) {
+        return null;
+    }
 
 }

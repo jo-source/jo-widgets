@@ -32,40 +32,40 @@ import org.jowidgets.common.image.IImageConstant;
 
 public class UIDTabItem extends UIDContainer {
 
-	private boolean selected;
-	private String text;
-	private IImageConstant icon;
-	private boolean closeable;
+    private boolean selected;
+    private String text;
+    private IImageConstant icon;
+    private boolean closeable;
 
-	public boolean isSelected() {
-		return selected;
-	}
+    public boolean isSelected() {
+        return selected;
+    }
 
-	public void setSelected(final boolean selected) {
-		this.selected = selected;
-	}
+    public void setSelected(final boolean selected) {
+        this.selected = selected;
+    }
 
-	public String getText() {
-		return text;
-	}
+    public String getText() {
+        return text;
+    }
 
-	public void setText(final String text) {
-		this.text = text;
-	}
+    public void setText(final String text) {
+        this.text = text;
+    }
 
-	public IImageConstant getIcon() {
-		return icon;
-	}
+    public IImageConstant getIcon() {
+        return icon;
+    }
 
-	public void setIcon(final IImageConstant icon) {
-		this.icon = icon;
-	}
+    public void setIcon(final IImageConstant icon) {
+        this.icon = icon;
+    }
 
-	public boolean isCloseable() {
-		return closeable;
-	}
+    public boolean isCloseable() {
+        return closeable;
+    }
 
-	public void setCloseable(final boolean closeable) {
-		this.closeable = closeable;
-	}
+    public void setCloseable(final boolean closeable) {
+        this.closeable = closeable;
+    }
 }

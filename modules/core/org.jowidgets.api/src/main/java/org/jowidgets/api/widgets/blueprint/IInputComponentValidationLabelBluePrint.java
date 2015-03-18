@@ -32,7 +32,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IInputComponentValidationLabe
 import org.jowidgets.api.widgets.descriptor.IInputComponentValidationLabelDescriptor;
 
 public interface IInputComponentValidationLabelBluePrint extends
-		IInputComponentValidationLabelSetupBuilder<IInputComponentValidationLabelBluePrint>,
-		IInputComponentValidationLabelDescriptor {
+        IInputComponentValidationLabelSetupBuilder<IInputComponentValidationLabelBluePrint>,
+        IInputComponentValidationLabelDescriptor {
 
 }

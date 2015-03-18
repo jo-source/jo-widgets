@@ -34,22 +34,22 @@ import org.jowidgets.common.types.Markup;
 
 public interface IAbstractTableCellBluePrint<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setForegroundColor(IColorConstant foregroundColor);
+    INSTANCE_TYPE setForegroundColor(IColorConstant foregroundColor);
 
-	INSTANCE_TYPE setBackgroundColor(IColorConstant backgroundColor);
+    INSTANCE_TYPE setBackgroundColor(IColorConstant backgroundColor);
 
-	INSTANCE_TYPE setSelectedForegroundColor(IColorConstant foregroundColor);
+    INSTANCE_TYPE setSelectedForegroundColor(IColorConstant foregroundColor);
 
-	INSTANCE_TYPE setSelectedBackgroundColor(IColorConstant backgroundColor);
+    INSTANCE_TYPE setSelectedBackgroundColor(IColorConstant backgroundColor);
 
-	INSTANCE_TYPE setMarkup(Markup markup);
+    INSTANCE_TYPE setMarkup(Markup markup);
 
-	INSTANCE_TYPE setText(String text);
+    INSTANCE_TYPE setText(String text);
 
-	INSTANCE_TYPE setToolTipText(String toolTipText);
+    INSTANCE_TYPE setToolTipText(String toolTipText);
 
-	INSTANCE_TYPE setIcon(IImageConstant icon);
+    INSTANCE_TYPE setIcon(IImageConstant icon);
 
-	INSTANCE_TYPE setEditable(boolean editable);
+    INSTANCE_TYPE setEditable(boolean editable);
 
 }

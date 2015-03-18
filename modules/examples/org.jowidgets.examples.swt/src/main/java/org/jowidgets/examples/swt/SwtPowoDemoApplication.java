@@ -31,10 +31,10 @@ import org.jowidgets.examples.common.powo.PowoDemoApplication;
 
 public final class SwtPowoDemoApplication {
 
-	private SwtPowoDemoApplication() {}
+    private SwtPowoDemoApplication() {}
 
-	public static void main(final String[] args) throws Exception {
-		new PowoDemoApplication("Swt widgets demo application").start();
-	}
+    public static void main(final String[] args) throws Exception {
+        new PowoDemoApplication("Swt widgets demo application").start();
+    }
 
 }

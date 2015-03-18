@@ -30,9 +30,9 @@ package org.jowidgets.api.widgets.blueprint.builder;
 import org.jowidgets.common.widgets.builder.IPopupDialogSetupBuilderCommon;
 
 public interface IPopupDialogSetupBuilder<INSTANCE_TYPE extends IPopupDialogSetupBuilder<?>> extends
-		IContainerSetupBuilder<INSTANCE_TYPE>,
-		IPopupDialogSetupBuilderCommon<INSTANCE_TYPE> {
+        IContainerSetupBuilder<INSTANCE_TYPE>,
+        IPopupDialogSetupBuilderCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setAutoDispose(boolean autoDispose);
+    INSTANCE_TYPE setAutoDispose(boolean autoDispose);
 
 }

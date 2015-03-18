@@ -37,17 +37,17 @@ import org.jowidgets.common.types.IVetoable;
 
 public class DragSourceAdapter implements IDragSourceListener {
 
-	@Override
-	public void dragStart(final IDragEvent event, final IVetoable veto) {}
+    @Override
+    public void dragStart(final IDragEvent event, final IVetoable veto) {}
 
-	@Override
-	public void dragSetData(
-		final IDragEvent event,
-		final IVetoable veto,
-		final TransferType<?> transferType,
-		final IDragDataResponse dragData) {}
+    @Override
+    public void dragSetData(
+        final IDragEvent event,
+        final IVetoable veto,
+        final TransferType<?> transferType,
+        final IDragDataResponse dragData) {}
 
-	@Override
-	public void dragFinished(final IDragEvent event, final DropAction dropAction) {}
+    @Override
+    public void dragFinished(final IDragEvent event, final DropAction dropAction) {}
 
 }

@@ -34,7 +34,7 @@ import org.jowidgets.api.widgets.descriptor.setup.ICombinedCollectionInputFieldS
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface ICombinedCollectionInputFieldDescriptor<ELEMENT_TYPE> extends
-		ICombinedCollectionInputFieldSetup<ELEMENT_TYPE>,
-		IWidgetDescriptor<IInputControl<Collection<ELEMENT_TYPE>>> {
+        ICombinedCollectionInputFieldSetup<ELEMENT_TYPE>,
+        IWidgetDescriptor<IInputControl<Collection<ELEMENT_TYPE>>> {
 
 }

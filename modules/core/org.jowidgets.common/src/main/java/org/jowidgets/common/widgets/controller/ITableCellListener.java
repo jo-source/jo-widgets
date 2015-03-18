@@ -30,10 +30,10 @@ package org.jowidgets.common.widgets.controller;
 
 public interface ITableCellListener {
 
-	void mousePressed(ITableCellMouseEvent event);
+    void mousePressed(ITableCellMouseEvent event);
 
-	void mouseReleased(ITableCellMouseEvent event);
+    void mouseReleased(ITableCellMouseEvent event);
 
-	void mouseDoubleClicked(ITableCellMouseEvent event);
+    void mouseDoubleClicked(ITableCellMouseEvent event);
 
 }

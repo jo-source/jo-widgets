@@ -42,48 +42,48 @@ import org.jowidgets.util.Assert;
  */
 public final class SwtToJoWrapper {
 
-	private SwtToJoWrapper() {}
+    private SwtToJoWrapper() {}
 
-	/**
-	 * Creates a IComposite Wrapper with help of a swt composite.
-	 * 
-	 * The IComposite will be disposed if the swt composite will be disposed
-	 * 
-	 * @param composite The swt composite to create the IComposite for, must not be null
-	 * 
-	 * @return A IComposite Wrapper
-	 */
-	public static IComposite create(final Composite composite) {
-		Assert.paramNotNull(composite, "composite");
-		final IComposite result = Toolkit.getWidgetWrapperFactory().createComposite(composite);
-		composite.addDisposeListener(new DisposeListener() {
-			@Override
-			public void widgetDisposed(final DisposeEvent e) {
-				result.dispose();
-			}
-		});
-		return result;
-	}
+    /**
+     * Creates a IComposite Wrapper with help of a swt composite.
+     * 
+     * The IComposite will be disposed if the swt composite will be disposed
+     * 
+     * @param composite The swt composite to create the IComposite for, must not be null
+     * 
+     * @return A IComposite Wrapper
+     */
+    public static IComposite create(final Composite composite) {
+        Assert.paramNotNull(composite, "composite");
+        final IComposite result = Toolkit.getWidgetWrapperFactory().createComposite(composite);
+        composite.addDisposeListener(new DisposeListener() {
+            @Override
+            public void widgetDisposed(final DisposeEvent e) {
+                result.dispose();
+            }
+        });
+        return result;
+    }
 
-	/**
-	 * Creates a IFrame Wrapper with help of a swt shell.
-	 * 
-	 * The IFrame will be disposed if the swt shell will be disposed
-	 * 
-	 * @param shell The swt shell to create the IComposite for, must not be null
-	 * 
-	 * @return A IFrame Wrapper
-	 */
-	public static IFrame create(final Shell shell) {
-		Assert.paramNotNull(shell, "shell");
-		final IFrame result = Toolkit.getWidgetWrapperFactory().createFrame(shell);
-		shell.addDisposeListener(new DisposeListener() {
-			@Override
-			public void widgetDisposed(final DisposeEvent e) {
-				result.dispose();
-			}
-		});
-		return result;
-	}
+    /**
+     * Creates a IFrame Wrapper with help of a swt shell.
+     * 
+     * The IFrame will be disposed if the swt shell will be disposed
+     * 
+     * @param shell The swt shell to create the IComposite for, must not be null
+     * 
+     * @return A IFrame Wrapper
+     */
+    public static IFrame create(final Shell shell) {
+        Assert.paramNotNull(shell, "shell");
+        final IFrame result = Toolkit.getWidgetWrapperFactory().createFrame(shell);
+        shell.addDisposeListener(new DisposeListener() {
+            @Override
+            public void widgetDisposed(final DisposeEvent e) {
+                result.dispose();
+            }
+        });
+        return result;
+    }
 
 }

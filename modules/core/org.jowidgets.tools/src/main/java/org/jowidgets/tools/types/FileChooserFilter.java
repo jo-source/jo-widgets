@@ -36,30 +36,30 @@ import org.jowidgets.common.types.IFileChooserFilter;
 
 public final class FileChooserFilter implements IFileChooserFilter {
 
-	private final String name;
-	private final List<String> extensions;
+    private final String name;
+    private final List<String> extensions;
 
-	public FileChooserFilter(final String name, final String extension, final String... extensions) {
-		this.name = name;
+    public FileChooserFilter(final String name, final String extension, final String... extensions) {
+        this.name = name;
 
-		final List<String> extensionList = new LinkedList<String>();
-		extensionList.add(extension);
+        final List<String> extensionList = new LinkedList<String>();
+        extensionList.add(extension);
 
-		for (final String additionalExtension : extensions) {
-			extensionList.add(additionalExtension);
-		}
+        for (final String additionalExtension : extensions) {
+            extensionList.add(additionalExtension);
+        }
 
-		this.extensions = Collections.unmodifiableList(extensionList);
-	}
+        this.extensions = Collections.unmodifiableList(extensionList);
+    }
 
-	@Override
-	public String getFilterName() {
-		return name;
-	}
+    @Override
+    public String getFilterName() {
+        return name;
+    }
 
-	@Override
-	public List<String> getExtensions() {
-		return extensions;
-	}
+    @Override
+    public List<String> getExtensions() {
+        return extensions;
+    }
 
 }

@@ -34,13 +34,13 @@ import org.jowidgets.examples.common.snipped.ObservableValueViewerSnipped;
 
 public final class ObservableValueViewerSnippedStarterSwing {
 
-	private ObservableValueViewerSnippedStarterSwing() {}
+    private ObservableValueViewerSnippedStarterSwing() {}
 
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		Toolkit.getApplicationRunner().run(new ObservableValueViewerSnipped());
-		System.exit(0);
-	}
+    public static void main(final String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
+        Toolkit.getApplicationRunner().run(new ObservableValueViewerSnipped());
+        System.exit(0);
+    }
 
 }

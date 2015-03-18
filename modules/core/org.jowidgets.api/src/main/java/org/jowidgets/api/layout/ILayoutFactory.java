@@ -33,6 +33,6 @@ import org.jowidgets.common.widgets.layout.ILayouter;
 
 public interface ILayoutFactory<LAYOUTER_TYPE extends ILayouter> {
 
-	LAYOUTER_TYPE create(IContainer container);
+    LAYOUTER_TYPE create(IContainer container);
 
 }

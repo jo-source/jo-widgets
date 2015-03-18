@@ -34,16 +34,16 @@ import org.jowidgets.util.Assert;
 
 public final class DragEventSpiImpl implements IDragEventSpi {
 
-	private final Position position;
+    private final Position position;
 
-	public DragEventSpiImpl(final Position position) {
-		Assert.paramNotNull(position, "position");
-		this.position = position;
-	}
+    public DragEventSpiImpl(final Position position) {
+        Assert.paramNotNull(position, "position");
+        this.position = position;
+    }
 
-	@Override
-	public Position getPosition() {
-		return position;
-	}
+    @Override
+    public Position getPosition() {
+        return position;
+    }
 
 }

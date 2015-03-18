@@ -30,9 +30,9 @@ package org.jowidgets.spi.impl.swt.common.widgets.base.layout;
 
 public interface ILayoutListener {
 
-	void beforeComputeSize();
+    void beforeComputeSize();
 
-	void beforeLayout();
+    void beforeLayout();
 
-	void afterLayout();
+    void afterLayout();
 }

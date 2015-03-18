@@ -28,6 +28,6 @@
 package org.jowidgets.common.widgets.builder;
 
 public interface ITabItemSetupBuilderCommon<INSTANCE_TYPE extends ITabItemSetupBuilderCommon<?>> extends
-		ISetupBuilder<INSTANCE_TYPE> {
+        ISetupBuilder<INSTANCE_TYPE> {
 
 }

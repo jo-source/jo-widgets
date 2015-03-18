@@ -36,11 +36,11 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IFileChooserSetupCommon {
 
-	@Mandatory
-	FileChooserType getType();
+    @Mandatory
+    FileChooserType getType();
 
-	String getTitle();
+    String getTitle();
 
-	List<IFileChooserFilter> getFilterList();
+    List<IFileChooserFilter> getFilterList();
 
 }

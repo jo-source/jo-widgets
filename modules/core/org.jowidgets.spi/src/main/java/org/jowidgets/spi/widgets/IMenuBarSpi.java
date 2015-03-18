@@ -32,8 +32,8 @@ import org.jowidgets.common.widgets.IMenuBarCommon;
 
 public interface IMenuBarSpi extends IWidgetSpi, IMenuBarCommon {
 
-	void remove(int index);
+    void remove(int index);
 
-	IMainMenuSpi addMenu(Integer index);
+    IMainMenuSpi addMenu(Integer index);
 
 }

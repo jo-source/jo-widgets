@@ -30,16 +30,16 @@ package org.jowidgets.api.command;
 
 public interface IEnabledState {
 
-	/**
-	 * @return true, if the action is enabled, false otherwise
-	 */
-	boolean isEnabled();
+    /**
+     * @return true, if the action is enabled, false otherwise
+     */
+    boolean isEnabled();
 
-	/**
-	 * If the action is not enabled, this get's the reason why. This reason should
-	 * be offered to the user, e.g. in the tooltip of a disabled button or menu item
-	 * 
-	 * @return the reason
-	 */
-	String getReason();
+    /**
+     * If the action is not enabled, this get's the reason why. This reason should
+     * be offered to the user, e.g. in the tooltip of a disabled button or menu item
+     * 
+     * @return the reason
+     */
+    String getReason();
 }

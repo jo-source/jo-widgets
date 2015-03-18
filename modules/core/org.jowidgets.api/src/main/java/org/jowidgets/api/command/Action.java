@@ -35,15 +35,15 @@ import org.jowidgets.api.toolkit.Toolkit;
  */
 public final class Action {
 
-	private Action() {}
+    private Action() {}
 
-	/**
-	 * Creates a new action builder instance
-	 * 
-	 * @return A new action builder, never null
-	 */
-	public static IActionBuilder builder() {
-		return Toolkit.getActionBuilderFactory().create();
-	}
+    /**
+     * Creates a new action builder instance
+     * 
+     * @return A new action builder, never null
+     */
+    public static IActionBuilder builder() {
+        return Toolkit.getActionBuilderFactory().create();
+    }
 
 }

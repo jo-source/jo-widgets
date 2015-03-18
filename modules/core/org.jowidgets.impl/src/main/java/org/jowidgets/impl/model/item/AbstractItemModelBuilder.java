@@ -38,111 +38,111 @@ import org.jowidgets.common.types.VirtualKey;
 
 public abstract class AbstractItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> implements IItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> {
 
-	private String id;
-	private String text;
-	private String toolTipText;
-	private IImageConstant icon;
-	private Accelerator accelerator;
-	private Character mnemonic;
-	private boolean enabled;
+    private String id;
+    private String text;
+    private String toolTipText;
+    private IImageConstant icon;
+    private Accelerator accelerator;
+    private Character mnemonic;
+    private boolean enabled;
 
-	public AbstractItemModelBuilder() {
-		this.id = UUID.randomUUID().toString();
-		this.enabled = true;
-	}
+    public AbstractItemModelBuilder() {
+        this.id = UUID.randomUUID().toString();
+        this.enabled = true;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public INSTANCE_TYPE setId(final String id) {
-		this.id = id;
-		return (INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public INSTANCE_TYPE setId(final String id) {
+        this.id = id;
+        return (INSTANCE_TYPE) this;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public INSTANCE_TYPE setText(final String text) {
-		this.text = text;
-		return (INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public INSTANCE_TYPE setText(final String text) {
+        this.text = text;
+        return (INSTANCE_TYPE) this;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public INSTANCE_TYPE setToolTipText(final String toolTipText) {
-		this.toolTipText = toolTipText;
-		return (INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public INSTANCE_TYPE setToolTipText(final String toolTipText) {
+        this.toolTipText = toolTipText;
+        return (INSTANCE_TYPE) this;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public INSTANCE_TYPE setIcon(final IImageConstant icon) {
-		this.icon = icon;
-		return (INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public INSTANCE_TYPE setIcon(final IImageConstant icon) {
+        this.icon = icon;
+        return (INSTANCE_TYPE) this;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public INSTANCE_TYPE setAccelerator(final Accelerator accelerator) {
-		this.accelerator = accelerator;
-		return (INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public INSTANCE_TYPE setAccelerator(final Accelerator accelerator) {
+        this.accelerator = accelerator;
+        return (INSTANCE_TYPE) this;
+    }
 
-	@Override
-	public INSTANCE_TYPE setAccelerator(final VirtualKey key, final Modifier... modifier) {
-		return setAccelerator(new Accelerator(key, modifier));
-	}
+    @Override
+    public INSTANCE_TYPE setAccelerator(final VirtualKey key, final Modifier... modifier) {
+        return setAccelerator(new Accelerator(key, modifier));
+    }
 
-	@Override
-	public INSTANCE_TYPE setAccelerator(final char key, final Modifier... modifier) {
-		return setAccelerator(new Accelerator(key, modifier));
-	}
+    @Override
+    public INSTANCE_TYPE setAccelerator(final char key, final Modifier... modifier) {
+        return setAccelerator(new Accelerator(key, modifier));
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public INSTANCE_TYPE setMnemonic(final Character mnemonic) {
-		this.mnemonic = mnemonic;
-		return (INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public INSTANCE_TYPE setMnemonic(final Character mnemonic) {
+        this.mnemonic = mnemonic;
+        return (INSTANCE_TYPE) this;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public INSTANCE_TYPE setMnemonic(final char mnemonic) {
-		this.mnemonic = Character.valueOf(mnemonic);
-		return (INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public INSTANCE_TYPE setMnemonic(final char mnemonic) {
+        this.mnemonic = Character.valueOf(mnemonic);
+        return (INSTANCE_TYPE) this;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public INSTANCE_TYPE setEnabled(final boolean enabled) {
-		this.enabled = enabled;
-		return (INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public INSTANCE_TYPE setEnabled(final boolean enabled) {
+        this.enabled = enabled;
+        return (INSTANCE_TYPE) this;
+    }
 
-	protected String getId() {
-		return id;
-	}
+    protected String getId() {
+        return id;
+    }
 
-	protected String getText() {
-		return text;
-	}
+    protected String getText() {
+        return text;
+    }
 
-	protected String getToolTipText() {
-		return toolTipText;
-	}
+    protected String getToolTipText() {
+        return toolTipText;
+    }
 
-	protected IImageConstant getIcon() {
-		return icon;
-	}
+    protected IImageConstant getIcon() {
+        return icon;
+    }
 
-	protected Accelerator getAccelerator() {
-		return accelerator;
-	}
+    protected Accelerator getAccelerator() {
+        return accelerator;
+    }
 
-	protected Character getMnemonic() {
-		return mnemonic;
-	}
+    protected Character getMnemonic() {
+        return mnemonic;
+    }
 
-	protected boolean isEnabled() {
-		return enabled;
-	}
+    protected boolean isEnabled() {
+        return enabled;
+    }
 
 }

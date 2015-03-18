@@ -39,28 +39,28 @@ import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public class PopupMenuImpl extends SwtMenu implements IPopupMenuSpi {
 
-	private Control parent;
+    private Control parent;
 
-	public PopupMenuImpl(final Control parent) {
-		super(new Menu(parent.getShell(), SWT.POP_UP));
-		this.parent = parent;
+    public PopupMenuImpl(final Control parent) {
+        super(new Menu(parent.getShell(), SWT.POP_UP));
+        this.parent = parent;
 
-		parent.addDisposeListener(new DisposeListener() {
-			@Override
-			public void widgetDisposed(final DisposeEvent e) {
-				getUiReference().dispose();
-			}
-		});
-	}
+        parent.addDisposeListener(new DisposeListener() {
+            @Override
+            public void widgetDisposed(final DisposeEvent e) {
+                getUiReference().dispose();
+            }
+        });
+    }
 
-	@Override
-	public void show(final Position position) {
-		final Point point = parent.toDisplay(position.getX(), position.getY());
-		getUiReference().setLocation(point);
-		getUiReference().setVisible(true);
-	}
+    @Override
+    public void show(final Position position) {
+        final Point point = parent.toDisplay(position.getX(), position.getY());
+        getUiReference().setLocation(point);
+        getUiReference().setVisible(true);
+    }
 
-	public void setParent(final Control parent) {
-		this.parent = parent;
-	}
+    public void setParent(final Control parent) {
+        this.parent = parent;
+    }
 }

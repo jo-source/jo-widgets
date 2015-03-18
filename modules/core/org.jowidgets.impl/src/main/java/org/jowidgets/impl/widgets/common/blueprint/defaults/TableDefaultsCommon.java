@@ -33,13 +33,13 @@ import org.jowidgets.common.widgets.builder.ITableSetupBuilderCommon;
 
 public class TableDefaultsCommon implements IDefaultInitializer<ITableSetupBuilderCommon<?>> {
 
-	@Override
-	public void initialize(final ITableSetupBuilderCommon<?> builder) {
-		builder.setSelectionPolicy(TableSelectionPolicy.MULTI_ROW_SELECTION);
-		builder.setColumnsMoveable(true);
-		builder.setColumnsResizeable(true);
-		builder.setHeaderVisible(true);
-		builder.setBorder(false);
-	}
+    @Override
+    public void initialize(final ITableSetupBuilderCommon<?> builder) {
+        builder.setSelectionPolicy(TableSelectionPolicy.MULTI_ROW_SELECTION);
+        builder.setColumnsMoveable(true);
+        builder.setColumnsResizeable(true);
+        builder.setHeaderVisible(true);
+        builder.setBorder(false);
+    }
 
 }

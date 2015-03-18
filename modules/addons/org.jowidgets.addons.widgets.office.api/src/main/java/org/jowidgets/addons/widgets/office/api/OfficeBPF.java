@@ -32,14 +32,14 @@ import org.jowidgets.api.toolkit.Toolkit;
 
 public final class OfficeBPF {
 
-	private OfficeBPF() {}
+    private OfficeBPF() {}
 
-	public static IOfficeTextBluePrint text() {
-		return Toolkit.getBluePrintFactory().bluePrint(IOfficeTextBluePrint.class);
-	}
+    public static IOfficeTextBluePrint text() {
+        return Toolkit.getBluePrintFactory().bluePrint(IOfficeTextBluePrint.class);
+    }
 
-	public static IOfficeTableCalculationBluePrint tableCalculation() {
-		return Toolkit.getBluePrintFactory().bluePrint(IOfficeTableCalculationBluePrint.class);
-	}
+    public static IOfficeTableCalculationBluePrint tableCalculation() {
+        return Toolkit.getBluePrintFactory().bluePrint(IOfficeTableCalculationBluePrint.class);
+    }
 
 }

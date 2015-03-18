@@ -41,28 +41,30 @@ import org.jowidgets.validation.Validator;
 
 public class CollectionInputControlDefaults implements IDefaultInitializer<ICollectionInputControlSetupBuilder<?, ?>> {
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
-	@Override
-	public void initialize(final ICollectionInputControlSetupBuilder<?, ?> builder) {
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @Override
+    public void initialize(final ICollectionInputControlSetupBuilder<?, ?> builder) {
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		final IInputComponentValidationLabelBluePrint validationLabelBp = bpf.inputComponentValidationLabel();
-		validationLabelBp.setShowValidationMessage(false);
-		validationLabelBp.setUnmodifiedValidationDecorator(new IDecorator<IValidationResult>() {
-			@Override
-			public IValidationResult decorate(final IValidationResult original) {
-				return null;
-			}
-		});
+        final IInputComponentValidationLabelBluePrint validationLabelBp = bpf.inputComponentValidationLabel();
+        validationLabelBp.setShowValidationMessage(false);
+        validationLabelBp.setUnmodifiedValidationDecorator(new IDecorator<IValidationResult>() {
+            @Override
+            public IValidationResult decorate(final IValidationResult original) {
+                return null;
+            }
+        });
 
-		builder.setValidationLabel(validationLabelBp);
-		builder.setValidationLabelSize(new Dimension(20, 20));
-		builder.setAddButton(bpf.button().setIcon(IconsSmall.ADD).setToolTipText(Messages.getString("CollectionInputControlDefaults.add_new_entry"))); //$NON-NLS-1$
-		builder.setAddButtonSize(new Dimension(21, 21));
-		builder.setRemoveButton(bpf.button().setIcon(IconsSmall.SUB));
-		builder.setRemoveButtonSize(new Dimension(21, 21));
-		builder.setEditable(true);
-		final IValidator validator = Validator.okValidator();
-		builder.setValidator(validator);
-	}
+        builder.setValidationLabel(validationLabelBp);
+        builder.setValidationLabelSize(new Dimension(20, 20));
+        builder.setAddButton(bpf.button()
+                .setIcon(IconsSmall.ADD)
+                .setToolTipText(Messages.getString("CollectionInputControlDefaults.add_new_entry"))); //$NON-NLS-1$
+        builder.setAddButtonSize(new Dimension(21, 21));
+        builder.setRemoveButton(bpf.button().setIcon(IconsSmall.SUB));
+        builder.setRemoveButtonSize(new Dimension(21, 21));
+        builder.setEditable(true);
+        final IValidator validator = Validator.okValidator();
+        builder.setValidator(validator);
+    }
 }

@@ -39,32 +39,32 @@ import org.jowidgets.tools.controller.WindowAdapter;
 
 public class TestToolView {
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
-	private final ITestTool testTool;
-	private final TestToolViewUtilities viewUtilities;
+    private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+    private final ITestTool testTool;
+    private final TestToolViewUtilities viewUtilities;
 
-	public TestToolView(final ITestTool testTool) {
-		this.testTool = testTool;
-		this.viewUtilities = new TestToolViewUtilities();
-		createContentArea();
-	}
+    public TestToolView(final ITestTool testTool) {
+        this.testTool = testTool;
+        this.viewUtilities = new TestToolViewUtilities();
+        createContentArea();
+    }
 
-	public void createContentArea() {
-		final IFrameBluePrint frameBP = BPF.frame("TestTool");
-		final IFrame frame = Toolkit.createRootFrame(frameBP);
-		frame.setLayout(new MigLayoutDescriptor("[grow]", "[grow]"));
-		new TestToolViewMenubar(frame, testTool);
-		new TestToolViewToolbar(frame, testTool);
-		new TestToolViewTable(frame);
-		viewUtilities.setupTestTool(testTool);
-		frame.pack();
-		frame.setSize(new Dimension(700, 500));
-		viewUtilities.setPositionRelativeToMainWindow(frame);
-		frame.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosed() {
-				testTool.deactivateReplayAndRecord();
-			}
-		});
-	}
+    public void createContentArea() {
+        final IFrameBluePrint frameBP = BPF.frame("TestTool");
+        final IFrame frame = Toolkit.createRootFrame(frameBP);
+        frame.setLayout(new MigLayoutDescriptor("[grow]", "[grow]"));
+        new TestToolViewMenubar(frame, testTool);
+        new TestToolViewToolbar(frame, testTool);
+        new TestToolViewTable(frame);
+        viewUtilities.setupTestTool(testTool);
+        frame.pack();
+        frame.setSize(new Dimension(700, 500));
+        viewUtilities.setPositionRelativeToMainWindow(frame);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed() {
+                testTool.deactivateReplayAndRecord();
+            }
+        });
+    }
 }

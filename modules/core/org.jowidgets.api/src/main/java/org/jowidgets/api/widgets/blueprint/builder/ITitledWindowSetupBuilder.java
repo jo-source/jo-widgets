@@ -31,8 +31,8 @@ import org.jowidgets.api.widgets.blueprint.builder.convenience.ITitledWindowSetu
 import org.jowidgets.common.widgets.builder.ITitledWindowSetupBuilderCommon;
 
 public interface ITitledWindowSetupBuilder<INSTANCE_TYPE extends ITitledWindowSetupBuilder<?>> extends
-		IWindowSetupBuilder<INSTANCE_TYPE>,
-		ITitledWindowSetupBuilderCommon<INSTANCE_TYPE>,
-		ITitledWindowSetupConvenience<INSTANCE_TYPE> {
+        IWindowSetupBuilder<INSTANCE_TYPE>,
+        ITitledWindowSetupBuilderCommon<INSTANCE_TYPE>,
+        ITitledWindowSetupConvenience<INSTANCE_TYPE> {
 
 }

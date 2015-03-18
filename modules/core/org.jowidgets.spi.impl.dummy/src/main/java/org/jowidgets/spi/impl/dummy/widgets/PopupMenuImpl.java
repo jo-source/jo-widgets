@@ -35,20 +35,20 @@ import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public class PopupMenuImpl extends DummyMenu implements IPopupMenuSpi {
 
-	private final UIDComponent parent;
+    private final UIDComponent parent;
 
-	public PopupMenuImpl(final UIDComponent parent) {
-		super(new UIDPopupMenu());
-		this.parent = parent;
-	}
+    public PopupMenuImpl(final UIDComponent parent) {
+        super(new UIDPopupMenu());
+        this.parent = parent;
+    }
 
-	@Override
-	public UIDPopupMenu getUiReference() {
-		return (UIDPopupMenu) super.getUiReference();
-	}
+    @Override
+    public UIDPopupMenu getUiReference() {
+        return (UIDPopupMenu) super.getUiReference();
+    }
 
-	@Override
-	public void show(final Position position) {
-		getUiReference().show(parent, position.getX(), position.getY());
-	}
+    @Override
+    public void show(final Position position) {
+        getUiReference().show(parent, position.getX(), position.getY());
+    }
 }

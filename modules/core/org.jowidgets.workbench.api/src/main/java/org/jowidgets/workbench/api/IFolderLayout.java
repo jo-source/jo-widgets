@@ -31,14 +31,14 @@ import java.util.List;
 
 public interface IFolderLayout extends ILayoutContainer, IWorkbenchPart {
 
-	String getId();
+    String getId();
 
-	String getGroupId();
+    String getGroupId();
 
-	List<? extends IViewLayout> getViews();
+    List<? extends IViewLayout> getViews();
 
-	boolean isDetachable();
+    boolean isDetachable();
 
-	boolean getViewsCloseable();
+    boolean getViewsCloseable();
 
 }

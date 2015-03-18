@@ -37,22 +37,22 @@ import org.jowidgets.util.Assert;
 
 final class CheckTreeActionBuilder extends AbstractDefaultActionBuilder {
 
-	private static final IMessage CHECK_ALL_MESSAGE = Messages.getMessage("CheckTreeActionBuilder.checkAllLabel");
+    private static final IMessage CHECK_ALL_MESSAGE = Messages.getMessage("CheckTreeActionBuilder.checkAllLabel");
 
-	private final ITreeContainer tree;
+    private final ITreeContainer tree;
 
-	CheckTreeActionBuilder(final ITreeContainer tree) {
-		Assert.paramNotNull(tree, "tree");
-		this.tree = tree;
+    CheckTreeActionBuilder(final ITreeContainer tree) {
+        Assert.paramNotNull(tree, "tree");
+        this.tree = tree;
 
-		setText(CHECK_ALL_MESSAGE.get());
-		setIcon(IconsSmall.CHECK_ALL);
-	}
+        setText(CHECK_ALL_MESSAGE.get());
+        setIcon(IconsSmall.CHECK_ALL);
+    }
 
-	@Override
-	protected IAction doBuild(final IActionBuilder superBuilder) {
-		superBuilder.setCommand(new TreeCheckCommand(tree, true), new TreeCheckedEnabledChecker(tree, true));
-		return superBuilder.build();
-	}
+    @Override
+    protected IAction doBuild(final IActionBuilder superBuilder) {
+        superBuilder.setCommand(new TreeCheckCommand(tree, true), new TreeCheckedEnabledChecker(tree, true));
+        return superBuilder.build();
+    }
 
 }

@@ -38,53 +38,53 @@ import org.jowidgets.util.Assert;
 
 final class TransferableSpiAdapter implements ITransferableSpi {
 
-	private final Map<TransferTypeSpi, Object> dataMap;
+    private final Map<TransferTypeSpi, Object> dataMap;
 
-	TransferableSpiAdapter(final Map<TransferTypeSpi, Object> dataMap) {
-		Assert.paramNotNull(dataMap, "dataMap");
-		this.dataMap = new LinkedHashMap<TransferTypeSpi, Object>(dataMap);
-	}
+    TransferableSpiAdapter(final Map<TransferTypeSpi, Object> dataMap) {
+        Assert.paramNotNull(dataMap, "dataMap");
+        this.dataMap = new LinkedHashMap<TransferTypeSpi, Object>(dataMap);
+    }
 
-	@Override
-	public Collection<TransferTypeSpi> getSupportedTypes() {
-		return dataMap.keySet();
-	}
+    @Override
+    public Collection<TransferTypeSpi> getSupportedTypes() {
+        return dataMap.keySet();
+    }
 
-	@Override
-	public Object getData(final TransferTypeSpi type) {
-		Assert.paramNotNull(type, "type");
-		return dataMap.get(type);
-	}
+    @Override
+    public Object getData(final TransferTypeSpi type) {
+        Assert.paramNotNull(type, "type");
+        return dataMap.get(type);
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((dataMap == null) ? 0 : dataMap.hashCode());
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((dataMap == null) ? 0 : dataMap.hashCode());
+        return result;
+    }
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof TransferableSpiAdapter)) {
-			return false;
-		}
-		final TransferableSpiAdapter other = (TransferableSpiAdapter) obj;
-		if (dataMap == null) {
-			if (other.dataMap != null) {
-				return false;
-			}
-		}
-		else if (!dataMap.equals(other.dataMap)) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof TransferableSpiAdapter)) {
+            return false;
+        }
+        final TransferableSpiAdapter other = (TransferableSpiAdapter) obj;
+        if (dataMap == null) {
+            if (other.dataMap != null) {
+                return false;
+            }
+        }
+        else if (!dataMap.equals(other.dataMap)) {
+            return false;
+        }
+        return true;
+    }
 
 }

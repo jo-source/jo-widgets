@@ -29,33 +29,33 @@ package org.jowidgets.util;
 
 public final class NullCompatibleComparison {
 
-	private NullCompatibleComparison() {}
+    private NullCompatibleComparison() {}
 
-	public static boolean equals(final Object object1, final Object object2) {
-		if (object1 == null && object2 == null) {
-			return true;
-		}
-		else if (object1 == null || object2 == null) {// only one of them is null
-			return false;
-		}
-		return object1.equals(object2);
-	}
+    public static boolean equals(final Object object1, final Object object2) {
+        if (object1 == null && object2 == null) {
+            return true;
+        }
+        else if (object1 == null || object2 == null) {// only one of them is null
+            return false;
+        }
+        return object1.equals(object2);
+    }
 
-	public static <COMPARABLE_TYPE extends Comparable<COMPARABLE_TYPE>> int compareTo(
-		final COMPARABLE_TYPE object1,
-		final COMPARABLE_TYPE object2) {
-		if (object1 == null && object2 == null) {
-			return 0;
-		}
-		else if (object1 == null) {// only one of them is null
-			return -1;
-		}
-		else if (object2 == null) {// only one of them is null
-			return 1;
-		}
-		else {
-			return object1.compareTo(object2);
-		}
+    public static <COMPARABLE_TYPE extends Comparable<COMPARABLE_TYPE>> int compareTo(
+        final COMPARABLE_TYPE object1,
+        final COMPARABLE_TYPE object2) {
+        if (object1 == null && object2 == null) {
+            return 0;
+        }
+        else if (object1 == null) {// only one of them is null
+            return -1;
+        }
+        else if (object2 == null) {// only one of them is null
+            return 1;
+        }
+        else {
+            return object1.compareTo(object2);
+        }
 
-	}
+    }
 }

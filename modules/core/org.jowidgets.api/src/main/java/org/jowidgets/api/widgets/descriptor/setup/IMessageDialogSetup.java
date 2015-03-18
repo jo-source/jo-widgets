@@ -34,11 +34,11 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IMessageDialogSetup extends ILabelSetup {
 
-	@Mandatory
-	IButtonDescriptor getOkButton();
+    @Mandatory
+    IButtonDescriptor getOkButton();
 
-	String getTitle();
+    String getTitle();
 
-	IImageConstant getTitleIcon();
+    IImageConstant getTitleIcon();
 
 }

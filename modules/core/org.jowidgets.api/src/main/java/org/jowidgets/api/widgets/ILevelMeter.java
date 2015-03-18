@@ -32,6 +32,6 @@ import org.jowidgets.api.model.levelmeter.ILevelMeterModel;
 
 public interface ILevelMeter extends IControl {
 
-	ILevelMeterModel getModel();
+    ILevelMeterModel getModel();
 
 }

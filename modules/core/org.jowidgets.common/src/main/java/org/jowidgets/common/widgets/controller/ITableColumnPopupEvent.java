@@ -32,6 +32,6 @@ import org.jowidgets.common.types.Position;
 
 public interface ITableColumnPopupEvent extends ITableColumnEvent {
 
-	Position getPosition();
+    Position getPosition();
 
 }

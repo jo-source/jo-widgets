@@ -37,22 +37,22 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class UserTestData {
 
-	@XmlElement(name = "TestData")
-	private final LinkedList<TestDataObject> testObjects;
+    @XmlElement(name = "TestData")
+    private final LinkedList<TestDataObject> testObjects;
 
-	public UserTestData() {
-		testObjects = new LinkedList<TestDataObject>();
-	}
+    public UserTestData() {
+        testObjects = new LinkedList<TestDataObject>();
+    }
 
-	public void addTestData(final List<TestDataObject> testDataObjects) {
-		testObjects.addAll(testDataObjects);
-	}
+    public void addTestData(final List<TestDataObject> testDataObjects) {
+        testObjects.addAll(testDataObjects);
+    }
 
-	public void removeTestData(final List<TestDataObject> testDataObjects) {
-		testObjects.removeAll(testDataObjects);
-	}
+    public void removeTestData(final List<TestDataObject> testDataObjects) {
+        testObjects.removeAll(testDataObjects);
+    }
 
-	public List<TestDataObject> getTestData() {
-		return testObjects;
-	}
+    public List<TestDataObject> getTestData() {
+        return testObjects;
+    }
 }

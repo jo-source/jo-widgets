@@ -47,72 +47,72 @@ import org.jowidgets.tools.verify.InputVerifierComposite;
 
 public class InputFieldFactory<VALUE_TYPE> implements IWidgetFactory<IInputField<VALUE_TYPE>, IInputFieldDescriptor<VALUE_TYPE>> {
 
-	private final IGenericWidgetFactory genericFactory;
+    private final IGenericWidgetFactory genericFactory;
 
-	public InputFieldFactory(final IGenericWidgetFactory genericFactory) {
-		super();
-		this.genericFactory = genericFactory;
-	}
+    public InputFieldFactory(final IGenericWidgetFactory genericFactory) {
+        super();
+        this.genericFactory = genericFactory;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public IInputField<VALUE_TYPE> create(final Object parentUiReference, final IInputFieldDescriptor<VALUE_TYPE> descriptor) {
+    @SuppressWarnings("unchecked")
+    @Override
+    public IInputField<VALUE_TYPE> create(final Object parentUiReference, final IInputFieldDescriptor<VALUE_TYPE> descriptor) {
 
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+        final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
-		final IConverter<VALUE_TYPE> converter;
-		final Object converterObject = descriptor.getConverter();
-		if (converterObject instanceof IConverter<?>) {
-			converter = (IConverter<VALUE_TYPE>) descriptor.getConverter();
-		}
-		else {
-			converter = null;
-		}
+        final IConverter<VALUE_TYPE> converter;
+        final Object converterObject = descriptor.getConverter();
+        if (converterObject instanceof IConverter<?>) {
+            converter = (IConverter<VALUE_TYPE>) descriptor.getConverter();
+        }
+        else {
+            converter = null;
+        }
 
-		final IInputVerifier inputVerifier = descriptor.getInputVerifier();
-		final IInputVerifier converterInputVerifier = converter != null ? converter.getInputVerifier() : null;
+        final IInputVerifier inputVerifier = descriptor.getInputVerifier();
+        final IInputVerifier converterInputVerifier = converter != null ? converter.getInputVerifier() : null;
 
-		InputVerifierComposite tfInputVerifier = null;
-		if (inputVerifier != null || converterInputVerifier != null) {
-			tfInputVerifier = new InputVerifierComposite();
-			if (inputVerifier != null) {
-				tfInputVerifier.addVerifier(inputVerifier);
-			}
-			if (converterInputVerifier != null) {
-				tfInputVerifier.addVerifier(converterInputVerifier);
-			}
-		}
+        InputVerifierComposite tfInputVerifier = null;
+        if (inputVerifier != null || converterInputVerifier != null) {
+            tfInputVerifier = new InputVerifierComposite();
+            if (inputVerifier != null) {
+                tfInputVerifier.addVerifier(inputVerifier);
+            }
+            if (converterInputVerifier != null) {
+                tfInputVerifier.addVerifier(converterInputVerifier);
+            }
+        }
 
-		final List<String> regExps = descriptor.getAcceptingRegExps();
-		final String converterRegExp = converter != null ? converter.getAcceptingRegExp() : null;
+        final List<String> regExps = descriptor.getAcceptingRegExps();
+        final String converterRegExp = converter != null ? converter.getAcceptingRegExp() : null;
 
-		final List<String> tfRegExps = new LinkedList<String>();
-		tfRegExps.addAll(regExps);
-		if (converterRegExp != null) {
-			tfRegExps.add(converterRegExp);
-		}
+        final List<String> tfRegExps = new LinkedList<String>();
+        tfRegExps.addAll(regExps);
+        if (converterRegExp != null) {
+            tfRegExps.add(converterRegExp);
+        }
 
-		final ITextFieldBluePrint textFieldBluePrint = bpF.textField();
-		textFieldBluePrint.setSetup(descriptor);
-		textFieldBluePrint.setInputVerifier(tfInputVerifier);
-		textFieldBluePrint.setAcceptingRegExps(tfRegExps);
-		if (converter != null) {
-			textFieldBluePrint.setMask(converter.getMask());
-		}
-		textFieldBluePrint.setEditable(descriptor.isEditable());
-		textFieldBluePrint.setMaxLength(descriptor.getMaxLength());
-		textFieldBluePrint.setPasswordPresentation(descriptor.isPasswordPresentation());
+        final ITextFieldBluePrint textFieldBluePrint = bpF.textField();
+        textFieldBluePrint.setSetup(descriptor);
+        textFieldBluePrint.setInputVerifier(tfInputVerifier);
+        textFieldBluePrint.setAcceptingRegExps(tfRegExps);
+        if (converter != null) {
+            textFieldBluePrint.setMask(converter.getMask());
+        }
+        textFieldBluePrint.setEditable(descriptor.isEditable());
+        textFieldBluePrint.setMaxLength(descriptor.getMaxLength());
+        textFieldBluePrint.setPasswordPresentation(descriptor.isPasswordPresentation());
 
-		final ITextControl textField = genericFactory.create(parentUiReference, textFieldBluePrint);
+        final ITextControl textField = genericFactory.create(parentUiReference, textFieldBluePrint);
 
-		if (textField == null) {
-			throw new IllegalStateException("Could not create widget with descriptor interface class '"
-				+ ITextFieldSetup.class
-				+ "' from '"
-				+ IWidgetFactorySpi.class.getName()
-				+ "'");
-		}
+        if (textField == null) {
+            throw new IllegalStateException("Could not create widget with descriptor interface class '"
+                + ITextFieldSetup.class
+                + "' from '"
+                + IWidgetFactorySpi.class.getName()
+                + "'");
+        }
 
-		return new InputFieldImpl<VALUE_TYPE>(textField, descriptor);
-	}
+        return new InputFieldImpl<VALUE_TYPE>(textField, descriptor);
+    }
 }

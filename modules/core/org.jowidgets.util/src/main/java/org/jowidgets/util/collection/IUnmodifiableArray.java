@@ -30,8 +30,8 @@ package org.jowidgets.util.collection;
 
 public interface IUnmodifiableArray<VALUE_TYPE> extends Iterable<VALUE_TYPE> {
 
-	int size();
+    int size();
 
-	VALUE_TYPE get(int index);
+    VALUE_TYPE get(int index);
 
 }

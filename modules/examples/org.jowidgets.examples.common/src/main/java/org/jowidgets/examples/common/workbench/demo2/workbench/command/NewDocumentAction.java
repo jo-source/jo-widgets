@@ -34,16 +34,16 @@ import org.jowidgets.tools.command.CommandAction;
 
 public class NewDocumentAction extends CommandAction {
 
-	public NewDocumentAction() {
-		super(new ActionBuilder() {
-			{
-				setText("New");
-				setToolTipText("Creates a new document");
-				setAccelerator('N', Modifier.CTRL);
-			}
-		});
+    public NewDocumentAction() {
+        super(new ActionBuilder() {
+            {
+                setText("New");
+                setToolTipText("Creates a new document");
+                setAccelerator('N', Modifier.CTRL);
+            }
+        });
 
-		setCommand(new DummyCommandExecuter());
-	}
+        setCommand(new DummyCommandExecuter());
+    }
 
 }

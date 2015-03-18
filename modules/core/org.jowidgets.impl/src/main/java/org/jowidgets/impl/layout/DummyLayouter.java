@@ -33,25 +33,25 @@ import org.jowidgets.common.widgets.layout.ILayouter;
 
 public final class DummyLayouter implements ILayouter {
 
-	@Override
-	public void layout() {}
+    @Override
+    public void layout() {}
 
-	@Override
-	public void invalidate() {}
+    @Override
+    public void invalidate() {}
 
-	@Override
-	public Dimension getPreferredSize() {
-		return new Dimension(50, 50);
-	}
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(50, 50);
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		return new Dimension(0, 0);
-	}
+    @Override
+    public Dimension getMinSize() {
+        return new Dimension(0, 0);
+    }
 
-	@Override
-	public Dimension getMaxSize() {
-		return new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);
-	}
+    @Override
+    public Dimension getMaxSize() {
+        return new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);
+    }
 
 }

@@ -33,15 +33,15 @@ import org.jowidgets.common.color.IColorConstant;
 
 public final class ColorConvert {
 
-	private ColorConvert() {};
+    private ColorConvert() {};
 
-	public static IColorConstant convert(final Color color) {
-		if (color != null) {
-			return new ColorValue(color.getRed(), color.getGreen(), color.getBlue());
-		}
-		else {
-			return null;
-		}
-	}
+    public static IColorConstant convert(final Color color) {
+        if (color != null) {
+            return new ColorValue(color.getRed(), color.getGreen(), color.getBlue());
+        }
+        else {
+            return null;
+        }
+    }
 
 }

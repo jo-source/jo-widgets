@@ -35,9 +35,9 @@ import org.jowidgets.tools.widgets.factory.AbstractCompositeWidgetFactory;
 
 public class LabelFactory extends AbstractCompositeWidgetFactory<ILabel, ILabelDescriptor> {
 
-	@Override
-	protected ILabel createWidget(final IComposite compositeWidget, final ILabelDescriptor descriptor) {
-		return new LabelImpl(compositeWidget, descriptor);
-	}
+    @Override
+    protected ILabel createWidget(final IComposite compositeWidget, final ILabelDescriptor descriptor) {
+        return new LabelImpl(compositeWidget, descriptor);
+    }
 
 }

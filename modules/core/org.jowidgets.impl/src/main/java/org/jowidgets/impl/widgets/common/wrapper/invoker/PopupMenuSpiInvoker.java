@@ -35,35 +35,35 @@ import org.jowidgets.util.Assert;
 
 public class PopupMenuSpiInvoker implements IItemSpiInvoker {
 
-	private final IPopupMenuSpi item;
+    private final IPopupMenuSpi item;
 
-	public PopupMenuSpiInvoker(final IPopupMenuSpi item) {
-		Assert.paramNotNull(item, "item");
-		this.item = item;
-	}
+    public PopupMenuSpiInvoker(final IPopupMenuSpi item) {
+        Assert.paramNotNull(item, "item");
+        this.item = item;
+    }
 
-	public IPopupMenuSpi getItem() {
-		return item;
-	}
+    public IPopupMenuSpi getItem() {
+        return item;
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		item.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        item.setEnabled(enabled);
+    }
 
-	@Override
-	public void setText(final String text) {}
+    @Override
+    public void setText(final String text) {}
 
-	@Override
-	public void setMnemonic(final Character mnemonic) {}
+    @Override
+    public void setMnemonic(final Character mnemonic) {}
 
-	@Override
-	public void setToolTipText(final String toolTipText) {}
+    @Override
+    public void setToolTipText(final String toolTipText) {}
 
-	@Override
-	public void setIcon(final IImageConstant icon) {}
+    @Override
+    public void setIcon(final IImageConstant icon) {}
 
-	@Override
-	public void setAccelerator(final Accelerator accelerator) {}
+    @Override
+    public void setAccelerator(final Accelerator accelerator) {}
 
 }

@@ -30,22 +30,22 @@ package org.jowidgets.tools.powo;
 
 public class WidgetAlreadyInitializedException extends RuntimeException {
 
-	private static final long serialVersionUID = -5468949490208929505L;
+    private static final long serialVersionUID = -5468949490208929505L;
 
-	public WidgetAlreadyInitializedException() {
-		super();
-	}
+    public WidgetAlreadyInitializedException() {
+        super();
+    }
 
-	public WidgetAlreadyInitializedException(final String message, final Throwable cause) {
-		super(message, cause);
-	}
+    public WidgetAlreadyInitializedException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
 
-	public WidgetAlreadyInitializedException(final String message) {
-		super(message);
-	}
+    public WidgetAlreadyInitializedException(final String message) {
+        super(message);
+    }
 
-	public WidgetAlreadyInitializedException(final Throwable cause) {
-		super(cause);
-	}
+    public WidgetAlreadyInitializedException(final Throwable cause) {
+        super(cause);
+    }
 
 }

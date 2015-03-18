@@ -34,27 +34,27 @@ import org.jowidgets.api.toolkit.IToolkitInterceptorHolder;
 
 public final class SilkIconsToolkitInterceptorHolder implements IToolkitInterceptorHolder {
 
-	private final IToolkitInterceptor interceptor;
+    private final IToolkitInterceptor interceptor;
 
-	public SilkIconsToolkitInterceptorHolder() {
-		this.interceptor = new SilkIconsToolkitInterceptor();
-	}
+    public SilkIconsToolkitInterceptorHolder() {
+        this.interceptor = new SilkIconsToolkitInterceptor();
+    }
 
-	@Override
-	public IToolkitInterceptor getToolkitInterceptor() {
-		return interceptor;
-	}
+    @Override
+    public IToolkitInterceptor getToolkitInterceptor() {
+        return interceptor;
+    }
 
-	@Override
-	public int getOrder() {
-		return 2;
-	}
+    @Override
+    public int getOrder() {
+        return 2;
+    }
 
-	private static final class SilkIconsToolkitInterceptor implements IToolkitInterceptor {
-		@Override
-		public void onToolkitCreate(final IToolkit toolkit) {
-			SilkIconsSubstitude.substitude(toolkit);
-		}
-	}
+    private static final class SilkIconsToolkitInterceptor implements IToolkitInterceptor {
+        @Override
+        public void onToolkitCreate(final IToolkit toolkit) {
+            SilkIconsSubstitude.substitude(toolkit);
+        }
+    }
 
 }

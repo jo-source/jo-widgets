@@ -30,19 +30,19 @@ package org.jowidgets.common.widgets;
 
 public interface IMenuItemCommon extends IItemCommon {
 
-	/**
-	 * Sets the keyboard mnemonic
-	 * 
-	 * The mnemonic is the key that will activate the item when combined
-	 * with (usually) ALT key.
-	 * 
-	 * A mnemonic must correspond to a single key and is case-insensitive.
-	 * 
-	 * The first occurrence of the mnemonic key will be underlined in the
-	 * menu label to indicate the mnemonic to the user
-	 * 
-	 * @param mnemonic The mnemonic to set
-	 */
-	void setMnemonic(char mnemonic);
+    /**
+     * Sets the keyboard mnemonic
+     * 
+     * The mnemonic is the key that will activate the item when combined
+     * with (usually) ALT key.
+     * 
+     * A mnemonic must correspond to a single key and is case-insensitive.
+     * 
+     * The first occurrence of the mnemonic key will be underlined in the
+     * menu label to indicate the mnemonic to the user
+     * 
+     * @param mnemonic The mnemonic to set
+     */
+    void setMnemonic(char mnemonic);
 
 }

@@ -35,57 +35,57 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface IWindow extends IDisplay, IComponent, IWindowCommon {
 
-	/**
-	 * Centers the location relative to the parent bounds
-	 * 
-	 * @see #getParentBounds()
-	 */
-	void centerLocation();
+    /**
+     * Centers the location relative to the parent bounds
+     * 
+     * @see #getParentBounds()
+     */
+    void centerLocation();
 
-	/**
-	 * Creates a child window with this window as parent
-	 * 
-	 * @param <WIDGET_TYPE> The type of the created child window
-	 * @param <DESCRIPTOR_TYPE> The type of the child windows descriptor
-	 * @param descriptor The child windows descriptor
-	 * @return The created window
-	 */
-	<WIDGET_TYPE extends IDisplay, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
-		final DESCRIPTOR_TYPE descriptor);
+    /**
+     * Creates a child window with this window as parent
+     * 
+     * @param <WIDGET_TYPE> The type of the created child window
+     * @param <DESCRIPTOR_TYPE> The type of the child windows descriptor
+     * @param descriptor The child windows descriptor
+     * @return The created window
+     */
+    <WIDGET_TYPE extends IDisplay, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
+        final DESCRIPTOR_TYPE descriptor);
 
-	/**
-	 * Gets the child windows of this window as a unmodifiable copy
-	 * 
-	 * @return all children of this window, may be empty but never null
-	 */
-	List<IDisplay> getChildWindows();
+    /**
+     * Gets the child windows of this window as a unmodifiable copy
+     * 
+     * @return all children of this window, may be empty but never null
+     */
+    List<IDisplay> getChildWindows();
 
-	/**
-	 * Sets the min pack size of the window.
-	 * 
-	 * If the window will be packed and a min pack size was defined
-	 * before, the window will not become smaller than the min pack size.
-	 * 
-	 * The min pack size can be used to avoid that window becomes to small by packing.
-	 * 
-	 * @param size The min pack size to set
-	 * 
-	 * @see #pack()
-	 */
-	void setMinPackSize(Dimension size);
+    /**
+     * Sets the min pack size of the window.
+     * 
+     * If the window will be packed and a min pack size was defined
+     * before, the window will not become smaller than the min pack size.
+     * 
+     * The min pack size can be used to avoid that window becomes to small by packing.
+     * 
+     * @param size The min pack size to set
+     * 
+     * @see #pack()
+     */
+    void setMinPackSize(Dimension size);
 
-	/**
-	 * Sets the max pack size of the window.
-	 * 
-	 * If the window will be packed and a max pack size was defined
-	 * before, the window will not become larger than the max pack size.
-	 * 
-	 * The max pack size can be used to avoid that window becomes to big by packing.
-	 * 
-	 * @param size The max pack size to set
-	 * 
-	 * @see #pack()
-	 */
-	void setMaxPackSize(Dimension size);
+    /**
+     * Sets the max pack size of the window.
+     * 
+     * If the window will be packed and a max pack size was defined
+     * before, the window will not become larger than the max pack size.
+     * 
+     * The max pack size can be used to avoid that window becomes to big by packing.
+     * 
+     * @param size The max pack size to set
+     * 
+     * @see #pack()
+     */
+    void setMaxPackSize(Dimension size);
 
 }

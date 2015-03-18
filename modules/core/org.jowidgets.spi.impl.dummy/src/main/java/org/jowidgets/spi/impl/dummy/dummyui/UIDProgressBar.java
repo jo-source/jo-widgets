@@ -32,50 +32,50 @@ import org.jowidgets.common.types.Orientation;
 
 public class UIDProgressBar extends UIDComponent {
 
-	private final Orientation orientation;
-	private boolean indeterminate;
-	private int minimum;
-	private int maximum;
-	private int progress;
+    private final Orientation orientation;
+    private boolean indeterminate;
+    private int minimum;
+    private int maximum;
+    private int progress;
 
-	public UIDProgressBar(final Orientation orientation) {
-		this.orientation = orientation;
-	}
+    public UIDProgressBar(final Orientation orientation) {
+        this.orientation = orientation;
+    }
 
-	public Orientation getOrientation() {
-		return orientation;
-	}
+    public Orientation getOrientation() {
+        return orientation;
+    }
 
-	public boolean isIndeterminate() {
-		return indeterminate;
-	}
+    public boolean isIndeterminate() {
+        return indeterminate;
+    }
 
-	public void setIndeterminate(final boolean indeterminate) {
-		this.indeterminate = indeterminate;
-	}
+    public void setIndeterminate(final boolean indeterminate) {
+        this.indeterminate = indeterminate;
+    }
 
-	public int getMinimum() {
-		return minimum;
-	}
+    public int getMinimum() {
+        return minimum;
+    }
 
-	public void setMinimum(final int minimum) {
-		this.minimum = minimum;
-	}
+    public void setMinimum(final int minimum) {
+        this.minimum = minimum;
+    }
 
-	public int getMaximum() {
-		return maximum;
-	}
+    public int getMaximum() {
+        return maximum;
+    }
 
-	public void setMaximum(final int maximum) {
-		this.maximum = maximum;
-	}
+    public void setMaximum(final int maximum) {
+        this.maximum = maximum;
+    }
 
-	public int getProgress() {
-		return progress;
-	}
+    public int getProgress() {
+        return progress;
+    }
 
-	public void setProgress(final int progress) {
-		this.progress = progress;
-	}
+    public void setProgress(final int progress) {
+        this.progress = progress;
+    }
 
 }

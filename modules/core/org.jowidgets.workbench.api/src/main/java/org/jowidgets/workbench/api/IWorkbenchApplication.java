@@ -29,16 +29,16 @@ package org.jowidgets.workbench.api;
 
 public interface IWorkbenchApplication extends IWorkbenchApplicationDescriptor, ILifecycleCallback {
 
-	void onContextInitialize(IWorkbenchApplicationContext context);
+    void onContextInitialize(IWorkbenchApplicationContext context);
 
-	/**
-	 * Creates a view for a given ID.
-	 * The scope of the view is WORKBENCH_APPLICATION.
-	 * 
-	 * @param viewId The id to get the view for
-	 * @param viewContext The view context
-	 * @return The created view
-	 */
-	IView createView(String viewId, IViewContext viewContext);
+    /**
+     * Creates a view for a given ID.
+     * The scope of the view is WORKBENCH_APPLICATION.
+     * 
+     * @param viewId The id to get the view for
+     * @param viewContext The view context
+     * @return The created view
+     */
+    IView createView(String viewId, IViewContext viewContext);
 
 }

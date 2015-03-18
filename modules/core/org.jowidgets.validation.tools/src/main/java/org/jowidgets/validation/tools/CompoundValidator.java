@@ -40,43 +40,43 @@ import org.jowidgets.validation.ValidationResult;
 
 public final class CompoundValidator<VALIDATION_INPUT_TYPE> implements IValidator<VALIDATION_INPUT_TYPE>, Serializable {
 
-	private static final long serialVersionUID = -6857961928993086297L;
+    private static final long serialVersionUID = -6857961928993086297L;
 
-	private final List<IValidator<VALIDATION_INPUT_TYPE>> validators;
+    private final List<IValidator<VALIDATION_INPUT_TYPE>> validators;
 
-	@SuppressWarnings("unchecked")
-	public CompoundValidator() {
-		this(new IValidator[] {});
-	}
+    @SuppressWarnings("unchecked")
+    public CompoundValidator() {
+        this(new IValidator[] {});
+    }
 
-	public CompoundValidator(final IValidator<VALIDATION_INPUT_TYPE>... validators) {
-		Assert.paramNotNull(validators, "validators");
-		this.validators = new LinkedList<IValidator<VALIDATION_INPUT_TYPE>>(Arrays.asList(validators));
-	}
+    public CompoundValidator(final IValidator<VALIDATION_INPUT_TYPE>... validators) {
+        Assert.paramNotNull(validators, "validators");
+        this.validators = new LinkedList<IValidator<VALIDATION_INPUT_TYPE>>(Arrays.asList(validators));
+    }
 
-	@Override
-	public IValidationResult validate(final VALIDATION_INPUT_TYPE validationInput) {
-		final IValidationResultBuilder builder = ValidationResult.builder();
-		for (final IValidator<VALIDATION_INPUT_TYPE> validator : validators) {
-			final IValidationResult subResult = validator.validate(validationInput);
-			builder.addResult(subResult);
-		}
-		return builder.build();
-	}
+    @Override
+    public IValidationResult validate(final VALIDATION_INPUT_TYPE validationInput) {
+        final IValidationResultBuilder builder = ValidationResult.builder();
+        for (final IValidator<VALIDATION_INPUT_TYPE> validator : validators) {
+            final IValidationResult subResult = validator.validate(validationInput);
+            builder.addResult(subResult);
+        }
+        return builder.build();
+    }
 
-	public void addValidator(final IValidator<VALIDATION_INPUT_TYPE> validator) {
-		Assert.paramNotNull(validator, "validator");
-		this.validators.add(validator);
-	}
+    public void addValidator(final IValidator<VALIDATION_INPUT_TYPE> validator) {
+        Assert.paramNotNull(validator, "validator");
+        this.validators.add(validator);
+    }
 
-	public void removeValidator(final IValidator<VALIDATION_INPUT_TYPE> validator) {
-		Assert.paramNotNull(validator, "validator");
-		if (validators.contains(validator)) {
-			validators.remove(validator);
-		}
-		else {
-			throw new IllegalArgumentException("Validator '" + validator + "' is not member of this compound validator");
-		}
-	}
+    public void removeValidator(final IValidator<VALIDATION_INPUT_TYPE> validator) {
+        Assert.paramNotNull(validator, "validator");
+        if (validators.contains(validator)) {
+            validators.remove(validator);
+        }
+        else {
+            throw new IllegalArgumentException("Validator '" + validator + "' is not member of this compound validator");
+        }
+    }
 
 }

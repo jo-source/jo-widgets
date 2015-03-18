@@ -35,11 +35,11 @@ import org.jowidgets.examples.common.ole.OleControlDemoApplication;
 
 public final class SwingOleControlDemoStarter {
 
-	private SwingOleControlDemoStarter() {}
+    private SwingOleControlDemoStarter() {}
 
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		Toolkit.initialize(AwtSwtToolkitProviderFactory.create());
-		new OleControlDemoApplication("Swing OLE Demo").start();
-	}
+    public static void main(final String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        Toolkit.initialize(AwtSwtToolkitProviderFactory.create());
+        new OleControlDemoApplication("Swing OLE Demo").start();
+    }
 }

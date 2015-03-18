@@ -33,13 +33,13 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
 public class CompositeWrapper extends SwingComposite {
 
-	public CompositeWrapper(final IGenericWidgetFactory factory, final Container uiReference) {
-		super(factory, uiReference);
-	}
+    public CompositeWrapper(final IGenericWidgetFactory factory, final Container uiReference) {
+        super(factory, uiReference);
+    }
 
-	@Override
-	public Container getUiReference() {
-		return super.getUiReference();
-	}
+    @Override
+    public Container getUiReference() {
+        return super.getUiReference();
+    }
 
 }

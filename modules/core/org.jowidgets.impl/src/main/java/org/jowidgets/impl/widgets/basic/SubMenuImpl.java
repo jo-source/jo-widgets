@@ -50,132 +50,132 @@ import org.jowidgets.spi.widgets.ISubMenuSpi;
 
 public class SubMenuImpl extends MenuItemSpiWrapper implements ISubMenu {
 
-	private final MenuDelegate menuDelegate;
-	private final IMenu parent;
+    private final MenuDelegate menuDelegate;
+    private final IMenu parent;
 
-	public SubMenuImpl(final ISubMenuSpi subMenuSpi, final IMenu parent, final IMenuItemSetup setup) {
-		super(subMenuSpi, new ItemModelBindingDelegate(new MenuItemSpiInvoker(subMenuSpi), new MenuModelBuilder().build()));
+    public SubMenuImpl(final ISubMenuSpi subMenuSpi, final IMenu parent, final IMenuItemSetup setup) {
+        super(subMenuSpi, new ItemModelBindingDelegate(new MenuItemSpiInvoker(subMenuSpi), new MenuModelBuilder().build()));
 
-		this.menuDelegate = new MenuDelegate(this, subMenuSpi, getModel(), getItemModelBindingDelegate());
-		this.parent = parent;
+        this.menuDelegate = new MenuDelegate(this, subMenuSpi, getModel(), getItemModelBindingDelegate());
+        this.parent = parent;
 
-		setText(setup.getText());
-		setToolTipText(setup.getToolTipText());
-		setIcon(setup.getIcon());
+        setText(setup.getText());
+        setToolTipText(setup.getToolTipText());
+        setIcon(setup.getIcon());
 
-		if (setup.getMnemonic() != null) {
-			setMnemonic(setup.getMnemonic().charValue());
-		}
+        if (setup.getMnemonic() != null) {
+            setMnemonic(setup.getMnemonic().charValue());
+        }
 
-	}
+    }
 
-	@Override
-	public ISubMenuSpi getWidget() {
-		return (ISubMenuSpi) super.getWidget();
-	}
+    @Override
+    public ISubMenuSpi getWidget() {
+        return (ISubMenuSpi) super.getWidget();
+    }
 
-	@Override
-	public IMenuModel getModel() {
-		return (IMenuModel) getItemModelBindingDelegate().getModel();
-	}
+    @Override
+    public IMenuModel getModel() {
+        return (IMenuModel) getItemModelBindingDelegate().getModel();
+    }
 
-	@Override
-	public void addMenuListener(final IMenuListener listener) {
-		getWidget().addMenuListener(listener);
-	}
+    @Override
+    public void addMenuListener(final IMenuListener listener) {
+        getWidget().addMenuListener(listener);
+    }
 
-	@Override
-	public void removeMenuListener(final IMenuListener listener) {
-		getWidget().removeMenuListener(listener);
-	}
+    @Override
+    public void removeMenuListener(final IMenuListener listener) {
+        getWidget().removeMenuListener(listener);
+    }
 
-	@Override
-	public List<IMenuItem> getChildren() {
-		return menuDelegate.getChildren();
-	}
+    @Override
+    public List<IMenuItem> getChildren() {
+        return menuDelegate.getChildren();
+    }
 
-	@Override
-	public boolean remove(final IMenuItem item) {
-		return menuDelegate.remove(item);
-	}
+    @Override
+    public boolean remove(final IMenuItem item) {
+        return menuDelegate.remove(item);
+    }
 
-	@Override
-	public void removeAll() {
-		menuDelegate.removeAll();
-	}
+    @Override
+    public void removeAll() {
+        menuDelegate.removeAll();
+    }
 
-	@Override
-	public IMenuItem addSeparator() {
-		return menuDelegate.addSeparator();
-	}
+    @Override
+    public IMenuItem addSeparator() {
+        return menuDelegate.addSeparator();
+    }
 
-	@Override
-	public IMenuItem addSeparator(final int index) {
-		return menuDelegate.addSeparator(index);
-	}
+    @Override
+    public IMenuItem addSeparator(final int index) {
+        return menuDelegate.addSeparator(index);
+    }
 
-	@Override
-	public IActionMenuItem addAction(final IAction action) {
-		return menuDelegate.addAction(action);
-	}
+    @Override
+    public IActionMenuItem addAction(final IAction action) {
+        return menuDelegate.addAction(action);
+    }
 
-	@Override
-	public IActionMenuItem addAction(final int index, final IAction action) {
-		return menuDelegate.addAction(index, action);
-	}
+    @Override
+    public IActionMenuItem addAction(final int index, final IAction action) {
+        return menuDelegate.addAction(index, action);
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addItem(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
-		return menuDelegate.addMenuItem(descriptor);
-	}
+    @Override
+    public <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addItem(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+        return menuDelegate.addMenuItem(descriptor);
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addItem(
-		final int index,
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+    @Override
+    public <WIDGET_TYPE extends IMenuItem> WIDGET_TYPE addItem(
+        final int index,
+        final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
 
-		return menuDelegate.addMenuItem(index, descriptor);
-	}
+        return menuDelegate.addMenuItem(index, descriptor);
+    }
 
-	@Override
-	public void setModel(final IMenuModel model) {
-		getItemModelBindingDelegate().setModel(model);
-		menuDelegate.setModel(model);
-	}
+    @Override
+    public void setModel(final IMenuModel model) {
+        getItemModelBindingDelegate().setModel(model);
+        menuDelegate.setModel(model);
+    }
 
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		menuDelegate.addDisposeListener(listener);
-	}
+    @Override
+    public void addDisposeListener(final IDisposeListener listener) {
+        menuDelegate.addDisposeListener(listener);
+    }
 
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		menuDelegate.removeDisposeListener(listener);
-	}
+    @Override
+    public void removeDisposeListener(final IDisposeListener listener) {
+        menuDelegate.removeDisposeListener(listener);
+    }
 
-	@Override
-	public void dispose() {
-		menuDelegate.dispose();
-	}
+    @Override
+    public void dispose() {
+        menuDelegate.dispose();
+    }
 
-	@Override
-	public boolean isDisposed() {
-		return menuDelegate.isDisposed();
-	}
+    @Override
+    public boolean isDisposed() {
+        return menuDelegate.isDisposed();
+    }
 
-	@Override
-	public void setModel(final IMenuItemModel model) {
-		if (model instanceof IMenuModel) {
-			setModel((IMenuModel) model);
-		}
-		else {
-			throw new IllegalArgumentException("Model must be instance of '" + IMenuModel.class.getName() + "'");
-		}
-	}
+    @Override
+    public void setModel(final IMenuItemModel model) {
+        if (model instanceof IMenuModel) {
+            setModel((IMenuModel) model);
+        }
+        else {
+            throw new IllegalArgumentException("Model must be instance of '" + IMenuModel.class.getName() + "'");
+        }
+    }
 
-	@Override
-	public IMenu getParent() {
-		return parent;
-	}
+    @Override
+    public IMenu getParent() {
+        return parent;
+    }
 
 }

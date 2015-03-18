@@ -37,44 +37,44 @@ import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
 
 class ModelBasedComponentContext implements IComponentContext {
 
-	private final IComponentContext componentContext;
-	private final IComponentNodeModel componentNodeModel;
-	private IComponentNodeContext componentNodeContext;
+    private final IComponentContext componentContext;
+    private final IComponentNodeModel componentNodeModel;
+    private IComponentNodeContext componentNodeContext;
 
-	ModelBasedComponentContext(final IComponentContext context, final IComponentNodeModel componentNodeModel) {
-		super();
-		this.componentContext = context;
-		this.componentNodeModel = componentNodeModel;
-	}
+    ModelBasedComponentContext(final IComponentContext context, final IComponentNodeModel componentNodeModel) {
+        super();
+        this.componentContext = context;
+        this.componentNodeModel = componentNodeModel;
+    }
 
-	@Override
-	public void setLayout(final ILayout layout) {
-		componentContext.setLayout(layout);
-	}
+    @Override
+    public void setLayout(final ILayout layout) {
+        componentContext.setLayout(layout);
+    }
 
-	@Override
-	public void resetLayout(final ILayout layout) {
-		componentContext.resetLayout(layout);
-	}
+    @Override
+    public void resetLayout(final ILayout layout) {
+        componentContext.resetLayout(layout);
+    }
 
-	@Override
-	public IComponentNodeContext getComponentNodeContext() {
-		if (componentNodeContext == null) {
-			componentNodeContext = new ModelBasedComponentNodeContext(
-				componentContext.getComponentNodeContext(),
-				componentNodeModel);
-		}
-		return componentNodeContext;
-	}
+    @Override
+    public IComponentNodeContext getComponentNodeContext() {
+        if (componentNodeContext == null) {
+            componentNodeContext = new ModelBasedComponentNodeContext(
+                componentContext.getComponentNodeContext(),
+                componentNodeModel);
+        }
+        return componentNodeContext;
+    }
 
-	@Override
-	public IWorkbenchApplicationContext getWorkbenchApplicationContext() {
-		return getComponentNodeContext().getWorkbenchApplicationContext();
-	}
+    @Override
+    public IWorkbenchApplicationContext getWorkbenchApplicationContext() {
+        return getComponentNodeContext().getWorkbenchApplicationContext();
+    }
 
-	@Override
-	public IWorkbenchContext getWorkbenchContext() {
-		return getWorkbenchApplicationContext().getWorkbenchContext();
-	}
+    @Override
+    public IWorkbenchContext getWorkbenchContext() {
+        return getWorkbenchApplicationContext().getWorkbenchContext();
+    }
 
 }

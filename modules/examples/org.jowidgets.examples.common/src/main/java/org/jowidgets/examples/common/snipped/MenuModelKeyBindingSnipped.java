@@ -46,69 +46,69 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class MenuModelKeyBindingSnipped implements IApplication {
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
 
-		//create a root frame
-		final IFrameBluePrint frameBp = BPF.frame();
-		frameBp.setSize(new Dimension(400, 300)).setTitle("Menu model key binding");
-		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
-		frame.setLayout(FillLayout.get());
+        //create a root frame
+        final IFrameBluePrint frameBp = BPF.frame();
+        frameBp.setSize(new Dimension(400, 300)).setTitle("Menu model key binding");
+        final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
+        frame.setLayout(FillLayout.get());
 
-		//create a popup menu with some actions
-		final MenuModel popup = new MenuModel();
+        //create a popup menu with some actions
+        final MenuModel popup = new MenuModel();
 
-		final IActionItemModel action1 = popup.addActionItem("Action1");
-		action1.setAccelerator(VirtualKey.DIGIT_1, Modifier.CTRL);
+        final IActionItemModel action1 = popup.addActionItem("Action1");
+        action1.setAccelerator(VirtualKey.DIGIT_1, Modifier.CTRL);
 
-		final IActionItemModel action2 = popup.addActionItem("Action2");
-		action2.setAccelerator(VirtualKey.DIGIT_2, Modifier.CTRL);
+        final IActionItemModel action2 = popup.addActionItem("Action2");
+        action2.setAccelerator(VirtualKey.DIGIT_2, Modifier.CTRL);
 
-		final IActionItemModel action3 = popup.addActionItem("Action3");
-		action3.setAccelerator(VirtualKey.DIGIT_3, Modifier.CTRL);
+        final IActionItemModel action3 = popup.addActionItem("Action3");
+        action3.setAccelerator(VirtualKey.DIGIT_3, Modifier.CTRL);
 
-		//set the popup menu for the frame
-		frame.setPopupMenu(popup);
+        //set the popup menu for the frame
+        frame.setPopupMenu(popup);
 
-		//do the key binding to the frame (recursive)
-		MenuModelKeyBinding.bind(popup, frame);
+        //do the key binding to the frame (recursive)
+        MenuModelKeyBinding.bind(popup, frame);
 
-		//set the root frame visible
-		frame.setVisible(true);
+        //set the root frame visible
+        frame.setVisible(true);
 
-		//add some actions after binding to show that they are bound too
-		final IMenuModel submenu = popup.addMenu("Submenu");
+        //add some actions after binding to show that they are bound too
+        final IMenuModel submenu = popup.addMenu("Submenu");
 
-		final IActionItemModel action4 = submenu.addActionItem("Action4");
-		action4.setAccelerator(VirtualKey.DIGIT_4, Modifier.CTRL);
+        final IActionItemModel action4 = submenu.addActionItem("Action4");
+        action4.setAccelerator(VirtualKey.DIGIT_4, Modifier.CTRL);
 
-		final IActionItemModel action5 = submenu.addActionItem("Action5");
-		action5.setAccelerator(VirtualKey.DIGIT_5, Modifier.CTRL);
+        final IActionItemModel action5 = submenu.addActionItem("Action5");
+        action5.setAccelerator(VirtualKey.DIGIT_5, Modifier.CTRL);
 
-		//add listeners to the items
-		action1.addActionListener(new SysoutActionListener(action1));
-		action2.addActionListener(new SysoutActionListener(action2));
-		action3.addActionListener(new SysoutActionListener(action3));
-		action4.addActionListener(new SysoutActionListener(action4));
-		action5.addActionListener(new SysoutActionListener(action5));
+        //add listeners to the items
+        action1.addActionListener(new SysoutActionListener(action1));
+        action2.addActionListener(new SysoutActionListener(action2));
+        action3.addActionListener(new SysoutActionListener(action3));
+        action4.addActionListener(new SysoutActionListener(action4));
+        action5.addActionListener(new SysoutActionListener(action5));
 
-	}
+    }
 
-	private final class SysoutActionListener implements IActionListener {
+    private final class SysoutActionListener implements IActionListener {
 
-		private final IItemModel item;
+        private final IItemModel item;
 
-		private SysoutActionListener(final IItemModel item) {
-			this.item = item;
-		}
+        private SysoutActionListener(final IItemModel item) {
+            this.item = item;
+        }
 
-		@Override
-		public void actionPerformed() {
-			//CHECKSTYLE:OFF
-			System.out.println("Invocation on: " + item.getText());
-			//CHECKSTYLE:ON
-		}
+        @Override
+        public void actionPerformed() {
+            //CHECKSTYLE:OFF
+            System.out.println("Invocation on: " + item.getText());
+            //CHECKSTYLE:ON
+        }
 
-	}
+    }
 
 }

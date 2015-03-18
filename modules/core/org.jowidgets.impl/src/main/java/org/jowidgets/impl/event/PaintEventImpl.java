@@ -37,29 +37,29 @@ import org.jowidgets.util.Assert;
 
 public final class PaintEventImpl implements IPaintEvent {
 
-	private final IGraphicContext graphicContext;
-	private final Rectangle clipBounds;
+    private final IGraphicContext graphicContext;
+    private final Rectangle clipBounds;
 
-	public PaintEventImpl(final IPaintEventSpi paintEventSpi) {
-		Assert.paramNotNull(paintEventSpi, "paintEventSpi");
+    public PaintEventImpl(final IPaintEventSpi paintEventSpi) {
+        Assert.paramNotNull(paintEventSpi, "paintEventSpi");
 
-		this.graphicContext = new GraphicContextAdapter(paintEventSpi.getGraphicContext());
-		this.clipBounds = paintEventSpi.getClipBounds();
-	}
+        this.graphicContext = new GraphicContextAdapter(paintEventSpi.getGraphicContext());
+        this.clipBounds = paintEventSpi.getClipBounds();
+    }
 
-	@Override
-	public IGraphicContext getGraphicContext() {
-		return graphicContext;
-	}
+    @Override
+    public IGraphicContext getGraphicContext() {
+        return graphicContext;
+    }
 
-	@Override
-	public Rectangle getClipBounds() {
-		return clipBounds;
-	}
+    @Override
+    public Rectangle getClipBounds() {
+        return clipBounds;
+    }
 
-	@Override
-	public String toString() {
-		return "PaintEventImpl [graphicContext=" + graphicContext + ", clipBounds=" + clipBounds + "]";
-	}
+    @Override
+    public String toString() {
+        return "PaintEventImpl [graphicContext=" + graphicContext + ", clipBounds=" + clipBounds + "]";
+    }
 
 }

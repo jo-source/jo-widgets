@@ -36,52 +36,51 @@ import org.jowidgets.common.types.Border;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.util.Assert;
 
-public class JoScrollComposite extends Composite<IScrollComposite, IScrollCompositeBluePrint> implements
-		IScrollComposite {
+public class JoScrollComposite extends Composite<IScrollComposite, IScrollCompositeBluePrint> implements IScrollComposite {
 
-	JoScrollComposite(final IScrollComposite widget) {
-		this(bluePrint());
-		Assert.paramNotNull(widget, "widget");
-		initialize(widget);
-	}
+    JoScrollComposite(final IScrollComposite widget) {
+        this(bluePrint());
+        Assert.paramNotNull(widget, "widget");
+        initialize(widget);
+    }
 
-	public JoScrollComposite() {
-		this(bluePrint());
-	}
+    public JoScrollComposite() {
+        this(bluePrint());
+    }
 
-	public JoScrollComposite(final ILayoutDescriptor layout) {
-		this(bluePrint(layout));
-	}
+    public JoScrollComposite(final ILayoutDescriptor layout) {
+        this(bluePrint(layout));
+    }
 
-	public JoScrollComposite(final IScrollCompositeDescriptor descriptor) {
-		super(bluePrint().setSetup(descriptor));
-	}
+    public JoScrollComposite(final IScrollCompositeDescriptor descriptor) {
+        super(bluePrint().setSetup(descriptor));
+    }
 
-	public static JoScrollComposite toJoScrollComposite(final IScrollComposite widget) {
-		Assert.paramNotNull(widget, "widget");
-		if (widget instanceof JoScrollComposite) {
-			return (JoScrollComposite) widget;
-		}
-		else {
-			return new JoScrollComposite(widget);
-		}
-	}
+    public static JoScrollComposite toJoScrollComposite(final IScrollComposite widget) {
+        Assert.paramNotNull(widget, "widget");
+        if (widget instanceof JoScrollComposite) {
+            return (JoScrollComposite) widget;
+        }
+        else {
+            return new JoScrollComposite(widget);
+        }
+    }
 
-	public static IScrollCompositeBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().scrollComposite();
-	}
+    public static IScrollCompositeBluePrint bluePrint() {
+        return Toolkit.getBluePrintFactory().scrollComposite();
+    }
 
-	public static IScrollCompositeBluePrint bluePrint(final ILayoutDescriptor layout) {
-		Assert.paramNotNull(layout, "layout");
-		return bluePrint().setLayout(layout);
-	}
+    public static IScrollCompositeBluePrint bluePrint(final ILayoutDescriptor layout) {
+        Assert.paramNotNull(layout, "layout");
+        return bluePrint().setLayout(layout);
+    }
 
-	public static IScrollCompositeBluePrint bluePrint(final String borderTitle) {
-		return bluePrint().setBorder(new Border(borderTitle));
-	}
+    public static IScrollCompositeBluePrint bluePrint(final String borderTitle) {
+        return bluePrint().setBorder(new Border(borderTitle));
+    }
 
-	public static IScrollCompositeBluePrint bluePrint(final boolean border) {
-		return border ? Toolkit.getBluePrintFactory().scrollCompositeWithBorder() : bluePrint();
-	}
+    public static IScrollCompositeBluePrint bluePrint(final boolean border) {
+        return border ? Toolkit.getBluePrintFactory().scrollCompositeWithBorder() : bluePrint();
+    }
 
 }

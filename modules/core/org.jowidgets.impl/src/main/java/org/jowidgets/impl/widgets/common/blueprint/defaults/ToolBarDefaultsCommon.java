@@ -33,9 +33,9 @@ import org.jowidgets.common.widgets.builder.IToolBarSetupBuilderCommon;
 
 public class ToolBarDefaultsCommon implements IDefaultInitializer<IToolBarSetupBuilderCommon<?>> {
 
-	@Override
-	public void initialize(final IToolBarSetupBuilderCommon<?> builder) {
-		builder.setOrientation(Orientation.HORIZONTAL);
-	}
+    @Override
+    public void initialize(final IToolBarSetupBuilderCommon<?> builder) {
+        builder.setOrientation(Orientation.HORIZONTAL);
+    }
 
 }

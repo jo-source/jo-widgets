@@ -36,20 +36,20 @@ import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
 
 public class IconImpl extends SwingControl implements IIconSpi {
 
-	public IconImpl(final IIconSetupSpi setup) {
-		super(new JLabel());
+    public IconImpl(final IIconSetupSpi setup) {
+        super(new JLabel());
 
-		setIcon(setup.getIcon());
-	}
+        setIcon(setup.getIcon());
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		getUiReference().setIcon(SwingImageRegistry.getInstance().getImageIcon(icon));
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        getUiReference().setIcon(SwingImageRegistry.getInstance().getImageIcon(icon));
+    }
 
-	@Override
-	public JLabel getUiReference() {
-		return (JLabel) super.getUiReference();
-	}
+    @Override
+    public JLabel getUiReference() {
+        return (JLabel) super.getUiReference();
+    }
 
 }

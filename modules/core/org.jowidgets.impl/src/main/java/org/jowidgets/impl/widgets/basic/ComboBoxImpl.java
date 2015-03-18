@@ -47,140 +47,140 @@ import org.jowidgets.validation.tools.CompoundValidator;
 
 public class ComboBoxImpl<VALUE_TYPE> extends ComboBoxSelectionImpl<VALUE_TYPE> implements IComboBox<VALUE_TYPE> {
 
-	private final IStringObjectConverter<VALUE_TYPE> stringObjectConverter;
-	private final IObjectStringConverter<VALUE_TYPE> objectStringConverter;
-	private final ValidationCache validationCache;
-	private final CompoundValidator<VALUE_TYPE> compoundValidator;
+    private final IStringObjectConverter<VALUE_TYPE> stringObjectConverter;
+    private final IObjectStringConverter<VALUE_TYPE> objectStringConverter;
+    private final ValidationCache validationCache;
+    private final CompoundValidator<VALUE_TYPE> compoundValidator;
 
-	private String lastUnmodifiedValue;
+    private String lastUnmodifiedValue;
 
-	public ComboBoxImpl(final IComboBoxSpi comboBoxWidgetSpi, final IComboBoxSetup<VALUE_TYPE> setup) {
-		super(comboBoxWidgetSpi, setup);
+    public ComboBoxImpl(final IComboBoxSpi comboBoxWidgetSpi, final IComboBoxSetup<VALUE_TYPE> setup) {
+        super(comboBoxWidgetSpi, setup);
 
-		VisibiliySettingsInvoker.setVisibility(setup, this);
-		ColorSettingsInvoker.setColors(setup, this);
+        VisibiliySettingsInvoker.setVisibility(setup, this);
+        ColorSettingsInvoker.setColors(setup, this);
 
-		setElements(setup.getElements());
+        setElements(setup.getElements());
 
-		if (setup.getValue() != null) {
-			setValue(setup.getValue());
-		}
+        if (setup.getValue() != null) {
+            setValue(setup.getValue());
+        }
 
-		this.stringObjectConverter = setup.getStringObjectConverter();
-		this.objectStringConverter = setup.getObjectStringConverter();
+        this.stringObjectConverter = setup.getStringObjectConverter();
+        this.objectStringConverter = setup.getObjectStringConverter();
 
-		this.compoundValidator = new CompoundValidator<VALUE_TYPE>();
+        this.compoundValidator = new CompoundValidator<VALUE_TYPE>();
 
-		final IValidator<VALUE_TYPE> validator = setup.getValidator();
-		if (validator != null) {
-			compoundValidator.addValidator(validator);
-		}
+        final IValidator<VALUE_TYPE> validator = setup.getValidator();
+        if (validator != null) {
+            compoundValidator.addValidator(validator);
+        }
 
-		final IValidator<String> stringValidator = stringObjectConverter.getStringValidator();
-		this.validationCache = new ValidationCache(new IValidationResultCreator() {
-			@Override
-			public IValidationResult createValidationResult() {
-				final IValidationResult result;
-				if (stringValidator != null) {
-					result = stringValidator.validate(comboBoxWidgetSpi.getText());
-				}
-				else {
-					result = ValidationResult.ok();
-				}
-				//if the converter could not parse the input, do not make more validation
-				if (!result.isValid()) {
-					return result;
-				}
-				else {
-					return result.withResult(compoundValidator.validate(getValue()));
-				}
-			}
-		});
+        final IValidator<String> stringValidator = stringObjectConverter.getStringValidator();
+        this.validationCache = new ValidationCache(new IValidationResultCreator() {
+            @Override
+            public IValidationResult createValidationResult() {
+                final IValidationResult result;
+                if (stringValidator != null) {
+                    result = stringValidator.validate(comboBoxWidgetSpi.getText());
+                }
+                else {
+                    result = ValidationResult.ok();
+                }
+                //if the converter could not parse the input, do not make more validation
+                if (!result.isValid()) {
+                    return result;
+                }
+                else {
+                    return result.withResult(compoundValidator.validate(getValue()));
+                }
+            }
+        });
 
-		getWidget().addInputListener(new IInputListener() {
-			@Override
-			public void inputChanged() {
-				getWidget().setToolTipText(objectStringConverter.getDescription(getValue()));
-				fireInputChanged();
-				validationCache.setDirty();
-			}
-		});
+        getWidget().addInputListener(new IInputListener() {
+            @Override
+            public void inputChanged() {
+                getWidget().setToolTipText(objectStringConverter.getDescription(getValue()));
+                fireInputChanged();
+                validationCache.setDirty();
+            }
+        });
 
-	}
+    }
 
-	@Override
-	public IComboBoxSpi getWidget() {
-		return (IComboBoxSpi) super.getWidget();
-	}
+    @Override
+    public IComboBoxSpi getWidget() {
+        return (IComboBoxSpi) super.getWidget();
+    }
 
-	@Override
-	public boolean hasModifications() {
-		return !NullCompatibleEquivalence.equals(lastUnmodifiedValue, getWidget().getText());
-	}
+    @Override
+    public boolean hasModifications() {
+        return !NullCompatibleEquivalence.equals(lastUnmodifiedValue, getWidget().getText());
+    }
 
-	@Override
-	public void resetModificationState() {
-		this.lastUnmodifiedValue = getWidget().getText();
-	}
+    @Override
+    public void resetModificationState() {
+        this.lastUnmodifiedValue = getWidget().getText();
+    }
 
-	@Override
-	public void addValidator(final IValidator<VALUE_TYPE> validator) {
-		compoundValidator.addValidator(validator);
-	}
+    @Override
+    public void addValidator(final IValidator<VALUE_TYPE> validator) {
+        compoundValidator.addValidator(validator);
+    }
 
-	@Override
-	public IValidationResult validate() {
-		return validationCache.validate();
-	}
+    @Override
+    public IValidationResult validate() {
+        return validationCache.validate();
+    }
 
-	@Override
-	public void addValidationConditionListener(final IValidationConditionListener listener) {
-		validationCache.addValidationConditionListener(listener);
-	}
+    @Override
+    public void addValidationConditionListener(final IValidationConditionListener listener) {
+        validationCache.addValidationConditionListener(listener);
+    }
 
-	@Override
-	public void removeValidationConditionListener(final IValidationConditionListener listener) {
-		validationCache.removeValidationConditionListener(listener);
-	}
+    @Override
+    public void removeValidationConditionListener(final IValidationConditionListener listener) {
+        validationCache.removeValidationConditionListener(listener);
+    }
 
-	@Override
-	public void setValue(final VALUE_TYPE value) {
-		if (value == null) {
-			getWidget().setText("");
-			getWidget().setSelectedIndex(-1);
-		}
-		else {
-			final int indexOfContent = getElements().indexOf(value);
-			if (indexOfContent != -1) {
-				getWidget().setSelectedIndex(indexOfContent);
-			}
-			else {
-				getWidget().setText(convertToString(value));
-			}
-		}
-	}
+    @Override
+    public void setValue(final VALUE_TYPE value) {
+        if (value == null) {
+            getWidget().setText("");
+            getWidget().setSelectedIndex(-1);
+        }
+        else {
+            final int indexOfContent = getElements().indexOf(value);
+            if (indexOfContent != -1) {
+                getWidget().setSelectedIndex(indexOfContent);
+            }
+            else {
+                getWidget().setText(convertToString(value));
+            }
+        }
+    }
 
-	private String convertToString(final VALUE_TYPE value) {
-		final String result = objectStringConverter.convertToString(value);
-		if (result != null) {
-			return result;
-		}
-		else {
-			return "";
-		}
-	}
+    private String convertToString(final VALUE_TYPE value) {
+        final String result = objectStringConverter.convertToString(value);
+        if (result != null) {
+            return result;
+        }
+        else {
+            return "";
+        }
+    }
 
-	@Override
-	public VALUE_TYPE getValue() {
-		if (stringObjectConverter != null) {
-			return stringObjectConverter.convertToObject(getWidget().getText());
-		}
-		return null;
-	}
+    @Override
+    public VALUE_TYPE getValue() {
+        if (stringObjectConverter != null) {
+            return stringObjectConverter.convertToObject(getWidget().getText());
+        }
+        return null;
+    }
 
-	@Override
-	public void setEditable(final boolean editable) {
-		getWidget().setEditable(editable);
-	}
+    @Override
+    public void setEditable(final boolean editable) {
+        getWidget().setEditable(editable);
+    }
 
 }

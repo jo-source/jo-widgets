@@ -32,6 +32,6 @@ import org.jowidgets.common.widgets.IIconCommon;
 
 public interface IIcon extends IControl, IIconCommon {
 
-	IImageConstant getIcon();
+    IImageConstant getIcon();
 
 }

@@ -52,319 +52,319 @@ import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 
 class WorkbenchModel extends WorkbenchPartModel implements IWorkbenchModel {
 
-	private final ListModelObservable listModelObservable;
+    private final ListModelObservable listModelObservable;
 
-	private final Dimension initialDimension;
-	private final boolean initialMaximized;
-	private final boolean decorated;
-	private final Position initialPosition;
-	private final double initialSplitWeight;
-	private final boolean hasApplicationNavigator;
-	private final boolean applicationsCloseable;
-	private final IWorkbenchInitializeCallback initializeCallback;
-	private final IViewFactory viewFactory;
+    private final Dimension initialDimension;
+    private final boolean initialMaximized;
+    private final boolean decorated;
+    private final Position initialPosition;
+    private final double initialSplitWeight;
+    private final boolean hasApplicationNavigator;
+    private final boolean applicationsCloseable;
+    private final IWorkbenchInitializeCallback initializeCallback;
+    private final IViewFactory viewFactory;
 
-	private final List<Runnable> shutdownHooks;
-	private final List<IWorkbenchApplicationModel> applications;
+    private final List<Runnable> shutdownHooks;
+    private final List<IWorkbenchApplicationModel> applications;
 
-	private IToolBarModel toolBar;
-	private IMenuBarModel menuBar;
-	private IContentCreator statusBarCreator;
-	private final ILoginCallback loginCallback;
-	private ICloseCallback closeCallback;
-	private boolean finished;
+    private IToolBarModel toolBar;
+    private IMenuBarModel menuBar;
+    private IContentCreator statusBarCreator;
+    private final ILoginCallback loginCallback;
+    private ICloseCallback closeCallback;
+    private boolean finished;
 
-	WorkbenchModel(
-		final String label,
-		final String tooltip,
-		final IImageConstant icon,
-		final Dimension initialDimension,
-		final boolean initialMaximized,
-		final boolean decorated,
-		final Position initialPosition,
-		final double initialSplitWeight,
-		final boolean hasApplicationNavigator,
-		final boolean applicationsCloseable,
-		final IToolBarModel toolBar,
-		final IMenuBarModel menuBar,
-		final IContentCreator statusBarCreator,
-		final ILoginCallback loginCallback,
-		final ICloseCallback closeCallback,
-		final IWorkbenchInitializeCallback initializeCallback,
-		final IViewFactory viewFactory,
-		final List<IWorkbenchApplicationModel> applications,
-		final List<Runnable> shutdownHooks) {
-		super(label, tooltip, icon);
+    WorkbenchModel(
+        final String label,
+        final String tooltip,
+        final IImageConstant icon,
+        final Dimension initialDimension,
+        final boolean initialMaximized,
+        final boolean decorated,
+        final Position initialPosition,
+        final double initialSplitWeight,
+        final boolean hasApplicationNavigator,
+        final boolean applicationsCloseable,
+        final IToolBarModel toolBar,
+        final IMenuBarModel menuBar,
+        final IContentCreator statusBarCreator,
+        final ILoginCallback loginCallback,
+        final ICloseCallback closeCallback,
+        final IWorkbenchInitializeCallback initializeCallback,
+        final IViewFactory viewFactory,
+        final List<IWorkbenchApplicationModel> applications,
+        final List<Runnable> shutdownHooks) {
+        super(label, tooltip, icon);
 
-		this.listModelObservable = new ListModelObservable();
+        this.listModelObservable = new ListModelObservable();
 
-		this.finished = false;
-		this.initialDimension = initialDimension;
-		this.initialMaximized = initialMaximized;
-		this.decorated = decorated;
-		this.initialPosition = initialPosition;
-		this.initialSplitWeight = initialSplitWeight;
-		this.hasApplicationNavigator = hasApplicationNavigator;
-		this.applicationsCloseable = applicationsCloseable;
-		this.toolBar = toolBar;
-		this.menuBar = menuBar;
-		this.statusBarCreator = statusBarCreator;
-		this.loginCallback = loginCallback;
-		this.closeCallback = closeCallback;
-		this.initializeCallback = initializeCallback;
-		this.viewFactory = viewFactory;
-		this.applications = new LinkedList<IWorkbenchApplicationModel>();
-		this.shutdownHooks = new LinkedList<Runnable>(shutdownHooks);
+        this.finished = false;
+        this.initialDimension = initialDimension;
+        this.initialMaximized = initialMaximized;
+        this.decorated = decorated;
+        this.initialPosition = initialPosition;
+        this.initialSplitWeight = initialSplitWeight;
+        this.hasApplicationNavigator = hasApplicationNavigator;
+        this.applicationsCloseable = applicationsCloseable;
+        this.toolBar = toolBar;
+        this.menuBar = menuBar;
+        this.statusBarCreator = statusBarCreator;
+        this.loginCallback = loginCallback;
+        this.closeCallback = closeCallback;
+        this.initializeCallback = initializeCallback;
+        this.viewFactory = viewFactory;
+        this.applications = new LinkedList<IWorkbenchApplicationModel>();
+        this.shutdownHooks = new LinkedList<Runnable>(shutdownHooks);
 
-		for (final IWorkbenchApplicationModel application : applications) {
-			//Add the children that way to ensure that the parents will be set correctly
-			addApplication(application);
-		}
-	}
+        for (final IWorkbenchApplicationModel application : applications) {
+            //Add the children that way to ensure that the parents will be set correctly
+            addApplication(application);
+        }
+    }
 
-	@Override
-	public Dimension getInitialDimension() {
-		return initialDimension;
-	}
+    @Override
+    public Dimension getInitialDimension() {
+        return initialDimension;
+    }
 
-	@Override
-	public boolean isInitialMaximized() {
-		return initialMaximized;
-	}
+    @Override
+    public boolean isInitialMaximized() {
+        return initialMaximized;
+    }
 
-	@Override
-	public boolean isDecorated() {
-		return decorated;
-	}
+    @Override
+    public boolean isDecorated() {
+        return decorated;
+    }
 
-	@Override
-	public Position getInitialPosition() {
-		return initialPosition;
-	}
+    @Override
+    public Position getInitialPosition() {
+        return initialPosition;
+    }
 
-	@Override
-	public double getInitialSplitWeight() {
-		return initialSplitWeight;
-	}
+    @Override
+    public double getInitialSplitWeight() {
+        return initialSplitWeight;
+    }
 
-	@Override
-	public boolean hasApplicationNavigator() {
-		return hasApplicationNavigator;
-	}
+    @Override
+    public boolean hasApplicationNavigator() {
+        return hasApplicationNavigator;
+    }
 
-	@Override
-	public boolean getApplicationsCloseable() {
-		return applicationsCloseable;
-	}
+    @Override
+    public boolean getApplicationsCloseable() {
+        return applicationsCloseable;
+    }
 
-	@Override
-	public IToolBarModel getToolBar() {
-		return toolBar;
-	}
+    @Override
+    public IToolBarModel getToolBar() {
+        return toolBar;
+    }
 
-	@Override
-	public IMenuBarModel getMenuBar() {
-		return menuBar;
-	}
+    @Override
+    public IMenuBarModel getMenuBar() {
+        return menuBar;
+    }
 
-	@Override
-	public IContentCreator getStatusBarCreator() {
-		return statusBarCreator;
-	}
+    @Override
+    public IContentCreator getStatusBarCreator() {
+        return statusBarCreator;
+    }
 
-	@Override
-	public ILoginCallback getLoginCallback() {
-		return loginCallback;
-	}
+    @Override
+    public ILoginCallback getLoginCallback() {
+        return loginCallback;
+    }
 
-	@Override
-	public ICloseCallback getCloseCallback() {
-		return closeCallback;
-	}
+    @Override
+    public ICloseCallback getCloseCallback() {
+        return closeCallback;
+    }
 
-	@Override
-	public IWorkbenchInitializeCallback getInitializeCallback() {
-		return initializeCallback;
-	}
+    @Override
+    public IWorkbenchInitializeCallback getInitializeCallback() {
+        return initializeCallback;
+    }
 
-	@Override
-	public IViewFactory getViewFactory() {
-		return viewFactory;
-	}
+    @Override
+    public IViewFactory getViewFactory() {
+        return viewFactory;
+    }
 
-	@Override
-	public void setToolBar(final IToolBarModel toolBarModel) {
-		this.toolBar = toolBarModel;
-		fireModelChanged();
-	}
+    @Override
+    public void setToolBar(final IToolBarModel toolBarModel) {
+        this.toolBar = toolBarModel;
+        fireModelChanged();
+    }
 
-	@Override
-	public void setMenuBar(final IMenuBarModel menuBarModel) {
-		this.menuBar = menuBarModel;
-		fireModelChanged();
-	}
+    @Override
+    public void setMenuBar(final IMenuBarModel menuBarModel) {
+        this.menuBar = menuBarModel;
+        fireModelChanged();
+    }
 
-	@Override
-	public void setStatusBarCreator(final IContentCreator statusBarContentCreator) {
-		this.statusBarCreator = statusBarContentCreator;
-		fireModelChanged();
-	}
+    @Override
+    public void setStatusBarCreator(final IContentCreator statusBarContentCreator) {
+        this.statusBarCreator = statusBarContentCreator;
+        fireModelChanged();
+    }
 
-	@Override
-	public void setCloseCallback(final ICloseCallback closeCallback) {
-		this.closeCallback = closeCallback;
-	}
+    @Override
+    public void setCloseCallback(final ICloseCallback closeCallback) {
+        this.closeCallback = closeCallback;
+    }
 
-	@Override
-	public List<Runnable> getShutdownHooks() {
-		return new LinkedList<Runnable>(shutdownHooks);
-	}
+    @Override
+    public List<Runnable> getShutdownHooks() {
+        return new LinkedList<Runnable>(shutdownHooks);
+    }
 
-	@Override
-	public void addShutdownHook(final Runnable shutdownHook) {
-		shutdownHooks.add(shutdownHook);
-	}
+    @Override
+    public void addShutdownHook(final Runnable shutdownHook) {
+        shutdownHooks.add(shutdownHook);
+    }
 
-	@Override
-	public void removeShutdownHook(final Runnable shutdownHook) {
-		shutdownHooks.remove(shutdownHook);
-	}
+    @Override
+    public void removeShutdownHook(final Runnable shutdownHook) {
+        shutdownHooks.remove(shutdownHook);
+    }
 
-	@Override
-	public boolean isFinished() {
-		return finished;
-	}
+    @Override
+    public boolean isFinished() {
+        return finished;
+    }
 
-	@Override
-	public void finish() {
-		this.finished = true;
-		fireModelChanged();
-	}
+    @Override
+    public void finish() {
+        this.finished = true;
+        fireModelChanged();
+    }
 
-	@Override
-	public List<IWorkbenchApplicationModel> getApplications() {
-		return Collections.unmodifiableList(applications);
-	}
+    @Override
+    public List<IWorkbenchApplicationModel> getApplications() {
+        return Collections.unmodifiableList(applications);
+    }
 
-	@Override
-	public int getApplicationCount() {
-		return applications.size();
-	}
+    @Override
+    public int getApplicationCount() {
+        return applications.size();
+    }
 
-	@Override
-	public IWorkbenchApplicationModel addApplication(final int index, final IWorkbenchApplicationModel applicationModel) {
-		Assert.paramNotNull(applicationModel, "applicationModel");
-		if (applicationModel.getWorkbench() != null) {
-			throw new IllegalArgumentException("The given model was alreay added to another workbench. "
-				+ "To add the model to this workbench, it must be removed from its current workbench first.");
-		}
-		applications.add(index, applicationModel.getUnwrappedThis());
-		applicationModel.setWorkbench(this);
-		listModelObservable.fireAfterChildAdded(index);
-		return applicationModel;
-	}
+    @Override
+    public IWorkbenchApplicationModel addApplication(final int index, final IWorkbenchApplicationModel applicationModel) {
+        Assert.paramNotNull(applicationModel, "applicationModel");
+        if (applicationModel.getWorkbench() != null) {
+            throw new IllegalArgumentException("The given model was alreay added to another workbench. "
+                + "To add the model to this workbench, it must be removed from its current workbench first.");
+        }
+        applications.add(index, applicationModel.getUnwrappedThis());
+        applicationModel.setWorkbench(this);
+        listModelObservable.fireAfterChildAdded(index);
+        return applicationModel;
+    }
 
-	@Override
-	public void removeApplication(final int index) {
-		if (applications.size() < index) {
-			listModelObservable.fireBeforeChildRemove(index);
-		}
-		final IWorkbenchApplicationModel applicationModel = applications.remove(index);
-		if (applicationModel != null) {
-			applicationModel.setWorkbench(null);
-			listModelObservable.fireAfterChildRemoved(index);
-		}
-	}
+    @Override
+    public void removeApplication(final int index) {
+        if (applications.size() < index) {
+            listModelObservable.fireBeforeChildRemove(index);
+        }
+        final IWorkbenchApplicationModel applicationModel = applications.remove(index);
+        if (applicationModel != null) {
+            applicationModel.setWorkbench(null);
+            listModelObservable.fireAfterChildRemoved(index);
+        }
+    }
 
-	@Override
-	public IWorkbenchApplicationModel addApplication(final IWorkbenchApplicationModel applicationModel) {
-		return addApplication(getApplicationCount(), applicationModel);
-	}
+    @Override
+    public IWorkbenchApplicationModel addApplication(final IWorkbenchApplicationModel applicationModel) {
+        return addApplication(getApplicationCount(), applicationModel);
+    }
 
-	@Override
-	public IWorkbenchApplicationModel addApplication(final IWorkbenchApplicationModelBuilder applicationModelBuilder) {
-		return addApplication(applications.size(), applicationModelBuilder);
-	}
+    @Override
+    public IWorkbenchApplicationModel addApplication(final IWorkbenchApplicationModelBuilder applicationModelBuilder) {
+        return addApplication(applications.size(), applicationModelBuilder);
+    }
 
-	@Override
-	public IWorkbenchApplicationModel addApplication(
-		final int index,
-		final IWorkbenchApplicationModelBuilder applicationModelBuilder) {
-		Assert.paramNotNull(applicationModelBuilder, "applicationModelBuilder");
-		return addApplication(index, applicationModelBuilder.build());
-	}
+    @Override
+    public IWorkbenchApplicationModel addApplication(
+        final int index,
+        final IWorkbenchApplicationModelBuilder applicationModelBuilder) {
+        Assert.paramNotNull(applicationModelBuilder, "applicationModelBuilder");
+        return addApplication(index, applicationModelBuilder.build());
+    }
 
-	@Override
-	public IWorkbenchApplicationModel addApplication(final IWorkbenchApplicationDescriptor descriptor) {
-		return addApplication(applicationBuilder(descriptor));
-	}
+    @Override
+    public IWorkbenchApplicationModel addApplication(final IWorkbenchApplicationDescriptor descriptor) {
+        return addApplication(applicationBuilder(descriptor));
+    }
 
-	@Override
-	public IWorkbenchApplicationModel addApplication(final int index, final IWorkbenchApplicationDescriptor descriptor) {
-		return addApplication(index, applicationBuilder(descriptor));
-	}
+    @Override
+    public IWorkbenchApplicationModel addApplication(final int index, final IWorkbenchApplicationDescriptor descriptor) {
+        return addApplication(index, applicationBuilder(descriptor));
+    }
 
-	@Override
-	public IWorkbenchApplicationModel addApplication(
-		final String id,
-		final String label,
-		final String tooltip,
-		final IImageConstant icon) {
-		return addApplication(applicationBuilder().setId(id).setLabel(label).setTooltip(tooltip).setIcon(icon));
-	}
+    @Override
+    public IWorkbenchApplicationModel addApplication(
+        final String id,
+        final String label,
+        final String tooltip,
+        final IImageConstant icon) {
+        return addApplication(applicationBuilder().setId(id).setLabel(label).setTooltip(tooltip).setIcon(icon));
+    }
 
-	@Override
-	public IWorkbenchApplicationModel addApplication(final String id, final String label, final IImageConstant icon) {
-		return addApplication(applicationBuilder().setId(id).setLabel(label).setIcon(icon));
-	}
+    @Override
+    public IWorkbenchApplicationModel addApplication(final String id, final String label, final IImageConstant icon) {
+        return addApplication(applicationBuilder().setId(id).setLabel(label).setIcon(icon));
+    }
 
-	@Override
-	public IWorkbenchApplicationModel addApplication(final String id, final String label, final String tooltip) {
-		return addApplication(applicationBuilder().setId(id).setLabel(label).setTooltip(tooltip));
-	}
+    @Override
+    public IWorkbenchApplicationModel addApplication(final String id, final String label, final String tooltip) {
+        return addApplication(applicationBuilder().setId(id).setLabel(label).setTooltip(tooltip));
+    }
 
-	@Override
-	public IWorkbenchApplicationModel addApplication(final String id, final String label) {
-		return addApplication(applicationBuilder().setId(id).setLabel(label));
-	}
+    @Override
+    public IWorkbenchApplicationModel addApplication(final String id, final String label) {
+        return addApplication(applicationBuilder().setId(id).setLabel(label));
+    }
 
-	@Override
-	public IWorkbenchApplicationModel addApplication(final String id) {
-		return addApplication(applicationBuilder().setId(id));
-	}
+    @Override
+    public IWorkbenchApplicationModel addApplication(final String id) {
+        return addApplication(applicationBuilder().setId(id));
+    }
 
-	@Override
-	public void removeApplication(final IWorkbenchApplicationModel childModel) {
-		final int index = applications.indexOf(childModel.getUnwrappedThis());
-		if (index != -1) {
-			removeApplication(index);
-		}
-	}
+    @Override
+    public void removeApplication(final IWorkbenchApplicationModel childModel) {
+        final int index = applications.indexOf(childModel.getUnwrappedThis());
+        if (index != -1) {
+            removeApplication(index);
+        }
+    }
 
-	@Override
-	public void removeAllApplications() {
-		final int applicationCount = applications.size();
-		for (int i = 0; i < applicationCount; i++) {
-			removeApplication(0);
-		}
-	}
+    @Override
+    public void removeAllApplications() {
+        final int applicationCount = applications.size();
+        for (int i = 0; i < applicationCount; i++) {
+            removeApplication(0);
+        }
+    }
 
-	@Override
-	public void addListModelListener(final IListModelListener listener) {
-		listModelObservable.addListModelListener(listener);
-	}
+    @Override
+    public void addListModelListener(final IListModelListener listener) {
+        listModelObservable.addListModelListener(listener);
+    }
 
-	@Override
-	public void removeListModelListener(final IListModelListener listener) {
-		listModelObservable.removeListModelListener(listener);
-	}
+    @Override
+    public void removeListModelListener(final IListModelListener listener) {
+        listModelObservable.removeListModelListener(listener);
+    }
 
-	private IWorkbenchApplicationModelBuilder applicationBuilder() {
-		return WorkbenchToolkit.getWorkbenchPartBuilderFactory().application();
-	}
+    private IWorkbenchApplicationModelBuilder applicationBuilder() {
+        return WorkbenchToolkit.getWorkbenchPartBuilderFactory().application();
+    }
 
-	private IWorkbenchApplicationModelBuilder applicationBuilder(final IWorkbenchApplicationDescriptor descriptor) {
-		return WorkbenchToolkit.getWorkbenchPartBuilderFactory().application().setDescriptor(descriptor);
-	}
+    private IWorkbenchApplicationModelBuilder applicationBuilder(final IWorkbenchApplicationDescriptor descriptor) {
+        return WorkbenchToolkit.getWorkbenchPartBuilderFactory().application().setDescriptor(descriptor);
+    }
 
 }

@@ -41,46 +41,46 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public class DemoExpandComposite extends JoFrame {
 
-	private static final ColorValue BLUE = new ColorValue(0, 0, 170);
+    private static final ColorValue BLUE = new ColorValue(0, 0, 170);
 
-	public DemoExpandComposite() {
-		super("Expand composite demo");
-		setLayout(new MigLayoutDescriptor("wrap", "[grow, 0::]", "[][]"));
+    public DemoExpandComposite() {
+        super("Expand composite demo");
+        setLayout(new MigLayoutDescriptor("wrap", "[grow, 0::]", "[][]"));
 
-		final StringBuilder helpText = new StringBuilder();
-		helpText.append("Programmer: Joe Estrada\n");
-		helpText.append("Mood: Well\n");
-		helpText.append("Lines of code: Unkown\n");
-		helpText.append("Clean: Hope so!\n");
-		addExpandComposite(SilkIcons.HELP, "About", helpText.toString());
+        final StringBuilder helpText = new StringBuilder();
+        helpText.append("Programmer: Joe Estrada\n");
+        helpText.append("Mood: Well\n");
+        helpText.append("Lines of code: Unkown\n");
+        helpText.append("Clean: Hope so!\n");
+        addExpandComposite(SilkIcons.HELP, "About", helpText.toString());
 
-		final StringBuilder infoText = new StringBuilder();
-		infoText.append("Important for proper setup:\n\n");
-		infoText.append("- Connect your MIDI device before power on\n");
-		infoText.append("- Lower the volume before power on the amplifter\n");
-		infoText.append("- Use only short cables < 1,5 m\n");
-		infoText.append("- In case of emergency cool down\n");
-		addExpandComposite(SilkIcons.INFORMATION, "Information", infoText.toString());
+        final StringBuilder infoText = new StringBuilder();
+        infoText.append("Important for proper setup:\n\n");
+        infoText.append("- Connect your MIDI device before power on\n");
+        infoText.append("- Lower the volume before power on the amplifter\n");
+        infoText.append("- Use only short cables < 1,5 m\n");
+        infoText.append("- In case of emergency cool down\n");
+        addExpandComposite(SilkIcons.INFORMATION, "Information", infoText.toString());
 
-		addExpandComposite(SilkIcons.INFORMATION, "Same information", infoText.toString());
-	}
+        addExpandComposite(SilkIcons.INFORMATION, "Same information", infoText.toString());
+    }
 
-	private void addExpandComposite(final IImageConstant icon, final String header, final String text) {
-		final IExpandCompositeBluePrint expandCompositeBp = BPF.expandComposite();
-		expandCompositeBp.setText(header).setIcon(icon).setTextColor(BLUE).setTextMarkup(Markup.STRONG);
-		final IExpandComposite expandComposite = add(expandCompositeBp, "growx, w 0::");
-		expandComposite.setLayout(new MigLayoutDescriptor("[]", "[]"));
-		expandComposite.add(BPF.textLabel(text).setColor(BLUE));
+    private void addExpandComposite(final IImageConstant icon, final String header, final String text) {
+        final IExpandCompositeBluePrint expandCompositeBp = BPF.expandComposite();
+        expandCompositeBp.setText(header).setIcon(icon).setTextColor(BLUE).setTextMarkup(Markup.STRONG);
+        final IExpandComposite expandComposite = add(expandCompositeBp, "growx, w 0::");
+        expandComposite.setLayout(new MigLayoutDescriptor("[]", "[]"));
+        expandComposite.add(BPF.textLabel(text).setColor(BLUE));
 
-		expandComposite.addExpandListener(new IExpandListener() {
-			@Override
-			public void expandedChanged(final boolean expanded) {
-				layout();
-				//CHECKSTYLE:OFF
-				System.out.println("Expanded " + header + ": " + expanded);
-				//CHECKSTYLE:ON
-			}
-		});
-	}
+        expandComposite.addExpandListener(new IExpandListener() {
+            @Override
+            public void expandedChanged(final boolean expanded) {
+                layout();
+                //CHECKSTYLE:OFF
+                System.out.println("Expanded " + header + ": " + expanded);
+                //CHECKSTYLE:ON
+            }
+        });
+    }
 
 }

@@ -30,6 +30,6 @@ package org.jowidgets.util;
 
 public interface IIterationCallback<ELEMENT_TYPE> {
 
-	void next(ELEMENT_TYPE type);
+    void next(ELEMENT_TYPE type);
 
 }

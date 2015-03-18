@@ -30,8 +30,8 @@ package org.jowidgets.api.widgets.blueprint.builder;
 import org.jowidgets.common.widgets.builder.ITabItemSetupBuilderCommon;
 
 public interface ITabItemSetupBuilder<INSTANCE_TYPE extends ITabItemSetupBuilder<?>> extends
-		IItemSetupBuilder<INSTANCE_TYPE>,
-		IContainerSetupBuilder<INSTANCE_TYPE>,
-		ITabItemSetupBuilderCommon<INSTANCE_TYPE> {
+        IItemSetupBuilder<INSTANCE_TYPE>,
+        IContainerSetupBuilder<INSTANCE_TYPE>,
+        ITabItemSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

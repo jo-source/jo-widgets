@@ -47,56 +47,56 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class SwingToJoFramesSnipped {
 
-	private SwingToJoFramesSnipped() {}
+    private SwingToJoFramesSnipped() {}
 
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				createAndShowJFrame();
-			}
-		});
-	}
+    public static void main(final String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                createAndShowJFrame();
+            }
+        });
+    }
 
-	private static void createAndShowJFrame() {
-		//create the root frame with swing
-		final JFrame frame = new JFrame();
-		frame.setSize(1024, 768);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLayout(new MigLayout("", "[]", "[][]"));
+    private static void createAndShowJFrame() {
+        //create the root frame with swing
+        final JFrame frame = new JFrame();
+        frame.setSize(1024, 768);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new MigLayout("", "[]", "[][]"));
 
-		//add button to open a jowidgets root frame
-		final JButton frameButton = new JButton("Create root frame");
-		frame.add(frameButton);
-		frameButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(final ActionEvent e) {
-				final IFrameBluePrint frameBp = BPF.frame("Jowidgets Root Frame");
-				frameBp.setSize(new Dimension(400, 300));
-				frameBp.setAutoDispose(true);
-				final IFrame frame = Toolkit.createRootFrame(frameBp);
-				frame.add(BPF.textLabel("This is a jowidgets root frame"));
-				frame.setVisible(true);
-			}
-		});
+        //add button to open a jowidgets root frame
+        final JButton frameButton = new JButton("Create root frame");
+        frame.add(frameButton);
+        frameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                final IFrameBluePrint frameBp = BPF.frame("Jowidgets Root Frame");
+                frameBp.setSize(new Dimension(400, 300));
+                frameBp.setAutoDispose(true);
+                final IFrame frame = Toolkit.createRootFrame(frameBp);
+                frame.add(BPF.textLabel("This is a jowidgets root frame"));
+                frame.setVisible(true);
+            }
+        });
 
-		//add button to open a jowidgets modal dialog
-		final JButton dialogButton = new JButton("Create dialog");
-		frame.add(dialogButton);
-		dialogButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(final ActionEvent e) {
-				final IDialogBluePrint dialogBp = BPF.dialog("Jowidgets dialog");
-				dialogBp.setSize(new Dimension(400, 300));
-				final IFrame dialog = Toolkit.getWidgetFactory().create(frame, dialogBp);
-				dialog.add(BPF.textLabel("This is a jowidgets modal dialog"));
-				dialog.setVisible(true);
-			}
-		});
+        //add button to open a jowidgets modal dialog
+        final JButton dialogButton = new JButton("Create dialog");
+        frame.add(dialogButton);
+        dialogButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                final IDialogBluePrint dialogBp = BPF.dialog("Jowidgets dialog");
+                dialogBp.setSize(new Dimension(400, 300));
+                final IFrame dialog = Toolkit.getWidgetFactory().create(frame, dialogBp);
+                dialog.add(BPF.textLabel("This is a jowidgets modal dialog"));
+                dialog.setVisible(true);
+            }
+        });
 
-		//show the frame
-		frame.setVisible(true);
-	}
+        //show the frame
+        frame.setVisible(true);
+    }
 
 }

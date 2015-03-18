@@ -34,14 +34,14 @@ import org.jowidgets.util.event.IChangeObservable;
 
 public interface IDefaultTableColumn extends ITableColumn, IChangeObservable {
 
-	void setText(String text);
+    void setText(String text);
 
-	void setToolTipText(String tooltipText);
+    void setToolTipText(String tooltipText);
 
-	void setIcon(IImageConstant icon);
+    void setIcon(IImageConstant icon);
 
-	void setAlignment(AlignmentHorizontal alignment);
+    void setAlignment(AlignmentHorizontal alignment);
 
-	void setVisible(boolean visible);
+    void setVisible(boolean visible);
 
 }

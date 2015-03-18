@@ -62,195 +62,195 @@ import org.jowidgets.validation.tools.MandatoryValidator;
 
 public final class PasswordChangeDialogImpl extends WindowWrapper implements IPasswordChangeDialog {
 
-	private static final IMessage OLD_PASSWORD = Messages.getMessage("PasswordChangeDialogImpl.oldPassword");
-	private static final IMessage NEW_PASSWORD = Messages.getMessage("PasswordChangeDialogImpl.newPassword");
-	private static final IMessage NEW_PASSWORD_REPEAT = Messages.getMessage("PasswordChangeDialogImpl.newPasswordRepeat");
-	private static final IMessage FILL_MANDATORY_FIELDS = Messages.getMessage("PasswordChangeDialogImpl.fillMandatoryFields");
-	private static final IMessage TRY_TO_CHANGE_PASSWORD = Messages.getMessage("PasswordChangeDialogImpl.tryToChangePassword");
-	private static final IMessage PASSWORDS_EQUAL = Messages.getMessage("PasswordChangeDialogImpl.passwordsEqual");
-	private static final IMessage REPEAT_PASSWORD = Messages.getMessage("PasswordChangeDialogImpl.repeatPassword");
-	private static final IMessage PASSWORD_REPEAT_MISMATCH = Messages.getMessage("PasswordChangeDialogImpl.passwordRepeatMissmatch");
-	private static final IMessage PASSWORD_CHANGED = Messages.getMessage("PasswordChangeDialogImpl.passwordChanged");
+    private static final IMessage OLD_PASSWORD = Messages.getMessage("PasswordChangeDialogImpl.oldPassword");
+    private static final IMessage NEW_PASSWORD = Messages.getMessage("PasswordChangeDialogImpl.newPassword");
+    private static final IMessage NEW_PASSWORD_REPEAT = Messages.getMessage("PasswordChangeDialogImpl.newPasswordRepeat");
+    private static final IMessage FILL_MANDATORY_FIELDS = Messages.getMessage("PasswordChangeDialogImpl.fillMandatoryFields");
+    private static final IMessage TRY_TO_CHANGE_PASSWORD = Messages.getMessage("PasswordChangeDialogImpl.tryToChangePassword");
+    private static final IMessage PASSWORDS_EQUAL = Messages.getMessage("PasswordChangeDialogImpl.passwordsEqual");
+    private static final IMessage REPEAT_PASSWORD = Messages.getMessage("PasswordChangeDialogImpl.repeatPassword");
+    private static final IMessage PASSWORD_REPEAT_MISMATCH = Messages.getMessage("PasswordChangeDialogImpl.passwordRepeatMissmatch");
+    private static final IMessage PASSWORD_CHANGED = Messages.getMessage("PasswordChangeDialogImpl.passwordChanged");
 
-	private final String title;
-	private final IImageConstant icon;
+    private final String title;
+    private final IImageConstant icon;
 
-	private final IValidationResultLabel validationResultLabel;
-	private final IInputField<String> oldPassword;
-	private final IInputField<String> newPassword;
-	private final IInputField<String> newPasswordRepeat;
-	private final IButton cancelButton;
-	private final IButton okButton;
-	private final IProgressBar progressBar;
+    private final IValidationResultLabel validationResultLabel;
+    private final IInputField<String> oldPassword;
+    private final IInputField<String> newPassword;
+    private final IInputField<String> newPasswordRepeat;
+    private final IButton cancelButton;
+    private final IButton okButton;
+    private final IProgressBar progressBar;
 
-	private final IPasswordChangeExecutor executor;
+    private final IPasswordChangeExecutor executor;
 
-	public PasswordChangeDialogImpl(final IFrame dialog, final IPasswordChangeDialogSetup setup) {
-		super(dialog);
-		Assert.paramNotNull(dialog, "dialog");
-		Assert.paramNotNull(setup, "setup");
-		Assert.paramNotNull(setup.getExecutor(), "setup.getExecutor()");
+    public PasswordChangeDialogImpl(final IFrame dialog, final IPasswordChangeDialogSetup setup) {
+        super(dialog);
+        Assert.paramNotNull(dialog, "dialog");
+        Assert.paramNotNull(setup, "setup");
+        Assert.paramNotNull(setup.getExecutor(), "setup.getExecutor()");
 
-		this.title = setup.getTitle();
-		this.icon = setup.getIcon();
+        this.title = setup.getTitle();
+        this.icon = setup.getIcon();
 
-		this.executor = setup.getExecutor();
+        this.executor = setup.getExecutor();
 
-		dialog.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::][]0"));
+        dialog.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::][]0"));
 
-		final IComposite content = dialog.add(BPF.scrollComposite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS + ",wrap");
+        final IComposite content = dialog.add(BPF.scrollComposite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS + ",wrap");
 
-		this.progressBar = dialog.add(BPF.progressBar().setIndeterminate(true), "growx, w 0::, h 10!");
-		progressBar.setVisible(false);
+        this.progressBar = dialog.add(BPF.progressBar().setIndeterminate(true), "growx, w 0::, h 10!");
+        progressBar.setVisible(false);
 
-		content.setLayout(new MigLayoutDescriptor("[][grow, 160::]", "[20!]25[]10[][]15[grow]"));
+        content.setLayout(new MigLayoutDescriptor("[][grow, 160::]", "[20!]25[]10[][]15[grow]"));
 
-		this.validationResultLabel = content.add(BPF.validationResultLabel(), "span 2, growx, w 0::, wrap");
+        this.validationResultLabel = content.add(BPF.validationResultLabel(), "span 2, growx, w 0::, wrap");
 
-		this.oldPassword = addInputField(content, OLD_PASSWORD.get(), setup.getPasswordMaxLength());
-		this.newPassword = addInputField(content, NEW_PASSWORD.get(), setup.getPasswordMaxLength());
-		this.newPasswordRepeat = addInputField(content, NEW_PASSWORD_REPEAT.get(), setup.getPasswordMaxLength());
+        this.oldPassword = addInputField(content, OLD_PASSWORD.get(), setup.getPasswordMaxLength());
+        this.newPassword = addInputField(content, NEW_PASSWORD.get(), setup.getPasswordMaxLength());
+        this.newPasswordRepeat = addInputField(content, NEW_PASSWORD_REPEAT.get(), setup.getPasswordMaxLength());
 
-		final IValidator<String> passwordValidator = setup.getPasswordValidator();
-		if (passwordValidator != null) {
-			newPassword.addValidator(passwordValidator);
-		}
+        final IValidator<String> passwordValidator = setup.getPasswordValidator();
+        if (passwordValidator != null) {
+            newPassword.addValidator(passwordValidator);
+        }
 
-		final IComposite buttonBar = content.add(BPF.composite(), "alignx r, aligny b, span 2");
-		buttonBar.setLayout(new MigLayoutDescriptor("0[][]0", "0[]0"));
-		this.okButton = buttonBar.add(setup.getOkButton(), "sg bg");
-		this.cancelButton = buttonBar.add(setup.getCancelButton(), "sg bg");
+        final IComposite buttonBar = content.add(BPF.composite(), "alignx r, aligny b, span 2");
+        buttonBar.setLayout(new MigLayoutDescriptor("0[][]0", "0[]0"));
+        this.okButton = buttonBar.add(setup.getOkButton(), "sg bg");
+        this.cancelButton = buttonBar.add(setup.getCancelButton(), "sg bg");
 
-		cancelButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				setVisible(false);
-			}
-		});
+        cancelButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                setVisible(false);
+            }
+        });
 
-		okButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				changePassword();
-			}
-		});
+        okButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                changePassword();
+            }
+        });
 
-		if (InputDialogDefaultButtonPolicy.OK == setup.getDefaultButtonPolicy()) {
-			dialog.setDefaultButton(okButton);
-		}
-		else if (InputDialogDefaultButtonPolicy.CANCEL == setup.getDefaultButtonPolicy()) {
-			dialog.setDefaultButton(cancelButton);
-		}
+        if (InputDialogDefaultButtonPolicy.OK == setup.getDefaultButtonPolicy()) {
+            dialog.setDefaultButton(okButton);
+        }
+        else if (InputDialogDefaultButtonPolicy.CANCEL == setup.getDefaultButtonPolicy()) {
+            dialog.setDefaultButton(cancelButton);
+        }
 
-		validate();
-	}
+        validate();
+    }
 
-	private IInputField<String> addInputField(final IContainer content, final String label, final int maxLength) {
-		content.add(BPF.textLabel(label).alignRight(), "alignx r");
-		final IInputFieldBluePrint<String> inputFieldBp = BPF.inputFieldString().setPasswordPresentation(true);
-		inputFieldBp.setMaxLength(maxLength);
-		final IInputField<String> result = content.add(inputFieldBp, "growx, w 0::, wrap");
-		result.addValidator(new MandatoryValidator<String>(ValidationResult.infoError(FILL_MANDATORY_FIELDS.get())));
-		result.addValidationConditionListener(new IValidationConditionListener() {
-			@Override
-			public void validationConditionsChanged() {
-				validate();
-			}
-		});
-		return result;
-	}
+    private IInputField<String> addInputField(final IContainer content, final String label, final int maxLength) {
+        content.add(BPF.textLabel(label).alignRight(), "alignx r");
+        final IInputFieldBluePrint<String> inputFieldBp = BPF.inputFieldString().setPasswordPresentation(true);
+        inputFieldBp.setMaxLength(maxLength);
+        final IInputField<String> result = content.add(inputFieldBp, "growx, w 0::, wrap");
+        result.addValidator(new MandatoryValidator<String>(ValidationResult.infoError(FILL_MANDATORY_FIELDS.get())));
+        result.addValidationConditionListener(new IValidationConditionListener() {
+            @Override
+            public void validationConditionsChanged() {
+                validate();
+            }
+        });
+        return result;
+    }
 
-	private void validate() {
-		final IValidationResultBuilder builder = ValidationResult.builder();
-		builder.addResult(oldPassword.validate());
-		if (newPassword.hasModifications()) {
-			builder.addResult(newPassword.validate().withContext(NEW_PASSWORD.get()));
-		}
-		builder.addResult(newPasswordRepeat.validate());
-		builder.addResult(validatePasswordEquality());
-		final IValidationResult validationResult = builder.build();
+    private void validate() {
+        final IValidationResultBuilder builder = ValidationResult.builder();
+        builder.addResult(oldPassword.validate());
+        if (newPassword.hasModifications()) {
+            builder.addResult(newPassword.validate().withContext(NEW_PASSWORD.get()));
+        }
+        builder.addResult(newPasswordRepeat.validate());
+        builder.addResult(validatePasswordEquality());
+        final IValidationResult validationResult = builder.build();
 
-		validationResultLabel.setResult(validationResult);
+        validationResultLabel.setResult(validationResult);
 
-		if (validationResult.isValid()) {
-			okButton.setEnabled(true);
-			okButton.setToolTipText(null);
-		}
-		else {
-			okButton.setEnabled(false);
-			okButton.setToolTipText(validationResult.getWorstFirst().getText());
-		}
-	}
+        if (validationResult.isValid()) {
+            okButton.setEnabled(true);
+            okButton.setToolTipText(null);
+        }
+        else {
+            okButton.setEnabled(false);
+            okButton.setToolTipText(validationResult.getWorstFirst().getText());
+        }
+    }
 
-	private IValidationResult validatePasswordEquality() {
-		final String oldPasswordValue = oldPassword.getValue();
-		final String newPasswordValue = newPassword.getValue();
-		final String newPasswordRepeatValue = newPasswordRepeat.getValue();
+    private IValidationResult validatePasswordEquality() {
+        final String oldPasswordValue = oldPassword.getValue();
+        final String newPasswordValue = newPassword.getValue();
+        final String newPasswordRepeatValue = newPasswordRepeat.getValue();
 
-		if (!EmptyCheck.isEmpty(newPasswordValue) && newPasswordValue.equals(oldPasswordValue)) {
-			return ValidationResult.error(PASSWORDS_EQUAL.get());
-		}
-		if (!EmptyCompatibleEquivalence.equals(newPasswordRepeatValue, newPasswordValue)) {
-			if (newPasswordRepeatValue != null
-				&& newPasswordValue != null
-				&& newPasswordValue.length() > newPasswordRepeatValue.length()) {
-				return ValidationResult.infoError(REPEAT_PASSWORD.get());
-			}
-			else {
-				return ValidationResult.error(PASSWORD_REPEAT_MISMATCH.get());
-			}
-		}
-		else {
-			return ValidationResult.ok();
-		}
-	}
+        if (!EmptyCheck.isEmpty(newPasswordValue) && newPasswordValue.equals(oldPasswordValue)) {
+            return ValidationResult.error(PASSWORDS_EQUAL.get());
+        }
+        if (!EmptyCompatibleEquivalence.equals(newPasswordRepeatValue, newPasswordValue)) {
+            if (newPasswordRepeatValue != null
+                && newPasswordValue != null
+                && newPasswordValue.length() > newPasswordRepeatValue.length()) {
+                return ValidationResult.infoError(REPEAT_PASSWORD.get());
+            }
+            else {
+                return ValidationResult.error(PASSWORD_REPEAT_MISMATCH.get());
+            }
+        }
+        else {
+            return ValidationResult.ok();
+        }
+    }
 
-	private void changePassword() {
-		validationResultLabel.setResult(ValidationResult.infoError(TRY_TO_CHANGE_PASSWORD.get()));
-		setControlsEnabled(false);
-		progressBar.setVisible(true);
+    private void changePassword() {
+        validationResultLabel.setResult(ValidationResult.infoError(TRY_TO_CHANGE_PASSWORD.get()));
+        setControlsEnabled(false);
+        progressBar.setVisible(true);
 
-		final CancelObservable cancelObservable = new CancelObservable();
+        final CancelObservable cancelObservable = new CancelObservable();
 
-		final IActionListener cancelListener = new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				cancelObservable.fireCanceledEvent();
-			}
-		};
+        final IActionListener cancelListener = new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                cancelObservable.fireCanceledEvent();
+            }
+        };
 
-		final IPasswordChangeResult resultCallback = new IPasswordChangeResult() {
+        final IPasswordChangeResult resultCallback = new IPasswordChangeResult() {
 
-			@Override
-			public void success() {
-				finishedCommon();
-				setVisible(false);
-				Toolkit.getMessagePane().showInfo(title, icon, PASSWORD_CHANGED.get());
-			}
+            @Override
+            public void success() {
+                finishedCommon();
+                setVisible(false);
+                Toolkit.getMessagePane().showInfo(title, icon, PASSWORD_CHANGED.get());
+            }
 
-			@Override
-			public void error(final String errorText) {
-				finishedCommon();
-				validationResultLabel.setResult(ValidationResult.error(errorText));
-			}
+            @Override
+            public void error(final String errorText) {
+                finishedCommon();
+                validationResultLabel.setResult(ValidationResult.error(errorText));
+            }
 
-			private void finishedCommon() {
-				cancelButton.removeActionListener(cancelListener);
-				progressBar.setVisible(false);
-				setControlsEnabled(true);
-			}
-		};
+            private void finishedCommon() {
+                cancelButton.removeActionListener(cancelListener);
+                progressBar.setVisible(false);
+                setControlsEnabled(true);
+            }
+        };
 
-		cancelButton.addActionListener(cancelListener);
+        cancelButton.addActionListener(cancelListener);
 
-		executor.changePassword(resultCallback, oldPassword.getValue(), newPassword.getValue(), cancelObservable);
-	}
+        executor.changePassword(resultCallback, oldPassword.getValue(), newPassword.getValue(), cancelObservable);
+    }
 
-	private void setControlsEnabled(final boolean enabled) {
-		oldPassword.setEnabled(enabled);
-		newPassword.setEnabled(enabled);
-		newPasswordRepeat.setEnabled(enabled);
-		okButton.setEnabled(enabled);
-	}
+    private void setControlsEnabled(final boolean enabled) {
+        oldPassword.setEnabled(enabled);
+        newPassword.setEnabled(enabled);
+        newPasswordRepeat.setEnabled(enabled);
+        okButton.setEnabled(enabled);
+    }
 
 }

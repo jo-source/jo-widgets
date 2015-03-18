@@ -44,130 +44,130 @@ import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 
 public class Workbench implements IWorkbench {
 
-	private final IWorkbench workbench;
-	private final IWorkbenchModel model;
+    private final IWorkbench workbench;
+    private final IWorkbenchModel model;
 
-	public Workbench(final IWorkbenchDescriptor descriptor) {
-		this(builder(descriptor));
-	}
+    public Workbench(final IWorkbenchDescriptor descriptor) {
+        this(builder(descriptor));
+    }
 
-	public Workbench(final String label) {
-		this(builder(label));
-	}
+    public Workbench(final String label) {
+        this(builder(label));
+    }
 
-	public Workbench(final String label, final IImageConstant icon) {
-		this(builder(label, icon));
-	}
+    public Workbench(final String label, final IImageConstant icon) {
+        this(builder(label, icon));
+    }
 
-	public Workbench(final IWorkbenchModelBuilder builder) {
-		this(build(builder));
-	}
+    public Workbench(final IWorkbenchModelBuilder builder) {
+        this(build(builder));
+    }
 
-	public Workbench(final IWorkbenchModel model) {
-		Assert.paramNotNull(model, "model");
-		this.model = model;
-		this.workbench = WorkbenchToolkit.getWorkbenchPartFactory().workbench(model);
-	}
+    public Workbench(final IWorkbenchModel model) {
+        Assert.paramNotNull(model, "model");
+        this.model = model;
+        this.workbench = WorkbenchToolkit.getWorkbenchPartFactory().workbench(model);
+    }
 
-	public final IWorkbenchModel getModel() {
-		return model;
-	}
+    public final IWorkbenchModel getModel() {
+        return model;
+    }
 
-	@Override
-	public final Dimension getInitialDimension() {
-		return workbench.getInitialDimension();
-	}
+    @Override
+    public final Dimension getInitialDimension() {
+        return workbench.getInitialDimension();
+    }
 
-	@Override
-	public boolean isInitialMaximized() {
-		return workbench.isInitialMaximized();
-	}
+    @Override
+    public boolean isInitialMaximized() {
+        return workbench.isInitialMaximized();
+    }
 
-	@Override
-	public boolean isDecorated() {
-		return workbench.isDecorated();
-	}
+    @Override
+    public boolean isDecorated() {
+        return workbench.isDecorated();
+    }
 
-	@Override
-	public final Position getInitialPosition() {
-		return workbench.getInitialPosition();
-	}
+    @Override
+    public final Position getInitialPosition() {
+        return workbench.getInitialPosition();
+    }
 
-	@Override
-	public final double getInitialSplitWeight() {
-		return workbench.getInitialSplitWeight();
-	}
+    @Override
+    public final double getInitialSplitWeight() {
+        return workbench.getInitialSplitWeight();
+    }
 
-	@Override
-	public final boolean hasApplicationNavigator() {
-		return workbench.hasApplicationNavigator();
-	}
+    @Override
+    public final boolean hasApplicationNavigator() {
+        return workbench.hasApplicationNavigator();
+    }
 
-	@Override
-	public final boolean getApplicationsCloseable() {
-		return workbench.getApplicationsCloseable();
-	}
+    @Override
+    public final boolean getApplicationsCloseable() {
+        return workbench.getApplicationsCloseable();
+    }
 
-	@Override
-	public final String getLabel() {
-		return workbench.getLabel();
-	}
+    @Override
+    public final String getLabel() {
+        return workbench.getLabel();
+    }
 
-	@Override
-	public final String getTooltip() {
-		return workbench.getTooltip();
-	}
+    @Override
+    public final String getTooltip() {
+        return workbench.getTooltip();
+    }
 
-	@Override
-	public final IImageConstant getIcon() {
-		return workbench.getIcon();
-	}
+    @Override
+    public final IImageConstant getIcon() {
+        return workbench.getIcon();
+    }
 
-	@Override
-	public final void onContextInitialize(final IWorkbenchContext context) {
-		workbench.onContextInitialize(context);
-	}
+    @Override
+    public final void onContextInitialize(final IWorkbenchContext context) {
+        workbench.onContextInitialize(context);
+    }
 
-	@Override
-	public final IView createView(final String viewId, final IViewContext viewContext) {
-		return workbench.createView(viewId, viewContext);
-	}
+    @Override
+    public final IView createView(final String viewId, final IViewContext viewContext) {
+        return workbench.createView(viewId, viewContext);
+    }
 
-	@Override
-	public final void onClose(final IVetoable vetoable) {
-		workbench.onClose(vetoable);
-	}
+    @Override
+    public final void onClose(final IVetoable vetoable) {
+        workbench.onClose(vetoable);
+    }
 
-	@Override
-	public void onLogin(final IVetoable vetoable) {
-		workbench.onLogin(vetoable);
-	}
+    @Override
+    public void onLogin(final IVetoable vetoable) {
+        workbench.onLogin(vetoable);
+    }
 
-	@Override
-	public void onDispose() {
-		workbench.onDispose();
-	}
+    @Override
+    public void onDispose() {
+        workbench.onDispose();
+    }
 
-	public static IWorkbenchModelBuilder builder() {
-		return WorkbenchToolkit.getWorkbenchPartBuilderFactory().workbench();
-	}
+    public static IWorkbenchModelBuilder builder() {
+        return WorkbenchToolkit.getWorkbenchPartBuilderFactory().workbench();
+    }
 
-	public static IWorkbenchModelBuilder builder(final String label) {
-		return builder().setLabel(label);
-	}
+    public static IWorkbenchModelBuilder builder(final String label) {
+        return builder().setLabel(label);
+    }
 
-	public static IWorkbenchModelBuilder builder(final String label, final IImageConstant icon) {
-		return builder(label).setIcon(icon);
-	}
+    public static IWorkbenchModelBuilder builder(final String label, final IImageConstant icon) {
+        return builder(label).setIcon(icon);
+    }
 
-	public static IWorkbenchModelBuilder builder(final IWorkbenchDescriptor descriptor) {
-		Assert.paramNotNull(descriptor, "descriptor");
-		return builder().setDescriptor(descriptor);
-	}
+    public static IWorkbenchModelBuilder builder(final IWorkbenchDescriptor descriptor) {
+        Assert.paramNotNull(descriptor, "descriptor");
+        return builder().setDescriptor(descriptor);
+    }
 
-	private static IWorkbenchModel build(final IWorkbenchModelBuilder builder) {
-		Assert.paramNotNull(builder, "builder");
-		return builder.build();
-	}
+    private static IWorkbenchModel build(final IWorkbenchModelBuilder builder) {
+        Assert.paramNotNull(builder, "builder");
+        return builder.build();
+    }
 
 }

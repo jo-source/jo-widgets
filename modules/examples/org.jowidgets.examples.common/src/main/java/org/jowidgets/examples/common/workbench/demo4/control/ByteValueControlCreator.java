@@ -36,9 +36,9 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class ByteValueControlCreator implements ICustomWidgetCreator<IInputControl<ByteValue>> {
 
-	@Override
-	public IInputControl<ByteValue> create(final ICustomWidgetFactory widgetFactory) {
-		return new ByteValueControl(widgetFactory.create(BPF.composite()));
-	}
+    @Override
+    public IInputControl<ByteValue> create(final ICustomWidgetFactory widgetFactory) {
+        return new ByteValueControl(widgetFactory.create(BPF.composite()));
+    }
 
 }

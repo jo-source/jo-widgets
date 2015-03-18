@@ -39,56 +39,56 @@ import org.jowidgets.util.ValueHolder;
 
 public class DemoScrollCompositeFrame extends JoFrame {
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+    private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
-	public DemoScrollCompositeFrame() {
-		super("Scroll composite demo");
+    public DemoScrollCompositeFrame() {
+        super("Scroll composite demo");
 
-		final ValueHolder<Boolean> finish = new ValueHolder<Boolean>(Boolean.FALSE);
+        final ValueHolder<Boolean> finish = new ValueHolder<Boolean>(Boolean.FALSE);
 
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosed() {
-				finish.set(Boolean.TRUE);
-			};
-		});
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed() {
+                finish.set(Boolean.TRUE);
+            };
+        });
 
-		setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
-		final IScrollComposite scrollComposite = add(BPF.scrollComposite(), "growx, growy, w 0::, h 0::");
-		scrollComposite.setLayout(new MigLayoutDescriptor("[grow]", ""));
+        setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
+        final IScrollComposite scrollComposite = add(BPF.scrollComposite(), "growx, growy, w 0::, h 0::");
+        scrollComposite.setLayout(new MigLayoutDescriptor("[grow]", ""));
 
-		final IUiThreadAccess uiThreadAccess = Toolkit.getUiThreadAccess();
+        final IUiThreadAccess uiThreadAccess = Toolkit.getUiThreadAccess();
 
-		final Runnable updater = new Runnable() {
+        final Runnable updater = new Runnable() {
 
-			@Override
-			public void run() {
-				final ValueHolder<Integer> index = new ValueHolder<Integer>(Integer.valueOf(0));
+            @Override
+            public void run() {
+                final ValueHolder<Integer> index = new ValueHolder<Integer>(Integer.valueOf(0));
 
-				while (!finish.get().booleanValue()) {
+                while (!finish.get().booleanValue()) {
 
-					uiThreadAccess.invokeLater(new Runnable() {
-						@Override
-						public void run() {
-							scrollComposite.layoutBegin();
-							scrollComposite.add(BPF.textLabel("Label: " + index.get().intValue()), "wrap");
-							scrollComposite.layoutEnd();
-						}
-					});
+                    uiThreadAccess.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            scrollComposite.layoutBegin();
+                            scrollComposite.add(BPF.textLabel("Label: " + index.get().intValue()), "wrap");
+                            scrollComposite.layoutEnd();
+                        }
+                    });
 
-					index.set(Integer.valueOf(index.get().intValue() + 1));
-					try {
-						Thread.sleep(1000);
-					}
-					catch (final InterruptedException e) {
-						throw new RuntimeException(e);
-					}
-				}
-			}
+                    index.set(Integer.valueOf(index.get().intValue() + 1));
+                    try {
+                        Thread.sleep(1000);
+                    }
+                    catch (final InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
 
-		};
+        };
 
-		new Thread(updater).start();
-	}
+        new Thread(updater).start();
+    }
 
 }

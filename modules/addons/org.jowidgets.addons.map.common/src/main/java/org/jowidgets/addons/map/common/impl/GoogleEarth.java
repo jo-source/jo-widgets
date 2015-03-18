@@ -60,257 +60,257 @@ import de.micromata.opengis.kml.v_2_2_0.Point;
 
 public final class GoogleEarth extends Composite implements IMap, IMapContext {
 
-	private final Map<Class<?>, IDesignationCallback<?>> designationCallbacks = new HashMap<Class<?>, IDesignationCallback<?>>() {
-		private static final long serialVersionUID = 1L;
-		{
-			put(Point.class, new PointDesignationCallback());
-		}
-	};
+    private final Map<Class<?>, IDesignationCallback<?>> designationCallbacks = new HashMap<Class<?>, IDesignationCallback<?>>() {
+        private static final long serialVersionUID = 1L;
+        {
+            put(Point.class, new PointDesignationCallback());
+        }
+    };
 
-	private final List<IViewChangeListener> viewChangeListeners = new CopyOnWriteArrayList<IViewChangeListener>();
-	private final String apiKey;
-	private final Browser browser;
-	private volatile String pluginName;
-	private volatile boolean initialized;
-	private volatile boolean initializing;
-	private String language = Locale.getDefault().getLanguage();
-	private IAvailableCallback availableCallback;
-	private IDesignationCallback<?> designationCallback;
+    private final List<IViewChangeListener> viewChangeListeners = new CopyOnWriteArrayList<IViewChangeListener>();
+    private final String apiKey;
+    private final Browser browser;
+    private volatile String pluginName;
+    private volatile boolean initialized;
+    private volatile boolean initializing;
+    private String language = Locale.getDefault().getLanguage();
+    private IAvailableCallback availableCallback;
+    private IDesignationCallback<?> designationCallback;
 
-	public GoogleEarth(final Composite parent, final String apiKey) {
-		this(parent, apiKey, SWT.NONE);
-	}
+    public GoogleEarth(final Composite parent, final String apiKey) {
+        this(parent, apiKey, SWT.NONE);
+    }
 
-	public GoogleEarth(final Composite parent, final String apiKey, final int style) {
-		super(parent, style);
-		Assert.paramNotEmpty(apiKey, "apiKey");
-		this.apiKey = apiKey;
-		super.setLayout(new FillLayout());
-		browser = new Browser(this, style & SWT.MOZILLA);
-		createCallbacks();
-	}
+    public GoogleEarth(final Composite parent, final String apiKey, final int style) {
+        super(parent, style);
+        Assert.paramNotEmpty(apiKey, "apiKey");
+        this.apiKey = apiKey;
+        super.setLayout(new FillLayout());
+        browser = new Browser(this, style & SWT.MOZILLA);
+        createCallbacks();
+    }
 
-	@Override
-	public void setLayout(final Layout layout) {
-		// ignore
-	}
+    @Override
+    public void setLayout(final Layout layout) {
+        // ignore
+    }
 
-	@Override
-	public void setLanguage(final String language) {
-		Assert.paramNotEmpty(language, "language");
-		if (initialized || initializing) {
-			throw new IllegalStateException("language cannot be set during or after initialization");
-		}
-		this.language = language;
-	}
+    @Override
+    public void setLanguage(final String language) {
+        Assert.paramNotEmpty(language, "language");
+        if (initialized || initializing) {
+            throw new IllegalStateException("language cannot be set during or after initialization");
+        }
+        this.language = language;
+    }
 
-	@Override
-	public void initialize(final IAvailableCallback availableCallback) {
-		checkWidget();
-		if (initialized) {
-			throw new IllegalStateException("widget is already initialized");
-		}
-		if (initializing) {
-			throw new IllegalStateException("widget is currently initializing");
-		}
-		initializing = true;
-		this.availableCallback = availableCallback;
-		try {
-			final String html = IOUtils.toString(GoogleEarth.class.getResourceAsStream("googleearth.html"), "UTF-8").replace(
-					"@API_KEY@",
-					apiKey).replace("@LANG@", language);
-			if (!browser.setText(html)) {
-				throw new RuntimeException("initialization failed");
-			}
-		}
-		catch (final IOException e) {
-			throw new Error(e);
-		}
-	}
+    @Override
+    public void initialize(final IAvailableCallback availableCallback) {
+        checkWidget();
+        if (initialized) {
+            throw new IllegalStateException("widget is already initialized");
+        }
+        if (initializing) {
+            throw new IllegalStateException("widget is currently initializing");
+        }
+        initializing = true;
+        this.availableCallback = availableCallback;
+        try {
+            final String html = IOUtils.toString(GoogleEarth.class.getResourceAsStream("googleearth.html"), "UTF-8")
+                    .replace("@API_KEY@", apiKey)
+                    .replace("@LANG@", language);
+            if (!browser.setText(html)) {
+                throw new RuntimeException("initialization failed");
+            }
+        }
+        catch (final IOException e) {
+            throw new Error(e);
+        }
+    }
 
-	private void createCallbacks() {
-		new BrowserFunction(browser, "onMapInitialized") {
-			@Override
-			public Object function(final Object[] arguments) {
-				super.function(arguments);
-				pluginName = (String) arguments[0];
-				initialized = true;
-				initializing = false;
-				if (availableCallback != null) {
-					getBrowser().getDisplay().asyncExec(new Runnable() {
-						@Override
-						public void run() {
-							availableCallback.onAvailable(GoogleEarth.this);
-						}
-					});
-				}
-				return null;
-			}
-		};
+    private void createCallbacks() {
+        new BrowserFunction(browser, "onMapInitialized") {
+            @Override
+            public Object function(final Object[] arguments) {
+                super.function(arguments);
+                pluginName = (String) arguments[0];
+                initialized = true;
+                initializing = false;
+                if (availableCallback != null) {
+                    getBrowser().getDisplay().asyncExec(new Runnable() {
+                        @Override
+                        public void run() {
+                            availableCallback.onAvailable(GoogleEarth.this);
+                        }
+                    });
+                }
+                return null;
+            }
+        };
 
-		new BrowserFunction(browser, "onMapError") {
-			@Override
-			public Object function(final Object[] arguments) {
-				super.function(arguments);
-				final String error = (String) arguments[0];
-				final Label label = new Label(GoogleEarth.this, SWT.NONE);
-				label.setText("Google Earth could not be initialized: " + error); // TODO i18n
-				browser.dispose();
-				GoogleEarth.this.layout();
-				initialized = true;
-				initializing = false;
-				return null;
-			}
-		};
+        new BrowserFunction(browser, "onMapError") {
+            @Override
+            public Object function(final Object[] arguments) {
+                super.function(arguments);
+                final String error = (String) arguments[0];
+                final Label label = new Label(GoogleEarth.this, SWT.NONE);
+                label.setText("Google Earth could not be initialized: " + error); // TODO i18n
+                browser.dispose();
+                GoogleEarth.this.layout();
+                initialized = true;
+                initializing = false;
+                return null;
+            }
+        };
 
-		new BrowserFunction(browser, "onViewChange") {
-			@Override
-			public Object function(final Object[] arguments) {
-				super.function(arguments);
-				getBrowser().getDisplay().asyncExec(new Runnable() {
-					@Override
-					public void run() {
-						for (final IViewChangeListener listener : viewChangeListeners) {
-							listener.onViewChange(
-									(Double) arguments[0],
-									(Double) arguments[1],
-									(Double) arguments[2],
-									(Double) arguments[3]);
-						}
-					}
-				});
-				return null;
-			}
-		};
-	}
+        new BrowserFunction(browser, "onViewChange") {
+            @Override
+            public Object function(final Object[] arguments) {
+                super.function(arguments);
+                getBrowser().getDisplay().asyncExec(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (final IViewChangeListener listener : viewChangeListeners) {
+                            listener.onViewChange(
+                                    (Double) arguments[0],
+                                    (Double) arguments[1],
+                                    (Double) arguments[2],
+                                    (Double) arguments[3]);
+                        }
+                    }
+                });
+                return null;
+            }
+        };
+    }
 
-	@Override
-	public double[] getBoundingBox() {
-		checkWidget();
-		checkAvailable();
-		final Object[] res = (Object[]) browser.evaluate("return new Array(ge.getView().getViewportGlobeBounds().getNorth(), ge.getView().getViewportGlobeBounds().getSouth(), ge.getView().getViewportGlobeBounds().getEast(), ge.getView().getViewportGlobeBounds().getWest())");
-		return new double[] {(Double) res[0], (Double) res[1], (Double) res[2], (Double) res[3]};
-	}
+    @Override
+    public double[] getBoundingBox() {
+        checkWidget();
+        checkAvailable();
+        final Object[] res = (Object[]) browser.evaluate("return new Array(ge.getView().getViewportGlobeBounds().getNorth(), ge.getView().getViewportGlobeBounds().getSouth(), ge.getView().getViewportGlobeBounds().getEast(), ge.getView().getViewportGlobeBounds().getWest())");
+        return new double[] {(Double) res[0], (Double) res[1], (Double) res[2], (Double) res[3]};
+    }
 
-	@Override
-	public boolean flyTo(final String placemarkId, final double range) {
-		checkWidget();
-		checkAvailable();
-		final Object result = browser.evaluate("return flyToPlacemark('"
-			+ StringEscapeUtils.escapeJavaScript(placemarkId)
-			+ "', "
-			+ range
-			+ ");");
-		return result instanceof Boolean ? (Boolean) result : false;
-	}
+    @Override
+    public boolean flyTo(final String placemarkId, final double range) {
+        checkWidget();
+        checkAvailable();
+        final Object result = browser.evaluate("return flyToPlacemark('"
+            + StringEscapeUtils.escapeJavaScript(placemarkId)
+            + "', "
+            + range
+            + ");");
+        return result instanceof Boolean ? (Boolean) result : false;
+    }
 
-	@Override
-	public boolean flyTo(final double latitude, final double longitude, final double range) {
-		checkWidget();
-		checkAvailable();
-		return browser.execute("flyTo(" + latitude + "," + longitude + "," + range + ");");
-	}
+    @Override
+    public boolean flyTo(final double latitude, final double longitude, final double range) {
+        checkWidget();
+        checkAvailable();
+        return browser.execute("flyTo(" + latitude + "," + longitude + "," + range + ");");
+    }
 
-	@Override
-	public boolean addFeature(final Feature feature) {
-		checkWidget();
-		checkAvailable();
-		final Kml kml = KmlFactory.createKml();
-		kml.setFeature(feature);
-		final StringWriter sw = new StringWriter();
-		kml.marshal(sw);
-		return browser.execute(pluginName
-			+ ".getFeatures().appendChild("
-			+ pluginName
-			+ ".parseKml('"
-			+ StringEscapeUtils.escapeJavaScript(sw.toString())
-			+ "'));");
-	}
+    @Override
+    public boolean addFeature(final Feature feature) {
+        checkWidget();
+        checkAvailable();
+        final Kml kml = KmlFactory.createKml();
+        kml.setFeature(feature);
+        final StringWriter sw = new StringWriter();
+        kml.marshal(sw);
+        return browser.execute(pluginName
+            + ".getFeatures().appendChild("
+            + pluginName
+            + ".parseKml('"
+            + StringEscapeUtils.escapeJavaScript(sw.toString())
+            + "'));");
+    }
 
-	@Override
-	public boolean removeFeature(final String featureId) {
-		checkWidget();
-		checkAvailable();
-		final Object result = browser.evaluate("return removeFeature('" + StringEscapeUtils.escapeJavaScript(featureId) + "');");
-		return result instanceof Boolean ? (Boolean) result : false;
-	}
+    @Override
+    public boolean removeFeature(final String featureId) {
+        checkWidget();
+        checkAvailable();
+        final Object result = browser.evaluate("return removeFeature('" + StringEscapeUtils.escapeJavaScript(featureId) + "');");
+        return result instanceof Boolean ? (Boolean) result : false;
+    }
 
-	@Override
-	public boolean removeAllFeatures() {
-		checkWidget();
-		checkAvailable();
-		return browser.execute("removeAllFeatures();");
-	}
+    @Override
+    public boolean removeAllFeatures() {
+        checkWidget();
+        checkAvailable();
+        return browser.execute("removeAllFeatures();");
+    }
 
-	@Override
-	public boolean isInitialized() {
-		return initialized;
-	}
+    @Override
+    public boolean isInitialized() {
+        return initialized;
+    }
 
-	@Override
-	public boolean isAvailable() {
-		return pluginName != null;
-	}
+    @Override
+    public boolean isAvailable() {
+        return pluginName != null;
+    }
 
-	private void checkAvailable() {
-		if (!isAvailable()) {
-			throw new IllegalStateException("widget is not available");
-		}
-	}
+    private void checkAvailable() {
+        if (!isAvailable()) {
+            throw new IllegalStateException("widget is not available");
+        }
+    }
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
-	@Override
-	public boolean startDesignation(final Class type, final IDesignationListener listener) {
-		checkWidget();
-		checkAvailable();
-		Assert.paramNotNull(listener, "listener");
-		if (designationCallback != null) {
-			throw new IllegalStateException("widget is already in designation mode");
-		}
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @Override
+    public boolean startDesignation(final Class type, final IDesignationListener listener) {
+        checkWidget();
+        checkAvailable();
+        Assert.paramNotNull(listener, "listener");
+        if (designationCallback != null) {
+            throw new IllegalStateException("widget is already in designation mode");
+        }
 
-		designationCallback = designationCallbacks.get(type);
-		if (designationCallback == null) {
-			throw new UnsupportedOperationException(type.getName() + " is not supported as designation type");
-		}
+        designationCallback = designationCallbacks.get(type);
+        if (designationCallback == null) {
+            throw new UnsupportedOperationException(type.getName() + " is not supported as designation type");
+        }
 
-		return designationCallback.register(browser, listener);
-	}
+        return designationCallback.register(browser, listener);
+    }
 
-	@Override
-	public boolean endDesignation() {
-		checkWidget();
-		checkAvailable();
-		if (designationCallback == null) {
-			throw new IllegalStateException("widget is not in designation mode");
-		}
-		try {
-			return designationCallback.unregister();
-		}
-		finally {
-			designationCallback = null;
-		}
-	}
+    @Override
+    public boolean endDesignation() {
+        checkWidget();
+        checkAvailable();
+        if (designationCallback == null) {
+            throw new IllegalStateException("widget is not in designation mode");
+        }
+        try {
+            return designationCallback.unregister();
+        }
+        finally {
+            designationCallback = null;
+        }
+    }
 
-	@Override
-	public boolean isDesignationRunning() {
-		checkWidget();
-		checkAvailable();
-		return designationCallback != null;
-	}
+    @Override
+    public boolean isDesignationRunning() {
+        checkWidget();
+        checkAvailable();
+        return designationCallback != null;
+    }
 
-	@Override
-	public void addViewChangeListener(final IViewChangeListener listener) {
-		viewChangeListeners.add(listener);
-	}
+    @Override
+    public void addViewChangeListener(final IViewChangeListener listener) {
+        viewChangeListeners.add(listener);
+    }
 
-	@Override
-	public boolean removeViewChangeListener(final IViewChangeListener listener) {
-		return viewChangeListeners.remove(listener);
-	}
+    @Override
+    public boolean removeViewChangeListener(final IViewChangeListener listener) {
+        return viewChangeListeners.remove(listener);
+    }
 
-	@Override
-	public Set<Class<?>> getSupportedDesignationClasses() {
-		return designationCallbacks.keySet();
-	}
+    @Override
+    public Set<Class<?>> getSupportedDesignationClasses() {
+        return designationCallbacks.keySet();
+    }
 
 }

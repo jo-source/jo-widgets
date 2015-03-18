@@ -32,11 +32,11 @@ import org.jowidgets.examples.common.snipped.ItemModelSnipped;
 
 public final class ItemModelSnippedStarterSwt {
 
-	private ItemModelSnippedStarterSwt() {}
+    private ItemModelSnippedStarterSwt() {}
 
-	public static void main(final String[] args) throws Exception {
-		Toolkit.getApplicationRunner().run(new ItemModelSnipped());
-		System.exit(0);
-	}
+    public static void main(final String[] args) throws Exception {
+        Toolkit.getApplicationRunner().run(new ItemModelSnipped());
+        System.exit(0);
+    }
 
 }

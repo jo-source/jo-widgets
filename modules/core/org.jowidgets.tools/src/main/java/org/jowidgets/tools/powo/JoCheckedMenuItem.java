@@ -35,38 +35,38 @@ import org.jowidgets.api.widgets.descriptor.ICheckedMenuItemDescriptor;
 import org.jowidgets.common.image.IImageConstant;
 
 public class JoCheckedMenuItem extends SelectableMenuItem<ISelectableMenuItem, ICheckedMenuItemBluePrint> implements
-		ISelectableMenuItem {
+        ISelectableMenuItem {
 
-	public JoCheckedMenuItem(final String text, final IImageConstant icon) {
-		this(bluePrint(text, icon));
-	}
+    public JoCheckedMenuItem(final String text, final IImageConstant icon) {
+        this(bluePrint(text, icon));
+    }
 
-	public JoCheckedMenuItem(final String text) {
-		this(bluePrint(text));
-	}
+    public JoCheckedMenuItem(final String text) {
+        this(bluePrint(text));
+    }
 
-	public JoCheckedMenuItem(final String text, final String tooltipText) {
-		this(bluePrint(text, tooltipText));
-	}
+    public JoCheckedMenuItem(final String text, final String tooltipText) {
+        this(bluePrint(text, tooltipText));
+    }
 
-	public JoCheckedMenuItem(final ICheckedMenuItemDescriptor descriptor) {
-		super(bluePrint().setSetup(descriptor));
-	}
+    public JoCheckedMenuItem(final ICheckedMenuItemDescriptor descriptor) {
+        super(bluePrint().setSetup(descriptor));
+    }
 
-	public static ICheckedMenuItemBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().checkedMenuItem();
-	}
+    public static ICheckedMenuItemBluePrint bluePrint() {
+        return Toolkit.getBluePrintFactory().checkedMenuItem();
+    }
 
-	public static ICheckedMenuItemBluePrint bluePrint(final String text) {
-		return Toolkit.getBluePrintFactory().checkedMenuItem(text);
-	}
+    public static ICheckedMenuItemBluePrint bluePrint(final String text) {
+        return Toolkit.getBluePrintFactory().checkedMenuItem(text);
+    }
 
-	public static ICheckedMenuItemBluePrint bluePrint(final String text, final String tooltipText) {
-		return Toolkit.getBluePrintFactory().checkedMenuItem(text).setToolTipText(tooltipText);
-	}
+    public static ICheckedMenuItemBluePrint bluePrint(final String text, final String tooltipText) {
+        return Toolkit.getBluePrintFactory().checkedMenuItem(text).setToolTipText(tooltipText);
+    }
 
-	public static ICheckedMenuItemBluePrint bluePrint(final String text, final IImageConstant icon) {
-		return Toolkit.getBluePrintFactory().checkedMenuItem(text).setIcon(icon);
-	}
+    public static ICheckedMenuItemBluePrint bluePrint(final String text, final IImageConstant icon) {
+        return Toolkit.getBluePrintFactory().checkedMenuItem(text).setIcon(icon);
+    }
 
 }

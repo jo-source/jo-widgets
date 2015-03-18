@@ -40,15 +40,15 @@ import org.jowidgets.workbench.impl.WorkbenchRunner;
 
 public final class SwingWorkbenchDemo1Motif {
 
-	private SwingWorkbenchDemo1Motif() {}
+    private SwingWorkbenchDemo1Motif() {}
 
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		Toolkit.initialize(AwtSwtToolkitProviderFactory.create());
-		Toolkit.getWidgetFactory().register(
-				IMapWidgetBlueprint.class,
-				new SwingGoogleEarthWidgetFactory(MapDemoApplication.API_KEY));
-		new WorkbenchRunner().run(new WorkbenchDemo1Factory());
-	}
+    public static void main(final String[] args) throws Exception {
+        UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
+        Toolkit.initialize(AwtSwtToolkitProviderFactory.create());
+        Toolkit.getWidgetFactory().register(
+                IMapWidgetBlueprint.class,
+                new SwingGoogleEarthWidgetFactory(MapDemoApplication.API_KEY));
+        new WorkbenchRunner().run(new WorkbenchDemo1Factory());
+    }
 }

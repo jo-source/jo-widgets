@@ -32,28 +32,28 @@ import org.jowidgets.api.widgets.IComponent;
 
 public class ComponentDelegate {
 
-	private IComponent parent;
+    private IComponent parent;
 
-	public ComponentDelegate() {
-		super();
-	}
+    public ComponentDelegate() {
+        super();
+    }
 
-	public IComponent getParent() {
-		return parent;
-	}
+    public IComponent getParent() {
+        return parent;
+    }
 
-	public void setParent(final IComponent parent) {
-		if (this.parent == null) {
-			this.parent = parent;
-		}
-		else if (!isReparentable()) {
-			throw new IllegalStateException("Widget is not reparentable");
-		}
-	}
+    public void setParent(final IComponent parent) {
+        if (this.parent == null) {
+            this.parent = parent;
+        }
+        else if (!isReparentable()) {
+            throw new IllegalStateException("Widget is not reparentable");
+        }
+    }
 
-	public boolean isReparentable() {
-		//TODO MG will be implemented later
-		return false;
-	}
+    public boolean isReparentable() {
+        //TODO MG will be implemented later
+        return false;
+    }
 
 }

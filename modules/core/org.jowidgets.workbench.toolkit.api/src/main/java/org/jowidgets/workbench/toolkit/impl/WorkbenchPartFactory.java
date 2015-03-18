@@ -42,38 +42,38 @@ import org.jowidgets.workbench.toolkit.api.IWorkbenchPartFactory;
 
 class WorkbenchPartFactory implements IWorkbenchPartFactory {
 
-	@Override
-	public IWorkbench workbench(final IWorkbenchModel model) {
-		Assert.paramNotNull(model, "model");
-		return new Workbench(model);
-	}
+    @Override
+    public IWorkbench workbench(final IWorkbenchModel model) {
+        Assert.paramNotNull(model, "model");
+        return new Workbench(model);
+    }
 
-	@Override
-	public IWorkbench workbench(final IWorkbenchModelBuilder modelBuilder) {
-		Assert.paramNotNull(modelBuilder, "modelBuilder");
-		return workbench(modelBuilder.build());
-	}
+    @Override
+    public IWorkbench workbench(final IWorkbenchModelBuilder modelBuilder) {
+        Assert.paramNotNull(modelBuilder, "modelBuilder");
+        return workbench(modelBuilder.build());
+    }
 
-	@Override
-	public IWorkbenchApplication application(final IWorkbenchApplicationModel model) {
-		return new WorkbenchApplication(model);
-	}
+    @Override
+    public IWorkbenchApplication application(final IWorkbenchApplicationModel model) {
+        return new WorkbenchApplication(model);
+    }
 
-	@Override
-	public IWorkbenchApplication application(final IWorkbenchApplicationModelBuilder modelBuilder) {
-		Assert.paramNotNull(modelBuilder, "modelBuilder");
-		return application(modelBuilder.build());
-	}
+    @Override
+    public IWorkbenchApplication application(final IWorkbenchApplicationModelBuilder modelBuilder) {
+        Assert.paramNotNull(modelBuilder, "modelBuilder");
+        return application(modelBuilder.build());
+    }
 
-	@Override
-	public IComponentNode componentNode(final IComponentNodeModel model) {
-		return new ComponentNode(model);
-	}
+    @Override
+    public IComponentNode componentNode(final IComponentNodeModel model) {
+        return new ComponentNode(model);
+    }
 
-	@Override
-	public IComponentNode componentNode(final IComponentNodeModelBuilder modelBuilder) {
-		Assert.paramNotNull(modelBuilder, "modelBuilder");
-		return componentNode(modelBuilder.build());
-	}
+    @Override
+    public IComponentNode componentNode(final IComponentNodeModelBuilder modelBuilder) {
+        Assert.paramNotNull(modelBuilder, "modelBuilder");
+        return componentNode(modelBuilder.build());
+    }
 
 }

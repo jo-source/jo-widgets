@@ -34,22 +34,22 @@ import org.jowidgets.api.dnd.IDropTargetListener;
 
 public class DropTargetAdapter implements IDropTargetListener {
 
-	@Override
-	public void dragEnter(final IDropEvent event, final IDropResponse response) {}
+    @Override
+    public void dragEnter(final IDropEvent event, final IDropResponse response) {}
 
-	@Override
-	public void dragOver(final IDropEvent event, final IDropResponse response) {}
+    @Override
+    public void dragOver(final IDropEvent event, final IDropResponse response) {}
 
-	@Override
-	public void dragOperationChanged(final IDropEvent event, final IDropResponse response) {}
+    @Override
+    public void dragOperationChanged(final IDropEvent event, final IDropResponse response) {}
 
-	@Override
-	public void dragExit() {}
+    @Override
+    public void dragExit() {}
 
-	@Override
-	public void dropAccept(final IDropEvent event, final IDropResponse response) {}
+    @Override
+    public void dropAccept(final IDropEvent event, final IDropResponse response) {}
 
-	@Override
-	public void drop(final IDropEvent event) {}
+    @Override
+    public void drop(final IDropEvent event) {}
 
 }

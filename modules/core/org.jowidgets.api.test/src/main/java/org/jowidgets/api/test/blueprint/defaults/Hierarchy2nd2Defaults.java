@@ -32,10 +32,10 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
 public class Hierarchy2nd2Defaults implements IDefaultInitializer<IHierarchy2nd2SetupBuilder<?>> {
 
-	@Override
-	public void initialize(final IHierarchy2nd2SetupBuilder<?> builder) {
-		builder.setIntro("2nd Part (2)");
-		builder.setIntroPartTwoTwo("Default Intro two-two");
-	}
+    @Override
+    public void initialize(final IHierarchy2nd2SetupBuilder<?> builder) {
+        builder.setIntro("2nd Part (2)");
+        builder.setIntroPartTwoTwo("Default Intro two-two");
+    }
 
 }

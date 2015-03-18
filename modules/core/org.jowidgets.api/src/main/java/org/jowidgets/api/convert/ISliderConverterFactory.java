@@ -30,28 +30,28 @@ package org.jowidgets.api.convert;
 
 public interface ISliderConverterFactory {
 
-	<VALUE_TYPE extends Number> ILinearSliderConverterBuilder<VALUE_TYPE> linearConverterBuilder();
+    <VALUE_TYPE extends Number> ILinearSliderConverterBuilder<VALUE_TYPE> linearConverterBuilder();
 
-	<VALUE_TYPE extends Number> ISliderViewerConverter<VALUE_TYPE> linearConverter(VALUE_TYPE max);
+    <VALUE_TYPE extends Number> ISliderViewerConverter<VALUE_TYPE> linearConverter(VALUE_TYPE max);
 
-	<VALUE_TYPE extends Number> ISliderViewerConverter<VALUE_TYPE> linearConverter(VALUE_TYPE min, VALUE_TYPE max);
+    <VALUE_TYPE extends Number> ISliderViewerConverter<VALUE_TYPE> linearConverter(VALUE_TYPE min, VALUE_TYPE max);
 
-	ISliderViewerConverter<Double> linearConverter();
+    ISliderViewerConverter<Double> linearConverter();
 
-	ISliderViewerConverter<Double> linearConverter(double max);
+    ISliderViewerConverter<Double> linearConverter(double max);
 
-	ISliderViewerConverter<Double> linearConverter(double min, double max);
+    ISliderViewerConverter<Double> linearConverter(double min, double max);
 
-	ISliderViewerConverter<Float> linearConverter(float max);
+    ISliderViewerConverter<Float> linearConverter(float max);
 
-	ISliderViewerConverter<Float> linearConverter(float min, float max);
+    ISliderViewerConverter<Float> linearConverter(float min, float max);
 
-	ISliderViewerConverter<Integer> linearConverter(int max);
+    ISliderViewerConverter<Integer> linearConverter(int max);
 
-	ISliderViewerConverter<Integer> linearConverter(int min, int max);
+    ISliderViewerConverter<Integer> linearConverter(int min, int max);
 
-	ISliderViewerConverter<Long> linearConverter(long max);
+    ISliderViewerConverter<Long> linearConverter(long max);
 
-	ISliderViewerConverter<Long> linearConverter(long min, long max);
+    ISliderViewerConverter<Long> linearConverter(long min, long max);
 
 }

@@ -33,9 +33,9 @@ import org.jowidgets.util.IFactory;
 
 public final class SwtApplicationRunnerFactory implements IFactory<IApplicationRunner> {
 
-	@Override
-	public IApplicationRunner create() {
-		return new SwtApplicationRunner();
-	}
+    @Override
+    public IApplicationRunner create() {
+        return new SwtApplicationRunner();
+    }
 
 }

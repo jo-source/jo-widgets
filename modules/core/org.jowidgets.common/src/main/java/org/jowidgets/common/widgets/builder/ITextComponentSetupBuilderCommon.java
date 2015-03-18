@@ -32,22 +32,22 @@ import java.util.List;
 import org.jowidgets.common.verify.IInputVerifier;
 
 public interface ITextComponentSetupBuilderCommon<INSTANCE_TYPE extends ITextComponentSetupBuilderCommon<?>> extends
-		IComponentSetupBuilderCommon<INSTANCE_TYPE>,
-		IInputObservableSetupBuilderCommon<INSTANCE_TYPE> {
+        IComponentSetupBuilderCommon<INSTANCE_TYPE>,
+        IInputObservableSetupBuilderCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setInputVerifier(IInputVerifier inputVerifier);
+    INSTANCE_TYPE setInputVerifier(IInputVerifier inputVerifier);
 
-	/**
-	 * Sets the regular expressions that describes the valid inputs. All regular expressions will be logical
-	 * connected with the AND operator.
-	 * 
-	 * REMARK: Implementors should prefer to use regular expressions instead of {@link IInputVerifier}'s
-	 * if possible because SPI implementations that uses e.g 'AJAX' can implement client side verification easier.
-	 * 
-	 * REMARK: Implementors must not assume that the regular expression will be used on all platforms
-	 */
-	INSTANCE_TYPE setAcceptingRegExps(List<String> regExp);
+    /**
+     * Sets the regular expressions that describes the valid inputs. All regular expressions will be logical
+     * connected with the AND operator.
+     * 
+     * REMARK: Implementors should prefer to use regular expressions instead of {@link IInputVerifier}'s
+     * if possible because SPI implementations that uses e.g 'AJAX' can implement client side verification easier.
+     * 
+     * REMARK: Implementors must not assume that the regular expression will be used on all platforms
+     */
+    INSTANCE_TYPE setAcceptingRegExps(List<String> regExp);
 
-	INSTANCE_TYPE setMaxLength(Integer maxLength);
+    INSTANCE_TYPE setMaxLength(Integer maxLength);
 
 }

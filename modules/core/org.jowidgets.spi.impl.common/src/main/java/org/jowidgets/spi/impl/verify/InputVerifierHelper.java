@@ -36,38 +36,38 @@ import org.jowidgets.spi.widgets.setup.ITextComponentSetupSpi;
 
 public final class InputVerifierHelper {
 
-	private InputVerifierHelper() {}
+    private InputVerifierHelper() {}
 
-	public static IInputVerifier getInputVerifier(final IInputVerifier inputVerifier, final ITextComponentSetupSpi setup) {
-		final List<IInputVerifier> inputVerifiers = new LinkedList<IInputVerifier>();
+    public static IInputVerifier getInputVerifier(final IInputVerifier inputVerifier, final ITextComponentSetupSpi setup) {
+        final List<IInputVerifier> inputVerifiers = new LinkedList<IInputVerifier>();
 
-		if (inputVerifier != null) {
-			inputVerifiers.add(inputVerifier);
-		}
+        if (inputVerifier != null) {
+            inputVerifiers.add(inputVerifier);
+        }
 
-		if (setup.getInputVerifier() != null) {
-			inputVerifiers.add(setup.getInputVerifier());
-		}
-		for (final String regExp : setup.getAcceptingRegExps()) {
-			inputVerifiers.add(new RegExpInputVerifier(regExp));
-		}
+        if (setup.getInputVerifier() != null) {
+            inputVerifiers.add(setup.getInputVerifier());
+        }
+        for (final String regExp : setup.getAcceptingRegExps()) {
+            inputVerifiers.add(new RegExpInputVerifier(regExp));
+        }
 
-		if (inputVerifiers.size() > 0) {
-			return new IInputVerifier() {
-				@Override
-				public boolean verify(final String currentValue, final String input, final int start, final int end) {
-					for (final IInputVerifier inputVerifier : inputVerifiers) {
-						if (!inputVerifier.verify(currentValue, input, start, end)) {
-							return false;
-						}
-					}
-					return true;
-				}
-			};
-		}
-		else {
-			return null;
-		}
-	}
+        if (inputVerifiers.size() > 0) {
+            return new IInputVerifier() {
+                @Override
+                public boolean verify(final String currentValue, final String input, final int start, final int end) {
+                    for (final IInputVerifier inputVerifier : inputVerifiers) {
+                        if (!inputVerifier.verify(currentValue, input, start, end)) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            };
+        }
+        else {
+            return null;
+        }
+    }
 
 }

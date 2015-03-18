@@ -40,63 +40,63 @@ import org.jowidgets.validation.tools.MandatoryValidator;
 
 public final class RoleContentCreator implements IInputContentCreator<Role> {
 
-	private final boolean readonly;
+    private final boolean readonly;
 
-	private IInputField<String> idField;
-	private IInputField<String> descriptionField;
+    private IInputField<String> idField;
+    private IInputField<String> descriptionField;
 
-	public RoleContentCreator(final boolean readonly) {
-		this.readonly = readonly;
-	}
+    public RoleContentCreator(final boolean readonly) {
+        this.readonly = readonly;
+    }
 
-	@Override
-	public void setValue(final Role role) {
-		if (role != null) {
-			idField.setValue(role.getId());
-			descriptionField.setValue(role.getDescription());
-		}
-		else {
-			idField.setValue(null);
-			descriptionField.setValue(null);
-		}
-	}
+    @Override
+    public void setValue(final Role role) {
+        if (role != null) {
+            idField.setValue(role.getId());
+            descriptionField.setValue(role.getDescription());
+        }
+        else {
+            idField.setValue(null);
+            descriptionField.setValue(null);
+        }
+    }
 
-	@Override
-	public Role getValue() {
-		final Role result = new Role();
-		result.setId(idField.getValue());
-		result.setDescription(descriptionField.getValue());
-		return result;
-	}
+    @Override
+    public Role getValue() {
+        final Role result = new Role();
+        result.setId(idField.getValue());
+        result.setDescription(descriptionField.getValue());
+        return result;
+    }
 
-	@Override
-	public void createContent(final IInputContentContainer content) {
-		if (readonly) {
-			content.setLayout(new MigLayoutDescriptor("wrap", "[][grow, 0::]", "[][]"));
-		}
-		else {
-			content.setLayout(new MigLayoutDescriptor("wrap", "[][grow, 0::][]", "[][]"));
-		}
+    @Override
+    public void createContent(final IInputContentContainer content) {
+        if (readonly) {
+            content.setLayout(new MigLayoutDescriptor("wrap", "[][grow, 0::]", "[][]"));
+        }
+        else {
+            content.setLayout(new MigLayoutDescriptor("wrap", "[][grow, 0::][]", "[][]"));
+        }
 
-		final ITextLabelBluePrint labelBp = BPF.textLabel().alignRight();
+        final ITextLabelBluePrint labelBp = BPF.textLabel().alignRight();
 
-		final IInputComponentValidationLabelBluePrint validationLabelBp = BPF.inputComponentValidationLabel();
-		validationLabelBp.setShowValidationMessage(false);
+        final IInputComponentValidationLabelBluePrint validationLabelBp = BPF.inputComponentValidationLabel();
+        validationLabelBp.setShowValidationMessage(false);
 
-		//id property
-		content.add(labelBp.setText("Id"), "alignx r");
-		idField = content.add("Id", BPF.inputFieldString(), "growx, w 0::");
-		if (!readonly) {
-			idField.addValidator(new MandatoryValidator<String>("Id must not empty!"));
-			content.add(validationLabelBp.setInputComponent(idField));
-		}
+        //id property
+        content.add(labelBp.setText("Id"), "alignx r");
+        idField = content.add("Id", BPF.inputFieldString(), "growx, w 0::");
+        if (!readonly) {
+            idField.addValidator(new MandatoryValidator<String>("Id must not empty!"));
+            content.add(validationLabelBp.setInputComponent(idField));
+        }
 
-		//description property
-		content.add(labelBp.setText("Description"), "alignx r");
-		descriptionField = content.add("Description", BPF.inputFieldString(), "growx, w 0::");
-		if (!readonly) {
-			content.add(validationLabelBp.setInputComponent(descriptionField));
-		}
+        //description property
+        content.add(labelBp.setText("Description"), "alignx r");
+        descriptionField = content.add("Description", BPF.inputFieldString(), "growx, w 0::");
+        if (!readonly) {
+            content.add(validationLabelBp.setInputComponent(descriptionField));
+        }
 
-	}
+    }
 }

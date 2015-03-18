@@ -32,14 +32,14 @@ import org.jowidgets.spi.widgets.ITreeNodeSpi;
 
 public interface ITreeDropLocationSpi {
 
-	public enum TreeDropPositionSpi {
-		ON,
-		BEFORE,
-		AFTER
-	}
+    public enum TreeDropPositionSpi {
+        ON,
+        BEFORE,
+        AFTER
+    }
 
-	ITreeNodeSpi getTreeNode();
+    ITreeNodeSpi getTreeNode();
 
-	TreeDropPositionSpi getDropPosition();
+    TreeDropPositionSpi getDropPosition();
 
 }

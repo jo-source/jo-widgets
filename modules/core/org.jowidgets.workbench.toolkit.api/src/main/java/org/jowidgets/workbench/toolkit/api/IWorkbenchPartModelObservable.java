@@ -30,8 +30,8 @@ package org.jowidgets.workbench.toolkit.api;
 
 public interface IWorkbenchPartModelObservable {
 
-	void addWorkbenchPartModelListener(IWorkbenchPartModelListener listener);
+    void addWorkbenchPartModelListener(IWorkbenchPartModelListener listener);
 
-	void removeWorkbenchPartModelListener(IWorkbenchPartModelListener listener);
+    void removeWorkbenchPartModelListener(IWorkbenchPartModelListener listener);
 
 }

@@ -32,30 +32,30 @@ import org.jowidgets.util.ICallback;
 
 public interface IAnimationScheduler {
 
-	/**
-	 * Runs an animation step in the next animation time slot in the ui thread.
-	 * This method may be invoked in any thread.
-	 * 
-	 * @param animationStep The animation step to run (must not be null). This will be invoked in the ui thread
-	 * @param callback A callback that will invoked in the ui thread after the animation step was executed, or null, if no
-	 *            callback is used
-	 */
-	void run(Runnable animationStep, ICallback<Void> callback);
+    /**
+     * Runs an animation step in the next animation time slot in the ui thread.
+     * This method may be invoked in any thread.
+     * 
+     * @param animationStep The animation step to run (must not be null). This will be invoked in the ui thread
+     * @param callback A callback that will invoked in the ui thread after the animation step was executed, or null, if no
+     *            callback is used
+     */
+    void run(Runnable animationStep, ICallback<Void> callback);
 
-	/**
-	 * Runs an animation step in the next animation time slot in the ui thread.
-	 * This method may be invoked in any thread.
-	 * 
-	 * @param animationStep The animation step to run (must not be null). This will be invoked in the ui thread
-	 */
-	void run(Runnable animationStep);
+    /**
+     * Runs an animation step in the next animation time slot in the ui thread.
+     * This method may be invoked in any thread.
+     * 
+     * @param animationStep The animation step to run (must not be null). This will be invoked in the ui thread
+     */
+    void run(Runnable animationStep);
 
-	/**
-	 * Runs an animation step in the next animation time slot in the ui thread.
-	 * This method may be invoked in any thread.
-	 * 
-	 * @param animationStep The animation step to run (must not be null). This will be invoked in the ui thread
-	 */
-	void run(IAnimationStep animationStep);
+    /**
+     * Runs an animation step in the next animation time slot in the ui thread.
+     * This method may be invoked in any thread.
+     * 
+     * @param animationStep The animation step to run (must not be null). This will be invoked in the ui thread
+     */
+    void run(IAnimationStep animationStep);
 
 }

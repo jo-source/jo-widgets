@@ -44,33 +44,33 @@ import org.jowidgets.util.ObservableValue;
 
 public final class ObservableValueViewerSnipped implements IApplication {
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
 
-		//create the root frame
-		final IFrameBluePrint frameBp = BPF.frame("Observable value viewer snipped");
-		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
-		frame.setLayout(new MigLayoutDescriptor("wrap", "[][][]", "[]"));
+        //create the root frame
+        final IFrameBluePrint frameBp = BPF.frame("Observable value viewer snipped");
+        final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
+        frame.setLayout(new MigLayoutDescriptor("wrap", "[][][]", "[]"));
 
-		//create panorama observable value 
-		final IObservableValue<Double> panorama = new ObservableValue<Double>(0.0d);
+        //create panorama observable value 
+        final IObservableValue<Double> panorama = new ObservableValue<Double>(0.0d);
 
-		//add panorama label
-		final ITextLabelBluePrint labelBp = BPF.textLabel("Panorama");
-		labelBp.setForegroundColor(Colors.STRONG).setMarkup(Markup.STRONG);
-		frame.add(labelBp);
+        //add panorama label
+        final ITextLabelBluePrint labelBp = BPF.textLabel("Panorama");
+        labelBp.setForegroundColor(Colors.STRONG).setMarkup(Markup.STRONG);
+        frame.add(labelBp);
 
-		//add panorama slider
-		final ISliderViewerBluePrint<Double> sliderBp = BPF.sliderViewerDouble(-1.0d, 1.0d);
-		sliderBp.setObservableValue(panorama);
-		frame.add(sliderBp, "growx, w 150!");
+        //add panorama slider
+        final ISliderViewerBluePrint<Double> sliderBp = BPF.sliderViewerDouble(-1.0d, 1.0d);
+        sliderBp.setObservableValue(panorama);
+        frame.add(sliderBp, "growx, w 150!");
 
-		//add panorama input field
-		final IInputFieldBluePrint<Double> inputFieldBp = BPF.inputFieldDoubleNumber();
-		inputFieldBp.setObservableValue(panorama);
-		frame.add(inputFieldBp, "w 50!");
+        //add panorama input field
+        final IInputFieldBluePrint<Double> inputFieldBp = BPF.inputFieldDoubleNumber();
+        inputFieldBp.setObservableValue(panorama);
+        frame.add(inputFieldBp, "w 50!");
 
-		//set the root frame visible
-		frame.setVisible(true);
-	}
+        //set the root frame visible
+        frame.setVisible(true);
+    }
 }

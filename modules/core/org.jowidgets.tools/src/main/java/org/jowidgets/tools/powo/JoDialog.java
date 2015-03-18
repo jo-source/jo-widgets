@@ -42,206 +42,206 @@ import org.jowidgets.util.Assert;
 
 public class JoDialog extends Window<IFrame, IDialogBluePrint> implements IFrame {
 
-	private JoMenuBar menuBar;
-	private IMenuBarModel menuBarModel;
-	private IButton defaultButton;
-	private Boolean maximized;
-	private Boolean iconfied;
+    private JoMenuBar menuBar;
+    private IMenuBarModel menuBarModel;
+    private IButton defaultButton;
+    private Boolean maximized;
+    private Boolean iconfied;
 
-	JoDialog(final IFrame widget) {
-		super(bluePrint(), widget);
-		Assert.paramNotNull(widget, "widget");
-	}
+    JoDialog(final IFrame widget) {
+        super(bluePrint(), widget);
+        Assert.paramNotNull(widget, "widget");
+    }
 
-	public JoDialog(final String title) {
-		super(Toolkit.getBluePrintFactory().dialog(title));
-	}
+    public JoDialog(final String title) {
+        super(Toolkit.getBluePrintFactory().dialog(title));
+    }
 
-	public JoDialog(final IWindow parent) {
-		this(parent, Toolkit.getBluePrintFactory().dialog());
-	}
+    public JoDialog(final IWindow parent) {
+        this(parent, Toolkit.getBluePrintFactory().dialog());
+    }
 
-	public JoDialog(final IWindow parent, final String title) {
-		this(parent, Toolkit.getBluePrintFactory().dialog(title));
-	}
+    public JoDialog(final IWindow parent, final String title) {
+        this(parent, Toolkit.getBluePrintFactory().dialog(title));
+    }
 
-	public JoDialog(final IWindow parent, final IDialogDescriptor setup) {
-		super(parent, Toolkit.getBluePrintFactory().dialog().setSetup(setup));
-	}
+    public JoDialog(final IWindow parent, final IDialogDescriptor setup) {
+        super(parent, Toolkit.getBluePrintFactory().dialog().setSetup(setup));
+    }
 
-	public JoDialog(final IDialogDescriptor setup) {
-		super(Toolkit.getBluePrintFactory().dialog().setSetup(setup));
-	}
+    public JoDialog(final IDialogDescriptor setup) {
+        super(Toolkit.getBluePrintFactory().dialog().setSetup(setup));
+    }
 
-	public static IDialogBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().dialog();
-	}
+    public static IDialogBluePrint bluePrint() {
+        return Toolkit.getBluePrintFactory().dialog();
+    }
 
-	public static IDialogBluePrint bluePrint(final String title) {
-		return bluePrint().setTitle(title);
-	}
+    public static IDialogBluePrint bluePrint(final String title) {
+        return bluePrint().setTitle(title);
+    }
 
-	public static IDialogBluePrint bluePrint(final String title, final IImageConstant icon) {
-		return bluePrint(title).setIcon(icon);
-	}
+    public static IDialogBluePrint bluePrint(final String title, final IImageConstant icon) {
+        return bluePrint(title).setIcon(icon);
+    }
 
-	@Override
-	void initialize(final IFrame widget) {
-		super.initialize(widget);
-		if (menuBar != null) {
-			menuBar.initialize(createMenuBar());
-		}
-		if (menuBarModel != null) {
-			widget.setMenuBar(menuBarModel);
-		}
-		if (defaultButton != null) {
-			getWidget().setDefaultButton(defaultButton);
-		}
-		if (maximized != null) {
-			widget.setMaximized(maximized.booleanValue());
-		}
-		if (iconfied != null) {
-			widget.setIconfied(iconfied.booleanValue());
-		}
-	}
+    @Override
+    void initialize(final IFrame widget) {
+        super.initialize(widget);
+        if (menuBar != null) {
+            menuBar.initialize(createMenuBar());
+        }
+        if (menuBarModel != null) {
+            widget.setMenuBar(menuBarModel);
+        }
+        if (defaultButton != null) {
+            getWidget().setDefaultButton(defaultButton);
+        }
+        if (maximized != null) {
+            widget.setMaximized(maximized.booleanValue());
+        }
+        if (iconfied != null) {
+            widget.setIconfied(iconfied.booleanValue());
+        }
+    }
 
-	public final void setMenuBar(final JoMenuBar menuBar) {
-		Assert.paramNotNull(menuBar, "menuBar");
-		if (isInitialized()) {
-			menuBar.initialize(createMenuBar());
-		}
-		else {
-			if (menuBarModel != null) {
-				throw new UnsupportedOperationException("This frame has already a menu bar model and is not yet initialized. "
-					+ "Uninitialized JoFrame's must not have a JoMenuBar and a menu model at the same time. This might be "
-					+ "supported in future releases.");
-			}
-			this.menuBar = menuBar;
-		}
-	}
+    public final void setMenuBar(final JoMenuBar menuBar) {
+        Assert.paramNotNull(menuBar, "menuBar");
+        if (isInitialized()) {
+            menuBar.initialize(createMenuBar());
+        }
+        else {
+            if (menuBarModel != null) {
+                throw new UnsupportedOperationException("This frame has already a menu bar model and is not yet initialized. "
+                    + "Uninitialized JoFrame's must not have a JoMenuBar and a menu model at the same time. This might be "
+                    + "supported in future releases.");
+            }
+            this.menuBar = menuBar;
+        }
+    }
 
-	@Override
-	public IMenuBar createMenuBar() {
-		if (isInitialized()) {
-			return getWidget().createMenuBar();
-		}
-		else {
-			if (menuBarModel != null) {
-				throw new UnsupportedOperationException("This frame has already a menu bar model and is not yet initialized. "
-					+ "Uninitialized JoFrame's must not have a JoMenuBar and a menu model at the same time. This might be "
-					+ "supported in future releases.");
-			}
-			menuBar = new JoMenuBar();
-			return menuBar;
-		}
-	}
+    @Override
+    public IMenuBar createMenuBar() {
+        if (isInitialized()) {
+            return getWidget().createMenuBar();
+        }
+        else {
+            if (menuBarModel != null) {
+                throw new UnsupportedOperationException("This frame has already a menu bar model and is not yet initialized. "
+                    + "Uninitialized JoFrame's must not have a JoMenuBar and a menu model at the same time. This might be "
+                    + "supported in future releases.");
+            }
+            menuBar = new JoMenuBar();
+            return menuBar;
+        }
+    }
 
-	@Override
-	public IMenuBarModel getMenuBarModel() {
-		if (isInitialized()) {
-			return getWidget().getMenuBarModel();
-		}
-		else {
-			if (menuBarModel == null) {
-				setMenuBar(Toolkit.getModelFactoryProvider().getItemModelFactory().menuBar());
-			}
-			return menuBarModel;
-		}
-	}
+    @Override
+    public IMenuBarModel getMenuBarModel() {
+        if (isInitialized()) {
+            return getWidget().getMenuBarModel();
+        }
+        else {
+            if (menuBarModel == null) {
+                setMenuBar(Toolkit.getModelFactoryProvider().getItemModelFactory().menuBar());
+            }
+            return menuBarModel;
+        }
+    }
 
-	@Override
-	public void setMenuBar(final IMenuBarModel menuBarModel) {
-		if (isInitialized()) {
-			getWidget().setMenuBar(menuBarModel);
-		}
-		else {
-			if (menuBar != null) {
-				throw new UnsupportedOperationException(
-					"This frame has already a menu bar (JoMenuBar) and is not yet initialized. "
-						+ "Uninitialized JoFrame's must not have a JoMenuBar and a menu model at the same time. This might be "
-						+ "supported in future releases.");
-			}
-			this.menuBarModel = menuBarModel;
-		}
-	}
+    @Override
+    public void setMenuBar(final IMenuBarModel menuBarModel) {
+        if (isInitialized()) {
+            getWidget().setMenuBar(menuBarModel);
+        }
+        else {
+            if (menuBar != null) {
+                throw new UnsupportedOperationException(
+                    "This frame has already a menu bar (JoMenuBar) and is not yet initialized. "
+                        + "Uninitialized JoFrame's must not have a JoMenuBar and a menu model at the same time. This might be "
+                        + "supported in future releases.");
+            }
+            this.menuBarModel = menuBarModel;
+        }
+    }
 
-	@Override
-	public void setDefaultButton(final IButton defaultButton) {
-		if (isInitialized()) {
-			getWidget().setDefaultButton(defaultButton);
-		}
-		else {
-			this.defaultButton = defaultButton;
-		}
-	}
+    @Override
+    public void setDefaultButton(final IButton defaultButton) {
+        if (isInitialized()) {
+            getWidget().setDefaultButton(defaultButton);
+        }
+        else {
+            this.defaultButton = defaultButton;
+        }
+    }
 
-	@Override
-	public void setMinSize(final Dimension minSize) {
-		getWidget().setMinSize(minSize);
-	}
+    @Override
+    public void setMinSize(final Dimension minSize) {
+        getWidget().setMinSize(minSize);
+    }
 
-	@Override
-	public void setMinSize(final int width, final int height) {
-		getWidget().setMinSize(width, height);
-	}
+    @Override
+    public void setMinSize(final int width, final int height) {
+        getWidget().setMinSize(width, height);
+    }
 
-	@Override
-	public void setTitle(final String title) {
-		if (isInitialized()) {
-			getWidget().setDefaultButton(defaultButton);
-		}
-		else {
-			getBluePrint().setTitle(title);
-		}
-	}
+    @Override
+    public void setTitle(final String title) {
+        if (isInitialized()) {
+            getWidget().setDefaultButton(defaultButton);
+        }
+        else {
+            getBluePrint().setTitle(title);
+        }
+    }
 
-	@Override
-	public void setMaximized(final boolean maximized) {
-		if (isInitialized()) {
-			getWidget().setMaximized(maximized);
-		}
-		else {
-			this.maximized = Boolean.valueOf(maximized);
-		}
-	}
+    @Override
+    public void setMaximized(final boolean maximized) {
+        if (isInitialized()) {
+            getWidget().setMaximized(maximized);
+        }
+        else {
+            this.maximized = Boolean.valueOf(maximized);
+        }
+    }
 
-	@Override
-	public boolean isMaximized() {
-		if (isInitialized()) {
-			return getWidget().isMaximized();
-		}
-		else {
-			return maximized != null ? maximized.booleanValue() : false;
-		}
-	}
+    @Override
+    public boolean isMaximized() {
+        if (isInitialized()) {
+            return getWidget().isMaximized();
+        }
+        else {
+            return maximized != null ? maximized.booleanValue() : false;
+        }
+    }
 
-	@Override
-	public void setIconfied(final boolean iconfied) {
-		if (isInitialized()) {
-			getWidget().setIconfied(iconfied);
-		}
-		else {
-			this.iconfied = Boolean.valueOf(iconfied);
-		}
-	}
+    @Override
+    public void setIconfied(final boolean iconfied) {
+        if (isInitialized()) {
+            getWidget().setIconfied(iconfied);
+        }
+        else {
+            this.iconfied = Boolean.valueOf(iconfied);
+        }
+    }
 
-	@Override
-	public boolean isIconfied() {
-		if (isInitialized()) {
-			return getWidget().isIconfied();
-		}
-		else {
-			return iconfied != null ? iconfied.booleanValue() : false;
-		}
-	}
+    @Override
+    public boolean isIconfied() {
+        if (isInitialized()) {
+            return getWidget().isIconfied();
+        }
+        else {
+            return iconfied != null ? iconfied.booleanValue() : false;
+        }
+    }
 
-	public static JoDialog toJoDialog(final IFrame widget) {
-		Assert.paramNotNull(widget, "widget");
-		if (widget instanceof JoDialog) {
-			return (JoDialog) widget;
-		}
-		else {
-			return new JoDialog(widget);
-		}
-	}
+    public static JoDialog toJoDialog(final IFrame widget) {
+        Assert.paramNotNull(widget, "widget");
+        if (widget instanceof JoDialog) {
+            return (JoDialog) widget;
+        }
+        else {
+            return new JoDialog(widget);
+        }
+    }
 }

@@ -33,11 +33,11 @@ import org.jowidgets.api.widgets.ISubMenu;
 
 public interface IJoMenu {
 
-	void addItem(final MenuItem<? extends IMenuItem, ?> item);
+    void addItem(final MenuItem<? extends IMenuItem, ?> item);
 
-	void addItem(final int index, final MenuItem<? extends IMenuItem, ?> item);
+    void addItem(final int index, final MenuItem<? extends IMenuItem, ?> item);
 
-	void addItem(final SubMenu<? extends ISubMenu, ?> item);
+    void addItem(final SubMenu<? extends ISubMenu, ?> item);
 
-	void addItem(final int index, final SubMenu<? extends ISubMenu, ?> item);
+    void addItem(final int index, final SubMenu<? extends ISubMenu, ?> item);
 }

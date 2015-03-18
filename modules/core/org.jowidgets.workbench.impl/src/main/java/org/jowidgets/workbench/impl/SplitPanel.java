@@ -38,36 +38,36 @@ import org.jowidgets.workbench.api.ISplitLayout;
 
 public class SplitPanel implements ILayoutPanel {
 
-	private final ILayoutPanel firstContainerContext;
-	private final ILayoutPanel secondContainerContext;
+    private final ILayoutPanel firstContainerContext;
+    private final ILayoutPanel secondContainerContext;
 
-	public SplitPanel(final ISplitLayout splitLayout, final IContainer parentContainer, final ComponentContext component) {
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		parentContainer.setLayout(MigLayoutFactory.growingInnerCellLayout());
+    public SplitPanel(final ISplitLayout splitLayout, final IContainer parentContainer, final ComponentContext component) {
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+        parentContainer.setLayout(MigLayoutFactory.growingInnerCellLayout());
 
-		final ISplitCompositeBluePrint splitCompositeBp = bpf.splitComposite();
-		splitCompositeBp.disableBorders();
-		splitCompositeBp.setOrientation(splitLayout.getOrientation());
-		if (splitLayout.getResizePolicy() != null) {
-			splitCompositeBp.setResizePolicy(splitLayout.getResizePolicy());
-		}
-		splitCompositeBp.setWeight(splitLayout.getWeight());
+        final ISplitCompositeBluePrint splitCompositeBp = bpf.splitComposite();
+        splitCompositeBp.disableBorders();
+        splitCompositeBp.setOrientation(splitLayout.getOrientation());
+        if (splitLayout.getResizePolicy() != null) {
+            splitCompositeBp.setResizePolicy(splitLayout.getResizePolicy());
+        }
+        splitCompositeBp.setWeight(splitLayout.getWeight());
 
-		final ISplitComposite splitComposite = parentContainer.add(splitCompositeBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        final ISplitComposite splitComposite = parentContainer.add(splitCompositeBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
-		firstContainerContext = new LayoutContainerContext(splitLayout.getFirstContainer(), splitComposite.getFirst(), component);
+        firstContainerContext = new LayoutContainerContext(splitLayout.getFirstContainer(), splitComposite.getFirst(), component);
 
-		secondContainerContext = new LayoutContainerContext(
-			splitLayout.getSecondContainer(),
-			splitComposite.getSecond(),
-			component);
+        secondContainerContext = new LayoutContainerContext(
+            splitLayout.getSecondContainer(),
+            splitComposite.getSecond(),
+            component);
 
-	}
+    }
 
-	@Override
-	public void setComponent(final ComponentContext component) {
-		firstContainerContext.setComponent(component);
-		secondContainerContext.setComponent(component);
-	}
+    @Override
+    public void setComponent(final ComponentContext component) {
+        firstContainerContext.setComponent(component);
+        secondContainerContext.setComponent(component);
+    }
 
 }

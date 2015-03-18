@@ -30,12 +30,12 @@ package org.jowidgets.workbench.toolkit.api;
 
 public interface ILayoutBuilderFactory {
 
-	ILayoutBuilder layout();
+    ILayoutBuilder layout();
 
-	IFolderLayoutBuilder folder();
+    IFolderLayoutBuilder folder();
 
-	ISplitLayoutBuilder split();
+    ISplitLayoutBuilder split();
 
-	IViewLayoutBuilder view();
+    IViewLayoutBuilder view();
 
 }

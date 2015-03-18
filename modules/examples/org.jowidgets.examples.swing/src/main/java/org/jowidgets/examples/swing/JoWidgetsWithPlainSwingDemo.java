@@ -49,48 +49,48 @@ import org.jowidgets.spi.impl.swing.addons.JoToSwingReference;
 
 public final class JoWidgetsWithPlainSwingDemo {
 
-	private JoWidgetsWithPlainSwingDemo() {}
+    private JoWidgetsWithPlainSwingDemo() {}
 
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		DemoIconsInitializer.initialize();
+    public static void main(final String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        DemoIconsInitializer.initialize();
 
-		Toolkit.getApplicationRunner().run(new IApplication() {
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
-				startApplication(lifecycle);
-			}
-		});
-	}
+        Toolkit.getApplicationRunner().run(new IApplication() {
+            @Override
+            public void start(final IApplicationLifecycle lifecycle) {
+                startApplication(lifecycle);
+            }
+        });
+    }
 
-	private static void startApplication(final IApplicationLifecycle lifecycle) {
-		//get the blue print factory
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+    private static void startApplication(final IApplicationLifecycle lifecycle) {
+        //get the blue print factory
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		//create the root frame
-		final IFrameBluePrint frameBp = bpf.frame("JoWidgetFrame").setSize(new Dimension(500, 400));
-		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
-		frame.setLayout(new MigLayoutDescriptor("[grow, 0::]", "[grow, 0::]"));
+        //create the root frame
+        final IFrameBluePrint frameBp = bpf.frame("JoWidgetFrame").setSize(new Dimension(500, 400));
+        final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
+        frame.setLayout(new MigLayoutDescriptor("[grow, 0::]", "[grow, 0::]"));
 
-		//create a scroll composite to put the content into
-		final IComposite scrollComposite = frame.add(bpf.scrollComposite(), "growx, growy, w 0::, h 0::");
-		scrollComposite.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::][0::]0"));
+        //create a scroll composite to put the content into
+        final IComposite scrollComposite = frame.add(bpf.scrollComposite(), "growx, growy, w 0::, h 0::");
+        scrollComposite.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::][0::]0"));
 
-		//add the demo form 1 to the first row
-		final IComposite composite1 = scrollComposite.add(bpf.composite(), "growx, growy, w 0::, h 0::, wrap");
-		DemoForm1Creator.createDemoForm1(composite1, false);
+        //add the demo form 1 to the first row
+        final IComposite composite1 = scrollComposite.add(bpf.composite(), "growx, growy, w 0::, h 0::, wrap");
+        DemoForm1Creator.createDemoForm1(composite1, false);
 
-		//add a composite to the second row and convert it to a JPanel
-		final IComposite composite2 = scrollComposite.add(bpf.composite(), "alignx center");
-		final JPanel panel2 = JoToSwingReference.getUiReference(composite2);
+        //add a composite to the second row and convert it to a JPanel
+        final IComposite composite2 = scrollComposite.add(bpf.composite(), "alignx center");
+        final JPanel panel2 = JoToSwingReference.getUiReference(composite2);
 
-		//add a swing label to the panel
-		final JLabel label = new JLabel("Label created with swing");
-		label.setForeground(new Color(255, 0, 0));
-		panel2.add(label);
+        //add a swing label to the panel
+        final JLabel label = new JLabel("Label created with swing");
+        label.setForeground(new Color(255, 0, 0));
+        panel2.add(label);
 
-		//show the frame
-		frame.setVisible(true);
-	}
+        //show the frame
+        frame.setVisible(true);
+    }
 
 }

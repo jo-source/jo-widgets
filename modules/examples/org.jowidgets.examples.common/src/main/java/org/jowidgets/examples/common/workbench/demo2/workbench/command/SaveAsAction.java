@@ -34,16 +34,16 @@ import org.jowidgets.tools.command.CommandAction;
 
 public class SaveAsAction extends CommandAction {
 
-	public SaveAsAction() {
-		super(new ActionBuilder() {
-			{
-				setText("Save as...");
-				setToolTipText("Save the modified data to a specific file");
-				setIcon(SilkIcons.DISK);
-			}
-		});
+    public SaveAsAction() {
+        super(new ActionBuilder() {
+            {
+                setText("Save as...");
+                setToolTipText("Save the modified data to a specific file");
+                setIcon(SilkIcons.DISK);
+            }
+        });
 
-		setCommand(new DummyCommandExecuter());
-	}
+        setCommand(new DummyCommandExecuter());
+    }
 
 }

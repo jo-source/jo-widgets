@@ -30,8 +30,8 @@ package org.jowidgets.spi.widgets.controller;
 
 public interface ITabItemObservableSpi {
 
-	void addTabItemListener(ITabItemListenerSpi listener);
+    void addTabItemListener(ITabItemListenerSpi listener);
 
-	void removeTabItemListener(ITabItemListenerSpi listener);
+    void removeTabItemListener(ITabItemListenerSpi listener);
 
 }

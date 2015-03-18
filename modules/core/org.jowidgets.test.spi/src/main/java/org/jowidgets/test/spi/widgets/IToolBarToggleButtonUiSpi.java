@@ -32,9 +32,9 @@ import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
 import org.jowidgets.test.common.widgets.IToolBarToggleButtonUiCommon;
 
 public interface IToolBarToggleButtonUiSpi extends
-		IToolBarItemUiSpi,
-		ISelectableItemUiSpi,
-		IToolBarToggleButtonUiCommon,
-		IToolBarToggleButtonSpi {
+        IToolBarItemUiSpi,
+        ISelectableItemUiSpi,
+        IToolBarToggleButtonUiCommon,
+        IToolBarToggleButtonSpi {
 
 }

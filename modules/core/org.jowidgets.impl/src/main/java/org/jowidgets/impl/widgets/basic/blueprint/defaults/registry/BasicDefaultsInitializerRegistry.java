@@ -62,22 +62,22 @@ import org.jowidgets.impl.widgets.common.blueprint.defaults.registry.CommonDefau
 
 public class BasicDefaultsInitializerRegistry extends CommonDefaultsInitializerRegistry {
 
-	public BasicDefaultsInitializerRegistry() {
-		super();
-		register(IButtonSetupBuilder.class, new ButtonDefaults());
-		register(IContainerSetupBuilder.class, new ContainerDefaults());
-		register(IComboBoxSelectionSetupBuilder.class, new ComboBoxSelectionDefaults());
-		register(ICheckBoxSetupBuilder.class, new CheckBoxDefaults());
-		register(IInputComponentSetupBuilder.class, new InputWidgetDefaults());
-		register(ITextFieldSetupBuilder.class, new TextFieldDefaults());
-		register(ITextAreaSetupBuilder.class, new TextAreaDefaults());
-		register(IWindowSetupBuilder.class, new WindowDefaults());
-		register(ISplitCompositeSetupBuilder.class, new SplitCompositeDefaults());
-		register(IComponentSetupBuilder.class, new WidgetDefaults());
-		register(ISelectableItemSetupBuilder.class, new SelectableItemDefaults());
-		register(ITreeNodeSetupBuilder.class, new TreeNodeDefaults());
-		register(IToolBarMenuBluePrint.class, new ToolBarMenuDefaults());
-		register(IPopupDialogSetupBuilder.class, new PopupDialogDefaults());
-		register(ITableSetupBuilder.class, new TableDefaults());
-	}
+    public BasicDefaultsInitializerRegistry() {
+        super();
+        register(IButtonSetupBuilder.class, new ButtonDefaults());
+        register(IContainerSetupBuilder.class, new ContainerDefaults());
+        register(IComboBoxSelectionSetupBuilder.class, new ComboBoxSelectionDefaults());
+        register(ICheckBoxSetupBuilder.class, new CheckBoxDefaults());
+        register(IInputComponentSetupBuilder.class, new InputWidgetDefaults());
+        register(ITextFieldSetupBuilder.class, new TextFieldDefaults());
+        register(ITextAreaSetupBuilder.class, new TextAreaDefaults());
+        register(IWindowSetupBuilder.class, new WindowDefaults());
+        register(ISplitCompositeSetupBuilder.class, new SplitCompositeDefaults());
+        register(IComponentSetupBuilder.class, new WidgetDefaults());
+        register(ISelectableItemSetupBuilder.class, new SelectableItemDefaults());
+        register(ITreeNodeSetupBuilder.class, new TreeNodeDefaults());
+        register(IToolBarMenuBluePrint.class, new ToolBarMenuDefaults());
+        register(IPopupDialogSetupBuilder.class, new PopupDialogDefaults());
+        register(ITableSetupBuilder.class, new TableDefaults());
+    }
 }

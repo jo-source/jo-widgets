@@ -32,10 +32,10 @@ import org.jowidgets.examples.common.tutorial.ValidationExample2;
 
 public final class SwtTutorialStarter {
 
-	private SwtTutorialStarter() {}
+    private SwtTutorialStarter() {}
 
-	public static void main(final String[] args) throws Exception {
-		Toolkit.getApplicationRunner().run(new ValidationExample2());
-	}
+    public static void main(final String[] args) throws Exception {
+        Toolkit.getApplicationRunner().run(new ValidationExample2());
+    }
 
 }

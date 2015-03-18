@@ -34,31 +34,31 @@ import org.jowidgets.common.types.Accelerator;
 
 class SeparatorItemModelImpl extends ItemModelImpl implements ISeparatorItemModel {
 
-	protected SeparatorItemModelImpl() {
-		this(null, null, null, null, null, null, true);
-	}
+    protected SeparatorItemModelImpl() {
+        this(null, null, null, null, null, null, true);
+    }
 
-	protected SeparatorItemModelImpl(
-		final String id,
-		final String text,
-		final String toolTipText,
-		final IImageConstant icon,
-		final Accelerator accelerator,
-		final Character mnemonic,
-		final boolean enabled) {
-		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled);
-	}
+    protected SeparatorItemModelImpl(
+        final String id,
+        final String text,
+        final String toolTipText,
+        final IImageConstant icon,
+        final Accelerator accelerator,
+        final Character mnemonic,
+        final boolean enabled) {
+        super(id, text, toolTipText, icon, accelerator, mnemonic, enabled);
+    }
 
-	@Override
-	public ISeparatorItemModel createCopy() {
-		final SeparatorItemModelImpl result = new SeparatorItemModelImpl();
-		result.setContent(this);
-		return result;
-	}
+    @Override
+    public ISeparatorItemModel createCopy() {
+        final SeparatorItemModelImpl result = new SeparatorItemModelImpl();
+        result.setContent(this);
+        return result;
+    }
 
-	@Override
-	public String toString() {
-		return "SeparatorItemModelImpl [toString()=" + super.toString() + "]";
-	}
+    @Override
+    public String toString() {
+        return "SeparatorItemModelImpl [toString()=" + super.toString() + "]";
+    }
 
 }

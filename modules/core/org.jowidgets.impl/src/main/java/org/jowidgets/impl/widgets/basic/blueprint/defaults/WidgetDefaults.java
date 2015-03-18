@@ -32,9 +32,9 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
 public class WidgetDefaults implements IDefaultInitializer<IComponentSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final IComponentSetupBuilder<?> builder) {
+    @Override
+    public void initialize(final IComponentSetupBuilder<?> builder) {
 
-	}
+    }
 
 }

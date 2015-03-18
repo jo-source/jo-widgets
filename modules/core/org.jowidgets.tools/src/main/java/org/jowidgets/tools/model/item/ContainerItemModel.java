@@ -35,40 +35,40 @@ import org.jowidgets.api.toolkit.Toolkit;
 
 public class ContainerItemModel extends AbstractItemModelWrapper implements IContainerItemModel {
 
-	public ContainerItemModel(final IContainerContentCreator contentCreator) {
-		this(builder(contentCreator));
-	}
+    public ContainerItemModel(final IContainerContentCreator contentCreator) {
+        this(builder(contentCreator));
+    }
 
-	public ContainerItemModel(final IContainerItemModelBuilder builder) {
-		super(builder.build());
-	}
+    public ContainerItemModel(final IContainerItemModelBuilder builder) {
+        super(builder.build());
+    }
 
-	@Override
-	protected IContainerItemModel getItemModel() {
-		return (IContainerItemModel) super.getItemModel();
-	}
+    @Override
+    protected IContainerItemModel getItemModel() {
+        return (IContainerItemModel) super.getItemModel();
+    }
 
-	@Override
-	public final IContainerContentCreator getContentCreator() {
-		return getItemModel().getContentCreator();
-	}
+    @Override
+    public final IContainerContentCreator getContentCreator() {
+        return getItemModel().getContentCreator();
+    }
 
-	@Override
-	public final void setContentCreator(final IContainerContentCreator contentCreator) {
-		getItemModel().setContentCreator(contentCreator);
-	}
+    @Override
+    public final void setContentCreator(final IContainerContentCreator contentCreator) {
+        getItemModel().setContentCreator(contentCreator);
+    }
 
-	@Override
-	public IContainerItemModel createCopy() {
-		return getItemModel().createCopy();
-	}
+    @Override
+    public IContainerItemModel createCopy() {
+        return getItemModel().createCopy();
+    }
 
-	public static IContainerItemModelBuilder builder() {
-		return Toolkit.getModelFactoryProvider().getItemModelFactory().containerItemBuilder();
-	}
+    public static IContainerItemModelBuilder builder() {
+        return Toolkit.getModelFactoryProvider().getItemModelFactory().containerItemBuilder();
+    }
 
-	public static IContainerItemModelBuilder builder(final IContainerContentCreator contentCreator) {
-		return builder().setContentCreator(contentCreator);
-	}
+    public static IContainerItemModelBuilder builder(final IContainerContentCreator contentCreator) {
+        return builder().setContentCreator(contentCreator);
+    }
 
 }

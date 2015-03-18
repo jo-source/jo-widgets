@@ -30,12 +30,12 @@ package org.jowidgets.common.widgets.builder;
 import org.jowidgets.common.image.IImageConstant;
 
 public interface ITitledWindowSetupBuilderCommon<INSTANCE_TYPE extends ITitledWindowSetupBuilderCommon<?>> extends
-		IWindowSetupBuilderCommon<INSTANCE_TYPE> {
+        IWindowSetupBuilderCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setTitle(final String title);
+    INSTANCE_TYPE setTitle(final String title);
 
-	INSTANCE_TYPE setIcon(final IImageConstant icon);
+    INSTANCE_TYPE setIcon(final IImageConstant icon);
 
-	INSTANCE_TYPE setDecorated(boolean decorated);
+    INSTANCE_TYPE setDecorated(boolean decorated);
 
 }

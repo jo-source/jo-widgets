@@ -36,48 +36,48 @@ import org.jowidgets.common.image.IImageConstant;
 
 public class JoToggleButton extends CheckBox<IToggleButton, IToggleButtonBluePrint> implements IToggleButton {
 
-	public JoToggleButton(final String text) {
-		super(Toolkit.getBluePrintFactory().toggleButton().setText(text));
-	}
+    public JoToggleButton(final String text) {
+        super(Toolkit.getBluePrintFactory().toggleButton().setText(text));
+    }
 
-	public JoToggleButton(final String text, final String tooltipText) {
-		super(Toolkit.getBluePrintFactory().toggleButton().setText(text).setToolTipText(tooltipText));
-	}
+    public JoToggleButton(final String text, final String tooltipText) {
+        super(Toolkit.getBluePrintFactory().toggleButton().setText(text).setToolTipText(tooltipText));
+    }
 
-	public JoToggleButton(final IToggleButtonDescriptor descriptor) {
-		super(Toolkit.getBluePrintFactory().toggleButton().setSetup(descriptor));
-	}
+    public JoToggleButton(final IToggleButtonDescriptor descriptor) {
+        super(Toolkit.getBluePrintFactory().toggleButton().setSetup(descriptor));
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		if (isInitialized()) {
-			getWidget().setIcon(icon);
-		}
-		else {
-			getBluePrint().setIcon(icon);
-		}
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        if (isInitialized()) {
+            getWidget().setIcon(icon);
+        }
+        else {
+            getBluePrint().setIcon(icon);
+        }
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		if (isInitialized()) {
-			return getWidget().getIcon();
-		}
-		else {
-			return getBluePrint().getIcon();
-		}
-	}
+    @Override
+    public IImageConstant getIcon() {
+        if (isInitialized()) {
+            return getWidget().getIcon();
+        }
+        else {
+            return getBluePrint().getIcon();
+        }
+    }
 
-	public static IToggleButtonBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().toggleButton();
-	}
+    public static IToggleButtonBluePrint bluePrint() {
+        return Toolkit.getBluePrintFactory().toggleButton();
+    }
 
-	public static IToggleButtonBluePrint bluePrint(final String text) {
-		return Toolkit.getBluePrintFactory().toggleButton().setText(text);
-	}
+    public static IToggleButtonBluePrint bluePrint(final String text) {
+        return Toolkit.getBluePrintFactory().toggleButton().setText(text);
+    }
 
-	public static IToggleButtonBluePrint bluePrint(final String text, final String tooltipText) {
-		return Toolkit.getBluePrintFactory().toggleButton().setText(text).setToolTipText(tooltipText);
-	}
+    public static IToggleButtonBluePrint bluePrint(final String text, final String tooltipText) {
+        return Toolkit.getBluePrintFactory().toggleButton().setText(text).setToolTipText(tooltipText);
+    }
 
 }

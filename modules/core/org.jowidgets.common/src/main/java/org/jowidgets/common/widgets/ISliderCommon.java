@@ -29,8 +29,8 @@ package org.jowidgets.common.widgets;
 
 public interface ISliderCommon extends IInputControlCommon {
 
-	int getSelection();
+    int getSelection();
 
-	void setSelection(int value);
+    void setSelection(int value);
 
 }

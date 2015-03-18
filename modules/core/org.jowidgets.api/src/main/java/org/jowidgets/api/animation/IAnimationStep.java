@@ -32,16 +32,16 @@ import org.jowidgets.util.ICallback;
 
 public interface IAnimationStep {
 
-	/**
-	 * @return The animation steps code
-	 */
-	Runnable getAnimationStep();
+    /**
+     * @return The animation steps code
+     */
+    Runnable getAnimationStep();
 
-	/**
-	 * Will be invoked, after the animation step was invoked and the animation is ready for a new step
-	 * 
-	 * @return The callback to invoke or null, if no callback is used
-	 */
-	ICallback<Void> getFinishedCallback();
+    /**
+     * Will be invoked, after the animation step was invoked and the animation is ready for a new step
+     * 
+     * @return The callback to invoke or null, if no callback is used
+     */
+    ICallback<Void> getFinishedCallback();
 
 }

@@ -39,27 +39,27 @@ import org.jowidgets.tools.powo.JoFrame;
 
 public class DemoFlowLayoutFrame extends JoFrame {
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+    private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
-	public DemoFlowLayoutFrame() {
-		super("Flow layout demo");
+    public DemoFlowLayoutFrame() {
+        super("Flow layout demo");
 
-		final ILayouter layouter = setLayout(FlowLayout.get());
+        final ILayouter layouter = setLayout(FlowLayout.get());
 
-		final IControl button = add(BPF.button("Button"));
-		button.setPreferredSize(new Dimension(200, button.getMinSize().getHeight()));
+        final IControl button = add(BPF.button("Button"));
+        button.setPreferredSize(new Dimension(200, button.getMinSize().getHeight()));
 
-		final IControl comboBox = add(BPF.comboBoxSelection("Germany", "Italy", "Spain", "USA"));
-		comboBox.setPreferredSize(new Dimension(200, comboBox.getMinSize().getHeight()));
+        final IControl comboBox = add(BPF.comboBoxSelection("Germany", "Italy", "Spain", "USA"));
+        comboBox.setPreferredSize(new Dimension(200, comboBox.getMinSize().getHeight()));
 
-		final IControl label = add(BPF.textLabel().setText("Label"));
-		label.setPreferredSize(new Dimension(200, label.getMinSize().getHeight()));
+        final IControl label = add(BPF.textLabel().setText("Label"));
+        label.setPreferredSize(new Dimension(200, label.getMinSize().getHeight()));
 
-		final IInputField<String> input = add(BPF.inputFieldString());
-		input.setValue(" Text ");
-		input.setPreferredSize(new Dimension(200, input.getMinSize().getHeight()));
+        final IInputField<String> input = add(BPF.inputFieldString());
+        input.setValue(" Text ");
+        input.setPreferredSize(new Dimension(200, input.getMinSize().getHeight()));
 
-		pack();
-		setMinSize(layouter.getMinSize());
-	}
+        pack();
+        setMinSize(layouter.getMinSize());
+    }
 }

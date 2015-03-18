@@ -42,94 +42,94 @@ import org.jowidgets.util.event.IObservableCallback;
 
 public final class ClipbaordImpl implements IClipboard {
 
-	private final IClipboardSpi clipboardSpi;
-	private final IClipboardListenerSpi clipboardListenerSpi;
-	private final ClipboardObservable clipboardObservable;
+    private final IClipboardSpi clipboardSpi;
+    private final IClipboardListenerSpi clipboardListenerSpi;
+    private final ClipboardObservable clipboardObservable;
 
-	private final IUiThreadAccess uiThreadAccess;
+    private final IUiThreadAccess uiThreadAccess;
 
-	public ClipbaordImpl(final IClipboardSpi clipboard) {
-		Assert.paramNotNull(clipboard, "clipboard");
+    public ClipbaordImpl(final IClipboardSpi clipboard) {
+        Assert.paramNotNull(clipboard, "clipboard");
 
-		this.clipboardSpi = clipboard;
+        this.clipboardSpi = clipboard;
 
-		this.clipboardListenerSpi = new IClipboardListenerSpi() {
-			@Override
-			public void clipboardChanged() {
-				clipboardObservable.fireClipboardChanged();
-			}
-		};
+        this.clipboardListenerSpi = new IClipboardListenerSpi() {
+            @Override
+            public void clipboardChanged() {
+                clipboardObservable.fireClipboardChanged();
+            }
+        };
 
-		final IObservableCallback observableCallback = new IObservableCallback() {
+        final IObservableCallback observableCallback = new IObservableCallback() {
 
-			@Override
-			public void onFirstRegistered() {
-				clipboardSpi.addClipboardListener(clipboardListenerSpi);
-			}
+            @Override
+            public void onFirstRegistered() {
+                clipboardSpi.addClipboardListener(clipboardListenerSpi);
+            }
 
-			@Override
-			public void onLastUnregistered() {
-				clipboardSpi.removeClipboardListener(clipboardListenerSpi);
-			}
-		};
+            @Override
+            public void onLastUnregistered() {
+                clipboardSpi.removeClipboardListener(clipboardListenerSpi);
+            }
+        };
 
-		this.clipboardObservable = new ClipboardObservable(observableCallback);
+        this.clipboardObservable = new ClipboardObservable(observableCallback);
 
-		this.uiThreadAccess = Toolkit.getUiThreadAccess();
-	}
+        this.uiThreadAccess = Toolkit.getUiThreadAccess();
+    }
 
-	@Override
-	public void setContents(final ITransferable contents) {
-		if (contents != null) {
-			clipboardSpi.setContents(new TransferableSpiAdapter(contents));
-		}
-		else {
-			clipboardSpi.setContents(null);
-		}
-	}
+    @Override
+    public void setContents(final ITransferable contents) {
+        if (contents != null) {
+            clipboardSpi.setContents(new TransferableSpiAdapter(contents));
+        }
+        else {
+            clipboardSpi.setContents(null);
+        }
+    }
 
-	@Override
-	public ITransferable getContents() {
-		final ITransferableSpi contents = clipboardSpi.getContents();
-		if (contents != null) {
-			return new TransferableAdapter(contents);
-		}
-		else {
-			return null;
-		}
-	}
+    @Override
+    public ITransferable getContents() {
+        final ITransferableSpi contents = clipboardSpi.getContents();
+        if (contents != null) {
+            return new TransferableAdapter(contents);
+        }
+        else {
+            return null;
+        }
+    }
 
-	@Override
-	public <JAVA_TYPE> JAVA_TYPE getData(final TransferType<JAVA_TYPE> type) {
-		final ITransferable content = getContents();
-		if (content != null) {
-			if (content.getSupportedTypes().contains(type)) {
-				return content.getData(type);
-			}
-		}
-		return null;
-	}
+    @Override
+    public <JAVA_TYPE> JAVA_TYPE getData(final TransferType<JAVA_TYPE> type) {
+        final ITransferable content = getContents();
+        if (content != null) {
+            if (content.getSupportedTypes().contains(type)) {
+                return content.getData(type);
+            }
+        }
+        return null;
+    }
 
-	@Override
-	public void addClipboardListener(final IClipboardListener listener) {
-		clipboardObservable.addClipboardListener(listener);
-	}
+    @Override
+    public void addClipboardListener(final IClipboardListener listener) {
+        clipboardObservable.addClipboardListener(listener);
+    }
 
-	@Override
-	public void removeClipboardListener(final IClipboardListener listener) {
-		clipboardObservable.removeClipboardListener(listener);
-	}
+    @Override
+    public void removeClipboardListener(final IClipboardListener listener) {
+        clipboardObservable.removeClipboardListener(listener);
+    }
 
-	@Override
-	public void dispose() {
-		checkThread();
-		clipboardSpi.removeClipboardListener(clipboardListenerSpi);
-	}
+    @Override
+    public void dispose() {
+        checkThread();
+        clipboardSpi.removeClipboardListener(clipboardListenerSpi);
+    }
 
-	private void checkThread() {
-		if (!uiThreadAccess.isUiThread()) {
-			throw new IllegalStateException("The clipboard must be accessed in the ui thread");
-		}
-	}
+    private void checkThread() {
+        if (!uiThreadAccess.isUiThread()) {
+            throw new IllegalStateException("The clipboard must be accessed in the ui thread");
+        }
+    }
 
 }

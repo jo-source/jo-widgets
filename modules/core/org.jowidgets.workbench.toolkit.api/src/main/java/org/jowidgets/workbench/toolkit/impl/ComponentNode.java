@@ -41,146 +41,146 @@ import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModelListener;
 
 class ComponentNode extends ComponentNodeContainer implements IComponentNode {
 
-	private final IComponentNodeModel model;
+    private final IComponentNodeModel model;
 
-	private String label;
-	private String tooltip;
-	private IImageConstant icon;
-	private IMenuModel popupMenu;
+    private String label;
+    private String tooltip;
+    private IImageConstant icon;
+    private IMenuModel popupMenu;
 
-	private boolean selected;
-	private boolean expanded;
+    private boolean selected;
+    private boolean expanded;
 
-	private IWorkbenchPartModelListener workbenchPartModelListener;
-	private IComponentNodeContext context;
+    private IWorkbenchPartModelListener workbenchPartModelListener;
+    private IComponentNodeContext context;
 
-	ComponentNode(final IComponentNodeModel model) {
-		super(model);
-		this.model = model;
-		this.selected = false;
-		this.expanded = false;
-	}
+    ComponentNode(final IComponentNodeModel model) {
+        super(model);
+        this.model = model;
+        this.selected = false;
+        this.expanded = false;
+    }
 
-	@Override
-	public void onContextInitialize(final IComponentNodeContext context) {
-		super.initialize(context);
+    @Override
+    public void onContextInitialize(final IComponentNodeContext context) {
+        super.initialize(context);
 
-		this.workbenchPartModelListener = new IWorkbenchPartModelListener() {
-			@Override
-			public void modelChanged() {
-				onModelChanged(context);
-			}
-		};
+        this.workbenchPartModelListener = new IWorkbenchPartModelListener() {
+            @Override
+            public void modelChanged() {
+                onModelChanged(context);
+            }
+        };
 
-		model.addWorkbenchPartModelListener(workbenchPartModelListener);
+        model.addWorkbenchPartModelListener(workbenchPartModelListener);
 
-		context.addTreeNodeListener(new TreeNodeAdapter() {
-			@Override
-			public void selectionChanged(final boolean selected) {
-				model.removeWorkbenchPartModelListener(workbenchPartModelListener);
-				model.setSelected(selected);
-				model.addWorkbenchPartModelListener(workbenchPartModelListener);
-			}
+        context.addTreeNodeListener(new TreeNodeAdapter() {
+            @Override
+            public void selectionChanged(final boolean selected) {
+                model.removeWorkbenchPartModelListener(workbenchPartModelListener);
+                model.setSelected(selected);
+                model.addWorkbenchPartModelListener(workbenchPartModelListener);
+            }
 
-			@Override
-			public void expandedChanged(final boolean expanded) {
-				model.removeWorkbenchPartModelListener(workbenchPartModelListener);
-				model.setExpanded(expanded);
-				model.addWorkbenchPartModelListener(workbenchPartModelListener);
-			}
-		});
+            @Override
+            public void expandedChanged(final boolean expanded) {
+                model.removeWorkbenchPartModelListener(workbenchPartModelListener);
+                model.setExpanded(expanded);
+                model.addWorkbenchPartModelListener(workbenchPartModelListener);
+            }
+        });
 
-		onModelChanged(context);
+        onModelChanged(context);
 
-		if (model.getInitializeCallback() != null) {
-			model.getInitializeCallback().onContextInitialize(new ModelBasedComponentNodeContext(context, model));
-		}
-	}
+        if (model.getInitializeCallback() != null) {
+            model.getInitializeCallback().onContextInitialize(new ModelBasedComponentNodeContext(context, model));
+        }
+    }
 
-	@Override
-	public void onDispose() {
-		final IDisposeCallback disposeCallback = model.getDisposeCallback();
-		if (disposeCallback != null) {
-			disposeCallback.onDispose();
-		}
-	}
+    @Override
+    public void onDispose() {
+        final IDisposeCallback disposeCallback = model.getDisposeCallback();
+        if (disposeCallback != null) {
+            disposeCallback.onDispose();
+        }
+    }
 
-	@Override
-	public String getId() {
-		return model.getId();
-	}
+    @Override
+    public String getId() {
+        return model.getId();
+    }
 
-	@Override
-	public String getLabel() {
-		return model.getLabel();
-	}
+    @Override
+    public String getLabel() {
+        return model.getLabel();
+    }
 
-	@Override
-	public String getTooltip() {
-		return model.getTooltip();
-	}
+    @Override
+    public String getTooltip() {
+        return model.getTooltip();
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return model.getIcon();
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return model.getIcon();
+    }
 
-	@Override
-	public IComponent createComponent(final IComponentContext context) {
-		if (model.getComponentFactory() != null) {
-			return model.getComponentFactory().createComponent(model, new ModelBasedComponentContext(context, model));
-		}
-		return null;
-	}
+    @Override
+    public IComponent createComponent(final IComponentContext context) {
+        if (model.getComponentFactory() != null) {
+            return model.getComponentFactory().createComponent(model, new ModelBasedComponentContext(context, model));
+        }
+        return null;
+    }
 
-	private void onModelChanged(final IComponentNodeContext context) {
-		if (popupMenu != model.getPopupMenu()) {
-			onPopupMenuChanged(context);
-		}
-		if (label != model.getLabel()) {
-			context.setLabel(model.getLabel());
-			label = model.getLabel();
-		}
-		if (tooltip != model.getTooltip()) {
-			context.setTooltip(model.getTooltip());
-			tooltip = model.getTooltip();
-		}
-		if (icon != model.getIcon()) {
-			context.setIcon(model.getIcon());
-			icon = model.getIcon();
-		}
-		if (expanded != model.isExpanded()) {
-			context.setExpanded(model.isExpanded());
-			expanded = model.isExpanded();
-		}
-		if (selected != model.isSelected()) {
-			context.setSelected(model.isSelected());
-			selected = model.isSelected();
-		}
-	}
+    private void onModelChanged(final IComponentNodeContext context) {
+        if (popupMenu != model.getPopupMenu()) {
+            onPopupMenuChanged(context);
+        }
+        if (label != model.getLabel()) {
+            context.setLabel(model.getLabel());
+            label = model.getLabel();
+        }
+        if (tooltip != model.getTooltip()) {
+            context.setTooltip(model.getTooltip());
+            tooltip = model.getTooltip();
+        }
+        if (icon != model.getIcon()) {
+            context.setIcon(model.getIcon());
+            icon = model.getIcon();
+        }
+        if (expanded != model.isExpanded()) {
+            context.setExpanded(model.isExpanded());
+            expanded = model.isExpanded();
+        }
+        if (selected != model.isSelected()) {
+            context.setSelected(model.isSelected());
+            selected = model.isSelected();
+        }
+    }
 
-	private void onPopupMenuChanged(final IComponentNodeContext context) {
-		if (popupMenu != null) {
-			popupMenu.unbind(context.getPopupMenu());
-		}
-		if (model.getPopupMenu() != null) {
-			model.getPopupMenu().bind(context.getPopupMenu());
-		}
-		else {
-			context.getPopupMenu().removeAllItems();
-		}
-		popupMenu = model.getPopupMenu();
-	}
+    private void onPopupMenuChanged(final IComponentNodeContext context) {
+        if (popupMenu != null) {
+            popupMenu.unbind(context.getPopupMenu());
+        }
+        if (model.getPopupMenu() != null) {
+            model.getPopupMenu().bind(context.getPopupMenu());
+        }
+        else {
+            context.getPopupMenu().removeAllItems();
+        }
+        popupMenu = model.getPopupMenu();
+    }
 
-	@Override
-	void dispose() {
-		super.dispose();
-		if (context != null) {
-			if (popupMenu != null) {
-				popupMenu.unbind(context.getPopupMenu());
-			}
-			model.removeWorkbenchPartModelListener(workbenchPartModelListener);
-		}
-	}
+    @Override
+    void dispose() {
+        super.dispose();
+        if (context != null) {
+            if (popupMenu != null) {
+                popupMenu.unbind(context.getPopupMenu());
+            }
+            model.removeWorkbenchPartModelListener(workbenchPartModelListener);
+        }
+    }
 
 }

@@ -35,70 +35,70 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 class Item<WIDGET_TYPE extends IItem, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & IItemSetupBuilder<?> & IItemSetup> extends
-		Widget<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IItem {
+        Widget<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IItem {
 
-	Item(final BLUE_PRINT_TYPE bluePrint) {
-		super(bluePrint);
-	}
+    Item(final BLUE_PRINT_TYPE bluePrint) {
+        super(bluePrint);
+    }
 
-	@Override
-	public void setText(final String text) {
-		if (isInitialized()) {
-			getWidget().setText(text);
-		}
-		else {
-			getBluePrint().setText(text);
-		}
-	}
+    @Override
+    public void setText(final String text) {
+        if (isInitialized()) {
+            getWidget().setText(text);
+        }
+        else {
+            getBluePrint().setText(text);
+        }
+    }
 
-	@Override
-	public void setToolTipText(final String text) {
-		if (isInitialized()) {
-			getWidget().setToolTipText(text);
-		}
-		else {
-			getBluePrint().setToolTipText(text);
-		}
-	}
+    @Override
+    public void setToolTipText(final String text) {
+        if (isInitialized()) {
+            getWidget().setToolTipText(text);
+        }
+        else {
+            getBluePrint().setToolTipText(text);
+        }
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		if (isInitialized()) {
-			getWidget().setIcon(icon);
-		}
-		else {
-			getBluePrint().setIcon(icon);
-		}
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        if (isInitialized()) {
+            getWidget().setIcon(icon);
+        }
+        else {
+            getBluePrint().setIcon(icon);
+        }
+    }
 
-	@Override
-	public String getText() {
-		if (isInitialized()) {
-			return getWidget().getText();
-		}
-		else {
-			return getBluePrint().getText();
-		}
-	}
+    @Override
+    public String getText() {
+        if (isInitialized()) {
+            return getWidget().getText();
+        }
+        else {
+            return getBluePrint().getText();
+        }
+    }
 
-	@Override
-	public String getToolTipText() {
-		if (isInitialized()) {
-			return getWidget().getToolTipText();
-		}
-		else {
-			return getBluePrint().getToolTipText();
-		}
-	}
+    @Override
+    public String getToolTipText() {
+        if (isInitialized()) {
+            return getWidget().getToolTipText();
+        }
+        else {
+            return getBluePrint().getToolTipText();
+        }
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		if (isInitialized()) {
-			return getWidget().getIcon();
-		}
-		else {
-			return getBluePrint().getIcon();
-		}
-	}
+    @Override
+    public IImageConstant getIcon() {
+        if (isInitialized()) {
+            return getWidget().getIcon();
+        }
+        else {
+            return getBluePrint().getIcon();
+        }
+    }
 
 }

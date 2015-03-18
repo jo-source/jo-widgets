@@ -35,16 +35,16 @@ import org.jowidgets.api.widgets.descriptor.ISeparatorMenuItemDescriptor;
 
 public class JoSeparatorMenuItem extends MenuItem<IMenuItem, ISeparatorMenuItemBluePrint> implements IMenuItem {
 
-	public JoSeparatorMenuItem() {
-		super(bluePrint());
-	}
+    public JoSeparatorMenuItem() {
+        super(bluePrint());
+    }
 
-	public JoSeparatorMenuItem(final ISeparatorMenuItemDescriptor descriptor) {
-		super(bluePrint().setSetup(descriptor));
-	}
+    public JoSeparatorMenuItem(final ISeparatorMenuItemDescriptor descriptor) {
+        super(bluePrint().setSetup(descriptor));
+    }
 
-	public static ISeparatorMenuItemBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().menuSeparator();
-	}
+    public static ISeparatorMenuItemBluePrint bluePrint() {
+        return Toolkit.getBluePrintFactory().menuSeparator();
+    }
 
 }

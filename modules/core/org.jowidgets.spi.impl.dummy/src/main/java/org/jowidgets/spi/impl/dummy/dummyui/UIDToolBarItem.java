@@ -32,22 +32,22 @@ import org.jowidgets.common.image.IImageConstant;
 
 public class UIDToolBarItem extends UIDContainer {
 
-	private IImageConstant icon;
-	private String text;
+    private IImageConstant icon;
+    private String text;
 
-	public IImageConstant getIcon() {
-		return icon;
-	}
+    public IImageConstant getIcon() {
+        return icon;
+    }
 
-	public void setIcon(final IImageConstant icon) {
-		this.icon = icon;
-	}
+    public void setIcon(final IImageConstant icon) {
+        this.icon = icon;
+    }
 
-	public String getText() {
-		return text;
-	}
+    public String getText() {
+        return text;
+    }
 
-	public void setText(final String text) {
-		this.text = text;
-	}
+    public void setText(final String text) {
+        this.text = text;
+    }
 }

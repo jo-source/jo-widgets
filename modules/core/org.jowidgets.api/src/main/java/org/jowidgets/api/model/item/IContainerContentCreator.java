@@ -32,12 +32,12 @@ import org.jowidgets.api.widgets.content.IContentCreator;
 
 public interface IContainerContentCreator extends IContentCreator {
 
-	/**
-	 * This method will be invoked after the created container was disposed (removed
-	 * from a toolBar).
-	 * 
-	 * @param container The disposed container
-	 */
-	void containerDisposed(IContainer container);
+    /**
+     * This method will be invoked after the created container was disposed (removed
+     * from a toolBar).
+     * 
+     * @param container The disposed container
+     */
+    void containerDisposed(IContainer container);
 
 }

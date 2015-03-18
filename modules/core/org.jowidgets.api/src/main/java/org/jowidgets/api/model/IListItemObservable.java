@@ -30,7 +30,7 @@ package org.jowidgets.api.model;
 
 public interface IListItemObservable {
 
-	void addItemContainerListener(IListItemListener listener);
+    void addItemContainerListener(IListItemListener listener);
 
-	void removeItemContainerListener(IListItemListener listener);
+    void removeItemContainerListener(IListItemListener listener);
 }

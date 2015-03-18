@@ -35,15 +35,15 @@ import org.jowidgets.common.widgets.factory.IWidgetFactory;
 
 public final class SwtGoogleEarthWidgetFactory implements IWidgetFactory<IMapWidget, IMapWidgetBlueprint> {
 
-	private final String apiKey;
+    private final String apiKey;
 
-	public SwtGoogleEarthWidgetFactory(final String apiKey) {
-		this.apiKey = apiKey;
-	}
+    public SwtGoogleEarthWidgetFactory(final String apiKey) {
+        this.apiKey = apiKey;
+    }
 
-	@Override
-	public IMapWidget create(final Object parentUiReference, final IMapWidgetBlueprint descriptor) {
-		return new SwtGoogleEarthWidget((Composite) parentUiReference, descriptor, apiKey);
-	}
+    @Override
+    public IMapWidget create(final Object parentUiReference, final IMapWidgetBlueprint descriptor) {
+        return new SwtGoogleEarthWidget((Composite) parentUiReference, descriptor, apiKey);
+    }
 
 }

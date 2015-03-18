@@ -34,16 +34,16 @@ import org.jowidgets.common.widgets.editor.ITableCellEditor;
 import org.jowidgets.common.widgets.editor.ITableCellEditorFactory;
 
 public abstract class AbstractTableCellEditorFactory<WIDGET_TYPE extends ITableCellEditor> implements
-		ITableCellEditorFactory<WIDGET_TYPE> {
+        ITableCellEditorFactory<WIDGET_TYPE> {
 
-	@Override
-	public EditActivation getActivation(
-		final ITableCell cell,
-		final int row,
-		final int column,
-		final boolean editMode,
-		final long editModeStopped) {
-		return EditActivation.DOUBLE_CLICK;
-	}
+    @Override
+    public EditActivation getActivation(
+        final ITableCell cell,
+        final int row,
+        final int column,
+        final boolean editMode,
+        final long editModeStopped) {
+        return EditActivation.DOUBLE_CLICK;
+    }
 
 }

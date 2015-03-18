@@ -38,46 +38,46 @@ import org.jowidgets.addons.testtool.internal.UserTestData;
 
 public class TestDataXmlPersister implements ITestDataPersister {
 
-	private static final String DEFAULT_FILEPATH = File.separator + "resources" + File.separator + "testtool";
-	private static final String FILE_EXTENSION = ".xml";
-	private final String filePath;
+    private static final String DEFAULT_FILEPATH = File.separator + "resources" + File.separator + "testtool";
+    private static final String FILE_EXTENSION = ".xml";
+    private final String filePath;
 
-	public TestDataXmlPersister(final String filePath) {
-		if (filePath.isEmpty()) {
-			this.filePath = DEFAULT_FILEPATH;
-		}
-		else {
-			this.filePath = filePath;
-		}
-	}
+    public TestDataXmlPersister(final String filePath) {
+        if (filePath.isEmpty()) {
+            this.filePath = DEFAULT_FILEPATH;
+        }
+        else {
+            this.filePath = filePath;
+        }
+    }
 
-	@Override
-	public List<TestDataObject> load(final String fileName) {
-		final File file = new File(getDirectory() + File.separator + fileName + FILE_EXTENSION);
-		if (file.exists()) {
-			final UserTestData result = JAXB.unmarshal(file, UserTestData.class);
-			return result.getTestData();
-		}
-		else {
-			return null;
-		}
-	}
+    @Override
+    public List<TestDataObject> load(final String fileName) {
+        final File file = new File(getDirectory() + File.separator + fileName + FILE_EXTENSION);
+        if (file.exists()) {
+            final UserTestData result = JAXB.unmarshal(file, UserTestData.class);
+            return result.getTestData();
+        }
+        else {
+            return null;
+        }
+    }
 
-	@Override
-	public void save(final List<TestDataObject> list, final String fileName) {
-		final UserTestData userTestData = new UserTestData();
-		userTestData.addTestData(list);
-		JAXB.marshal(userTestData, new File(getDirectory() + File.separator + fileName + FILE_EXTENSION));
-		userTestData.removeTestData(list);
-	}
+    @Override
+    public void save(final List<TestDataObject> list, final String fileName) {
+        final UserTestData userTestData = new UserTestData();
+        userTestData.addTestData(list);
+        JAXB.marshal(userTestData, new File(getDirectory() + File.separator + fileName + FILE_EXTENSION));
+        userTestData.removeTestData(list);
+    }
 
-	private File getDirectory() {
-		final File dir = new File(System.getProperty("user.dir") + filePath);
-		if (!dir.exists()) {
-			if (!dir.mkdirs()) {
-				throw new RuntimeException("Couldn't create directory for user tests!");
-			}
-		}
-		return dir;
-	}
+    private File getDirectory() {
+        final File dir = new File(System.getProperty("user.dir") + filePath);
+        if (!dir.exists()) {
+            if (!dir.mkdirs()) {
+                throw new RuntimeException("Couldn't create directory for user tests!");
+            }
+        }
+        return dir;
+    }
 }

@@ -33,17 +33,17 @@ import org.jowidgets.api.widgets.IWidget;
 
 public final class WidgetCheck {
 
-	private WidgetCheck() {};
+    private WidgetCheck() {};
 
-	public static void check(final Object object) {
-		if (object instanceof IWidget) {
-			final IWidget widget = (IWidget) object;
-			if (widget.isDisposed()) {
-				throw new IllegalStateException("Widget is disposed");
-			}
-		}
-		if (!Toolkit.getUiThreadAccess().isUiThread()) {
-			throw new IllegalStateException("Wrong thread! Wigdet must be accessed in the UI thread");
-		}
-	}
+    public static void check(final Object object) {
+        if (object instanceof IWidget) {
+            final IWidget widget = (IWidget) object;
+            if (widget.isDisposed()) {
+                throw new IllegalStateException("Widget is disposed");
+            }
+        }
+        if (!Toolkit.getUiThreadAccess().isUiThread()) {
+            throw new IllegalStateException("Wrong thread! Wigdet must be accessed in the UI thread");
+        }
+    }
 }

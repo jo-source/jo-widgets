@@ -46,118 +46,118 @@ import org.jowidgets.util.event.IChangeListener;
 
 final class DefaultWaitAnimationProcessor implements IWaitAnimationProcessor {
 
-	private static final String TEXT_0 = "";
-	private static final String TEXT_1 = ".";
-	private static final String TEXT_2 = "..";
-	private static final String TEXT_3 = "...";
+    private static final String TEXT_0 = "";
+    private static final String TEXT_1 = ".";
+    private static final String TEXT_2 = "..";
+    private static final String TEXT_3 = "...";
 
-	private final Set<IChangeListener> changeListeners;
-	private final IUiThreadAccess uiThreadAccess;
-	private final ScheduledExecutorService threadPool;
+    private final Set<IChangeListener> changeListeners;
+    private final IUiThreadAccess uiThreadAccess;
+    private final ScheduledExecutorService threadPool;
 
-	private ScheduledFuture<?> scheduledFuture;
-	private int animationState;
+    private ScheduledFuture<?> scheduledFuture;
+    private int animationState;
 
-	private IImageConstant icon;
-	private String text;
+    private IImageConstant icon;
+    private String text;
 
-	DefaultWaitAnimationProcessor() {
-		super();
-		this.uiThreadAccess = Toolkit.getUiThreadAccess();
-		this.threadPool = Executors.newScheduledThreadPool(1, new DaemonThreadFactory("WaitAnimationProcessor"));
-		this.changeListeners = new HashSet<IChangeListener>();
-		this.animationState = 0;
-		this.icon = IconsSmall.WAIT_1;
-		this.text = "";
-	}
+    DefaultWaitAnimationProcessor() {
+        super();
+        this.uiThreadAccess = Toolkit.getUiThreadAccess();
+        this.threadPool = Executors.newScheduledThreadPool(1, new DaemonThreadFactory("WaitAnimationProcessor"));
+        this.changeListeners = new HashSet<IChangeListener>();
+        this.animationState = 0;
+        this.icon = IconsSmall.WAIT_1;
+        this.text = "";
+    }
 
-	@Override
-	public void addChangeListener(final IChangeListener listener) {
-		changeListeners.add(listener);
-		listener.changed();
-		if (changeListeners.size() == 1) {
-			start();
-		}
-	}
+    @Override
+    public void addChangeListener(final IChangeListener listener) {
+        changeListeners.add(listener);
+        listener.changed();
+        if (changeListeners.size() == 1) {
+            start();
+        }
+    }
 
-	@Override
-	public void removeChangeListener(final IChangeListener listener) {
-		changeListeners.remove(listener);
-		if (changeListeners.size() == 0) {
-			stop();
-		}
-	}
+    @Override
+    public void removeChangeListener(final IChangeListener listener) {
+        changeListeners.remove(listener);
+        if (changeListeners.size() == 0) {
+            stop();
+        }
+    }
 
-	@Override
-	public IImageConstant getWaitIcon() {
-		return icon;
-	}
+    @Override
+    public IImageConstant getWaitIcon() {
+        return icon;
+    }
 
-	@Override
-	public String getWaitText() {
-		return text;
-	}
+    @Override
+    public String getWaitText() {
+        return text;
+    }
 
-	private void start() {
-		if (scheduledFuture == null) {
-			final Runnable labelAnimationRunnable = new Runnable() {
-				@Override
-				public void run() {
-					nextStep();
-				}
-			};
-			this.scheduledFuture = threadPool.scheduleAtFixedRate(labelAnimationRunnable, 500, 250, TimeUnit.MILLISECONDS);
-		}
-	}
+    private void start() {
+        if (scheduledFuture == null) {
+            final Runnable labelAnimationRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    nextStep();
+                }
+            };
+            this.scheduledFuture = threadPool.scheduleAtFixedRate(labelAnimationRunnable, 500, 250, TimeUnit.MILLISECONDS);
+        }
+    }
 
-	private void stop() {
-		if (scheduledFuture != null) {
-			scheduledFuture.cancel(false);
-			scheduledFuture = null;
-		}
-	}
+    private void stop() {
+        if (scheduledFuture != null) {
+            scheduledFuture.cancel(false);
+            scheduledFuture = null;
+        }
+    }
 
-	private void nextStep() {
-		if (animationState == 0) {
-			icon = IconsSmall.WAIT_1;
-			text = TEXT_0;
-		}
-		else if (animationState == 1) {
-			icon = IconsSmall.WAIT_2;
-			text = TEXT_1;
-		}
-		else if (animationState == 2) {
-			icon = IconsSmall.WAIT_3;
-			text = TEXT_2;
-		}
-		else if (animationState == 3) {
-			icon = IconsSmall.WAIT_4;
-			text = TEXT_3;
-		}
+    private void nextStep() {
+        if (animationState == 0) {
+            icon = IconsSmall.WAIT_1;
+            text = TEXT_0;
+        }
+        else if (animationState == 1) {
+            icon = IconsSmall.WAIT_2;
+            text = TEXT_1;
+        }
+        else if (animationState == 2) {
+            icon = IconsSmall.WAIT_3;
+            text = TEXT_2;
+        }
+        else if (animationState == 3) {
+            icon = IconsSmall.WAIT_4;
+            text = TEXT_3;
+        }
 
-		if (animationState == 3) {
-			animationState = 0;
-		}
-		else {
-			animationState++;
-		}
+        if (animationState == 3) {
+            animationState = 0;
+        }
+        else {
+            animationState++;
+        }
 
-		fireChangedEventLater();
-	}
+        fireChangedEventLater();
+    }
 
-	private void fireChangedEventLater() {
-		uiThreadAccess.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				fireChangedEvent();
-			}
-		});
-	}
+    private void fireChangedEventLater() {
+        uiThreadAccess.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                fireChangedEvent();
+            }
+        });
+    }
 
-	private void fireChangedEvent() {
-		for (final IChangeListener listener : new LinkedList<IChangeListener>(changeListeners)) {
-			listener.changed();
-		}
-	}
+    private void fireChangedEvent() {
+        for (final IChangeListener listener : new LinkedList<IChangeListener>(changeListeners)) {
+            listener.changed();
+        }
+    }
 
 }

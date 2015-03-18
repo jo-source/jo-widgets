@@ -32,6 +32,6 @@ import org.jowidgets.common.widgets.controller.IMouseButtonEvent;
 
 public interface IMouseButtonEventMatcher {
 
-	boolean matches(IMouseButtonEvent event, boolean doubleClick);
+    boolean matches(IMouseButtonEvent event, boolean doubleClick);
 
 }

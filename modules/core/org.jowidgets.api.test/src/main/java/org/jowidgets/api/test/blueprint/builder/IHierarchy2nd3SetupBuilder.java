@@ -34,13 +34,13 @@ package org.jowidgets.api.test.blueprint.builder;
 import org.jowidgets.api.test.blueprint.convenience.IHierarchy2nd3Convenience;
 
 public interface IHierarchy2nd3SetupBuilder<INSTANCE_TYPE extends IHierarchy2nd3SetupBuilder<?>> extends
-		IHierarchy1stSetupBuilder<INSTANCE_TYPE>,
-		IHierarchy2nd3Convenience<INSTANCE_TYPE> {
+        IHierarchy1stSetupBuilder<INSTANCE_TYPE>,
+        IHierarchy2nd3Convenience<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setIntroPartTwoThree(String introPartThree);
+    INSTANCE_TYPE setIntroPartTwoThree(String introPartThree);
 
-	INSTANCE_TYPE setConvenienceAnnotationCalled(int annotationCalled);
+    INSTANCE_TYPE setConvenienceAnnotationCalled(int annotationCalled);
 
-	INSTANCE_TYPE setDefaultInitializerTestValue(int defaultInitializerCalled);
+    INSTANCE_TYPE setDefaultInitializerTestValue(int defaultInitializerCalled);
 
 }

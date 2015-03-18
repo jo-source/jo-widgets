@@ -32,9 +32,9 @@ import org.jowidgets.common.widgets.builder.IFrameSetupBuilderCommon;
 
 public class FrameDefaultsCommon implements IDefaultInitializer<IFrameSetupBuilderCommon<?>> {
 
-	@Override
-	public void initialize(final IFrameSetupBuilderCommon<?> builder) {
-		builder.setCloseable(true);
-	}
+    @Override
+    public void initialize(final IFrameSetupBuilderCommon<?> builder) {
+        builder.setCloseable(true);
+    }
 
 }

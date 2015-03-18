@@ -38,48 +38,48 @@ import org.jowidgets.util.Assert;
 
 public class SwingActionWrapper implements Action, Serializable {
 
-	private static final long serialVersionUID = -4929518877569965000L;
+    private static final long serialVersionUID = -4929518877569965000L;
 
-	private final Action original;
+    private final Action original;
 
-	public SwingActionWrapper(final Action original) {
-		Assert.paramNotNull(original, "original");
-		this.original = original;
-	}
+    public SwingActionWrapper(final Action original) {
+        Assert.paramNotNull(original, "original");
+        this.original = original;
+    }
 
-	@Override
-	public void actionPerformed(final ActionEvent e) {
-		original.actionPerformed(e);
-	}
+    @Override
+    public void actionPerformed(final ActionEvent e) {
+        original.actionPerformed(e);
+    }
 
-	@Override
-	public Object getValue(final String key) {
-		return original.getValue(key);
-	}
+    @Override
+    public Object getValue(final String key) {
+        return original.getValue(key);
+    }
 
-	@Override
-	public void putValue(final String key, final Object value) {
-		original.putValue(key, value);
-	}
+    @Override
+    public void putValue(final String key, final Object value) {
+        original.putValue(key, value);
+    }
 
-	@Override
-	public void setEnabled(final boolean b) {
-		original.setEnabled(b);
-	}
+    @Override
+    public void setEnabled(final boolean b) {
+        original.setEnabled(b);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return original.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return original.isEnabled();
+    }
 
-	@Override
-	public void addPropertyChangeListener(final PropertyChangeListener listener) {
-		original.addPropertyChangeListener(listener);
-	}
+    @Override
+    public void addPropertyChangeListener(final PropertyChangeListener listener) {
+        original.addPropertyChangeListener(listener);
+    }
 
-	@Override
-	public void removePropertyChangeListener(final PropertyChangeListener listener) {
-		original.removePropertyChangeListener(listener);
-	}
+    @Override
+    public void removePropertyChangeListener(final PropertyChangeListener listener) {
+        original.removePropertyChangeListener(listener);
+    }
 
 }

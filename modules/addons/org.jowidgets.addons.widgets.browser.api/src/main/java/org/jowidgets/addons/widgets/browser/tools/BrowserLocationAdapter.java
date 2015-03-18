@@ -34,10 +34,10 @@ import org.jowidgets.common.types.IVetoable;
 
 public class BrowserLocationAdapter implements IBrowserLocationListener {
 
-	@Override
-	public void onLocationChange(final IBrowserLocationEvent event, final IVetoable veto) {}
+    @Override
+    public void onLocationChange(final IBrowserLocationEvent event, final IVetoable veto) {}
 
-	@Override
-	public void locationChanged(final IBrowserLocationEvent event) {}
+    @Override
+    public void locationChanged(final IBrowserLocationEvent event) {}
 
 }

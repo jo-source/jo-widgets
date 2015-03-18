@@ -30,21 +30,21 @@ package org.jowidgets.util.builder;
 
 public abstract class AbstractSingleUseBuilder<RESULT_TYPE> {
 
-	private boolean exhausted = false;
+    private boolean exhausted = false;
 
-	protected abstract RESULT_TYPE doBuild();
+    protected abstract RESULT_TYPE doBuild();
 
-	protected final void checkExhausted() {
-		if (exhausted) {
-			throw new IllegalStateException("The builder is exhausted. It's a single use builder that can only be used once.");
-		}
-	}
+    protected final void checkExhausted() {
+        if (exhausted) {
+            throw new IllegalStateException("The builder is exhausted. It's a single use builder that can only be used once.");
+        }
+    }
 
-	public final RESULT_TYPE build() {
-		checkExhausted();
-		final RESULT_TYPE result = doBuild();
-		exhausted = true;
-		return result;
-	}
+    public final RESULT_TYPE build() {
+        checkExhausted();
+        final RESULT_TYPE result = doBuild();
+        exhausted = true;
+        return result;
+    }
 
 }

@@ -30,6 +30,6 @@ package org.jowidgets.common.application;
 
 public interface IApplicationRunner {
 
-	void run(IApplication application);
+    void run(IApplication application);
 
 }

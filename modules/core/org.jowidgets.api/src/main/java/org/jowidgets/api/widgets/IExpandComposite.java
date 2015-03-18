@@ -35,32 +35,32 @@ import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 
 public interface IExpandComposite extends IControl, IContainer, IExpandObservable {
 
-	void setText(String text);
+    void setText(String text);
 
-	String getText();
+    String getText();
 
-	void setIcon(IImageConstant icon);
+    void setIcon(IImageConstant icon);
 
-	IImageConstant getIcon();
+    IImageConstant getIcon();
 
-	void setTextMarkup(Markup markup);
+    void setTextMarkup(Markup markup);
 
-	void setTextColor(IColorConstant color);
+    void setTextColor(IColorConstant color);
 
-	void setCustomHeader(ICustomWidgetCreator<? extends IControl> header);
+    void setCustomHeader(ICustomWidgetCreator<? extends IControl> header);
 
-	IColorConstant getTextColor();
+    IColorConstant getTextColor();
 
-	void setHeaderBackgroundColor(IColorConstant color);
+    void setHeaderBackgroundColor(IColorConstant color);
 
-	IColorConstant getHeaderBackgroundColor();
+    IColorConstant getHeaderBackgroundColor();
 
-	void setContentBackgroundColor(IColorConstant color);
+    void setContentBackgroundColor(IColorConstant color);
 
-	IColorConstant getContentBackgroundColor();
+    IColorConstant getContentBackgroundColor();
 
-	void setExpanded(boolean expanded);
+    void setExpanded(boolean expanded);
 
-	boolean isExpanded();
+    boolean isExpanded();
 
 }

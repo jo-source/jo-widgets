@@ -30,18 +30,18 @@ package org.jowidgets.addons.widgets.ole.api;
 
 public interface IOleAutomation {
 
-	<RESULT_TYPE> RESULT_TYPE invoke(String methodName, IInvocationParameter... parameter);
+    <RESULT_TYPE> RESULT_TYPE invoke(String methodName, IInvocationParameter... parameter);
 
-	boolean setProperty(String propertyName, Object... parameter);
+    boolean setProperty(String propertyName, Object... parameter);
 
-	<RESULT_TYPE> RESULT_TYPE getProperty(String propertyName, Object... parameter);
+    <RESULT_TYPE> RESULT_TYPE getProperty(String propertyName, Object... parameter);
 
-	void addEventListener(int eventID, IOleEventListener listener);
+    void addEventListener(int eventID, IOleEventListener listener);
 
-	void removeEventListener(int eventID, IOleEventListener listener);
+    void removeEventListener(int eventID, IOleEventListener listener);
 
-	String getTypeInfo();
+    String getTypeInfo();
 
-	void dispose();
+    void dispose();
 
 }

@@ -40,58 +40,58 @@ import org.jowidgets.workbench.api.IWorkbenchDescriptor;
 
 public interface IWorkbenchModelBuilder extends IWorkbenchPartBuilder<IWorkbenchModelBuilder> {
 
-	IWorkbenchModelBuilder setDescriptor(IWorkbenchDescriptor descriptor);
+    IWorkbenchModelBuilder setDescriptor(IWorkbenchDescriptor descriptor);
 
-	IWorkbenchModelBuilder setInitialDimension(Dimension initialDimension);
+    IWorkbenchModelBuilder setInitialDimension(Dimension initialDimension);
 
-	IWorkbenchModelBuilder setInitialMaximized(boolean maximized);
+    IWorkbenchModelBuilder setInitialMaximized(boolean maximized);
 
-	IWorkbenchModelBuilder setDecorated(boolean decorated);
+    IWorkbenchModelBuilder setDecorated(boolean decorated);
 
-	IWorkbenchModelBuilder setInitialPosition(Position initialPosition);
+    IWorkbenchModelBuilder setInitialPosition(Position initialPosition);
 
-	IWorkbenchModelBuilder setInitialSplitWeight(double initialSplitWeigth);
+    IWorkbenchModelBuilder setInitialSplitWeight(double initialSplitWeigth);
 
-	IWorkbenchModelBuilder setApplicationNavigator(boolean hasApplicationNavigator);
+    IWorkbenchModelBuilder setApplicationNavigator(boolean hasApplicationNavigator);
 
-	IWorkbenchModelBuilder setApplicationsCloseable(boolean applicationsCloseable);
+    IWorkbenchModelBuilder setApplicationsCloseable(boolean applicationsCloseable);
 
-	IWorkbenchModelBuilder setToolBar(IToolBarModel toolBarModel);
+    IWorkbenchModelBuilder setToolBar(IToolBarModel toolBarModel);
 
-	IWorkbenchModelBuilder setMenuBar(IMenuBarModel menuBarModel);
+    IWorkbenchModelBuilder setMenuBar(IMenuBarModel menuBarModel);
 
-	IWorkbenchModelBuilder setStatusBarCreator(IContentCreator statusBarContentCreator);
+    IWorkbenchModelBuilder setStatusBarCreator(IContentCreator statusBarContentCreator);
 
-	IWorkbenchModelBuilder setLoginCallback(ILoginCallback loginCallback);
+    IWorkbenchModelBuilder setLoginCallback(ILoginCallback loginCallback);
 
-	IWorkbenchModelBuilder setCloseCallback(ICloseCallback closeCallback);
+    IWorkbenchModelBuilder setCloseCallback(ICloseCallback closeCallback);
 
-	IWorkbenchModelBuilder setViewFactoy(IViewFactory viewFactory);
+    IWorkbenchModelBuilder setViewFactoy(IViewFactory viewFactory);
 
-	IWorkbenchModelBuilder setInitializeCallback(IWorkbenchInitializeCallback initializeCallback);
+    IWorkbenchModelBuilder setInitializeCallback(IWorkbenchInitializeCallback initializeCallback);
 
-	IWorkbenchModelBuilder addInitializeCallback(IWorkbenchInitializeCallback initializeCallback);
+    IWorkbenchModelBuilder addInitializeCallback(IWorkbenchInitializeCallback initializeCallback);
 
-	IWorkbenchModelBuilder addShutdownHook(Runnable shutdownHook);
+    IWorkbenchModelBuilder addShutdownHook(Runnable shutdownHook);
 
-	IWorkbenchModelBuilder addApplication(IWorkbenchApplicationModel applicationModel);
+    IWorkbenchModelBuilder addApplication(IWorkbenchApplicationModel applicationModel);
 
-	IWorkbenchModelBuilder addApplication(int index, IWorkbenchApplicationModel applicationModel);
+    IWorkbenchModelBuilder addApplication(int index, IWorkbenchApplicationModel applicationModel);
 
-	IWorkbenchModelBuilder addApplication(IWorkbenchApplicationModelBuilder applicationModelBuilder);
+    IWorkbenchModelBuilder addApplication(IWorkbenchApplicationModelBuilder applicationModelBuilder);
 
-	IWorkbenchModelBuilder addApplication(int index, IWorkbenchApplicationModelBuilder applicationModelBuilder);
+    IWorkbenchModelBuilder addApplication(int index, IWorkbenchApplicationModelBuilder applicationModelBuilder);
 
-	IWorkbenchModelBuilder addApplication(String id, String label, String tooltip, IImageConstant icon);
+    IWorkbenchModelBuilder addApplication(String id, String label, String tooltip, IImageConstant icon);
 
-	IWorkbenchModelBuilder addApplication(String id, String label, IImageConstant icon);
+    IWorkbenchModelBuilder addApplication(String id, String label, IImageConstant icon);
 
-	IWorkbenchModelBuilder addApplication(String id, String label, String tooltip);
+    IWorkbenchModelBuilder addApplication(String id, String label, String tooltip);
 
-	IWorkbenchModelBuilder addApplication(String id, String label);
+    IWorkbenchModelBuilder addApplication(String id, String label);
 
-	IWorkbenchModelBuilder addApplication(String id);
+    IWorkbenchModelBuilder addApplication(String id);
 
-	IWorkbenchModel build();
+    IWorkbenchModel build();
 
 }

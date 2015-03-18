@@ -47,24 +47,24 @@ import org.jowidgets.common.widgets.layout.ILayouter;
  */
 public final class FillLayout {
 
-	private FillLayout() {}
+    private FillLayout() {}
 
-	/**
-	 * Gets a layout factory for an 'FillLayout'
-	 * 
-	 * @return A layout factory that produces 'FillLayout'
-	 */
-	public static ILayoutFactory<ILayouter> get() {
-		return Toolkit.getLayoutFactoryProvider().fillLayout();
-	}
+    /**
+     * Gets a layout factory for an 'FillLayout'
+     * 
+     * @return A layout factory that produces 'FillLayout'
+     */
+    public static ILayoutFactory<ILayouter> get() {
+        return Toolkit.getLayoutFactoryProvider().fillLayout();
+    }
 
-	/**
-	 * Gets a builder for an layout factory of an 'FillLayout'
-	 * 
-	 * @return A builder for an layout factory of an 'FillLayout'
-	 */
-	public static IFillLayoutFactoryBuilder builder() {
-		return Toolkit.getLayoutFactoryProvider().fillLayoutBuilder();
-	}
+    /**
+     * Gets a builder for an layout factory of an 'FillLayout'
+     * 
+     * @return A builder for an layout factory of an 'FillLayout'
+     */
+    public static IFillLayoutFactoryBuilder builder() {
+        return Toolkit.getLayoutFactoryProvider().fillLayoutBuilder();
+    }
 
 }

@@ -85,364 +85,364 @@ import org.jowidgets.util.Assert;
 
 public class ToolBarImpl extends AbstractToolBarSpiWrapper implements IToolBar, IListItemObservable {
 
-	private final ControlDelegate controlDelegate;
-	private final List<IToolBarItem> children;
-	private final IListModelListener listModelListener;
-	private final IItemModelListener itemModelListener;
-	private final ModelViewIndexConverter<IItemModel> modelViewConverter;
-	private final ListItemObservable itemObs;
-	private IToolBarModel model;
+    private final ControlDelegate controlDelegate;
+    private final List<IToolBarItem> children;
+    private final IListModelListener listModelListener;
+    private final IItemModelListener itemModelListener;
+    private final ModelViewIndexConverter<IItemModel> modelViewConverter;
+    private final ListItemObservable itemObs;
+    private IToolBarModel model;
 
-	public ToolBarImpl(final IToolBarSpi widgetSpi, final IToolBarSetup setup) {
-		super(widgetSpi);
-		this.controlDelegate = new ControlDelegate(widgetSpi, this);
+    public ToolBarImpl(final IToolBarSpi widgetSpi, final IToolBarSetup setup) {
+        super(widgetSpi);
+        this.controlDelegate = new ControlDelegate(widgetSpi, this);
 
-		this.children = new LinkedList<IToolBarItem>();
+        this.children = new LinkedList<IToolBarItem>();
 
-		VisibiliySettingsInvoker.setVisibility(setup, this);
-		ColorSettingsInvoker.setColors(setup, this);
+        VisibiliySettingsInvoker.setVisibility(setup, this);
+        ColorSettingsInvoker.setColors(setup, this);
 
-		this.itemObs = new ListItemObservable();
-		this.modelViewConverter = new ModelViewIndexConverter<IItemModel>();
+        this.itemObs = new ListItemObservable();
+        this.modelViewConverter = new ModelViewIndexConverter<IItemModel>();
 
-		this.listModelListener = new ListModelAdapter() {
+        this.listModelListener = new ListModelAdapter() {
 
-			@Override
-			public void beforeChildRemove(final int index) {
-				final IToolBarItemModel childModel = getModel().getItems().get(index);
-				final int viewIndex = modelViewConverter.removeModel(childModel, index);
-				childModel.removeItemModelListener(itemModelListener);
-				if (viewIndex != -1) {
-					remove(viewIndex);
-				}
-				pack();
-			}
+            @Override
+            public void beforeChildRemove(final int index) {
+                final IToolBarItemModel childModel = getModel().getItems().get(index);
+                final int viewIndex = modelViewConverter.removeModel(childModel, index);
+                childModel.removeItemModelListener(itemModelListener);
+                if (viewIndex != -1) {
+                    remove(viewIndex);
+                }
+                pack();
+            }
 
-			@Override
-			public void afterChildAdded(final int index) {
-				final IToolBarItemModel addedModel = getModel().getItems().get(index);
-				addChild(index, addedModel);
-				pack();
-			}
-		};
+            @Override
+            public void afterChildAdded(final int index) {
+                final IToolBarItemModel addedModel = getModel().getItems().get(index);
+                addChild(index, addedModel);
+                pack();
+            }
+        };
 
-		this.itemModelListener = new IItemModelListener() {
-			@Override
-			public void itemChanged(final IItemModel item) {
-				final boolean visible = item.isVisible();
-				final int viewIndex = modelViewConverter.markVisibility(item, visible);
-				if (viewIndex != -1) {
-					if (visible) {
-						addChildToView(viewIndex, (IToolBarItemModel) item);
-					}
-					else {
-						remove(viewIndex);
-					}
-				}
-			}
-		};
+        this.itemModelListener = new IItemModelListener() {
+            @Override
+            public void itemChanged(final IItemModel item) {
+                final boolean visible = item.isVisible();
+                final int viewIndex = modelViewConverter.markVisibility(item, visible);
+                if (viewIndex != -1) {
+                    if (visible) {
+                        addChildToView(viewIndex, (IToolBarItemModel) item);
+                    }
+                    else {
+                        remove(viewIndex);
+                    }
+                }
+            }
+        };
 
-		setModel(Toolkit.getModelFactoryProvider().getItemModelFactory().toolBar());
-	}
+        setModel(Toolkit.getModelFactoryProvider().getItemModelFactory().toolBar());
+    }
 
-	@Override
-	public void setModel(final IToolBarModel model) {
-		modelViewConverter.clear();
-		if (this.model != null) {
-			for (final IItemModel child : model.getItems()) {
-				child.removeItemModelListener(itemModelListener);
-			}
-			this.model.removeListModelListener(listModelListener);
-			removeAll();
-		}
-		this.model = model;
-		int childModelIndex = 0;
-		for (final IToolBarItemModel childModel : model.getItems()) {
-			addChild(childModelIndex, childModel);
-			childModelIndex++;
-		}
-		model.addListModelListener(listModelListener);
-		pack();
-	}
+    @Override
+    public void setModel(final IToolBarModel model) {
+        modelViewConverter.clear();
+        if (this.model != null) {
+            for (final IItemModel child : model.getItems()) {
+                child.removeItemModelListener(itemModelListener);
+            }
+            this.model.removeListModelListener(listModelListener);
+            removeAll();
+        }
+        this.model = model;
+        int childModelIndex = 0;
+        for (final IToolBarItemModel childModel : model.getItems()) {
+            addChild(childModelIndex, childModel);
+            childModelIndex++;
+        }
+        model.addListModelListener(listModelListener);
+        pack();
+    }
 
-	@Override
-	public IToolBarModel getModel() {
-		return model;
-	}
+    @Override
+    public IToolBarModel getModel() {
+        return model;
+    }
 
-	@Override
-	public IContainer getParent() {
-		return controlDelegate.getParent();
-	}
+    @Override
+    public IContainer getParent() {
+        return controlDelegate.getParent();
+    }
 
-	@Override
-	public void setParent(final IContainer parent) {
-		controlDelegate.setParent(parent);
-	}
+    @Override
+    public void setParent(final IContainer parent) {
+        controlDelegate.setParent(parent);
+    }
 
-	@Override
-	public void addParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.addParentListener(listener);
-	}
+    @Override
+    public void addParentListener(final IParentListener<IContainer> listener) {
+        controlDelegate.addParentListener(listener);
+    }
 
-	@Override
-	public void removeParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.removeParentListener(listener);
-	}
+    @Override
+    public void removeParentListener(final IParentListener<IContainer> listener) {
+        controlDelegate.removeParentListener(listener);
+    }
 
-	@Override
-	public boolean isReparentable() {
-		return controlDelegate.isReparentable();
-	}
+    @Override
+    public boolean isReparentable() {
+        return controlDelegate.isReparentable();
+    }
 
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		controlDelegate.addDisposeListener(listener);
-	}
+    @Override
+    public void addDisposeListener(final IDisposeListener listener) {
+        controlDelegate.addDisposeListener(listener);
+    }
 
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		controlDelegate.removeDisposeListener(listener);
-	}
+    @Override
+    public void removeDisposeListener(final IDisposeListener listener) {
+        controlDelegate.removeDisposeListener(listener);
+    }
 
-	@Override
-	public boolean isDisposed() {
-		return controlDelegate.isDisposed();
-	}
+    @Override
+    public boolean isDisposed() {
+        return controlDelegate.isDisposed();
+    }
 
-	@Override
-	public void dispose() {
-		if (!isDisposed()) {
-			this.model.removeListModelListener(listModelListener);
-			for (final IItemModel child : model.getItems()) {
-				child.removeItemModelListener(itemModelListener);
-			}
+    @Override
+    public void dispose() {
+        if (!isDisposed()) {
+            this.model.removeListModelListener(listModelListener);
+            for (final IItemModel child : model.getItems()) {
+                child.removeItemModelListener(itemModelListener);
+            }
 
-			final List<IToolBarItem> childrenCopy = new LinkedList<IToolBarItem>(children);
-			//clear the children to avoid that children will be removed
-			//unnecessarily from its parent toolbar on dispose invocation
-			children.clear();
-			for (final IToolBarItem child : childrenCopy) {
-				child.dispose();
-			}
-			controlDelegate.dispose();
-			modelViewConverter.dispose();
-		}
+            final List<IToolBarItem> childrenCopy = new LinkedList<IToolBarItem>(children);
+            //clear the children to avoid that children will be removed
+            //unnecessarily from its parent toolbar on dispose invocation
+            children.clear();
+            for (final IToolBarItem child : childrenCopy) {
+                child.dispose();
+            }
+            controlDelegate.dispose();
+            modelViewConverter.dispose();
+        }
 
-	}
+    }
 
-	@Override
-	public IPopupMenu createPopupMenu() {
-		return controlDelegate.createPopupMenu();
-	}
+    @Override
+    public IPopupMenu createPopupMenu() {
+        return controlDelegate.createPopupMenu();
+    }
 
-	@Override
-	public List<IToolBarItem> getChildren() {
-		return new LinkedList<IToolBarItem>(children);
-	}
+    @Override
+    public List<IToolBarItem> getChildren() {
+        return new LinkedList<IToolBarItem>(children);
+    }
 
-	@Override
-	public void remove(final int index) {
-		final IToolBarItem item = children.get(index);
-		children.remove(index);
-		item.dispose();
-		getWidget().remove(index);
-	}
+    @Override
+    public void remove(final int index) {
+        final IToolBarItem item = children.get(index);
+        children.remove(index);
+        item.dispose();
+        getWidget().remove(index);
+    }
 
-	@Override
-	public boolean remove(final IToolBarItem item) {
-		Assert.paramNotNull(item, "item");
-		final int index = children.indexOf(item);
-		if (index != -1) {
-			remove(index);
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+    @Override
+    public boolean remove(final IToolBarItem item) {
+        Assert.paramNotNull(item, "item");
+        final int index = children.indexOf(item);
+        if (index != -1) {
+            remove(index);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
-	@Override
-	public void removeAll() {
-		for (final IToolBarItem item : getChildren()) {
-			remove(item);
-		}
-	}
+    @Override
+    public void removeAll() {
+        for (final IToolBarItem item : getChildren()) {
+            remove(item);
+        }
+    }
 
-	@Override
-	public IToolBarItem addSeparator() {
-		return addSeparator(null);
-	}
+    @Override
+    public IToolBarItem addSeparator() {
+        return addSeparator(null);
+    }
 
-	@Override
-	public IToolBarItem addSeparator(final int index) {
-		if (index < 0 || index > children.size()) {
-			throw new IllegalArgumentException("Index must be between '0' and '" + children.size() + "'.");
-		}
-		return addSeparator(Integer.valueOf(index));
-	}
+    @Override
+    public IToolBarItem addSeparator(final int index) {
+        if (index < 0 || index > children.size()) {
+            throw new IllegalArgumentException("Index must be between '0' and '" + children.size() + "'.");
+        }
+        return addSeparator(Integer.valueOf(index));
+    }
 
-	private IToolBarItem addSeparator(final Integer index) {
-		if (index != null) {
-			return addItem(index.intValue(), Toolkit.getBluePrintFactory().toolBarSeparator());
-		}
-		else {
-			return addItem(Toolkit.getBluePrintFactory().toolBarSeparator());
-		}
-	}
+    private IToolBarItem addSeparator(final Integer index) {
+        if (index != null) {
+            return addItem(index.intValue(), Toolkit.getBluePrintFactory().toolBarSeparator());
+        }
+        else {
+            return addItem(Toolkit.getBluePrintFactory().toolBarSeparator());
+        }
+    }
 
-	@Override
-	public IToolBarButton addAction(final int index, final IAction action) {
-		final IToolBarButton result = addItem(index, Toolkit.getBluePrintFactory().toolBarButton());
-		result.setAction(action);
-		return result;
-	}
+    @Override
+    public IToolBarButton addAction(final int index, final IAction action) {
+        final IToolBarButton result = addItem(index, Toolkit.getBluePrintFactory().toolBarButton());
+        result.setAction(action);
+        return result;
+    }
 
-	@Override
-	public IToolBarButton addAction(final IAction action) {
-		final IToolBarButton result = addItem(Toolkit.getBluePrintFactory().toolBarButton());
-		result.setAction(action);
-		return result;
-	}
+    @Override
+    public IToolBarButton addAction(final IAction action) {
+        final IToolBarButton result = addItem(Toolkit.getBluePrintFactory().toolBarButton());
+        result.setAction(action);
+        return result;
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IToolBarItem> WIDGET_TYPE addItem(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
-		final WIDGET_TYPE result = addItemInternal(null, descriptor);
-		addToModel(null, result);
-		return result;
-	}
+    @Override
+    public <WIDGET_TYPE extends IToolBarItem> WIDGET_TYPE addItem(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+        final WIDGET_TYPE result = addItemInternal(null, descriptor);
+        addToModel(null, result);
+        return result;
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IToolBarItem> WIDGET_TYPE addItem(
-		final int index,
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+    @Override
+    public <WIDGET_TYPE extends IToolBarItem> WIDGET_TYPE addItem(
+        final int index,
+        final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
 
-		if (index < 0 || index > children.size()) {
-			throw new IllegalArgumentException("Index must be between '0' and '" + children.size() + "'.");
-		}
-		final WIDGET_TYPE result = addItemInternal(Integer.valueOf(index), descriptor);
-		addToModel(index, result);
-		return result;
-	}
+        if (index < 0 || index > children.size()) {
+            throw new IllegalArgumentException("Index must be between '0' and '" + children.size() + "'.");
+        }
+        final WIDGET_TYPE result = addItemInternal(Integer.valueOf(index), descriptor);
+        addToModel(index, result);
+        return result;
+    }
 
-	@SuppressWarnings("unchecked")
-	private <WIDGET_TYPE extends IToolBarItem> WIDGET_TYPE addItemInternal(
-		final Integer index,
-		final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+    @SuppressWarnings("unchecked")
+    private <WIDGET_TYPE extends IToolBarItem> WIDGET_TYPE addItemInternal(
+        final Integer index,
+        final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
 
-		Assert.paramNotNull(descriptor, "descriptor");
+        Assert.paramNotNull(descriptor, "descriptor");
 
-		WIDGET_TYPE result = null;
+        WIDGET_TYPE result = null;
 
-		if (IToolBarButtonDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
-			final IToolBarButtonSpi toolBarButtonSpi = getWidget().addToolBarButton(index);
-			final IToolBarButton toolBarButton = new ToolBarButtonImpl(this, toolBarButtonSpi, (IItemSetup) descriptor);
-			result = (WIDGET_TYPE) toolBarButton;
-		}
-		else if (IToolBarToggleButtonDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
-			final IToolBarToggleButtonSpi toolBarToggleButtonSpi = getWidget().addToolBarToggleButton(index);
-			final IToolBarToggleButton toolBarToggleButton = new ToolBarToggleButtonImpl(
-				this,
-				toolBarToggleButtonSpi,
-				(IItemSetup) descriptor);
-			result = (WIDGET_TYPE) toolBarToggleButton;
-		}
-		else if (IToolBarPopupButtonDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
-			final IToolBarPopupButtonSpi toolBarPopupSpi = getWidget().addToolBarPopupButton(index);
-			final IToolBarPopupButton toolBarPopupButton = new ToolBarPopupButtonImpl(
-				this,
-				toolBarPopupSpi,
-				(IItemSetup) descriptor);
-			result = (WIDGET_TYPE) toolBarPopupButton;
-		}
-		else if (IToolBarMenuDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
-			final IToolBarButtonSpi toolBarBurronSpi = getWidget().addToolBarButton(index);
-			final IToolBarMenu toolBarMenu = new ToolBarMenuImpl(this, toolBarBurronSpi, (IItemSetup) descriptor);
-			result = (WIDGET_TYPE) toolBarMenu;
-		}
-		else if (IToolBarContainerItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
-			final IToolBarContainerItemSpi toolBarContainerItemSpi = getWidget().addToolBarContainer(index);
-			final IToolBarContainerItem toolBarContainerItem = new ToolBarContainerItemImpl(
-				this,
-				toolBarContainerItemSpi,
-				(IContainerSetup) descriptor);
-			result = (WIDGET_TYPE) toolBarContainerItem;
-		}
-		else if (ISeparatorToolBarItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
-			final IToolBarItemSpi toolBarSeparatorItemSpi = getWidget().addSeparator(index);
-			final ToolBarSeparatorItemImpl toolBarSeparatorItem = new ToolBarSeparatorItemImpl(this, toolBarSeparatorItemSpi);
-			result = (WIDGET_TYPE) toolBarSeparatorItem;
-		}
-		else {
-			throw new IllegalArgumentException("Descriptor with type '" + descriptor.getClass().getName() + "' is not supported");
-		}
+        if (IToolBarButtonDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
+            final IToolBarButtonSpi toolBarButtonSpi = getWidget().addToolBarButton(index);
+            final IToolBarButton toolBarButton = new ToolBarButtonImpl(this, toolBarButtonSpi, (IItemSetup) descriptor);
+            result = (WIDGET_TYPE) toolBarButton;
+        }
+        else if (IToolBarToggleButtonDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
+            final IToolBarToggleButtonSpi toolBarToggleButtonSpi = getWidget().addToolBarToggleButton(index);
+            final IToolBarToggleButton toolBarToggleButton = new ToolBarToggleButtonImpl(
+                this,
+                toolBarToggleButtonSpi,
+                (IItemSetup) descriptor);
+            result = (WIDGET_TYPE) toolBarToggleButton;
+        }
+        else if (IToolBarPopupButtonDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
+            final IToolBarPopupButtonSpi toolBarPopupSpi = getWidget().addToolBarPopupButton(index);
+            final IToolBarPopupButton toolBarPopupButton = new ToolBarPopupButtonImpl(
+                this,
+                toolBarPopupSpi,
+                (IItemSetup) descriptor);
+            result = (WIDGET_TYPE) toolBarPopupButton;
+        }
+        else if (IToolBarMenuDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
+            final IToolBarButtonSpi toolBarBurronSpi = getWidget().addToolBarButton(index);
+            final IToolBarMenu toolBarMenu = new ToolBarMenuImpl(this, toolBarBurronSpi, (IItemSetup) descriptor);
+            result = (WIDGET_TYPE) toolBarMenu;
+        }
+        else if (IToolBarContainerItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
+            final IToolBarContainerItemSpi toolBarContainerItemSpi = getWidget().addToolBarContainer(index);
+            final IToolBarContainerItem toolBarContainerItem = new ToolBarContainerItemImpl(
+                this,
+                toolBarContainerItemSpi,
+                (IContainerSetup) descriptor);
+            result = (WIDGET_TYPE) toolBarContainerItem;
+        }
+        else if (ISeparatorToolBarItemDescriptor.class.isAssignableFrom(descriptor.getDescriptorInterface())) {
+            final IToolBarItemSpi toolBarSeparatorItemSpi = getWidget().addSeparator(index);
+            final ToolBarSeparatorItemImpl toolBarSeparatorItem = new ToolBarSeparatorItemImpl(this, toolBarSeparatorItemSpi);
+            result = (WIDGET_TYPE) toolBarSeparatorItem;
+        }
+        else {
+            throw new IllegalArgumentException("Descriptor with type '" + descriptor.getClass().getName() + "' is not supported");
+        }
 
-		addToChildren(index, result);
-		itemObs.fireItemAdded(result);
-		return result;
-	}
+        addToChildren(index, result);
+        itemObs.fireItemAdded(result);
+        return result;
+    }
 
-	private void addChild(final int modelIndex, final IToolBarItemModel model) {
-		final int viewIndex = modelViewConverter.addModel(model, model.isVisible(), modelIndex);
-		addChildToView(viewIndex, model);
-		model.addItemModelListener(itemModelListener);
-	}
+    private void addChild(final int modelIndex, final IToolBarItemModel model) {
+        final int viewIndex = modelViewConverter.addModel(model, model.isVisible(), modelIndex);
+        addChildToView(viewIndex, model);
+        model.addItemModelListener(itemModelListener);
+    }
 
-	private void addChildToView(final int viewIndex, final IToolBarItemModel model) {
-		Assert.paramNotNull(model, "model");
-		if (viewIndex != -1) {
-			final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-			if (model instanceof IActionItemModel) {
-				addItemInternal(viewIndex, bpf.toolBarButton()).setModel(model);
-			}
-			else if (model instanceof ICheckedItemModel) {
-				addItemInternal(viewIndex, bpf.toolBarToggleButton()).setModel(model);
-			}
-			else if (model instanceof IPopupActionItemModel) {
-				addItemInternal(viewIndex, bpf.toolBarPopupButton()).setModel(model);
-			}
-			else if (model instanceof IContainerItemModel) {
-				addItemInternal(viewIndex, bpf.toolBarContainerItem()).setModel(model);
-			}
-			else if (model instanceof ISeparatorItemModel) {
-				addItemInternal(viewIndex, bpf.toolBarSeparator()).setModel(model);
-			}
-			else if (model instanceof IMenuModel) {
-				addItemInternal(viewIndex, bpf.toolBarMenu()).setModel(model);
-			}
-			else {
-				throw new IllegalArgumentException("Model of type '" + model.getClass().getName() + "' is not supported.");
-			}
-		}
-	}
+    private void addChildToView(final int viewIndex, final IToolBarItemModel model) {
+        Assert.paramNotNull(model, "model");
+        if (viewIndex != -1) {
+            final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+            if (model instanceof IActionItemModel) {
+                addItemInternal(viewIndex, bpf.toolBarButton()).setModel(model);
+            }
+            else if (model instanceof ICheckedItemModel) {
+                addItemInternal(viewIndex, bpf.toolBarToggleButton()).setModel(model);
+            }
+            else if (model instanceof IPopupActionItemModel) {
+                addItemInternal(viewIndex, bpf.toolBarPopupButton()).setModel(model);
+            }
+            else if (model instanceof IContainerItemModel) {
+                addItemInternal(viewIndex, bpf.toolBarContainerItem()).setModel(model);
+            }
+            else if (model instanceof ISeparatorItemModel) {
+                addItemInternal(viewIndex, bpf.toolBarSeparator()).setModel(model);
+            }
+            else if (model instanceof IMenuModel) {
+                addItemInternal(viewIndex, bpf.toolBarMenu()).setModel(model);
+            }
+            else {
+                throw new IllegalArgumentException("Model of type '" + model.getClass().getName() + "' is not supported.");
+            }
+        }
+    }
 
-	private void addToChildren(final Integer index, final IToolBarItem item) {
-		if (index != null) {
-			children.add(index.intValue(), item);
-		}
-		else {
-			children.add(item);
-		}
-	}
+    private void addToChildren(final Integer index, final IToolBarItem item) {
+        if (index != null) {
+            children.add(index.intValue(), item);
+        }
+        else {
+            children.add(item);
+        }
+    }
 
-	private void addToModel(final Integer index, final IToolBarItem item) {
-		model.removeListModelListener(listModelListener);
-		if (index != null) {
-			getModel().addItem(index.intValue(), item.getModel());
-		}
-		else {
-			getModel().addItem(item.getModel());
-		}
-		model.addListModelListener(listModelListener);
-	}
+    private void addToModel(final Integer index, final IToolBarItem item) {
+        model.removeListModelListener(listModelListener);
+        if (index != null) {
+            getModel().addItem(index.intValue(), item.getModel());
+        }
+        else {
+            getModel().addItem(item.getModel());
+        }
+        model.addListModelListener(listModelListener);
+    }
 
-	@Override
-	public void addItemContainerListener(final IListItemListener listener) {
-		itemObs.addItemContainerListener(listener);
-	}
+    @Override
+    public void addItemContainerListener(final IListItemListener listener) {
+        itemObs.addItemContainerListener(listener);
+    }
 
-	@Override
-	public void removeItemContainerListener(final IListItemListener listener) {
-		itemObs.removeItemContainerListener(listener);
-	}
+    @Override
+    public void removeItemContainerListener(final IListItemListener listener) {
+        itemObs.removeItemContainerListener(listener);
+    }
 }

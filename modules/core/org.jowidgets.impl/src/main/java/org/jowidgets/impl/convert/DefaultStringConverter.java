@@ -32,14 +32,14 @@ import org.jowidgets.tools.converter.AbstractConverter;
 
 class DefaultStringConverter extends AbstractConverter<String> implements IConverter<String> {
 
-	@Override
-	public String convertToObject(final String string) {
-		return string;
-	}
+    @Override
+    public String convertToObject(final String string) {
+        return string;
+    }
 
-	@Override
-	public String convertToString(final String value) {
-		return value;
-	}
+    @Override
+    public String convertToString(final String value) {
+        return value;
+    }
 
 }

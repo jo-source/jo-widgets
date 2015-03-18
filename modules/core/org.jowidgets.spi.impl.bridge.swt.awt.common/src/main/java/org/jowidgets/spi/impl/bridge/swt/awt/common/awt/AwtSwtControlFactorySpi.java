@@ -30,10 +30,10 @@ package org.jowidgets.spi.impl.bridge.swt.awt.common.awt;
 
 public final class AwtSwtControlFactorySpi {
 
-	private AwtSwtControlFactorySpi() {}
+    private AwtSwtControlFactorySpi() {}
 
-	public static IAwtSwtControlFactorySpi getInstance() {
-		return new AwtSwtControlFactorySpiImpl();
-	}
+    public static IAwtSwtControlFactorySpi getInstance() {
+        return new AwtSwtControlFactorySpiImpl();
+    }
 
 }

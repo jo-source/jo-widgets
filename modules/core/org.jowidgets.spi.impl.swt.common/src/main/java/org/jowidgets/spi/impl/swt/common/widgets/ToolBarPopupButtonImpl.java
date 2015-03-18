@@ -41,33 +41,33 @@ import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 
 public class ToolBarPopupButtonImpl extends ToolBarButtonImpl implements IToolBarPopupButtonSpi {
 
-	private final PopupDetectionObservable popupDetectionObservable;
+    private final PopupDetectionObservable popupDetectionObservable;
 
-	public ToolBarPopupButtonImpl(final ToolItem item) {
-		super(item);
-		this.popupDetectionObservable = new PopupDetectionObservable();
+    public ToolBarPopupButtonImpl(final ToolItem item) {
+        super(item);
+        this.popupDetectionObservable = new PopupDetectionObservable();
 
-		item.addListener(SWT.Selection, new Listener() {
-			@Override
-			public void handleEvent(final Event event) {
-				if (event.detail == SWT.ARROW) {
-					final Rectangle bounds = item.getBounds();
-					final Point point = new Point(bounds.x, bounds.y + bounds.height);
-					popupDetectionObservable.firePopupDetected(new Position(point.x, point.y));
-				}
-			}
-		});
+        item.addListener(SWT.Selection, new Listener() {
+            @Override
+            public void handleEvent(final Event event) {
+                if (event.detail == SWT.ARROW) {
+                    final Rectangle bounds = item.getBounds();
+                    final Point point = new Point(bounds.x, bounds.y + bounds.height);
+                    popupDetectionObservable.firePopupDetected(new Position(point.x, point.y));
+                }
+            }
+        });
 
-	}
+    }
 
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		popupDetectionObservable.addPopupDetectionListener(listener);
-	}
+    @Override
+    public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+        popupDetectionObservable.addPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		popupDetectionObservable.removePopupDetectionListener(listener);
-	}
+    @Override
+    public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+        popupDetectionObservable.removePopupDetectionListener(listener);
+    }
 
 }

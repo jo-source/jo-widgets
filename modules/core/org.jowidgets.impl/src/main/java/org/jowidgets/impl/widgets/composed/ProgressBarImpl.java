@@ -52,233 +52,233 @@ import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 
 public class ProgressBarImpl extends ControlWrapper implements IProgressBar {
 
-	private final IComposite composite;
-	private final IProgressBarCommon indeterminateProgressBar;
-	private final IProgressBarCommon progressBar;
+    private final IComposite composite;
+    private final IProgressBarCommon indeterminateProgressBar;
+    private final IProgressBarCommon progressBar;
 
-	private int maximum;
-	private int minimum;
-	private int progress;
-	private boolean isIndeterminate;
+    private int maximum;
+    private int minimum;
+    private int progress;
+    private boolean isIndeterminate;
 
-	public ProgressBarImpl(final IComposite composite, final IProgressBarSetup setup, final IWidgetFactorySpi widgetsFactorySpi) {
+    public ProgressBarImpl(final IComposite composite, final IProgressBarSetup setup, final IWidgetFactorySpi widgetsFactorySpi) {
 
-		super(composite);
+        super(composite);
 
-		this.composite = composite;
+        this.composite = composite;
 
-		final String componentLayoutConstraints;
-		if (setup.getOrientation() == Orientation.HORIZONTAL) {
-			componentLayoutConstraints = "growx, growy, hidemode 3";
-		}
-		else {
-			componentLayoutConstraints = "growy, growx, hidemode 3";
-		}
+        final String componentLayoutConstraints;
+        if (setup.getOrientation() == Orientation.HORIZONTAL) {
+            componentLayoutConstraints = "growx, growy, hidemode 3";
+        }
+        else {
+            componentLayoutConstraints = "growy, growx, hidemode 3";
+        }
 
-		final ILayoutDescriptor layoutDescriptor;
-		if (setup.getOrientation() == Orientation.HORIZONTAL) {
-			layoutDescriptor = new MigLayoutDescriptor("0[grow]0", "0[grow]0");
-		}
-		else {
-			layoutDescriptor = new MigLayoutDescriptor("0[grow]0", "0[grow][grow]0");
-		}
+        final ILayoutDescriptor layoutDescriptor;
+        if (setup.getOrientation() == Orientation.HORIZONTAL) {
+            layoutDescriptor = new MigLayoutDescriptor("0[grow]0", "0[grow]0");
+        }
+        else {
+            layoutDescriptor = new MigLayoutDescriptor("0[grow]0", "0[grow][grow]0");
+        }
 
-		this.composite.setLayout(layoutDescriptor);
+        this.composite.setLayout(layoutDescriptor);
 
-		final ISpiBluePrintFactory spiBpf = new SpiBluePrintFactory();
+        final ISpiBluePrintFactory spiBpf = new SpiBluePrintFactory();
 
-		final IProgressBarBluePrintSpi intermediateProgressBarBp = spiBpf.progressBar();
-		intermediateProgressBarBp.setSetup(setup).setIndeterminate(true);
+        final IProgressBarBluePrintSpi intermediateProgressBarBp = spiBpf.progressBar();
+        intermediateProgressBarBp.setSetup(setup).setIndeterminate(true);
 
-		final IProgressBarBluePrintSpi progressBarBp = spiBpf.progressBar();
-		progressBarBp.setSetup(setup).setIndeterminate(false);
+        final IProgressBarBluePrintSpi progressBarBp = spiBpf.progressBar();
+        progressBarBp.setSetup(setup).setIndeterminate(false);
 
-		this.indeterminateProgressBar = composite.add(new ICustomWidgetCreator<ProgressBarCommonToControl>() {
-			@Override
-			public ProgressBarCommonToControl create(final ICustomWidgetFactory widgetFactory) {
-				final IProgressBarSpi progressBarSpi = widgetsFactorySpi.createProgressBar(
-						getUiReference(),
-						intermediateProgressBarBp);
-				return new ProgressBarCommonToControl(progressBarSpi);
-			}
-		},
-				componentLayoutConstraints);
+        this.indeterminateProgressBar = composite.add(new ICustomWidgetCreator<ProgressBarCommonToControl>() {
+            @Override
+            public ProgressBarCommonToControl create(final ICustomWidgetFactory widgetFactory) {
+                final IProgressBarSpi progressBarSpi = widgetsFactorySpi.createProgressBar(
+                        getUiReference(),
+                        intermediateProgressBarBp);
+                return new ProgressBarCommonToControl(progressBarSpi);
+            }
+        },
+                componentLayoutConstraints);
 
-		this.progressBar = composite.add(new ICustomWidgetCreator<ProgressBarCommonToControl>() {
-			@Override
-			public ProgressBarCommonToControl create(final ICustomWidgetFactory widgetFactory) {
-				final IProgressBarSpi progressBarSpi = widgetsFactorySpi.createProgressBar(getUiReference(), progressBarBp);
-				return new ProgressBarCommonToControl(progressBarSpi);
-			}
-		}, componentLayoutConstraints);
+        this.progressBar = composite.add(new ICustomWidgetCreator<ProgressBarCommonToControl>() {
+            @Override
+            public ProgressBarCommonToControl create(final ICustomWidgetFactory widgetFactory) {
+                final IProgressBarSpi progressBarSpi = widgetsFactorySpi.createProgressBar(getUiReference(), progressBarBp);
+                return new ProgressBarCommonToControl(progressBarSpi);
+            }
+        }, componentLayoutConstraints);
 
-		this.minimum = setup.getMinimum();
-		progressBar.setMinimum(this.minimum);
+        this.minimum = setup.getMinimum();
+        progressBar.setMinimum(this.minimum);
 
-		this.maximum = setup.getMaximum();
-		progressBar.setMaximum(this.maximum);
+        this.maximum = setup.getMaximum();
+        progressBar.setMaximum(this.maximum);
 
-		this.progress = setup.getProgress();
-		progressBar.setProgress(progress);
+        this.progress = setup.getProgress();
+        progressBar.setProgress(progress);
 
-		setIndeterminatState(setup.isIndeterminate());
+        setIndeterminatState(setup.isIndeterminate());
 
-		ColorSettingsInvoker.setColors(setup, this);
-		VisibiliySettingsInvoker.setVisibility(setup, this);
-	}
+        ColorSettingsInvoker.setColors(setup, this);
+        VisibiliySettingsInvoker.setVisibility(setup, this);
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		indeterminateProgressBar.setEnabled(enabled);
-		progressBar.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        indeterminateProgressBar.setEnabled(enabled);
+        progressBar.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return indeterminateProgressBar.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return indeterminateProgressBar.isEnabled();
+    }
 
-	@Override
-	public int getMinimum() {
-		return minimum;
-	}
+    @Override
+    public int getMinimum() {
+        return minimum;
+    }
 
-	@Override
-	public int getMaximum() {
-		return maximum;
-	}
+    @Override
+    public int getMaximum() {
+        return maximum;
+    }
 
-	@Override
-	public int getProgress() {
-		return progress;
-	}
+    @Override
+    public int getProgress() {
+        return progress;
+    }
 
-	@Override
-	public void setIndeterminate(final boolean indeterminate) {
-		if (this.isIndeterminate != indeterminate) {
-			composite.layoutBegin();
-			setIndeterminatState(indeterminate);
-			composite.layoutEnd();
-		}
-	}
+    @Override
+    public void setIndeterminate(final boolean indeterminate) {
+        if (this.isIndeterminate != indeterminate) {
+            composite.layoutBegin();
+            setIndeterminatState(indeterminate);
+            composite.layoutEnd();
+        }
+    }
 
-	private void setIndeterminatState(final boolean indeterminate) {
-		this.isIndeterminate = indeterminate;
-		if (indeterminate) {
-			indeterminateProgressBar.setVisible(true);
-			progressBar.setVisible(false);
-		}
-		else {
-			progressBar.setVisible(true);
-			this.indeterminateProgressBar.setVisible(false);
-		}
-	}
+    private void setIndeterminatState(final boolean indeterminate) {
+        this.isIndeterminate = indeterminate;
+        if (indeterminate) {
+            indeterminateProgressBar.setVisible(true);
+            progressBar.setVisible(false);
+        }
+        else {
+            progressBar.setVisible(true);
+            this.indeterminateProgressBar.setVisible(false);
+        }
+    }
 
-	@Override
-	public boolean isIndeterminate() {
-		return isIndeterminate;
-	}
+    @Override
+    public boolean isIndeterminate() {
+        return isIndeterminate;
+    }
 
-	@Override
-	public void setMinimum(final int min) {
-		this.minimum = min;
-		progressBar.setMinimum(min);
-		if (isIndeterminate) {
-			setIndeterminate(false);
-		}
-	}
+    @Override
+    public void setMinimum(final int min) {
+        this.minimum = min;
+        progressBar.setMinimum(min);
+        if (isIndeterminate) {
+            setIndeterminate(false);
+        }
+    }
 
-	@Override
-	public void setMaximum(final int max) {
-		this.maximum = max;
-		progressBar.setMaximum(max);
-		if (isIndeterminate) {
-			setIndeterminate(false);
-		}
-	}
+    @Override
+    public void setMaximum(final int max) {
+        this.maximum = max;
+        progressBar.setMaximum(max);
+        if (isIndeterminate) {
+            setIndeterminate(false);
+        }
+    }
 
-	@Override
-	public void setProgress(final int progress) {
-		progressBar.setProgress(progress);
-		if (isIndeterminate) {
-			setIndeterminate(false);
-		}
-	}
+    @Override
+    public void setProgress(final int progress) {
+        progressBar.setProgress(progress);
+        if (isIndeterminate) {
+            setIndeterminate(false);
+        }
+    }
 
-	@Override
-	public void setFinished() {
-		indeterminateProgressBar.setProgress(maximum);
-		progressBar.setProgress(maximum);
-		if (isIndeterminate) {
-			setIndeterminate(false);
-		}
-	}
+    @Override
+    public void setFinished() {
+        indeterminateProgressBar.setProgress(maximum);
+        progressBar.setProgress(maximum);
+        if (isIndeterminate) {
+            setIndeterminate(false);
+        }
+    }
 
-	@Override
-	public boolean isFinished() {
-		return maximum == progress;
-	}
+    @Override
+    public boolean isFinished() {
+        return maximum == progress;
+    }
 
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		indeterminateProgressBar.setForegroundColor(colorValue);
-		progressBar.setForegroundColor(colorValue);
-	}
+    @Override
+    public void setForegroundColor(final IColorConstant colorValue) {
+        indeterminateProgressBar.setForegroundColor(colorValue);
+        progressBar.setForegroundColor(colorValue);
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		indeterminateProgressBar.setBackgroundColor(colorValue);
-		progressBar.setBackgroundColor(colorValue);
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        indeterminateProgressBar.setBackgroundColor(colorValue);
+        progressBar.setBackgroundColor(colorValue);
+    }
 
-	@Override
-	public IColorConstant getForegroundColor() {
-		if (isIndeterminate) {
-			return indeterminateProgressBar.getForegroundColor();
-		}
-		else {
-			return progressBar.getForegroundColor();
-		}
-	}
+    @Override
+    public IColorConstant getForegroundColor() {
+        if (isIndeterminate) {
+            return indeterminateProgressBar.getForegroundColor();
+        }
+        else {
+            return progressBar.getForegroundColor();
+        }
+    }
 
-	@Override
-	public IColorConstant getBackgroundColor() {
-		if (isIndeterminate) {
-			return indeterminateProgressBar.getBackgroundColor();
-		}
-		else {
-			return progressBar.getBackgroundColor();
-		}
-	}
+    @Override
+    public IColorConstant getBackgroundColor() {
+        if (isIndeterminate) {
+            return indeterminateProgressBar.getBackgroundColor();
+        }
+        else {
+            return progressBar.getBackgroundColor();
+        }
+    }
 
-	@Override
-	public void setCursor(final Cursor cursor) {
-		indeterminateProgressBar.setCursor(cursor);
-		progressBar.setCursor(cursor);
-	}
+    @Override
+    public void setCursor(final Cursor cursor) {
+        indeterminateProgressBar.setCursor(cursor);
+        progressBar.setCursor(cursor);
+    }
 
-	@Override
-	public void setPopupMenu(final IMenuModel popupMenu) {
-		//TODO MG this might not work, popup must be set on progressBar and indeterminateProgressBar also. 
-		//For that, progressBar and indeterminateProgressBar must be api widgets 
-		composite.setPopupMenu(popupMenu);
-	}
+    @Override
+    public void setPopupMenu(final IMenuModel popupMenu) {
+        //TODO MG this might not work, popup must be set on progressBar and indeterminateProgressBar also. 
+        //For that, progressBar and indeterminateProgressBar must be api widgets 
+        composite.setPopupMenu(popupMenu);
+    }
 
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		composite.addPopupDetectionListener(listener);
-	}
+    @Override
+    public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+        composite.addPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		composite.removePopupDetectionListener(listener);
-	}
+    @Override
+    public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+        composite.removePopupDetectionListener(listener);
+    }
 
-	@Override
-	public void setToolTipText(final String toolTip) {
-		composite.setToolTipText(toolTip);
-		indeterminateProgressBar.setToolTipText(toolTip);
-		progressBar.setToolTipText(toolTip);
-	}
+    @Override
+    public void setToolTipText(final String toolTip) {
+        composite.setToolTipText(toolTip);
+        indeterminateProgressBar.setToolTipText(toolTip);
+        progressBar.setToolTipText(toolTip);
+    }
 
 }

@@ -34,7 +34,7 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ITableSetupSpi extends ITableSetupCommon {
 
-	@Mandatory
-	ITableColumnModelSpi getColumnModel();
+    @Mandatory
+    ITableColumnModelSpi getColumnModel();
 
 }

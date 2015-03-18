@@ -29,10 +29,10 @@ package org.jowidgets.workbench.api;
 
 public interface ILayout extends IWorkbenchPart {
 
-	String getId();
+    String getId();
 
-	LayoutScope getScope();
+    LayoutScope getScope();
 
-	ILayoutContainer getLayoutContainer();
+    ILayoutContainer getLayoutContainer();
 
 }

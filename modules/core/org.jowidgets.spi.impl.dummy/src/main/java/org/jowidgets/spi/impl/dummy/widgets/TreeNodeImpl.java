@@ -40,150 +40,150 @@ import org.jowidgets.spi.widgets.ITreeNodeSpi;
 
 public class TreeNodeImpl implements ITreeNodeSpi {
 
-	private final UIDTreeItem item;
-	private final UIDObservable treeObs;
-	private final TreeImpl parentTree;
-	private boolean selected;
+    private final UIDTreeItem item;
+    private final UIDObservable treeObs;
+    private final TreeImpl parentTree;
+    private boolean selected;
 
-	public TreeNodeImpl(final TreeImpl parentTree, final UIDTreeItem parentItem, final Integer index) {
-		this.treeObs = new UIDObservable();
-		this.parentTree = parentTree;
-		this.item = parentItem;
-		this.selected = false;
-	}
+    public TreeNodeImpl(final TreeImpl parentTree, final UIDTreeItem parentItem, final Integer index) {
+        this.treeObs = new UIDObservable();
+        this.parentTree = parentTree;
+        this.item = parentItem;
+        this.selected = false;
+    }
 
-	@Override
-	public UIDTreeItem getUiReference() {
-		return item;
-	}
+    @Override
+    public UIDTreeItem getUiReference() {
+        return item;
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		if (!enabled) {
-			throw new UnsupportedOperationException("Tree items can not be disabled");
-		}
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        if (!enabled) {
+            throw new UnsupportedOperationException("Tree items can not be disabled");
+        }
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
-	@Override
-	public void setText(final String text) {
-		if (text != null) {
-			item.setText(text);
-		}
-		else {
-			item.setText(String.valueOf(""));
-		}
-	}
+    @Override
+    public void setText(final String text) {
+        if (text != null) {
+            item.setText(text);
+        }
+        else {
+            item.setText(String.valueOf(""));
+        }
+    }
 
-	@Override
-	public void setToolTipText(final String text) {
-		item.setToolTipText(text);
-	}
+    @Override
+    public void setToolTipText(final String text) {
+        item.setToolTipText(text);
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		item.setIcon(icon);
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        item.setIcon(icon);
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		item.setMarkup(markup);
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        item.setMarkup(markup);
+    }
 
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		item.setForegroundColor(colorValue);
-	}
+    @Override
+    public void setForegroundColor(final IColorConstant colorValue) {
+        item.setForegroundColor(colorValue);
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		item.setBackgroundColor(colorValue);
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        item.setBackgroundColor(colorValue);
+    }
 
-	@Override
-	public void setExpanded(final boolean expanded) {
-		item.setExpanded(!expanded);
-	}
+    @Override
+    public void setExpanded(final boolean expanded) {
+        item.setExpanded(!expanded);
+    }
 
-	@Override
-	public boolean isExpanded() {
-		return item.isExpanded();
-	}
+    @Override
+    public boolean isExpanded() {
+        return item.isExpanded();
+    }
 
-	@Override
-	public void setSelected(final boolean selected) {
-		this.selected = selected;
-	}
+    @Override
+    public void setSelected(final boolean selected) {
+        this.selected = selected;
+    }
 
-	@Override
-	public boolean isSelected() {
-		return selected;
-	}
+    @Override
+    public boolean isSelected() {
+        return selected;
+    }
 
-	@Override
-	public void setChecked(final boolean checked) {
-		item.setChecked(checked);
-	}
+    @Override
+    public void setChecked(final boolean checked) {
+        item.setChecked(checked);
+    }
 
-	@Override
-	public boolean isChecked() {
-		return item.isChecked();
-	}
+    @Override
+    public boolean isChecked() {
+        return item.isChecked();
+    }
 
-	@Override
-	public void setGreyed(final boolean greyed) {
-		item.setGreyed(greyed);
-	}
+    @Override
+    public void setGreyed(final boolean greyed) {
+        item.setGreyed(greyed);
+    }
 
-	@Override
-	public boolean isGreyed() {
-		return item.isGreyed();
-	}
+    @Override
+    public boolean isGreyed() {
+        return item.isGreyed();
+    }
 
-	@Override
-	public void setCheckable(final boolean checkable) {
-		item.setCheckable(checkable);
-	}
+    @Override
+    public void setCheckable(final boolean checkable) {
+        item.setCheckable(checkable);
+    }
 
-	@Override
-	public void addTreeNodeListener(final ITreeNodeListener listener) {
-		treeObs.addTreeNodeListener(listener);
-	}
+    @Override
+    public void addTreeNodeListener(final ITreeNodeListener listener) {
+        treeObs.addTreeNodeListener(listener);
+    }
 
-	@Override
-	public void removeTreeNodeListener(final ITreeNodeListener listener) {
-		treeObs.removeTreeNodeListener(listener);
-	}
+    @Override
+    public void removeTreeNodeListener(final ITreeNodeListener listener) {
+        treeObs.removeTreeNodeListener(listener);
+    }
 
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		treeObs.addPopupDetectionListener(listener);
-	}
+    @Override
+    public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+        treeObs.addPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		treeObs.removePopupDetectionListener(listener);
-	}
+    @Override
+    public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+        treeObs.removePopupDetectionListener(listener);
+    }
 
-	@Override
-	public ITreeNodeSpi addNode(final Integer index) {
-		final TreeNodeImpl result = new TreeNodeImpl(parentTree, getUiReference(), index);
-		parentTree.registerNode(result);
-		return result;
-	}
+    @Override
+    public ITreeNodeSpi addNode(final Integer index) {
+        final TreeNodeImpl result = new TreeNodeImpl(parentTree, getUiReference(), index);
+        parentTree.registerNode(result);
+        return result;
+    }
 
-	@Override
-	public void removeNode(final int index) {
-		parentTree.removeNode(index);
-	}
+    @Override
+    public void removeNode(final int index) {
+        parentTree.removeNode(index);
+    }
 
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return new PopupMenuImpl(parentTree.getUiReference());
-	}
+    @Override
+    public IPopupMenuSpi createPopupMenu() {
+        return new PopupMenuImpl(parentTree.getUiReference());
+    }
 
 }

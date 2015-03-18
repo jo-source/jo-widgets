@@ -72,231 +72,231 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 //CHECKSTYLE:OFF
 public class SwingDragAndDropPractice2 implements IApplication {
 
-	private static final int LEVEL_ONE_COUNT = 3;
-	private static final int LEVEL_TWO_COUNT = 3;
-	private static final int LEVEL_TREE_COUNT = 3;
+    private static final int LEVEL_ONE_COUNT = 3;
+    private static final int LEVEL_TWO_COUNT = 3;
+    private static final int LEVEL_TREE_COUNT = 3;
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
-		final IFrame rootFrame = Toolkit.createRootFrame(BPF.frame().setTitle("Dran and Drop Tree"), lifecycle);
-		rootFrame.setLayout(MigLayoutFactory.growingInnerCellLayout());
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
+        final IFrame rootFrame = Toolkit.createRootFrame(BPF.frame().setTitle("Dran and Drop Tree"), lifecycle);
+        rootFrame.setLayout(MigLayoutFactory.growingInnerCellLayout());
 
-		final ISplitComposite splitComposite = rootFrame.add(BPF.splitHorizontal(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        final ISplitComposite splitComposite = rootFrame.add(BPF.splitHorizontal(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
-		final ITree tree1 = addTree(splitComposite.getFirst());
-		addDragSource(tree1);
-		addDropTarget(tree1);
+        final ITree tree1 = addTree(splitComposite.getFirst());
+        addDragSource(tree1);
+        addDropTarget(tree1);
 
-		final ITree tree2 = addTree(splitComposite.getSecond());
-		addDropTarget(tree2);
+        final ITree tree2 = addTree(splitComposite.getSecond());
+        addDropTarget(tree2);
 
-		rootFrame.setSize(800, 800);
-		rootFrame.setVisible(true);
-	}
+        rootFrame.setSize(800, 800);
+        rootFrame.setVisible(true);
+    }
 
-	private void addDragSource(final ITree joTree) {
-		final JTree tree = (JTree) ((JScrollPane) joTree.getUiReference()).getViewport().getComponent(0);
+    private void addDragSource(final ITree joTree) {
+        final JTree tree = (JTree) ((JScrollPane) joTree.getUiReference()).getViewport().getComponent(0);
 
-		final DragSource ds = new DragSource();
+        final DragSource ds = new DragSource();
 
-		final DragGestureListener dragGestureListener = new DragGestureListener() {
+        final DragGestureListener dragGestureListener = new DragGestureListener() {
 
-			@Override
-			public void dragGestureRecognized(final DragGestureEvent dge) {
-				final Point dragOrigin = dge.getDragOrigin();
+            @Override
+            public void dragGestureRecognized(final DragGestureEvent dge) {
+                final Point dragOrigin = dge.getDragOrigin();
 
-				System.out.println("COMPONENT: " + dge.getComponent());
-				System.out.println("ORIGIN: " + dragOrigin);
-				System.out.println("SOURCE: " + dge.getSource());
+                System.out.println("COMPONENT: " + dge.getComponent());
+                System.out.println("ORIGIN: " + dragOrigin);
+                System.out.println("SOURCE: " + dge.getSource());
 
-				final ITreeNode treeNode = joTree.getNodeAt(new Position(dragOrigin.x, dragOrigin.y));
-				if (treeNode != null) {
-					final StringSelection transfer = new StringSelection(treeNode.getText());
+                final ITreeNode treeNode = joTree.getNodeAt(new Position(dragOrigin.x, dragOrigin.y));
+                if (treeNode != null) {
+                    final StringSelection transfer = new StringSelection(treeNode.getText());
 
-					final DragSourceListener dragSourceListener = new DragSourceListener() {
+                    final DragSourceListener dragSourceListener = new DragSourceListener() {
 
-						@Override
-						public void dropActionChanged(final DragSourceDragEvent dsde) {
-							System.out.println("DROP ACTION CHANGED: " + dsde);
-						}
+                        @Override
+                        public void dropActionChanged(final DragSourceDragEvent dsde) {
+                            System.out.println("DROP ACTION CHANGED: " + dsde);
+                        }
 
-						@Override
-						public void dragOver(final DragSourceDragEvent dsde) {
-							//System.out.println("DRAG OVER: " + dsde);
+                        @Override
+                        public void dragOver(final DragSourceDragEvent dsde) {
+                            //System.out.println("DRAG OVER: " + dsde);
 
-						}
+                        }
 
-						@Override
-						public void dragExit(final DragSourceEvent dse) {
-							System.out.println("DRAG EXIT: " + dse);
-						}
+                        @Override
+                        public void dragExit(final DragSourceEvent dse) {
+                            System.out.println("DRAG EXIT: " + dse);
+                        }
 
-						@Override
-						public void dragEnter(final DragSourceDragEvent dsde) {
-							System.out.println("DRAG ENTER: " + dsde);
-						}
+                        @Override
+                        public void dragEnter(final DragSourceDragEvent dsde) {
+                            System.out.println("DRAG ENTER: " + dsde);
+                        }
 
-						@Override
-						public void dragDropEnd(final DragSourceDropEvent dsde) {
-							System.out.println("DRAG DROP END: " + dsde.getDropSuccess());
-						}
-					};
+                        @Override
+                        public void dragDropEnd(final DragSourceDropEvent dsde) {
+                            System.out.println("DRAG DROP END: " + dsde.getDropSuccess());
+                        }
+                    };
 
-					dge.startDrag(null, transfer, dragSourceListener);
-				}
+                    dge.startDrag(null, transfer, dragSourceListener);
+                }
 
-			}
-		};
+            }
+        };
 
-		@SuppressWarnings("unused")
-		final DragGestureRecognizer dragGestureRecognizer = ds.createDefaultDragGestureRecognizer(
-				tree,
-				DnDConstants.ACTION_COPY_OR_MOVE,
-				dragGestureListener);
+        @SuppressWarnings("unused")
+        final DragGestureRecognizer dragGestureRecognizer = ds.createDefaultDragGestureRecognizer(
+                tree,
+                DnDConstants.ACTION_COPY_OR_MOVE,
+                dragGestureListener);
 
-	}
+    }
 
-	@SuppressWarnings({"serial", "unused"})
-	private void addDropTarget(final ITree joTree) {
-		final JTree tree = (JTree) ((JScrollPane) joTree.getUiReference()).getViewport().getComponent(0);
+    @SuppressWarnings({"serial", "unused"})
+    private void addDropTarget(final ITree joTree) {
+        final JTree tree = (JTree) ((JScrollPane) joTree.getUiReference()).getViewport().getComponent(0);
 
-		tree.setDropMode(DropMode.ON_OR_INSERT);
-		tree.setTransferHandler(new TransferHandler() {
-			@Override
-			public boolean canImport(final TransferHandler.TransferSupport support) {
-				if (!support.isDataFlavorSupported(DataFlavor.stringFlavor) || !support.isDrop()) {
-					return false;
-				}
+        tree.setDropMode(DropMode.ON_OR_INSERT);
+        tree.setTransferHandler(new TransferHandler() {
+            @Override
+            public boolean canImport(final TransferHandler.TransferSupport support) {
+                if (!support.isDataFlavorSupported(DataFlavor.stringFlavor) || !support.isDrop()) {
+                    return false;
+                }
 
-				final JTree.DropLocation dropLocation = (JTree.DropLocation) support.getDropLocation();
-				System.out.println(dropLocation);
-				return dropLocation.getPath() != null;
-			}
+                final JTree.DropLocation dropLocation = (JTree.DropLocation) support.getDropLocation();
+                System.out.println(dropLocation);
+                return dropLocation.getPath() != null;
+            }
 
-			@Override
-			public boolean importData(final JComponent comp, final Transferable transferable) {
-				if (transferable != null) {
-					try {
-						final Object data = transferable.getTransferData(DataFlavor.stringFlavor);
-						System.out.println("DATA: " + data);
-						return true;
-					}
-					catch (final Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+            @Override
+            public boolean importData(final JComponent comp, final Transferable transferable) {
+                if (transferable != null) {
+                    try {
+                        final Object data = transferable.getTransferData(DataFlavor.stringFlavor);
+                        System.out.println("DATA: " + data);
+                        return true;
+                    }
+                    catch (final Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
 
-				}
-				return false;
-			}
+                }
+                return false;
+            }
 
-		});
+        });
 
-		final DropTargetListener dtl = new DropTargetListener() {
+        final DropTargetListener dtl = new DropTargetListener() {
 
-			@Override
-			public void dropActionChanged(final DropTargetDragEvent dtde) {
-				System.out.println("DROP ACTION CHANGED: " + dtde.getDropAction());
-				dtde.acceptDrag(DnDConstants.ACTION_MOVE);
+            @Override
+            public void dropActionChanged(final DropTargetDragEvent dtde) {
+                System.out.println("DROP ACTION CHANGED: " + dtde.getDropAction());
+                dtde.acceptDrag(DnDConstants.ACTION_MOVE);
 
-			}
+            }
 
-			@Override
-			public void drop(final DropTargetDropEvent dtde) {
-				final Transferable transferable = dtde.getTransferable();
-				if (transferable != null) {
-					try {
-						final Object data = transferable.getTransferData(DataFlavor.stringFlavor);
-						System.out.println("DATA: " + data);
-						dtde.dropComplete(true);
-					}
-					catch (final Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+            @Override
+            public void drop(final DropTargetDropEvent dtde) {
+                final Transferable transferable = dtde.getTransferable();
+                if (transferable != null) {
+                    try {
+                        final Object data = transferable.getTransferData(DataFlavor.stringFlavor);
+                        System.out.println("DATA: " + data);
+                        dtde.dropComplete(true);
+                    }
+                    catch (final Exception e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
 
-				}
-			}
+                }
+            }
 
-			@Override
-			public void dragOver(final DropTargetDragEvent dtde) {
-				dtde.acceptDrag(DnDConstants.ACTION_MOVE);
-				final DropLocation dropLocation = tree.getDropLocation();
-				if (dropLocation != null) {
-					System.out.println("dropLocation: "
-						+ dropLocation.getChildIndex()
-						+ " / "
-						+ dropLocation.getPath().getLastPathComponent());
-				}
-			}
+            @Override
+            public void dragOver(final DropTargetDragEvent dtde) {
+                dtde.acceptDrag(DnDConstants.ACTION_MOVE);
+                final DropLocation dropLocation = tree.getDropLocation();
+                if (dropLocation != null) {
+                    System.out.println("dropLocation: "
+                        + dropLocation.getChildIndex()
+                        + " / "
+                        + dropLocation.getPath().getLastPathComponent());
+                }
+            }
 
-			@Override
-			public void dragExit(final DropTargetEvent dte) {
-				System.out.println("DRAG EXIT: " + dte);
-			}
+            @Override
+            public void dragExit(final DropTargetEvent dte) {
+                System.out.println("DRAG EXIT: " + dte);
+            }
 
-			@Override
-			public void dragEnter(final DropTargetDragEvent dtde) {
-				System.out.println("DRAG ENTER: " + dtde);
-				dtde.acceptDrag(DnDConstants.ACTION_MOVE);
-			}
-		};
+            @Override
+            public void dragEnter(final DropTargetDragEvent dtde) {
+                System.out.println("DRAG ENTER: " + dtde);
+                dtde.acceptDrag(DnDConstants.ACTION_MOVE);
+            }
+        };
 
-		//final DropTarget dropTarget = new DropTarget(tree, DnDConstants.ACTION_COPY_OR_MOVE, dtl);
-		//dropTarget.setActive(isActive)
+        //final DropTarget dropTarget = new DropTarget(tree, DnDConstants.ACTION_COPY_OR_MOVE, dtl);
+        //dropTarget.setActive(isActive)
 
-		try {
-			//tree.getDropTarget().addDropTargetListener(dtl);
-		}
-		catch (final Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//tree.setDropTarget(dropTarget);
-	}
+        try {
+            //tree.getDropTarget().addDropTargetListener(dtl);
+        }
+        catch (final Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        //tree.setDropTarget(dropTarget);
+    }
 
-	private ITree addTree(final IContainer container) {
-		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
-		final ITree tree = container.add(BPF.tree(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		for (int i = 0; i < LEVEL_ONE_COUNT; i++) {
-			final ITreeNode levelOneNode = addNode(tree, "Level A, Node ", i);
-			for (int j = 0; j < LEVEL_TWO_COUNT; j++) {
-				final ITreeNode levelTwoNode = addNode(levelOneNode, "Level B, Node ", j);
-				for (int k = 0; k < LEVEL_TREE_COUNT; k++) {
-					addNode(levelTwoNode, "Level C, Node ", k);
-				}
-				levelTwoNode.setExpanded(true);
-			}
-			levelOneNode.setExpanded(true);
-		}
+    private ITree addTree(final IContainer container) {
+        container.setLayout(MigLayoutFactory.growingInnerCellLayout());
+        final ITree tree = container.add(BPF.tree(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        for (int i = 0; i < LEVEL_ONE_COUNT; i++) {
+            final ITreeNode levelOneNode = addNode(tree, "Level A, Node ", i);
+            for (int j = 0; j < LEVEL_TWO_COUNT; j++) {
+                final ITreeNode levelTwoNode = addNode(levelOneNode, "Level B, Node ", j);
+                for (int k = 0; k < LEVEL_TREE_COUNT; k++) {
+                    addNode(levelTwoNode, "Level C, Node ", k);
+                }
+                levelTwoNode.setExpanded(true);
+            }
+            levelOneNode.setExpanded(true);
+        }
 
-		tree.addMouseListener(new MouseAdapter() {
+        tree.addMouseListener(new MouseAdapter() {
 
-			@Override
-			public void mousePressed(final IMouseButtonEvent event) {
-				final ITreeNode nodeAtPosition = tree.getNodeAt(event.getPosition());
-				if (nodeAtPosition != null) {
-					System.out.println("NODE AT POSITION: " + nodeAtPosition.getText());
-				}
-				else {
-					System.out.println("NULL");
-				}
-			}
+            @Override
+            public void mousePressed(final IMouseButtonEvent event) {
+                final ITreeNode nodeAtPosition = tree.getNodeAt(event.getPosition());
+                if (nodeAtPosition != null) {
+                    System.out.println("NODE AT POSITION: " + nodeAtPosition.getText());
+                }
+                else {
+                    System.out.println("NULL");
+                }
+            }
 
-		});
+        });
 
-		return tree;
-	}
+        return tree;
+    }
 
-	private ITreeNode addNode(final ITreeContainer parent, final String prefix, final int index) {
-		final ITreeNode node = parent.addNode();
-		node.setText(prefix + " " + index);
-		return node;
-	}
+    private ITreeNode addNode(final ITreeContainer parent, final String prefix, final int index) {
+        final ITreeNode node = parent.addNode();
+        node.setText(prefix + " " + index);
+        return node;
+    }
 
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		Toolkit.getInstance().getApplicationRunner().run(new SwingDragAndDropPractice2());
-	}
+    public static void main(final String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
+        Toolkit.getInstance().getApplicationRunner().run(new SwingDragAndDropPractice2());
+    }
 }

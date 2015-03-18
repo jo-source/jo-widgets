@@ -35,59 +35,59 @@ import org.jowidgets.common.widgets.layout.ILayouter;
 
 final class FillLayoutFactoryBuilder implements IFillLayoutFactoryBuilder {
 
-	private int marginTop;
-	private int marginBottom;
-	private int marginLeft;
-	private int marginRight;
+    private int marginTop;
+    private int marginBottom;
+    private int marginLeft;
+    private int marginRight;
 
-	FillLayoutFactoryBuilder() {
-		this.marginTop = 0;
-		this.marginBottom = 0;
-		this.marginLeft = 0;
-		this.marginRight = 0;
-	}
+    FillLayoutFactoryBuilder() {
+        this.marginTop = 0;
+        this.marginBottom = 0;
+        this.marginLeft = 0;
+        this.marginRight = 0;
+    }
 
-	@Override
-	public IFillLayoutFactoryBuilder margin(final int margin) {
-		this.marginTop = margin;
-		this.marginBottom = margin;
-		this.marginLeft = margin;
-		this.marginRight = margin;
-		return this;
-	}
+    @Override
+    public IFillLayoutFactoryBuilder margin(final int margin) {
+        this.marginTop = margin;
+        this.marginBottom = margin;
+        this.marginLeft = margin;
+        this.marginRight = margin;
+        return this;
+    }
 
-	@Override
-	public IFillLayoutFactoryBuilder marginLeft(final int marginLeft) {
-		this.marginLeft = marginLeft;
-		return this;
-	}
+    @Override
+    public IFillLayoutFactoryBuilder marginLeft(final int marginLeft) {
+        this.marginLeft = marginLeft;
+        return this;
+    }
 
-	@Override
-	public IFillLayoutFactoryBuilder marginRight(final int marginRight) {
-		this.marginRight = marginRight;
-		return this;
-	}
+    @Override
+    public IFillLayoutFactoryBuilder marginRight(final int marginRight) {
+        this.marginRight = marginRight;
+        return this;
+    }
 
-	@Override
-	public IFillLayoutFactoryBuilder marginTop(final int marginTop) {
-		this.marginTop = marginTop;
-		return this;
-	}
+    @Override
+    public IFillLayoutFactoryBuilder marginTop(final int marginTop) {
+        this.marginTop = marginTop;
+        return this;
+    }
 
-	@Override
-	public IFillLayoutFactoryBuilder marginBottom(final int marginBottom) {
-		this.marginBottom = marginBottom;
-		return this;
-	}
+    @Override
+    public IFillLayoutFactoryBuilder marginBottom(final int marginBottom) {
+        this.marginBottom = marginBottom;
+        return this;
+    }
 
-	@Override
-	public ILayoutFactory<ILayouter> build() {
-		return new ILayoutFactory<ILayouter>() {
-			@Override
-			public ILayouter create(final IContainer container) {
-				return new FillLayoutImpl(container, marginLeft, marginRight, marginTop, marginBottom);
-			}
-		};
-	}
+    @Override
+    public ILayoutFactory<ILayouter> build() {
+        return new ILayoutFactory<ILayouter>() {
+            @Override
+            public ILayouter create(final IContainer container) {
+                return new FillLayoutImpl(container, marginLeft, marginRight, marginTop, marginBottom);
+            }
+        };
+    }
 
 }

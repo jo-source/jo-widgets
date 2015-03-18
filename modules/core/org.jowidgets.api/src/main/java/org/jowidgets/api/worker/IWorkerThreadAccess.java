@@ -32,26 +32,26 @@ import org.jowidgets.util.ICancelCallback;
 
 public interface IWorkerThreadAccess {
 
-	<RESULT_TYPE, PROGRESS_TYPE> void work(
-		IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> callback,
-		ICancelCallback cancelCallback,
-		IWorker<RESULT_TYPE, PROGRESS_TYPE> worker);
+    <RESULT_TYPE, PROGRESS_TYPE> void work(
+        IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> callback,
+        ICancelCallback cancelCallback,
+        IWorker<RESULT_TYPE, PROGRESS_TYPE> worker);
 
-	<RESULT_TYPE, PROGRESS_TYPE> void work(
-		IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> callback,
-		ICancelCallback cancelCallback,
-		ISyncWorker<RESULT_TYPE, PROGRESS_TYPE> worker);
+    <RESULT_TYPE, PROGRESS_TYPE> void work(
+        IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> callback,
+        ICancelCallback cancelCallback,
+        ISyncWorker<RESULT_TYPE, PROGRESS_TYPE> worker);
 
-	<RESULT_TYPE, PROGRESS_TYPE> void work(
-		IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> callback,
-		ICancelCallback cancelCallback,
-		IWorkerProgressDelay<PROGRESS_TYPE> progressDelay,
-		IWorker<RESULT_TYPE, PROGRESS_TYPE> worker);
+    <RESULT_TYPE, PROGRESS_TYPE> void work(
+        IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> callback,
+        ICancelCallback cancelCallback,
+        IWorkerProgressDelay<PROGRESS_TYPE> progressDelay,
+        IWorker<RESULT_TYPE, PROGRESS_TYPE> worker);
 
-	<RESULT_TYPE, PROGRESS_TYPE> void work(
-		IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> callback,
-		ICancelCallback cancelCallback,
-		IWorkerProgressDelay<PROGRESS_TYPE> progressDelay,
-		ISyncWorker<RESULT_TYPE, PROGRESS_TYPE> worker);
+    <RESULT_TYPE, PROGRESS_TYPE> void work(
+        IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> callback,
+        ICancelCallback cancelCallback,
+        IWorkerProgressDelay<PROGRESS_TYPE> progressDelay,
+        ISyncWorker<RESULT_TYPE, PROGRESS_TYPE> worker);
 
 }

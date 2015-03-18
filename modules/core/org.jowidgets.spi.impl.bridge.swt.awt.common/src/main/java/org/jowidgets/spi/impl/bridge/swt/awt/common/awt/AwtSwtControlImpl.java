@@ -45,105 +45,105 @@ import org.jowidgets.spi.impl.swing.common.widgets.SwingControl;
 
 class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
 
-	private final Shell backboneShell;
-	private final Composite composite;
+    private final Shell backboneShell;
+    private final Composite composite;
 
-	private boolean initialized;
-	private Shell bridgeShell;
+    private boolean initialized;
+    private Shell bridgeShell;
 
-	public AwtSwtControlImpl(final Object parentUiReference) {
-		super(new PeerObservablePanel());
+    public AwtSwtControlImpl(final Object parentUiReference) {
+        super(new PeerObservablePanel());
 
-		if (!SwingUtilities.isEventDispatchThread()) {
-			throw new IllegalArgumentException("The AwtSwtControl must be created in the event dispatching thread of swing");
-		}
+        if (!SwingUtilities.isEventDispatchThread()) {
+            throw new IllegalArgumentException("The AwtSwtControl must be created in the event dispatching thread of swing");
+        }
 
-		this.initialized = false;
-		this.backboneShell = new Shell(getCurrentDisplay());
-		this.backboneShell.setLayout(new FillLayout());
-		this.composite = new Composite(backboneShell, SWT.NONE);
-		this.composite.setLayout(new FillLayout());
+        this.initialized = false;
+        this.backboneShell = new Shell(getCurrentDisplay());
+        this.backboneShell.setLayout(new FillLayout());
+        this.composite = new Composite(backboneShell, SWT.NONE);
+        this.composite.setLayout(new FillLayout());
 
-		getUiReference().setLayout(new BorderLayout());
-		getUiReference().addPeerListener(new IPeerListener() {
+        getUiReference().setLayout(new BorderLayout());
+        getUiReference().addPeerListener(new IPeerListener() {
 
-			@Override
-			public void afterPeerAdd() {
-				//If initialize will be invoked here, there is a flicker artifact
-				//that will not occur if initialize will be invoked in the 
-				//HierarchyListener
-			}
+            @Override
+            public void afterPeerAdd() {
+                //If initialize will be invoked here, there is a flicker artifact
+                //that will not occur if initialize will be invoked in the 
+                //HierarchyListener
+            }
 
-			@Override
-			public void beforePeerRemove() {
-				onPeerRemoved();
-			}
+            @Override
+            public void beforePeerRemove() {
+                onPeerRemoved();
+            }
 
-		});
-		getUiReference().addHierarchyListener(new HierarchyListener() {
-			@Override
-			public void hierarchyChanged(final HierarchyEvent e) {
-				if (!initialized && getUiReference().isDisplayable()) {
-					onPeerAdded();
-				}
-			}
-		});
-	}
+        });
+        getUiReference().addHierarchyListener(new HierarchyListener() {
+            @Override
+            public void hierarchyChanged(final HierarchyEvent e) {
+                if (!initialized && getUiReference().isDisplayable()) {
+                    onPeerAdded();
+                }
+            }
+        });
+    }
 
-	private static Display getCurrentDisplay() {
-		final Display currentDisplay = Display.getCurrent();
-		if (currentDisplay != null) {
-			return currentDisplay;
-		}
-		else {
-			throw new IllegalStateException("This thread has no swt display. "
-				+ "To ensure that the awt event dispatching thread has a display, e.g. the class "
-				+ "'"
-				+ "BridgedSwtAwtApplicationRunner"
-				+ "' could be used, or, if no application "
-				+ "runner should be used, use the single ui thread pattern implemented there.");
-		}
-	}
+    private static Display getCurrentDisplay() {
+        final Display currentDisplay = Display.getCurrent();
+        if (currentDisplay != null) {
+            return currentDisplay;
+        }
+        else {
+            throw new IllegalStateException("This thread has no swt display. "
+                + "To ensure that the awt event dispatching thread has a display, e.g. the class "
+                + "'"
+                + "BridgedSwtAwtApplicationRunner"
+                + "' could be used, or, if no application "
+                + "runner should be used, use the single ui thread pattern implemented there.");
+        }
+    }
 
-	private void onPeerAdded() {
-		final Canvas canvas = new Canvas();
-		getUiReference().removeAll();
-		getUiReference().add(BorderLayout.CENTER, canvas);
-		bridgeShell = SWT_AWT.new_Shell(getCurrentDisplay(), canvas);
-		bridgeShell.setLayout(new FillLayout());
-		composite.setParent(bridgeShell);
-		initialized = true;
-	}
+    private void onPeerAdded() {
+        final Canvas canvas = new Canvas();
+        getUiReference().removeAll();
+        getUiReference().add(BorderLayout.CENTER, canvas);
+        bridgeShell = SWT_AWT.new_Shell(getCurrentDisplay(), canvas);
+        bridgeShell.setLayout(new FillLayout());
+        composite.setParent(bridgeShell);
+        initialized = true;
+    }
 
-	private void onPeerRemoved() {
-		if (!composite.isDisposed()) {
-			composite.setParent(backboneShell);
-		}
-		tryToDispose(bridgeShell);
-		bridgeShell = null;
-		initialized = false;
-	}
+    private void onPeerRemoved() {
+        if (!composite.isDisposed()) {
+            composite.setParent(backboneShell);
+        }
+        tryToDispose(bridgeShell);
+        bridgeShell = null;
+        initialized = false;
+    }
 
-	@Override
-	public PeerObservablePanel getUiReference() {
-		return (PeerObservablePanel) super.getUiReference();
-	}
+    @Override
+    public PeerObservablePanel getUiReference() {
+        return (PeerObservablePanel) super.getUiReference();
+    }
 
-	@Override
-	public Composite getSwtComposite() {
-		return composite;
-	}
+    @Override
+    public Composite getSwtComposite() {
+        return composite;
+    }
 
-	@Override
-	public void dispose() {
-		tryToDispose(composite);
-		tryToDispose(backboneShell);
-		tryToDispose(bridgeShell);
-	}
+    @Override
+    public void dispose() {
+        tryToDispose(composite);
+        tryToDispose(backboneShell);
+        tryToDispose(bridgeShell);
+    }
 
-	private static void tryToDispose(final Composite composite) {
-		if (composite != null && !composite.isDisposed()) {
-			composite.dispose();
-		}
-	}
+    private static void tryToDispose(final Composite composite) {
+        if (composite != null && !composite.isDisposed()) {
+            composite.dispose();
+        }
+    }
 }

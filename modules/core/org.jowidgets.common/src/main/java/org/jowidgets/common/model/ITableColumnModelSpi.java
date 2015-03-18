@@ -30,10 +30,10 @@ package org.jowidgets.common.model;
 
 public interface ITableColumnModelSpi {
 
-	int getColumnCount();
+    int getColumnCount();
 
-	ITableColumnSpi getColumn(int columnIndex);
+    ITableColumnSpi getColumn(int columnIndex);
 
-	ITableColumnModelObservable getTableColumnModelObservable();
+    ITableColumnModelObservable getTableColumnModelObservable();
 
 }

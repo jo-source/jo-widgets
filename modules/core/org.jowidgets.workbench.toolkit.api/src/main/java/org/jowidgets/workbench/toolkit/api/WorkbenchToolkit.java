@@ -34,43 +34,43 @@ import org.jowidgets.workbench.toolkit.impl.DefaultWorkbenchToolkit;
 
 public final class WorkbenchToolkit {
 
-	private static IWorkbenchToolkit workbenchToolkit;
+    private static IWorkbenchToolkit workbenchToolkit;
 
-	private WorkbenchToolkit() {}
+    private WorkbenchToolkit() {}
 
-	public static void initialize(final IWorkbenchToolkit workbenchToolkit) {
-		Assert.paramNotNull(workbenchToolkit, "workbenchTools");
-		if (WorkbenchToolkit.workbenchToolkit != null) {
-			throw new IllegalStateException("Workbench toolkit is already initialized");
-		}
-		WorkbenchToolkit.workbenchToolkit = workbenchToolkit;
-	}
+    public static void initialize(final IWorkbenchToolkit workbenchToolkit) {
+        Assert.paramNotNull(workbenchToolkit, "workbenchTools");
+        if (WorkbenchToolkit.workbenchToolkit != null) {
+            throw new IllegalStateException("Workbench toolkit is already initialized");
+        }
+        WorkbenchToolkit.workbenchToolkit = workbenchToolkit;
+    }
 
-	public static boolean isInitialized() {
-		return workbenchToolkit != null;
-	}
+    public static boolean isInitialized() {
+        return workbenchToolkit != null;
+    }
 
-	public static synchronized IWorkbenchToolkit getInstance() {
-		if (workbenchToolkit == null) {
-			workbenchToolkit = new DefaultWorkbenchToolkit();
-		}
-		return workbenchToolkit;
-	}
+    public static synchronized IWorkbenchToolkit getInstance() {
+        if (workbenchToolkit == null) {
+            workbenchToolkit = new DefaultWorkbenchToolkit();
+        }
+        return workbenchToolkit;
+    }
 
-	public static ILayoutBuilderFactory getLayoutBuilderFactory() {
-		return getInstance().getLayoutBuilderFactory();
-	}
+    public static ILayoutBuilderFactory getLayoutBuilderFactory() {
+        return getInstance().getLayoutBuilderFactory();
+    }
 
-	public static IWorkbenchPartBuilderFactory getWorkbenchPartBuilderFactory() {
-		return getInstance().getWorkbenchPartBuilderFactory();
-	}
+    public static IWorkbenchPartBuilderFactory getWorkbenchPartBuilderFactory() {
+        return getInstance().getWorkbenchPartBuilderFactory();
+    }
 
-	public static IWorkbenchPartFactory getWorkbenchPartFactory() {
-		return getInstance().getWorkbenchPartFactory();
-	}
+    public static IWorkbenchPartFactory getWorkbenchPartFactory() {
+        return getInstance().getWorkbenchPartFactory();
+    }
 
-	public static IComponentFactory createComponentFactory(final Class<? extends IComponent> componentType) {
-		return getInstance().createComponentFactory(componentType);
-	}
+    public static IComponentFactory createComponentFactory(final Class<? extends IComponent> componentType) {
+        return getInstance().createComponentFactory(componentType);
+    }
 
 }

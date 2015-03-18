@@ -28,9 +28,8 @@
 
 package org.jowidgets.common.widgets.controller;
 
-
 public interface ITableCellPopupDetectionListener {
 
-	void popupDetected(ITableCellPopupEvent event);
+    void popupDetected(ITableCellPopupEvent event);
 
 }

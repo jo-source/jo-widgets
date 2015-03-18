@@ -38,12 +38,12 @@ import org.jowidgets.common.widgets.factory.IWidgetFactory;
 
 final class MediaPlayerFactory implements IWidgetFactory<IMediaPlayer, IMediaPlayerBluePrint> {
 
-	@Override
-	public IMediaPlayer create(final Object parentUiReference, final IMediaPlayerBluePrint bluePrint) {
-		final IOleControlBluePrint oleControlBp = OleBPF.oleControl();
-		oleControlBp.setSetup(bluePrint);
-		final IOleControl oleControl = Toolkit.getWidgetFactory().create(parentUiReference, oleControlBp);
-		return new MediaPlayerImpl(oleControl, bluePrint);
-	}
+    @Override
+    public IMediaPlayer create(final Object parentUiReference, final IMediaPlayerBluePrint bluePrint) {
+        final IOleControlBluePrint oleControlBp = OleBPF.oleControl();
+        oleControlBp.setSetup(bluePrint);
+        final IOleControl oleControl = Toolkit.getWidgetFactory().create(parentUiReference, oleControlBp);
+        return new MediaPlayerImpl(oleControl, bluePrint);
+    }
 
 }

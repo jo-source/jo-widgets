@@ -43,125 +43,125 @@ import org.jowidgets.util.Assert;
 
 public abstract class AbstractContainerSpiWrapper extends AbstractComponentSpiWrapper implements IContainerCommon {
 
-	private ILayouter layouter;
+    private ILayouter layouter;
 
-	private Dimension minSize;
-	private Dimension prefferedSize;
-	private Dimension maxSize;
+    private Dimension minSize;
+    private Dimension prefferedSize;
+    private Dimension maxSize;
 
-	public AbstractContainerSpiWrapper(final IContainerSpi widget) {
-		super(widget);
-	}
+    public AbstractContainerSpiWrapper(final IContainerSpi widget) {
+        super(widget);
+    }
 
-	@Override
-	public IContainerSpi getWidget() {
-		return (IContainerSpi) super.getWidget();
-	}
+    @Override
+    public IContainerSpi getWidget() {
+        return (IContainerSpi) super.getWidget();
+    }
 
-	@Override
-	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		Assert.paramNotNull(layoutDescriptor, "layoutDescriptor");
-		if (!Toolkit.hasSpiMigLayoutSupport() && layoutDescriptor instanceof MigLayoutDescriptor && this instanceof IContainer) {
-			final IMigLayoutFactoryBuilder migLayoutBuilder = Toolkit.getLayoutFactoryProvider().migLayoutBuilder();
-			migLayoutBuilder.descriptor((MigLayoutDescriptor) layoutDescriptor);
-			setLayoutImpl(migLayoutBuilder.build().create((IContainer) this));
-		}
-		else {
-			setLayoutImpl(layoutDescriptor);
-		}
-	}
+    @Override
+    public void setLayout(final ILayoutDescriptor layoutDescriptor) {
+        Assert.paramNotNull(layoutDescriptor, "layoutDescriptor");
+        if (!Toolkit.hasSpiMigLayoutSupport() && layoutDescriptor instanceof MigLayoutDescriptor && this instanceof IContainer) {
+            final IMigLayoutFactoryBuilder migLayoutBuilder = Toolkit.getLayoutFactoryProvider().migLayoutBuilder();
+            migLayoutBuilder.descriptor((MigLayoutDescriptor) layoutDescriptor);
+            setLayoutImpl(migLayoutBuilder.build().create((IContainer) this));
+        }
+        else {
+            setLayoutImpl(layoutDescriptor);
+        }
+    }
 
-	private void setLayoutImpl(final ILayoutDescriptor layoutDescriptor) {
-		Assert.paramNotNull(layoutDescriptor, "layoutDescriptor");
-		if (layoutDescriptor instanceof ILayouter) {
-			this.layouter = (ILayouter) layoutDescriptor;
-		}
-		else {
-			this.layouter = null;
-		}
-		getWidget().setLayout(layoutDescriptor);
-	}
+    private void setLayoutImpl(final ILayoutDescriptor layoutDescriptor) {
+        Assert.paramNotNull(layoutDescriptor, "layoutDescriptor");
+        if (layoutDescriptor instanceof ILayouter) {
+            this.layouter = (ILayouter) layoutDescriptor;
+        }
+        else {
+            this.layouter = null;
+        }
+        getWidget().setLayout(layoutDescriptor);
+    }
 
-	public void layout() {
-		layoutBegin();
-		layoutEnd();
-	}
+    public void layout() {
+        layoutBegin();
+        layoutEnd();
+    }
 
-	@Override
-	public void layoutBegin() {
-		getWidget().layoutBegin();
-	}
+    @Override
+    public void layoutBegin() {
+        getWidget().layoutBegin();
+    }
 
-	@Override
-	public void layoutEnd() {
-		getWidget().layoutEnd();
-	}
+    @Override
+    public void layoutEnd() {
+        getWidget().layoutEnd();
+    }
 
-	@Override
-	public Rectangle getClientArea() {
-		return getWidget().getClientArea();
-	}
+    @Override
+    public Rectangle getClientArea() {
+        return getWidget().getClientArea();
+    }
 
-	@Override
-	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
-		return getWidget().computeDecoratedSize(clientAreaSize);
-	}
+    @Override
+    public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+        return getWidget().computeDecoratedSize(clientAreaSize);
+    }
 
-	public void setMinSize(final Dimension minSize) {
-		this.minSize = minSize;
-	}
+    public void setMinSize(final Dimension minSize) {
+        this.minSize = minSize;
+    }
 
-	public void setPreferredSize(final Dimension preferredSize) {
-		this.prefferedSize = preferredSize;
-	}
+    public void setPreferredSize(final Dimension preferredSize) {
+        this.prefferedSize = preferredSize;
+    }
 
-	public void setMaxSize(final Dimension maxSize) {
-		this.maxSize = maxSize;
-	}
+    public void setMaxSize(final Dimension maxSize) {
+        this.maxSize = maxSize;
+    }
 
-	public Dimension getMinSize() {
-		if (minSize != null) {
-			return minSize;
-		}
-		else if (layouter != null) {
-			return layouter.getMinSize();
-		}
-		else if (getWidget() instanceof IControlSpi) {
-			return ((IControlSpi) getWidget()).getMinSize();
-		}
-		else {
-			return null;
-		}
-	}
+    public Dimension getMinSize() {
+        if (minSize != null) {
+            return minSize;
+        }
+        else if (layouter != null) {
+            return layouter.getMinSize();
+        }
+        else if (getWidget() instanceof IControlSpi) {
+            return ((IControlSpi) getWidget()).getMinSize();
+        }
+        else {
+            return null;
+        }
+    }
 
-	public Dimension getPreferredSize() {
-		if (prefferedSize != null) {
-			return prefferedSize;
-		}
-		else if (layouter != null) {
-			return layouter.getPreferredSize();
-		}
-		else if (getWidget() instanceof IControlSpi) {
-			return ((IControlSpi) getWidget()).getPreferredSize();
-		}
-		else {
-			return null;
-		}
-	}
+    public Dimension getPreferredSize() {
+        if (prefferedSize != null) {
+            return prefferedSize;
+        }
+        else if (layouter != null) {
+            return layouter.getPreferredSize();
+        }
+        else if (getWidget() instanceof IControlSpi) {
+            return ((IControlSpi) getWidget()).getPreferredSize();
+        }
+        else {
+            return null;
+        }
+    }
 
-	public Dimension getMaxSize() {
-		if (maxSize != null) {
-			return maxSize;
-		}
-		else if (layouter != null) {
-			return layouter.getMaxSize();
-		}
-		else if (getWidget() instanceof IControlSpi) {
-			return ((IControlSpi) getWidget()).getMaxSize();
-		}
-		else {
-			return null;
-		}
-	}
+    public Dimension getMaxSize() {
+        if (maxSize != null) {
+            return maxSize;
+        }
+        else if (layouter != null) {
+            return layouter.getMaxSize();
+        }
+        else if (getWidget() instanceof IControlSpi) {
+            return ((IControlSpi) getWidget()).getMaxSize();
+        }
+        else {
+            return null;
+        }
+    }
 
 }

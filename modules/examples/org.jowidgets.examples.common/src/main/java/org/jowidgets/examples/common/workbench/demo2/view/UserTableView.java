@@ -44,70 +44,70 @@ import org.jowidgets.workbench.tools.AbstractView;
 
 public class UserTableView extends AbstractView {
 
-	public static final String ID = UserTableView.class.getName();
-	public static final String DEFAULT_LABEL = "Persons";
-	public static final String DEFAULT_TOOLTIP = "Shows all person";
-	public static final IImageConstant DEFAULT_ICON = SilkIcons.USER;
+    public static final String ID = UserTableView.class.getName();
+    public static final String DEFAULT_LABEL = "Persons";
+    public static final String DEFAULT_TOOLTIP = "Shows all person";
+    public static final IImageConstant DEFAULT_ICON = SilkIcons.USER;
 
-	public UserTableView(final IViewContext context) {
-		final IContainer container = context.getContainer();
+    public UserTableView(final IViewContext context) {
+        final IContainer container = context.getContainer();
 
-		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+        container.setLayout(MigLayoutFactory.growingInnerCellLayout());
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		final ITableModel tableModel = createTableModel();
-		final ITable table = container.add(bpf.table(tableModel), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		table.pack(TablePackPolicy.HEADER_AND_DATA_ALL);
+        final ITableModel tableModel = createTableModel();
+        final ITable table = container.add(bpf.table(tableModel), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        table.pack(TablePackPolicy.HEADER_AND_DATA_ALL);
 
-	}
+    }
 
-	private ISimpleTableModel createTableModel() {
+    private ISimpleTableModel createTableModel() {
 
-		final ISimpleTableModel result = new SimpleTableModelBuilder().setEditableDefault(true).build();
+        final ISimpleTableModel result = new SimpleTableModelBuilder().setEditableDefault(true).build();
 
-		result.addColumn("Gender");
-		result.addColumn("Firstname");
-		result.addColumn("Lastname");
-		result.addColumn("Street");
-		result.addColumn("Postal code");
-		result.addColumn("City");
-		result.addColumn("Country");
-		result.addColumn("Phone number");
-		result.addColumn("Email");
+        result.addColumn("Gender");
+        result.addColumn("Firstname");
+        result.addColumn("Lastname");
+        result.addColumn("Street");
+        result.addColumn("Postal code");
+        result.addColumn("City");
+        result.addColumn("Country");
+        result.addColumn("Phone number");
+        result.addColumn("Email");
 
-		result.addRow(
-				"Male",
-				"Pete",
-				"Brown",
-				"Audubon Ave 34",
-				"76453",
-				"New York",
-				"USA",
-				"47634826",
-				"hans.maier@gtzservice.com");
+        result.addRow(
+                "Male",
+                "Pete",
+                "Brown",
+                "Audubon Ave 34",
+                "76453",
+                "New York",
+                "USA",
+                "47634826",
+                "hans.maier@gtzservice.com");
 
-		result.addRow(
-				"Male",
-				"Steve",
-				"Miller",
-				"Convent Ave 25",
-				"53453",
-				"New York",
-				"USA",
-				"4354354",
-				"mr.steve.miller@gjk.com");
+        result.addRow(
+                "Male",
+                "Steve",
+                "Miller",
+                "Convent Ave 25",
+                "53453",
+                "New York",
+                "USA",
+                "4354354",
+                "mr.steve.miller@gjk.com");
 
-		result.addRow(
-				"Female",
-				"Laura",
-				"Brixton",
-				"West End Ave 2",
-				"53453",
-				"New York",
-				"USA",
-				"435345345",
-				"laura.brixton@gjk.com");
+        result.addRow(
+                "Female",
+                "Laura",
+                "Brixton",
+                "West End Ave 2",
+                "53453",
+                "New York",
+                "USA",
+                "435345345",
+                "laura.brixton@gjk.com");
 
-		return result;
-	}
+        return result;
+    }
 }

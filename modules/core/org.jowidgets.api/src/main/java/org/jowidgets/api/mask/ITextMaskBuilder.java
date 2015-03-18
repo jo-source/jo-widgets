@@ -34,38 +34,38 @@ import org.jowidgets.common.mask.TextMaskMode;
 
 public interface ITextMaskBuilder {
 
-	ITextMaskBuilder setMode(TextMaskMode mode);
+    ITextMaskBuilder setMode(TextMaskMode mode);
 
-	ITextMaskBuilder defaultPlaceholder(char placeholder);
+    ITextMaskBuilder defaultPlaceholder(char placeholder);
 
-	ITextMaskBuilder addDelimiter(char placeholder);
+    ITextMaskBuilder addDelimiter(char placeholder);
 
-	ITextMaskBuilder addCharacterMask();
+    ITextMaskBuilder addCharacterMask();
 
-	ITextMaskBuilder addCharacterMask(char placeholder);
+    ITextMaskBuilder addCharacterMask(char placeholder);
 
-	ITextMaskBuilder addCharacterMask(String acceptingRegExp);
+    ITextMaskBuilder addCharacterMask(String acceptingRegExp);
 
-	ITextMaskBuilder addCharacterMask(String acceptingRegExp, char placeholder);
+    ITextMaskBuilder addCharacterMask(String acceptingRegExp, char placeholder);
 
-	ITextMaskBuilder addCharacterMask(String acceptingRegExp, String rejectingRegExp);
+    ITextMaskBuilder addCharacterMask(String acceptingRegExp, String rejectingRegExp);
 
-	ITextMaskBuilder addCharacterMask(String acceptingRegExp, String rejectingRegExp, char placeholder);
+    ITextMaskBuilder addCharacterMask(String acceptingRegExp, String rejectingRegExp, char placeholder);
 
-	ITextMaskBuilder addNumericMask();
+    ITextMaskBuilder addNumericMask();
 
-	ITextMaskBuilder addNumericMask(char placeholder);
+    ITextMaskBuilder addNumericMask(char placeholder);
 
-	ITextMaskBuilder addAlphabeticMask();
+    ITextMaskBuilder addAlphabeticMask();
 
-	ITextMaskBuilder addAlphabeticMask(char placeholder);
+    ITextMaskBuilder addAlphabeticMask(char placeholder);
 
-	ITextMaskBuilder addAlphaNumericMask();
+    ITextMaskBuilder addAlphaNumericMask();
 
-	ITextMaskBuilder addAlphaNumericMask(char placeholder);
+    ITextMaskBuilder addAlphaNumericMask(char placeholder);
 
-	ITextMaskBuilder addCharacterMask(ICharacterMask mask);
+    ITextMaskBuilder addCharacterMask(ICharacterMask mask);
 
-	ITextMask build();
+    ITextMask build();
 
 }

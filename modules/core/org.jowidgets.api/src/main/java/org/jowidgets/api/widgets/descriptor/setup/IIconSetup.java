@@ -31,6 +31,6 @@ import org.jowidgets.common.widgets.descriptor.setup.IIconSetupCommon;
 
 public interface IIconSetup extends IIconSetupCommon, IComponentSetup {
 
-	String getToolTipText();
+    String getToolTipText();
 
 }

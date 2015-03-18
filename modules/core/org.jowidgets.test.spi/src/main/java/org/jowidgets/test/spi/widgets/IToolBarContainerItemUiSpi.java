@@ -32,9 +32,9 @@ import org.jowidgets.spi.widgets.IToolBarContainerItemSpi;
 import org.jowidgets.test.common.widgets.IToolBarContainerItemUiCommon;
 
 public interface IToolBarContainerItemUiSpi extends
-		IToolBarItemUiSpi,
-		IContainerUiSpi,
-		IToolBarContainerItemUiCommon,
-		IToolBarContainerItemSpi {
+        IToolBarItemUiSpi,
+        IContainerUiSpi,
+        IToolBarContainerItemUiCommon,
+        IToolBarContainerItemSpi {
 
 }

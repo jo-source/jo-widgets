@@ -56,136 +56,136 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public class SwtDragAndDropPractice implements IApplication {
 
-	private static final int LEVEL_ONE_COUNT = 3;
-	private static final int LEVEL_TWO_COUNT = 3;
-	private static final int LEVEL_TREE_COUNT = 3;
+    private static final int LEVEL_ONE_COUNT = 3;
+    private static final int LEVEL_TWO_COUNT = 3;
+    private static final int LEVEL_TREE_COUNT = 3;
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
-		final IFrame rootFrame = Toolkit.createRootFrame(BPF.frame().setTitle("Dran and Drop Tree"), lifecycle);
-		rootFrame.setLayout(MigLayoutFactory.growingInnerCellLayout());
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
+        final IFrame rootFrame = Toolkit.createRootFrame(BPF.frame().setTitle("Dran and Drop Tree"), lifecycle);
+        rootFrame.setLayout(MigLayoutFactory.growingInnerCellLayout());
 
-		final ISplitComposite splitComposite = rootFrame.add(BPF.splitHorizontal(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        final ISplitComposite splitComposite = rootFrame.add(BPF.splitHorizontal(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
-		final ITree tree = addTree(splitComposite.getFirst());
-		addDragSource(tree);
+        final ITree tree = addTree(splitComposite.getFirst());
+        addDragSource(tree);
 
-		final ITextControl textControl = addTextField(splitComposite.getSecond());
-		addDropTarget(textControl);
+        final ITextControl textControl = addTextField(splitComposite.getSecond());
+        addDropTarget(textControl);
 
-		rootFrame.setSize(800, 800);
-		rootFrame.setVisible(true);
-	}
+        rootFrame.setSize(800, 800);
+        rootFrame.setVisible(true);
+    }
 
-	private void addDragSource(final ITree joTree) {
-		final Tree tree = (Tree) joTree.getUiReference();
+    private void addDragSource(final ITree joTree) {
+        final Tree tree = (Tree) joTree.getUiReference();
 
-		final int operations = DND.DROP_MOVE | DND.DROP_COPY;
-		final DragSource dragSource = new DragSource(tree, operations);
+        final int operations = DND.DROP_MOVE | DND.DROP_COPY;
+        final DragSource dragSource = new DragSource(tree, operations);
 
-		final Transfer[] types = new Transfer[] {TextTransfer.getInstance()};
-		dragSource.setTransfer(types);
+        final Transfer[] types = new Transfer[] {TextTransfer.getInstance()};
+        dragSource.setTransfer(types);
 
-		dragSource.addDragListener(new DragSourceListener() {
+        dragSource.addDragListener(new DragSourceListener() {
 
-			private TreeItem dragItem;
+            private TreeItem dragItem;
 
-			@Override
-			public void dragStart(final DragSourceEvent event) {
-				dragItem = tree.getItem(new Point(event.x, event.y));
-			}
+            @Override
+            public void dragStart(final DragSourceEvent event) {
+                dragItem = tree.getItem(new Point(event.x, event.y));
+            }
 
-			@Override
-			public void dragSetData(final DragSourceEvent event) {
-				if (dragItem != null && TextTransfer.getInstance().isSupportedType(event.dataType)) {
-					event.data = dragItem.getText();
-				}
-			}
+            @Override
+            public void dragSetData(final DragSourceEvent event) {
+                if (dragItem != null && TextTransfer.getInstance().isSupportedType(event.dataType)) {
+                    event.data = dragItem.getText();
+                }
+            }
 
-			@Override
-			public void dragFinished(final DragSourceEvent event) {
-				if (event.detail == DND.DROP_MOVE && dragItem != null) {
-					dragItem.dispose();
-				}
-			}
-		});
-	}
+            @Override
+            public void dragFinished(final DragSourceEvent event) {
+                if (event.detail == DND.DROP_MOVE && dragItem != null) {
+                    dragItem.dispose();
+                }
+            }
+        });
+    }
 
-	private void addDropTarget(final ITextControl joTextControl) {
-		final Text text = (Text) joTextControl.getUiReference();
+    private void addDropTarget(final ITextControl joTextControl) {
+        final Text text = (Text) joTextControl.getUiReference();
 
-		final int operations = DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_DEFAULT | DND.DROP_NONE;
-		final DropTarget target = new DropTarget(text, operations);
+        final int operations = DND.DROP_MOVE | DND.DROP_COPY | DND.DROP_DEFAULT | DND.DROP_NONE;
+        final DropTarget target = new DropTarget(text, operations);
 
-		target.setTransfer(new Transfer[] {TextTransfer.getInstance()});
+        target.setTransfer(new Transfer[] {TextTransfer.getInstance()});
 
-		target.addDropListener(new DropTargetListener() {
+        target.addDropListener(new DropTargetListener() {
 
-			@Override
-			public void dropAccept(final DropTargetEvent event) {
+            @Override
+            public void dropAccept(final DropTargetEvent event) {
 
-			}
+            }
 
-			@Override
-			public void drop(final DropTargetEvent event) {
-				if (TextTransfer.getInstance().isSupportedType(event.currentDataType)) {
-					final String text = (String) event.data;
-					joTextControl.setText(text);
-				}
-			}
+            @Override
+            public void drop(final DropTargetEvent event) {
+                if (TextTransfer.getInstance().isSupportedType(event.currentDataType)) {
+                    final String text = (String) event.data;
+                    joTextControl.setText(text);
+                }
+            }
 
-			@Override
-			public void dragOver(final DropTargetEvent event) {
-				event.feedback = DND.FEEDBACK_SELECT | DND.FEEDBACK_SCROLL;
-			}
+            @Override
+            public void dragOver(final DropTargetEvent event) {
+                event.feedback = DND.FEEDBACK_SELECT | DND.FEEDBACK_SCROLL;
+            }
 
-			@Override
-			public void dragOperationChanged(final DropTargetEvent event) {
-				// TODO Auto-generated method stub
-			}
+            @Override
+            public void dragOperationChanged(final DropTargetEvent event) {
+                // TODO Auto-generated method stub
+            }
 
-			@Override
-			public void dragLeave(final DropTargetEvent event) {
-				// TODO Auto-generated method stub
-			}
+            @Override
+            public void dragLeave(final DropTargetEvent event) {
+                // TODO Auto-generated method stub
+            }
 
-			@Override
-			public void dragEnter(final DropTargetEvent event) {
+            @Override
+            public void dragEnter(final DropTargetEvent event) {
 
-			}
-		});
+            }
+        });
 
-	}
+    }
 
-	private ITree addTree(final IContainer container) {
-		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
-		final ITree tree = container.add(BPF.tree(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		for (int i = 0; i < LEVEL_ONE_COUNT; i++) {
-			final ITreeNode levelOneNode = addNode(tree, "Level A, Node ", i);
-			for (int j = 0; j < LEVEL_TWO_COUNT; j++) {
-				final ITreeNode levelTwoNode = addNode(levelOneNode, "Level B, Node ", j);
-				for (int k = 0; k < LEVEL_TREE_COUNT; k++) {
-					addNode(levelTwoNode, "Level C, Node ", k);
-				}
-				levelTwoNode.setExpanded(true);
-			}
-			levelOneNode.setExpanded(true);
-		}
-		return tree;
-	}
+    private ITree addTree(final IContainer container) {
+        container.setLayout(MigLayoutFactory.growingInnerCellLayout());
+        final ITree tree = container.add(BPF.tree(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        for (int i = 0; i < LEVEL_ONE_COUNT; i++) {
+            final ITreeNode levelOneNode = addNode(tree, "Level A, Node ", i);
+            for (int j = 0; j < LEVEL_TWO_COUNT; j++) {
+                final ITreeNode levelTwoNode = addNode(levelOneNode, "Level B, Node ", j);
+                for (int k = 0; k < LEVEL_TREE_COUNT; k++) {
+                    addNode(levelTwoNode, "Level C, Node ", k);
+                }
+                levelTwoNode.setExpanded(true);
+            }
+            levelOneNode.setExpanded(true);
+        }
+        return tree;
+    }
 
-	private ITreeNode addNode(final ITreeContainer parent, final String prefix, final int index) {
-		final ITreeNode node = parent.addNode();
-		node.setText(prefix + " " + index);
-		return node;
-	}
+    private ITreeNode addNode(final ITreeContainer parent, final String prefix, final int index) {
+        final ITreeNode node = parent.addNode();
+        node.setText(prefix + " " + index);
+        return node;
+    }
 
-	private ITextControl addTextField(final IContainer container) {
-		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
-		return container.add(BPF.textField(), "growx, w 0::");
-	}
+    private ITextControl addTextField(final IContainer container) {
+        container.setLayout(MigLayoutFactory.growingInnerCellLayout());
+        return container.add(BPF.textField(), "growx, w 0::");
+    }
 
-	public static void main(final String[] args) {
-		Toolkit.getInstance().getApplicationRunner().run(new SwtDragAndDropPractice());
-	}
+    public static void main(final String[] args) {
+        Toolkit.getInstance().getApplicationRunner().run(new SwtDragAndDropPractice());
+    }
 }

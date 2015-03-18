@@ -32,17 +32,17 @@ import org.jowidgets.i18n.api.IMessage;
 
 public interface IUnitBuilder {
 
-	IUnitBuilder abbreviation(String abbreviation);
+    IUnitBuilder abbreviation(String abbreviation);
 
-	IUnitBuilder abbreviation(IMessage abbreviation);
+    IUnitBuilder abbreviation(IMessage abbreviation);
 
-	IUnitBuilder name(String name);
+    IUnitBuilder name(String name);
 
-	IUnitBuilder name(IMessage name);
+    IUnitBuilder name(IMessage name);
 
-	IUnitBuilder conversionFactor(double conversionFactor);
+    IUnitBuilder conversionFactor(double conversionFactor);
 
-	IUnitBuilder conversionFactor(long conversionFactor);
+    IUnitBuilder conversionFactor(long conversionFactor);
 
-	IUnit build();
+    IUnit build();
 }

@@ -37,72 +37,74 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
 public class DemoMessagesComposite {
 
-	public DemoMessagesComposite(final IContainer parentContainer) {
+    public DemoMessagesComposite(final IContainer parentContainer) {
 
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+        final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
-		parentContainer.setLayout(new MigLayoutDescriptor("[300::, grow]", "[][][][][]"));
+        parentContainer.setLayout(new MigLayoutDescriptor("[300::, grow]", "[][][][][]"));
 
-		final IButton infoMessageButton = parentContainer.add(
-				bpF.button("Info message demo", "Shows an info message"),
-				"grow, sg bg, wrap");
-		infoMessageButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				Toolkit.getMessagePane().showInfo(
-						"Info message title",
-						"This is an info message! \nHere comes some more information in text form about the kitchens sink.");
-			}
-		});
+        final IButton infoMessageButton = parentContainer.add(
+                bpF.button("Info message demo", "Shows an info message"),
+                "grow, sg bg, wrap");
+        infoMessageButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                Toolkit.getMessagePane().showInfo(
+                        "Info message title",
+                        "This is an info message! \nHere comes some more information in text form about the kitchens sink.");
+            }
+        });
 
-		final IButton warningMessageButton = parentContainer.add(
-				bpF.button("Warning message demo", "Shows an warning message"),
-				"grow, sg bg, wrap");
-		warningMessageButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				Toolkit.getMessagePane().showWarning(
-						"Warning message title",
-						"This is warning message! \nHere comes some more information in text form about the kitchens sink.");
-			}
-		});
+        final IButton warningMessageButton = parentContainer.add(
+                bpF.button("Warning message demo", "Shows an warning message"),
+                "grow, sg bg, wrap");
+        warningMessageButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                Toolkit.getMessagePane().showWarning(
+                        "Warning message title",
+                        "This is warning message! \nHere comes some more information in text form about the kitchens sink.");
+            }
+        });
 
-		final IButton errorMessageButton = parentContainer.add(
-				bpF.button("Error message demo", "Shows an error message"),
-				"grow, sg bg, wrap");
-		errorMessageButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				Toolkit.getMessagePane().showError(
-						"Error message title",
-						"This is an error message! \nHere comes some more information in text form about the kitchens sink.");
-			}
-		});
+        final IButton errorMessageButton = parentContainer.add(
+                bpF.button("Error message demo", "Shows an error message"),
+                "grow, sg bg, wrap");
+        errorMessageButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                Toolkit.getMessagePane().showError(
+                        "Error message title",
+                        "This is an error message! \nHere comes some more information in text form about the kitchens sink.");
+            }
+        });
 
-		final IButton yesNoQuestionButton = parentContainer.add(
-				bpF.button("Yes/No question demo", "Shows an Yes / No question"),
-				"grow, sg bg, wrap");
-		yesNoQuestionButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				Toolkit.getQuestionPane().askYesNoQuestion(
-						"Question title",
-						"This is an important question! \nHere comes some more information in text form about the kitchens sink.");
-			}
-		});
+        final IButton yesNoQuestionButton = parentContainer.add(
+                bpF.button("Yes/No question demo", "Shows an Yes / No question"),
+                "grow, sg bg, wrap");
+        yesNoQuestionButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                Toolkit.getQuestionPane()
+                        .askYesNoQuestion(
+                                "Question title",
+                                "This is an important question! \nHere comes some more information in text form about the kitchens sink.");
+            }
+        });
 
-		final IButton yesNoCancelQuestionButton = parentContainer.add(
-				bpF.button("Yes/No/Cancel question demo", "Shows an Yes/No/Cancel question"),
-				"grow, sg bg, wrap");
-		yesNoCancelQuestionButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				Toolkit.getQuestionPane().askYesNoCancelQuestion(
-						"Question title",
-						"This is an important question! \nHere comes some more information in text form about the kitchens sink.");
-			}
-		});
+        final IButton yesNoCancelQuestionButton = parentContainer.add(
+                bpF.button("Yes/No/Cancel question demo", "Shows an Yes/No/Cancel question"),
+                "grow, sg bg, wrap");
+        yesNoCancelQuestionButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                Toolkit.getQuestionPane()
+                        .askYesNoCancelQuestion(
+                                "Question title",
+                                "This is an important question! \nHere comes some more information in text form about the kitchens sink.");
+            }
+        });
 
-	}
+    }
 
 }

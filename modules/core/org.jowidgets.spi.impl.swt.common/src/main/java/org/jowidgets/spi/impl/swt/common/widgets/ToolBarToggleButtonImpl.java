@@ -37,38 +37,38 @@ import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
 
 public class ToolBarToggleButtonImpl extends ToolBarButtonImpl implements IToolBarToggleButtonSpi {
 
-	private final ItemStateObservable itemStateObservable;
+    private final ItemStateObservable itemStateObservable;
 
-	public ToolBarToggleButtonImpl(final ToolItem item) {
-		super(item);
-		this.itemStateObservable = new ItemStateObservable();
+    public ToolBarToggleButtonImpl(final ToolItem item) {
+        super(item);
+        this.itemStateObservable = new ItemStateObservable();
 
-		item.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(final SelectionEvent e) {
-				itemStateObservable.fireItemStateChanged(isSelected());
-			}
-		});
-	}
+        item.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(final SelectionEvent e) {
+                itemStateObservable.fireItemStateChanged(isSelected());
+            }
+        });
+    }
 
-	@Override
-	public boolean isSelected() {
-		return getUiReference().getSelection();
-	}
+    @Override
+    public boolean isSelected() {
+        return getUiReference().getSelection();
+    }
 
-	@Override
-	public void setSelected(final boolean selected) {
-		getUiReference().setSelection(selected);
-	}
+    @Override
+    public void setSelected(final boolean selected) {
+        getUiReference().setSelection(selected);
+    }
 
-	@Override
-	public void addItemListener(final IItemStateListener listener) {
-		itemStateObservable.addItemListener(listener);
-	}
+    @Override
+    public void addItemListener(final IItemStateListener listener) {
+        itemStateObservable.addItemListener(listener);
+    }
 
-	@Override
-	public void removeItemListener(final IItemStateListener listener) {
-		itemStateObservable.removeItemListener(listener);
-	}
+    @Override
+    public void removeItemListener(final IItemStateListener listener) {
+        itemStateObservable.removeItemListener(listener);
+    }
 
 }

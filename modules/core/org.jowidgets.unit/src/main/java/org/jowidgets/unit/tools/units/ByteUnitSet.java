@@ -37,67 +37,67 @@ import org.jowidgets.unit.api.UnitSet;
 
 public final class ByteUnitSet {
 
-	public static final IUnit B = b();
-	public static final IUnit KB = kb();
-	public static final IUnit MB = mb();
-	public static final IUnit GB = gb();
-	public static final IUnit TB = tb();
+    public static final IUnit B = b();
+    public static final IUnit KB = kb();
+    public static final IUnit MB = mb();
+    public static final IUnit GB = gb();
+    public static final IUnit TB = tb();
 
-	private static final IUnitSet INSTANCE = createInstance();
+    private static final IUnitSet INSTANCE = createInstance();
 
-	private ByteUnitSet() {}
+    private ByteUnitSet() {}
 
-	private static IUnit b() {
-		final IUnitBuilder builder = Unit.builder();
-		builder.abbreviation(Messages.getMessage("ByteUnitSet.b_abbreviation"));
-		builder.name(Messages.getMessage("ByteUnitSet.b_name"));
-		return builder.build();
-	}
+    private static IUnit b() {
+        final IUnitBuilder builder = Unit.builder();
+        builder.abbreviation(Messages.getMessage("ByteUnitSet.b_abbreviation"));
+        builder.name(Messages.getMessage("ByteUnitSet.b_name"));
+        return builder.build();
+    }
 
-	private static IUnit kb() {
-		final IUnitBuilder builder = Unit.builder();
-		builder.abbreviation(Messages.getMessage("ByteUnitSet.kb_abbreviation"));
-		builder.name(Messages.getMessage("ByteUnitSet.kb_name"));
-		builder.conversionFactor(1024);
-		return builder.build();
-	}
+    private static IUnit kb() {
+        final IUnitBuilder builder = Unit.builder();
+        builder.abbreviation(Messages.getMessage("ByteUnitSet.kb_abbreviation"));
+        builder.name(Messages.getMessage("ByteUnitSet.kb_name"));
+        builder.conversionFactor(1024);
+        return builder.build();
+    }
 
-	private static IUnit mb() {
-		final IUnitBuilder builder = Unit.builder();
-		builder.abbreviation(Messages.getMessage("ByteUnitSet.mb_abbreviation"));
-		builder.name(Messages.getMessage("ByteUnitSet.mb_name"));
-		builder.conversionFactor(1024 * 1024);
-		return builder.build();
-	}
+    private static IUnit mb() {
+        final IUnitBuilder builder = Unit.builder();
+        builder.abbreviation(Messages.getMessage("ByteUnitSet.mb_abbreviation"));
+        builder.name(Messages.getMessage("ByteUnitSet.mb_name"));
+        builder.conversionFactor(1024 * 1024);
+        return builder.build();
+    }
 
-	private static IUnit gb() {
-		final IUnitBuilder builder = Unit.builder();
-		builder.abbreviation(Messages.getMessage("ByteUnitSet.gb_abbreviation"));
-		builder.name(Messages.getMessage("ByteUnitSet.gb_name"));
-		builder.conversionFactor(1024 * 1024 * 1024);
-		return builder.build();
-	}
+    private static IUnit gb() {
+        final IUnitBuilder builder = Unit.builder();
+        builder.abbreviation(Messages.getMessage("ByteUnitSet.gb_abbreviation"));
+        builder.name(Messages.getMessage("ByteUnitSet.gb_name"));
+        builder.conversionFactor(1024 * 1024 * 1024);
+        return builder.build();
+    }
 
-	private static IUnit tb() {
-		final IUnitBuilder builder = Unit.builder();
-		builder.abbreviation(Messages.getMessage("ByteUnitSet.tb_abbreviation"));
-		builder.name(Messages.getMessage("ByteUnitSet.tb_name"));
-		builder.conversionFactor(1024 * 1024 * 1024 * 1024);
-		return builder.build();
-	}
+    private static IUnit tb() {
+        final IUnitBuilder builder = Unit.builder();
+        builder.abbreviation(Messages.getMessage("ByteUnitSet.tb_abbreviation"));
+        builder.name(Messages.getMessage("ByteUnitSet.tb_name"));
+        builder.conversionFactor(1024 * 1024 * 1024 * 1024);
+        return builder.build();
+    }
 
-	private static IUnitSet createInstance() {
-		final IUnitSetBuilder builder = UnitSet.builder();
-		builder.add(B);
-		builder.add(KB);
-		builder.add(MB);
-		builder.add(GB);
-		builder.add(TB);
-		return builder.build();
-	}
+    private static IUnitSet createInstance() {
+        final IUnitSetBuilder builder = UnitSet.builder();
+        builder.add(B);
+        builder.add(KB);
+        builder.add(MB);
+        builder.add(GB);
+        builder.add(TB);
+        return builder.build();
+    }
 
-	public static IUnitSet instance() {
-		return INSTANCE;
-	}
+    public static IUnitSet instance() {
+        return INSTANCE;
+    }
 
 }

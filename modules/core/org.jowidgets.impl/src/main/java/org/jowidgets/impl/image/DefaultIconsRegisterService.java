@@ -34,84 +34,84 @@ import org.jowidgets.common.image.IconsSmallCommon;
 
 public class DefaultIconsRegisterService extends ImageConstantRegisterService {
 
-	public DefaultIconsRegisterService(final IImageRegistry imageRegistry) {
-		super("org/jowidgets/impl/images/icons/", imageRegistry);
-	}
+    public DefaultIconsRegisterService(final IImageRegistry imageRegistry) {
+        super("org/jowidgets/impl/images/icons/", imageRegistry);
+    }
 
-	public void registerImages() {
-		registerImage(IconsSmall.EMPTY, "empty.png");
+    public void registerImages() {
+        registerImage(IconsSmall.EMPTY, "empty.png");
 
-		registerImage(IconsSmall.OK, "ok.png");
-		registerImage(IconsSmall.OK_GREYED, "ok_greyed.png");
-		registerImage(IconsSmall.POPUP_ARROW, "popup_arrow.png");
+        registerImage(IconsSmall.OK, "ok.png");
+        registerImage(IconsSmall.OK_GREYED, "ok_greyed.png");
+        registerImage(IconsSmall.POPUP_ARROW, "popup_arrow.png");
 
-		registerImage(IconsCommon.FALLBACK_INFO, "empty.png");
-		registerImage(IconsCommon.FALLBACK_ERROR, "empty.png");
-		registerImage(IconsCommon.FALLBACK_QUESTION, "empty.png");
-		registerImage(IconsCommon.FALLBACK_WARNING, "empty.png");
+        registerImage(IconsCommon.FALLBACK_INFO, "empty.png");
+        registerImage(IconsCommon.FALLBACK_ERROR, "empty.png");
+        registerImage(IconsCommon.FALLBACK_QUESTION, "empty.png");
+        registerImage(IconsCommon.FALLBACK_WARNING, "empty.png");
 
-		registerImage(IconsSmallCommon.CLOSE, "close.png");
-		registerImage(IconsSmallCommon.CLOSE_MOUSEOVER, "close_mouseover.png");
+        registerImage(IconsSmallCommon.CLOSE, "close.png");
+        registerImage(IconsSmallCommon.CLOSE_MOUSEOVER, "close_mouseover.png");
 
-		registerImage(IconsSmall.NAVIGATION_FIRST_TINY, "nav_first_tiny.gif");
-		registerImage(IconsSmall.NAVIGATION_FIRST2_TINY, "nav_first2_tiny.gif");
-		registerImage(IconsSmall.NAVIGATION_NEXT_TINY, "nav_next_tiny.gif");
-		registerImage(IconsSmall.NAVIGATION_STOP_TINY, "nav_stop_tiny.gif");
-		registerImage(IconsSmall.NAVIGATION_PAUSE_TINY, "nav_pause_tiny.gif");
-		registerImage(IconsSmall.NAVIGATION_PREVIOUS_TINY, "nav_prev_tiny.gif");
-		registerImage(IconsSmall.NAVIGATION_LAST_TINY, "nav_last_tiny.gif");
-		registerImage(IconsSmall.NAVIGATION_LAST2_TINY, "nav_last2_tiny.gif");
-		registerImage(IconsSmall.NAVIGATION_FORWARD_TINY, "nav_forward_tiny.gif");
-		registerImage(IconsSmall.NAVIGATION_BACKWARD_TINY, "nav_backward_tiny.gif");
+        registerImage(IconsSmall.NAVIGATION_FIRST_TINY, "nav_first_tiny.gif");
+        registerImage(IconsSmall.NAVIGATION_FIRST2_TINY, "nav_first2_tiny.gif");
+        registerImage(IconsSmall.NAVIGATION_NEXT_TINY, "nav_next_tiny.gif");
+        registerImage(IconsSmall.NAVIGATION_STOP_TINY, "nav_stop_tiny.gif");
+        registerImage(IconsSmall.NAVIGATION_PAUSE_TINY, "nav_pause_tiny.gif");
+        registerImage(IconsSmall.NAVIGATION_PREVIOUS_TINY, "nav_prev_tiny.gif");
+        registerImage(IconsSmall.NAVIGATION_LAST_TINY, "nav_last_tiny.gif");
+        registerImage(IconsSmall.NAVIGATION_LAST2_TINY, "nav_last2_tiny.gif");
+        registerImage(IconsSmall.NAVIGATION_FORWARD_TINY, "nav_forward_tiny.gif");
+        registerImage(IconsSmall.NAVIGATION_BACKWARD_TINY, "nav_backward_tiny.gif");
 
-		registerImage(IconsSmall.TABLE_SORT_DESC, "table_sort_desc.gif");
-		registerImage(IconsSmall.TABLE_SORT_ASC, "table_sort_asc.gif");
-		registerImage(IconsSmall.TABLE_SORT_FILTER_DESC, "table_sort_filter_desc.gif");
-		registerImage(IconsSmall.TABLE_SORT_FILTER_ASC, "table_sort_filter_asc.gif");
-		registerImage(IconsSmall.TABLE_FILTER, "table_filter.gif");
+        registerImage(IconsSmall.TABLE_SORT_DESC, "table_sort_desc.gif");
+        registerImage(IconsSmall.TABLE_SORT_ASC, "table_sort_asc.gif");
+        registerImage(IconsSmall.TABLE_SORT_FILTER_DESC, "table_sort_filter_desc.gif");
+        registerImage(IconsSmall.TABLE_SORT_FILTER_ASC, "table_sort_filter_asc.gif");
+        registerImage(IconsSmall.TABLE_FILTER, "table_filter.gif");
 
-		registerImage(IconsSmall.EXPAND_DOWN, "expand_down.png");
-		registerImage(IconsSmall.EXPAND_UP, "expand_up.png");
+        registerImage(IconsSmall.EXPAND_DOWN, "expand_down.png");
+        registerImage(IconsSmall.EXPAND_UP, "expand_up.png");
 
-		registerImage(IconsSmall.ADD, "add.gif");
-		registerImage(IconsSmall.ADD_GREEN, "add_green.gif");
-		registerImage(IconsSmall.ADD_ALL, "add_all.gif");
-		registerImage(IconsSmall.SUB, "sub.gif");
+        registerImage(IconsSmall.ADD, "add.gif");
+        registerImage(IconsSmall.ADD_GREEN, "add_green.gif");
+        registerImage(IconsSmall.ADD_ALL, "add_all.gif");
+        registerImage(IconsSmall.SUB, "sub.gif");
 
-		registerImage(IconsSmall.DELETE, "delete.gif");
-		registerImage(IconsSmall.DELETE_TINY, "delete_tiny.png");
-		registerImage(IconsSmall.DELETE_GREY_TINY, "delete_grey_tiny.png");
+        registerImage(IconsSmall.DELETE, "delete.gif");
+        registerImage(IconsSmall.DELETE_TINY, "delete_tiny.png");
+        registerImage(IconsSmall.DELETE_GREY_TINY, "delete_grey_tiny.png");
 
-		registerImage(IconsSmall.SETTINGS, "settings.gif");
+        registerImage(IconsSmall.SETTINGS, "settings.gif");
 
-		registerImage(IconsSmall.COPY, "copy.png");
-		registerImage(IconsSmall.PASTE, "paste.png");
-		registerImage(IconsSmall.EDIT, "edit.png");
+        registerImage(IconsSmall.COPY, "copy.png");
+        registerImage(IconsSmall.PASTE, "paste.png");
+        registerImage(IconsSmall.EDIT, "edit.png");
 
-		registerImage(IconsSmall.FOLDER, "folder.png");
-		registerImage(IconsSmall.PAGE_WHITE, "page_white.png");
-		registerImage(IconsSmall.DISK, "disk.png");
-		registerImage(IconsSmall.CANCEL, "cancel.png");
-		registerImage(IconsSmall.REFRESH, "refresh.png");
-		registerImage(IconsSmall.UNDO, "undo.png");
+        registerImage(IconsSmall.FOLDER, "folder.png");
+        registerImage(IconsSmall.PAGE_WHITE, "page_white.png");
+        registerImage(IconsSmall.DISK, "disk.png");
+        registerImage(IconsSmall.CANCEL, "cancel.png");
+        registerImage(IconsSmall.REFRESH, "refresh.png");
+        registerImage(IconsSmall.UNDO, "undo.png");
 
-		registerImage(IconsSmall.FILTER, "filter.png");
-		registerImage(IconsSmall.FILTER_INCLUDING, "filter_including.png");
-		registerImage(IconsSmall.FILTER_EXCLUDING, "filter_excluding.png");
-		registerImage(IconsSmall.FILTER_EDIT, "filter_edit.png");
-		registerImage(IconsSmall.FILTER_DELETE, "filter_delete.png");
+        registerImage(IconsSmall.FILTER, "filter.png");
+        registerImage(IconsSmall.FILTER_INCLUDING, "filter_including.png");
+        registerImage(IconsSmall.FILTER_EXCLUDING, "filter_excluding.png");
+        registerImage(IconsSmall.FILTER_EDIT, "filter_edit.png");
+        registerImage(IconsSmall.FILTER_DELETE, "filter_delete.png");
 
-		registerImage(IconsSmall.EXPAND_ALL, "expand_all.png");
-		registerImage(IconsSmall.COLLAPSE_ALL, "collapse_all.png");
-		registerImage(IconsSmall.EXPAND_COLLAPSE_ALL, "expand_collapse_all.png");
-		registerImage(IconsSmall.EXPAND_ALL_CHECKED, "expand_all_checked.png");
+        registerImage(IconsSmall.EXPAND_ALL, "expand_all.png");
+        registerImage(IconsSmall.COLLAPSE_ALL, "collapse_all.png");
+        registerImage(IconsSmall.EXPAND_COLLAPSE_ALL, "expand_collapse_all.png");
+        registerImage(IconsSmall.EXPAND_ALL_CHECKED, "expand_all_checked.png");
 
-		registerImage(IconsSmall.CHECK_ALL, "check_all.png");
-		registerImage(IconsSmall.UNCHECK_ALL, "uncheck_all.png");
+        registerImage(IconsSmall.CHECK_ALL, "check_all.png");
+        registerImage(IconsSmall.UNCHECK_ALL, "uncheck_all.png");
 
-		registerImage(IconsSmall.WAIT_1, "wait_1.png");
-		registerImage(IconsSmall.WAIT_2, "wait_2.png");
-		registerImage(IconsSmall.WAIT_3, "wait_3.png");
-		registerImage(IconsSmall.WAIT_4, "wait_4.png");
-	}
+        registerImage(IconsSmall.WAIT_1, "wait_1.png");
+        registerImage(IconsSmall.WAIT_2, "wait_2.png");
+        registerImage(IconsSmall.WAIT_3, "wait_3.png");
+        registerImage(IconsSmall.WAIT_4, "wait_4.png");
+    }
 }

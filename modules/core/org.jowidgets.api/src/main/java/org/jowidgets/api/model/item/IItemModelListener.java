@@ -30,11 +30,11 @@ package org.jowidgets.api.model.item;
 
 public interface IItemModelListener {
 
-	/**
-	 * Will be invoked if the item has been changed
-	 * 
-	 * @param item The changed item
-	 */
-	void itemChanged(IItemModel item);
+    /**
+     * Will be invoked if the item has been changed
+     * 
+     * @param item The changed item
+     */
+    void itemChanged(IItemModel item);
 
 }

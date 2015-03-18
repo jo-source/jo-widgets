@@ -32,10 +32,10 @@ import org.jowidgets.common.image.IImageConstant;
 
 public interface IWorkbenchPartBuilder<BUILDER_INSTANCE_TYPE> {
 
-	BUILDER_INSTANCE_TYPE setLabel(String label);
+    BUILDER_INSTANCE_TYPE setLabel(String label);
 
-	BUILDER_INSTANCE_TYPE setTooltip(String toolTiptext);
+    BUILDER_INSTANCE_TYPE setTooltip(String toolTiptext);
 
-	BUILDER_INSTANCE_TYPE setIcon(IImageConstant icon);
+    BUILDER_INSTANCE_TYPE setIcon(IImageConstant icon);
 
 }

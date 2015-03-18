@@ -44,102 +44,102 @@ import org.jowidgets.util.Assert;
 
 final class DropTargetPowo implements IDropTarget {
 
-	private final Set<IDropTargetListener> listeners;
+    private final Set<IDropTargetListener> listeners;
 
-	private IDropTarget original;
+    private IDropTarget original;
 
-	private Collection<TransferType<?>> supportedTypes;
-	private Set<DropAction> actions;
-	private DropMode defaultDropMode;
+    private Collection<TransferType<?>> supportedTypes;
+    private Set<DropAction> actions;
+    private DropMode defaultDropMode;
 
-	DropTargetPowo() {
-		this.listeners = new LinkedHashSet<IDropTargetListener>();
-	}
+    DropTargetPowo() {
+        this.listeners = new LinkedHashSet<IDropTargetListener>();
+    }
 
-	void setOriginal(final IDropTarget original) {
-		this.original = original;
-		for (final IDropTargetListener listener : listeners) {
-			original.addDropTargetListener(listener);
-		}
-		if (supportedTypes != null) {
-			original.setTransferTypes(supportedTypes);
-		}
-		if (actions != null) {
-			original.setActions(actions);
-		}
-		if (defaultDropMode != null) {
-			original.setDefaultDropMode(defaultDropMode);
-		}
-		listeners.clear();
-		supportedTypes = null;
-		actions = null;
-		defaultDropMode = null;
-	}
+    void setOriginal(final IDropTarget original) {
+        this.original = original;
+        for (final IDropTargetListener listener : listeners) {
+            original.addDropTargetListener(listener);
+        }
+        if (supportedTypes != null) {
+            original.setTransferTypes(supportedTypes);
+        }
+        if (actions != null) {
+            original.setActions(actions);
+        }
+        if (defaultDropMode != null) {
+            original.setDefaultDropMode(defaultDropMode);
+        }
+        listeners.clear();
+        supportedTypes = null;
+        actions = null;
+        defaultDropMode = null;
+    }
 
-	@Override
-	public void addDropTargetListener(final IDropTargetListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		if (original != null) {
-			original.addDropTargetListener(listener);
-		}
-		else {
-			listeners.add(listener);
-		}
-	}
+    @Override
+    public void addDropTargetListener(final IDropTargetListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        if (original != null) {
+            original.addDropTargetListener(listener);
+        }
+        else {
+            listeners.add(listener);
+        }
+    }
 
-	@Override
-	public void removeDropTargetListener(final IDropTargetListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		if (original != null) {
-			original.removeDropTargetListener(listener);
-		}
-		else {
-			listeners.remove(listener);
-		}
-	}
+    @Override
+    public void removeDropTargetListener(final IDropTargetListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        if (original != null) {
+            original.removeDropTargetListener(listener);
+        }
+        else {
+            listeners.remove(listener);
+        }
+    }
 
-	@Override
-	public void setTransferTypes(final Collection<TransferType<?>> supportedTypes) {
-		Assert.paramNotNull(supportedTypes, "supportedTypes");
-		if (original != null) {
-			original.setTransferTypes(supportedTypes);
-		}
-		else {
-			this.supportedTypes = new LinkedList<TransferType<?>>(supportedTypes);
-		}
-	}
+    @Override
+    public void setTransferTypes(final Collection<TransferType<?>> supportedTypes) {
+        Assert.paramNotNull(supportedTypes, "supportedTypes");
+        if (original != null) {
+            original.setTransferTypes(supportedTypes);
+        }
+        else {
+            this.supportedTypes = new LinkedList<TransferType<?>>(supportedTypes);
+        }
+    }
 
-	@Override
-	public void setTransferTypes(final TransferType<?>... supportedTypes) {
-		Assert.paramNotNull(supportedTypes, "supportedTypes");
-		setTransferTypes(Arrays.asList(supportedTypes));
-	}
+    @Override
+    public void setTransferTypes(final TransferType<?>... supportedTypes) {
+        Assert.paramNotNull(supportedTypes, "supportedTypes");
+        setTransferTypes(Arrays.asList(supportedTypes));
+    }
 
-	@Override
-	public void setActions(final Set<DropAction> actions) {
-		Assert.paramNotNull(actions, "actions");
-		if (original != null) {
-			original.setActions(actions);
-		}
-		else {
-			this.actions = new HashSet<DropAction>(actions);
-		}
-	}
+    @Override
+    public void setActions(final Set<DropAction> actions) {
+        Assert.paramNotNull(actions, "actions");
+        if (original != null) {
+            original.setActions(actions);
+        }
+        else {
+            this.actions = new HashSet<DropAction>(actions);
+        }
+    }
 
-	@Override
-	public void setActions(final DropAction... actions) {
-		Assert.paramNotNull(actions, "actions");
-		final Set<DropAction> actionsSet = new HashSet<DropAction>();
-		for (int i = 0; i < actions.length; i++) {
-			actionsSet.add(actions[i]);
-		}
-		setActions(actionsSet);
-	}
+    @Override
+    public void setActions(final DropAction... actions) {
+        Assert.paramNotNull(actions, "actions");
+        final Set<DropAction> actionsSet = new HashSet<DropAction>();
+        for (int i = 0; i < actions.length; i++) {
+            actionsSet.add(actions[i]);
+        }
+        setActions(actionsSet);
+    }
 
-	@Override
-	public void setDefaultDropMode(final DropMode dropMode) {
-		Assert.paramNotNull(actions, "actions");
-		this.defaultDropMode = dropMode;
-	}
+    @Override
+    public void setDefaultDropMode(final DropMode dropMode) {
+        Assert.paramNotNull(actions, "actions");
+        this.defaultDropMode = dropMode;
+    }
 
 }

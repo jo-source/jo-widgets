@@ -37,10 +37,10 @@ import org.jowidgets.spi.clipboard.TransferTypeSpi;
 
 public interface IDropTargetSpi extends IDropTargetObservableSpi {
 
-	void setTransferTypes(Collection<TransferTypeSpi> supportedTypes);
+    void setTransferTypes(Collection<TransferTypeSpi> supportedTypes);
 
-	void setActions(Set<DropAction> actions);
+    void setActions(Set<DropAction> actions);
 
-	void setDefaultDropMode(DropMode dropMode);
+    void setDefaultDropMode(DropMode dropMode);
 
 }

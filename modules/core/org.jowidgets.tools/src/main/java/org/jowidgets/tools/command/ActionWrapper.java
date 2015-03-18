@@ -39,61 +39,61 @@ import org.jowidgets.util.wrapper.IWrapper;
 
 public class ActionWrapper implements IAction, IWrapper<IAction> {
 
-	private final IAction action;
+    private final IAction action;
 
-	public ActionWrapper(final IAction action) {
-		Assert.paramNotNull(action, "action");
-		this.action = action;
-	}
+    public ActionWrapper(final IAction action) {
+        Assert.paramNotNull(action, "action");
+        this.action = action;
+    }
 
-	@Override
-	public String getText() {
-		return action.getText();
-	}
+    @Override
+    public String getText() {
+        return action.getText();
+    }
 
-	@Override
-	public String getToolTipText() {
-		return action.getToolTipText();
-	}
+    @Override
+    public String getToolTipText() {
+        return action.getToolTipText();
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return action.getIcon();
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return action.getIcon();
+    }
 
-	@Override
-	public Character getMnemonic() {
-		return action.getMnemonic();
-	}
+    @Override
+    public Character getMnemonic() {
+        return action.getMnemonic();
+    }
 
-	@Override
-	public Accelerator getAccelerator() {
-		return action.getAccelerator();
-	}
+    @Override
+    public Accelerator getAccelerator() {
+        return action.getAccelerator();
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return action.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return action.isEnabled();
+    }
 
-	@Override
-	public void execute(final IExecutionContext actionEvent) throws Exception {
-		action.execute(actionEvent);
-	}
+    @Override
+    public void execute(final IExecutionContext actionEvent) throws Exception {
+        action.execute(actionEvent);
+    }
 
-	@Override
-	public IExceptionHandler getExceptionHandler() {
-		return action.getExceptionHandler();
-	}
+    @Override
+    public IExceptionHandler getExceptionHandler() {
+        return action.getExceptionHandler();
+    }
 
-	@Override
-	public IActionChangeObservable getActionChangeObservable() {
-		return action.getActionChangeObservable();
-	}
+    @Override
+    public IActionChangeObservable getActionChangeObservable() {
+        return action.getActionChangeObservable();
+    }
 
-	@Override
-	public IAction unwrap() {
-		return action;
-	}
+    @Override
+    public IAction unwrap() {
+        return action;
+    }
 
 }

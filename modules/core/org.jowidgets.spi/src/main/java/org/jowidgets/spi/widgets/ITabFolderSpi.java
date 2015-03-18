@@ -34,16 +34,16 @@ import org.jowidgets.spi.widgets.setup.ITabItemSetupSpi;
 
 public interface ITabFolderSpi extends IControlSpi, ITabFolderCommon {
 
-	ITabItemSpi addItem(final ITabItemSetupSpi setup);
+    ITabItemSpi addItem(final ITabItemSetupSpi setup);
 
-	ITabItemSpi addItem(int index, final ITabItemSetupSpi setup);
+    ITabItemSpi addItem(int index, final ITabItemSetupSpi setup);
 
-	void detachItem(ITabItemSpi item);
+    void detachItem(ITabItemSpi item);
 
-	void attachItem(ITabItemSpi item);
+    void attachItem(ITabItemSpi item);
 
-	void attachItem(int index, ITabItemSpi item);
+    void attachItem(int index, ITabItemSpi item);
 
-	Dimension computeDecoratedSize(Dimension clientAreaSize);
+    Dimension computeDecoratedSize(Dimension clientAreaSize);
 
 }

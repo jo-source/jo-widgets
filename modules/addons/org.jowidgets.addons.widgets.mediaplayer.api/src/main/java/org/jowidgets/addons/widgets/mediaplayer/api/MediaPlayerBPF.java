@@ -32,10 +32,10 @@ import org.jowidgets.api.toolkit.Toolkit;
 
 public final class MediaPlayerBPF {
 
-	private MediaPlayerBPF() {}
+    private MediaPlayerBPF() {}
 
-	public static IMediaPlayerBluePrint player() {
-		return Toolkit.getBluePrintFactory().bluePrint(IMediaPlayerBluePrint.class);
-	}
+    public static IMediaPlayerBluePrint player() {
+        return Toolkit.getBluePrintFactory().bluePrint(IMediaPlayerBluePrint.class);
+    }
 
 }

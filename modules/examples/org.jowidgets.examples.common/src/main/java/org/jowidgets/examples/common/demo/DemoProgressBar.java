@@ -45,81 +45,81 @@ import org.jowidgets.tools.controller.WindowAdapter;
 
 public class DemoProgressBar {
 
-	public DemoProgressBar(final IContainer parentContainer, final IWindow parentWindow) {
+    public DemoProgressBar(final IContainer parentContainer, final IWindow parentWindow) {
 
-		final AtomicBoolean windowActive = new AtomicBoolean();
-		final AtomicBoolean progressBarFinished = new AtomicBoolean();
-		final IProgressBar progressBar;
+        final AtomicBoolean windowActive = new AtomicBoolean();
+        final AtomicBoolean progressBarFinished = new AtomicBoolean();
+        final IProgressBar progressBar;
 
-		final int max = (int) (Math.random() * 200) + 100;
-		final boolean indetermined = Math.random() > 0.7;
+        final int max = (int) (Math.random() * 200) + 100;
+        final boolean indetermined = Math.random() > 0.7;
 
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+        final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
-		parentContainer.setLayout(new MigLayoutDescriptor("0[grow][]0", "0[]0"));
+        parentContainer.setLayout(new MigLayoutDescriptor("0[grow][]0", "0[]0"));
 
-		final IProgressBarBluePrint progressBarPb = bpF.progressBar().setIndeterminate(indetermined).setMaximum(max);
+        final IProgressBarBluePrint progressBarPb = bpF.progressBar().setIndeterminate(indetermined).setMaximum(max);
 
-		progressBar = parentContainer.add(progressBarPb, "growx,w 300::, h 22:22:22");
+        progressBar = parentContainer.add(progressBarPb, "growx,w 300::, h 22:22:22");
 
-		final IButton buttonWidget = parentContainer.add(bpF.button().setIcon(IconsSmall.ERROR), " h 25:25:25, w 25:25:25, wrap");
+        final IButton buttonWidget = parentContainer.add(bpF.button().setIcon(IconsSmall.ERROR), " h 25:25:25, w 25:25:25, wrap");
 
-		buttonWidget.addActionListener(new IActionListener() {
+        buttonWidget.addActionListener(new IActionListener() {
 
-			@Override
-			public void actionPerformed() {
-				progressBarFinished.set(true);
-				progressBar.setProgress(0);
-			}
-		});
+            @Override
+            public void actionPerformed() {
+                progressBarFinished.set(true);
+                progressBar.setProgress(0);
+            }
+        });
 
-		if (!indetermined) {
+        if (!indetermined) {
 
-			parentWindow.addWindowListener(new WindowAdapter() {
+            parentWindow.addWindowListener(new WindowAdapter() {
 
-				@Override
-				public void windowActivated() {
-					if (windowActive.getAndSet(true) || progressBarFinished.get()) {
-						return;
-					}
-					progressBarFinished.set(false);
-					final IUiThreadAccess uiThreadAccess = Toolkit.getUiThreadAccess();
-					new Thread(new Runnable() {
+                @Override
+                public void windowActivated() {
+                    if (windowActive.getAndSet(true) || progressBarFinished.get()) {
+                        return;
+                    }
+                    progressBarFinished.set(false);
+                    final IUiThreadAccess uiThreadAccess = Toolkit.getUiThreadAccess();
+                    new Thread(new Runnable() {
 
-						private int i = 0;
+                        private int i = 0;
 
-						@Override
-						public void run() {
-							for (i = 0; i <= max && windowActive.get() && !progressBarFinished.get(); i++) {
-								uiThreadAccess.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            for (i = 0; i <= max && windowActive.get() && !progressBarFinished.get(); i++) {
+                                uiThreadAccess.invokeLater(new Runnable() {
 
-									@Override
-									public void run() {
-										if (windowActive.get() && !progressBarFinished.get()) {
-											progressBar.setProgress(i);
-										}
-									}
-								});
+                                    @Override
+                                    public void run() {
+                                        if (windowActive.get() && !progressBarFinished.get()) {
+                                            progressBar.setProgress(i);
+                                        }
+                                    }
+                                });
 
-								try {
-									Thread.sleep(200);
-								}
-								catch (final InterruptedException e) {
-									throw new RuntimeException(e);
-								}
-							}
-						}
+                                try {
+                                    Thread.sleep(200);
+                                }
+                                catch (final InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        }
 
-					}).start();
-				}
+                    }).start();
+                }
 
-				@Override
-				public void windowClosed() {
-					windowActive.set(false);
-				}
+                @Override
+                public void windowClosed() {
+                    windowActive.set(false);
+                }
 
-			});
-		}
+            });
+        }
 
-	}
+    }
 }

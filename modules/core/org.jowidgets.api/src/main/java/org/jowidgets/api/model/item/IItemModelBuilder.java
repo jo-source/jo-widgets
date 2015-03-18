@@ -35,108 +35,108 @@ import org.jowidgets.common.types.VirtualKey;
 
 public interface IItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> {
 
-	/**
-	 * The the id if the item.
-	 * 
-	 * If no id will be set or null will set,
-	 * a UUID will be used
-	 * 
-	 * @param id The id to set
-	 * 
-	 * @return This builder
-	 */
-	INSTANCE_TYPE setId(String id);
+    /**
+     * The the id if the item.
+     * 
+     * If no id will be set or null will set,
+     * a UUID will be used
+     * 
+     * @param id The id to set
+     * 
+     * @return This builder
+     */
+    INSTANCE_TYPE setId(String id);
 
-	/**
-	 * Sets the label text
-	 * 
-	 * @param text The label text to set
-	 * 
-	 * @return This builder
-	 */
-	INSTANCE_TYPE setText(final String text);
+    /**
+     * Sets the label text
+     * 
+     * @param text The label text to set
+     * 
+     * @return This builder
+     */
+    INSTANCE_TYPE setText(final String text);
 
-	/**
-	 * Sets the tooltip text
-	 * 
-	 * @param toolTipText The tooltip text to set
-	 * 
-	 * @return This builder
-	 */
-	INSTANCE_TYPE setToolTipText(String toolTipText);
+    /**
+     * Sets the tooltip text
+     * 
+     * @param toolTipText The tooltip text to set
+     * 
+     * @return This builder
+     */
+    INSTANCE_TYPE setToolTipText(String toolTipText);
 
-	/**
-	 * Sets the icon
-	 * 
-	 * @param icon The icon to set
-	 * 
-	 * @return This builder
-	 */
-	INSTANCE_TYPE setIcon(IImageConstant icon);
+    /**
+     * Sets the icon
+     * 
+     * @param icon The icon to set
+     * 
+     * @return This builder
+     */
+    INSTANCE_TYPE setIcon(IImageConstant icon);
 
-	/**
-	 * Sets the key accelerator
-	 * 
-	 * @param accelerator The accelerator to set
-	 * 
-	 * @return This builder
-	 */
-	INSTANCE_TYPE setAccelerator(Accelerator accelerator);
+    /**
+     * Sets the key accelerator
+     * 
+     * @param accelerator The accelerator to set
+     * 
+     * @return This builder
+     */
+    INSTANCE_TYPE setAccelerator(Accelerator accelerator);
 
-	/**
-	 * Sets the key accelerator
-	 * 
-	 * @param key The virtual key of the accelerator
-	 * @param modifier The modifier of the accelerator
-	 * 
-	 * @return This builder
-	 */
-	INSTANCE_TYPE setAccelerator(final VirtualKey key, final Modifier... modifier);
+    /**
+     * Sets the key accelerator
+     * 
+     * @param key The virtual key of the accelerator
+     * @param modifier The modifier of the accelerator
+     * 
+     * @return This builder
+     */
+    INSTANCE_TYPE setAccelerator(final VirtualKey key, final Modifier... modifier);
 
-	/**
-	 * Sets the key accelerator
-	 * 
-	 * @param key The key character of the accelerator
-	 * @param modifier The modifier of the accelerator
-	 * 
-	 * @return This builder
-	 */
-	INSTANCE_TYPE setAccelerator(final char key, final Modifier... modifier);
+    /**
+     * Sets the key accelerator
+     * 
+     * @param key The key character of the accelerator
+     * @param modifier The modifier of the accelerator
+     * 
+     * @return This builder
+     */
+    INSTANCE_TYPE setAccelerator(final char key, final Modifier... modifier);
 
-	/**
-	 * Sets the mnemonic
-	 * 
-	 * @param mnemonic The mnemonic to set
-	 * 
-	 * @return This builder
-	 */
-	INSTANCE_TYPE setMnemonic(Character mnemonic);
+    /**
+     * Sets the mnemonic
+     * 
+     * @param mnemonic The mnemonic to set
+     * 
+     * @return This builder
+     */
+    INSTANCE_TYPE setMnemonic(Character mnemonic);
 
-	/**
-	 * Sets the mnemonic
-	 * 
-	 * @param mnemonic The mnemonic to set
-	 * 
-	 * @return This builder
-	 */
-	INSTANCE_TYPE setMnemonic(char mnemonic);
+    /**
+     * Sets the mnemonic
+     * 
+     * @param mnemonic The mnemonic to set
+     * 
+     * @return This builder
+     */
+    INSTANCE_TYPE setMnemonic(char mnemonic);
 
-	/**
-	 * Sets the initial enabled state
-	 * 
-	 * The default value is true
-	 * 
-	 * @param enabled The enabled state to set
-	 * 
-	 * @return This builder
-	 */
-	INSTANCE_TYPE setEnabled(boolean enabled);
+    /**
+     * Sets the initial enabled state
+     * 
+     * The default value is true
+     * 
+     * @param enabled The enabled state to set
+     * 
+     * @return This builder
+     */
+    INSTANCE_TYPE setEnabled(boolean enabled);
 
-	/**
-	 * Creates a new model based on the given setup
-	 * 
-	 * @return A new model
-	 */
-	ITEM_TYPE build();
+    /**
+     * Creates a new model based on the given setup
+     * 
+     * @return A new model
+     */
+    ITEM_TYPE build();
 
 }

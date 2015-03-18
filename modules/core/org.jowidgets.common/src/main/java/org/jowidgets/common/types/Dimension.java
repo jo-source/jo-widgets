@@ -29,75 +29,75 @@ package org.jowidgets.common.types;
 
 public final class Dimension {
 
-	public static final Dimension MIN = new Dimension(0, 0);
-	public static final Dimension MAX = new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
+    public static final Dimension MIN = new Dimension(0, 0);
+    public static final Dimension MAX = new Dimension(Integer.MAX_VALUE, Integer.MAX_VALUE);
 
-	private final int width;
-	private final int height;
+    private final int width;
+    private final int height;
 
-	/**
-	 * Creates a new Dimension
-	 * 
-	 * @param width The width of the dimension
-	 * @param height The height of the dimension
-	 */
-	public Dimension(final int width, final int height) {
-		super();
-		this.width = width;
-		this.height = height;
-	}
+    /**
+     * Creates a new Dimension
+     * 
+     * @param width The width of the dimension
+     * @param height The height of the dimension
+     */
+    public Dimension(final int width, final int height) {
+        super();
+        this.width = width;
+        this.height = height;
+    }
 
-	/**
-	 * Gets the width
-	 * 
-	 * @return The width
-	 */
-	public int getWidth() {
-		return width;
-	}
+    /**
+     * Gets the width
+     * 
+     * @return The width
+     */
+    public int getWidth() {
+        return width;
+    }
 
-	/**
-	 * Gets the height
-	 * 
-	 * @return The height
-	 */
-	public int getHeight() {
-		return height;
-	}
+    /**
+     * Gets the height
+     * 
+     * @return The height
+     */
+    public int getHeight() {
+        return height;
+    }
 
-	@Override
-	public String toString() {
-		return "Dimension [width=" + width + ", height=" + height + "]";
-	}
+    @Override
+    public String toString() {
+        return "Dimension [width=" + width + ", height=" + height + "]";
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + height;
-		result = prime * result + width;
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + height;
+        result = prime * result + width;
+        return result;
+    }
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final Dimension other = (Dimension) obj;
-		if (height != other.height) {
-			return false;
-		}
-		if (width != other.width) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Dimension other = (Dimension) obj;
+        if (height != other.height) {
+            return false;
+        }
+        if (width != other.width) {
+            return false;
+        }
+        return true;
+    }
 
 }

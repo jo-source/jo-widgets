@@ -36,87 +36,87 @@ import org.jowidgets.common.types.Markup;
 
 final class TableCellBuilder implements ITableCellBuilder {
 
-	private String text;
-	private String toolTipText;
-	private IImageConstant icon;
-	private Markup markup;
-	private IColorConstant foregroundColor;
-	private IColorConstant backgroundColor;
-	private IColorConstant selectedForegroundColor;
-	private IColorConstant selectedBackgroundColor;
-	private boolean editable;
+    private String text;
+    private String toolTipText;
+    private IImageConstant icon;
+    private Markup markup;
+    private IColorConstant foregroundColor;
+    private IColorConstant backgroundColor;
+    private IColorConstant selectedForegroundColor;
+    private IColorConstant selectedBackgroundColor;
+    private boolean editable;
 
-	TableCellBuilder() {
-		this.markup = Markup.DEFAULT;
-		this.editable = false;
-	}
+    TableCellBuilder() {
+        this.markup = Markup.DEFAULT;
+        this.editable = false;
+    }
 
-	@Override
-	public ITableCellBuilder setText(final String text) {
-		this.text = text;
-		return this;
-	}
+    @Override
+    public ITableCellBuilder setText(final String text) {
+        this.text = text;
+        return this;
+    }
 
-	@Override
-	public ITableCellBuilder setToolTipText(final String toolTipText) {
-		this.toolTipText = toolTipText;
-		return this;
-	}
+    @Override
+    public ITableCellBuilder setToolTipText(final String toolTipText) {
+        this.toolTipText = toolTipText;
+        return this;
+    }
 
-	@Override
-	public ITableCellBuilder setIcon(final IImageConstant icon) {
-		this.icon = icon;
-		return this;
-	}
+    @Override
+    public ITableCellBuilder setIcon(final IImageConstant icon) {
+        this.icon = icon;
+        return this;
+    }
 
-	@Override
-	public ITableCellBuilder setMarkup(final Markup markup) {
-		this.markup = markup;
-		return this;
-	}
+    @Override
+    public ITableCellBuilder setMarkup(final Markup markup) {
+        this.markup = markup;
+        return this;
+    }
 
-	@Override
-	public ITableCellBuilder setForegroundColor(final IColorConstant foregroundColor) {
-		this.foregroundColor = foregroundColor;
-		return this;
-	}
+    @Override
+    public ITableCellBuilder setForegroundColor(final IColorConstant foregroundColor) {
+        this.foregroundColor = foregroundColor;
+        return this;
+    }
 
-	@Override
-	public ITableCellBuilder setBackgroundColor(final IColorConstant backgroundColor) {
-		this.backgroundColor = backgroundColor;
-		return this;
-	}
+    @Override
+    public ITableCellBuilder setBackgroundColor(final IColorConstant backgroundColor) {
+        this.backgroundColor = backgroundColor;
+        return this;
+    }
 
-	@Override
-	public ITableCellBuilder setSelectedForegroundColor(final IColorConstant foregroundColor) {
-		this.selectedForegroundColor = foregroundColor;
-		return this;
-	}
+    @Override
+    public ITableCellBuilder setSelectedForegroundColor(final IColorConstant foregroundColor) {
+        this.selectedForegroundColor = foregroundColor;
+        return this;
+    }
 
-	@Override
-	public ITableCellBuilder setSelectedBackgroundColor(final IColorConstant backgroundColor) {
-		this.selectedBackgroundColor = backgroundColor;
-		return this;
-	}
+    @Override
+    public ITableCellBuilder setSelectedBackgroundColor(final IColorConstant backgroundColor) {
+        this.selectedBackgroundColor = backgroundColor;
+        return this;
+    }
 
-	@Override
-	public ITableCellBuilder setEditable(final boolean editable) {
-		this.editable = editable;
-		return this;
-	}
+    @Override
+    public ITableCellBuilder setEditable(final boolean editable) {
+        this.editable = editable;
+        return this;
+    }
 
-	@Override
-	public ITableCell build() {
-		return new TableCell(
-			text,
-			toolTipText,
-			icon,
-			markup,
-			foregroundColor,
-			backgroundColor,
-			selectedForegroundColor,
-			selectedBackgroundColor,
-			editable);
-	}
+    @Override
+    public ITableCell build() {
+        return new TableCell(
+            text,
+            toolTipText,
+            icon,
+            markup,
+            foregroundColor,
+            backgroundColor,
+            selectedForegroundColor,
+            selectedBackgroundColor,
+            editable);
+    }
 
 }

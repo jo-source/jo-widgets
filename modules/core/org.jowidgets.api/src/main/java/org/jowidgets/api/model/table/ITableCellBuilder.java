@@ -32,6 +32,6 @@ import org.jowidgets.common.model.ITableCell;
 
 public interface ITableCellBuilder extends IAbstractTableCellBluePrint<ITableCellBuilder> {
 
-	ITableCell build();
+    ITableCell build();
 
 }

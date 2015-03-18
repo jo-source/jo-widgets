@@ -28,9 +28,8 @@
 
 package org.jowidgets.common.application;
 
-
 public interface IApplicationLifecycle {
 
-	void finish();
+    void finish();
 
 }

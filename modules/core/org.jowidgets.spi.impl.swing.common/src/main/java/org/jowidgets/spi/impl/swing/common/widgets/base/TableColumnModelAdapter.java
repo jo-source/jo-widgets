@@ -35,19 +35,19 @@ import javax.swing.event.TableColumnModelListener;
 
 public class TableColumnModelAdapter implements TableColumnModelListener {
 
-	@Override
-	public void columnAdded(final TableColumnModelEvent e) {}
+    @Override
+    public void columnAdded(final TableColumnModelEvent e) {}
 
-	@Override
-	public void columnRemoved(final TableColumnModelEvent e) {}
+    @Override
+    public void columnRemoved(final TableColumnModelEvent e) {}
 
-	@Override
-	public void columnMoved(final TableColumnModelEvent e) {}
+    @Override
+    public void columnMoved(final TableColumnModelEvent e) {}
 
-	@Override
-	public void columnMarginChanged(final ChangeEvent e) {}
+    @Override
+    public void columnMarginChanged(final ChangeEvent e) {}
 
-	@Override
-	public void columnSelectionChanged(final ListSelectionEvent e) {}
+    @Override
+    public void columnSelectionChanged(final ListSelectionEvent e) {}
 
 }

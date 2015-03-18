@@ -28,13 +28,12 @@
 
 package org.jowidgets.workbench.toolkit.api;
 
-
 public interface IWorkbenchPartBuilderFactory {
 
-	IWorkbenchModelBuilder workbench();
+    IWorkbenchModelBuilder workbench();
 
-	IWorkbenchApplicationModelBuilder application();
+    IWorkbenchApplicationModelBuilder application();
 
-	IComponentNodeModelBuilder componentNode();
+    IComponentNodeModelBuilder componentNode();
 
 }

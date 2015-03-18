@@ -35,33 +35,33 @@ import org.jowidgets.spi.widgets.IButtonSpi;
 
 public abstract class AbstractButtonSpiWrapper extends AbstractTextLabelSpiWrapper implements IButtonCommon {
 
-	public AbstractButtonSpiWrapper(final IButtonSpi widget) {
-		super(widget);
-	}
+    public AbstractButtonSpiWrapper(final IButtonSpi widget) {
+        super(widget);
+    }
 
-	@Override
-	public IButtonSpi getWidget() {
-		return (IButtonSpi) super.getWidget();
-	}
+    @Override
+    public IButtonSpi getWidget() {
+        return (IButtonSpi) super.getWidget();
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		getWidget().setIcon(icon);
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        getWidget().setIcon(icon);
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		getWidget().setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        getWidget().setEnabled(enabled);
+    }
 
-	@Override
-	public void addActionListener(final IActionListener actionListener) {
-		getWidget().addActionListener(actionListener);
-	}
+    @Override
+    public void addActionListener(final IActionListener actionListener) {
+        getWidget().addActionListener(actionListener);
+    }
 
-	@Override
-	public void removeActionListener(final IActionListener actionListener) {
-		getWidget().removeActionListener(actionListener);
-	}
+    @Override
+    public void removeActionListener(final IActionListener actionListener) {
+        getWidget().removeActionListener(actionListener);
+    }
 
 }

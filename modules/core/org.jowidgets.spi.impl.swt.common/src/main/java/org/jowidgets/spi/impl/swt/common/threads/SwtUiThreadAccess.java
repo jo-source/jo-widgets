@@ -33,40 +33,40 @@ import org.jowidgets.util.Assert;
 
 public class SwtUiThreadAccess implements IUiThreadAccessCommon {
 
-	private Display display;
+    private Display display;
 
-	public SwtUiThreadAccess() {
-		this(null);
-	}
+    public SwtUiThreadAccess() {
+        this(null);
+    }
 
-	public SwtUiThreadAccess(final Display display) {
-		super();
-		this.display = display;
-	}
+    public SwtUiThreadAccess(final Display display) {
+        super();
+        this.display = display;
+    }
 
-	@Override
-	public void invokeLater(final Runnable runnable) {
-		Assert.paramNotNull(runnable, "runnable");
-		getDisplay().asyncExec(runnable);
-	}
+    @Override
+    public void invokeLater(final Runnable runnable) {
+        Assert.paramNotNull(runnable, "runnable");
+        getDisplay().asyncExec(runnable);
+    }
 
-	@Override
-	public void invokeAndWait(final Runnable runnable) throws InterruptedException {
-		Assert.paramNotNull(runnable, "runnable");
-		getDisplay().syncExec(runnable);
-	}
+    @Override
+    public void invokeAndWait(final Runnable runnable) throws InterruptedException {
+        Assert.paramNotNull(runnable, "runnable");
+        getDisplay().syncExec(runnable);
+    }
 
-	@Override
-	public boolean isUiThread() {
-		final Display currentDisplay = Display.getCurrent();
-		return currentDisplay != null && currentDisplay == getDisplay();
-	}
+    @Override
+    public boolean isUiThread() {
+        final Display currentDisplay = Display.getCurrent();
+        return currentDisplay != null && currentDisplay == getDisplay();
+    }
 
-	public Display getDisplay() {
-		if (display == null) {
-			display = Display.getDefault();
-		}
-		return display;
-	}
+    public Display getDisplay() {
+        if (display == null) {
+            display = Display.getDefault();
+        }
+        return display;
+    }
 
 }

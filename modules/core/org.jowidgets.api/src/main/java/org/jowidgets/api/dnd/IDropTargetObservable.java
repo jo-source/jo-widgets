@@ -30,8 +30,8 @@ package org.jowidgets.api.dnd;
 
 public interface IDropTargetObservable {
 
-	void addDropTargetListener(IDropTargetListener listener);
+    void addDropTargetListener(IDropTargetListener listener);
 
-	void removeDropTargetListener(IDropTargetListener listener);
+    void removeDropTargetListener(IDropTargetListener listener);
 
 }

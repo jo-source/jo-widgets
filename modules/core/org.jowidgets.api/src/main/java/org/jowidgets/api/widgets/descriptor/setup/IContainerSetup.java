@@ -34,9 +34,9 @@ import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
 public interface IContainerSetup extends IComponentSetup, IContainerSetupCommon {
 
-	ILayoutDescriptor getLayout();
+    ILayoutDescriptor getLayout();
 
-	@Mandatory
-	ILayoutFactory<?> getLayoutFactory();
+    @Mandatory
+    ILayoutFactory<?> getLayoutFactory();
 
 }

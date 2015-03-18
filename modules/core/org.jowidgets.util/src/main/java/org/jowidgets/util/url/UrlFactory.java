@@ -36,36 +36,36 @@ import org.jowidgets.util.Assert;
 
 public final class UrlFactory {
 
-	private UrlFactory() {}
+    private UrlFactory() {}
 
-	public static URL create(final String url) {
-		Assert.paramNotEmpty(url, "url");
-		try {
-			return new URL(url);
-		}
-		catch (final MalformedURLException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public static URL create(final String url) {
+        Assert.paramNotEmpty(url, "url");
+        try {
+            return new URL(url);
+        }
+        catch (final MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	public static URL create(final File file) {
-		Assert.paramNotNull(file, "file");
-		try {
-			return file.toURI().toURL();
-		}
-		catch (final MalformedURLException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public static URL create(final File file) {
+        Assert.paramNotNull(file, "file");
+        try {
+            return file.toURI().toURL();
+        }
+        catch (final MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	public static URL createFromFileName(final String filename) {
-		Assert.paramNotEmpty(filename, "filename");
-		try {
-			return new File(filename).toURI().toURL();
-		}
-		catch (final MalformedURLException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public static URL createFromFileName(final String filename) {
+        Assert.paramNotEmpty(filename, "filename");
+        try {
+            return new File(filename).toURI().toURL();
+        }
+        catch (final MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

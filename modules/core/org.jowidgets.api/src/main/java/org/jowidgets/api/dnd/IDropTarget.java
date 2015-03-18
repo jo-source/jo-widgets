@@ -37,14 +37,14 @@ import org.jowidgets.common.dnd.DropMode;
 
 public interface IDropTarget extends IDropTargetObservable {
 
-	void setTransferTypes(Collection<TransferType<?>> supportedTypes);
+    void setTransferTypes(Collection<TransferType<?>> supportedTypes);
 
-	void setTransferTypes(TransferType<?>... supportedTypes);
+    void setTransferTypes(TransferType<?>... supportedTypes);
 
-	void setActions(Set<DropAction> actions);
+    void setActions(Set<DropAction> actions);
 
-	void setActions(DropAction... actions);
+    void setActions(DropAction... actions);
 
-	void setDefaultDropMode(DropMode dropMode);
+    void setDefaultDropMode(DropMode dropMode);
 
 }

@@ -51,160 +51,160 @@ import org.jowidgets.util.NullCompatibleEquivalence;
 
 public class LabelImpl extends ControlWrapper implements ILabel {
 
-	private final IIconCommon iconWidget;
-	private final ITextLabel textLabelWidget;
-	private final IComposite composite;
-	private String text;
-	private IImageConstant icon;
+    private final IIconCommon iconWidget;
+    private final ITextLabel textLabelWidget;
+    private final IComposite composite;
+    private String text;
+    private IImageConstant icon;
 
-	public LabelImpl(final IComposite composite, final ILabelSetup setup) {
+    public LabelImpl(final IComposite composite, final ILabelSetup setup) {
 
-		super(composite);
+        super(composite);
 
-		this.composite = composite;
+        this.composite = composite;
 
-		final IIconDescriptor iconDescriptor = BPF.icon(setup.getIcon()).setSetup(setup);
-		this.iconWidget = composite.add(iconDescriptor, "w 0::");
-		this.icon = setup.getIcon();
+        final IIconDescriptor iconDescriptor = BPF.icon(setup.getIcon()).setSetup(setup);
+        this.iconWidget = composite.add(iconDescriptor, "w 0::");
+        this.icon = setup.getIcon();
 
-		final ITextLabelDescriptor textLabelDescriptor = BPF.textLabel().setSetup(setup);
-		this.textLabelWidget = composite.add(textLabelDescriptor, "w 0::");
+        final ITextLabelDescriptor textLabelDescriptor = BPF.textLabel().setSetup(setup);
+        this.textLabelWidget = composite.add(textLabelDescriptor, "w 0::");
 
-		setLayout();
+        setLayout();
 
-		VisibiliySettingsInvoker.setVisibility(setup, this);
-		ColorSettingsInvoker.setColors(setup, this);
-	}
+        VisibiliySettingsInvoker.setVisibility(setup, this);
+        ColorSettingsInvoker.setColors(setup, this);
+    }
 
-	@Override
-	public void setText(final String text) {
-		if (!NullCompatibleEquivalence.equals(text, this.text)) {
-			this.text = text;
-			textLabelWidget.setText(text);
-			composite.layoutBegin();
-			composite.layoutEnd();
-		}
-	}
+    @Override
+    public void setText(final String text) {
+        if (!NullCompatibleEquivalence.equals(text, this.text)) {
+            this.text = text;
+            textLabelWidget.setText(text);
+            composite.layoutBegin();
+            composite.layoutEnd();
+        }
+    }
 
-	@Override
-	public String getText() {
-		return text;
-	}
+    @Override
+    public String getText() {
+        return text;
+    }
 
-	@Override
-	public void setToolTipText(final String text) {
-		textLabelWidget.setToolTipText(text);
-		iconWidget.setToolTipText(text);
-	}
+    @Override
+    public void setToolTipText(final String text) {
+        textLabelWidget.setToolTipText(text);
+        iconWidget.setToolTipText(text);
+    }
 
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		textLabelWidget.setForegroundColor(colorValue);
-	}
+    @Override
+    public void setForegroundColor(final IColorConstant colorValue) {
+        textLabelWidget.setForegroundColor(colorValue);
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		textLabelWidget.setBackgroundColor(colorValue);
-		iconWidget.setBackgroundColor(colorValue);
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        textLabelWidget.setBackgroundColor(colorValue);
+        iconWidget.setBackgroundColor(colorValue);
+    }
 
-	@Override
-	public IColorConstant getForegroundColor() {
-		return textLabelWidget.getForegroundColor();
-	}
+    @Override
+    public IColorConstant getForegroundColor() {
+        return textLabelWidget.getForegroundColor();
+    }
 
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return textLabelWidget.getBackgroundColor();
-	}
+    @Override
+    public IColorConstant getBackgroundColor() {
+        return textLabelWidget.getBackgroundColor();
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		textLabelWidget.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        textLabelWidget.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return textLabelWidget.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return textLabelWidget.isEnabled();
+    }
 
-	@Override
-	public void setPopupMenu(final IMenuModel popupMenu) {
-		//TODO MG this might not work, popup must be set on label an text also. 
-		//For that, label and texfield must be api widgets 
-		composite.setPopupMenu(popupMenu);
-	}
+    @Override
+    public void setPopupMenu(final IMenuModel popupMenu) {
+        //TODO MG this might not work, popup must be set on label an text also. 
+        //For that, label and texfield must be api widgets 
+        composite.setPopupMenu(popupMenu);
+    }
 
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		textLabelWidget.addPopupDetectionListener(listener);
-		iconWidget.addPopupDetectionListener(listener);
-		composite.addPopupDetectionListener(listener);
-	}
+    @Override
+    public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+        textLabelWidget.addPopupDetectionListener(listener);
+        iconWidget.addPopupDetectionListener(listener);
+        composite.addPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		textLabelWidget.removePopupDetectionListener(listener);
-		iconWidget.removePopupDetectionListener(listener);
-		composite.removePopupDetectionListener(listener);
-	}
+    @Override
+    public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+        textLabelWidget.removePopupDetectionListener(listener);
+        iconWidget.removePopupDetectionListener(listener);
+        composite.removePopupDetectionListener(listener);
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		textLabelWidget.setMarkup(markup);
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        textLabelWidget.setMarkup(markup);
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		textLabelWidget.setFontSize(size);
-	}
+    @Override
+    public void setFontSize(final int size) {
+        textLabelWidget.setFontSize(size);
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		textLabelWidget.setFontName(fontName);
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        textLabelWidget.setFontName(fontName);
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		final boolean layoutChanged = (icon == null && this.icon != null) || (icon != null && this.icon == null);
-		this.icon = icon;
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        final boolean layoutChanged = (icon == null && this.icon != null) || (icon != null && this.icon == null);
+        this.icon = icon;
 
-		final Dimension lastPreferredSize = iconWidget.getPreferredSize();
-		iconWidget.setIcon(icon);
-		if (layoutChanged) {
-			setLayout();
-		}
-		if (!lastPreferredSize.equals(iconWidget.getPreferredSize()) || layoutChanged) {
-			composite.layoutBegin();
-			composite.layoutEnd();
-		}
+        final Dimension lastPreferredSize = iconWidget.getPreferredSize();
+        iconWidget.setIcon(icon);
+        if (layoutChanged) {
+            setLayout();
+        }
+        if (!lastPreferredSize.equals(iconWidget.getPreferredSize()) || layoutChanged) {
+            composite.layoutBegin();
+            composite.layoutEnd();
+        }
 
-	}
+    }
 
-	private void setLayout() {
-		if (icon == null) {
-			//TODO This will no work under swt, because it leads to space greedy label
-			//this.composite.setLayout(new MigLayoutDescriptor("0[]0[grow, 0::]0", "0[]0"));
-			this.composite.setLayout(new MigLayoutDescriptor("0[][grow, 0::]0", "0[]0"));
-		}
-		else {
-			this.composite.setLayout(new MigLayoutDescriptor("0[][grow, 0::]0", "0[]0"));
-		}
-	}
+    private void setLayout() {
+        if (icon == null) {
+            //TODO This will no work under swt, because it leads to space greedy label
+            //this.composite.setLayout(new MigLayoutDescriptor("0[]0[grow, 0::]0", "0[]0"));
+            this.composite.setLayout(new MigLayoutDescriptor("0[][grow, 0::]0", "0[]0"));
+        }
+        else {
+            this.composite.setLayout(new MigLayoutDescriptor("0[][grow, 0::]0", "0[]0"));
+        }
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return icon;
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return icon;
+    }
 
-	@Override
-	public IDragSource getDragSource() {
-		return textLabelWidget.getDragSource();
-	}
+    @Override
+    public IDragSource getDragSource() {
+        return textLabelWidget.getDragSource();
+    }
 
-	@Override
-	public IDropTarget getDropTarget() {
-		return textLabelWidget.getDropTarget();
-	}
+    @Override
+    public IDropTarget getDropTarget() {
+        return textLabelWidget.getDropTarget();
+    }
 
 }

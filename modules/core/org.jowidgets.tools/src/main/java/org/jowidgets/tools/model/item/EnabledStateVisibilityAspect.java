@@ -39,26 +39,26 @@ import org.jowidgets.util.priority.PriorityValue;
  */
 public final class EnabledStateVisibilityAspect implements IActionItemVisibilityAspect {
 
-	private static final IPriorityValue<Boolean, LowHighPriority> NOT_VISIBLE_HIGH = new PriorityValue<Boolean, LowHighPriority>(
-		Boolean.FALSE,
-		LowHighPriority.HIGH);
+    private static final IPriorityValue<Boolean, LowHighPriority> NOT_VISIBLE_HIGH = new PriorityValue<Boolean, LowHighPriority>(
+        Boolean.FALSE,
+        LowHighPriority.HIGH);
 
-	private static final IPriorityValue<Boolean, LowHighPriority> VISIBLE_LOW = new PriorityValue<Boolean, LowHighPriority>(
-		Boolean.TRUE,
-		LowHighPriority.LOW);
+    private static final IPriorityValue<Boolean, LowHighPriority> VISIBLE_LOW = new PriorityValue<Boolean, LowHighPriority>(
+        Boolean.TRUE,
+        LowHighPriority.LOW);
 
-	@Override
-	public IPriorityValue<Boolean, LowHighPriority> getVisibility(final IAction action) {
-		if (action != null) {
-			final boolean enabled = action.isEnabled();
-			if (!enabled) {
-				return NOT_VISIBLE_HIGH;
-			}
-			else {
-				return VISIBLE_LOW;
-			}
-		}
-		return null;
-	}
+    @Override
+    public IPriorityValue<Boolean, LowHighPriority> getVisibility(final IAction action) {
+        if (action != null) {
+            final boolean enabled = action.isEnabled();
+            if (!enabled) {
+                return NOT_VISIBLE_HIGH;
+            }
+            else {
+                return VISIBLE_LOW;
+            }
+        }
+        return null;
+    }
 
 }

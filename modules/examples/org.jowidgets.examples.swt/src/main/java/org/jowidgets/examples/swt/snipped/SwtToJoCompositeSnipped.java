@@ -41,47 +41,47 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class SwtToJoCompositeSnipped {
 
-	private SwtToJoCompositeSnipped() {}
+    private SwtToJoCompositeSnipped() {}
 
-	public static void main(final String[] args) throws Exception {
-		//create a swt display
-		final Display display = new Display();
+    public static void main(final String[] args) throws Exception {
+        //create a swt display
+        final Display display = new Display();
 
-		//create a swt shell
-		final Shell shell = new Shell(display);
-		shell.setSize(400, 300);
-		shell.setText("SwtToJo composite snipped");
-		shell.setLayout(new FillLayout());
+        //create a swt shell
+        final Shell shell = new Shell(display);
+        shell.setSize(400, 300);
+        shell.setText("SwtToJo composite snipped");
+        shell.setLayout(new FillLayout());
 
-		//create a swt composite
-		final Composite swtComposite = new Composite(shell, SWT.NONE);
+        //create a swt composite
+        final Composite swtComposite = new Composite(shell, SWT.NONE);
 
-		//create a jowidgets composite wrapper and do some jowidgets stuff
-		final IComposite joComposite = SwtToJoWrapper.create(swtComposite);
-		joComposite.setLayout(new MigLayoutDescriptor("[][grow]", "[]"));
+        //create a jowidgets composite wrapper and do some jowidgets stuff
+        final IComposite joComposite = SwtToJoWrapper.create(swtComposite);
+        joComposite.setLayout(new MigLayoutDescriptor("[][grow]", "[]"));
 
-		//add a label
-		joComposite.add(BPF.textLabel("Name"));
+        //add a label
+        joComposite.add(BPF.textLabel("Name"));
 
-		//add a input field for double values
-		final IInputField<String> nameField = joComposite.add(BPF.inputFieldString(), "grow x");
-		nameField.addInputListener(new IInputListener() {
-			@Override
-			public void inputChanged() {
-				//CHECKSTYLE:OFF
-				System.out.println("Hello " + nameField.getValue());
-				//CHECKSTYLE:ON
-			}
-		});
+        //add a input field for double values
+        final IInputField<String> nameField = joComposite.add(BPF.inputFieldString(), "grow x");
+        nameField.addInputListener(new IInputListener() {
+            @Override
+            public void inputChanged() {
+                //CHECKSTYLE:OFF
+                System.out.println("Hello " + nameField.getValue());
+                //CHECKSTYLE:ON
+            }
+        });
 
-		//open the swt shell and start event dispatching
-		shell.open();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-		display.dispose();
-	}
+        //open the swt shell and start event dispatching
+        shell.open();
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch()) {
+                display.sleep();
+            }
+        }
+        display.dispose();
+    }
 
 }

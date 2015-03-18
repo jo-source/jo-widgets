@@ -33,138 +33,138 @@ import org.jowidgets.util.ObservableValue;
 
 public final class Parameter {
 
-	private Parameter() {}
+    private Parameter() {}
 
-	public static <VALUE_TYPE> IParameter<VALUE_TYPE> create(final Class<VALUE_TYPE> valueType) {
-		return create(valueType, null);
-	}
+    public static <VALUE_TYPE> IParameter<VALUE_TYPE> create(final Class<VALUE_TYPE> valueType) {
+        return create(valueType, null);
+    }
 
-	public static <VALUE_TYPE> IParameter<VALUE_TYPE> create(final Class<VALUE_TYPE> valueType, final String label) {
-		return create(valueType, label, null);
-	}
+    public static <VALUE_TYPE> IParameter<VALUE_TYPE> create(final Class<VALUE_TYPE> valueType, final String label) {
+        return create(valueType, label, null);
+    }
 
-	public static <VALUE_TYPE> IParameter<VALUE_TYPE> create(
-		final Class<VALUE_TYPE> valueType,
-		final String label,
-		final String descripion) {
-		return create(valueType, label, descripion, null);
-	}
+    public static <VALUE_TYPE> IParameter<VALUE_TYPE> create(
+        final Class<VALUE_TYPE> valueType,
+        final String label,
+        final String descripion) {
+        return create(valueType, label, descripion, null);
+    }
 
-	public static <VALUE_TYPE> IParameter<VALUE_TYPE> create(
-		final Class<VALUE_TYPE> valueType,
-		final String label,
-		final String descripion,
-		final VALUE_TYPE defaultValue) {
-		final IParameterBuilder<VALUE_TYPE> builder = builder();
-		builder.setValueType(valueType).setLabel(label).setDescription(descripion).setDefaultValue(defaultValue);
-		return builder.build();
-	}
+    public static <VALUE_TYPE> IParameter<VALUE_TYPE> create(
+        final Class<VALUE_TYPE> valueType,
+        final String label,
+        final String descripion,
+        final VALUE_TYPE defaultValue) {
+        final IParameterBuilder<VALUE_TYPE> builder = builder();
+        builder.setValueType(valueType).setLabel(label).setDescription(descripion).setDefaultValue(defaultValue);
+        return builder.build();
+    }
 
-	public static <VALUE_TYPE> IParameterBuilder<VALUE_TYPE> builder() {
-		return new ParameterBuilderImpl<VALUE_TYPE>();
-	}
+    public static <VALUE_TYPE> IParameterBuilder<VALUE_TYPE> builder() {
+        return new ParameterBuilderImpl<VALUE_TYPE>();
+    }
 
-	private static final class ParameterBuilderImpl<VALUE_TYPE> implements IParameterBuilder<VALUE_TYPE> {
+    private static final class ParameterBuilderImpl<VALUE_TYPE> implements IParameterBuilder<VALUE_TYPE> {
 
-		private Class<VALUE_TYPE> valueType;
-		private VALUE_TYPE value;
-		private VALUE_TYPE defaultValue;
-		private String label;
-		private String description;
+        private Class<VALUE_TYPE> valueType;
+        private VALUE_TYPE value;
+        private VALUE_TYPE defaultValue;
+        private String label;
+        private String description;
 
-		@Override
-		public IParameterBuilder<VALUE_TYPE> setValueType(final Class<VALUE_TYPE> valueType) {
-			Assert.paramNotNull(valueType, "valueType");
-			this.valueType = valueType;
-			return this;
-		}
+        @Override
+        public IParameterBuilder<VALUE_TYPE> setValueType(final Class<VALUE_TYPE> valueType) {
+            Assert.paramNotNull(valueType, "valueType");
+            this.valueType = valueType;
+            return this;
+        }
 
-		@Override
-		public IParameterBuilder<VALUE_TYPE> setValue(final VALUE_TYPE value) {
-			this.value = value;
-			return this;
-		}
+        @Override
+        public IParameterBuilder<VALUE_TYPE> setValue(final VALUE_TYPE value) {
+            this.value = value;
+            return this;
+        }
 
-		@Override
-		public IParameterBuilder<VALUE_TYPE> setDefaultValue(final VALUE_TYPE value) {
-			this.defaultValue = value;
-			return this;
-		}
+        @Override
+        public IParameterBuilder<VALUE_TYPE> setDefaultValue(final VALUE_TYPE value) {
+            this.defaultValue = value;
+            return this;
+        }
 
-		@Override
-		public IParameterBuilder<VALUE_TYPE> setLabel(final String label) {
-			this.label = label;
-			return this;
-		}
+        @Override
+        public IParameterBuilder<VALUE_TYPE> setLabel(final String label) {
+            this.label = label;
+            return this;
+        }
 
-		@Override
-		public IParameterBuilder<VALUE_TYPE> setDescription(final String description) {
-			this.description = description;
-			return this;
-		}
+        @Override
+        public IParameterBuilder<VALUE_TYPE> setDescription(final String description) {
+            this.description = description;
+            return this;
+        }
 
-		@Override
-		public IParameter<VALUE_TYPE> build() {
-			return new ParameterImpl<VALUE_TYPE>(valueType, value, defaultValue, label, description);
-		}
+        @Override
+        public IParameter<VALUE_TYPE> build() {
+            return new ParameterImpl<VALUE_TYPE>(valueType, value, defaultValue, label, description);
+        }
 
-	}
+    }
 
-	private static final class ParameterImpl<VALUE_TYPE> extends ObservableValue<VALUE_TYPE> implements IParameter<VALUE_TYPE> {
+    private static final class ParameterImpl<VALUE_TYPE> extends ObservableValue<VALUE_TYPE> implements IParameter<VALUE_TYPE> {
 
-		private final Class<VALUE_TYPE> valueType;
-		private final String label;
-		private final String description;
-		private final VALUE_TYPE defaultValue;
+        private final Class<VALUE_TYPE> valueType;
+        private final String label;
+        private final String description;
+        private final VALUE_TYPE defaultValue;
 
-		private ParameterImpl(
-			final Class<VALUE_TYPE> valueType,
-			final VALUE_TYPE value,
-			final VALUE_TYPE defaultValue,
-			final String label,
-			final String description) {
-			super();
-			Assert.paramNotNull(valueType, "valueType");
-			this.valueType = valueType;
-			this.label = label;
-			this.description = description;
-			this.defaultValue = defaultValue;
-			setValue(value);
-		}
+        private ParameterImpl(
+            final Class<VALUE_TYPE> valueType,
+            final VALUE_TYPE value,
+            final VALUE_TYPE defaultValue,
+            final String label,
+            final String description) {
+            super();
+            Assert.paramNotNull(valueType, "valueType");
+            this.valueType = valueType;
+            this.label = label;
+            this.description = description;
+            this.defaultValue = defaultValue;
+            setValue(value);
+        }
 
-		@Override
-		public Class<VALUE_TYPE> getValueType() {
-			return valueType;
-		}
+        @Override
+        public Class<VALUE_TYPE> getValueType() {
+            return valueType;
+        }
 
-		@Override
-		public String getLabel() {
-			return label;
-		}
+        @Override
+        public String getLabel() {
+            return label;
+        }
 
-		@Override
-		public String getDescription() {
-			return description;
-		}
+        @Override
+        public String getDescription() {
+            return description;
+        }
 
-		@Override
-		public VALUE_TYPE getDefaultValue() {
-			return defaultValue;
-		}
+        @Override
+        public VALUE_TYPE getDefaultValue() {
+            return defaultValue;
+        }
 
-		@Override
-		public String toString() {
-			return "ParameterImpl [label="
-				+ label
-				+ ", description="
-				+ description
-				+ ", defaultValue="
-				+ defaultValue
-				+ ", getValue()="
-				+ getValue()
-				+ "]";
-		}
+        @Override
+        public String toString() {
+            return "ParameterImpl [label="
+                + label
+                + ", description="
+                + description
+                + ", defaultValue="
+                + defaultValue
+                + ", getValue()="
+                + getValue()
+                + "]";
+        }
 
-	}
+    }
 
 }

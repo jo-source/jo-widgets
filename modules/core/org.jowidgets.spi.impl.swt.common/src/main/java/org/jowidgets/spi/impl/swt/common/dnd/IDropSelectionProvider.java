@@ -34,8 +34,8 @@ import org.jowidgets.common.types.Position;
 
 public interface IDropSelectionProvider {
 
-	Object getDropSelection(Widget item, Position position, int dropFeedback);
+    Object getDropSelection(Widget item, Position position, int dropFeedback);
 
-	Integer getFeedback(Widget item, Position position, DropMode dropMode);
+    Integer getFeedback(Widget item, Position position, DropMode dropMode);
 
 }

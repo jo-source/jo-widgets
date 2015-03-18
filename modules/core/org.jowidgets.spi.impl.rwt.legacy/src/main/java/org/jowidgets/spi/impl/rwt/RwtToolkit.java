@@ -35,8 +35,8 @@ import org.jowidgets.spi.impl.swt.common.SwtWidgetsServiceProvider;
 
 public class RwtToolkit extends DefaultToolkit {
 
-	public RwtToolkit() {
-		super(new SwtWidgetsServiceProvider(Display.getDefault(), new ApplicationLocalClipboard()));
-	}
+    public RwtToolkit() {
+        super(new SwtWidgetsServiceProvider(Display.getDefault(), new ApplicationLocalClipboard()));
+    }
 
 }

@@ -32,18 +32,18 @@ import org.jowidgets.common.types.SplitResizePolicy;
 
 public interface ISplitLayout extends ILayoutContainer {
 
-	Orientation getOrientation();
+    Orientation getOrientation();
 
-	double getWeight();
+    double getWeight();
 
-	/**
-	 * @return the resize policy, may be null for default policy
-	 *         (this is a hint and may not work on all platforms)
-	 */
-	SplitResizePolicy getResizePolicy();
+    /**
+     * @return the resize policy, may be null for default policy
+     *         (this is a hint and may not work on all platforms)
+     */
+    SplitResizePolicy getResizePolicy();
 
-	ILayoutContainer getFirstContainer();
+    ILayoutContainer getFirstContainer();
 
-	ILayoutContainer getSecondContainer();
+    ILayoutContainer getSecondContainer();
 
 }

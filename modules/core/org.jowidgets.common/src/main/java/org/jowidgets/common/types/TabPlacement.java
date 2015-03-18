@@ -30,7 +30,7 @@ package org.jowidgets.common.types;
 
 public enum TabPlacement {
 
-	TOP,
-	BOTTOM;
+    TOP,
+    BOTTOM;
 
 }

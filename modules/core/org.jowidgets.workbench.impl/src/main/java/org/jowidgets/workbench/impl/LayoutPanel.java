@@ -37,32 +37,32 @@ import org.jowidgets.workbench.api.ILayout;
 
 public class LayoutPanel implements ILayoutPanel {
 
-	private final IBluePrintFactory bpf;
-	private final IComposite contentPane;
+    private final IBluePrintFactory bpf;
+    private final IComposite contentPane;
 
-	private ComponentContext currentComponent;
-	private final LayoutContainerContext childContainerContext;
+    private ComponentContext currentComponent;
+    private final LayoutContainerContext childContainerContext;
 
-	public LayoutPanel(final IContainer mainContainer, final ComponentContext currentComponent, final ILayout layout) {
-		super();
-		this.bpf = Toolkit.getBluePrintFactory();
-		this.currentComponent = currentComponent;
+    public LayoutPanel(final IContainer mainContainer, final ComponentContext currentComponent, final ILayout layout) {
+        super();
+        this.bpf = Toolkit.getBluePrintFactory();
+        this.currentComponent = currentComponent;
 
-		contentPane = mainContainer.add(bpf.composite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS + ", hidemode 3");
+        contentPane = mainContainer.add(bpf.composite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS + ", hidemode 3");
 
-		childContainerContext = new LayoutContainerContext(layout.getLayoutContainer(), contentPane, currentComponent);
-	}
+        childContainerContext = new LayoutContainerContext(layout.getLayoutContainer(), contentPane, currentComponent);
+    }
 
-	public IComposite getContentPane() {
-		return contentPane;
-	}
+    public IComposite getContentPane() {
+        return contentPane;
+    }
 
-	@Override
-	public void setComponent(final ComponentContext component) {
-		if (currentComponent != component) {
-			childContainerContext.setComponent(component);
-			currentComponent = component;
-		}
-	}
+    @Override
+    public void setComponent(final ComponentContext component) {
+        if (currentComponent != component) {
+            childContainerContext.setComponent(component);
+            currentComponent = component;
+        }
+    }
 
 }

@@ -35,17 +35,17 @@ import org.jowidgets.tools.command.CommandAction;
 
 public class PasteAction extends CommandAction {
 
-	public PasteAction() {
-		super(new ActionBuilder() {
-			{
-				setText("Paste");
-				setToolTipText("Paste");
-				setIcon(SilkIcons.PASTE_PLAIN);
-				setAccelerator('V', Modifier.CTRL);
-			}
-		});
+    public PasteAction() {
+        super(new ActionBuilder() {
+            {
+                setText("Paste");
+                setToolTipText("Paste");
+                setIcon(SilkIcons.PASTE_PLAIN);
+                setAccelerator('V', Modifier.CTRL);
+            }
+        });
 
-		setCommand(new DummyCommandExecuter());
-	}
+        setCommand(new DummyCommandExecuter());
+    }
 
 }

@@ -33,36 +33,36 @@ import org.jowidgets.common.widgets.ITableCommon;
 
 public interface ITable extends IControl, ITableCommon, IListSelectionVetoObservable {
 
-	void pack();
+    void pack();
 
-	void pack(int columnIndex);
+    void pack(int columnIndex);
 
-	int getRowCount();
+    int getRowCount();
 
-	int getColumnCount();
+    int getColumnCount();
 
-	int convertColumnIndexToView(int modelIndex);
+    int convertColumnIndexToView(int modelIndex);
 
-	int convertColumnIndexToModel(int viewIndex);
+    int convertColumnIndexToModel(int viewIndex);
 
-	void moveColumn(int oldViewIndex, int newViewIndex);
+    void moveColumn(int oldViewIndex, int newViewIndex);
 
-	/**
-	 * Scrolls the viewport to the first selected row.
-	 * If nothing is selected or the first selected row is already visible, nothing happens.
-	 * 
-	 * @see ITableCommon#scrollToRow(int)
-	 */
-	void scrollToSelection();
+    /**
+     * Scrolls the viewport to the first selected row.
+     * If nothing is selected or the first selected row is already visible, nothing happens.
+     * 
+     * @see ITableCommon#scrollToRow(int)
+     */
+    void scrollToSelection();
 
-	/**
-	 * Scrolls the viewport to the last row.
-	 * If the table is empty, nothing happens.
-	 * 
-	 * @see ITableCommon#scrollToRow(int)
-	 */
-	void scrollToEnd();
+    /**
+     * Scrolls the viewport to the last row.
+     * If the table is empty, nothing happens.
+     * 
+     * @see ITableCommon#scrollToRow(int)
+     */
+    void scrollToEnd();
 
-	void resetColumnPermutation();
+    void resetColumnPermutation();
 
 }

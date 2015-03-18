@@ -33,14 +33,14 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ITextLabelSetupCommon extends IComponentSetupCommon {
 
-	String getText();
+    String getText();
 
-	String getToolTipText();
+    String getToolTipText();
 
-	@Mandatory
-	Markup getMarkup();
+    @Mandatory
+    Markup getMarkup();
 
-	@Mandatory
-	AlignmentHorizontal getAlignment();
+    @Mandatory
+    AlignmentHorizontal getAlignment();
 
 }

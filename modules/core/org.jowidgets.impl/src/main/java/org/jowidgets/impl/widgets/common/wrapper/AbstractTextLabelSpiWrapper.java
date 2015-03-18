@@ -34,44 +34,44 @@ import org.jowidgets.spi.widgets.ITextLabelSpi;
 
 public abstract class AbstractTextLabelSpiWrapper extends AbstractControlSpiWrapper implements ITextLabelCommon {
 
-	private String text;
+    private String text;
 
-	public AbstractTextLabelSpiWrapper(final ITextLabelSpi widget) {
-		super(widget);
-	}
+    public AbstractTextLabelSpiWrapper(final ITextLabelSpi widget) {
+        super(widget);
+    }
 
-	@Override
-	public ITextLabelSpi getWidget() {
-		return (ITextLabelSpi) super.getWidget();
-	}
+    @Override
+    public ITextLabelSpi getWidget() {
+        return (ITextLabelSpi) super.getWidget();
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		getWidget().setFontSize(size);
-	}
+    @Override
+    public void setFontSize(final int size) {
+        getWidget().setFontSize(size);
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		getWidget().setFontName(fontName);
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        getWidget().setFontName(fontName);
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		getWidget().setMarkup(markup);
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        getWidget().setMarkup(markup);
+    }
 
-	@Override
-	public void setText(final String text) {
-		this.text = text;
-		getWidget().setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        this.text = text;
+        getWidget().setText(text);
+    }
 
-	public String getText() {
-		return text;
-	}
+    public String getText() {
+        return text;
+    }
 
-	protected void setTextCache(final String text) {
-		this.text = text;
-	}
+    protected void setTextCache(final String text) {
+        this.text = text;
+    }
 
 }

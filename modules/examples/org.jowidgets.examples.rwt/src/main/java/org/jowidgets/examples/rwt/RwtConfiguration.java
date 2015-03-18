@@ -38,15 +38,15 @@ import org.eclipse.rap.rwt.client.WebClient;
 
 public final class RwtConfiguration implements ApplicationConfiguration {
 
-	@Override
-	public void configure(final Application application) {
-		application.setOperationMode(OperationMode.SWT_COMPATIBILITY);
-		application.addStyleSheet(
-				"org.jowidgets.spi.impl.rwt.themes.business",
-				"org/jowidgets/spi/impl/rwt/themes/business/business_less_insets.css");
-		final Map<String, String> properties = new HashMap<String, String>();
-		properties.put(WebClient.THEME_ID, "org.jowidgets.spi.impl.rwt.themes.business");
-		properties.put(WebClient.PAGE_TITLE, "RWT Workbench Demo");
-		application.addEntryPoint("/RwtWorkbenchDemo", RwtWorkbenchDemo.class, properties);
-	}
+    @Override
+    public void configure(final Application application) {
+        application.setOperationMode(OperationMode.SWT_COMPATIBILITY);
+        application.addStyleSheet(
+                "org.jowidgets.spi.impl.rwt.themes.business",
+                "org/jowidgets/spi/impl/rwt/themes/business/business_less_insets.css");
+        final Map<String, String> properties = new HashMap<String, String>();
+        properties.put(WebClient.THEME_ID, "org.jowidgets.spi.impl.rwt.themes.business");
+        properties.put(WebClient.PAGE_TITLE, "RWT Workbench Demo");
+        application.addEntryPoint("/RwtWorkbenchDemo", RwtWorkbenchDemo.class, properties);
+    }
 }

@@ -37,24 +37,24 @@ import org.jowidgets.unit.api.IUnitConverter;
 import org.jowidgets.unit.api.IUnitSet;
 
 public interface IUnitValueFieldSetupBuilder<INSTANCE_TYPE extends IUnitValueFieldSetupBuilder<?, ?, ?>, BASE_VALUE_TYPE, UNIT_VALUE_TYPE> extends
-		IInputComponentSetupBuilder<INSTANCE_TYPE, BASE_VALUE_TYPE> {
+        IInputComponentSetupBuilder<INSTANCE_TYPE, BASE_VALUE_TYPE> {
 
-	INSTANCE_TYPE setUnitSet(IUnitSet unitSet);
+    INSTANCE_TYPE setUnitSet(IUnitSet unitSet);
 
-	INSTANCE_TYPE setDefaultUnit(IUnit unit);
+    INSTANCE_TYPE setDefaultUnit(IUnit unit);
 
-	INSTANCE_TYPE setUnitKeyMapping(Map<VirtualKey, IUnit> unitKeyMapping);
+    INSTANCE_TYPE setUnitKeyMapping(Map<VirtualKey, IUnit> unitKeyMapping);
 
-	INSTANCE_TYPE setUnitComboMinSize(int unitComboMinSize);
+    INSTANCE_TYPE setUnitComboMinSize(int unitComboMinSize);
 
-	INSTANCE_TYPE setUnitConverter(IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter);
+    INSTANCE_TYPE setUnitConverter(IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter);
 
-	INSTANCE_TYPE setUnitValueInputField(IInputFieldDescriptor<UNIT_VALUE_TYPE> inputField);
+    INSTANCE_TYPE setUnitValueInputField(IInputFieldDescriptor<UNIT_VALUE_TYPE> inputField);
 
-	INSTANCE_TYPE setMarkup(Markup markup);
+    INSTANCE_TYPE setMarkup(Markup markup);
 
-	INSTANCE_TYPE setFontSize(Integer size);
+    INSTANCE_TYPE setFontSize(Integer size);
 
-	INSTANCE_TYPE setFontName(String fontName);
+    INSTANCE_TYPE setFontName(String fontName);
 
 }

@@ -34,26 +34,26 @@ import org.jowidgets.util.collection.ObserverSetFactory;
 
 public class CacheableObservable implements ICacheableObservable {
 
-	private final IObserverSet<ICacheableListener> listeners;
+    private final IObserverSet<ICacheableListener> listeners;
 
-	public CacheableObservable() {
-		this.listeners = ObserverSetFactory.create(Strategy.LOW_MEMORY);
-	}
+    public CacheableObservable() {
+        this.listeners = ObserverSetFactory.create(Strategy.LOW_MEMORY);
+    }
 
-	@Override
-	public final void addCacheableListener(final ICacheableListener listener) {
-		listeners.add(listener);
-	}
+    @Override
+    public final void addCacheableListener(final ICacheableListener listener) {
+        listeners.add(listener);
+    }
 
-	@Override
-	public final void removeCacheableListener(final ICacheableListener listener) {
-		listeners.remove(listener);
-	}
+    @Override
+    public final void removeCacheableListener(final ICacheableListener listener) {
+        listeners.remove(listener);
+    }
 
-	public final void fireOnRelease() {
-		for (final ICacheableListener listener : listeners) {
-			listener.onRelease();
-		}
-	}
+    public final void fireOnRelease() {
+        for (final ICacheableListener listener : listeners) {
+            listener.onRelease();
+        }
+    }
 
 }

@@ -32,12 +32,12 @@ import org.jowidgets.util.IDecorator;
 import org.jowidgets.validation.IValidationResult;
 
 public interface IInputComponentValidationLabelSetupBuilder<INSTANCE_TYPE extends IInputComponentValidationLabelSetupBuilder<?>> extends
-		IValidationLabelSetupBuilder<INSTANCE_TYPE> {
+        IValidationLabelSetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setInputComponent(IInputComponent<?> inputComponent);
+    INSTANCE_TYPE setInputComponent(IInputComponent<?> inputComponent);
 
-	INSTANCE_TYPE setUnmodifiedValidationDecorator(IDecorator<IValidationResult> decorator);
+    INSTANCE_TYPE setUnmodifiedValidationDecorator(IDecorator<IValidationResult> decorator);
 
-	INSTANCE_TYPE setInitialValidationDecorator(IDecorator<IValidationResult> decorator);
+    INSTANCE_TYPE setInitialValidationDecorator(IDecorator<IValidationResult> decorator);
 
 }

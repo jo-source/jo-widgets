@@ -50,40 +50,40 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class TreeViewerDemo1 implements IApplication {
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
 
-		final IFrameBluePrint frameBp = BPF.frame();
-		frameBp.setSize(new Dimension(800, 600)).setTitle("Tree Viewer Demo");
+        final IFrameBluePrint frameBp = BPF.frame();
+        frameBp.setSize(new Dimension(800, 600)).setTitle("Tree Viewer Demo");
 
-		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
-		frame.setLayout(new MigLayoutDescriptor("wrap", "0[grow, 0::]0", "0[]0[]0[grow, 0::]0"));
+        final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
+        frame.setLayout(new MigLayoutDescriptor("wrap", "0[grow, 0::]0", "0[]0[]0[grow, 0::]0"));
 
-		final IToolBar toolBar = frame.add(BPF.toolBar());
-		final IToolBarModel toolBarModel = toolBar.getModel();
-		frame.add(BPF.separator(), "growx, w 0::");
+        final IToolBar toolBar = frame.add(BPF.toolBar());
+        final IToolBarModel toolBarModel = toolBar.getModel();
+        frame.add(BPF.separator(), "growx, w 0::");
 
-		final ITreeViewerBluePrint<String> treeViewerBp = BPF.treeViewer(new RootNodeModel());
-		treeViewerBp.setChecked(true).setAutoCheckMode(true);
-		final ITreeViewer<String> tree = frame.add(treeViewerBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        final ITreeViewerBluePrint<String> treeViewerBp = BPF.treeViewer(new RootNodeModel());
+        treeViewerBp.setChecked(true).setAutoCheckMode(true);
+        final ITreeViewer<String> tree = frame.add(treeViewerBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
-		toolBarModel.addAction(CollapseTreeAction.create(tree));
-		toolBarModel.addItem(ExpandCollapseTreeToolbarItemModel.create(tree, 4, 2));
-		toolBarModel.addAction(ExpandTreeAction.create(tree));
+        toolBarModel.addAction(CollapseTreeAction.create(tree));
+        toolBarModel.addItem(ExpandCollapseTreeToolbarItemModel.create(tree, 4, 2));
+        toolBarModel.addAction(ExpandTreeAction.create(tree));
 
-		toolBarModel.addAction(ExpandCheckedNodesTreeAction.create(tree));
+        toolBarModel.addAction(ExpandCheckedNodesTreeAction.create(tree));
 
-		toolBarModel.addAction(UncheckTreeAction.create(tree));
-		toolBarModel.addAction(CheckTreeAction.create(tree));
+        toolBarModel.addAction(UncheckTreeAction.create(tree));
+        toolBarModel.addAction(CheckTreeAction.create(tree));
 
-		toolBar.pack();
+        toolBar.pack();
 
-		//set the root frame visible
-		frame.setVisible(true);
-	}
+        //set the root frame visible
+        frame.setVisible(true);
+    }
 
-	public void start() {
-		DemoIconsInitializer.initialize();
-		Toolkit.getInstance().getApplicationRunner().run(this);
-	}
+    public void start() {
+        DemoIconsInitializer.initialize();
+        Toolkit.getInstance().getApplicationRunner().run(this);
+    }
 }

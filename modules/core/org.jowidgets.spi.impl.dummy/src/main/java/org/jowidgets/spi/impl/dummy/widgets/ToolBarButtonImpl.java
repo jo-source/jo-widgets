@@ -35,28 +35,28 @@ import org.jowidgets.spi.widgets.IToolBarButtonSpi;
 
 public class ToolBarButtonImpl extends ToolBarItemImpl implements IToolBarButtonSpi {
 
-	private final UIDObservable actionObservable;
+    private final UIDObservable actionObservable;
 
-	public ToolBarButtonImpl(final AbstractUIDButton button) {
-		super(button);
-		getUiReference().addActionListener(new IActionListener() {
+    public ToolBarButtonImpl(final AbstractUIDButton button) {
+        super(button);
+        getUiReference().addActionListener(new IActionListener() {
 
-			@Override
-			public void actionPerformed() {
-				actionObservable.fireActionPerformed();
-			}
-		});
-		actionObservable = new UIDObservable();
-	}
+            @Override
+            public void actionPerformed() {
+                actionObservable.fireActionPerformed();
+            }
+        });
+        actionObservable = new UIDObservable();
+    }
 
-	@Override
-	public void addActionListener(final IActionListener actionListener) {
-		actionObservable.addActionListener(actionListener);
-	}
+    @Override
+    public void addActionListener(final IActionListener actionListener) {
+        actionObservable.addActionListener(actionListener);
+    }
 
-	@Override
-	public void removeActionListener(final IActionListener actionListener) {
-		actionObservable.removeActionListener(actionListener);
-	}
+    @Override
+    public void removeActionListener(final IActionListener actionListener) {
+        actionObservable.removeActionListener(actionListener);
+    }
 
 }

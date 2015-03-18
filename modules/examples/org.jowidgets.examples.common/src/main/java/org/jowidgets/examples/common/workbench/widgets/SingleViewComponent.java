@@ -41,40 +41,40 @@ import org.jowidgets.workbench.tools.Layout;
 
 public class SingleViewComponent extends AbstractDemoComponent implements IComponent {
 
-	public static final String DEFAULT_LAYOUT_ID = "DEFAULT_LAYOUT_ID";
-	public static final String MASTER_FOLDER_ID = "MASTER_FOLDER_ID";
+    public static final String DEFAULT_LAYOUT_ID = "DEFAULT_LAYOUT_ID";
+    public static final String MASTER_FOLDER_ID = "MASTER_FOLDER_ID";
 
-	private final Class<? extends IView> viewClass;
-	private final String id;
-	private final String label;
+    private final Class<? extends IView> viewClass;
+    private final String id;
+    private final String label;
 
-	public SingleViewComponent(
-		final IComponentContext context,
-		final Class<? extends IView> viewClass,
-		final String id,
-		final String label) {
+    public SingleViewComponent(
+        final IComponentContext context,
+        final Class<? extends IView> viewClass,
+        final String id,
+        final String label) {
 
-		this.viewClass = viewClass;
-		this.id = id;
-		this.label = label;
+        this.viewClass = viewClass;
+        this.id = id;
+        this.label = label;
 
-		context.setLayout(new Layout(DEFAULT_LAYOUT_ID, createMasterFolder()));
-	}
+        context.setLayout(new Layout(DEFAULT_LAYOUT_ID, createMasterFolder()));
+    }
 
-	@Override
-	public IView createView(final String viewId, final IViewContext context) {
-		try {
-			@SuppressWarnings("unchecked")
-			final Constructor<IView> constructor = (Constructor<IView>) viewClass.getConstructor(IViewContext.class);
-			return constructor.newInstance(context);
-		}
-		catch (final Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+    @Override
+    public IView createView(final String viewId, final IViewContext context) {
+        try {
+            @SuppressWarnings("unchecked")
+            final Constructor<IView> constructor = (Constructor<IView>) viewClass.getConstructor(IViewContext.class);
+            return constructor.newInstance(context);
+        }
+        catch (final Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	private IFolderLayoutBuilder createMasterFolder() {
-		return new FolderLayoutBuilder(MASTER_FOLDER_ID).addView(id, label);
-	}
+    private IFolderLayoutBuilder createMasterFolder() {
+        return new FolderLayoutBuilder(MASTER_FOLDER_ID).addView(id, label);
+    }
 
 }

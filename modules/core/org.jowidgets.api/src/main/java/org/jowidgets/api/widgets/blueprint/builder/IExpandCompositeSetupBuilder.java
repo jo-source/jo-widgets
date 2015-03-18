@@ -35,27 +35,27 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 
 public interface IExpandCompositeSetupBuilder<INSTANCE_TYPE extends IExpandCompositeSetupBuilder<?>> extends
-		IComponentSetupBuilder<INSTANCE_TYPE> {
+        IComponentSetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setText(String text);
+    INSTANCE_TYPE setText(String text);
 
-	INSTANCE_TYPE setIcon(IImageConstant icon);
+    INSTANCE_TYPE setIcon(IImageConstant icon);
 
-	INSTANCE_TYPE setBorder(boolean border);
+    INSTANCE_TYPE setBorder(boolean border);
 
-	INSTANCE_TYPE setHeaderBorder(boolean border);
+    INSTANCE_TYPE setHeaderBorder(boolean border);
 
-	INSTANCE_TYPE setContentBorder(boolean border);
+    INSTANCE_TYPE setContentBorder(boolean border);
 
-	INSTANCE_TYPE setTextMarkup(Markup markup);
+    INSTANCE_TYPE setTextMarkup(Markup markup);
 
-	INSTANCE_TYPE setTextColor(IColorConstant color);
+    INSTANCE_TYPE setTextColor(IColorConstant color);
 
-	INSTANCE_TYPE setHeaderBackgroundColor(IColorConstant color);
+    INSTANCE_TYPE setHeaderBackgroundColor(IColorConstant color);
 
-	INSTANCE_TYPE setExpanded(boolean expanded);
+    INSTANCE_TYPE setExpanded(boolean expanded);
 
-	INSTANCE_TYPE setInsets(Insets insets);
+    INSTANCE_TYPE setInsets(Insets insets);
 
-	INSTANCE_TYPE setCustomHeader(ICustomWidgetCreator<? extends IControl> header);
+    INSTANCE_TYPE setCustomHeader(ICustomWidgetCreator<? extends IControl> header);
 }

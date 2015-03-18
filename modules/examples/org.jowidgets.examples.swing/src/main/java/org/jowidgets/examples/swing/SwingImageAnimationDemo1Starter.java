@@ -35,11 +35,11 @@ import org.jowidgets.examples.common.image.ImageAnimationDemo1;
 
 public final class SwingImageAnimationDemo1Starter {
 
-	private SwingImageAnimationDemo1Starter() {}
+    private SwingImageAnimationDemo1Starter() {}
 
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		Toolkit.getApplicationRunner().run(new ImageAnimationDemo1());
-	}
+    public static void main(final String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
+        Toolkit.getApplicationRunner().run(new ImageAnimationDemo1());
+    }
 }

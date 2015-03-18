@@ -44,155 +44,155 @@ import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public class DummyComponent extends DummyWidget implements IComponentSpi {
 
-	public DummyComponent(final UIDComponent component) {
-		super(component);
-	}
+    public DummyComponent(final UIDComponent component) {
+        super(component);
+    }
 
-	@Override
-	public void redraw() {
-		getUiReference().redraw();
-	}
+    @Override
+    public void redraw() {
+        getUiReference().redraw();
+    }
 
-	@Override
-	public void setRedrawEnabled(final boolean enabled) {
-		getUiReference().setRedrawEnabled(enabled);
-	}
+    @Override
+    public void setRedrawEnabled(final boolean enabled) {
+        getUiReference().setRedrawEnabled(enabled);
+    }
 
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		getUiReference().setForegroundColor(colorValue);
-	}
+    @Override
+    public void setForegroundColor(final IColorConstant colorValue) {
+        getUiReference().setForegroundColor(colorValue);
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		getUiReference().setBackgroundColor(colorValue);
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        getUiReference().setBackgroundColor(colorValue);
+    }
 
-	@Override
-	public IColorConstant getForegroundColor() {
-		return getUiReference().getForegroundColor();
-	}
+    @Override
+    public IColorConstant getForegroundColor() {
+        return getUiReference().getForegroundColor();
+    }
 
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return getUiReference().getBackgroundColor();
-	}
+    @Override
+    public IColorConstant getBackgroundColor() {
+        return getUiReference().getBackgroundColor();
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		getUiReference().setVisible(visible);
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        getUiReference().setVisible(visible);
+    }
 
-	@Override
-	public boolean isVisible() {
-		return getUiReference().isVisible();
-	}
+    @Override
+    public boolean isVisible() {
+        return getUiReference().isVisible();
+    }
 
-	@Override
-	public Dimension getSize() {
-		return getUiReference().getSize();
-	}
+    @Override
+    public Dimension getSize() {
+        return getUiReference().getSize();
+    }
 
-	@Override
-	public void setSize(final Dimension size) {
-		getUiReference().setSize(size);
-	}
+    @Override
+    public void setSize(final Dimension size) {
+        getUiReference().setSize(size);
+    }
 
-	@Override
-	public Position getPosition() {
-		return getUiReference().getPosition();
-	}
+    @Override
+    public Position getPosition() {
+        return getUiReference().getPosition();
+    }
 
-	@Override
-	public void setPosition(final Position position) {
-		getUiReference().setPosition(position);
-	}
+    @Override
+    public void setPosition(final Position position) {
+        getUiReference().setPosition(position);
+    }
 
-	@Override
-	public void setCursor(final Cursor cursor) {
-		getUiReference().setCursor(cursor);
-	}
+    @Override
+    public void setCursor(final Cursor cursor) {
+        getUiReference().setCursor(cursor);
+    }
 
-	@Override
-	public boolean requestFocus() {
-		return getUiReference().requestFocus();
-	}
+    @Override
+    public boolean requestFocus() {
+        return getUiReference().requestFocus();
+    }
 
-	@Override
-	public void addFocusListener(final IFocusListener listener) {
-		getUiReference().addFocusListener(listener);
-	}
+    @Override
+    public void addFocusListener(final IFocusListener listener) {
+        getUiReference().addFocusListener(listener);
+    }
 
-	@Override
-	public void removeFocusListener(final IFocusListener listener) {
-		getUiReference().removeFocusListener(listener);
-	}
+    @Override
+    public void removeFocusListener(final IFocusListener listener) {
+        getUiReference().removeFocusListener(listener);
+    }
 
-	@Override
-	public void addKeyListener(final IKeyListener listener) {
-		getUiReference().addKeyListener(listener);
-	}
+    @Override
+    public void addKeyListener(final IKeyListener listener) {
+        getUiReference().addKeyListener(listener);
+    }
 
-	@Override
-	public void removeKeyListener(final IKeyListener listener) {
-		getUiReference().removeKeyListener(listener);
-	}
+    @Override
+    public void removeKeyListener(final IKeyListener listener) {
+        getUiReference().removeKeyListener(listener);
+    }
 
-	@Override
-	public void addMouseListener(final IMouseListener mouseListener) {
-		getUiReference().addMouseListener(mouseListener);
-	}
+    @Override
+    public void addMouseListener(final IMouseListener mouseListener) {
+        getUiReference().addMouseListener(mouseListener);
+    }
 
-	@Override
-	public void removeMouseListener(final IMouseListener mouseListener) {
-		getUiReference().removeMouseListener(mouseListener);
-	}
+    @Override
+    public void removeMouseListener(final IMouseListener mouseListener) {
+        getUiReference().removeMouseListener(mouseListener);
+    }
 
-	@Override
-	public void addMouseMotionListener(final IMouseMotionListener listener) {
-		getUiReference().addMouseMotionListener(listener);
-	}
+    @Override
+    public void addMouseMotionListener(final IMouseMotionListener listener) {
+        getUiReference().addMouseMotionListener(listener);
+    }
 
-	@Override
-	public void removeMouseMotionListener(final IMouseMotionListener listener) {
-		getUiReference().removeMouseMotionListener(listener);
-	}
+    @Override
+    public void removeMouseMotionListener(final IMouseMotionListener listener) {
+        getUiReference().removeMouseMotionListener(listener);
+    }
 
-	@Override
-	public void addComponentListener(final IComponentListener componentListener) {
-		getUiReference().addComponentListener(componentListener);
-	}
+    @Override
+    public void addComponentListener(final IComponentListener componentListener) {
+        getUiReference().addComponentListener(componentListener);
+    }
 
-	@Override
-	public void removeComponentListener(final IComponentListener componentListener) {
-		getUiReference().removeComponentListener(componentListener);
-	}
+    @Override
+    public void removeComponentListener(final IComponentListener componentListener) {
+        getUiReference().removeComponentListener(componentListener);
+    }
 
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		getUiReference().addPopupDetectionListener(listener);
-	}
+    @Override
+    public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+        getUiReference().addPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		getUiReference().removePopupDetectionListener(listener);
-	}
+    @Override
+    public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+        getUiReference().removePopupDetectionListener(listener);
+    }
 
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return new PopupMenuImpl(getUiReference());
-	}
+    @Override
+    public IPopupMenuSpi createPopupMenu() {
+        return new PopupMenuImpl(getUiReference());
+    }
 
-	public Rectangle getClientArea() {
-		return getUiReference().getClientArea();
-	}
+    public Rectangle getClientArea() {
+        return getUiReference().getClientArea();
+    }
 
-	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
-		return getUiReference().computeDecoratedSize(clientAreaSize);
-	}
+    public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+        return getUiReference().computeDecoratedSize(clientAreaSize);
+    }
 
-	public void setToolTipText(final String toolTip) {
-		getUiReference().setToolTipText(toolTip);
-	}
+    public void setToolTipText(final String toolTip) {
+        getUiReference().setToolTipText(toolTip);
+    }
 
 }

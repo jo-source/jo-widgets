@@ -35,9 +35,9 @@ import org.jowidgets.spi.impl.image.ImageHandle;
 
 public class DummyImageHandleFactory implements IImageHandleFactory {
 
-	@Override
-	public ImageHandle<UIDImage> createImageHandle(final IImageDescriptor imageDescriptor) {
-		return new ImageHandle<UIDImage>(new DummyImageLoader(imageDescriptor), imageDescriptor);
-	}
+    @Override
+    public ImageHandle<UIDImage> createImageHandle(final IImageDescriptor imageDescriptor) {
+        return new ImageHandle<UIDImage>(new DummyImageLoader(imageDescriptor), imageDescriptor);
+    }
 
 }

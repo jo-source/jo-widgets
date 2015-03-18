@@ -34,6 +34,6 @@ import org.jowidgets.common.types.IVetoable;
 
 public interface IListSelectionVetoListener {
 
-	void beforeSelectionChange(List<Integer> newSelection, IVetoable veto);
+    void beforeSelectionChange(List<Integer> newSelection, IVetoable veto);
 
 }

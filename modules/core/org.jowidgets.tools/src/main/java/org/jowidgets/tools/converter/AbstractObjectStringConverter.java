@@ -32,9 +32,9 @@ import org.jowidgets.api.convert.IObjectStringConverter;
 
 public abstract class AbstractObjectStringConverter<FROM_TYPE> implements IObjectStringConverter<FROM_TYPE> {
 
-	@Override
-	public String getDescription(final FROM_TYPE value) {
-		return null;
-	}
+    @Override
+    public String getDescription(final FROM_TYPE value) {
+        return null;
+    }
 
 }

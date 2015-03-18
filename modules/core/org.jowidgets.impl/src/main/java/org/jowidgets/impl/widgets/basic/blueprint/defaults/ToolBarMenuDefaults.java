@@ -33,9 +33,9 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
 public class ToolBarMenuDefaults implements IDefaultInitializer<IItemSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final IItemSetupBuilder<?> builder) {
-		builder.setIcon(IconsSmall.POPUP_ARROW);
-	}
+    @Override
+    public void initialize(final IItemSetupBuilder<?> builder) {
+        builder.setIcon(IconsSmall.POPUP_ARROW);
+    }
 
 }

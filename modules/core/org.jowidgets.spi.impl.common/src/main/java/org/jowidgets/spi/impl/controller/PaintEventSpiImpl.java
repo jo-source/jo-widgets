@@ -35,28 +35,28 @@ import org.jowidgets.util.Assert;
 
 public final class PaintEventSpiImpl implements IPaintEventSpi {
 
-	private final IGraphicContextSpi graphicContext;
-	private final Rectangle clipBounds;
+    private final IGraphicContextSpi graphicContext;
+    private final Rectangle clipBounds;
 
-	public PaintEventSpiImpl(final IGraphicContextSpi graphicContext) {
-		this(Assert.getParamNotNull(graphicContext, "graphicContext"), graphicContext.getBounds());
-	}
+    public PaintEventSpiImpl(final IGraphicContextSpi graphicContext) {
+        this(Assert.getParamNotNull(graphicContext, "graphicContext"), graphicContext.getBounds());
+    }
 
-	public PaintEventSpiImpl(final IGraphicContextSpi graphicContext, final Rectangle clipBounds) {
-		Assert.paramNotNull(graphicContext, "graphicContext");
-		Assert.paramNotNull(clipBounds, "clipBounds");
-		this.graphicContext = graphicContext;
-		this.clipBounds = clipBounds;
-	}
+    public PaintEventSpiImpl(final IGraphicContextSpi graphicContext, final Rectangle clipBounds) {
+        Assert.paramNotNull(graphicContext, "graphicContext");
+        Assert.paramNotNull(clipBounds, "clipBounds");
+        this.graphicContext = graphicContext;
+        this.clipBounds = clipBounds;
+    }
 
-	@Override
-	public IGraphicContextSpi getGraphicContext() {
-		return graphicContext;
-	}
+    @Override
+    public IGraphicContextSpi getGraphicContext() {
+        return graphicContext;
+    }
 
-	@Override
-	public Rectangle getClipBounds() {
-		return clipBounds;
-	}
+    @Override
+    public Rectangle getClipBounds() {
+        return clipBounds;
+    }
 
 }

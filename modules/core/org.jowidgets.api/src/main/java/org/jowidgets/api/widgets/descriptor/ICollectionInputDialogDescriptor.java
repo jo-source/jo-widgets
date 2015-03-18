@@ -34,7 +34,7 @@ import org.jowidgets.api.widgets.descriptor.setup.ICollectionInputDialogSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface ICollectionInputDialogDescriptor<ELEMENT_TYPE> extends
-		ICollectionInputDialogSetup<ELEMENT_TYPE>,
-		IWidgetDescriptor<IInputDialog<Collection<ELEMENT_TYPE>>> {
+        ICollectionInputDialogSetup<ELEMENT_TYPE>,
+        IWidgetDescriptor<IInputDialog<Collection<ELEMENT_TYPE>>> {
 
 }

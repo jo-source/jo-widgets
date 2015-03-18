@@ -39,32 +39,32 @@ import org.jowidgets.util.Assert;
 
 public class PopupDetectionObservable implements IPopupDetectionObservable {
 
-	private final Set<IPopupDetectionListener> listeners;
+    private final Set<IPopupDetectionListener> listeners;
 
-	public PopupDetectionObservable() {
-		this.listeners = new LinkedHashSet<IPopupDetectionListener>();
-	}
+    public PopupDetectionObservable() {
+        this.listeners = new LinkedHashSet<IPopupDetectionListener>();
+    }
 
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public void firePopupDetected(final Position position) {
-		for (final IPopupDetectionListener listener : new LinkedList<IPopupDetectionListener>(listeners)) {
-			listener.popupDetected(position);
-		}
-	}
+    public void firePopupDetected(final Position position) {
+        for (final IPopupDetectionListener listener : new LinkedList<IPopupDetectionListener>(listeners)) {
+            listener.popupDetected(position);
+        }
+    }
 
-	public void dispose() {
-		listeners.clear();
-	}
+    public void dispose() {
+        listeners.clear();
+    }
 
 }

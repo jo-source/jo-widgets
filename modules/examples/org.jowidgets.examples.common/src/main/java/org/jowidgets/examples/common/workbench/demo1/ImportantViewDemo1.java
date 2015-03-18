@@ -41,25 +41,25 @@ import org.jowidgets.workbench.api.IViewContext;
 
 public class ImportantViewDemo1 extends AbstractDemoView {
 
-	public static final String ID = ImportantViewDemo1.class.getName();
-	public static final String DEFAULT_LABEL = "View";
-	public static final String DEFAULT_TOOLTIP = "View tooltip";
-	public static final IImageConstant DEFAULT_ICON = IconsSmall.WARNING;
+    public static final String ID = ImportantViewDemo1.class.getName();
+    public static final String DEFAULT_LABEL = "View";
+    public static final String DEFAULT_TOOLTIP = "View tooltip";
+    public static final IImageConstant DEFAULT_ICON = IconsSmall.WARNING;
 
-	public ImportantViewDemo1(final IViewContext context) {
-		super(ID);
+    public ImportantViewDemo1(final IViewContext context) {
+        super(ID);
 
-		final IContainer container = context.getContainer();
-		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+        final IContainer container = context.getContainer();
+        container.setLayout(MigLayoutFactory.growingInnerCellLayout());
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		final IComposite content = container.add(
-				bpf.composite().setBackgroundColor(Colors.WHITE),
-				MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        final IComposite content = container.add(
+                bpf.composite().setBackgroundColor(Colors.WHITE),
+                MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
-		content.setLayout(MigLayoutFactory.growingInnerCellLayout());
-		content.add(bpf.textLabel("Demo for component deacivate listener"), "alignx center, aligny center");
+        content.setLayout(MigLayoutFactory.growingInnerCellLayout());
+        content.add(bpf.textLabel("Demo for component deacivate listener"), "alignx center, aligny center");
 
-	}
+    }
 
 }

@@ -33,28 +33,28 @@ import org.jowidgets.spi.widgets.IProgressBarSpi;
 
 public abstract class AbstractProgressBarSpiWrapper extends AbstractControlSpiWrapper implements IProgressBarCommon {
 
-	public AbstractProgressBarSpiWrapper(final IProgressBarSpi widget) {
-		super(widget);
-	}
+    public AbstractProgressBarSpiWrapper(final IProgressBarSpi widget) {
+        super(widget);
+    }
 
-	@Override
-	public IProgressBarSpi getWidget() {
-		return (IProgressBarSpi) super.getWidget();
-	}
+    @Override
+    public IProgressBarSpi getWidget() {
+        return (IProgressBarSpi) super.getWidget();
+    }
 
-	@Override
-	public void setMinimum(final int min) {
-		getWidget().setMinimum(min);
-	}
+    @Override
+    public void setMinimum(final int min) {
+        getWidget().setMinimum(min);
+    }
 
-	@Override
-	public void setMaximum(final int max) {
-		getWidget().setMaximum(max);
-	}
+    @Override
+    public void setMaximum(final int max) {
+        getWidget().setMaximum(max);
+    }
 
-	@Override
-	public void setProgress(final int progress) {
-		getWidget().setProgress(progress);
-	}
+    @Override
+    public void setProgress(final int progress) {
+        getWidget().setProgress(progress);
+    }
 
 }

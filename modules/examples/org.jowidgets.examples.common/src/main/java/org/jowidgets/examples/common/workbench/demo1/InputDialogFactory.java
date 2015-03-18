@@ -41,50 +41,50 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
 public class InputDialogFactory {
 
-	public IInputDialog<String> createInputDialog(final IExecutionContext executionContext, final String inputName) {
-		return createInputDialog(executionContext.getAction().getText(), executionContext.getAction().getIcon(), inputName);
-	}
+    public IInputDialog<String> createInputDialog(final IExecutionContext executionContext, final String inputName) {
+        return createInputDialog(executionContext.getAction().getText(), executionContext.getAction().getIcon(), inputName);
+    }
 
-	public IInputDialog<String> createInputDialog(final String title, final String inputName) {
-		return createInputDialog(title, null, inputName);
-	}
+    public IInputDialog<String> createInputDialog(final String title, final String inputName) {
+        return createInputDialog(title, null, inputName);
+    }
 
-	public IInputDialog<String> createInputDialog(final String title, final IImageConstant icon, final String inputName) {
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		final IInputDialogBluePrint<String> inputDialogBp = bpf.inputDialog(createLabelDialogCreator(inputName));
-		inputDialogBp.setTitle(title);
-		inputDialogBp.setIcon(icon);
-		inputDialogBp.setMissingInputHint("Please enter the " + inputName);
-		inputDialogBp.setCloseable(true);
-		inputDialogBp.setResizable(false);
+    public IInputDialog<String> createInputDialog(final String title, final IImageConstant icon, final String inputName) {
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+        final IInputDialogBluePrint<String> inputDialogBp = bpf.inputDialog(createLabelDialogCreator(inputName));
+        inputDialogBp.setTitle(title);
+        inputDialogBp.setIcon(icon);
+        inputDialogBp.setMissingInputHint("Please enter the " + inputName);
+        inputDialogBp.setCloseable(true);
+        inputDialogBp.setResizable(false);
 
-		return Toolkit.getWidgetFactory().create(inputDialogBp);
-	}
+        return Toolkit.getWidgetFactory().create(inputDialogBp);
+    }
 
-	private IInputContentCreator<String> createLabelDialogCreator(final String inputName) {
-		return new IInputContentCreator<String>() {
+    private IInputContentCreator<String> createLabelDialogCreator(final String inputName) {
+        return new IInputContentCreator<String>() {
 
-			private IInputControl<String> inputField;
+            private IInputControl<String> inputField;
 
-			@Override
-			public void createContent(final IInputContentContainer contentContainer) {
-				final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-				contentContainer.setLayout(new MigLayoutDescriptor("[][grow]", "[]"));
-				contentContainer.add(bpf.textLabel(inputName), "");
-				inputField = contentContainer.add(inputName, bpf.inputFieldString(), "growx, w 180:180:180");
-			}
+            @Override
+            public void createContent(final IInputContentContainer contentContainer) {
+                final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+                contentContainer.setLayout(new MigLayoutDescriptor("[][grow]", "[]"));
+                contentContainer.add(bpf.textLabel(inputName), "");
+                inputField = contentContainer.add(inputName, bpf.inputFieldString(), "growx, w 180:180:180");
+            }
 
-			@Override
-			public void setValue(final String value) {
-				inputField.setValue(value);
-			}
+            @Override
+            public void setValue(final String value) {
+                inputField.setValue(value);
+            }
 
-			@Override
-			public String getValue() {
-				return inputField.getValue();
-			}
+            @Override
+            public String getValue() {
+                return inputField.getValue();
+            }
 
-		};
-	}
+        };
+    }
 
 }

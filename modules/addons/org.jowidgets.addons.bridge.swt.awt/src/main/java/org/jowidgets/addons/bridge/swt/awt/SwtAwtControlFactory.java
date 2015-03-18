@@ -30,16 +30,16 @@ package org.jowidgets.addons.bridge.swt.awt;
 
 public final class SwtAwtControlFactory {
 
-	private static final ISwtAwtControlFactory INSTANCE = new SwtAwtControlFactoryImpl();
+    private static final ISwtAwtControlFactory INSTANCE = new SwtAwtControlFactoryImpl();
 
-	private SwtAwtControlFactory() {}
+    private SwtAwtControlFactory() {}
 
-	public static ISwtAwtControlFactory getInstance() {
-		return INSTANCE;
-	}
+    public static ISwtAwtControlFactory getInstance() {
+        return INSTANCE;
+    }
 
-	public static ISwtAwtControl createSwtAwtControl(final Object parentUiReference) {
-		return getInstance().createSwtAwtControl(parentUiReference);
-	}
+    public static ISwtAwtControl createSwtAwtControl(final Object parentUiReference) {
+        return getInstance().createSwtAwtControl(parentUiReference);
+    }
 
 }

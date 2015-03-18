@@ -36,24 +36,24 @@ import org.jowidgets.workbench.toolkit.api.IViewLayoutBuilder;
 
 class LayoutBuilderFactory implements ILayoutBuilderFactory {
 
-	@Override
-	public ILayoutBuilder layout() {
-		return new LayoutBuilder();
-	}
+    @Override
+    public ILayoutBuilder layout() {
+        return new LayoutBuilder();
+    }
 
-	@Override
-	public IFolderLayoutBuilder folder() {
-		return new FolderLayoutBuilder();
-	}
+    @Override
+    public IFolderLayoutBuilder folder() {
+        return new FolderLayoutBuilder();
+    }
 
-	@Override
-	public ISplitLayoutBuilder split() {
-		return new SplitLayoutBuilder();
-	}
+    @Override
+    public ISplitLayoutBuilder split() {
+        return new SplitLayoutBuilder();
+    }
 
-	@Override
-	public IViewLayoutBuilder view() {
-		return new ViewLayoutBuilder();
-	}
+    @Override
+    public IViewLayoutBuilder view() {
+        return new ViewLayoutBuilder();
+    }
 
 }

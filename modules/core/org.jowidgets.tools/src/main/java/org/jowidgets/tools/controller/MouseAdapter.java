@@ -34,19 +34,19 @@ import org.jowidgets.common.widgets.controller.IMouseListener;
 
 public class MouseAdapter implements IMouseListener {
 
-	@Override
-	public void mousePressed(final IMouseButtonEvent mouseEvent) {}
+    @Override
+    public void mousePressed(final IMouseButtonEvent mouseEvent) {}
 
-	@Override
-	public void mouseReleased(final IMouseButtonEvent mouseEvent) {}
+    @Override
+    public void mouseReleased(final IMouseButtonEvent mouseEvent) {}
 
-	@Override
-	public void mouseDoubleClicked(final IMouseButtonEvent mouseEvent) {}
+    @Override
+    public void mouseDoubleClicked(final IMouseButtonEvent mouseEvent) {}
 
-	@Override
-	public void mouseEnter(final IMouseEvent mouseEvent) {}
+    @Override
+    public void mouseEnter(final IMouseEvent mouseEvent) {}
 
-	@Override
-	public void mouseExit(final IMouseEvent mouseEvent) {}
+    @Override
+    public void mouseExit(final IMouseEvent mouseEvent) {}
 
 }

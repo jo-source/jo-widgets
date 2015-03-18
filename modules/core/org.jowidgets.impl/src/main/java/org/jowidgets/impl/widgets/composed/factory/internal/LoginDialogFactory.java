@@ -35,12 +35,12 @@ import org.jowidgets.impl.widgets.composed.LoginDialogImpl;
 
 public class LoginDialogFactory extends AbstractDialogFactory<ILoginDialog, ILoginDialogDescriptor> {
 
-	public LoginDialogFactory(final IGenericWidgetFactory genericWidgetFactory) {
-		super(genericWidgetFactory);
-	}
+    public LoginDialogFactory(final IGenericWidgetFactory genericWidgetFactory) {
+        super(genericWidgetFactory);
+    }
 
-	@Override
-	protected ILoginDialog createWidget(final IFrame dialogWidget, final ILoginDialogDescriptor descriptor) {
-		return new LoginDialogImpl(dialogWidget, descriptor);
-	}
+    @Override
+    protected ILoginDialog createWidget(final IFrame dialogWidget, final ILoginDialogDescriptor descriptor) {
+        return new LoginDialogImpl(dialogWidget, descriptor);
+    }
 }

@@ -36,14 +36,14 @@ import org.jowidgets.examples.common.map.MapDemoApplication;
 
 public final class SwingMapDemoStarter {
 
-	private SwingMapDemoStarter() {}
+    private SwingMapDemoStarter() {}
 
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		Toolkit.getWidgetFactory().register(
-				IMapWidgetBlueprint.class,
-				new SwingGoogleEarthWidgetFactory(MapDemoApplication.API_KEY));
-		new MapDemoApplication().start();
-	}
+    public static void main(final String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        Toolkit.getWidgetFactory().register(
+                IMapWidgetBlueprint.class,
+                new SwingGoogleEarthWidgetFactory(MapDemoApplication.API_KEY));
+        new MapDemoApplication().start();
+    }
 
 }

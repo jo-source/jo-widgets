@@ -40,19 +40,19 @@ import org.jowidgets.spi.widgets.ITextLabelSpi;
 
 public class TextLabelFactory extends AbstractWidgetFactory implements IWidgetFactory<ITextLabel, ITextLabelDescriptor> {
 
-	public TextLabelFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+    public TextLabelFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider,
+        final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
-	}
+        super(genericWidgetFactory, widgetsServiceProvider, bpF);
+    }
 
-	@Override
-	public ITextLabel create(final Object parentUiReference, final ITextLabelDescriptor descriptor) {
-		final ITextLabelBluePrintSpi bp = getSpiBluePrintFactory().textLabel().setSetup(descriptor);
-		final ITextLabelSpi textLabelSpi = getSpiWidgetFactory().createTextLabel(parentUiReference, bp);
-		return new TextLabelImpl(textLabelSpi, descriptor);
-	}
+    @Override
+    public ITextLabel create(final Object parentUiReference, final ITextLabelDescriptor descriptor) {
+        final ITextLabelBluePrintSpi bp = getSpiBluePrintFactory().textLabel().setSetup(descriptor);
+        final ITextLabelSpi textLabelSpi = getSpiWidgetFactory().createTextLabel(parentUiReference, bp);
+        return new TextLabelImpl(textLabelSpi, descriptor);
+    }
 
 }

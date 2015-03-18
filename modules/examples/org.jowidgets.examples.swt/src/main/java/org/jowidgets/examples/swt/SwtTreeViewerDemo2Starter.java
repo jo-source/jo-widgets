@@ -31,10 +31,10 @@ import org.jowidgets.examples.common.tree.demo2.TreeViewerDemo2;
 
 public final class SwtTreeViewerDemo2Starter {
 
-	private SwtTreeViewerDemo2Starter() {}
+    private SwtTreeViewerDemo2Starter() {}
 
-	public static void main(final String[] args) throws Exception {
-		new TreeViewerDemo2().start();
-	}
+    public static void main(final String[] args) throws Exception {
+        new TreeViewerDemo2().start();
+    }
 
 }

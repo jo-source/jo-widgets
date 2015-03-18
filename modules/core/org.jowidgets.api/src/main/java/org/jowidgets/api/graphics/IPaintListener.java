@@ -32,6 +32,6 @@ import org.jowidgets.api.controller.IPaintEvent;
 
 public interface IPaintListener {
 
-	void paint(IPaintEvent paintEvent);
+    void paint(IPaintEvent paintEvent);
 
 }

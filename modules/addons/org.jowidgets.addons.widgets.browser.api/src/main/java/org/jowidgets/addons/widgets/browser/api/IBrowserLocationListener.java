@@ -32,8 +32,8 @@ import org.jowidgets.common.types.IVetoable;
 
 public interface IBrowserLocationListener {
 
-	void onLocationChange(IBrowserLocationEvent event, IVetoable veto);
+    void onLocationChange(IBrowserLocationEvent event, IVetoable veto);
 
-	void locationChanged(IBrowserLocationEvent event);
+    void locationChanged(IBrowserLocationEvent event);
 
 }

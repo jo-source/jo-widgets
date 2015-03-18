@@ -33,30 +33,30 @@ import org.jowidgets.api.model.item.IPopupActionItemModel;
 import org.jowidgets.api.model.item.IPopupActionItemModelBuilder;
 
 public class PopupActionItemModelBuilder extends
-		AbstractActionItemModelBuilder<IPopupActionItemModelBuilder, IPopupActionItemModel> implements
-		IPopupActionItemModelBuilder {
+        AbstractActionItemModelBuilder<IPopupActionItemModelBuilder, IPopupActionItemModel> implements
+        IPopupActionItemModelBuilder {
 
-	private IMenuModel popupMenu;
+    private IMenuModel popupMenu;
 
-	@Override
-	public IPopupActionItemModel build() {
-		return new PopupActionItemModelImpl(
-			getId(),
-			getText(),
-			getToolTipText(),
-			getIcon(),
-			getAccelerator(),
-			getMnemonic(),
-			isEnabled(),
-			getAction(),
-			popupMenu,
-			getVisibilityAspect());
-	}
+    @Override
+    public IPopupActionItemModel build() {
+        return new PopupActionItemModelImpl(
+            getId(),
+            getText(),
+            getToolTipText(),
+            getIcon(),
+            getAccelerator(),
+            getMnemonic(),
+            isEnabled(),
+            getAction(),
+            popupMenu,
+            getVisibilityAspect());
+    }
 
-	@Override
-	public IPopupActionItemModelBuilder setPopupMenu(final IMenuModel popupMenu) {
-		this.popupMenu = popupMenu;
-		return this;
-	}
+    @Override
+    public IPopupActionItemModelBuilder setPopupMenu(final IMenuModel popupMenu) {
+        this.popupMenu = popupMenu;
+        return this;
+    }
 
 }

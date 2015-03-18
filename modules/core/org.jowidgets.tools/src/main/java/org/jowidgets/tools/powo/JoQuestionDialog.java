@@ -40,88 +40,88 @@ import org.jowidgets.util.Assert;
 
 public class JoQuestionDialog extends Component<IQuestionDialog, IQuestionDialogBluePrint> implements IQuestionDialog {
 
-	public JoQuestionDialog(final IWindowCommon parent, final QuestionType questionType, final String message) {
-		this(parent, bluePrint(questionType).setText(message));
-	}
+    public JoQuestionDialog(final IWindowCommon parent, final QuestionType questionType, final String message) {
+        this(parent, bluePrint(questionType).setText(message));
+    }
 
-	public JoQuestionDialog(final IWindowCommon parent, final QuestionType questionType, final String title, final String message) {
-		this(parent, bluePrint(questionType).setTitle(title).setText(message));
-	}
+    public JoQuestionDialog(final IWindowCommon parent, final QuestionType questionType, final String title, final String message) {
+        this(parent, bluePrint(questionType).setTitle(title).setText(message));
+    }
 
-	public JoQuestionDialog(
-		final IWindowCommon parent,
-		final QuestionType questionType,
-		final String title,
-		final IImageConstant icon,
-		final String message) {
-		this(parent, bluePrint(questionType).setTitle(title).setIcon(icon).setText(message));
-	}
+    public JoQuestionDialog(
+        final IWindowCommon parent,
+        final QuestionType questionType,
+        final String title,
+        final IImageConstant icon,
+        final String message) {
+        this(parent, bluePrint(questionType).setTitle(title).setIcon(icon).setText(message));
+    }
 
-	public JoQuestionDialog(
-		final IWindowCommon parent,
-		final QuestionType questionType,
-		final IImageConstant titleIcon,
-		final String title,
-		final IImageConstant icon,
-		final String message) {
-		this(parent, bluePrint(questionType).setTitleIcon(titleIcon).setTitle(title).setIcon(icon).setText(message));
-	}
+    public JoQuestionDialog(
+        final IWindowCommon parent,
+        final QuestionType questionType,
+        final IImageConstant titleIcon,
+        final String title,
+        final IImageConstant icon,
+        final String message) {
+        this(parent, bluePrint(questionType).setTitleIcon(titleIcon).setTitle(title).setIcon(icon).setText(message));
+    }
 
-	public JoQuestionDialog(final IWindowCommon parent, final IQuestionDialogDescriptor descriptor) {
-		super(bluePrint().setSetup(descriptor));
-		initialize(Toolkit.getWidgetFactory().create(parent.getUiReference(), descriptor));
-	}
+    public JoQuestionDialog(final IWindowCommon parent, final IQuestionDialogDescriptor descriptor) {
+        super(bluePrint().setSetup(descriptor));
+        initialize(Toolkit.getWidgetFactory().create(parent.getUiReference(), descriptor));
+    }
 
-	@Override
-	public QuestionResult question() {
-		return getWidget().question();
-	}
+    @Override
+    public QuestionResult question() {
+        return getWidget().question();
+    }
 
-	@Override
-	public IWindow getParent() {
-		return getWidget().getParent();
-	}
+    @Override
+    public IWindow getParent() {
+        return getWidget().getParent();
+    }
 
-	@Override
-	public void setParent(final IWindow parent) {
-		getWidget().setParent(parent);
-	}
+    @Override
+    public void setParent(final IWindow parent) {
+        getWidget().setParent(parent);
+    }
 
-	public static IQuestionDialogBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().questionDialog();
-	}
+    public static IQuestionDialogBluePrint bluePrint() {
+        return Toolkit.getBluePrintFactory().questionDialog();
+    }
 
-	public static IQuestionDialogBluePrint bluePrint(final QuestionType questionType) {
-		Assert.paramNotNull(questionType, "questionType");
-		if (questionType == QuestionType.YES_NO) {
-			return bluePrintYesNo();
-		}
-		else if (questionType == QuestionType.YES_NO_CANCEL) {
-			return bluePrintYesNoCancel();
-		}
-		else {
-			throw new IllegalArgumentException("QuestionType '" + questionType + "' is not known.");
-		}
-	}
+    public static IQuestionDialogBluePrint bluePrint(final QuestionType questionType) {
+        Assert.paramNotNull(questionType, "questionType");
+        if (questionType == QuestionType.YES_NO) {
+            return bluePrintYesNo();
+        }
+        else if (questionType == QuestionType.YES_NO_CANCEL) {
+            return bluePrintYesNoCancel();
+        }
+        else {
+            throw new IllegalArgumentException("QuestionType '" + questionType + "' is not known.");
+        }
+    }
 
-	public static IQuestionDialogBluePrint bluePrintYesNo() {
-		return Toolkit.getBluePrintFactory().yesNoQuestion();
-	}
+    public static IQuestionDialogBluePrint bluePrintYesNo() {
+        return Toolkit.getBluePrintFactory().yesNoQuestion();
+    }
 
-	public static IQuestionDialogBluePrint bluePrintYesNoCancel() {
-		return Toolkit.getBluePrintFactory().yesNoCancelQuestion();
-	}
+    public static IQuestionDialogBluePrint bluePrintYesNoCancel() {
+        return Toolkit.getBluePrintFactory().yesNoCancelQuestion();
+    }
 
-	public static IQuestionDialogBluePrint bluePrintYesNo(final String question) {
-		return Toolkit.getBluePrintFactory().yesNoQuestion(question);
-	}
+    public static IQuestionDialogBluePrint bluePrintYesNo(final String question) {
+        return Toolkit.getBluePrintFactory().yesNoQuestion(question);
+    }
 
-	public static IQuestionDialogBluePrint bluePrintYesNoCancel(final String question) {
-		return Toolkit.getBluePrintFactory().yesNoCancelQuestion(question);
-	}
+    public static IQuestionDialogBluePrint bluePrintYesNoCancel(final String question) {
+        return Toolkit.getBluePrintFactory().yesNoCancelQuestion(question);
+    }
 
-	public enum QuestionType {
-		YES_NO,
-		YES_NO_CANCEL;
-	}
+    public enum QuestionType {
+        YES_NO,
+        YES_NO_CANCEL;
+    }
 }

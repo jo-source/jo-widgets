@@ -40,62 +40,62 @@ import org.jowidgets.util.Assert;
 
 public final class DropEventSpiImpl implements IDropEventSpi {
 
-	private final Position position;
-	private final Object dropLocation;
-	private final Set<DropAction> supportedActions;
-	private final DropAction dropAction;
-	private final Object data;
-	private final TransferTypeSpi transferType;
+    private final Position position;
+    private final Object dropLocation;
+    private final Set<DropAction> supportedActions;
+    private final DropAction dropAction;
+    private final Object data;
+    private final TransferTypeSpi transferType;
 
-	public DropEventSpiImpl(
-		final Position position,
-		final Object dropLocation,
-		final Set<DropAction> supportedActions,
-		final DropAction dropAction,
-		final Object data,
-		final TransferTypeSpi transferType) {
+    public DropEventSpiImpl(
+        final Position position,
+        final Object dropLocation,
+        final Set<DropAction> supportedActions,
+        final DropAction dropAction,
+        final Object data,
+        final TransferTypeSpi transferType) {
 
-		Assert.paramNotNull(position, "position");
-		Assert.paramNotNull(supportedActions, "supportedActions");
-		Assert.paramNotNull(dropAction, "dropAction");
-		Assert.paramNotNull(transferType, "transferType");
+        Assert.paramNotNull(position, "position");
+        Assert.paramNotNull(supportedActions, "supportedActions");
+        Assert.paramNotNull(dropAction, "dropAction");
+        Assert.paramNotNull(transferType, "transferType");
 
-		this.position = position;
-		this.supportedActions = Collections.unmodifiableSet(new HashSet<DropAction>(supportedActions));
-		this.dropAction = dropAction;
-		this.dropLocation = dropLocation;
-		this.data = data;
-		this.transferType = transferType;
-	}
+        this.position = position;
+        this.supportedActions = Collections.unmodifiableSet(new HashSet<DropAction>(supportedActions));
+        this.dropAction = dropAction;
+        this.dropLocation = dropLocation;
+        this.data = data;
+        this.transferType = transferType;
+    }
 
-	@Override
-	public Position getPosition() {
-		return position;
-	}
+    @Override
+    public Position getPosition() {
+        return position;
+    }
 
-	@Override
-	public Object getDropSelection() {
-		return dropLocation;
-	}
+    @Override
+    public Object getDropSelection() {
+        return dropLocation;
+    }
 
-	@Override
-	public Set<DropAction> getSupportedActions() {
-		return supportedActions;
-	}
+    @Override
+    public Set<DropAction> getSupportedActions() {
+        return supportedActions;
+    }
 
-	@Override
-	public DropAction getDropAction() {
-		return dropAction;
-	}
+    @Override
+    public DropAction getDropAction() {
+        return dropAction;
+    }
 
-	@Override
-	public Object getData() {
-		return data;
-	}
+    @Override
+    public Object getData() {
+        return data;
+    }
 
-	@Override
-	public TransferTypeSpi getTransferType() {
-		return transferType;
-	}
+    @Override
+    public TransferTypeSpi getTransferType() {
+        return transferType;
+    }
 
 }

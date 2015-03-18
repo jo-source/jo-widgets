@@ -34,10 +34,10 @@ import org.jowidgets.common.types.IVetoable;
 
 public interface IDragSourceListener {
 
-	void dragStart(IDragEvent event, IVetoable veto);
+    void dragStart(IDragEvent event, IVetoable veto);
 
-	void dragSetData(IDragEvent event, IVetoable veto, TransferType<?> transferType, IDragDataResponse dragData);
+    void dragSetData(IDragEvent event, IVetoable veto, TransferType<?> transferType, IDragDataResponse dragData);
 
-	void dragFinished(IDragEvent event, DropAction dropAction);
+    void dragFinished(IDragEvent event, DropAction dropAction);
 
 }

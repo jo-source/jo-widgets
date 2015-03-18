@@ -32,11 +32,11 @@ import org.jowidgets.common.types.Position;
 
 public interface IMouseEvent {
 
-	/**
-	 * Gets the position of the mouse event relative to its component
-	 * 
-	 * @return The mouse position, never null
-	 */
-	Position getPosition();
+    /**
+     * Gets the position of the mouse event relative to its component
+     * 
+     * @return The mouse position, never null
+     */
+    Position getPosition();
 
 }

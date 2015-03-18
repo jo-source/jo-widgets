@@ -49,132 +49,132 @@ import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 
 public class ButtonImpl extends AbstractButtonSpiWrapper implements IButtonUi, IActionWidget {
 
-	private final ControlDelegate controlDelegate;
+    private final ControlDelegate controlDelegate;
 
-	private ActionWidgetSync actionWidgetSync;
-	private ActionExecuter actionExecuter;
+    private ActionWidgetSync actionWidgetSync;
+    private ActionExecuter actionExecuter;
 
-	private IImageConstant icon;
+    private IImageConstant icon;
 
-	public ButtonImpl(final IButtonSpi buttonSpi, final IButtonDescriptor descriptor) {
-		super(buttonSpi);
-		this.controlDelegate = new ControlDelegate(buttonSpi, this);
-		setEnabled(descriptor.isEnabled());
-		VisibiliySettingsInvoker.setVisibility(descriptor, this);
-		ColorSettingsInvoker.setColors(descriptor, this);
+    public ButtonImpl(final IButtonSpi buttonSpi, final IButtonDescriptor descriptor) {
+        super(buttonSpi);
+        this.controlDelegate = new ControlDelegate(buttonSpi, this);
+        setEnabled(descriptor.isEnabled());
+        VisibiliySettingsInvoker.setVisibility(descriptor, this);
+        ColorSettingsInvoker.setColors(descriptor, this);
 
-		if (descriptor.getFontSize() != null) {
-			setFontSize(Integer.valueOf(descriptor.getFontSize()));
-		}
-		if (descriptor.getFontName() != null) {
-			setFontName(descriptor.getFontName());
-		}
+        if (descriptor.getFontSize() != null) {
+            setFontSize(Integer.valueOf(descriptor.getFontSize()));
+        }
+        if (descriptor.getFontName() != null) {
+            setFontName(descriptor.getFontName());
+        }
 
-		addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				if (actionExecuter != null) {
-					actionExecuter.execute();
-				}
-			}
-		});
+        addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                if (actionExecuter != null) {
+                    actionExecuter.execute();
+                }
+            }
+        });
 
-		setTextCache(descriptor.getText());
+        setTextCache(descriptor.getText());
 
-		this.icon = descriptor.getIcon();
-	}
+        this.icon = descriptor.getIcon();
+    }
 
-	@Override
-	public IContainer getParent() {
-		return controlDelegate.getParent();
-	}
+    @Override
+    public IContainer getParent() {
+        return controlDelegate.getParent();
+    }
 
-	@Override
-	public void setParent(final IContainer parent) {
-		controlDelegate.setParent(parent);
-	}
+    @Override
+    public void setParent(final IContainer parent) {
+        controlDelegate.setParent(parent);
+    }
 
-	@Override
-	public void addParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.addParentListener(listener);
-	}
+    @Override
+    public void addParentListener(final IParentListener<IContainer> listener) {
+        controlDelegate.addParentListener(listener);
+    }
 
-	@Override
-	public void removeParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.removeParentListener(listener);
-	}
+    @Override
+    public void removeParentListener(final IParentListener<IContainer> listener) {
+        controlDelegate.removeParentListener(listener);
+    }
 
-	@Override
-	public boolean isReparentable() {
-		return controlDelegate.isReparentable();
-	}
+    @Override
+    public boolean isReparentable() {
+        return controlDelegate.isReparentable();
+    }
 
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		controlDelegate.addDisposeListener(listener);
-	}
+    @Override
+    public void addDisposeListener(final IDisposeListener listener) {
+        controlDelegate.addDisposeListener(listener);
+    }
 
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		controlDelegate.removeDisposeListener(listener);
-	}
+    @Override
+    public void removeDisposeListener(final IDisposeListener listener) {
+        controlDelegate.removeDisposeListener(listener);
+    }
 
-	@Override
-	public boolean isDisposed() {
-		return controlDelegate.isDisposed();
-	}
+    @Override
+    public boolean isDisposed() {
+        return controlDelegate.isDisposed();
+    }
 
-	@Override
-	public void dispose() {
-		disposeActionWidgetSync();
-		controlDelegate.dispose();
-	}
+    @Override
+    public void dispose() {
+        disposeActionWidgetSync();
+        controlDelegate.dispose();
+    }
 
-	@Override
-	public IPopupMenu createPopupMenu() {
-		return controlDelegate.createPopupMenu();
-	}
+    @Override
+    public IPopupMenu createPopupMenu() {
+        return controlDelegate.createPopupMenu();
+    }
 
-	@Override
-	public void setAction(final IAction action) {
-		//dispose the old sync if exists
-		disposeActionWidgetSync();
+    @Override
+    public void setAction(final IAction action) {
+        //dispose the old sync if exists
+        disposeActionWidgetSync();
 
-		actionWidgetSync = new ActionWidgetSync(action, this);
-		actionWidgetSync.setActive(true);
+        actionWidgetSync = new ActionWidgetSync(action, this);
+        actionWidgetSync.setActive(true);
 
-		actionExecuter = new ActionExecuter(action, this);
-	}
+        actionExecuter = new ActionExecuter(action, this);
+    }
 
-	private void disposeActionWidgetSync() {
-		if (actionWidgetSync != null) {
-			actionWidgetSync.dispose();
-			actionWidgetSync = null;
-		}
-	}
+    private void disposeActionWidgetSync() {
+        if (actionWidgetSync != null) {
+            actionWidgetSync.dispose();
+            actionWidgetSync = null;
+        }
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		this.icon = icon;
-		super.setIcon(icon);
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        this.icon = icon;
+        super.setIcon(icon);
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return icon;
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return icon;
+    }
 
-	@Override
-	public void push() {
-		if (getWidget() instanceof IButtonUiSpi) {
-			final IButtonUiSpi widget = (IButtonUiSpi) getWidget();
-			widget.push();
-		}
-	}
+    @Override
+    public void push() {
+        if (getWidget() instanceof IButtonUiSpi) {
+            final IButtonUiSpi widget = (IButtonUiSpi) getWidget();
+            widget.push();
+        }
+    }
 
-	@Override
-	public boolean isTestable() {
-		return true;
-	}
+    @Override
+    public boolean isTestable() {
+        return true;
+    }
 
 }

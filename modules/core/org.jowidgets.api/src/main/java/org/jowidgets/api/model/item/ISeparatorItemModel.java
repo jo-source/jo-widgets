@@ -30,7 +30,7 @@ package org.jowidgets.api.model.item;
 
 public interface ISeparatorItemModel extends IMenuItemModel, IToolBarItemModel {
 
-	@Override
-	ISeparatorItemModel createCopy();
+    @Override
+    ISeparatorItemModel createCopy();
 
 }

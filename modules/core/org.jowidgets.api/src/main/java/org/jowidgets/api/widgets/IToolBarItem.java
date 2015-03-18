@@ -33,11 +33,11 @@ import org.jowidgets.common.widgets.IToolBarItemCommon;
 
 public interface IToolBarItem extends IItem, IToolBarItemCommon {
 
-	@Override
-	IToolBar getParent();
+    @Override
+    IToolBar getParent();
 
-	void setModel(IToolBarItemModel model);
+    void setModel(IToolBarItemModel model);
 
-	IToolBarItemModel getModel();
+    IToolBarItemModel getModel();
 
 }

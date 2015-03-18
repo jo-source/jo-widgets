@@ -31,6 +31,6 @@ import org.jowidgets.common.types.IVetoable;
 
 public interface ILoginCallback {
 
-	void onLogin(IVetoable vetoable);
+    void onLogin(IVetoable vetoable);
 
 }

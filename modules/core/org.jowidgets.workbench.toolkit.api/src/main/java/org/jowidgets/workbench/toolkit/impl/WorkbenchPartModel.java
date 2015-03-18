@@ -33,29 +33,29 @@ import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModel;
 
 class WorkbenchPartModel extends WorkbenchPartModelObservable implements IWorkbenchPartModel {
 
-	private final String label;
-	private final String toolTip;
-	private final IImageConstant icon;
+    private final String label;
+    private final String toolTip;
+    private final IImageConstant icon;
 
-	WorkbenchPartModel(final String label, final String tooltip, final IImageConstant icon) {
-		this.label = label;
-		this.toolTip = tooltip;
-		this.icon = icon;
-	}
+    WorkbenchPartModel(final String label, final String tooltip, final IImageConstant icon) {
+        this.label = label;
+        this.toolTip = tooltip;
+        this.icon = icon;
+    }
 
-	@Override
-	public String getLabel() {
-		return label;
-	}
+    @Override
+    public String getLabel() {
+        return label;
+    }
 
-	@Override
-	public String getTooltip() {
-		return toolTip;
-	}
+    @Override
+    public String getTooltip() {
+        return toolTip;
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return icon;
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return icon;
+    }
 
 }

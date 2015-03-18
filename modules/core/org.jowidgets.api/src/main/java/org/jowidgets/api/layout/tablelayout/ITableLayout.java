@@ -33,28 +33,28 @@ import org.jowidgets.common.types.Dimension;
 
 public interface ITableLayout {
 
-	void invalidate();
+    void invalidate();
 
-	void validate();
+    void validate();
 
-	void beginLayout();
+    void beginLayout();
 
-	void endLayout();
+    void endLayout();
 
-	void addRowLayout(ITableRowLayout tableRowLayout);
+    void addRowLayout(ITableRowLayout tableRowLayout);
 
-	void removeRowLayout(ITableRowLayout tableRowLayout);
+    void removeRowLayout(ITableRowLayout tableRowLayout);
 
-	int getLayoutHashCode();
+    int getLayoutHashCode();
 
-	int[] getGaps();
+    int[] getGaps();
 
-	int[] getWidths();
+    int[] getWidths();
 
-	Alignment[] getAlignments();
+    Alignment[] getAlignments();
 
-	Dimension getPreferredSize();
+    Dimension getPreferredSize();
 
-	ITableRowLayoutFactoryBuilder rowBuilder();
+    ITableRowLayoutFactoryBuilder rowBuilder();
 
 }

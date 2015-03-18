@@ -31,7 +31,7 @@ import org.jowidgets.api.widgets.blueprint.builder.ICollectionInputControlSetupB
 import org.jowidgets.api.widgets.descriptor.ICollectionInputControlDescriptor;
 
 public interface ICollectionInputControlBluePrint<ELEMENT_TYPE> extends
-		ICollectionInputControlSetupBuilder<ICollectionInputControlBluePrint<ELEMENT_TYPE>, ELEMENT_TYPE>,
-		ICollectionInputControlDescriptor<ELEMENT_TYPE> {
+        ICollectionInputControlSetupBuilder<ICollectionInputControlBluePrint<ELEMENT_TYPE>, ELEMENT_TYPE>,
+        ICollectionInputControlDescriptor<ELEMENT_TYPE> {
 
 }

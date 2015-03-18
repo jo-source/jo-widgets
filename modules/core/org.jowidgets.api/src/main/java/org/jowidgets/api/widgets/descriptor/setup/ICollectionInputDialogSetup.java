@@ -33,7 +33,7 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ICollectionInputDialogSetup<ELEMENT_TYPE> extends IInputDialogSetup<Collection<ELEMENT_TYPE>> {
 
-	@Mandatory
-	ICollectionInputControlSetup<ELEMENT_TYPE> getCollectionInputControlSetup();
+    @Mandatory
+    ICollectionInputControlSetup<ELEMENT_TYPE> getCollectionInputControlSetup();
 
 }

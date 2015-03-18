@@ -36,10 +36,10 @@ import org.jowidgets.validation.IValidator;
  */
 public interface IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> {
 
-	BASE_VALUE_TYPE toBaseValue(IUnitValue<UNIT_VALUE_TYPE> value);
+    BASE_VALUE_TYPE toBaseValue(IUnitValue<UNIT_VALUE_TYPE> value);
 
-	IUnitValue<UNIT_VALUE_TYPE> toUnitValue(BASE_VALUE_TYPE value);
+    IUnitValue<UNIT_VALUE_TYPE> toUnitValue(BASE_VALUE_TYPE value);
 
-	IValidator<IUnitValue<UNIT_VALUE_TYPE>> getValidator();
+    IValidator<IUnitValue<UNIT_VALUE_TYPE>> getValidator();
 
 }

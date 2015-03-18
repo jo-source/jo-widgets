@@ -38,43 +38,43 @@ import org.jowidgets.workbench.tools.AbstractWorkbench;
 
 public abstract class AbstractDemoWorkbench extends AbstractWorkbench implements IWorkbench {
 
-	@Override
-	public boolean getApplicationsCloseable() {
-		return true;
-	}
+    @Override
+    public boolean getApplicationsCloseable() {
+        return true;
+    }
 
-	@Override
-	public void onClose(final IVetoable vetoable) {
-		if (!shouldWorkbenchFinished()) {
-			vetoable.veto();
-		}
-	}
+    @Override
+    public void onClose(final IVetoable vetoable) {
+        if (!shouldWorkbenchFinished()) {
+            vetoable.veto();
+        }
+    }
 
-	@Override
-	public void onLogin(final IVetoable vetoable) {
-		// CHECKSTYLE:OFF
-		System.out.println("Workbench: onLogin");
-		// CHECKSTYLE:ON
-	}
+    @Override
+    public void onLogin(final IVetoable vetoable) {
+        // CHECKSTYLE:OFF
+        System.out.println("Workbench: onLogin");
+        // CHECKSTYLE:ON
+    }
 
-	@Override
-	public void onDispose() {
-		// CHECKSTYLE:OFF
-		System.out.println("Workbench: onDispose");
-		// CHECKSTYLE:ON
-	}
+    @Override
+    public void onDispose() {
+        // CHECKSTYLE:OFF
+        System.out.println("Workbench: onDispose");
+        // CHECKSTYLE:ON
+    }
 
-	@Override
-	public IView createView(final String viewId, final IViewContext viewContext) {
-		return null;
-	}
+    @Override
+    public IView createView(final String viewId, final IViewContext viewContext) {
+        return null;
+    }
 
-	protected final boolean shouldWorkbenchFinished() {
-		final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to quit the workbench?");
-		if (result != QuestionResult.YES) {
-			return false;
-		}
-		return true;
-	}
+    protected final boolean shouldWorkbenchFinished() {
+        final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to quit the workbench?");
+        if (result != QuestionResult.YES) {
+            return false;
+        }
+        return true;
+    }
 
 }

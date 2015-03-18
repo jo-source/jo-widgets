@@ -51,103 +51,103 @@ import org.jowidgets.workbench.api.IViewContext;
 
 public class MediaView extends AbstractDemoView implements IView {
 
-	public static final String ID = MediaView.class.getName();
-	public static final String DEFAULT_LABEL = "Media";
-	public static final String DEFAULT_TOOLTIP = "Media View";
-	public static final IImageConstant DEFAULT_ICON = SilkIcons.ATTACH;
+    public static final String ID = MediaView.class.getName();
+    public static final String DEFAULT_LABEL = "Media";
+    public static final String DEFAULT_TOOLTIP = "Media View";
+    public static final IImageConstant DEFAULT_ICON = SilkIcons.ATTACH;
 
-	private final ITree tree;
-	private final IAction collapseTreeAction;
-	private final IAction expandTreeAction;
+    private final ITree tree;
+    private final IAction collapseTreeAction;
+    private final IAction expandTreeAction;
 
-	public MediaView(final IViewContext context) {
-		super(ID);
+    public MediaView(final IViewContext context) {
+        super(ID);
 
-		final IContainer container = context.getContainer();
-		container.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "[grow, 0::]"));
+        final IContainer container = context.getContainer();
+        container.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "[grow, 0::]"));
 
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		this.tree = container.add(bpf.tree(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		tree.setBackgroundColor(Colors.WHITE);
-		container.setBackgroundColor(Colors.WHITE);
-		createTreeContext(tree);
+        this.tree = container.add(bpf.tree(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        tree.setBackgroundColor(Colors.WHITE);
+        container.setBackgroundColor(Colors.WHITE);
+        createTreeContext(tree);
 
-		this.collapseTreeAction = createCollapseTreeAction();
-		this.expandTreeAction = createExpandTreeAction();
+        this.collapseTreeAction = createCollapseTreeAction();
+        this.expandTreeAction = createExpandTreeAction();
 
-		tree.setPopupMenu(createPopupMenu());
+        tree.setPopupMenu(createPopupMenu());
 
-		context.getToolBar().addAction(expandTreeAction);
-		context.getToolBar().addAction(collapseTreeAction);
-	}
+        context.getToolBar().addAction(expandTreeAction);
+        context.getToolBar().addAction(collapseTreeAction);
+    }
 
-	private void createTreeContext(final ITree tree) {
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+    private void createTreeContext(final ITree tree) {
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		final ITreeNode cdNode = tree.addNode(bpf.treeNode().setText("CD").setIcon(SilkIcons.CD));
-		final ITreeNode dvdNode = tree.addNode(bpf.treeNode().setText("DVD").setIcon(SilkIcons.DVD));
-		final ITreeNode diskNode = tree.addNode(bpf.treeNode().setText("Drive").setIcon(SilkIcons.DRIVE));
-		final ITreeNode floppyNode = tree.addNode(bpf.treeNode().setText("Floppy").setIcon(SilkIcons.DISK));
+        final ITreeNode cdNode = tree.addNode(bpf.treeNode().setText("CD").setIcon(SilkIcons.CD));
+        final ITreeNode dvdNode = tree.addNode(bpf.treeNode().setText("DVD").setIcon(SilkIcons.DVD));
+        final ITreeNode diskNode = tree.addNode(bpf.treeNode().setText("Drive").setIcon(SilkIcons.DRIVE));
+        final ITreeNode floppyNode = tree.addNode(bpf.treeNode().setText("Floppy").setIcon(SilkIcons.DISK));
 
-		cdNode.addNode(bpf.treeNode().setText("Bugs").setIcon(SilkIcons.BUG));
-		cdNode.addNode(bpf.treeNode().setText("Charts").setIcon(SilkIcons.CHART_BAR));
-		cdNode.addNode(bpf.treeNode().setText("Camera").setIcon(SilkIcons.CAMERA));
-		cdNode.addNode(bpf.treeNode().setText("Organization").setIcon(SilkIcons.CHART_ORGANISATION));
+        cdNode.addNode(bpf.treeNode().setText("Bugs").setIcon(SilkIcons.BUG));
+        cdNode.addNode(bpf.treeNode().setText("Charts").setIcon(SilkIcons.CHART_BAR));
+        cdNode.addNode(bpf.treeNode().setText("Camera").setIcon(SilkIcons.CAMERA));
+        cdNode.addNode(bpf.treeNode().setText("Organization").setIcon(SilkIcons.CHART_ORGANISATION));
 
-		dvdNode.addNode(bpf.treeNode().setText("Bugs").setIcon(SilkIcons.BUG));
-		dvdNode.addNode(bpf.treeNode().setText("Charts").setIcon(SilkIcons.CHART_BAR));
-		dvdNode.addNode(bpf.treeNode().setText("Camera").setIcon(SilkIcons.CAMERA));
-		dvdNode.addNode(bpf.treeNode().setText("Organization").setIcon(SilkIcons.CHART_ORGANISATION));
+        dvdNode.addNode(bpf.treeNode().setText("Bugs").setIcon(SilkIcons.BUG));
+        dvdNode.addNode(bpf.treeNode().setText("Charts").setIcon(SilkIcons.CHART_BAR));
+        dvdNode.addNode(bpf.treeNode().setText("Camera").setIcon(SilkIcons.CAMERA));
+        dvdNode.addNode(bpf.treeNode().setText("Organization").setIcon(SilkIcons.CHART_ORGANISATION));
 
-		diskNode.addNode(bpf.treeNode().setText("Bugs").setIcon(SilkIcons.BUG));
-		diskNode.addNode(bpf.treeNode().setText("Charts").setIcon(SilkIcons.CHART_BAR));
-		diskNode.addNode(bpf.treeNode().setText("Camera").setIcon(SilkIcons.CAMERA));
-		diskNode.addNode(bpf.treeNode().setText("Organization").setIcon(SilkIcons.CHART_ORGANISATION));
+        diskNode.addNode(bpf.treeNode().setText("Bugs").setIcon(SilkIcons.BUG));
+        diskNode.addNode(bpf.treeNode().setText("Charts").setIcon(SilkIcons.CHART_BAR));
+        diskNode.addNode(bpf.treeNode().setText("Camera").setIcon(SilkIcons.CAMERA));
+        diskNode.addNode(bpf.treeNode().setText("Organization").setIcon(SilkIcons.CHART_ORGANISATION));
 
-		floppyNode.addNode(bpf.treeNode().setText("Bugs").setIcon(SilkIcons.BUG));
-		floppyNode.addNode(bpf.treeNode().setText("Charts").setIcon(SilkIcons.CHART_BAR));
-		floppyNode.addNode(bpf.treeNode().setText("Camera").setIcon(SilkIcons.CAMERA));
-		floppyNode.addNode(bpf.treeNode().setText("Organization").setIcon(SilkIcons.CHART_ORGANISATION));
+        floppyNode.addNode(bpf.treeNode().setText("Bugs").setIcon(SilkIcons.BUG));
+        floppyNode.addNode(bpf.treeNode().setText("Charts").setIcon(SilkIcons.CHART_BAR));
+        floppyNode.addNode(bpf.treeNode().setText("Camera").setIcon(SilkIcons.CAMERA));
+        floppyNode.addNode(bpf.treeNode().setText("Organization").setIcon(SilkIcons.CHART_ORGANISATION));
 
-		diskNode.setExpanded(true);
-	}
+        diskNode.setExpanded(true);
+    }
 
-	private IMenuModel createPopupMenu() {
-		final IMenuModel result = new MenuModel();
-		result.addAction(expandTreeAction);
-		result.addAction(collapseTreeAction);
-		return result;
-	}
+    private IMenuModel createPopupMenu() {
+        final IMenuModel result = new MenuModel();
+        result.addAction(expandTreeAction);
+        result.addAction(collapseTreeAction);
+        return result;
+    }
 
-	private IAction createExpandTreeAction() {
-		final IActionBuilder builder = new ActionBuilder();
-		builder.setText("Expand tree");
-		builder.setToolTipText("Expands all nodes of the tree");
-		builder.setIcon(SilkIcons.MAGNIFIER_ZOOM_IN);
+    private IAction createExpandTreeAction() {
+        final IActionBuilder builder = new ActionBuilder();
+        builder.setText("Expand tree");
+        builder.setToolTipText("Expands all nodes of the tree");
+        builder.setIcon(SilkIcons.MAGNIFIER_ZOOM_IN);
 
-		builder.setCommand(new ICommandExecutor() {
-			@Override
-			public void execute(final IExecutionContext executionContext) throws Exception {
-				tree.setAllChildrenExpanded(true);
-			}
-		});
-		return builder.build();
-	}
+        builder.setCommand(new ICommandExecutor() {
+            @Override
+            public void execute(final IExecutionContext executionContext) throws Exception {
+                tree.setAllChildrenExpanded(true);
+            }
+        });
+        return builder.build();
+    }
 
-	private IAction createCollapseTreeAction() {
-		final IActionBuilder builder = new ActionBuilder();
-		builder.setText("Collapse tree");
-		builder.setToolTipText("Collapses all nodes of the tree");
-		builder.setIcon(SilkIcons.MAGIFIER_ZOOM_OUT);
+    private IAction createCollapseTreeAction() {
+        final IActionBuilder builder = new ActionBuilder();
+        builder.setText("Collapse tree");
+        builder.setToolTipText("Collapses all nodes of the tree");
+        builder.setIcon(SilkIcons.MAGIFIER_ZOOM_OUT);
 
-		builder.setCommand(new ICommandExecutor() {
-			@Override
-			public void execute(final IExecutionContext executionContext) throws Exception {
-				tree.setAllChildrenExpanded(false);
-			}
-		});
-		return builder.build();
-	}
+        builder.setCommand(new ICommandExecutor() {
+            @Override
+            public void execute(final IExecutionContext executionContext) throws Exception {
+                tree.setAllChildrenExpanded(false);
+            }
+        });
+        return builder.build();
+    }
 
 }

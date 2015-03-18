@@ -35,15 +35,15 @@ import org.jowidgets.common.types.Markup;
 
 public class ExpandCompositeDefaults implements IDefaultInitializer<IExpandCompositeSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final IExpandCompositeSetupBuilder<?> builder) {
-		builder.setBorder(false);
-		builder.setContentBorder(false);
-		builder.setHeaderBorder(false);
-		builder.setExpanded(false);
-		builder.setInsets(new Insets(4, 8, 4, 4));
-		builder.setHeaderBackgroundColor(Colors.LIGHT_GREY);
-		builder.setTextMarkup(Markup.DEFAULT);
-	}
+    @Override
+    public void initialize(final IExpandCompositeSetupBuilder<?> builder) {
+        builder.setBorder(false);
+        builder.setContentBorder(false);
+        builder.setHeaderBorder(false);
+        builder.setExpanded(false);
+        builder.setInsets(new Insets(4, 8, 4, 4));
+        builder.setHeaderBackgroundColor(Colors.LIGHT_GREY);
+        builder.setTextMarkup(Markup.DEFAULT);
+    }
 
 }

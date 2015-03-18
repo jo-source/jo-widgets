@@ -38,16 +38,16 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 final class MainBrowserFactory implements IWidgetFactory<IMainBrowser, IMainBrowserBluePrint> {
 
-	@Override
-	public IMainBrowser create(final Object parentUiReference, final IMainBrowserBluePrint bluePrint) {
-		final IComposite composite = Toolkit.getWidgetFactory().create(parentUiReference, BPF.composite());
-		if (composite.getUiReference() instanceof Composite) {
-			return SwtBrowserFactory.createMainBrowser(composite, (Composite) composite.getUiReference(), bluePrint);
-		}
-		else {
-			throw new IllegalArgumentException("The given composite must be an swt composite");
-		}
+    @Override
+    public IMainBrowser create(final Object parentUiReference, final IMainBrowserBluePrint bluePrint) {
+        final IComposite composite = Toolkit.getWidgetFactory().create(parentUiReference, BPF.composite());
+        if (composite.getUiReference() instanceof Composite) {
+            return SwtBrowserFactory.createMainBrowser(composite, (Composite) composite.getUiReference(), bluePrint);
+        }
+        else {
+            throw new IllegalArgumentException("The given composite must be an swt composite");
+        }
 
-	}
+    }
 
 }

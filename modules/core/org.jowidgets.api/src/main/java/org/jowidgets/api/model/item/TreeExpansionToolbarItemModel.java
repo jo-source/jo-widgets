@@ -33,22 +33,22 @@ import org.jowidgets.api.toolkit.Toolkit;
 
 public final class TreeExpansionToolbarItemModel {
 
-	private TreeExpansionToolbarItemModel() {}
+    private TreeExpansionToolbarItemModel() {}
 
-	public static ITreeExpansionToolbarItemModelBuilder builder(final ITreeExpansionAction action) {
-		return Toolkit.getModelFactoryProvider().getItemModelFactory().treeExpansionToolbarItemBuilder(action);
-	}
+    public static ITreeExpansionToolbarItemModelBuilder builder(final ITreeExpansionAction action) {
+        return Toolkit.getModelFactoryProvider().getItemModelFactory().treeExpansionToolbarItemBuilder(action);
+    }
 
-	public static IToolBarItemModel create(final ITreeExpansionAction action, final int maxLevel) {
-		return builder(action).setLevels(maxLevel).build();
-	}
+    public static IToolBarItemModel create(final ITreeExpansionAction action, final int maxLevel) {
+        return builder(action).setLevels(maxLevel).build();
+    }
 
-	public static IToolBarItemModel create(
-		final ITreeExpansionAction action,
-		final int maxLevel,
-		final int defaultLevel,
-		final boolean hasUnbound) {
-		return builder(action).setLevels(maxLevel, hasUnbound).setDefaultLevel(defaultLevel).build();
-	}
+    public static IToolBarItemModel create(
+        final ITreeExpansionAction action,
+        final int maxLevel,
+        final int defaultLevel,
+        final boolean hasUnbound) {
+        return builder(action).setLevels(maxLevel, hasUnbound).setDefaultLevel(defaultLevel).build();
+    }
 
 }

@@ -29,10 +29,10 @@ package org.jowidgets.common.types;
 
 public enum Markup {
 
-	DEFAULT,
+    DEFAULT,
 
-	STRONG,
+    STRONG,
 
-	EMPHASIZED;
+    EMPHASIZED;
 
 }

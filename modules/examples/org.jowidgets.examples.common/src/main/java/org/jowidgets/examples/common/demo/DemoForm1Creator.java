@@ -39,24 +39,24 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 
 public final class DemoForm1Creator {
 
-	private DemoForm1Creator() {}
+    private DemoForm1Creator() {}
 
-	public static IInputComposite<List<String>> createDemoForm1(final IContainer parentContainer) {
-		return createDemoForm1(parentContainer, true);
-	}
+    public static IInputComposite<List<String>> createDemoForm1(final IContainer parentContainer) {
+        return createDemoForm1(parentContainer, true);
+    }
 
-	public static IInputComposite<List<String>> createDemoForm1(final IContainer parentContainer, final boolean scrolledContent) {
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+    public static IInputComposite<List<String>> createDemoForm1(final IContainer parentContainer, final boolean scrolledContent) {
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		//layout for the composite
-		parentContainer.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
+        //layout for the composite
+        parentContainer.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
 
-		//define the blue print for the input composite
-		final IInputCompositeBluePrint<List<String>> inputCompositeBp = bpf.inputComposite(new DemoForm1ContentCreator());
-		inputCompositeBp.setContentScrolled(scrolledContent);
-		inputCompositeBp.setMissingInputHint("Please fill out all mandatory (*) fields");
+        //define the blue print for the input composite
+        final IInputCompositeBluePrint<List<String>> inputCompositeBp = bpf.inputComposite(new DemoForm1ContentCreator());
+        inputCompositeBp.setContentScrolled(scrolledContent);
+        inputCompositeBp.setMissingInputHint("Please fill out all mandatory (*) fields");
 
-		//add the input composite to the parent composite
-		return parentContainer.add(inputCompositeBp, "growx, growy, w 0::, h 0::");
-	}
+        //add the input composite to the parent composite
+        return parentContainer.add(inputCompositeBp, "growx, growy, w 0::, h 0::");
+    }
 }

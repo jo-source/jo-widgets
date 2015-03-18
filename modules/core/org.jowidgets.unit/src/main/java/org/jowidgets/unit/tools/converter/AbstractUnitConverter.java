@@ -35,15 +35,15 @@ import org.jowidgets.validation.Validator;
 
 public abstract class AbstractUnitConverter<BASE_TYPE, UNIT_VALUE_TYPE> implements IUnitConverter<BASE_TYPE, UNIT_VALUE_TYPE> {
 
-	private final IValidator<IUnitValue<UNIT_VALUE_TYPE>> okValidator;
+    private final IValidator<IUnitValue<UNIT_VALUE_TYPE>> okValidator;
 
-	protected AbstractUnitConverter() {
-		this.okValidator = Validator.okValidator();
-	}
+    protected AbstractUnitConverter() {
+        this.okValidator = Validator.okValidator();
+    }
 
-	@Override
-	public IValidator<IUnitValue<UNIT_VALUE_TYPE>> getValidator() {
-		return okValidator;
-	}
+    @Override
+    public IValidator<IUnitValue<UNIT_VALUE_TYPE>> getValidator() {
+        return okValidator;
+    }
 
 }

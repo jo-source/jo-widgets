@@ -37,32 +37,32 @@ import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 
 public class DemoApplication implements IApplication {
 
-	private final String frameTitle;
-	private IFrame frame;
+    private final String frameTitle;
+    private IFrame frame;
 
-	public DemoApplication(final String frameTitle) {
-		super();
-		this.frameTitle = frameTitle;
-	}
+    public DemoApplication(final String frameTitle) {
+        super();
+        this.frameTitle = frameTitle;
+    }
 
-	public void start() {
-		DemoIconsInitializer.initialize();
-		Toolkit.getInstance().getApplicationRunner().run(this);
-	}
+    public void start() {
+        DemoIconsInitializer.initialize();
+        Toolkit.getInstance().getApplicationRunner().run(this);
+    }
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
+        final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
-		frame = Toolkit.createRootFrame(bpF.frame(frameTitle), lifecycle);
-		new DemoMainComposite(frame);
+        frame = Toolkit.createRootFrame(bpF.frame(frameTitle), lifecycle);
+        new DemoMainComposite(frame);
 
-		frame.setVisible(true);
+        frame.setVisible(true);
 
-	}
+    }
 
-	public IFrame getRootFrame() {
-		return frame;
-	}
+    public IFrame getRootFrame() {
+        return frame;
+    }
 
 }

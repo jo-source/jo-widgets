@@ -33,10 +33,10 @@ import org.jowidgets.common.dnd.DropMode;
 
 public interface IDropResponseSpi {
 
-	void accept(DropAction operation);
+    void accept(DropAction operation);
 
-	void reject();
+    void reject();
 
-	void setDropMode(DropMode dropMode);
+    void setDropMode(DropMode dropMode);
 
 }

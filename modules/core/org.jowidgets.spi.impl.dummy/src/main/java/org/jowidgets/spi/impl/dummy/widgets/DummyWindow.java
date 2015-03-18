@@ -42,111 +42,111 @@ import org.jowidgets.spi.widgets.IWindowSpi;
 
 public class DummyWindow extends DummyContainer implements IWindowSpi {
 
-	public DummyWindow(final IGenericWidgetFactory factory, final UIDWindow window) {
-		super(factory, window);
-	}
+    public DummyWindow(final IGenericWidgetFactory factory, final UIDWindow window) {
+        super(factory, window);
+    }
 
-	@Override
-	public UIDWindow getUiReference() {
-		return (UIDWindow) super.getUiReference();
-	}
+    @Override
+    public UIDWindow getUiReference() {
+        return (UIDWindow) super.getUiReference();
+    }
 
-	public void setDefaultButton(final IButtonCommon button) {
-		// TODO LG default button must be simulated
-	}
+    public void setDefaultButton(final IButtonCommon button) {
+        // TODO LG default button must be simulated
+    }
 
-	@Override
-	public void pack() {
-		getUiReference().pack();
-	}
+    @Override
+    public void pack() {
+        getUiReference().pack();
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		getUiReference().setVisible(visible);
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        getUiReference().setVisible(visible);
+    }
 
-	@Override
-	public boolean isVisible() {
-		return getUiReference().isVisible();
-	}
+    @Override
+    public boolean isVisible() {
+        return getUiReference().isVisible();
+    }
 
-	@Override
-	public final void setPosition(final Position position) {
-		getUiReference().setPosition(position);
-	}
+    @Override
+    public final void setPosition(final Position position) {
+        getUiReference().setPosition(position);
+    }
 
-	@Override
-	public final Position getPosition() {
-		return getUiReference().getPosition();
-	}
+    @Override
+    public final Position getPosition() {
+        return getUiReference().getPosition();
+    }
 
-	@Override
-	public final void setSize(final Dimension size) {
-		getUiReference().setSize(size);
-	}
+    @Override
+    public final void setSize(final Dimension size) {
+        getUiReference().setSize(size);
+    }
 
-	public void setMinSize(final Dimension minSize) {
-		getUiReference().setMinSize(minSize);
-	}
+    public void setMinSize(final Dimension minSize) {
+        getUiReference().setMinSize(minSize);
+    }
 
-	@Override
-	public final Dimension getSize() {
-		return getUiReference().getSize();
-	}
+    @Override
+    public final Dimension getSize() {
+        return getUiReference().getSize();
+    }
 
-	public void setMaximized(final boolean maximized) {
-		getUiReference().setMaximized(maximized);
-	}
+    public void setMaximized(final boolean maximized) {
+        getUiReference().setMaximized(maximized);
+    }
 
-	public boolean isMaximized() {
-		return getUiReference().isMaximized();
-	}
+    public boolean isMaximized() {
+        return getUiReference().isMaximized();
+    }
 
-	public void setIconfied(final boolean iconfied) {
-		getUiReference().setIconfied(iconfied);
-	}
+    public void setIconfied(final boolean iconfied) {
+        getUiReference().setIconfied(iconfied);
+    }
 
-	public boolean isIconfied() {
-		return getUiReference().isIconfied();
-	}
+    public boolean isIconfied() {
+        return getUiReference().isIconfied();
+    }
 
-	@Override
-	public <WIDGET_TYPE extends IDisplayCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
-		final DESCRIPTOR_TYPE descriptor) {
-		return getGenericWidgetFactory().create(getUiReference(), descriptor);
-	}
+    @Override
+    public <WIDGET_TYPE extends IDisplayCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> WIDGET_TYPE createChildWindow(
+        final DESCRIPTOR_TYPE descriptor) {
+        return getGenericWidgetFactory().create(getUiReference(), descriptor);
+    }
 
-	protected void setIcon(final IImageConstant icon, final DummyImageRegistry imageRegistry) {
-		getUiReference().setIconImage(imageRegistry.getImage(icon));
-	}
+    protected void setIcon(final IImageConstant icon, final DummyImageRegistry imageRegistry) {
+        getUiReference().setIconImage(imageRegistry.getImage(icon));
+    }
 
-	@Override
-	public Rectangle getParentBounds() {
-		Dimension parentSize;
-		Position parentPosition = new Position(0, 0);
-		if (getUiReference().getParent() != null) {
-			parentPosition = getUiReference().getParent().getPosition();
-			parentSize = getUiReference().getParent().getSize();
-		}
-		else {
-			parentSize = new Dimension(1920, 1200);
-		}
-		return new Rectangle(parentPosition, parentSize);
-	}
+    @Override
+    public Rectangle getParentBounds() {
+        Dimension parentSize;
+        Position parentPosition = new Position(0, 0);
+        if (getUiReference().getParent() != null) {
+            parentPosition = getUiReference().getParent().getPosition();
+            parentSize = getUiReference().getParent().getSize();
+        }
+        else {
+            parentSize = new Dimension(1920, 1200);
+        }
+        return new Rectangle(parentPosition, parentSize);
+    }
 
-	@Override
-	public void addWindowListener(final IWindowListener listener) {
-		getUiReference().addWindowListener(listener);
-	}
+    @Override
+    public void addWindowListener(final IWindowListener listener) {
+        getUiReference().addWindowListener(listener);
+    }
 
-	@Override
-	public void removeWindowListener(final IWindowListener listener) {
-		getUiReference().removeWindowListener(listener);
-	}
+    @Override
+    public void removeWindowListener(final IWindowListener listener) {
+        getUiReference().removeWindowListener(listener);
+    }
 
-	@Override
-	public void dispose() {
-		getUiReference().dispose();
-	}
+    @Override
+    public void dispose() {
+        getUiReference().dispose();
+    }
 
 }

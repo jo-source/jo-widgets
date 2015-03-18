@@ -34,23 +34,23 @@ import org.jowidgets.workbench.api.ILifecycleCallback;
 import org.jowidgets.workbench.api.IWorkbenchApplicationDescriptor;
 
 public interface IWorkbenchApplicationModelBuilder extends
-		IComponentNodeContainerModelBuilder<IWorkbenchApplicationModelBuilder>,
-		IWorkbenchPartBuilder<IWorkbenchApplicationModelBuilder> {
+        IComponentNodeContainerModelBuilder<IWorkbenchApplicationModelBuilder>,
+        IWorkbenchPartBuilder<IWorkbenchApplicationModelBuilder> {
 
-	IWorkbenchApplicationModelBuilder setPopupMenu(IMenuModel menuModel);
+    IWorkbenchApplicationModelBuilder setPopupMenu(IMenuModel menuModel);
 
-	IWorkbenchApplicationModelBuilder setToolBar(IToolBarModel toolBarModel);
+    IWorkbenchApplicationModelBuilder setToolBar(IToolBarModel toolBarModel);
 
-	IWorkbenchApplicationModelBuilder setToolBarMenu(IMenuModel toolBarMenu);
+    IWorkbenchApplicationModelBuilder setToolBarMenu(IMenuModel toolBarMenu);
 
-	IWorkbenchApplicationModelBuilder setViewFactoy(IViewFactory viewFactory);
+    IWorkbenchApplicationModelBuilder setViewFactoy(IViewFactory viewFactory);
 
-	IWorkbenchApplicationModelBuilder setLifecycleCallback(ILifecycleCallback lifecycleCallback);
+    IWorkbenchApplicationModelBuilder setLifecycleCallback(ILifecycleCallback lifecycleCallback);
 
-	IWorkbenchApplicationModelBuilder setInitializeCallback(IWorkbenchApplicationInitializeCallback initializeCallback);
+    IWorkbenchApplicationModelBuilder setInitializeCallback(IWorkbenchApplicationInitializeCallback initializeCallback);
 
-	IWorkbenchApplicationModelBuilder setDescriptor(IWorkbenchApplicationDescriptor descriptor);
+    IWorkbenchApplicationModelBuilder setDescriptor(IWorkbenchApplicationDescriptor descriptor);
 
-	IWorkbenchApplicationModel build();
+    IWorkbenchApplicationModel build();
 
 }

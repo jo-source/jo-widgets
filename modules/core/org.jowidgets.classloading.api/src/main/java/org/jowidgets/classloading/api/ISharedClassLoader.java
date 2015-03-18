@@ -30,28 +30,28 @@ package org.jowidgets.classloading.api;
 
 public interface ISharedClassLoader {
 
-	/**
-	 * Adds a class loader to the shared class loader
-	 * 
-	 * @param classLoader The class loader to add
-	 */
-	void addClassLoader(IClassLoader classLoader);
+    /**
+     * Adds a class loader to the shared class loader
+     * 
+     * @param classLoader The class loader to add
+     */
+    void addClassLoader(IClassLoader classLoader);
 
-	/**
-	 * Removes a class loader from the shared class loader
-	 * 
-	 * @param classLoader The class loader to remove
-	 */
-	void removeClassLoader(IClassLoader classLoader);
+    /**
+     * Removes a class loader from the shared class loader
+     * 
+     * @param classLoader The class loader to remove
+     */
+    void removeClassLoader(IClassLoader classLoader);
 
-	/**
-	 * Gets the composite class loader that uses all registered class loaders to resolve
-	 * the class to load.
-	 * The shared class loader always uses the SystemClassLoader and the ThreadContextLocalClassLoader
-	 * as default (e.g. if no classloader was added)
-	 * 
-	 * @return The composite class loader
-	 */
-	ClassLoader getCompositeClassLoader();
+    /**
+     * Gets the composite class loader that uses all registered class loaders to resolve
+     * the class to load.
+     * The shared class loader always uses the SystemClassLoader and the ThreadContextLocalClassLoader
+     * as default (e.g. if no classloader was added)
+     * 
+     * @return The composite class loader
+     */
+    ClassLoader getCompositeClassLoader();
 
 }

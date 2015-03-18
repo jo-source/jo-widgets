@@ -32,10 +32,10 @@ import org.jowidgets.common.model.ITableColumnModelObservable;
 
 public interface ITableColumnModel {
 
-	int getColumnCount();
+    int getColumnCount();
 
-	ITableColumn getColumn(int columnIndex);
+    ITableColumn getColumn(int columnIndex);
 
-	ITableColumnModelObservable getTableColumnModelObservable();
+    ITableColumnModelObservable getTableColumnModelObservable();
 
 }

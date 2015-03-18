@@ -29,11 +29,11 @@ package org.jowidgets.common.image;
 
 public enum IconsCommon implements IImageConstant {
 
-	/** fallback - icons for cases where no default-icons were found **/
+    /** fallback - icons for cases where no default-icons were found **/
 
-	FALLBACK_INFO,
-	FALLBACK_QUESTION,
-	FALLBACK_WARNING,
-	FALLBACK_ERROR;
+    FALLBACK_INFO,
+    FALLBACK_QUESTION,
+    FALLBACK_WARNING,
+    FALLBACK_ERROR;
 
 }

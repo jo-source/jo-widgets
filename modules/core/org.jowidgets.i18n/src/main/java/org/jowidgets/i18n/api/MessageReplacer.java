@@ -32,116 +32,116 @@ import java.util.Collection;
 
 public final class MessageReplacer {
 
-	private static final IMessageReplacer MESSAGE_REPLACER = new MessageReplacerImpl();
+    private static final IMessageReplacer MESSAGE_REPLACER = new MessageReplacerImpl();
 
-	private MessageReplacer() {}
+    private MessageReplacer() {}
 
-	public static IMessageReplacer getInstance() {
-		return MESSAGE_REPLACER;
-	}
+    public static IMessageReplacer getInstance() {
+        return MESSAGE_REPLACER;
+    }
 
-	/**
-	 * Replaces all variables (%1, ..., %n) with the given string parameters
-	 * 
-	 * @param message The message that contains variables
-	 * @param parameter The parameters to insert
-	 * 
-	 * @return A new string where the variables was replaced with the parameters
-	 */
-	public static String replace(final IMessage message, final String... parameter) {
-		return MESSAGE_REPLACER.replace(message.get(), parameter);
-	}
+    /**
+     * Replaces all variables (%1, ..., %n) with the given string parameters
+     * 
+     * @param message The message that contains variables
+     * @param parameter The parameters to insert
+     * 
+     * @return A new string where the variables was replaced with the parameters
+     */
+    public static String replace(final IMessage message, final String... parameter) {
+        return MESSAGE_REPLACER.replace(message.get(), parameter);
+    }
 
-	/**
-	 * Replaces all variables (%1, ..., %n) with the given string parameters
-	 * 
-	 * @param message The message that contains variables
-	 * @param parameter The parameters to insert
-	 * 
-	 * @return A new string where the variables was replaced with the parameters
-	 */
-	public static String replace(final String message, final String... parameter) {
-		return MESSAGE_REPLACER.replace(message, parameter);
-	}
+    /**
+     * Replaces all variables (%1, ..., %n) with the given string parameters
+     * 
+     * @param message The message that contains variables
+     * @param parameter The parameters to insert
+     * 
+     * @return A new string where the variables was replaced with the parameters
+     */
+    public static String replace(final String message, final String... parameter) {
+        return MESSAGE_REPLACER.replace(message, parameter);
+    }
 
-	/**
-	 * Replaces all variables (%1, ..., %n) with the given string parameters
-	 * 
-	 * @param message The message that contains variables
-	 * @param parameter The parameters to insert
-	 * 
-	 * @return A new string where the variables was replaced with the parameters
-	 */
-	public static String replace(final String message, final Collection<String> parameter) {
-		return MESSAGE_REPLACER.replace(message, parameter);
-	}
+    /**
+     * Replaces all variables (%1, ..., %n) with the given string parameters
+     * 
+     * @param message The message that contains variables
+     * @param parameter The parameters to insert
+     * 
+     * @return A new string where the variables was replaced with the parameters
+     */
+    public static String replace(final String message, final Collection<String> parameter) {
+        return MESSAGE_REPLACER.replace(message, parameter);
+    }
 
-	private static final class MessageReplacerImpl implements IMessageReplacer {
+    private static final class MessageReplacerImpl implements IMessageReplacer {
 
-		@Override
-		public String replace(final String message, final String... parameters) {
-			final StringBuilder result = new StringBuilder();
-			final StringBuilder digits = new StringBuilder();
-			boolean digitMode = false;
-			boolean toLowercase = false;
-			for (final char c : message.toCharArray()) {
-				if (digitMode) {
-					if (c >= '0' && c <= '9') {
-						digits.append(c);
-					}
-					else if (c == 'L') {
-						toLowercase = true;
-					}
-					else {
-						if (digits.length() > 0) {
-							final int paramIndex = Integer.valueOf(digits.toString()) - 1;
-							if (paramIndex > parameters.length) {
-								throw new IllegalStateException("Message '" + message + "' contains to many placeholders.");
-							}
-							result.append(getParameter(paramIndex, toLowercase, parameters));
-						}
-						else {
-							result.append('%');
-						}
-						result.append(c);
-						digitMode = false;
-						toLowercase = false;
-					}
-				}
-				else if (c == '%') {
-					digits.setLength(0);
-					digitMode = true;
-				}
-				else {
-					result.append(c);
-				}
-			}
+        @Override
+        public String replace(final String message, final String... parameters) {
+            final StringBuilder result = new StringBuilder();
+            final StringBuilder digits = new StringBuilder();
+            boolean digitMode = false;
+            boolean toLowercase = false;
+            for (final char c : message.toCharArray()) {
+                if (digitMode) {
+                    if (c >= '0' && c <= '9') {
+                        digits.append(c);
+                    }
+                    else if (c == 'L') {
+                        toLowercase = true;
+                    }
+                    else {
+                        if (digits.length() > 0) {
+                            final int paramIndex = Integer.valueOf(digits.toString()) - 1;
+                            if (paramIndex > parameters.length) {
+                                throw new IllegalStateException("Message '" + message + "' contains to many placeholders.");
+                            }
+                            result.append(getParameter(paramIndex, toLowercase, parameters));
+                        }
+                        else {
+                            result.append('%');
+                        }
+                        result.append(c);
+                        digitMode = false;
+                        toLowercase = false;
+                    }
+                }
+                else if (c == '%') {
+                    digits.setLength(0);
+                    digitMode = true;
+                }
+                else {
+                    result.append(c);
+                }
+            }
 
-			if (digitMode && digits.length() > 0) {
-				final int paramIndex = Integer.valueOf(digits.toString()) - 1;
-				if (paramIndex > parameters.length) {
-					throw new IllegalStateException("Message '" + message + "' contains to many placeholders.");
-				}
-				result.append(getParameter(paramIndex, toLowercase, parameters));
-			}
+            if (digitMode && digits.length() > 0) {
+                final int paramIndex = Integer.valueOf(digits.toString()) - 1;
+                if (paramIndex > parameters.length) {
+                    throw new IllegalStateException("Message '" + message + "' contains to many placeholders.");
+                }
+                result.append(getParameter(paramIndex, toLowercase, parameters));
+            }
 
-			return result.toString();
-		}
+            return result.toString();
+        }
 
-		@Override
-		public String replace(final String message, final Collection<String> parameters) {
+        @Override
+        public String replace(final String message, final Collection<String> parameters) {
 
-			return replace(message, parameters.toArray(new String[parameters.size()]));
-		}
+            return replace(message, parameters.toArray(new String[parameters.size()]));
+        }
 
-		private String getParameter(final int paramIndex, final boolean toLowercase, final String... parameters) {
-			if (toLowercase) {
-				return parameters[paramIndex].toLowerCase(LocaleHolder.getUserLocale());
-			}
-			else {
-				return parameters[paramIndex];
-			}
-		}
-	}
+        private String getParameter(final int paramIndex, final boolean toLowercase, final String... parameters) {
+            if (toLowercase) {
+                return parameters[paramIndex].toLowerCase(LocaleHolder.getUserLocale());
+            }
+            else {
+                return parameters[paramIndex];
+            }
+        }
+    }
 
 }

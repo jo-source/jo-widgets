@@ -45,65 +45,65 @@ import org.jowidgets.spi.impl.swt.common.widgets.SwtControl;
 
 class SwtAwtControlImpl extends SwtControl implements ISwtAwtControlSpi {
 
-	private final JApplet applet;
+    private final JApplet applet;
 
-	public SwtAwtControlImpl(final Object parentUiReference) {
-		super(createComposite(parentUiReference));
+    public SwtAwtControlImpl(final Object parentUiReference) {
+        super(createComposite(parentUiReference));
 
-		final Composite innerComposite = new Composite(getUiReference(), SWT.EMBEDDED | SWT.NO_BACKGROUND);
-		innerComposite.setLayout(new FillLayout());
+        final Composite innerComposite = new Composite(getUiReference(), SWT.EMBEDDED | SWT.NO_BACKGROUND);
+        innerComposite.setLayout(new FillLayout());
 
-		final Frame frame = SWT_AWT.new_Frame(innerComposite);
-		this.applet = new JApplet();
-		frame.add(applet);
-		applet.setLayout(new BorderLayout());
-	}
+        final Frame frame = SWT_AWT.new_Frame(innerComposite);
+        this.applet = new JApplet();
+        frame.add(applet);
+        applet.setLayout(new BorderLayout());
+    }
 
-	private static Composite createComposite(final Object parentUiReference) {
-		if (parentUiReference instanceof Composite) {
-			final Composite result = new Composite((Composite) parentUiReference, SWT.NONE);
-			result.setLayout(new FillLayout());
-			result.addControlListener(new SwtAwtResizeListener());
-			return result;
-		}
-		else {
-			throw new IllegalArgumentException("parentUiReference must be a swt composite");
-		}
-	}
+    private static Composite createComposite(final Object parentUiReference) {
+        if (parentUiReference instanceof Composite) {
+            final Composite result = new Composite((Composite) parentUiReference, SWT.NONE);
+            result.setLayout(new FillLayout());
+            result.addControlListener(new SwtAwtResizeListener());
+            return result;
+        }
+        else {
+            throw new IllegalArgumentException("parentUiReference must be a swt composite");
+        }
+    }
 
-	@Override
-	public Composite getUiReference() {
-		return (Composite) super.getUiReference();
-	}
+    @Override
+    public Composite getUiReference() {
+        return (Composite) super.getUiReference();
+    }
 
-	@Override
-	public Container getAwtContainer() {
-		return applet;
-	}
+    @Override
+    public Container getAwtContainer() {
+        return applet;
+    }
 
-	private static final class SwtAwtResizeListener extends ControlAdapter {
+    private static final class SwtAwtResizeListener extends ControlAdapter {
 
-		private Rectangle lastRectangle;
+        private Rectangle lastRectangle;
 
-		@Override
-		public void controlResized(final ControlEvent event) {
-			final Composite composite = (Composite) event.widget;
-			final Rectangle rectangle = composite.getClientArea();
-			if (lastRectangle != null) {
-				final int dy = rectangle.height - lastRectangle.height;
-				final int dx = rectangle.width - lastRectangle.width;
-				if (dx > 0 || dy > 0) {
-					final GC graphicContext = new GC(composite);
-					try {
-						graphicContext.fillRectangle(rectangle.x, lastRectangle.height, rectangle.width, dy);
-						graphicContext.fillRectangle(lastRectangle.width, rectangle.y, dx, rectangle.height);
-					}
-					finally {
-						graphicContext.dispose();
-					}
-				}
-			}
-			lastRectangle = rectangle;
-		}
-	}
+        @Override
+        public void controlResized(final ControlEvent event) {
+            final Composite composite = (Composite) event.widget;
+            final Rectangle rectangle = composite.getClientArea();
+            if (lastRectangle != null) {
+                final int dy = rectangle.height - lastRectangle.height;
+                final int dx = rectangle.width - lastRectangle.width;
+                if (dx > 0 || dy > 0) {
+                    final GC graphicContext = new GC(composite);
+                    try {
+                        graphicContext.fillRectangle(rectangle.x, lastRectangle.height, rectangle.width, dy);
+                        graphicContext.fillRectangle(lastRectangle.width, rectangle.y, dx, rectangle.height);
+                    }
+                    finally {
+                        graphicContext.dispose();
+                    }
+                }
+            }
+            lastRectangle = rectangle;
+        }
+    }
 }

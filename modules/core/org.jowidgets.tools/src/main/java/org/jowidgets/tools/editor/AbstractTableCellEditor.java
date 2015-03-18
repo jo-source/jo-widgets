@@ -35,17 +35,17 @@ import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 
 public abstract class AbstractTableCellEditor extends ControlWrapper implements ITableCellEditor {
 
-	public AbstractTableCellEditor(final IControl widget) {
-		super(widget);
-	}
+    public AbstractTableCellEditor(final IControl widget) {
+        super(widget);
+    }
 
-	@Override
-	public void startEditing(final ITableCell cell, final int row, final int column) {}
+    @Override
+    public void startEditing(final ITableCell cell, final int row, final int column) {}
 
-	@Override
-	public void stopEditing(final ITableCell cell, final int row, final int column) {}
+    @Override
+    public void stopEditing(final ITableCell cell, final int row, final int column) {}
 
-	@Override
-	public void cancelEditing(final ITableCell cell, final int row, final int column) {}
+    @Override
+    public void cancelEditing(final ITableCell cell, final int row, final int column) {}
 
 }

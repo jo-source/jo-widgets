@@ -52,63 +52,63 @@ import org.jowidgets.test.api.widgets.descriptor.IFrameDescriptorUi;
 
 public interface ITestToolkit {
 
-	IBasicSimpleTestBluePrintFactory getBluePrintFactory();
+    IBasicSimpleTestBluePrintFactory getBluePrintFactory();
 
-	IGenericWidgetFactory getWidgetFactory();
+    IGenericWidgetFactory getWidgetFactory();
 
-	IImageRegistry getImageRegistry();
+    IImageRegistry getImageRegistry();
 
-	IMessagePane getMessagePane();
+    IMessagePane getMessagePane();
 
-	IQuestionPane getQuestionPane();
+    IQuestionPane getQuestionPane();
 
-	IWidgetWrapperFactory getWidgetWrapperFactory();
+    IWidgetWrapperFactory getWidgetWrapperFactory();
 
-	IInputContentCreatorFactory getInputContentCreatorFactory();
+    IInputContentCreatorFactory getInputContentCreatorFactory();
 
-	IConverterProvider getConverterProvider();
+    IConverterProvider getConverterProvider();
 
-	IActionBuilderFactory getActionBuilderFactory();
+    IActionBuilderFactory getActionBuilderFactory();
 
-	IModelFactoryProvider getModelFactoryProvider();
+    IModelFactoryProvider getModelFactoryProvider();
 
-	IApplicationRunner getApplicationRunner();
+    IApplicationRunner getApplicationRunner();
 
-	IUiThreadAccess getUiThreadAccess();
+    IUiThreadAccess getUiThreadAccess();
 
-	IWidgetUtils getWidgetUtils();
+    IWidgetUtils getWidgetUtils();
 
-	IWindow getActiveWindow();
+    IWindow getActiveWindow();
 
-	List<IWindow> getAllWindows();
+    List<IWindow> getAllWindows();
 
-	IFrameUi createRootFrame(IFrameDescriptorUi descriptor);
+    IFrameUi createRootFrame(IFrameDescriptorUi descriptor);
 
-	/**
-	 * Creates an root frame for an application lifecycle. When the rootFrame will be
-	 * closed, the lifecycle will be finished.
-	 * 
-	 * @param descriptor The frame descriptor
-	 * @param lifecycle The lifecycle of the current application
-	 * @return the created frame
-	 */
-	IFrameUi createRootFrame(IFrameDescriptorUi descriptor, IApplicationLifecycle lifecycle);
+    /**
+     * Creates an root frame for an application lifecycle. When the rootFrame will be
+     * closed, the lifecycle will be finished.
+     * 
+     * @param descriptor The frame descriptor
+     * @param lifecycle The lifecycle of the current application
+     * @return the created frame
+     */
+    IFrameUi createRootFrame(IFrameDescriptorUi descriptor, IApplicationLifecycle lifecycle);
 
-	/**
-	 * Transforms a local component position to a screen position
-	 * 
-	 * @param localPosition Local position relative to the component
-	 * @param component The component
-	 * @return screen position
-	 */
-	Position toScreen(final Position localPosition, final IComponent component);
+    /**
+     * Transforms a local component position to a screen position
+     * 
+     * @param localPosition Local position relative to the component
+     * @param component The component
+     * @return screen position
+     */
+    Position toScreen(final Position localPosition, final IComponent component);
 
-	/**
-	 * Transforms a screen position to a local component position
-	 * 
-	 * @param screenPosition Screen position
-	 * @param component The component
-	 * @return local position relative to the component
-	 */
-	Position toLocal(final Position screenPosition, final IComponent component);
+    /**
+     * Transforms a screen position to a local component position
+     * 
+     * @param screenPosition Screen position
+     * @param component The component
+     * @return local position relative to the component
+     */
+    Position toLocal(final Position screenPosition, final IComponent component);
 }

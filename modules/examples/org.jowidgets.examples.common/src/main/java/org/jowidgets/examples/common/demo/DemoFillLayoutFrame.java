@@ -39,26 +39,26 @@ import org.jowidgets.tools.powo.JoFrame;
 
 public class DemoFillLayoutFrame extends JoFrame {
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+    private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
-	public DemoFillLayoutFrame() {
-		super("Fill layout demo");
+    public DemoFillLayoutFrame() {
+        super("Fill layout demo");
 
-		final IMenuBarModel menuBarModel = new MenuBarModel();
-		menuBarModel.addMenu("File");
-		menuBarModel.addMenu("Edit");
-		setMenuBar(menuBarModel);
+        final IMenuBarModel menuBarModel = new MenuBarModel();
+        menuBarModel.addMenu("File");
+        menuBarModel.addMenu("Edit");
+        setMenuBar(menuBarModel);
 
-		final ILayouter layouter = setLayout(FillLayout.get());
-		final ITextArea textArea = add(BPF.textArea().setBorder(false));
+        final ILayouter layouter = setLayout(FillLayout.get());
+        final ITextArea textArea = add(BPF.textArea().setBorder(false));
 
-		final StringBuilder stringBuilder = new StringBuilder();
-		for (int i = 0; i < 50; i++) {
-			stringBuilder.append("Text area in a border layout. ");
-		}
-		textArea.setText(stringBuilder.toString());
+        final StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < 50; i++) {
+            stringBuilder.append("Text area in a border layout. ");
+        }
+        textArea.setText(stringBuilder.toString());
 
-		setSize(500, 400);
-		setMinSize(layouter.getMinSize());
-	}
+        setSize(500, 400);
+        setMinSize(layouter.getMinSize());
+    }
 }

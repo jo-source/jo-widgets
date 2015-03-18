@@ -37,41 +37,41 @@ import org.jowidgets.util.Assert;
 
 public class CancelObservable implements ICancelObservable {
 
-	private final Set<ICancelListener> listeners;
+    private final Set<ICancelListener> listeners;
 
-	public CancelObservable() {
-		this.listeners = new LinkedHashSet<ICancelListener>();
-	}
+    public CancelObservable() {
+        this.listeners = new LinkedHashSet<ICancelListener>();
+    }
 
-	@Override
-	public final void addCancelListener(final ICancelListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		synchronized (this) {
-			listeners.add(listener);
-		}
-	}
+    @Override
+    public final void addCancelListener(final ICancelListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        synchronized (this) {
+            listeners.add(listener);
+        }
+    }
 
-	@Override
-	public final void removeCancelListener(final ICancelListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		synchronized (this) {
-			listeners.remove(listener);
-		}
-	}
+    @Override
+    public final void removeCancelListener(final ICancelListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        synchronized (this) {
+            listeners.remove(listener);
+        }
+    }
 
-	public final void fireCanceledEvent() {
-		final Collection<ICancelListener> listenerCopy;
-		synchronized (this) {
-			listenerCopy = new ArrayList<ICancelListener>(listeners);
-		}
+    public final void fireCanceledEvent() {
+        final Collection<ICancelListener> listenerCopy;
+        synchronized (this) {
+            listenerCopy = new ArrayList<ICancelListener>(listeners);
+        }
 
-		for (final ICancelListener listener : listenerCopy) {
-			listener.canceled();
-		}
-	}
+        for (final ICancelListener listener : listenerCopy) {
+            listener.canceled();
+        }
+    }
 
-	public final void dispose() {
-		listeners.clear();
-	}
+    public final void dispose() {
+        listeners.clear();
+    }
 
 }

@@ -40,32 +40,32 @@ import org.jowidgets.util.Assert;
 
 public class PaintObservable implements IPaintObservable {
 
-	private final Set<IPaintListener> listeners;
+    private final Set<IPaintListener> listeners;
 
-	public PaintObservable() {
-		this.listeners = new LinkedHashSet<IPaintListener>();
-	}
+    public PaintObservable() {
+        this.listeners = new LinkedHashSet<IPaintListener>();
+    }
 
-	@Override
-	public void addPaintListener(final IPaintListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public void addPaintListener(final IPaintListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removePaintListener(final IPaintListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public void removePaintListener(final IPaintListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public void firePaint(final IPaintEventSpi paintEventSpi) {
-		firePaint(new PaintEventImpl(paintEventSpi));
-	}
+    public void firePaint(final IPaintEventSpi paintEventSpi) {
+        firePaint(new PaintEventImpl(paintEventSpi));
+    }
 
-	public void firePaint(final IPaintEvent paintEvent) {
-		for (final IPaintListener listener : new LinkedList<IPaintListener>(listeners)) {
-			listener.paint(paintEvent);
-		}
-	}
+    public void firePaint(final IPaintEvent paintEvent) {
+        for (final IPaintListener listener : new LinkedList<IPaintListener>(listeners)) {
+            listener.paint(paintEvent);
+        }
+    }
 
 }

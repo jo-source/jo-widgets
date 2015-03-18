@@ -32,18 +32,18 @@ import org.jowidgets.common.widgets.controller.IItemStateObservable;
 
 public interface ISelectableItemCommon extends IItemCommon, IItemStateObservable {
 
-	/**
-	 * Gets the selection state of the item
-	 * 
-	 * @return True if the item is selected, false otherwise
-	 */
-	boolean isSelected();
+    /**
+     * Gets the selection state of the item
+     * 
+     * @return True if the item is selected, false otherwise
+     */
+    boolean isSelected();
 
-	/**
-	 * Sets the selection state of the item
-	 * 
-	 * @param selected The selection state to set
-	 */
-	void setSelected(boolean selected);
+    /**
+     * Sets the selection state of the item
+     * 
+     * @param selected The selection state to set
+     */
+    void setSelected(boolean selected);
 
 }

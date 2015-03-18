@@ -35,24 +35,24 @@ import org.jowidgets.validation.IValidator;
 
 public abstract class AbstractStringObjectConverter<TO_TYPE> implements IStringObjectConverter<TO_TYPE> {
 
-	@Override
-	public IValidator<String> getStringValidator() {
-		return null;
-	}
+    @Override
+    public IValidator<String> getStringValidator() {
+        return null;
+    }
 
-	@Override
-	public IInputVerifier getInputVerifier() {
-		return null;
-	}
+    @Override
+    public IInputVerifier getInputVerifier() {
+        return null;
+    }
 
-	@Override
-	public String getAcceptingRegExp() {
-		return null;
-	}
+    @Override
+    public String getAcceptingRegExp() {
+        return null;
+    }
 
-	@Override
-	public ITextMask getMask() {
-		return null;
-	}
+    @Override
+    public ITextMask getMask() {
+        return null;
+    }
 
 }

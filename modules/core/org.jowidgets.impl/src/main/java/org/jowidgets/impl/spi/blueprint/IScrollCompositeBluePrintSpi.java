@@ -31,5 +31,5 @@ import org.jowidgets.impl.spi.blueprint.builder.IScrollCompositeSetupBuilderSpi;
 import org.jowidgets.impl.spi.descriptor.IScrollCompositeDescriptorSpi;
 
 public interface IScrollCompositeBluePrintSpi extends
-		IScrollCompositeSetupBuilderSpi<IScrollCompositeBluePrintSpi>,
-		IScrollCompositeDescriptorSpi {}
+        IScrollCompositeSetupBuilderSpi<IScrollCompositeBluePrintSpi>,
+        IScrollCompositeDescriptorSpi {}

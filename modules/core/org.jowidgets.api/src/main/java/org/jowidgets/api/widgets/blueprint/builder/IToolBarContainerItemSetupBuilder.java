@@ -30,6 +30,6 @@ package org.jowidgets.api.widgets.blueprint.builder;
 import org.jowidgets.common.widgets.builder.IContainerSetupBuilderCommon;
 
 public interface IToolBarContainerItemSetupBuilder<INSTANCE_TYPE extends IToolBarContainerItemSetupBuilder<?>> extends
-		IContainerSetupBuilderCommon<INSTANCE_TYPE> {
+        IContainerSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

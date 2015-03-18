@@ -34,63 +34,63 @@ import org.jowidgets.api.widgets.descriptor.ITreeNodeDescriptor;
 
 public interface ITreeContainer {
 
-	ITreeNode addNode();
+    ITreeNode addNode();
 
-	ITreeNode addNode(int index);
+    ITreeNode addNode(int index);
 
-	ITreeNode addNode(ITreeNodeDescriptor descriptor);
+    ITreeNode addNode(ITreeNodeDescriptor descriptor);
 
-	ITreeNode addNode(int index, ITreeNodeDescriptor descriptor);
+    ITreeNode addNode(int index, ITreeNodeDescriptor descriptor);
 
-	void removeNode(ITreeNode node);
+    void removeNode(ITreeNode node);
 
-	void removeNode(int index);
+    void removeNode(int index);
 
-	void removeAllNodes();
+    void removeAllNodes();
 
-	List<ITreeNode> getChildren();
+    List<ITreeNode> getChildren();
 
-	ITreeContainer getParentContainer();
+    ITreeContainer getParentContainer();
 
-	void setAllChildrenExpanded(boolean expanded);
+    void setAllChildrenExpanded(boolean expanded);
 
-	/**
-	 * Sets all children expanded or collapsed until a pivot level is reached
-	 * 
-	 * @param pivotLevel The pivot level to use, assuming this node has level 0, the children level 1 and so on
-	 *            If expanded is true, all nodes of this level and below will be expanded
-	 *            If expanded is false, all node of this level and above will be collapsed
-	 *            If expanded is null, the expansion is unbound
-	 * 
-	 * @param expanded If true, nodes will be expanded, I false nodes will be collapsed
-	 * 
-	 * @throws IllegalArgumentException if the level is not greater or equal 0
-	 */
-	void setAllChildrenExpanded(Integer pivotLevel, boolean expanded);
+    /**
+     * Sets all children expanded or collapsed until a pivot level is reached
+     * 
+     * @param pivotLevel The pivot level to use, assuming this node has level 0, the children level 1 and so on
+     *            If expanded is true, all nodes of this level and below will be expanded
+     *            If expanded is false, all node of this level and above will be collapsed
+     *            If expanded is null, the expansion is unbound
+     * 
+     * @param expanded If true, nodes will be expanded, I false nodes will be collapsed
+     * 
+     * @throws IllegalArgumentException if the level is not greater or equal 0
+     */
+    void setAllChildrenExpanded(Integer pivotLevel, boolean expanded);
 
-	void setAllChildrenChecked(boolean checked);
+    void setAllChildrenChecked(boolean checked);
 
-	/**
-	 * Expands all nodes of the given level and below and collapses all nodes above
-	 * 
-	 * @param pivotLevel The pivot level, assuming this node has level 0, the children level 1 and so on
-	 */
-	void setAllChildrenBelowExpandedAboveCollapsed(int pivotLevel);
+    /**
+     * Expands all nodes of the given level and below and collapses all nodes above
+     * 
+     * @param pivotLevel The pivot level, assuming this node has level 0, the children level 1 and so on
+     */
+    void setAllChildrenBelowExpandedAboveCollapsed(int pivotLevel);
 
-	/**
-	 * Visits the nodes of the container by a visitor
-	 * 
-	 * @param visitor The visitor to visit the nodes, must not be null
-	 * 
-	 * @return false if the visiting should be stopped
-	 */
-	boolean accept(ITreeNodeVisitor visitor);
+    /**
+     * Visits the nodes of the container by a visitor
+     * 
+     * @param visitor The visitor to visit the nodes, must not be null
+     * 
+     * @return false if the visiting should be stopped
+     */
+    boolean accept(ITreeNodeVisitor visitor);
 
-	/**
-	 * Gets the level of the node, where 0 is the root level
-	 * 
-	 * @return The level of the node
-	 */
-	int getLevel();
+    /**
+     * Gets the level of the node, where 0 is the root level
+     * 
+     * @return The level of the node
+     */
+    int getLevel();
 
 }

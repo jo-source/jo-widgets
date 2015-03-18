@@ -43,94 +43,94 @@ import org.jowidgets.spi.impl.image.ImageHandle;
 
 public class SwingImageHandleFactorySpi extends SwingImageHandleFactory implements IImageHandleFactorySpi {
 
-	private final SwingImageRegistry swingImageRegistry;
+    private final SwingImageRegistry swingImageRegistry;
 
-	public SwingImageHandleFactorySpi(final SwingImageRegistry swingImageRegistry) {
-		super();
-		this.swingImageRegistry = swingImageRegistry;
-	}
+    public SwingImageHandleFactorySpi(final SwingImageRegistry swingImageRegistry) {
+        super();
+        this.swingImageRegistry = swingImageRegistry;
+    }
 
-	@Override
-	public IImageHandle infoIcon() {
-		return new ImageHandle<Image>(new IImageFactory<Image>() {
-			@Override
-			public Image createImage() {
-				final Icon icon = UIManager.getIcon("OptionPane.informationIcon");
-				if (icon == null) {
-					return SwingImageRegistry.getInstance().getImage(IconsCommon.FALLBACK_INFO);
-				}
-				final Image icon2Image = icon2Image(icon);
-				return icon2Image;
-			}
-		});
-	}
+    @Override
+    public IImageHandle infoIcon() {
+        return new ImageHandle<Image>(new IImageFactory<Image>() {
+            @Override
+            public Image createImage() {
+                final Icon icon = UIManager.getIcon("OptionPane.informationIcon");
+                if (icon == null) {
+                    return SwingImageRegistry.getInstance().getImage(IconsCommon.FALLBACK_INFO);
+                }
+                final Image icon2Image = icon2Image(icon);
+                return icon2Image;
+            }
+        });
+    }
 
-	@Override
-	public IImageHandle questionIcon() {
-		return new ImageHandle<Image>(new IImageFactory<Image>() {
-			@Override
-			public Image createImage() {
-				final Icon icon = UIManager.getIcon("OptionPane.questionIcon");
-				if (icon == null) {
-					return SwingImageRegistry.getInstance().getImage(IconsCommon.FALLBACK_QUESTION);
-				}
-				final Image icon2Image = icon2Image(icon);
-				return icon2Image;
-			}
-		});
-	}
+    @Override
+    public IImageHandle questionIcon() {
+        return new ImageHandle<Image>(new IImageFactory<Image>() {
+            @Override
+            public Image createImage() {
+                final Icon icon = UIManager.getIcon("OptionPane.questionIcon");
+                if (icon == null) {
+                    return SwingImageRegistry.getInstance().getImage(IconsCommon.FALLBACK_QUESTION);
+                }
+                final Image icon2Image = icon2Image(icon);
+                return icon2Image;
+            }
+        });
+    }
 
-	@Override
-	public IImageHandle warningIcon() {
-		return new ImageHandle<Image>(new IImageFactory<Image>() {
-			@Override
-			public Image createImage() {
-				final Icon icon = UIManager.getIcon("OptionPane.warningIcon");
-				if (icon == null) {
-					return SwingImageRegistry.getInstance().getImage(IconsCommon.FALLBACK_WARNING);
-				}
-				final Image icon2Image = icon2Image(icon);
-				return icon2Image;
-			}
-		});
-	}
+    @Override
+    public IImageHandle warningIcon() {
+        return new ImageHandle<Image>(new IImageFactory<Image>() {
+            @Override
+            public Image createImage() {
+                final Icon icon = UIManager.getIcon("OptionPane.warningIcon");
+                if (icon == null) {
+                    return SwingImageRegistry.getInstance().getImage(IconsCommon.FALLBACK_WARNING);
+                }
+                final Image icon2Image = icon2Image(icon);
+                return icon2Image;
+            }
+        });
+    }
 
-	@Override
-	public IImageHandle errorIcon() {
-		return new ImageHandle<Image>(new IImageFactory<Image>() {
-			@Override
-			public Image createImage() {
-				final Icon icon = UIManager.getIcon("OptionPane.errorIcon");
-				if (icon == null) {
-					return SwingImageRegistry.getInstance().getImage(IconsCommon.FALLBACK_ERROR);
-				}
-				final Image icon2Image = icon2Image(icon);
-				return icon2Image;
-			}
-		});
-	}
+    @Override
+    public IImageHandle errorIcon() {
+        return new ImageHandle<Image>(new IImageFactory<Image>() {
+            @Override
+            public Image createImage() {
+                final Icon icon = UIManager.getIcon("OptionPane.errorIcon");
+                if (icon == null) {
+                    return SwingImageRegistry.getInstance().getImage(IconsCommon.FALLBACK_ERROR);
+                }
+                final Image icon2Image = icon2Image(icon);
+                return icon2Image;
+            }
+        });
+    }
 
-	private Image icon2Image(final Icon icon) {
-		final BufferedImage bufferedImage = new BufferedImage(
-			icon.getIconWidth(),
-			icon.getIconHeight(),
-			BufferedImage.TYPE_INT_ARGB);
-		icon.paintIcon(null, bufferedImage.getGraphics(), 0, 0);
-		return bufferedImage;
-	}
+    private Image icon2Image(final Icon icon) {
+        final BufferedImage bufferedImage = new BufferedImage(
+            icon.getIconWidth(),
+            icon.getIconHeight(),
+            BufferedImage.TYPE_INT_ARGB);
+        icon.paintIcon(null, bufferedImage.getGraphics(), 0, 0);
+        return bufferedImage;
+    }
 
-	@Override
-	public IImageHandle createImageHandle(final IImageConstant imageConstant, final int width, final int height) {
-		return new ImageHandle<Image>(new IImageFactory<Image>() {
-			@Override
-			public Image createImage() {
-				final Image templateImage = swingImageRegistry.getImage(imageConstant);
-				final Image scaledImage = templateImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-				final BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-				bufferedImage.getGraphics().drawImage(scaledImage, 0, 0, null);
-				return bufferedImage;
-			}
-		});
-	}
+    @Override
+    public IImageHandle createImageHandle(final IImageConstant imageConstant, final int width, final int height) {
+        return new ImageHandle<Image>(new IImageFactory<Image>() {
+            @Override
+            public Image createImage() {
+                final Image templateImage = swingImageRegistry.getImage(imageConstant);
+                final Image scaledImage = templateImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+                final BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+                bufferedImage.getGraphics().drawImage(scaledImage, 0, 0, null);
+                return bufferedImage;
+            }
+        });
+    }
 
 }

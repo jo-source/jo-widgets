@@ -32,11 +32,11 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IButtonSetup extends IButtonSetupCommon, IComponentSetup {
 
-	@Mandatory
-	boolean isEnabled();
+    @Mandatory
+    boolean isEnabled();
 
-	Integer getFontSize();
+    Integer getFontSize();
 
-	String getFontName();
+    String getFontName();
 
 }

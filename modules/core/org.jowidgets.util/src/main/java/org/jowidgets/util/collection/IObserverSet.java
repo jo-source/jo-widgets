@@ -57,29 +57,29 @@ package org.jowidgets.util.collection;
  */
 public interface IObserverSet<OBSERVER_TYPE> extends Iterable<OBSERVER_TYPE> {
 
-	/**
-	 * Adds an observer to the set. If the observer was added already, the set remains unchanged
-	 * 
-	 * @param observer The observer to add, not null
-	 * 
-	 * @throws IllegalArgumentException if the observer is null
-	 */
-	void add(OBSERVER_TYPE observer);
+    /**
+     * Adds an observer to the set. If the observer was added already, the set remains unchanged
+     * 
+     * @param observer The observer to add, not null
+     * 
+     * @throws IllegalArgumentException if the observer is null
+     */
+    void add(OBSERVER_TYPE observer);
 
-	/**
-	 * Removes an observer from the set. If the observer is not a element of the set, the set remains unchanged
-	 * 
-	 * @param observer The observer to remove, not null
-	 * 
-	 * @return true if the set container the given element (and so it was removed)
-	 * 
-	 * @throws IllegalArgumentException if the given observer is null
-	 */
-	boolean remove(OBSERVER_TYPE observer);
+    /**
+     * Removes an observer from the set. If the observer is not a element of the set, the set remains unchanged
+     * 
+     * @param observer The observer to remove, not null
+     * 
+     * @return true if the set container the given element (and so it was removed)
+     * 
+     * @throws IllegalArgumentException if the given observer is null
+     */
+    boolean remove(OBSERVER_TYPE observer);
 
-	/**
-	 * Removes all elements from the set an releases the used memory
-	 */
-	void clear();
+    /**
+     * Removes all elements from the set an releases the used memory
+     */
+    void clear();
 
 }

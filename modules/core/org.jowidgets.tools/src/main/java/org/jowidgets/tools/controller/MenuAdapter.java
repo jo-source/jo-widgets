@@ -32,10 +32,10 @@ import org.jowidgets.common.widgets.controller.IMenuListener;
 
 public class MenuAdapter implements IMenuListener {
 
-	@Override
-	public void menuActivated() {}
+    @Override
+    public void menuActivated() {}
 
-	@Override
-	public void menuDeactivated() {}
+    @Override
+    public void menuDeactivated() {}
 
 }

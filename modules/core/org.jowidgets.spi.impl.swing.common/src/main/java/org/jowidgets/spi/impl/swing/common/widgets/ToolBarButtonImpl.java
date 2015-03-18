@@ -41,34 +41,34 @@ import org.jowidgets.spi.widgets.IToolBarButtonSpi;
 
 public class ToolBarButtonImpl extends ToolBarItemImpl implements IToolBarButtonSpi {
 
-	private static final Border EMPTY_BORDER = BorderFactory.createEmptyBorder(3, 3, 3, 3);
+    private static final Border EMPTY_BORDER = BorderFactory.createEmptyBorder(3, 3, 3, 3);
 
-	private final ActionObservable actionObservable;
+    private final ActionObservable actionObservable;
 
-	public ToolBarButtonImpl(final JButton button) {
-		super(button);
+    public ToolBarButtonImpl(final JButton button) {
+        super(button);
 
-		getUiReference().setOpaque(false);
-		getUiReference().setBorder(EMPTY_BORDER);
+        getUiReference().setOpaque(false);
+        getUiReference().setBorder(EMPTY_BORDER);
 
-		getUiReference().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(final ActionEvent e) {
-				actionObservable.fireActionPerformed();
-			}
-		});
+        getUiReference().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                actionObservable.fireActionPerformed();
+            }
+        });
 
-		this.actionObservable = new ActionObservable();
-	}
+        this.actionObservable = new ActionObservable();
+    }
 
-	@Override
-	public void addActionListener(final IActionListener actionListener) {
-		actionObservable.addActionListener(actionListener);
-	}
+    @Override
+    public void addActionListener(final IActionListener actionListener) {
+        actionObservable.addActionListener(actionListener);
+    }
 
-	@Override
-	public void removeActionListener(final IActionListener actionListener) {
-		actionObservable.removeActionListener(actionListener);
-	}
+    @Override
+    public void removeActionListener(final IActionListener actionListener) {
+        actionObservable.removeActionListener(actionListener);
+    }
 
 }

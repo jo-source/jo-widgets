@@ -30,6 +30,6 @@ package org.jowidgets.addons.bridge.awt.swt;
 
 public interface IAwtSwtControlFactory {
 
-	IAwtSwtControl createAwtSwtControl(Object parentUiReference);
+    IAwtSwtControl createAwtSwtControl(Object parentUiReference);
 
 }

@@ -43,139 +43,139 @@ import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 
 public class TextFieldImpl extends AbstractInputControlSpiWrapper implements ITextControl {
 
-	private final ControlDelegate controlDelegate;
+    private final ControlDelegate controlDelegate;
 
-	public TextFieldImpl(final ITextControlSpi textInputWidgetSpi, final ITextFieldSetup setup) {
-		super(textInputWidgetSpi);
+    public TextFieldImpl(final ITextControlSpi textInputWidgetSpi, final ITextFieldSetup setup) {
+        super(textInputWidgetSpi);
 
-		this.controlDelegate = new ControlDelegate(textInputWidgetSpi, this);
+        this.controlDelegate = new ControlDelegate(textInputWidgetSpi, this);
 
-		if (setup.getText() != null) {
-			setText(setup.getText());
-		}
+        if (setup.getText() != null) {
+            setText(setup.getText());
+        }
 
-		if (setup.getMarkup() != null) {
-			setMarkup(setup.getMarkup());
-		}
-		if (setup.getFontSize() != null) {
-			setFontSize(Integer.valueOf(setup.getFontSize()));
-		}
-		if (setup.getFontName() != null) {
-			setFontName(setup.getFontName());
-		}
+        if (setup.getMarkup() != null) {
+            setMarkup(setup.getMarkup());
+        }
+        if (setup.getFontSize() != null) {
+            setFontSize(Integer.valueOf(setup.getFontSize()));
+        }
+        if (setup.getFontName() != null) {
+            setFontName(setup.getFontName());
+        }
 
-		setEditable(setup.isEditable());
+        setEditable(setup.isEditable());
 
-		VisibiliySettingsInvoker.setVisibility(setup, this);
-		ColorSettingsInvoker.setColors(setup, this);
-	}
+        VisibiliySettingsInvoker.setVisibility(setup, this);
+        ColorSettingsInvoker.setColors(setup, this);
+    }
 
-	@Override
-	public ITextControlSpi getWidget() {
-		return (ITextControlSpi) super.getWidget();
-	}
+    @Override
+    public ITextControlSpi getWidget() {
+        return (ITextControlSpi) super.getWidget();
+    }
 
-	@Override
-	public IContainer getParent() {
-		return controlDelegate.getParent();
-	}
+    @Override
+    public IContainer getParent() {
+        return controlDelegate.getParent();
+    }
 
-	@Override
-	public void setParent(final IContainer parent) {
-		controlDelegate.setParent(parent);
-	}
+    @Override
+    public void setParent(final IContainer parent) {
+        controlDelegate.setParent(parent);
+    }
 
-	@Override
-	public void addParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.addParentListener(listener);
-	}
+    @Override
+    public void addParentListener(final IParentListener<IContainer> listener) {
+        controlDelegate.addParentListener(listener);
+    }
 
-	@Override
-	public void removeParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.removeParentListener(listener);
-	}
+    @Override
+    public void removeParentListener(final IParentListener<IContainer> listener) {
+        controlDelegate.removeParentListener(listener);
+    }
 
-	@Override
-	public boolean isReparentable() {
-		return controlDelegate.isReparentable();
-	}
+    @Override
+    public boolean isReparentable() {
+        return controlDelegate.isReparentable();
+    }
 
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		controlDelegate.addDisposeListener(listener);
-	}
+    @Override
+    public void addDisposeListener(final IDisposeListener listener) {
+        controlDelegate.addDisposeListener(listener);
+    }
 
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		controlDelegate.removeDisposeListener(listener);
-	}
+    @Override
+    public void removeDisposeListener(final IDisposeListener listener) {
+        controlDelegate.removeDisposeListener(listener);
+    }
 
-	@Override
-	public boolean isDisposed() {
-		return controlDelegate.isDisposed();
-	}
+    @Override
+    public boolean isDisposed() {
+        return controlDelegate.isDisposed();
+    }
 
-	@Override
-	public void dispose() {
-		controlDelegate.dispose();
-	}
+    @Override
+    public void dispose() {
+        controlDelegate.dispose();
+    }
 
-	@Override
-	public IPopupMenu createPopupMenu() {
-		return controlDelegate.createPopupMenu();
-	}
+    @Override
+    public IPopupMenu createPopupMenu() {
+        return controlDelegate.createPopupMenu();
+    }
 
-	@Override
-	public String getText() {
-		return getWidget().getText();
-	}
+    @Override
+    public String getText() {
+        return getWidget().getText();
+    }
 
-	@Override
-	public void setText(final String text) {
-		getWidget().setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        getWidget().setText(text);
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		getWidget().setFontSize(size);
-	}
+    @Override
+    public void setFontSize(final int size) {
+        getWidget().setFontSize(size);
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		getWidget().setFontName(fontName);
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        getWidget().setFontName(fontName);
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		getWidget().setMarkup(markup);
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        getWidget().setMarkup(markup);
+    }
 
-	@Override
-	public void setSelection(final int start, final int end) {
-		getWidget().setSelection(start, end);
-	}
+    @Override
+    public void setSelection(final int start, final int end) {
+        getWidget().setSelection(start, end);
+    }
 
-	@Override
-	public void setCaretPosition(final int pos) {
-		getWidget().setCaretPosition(pos);
-	}
+    @Override
+    public void setCaretPosition(final int pos) {
+        getWidget().setCaretPosition(pos);
+    }
 
-	@Override
-	public int getCaretPosition() {
-		return getWidget().getCaretPosition();
-	}
+    @Override
+    public int getCaretPosition() {
+        return getWidget().getCaretPosition();
+    }
 
-	@Override
-	public void selectAll() {
-		final String text = getText();
-		if (text != null) {
-			setSelection(0, text.length());
-		}
-	}
+    @Override
+    public void selectAll() {
+        final String text = getText();
+        if (text != null) {
+            setSelection(0, text.length());
+        }
+    }
 
-	@Override
-	public void select() {
-		selectAll();
-	}
+    @Override
+    public void select() {
+        selectAll();
+    }
 
 }

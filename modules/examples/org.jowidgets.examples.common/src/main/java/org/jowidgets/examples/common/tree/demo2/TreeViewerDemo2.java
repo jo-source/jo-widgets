@@ -52,62 +52,62 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class TreeViewerDemo2 implements IApplication {
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
 
-		final IFrameBluePrint frameBp = BPF.frame();
-		frameBp.setSize(new Dimension(800, 600)).setTitle("Tree Viewer Demo");
+        final IFrameBluePrint frameBp = BPF.frame();
+        frameBp.setSize(new Dimension(800, 600)).setTitle("Tree Viewer Demo");
 
-		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
-		frame.setLayout(new MigLayoutDescriptor("wrap", "0[grow, 0::]0", "0[]0[]0[grow, 0::]0"));
+        final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
+        frame.setLayout(new MigLayoutDescriptor("wrap", "0[grow, 0::]0", "0[]0[]0[grow, 0::]0"));
 
-		final IToolBar toolBar = frame.add(BPF.toolBar());
-		final IToolBarModel toolBarModel = toolBar.getModel();
-		frame.add(BPF.separator(), "growx, w 0::");
+        final IToolBar toolBar = frame.add(BPF.toolBar());
+        final IToolBarModel toolBarModel = toolBar.getModel();
+        frame.add(BPF.separator(), "growx, w 0::");
 
-		final RootNodeModel rootModel = new RootNodeModel();
-		final ITreeViewerBluePrint<String> treeViewerBp = BPF.treeViewer(rootModel);
-		treeViewerBp.setCreationPolicy(TreeViewerCreationPolicy.CREATE_ON_EXPAND);
-		treeViewerBp.setPageSize(100);
-		treeViewerBp.setChecked(true).setAutoCheckPolicy(TreeAutoCheckPolicy.SINGLE_PATH);
-		treeViewerBp.setSelectionPolicy(SelectionPolicy.SINGLE_SELECTION);
-		treeViewerBp.setWinSelectionColors();
-		final ITreeViewer<String> tree = frame.add(treeViewerBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        final RootNodeModel rootModel = new RootNodeModel();
+        final ITreeViewerBluePrint<String> treeViewerBp = BPF.treeViewer(rootModel);
+        treeViewerBp.setCreationPolicy(TreeViewerCreationPolicy.CREATE_ON_EXPAND);
+        treeViewerBp.setPageSize(100);
+        treeViewerBp.setChecked(true).setAutoCheckPolicy(TreeAutoCheckPolicy.SINGLE_PATH);
+        treeViewerBp.setSelectionPolicy(SelectionPolicy.SINGLE_SELECTION);
+        treeViewerBp.setWinSelectionColors();
+        final ITreeViewer<String> tree = frame.add(treeViewerBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
-		toolBarModel.addAction(CollapseTreeAction.create(tree));
-		toolBarModel.addAction(ExpandTreeAction.builder(tree).setPivotLevel(1).build());
-		toolBar.pack();
+        toolBarModel.addAction(CollapseTreeAction.create(tree));
+        toolBarModel.addAction(ExpandTreeAction.builder(tree).setPivotLevel(1).build());
+        toolBar.pack();
 
-		rootModel.addTreeNodeModelListener(new TreeNodeModelAdapter() {
-			@Override
-			public void checkedChanged() {
-				printCheckedNodes(rootModel);
-				//CHECKSTYLE:OFF
-				System.out.println();
-				System.out.println("--------------------------------------------");
-				//CHECKSTYLE:ON
-			}
+        rootModel.addTreeNodeModelListener(new TreeNodeModelAdapter() {
+            @Override
+            public void checkedChanged() {
+                printCheckedNodes(rootModel);
+                //CHECKSTYLE:OFF
+                System.out.println();
+                System.out.println("--------------------------------------------");
+                //CHECKSTYLE:ON
+            }
 
-		});
+        });
 
-		//set the root frame visible
+        //set the root frame visible
 
-		frame.setVisible(true);
-	}
+        frame.setVisible(true);
+    }
 
-	private static void printCheckedNodes(final ITreeNodeModel<?> model) {
-		if (model.getCheckedState() != CheckedState.UNCHECKED) {
-			//CHECKSTYLE:OFF
-			System.out.print(model.getData() + " -- ");
-			//CHECKSTYLE:ON
-			for (int i = 0; i < model.getChildrenCount(); i++) {
-				printCheckedNodes(model.getChildNode(i));
-			}
-		}
-	}
+    private static void printCheckedNodes(final ITreeNodeModel<?> model) {
+        if (model.getCheckedState() != CheckedState.UNCHECKED) {
+            //CHECKSTYLE:OFF
+            System.out.print(model.getData() + " -- ");
+            //CHECKSTYLE:ON
+            for (int i = 0; i < model.getChildrenCount(); i++) {
+                printCheckedNodes(model.getChildNode(i));
+            }
+        }
+    }
 
-	public void start() {
-		DemoIconsInitializer.initialize();
-		Toolkit.getInstance().getApplicationRunner().run(this);
-	}
+    public void start() {
+        DemoIconsInitializer.initialize();
+        Toolkit.getInstance().getApplicationRunner().run(this);
+    }
 }

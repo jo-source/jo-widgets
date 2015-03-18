@@ -38,58 +38,58 @@ import org.jowidgets.spi.widgets.IToolBarItemSpi;
 
 public class ToolBarItemImpl implements IToolBarItemSpi {
 
-	private final ToolItem toolItem;
+    private final ToolItem toolItem;
 
-	public ToolBarItemImpl(final ToolItem item) {
-		super();
-		this.toolItem = item;
-	}
+    public ToolBarItemImpl(final ToolItem item) {
+        super();
+        this.toolItem = item;
+    }
 
-	@Override
-	public ToolItem getUiReference() {
-		return toolItem;
-	}
+    @Override
+    public ToolItem getUiReference() {
+        return toolItem;
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		toolItem.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        toolItem.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return toolItem.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return toolItem.isEnabled();
+    }
 
-	@Override
-	public void setText(final String text) {
-		if (text != null) {
-			toolItem.setText(text);
-		}
-		else {
-			toolItem.setText("");
-		}
-	}
+    @Override
+    public void setText(final String text) {
+        if (text != null) {
+            toolItem.setText(text);
+        }
+        else {
+            toolItem.setText("");
+        }
+    }
 
-	@Override
-	public void setToolTipText(final String text) {
-		toolItem.setToolTipText(text);
-	}
+    @Override
+    public void setToolTipText(final String text) {
+        toolItem.setToolTipText(text);
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		toolItem.setImage(SwtImageRegistry.getInstance().getImage(icon));
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        toolItem.setImage(SwtImageRegistry.getInstance().getImage(icon));
+    }
 
-	@Override
-	public Position getPosition() {
-		final Rectangle bounds = toolItem.getBounds();
-		return new Position(bounds.x, bounds.y);
-	}
+    @Override
+    public Position getPosition() {
+        final Rectangle bounds = toolItem.getBounds();
+        return new Position(bounds.x, bounds.y);
+    }
 
-	@Override
-	public Dimension getSize() {
-		final Rectangle bounds = toolItem.getBounds();
-		return new Dimension(bounds.width, bounds.height);
-	}
+    @Override
+    public Dimension getSize() {
+        final Rectangle bounds = toolItem.getBounds();
+        return new Dimension(bounds.width, bounds.height);
+    }
 
 }

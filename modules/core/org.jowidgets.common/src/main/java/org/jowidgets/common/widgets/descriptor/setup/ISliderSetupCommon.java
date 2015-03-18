@@ -32,21 +32,21 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ISliderSetupCommon extends IComponentSetupCommon {
 
-	@Mandatory
-	Orientation getOrientation();
+    @Mandatory
+    Orientation getOrientation();
 
-	@Mandatory
-	int getMinimum();
+    @Mandatory
+    int getMinimum();
 
-	@Mandatory
-	int getMaximum();
+    @Mandatory
+    int getMaximum();
 
-	@Mandatory
-	int getTickSpacing();
+    @Mandatory
+    int getTickSpacing();
 
-	@Mandatory
-	boolean getRenderTicks();
+    @Mandatory
+    boolean getRenderTicks();
 
-	String getToolTipText();
+    String getToolTipText();
 
 }

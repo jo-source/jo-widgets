@@ -37,25 +37,25 @@ import org.jowidgets.util.ICancelCallback;
 
 class AsyncWorkerAdapter<RESULT_TYPE, PROGRESS_TYPE> implements IWorker<RESULT_TYPE, PROGRESS_TYPE> {
 
-	private final ISyncWorker<RESULT_TYPE, PROGRESS_TYPE> syncWorker;
+    private final ISyncWorker<RESULT_TYPE, PROGRESS_TYPE> syncWorker;
 
-	AsyncWorkerAdapter(final ISyncWorker<RESULT_TYPE, PROGRESS_TYPE> syncWorker) {
-		Assert.paramNotNull(syncWorker, "syncWorker");
-		this.syncWorker = syncWorker;
-	}
+    AsyncWorkerAdapter(final ISyncWorker<RESULT_TYPE, PROGRESS_TYPE> syncWorker) {
+        Assert.paramNotNull(syncWorker, "syncWorker");
+        this.syncWorker = syncWorker;
+    }
 
-	@Override
-	public void work(final IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> callback, final ICancelCallback cancelCallback) {
-		try {
-			final RESULT_TYPE result = syncWorker.work(callback, cancelCallback);
-			callback.finished(result);
-		}
-		catch (final WorkerCanceledException e) {
-			callback.canceled();
-		}
-		catch (final Throwable e) {
-			callback.exception(e);
-		}
-	}
+    @Override
+    public void work(final IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> callback, final ICancelCallback cancelCallback) {
+        try {
+            final RESULT_TYPE result = syncWorker.work(callback, cancelCallback);
+            callback.finished(result);
+        }
+        catch (final WorkerCanceledException e) {
+            callback.canceled();
+        }
+        catch (final Throwable e) {
+            callback.exception(e);
+        }
+    }
 
 }

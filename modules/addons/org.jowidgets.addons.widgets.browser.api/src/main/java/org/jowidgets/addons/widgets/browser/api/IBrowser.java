@@ -32,29 +32,29 @@ import org.jowidgets.api.widgets.IControl;
 
 public interface IBrowser extends IControl {
 
-	void setUrl(String url);
+    void setUrl(String url);
 
-	void setHtml(String html);
+    void setHtml(String html);
 
-	Object evaluateScript(String javaScript);
+    Object evaluateScript(String javaScript);
 
-	boolean executeScript(String javaScript);
+    boolean executeScript(String javaScript);
 
-	/**
-	 * Creates a function that can be invoked from java script by calling a function with the given function name
-	 * 
-	 * @param functionName The function name java script must use to invoke this function
-	 * @param function The function that will be invoked when java script invokes the function
-	 * @return A handle to the function. The handle must be disposed, if the function will no longer be needed.
-	 */
-	IBrowserFunctionHandle createBrowserFunction(String functionName, IBrowserFunction function);
+    /**
+     * Creates a function that can be invoked from java script by calling a function with the given function name
+     * 
+     * @param functionName The function name java script must use to invoke this function
+     * @param function The function that will be invoked when java script invokes the function
+     * @return A handle to the function. The handle must be disposed, if the function will no longer be needed.
+     */
+    IBrowserFunctionHandle createBrowserFunction(String functionName, IBrowserFunction function);
 
-	void addLocationListener(IBrowserLocationListener listener);
+    void addLocationListener(IBrowserLocationListener listener);
 
-	void removeLocationListener(IBrowserLocationListener listener);
+    void removeLocationListener(IBrowserLocationListener listener);
 
-	void addProgressListener(IBrowserProgressListener listener);
+    void addProgressListener(IBrowserProgressListener listener);
 
-	void removeProgressListener(IBrowserProgressListener listener);
+    void removeProgressListener(IBrowserProgressListener listener);
 
 }

@@ -32,22 +32,22 @@ import org.jowidgets.api.widgets.blueprint.builder.convenience.IInputDialogSetup
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 
 public interface IInputDialogSetupBuilder<INSTANCE_TYPE extends IInputDialogSetupBuilder<?, ?>, INPUT_TYPE> extends
-		ITitledWindowSetupBuilder<INSTANCE_TYPE>,
-		IInputCompositeSetupBuilder<INSTANCE_TYPE, INPUT_TYPE>,
-		IInputDialogSetupConvenience<INSTANCE_TYPE> {
+        ITitledWindowSetupBuilder<INSTANCE_TYPE>,
+        IInputCompositeSetupBuilder<INSTANCE_TYPE, INPUT_TYPE>,
+        IInputDialogSetupConvenience<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setOkButton(final IButtonDescriptor buttonDescriptor);
+    INSTANCE_TYPE setOkButton(final IButtonDescriptor buttonDescriptor);
 
-	INSTANCE_TYPE setCancelButton(final IButtonDescriptor buttonDescriptor);
+    INSTANCE_TYPE setCancelButton(final IButtonDescriptor buttonDescriptor);
 
-	IButtonDescriptor getOkButton();
+    IButtonDescriptor getOkButton();
 
-	IButtonDescriptor getCancelButton();
+    IButtonDescriptor getCancelButton();
 
-	INSTANCE_TYPE setDefaultButtonPolicy(InputDialogDefaultButtonPolicy policy);
+    INSTANCE_TYPE setDefaultButtonPolicy(InputDialogDefaultButtonPolicy policy);
 
-	INSTANCE_TYPE setCloseable(boolean closeable);
+    INSTANCE_TYPE setCloseable(boolean closeable);
 
-	INSTANCE_TYPE setCloseOnEscape(boolean closeOnEscape);
+    INSTANCE_TYPE setCloseOnEscape(boolean closeOnEscape);
 
 }

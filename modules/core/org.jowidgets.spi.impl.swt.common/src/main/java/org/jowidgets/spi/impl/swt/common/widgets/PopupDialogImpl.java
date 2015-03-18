@@ -35,16 +35,16 @@ import org.jowidgets.spi.widgets.setup.IPopupDialogSetupSpi;
 
 public class PopupDialogImpl extends WindowImpl implements IPopupDialogSpi {
 
-	public PopupDialogImpl(final IGenericWidgetFactory factory, final Object parentUiReference, final IPopupDialogSetupSpi setup) {
-		super(factory, new Shell((Shell) parentUiReference, getStyle(setup)), false);
-	}
+    public PopupDialogImpl(final IGenericWidgetFactory factory, final Object parentUiReference, final IPopupDialogSetupSpi setup) {
+        super(factory, new Shell((Shell) parentUiReference, getStyle(setup)), false);
+    }
 
-	private static int getStyle(final IPopupDialogSetupSpi setup) {
-		if (setup.hasBorder()) {
-			return SWT.DROP_DOWN;
-		}
-		else {
-			return SWT.DROP_DOWN | SWT.NO_TRIM;
-		}
-	}
+    private static int getStyle(final IPopupDialogSetupSpi setup) {
+        if (setup.hasBorder()) {
+            return SWT.DROP_DOWN;
+        }
+        else {
+            return SWT.DROP_DOWN | SWT.NO_TRIM;
+        }
+    }
 }

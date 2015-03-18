@@ -30,46 +30,46 @@ package org.jowidgets.api.layout.tablelayout;
 
 public interface ITableLayoutBuilder {
 
-	public enum ColumnMode {
-		PREFERRED,
-		GROWING,
-		HIDDEN,
-		FIXED
-	};
+    public enum ColumnMode {
+        PREFERRED,
+        GROWING,
+        HIDDEN,
+        FIXED
+    };
 
-	public enum Alignment {
-		LEFT,
-		CENTER,
-	}
+    public enum Alignment {
+        LEFT,
+        CENTER,
+    }
 
-	ITableLayoutBuilder verticalGap(final int verticalGap);
+    ITableLayoutBuilder verticalGap(final int verticalGap);
 
-	ITableLayoutBuilder layoutMinRows(final int layoutMinRows);
+    ITableLayoutBuilder layoutMinRows(final int layoutMinRows);
 
-	ITableLayoutBuilder columnCount(final int columnCount);
+    ITableLayoutBuilder columnCount(final int columnCount);
 
-	ITableLayoutBuilder widths(final int[] widths);
+    ITableLayoutBuilder widths(final int[] widths);
 
-	ITableLayoutBuilder gaps(final int[] gaps);
+    ITableLayoutBuilder gaps(final int[] gaps);
 
-	ITableLayoutBuilder modes(final ColumnMode[] modes);
+    ITableLayoutBuilder modes(final ColumnMode[] modes);
 
-	ITableLayoutBuilder alignments(final Alignment[] alignments);
+    ITableLayoutBuilder alignments(final Alignment[] alignments);
 
-	ITableLayoutBuilder fixedColumnWidth(final int column, final int width);
+    ITableLayoutBuilder fixedColumnWidth(final int column, final int width);
 
-	ITableLayoutBuilder columnMode(final int column, final ColumnMode mode);
+    ITableLayoutBuilder columnMode(final int column, final ColumnMode mode);
 
-	ITableLayoutBuilder columnAlignment(final int column, final Alignment alignment);
+    ITableLayoutBuilder columnAlignment(final int column, final Alignment alignment);
 
-	ITableLayoutBuilder gap(final int gap);
+    ITableLayoutBuilder gap(final int gap);
 
-	ITableLayoutBuilder gapBeforeColumn(final int column, final int gap);
+    ITableLayoutBuilder gapBeforeColumn(final int column, final int gap);
 
-	ITableLayoutBuilder gapAfterColumn(final int column, final int gap);
+    ITableLayoutBuilder gapAfterColumn(final int column, final int gap);
 
-	ITableLayoutBuilder alignment(final int index, final Alignment alignment);
+    ITableLayoutBuilder alignment(final int index, final Alignment alignment);
 
-	ITableLayout build();
+    ITableLayout build();
 
 }

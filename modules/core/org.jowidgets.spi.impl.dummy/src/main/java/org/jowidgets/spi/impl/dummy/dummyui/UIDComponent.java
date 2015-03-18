@@ -39,134 +39,134 @@ import org.jowidgets.spi.dnd.IDropTargetSpi;
 
 public class UIDComponent extends UIDObservable {
 
-	private final IDragSourceSpi dragSource = new DummyDragSource();
-	private final IDropTargetSpi dropTarget = new DummyDropTarget();
+    private final IDragSourceSpi dragSource = new DummyDragSource();
+    private final IDropTargetSpi dropTarget = new DummyDropTarget();
 
-	private Position position = new Position(0, 0);
-	private Dimension size = new Dimension(400, 300);
-	private IColorConstant foregroundColor = new ColorValue(0, 0, 0);
-	private IColorConstant backgroundColor = new ColorValue(230, 230, 230);
+    private Position position = new Position(0, 0);
+    private Dimension size = new Dimension(400, 300);
+    private IColorConstant foregroundColor = new ColorValue(0, 0, 0);
+    private IColorConstant backgroundColor = new ColorValue(230, 230, 230);
 
-	private String tooltipText;
-	private boolean visible = true;
-	private boolean enabled = true;
-	private Cursor cursor;
-	private Object layoutConstraints;
+    private String tooltipText;
+    private boolean visible = true;
+    private boolean enabled = true;
+    private Cursor cursor;
+    private Object layoutConstraints;
 
-	public void redraw() {}
+    public void redraw() {}
 
-	public void setPosition(final Position position) {
-		this.position = position;
-	}
+    public void setPosition(final Position position) {
+        this.position = position;
+    }
 
-	public Position getPosition() {
-		return position;
-	}
+    public Position getPosition() {
+        return position;
+    }
 
-	public void setSize(final Dimension size) {
-		this.size = size;
-	}
+    public void setSize(final Dimension size) {
+        this.size = size;
+    }
 
-	public Dimension getSize() {
-		return size;
-	}
+    public Dimension getSize() {
+        return size;
+    }
 
-	public void setForegroundColor(final IColorConstant colorValue) {
-		this.foregroundColor = colorValue;
-	}
+    public void setForegroundColor(final IColorConstant colorValue) {
+        this.foregroundColor = colorValue;
+    }
 
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		this.backgroundColor = colorValue;
-	}
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        this.backgroundColor = colorValue;
+    }
 
-	public IColorConstant getForegroundColor() {
-		return foregroundColor;
-	}
+    public IColorConstant getForegroundColor() {
+        return foregroundColor;
+    }
 
-	public IColorConstant getBackgroundColor() {
-		return backgroundColor;
-	}
+    public IColorConstant getBackgroundColor() {
+        return backgroundColor;
+    }
 
-	public void setVisible(final boolean visible) {
-		this.visible = visible;
-	}
+    public void setVisible(final boolean visible) {
+        this.visible = visible;
+    }
 
-	public boolean isVisible() {
-		return visible;
-	}
+    public boolean isVisible() {
+        return visible;
+    }
 
-	public void setEnabled(final boolean enabled) {
-		this.enabled = enabled;
-	}
+    public void setEnabled(final boolean enabled) {
+        this.enabled = enabled;
+    }
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+    public boolean isEnabled() {
+        return enabled;
+    }
 
-	public String getToolTipText() {
-		return tooltipText;
-	}
+    public String getToolTipText() {
+        return tooltipText;
+    }
 
-	public void setToolTipText(final String tooltipText) {
-		this.tooltipText = tooltipText;
-	}
+    public void setToolTipText(final String tooltipText) {
+        this.tooltipText = tooltipText;
+    }
 
-	public void setCursor(final Cursor cursor) {
-		this.cursor = cursor;
-	}
+    public void setCursor(final Cursor cursor) {
+        this.cursor = cursor;
+    }
 
-	public Cursor getCursor() {
-		return cursor;
-	}
+    public Cursor getCursor() {
+        return cursor;
+    }
 
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		this.layoutConstraints = layoutConstraints;
-	}
+    public void setLayoutConstraints(final Object layoutConstraints) {
+        this.layoutConstraints = layoutConstraints;
+    }
 
-	public Object getLayoutConstraints() {
-		return layoutConstraints;
-	}
+    public Object getLayoutConstraints() {
+        return layoutConstraints;
+    }
 
-	public void setRedrawEnabled(final boolean enabled2) {
-		//Do nothing
-	}
+    public void setRedrawEnabled(final boolean enabled2) {
+        //Do nothing
+    }
 
-	public boolean requestFocus() {
-		//TODO LG implement requestFocus 
-		return false;
-	}
+    public boolean requestFocus() {
+        //TODO LG implement requestFocus 
+        return false;
+    }
 
-	public Dimension getMinSize() {
-		//TODO LG implement getMinSize
-		return new Dimension(0, 0);
-	}
+    public Dimension getMinSize() {
+        //TODO LG implement getMinSize
+        return new Dimension(0, 0);
+    }
 
-	public Dimension getPreferredSize() {
-		//TODO LG implement getPreferredSize
-		return new Dimension(100, 100);
-	}
+    public Dimension getPreferredSize() {
+        //TODO LG implement getPreferredSize
+        return new Dimension(100, 100);
+    }
 
-	public Dimension getMaxSize() {
-		//TODO LG implement getMaxSize
-		return new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);
-	}
+    public Dimension getMaxSize() {
+        //TODO LG implement getMaxSize
+        return new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);
+    }
 
-	public Rectangle getClientArea() {
-		//TODO LG implement getClientArea
-		return new Rectangle(new Position(0, 0), getSize());
-	}
+    public Rectangle getClientArea() {
+        //TODO LG implement getClientArea
+        return new Rectangle(new Position(0, 0), getSize());
+    }
 
-	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
-		// TODO LG computeDecoratedSize
-		return clientAreaSize;
-	}
+    public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+        // TODO LG computeDecoratedSize
+        return clientAreaSize;
+    }
 
-	public IDragSourceSpi getDragSource() {
-		return dragSource;
-	}
+    public IDragSourceSpi getDragSource() {
+        return dragSource;
+    }
 
-	public IDropTargetSpi getDropTarget() {
-		return dropTarget;
-	}
+    public IDropTargetSpi getDropTarget() {
+        return dropTarget;
+    }
 
 }

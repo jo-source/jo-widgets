@@ -31,10 +31,10 @@ import org.jowidgets.common.types.Dimension;
 
 public interface ISplitCompositeCommon extends IControlCommon {
 
-	IContainerCommon getFirst();
+    IContainerCommon getFirst();
 
-	IContainerCommon getSecond();
+    IContainerCommon getSecond();
 
-	void setMinSizes(final Dimension firstMinSize, final Dimension secondMinSize);
+    void setMinSizes(final Dimension firstMinSize, final Dimension secondMinSize);
 
 }

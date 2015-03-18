@@ -33,9 +33,9 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
 public class CollectionInputDialogDefaults implements IDefaultInitializer<ICollectionInputDialogSetupBuilder<?, ?>> {
 
-	@Override
-	public void initialize(final ICollectionInputDialogSetupBuilder<?, ?> builder) {
-		builder.setDefaultButtonPolicy(InputDialogDefaultButtonPolicy.DISABLED);
-	}
+    @Override
+    public void initialize(final ICollectionInputDialogSetupBuilder<?, ?> builder) {
+        builder.setDefaultButtonPolicy(InputDialogDefaultButtonPolicy.DISABLED);
+    }
 
 }

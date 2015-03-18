@@ -30,6 +30,6 @@ package org.jowidgets.unit.api;
 
 public interface IUnitProvider<BASE_VALUE_TYPE> {
 
-	IUnit getUnit(BASE_VALUE_TYPE value);
+    IUnit getUnit(BASE_VALUE_TYPE value);
 
 }

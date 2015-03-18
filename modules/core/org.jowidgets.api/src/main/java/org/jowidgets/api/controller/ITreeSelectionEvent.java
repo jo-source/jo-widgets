@@ -34,28 +34,28 @@ import org.jowidgets.api.widgets.ITreeNode;
 
 public interface ITreeSelectionEvent {
 
-	/**
-	 * @return The nodes that was selected by this event or an empty list if nothing was selected.
-	 */
-	List<ITreeNode> getSelected();
+    /**
+     * @return The nodes that was selected by this event or an empty list if nothing was selected.
+     */
+    List<ITreeNode> getSelected();
 
-	/**
-	 * @return The nodes that was unselected by this event or an empty list if nothing was unselected.
-	 */
-	List<ITreeNode> getUnselected();
+    /**
+     * @return The nodes that was unselected by this event or an empty list if nothing was unselected.
+     */
+    List<ITreeNode> getUnselected();
 
-	/**
-	 * Gets the first node that was selected by this event.
-	 * 
-	 * @return The node that was selected by this event or null if nothing was selected
-	 */
-	ITreeNode getFirstSelected();
+    /**
+     * Gets the first node that was selected by this event.
+     * 
+     * @return The node that was selected by this event or null if nothing was selected
+     */
+    ITreeNode getFirstSelected();
 
-	/**
-	 * Gets the first node that was unselected by this event.
-	 * 
-	 * @return The node that was unselected by this event or null if nothing was unselected
-	 */
-	ITreeNode getFirstUnselected();
+    /**
+     * Gets the first node that was unselected by this event.
+     * 
+     * @return The node that was unselected by this event or null if nothing was unselected
+     */
+    ITreeNode getFirstUnselected();
 
 }

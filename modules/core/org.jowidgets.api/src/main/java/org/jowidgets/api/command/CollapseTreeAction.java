@@ -32,14 +32,14 @@ import org.jowidgets.api.widgets.ITreeContainer;
 
 public final class CollapseTreeAction {
 
-	private CollapseTreeAction() {}
+    private CollapseTreeAction() {}
 
-	public static ITreeExpansionActionBuilder builder(final ITreeContainer tree) {
-		return DefaultActionFactory.collapseTreeActionBuilder(tree);
-	}
+    public static ITreeExpansionActionBuilder builder(final ITreeContainer tree) {
+        return DefaultActionFactory.collapseTreeActionBuilder(tree);
+    }
 
-	public static ITreeExpansionAction create(final ITreeContainer tree) {
-		return DefaultActionFactory.collapseTreeAction(tree);
-	}
+    public static ITreeExpansionAction create(final ITreeContainer tree) {
+        return DefaultActionFactory.collapseTreeAction(tree);
+    }
 
 }

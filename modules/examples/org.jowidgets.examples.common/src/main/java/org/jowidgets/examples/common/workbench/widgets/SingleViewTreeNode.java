@@ -37,29 +37,29 @@ import org.jowidgets.workbench.api.IView;
 
 public class SingleViewTreeNode extends AbstractDemoComponentNode {
 
-	private final Class<? extends IView> viewClass;
-	private final String id;
-	private final String label;
+    private final Class<? extends IView> viewClass;
+    private final String id;
+    private final String label;
 
-	public SingleViewTreeNode(final Class<? extends IView> viewClass, final String id, final String label) {
-		this(viewClass, id, label, null, SilkIcons.APPLICATION);
-	}
+    public SingleViewTreeNode(final Class<? extends IView> viewClass, final String id, final String label) {
+        this(viewClass, id, label, null, SilkIcons.APPLICATION);
+    }
 
-	public SingleViewTreeNode(
-		final Class<? extends IView> viewClass,
-		final String id,
-		final String label,
-		final String tooltip,
-		final IImageConstant icon) {
-		super(id, label, tooltip, icon);
-		this.viewClass = viewClass;
-		this.id = id;
-		this.label = label;
-	}
+    public SingleViewTreeNode(
+        final Class<? extends IView> viewClass,
+        final String id,
+        final String label,
+        final String tooltip,
+        final IImageConstant icon) {
+        super(id, label, tooltip, icon);
+        this.viewClass = viewClass;
+        this.id = id;
+        this.label = label;
+    }
 
-	@Override
-	public IComponent createComponent(final IComponentContext context) {
-		return new SingleViewComponent(context, viewClass, id, label);
-	}
+    @Override
+    public IComponent createComponent(final IComponentContext context) {
+        return new SingleViewComponent(context, viewClass, id, label);
+    }
 
 }

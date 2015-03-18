@@ -36,9 +36,9 @@ import org.jowidgets.impl.widgets.composed.blueprint.convenience.InputDialogSetu
 
 public class ComposedSetupConvenienceRegistry extends BasicSetupConvenienceRegistry {
 
-	public ComposedSetupConvenienceRegistry() {
-		super();
-		register(IInputCompositeSetupBuilder.class, new InputCompositeSetupConvenience());
-		register(IInputDialogSetupBuilder.class, new InputDialogSetupConvenience());
-	}
+    public ComposedSetupConvenienceRegistry() {
+        super();
+        register(IInputCompositeSetupBuilder.class, new InputCompositeSetupConvenience());
+        register(IInputDialogSetupBuilder.class, new InputDialogSetupConvenience());
+    }
 }

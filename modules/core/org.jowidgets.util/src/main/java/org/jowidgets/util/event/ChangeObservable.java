@@ -36,32 +36,32 @@ import org.jowidgets.util.Assert;
 
 public class ChangeObservable implements IChangeObservable {
 
-	private final Set<IChangeListener> listeners;
+    private final Set<IChangeListener> listeners;
 
-	public ChangeObservable() {
-		this.listeners = new LinkedHashSet<IChangeListener>();
-	}
+    public ChangeObservable() {
+        this.listeners = new LinkedHashSet<IChangeListener>();
+    }
 
-	@Override
-	public final void addChangeListener(final IChangeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public final void addChangeListener(final IChangeListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public final void removeChangeListener(final IChangeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public final void removeChangeListener(final IChangeListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public final void fireChangedEvent() {
-		for (final IChangeListener listener : new LinkedList<IChangeListener>(listeners)) {
-			listener.changed();
-		}
-	}
+    public final void fireChangedEvent() {
+        for (final IChangeListener listener : new LinkedList<IChangeListener>(listeners)) {
+            listener.changed();
+        }
+    }
 
-	public void dispose() {
-		listeners.clear();
-	}
+    public void dispose() {
+        listeners.clear();
+    }
 
 }

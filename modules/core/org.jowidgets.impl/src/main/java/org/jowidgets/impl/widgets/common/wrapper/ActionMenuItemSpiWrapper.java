@@ -37,38 +37,38 @@ import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 
 public class ActionMenuItemSpiWrapper extends MenuItemSpiWrapper implements IActionMenuItemCommon {
 
-	public ActionMenuItemSpiWrapper(final IActionMenuItemSpi widget, final ItemModelBindingDelegate itemDelegate) {
-		super(widget, itemDelegate);
-		widget.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				getModel().actionPerformed();
-			}
-		});
-	}
+    public ActionMenuItemSpiWrapper(final IActionMenuItemSpi widget, final ItemModelBindingDelegate itemDelegate) {
+        super(widget, itemDelegate);
+        widget.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                getModel().actionPerformed();
+            }
+        });
+    }
 
-	@Override
-	public IActionMenuItemSpi getWidget() {
-		return (IActionMenuItemSpi) super.getWidget();
-	}
+    @Override
+    public IActionMenuItemSpi getWidget() {
+        return (IActionMenuItemSpi) super.getWidget();
+    }
 
-	public IActionItemModel getModel() {
-		return (IActionItemModel) getItemModelBindingDelegate().getModel();
-	}
+    public IActionItemModel getModel() {
+        return (IActionItemModel) getItemModelBindingDelegate().getModel();
+    }
 
-	@Override
-	public void addActionListener(final IActionListener actionListener) {
-		getWidget().addActionListener(actionListener);
-	}
+    @Override
+    public void addActionListener(final IActionListener actionListener) {
+        getWidget().addActionListener(actionListener);
+    }
 
-	@Override
-	public void removeActionListener(final IActionListener actionListener) {
-		getWidget().removeActionListener(actionListener);
-	}
+    @Override
+    public void removeActionListener(final IActionListener actionListener) {
+        getWidget().removeActionListener(actionListener);
+    }
 
-	@Override
-	public void setAccelerator(final Accelerator accelerator) {
-		getItemModelBindingDelegate().setAccelerator(accelerator);
-	}
+    @Override
+    public void setAccelerator(final Accelerator accelerator) {
+        getItemModelBindingDelegate().setAccelerator(accelerator);
+    }
 
 }

@@ -34,17 +34,15 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.widgets.composed.InputDialogImpl;
 
 public class InputDialogFactory<INPUT_TYPE> extends
-		AbstractDialogFactory<IInputDialog<INPUT_TYPE>, IInputDialogDescriptor<INPUT_TYPE>> {
+        AbstractDialogFactory<IInputDialog<INPUT_TYPE>, IInputDialogDescriptor<INPUT_TYPE>> {
 
-	public InputDialogFactory(final IGenericWidgetFactory genericWidgetFactory) {
-		super(genericWidgetFactory);
-	}
+    public InputDialogFactory(final IGenericWidgetFactory genericWidgetFactory) {
+        super(genericWidgetFactory);
+    }
 
-	@Override
-	protected IInputDialog<INPUT_TYPE> createWidget(
-		final IFrame dialogWidget,
-		final IInputDialogDescriptor<INPUT_TYPE> descriptor) {
-		return new InputDialogImpl<INPUT_TYPE>(dialogWidget, descriptor);
-	}
+    @Override
+    protected IInputDialog<INPUT_TYPE> createWidget(final IFrame dialogWidget, final IInputDialogDescriptor<INPUT_TYPE> descriptor) {
+        return new InputDialogImpl<INPUT_TYPE>(dialogWidget, descriptor);
+    }
 
 }

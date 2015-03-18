@@ -33,37 +33,37 @@ import org.jowidgets.util.ObservableValueWrapper;
 
 public class ParameterWrapper<VALUE_TYPE> extends ObservableValueWrapper<VALUE_TYPE> implements IParameter<VALUE_TYPE> {
 
-	private final IParameter<VALUE_TYPE> original;
+    private final IParameter<VALUE_TYPE> original;
 
-	public ParameterWrapper(final IParameter<VALUE_TYPE> original) {
-		super(original);
-		Assert.paramNotNull(original, "original");
-		this.original = original;
-	}
+    public ParameterWrapper(final IParameter<VALUE_TYPE> original) {
+        super(original);
+        Assert.paramNotNull(original, "original");
+        this.original = original;
+    }
 
-	@Override
-	public Class<VALUE_TYPE> getValueType() {
-		return original.getValueType();
-	}
+    @Override
+    public Class<VALUE_TYPE> getValueType() {
+        return original.getValueType();
+    }
 
-	@Override
-	public String getLabel() {
-		return original.getLabel();
-	}
+    @Override
+    public String getLabel() {
+        return original.getLabel();
+    }
 
-	@Override
-	public String getDescription() {
-		return original.getDescription();
-	}
+    @Override
+    public String getDescription() {
+        return original.getDescription();
+    }
 
-	@Override
-	public VALUE_TYPE getDefaultValue() {
-		return original.getDefaultValue();
-	}
+    @Override
+    public VALUE_TYPE getDefaultValue() {
+        return original.getDefaultValue();
+    }
 
-	@Override
-	public String toString() {
-		return "ParameterWrapper [original=" + original + "]";
-	}
+    @Override
+    public String toString() {
+        return "ParameterWrapper [original=" + original + "]";
+    }
 
 }

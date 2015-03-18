@@ -34,57 +34,57 @@ import org.jowidgets.util.Assert;
 
 public final class TransferType<JAVA_TYPE> implements Serializable {
 
-	public static final TransferType<String> STRING_TYPE = new TransferType<String>(String.class);
+    public static final TransferType<String> STRING_TYPE = new TransferType<String>(String.class);
 
-	public static final TransferType<UnknownTransferTypeClass> UNKOWN_TYPE = new TransferType<UnknownTransferTypeClass>(
-		UnknownTransferTypeClass.class);
+    public static final TransferType<UnknownTransferTypeClass> UNKOWN_TYPE = new TransferType<UnknownTransferTypeClass>(
+        UnknownTransferTypeClass.class);
 
-	private static final long serialVersionUID = 3536962082573394080L;
+    private static final long serialVersionUID = 3536962082573394080L;
 
-	private final Class<JAVA_TYPE> javaType;
-	private final String className;
+    private final Class<JAVA_TYPE> javaType;
+    private final String className;
 
-	public TransferType(final Class<JAVA_TYPE> javaType) {
-		Assert.paramNotNull(javaType, "javaType");
-		this.javaType = javaType;
-		this.className = javaType.getName();
-	}
+    public TransferType(final Class<JAVA_TYPE> javaType) {
+        Assert.paramNotNull(javaType, "javaType");
+        this.javaType = javaType;
+        this.className = javaType.getName();
+    }
 
-	public Class<JAVA_TYPE> getJavaType() {
-		return javaType;
-	}
+    public Class<JAVA_TYPE> getJavaType() {
+        return javaType;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((className == null) ? 0 : className.hashCode());
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((className == null) ? 0 : className.hashCode());
+        return result;
+    }
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof TransferType)) {
-			return false;
-		}
-		@SuppressWarnings({"unchecked", "rawtypes"})
-		final TransferType<JAVA_TYPE> other = (TransferType) obj;
-		return className.equals(other.getJavaType().getName());
-	}
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof TransferType)) {
+            return false;
+        }
+        @SuppressWarnings({"unchecked", "rawtypes"})
+        final TransferType<JAVA_TYPE> other = (TransferType) obj;
+        return className.equals(other.getJavaType().getName());
+    }
 
-	@Override
-	public String toString() {
-		return "TransferType [className=" + className + "]";
-	}
+    @Override
+    public String toString() {
+        return "TransferType [className=" + className + "]";
+    }
 
-	private static final class UnknownTransferTypeClass implements Serializable {
-		private static final long serialVersionUID = -5806128937509663454L;
-	}
+    private static final class UnknownTransferTypeClass implements Serializable {
+        private static final long serialVersionUID = -5806128937509663454L;
+    }
 
 }

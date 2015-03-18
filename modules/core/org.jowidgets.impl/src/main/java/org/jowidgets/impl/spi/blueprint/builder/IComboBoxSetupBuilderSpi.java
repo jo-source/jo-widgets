@@ -31,10 +31,10 @@ import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.common.widgets.builder.IComboBoxSetupBuilderCommon;
 
 public interface IComboBoxSetupBuilderSpi<INSTANCE_TYPE extends IComboBoxSetupBuilderSpi<?>> extends
-		IComboBoxSelectionSetupBuilderSpi<INSTANCE_TYPE>,
-		ITextComponentSetupBuilderSpi<INSTANCE_TYPE>,
-		IComboBoxSetupBuilderCommon<INSTANCE_TYPE> {
+        IComboBoxSelectionSetupBuilderSpi<INSTANCE_TYPE>,
+        ITextComponentSetupBuilderSpi<INSTANCE_TYPE>,
+        IComboBoxSetupBuilderCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setMask(final ITextMask textMask);
+    INSTANCE_TYPE setMask(final ITextMask textMask);
 
 }

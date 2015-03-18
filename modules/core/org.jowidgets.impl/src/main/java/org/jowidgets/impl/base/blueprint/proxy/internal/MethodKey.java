@@ -31,43 +31,43 @@ import java.lang.reflect.Method;
 
 public class MethodKey {
 
-	private final Method method;
+    private final Method method;
 
-	public MethodKey(final Method method) {
-		super();
-		this.method = method;
-	}
+    public MethodKey(final Method method) {
+        super();
+        this.method = method;
+    }
 
-	public Method getMethod() {
-		return method;
-	}
+    public Method getMethod() {
+        return method;
+    }
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (obj != null && obj instanceof MethodKey) {
-			final MethodKey other = (MethodKey) obj;
-			if (((method.getName() == other.getMethod().getName()))) {
-				if (!method.getReturnType().equals(other.getMethod().getReturnType())) {
-					return false;
-				}
-				final Class<?>[] params1 = method.getParameterTypes();
-				final Class<?>[] params2 = other.getMethod().getParameterTypes();
-				if (params1.length == params2.length) {
-					for (int i = 0; i < params1.length; i++) {
-						if (params1[i] != params2[i]) {
-							return false;
-						}
-					}
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+    @Override
+    public boolean equals(final Object obj) {
+        if (obj != null && obj instanceof MethodKey) {
+            final MethodKey other = (MethodKey) obj;
+            if (((method.getName() == other.getMethod().getName()))) {
+                if (!method.getReturnType().equals(other.getMethod().getReturnType())) {
+                    return false;
+                }
+                final Class<?>[] params1 = method.getParameterTypes();
+                final Class<?>[] params2 = other.getMethod().getParameterTypes();
+                if (params1.length == params2.length) {
+                    for (int i = 0; i < params1.length; i++) {
+                        if (params1[i] != params2[i]) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-	@Override
-	public int hashCode() {
-		return method.getName().hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return method.getName().hashCode();
+    }
 
 }

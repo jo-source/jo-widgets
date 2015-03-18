@@ -31,10 +31,10 @@ import org.jowidgets.common.image.IImageConstant;
 
 public interface IItemSetup {
 
-	String getText();
+    String getText();
 
-	String getToolTipText();
+    String getToolTipText();
 
-	IImageConstant getIcon();
+    IImageConstant getIcon();
 
 }

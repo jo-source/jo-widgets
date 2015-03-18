@@ -34,13 +34,13 @@ import org.jowidgets.helloworld.common.HelloWorldApplication;
 
 public final class HelloWorldStarterSwing {
 
-	private HelloWorldStarterSwing() {}
+    private HelloWorldStarterSwing() {}
 
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		Toolkit.getApplicationRunner().run(new HelloWorldApplication());
-		System.exit(0);
-	}
+    public static void main(final String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
+        Toolkit.getApplicationRunner().run(new HelloWorldApplication());
+        System.exit(0);
+    }
 
 }

@@ -40,55 +40,55 @@ import org.jowidgets.util.Assert;
 
 public final class BeanValidatorFactory {
 
-	private static IBeanValidatorFactory instance = createDefaultFactory();
+    private static IBeanValidatorFactory instance = createDefaultFactory();
 
-	private BeanValidatorFactory() {}
+    private BeanValidatorFactory() {}
 
-	private static IBeanValidatorFactory createDefaultFactory() {
-		IBeanValidatorFactory result = null;
-		final ServiceLoader<IBeanValidatorFactory> serviceLoader = ServiceLoader.load(
-				IBeanValidatorFactory.class,
-				SharedClassLoader.getCompositeClassLoader());
+    private static IBeanValidatorFactory createDefaultFactory() {
+        IBeanValidatorFactory result = null;
+        final ServiceLoader<IBeanValidatorFactory> serviceLoader = ServiceLoader.load(
+                IBeanValidatorFactory.class,
+                SharedClassLoader.getCompositeClassLoader());
 
-		final Iterator<IBeanValidatorFactory> services = serviceLoader.iterator();
-		if (services.hasNext()) {
-			result = services.next();
-		}
-		if (result == null) {
-			result = new DefaultBeanValidatorFactory();
-		}
-		return result;
-	}
+        final Iterator<IBeanValidatorFactory> services = serviceLoader.iterator();
+        if (services.hasNext()) {
+            result = services.next();
+        }
+        if (result == null) {
+            result = new DefaultBeanValidatorFactory();
+        }
+        return result;
+    }
 
-	public static IBeanValidatorFactory getInstance() {
-		return instance;
-	}
+    public static IBeanValidatorFactory getInstance() {
+        return instance;
+    }
 
-	public static synchronized void setFactory(final IBeanValidatorFactory factory) {
-		Assert.paramNotNull(factory, "factory");
-		instance = factory;
-	}
+    public static synchronized void setFactory(final IBeanValidatorFactory factory) {
+        Assert.paramNotNull(factory, "factory");
+        instance = factory;
+    }
 
-	public static Validator create() {
-		return getInstance().create();
-	}
+    public static Validator create() {
+        return getInstance().create();
+    }
 
-	private static class DefaultBeanValidatorFactory implements IBeanValidatorFactory {
+    private static class DefaultBeanValidatorFactory implements IBeanValidatorFactory {
 
-		@Override
-		public Validator create() {
-			try {
-				return Validation.buildDefaultValidatorFactory().getValidator();
-			}
-			catch (final ValidationException e) {
-				//TODO MG change error handling (maybe ignore)
-				//CHECKSTYLE:OFF
-				e.printStackTrace();
-				//CHECKSTYLE:ON
-				return null;
-			}
-		}
+        @Override
+        public Validator create() {
+            try {
+                return Validation.buildDefaultValidatorFactory().getValidator();
+            }
+            catch (final ValidationException e) {
+                //TODO MG change error handling (maybe ignore)
+                //CHECKSTYLE:OFF
+                e.printStackTrace();
+                //CHECKSTYLE:ON
+                return null;
+            }
+        }
 
-	}
+    }
 
 }

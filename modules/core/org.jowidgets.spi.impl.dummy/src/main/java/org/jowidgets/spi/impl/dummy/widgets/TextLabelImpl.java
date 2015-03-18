@@ -34,39 +34,39 @@ import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 
 public class TextLabelImpl extends DummyControl implements ITextLabelSpi {
 
-	public TextLabelImpl(final ITextLabelSetupSpi setup) {
-		super(new UIDTextLabel());
+    public TextLabelImpl(final ITextLabelSetupSpi setup) {
+        super(new UIDTextLabel());
 
-		setText(setup.getText());
-		setToolTipText(setup.getToolTipText());
-		setMarkup(setup.getMarkup());
+        setText(setup.getText());
+        setToolTipText(setup.getToolTipText());
+        setMarkup(setup.getMarkup());
 
-		getUiReference().setHorizontalAlignment(setup.getAlignment());
-	}
+        getUiReference().setHorizontalAlignment(setup.getAlignment());
+    }
 
-	@Override
-	public UIDTextLabel getUiReference() {
-		return (UIDTextLabel) super.getUiReference();
-	}
+    @Override
+    public UIDTextLabel getUiReference() {
+        return (UIDTextLabel) super.getUiReference();
+    }
 
-	@Override
-	public void setText(final String text) {
-		getUiReference().setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        getUiReference().setText(text);
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		getUiReference().setMarkup(markup);
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        getUiReference().setMarkup(markup);
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		getUiReference().setFontSize(size);
-	}
+    @Override
+    public void setFontSize(final int size) {
+        getUiReference().setFontSize(size);
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		getUiReference().setFontName(fontName);
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        getUiReference().setFontName(fontName);
+    }
 
 }

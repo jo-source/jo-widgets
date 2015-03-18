@@ -34,12 +34,12 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 import org.jowidgets.util.io.ITempFileFactory;
 
 public interface IMediaPlayerSetupBuilder<INSTANCE_TYPE extends IMediaPlayerSetupBuilder<?>> extends
-		IComponentSetup,
-		IComponentSetupBuilder<INSTANCE_TYPE> {
+        IComponentSetup,
+        IComponentSetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setTempFileFactory(ITempFileFactory factory);
+    INSTANCE_TYPE setTempFileFactory(ITempFileFactory factory);
 
-	@Mandatory
-	ITempFileFactory getTempFileFactory();
+    @Mandatory
+    ITempFileFactory getTempFileFactory();
 
 }

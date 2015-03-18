@@ -35,28 +35,28 @@ import org.jowidgets.common.types.Accelerator;
 
 class ActionItemModelImpl extends AbstractActionItemModelImpl implements IActionItemModel {
 
-	protected ActionItemModelImpl() {
-		this(null, null, null, null, null, null, true, null, null);
-	}
+    protected ActionItemModelImpl() {
+        this(null, null, null, null, null, null, true, null, null);
+    }
 
-	protected ActionItemModelImpl(
-		final String id,
-		final String text,
-		final String toolTipText,
-		final IImageConstant icon,
-		final Accelerator accelerator,
-		final Character mnemonic,
-		final boolean enabled,
-		final IAction action,
-		final ActionItemVisibilityAspectComposite visibilityAspect) {
-		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled, action, visibilityAspect);
-	}
+    protected ActionItemModelImpl(
+        final String id,
+        final String text,
+        final String toolTipText,
+        final IImageConstant icon,
+        final Accelerator accelerator,
+        final Character mnemonic,
+        final boolean enabled,
+        final IAction action,
+        final ActionItemVisibilityAspectComposite visibilityAspect) {
+        super(id, text, toolTipText, icon, accelerator, mnemonic, enabled, action, visibilityAspect);
+    }
 
-	@Override
-	public IActionItemModel createCopy() {
-		final ActionItemModelImpl result = new ActionItemModelImpl();
-		result.setContent(this);
-		return result;
-	}
+    @Override
+    public IActionItemModel createCopy() {
+        final ActionItemModelImpl result = new ActionItemModelImpl();
+        result.setContent(this);
+        return result;
+    }
 
 }

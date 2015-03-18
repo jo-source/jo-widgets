@@ -30,12 +30,12 @@ package org.jowidgets.util;
 
 public final class DefaultExceptionHandler implements IExceptionHandler {
 
-	@Override
-	public void handleException(final Throwable exception) {
-		if (exception instanceof RuntimeException) {
-			throw (RuntimeException) exception;
-		}
-		throw new RuntimeException(exception);
-	}
+    @Override
+    public void handleException(final Throwable exception) {
+        if (exception instanceof RuntimeException) {
+            throw (RuntimeException) exception;
+        }
+        throw new RuntimeException(exception);
+    }
 
 }

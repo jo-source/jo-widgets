@@ -36,24 +36,24 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IWindowSetup extends IComponentSetup {
 
-	@Mandatory
-	AutoPackPolicy getAutoPackPolicy();
+    @Mandatory
+    AutoPackPolicy getAutoPackPolicy();
 
-	@Mandatory
-	AutoPositionCorrectionPolicy getAutoPositionCorrectionPolicy();
+    @Mandatory
+    AutoPositionCorrectionPolicy getAutoPositionCorrectionPolicy();
 
-	@Mandatory
-	AutoCenterPolicy getAutoCenterPolicy();
+    @Mandatory
+    AutoCenterPolicy getAutoCenterPolicy();
 
-	@Mandatory
-	boolean getAutoDispose();
+    @Mandatory
+    boolean getAutoDispose();
 
-	Dimension getMinPackSize();
+    Dimension getMinPackSize();
 
-	Dimension getMaxPackSize();
+    Dimension getMaxPackSize();
 
-	Dimension getSize();
+    Dimension getSize();
 
-	Position getPosition();
+    Position getPosition();
 
 }

@@ -41,157 +41,157 @@ import org.jowidgets.util.CollectionUtils;
 
 public final class SharedClassLoader {
 
-	private static final ISharedClassLoader INSTANCE = new SharedClassLoaderImpl();
+    private static final ISharedClassLoader INSTANCE = new SharedClassLoaderImpl();
 
-	private SharedClassLoader() {}
+    private SharedClassLoader() {}
 
-	public static ISharedClassLoader getInstance() {
-		return INSTANCE;
-	}
+    public static ISharedClassLoader getInstance() {
+        return INSTANCE;
+    }
 
-	/**
-	 * Adds a class loader to the shared class loader
-	 * 
-	 * @param classLoader The class loader to add
-	 */
-	public static void addClassLoader(final IClassLoader classLoader) {
-		getInstance().addClassLoader(classLoader);
-	}
+    /**
+     * Adds a class loader to the shared class loader
+     * 
+     * @param classLoader The class loader to add
+     */
+    public static void addClassLoader(final IClassLoader classLoader) {
+        getInstance().addClassLoader(classLoader);
+    }
 
-	/**
-	 * Removes a class loader from the shared class loader
-	 * 
-	 * @param classLoader The class loader to remove
-	 */
-	public static void removeClassLoader(final IClassLoader classLoader) {
-		getInstance().removeClassLoader(classLoader);
-	}
+    /**
+     * Removes a class loader from the shared class loader
+     * 
+     * @param classLoader The class loader to remove
+     */
+    public static void removeClassLoader(final IClassLoader classLoader) {
+        getInstance().removeClassLoader(classLoader);
+    }
 
-	/**
-	 * Gets the composite class loader that uses all registered class loaders to resolve
-	 * the class to load.
-	 * The shared class loader always uses the SystemClassLoader and the ThreadContextLocalClassLoader
-	 * as default (e.g. if no classloader was added)
-	 * 
-	 * @return The composite class loader
-	 */
-	public static ClassLoader getCompositeClassLoader() {
-		return getInstance().getCompositeClassLoader();
-	}
+    /**
+     * Gets the composite class loader that uses all registered class loaders to resolve
+     * the class to load.
+     * The shared class loader always uses the SystemClassLoader and the ThreadContextLocalClassLoader
+     * as default (e.g. if no classloader was added)
+     * 
+     * @return The composite class loader
+     */
+    public static ClassLoader getCompositeClassLoader() {
+        return getInstance().getCompositeClassLoader();
+    }
 
-	private static final class SharedClassLoaderImpl implements ISharedClassLoader {
+    private static final class SharedClassLoaderImpl implements ISharedClassLoader {
 
-		private final Set<IClassLoader> classLoaders;
-		private final ClassLoader compositeClassLoader;
+        private final Set<IClassLoader> classLoaders;
+        private final ClassLoader compositeClassLoader;
 
-		private SharedClassLoaderImpl() {
-			this.classLoaders = new LinkedHashSet<IClassLoader>();
-			this.compositeClassLoader = new CompositeClassLoaderImpl();
-			addClassLoader(ClassLoaderAdapter.create(ClassLoader.getSystemClassLoader()));
-			addClassLoader(new CurrentThreadClassLoader());
-		}
+        private SharedClassLoaderImpl() {
+            this.classLoaders = new LinkedHashSet<IClassLoader>();
+            this.compositeClassLoader = new CompositeClassLoaderImpl();
+            addClassLoader(ClassLoaderAdapter.create(ClassLoader.getSystemClassLoader()));
+            addClassLoader(new CurrentThreadClassLoader());
+        }
 
-		@Override
-		public void addClassLoader(final IClassLoader classLoader) {
-			Assert.paramNotNull(classLoader, "classLoader");
-			classLoaders.add(classLoader);
-		}
+        @Override
+        public void addClassLoader(final IClassLoader classLoader) {
+            Assert.paramNotNull(classLoader, "classLoader");
+            classLoaders.add(classLoader);
+        }
 
-		@Override
-		public void removeClassLoader(final IClassLoader classLoader) {
-			Assert.paramNotNull(classLoader, "classLoader");
-			classLoaders.remove(classLoader);
-		}
+        @Override
+        public void removeClassLoader(final IClassLoader classLoader) {
+            Assert.paramNotNull(classLoader, "classLoader");
+            classLoaders.remove(classLoader);
+        }
 
-		@Override
-		public ClassLoader getCompositeClassLoader() {
-			return compositeClassLoader;
-		}
+        @Override
+        public ClassLoader getCompositeClassLoader() {
+            return compositeClassLoader;
+        }
 
-		private final class CompositeClassLoaderImpl extends ClassLoader {
+        private final class CompositeClassLoaderImpl extends ClassLoader {
 
-			@Override
-			protected Class<?> findClass(final String name) throws ClassNotFoundException {
-				for (final IClassLoader classLoader : new LinkedList<IClassLoader>(classLoaders)) {
-					try {
-						return classLoader.findClass(name);
-					}
-					catch (final Exception e) {
-						//Nothing to do, this loader may not know the class
-					}
-				}
-				throw new ClassNotFoundException("Class with the name '" + name + "' not found");
-			}
+            @Override
+            protected Class<?> findClass(final String name) throws ClassNotFoundException {
+                for (final IClassLoader classLoader : new LinkedList<IClassLoader>(classLoaders)) {
+                    try {
+                        return classLoader.findClass(name);
+                    }
+                    catch (final Exception e) {
+                        //Nothing to do, this loader may not know the class
+                    }
+                }
+                throw new ClassNotFoundException("Class with the name '" + name + "' not found");
+            }
 
-			@Override
-			protected URL findResource(final String name) {
-				for (final IClassLoader classLoader : new LinkedList<IClassLoader>(classLoaders)) {
-					try {
-						final URL result = classLoader.findResource(name);
-						if (result != null) {
-							return result;
-						}
-					}
-					catch (final Exception e) {
-						//Nothing to do, this loader may not know the class
-					}
-				}
-				return null;
-			}
+            @Override
+            protected URL findResource(final String name) {
+                for (final IClassLoader classLoader : new LinkedList<IClassLoader>(classLoaders)) {
+                    try {
+                        final URL result = classLoader.findResource(name);
+                        if (result != null) {
+                            return result;
+                        }
+                    }
+                    catch (final Exception e) {
+                        //Nothing to do, this loader may not know the class
+                    }
+                }
+                return null;
+            }
 
-			@Override
-			protected Enumeration<URL> findResources(final String name) throws IOException {
-				final List<URL> result = new LinkedList<URL>();
-				for (final IClassLoader classLoader : new LinkedList<IClassLoader>(classLoaders)) {
-					try {
-						final Enumeration<URL> resources = classLoader.findResources(name);
-						CollectionUtils.addFromEnumerationToCollection(result, resources);
-					}
-					catch (final Exception e) {
-						//Nothing to do, this loader may not know the class
-					}
-				}
-				return CollectionUtils.enumerationFromCollection(result);
-			}
+            @Override
+            protected Enumeration<URL> findResources(final String name) throws IOException {
+                final List<URL> result = new LinkedList<URL>();
+                for (final IClassLoader classLoader : new LinkedList<IClassLoader>(classLoaders)) {
+                    try {
+                        final Enumeration<URL> resources = classLoader.findResources(name);
+                        CollectionUtils.addFromEnumerationToCollection(result, resources);
+                    }
+                    catch (final Exception e) {
+                        //Nothing to do, this loader may not know the class
+                    }
+                }
+                return CollectionUtils.enumerationFromCollection(result);
+            }
 
-		}
+        }
 
-	}
+    }
 
-	private static final class CurrentThreadClassLoader implements IClassLoader {
+    private static final class CurrentThreadClassLoader implements IClassLoader {
 
-		@Override
-		public Class<?> findClass(final String name) throws ClassNotFoundException {
-			final ClassLoader tccl = Thread.currentThread().getContextClassLoader();
-			if (tccl != null) {
-				return tccl.loadClass(name);
-			}
-			else {
-				throw new ClassNotFoundException("No Thread context classloader set");
-			}
-		}
+        @Override
+        public Class<?> findClass(final String name) throws ClassNotFoundException {
+            final ClassLoader tccl = Thread.currentThread().getContextClassLoader();
+            if (tccl != null) {
+                return tccl.loadClass(name);
+            }
+            else {
+                throw new ClassNotFoundException("No Thread context classloader set");
+            }
+        }
 
-		@Override
-		public URL findResource(final String name) {
-			final ClassLoader tccl = Thread.currentThread().getContextClassLoader();
-			if (tccl != null) {
-				return tccl.getResource(name);
-			}
-			else {
-				return null;
-			}
-		}
+        @Override
+        public URL findResource(final String name) {
+            final ClassLoader tccl = Thread.currentThread().getContextClassLoader();
+            if (tccl != null) {
+                return tccl.getResource(name);
+            }
+            else {
+                return null;
+            }
+        }
 
-		@Override
-		public Enumeration<URL> findResources(final String name) throws IOException {
-			final ClassLoader tccl = Thread.currentThread().getContextClassLoader();
-			if (tccl != null) {
-				return tccl.getResources(name);
-			}
-			else {
-				return null;
-			}
-		}
-	}
+        @Override
+        public Enumeration<URL> findResources(final String name) throws IOException {
+            final ClassLoader tccl = Thread.currentThread().getContextClassLoader();
+            if (tccl != null) {
+                return tccl.getResources(name);
+            }
+            else {
+                return null;
+            }
+        }
+    }
 
 }

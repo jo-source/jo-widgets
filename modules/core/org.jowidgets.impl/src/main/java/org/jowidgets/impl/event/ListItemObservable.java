@@ -39,33 +39,33 @@ import org.jowidgets.util.Assert;
 
 public class ListItemObservable implements IListItemObservable {
 
-	private final Set<IListItemListener> listeners;
+    private final Set<IListItemListener> listeners;
 
-	public ListItemObservable() {
-		this.listeners = new LinkedHashSet<IListItemListener>();
-	}
+    public ListItemObservable() {
+        this.listeners = new LinkedHashSet<IListItemListener>();
+    }
 
-	@Override
-	public final void addItemContainerListener(final IListItemListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public final void addItemContainerListener(final IListItemListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public final void removeItemContainerListener(final IListItemListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public final void removeItemContainerListener(final IListItemListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public final void fireItemAdded(final IWidget item) {
-		for (final IListItemListener listener : new LinkedList<IListItemListener>(listeners)) {
-			listener.itemAdded(item);
-		}
-	}
+    public final void fireItemAdded(final IWidget item) {
+        for (final IListItemListener listener : new LinkedList<IListItemListener>(listeners)) {
+            listener.itemAdded(item);
+        }
+    }
 
-	public final void fireItemRemoved(final IWidget item) {
-		for (final IListItemListener listener : new LinkedList<IListItemListener>(listeners)) {
-			listener.itemRemoved(item);
-		}
-	}
+    public final void fireItemRemoved(final IWidget item) {
+        for (final IListItemListener listener : new LinkedList<IListItemListener>(listeners)) {
+            listener.itemRemoved(item);
+        }
+    }
 }

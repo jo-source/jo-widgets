@@ -32,26 +32,26 @@ import org.jowidgets.spi.widgets.IWidgetSpi;
 
 public class DummyWidget implements IWidgetSpi {
 
-	private final UIDComponent component;
+    private final UIDComponent component;
 
-	public DummyWidget(final UIDComponent component) {
-		super();
-		this.component = component;
-	}
+    public DummyWidget(final UIDComponent component) {
+        super();
+        this.component = component;
+    }
 
-	@Override
-	public UIDComponent getUiReference() {
-		return component;
-	}
+    @Override
+    public UIDComponent getUiReference() {
+        return component;
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		component.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        component.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return component.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return component.isEnabled();
+    }
 
 }

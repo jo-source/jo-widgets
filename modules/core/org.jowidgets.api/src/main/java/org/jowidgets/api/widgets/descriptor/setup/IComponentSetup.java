@@ -33,10 +33,10 @@ import org.jowidgets.common.widgets.descriptor.setup.IComponentSetupCommon;
 
 public interface IComponentSetup extends IComponentSetupCommon {
 
-	Boolean isVisible();
+    Boolean isVisible();
 
-	IColorConstant getForegroundColor();
+    IColorConstant getForegroundColor();
 
-	IColorConstant getBackgroundColor();
+    IColorConstant getBackgroundColor();
 
 }

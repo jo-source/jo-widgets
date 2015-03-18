@@ -34,16 +34,16 @@ import org.jowidgets.util.Assert;
 
 public final class CollapseTreeToolbarItemModel {
 
-	private CollapseTreeToolbarItemModel() {}
+    private CollapseTreeToolbarItemModel() {}
 
-	public static ITreeExpansionToolbarItemModelBuilder builder(final ITreeContainer tree) {
-		Assert.paramNotNull(tree, "tree");
-		return TreeExpansionToolbarItemModel.builder(CollapseTreeAction.create(tree));
-	}
+    public static ITreeExpansionToolbarItemModelBuilder builder(final ITreeContainer tree) {
+        Assert.paramNotNull(tree, "tree");
+        return TreeExpansionToolbarItemModel.builder(CollapseTreeAction.create(tree));
+    }
 
-	public static IToolBarItemModel create(final ITreeContainer tree, final int maxLevel) {
-		Assert.paramNotNull(tree, "tree");
-		return TreeExpansionToolbarItemModel.create(CollapseTreeAction.create(tree), maxLevel);
-	}
+    public static IToolBarItemModel create(final ITreeContainer tree, final int maxLevel) {
+        Assert.paramNotNull(tree, "tree");
+        return TreeExpansionToolbarItemModel.create(CollapseTreeAction.create(tree), maxLevel);
+    }
 
 }

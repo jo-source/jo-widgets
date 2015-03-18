@@ -36,33 +36,33 @@ import org.jowidgets.api.widgets.blueprint.builder.convenience.IComboBoxSelectio
 import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
 public class ComboBoxSelectionSetupConvenience extends AbstractSetupBuilderConvenience<IComboBoxSelectionSetupBuilder<?, ?>> implements
-		IComboBoxSelectionSetupConvenience<IComboBoxSelectionSetupBuilder<?, ?>, Object> {
+        IComboBoxSelectionSetupConvenience<IComboBoxSelectionSetupBuilder<?, ?>, Object> {
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
-	@Override
-	public IComboBoxSelectionSetupBuilder<?, ?> setElements(final Object... elements) {
-		getBuilder().setElements((List) Arrays.asList(elements));
-		return getBuilder();
-	}
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @Override
+    public IComboBoxSelectionSetupBuilder<?, ?> setElements(final Object... elements) {
+        getBuilder().setElements((List) Arrays.asList(elements));
+        return getBuilder();
+    }
 
-	@Override
-	public IComboBoxSelectionSetupBuilder<?, ?> autoSelectionOn() {
-		return getBuilder().setAutoSelectionPolicy(AutoSelectionPolicy.PREVIOUS_SELECTED_OR_FIRST);
-	}
+    @Override
+    public IComboBoxSelectionSetupBuilder<?, ?> autoSelectionOn() {
+        return getBuilder().setAutoSelectionPolicy(AutoSelectionPolicy.PREVIOUS_SELECTED_OR_FIRST);
+    }
 
-	@Override
-	public IComboBoxSelectionSetupBuilder<?, ?> autoSelectionOff() {
-		return getBuilder().setAutoSelectionPolicy(AutoSelectionPolicy.OFF);
-	}
+    @Override
+    public IComboBoxSelectionSetupBuilder<?, ?> autoSelectionOff() {
+        return getBuilder().setAutoSelectionPolicy(AutoSelectionPolicy.OFF);
+    }
 
-	@Override
-	public IComboBoxSelectionSetupBuilder<?, ?> autoCompletionOn() {
-		return getBuilder().setAutoCompletion(true);
-	}
+    @Override
+    public IComboBoxSelectionSetupBuilder<?, ?> autoCompletionOn() {
+        return getBuilder().setAutoCompletion(true);
+    }
 
-	@Override
-	public IComboBoxSelectionSetupBuilder<?, ?> autoCompletionOff() {
-		return getBuilder().setAutoCompletion(false);
-	}
+    @Override
+    public IComboBoxSelectionSetupBuilder<?, ?> autoCompletionOff() {
+        return getBuilder().setAutoCompletion(false);
+    }
 
 }

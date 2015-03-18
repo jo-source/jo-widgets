@@ -40,30 +40,30 @@ import org.jowidgets.util.Assert;
 
 public class MouseButtonEvent extends MouseEvent implements IMouseButtonEvent {
 
-	private final MouseButton mouseButton;
-	private final Set<Modifier> modifiers;
+    private final MouseButton mouseButton;
+    private final Set<Modifier> modifiers;
 
-	public MouseButtonEvent(final Position position, final MouseButton mouseButton, final Set<Modifier> modifiers) {
-		super(position);
-		Assert.paramNotNull(mouseButton, "mouseButton");
-		Assert.paramNotNull(modifiers, "modifiers");
-		this.mouseButton = mouseButton;
-		this.modifiers = Collections.unmodifiableSet(new HashSet<Modifier>(modifiers));
-	}
+    public MouseButtonEvent(final Position position, final MouseButton mouseButton, final Set<Modifier> modifiers) {
+        super(position);
+        Assert.paramNotNull(mouseButton, "mouseButton");
+        Assert.paramNotNull(modifiers, "modifiers");
+        this.mouseButton = mouseButton;
+        this.modifiers = Collections.unmodifiableSet(new HashSet<Modifier>(modifiers));
+    }
 
-	@Override
-	public MouseButton getMouseButton() {
-		return mouseButton;
-	}
+    @Override
+    public MouseButton getMouseButton() {
+        return mouseButton;
+    }
 
-	@Override
-	public Set<Modifier> getModifiers() {
-		return modifiers;
-	}
+    @Override
+    public Set<Modifier> getModifiers() {
+        return modifiers;
+    }
 
-	@Override
-	public String toString() {
-		return "MouseButtonEvent [mouseButton=" + mouseButton + ", modifiers=" + modifiers + ", position=" + getPosition() + "]";
-	}
+    @Override
+    public String toString() {
+        return "MouseButtonEvent [mouseButton=" + mouseButton + ", modifiers=" + modifiers + ", position=" + getPosition() + "]";
+    }
 
 }

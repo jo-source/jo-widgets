@@ -35,18 +35,18 @@ import org.jowidgets.tools.command.CommandAction;
 
 public class CopyAction extends CommandAction {
 
-	public CopyAction() {
-		super(new ActionBuilder() {
-			{
-				setText("Copy");
-				setToolTipText("Copy");
-				setIcon(SilkIcons.PAGE_COPY);
-				setAccelerator('C', Modifier.CTRL);
-				setMnemonic('C');
-			}
-		});
+    public CopyAction() {
+        super(new ActionBuilder() {
+            {
+                setText("Copy");
+                setToolTipText("Copy");
+                setIcon(SilkIcons.PAGE_COPY);
+                setAccelerator('C', Modifier.CTRL);
+                setMnemonic('C');
+            }
+        });
 
-		setCommand(new DummyCommandExecuter());
-	}
+        setCommand(new DummyCommandExecuter());
+    }
 
 }

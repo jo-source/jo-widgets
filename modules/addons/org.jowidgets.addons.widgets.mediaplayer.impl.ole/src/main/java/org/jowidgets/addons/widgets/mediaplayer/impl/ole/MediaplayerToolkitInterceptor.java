@@ -36,11 +36,11 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
 final class MediaplayerToolkitInterceptor implements IToolkitInterceptor {
 
-	@Override
-	public void onToolkitCreate(final IToolkit toolkit) {
-		final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
-		widgetFactory.register(IMediaPlayerBluePrint.class, new MediaPlayerFactory());
-		toolkit.getBluePrintFactory().addDefaultsInitializer(IMediaPlayerSetupBuilder.class, new MediaPlayerDefaults());
-	}
+    @Override
+    public void onToolkitCreate(final IToolkit toolkit) {
+        final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
+        widgetFactory.register(IMediaPlayerBluePrint.class, new MediaPlayerFactory());
+        toolkit.getBluePrintFactory().addDefaultsInitializer(IMediaPlayerSetupBuilder.class, new MediaPlayerDefaults());
+    }
 
 }

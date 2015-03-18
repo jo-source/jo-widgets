@@ -37,35 +37,35 @@ import org.jowidgets.unit.tools.UnitValue;
 import org.jowidgets.util.Assert;
 
 public final class LongDoubleUnitConverter extends AbstractNumberUnitConverter<Long, Double> implements
-		IUnitConverter<Long, Double> {
+        IUnitConverter<Long, Double> {
 
-	private final IUnitProvider<Long> unitProvider;
+    private final IUnitProvider<Long> unitProvider;
 
-	public LongDoubleUnitConverter(final IUnit defaultUnit) {
-		this(new StaticUnitProvider<Long>(defaultUnit));
-	}
+    public LongDoubleUnitConverter(final IUnit defaultUnit) {
+        this(new StaticUnitProvider<Long>(defaultUnit));
+    }
 
-	public LongDoubleUnitConverter(final IUnitProvider<Long> unitProvider) {
-		Assert.paramNotNull(unitProvider, "name");
-		this.unitProvider = unitProvider;
-	}
+    public LongDoubleUnitConverter(final IUnitProvider<Long> unitProvider) {
+        Assert.paramNotNull(unitProvider, "name");
+        this.unitProvider = unitProvider;
+    }
 
-	@Override
-	public Long toBaseValue(final IUnitValue<Double> unitValue) {
-		if (unitValue != null) {
-			return Long.valueOf((long) (unitValue.getValue() * unitValue.getUnit().getConversionFactor()));
-		}
-		return null;
-	}
+    @Override
+    public Long toBaseValue(final IUnitValue<Double> unitValue) {
+        if (unitValue != null) {
+            return Long.valueOf((long) (unitValue.getValue() * unitValue.getUnit().getConversionFactor()));
+        }
+        return null;
+    }
 
-	@Override
-	public IUnitValue<Double> toUnitValue(final Long baseValue) {
-		if (baseValue != null) {
-			final IUnit unit = unitProvider.getUnit(baseValue);
-			final Double unitValue = baseValue.doubleValue() / unit.getConversionFactor();
-			return new UnitValue<Double>(unitValue, unit);
-		}
-		return null;
-	}
+    @Override
+    public IUnitValue<Double> toUnitValue(final Long baseValue) {
+        if (baseValue != null) {
+            final IUnit unit = unitProvider.getUnit(baseValue);
+            final Double unitValue = baseValue.doubleValue() / unit.getConversionFactor();
+            return new UnitValue<Double>(unitValue, unit);
+        }
+        return null;
+    }
 
 }

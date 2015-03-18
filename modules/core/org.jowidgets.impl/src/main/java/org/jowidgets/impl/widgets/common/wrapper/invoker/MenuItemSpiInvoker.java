@@ -35,45 +35,45 @@ import org.jowidgets.util.Assert;
 
 public class MenuItemSpiInvoker implements IItemSpiInvoker {
 
-	private final IMenuItemSpi item;
+    private final IMenuItemSpi item;
 
-	public MenuItemSpiInvoker(final IMenuItemSpi item) {
-		Assert.paramNotNull(item, "item");
-		this.item = item;
-	}
+    public MenuItemSpiInvoker(final IMenuItemSpi item) {
+        Assert.paramNotNull(item, "item");
+        this.item = item;
+    }
 
-	public IMenuItemSpi getItem() {
-		return item;
-	}
+    public IMenuItemSpi getItem() {
+        return item;
+    }
 
-	@Override
-	public void setText(final String text) {
-		item.setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        item.setText(text);
+    }
 
-	@Override
-	public void setToolTipText(final String toolTipText) {
-		item.setToolTipText(toolTipText);
-	}
+    @Override
+    public void setToolTipText(final String toolTipText) {
+        item.setToolTipText(toolTipText);
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		item.setIcon(icon);
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        item.setIcon(icon);
+    }
 
-	@Override
-	public void setMnemonic(final Character mnemonic) {
-		if (mnemonic != null) {
-			item.setMnemonic(mnemonic);
-		}
-	}
+    @Override
+    public void setMnemonic(final Character mnemonic) {
+        if (mnemonic != null) {
+            item.setMnemonic(mnemonic);
+        }
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		item.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        item.setEnabled(enabled);
+    }
 
-	@Override
-	public void setAccelerator(final Accelerator accelerator) {}
+    @Override
+    public void setAccelerator(final Accelerator accelerator) {}
 
 }

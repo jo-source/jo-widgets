@@ -37,13 +37,13 @@ import org.jowidgets.workbench.api.IViewContext;
 
 public class DynamicViewDemo extends AbstractDemoView implements IView {
 
-	public static final String ID_PREFIX = DynamicViewDemo.class.getName() + "_";
+    public static final String ID_PREFIX = DynamicViewDemo.class.getName() + "_";
 
-	public DynamicViewDemo(final String id, final IViewContext context) {
-		super(id);
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		final IContainer container = context.getContainer();
-		container.add(bpf.textLabel("View " + id), "");
-	}
+    public DynamicViewDemo(final String id, final IViewContext context) {
+        super(id);
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+        final IContainer container = context.getContainer();
+        container.add(bpf.textLabel("View " + id), "");
+    }
 
 }

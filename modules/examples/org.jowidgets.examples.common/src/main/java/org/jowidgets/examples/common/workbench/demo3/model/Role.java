@@ -30,40 +30,40 @@ package org.jowidgets.examples.common.workbench.demo3.model;
 
 public final class Role {
 
-	private String id;
-	private String description;
+    private String id;
+    private String description;
 
-	public String getId() {
-		return id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setId(final String id) {
-		this.id = id;
-	}
+    public void setId(final String id) {
+        this.id = id;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setDescription(final String description) {
-		this.description = description;
-	}
+    public void setDescription(final String description) {
+        this.description = description;
+    }
 
-	public Role createCopy() {
-		final Role result = new Role();
-		result.setId(id);
-		result.setDescription(description);
-		return result;
-	}
+    public Role createCopy() {
+        final Role result = new Role();
+        result.setId(id);
+        result.setDescription(description);
+        return result;
+    }
 
-	public void setRole(final Role role) {
-		id = role.getId();
-		description = role.getDescription();
-	}
+    public void setRole(final Role role) {
+        id = role.getId();
+        description = role.getDescription();
+    }
 
-	@Override
-	public String toString() {
-		return "Role [id=" + id + ", description=" + description + "]";
-	}
+    @Override
+    public String toString() {
+        return "Role [id=" + id + ", description=" + description + "]";
+    }
 
 }

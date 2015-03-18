@@ -32,17 +32,17 @@ import org.jowidgets.tools.converter.AbstractObjectStringConverter;
 
 final class PasswordPresentationConverter extends AbstractObjectStringConverter<String> {
 
-	@Override
-	public String convertToString(final String value) {
-		if (value != null) {
-			final StringBuilder result = new StringBuilder();
-			for (int i = 0; i < value.length(); i++) {
-				result.append('\u2022');
-			}
-			return result.toString();
+    @Override
+    public String convertToString(final String value) {
+        if (value != null) {
+            final StringBuilder result = new StringBuilder();
+            for (int i = 0; i < value.length(); i++) {
+                result.append('\u2022');
+            }
+            return result.toString();
 
-		}
-		return null;
-	}
+        }
+        return null;
+    }
 
 }

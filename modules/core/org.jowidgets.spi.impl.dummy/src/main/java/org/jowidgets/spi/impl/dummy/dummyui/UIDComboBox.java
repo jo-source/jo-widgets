@@ -32,85 +32,85 @@ import org.jowidgets.common.types.Markup;
 
 public class UIDComboBox extends UIDComponent {
 
-	private String[] elements;
-	private int selectedIndex;
-	private boolean editable;
-	private String text;
-	private boolean popupVisible;
+    private String[] elements;
+    private int selectedIndex;
+    private boolean editable;
+    private String text;
+    private boolean popupVisible;
 
-	public UIDComboBox() {
-		this(new String[] {});
-	}
+    public UIDComboBox() {
+        this(new String[] {});
+    }
 
-	public UIDComboBox(final String[] elements) {
-		super();
-		this.elements = elements;
-		this.popupVisible = false;
-	}
+    public UIDComboBox(final String[] elements) {
+        super();
+        this.elements = elements;
+        this.popupVisible = false;
+    }
 
-	public String[] getElements() {
-		return elements;
-	}
+    public String[] getElements() {
+        return elements;
+    }
 
-	public void setElements(final String[] elements) {
-		this.elements = elements;
-	}
+    public void setElements(final String[] elements) {
+        this.elements = elements;
+    }
 
-	public int getSelectedIndex() {
-		return selectedIndex;
-	}
+    public int getSelectedIndex() {
+        return selectedIndex;
+    }
 
-	public void setSelectedIndex(final int selectedIndex) {
-		this.selectedIndex = selectedIndex;
-	}
+    public void setSelectedIndex(final int selectedIndex) {
+        this.selectedIndex = selectedIndex;
+    }
 
-	public void setEditable(final boolean editable) {
-		this.editable = editable;
-	}
+    public void setEditable(final boolean editable) {
+        this.editable = editable;
+    }
 
-	public boolean isEditable() {
-		return editable;
-	}
+    public boolean isEditable() {
+        return editable;
+    }
 
-	public String getText() {
-		return text;
-	}
+    public String getText() {
+        return text;
+    }
 
-	public void setText(final String text) {
-		this.text = text;
-	}
+    public void setText(final String text) {
+        this.text = text;
+    }
 
-	public void setSelection(final int start, final int end) {
-		// TODO LG implement setSelection()
-	}
+    public void setSelection(final int start, final int end) {
+        // TODO LG implement setSelection()
+    }
 
-	public int getCaretPosition() {
-		// TODO LG implement getCaretPosition()
-		return 0;
-	}
+    public int getCaretPosition() {
+        // TODO LG implement getCaretPosition()
+        return 0;
+    }
 
-	public void setFontSize(final int size) {
-		// TODO LG implement setFontSize
-	}
+    public void setFontSize(final int size) {
+        // TODO LG implement setFontSize
+    }
 
-	public void setFontName(final String fontName) {
-		// TODO LG implement setFontName
-	}
+    public void setFontName(final String fontName) {
+        // TODO LG implement setFontName
+    }
 
-	public void setMarkup(final Markup markup) {
-		// TODO LG implement setMarkup
-	}
+    public void setMarkup(final Markup markup) {
+        // TODO LG implement setMarkup
+    }
 
-	public void select() {
-		// TODO LG implement select
-	}
+    public void select() {
+        // TODO LG implement select
+    }
 
-	public void setPopupVisible(final boolean visible) {
-		this.popupVisible = visible;
-	}
+    public void setPopupVisible(final boolean visible) {
+        this.popupVisible = visible;
+    }
 
-	public boolean isPopopVisible() {
-		return popupVisible;
-	}
+    public boolean isPopopVisible() {
+        return popupVisible;
+    }
 
 }

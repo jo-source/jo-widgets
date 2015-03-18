@@ -68,410 +68,411 @@ import org.jowidgets.util.ITypedKey;
  */
 public final class MenuModelKeyBinding {
 
-	private final Collection<IMenuModel> menus;
-	private final IKeyObservable sourceKeyObservable;
-	private final IWidget sourceWidget;
+    private final Collection<IMenuModel> menus;
+    private final IKeyObservable sourceKeyObservable;
+    private final IWidget sourceWidget;
 
-	private final IKeyListener keyListener;
-	private final IListModelListener listModelListener;
+    private final IKeyListener keyListener;
+    private final IListModelListener listModelListener;
 
-	private final Map<Accelerator, IAction> actions;
+    private final Map<Accelerator, IAction> actions;
 
-	private Runnable actionsMapUpdater;
+    private Runnable actionsMapUpdater;
 
-	/**
-	 * Creates a new binding for a menu and a component that contains the menu.
-	 * 
-	 * If the given component is a container, a recursive key lister will be added,
-	 * otherwise a 'normal' key listener will be used for the key binding.
-	 * 
-	 * If the component will be disposed, the binding will be disposed also
-	 * 
-	 * @param menu The menu which actions should be bound
-	 * @param component The component which receives the key events
-	 */
-	public MenuModelKeyBinding(final IMenuModel menu, final IComponent component) {
-		this(Collections.singleton(menu), component);
-	}
+    /**
+     * Creates a new binding for a menu and a component that contains the menu.
+     * 
+     * If the given component is a container, a recursive key lister will be added,
+     * otherwise a 'normal' key listener will be used for the key binding.
+     * 
+     * If the component will be disposed, the binding will be disposed also
+     * 
+     * @param menu The menu which actions should be bound
+     * @param component The component which receives the key events
+     */
+    public MenuModelKeyBinding(final IMenuModel menu, final IComponent component) {
+        this(Collections.singleton(menu), component);
+    }
 
-	/**
-	 * Creates a new binding for a collection of menus and a component that contains the menu.
-	 * 
-	 * If the given component is a container, a recursive key lister will be added,
-	 * otherwise a 'normal' key listener will be used for the key binding.
-	 * 
-	 * If the component will be disposed, the binding will be disposed also
-	 * 
-	 * @param menu The menu which actions should be bound
-	 * @param component The component which receives the key events
-	 */
-	public MenuModelKeyBinding(final Collection<? extends IMenuModel> menus, final IComponent component) {
-		this(menus, createRecursiveKeyObservable(component), component);
+    /**
+     * Creates a new binding for a collection of menus and a component that contains the menu.
+     * 
+     * If the given component is a container, a recursive key lister will be added,
+     * otherwise a 'normal' key listener will be used for the key binding.
+     * 
+     * If the component will be disposed, the binding will be disposed also
+     * 
+     * @param menu The menu which actions should be bound
+     * @param component The component which receives the key events
+     */
+    public MenuModelKeyBinding(final Collection<? extends IMenuModel> menus, final IComponent component) {
+        this(menus, createRecursiveKeyObservable(component), component);
 
-		//dispose the binding if the component becomes disposed
-		component.addDisposeListener(new IDisposeListener() {
-			@Override
-			public void onDispose() {
-				dispose();
-			}
-		});
-	}
+        //dispose the binding if the component becomes disposed
+        component.addDisposeListener(new IDisposeListener() {
+            @Override
+            public void onDispose() {
+                dispose();
+            }
+        });
+    }
 
-	/**
-	 * Creates a new key binding for menu and a given key observable
-	 * 
-	 * @param menu The menu for the key binding
-	 * @param sourceKeyObservable The key observable that receives the key events
-	 * @param source The source widget that will be used for the execution context
-	 */
-	public MenuModelKeyBinding(final IMenuModel menu, final IKeyObservable sourceKeyObservable, final IWidget source) {
-		this(Collections.singleton(menu), sourceKeyObservable, source);
-	}
+    /**
+     * Creates a new key binding for menu and a given key observable
+     * 
+     * @param menu The menu for the key binding
+     * @param sourceKeyObservable The key observable that receives the key events
+     * @param source The source widget that will be used for the execution context
+     */
+    public MenuModelKeyBinding(final IMenuModel menu, final IKeyObservable sourceKeyObservable, final IWidget source) {
+        this(Collections.singleton(menu), sourceKeyObservable, source);
+    }
 
-	/**
-	 * Creates a new key binding for collection of menus and a given key observable
-	 * 
-	 * @param menu The menu for the key binding
-	 * @param sourceKeyObservable The key observable that receives the key events
-	 * @param source The source widget that will be used for the execution context
-	 */
-	public MenuModelKeyBinding(
-		final Collection<? extends IMenuModel> menus,
-		final IKeyObservable sourceKeyObservable,
-		final IWidget source) {
-		Assert.paramNotNull(menus, "menus");
-		Assert.paramNotNull(sourceKeyObservable, "sourceKeyObservable");
-		Assert.paramNotNull(source, "source");
+    /**
+     * Creates a new key binding for collection of menus and a given key observable
+     * 
+     * @param menu The menu for the key binding
+     * @param sourceKeyObservable The key observable that receives the key events
+     * @param source The source widget that will be used for the execution context
+     */
+    public MenuModelKeyBinding(
+        final Collection<? extends IMenuModel> menus,
+        final IKeyObservable sourceKeyObservable,
+        final IWidget source) {
+        Assert.paramNotNull(menus, "menus");
+        Assert.paramNotNull(sourceKeyObservable, "sourceKeyObservable");
+        Assert.paramNotNull(source, "source");
 
-		this.menus = new LinkedList<IMenuModel>(menus);
-		this.sourceKeyObservable = sourceKeyObservable;
-		this.sourceWidget = source;
+        this.menus = new LinkedList<IMenuModel>(menus);
+        this.sourceKeyObservable = sourceKeyObservable;
+        this.sourceWidget = source;
 
-		this.actions = new HashMap<Accelerator, IAction>();
+        this.actions = new HashMap<Accelerator, IAction>();
 
-		this.keyListener = new KeyAdapter() {
-			@Override
-			public void keyPressed(final IKeyEvent event) {
-				final VirtualKey virtualKey = event.getVirtualKey();
-				if (VirtualKey.UNDEFINED != virtualKey) {
-					final Accelerator pressedAccelerator = getAccelerator(event);
-					if (pressedAccelerator != null) {
-						final IAction action = actions.get(pressedAccelerator);
-						if (action != null && action.isEnabled()) {
-							final IExecutionContext executionContext = new ExecutionContext(action);
-							try {
-								action.execute(executionContext);
-							}
-							catch (final Exception e) {
-								try {
-									final IExceptionHandler exceptionHandler = action.getExceptionHandler();
-									if (exceptionHandler != null) {
-										exceptionHandler.handleException(executionContext, e);
-									}
-									else {
-										throw e;
-									}
-								}
-								catch (final Exception e1) {
-									final UncaughtExceptionHandler uncaughtExceptionHandler = Thread.currentThread().getUncaughtExceptionHandler();
-									if (uncaughtExceptionHandler != null) {
-										uncaughtExceptionHandler.uncaughtException(Thread.currentThread(), e1);
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		};
+        this.keyListener = new KeyAdapter() {
+            @Override
+            public void keyPressed(final IKeyEvent event) {
+                final VirtualKey virtualKey = event.getVirtualKey();
+                if (VirtualKey.UNDEFINED != virtualKey) {
+                    final Accelerator pressedAccelerator = getAccelerator(event);
+                    if (pressedAccelerator != null) {
+                        final IAction action = actions.get(pressedAccelerator);
+                        if (action != null && action.isEnabled()) {
+                            final IExecutionContext executionContext = new ExecutionContext(action);
+                            try {
+                                action.execute(executionContext);
+                            }
+                            catch (final Exception e) {
+                                try {
+                                    final IExceptionHandler exceptionHandler = action.getExceptionHandler();
+                                    if (exceptionHandler != null) {
+                                        exceptionHandler.handleException(executionContext, e);
+                                    }
+                                    else {
+                                        throw e;
+                                    }
+                                }
+                                catch (final Exception e1) {
+                                    final UncaughtExceptionHandler uncaughtExceptionHandler = Thread.currentThread()
+                                            .getUncaughtExceptionHandler();
+                                    if (uncaughtExceptionHandler != null) {
+                                        uncaughtExceptionHandler.uncaughtException(Thread.currentThread(), e1);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
 
-		this.listModelListener = new ListModelAdapter() {
+        this.listModelListener = new ListModelAdapter() {
 
-			@Override
-			public void afterChildRemoved(final int index) {
-				updateActionsMapLater();
-			}
+            @Override
+            public void afterChildRemoved(final int index) {
+                updateActionsMapLater();
+            }
 
-			@Override
-			public void afterChildAdded(final int index) {
-				updateActionsMapLater();
-			}
-		};
+            @Override
+            public void afterChildAdded(final int index) {
+                updateActionsMapLater();
+            }
+        };
 
-		updateActionsMap();
-	}
+        updateActionsMap();
+    }
 
-	/**
-	 * Binds a collection of menus to a component
-	 * 
-	 * When bound all key events of the component (recursive, if component is a IContainer) will be
-	 * checked against the key accelerators of the menu and the actions will be performed if accelerator
-	 * matches.
-	 * 
-	 * If the component will be disposed, the binding will be disposed too
-	 * 
-	 * @param menus The menus to bind
-	 * @param component The component to bind to
-	 * 
-	 * @return The KeyBinding
-	 */
-	public static MenuModelKeyBinding bind(final Collection<? extends IMenuModel> menus, final IComponent component) {
-		return new MenuModelKeyBinding(menus, component);
-	}
+    /**
+     * Binds a collection of menus to a component
+     * 
+     * When bound all key events of the component (recursive, if component is a IContainer) will be
+     * checked against the key accelerators of the menu and the actions will be performed if accelerator
+     * matches.
+     * 
+     * If the component will be disposed, the binding will be disposed too
+     * 
+     * @param menus The menus to bind
+     * @param component The component to bind to
+     * 
+     * @return The KeyBinding
+     */
+    public static MenuModelKeyBinding bind(final Collection<? extends IMenuModel> menus, final IComponent component) {
+        return new MenuModelKeyBinding(menus, component);
+    }
 
-	/**
-	 * Binds a menu to a component
-	 * 
-	 * When bound all key events of the component (recursive, if component is a IContainer) will be
-	 * checked against the key accelerators of the menu and the actions will be performed if accelerator
-	 * matches.
-	 * 
-	 * If the component will be disposed, the binding will be disposed too
-	 * 
-	 * @param menus The menus to bind
-	 * @param component The component to bind to
-	 * 
-	 * @return The KeyBinding
-	 */
-	public static MenuModelKeyBinding bind(final IMenuModel menu, final IComponent component) {
-		return new MenuModelKeyBinding(menu, component);
-	}
+    /**
+     * Binds a menu to a component
+     * 
+     * When bound all key events of the component (recursive, if component is a IContainer) will be
+     * checked against the key accelerators of the menu and the actions will be performed if accelerator
+     * matches.
+     * 
+     * If the component will be disposed, the binding will be disposed too
+     * 
+     * @param menus The menus to bind
+     * @param component The component to bind to
+     * 
+     * @return The KeyBinding
+     */
+    public static MenuModelKeyBinding bind(final IMenuModel menu, final IComponent component) {
+        return new MenuModelKeyBinding(menu, component);
+    }
 
-	private static IKeyObservable createRecursiveKeyObservable(final IComponent component) {
-		Assert.paramNotNull(component, "component");
-		final KeyObservable result = new KeyObservable();
-		final IKeyListener keyListener = new IKeyListener() {
+    private static IKeyObservable createRecursiveKeyObservable(final IComponent component) {
+        Assert.paramNotNull(component, "component");
+        final KeyObservable result = new KeyObservable();
+        final IKeyListener keyListener = new IKeyListener() {
 
-			@Override
-			public void keyReleased(final IKeyEvent event) {
-				result.fireKeyReleased(event);
-			}
+            @Override
+            public void keyReleased(final IKeyEvent event) {
+                result.fireKeyReleased(event);
+            }
 
-			@Override
-			public void keyPressed(final IKeyEvent event) {
-				result.fireKeyPressed(event);
-			}
-		};
-		if (component instanceof IContainer) {
-			addKeyListenerRecursive((IContainer) component, keyListener);
-		}
-		else {
-			addKeyListener(component, keyListener);
-		}
-		return result;
-	}
+            @Override
+            public void keyPressed(final IKeyEvent event) {
+                result.fireKeyPressed(event);
+            }
+        };
+        if (component instanceof IContainer) {
+            addKeyListenerRecursive((IContainer) component, keyListener);
+        }
+        else {
+            addKeyListener(component, keyListener);
+        }
+        return result;
+    }
 
-	private static void addKeyListenerRecursive(final IContainer container, final IKeyListener keyListener) {
-		Assert.paramNotNull(container, "container");
-		Assert.paramNotNull(keyListener, "keyListener");
+    private static void addKeyListenerRecursive(final IContainer container, final IKeyListener keyListener) {
+        Assert.paramNotNull(container, "container");
+        Assert.paramNotNull(keyListener, "keyListener");
 
-		final IListenerFactory<IKeyListener> listenerFactory = new IListenerFactory<IKeyListener>() {
-			@Override
-			public IKeyListener create(final IComponent component) {
-				return keyListener;
-			}
-		};
+        final IListenerFactory<IKeyListener> listenerFactory = new IListenerFactory<IKeyListener>() {
+            @Override
+            public IKeyListener create(final IComponent component) {
+                return keyListener;
+            }
+        };
 
-		container.addKeyListenerRecursive(listenerFactory);
+        container.addKeyListenerRecursive(listenerFactory);
 
-		container.addDisposeListener(new IDisposeListener() {
-			@Override
-			public void onDispose() {
-				container.removeKeyListenerRecursive(listenerFactory);
-			}
-		});
-	}
+        container.addDisposeListener(new IDisposeListener() {
+            @Override
+            public void onDispose() {
+                container.removeKeyListenerRecursive(listenerFactory);
+            }
+        });
+    }
 
-	private static void addKeyListener(final IComponent component, final IKeyListener keyListener) {
-		Assert.paramNotNull(component, "component");
-		Assert.paramNotNull(keyListener, "keyListener");
-		component.addKeyListener(keyListener);
+    private static void addKeyListener(final IComponent component, final IKeyListener keyListener) {
+        Assert.paramNotNull(component, "component");
+        Assert.paramNotNull(keyListener, "keyListener");
+        component.addKeyListener(keyListener);
 
-		component.addDisposeListener(new IDisposeListener() {
-			@Override
-			public void onDispose() {
-				component.removeKeyListener(keyListener);
-			}
-		});
-	}
+        component.addDisposeListener(new IDisposeListener() {
+            @Override
+            public void onDispose() {
+                component.removeKeyListener(keyListener);
+            }
+        });
+    }
 
-	private static Accelerator getAccelerator(final IKeyEvent event) {
-		final VirtualKey virtualKey = event.getVirtualKey();
-		final Set<Modifier> modifier = event.getModifier();
-		if (virtualKey != null && virtualKey != VirtualKey.UNDEFINED) {
-			return new Accelerator(virtualKey, modifier);
-		}
-		else {
-			final Character character = event.getCharacter();
-			if (character != null) {
-				return new Accelerator(virtualKey, modifier);
-			}
-		}
-		return null;
-	}
+    private static Accelerator getAccelerator(final IKeyEvent event) {
+        final VirtualKey virtualKey = event.getVirtualKey();
+        final Set<Modifier> modifier = event.getModifier();
+        if (virtualKey != null && virtualKey != VirtualKey.UNDEFINED) {
+            return new Accelerator(virtualKey, modifier);
+        }
+        else {
+            final Character character = event.getCharacter();
+            if (character != null) {
+                return new Accelerator(virtualKey, modifier);
+            }
+        }
+        return null;
+    }
 
-	/**
-	 * Adds a menu to the key binding
-	 * 
-	 * @param menu
-	 */
-	public void addMenu(final IMenuModel menu) {
-		menus.add(menu);
-		updateActionsMapLater();
-	}
+    /**
+     * Adds a menu to the key binding
+     * 
+     * @param menu
+     */
+    public void addMenu(final IMenuModel menu) {
+        menus.add(menu);
+        updateActionsMapLater();
+    }
 
-	/**
-	 * Disposes the key binding
-	 */
-	public void dispose() {
-		disposeActionsMap();
-		sourceKeyObservable.removeKeyListener(keyListener);
-	}
+    /**
+     * Disposes the key binding
+     */
+    public void dispose() {
+        disposeActionsMap();
+        sourceKeyObservable.removeKeyListener(keyListener);
+    }
 
-	private void updateActionsMapLater() {
-		if (actionsMapUpdater == null) {
-			actionsMapUpdater = new Runnable() {
-				@Override
-				public void run() {
-					updateActionsMap();
-					actionsMapUpdater = null;
-				}
-			};
-			Toolkit.getUiThreadAccess().invokeLater(actionsMapUpdater);
-		}
-	}
+    private void updateActionsMapLater() {
+        if (actionsMapUpdater == null) {
+            actionsMapUpdater = new Runnable() {
+                @Override
+                public void run() {
+                    updateActionsMap();
+                    actionsMapUpdater = null;
+                }
+            };
+            Toolkit.getUiThreadAccess().invokeLater(actionsMapUpdater);
+        }
+    }
 
-	private void updateActionsMap() {
-		actions.clear();
-		sourceKeyObservable.removeKeyListener(keyListener);
-		for (final IMenuModel menu : menus) {
-			updateActionsMap(menu);
-		}
-		if (!actions.isEmpty()) {
-			sourceKeyObservable.addKeyListener(keyListener);
-		}
-	}
+    private void updateActionsMap() {
+        actions.clear();
+        sourceKeyObservable.removeKeyListener(keyListener);
+        for (final IMenuModel menu : menus) {
+            updateActionsMap(menu);
+        }
+        if (!actions.isEmpty()) {
+            sourceKeyObservable.addKeyListener(keyListener);
+        }
+    }
 
-	private void updateActionsMap(final IMenuModel menu) {
-		for (final IMenuItemModel item : menu.getChildren()) {
-			if (item instanceof IActionItemModel) {
+    private void updateActionsMap(final IMenuModel menu) {
+        for (final IMenuItemModel item : menu.getChildren()) {
+            if (item instanceof IActionItemModel) {
 
-				final IAction action = ((IActionItemModel) item).getAction();
-				if (action != null) {
-					final Accelerator accelerator = action.getAccelerator();
-					if (accelerator != null) {
-						actions.put(accelerator, action);
-					}
-				}
-				else {
-					final Accelerator accelerator = item.getAccelerator();
-					if (accelerator != null) {
-						actions.put(accelerator, new ActionItemAction((IActionItemModel) item));
-					}
-				}
-			}
-			else if (item instanceof IMenuModel) {
-				updateActionsMap((IMenuModel) item);
-			}
-		}
-		menu.addListModelListener(listModelListener);
-	}
+                final IAction action = ((IActionItemModel) item).getAction();
+                if (action != null) {
+                    final Accelerator accelerator = action.getAccelerator();
+                    if (accelerator != null) {
+                        actions.put(accelerator, action);
+                    }
+                }
+                else {
+                    final Accelerator accelerator = item.getAccelerator();
+                    if (accelerator != null) {
+                        actions.put(accelerator, new ActionItemAction((IActionItemModel) item));
+                    }
+                }
+            }
+            else if (item instanceof IMenuModel) {
+                updateActionsMap((IMenuModel) item);
+            }
+        }
+        menu.addListModelListener(listModelListener);
+    }
 
-	private void disposeActionsMap() {
-		actions.clear();
-		for (final IMenuModel menu : menus) {
-			disposeActionsMap(menu);
-		}
-	}
+    private void disposeActionsMap() {
+        actions.clear();
+        for (final IMenuModel menu : menus) {
+            disposeActionsMap(menu);
+        }
+    }
 
-	private void disposeActionsMap(final IMenuModel menu) {
-		menu.removeListModelListener(listModelListener);
-		for (final IMenuItemModel item : menu.getChildren()) {
-			if (item instanceof IMenuModel) {
-				disposeActionsMap((IMenuModel) item);
-			}
-		}
-	}
+    private void disposeActionsMap(final IMenuModel menu) {
+        menu.removeListModelListener(listModelListener);
+        for (final IMenuItemModel item : menu.getChildren()) {
+            if (item instanceof IMenuModel) {
+                disposeActionsMap((IMenuModel) item);
+            }
+        }
+    }
 
-	private final class ExecutionContext implements IExecutionContext {
+    private final class ExecutionContext implements IExecutionContext {
 
-		private final IAction action;
+        private final IAction action;
 
-		private ExecutionContext(final IAction action) {
-			Assert.paramNotNull(action, "action");
-			this.action = action;
-		}
+        private ExecutionContext(final IAction action) {
+            Assert.paramNotNull(action, "action");
+            this.action = action;
+        }
 
-		@Override
-		public <VALUE_TYPE> VALUE_TYPE getValue(final ITypedKey<VALUE_TYPE> key) {
-			return null;
-		}
+        @Override
+        public <VALUE_TYPE> VALUE_TYPE getValue(final ITypedKey<VALUE_TYPE> key) {
+            return null;
+        }
 
-		@Override
-		public IAction getAction() {
-			return action;
-		}
+        @Override
+        public IAction getAction() {
+            return action;
+        }
 
-		@Override
-		public IWidget getSource() {
-			return sourceWidget;
-		}
+        @Override
+        public IWidget getSource() {
+            return sourceWidget;
+        }
 
-	}
+    }
 
-	private final class ActionItemAction implements IAction {
+    private final class ActionItemAction implements IAction {
 
-		private final IActionItemModel item;
+        private final IActionItemModel item;
 
-		public ActionItemAction(final IActionItemModel item) {
-			Assert.paramNotNull(item, "item");
-			this.item = item;
-		}
+        public ActionItemAction(final IActionItemModel item) {
+            Assert.paramNotNull(item, "item");
+            this.item = item;
+        }
 
-		@Override
-		public String getText() {
-			return item.getText();
-		}
+        @Override
+        public String getText() {
+            return item.getText();
+        }
 
-		@Override
-		public String getToolTipText() {
-			return item.getToolTipText();
-		}
+        @Override
+        public String getToolTipText() {
+            return item.getToolTipText();
+        }
 
-		@Override
-		public IImageConstant getIcon() {
-			return item.getIcon();
-		}
+        @Override
+        public IImageConstant getIcon() {
+            return item.getIcon();
+        }
 
-		@Override
-		public Character getMnemonic() {
-			return item.getMnemonic();
-		}
+        @Override
+        public Character getMnemonic() {
+            return item.getMnemonic();
+        }
 
-		@Override
-		public Accelerator getAccelerator() {
-			return item.getAccelerator();
-		}
+        @Override
+        public Accelerator getAccelerator() {
+            return item.getAccelerator();
+        }
 
-		@Override
-		public boolean isEnabled() {
-			return item.isEnabled();
-		}
+        @Override
+        public boolean isEnabled() {
+            return item.isEnabled();
+        }
 
-		@Override
-		public void execute(final IExecutionContext actionEvent) throws Exception {
-			item.actionPerformed();
-		}
+        @Override
+        public void execute(final IExecutionContext actionEvent) throws Exception {
+            item.actionPerformed();
+        }
 
-		@Override
-		public IExceptionHandler getExceptionHandler() {
-			return null;
-		}
+        @Override
+        public IExceptionHandler getExceptionHandler() {
+            return null;
+        }
 
-		@Override
-		public IActionChangeObservable getActionChangeObservable() {
-			return null;
-		}
+        @Override
+        public IActionChangeObservable getActionChangeObservable() {
+            return null;
+        }
 
-	}
+    }
 }

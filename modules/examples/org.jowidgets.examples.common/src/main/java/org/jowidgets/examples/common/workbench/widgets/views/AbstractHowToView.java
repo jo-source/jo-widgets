@@ -43,71 +43,71 @@ import org.jowidgets.workbench.api.IViewContext;
 
 public abstract class AbstractHowToView extends AbstractDemoView implements IView {
 
-	public static final String ID = AbstractHowToView.class.getName();
-	public static final String DEFAULT_LABEL = "Labels";
+    public static final String ID = AbstractHowToView.class.getName();
+    public static final String DEFAULT_LABEL = "Labels";
 
-	private static final String URL_PREFIX = "http://code.google.com/p/jo-widgets/"
-		+ "source/browse/trunk/examples/org.jowidgets.examples.common/"
-		+ "src/main/java/org/jowidgets/examples/common/workbench/widgets/views/";
+    private static final String URL_PREFIX = "http://code.google.com/p/jo-widgets/"
+        + "source/browse/trunk/examples/org.jowidgets.examples.common/"
+        + "src/main/java/org/jowidgets/examples/common/workbench/widgets/views/";
 
-	private URI sourceUri;
-	private URI migLayoutUri;
-	private Desktop desktop;
+    private URI sourceUri;
+    private URI migLayoutUri;
+    private Desktop desktop;
 
-	public AbstractHowToView(final IViewContext context) {
-		super(ID);
+    public AbstractHowToView(final IViewContext context) {
+        super(ID);
 
-		if (Desktop.isDesktopSupported()) {
-			desktop = Desktop.getDesktop();
-			if (desktop.isSupported(Desktop.Action.BROWSE)) {
-				try {
-					this.sourceUri = new URI(URL_PREFIX + getClass().getSimpleName() + ".java");
-					this.migLayoutUri = new URI("http://www.miglayout.com/");
-				}
-				catch (final Exception e1) {
-					throw new RuntimeException();
-				}
-			}
-		}
+        if (Desktop.isDesktopSupported()) {
+            desktop = Desktop.getDesktop();
+            if (desktop.isSupported(Desktop.Action.BROWSE)) {
+                try {
+                    this.sourceUri = new URI(URL_PREFIX + getClass().getSimpleName() + ".java");
+                    this.migLayoutUri = new URI("http://www.miglayout.com/");
+                }
+                catch (final Exception e1) {
+                    throw new RuntimeException();
+                }
+            }
+        }
 
-		final IActionItemModel sourceAction = context.getToolBar().addActionItem(SilkIcons.PAGE_WHITE_TEXT, "View Source");
-		sourceAction.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				try {
-					if (desktop != null && sourceUri != null) {
-						desktop.browse(sourceUri);
-					}
-					else {
-						Toolkit.getMessagePane().showError("Could not open browser. \n Maybe java desktop is not supported.");
-					}
-				}
-				catch (final Exception e) {
-					throw new RuntimeException(e);
-				}
-			}
-		});
+        final IActionItemModel sourceAction = context.getToolBar().addActionItem(SilkIcons.PAGE_WHITE_TEXT, "View Source");
+        sourceAction.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                try {
+                    if (desktop != null && sourceUri != null) {
+                        desktop.browse(sourceUri);
+                    }
+                    else {
+                        Toolkit.getMessagePane().showError("Could not open browser. \n Maybe java desktop is not supported.");
+                    }
+                }
+                catch (final Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
 
-		final IActionItemModel migLayout = context.getToolBar().addActionItem(SilkIcons.WORLD, "MiGLayout Layout Manager");
-		migLayout.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				try {
-					if (desktop != null && sourceUri != null) {
-						desktop.browse(migLayoutUri);
-					}
-					else {
-						Toolkit.getMessagePane().showError("Could not open browser. \n Maybe java desktop is not supported.");
-					}
-				}
-				catch (final Exception e) {
-					throw new RuntimeException(e);
-				}
-			}
-		});
+        final IActionItemModel migLayout = context.getToolBar().addActionItem(SilkIcons.WORLD, "MiGLayout Layout Manager");
+        migLayout.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                try {
+                    if (desktop != null && sourceUri != null) {
+                        desktop.browse(migLayoutUri);
+                    }
+                    else {
+                        Toolkit.getMessagePane().showError("Could not open browser. \n Maybe java desktop is not supported.");
+                    }
+                }
+                catch (final Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
 
-		createViewContent(context.getContainer(), Toolkit.getBluePrintFactory());
-	}
+        createViewContent(context.getContainer(), Toolkit.getBluePrintFactory());
+    }
 
-	public abstract void createViewContent(IContainer container, IBluePrintFactory bpf);
+    public abstract void createViewContent(IContainer container, IBluePrintFactory bpf);
 }

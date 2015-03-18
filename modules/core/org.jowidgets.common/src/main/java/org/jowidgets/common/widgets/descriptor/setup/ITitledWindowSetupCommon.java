@@ -32,11 +32,11 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ITitledWindowSetupCommon extends IWindowSetupCommon {
 
-	IImageConstant getIcon();
+    IImageConstant getIcon();
 
-	String getTitle();
+    String getTitle();
 
-	@Mandatory
-	boolean isDecorated();
+    @Mandatory
+    boolean isDecorated();
 
 }

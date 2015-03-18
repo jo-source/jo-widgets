@@ -32,12 +32,12 @@ import org.jowidgets.common.widgets.IComponentCommon;
 
 public final class VisibiliySettingsInvoker {
 
-	private VisibiliySettingsInvoker() {}
+    private VisibiliySettingsInvoker() {}
 
-	public static void setVisibility(final IComponentSetup setup, final IComponentCommon widget) {
-		if (setup.isVisible() != null) {
-			widget.setVisible(setup.isVisible().booleanValue());
-		}
-	}
+    public static void setVisibility(final IComponentSetup setup, final IComponentCommon widget) {
+        if (setup.isVisible() != null) {
+            widget.setVisible(setup.isVisible().booleanValue());
+        }
+    }
 
 }

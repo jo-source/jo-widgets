@@ -33,8 +33,8 @@ import org.jowidgets.common.widgets.layout.ILayouter;
 
 public interface IListLayoutFactoryBuilder {
 
-	IListLayoutFactoryBuilder backgroundColors(IColorConstant[] backgroundColors);
+    IListLayoutFactoryBuilder backgroundColors(IColorConstant[] backgroundColors);
 
-	ILayoutFactory<ILayouter> build();
+    ILayoutFactory<ILayouter> build();
 
 }

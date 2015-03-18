@@ -35,51 +35,51 @@ import org.jowidgets.workbench.api.IView;
 
 public abstract class AbstractDemoView implements IView {
 
-	private final String id;
+    private final String id;
 
-	public AbstractDemoView(final String id) {
-		super();
-		this.id = id;
-	}
+    public AbstractDemoView(final String id) {
+        super();
+        this.id = id;
+    }
 
-	public final String getId() {
-		return id;
-	}
+    public final String getId() {
+        return id;
+    }
 
-	@Override
-	public void onActiveStateChanged(final boolean active) {
-		// CHECKSTYLE:OFF
-		System.out.println(getId() + " onActiveStateChanged, active= " + active);
-		// CHECKSTYLE:ON
-	}
+    @Override
+    public void onActiveStateChanged(final boolean active) {
+        // CHECKSTYLE:OFF
+        System.out.println(getId() + " onActiveStateChanged, active= " + active);
+        // CHECKSTYLE:ON
+    }
 
-	@Override
-	public void onVisibleStateChanged(final boolean visible) {
-		// CHECKSTYLE:OFF
-		System.out.println(getId() + " onVisibleStateChanged, visible= " + visible);
-		// CHECKSTYLE:ON
-	}
+    @Override
+    public void onVisibleStateChanged(final boolean visible) {
+        // CHECKSTYLE:OFF
+        System.out.println(getId() + " onVisibleStateChanged, visible= " + visible);
+        // CHECKSTYLE:ON
+    }
 
-	@Override
-	public void onHiddenStateChanged(final boolean hidden) {
-		// CHECKSTYLE:OFF
-		System.out.println(getId() + " onHiddenStateChanged, hidden= " + hidden);
-		// CHECKSTYLE:ON
-	}
+    @Override
+    public void onHiddenStateChanged(final boolean hidden) {
+        // CHECKSTYLE:OFF
+        System.out.println(getId() + " onHiddenStateChanged, hidden= " + hidden);
+        // CHECKSTYLE:ON
+    }
 
-	@Override
-	public void onDispose() {
-		// CHECKSTYLE:OFF
-		System.out.println(getId() + " onDispose");
-		// CHECKSTYLE:ON
-	}
+    @Override
+    public void onDispose() {
+        // CHECKSTYLE:OFF
+        System.out.println(getId() + " onDispose");
+        // CHECKSTYLE:ON
+    }
 
-	@Override
-	public void onClose(final IVetoable vetoable) {
-		final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to close the view?");
-		if (result != QuestionResult.YES) {
-			vetoable.veto();
-		}
-	}
+    @Override
+    public void onClose(final IVetoable vetoable) {
+        final QuestionResult result = Toolkit.getQuestionPane().askYesNoQuestion("Would you really like to close the view?");
+        if (result != QuestionResult.YES) {
+            vetoable.veto();
+        }
+    }
 
 }

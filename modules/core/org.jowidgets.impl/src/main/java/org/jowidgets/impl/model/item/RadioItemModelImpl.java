@@ -34,27 +34,27 @@ import org.jowidgets.common.types.Accelerator;
 
 class RadioItemModelImpl extends AbstractSelectableItemModel implements IRadioItemModel {
 
-	protected RadioItemModelImpl() {
-		this(null, null, null, null, null, null, true, false);
-	}
+    protected RadioItemModelImpl() {
+        this(null, null, null, null, null, null, true, false);
+    }
 
-	protected RadioItemModelImpl(
-		final String id,
-		final String text,
-		final String toolTipText,
-		final IImageConstant icon,
-		final Accelerator accelerator,
-		final Character mnemonic,
-		final boolean enabled,
-		final boolean selected) {
-		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled, selected);
-	}
+    protected RadioItemModelImpl(
+        final String id,
+        final String text,
+        final String toolTipText,
+        final IImageConstant icon,
+        final Accelerator accelerator,
+        final Character mnemonic,
+        final boolean enabled,
+        final boolean selected) {
+        super(id, text, toolTipText, icon, accelerator, mnemonic, enabled, selected);
+    }
 
-	@Override
-	public IRadioItemModel createCopy() {
-		final RadioItemModelImpl result = new RadioItemModelImpl();
-		result.setContent(this);
-		return result;
-	}
+    @Override
+    public IRadioItemModel createCopy() {
+        final RadioItemModelImpl result = new RadioItemModelImpl();
+        result.setContent(this);
+        return result;
+    }
 
 }

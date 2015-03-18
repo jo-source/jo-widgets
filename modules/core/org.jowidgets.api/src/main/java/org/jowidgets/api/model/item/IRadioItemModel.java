@@ -29,7 +29,7 @@ package org.jowidgets.api.model.item;
 
 public interface IRadioItemModel extends ISelectableMenuItemModel {
 
-	@Override
-	IRadioItemModel createCopy();
+    @Override
+    IRadioItemModel createCopy();
 
 }

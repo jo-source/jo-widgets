@@ -33,20 +33,20 @@ import org.jowidgets.common.widgets.controller.ITreeNodeObservable;
 
 public interface IComponentNodeContext extends IComponentNodeContainerContext, ITreeNodeObservable {
 
-	void setSelected(boolean selected);
+    void setSelected(boolean selected);
 
-	void setExpanded(boolean expanded);
+    void setExpanded(boolean expanded);
 
-	void setLabel(String label);
+    void setLabel(String label);
 
-	void setTooltip(String tooltip);
+    void setTooltip(String tooltip);
 
-	void setIcon(IImageConstant icon);
+    void setIcon(IImageConstant icon);
 
-	IMenuModel getPopupMenu();
+    IMenuModel getPopupMenu();
 
-	IComponentNodeContext getParent();
+    IComponentNodeContext getParent();
 
-	IWorkbenchApplicationContext getWorkbenchApplicationContext();
+    IWorkbenchApplicationContext getWorkbenchApplicationContext();
 
 }

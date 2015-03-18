@@ -37,32 +37,32 @@ import org.jowidgets.util.CollectionUtils;
 
 final class ObserverSetPerformanceStrategyImpl<OBSERVER_TYPE> implements IObserverSet<OBSERVER_TYPE> {
 
-	private final LinkedHashSet<OBSERVER_TYPE> listeners;
+    private final LinkedHashSet<OBSERVER_TYPE> listeners;
 
-	ObserverSetPerformanceStrategyImpl() {
-		this.listeners = new LinkedHashSet<OBSERVER_TYPE>();
-	}
+    ObserverSetPerformanceStrategyImpl() {
+        this.listeners = new LinkedHashSet<OBSERVER_TYPE>();
+    }
 
-	@Override
-	public Iterator<OBSERVER_TYPE> iterator() {
-		return CollectionUtils.unmodifiableIterator(new ArrayList<OBSERVER_TYPE>(listeners).iterator());
-	}
+    @Override
+    public Iterator<OBSERVER_TYPE> iterator() {
+        return CollectionUtils.unmodifiableIterator(new ArrayList<OBSERVER_TYPE>(listeners).iterator());
+    }
 
-	@Override
-	public void add(final OBSERVER_TYPE observer) {
-		Assert.paramNotNull(observer, "observer");
-		listeners.add(observer);
-	}
+    @Override
+    public void add(final OBSERVER_TYPE observer) {
+        Assert.paramNotNull(observer, "observer");
+        listeners.add(observer);
+    }
 
-	@Override
-	public boolean remove(final OBSERVER_TYPE observer) {
-		Assert.paramNotNull(observer, "observer");
-		return listeners.remove(observer);
-	}
+    @Override
+    public boolean remove(final OBSERVER_TYPE observer) {
+        Assert.paramNotNull(observer, "observer");
+        return listeners.remove(observer);
+    }
 
-	@Override
-	public void clear() {
-		listeners.clear();
-	}
+    @Override
+    public void clear() {
+        listeners.clear();
+    }
 
 }

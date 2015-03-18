@@ -34,16 +34,16 @@ import org.jowidgets.util.Assert;
 
 public final class CloseActionListener implements IActionListener {
 
-	private final IWindow display;
+    private final IWindow display;
 
-	public CloseActionListener(final IWindow display) {
-		Assert.paramNotNull(display, "display");
-		this.display = display;
-	}
+    public CloseActionListener(final IWindow display) {
+        Assert.paramNotNull(display, "display");
+        this.display = display;
+    }
 
-	@Override
-	public void actionPerformed() {
-		display.setVisible(false);
-	}
+    @Override
+    public void actionPerformed() {
+        display.setVisible(false);
+    }
 
 }

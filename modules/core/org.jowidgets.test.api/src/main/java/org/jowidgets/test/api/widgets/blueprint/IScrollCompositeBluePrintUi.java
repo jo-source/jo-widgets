@@ -32,7 +32,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IScrollCompositeSetupBuilder;
 import org.jowidgets.test.api.widgets.descriptor.IScrollCompositeDescriptorUi;
 
 public interface IScrollCompositeBluePrintUi extends
-		IScrollCompositeSetupBuilder<IScrollCompositeBluePrintUi>,
-		IScrollCompositeDescriptorUi {
+        IScrollCompositeSetupBuilder<IScrollCompositeBluePrintUi>,
+        IScrollCompositeDescriptorUi {
 
 }

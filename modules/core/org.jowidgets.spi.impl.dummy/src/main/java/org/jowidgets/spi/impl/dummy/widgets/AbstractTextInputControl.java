@@ -34,17 +34,17 @@ import org.jowidgets.spi.widgets.ITextControlSpi;
 
 public abstract class AbstractTextInputControl extends AbstractInputControl implements ITextControlSpi {
 
-	public AbstractTextInputControl(final UIDComponent component) {
-		super(component);
-	}
+    public AbstractTextInputControl(final UIDComponent component) {
+        super(component);
+    }
 
-	protected void registerTextComponent(final UIDTextComponent textComponent) {
-		textComponent.addInputListener(new IInputListener() {
+    protected void registerTextComponent(final UIDTextComponent textComponent) {
+        textComponent.addInputListener(new IInputListener() {
 
-			@Override
-			public void inputChanged() {
-				fireInputChanged(getText());
-			}
-		});
-	}
+            @Override
+            public void inputChanged() {
+                fireInputChanged(getText());
+            }
+        });
+    }
 }

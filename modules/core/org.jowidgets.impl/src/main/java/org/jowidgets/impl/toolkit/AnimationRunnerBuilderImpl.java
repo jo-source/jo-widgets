@@ -43,72 +43,72 @@ import org.jowidgets.util.concurrent.DaemonThreadFactory;
 
 final class AnimationRunnerBuilderImpl implements IAnimationRunnerBuilder {
 
-	private static final ITypedKey<ScheduledExecutorService> DEFAULT_EXECUTOR_KEY = new ITypedKey<ScheduledExecutorService>() {};
+    private static final ITypedKey<ScheduledExecutorService> DEFAULT_EXECUTOR_KEY = new ITypedKey<ScheduledExecutorService>() {};
 
-	private long delay;
-	private TimeUnit timeUnit;
-	private ScheduledExecutorService executor;
+    private long delay;
+    private TimeUnit timeUnit;
+    private ScheduledExecutorService executor;
 
-	AnimationRunnerBuilderImpl() {
-		this.delay = 200;
-		this.timeUnit = TimeUnit.MILLISECONDS;
-	}
+    AnimationRunnerBuilderImpl() {
+        this.delay = 200;
+        this.timeUnit = TimeUnit.MILLISECONDS;
+    }
 
-	@Override
-	public IAnimationRunnerBuilder setExecutor(final ScheduledExecutorService executor) {
-		this.executor = executor;
-		return this;
-	}
+    @Override
+    public IAnimationRunnerBuilder setExecutor(final ScheduledExecutorService executor) {
+        this.executor = executor;
+        return this;
+    }
 
-	@Override
-	public IAnimationRunnerBuilder setExecutor(final ThreadFactory threadFactory) {
-		Assert.paramNotNull(threadFactory, "threadFactory");
-		return setExecutor(Executors.newSingleThreadScheduledExecutor(threadFactory));
-	}
+    @Override
+    public IAnimationRunnerBuilder setExecutor(final ThreadFactory threadFactory) {
+        Assert.paramNotNull(threadFactory, "threadFactory");
+        return setExecutor(Executors.newSingleThreadScheduledExecutor(threadFactory));
+    }
 
-	@Override
-	public IAnimationRunnerBuilder setExecutor(final IFactory<String> threadNameFactory) {
-		Assert.paramNotNull(threadNameFactory, "threadNameFactory");
-		return setExecutor(new DaemonThreadFactory(threadNameFactory));
-	}
+    @Override
+    public IAnimationRunnerBuilder setExecutor(final IFactory<String> threadNameFactory) {
+        Assert.paramNotNull(threadNameFactory, "threadNameFactory");
+        return setExecutor(new DaemonThreadFactory(threadNameFactory));
+    }
 
-	@Override
-	public IAnimationRunnerBuilder setExecutor(final String threadPrefix) {
-		Assert.paramNotNull(threadPrefix, "threadPrefix");
-		return setExecutor(new DaemonThreadFactory(threadPrefix));
-	}
+    @Override
+    public IAnimationRunnerBuilder setExecutor(final String threadPrefix) {
+        Assert.paramNotNull(threadPrefix, "threadPrefix");
+        return setExecutor(new DaemonThreadFactory(threadPrefix));
+    }
 
-	@Override
-	public IAnimationRunnerBuilder setDelay(final long delay, final TimeUnit timeUnit) {
-		Assert.paramNotNull(timeUnit, "timeUnit");
-		this.delay = delay;
-		this.timeUnit = timeUnit;
-		return this;
-	}
+    @Override
+    public IAnimationRunnerBuilder setDelay(final long delay, final TimeUnit timeUnit) {
+        Assert.paramNotNull(timeUnit, "timeUnit");
+        this.delay = delay;
+        this.timeUnit = timeUnit;
+        return this;
+    }
 
-	@Override
-	public IAnimationRunnerBuilder setDelay(final long delay) {
-		setDelay(delay, TimeUnit.MILLISECONDS);
-		return this;
-	}
+    @Override
+    public IAnimationRunnerBuilder setDelay(final long delay) {
+        setDelay(delay, TimeUnit.MILLISECONDS);
+        return this;
+    }
 
-	private ScheduledExecutorService getExecutor() {
-		if (executor != null) {
-			return executor;
-		}
-		else {
-			ScheduledExecutorService executorService = Toolkit.getValue(DEFAULT_EXECUTOR_KEY);
-			if (executorService == null) {
-				executorService = Executors.newSingleThreadScheduledExecutor(new DaemonThreadFactory());
-				Toolkit.setValue(DEFAULT_EXECUTOR_KEY, executorService);
-			}
-			return executorService;
-		}
-	}
+    private ScheduledExecutorService getExecutor() {
+        if (executor != null) {
+            return executor;
+        }
+        else {
+            ScheduledExecutorService executorService = Toolkit.getValue(DEFAULT_EXECUTOR_KEY);
+            if (executorService == null) {
+                executorService = Executors.newSingleThreadScheduledExecutor(new DaemonThreadFactory());
+                Toolkit.setValue(DEFAULT_EXECUTOR_KEY, executorService);
+            }
+            return executorService;
+        }
+    }
 
-	@Override
-	public IAnimationRunner build() {
-		return new AnimationRunnerImpl(getExecutor(), delay, timeUnit);
-	}
+    @Override
+    public IAnimationRunner build() {
+        return new AnimationRunnerImpl(getExecutor(), delay, timeUnit);
+    }
 
 }

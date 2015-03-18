@@ -42,73 +42,73 @@ import org.jowidgets.util.ICancelCallback;
 
 final class WorkerThreadAccessImpl implements IWorkerThreadAccess {
 
-	private final IUiThreadAccess uiThreadAccess;
-	private final Executor executor;
-	@SuppressWarnings("unused")
-	private final ScheduledExecutorService progressDelayExcecutor;
+    private final IUiThreadAccess uiThreadAccess;
+    private final Executor executor;
+    @SuppressWarnings("unused")
+    private final ScheduledExecutorService progressDelayExcecutor;
 
-	WorkerThreadAccessImpl(
-		final IUiThreadAccess uiThreadAccess,
-		final Executor executor,
-		final ScheduledExecutorService progressDelayExcecutor) {
+    WorkerThreadAccessImpl(
+        final IUiThreadAccess uiThreadAccess,
+        final Executor executor,
+        final ScheduledExecutorService progressDelayExcecutor) {
 
-		this.uiThreadAccess = uiThreadAccess;
-		this.executor = executor;
-		this.progressDelayExcecutor = progressDelayExcecutor;
-	}
+        this.uiThreadAccess = uiThreadAccess;
+        this.executor = executor;
+        this.progressDelayExcecutor = progressDelayExcecutor;
+    }
 
-	@Override
-	public <RESULT_TYPE, PROGRESS_TYPE> void work(
-		final IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> callback,
-		final ICancelCallback cancelCallback,
-		final IWorker<RESULT_TYPE, PROGRESS_TYPE> worker) {
+    @Override
+    public <RESULT_TYPE, PROGRESS_TYPE> void work(
+        final IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> callback,
+        final ICancelCallback cancelCallback,
+        final IWorker<RESULT_TYPE, PROGRESS_TYPE> worker) {
 
-		final IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> uiCallback = new UiWorkerCallback<RESULT_TYPE, PROGRESS_TYPE>(
-			uiThreadAccess,
-			callback);
+        final IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> uiCallback = new UiWorkerCallback<RESULT_TYPE, PROGRESS_TYPE>(
+            uiThreadAccess,
+            callback);
 
-		executor.execute(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					worker.work(uiCallback, cancelCallback);
-				}
-				catch (final WorkerCanceledException e) {
-					callback.canceled();
-				}
-				catch (final Throwable e) {
-					callback.exception(e);
-				}
-			}
-		});
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    worker.work(uiCallback, cancelCallback);
+                }
+                catch (final WorkerCanceledException e) {
+                    callback.canceled();
+                }
+                catch (final Throwable e) {
+                    callback.exception(e);
+                }
+            }
+        });
 
-	}
+    }
 
-	@Override
-	public <RESULT_TYPE, PROGRESS_TYPE> void work(
-		final IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> callback,
-		final ICancelCallback cancelCallback,
-		final IWorkerProgressDelay<PROGRESS_TYPE> progressDelay,
-		final IWorker<RESULT_TYPE, PROGRESS_TYPE> worker) {
-		// TODO implement progress delay
+    @Override
+    public <RESULT_TYPE, PROGRESS_TYPE> void work(
+        final IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> callback,
+        final ICancelCallback cancelCallback,
+        final IWorkerProgressDelay<PROGRESS_TYPE> progressDelay,
+        final IWorker<RESULT_TYPE, PROGRESS_TYPE> worker) {
+        // TODO implement progress delay
 
-	}
+    }
 
-	@Override
-	public <RESULT_TYPE, PROGRESS_TYPE> void work(
-		final IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> callback,
-		final ICancelCallback cancelCallback,
-		final ISyncWorker<RESULT_TYPE, PROGRESS_TYPE> worker) {
-		work(callback, cancelCallback, new AsyncWorkerAdapter<RESULT_TYPE, PROGRESS_TYPE>(worker));
-	}
+    @Override
+    public <RESULT_TYPE, PROGRESS_TYPE> void work(
+        final IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> callback,
+        final ICancelCallback cancelCallback,
+        final ISyncWorker<RESULT_TYPE, PROGRESS_TYPE> worker) {
+        work(callback, cancelCallback, new AsyncWorkerAdapter<RESULT_TYPE, PROGRESS_TYPE>(worker));
+    }
 
-	@Override
-	public <RESULT_TYPE, PROGRESS_TYPE> void work(
-		final IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> callback,
-		final ICancelCallback cancelCallback,
-		final IWorkerProgressDelay<PROGRESS_TYPE> progressDelay,
-		final ISyncWorker<RESULT_TYPE, PROGRESS_TYPE> worker) {
-		work(callback, cancelCallback, progressDelay, new AsyncWorkerAdapter<RESULT_TYPE, PROGRESS_TYPE>(worker));
-	}
+    @Override
+    public <RESULT_TYPE, PROGRESS_TYPE> void work(
+        final IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> callback,
+        final ICancelCallback cancelCallback,
+        final IWorkerProgressDelay<PROGRESS_TYPE> progressDelay,
+        final ISyncWorker<RESULT_TYPE, PROGRESS_TYPE> worker) {
+        work(callback, cancelCallback, progressDelay, new AsyncWorkerAdapter<RESULT_TYPE, PROGRESS_TYPE>(worker));
+    }
 
 }

@@ -33,6 +33,6 @@ import org.jowidgets.api.widgets.blueprint.convenience.anotations.ConvenienceMet
 @ConvenienceMethods(Hierarchy2nd3Convenience.class)
 public interface IHierarchy2nd3Convenience<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE introduce2nd3(String title);
+    INSTANCE_TYPE introduce2nd3(String title);
 
 }

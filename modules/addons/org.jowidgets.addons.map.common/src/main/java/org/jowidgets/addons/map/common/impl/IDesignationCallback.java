@@ -33,8 +33,8 @@ import org.jowidgets.addons.map.common.IDesignationListener;
 
 public interface IDesignationCallback<T> {
 
-	boolean register(Browser browser, final IDesignationListener<? super T> listener);
+    boolean register(Browser browser, final IDesignationListener<? super T> listener);
 
-	boolean unregister();
+    boolean unregister();
 
 }

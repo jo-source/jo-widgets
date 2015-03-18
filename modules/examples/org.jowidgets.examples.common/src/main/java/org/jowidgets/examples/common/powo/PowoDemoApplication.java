@@ -78,227 +78,227 @@ import org.jowidgets.tools.powo.JoToggleButton;
 
 public class PowoDemoApplication implements IApplication {
 
-	private final String frameTitle;
-	private JoFrame frame;
+    private final String frameTitle;
+    private JoFrame frame;
 
-	public PowoDemoApplication(final String frameTitle) {
-		super();
-		this.frameTitle = frameTitle;
-	}
+    public PowoDemoApplication(final String frameTitle) {
+        super();
+        this.frameTitle = frameTitle;
+    }
 
-	public void start() {
-		DemoIconsInitializer.initialize();
-		Toolkit.getInstance().getApplicationRunner().run(this);
-	}
+    public void start() {
+        DemoIconsInitializer.initialize();
+        Toolkit.getInstance().getApplicationRunner().run(this);
+    }
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
+        final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
-		frame = new JoFrame(frameTitle);
-		final JoDialog dialog = createDialog(frame);
+        frame = new JoFrame(frameTitle);
+        final JoDialog dialog = createDialog(frame);
 
-		frame.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosed() {
-				lifecycle.finish();
-			}
-		});
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed() {
+                lifecycle.finish();
+            }
+        });
 
-		frame.setMenuBar(createMenuBar());
+        frame.setMenuBar(createMenuBar());
 
-		final JoPopupMenu popupMenu = createPopUpMenu();
-		frame.addPopupMenu(popupMenu);
-		frame.addPopupDetectionListener(new IPopupDetectionListener() {
-			@Override
-			public void popupDetected(final Position position) {
-				popupMenu.show(position);
-			}
-		});
+        final JoPopupMenu popupMenu = createPopUpMenu();
+        frame.addPopupMenu(popupMenu);
+        frame.addPopupDetectionListener(new IPopupDetectionListener() {
+            @Override
+            public void popupDetected(final Position position) {
+                popupMenu.show(position);
+            }
+        });
 
-		frame.setLayout(new MigLayoutDescriptor("[grow]", "[][][][][][grow]"));
-		frame.add(new JoTextLabel("Test1"), "wrap");
-		frame.add(new JoTextLabel("Test2"), "wrap");
-		frame.add(new JoTextLabel("Test3"), "wrap");
-		frame.add(new JoTextLabel("Test4"), "wrap");
-		frame.add(bpF.separator(), "grow, wrap");
+        frame.setLayout(new MigLayoutDescriptor("[grow]", "[][][][][][grow]"));
+        frame.add(new JoTextLabel("Test1"), "wrap");
+        frame.add(new JoTextLabel("Test2"), "wrap");
+        frame.add(new JoTextLabel("Test3"), "wrap");
+        frame.add(new JoTextLabel("Test4"), "wrap");
+        frame.add(bpF.separator(), "grow, wrap");
 
-		//headless creation of composite2
-		final JoComposite composite2 = new JoComposite(bpF.composite("Test"));
-		composite2.setLayout(new MigLayoutDescriptor("[][grow]", "[][][][][][]"));
-		composite2.add(new JoIcon(IconsSmall.INFO), "");
-		composite2.add(JoTextLabel.bluePrint("Test6"), "wrap");
-		composite2.add(new JoIcon(IconsSmall.INFO), "");
-		composite2.add(bpF.textLabel("Test8"), "wrap");
+        //headless creation of composite2
+        final JoComposite composite2 = new JoComposite(bpF.composite("Test"));
+        composite2.setLayout(new MigLayoutDescriptor("[][grow]", "[][][][][][]"));
+        composite2.add(new JoIcon(IconsSmall.INFO), "");
+        composite2.add(JoTextLabel.bluePrint("Test6"), "wrap");
+        composite2.add(new JoIcon(IconsSmall.INFO), "");
+        composite2.add(bpF.textLabel("Test8"), "wrap");
 
-		composite2.add(new JoIcon(IconsSmall.ERROR), "");
-		final JoProgressBar progressBar = new JoProgressBar(100);
-		composite2.add(progressBar, "growx, wrap");
-		progressBar.setProgress(35);
+        composite2.add(new JoIcon(IconsSmall.ERROR), "");
+        final JoProgressBar progressBar = new JoProgressBar(100);
+        composite2.add(progressBar, "growx, wrap");
+        progressBar.setProgress(35);
 
-		final JoButton button1 = new JoButton("open dialog");
-		composite2.add(button1, "grow, span2, wrap");
+        final JoButton button1 = new JoButton("open dialog");
+        composite2.add(button1, "grow, span2, wrap");
 
-		final JoButton button2 = new JoButton("show message", "shows an message dialog");
-		composite2.add(button2, "grow, span2, wrap");
+        final JoButton button2 = new JoButton("show message", "shows an message dialog");
+        composite2.add(button2, "grow, span2, wrap");
 
-		final JoButton button3 = new JoButton("ask question", "shows an question dialog");
-		composite2.add(button3, "grow, span2, wrap");
+        final JoButton button3 = new JoButton("ask question", "shows an question dialog");
+        composite2.add(button3, "grow, span2, wrap");
 
-		button1.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				dialog.setVisible(true);
-			}
-		});
+        button1.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                dialog.setVisible(true);
+            }
+        });
 
-		button2.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IMessageDialogBluePrint bp = JoMessageDialog.bluePrintInfo();
-				bp.setTitle("Title for my message");
-				bp.setText("This is my message!\nI hope you like it very much!");
-				new JoMessageDialog(frame, bp).showMessage();
-			}
-		});
+        button2.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IMessageDialogBluePrint bp = JoMessageDialog.bluePrintInfo();
+                bp.setTitle("Title for my message");
+                bp.setText("This is my message!\nI hope you like it very much!");
+                new JoMessageDialog(frame, bp).showMessage();
+            }
+        });
 
-		button3.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final IQuestionDialogBluePrint bp = JoQuestionDialog.bluePrintYesNoCancel();
-				bp.setTitle("Title for my message");
-				bp.setText("This is my message!\nI hope you like it very much!");
-				final QuestionResult result = new JoQuestionDialog(frame, bp).question();
+        button3.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final IQuestionDialogBluePrint bp = JoQuestionDialog.bluePrintYesNoCancel();
+                bp.setTitle("Title for my message");
+                bp.setText("This is my message!\nI hope you like it very much!");
+                final QuestionResult result = new JoQuestionDialog(frame, bp).question();
 
-				new JoMessageDialog(frame, Icons.INFO, "Answer was:\n" + result).showMessage();
-			}
-		});
+                new JoMessageDialog(frame, Icons.INFO, "Answer was:\n" + result).showMessage();
+            }
+        });
 
-		//here composite2 becomes initialized
-		frame.add(composite2, "growx, growy");
+        //here composite2 becomes initialized
+        frame.add(composite2, "growx, growy");
 
-		frame.setVisible(true);
-	}
+        frame.setVisible(true);
+    }
 
-	private JoPopupMenu createPopUpMenu() {
-		final JoPopupMenu result = new JoPopupMenu();
-		fillMenu(result);
-		return result;
-	}
+    private JoPopupMenu createPopUpMenu() {
+        final JoPopupMenu result = new JoPopupMenu();
+        fillMenu(result);
+        return result;
+    }
 
-	private JoMenuBar createMenuBar() {
-		final JoMenuBar menuBar = new JoMenuBar();
-		menuBar.addMenu(createMainMenu1());
-		menuBar.addMenu(createMainMenu2());
-		return menuBar;
-	}
+    private JoMenuBar createMenuBar() {
+        final JoMenuBar menuBar = new JoMenuBar();
+        menuBar.addMenu(createMainMenu1());
+        menuBar.addMenu(createMainMenu2());
+        return menuBar;
+    }
 
-	private JoMainMenu createMainMenu1() {
-		final JoMainMenu result = new JoMainMenu("File", 'F');
-		fillMenu(result);
-		return result;
-	}
+    private JoMainMenu createMainMenu1() {
+        final JoMainMenu result = new JoMainMenu("File", 'F');
+        fillMenu(result);
+        return result;
+    }
 
-	private JoMainMenu createMainMenu2() {
-		final JoMainMenu result = new JoMainMenu("Edit", 'E');
-		fillMenu(result);
-		return result;
-	}
+    private JoMainMenu createMainMenu2() {
+        final JoMainMenu result = new JoMainMenu("Edit", 'E');
+        fillMenu(result);
+        return result;
+    }
 
-	private void fillMenu(final IJoMenu menu) {
-		final JoCheckedMenuItem checkedItem = new JoCheckedMenuItem("Checked1");
-		checkedItem.setSelected(true);
-		menu.addItem(checkedItem);
+    private void fillMenu(final IJoMenu menu) {
+        final JoCheckedMenuItem checkedItem = new JoCheckedMenuItem("Checked1");
+        checkedItem.setSelected(true);
+        menu.addItem(checkedItem);
 
-		menu.addItem(new JoSeparatorMenuItem());
+        menu.addItem(new JoSeparatorMenuItem());
 
-		menu.addItem(new JoActionMenuItem("Item1", "Tooltip of item1"));
-		menu.addItem(new JoActionMenuItem("Item2", "Tooltip of item2"));
-		menu.addItem(new JoActionMenuItem("Item3", "Tooltip of item3"));
+        menu.addItem(new JoActionMenuItem("Item1", "Tooltip of item1"));
+        menu.addItem(new JoActionMenuItem("Item2", "Tooltip of item2"));
+        menu.addItem(new JoActionMenuItem("Item3", "Tooltip of item3"));
 
-		menu.addItem(new JoSeparatorMenuItem());
+        menu.addItem(new JoSeparatorMenuItem());
 
-		final JoSubMenu subMenu = new JoSubMenu("Submenu", "Tooltip of submenu");
-		subMenu.addItem(new JoActionMenuItem("Sub item1", "Tooltip of sub item1"));
-		subMenu.addItem(new JoActionMenuItem("Sub item2", "Tooltip of sub item2"));
-		subMenu.addItem(new JoActionMenuItem("Sub item3", "Tooltip of sub item3"));
-		menu.addItem(subMenu);
+        final JoSubMenu subMenu = new JoSubMenu("Submenu", "Tooltip of submenu");
+        subMenu.addItem(new JoActionMenuItem("Sub item1", "Tooltip of sub item1"));
+        subMenu.addItem(new JoActionMenuItem("Sub item2", "Tooltip of sub item2"));
+        subMenu.addItem(new JoActionMenuItem("Sub item3", "Tooltip of sub item3"));
+        menu.addItem(subMenu);
 
-		menu.addItem(new JoSeparatorMenuItem());
+        menu.addItem(new JoSeparatorMenuItem());
 
-		final JoRadioMenuItem radioItem = new JoRadioMenuItem("Radio1", "Tooltip of radio1");
-		radioItem.setSelected(true);
-		menu.addItem(radioItem);
-		menu.addItem(new JoRadioMenuItem("Radio2", "Tooltip of radio2"));
-		menu.addItem(new JoRadioMenuItem("Radio3", "Tooltip of radio3"));
+        final JoRadioMenuItem radioItem = new JoRadioMenuItem("Radio1", "Tooltip of radio1");
+        radioItem.setSelected(true);
+        menu.addItem(radioItem);
+        menu.addItem(new JoRadioMenuItem("Radio2", "Tooltip of radio2"));
+        menu.addItem(new JoRadioMenuItem("Radio3", "Tooltip of radio3"));
 
-	}
+    }
 
-	private JoDialog createDialog(final IFrame parent) {
+    private JoDialog createDialog(final IFrame parent) {
 
-		final JoDialog result = new JoDialog(parent, JoDialog.bluePrint("test").autoPackOff());
-		result.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
+        final JoDialog result = new JoDialog(parent, JoDialog.bluePrint("test").autoPackOff());
+        result.setLayout(new MigLayoutDescriptor("0[grow]0", "0[grow]0"));
 
-		final ISplitCompositeBluePrint splitBp = JoSplitComposite.bluePrint().setWeight(0.3).resizeSecondPolicy();
-		final JoSplitComposite split = new JoSplitComposite(splitBp);
-		split.getFirst().add(createFirstSplit(), "growx, growy");
-		split.getSecond().add(createSecondSplit(), "growx, growy");
+        final ISplitCompositeBluePrint splitBp = JoSplitComposite.bluePrint().setWeight(0.3).resizeSecondPolicy();
+        final JoSplitComposite split = new JoSplitComposite(splitBp);
+        split.getFirst().add(createFirstSplit(), "growx, growy");
+        split.getSecond().add(createSecondSplit(), "growx, growy");
 
-		result.add(split, "growx, growy");
-		result.setSize(new Dimension(800, 600));
-		return result;
-	}
+        result.add(split, "growx, growy");
+        result.setSize(new Dimension(800, 600));
+        return result;
+    }
 
-	private JoScrollComposite createFirstSplit() {
-		final JoScrollComposite result = new JoScrollComposite(new MigLayoutDescriptor("[][grow]", "[][][]"));
-		result.addLabel("String input");
-		result.add(JoInputField.inputFieldString(), "growx, wrap");
+    private JoScrollComposite createFirstSplit() {
+        final JoScrollComposite result = new JoScrollComposite(new MigLayoutDescriptor("[][grow]", "[][][]"));
+        result.addLabel("String input");
+        result.add(JoInputField.inputFieldString(), "growx, wrap");
 
-		result.addLabel("Long input");
-		result.add(JoInputField.inputFieldLong(), "growx, wrap");
+        result.addLabel("Long input");
+        result.add(JoInputField.inputFieldLong(), "growx, wrap");
 
-		result.addLabel("Integer input");
-		result.add(JoInputField.inputFieldInteger(), "growx, wrap");
+        result.addLabel("Integer input");
+        result.add(JoInputField.inputFieldInteger(), "growx, wrap");
 
-		return result;
-	}
+        return result;
+    }
 
-	@SuppressWarnings("deprecation")
-	private JoScrollComposite createSecondSplit() {
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+    @SuppressWarnings("deprecation")
+    private JoScrollComposite createSecondSplit() {
+        final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
-		final JoScrollComposite result = new JoScrollComposite(new MigLayoutDescriptor("[grow]", "[][][][][][][]"));
+        final JoScrollComposite result = new JoScrollComposite(new MigLayoutDescriptor("[grow]", "[][][][][][][]"));
 
-		final JoComboBoxSelection<String> comboBox1 = new JoComboBoxSelection<String>(new String[] {"hallo", "test", "more"});
-		comboBox1.setValue("test");
-		result.add(comboBox1, "growx, wrap");
+        final JoComboBoxSelection<String> comboBox1 = new JoComboBoxSelection<String>(new String[] {"hallo", "test", "more"});
+        comboBox1.setValue("test");
+        result.add(comboBox1, "growx, wrap");
 
-		final JoComboBoxSelection<Integer> comboBox2 = new JoComboBoxSelection<Integer>(new Integer[] {1, 2, 3, 4, 5});
-		result.add(comboBox2, "growx, wrap");
+        final JoComboBoxSelection<Integer> comboBox2 = new JoComboBoxSelection<Integer>(new Integer[] {1, 2, 3, 4, 5});
+        result.add(comboBox2, "growx, wrap");
 
-		final JoCheckBox checkBox = new JoCheckBox("test");
-		result.add(checkBox, "growx, wrap");
+        final JoCheckBox checkBox = new JoCheckBox("test");
+        result.add(checkBox, "growx, wrap");
 
-		final IComboBoxSelectionBluePrint<Date> cbBp = JoComboBoxSelection.bluePrint();
-		cbBp.autoSelectionOn();
-		cbBp.setElements(new Date[] {new Date(), new Date(110, 11, 9), new Date(110, 11, 11)});
-		final JoComboBoxSelection<Date> comboBox3 = new JoComboBoxSelection<Date>(cbBp);
-		result.add(comboBox3, "growx, wrap");
+        final IComboBoxSelectionBluePrint<Date> cbBp = JoComboBoxSelection.bluePrint();
+        cbBp.autoSelectionOn();
+        cbBp.setElements(new Date[] {new Date(), new Date(110, 11, 9), new Date(110, 11, 11)});
+        final JoComboBoxSelection<Date> comboBox3 = new JoComboBoxSelection<Date>(cbBp);
+        result.add(comboBox3, "growx, wrap");
 
-		result.add(bpF.comboBoxSelection(new String[] {"some", "more", "testing"}), "growx, wrap");
+        result.add(bpF.comboBoxSelection(new String[] {"some", "more", "testing"}), "growx, wrap");
 
-		final IComboBoxBluePrint<Long> comboBoxBp4 = JoComboBox.bluePrintLong().autoSelectionOn();
-		comboBoxBp4.setElements(new Long[] {14324L, 4235345L, 324234L, 32423L, 32432432L, 2343234L});
-		result.add(new JoComboBox<Long>(comboBoxBp4), "growx, wrap");
+        final IComboBoxBluePrint<Long> comboBoxBp4 = JoComboBox.bluePrintLong().autoSelectionOn();
+        comboBoxBp4.setElements(new Long[] {14324L, 4235345L, 324234L, 32423L, 32432432L, 2343234L});
+        result.add(new JoComboBox<Long>(comboBoxBp4), "growx, wrap");
 
-		result.add(JoComboBox.comboBoxString(new String[] {"put your own", "values", "in here"}), "growx, wrap");
+        result.add(JoComboBox.comboBoxString(new String[] {"put your own", "values", "in here"}), "growx, wrap");
 
-		result.add(new JoToggleButton("Toggle me"), "growx, wrap");
-		return result;
-	}
+        result.add(new JoToggleButton("Toggle me"), "growx, wrap");
+        return result;
+    }
 
-	public JoFrame getRootFrame() {
-		return frame;
-	}
+    public JoFrame getRootFrame() {
+        return frame;
+    }
 
 }

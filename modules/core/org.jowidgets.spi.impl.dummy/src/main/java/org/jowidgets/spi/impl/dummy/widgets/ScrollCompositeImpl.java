@@ -34,14 +34,14 @@ import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 
 public class ScrollCompositeImpl extends DummyComposite implements IScrollCompositeSpi {
 
-	public ScrollCompositeImpl(final IGenericWidgetFactory factory, final IScrollCompositeSetupSpi setup) {
-		super(factory, new UIDScrollPane());
-		final UIDScrollPane scrollPane = new UIDScrollPane();
+    public ScrollCompositeImpl(final IGenericWidgetFactory factory, final IScrollCompositeSetupSpi setup) {
+        super(factory, new UIDScrollPane());
+        final UIDScrollPane scrollPane = new UIDScrollPane();
 
-		scrollPane.setVerticalBar(setup.hasVerticalBar());
-		scrollPane.setHorizontalBar(setup.hasHorizontalBar());
-		scrollPane.setAlwaysShowBars(setup.isAlwaysShowBars());
+        scrollPane.setVerticalBar(setup.hasVerticalBar());
+        scrollPane.setHorizontalBar(setup.hasHorizontalBar());
+        scrollPane.setAlwaysShowBars(setup.isAlwaysShowBars());
 
-	}
+    }
 
 }

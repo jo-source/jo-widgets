@@ -34,16 +34,16 @@ import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 
 public class ActionMenuItemImpl extends MenuItemImpl implements IActionMenuItemSpi {
 
-	public ActionMenuItemImpl(final MenuItem menuItem) {
-		super(menuItem);
+    public ActionMenuItemImpl(final MenuItem menuItem) {
+        super(menuItem);
 
-		menuItem.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(final SelectionEvent e) {
-				fireActionPerformed();
-			}
-		});
+        menuItem.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(final SelectionEvent e) {
+                fireActionPerformed();
+            }
+        });
 
-	}
+    }
 
 }

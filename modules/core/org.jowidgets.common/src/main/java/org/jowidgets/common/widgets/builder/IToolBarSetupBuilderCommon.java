@@ -32,9 +32,9 @@ import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.widgets.builder.convenience.IToolBarSetupConvenienceCommon;
 
 public interface IToolBarSetupBuilderCommon<INSTANCE_TYPE extends IToolBarSetupBuilderCommon<?>> extends
-		IComponentSetupBuilderCommon<INSTANCE_TYPE>,
-		IToolBarSetupConvenienceCommon<INSTANCE_TYPE> {
+        IComponentSetupBuilderCommon<INSTANCE_TYPE>,
+        IToolBarSetupConvenienceCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setOrientation(Orientation orientation);
+    INSTANCE_TYPE setOrientation(Orientation orientation);
 
 }

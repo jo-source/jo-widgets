@@ -30,8 +30,8 @@ package org.jowidgets.api.password;
 
 public interface IPasswordChangeResult {
 
-	void success();
+    void success();
 
-	void error(String errorText);
+    void error(String errorText);
 
 }

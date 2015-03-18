@@ -30,19 +30,19 @@ package org.jowidgets.api.types;
 
 public enum CheckedState {
 
-	/**
-	 * The item is checked completely
-	 */
-	CHECKED,
+    /**
+     * The item is checked completely
+     */
+    CHECKED,
 
-	/**
-	 * The item is checked partially
-	 */
-	GREYED,
+    /**
+     * The item is checked partially
+     */
+    GREYED,
 
-	/**
-	 * The item is unchecked
-	 */
-	UNCHECKED;
+    /**
+     * The item is unchecked
+     */
+    UNCHECKED;
 
 }

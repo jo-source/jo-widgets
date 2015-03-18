@@ -47,82 +47,82 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class MenusExample implements IApplication {
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
 
-		//Create a frame BluePrint with help of the BluePrintFactory (BPF)
-		final IFrameBluePrint frameBp = BPF.frame();
-		frameBp.setSize(new Dimension(400, 300)).setTitle("Hello World");
+        //Create a frame BluePrint with help of the BluePrintFactory (BPF)
+        final IFrameBluePrint frameBp = BPF.frame();
+        frameBp.setSize(new Dimension(400, 300)).setTitle("Hello World");
 
-		//Create a frame with help of the Toolkit and BluePrint. This convenience
-		//method finishes the ApplicationLifecycle when the root frame will be closed.
-		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
+        //Create a frame with help of the Toolkit and BluePrint. This convenience
+        //method finishes the ApplicationLifecycle when the root frame will be closed.
+        final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
 
-		//Use a simple MigLayout with one column and one row for the frame (a frame is a container also)
-		frame.setLayout(new MigLayoutDescriptor("[]", "[]"));
+        //Use a simple MigLayout with one column and one row for the frame (a frame is a container also)
+        frame.setLayout(new MigLayoutDescriptor("[]", "[]"));
 
-		//Create a button BluePrint with help of the BluePrintFactory (BPF)
-		final IButtonBluePrint buttonBp = BPF.button().setText("Hello World");
+        //Create a button BluePrint with help of the BluePrintFactory (BPF)
+        final IButtonBluePrint buttonBp = BPF.button().setText("Hello World");
 
-		//Add the button defined by the BluePrint to the frame
-		final IButton button = frame.add(buttonBp);
+        //Add the button defined by the BluePrint to the frame
+        final IButton button = frame.add(buttonBp);
 
-		//Add an ActionListener to the button
-		button.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				//CHECKSTYLE:OFF
-				System.out.println("Hello World");
-				//CHECKSTYLE:ON
-			}
-		});
+        //Add an ActionListener to the button
+        button.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                //CHECKSTYLE:OFF
+                System.out.println("Hello World");
+                //CHECKSTYLE:ON
+            }
+        });
 
-		//****************************************************************
-		//MENU EXAMPLE
-		//****************************************************************
-		final IMenuBar menuBar = frame.createMenuBar();
+        //****************************************************************
+        //MENU EXAMPLE
+        //****************************************************************
+        final IMenuBar menuBar = frame.createMenuBar();
 
-		final IMainMenu mainMenu = menuBar.addMenu(BPF.mainMenu("Menu1"));
+        final IMainMenu mainMenu = menuBar.addMenu(BPF.mainMenu("Menu1"));
 
-		final IActionMenuItem actionItem = mainMenu.addItem(BPF.menuItem("ActionItem"));
-		actionItem.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				//CHECKSTYLE:OFF
-				System.out.println("Action Performed");
-				//CHECKSTYLE:ON
-			}
-		});
+        final IActionMenuItem actionItem = mainMenu.addItem(BPF.menuItem("ActionItem"));
+        actionItem.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                //CHECKSTYLE:OFF
+                System.out.println("Action Performed");
+                //CHECKSTYLE:ON
+            }
+        });
 
-		final ISelectableMenuItem selectableItem = mainMenu.addItem(BPF.checkedMenuItem("Checked Item"));
-		selectableItem.setSelected(true);
-		selectableItem.addItemListener(new IItemStateListener() {
-			@Override
-			public void itemStateChanged() {
-				//CHECKSTYLE:OFF
-				System.out.println(selectableItem.isSelected());
-				//CHECKSTYLE:ON
-			}
-		});
+        final ISelectableMenuItem selectableItem = mainMenu.addItem(BPF.checkedMenuItem("Checked Item"));
+        selectableItem.setSelected(true);
+        selectableItem.addItemListener(new IItemStateListener() {
+            @Override
+            public void itemStateChanged() {
+                //CHECKSTYLE:OFF
+                System.out.println(selectableItem.isSelected());
+                //CHECKSTYLE:ON
+            }
+        });
 
-		mainMenu.addSeparator();
+        mainMenu.addSeparator();
 
-		final ISubMenu subMenu = mainMenu.addItem(BPF.subMenu("SubMenu"));
-		final ISelectableMenuItem radio1 = subMenu.addItem(BPF.radioMenuItem("Radio1"));
-		subMenu.addItem(BPF.radioMenuItem("Radio2").setSelected(true));
-		subMenu.addItem(BPF.radioMenuItem("Radio3"));
+        final ISubMenu subMenu = mainMenu.addItem(BPF.subMenu("SubMenu"));
+        final ISelectableMenuItem radio1 = subMenu.addItem(BPF.radioMenuItem("Radio1"));
+        subMenu.addItem(BPF.radioMenuItem("Radio2").setSelected(true));
+        subMenu.addItem(BPF.radioMenuItem("Radio3"));
 
-		radio1.addItemListener(new IItemStateListener() {
-			@Override
-			public void itemStateChanged() {
-				//CHECKSTYLE:OFF
-				System.out.println(radio1.isSelected());
-				//CHECKSTYLE:ON
-			}
-		});
+        radio1.addItemListener(new IItemStateListener() {
+            @Override
+            public void itemStateChanged() {
+                //CHECKSTYLE:OFF
+                System.out.println(radio1.isSelected());
+                //CHECKSTYLE:ON
+            }
+        });
 
-		//set the root frame visible
-		frame.setVisible(true);
-	}
+        //set the root frame visible
+        frame.setVisible(true);
+    }
 
 }

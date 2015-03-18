@@ -32,9 +32,9 @@ import org.jowidgets.util.IObservableValue;
 
 public interface ICheckBoxSetup extends ICheckBoxSetupCommon, IInputComponentSetup<Boolean> {
 
-	Integer getFontSize();
+    Integer getFontSize();
 
-	String getFontName();
+    String getFontName();
 
-	IObservableValue<Boolean> getObservableValue();
+    IObservableValue<Boolean> getObservableValue();
 }

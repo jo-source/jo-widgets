@@ -44,75 +44,75 @@ import org.jowidgets.spi.widgets.setup.ICanvasSetupSpi;
 
 public class CanvasImpl extends SwtComposite implements ICanvasSpi {
 
-	private final PaintObservable paintObservable;
+    private final PaintObservable paintObservable;
 
-	public CanvasImpl(final IGenericWidgetFactory factory, final Object parentUiReference, final ICanvasSetupSpi setup) {
-		super(factory, new Canvas((Composite) parentUiReference, SWT.DOUBLE_BUFFERED));
-		getUiReference().setBackgroundMode(SWT.INHERIT_DEFAULT);
-		this.paintObservable = new PaintObservable();
+    public CanvasImpl(final IGenericWidgetFactory factory, final Object parentUiReference, final ICanvasSetupSpi setup) {
+        super(factory, new Canvas((Composite) parentUiReference, SWT.DOUBLE_BUFFERED));
+        getUiReference().setBackgroundMode(SWT.INHERIT_DEFAULT);
+        this.paintObservable = new PaintObservable();
 
-		getUiReference().addPaintListener(new PaintListener() {
-			@Override
-			public void paintControl(final PaintEvent e) {
-				final Dimension size = getSize();
-				final Rectangle bounds = new Rectangle(0, 0, size.getWidth(), size.getHeight());
-				final Rectangle clipBounds = new Rectangle(e.x, e.y, e.width, e.height);
-				final GraphicContextSpiImpl graphicContext = new GraphicContextSpiImpl(e.gc, bounds);
-				paintObservable.firePaint(new PaintEventSpiImpl(graphicContext, clipBounds));
-			}
-		});
-	}
+        getUiReference().addPaintListener(new PaintListener() {
+            @Override
+            public void paintControl(final PaintEvent e) {
+                final Dimension size = getSize();
+                final Rectangle bounds = new Rectangle(0, 0, size.getWidth(), size.getHeight());
+                final Rectangle clipBounds = new Rectangle(e.x, e.y, e.width, e.height);
+                final GraphicContextSpiImpl graphicContext = new GraphicContextSpiImpl(e.gc, bounds);
+                paintObservable.firePaint(new PaintEventSpiImpl(graphicContext, clipBounds));
+            }
+        });
+    }
 
-	@Override
-	public Canvas getUiReference() {
-		return (Canvas) super.getUiReference();
-	}
+    @Override
+    public Canvas getUiReference() {
+        return (Canvas) super.getUiReference();
+    }
 
-	@Override
-	public void scroll(
-		final int sourceX,
-		final int sourceY,
-		final int sourceWidth,
-		final int sourceHeight,
-		final int destinationX,
-		final int destinationY) {
-		getUiReference().scroll(destinationX, destinationY, sourceX, sourceY, sourceWidth, sourceHeight, false);
-	}
+    @Override
+    public void scroll(
+        final int sourceX,
+        final int sourceY,
+        final int sourceWidth,
+        final int sourceHeight,
+        final int destinationX,
+        final int destinationY) {
+        getUiReference().scroll(destinationX, destinationY, sourceX, sourceY, sourceWidth, sourceHeight, false);
+    }
 
-	@Override
-	public void redraw() {
-		redraw(false);
-	}
+    @Override
+    public void redraw() {
+        redraw(false);
+    }
 
-	@Override
-	public void redraw(final int x, final int y, final int width, final int height) {
-		redraw(x, y, width, height, false);
-	}
+    @Override
+    public void redraw(final int x, final int y, final int width, final int height) {
+        redraw(x, y, width, height, false);
+    }
 
-	@Override
-	public void redraw(final boolean sync) {
-		getUiReference().redraw();
-		if (sync) {
-			getUiReference().update();
-		}
-	}
+    @Override
+    public void redraw(final boolean sync) {
+        getUiReference().redraw();
+        if (sync) {
+            getUiReference().update();
+        }
+    }
 
-	@Override
-	public void redraw(final int x, final int y, final int width, final int height, final boolean sync) {
-		getUiReference().redraw(x, y, width, height, false);
-		if (sync) {
-			getUiReference().update();
-		}
-	}
+    @Override
+    public void redraw(final int x, final int y, final int width, final int height, final boolean sync) {
+        getUiReference().redraw(x, y, width, height, false);
+        if (sync) {
+            getUiReference().update();
+        }
+    }
 
-	@Override
-	public void addPaintListener(final IPaintListenerSpi listener) {
-		paintObservable.addPaintListener(listener);
-	}
+    @Override
+    public void addPaintListener(final IPaintListenerSpi listener) {
+        paintObservable.addPaintListener(listener);
+    }
 
-	@Override
-	public void removePaintListener(final IPaintListenerSpi paintListener) {
-		paintObservable.removePaintListener(paintListener);
-	}
+    @Override
+    public void removePaintListener(final IPaintListenerSpi paintListener) {
+        paintObservable.removePaintListener(paintListener);
+    }
 
 }

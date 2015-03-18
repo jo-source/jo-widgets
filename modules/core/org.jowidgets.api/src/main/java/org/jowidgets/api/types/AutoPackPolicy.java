@@ -29,10 +29,10 @@ package org.jowidgets.api.types;
 
 public enum AutoPackPolicy {
 
-	ALWAYS,
+    ALWAYS,
 
-	ONCE,
+    ONCE,
 
-	OFF;
+    OFF;
 
 }

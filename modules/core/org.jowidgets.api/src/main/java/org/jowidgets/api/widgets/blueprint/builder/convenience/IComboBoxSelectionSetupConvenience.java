@@ -29,13 +29,13 @@ package org.jowidgets.api.widgets.blueprint.builder.convenience;
 
 public interface IComboBoxSelectionSetupConvenience<INSTANCE_TYPE, INPUT_TYPE> {
 
-	INSTANCE_TYPE setElements(INPUT_TYPE... elements);
+    INSTANCE_TYPE setElements(INPUT_TYPE... elements);
 
-	INSTANCE_TYPE autoSelectionOn();
+    INSTANCE_TYPE autoSelectionOn();
 
-	INSTANCE_TYPE autoSelectionOff();
+    INSTANCE_TYPE autoSelectionOff();
 
-	INSTANCE_TYPE autoCompletionOn();
+    INSTANCE_TYPE autoCompletionOn();
 
-	INSTANCE_TYPE autoCompletionOff();
+    INSTANCE_TYPE autoCompletionOff();
 }

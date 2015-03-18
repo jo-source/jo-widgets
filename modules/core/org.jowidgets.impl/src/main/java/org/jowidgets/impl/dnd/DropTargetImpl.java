@@ -45,123 +45,123 @@ import org.jowidgets.util.Assert;
 
 public final class DropTargetImpl extends AbstractDropTargetObservable implements IDropTarget {
 
-	private final IDropTargetSpi dropTargetSpi;
-	private final IDropSelectionProvider dropSelectionProvider;
-	private final IDropTargetListenerSpi dropTargetListenerSpi;
-	private final DragDropDelegate dragDropDelegate;
+    private final IDropTargetSpi dropTargetSpi;
+    private final IDropSelectionProvider dropSelectionProvider;
+    private final IDropTargetListenerSpi dropTargetListenerSpi;
+    private final DragDropDelegate dragDropDelegate;
 
-	public DropTargetImpl(final IDropTargetSpi dropTargetSpi, final IDropSelectionProvider dropSelectionProvider) {
+    public DropTargetImpl(final IDropTargetSpi dropTargetSpi, final IDropSelectionProvider dropSelectionProvider) {
 
-		Assert.paramNotNull(dropTargetSpi, "dropTargetSpi");
-		Assert.paramNotNull(dropSelectionProvider, "dropSelectionProvider");
+        Assert.paramNotNull(dropTargetSpi, "dropTargetSpi");
+        Assert.paramNotNull(dropSelectionProvider, "dropSelectionProvider");
 
-		this.dropTargetSpi = dropTargetSpi;
-		this.dropSelectionProvider = dropSelectionProvider;
+        this.dropTargetSpi = dropTargetSpi;
+        this.dropSelectionProvider = dropSelectionProvider;
 
-		this.dropTargetListenerSpi = new DropTargetListenerSpi();
-		this.dragDropDelegate = new DragDropDelegate(new IDragDropSpiSupport() {
+        this.dropTargetListenerSpi = new DropTargetListenerSpi();
+        this.dragDropDelegate = new DragDropDelegate(new IDragDropSpiSupport() {
 
-			@Override
-			public void setTransferTypesSpi(final Collection<TransferTypeSpi> supportedTypes) {
-				dropTargetSpi.setTransferTypes(supportedTypes);
-			}
+            @Override
+            public void setTransferTypesSpi(final Collection<TransferTypeSpi> supportedTypes) {
+                dropTargetSpi.setTransferTypes(supportedTypes);
+            }
 
-			@Override
-			public void setActionsSpi(final Set<DropAction> actions) {
-				dropTargetSpi.setActions(actions);
-			}
-		});
-	}
+            @Override
+            public void setActionsSpi(final Set<DropAction> actions) {
+                dropTargetSpi.setActions(actions);
+            }
+        });
+    }
 
-	@Override
-	public void setTransferTypes(final Collection<TransferType<?>> types) {
-		dragDropDelegate.setTransferTypes(types);
-	}
+    @Override
+    public void setTransferTypes(final Collection<TransferType<?>> types) {
+        dragDropDelegate.setTransferTypes(types);
+    }
 
-	@Override
-	public void setTransferTypes(final TransferType<?>... supportedTypes) {
-		dragDropDelegate.setTransferTypes(supportedTypes);
-	}
+    @Override
+    public void setTransferTypes(final TransferType<?>... supportedTypes) {
+        dragDropDelegate.setTransferTypes(supportedTypes);
+    }
 
-	@Override
-	public void setActions(final Set<DropAction> actions) {
-		dragDropDelegate.setActions(actions);
-	}
+    @Override
+    public void setActions(final Set<DropAction> actions) {
+        dragDropDelegate.setActions(actions);
+    }
 
-	@Override
-	public void setActions(final DropAction... actions) {
-		dragDropDelegate.setActions(actions);
-	}
+    @Override
+    public void setActions(final DropAction... actions) {
+        dragDropDelegate.setActions(actions);
+    }
 
-	@Override
-	public void setDefaultDropMode(final DropMode dropMode) {
-		dropTargetSpi.setDefaultDropMode(dropMode);
-	}
+    @Override
+    public void setDefaultDropMode(final DropMode dropMode) {
+        dropTargetSpi.setDefaultDropMode(dropMode);
+    }
 
-	@Override
-	protected void setActive(final boolean active) {
-		if (active) {
-			dropTargetSpi.addDropTargetListenerSpi(dropTargetListenerSpi);
-		}
-		else {
-			dropTargetSpi.removeDropTargetListenerSpi(dropTargetListenerSpi);
-		}
-	}
+    @Override
+    protected void setActive(final boolean active) {
+        if (active) {
+            dropTargetSpi.addDropTargetListenerSpi(dropTargetListenerSpi);
+        }
+        else {
+            dropTargetSpi.removeDropTargetListenerSpi(dropTargetListenerSpi);
+        }
+    }
 
-	private final class DropTargetListenerSpi implements IDropTargetListenerSpi {
+    private final class DropTargetListenerSpi implements IDropTargetListenerSpi {
 
-		@Override
-		public void dragEnter(final IDropEventSpi event, final IDropResponseSpi response) {
-			final TransferType<?> transferType = dragDropDelegate.getTransferType(event.getTransferType());
-			if (transferType != null) {
-				fireDragEnter(createDropEvent(event, transferType), new DropResponseImpl(response));
-			}
-		}
+        @Override
+        public void dragEnter(final IDropEventSpi event, final IDropResponseSpi response) {
+            final TransferType<?> transferType = dragDropDelegate.getTransferType(event.getTransferType());
+            if (transferType != null) {
+                fireDragEnter(createDropEvent(event, transferType), new DropResponseImpl(response));
+            }
+        }
 
-		@Override
-		public void dragOver(final IDropEventSpi event, final IDropResponseSpi response) {
-			final TransferType<?> transferType = dragDropDelegate.getTransferType(event.getTransferType());
-			if (transferType != null) {
-				fireDragOver(createDropEvent(event, transferType), new DropResponseImpl(response));
-			}
-		}
+        @Override
+        public void dragOver(final IDropEventSpi event, final IDropResponseSpi response) {
+            final TransferType<?> transferType = dragDropDelegate.getTransferType(event.getTransferType());
+            if (transferType != null) {
+                fireDragOver(createDropEvent(event, transferType), new DropResponseImpl(response));
+            }
+        }
 
-		@Override
-		public void dragOperationChanged(final IDropEventSpi event, final IDropResponseSpi response) {
-			final TransferType<?> transferType = dragDropDelegate.getTransferType(event.getTransferType());
-			if (transferType != null) {
-				fireDragOperationChanged(createDropEvent(event, transferType), new DropResponseImpl(response));
-			}
-		}
+        @Override
+        public void dragOperationChanged(final IDropEventSpi event, final IDropResponseSpi response) {
+            final TransferType<?> transferType = dragDropDelegate.getTransferType(event.getTransferType());
+            if (transferType != null) {
+                fireDragOperationChanged(createDropEvent(event, transferType), new DropResponseImpl(response));
+            }
+        }
 
-		@Override
-		public void dragExit() {
-			fireDragExit();
-		}
+        @Override
+        public void dragExit() {
+            fireDragExit();
+        }
 
-		@Override
-		public void dropAccept(final IDropEventSpi event, final IDropResponseSpi response) {
-			final TransferType<?> transferType = dragDropDelegate.getTransferType(event.getTransferType());
-			if (transferType != null) {
-				fireDropAccept(createDropEvent(event, transferType), new DropResponseImpl(response));
-			}
-		}
+        @Override
+        public void dropAccept(final IDropEventSpi event, final IDropResponseSpi response) {
+            final TransferType<?> transferType = dragDropDelegate.getTransferType(event.getTransferType());
+            if (transferType != null) {
+                fireDropAccept(createDropEvent(event, transferType), new DropResponseImpl(response));
+            }
+        }
 
-		@Override
-		public void drop(final IDropEventSpi event) {
-			final TransferType<?> transferType = dragDropDelegate.getTransferType(event.getTransferType());
-			if (transferType != null) {
-				fireDrop(createDropEvent(event, transferType));
-			}
-		}
+        @Override
+        public void drop(final IDropEventSpi event) {
+            final TransferType<?> transferType = dragDropDelegate.getTransferType(event.getTransferType());
+            if (transferType != null) {
+                fireDrop(createDropEvent(event, transferType));
+            }
+        }
 
-		private IDropEvent createDropEvent(final IDropEventSpi dropEventSpi, final TransferType<?> transferType) {
-			return new DropEventImpl(
-				dropEventSpi,
-				dropSelectionProvider.getDropSelection(dropEventSpi.getDropSelection()),
-				transferType);
-		}
+        private IDropEvent createDropEvent(final IDropEventSpi dropEventSpi, final TransferType<?> transferType) {
+            return new DropEventImpl(
+                dropEventSpi,
+                dropSelectionProvider.getDropSelection(dropEventSpi.getDropSelection()),
+                transferType);
+        }
 
-	}
+    }
 
 }

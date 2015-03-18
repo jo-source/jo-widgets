@@ -38,51 +38,51 @@ import org.jowidgets.common.application.IApplicationRunner;
 
 public class SwtApplicationRunner implements IApplicationRunner {
 
-	private final AtomicBoolean isRunning = new AtomicBoolean();
-	private Display display;
+    private final AtomicBoolean isRunning = new AtomicBoolean();
+    private Display display;
 
-	@Override
-	public void run(final IApplication application) {
+    @Override
+    public void run(final IApplication application) {
 
-		isRunning.set(true);
+        isRunning.set(true);
 
-		//now, if someone will run the application, get the display
-		final Display currentDisplay = getDisplay();
+        //now, if someone will run the application, get the display
+        final Display currentDisplay = getDisplay();
 
-		//Create a lifecycle that disposes all windows when finished
-		final IApplicationLifecycle lifecycle = new IApplicationLifecycle() {
+        //Create a lifecycle that disposes all windows when finished
+        final IApplicationLifecycle lifecycle = new IApplicationLifecycle() {
 
-			@Override
-			public void finish() {
-				if (isRunning.getAndSet(false)) {
-					for (final Shell shell : currentDisplay.getShells()) {
-						shell.dispose();
-					}
-				}
-			}
-		};
+            @Override
+            public void finish() {
+                if (isRunning.getAndSet(false)) {
+                    for (final Shell shell : currentDisplay.getShells()) {
+                        shell.dispose();
+                    }
+                }
+            }
+        };
 
-		//start the lifecycle
-		application.start(lifecycle);
+        //start the lifecycle
+        application.start(lifecycle);
 
-		//do the event dispatching
-		while (!currentDisplay.isDisposed() && isRunning.get()) {
-			if (!currentDisplay.readAndDispatch()) {
-				currentDisplay.sleep();
-			}
-		}
+        //do the event dispatching
+        while (!currentDisplay.isDisposed() && isRunning.get()) {
+            if (!currentDisplay.readAndDispatch()) {
+                currentDisplay.sleep();
+            }
+        }
 
-	}
+    }
 
-	private Display getDisplay() {
-		if (display == null) {
-			display = Display.getDefault();
-			if (display.getThread() != Thread.currentThread()) {
-				throw new IllegalStateException(
-					"A default Display exists, but the current thread is not the owner of this display.");
-			}
-		}
-		return display;
-	}
+    private Display getDisplay() {
+        if (display == null) {
+            display = Display.getDefault();
+            if (display.getThread() != Thread.currentThread()) {
+                throw new IllegalStateException(
+                    "A default Display exists, but the current thread is not the owner of this display.");
+            }
+        }
+        return display;
+    }
 
 }

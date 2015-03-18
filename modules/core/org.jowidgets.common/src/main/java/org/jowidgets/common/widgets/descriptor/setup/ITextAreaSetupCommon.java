@@ -31,13 +31,13 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ITextAreaSetupCommon extends ITextComponentSetupCommon {
 
-	@Mandatory
-	boolean isLineWrap();
+    @Mandatory
+    boolean isLineWrap();
 
-	@Mandatory
-	boolean isAlwaysShowBars();
+    @Mandatory
+    boolean isAlwaysShowBars();
 
-	@Mandatory
-	boolean hasBorder();
+    @Mandatory
+    boolean hasBorder();
 
 }

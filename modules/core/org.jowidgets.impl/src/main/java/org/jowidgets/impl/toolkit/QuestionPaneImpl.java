@@ -40,129 +40,129 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
 class QuestionPaneImpl implements IQuestionPane {
 
-	private final IGenericWidgetFactory genericWidgetFactory;
-	private final IBluePrintFactory bluePrintFactory;
-	private final WindowProvider activeWindowProvider;
+    private final IGenericWidgetFactory genericWidgetFactory;
+    private final IBluePrintFactory bluePrintFactory;
+    private final WindowProvider activeWindowProvider;
 
-	QuestionPaneImpl(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IBluePrintFactory bluePrintFactory,
-		final WindowProvider activeWindowProvider) {
-		super();
-		this.genericWidgetFactory = genericWidgetFactory;
-		this.bluePrintFactory = bluePrintFactory;
-		this.activeWindowProvider = activeWindowProvider;
-	}
+    QuestionPaneImpl(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IBluePrintFactory bluePrintFactory,
+        final WindowProvider activeWindowProvider) {
+        super();
+        this.genericWidgetFactory = genericWidgetFactory;
+        this.bluePrintFactory = bluePrintFactory;
+        this.activeWindowProvider = activeWindowProvider;
+    }
 
-	@Override
-	public QuestionResult askYesNoQuestion(final String question) {
-		final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoQuestion().setText(question);
-		return askQuestion(bp);
-	}
+    @Override
+    public QuestionResult askYesNoQuestion(final String question) {
+        final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoQuestion().setText(question);
+        return askQuestion(bp);
+    }
 
-	@Override
-	public QuestionResult askYesNoCancelQuestion(final String question) {
-		final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoCancelQuestion().setText(question);
-		return askQuestion(bp);
-	}
+    @Override
+    public QuestionResult askYesNoCancelQuestion(final String question) {
+        final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoCancelQuestion().setText(question);
+        return askQuestion(bp);
+    }
 
-	@Override
-	public QuestionResult askYesNoQuestion(final String title, final String question) {
-		final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoQuestion().setTitle(title).setText(question);
-		return askQuestion(bp);
-	}
+    @Override
+    public QuestionResult askYesNoQuestion(final String title, final String question) {
+        final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoQuestion().setTitle(title).setText(question);
+        return askQuestion(bp);
+    }
 
-	@Override
-	public QuestionResult askYesNoCancelQuestion(final String title, final String question) {
-		final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoCancelQuestion().setTitle(title).setText(question);
-		return askQuestion(bp);
-	}
+    @Override
+    public QuestionResult askYesNoCancelQuestion(final String title, final String question) {
+        final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoCancelQuestion().setTitle(title).setText(question);
+        return askQuestion(bp);
+    }
 
-	@Override
-	public QuestionResult askYesNoQuestion(final String title, final String question, final QuestionResult defaultResult) {
-		final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoQuestion().setTitle(title).setText(question);
-		bp.setDefaultResult(defaultResult);
-		return askQuestion(bp);
-	}
+    @Override
+    public QuestionResult askYesNoQuestion(final String title, final String question, final QuestionResult defaultResult) {
+        final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoQuestion().setTitle(title).setText(question);
+        bp.setDefaultResult(defaultResult);
+        return askQuestion(bp);
+    }
 
-	@Override
-	public QuestionResult askYesNoCancelQuestion(final String title, final String question, final QuestionResult defaultResult) {
-		final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoCancelQuestion().setTitle(title).setText(question);
-		bp.setDefaultResult(defaultResult);
-		return askQuestion(bp);
-	}
+    @Override
+    public QuestionResult askYesNoCancelQuestion(final String title, final String question, final QuestionResult defaultResult) {
+        final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoCancelQuestion().setTitle(title).setText(question);
+        bp.setDefaultResult(defaultResult);
+        return askQuestion(bp);
+    }
 
-	@Override
-	public QuestionResult askYesNoQuestion(
-		final String title,
-		final String question,
-		final QuestionResult defaultResult,
-		final IImageConstant icon) {
+    @Override
+    public QuestionResult askYesNoQuestion(
+        final String title,
+        final String question,
+        final QuestionResult defaultResult,
+        final IImageConstant icon) {
 
-		final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoQuestion().setTitle(title).setText(question);
-		bp.setDefaultResult(defaultResult).setIcon(icon);
-		return askQuestion(bp);
-	}
+        final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoQuestion().setTitle(title).setText(question);
+        bp.setDefaultResult(defaultResult).setIcon(icon);
+        return askQuestion(bp);
+    }
 
-	@Override
-	public QuestionResult askYesNoCancelQuestion(
-		final String title,
-		final String question,
-		final QuestionResult defaultResult,
-		final IImageConstant icon) {
+    @Override
+    public QuestionResult askYesNoCancelQuestion(
+        final String title,
+        final String question,
+        final QuestionResult defaultResult,
+        final IImageConstant icon) {
 
-		final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoCancelQuestion().setTitle(title).setText(question);
-		bp.setDefaultResult(defaultResult).setIcon(icon);
-		return askQuestion(bp);
-	}
+        final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoCancelQuestion().setTitle(title).setText(question);
+        bp.setDefaultResult(defaultResult).setIcon(icon);
+        return askQuestion(bp);
+    }
 
-	@Override
-	public QuestionResult askYesNoQuestion(
-		final String title,
-		final IImageConstant titleIcon,
-		final String question,
-		final QuestionResult defaultResult,
-		final IImageConstant icon) {
+    @Override
+    public QuestionResult askYesNoQuestion(
+        final String title,
+        final IImageConstant titleIcon,
+        final String question,
+        final QuestionResult defaultResult,
+        final IImageConstant icon) {
 
-		final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoQuestion().setTitle(title).setTitleIcon(titleIcon);
-		bp.setText(question).setDefaultResult(defaultResult).setIcon(icon);
-		return askQuestion(bp);
-	}
+        final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoQuestion().setTitle(title).setTitleIcon(titleIcon);
+        bp.setText(question).setDefaultResult(defaultResult).setIcon(icon);
+        return askQuestion(bp);
+    }
 
-	@Override
-	public QuestionResult askYesNoCancelQuestion(
-		final String title,
-		final IImageConstant titleIcon,
-		final String question,
-		final QuestionResult defaultResult,
-		final IImageConstant icon) {
+    @Override
+    public QuestionResult askYesNoCancelQuestion(
+        final String title,
+        final IImageConstant titleIcon,
+        final String question,
+        final QuestionResult defaultResult,
+        final IImageConstant icon) {
 
-		final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoCancelQuestion().setTitle(title).setTitleIcon(titleIcon);
-		bp.setText(question).setDefaultResult(defaultResult).setIcon(icon);
-		return askQuestion(bp);
-	}
+        final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoCancelQuestion().setTitle(title).setTitleIcon(titleIcon);
+        bp.setText(question).setDefaultResult(defaultResult).setIcon(icon);
+        return askQuestion(bp);
+    }
 
-	@Override
-	public QuestionResult askYesNoQuestion(
-		final IExecutionContext executionContext,
-		final String question,
-		final QuestionResult defaultResult) {
-		final IAction action = executionContext.getAction();
-		final String title = action.getText();
-		final IImageConstant titleIcon = action.getIcon();
-		final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoQuestion();
-		bp.setTitle(title).setTitleIcon(titleIcon).setText(question).setDefaultResult(defaultResult);
-		return askQuestion(bp);
-	}
+    @Override
+    public QuestionResult askYesNoQuestion(
+        final IExecutionContext executionContext,
+        final String question,
+        final QuestionResult defaultResult) {
+        final IAction action = executionContext.getAction();
+        final String title = action.getText();
+        final IImageConstant titleIcon = action.getIcon();
+        final IQuestionDialogBluePrint bp = bluePrintFactory.yesNoQuestion();
+        bp.setTitle(title).setTitleIcon(titleIcon).setText(question).setDefaultResult(defaultResult);
+        return askQuestion(bp);
+    }
 
-	private QuestionResult askQuestion(final IQuestionDialogBluePrint messageDialogBluePrint) {
-		final IWindow activeWindow = activeWindowProvider.getActiveWindow();
-		if (activeWindow != null) {
-			return activeWindow.createChildWindow(messageDialogBluePrint).question();
-		}
-		else {
-			return genericWidgetFactory.create(messageDialogBluePrint).question();
-		}
-	}
+    private QuestionResult askQuestion(final IQuestionDialogBluePrint messageDialogBluePrint) {
+        final IWindow activeWindow = activeWindowProvider.getActiveWindow();
+        if (activeWindow != null) {
+            return activeWindow.createChildWindow(messageDialogBluePrint).question();
+        }
+        else {
+            return genericWidgetFactory.create(messageDialogBluePrint).question();
+        }
+    }
 
 }

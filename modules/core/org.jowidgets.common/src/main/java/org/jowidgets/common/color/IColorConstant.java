@@ -29,11 +29,11 @@ package org.jowidgets.common.color;
 
 public interface IColorConstant {
 
-	/**
-	 * Gets the default value of the color
-	 * 
-	 * @return The default value of the color, never null
-	 */
-	ColorValue getDefaultValue();
+    /**
+     * Gets the default value of the color
+     * 
+     * @return The default value of the color, never null
+     */
+    ColorValue getDefaultValue();
 
 }

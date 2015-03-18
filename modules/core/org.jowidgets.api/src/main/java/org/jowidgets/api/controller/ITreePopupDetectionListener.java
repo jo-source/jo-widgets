@@ -29,6 +29,6 @@ package org.jowidgets.api.controller;
 
 public interface ITreePopupDetectionListener {
 
-	void popupDetected(ITreePopupEvent event);
+    void popupDetected(ITreePopupEvent event);
 
 }

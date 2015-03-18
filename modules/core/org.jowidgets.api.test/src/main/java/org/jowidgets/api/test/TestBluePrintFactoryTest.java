@@ -40,25 +40,25 @@ import org.junit.Test;
 
 public class TestBluePrintFactoryTest {
 
-	private static final IBasicSimpleTestBluePrintFactory BPF = TestToolkit.getBluePrintFactory();
+    private static final IBasicSimpleTestBluePrintFactory BPF = TestToolkit.getBluePrintFactory();
 
-	@Test
-	public void createTestBluePrintFactoryTest() {
-		Assert.assertNotNull(TestToolkit.getInstance());
+    @Test
+    public void createTestBluePrintFactoryTest() {
+        Assert.assertNotNull(TestToolkit.getInstance());
 
-		Toolkit.getApplicationRunner().run(new IApplication() {
+        Toolkit.getApplicationRunner().run(new IApplication() {
 
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
-				final IFrameUi frame = TestToolkit.createRootFrame(BPF.frame(), lifecycle);
-				frame.setVisible(true);
+            @Override
+            public void start(final IApplicationLifecycle lifecycle) {
+                final IFrameUi frame = TestToolkit.createRootFrame(BPF.frame(), lifecycle);
+                frame.setVisible(true);
 
-				final IButtonUi button = frame.add(BPF.button(), "");
-				button.push();
+                final IButtonUi button = frame.add(BPF.button(), "");
+                button.push();
 
-				frame.dispose();
-			}
-		});
-	}
+                frame.dispose();
+            }
+        });
+    }
 
 }

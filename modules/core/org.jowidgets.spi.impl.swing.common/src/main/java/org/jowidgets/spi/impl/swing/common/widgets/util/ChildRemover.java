@@ -33,23 +33,23 @@ import java.awt.Container;
 
 public final class ChildRemover {
 
-	private ChildRemover() {}
+    private ChildRemover() {}
 
-	public static boolean removeChild(final Container parent, final Component child) {
-		final boolean result = isChild(parent, child);
-		if (result) {
-			parent.remove(child);
-		}
-		return result;
-	}
+    public static boolean removeChild(final Container parent, final Component child) {
+        final boolean result = isChild(parent, child);
+        if (result) {
+            parent.remove(child);
+        }
+        return result;
+    }
 
-	private static boolean isChild(final Container parent, final Component component) {
-		for (final Component child : parent.getComponents()) {
-			if (child == component) {
-				return true;
-			}
-		}
-		return false;
-	}
+    private static boolean isChild(final Container parent, final Component component) {
+        for (final Component child : parent.getComponents()) {
+            if (child == component) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

@@ -36,13 +36,13 @@ import org.jowidgets.impl.widgets.composed.CollectionInputControlImpl;
 import org.jowidgets.tools.widgets.factory.AbstractCompositeWidgetFactory;
 
 public class CollectionInputControlFactory<INPUT_TYPE> extends
-		AbstractCompositeWidgetFactory<IInputControl<Collection<INPUT_TYPE>>, ICollectionInputControlDescriptor<INPUT_TYPE>> {
+        AbstractCompositeWidgetFactory<IInputControl<Collection<INPUT_TYPE>>, ICollectionInputControlDescriptor<INPUT_TYPE>> {
 
-	@Override
-	protected IInputControl<Collection<INPUT_TYPE>> createWidget(
-		final IComposite composite,
-		final ICollectionInputControlDescriptor<INPUT_TYPE> descriptor) {
-		return new CollectionInputControlImpl<INPUT_TYPE>(composite, descriptor);
-	}
+    @Override
+    protected IInputControl<Collection<INPUT_TYPE>> createWidget(
+        final IComposite composite,
+        final ICollectionInputControlDescriptor<INPUT_TYPE> descriptor) {
+        return new CollectionInputControlImpl<INPUT_TYPE>(composite, descriptor);
+    }
 
 }

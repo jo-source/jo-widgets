@@ -36,17 +36,17 @@ import org.jowidgets.tools.command.CommandAction;
 
 public class PrintAction extends CommandAction {
 
-	public PrintAction() {
-		super(new ActionBuilder() {
-			{
-				setText("Print");
-				setToolTipText("Prints the document");
-				setIcon(SilkIcons.PRINTER);
-				setAccelerator(VirtualKey.F1, Modifier.SHIFT);
-			}
-		});
+    public PrintAction() {
+        super(new ActionBuilder() {
+            {
+                setText("Print");
+                setToolTipText("Prints the document");
+                setIcon(SilkIcons.PRINTER);
+                setAccelerator(VirtualKey.F1, Modifier.SHIFT);
+            }
+        });
 
-		setCommand(new DummyCommandExecuter());
-	}
+        setCommand(new DummyCommandExecuter());
+    }
 
 }

@@ -27,8 +27,7 @@
  */
 package org.jowidgets.api.widgets.blueprint.builder;
 
-
 public interface ITextSeparatorSetupBuilder<INSTANCE_TYPE extends ITextSeparatorSetupBuilder<?>> extends
-		ITextLabelSetupBuilder<INSTANCE_TYPE> {
+        ITextLabelSetupBuilder<INSTANCE_TYPE> {
 
 }

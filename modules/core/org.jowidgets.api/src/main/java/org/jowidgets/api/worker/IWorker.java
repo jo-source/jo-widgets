@@ -32,12 +32,12 @@ import org.jowidgets.util.ICancelCallback;
 
 public interface IWorker<RESULT_TYPE, PROGRESS_TYPE> {
 
-	/**
-	 * Do the work
-	 * 
-	 * @param callback Callback to invoke after finished, canceled, progress change or exception
-	 * @param cancelCallback The cancel callback to check if work has been canceled
-	 */
-	void work(IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> callback, ICancelCallback cancelCallback);
+    /**
+     * Do the work
+     * 
+     * @param callback Callback to invoke after finished, canceled, progress change or exception
+     * @param cancelCallback The cancel callback to check if work has been canceled
+     */
+    void work(IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> callback, ICancelCallback cancelCallback);
 
 }

@@ -50,120 +50,120 @@ import org.jowidgets.util.EmptyCheck;
 
 class DownloadButtonImpl extends CompositeWrapper implements IDownloadButton {
 
-	private final IButton button;
+    private final IButton button;
 
-	private IBrowser browser;
-	private String url;
+    private IBrowser browser;
+    private String url;
 
-	public DownloadButtonImpl(final IComposite composite, final IDownloadButtonBluePrint bluePrint) {
-		super(composite);
-		composite.setLayout(new MigLayoutDescriptor("hidemode 3", "0[grow, 0::]0", "0[grow, 0::]0"));
-		this.url = bluePrint.getUrl();
+    public DownloadButtonImpl(final IComposite composite, final IDownloadButtonBluePrint bluePrint) {
+        super(composite);
+        composite.setLayout(new MigLayoutDescriptor("hidemode 3", "0[grow, 0::]0", "0[grow, 0::]0"));
+        this.url = bluePrint.getUrl();
 
-		final IButtonBluePrint buttonBp = BPF.button();
-		buttonBp.setSetup(bluePrint);
+        final IButtonBluePrint buttonBp = BPF.button();
+        buttonBp.setSetup(bluePrint);
 
-		this.button = composite.add(buttonBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		button.addActionListener(new DownloadActionListener());
-		button.setEnabled(false);
+        this.button = composite.add(buttonBp, MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        button.addActionListener(new DownloadActionListener());
+        button.setEnabled(false);
 
-		if (!EmptyCheck.isEmpty(bluePrint.getUrl())) {
-			setUrl(bluePrint.getUrl());
-		}
-	}
+        if (!EmptyCheck.isEmpty(bluePrint.getUrl())) {
+            setUrl(bluePrint.getUrl());
+        }
+    }
 
-	@Override
-	protected IComposite getWidget() {
-		return super.getWidget();
-	}
+    @Override
+    protected IComposite getWidget() {
+        return super.getWidget();
+    }
 
-	@Override
-	public void setUrl(final String url) {
-		try {
-			new URL(url);
-			this.url = url;
-		}
-		catch (final MalformedURLException e) {
-			this.url = null;
-		}
-		button.setEnabled(!EmptyCheck.isEmpty(this.url));
-	}
+    @Override
+    public void setUrl(final String url) {
+        try {
+            new URL(url);
+            this.url = url;
+        }
+        catch (final MalformedURLException e) {
+            this.url = null;
+        }
+        button.setEnabled(!EmptyCheck.isEmpty(this.url));
+    }
 
-	@Override
-	public String getUrl() {
-		return url;
-	}
+    @Override
+    public String getUrl() {
+        return url;
+    }
 
-	@Override
-	public void download() {
-		//Create a new browser for every download to allow that subsequent
-		//downloads for the same url will work. If you change this code, try
-		//to press the download button more than once in rwt for the same url!
-		if (browser != null) {
-			browser.dispose();
-			browser = null;
-		}
-		if (!EmptyCheck.isEmpty(url)) {
-			browser = getWidget().add(BrowserBPF.browser().setVisible(false));
-			browser.setUrl(url);
-		}
-	}
+    @Override
+    public void download() {
+        //Create a new browser for every download to allow that subsequent
+        //downloads for the same url will work. If you change this code, try
+        //to press the download button more than once in rwt for the same url!
+        if (browser != null) {
+            browser.dispose();
+            browser = null;
+        }
+        if (!EmptyCheck.isEmpty(url)) {
+            browser = getWidget().add(BrowserBPF.browser().setVisible(false));
+            browser.setUrl(url);
+        }
+    }
 
-	@Override
-	public void setAction(final IAction action) {
-		throw new UnsupportedOperationException("setAction() is not possible for a DownloadButton");
-	}
+    @Override
+    public void setAction(final IAction action) {
+        throw new UnsupportedOperationException("setAction() is not possible for a DownloadButton");
+    }
 
-	@Override
-	public String getText() {
-		return button.getText();
-	}
+    @Override
+    public String getText() {
+        return button.getText();
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return button.getIcon();
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return button.getIcon();
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		button.setFontSize(size);
-	}
+    @Override
+    public void setFontSize(final int size) {
+        button.setFontSize(size);
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		button.setFontName(fontName);
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        button.setFontName(fontName);
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		button.setMarkup(markup);
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        button.setMarkup(markup);
+    }
 
-	@Override
-	public void setText(final String text) {
-		button.setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        button.setText(text);
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		button.setIcon(icon);
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        button.setIcon(icon);
+    }
 
-	@Override
-	public void addActionListener(final IActionListener actionListener) {
-		button.addActionListener(actionListener);
-	}
+    @Override
+    public void addActionListener(final IActionListener actionListener) {
+        button.addActionListener(actionListener);
+    }
 
-	@Override
-	public void removeActionListener(final IActionListener actionListener) {
-		button.removeActionListener(actionListener);
-	}
+    @Override
+    public void removeActionListener(final IActionListener actionListener) {
+        button.removeActionListener(actionListener);
+    }
 
-	private class DownloadActionListener implements IActionListener {
-		@Override
-		public void actionPerformed() {
-			download();
-		}
-	}
+    private class DownloadActionListener implements IActionListener {
+        @Override
+        public void actionPerformed() {
+            download();
+        }
+    }
 
 }

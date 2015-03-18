@@ -33,11 +33,11 @@ import org.jowidgets.common.types.Markup;
 
 public class TreeNodeDefaults implements IDefaultInitializer<ITreeNodeSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final ITreeNodeSetupBuilder<?> builder) {
-		builder.setExpanded(false);
-		builder.setSelected(false);
-		builder.setMarkup(Markup.DEFAULT);
-	}
+    @Override
+    public void initialize(final ITreeNodeSetupBuilder<?> builder) {
+        builder.setExpanded(false);
+        builder.setSelected(false);
+        builder.setMarkup(Markup.DEFAULT);
+    }
 
 }

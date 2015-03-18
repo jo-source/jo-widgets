@@ -40,19 +40,19 @@ import org.jowidgets.spi.widgets.ICalendarSpi;
 
 public class CalendarFactory extends AbstractWidgetFactory implements IWidgetFactory<ICalendar, ICalendarDescriptor> {
 
-	public CalendarFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+    public CalendarFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider,
+        final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
-	}
+        super(genericWidgetFactory, widgetsServiceProvider, bpF);
+    }
 
-	@Override
-	public ICalendar create(final Object parentUiReference, final ICalendarDescriptor descriptor) {
-		final ICalendarBluePrintSpi bpSpi = getSpiBluePrintFactory().calendar();
-		bpSpi.setSetup(descriptor);
-		final ICalendarSpi widgetSpi = getOptionalSpiWidgetsFactory().createCalendar(parentUiReference, bpSpi);
-		return new CalendarImpl(widgetSpi, descriptor);
-	}
+    @Override
+    public ICalendar create(final Object parentUiReference, final ICalendarDescriptor descriptor) {
+        final ICalendarBluePrintSpi bpSpi = getSpiBluePrintFactory().calendar();
+        bpSpi.setSetup(descriptor);
+        final ICalendarSpi widgetSpi = getOptionalSpiWidgetsFactory().createCalendar(parentUiReference, bpSpi);
+        return new CalendarImpl(widgetSpi, descriptor);
+    }
 }

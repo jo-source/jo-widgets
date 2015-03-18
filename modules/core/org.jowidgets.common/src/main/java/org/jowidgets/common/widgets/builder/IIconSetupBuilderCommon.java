@@ -30,8 +30,8 @@ package org.jowidgets.common.widgets.builder;
 import org.jowidgets.common.image.IImageConstant;
 
 public interface IIconSetupBuilderCommon<INSTANCE_TYPE extends IIconSetupBuilderCommon<?>> extends
-		IComponentSetupBuilderCommon<INSTANCE_TYPE> {
+        IComponentSetupBuilderCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setIcon(IImageConstant icon);
+    INSTANCE_TYPE setIcon(IImageConstant icon);
 
 }

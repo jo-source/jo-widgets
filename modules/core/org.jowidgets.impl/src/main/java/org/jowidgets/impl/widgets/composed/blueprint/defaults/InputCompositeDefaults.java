@@ -38,27 +38,27 @@ import org.jowidgets.validation.IValidationResult;
 
 public class InputCompositeDefaults implements IDefaultInitializer<IInputCompositeSetupBuilder<?, ?>> {
 
-	@Override
-	public void initialize(final IInputCompositeSetupBuilder<?, ?> builder) {
-		builder.setContentScrolled(true);
+    @Override
+    public void initialize(final IInputCompositeSetupBuilder<?, ?> builder) {
+        builder.setContentScrolled(true);
 
-		builder.setValidationLabelBackground(Colors.LIGHT_GREY);
-		builder.setValidationLabelHeight(35);
+        builder.setValidationLabelBackground(Colors.LIGHT_GREY);
+        builder.setValidationLabelHeight(35);
 
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+        final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
-		final IInputComponentValidationLabelBluePrint validationLabelBp = bpF.inputComponentValidationLabel();
-		validationLabelBp.setInitialValidationDecorator(new IDecorator<IValidationResult>() {
-			@Override
-			public IValidationResult decorate(final IValidationResult original) {
-				if (!original.isValid()) {
-					return original;
-				}
-				return null;
-			}
-		});
+        final IInputComponentValidationLabelBluePrint validationLabelBp = bpF.inputComponentValidationLabel();
+        validationLabelBp.setInitialValidationDecorator(new IDecorator<IValidationResult>() {
+            @Override
+            public IValidationResult decorate(final IValidationResult original) {
+                if (!original.isValid()) {
+                    return original;
+                }
+                return null;
+            }
+        });
 
-		builder.setValidationLabel(validationLabelBp);
-	}
+        builder.setValidationLabel(validationLabelBp);
+    }
 
 }

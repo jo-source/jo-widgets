@@ -43,196 +43,196 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
 
 class Composite<WIDGET_TYPE extends IComposite, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & ICompositeSetupBuilder<?>> extends
-		Container<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IComposite {
+        Container<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IComposite {
 
-	private final Set<IParentListener<IContainer>> parentListeners;
+    private final Set<IParentListener<IContainer>> parentListeners;
 
-	private Object layoutConstraints;
+    private Object layoutConstraints;
 
-	private Dimension minSize;
-	private Dimension preferredSize;
-	private Dimension maxSize;
-	private String toolTipText;
-	private DragSourcePowo dragSource;
-	private DropTargetPowo dropTarget;
+    private Dimension minSize;
+    private Dimension preferredSize;
+    private Dimension maxSize;
+    private String toolTipText;
+    private DragSourcePowo dragSource;
+    private DropTargetPowo dropTarget;
 
-	Composite(final BLUE_PRINT_TYPE bluePrint) {
-		super(bluePrint);
-		this.parentListeners = new LinkedHashSet<IParentListener<IContainer>>();
-	}
+    Composite(final BLUE_PRINT_TYPE bluePrint) {
+        super(bluePrint);
+        this.parentListeners = new LinkedHashSet<IParentListener<IContainer>>();
+    }
 
-	@Override
-	void initialize(final WIDGET_TYPE widget) {
-		super.initialize(widget);
-		for (final IParentListener<IContainer> listener : parentListeners) {
-			getWidget().addParentListener(listener);
-		}
-		if (layoutConstraints != null) {
-			getWidget().setLayoutConstraints(layoutConstraints);
-		}
-		if (minSize != null) {
-			getWidget().setMinSize(minSize);
-		}
-		if (preferredSize != null) {
-			getWidget().setPreferredSize(preferredSize);
-		}
-		if (maxSize != null) {
-			getWidget().setMaxSize(maxSize);
-		}
-		if (toolTipText != null) {
-			getWidget().setToolTipText(toolTipText);
-		}
-		if (dragSource != null) {
-			dragSource.setOriginal(widget.getDragSource());
-		}
-		if (dropTarget != null) {
-			dropTarget.setOriginal(widget.getDropTarget());
-		}
-	}
+    @Override
+    void initialize(final WIDGET_TYPE widget) {
+        super.initialize(widget);
+        for (final IParentListener<IContainer> listener : parentListeners) {
+            getWidget().addParentListener(listener);
+        }
+        if (layoutConstraints != null) {
+            getWidget().setLayoutConstraints(layoutConstraints);
+        }
+        if (minSize != null) {
+            getWidget().setMinSize(minSize);
+        }
+        if (preferredSize != null) {
+            getWidget().setPreferredSize(preferredSize);
+        }
+        if (maxSize != null) {
+            getWidget().setMaxSize(maxSize);
+        }
+        if (toolTipText != null) {
+            getWidget().setToolTipText(toolTipText);
+        }
+        if (dragSource != null) {
+            dragSource.setOriginal(widget.getDragSource());
+        }
+        if (dropTarget != null) {
+            dropTarget.setOriginal(widget.getDropTarget());
+        }
+    }
 
-	@Override
-	public final IContainer getParent() {
-		checkInitialized();
-		return getWidget().getParent();
-	}
+    @Override
+    public final IContainer getParent() {
+        checkInitialized();
+        return getWidget().getParent();
+    }
 
-	@Override
-	public IControl getRoot() {
-		return (IControl) super.getRoot();
-	}
+    @Override
+    public IControl getRoot() {
+        return (IControl) super.getRoot();
+    }
 
-	@Override
-	public void setParent(final IContainer parent) {
-		checkInitialized();
-		getWidget().setParent(parent);
-	}
+    @Override
+    public void setParent(final IContainer parent) {
+        checkInitialized();
+        getWidget().setParent(parent);
+    }
 
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		if (isInitialized()) {
-			getWidget().setLayoutConstraints(layoutConstraints);
-		}
-		else {
-			this.layoutConstraints = layoutConstraints;
-		}
-	}
+    @Override
+    public void setLayoutConstraints(final Object layoutConstraints) {
+        if (isInitialized()) {
+            getWidget().setLayoutConstraints(layoutConstraints);
+        }
+        else {
+            this.layoutConstraints = layoutConstraints;
+        }
+    }
 
-	@Override
-	public Object getLayoutConstraints() {
-		if (isInitialized()) {
-			return getWidget().getLayoutConstraints();
-		}
-		else {
-			return layoutConstraints;
-		}
-	}
+    @Override
+    public Object getLayoutConstraints() {
+        if (isInitialized()) {
+            return getWidget().getLayoutConstraints();
+        }
+        else {
+            return layoutConstraints;
+        }
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		checkInitialized();
-		return getWidget().getMinSize();
-	}
+    @Override
+    public Dimension getMinSize() {
+        checkInitialized();
+        return getWidget().getMinSize();
+    }
 
-	@Override
-	public Dimension getPreferredSize() {
-		checkInitialized();
-		return getWidget().getPreferredSize();
-	}
+    @Override
+    public Dimension getPreferredSize() {
+        checkInitialized();
+        return getWidget().getPreferredSize();
+    }
 
-	@Override
-	public Dimension getMaxSize() {
-		checkInitialized();
-		return getWidget().getMaxSize();
-	}
+    @Override
+    public Dimension getMaxSize() {
+        checkInitialized();
+        return getWidget().getMaxSize();
+    }
 
-	@Override
-	public void setMinSize(final Dimension minSize) {
-		if (isInitialized()) {
-			getWidget().setMinSize(minSize);
-		}
-		else {
-			this.minSize = minSize;
-		}
-	}
+    @Override
+    public void setMinSize(final Dimension minSize) {
+        if (isInitialized()) {
+            getWidget().setMinSize(minSize);
+        }
+        else {
+            this.minSize = minSize;
+        }
+    }
 
-	@Override
-	public void setPreferredSize(final Dimension preferredSize) {
-		if (isInitialized()) {
-			getWidget().setPreferredSize(preferredSize);
-		}
-		else {
-			this.preferredSize = preferredSize;
-		}
-	}
+    @Override
+    public void setPreferredSize(final Dimension preferredSize) {
+        if (isInitialized()) {
+            getWidget().setPreferredSize(preferredSize);
+        }
+        else {
+            this.preferredSize = preferredSize;
+        }
+    }
 
-	@Override
-	public void setMaxSize(final Dimension maxSize) {
-		if (isInitialized()) {
-			getWidget().setMaxSize(maxSize);
-		}
-		else {
-			this.maxSize = maxSize;
-		}
-	}
+    @Override
+    public void setMaxSize(final Dimension maxSize) {
+        if (isInitialized()) {
+            getWidget().setMaxSize(maxSize);
+        }
+        else {
+            this.maxSize = maxSize;
+        }
+    }
 
-	@Override
-	public void setToolTipText(final String toolTip) {
-		if (isInitialized()) {
-			getWidget().setToolTipText(toolTip);
-		}
-		else {
-			this.toolTipText = toolTip;
-		}
-	}
+    @Override
+    public void setToolTipText(final String toolTip) {
+        if (isInitialized()) {
+            getWidget().setToolTipText(toolTip);
+        }
+        else {
+            this.toolTipText = toolTip;
+        }
+    }
 
-	@Override
-	public void addParentListener(final IParentListener<IContainer> listener) {
-		Assert.paramNotNull(listener, "listener");
-		if (isInitialized()) {
-			getWidget().addParentListener(listener);
-		}
-		else {
-			parentListeners.add(listener);
-		}
-	}
+    @Override
+    public void addParentListener(final IParentListener<IContainer> listener) {
+        Assert.paramNotNull(listener, "listener");
+        if (isInitialized()) {
+            getWidget().addParentListener(listener);
+        }
+        else {
+            parentListeners.add(listener);
+        }
+    }
 
-	@Override
-	public void removeParentListener(final IParentListener<IContainer> listener) {
-		Assert.paramNotNull(listener, "listener");
-		if (isInitialized()) {
-			getWidget().removeParentListener(listener);
-		}
-		else {
-			parentListeners.remove(listener);
-		}
-	}
+    @Override
+    public void removeParentListener(final IParentListener<IContainer> listener) {
+        Assert.paramNotNull(listener, "listener");
+        if (isInitialized()) {
+            getWidget().removeParentListener(listener);
+        }
+        else {
+            parentListeners.remove(listener);
+        }
+    }
 
-	@Override
-	public IDragSource getDragSource() {
-		if (dragSource != null) {
-			return dragSource;
-		}
-		else if (isInitialized()) {
-			return getWidget().getDragSource();
-		}
-		else {
-			dragSource = new DragSourcePowo();
-			return dragSource;
-		}
-	}
+    @Override
+    public IDragSource getDragSource() {
+        if (dragSource != null) {
+            return dragSource;
+        }
+        else if (isInitialized()) {
+            return getWidget().getDragSource();
+        }
+        else {
+            dragSource = new DragSourcePowo();
+            return dragSource;
+        }
+    }
 
-	@Override
-	public IDropTarget getDropTarget() {
-		if (dropTarget != null) {
-			return dropTarget;
-		}
-		else if (isInitialized()) {
-			return getWidget().getDropTarget();
-		}
-		else {
-			dropTarget = new DropTargetPowo();
-			return dropTarget;
-		}
-	}
+    @Override
+    public IDropTarget getDropTarget() {
+        if (dropTarget != null) {
+            return dropTarget;
+        }
+        else if (isInitialized()) {
+            return getWidget().getDropTarget();
+        }
+        else {
+            dropTarget = new DropTargetPowo();
+            return dropTarget;
+        }
+    }
 
 }

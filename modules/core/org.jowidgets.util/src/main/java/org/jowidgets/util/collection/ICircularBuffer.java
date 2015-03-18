@@ -30,40 +30,40 @@ package org.jowidgets.util.collection;
 
 public interface ICircularBuffer<ELEMENT_TYPE> {
 
-	/**
-	 * @return The capacity of the circular buffer.
-	 */
-	int capacity();
+    /**
+     * @return The capacity of the circular buffer.
+     */
+    int capacity();
 
-	/**
-	 * The current size of the buffer.
-	 * If the buffer is not full, the number of added elements,
-	 * other the capacity will be returned.
-	 * 
-	 * @return The current size of the buffer
-	 */
-	int size();
+    /**
+     * The current size of the buffer.
+     * If the buffer is not full, the number of added elements,
+     * other the capacity will be returned.
+     * 
+     * @return The current size of the buffer
+     */
+    int size();
 
-	/**
-	 * Adds an element to the end of buffer.
-	 * If the buffer is full, all elements are shifted to the left and the first element will be removed.
-	 * This operation will be done in O(1).
-	 * 
-	 * @param element The element to add, may be null
-	 */
-	void add(ELEMENT_TYPE element);
+    /**
+     * Adds an element to the end of buffer.
+     * If the buffer is full, all elements are shifted to the left and the first element will be removed.
+     * This operation will be done in O(1).
+     * 
+     * @param element The element to add, may be null
+     */
+    void add(ELEMENT_TYPE element);
 
-	/**
-	 * Gets the element at the specific index or null, if no element was added to the index before
-	 * 
-	 * @param index The index (0 <= index < capacity)
-	 * 
-	 * @return The element
-	 */
-	ELEMENT_TYPE get(int index);
+    /**
+     * Gets the element at the specific index or null, if no element was added to the index before
+     * 
+     * @param index The index (0 <= index < capacity)
+     * 
+     * @return The element
+     */
+    ELEMENT_TYPE get(int index);
 
-	/**
-	 * Clears the current buffer
-	 */
-	void clear();
+    /**
+     * Clears the current buffer
+     */
+    void clear();
 }

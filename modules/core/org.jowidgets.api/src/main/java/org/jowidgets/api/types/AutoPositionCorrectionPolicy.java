@@ -29,10 +29,10 @@ package org.jowidgets.api.types;
 
 public enum AutoPositionCorrectionPolicy {
 
-	ALWAYS,
+    ALWAYS,
 
-	ONCE,
+    ONCE,
 
-	OFF;
+    OFF;
 
 }

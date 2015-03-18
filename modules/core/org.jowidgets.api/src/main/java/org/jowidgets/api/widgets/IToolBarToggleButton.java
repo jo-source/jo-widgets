@@ -33,9 +33,9 @@ import org.jowidgets.common.widgets.IToolBarToggleButtonCommon;
 
 public interface IToolBarToggleButton extends IToolBarItem, IToolBarToggleButtonCommon {
 
-	void setModel(ICheckedItemModel model);
+    void setModel(ICheckedItemModel model);
 
-	@Override
-	ICheckedItemModel getModel();
+    @Override
+    ICheckedItemModel getModel();
 
 }

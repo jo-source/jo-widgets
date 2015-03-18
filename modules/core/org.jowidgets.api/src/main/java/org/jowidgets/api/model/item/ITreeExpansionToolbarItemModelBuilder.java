@@ -30,102 +30,102 @@ package org.jowidgets.api.model.item;
 
 public interface ITreeExpansionToolbarItemModelBuilder {
 
-	/**
-	 * Adds an unbound level with a default label
-	 * 
-	 * @return This builder
-	 */
-	ITreeExpansionToolbarItemModelBuilder addUnboundLevel();
+    /**
+     * Adds an unbound level with a default label
+     * 
+     * @return This builder
+     */
+    ITreeExpansionToolbarItemModelBuilder addUnboundLevel();
 
-	/**
-	 * Adds an unbound level
-	 * 
-	 * @param label The label of the unbound level
-	 * 
-	 * @return This builder
-	 */
-	ITreeExpansionToolbarItemModelBuilder addUnboundLevel(String label);
+    /**
+     * Adds an unbound level
+     * 
+     * @param label The label of the unbound level
+     * 
+     * @return This builder
+     */
+    ITreeExpansionToolbarItemModelBuilder addUnboundLevel(String label);
 
-	/**
-	 * Adds a level, a default label will be created
-	 * 
-	 * @param level The level to add
-	 * 
-	 * @return This builder
-	 */
-	ITreeExpansionToolbarItemModelBuilder addLevel(int level);
+    /**
+     * Adds a level, a default label will be created
+     * 
+     * @param level The level to add
+     * 
+     * @return This builder
+     */
+    ITreeExpansionToolbarItemModelBuilder addLevel(int level);
 
-	/**
-	 * Adds a level with a corresponding level name
-	 * 
-	 * @param level The level to add
-	 * @param levelName The name of the level
-	 * 
-	 * @return This builder
-	 */
-	ITreeExpansionToolbarItemModelBuilder addLevel(int level, String levelName);
+    /**
+     * Adds a level with a corresponding level name
+     * 
+     * @param level The level to add
+     * @param levelName The name of the level
+     * 
+     * @return This builder
+     */
+    ITreeExpansionToolbarItemModelBuilder addLevel(int level, String levelName);
 
-	/**
-	 * Sets a range of levels with default labels for each level
-	 * 
-	 * @param minLevel The minimum level
-	 * @param maxLevel The maximum level
-	 * @param unboundPossible If true, a unbound expansion can be set
-	 * 
-	 * @return This builder
-	 * 
-	 * @throw IllegalArgumentException if the min level is not less or equal the max level or some levels are negative
-	 */
-	ITreeExpansionToolbarItemModelBuilder setLevels(int minlevel, int maxLevel, boolean unboundPossible);
+    /**
+     * Sets a range of levels with default labels for each level
+     * 
+     * @param minLevel The minimum level
+     * @param maxLevel The maximum level
+     * @param unboundPossible If true, a unbound expansion can be set
+     * 
+     * @return This builder
+     * 
+     * @throw IllegalArgumentException if the min level is not less or equal the max level or some levels are negative
+     */
+    ITreeExpansionToolbarItemModelBuilder setLevels(int minlevel, int maxLevel, boolean unboundPossible);
 
-	/**
-	 * Sets a range of levels with default labels for each level.
-	 * The minLevel is set to 0 by default
-	 * 
-	 * @param maxLevel The maximum level
-	 * @param unboundPossible If true, a unbound expansion can be set
-	 * 
-	 * @return This builder
-	 * 
-	 * @throw IllegalArgumentException if the max level is negative
-	 */
-	ITreeExpansionToolbarItemModelBuilder setLevels(int maxLevel, boolean unboundPossible);
+    /**
+     * Sets a range of levels with default labels for each level.
+     * The minLevel is set to 0 by default
+     * 
+     * @param maxLevel The maximum level
+     * @param unboundPossible If true, a unbound expansion can be set
+     * 
+     * @return This builder
+     * 
+     * @throw IllegalArgumentException if the max level is negative
+     */
+    ITreeExpansionToolbarItemModelBuilder setLevels(int maxLevel, boolean unboundPossible);
 
-	/**
-	 * Sets a range of levels with default labels for each level.
-	 * The minLevel is set to 0 by default.
-	 * A unbound level is added by default
-	 * 
-	 * @param maxLevel The maximum level
-	 * 
-	 * @return This builder
-	 * 
-	 * @throw IllegalArgumentException if the max level is negative
-	 */
-	ITreeExpansionToolbarItemModelBuilder setLevels(int maxLevel);
+    /**
+     * Sets a range of levels with default labels for each level.
+     * The minLevel is set to 0 by default.
+     * A unbound level is added by default
+     * 
+     * @param maxLevel The maximum level
+     * 
+     * @return This builder
+     * 
+     * @throw IllegalArgumentException if the max level is negative
+     */
+    ITreeExpansionToolbarItemModelBuilder setLevels(int maxLevel);
 
-	/**
-	 * Sets the level that is used by default.
-	 * If no default is set, the first added level is the default level
-	 * 
-	 * @param defaultLevel The level that will be used by default.
-	 * 
-	 * @return This builder
-	 */
-	ITreeExpansionToolbarItemModelBuilder setDefaultLevel(int defaultLevel);
+    /**
+     * Sets the level that is used by default.
+     * If no default is set, the first added level is the default level
+     * 
+     * @param defaultLevel The level that will be used by default.
+     * 
+     * @return This builder
+     */
+    ITreeExpansionToolbarItemModelBuilder setDefaultLevel(int defaultLevel);
 
-	/**
-	 * Sets the unbound level as default level.
-	 * 
-	 * @return This builder
-	 */
-	ITreeExpansionToolbarItemModelBuilder setUnboundDefaultLevel();
+    /**
+     * Sets the unbound level as default level.
+     * 
+     * @return This builder
+     */
+    ITreeExpansionToolbarItemModelBuilder setUnboundDefaultLevel();
 
-	/**
-	 * Builds the item
-	 * 
-	 * @return The builded item
-	 */
-	IToolBarItemModel build();
+    /**
+     * Builds the item
+     * 
+     * @return The builded item
+     */
+    IToolBarItemModel build();
 
 }

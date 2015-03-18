@@ -30,8 +30,8 @@ package org.jowidgets.util.event;
 
 public interface ICancelObservable {
 
-	void addCancelListener(ICancelListener listener);
+    void addCancelListener(ICancelListener listener);
 
-	void removeCancelListener(ICancelListener listener);
+    void removeCancelListener(ICancelListener listener);
 
 }

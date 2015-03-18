@@ -33,18 +33,18 @@ import org.jowidgets.tools.controller.LevelObservable;
 
 final class MutableLevelMeterModelImpl extends LevelObservable implements IMutableLevelMeterModel {
 
-	private double level;
+    private double level;
 
-	@Override
-	public double getLevel() {
-		return level;
-	}
+    @Override
+    public double getLevel() {
+        return level;
+    }
 
-	@Override
-	public void setLevel(final double level) {
-		final double oldLevel = this.level;
-		this.level = level;
-		fireLevelChanged(oldLevel, level);
-	}
+    @Override
+    public void setLevel(final double level) {
+        final double oldLevel = this.level;
+        this.level = level;
+        fireLevelChanged(oldLevel, level);
+    }
 
 }

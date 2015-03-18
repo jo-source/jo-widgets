@@ -32,15 +32,15 @@ import org.jowidgets.spi.dnd.IDragDataResponseSpi;
 
 public class DragDataResponseSpiImpl implements IDragDataResponseSpi {
 
-	private Object data;
+    private Object data;
 
-	@Override
-	public void setData(final Object data) {
-		this.data = data;
-	}
+    @Override
+    public void setData(final Object data) {
+        this.data = data;
+    }
 
-	public Object getData() {
-		return data;
-	}
+    public Object getData() {
+        return data;
+    }
 
 }

@@ -33,25 +33,25 @@ package org.jowidgets.validation;
  */
 public interface IValidateable {
 
-	/**
-	 * Does the validation
-	 * 
-	 * @return The validation result, must not be null
-	 */
-	IValidationResult validate();
+    /**
+     * Does the validation
+     * 
+     * @return The validation result, must not be null
+     */
+    IValidationResult validate();
 
-	/**
-	 * Adds a validation condition listener
-	 * 
-	 * @param listener The listener to add
-	 */
-	void addValidationConditionListener(IValidationConditionListener listener);
+    /**
+     * Adds a validation condition listener
+     * 
+     * @param listener The listener to add
+     */
+    void addValidationConditionListener(IValidationConditionListener listener);
 
-	/**
-	 * Removes a validation condition listener
-	 * 
-	 * @param listener The listener to remove
-	 */
-	void removeValidationConditionListener(IValidationConditionListener listener);
+    /**
+     * Removes a validation condition listener
+     * 
+     * @param listener The listener to remove
+     */
+    void removeValidationConditionListener(IValidationConditionListener listener);
 
 }

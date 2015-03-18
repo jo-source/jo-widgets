@@ -34,10 +34,10 @@ import org.jowidgets.spi.clipboard.TransferTypeSpi;
 
 public interface IDragSourceListenerSpi {
 
-	void dragStart(IDragEventSpi event, IVetoable veto);
+    void dragStart(IDragEventSpi event, IVetoable veto);
 
-	void dragSetData(IDragEventSpi event, IVetoable veto, TransferTypeSpi transferType, IDragDataResponseSpi dragData);
+    void dragSetData(IDragEventSpi event, IVetoable veto, TransferTypeSpi transferType, IDragDataResponseSpi dragData);
 
-	void dragFinished(IDragEventSpi event, DropAction dropAction);
+    void dragFinished(IDragEventSpi event, DropAction dropAction);
 
 }

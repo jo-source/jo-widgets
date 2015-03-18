@@ -36,21 +36,21 @@ import org.jowidgets.workbench.api.IComponentNodeContext;
 
 public class WidgetsHowToTreeNode extends AbstractDemoComponentNode {
 
-	public static final String ID = WidgetsHowToTreeNode.class.getName();
+    public static final String ID = WidgetsHowToTreeNode.class.getName();
 
-	public WidgetsHowToTreeNode() {
-		super(ID, "Widgets HowTo", "Demonstrates different widgets", SilkIcons.FOLDER);
-	}
+    public WidgetsHowToTreeNode() {
+        super(ID, "Widgets HowTo", "Demonstrates different widgets", SilkIcons.FOLDER);
+    }
 
-	@Override
-	public void onContextInitialize(final IComponentNodeContext context) {
-		context.add(new LabelsHowToTreeNode());
-		context.add(new AddonWidgetsHowToTreeNode());
-	}
+    @Override
+    public void onContextInitialize(final IComponentNodeContext context) {
+        context.add(new LabelsHowToTreeNode());
+        context.add(new AddonWidgetsHowToTreeNode());
+    }
 
-	@Override
-	public IComponent createComponent(final IComponentContext context) {
-		return null;
-	}
+    @Override
+    public IComponent createComponent(final IComponentContext context) {
+        return null;
+    }
 
 }

@@ -30,7 +30,7 @@ package org.jowidgets.examples.common.workbench.demo3.model;
 
 public enum Gender {
 
-	MALE,
-	FEMALE;
+    MALE,
+    FEMALE;
 
 }

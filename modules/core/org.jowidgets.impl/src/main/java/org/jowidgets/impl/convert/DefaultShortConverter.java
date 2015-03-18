@@ -32,27 +32,27 @@ import org.jowidgets.tools.converter.AbstractConverter;
 
 class DefaultShortConverter extends AbstractConverter<Short> implements IConverter<Short> {
 
-	@Override
-	public Short convertToObject(final String string) {
-		try {
-			return Short.valueOf(Short.parseShort(string));
-		}
-		catch (final NumberFormatException e) {
-			return null;
-		}
-	}
+    @Override
+    public Short convertToObject(final String string) {
+        try {
+            return Short.valueOf(Short.parseShort(string));
+        }
+        catch (final NumberFormatException e) {
+            return null;
+        }
+    }
 
-	@Override
-	public String convertToString(final Short value) {
-		if (value != null) {
-			return value.toString();
-		}
-		return null;
-	}
+    @Override
+    public String convertToString(final Short value) {
+        if (value != null) {
+            return value.toString();
+        }
+        return null;
+    }
 
-	@Override
-	public String getAcceptingRegExp() {
-		return "-?(([0-9]{0,5}))";
-	}
+    @Override
+    public String getAcceptingRegExp() {
+        return "-?(([0-9]{0,5}))";
+    }
 
 }

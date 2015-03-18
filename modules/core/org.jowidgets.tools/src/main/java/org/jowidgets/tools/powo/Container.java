@@ -60,476 +60,476 @@ import org.jowidgets.util.Assert;
 import org.jowidgets.util.Tuple;
 
 class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & IContainerSetupBuilder<?>> extends
-		Component<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IContainer {
+        Component<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IContainer {
 
-	@SuppressWarnings("rawtypes")
-	private final List<Tuple<Widget, Object>> preWidgets;
-	private final JoWidgetFactory widgetFactory;
-	private final Set<IContainerListener> containerListeners;
-	private final Set<IContainerRegistry> containerChildrenRegistries;
-	private final Set<IListenerFactory<IComponentListener>> componentListenerFactories;
-	private final Set<IListenerFactory<IFocusListener>> focusListenerFactories;
-	private final Set<IListenerFactory<IKeyListener>> keyListenerFactories;
-	private final Set<IListenerFactory<IMouseListener>> mouseListenerFactories;
-	private final Set<IListenerFactory<IPopupDetectionListener>> popupDetectionListenerFactories;
+    @SuppressWarnings("rawtypes")
+    private final List<Tuple<Widget, Object>> preWidgets;
+    private final JoWidgetFactory widgetFactory;
+    private final Set<IContainerListener> containerListeners;
+    private final Set<IContainerRegistry> containerChildrenRegistries;
+    private final Set<IListenerFactory<IComponentListener>> componentListenerFactories;
+    private final Set<IListenerFactory<IFocusListener>> focusListenerFactories;
+    private final Set<IListenerFactory<IKeyListener>> keyListenerFactories;
+    private final Set<IListenerFactory<IMouseListener>> mouseListenerFactories;
+    private final Set<IListenerFactory<IPopupDetectionListener>> popupDetectionListenerFactories;
 
-	private Collection<? extends IControl> tabOrder;
+    private Collection<? extends IControl> tabOrder;
 
-	@SuppressWarnings("rawtypes")
-	Container(final BLUE_PRINT_TYPE bluePrint) {
-		super(bluePrint);
-		this.preWidgets = new LinkedList<Tuple<Widget, Object>>();
-		this.widgetFactory = new JoWidgetFactory();
-		this.containerListeners = new LinkedHashSet<IContainerListener>();
-		this.containerChildrenRegistries = new LinkedHashSet<IContainerRegistry>();
-		this.componentListenerFactories = new LinkedHashSet<IListenerFactory<IComponentListener>>();
-		this.focusListenerFactories = new LinkedHashSet<IListenerFactory<IFocusListener>>();
-		this.keyListenerFactories = new LinkedHashSet<IListenerFactory<IKeyListener>>();
-		this.mouseListenerFactories = new LinkedHashSet<IListenerFactory<IMouseListener>>();
-		this.popupDetectionListenerFactories = new LinkedHashSet<IListenerFactory<IPopupDetectionListener>>();
-	}
+    @SuppressWarnings("rawtypes")
+    Container(final BLUE_PRINT_TYPE bluePrint) {
+        super(bluePrint);
+        this.preWidgets = new LinkedList<Tuple<Widget, Object>>();
+        this.widgetFactory = new JoWidgetFactory();
+        this.containerListeners = new LinkedHashSet<IContainerListener>();
+        this.containerChildrenRegistries = new LinkedHashSet<IContainerRegistry>();
+        this.componentListenerFactories = new LinkedHashSet<IListenerFactory<IComponentListener>>();
+        this.focusListenerFactories = new LinkedHashSet<IListenerFactory<IFocusListener>>();
+        this.keyListenerFactories = new LinkedHashSet<IListenerFactory<IKeyListener>>();
+        this.mouseListenerFactories = new LinkedHashSet<IListenerFactory<IMouseListener>>();
+        this.popupDetectionListenerFactories = new LinkedHashSet<IListenerFactory<IPopupDetectionListener>>();
+    }
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	@Override
-	void initialize(final WIDGET_TYPE widget) {
-		super.initialize(widget);
-		for (final IContainerListener containerListener : containerListeners) {
-			widget.addContainerListener(containerListener);
-		}
-		for (final IContainerRegistry registry : containerChildrenRegistries) {
-			widget.addContainerRegistry(registry);
-		}
-		for (final IListenerFactory<IComponentListener> factory : componentListenerFactories) {
-			widget.addComponentListenerRecursive(factory);
-		}
-		for (final IListenerFactory<IFocusListener> factory : focusListenerFactories) {
-			widget.addFocusListenerRecursive(factory);
-		}
-		for (final IListenerFactory<IKeyListener> factory : keyListenerFactories) {
-			widget.addKeyListenerRecursive(factory);
-		}
-		for (final IListenerFactory<IMouseListener> factory : mouseListenerFactories) {
-			widget.addMouseListenerRecursive(factory);
-		}
-		for (final IListenerFactory<IPopupDetectionListener> factory : popupDetectionListenerFactories) {
-			widget.addPopupDetectionListenerRecursive(factory);
-		}
-		for (final Tuple<Widget, Object> preWidgetTuple : preWidgets) {
-			final Widget preWidget = preWidgetTuple.getFirst();
-			final Object layoutConstraints = preWidgetTuple.getSecond();
-			final IControl newWidget = widget.add(preWidget.getDescriptor(), layoutConstraints);
-			preWidget.initialize(newWidget);
-		}
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    @Override
+    void initialize(final WIDGET_TYPE widget) {
+        super.initialize(widget);
+        for (final IContainerListener containerListener : containerListeners) {
+            widget.addContainerListener(containerListener);
+        }
+        for (final IContainerRegistry registry : containerChildrenRegistries) {
+            widget.addContainerRegistry(registry);
+        }
+        for (final IListenerFactory<IComponentListener> factory : componentListenerFactories) {
+            widget.addComponentListenerRecursive(factory);
+        }
+        for (final IListenerFactory<IFocusListener> factory : focusListenerFactories) {
+            widget.addFocusListenerRecursive(factory);
+        }
+        for (final IListenerFactory<IKeyListener> factory : keyListenerFactories) {
+            widget.addKeyListenerRecursive(factory);
+        }
+        for (final IListenerFactory<IMouseListener> factory : mouseListenerFactories) {
+            widget.addMouseListenerRecursive(factory);
+        }
+        for (final IListenerFactory<IPopupDetectionListener> factory : popupDetectionListenerFactories) {
+            widget.addPopupDetectionListenerRecursive(factory);
+        }
+        for (final Tuple<Widget, Object> preWidgetTuple : preWidgets) {
+            final Widget preWidget = preWidgetTuple.getFirst();
+            final Object layoutConstraints = preWidgetTuple.getSecond();
+            final IControl newWidget = widget.add(preWidget.getDescriptor(), layoutConstraints);
+            preWidget.initialize(newWidget);
+        }
 
-		if (tabOrder != null) {
-			widget.setTabOrder(tabOrder);
-			tabOrder = null;
-		}
-	}
+        if (tabOrder != null) {
+            widget.setTabOrder(tabOrder);
+            tabOrder = null;
+        }
+    }
 
-	public final <P_WIDGET_TYPE extends Component<? extends IControl, ?>> P_WIDGET_TYPE add(final P_WIDGET_TYPE widget) {
-		return add(widget, "");
-	}
+    public final <P_WIDGET_TYPE extends Component<? extends IControl, ?>> P_WIDGET_TYPE add(final P_WIDGET_TYPE widget) {
+        return add(widget, "");
+    }
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
-	public final <P_WIDGET_TYPE extends Component<? extends IControl, ?>> P_WIDGET_TYPE add(
-		final P_WIDGET_TYPE widget,
-		final Object layoutConstraints) {
-		if (isInitialized()) {
-			final IComponent newWidget = getWidget().add(widget.getDescriptor(), layoutConstraints);
-			final Component rawWidget = widget;
-			rawWidget.initialize(newWidget);
-			return widget;
-		}
-		else {
-			preWidgets.add(new Tuple<Widget, Object>(widget, layoutConstraints));
-			return widget;
-		}
-	}
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public final <P_WIDGET_TYPE extends Component<? extends IControl, ?>> P_WIDGET_TYPE add(
+        final P_WIDGET_TYPE widget,
+        final Object layoutConstraints) {
+        if (isInitialized()) {
+            final IComponent newWidget = getWidget().add(widget.getDescriptor(), layoutConstraints);
+            final Component rawWidget = widget;
+            rawWidget.initialize(newWidget);
+            return widget;
+        }
+        else {
+            preWidgets.add(new Tuple<Widget, Object>(widget, layoutConstraints));
+            return widget;
+        }
+    }
 
-	public final JoLabel addLabel(final String text) {
-		final JoLabel label = new JoLabel(text);
-		add(label);
-		return label;
-	}
+    public final JoLabel addLabel(final String text) {
+        final JoLabel label = new JoLabel(text);
+        add(label);
+        return label;
+    }
 
-	public final JoLabel addLabel(final String text, final Object layoutConstraints) {
-		final JoLabel label = new JoLabel(text);
-		add(label, layoutConstraints);
-		return label;
-	}
+    public final JoLabel addLabel(final String text, final Object layoutConstraints) {
+        final JoLabel label = new JoLabel(text);
+        add(label, layoutConstraints);
+        return label;
+    }
 
-	public final JoLabel addLabel(final String text, final String tooltipText, final Object layoutConstraints) {
-		final JoLabel label = new JoLabel(text, tooltipText);
-		add(label, layoutConstraints);
-		return label;
-	}
+    public final JoLabel addLabel(final String text, final String tooltipText, final Object layoutConstraints) {
+        final JoLabel label = new JoLabel(text, tooltipText);
+        add(label, layoutConstraints);
+        return label;
+    }
 
-	public final JoLabel addLabel(
-		final IImageConstant icon,
-		final String text,
-		final String tooltipText,
-		final Object layoutConstraints) {
+    public final JoLabel addLabel(
+        final IImageConstant icon,
+        final String text,
+        final String tooltipText,
+        final Object layoutConstraints) {
 
-		final JoLabel label = new JoLabel(icon, text, tooltipText);
-		add(label, layoutConstraints);
-		return label;
-	}
+        final JoLabel label = new JoLabel(icon, text, tooltipText);
+        add(label, layoutConstraints);
+        return label;
+    }
 
-	@Override
-	public void setTabOrder(final Collection<? extends IControl> tabOrder) {
-		if (isInitialized()) {
-			getWidget().setTabOrder(tabOrder);
-		}
-		else {
-			this.tabOrder = tabOrder;
-		}
-	}
+    @Override
+    public void setTabOrder(final Collection<? extends IControl> tabOrder) {
+        if (isInitialized()) {
+            getWidget().setTabOrder(tabOrder);
+        }
+        else {
+            this.tabOrder = tabOrder;
+        }
+    }
 
-	@Override
-	public void setTabOrder(final IControl... controls) {
-		if (isInitialized()) {
-			getWidget().setTabOrder(controls);
-		}
-		else {
-			if (controls != null) {
-				this.tabOrder = Arrays.asList(controls);
-			}
-			else {
-				this.tabOrder = Collections.emptyList();
-			}
-		}
-	}
+    @Override
+    public void setTabOrder(final IControl... controls) {
+        if (isInitialized()) {
+            getWidget().setTabOrder(controls);
+        }
+        else {
+            if (controls != null) {
+                this.tabOrder = Arrays.asList(controls);
+            }
+            else {
+                this.tabOrder = Collections.emptyList();
+            }
+        }
+    }
 
-	@Override
-	public void addContainerListener(final IContainerListener listener) {
-		if (isInitialized()) {
-			getWidget().addContainerListener(listener);
-		}
-		else {
-			containerListeners.add(listener);
-		}
-	}
+    @Override
+    public void addContainerListener(final IContainerListener listener) {
+        if (isInitialized()) {
+            getWidget().addContainerListener(listener);
+        }
+        else {
+            containerListeners.add(listener);
+        }
+    }
 
-	@Override
-	public void removeContainerListener(final IContainerListener listener) {
-		if (isInitialized()) {
-			getWidget().removeContainerListener(listener);
-		}
-		else {
-			containerListeners.remove(listener);
-		}
-	}
+    @Override
+    public void removeContainerListener(final IContainerListener listener) {
+        if (isInitialized()) {
+            getWidget().removeContainerListener(listener);
+        }
+        else {
+            containerListeners.remove(listener);
+        }
+    }
 
-	@Override
-	public void addContainerRegistry(final IContainerRegistry registry) {
-		if (isInitialized()) {
-			getWidget().addContainerRegistry(registry);
-		}
-		else {
-			containerChildrenRegistries.add(registry);
-		}
-	}
+    @Override
+    public void addContainerRegistry(final IContainerRegistry registry) {
+        if (isInitialized()) {
+            getWidget().addContainerRegistry(registry);
+        }
+        else {
+            containerChildrenRegistries.add(registry);
+        }
+    }
 
-	@Override
-	public void removeContainerRegistry(final IContainerRegistry registry) {
-		if (isInitialized()) {
-			getWidget().removeContainerRegistry(registry);
-		}
-		else {
-			containerChildrenRegistries.remove(registry);
-		}
-	}
+    @Override
+    public void removeContainerRegistry(final IContainerRegistry registry) {
+        if (isInitialized()) {
+            getWidget().removeContainerRegistry(registry);
+        }
+        else {
+            containerChildrenRegistries.remove(registry);
+        }
+    }
 
-	@Override
-	public void addComponentListenerRecursive(final IListenerFactory<IComponentListener> listenerFactory) {
-		if (isInitialized()) {
-			getWidget().addComponentListenerRecursive(listenerFactory);
-		}
-		else {
-			componentListenerFactories.add(listenerFactory);
-		}
-	}
+    @Override
+    public void addComponentListenerRecursive(final IListenerFactory<IComponentListener> listenerFactory) {
+        if (isInitialized()) {
+            getWidget().addComponentListenerRecursive(listenerFactory);
+        }
+        else {
+            componentListenerFactories.add(listenerFactory);
+        }
+    }
 
-	@Override
-	public void removeComponentListenerRecursive(final IListenerFactory<IComponentListener> listenerFactory) {
-		if (isInitialized()) {
-			getWidget().removeComponentListenerRecursive(listenerFactory);
-		}
-		else {
-			componentListenerFactories.remove(listenerFactory);
-		}
-	}
+    @Override
+    public void removeComponentListenerRecursive(final IListenerFactory<IComponentListener> listenerFactory) {
+        if (isInitialized()) {
+            getWidget().removeComponentListenerRecursive(listenerFactory);
+        }
+        else {
+            componentListenerFactories.remove(listenerFactory);
+        }
+    }
 
-	@Override
-	public void addFocusListenerRecursive(final IListenerFactory<IFocusListener> listenerFactory) {
-		if (isInitialized()) {
-			getWidget().addFocusListenerRecursive(listenerFactory);
-		}
-		else {
-			focusListenerFactories.add(listenerFactory);
-		}
-	}
+    @Override
+    public void addFocusListenerRecursive(final IListenerFactory<IFocusListener> listenerFactory) {
+        if (isInitialized()) {
+            getWidget().addFocusListenerRecursive(listenerFactory);
+        }
+        else {
+            focusListenerFactories.add(listenerFactory);
+        }
+    }
 
-	@Override
-	public void removeFocusListenerRecursive(final IListenerFactory<IFocusListener> listenerFactory) {
-		if (isInitialized()) {
-			getWidget().removeFocusListenerRecursive(listenerFactory);
-		}
-		else {
-			focusListenerFactories.remove(listenerFactory);
-		}
-	}
+    @Override
+    public void removeFocusListenerRecursive(final IListenerFactory<IFocusListener> listenerFactory) {
+        if (isInitialized()) {
+            getWidget().removeFocusListenerRecursive(listenerFactory);
+        }
+        else {
+            focusListenerFactories.remove(listenerFactory);
+        }
+    }
 
-	@Override
-	public void addKeyListenerRecursive(final IListenerFactory<IKeyListener> listenerFactory) {
-		if (isInitialized()) {
-			getWidget().addKeyListenerRecursive(listenerFactory);
-		}
-		else {
-			keyListenerFactories.add(listenerFactory);
-		}
-	}
+    @Override
+    public void addKeyListenerRecursive(final IListenerFactory<IKeyListener> listenerFactory) {
+        if (isInitialized()) {
+            getWidget().addKeyListenerRecursive(listenerFactory);
+        }
+        else {
+            keyListenerFactories.add(listenerFactory);
+        }
+    }
 
-	@Override
-	public void removeKeyListenerRecursive(final IListenerFactory<IKeyListener> listenerFactory) {
-		if (isInitialized()) {
-			getWidget().removeKeyListenerRecursive(listenerFactory);
-		}
-		else {
-			keyListenerFactories.remove(listenerFactory);
-		}
-	}
+    @Override
+    public void removeKeyListenerRecursive(final IListenerFactory<IKeyListener> listenerFactory) {
+        if (isInitialized()) {
+            getWidget().removeKeyListenerRecursive(listenerFactory);
+        }
+        else {
+            keyListenerFactories.remove(listenerFactory);
+        }
+    }
 
-	@Override
-	public void addMouseListenerRecursive(final IListenerFactory<IMouseListener> listenerFactory) {
-		if (isInitialized()) {
-			getWidget().addMouseListenerRecursive(listenerFactory);
-		}
-		else {
-			mouseListenerFactories.add(listenerFactory);
-		}
-	}
+    @Override
+    public void addMouseListenerRecursive(final IListenerFactory<IMouseListener> listenerFactory) {
+        if (isInitialized()) {
+            getWidget().addMouseListenerRecursive(listenerFactory);
+        }
+        else {
+            mouseListenerFactories.add(listenerFactory);
+        }
+    }
 
-	@Override
-	public void removeMouseListenerRecursive(final IListenerFactory<IMouseListener> listenerFactory) {
-		if (isInitialized()) {
-			getWidget().removeMouseListenerRecursive(listenerFactory);
-		}
-		else {
-			mouseListenerFactories.remove(listenerFactory);
-		}
-	}
+    @Override
+    public void removeMouseListenerRecursive(final IListenerFactory<IMouseListener> listenerFactory) {
+        if (isInitialized()) {
+            getWidget().removeMouseListenerRecursive(listenerFactory);
+        }
+        else {
+            mouseListenerFactories.remove(listenerFactory);
+        }
+    }
 
-	@Override
-	public void addPopupDetectionListenerRecursive(final IListenerFactory<IPopupDetectionListener> listenerFactory) {
-		if (isInitialized()) {
-			getWidget().addPopupDetectionListenerRecursive(listenerFactory);
-		}
-		else {
-			popupDetectionListenerFactories.add(listenerFactory);
-		}
-	}
+    @Override
+    public void addPopupDetectionListenerRecursive(final IListenerFactory<IPopupDetectionListener> listenerFactory) {
+        if (isInitialized()) {
+            getWidget().addPopupDetectionListenerRecursive(listenerFactory);
+        }
+        else {
+            popupDetectionListenerFactories.add(listenerFactory);
+        }
+    }
 
-	@Override
-	public void removePopupDetectionListenerRecursive(final IListenerFactory<IPopupDetectionListener> listenerFactory) {
-		if (isInitialized()) {
-			getWidget().removePopupDetectionListenerRecursive(listenerFactory);
-		}
-		else {
-			popupDetectionListenerFactories.remove(listenerFactory);
-		}
-	}
+    @Override
+    public void removePopupDetectionListenerRecursive(final IListenerFactory<IPopupDetectionListener> listenerFactory) {
+        if (isInitialized()) {
+            getWidget().removePopupDetectionListenerRecursive(listenerFactory);
+        }
+        else {
+            popupDetectionListenerFactories.remove(listenerFactory);
+        }
+    }
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	@Override
-	public <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(
-		final int index,
-		final IWidgetDescriptor<? extends M_WIDGET_TYPE> descriptor,
-		final Object layoutConstraints) {
-		if (isInitialized()) {
-			return getWidget().add(index, descriptor, layoutConstraints);
-		}
-		else {
-			final Widget powo = widgetFactory.create(descriptor);
-			preWidgets.add(index, new Tuple<Widget, Object>(powo, layoutConstraints));
-			return (M_WIDGET_TYPE) powo;
-		}
-	}
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    @Override
+    public <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(
+        final int index,
+        final IWidgetDescriptor<? extends M_WIDGET_TYPE> descriptor,
+        final Object layoutConstraints) {
+        if (isInitialized()) {
+            return getWidget().add(index, descriptor, layoutConstraints);
+        }
+        else {
+            final Widget powo = widgetFactory.create(descriptor);
+            preWidgets.add(index, new Tuple<Widget, Object>(powo, layoutConstraints));
+            return (M_WIDGET_TYPE) powo;
+        }
+    }
 
-	@Override
-	public <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(
-		final int index,
-		final IWidgetDescriptor<? extends M_WIDGET_TYPE> descriptor) {
-		return add(index, descriptor, null);
-	}
+    @Override
+    public <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(
+        final int index,
+        final IWidgetDescriptor<? extends M_WIDGET_TYPE> descriptor) {
+        return add(index, descriptor, null);
+    }
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	@Override
-	public final <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(
-		final IWidgetDescriptor<? extends M_WIDGET_TYPE> descriptor,
-		final Object layoutConstraints) {
-		if (isInitialized()) {
-			return getWidget().add(descriptor, layoutConstraints);
-		}
-		else {
-			final Widget powo = widgetFactory.create(descriptor);
-			preWidgets.add(new Tuple<Widget, Object>(powo, layoutConstraints));
-			return (M_WIDGET_TYPE) powo;
-		}
-	}
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    @Override
+    public final <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(
+        final IWidgetDescriptor<? extends M_WIDGET_TYPE> descriptor,
+        final Object layoutConstraints) {
+        if (isInitialized()) {
+            return getWidget().add(descriptor, layoutConstraints);
+        }
+        else {
+            final Widget powo = widgetFactory.create(descriptor);
+            preWidgets.add(new Tuple<Widget, Object>(powo, layoutConstraints));
+            return (M_WIDGET_TYPE) powo;
+        }
+    }
 
-	@Override
-	public <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(final IWidgetDescriptor<? extends M_WIDGET_TYPE> descriptor) {
-		return add(descriptor, null);
-	}
+    @Override
+    public <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(final IWidgetDescriptor<? extends M_WIDGET_TYPE> descriptor) {
+        return add(descriptor, null);
+    }
 
-	@SuppressWarnings("rawtypes")
-	@Override
-	public List<IControl> getChildren() {
-		if (isInitialized()) {
-			return getWidget().getChildren();
-		}
-		else {
-			final List<IControl> result = new LinkedList<IControl>();
-			for (final Tuple<Widget, Object> preWidgetTuple : preWidgets) {
-				result.add((IControl) preWidgetTuple.getFirst());
-			}
-			return result;
-		}
-	}
+    @SuppressWarnings("rawtypes")
+    @Override
+    public List<IControl> getChildren() {
+        if (isInitialized()) {
+            return getWidget().getChildren();
+        }
+        else {
+            final List<IControl> result = new LinkedList<IControl>();
+            for (final Tuple<Widget, Object> preWidgetTuple : preWidgets) {
+                result.add((IControl) preWidgetTuple.getFirst());
+            }
+            return result;
+        }
+    }
 
-	@SuppressWarnings("rawtypes")
-	@Override
-	public boolean remove(final IControl control) {
-		if (isInitialized()) {
-			return getWidget().remove(control);
-		}
-		else {
-			Assert.paramNotNull(control, "control");
-			Tuple<Widget, Object> foundControl = null;
-			for (final Tuple<Widget, Object> preWidgetTuple : preWidgets) {
-				if (control == preWidgetTuple.getFirst()) {
-					foundControl = preWidgetTuple;
-					break;
-				}
-			}
-			if (foundControl != null) {
-				final boolean removed = preWidgets.remove(foundControl);
-				if (removed) {
-					return true;
-				}
-				else {
-					throw new IllegalStateException(
-						"Control could not be removed from pre widget list. This seems to be a bug. Please report this.");
-				}
-			}
-			else {
-				return false;
-			}
-		}
-	}
+    @SuppressWarnings("rawtypes")
+    @Override
+    public boolean remove(final IControl control) {
+        if (isInitialized()) {
+            return getWidget().remove(control);
+        }
+        else {
+            Assert.paramNotNull(control, "control");
+            Tuple<Widget, Object> foundControl = null;
+            for (final Tuple<Widget, Object> preWidgetTuple : preWidgets) {
+                if (control == preWidgetTuple.getFirst()) {
+                    foundControl = preWidgetTuple;
+                    break;
+                }
+            }
+            if (foundControl != null) {
+                final boolean removed = preWidgets.remove(foundControl);
+                if (removed) {
+                    return true;
+                }
+                else {
+                    throw new IllegalStateException(
+                        "Control could not be removed from pre widget list. This seems to be a bug. Please report this.");
+                }
+            }
+            else {
+                return false;
+            }
+        }
+    }
 
-	@Override
-	public boolean isReparentable() {
-		checkInitialized();
-		return getWidget().isReparentable();
-	}
+    @Override
+    public boolean isReparentable() {
+        checkInitialized();
+        return getWidget().isReparentable();
+    }
 
-	@Override
-	public final void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		if (isInitialized()) {
-			getWidget().setLayout(layoutDescriptor);
-		}
-		else {
-			getBluePrint().setLayout(layoutDescriptor);
-		}
-	}
+    @Override
+    public final void setLayout(final ILayoutDescriptor layoutDescriptor) {
+        if (isInitialized()) {
+            getWidget().setLayout(layoutDescriptor);
+        }
+        else {
+            getBluePrint().setLayout(layoutDescriptor);
+        }
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <LAYOUT_TYPE extends ILayouter> LAYOUT_TYPE setLayout(final ILayoutFactory<LAYOUT_TYPE> layoutFactory) {
-		if (isInitialized()) {
-			return getWidget().setLayout(layoutFactory);
-		}
-		else {
-			final ILayouter result = layoutFactory.create(this);
-			getBluePrint().setLayout(result);
-			return (LAYOUT_TYPE) result;
-		}
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public <LAYOUT_TYPE extends ILayouter> LAYOUT_TYPE setLayout(final ILayoutFactory<LAYOUT_TYPE> layoutFactory) {
+        if (isInitialized()) {
+            return getWidget().setLayout(layoutFactory);
+        }
+        else {
+            final ILayouter result = layoutFactory.create(this);
+            getBluePrint().setLayout(result);
+            return (LAYOUT_TYPE) result;
+        }
+    }
 
-	@Override
-	public final void removeAll() {
-		if (isInitialized()) {
-			getWidget().removeAll();
-		}
-		else {
-			preWidgets.clear();
-		}
-	}
+    @Override
+    public final void removeAll() {
+        if (isInitialized()) {
+            getWidget().removeAll();
+        }
+        else {
+            preWidgets.clear();
+        }
+    }
 
-	@Override
-	public Rectangle getClientArea() {
-		checkInitialized();
-		return getWidget().getClientArea();
-	}
+    @Override
+    public Rectangle getClientArea() {
+        checkInitialized();
+        return getWidget().getClientArea();
+    }
 
-	@Override
-	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
-		checkInitialized();
-		return getWidget().computeDecoratedSize(clientAreaSize);
-	}
+    @Override
+    public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+        checkInitialized();
+        return getWidget().computeDecoratedSize(clientAreaSize);
+    }
 
-	@Override
-	public void layout() {
-		checkInitialized();
-		getWidget().layout();
-	}
+    @Override
+    public void layout() {
+        checkInitialized();
+        getWidget().layout();
+    }
 
-	@Override
-	public void layoutLater() {
-		checkInitialized();
-		getWidget().layoutLater();
-	}
+    @Override
+    public void layoutLater() {
+        checkInitialized();
+        getWidget().layoutLater();
+    }
 
-	@Override
-	public final void layoutBegin() {
-		checkInitialized();
-		getWidget().layoutBegin();
-	}
+    @Override
+    public final void layoutBegin() {
+        checkInitialized();
+        getWidget().layoutBegin();
+    }
 
-	@Override
-	public final void layoutEnd() {
-		checkInitialized();
-		getWidget().layoutEnd();
-	}
+    @Override
+    public final void layoutEnd() {
+        checkInitialized();
+        getWidget().layoutEnd();
+    }
 
-	@Override
-	public <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(
-		final int index,
-		final ICustomWidgetCreator<M_WIDGET_TYPE> creator,
-		final Object layoutConstraints) {
-		checkInitialized();
-		return getWidget().add(index, creator, layoutConstraints);
-	}
+    @Override
+    public <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(
+        final int index,
+        final ICustomWidgetCreator<M_WIDGET_TYPE> creator,
+        final Object layoutConstraints) {
+        checkInitialized();
+        return getWidget().add(index, creator, layoutConstraints);
+    }
 
-	@Override
-	public <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(final int index, final ICustomWidgetCreator<M_WIDGET_TYPE> creator) {
-		return add(index, creator, null);
-	}
+    @Override
+    public <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(final int index, final ICustomWidgetCreator<M_WIDGET_TYPE> creator) {
+        return add(index, creator, null);
+    }
 
-	@Override
-	public final <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(
-		final ICustomWidgetCreator<M_WIDGET_TYPE> creator,
-		final Object layoutConstraints) {
-		checkInitialized();
-		return getWidget().add(creator, layoutConstraints);
-	}
+    @Override
+    public final <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(
+        final ICustomWidgetCreator<M_WIDGET_TYPE> creator,
+        final Object layoutConstraints) {
+        checkInitialized();
+        return getWidget().add(creator, layoutConstraints);
+    }
 
-	@Override
-	public <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(final ICustomWidgetCreator<M_WIDGET_TYPE> creator) {
-		return add(creator, null);
-	}
+    @Override
+    public <M_WIDGET_TYPE extends IControl> M_WIDGET_TYPE add(final ICustomWidgetCreator<M_WIDGET_TYPE> creator) {
+        return add(creator, null);
+    }
 
 }

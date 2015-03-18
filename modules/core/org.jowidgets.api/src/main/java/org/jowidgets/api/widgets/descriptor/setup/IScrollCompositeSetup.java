@@ -29,7 +29,6 @@ package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.common.widgets.descriptor.setup.IScrollCompositeSetupCommon;
 
-
 public interface IScrollCompositeSetup extends IScrollCompositeSetupCommon, ICompositeSetup {
 
 }

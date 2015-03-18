@@ -37,17 +37,17 @@ import org.jowidgets.api.widgets.IControl;
 
 public final class SwtBrowserFactory {
 
-	private SwtBrowserFactory() {}
+    private SwtBrowserFactory() {}
 
-	public static IBrowser createBrowser(final IControl control, final Composite swtComposite, final IBrowserBluePrint bluePrint) {
-		return new BrowserImpl(control, swtComposite, bluePrint);
-	}
+    public static IBrowser createBrowser(final IControl control, final Composite swtComposite, final IBrowserBluePrint bluePrint) {
+        return new BrowserImpl(control, swtComposite, bluePrint);
+    }
 
-	public static IMainBrowser createMainBrowser(
-		final IControl control,
-		final Composite swtComposite,
-		final IMainBrowserBluePrint bluePrint) {
-		return new MainBrowserImpl(control, swtComposite, bluePrint);
-	}
+    public static IMainBrowser createMainBrowser(
+        final IControl control,
+        final Composite swtComposite,
+        final IMainBrowserBluePrint bluePrint) {
+        return new MainBrowserImpl(control, swtComposite, bluePrint);
+    }
 
 }

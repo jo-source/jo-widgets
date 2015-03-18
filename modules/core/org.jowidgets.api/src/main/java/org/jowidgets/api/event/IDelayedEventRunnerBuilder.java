@@ -33,14 +33,14 @@ import java.util.concurrent.TimeUnit;
 
 public interface IDelayedEventRunnerBuilder {
 
-	IDelayedEventRunnerBuilder setExecutor(ScheduledExecutorService executor);
+    IDelayedEventRunnerBuilder setExecutor(ScheduledExecutorService executor);
 
-	IDelayedEventRunnerBuilder setDelay(long delay, TimeUnit timeUnit);
+    IDelayedEventRunnerBuilder setDelay(long delay, TimeUnit timeUnit);
 
-	IDelayedEventRunnerBuilder setDelay(long delay);
+    IDelayedEventRunnerBuilder setDelay(long delay);
 
-	IDelayedEventRunnerBuilder setCancelPrevious(boolean cancel);
+    IDelayedEventRunnerBuilder setCancelPrevious(boolean cancel);
 
-	IDelayedEventRunner build();
+    IDelayedEventRunner build();
 
 }

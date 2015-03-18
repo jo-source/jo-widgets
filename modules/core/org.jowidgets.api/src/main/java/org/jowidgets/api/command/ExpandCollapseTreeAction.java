@@ -32,18 +32,18 @@ import org.jowidgets.api.widgets.ITreeContainer;
 
 public final class ExpandCollapseTreeAction {
 
-	private ExpandCollapseTreeAction() {}
+    private ExpandCollapseTreeAction() {}
 
-	public static ITreeExpansionActionBuilder builder(final ITreeContainer tree) {
-		return DefaultActionFactory.expandCollapseTreeActionBuilder(tree);
-	}
+    public static ITreeExpansionActionBuilder builder(final ITreeContainer tree) {
+        return DefaultActionFactory.expandCollapseTreeActionBuilder(tree);
+    }
 
-	public static ITreeExpansionAction create(final ITreeContainer tree) {
-		return DefaultActionFactory.expandCollapseTreeAction(tree);
-	}
+    public static ITreeExpansionAction create(final ITreeContainer tree) {
+        return DefaultActionFactory.expandCollapseTreeAction(tree);
+    }
 
-	public static ITreeExpansionAction create(final ITreeContainer tree, final boolean enabledChecking) {
-		return DefaultActionFactory.expandCollapseTreeActionBuilder(tree).setEnabledChecking(enabledChecking).build();
-	}
+    public static ITreeExpansionAction create(final ITreeContainer tree, final boolean enabledChecking) {
+        return DefaultActionFactory.expandCollapseTreeActionBuilder(tree).setEnabledChecking(enabledChecking).build();
+    }
 
 }

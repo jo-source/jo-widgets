@@ -33,19 +33,19 @@ import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
 public class ContainerSetupConvenience extends AbstractSetupBuilderConvenience<IContainerSetupBuilder<?>> implements
-		IContainerSetupConvenience<IContainerSetupBuilder<?>> {
+        IContainerSetupConvenience<IContainerSetupBuilder<?>> {
 
-	@Override
-	public IContainerSetupBuilder<?> setMigLayout(final String columnConstraints, final String rowConstraints) {
-		return getBuilder().setLayout(new MigLayoutDescriptor(columnConstraints, rowConstraints));
-	}
+    @Override
+    public IContainerSetupBuilder<?> setMigLayout(final String columnConstraints, final String rowConstraints) {
+        return getBuilder().setLayout(new MigLayoutDescriptor(columnConstraints, rowConstraints));
+    }
 
-	@Override
-	public IContainerSetupBuilder<?> setMigLayout(
-		final String layoutConstraints,
-		final String columnConstraints,
-		final String rowConstraints) {
-		return getBuilder().setLayout(new MigLayoutDescriptor(layoutConstraints, columnConstraints, rowConstraints));
-	}
+    @Override
+    public IContainerSetupBuilder<?> setMigLayout(
+        final String layoutConstraints,
+        final String columnConstraints,
+        final String rowConstraints) {
+        return getBuilder().setLayout(new MigLayoutDescriptor(layoutConstraints, columnConstraints, rowConstraints));
+    }
 
 }

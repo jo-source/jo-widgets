@@ -30,6 +30,6 @@ package org.jowidgets.api.model.levelmeter;
 
 public interface ILevelListener {
 
-	void levelChanged(double oldValue, double newValue);
+    void levelChanged(double oldValue, double newValue);
 
 }

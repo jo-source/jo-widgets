@@ -38,30 +38,30 @@ import org.jowidgets.tools.powo.JoFrame;
 
 public class DemoPreferredSizeLayoutFrame extends JoFrame {
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+    private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
-	public DemoPreferredSizeLayoutFrame() {
-		super("Preferred size layout demo");
+    public DemoPreferredSizeLayoutFrame() {
+        super("Preferred size layout demo");
 
-		final ILayouter layouter = setLayout(PreferredSizeLayout.get());
+        final ILayouter layouter = setLayout(PreferredSizeLayout.get());
 
-		final Rectangle clientArea = getClientArea();
-		final int x = clientArea.getX();
-		final int y = clientArea.getY();
+        final Rectangle clientArea = getClientArea();
+        final int x = clientArea.getX();
+        final int y = clientArea.getY();
 
-		for (int i = 0; i < 10; i++) {
-			final IButton button = add(BPF.button());
-			button.setPosition(x + i * 20, y + i * 40);
-			button.setText("Button " + i);
-		}
+        for (int i = 0; i < 10; i++) {
+            final IButton button = add(BPF.button());
+            button.setPosition(x + i * 20, y + i * 40);
+            button.setText("Button " + i);
+        }
 
-		for (int i = 0; i < 10; i++) {
-			final IButton button = add(BPF.button());
-			button.setPosition(x + 400 + i * 20, y + 200 + (9 - i) * 40);
-			button.setText("Button " + i);
-		}
+        for (int i = 0; i < 10; i++) {
+            final IButton button = add(BPF.button());
+            button.setPosition(x + 400 + i * 20, y + 200 + (9 - i) * 40);
+            button.setText("Button " + i);
+        }
 
-		pack();
-		setMinSize(layouter.getMinSize());
-	}
+        pack();
+        setMinSize(layouter.getMinSize());
+    }
 }

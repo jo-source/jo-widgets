@@ -28,10 +28,8 @@
 
 package org.jowidgets.api.model.item;
 
+public interface IContainerItemModelBuilder extends IItemModelBuilder<IContainerItemModelBuilder, IContainerItemModel> {
 
-public interface IContainerItemModelBuilder extends
-		IItemModelBuilder<IContainerItemModelBuilder, IContainerItemModel> {
-
-	IContainerItemModelBuilder setContentCreator(IContainerContentCreator contentCreator);
+    IContainerItemModelBuilder setContentCreator(IContainerContentCreator contentCreator);
 
 }

@@ -34,29 +34,29 @@ import org.jowidgets.util.Assert;
 
 public final class ExpandCollapseTreeToolbarItemModel {
 
-	private ExpandCollapseTreeToolbarItemModel() {}
+    private ExpandCollapseTreeToolbarItemModel() {}
 
-	public static ITreeExpansionToolbarItemModelBuilder builder(final ITreeContainer tree) {
-		Assert.paramNotNull(tree, "tree");
-		return TreeExpansionToolbarItemModel.builder(ExpandCollapseTreeAction.create(tree));
-	}
+    public static ITreeExpansionToolbarItemModelBuilder builder(final ITreeContainer tree) {
+        Assert.paramNotNull(tree, "tree");
+        return TreeExpansionToolbarItemModel.builder(ExpandCollapseTreeAction.create(tree));
+    }
 
-	public static IToolBarItemModel create(final ITreeContainer tree, final int maxLevel, final int defaultLevel) {
-		Assert.paramNotNull(tree, "tree");
-		return TreeExpansionToolbarItemModel.create(ExpandCollapseTreeAction.create(tree), maxLevel, defaultLevel, false);
-	}
+    public static IToolBarItemModel create(final ITreeContainer tree, final int maxLevel, final int defaultLevel) {
+        Assert.paramNotNull(tree, "tree");
+        return TreeExpansionToolbarItemModel.create(ExpandCollapseTreeAction.create(tree), maxLevel, defaultLevel, false);
+    }
 
-	public static IToolBarItemModel create(
-		final ITreeContainer tree,
-		final boolean enabledChecking,
-		final int maxLevel,
-		final int defaultLevel) {
-		Assert.paramNotNull(tree, "tree");
-		return TreeExpansionToolbarItemModel.create(
-				ExpandCollapseTreeAction.create(tree, enabledChecking),
-				maxLevel,
-				defaultLevel,
-				false);
-	}
+    public static IToolBarItemModel create(
+        final ITreeContainer tree,
+        final boolean enabledChecking,
+        final int maxLevel,
+        final int defaultLevel) {
+        Assert.paramNotNull(tree, "tree");
+        return TreeExpansionToolbarItemModel.create(
+                ExpandCollapseTreeAction.create(tree, enabledChecking),
+                maxLevel,
+                defaultLevel,
+                false);
+    }
 
 }

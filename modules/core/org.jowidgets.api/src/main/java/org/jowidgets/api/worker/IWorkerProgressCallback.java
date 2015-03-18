@@ -30,11 +30,11 @@ package org.jowidgets.api.worker;
 
 public interface IWorkerProgressCallback<PROGRESS_TYPE> {
 
-	/**
-	 * Will be invoked if the progress changed.
-	 * 
-	 * @param progress
-	 */
-	void progress(PROGRESS_TYPE progress);
+    /**
+     * Will be invoked if the progress changed.
+     * 
+     * @param progress
+     */
+    void progress(PROGRESS_TYPE progress);
 
 }

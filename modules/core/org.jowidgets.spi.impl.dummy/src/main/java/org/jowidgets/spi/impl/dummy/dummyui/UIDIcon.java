@@ -30,14 +30,14 @@ package org.jowidgets.spi.impl.dummy.dummyui;
 
 public class UIDIcon extends UIDComponent {
 
-	private UIDImage icon;
+    private UIDImage icon;
 
-	public void setIcon(final UIDImage icon) {
-		this.icon = icon;
-	}
+    public void setIcon(final UIDImage icon) {
+        this.icon = icon;
+    }
 
-	public UIDImage getIcon() {
-		return icon;
-	}
+    public UIDImage getIcon() {
+        return icon;
+    }
 
 }

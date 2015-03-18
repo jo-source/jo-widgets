@@ -38,16 +38,16 @@ import org.jowidgets.spi.dnd.IDragSourceSpi;
 
 final class DummyDragSource implements IDragSourceSpi {
 
-	@Override
-	public void addDragSourceListenerSpi(final IDragSourceListenerSpi listener) {}
+    @Override
+    public void addDragSourceListenerSpi(final IDragSourceListenerSpi listener) {}
 
-	@Override
-	public void removeDragSourceListenerSpi(final IDragSourceListenerSpi listener) {}
+    @Override
+    public void removeDragSourceListenerSpi(final IDragSourceListenerSpi listener) {}
 
-	@Override
-	public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {}
+    @Override
+    public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {}
 
-	@Override
-	public void setActions(final Set<DropAction> actions) {}
+    @Override
+    public void setActions(final Set<DropAction> actions) {}
 
 }

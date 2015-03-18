@@ -51,70 +51,70 @@ import org.jowidgets.util.Assert;
 
 class JoWidgetFactory {
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
-	Widget create(final IWidgetDescriptor descriptor) {
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    Widget create(final IWidgetDescriptor descriptor) {
 
-		Assert.paramNotNull(descriptor, "descriptor");
+        Assert.paramNotNull(descriptor, "descriptor");
 
-		if (descriptor instanceof IButtonDescriptor) {
-			return new JoButton((IButtonDescriptor) descriptor);
-		}
-		else if (descriptor instanceof ICheckBoxDescriptor) {
-			return new JoCheckBox((ICheckBoxDescriptor) descriptor);
-		}
-		else if (descriptor instanceof IComboBoxSelectionDescriptor) {
-			return new JoComboBoxSelection((IComboBoxSelectionDescriptor) descriptor);
-		}
-		else if (descriptor instanceof IComboBoxDescriptor) {
-			return new JoComboBox((IComboBoxDescriptor) descriptor);
-		}
-		else if (descriptor instanceof ICompositeDescriptor) {
-			return new JoComposite((ICompositeDescriptor) descriptor);
-		}
-		else if (descriptor instanceof IIconDescriptor) {
-			return new JoIcon((IIconDescriptor) descriptor);
-		}
-		else if (descriptor instanceof ILabelDescriptor) {
-			return new JoLabel((ILabelDescriptor) descriptor);
-		}
-		else if (descriptor instanceof IProgressBarDescriptor) {
-			return new JoProgressBar((IProgressBarDescriptor) descriptor);
-		}
-		else if (descriptor instanceof IScrollCompositeDescriptor) {
-			return new JoScrollComposite((IScrollCompositeDescriptor) descriptor);
-		}
-		else if (descriptor instanceof ISplitCompositeDescriptor) {
-			return new JoSplitComposite((ISplitCompositeDescriptor) descriptor);
-		}
-		else if (descriptor instanceof ITextLabelDescriptor) {
-			return new JoTextLabel((ITextLabelDescriptor) descriptor);
-		}
-		else if (descriptor instanceof IToggleButtonDescriptor) {
-			return new JoToggleButton((IToggleButtonDescriptor) descriptor);
-		}
-		else if (descriptor instanceof IActionMenuItemDescriptor) {
-			return new JoActionMenuItem((IActionMenuItemDescriptor) descriptor);
-		}
-		else if (descriptor instanceof ICheckedMenuItemDescriptor) {
-			return new JoCheckedMenuItem((ICheckedMenuItemDescriptor) descriptor);
-		}
-		else if (descriptor instanceof IRadioMenuItemDescriptor) {
-			return new JoRadioMenuItem((IRadioMenuItemDescriptor) descriptor);
-		}
-		else if (descriptor instanceof ISubMenuDescriptor) {
-			return new JoSubMenu((ISubMenuDescriptor) descriptor);
-		}
-		else if (descriptor instanceof ISeparatorMenuItemDescriptor) {
-			return new JoSeparatorMenuItem((ISeparatorMenuItemDescriptor) descriptor);
-		}
-		else if (descriptor instanceof ISeparatorDescriptor) {
-			return new Control(descriptor);
-		}
-		else {
-			throw new IllegalArgumentException("Could not create a Widget from descriptor '"
-				+ descriptor.getDescriptorInterface().getName()
-				+ "' Descriptor is not yet supported for Powo's (Plain old widget objects)");
-		}
-	}
+        if (descriptor instanceof IButtonDescriptor) {
+            return new JoButton((IButtonDescriptor) descriptor);
+        }
+        else if (descriptor instanceof ICheckBoxDescriptor) {
+            return new JoCheckBox((ICheckBoxDescriptor) descriptor);
+        }
+        else if (descriptor instanceof IComboBoxSelectionDescriptor) {
+            return new JoComboBoxSelection((IComboBoxSelectionDescriptor) descriptor);
+        }
+        else if (descriptor instanceof IComboBoxDescriptor) {
+            return new JoComboBox((IComboBoxDescriptor) descriptor);
+        }
+        else if (descriptor instanceof ICompositeDescriptor) {
+            return new JoComposite((ICompositeDescriptor) descriptor);
+        }
+        else if (descriptor instanceof IIconDescriptor) {
+            return new JoIcon((IIconDescriptor) descriptor);
+        }
+        else if (descriptor instanceof ILabelDescriptor) {
+            return new JoLabel((ILabelDescriptor) descriptor);
+        }
+        else if (descriptor instanceof IProgressBarDescriptor) {
+            return new JoProgressBar((IProgressBarDescriptor) descriptor);
+        }
+        else if (descriptor instanceof IScrollCompositeDescriptor) {
+            return new JoScrollComposite((IScrollCompositeDescriptor) descriptor);
+        }
+        else if (descriptor instanceof ISplitCompositeDescriptor) {
+            return new JoSplitComposite((ISplitCompositeDescriptor) descriptor);
+        }
+        else if (descriptor instanceof ITextLabelDescriptor) {
+            return new JoTextLabel((ITextLabelDescriptor) descriptor);
+        }
+        else if (descriptor instanceof IToggleButtonDescriptor) {
+            return new JoToggleButton((IToggleButtonDescriptor) descriptor);
+        }
+        else if (descriptor instanceof IActionMenuItemDescriptor) {
+            return new JoActionMenuItem((IActionMenuItemDescriptor) descriptor);
+        }
+        else if (descriptor instanceof ICheckedMenuItemDescriptor) {
+            return new JoCheckedMenuItem((ICheckedMenuItemDescriptor) descriptor);
+        }
+        else if (descriptor instanceof IRadioMenuItemDescriptor) {
+            return new JoRadioMenuItem((IRadioMenuItemDescriptor) descriptor);
+        }
+        else if (descriptor instanceof ISubMenuDescriptor) {
+            return new JoSubMenu((ISubMenuDescriptor) descriptor);
+        }
+        else if (descriptor instanceof ISeparatorMenuItemDescriptor) {
+            return new JoSeparatorMenuItem((ISeparatorMenuItemDescriptor) descriptor);
+        }
+        else if (descriptor instanceof ISeparatorDescriptor) {
+            return new Control(descriptor);
+        }
+        else {
+            throw new IllegalArgumentException("Could not create a Widget from descriptor '"
+                + descriptor.getDescriptorInterface().getName()
+                + "' Descriptor is not yet supported for Powo's (Plain old widget objects)");
+        }
+    }
 
 }

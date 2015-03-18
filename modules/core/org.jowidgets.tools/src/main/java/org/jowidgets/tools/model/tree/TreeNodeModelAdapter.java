@@ -32,28 +32,28 @@ import org.jowidgets.api.model.tree.ITreeNodeModelListener;
 
 public class TreeNodeModelAdapter implements ITreeNodeModelListener {
 
-	@Override
-	public void dataChanged() {}
+    @Override
+    public void dataChanged() {}
 
-	@Override
-	public void childrenChanged() {}
+    @Override
+    public void childrenChanged() {}
 
-	@Override
-	public void selectionChanged() {}
+    @Override
+    public void selectionChanged() {}
 
-	@Override
-	public void checkedChanged() {}
+    @Override
+    public void checkedChanged() {}
 
-	@Override
-	public void checkableChanged() {}
+    @Override
+    public void checkableChanged() {}
 
-	@Override
-	public void expansionChanged() {}
+    @Override
+    public void expansionChanged() {}
 
-	@Override
-	public void visibilityChanged() {}
+    @Override
+    public void visibilityChanged() {}
 
-	@Override
-	public void dispose() {}
+    @Override
+    public void dispose() {}
 
 }

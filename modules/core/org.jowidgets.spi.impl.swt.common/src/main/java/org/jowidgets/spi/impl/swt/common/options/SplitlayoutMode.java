@@ -37,7 +37,7 @@ package org.jowidgets.spi.impl.swt.common.options;
  */
 public enum SplitlayoutMode {
 
-	ON_MOUSE_MOVE,
-	ON_MOUSE_RELEASE
+    ON_MOUSE_MOVE,
+    ON_MOUSE_RELEASE
 
 }

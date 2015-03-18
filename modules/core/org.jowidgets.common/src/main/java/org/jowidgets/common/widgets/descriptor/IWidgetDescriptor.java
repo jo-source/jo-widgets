@@ -34,8 +34,8 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.MandatoryCheckRes
 
 public interface IWidgetDescriptor<WIDGET_TYPE extends IWidgetCommon> extends IComponentSetupCommon {
 
-	Class<? extends IWidgetDescriptor<WIDGET_TYPE>> getDescriptorInterface();
+    Class<? extends IWidgetDescriptor<WIDGET_TYPE>> getDescriptorInterface();
 
-	MandatoryCheckResult checkMandatoryFields();
+    MandatoryCheckResult checkMandatoryFields();
 
 }

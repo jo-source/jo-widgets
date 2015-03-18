@@ -40,68 +40,68 @@ import org.jowidgets.util.Assert;
 
 abstract class AbstractDropTargetObservable implements IDropTargetObservable {
 
-	private final Set<IDropTargetListener> listeners;
+    private final Set<IDropTargetListener> listeners;
 
-	public AbstractDropTargetObservable() {
-		this.listeners = new LinkedHashSet<IDropTargetListener>();
-	}
+    public AbstractDropTargetObservable() {
+        this.listeners = new LinkedHashSet<IDropTargetListener>();
+    }
 
-	@Override
-	public final void addDropTargetListener(final IDropTargetListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		final int lastSize = listeners.size();
-		listeners.add(listener);
-		if (lastSize == 0) {
-			setActive(true);
-		}
-	}
+    @Override
+    public final void addDropTargetListener(final IDropTargetListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        final int lastSize = listeners.size();
+        listeners.add(listener);
+        if (lastSize == 0) {
+            setActive(true);
+        }
+    }
 
-	@Override
-	public final void removeDropTargetListener(final IDropTargetListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		final int lastSize = listeners.size();
-		listeners.remove(listener);
-		if (lastSize == 1 && listeners.size() == 0) {
-			setActive(false);
-		}
-	}
+    @Override
+    public final void removeDropTargetListener(final IDropTargetListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        final int lastSize = listeners.size();
+        listeners.remove(listener);
+        if (lastSize == 1 && listeners.size() == 0) {
+            setActive(false);
+        }
+    }
 
-	final void fireDragEnter(final IDropEvent event, final IDropResponse response) {
-		for (final IDropTargetListener listener : new LinkedList<IDropTargetListener>(listeners)) {
-			listener.dragEnter(event, response);
-		}
-	}
+    final void fireDragEnter(final IDropEvent event, final IDropResponse response) {
+        for (final IDropTargetListener listener : new LinkedList<IDropTargetListener>(listeners)) {
+            listener.dragEnter(event, response);
+        }
+    }
 
-	final void fireDragOver(final IDropEvent event, final IDropResponse response) {
-		for (final IDropTargetListener listener : new LinkedList<IDropTargetListener>(listeners)) {
-			listener.dragOver(event, response);
-		}
-	}
+    final void fireDragOver(final IDropEvent event, final IDropResponse response) {
+        for (final IDropTargetListener listener : new LinkedList<IDropTargetListener>(listeners)) {
+            listener.dragOver(event, response);
+        }
+    }
 
-	final void fireDragOperationChanged(final IDropEvent event, final IDropResponse response) {
-		for (final IDropTargetListener listener : new LinkedList<IDropTargetListener>(listeners)) {
-			listener.dragOperationChanged(event, response);
-		}
-	}
+    final void fireDragOperationChanged(final IDropEvent event, final IDropResponse response) {
+        for (final IDropTargetListener listener : new LinkedList<IDropTargetListener>(listeners)) {
+            listener.dragOperationChanged(event, response);
+        }
+    }
 
-	final void fireDragExit() {
-		for (final IDropTargetListener listener : new LinkedList<IDropTargetListener>(listeners)) {
-			listener.dragExit();
-		}
-	}
+    final void fireDragExit() {
+        for (final IDropTargetListener listener : new LinkedList<IDropTargetListener>(listeners)) {
+            listener.dragExit();
+        }
+    }
 
-	final void fireDropAccept(final IDropEvent event, final IDropResponse response) {
-		for (final IDropTargetListener listener : new LinkedList<IDropTargetListener>(listeners)) {
-			listener.dropAccept(event, response);
-		}
-	}
+    final void fireDropAccept(final IDropEvent event, final IDropResponse response) {
+        for (final IDropTargetListener listener : new LinkedList<IDropTargetListener>(listeners)) {
+            listener.dropAccept(event, response);
+        }
+    }
 
-	final void fireDrop(final IDropEvent event) {
-		for (final IDropTargetListener listener : new LinkedList<IDropTargetListener>(listeners)) {
-			listener.drop(event);
-		}
-	}
+    final void fireDrop(final IDropEvent event) {
+        for (final IDropTargetListener listener : new LinkedList<IDropTargetListener>(listeners)) {
+            listener.drop(event);
+        }
+    }
 
-	protected abstract void setActive(boolean active);
+    protected abstract void setActive(boolean active);
 
 }

@@ -32,10 +32,10 @@ import org.jowidgets.common.widgets.builder.ISetupBuilder;
 
 public interface ISetupBuilderConvenienceRegistry {
 
-	@SuppressWarnings("rawtypes")
-	void register(Class<? extends ISetupBuilder> setupBuilder, ISetupBuilderConvenience<?> convenienceImpl);
+    @SuppressWarnings("rawtypes")
+    void register(Class<? extends ISetupBuilder> setupBuilder, ISetupBuilderConvenience<?> convenienceImpl);
 
-	@SuppressWarnings("rawtypes")
-	ISetupBuilderConvenience<ISetupBuilder<?>> getRegistered(Class<? extends ISetupBuilder> setupBuilder);
+    @SuppressWarnings("rawtypes")
+    ISetupBuilderConvenience<ISetupBuilder<?>> getRegistered(Class<? extends ISetupBuilder> setupBuilder);
 
 }

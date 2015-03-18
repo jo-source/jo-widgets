@@ -35,54 +35,54 @@ import org.jowidgets.workbench.api.IWorkbenchDescriptor;
 
 public abstract class AbstractWorkbenchDescriptor implements IWorkbenchDescriptor {
 
-	@Override
-	public String getLabel() {
-		return null;
-	}
+    @Override
+    public String getLabel() {
+        return null;
+    }
 
-	@Override
-	public String getTooltip() {
-		return null;
-	}
+    @Override
+    public String getTooltip() {
+        return null;
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return null;
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return null;
+    }
 
-	@Override
-	public Dimension getInitialDimension() {
-		return null;
-	}
+    @Override
+    public Dimension getInitialDimension() {
+        return null;
+    }
 
-	@Override
-	public boolean isInitialMaximized() {
-		return false;
-	}
+    @Override
+    public boolean isInitialMaximized() {
+        return false;
+    }
 
-	@Override
-	public boolean isDecorated() {
-		return true;
-	}
+    @Override
+    public boolean isDecorated() {
+        return true;
+    }
 
-	@Override
-	public Position getInitialPosition() {
-		return null;
-	}
+    @Override
+    public Position getInitialPosition() {
+        return null;
+    }
 
-	@Override
-	public double getInitialSplitWeight() {
-		return 0.2;
-	}
+    @Override
+    public double getInitialSplitWeight() {
+        return 0.2;
+    }
 
-	@Override
-	public boolean hasApplicationNavigator() {
-		return true;
-	}
+    @Override
+    public boolean hasApplicationNavigator() {
+        return true;
+    }
 
-	@Override
-	public boolean getApplicationsCloseable() {
-		return false;
-	}
+    @Override
+    public boolean getApplicationsCloseable() {
+        return false;
+    }
 
 }

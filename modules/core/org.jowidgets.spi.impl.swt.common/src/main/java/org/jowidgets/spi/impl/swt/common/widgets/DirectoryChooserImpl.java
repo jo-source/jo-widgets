@@ -40,52 +40,52 @@ import org.jowidgets.util.Assert;
 
 public class DirectoryChooserImpl implements IDirectoryChooserSpi {
 
-	private final DirectoryDialog directoryDialog;
-	private String directoryName;
+    private final DirectoryDialog directoryDialog;
+    private String directoryName;
 
-	public DirectoryChooserImpl(final Object parentUiReference, final IDirectoryChooserSetupSpi setup) {
-		directoryDialog = new DirectoryDialog((Shell) parentUiReference, SWT.NONE);
-		if (setup.getTitle() != null) {
-			directoryDialog.setText(setup.getTitle());
-		}
-	}
+    public DirectoryChooserImpl(final Object parentUiReference, final IDirectoryChooserSetupSpi setup) {
+        directoryDialog = new DirectoryDialog((Shell) parentUiReference, SWT.NONE);
+        if (setup.getTitle() != null) {
+            directoryDialog.setText(setup.getTitle());
+        }
+    }
 
-	@Override
-	public Object getUiReference() {
-		return directoryDialog;
-	}
+    @Override
+    public Object getUiReference() {
+        return directoryDialog;
+    }
 
-	@Override
-	public void setDirectory(final File file) {
-		Assert.paramNotNull(file, "file");
-		directoryDialog.setFilterPath(file.getAbsolutePath());
-	}
+    @Override
+    public void setDirectory(final File file) {
+        Assert.paramNotNull(file, "file");
+        directoryDialog.setFilterPath(file.getAbsolutePath());
+    }
 
-	@Override
-	public DialogResult open() {
-		directoryName = directoryDialog.open();
-		if (directoryName != null) {
-			return DialogResult.OK;
-		}
-		else {
-			return DialogResult.CANCEL;
-		}
-	}
+    @Override
+    public DialogResult open() {
+        directoryName = directoryDialog.open();
+        if (directoryName != null) {
+            return DialogResult.OK;
+        }
+        else {
+            return DialogResult.CANCEL;
+        }
+    }
 
-	@Override
-	public File getDirectory() {
-		return new File(directoryName);
-	}
+    @Override
+    public File getDirectory() {
+        return new File(directoryName);
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		if (!enabled) {
-			throw new IllegalArgumentException("Can not disable a file chooser");
-		}
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        if (!enabled) {
+            throw new IllegalArgumentException("Can not disable a file chooser");
+        }
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

@@ -33,8 +33,8 @@ import org.jowidgets.unit.api.IUnitValue;
 
 public interface IUnitValueField<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> extends IInputControl<BASE_VALUE_TYPE>, ISelectable {
 
-	IUnitValue<UNIT_VALUE_TYPE> getUnitValue();
+    IUnitValue<UNIT_VALUE_TYPE> getUnitValue();
 
-	void setUnitValue(IUnitValue<UNIT_VALUE_TYPE> unitValue);
+    void setUnitValue(IUnitValue<UNIT_VALUE_TYPE> unitValue);
 
 }

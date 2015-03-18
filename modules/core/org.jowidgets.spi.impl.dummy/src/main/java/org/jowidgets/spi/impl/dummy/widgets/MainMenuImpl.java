@@ -32,26 +32,26 @@ import org.jowidgets.spi.widgets.IMainMenuSpi;
 
 public class MainMenuImpl extends DummyMenu implements IMainMenuSpi {
 
-	private final MenuItemImpl menuItemDelegate;
+    private final MenuItemImpl menuItemDelegate;
 
-	public MainMenuImpl() {
-		super(new UIDMenuItem());
-		this.menuItemDelegate = new MenuItemImpl(getUiReference());
-	}
+    public MainMenuImpl() {
+        super(new UIDMenuItem());
+        this.menuItemDelegate = new MenuItemImpl(getUiReference());
+    }
 
-	@Override
-	public UIDMenuItem getUiReference() {
-		return super.getUiReference();
-	}
+    @Override
+    public UIDMenuItem getUiReference() {
+        return super.getUiReference();
+    }
 
-	@Override
-	public void setText(final String text) {
-		menuItemDelegate.setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        menuItemDelegate.setText(text);
+    }
 
-	@Override
-	public void setMnemonic(final char mnemonic) {
-		menuItemDelegate.setMnemonic(mnemonic);
-	}
+    @Override
+    public void setMnemonic(final char mnemonic) {
+        menuItemDelegate.setMnemonic(mnemonic);
+    }
 
 }

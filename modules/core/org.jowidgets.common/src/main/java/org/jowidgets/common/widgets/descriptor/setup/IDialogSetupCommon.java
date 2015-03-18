@@ -31,10 +31,10 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IDialogSetupCommon extends IFrameSetupCommon {
 
-	@Mandatory
-	boolean isModal();
+    @Mandatory
+    boolean isModal();
 
-	@Mandatory
-	boolean isCloseOnEscape();
+    @Mandatory
+    boolean isCloseOnEscape();
 
 }

@@ -30,19 +30,19 @@ package org.jowidgets.common.types;
 
 public enum Modifier {
 
-	/**
-	 * The control key modifier
-	 */
-	CTRL,
+    /**
+     * The control key modifier
+     */
+    CTRL,
 
-	/**
-	 * The shift key modifier
-	 */
-	SHIFT,
+    /**
+     * The shift key modifier
+     */
+    SHIFT,
 
-	/**
-	 * The alt key modifier
-	 */
-	ALT;
+    /**
+     * The alt key modifier
+     */
+    ALT;
 
 }

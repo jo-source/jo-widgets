@@ -35,26 +35,26 @@ import org.jowidgets.util.Assert;
 
 public class ObjectStringObjectLabelConverterAdapter<FROM_TYPE> implements IObjectLabelConverter<FROM_TYPE> {
 
-	private final IObjectStringConverter<FROM_TYPE> objectStringConverter;
+    private final IObjectStringConverter<FROM_TYPE> objectStringConverter;
 
-	public ObjectStringObjectLabelConverterAdapter(final IObjectStringConverter<FROM_TYPE> objectStringConverter) {
-		Assert.paramNotNull(objectStringConverter, "objectStringConverter");
-		this.objectStringConverter = objectStringConverter;
-	}
+    public ObjectStringObjectLabelConverterAdapter(final IObjectStringConverter<FROM_TYPE> objectStringConverter) {
+        Assert.paramNotNull(objectStringConverter, "objectStringConverter");
+        this.objectStringConverter = objectStringConverter;
+    }
 
-	@Override
-	public String convertToString(final FROM_TYPE value) {
-		return objectStringConverter.convertToString(value);
-	}
+    @Override
+    public String convertToString(final FROM_TYPE value) {
+        return objectStringConverter.convertToString(value);
+    }
 
-	@Override
-	public String getDescription(final FROM_TYPE value) {
-		return objectStringConverter.getDescription(value);
-	}
+    @Override
+    public String getDescription(final FROM_TYPE value) {
+        return objectStringConverter.getDescription(value);
+    }
 
-	@Override
-	public IImageConstant getIcon(final FROM_TYPE value) {
-		return null;
-	}
+    @Override
+    public IImageConstant getIcon(final FROM_TYPE value) {
+        return null;
+    }
 
 }

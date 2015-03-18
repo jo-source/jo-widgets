@@ -40,83 +40,83 @@ import org.jowidgets.unit.api.IUnitConverter;
 
 public interface IConverterProvider {
 
-	/**
-	 * Generic method to get an converter for an type. This method only gets an converter for the types supported by the
-	 * explicit methods of this interface or that was registered before.
-	 * 
-	 * @param <OBJECT_TYPE> The type of the object to get the converter for
-	 * @param type the class to get the converter for
-	 * @return The converter for the type or null if no converter exists for the type
-	 */
-	<OBJECT_TYPE> IConverter<OBJECT_TYPE> getConverter(Class<? extends OBJECT_TYPE> type);
+    /**
+     * Generic method to get an converter for an type. This method only gets an converter for the types supported by the
+     * explicit methods of this interface or that was registered before.
+     * 
+     * @param <OBJECT_TYPE> The type of the object to get the converter for
+     * @param type the class to get the converter for
+     * @return The converter for the type or null if no converter exists for the type
+     */
+    <OBJECT_TYPE> IConverter<OBJECT_TYPE> getConverter(Class<? extends OBJECT_TYPE> type);
 
-	<OBJECT_TYPE> IObjectStringConverter<OBJECT_TYPE> getObjectStringConverter(Class<? extends OBJECT_TYPE> type);
+    <OBJECT_TYPE> IObjectStringConverter<OBJECT_TYPE> getObjectStringConverter(Class<? extends OBJECT_TYPE> type);
 
-	<OBJECT_TYPE> IObjectLabelConverter<OBJECT_TYPE> getObjectLabelConverter(Class<? extends OBJECT_TYPE> type);
+    <OBJECT_TYPE> IObjectLabelConverter<OBJECT_TYPE> getObjectLabelConverter(Class<? extends OBJECT_TYPE> type);
 
-	<OBJECT_TYPE> IStringObjectConverter<OBJECT_TYPE> getStringObjectConverter(Class<? extends OBJECT_TYPE> type);
+    <OBJECT_TYPE> IStringObjectConverter<OBJECT_TYPE> getStringObjectConverter(Class<? extends OBJECT_TYPE> type);
 
-	<OBJECT_TYPE> IObjectStringConverter<OBJECT_TYPE> toStringConverter();
+    <OBJECT_TYPE> IObjectStringConverter<OBJECT_TYPE> toStringConverter();
 
-	IObjectStringConverter<String> passwordPresentationConverter();
+    IObjectStringConverter<String> passwordPresentationConverter();
 
-	<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IObjectStringConverter<BASE_VALUE_TYPE> unitValueConverter(
-		IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitConverter,
-		Class<? extends UNIT_VALUE_TYPE> unitValueType);
+    <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IObjectStringConverter<BASE_VALUE_TYPE> unitValueConverter(
+        IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitConverter,
+        Class<? extends UNIT_VALUE_TYPE> unitValueType);
 
-	<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IObjectStringConverter<BASE_VALUE_TYPE> unitValueConverter(
-		IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitConverter,
-		IObjectStringConverter<UNIT_VALUE_TYPE> unitValueConverter);
+    <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IObjectStringConverter<BASE_VALUE_TYPE> unitValueConverter(
+        IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitConverter,
+        IObjectStringConverter<UNIT_VALUE_TYPE> unitValueConverter);
 
-	IObjectStringConverter<IUnit> unitConverter();
+    IObjectStringConverter<IUnit> unitConverter();
 
-	<OBJECT_TYPE> IConverter<OBJECT_TYPE> mapConverter(
-		Map<? extends OBJECT_TYPE, String> objectToString,
-		Map<String, ? extends OBJECT_TYPE> stringToObject,
-		String hint);
+    <OBJECT_TYPE> IConverter<OBJECT_TYPE> mapConverter(
+        Map<? extends OBJECT_TYPE, String> objectToString,
+        Map<String, ? extends OBJECT_TYPE> stringToObject,
+        String hint);
 
-	<OBJECT_TYPE> IObjectStringConverter<OBJECT_TYPE> mapConverter(Map<OBJECT_TYPE, String> objectToString);
+    <OBJECT_TYPE> IObjectStringConverter<OBJECT_TYPE> mapConverter(Map<OBJECT_TYPE, String> objectToString);
 
-	IConverter<String> string();
+    IConverter<String> string();
 
-	IConverter<Long> longNumber();
+    IConverter<Long> longNumber();
 
-	IConverter<Integer> integerNumber();
+    IConverter<Integer> integerNumber();
 
-	IConverter<Short> shortNumber();
+    IConverter<Short> shortNumber();
 
-	IConverter<Boolean> boolLong();
+    IConverter<Boolean> boolLong();
 
-	IConverter<Boolean> boolShort();
+    IConverter<Boolean> boolShort();
 
-	IConverter<Double> doubleNumber();
+    IConverter<Double> doubleNumber();
 
-	IConverter<Double> doubleNumber(final int minFractionDigits, final int maxFractionDigits);
+    IConverter<Double> doubleNumber(final int minFractionDigits, final int maxFractionDigits);
 
-	IConverter<Double> doubleNumber(DecimalFormat decimalFormat, String formatHint);
+    IConverter<Double> doubleNumber(DecimalFormat decimalFormat, String formatHint);
 
-	IConverter<Date> date(DateFormat dateFormat, String formatHint, ITextMask mask);
+    IConverter<Date> date(DateFormat dateFormat, String formatHint, ITextMask mask);
 
-	IConverter<Date> date(DateFormat dateFormat, String formatHint);
+    IConverter<Date> date(DateFormat dateFormat, String formatHint);
 
-	IConverter<Date> date();
+    IConverter<Date> date();
 
-	IConverter<Date> dateTime();
+    IConverter<Date> dateTime();
 
-	IConverter<Date> time();
+    IConverter<Date> time();
 
-	<OBJECT_TYPE> void register(Locale locale, Class<? extends OBJECT_TYPE> type, IConverter<OBJECT_TYPE> converter);
+    <OBJECT_TYPE> void register(Locale locale, Class<? extends OBJECT_TYPE> type, IConverter<OBJECT_TYPE> converter);
 
-	<OBJECT_TYPE> void register(Class<? extends OBJECT_TYPE> type, IConverter<OBJECT_TYPE> converter);
+    <OBJECT_TYPE> void register(Class<? extends OBJECT_TYPE> type, IConverter<OBJECT_TYPE> converter);
 
-	void registerDefaultDateConverter(Locale locale, IConverter<Date> converter);
+    void registerDefaultDateConverter(Locale locale, IConverter<Date> converter);
 
-	void registerDefaultTimeConverter(Locale locale, IConverter<Date> converter);
+    void registerDefaultTimeConverter(Locale locale, IConverter<Date> converter);
 
-	void registerDefaultDateTimeConverter(Locale locale, IConverter<Date> converter);
+    void registerDefaultDateTimeConverter(Locale locale, IConverter<Date> converter);
 
-	void registerDefaultBooleanLongConverter(Locale locale, IConverter<Boolean> converter);
+    void registerDefaultBooleanLongConverter(Locale locale, IConverter<Boolean> converter);
 
-	void registerDefaultBooleanShortConverter(Locale locale, IConverter<Boolean> converter);
+    void registerDefaultBooleanShortConverter(Locale locale, IConverter<Boolean> converter);
 
 }

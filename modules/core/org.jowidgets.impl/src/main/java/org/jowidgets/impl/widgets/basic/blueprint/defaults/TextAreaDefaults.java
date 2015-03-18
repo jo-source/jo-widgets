@@ -32,9 +32,9 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
 public class TextAreaDefaults implements IDefaultInitializer<ITextAreaSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final ITextAreaSetupBuilder<?> builder) {
-		builder.setEditable(true);
-	}
+    @Override
+    public void initialize(final ITextAreaSetupBuilder<?> builder) {
+        builder.setEditable(true);
+    }
 
 }

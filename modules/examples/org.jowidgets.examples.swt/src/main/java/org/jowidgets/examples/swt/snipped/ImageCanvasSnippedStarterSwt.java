@@ -32,11 +32,11 @@ import org.jowidgets.examples.common.snipped.ImageCanvasSnipped;
 
 public final class ImageCanvasSnippedStarterSwt {
 
-	private ImageCanvasSnippedStarterSwt() {}
+    private ImageCanvasSnippedStarterSwt() {}
 
-	public static void main(final String[] args) throws Exception {
-		Toolkit.getApplicationRunner().run(new ImageCanvasSnipped());
-		System.exit(0);
-	}
+    public static void main(final String[] args) throws Exception {
+        Toolkit.getApplicationRunner().run(new ImageCanvasSnipped());
+        System.exit(0);
+    }
 
 }

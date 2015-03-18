@@ -33,22 +33,22 @@ package org.jowidgets.util.context;
  */
 public interface IContextSingletonProvider {
 
-	/**
-	 * Gets a value for a defined context. If not yet exists, it will be created by the given factory
-	 * 
-	 * @param context The context to get the singleton for (must not be null)
-	 * @param factory The factory to create the context with if not exists (must not be null)
-	 * @return The value for the context
-	 */
-	<VALUE_TYPE, CONTEXT_TYPE> VALUE_TYPE get(CONTEXT_TYPE context, IContextSingletonFactory<VALUE_TYPE, CONTEXT_TYPE> factory);
+    /**
+     * Gets a value for a defined context. If not yet exists, it will be created by the given factory
+     * 
+     * @param context The context to get the singleton for (must not be null)
+     * @param factory The factory to create the context with if not exists (must not be null)
+     * @return The value for the context
+     */
+    <VALUE_TYPE, CONTEXT_TYPE> VALUE_TYPE get(CONTEXT_TYPE context, IContextSingletonFactory<VALUE_TYPE, CONTEXT_TYPE> factory);
 
-	/**
-	 * Removes the reference from the provider if one exists.
-	 * 
-	 * REMARK: If get will be invoked after invoking this method, a new instance will created for the context
-	 * 
-	 * @param context The context to remove the reference for
-	 */
-	void removeReference(Object context);
+    /**
+     * Removes the reference from the provider if one exists.
+     * 
+     * REMARK: If get will be invoked after invoking this method, a new instance will created for the context
+     * 
+     * @param context The context to remove the reference for
+     */
+    void removeReference(Object context);
 
 }

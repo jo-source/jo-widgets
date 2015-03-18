@@ -32,8 +32,8 @@ import org.jowidgets.api.widgets.IMenuBar;
 
 public class JoMenuBar extends MenuBar implements IMenuBar {
 
-	public JoMenuBar() {
-		super();
-	}
+    public JoMenuBar() {
+        super();
+    }
 
 }

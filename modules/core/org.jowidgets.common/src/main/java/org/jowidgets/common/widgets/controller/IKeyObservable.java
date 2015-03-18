@@ -30,18 +30,18 @@ package org.jowidgets.common.widgets.controller;
 
 public interface IKeyObservable {
 
-	/**
-	 * Adds a key listener
-	 * 
-	 * @param listener The listener to add
-	 */
-	void addKeyListener(IKeyListener listener);
+    /**
+     * Adds a key listener
+     * 
+     * @param listener The listener to add
+     */
+    void addKeyListener(IKeyListener listener);
 
-	/**
-	 * Removes a key listener
-	 * 
-	 * @param listener The listener to remove
-	 */
-	void removeKeyListener(IKeyListener listener);
+    /**
+     * Removes a key listener
+     * 
+     * @param listener The listener to remove
+     */
+    void removeKeyListener(IKeyListener listener);
 
 }

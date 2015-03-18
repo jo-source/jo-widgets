@@ -38,32 +38,32 @@ import org.jowidgets.impl.model.table.TableModelFactory;
 
 public class ModelFactoryProvider implements IModelFactoryProvider {
 
-	private IItemModelFactory itemModelFactory;
-	private ITableModelFactory tableModelFactory;
-	private ILevelMeterModelFactory levelMeterModelFactory;
+    private IItemModelFactory itemModelFactory;
+    private ITableModelFactory tableModelFactory;
+    private ILevelMeterModelFactory levelMeterModelFactory;
 
-	@Override
-	public IItemModelFactory getItemModelFactory() {
-		if (itemModelFactory == null) {
-			itemModelFactory = new ItemModelFactory();
-		}
-		return itemModelFactory;
-	}
+    @Override
+    public IItemModelFactory getItemModelFactory() {
+        if (itemModelFactory == null) {
+            itemModelFactory = new ItemModelFactory();
+        }
+        return itemModelFactory;
+    }
 
-	@Override
-	public ITableModelFactory getTableModelFactory() {
-		if (tableModelFactory == null) {
-			this.tableModelFactory = new TableModelFactory();
-		}
-		return tableModelFactory;
-	}
+    @Override
+    public ITableModelFactory getTableModelFactory() {
+        if (tableModelFactory == null) {
+            this.tableModelFactory = new TableModelFactory();
+        }
+        return tableModelFactory;
+    }
 
-	@Override
-	public ILevelMeterModelFactory getLevelMeterModelFactory() {
-		if (levelMeterModelFactory == null) {
-			this.levelMeterModelFactory = new LevelMeterModelFactoryImpl();
-		}
-		return levelMeterModelFactory;
-	}
+    @Override
+    public ILevelMeterModelFactory getLevelMeterModelFactory() {
+        if (levelMeterModelFactory == null) {
+            this.levelMeterModelFactory = new LevelMeterModelFactoryImpl();
+        }
+        return levelMeterModelFactory;
+    }
 
 }

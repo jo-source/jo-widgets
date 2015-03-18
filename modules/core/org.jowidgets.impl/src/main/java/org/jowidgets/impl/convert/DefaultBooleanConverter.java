@@ -35,71 +35,71 @@ import org.jowidgets.validation.ValidationResult;
 
 class DefaultBooleanConverter extends AbstractConverter<Boolean> implements IConverter<Boolean> {
 
-	private final String[] trueStrings;
-	private final String[] falseStrings;
-	private final String matchingRegExp;
+    private final String[] trueStrings;
+    private final String[] falseStrings;
+    private final String matchingRegExp;
 
-	private final IValidator<String> stringValidator;
+    private final IValidator<String> stringValidator;
 
-	DefaultBooleanConverter(final String[] trueStrings, final String[] falseStrings, final String matchingRegExp) {
-		super();
-		this.trueStrings = trueStrings;
-		this.falseStrings = falseStrings;
-		this.matchingRegExp = matchingRegExp;
-		this.stringValidator = new IValidator<String>() {
-			@Override
-			public IValidationResult validate(final String input) {
-				if (input != null && !input.isEmpty() && convertToObject(input) == null) {
-					return ValidationResult.error("Must be '" + trueStrings[0] + "' or '" + falseStrings[0] + "'");
-				}
-				return ValidationResult.ok();
-			}
-		};
-	}
+    DefaultBooleanConverter(final String[] trueStrings, final String[] falseStrings, final String matchingRegExp) {
+        super();
+        this.trueStrings = trueStrings;
+        this.falseStrings = falseStrings;
+        this.matchingRegExp = matchingRegExp;
+        this.stringValidator = new IValidator<String>() {
+            @Override
+            public IValidationResult validate(final String input) {
+                if (input != null && !input.isEmpty() && convertToObject(input) == null) {
+                    return ValidationResult.error("Must be '" + trueStrings[0] + "' or '" + falseStrings[0] + "'");
+                }
+                return ValidationResult.ok();
+            }
+        };
+    }
 
-	@Override
-	public Boolean convertToObject(final String string) {
-		if (contains(trueStrings, string)) {
-			return Boolean.valueOf(true);
-		}
-		else if (contains(falseStrings, string)) {
-			return Boolean.valueOf(false);
-		}
-		else {
-			return null;
-		}
-	}
+    @Override
+    public Boolean convertToObject(final String string) {
+        if (contains(trueStrings, string)) {
+            return Boolean.valueOf(true);
+        }
+        else if (contains(falseStrings, string)) {
+            return Boolean.valueOf(false);
+        }
+        else {
+            return null;
+        }
+    }
 
-	@Override
-	public String convertToString(final Boolean value) {
-		if (value != null) {
-			if (value.booleanValue()) {
-				return trueStrings[0];
-			}
-			else {
-				return falseStrings[0];
-			}
-		}
-		return "";
-	}
+    @Override
+    public String convertToString(final Boolean value) {
+        if (value != null) {
+            if (value.booleanValue()) {
+                return trueStrings[0];
+            }
+            else {
+                return falseStrings[0];
+            }
+        }
+        return "";
+    }
 
-	@Override
-	public String getAcceptingRegExp() {
-		return matchingRegExp;
-	}
+    @Override
+    public String getAcceptingRegExp() {
+        return matchingRegExp;
+    }
 
-	@Override
-	public IValidator<String> getStringValidator() {
-		return stringValidator;
-	}
+    @Override
+    public IValidator<String> getStringValidator() {
+        return stringValidator;
+    }
 
-	private boolean contains(final String[] tangas, final String tanga) {
-		for (final String string : tangas) {
-			if (string.equals(tanga)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    private boolean contains(final String[] tangas, final String tanga) {
+        for (final String string : tangas) {
+            if (string.equals(tanga)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

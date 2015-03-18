@@ -57,58 +57,58 @@ import org.jowidgets.impl.spi.blueprint.ITreeBluePrintSpi;
 
 public interface ISpiBluePrintFactory {
 
-	IFrameBluePrintSpi frame();
+    IFrameBluePrintSpi frame();
 
-	IDialogBluePrintSpi dialog();
+    IDialogBluePrintSpi dialog();
 
-	IPopupDialogBluePrintSpi popupDialog();
+    IPopupDialogBluePrintSpi popupDialog();
 
-	IFileChooserBluePrintSpi fileChooser();
+    IFileChooserBluePrintSpi fileChooser();
 
-	IDirectoryChooserBluePrintSpi directoryChooser();
+    IDirectoryChooserBluePrintSpi directoryChooser();
 
-	ICompositeBluePrintSpi composite();
+    ICompositeBluePrintSpi composite();
 
-	IScrollCompositeBluePrintSpi scrollComposite();
+    IScrollCompositeBluePrintSpi scrollComposite();
 
-	ISplitCompositeBluePrintSpi splitComposite();
+    ISplitCompositeBluePrintSpi splitComposite();
 
-	ITextLabelBluePrintSpi textLabel();
+    ITextLabelBluePrintSpi textLabel();
 
-	IIconBluePrintSpi icon();
+    IIconBluePrintSpi icon();
 
-	ISeparatorBluePrintSpi separator();
+    ISeparatorBluePrintSpi separator();
 
-	ITextFieldBluePrintSpi textField();
+    ITextFieldBluePrintSpi textField();
 
-	ITextAreaBluePrintSpi textArea();
+    ITextAreaBluePrintSpi textArea();
 
-	IButtonBluePrintSpi button();
+    IButtonBluePrintSpi button();
 
-	ICheckBoxBluePrintSpi checkBox();
+    ICheckBoxBluePrintSpi checkBox();
 
-	IToggleButtonBluePrintSpi toggleButton();
+    IToggleButtonBluePrintSpi toggleButton();
 
-	IComboBoxBluePrintSpi comboBox();
+    IComboBoxBluePrintSpi comboBox();
 
-	IComboBoxSelectionBluePrintSpi comboBoxSelection();
+    IComboBoxSelectionBluePrintSpi comboBoxSelection();
 
-	IProgressBarBluePrintSpi progressBar();
+    IProgressBarBluePrintSpi progressBar();
 
-	ITabFolderBluePrintSpi tabFolder();
+    ITabFolderBluePrintSpi tabFolder();
 
-	ITabItemBluePrintSpi tabItem();
+    ITabItemBluePrintSpi tabItem();
 
-	IToolBarBluePrintSpi toolBar();
+    IToolBarBluePrintSpi toolBar();
 
-	ITreeBluePrintSpi tree();
+    ITreeBluePrintSpi tree();
 
-	ITableBluePrintSpi table();
+    ITableBluePrintSpi table();
 
-	ICalendarBluePrintSpi calendar();
+    ICalendarBluePrintSpi calendar();
 
-	ISliderBluePrintSpi slider();
+    ISliderBluePrintSpi slider();
 
-	ICanvasBluePrintSpi canvas();
+    ICanvasBluePrintSpi canvas();
 
 }

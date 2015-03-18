@@ -30,8 +30,8 @@ package org.jowidgets.common.graphics;
 
 public enum LineJoin {
 
-	MITER,
-	ROUND,
-	BEVEL;
+    MITER,
+    ROUND,
+    BEVEL;
 
 }

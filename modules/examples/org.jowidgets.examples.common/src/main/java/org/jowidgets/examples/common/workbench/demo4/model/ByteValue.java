@@ -32,33 +32,33 @@ import org.jowidgets.util.Assert;
 
 public final class ByteValue {
 
-	private final ByteUnit unit;
-	private final int value;
+    private final ByteUnit unit;
+    private final int value;
 
-	public ByteValue(final int value, final ByteUnit unit) {
-		Assert.paramNotNull(unit, "unit");
-		this.unit = unit;
-		this.value = value;
-	}
+    public ByteValue(final int value, final ByteUnit unit) {
+        Assert.paramNotNull(unit, "unit");
+        this.unit = unit;
+        this.value = value;
+    }
 
-	public ByteUnit getUnit() {
-		return unit;
-	}
+    public ByteUnit getUnit() {
+        return unit;
+    }
 
-	public int getValue() {
-		return value;
-	}
+    public int getValue() {
+        return value;
+    }
 
-	@Override
-	public String toString() {
-		return value + " " + unit;
-	}
+    @Override
+    public String toString() {
+        return value + " " + unit;
+    }
 
-	public enum ByteUnit {
-		KB,
-		MB,
-		GB,
-		TB;
-	}
+    public enum ByteUnit {
+        KB,
+        MB,
+        GB,
+        TB;
+    }
 
 }

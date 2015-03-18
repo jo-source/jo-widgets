@@ -40,22 +40,22 @@ import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.IComboBoxSelectionSpi;
 
 public class ComboBoxSelectionFactory<VALUE_TYPE> extends AbstractWidgetFactory implements
-		IWidgetFactory<IComboBox<VALUE_TYPE>, IComboBoxSelectionDescriptor<VALUE_TYPE>> {
+        IWidgetFactory<IComboBox<VALUE_TYPE>, IComboBoxSelectionDescriptor<VALUE_TYPE>> {
 
-	public ComboBoxSelectionFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+    public ComboBoxSelectionFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider,
+        final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
-	}
+        super(genericWidgetFactory, widgetsServiceProvider, bpF);
+    }
 
-	@Override
-	public IComboBox<VALUE_TYPE> create(final Object parentUiReference, final IComboBoxSelectionDescriptor<VALUE_TYPE> descriptor) {
-		final IComboBoxSelectionBluePrintSpi bp = getSpiBluePrintFactory().comboBoxSelection().setSetup(descriptor);
-		ComboBoxBuilderConverter.convert(bp, descriptor);
-		final IComboBoxSelectionSpi widget = getSpiWidgetFactory().createComboBoxSelection(parentUiReference, bp);
-		return new ComboBoxSelectionImpl<VALUE_TYPE>(widget, descriptor);
-	}
+    @Override
+    public IComboBox<VALUE_TYPE> create(final Object parentUiReference, final IComboBoxSelectionDescriptor<VALUE_TYPE> descriptor) {
+        final IComboBoxSelectionBluePrintSpi bp = getSpiBluePrintFactory().comboBoxSelection().setSetup(descriptor);
+        ComboBoxBuilderConverter.convert(bp, descriptor);
+        final IComboBoxSelectionSpi widget = getSpiWidgetFactory().createComboBoxSelection(parentUiReference, bp);
+        return new ComboBoxSelectionImpl<VALUE_TYPE>(widget, descriptor);
+    }
 
 }

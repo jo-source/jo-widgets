@@ -39,25 +39,25 @@ import org.jowidgets.unit.api.IUnitSet;
 
 public interface IUnitValueFieldSetup<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> extends IInputComponentSetup<BASE_VALUE_TYPE> {
 
-	@Mandatory
-	IUnitSet getUnitSet();
+    @Mandatory
+    IUnitSet getUnitSet();
 
-	IUnit getDefaultUnit();
+    IUnit getDefaultUnit();
 
-	Map<VirtualKey, IUnit> getUnitKeyMapping();
+    Map<VirtualKey, IUnit> getUnitKeyMapping();
 
-	Integer getUnitComboMinSize();
+    Integer getUnitComboMinSize();
 
-	@Mandatory
-	IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> getUnitConverter();
+    @Mandatory
+    IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> getUnitConverter();
 
-	@Mandatory
-	IInputFieldDescriptor<UNIT_VALUE_TYPE> getUnitValueInputField();
+    @Mandatory
+    IInputFieldDescriptor<UNIT_VALUE_TYPE> getUnitValueInputField();
 
-	Markup getMarkup();
+    Markup getMarkup();
 
-	Integer getFontSize();
+    Integer getFontSize();
 
-	String getFontName();
+    String getFontName();
 
 }

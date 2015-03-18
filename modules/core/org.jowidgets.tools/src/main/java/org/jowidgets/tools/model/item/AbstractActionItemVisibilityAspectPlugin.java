@@ -33,21 +33,21 @@ import org.jowidgets.api.model.item.IActionItemVisibilityAspectPlugin;
 
 public abstract class AbstractActionItemVisibilityAspectPlugin implements IActionItemVisibilityAspectPlugin {
 
-	private IActionItemVisibilityAspect visibilityAspect;
+    private IActionItemVisibilityAspect visibilityAspect;
 
-	/**
-	 * Creates the visibility aspect for the plugin
-	 * 
-	 * @return The visibility aspect, never null
-	 */
-	protected abstract IActionItemVisibilityAspect createVisibilityAspect();
+    /**
+     * Creates the visibility aspect for the plugin
+     * 
+     * @return The visibility aspect, never null
+     */
+    protected abstract IActionItemVisibilityAspect createVisibilityAspect();
 
-	@Override
-	public IActionItemVisibilityAspect getVisibilityAspect() {
-		if (visibilityAspect == null) {
-			visibilityAspect = createVisibilityAspect();
-		}
-		return visibilityAspect;
-	}
+    @Override
+    public IActionItemVisibilityAspect getVisibilityAspect() {
+        if (visibilityAspect == null) {
+            visibilityAspect = createVisibilityAspect();
+        }
+        return visibilityAspect;
+    }
 
 }

@@ -33,16 +33,16 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Event;
 
 interface ISashOrientationUtil {
-	Rectangle createBounds(Rectangle parentArea, int position, int size);
+    Rectangle createBounds(Rectangle parentArea, int position, int size);
 
-	int getPosition(Rectangle control);
+    int getPosition(Rectangle control);
 
-	int getSize(Rectangle control);
+    int getSize(Rectangle control);
 
-	int getSize(Point size);
+    int getSize(Point size);
 
-	int getEventPos(Event event);
+    int getEventPos(Event event);
 
-	int getOrientation();
+    int getOrientation();
 
 }

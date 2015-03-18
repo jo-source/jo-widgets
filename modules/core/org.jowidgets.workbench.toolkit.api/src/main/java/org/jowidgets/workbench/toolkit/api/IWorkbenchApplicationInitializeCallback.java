@@ -32,6 +32,6 @@ import org.jowidgets.workbench.api.IWorkbenchApplicationContext;
 
 public interface IWorkbenchApplicationInitializeCallback {
 
-	void onContextInitialize(IWorkbenchApplicationContext context);
+    void onContextInitialize(IWorkbenchApplicationContext context);
 
 }

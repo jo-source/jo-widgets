@@ -32,8 +32,8 @@ import java.util.Collection;
 
 public interface ITransferableSpi {
 
-	Collection<TransferTypeSpi> getSupportedTypes();
+    Collection<TransferTypeSpi> getSupportedTypes();
 
-	Object getData(TransferTypeSpi type);
+    Object getData(TransferTypeSpi type);
 
 }

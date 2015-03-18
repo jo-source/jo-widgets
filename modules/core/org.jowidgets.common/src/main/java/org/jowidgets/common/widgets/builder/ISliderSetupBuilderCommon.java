@@ -31,28 +31,28 @@ import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.widgets.builder.convenience.ISliderSetupConvenienceCommon;
 
 public interface ISliderSetupBuilderCommon<INSTANCE_TYPE extends ISliderSetupBuilderCommon<?>> extends
-		IComponentSetupBuilderCommon<INSTANCE_TYPE>,
-		ISliderSetupConvenienceCommon<INSTANCE_TYPE> {
+        IComponentSetupBuilderCommon<INSTANCE_TYPE>,
+        ISliderSetupConvenienceCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setToolTipText(String text);
+    INSTANCE_TYPE setToolTipText(String text);
 
-	INSTANCE_TYPE setOrientation(Orientation orientation);
+    INSTANCE_TYPE setOrientation(Orientation orientation);
 
-	INSTANCE_TYPE setMinimum(int minimum);
+    INSTANCE_TYPE setMinimum(int minimum);
 
-	INSTANCE_TYPE setMaximum(int maximum);
+    INSTANCE_TYPE setMaximum(int maximum);
 
-	INSTANCE_TYPE setTickSpacing(int tickSpacing);
+    INSTANCE_TYPE setTickSpacing(int tickSpacing);
 
-	/**
-	 * Sets weather ticks should be rendered or not.
-	 * 
-	 * Remark: This is a hint and will not work on all ui frameworks
-	 * 
-	 * @param renderTicks
-	 * 
-	 * @return This builder
-	 */
-	INSTANCE_TYPE setRenderTicks(boolean renderTicks);
+    /**
+     * Sets weather ticks should be rendered or not.
+     * 
+     * Remark: This is a hint and will not work on all ui frameworks
+     * 
+     * @param renderTicks
+     * 
+     * @return This builder
+     */
+    INSTANCE_TYPE setRenderTicks(boolean renderTicks);
 
 }

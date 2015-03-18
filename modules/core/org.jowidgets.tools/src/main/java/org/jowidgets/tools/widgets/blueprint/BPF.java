@@ -123,656 +123,656 @@ import org.jowidgets.unit.api.IUnitSet;
 
 public final class BPF {
 
-	private BPF() {}
-
-	public static void addDefaultsInitializer(
-		@SuppressWarnings("rawtypes") final Class<? extends ISetupBuilder> setupBuilder,
-		final IDefaultInitializer<?> defaultInitializer) {
-		Toolkit.getBluePrintFactory().addDefaultsInitializer(setupBuilder, defaultInitializer);
-	}
-
-	public static <WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends ISetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
-		final Class<BLUE_PRINT_TYPE> bluePrintType) {
-		return Toolkit.getBluePrintFactory().bluePrint(bluePrintType);
-	}
-
-	public static IFrameBluePrint frame() {
-		return Toolkit.getBluePrintFactory().frame();
-	}
-
-	public static IDialogBluePrint dialog() {
-		return Toolkit.getBluePrintFactory().dialog();
-	}
-
-	public static IPopupDialogBluePrint popupDialog() {
-		return Toolkit.getBluePrintFactory().popupDialog();
-	}
-
-	public static IFileChooserBluePrint fileChooser(final FileChooserType type) {
-		return Toolkit.getBluePrintFactory().fileChooser(type);
-	}
-
-	public static IDirectoryChooserBluePrint directoryChooser() {
-		return Toolkit.getBluePrintFactory().directoryChooser();
-	}
-
-	public static ICompositeBluePrint composite() {
-		return Toolkit.getBluePrintFactory().composite();
-	}
-
-	public static IScrollCompositeBluePrint scrollComposite() {
-		return Toolkit.getBluePrintFactory().scrollComposite();
-	}
-
-	public static ISplitCompositeBluePrint splitComposite() {
-		return Toolkit.getBluePrintFactory().splitComposite();
-	}
-
-	public static ITextLabelBluePrint textLabel() {
-		return Toolkit.getBluePrintFactory().textLabel();
-	}
-
-	public static IIconBluePrint icon() {
-		return Toolkit.getBluePrintFactory().icon();
-	}
-
-	public static ISeparatorBluePrint separator() {
-		return Toolkit.getBluePrintFactory().separator();
-	}
-
-	public static ITextFieldBluePrint textField() {
-		return Toolkit.getBluePrintFactory().textField();
-	}
-
-	public static ITextAreaBluePrint textArea() {
-		return Toolkit.getBluePrintFactory().textArea();
-	}
-
-	public static IButtonBluePrint button() {
-		return Toolkit.getBluePrintFactory().button();
-	}
-
-	public static IButtonBluePrint buttonOk() {
-		return Toolkit.getBluePrintFactory().buttonOk();
-	}
-
-	public static IButtonBluePrint buttonClose() {
-		return Toolkit.getBluePrintFactory().buttonClose();
-	}
-
-	public static IButtonBluePrint buttonDetails() {
-		return Toolkit.getBluePrintFactory().buttonDetails();
-	}
-
-	public static IButtonBluePrint buttonCancel() {
-		return Toolkit.getBluePrintFactory().buttonCancel();
-	}
-
-	public static IButtonBluePrint buttonSave() {
-		return Toolkit.getBluePrintFactory().buttonSave();
-	}
-
-	public static ICheckBoxBluePrint checkBox() {
-		return Toolkit.getBluePrintFactory().checkBox();
-	}
-
-	public static IToggleButtonBluePrint toggleButton() {
-		return Toolkit.getBluePrintFactory().toggleButton();
-	}
-
-	public static <INPUT_TYPE> IComboBoxBluePrint<INPUT_TYPE> comboBox(final IConverter<INPUT_TYPE> converter) {
-		return Toolkit.getBluePrintFactory().comboBox(converter);
-	}
-
-	public static <INPUT_TYPE> IComboBoxSelectionBluePrint<INPUT_TYPE> comboBoxSelection(
-		final IObjectStringConverter<INPUT_TYPE> objectStringConverter) {
-		return Toolkit.getBluePrintFactory().comboBoxSelection(objectStringConverter);
-	}
-
-	public static IActionMenuItemBluePrint menuItem() {
-		return Toolkit.getBluePrintFactory().menuItem();
-	}
-
-	public static IRadioMenuItemBluePrint radioMenuItem() {
-		return Toolkit.getBluePrintFactory().radioMenuItem();
-	}
-
-	public static ICheckedMenuItemBluePrint checkedMenuItem() {
-		return Toolkit.getBluePrintFactory().checkedMenuItem();
-	}
-
-	public static ISubMenuBluePrint subMenu() {
-		return Toolkit.getBluePrintFactory().subMenu();
-	}
-
-	public static IMainMenuBluePrint mainMenu() {
-		return Toolkit.getBluePrintFactory().mainMenu();
-	}
-
-	public static ISeparatorMenuItemBluePrint menuSeparator() {
-		return Toolkit.getBluePrintFactory().menuSeparator();
-	}
-
-	public static ISeparatorToolBarItemBluePrint toolBarSeparator() {
-		return Toolkit.getBluePrintFactory().toolBarSeparator();
-	}
-
-	public static IToolBarBluePrint toolBar() {
-		return Toolkit.getBluePrintFactory().toolBar();
-	}
-
-	public static IToolBarButtonBluePrint toolBarButton() {
-		return Toolkit.getBluePrintFactory().toolBarButton();
-	}
-
-	public static IToolBarToggleButtonBluePrint toolBarToggleButton() {
-		return Toolkit.getBluePrintFactory().toolBarToggleButton();
-	}
-
-	public static IToolBarPopupButtonBluePrint toolBarPopupButton() {
-		return Toolkit.getBluePrintFactory().toolBarPopupButton();
-	}
-
-	public static IToolBarMenuBluePrint toolBarMenu() {
-		return Toolkit.getBluePrintFactory().toolBarMenu();
-	}
-
-	public static IToolBarContainerItemBluePrint toolBarContainerItem() {
-		return Toolkit.getBluePrintFactory().toolBarContainerItem();
-	}
-
-	public static ITabFolderBluePrint tabFolder() {
-		return Toolkit.getBluePrintFactory().tabFolder();
-	}
-
-	public static ITabItemBluePrint tabItem() {
-		return Toolkit.getBluePrintFactory().tabItem();
-	}
-
-	public static ITreeBluePrint tree() {
-		return Toolkit.getBluePrintFactory().tree();
-	}
-
-	public static <ROOT_NODE_VALUE_TYPE> ITreeViewerBluePrint<ROOT_NODE_VALUE_TYPE> treeViewer(
-		final ITreeNodeModel<ROOT_NODE_VALUE_TYPE> model) {
-		return Toolkit.getBluePrintFactory().treeViewer(model);
-	}
-
-	public static ITreeNodeBluePrint treeNode() {
-		return Toolkit.getBluePrintFactory().treeNode();
-	}
-
-	public static ITableBluePrint table(final ITableModel model) {
-		return Toolkit.getBluePrintFactory().table(model);
-	}
-
-	public static ITableBluePrint table(final ITableColumnModel columnModel, final ITableDataModel dataModel) {
-		return Toolkit.getBluePrintFactory().table(columnModel, dataModel);
-	}
-
-	public static ICalendarBluePrint calendar() {
-		return Toolkit.getBluePrintFactory().calendar();
-	}
-
-	public static ISliderBluePrint slider() {
-		return Toolkit.getBluePrintFactory().slider();
-	}
-
-	public static ILabelBluePrint label() {
-		return Toolkit.getBluePrintFactory().label();
-	}
-
-	public static ITextSeparatorBluePrint textSeparator() {
-		return Toolkit.getBluePrintFactory().textSeparator();
-	}
-
-	public static IInputComponentValidationLabelBluePrint inputComponentValidationLabel(final IInputComponent<?> inputComponent) {
-		return Toolkit.getBluePrintFactory().inputComponentValidationLabel(inputComponent);
-	}
-
-	public static IInputComponentValidationLabelBluePrint inputComponentValidationLabel() {
-		return Toolkit.getBluePrintFactory().inputComponentValidationLabel();
-	}
-
-	public static IValidationResultLabelBluePrint validationResultLabel() {
-		return Toolkit.getBluePrintFactory().validationResultLabel();
-	}
-
-	public static <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IConverter<INPUT_TYPE> converter) {
-		return Toolkit.getBluePrintFactory().inputField(converter);
-	}
-
-	public static <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IObjectStringConverter<INPUT_TYPE> converter) {
-		return Toolkit.getBluePrintFactory().inputField(converter);
-	}
-
-	public static <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField() {
-		return Toolkit.getBluePrintFactory().inputField();
-	}
-
-	public static <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField() {
-		return Toolkit.getBluePrintFactory().unitValueField();
-	}
-
-	public static <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
-		final Class<? extends UNIT_VALUE_TYPE> inputFieldType) {
-		return Toolkit.getBluePrintFactory().unitValueField(inputFieldType);
-	}
-
-	public static <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
-		final IUnitSet unitSet,
-		final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter,
-		final IInputFieldDescriptor<UNIT_VALUE_TYPE> inputField) {
-		return Toolkit.getBluePrintFactory().unitValueField(unitSet, converter, inputField);
-	}
-
-	public static <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
-		final IUnitSet unitSet,
-		final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter,
-		final Class<? extends UNIT_VALUE_TYPE> inputFieldType) {
-		return Toolkit.getBluePrintFactory().unitValueField(unitSet, converter, inputFieldType);
-	}
-
-	public static IMessageDialogBluePrint messageDialog() {
-		return Toolkit.getBluePrintFactory().messageDialog();
-	}
-
-	public static IQuestionDialogBluePrint questionDialog() {
-		return Toolkit.getBluePrintFactory().questionDialog();
-	}
-
-	public static IProgressBarBluePrint progressBar() {
-		return Toolkit.getBluePrintFactory().progressBar();
-	}
-
-	public static <INPUT_TYPE> IInputDialogBluePrint<INPUT_TYPE> inputDialog(final IInputContentCreator<INPUT_TYPE> contentCreator) {
-		return Toolkit.getBluePrintFactory().inputDialog(contentCreator);
-	}
-
-	public static <INPUT_TYPE> IInputCompositeBluePrint<INPUT_TYPE> inputComposite(
-		final IInputContentCreator<INPUT_TYPE> contentCreator) {
-		return Toolkit.getBluePrintFactory().inputComposite(contentCreator);
-	}
-
-	public static ILoginDialogBluePrint loginDialog(final ILoginInterceptor interceptor) {
-		return Toolkit.getBluePrintFactory().loginDialog(interceptor);
-	}
-
-	public static IPasswordChangeDialogBluePrint passwordChangeDialog(final IPasswordChangeExecutor executor) {
-		return Toolkit.getBluePrintFactory().passwordChangeDialog(executor);
-	}
-
-	public static <ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(
-		final ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> widgetCreator) {
-		return Toolkit.getBluePrintFactory().collectionInputControl(widgetCreator);
-	}
-
-	public static <ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
-		final ICollectionInputControlSetup<ELEMENT_TYPE> setup) {
-		return Toolkit.getBluePrintFactory().collectionInputDialog(setup);
-	}
-
-	public static <ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField(
-		final IConverter<ELEMENT_TYPE> converter) {
-		return Toolkit.getBluePrintFactory().collectionInputField(converter);
-	}
-
-	public static <ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField(
-		final IObjectStringConverter<ELEMENT_TYPE> converter) {
-		return Toolkit.getBluePrintFactory().collectionInputField(converter);
-	}
-
-	public static <ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField() {
-		return Toolkit.getBluePrintFactory().collectionInputField();
-	}
-
-	public static <ELEMENT_TYPE> ICombinedCollectionInputFieldBluePrint<ELEMENT_TYPE> combinedCollectionInputField(
-		final ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> elementTypeCreator,
-		final ICustomWidgetCreator<IInputControl<? extends Collection<ELEMENT_TYPE>>> collectionTypeCreator) {
-		return Toolkit.getBluePrintFactory().combinedCollectionInputField(elementTypeCreator, collectionTypeCreator);
-	}
-
-	public static IInputFieldBluePrint<String> inputFieldString() {
-		return Toolkit.getBluePrintFactory().inputFieldString();
-	}
-
-	public static IInputFieldBluePrint<Long> inputFieldLongNumber() {
-		return Toolkit.getBluePrintFactory().inputFieldLongNumber();
-	}
-
-	public static IInputFieldBluePrint<Integer> inputFieldIntegerNumber() {
-		return Toolkit.getBluePrintFactory().inputFieldIntegerNumber();
-	}
-
-	public static IInputFieldBluePrint<Short> inputFieldShortNumber() {
-		return Toolkit.getBluePrintFactory().inputFieldShortNumber();
-	}
-
-	public static IInputFieldBluePrint<Double> inputFieldDoubleNumber() {
-		return Toolkit.getBluePrintFactory().inputFieldDoubleNumber();
-	}
-
-	public static IInputFieldBluePrint<Double> inputFieldDoubleNumber(final int minFractionDigits, final int maxFractionDigits) {
-		return Toolkit.getBluePrintFactory().inputFieldDoubleNumber(minFractionDigits, maxFractionDigits);
-	}
-
-	public static IInputFieldBluePrint<Date> inputFieldDate(
-		final DateFormat dateFormat,
-		final String formatHint,
-		final ITextMask mask) {
-		return Toolkit.getBluePrintFactory().inputFieldDate(dateFormat, formatHint, mask);
-	}
-
-	public static IInputFieldBluePrint<Date> inputFieldDate(final DateFormat dateFormat, final String formatHint) {
-		return Toolkit.getBluePrintFactory().inputFieldDate(dateFormat, formatHint);
-	}
-
-	public static IInputFieldBluePrint<Date> inputFieldDate() {
-		return Toolkit.getBluePrintFactory().inputFieldDate();
-	}
-
-	public static IInputFieldBluePrint<Date> inputFieldDateTime() {
-		return Toolkit.getBluePrintFactory().inputFieldDateTime();
-	}
-
-	public static IInputFieldBluePrint<Date> inputFieldTime() {
-		return Toolkit.getBluePrintFactory().inputFieldTime();
-	}
-
-	public static ILabelBluePrint label(final IImageConstant icon) {
-		return Toolkit.getBluePrintFactory().label(icon);
-	}
-
-	public static ILabelBluePrint label(final IImageConstant icon, final String text) {
-		return Toolkit.getBluePrintFactory().label(icon, text);
-	}
-
-	public static ILabelBluePrint label(final IImageConstant icon, final String text, final String toolTiptext) {
-		return Toolkit.getBluePrintFactory().label(icon, text, toolTiptext);
-	}
-
-	public static ITextSeparatorBluePrint textSeparator(final String text) {
-		return Toolkit.getBluePrintFactory().textSeparator(text);
-	}
-
-	public static ITextSeparatorBluePrint textSeparator(final String text, final String tooltipText) {
-		return Toolkit.getBluePrintFactory().textSeparator(text, tooltipText);
-	}
-
-	public static IQuestionDialogBluePrint yesNoQuestion() {
-		return Toolkit.getBluePrintFactory().yesNoQuestion();
-	}
-
-	public static IQuestionDialogBluePrint yesNoCancelQuestion() {
-		return Toolkit.getBluePrintFactory().yesNoCancelQuestion();
-	}
-
-	public static IQuestionDialogBluePrint yesNoQuestion(final String question) {
-		return Toolkit.getBluePrintFactory().yesNoQuestion(question);
-	}
-
-	public static IQuestionDialogBluePrint yesNoCancelQuestion(final String question) {
-		return Toolkit.getBluePrintFactory().yesNoCancelQuestion(question);
-	}
-
-	public static IMessageDialogBluePrint infoDialog() {
-		return Toolkit.getBluePrintFactory().infoDialog();
-	}
-
-	public static IMessageDialogBluePrint warningDialog() {
-		return Toolkit.getBluePrintFactory().warningDialog();
-	}
-
-	public static IMessageDialogBluePrint errorDialog() {
-		return Toolkit.getBluePrintFactory().errorDialog();
-	}
-
-	public static IMessageDialogBluePrint infoDialog(final String message) {
-		return Toolkit.getBluePrintFactory().infoDialog(message);
-	}
-
-	public static IMessageDialogBluePrint warningDialog(final String message) {
-		return Toolkit.getBluePrintFactory().warningDialog(message);
-	}
-
-	public static IMessageDialogBluePrint errorDialog(final String message) {
-		return Toolkit.getBluePrintFactory().errorDialog(message);
-	}
-
-	public static IProgressBarBluePrint progressBar(final int minimum, final int maximum) {
-		return Toolkit.getBluePrintFactory().progressBar(minimum, maximum);
-	}
-
-	public static IProgressBarBluePrint progressBar(final int maximum) {
-		return Toolkit.getBluePrintFactory().progressBar(maximum);
-	}
-
-	public static <ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(
-		final IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>> descriptor) {
-		return Toolkit.getBluePrintFactory().collectionInputControl(descriptor);
-	}
-
-	public static <ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
-		final ICustomWidgetCreator<? extends IInputControl<ELEMENT_TYPE>> widgetCreator) {
-		return Toolkit.getBluePrintFactory().collectionInputDialog(widgetCreator);
-	}
-
-	public static <ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
-		final IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>> descriptor) {
-		return Toolkit.getBluePrintFactory().collectionInputDialog(descriptor);
-	}
-
-	public static IFrameBluePrint frame(final String title) {
-		return Toolkit.getBluePrintFactory().frame(title);
-	}
-
-	public static IFrameBluePrint frame(final String title, final IImageConstant icon) {
-		return Toolkit.getBluePrintFactory().frame(title, icon);
-	}
-
-	public static IDialogBluePrint dialog(final String title) {
-		return Toolkit.getBluePrintFactory().dialog(title);
-	}
-
-	public static IDialogBluePrint dialog(final String title, final IImageConstant icon) {
-		return Toolkit.getBluePrintFactory().dialog(title, icon);
-	}
-
-	public static ICompositeBluePrint compositeWithBorder() {
-		return Toolkit.getBluePrintFactory().compositeWithBorder();
-	}
-
-	public static ICompositeBluePrint composite(final String borderTitle) {
-		return Toolkit.getBluePrintFactory().composite(borderTitle);
-	}
-
-	public static IScrollCompositeBluePrint scrollCompositeWithBorder() {
-		return Toolkit.getBluePrintFactory().scrollCompositeWithBorder();
-	}
-
-	public static IScrollCompositeBluePrint scrollComposite(final String borderTitle) {
-		return Toolkit.getBluePrintFactory().scrollComposite(borderTitle);
-	}
-
-	public static ISplitCompositeBluePrint splitHorizontal() {
-		return Toolkit.getBluePrintFactory().splitHorizontal();
-	}
-
-	public static ISplitCompositeBluePrint splitVertical() {
-		return Toolkit.getBluePrintFactory().splitVertical();
-	}
-
-	public static IButtonBluePrint button(final String text) {
-		return Toolkit.getBluePrintFactory().button(text);
-	}
-
-	public static IButtonBluePrint button(final String text, final String toolTipText) {
-		return Toolkit.getBluePrintFactory().button(text, toolTipText);
-	}
-
-	public static IIconBluePrint icon(final IImageConstant icon) {
-		return Toolkit.getBluePrintFactory().icon(icon);
-	}
-
-	public static ITextLabelBluePrint textLabel(final String text) {
-		return Toolkit.getBluePrintFactory().textLabel(text);
-	}
-
-	public static ITextLabelBluePrint textLabel(final String text, final String tooltipText) {
-		return Toolkit.getBluePrintFactory().textLabel(text, tooltipText);
-	}
-
-	public static IComboBoxBluePrint<String> comboBox() {
-		return Toolkit.getBluePrintFactory().comboBox();
-	}
-
-	public static IComboBoxBluePrint<String> comboBox(final String... elements) {
-		return Toolkit.getBluePrintFactory().comboBox(elements);
-	}
-
-	public static IComboBoxBluePrint<String> comboBox(final List<String> elements) {
-		return Toolkit.getBluePrintFactory().comboBox(elements);
-	}
-
-	public static IComboBoxBluePrint<String> comboBoxString() {
-		return Toolkit.getBluePrintFactory().comboBoxString();
-	}
-
-	public static IComboBoxBluePrint<Long> comboBoxLongNumber() {
-		return Toolkit.getBluePrintFactory().comboBoxLongNumber();
-	}
-
-	public static IComboBoxBluePrint<Integer> comboBoxIntegerNumber() {
-		return Toolkit.getBluePrintFactory().comboBoxIntegerNumber();
-	}
-
-	public static IComboBoxBluePrint<Short> comboBoxShortNumber() {
-		return Toolkit.getBluePrintFactory().comboBoxShortNumber();
-	}
-
-	public static IComboBoxSelectionBluePrint<String> comboBoxSelection() {
-		return Toolkit.getBluePrintFactory().comboBoxSelection();
-	}
-
-	public static IComboBoxSelectionBluePrint<String> comboBoxSelection(final String... elements) {
-		return Toolkit.getBluePrintFactory().comboBoxSelection(elements);
-	}
-
-	public static IComboBoxSelectionBluePrint<String> comboBoxSelection(final List<String> elements) {
-		return Toolkit.getBluePrintFactory().comboBoxSelection(elements);
-	}
-
-	public static <ENUM_TYPE extends Enum<?>> IComboBoxSelectionBluePrint<ENUM_TYPE> comboBoxSelection(
-		final ENUM_TYPE... enumValues) {
-		return Toolkit.getBluePrintFactory().comboBoxSelection(enumValues);
-	}
-
-	public static <VALUE_TYPE> IComboBoxSelectionBluePrint<VALUE_TYPE> comboBoxSelection(final Collection<VALUE_TYPE> elements) {
-		return Toolkit.getBluePrintFactory().comboBoxSelection(elements);
-	}
-
-	public static IComboBoxSelectionBluePrint<IUnit> comboBoxSelection(final IUnitSet unitSet) {
-		return Toolkit.getBluePrintFactory().comboBoxSelection(unitSet);
-	}
-
-	public static IComboBoxSelectionBluePrint<String> comboBoxSelectionString() {
-		return Toolkit.getBluePrintFactory().comboBoxSelectionString();
-	}
-
-	public static IComboBoxSelectionBluePrint<Long> comboBoxSelectionLongNumber() {
-		return Toolkit.getBluePrintFactory().comboBoxSelectionLongNumber();
-	}
-
-	public static IComboBoxSelectionBluePrint<Integer> comboBoxSelectionIntegerNumber() {
-		return Toolkit.getBluePrintFactory().comboBoxSelectionIntegerNumber();
-	}
-
-	public static IComboBoxSelectionBluePrint<Short> comboBoxSelectionShortNumber() {
-		return Toolkit.getBluePrintFactory().comboBoxSelectionShortNumber();
-	}
-
-	public static IComboBoxSelectionBluePrint<Boolean> comboBoxSelectionBoolean() {
-		return Toolkit.getBluePrintFactory().comboBoxSelectionBoolean();
-	}
-
-	public static IActionMenuItemBluePrint menuItem(final String text) {
-		return Toolkit.getBluePrintFactory().menuItem(text);
-	}
-
-	public static IRadioMenuItemBluePrint radioMenuItem(final String text) {
-		return Toolkit.getBluePrintFactory().radioMenuItem(text);
-	}
-
-	public static ICheckedMenuItemBluePrint checkedMenuItem(final String text) {
-		return Toolkit.getBluePrintFactory().checkedMenuItem(text);
-	}
-
-	public static ISubMenuBluePrint subMenu(final String text) {
-		return Toolkit.getBluePrintFactory().subMenu(text);
-	}
-
-	public static IMainMenuBluePrint mainMenu(final String text) {
-		return Toolkit.getBluePrintFactory().mainMenu(text);
-	}
-
-	public static IExpandCompositeBluePrint expandComposite() {
-		return Toolkit.getBluePrintFactory().expandComposite();
-	}
-
-	public static ICanvasBluePrint canvas() {
-		return Toolkit.getBluePrintFactory().canvas();
-	}
-
-	public static ILevelMeterBluePrint levelMeter(final ILevelMeterModel model) {
-		return Toolkit.getBluePrintFactory().levelMeter(model);
-	}
-
-	public static <VALUE_TYPE> ISliderViewerBluePrint<VALUE_TYPE> sliderViewer() {
-		return Toolkit.getBluePrintFactory().sliderViewer();
-	}
-
-	public static <VALUE_TYPE> ISliderViewerBluePrint<VALUE_TYPE> sliderViewer(final ISliderViewerConverter<VALUE_TYPE> converter) {
-		return Toolkit.getBluePrintFactory().sliderViewer(converter);
-	}
-
-	public static ISliderViewerBluePrint<Double> sliderViewerDouble() {
-		return Toolkit.getBluePrintFactory().sliderViewerDouble();
-	}
-
-	public static ISliderViewerBluePrint<Double> sliderViewerDouble(final double max) {
-		return Toolkit.getBluePrintFactory().sliderViewerDouble(max);
-	}
-
-	public static ISliderViewerBluePrint<Double> sliderViewerDouble(final double min, final double max) {
-		return Toolkit.getBluePrintFactory().sliderViewerDouble(min, max);
-	}
-
-	public static ISliderViewerBluePrint<Float> sliderViewerFloat() {
-		return Toolkit.getBluePrintFactory().sliderViewerFloat();
-	}
-
-	public static ISliderViewerBluePrint<Float> sliderViewerFloat(final float max) {
-		return Toolkit.getBluePrintFactory().sliderViewerFloat(max);
-	}
-
-	public static ISliderViewerBluePrint<Float> sliderViewerFloat(final float min, final float max) {
-		return Toolkit.getBluePrintFactory().sliderViewerFloat(min, max);
-	}
-
-	public static ISliderViewerBluePrint<Integer> sliderViewerInteger(final int max) {
-		return Toolkit.getBluePrintFactory().sliderViewerInteger(max);
-	}
-
-	public static ISliderViewerBluePrint<Integer> sliderViewerInteger(final int min, final int max) {
-		return Toolkit.getBluePrintFactory().sliderViewerInteger(min, max);
-	}
-
-	public static ISliderViewerBluePrint<Long> sliderViewerLong(final long max) {
-		return Toolkit.getBluePrintFactory().sliderViewerLong(max);
-	}
-
-	public static ISliderViewerBluePrint<Long> sliderViewerLong(final long min, final long max) {
-		return Toolkit.getBluePrintFactory().sliderViewerLong(min, max);
-	}
+    private BPF() {}
+
+    public static void addDefaultsInitializer(
+        @SuppressWarnings("rawtypes") final Class<? extends ISetupBuilder> setupBuilder,
+        final IDefaultInitializer<?> defaultInitializer) {
+        Toolkit.getBluePrintFactory().addDefaultsInitializer(setupBuilder, defaultInitializer);
+    }
+
+    public static <WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends ISetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
+        final Class<BLUE_PRINT_TYPE> bluePrintType) {
+        return Toolkit.getBluePrintFactory().bluePrint(bluePrintType);
+    }
+
+    public static IFrameBluePrint frame() {
+        return Toolkit.getBluePrintFactory().frame();
+    }
+
+    public static IDialogBluePrint dialog() {
+        return Toolkit.getBluePrintFactory().dialog();
+    }
+
+    public static IPopupDialogBluePrint popupDialog() {
+        return Toolkit.getBluePrintFactory().popupDialog();
+    }
+
+    public static IFileChooserBluePrint fileChooser(final FileChooserType type) {
+        return Toolkit.getBluePrintFactory().fileChooser(type);
+    }
+
+    public static IDirectoryChooserBluePrint directoryChooser() {
+        return Toolkit.getBluePrintFactory().directoryChooser();
+    }
+
+    public static ICompositeBluePrint composite() {
+        return Toolkit.getBluePrintFactory().composite();
+    }
+
+    public static IScrollCompositeBluePrint scrollComposite() {
+        return Toolkit.getBluePrintFactory().scrollComposite();
+    }
+
+    public static ISplitCompositeBluePrint splitComposite() {
+        return Toolkit.getBluePrintFactory().splitComposite();
+    }
+
+    public static ITextLabelBluePrint textLabel() {
+        return Toolkit.getBluePrintFactory().textLabel();
+    }
+
+    public static IIconBluePrint icon() {
+        return Toolkit.getBluePrintFactory().icon();
+    }
+
+    public static ISeparatorBluePrint separator() {
+        return Toolkit.getBluePrintFactory().separator();
+    }
+
+    public static ITextFieldBluePrint textField() {
+        return Toolkit.getBluePrintFactory().textField();
+    }
+
+    public static ITextAreaBluePrint textArea() {
+        return Toolkit.getBluePrintFactory().textArea();
+    }
+
+    public static IButtonBluePrint button() {
+        return Toolkit.getBluePrintFactory().button();
+    }
+
+    public static IButtonBluePrint buttonOk() {
+        return Toolkit.getBluePrintFactory().buttonOk();
+    }
+
+    public static IButtonBluePrint buttonClose() {
+        return Toolkit.getBluePrintFactory().buttonClose();
+    }
+
+    public static IButtonBluePrint buttonDetails() {
+        return Toolkit.getBluePrintFactory().buttonDetails();
+    }
+
+    public static IButtonBluePrint buttonCancel() {
+        return Toolkit.getBluePrintFactory().buttonCancel();
+    }
+
+    public static IButtonBluePrint buttonSave() {
+        return Toolkit.getBluePrintFactory().buttonSave();
+    }
+
+    public static ICheckBoxBluePrint checkBox() {
+        return Toolkit.getBluePrintFactory().checkBox();
+    }
+
+    public static IToggleButtonBluePrint toggleButton() {
+        return Toolkit.getBluePrintFactory().toggleButton();
+    }
+
+    public static <INPUT_TYPE> IComboBoxBluePrint<INPUT_TYPE> comboBox(final IConverter<INPUT_TYPE> converter) {
+        return Toolkit.getBluePrintFactory().comboBox(converter);
+    }
+
+    public static <INPUT_TYPE> IComboBoxSelectionBluePrint<INPUT_TYPE> comboBoxSelection(
+        final IObjectStringConverter<INPUT_TYPE> objectStringConverter) {
+        return Toolkit.getBluePrintFactory().comboBoxSelection(objectStringConverter);
+    }
+
+    public static IActionMenuItemBluePrint menuItem() {
+        return Toolkit.getBluePrintFactory().menuItem();
+    }
+
+    public static IRadioMenuItemBluePrint radioMenuItem() {
+        return Toolkit.getBluePrintFactory().radioMenuItem();
+    }
+
+    public static ICheckedMenuItemBluePrint checkedMenuItem() {
+        return Toolkit.getBluePrintFactory().checkedMenuItem();
+    }
+
+    public static ISubMenuBluePrint subMenu() {
+        return Toolkit.getBluePrintFactory().subMenu();
+    }
+
+    public static IMainMenuBluePrint mainMenu() {
+        return Toolkit.getBluePrintFactory().mainMenu();
+    }
+
+    public static ISeparatorMenuItemBluePrint menuSeparator() {
+        return Toolkit.getBluePrintFactory().menuSeparator();
+    }
+
+    public static ISeparatorToolBarItemBluePrint toolBarSeparator() {
+        return Toolkit.getBluePrintFactory().toolBarSeparator();
+    }
+
+    public static IToolBarBluePrint toolBar() {
+        return Toolkit.getBluePrintFactory().toolBar();
+    }
+
+    public static IToolBarButtonBluePrint toolBarButton() {
+        return Toolkit.getBluePrintFactory().toolBarButton();
+    }
+
+    public static IToolBarToggleButtonBluePrint toolBarToggleButton() {
+        return Toolkit.getBluePrintFactory().toolBarToggleButton();
+    }
+
+    public static IToolBarPopupButtonBluePrint toolBarPopupButton() {
+        return Toolkit.getBluePrintFactory().toolBarPopupButton();
+    }
+
+    public static IToolBarMenuBluePrint toolBarMenu() {
+        return Toolkit.getBluePrintFactory().toolBarMenu();
+    }
+
+    public static IToolBarContainerItemBluePrint toolBarContainerItem() {
+        return Toolkit.getBluePrintFactory().toolBarContainerItem();
+    }
+
+    public static ITabFolderBluePrint tabFolder() {
+        return Toolkit.getBluePrintFactory().tabFolder();
+    }
+
+    public static ITabItemBluePrint tabItem() {
+        return Toolkit.getBluePrintFactory().tabItem();
+    }
+
+    public static ITreeBluePrint tree() {
+        return Toolkit.getBluePrintFactory().tree();
+    }
+
+    public static <ROOT_NODE_VALUE_TYPE> ITreeViewerBluePrint<ROOT_NODE_VALUE_TYPE> treeViewer(
+        final ITreeNodeModel<ROOT_NODE_VALUE_TYPE> model) {
+        return Toolkit.getBluePrintFactory().treeViewer(model);
+    }
+
+    public static ITreeNodeBluePrint treeNode() {
+        return Toolkit.getBluePrintFactory().treeNode();
+    }
+
+    public static ITableBluePrint table(final ITableModel model) {
+        return Toolkit.getBluePrintFactory().table(model);
+    }
+
+    public static ITableBluePrint table(final ITableColumnModel columnModel, final ITableDataModel dataModel) {
+        return Toolkit.getBluePrintFactory().table(columnModel, dataModel);
+    }
+
+    public static ICalendarBluePrint calendar() {
+        return Toolkit.getBluePrintFactory().calendar();
+    }
+
+    public static ISliderBluePrint slider() {
+        return Toolkit.getBluePrintFactory().slider();
+    }
+
+    public static ILabelBluePrint label() {
+        return Toolkit.getBluePrintFactory().label();
+    }
+
+    public static ITextSeparatorBluePrint textSeparator() {
+        return Toolkit.getBluePrintFactory().textSeparator();
+    }
+
+    public static IInputComponentValidationLabelBluePrint inputComponentValidationLabel(final IInputComponent<?> inputComponent) {
+        return Toolkit.getBluePrintFactory().inputComponentValidationLabel(inputComponent);
+    }
+
+    public static IInputComponentValidationLabelBluePrint inputComponentValidationLabel() {
+        return Toolkit.getBluePrintFactory().inputComponentValidationLabel();
+    }
+
+    public static IValidationResultLabelBluePrint validationResultLabel() {
+        return Toolkit.getBluePrintFactory().validationResultLabel();
+    }
+
+    public static <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IConverter<INPUT_TYPE> converter) {
+        return Toolkit.getBluePrintFactory().inputField(converter);
+    }
+
+    public static <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IObjectStringConverter<INPUT_TYPE> converter) {
+        return Toolkit.getBluePrintFactory().inputField(converter);
+    }
+
+    public static <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField() {
+        return Toolkit.getBluePrintFactory().inputField();
+    }
+
+    public static <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField() {
+        return Toolkit.getBluePrintFactory().unitValueField();
+    }
+
+    public static <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
+        final Class<? extends UNIT_VALUE_TYPE> inputFieldType) {
+        return Toolkit.getBluePrintFactory().unitValueField(inputFieldType);
+    }
+
+    public static <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
+        final IUnitSet unitSet,
+        final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter,
+        final IInputFieldDescriptor<UNIT_VALUE_TYPE> inputField) {
+        return Toolkit.getBluePrintFactory().unitValueField(unitSet, converter, inputField);
+    }
+
+    public static <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
+        final IUnitSet unitSet,
+        final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter,
+        final Class<? extends UNIT_VALUE_TYPE> inputFieldType) {
+        return Toolkit.getBluePrintFactory().unitValueField(unitSet, converter, inputFieldType);
+    }
+
+    public static IMessageDialogBluePrint messageDialog() {
+        return Toolkit.getBluePrintFactory().messageDialog();
+    }
+
+    public static IQuestionDialogBluePrint questionDialog() {
+        return Toolkit.getBluePrintFactory().questionDialog();
+    }
+
+    public static IProgressBarBluePrint progressBar() {
+        return Toolkit.getBluePrintFactory().progressBar();
+    }
+
+    public static <INPUT_TYPE> IInputDialogBluePrint<INPUT_TYPE> inputDialog(final IInputContentCreator<INPUT_TYPE> contentCreator) {
+        return Toolkit.getBluePrintFactory().inputDialog(contentCreator);
+    }
+
+    public static <INPUT_TYPE> IInputCompositeBluePrint<INPUT_TYPE> inputComposite(
+        final IInputContentCreator<INPUT_TYPE> contentCreator) {
+        return Toolkit.getBluePrintFactory().inputComposite(contentCreator);
+    }
+
+    public static ILoginDialogBluePrint loginDialog(final ILoginInterceptor interceptor) {
+        return Toolkit.getBluePrintFactory().loginDialog(interceptor);
+    }
+
+    public static IPasswordChangeDialogBluePrint passwordChangeDialog(final IPasswordChangeExecutor executor) {
+        return Toolkit.getBluePrintFactory().passwordChangeDialog(executor);
+    }
+
+    public static <ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(
+        final ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> widgetCreator) {
+        return Toolkit.getBluePrintFactory().collectionInputControl(widgetCreator);
+    }
+
+    public static <ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
+        final ICollectionInputControlSetup<ELEMENT_TYPE> setup) {
+        return Toolkit.getBluePrintFactory().collectionInputDialog(setup);
+    }
+
+    public static <ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField(
+        final IConverter<ELEMENT_TYPE> converter) {
+        return Toolkit.getBluePrintFactory().collectionInputField(converter);
+    }
+
+    public static <ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField(
+        final IObjectStringConverter<ELEMENT_TYPE> converter) {
+        return Toolkit.getBluePrintFactory().collectionInputField(converter);
+    }
+
+    public static <ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField() {
+        return Toolkit.getBluePrintFactory().collectionInputField();
+    }
+
+    public static <ELEMENT_TYPE> ICombinedCollectionInputFieldBluePrint<ELEMENT_TYPE> combinedCollectionInputField(
+        final ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> elementTypeCreator,
+        final ICustomWidgetCreator<IInputControl<? extends Collection<ELEMENT_TYPE>>> collectionTypeCreator) {
+        return Toolkit.getBluePrintFactory().combinedCollectionInputField(elementTypeCreator, collectionTypeCreator);
+    }
+
+    public static IInputFieldBluePrint<String> inputFieldString() {
+        return Toolkit.getBluePrintFactory().inputFieldString();
+    }
+
+    public static IInputFieldBluePrint<Long> inputFieldLongNumber() {
+        return Toolkit.getBluePrintFactory().inputFieldLongNumber();
+    }
+
+    public static IInputFieldBluePrint<Integer> inputFieldIntegerNumber() {
+        return Toolkit.getBluePrintFactory().inputFieldIntegerNumber();
+    }
+
+    public static IInputFieldBluePrint<Short> inputFieldShortNumber() {
+        return Toolkit.getBluePrintFactory().inputFieldShortNumber();
+    }
+
+    public static IInputFieldBluePrint<Double> inputFieldDoubleNumber() {
+        return Toolkit.getBluePrintFactory().inputFieldDoubleNumber();
+    }
+
+    public static IInputFieldBluePrint<Double> inputFieldDoubleNumber(final int minFractionDigits, final int maxFractionDigits) {
+        return Toolkit.getBluePrintFactory().inputFieldDoubleNumber(minFractionDigits, maxFractionDigits);
+    }
+
+    public static IInputFieldBluePrint<Date> inputFieldDate(
+        final DateFormat dateFormat,
+        final String formatHint,
+        final ITextMask mask) {
+        return Toolkit.getBluePrintFactory().inputFieldDate(dateFormat, formatHint, mask);
+    }
+
+    public static IInputFieldBluePrint<Date> inputFieldDate(final DateFormat dateFormat, final String formatHint) {
+        return Toolkit.getBluePrintFactory().inputFieldDate(dateFormat, formatHint);
+    }
+
+    public static IInputFieldBluePrint<Date> inputFieldDate() {
+        return Toolkit.getBluePrintFactory().inputFieldDate();
+    }
+
+    public static IInputFieldBluePrint<Date> inputFieldDateTime() {
+        return Toolkit.getBluePrintFactory().inputFieldDateTime();
+    }
+
+    public static IInputFieldBluePrint<Date> inputFieldTime() {
+        return Toolkit.getBluePrintFactory().inputFieldTime();
+    }
+
+    public static ILabelBluePrint label(final IImageConstant icon) {
+        return Toolkit.getBluePrintFactory().label(icon);
+    }
+
+    public static ILabelBluePrint label(final IImageConstant icon, final String text) {
+        return Toolkit.getBluePrintFactory().label(icon, text);
+    }
+
+    public static ILabelBluePrint label(final IImageConstant icon, final String text, final String toolTiptext) {
+        return Toolkit.getBluePrintFactory().label(icon, text, toolTiptext);
+    }
+
+    public static ITextSeparatorBluePrint textSeparator(final String text) {
+        return Toolkit.getBluePrintFactory().textSeparator(text);
+    }
+
+    public static ITextSeparatorBluePrint textSeparator(final String text, final String tooltipText) {
+        return Toolkit.getBluePrintFactory().textSeparator(text, tooltipText);
+    }
+
+    public static IQuestionDialogBluePrint yesNoQuestion() {
+        return Toolkit.getBluePrintFactory().yesNoQuestion();
+    }
+
+    public static IQuestionDialogBluePrint yesNoCancelQuestion() {
+        return Toolkit.getBluePrintFactory().yesNoCancelQuestion();
+    }
+
+    public static IQuestionDialogBluePrint yesNoQuestion(final String question) {
+        return Toolkit.getBluePrintFactory().yesNoQuestion(question);
+    }
+
+    public static IQuestionDialogBluePrint yesNoCancelQuestion(final String question) {
+        return Toolkit.getBluePrintFactory().yesNoCancelQuestion(question);
+    }
+
+    public static IMessageDialogBluePrint infoDialog() {
+        return Toolkit.getBluePrintFactory().infoDialog();
+    }
+
+    public static IMessageDialogBluePrint warningDialog() {
+        return Toolkit.getBluePrintFactory().warningDialog();
+    }
+
+    public static IMessageDialogBluePrint errorDialog() {
+        return Toolkit.getBluePrintFactory().errorDialog();
+    }
+
+    public static IMessageDialogBluePrint infoDialog(final String message) {
+        return Toolkit.getBluePrintFactory().infoDialog(message);
+    }
+
+    public static IMessageDialogBluePrint warningDialog(final String message) {
+        return Toolkit.getBluePrintFactory().warningDialog(message);
+    }
+
+    public static IMessageDialogBluePrint errorDialog(final String message) {
+        return Toolkit.getBluePrintFactory().errorDialog(message);
+    }
+
+    public static IProgressBarBluePrint progressBar(final int minimum, final int maximum) {
+        return Toolkit.getBluePrintFactory().progressBar(minimum, maximum);
+    }
+
+    public static IProgressBarBluePrint progressBar(final int maximum) {
+        return Toolkit.getBluePrintFactory().progressBar(maximum);
+    }
+
+    public static <ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(
+        final IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>> descriptor) {
+        return Toolkit.getBluePrintFactory().collectionInputControl(descriptor);
+    }
+
+    public static <ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
+        final ICustomWidgetCreator<? extends IInputControl<ELEMENT_TYPE>> widgetCreator) {
+        return Toolkit.getBluePrintFactory().collectionInputDialog(widgetCreator);
+    }
+
+    public static <ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
+        final IWidgetDescriptor<? extends IInputControl<ELEMENT_TYPE>> descriptor) {
+        return Toolkit.getBluePrintFactory().collectionInputDialog(descriptor);
+    }
+
+    public static IFrameBluePrint frame(final String title) {
+        return Toolkit.getBluePrintFactory().frame(title);
+    }
+
+    public static IFrameBluePrint frame(final String title, final IImageConstant icon) {
+        return Toolkit.getBluePrintFactory().frame(title, icon);
+    }
+
+    public static IDialogBluePrint dialog(final String title) {
+        return Toolkit.getBluePrintFactory().dialog(title);
+    }
+
+    public static IDialogBluePrint dialog(final String title, final IImageConstant icon) {
+        return Toolkit.getBluePrintFactory().dialog(title, icon);
+    }
+
+    public static ICompositeBluePrint compositeWithBorder() {
+        return Toolkit.getBluePrintFactory().compositeWithBorder();
+    }
+
+    public static ICompositeBluePrint composite(final String borderTitle) {
+        return Toolkit.getBluePrintFactory().composite(borderTitle);
+    }
+
+    public static IScrollCompositeBluePrint scrollCompositeWithBorder() {
+        return Toolkit.getBluePrintFactory().scrollCompositeWithBorder();
+    }
+
+    public static IScrollCompositeBluePrint scrollComposite(final String borderTitle) {
+        return Toolkit.getBluePrintFactory().scrollComposite(borderTitle);
+    }
+
+    public static ISplitCompositeBluePrint splitHorizontal() {
+        return Toolkit.getBluePrintFactory().splitHorizontal();
+    }
+
+    public static ISplitCompositeBluePrint splitVertical() {
+        return Toolkit.getBluePrintFactory().splitVertical();
+    }
+
+    public static IButtonBluePrint button(final String text) {
+        return Toolkit.getBluePrintFactory().button(text);
+    }
+
+    public static IButtonBluePrint button(final String text, final String toolTipText) {
+        return Toolkit.getBluePrintFactory().button(text, toolTipText);
+    }
+
+    public static IIconBluePrint icon(final IImageConstant icon) {
+        return Toolkit.getBluePrintFactory().icon(icon);
+    }
+
+    public static ITextLabelBluePrint textLabel(final String text) {
+        return Toolkit.getBluePrintFactory().textLabel(text);
+    }
+
+    public static ITextLabelBluePrint textLabel(final String text, final String tooltipText) {
+        return Toolkit.getBluePrintFactory().textLabel(text, tooltipText);
+    }
+
+    public static IComboBoxBluePrint<String> comboBox() {
+        return Toolkit.getBluePrintFactory().comboBox();
+    }
+
+    public static IComboBoxBluePrint<String> comboBox(final String... elements) {
+        return Toolkit.getBluePrintFactory().comboBox(elements);
+    }
+
+    public static IComboBoxBluePrint<String> comboBox(final List<String> elements) {
+        return Toolkit.getBluePrintFactory().comboBox(elements);
+    }
+
+    public static IComboBoxBluePrint<String> comboBoxString() {
+        return Toolkit.getBluePrintFactory().comboBoxString();
+    }
+
+    public static IComboBoxBluePrint<Long> comboBoxLongNumber() {
+        return Toolkit.getBluePrintFactory().comboBoxLongNumber();
+    }
+
+    public static IComboBoxBluePrint<Integer> comboBoxIntegerNumber() {
+        return Toolkit.getBluePrintFactory().comboBoxIntegerNumber();
+    }
+
+    public static IComboBoxBluePrint<Short> comboBoxShortNumber() {
+        return Toolkit.getBluePrintFactory().comboBoxShortNumber();
+    }
+
+    public static IComboBoxSelectionBluePrint<String> comboBoxSelection() {
+        return Toolkit.getBluePrintFactory().comboBoxSelection();
+    }
+
+    public static IComboBoxSelectionBluePrint<String> comboBoxSelection(final String... elements) {
+        return Toolkit.getBluePrintFactory().comboBoxSelection(elements);
+    }
+
+    public static IComboBoxSelectionBluePrint<String> comboBoxSelection(final List<String> elements) {
+        return Toolkit.getBluePrintFactory().comboBoxSelection(elements);
+    }
+
+    public static <ENUM_TYPE extends Enum<?>> IComboBoxSelectionBluePrint<ENUM_TYPE> comboBoxSelection(
+        final ENUM_TYPE... enumValues) {
+        return Toolkit.getBluePrintFactory().comboBoxSelection(enumValues);
+    }
+
+    public static <VALUE_TYPE> IComboBoxSelectionBluePrint<VALUE_TYPE> comboBoxSelection(final Collection<VALUE_TYPE> elements) {
+        return Toolkit.getBluePrintFactory().comboBoxSelection(elements);
+    }
+
+    public static IComboBoxSelectionBluePrint<IUnit> comboBoxSelection(final IUnitSet unitSet) {
+        return Toolkit.getBluePrintFactory().comboBoxSelection(unitSet);
+    }
+
+    public static IComboBoxSelectionBluePrint<String> comboBoxSelectionString() {
+        return Toolkit.getBluePrintFactory().comboBoxSelectionString();
+    }
+
+    public static IComboBoxSelectionBluePrint<Long> comboBoxSelectionLongNumber() {
+        return Toolkit.getBluePrintFactory().comboBoxSelectionLongNumber();
+    }
+
+    public static IComboBoxSelectionBluePrint<Integer> comboBoxSelectionIntegerNumber() {
+        return Toolkit.getBluePrintFactory().comboBoxSelectionIntegerNumber();
+    }
+
+    public static IComboBoxSelectionBluePrint<Short> comboBoxSelectionShortNumber() {
+        return Toolkit.getBluePrintFactory().comboBoxSelectionShortNumber();
+    }
+
+    public static IComboBoxSelectionBluePrint<Boolean> comboBoxSelectionBoolean() {
+        return Toolkit.getBluePrintFactory().comboBoxSelectionBoolean();
+    }
+
+    public static IActionMenuItemBluePrint menuItem(final String text) {
+        return Toolkit.getBluePrintFactory().menuItem(text);
+    }
+
+    public static IRadioMenuItemBluePrint radioMenuItem(final String text) {
+        return Toolkit.getBluePrintFactory().radioMenuItem(text);
+    }
+
+    public static ICheckedMenuItemBluePrint checkedMenuItem(final String text) {
+        return Toolkit.getBluePrintFactory().checkedMenuItem(text);
+    }
+
+    public static ISubMenuBluePrint subMenu(final String text) {
+        return Toolkit.getBluePrintFactory().subMenu(text);
+    }
+
+    public static IMainMenuBluePrint mainMenu(final String text) {
+        return Toolkit.getBluePrintFactory().mainMenu(text);
+    }
+
+    public static IExpandCompositeBluePrint expandComposite() {
+        return Toolkit.getBluePrintFactory().expandComposite();
+    }
+
+    public static ICanvasBluePrint canvas() {
+        return Toolkit.getBluePrintFactory().canvas();
+    }
+
+    public static ILevelMeterBluePrint levelMeter(final ILevelMeterModel model) {
+        return Toolkit.getBluePrintFactory().levelMeter(model);
+    }
+
+    public static <VALUE_TYPE> ISliderViewerBluePrint<VALUE_TYPE> sliderViewer() {
+        return Toolkit.getBluePrintFactory().sliderViewer();
+    }
+
+    public static <VALUE_TYPE> ISliderViewerBluePrint<VALUE_TYPE> sliderViewer(final ISliderViewerConverter<VALUE_TYPE> converter) {
+        return Toolkit.getBluePrintFactory().sliderViewer(converter);
+    }
+
+    public static ISliderViewerBluePrint<Double> sliderViewerDouble() {
+        return Toolkit.getBluePrintFactory().sliderViewerDouble();
+    }
+
+    public static ISliderViewerBluePrint<Double> sliderViewerDouble(final double max) {
+        return Toolkit.getBluePrintFactory().sliderViewerDouble(max);
+    }
+
+    public static ISliderViewerBluePrint<Double> sliderViewerDouble(final double min, final double max) {
+        return Toolkit.getBluePrintFactory().sliderViewerDouble(min, max);
+    }
+
+    public static ISliderViewerBluePrint<Float> sliderViewerFloat() {
+        return Toolkit.getBluePrintFactory().sliderViewerFloat();
+    }
+
+    public static ISliderViewerBluePrint<Float> sliderViewerFloat(final float max) {
+        return Toolkit.getBluePrintFactory().sliderViewerFloat(max);
+    }
+
+    public static ISliderViewerBluePrint<Float> sliderViewerFloat(final float min, final float max) {
+        return Toolkit.getBluePrintFactory().sliderViewerFloat(min, max);
+    }
+
+    public static ISliderViewerBluePrint<Integer> sliderViewerInteger(final int max) {
+        return Toolkit.getBluePrintFactory().sliderViewerInteger(max);
+    }
+
+    public static ISliderViewerBluePrint<Integer> sliderViewerInteger(final int min, final int max) {
+        return Toolkit.getBluePrintFactory().sliderViewerInteger(min, max);
+    }
+
+    public static ISliderViewerBluePrint<Long> sliderViewerLong(final long max) {
+        return Toolkit.getBluePrintFactory().sliderViewerLong(max);
+    }
+
+    public static ISliderViewerBluePrint<Long> sliderViewerLong(final long min, final long max) {
+        return Toolkit.getBluePrintFactory().sliderViewerLong(min, max);
+    }
 
 }

@@ -33,14 +33,14 @@ import org.jowidgets.spi.widgets.IControlSpi;
 
 public interface IAwtSwtControlSpi extends IControlSpi {
 
-	/**
-	 * @return The swt composite
-	 */
-	Composite getSwtComposite();
+    /**
+     * @return The swt composite
+     */
+    Composite getSwtComposite();
 
-	/**
-	 * The spi widget must be disposed manually if not needed any more to avoid memory leaks
-	 */
-	void dispose();
+    /**
+     * The spi widget must be disposed manually if not needed any more to avoid memory leaks
+     */
+    void dispose();
 
 }

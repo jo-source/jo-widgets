@@ -31,6 +31,6 @@ import org.jowidgets.common.widgets.descriptor.setup.IComponentSetupCommon;
 
 public interface ISetupBuilder<INSTANCE_TYPE extends ISetupBuilder<?>> {
 
-	INSTANCE_TYPE setSetup(IComponentSetupCommon descriptor);
+    INSTANCE_TYPE setSetup(IComponentSetupCommon descriptor);
 
 }

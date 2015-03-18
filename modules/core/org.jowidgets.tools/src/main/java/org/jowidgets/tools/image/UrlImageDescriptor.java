@@ -37,68 +37,68 @@ import org.jowidgets.util.Assert;
 
 public class UrlImageDescriptor implements IUrlImageDescriptor {
 
-	private final URL url;
+    private final URL url;
 
-	/**
-	 * Creates a new UrlImageDescriptor from a file
-	 * 
-	 * @param file A File used to create the url from
-	 * 
-	 * @throws IllegalArgumentException if the url is malformed
-	 */
-	public UrlImageDescriptor(final File file) {
-		this(createUrl(file));
-	}
+    /**
+     * Creates a new UrlImageDescriptor from a file
+     * 
+     * @param file A File used to create the url from
+     * 
+     * @throws IllegalArgumentException if the url is malformed
+     */
+    public UrlImageDescriptor(final File file) {
+        this(createUrl(file));
+    }
 
-	/**
-	 * Creates a new UrlImageDescriptor
-	 * 
-	 * @param url A String defining the url
-	 * 
-	 * @throws IllegalArgumentException if the url is malformed
-	 */
-	public UrlImageDescriptor(final String url) {
-		this(createUrl(url));
-	}
+    /**
+     * Creates a new UrlImageDescriptor
+     * 
+     * @param url A String defining the url
+     * 
+     * @throws IllegalArgumentException if the url is malformed
+     */
+    public UrlImageDescriptor(final String url) {
+        this(createUrl(url));
+    }
 
-	/**
-	 * Creates a new UrlImageDescriptor
-	 * 
-	 * @param url The url to use, must not be null
-	 */
-	public UrlImageDescriptor(final URL url) {
-		Assert.paramNotNull(url, "url");
-		this.url = url;
-	}
+    /**
+     * Creates a new UrlImageDescriptor
+     * 
+     * @param url The url to use, must not be null
+     */
+    public UrlImageDescriptor(final URL url) {
+        Assert.paramNotNull(url, "url");
+        this.url = url;
+    }
 
-	private static URL createUrl(final String url) {
-		Assert.paramNotEmpty(url, "url");
-		try {
-			return new URL(url);
-		}
-		catch (final MalformedURLException e) {
-			throw new IllegalArgumentException(e);
-		}
-	}
+    private static URL createUrl(final String url) {
+        Assert.paramNotEmpty(url, "url");
+        try {
+            return new URL(url);
+        }
+        catch (final MalformedURLException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
 
-	private static URL createUrl(final File file) {
-		Assert.paramNotNull(file, "file");
-		try {
-			return file.toURI().toURL();
-		}
-		catch (final MalformedURLException e) {
-			throw new IllegalArgumentException(e);
-		}
-	}
+    private static URL createUrl(final File file) {
+        Assert.paramNotNull(file, "file");
+        try {
+            return file.toURI().toURL();
+        }
+        catch (final MalformedURLException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
 
-	@Override
-	public final URL getImageUrl() {
-		return url;
-	}
+    @Override
+    public final URL getImageUrl() {
+        return url;
+    }
 
-	@Override
-	public String toString() {
-		return "UrlImageDescriptor [url=" + url + "]";
-	}
+    @Override
+    public String toString() {
+        return "UrlImageDescriptor [url=" + url + "]";
+    }
 
 }

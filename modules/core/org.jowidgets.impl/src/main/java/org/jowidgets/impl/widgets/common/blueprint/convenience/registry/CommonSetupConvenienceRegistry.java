@@ -40,11 +40,11 @@ import org.jowidgets.tools.widgets.blueprint.convenience.SetupBuilderConvenience
 
 public class CommonSetupConvenienceRegistry extends SetupBuilderConvenienceRegistry {
 
-	public CommonSetupConvenienceRegistry() {
-		super();
-		register(ICompositeSetupBuilderCommon.class, new CompositeSetupConvenienceCommon());
-		register(ITextLabelSetupBuilderCommon.class, new TextLabelSetupConvenienceCommon());
-		register(IToolBarSetupBuilderCommon.class, new ToolBarSetupConvenienceCommon());
-		register(ISliderSetupBuilderCommon.class, new SliderSetupConvenienceCommon());
-	}
+    public CommonSetupConvenienceRegistry() {
+        super();
+        register(ICompositeSetupBuilderCommon.class, new CompositeSetupConvenienceCommon());
+        register(ITextLabelSetupBuilderCommon.class, new TextLabelSetupConvenienceCommon());
+        register(IToolBarSetupBuilderCommon.class, new ToolBarSetupConvenienceCommon());
+        register(ISliderSetupBuilderCommon.class, new SliderSetupConvenienceCommon());
+    }
 }

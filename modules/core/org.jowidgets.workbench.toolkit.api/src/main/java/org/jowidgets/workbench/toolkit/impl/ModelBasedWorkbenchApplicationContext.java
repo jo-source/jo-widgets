@@ -36,42 +36,42 @@ import org.jowidgets.workbench.toolkit.api.IWorkbenchApplicationModel;
 import org.jowidgets.workbench.toolkit.api.IWorkbenchModel;
 
 class ModelBasedWorkbenchApplicationContext extends ModelBasedComponentNodeContainerContext implements
-		IWorkbenchApplicationContext {
+        IWorkbenchApplicationContext {
 
-	private final IWorkbenchApplicationContext applicationContext;
-	private final IWorkbenchApplicationModel applicationModel;
+    private final IWorkbenchApplicationContext applicationContext;
+    private final IWorkbenchApplicationModel applicationModel;
 
-	private IWorkbenchContext workbenchContext;
+    private IWorkbenchContext workbenchContext;
 
-	ModelBasedWorkbenchApplicationContext(final IWorkbenchApplicationContext context, final IWorkbenchApplicationModel model) {
-		super(model);
-		this.applicationContext = context;
-		this.applicationModel = model;
-	}
+    ModelBasedWorkbenchApplicationContext(final IWorkbenchApplicationContext context, final IWorkbenchApplicationModel model) {
+        super(model);
+        this.applicationContext = context;
+        this.applicationModel = model;
+    }
 
-	@Override
-	public IWorkbenchContext getWorkbenchContext() {
-		if (workbenchContext == null) {
-			final IWorkbenchModel wbModel = applicationModel.getWorkbench();
-			final IWorkbenchContext wbContext = applicationContext.getWorkbenchContext();
-			workbenchContext = new ModelBasedWorkbenchContext(wbModel, wbContext);
-		}
-		return workbenchContext;
-	}
+    @Override
+    public IWorkbenchContext getWorkbenchContext() {
+        if (workbenchContext == null) {
+            final IWorkbenchModel wbModel = applicationModel.getWorkbench();
+            final IWorkbenchContext wbContext = applicationContext.getWorkbenchContext();
+            workbenchContext = new ModelBasedWorkbenchContext(wbModel, wbContext);
+        }
+        return workbenchContext;
+    }
 
-	@Override
-	public IToolBarModel getToolBar() {
-		return applicationModel.getToolBar();
-	}
+    @Override
+    public IToolBarModel getToolBar() {
+        return applicationModel.getToolBar();
+    }
 
-	@Override
-	public IMenuModel getToolBarMenu() {
-		return applicationModel.getToolBarMenu();
-	}
+    @Override
+    public IMenuModel getToolBarMenu() {
+        return applicationModel.getToolBarMenu();
+    }
 
-	@Override
-	public IMenuModel getPopupMenu() {
-		return applicationModel.getPopupMenu();
-	}
+    @Override
+    public IMenuModel getPopupMenu() {
+        return applicationModel.getPopupMenu();
+    }
 
 }

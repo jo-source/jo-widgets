@@ -33,14 +33,14 @@ import org.jowidgets.common.widgets.builder.ISliderSetupBuilderCommon;
 
 public class SliderDefaultsCommon implements IDefaultInitializer<ISliderSetupBuilderCommon<?>> {
 
-	@Override
-	public void initialize(final ISliderSetupBuilderCommon<?> builder) {
-		builder.setOrientation(Orientation.HORIZONTAL);
-		builder.setMinimum(0);
-		builder.setMaximum(100);
-		builder.setTickSpacing(10);
-		builder.setRenderTicks(true);
+    @Override
+    public void initialize(final ISliderSetupBuilderCommon<?> builder) {
+        builder.setOrientation(Orientation.HORIZONTAL);
+        builder.setMinimum(0);
+        builder.setMaximum(100);
+        builder.setTickSpacing(10);
+        builder.setRenderTicks(true);
 
-	}
+    }
 
 }

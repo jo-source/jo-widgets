@@ -34,17 +34,17 @@ import org.jowidgets.i18n.api.MessageProvider;
 
 final class Messages {
 
-	private static final IMessageProvider MESSAGE_PROVIDER = MessageProvider.create(
-			"org.jowidgets.spi.impl.swing.common.widgets.messages",
-			Messages.class);
+    private static final IMessageProvider MESSAGE_PROVIDER = MessageProvider.create(
+            "org.jowidgets.spi.impl.swing.common.widgets.messages",
+            Messages.class);
 
-	private Messages() {}
+    private Messages() {}
 
-	public static String getString(final String key) {
-		return MESSAGE_PROVIDER.getString(key);
-	}
+    public static String getString(final String key) {
+        return MESSAGE_PROVIDER.getString(key);
+    }
 
-	public static IMessage getMessage(final String key) {
-		return MESSAGE_PROVIDER.getMessage(key);
-	}
+    public static IMessage getMessage(final String key) {
+        return MESSAGE_PROVIDER.getMessage(key);
+    }
 }

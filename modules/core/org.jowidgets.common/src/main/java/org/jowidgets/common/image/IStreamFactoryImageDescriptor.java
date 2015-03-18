@@ -35,13 +35,13 @@ import java.io.InputStream;
  */
 public interface IStreamFactoryImageDescriptor extends IImageDescriptor {
 
-	/**
-	 * Creates the stream that provides the image data.
-	 * 
-	 * The input stream will be closed by the invoker
-	 * 
-	 * @return A input stream for image data, never null
-	 */
-	InputStream createInputStream();
+    /**
+     * Creates the stream that provides the image data.
+     * 
+     * The input stream will be closed by the invoker
+     * 
+     * @return A input stream for image data, never null
+     */
+    InputStream createInputStream();
 
 }

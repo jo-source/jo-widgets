@@ -31,10 +31,9 @@
  */
 package org.jowidgets.api.test.blueprint.builder;
 
-
 public interface IHierarchy2nd1SetupBuilder<INSTANCE_TYPE extends IHierarchy2nd1SetupBuilder<?>> extends
-		IHierarchy1stSetupBuilder<INSTANCE_TYPE> {
+        IHierarchy1stSetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setIntroPartTwoOne(String introPartTwo);
+    INSTANCE_TYPE setIntroPartTwoOne(String introPartTwo);
 
 }

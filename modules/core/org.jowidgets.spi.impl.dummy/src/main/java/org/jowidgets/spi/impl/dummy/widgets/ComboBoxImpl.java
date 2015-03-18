@@ -33,59 +33,59 @@ import org.jowidgets.spi.widgets.setup.IComboBoxSetupSpi;
 
 public class ComboBoxImpl extends ComboBoxSelectionImpl implements IComboBoxSpi {
 
-	public ComboBoxImpl(final IComboBoxSetupSpi setup) {
-		super(setup);
-		getUiReference().setEditable(true);
-	}
+    public ComboBoxImpl(final IComboBoxSetupSpi setup) {
+        super(setup);
+        getUiReference().setEditable(true);
+    }
 
-	@Override
-	public void setEditable(final boolean editable) {
-		getUiReference().setEditable(true);
-	}
+    @Override
+    public void setEditable(final boolean editable) {
+        getUiReference().setEditable(true);
+    }
 
-	@Override
-	public String getText() {
-		return getUiReference().getText();
-	}
+    @Override
+    public String getText() {
+        return getUiReference().getText();
+    }
 
-	@Override
-	public void setText(final String text) {
-		getUiReference().setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        getUiReference().setText(text);
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		getUiReference().setFontSize(size);
-	}
+    @Override
+    public void setFontSize(final int size) {
+        getUiReference().setFontSize(size);
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		getUiReference().setFontName(fontName);
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        getUiReference().setFontName(fontName);
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		getUiReference().setMarkup(markup);
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        getUiReference().setMarkup(markup);
+    }
 
-	@Override
-	public void setSelection(final int start, final int end) {
-		getUiReference().setSelection(start, end);
-	}
+    @Override
+    public void setSelection(final int start, final int end) {
+        getUiReference().setSelection(start, end);
+    }
 
-	@Override
-	public void setCaretPosition(final int pos) {
-		setSelection(pos, pos);
-	}
+    @Override
+    public void setCaretPosition(final int pos) {
+        setSelection(pos, pos);
+    }
 
-	@Override
-	public int getCaretPosition() {
-		return getUiReference().getCaretPosition();
-	}
+    @Override
+    public int getCaretPosition() {
+        return getUiReference().getCaretPosition();
+    }
 
-	@Override
-	public void select() {
-		getUiReference().select();
-	}
+    @Override
+    public void select() {
+        getUiReference().select();
+    }
 
 }

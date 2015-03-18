@@ -39,50 +39,50 @@ import org.jowidgets.util.Assert;
 
 public class TreeObservable implements ITreeObservable {
 
-	private final Set<ITreeListener> listeners;
+    private final Set<ITreeListener> listeners;
 
-	public TreeObservable() {
-		this.listeners = new LinkedHashSet<ITreeListener>();
-	}
+    public TreeObservable() {
+        this.listeners = new LinkedHashSet<ITreeListener>();
+    }
 
-	@Override
-	public final void addTreeListener(final ITreeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public final void addTreeListener(final ITreeListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public final void removeTreeListener(final ITreeListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public final void removeTreeListener(final ITreeListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public final void fireNodeExpanded(final ITreeNode node) {
-		Assert.paramNotNull(node, "node");
-		for (final ITreeListener listener : new LinkedList<ITreeListener>(listeners)) {
-			listener.nodeExpanded(node);
-		}
-	}
+    public final void fireNodeExpanded(final ITreeNode node) {
+        Assert.paramNotNull(node, "node");
+        for (final ITreeListener listener : new LinkedList<ITreeListener>(listeners)) {
+            listener.nodeExpanded(node);
+        }
+    }
 
-	public final void fireNodeCollapsed(final ITreeNode node) {
-		Assert.paramNotNull(node, "node");
-		for (final ITreeListener listener : new LinkedList<ITreeListener>(listeners)) {
-			listener.nodeCollapsed(node);
-		}
-	}
+    public final void fireNodeCollapsed(final ITreeNode node) {
+        Assert.paramNotNull(node, "node");
+        for (final ITreeListener listener : new LinkedList<ITreeListener>(listeners)) {
+            listener.nodeCollapsed(node);
+        }
+    }
 
-	public final void fireNodeChecked(final ITreeNode node) {
-		Assert.paramNotNull(node, "node");
-		for (final ITreeListener listener : new LinkedList<ITreeListener>(listeners)) {
-			listener.nodeChecked(node);
-		}
-	}
+    public final void fireNodeChecked(final ITreeNode node) {
+        Assert.paramNotNull(node, "node");
+        for (final ITreeListener listener : new LinkedList<ITreeListener>(listeners)) {
+            listener.nodeChecked(node);
+        }
+    }
 
-	public final void fireNodeUnchecked(final ITreeNode node) {
-		Assert.paramNotNull(node, "node");
-		for (final ITreeListener listener : new LinkedList<ITreeListener>(listeners)) {
-			listener.nodeUnchecked(node);
-		}
-	}
+    public final void fireNodeUnchecked(final ITreeNode node) {
+        Assert.paramNotNull(node, "node");
+        for (final ITreeListener listener : new LinkedList<ITreeListener>(listeners)) {
+            listener.nodeUnchecked(node);
+        }
+    }
 
 }

@@ -34,58 +34,58 @@ import org.jowidgets.util.IObservableValue;
 
 public class CheckBoxWrapper extends InputControlWrapper<Boolean> implements ICheckBox {
 
-	public CheckBoxWrapper(final ICheckBox widget) {
-		super(widget);
-	}
+    public CheckBoxWrapper(final ICheckBox widget) {
+        super(widget);
+    }
 
-	@Override
-	protected ICheckBox getWidget() {
-		return (ICheckBox) super.getWidget();
-	}
+    @Override
+    protected ICheckBox getWidget() {
+        return (ICheckBox) super.getWidget();
+    }
 
-	@Override
-	public String getText() {
-		return getWidget().getText();
-	}
+    @Override
+    public String getText() {
+        return getWidget().getText();
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		getWidget().setFontSize(size);
-	}
+    @Override
+    public void setFontSize(final int size) {
+        getWidget().setFontSize(size);
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		getWidget().setFontName(fontName);
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        getWidget().setFontName(fontName);
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		getWidget().setMarkup(markup);
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        getWidget().setMarkup(markup);
+    }
 
-	@Override
-	public void setText(final String text) {
-		getWidget().setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        getWidget().setText(text);
+    }
 
-	@Override
-	public void setToolTipText(final String text) {
-		getWidget().setToolTipText(text);
-	}
+    @Override
+    public void setToolTipText(final String text) {
+        getWidget().setToolTipText(text);
+    }
 
-	@Override
-	public boolean isSelected() {
-		return getWidget().isSelected();
-	}
+    @Override
+    public boolean isSelected() {
+        return getWidget().isSelected();
+    }
 
-	@Override
-	public void setSelected(final boolean selected) {
-		getWidget().setSelected(selected);
-	}
+    @Override
+    public void setSelected(final boolean selected) {
+        getWidget().setSelected(selected);
+    }
 
-	@Override
-	public IObservableValue<Boolean> getObservableValue() {
-		return getWidget().getObservableValue();
-	}
+    @Override
+    public IObservableValue<Boolean> getObservableValue() {
+        return getWidget().getObservableValue();
+    }
 
 }

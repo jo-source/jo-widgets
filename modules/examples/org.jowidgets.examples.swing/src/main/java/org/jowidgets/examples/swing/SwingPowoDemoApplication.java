@@ -33,12 +33,12 @@ import org.jowidgets.examples.common.powo.PowoDemoApplication;
 
 public final class SwingPowoDemoApplication {
 
-	private SwingPowoDemoApplication() {}
+    private SwingPowoDemoApplication() {}
 
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		new PowoDemoApplication("Swing widgets demo application").start();
-	}
+    public static void main(final String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
+        new PowoDemoApplication("Swing widgets demo application").start();
+    }
 
 }

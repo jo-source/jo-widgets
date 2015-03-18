@@ -41,60 +41,60 @@ import org.jowidgets.spi.image.IImageHandleFactorySpi;
 
 public interface IWidgetsServiceProvider {
 
-	IImageRegistry getImageRegistry();
+    IImageRegistry getImageRegistry();
 
-	IImageHandleFactorySpi getImageHandleFactory();
+    IImageHandleFactorySpi getImageHandleFactory();
 
-	IImageFactorySpi getImageFactory();
+    IImageFactorySpi getImageFactory();
 
-	IWidgetFactorySpi getWidgetFactory();
+    IWidgetFactorySpi getWidgetFactory();
 
-	/**
-	 * These widgets are optional and may be not supported on all platforms
-	 * 
-	 * @return The optional widgets factory or null if no optional widgets are supported
-	 */
-	IOptionalWidgetsFactorySpi getOptionalWidgetFactory();
+    /**
+     * These widgets are optional and may be not supported on all platforms
+     * 
+     * @return The optional widgets factory or null if no optional widgets are supported
+     */
+    IOptionalWidgetsFactorySpi getOptionalWidgetFactory();
 
-	IUiThreadAccessCommon createUiThreadAccess();
+    IUiThreadAccessCommon createUiThreadAccess();
 
-	IApplicationRunner createApplicationRunner();
+    IApplicationRunner createApplicationRunner();
 
-	/**
-	 * Gets the UI reference (e.g. Shell for SWT, Window for Swing, ...) of the active window.
-	 * 
-	 * @return The UI reference of the active window or null, if now window is active
-	 */
-	Object getActiveWindowUiReference();
+    /**
+     * Gets the UI reference (e.g. Shell for SWT, Window for Swing, ...) of the active window.
+     * 
+     * @return The UI reference of the active window or null, if now window is active
+     */
+    Object getActiveWindowUiReference();
 
-	/**
-	 * Gets the UI reference (e.g. Shell for SWT, Window for Swing, ...) for all known windows
-	 * 
-	 * @return The UI reference for all known windows or an empty list
-	 */
-	List<Object> getAllWindowsUiReference();
+    /**
+     * Gets the UI reference (e.g. Shell for SWT, Window for Swing, ...) for all known windows
+     * 
+     * @return The UI reference for all known windows or an empty list
+     */
+    List<Object> getAllWindowsUiReference();
 
-	/**
-	 * Transforms a local component position to a screen position
-	 * 
-	 * @param localPosition Local position relative to the component
-	 * @param component The component
-	 * @return screen position
-	 */
-	Position toScreen(final Position localPosition, final IComponentCommon component);
+    /**
+     * Transforms a local component position to a screen position
+     * 
+     * @param localPosition Local position relative to the component
+     * @param component The component
+     * @return screen position
+     */
+    Position toScreen(final Position localPosition, final IComponentCommon component);
 
-	/**
-	 * Transforms a screen position to a local component position
-	 * 
-	 * @param screenPosition Screen position
-	 * @param component The component
-	 * @return local position relative to the component
-	 */
-	Position toLocal(final Position screenPosition, final IComponentCommon component);
+    /**
+     * Transforms a screen position to a local component position
+     * 
+     * @param screenPosition Screen position
+     * @param component The component
+     * @return local position relative to the component
+     */
+    Position toLocal(final Position screenPosition, final IComponentCommon component);
 
-	/**
-	 * @return The system clipboard
-	 */
-	IClipboardSpi getClipboard();
+    /**
+     * @return The system clipboard
+     */
+    IClipboardSpi getClipboard();
 
 }

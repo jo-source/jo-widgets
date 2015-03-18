@@ -45,42 +45,42 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class EditPersonActionFactory {
 
-	private EditPersonActionFactory() {}
+    private EditPersonActionFactory() {}
 
-	public static IAction create(final BeanTableModel<Person> model) {
-		final IActionBuilder builder = CommandAction.builder();
-		builder.setText("Edit person ...");
-		builder.setIcon(SilkIcons.USER_EDIT);
-		builder.setCommand(new EditPersonCommand(model), new SingleSelectionEnabledChecker(model));
-		return builder.build();
-	}
+    public static IAction create(final BeanTableModel<Person> model) {
+        final IActionBuilder builder = CommandAction.builder();
+        builder.setText("Edit person ...");
+        builder.setIcon(SilkIcons.USER_EDIT);
+        builder.setCommand(new EditPersonCommand(model), new SingleSelectionEnabledChecker(model));
+        return builder.build();
+    }
 
-	private static final class EditPersonCommand implements ICommandExecutor {
+    private static final class EditPersonCommand implements ICommandExecutor {
 
-		private final BeanTableModel<Person> model;
+        private final BeanTableModel<Person> model;
 
-		private EditPersonCommand(final BeanTableModel<Person> model) {
-			this.model = model;
-		}
+        private EditPersonCommand(final BeanTableModel<Person> model) {
+            this.model = model;
+        }
 
-		@Override
-		public void execute(final IExecutionContext executionContext) throws Exception {
-			final Person person = model.getSelectedBean();
-			if (person != null) {
-				final Person personCopy = person.createCopy();
-				final IInputDialogBluePrint<Person> dialogBp = BPF.inputDialog(new PersonContentCreator(false));
-				dialogBp.setMinPackSize(new Dimension(640, 480));
-				dialogBp.setExecutionContext(executionContext);
-				dialogBp.setValue(personCopy);
-				final IInputDialog<Person> dialog = Toolkit.getActiveWindow().createChildWindow(dialogBp);
-				dialog.setVisible(true);
-				if (dialog.isOkPressed()) {
-					person.setPerson(dialog.getValue());
-					model.fireDataChanged();
-				}
-			}
-		}
+        @Override
+        public void execute(final IExecutionContext executionContext) throws Exception {
+            final Person person = model.getSelectedBean();
+            if (person != null) {
+                final Person personCopy = person.createCopy();
+                final IInputDialogBluePrint<Person> dialogBp = BPF.inputDialog(new PersonContentCreator(false));
+                dialogBp.setMinPackSize(new Dimension(640, 480));
+                dialogBp.setExecutionContext(executionContext);
+                dialogBp.setValue(personCopy);
+                final IInputDialog<Person> dialog = Toolkit.getActiveWindow().createChildWindow(dialogBp);
+                dialog.setVisible(true);
+                if (dialog.isOkPressed()) {
+                    person.setPerson(dialog.getValue());
+                    model.fireDataChanged();
+                }
+            }
+        }
 
-	}
+    }
 
 }

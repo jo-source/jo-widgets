@@ -32,7 +32,7 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IComboBoxSelectionSetupSpi extends IComponentSetupSpi, IComboBoxSelectionSetupCommon {
 
-	@Mandatory
-	String[] getElements();
+    @Mandatory
+    String[] getElements();
 
 }

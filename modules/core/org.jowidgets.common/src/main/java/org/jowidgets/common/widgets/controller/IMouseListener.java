@@ -30,39 +30,39 @@ package org.jowidgets.common.widgets.controller;
 
 public interface IMouseListener {
 
-	/**
-	 * Will be invoked if a mouse button was pressed
-	 * 
-	 * @param event The mouse button event
-	 */
-	void mousePressed(IMouseButtonEvent event);
+    /**
+     * Will be invoked if a mouse button was pressed
+     * 
+     * @param event The mouse button event
+     */
+    void mousePressed(IMouseButtonEvent event);
 
-	/**
-	 * Will be invoked if a mouse button was released
-	 * 
-	 * @param event The mouse button event
-	 */
-	void mouseReleased(IMouseButtonEvent event);
+    /**
+     * Will be invoked if a mouse button was released
+     * 
+     * @param event The mouse button event
+     */
+    void mouseReleased(IMouseButtonEvent event);
 
-	/**
-	 * Will be invoked if a mouse button was double klicked
-	 * 
-	 * @param event The mouse button event
-	 */
-	void mouseDoubleClicked(IMouseButtonEvent event);
+    /**
+     * Will be invoked if a mouse button was double klicked
+     * 
+     * @param event The mouse button event
+     */
+    void mouseDoubleClicked(IMouseButtonEvent event);
 
-	/**
-	 * Will be invoked if the mouse entered
-	 * 
-	 * @param event The mouse event
-	 */
-	void mouseEnter(IMouseEvent event);
+    /**
+     * Will be invoked if the mouse entered
+     * 
+     * @param event The mouse event
+     */
+    void mouseEnter(IMouseEvent event);
 
-	/**
-	 * Will be invoked after mouse exit
-	 * 
-	 * @param event The mouse event
-	 */
-	void mouseExit(IMouseEvent event);
+    /**
+     * Will be invoked after mouse exit
+     * 
+     * @param event The mouse event
+     */
+    void mouseExit(IMouseEvent event);
 
 }

@@ -36,31 +36,31 @@ import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
 
 class TypeBasedComponentFactory implements IComponentFactory {
 
-	private final Class<? extends IComponent> componentType;
+    private final Class<? extends IComponent> componentType;
 
-	public TypeBasedComponentFactory(final Class<? extends IComponent> componentType) {
-		Assert.paramNotNull(componentType, "componentType");
-		this.componentType = componentType;
-	}
+    public TypeBasedComponentFactory(final Class<? extends IComponent> componentType) {
+        Assert.paramNotNull(componentType, "componentType");
+        this.componentType = componentType;
+    }
 
-	@Override
-	public IComponent createComponent(final IComponentNodeModel nodeModel, final IComponentContext context) {
-		try {
-			return componentType.getConstructor(IComponentNodeModel.class, IComponentContext.class).newInstance(
-					nodeModel,
-					context);
-		}
-		catch (final NoSuchMethodException exception) {
-			try {
-				return componentType.getConstructor(IComponentContext.class).newInstance(context);
-			}
-			catch (final Exception e) {
-				throw new RuntimeException("Exception while creating component from class. ", e);
-			}
-		}
-		catch (final Exception exception) {
-			throw new RuntimeException("Exception while creating component from class. ", exception);
-		}
+    @Override
+    public IComponent createComponent(final IComponentNodeModel nodeModel, final IComponentContext context) {
+        try {
+            return componentType.getConstructor(IComponentNodeModel.class, IComponentContext.class).newInstance(
+                    nodeModel,
+                    context);
+        }
+        catch (final NoSuchMethodException exception) {
+            try {
+                return componentType.getConstructor(IComponentContext.class).newInstance(context);
+            }
+            catch (final Exception e) {
+                throw new RuntimeException("Exception while creating component from class. ", e);
+            }
+        }
+        catch (final Exception exception) {
+            throw new RuntimeException("Exception while creating component from class. ", exception);
+        }
 
-	}
+    }
 }

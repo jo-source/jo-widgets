@@ -31,7 +31,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IDirectoryChooserSetupBuilder
 import org.jowidgets.api.widgets.descriptor.IDirectoryChooserDescriptor;
 
 public interface IDirectoryChooserBluePrint extends
-		IDirectoryChooserSetupBuilder<IDirectoryChooserBluePrint>,
-		IDirectoryChooserDescriptor {
+        IDirectoryChooserSetupBuilder<IDirectoryChooserBluePrint>,
+        IDirectoryChooserDescriptor {
 
 }

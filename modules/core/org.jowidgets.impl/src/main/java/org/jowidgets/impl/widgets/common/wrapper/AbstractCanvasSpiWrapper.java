@@ -33,25 +33,25 @@ import org.jowidgets.spi.widgets.ICanvasSpi;
 
 public abstract class AbstractCanvasSpiWrapper extends AbstractControlSpiWrapper implements ICanvasCommon {
 
-	public AbstractCanvasSpiWrapper(final ICanvasSpi widget) {
-		super(widget);
-	}
+    public AbstractCanvasSpiWrapper(final ICanvasSpi widget) {
+        super(widget);
+    }
 
-	@Override
-	public ICanvasSpi getWidget() {
-		return (ICanvasSpi) super.getWidget();
-	}
+    @Override
+    public ICanvasSpi getWidget() {
+        return (ICanvasSpi) super.getWidget();
+    }
 
-	@Override
-	public void scroll(
-		final int sourceX,
-		final int sourceY,
-		final int sourceWidth,
-		final int sourceHeight,
-		final int destinationX,
-		final int destinationY) {
+    @Override
+    public void scroll(
+        final int sourceX,
+        final int sourceY,
+        final int sourceWidth,
+        final int sourceHeight,
+        final int destinationX,
+        final int destinationY) {
 
-		getWidget().scroll(sourceX, sourceY, sourceWidth, sourceHeight, destinationX, destinationY);
-	}
+        getWidget().scroll(sourceX, sourceY, sourceWidth, sourceHeight, destinationX, destinationY);
+    }
 
 }

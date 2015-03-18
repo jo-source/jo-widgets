@@ -32,19 +32,19 @@ import org.jowidgets.tools.converter.AbstractObjectStringConverter;
 
 public final class DefaultObjectStringConverter extends AbstractObjectStringConverter<Object> {
 
-	private static final IObjectStringConverter<?> INSTANCE = new DefaultObjectStringConverter();
+    private static final IObjectStringConverter<?> INSTANCE = new DefaultObjectStringConverter();
 
-	@Override
-	public String convertToString(final Object value) {
-		if (value != null) {
-			return value.toString();
-		}
-		return null;
-	}
+    @Override
+    public String convertToString(final Object value) {
+        if (value != null) {
+            return value.toString();
+        }
+        return null;
+    }
 
-	@SuppressWarnings("unchecked")
-	public static <OBJECT_TYPE> IObjectStringConverter<OBJECT_TYPE> getInstance() {
-		return (IObjectStringConverter<OBJECT_TYPE>) INSTANCE;
-	}
+    @SuppressWarnings("unchecked")
+    public static <OBJECT_TYPE> IObjectStringConverter<OBJECT_TYPE> getInstance() {
+        return (IObjectStringConverter<OBJECT_TYPE>) INSTANCE;
+    }
 
 }

@@ -30,22 +30,22 @@ package org.jowidgets.api.widgets;
 
 public interface ITreeNodeVisitor {
 
-	/**
-	 * Will be invoked when a node entered and before its children will be visited
-	 * 
-	 * @param node The node that was entered
-	 * 
-	 * @return false if the visiting should be stopped
-	 */
-	boolean visitEnter(ITreeNode node);
+    /**
+     * Will be invoked when a node entered and before its children will be visited
+     * 
+     * @param node The node that was entered
+     * 
+     * @return false if the visiting should be stopped
+     */
+    boolean visitEnter(ITreeNode node);
 
-	/**
-	 * Will be invoked, when the node will be leaved
-	 * 
-	 * @param node The node that will be leaved
-	 * 
-	 * @return false if the visiting should be stopped
-	 */
-	boolean visitLeave(ITreeNode node);
+    /**
+     * Will be invoked, when the node will be leaved
+     * 
+     * @param node The node that will be leaved
+     * 
+     * @return false if the visiting should be stopped
+     */
+    boolean visitLeave(ITreeNode node);
 
 }

@@ -33,16 +33,16 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
 public class WidgetSetupConvenience extends AbstractSetupBuilderConvenience<IComponentSetupBuilder<?>> implements
-		IComponentSetupConvenience<IComponentSetupBuilder<?>> {
+        IComponentSetupConvenience<IComponentSetupBuilder<?>> {
 
-	@Override
-	public IComponentSetupBuilder<?> setVisible(final boolean visible) {
-		return getBuilder().setVisible(Boolean.valueOf(visible));
-	}
+    @Override
+    public IComponentSetupBuilder<?> setVisible(final boolean visible) {
+        return getBuilder().setVisible(Boolean.valueOf(visible));
+    }
 
-	@Override
-	public IComponentSetupBuilder<?> setColor(final IColorConstant colorConstant) {
-		return getBuilder().setForegroundColor(colorConstant);
-	}
+    @Override
+    public IComponentSetupBuilder<?> setColor(final IColorConstant colorConstant) {
+        return getBuilder().setForegroundColor(colorConstant);
+    }
 
 }

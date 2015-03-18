@@ -32,7 +32,7 @@ import org.jowidgets.api.widgets.descriptor.setup.IUnitValueFieldSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface IUnitValueFieldDescriptor<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> extends
-		IUnitValueFieldSetup<BASE_VALUE_TYPE, UNIT_VALUE_TYPE>,
-		IWidgetDescriptor<IUnitValueField<BASE_VALUE_TYPE, UNIT_VALUE_TYPE>> {
+        IUnitValueFieldSetup<BASE_VALUE_TYPE, UNIT_VALUE_TYPE>,
+        IWidgetDescriptor<IUnitValueField<BASE_VALUE_TYPE, UNIT_VALUE_TYPE>> {
 
 }

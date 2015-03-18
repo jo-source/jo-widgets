@@ -32,14 +32,14 @@ import org.jowidgets.api.widgets.ITreeNode;
 
 public interface ITreeDropLocation {
 
-	public enum TreeDropPosition {
-		ON,
-		BEFORE,
-		AFTER
-	}
+    public enum TreeDropPosition {
+        ON,
+        BEFORE,
+        AFTER
+    }
 
-	ITreeNode getTreeNode();
+    ITreeNode getTreeNode();
 
-	TreeDropPosition getDropPosition();
+    TreeDropPosition getDropPosition();
 
 }

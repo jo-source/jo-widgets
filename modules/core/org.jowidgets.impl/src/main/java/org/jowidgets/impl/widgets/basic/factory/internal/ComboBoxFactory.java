@@ -46,52 +46,52 @@ import org.jowidgets.spi.widgets.IComboBoxSpi;
 import org.jowidgets.tools.verify.InputVerifierComposite;
 
 public class ComboBoxFactory<VALUE_TYPE> extends AbstractWidgetFactory implements
-		IWidgetFactory<IComboBox<VALUE_TYPE>, IComboBoxDescriptor<VALUE_TYPE>> {
+        IWidgetFactory<IComboBox<VALUE_TYPE>, IComboBoxDescriptor<VALUE_TYPE>> {
 
-	public ComboBoxFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+    public ComboBoxFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider,
+        final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
-	}
+        super(genericWidgetFactory, widgetsServiceProvider, bpF);
+    }
 
-	@Override
-	public IComboBox<VALUE_TYPE> create(final Object parentUiReference, final IComboBoxDescriptor<VALUE_TYPE> descriptor) {
-		final IComboBoxBluePrintSpi bp = getSpiBluePrintFactory().comboBox().setSetup(descriptor);
-		ComboBoxBuilderConverter.convert(bp, descriptor);
+    @Override
+    public IComboBox<VALUE_TYPE> create(final Object parentUiReference, final IComboBoxDescriptor<VALUE_TYPE> descriptor) {
+        final IComboBoxBluePrintSpi bp = getSpiBluePrintFactory().comboBox().setSetup(descriptor);
+        ComboBoxBuilderConverter.convert(bp, descriptor);
 
-		final IStringObjectConverter<?> converter = descriptor.getStringObjectConverter();
+        final IStringObjectConverter<?> converter = descriptor.getStringObjectConverter();
 
-		final IInputVerifier inputVerifier = descriptor.getInputVerifier();
-		final IInputVerifier converterInputVerifier = converter.getInputVerifier();
+        final IInputVerifier inputVerifier = descriptor.getInputVerifier();
+        final IInputVerifier converterInputVerifier = converter.getInputVerifier();
 
-		InputVerifierComposite spiInputVerifier = null;
-		if (inputVerifier != null || converterInputVerifier != null) {
-			spiInputVerifier = new InputVerifierComposite();
-			if (inputVerifier != null) {
-				spiInputVerifier.addVerifier(inputVerifier);
-			}
-			if (converterInputVerifier != null) {
-				spiInputVerifier.addVerifier(converterInputVerifier);
-			}
-		}
+        InputVerifierComposite spiInputVerifier = null;
+        if (inputVerifier != null || converterInputVerifier != null) {
+            spiInputVerifier = new InputVerifierComposite();
+            if (inputVerifier != null) {
+                spiInputVerifier.addVerifier(inputVerifier);
+            }
+            if (converterInputVerifier != null) {
+                spiInputVerifier.addVerifier(converterInputVerifier);
+            }
+        }
 
-		final List<String> regExps = descriptor.getAcceptingRegExps();
-		final String converterRegExp = converter.getAcceptingRegExp();
+        final List<String> regExps = descriptor.getAcceptingRegExps();
+        final String converterRegExp = converter.getAcceptingRegExp();
 
-		final List<String> spiRegExps = new LinkedList<String>();
-		spiRegExps.addAll(regExps);
-		if (converterRegExp != null) {
-			spiRegExps.add(converterRegExp);
-		}
+        final List<String> spiRegExps = new LinkedList<String>();
+        spiRegExps.addAll(regExps);
+        if (converterRegExp != null) {
+            spiRegExps.add(converterRegExp);
+        }
 
-		bp.setInputVerifier(spiInputVerifier);
-		bp.setAcceptingRegExps(spiRegExps);
-		bp.setMaxLength(descriptor.getMaxLength());
-		bp.setMask(converter.getMask());
+        bp.setInputVerifier(spiInputVerifier);
+        bp.setAcceptingRegExps(spiRegExps);
+        bp.setMaxLength(descriptor.getMaxLength());
+        bp.setMask(converter.getMask());
 
-		final IComboBoxSpi widget = getSpiWidgetFactory().createComboBox(parentUiReference, bp);
-		return new ComboBoxImpl<VALUE_TYPE>(widget, descriptor);
-	}
+        final IComboBoxSpi widget = getSpiWidgetFactory().createComboBox(parentUiReference, bp);
+        return new ComboBoxImpl<VALUE_TYPE>(widget, descriptor);
+    }
 }

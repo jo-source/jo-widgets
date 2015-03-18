@@ -32,27 +32,27 @@ import org.jowidgets.tools.converter.AbstractConverter;
 
 class DefaultIntegerConverter extends AbstractConverter<Integer> implements IConverter<Integer> {
 
-	@Override
-	public Integer convertToObject(final String string) {
-		try {
-			return Integer.valueOf(Integer.parseInt(string));
-		}
-		catch (final NumberFormatException e) {
-			return null;
-		}
-	}
+    @Override
+    public Integer convertToObject(final String string) {
+        try {
+            return Integer.valueOf(Integer.parseInt(string));
+        }
+        catch (final NumberFormatException e) {
+            return null;
+        }
+    }
 
-	@Override
-	public String convertToString(final Integer value) {
-		if (value != null) {
-			return value.toString();
-		}
-		return null;
-	}
+    @Override
+    public String convertToString(final Integer value) {
+        if (value != null) {
+            return value.toString();
+        }
+        return null;
+    }
 
-	@Override
-	public String getAcceptingRegExp() {
-		return "-?(([0-9]{0,10}))";
-	}
+    @Override
+    public String getAcceptingRegExp() {
+        return "-?(([0-9]{0,10}))";
+    }
 
 }

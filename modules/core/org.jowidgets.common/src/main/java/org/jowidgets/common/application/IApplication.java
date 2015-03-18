@@ -30,6 +30,6 @@ package org.jowidgets.common.application;
 
 public interface IApplication {
 
-	void start(final IApplicationLifecycle lifecycle);
+    void start(final IApplicationLifecycle lifecycle);
 
 }

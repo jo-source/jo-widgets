@@ -43,46 +43,46 @@ import org.jowidgets.spi.widgets.setup.IFileChooserSetupSpi;
 
 public class SwtOptionalWidgetsFactory implements IOptionalWidgetsFactorySpi {
 
-	@Override
-	public boolean hasFileChooser() {
-		try {
-			FileDialog.class.getName();
-		}
-		catch (final NoClassDefFoundError error) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean hasFileChooser() {
+        try {
+            FileDialog.class.getName();
+        }
+        catch (final NoClassDefFoundError error) {
+            return false;
+        }
+        return true;
+    }
 
-	@Override
-	public IFileChooserSpi createFileChooser(final Object parentUiReference, final IFileChooserSetupSpi setup) {
-		return new FileChooserImpl(parentUiReference, setup);
-	}
+    @Override
+    public IFileChooserSpi createFileChooser(final Object parentUiReference, final IFileChooserSetupSpi setup) {
+        return new FileChooserImpl(parentUiReference, setup);
+    }
 
-	@Override
-	public boolean hasDirectoryChooser() {
-		try {
-			DirectoryDialog.class.getName();
-		}
-		catch (final NoClassDefFoundError error) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean hasDirectoryChooser() {
+        try {
+            DirectoryDialog.class.getName();
+        }
+        catch (final NoClassDefFoundError error) {
+            return false;
+        }
+        return true;
+    }
 
-	@Override
-	public IDirectoryChooserSpi createDirectoryChooser(final Object parentUiReference, final IDirectoryChooserSetupSpi setup) {
-		return new DirectoryChooserImpl(parentUiReference, setup);
-	}
+    @Override
+    public IDirectoryChooserSpi createDirectoryChooser(final Object parentUiReference, final IDirectoryChooserSetupSpi setup) {
+        return new DirectoryChooserImpl(parentUiReference, setup);
+    }
 
-	@Override
-	public boolean hasCalendar() {
-		return true;
-	}
+    @Override
+    public boolean hasCalendar() {
+        return true;
+    }
 
-	@Override
-	public ICalendarSpi createCalendar(final Object parentUiReference, final ICalendarSetupSpi setup) {
-		return new CalendarImpl(parentUiReference, setup);
-	}
+    @Override
+    public ICalendarSpi createCalendar(final Object parentUiReference, final ICalendarSetupSpi setup) {
+        return new CalendarImpl(parentUiReference, setup);
+    }
 
 }

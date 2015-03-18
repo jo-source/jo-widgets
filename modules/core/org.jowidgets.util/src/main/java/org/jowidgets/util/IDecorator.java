@@ -30,13 +30,13 @@ package org.jowidgets.util;
 
 public interface IDecorator<T> {
 
-	/**
-	 * Decorates the given object
-	 * 
-	 * @param original The object to decorate
-	 * 
-	 * @return the docorated object
-	 */
-	T decorate(T original);
+    /**
+     * Decorates the given object
+     * 
+     * @param original The object to decorate
+     * 
+     * @return the docorated object
+     */
+    T decorate(T original);
 
 }

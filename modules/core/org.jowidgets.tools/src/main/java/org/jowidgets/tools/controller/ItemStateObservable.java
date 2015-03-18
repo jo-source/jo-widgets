@@ -38,29 +38,29 @@ import org.jowidgets.util.Assert;
 
 public class ItemStateObservable implements IItemStateObservable {
 
-	private final Set<IItemStateListener> listeners;
+    private final Set<IItemStateListener> listeners;
 
-	public ItemStateObservable() {
-		super();
-		this.listeners = new LinkedHashSet<IItemStateListener>();
-	}
+    public ItemStateObservable() {
+        super();
+        this.listeners = new LinkedHashSet<IItemStateListener>();
+    }
 
-	@Override
-	public final void addItemListener(final IItemStateListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		this.listeners.add(listener);
-	}
+    @Override
+    public final void addItemListener(final IItemStateListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        this.listeners.add(listener);
+    }
 
-	@Override
-	public final void removeItemListener(final IItemStateListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		this.listeners.remove(listener);
-	}
+    @Override
+    public final void removeItemListener(final IItemStateListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        this.listeners.remove(listener);
+    }
 
-	public final void fireItemStateChanged() {
-		for (final IItemStateListener listener : new LinkedList<IItemStateListener>(listeners)) {
-			listener.itemStateChanged();
-		}
-	}
+    public final void fireItemStateChanged() {
+        for (final IItemStateListener listener : new LinkedList<IItemStateListener>(listeners)) {
+            listener.itemStateChanged();
+        }
+    }
 
 }

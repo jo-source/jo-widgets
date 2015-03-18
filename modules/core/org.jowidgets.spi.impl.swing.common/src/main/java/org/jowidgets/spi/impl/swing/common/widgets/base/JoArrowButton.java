@@ -39,54 +39,54 @@ import javax.swing.UIManager;
 
 public class JoArrowButton extends JButton {
 
-	public static final Icon ARROW_ICON = new ArrowIcon();
+    public static final Icon ARROW_ICON = new ArrowIcon();
 
-	private static final long serialVersionUID = 2899012201229989443L;
+    private static final long serialVersionUID = 2899012201229989443L;
 
-	public JoArrowButton() {
-		super();
-		setFocusable(false);
-		setIcon(ARROW_ICON);
-	}
+    public JoArrowButton() {
+        super();
+        setFocusable(false);
+        setIcon(ARROW_ICON);
+    }
 
-	private static class ArrowIcon implements Icon {
+    private static class ArrowIcon implements Icon {
 
-		private static final int HEIGHT = 4;
-		private static final int WIDTH = 10;
+        private static final int HEIGHT = 4;
+        private static final int WIDTH = 10;
 
-		@Override
-		public int getIconWidth() {
-			return WIDTH;
-		}
+        @Override
+        public int getIconWidth() {
+            return WIDTH;
+        }
 
-		@Override
-		public int getIconHeight() {
-			return HEIGHT;
-		}
+        @Override
+        public int getIconHeight() {
+            return HEIGHT;
+        }
 
-		@Override
-		public void paintIcon(final Component component, final Graphics graphics, final int x, final int y) {
-			final AbstractButton button = (AbstractButton) component;
-			final ButtonModel buttonModel = button.getModel();
+        @Override
+        public void paintIcon(final Component component, final Graphics graphics, final int x, final int y) {
+            final AbstractButton button = (AbstractButton) component;
+            final ButtonModel buttonModel = button.getModel();
 
-			final int width = WIDTH - 2;
-			final int height = HEIGHT;
+            final int width = WIDTH - 2;
+            final int height = HEIGHT;
 
-			graphics.translate(x, y);
+            graphics.translate(x, y);
 
-			String colorUI = null;
-			if (buttonModel.isEnabled()) {
-				colorUI = "controlText";
-			}
-			else {
-				colorUI = "textInactiveText";
-			}
-			graphics.setColor(UIManager.getColor(colorUI));
+            String colorUI = null;
+            if (buttonModel.isEnabled()) {
+                colorUI = "controlText";
+            }
+            else {
+                colorUI = "textInactiveText";
+            }
+            graphics.setColor(UIManager.getColor(colorUI));
 
-			for (int i = 0; i < height; i++) {
-				graphics.drawLine(i + 1, i, width - i, i);
-			}
-			graphics.translate(-x, -y);
-		}
-	}
+            for (int i = 0; i < height; i++) {
+                graphics.drawLine(i + 1, i, width - i, i);
+            }
+            graphics.translate(-x, -y);
+        }
+    }
 }

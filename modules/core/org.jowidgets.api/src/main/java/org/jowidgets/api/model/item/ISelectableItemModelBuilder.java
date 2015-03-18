@@ -30,15 +30,15 @@ package org.jowidgets.api.model.item;
 
 public interface ISelectableItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> extends IItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> {
 
-	/**
-	 * Sets the selected state of the item
-	 * 
-	 * The default value is false
-	 * 
-	 * @param selected The selected state to set
-	 * 
-	 * @return This builder
-	 */
-	INSTANCE_TYPE setSelected(boolean selected);
+    /**
+     * Sets the selected state of the item
+     * 
+     * The default value is false
+     * 
+     * @param selected The selected state to set
+     * 
+     * @return This builder
+     */
+    INSTANCE_TYPE setSelected(boolean selected);
 
 }

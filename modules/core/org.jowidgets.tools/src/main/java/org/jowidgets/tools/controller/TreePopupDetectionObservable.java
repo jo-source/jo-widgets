@@ -39,28 +39,28 @@ import org.jowidgets.util.Assert;
 
 public class TreePopupDetectionObservable implements ITreePopupDetectionObservable {
 
-	private final Set<ITreePopupDetectionListener> listeners;
+    private final Set<ITreePopupDetectionListener> listeners;
 
-	public TreePopupDetectionObservable() {
-		this.listeners = new LinkedHashSet<ITreePopupDetectionListener>();
-	}
+    public TreePopupDetectionObservable() {
+        this.listeners = new LinkedHashSet<ITreePopupDetectionListener>();
+    }
 
-	@Override
-	public void addTreePopupDetectionListener(final ITreePopupDetectionListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public void addTreePopupDetectionListener(final ITreePopupDetectionListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removeTreePopupDetectionListener(final ITreePopupDetectionListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeTreePopupDetectionListener(final ITreePopupDetectionListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public void firePopupDetected(final ITreePopupEvent event) {
-		for (final ITreePopupDetectionListener listener : new LinkedList<ITreePopupDetectionListener>(listeners)) {
-			listener.popupDetected(event);
-		}
-	}
+    public void firePopupDetected(final ITreePopupEvent event) {
+        for (final ITreePopupDetectionListener listener : new LinkedList<ITreePopupDetectionListener>(listeners)) {
+            listener.popupDetected(event);
+        }
+    }
 
 }

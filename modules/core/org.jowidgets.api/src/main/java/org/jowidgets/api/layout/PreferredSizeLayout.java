@@ -44,15 +44,15 @@ import org.jowidgets.common.widgets.layout.ILayouter;
  */
 public final class PreferredSizeLayout {
 
-	private PreferredSizeLayout() {}
+    private PreferredSizeLayout() {}
 
-	/**
-	 * Gets a layout factory for an 'PreferredSizeLayout'
-	 * 
-	 * @return A layout factory that produces 'PreferredSizeLayout'
-	 */
-	public static ILayoutFactory<ILayouter> get() {
-		return Toolkit.getLayoutFactoryProvider().preferredSizeLayout();
-	}
+    /**
+     * Gets a layout factory for an 'PreferredSizeLayout'
+     * 
+     * @return A layout factory that produces 'PreferredSizeLayout'
+     */
+    public static ILayoutFactory<ILayouter> get() {
+        return Toolkit.getLayoutFactoryProvider().preferredSizeLayout();
+    }
 
 }

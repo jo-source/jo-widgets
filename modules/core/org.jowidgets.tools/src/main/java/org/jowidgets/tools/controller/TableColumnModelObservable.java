@@ -38,40 +38,40 @@ import org.jowidgets.util.Assert;
 
 public class TableColumnModelObservable implements ITableColumnModelObservable {
 
-	private final Set<ITableColumnModelListener> listeners;
+    private final Set<ITableColumnModelListener> listeners;
 
-	public TableColumnModelObservable() {
-		this.listeners = new LinkedHashSet<ITableColumnModelListener>();
-	}
+    public TableColumnModelObservable() {
+        this.listeners = new LinkedHashSet<ITableColumnModelListener>();
+    }
 
-	@Override
-	public void addColumnModelListener(final ITableColumnModelListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public void addColumnModelListener(final ITableColumnModelListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removeColumnModelListener(final ITableColumnModelListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeColumnModelListener(final ITableColumnModelListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public void fireColumnsAdded(final int[] columnIndices) {
-		for (final ITableColumnModelListener listener : new LinkedList<ITableColumnModelListener>(listeners)) {
-			listener.columnsAdded(columnIndices);
-		}
-	}
+    public void fireColumnsAdded(final int[] columnIndices) {
+        for (final ITableColumnModelListener listener : new LinkedList<ITableColumnModelListener>(listeners)) {
+            listener.columnsAdded(columnIndices);
+        }
+    }
 
-	public void fireColumnsRemoved(final int[] columnIndices) {
-		for (final ITableColumnModelListener listener : new LinkedList<ITableColumnModelListener>(listeners)) {
-			listener.columnsRemoved(columnIndices);
-		}
-	}
+    public void fireColumnsRemoved(final int[] columnIndices) {
+        for (final ITableColumnModelListener listener : new LinkedList<ITableColumnModelListener>(listeners)) {
+            listener.columnsRemoved(columnIndices);
+        }
+    }
 
-	public void fireColumnsChanged(final int[] columnIndices) {
-		for (final ITableColumnModelListener listener : new LinkedList<ITableColumnModelListener>(listeners)) {
-			listener.columnsChanged(columnIndices);
-		}
-	}
+    public void fireColumnsChanged(final int[] columnIndices) {
+        for (final ITableColumnModelListener listener : new LinkedList<ITableColumnModelListener>(listeners)) {
+            listener.columnsChanged(columnIndices);
+        }
+    }
 
 }

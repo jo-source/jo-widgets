@@ -32,8 +32,8 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
 public class CompositeWrapper extends SwtComposite {
 
-	public CompositeWrapper(final IGenericWidgetFactory factory, final Composite composite) {
-		super(factory, composite);
-	}
+    public CompositeWrapper(final IGenericWidgetFactory factory, final Composite composite) {
+        super(factory, composite);
+    }
 
 }

@@ -40,33 +40,33 @@ import org.jowidgets.util.Assert;
 
 class TableCellPopupDetectionObservableSpiAdapter implements ITableCellPopupDetectionObservable {
 
-	private final Set<ITableCellPopupDetectionListener> listeners;
+    private final Set<ITableCellPopupDetectionListener> listeners;
 
-	TableCellPopupDetectionObservableSpiAdapter() {
-		this.listeners = new LinkedHashSet<ITableCellPopupDetectionListener>();
-	}
+    TableCellPopupDetectionObservableSpiAdapter() {
+        this.listeners = new LinkedHashSet<ITableCellPopupDetectionListener>();
+    }
 
-	@Override
-	public void addTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public void addTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removeTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public void firePopupDetected(final ITableCellPopupEvent event, final TableModelSpiAdapter modelSpiAdapter) {
-		if (!listeners.isEmpty()) {
-			final ITableCellPopupEvent decoratedEvent = new TableCellPopupEvent(
-				event.getRowIndex(),
-				modelSpiAdapter.convertViewToModel(event.getColumnIndex()),
-				event.getPosition());
-			for (final ITableCellPopupDetectionListener listener : new LinkedList<ITableCellPopupDetectionListener>(listeners)) {
-				listener.popupDetected(decoratedEvent);
-			}
-		}
-	}
+    public void firePopupDetected(final ITableCellPopupEvent event, final TableModelSpiAdapter modelSpiAdapter) {
+        if (!listeners.isEmpty()) {
+            final ITableCellPopupEvent decoratedEvent = new TableCellPopupEvent(
+                event.getRowIndex(),
+                modelSpiAdapter.convertViewToModel(event.getColumnIndex()),
+                event.getPosition());
+            for (final ITableCellPopupDetectionListener listener : new LinkedList<ITableCellPopupDetectionListener>(listeners)) {
+                listener.popupDetected(decoratedEvent);
+            }
+        }
+    }
 }

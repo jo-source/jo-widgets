@@ -34,8 +34,8 @@ import org.jowidgets.util.io.DefaultTempFileFactory;
 
 public final class OleDocumentDefaults implements IDefaultInitializer<IOleDocumentSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final IOleDocumentSetupBuilder<?> setup) {
-		setup.setTempFileFactory(new DefaultTempFileFactory());
-	}
+    @Override
+    public void initialize(final IOleDocumentSetupBuilder<?> setup) {
+        setup.setTempFileFactory(new DefaultTempFileFactory());
+    }
 }

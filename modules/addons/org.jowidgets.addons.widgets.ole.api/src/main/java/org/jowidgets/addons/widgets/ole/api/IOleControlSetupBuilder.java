@@ -32,7 +32,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IComponentSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
 
 public interface IOleControlSetupBuilder<INSTANCE_TYPE extends IOleControlSetupBuilder<?>> extends
-		IComponentSetup,
-		IComponentSetupBuilder<INSTANCE_TYPE> {
+        IComponentSetup,
+        IComponentSetupBuilder<INSTANCE_TYPE> {
 
 }

@@ -49,166 +49,166 @@ import org.junit.Test;
 
 public class MenuModelTest {
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+    private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
-	@Test
-	public void testMenuModelAddRemove() {
-		testAddAndRemoveMenuItem(new MenuModel());
-		testAddAndRemoveMenuItem(new SeparatorItemModel());
-		testAddAndRemoveMenuItem(new CheckedItemModel());
-		testAddAndRemoveMenuItem(new RadioItemModel());
-		testAddAndRemoveMenuItem(new ActionItemModel());
-	}
+    @Test
+    public void testMenuModelAddRemove() {
+        testAddAndRemoveMenuItem(new MenuModel());
+        testAddAndRemoveMenuItem(new SeparatorItemModel());
+        testAddAndRemoveMenuItem(new CheckedItemModel());
+        testAddAndRemoveMenuItem(new RadioItemModel());
+        testAddAndRemoveMenuItem(new ActionItemModel());
+    }
 
-	private void testAddAndRemoveMenuItem(final IMenuItemModel childModel) {
-		final MenuModel model = new MenuModel();
+    private void testAddAndRemoveMenuItem(final IMenuItemModel childModel) {
+        final MenuModel model = new MenuModel();
 
-		model.addItem(childModel);
-		Assert.assertTrue(model.getChildren().contains(childModel));
+        model.addItem(childModel);
+        Assert.assertTrue(model.getChildren().contains(childModel));
 
-		final IMenuItemModel childModelOfList = model.getChildren().iterator().next();
-		Assert.assertTrue(childModelOfList.equals(childModel));
-		Assert.assertTrue(childModelOfList == childModel);
+        final IMenuItemModel childModelOfList = model.getChildren().iterator().next();
+        Assert.assertTrue(childModelOfList.equals(childModel));
+        Assert.assertTrue(childModelOfList == childModel);
 
-		model.removeItem(childModel);
-		Assert.assertFalse(model.getChildren().contains(childModel));
-	}
+        model.removeItem(childModel);
+        Assert.assertFalse(model.getChildren().contains(childModel));
+    }
 
-	@Test
-	public void testMenuModelRejectIdDoubles() {
+    @Test
+    public void testMenuModelRejectIdDoubles() {
 
-		final MenuModel model = new MenuModel();
+        final MenuModel model = new MenuModel();
 
-		final String id = "ID_OF_ITEM";
+        final String id = "ID_OF_ITEM";
 
-		final SeparatorItemModel separator = new SeparatorItemModel(id);
+        final SeparatorItemModel separator = new SeparatorItemModel(id);
 
-		model.addItem(separator);
+        model.addItem(separator);
 
-		final IMenuItemModel foundItem = model.findItemByPath(id);
-		Assert.assertEquals(separator, foundItem);
+        final IMenuItemModel foundItem = model.findItemByPath(id);
+        Assert.assertEquals(separator, foundItem);
 
-		int exceptionCount = 0;
+        int exceptionCount = 0;
 
-		try {
-			model.addItem(separator);
-		}
-		catch (final IllegalArgumentException e) {
-			exceptionCount++;
-		}
-		Assert.assertEquals(exceptionCount, 1);
+        try {
+            model.addItem(separator);
+        }
+        catch (final IllegalArgumentException e) {
+            exceptionCount++;
+        }
+        Assert.assertEquals(exceptionCount, 1);
 
-		try {
-			model.addItem(new SeparatorItemModel(id));
-		}
-		catch (final IllegalArgumentException e) {
-			exceptionCount++;
-		}
-		Assert.assertEquals(exceptionCount, 2);
+        try {
+            model.addItem(new SeparatorItemModel(id));
+        }
+        catch (final IllegalArgumentException e) {
+            exceptionCount++;
+        }
+        Assert.assertEquals(exceptionCount, 2);
 
-		try {
-			model.addItem(MenuModel.builder().setId(id));
-		}
-		catch (final IllegalArgumentException e) {
-			exceptionCount++;
-		}
-		Assert.assertEquals(exceptionCount, 3);
+        try {
+            model.addItem(MenuModel.builder().setId(id));
+        }
+        catch (final IllegalArgumentException e) {
+            exceptionCount++;
+        }
+        Assert.assertEquals(exceptionCount, 3);
 
-		try {
-			model.addItem(CheckedItemModel.builder().setId(id));
-		}
-		catch (final IllegalArgumentException e) {
-			exceptionCount++;
-		}
-		Assert.assertEquals(exceptionCount, 4);
+        try {
+            model.addItem(CheckedItemModel.builder().setId(id));
+        }
+        catch (final IllegalArgumentException e) {
+            exceptionCount++;
+        }
+        Assert.assertEquals(exceptionCount, 4);
 
-		try {
-			model.addItem(RadioItemModel.builder().setId(id));
-		}
-		catch (final IllegalArgumentException e) {
-			exceptionCount++;
-		}
-		Assert.assertEquals(exceptionCount, 5);
+        try {
+            model.addItem(RadioItemModel.builder().setId(id));
+        }
+        catch (final IllegalArgumentException e) {
+            exceptionCount++;
+        }
+        Assert.assertEquals(exceptionCount, 5);
 
-		try {
-			model.addItem(ActionItemModel.builder().setId(id));
-		}
-		catch (final IllegalArgumentException e) {
-			exceptionCount++;
-		}
-		Assert.assertEquals(exceptionCount, 6);
-	}
+        try {
+            model.addItem(ActionItemModel.builder().setId(id));
+        }
+        catch (final IllegalArgumentException e) {
+            exceptionCount++;
+        }
+        Assert.assertEquals(exceptionCount, 6);
+    }
 
-	@Test
-	public void testMenuItemVisibility() {
-		Toolkit.getApplicationRunner().run(new IApplication() {
+    @Test
+    public void testMenuItemVisibility() {
+        Toolkit.getApplicationRunner().run(new IApplication() {
 
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
-				final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
-				frame.setVisible(true);
+            @Override
+            public void start(final IApplicationLifecycle lifecycle) {
+                final IFrame frame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
+                frame.setVisible(true);
 
-				final IMenuBar menuBar = frame.createMenuBar();
+                final IMenuBar menuBar = frame.createMenuBar();
 
-				final IMainMenu menu = menuBar.addMenu("menu");
-				final IMenuModel menuModel = menu.getModel();
+                final IMainMenu menu = menuBar.addMenu("menu");
+                final IMenuModel menuModel = menu.getModel();
 
-				testMenuItemVisibility(menu, menuModel);
+                testMenuItemVisibility(menu, menuModel);
 
-				frame.dispose();
-			}
-		});
-	}
+                frame.dispose();
+            }
+        });
+    }
 
-	private void testMenuItemVisibility(final IMainMenu menu, final IMenuModel menuModel) {
-		final int iterationCount = 5;
-		final IMenuItem[] menuItems = new IMenuItem[iterationCount];
-		//create actions and test model and menu size
-		for (int i = 0; i < iterationCount; i++) {
-			Assert.assertEquals(i, menu.getChildren().size());
-			Assert.assertEquals(i, menuModel.getChildren().size());
+    private void testMenuItemVisibility(final IMainMenu menu, final IMenuModel menuModel) {
+        final int iterationCount = 5;
+        final IMenuItem[] menuItems = new IMenuItem[iterationCount];
+        //create actions and test model and menu size
+        for (int i = 0; i < iterationCount; i++) {
+            Assert.assertEquals(i, menu.getChildren().size());
+            Assert.assertEquals(i, menuModel.getChildren().size());
 
-			menuModel.addActionItem("TestAction" + i);
-			menuItems[i] = menu.getChildren().get(i);
+            menuModel.addActionItem("TestAction" + i);
+            menuItems[i] = menu.getChildren().get(i);
 
-			Assert.assertEquals(i + 1, menu.getChildren().size());
-			Assert.assertEquals(i + 1, menuModel.getChildren().size());
-		}
+            Assert.assertEquals(i + 1, menu.getChildren().size());
+            Assert.assertEquals(i + 1, menuModel.getChildren().size());
+        }
 
-		//hide actions and test model and menu size
-		int i = iterationCount;
-		for (final IItemModel itemModel : menuModel.getChildren()) {
-			Assert.assertEquals(i, menu.getChildren().size());
-			Assert.assertEquals(iterationCount, menuModel.getChildren().size());
+        //hide actions and test model and menu size
+        int i = iterationCount;
+        for (final IItemModel itemModel : menuModel.getChildren()) {
+            Assert.assertEquals(i, menu.getChildren().size());
+            Assert.assertEquals(iterationCount, menuModel.getChildren().size());
 
-			itemModel.setVisible(false);
+            itemModel.setVisible(false);
 
-			Assert.assertEquals(i - 1, menu.getChildren().size());
-			Assert.assertEquals(iterationCount, menuModel.getChildren().size());
+            Assert.assertEquals(i - 1, menu.getChildren().size());
+            Assert.assertEquals(iterationCount, menuModel.getChildren().size());
 
-			i--;
-		}
+            i--;
+        }
 
-		//unhide actions and test model and menu size
-		for (final IItemModel itemModel : menuModel.getChildren()) {
-			Assert.assertEquals(i, menu.getChildren().size());
-			Assert.assertEquals(iterationCount, menuModel.getChildren().size());
+        //unhide actions and test model and menu size
+        for (final IItemModel itemModel : menuModel.getChildren()) {
+            Assert.assertEquals(i, menu.getChildren().size());
+            Assert.assertEquals(iterationCount, menuModel.getChildren().size());
 
-			itemModel.setVisible(true);
+            itemModel.setVisible(true);
 
-			Assert.assertEquals(menuItems[i].getText(), menu.getChildren().get(i).getText());
+            Assert.assertEquals(menuItems[i].getText(), menu.getChildren().get(i).getText());
 
-			Assert.assertEquals(i + 1, menu.getChildren().size());
-			Assert.assertEquals(iterationCount, menuModel.getChildren().size());
+            Assert.assertEquals(i + 1, menu.getChildren().size());
+            Assert.assertEquals(iterationCount, menuModel.getChildren().size());
 
-			i++;
-		}
+            i++;
+        }
 
-		//remove all items
-		menuModel.removeAllItems();
-		Assert.assertEquals(0, menu.getChildren().size());
-		Assert.assertEquals(0, menuModel.getChildren().size());
+        //remove all items
+        menuModel.removeAllItems();
+        Assert.assertEquals(0, menu.getChildren().size());
+        Assert.assertEquals(0, menuModel.getChildren().size());
 
-	}
+    }
 
 }

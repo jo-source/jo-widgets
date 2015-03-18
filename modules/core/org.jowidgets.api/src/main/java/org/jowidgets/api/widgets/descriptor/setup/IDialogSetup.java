@@ -29,7 +29,6 @@ package org.jowidgets.api.widgets.descriptor.setup;
 
 import org.jowidgets.common.widgets.descriptor.setup.IDialogSetupCommon;
 
-
 public interface IDialogSetup extends IFrameSetup, IDialogSetupCommon {
 
 }

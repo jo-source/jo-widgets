@@ -27,9 +27,8 @@
  */
 package org.jowidgets.workbench.api;
 
-
 public interface IDisposeCallback {
 
-	void onDispose();
+    void onDispose();
 
 }

@@ -48,101 +48,101 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class MenuModelsExample implements IApplication {
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
 
-		//Create a frame BluePrint with help of the BluePrintFactory (BPF)
-		final IFrameBluePrint frameBp = BPF.frame();
-		frameBp.setSize(new Dimension(400, 300)).setTitle("Hello World");
+        //Create a frame BluePrint with help of the BluePrintFactory (BPF)
+        final IFrameBluePrint frameBp = BPF.frame();
+        frameBp.setSize(new Dimension(400, 300)).setTitle("Hello World");
 
-		//Create a frame with help of the Toolkit and BluePrint. This convenience
-		//method finishes the ApplicationLifecycle when the root frame will be closed.
-		final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
+        //Create a frame with help of the Toolkit and BluePrint. This convenience
+        //method finishes the ApplicationLifecycle when the root frame will be closed.
+        final IFrame frame = Toolkit.createRootFrame(frameBp, lifecycle);
 
-		//Use a simple MigLayout with one column and one row for the frame (a frame is a container also)
-		frame.setLayout(new MigLayoutDescriptor("[]", "[]"));
+        //Use a simple MigLayout with one column and one row for the frame (a frame is a container also)
+        frame.setLayout(new MigLayoutDescriptor("[]", "[]"));
 
-		//Create a button BluePrint with help of the BluePrintFactory (BPF)
-		final IButtonBluePrint buttonBp = BPF.button().setText("Hello World");
+        //Create a button BluePrint with help of the BluePrintFactory (BPF)
+        final IButtonBluePrint buttonBp = BPF.button().setText("Hello World");
 
-		//Add the button defined by the BluePrint to the frame
-		final IButton button = frame.add(buttonBp);
+        //Add the button defined by the BluePrint to the frame
+        final IButton button = frame.add(buttonBp);
 
-		//Add an ActionListener to the button
-		button.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				//CHECKSTYLE:OFF
-				System.out.println("Hello World");
-				//CHECKSTYLE:ON
-			}
-		});
+        //Add an ActionListener to the button
+        button.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                //CHECKSTYLE:OFF
+                System.out.println("Hello World");
+                //CHECKSTYLE:ON
+            }
+        });
 
-		//****************************************************************
-		//MENU MODEL EXAMPLE
-		//****************************************************************
-		final IMenuModel mainMenu = new MenuModel("Main menu");
+        //****************************************************************
+        //MENU MODEL EXAMPLE
+        //****************************************************************
+        final IMenuModel mainMenu = new MenuModel("Main menu");
 
-		final IActionItemModel actionItem = mainMenu.addActionItem("ActionItem");
-		actionItem.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				//CHECKSTYLE:OFF
-				System.out.println("Action Performed");
-				//CHECKSTYLE:ON
-			}
-		});
+        final IActionItemModel actionItem = mainMenu.addActionItem("ActionItem");
+        actionItem.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                //CHECKSTYLE:OFF
+                System.out.println("Action Performed");
+                //CHECKSTYLE:ON
+            }
+        });
 
-		final ICheckedItemModel checkedItem = mainMenu.addCheckedItem("CheckedItem");
-		checkedItem.setSelected(true);
-		checkedItem.addItemListener(new IItemStateListener() {
-			@Override
-			public void itemStateChanged() {
-				//CHECKSTYLE:OFF
-				System.out.println(checkedItem.isSelected());
-				//CHECKSTYLE:ON
-			}
-		});
+        final ICheckedItemModel checkedItem = mainMenu.addCheckedItem("CheckedItem");
+        checkedItem.setSelected(true);
+        checkedItem.addItemListener(new IItemStateListener() {
+            @Override
+            public void itemStateChanged() {
+                //CHECKSTYLE:OFF
+                System.out.println(checkedItem.isSelected());
+                //CHECKSTYLE:ON
+            }
+        });
 
-		mainMenu.addSeparator();
+        mainMenu.addSeparator();
 
-		final IMenuModel subMenu = mainMenu.addMenu("SubMenu");
-		final IRadioItemModel radio1 = subMenu.addRadioItem("Radio1");
-		subMenu.addRadioItem("Radio2").setSelected(true);
-		subMenu.addRadioItem("Radio3");
+        final IMenuModel subMenu = mainMenu.addMenu("SubMenu");
+        final IRadioItemModel radio1 = subMenu.addRadioItem("Radio1");
+        subMenu.addRadioItem("Radio2").setSelected(true);
+        subMenu.addRadioItem("Radio3");
 
-		radio1.addItemListener(new IItemStateListener() {
-			@Override
-			public void itemStateChanged() {
-				//CHECKSTYLE:OFF
-				System.out.println(radio1.isSelected());
-				//CHECKSTYLE:ON
-			}
-		});
+        radio1.addItemListener(new IItemStateListener() {
+            @Override
+            public void itemStateChanged() {
+                //CHECKSTYLE:OFF
+                System.out.println(radio1.isSelected());
+                //CHECKSTYLE:ON
+            }
+        });
 
-		final IMenuBarModel menuBar = frame.getMenuBarModel();
-		menuBar.addMenu(mainMenu);
+        final IMenuBarModel menuBar = frame.getMenuBarModel();
+        menuBar.addMenu(mainMenu);
 
-		frame.setPopupMenu(mainMenu);
-		//RECURSIVE LISTENER EXAMPLE
-		//		frame.addPopupDetectionListenerRecursive(new IListenerFactory<IPopupDetectionListener>() {
-		//			@Override
-		//			public IPopupDetectionListener create(final IComponent component) {
-		//
-		//				final IPopupMenu popupMenu = component.createPopupMenu();
-		//				popupMenu.setModel(mainMenu);
-		//
-		//				return new IPopupDetectionListener() {
-		//					@Override
-		//					public void popupDetected(final Position position) {
-		//						popupMenu.show(position);
-		//					}
-		//				};
-		//			}
-		//		});
+        frame.setPopupMenu(mainMenu);
+        //RECURSIVE LISTENER EXAMPLE
+        //		frame.addPopupDetectionListenerRecursive(new IListenerFactory<IPopupDetectionListener>() {
+        //			@Override
+        //			public IPopupDetectionListener create(final IComponent component) {
+        //
+        //				final IPopupMenu popupMenu = component.createPopupMenu();
+        //				popupMenu.setModel(mainMenu);
+        //
+        //				return new IPopupDetectionListener() {
+        //					@Override
+        //					public void popupDetected(final Position position) {
+        //						popupMenu.show(position);
+        //					}
+        //				};
+        //			}
+        //		});
 
-		//set the root frame visible
-		frame.setVisible(true);
-	}
+        //set the root frame visible
+        frame.setVisible(true);
+    }
 
 }

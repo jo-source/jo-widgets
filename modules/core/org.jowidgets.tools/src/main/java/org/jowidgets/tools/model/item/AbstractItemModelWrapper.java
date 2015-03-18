@@ -38,125 +38,125 @@ import org.jowidgets.util.wrapper.IWrapper;
 
 abstract class AbstractItemModelWrapper implements IItemModel, IWrapper<IItemModel> {
 
-	private final IItemModel itemModel;
+    private final IItemModel itemModel;
 
-	public AbstractItemModelWrapper(final IItemModel itemModel) {
-		super();
-		this.itemModel = itemModel;
-	}
+    public AbstractItemModelWrapper(final IItemModel itemModel) {
+        super();
+        this.itemModel = itemModel;
+    }
 
-	protected IItemModel getItemModel() {
-		return itemModel;
-	}
+    protected IItemModel getItemModel() {
+        return itemModel;
+    }
 
-	@Override
-	public final String getId() {
-		return itemModel.getId();
-	}
+    @Override
+    public final String getId() {
+        return itemModel.getId();
+    }
 
-	@Override
-	public final String getText() {
-		return itemModel.getText();
-	}
+    @Override
+    public final String getText() {
+        return itemModel.getText();
+    }
 
-	@Override
-	public final String getToolTipText() {
-		return itemModel.getToolTipText();
-	}
+    @Override
+    public final String getToolTipText() {
+        return itemModel.getToolTipText();
+    }
 
-	@Override
-	public final IImageConstant getIcon() {
-		return itemModel.getIcon();
-	}
+    @Override
+    public final IImageConstant getIcon() {
+        return itemModel.getIcon();
+    }
 
-	@Override
-	public final Accelerator getAccelerator() {
-		return itemModel.getAccelerator();
-	}
+    @Override
+    public final Accelerator getAccelerator() {
+        return itemModel.getAccelerator();
+    }
 
-	@Override
-	public final Character getMnemonic() {
-		return itemModel.getMnemonic();
-	}
+    @Override
+    public final Character getMnemonic() {
+        return itemModel.getMnemonic();
+    }
 
-	@Override
-	public final boolean isEnabled() {
-		return itemModel.isEnabled();
-	}
+    @Override
+    public final boolean isEnabled() {
+        return itemModel.isEnabled();
+    }
 
-	@Override
-	public final void setText(final String text) {
-		itemModel.setText(text);
-	}
+    @Override
+    public final void setText(final String text) {
+        itemModel.setText(text);
+    }
 
-	@Override
-	public final void setToolTipText(final String toolTipText) {
-		itemModel.setToolTipText(toolTipText);
-	}
+    @Override
+    public final void setToolTipText(final String toolTipText) {
+        itemModel.setToolTipText(toolTipText);
+    }
 
-	@Override
-	public final void setIcon(final IImageConstant icon) {
-		itemModel.setIcon(icon);
-	}
+    @Override
+    public final void setIcon(final IImageConstant icon) {
+        itemModel.setIcon(icon);
+    }
 
-	@Override
-	public final void setAccelerator(final Accelerator accelerator) {
-		itemModel.setAccelerator(accelerator);
-	}
+    @Override
+    public final void setAccelerator(final Accelerator accelerator) {
+        itemModel.setAccelerator(accelerator);
+    }
 
-	@Override
-	public final void setAccelerator(final VirtualKey key, final Modifier... modifier) {
-		itemModel.setAccelerator(key, modifier);
-	}
+    @Override
+    public final void setAccelerator(final VirtualKey key, final Modifier... modifier) {
+        itemModel.setAccelerator(key, modifier);
+    }
 
-	@Override
-	public final void setMnemonic(final Character mnemonic) {
-		itemModel.setMnemonic(mnemonic);
-	}
+    @Override
+    public final void setMnemonic(final Character mnemonic) {
+        itemModel.setMnemonic(mnemonic);
+    }
 
-	@Override
-	public final void setMnemonic(final char mnemonic) {
-		itemModel.setMnemonic(mnemonic);
-	}
+    @Override
+    public final void setMnemonic(final char mnemonic) {
+        itemModel.setMnemonic(mnemonic);
+    }
 
-	@Override
-	public final void setEnabled(final boolean enabled) {
-		itemModel.setEnabled(enabled);
-	}
+    @Override
+    public final void setEnabled(final boolean enabled) {
+        itemModel.setEnabled(enabled);
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		itemModel.setVisible(visible);
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        itemModel.setVisible(visible);
+    }
 
-	@Override
-	public boolean isVisible() {
-		return itemModel.isVisible();
-	}
+    @Override
+    public boolean isVisible() {
+        return itemModel.isVisible();
+    }
 
-	@Override
-	public final void addItemModelListener(final IItemModelListener listener) {
-		itemModel.addItemModelListener(listener);
-	}
+    @Override
+    public final void addItemModelListener(final IItemModelListener listener) {
+        itemModel.addItemModelListener(listener);
+    }
 
-	@Override
-	public final void removeItemModelListener(final IItemModelListener listener) {
-		itemModel.removeItemModelListener(listener);
-	}
+    @Override
+    public final void removeItemModelListener(final IItemModelListener listener) {
+        itemModel.removeItemModelListener(listener);
+    }
 
-	@Override
-	public IItemModel unwrap() {
-		return itemModel;
-	}
+    @Override
+    public IItemModel unwrap() {
+        return itemModel;
+    }
 
-	@Override
-	public int hashCode() {
-		return itemModel.hashCode();
-	}
+    @Override
+    public int hashCode() {
+        return itemModel.hashCode();
+    }
 
-	@Override
-	public boolean equals(final Object obj) {
-		return itemModel.equals(obj);
-	}
+    @Override
+    public boolean equals(final Object obj) {
+        return itemModel.equals(obj);
+    }
 
 }

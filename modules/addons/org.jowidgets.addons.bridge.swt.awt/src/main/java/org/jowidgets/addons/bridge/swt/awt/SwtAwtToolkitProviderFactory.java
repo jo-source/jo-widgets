@@ -36,18 +36,18 @@ import org.jowidgets.spi.impl.swt.common.SwtWidgetsServiceProvider;
 
 public final class SwtAwtToolkitProviderFactory {
 
-	private SwtAwtToolkitProviderFactory() {}
+    private SwtAwtToolkitProviderFactory() {}
 
-	public static IToolkitProvider create() {
-		return new IToolkitProvider() {
+    public static IToolkitProvider create() {
+        return new IToolkitProvider() {
 
-			private final IToolkit toolkit = new DefaultToolkit(new SwtWidgetsServiceProvider(
-				new BridgedSwtAwtApplicationRunnerFactory()));
+            private final IToolkit toolkit = new DefaultToolkit(new SwtWidgetsServiceProvider(
+                new BridgedSwtAwtApplicationRunnerFactory()));
 
-			@Override
-			public IToolkit get() {
-				return toolkit;
-			}
-		};
-	}
+            @Override
+            public IToolkit get() {
+                return toolkit;
+            }
+        };
+    }
 }

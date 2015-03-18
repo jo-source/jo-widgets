@@ -33,16 +33,16 @@ import org.jowidgets.common.types.AlignmentHorizontal;
 
 public interface ITableColumnSpi {
 
-	String getText();
+    String getText();
 
-	String getToolTipText();
+    String getToolTipText();
 
-	IImageConstant getIcon();
+    IImageConstant getIcon();
 
-	void setWidth(int width);
+    void setWidth(int width);
 
-	int getWidth();
+    int getWidth();
 
-	AlignmentHorizontal getAlignment();
+    AlignmentHorizontal getAlignment();
 
 }

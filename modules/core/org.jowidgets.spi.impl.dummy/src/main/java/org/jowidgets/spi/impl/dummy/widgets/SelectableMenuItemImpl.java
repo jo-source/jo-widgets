@@ -34,38 +34,38 @@ import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
 public class SelectableMenuItemImpl extends MenuItemImpl implements ISelectableMenuItemSpi {
 
-	private final ItemStateObservable itemStateObservable;
+    private final ItemStateObservable itemStateObservable;
 
-	public SelectableMenuItemImpl(final UIDMenuItem menuItem) {
-		super(menuItem);
-		this.itemStateObservable = new ItemStateObservable();
+    public SelectableMenuItemImpl(final UIDMenuItem menuItem) {
+        super(menuItem);
+        this.itemStateObservable = new ItemStateObservable();
 
-		menuItem.addItemListener(new IItemStateListener() {
-			@Override
-			public void itemStateChanged() {
-				itemStateObservable.fireItemStateChanged(isSelected());
-			}
-		});
-	}
+        menuItem.addItemListener(new IItemStateListener() {
+            @Override
+            public void itemStateChanged() {
+                itemStateObservable.fireItemStateChanged(isSelected());
+            }
+        });
+    }
 
-	@Override
-	public boolean isSelected() {
-		return getUiReference().isSelected();
-	}
+    @Override
+    public boolean isSelected() {
+        return getUiReference().isSelected();
+    }
 
-	@Override
-	public void setSelected(final boolean selected) {
-		getUiReference().setSelected(selected);
-	}
+    @Override
+    public void setSelected(final boolean selected) {
+        getUiReference().setSelected(selected);
+    }
 
-	@Override
-	public void addItemListener(final IItemStateListener listener) {
-		itemStateObservable.addItemListener(listener);
-	}
+    @Override
+    public void addItemListener(final IItemStateListener listener) {
+        itemStateObservable.addItemListener(listener);
+    }
 
-	@Override
-	public void removeItemListener(final IItemStateListener listener) {
-		itemStateObservable.removeItemListener(listener);
-	}
+    @Override
+    public void removeItemListener(final IItemStateListener listener) {
+        itemStateObservable.removeItemListener(listener);
+    }
 
 }

@@ -40,33 +40,33 @@ import org.jowidgets.workbench.api.IComponentNodeContext;
 
 public class LabelsHowToTreeNode extends AbstractDemoComponentNode {
 
-	public static final String ID = LabelsHowToTreeNode.class.getName();
+    public static final String ID = LabelsHowToTreeNode.class.getName();
 
-	public LabelsHowToTreeNode() {
-		super(ID, "Labels", null, SilkIcons.FOLDER);
-	}
+    public LabelsHowToTreeNode() {
+        super(ID, "Labels", null, SilkIcons.FOLDER);
+    }
 
-	@Override
-	public void onContextInitialize(final IComponentNodeContext context) {
-		context.add(new SingleViewTreeNode(LabelWithTextView.class, LabelWithTextView.ID, LabelWithTextView.DEFAULT_LABEL));
+    @Override
+    public void onContextInitialize(final IComponentNodeContext context) {
+        context.add(new SingleViewTreeNode(LabelWithTextView.class, LabelWithTextView.ID, LabelWithTextView.DEFAULT_LABEL));
 
-		context.add(new SingleViewTreeNode(LabelWithIconView.class, LabelWithIconView.ID, LabelWithIconView.DEFAULT_LABEL));
+        context.add(new SingleViewTreeNode(LabelWithIconView.class, LabelWithIconView.ID, LabelWithIconView.DEFAULT_LABEL));
 
-		context.add(new SingleViewTreeNode(
-			LabelWithTextAndIconView.class,
-			LabelWithTextAndIconView.ID,
-			LabelWithTextAndIconView.DEFAULT_LABEL));
+        context.add(new SingleViewTreeNode(
+            LabelWithTextAndIconView.class,
+            LabelWithTextAndIconView.ID,
+            LabelWithTextAndIconView.DEFAULT_LABEL));
 
-		context.add(new SingleViewTreeNode(
-			LabelKitchensinkView.class,
-			LabelKitchensinkView.ID,
-			LabelKitchensinkView.DEFAULT_LABEL));
+        context.add(new SingleViewTreeNode(
+            LabelKitchensinkView.class,
+            LabelKitchensinkView.ID,
+            LabelKitchensinkView.DEFAULT_LABEL));
 
-	}
+    }
 
-	@Override
-	public IComponent createComponent(final IComponentContext context) {
-		return null;
-	}
+    @Override
+    public IComponent createComponent(final IComponentContext context) {
+        return null;
+    }
 
 }

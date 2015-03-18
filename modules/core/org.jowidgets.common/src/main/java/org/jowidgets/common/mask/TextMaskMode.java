@@ -30,14 +30,14 @@ package org.jowidgets.common.mask;
 
 public enum TextMaskMode {
 
-	/**
-	 * All placeholders will be shown, even if the input is incomplete
-	 */
-	FULL_MASK,
+    /**
+     * All placeholders will be shown, even if the input is incomplete
+     */
+    FULL_MASK,
 
-	/**
-	 * Only the placeholders from the start index to the last input index will be shown
-	 */
-	PARTITIAL_MASK;
+    /**
+     * Only the placeholders from the start index to the last input index will be shown
+     */
+    PARTITIAL_MASK;
 
 }

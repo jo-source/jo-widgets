@@ -32,66 +32,66 @@ import org.jowidgets.common.color.IColorConstant;
 
 public enum Colors implements IColorConstant {
 
-	//logical colors
+    //logical colors
 
-	/**
-	 * Default foreground color
-	 */
-	DEFAULT(new ColorValue(0, 0, 0)),
+    /**
+     * Default foreground color
+     */
+    DEFAULT(new ColorValue(0, 0, 0)),
 
-	/**
-	 * Error color
-	 */
-	ERROR(new ColorValue(220, 0, 0)),
+    /**
+     * Error color
+     */
+    ERROR(new ColorValue(220, 0, 0)),
 
-	/**
-	 * Warning color
-	 */
-	WARNING(new ColorValue(209, 124, 34)),
+    /**
+     * Warning color
+     */
+    WARNING(new ColorValue(209, 124, 34)),
 
-	/**
-	 * Color for a strong label markup
-	 */
-	STRONG(new ColorValue(0, 70, 213)),
+    /**
+     * Color for a strong label markup
+     */
+    STRONG(new ColorValue(0, 70, 213)),
 
-	/**
-	 * Color for disabled items
-	 */
-	DISABLED(new ColorValue(130, 130, 130)),
+    /**
+     * Color for disabled items
+     */
+    DISABLED(new ColorValue(130, 130, 130)),
 
-	/**
-	 * Background color for even table rows when using striped rendering
-	 */
-	DEFAULT_TABLE_EVEN_BACKGROUND_COLOR(new ColorValue(222, 235, 235)),
+    /**
+     * Background color for even table rows when using striped rendering
+     */
+    DEFAULT_TABLE_EVEN_BACKGROUND_COLOR(new ColorValue(222, 235, 235)),
 
-	/**
-	 * Color for selected backgrounds
-	 */
-	SELECTED_BACKGROUND(new ColorValue(16, 63, 149)),
+    /**
+     * Color for selected backgrounds
+     */
+    SELECTED_BACKGROUND(new ColorValue(16, 63, 149)),
 
-	//named colors
+    //named colors
 
-	BLACK(new ColorValue(0, 0, 0)),
+    BLACK(new ColorValue(0, 0, 0)),
 
-	WHITE(new ColorValue(255, 255, 255)),
+    WHITE(new ColorValue(255, 255, 255)),
 
-	DARK_GREY(new ColorValue(80, 80, 80)),
+    DARK_GREY(new ColorValue(80, 80, 80)),
 
-	GREY(new ColorValue(140, 140, 140)),
+    GREY(new ColorValue(140, 140, 140)),
 
-	LIGHT_GREY(new ColorValue(225, 225, 225)),
+    LIGHT_GREY(new ColorValue(225, 225, 225)),
 
-	GREEN(new ColorValue(7, 106, 3));
+    GREEN(new ColorValue(7, 106, 3));
 
-	private ColorValue colorValue;
+    private ColorValue colorValue;
 
-	private Colors(final ColorValue colorValue) {
-		this.colorValue = colorValue;
-	}
+    private Colors(final ColorValue colorValue) {
+        this.colorValue = colorValue;
+    }
 
-	@Override
-	public ColorValue getDefaultValue() {
-		return colorValue;
-	}
+    @Override
+    public ColorValue getDefaultValue() {
+        return colorValue;
+    }
 
 }

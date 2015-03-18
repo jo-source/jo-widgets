@@ -30,10 +30,10 @@ package org.jowidgets.api.widgets;
 
 public interface IMessageDialog extends IDisplay, IComponent {
 
-	/**
-	 * Shows the message of the dialog and blocks until the user pressed the OK button. After that, the
-	 * dialog will be disposed, so it can not be shown a second time.
-	 */
-	void showMessage();
+    /**
+     * Shows the message of the dialog and blocks until the user pressed the OK button. After that, the
+     * dialog will be disposed, so it can not be shown a second time.
+     */
+    void showMessage();
 
 }

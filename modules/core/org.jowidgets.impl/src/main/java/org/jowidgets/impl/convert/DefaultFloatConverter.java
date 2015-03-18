@@ -31,13 +31,13 @@ import java.text.DecimalFormat;
 
 class DefaultFloatConverter extends AbstractFloatingPointNumberConverter<Float> {
 
-	DefaultFloatConverter(final DecimalFormat decimalFormat, final String formatHint) {
-		super(decimalFormat, formatHint);
-	}
+    DefaultFloatConverter(final DecimalFormat decimalFormat, final String formatHint) {
+        super(decimalFormat, formatHint);
+    }
 
-	@Override
-	Float convert(final Number number) {
-		return number.floatValue();
-	}
+    @Override
+    Float convert(final Number number) {
+        return number.floatValue();
+    }
 
 }

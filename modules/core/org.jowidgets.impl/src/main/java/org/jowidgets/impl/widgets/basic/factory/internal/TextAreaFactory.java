@@ -40,19 +40,19 @@ import org.jowidgets.spi.widgets.ITextAreaSpi;
 
 public class TextAreaFactory extends AbstractWidgetFactory implements IWidgetFactory<ITextArea, ITextAreaDescriptor> {
 
-	public TextAreaFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+    public TextAreaFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider,
+        final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
-	}
+        super(genericWidgetFactory, widgetsServiceProvider, bpF);
+    }
 
-	@Override
-	public ITextArea create(final Object parentUiReference, final ITextAreaDescriptor descriptor) {
-		final ITextAreaBluePrintSpi bp = getSpiBluePrintFactory().textArea().setSetup(descriptor);
-		final ITextAreaSpi textAreaSpi = getSpiWidgetFactory().createTextArea(parentUiReference, bp);
+    @Override
+    public ITextArea create(final Object parentUiReference, final ITextAreaDescriptor descriptor) {
+        final ITextAreaBluePrintSpi bp = getSpiBluePrintFactory().textArea().setSetup(descriptor);
+        final ITextAreaSpi textAreaSpi = getSpiWidgetFactory().createTextArea(parentUiReference, bp);
 
-		return new TextAreaImpl(textAreaSpi, descriptor);
-	}
+        return new TextAreaImpl(textAreaSpi, descriptor);
+    }
 }

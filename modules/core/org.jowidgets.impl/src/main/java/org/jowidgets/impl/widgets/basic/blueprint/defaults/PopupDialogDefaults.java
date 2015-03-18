@@ -32,9 +32,9 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
 public class PopupDialogDefaults implements IDefaultInitializer<IPopupDialogSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final IPopupDialogSetupBuilder<?> builder) {
-		builder.setAutoDispose(true);
-	}
+    @Override
+    public void initialize(final IPopupDialogSetupBuilder<?> builder) {
+        builder.setAutoDispose(true);
+    }
 
 }

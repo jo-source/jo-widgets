@@ -55,151 +55,151 @@ import org.jowidgets.api.widgets.IValidationResultLabel;
 
 final class ComponentTypeUtil {
 
-	private ComponentTypeUtil() {}
+    private ComponentTypeUtil() {}
 
-	static int getType(final IComponent component) {
+    static int getType(final IComponent component) {
 
-		if (isContainer(component)) {
-			return IComponentWrapperCommon.TYPE_CONTAINER;
-		}
-		if (isButton(component)) {
-			return IComponentWrapperCommon.TYPE_BUTTON;
-		}
-		if (isLabel(component)) {
-			return IComponentWrapperCommon.TYPE_LABEL;
-		}
-		if (isTextField(component)) {
-			return IComponentWrapperCommon.TYPE_TEXT_FIELD;
-		}
-		if (isTextArea(component)) {
-			return IComponentWrapperCommon.TYPE_TEXT_AREA;
-		}
-		if (isList(component)) {
-			return IComponentWrapperCommon.TYPE_LIST;
-		}
-		if (isTable(component)) {
-			return IComponentWrapperCommon.TYPE_TABLE;
-		}
-		if (isScrollPane(component)) {
-			return IComponentWrapperCommon.TYPE_SCROLL_PANE;
-		}
-		if (isImage(component)) {
-			return IComponentWrapperCommon.TYPE_IMAGE;
-		}
-		if (isPanel(component)) {
-			return IComponentWrapperCommon.TYPE_PANEL;
-		}
-		if (isComboBox(component)) {
-			return IComponentWrapperCommon.TYPE_COMBO_BOX;
-		}
-		if (isCheckBox(component)) {
-			return IComponentWrapperCommon.TYPE_CHECK_BOX;
-		}
-		if (isProgressBar(component)) {
-			return IComponentWrapperCommon.TYPE_PROGRESS_BAR;
-		}
-		if (isTree(component)) {
-			return IComponentWrapperCommon.TYPE_TREE;
-		}
+        if (isContainer(component)) {
+            return IComponentWrapperCommon.TYPE_CONTAINER;
+        }
+        if (isButton(component)) {
+            return IComponentWrapperCommon.TYPE_BUTTON;
+        }
+        if (isLabel(component)) {
+            return IComponentWrapperCommon.TYPE_LABEL;
+        }
+        if (isTextField(component)) {
+            return IComponentWrapperCommon.TYPE_TEXT_FIELD;
+        }
+        if (isTextArea(component)) {
+            return IComponentWrapperCommon.TYPE_TEXT_AREA;
+        }
+        if (isList(component)) {
+            return IComponentWrapperCommon.TYPE_LIST;
+        }
+        if (isTable(component)) {
+            return IComponentWrapperCommon.TYPE_TABLE;
+        }
+        if (isScrollPane(component)) {
+            return IComponentWrapperCommon.TYPE_SCROLL_PANE;
+        }
+        if (isImage(component)) {
+            return IComponentWrapperCommon.TYPE_IMAGE;
+        }
+        if (isPanel(component)) {
+            return IComponentWrapperCommon.TYPE_PANEL;
+        }
+        if (isComboBox(component)) {
+            return IComponentWrapperCommon.TYPE_COMBO_BOX;
+        }
+        if (isCheckBox(component)) {
+            return IComponentWrapperCommon.TYPE_CHECK_BOX;
+        }
+        if (isProgressBar(component)) {
+            return IComponentWrapperCommon.TYPE_PROGRESS_BAR;
+        }
+        if (isTree(component)) {
+            return IComponentWrapperCommon.TYPE_TREE;
+        }
 
-		if (isSlider(component)) {
-			return IComponentWrapperCommon.TYPE_SLIDER;
-		}
-		if (isSpinner(component)) {
-			return IComponentWrapperCommon.TYPE_SPINNER;
-		}
-		if (isScrollBar(component)) {
-			return IComponentWrapperCommon.TYPE_SCROLL_BAR;
-		}
+        if (isSlider(component)) {
+            return IComponentWrapperCommon.TYPE_SLIDER;
+        }
+        if (isSpinner(component)) {
+            return IComponentWrapperCommon.TYPE_SPINNER;
+        }
+        if (isScrollBar(component)) {
+            return IComponentWrapperCommon.TYPE_SCROLL_BAR;
+        }
 
-		if (isSeparator(component)) {
-			return IComponentWrapperCommon.TYPE_SEPARATOR;
-		}
+        if (isSeparator(component)) {
+            return IComponentWrapperCommon.TYPE_SEPARATOR;
+        }
 
-		return IComponentWrapperCommon.TYPE_UNKNOWN;
-	}
+        return IComponentWrapperCommon.TYPE_UNKNOWN;
+    }
 
-	private static boolean isSeparator(final IComponent component) {
-		// TODO MG,NM MigLayout - find a way to detect separator
-		//		if (component instanceof IControl) {
-		//			IControl control = (IControl) component;
-		//		}
-		return false;
-	}
+    private static boolean isSeparator(final IComponent component) {
+        // TODO MG,NM MigLayout - find a way to detect separator
+        //		if (component instanceof IControl) {
+        //			IControl control = (IControl) component;
+        //		}
+        return false;
+    }
 
-	private static boolean isScrollBar(final IComponent component) {
-		return false;
-	}
+    private static boolean isScrollBar(final IComponent component) {
+        return false;
+    }
 
-	private static boolean isTree(final IComponent component) {
-		return (component instanceof ITree);
-	}
+    private static boolean isTree(final IComponent component) {
+        return (component instanceof ITree);
+    }
 
-	private static boolean isProgressBar(final IComponent component) {
-		return (component instanceof IProgressBar);
-	}
+    private static boolean isProgressBar(final IComponent component) {
+        return (component instanceof IProgressBar);
+    }
 
-	private static boolean isCheckBox(final IComponent component) {
-		return (component instanceof ICheckBox);
-	}
+    private static boolean isCheckBox(final IComponent component) {
+        return (component instanceof ICheckBox);
+    }
 
-	private static boolean isSpinner(final IComponent component) {
-		return false;
-	}
+    private static boolean isSpinner(final IComponent component) {
+        return false;
+    }
 
-	private static boolean isSlider(final IComponent component) {
-		return false;
-	}
+    private static boolean isSlider(final IComponent component) {
+        return false;
+    }
 
-	private static boolean isComboBox(final IComponent component) {
-		return (component instanceof IComboBox);
-	}
+    private static boolean isComboBox(final IComponent component) {
+        return (component instanceof IComboBox);
+    }
 
-	private static boolean isPanel(final IComponent component) {
-		return false;
-	}
+    private static boolean isPanel(final IComponent component) {
+        return false;
+    }
 
-	private static boolean isImage(final IComponent component) {
-		return (component instanceof IIcon);
-	}
+    private static boolean isImage(final IComponent component) {
+        return (component instanceof IIcon);
+    }
 
-	private static boolean isScrollPane(final IComponent component) {
-		return (component instanceof IScrollComposite);
-	}
+    private static boolean isScrollPane(final IComponent component) {
+        return (component instanceof IScrollComposite);
+    }
 
-	private static boolean isTable(final IComponent component) {
-		return (component instanceof ITable);
-	}
+    private static boolean isTable(final IComponent component) {
+        return (component instanceof ITable);
+    }
 
-	private static boolean isList(final IComponent component) {
-		return false;
-	}
+    private static boolean isList(final IComponent component) {
+        return false;
+    }
 
-	private static boolean isButton(final IComponent component) {
-		return ((component instanceof IButton)
-			|| (component instanceof IToggleButton)
-			|| (component instanceof IToolBarButton)
-			|| (component instanceof IToolBarPopupButton) || (component instanceof IToolBarToggleButton));
-	}
+    private static boolean isButton(final IComponent component) {
+        return ((component instanceof IButton)
+            || (component instanceof IToggleButton)
+            || (component instanceof IToolBarButton)
+            || (component instanceof IToolBarPopupButton) || (component instanceof IToolBarToggleButton));
+    }
 
-	private static boolean isContainer(final IComponent component) {
-		return ((component instanceof IFrame)
-			|| (component instanceof IContainer)
-			|| (component instanceof ITabFolder)
-			|| (component instanceof IToolBar)
-			|| (component instanceof ISplitComposite) || (component instanceof IMenuBar));
-	}
+    private static boolean isContainer(final IComponent component) {
+        return ((component instanceof IFrame)
+            || (component instanceof IContainer)
+            || (component instanceof ITabFolder)
+            || (component instanceof IToolBar)
+            || (component instanceof ISplitComposite) || (component instanceof IMenuBar));
+    }
 
-	private static boolean isLabel(final IComponent component) {
-		return ((component instanceof ILabel) || (component instanceof IValidationResultLabel));
-	}
+    private static boolean isLabel(final IComponent component) {
+        return ((component instanceof ILabel) || (component instanceof IValidationResultLabel));
+    }
 
-	private static boolean isTextField(final IComponent component) {
-		return ((component instanceof IInputField) || (component instanceof IInputControl));
-	}
+    private static boolean isTextField(final IComponent component) {
+        return ((component instanceof IInputField) || (component instanceof IInputControl));
+    }
 
-	private static boolean isTextArea(final IComponent component) {
-		return (component instanceof ITextArea);
-	}
+    private static boolean isTextArea(final IComponent component) {
+        return (component instanceof ITextArea);
+    }
 
 }

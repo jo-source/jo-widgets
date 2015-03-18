@@ -47,136 +47,136 @@ import org.jowidgets.validation.ValidationResult;
 
 public class SliderViewerImpl<VALUE_TYPE> extends AbstractInputControl<VALUE_TYPE> implements ISliderViewer<VALUE_TYPE> {
 
-	private final IObservableValue<VALUE_TYPE> observableValue;
-	private final IBinding binding;
-	private final VALUE_TYPE defaultValue;
+    private final IObservableValue<VALUE_TYPE> observableValue;
+    private final IBinding binding;
+    private final VALUE_TYPE defaultValue;
 
-	public SliderViewerImpl(final ISlider slider, final ISliderViewerDescriptor<VALUE_TYPE> setup) {
+    public SliderViewerImpl(final ISlider slider, final ISliderViewerDescriptor<VALUE_TYPE> setup) {
 
-		super(slider);
+        super(slider);
 
-		Assert.paramNotNull(setup.getConverter(), "setup.getConverter()");
-		Assert.paramNotNull(setup.getObservableValue(), "setup.getObservableValue()");
+        Assert.paramNotNull(setup.getConverter(), "setup.getConverter()");
+        Assert.paramNotNull(setup.getObservableValue(), "setup.getObservableValue()");
 
-		this.observableValue = setup.getObservableValue();
+        this.observableValue = setup.getObservableValue();
 
-		this.defaultValue = setup.getDefaultValue();
-		final IMouseButtonEventMatcher defaultValueMatcher = setup.getDefaultValueMatcher();
-		if (defaultValue != null) {
-			slider.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mousePressed(final IMouseButtonEvent event) {
-					if (defaultValueMatcher.matches(event, false)) {
-						setValue(defaultValue);
-					}
-				}
+        this.defaultValue = setup.getDefaultValue();
+        final IMouseButtonEventMatcher defaultValueMatcher = setup.getDefaultValueMatcher();
+        if (defaultValue != null) {
+            slider.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(final IMouseButtonEvent event) {
+                    if (defaultValueMatcher.matches(event, false)) {
+                        setValue(defaultValue);
+                    }
+                }
 
-				@Override
-				public void mouseDoubleClicked(final IMouseButtonEvent event) {
-					if (defaultValueMatcher.matches(event, true)) {
-						setValue(defaultValue);
-					}
-				}
-			});
-		}
+                @Override
+                public void mouseDoubleClicked(final IMouseButtonEvent event) {
+                    if (defaultValueMatcher.matches(event, true)) {
+                        setValue(defaultValue);
+                    }
+                }
+            });
+        }
 
-		final ISliderViewerConverter<VALUE_TYPE> viewerConverter = setup.getConverter();
+        final ISliderViewerConverter<VALUE_TYPE> viewerConverter = setup.getConverter();
 
-		VisibiliySettingsInvoker.setVisibility(setup, this);
-		ColorSettingsInvoker.setColors(setup, this);
+        VisibiliySettingsInvoker.setVisibility(setup, this);
+        ColorSettingsInvoker.setColors(setup, this);
 
-		//default value overrides setup value if null
-		final VALUE_TYPE initialValue;
-		if (defaultValue != null && setup.getValue() == null) {
-			initialValue = defaultValue;
-		}
-		else {
-			initialValue = setup.getValue();
-		}
+        //default value overrides setup value if null
+        final VALUE_TYPE initialValue;
+        if (defaultValue != null && setup.getValue() == null) {
+            initialValue = defaultValue;
+        }
+        else {
+            initialValue = setup.getValue();
+        }
 
-		//observable value overrides setup value
-		if (initialValue != null && observableValue.getValue() == null) {
-			setValue(initialValue);
-		}
-		else if (observableValue.getValue() == null) {
-			observableValue.setValue(viewerConverter.getModelValue(
-					slider.getMinimum(),
-					slider.getMaximum(),
-					slider.getSelection()));
-		}
+        //observable value overrides setup value
+        if (initialValue != null && observableValue.getValue() == null) {
+            setValue(initialValue);
+        }
+        else if (observableValue.getValue() == null) {
+            observableValue.setValue(viewerConverter.getModelValue(
+                    slider.getMinimum(),
+                    slider.getMaximum(),
+                    slider.getSelection()));
+        }
 
-		this.binding = Bind.bind(observableValue, slider.getObservableValue(), new IBindingConverter<VALUE_TYPE, Integer>() {
-			@Override
-			public Integer convertSource(final VALUE_TYPE sourceValue) {
-				int sliderValue = viewerConverter.getSliderValue(slider.getMinimum(), slider.getMaximum(), sourceValue);
-				sliderValue = Math.max(slider.getMinimum(), sliderValue);
-				sliderValue = Math.min(slider.getMaximum(), sliderValue);
-				return Integer.valueOf(sliderValue);
-			}
+        this.binding = Bind.bind(observableValue, slider.getObservableValue(), new IBindingConverter<VALUE_TYPE, Integer>() {
+            @Override
+            public Integer convertSource(final VALUE_TYPE sourceValue) {
+                int sliderValue = viewerConverter.getSliderValue(slider.getMinimum(), slider.getMaximum(), sourceValue);
+                sliderValue = Math.max(slider.getMinimum(), sliderValue);
+                sliderValue = Math.min(slider.getMaximum(), sliderValue);
+                return Integer.valueOf(sliderValue);
+            }
 
-			@Override
-			public VALUE_TYPE convertDestination(final Integer destinationValue) {
-				return viewerConverter.getModelValue(slider.getMinimum(), slider.getMaximum(), destinationValue);
-			}
-		});
+            @Override
+            public VALUE_TYPE convertDestination(final Integer destinationValue) {
+                return viewerConverter.getModelValue(slider.getMinimum(), slider.getMaximum(), destinationValue);
+            }
+        });
 
-		resetModificationState();
-	}
+        resetModificationState();
+    }
 
-	@Override
-	protected ISlider getWidget() {
-		return (ISlider) super.getWidget();
-	}
+    @Override
+    protected ISlider getWidget() {
+        return (ISlider) super.getWidget();
+    }
 
-	@Override
-	public IObservableValue<VALUE_TYPE> getObservableValue() {
-		return observableValue;
-	}
+    @Override
+    public IObservableValue<VALUE_TYPE> getObservableValue() {
+        return observableValue;
+    }
 
-	@Override
-	public boolean hasModifications() {
-		return getWidget().hasModifications();
-	}
+    @Override
+    public boolean hasModifications() {
+        return getWidget().hasModifications();
+    }
 
-	@Override
-	public void resetModificationState() {
-		getWidget().resetModificationState();
-	}
+    @Override
+    public void resetModificationState() {
+        getWidget().resetModificationState();
+    }
 
-	@Override
-	protected IValidationResult createValidationResult() {
-		return ValidationResult.ok();
-	}
+    @Override
+    protected IValidationResult createValidationResult() {
+        return ValidationResult.ok();
+    }
 
-	@Override
-	public void setValue(final VALUE_TYPE value) {
-		observableValue.setValue(value);
-	}
+    @Override
+    public void setValue(final VALUE_TYPE value) {
+        observableValue.setValue(value);
+    }
 
-	@Override
-	public VALUE_TYPE getValue() {
-		return observableValue.getValue();
-	}
+    @Override
+    public VALUE_TYPE getValue() {
+        return observableValue.getValue();
+    }
 
-	@Override
-	public void setEditable(final boolean editable) {
-		getWidget().setEditable(editable);
-	}
+    @Override
+    public void setEditable(final boolean editable) {
+        getWidget().setEditable(editable);
+    }
 
-	@Override
-	public boolean isEditable() {
-		return getWidget().isEditable();
-	}
+    @Override
+    public boolean isEditable() {
+        return getWidget().isEditable();
+    }
 
-	@Override
-	public ISlider getSlider() {
-		return getWidget();
-	}
+    @Override
+    public ISlider getSlider() {
+        return getWidget();
+    }
 
-	@Override
-	public void dispose() {
-		binding.dispose();
-		super.dispose();
-	}
+    @Override
+    public void dispose() {
+        binding.dispose();
+        super.dispose();
+    }
 
 }

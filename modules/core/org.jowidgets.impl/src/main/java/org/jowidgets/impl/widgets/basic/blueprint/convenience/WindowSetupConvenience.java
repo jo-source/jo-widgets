@@ -35,50 +35,50 @@ import org.jowidgets.api.widgets.blueprint.builder.convenience.IWindowSetupConve
 import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
 public class WindowSetupConvenience extends AbstractSetupBuilderConvenience<IWindowSetupBuilder<?>> implements
-		IWindowSetupConvenience<IWindowSetupBuilder<?>> {
+        IWindowSetupConvenience<IWindowSetupBuilder<?>> {
 
-	@Override
-	public IWindowSetupBuilder<?> autoPackOnce() {
-		return getBuilder().setAutoPackPolicy(AutoPackPolicy.ONCE);
-	}
+    @Override
+    public IWindowSetupBuilder<?> autoPackOnce() {
+        return getBuilder().setAutoPackPolicy(AutoPackPolicy.ONCE);
+    }
 
-	@Override
-	public IWindowSetupBuilder<?> autoPackAlways() {
-		return getBuilder().setAutoPackPolicy(AutoPackPolicy.ALWAYS);
-	}
+    @Override
+    public IWindowSetupBuilder<?> autoPackAlways() {
+        return getBuilder().setAutoPackPolicy(AutoPackPolicy.ALWAYS);
+    }
 
-	@Override
-	public IWindowSetupBuilder<?> autoPackOff() {
-		return getBuilder().setAutoPackPolicy(AutoPackPolicy.OFF);
-	}
+    @Override
+    public IWindowSetupBuilder<?> autoPackOff() {
+        return getBuilder().setAutoPackPolicy(AutoPackPolicy.OFF);
+    }
 
-	@Override
-	public IWindowSetupBuilder<?> autoPositionCorrectionOnce() {
-		return getBuilder().setAutoPositionCorrectionPolicy(AutoPositionCorrectionPolicy.OFF);
-	}
+    @Override
+    public IWindowSetupBuilder<?> autoPositionCorrectionOnce() {
+        return getBuilder().setAutoPositionCorrectionPolicy(AutoPositionCorrectionPolicy.OFF);
+    }
 
-	@Override
-	public IWindowSetupBuilder<?> autoPositionCorrectionAlways() {
-		return getBuilder().setAutoPositionCorrectionPolicy(AutoPositionCorrectionPolicy.OFF);
-	}
+    @Override
+    public IWindowSetupBuilder<?> autoPositionCorrectionAlways() {
+        return getBuilder().setAutoPositionCorrectionPolicy(AutoPositionCorrectionPolicy.OFF);
+    }
 
-	@Override
-	public IWindowSetupBuilder<?> autoPositionCorrectionOff() {
-		return getBuilder().setAutoPositionCorrectionPolicy(AutoPositionCorrectionPolicy.OFF);
-	}
+    @Override
+    public IWindowSetupBuilder<?> autoPositionCorrectionOff() {
+        return getBuilder().setAutoPositionCorrectionPolicy(AutoPositionCorrectionPolicy.OFF);
+    }
 
-	@Override
-	public IWindowSetupBuilder<?> autoCenterOnce() {
-		return getBuilder().setAutoCenterPolicy(AutoCenterPolicy.ONCE);
-	}
+    @Override
+    public IWindowSetupBuilder<?> autoCenterOnce() {
+        return getBuilder().setAutoCenterPolicy(AutoCenterPolicy.ONCE);
+    }
 
-	@Override
-	public IWindowSetupBuilder<?> autoCenterAlways() {
-		return getBuilder().setAutoCenterPolicy(AutoCenterPolicy.ALWAYS);
-	}
+    @Override
+    public IWindowSetupBuilder<?> autoCenterAlways() {
+        return getBuilder().setAutoCenterPolicy(AutoCenterPolicy.ALWAYS);
+    }
 
-	@Override
-	public IWindowSetupBuilder<?> autoCenterOff() {
-		return getBuilder().setAutoCenterPolicy(AutoCenterPolicy.OFF);
-	}
+    @Override
+    public IWindowSetupBuilder<?> autoCenterOff() {
+        return getBuilder().setAutoCenterPolicy(AutoCenterPolicy.OFF);
+    }
 }

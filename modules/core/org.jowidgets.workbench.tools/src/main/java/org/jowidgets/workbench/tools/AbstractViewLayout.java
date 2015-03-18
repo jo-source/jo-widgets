@@ -36,34 +36,34 @@ import org.jowidgets.workbench.api.IViewLayout;
 
 public abstract class AbstractViewLayout implements IViewLayout {
 
-	@Override
-	public String getTooltip() {
-		return null;
-	}
+    @Override
+    public String getTooltip() {
+        return null;
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return null;
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return null;
+    }
 
-	@Override
-	public boolean isHidden() {
-		return false;
-	}
+    @Override
+    public boolean isHidden() {
+        return false;
+    }
 
-	@Override
-	public boolean isDetachable() {
-		return true;
-	}
+    @Override
+    public boolean isDetachable() {
+        return true;
+    }
 
-	@Override
-	public List<String> getFolderWhitelist() {
-		return Collections.emptyList();
-	}
+    @Override
+    public List<String> getFolderWhitelist() {
+        return Collections.emptyList();
+    }
 
-	@Override
-	public List<String> getFolderBlacklist() {
-		return Collections.emptyList();
-	}
+    @Override
+    public List<String> getFolderBlacklist() {
+        return Collections.emptyList();
+    }
 
 }

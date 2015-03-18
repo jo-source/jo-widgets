@@ -35,166 +35,166 @@ import org.jowidgets.common.image.IImageConstant;
 
 public class CheckedItemModel extends AbstractSelectableItemModelWrapper implements ICheckedItemModel {
 
-	/**
-	 * Creates a new checked item model
-	 */
-	public CheckedItemModel() {
-		this(builder());
-	}
+    /**
+     * Creates a new checked item model
+     */
+    public CheckedItemModel() {
+        this(builder());
+    }
 
-	/**
-	 * Creates a new checked item model
-	 * 
-	 * @param text The label text to use
-	 */
-	public CheckedItemModel(final String text) {
-		this(builder().setText(text));
-	}
+    /**
+     * Creates a new checked item model
+     * 
+     * @param text The label text to use
+     */
+    public CheckedItemModel(final String text) {
+        this(builder().setText(text));
+    }
 
-	/**
-	 * Creates a new checked item model
-	 * 
-	 * @param text The label text to use
-	 * @param icon The icon to use
-	 */
-	public CheckedItemModel(final String text, final IImageConstant icon) {
-		this(builder(text, icon));
-	}
+    /**
+     * Creates a new checked item model
+     * 
+     * @param text The label text to use
+     * @param icon The icon to use
+     */
+    public CheckedItemModel(final String text, final IImageConstant icon) {
+        this(builder(text, icon));
+    }
 
-	/**
-	 * Creates a new checked item model
-	 * 
-	 * @param text The label text to use
-	 * @param toolTipText The tooltip text to use
-	 */
-	public CheckedItemModel(final String text, final String toolTipText) {
-		this(builder(text, toolTipText));
-	}
+    /**
+     * Creates a new checked item model
+     * 
+     * @param text The label text to use
+     * @param toolTipText The tooltip text to use
+     */
+    public CheckedItemModel(final String text, final String toolTipText) {
+        this(builder(text, toolTipText));
+    }
 
-	/**
-	 * Creates a new checked item model
-	 * 
-	 * @param text The label text to use
-	 * @param toolTipText The tooltip text to use
-	 * @param icon The icon to use
-	 */
-	public CheckedItemModel(final String text, final String toolTipText, final IImageConstant icon) {
-		this(builder(text, toolTipText, icon));
-	}
+    /**
+     * Creates a new checked item model
+     * 
+     * @param text The label text to use
+     * @param toolTipText The tooltip text to use
+     * @param icon The icon to use
+     */
+    public CheckedItemModel(final String text, final String toolTipText, final IImageConstant icon) {
+        this(builder(text, toolTipText, icon));
+    }
 
-	/**
-	 * Creates a new checked item model
-	 * 
-	 * @param id The id to use
-	 * @param text The label text to use
-	 * @param toolTipText The tooltip text to use
-	 * @param icon The icon to use
-	 */
-	public CheckedItemModel(final String id, final String text, final String toolTipText, final IImageConstant icon) {
-		this(builder(id, text, toolTipText, icon));
-	}
+    /**
+     * Creates a new checked item model
+     * 
+     * @param id The id to use
+     * @param text The label text to use
+     * @param toolTipText The tooltip text to use
+     * @param icon The icon to use
+     */
+    public CheckedItemModel(final String id, final String text, final String toolTipText, final IImageConstant icon) {
+        this(builder(id, text, toolTipText, icon));
+    }
 
-	/**
-	 * Creates a checked item model defined by a builder
-	 * 
-	 * @param builder The builder that defines the model
-	 */
-	public CheckedItemModel(final ICheckedItemModelBuilder builder) {
-		super(builder.build());
-	}
+    /**
+     * Creates a checked item model defined by a builder
+     * 
+     * @param builder The builder that defines the model
+     */
+    public CheckedItemModel(final ICheckedItemModelBuilder builder) {
+        super(builder.build());
+    }
 
-	@Override
-	protected ICheckedItemModel getItemModel() {
-		return (ICheckedItemModel) super.getItemModel();
-	}
+    @Override
+    protected ICheckedItemModel getItemModel() {
+        return (ICheckedItemModel) super.getItemModel();
+    }
 
-	@Override
-	public ICheckedItemModel createCopy() {
-		return getItemModel().createCopy();
-	}
+    @Override
+    public ICheckedItemModel createCopy() {
+        return getItemModel().createCopy();
+    }
 
-	/**
-	 * Creates a new checked item model
-	 * 
-	 * @return A new checked item model
-	 */
-	public static ICheckedItemModel create() {
-		return builder().build();
-	}
+    /**
+     * Creates a new checked item model
+     * 
+     * @return A new checked item model
+     */
+    public static ICheckedItemModel create() {
+        return builder().build();
+    }
 
-	/**
-	 * Creates a new checked item model builder
-	 * 
-	 * @return A new checked item model builder
-	 */
-	public static ICheckedItemModelBuilder builder() {
-		return Toolkit.getModelFactoryProvider().getItemModelFactory().checkedItemBuilder();
-	}
+    /**
+     * Creates a new checked item model builder
+     * 
+     * @return A new checked item model builder
+     */
+    public static ICheckedItemModelBuilder builder() {
+        return Toolkit.getModelFactoryProvider().getItemModelFactory().checkedItemBuilder();
+    }
 
-	/**
-	 * Creates a new checked item model builder
-	 * 
-	 * @param text The label text to set on the builder
-	 * 
-	 * @return A new checked item model builder
-	 */
-	public static ICheckedItemModelBuilder builder(final String text) {
-		return builder().setText(text);
-	}
+    /**
+     * Creates a new checked item model builder
+     * 
+     * @param text The label text to set on the builder
+     * 
+     * @return A new checked item model builder
+     */
+    public static ICheckedItemModelBuilder builder(final String text) {
+        return builder().setText(text);
+    }
 
-	/**
-	 * Creates a new checked item model builder
-	 * 
-	 * @param text The label text to set on the builder
-	 * @param toolTipText The tooltip text to set on the builder
-	 * 
-	 * @return A new checked item model builder
-	 */
-	public static ICheckedItemModelBuilder builder(final String text, final String toolTipText) {
-		return builder(text).setToolTipText(toolTipText);
-	}
+    /**
+     * Creates a new checked item model builder
+     * 
+     * @param text The label text to set on the builder
+     * @param toolTipText The tooltip text to set on the builder
+     * 
+     * @return A new checked item model builder
+     */
+    public static ICheckedItemModelBuilder builder(final String text, final String toolTipText) {
+        return builder(text).setToolTipText(toolTipText);
+    }
 
-	/**
-	 * Creates a new checked item model builder
-	 * 
-	 * @param text The label text to set on the builder
-	 * @param icon The icon to set on the builder
-	 * 
-	 * @return A new checked item model builder
-	 */
-	public static ICheckedItemModelBuilder builder(final String text, final IImageConstant icon) {
-		return builder().setText(text).setIcon(icon);
-	}
+    /**
+     * Creates a new checked item model builder
+     * 
+     * @param text The label text to set on the builder
+     * @param icon The icon to set on the builder
+     * 
+     * @return A new checked item model builder
+     */
+    public static ICheckedItemModelBuilder builder(final String text, final IImageConstant icon) {
+        return builder().setText(text).setIcon(icon);
+    }
 
-	/**
-	 * Creates a new checked item model builder
-	 * 
-	 * @param text The label text to set on the builder
-	 * @param toolTipText The tooltip text to set on the builder
-	 * @param icon The icon to set on the builder
-	 * 
-	 * @return A new checked item model builder
-	 */
-	public static ICheckedItemModelBuilder builder(final String text, final String toolTipText, final IImageConstant icon) {
-		return builder(text, toolTipText).setIcon(icon);
-	}
+    /**
+     * Creates a new checked item model builder
+     * 
+     * @param text The label text to set on the builder
+     * @param toolTipText The tooltip text to set on the builder
+     * @param icon The icon to set on the builder
+     * 
+     * @return A new checked item model builder
+     */
+    public static ICheckedItemModelBuilder builder(final String text, final String toolTipText, final IImageConstant icon) {
+        return builder(text, toolTipText).setIcon(icon);
+    }
 
-	/**
-	 * Creates a new checked item model builder
-	 * 
-	 * @param id The id to set on builder
-	 * @param text The label text to set on the builder
-	 * @param toolTipText The tooltip text to set on the builder
-	 * @param icon The icon to set on the builder
-	 * 
-	 * @return A new checked item model builder
-	 */
-	public static ICheckedItemModelBuilder builder(
-		final String id,
-		final String text,
-		final String toolTipText,
-		final IImageConstant icon) {
-		return builder(text, toolTipText, icon).setId(id);
-	}
+    /**
+     * Creates a new checked item model builder
+     * 
+     * @param id The id to set on builder
+     * @param text The label text to set on the builder
+     * @param toolTipText The tooltip text to set on the builder
+     * @param icon The icon to set on the builder
+     * 
+     * @return A new checked item model builder
+     */
+    public static ICheckedItemModelBuilder builder(
+        final String id,
+        final String text,
+        final String toolTipText,
+        final IImageConstant icon) {
+        return builder(text, toolTipText, icon).setId(id);
+    }
 
 }

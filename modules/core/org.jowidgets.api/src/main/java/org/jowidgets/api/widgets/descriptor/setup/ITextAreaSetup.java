@@ -33,15 +33,15 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ITextAreaSetup extends IComponentSetup, ITextAreaSetupCommon {
 
-	@Mandatory
-	boolean isEditable();
+    @Mandatory
+    boolean isEditable();
 
-	String getText();
+    String getText();
 
-	Markup getMarkup();
+    Markup getMarkup();
 
-	Integer getFontSize();
+    Integer getFontSize();
 
-	String getFontName();
+    String getFontName();
 
 }

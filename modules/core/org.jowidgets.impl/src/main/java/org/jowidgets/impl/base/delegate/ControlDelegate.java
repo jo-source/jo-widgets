@@ -39,73 +39,73 @@ import org.jowidgets.tools.controller.ParentObservable;
 
 public class ControlDelegate extends DisposableDelegate implements IParentObservable<IContainer> {
 
-	private final IControl control;
-	private final PopupMenuCreationDelegate popupMenuCreationDelegate;
-	private final ParentObservable<IContainer> parentObservable;
+    private final IControl control;
+    private final PopupMenuCreationDelegate popupMenuCreationDelegate;
+    private final ParentObservable<IContainer> parentObservable;
 
-	private IContainer parent;
-	private boolean onRemoveByDispose;
+    private IContainer parent;
+    private boolean onRemoveByDispose;
 
-	public ControlDelegate(final IControlSpi controlSpi, final IControl control) {
-		super();
-		this.control = control;
-		this.popupMenuCreationDelegate = new PopupMenuCreationDelegate(controlSpi, control);
-		this.parentObservable = new ParentObservable<IContainer>();
-		this.onRemoveByDispose = false;
-	}
+    public ControlDelegate(final IControlSpi controlSpi, final IControl control) {
+        super();
+        this.control = control;
+        this.popupMenuCreationDelegate = new PopupMenuCreationDelegate(controlSpi, control);
+        this.parentObservable = new ParentObservable<IContainer>();
+        this.onRemoveByDispose = false;
+    }
 
-	public IContainer getParent() {
-		return parent;
-	}
+    public IContainer getParent() {
+        return parent;
+    }
 
-	public void setParent(final IComponent parent) {
-		if (this.parent == null) {
-			if (parent instanceof IContainer) {
-				final IContainer parentContainer = (IContainer) parent;
-				this.parent = parentContainer;
-				parentObservable.fireParentChanged(null, parentContainer);
-			}
-			else {
-				throw new IllegalArgumentException("Parent must be instance of '" + IContainer.class.getName() + "'");
-			}
-		}
-		else if (!isReparentable()) {
-			throw new IllegalStateException("Widget is not reparentable");
-		}
+    public void setParent(final IComponent parent) {
+        if (this.parent == null) {
+            if (parent instanceof IContainer) {
+                final IContainer parentContainer = (IContainer) parent;
+                this.parent = parentContainer;
+                parentObservable.fireParentChanged(null, parentContainer);
+            }
+            else {
+                throw new IllegalArgumentException("Parent must be instance of '" + IContainer.class.getName() + "'");
+            }
+        }
+        else if (!isReparentable()) {
+            throw new IllegalStateException("Widget is not reparentable");
+        }
 
-	}
+    }
 
-	public boolean isReparentable() {
-		//TODO MG will be implemented later
-		return false;
-	}
+    public boolean isReparentable() {
+        //TODO MG will be implemented later
+        return false;
+    }
 
-	@Override
-	public void dispose() {
-		if (!isDisposed()) {
-			if (parent != null && parent.getChildren().contains(control) && !onRemoveByDispose) {
-				onRemoveByDispose = true;
-				parent.remove(control); //this will invoke dispose by the parent container
-				onRemoveByDispose = false;
-			}
-			else {
-				popupMenuCreationDelegate.dispose();
-				super.dispose();
-			}
-		}
-	}
+    @Override
+    public void dispose() {
+        if (!isDisposed()) {
+            if (parent != null && parent.getChildren().contains(control) && !onRemoveByDispose) {
+                onRemoveByDispose = true;
+                parent.remove(control); //this will invoke dispose by the parent container
+                onRemoveByDispose = false;
+            }
+            else {
+                popupMenuCreationDelegate.dispose();
+                super.dispose();
+            }
+        }
+    }
 
-	public IPopupMenu createPopupMenu() {
-		return popupMenuCreationDelegate.createPopupMenu();
-	}
+    public IPopupMenu createPopupMenu() {
+        return popupMenuCreationDelegate.createPopupMenu();
+    }
 
-	@Override
-	public void addParentListener(final IParentListener<IContainer> listener) {
-		parentObservable.addParentListener(listener);
-	}
+    @Override
+    public void addParentListener(final IParentListener<IContainer> listener) {
+        parentObservable.addParentListener(listener);
+    }
 
-	@Override
-	public void removeParentListener(final IParentListener<IContainer> listener) {
-		parentObservable.removeParentListener(listener);
-	}
+    @Override
+    public void removeParentListener(final IParentListener<IContainer> listener) {
+        parentObservable.removeParentListener(listener);
+    }
 }

@@ -44,71 +44,71 @@ import org.jowidgets.tools.powo.JoFrame;
 
 public class DemoFillLayoutMarginFrame extends JoFrame {
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+    private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
-	public DemoFillLayoutMarginFrame() {
-		super("Fill layout (margin) demo");
+    public DemoFillLayoutMarginFrame() {
+        super("Fill layout (margin) demo");
 
-		final ILayouter layouter = setLayout(FillLayout.builder().margin(100).build());
+        final ILayouter layouter = setLayout(FillLayout.builder().margin(100).build());
 
-		addSplitComposite(this);
+        addSplitComposite(this);
 
-		setMinSize(layouter.getMinSize());
-		setSize(500, 400);
-	}
+        setMinSize(layouter.getMinSize());
+        setSize(500, 400);
+    }
 
-	private ITextArea addTextArea(final IContainer container) {
-		final ITextArea textArea = container.add(BPF.textArea());
+    private ITextArea addTextArea(final IContainer container) {
+        final ITextArea textArea = container.add(BPF.textArea());
 
-		final StringBuilder stringBuilder = new StringBuilder();
-		for (int i = 0; i < 50; i++) {
-			stringBuilder.append("Text area in a fill layout. ");
-		}
-		textArea.setText(stringBuilder.toString());
-		return textArea;
-	}
+        final StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < 50; i++) {
+            stringBuilder.append("Text area in a fill layout. ");
+        }
+        textArea.setText(stringBuilder.toString());
+        return textArea;
+    }
 
-	private ITable addTable(final IContainer container) {
-		final ISimpleTableModel tableModel = new SimpleTableModel();
-		for (int i = 0; i < 10; i++) {
-			tableModel.addColumn("Column " + i);
-			tableModel.getColumn(i).setWidth(100);
-		}
-		for (int i = 0; i < 20; i++) {
-			tableModel.addRow();
-			for (int j = 0; j < 10; j++) {
-				tableModel.setCellText(i, j, "Cell (" + i + " / " + j + ")");
-			}
-		}
+    private ITable addTable(final IContainer container) {
+        final ISimpleTableModel tableModel = new SimpleTableModel();
+        for (int i = 0; i < 10; i++) {
+            tableModel.addColumn("Column " + i);
+            tableModel.getColumn(i).setWidth(100);
+        }
+        for (int i = 0; i < 20; i++) {
+            tableModel.addRow();
+            for (int j = 0; j < 10; j++) {
+                tableModel.setCellText(i, j, "Cell (" + i + " / " + j + ")");
+            }
+        }
 
-		return container.add(BPF.table(tableModel).setBorder(true));
-	}
+        return container.add(BPF.table(tableModel).setBorder(true));
+    }
 
-	private IComposite addComposite(final IContainer container) {
-		IComposite composite = container.add(BPF.composite().setBorder());
-		composite.setLayout(FillLayout.get());
-		for (int i = 0; i < 3; i++) {
-			composite = composite.add(BPF.composite().setBorder());
-			composite.setLayout(FillLayout.get());
-		}
+    private IComposite addComposite(final IContainer container) {
+        IComposite composite = container.add(BPF.composite().setBorder());
+        composite.setLayout(FillLayout.get());
+        for (int i = 0; i < 3; i++) {
+            composite = composite.add(BPF.composite().setBorder());
+            composite.setLayout(FillLayout.get());
+        }
 
-		addTextArea(composite);
-		return composite;
-	}
+        addTextArea(composite);
+        return composite;
+    }
 
-	private void addSplitComposite(final IContainer container) {
-		final ISplitCompositeBluePrint splitBp = BPF.splitComposite().resizeSecondPolicy();
-		splitBp.setVertical();
-		final ISplitComposite split = container.add(splitBp);
-		final IContainer first = split.getFirst();
-		final IContainer second = split.getSecond();
+    private void addSplitComposite(final IContainer container) {
+        final ISplitCompositeBluePrint splitBp = BPF.splitComposite().resizeSecondPolicy();
+        splitBp.setVertical();
+        final ISplitComposite split = container.add(splitBp);
+        final IContainer first = split.getFirst();
+        final IContainer second = split.getSecond();
 
-		final ILayouter firstLayouter = first.setLayout(FillLayout.get());
-		final ILayouter secondLayouter = second.setLayout(FillLayout.get());
+        final ILayouter firstLayouter = first.setLayout(FillLayout.get());
+        final ILayouter secondLayouter = second.setLayout(FillLayout.get());
 
-		addComposite(split.getFirst());
-		addTable(split.getSecond());
+        addComposite(split.getFirst());
+        addTable(split.getSecond());
 
-		split.setMinSizes(firstLayouter.getMinSize(), secondLayouter.getMinSize());
-	}
+        split.setMinSizes(firstLayouter.getMinSize(), secondLayouter.getMinSize());
+    }
 }

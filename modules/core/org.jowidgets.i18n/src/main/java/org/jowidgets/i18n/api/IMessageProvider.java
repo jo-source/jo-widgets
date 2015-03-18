@@ -33,18 +33,18 @@ package org.jowidgets.i18n.api;
  */
 public interface IMessageProvider {
 
-	/**
-	 * @param key
-	 * 
-	 * @return The message for the given key
-	 */
-	IMessage getMessage(String key);
+    /**
+     * @param key
+     * 
+     * @return The message for the given key
+     */
+    IMessage getMessage(String key);
 
-	/**
-	 * @param key
-	 * 
-	 * @return The value of the message for the given key and the currently set locale provided from the LocaleHolder
-	 */
-	String getString(String key);
+    /**
+     * @param key
+     * 
+     * @return The value of the message for the given key and the currently set locale provided from the LocaleHolder
+     */
+    String getString(String key);
 
 }

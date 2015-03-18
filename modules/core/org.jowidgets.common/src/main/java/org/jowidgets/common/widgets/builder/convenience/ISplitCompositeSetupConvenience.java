@@ -29,26 +29,26 @@ package org.jowidgets.common.widgets.builder.convenience;
 
 public interface ISplitCompositeSetupConvenience<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE enableFirstBorder();
+    INSTANCE_TYPE enableFirstBorder();
 
-	INSTANCE_TYPE disableSecondBorder();
+    INSTANCE_TYPE disableSecondBorder();
 
-	INSTANCE_TYPE enableSecondBorder();
+    INSTANCE_TYPE enableSecondBorder();
 
-	INSTANCE_TYPE disableFirstBorder();
+    INSTANCE_TYPE disableFirstBorder();
 
-	INSTANCE_TYPE enableBorders();
+    INSTANCE_TYPE enableBorders();
 
-	INSTANCE_TYPE disableBorders();
+    INSTANCE_TYPE disableBorders();
 
-	INSTANCE_TYPE setHorizontal();
+    INSTANCE_TYPE setHorizontal();
 
-	INSTANCE_TYPE setVertical();
+    INSTANCE_TYPE setVertical();
 
-	INSTANCE_TYPE resizeFirstPolicy();
+    INSTANCE_TYPE resizeFirstPolicy();
 
-	INSTANCE_TYPE resizeSecondPolicy();
+    INSTANCE_TYPE resizeSecondPolicy();
 
-	INSTANCE_TYPE resizeBothPolicy();
+    INSTANCE_TYPE resizeBothPolicy();
 
 }

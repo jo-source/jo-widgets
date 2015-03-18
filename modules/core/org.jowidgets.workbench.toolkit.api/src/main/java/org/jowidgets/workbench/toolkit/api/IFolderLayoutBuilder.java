@@ -36,35 +36,35 @@ import org.jowidgets.workbench.api.IViewLayout;
 
 public interface IFolderLayoutBuilder extends ILayoutContainerBuilder, IWorkbenchPartBuilder<IFolderLayoutBuilder> {
 
-	IFolderLayoutBuilder setId(String id);
+    IFolderLayoutBuilder setId(String id);
 
-	IFolderLayoutBuilder setGroupId(String groupId);
+    IFolderLayoutBuilder setGroupId(String groupId);
 
-	IFolderLayoutBuilder setDetachable(boolean detachable);
+    IFolderLayoutBuilder setDetachable(boolean detachable);
 
-	IFolderLayoutBuilder setViewsCloseable(boolean viewsCloseable);
+    IFolderLayoutBuilder setViewsCloseable(boolean viewsCloseable);
 
-	IFolderLayoutBuilder setViews(List<? extends IViewLayout> views);
+    IFolderLayoutBuilder setViews(List<? extends IViewLayout> views);
 
-	IFolderLayoutBuilder setViews(IViewLayout... views);
+    IFolderLayoutBuilder setViews(IViewLayout... views);
 
-	IFolderLayoutBuilder setViews(IViewLayoutBuilder... viewsBuilder);
+    IFolderLayoutBuilder setViews(IViewLayoutBuilder... viewsBuilder);
 
-	IFolderLayoutBuilder addView(IViewLayout view);
+    IFolderLayoutBuilder addView(IViewLayout view);
 
-	IFolderLayoutBuilder addView(String id, String label, String tooltip, IImageConstant icon);
+    IFolderLayoutBuilder addView(String id, String label, String tooltip, IImageConstant icon);
 
-	IFolderLayoutBuilder addView(String id, String label, IImageConstant icon);
+    IFolderLayoutBuilder addView(String id, String label, IImageConstant icon);
 
-	IFolderLayoutBuilder addView(String id, String label, String tooltip);
+    IFolderLayoutBuilder addView(String id, String label, String tooltip);
 
-	IFolderLayoutBuilder addView(String id, String label);
+    IFolderLayoutBuilder addView(String id, String label);
 
-	IFolderLayoutBuilder addView(String id, IImageConstant icon);
+    IFolderLayoutBuilder addView(String id, IImageConstant icon);
 
-	IFolderLayoutBuilder addView(IViewLayoutBuilder viewBuilder);
+    IFolderLayoutBuilder addView(IViewLayoutBuilder viewBuilder);
 
-	@Override
-	IFolderLayout build();
+    @Override
+    IFolderLayout build();
 
 }

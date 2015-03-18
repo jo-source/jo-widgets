@@ -33,6 +33,6 @@ package org.jowidgets.api.test.blueprint.descriptor.setup;
 
 public interface IHierarchy4thSetup extends IHierarchy2nd1Setup, IHierarchy2nd3Setup, IHierarchy3rdSetup {
 
-	String getIntroPartFour();
+    String getIntroPartFour();
 
 }

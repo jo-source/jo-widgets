@@ -38,11 +38,11 @@ import org.eclipse.rap.rwt.client.WebClient;
 
 public final class HelloWorldConfiguration implements ApplicationConfiguration {
 
-	@Override
-	public void configure(final Application application) {
-		application.setOperationMode(OperationMode.SWT_COMPATIBILITY);
-		final Map<String, String> properties = new HashMap<String, String>();
-		properties.put(WebClient.PAGE_TITLE, "Hello World");
-		application.addEntryPoint("/HelloWorld", HelloWorldStarterRwt.class, properties);
-	}
+    @Override
+    public void configure(final Application application) {
+        application.setOperationMode(OperationMode.SWT_COMPATIBILITY);
+        final Map<String, String> properties = new HashMap<String, String>();
+        properties.put(WebClient.PAGE_TITLE, "Hello World");
+        application.addEntryPoint("/HelloWorld", HelloWorldStarterRwt.class, properties);
+    }
 }

@@ -28,9 +28,8 @@
 
 package org.jowidgets.common.widgets.controller;
 
-
 public interface ITableColumnResizeEvent extends ITableColumnEvent {
 
-	int getWidth();
+    int getWidth();
 
 }

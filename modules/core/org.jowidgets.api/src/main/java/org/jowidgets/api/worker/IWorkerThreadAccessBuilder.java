@@ -35,88 +35,88 @@ import org.jowidgets.util.IFactory;
 
 public interface IWorkerThreadAccessBuilder {
 
-	/**
-	 * Sets the ExecutorService to use
-	 * 
-	 * @param executor The executor service to set
-	 * 
-	 * @return This builder
-	 */
-	IWorkerThreadAccessBuilder setExecutor(ScheduledExecutorService executor);
+    /**
+     * Sets the ExecutorService to use
+     * 
+     * @param executor The executor service to set
+     * 
+     * @return This builder
+     */
+    IWorkerThreadAccessBuilder setExecutor(ScheduledExecutorService executor);
 
-	/**
-	 * Sets a default ExecutorService using the given thread factory
-	 * 
-	 * @param threadFactory The thread factory to use
-	 * 
-	 * @return This builder
-	 */
-	IWorkerThreadAccessBuilder setExecutor(ThreadFactory threadFactory);
+    /**
+     * Sets a default ExecutorService using the given thread factory
+     * 
+     * @param threadFactory The thread factory to use
+     * 
+     * @return This builder
+     */
+    IWorkerThreadAccessBuilder setExecutor(ThreadFactory threadFactory);
 
-	/**
-	 * Sets a default ExecutorService using a default
-	 * DaemonThreadFactory using the given ThreadNameFactory
-	 * 
-	 * @param threadNameFactory The thread name factory to use
-	 * 
-	 * @return this builder
-	 */
-	IWorkerThreadAccessBuilder setExecutor(IFactory<String> threadNameFactory);
+    /**
+     * Sets a default ExecutorService using a default
+     * DaemonThreadFactory using the given ThreadNameFactory
+     * 
+     * @param threadNameFactory The thread name factory to use
+     * 
+     * @return this builder
+     */
+    IWorkerThreadAccessBuilder setExecutor(IFactory<String> threadNameFactory);
 
-	/**
-	 * Sets a default ExecutorService using a defaultDaemonThreadFactory using a default
-	 * ThreadNameFactory where all created threads has the given thread name prefix
-	 * 
-	 * @param threadPrefix The thread name prefix to use
-	 * 
-	 * @return this builder
-	 */
-	IWorkerThreadAccessBuilder setExecutor(String threadPrefix);
+    /**
+     * Sets a default ExecutorService using a defaultDaemonThreadFactory using a default
+     * ThreadNameFactory where all created threads has the given thread name prefix
+     * 
+     * @param threadPrefix The thread name prefix to use
+     * 
+     * @return this builder
+     */
+    IWorkerThreadAccessBuilder setExecutor(String threadPrefix);
 
-	/**
-	 * Sets the ScheduledExecutorService to use for progress delay
-	 * 
-	 * @param executor The executor service to set
-	 * 
-	 * @return This builder
-	 */
-	IWorkerThreadAccessBuilder setProgressDelayExecutor(ScheduledExecutorService executor);
+    /**
+     * Sets the ScheduledExecutorService to use for progress delay
+     * 
+     * @param executor The executor service to set
+     * 
+     * @return This builder
+     */
+    IWorkerThreadAccessBuilder setProgressDelayExecutor(ScheduledExecutorService executor);
 
-	/**
-	 * Sets a default ScheduledExecutorService using the given thread factory
-	 * 
-	 * @param threadFactory The thread factory to use
-	 * 
-	 * @return This builder
-	 */
-	IWorkerThreadAccessBuilder setProgressDelayExecutor(ThreadFactory threadFactory);
+    /**
+     * Sets a default ScheduledExecutorService using the given thread factory
+     * 
+     * @param threadFactory The thread factory to use
+     * 
+     * @return This builder
+     */
+    IWorkerThreadAccessBuilder setProgressDelayExecutor(ThreadFactory threadFactory);
 
-	/**
-	 * Sets a default ScheduledExecutorService using a default
-	 * DaemonThreadFactory using the given ThreadNameFactory
-	 * 
-	 * @param threadNameFactory The thread name factory to use
-	 * 
-	 * @return this builder
-	 */
-	IWorkerThreadAccessBuilder setProgressDelayExecutor(IFactory<String> threadNameFactory);
+    /**
+     * Sets a default ScheduledExecutorService using a default
+     * DaemonThreadFactory using the given ThreadNameFactory
+     * 
+     * @param threadNameFactory The thread name factory to use
+     * 
+     * @return this builder
+     */
+    IWorkerThreadAccessBuilder setProgressDelayExecutor(IFactory<String> threadNameFactory);
 
-	/**
-	 * Sets a default ScheduledExecutorService using a default
-	 * DaemonThreadFactory using a default ThreadNameFactory where
-	 * all created threads has the given thread name prefix
-	 * 
-	 * @param threadPrefix The thread name prefix to use
-	 * 
-	 * @return this builder
-	 */
-	IWorkerThreadAccessBuilder setProgressDelayExecutor(String threadPrefix);
+    /**
+     * Sets a default ScheduledExecutorService using a default
+     * DaemonThreadFactory using a default ThreadNameFactory where
+     * all created threads has the given thread name prefix
+     * 
+     * @param threadPrefix The thread name prefix to use
+     * 
+     * @return this builder
+     */
+    IWorkerThreadAccessBuilder setProgressDelayExecutor(String threadPrefix);
 
-	/**
-	 * Builds the worker thread access
-	 * 
-	 * @return
-	 */
-	IWorkerThreadAccess build();
+    /**
+     * Builds the worker thread access
+     * 
+     * @return
+     */
+    IWorkerThreadAccess build();
 
 }

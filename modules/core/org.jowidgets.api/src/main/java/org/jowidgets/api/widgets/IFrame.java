@@ -33,33 +33,33 @@ import org.jowidgets.common.widgets.IFrameCommon;
 
 public interface IFrame extends IWindow, IContainer, IFrameCommon {
 
-	/**
-	 * Creates a new menu bar or returns a earlier created menu bar.
-	 * 
-	 * @return The menu bar of the frame.
-	 */
-	IMenuBar createMenuBar();
+    /**
+     * Creates a new menu bar or returns a earlier created menu bar.
+     * 
+     * @return The menu bar of the frame.
+     */
+    IMenuBar createMenuBar();
 
-	/**
-	 * Gets the menu bar model of this frame. Invocation of this method will create a menu bar,
-	 * if not already a menu bar exist.
-	 * 
-	 * @return The menu bar model of this frame
-	 */
-	IMenuBarModel getMenuBarModel();
+    /**
+     * Gets the menu bar model of this frame. Invocation of this method will create a menu bar,
+     * if not already a menu bar exist.
+     * 
+     * @return The menu bar model of this frame
+     */
+    IMenuBarModel getMenuBarModel();
 
-	/**
-	 * Sets the menu bar for this frame. If this frame already has a menu bar, the old menu bar will
-	 * be removed, and the new menu bar will be set.
-	 * 
-	 * @param model The model of the menu bar to add, must not be null;
-	 * 
-	 * @throws IllegalArgumentException if the model is null
-	 */
-	void setMenuBar(IMenuBarModel model);
+    /**
+     * Sets the menu bar for this frame. If this frame already has a menu bar, the old menu bar will
+     * be removed, and the new menu bar will be set.
+     * 
+     * @param model The model of the menu bar to add, must not be null;
+     * 
+     * @throws IllegalArgumentException if the model is null
+     */
+    void setMenuBar(IMenuBarModel model);
 
-	void setDefaultButton(IButton button);
+    void setDefaultButton(IButton button);
 
-	void setMinSize(int width, int height);
+    void setMinSize(int width, int height);
 
 }

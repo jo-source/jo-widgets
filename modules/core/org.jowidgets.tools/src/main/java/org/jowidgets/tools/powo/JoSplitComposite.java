@@ -39,94 +39,94 @@ import org.jowidgets.common.types.Orientation;
 
 public class JoSplitComposite extends Control<ISplitComposite, ISplitCompositeBluePrint> implements ISplitComposite {
 
-	private final JoContainer first;
-	private final JoContainer second;
+    private final JoContainer first;
+    private final JoContainer second;
 
-	private Dimension firstMinSize;
-	private Dimension secondMinSize;
+    private Dimension firstMinSize;
+    private Dimension secondMinSize;
 
-	public JoSplitComposite(final Orientation orientation) {
-		this(Toolkit.getBluePrintFactory().splitComposite().setOrientation(orientation));
-	}
+    public JoSplitComposite(final Orientation orientation) {
+        this(Toolkit.getBluePrintFactory().splitComposite().setOrientation(orientation));
+    }
 
-	public JoSplitComposite() {
-		this(Toolkit.getBluePrintFactory().splitHorizontal());
-	}
+    public JoSplitComposite() {
+        this(Toolkit.getBluePrintFactory().splitHorizontal());
+    }
 
-	public JoSplitComposite(final ISplitCompositeDescriptor descriptor) {
-		super(Toolkit.getBluePrintFactory().splitComposite().setSetup(descriptor));
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+    public JoSplitComposite(final ISplitCompositeDescriptor descriptor) {
+        super(Toolkit.getBluePrintFactory().splitComposite().setSetup(descriptor));
+        final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
-		final ICompositeBluePrint firstBp = bpF.composite();
-		firstBp.setBorder(descriptor.getFirstBorder()).setLayout(descriptor.getFirstLayout());
-		this.first = new JoContainer(firstBp);
+        final ICompositeBluePrint firstBp = bpF.composite();
+        firstBp.setBorder(descriptor.getFirstBorder()).setLayout(descriptor.getFirstLayout());
+        this.first = new JoContainer(firstBp);
 
-		final ICompositeBluePrint secondBp = bpF.composite();
-		secondBp.setBorder(descriptor.getSecondBorder()).setLayout(descriptor.getSecondLayout());
-		this.second = new JoContainer(secondBp);
-	}
+        final ICompositeBluePrint secondBp = bpF.composite();
+        secondBp.setBorder(descriptor.getSecondBorder()).setLayout(descriptor.getSecondLayout());
+        this.second = new JoContainer(secondBp);
+    }
 
-	@Override
-	void initialize(final ISplitComposite widget) {
-		super.initialize(widget);
+    @Override
+    void initialize(final ISplitComposite widget) {
+        super.initialize(widget);
 
-		//maybe the layout was changed on first or second before initialization, so
-		//write them back to avoid keep using the old layout.
-		//this must be done before first and second will be initialized
-		widget.getFirst().setLayout(first.getBluePrint().getLayout());
-		widget.getSecond().setLayout(second.getBluePrint().getLayout());
+        //maybe the layout was changed on first or second before initialization, so
+        //write them back to avoid keep using the old layout.
+        //this must be done before first and second will be initialized
+        widget.getFirst().setLayout(first.getBluePrint().getLayout());
+        widget.getSecond().setLayout(second.getBluePrint().getLayout());
 
-		first.initialize(widget.getFirst());
-		second.initialize(widget.getSecond());
+        first.initialize(widget.getFirst());
+        second.initialize(widget.getSecond());
 
-		if (firstMinSize != null || secondMinSize != null) {
-			widget.setMinSizes(firstMinSize, secondMinSize);
-		}
-	}
+        if (firstMinSize != null || secondMinSize != null) {
+            widget.setMinSizes(firstMinSize, secondMinSize);
+        }
+    }
 
-	@Override
-	public JoContainer getFirst() {
-		return first;
-	}
+    @Override
+    public JoContainer getFirst() {
+        return first;
+    }
 
-	@Override
-	public JoContainer getSecond() {
-		return second;
-	}
+    @Override
+    public JoContainer getSecond() {
+        return second;
+    }
 
-	@Override
-	public void setMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
-		if (isInitialized()) {
-			getWidget().setMinSizes(firstMinSize, secondMinSize);
-		}
-		else {
-			this.firstMinSize = firstMinSize;
-			this.secondMinSize = secondMinSize;
-		}
-	}
+    @Override
+    public void setMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
+        if (isInitialized()) {
+            getWidget().setMinSizes(firstMinSize, secondMinSize);
+        }
+        else {
+            this.firstMinSize = firstMinSize;
+            this.secondMinSize = secondMinSize;
+        }
+    }
 
-	@Override
-	public Dimension getFirstMinSize() {
-		if (isInitialized()) {
-			return getWidget().getFirstMinSize();
-		}
-		else {
-			return firstMinSize;
-		}
-	}
+    @Override
+    public Dimension getFirstMinSize() {
+        if (isInitialized()) {
+            return getWidget().getFirstMinSize();
+        }
+        else {
+            return firstMinSize;
+        }
+    }
 
-	@Override
-	public Dimension getSecondMinSize() {
-		if (isInitialized()) {
-			return getWidget().getSecondMinSize();
-		}
-		else {
-			return secondMinSize;
-		}
-	}
+    @Override
+    public Dimension getSecondMinSize() {
+        if (isInitialized()) {
+            return getWidget().getSecondMinSize();
+        }
+        else {
+            return secondMinSize;
+        }
+    }
 
-	public static ISplitCompositeBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().splitComposite();
-	}
+    public static ISplitCompositeBluePrint bluePrint() {
+        return Toolkit.getBluePrintFactory().splitComposite();
+    }
 
 }

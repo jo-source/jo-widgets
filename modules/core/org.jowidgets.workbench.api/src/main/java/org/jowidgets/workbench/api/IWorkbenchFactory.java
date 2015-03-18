@@ -30,6 +30,6 @@ package org.jowidgets.workbench.api;
 
 public interface IWorkbenchFactory {
 
-	IWorkbench create();
+    IWorkbench create();
 
 }

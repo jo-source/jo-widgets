@@ -30,6 +30,6 @@ package org.jowidgets.impl.spi.blueprint.builder;
 import org.jowidgets.common.widgets.builder.IDirectoryChooserSetupBuilderCommon;
 
 public interface IDirectoryChooserSetupBuilderSpi<INSTANCE_TYPE extends IDirectoryChooserSetupBuilderSpi<?>> extends
-		IDirectoryChooserSetupBuilderCommon<INSTANCE_TYPE> {
+        IDirectoryChooserSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

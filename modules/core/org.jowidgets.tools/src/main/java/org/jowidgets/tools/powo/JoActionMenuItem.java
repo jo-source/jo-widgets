@@ -38,42 +38,42 @@ import org.jowidgets.util.Assert;
 
 public class JoActionMenuItem extends ActionMenuItem<IActionMenuItem, IActionMenuItemBluePrint> implements IActionMenuItem {
 
-	public JoActionMenuItem(final String text, final IImageConstant icon) {
-		this(bluePrint(text, icon));
-	}
+    public JoActionMenuItem(final String text, final IImageConstant icon) {
+        this(bluePrint(text, icon));
+    }
 
-	public JoActionMenuItem(final IAction action) {
-		this(bluePrint());
-		Assert.paramNotNull(action, "action");
-		setAction(action);
-	}
+    public JoActionMenuItem(final IAction action) {
+        this(bluePrint());
+        Assert.paramNotNull(action, "action");
+        setAction(action);
+    }
 
-	public JoActionMenuItem(final String text) {
-		this(bluePrint(text));
-	}
+    public JoActionMenuItem(final String text) {
+        this(bluePrint(text));
+    }
 
-	public JoActionMenuItem(final String text, final String tooltipText) {
-		this(bluePrint(text, tooltipText));
-	}
+    public JoActionMenuItem(final String text, final String tooltipText) {
+        this(bluePrint(text, tooltipText));
+    }
 
-	public JoActionMenuItem(final IActionMenuItemDescriptor descriptor) {
-		super(bluePrint().setSetup(descriptor));
-	}
+    public JoActionMenuItem(final IActionMenuItemDescriptor descriptor) {
+        super(bluePrint().setSetup(descriptor));
+    }
 
-	public static IActionMenuItemBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().menuItem();
-	}
+    public static IActionMenuItemBluePrint bluePrint() {
+        return Toolkit.getBluePrintFactory().menuItem();
+    }
 
-	public static IActionMenuItemBluePrint bluePrint(final String text) {
-		return Toolkit.getBluePrintFactory().menuItem(text);
-	}
+    public static IActionMenuItemBluePrint bluePrint(final String text) {
+        return Toolkit.getBluePrintFactory().menuItem(text);
+    }
 
-	public static IActionMenuItemBluePrint bluePrint(final String text, final String tooltipText) {
-		return Toolkit.getBluePrintFactory().menuItem(text).setToolTipText(tooltipText);
-	}
+    public static IActionMenuItemBluePrint bluePrint(final String text, final String tooltipText) {
+        return Toolkit.getBluePrintFactory().menuItem(text).setToolTipText(tooltipText);
+    }
 
-	public static IActionMenuItemBluePrint bluePrint(final String text, final IImageConstant icon) {
-		return Toolkit.getBluePrintFactory().menuItem(text).setIcon(icon);
-	}
+    public static IActionMenuItemBluePrint bluePrint(final String text, final IImageConstant icon) {
+        return Toolkit.getBluePrintFactory().menuItem(text).setIcon(icon);
+    }
 
 }

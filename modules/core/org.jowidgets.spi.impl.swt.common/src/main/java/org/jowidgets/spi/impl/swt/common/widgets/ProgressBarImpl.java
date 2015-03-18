@@ -37,43 +37,43 @@ import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 
 public class ProgressBarImpl extends SwtControl implements IProgressBarSpi {
 
-	public ProgressBarImpl(final Object parentUiReference, final IProgressBarSetupSpi setup) {
-		super(createProgressBar(parentUiReference, setup));
+    public ProgressBarImpl(final Object parentUiReference, final IProgressBarSetupSpi setup) {
+        super(createProgressBar(parentUiReference, setup));
 
-		setMinimum(setup.getMinimum());
-		setMaximum(setup.getMaximum());
+        setMinimum(setup.getMinimum());
+        setMaximum(setup.getMaximum());
 
-	}
+    }
 
-	@Override
-	public ProgressBar getUiReference() {
-		return (ProgressBar) super.getUiReference();
-	}
+    @Override
+    public ProgressBar getUiReference() {
+        return (ProgressBar) super.getUiReference();
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		return new Dimension(10, 10);
-	}
+    @Override
+    public Dimension getMinSize() {
+        return new Dimension(10, 10);
+    }
 
-	@Override
-	public void setMinimum(final int min) {
-		getUiReference().setMinimum(min);
-	}
+    @Override
+    public void setMinimum(final int min) {
+        getUiReference().setMinimum(min);
+    }
 
-	@Override
-	public void setMaximum(final int max) {
-		getUiReference().setMaximum(max);
-	}
+    @Override
+    public void setMaximum(final int max) {
+        getUiReference().setMaximum(max);
+    }
 
-	@Override
-	public void setProgress(final int progress) {
-		getUiReference().setSelection(progress);
-	}
+    @Override
+    public void setProgress(final int progress) {
+        getUiReference().setSelection(progress);
+    }
 
-	private static ProgressBar createProgressBar(final Object parentUiReference, final IProgressBarSetupSpi setup) {
-		final int orientation = OrientationConvert.convert(setup.getOrientation());
-		return new ProgressBar((Composite) parentUiReference, setup.isIndeterminate() ? SWT.INDETERMINATE : SWT.SMOOTH
-			| orientation);
-	}
+    private static ProgressBar createProgressBar(final Object parentUiReference, final IProgressBarSetupSpi setup) {
+        final int orientation = OrientationConvert.convert(setup.getOrientation());
+        return new ProgressBar((Composite) parentUiReference, setup.isIndeterminate() ? SWT.INDETERMINATE : SWT.SMOOTH
+            | orientation);
+    }
 
 }

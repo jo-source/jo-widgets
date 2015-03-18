@@ -33,7 +33,7 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.test.api.widgets.IInputCompositeUi;
 
 public interface IInputCompositeDescriptorUi<INPUT_TYPE> extends
-		IInputCompositeSetup<INPUT_TYPE>,
-		IWidgetDescriptor<IInputCompositeUi<INPUT_TYPE>> {
+        IInputCompositeSetup<INPUT_TYPE>,
+        IWidgetDescriptor<IInputCompositeUi<INPUT_TYPE>> {
 
 }

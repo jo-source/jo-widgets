@@ -30,6 +30,6 @@ package org.jowidgets.api.controller;
 
 public interface IExpandListener {
 
-	void expandedChanged(boolean expanded);
+    void expandedChanged(boolean expanded);
 
 }

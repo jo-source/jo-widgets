@@ -45,133 +45,133 @@ import org.jowidgets.spi.widgets.ISubMenuSpi;
 
 public abstract class AbstractSwingMenu extends SwingWidget implements IMenuSpi {
 
-	private final List<JoSwingButtonGroup> radioGroups;
+    private final List<JoSwingButtonGroup> radioGroups;
 
-	public AbstractSwingMenu(final Container component) {
-		super(component);
-		this.radioGroups = new ArrayList<AbstractSwingMenu.JoSwingButtonGroup>();
-		this.radioGroups.add(new JoSwingButtonGroup(null, new ButtonGroup()));
-	}
+    public AbstractSwingMenu(final Container component) {
+        super(component);
+        this.radioGroups = new ArrayList<AbstractSwingMenu.JoSwingButtonGroup>();
+        this.radioGroups.add(new JoSwingButtonGroup(null, new ButtonGroup()));
+    }
 
-	@Override
-	public Container getUiReference() {
-		return (Container) super.getUiReference();
-	}
+    @Override
+    public Container getUiReference() {
+        return (Container) super.getUiReference();
+    }
 
-	@Override
-	public void remove(final int index) {
-		getUiReference().remove(index);
-		if (getUiReference() instanceof JComponent) {
-			final JComponent jComponent = (JComponent) getUiReference();
-			jComponent.revalidate();
-			jComponent.repaint();
-		}
-	}
+    @Override
+    public void remove(final int index) {
+        getUiReference().remove(index);
+        if (getUiReference() instanceof JComponent) {
+            final JComponent jComponent = (JComponent) getUiReference();
+            jComponent.revalidate();
+            jComponent.repaint();
+        }
+    }
 
-	@Override
-	public IMenuItemSpi addSeparator(final Integer index) {
-		final SeparatorMenuItemImpl result = new SeparatorMenuItemImpl();
-		radioGroups.add(new JoSwingButtonGroup(result, new ButtonGroup()));
-		addItem(index, result);
-		return result;
-	}
+    @Override
+    public IMenuItemSpi addSeparator(final Integer index) {
+        final SeparatorMenuItemImpl result = new SeparatorMenuItemImpl();
+        radioGroups.add(new JoSwingButtonGroup(result, new ButtonGroup()));
+        addItem(index, result);
+        return result;
+    }
 
-	@Override
-	public IActionMenuItemSpi addActionItem(final Integer index) {
-		final ActionMenuItemImpl result = new ActionMenuItemImpl();
-		addItem(index, result);
-		return result;
-	}
+    @Override
+    public IActionMenuItemSpi addActionItem(final Integer index) {
+        final ActionMenuItemImpl result = new ActionMenuItemImpl();
+        addItem(index, result);
+        return result;
+    }
 
-	@Override
-	public ISelectableMenuItemSpi addCheckedItem(final Integer index) {
-		final SelectableMenuItemImpl result = new SelectableMenuItemImpl(new JCheckBoxMenuItem());
-		addItem(index, result);
-		return result;
-	}
+    @Override
+    public ISelectableMenuItemSpi addCheckedItem(final Integer index) {
+        final SelectableMenuItemImpl result = new SelectableMenuItemImpl(new JCheckBoxMenuItem());
+        addItem(index, result);
+        return result;
+    }
 
-	@Override
-	public ISelectableMenuItemSpi addRadioItem(final Integer index) {
-		final JRadioButtonMenuItem radioItem = new JRadioButtonMenuItem();
-		final ButtonGroup radioGroup = findRadioGroup(index);
-		radioGroup.add(radioItem);
-		final SelectableMenuItemImpl result = new SelectableMenuItemImpl(radioItem);
-		addItem(index, result);
-		return result;
-	}
+    @Override
+    public ISelectableMenuItemSpi addRadioItem(final Integer index) {
+        final JRadioButtonMenuItem radioItem = new JRadioButtonMenuItem();
+        final ButtonGroup radioGroup = findRadioGroup(index);
+        radioGroup.add(radioItem);
+        final SelectableMenuItemImpl result = new SelectableMenuItemImpl(radioItem);
+        addItem(index, result);
+        return result;
+    }
 
-	@Override
-	public ISubMenuSpi addSubMenu(final Integer index) {
-		final SubMenuImpl result = new SubMenuImpl();
-		addItem(index, result);
-		return result;
-	}
+    @Override
+    public ISubMenuSpi addSubMenu(final Integer index) {
+        final SubMenuImpl result = new SubMenuImpl();
+        addItem(index, result);
+        return result;
+    }
 
-	private void addItem(final Integer index, final SwingWidget item) {
-		if (index != null) {
-			getUiReference().add(item.getUiReference(), index.intValue());
-		}
-		else {
-			getUiReference().add(item.getUiReference());
-		}
-	}
+    private void addItem(final Integer index, final SwingWidget item) {
+        if (index != null) {
+            getUiReference().add(item.getUiReference(), index.intValue());
+        }
+        else {
+            getUiReference().add(item.getUiReference());
+        }
+    }
 
-	private ButtonGroup findRadioGroup(final Integer index) {
-		final int safeIndex;
-		if (index != null) {
-			safeIndex = index.intValue();
-		}
-		else {
-			safeIndex = getUiReference().getComponentCount();
-		}
-		ButtonGroup result = radioGroups.get(0).getButtonGroup();
+    private ButtonGroup findRadioGroup(final Integer index) {
+        final int safeIndex;
+        if (index != null) {
+            safeIndex = index.intValue();
+        }
+        else {
+            safeIndex = getUiReference().getComponentCount();
+        }
+        ButtonGroup result = radioGroups.get(0).getButtonGroup();
 
-		if (radioGroups.size() != 1) {
-			for (final JoSwingButtonGroup joButtonGroup : radioGroups) {
-				final SeparatorMenuItemImpl separator = joButtonGroup.getSeparator();
-				if (separator == null) {
-					continue;
-				}
-				int componentIndex = 0;
-				final int componentCount = getUiReference().getComponentCount();
-				for (int i = 0; i < componentCount; i++) {
-					if (getUiReference().getComponent(i) == separator.getUiReference()) {
-						componentIndex = i;
-						break;
-					}
-				}
-				if (componentIndex >= safeIndex) {
-					break;
-				}
-				result = joButtonGroup.getButtonGroup();
-			}
-		}
-		return result;
-	}
+        if (radioGroups.size() != 1) {
+            for (final JoSwingButtonGroup joButtonGroup : radioGroups) {
+                final SeparatorMenuItemImpl separator = joButtonGroup.getSeparator();
+                if (separator == null) {
+                    continue;
+                }
+                int componentIndex = 0;
+                final int componentCount = getUiReference().getComponentCount();
+                for (int i = 0; i < componentCount; i++) {
+                    if (getUiReference().getComponent(i) == separator.getUiReference()) {
+                        componentIndex = i;
+                        break;
+                    }
+                }
+                if (componentIndex >= safeIndex) {
+                    break;
+                }
+                result = joButtonGroup.getButtonGroup();
+            }
+        }
+        return result;
+    }
 
-	private static class JoSwingButtonGroup {
+    private static class JoSwingButtonGroup {
 
-		private final SeparatorMenuItemImpl separator;
+        private final SeparatorMenuItemImpl separator;
 
-		private final ButtonGroup buttonGroup;
+        private final ButtonGroup buttonGroup;
 
-		/**
-		 * @param separatorIndex
-		 * @param separator
-		 * @param buttonGroup
-		 */
-		public JoSwingButtonGroup(final SeparatorMenuItemImpl separator, final ButtonGroup buttonGroup) {
-			this.separator = separator;
-			this.buttonGroup = buttonGroup;
-		}
+        /**
+         * @param separatorIndex
+         * @param separator
+         * @param buttonGroup
+         */
+        public JoSwingButtonGroup(final SeparatorMenuItemImpl separator, final ButtonGroup buttonGroup) {
+            this.separator = separator;
+            this.buttonGroup = buttonGroup;
+        }
 
-		protected SeparatorMenuItemImpl getSeparator() {
-			return separator;
-		}
+        protected SeparatorMenuItemImpl getSeparator() {
+            return separator;
+        }
 
-		protected ButtonGroup getButtonGroup() {
-			return buttonGroup;
-		}
+        protected ButtonGroup getButtonGroup() {
+            return buttonGroup;
+        }
 
-	}
+    }
 }

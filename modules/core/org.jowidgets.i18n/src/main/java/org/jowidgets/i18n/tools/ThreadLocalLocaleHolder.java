@@ -34,21 +34,21 @@ import org.jowidgets.i18n.api.ILocaleHolder;
 
 public final class ThreadLocalLocaleHolder implements ILocaleHolder {
 
-	private final ThreadLocal<Locale> locale = new ThreadLocal<Locale>();
+    private final ThreadLocal<Locale> locale = new ThreadLocal<Locale>();
 
-	@Override
-	public Locale getUserLocale() {
-		return locale.get();
-	}
+    @Override
+    public Locale getUserLocale() {
+        return locale.get();
+    }
 
-	@Override
-	public void setUserLocale(final Locale userLocale) {
-		locale.set(userLocale);
-	}
+    @Override
+    public void setUserLocale(final Locale userLocale) {
+        locale.set(userLocale);
+    }
 
-	@Override
-	public void clearUserLocale() {
-		locale.remove();
-	}
+    @Override
+    public void clearUserLocale() {
+        locale.remove();
+    }
 
 }

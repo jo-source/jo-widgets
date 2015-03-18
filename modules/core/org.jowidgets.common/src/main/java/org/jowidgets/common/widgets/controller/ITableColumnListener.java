@@ -30,10 +30,10 @@ package org.jowidgets.common.widgets.controller;
 
 public interface ITableColumnListener {
 
-	void mouseClicked(ITableColumnMouseEvent event);
+    void mouseClicked(ITableColumnMouseEvent event);
 
-	void columnResized(ITableColumnResizeEvent event);
+    void columnResized(ITableColumnResizeEvent event);
 
-	void columnPermutationChanged();
+    void columnPermutationChanged();
 
 }

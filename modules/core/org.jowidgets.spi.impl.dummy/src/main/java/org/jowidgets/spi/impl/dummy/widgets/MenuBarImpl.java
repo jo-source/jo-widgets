@@ -34,44 +34,44 @@ import org.jowidgets.spi.widgets.IMenuBarSpi;
 
 public class MenuBarImpl extends DummyWidget implements IMenuBarSpi {
 
-	public MenuBarImpl(final UIDMenuItem menuBar) {
-		super(menuBar);
-	}
+    public MenuBarImpl(final UIDMenuItem menuBar) {
+        super(menuBar);
+    }
 
-	@Override
-	public UIDMenuItem getUiReference() {
-		return (UIDMenuItem) super.getUiReference();
-	}
+    @Override
+    public UIDMenuItem getUiReference() {
+        return (UIDMenuItem) super.getUiReference();
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		getUiReference().setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        getUiReference().setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return getUiReference().isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return getUiReference().isEnabled();
+    }
 
-	@Override
-	public void remove(final int index) {
-		getUiReference().remove(index);
-	}
+    @Override
+    public void remove(final int index) {
+        getUiReference().remove(index);
+    }
 
-	@Override
-	public IMainMenuSpi addMenu(final Integer index) {
-		final MainMenuImpl result = new MainMenuImpl();
-		addItem(index, result);
-		return result;
-	}
+    @Override
+    public IMainMenuSpi addMenu(final Integer index) {
+        final MainMenuImpl result = new MainMenuImpl();
+        addItem(index, result);
+        return result;
+    }
 
-	private void addItem(final Integer index, final DummyWidget item) {
-		if (index != null) {
-			getUiReference().add(item.getUiReference(), index.intValue());
-		}
-		else {
-			getUiReference().add(item.getUiReference());
-		}
-	}
+    private void addItem(final Integer index, final DummyWidget item) {
+        if (index != null) {
+            getUiReference().add(item.getUiReference(), index.intValue());
+        }
+        else {
+            getUiReference().add(item.getUiReference());
+        }
+    }
 
 }

@@ -35,18 +35,18 @@ import org.jowidgets.common.types.MouseButton;
 
 public interface IMouseButtonEvent extends IMouseEvent {
 
-	/**
-	 * Gets the mouse button.
-	 * 
-	 * @return The mouse button, never null
-	 */
-	MouseButton getMouseButton();
+    /**
+     * Gets the mouse button.
+     * 
+     * @return The mouse button, never null
+     */
+    MouseButton getMouseButton();
 
-	/**
-	 * Gets the modifiers as unmodifiable set
-	 * 
-	 * @return The modifiers, may be empty but never null
-	 */
-	Set<Modifier> getModifiers();
+    /**
+     * Gets the modifiers as unmodifiable set
+     * 
+     * @return The modifiers, may be empty but never null
+     */
+    Set<Modifier> getModifiers();
 
 }

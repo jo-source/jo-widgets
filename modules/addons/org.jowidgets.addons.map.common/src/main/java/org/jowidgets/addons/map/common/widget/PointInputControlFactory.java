@@ -32,9 +32,9 @@ import org.jowidgets.common.widgets.factory.IWidgetFactory;
 
 public final class PointInputControlFactory implements IWidgetFactory<IPointInputControl, IPointInputControlBlueprint> {
 
-	@Override
-	public IPointInputControl create(final Object parentUiReference, final IPointInputControlBlueprint descriptor) {
-		return new PointInputControl(parentUiReference, descriptor);
-	}
+    @Override
+    public IPointInputControl create(final Object parentUiReference, final IPointInputControlBlueprint descriptor) {
+        return new PointInputControl(parentUiReference, descriptor);
+    }
 
 }

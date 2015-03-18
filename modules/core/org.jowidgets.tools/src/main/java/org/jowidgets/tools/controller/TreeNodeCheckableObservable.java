@@ -36,26 +36,26 @@ import org.jowidgets.util.collection.ObserverSetFactory;
 
 public class TreeNodeCheckableObservable implements ITreeNodeCheckableObservable {
 
-	private final IObserverSet<ITreeNodeCheckableListener> listeners;
+    private final IObserverSet<ITreeNodeCheckableListener> listeners;
 
-	public TreeNodeCheckableObservable() {
-		this.listeners = ObserverSetFactory.create(Strategy.HIGH_PERFORMANCE);
-	}
+    public TreeNodeCheckableObservable() {
+        this.listeners = ObserverSetFactory.create(Strategy.HIGH_PERFORMANCE);
+    }
 
-	@Override
-	public void addCheckableListener(final ITreeNodeCheckableListener listener) {
-		listeners.add(listener);
-	}
+    @Override
+    public void addCheckableListener(final ITreeNodeCheckableListener listener) {
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removeCheckableListener(final ITreeNodeCheckableListener listener) {
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeCheckableListener(final ITreeNodeCheckableListener listener) {
+        listeners.remove(listener);
+    }
 
-	public void fireCheckableChanged(final boolean checkable) {
-		for (final ITreeNodeCheckableListener listener : listeners) {
-			listener.checkableChanged(checkable);
-		}
-	}
+    public void fireCheckableChanged(final boolean checkable) {
+        for (final ITreeNodeCheckableListener listener : listeners) {
+            listener.checkableChanged(checkable);
+        }
+    }
 
 }

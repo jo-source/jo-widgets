@@ -32,9 +32,9 @@ import org.jowidgets.common.widgets.builder.IWindowSetupBuilderCommon;
 
 public class WindowDefaultsCommon implements IDefaultInitializer<IWindowSetupBuilderCommon<?>> {
 
-	@Override
-	public void initialize(final IWindowSetupBuilderCommon<?> builder) {
-		builder.setResizable(true);
-	}
+    @Override
+    public void initialize(final IWindowSetupBuilderCommon<?> builder) {
+        builder.setResizable(true);
+    }
 
 }

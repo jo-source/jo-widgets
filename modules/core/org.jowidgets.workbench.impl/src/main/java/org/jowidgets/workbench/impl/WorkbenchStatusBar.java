@@ -35,29 +35,29 @@ import org.jowidgets.tools.widgets.wrapper.ContainerWrapper;
 
 public class WorkbenchStatusBar extends ContainerWrapper {
 
-	public WorkbenchStatusBar(final IContainer container) {
-		super(container);
-		container.addContainerListener(new IContainerListener() {
-			@Override
-			public void beforeRemove(final IControl control) {
-				checkVisibility();
-			}
+    public WorkbenchStatusBar(final IContainer container) {
+        super(container);
+        container.addContainerListener(new IContainerListener() {
+            @Override
+            public void beforeRemove(final IControl control) {
+                checkVisibility();
+            }
 
-			@Override
-			public void afterAdded(final IControl control) {
-				checkVisibility();
-			}
-		});
-		checkVisibility();
-	}
+            @Override
+            public void afterAdded(final IControl control) {
+                checkVisibility();
+            }
+        });
+        checkVisibility();
+    }
 
-	private void checkVisibility() {
-		if (getChildren().size() == 0) {
-			setVisible(false);
-		}
-		else {
-			setVisible(true);
-		}
-	}
+    private void checkVisibility() {
+        if (getChildren().size() == 0) {
+            setVisible(false);
+        }
+        else {
+            setVisible(true);
+        }
+    }
 
 }

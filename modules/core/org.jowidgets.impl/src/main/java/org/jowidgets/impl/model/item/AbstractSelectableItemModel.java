@@ -36,54 +36,54 @@ import org.jowidgets.tools.controller.ItemStateObservable;
 
 abstract class AbstractSelectableItemModel extends ItemModelImpl implements ISelectableItemModel {
 
-	private final ItemStateObservable itemStateObservable;
-	private boolean selected;
+    private final ItemStateObservable itemStateObservable;
+    private boolean selected;
 
-	protected AbstractSelectableItemModel(
-		final String id,
-		final String text,
-		final String toolTipText,
-		final IImageConstant icon,
-		final Accelerator accelerator,
-		final Character mnemonic,
-		final boolean enabled,
-		final boolean selected) {
-		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled);
+    protected AbstractSelectableItemModel(
+        final String id,
+        final String text,
+        final String toolTipText,
+        final IImageConstant icon,
+        final Accelerator accelerator,
+        final Character mnemonic,
+        final boolean enabled,
+        final boolean selected) {
+        super(id, text, toolTipText, icon, accelerator, mnemonic, enabled);
 
-		this.itemStateObservable = new ItemStateObservable();
-		this.selected = selected;
-	}
+        this.itemStateObservable = new ItemStateObservable();
+        this.selected = selected;
+    }
 
-	@Override
-	public abstract ISelectableItemModel createCopy();
+    @Override
+    public abstract ISelectableItemModel createCopy();
 
-	protected void setContent(final ISelectableItemModel source) {
-		super.setContent(source);
-		this.selected = source.isSelected();
-	}
+    protected void setContent(final ISelectableItemModel source) {
+        super.setContent(source);
+        this.selected = source.isSelected();
+    }
 
-	@Override
-	public void addItemListener(final IItemStateListener listener) {
-		itemStateObservable.addItemListener(listener);
-	}
+    @Override
+    public void addItemListener(final IItemStateListener listener) {
+        itemStateObservable.addItemListener(listener);
+    }
 
-	@Override
-	public void removeItemListener(final IItemStateListener listener) {
-		itemStateObservable.removeItemListener(listener);
-	}
+    @Override
+    public void removeItemListener(final IItemStateListener listener) {
+        itemStateObservable.removeItemListener(listener);
+    }
 
-	@Override
-	public boolean isSelected() {
-		return selected;
-	}
+    @Override
+    public boolean isSelected() {
+        return selected;
+    }
 
-	@Override
-	public void setSelected(final boolean selected) {
-		if (this.selected != selected) {
-			this.selected = selected;
-			fireItemChanged();
-			itemStateObservable.fireItemStateChanged();
-		}
-	}
+    @Override
+    public void setSelected(final boolean selected) {
+        if (this.selected != selected) {
+            this.selected = selected;
+            fireItemChanged();
+            itemStateObservable.fireItemStateChanged();
+        }
+    }
 
 }

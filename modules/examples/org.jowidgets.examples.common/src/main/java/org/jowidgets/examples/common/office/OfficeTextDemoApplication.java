@@ -63,132 +63,132 @@ import org.jowidgets.util.event.IChangeListener;
 
 public final class OfficeTextDemoApplication implements IApplication {
 
-	private final String title;
-	private IButton saveFileButton;
+    private final String title;
+    private IButton saveFileButton;
 
-	public OfficeTextDemoApplication(final String title) {
-		this.title = title;
-	}
+    public OfficeTextDemoApplication(final String title) {
+        this.title = title;
+    }
 
-	public void start() {
-		Toolkit.getApplicationRunner().run(this);
-	}
+    public void start() {
+        Toolkit.getApplicationRunner().run(this);
+    }
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
-		initializeSilkIcons();
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
+        initializeSilkIcons();
 
-		//Frame 1
-		final IFrame frame = Toolkit.createRootFrame(BPF.frame().setTitle(title).autoPackOff(), lifecycle);
-		frame.setBackgroundColor(Colors.WHITE);
-		frame.setSize(1024, 768);
-		frame.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "[][]0[grow, 0::]0"));
+        //Frame 1
+        final IFrame frame = Toolkit.createRootFrame(BPF.frame().setTitle(title).autoPackOff(), lifecycle);
+        frame.setBackgroundColor(Colors.WHITE);
+        frame.setSize(1024, 768);
+        frame.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "[][]0[grow, 0::]0"));
 
-		saveFileButton = frame.add(
-				BPF.button("", "Allows to save a file, with a fileselector").setIcon(SilkIcons.DISK).setEnabled(false),
-				"split 3");
-		//add buttons
-		final IButton openFileButton = frame.add(BPF.button("", "Allows to open a file, with a fileselector").setIcon(
-				SilkIcons.FOLDER));
+        saveFileButton = frame.add(BPF.button("", "Allows to save a file, with a fileselector")
+                .setIcon(SilkIcons.DISK)
+                .setEnabled(false), "split 3");
+        //add buttons
+        final IButton openFileButton = frame.add(BPF.button("", "Allows to open a file, with a fileselector").setIcon(
+                SilkIcons.FOLDER));
 
-		final ITextControl filenameField = frame.add(BPF.textField(), "span,growx, wrap");
-		frame.add(BPF.separator(), "growx, h 0::, wrap");
+        final ITextControl filenameField = frame.add(BPF.textField(), "span,growx, wrap");
+        frame.add(BPF.separator(), "growx, h 0::, wrap");
 
-		//add ole content
-		final IOfficeControl officeControl = frame.add(OfficeBPF.text().setToolbarVisible(false), "span,growx,height 1000");
+        //add ole content
+        final IOfficeControl officeControl = frame.add(OfficeBPF.text().setToolbarVisible(false), "span,growx,height 1000");
 
-		officeControl.addDirtyStateListener(new IChangeListener() {
-			@Override
-			public void changed() {
-				setSaveFileButtonEnable(officeControl.getOleControl().isDirty());
-			}
-		});
+        officeControl.addDirtyStateListener(new IChangeListener() {
+            @Override
+            public void changed() {
+                setSaveFileButtonEnable(officeControl.getOleControl().isDirty());
+            }
+        });
 
-		filenameField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(final IKeyEvent event) {
-				if (event.getVirtualKey() == VirtualKey.ENTER) {
+        filenameField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(final IKeyEvent event) {
+                if (event.getVirtualKey() == VirtualKey.ENTER) {
 
-					final File file = new File(filenameField.getText());
-					if (file.exists()) {
-						officeControl.openDocument(file);
-					}
-					else {
-						final String path = openFileChooser(FileChooserType.OPEN_FILE_LIST, "Open Olefile demo");
-						if (path != null) {
-							officeControl.openDocument(new File(path));
-							filenameField.setText(path);
-						}
-					}
-				}
-			}
-		});
+                    final File file = new File(filenameField.getText());
+                    if (file.exists()) {
+                        officeControl.openDocument(file);
+                    }
+                    else {
+                        final String path = openFileChooser(FileChooserType.OPEN_FILE_LIST, "Open Olefile demo");
+                        if (path != null) {
+                            officeControl.openDocument(new File(path));
+                            filenameField.setText(path);
+                        }
+                    }
+                }
+            }
+        });
 
-		openFileButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final String path = openFileChooser(FileChooserType.OPEN_FILE_LIST, "Open Olefile demo");
-				if (path != null) {
-					officeControl.openDocument(new File(path));
-					filenameField.setText(path);
-				}
-			}
-		});
+        openFileButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final String path = openFileChooser(FileChooserType.OPEN_FILE_LIST, "Open Olefile demo");
+                if (path != null) {
+                    officeControl.openDocument(new File(path));
+                    filenameField.setText(path);
+                }
+            }
+        });
 
-		saveFileButton.addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				final String path = openFileChooser(FileChooserType.SAVE, "Save Olefile demo");
-				if (path != null) {
-					officeControl.saveDocument(new File(path), true);
-					filenameField.setText(path);
-				}
-			}
-		});
+        saveFileButton.addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                final String path = openFileChooser(FileChooserType.SAVE, "Save Olefile demo");
+                if (path != null) {
+                    officeControl.saveDocument(new File(path), true);
+                    filenameField.setText(path);
+                }
+            }
+        });
 
-		frame.setVisible(true);
-	}
+        frame.setVisible(true);
+    }
 
-	private void setSaveFileButtonEnable(final boolean value) {
-		if (saveFileButton != null) {
-			saveFileButton.setEnabled(value);
-		}
-	}
+    private void setSaveFileButtonEnable(final boolean value) {
+        if (saveFileButton != null) {
+            saveFileButton.setEnabled(value);
+        }
+    }
 
-	private String openFileChooser(final FileChooserType type, final String title) {
-		if (Toolkit.getSupportedWidgets().hasFileChooser()) {
-			final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+    private String openFileChooser(final FileChooserType type, final String title) {
+        if (Toolkit.getSupportedWidgets().hasFileChooser()) {
+            final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-			final List<IFileChooserFilter> filterList = new LinkedList<IFileChooserFilter>();
-			filterList.add(new FileChooserFilter("Word Files (*.doc, *.docx)", "doc", "docx"));
-			final IFileChooserBluePrint fileChooserBp = bpf.fileChooser(type).setFilterList(filterList).setTitle(title);
-			final IFileChooser fileChooser = Toolkit.getActiveWindow().createChildWindow(fileChooserBp);
-			final DialogResult result = fileChooser.open();
-			if (result == DialogResult.OK) {
-				String path = fileChooser.getSelectedFiles().get(0).toString();
-				if (!path.toLowerCase().endsWith(".doc") && !path.toLowerCase().endsWith(".docx")) {
-					path += ".doc";
-				}
-				return path;
-			}
-		}
-		else {
-			Toolkit.getMessagePane().showInfo("File chooser is not supported by the spi implementation");
-		}
-		return null;
-	}
+            final List<IFileChooserFilter> filterList = new LinkedList<IFileChooserFilter>();
+            filterList.add(new FileChooserFilter("Word Files (*.doc, *.docx)", "doc", "docx"));
+            final IFileChooserBluePrint fileChooserBp = bpf.fileChooser(type).setFilterList(filterList).setTitle(title);
+            final IFileChooser fileChooser = Toolkit.getActiveWindow().createChildWindow(fileChooserBp);
+            final DialogResult result = fileChooser.open();
+            if (result == DialogResult.OK) {
+                String path = fileChooser.getSelectedFiles().get(0).toString();
+                if (!path.toLowerCase().endsWith(".doc") && !path.toLowerCase().endsWith(".docx")) {
+                    path += ".doc";
+                }
+                return path;
+            }
+        }
+        else {
+            Toolkit.getMessagePane().showInfo("File chooser is not supported by the spi implementation");
+        }
+        return null;
+    }
 
-	private static void initializeSilkIcons() {
-		Toolkit.getImageRegistry().registerImageConstant(IconsSmall.OK, SilkIcons.TICK);
+    private static void initializeSilkIcons() {
+        Toolkit.getImageRegistry().registerImageConstant(IconsSmall.OK, SilkIcons.TICK);
 
-		Toolkit.getBluePrintFactory().addDefaultsInitializer(
-				ITreeBluePrint.class,
-				new IDefaultInitializer<ITreeSetupBuilder<?>>() {
-					@Override
-					public void initialize(final ITreeSetupBuilder<?> setupBuilder) {
-						setupBuilder.setDefaultInnerIcon(SilkIcons.DISK);
-						setupBuilder.setDefaultInnerIcon(SilkIcons.FOLDER);
-					}
-				});
-	}
+        Toolkit.getBluePrintFactory().addDefaultsInitializer(
+                ITreeBluePrint.class,
+                new IDefaultInitializer<ITreeSetupBuilder<?>>() {
+                    @Override
+                    public void initialize(final ITreeSetupBuilder<?> setupBuilder) {
+                        setupBuilder.setDefaultInnerIcon(SilkIcons.DISK);
+                        setupBuilder.setDefaultInnerIcon(SilkIcons.FOLDER);
+                    }
+                });
+    }
 }

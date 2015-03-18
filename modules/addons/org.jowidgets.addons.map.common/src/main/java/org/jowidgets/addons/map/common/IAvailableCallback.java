@@ -30,6 +30,6 @@ package org.jowidgets.addons.map.common;
 
 public interface IAvailableCallback {
 
-	void onAvailable(IMapContext mapContext);
+    void onAvailable(IMapContext mapContext);
 
 }

@@ -38,30 +38,30 @@ import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
 
 public final class NumberUnitValidator<BASE_VALUE_TYPE extends Number, UNIT_VALUE_TYPE extends Number> implements
-		IValidator<IUnitValue<UNIT_VALUE_TYPE>> {
+        IValidator<IUnitValue<UNIT_VALUE_TYPE>> {
 
-	private static final IMessage BIJECTIVITY_CHECK_WARNING = Messages.getMessage("BijectiveCheckUnitValidator.bijectivityCheckFailed");
+    private static final IMessage BIJECTIVITY_CHECK_WARNING = Messages.getMessage("BijectiveCheckUnitValidator.bijectivityCheckFailed");
 
-	private final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter;
+    private final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter;
 
-	public NumberUnitValidator(final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter) {
-		Assert.paramNotNull(converter, "converter");
-		this.converter = converter;
-	}
+    public NumberUnitValidator(final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter) {
+        Assert.paramNotNull(converter, "converter");
+        this.converter = converter;
+    }
 
-	@Override
-	public IValidationResult validate(final IUnitValue<UNIT_VALUE_TYPE> value) {
-		if (value != null && value.getValue() != null) {
-			final Number baseValue = converter.toBaseValue(value);
-			if (baseValue == null) {
-				return ValidationResult.warning(BIJECTIVITY_CHECK_WARNING.get());
-			}
-			final Number backValue = baseValue.doubleValue() / value.getUnit().getConversionFactor();
-			if (!NullCompatibleEquivalence.equals(value.getValue().doubleValue(), backValue.doubleValue())) {
-				return ValidationResult.warning(BIJECTIVITY_CHECK_WARNING.get());
-			}
-		}
-		return ValidationResult.ok();
-	}
+    @Override
+    public IValidationResult validate(final IUnitValue<UNIT_VALUE_TYPE> value) {
+        if (value != null && value.getValue() != null) {
+            final Number baseValue = converter.toBaseValue(value);
+            if (baseValue == null) {
+                return ValidationResult.warning(BIJECTIVITY_CHECK_WARNING.get());
+            }
+            final Number backValue = baseValue.doubleValue() / value.getUnit().getConversionFactor();
+            if (!NullCompatibleEquivalence.equals(value.getValue().doubleValue(), backValue.doubleValue())) {
+                return ValidationResult.warning(BIJECTIVITY_CHECK_WARNING.get());
+            }
+        }
+        return ValidationResult.ok();
+    }
 
 }

@@ -31,5 +31,5 @@ import org.jowidgets.impl.spi.blueprint.builder.IToggleButtonSetupBuilderSpi;
 import org.jowidgets.impl.spi.descriptor.IToggleButtonDescriptorSpi;
 
 public interface IToggleButtonBluePrintSpi extends
-		IToggleButtonSetupBuilderSpi<IToggleButtonBluePrintSpi>,
-		IToggleButtonDescriptorSpi {}
+        IToggleButtonSetupBuilderSpi<IToggleButtonBluePrintSpi>,
+        IToggleButtonDescriptorSpi {}

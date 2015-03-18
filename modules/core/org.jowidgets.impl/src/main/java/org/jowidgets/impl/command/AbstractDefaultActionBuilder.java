@@ -39,76 +39,76 @@ import org.jowidgets.common.types.VirtualKey;
 
 abstract class AbstractDefaultActionBuilder implements IDefaultActionBuilder {
 
-	private String text;
+    private String text;
 
-	private final IActionBuilder original;
+    private final IActionBuilder original;
 
-	AbstractDefaultActionBuilder() {
-		this.original = Toolkit.getActionBuilderFactory().create();
-	}
+    AbstractDefaultActionBuilder() {
+        this.original = Toolkit.getActionBuilderFactory().create();
+    }
 
-	IActionBuilder getOriginal() {
-		return original;
-	}
+    IActionBuilder getOriginal() {
+        return original;
+    }
 
-	@Override
-	public final IDefaultActionBuilder setText(final String text) {
-		original.setText(text);
-		this.text = text;
-		return this;
-	}
+    @Override
+    public final IDefaultActionBuilder setText(final String text) {
+        original.setText(text);
+        this.text = text;
+        return this;
+    }
 
-	@Override
-	public final IDefaultActionBuilder setToolTipText(final String toolTipText) {
-		original.setToolTipText(toolTipText);
-		return this;
-	}
+    @Override
+    public final IDefaultActionBuilder setToolTipText(final String toolTipText) {
+        original.setToolTipText(toolTipText);
+        return this;
+    }
 
-	@Override
-	public final IDefaultActionBuilder setIcon(final IImageConstant icon) {
-		original.setIcon(icon);
-		return this;
-	}
+    @Override
+    public final IDefaultActionBuilder setIcon(final IImageConstant icon) {
+        original.setIcon(icon);
+        return this;
+    }
 
-	@Override
-	public final IDefaultActionBuilder setMnemonic(final Character mnemonic) {
-		original.setMnemonic(mnemonic);
-		return this;
-	}
+    @Override
+    public final IDefaultActionBuilder setMnemonic(final Character mnemonic) {
+        original.setMnemonic(mnemonic);
+        return this;
+    }
 
-	@Override
-	public final IDefaultActionBuilder setMnemonic(final char mnemonic) {
-		original.setMnemonic(mnemonic);
-		return this;
-	}
+    @Override
+    public final IDefaultActionBuilder setMnemonic(final char mnemonic) {
+        original.setMnemonic(mnemonic);
+        return this;
+    }
 
-	@Override
-	public final IDefaultActionBuilder setAccelerator(final Accelerator accelerator) {
-		original.setAccelerator(accelerator);
-		return this;
-	}
+    @Override
+    public final IDefaultActionBuilder setAccelerator(final Accelerator accelerator) {
+        original.setAccelerator(accelerator);
+        return this;
+    }
 
-	@Override
-	public final IDefaultActionBuilder setAccelerator(final char key, final Modifier... modifier) {
-		original.setAccelerator(key, modifier);
-		return this;
-	}
+    @Override
+    public final IDefaultActionBuilder setAccelerator(final char key, final Modifier... modifier) {
+        original.setAccelerator(key, modifier);
+        return this;
+    }
 
-	@Override
-	public final IDefaultActionBuilder setAccelerator(final VirtualKey virtualKey, final Modifier... modifier) {
-		original.setAccelerator(virtualKey, modifier);
-		return this;
-	}
+    @Override
+    public final IDefaultActionBuilder setAccelerator(final VirtualKey virtualKey, final Modifier... modifier) {
+        original.setAccelerator(virtualKey, modifier);
+        return this;
+    }
 
-	@Override
-	public IAction build() {
-		return doBuild(original);
-	}
+    @Override
+    public IAction build() {
+        return doBuild(original);
+    }
 
-	String getText() {
-		return text;
-	}
+    String getText() {
+        return text;
+    }
 
-	protected abstract IAction doBuild(IActionBuilder superBuilder);
+    protected abstract IAction doBuild(IActionBuilder superBuilder);
 
 }

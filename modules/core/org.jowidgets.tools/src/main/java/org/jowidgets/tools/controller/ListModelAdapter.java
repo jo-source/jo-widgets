@@ -32,13 +32,13 @@ import org.jowidgets.api.model.IListModelListener;
 
 public class ListModelAdapter implements IListModelListener {
 
-	@Override
-	public void afterChildAdded(final int index) {}
+    @Override
+    public void afterChildAdded(final int index) {}
 
-	@Override
-	public void beforeChildRemove(final int index) {}
+    @Override
+    public void beforeChildRemove(final int index) {}
 
-	@Override
-	public void afterChildRemoved(final int index) {}
+    @Override
+    public void afterChildRemoved(final int index) {}
 
 }

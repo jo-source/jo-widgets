@@ -50,158 +50,158 @@ import org.jowidgets.spi.widgets.setup.ITextAreaSetupSpi;
 
 public class TextAreaImpl extends AbstractInputControl implements ITextAreaSpi {
 
-	private final JTextArea textArea;
+    private final JTextArea textArea;
 
-	static {
-		final FontUIResource fontResource = (FontUIResource) UIManager.get("TextField.font");
-		if (fontResource != null) {
-			UIManager.put("TextArea.font", fontResource);
-		}
-	}
+    static {
+        final FontUIResource fontResource = (FontUIResource) UIManager.get("TextField.font");
+        if (fontResource != null) {
+            UIManager.put("TextArea.font", fontResource);
+        }
+    }
 
-	public TextAreaImpl(final ITextAreaSetupSpi setup) {
-		super(new JScrollPane(new JTextArea()));
+    public TextAreaImpl(final ITextAreaSetupSpi setup) {
+        super(new JScrollPane(new JTextArea()));
 
-		textArea = (JTextArea) getUiReference().getViewport().getView();
+        textArea = (JTextArea) getUiReference().getViewport().getView();
 
-		textArea.setWrapStyleWord(true);
-		textArea.setLineWrap(setup.isLineWrap());
+        textArea.setWrapStyleWord(true);
+        textArea.setLineWrap(setup.isLineWrap());
 
-		textArea.setAutoscrolls(false);
+        textArea.setAutoscrolls(false);
 
-		if (setup.isAlwaysShowBars()) {
-			getUiReference().setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-			if (!setup.isLineWrap()) {
-				getUiReference().setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-			}
-		}
+        if (setup.isAlwaysShowBars()) {
+            getUiReference().setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            if (!setup.isLineWrap()) {
+                getUiReference().setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+            }
+        }
 
-		if (!setup.hasBorder()) {
-			getUiReference().setBorder(BorderFactory.createEmptyBorder());
-			getUiReference().setViewportBorder(BorderFactory.createEmptyBorder());
-		}
+        if (!setup.hasBorder()) {
+            getUiReference().setBorder(BorderFactory.createEmptyBorder());
+            getUiReference().setViewportBorder(BorderFactory.createEmptyBorder());
+        }
 
-		final InputObservable inputObservable;
-		if (setup.getInputChangeEventPolicy() == InputChangeEventPolicy.ANY_CHANGE) {
-			inputObservable = this;
-		}
-		else if (setup.getInputChangeEventPolicy() == InputChangeEventPolicy.EDIT_FINISHED) {
-			inputObservable = null;
-			getUiReference().addFocusListener(new FocusAdapter() {
-				@Override
-				public void focusLost(final FocusEvent e) {
-					fireInputChanged(getText());
-				}
-			});
-		}
-		else {
-			throw new IllegalArgumentException("InputChangeEventPolicy '" + setup.getInputChangeEventPolicy() + "' is not known.");
-		}
+        final InputObservable inputObservable;
+        if (setup.getInputChangeEventPolicy() == InputChangeEventPolicy.ANY_CHANGE) {
+            inputObservable = this;
+        }
+        else if (setup.getInputChangeEventPolicy() == InputChangeEventPolicy.EDIT_FINISHED) {
+            inputObservable = null;
+            getUiReference().addFocusListener(new FocusAdapter() {
+                @Override
+                public void focusLost(final FocusEvent e) {
+                    fireInputChanged(getText());
+                }
+            });
+        }
+        else {
+            throw new IllegalArgumentException("InputChangeEventPolicy '" + setup.getInputChangeEventPolicy() + "' is not known.");
+        }
 
-		final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(null, setup);
-		textArea.setDocument(new InputModifierDocument(textArea, inputVerifier, inputObservable, setup.getMaxLength()));
-	}
+        final IInputVerifier inputVerifier = InputVerifierHelper.getInputVerifier(null, setup);
+        textArea.setDocument(new InputModifierDocument(textArea, inputVerifier, inputObservable, setup.getMaxLength()));
+    }
 
-	@Override
-	public JScrollPane getUiReference() {
-		return (JScrollPane) super.getUiReference();
-	}
+    @Override
+    public JScrollPane getUiReference() {
+        return (JScrollPane) super.getUiReference();
+    }
 
-	@Override
-	public String getText() {
-		return textArea.getText();
-	}
+    @Override
+    public String getText() {
+        return textArea.getText();
+    }
 
-	@Override
-	public void setText(final String text) {
-		textArea.setText(text);
-		if (!textArea.isFocusOwner()) {
-			fireInputChanged(getText());
-		}
-	}
+    @Override
+    public void setText(final String text) {
+        textArea.setText(text);
+        if (!textArea.isFocusOwner()) {
+            fireInputChanged(getText());
+        }
+    }
 
-	@Override
-	public void append(final String text) {
-		textArea.append(text);
-		if (!textArea.isFocusOwner()) {
-			fireInputChanged(getText());
-		}
-	}
+    @Override
+    public void append(final String text) {
+        textArea.append(text);
+        if (!textArea.isFocusOwner()) {
+            fireInputChanged(getText());
+        }
+    }
 
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		super.setForegroundColor(colorValue);
-		textArea.setForeground(ColorConvert.convert(colorValue));
-	}
+    @Override
+    public void setForegroundColor(final IColorConstant colorValue) {
+        super.setForegroundColor(colorValue);
+        textArea.setForeground(ColorConvert.convert(colorValue));
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		super.setBackgroundColor(colorValue);
-		textArea.setBackground(ColorConvert.convert(colorValue));
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        super.setBackgroundColor(colorValue);
+        textArea.setBackground(ColorConvert.convert(colorValue));
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		textArea.setFont(FontProvider.deriveFont(textArea.getFont(), size));
-	}
+    @Override
+    public void setFontSize(final int size) {
+        textArea.setFont(FontProvider.deriveFont(textArea.getFont(), size));
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		textArea.setFont(FontProvider.deriveFont(textArea.getFont(), fontName));
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        textArea.setFont(FontProvider.deriveFont(textArea.getFont(), fontName));
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		textArea.setFont(FontProvider.deriveFont(textArea.getFont(), markup));
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        textArea.setFont(FontProvider.deriveFont(textArea.getFont(), markup));
+    }
 
-	@Override
-	public void setSelection(final int start, final int end) {
-		textArea.setSelectionStart(start);
-		textArea.setSelectionEnd(end);
-	}
+    @Override
+    public void setSelection(final int start, final int end) {
+        textArea.setSelectionStart(start);
+        textArea.setSelectionEnd(end);
+    }
 
-	@Override
-	public void select() {
-		textArea.selectAll();
-	}
+    @Override
+    public void select() {
+        textArea.selectAll();
+    }
 
-	@Override
-	public void setEditable(final boolean editable) {
-		textArea.setEditable(editable);
-	}
+    @Override
+    public void setEditable(final boolean editable) {
+        textArea.setEditable(editable);
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		textArea.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        textArea.setEnabled(enabled);
+    }
 
-	@Override
-	public void setCaretPosition(final int pos) {
-		textArea.setCaretPosition(pos);
-	}
+    @Override
+    public void setCaretPosition(final int pos) {
+        textArea.setCaretPosition(pos);
+    }
 
-	@Override
-	public int getCaretPosition() {
-		return textArea.getCaretPosition();
-	}
+    @Override
+    public int getCaretPosition() {
+        return textArea.getCaretPosition();
+    }
 
-	@Override
-	public void scrollToCaretPosition() {
-		final int caretPosition = textArea.getCaretPosition();
-		final int usedPosition;
+    @Override
+    public void scrollToCaretPosition() {
+        final int caretPosition = textArea.getCaretPosition();
+        final int usedPosition;
 
-		final int next = Math.min(caretPosition + 1, textArea.getDocument().getLength());
-		final int previous = Math.max(caretPosition - 1, 0);
-		if (next != caretPosition) {
-			usedPosition = next;
-		}
-		else {
-			usedPosition = previous;
-		}
+        final int next = Math.min(caretPosition + 1, textArea.getDocument().getLength());
+        final int previous = Math.max(caretPosition - 1, 0);
+        if (next != caretPosition) {
+            usedPosition = next;
+        }
+        else {
+            usedPosition = previous;
+        }
 
-		textArea.setCaretPosition(usedPosition);
-		textArea.setCaretPosition(caretPosition);
-	}
+        textArea.setCaretPosition(usedPosition);
+        textArea.setCaretPosition(caretPosition);
+    }
 
 }

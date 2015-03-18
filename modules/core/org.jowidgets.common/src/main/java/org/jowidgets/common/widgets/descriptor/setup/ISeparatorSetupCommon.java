@@ -32,7 +32,7 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ISeparatorSetupCommon extends IComponentSetupCommon {
 
-	@Mandatory
-	Orientation getOrientation();
+    @Mandatory
+    Orientation getOrientation();
 
 }

@@ -34,6 +34,6 @@ import org.jowidgets.common.widgets.descriptor.setup.ICalendarSetupCommon;
 
 public interface ICalendarSetup extends IComponentSetup, ICalendarSetupCommon {
 
-	Date getDate();
+    Date getDate();
 
 }

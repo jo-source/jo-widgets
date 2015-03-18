@@ -29,18 +29,18 @@ package org.jowidgets.i18n.api;
 
 final class Assert {
 
-	private Assert() {}
+    private Assert() {}
 
-	static void paramNotNull(final Object object, final String name) {
-		if (object == null) {
-			throw new IllegalArgumentException("The parameter '" + name + "' must not be null!");
-		}
-	}
+    static void paramNotNull(final Object object, final String name) {
+        if (object == null) {
+            throw new IllegalArgumentException("The parameter '" + name + "' must not be null!");
+        }
+    }
 
-	static void paramNotEmpty(final String string, final String name) {
-		if (string == null || string.length() <= 0) {
-			throw new IllegalArgumentException("The parameter '" + name + "' must not be empty!");
-		}
-	}
+    static void paramNotEmpty(final String string, final String name) {
+        if (string == null || string.length() <= 0) {
+            throw new IllegalArgumentException("The parameter '" + name + "' must not be empty!");
+        }
+    }
 
 }

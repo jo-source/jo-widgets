@@ -29,8 +29,8 @@ package org.jowidgets.api.widgets.descriptor.setup;
 
 public interface IMainMenuSetup {
 
-	String getText();
+    String getText();
 
-	Character getMnemonic();
+    Character getMnemonic();
 
 }

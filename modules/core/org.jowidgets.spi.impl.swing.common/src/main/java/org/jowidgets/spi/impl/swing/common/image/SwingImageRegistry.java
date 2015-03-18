@@ -38,42 +38,42 @@ import org.jowidgets.spi.impl.image.ImageRegistry;
 
 public final class SwingImageRegistry extends ImageRegistry {
 
-	private static final SwingImageRegistry INSTANCE = new SwingImageRegistry(new SwingImageHandleFactory());
+    private static final SwingImageRegistry INSTANCE = new SwingImageRegistry(new SwingImageHandleFactory());
 
-	private SwingImageRegistry(final IImageHandleFactory imageHandleFactory) {
-		super(imageHandleFactory);
-	}
+    private SwingImageRegistry(final IImageHandleFactory imageHandleFactory) {
+        super(imageHandleFactory);
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public synchronized ImageHandle<Image> getImageHandle(final IImageConstant key) {
-		return (ImageHandle<Image>) super.getImageHandle(key);
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public synchronized ImageHandle<Image> getImageHandle(final IImageConstant key) {
+        return (ImageHandle<Image>) super.getImageHandle(key);
+    }
 
-	public synchronized Image getImage(final IImageConstant key) {
-		if (key == null) {
-			return null;
-		}
-		final ImageHandle<Image> imageHandle = getImageHandle(key);
-		if (imageHandle != null) {
-			return imageHandle.getImage();
-		}
-		else {
-			throw new IllegalArgumentException("No image found for the image constant '" + key + "'");
-		}
-	}
+    public synchronized Image getImage(final IImageConstant key) {
+        if (key == null) {
+            return null;
+        }
+        final ImageHandle<Image> imageHandle = getImageHandle(key);
+        if (imageHandle != null) {
+            return imageHandle.getImage();
+        }
+        else {
+            throw new IllegalArgumentException("No image found for the image constant '" + key + "'");
+        }
+    }
 
-	public synchronized ImageIcon getImageIcon(final IImageConstant key) {
-		if (key == null) {
-			return null;
-		}
-		else {
-			return new ImageIcon(getImage(key));
-		}
-	}
+    public synchronized ImageIcon getImageIcon(final IImageConstant key) {
+        if (key == null) {
+            return null;
+        }
+        else {
+            return new ImageIcon(getImage(key));
+        }
+    }
 
-	public static SwingImageRegistry getInstance() {
-		return INSTANCE;
-	}
+    public static SwingImageRegistry getInstance() {
+        return INSTANCE;
+    }
 
 }

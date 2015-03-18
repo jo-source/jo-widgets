@@ -33,13 +33,13 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface IInputContentCreatorFactory {
 
-	<INPUT_TYPE> IInputContentCreator<INPUT_TYPE> singleControlContent(
-		String label,
-		IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor,
-		int fieldMinWidth);
+    <INPUT_TYPE> IInputContentCreator<INPUT_TYPE> singleControlContent(
+        String label,
+        IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor,
+        int fieldMinWidth);
 
-	<INPUT_TYPE> IInputContentCreator<INPUT_TYPE> singleControlContent(
-		String label,
-		IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor);
+    <INPUT_TYPE> IInputContentCreator<INPUT_TYPE> singleControlContent(
+        String label,
+        IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor);
 
 }

@@ -31,8 +31,8 @@ import org.jowidgets.common.color.IColorConstant;
 
 public interface IComponentSetupConvenience<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setVisible(boolean visible);
+    INSTANCE_TYPE setVisible(boolean visible);
 
-	INSTANCE_TYPE setColor(IColorConstant colorConstant);
+    INSTANCE_TYPE setColor(IColorConstant colorConstant);
 
 }

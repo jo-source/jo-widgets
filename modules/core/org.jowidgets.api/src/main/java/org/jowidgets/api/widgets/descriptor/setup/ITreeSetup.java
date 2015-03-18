@@ -35,11 +35,11 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ITreeSetup extends IComponentSetup, ITreeSetupCommon {
 
-	IImageConstant getDefaultInnerIcon();
+    IImageConstant getDefaultInnerIcon();
 
-	IImageConstant getDefaultLeafIcon();
+    IImageConstant getDefaultLeafIcon();
 
-	@Mandatory
-	TreeAutoCheckPolicy getAutoCheckPolicy();
+    @Mandatory
+    TreeAutoCheckPolicy getAutoCheckPolicy();
 
 }

@@ -42,51 +42,51 @@ import org.jowidgets.util.Assert;
 
 class TableColumnObservableSpiAdapter implements ITableColumnObservable {
 
-	private final Set<ITableColumnListener> listeners;
+    private final Set<ITableColumnListener> listeners;
 
-	TableColumnObservableSpiAdapter() {
-		this.listeners = new LinkedHashSet<ITableColumnListener>();
-	}
+    TableColumnObservableSpiAdapter() {
+        this.listeners = new LinkedHashSet<ITableColumnListener>();
+    }
 
-	@Override
-	public void addTableColumnListener(final ITableColumnListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public void addTableColumnListener(final ITableColumnListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removeTableColumnListener(final ITableColumnListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeTableColumnListener(final ITableColumnListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public void fireColumnPermutationChanged() {
-		if (!listeners.isEmpty()) {
-			for (final ITableColumnListener listener : new LinkedList<ITableColumnListener>(listeners)) {
-				listener.columnPermutationChanged();
-			}
-		}
-	}
+    public void fireColumnPermutationChanged() {
+        if (!listeners.isEmpty()) {
+            for (final ITableColumnListener listener : new LinkedList<ITableColumnListener>(listeners)) {
+                listener.columnPermutationChanged();
+            }
+        }
+    }
 
-	public void fireColumnResized(final ITableColumnResizeEvent event, final TableModelSpiAdapter modelSpiAdapter) {
-		if (!listeners.isEmpty()) {
-			final ITableColumnResizeEvent decoratedEvent = new TableColumnResizeEvent(
-				modelSpiAdapter.convertViewToModel(event.getColumnIndex()),
-				event.getWidth());
-			for (final ITableColumnListener listener : new LinkedList<ITableColumnListener>(listeners)) {
-				listener.columnResized(decoratedEvent);
-			}
-		}
-	}
+    public void fireColumnResized(final ITableColumnResizeEvent event, final TableModelSpiAdapter modelSpiAdapter) {
+        if (!listeners.isEmpty()) {
+            final ITableColumnResizeEvent decoratedEvent = new TableColumnResizeEvent(
+                modelSpiAdapter.convertViewToModel(event.getColumnIndex()),
+                event.getWidth());
+            for (final ITableColumnListener listener : new LinkedList<ITableColumnListener>(listeners)) {
+                listener.columnResized(decoratedEvent);
+            }
+        }
+    }
 
-	public void fireMouseClicked(final ITableColumnMouseEvent event, final TableModelSpiAdapter modelSpiAdapter) {
-		if (!listeners.isEmpty()) {
-			final ITableColumnMouseEvent decoratedEvent = new TableColumnMouseEvent(
-				modelSpiAdapter.convertViewToModel(event.getColumnIndex()),
-				event.getModifiers());
-			for (final ITableColumnListener listener : new LinkedList<ITableColumnListener>(listeners)) {
-				listener.mouseClicked(decoratedEvent);
-			}
-		}
-	}
+    public void fireMouseClicked(final ITableColumnMouseEvent event, final TableModelSpiAdapter modelSpiAdapter) {
+        if (!listeners.isEmpty()) {
+            final ITableColumnMouseEvent decoratedEvent = new TableColumnMouseEvent(
+                modelSpiAdapter.convertViewToModel(event.getColumnIndex()),
+                event.getModifiers());
+            for (final ITableColumnListener listener : new LinkedList<ITableColumnListener>(listeners)) {
+                listener.mouseClicked(decoratedEvent);
+            }
+        }
+    }
 }

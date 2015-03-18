@@ -37,51 +37,51 @@ import org.jowidgets.spi.widgets.IControlSpi;
 
 public abstract class AbstractActionControl extends AbstractActionComponent implements IControlSpi {
 
-	private final SwingControl swingControlDelegate;
+    private final SwingControl swingControlDelegate;
 
-	public AbstractActionControl(final Component component) {
-		super(component);
-		this.swingControlDelegate = new SwingControl(component, new ImmutableDropSelection(this));
-	}
+    public AbstractActionControl(final Component component) {
+        super(component);
+        this.swingControlDelegate = new SwingControl(component, new ImmutableDropSelection(this));
+    }
 
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		swingControlDelegate.setLayoutConstraints(layoutConstraints);
-	}
+    @Override
+    public void setLayoutConstraints(final Object layoutConstraints) {
+        swingControlDelegate.setLayoutConstraints(layoutConstraints);
+    }
 
-	@Override
-	public Object getLayoutConstraints() {
-		return swingControlDelegate.getLayoutConstraints();
-	}
+    @Override
+    public Object getLayoutConstraints() {
+        return swingControlDelegate.getLayoutConstraints();
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		return swingControlDelegate.getMinSize();
-	}
+    @Override
+    public Dimension getMinSize() {
+        return swingControlDelegate.getMinSize();
+    }
 
-	@Override
-	public Dimension getPreferredSize() {
-		return swingControlDelegate.getPreferredSize();
-	}
+    @Override
+    public Dimension getPreferredSize() {
+        return swingControlDelegate.getPreferredSize();
+    }
 
-	@Override
-	public Dimension getMaxSize() {
-		return swingControlDelegate.getMaxSize();
-	}
+    @Override
+    public Dimension getMaxSize() {
+        return swingControlDelegate.getMaxSize();
+    }
 
-	@Override
-	public void setToolTipText(final String toolTip) {
-		swingControlDelegate.setToolTipText(toolTip);
-	}
+    @Override
+    public void setToolTipText(final String toolTip) {
+        swingControlDelegate.setToolTipText(toolTip);
+    }
 
-	@Override
-	public IDragSourceSpi getDragSource() {
-		return swingControlDelegate.getDragSource();
-	}
+    @Override
+    public IDragSourceSpi getDragSource() {
+        return swingControlDelegate.getDragSource();
+    }
 
-	@Override
-	public IDropTargetSpi getDropTarget() {
-		return swingControlDelegate.getDropTarget();
-	}
+    @Override
+    public IDropTargetSpi getDropTarget() {
+        return swingControlDelegate.getDropTarget();
+    }
 
 }

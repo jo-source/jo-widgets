@@ -35,16 +35,16 @@ import org.jowidgets.util.IConverter;
 
 public final class SwtAwtConverterFactory {
 
-	private static final ISwtAwtConverterFactory INSTANCE = new SwtAwtConverterFactoryImpl();
+    private static final ISwtAwtConverterFactory INSTANCE = new SwtAwtConverterFactoryImpl();
 
-	private SwtAwtConverterFactory() {}
+    private SwtAwtConverterFactory() {}
 
-	public static ISwtAwtConverterFactory getInstance() {
-		return INSTANCE;
-	}
+    public static ISwtAwtConverterFactory getInstance() {
+        return INSTANCE;
+    }
 
-	public static IConverter<IComposite, Container> createCompositeConverter() {
-		return getInstance().createCompositeConverter();
-	}
+    public static IConverter<IComposite, Container> createCompositeConverter() {
+        return getInstance().createCompositeConverter();
+    }
 
 }

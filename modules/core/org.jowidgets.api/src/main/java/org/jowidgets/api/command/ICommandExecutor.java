@@ -30,13 +30,13 @@ package org.jowidgets.api.command;
 
 public interface ICommandExecutor {
 
-	/**
-	 * Executes the command
-	 * 
-	 * @param executionContext The execution context of the underlying action
-	 * 
-	 * @throws Exception
-	 */
-	void execute(IExecutionContext executionContext) throws Exception;
+    /**
+     * Executes the command
+     * 
+     * @param executionContext The execution context of the underlying action
+     * 
+     * @throws Exception
+     */
+    void execute(IExecutionContext executionContext) throws Exception;
 
 }

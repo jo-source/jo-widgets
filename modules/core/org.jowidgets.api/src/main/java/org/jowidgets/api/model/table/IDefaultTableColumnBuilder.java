@@ -33,18 +33,18 @@ import org.jowidgets.common.types.AlignmentHorizontal;
 
 public interface IDefaultTableColumnBuilder {
 
-	IDefaultTableColumnBuilder setText(String text);
+    IDefaultTableColumnBuilder setText(String text);
 
-	IDefaultTableColumnBuilder setToolTipText(String tooltipText);
+    IDefaultTableColumnBuilder setToolTipText(String tooltipText);
 
-	IDefaultTableColumnBuilder setIcon(IImageConstant icon);
+    IDefaultTableColumnBuilder setIcon(IImageConstant icon);
 
-	IDefaultTableColumnBuilder setWidth(int width);
+    IDefaultTableColumnBuilder setWidth(int width);
 
-	IDefaultTableColumnBuilder setAlignment(AlignmentHorizontal alignment);
+    IDefaultTableColumnBuilder setAlignment(AlignmentHorizontal alignment);
 
-	IDefaultTableColumnBuilder setVisible(boolean visible);
+    IDefaultTableColumnBuilder setVisible(boolean visible);
 
-	IDefaultTableColumn build();
+    IDefaultTableColumn build();
 
 }

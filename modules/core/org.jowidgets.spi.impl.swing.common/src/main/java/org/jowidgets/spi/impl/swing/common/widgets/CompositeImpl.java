@@ -35,15 +35,15 @@ import org.jowidgets.spi.impl.swing.common.util.BorderConvert;
 
 public class CompositeImpl extends SwingComposite {
 
-	public CompositeImpl(final IGenericWidgetFactory factory, final ICompositeSetupCommon setup) {
-		super(factory, new JPanel());
-		getUiReference().setBorder(BorderConvert.convert(setup.getBorder()));
-		getUiReference().setBackground(null);
-	}
+    public CompositeImpl(final IGenericWidgetFactory factory, final ICompositeSetupCommon setup) {
+        super(factory, new JPanel());
+        getUiReference().setBorder(BorderConvert.convert(setup.getBorder()));
+        getUiReference().setBackground(null);
+    }
 
-	@Override
-	public JPanel getUiReference() {
-		return (JPanel) super.getUiReference();
-	}
+    @Override
+    public JPanel getUiReference() {
+        return (JPanel) super.getUiReference();
+    }
 
 }

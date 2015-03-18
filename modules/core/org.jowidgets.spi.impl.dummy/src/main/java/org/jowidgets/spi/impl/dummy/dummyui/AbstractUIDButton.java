@@ -33,40 +33,40 @@ import org.jowidgets.common.types.Markup;
 
 public abstract class AbstractUIDButton extends UIDComponent {
 
-	private AlignmentHorizontal horizontalAlignment;
-	private String text;
-	private UIDImage icon;
-	private Markup markup;
+    private AlignmentHorizontal horizontalAlignment;
+    private String text;
+    private UIDImage icon;
+    private Markup markup;
 
-	public AlignmentHorizontal getHorizontalAlignment() {
-		return horizontalAlignment;
-	}
+    public AlignmentHorizontal getHorizontalAlignment() {
+        return horizontalAlignment;
+    }
 
-	public void setHorizontalAlignment(final AlignmentHorizontal horizontalAlignment) {
-		this.horizontalAlignment = horizontalAlignment;
-	}
+    public void setHorizontalAlignment(final AlignmentHorizontal horizontalAlignment) {
+        this.horizontalAlignment = horizontalAlignment;
+    }
 
-	public String getText() {
-		return text;
-	}
+    public String getText() {
+        return text;
+    }
 
-	public void setText(final String text) {
-		this.text = text;
-	}
+    public void setText(final String text) {
+        this.text = text;
+    }
 
-	public UIDImage getIcon() {
-		return icon;
-	}
+    public UIDImage getIcon() {
+        return icon;
+    }
 
-	public void setIcon(final UIDImage icon) {
-		this.icon = icon;
-	}
+    public void setIcon(final UIDImage icon) {
+        this.icon = icon;
+    }
 
-	public Markup getMarkup() {
-		return markup;
-	}
+    public Markup getMarkup() {
+        return markup;
+    }
 
-	public void setMarkup(final Markup markup) {
-		this.markup = markup;
-	}
+    public void setMarkup(final Markup markup) {
+        this.markup = markup;
+    }
 }

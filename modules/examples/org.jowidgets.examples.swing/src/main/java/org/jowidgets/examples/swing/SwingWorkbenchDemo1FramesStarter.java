@@ -46,44 +46,44 @@ import org.jowidgets.workbench.impl.WorkbenchRunner;
 
 public final class SwingWorkbenchDemo1FramesStarter {
 
-	private SwingWorkbenchDemo1FramesStarter() {}
+    private SwingWorkbenchDemo1FramesStarter() {}
 
-	public static void main(final String[] args) throws Exception {
+    public static void main(final String[] args) throws Exception {
 
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
 
-		Toolkit.initialize(AwtSwtToolkitProviderFactory.create());
+        Toolkit.initialize(AwtSwtToolkitProviderFactory.create());
 
-		Toolkit.getWidgetFactory().register(
-				IMapWidgetBlueprint.class,
-				new SwingGoogleEarthWidgetFactory(MapDemoApplication.API_KEY));
+        Toolkit.getWidgetFactory().register(
+                IMapWidgetBlueprint.class,
+                new SwingGoogleEarthWidgetFactory(MapDemoApplication.API_KEY));
 
-		SwingOptions.setInternalFramesForTabFolders(true);
-		SwingOptions.setOneTouchExpandableSplits(true);
+        SwingOptions.setInternalFramesForTabFolders(true);
+        SwingOptions.setOneTouchExpandableSplits(true);
 
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		bpf.addDefaultsInitializer(ITabFolderBluePrint.class, createTabDefaults());
-		bpf.addDefaultsInitializer(ISplitCompositeBluePrint.class, createSplitDefaults());
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+        bpf.addDefaultsInitializer(ITabFolderBluePrint.class, createTabDefaults());
+        bpf.addDefaultsInitializer(ISplitCompositeBluePrint.class, createSplitDefaults());
 
-		new WorkbenchRunner().run(new WorkbenchDemo1Factory());
-	}
+        new WorkbenchRunner().run(new WorkbenchDemo1Factory());
+    }
 
-	private static IDefaultInitializer<ITabFolderBluePrint> createTabDefaults() {
-		return new IDefaultInitializer<ITabFolderBluePrint>() {
-			@Override
-			public void initialize(final ITabFolderBluePrint tabFolderBp) {
-				tabFolderBp.setTabPlacement(TabPlacement.BOTTOM);
-			}
-		};
-	}
+    private static IDefaultInitializer<ITabFolderBluePrint> createTabDefaults() {
+        return new IDefaultInitializer<ITabFolderBluePrint>() {
+            @Override
+            public void initialize(final ITabFolderBluePrint tabFolderBp) {
+                tabFolderBp.setTabPlacement(TabPlacement.BOTTOM);
+            }
+        };
+    }
 
-	private static IDefaultInitializer<ISplitCompositeBluePrint> createSplitDefaults() {
-		return new IDefaultInitializer<ISplitCompositeBluePrint>() {
-			@Override
-			public void initialize(final ISplitCompositeBluePrint splitCompositeBp) {
-				splitCompositeBp.setDividerSize(5);
-			}
-		};
-	}
+    private static IDefaultInitializer<ISplitCompositeBluePrint> createSplitDefaults() {
+        return new IDefaultInitializer<ISplitCompositeBluePrint>() {
+            @Override
+            public void initialize(final ISplitCompositeBluePrint splitCompositeBp) {
+                splitCompositeBp.setDividerSize(5);
+            }
+        };
+    }
 }

@@ -33,6 +33,6 @@ import org.jowidgets.common.model.ITableCell;
 
 public interface IBeanTableRenderer<BEAN_TYPE> extends ITableColumnModel {
 
-	ITableCell getCell(int rowIndex, int columnIndex, BEAN_TYPE bean);
+    ITableCell getCell(int rowIndex, int columnIndex, BEAN_TYPE bean);
 
 }

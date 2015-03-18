@@ -32,21 +32,21 @@ import org.jowidgets.common.widgets.controller.ITableColumnEvent;
 
 public class TableColumnEvent implements ITableColumnEvent {
 
-	private final int columnIndex;
+    private final int columnIndex;
 
-	public TableColumnEvent(final int columnIndex) {
-		super();
-		this.columnIndex = columnIndex;
-	}
+    public TableColumnEvent(final int columnIndex) {
+        super();
+        this.columnIndex = columnIndex;
+    }
 
-	@Override
-	public int getColumnIndex() {
-		return columnIndex;
-	}
+    @Override
+    public int getColumnIndex() {
+        return columnIndex;
+    }
 
-	@Override
-	public String toString() {
-		return "TableColumnEvent [columnIndex=" + columnIndex + "]";
-	}
+    @Override
+    public String toString() {
+        return "TableColumnEvent [columnIndex=" + columnIndex + "]";
+    }
 
 }

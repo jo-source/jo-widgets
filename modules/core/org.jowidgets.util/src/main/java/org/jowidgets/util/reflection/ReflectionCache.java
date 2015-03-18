@@ -38,18 +38,18 @@ import org.jowidgets.util.Assert;
 
 public final class ReflectionCache {
 
-	private static final Map<Class<?>, Set<Method>> TYPE_METHODS_CACHE = new HashMap<Class<?>, Set<Method>>();
+    private static final Map<Class<?>, Set<Method>> TYPE_METHODS_CACHE = new HashMap<Class<?>, Set<Method>>();
 
-	private ReflectionCache() {}
+    private ReflectionCache() {}
 
-	public static Set<Method> getMethods(final Class<?> type) {
-		Assert.paramNotNull(type, "type");
-		Set<Method> result = TYPE_METHODS_CACHE.get(type);
-		if (result == null) {
-			result = Collections.unmodifiableSet(ReflectionUtils.getMethods(type));
-			TYPE_METHODS_CACHE.put(type, result);
-		}
-		return result;
-	}
+    public static Set<Method> getMethods(final Class<?> type) {
+        Assert.paramNotNull(type, "type");
+        Set<Method> result = TYPE_METHODS_CACHE.get(type);
+        if (result == null) {
+            result = Collections.unmodifiableSet(ReflectionUtils.getMethods(type));
+            TYPE_METHODS_CACHE.put(type, result);
+        }
+        return result;
+    }
 
 }

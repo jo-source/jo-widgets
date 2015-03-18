@@ -36,33 +36,33 @@ import org.jowidgets.common.types.IFileChooserFilter;
 
 public interface IFileChooserCommon extends IDisplayCommon {
 
-	/**
-	 * Sets the selected file or directory of the chooser that will be shown
-	 * when the chooser will be opened the first time.
-	 * 
-	 * @param file The file or directory to set
-	 */
-	void setSelectedFile(File file);
+    /**
+     * Sets the selected file or directory of the chooser that will be shown
+     * when the chooser will be opened the first time.
+     * 
+     * @param file The file or directory to set
+     */
+    void setSelectedFile(File file);
 
-	/**
-	 * Opens the chooser and blocks until the user has pressed OK or CANCEL
-	 * 
-	 * @return DialogResult.OK or DialogResult.CANCEL
-	 */
-	DialogResult open();
+    /**
+     * Opens the chooser and blocks until the user has pressed OK or CANCEL
+     * 
+     * @return DialogResult.OK or DialogResult.CANCEL
+     */
+    DialogResult open();
 
-	/**
-	 * Gets the files that was selected by the user.
-	 * 
-	 * @return The files that was selected by the user or an empty list.
-	 */
-	List<File> getSelectedFiles();
+    /**
+     * Gets the files that was selected by the user.
+     * 
+     * @return The files that was selected by the user or an empty list.
+     */
+    List<File> getSelectedFiles();
 
-	/**
-	 * Gets the filter that was selected by the user
-	 * 
-	 * @return The selected filter or null
-	 */
-	IFileChooserFilter getSelectedFilter();
+    /**
+     * Gets the filter that was selected by the user
+     * 
+     * @return The selected filter or null
+     */
+    IFileChooserFilter getSelectedFilter();
 
 }

@@ -36,56 +36,56 @@ import org.jowidgets.common.types.AlignmentHorizontal;
 
 public class DefaultTableColumnBuilder implements IDefaultTableColumnBuilder {
 
-	private final IDefaultTableColumnBuilder builder;
+    private final IDefaultTableColumnBuilder builder;
 
-	public DefaultTableColumnBuilder() {
-		this(Toolkit.getModelFactoryProvider().getTableModelFactory().columnBuilder());
-	}
+    public DefaultTableColumnBuilder() {
+        this(Toolkit.getModelFactoryProvider().getTableModelFactory().columnBuilder());
+    }
 
-	public DefaultTableColumnBuilder(final IDefaultTableColumnBuilder builder) {
-		super();
-		this.builder = builder;
-	}
+    public DefaultTableColumnBuilder(final IDefaultTableColumnBuilder builder) {
+        super();
+        this.builder = builder;
+    }
 
-	@Override
-	public final IDefaultTableColumnBuilder setText(final String text) {
-		builder.setText(text);
-		return this;
-	}
+    @Override
+    public final IDefaultTableColumnBuilder setText(final String text) {
+        builder.setText(text);
+        return this;
+    }
 
-	@Override
-	public final IDefaultTableColumnBuilder setToolTipText(final String tooltipText) {
-		builder.setToolTipText(tooltipText);
-		return this;
-	}
+    @Override
+    public final IDefaultTableColumnBuilder setToolTipText(final String tooltipText) {
+        builder.setToolTipText(tooltipText);
+        return this;
+    }
 
-	@Override
-	public final IDefaultTableColumnBuilder setIcon(final IImageConstant icon) {
-		builder.setIcon(icon);
-		return this;
-	}
+    @Override
+    public final IDefaultTableColumnBuilder setIcon(final IImageConstant icon) {
+        builder.setIcon(icon);
+        return this;
+    }
 
-	@Override
-	public final IDefaultTableColumnBuilder setWidth(final int width) {
-		builder.setWidth(width);
-		return this;
-	}
+    @Override
+    public final IDefaultTableColumnBuilder setWidth(final int width) {
+        builder.setWidth(width);
+        return this;
+    }
 
-	@Override
-	public final IDefaultTableColumnBuilder setAlignment(final AlignmentHorizontal alignment) {
-		builder.setAlignment(alignment);
-		return this;
-	}
+    @Override
+    public final IDefaultTableColumnBuilder setAlignment(final AlignmentHorizontal alignment) {
+        builder.setAlignment(alignment);
+        return this;
+    }
 
-	@Override
-	public IDefaultTableColumnBuilder setVisible(final boolean visible) {
-		builder.setVisible(visible);
-		return this;
-	}
+    @Override
+    public IDefaultTableColumnBuilder setVisible(final boolean visible) {
+        builder.setVisible(visible);
+        return this;
+    }
 
-	@Override
-	public final IDefaultTableColumn build() {
-		return builder.build();
-	}
+    @Override
+    public final IDefaultTableColumn build() {
+        return builder.build();
+    }
 
 }

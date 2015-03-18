@@ -30,21 +30,21 @@ package org.jowidgets.addons.widgets.browser.api;
 
 public interface IBrowserFunction {
 
-	/**
-	 * Will be invoked if java script function with the browser function name will be invoked.
-	 * 
-	 * Supported argument and return types are:
-	 * 
-	 * javascript type null or undefined -> <code>null</code> <br>
-	 * javascript type number -> <code>java.lang.Double</code> <br>
-	 * javascript type string -> <code>java.lang.String</code> <br>
-	 * javascript type boolean -> <code>java.lang.Boolean</code> <br>
-	 * javascript array (all types must be supported) -> <code>java.lang.Object[]</code> (converted as shown above)
-	 * 
-	 * @param args The functions arguments
-	 * 
-	 * @return The result of the invocation
-	 */
-	Object invoke(Object[] args);
+    /**
+     * Will be invoked if java script function with the browser function name will be invoked.
+     * 
+     * Supported argument and return types are:
+     * 
+     * javascript type null or undefined -> <code>null</code> <br>
+     * javascript type number -> <code>java.lang.Double</code> <br>
+     * javascript type string -> <code>java.lang.String</code> <br>
+     * javascript type boolean -> <code>java.lang.Boolean</code> <br>
+     * javascript array (all types must be supported) -> <code>java.lang.Object[]</code> (converted as shown above)
+     * 
+     * @param args The functions arguments
+     * 
+     * @return The result of the invocation
+     */
+    Object invoke(Object[] args);
 
 }

@@ -38,28 +38,28 @@ import org.jowidgets.util.Assert;
 
 public class TableSelectionObservable implements ITableSelectionObservable {
 
-	private final Set<ITableSelectionListener> listeners;
+    private final Set<ITableSelectionListener> listeners;
 
-	public TableSelectionObservable() {
-		super();
-		this.listeners = new LinkedHashSet<ITableSelectionListener>();
-	}
+    public TableSelectionObservable() {
+        super();
+        this.listeners = new LinkedHashSet<ITableSelectionListener>();
+    }
 
-	@Override
-	public void addTableSelectionListener(final ITableSelectionListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public void addTableSelectionListener(final ITableSelectionListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removeTableSelectionListener(final ITableSelectionListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeTableSelectionListener(final ITableSelectionListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public void fireSelectionChanged() {
-		for (final ITableSelectionListener listener : new LinkedList<ITableSelectionListener>(listeners)) {
-			listener.selectionChanged();
-		}
-	}
+    public void fireSelectionChanged() {
+        for (final ITableSelectionListener listener : new LinkedList<ITableSelectionListener>(listeners)) {
+            listener.selectionChanged();
+        }
+    }
 }

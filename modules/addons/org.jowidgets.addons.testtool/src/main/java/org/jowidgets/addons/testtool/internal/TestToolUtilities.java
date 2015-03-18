@@ -40,92 +40,92 @@ import org.jowidgets.util.Assert;
 // TODO LG generate unique id
 public final class TestToolUtilities {
 
-	public static final String ELEMENT_SEPARATOR = "/";
-	public static final String PROPERTY_SEPARATOR = ":";
-	public static final String CHILD_INDEX_SEPARATOR = "_";
-	public static final String DEFAULT_IDENTIFIER = "test";
+    public static final String ELEMENT_SEPARATOR = "/";
+    public static final String PROPERTY_SEPARATOR = ":";
+    public static final String CHILD_INDEX_SEPARATOR = "_";
+    public static final String DEFAULT_IDENTIFIER = "test";
 
-	public TestToolUtilities() {}
+    public TestToolUtilities() {}
 
-	public String createWidgetID(final IWidget widget) {
-		return createWidgetID(widget, "");
-	}
+    public String createWidgetID(final IWidget widget) {
+        return createWidgetID(widget, "");
+    }
 
-	public String createWidgetID(final IWidget widget, final String identifier) {
-		Assert.paramNotNull(widget, "widget");
-		Assert.paramNotNull(identifier, "identifier");
+    public String createWidgetID(final IWidget widget, final String identifier) {
+        Assert.paramNotNull(widget, "widget");
+        Assert.paramNotNull(identifier, "identifier");
 
-		final LinkedList<IWidget> widgetList = getWidgetHierarchy(widget);
+        final LinkedList<IWidget> widgetList = getWidgetHierarchy(widget);
 
-		final StringBuilder sb = new StringBuilder();
-		while (!widgetList.isEmpty()) {
-			if (widgetList.size() > 1) {
-				final IWidget tmpWidget = widgetList.getLast();
-				if (tmpWidget instanceof IContainer) {
-					final IContainer tmpContainer = (IContainer) tmpWidget;
-					final IWidget childWidget = widgetList.get(widgetList.size() - 2);
-					final int childPosition = tmpContainer.getChildren().indexOf(childWidget);
-					sb.append(widgetList.getLast().getClass().getSimpleName());
-					sb.append(PROPERTY_SEPARATOR);
-					sb.append(getIdentifier(widgetList.getLast()));
-					sb.append(ELEMENT_SEPARATOR);
-					if (childPosition != -1) {
-						sb.append(childPosition);
-						sb.append(CHILD_INDEX_SEPARATOR);
-					}
-					widgetList.removeLast();
-				}
-				else {
-					sb.append(widgetList.getLast().getClass().getSimpleName());
-					sb.append(PROPERTY_SEPARATOR);
-					sb.append(getIdentifier(widgetList.getLast()));
-					sb.append(ELEMENT_SEPARATOR);
-					widgetList.removeLast();
-				}
-			}
-			else {
-				sb.append(widgetList.getLast().getClass().getSimpleName());
-				sb.append(PROPERTY_SEPARATOR);
-				if (!identifier.isEmpty()) {
-					sb.append(identifier);
-				}
-				else {
-					sb.append(getIdentifier(widgetList.getLast()));
-				}
-				widgetList.removeLast();
-			}
-		}
-		return sb.toString();
-	}
+        final StringBuilder sb = new StringBuilder();
+        while (!widgetList.isEmpty()) {
+            if (widgetList.size() > 1) {
+                final IWidget tmpWidget = widgetList.getLast();
+                if (tmpWidget instanceof IContainer) {
+                    final IContainer tmpContainer = (IContainer) tmpWidget;
+                    final IWidget childWidget = widgetList.get(widgetList.size() - 2);
+                    final int childPosition = tmpContainer.getChildren().indexOf(childWidget);
+                    sb.append(widgetList.getLast().getClass().getSimpleName());
+                    sb.append(PROPERTY_SEPARATOR);
+                    sb.append(getIdentifier(widgetList.getLast()));
+                    sb.append(ELEMENT_SEPARATOR);
+                    if (childPosition != -1) {
+                        sb.append(childPosition);
+                        sb.append(CHILD_INDEX_SEPARATOR);
+                    }
+                    widgetList.removeLast();
+                }
+                else {
+                    sb.append(widgetList.getLast().getClass().getSimpleName());
+                    sb.append(PROPERTY_SEPARATOR);
+                    sb.append(getIdentifier(widgetList.getLast()));
+                    sb.append(ELEMENT_SEPARATOR);
+                    widgetList.removeLast();
+                }
+            }
+            else {
+                sb.append(widgetList.getLast().getClass().getSimpleName());
+                sb.append(PROPERTY_SEPARATOR);
+                if (!identifier.isEmpty()) {
+                    sb.append(identifier);
+                }
+                else {
+                    sb.append(getIdentifier(widgetList.getLast()));
+                }
+                widgetList.removeLast();
+            }
+        }
+        return sb.toString();
+    }
 
-	private LinkedList<IWidget> getWidgetHierarchy(final IWidget widget) {
-		final LinkedList<IWidget> results = new LinkedList<IWidget>();
-		results.add(widget);
-		IWidget parent = widget.getParent();
+    private LinkedList<IWidget> getWidgetHierarchy(final IWidget widget) {
+        final LinkedList<IWidget> results = new LinkedList<IWidget>();
+        results.add(widget);
+        IWidget parent = widget.getParent();
 
-		if (widget instanceof ITreeNode) {
-			final ITreeNode node = (ITreeNode) widget;
-			parent = node.getTree();
-		}
-		while (parent != null) {
-			results.add(parent);
-			parent = parent.getParent();
-		}
-		return results;
-	}
+        if (widget instanceof ITreeNode) {
+            final ITreeNode node = (ITreeNode) widget;
+            parent = node.getTree();
+        }
+        while (parent != null) {
+            results.add(parent);
+            parent = parent.getParent();
+        }
+        return results;
+    }
 
-	// TODO LG add IButtonUi, IFrameUi... 
-	// TODO LG replace non ui interfaces with ui interfaces
-	private String getIdentifier(final IWidget widget) {
-		if (widget instanceof ITreeNode) {
-			return ((ITreeNode) widget).getText();
-		}
-		if (widget instanceof IToolBarItem) {
-			return ((IToolBarItem) widget).getToolTipText();
-		}
-		if (widget instanceof ITabItem) {
-			return ((ITabItem) widget).getText();
-		}
-		return DEFAULT_IDENTIFIER;
-	}
+    // TODO LG add IButtonUi, IFrameUi... 
+    // TODO LG replace non ui interfaces with ui interfaces
+    private String getIdentifier(final IWidget widget) {
+        if (widget instanceof ITreeNode) {
+            return ((ITreeNode) widget).getText();
+        }
+        if (widget instanceof IToolBarItem) {
+            return ((IToolBarItem) widget).getToolTipText();
+        }
+        if (widget instanceof ITabItem) {
+            return ((ITabItem) widget).getText();
+        }
+        return DEFAULT_IDENTIFIER;
+    }
 }

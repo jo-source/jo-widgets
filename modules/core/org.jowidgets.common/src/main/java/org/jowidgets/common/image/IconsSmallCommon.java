@@ -27,10 +27,9 @@
  */
 package org.jowidgets.common.image;
 
-
 public enum IconsSmallCommon implements IImageConstant {
 
-	CLOSE,
-	CLOSE_MOUSEOVER;
+    CLOSE,
+    CLOSE_MOUSEOVER;
 
 }

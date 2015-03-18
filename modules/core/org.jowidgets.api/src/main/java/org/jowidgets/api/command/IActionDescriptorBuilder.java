@@ -35,22 +35,22 @@ import org.jowidgets.common.types.VirtualKey;
 
 public interface IActionDescriptorBuilder<INSTANCE_TYPE extends IActionDescriptorBuilder<?>> {
 
-	INSTANCE_TYPE setText(String text);
+    INSTANCE_TYPE setText(String text);
 
-	INSTANCE_TYPE setToolTipText(final String toolTipText);
+    INSTANCE_TYPE setToolTipText(final String toolTipText);
 
-	INSTANCE_TYPE setIcon(IImageConstant icon);
+    INSTANCE_TYPE setIcon(IImageConstant icon);
 
-	INSTANCE_TYPE setMnemonic(final Character mnemonic);
+    INSTANCE_TYPE setMnemonic(final Character mnemonic);
 
-	INSTANCE_TYPE setMnemonic(final char mnemonic);
+    INSTANCE_TYPE setMnemonic(final char mnemonic);
 
-	INSTANCE_TYPE setAccelerator(Accelerator accelerator);
+    INSTANCE_TYPE setAccelerator(Accelerator accelerator);
 
-	INSTANCE_TYPE setAccelerator(final char key, final Modifier... modifier);
+    INSTANCE_TYPE setAccelerator(final char key, final Modifier... modifier);
 
-	INSTANCE_TYPE setAccelerator(final VirtualKey virtualKey, final Modifier... modifier);
+    INSTANCE_TYPE setAccelerator(final VirtualKey virtualKey, final Modifier... modifier);
 
-	IAction build();
+    IAction build();
 
 }

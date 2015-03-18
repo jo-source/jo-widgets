@@ -30,6 +30,6 @@ package org.jowidgets.api.model.levelmeter;
 
 public interface ILevelMeterModelFactory {
 
-	IMutableLevelMeterModel createMutableModel();
+    IMutableLevelMeterModel createMutableModel();
 
 }

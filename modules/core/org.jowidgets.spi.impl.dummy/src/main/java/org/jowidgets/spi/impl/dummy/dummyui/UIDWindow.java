@@ -32,60 +32,60 @@ import org.jowidgets.common.types.Dimension;
 
 public class UIDWindow extends UIDContainer {
 
-	private UIDImage iconImage;
-	private final UIDWindow parent;
-	private boolean maximized;
-	private boolean iconfied;
+    private UIDImage iconImage;
+    private final UIDWindow parent;
+    private boolean maximized;
+    private boolean iconfied;
 
-	public UIDWindow(final UIDWindow parent) {
-		super();
-		this.parent = parent;
-		setVisible(false);
-	}
+    public UIDWindow(final UIDWindow parent) {
+        super();
+        this.parent = parent;
+        setVisible(false);
+    }
 
-	public void setIconImage(final UIDImage image) {
-		this.iconImage = image;
-	}
+    public void setIconImage(final UIDImage image) {
+        this.iconImage = image;
+    }
 
-	public UIDImage getIconImage() {
-		return iconImage;
-	}
+    public UIDImage getIconImage() {
+        return iconImage;
+    }
 
-	public UIDContainer getParent() {
-		return parent;
-	}
+    public UIDContainer getParent() {
+        return parent;
+    }
 
-	public void pack() {}
+    public void pack() {}
 
-	public void dispose() {
-		if (isVisible()) {
-			setVisible(false);
-		}
-		fireWindowClosed();
-	}
+    public void dispose() {
+        if (isVisible()) {
+            setVisible(false);
+        }
+        fireWindowClosed();
+    }
 
-	public void setMinSize(final Dimension minSize) {
-		// TODO LG implement setMinSize()
-	}
+    public void setMinSize(final Dimension minSize) {
+        // TODO LG implement setMinSize()
+    }
 
-	public void setTitle(final String title) {
+    public void setTitle(final String title) {
 
-	}
+    }
 
-	public void setMaximized(final boolean maximized) {
-		this.maximized = maximized;
-	}
+    public void setMaximized(final boolean maximized) {
+        this.maximized = maximized;
+    }
 
-	public boolean isMaximized() {
-		return maximized;
-	}
+    public boolean isMaximized() {
+        return maximized;
+    }
 
-	public void setIconfied(final boolean iconfied) {
-		this.iconfied = iconfied;
-	}
+    public void setIconfied(final boolean iconfied) {
+        this.iconfied = iconfied;
+    }
 
-	public boolean isIconfied() {
-		return iconfied;
-	}
+    public boolean isIconfied() {
+        return iconfied;
+    }
 
 }

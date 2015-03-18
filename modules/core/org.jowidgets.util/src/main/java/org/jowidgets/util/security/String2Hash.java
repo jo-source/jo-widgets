@@ -34,38 +34,38 @@ import org.jowidgets.util.Assert;
 
 public final class String2Hash {
 
-	private String2Hash() {}
+    private String2Hash() {}
 
-	public static String encode(final String string) {
-		return encode(string, "MD5", "UTF-8");
-	}
+    public static String encode(final String string) {
+        return encode(string, "MD5", "UTF-8");
+    }
 
-	public static String encode(final String string, final String algorithm, final String charsetName) {
-		Assert.paramNotNull(string, "string");
-		Assert.paramNotNull(algorithm, "algorithm");
-		Assert.paramNotNull(charsetName, "charsetName");
+    public static String encode(final String string, final String algorithm, final String charsetName) {
+        Assert.paramNotNull(string, "string");
+        Assert.paramNotNull(algorithm, "algorithm");
+        Assert.paramNotNull(charsetName, "charsetName");
 
-		try {
-			final MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
-			final StringBuilder result = new StringBuilder();
-			messageDigest.update(string.getBytes(charsetName));
+        try {
+            final MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
+            final StringBuilder result = new StringBuilder();
+            messageDigest.update(string.getBytes(charsetName));
 
-			for (final byte byteValue : messageDigest.digest()) {
-				result.append(byteToHexString(byteValue));
-			}
+            for (final byte byteValue : messageDigest.digest()) {
+                result.append(byteToHexString(byteValue));
+            }
 
-			return result.toString();
-		}
-		catch (final Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+            return result.toString();
+        }
+        catch (final Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	private static String byteToHexString(final byte byteValue) {
-		final int value = (byteValue & 0x7F) + (byteValue < 0 ? 128 : 0);
-		String result = value < 16 ? "0" : "";
-		result = result + Integer.toHexString(value).toLowerCase();
-		return result;
-	}
+    private static String byteToHexString(final byte byteValue) {
+        final int value = (byteValue & 0x7F) + (byteValue < 0 ? 128 : 0);
+        String result = value < 16 ? "0" : "";
+        result = result + Integer.toHexString(value).toLowerCase();
+        return result;
+    }
 
 }

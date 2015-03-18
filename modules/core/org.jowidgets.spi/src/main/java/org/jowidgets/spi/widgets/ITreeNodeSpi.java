@@ -32,12 +32,12 @@ import org.jowidgets.common.widgets.ITreeNodeCommon;
 
 public interface ITreeNodeSpi extends IItemSpi, ITreeNodeCommon {
 
-	ITreeNodeSpi addNode(Integer index);
+    ITreeNodeSpi addNode(Integer index);
 
-	void removeNode(int index);
+    void removeNode(int index);
 
-	IPopupMenuSpi createPopupMenu();
+    IPopupMenuSpi createPopupMenu();
 
-	void setGreyed(boolean greyed);
+    void setGreyed(boolean greyed);
 
 }

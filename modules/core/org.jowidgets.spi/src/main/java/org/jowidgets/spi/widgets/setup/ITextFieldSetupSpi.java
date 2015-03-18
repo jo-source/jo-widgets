@@ -32,6 +32,6 @@ import org.jowidgets.common.widgets.descriptor.setup.ITextFieldSetupCommon;
 
 public interface ITextFieldSetupSpi extends ITextComponentSetupSpi, ITextFieldSetupCommon {
 
-	ITextMask getMask();
-	
+    ITextMask getMask();
+
 }

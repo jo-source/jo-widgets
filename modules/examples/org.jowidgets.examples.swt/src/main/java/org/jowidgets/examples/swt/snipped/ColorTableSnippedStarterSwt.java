@@ -32,11 +32,11 @@ import org.jowidgets.examples.common.snipped.ColorTableSnipped;
 
 public final class ColorTableSnippedStarterSwt {
 
-	private ColorTableSnippedStarterSwt() {}
+    private ColorTableSnippedStarterSwt() {}
 
-	public static void main(final String[] args) throws Exception {
-		Toolkit.getApplicationRunner().run(new ColorTableSnipped());
-		System.exit(0);
-	}
+    public static void main(final String[] args) throws Exception {
+        Toolkit.getApplicationRunner().run(new ColorTableSnipped());
+        System.exit(0);
+    }
 
 }

@@ -35,27 +35,27 @@ import org.jowidgets.spi.widgets.IMenuItemSpi;
 
 public class SeparatorMenuItemImpl extends SwingWidget implements IMenuItemSpi {
 
-	public SeparatorMenuItemImpl() {
-		super(new JSeparator());
-	}
+    public SeparatorMenuItemImpl() {
+        super(new JSeparator());
+    }
 
-	@Override
-	public JSeparator getUiReference() {
-		return (JSeparator) super.getUiReference();
-	}
+    @Override
+    public JSeparator getUiReference() {
+        return (JSeparator) super.getUiReference();
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {}
+    @Override
+    public void setIcon(final IImageConstant icon) {}
 
-	@Override
-	public void setText(final String text) {}
+    @Override
+    public void setText(final String text) {}
 
-	@Override
-	public void setToolTipText(final String text) {}
+    @Override
+    public void setToolTipText(final String text) {}
 
-	@Override
-	public void setMnemonic(final char mnemonic) {}
+    @Override
+    public void setMnemonic(final char mnemonic) {}
 
-	public void setAccelerator(final Accelerator accelerator) {}
+    public void setAccelerator(final Accelerator accelerator) {}
 
 }

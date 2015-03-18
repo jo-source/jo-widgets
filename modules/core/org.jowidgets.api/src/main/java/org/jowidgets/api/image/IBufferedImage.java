@@ -33,12 +33,12 @@ import org.jowidgets.common.image.IBufferedImageCommon;
 
 public interface IBufferedImage extends IImage, IBufferedImageCommon {
 
-	/**
-	 * Gets the graphics context of the image
-	 * 
-	 * @return The graphics context of the image
-	 */
-	@Override
-	IGraphicContext getGraphicContext();
+    /**
+     * Gets the graphics context of the image
+     * 
+     * @return The graphics context of the image
+     */
+    @Override
+    IGraphicContext getGraphicContext();
 
 }

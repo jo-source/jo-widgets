@@ -32,14 +32,14 @@ import org.jowidgets.common.widgets.ISelectable;
 
 public interface IInputField<VALUE_TYPE> extends IObservableValueViewer<VALUE_TYPE>, IInputControl<VALUE_TYPE>, ISelectable {
 
-	void selectAll();
+    void selectAll();
 
-	void setSelection(int start, int end);
+    void setSelection(int start, int end);
 
-	void setCaretPosition(int pos);
+    void setCaretPosition(int pos);
 
-	int getCaretPosition();
+    int getCaretPosition();
 
-	String getText();
+    String getText();
 
 }

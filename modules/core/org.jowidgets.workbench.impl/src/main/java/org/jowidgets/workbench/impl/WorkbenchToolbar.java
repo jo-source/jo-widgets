@@ -39,51 +39,51 @@ import org.jowidgets.tools.model.item.ToolBarModel;
 
 public class WorkbenchToolbar {
 
-	private final IToolBar toolBar;
-	private final IToolBarModel toolBarModel;
-	private final IContainer container;
+    private final IToolBar toolBar;
+    private final IToolBarModel toolBarModel;
+    private final IContainer container;
 
-	public WorkbenchToolbar(final IContainer container) {
+    public WorkbenchToolbar(final IContainer container) {
 
-		this.container = container;
+        this.container = container;
 
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-		container.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[]0"));
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+        container.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[]0"));
 
-		toolBarModel = new ToolBarModel();
-		toolBar = container.add(bpf.toolBar(), "w 0::, growx");
-		toolBar.setModel(toolBarModel);
-		container.setVisible(false);
+        toolBarModel = new ToolBarModel();
+        toolBar = container.add(bpf.toolBar(), "w 0::, growx");
+        toolBar.setModel(toolBarModel);
+        container.setVisible(false);
 
-		toolBarModel.addListModelListener(new ListModelAdapter() {
+        toolBarModel.addListModelListener(new ListModelAdapter() {
 
-			@Override
-			public void afterChildAdded(final int index) {
-				if (toolBarModel.getItems().size() == 1) {
-					container.setVisible(true);
-				}
-			}
+            @Override
+            public void afterChildAdded(final int index) {
+                if (toolBarModel.getItems().size() == 1) {
+                    container.setVisible(true);
+                }
+            }
 
-			@Override
-			public void afterChildRemoved(final int index) {
-				if (toolBarModel.getItems().size() == 0) {
-					container.setVisible(false);
-				}
-			}
-		});
+            @Override
+            public void afterChildRemoved(final int index) {
+                if (toolBarModel.getItems().size() == 0) {
+                    container.setVisible(false);
+                }
+            }
+        });
 
-	}
+    }
 
-	public IToolBarModel getToolBarModel() {
-		return toolBarModel;
-	}
+    public IToolBarModel getToolBarModel() {
+        return toolBarModel;
+    }
 
-	public boolean isVisible() {
-		return container.isVisible();
-	}
+    public boolean isVisible() {
+        return container.isVisible();
+    }
 
-	public void pack() {
-		toolBar.pack();
-	}
+    public void pack() {
+        toolBar.pack();
+    }
 
 }

@@ -42,113 +42,113 @@ import org.jowidgets.workbench.api.LayoutScope;
 
 public class WorkbenchContentPanel {
 
-	private final IBluePrintFactory bpf;
-	private final IContainer mainContainer;
-	private final IControl emptyContent;
+    private final IBluePrintFactory bpf;
+    private final IContainer mainContainer;
+    private final IControl emptyContent;
 
-	private final Map<String, LayoutPanel> componentScopeLayouts;
-	private final Map<String, LayoutPanel> applicationScopeLayouts;
-	private final Map<String, LayoutPanel> workbenchScopeLayouts;
+    private final Map<String, LayoutPanel> componentScopeLayouts;
+    private final Map<String, LayoutPanel> applicationScopeLayouts;
+    private final Map<String, LayoutPanel> workbenchScopeLayouts;
 
-	private IControl lastContent;
+    private IControl lastContent;
 
-	public WorkbenchContentPanel(final IContainer mainContainer) {
-		super();
-		this.componentScopeLayouts = new HashMap<String, LayoutPanel>();
-		this.applicationScopeLayouts = new HashMap<String, LayoutPanel>();
-		this.workbenchScopeLayouts = new HashMap<String, LayoutPanel>();
+    public WorkbenchContentPanel(final IContainer mainContainer) {
+        super();
+        this.componentScopeLayouts = new HashMap<String, LayoutPanel>();
+        this.applicationScopeLayouts = new HashMap<String, LayoutPanel>();
+        this.workbenchScopeLayouts = new HashMap<String, LayoutPanel>();
 
-		this.bpf = Toolkit.getBluePrintFactory();
-		this.mainContainer = mainContainer;
-		mainContainer.setLayout(new MigLayoutDescriptor("hidemode 3", "0[grow, 0::]0", "0[grow, 0::]0"));
-		this.emptyContent = mainContainer.add(bpf.tabFolder(), "hidemode 3, growx, growy");
-		this.lastContent = emptyContent;
-	}
+        this.bpf = Toolkit.getBluePrintFactory();
+        this.mainContainer = mainContainer;
+        mainContainer.setLayout(new MigLayoutDescriptor("hidemode 3", "0[grow, 0::]0", "0[grow, 0::]0"));
+        this.emptyContent = mainContainer.add(bpf.tabFolder(), "hidemode 3, growx, growy");
+        this.lastContent = emptyContent;
+    }
 
-	public void setEmptyContent() {
-		switchContent(emptyContent);
-	}
+    public void setEmptyContent() {
+        switchContent(emptyContent);
+    }
 
-	public void setLayout(final ComponentContext componentContext, final ILayout layout) {
-		switchContent(getLayoutPanel(componentContext, layout).getContentPane());
-	}
+    public void setLayout(final ComponentContext componentContext, final ILayout layout) {
+        switchContent(getLayoutPanel(componentContext, layout).getContentPane());
+    }
 
-	public void resetLayout(final ComponentContext componentContext, final ILayout layout) {}
+    public void resetLayout(final ComponentContext componentContext, final ILayout layout) {}
 
-	public void disposeComponent(final ComponentContext componentContext) {}
+    public void disposeComponent(final ComponentContext componentContext) {}
 
-	private void switchContent(final IControl newContent) {
-		if (lastContent != newContent) {
-			Dimension lastSize = null;
-			if (lastContent != null) {
-				lastSize = lastContent.getSize();
-				lastContent.setVisible(false);
-			}
+    private void switchContent(final IControl newContent) {
+        if (lastContent != newContent) {
+            Dimension lastSize = null;
+            if (lastContent != null) {
+                lastSize = lastContent.getSize();
+                lastContent.setVisible(false);
+            }
 
-			if (!newContent.getSize().equals(lastSize)) {
-				newContent.setSize(lastSize);
-			}
-			newContent.setVisible(true);
+            if (!newContent.getSize().equals(lastSize)) {
+                newContent.setSize(lastSize);
+            }
+            newContent.setVisible(true);
 
-			lastContent = newContent;
-		}
-	}
+            lastContent = newContent;
+        }
+    }
 
-	private LayoutPanel getLayoutPanel(final ComponentContext componentContext, final ILayout layout) {
-		LayoutPanel result = null;
-		final String gloabId = getGlobalLayoutId(componentContext, layout);
+    private LayoutPanel getLayoutPanel(final ComponentContext componentContext, final ILayout layout) {
+        LayoutPanel result = null;
+        final String gloabId = getGlobalLayoutId(componentContext, layout);
 
-		if (layout.getScope() == LayoutScope.COMPONENT) {
+        if (layout.getScope() == LayoutScope.COMPONENT) {
 
-			result = componentScopeLayouts.get(gloabId);
-			if (result == null) {
-				result = new LayoutPanel(mainContainer, componentContext, layout);
-				componentScopeLayouts.put(gloabId, result);
-			}
-		}
-		else if (layout.getScope() == LayoutScope.WORKBENCH_APPLICATION) {
-			result = applicationScopeLayouts.get(gloabId);
-			if (result == null) {
-				result = new LayoutPanel(mainContainer, componentContext, layout);
-				applicationScopeLayouts.put(gloabId, result);
-			}
-			else {
-				result.setComponent(componentContext);
-			}
-		}
-		else if (layout.getScope() == LayoutScope.WORKBENCH) {
-			result = workbenchScopeLayouts.get(gloabId);
-			if (result == null) {
-				result = new LayoutPanel(mainContainer, componentContext, layout);
-				workbenchScopeLayouts.put(gloabId, result);
-			}
-			else {
-				result.setComponent(componentContext);
-			}
-		}
-		else {
-			throw new IllegalArgumentException("Layout scope '" + layout.getScope() + "' is not supported.");
-		}
-		return result;
-	}
+            result = componentScopeLayouts.get(gloabId);
+            if (result == null) {
+                result = new LayoutPanel(mainContainer, componentContext, layout);
+                componentScopeLayouts.put(gloabId, result);
+            }
+        }
+        else if (layout.getScope() == LayoutScope.WORKBENCH_APPLICATION) {
+            result = applicationScopeLayouts.get(gloabId);
+            if (result == null) {
+                result = new LayoutPanel(mainContainer, componentContext, layout);
+                applicationScopeLayouts.put(gloabId, result);
+            }
+            else {
+                result.setComponent(componentContext);
+            }
+        }
+        else if (layout.getScope() == LayoutScope.WORKBENCH) {
+            result = workbenchScopeLayouts.get(gloabId);
+            if (result == null) {
+                result = new LayoutPanel(mainContainer, componentContext, layout);
+                workbenchScopeLayouts.put(gloabId, result);
+            }
+            else {
+                result.setComponent(componentContext);
+            }
+        }
+        else {
+            throw new IllegalArgumentException("Layout scope '" + layout.getScope() + "' is not supported.");
+        }
+        return result;
+    }
 
-	private String getGlobalLayoutId(final ComponentContext componentContext, final ILayout layout) {
-		if (layout.getScope() == LayoutScope.WORKBENCH) {
-			return layout.getId();
-		}
-		else if (layout.getScope() == LayoutScope.WORKBENCH_APPLICATION) {
-			return componentContext.getWorkbenchApplicationContext().getId() + "#" + layout.getId();
-		}
-		else if (layout.getScope() == LayoutScope.COMPONENT) {
-			return componentContext.getWorkbenchApplicationContext().getId()
-				+ "#"
-				+ componentContext.getComponentNodeContext().getGlobalId()
-				+ "#"
-				+ layout.getId();
-		}
-		else {
-			throw new IllegalArgumentException("LayoutScope '" + layout.getScope() + "' is not supported.");
-		}
+    private String getGlobalLayoutId(final ComponentContext componentContext, final ILayout layout) {
+        if (layout.getScope() == LayoutScope.WORKBENCH) {
+            return layout.getId();
+        }
+        else if (layout.getScope() == LayoutScope.WORKBENCH_APPLICATION) {
+            return componentContext.getWorkbenchApplicationContext().getId() + "#" + layout.getId();
+        }
+        else if (layout.getScope() == LayoutScope.COMPONENT) {
+            return componentContext.getWorkbenchApplicationContext().getId()
+                + "#"
+                + componentContext.getComponentNodeContext().getGlobalId()
+                + "#"
+                + layout.getId();
+        }
+        else {
+            throw new IllegalArgumentException("LayoutScope '" + layout.getScope() + "' is not supported.");
+        }
 
-	}
+    }
 }

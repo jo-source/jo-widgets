@@ -33,67 +33,67 @@ import org.jowidgets.util.IFilter;
 
 public interface ITreeExpansionActionBuilder extends IDefaultActionBuilder {
 
-	/**
-	 * Sets the label that is used, if a bound pivot level is used
-	 * 
-	 * @param the bound pivot level text to set
-	 * 
-	 * @return This builder
-	 */
-	ITreeExpansionActionBuilder setBoundPivotLevelText(String text);
+    /**
+     * Sets the label that is used, if a bound pivot level is used
+     * 
+     * @param the bound pivot level text to set
+     * 
+     * @return This builder
+     */
+    ITreeExpansionActionBuilder setBoundPivotLevelText(String text);
 
-	/**
-	 * Sets the pivot level for the expand or collapse
-	 * 
-	 * @param level The level to set
-	 * 
-	 * @return This builder
-	 * 
-	 * @see setAllChildrenExpanded(Integer, boolean) for ITreeContainer
-	 */
-	ITreeExpansionActionBuilder setPivotLevel(Integer level);
+    /**
+     * Sets the pivot level for the expand or collapse
+     * 
+     * @param level The level to set
+     * 
+     * @return This builder
+     * 
+     * @see setAllChildrenExpanded(Integer, boolean) for ITreeContainer
+     */
+    ITreeExpansionActionBuilder setPivotLevel(Integer level);
 
-	/**
-	 * Sets the pivot level for the expand or collapse
-	 * 
-	 * @param level The level to set
-	 * 
-	 * @return This builder
-	 * 
-	 * @see setAllChildrenExpanded(Integer, boolean) for ITreeContainer
-	 */
-	ITreeExpansionActionBuilder setPivotLevel(int level);
+    /**
+     * Sets the pivot level for the expand or collapse
+     * 
+     * @param level The level to set
+     * 
+     * @return This builder
+     * 
+     * @see setAllChildrenExpanded(Integer, boolean) for ITreeContainer
+     */
+    ITreeExpansionActionBuilder setPivotLevel(int level);
 
-	/**
-	 * Adds a filter. Only nodes that was accepted by the filter will be affected
-	 * 
-	 * @param filter The filter to set
-	 * 
-	 * @return This builder
-	 */
-	ITreeExpansionActionBuilder addFilter(IFilter<ITreeNode> filter);
+    /**
+     * Adds a filter. Only nodes that was accepted by the filter will be affected
+     * 
+     * @param filter The filter to set
+     * 
+     * @return This builder
+     */
+    ITreeExpansionActionBuilder addFilter(IFilter<ITreeNode> filter);
 
-	/**
-	 * Sets a filter. Only nodes that was accepted by the filter will be affected.
-	 * Remark: Setting a filter will remove all currently added filters
-	 * 
-	 * @param filter The filter to set
-	 * 
-	 * @return This builder
-	 */
-	ITreeExpansionActionBuilder setFilter(IFilter<ITreeNode> filter);
+    /**
+     * Sets a filter. Only nodes that was accepted by the filter will be affected.
+     * Remark: Setting a filter will remove all currently added filters
+     * 
+     * @param filter The filter to set
+     * 
+     * @return This builder
+     */
+    ITreeExpansionActionBuilder setFilter(IFilter<ITreeNode> filter);
 
-	/**
-	 * Enable or disable enable checking.
-	 * By default enabled checking is enabled
-	 * 
-	 * @param enabledChecker If set true, enable checking is enabled, otherwise enabled checking is disabled
-	 * 
-	 * @return This builder
-	 */
-	ITreeExpansionActionBuilder setEnabledChecking(boolean enabledChecking);
+    /**
+     * Enable or disable enable checking.
+     * By default enabled checking is enabled
+     * 
+     * @param enabledChecker If set true, enable checking is enabled, otherwise enabled checking is disabled
+     * 
+     * @return This builder
+     */
+    ITreeExpansionActionBuilder setEnabledChecking(boolean enabledChecking);
 
-	@Override
-	ITreeExpansionAction build();
+    @Override
+    ITreeExpansionAction build();
 
 }

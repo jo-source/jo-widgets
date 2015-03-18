@@ -32,19 +32,19 @@ import org.jowidgets.common.model.ITableDataModelListener;
 
 public class TableDataModelAdapter implements ITableDataModelListener {
 
-	@Override
-	public void rowsAdded(final int[] rowIndices) {}
+    @Override
+    public void rowsAdded(final int[] rowIndices) {}
 
-	@Override
-	public void rowsRemoved(final int[] rowIndices) {}
+    @Override
+    public void rowsRemoved(final int[] rowIndices) {}
 
-	@Override
-	public void rowsChanged(final int[] rowIndices) {}
+    @Override
+    public void rowsChanged(final int[] rowIndices) {}
 
-	@Override
-	public void dataChanged() {}
+    @Override
+    public void dataChanged() {}
 
-	@Override
-	public void selectionChanged() {}
+    @Override
+    public void selectionChanged() {}
 
 }

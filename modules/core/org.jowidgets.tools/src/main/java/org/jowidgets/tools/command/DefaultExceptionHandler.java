@@ -37,25 +37,25 @@ import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
 
 public class DefaultExceptionHandler implements IExceptionHandler {
 
-	@Override
-	public void handleException(final IExecutionContext actionEvent, final Exception exception) throws Exception {
+    @Override
+    public void handleException(final IExecutionContext actionEvent, final Exception exception) throws Exception {
 
-		final IAction action = actionEvent.getAction();
+        final IAction action = actionEvent.getAction();
 
-		final IMessageDialogBluePrint messageDialogBp = Toolkit.getBluePrintFactory().errorDialog();
-		messageDialogBp.setTitleIcon(action.getIcon());
-		messageDialogBp.setTitle(action.getText());
-		messageDialogBp.setText("An error occurred:\n" + exception.toString());
+        final IMessageDialogBluePrint messageDialogBp = Toolkit.getBluePrintFactory().errorDialog();
+        messageDialogBp.setTitleIcon(action.getIcon());
+        messageDialogBp.setTitle(action.getText());
+        messageDialogBp.setText("An error occurred:\n" + exception.toString());
 
-		Thread.currentThread().getUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), exception);
+        Thread.currentThread().getUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), exception);
 
-		final IWindow parentWindow = Toolkit.getWidgetUtils().getWindowAncestor(actionEvent.getSource());
-		if (parentWindow != null) {
-			parentWindow.createChildWindow(messageDialogBp).showMessage();
-		}
-		else {
-			Toolkit.getWidgetFactory().create(messageDialogBp).showMessage();
-		}
-	}
+        final IWindow parentWindow = Toolkit.getWidgetUtils().getWindowAncestor(actionEvent.getSource());
+        if (parentWindow != null) {
+            parentWindow.createChildWindow(messageDialogBp).showMessage();
+        }
+        else {
+            Toolkit.getWidgetFactory().create(messageDialogBp).showMessage();
+        }
+    }
 
 }

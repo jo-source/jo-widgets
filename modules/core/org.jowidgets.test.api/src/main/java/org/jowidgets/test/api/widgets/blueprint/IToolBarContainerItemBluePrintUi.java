@@ -32,7 +32,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IToolBarContainerItemSetupBui
 import org.jowidgets.test.api.widgets.descriptor.IToolBarContainerItemDescriptorUi;
 
 public interface IToolBarContainerItemBluePrintUi extends
-		IToolBarContainerItemSetupBuilder<IToolBarContainerItemBluePrintUi>,
-		IToolBarContainerItemDescriptorUi {
+        IToolBarContainerItemSetupBuilder<IToolBarContainerItemBluePrintUi>,
+        IToolBarContainerItemDescriptorUi {
 
 }

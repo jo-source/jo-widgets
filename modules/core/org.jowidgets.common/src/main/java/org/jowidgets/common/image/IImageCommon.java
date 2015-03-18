@@ -32,16 +32,16 @@ import org.jowidgets.common.types.Dimension;
 
 public interface IImageCommon extends IImageConstant {
 
-	/**
-	 * Gets the image size
-	 * 
-	 * @return The size of the image, never null
-	 */
-	Dimension getSize();
+    /**
+     * Gets the image size
+     * 
+     * @return The size of the image, never null
+     */
+    Dimension getSize();
 
-	/**
-	 * Disposes the image
-	 */
-	void dispose();
+    /**
+     * Disposes the image
+     */
+    void dispose();
 
 }

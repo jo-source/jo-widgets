@@ -33,9 +33,9 @@ import org.jowidgets.api.model.levelmeter.IMutableLevelMeterModel;
 
 public final class LevelMeterModelFactoryImpl implements ILevelMeterModelFactory {
 
-	@Override
-	public IMutableLevelMeterModel createMutableModel() {
-		return new MutableLevelMeterModelImpl();
-	}
+    @Override
+    public IMutableLevelMeterModel createMutableModel() {
+        return new MutableLevelMeterModelImpl();
+    }
 
 }

@@ -35,57 +35,57 @@ import org.jowidgets.common.color.IColorConstant;
 
 public class SimpleTableModelBuilder implements ISimpleTableModelBuilder {
 
-	private final ISimpleTableModelBuilder builder;
+    private final ISimpleTableModelBuilder builder;
 
-	public SimpleTableModelBuilder() {
-		super();
-		this.builder = Toolkit.getModelFactoryProvider().getTableModelFactory().simpleTableModelBuilder();
-	}
+    public SimpleTableModelBuilder() {
+        super();
+        this.builder = Toolkit.getModelFactoryProvider().getTableModelFactory().simpleTableModelBuilder();
+    }
 
-	public SimpleTableModelBuilder(final ISimpleTableModelBuilder builder) {
-		super();
-		this.builder = builder;
-	}
+    public SimpleTableModelBuilder(final ISimpleTableModelBuilder builder) {
+        super();
+        this.builder = builder;
+    }
 
-	@Override
-	public final ISimpleTableModelBuilder setRowCount(final int rowCount) {
-		builder.setRowCount(rowCount);
-		return this;
-	}
+    @Override
+    public final ISimpleTableModelBuilder setRowCount(final int rowCount) {
+        builder.setRowCount(rowCount);
+        return this;
+    }
 
-	@Override
-	public final ISimpleTableModelBuilder setColumnCount(final int columnCount) {
-		builder.setColumnCount(columnCount);
-		return this;
-	}
+    @Override
+    public final ISimpleTableModelBuilder setColumnCount(final int columnCount) {
+        builder.setColumnCount(columnCount);
+        return this;
+    }
 
-	@Override
-	public final ISimpleTableModelBuilder setEditableDefault(final boolean editable) {
-		builder.setEditableDefault(editable);
-		return this;
-	}
+    @Override
+    public final ISimpleTableModelBuilder setEditableDefault(final boolean editable) {
+        builder.setEditableDefault(editable);
+        return this;
+    }
 
-	@Override
-	public final ISimpleTableModelBuilder setDefaultStripedRenderingColors() {
-		builder.setDefaultStripedRenderingColors();
-		return this;
-	}
+    @Override
+    public final ISimpleTableModelBuilder setDefaultStripedRenderingColors() {
+        builder.setDefaultStripedRenderingColors();
+        return this;
+    }
 
-	@Override
-	public final ISimpleTableModelBuilder setEvenRowsBackgroundColor(final IColorConstant color) {
-		builder.setEvenRowsBackgroundColor(color);
-		return this;
-	}
+    @Override
+    public final ISimpleTableModelBuilder setEvenRowsBackgroundColor(final IColorConstant color) {
+        builder.setEvenRowsBackgroundColor(color);
+        return this;
+    }
 
-	@Override
-	public final ISimpleTableModelBuilder setOddRowsBackgroundColor(final IColorConstant color) {
-		builder.setOddRowsBackgroundColor(color);
-		return this;
-	}
+    @Override
+    public final ISimpleTableModelBuilder setOddRowsBackgroundColor(final IColorConstant color) {
+        builder.setOddRowsBackgroundColor(color);
+        return this;
+    }
 
-	@Override
-	public final ISimpleTableModel build() {
-		return builder.build();
-	}
+    @Override
+    public final ISimpleTableModel build() {
+        return builder.build();
+    }
 
 }

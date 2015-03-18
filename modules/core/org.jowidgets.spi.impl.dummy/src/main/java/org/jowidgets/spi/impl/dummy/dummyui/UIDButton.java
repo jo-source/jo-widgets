@@ -30,14 +30,14 @@ package org.jowidgets.spi.impl.dummy.dummyui;
 
 public class UIDButton extends AbstractUIDButton {
 
-	public void requestFocusInWindow() {}
+    public void requestFocusInWindow() {}
 
-	public void setFontSize(final int size) {
-		// TODO LG implement setFontSize
-	}
+    public void setFontSize(final int size) {
+        // TODO LG implement setFontSize
+    }
 
-	public void setFontName(final String fontName) {
-		// TODO LG implement setFontName
-	}
+    public void setFontName(final String fontName) {
+        // TODO LG implement setFontName
+    }
 
 }

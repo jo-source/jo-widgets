@@ -34,9 +34,9 @@ import org.jowidgets.common.widgets.builder.ITextComponentSetupBuilderCommon;
 
 public class TextComponentDefaultsCommon implements IDefaultInitializer<ITextComponentSetupBuilderCommon<?>> {
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public void initialize(final ITextComponentSetupBuilderCommon<?> builder) {
-		builder.setAcceptingRegExps(Collections.EMPTY_LIST);
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public void initialize(final ITextComponentSetupBuilderCommon<?> builder) {
+        builder.setAcceptingRegExps(Collections.EMPTY_LIST);
+    }
 }

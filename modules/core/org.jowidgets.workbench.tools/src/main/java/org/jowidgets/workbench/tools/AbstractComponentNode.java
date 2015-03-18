@@ -36,22 +36,22 @@ import org.jowidgets.workbench.api.IComponentNodeContext;
 
 public abstract class AbstractComponentNode implements IComponentNode {
 
-	@Override
-	public String getTooltip() {
-		return null;
-	}
+    @Override
+    public String getTooltip() {
+        return null;
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return null;
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return null;
+    }
 
-	@Override
-	public void onContextInitialize(final IComponentNodeContext context) {}
+    @Override
+    public void onContextInitialize(final IComponentNodeContext context) {}
 
-	@Override
-	public IComponent createComponent(final IComponentContext context) {
-		return null;
-	}
+    @Override
+    public IComponent createComponent(final IComponentContext context) {
+        return null;
+    }
 
 }

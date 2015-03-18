@@ -29,12 +29,12 @@ package org.jowidgets.workbench.api;
 
 public interface IComponentNodeContainerContext {
 
-	void add(IComponentNode componentNode);
+    void add(IComponentNode componentNode);
 
-	void add(int index, IComponentNode componentNode);
+    void add(int index, IComponentNode componentNode);
 
-	void remove(IComponentNode componentNode);
+    void remove(IComponentNode componentNode);
 
-	IWorkbenchContext getWorkbenchContext();
+    IWorkbenchContext getWorkbenchContext();
 
 }

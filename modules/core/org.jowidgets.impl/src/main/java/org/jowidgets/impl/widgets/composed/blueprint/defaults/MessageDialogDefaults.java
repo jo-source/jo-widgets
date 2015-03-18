@@ -34,11 +34,11 @@ import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
 public class MessageDialogDefaults implements IDefaultInitializer<IMessageDialogSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final IMessageDialogSetupBuilder<?> builder) {
-		final BluePrintFactory bpF = new BluePrintFactory();
-		builder.setOkButton(bpF.button(Messages.getString("MessageDialogDefaults.ok"))); //$NON-NLS-1$
-		builder.setIcon(Icons.INFO);
-	}
+    @Override
+    public void initialize(final IMessageDialogSetupBuilder<?> builder) {
+        final BluePrintFactory bpF = new BluePrintFactory();
+        builder.setOkButton(bpF.button(Messages.getString("MessageDialogDefaults.ok"))); //$NON-NLS-1$
+        builder.setIcon(Icons.INFO);
+    }
 
 }

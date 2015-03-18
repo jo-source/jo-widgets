@@ -33,8 +33,8 @@ import org.jowidgets.spi.impl.swing.common.SwingWidgetsServiceProvider;
 
 public class AwtSwtBridgeWidgetsServiceProvider extends SwingWidgetsServiceProvider {
 
-	public AwtSwtBridgeWidgetsServiceProvider() {
-		super(new BridgedSwtAwtApplicationRunnerFactory());
-	}
+    public AwtSwtBridgeWidgetsServiceProvider() {
+        super(new BridgedSwtAwtApplicationRunnerFactory());
+    }
 
 }

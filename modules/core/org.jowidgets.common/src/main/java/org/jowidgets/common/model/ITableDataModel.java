@@ -33,14 +33,14 @@ import java.util.Collection;
 
 public interface ITableDataModel {
 
-	int getRowCount();
+    int getRowCount();
 
-	ITableCell getCell(int rowIndex, int columnIndex);
+    ITableCell getCell(int rowIndex, int columnIndex);
 
-	ArrayList<Integer> getSelection();
+    ArrayList<Integer> getSelection();
 
-	void setSelection(Collection<Integer> selection);
+    void setSelection(Collection<Integer> selection);
 
-	ITableDataModelObservable getTableDataModelObservable();
+    ITableDataModelObservable getTableDataModelObservable();
 
 }

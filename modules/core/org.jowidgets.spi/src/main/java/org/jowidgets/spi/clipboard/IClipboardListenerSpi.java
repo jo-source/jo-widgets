@@ -30,6 +30,6 @@ package org.jowidgets.spi.clipboard;
 
 public interface IClipboardListenerSpi {
 
-	void clipboardChanged();
+    void clipboardChanged();
 
 }

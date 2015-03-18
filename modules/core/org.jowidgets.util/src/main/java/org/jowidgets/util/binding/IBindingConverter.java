@@ -30,22 +30,22 @@ package org.jowidgets.util.binding;
 
 public interface IBindingConverter<SOURCE_TYPE, DESTINATION_TYPE> {
 
-	/**
-	 * Convert the source value to the destination value
-	 * 
-	 * @param sourceValue The source value to convert, may be null
-	 * 
-	 * @return The destination value, may be null
-	 */
-	DESTINATION_TYPE convertSource(SOURCE_TYPE sourceValue);
+    /**
+     * Convert the source value to the destination value
+     * 
+     * @param sourceValue The source value to convert, may be null
+     * 
+     * @return The destination value, may be null
+     */
+    DESTINATION_TYPE convertSource(SOURCE_TYPE sourceValue);
 
-	/**
-	 * Convert the destination value to the source value
-	 * 
-	 * @param destinationValue The destination value to convert, may be null
-	 * 
-	 * @return The source value, may be null
-	 */
-	SOURCE_TYPE convertDestination(DESTINATION_TYPE destinationValue);
+    /**
+     * Convert the destination value to the source value
+     * 
+     * @param destinationValue The destination value to convert, may be null
+     * 
+     * @return The source value, may be null
+     */
+    SOURCE_TYPE convertDestination(DESTINATION_TYPE destinationValue);
 
 }

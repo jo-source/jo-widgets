@@ -30,6 +30,6 @@ package org.jowidgets.api.widgets;
 
 public interface ISliderViewer<VALUE_TYPE> extends IInputControl<VALUE_TYPE>, IObservableValueViewer<VALUE_TYPE> {
 
-	ISlider getSlider();
+    ISlider getSlider();
 
 }

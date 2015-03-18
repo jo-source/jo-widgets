@@ -32,24 +32,24 @@ import org.jowidgets.common.image.IImageConstant;
 
 public interface IComponentNodeContainerModelBuilder<BUILDER_INSTANCE_TYPE> {
 
-	BUILDER_INSTANCE_TYPE setId(String id);
+    BUILDER_INSTANCE_TYPE setId(String id);
 
-	BUILDER_INSTANCE_TYPE addChild(IComponentNodeModel childModel);
+    BUILDER_INSTANCE_TYPE addChild(IComponentNodeModel childModel);
 
-	BUILDER_INSTANCE_TYPE addChild(int index, IComponentNodeModel childModel);
+    BUILDER_INSTANCE_TYPE addChild(int index, IComponentNodeModel childModel);
 
-	BUILDER_INSTANCE_TYPE addChild(IComponentNodeModelBuilder childModel);
+    BUILDER_INSTANCE_TYPE addChild(IComponentNodeModelBuilder childModel);
 
-	BUILDER_INSTANCE_TYPE addChild(int index, IComponentNodeModelBuilder childModel);
+    BUILDER_INSTANCE_TYPE addChild(int index, IComponentNodeModelBuilder childModel);
 
-	BUILDER_INSTANCE_TYPE addChild(String id, String label, String tooltip, IImageConstant icon);
+    BUILDER_INSTANCE_TYPE addChild(String id, String label, String tooltip, IImageConstant icon);
 
-	BUILDER_INSTANCE_TYPE addChild(String id, String label, IImageConstant icon);
+    BUILDER_INSTANCE_TYPE addChild(String id, String label, IImageConstant icon);
 
-	BUILDER_INSTANCE_TYPE addChild(String id, String label, String tooltip);
+    BUILDER_INSTANCE_TYPE addChild(String id, String label, String tooltip);
 
-	BUILDER_INSTANCE_TYPE addChild(String id, String label);
+    BUILDER_INSTANCE_TYPE addChild(String id, String label);
 
-	BUILDER_INSTANCE_TYPE addChild(String id);
+    BUILDER_INSTANCE_TYPE addChild(String id);
 
 }

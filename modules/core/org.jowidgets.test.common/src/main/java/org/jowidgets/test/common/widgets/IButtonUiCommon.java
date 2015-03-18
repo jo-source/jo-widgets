@@ -31,11 +31,11 @@ package org.jowidgets.test.common.widgets;
 import org.jowidgets.common.widgets.IButtonCommon;
 
 public interface IButtonUiCommon extends
-		ITextLabelUiCommon,
-		IIconUiCommon,
-		IControlUiCommon,
-		IActionWidgetUiCommon,
-		IButtonCommon {
+        ITextLabelUiCommon,
+        IIconUiCommon,
+        IControlUiCommon,
+        IActionWidgetUiCommon,
+        IButtonCommon {
 
-	void push();
+    void push();
 }

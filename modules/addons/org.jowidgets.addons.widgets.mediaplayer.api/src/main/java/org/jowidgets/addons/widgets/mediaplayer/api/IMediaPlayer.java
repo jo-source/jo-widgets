@@ -35,17 +35,17 @@ import org.jowidgets.api.widgets.IControl;
 
 public interface IMediaPlayer extends IControl {
 
-	void clear();
+    void clear();
 
-	void open(String url);
+    void open(String url);
 
-	void open(File file);
+    void open(File file);
 
-	void open(InputStream inputStream);
+    void open(InputStream inputStream);
 
-	/**
-	 * @return The play position of the current media in milliseconds
-	 */
-	long getCurrentPosition();
+    /**
+     * @return The play position of the current media in milliseconds
+     */
+    long getCurrentPosition();
 
 }

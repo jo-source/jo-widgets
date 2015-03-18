@@ -44,68 +44,68 @@ import org.jowidgets.util.EmptyCheck;
 
 public final class BeanTableModel<BEAN_TYPE> extends AbstractTableDataModel implements ITableModel {
 
-	private final List<BEAN_TYPE> data;
-	private final IBeanTableRenderer<BEAN_TYPE> renderer;
+    private final List<BEAN_TYPE> data;
+    private final IBeanTableRenderer<BEAN_TYPE> renderer;
 
-	public BeanTableModel(final IBeanTableRenderer<BEAN_TYPE> renderer) {
-		Assert.paramNotNull(renderer, "renderer");
-		this.renderer = renderer;
-		this.data = new ArrayList<BEAN_TYPE>();
-	}
+    public BeanTableModel(final IBeanTableRenderer<BEAN_TYPE> renderer) {
+        Assert.paramNotNull(renderer, "renderer");
+        this.renderer = renderer;
+        this.data = new ArrayList<BEAN_TYPE>();
+    }
 
-	@Override
-	public int getRowCount() {
-		return data.size();
-	}
+    @Override
+    public int getRowCount() {
+        return data.size();
+    }
 
-	@Override
-	public ITableCell getCell(final int rowIndex, final int columnIndex) {
-		return renderer.getCell(rowIndex, columnIndex, data.get(rowIndex));
-	}
+    @Override
+    public ITableCell getCell(final int rowIndex, final int columnIndex) {
+        return renderer.getCell(rowIndex, columnIndex, data.get(rowIndex));
+    }
 
-	public void addBean(final BEAN_TYPE bean, final boolean select) {
-		Assert.paramNotNull(bean, "bean");
-		data.add(bean);
-		fireDataChanged();
-		if (select) {
-			final List<Integer> selection = new LinkedList<Integer>();
-			selection.add(Integer.valueOf(data.size() - 1));
-			setSelection(selection);
-		}
-	}
+    public void addBean(final BEAN_TYPE bean, final boolean select) {
+        Assert.paramNotNull(bean, "bean");
+        data.add(bean);
+        fireDataChanged();
+        if (select) {
+            final List<Integer> selection = new LinkedList<Integer>();
+            selection.add(Integer.valueOf(data.size() - 1));
+            setSelection(selection);
+        }
+    }
 
-	public void removeBean(final BEAN_TYPE bean) {
-		Assert.paramNotNull(bean, "bean");
-		data.remove(bean);
-		final Set<Integer> emptySet = Collections.emptySet();
-		setSelection(emptySet);
-		fireDataChanged();
-	}
+    public void removeBean(final BEAN_TYPE bean) {
+        Assert.paramNotNull(bean, "bean");
+        data.remove(bean);
+        final Set<Integer> emptySet = Collections.emptySet();
+        setSelection(emptySet);
+        fireDataChanged();
+    }
 
-	@Override
-	public int getColumnCount() {
-		return renderer.getColumnCount();
-	}
+    @Override
+    public int getColumnCount() {
+        return renderer.getColumnCount();
+    }
 
-	@Override
-	public ITableColumn getColumn(final int columnIndex) {
-		return renderer.getColumn(columnIndex);
-	}
+    @Override
+    public ITableColumn getColumn(final int columnIndex) {
+        return renderer.getColumn(columnIndex);
+    }
 
-	@Override
-	public ITableColumnModelObservable getTableColumnModelObservable() {
-		return renderer.getTableColumnModelObservable();
-	}
+    @Override
+    public ITableColumnModelObservable getTableColumnModelObservable() {
+        return renderer.getTableColumnModelObservable();
+    }
 
-	public BEAN_TYPE getSelectedBean() {
-		final ArrayList<Integer> selection = getSelection();
-		if (!EmptyCheck.isEmpty(selection)) {
-			final Integer index = selection.get(0);
-			return data.get(index.intValue());
-		}
-		else {
-			return null;
-		}
-	}
+    public BEAN_TYPE getSelectedBean() {
+        final ArrayList<Integer> selection = getSelection();
+        if (!EmptyCheck.isEmpty(selection)) {
+            final Integer index = selection.get(0);
+            return data.get(index.intValue());
+        }
+        else {
+            return null;
+        }
+    }
 
 }

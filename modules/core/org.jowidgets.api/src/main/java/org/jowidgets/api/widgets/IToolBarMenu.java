@@ -33,23 +33,23 @@ import org.jowidgets.common.widgets.IToolBarItemCommon;
 
 public interface IToolBarMenu extends IToolBarItem, IToolBarItemCommon {
 
-	/**
-	 * Gets the popup menu of this item
-	 * 
-	 * @return The popup menu of this item
-	 */
-	IPopupMenu getPopupMenu();
+    /**
+     * Gets the popup menu of this item
+     * 
+     * @return The popup menu of this item
+     */
+    IPopupMenu getPopupMenu();
 
-	/**
-	 * Sets the menu model for this component.
-	 * The menu will be shown, when the button will be pressed on this component.
-	 * 
-	 * @param menuModel
-	 *            The model of the menu or null, if no menu should be shown on action event
-	 */
-	void setModel(IMenuModel model);
+    /**
+     * Sets the menu model for this component.
+     * The menu will be shown, when the button will be pressed on this component.
+     * 
+     * @param menuModel
+     *            The model of the menu or null, if no menu should be shown on action event
+     */
+    void setModel(IMenuModel model);
 
-	@Override
-	IMenuModel getModel();
+    @Override
+    IMenuModel getModel();
 
 }

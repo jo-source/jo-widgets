@@ -33,7 +33,7 @@ import org.jowidgets.spi.graphics.IGraphicContextSpi;
 
 public interface IBufferedImageSpi extends IImageSpi, IBufferedImageCommon {
 
-	@Override
-	IGraphicContextSpi getGraphicContext();
+    @Override
+    IGraphicContextSpi getGraphicContext();
 
 }

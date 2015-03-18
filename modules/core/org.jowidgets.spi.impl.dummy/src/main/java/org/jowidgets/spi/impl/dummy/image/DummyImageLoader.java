@@ -33,14 +33,14 @@ import org.jowidgets.spi.impl.image.IImageFactory;
 
 public class DummyImageLoader implements IImageFactory<UIDImage> {
 
-	private final IImageDescriptor imageDescriptor;
+    private final IImageDescriptor imageDescriptor;
 
-	public DummyImageLoader(final IImageDescriptor imageDescriptor) {
-		this.imageDescriptor = imageDescriptor;
-	}
+    public DummyImageLoader(final IImageDescriptor imageDescriptor) {
+        this.imageDescriptor = imageDescriptor;
+    }
 
-	@Override
-	public UIDImage createImage() {
-		return new UIDImage(imageDescriptor);
-	}
+    @Override
+    public UIDImage createImage() {
+        return new UIDImage(imageDescriptor);
+    }
 }

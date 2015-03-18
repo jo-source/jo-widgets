@@ -33,17 +33,17 @@ import org.jowidgets.api.widgets.IWindow;
 
 public interface IWidgetUtils {
 
-	/**
-	 * Gets the widget ancestor for an widget.
-	 * 
-	 * Remark: Use this method with care if the application is not a
-	 * standalone jowidgets application or native wrapper will be used,
-	 * because native ancestors can not be determined.
-	 * 
-	 * @param widget the widget to get ancestor for
-	 * @return the first found window ancestor for an widget or null if the ancestor can not be determined, e.g. cebause its
-	 *         native
-	 */
-	IWindow getWindowAncestor(final IWidget widget);
+    /**
+     * Gets the widget ancestor for an widget.
+     * 
+     * Remark: Use this method with care if the application is not a
+     * standalone jowidgets application or native wrapper will be used,
+     * because native ancestors can not be determined.
+     * 
+     * @param widget the widget to get ancestor for
+     * @return the first found window ancestor for an widget or null if the ancestor can not be determined, e.g. cebause its
+     *         native
+     */
+    IWindow getWindowAncestor(final IWidget widget);
 
 }

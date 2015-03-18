@@ -33,21 +33,21 @@ import de.micromata.opengis.kml.v_2_2_0.Point;
 
 final class PointDesignationCallback extends AbstractDesignationCallback<Point> {
 
-	@Override
-	protected String getJsStartFunctionName() {
-		return "startPointDesignation";
-	}
+    @Override
+    protected String getJsStartFunctionName() {
+        return "startPointDesignation";
+    }
 
-	@Override
-	protected String getJsEndFunctionName() {
-		return "endPointDesignation";
-	}
+    @Override
+    protected String getJsEndFunctionName() {
+        return "endPointDesignation";
+    }
 
-	@Override
-	protected Point createResult(final Object[] arguments) {
-		final Point point = KmlFactory.createPoint();
-		point.addToCoordinates((Double) arguments[0], (Double) arguments[1], (Double) arguments[2]);
-		return point;
-	}
+    @Override
+    protected Point createResult(final Object[] arguments) {
+        final Point point = KmlFactory.createPoint();
+        point.addToCoordinates((Double) arguments[0], (Double) arguments[1], (Double) arguments[2]);
+        return point;
+    }
 
 }

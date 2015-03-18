@@ -30,11 +30,11 @@ package org.jowidgets.api.widgets.blueprint.builder;
 import org.jowidgets.common.widgets.builder.ISliderSetupBuilderCommon;
 
 public interface ISliderSetupBuilder<INSTANCE_TYPE extends ISliderSetupBuilder<?>> extends
-		ISliderSetupBuilderCommon<INSTANCE_TYPE>,
-		IComponentSetupBuilder<INSTANCE_TYPE> {
+        ISliderSetupBuilderCommon<INSTANCE_TYPE>,
+        IComponentSetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setValue(int value);
+    INSTANCE_TYPE setValue(int value);
 
-	INSTANCE_TYPE setValue(Integer value);
+    INSTANCE_TYPE setValue(Integer value);
 
 }

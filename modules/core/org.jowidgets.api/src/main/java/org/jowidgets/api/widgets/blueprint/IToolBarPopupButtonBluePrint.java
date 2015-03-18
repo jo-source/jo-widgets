@@ -31,7 +31,7 @@ import org.jowidgets.api.widgets.blueprint.builder.IItemSetupBuilder;
 import org.jowidgets.api.widgets.descriptor.IToolBarPopupButtonDescriptor;
 
 public interface IToolBarPopupButtonBluePrint extends
-		IItemSetupBuilder<IToolBarPopupButtonBluePrint>,
-		IToolBarPopupButtonDescriptor {
+        IItemSetupBuilder<IToolBarPopupButtonBluePrint>,
+        IToolBarPopupButtonDescriptor {
 
 }

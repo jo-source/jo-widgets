@@ -32,15 +32,15 @@ import org.jowidgets.api.widgets.descriptor.setup.IContainerSetup;
 
 public final class LayoutSettingsInvoker {
 
-	private LayoutSettingsInvoker() {}
+    private LayoutSettingsInvoker() {}
 
-	public static void setLayout(final IContainerSetup setup, final IContainer container) {
-		if (setup.getLayout() != null) {
-			container.setLayout(setup.getLayout());
-		}
-		else if (setup.getLayoutFactory() != null) {
-			container.setLayout(setup.getLayoutFactory());
-		}
-	}
+    public static void setLayout(final IContainerSetup setup, final IContainer container) {
+        if (setup.getLayout() != null) {
+            container.setLayout(setup.getLayout());
+        }
+        else if (setup.getLayoutFactory() != null) {
+            container.setLayout(setup.getLayoutFactory());
+        }
+    }
 
 }

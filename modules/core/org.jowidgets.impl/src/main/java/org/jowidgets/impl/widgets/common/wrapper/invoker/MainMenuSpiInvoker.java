@@ -35,41 +35,41 @@ import org.jowidgets.util.Assert;
 
 public class MainMenuSpiInvoker implements IItemSpiInvoker {
 
-	private final IMainMenuSpi item;
+    private final IMainMenuSpi item;
 
-	public MainMenuSpiInvoker(final IMainMenuSpi item) {
-		Assert.paramNotNull(item, "item");
-		this.item = item;
-	}
+    public MainMenuSpiInvoker(final IMainMenuSpi item) {
+        Assert.paramNotNull(item, "item");
+        this.item = item;
+    }
 
-	public IMainMenuSpi getItem() {
-		return item;
-	}
+    public IMainMenuSpi getItem() {
+        return item;
+    }
 
-	@Override
-	public void setText(final String text) {
-		item.setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        item.setText(text);
+    }
 
-	@Override
-	public void setMnemonic(final Character mnemonic) {
-		if (mnemonic != null) {
-			item.setMnemonic(mnemonic);
-		}
-	}
+    @Override
+    public void setMnemonic(final Character mnemonic) {
+        if (mnemonic != null) {
+            item.setMnemonic(mnemonic);
+        }
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		item.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        item.setEnabled(enabled);
+    }
 
-	@Override
-	public void setToolTipText(final String toolTipText) {}
+    @Override
+    public void setToolTipText(final String toolTipText) {}
 
-	@Override
-	public void setIcon(final IImageConstant icon) {}
+    @Override
+    public void setIcon(final IImageConstant icon) {}
 
-	@Override
-	public void setAccelerator(final Accelerator accelerator) {}
+    @Override
+    public void setAccelerator(final Accelerator accelerator) {}
 
 }

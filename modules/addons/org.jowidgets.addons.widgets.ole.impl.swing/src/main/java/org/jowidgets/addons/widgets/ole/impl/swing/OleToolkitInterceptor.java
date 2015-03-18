@@ -35,10 +35,10 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
 final class OleToolkitInterceptor implements IToolkitInterceptor {
 
-	@Override
-	public void onToolkitCreate(final IToolkit toolkit) {
-		final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
-		widgetFactory.register(IOleControlBluePrint.class, new OleControlFactory());
-	}
+    @Override
+    public void onToolkitCreate(final IToolkit toolkit) {
+        final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
+        widgetFactory.register(IOleControlBluePrint.class, new OleControlFactory());
+    }
 
 }

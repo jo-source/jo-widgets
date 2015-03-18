@@ -39,24 +39,24 @@ import org.jowidgets.workbench.tools.AbstractComponent;
 
 public final class RoleComponent extends AbstractComponent {
 
-	private final BeanTableModel<Role> roleModel;
+    private final BeanTableModel<Role> roleModel;
 
-	public RoleComponent(final IComponentNodeModel componentNodeModel, final IComponentContext componentContext) {
-		componentContext.setLayout(RoleComponentLayoutFactory.create());
-		this.roleModel = new BeanTableModel<Role>(new RoleTableRenderer());
-	}
+    public RoleComponent(final IComponentNodeModel componentNodeModel, final IComponentContext componentContext) {
+        componentContext.setLayout(RoleComponentLayoutFactory.create());
+        this.roleModel = new BeanTableModel<Role>(new RoleTableRenderer());
+    }
 
-	@Override
-	public IView createView(final String viewId, final IViewContext context) {
-		if (RoleTableView.ID.equals(viewId)) {
-			return new RoleTableView(context, roleModel);
-		}
-		else if (RoleDetailView.ID.equals(viewId)) {
-			return new RoleDetailView(context, roleModel);
-		}
-		else {
-			throw new IllegalArgumentException("View id '" + viewId + "' is not known.");
-		}
-	}
+    @Override
+    public IView createView(final String viewId, final IViewContext context) {
+        if (RoleTableView.ID.equals(viewId)) {
+            return new RoleTableView(context, roleModel);
+        }
+        else if (RoleDetailView.ID.equals(viewId)) {
+            return new RoleDetailView(context, roleModel);
+        }
+        else {
+            throw new IllegalArgumentException("View id '" + viewId + "' is not known.");
+        }
+    }
 
 }

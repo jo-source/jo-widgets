@@ -33,9 +33,9 @@ import org.jowidgets.common.widgets.builder.ISeparatorSetupBuilderCommon;
 
 public class SeparatorDefaultsCommon implements IDefaultInitializer<ISeparatorSetupBuilderCommon<?>> {
 
-	@Override
-	public void initialize(final ISeparatorSetupBuilderCommon<?> builder) {
-		builder.setOrientation(Orientation.HORIZONTAL);
-	}
+    @Override
+    public void initialize(final ISeparatorSetupBuilderCommon<?> builder) {
+        builder.setOrientation(Orientation.HORIZONTAL);
+    }
 
 }

@@ -35,12 +35,12 @@ import org.jowidgets.common.types.VirtualKey;
 
 public interface ILazyKeyEventContentFactory {
 
-	VirtualKey createVirtualKey();
+    VirtualKey createVirtualKey();
 
-	Character createCharacter();
+    Character createCharacter();
 
-	Character createResultingCharacter();
+    Character createResultingCharacter();
 
-	Set<Modifier> createModifier();
+    Set<Modifier> createModifier();
 
 }

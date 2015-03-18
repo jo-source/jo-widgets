@@ -38,126 +38,126 @@ import org.jowidgets.common.widgets.controller.IActionListener;
 
 public class PopupActionItemModel extends AbstractItemModelWrapper implements IPopupActionItemModel {
 
-	public PopupActionItemModel() {
-		this(builder());
-	}
+    public PopupActionItemModel() {
+        this(builder());
+    }
 
-	public PopupActionItemModel(final IAction action) {
-		this(builder(action));
-	}
+    public PopupActionItemModel(final IAction action) {
+        this(builder(action));
+    }
 
-	public PopupActionItemModel(final IAction action, final IMenuModel popupMenu) {
-		this(builder(action, popupMenu));
-	}
+    public PopupActionItemModel(final IAction action, final IMenuModel popupMenu) {
+        this(builder(action, popupMenu));
+    }
 
-	public PopupActionItemModel(final String text) {
-		this(builder(text));
-	}
+    public PopupActionItemModel(final String text) {
+        this(builder(text));
+    }
 
-	public PopupActionItemModel(final String text, final IImageConstant icon) {
-		this(builder(text, icon));
-	}
+    public PopupActionItemModel(final String text, final IImageConstant icon) {
+        this(builder(text, icon));
+    }
 
-	public PopupActionItemModel(final String text, final String toolTipText) {
-		this(builder(text, toolTipText));
-	}
+    public PopupActionItemModel(final String text, final String toolTipText) {
+        this(builder(text, toolTipText));
+    }
 
-	public PopupActionItemModel(final String text, final String toolTipText, final IImageConstant icon) {
-		this(builder(text, toolTipText, icon));
-	}
+    public PopupActionItemModel(final String text, final String toolTipText, final IImageConstant icon) {
+        this(builder(text, toolTipText, icon));
+    }
 
-	public PopupActionItemModel(final String id, final String text, final String toolTipText, final IImageConstant icon) {
-		this(builder(id, text, toolTipText, icon));
-	}
+    public PopupActionItemModel(final String id, final String text, final String toolTipText, final IImageConstant icon) {
+        this(builder(id, text, toolTipText, icon));
+    }
 
-	public PopupActionItemModel(final IPopupActionItemModelBuilder builder) {
-		super(builder.build());
-	}
+    public PopupActionItemModel(final IPopupActionItemModelBuilder builder) {
+        super(builder.build());
+    }
 
-	@Override
-	public IPopupActionItemModel getItemModel() {
-		return (IPopupActionItemModel) super.getItemModel();
-	}
+    @Override
+    public IPopupActionItemModel getItemModel() {
+        return (IPopupActionItemModel) super.getItemModel();
+    }
 
-	@Override
-	public final void addActionListener(final IActionListener actionListener) {
-		getItemModel().addActionListener(actionListener);
-	}
+    @Override
+    public final void addActionListener(final IActionListener actionListener) {
+        getItemModel().addActionListener(actionListener);
+    }
 
-	@Override
-	public final void removeActionListener(final IActionListener actionListener) {
-		getItemModel().removeActionListener(actionListener);
-	}
+    @Override
+    public final void removeActionListener(final IActionListener actionListener) {
+        getItemModel().removeActionListener(actionListener);
+    }
 
-	@Override
-	public final IAction getAction() {
-		return getItemModel().getAction();
-	}
+    @Override
+    public final IAction getAction() {
+        return getItemModel().getAction();
+    }
 
-	@Override
-	public final void setAction(final IAction action) {
-		getItemModel().setAction(action);
-	}
+    @Override
+    public final void setAction(final IAction action) {
+        getItemModel().setAction(action);
+    }
 
-	@Override
-	public final void setPopupMenu(final IMenuModel popupMenu) {
-		getItemModel().setPopupMenu(popupMenu);
-	}
+    @Override
+    public final void setPopupMenu(final IMenuModel popupMenu) {
+        getItemModel().setPopupMenu(popupMenu);
+    }
 
-	@Override
-	public final IMenuModel getPopupMenu() {
-		return getItemModel().getPopupMenu();
-	}
+    @Override
+    public final IMenuModel getPopupMenu() {
+        return getItemModel().getPopupMenu();
+    }
 
-	@Override
-	public final void actionPerformed() {
-		getItemModel().actionPerformed();
-	}
+    @Override
+    public final void actionPerformed() {
+        getItemModel().actionPerformed();
+    }
 
-	@Override
-	public IPopupActionItemModel createCopy() {
-		return getItemModel().createCopy();
-	}
+    @Override
+    public IPopupActionItemModel createCopy() {
+        return getItemModel().createCopy();
+    }
 
-	public static IPopupActionItemModelBuilder builder() {
-		return Toolkit.getModelFactoryProvider().getItemModelFactory().popupActionItemBuilder();
-	}
+    public static IPopupActionItemModelBuilder builder() {
+        return Toolkit.getModelFactoryProvider().getItemModelFactory().popupActionItemBuilder();
+    }
 
-	public static IPopupActionItemModelBuilder builder(final IAction action) {
-		return builder().setAction(action);
-	}
+    public static IPopupActionItemModelBuilder builder(final IAction action) {
+        return builder().setAction(action);
+    }
 
-	public static IPopupActionItemModelBuilder builder(final IAction action, final IMenuModel popupMenu) {
-		return builder(action).setPopupMenu(popupMenu);
-	}
+    public static IPopupActionItemModelBuilder builder(final IAction action, final IMenuModel popupMenu) {
+        return builder(action).setPopupMenu(popupMenu);
+    }
 
-	public static IPopupActionItemModelBuilder builder(final String text) {
-		return builder().setText(text);
-	}
+    public static IPopupActionItemModelBuilder builder(final String text) {
+        return builder().setText(text);
+    }
 
-	public static IPopupActionItemModelBuilder builder(final String text, final String toolTipText) {
-		return builder(text).setToolTipText(toolTipText);
-	}
+    public static IPopupActionItemModelBuilder builder(final String text, final String toolTipText) {
+        return builder(text).setToolTipText(toolTipText);
+    }
 
-	public static IPopupActionItemModelBuilder builder(final String text, final IImageConstant icon) {
-		return builder().setText(text).setIcon(icon);
-	}
+    public static IPopupActionItemModelBuilder builder(final String text, final IImageConstant icon) {
+        return builder().setText(text).setIcon(icon);
+    }
 
-	public static IPopupActionItemModelBuilder builder(final String text, final String toolTipText, final IImageConstant icon) {
-		return builder(text, toolTipText).setIcon(icon);
-	}
+    public static IPopupActionItemModelBuilder builder(final String text, final String toolTipText, final IImageConstant icon) {
+        return builder(text, toolTipText).setIcon(icon);
+    }
 
-	public static IPopupActionItemModelBuilder builder(
-		final String id,
-		final String text,
-		final String toolTipText,
-		final IImageConstant icon) {
-		return builder(text, toolTipText, icon).setId(id);
-	}
+    public static IPopupActionItemModelBuilder builder(
+        final String id,
+        final String text,
+        final String toolTipText,
+        final IImageConstant icon) {
+        return builder(text, toolTipText, icon).setId(id);
+    }
 
-	@Override
-	public String toString() {
-		return "PopupActionItemModel [getId()=" + getId() + "]";
-	}
+    @Override
+    public String toString() {
+        return "PopupActionItemModel [getId()=" + getId() + "]";
+    }
 
 }

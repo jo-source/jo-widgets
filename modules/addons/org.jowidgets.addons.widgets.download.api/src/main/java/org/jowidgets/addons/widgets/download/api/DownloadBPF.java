@@ -33,15 +33,15 @@ import org.jowidgets.util.Assert;
 
 public final class DownloadBPF {
 
-	private DownloadBPF() {}
+    private DownloadBPF() {}
 
-	public static IDownloadButtonBluePrint button() {
-		return Toolkit.getBluePrintFactory().bluePrint(IDownloadButtonBluePrint.class);
-	}
+    public static IDownloadButtonBluePrint button() {
+        return Toolkit.getBluePrintFactory().bluePrint(IDownloadButtonBluePrint.class);
+    }
 
-	public static IDownloadButtonBluePrint button(final String url) {
-		Assert.paramNotNull(url, "url");
-		return button().setUrl(url);
-	}
+    public static IDownloadButtonBluePrint button(final String url) {
+        Assert.paramNotNull(url, "url");
+        return button().setUrl(url);
+    }
 
 }

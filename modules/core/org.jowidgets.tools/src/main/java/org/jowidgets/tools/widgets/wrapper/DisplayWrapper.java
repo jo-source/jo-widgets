@@ -33,21 +33,21 @@ import org.jowidgets.api.widgets.IWindow;
 
 public class DisplayWrapper extends WidgetWrapper implements IDisplay {
 
-	private final IDisplay display;
+    private final IDisplay display;
 
-	public DisplayWrapper(final IDisplay display) {
-		super(display);
-		this.display = display;
-	}
+    public DisplayWrapper(final IDisplay display) {
+        super(display);
+        this.display = display;
+    }
 
-	@Override
-	public void setParent(final IWindow parent) {
-		display.setParent(parent);
-	}
+    @Override
+    public void setParent(final IWindow parent) {
+        display.setParent(parent);
+    }
 
-	@Override
-	public IWindow getParent() {
-		return display.getParent();
-	}
+    @Override
+    public IWindow getParent() {
+        return display.getParent();
+    }
 
 }

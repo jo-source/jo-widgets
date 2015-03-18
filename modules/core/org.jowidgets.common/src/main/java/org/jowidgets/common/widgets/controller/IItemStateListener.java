@@ -30,9 +30,9 @@ package org.jowidgets.common.widgets.controller;
 
 public interface IItemStateListener {
 
-	/**
-	 * Invoked if the state of the item has bean changed
-	 */
-	void itemStateChanged();
+    /**
+     * Invoked if the state of the item has bean changed
+     */
+    void itemStateChanged();
 
 }

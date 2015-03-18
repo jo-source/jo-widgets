@@ -42,70 +42,70 @@ import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
 
 public class CheckBoxImpl extends AbstractInputControl implements ICheckBoxSpi {
 
-	public CheckBoxImpl(final ICheckBoxSetupSpi setup) {
-		this(new JCheckBox(), setup);
-	}
+    public CheckBoxImpl(final ICheckBoxSetupSpi setup) {
+        this(new JCheckBox(), setup);
+    }
 
-	public CheckBoxImpl(final JToggleButton toggleButton, final ICheckBoxSetupSpi descriptor) {
-		super(toggleButton);
+    public CheckBoxImpl(final JToggleButton toggleButton, final ICheckBoxSetupSpi descriptor) {
+        super(toggleButton);
 
-		setText(descriptor.getText());
-		setToolTipText(descriptor.getToolTipText());
-		setMarkup(descriptor.getMarkup());
-		getUiReference().setHorizontalAlignment(AlignmentConvert.convert(descriptor.getAlignment()));
+        setText(descriptor.getText());
+        setToolTipText(descriptor.getToolTipText());
+        setMarkup(descriptor.getMarkup());
+        getUiReference().setHorizontalAlignment(AlignmentConvert.convert(descriptor.getAlignment()));
 
-		getUiReference().addItemListener(new ItemListener() {
+        getUiReference().addItemListener(new ItemListener() {
 
-			@Override
-			public void itemStateChanged(final ItemEvent e) {
-				fireInputChanged(getUiReference().isSelected());
-			}
-		});
+            @Override
+            public void itemStateChanged(final ItemEvent e) {
+                fireInputChanged(getUiReference().isSelected());
+            }
+        });
 
-		getUiReference().setBackground(null);
-		//avoid that checkbox have a border on the left or right side
-		getUiReference().setBorder(BorderFactory.createEmptyBorder(2, 0, 2, 0));
-	}
+        getUiReference().setBackground(null);
+        //avoid that checkbox have a border on the left or right side
+        getUiReference().setBorder(BorderFactory.createEmptyBorder(2, 0, 2, 0));
+    }
 
-	@Override
-	public JToggleButton getUiReference() {
-		return (JToggleButton) super.getUiReference();
-	}
+    @Override
+    public JToggleButton getUiReference() {
+        return (JToggleButton) super.getUiReference();
+    }
 
-	@Override
-	public void setEditable(final boolean editable) {
-		getUiReference().setEnabled(editable);
-	}
+    @Override
+    public void setEditable(final boolean editable) {
+        getUiReference().setEnabled(editable);
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		final JToggleButton toggleButton = getUiReference();
-		toggleButton.setFont(FontProvider.deriveFont(toggleButton.getFont(), markup));
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        final JToggleButton toggleButton = getUiReference();
+        toggleButton.setFont(FontProvider.deriveFont(toggleButton.getFont(), markup));
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), size));
-	}
+    @Override
+    public void setFontSize(final int size) {
+        getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), size));
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), fontName));
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), fontName));
+    }
 
-	@Override
-	public void setText(final String text) {
-		getUiReference().setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        getUiReference().setText(text);
+    }
 
-	@Override
-	public boolean isSelected() {
-		return getUiReference().isSelected();
-	}
+    @Override
+    public boolean isSelected() {
+        return getUiReference().isSelected();
+    }
 
-	@Override
-	public void setSelected(final boolean selected) {
-		getUiReference().setSelected(selected);
-	}
+    @Override
+    public void setSelected(final boolean selected) {
+        getUiReference().setSelected(selected);
+    }
 
 }

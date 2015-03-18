@@ -30,6 +30,6 @@ package org.jowidgets.api.model.levelmeter;
 
 public interface IMutableLevelMeterModel extends ILevelMeterModel {
 
-	void setLevel(double level);
+    void setLevel(double level);
 
 }

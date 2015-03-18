@@ -44,174 +44,174 @@ import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
 
 public class CombinedCollectionInputFieldImpl<ELEMENT_TYPE> extends ControlWrapper implements
-		IInputControl<Collection<ELEMENT_TYPE>> {
+        IInputControl<Collection<ELEMENT_TYPE>> {
 
-	private final IInputControl<ELEMENT_TYPE> elementControl;
-	private final IInputControl<Collection<ELEMENT_TYPE>> collectionControl;
-	private final IInputListener inputListener;
+    private final IInputControl<ELEMENT_TYPE> elementControl;
+    private final IInputControl<Collection<ELEMENT_TYPE>> collectionControl;
+    private final IInputListener inputListener;
 
-	private boolean editable;
+    private boolean editable;
 
-	@SuppressWarnings("unchecked")
-	public CombinedCollectionInputFieldImpl(
-		final IComposite composite,
-		final ICombinedCollectionInputFieldDescriptor<ELEMENT_TYPE> setup) {
-		super(composite);
+    @SuppressWarnings("unchecked")
+    public CombinedCollectionInputFieldImpl(
+        final IComposite composite,
+        final ICombinedCollectionInputFieldDescriptor<ELEMENT_TYPE> setup) {
+        super(composite);
 
-		composite.setLayout(new MigLayoutDescriptor("hidemode 3", "0[grow, 0::]0", "0[grow, 0::]0"));
+        composite.setLayout(new MigLayoutDescriptor("hidemode 3", "0[grow, 0::]0", "0[grow, 0::]0"));
 
-		this.elementControl = composite.add(setup.getElementTypeControlCreator(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		this.collectionControl = (IInputControl<Collection<ELEMENT_TYPE>>) composite.add(
-				setup.getCollectionTypeControlCreator(),
-				MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        this.elementControl = composite.add(setup.getElementTypeControlCreator(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        this.collectionControl = (IInputControl<Collection<ELEMENT_TYPE>>) composite.add(
+                setup.getCollectionTypeControlCreator(),
+                MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
-		collectionControl.setVisible(false);
+        collectionControl.setVisible(false);
 
-		this.inputListener = new IInputListener() {
-			@Override
-			public void inputChanged() {
-				if (elementControl.getValue() != null) {
-					final List<ELEMENT_TYPE> singletonList = Collections.singletonList(elementControl.getValue());
-					collectionControl.setValue(singletonList);
-				}
-				else {
-					collectionControl.setValue(null);
-				}
-			}
-		};
+        this.inputListener = new IInputListener() {
+            @Override
+            public void inputChanged() {
+                if (elementControl.getValue() != null) {
+                    final List<ELEMENT_TYPE> singletonList = Collections.singletonList(elementControl.getValue());
+                    collectionControl.setValue(singletonList);
+                }
+                else {
+                    collectionControl.setValue(null);
+                }
+            }
+        };
 
-		elementControl.addInputListener(inputListener);
+        elementControl.addInputListener(inputListener);
 
-		this.editable = setup.isEditable();
-		if (!setup.isEditable()) {
-			setEditable(false);
-		}
-	}
+        this.editable = setup.isEditable();
+        if (!setup.isEditable()) {
+            setEditable(false);
+        }
+    }
 
-	@Override
-	protected IComposite getWidget() {
-		return (IComposite) super.getWidget();
-	}
+    @Override
+    protected IComposite getWidget() {
+        return (IComposite) super.getWidget();
+    }
 
-	@Override
-	public void addValidator(final IValidator<Collection<ELEMENT_TYPE>> validator) {
-		collectionControl.addValidator(validator);
-	}
+    @Override
+    public void addValidator(final IValidator<Collection<ELEMENT_TYPE>> validator) {
+        collectionControl.addValidator(validator);
+    }
 
-	@Override
-	public boolean hasModifications() {
-		return collectionControl.hasModifications() || elementControl.hasModifications();
-	}
+    @Override
+    public boolean hasModifications() {
+        return collectionControl.hasModifications() || elementControl.hasModifications();
+    }
 
-	@Override
-	public void resetModificationState() {
-		collectionControl.resetModificationState();
-		elementControl.resetModificationState();
-	}
+    @Override
+    public void resetModificationState() {
+        collectionControl.resetModificationState();
+        elementControl.resetModificationState();
+    }
 
-	@Override
-	public void setValue(final Collection<ELEMENT_TYPE> value) {
-		elementControl.removeInputListener(inputListener);
+    @Override
+    public void setValue(final Collection<ELEMENT_TYPE> value) {
+        elementControl.removeInputListener(inputListener);
 
-		collectionControl.setValue(value);
-		if (value != null && value.size() == 1) {
-			elementControl.setValue(value.iterator().next());
-			checkVisibility(false);
-		}
-		if (value == null || value.size() == 0) {
-			elementControl.setValue(null);
-			checkVisibility(false);
-		}
-		else if (value != null && value.size() > 1) {
-			checkVisibility(true);
-		}
+        collectionControl.setValue(value);
+        if (value != null && value.size() == 1) {
+            elementControl.setValue(value.iterator().next());
+            checkVisibility(false);
+        }
+        if (value == null || value.size() == 0) {
+            elementControl.setValue(null);
+            checkVisibility(false);
+        }
+        else if (value != null && value.size() > 1) {
+            checkVisibility(true);
+        }
 
-		elementControl.addInputListener(inputListener);
-	}
+        elementControl.addInputListener(inputListener);
+    }
 
-	private void checkVisibility(final boolean collection) {
-		if (collection && !collectionControl.isVisible()) {
-			switchVisibility();
-		}
-		else if (!collection && collectionControl.isVisible()) {
-			switchVisibility();
-		}
-	}
+    private void checkVisibility(final boolean collection) {
+        if (collection && !collectionControl.isVisible()) {
+            switchVisibility();
+        }
+        else if (!collection && collectionControl.isVisible()) {
+            switchVisibility();
+        }
+    }
 
-	private void switchVisibility() {
-		getWidget().layoutBegin();
-		collectionControl.setVisible(!collectionControl.isVisible());
-		elementControl.setVisible(!elementControl.isVisible());
-		getWidget().layoutEnd();
-	}
+    private void switchVisibility() {
+        getWidget().layoutBegin();
+        collectionControl.setVisible(!collectionControl.isVisible());
+        elementControl.setVisible(!elementControl.isVisible());
+        getWidget().layoutEnd();
+    }
 
-	@Override
-	public Collection<ELEMENT_TYPE> getValue() {
-		return collectionControl.getValue();
-	}
+    @Override
+    public Collection<ELEMENT_TYPE> getValue() {
+        return collectionControl.getValue();
+    }
 
-	@Override
-	public IValidationResult validate() {
-		return collectionControl.validate().withResult(elementControl.validate());
-	}
+    @Override
+    public IValidationResult validate() {
+        return collectionControl.validate().withResult(elementControl.validate());
+    }
 
-	@Override
-	public void addValidationConditionListener(final IValidationConditionListener listener) {
-		collectionControl.addValidationConditionListener(listener);
-		elementControl.addValidationConditionListener(listener);
-	}
+    @Override
+    public void addValidationConditionListener(final IValidationConditionListener listener) {
+        collectionControl.addValidationConditionListener(listener);
+        elementControl.addValidationConditionListener(listener);
+    }
 
-	@Override
-	public void removeValidationConditionListener(final IValidationConditionListener listener) {
-		collectionControl.removeValidationConditionListener(listener);
-		elementControl.removeValidationConditionListener(listener);
-	}
+    @Override
+    public void removeValidationConditionListener(final IValidationConditionListener listener) {
+        collectionControl.removeValidationConditionListener(listener);
+        elementControl.removeValidationConditionListener(listener);
+    }
 
-	@Override
-	public void setEditable(final boolean editable) {
-		this.editable = editable;
-		collectionControl.setEditable(editable);
-		elementControl.setEditable(editable);
-	}
+    @Override
+    public void setEditable(final boolean editable) {
+        this.editable = editable;
+        collectionControl.setEditable(editable);
+        elementControl.setEditable(editable);
+    }
 
-	@Override
-	public boolean isEditable() {
-		return editable;
-	}
+    @Override
+    public boolean isEditable() {
+        return editable;
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		collectionControl.setEnabled(enabled);
-		elementControl.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        collectionControl.setEnabled(enabled);
+        elementControl.setEnabled(enabled);
+    }
 
-	@Override
-	public void addInputListener(final IInputListener listener) {
-		collectionControl.addInputListener(listener);
-		elementControl.addInputListener(listener);
-	}
+    @Override
+    public void addInputListener(final IInputListener listener) {
+        collectionControl.addInputListener(listener);
+        elementControl.addInputListener(listener);
+    }
 
-	@Override
-	public void removeInputListener(final IInputListener listener) {
-		collectionControl.removeInputListener(listener);
-		elementControl.removeInputListener(listener);
-	}
+    @Override
+    public void removeInputListener(final IInputListener listener) {
+        collectionControl.removeInputListener(listener);
+        elementControl.removeInputListener(listener);
+    }
 
-	@Override
-	public void setToolTipText(final String toolTip) {
-		collectionControl.setToolTipText(toolTip);
-		elementControl.setToolTipText(toolTip);
-	}
+    @Override
+    public void setToolTipText(final String toolTip) {
+        collectionControl.setToolTipText(toolTip);
+        elementControl.setToolTipText(toolTip);
+    }
 
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		collectionControl.setForegroundColor(colorValue);
-		elementControl.setForegroundColor(colorValue);
-	}
+    @Override
+    public void setForegroundColor(final IColorConstant colorValue) {
+        collectionControl.setForegroundColor(colorValue);
+        elementControl.setForegroundColor(colorValue);
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		collectionControl.setBackgroundColor(colorValue);
-		elementControl.setBackgroundColor(colorValue);
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        collectionControl.setBackgroundColor(colorValue);
+        elementControl.setBackgroundColor(colorValue);
+    }
 }

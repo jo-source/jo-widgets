@@ -36,49 +36,49 @@ import org.jowidgets.common.types.Accelerator;
 
 class PopupActionItemModelImpl extends AbstractActionItemModelImpl implements IPopupActionItemModel {
 
-	private IMenuModel popupMenu;
+    private IMenuModel popupMenu;
 
-	protected PopupActionItemModelImpl() {
-		this(null, null, null, null, null, null, true, null, null, null);
-	}
+    protected PopupActionItemModelImpl() {
+        this(null, null, null, null, null, null, true, null, null, null);
+    }
 
-	protected PopupActionItemModelImpl(
-		final String id,
-		final String text,
-		final String toolTipText,
-		final IImageConstant icon,
-		final Accelerator accelerator,
-		final Character mnemonic,
-		final boolean enabled,
-		final IAction action,
-		final IMenuModel popupMenu,
-		final ActionItemVisibilityAspectComposite visibilityAspect) {
-		super(id, text, toolTipText, icon, accelerator, mnemonic, enabled, action, visibilityAspect);
+    protected PopupActionItemModelImpl(
+        final String id,
+        final String text,
+        final String toolTipText,
+        final IImageConstant icon,
+        final Accelerator accelerator,
+        final Character mnemonic,
+        final boolean enabled,
+        final IAction action,
+        final IMenuModel popupMenu,
+        final ActionItemVisibilityAspectComposite visibilityAspect) {
+        super(id, text, toolTipText, icon, accelerator, mnemonic, enabled, action, visibilityAspect);
 
-		this.popupMenu = popupMenu;
-	}
+        this.popupMenu = popupMenu;
+    }
 
-	@Override
-	public IPopupActionItemModel createCopy() {
-		final PopupActionItemModelImpl result = new PopupActionItemModelImpl();
-		result.setContent(this);
-		return result;
-	}
+    @Override
+    public IPopupActionItemModel createCopy() {
+        final PopupActionItemModelImpl result = new PopupActionItemModelImpl();
+        result.setContent(this);
+        return result;
+    }
 
-	protected void setContent(final PopupActionItemModelImpl source) {
-		super.setContent(source);
-		this.popupMenu = source.getPopupMenu();
-	}
+    protected void setContent(final PopupActionItemModelImpl source) {
+        super.setContent(source);
+        this.popupMenu = source.getPopupMenu();
+    }
 
-	@Override
-	public void setPopupMenu(final IMenuModel popupMenu) {
-		this.popupMenu = popupMenu;
-		fireItemChanged();
-	}
+    @Override
+    public void setPopupMenu(final IMenuModel popupMenu) {
+        this.popupMenu = popupMenu;
+        fireItemChanged();
+    }
 
-	@Override
-	public IMenuModel getPopupMenu() {
-		return popupMenu;
-	}
+    @Override
+    public IMenuModel getPopupMenu() {
+        return popupMenu;
+    }
 
 }

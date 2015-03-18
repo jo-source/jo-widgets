@@ -35,65 +35,65 @@ import org.jowidgets.common.widgets.builder.convenience.ISplitCompositeSetupConv
 import org.jowidgets.tools.widgets.blueprint.convenience.AbstractSetupBuilderConvenience;
 
 public class SplitCompositeSetupConvenience extends AbstractSetupBuilderConvenience<ISplitCompositeSetupBuilder<?>> implements
-		ISplitCompositeSetupConvenience<ISplitCompositeSetupBuilder<?>> {
+        ISplitCompositeSetupConvenience<ISplitCompositeSetupBuilder<?>> {
 
-	@Override
-	public ISplitCompositeSetupBuilder<?> enableFirstBorder() {
-		return getBuilder().setFirstBorder(new Border());
-	}
+    @Override
+    public ISplitCompositeSetupBuilder<?> enableFirstBorder() {
+        return getBuilder().setFirstBorder(new Border());
+    }
 
-	@Override
-	public ISplitCompositeSetupBuilder<?> disableFirstBorder() {
-		return getBuilder().setFirstBorder(null);
-	}
+    @Override
+    public ISplitCompositeSetupBuilder<?> disableFirstBorder() {
+        return getBuilder().setFirstBorder(null);
+    }
 
-	@Override
-	public ISplitCompositeSetupBuilder<?> enableSecondBorder() {
-		return getBuilder().setSecondBorder(new Border());
-	}
+    @Override
+    public ISplitCompositeSetupBuilder<?> enableSecondBorder() {
+        return getBuilder().setSecondBorder(new Border());
+    }
 
-	@Override
-	public ISplitCompositeSetupBuilder<?> disableSecondBorder() {
-		return getBuilder().setSecondBorder(null);
-	}
+    @Override
+    public ISplitCompositeSetupBuilder<?> disableSecondBorder() {
+        return getBuilder().setSecondBorder(null);
+    }
 
-	@Override
-	public ISplitCompositeSetupBuilder<?> setHorizontal() {
-		return getBuilder().setOrientation(Orientation.HORIZONTAL);
-	}
+    @Override
+    public ISplitCompositeSetupBuilder<?> setHorizontal() {
+        return getBuilder().setOrientation(Orientation.HORIZONTAL);
+    }
 
-	@Override
-	public ISplitCompositeSetupBuilder<?> setVertical() {
-		return getBuilder().setOrientation(Orientation.VERTICAL);
-	}
+    @Override
+    public ISplitCompositeSetupBuilder<?> setVertical() {
+        return getBuilder().setOrientation(Orientation.VERTICAL);
+    }
 
-	@Override
-	public ISplitCompositeSetupBuilder<?> enableBorders() {
-		enableFirstBorder();
-		enableSecondBorder();
-		return getBuilder();
-	}
+    @Override
+    public ISplitCompositeSetupBuilder<?> enableBorders() {
+        enableFirstBorder();
+        enableSecondBorder();
+        return getBuilder();
+    }
 
-	@Override
-	public ISplitCompositeSetupBuilder<?> disableBorders() {
-		disableFirstBorder();
-		disableSecondBorder();
-		return getBuilder();
-	}
+    @Override
+    public ISplitCompositeSetupBuilder<?> disableBorders() {
+        disableFirstBorder();
+        disableSecondBorder();
+        return getBuilder();
+    }
 
-	@Override
-	public ISplitCompositeSetupBuilder<?> resizeFirstPolicy() {
-		return getBuilder().setResizePolicy(SplitResizePolicy.RESIZE_FIRST);
-	}
+    @Override
+    public ISplitCompositeSetupBuilder<?> resizeFirstPolicy() {
+        return getBuilder().setResizePolicy(SplitResizePolicy.RESIZE_FIRST);
+    }
 
-	@Override
-	public ISplitCompositeSetupBuilder<?> resizeSecondPolicy() {
-		return getBuilder().setResizePolicy(SplitResizePolicy.RESIZE_SECOND);
-	}
+    @Override
+    public ISplitCompositeSetupBuilder<?> resizeSecondPolicy() {
+        return getBuilder().setResizePolicy(SplitResizePolicy.RESIZE_SECOND);
+    }
 
-	@Override
-	public ISplitCompositeSetupBuilder<?> resizeBothPolicy() {
-		return getBuilder().setResizePolicy(SplitResizePolicy.RESIZE_BOTH);
-	}
+    @Override
+    public ISplitCompositeSetupBuilder<?> resizeBothPolicy() {
+        return getBuilder().setResizePolicy(SplitResizePolicy.RESIZE_BOTH);
+    }
 
 }

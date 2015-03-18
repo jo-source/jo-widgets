@@ -38,52 +38,52 @@ import org.jowidgets.util.cache.ICacheableListener;
 
 public class ImageUrlProvider extends UrlImageDescriptor implements IImageUrlProvider, ICacheable {
 
-	private final Cacheable cacheable = new Cacheable();
+    private final Cacheable cacheable = new Cacheable();
 
-	/**
-	 * Creates a new ImageUrlProvider from a file
-	 * 
-	 * @param file A File used to create the url from
-	 * 
-	 * @throws IllegalArgumentException if the url is malformed
-	 */
-	public ImageUrlProvider(final File file) {
-		super(file);
-	}
+    /**
+     * Creates a new ImageUrlProvider from a file
+     * 
+     * @param file A File used to create the url from
+     * 
+     * @throws IllegalArgumentException if the url is malformed
+     */
+    public ImageUrlProvider(final File file) {
+        super(file);
+    }
 
-	/**
-	 * Creates a new ImageUrlProvider
-	 * 
-	 * @param url A String defining the url
-	 * 
-	 * @throws IllegalArgumentException if the url is malformed
-	 */
-	public ImageUrlProvider(final String url) {
-		super(url);
-	}
+    /**
+     * Creates a new ImageUrlProvider
+     * 
+     * @param url A String defining the url
+     * 
+     * @throws IllegalArgumentException if the url is malformed
+     */
+    public ImageUrlProvider(final String url) {
+        super(url);
+    }
 
-	/**
-	 * Creates a new ImageUrlProvider
-	 * 
-	 * @param url The url to use, must not be null
-	 */
-	public ImageUrlProvider(final URL url) {
-		super(url);
-	}
+    /**
+     * Creates a new ImageUrlProvider
+     * 
+     * @param url The url to use, must not be null
+     */
+    public ImageUrlProvider(final URL url) {
+        super(url);
+    }
 
-	@Override
-	public final void addCacheableListener(final ICacheableListener listener) {
-		cacheable.addCacheableListener(listener);
-	}
+    @Override
+    public final void addCacheableListener(final ICacheableListener listener) {
+        cacheable.addCacheableListener(listener);
+    }
 
-	@Override
-	public final void removeCacheableListener(final ICacheableListener listener) {
-		cacheable.removeCacheableListener(listener);
-	}
+    @Override
+    public final void removeCacheableListener(final ICacheableListener listener) {
+        cacheable.removeCacheableListener(listener);
+    }
 
-	@Override
-	public final void release() {
-		cacheable.release();
-	}
+    @Override
+    public final void release() {
+        cacheable.release();
+    }
 
 }

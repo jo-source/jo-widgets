@@ -30,11 +30,11 @@ package org.jowidgets.api.controller;
 
 public interface IShowingStateListener {
 
-	/**
-	 * This method will be invoked after the showing state has been changed
-	 * 
-	 * @param isShowing The new showing state
-	 */
-	void showingStateChanged(boolean isShowing);
+    /**
+     * This method will be invoked after the showing state has been changed
+     * 
+     * @param isShowing The new showing state
+     */
+    void showingStateChanged(boolean isShowing);
 
 }

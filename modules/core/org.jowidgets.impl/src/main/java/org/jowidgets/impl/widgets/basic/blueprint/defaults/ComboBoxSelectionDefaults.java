@@ -35,13 +35,13 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
 public class ComboBoxSelectionDefaults implements IDefaultInitializer<IComboBoxSelectionSetupBuilder<?, ?>> {
 
-	@SuppressWarnings({"unchecked"})
-	@Override
-	public void initialize(final IComboBoxSelectionSetupBuilder<?, ?> builder) {
-		builder.setAutoCompletion(true);
-		builder.setAutoSelectionPolicy(AutoSelectionPolicy.OFF);
-		builder.setElements(Collections.EMPTY_LIST);
-		builder.setLenient(false);
-	}
+    @SuppressWarnings({"unchecked"})
+    @Override
+    public void initialize(final IComboBoxSelectionSetupBuilder<?, ?> builder) {
+        builder.setAutoCompletion(true);
+        builder.setAutoSelectionPolicy(AutoSelectionPolicy.OFF);
+        builder.setElements(Collections.EMPTY_LIST);
+        builder.setLenient(false);
+    }
 
 }

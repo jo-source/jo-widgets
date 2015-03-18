@@ -45,71 +45,71 @@ import org.jowidgets.util.Assert;
  */
 public final class OsxMainThreadExecutor {
 
-	private OsxMainThreadExecutor() {}
+    private OsxMainThreadExecutor() {}
 
-	/**
-	 * Runs a given application in the mac os x main thread and makes the vm argument
-	 * -XstartOnFirstThread obsolete.
-	 * 
-	 * Remark: This is a workaround that depends on non public api
-	 * 
-	 * @param runnable The runnable that runs the application and the swt event loop.
-	 *            This runnable has to block until the application was finished
-	 */
-	public static void runAppInOsxMainThread(final Runnable runnable) {
-		Assert.paramNotNull(runnable, "runnable");
+    /**
+     * Runs a given application in the mac os x main thread and makes the vm argument
+     * -XstartOnFirstThread obsolete.
+     * 
+     * Remark: This is a workaround that depends on non public api
+     * 
+     * @param runnable The runnable that runs the application and the swt event loop.
+     *            This runnable has to block until the application was finished
+     */
+    public static void runAppInOsxMainThread(final Runnable runnable) {
+        Assert.paramNotNull(runnable, "runnable");
 
-		try {
-			//maybe the thread is already correct, so first try to start normally
-			runnable.run();
-		}
-		catch (final Exception e) {
-			//CHECKSTYLE:OFF
-			System.out.println("*** Ignore warning about wrong thread by now and try it in the main thread");
-			//CHECKSTYLE:ON
-			final CountDownLatch latch = new CountDownLatch(1);
-			getOsxNonBlockingMainExecutor().execute(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						//this starts the swt event loop and blocks until main shell will closed
-						runnable.run();
-					}
-					finally {
-						//ensure that the execution thread not blocks on exceptions
-						latch.countDown();
-					}
-				}
-			});
-			try {
-				//wait until the application has been finished
-				latch.await();
-			}
-			catch (final InterruptedException e2) {
-				throw new RuntimeException(e2);
-			}
-		}
+        try {
+            //maybe the thread is already correct, so first try to start normally
+            runnable.run();
+        }
+        catch (final Exception e) {
+            //CHECKSTYLE:OFF
+            System.out.println("*** Ignore warning about wrong thread by now and try it in the main thread");
+            //CHECKSTYLE:ON
+            final CountDownLatch latch = new CountDownLatch(1);
+            getOsxNonBlockingMainExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        //this starts the swt event loop and blocks until main shell will closed
+                        runnable.run();
+                    }
+                    finally {
+                        //ensure that the execution thread not blocks on exceptions
+                        latch.countDown();
+                    }
+                }
+            });
+            try {
+                //wait until the application has been finished
+                latch.await();
+            }
+            catch (final InterruptedException e2) {
+                throw new RuntimeException(e2);
+            }
+        }
 
-	}
+    }
 
-	/**
-	 * Gets the NonBlockingMainExecutor of os x.
-	 * 
-	 * This will be done by reflection do make it possible to compile this code on all platforms.
-	 * 
-	 * @return The executor or null, if no executor can be created (e.g. not a mac jvm or api changed)
-	 */
-	private static Executor getOsxNonBlockingMainExecutor() {
-		try {
-			final Class<?> dispatchClass = Class.forName("com.apple.concurrent.Dispatch");
-			final Method getInstanceMethod = dispatchClass.getMethod("getInstance");
-			final Object dispatchInstance = getInstanceMethod.invoke(null);
-			final Method getExecutorMethod = dispatchClass.getMethod("getNonBlockingMainQueueExecutor");
-			return (Executor) getExecutorMethod.invoke(dispatchInstance);
-		}
-		catch (final Exception e) {
-			throw new RuntimeException("*** Cannot get os x main thread executor", e);
-		}
-	}
+    /**
+     * Gets the NonBlockingMainExecutor of os x.
+     * 
+     * This will be done by reflection do make it possible to compile this code on all platforms.
+     * 
+     * @return The executor or null, if no executor can be created (e.g. not a mac jvm or api changed)
+     */
+    private static Executor getOsxNonBlockingMainExecutor() {
+        try {
+            final Class<?> dispatchClass = Class.forName("com.apple.concurrent.Dispatch");
+            final Method getInstanceMethod = dispatchClass.getMethod("getInstance");
+            final Object dispatchInstance = getInstanceMethod.invoke(null);
+            final Method getExecutorMethod = dispatchClass.getMethod("getNonBlockingMainQueueExecutor");
+            return (Executor) getExecutorMethod.invoke(dispatchInstance);
+        }
+        catch (final Exception e) {
+            throw new RuntimeException("*** Cannot get os x main thread executor", e);
+        }
+    }
 
 }

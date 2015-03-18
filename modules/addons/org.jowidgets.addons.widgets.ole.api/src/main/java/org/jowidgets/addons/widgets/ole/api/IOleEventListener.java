@@ -30,6 +30,6 @@ package org.jowidgets.addons.widgets.ole.api;
 
 public interface IOleEventListener {
 
-	void handleEvent(IOleEvent event);
+    void handleEvent(IOleEvent event);
 
 }

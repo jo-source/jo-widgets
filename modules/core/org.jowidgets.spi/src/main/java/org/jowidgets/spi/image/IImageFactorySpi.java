@@ -35,32 +35,32 @@ import org.jowidgets.util.IFactory;
 
 public interface IImageFactorySpi {
 
-	/**
-	 * Creates an image from an input stream.
-	 * 
-	 * @param inputStream A factory for an input stream
-	 * 
-	 * @return The created image
-	 */
-	IImageSpi createImage(IFactory<InputStream> inputStream);
+    /**
+     * Creates an image from an input stream.
+     * 
+     * @param inputStream A factory for an input stream
+     * 
+     * @return The created image
+     */
+    IImageSpi createImage(IFactory<InputStream> inputStream);
 
-	/**
-	 * Creates an image from an url.
-	 * 
-	 * @param url The url to create the image from
-	 * 
-	 * @return The created image
-	 */
-	IImageSpi createImage(URL url);
+    /**
+     * Creates an image from an url.
+     * 
+     * @param url The url to create the image from
+     * 
+     * @return The created image
+     */
+    IImageSpi createImage(URL url);
 
-	/**
-	 * Creates an buffered image with defined with and height.
-	 * 
-	 * @param width The width of the image
-	 * @param height The height of the image
-	 * 
-	 * @return The created image
-	 */
-	IBufferedImageSpi createBufferedImage(int width, int height);
+    /**
+     * Creates an buffered image with defined with and height.
+     * 
+     * @param width The width of the image
+     * @param height The height of the image
+     * 
+     * @return The created image
+     */
+    IBufferedImageSpi createBufferedImage(int width, int height);
 
 }

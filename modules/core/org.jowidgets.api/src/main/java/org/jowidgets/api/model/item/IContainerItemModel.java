@@ -30,33 +30,33 @@ package org.jowidgets.api.model.item;
 
 public interface IContainerItemModel extends IToolBarItemModel {
 
-	/**
-	 * Gets the content creator for this model. The content creator is responsible to add the content (e.G. IControl) to
-	 * its container.
-	 * 
-	 * The method createContent(IContainer container) will be invoked when this model will be assigned to an toolbar.
-	 * The method containerDisposed(IContainer container) will be invoked after the model was removed from an toolbar.
-	 * 
-	 * Remark: If controls in the different toolbars should be synchronized, the content creator is responsible for that.
-	 * 
-	 * @return The content creator for this model.
-	 */
-	IContainerContentCreator getContentCreator();
+    /**
+     * Gets the content creator for this model. The content creator is responsible to add the content (e.G. IControl) to
+     * its container.
+     * 
+     * The method createContent(IContainer container) will be invoked when this model will be assigned to an toolbar.
+     * The method containerDisposed(IContainer container) will be invoked after the model was removed from an toolbar.
+     * 
+     * Remark: If controls in the different toolbars should be synchronized, the content creator is responsible for that.
+     * 
+     * @return The content creator for this model.
+     */
+    IContainerContentCreator getContentCreator();
 
-	/**
-	 * Sets the content creator for this model.
-	 * 
-	 * @param contentCreator The content creator to set.
-	 */
-	void setContentCreator(IContainerContentCreator contentCreator);
+    /**
+     * Sets the content creator for this model.
+     * 
+     * @param contentCreator The content creator to set.
+     */
+    void setContentCreator(IContainerContentCreator contentCreator);
 
-	/**
-	 * Makes a deep copy of the item.
-	 * Registered listeners on items won't be copied.
-	 * 
-	 * @return A new instance that is a clone of this instance
-	 */
-	@Override
-	IContainerItemModel createCopy();
+    /**
+     * Makes a deep copy of the item.
+     * Registered listeners on items won't be copied.
+     * 
+     * @return A new instance that is a clone of this instance
+     */
+    @Override
+    IContainerItemModel createCopy();
 
 }

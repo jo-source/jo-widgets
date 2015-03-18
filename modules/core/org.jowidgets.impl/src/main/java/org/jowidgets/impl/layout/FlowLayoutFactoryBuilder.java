@@ -37,48 +37,48 @@ import org.jowidgets.util.Assert;
 
 final class FlowLayoutFactoryBuilder implements IFlowLayoutFactoryBuilder {
 
-	private static final int DEFAULT_GAP = 4;
+    private static final int DEFAULT_GAP = 4;
 
-	private int gap;
-	private Orientation orientation;
+    private int gap;
+    private Orientation orientation;
 
-	FlowLayoutFactoryBuilder() {
-		this.orientation = Orientation.HORIZONTAL;
-		this.gap = DEFAULT_GAP;
-	}
+    FlowLayoutFactoryBuilder() {
+        this.orientation = Orientation.HORIZONTAL;
+        this.gap = DEFAULT_GAP;
+    }
 
-	@Override
-	public IFlowLayoutFactoryBuilder gap(final int gap) {
-		this.gap = gap;
-		return this;
-	}
+    @Override
+    public IFlowLayoutFactoryBuilder gap(final int gap) {
+        this.gap = gap;
+        return this;
+    }
 
-	@Override
-	public IFlowLayoutFactoryBuilder orientation(final Orientation orientation) {
-		Assert.paramNotNull(orientation, "orientation");
-		this.orientation = orientation;
-		return this;
-	}
+    @Override
+    public IFlowLayoutFactoryBuilder orientation(final Orientation orientation) {
+        Assert.paramNotNull(orientation, "orientation");
+        this.orientation = orientation;
+        return this;
+    }
 
-	@Override
-	public IFlowLayoutFactoryBuilder vertical() {
-		this.orientation = Orientation.VERTICAL;
-		return this;
-	}
+    @Override
+    public IFlowLayoutFactoryBuilder vertical() {
+        this.orientation = Orientation.VERTICAL;
+        return this;
+    }
 
-	@Override
-	public IFlowLayoutFactoryBuilder horizontal() {
-		this.orientation = Orientation.HORIZONTAL;
-		return this;
-	}
+    @Override
+    public IFlowLayoutFactoryBuilder horizontal() {
+        this.orientation = Orientation.HORIZONTAL;
+        return this;
+    }
 
-	@Override
-	public ILayoutFactory<ILayouter> build() {
-		return new ILayoutFactory<ILayouter>() {
-			@Override
-			public ILayouter create(final IContainer container) {
-				return new FlowLayoutImpl(container, gap, orientation);
-			}
-		};
-	}
+    @Override
+    public ILayoutFactory<ILayouter> build() {
+        return new ILayoutFactory<ILayouter>() {
+            @Override
+            public ILayouter create(final IContainer container) {
+                return new FlowLayoutImpl(container, gap, orientation);
+            }
+        };
+    }
 }

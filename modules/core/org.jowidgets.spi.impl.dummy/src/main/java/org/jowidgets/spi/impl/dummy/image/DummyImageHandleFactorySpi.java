@@ -37,62 +37,62 @@ import org.jowidgets.spi.impl.image.ImageHandle;
 
 public class DummyImageHandleFactorySpi extends DummyImageHandleFactory implements IImageHandleFactorySpi {
 
-	private final DummyImageRegistry dummyImageRegistry;
+    private final DummyImageRegistry dummyImageRegistry;
 
-	public DummyImageHandleFactorySpi(final DummyImageRegistry swingImageRegistry) {
-		super();
-		this.dummyImageRegistry = swingImageRegistry;
-	}
+    public DummyImageHandleFactorySpi(final DummyImageRegistry swingImageRegistry) {
+        super();
+        this.dummyImageRegistry = swingImageRegistry;
+    }
 
-	@Override
-	public IImageHandle infoIcon() {
-		return new ImageHandle<UIDImage>(new IImageFactory<UIDImage>() {
-			@Override
-			public UIDImage createImage() {
-				return new UIDImage("InfoIcon");
-			}
-		});
-	}
+    @Override
+    public IImageHandle infoIcon() {
+        return new ImageHandle<UIDImage>(new IImageFactory<UIDImage>() {
+            @Override
+            public UIDImage createImage() {
+                return new UIDImage("InfoIcon");
+            }
+        });
+    }
 
-	@Override
-	public IImageHandle questionIcon() {
-		return new ImageHandle<UIDImage>(new IImageFactory<UIDImage>() {
-			@Override
-			public UIDImage createImage() {
-				return new UIDImage("QuestionIcon");
-			}
-		});
-	}
+    @Override
+    public IImageHandle questionIcon() {
+        return new ImageHandle<UIDImage>(new IImageFactory<UIDImage>() {
+            @Override
+            public UIDImage createImage() {
+                return new UIDImage("QuestionIcon");
+            }
+        });
+    }
 
-	@Override
-	public IImageHandle warningIcon() {
-		return new ImageHandle<UIDImage>(new IImageFactory<UIDImage>() {
-			@Override
-			public UIDImage createImage() {
-				return new UIDImage("QuestionIcon");
-			}
-		});
-	}
+    @Override
+    public IImageHandle warningIcon() {
+        return new ImageHandle<UIDImage>(new IImageFactory<UIDImage>() {
+            @Override
+            public UIDImage createImage() {
+                return new UIDImage("QuestionIcon");
+            }
+        });
+    }
 
-	@Override
-	public IImageHandle errorIcon() {
-		return new ImageHandle<UIDImage>(new IImageFactory<UIDImage>() {
-			@Override
-			public UIDImage createImage() {
-				return new UIDImage("ErrorIcon");
-			}
-		});
-	}
+    @Override
+    public IImageHandle errorIcon() {
+        return new ImageHandle<UIDImage>(new IImageFactory<UIDImage>() {
+            @Override
+            public UIDImage createImage() {
+                return new UIDImage("ErrorIcon");
+            }
+        });
+    }
 
-	@Override
-	public IImageHandle createImageHandle(final IImageConstant imageConstant, final int width, final int height) {
-		return new ImageHandle<UIDImage>(new IImageFactory<UIDImage>() {
-			@Override
-			public UIDImage createImage() {
-				final UIDImage templateImage = dummyImageRegistry.getImage(imageConstant);
-				return new UIDImage(templateImage.getDescription() + "_" + width + "x" + height);
-			}
-		});
-	}
+    @Override
+    public IImageHandle createImageHandle(final IImageConstant imageConstant, final int width, final int height) {
+        return new ImageHandle<UIDImage>(new IImageFactory<UIDImage>() {
+            @Override
+            public UIDImage createImage() {
+                final UIDImage templateImage = dummyImageRegistry.getImage(imageConstant);
+                return new UIDImage(templateImage.getDescription() + "_" + width + "x" + height);
+            }
+        });
+    }
 
 }

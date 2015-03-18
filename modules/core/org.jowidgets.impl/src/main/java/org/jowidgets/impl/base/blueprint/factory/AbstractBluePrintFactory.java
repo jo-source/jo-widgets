@@ -42,78 +42,78 @@ import org.jowidgets.tools.widgets.blueprint.defaults.DefaultsInitializerRegistr
 
 public abstract class AbstractBluePrintFactory implements IBaseBluePrintFactory {
 
-	private final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry;
-	private IDefaultsInitializerRegistry defaultInitializerRegistry;
+    private final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry;
+    private IDefaultsInitializerRegistry defaultInitializerRegistry;
 
-	public AbstractBluePrintFactory(
-		final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry,
-		final IDefaultsInitializerRegistry defaultInitializerRegistry) {
-		super();
-		this.setupBuilderConvenienceRegistry = setupBuilderConvenienceRegistry;
-		this.defaultInitializerRegistry = defaultInitializerRegistry;
-	}
+    public AbstractBluePrintFactory(
+        final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry,
+        final IDefaultsInitializerRegistry defaultInitializerRegistry) {
+        super();
+        this.setupBuilderConvenienceRegistry = setupBuilderConvenienceRegistry;
+        this.defaultInitializerRegistry = defaultInitializerRegistry;
+    }
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public <WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends ISetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
-		final Class<BLUE_PRINT_TYPE> bluePrintType) {
-		//This cast is necessary for compilation with sun compiler. 
-		//It compiles in eclipse Version: Helios Service Release 1 Build id: 20100917-0705
-		//without the cast, so don't remove the cast
-		return (BLUE_PRINT_TYPE) createProxy(bluePrintType);
-	}
+    @Override
+    @SuppressWarnings("unchecked")
+    public <WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends ISetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
+        final Class<BLUE_PRINT_TYPE> bluePrintType) {
+        //This cast is necessary for compilation with sun compiler. 
+        //It compiles in eclipse Version: Helios Service Release 1 Build id: 20100917-0705
+        //without the cast, so don't remove the cast
+        return (BLUE_PRINT_TYPE) createProxy(bluePrintType);
+    }
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	protected <BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends IWidgetCommon>> BLUE_PRINT_TYPE createProxy(
-		final Class<? extends IWidgetDescriptor> bluePrintType) {
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    protected <BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends IWidgetCommon>> BLUE_PRINT_TYPE createProxy(
+        final Class<? extends IWidgetDescriptor> bluePrintType) {
 
-		return (BLUE_PRINT_TYPE) new BluePrintProxyProvider<IFrameBluePrintSpi>(
-			bluePrintType,
-			setupBuilderConvenienceRegistry,
-			defaultInitializerRegistry).getBluePrint();
-	}
+        return (BLUE_PRINT_TYPE) new BluePrintProxyProvider<IFrameBluePrintSpi>(
+            bluePrintType,
+            setupBuilderConvenienceRegistry,
+            defaultInitializerRegistry).getBluePrint();
+    }
 
-	@SuppressWarnings("rawtypes")
-	@Override
-	public void setSetupBuilderConvenience(
-		final Class<? extends ISetupBuilder> setupBuilder,
-		final ISetupBuilderConvenience<?> setupBuilderConvenience) {
-		getSetupBuilderConvenienceRegistry().register(setupBuilder, setupBuilderConvenience);
-	}
+    @SuppressWarnings("rawtypes")
+    @Override
+    public void setSetupBuilderConvenience(
+        final Class<? extends ISetupBuilder> setupBuilder,
+        final ISetupBuilderConvenience<?> setupBuilderConvenience) {
+        getSetupBuilderConvenienceRegistry().register(setupBuilder, setupBuilderConvenience);
+    }
 
-	@Override
-	public void setDefaultsInitializerRegistry(final IDefaultsInitializerRegistry defaultInitializerRegistry) {
-		if (defaultInitializerRegistry == null) {
-			this.defaultInitializerRegistry = new DefaultsInitializerRegistry();
-		}
-		else {
-			this.defaultInitializerRegistry = defaultInitializerRegistry;
-		}
-	}
+    @Override
+    public void setDefaultsInitializerRegistry(final IDefaultsInitializerRegistry defaultInitializerRegistry) {
+        if (defaultInitializerRegistry == null) {
+            this.defaultInitializerRegistry = new DefaultsInitializerRegistry();
+        }
+        else {
+            this.defaultInitializerRegistry = defaultInitializerRegistry;
+        }
+    }
 
-	@SuppressWarnings("rawtypes")
-	@Override
-	public void addDefaultsInitializer(
-		final Class<? extends ISetupBuilder> setupBuilder,
-		final IDefaultInitializer<?> defaultsImpl) {
-		defaultInitializerRegistry.register(setupBuilder, defaultsImpl);
-	}
+    @SuppressWarnings("rawtypes")
+    @Override
+    public void addDefaultsInitializer(
+        final Class<? extends ISetupBuilder> setupBuilder,
+        final IDefaultInitializer<?> defaultsImpl) {
+        defaultInitializerRegistry.register(setupBuilder, defaultsImpl);
+    }
 
-	@SuppressWarnings("rawtypes")
-	@Override
-	public void setDefaultsInitializer(
-		final Class<? extends ISetupBuilder> setupBuilder,
-		final IDefaultInitializer<?> defaultsImpl) {
-		defaultInitializerRegistry.setDefaultsInitializer(setupBuilder, defaultsImpl);
-	}
+    @SuppressWarnings("rawtypes")
+    @Override
+    public void setDefaultsInitializer(
+        final Class<? extends ISetupBuilder> setupBuilder,
+        final IDefaultInitializer<?> defaultsImpl) {
+        defaultInitializerRegistry.setDefaultsInitializer(setupBuilder, defaultsImpl);
+    }
 
-	@Override
-	public ISetupBuilderConvenienceRegistry getSetupBuilderConvenienceRegistry() {
-		return setupBuilderConvenienceRegistry;
-	}
+    @Override
+    public ISetupBuilderConvenienceRegistry getSetupBuilderConvenienceRegistry() {
+        return setupBuilderConvenienceRegistry;
+    }
 
-	@Override
-	public IDefaultsInitializerRegistry getDefaultsInitializerRegistry() {
-		return defaultInitializerRegistry;
-	}
+    @Override
+    public IDefaultsInitializerRegistry getDefaultsInitializerRegistry() {
+        return defaultInitializerRegistry;
+    }
 }

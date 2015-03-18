@@ -33,6 +33,6 @@ import org.jowidgets.api.widgets.IControl;
 
 public interface IAwtSwtControl extends IControl {
 
-	Composite getSwtComposite();
+    Composite getSwtComposite();
 
 }

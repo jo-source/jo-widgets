@@ -32,13 +32,13 @@ import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 
 public interface ITabItemCommon extends IItemCommon, IContainerCommon {
 
-	/**
-	 * @return true if a item content can be attached to items of another folder. False otherwise.
-	 */
-	boolean isReparentable();
+    /**
+     * @return true if a item content can be attached to items of another folder. False otherwise.
+     */
+    boolean isReparentable();
 
-	void addTabPopupDetectionListener(IPopupDetectionListener listener);
+    void addTabPopupDetectionListener(IPopupDetectionListener listener);
 
-	void removeTabPopupDetectionListener(IPopupDetectionListener listener);
+    void removeTabPopupDetectionListener(IPopupDetectionListener listener);
 
 }

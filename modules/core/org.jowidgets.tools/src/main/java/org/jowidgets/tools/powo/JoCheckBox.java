@@ -35,28 +35,28 @@ import org.jowidgets.api.widgets.descriptor.ICheckBoxDescriptor;
 
 public class JoCheckBox extends CheckBox<ICheckBox, ICheckBoxBluePrint> implements ICheckBox {
 
-	public JoCheckBox(final String text) {
-		super(Toolkit.getBluePrintFactory().checkBox().setText(text));
-	}
+    public JoCheckBox(final String text) {
+        super(Toolkit.getBluePrintFactory().checkBox().setText(text));
+    }
 
-	public JoCheckBox(final String text, final String tooltipText) {
-		super(Toolkit.getBluePrintFactory().checkBox().setText(text).setToolTipText(tooltipText));
-	}
+    public JoCheckBox(final String text, final String tooltipText) {
+        super(Toolkit.getBluePrintFactory().checkBox().setText(text).setToolTipText(tooltipText));
+    }
 
-	public JoCheckBox(final ICheckBoxDescriptor descriptor) {
-		super(Toolkit.getBluePrintFactory().checkBox().setSetup(descriptor));
-	}
+    public JoCheckBox(final ICheckBoxDescriptor descriptor) {
+        super(Toolkit.getBluePrintFactory().checkBox().setSetup(descriptor));
+    }
 
-	public static ICheckBoxBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().checkBox();
-	}
+    public static ICheckBoxBluePrint bluePrint() {
+        return Toolkit.getBluePrintFactory().checkBox();
+    }
 
-	public static ICheckBoxBluePrint bluePrint(final String text) {
-		return Toolkit.getBluePrintFactory().checkBox().setText(text);
-	}
+    public static ICheckBoxBluePrint bluePrint(final String text) {
+        return Toolkit.getBluePrintFactory().checkBox().setText(text);
+    }
 
-	public static ICheckBoxBluePrint bluePrint(final String text, final String tooltipText) {
-		return Toolkit.getBluePrintFactory().checkBox().setText(text).setToolTipText(tooltipText);
-	}
+    public static ICheckBoxBluePrint bluePrint(final String text, final String tooltipText) {
+        return Toolkit.getBluePrintFactory().checkBox().setText(text).setToolTipText(tooltipText);
+    }
 
 }

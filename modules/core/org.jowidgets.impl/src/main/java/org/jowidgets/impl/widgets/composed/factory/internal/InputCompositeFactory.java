@@ -36,19 +36,19 @@ import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.widgets.composed.InputCompositeImpl;
 
 public class InputCompositeFactory<INPUT_TYPE> implements
-		IWidgetFactory<IInputComposite<INPUT_TYPE>, IInputCompositeDescriptor<INPUT_TYPE>> {
+        IWidgetFactory<IInputComposite<INPUT_TYPE>, IInputCompositeDescriptor<INPUT_TYPE>> {
 
-	@Override
-	public IInputComposite<INPUT_TYPE> create(
-		final Object parentUiReference,
-		final IInputCompositeDescriptor<INPUT_TYPE> descriptor) {
+    @Override
+    public IInputComposite<INPUT_TYPE> create(
+        final Object parentUiReference,
+        final IInputCompositeDescriptor<INPUT_TYPE> descriptor) {
 
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		final IComposite composite = Toolkit.getWidgetFactory().create(
-				parentUiReference,
-				bpf.composite().setBorder(descriptor.getBorder()));
+        final IComposite composite = Toolkit.getWidgetFactory().create(
+                parentUiReference,
+                bpf.composite().setBorder(descriptor.getBorder()));
 
-		return new InputCompositeImpl<INPUT_TYPE>(composite, descriptor);
-	}
+        return new InputCompositeImpl<INPUT_TYPE>(composite, descriptor);
+    }
 }

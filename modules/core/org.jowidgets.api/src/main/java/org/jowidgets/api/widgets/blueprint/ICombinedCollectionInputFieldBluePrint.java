@@ -31,7 +31,7 @@ import org.jowidgets.api.widgets.blueprint.builder.ICombinedCollectionInputField
 import org.jowidgets.api.widgets.descriptor.ICombinedCollectionInputFieldDescriptor;
 
 public interface ICombinedCollectionInputFieldBluePrint<ELEMENT_TYPE> extends
-		ICombinedCollectionInputFieldSetupBuilder<ICombinedCollectionInputFieldBluePrint<ELEMENT_TYPE>, ELEMENT_TYPE>,
-		ICombinedCollectionInputFieldDescriptor<ELEMENT_TYPE> {
+        ICombinedCollectionInputFieldSetupBuilder<ICombinedCollectionInputFieldBluePrint<ELEMENT_TYPE>, ELEMENT_TYPE>,
+        ICombinedCollectionInputFieldDescriptor<ELEMENT_TYPE> {
 
 }

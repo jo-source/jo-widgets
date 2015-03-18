@@ -33,53 +33,53 @@ import org.jowidgets.validation.IValidator;
 
 public interface IStringObjectConverter<OBJECT_TYPE> {
 
-	/**
-	 * Converts an string input to an object.
-	 * 
-	 * @param string The string to convert.
-	 * @return The object that is represented by the string or null if:
-	 *         1. The string input is not convertible to the OBJECT_TYPE
-	 *         2. The string represents null
-	 */
-	OBJECT_TYPE convertToObject(String string);
+    /**
+     * Converts an string input to an object.
+     * 
+     * @param string The string to convert.
+     * @return The object that is represented by the string or null if:
+     *         1. The string input is not convertible to the OBJECT_TYPE
+     *         2. The string represents null
+     */
+    OBJECT_TYPE convertToObject(String string);
 
-	/**
-	 * Gets a validator that will be used to validate the string input.
-	 * 
-	 * @return A validator or null
-	 */
-	IValidator<String> getStringValidator();
+    /**
+     * Gets a validator that will be used to validate the string input.
+     * 
+     * @return A validator or null
+     */
+    IValidator<String> getStringValidator();
 
-	/**
-	 * Gets an input verifier that verifies the input.
-	 * 
-	 * REMARK: Implementors must not assume that the verifier will be used on all platforms,
-	 * so the validator implementation must consider inputs that won't be verified
-	 * 
-	 * REMARK: Implementors should prefer to use regular expressions instead of {@link IInputVerifier}'s
-	 * if possible because SPI implementations that use 'AJAX' can implement client side verification easier.
-	 * 
-	 * @return A verifier or null
-	 */
-	IInputVerifier getInputVerifier();
+    /**
+     * Gets an input verifier that verifies the input.
+     * 
+     * REMARK: Implementors must not assume that the verifier will be used on all platforms,
+     * so the validator implementation must consider inputs that won't be verified
+     * 
+     * REMARK: Implementors should prefer to use regular expressions instead of {@link IInputVerifier}'s
+     * if possible because SPI implementations that use 'AJAX' can implement client side verification easier.
+     * 
+     * @return A verifier or null
+     */
+    IInputVerifier getInputVerifier();
 
-	/**
-	 * Gets the regular expression that describes the valid inputs.
-	 * 
-	 * REMARK: Implementors should prefer to use regular expressions instead of {@link IInputVerifier}'s
-	 * if possible because SPI implementations that uses e.g 'AJAX' can implement client side verification easier.
-	 * 
-	 * REMARK: Implementors must not assume that the regular expression will be used on all platforms
-	 * 
-	 * @return A regular expression or null
-	 */
-	String getAcceptingRegExp();
+    /**
+     * Gets the regular expression that describes the valid inputs.
+     * 
+     * REMARK: Implementors should prefer to use regular expressions instead of {@link IInputVerifier}'s
+     * if possible because SPI implementations that uses e.g 'AJAX' can implement client side verification easier.
+     * 
+     * REMARK: Implementors must not assume that the regular expression will be used on all platforms
+     * 
+     * @return A regular expression or null
+     */
+    String getAcceptingRegExp();
 
-	/**
-	 * Gets a mask if the input should be masked.
-	 * 
-	 * @return A text mask or null if the input is not masked
-	 */
-	ITextMask getMask();
+    /**
+     * Gets a mask if the input should be masked.
+     * 
+     * @return A text mask or null if the input is not masked
+     */
+    ITextMask getMask();
 
 }

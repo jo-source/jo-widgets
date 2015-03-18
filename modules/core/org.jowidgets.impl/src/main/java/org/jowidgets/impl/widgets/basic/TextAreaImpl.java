@@ -56,257 +56,257 @@ import org.jowidgets.validation.tools.CompoundValidator;
 
 public class TextAreaImpl extends AbstractControlSpiWrapper implements ITextArea {
 
-	private final ControlDelegate controlDelegate;
+    private final ControlDelegate controlDelegate;
 
-	private final ValidationCache validationCache;
-	private final CompoundValidator<String> compoundValidator;
-	private final InputObservable inputObservable;
+    private final ValidationCache validationCache;
+    private final CompoundValidator<String> compoundValidator;
+    private final InputObservable inputObservable;
 
-	private String lastUnmodiefiedText;
+    private String lastUnmodiefiedText;
 
-	private boolean editable;
+    private boolean editable;
 
-	public TextAreaImpl(final ITextAreaSpi textAreaSpi, final ITextAreaSetup setup) {
-		super(textAreaSpi);
+    public TextAreaImpl(final ITextAreaSpi textAreaSpi, final ITextAreaSetup setup) {
+        super(textAreaSpi);
 
-		this.controlDelegate = new ControlDelegate(textAreaSpi, this);
+        this.controlDelegate = new ControlDelegate(textAreaSpi, this);
 
-		this.inputObservable = new InputObservable();
+        this.inputObservable = new InputObservable();
 
-		this.compoundValidator = new CompoundValidator<String>();
-		this.validationCache = new ValidationCache(new IValidationResultCreator() {
-			@Override
-			public IValidationResult createValidationResult() {
-				final IValidationResultBuilder builder = ValidationResult.builder();
-				builder.addResult(compoundValidator.validate(getValue()));
-				return builder.build();
-			}
-		});
+        this.compoundValidator = new CompoundValidator<String>();
+        this.validationCache = new ValidationCache(new IValidationResultCreator() {
+            @Override
+            public IValidationResult createValidationResult() {
+                final IValidationResultBuilder builder = ValidationResult.builder();
+                builder.addResult(compoundValidator.validate(getValue()));
+                return builder.build();
+            }
+        });
 
-		if (setup.getText() != null) {
-			setText(setup.getText());
-		}
+        if (setup.getText() != null) {
+            setText(setup.getText());
+        }
 
-		if (setup.getMarkup() != null) {
-			setMarkup(setup.getMarkup());
-		}
-		if (setup.getFontSize() != null) {
-			setFontSize(Integer.valueOf(setup.getFontSize()));
-		}
-		if (setup.getFontName() != null) {
-			setFontName(setup.getFontName());
-		}
+        if (setup.getMarkup() != null) {
+            setMarkup(setup.getMarkup());
+        }
+        if (setup.getFontSize() != null) {
+            setFontSize(Integer.valueOf(setup.getFontSize()));
+        }
+        if (setup.getFontName() != null) {
+            setFontName(setup.getFontName());
+        }
 
-		this.editable = setup.isEditable();
-		if (!setup.isEditable()) {
-			setEditable(false);
-		}
+        this.editable = setup.isEditable();
+        if (!setup.isEditable()) {
+            setEditable(false);
+        }
 
-		VisibiliySettingsInvoker.setVisibility(setup, this);
-		ColorSettingsInvoker.setColors(setup, this);
+        VisibiliySettingsInvoker.setVisibility(setup, this);
+        ColorSettingsInvoker.setColors(setup, this);
 
-		textAreaSpi.addInputListener(new IInputListener() {
-			@Override
-			public void inputChanged() {
-				inputObservable.fireInputChanged();
-				validationCache.setDirty();
-			}
-		});
+        textAreaSpi.addInputListener(new IInputListener() {
+            @Override
+            public void inputChanged() {
+                inputObservable.fireInputChanged();
+                validationCache.setDirty();
+            }
+        });
 
-		lastUnmodiefiedText = textAreaSpi.getText();
-	}
+        lastUnmodiefiedText = textAreaSpi.getText();
+    }
 
-	@Override
-	public ITextAreaSpi getWidget() {
-		return (ITextAreaSpi) super.getWidget();
-	}
+    @Override
+    public ITextAreaSpi getWidget() {
+        return (ITextAreaSpi) super.getWidget();
+    }
 
-	@Override
-	public IContainer getParent() {
-		return controlDelegate.getParent();
-	}
+    @Override
+    public IContainer getParent() {
+        return controlDelegate.getParent();
+    }
 
-	@Override
-	public void setParent(final IContainer parent) {
-		controlDelegate.setParent(parent);
-	}
+    @Override
+    public void setParent(final IContainer parent) {
+        controlDelegate.setParent(parent);
+    }
 
-	@Override
-	public void addParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.addParentListener(listener);
-	}
+    @Override
+    public void addParentListener(final IParentListener<IContainer> listener) {
+        controlDelegate.addParentListener(listener);
+    }
 
-	@Override
-	public void removeParentListener(final IParentListener<IContainer> listener) {
-		controlDelegate.removeParentListener(listener);
-	}
+    @Override
+    public void removeParentListener(final IParentListener<IContainer> listener) {
+        controlDelegate.removeParentListener(listener);
+    }
 
-	@Override
-	public boolean isReparentable() {
-		return controlDelegate.isReparentable();
-	}
+    @Override
+    public boolean isReparentable() {
+        return controlDelegate.isReparentable();
+    }
 
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		controlDelegate.addDisposeListener(listener);
-	}
+    @Override
+    public void addDisposeListener(final IDisposeListener listener) {
+        controlDelegate.addDisposeListener(listener);
+    }
 
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		controlDelegate.removeDisposeListener(listener);
-	}
+    @Override
+    public void removeDisposeListener(final IDisposeListener listener) {
+        controlDelegate.removeDisposeListener(listener);
+    }
 
-	@Override
-	public boolean isDisposed() {
-		return controlDelegate.isDisposed();
-	}
+    @Override
+    public boolean isDisposed() {
+        return controlDelegate.isDisposed();
+    }
 
-	@Override
-	public void dispose() {
-		controlDelegate.dispose();
-	}
+    @Override
+    public void dispose() {
+        controlDelegate.dispose();
+    }
 
-	@Override
-	public IPopupMenu createPopupMenu() {
-		return controlDelegate.createPopupMenu();
-	}
+    @Override
+    public IPopupMenu createPopupMenu() {
+        return controlDelegate.createPopupMenu();
+    }
 
-	@Override
-	public String getText() {
-		return getWidget().getText();
-	}
+    @Override
+    public String getText() {
+        return getWidget().getText();
+    }
 
-	@Override
-	public void setText(final String text) {
-		getWidget().setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        getWidget().setText(text);
+    }
 
-	@Override
-	public void append(final String text) {
-		getWidget().append(text);
-	}
+    @Override
+    public void append(final String text) {
+        getWidget().append(text);
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		getWidget().setFontSize(size);
-	}
+    @Override
+    public void setFontSize(final int size) {
+        getWidget().setFontSize(size);
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		getWidget().setFontName(fontName);
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        getWidget().setFontName(fontName);
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		getWidget().setMarkup(markup);
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        getWidget().setMarkup(markup);
+    }
 
-	@Override
-	public void setSelection(final int start, final int end) {
-		getWidget().setSelection(start, end);
-	}
+    @Override
+    public void setSelection(final int start, final int end) {
+        getWidget().setSelection(start, end);
+    }
 
-	@Override
-	public void setCaretPosition(final int pos) {
-		getWidget().setCaretPosition(pos);
-	}
+    @Override
+    public void setCaretPosition(final int pos) {
+        getWidget().setCaretPosition(pos);
+    }
 
-	@Override
-	public int getCaretPosition() {
-		return getWidget().getCaretPosition();
-	}
+    @Override
+    public int getCaretPosition() {
+        return getWidget().getCaretPosition();
+    }
 
-	@Override
-	public void selectAll() {
-		final String text = getText();
-		if (text != null) {
-			setSelection(0, text.length());
-		}
-	}
+    @Override
+    public void selectAll() {
+        final String text = getText();
+        if (text != null) {
+            setSelection(0, text.length());
+        }
+    }
 
-	@Override
-	public void select() {
-		selectAll();
-	}
+    @Override
+    public void select() {
+        selectAll();
+    }
 
-	@Override
-	public void scrollToCaretPosition() {
-		getWidget().scrollToCaretPosition();
-	}
+    @Override
+    public void scrollToCaretPosition() {
+        getWidget().scrollToCaretPosition();
+    }
 
-	@Override
-	public void scrollToEnd() {
-		final String text = getText();
-		if (!EmptyCheck.isEmpty(text)) {
-			setCaretPosition(text.length() - 1);
-			Toolkit.getUiThreadAccess().invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					scrollToCaretPosition();
-				}
-			});
-		}
-	}
+    @Override
+    public void scrollToEnd() {
+        final String text = getText();
+        if (!EmptyCheck.isEmpty(text)) {
+            setCaretPosition(text.length() - 1);
+            Toolkit.getUiThreadAccess().invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    scrollToCaretPosition();
+                }
+            });
+        }
+    }
 
-	@Override
-	public void setEditable(final boolean editable) {
-		this.editable = editable;
-		getWidget().setEditable(editable);
-	}
+    @Override
+    public void setEditable(final boolean editable) {
+        this.editable = editable;
+        getWidget().setEditable(editable);
+    }
 
-	@Override
-	public boolean isEditable() {
-		return editable;
-	}
+    @Override
+    public boolean isEditable() {
+        return editable;
+    }
 
-	@Override
-	public void addInputListener(final IInputListener listener) {
-		inputObservable.addInputListener(listener);
-	}
+    @Override
+    public void addInputListener(final IInputListener listener) {
+        inputObservable.addInputListener(listener);
+    }
 
-	@Override
-	public void removeInputListener(final IInputListener listener) {
-		inputObservable.removeInputListener(listener);
-	}
+    @Override
+    public void removeInputListener(final IInputListener listener) {
+        inputObservable.removeInputListener(listener);
+    }
 
-	@Override
-	public void addValidator(final IValidator<String> validator) {
-		compoundValidator.addValidator(validator);
-	}
+    @Override
+    public void addValidator(final IValidator<String> validator) {
+        compoundValidator.addValidator(validator);
+    }
 
-	@Override
-	public boolean hasModifications() {
-		return !NullCompatibleEquivalence.equals(lastUnmodiefiedText, getWidget().getText());
-	}
+    @Override
+    public boolean hasModifications() {
+        return !NullCompatibleEquivalence.equals(lastUnmodiefiedText, getWidget().getText());
+    }
 
-	@Override
-	public void resetModificationState() {
-		lastUnmodiefiedText = getWidget().getText();
-	}
+    @Override
+    public void resetModificationState() {
+        lastUnmodiefiedText = getWidget().getText();
+    }
 
-	@Override
-	public void setValue(final String value) {
-		getWidget().setText(value);
-	}
+    @Override
+    public void setValue(final String value) {
+        getWidget().setText(value);
+    }
 
-	@Override
-	public String getValue() {
-		return getWidget().getText();
-	}
+    @Override
+    public String getValue() {
+        return getWidget().getText();
+    }
 
-	@Override
-	public IValidationResult validate() {
-		return validationCache.validate();
-	}
+    @Override
+    public IValidationResult validate() {
+        return validationCache.validate();
+    }
 
-	@Override
-	public void addValidationConditionListener(final IValidationConditionListener listener) {
-		validationCache.addValidationConditionListener(listener);
-	}
+    @Override
+    public void addValidationConditionListener(final IValidationConditionListener listener) {
+        validationCache.addValidationConditionListener(listener);
+    }
 
-	@Override
-	public void removeValidationConditionListener(final IValidationConditionListener listener) {
-		validationCache.removeValidationConditionListener(listener);
-	}
+    @Override
+    public void removeValidationConditionListener(final IValidationConditionListener listener) {
+        validationCache.removeValidationConditionListener(listener);
+    }
 
 }

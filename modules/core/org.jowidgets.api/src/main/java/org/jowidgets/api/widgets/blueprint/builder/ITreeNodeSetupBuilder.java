@@ -33,17 +33,17 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ITreeNodeSetupBuilder<INSTANCE_TYPE extends ITreeNodeSetupBuilder<?>> extends IItemSetupBuilder<INSTANCE_TYPE> {
 
-	@Mandatory
-	INSTANCE_TYPE setMarkup(Markup markup);
+    @Mandatory
+    INSTANCE_TYPE setMarkup(Markup markup);
 
-	@Mandatory
-	INSTANCE_TYPE setExpanded(boolean expanded);
+    @Mandatory
+    INSTANCE_TYPE setExpanded(boolean expanded);
 
-	@Mandatory
-	INSTANCE_TYPE setSelected(boolean selected);
+    @Mandatory
+    INSTANCE_TYPE setSelected(boolean selected);
 
-	INSTANCE_TYPE setForegroundColor(IColorConstant color);
+    INSTANCE_TYPE setForegroundColor(IColorConstant color);
 
-	INSTANCE_TYPE setBackgroundColor(final IColorConstant color);
+    INSTANCE_TYPE setBackgroundColor(final IColorConstant color);
 
 }

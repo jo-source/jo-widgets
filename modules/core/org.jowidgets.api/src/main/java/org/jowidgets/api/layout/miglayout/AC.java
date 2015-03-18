@@ -28,18 +28,17 @@
 
 package org.jowidgets.api.layout.miglayout;
 
-
 public final class AC {
 
-	private AC() {}
+    private AC() {}
 
-	/**
-	 * Creates a new IAC instance
-	 * 
-	 * @return a new IAC instance
-	 */
-	public static IAC create() {
-		return MigLayoutToolkit.ac();
-	}
+    /**
+     * Creates a new IAC instance
+     * 
+     * @return a new IAC instance
+     */
+    public static IAC create() {
+        return MigLayoutToolkit.ac();
+    }
 
 }

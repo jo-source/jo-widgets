@@ -53,236 +53,236 @@ import org.jowidgets.util.Assert;
 
 public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 
-	private final Set<IPopupDetectionListener> popupDetectionListeners;
+    private final Set<IPopupDetectionListener> popupDetectionListeners;
 
-	private final TreeImpl parentTree;
-	private final TreeItem item;
-	private String toolTipText;
+    private final TreeImpl parentTree;
+    private final TreeItem item;
+    private String toolTipText;
 
-	private Boolean expanded;
+    private Boolean expanded;
 
-	private boolean selected;
-	private boolean checkable;
+    private boolean selected;
+    private boolean checkable;
 
-	private IColorConstant lastCheckableColor;
+    private IColorConstant lastCheckableColor;
 
-	public TreeNodeImpl(final TreeImpl parentTree, final TreeItem parentItem, final Integer index) {
-		Assert.paramNotNull(parentTree, "parentTree");
+    public TreeNodeImpl(final TreeImpl parentTree, final TreeItem parentItem, final Integer index) {
+        Assert.paramNotNull(parentTree, "parentTree");
 
-		this.popupDetectionListeners = new HashSet<IPopupDetectionListener>();
+        this.popupDetectionListeners = new HashSet<IPopupDetectionListener>();
 
-		this.parentTree = parentTree;
-		this.checkable = true;
+        this.parentTree = parentTree;
+        this.checkable = true;
 
-		if (index != null) {
-			if (parentItem == null) {
-				this.item = new TreeItem(parentTree.getUiReference(), SWT.NONE, index.intValue());
-			}
-			else {
-				this.item = new TreeItem(parentItem, SWT.NONE, index.intValue());
-			}
-		}
-		else {
-			if (parentItem == null) {
-				this.item = new TreeItem(parentTree.getUiReference(), SWT.NONE);
-			}
-			else {
-				this.item = new TreeItem(parentItem, SWT.NONE);
-			}
-		}
+        if (index != null) {
+            if (parentItem == null) {
+                this.item = new TreeItem(parentTree.getUiReference(), SWT.NONE, index.intValue());
+            }
+            else {
+                this.item = new TreeItem(parentItem, SWT.NONE, index.intValue());
+            }
+        }
+        else {
+            if (parentItem == null) {
+                this.item = new TreeItem(parentTree.getUiReference(), SWT.NONE);
+            }
+            else {
+                this.item = new TreeItem(parentItem, SWT.NONE);
+            }
+        }
 
-		item.addDisposeListener(new DisposeListener() {
-			@Override
-			public void widgetDisposed(final DisposeEvent arg0) {
-				parentTree.unRegisterItem(item);
-			}
-		});
+        item.addDisposeListener(new DisposeListener() {
+            @Override
+            public void widgetDisposed(final DisposeEvent arg0) {
+                parentTree.unRegisterItem(item);
+            }
+        });
 
-		this.selected = false;
+        this.selected = false;
 
-	}
+    }
 
-	@Override
-	public TreeItem getUiReference() {
-		return item;
-	}
+    @Override
+    public TreeItem getUiReference() {
+        return item;
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		if (!enabled) {
-			throw new UnsupportedOperationException("Tree items can not be disabled");
-		}
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        if (!enabled) {
+            throw new UnsupportedOperationException("Tree items can not be disabled");
+        }
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
-	@Override
-	public void setText(final String text) {
-		if (text != null) {
-			getUiReference().setText(text);
-		}
-		else {
-			getUiReference().setText(String.valueOf(""));
-		}
-	}
+    @Override
+    public void setText(final String text) {
+        if (text != null) {
+            getUiReference().setText(text);
+        }
+        else {
+            getUiReference().setText(String.valueOf(""));
+        }
+    }
 
-	@Override
-	public void setToolTipText(final String toolTipText) {
-		this.toolTipText = toolTipText;
-	}
+    @Override
+    public void setToolTipText(final String toolTipText) {
+        this.toolTipText = toolTipText;
+    }
 
-	public String getToolTipText() {
-		return toolTipText;
-	}
+    public String getToolTipText() {
+        return toolTipText;
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		final Image oldImage = getUiReference().getImage();
-		final Image newImage = SwtImageRegistry.getInstance().getImage(icon);
-		if (oldImage != newImage) {
-			getUiReference().setImage(newImage);
-		}
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        final Image oldImage = getUiReference().getImage();
+        final Image newImage = SwtImageRegistry.getInstance().getImage(icon);
+        if (oldImage != newImage) {
+            getUiReference().setImage(newImage);
+        }
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		final Font newFont = FontProvider.deriveFont(item.getFont(), markup);
-		item.setFont(newFont);
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        final Font newFont = FontProvider.deriveFont(item.getFont(), markup);
+        item.setFont(newFont);
+    }
 
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		getUiReference().setForeground(ColorCache.getInstance().getColor(colorValue));
-	}
+    @Override
+    public void setForegroundColor(final IColorConstant colorValue) {
+        getUiReference().setForeground(ColorCache.getInstance().getColor(colorValue));
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		getUiReference().setBackground(ColorCache.getInstance().getColor(colorValue));
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        getUiReference().setBackground(ColorCache.getInstance().getColor(colorValue));
+    }
 
-	@Override
-	public void setChecked(final boolean checked) {
-		getUiReference().setChecked(checked);
-		fireCheckedChanged(checked);
-	}
+    @Override
+    public void setChecked(final boolean checked) {
+        getUiReference().setChecked(checked);
+        fireCheckedChanged(checked);
+    }
 
-	@Override
-	public boolean isChecked() {
-		return getUiReference().getChecked();
-	}
+    @Override
+    public boolean isChecked() {
+        return getUiReference().getChecked();
+    }
 
-	@Override
-	public void setGreyed(final boolean grayed) {
-		getUiReference().setGrayed(grayed);
-	}
+    @Override
+    public void setGreyed(final boolean grayed) {
+        getUiReference().setGrayed(grayed);
+    }
 
-	@Override
-	public boolean isGreyed() {
-		return getUiReference().getGrayed();
-	}
+    @Override
+    public boolean isGreyed() {
+        return getUiReference().getGrayed();
+    }
 
-	@Override
-	public void setCheckable(final boolean checkable) {
-		this.checkable = checkable;
-		if (!checkable) {
-			parentTree.addUncheckableItem(item);
-			if (isChecked()) {
-				setChecked(false);
-			}
-			lastCheckableColor = ColorConvert.convert(getUiReference().getForeground());
-			setForegroundColor(TreeImpl.DISABLED_COLOR);
-		}
-		else {
-			parentTree.removeUncheckableItem(item);
-			setForegroundColor(lastCheckableColor);
-		}
-	}
+    @Override
+    public void setCheckable(final boolean checkable) {
+        this.checkable = checkable;
+        if (!checkable) {
+            parentTree.addUncheckableItem(item);
+            if (isChecked()) {
+                setChecked(false);
+            }
+            lastCheckableColor = ColorConvert.convert(getUiReference().getForeground());
+            setForegroundColor(TreeImpl.DISABLED_COLOR);
+        }
+        else {
+            parentTree.removeUncheckableItem(item);
+            setForegroundColor(lastCheckableColor);
+        }
+    }
 
-	boolean isCheckable() {
-		return checkable;
-	}
+    boolean isCheckable() {
+        return checkable;
+    }
 
-	@Override
-	public void setExpanded(final boolean expanded) {
-		item.setExpanded(expanded);
-		if (item.getExpanded() == expanded) {
-			fireExpandedChanged(expanded);
-		}
-	}
+    @Override
+    public void setExpanded(final boolean expanded) {
+        item.setExpanded(expanded);
+        if (item.getExpanded() == expanded) {
+            fireExpandedChanged(expanded);
+        }
+    }
 
-	@Override
-	public void fireExpandedChanged(final boolean expanded) {
-		this.expanded = Boolean.valueOf(expanded);
-		super.fireExpandedChanged(expanded);
-	}
+    @Override
+    public void fireExpandedChanged(final boolean expanded) {
+        this.expanded = Boolean.valueOf(expanded);
+        super.fireExpandedChanged(expanded);
+    }
 
-	@Override
-	public boolean isExpanded() {
-		if (expanded != null) {
-			return expanded.booleanValue();
-		}
-		else {
-			return item.getExpanded();
-		}
-	}
+    @Override
+    public boolean isExpanded() {
+        if (expanded != null) {
+            return expanded.booleanValue();
+        }
+        else {
+            return item.getExpanded();
+        }
+    }
 
-	@Override
-	public void setSelected(final boolean selected) {
-		if (this.selected != selected) {
-			parentTree.setSelected(this, selected);
-			this.selected = selected;
-		}
-	}
+    @Override
+    public void setSelected(final boolean selected) {
+        if (this.selected != selected) {
+            parentTree.setSelected(this, selected);
+            this.selected = selected;
+        }
+    }
 
-	@Override
-	public boolean isSelected() {
-		return selected;
-	}
+    @Override
+    public boolean isSelected() {
+        return selected;
+    }
 
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		popupDetectionListeners.add(listener);
-	}
+    @Override
+    public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+        popupDetectionListeners.add(listener);
+    }
 
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		popupDetectionListeners.remove(listener);
-	}
+    @Override
+    public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+        popupDetectionListeners.remove(listener);
+    }
 
-	protected void firePopupDetected(final Position position) {
-		for (final IPopupDetectionListener listener : popupDetectionListeners) {
-			listener.popupDetected(position);
-		}
-	}
+    protected void firePopupDetected(final Position position) {
+        for (final IPopupDetectionListener listener : popupDetectionListeners) {
+            listener.popupDetected(position);
+        }
+    }
 
-	@Override
-	public ITreeNodeSpi addNode(final Integer index) {
-		final TreeNodeImpl result = new TreeNodeImpl(parentTree, item, index);
-		parentTree.registerItem(result.getUiReference(), result);
-		return result;
-	}
+    @Override
+    public ITreeNodeSpi addNode(final Integer index) {
+        final TreeNodeImpl result = new TreeNodeImpl(parentTree, item, index);
+        parentTree.registerItem(result.getUiReference(), result);
+        return result;
+    }
 
-	@Override
-	public void removeNode(final int index) {
-		final TreeItem child = getUiReference().getItem(index);
-		if (child != null) {
-			if (parentTree.isNodeSelected(child)) {
-				final TreeNodeImpl treeNode = parentTree.getTreeNodeItem(child);
-				if (treeNode != null) {
-					parentTree.setSelected(treeNode, false);
-				}
-			}
-			parentTree.unRegisterItem(child);
-			child.dispose();
-		}
-	}
+    @Override
+    public void removeNode(final int index) {
+        final TreeItem child = getUiReference().getItem(index);
+        if (child != null) {
+            if (parentTree.isNodeSelected(child)) {
+                final TreeNodeImpl treeNode = parentTree.getTreeNodeItem(child);
+                if (treeNode != null) {
+                    parentTree.setSelected(treeNode, false);
+                }
+            }
+            parentTree.unRegisterItem(child);
+            child.dispose();
+        }
+    }
 
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return new PopupMenuImpl(parentTree.getUiReference());
-	}
+    @Override
+    public IPopupMenuSpi createPopupMenu() {
+        return new PopupMenuImpl(parentTree.getUiReference());
+    }
 
 }

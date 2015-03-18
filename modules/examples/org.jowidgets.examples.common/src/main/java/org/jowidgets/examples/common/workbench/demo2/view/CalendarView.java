@@ -39,19 +39,19 @@ import org.jowidgets.workbench.api.IViewContext;
 
 public class CalendarView extends AbstractDemoView implements IView {
 
-	public static final String ID = CalendarView.class.getName();
-	public static final String DEFAULT_LABEL = "Calendar";
-	public static final String DEFAULT_TOOLTIP = "Calendar view";
-	public static final IImageConstant DEFAULT_ICON = SilkIcons.CALENDAR;
+    public static final String ID = CalendarView.class.getName();
+    public static final String DEFAULT_LABEL = "Calendar";
+    public static final String DEFAULT_TOOLTIP = "Calendar view";
+    public static final IImageConstant DEFAULT_ICON = SilkIcons.CALENDAR;
 
-	public CalendarView(final IViewContext context) {
-		super(ID);
+    public CalendarView(final IViewContext context) {
+        super(ID);
 
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		final IContainer container = context.getContainer();
-		container.setLayout(Toolkit.getLayoutFactoryProvider().fillLayout());
-		container.add(bpf.calendar());
+        final IContainer container = context.getContainer();
+        container.setLayout(Toolkit.getLayoutFactoryProvider().fillLayout());
+        container.add(bpf.calendar());
 
-	}
+    }
 }

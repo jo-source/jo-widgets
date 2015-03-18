@@ -35,20 +35,20 @@ import org.jowidgets.util.event.IChangeListener;
 
 public final class EnabledAllEnabledChecker {
 
-	public static final IEnabledChecker INSTANCE = new IEnabledChecker() {
+    public static final IEnabledChecker INSTANCE = new IEnabledChecker() {
 
-		@Override
-		public void removeChangeListener(final IChangeListener listener) {}
+        @Override
+        public void removeChangeListener(final IChangeListener listener) {}
 
-		@Override
-		public void addChangeListener(final IChangeListener listener) {}
+        @Override
+        public void addChangeListener(final IChangeListener listener) {}
 
-		@Override
-		public IEnabledState getEnabledState() {
-			return EnabledState.ENABLED;
-		}
-	};
+        @Override
+        public IEnabledState getEnabledState() {
+            return EnabledState.ENABLED;
+        }
+    };
 
-	private EnabledAllEnabledChecker() {}
+    private EnabledAllEnabledChecker() {}
 
 }

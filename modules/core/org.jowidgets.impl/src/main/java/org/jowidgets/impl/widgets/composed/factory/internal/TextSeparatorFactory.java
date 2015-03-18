@@ -35,9 +35,9 @@ import org.jowidgets.tools.widgets.factory.AbstractCompositeWidgetFactory;
 
 public class TextSeparatorFactory extends AbstractCompositeWidgetFactory<ITextLabel, ITextSeparatorDescriptor> {
 
-	@Override
-	protected ITextLabel createWidget(final IComposite compositeWidget, final ITextSeparatorDescriptor descriptor) {
-		return new TextSeparatorImpl(compositeWidget, descriptor);
-	}
+    @Override
+    protected ITextLabel createWidget(final IComposite compositeWidget, final ITextSeparatorDescriptor descriptor) {
+        return new TextSeparatorImpl(compositeWidget, descriptor);
+    }
 
 }

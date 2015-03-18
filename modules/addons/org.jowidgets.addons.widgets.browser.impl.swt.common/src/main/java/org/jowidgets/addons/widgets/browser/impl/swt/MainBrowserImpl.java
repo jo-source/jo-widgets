@@ -46,109 +46,109 @@ import org.jowidgets.util.Assert;
 
 final class MainBrowserImpl extends BrowserImpl implements IMainBrowser {
 
-	private final Set<IBrowserDocumentListener> documentListeners;
+    private final Set<IBrowserDocumentListener> documentListeners;
 
-	MainBrowserImpl(final IControl control, final Composite swtComposite, final IBrowserSetupBuilder<?> setup) {
-		super(control, swtComposite, setup);
-		this.documentListeners = new LinkedHashSet<IBrowserDocumentListener>();
+    MainBrowserImpl(final IControl control, final Composite swtComposite, final IBrowserSetupBuilder<?> setup) {
+        super(control, swtComposite, setup);
+        this.documentListeners = new LinkedHashSet<IBrowserDocumentListener>();
 
-		getSwtBrowser().addTitleListener(new TitleListenerImpl());
-		getSwtBrowser().addStatusTextListener(new StatusTextListenerImpl());
-	}
+        getSwtBrowser().addTitleListener(new TitleListenerImpl());
+        getSwtBrowser().addStatusTextListener(new StatusTextListenerImpl());
+    }
 
-	@Override
-	public boolean setCookie(final String url, final String cookieValue) {
-		return Browser.setCookie(cookieValue, url);
-	}
+    @Override
+    public boolean setCookie(final String url, final String cookieValue) {
+        return Browser.setCookie(cookieValue, url);
+    }
 
-	@Override
-	public String getCookie(final String url, final String cookieName) {
-		return Browser.getCookie(cookieName, url);
-	}
+    @Override
+    public String getCookie(final String url, final String cookieName) {
+        return Browser.getCookie(cookieName, url);
+    }
 
-	@Override
-	public void clearAllCookies() {
-		Browser.clearSessions();
-	}
+    @Override
+    public void clearAllCookies() {
+        Browser.clearSessions();
+    }
 
-	@Override
-	public String getUrl() {
-		return getSwtBrowser().getUrl();
-	}
+    @Override
+    public String getUrl() {
+        return getSwtBrowser().getUrl();
+    }
 
-	@Override
-	public String getHtml() {
-		return getSwtBrowser().getText();
-	}
+    @Override
+    public String getHtml() {
+        return getSwtBrowser().getText();
+    }
 
-	@Override
-	public void setJavascriptEnabled(final boolean enabled) {
-		getSwtBrowser().setJavascriptEnabled(enabled);
-	}
+    @Override
+    public void setJavascriptEnabled(final boolean enabled) {
+        getSwtBrowser().setJavascriptEnabled(enabled);
+    }
 
-	@Override
-	public boolean isJavascriptEnabled() {
-		return getSwtBrowser().getJavascriptEnabled();
-	}
+    @Override
+    public boolean isJavascriptEnabled() {
+        return getSwtBrowser().getJavascriptEnabled();
+    }
 
-	@Override
-	public void back() {
-		getSwtBrowser().back();
-	}
+    @Override
+    public void back() {
+        getSwtBrowser().back();
+    }
 
-	@Override
-	public boolean isBackEnabled() {
-		return getSwtBrowser().isBackEnabled();
-	}
+    @Override
+    public boolean isBackEnabled() {
+        return getSwtBrowser().isBackEnabled();
+    }
 
-	@Override
-	public void forward() {
-		getSwtBrowser().forward();
-	}
+    @Override
+    public void forward() {
+        getSwtBrowser().forward();
+    }
 
-	@Override
-	public boolean isForwardEnabled() {
-		return getSwtBrowser().isForwardEnabled();
-	}
+    @Override
+    public boolean isForwardEnabled() {
+        return getSwtBrowser().isForwardEnabled();
+    }
 
-	@Override
-	public void reload() {
-		getSwtBrowser().refresh();
-	}
+    @Override
+    public void reload() {
+        getSwtBrowser().refresh();
+    }
 
-	@Override
-	public void cancel() {
-		getSwtBrowser().stop();
-	}
+    @Override
+    public void cancel() {
+        getSwtBrowser().stop();
+    }
 
-	@Override
-	public void addDocumentListener(final IBrowserDocumentListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		documentListeners.add(listener);
-	}
+    @Override
+    public void addDocumentListener(final IBrowserDocumentListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        documentListeners.add(listener);
+    }
 
-	@Override
-	public void removeDocumentListener(final IBrowserDocumentListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		documentListeners.remove(listener);
-	}
+    @Override
+    public void removeDocumentListener(final IBrowserDocumentListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        documentListeners.remove(listener);
+    }
 
-	private final class TitleListenerImpl implements TitleListener {
-		@Override
-		public void changed(final TitleEvent event) {
-			for (final IBrowserDocumentListener listener : new LinkedList<IBrowserDocumentListener>(documentListeners)) {
-				listener.titleChanged(event.title);
-			}
-		}
-	}
+    private final class TitleListenerImpl implements TitleListener {
+        @Override
+        public void changed(final TitleEvent event) {
+            for (final IBrowserDocumentListener listener : new LinkedList<IBrowserDocumentListener>(documentListeners)) {
+                listener.titleChanged(event.title);
+            }
+        }
+    }
 
-	private final class StatusTextListenerImpl implements StatusTextListener {
-		@Override
-		public void changed(final StatusTextEvent event) {
-			for (final IBrowserDocumentListener listener : new LinkedList<IBrowserDocumentListener>(documentListeners)) {
-				listener.statusTextChanged(event.text);
-			}
-		}
-	}
+    private final class StatusTextListenerImpl implements StatusTextListener {
+        @Override
+        public void changed(final StatusTextEvent event) {
+            for (final IBrowserDocumentListener listener : new LinkedList<IBrowserDocumentListener>(documentListeners)) {
+                listener.statusTextChanged(event.text);
+            }
+        }
+    }
 
 }

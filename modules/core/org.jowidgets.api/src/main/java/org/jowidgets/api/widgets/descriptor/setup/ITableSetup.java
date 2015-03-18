@@ -34,13 +34,13 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ITableSetup extends IComponentSetup, ITableSetupCommon {
 
-	@Mandatory
-	ITableColumnModel getColumnModel();
+    @Mandatory
+    ITableColumnModel getColumnModel();
 
-	@Mandatory
-	boolean isEditable();
+    @Mandatory
+    boolean isEditable();
 
-	@Mandatory
-	int getColumnMaxPackWidth();
+    @Mandatory
+    int getColumnMaxPackWidth();
 
 }

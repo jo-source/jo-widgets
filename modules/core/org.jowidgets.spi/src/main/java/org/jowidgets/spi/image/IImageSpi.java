@@ -33,6 +33,6 @@ import org.jowidgets.common.image.IImageHandle;
 
 public interface IImageSpi extends IImageCommon {
 
-	IImageHandle getImageHandle();
+    IImageHandle getImageHandle();
 
 }

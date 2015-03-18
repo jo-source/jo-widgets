@@ -42,73 +42,73 @@ import org.junit.Test;
 
 public class TabFolderTest {
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
-	private static final String DEFAULT_TEXT = "text";
-	private static final String DEFAULT_TOOLTIP = "tooltip";
+    private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+    private static final String DEFAULT_TEXT = "text";
+    private static final String DEFAULT_TOOLTIP = "tooltip";
 
-	@Test
-	public void createTabFolderTest() {
-		Toolkit.getApplicationRunner().run(new IApplication() {
+    @Test
+    public void createTabFolderTest() {
+        Toolkit.getApplicationRunner().run(new IApplication() {
 
-			@Override
-			public void start(final IApplicationLifecycle lifecycle) {
-				final IFrame rootFrame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
-				rootFrame.setVisible(true);
+            @Override
+            public void start(final IApplicationLifecycle lifecycle) {
+                final IFrame rootFrame = Toolkit.createRootFrame(BPF.frame(), lifecycle);
+                rootFrame.setVisible(true);
 
-				final ITabFolder tabFolder = rootFrame.add(BPF.tabFolder().setTabsCloseable(true), "");
+                final ITabFolder tabFolder = rootFrame.add(BPF.tabFolder().setTabsCloseable(true), "");
 
-				final ITabItem item1 = tabFolder.addItem(BPF.tabItem());
-				testTabItem(tabFolder, item1);
-				Assert.assertTrue(tabFolder.getItems().contains(item1));
+                final ITabItem item1 = tabFolder.addItem(BPF.tabItem());
+                testTabItem(tabFolder, item1);
+                Assert.assertTrue(tabFolder.getItems().contains(item1));
 
-				final ITabItem item2 = tabFolder.addItem(BPF.tabItem());
-				testTabItem(tabFolder, item2);
-				Assert.assertTrue(tabFolder.getItems().contains(item2));
+                final ITabItem item2 = tabFolder.addItem(BPF.tabItem());
+                testTabItem(tabFolder, item2);
+                Assert.assertTrue(tabFolder.getItems().contains(item2));
 
-				tabFolder.setSelectedItem(0);
-				Assert.assertEquals(0, tabFolder.getSelectedIndex());
-				tabFolder.setSelectedItem(1);
-				Assert.assertEquals(1, tabFolder.getSelectedIndex());
+                tabFolder.setSelectedItem(0);
+                Assert.assertEquals(0, tabFolder.getSelectedIndex());
+                tabFolder.setSelectedItem(1);
+                Assert.assertEquals(1, tabFolder.getSelectedIndex());
 
-				final IPopupMenu tabPopupMenu = item1.createTabPopupMenu();
-				tabPopupMenu.addSeparator();
-				tabPopupMenu.addItem(BPF.menuItem("test"));
+                final IPopupMenu tabPopupMenu = item1.createTabPopupMenu();
+                tabPopupMenu.addSeparator();
+                tabPopupMenu.addItem(BPF.menuItem("test"));
 
-				final IPopupMenu popupMenu = item1.createPopupMenu();
-				popupMenu.addItem(BPF.menuItem());
-				popupMenu.addSeparator();
-				popupMenu.addItem(BPF.menuItem());
+                final IPopupMenu popupMenu = item1.createPopupMenu();
+                popupMenu.addItem(BPF.menuItem());
+                popupMenu.addSeparator();
+                popupMenu.addItem(BPF.menuItem());
 
-				final IToolBar toolBar = item2.add(BPF.toolBar(), "");
-				toolBar.addItem(BPF.toolBarButton());
-				toolBar.addItem(BPF.toolBarSeparator());
-				toolBar.addItem(BPF.toolBarPopupButton());
+                final IToolBar toolBar = item2.add(BPF.toolBar(), "");
+                toolBar.addItem(BPF.toolBarButton());
+                toolBar.addItem(BPF.toolBarSeparator());
+                toolBar.addItem(BPF.toolBarPopupButton());
 
-				rootFrame.dispose();
-			}
-		});
-	}
+                rootFrame.dispose();
+            }
+        });
+    }
 
-	public void testTabItem(final ITabFolder parentFolder, final ITabItem item) {
-		item.setText(DEFAULT_TEXT);
-		Assert.assertEquals(DEFAULT_TEXT, item.getText());
+    public void testTabItem(final ITabFolder parentFolder, final ITabItem item) {
+        item.setText(DEFAULT_TEXT);
+        Assert.assertEquals(DEFAULT_TEXT, item.getText());
 
-		item.setToolTipText(DEFAULT_TOOLTIP);
-		Assert.assertEquals(DEFAULT_TOOLTIP, item.getToolTipText());
+        item.setToolTipText(DEFAULT_TOOLTIP);
+        Assert.assertEquals(DEFAULT_TOOLTIP, item.getToolTipText());
 
-		item.setVisible(false);
-		Assert.assertEquals(false, item.isVisible());
-		item.setVisible(true);
+        item.setVisible(false);
+        Assert.assertEquals(false, item.isVisible());
+        item.setVisible(true);
 
-		item.setEnabled(false);
-		Assert.assertEquals(false, item.isEnabled());
-		item.setEnabled(true);
+        item.setEnabled(false);
+        Assert.assertEquals(false, item.isEnabled());
+        item.setEnabled(true);
 
-		parentFolder.detachItem(item);
-		Assert.assertTrue(item.isDetached());
+        parentFolder.detachItem(item);
+        Assert.assertTrue(item.isDetached());
 
-		parentFolder.attachItem(item);
-		Assert.assertFalse(item.isDetached());
-	}
+        parentFolder.attachItem(item);
+        Assert.assertFalse(item.isDetached());
+    }
 
 }

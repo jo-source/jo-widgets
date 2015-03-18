@@ -43,152 +43,152 @@ import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModelListener;
 
 class WorkbenchApplicationModel extends ComponentNodeContainerModel implements IWorkbenchApplicationModel {
 
-	private final WorkbenchPartModelObservable workbenchPartModelObservable;
+    private final WorkbenchPartModelObservable workbenchPartModelObservable;
 
-	private final String label;
-	private final String tooltip;
-	private final IImageConstant icon;
-	private final IWorkbenchApplicationInitializeCallback initializeCallback;
-	private final IViewFactory viewFactory;
+    private final String label;
+    private final String tooltip;
+    private final IImageConstant icon;
+    private final IWorkbenchApplicationInitializeCallback initializeCallback;
+    private final IViewFactory viewFactory;
 
-	private IMenuModel popupMenu;
-	private IToolBarModel toolBarModel;
-	private IMenuModel toolBarMenu;
-	private ILifecycleCallback lifecycleCallback;
+    private IMenuModel popupMenu;
+    private IToolBarModel toolBarModel;
+    private IMenuModel toolBarMenu;
+    private ILifecycleCallback lifecycleCallback;
 
-	private IWorkbenchModel workbench;
+    private IWorkbenchModel workbench;
 
-	WorkbenchApplicationModel(
-		final String id,
-		final String label,
-		final String tooltip,
-		final IImageConstant icon,
-		final IMenuModel popupMenu,
-		final IToolBarModel toolBarModel,
-		final IMenuModel toolBarMenu,
-		final ILifecycleCallback lifecycleCallback,
-		final IWorkbenchApplicationInitializeCallback initializeCallback,
-		final IViewFactory viewFactory,
-		final List<IComponentNodeModel> children) {
-		super(id, children);
+    WorkbenchApplicationModel(
+        final String id,
+        final String label,
+        final String tooltip,
+        final IImageConstant icon,
+        final IMenuModel popupMenu,
+        final IToolBarModel toolBarModel,
+        final IMenuModel toolBarMenu,
+        final ILifecycleCallback lifecycleCallback,
+        final IWorkbenchApplicationInitializeCallback initializeCallback,
+        final IViewFactory viewFactory,
+        final List<IComponentNodeModel> children) {
+        super(id, children);
 
-		this.workbenchPartModelObservable = new WorkbenchPartModelObservable();
-		this.label = label;
-		this.tooltip = tooltip;
-		this.icon = icon;
-		this.popupMenu = popupMenu;
-		this.toolBarModel = toolBarModel;
-		this.toolBarMenu = toolBarMenu;
-		this.lifecycleCallback = lifecycleCallback;
-		this.initializeCallback = initializeCallback;
-		this.viewFactory = viewFactory;
-	}
+        this.workbenchPartModelObservable = new WorkbenchPartModelObservable();
+        this.label = label;
+        this.tooltip = tooltip;
+        this.icon = icon;
+        this.popupMenu = popupMenu;
+        this.toolBarModel = toolBarModel;
+        this.toolBarMenu = toolBarMenu;
+        this.lifecycleCallback = lifecycleCallback;
+        this.initializeCallback = initializeCallback;
+        this.viewFactory = viewFactory;
+    }
 
-	@Override
-	public String getLabel() {
-		return label;
-	}
+    @Override
+    public String getLabel() {
+        return label;
+    }
 
-	@Override
-	public String getTooltip() {
-		return tooltip;
-	}
+    @Override
+    public String getTooltip() {
+        return tooltip;
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return icon;
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return icon;
+    }
 
-	@Override
-	public IMenuModel getPopupMenu() {
-		return popupMenu;
-	}
+    @Override
+    public IMenuModel getPopupMenu() {
+        return popupMenu;
+    }
 
-	@Override
-	public IToolBarModel getToolBar() {
-		return toolBarModel;
-	}
+    @Override
+    public IToolBarModel getToolBar() {
+        return toolBarModel;
+    }
 
-	@Override
-	public IMenuModel getToolBarMenu() {
-		return toolBarMenu;
-	}
+    @Override
+    public IMenuModel getToolBarMenu() {
+        return toolBarMenu;
+    }
 
-	@Override
-	public ILifecycleCallback getLifecycleCallback() {
-		return lifecycleCallback;
-	}
+    @Override
+    public ILifecycleCallback getLifecycleCallback() {
+        return lifecycleCallback;
+    }
 
-	@Override
-	public IWorkbenchApplicationInitializeCallback getInitializeCallback() {
-		return initializeCallback;
-	}
+    @Override
+    public IWorkbenchApplicationInitializeCallback getInitializeCallback() {
+        return initializeCallback;
+    }
 
-	@Override
-	public IViewFactory getViewFactory() {
-		return viewFactory;
-	}
+    @Override
+    public IViewFactory getViewFactory() {
+        return viewFactory;
+    }
 
-	@Override
-	public void setPopupMenu(final IMenuModel popupMenu) {
-		this.popupMenu = popupMenu;
-		fireModelChanged();
-	}
+    @Override
+    public void setPopupMenu(final IMenuModel popupMenu) {
+        this.popupMenu = popupMenu;
+        fireModelChanged();
+    }
 
-	@Override
-	public void setToolBar(final IToolBarModel toolBarModel) {
-		this.toolBarModel = toolBarModel;
-		fireModelChanged();
-	}
+    @Override
+    public void setToolBar(final IToolBarModel toolBarModel) {
+        this.toolBarModel = toolBarModel;
+        fireModelChanged();
+    }
 
-	@Override
-	public void setToolBarMenu(final IMenuModel toolBarMenu) {
-		this.toolBarMenu = toolBarMenu;
-		fireModelChanged();
-	}
+    @Override
+    public void setToolBarMenu(final IMenuModel toolBarMenu) {
+        this.toolBarMenu = toolBarMenu;
+        fireModelChanged();
+    }
 
-	@Override
-	public void setLifecycleCallback(final ILifecycleCallback lifecycleCallback) {
-		this.lifecycleCallback = lifecycleCallback;
-	}
+    @Override
+    public void setLifecycleCallback(final ILifecycleCallback lifecycleCallback) {
+        this.lifecycleCallback = lifecycleCallback;
+    }
 
-	@Override
-	public IWorkbenchModel getWorkbench() {
-		return workbench;
-	}
+    @Override
+    public IWorkbenchModel getWorkbench() {
+        return workbench;
+    }
 
-	@Override
-	public void setWorkbench(final IWorkbenchModel workbench) {
-		if (this.workbench != workbench) {
-			if (this.workbench != null) {
-				this.workbench.removeApplication(getUnwrappedThis());
-			}
-			if (workbench != null) {
-				if (!workbench.getApplications().contains(getUnwrappedThis())) {
-					workbench.addApplication(getUnwrappedThis());
-				}
-			}
-			this.workbench = workbench;
-		}
-	}
+    @Override
+    public void setWorkbench(final IWorkbenchModel workbench) {
+        if (this.workbench != workbench) {
+            if (this.workbench != null) {
+                this.workbench.removeApplication(getUnwrappedThis());
+            }
+            if (workbench != null) {
+                if (!workbench.getApplications().contains(getUnwrappedThis())) {
+                    workbench.addApplication(getUnwrappedThis());
+                }
+            }
+            this.workbench = workbench;
+        }
+    }
 
-	@Override
-	public void addWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
-		workbenchPartModelObservable.addWorkbenchPartModelListener(listener);
-	}
+    @Override
+    public void addWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
+        workbenchPartModelObservable.addWorkbenchPartModelListener(listener);
+    }
 
-	@Override
-	public void removeWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
-		workbenchPartModelObservable.removeWorkbenchPartModelListener(listener);
-	}
+    @Override
+    public void removeWorkbenchPartModelListener(final IWorkbenchPartModelListener listener) {
+        workbenchPartModelObservable.removeWorkbenchPartModelListener(listener);
+    }
 
-	@Override
-	public IWorkbenchApplicationModel getUnwrappedThis() {
-		return this;
-	}
+    @Override
+    public IWorkbenchApplicationModel getUnwrappedThis() {
+        return this;
+    }
 
-	private void fireModelChanged() {
-		workbenchPartModelObservable.fireModelChanged();
-	}
+    private void fireModelChanged() {
+        workbenchPartModelObservable.fireModelChanged();
+    }
 
 }

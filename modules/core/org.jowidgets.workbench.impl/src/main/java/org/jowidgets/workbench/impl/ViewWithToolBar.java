@@ -44,101 +44,101 @@ import org.jowidgets.tools.model.item.ToolBarModel;
 
 public class ViewWithToolBar {
 
-	private final IComposite viewContent;
+    private final IComposite viewContent;
 
-	private final IComposite toolBarContainer;
-	private final IToolBar toolBar;
-	private final IToolBarModel toolBarModel;
-	private final IMenuModel toolBarMenuModel;
+    private final IComposite toolBarContainer;
+    private final IToolBar toolBar;
+    private final IToolBarModel toolBarModel;
+    private final IMenuModel toolBarMenuModel;
 
-	public ViewWithToolBar(final IContainer container) {
-		final IToolBarModel innerToolBarModel = new ToolBarModel();
-		this.toolBarModel = new ToolBarModel();
-		this.toolBarMenuModel = new MenuModel();
+    public ViewWithToolBar(final IContainer container) {
+        final IToolBarModel innerToolBarModel = new ToolBarModel();
+        this.toolBarModel = new ToolBarModel();
+        this.toolBarMenuModel = new MenuModel();
 
-		final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
 
-		container.setLayout(new MigLayoutDescriptor("hidemode 2", "0[grow, 0::]0", "0[]0[]0[grow, 0::]0"));
+        container.setLayout(new MigLayoutDescriptor("hidemode 2", "0[grow, 0::]0", "0[]0[]0[grow, 0::]0"));
 
-		toolBarContainer = container.add(bpf.composite(), "growx, w 0::, hidemode 2, wrap");
-		toolBarContainer.setLayout(new MigLayoutDescriptor("0[grow, 0::]0[0::]0", "0[]0"));
-		toolBarContainer.add(bpf.toolBar(), "growx, growy, w 0::, h 0::");
-		toolBar = toolBarContainer.add(bpf.toolBar(), "w 0::");
-		toolBar.setModel(innerToolBarModel);
-		toolBarContainer.setVisible(false);
-		final IControl toolBarSeparator = container.add(bpf.separator(), "growx, w 0::, hidemode 2, wrap");
-		toolBarSeparator.setVisible(false);
+        toolBarContainer = container.add(bpf.composite(), "growx, w 0::, hidemode 2, wrap");
+        toolBarContainer.setLayout(new MigLayoutDescriptor("0[grow, 0::]0[0::]0", "0[]0"));
+        toolBarContainer.add(bpf.toolBar(), "growx, growy, w 0::, h 0::");
+        toolBar = toolBarContainer.add(bpf.toolBar(), "w 0::");
+        toolBar.setModel(innerToolBarModel);
+        toolBarContainer.setVisible(false);
+        final IControl toolBarSeparator = container.add(bpf.separator(), "growx, w 0::, hidemode 2, wrap");
+        toolBarSeparator.setVisible(false);
 
-		toolBarModel.addListModelListener(new ListModelAdapter() {
+        toolBarModel.addListModelListener(new ListModelAdapter() {
 
-			@Override
-			public void afterChildAdded(final int index) {
-				innerToolBarModel.addItem(index, toolBarModel.getItems().get(index));
-			}
+            @Override
+            public void afterChildAdded(final int index) {
+                innerToolBarModel.addItem(index, toolBarModel.getItems().get(index));
+            }
 
-			@Override
-			public void afterChildRemoved(final int index) {
-				innerToolBarModel.removeItem(index);
-			}
+            @Override
+            public void afterChildRemoved(final int index) {
+                innerToolBarModel.removeItem(index);
+            }
 
-		});
+        });
 
-		toolBarMenuModel.addListModelListener(new ListModelAdapter() {
+        toolBarMenuModel.addListModelListener(new ListModelAdapter() {
 
-			@Override
-			public void afterChildAdded(final int index) {
-				if (toolBarMenuModel.getChildren().size() == 1) {
-					innerToolBarModel.addItem(toolBarMenuModel);
-				}
-			}
+            @Override
+            public void afterChildAdded(final int index) {
+                if (toolBarMenuModel.getChildren().size() == 1) {
+                    innerToolBarModel.addItem(toolBarMenuModel);
+                }
+            }
 
-			@Override
-			public void afterChildRemoved(final int index) {
-				if (toolBarMenuModel.getChildren().size() == 0) {
-					innerToolBarModel.removeItem(toolBarMenuModel);
-				}
-			}
+            @Override
+            public void afterChildRemoved(final int index) {
+                if (toolBarMenuModel.getChildren().size() == 0) {
+                    innerToolBarModel.removeItem(toolBarMenuModel);
+                }
+            }
 
-		});
+        });
 
-		innerToolBarModel.addListModelListener(new ListModelAdapter() {
+        innerToolBarModel.addListModelListener(new ListModelAdapter() {
 
-			@Override
-			public void afterChildAdded(final int index) {
-				if (innerToolBarModel.getItems().size() == 1) {
-					toolBarContainer.setVisible(true);
-					toolBarSeparator.setVisible(true);
-				}
-			}
+            @Override
+            public void afterChildAdded(final int index) {
+                if (innerToolBarModel.getItems().size() == 1) {
+                    toolBarContainer.setVisible(true);
+                    toolBarSeparator.setVisible(true);
+                }
+            }
 
-			@Override
-			public void afterChildRemoved(final int index) {
-				if (innerToolBarModel.getItems().size() == 0) {
-					innerToolBarModel.removeItem(innerToolBarModel.getItems().size());
-					toolBarContainer.setVisible(false);
-					toolBarSeparator.setVisible(false);
-				}
-			}
+            @Override
+            public void afterChildRemoved(final int index) {
+                if (innerToolBarModel.getItems().size() == 0) {
+                    innerToolBarModel.removeItem(innerToolBarModel.getItems().size());
+                    toolBarContainer.setVisible(false);
+                    toolBarSeparator.setVisible(false);
+                }
+            }
 
-		});
+        });
 
-		viewContent = container.add(bpf.composite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
-		viewContent.setLayout(MigLayoutFactory.growingInnerCellLayout());
-	}
+        viewContent = container.add(bpf.composite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        viewContent.setLayout(MigLayoutFactory.growingInnerCellLayout());
+    }
 
-	public IComposite getViewContent() {
-		return viewContent;
-	}
+    public IComposite getViewContent() {
+        return viewContent;
+    }
 
-	public IToolBarModel getToolBarModel() {
-		return toolBarModel;
-	}
+    public IToolBarModel getToolBarModel() {
+        return toolBarModel;
+    }
 
-	public IMenuModel getToolBarMenuModel() {
-		return toolBarMenuModel;
-	}
+    public IMenuModel getToolBarMenuModel() {
+        return toolBarMenuModel;
+    }
 
-	public void pack() {
-		toolBar.pack();
-	}
+    public void pack() {
+        toolBar.pack();
+    }
 }

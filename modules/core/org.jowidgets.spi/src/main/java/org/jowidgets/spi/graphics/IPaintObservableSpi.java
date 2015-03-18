@@ -30,8 +30,8 @@ package org.jowidgets.spi.graphics;
 
 public interface IPaintObservableSpi {
 
-	void addPaintListener(IPaintListenerSpi paintListener);
+    void addPaintListener(IPaintListenerSpi paintListener);
 
-	void removePaintListener(IPaintListenerSpi paintListener);
+    void removePaintListener(IPaintListenerSpi paintListener);
 
 }

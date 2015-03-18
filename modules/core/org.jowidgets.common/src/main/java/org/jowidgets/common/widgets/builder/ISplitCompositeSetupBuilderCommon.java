@@ -34,35 +34,35 @@ import org.jowidgets.common.widgets.builder.convenience.ISplitCompositeSetupConv
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 
 public interface ISplitCompositeSetupBuilderCommon<INSTANCE_TYPE extends ISplitCompositeSetupBuilderCommon<?>> extends
-		IComponentSetupBuilderCommon<INSTANCE_TYPE>,
-		ISplitCompositeSetupConvenience<INSTANCE_TYPE> {
+        IComponentSetupBuilderCommon<INSTANCE_TYPE>,
+        ISplitCompositeSetupConvenience<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setOrientation(final Orientation orientation);
+    INSTANCE_TYPE setOrientation(final Orientation orientation);
 
-	INSTANCE_TYPE setFirstBorder(Border border);
+    INSTANCE_TYPE setFirstBorder(Border border);
 
-	INSTANCE_TYPE setSecondBorder(Border border);
+    INSTANCE_TYPE setSecondBorder(Border border);
 
-	INSTANCE_TYPE setFirstLayout(ILayoutDescriptor layoutDescriptor);
+    INSTANCE_TYPE setFirstLayout(ILayoutDescriptor layoutDescriptor);
 
-	INSTANCE_TYPE setSecondLayout(ILayoutDescriptor layoutDescriptor);
+    INSTANCE_TYPE setSecondLayout(ILayoutDescriptor layoutDescriptor);
 
-	INSTANCE_TYPE setResizePolicy(SplitResizePolicy resizePolicy);
+    INSTANCE_TYPE setResizePolicy(SplitResizePolicy resizePolicy);
 
-	/**
-	 * Sets the dividers size
-	 * 
-	 * @param size The size in pixel
-	 * @return An instance of this builder
-	 */
-	INSTANCE_TYPE setDividerSize(int size);
+    /**
+     * Sets the dividers size
+     * 
+     * @param size The size in pixel
+     * @return An instance of this builder
+     */
+    INSTANCE_TYPE setDividerSize(int size);
 
-	/**
-	 * Sets the weight of the divider.
-	 * 
-	 * @param weight The weight to set. Value must be between 0.0 and 1.0.
-	 * @return An instance of this builder
-	 */
-	INSTANCE_TYPE setWeight(double weight);
+    /**
+     * Sets the weight of the divider.
+     * 
+     * @param weight The weight to set. Value must be between 0.0 and 1.0.
+     * @return An instance of this builder
+     */
+    INSTANCE_TYPE setWeight(double weight);
 
 }

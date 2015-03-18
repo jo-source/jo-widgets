@@ -38,81 +38,81 @@ import org.jowidgets.util.Assert;
 
 public class KeyEvent implements IKeyEvent {
 
-	private final ILazyKeyEventContentFactory contentFactory;
+    private final ILazyKeyEventContentFactory contentFactory;
 
-	private VirtualKey virtualKey;
-	private Character character;
-	private Character resultingCharacter;
-	private Set<Modifier> modifier;
+    private VirtualKey virtualKey;
+    private Character character;
+    private Character resultingCharacter;
+    private Set<Modifier> modifier;
 
-	private boolean virtualKeyInitialized;
-	private boolean characterInitialized;
-	private boolean resultingCharacterInitialized;
-	private boolean modifierInitialized;
+    private boolean virtualKeyInitialized;
+    private boolean characterInitialized;
+    private boolean resultingCharacterInitialized;
+    private boolean modifierInitialized;
 
-	public KeyEvent(final ILazyKeyEventContentFactory contentFactory) {
-		Assert.paramNotNull(contentFactory, "contentFactory");
-		this.contentFactory = contentFactory;
+    public KeyEvent(final ILazyKeyEventContentFactory contentFactory) {
+        Assert.paramNotNull(contentFactory, "contentFactory");
+        this.contentFactory = contentFactory;
 
-		this.virtualKeyInitialized = false;
-		this.characterInitialized = false;
-		this.resultingCharacterInitialized = false;
-		this.modifierInitialized = false;
-	}
+        this.virtualKeyInitialized = false;
+        this.characterInitialized = false;
+        this.resultingCharacterInitialized = false;
+        this.modifierInitialized = false;
+    }
 
-	@Override
-	public VirtualKey getVirtualKey() {
-		if (!virtualKeyInitialized) {
-			virtualKey = contentFactory.createVirtualKey();
-			virtualKeyInitialized = true;
-		}
-		return virtualKey;
-	}
+    @Override
+    public VirtualKey getVirtualKey() {
+        if (!virtualKeyInitialized) {
+            virtualKey = contentFactory.createVirtualKey();
+            virtualKeyInitialized = true;
+        }
+        return virtualKey;
+    }
 
-	@Override
-	public Character getCharacter() {
-		if (!characterInitialized) {
-			character = contentFactory.createCharacter();
-			characterInitialized = true;
-		}
-		return character;
-	}
+    @Override
+    public Character getCharacter() {
+        if (!characterInitialized) {
+            character = contentFactory.createCharacter();
+            characterInitialized = true;
+        }
+        return character;
+    }
 
-	@Override
-	public Character getResultingCharacter() {
-		if (!resultingCharacterInitialized) {
-			resultingCharacter = contentFactory.createResultingCharacter();
-			resultingCharacterInitialized = true;
-		}
-		return resultingCharacter;
-	}
+    @Override
+    public Character getResultingCharacter() {
+        if (!resultingCharacterInitialized) {
+            resultingCharacter = contentFactory.createResultingCharacter();
+            resultingCharacterInitialized = true;
+        }
+        return resultingCharacter;
+    }
 
-	@Override
-	public Set<Modifier> getModifier() {
-		if (!modifierInitialized) {
-			final Set<Modifier> createdModifier = contentFactory.createModifier();
-			if (createdModifier != null) {
-				modifier = Collections.unmodifiableSet(contentFactory.createModifier());
-			}
-			else {
-				modifier = Collections.emptySet();
-			}
-			modifierInitialized = true;
-		}
-		return modifier;
-	}
+    @Override
+    public Set<Modifier> getModifier() {
+        if (!modifierInitialized) {
+            final Set<Modifier> createdModifier = contentFactory.createModifier();
+            if (createdModifier != null) {
+                modifier = Collections.unmodifiableSet(contentFactory.createModifier());
+            }
+            else {
+                modifier = Collections.emptySet();
+            }
+            modifierInitialized = true;
+        }
+        return modifier;
+    }
 
-	@Override
-	public String toString() {
-		return "LazyKeyEvent [virtualKey="
-			+ getVirtualKey()
-			+ ", character="
-			+ getCharacter()
-			+ ", resultingCharacter="
-			+ getResultingCharacter()
-			+ ", modifier="
-			+ getModifier()
-			+ "]";
-	}
+    @Override
+    public String toString() {
+        return "LazyKeyEvent [virtualKey="
+            + getVirtualKey()
+            + ", character="
+            + getCharacter()
+            + ", resultingCharacter="
+            + getResultingCharacter()
+            + ", modifier="
+            + getModifier()
+            + "]";
+    }
 
 }

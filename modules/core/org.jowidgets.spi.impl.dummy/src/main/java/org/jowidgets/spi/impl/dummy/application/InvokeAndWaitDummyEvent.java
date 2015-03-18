@@ -30,28 +30,28 @@ package org.jowidgets.spi.impl.dummy.application;
 
 public class InvokeAndWaitDummyEvent extends AbstractDummyEvent {
 
-	private final Object lock;
-	private final Runnable runnable;
+    private final Object lock;
+    private final Runnable runnable;
 
-	public InvokeAndWaitDummyEvent(final Runnable runnable) {
-		this.lock = new Object();
-		this.runnable = runnable;
-	}
+    public InvokeAndWaitDummyEvent(final Runnable runnable) {
+        this.lock = new Object();
+        this.runnable = runnable;
+    }
 
-	public Object getLock() {
-		return lock;
-	}
+    public Object getLock() {
+        return lock;
+    }
 
-	@Override
-	public void run() {
-		runnable.run();
-		synchronized (lock) {
-			try {
-				lock.wait();
-			}
-			catch (final InterruptedException e) {
-				throw new RuntimeException("Invoke and wait was interrupted.", e);
-			}
-		}
-	}
+    @Override
+    public void run() {
+        runnable.run();
+        synchronized (lock) {
+            try {
+                lock.wait();
+            }
+            catch (final InterruptedException e) {
+                throw new RuntimeException("Invoke and wait was interrupted.", e);
+            }
+        }
+    }
 }

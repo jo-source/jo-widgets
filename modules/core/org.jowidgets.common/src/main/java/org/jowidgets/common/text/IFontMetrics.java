@@ -30,24 +30,24 @@ package org.jowidgets.common.text;
 
 public interface IFontMetrics {
 
-	/**
-	 * @return the leading space of the font
-	 */
-	int getLeading();
+    /**
+     * @return the leading space of the font
+     */
+    int getLeading();
 
-	/**
-	 * @return the ascent of the font
-	 */
-	int getAscent();
+    /**
+     * @return the ascent of the font
+     */
+    int getAscent();
 
-	/**
-	 * @return the descent of the font
-	 */
-	int getDescent();
+    /**
+     * @return the descent of the font
+     */
+    int getDescent();
 
-	/**
-	 * @return the height of the font
-	 */
-	int getHeight();
+    /**
+     * @return the height of the font
+     */
+    int getHeight();
 
 }

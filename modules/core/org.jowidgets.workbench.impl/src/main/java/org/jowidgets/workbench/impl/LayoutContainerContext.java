@@ -36,32 +36,32 @@ import org.jowidgets.workbench.api.ISplitLayout;
 
 public class LayoutContainerContext implements ILayoutPanel {
 
-	private final ILayoutPanel childContext;
+    private final ILayoutPanel childContext;
 
-	public LayoutContainerContext(
-		final ILayoutContainer layoutContainer,
-		final IContainer parentContainer,
-		final ComponentContext component) {
+    public LayoutContainerContext(
+        final ILayoutContainer layoutContainer,
+        final IContainer parentContainer,
+        final ComponentContext component) {
 
-		Assert.paramNotNull(layoutContainer, "layoutContainer");
+        Assert.paramNotNull(layoutContainer, "layoutContainer");
 
-		if (layoutContainer instanceof ISplitLayout) {
-			this.childContext = new SplitPanel((ISplitLayout) layoutContainer, parentContainer, component);
-		}
-		else if (layoutContainer instanceof IFolderLayout) {
-			this.childContext = new FolderPanel((IFolderLayout) layoutContainer, parentContainer, component);
-		}
-		else {
-			throw new IllegalArgumentException("Layout container type '"
-				+ layoutContainer.getClass().getName()
-				+ "' is not supported");
-		}
+        if (layoutContainer instanceof ISplitLayout) {
+            this.childContext = new SplitPanel((ISplitLayout) layoutContainer, parentContainer, component);
+        }
+        else if (layoutContainer instanceof IFolderLayout) {
+            this.childContext = new FolderPanel((IFolderLayout) layoutContainer, parentContainer, component);
+        }
+        else {
+            throw new IllegalArgumentException("Layout container type '"
+                + layoutContainer.getClass().getName()
+                + "' is not supported");
+        }
 
-	}
+    }
 
-	@Override
-	public void setComponent(final ComponentContext component) {
-		childContext.setComponent(component);
-	}
+    @Override
+    public void setComponent(final ComponentContext component) {
+        childContext.setComponent(component);
+    }
 
 }

@@ -29,29 +29,29 @@ package org.jowidgets.workbench.api;
 
 public interface IComponentContext {
 
-	/**
-	 * Sets the layout for the component context.
-	 * If not already an instance exists for the given layout, an new instance will be
-	 * created, added and set. Otherwise, the the existing layouts instance will be used.
-	 * 
-	 * @param layout The layout to set
-	 */
-	void setLayout(final ILayout layout);
+    /**
+     * Sets the layout for the component context.
+     * If not already an instance exists for the given layout, an new instance will be
+     * created, added and set. Otherwise, the the existing layouts instance will be used.
+     * 
+     * @param layout The layout to set
+     */
+    void setLayout(final ILayout layout);
 
-	/**
-	 * Resets the layout for the component context.
-	 * If not already an instance exists for the given layout, an new instance will be
-	 * created, added and set. Otherwise, the the existing layouts instance will be reseted with the given
-	 * layout.
-	 * 
-	 * @param layout The layout to set / reset
-	 */
-	void resetLayout(final ILayout layout);
+    /**
+     * Resets the layout for the component context.
+     * If not already an instance exists for the given layout, an new instance will be
+     * created, added and set. Otherwise, the the existing layouts instance will be reseted with the given
+     * layout.
+     * 
+     * @param layout The layout to set / reset
+     */
+    void resetLayout(final ILayout layout);
 
-	IComponentNodeContext getComponentNodeContext();
+    IComponentNodeContext getComponentNodeContext();
 
-	IWorkbenchApplicationContext getWorkbenchApplicationContext();
+    IWorkbenchApplicationContext getWorkbenchApplicationContext();
 
-	IWorkbenchContext getWorkbenchContext();
+    IWorkbenchContext getWorkbenchContext();
 
 }

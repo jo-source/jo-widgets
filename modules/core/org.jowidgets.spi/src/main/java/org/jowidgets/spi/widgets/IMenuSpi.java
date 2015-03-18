@@ -32,16 +32,16 @@ import org.jowidgets.common.widgets.IMenuCommon;
 
 public interface IMenuSpi extends IWidgetSpi, IMenuCommon {
 
-	void remove(int index);
+    void remove(int index);
 
-	IActionMenuItemSpi addActionItem(Integer index);
+    IActionMenuItemSpi addActionItem(Integer index);
 
-	ISelectableMenuItemSpi addCheckedItem(Integer index);
+    ISelectableMenuItemSpi addCheckedItem(Integer index);
 
-	ISelectableMenuItemSpi addRadioItem(Integer index);
+    ISelectableMenuItemSpi addRadioItem(Integer index);
 
-	ISubMenuSpi addSubMenu(Integer index);
+    ISubMenuSpi addSubMenu(Integer index);
 
-	IMenuItemSpi addSeparator(Integer index);
+    IMenuItemSpi addSeparator(Integer index);
 
 }

@@ -35,46 +35,46 @@ import org.jowidgets.spi.widgets.IMenuBarSpi;
 
 public class MenuBarImpl implements IMenuBarSpi {
 
-	private final JMenuBar menuBar;
+    private final JMenuBar menuBar;
 
-	public MenuBarImpl(final JMenuBar menuBar) {
-		this.menuBar = menuBar;
-	}
+    public MenuBarImpl(final JMenuBar menuBar) {
+        this.menuBar = menuBar;
+    }
 
-	@Override
-	public JMenuBar getUiReference() {
-		return menuBar;
-	}
+    @Override
+    public JMenuBar getUiReference() {
+        return menuBar;
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		menuBar.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        menuBar.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return menuBar.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return menuBar.isEnabled();
+    }
 
-	@Override
-	public void remove(final int index) {
-		menuBar.remove(index);
-	}
+    @Override
+    public void remove(final int index) {
+        menuBar.remove(index);
+    }
 
-	@Override
-	public IMainMenuSpi addMenu(final Integer index) {
-		final MainMenuImpl result = new MainMenuImpl();
-		addItem(index, result);
-		return result;
-	}
+    @Override
+    public IMainMenuSpi addMenu(final Integer index) {
+        final MainMenuImpl result = new MainMenuImpl();
+        addItem(index, result);
+        return result;
+    }
 
-	private void addItem(final Integer index, final SwingWidget item) {
-		if (index != null) {
-			getUiReference().add(item.getUiReference(), index.intValue());
-		}
-		else {
-			getUiReference().add(item.getUiReference());
-		}
-	}
+    private void addItem(final Integer index, final SwingWidget item) {
+        if (index != null) {
+            getUiReference().add(item.getUiReference(), index.intValue());
+        }
+        else {
+            getUiReference().add(item.getUiReference());
+        }
+    }
 
 }

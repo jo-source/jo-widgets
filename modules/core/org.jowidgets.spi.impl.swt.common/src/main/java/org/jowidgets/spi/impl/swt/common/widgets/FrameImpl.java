@@ -35,35 +35,35 @@ import org.jowidgets.test.spi.widgets.IFrameUiSpi;
 
 public class FrameImpl extends WindowImpl implements IFrameUiSpi {
 
-	public FrameImpl(final IGenericWidgetFactory factory, final IFrameSetupSpi setup) {
-		super(factory, new Shell(getStyle(setup)), setup.isCloseable());
+    public FrameImpl(final IGenericWidgetFactory factory, final IFrameSetupSpi setup) {
+        super(factory, new Shell(getStyle(setup)), setup.isCloseable());
 
-		if (setup.getTitle() != null) {
-			getUiReference().setText(setup.getTitle());
-		}
-		setIcon(setup.getIcon());
-	}
+        if (setup.getTitle() != null) {
+            getUiReference().setText(setup.getTitle());
+        }
+        setIcon(setup.getIcon());
+    }
 
-	private static int getStyle(final IFrameSetupSpi setup) {
-		int result;
-		if (setup.isDecorated()) {
-			result = SWT.TITLE | SWT.MIN | SWT.MAX;
-		}
-		else {
-			result = SWT.NONE;
-		}
-		if (setup.isResizable() && setup.isDecorated()) {
-			result = result | SWT.RESIZE;
-		}
-		if (setup.isCloseable() && setup.isDecorated()) {
-			result = result | SWT.CLOSE;
-		}
-		return result;
-	}
+    private static int getStyle(final IFrameSetupSpi setup) {
+        int result;
+        if (setup.isDecorated()) {
+            result = SWT.TITLE | SWT.MIN | SWT.MAX;
+        }
+        else {
+            result = SWT.NONE;
+        }
+        if (setup.isResizable() && setup.isDecorated()) {
+            result = result | SWT.RESIZE;
+        }
+        if (setup.isCloseable() && setup.isDecorated()) {
+            result = result | SWT.CLOSE;
+        }
+        return result;
+    }
 
-	@Override
-	public boolean isTestable() {
-		return true;
-	}
+    @Override
+    public boolean isTestable() {
+        return true;
+    }
 
 }

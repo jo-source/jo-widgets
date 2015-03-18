@@ -32,14 +32,14 @@ import org.jowidgets.api.toolkit.Toolkit;
 
 public final class BrowserBPF {
 
-	private BrowserBPF() {}
+    private BrowserBPF() {}
 
-	public static IBrowserBluePrint browser() {
-		return Toolkit.getBluePrintFactory().bluePrint(IBrowserBluePrint.class);
-	}
+    public static IBrowserBluePrint browser() {
+        return Toolkit.getBluePrintFactory().bluePrint(IBrowserBluePrint.class);
+    }
 
-	public static IMainBrowserBluePrint mainBrowser() {
-		return Toolkit.getBluePrintFactory().bluePrint(IMainBrowserBluePrint.class);
-	}
+    public static IMainBrowserBluePrint mainBrowser() {
+        return Toolkit.getBluePrintFactory().bluePrint(IMainBrowserBluePrint.class);
+    }
 
 }

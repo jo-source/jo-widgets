@@ -34,20 +34,20 @@ import org.jowidgets.common.widgets.editor.ITableCellEditor;
 import org.jowidgets.common.widgets.editor.ITableCellEditorFactory;
 
 public interface ITableSetupBuilderCommon<INSTANCE_TYPE extends ITableSetupBuilderCommon<?>> extends
-		IComponentSetupBuilderCommon<INSTANCE_TYPE> {
+        IComponentSetupBuilderCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setSelectionPolicy(TableSelectionPolicy selectionPolicy);
+    INSTANCE_TYPE setSelectionPolicy(TableSelectionPolicy selectionPolicy);
 
-	INSTANCE_TYPE setColumnsMoveable(boolean columnsMoveable);
+    INSTANCE_TYPE setColumnsMoveable(boolean columnsMoveable);
 
-	INSTANCE_TYPE setColumnsResizeable(boolean columnsResizeable);
+    INSTANCE_TYPE setColumnsResizeable(boolean columnsResizeable);
 
-	INSTANCE_TYPE setHeaderVisible(boolean visible);
+    INSTANCE_TYPE setHeaderVisible(boolean visible);
 
-	INSTANCE_TYPE setBorder(boolean border);
+    INSTANCE_TYPE setBorder(boolean border);
 
-	INSTANCE_TYPE setDataModel(ITableDataModel model);
+    INSTANCE_TYPE setDataModel(ITableDataModel model);
 
-	INSTANCE_TYPE setEditor(ITableCellEditorFactory<? extends ITableCellEditor> editor);
+    INSTANCE_TYPE setEditor(ITableCellEditorFactory<? extends ITableCellEditor> editor);
 
 }

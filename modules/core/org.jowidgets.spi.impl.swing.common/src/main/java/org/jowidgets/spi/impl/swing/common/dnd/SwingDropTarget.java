@@ -41,36 +41,36 @@ import org.jowidgets.util.Assert;
 
 public final class SwingDropTarget extends AbstractDropTargetObservableSpi implements IDropTargetSpi {
 
-	@SuppressWarnings("unused")
-	private final Component component;
-	@SuppressWarnings("unused")
-	private final IDropSelectionProvider dropSelectionProvider;
+    @SuppressWarnings("unused")
+    private final Component component;
+    @SuppressWarnings("unused")
+    private final IDropSelectionProvider dropSelectionProvider;
 
-	public SwingDropTarget(final Component component, final IDropSelectionProvider dropSelectionProvider) {
-		Assert.paramNotNull(component, "component");
-		Assert.paramNotNull(dropSelectionProvider, "dropSelectionProvider");
-		this.component = component;
-		this.dropSelectionProvider = dropSelectionProvider;
-	}
+    public SwingDropTarget(final Component component, final IDropSelectionProvider dropSelectionProvider) {
+        Assert.paramNotNull(component, "component");
+        Assert.paramNotNull(dropSelectionProvider, "dropSelectionProvider");
+        this.component = component;
+        this.dropSelectionProvider = dropSelectionProvider;
+    }
 
-	@Override
-	public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {
-		// TODO MG must be implemented
-	}
+    @Override
+    public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {
+        // TODO MG must be implemented
+    }
 
-	@Override
-	public void setActions(final Set<DropAction> actions) {
-		// TODO MG must be implemented
-	}
+    @Override
+    public void setActions(final Set<DropAction> actions) {
+        // TODO MG must be implemented
+    }
 
-	@Override
-	protected void setActive(final boolean active) {
-		// TODO MG must be implemented
-	}
+    @Override
+    protected void setActive(final boolean active) {
+        // TODO MG must be implemented
+    }
 
-	@Override
-	public void setDefaultDropMode(final DropMode dropMode) {
-		// TODO Auto-generated method stub
-	}
+    @Override
+    public void setDefaultDropMode(final DropMode dropMode) {
+        // TODO Auto-generated method stub
+    }
 
 }

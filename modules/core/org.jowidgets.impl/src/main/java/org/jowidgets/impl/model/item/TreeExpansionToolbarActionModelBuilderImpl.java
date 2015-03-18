@@ -49,170 +49,170 @@ import org.jowidgets.util.maybe.Some;
 
 final class TreeExpansionToolbarActionModelBuilderImpl implements ITreeExpansionToolbarItemModelBuilder {
 
-	private static final IMessage LEVEL = Messages.getMessage("TreeExpansionToolbarActionModelBuilderImpl.level");
-	private static final IMessage UNBOUND = Messages.getMessage("TreeExpansionToolbarActionModelBuilderImpl.unbound");
+    private static final IMessage LEVEL = Messages.getMessage("TreeExpansionToolbarActionModelBuilderImpl.level");
+    private static final IMessage UNBOUND = Messages.getMessage("TreeExpansionToolbarActionModelBuilderImpl.unbound");
 
-	private final List<Tuple<Integer, String>> levels;
-	private final ITreeExpansionAction action;
+    private final List<Tuple<Integer, String>> levels;
+    private final ITreeExpansionAction action;
 
-	private IMaybe<Integer> defaultLevelMaybe;
-	private boolean exhausted;
+    private IMaybe<Integer> defaultLevelMaybe;
+    private boolean exhausted;
 
-	TreeExpansionToolbarActionModelBuilderImpl(final ITreeExpansionAction action) {
-		Assert.paramNotNull(action, "action");
-		this.action = action;
-		this.levels = new LinkedList<Tuple<Integer, String>>();
+    TreeExpansionToolbarActionModelBuilderImpl(final ITreeExpansionAction action) {
+        Assert.paramNotNull(action, "action");
+        this.action = action;
+        this.levels = new LinkedList<Tuple<Integer, String>>();
 
-		this.exhausted = false;
-	}
+        this.exhausted = false;
+    }
 
-	@Override
-	public ITreeExpansionToolbarItemModelBuilder addUnboundLevel() {
-		return addUnboundLevel(UNBOUND.get());
-	}
+    @Override
+    public ITreeExpansionToolbarItemModelBuilder addUnboundLevel() {
+        return addUnboundLevel(UNBOUND.get());
+    }
 
-	@Override
-	public ITreeExpansionToolbarItemModelBuilder addUnboundLevel(final String label) {
-		checkExhausted();
-		Assert.paramNotNull(label, "label");
+    @Override
+    public ITreeExpansionToolbarItemModelBuilder addUnboundLevel(final String label) {
+        checkExhausted();
+        Assert.paramNotNull(label, "label");
 
-		levels.add(new Tuple<Integer, String>(null, label));
-		return this;
-	}
+        levels.add(new Tuple<Integer, String>(null, label));
+        return this;
+    }
 
-	@Override
-	public ITreeExpansionToolbarItemModelBuilder addLevel(final int level) {
-		return addLevel(level, getDefaultLevelName(level));
-	}
+    @Override
+    public ITreeExpansionToolbarItemModelBuilder addLevel(final int level) {
+        return addLevel(level, getDefaultLevelName(level));
+    }
 
-	@Override
-	public ITreeExpansionToolbarItemModelBuilder addLevel(final int level, final String levelName) {
-		checkExhausted();
-		Assert.paramNotNull(levelName, "levelName");
+    @Override
+    public ITreeExpansionToolbarItemModelBuilder addLevel(final int level, final String levelName) {
+        checkExhausted();
+        Assert.paramNotNull(levelName, "levelName");
 
-		levels.add(new Tuple<Integer, String>(Integer.valueOf(level), levelName));
-		return this;
-	}
+        levels.add(new Tuple<Integer, String>(Integer.valueOf(level), levelName));
+        return this;
+    }
 
-	@Override
-	public ITreeExpansionToolbarItemModelBuilder setLevels(final int maxLevel) {
-		return setLevels(maxLevel, true);
-	}
+    @Override
+    public ITreeExpansionToolbarItemModelBuilder setLevels(final int maxLevel) {
+        return setLevels(maxLevel, true);
+    }
 
-	@Override
-	public ITreeExpansionToolbarItemModelBuilder setLevels(final int maxLevel, final boolean unboundPossible) {
-		return setLevels(0, maxLevel, unboundPossible);
-	}
+    @Override
+    public ITreeExpansionToolbarItemModelBuilder setLevels(final int maxLevel, final boolean unboundPossible) {
+        return setLevels(0, maxLevel, unboundPossible);
+    }
 
-	@Override
-	public ITreeExpansionToolbarItemModelBuilder setLevels(final int minLevel, final int maxLevel, final boolean unboundPossible) {
-		checkExhausted();
+    @Override
+    public ITreeExpansionToolbarItemModelBuilder setLevels(final int minLevel, final int maxLevel, final boolean unboundPossible) {
+        checkExhausted();
 
-		Assert.paramNotNegative(minLevel, "minLevel");
-		Assert.paramNotNegative(maxLevel, "maxLevel");
-		Assert.paramLessOrEqual(minLevel, maxLevel, "minLevel", "maxLevel");
+        Assert.paramNotNegative(minLevel, "minLevel");
+        Assert.paramNotNegative(maxLevel, "maxLevel");
+        Assert.paramLessOrEqual(minLevel, maxLevel, "minLevel", "maxLevel");
 
-		defaultLevelMaybe = null;
-		levels.clear();
+        defaultLevelMaybe = null;
+        levels.clear();
 
-		if (unboundPossible) {
-			addUnboundLevel();
-		}
+        if (unboundPossible) {
+            addUnboundLevel();
+        }
 
-		for (int level = minLevel; level <= maxLevel; level++) {
-			addLevel(level);
-		}
+        for (int level = minLevel; level <= maxLevel; level++) {
+            addLevel(level);
+        }
 
-		return this;
-	}
+        return this;
+    }
 
-	@Override
-	public ITreeExpansionToolbarItemModelBuilder setDefaultLevel(final int defaultLevel) {
-		return setDefaultLevelImpl(Integer.valueOf(defaultLevel));
-	}
+    @Override
+    public ITreeExpansionToolbarItemModelBuilder setDefaultLevel(final int defaultLevel) {
+        return setDefaultLevelImpl(Integer.valueOf(defaultLevel));
+    }
 
-	@Override
-	public ITreeExpansionToolbarItemModelBuilder setUnboundDefaultLevel() {
-		return setDefaultLevelImpl(null);
-	}
+    @Override
+    public ITreeExpansionToolbarItemModelBuilder setUnboundDefaultLevel() {
+        return setDefaultLevelImpl(null);
+    }
 
-	private ITreeExpansionToolbarItemModelBuilder setDefaultLevelImpl(final Integer defaultLevel) {
-		checkExhausted();
-		if (!hasDefaultLevel(defaultLevel)) {
-			throw new IllegalArgumentException("There was now level with the value '" + defaultLevel + "' added yet.");
-		}
-		this.defaultLevelMaybe = new Some<Integer>(defaultLevel);
-		return this;
-	}
+    private ITreeExpansionToolbarItemModelBuilder setDefaultLevelImpl(final Integer defaultLevel) {
+        checkExhausted();
+        if (!hasDefaultLevel(defaultLevel)) {
+            throw new IllegalArgumentException("There was now level with the value '" + defaultLevel + "' added yet.");
+        }
+        this.defaultLevelMaybe = new Some<Integer>(defaultLevel);
+        return this;
+    }
 
-	private boolean hasDefaultLevel(final Integer defaultLevel) {
-		for (final Tuple<Integer, String> level : levels) {
-			if (NullCompatibleEquivalence.equals(level.getFirst(), defaultLevel)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    private boolean hasDefaultLevel(final Integer defaultLevel) {
+        for (final Tuple<Integer, String> level : levels) {
+            if (NullCompatibleEquivalence.equals(level.getFirst(), defaultLevel)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	private void checkExhausted() {
-		if (exhausted) {
-			throw new IllegalStateException("The builder is exhausted. It's a single use builder that can only be used once.");
-		}
-	}
+    private void checkExhausted() {
+        if (exhausted) {
+            throw new IllegalStateException("The builder is exhausted. It's a single use builder that can only be used once.");
+        }
+    }
 
-	private static String getDefaultLevelName(final int level) {
-		return LEVEL.get() + " " + (level + 1);
-	}
+    private static String getDefaultLevelName(final int level) {
+        return LEVEL.get() + " " + (level + 1);
+    }
 
-	@Override
-	public IToolBarItemModel build() {
-		exhausted = true;
-		if (levels.size() > 0) {
-			final IMenuModel levelMenu = buildLevelMenu();
-			return PopupActionItemModel.builder(action, levelMenu).build();
-		}
-		else {
-			return ActionItemModel.builder(action).build();
-		}
-	}
+    @Override
+    public IToolBarItemModel build() {
+        exhausted = true;
+        if (levels.size() > 0) {
+            final IMenuModel levelMenu = buildLevelMenu();
+            return PopupActionItemModel.builder(action, levelMenu).build();
+        }
+        else {
+            return ActionItemModel.builder(action).build();
+        }
+    }
 
-	private IMenuModel buildLevelMenu() {
-		final MenuModel levelMenu = new MenuModel();
+    private IMenuModel buildLevelMenu() {
+        final MenuModel levelMenu = new MenuModel();
 
-		final Integer defaultLevel;
-		if (defaultLevelMaybe != null) {
-			defaultLevel = defaultLevelMaybe.getValue();
-		}
-		else if (levels.size() > 0) {
-			defaultLevel = levels.iterator().next().getFirst();
-		}
-		else {
-			//levels are empty, default value has no effect
-			defaultLevel = null;
-		}
+        final Integer defaultLevel;
+        if (defaultLevelMaybe != null) {
+            defaultLevel = defaultLevelMaybe.getValue();
+        }
+        else if (levels.size() > 0) {
+            defaultLevel = levels.iterator().next().getFirst();
+        }
+        else {
+            //levels are empty, default value has no effect
+            defaultLevel = null;
+        }
 
-		for (final Tuple<Integer, String> levelTuple : levels) {
-			final String label = levelTuple.getSecond();
-			final Integer level = levelTuple.getFirst();
-			final boolean selected = NullCompatibleEquivalence.equals(defaultLevel, level);
-			addItemListener(levelMenu.addRadioItem(label), level, label, selected);
-		}
-		return levelMenu;
-	}
+        for (final Tuple<Integer, String> levelTuple : levels) {
+            final String label = levelTuple.getSecond();
+            final Integer level = levelTuple.getFirst();
+            final boolean selected = NullCompatibleEquivalence.equals(defaultLevel, level);
+            addItemListener(levelMenu.addRadioItem(label), level, label, selected);
+        }
+        return levelMenu;
+    }
 
-	private void addItemListener(final IRadioItemModel itemModel, final Integer level, final String label, final boolean selected) {
-		itemModel.addItemListener(new IItemStateListener() {
-			@Override
-			public void itemStateChanged() {
-				if (itemModel.isSelected()) {
-					action.setPivotLevel(level, label);
-				}
-			}
-		});
-		if (selected) {
-			action.setPivotLevel(level, label);
-			itemModel.setSelected(selected);
-		}
-	}
+    private void addItemListener(final IRadioItemModel itemModel, final Integer level, final String label, final boolean selected) {
+        itemModel.addItemListener(new IItemStateListener() {
+            @Override
+            public void itemStateChanged() {
+                if (itemModel.isSelected()) {
+                    action.setPivotLevel(level, label);
+                }
+            }
+        });
+        if (selected) {
+            action.setPivotLevel(level, label);
+            itemModel.setSelected(selected);
+        }
+    }
 
 }

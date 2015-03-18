@@ -35,26 +35,26 @@ import org.jowidgets.common.widgets.controller.ITreeNodeObservable;
 
 public interface ITreeNodeCommon extends IItemCommon, ITreeNodeObservable, IPopupDetectionObservable {
 
-	void setMarkup(Markup markup);
+    void setMarkup(Markup markup);
 
-	void setForegroundColor(final IColorConstant colorValue);
+    void setForegroundColor(final IColorConstant colorValue);
 
-	void setBackgroundColor(final IColorConstant colorValue);
+    void setBackgroundColor(final IColorConstant colorValue);
 
-	void setExpanded(boolean expanded);
+    void setExpanded(boolean expanded);
 
-	boolean isExpanded();
+    boolean isExpanded();
 
-	void setSelected(boolean selected);
+    void setSelected(boolean selected);
 
-	boolean isSelected();
+    boolean isSelected();
 
-	void setChecked(boolean checked);
+    void setChecked(boolean checked);
 
-	boolean isChecked();
+    boolean isChecked();
 
-	void setCheckable(boolean checkable);
+    void setCheckable(boolean checkable);
 
-	boolean isGreyed();
+    boolean isGreyed();
 
 }

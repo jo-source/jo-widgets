@@ -36,63 +36,63 @@ import org.jowidgets.common.widgets.controller.IActionListener;
 
 public class ButtonWrapper extends ControlWrapper implements IButton {
 
-	public ButtonWrapper(final IButton widget) {
-		super(widget);
-	}
+    public ButtonWrapper(final IButton widget) {
+        super(widget);
+    }
 
-	@Override
-	protected IButton getWidget() {
-		return (IButton) super.getWidget();
-	}
+    @Override
+    protected IButton getWidget() {
+        return (IButton) super.getWidget();
+    }
 
-	@Override
-	public String getText() {
-		return getWidget().getText();
-	}
+    @Override
+    public String getText() {
+        return getWidget().getText();
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		getWidget().setFontSize(size);
-	}
+    @Override
+    public void setFontSize(final int size) {
+        getWidget().setFontSize(size);
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		getWidget().setFontName(fontName);
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        getWidget().setFontName(fontName);
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		getWidget().setMarkup(markup);
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        getWidget().setMarkup(markup);
+    }
 
-	@Override
-	public void setText(final String text) {
-		getWidget().setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        getWidget().setText(text);
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		getWidget().setIcon(icon);
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        getWidget().setIcon(icon);
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return getWidget().getIcon();
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return getWidget().getIcon();
+    }
 
-	@Override
-	public void addActionListener(final IActionListener actionListener) {
-		getWidget().addActionListener(actionListener);
-	}
+    @Override
+    public void addActionListener(final IActionListener actionListener) {
+        getWidget().addActionListener(actionListener);
+    }
 
-	@Override
-	public void removeActionListener(final IActionListener actionListener) {
-		getWidget().removeActionListener(actionListener);
-	}
+    @Override
+    public void removeActionListener(final IActionListener actionListener) {
+        getWidget().removeActionListener(actionListener);
+    }
 
-	@Override
-	public void setAction(final IAction action) {
-		getWidget().setAction(action);
-	}
+    @Override
+    public void setAction(final IAction action) {
+        getWidget().setAction(action);
+    }
 
 }

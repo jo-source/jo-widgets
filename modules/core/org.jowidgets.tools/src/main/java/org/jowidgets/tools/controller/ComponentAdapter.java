@@ -32,10 +32,10 @@ import org.jowidgets.common.widgets.controller.IComponentListener;
 
 public class ComponentAdapter implements IComponentListener {
 
-	@Override
-	public void sizeChanged() {}
+    @Override
+    public void sizeChanged() {}
 
-	@Override
-	public void positionChanged() {}
+    @Override
+    public void positionChanged() {}
 
 }

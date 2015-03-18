@@ -40,106 +40,106 @@ import org.jowidgets.util.event.IChangeObservable;
 
 public class ParameterizedWrapper implements IParameterized, IChangeObservable {
 
-	private final IParameterized original;
-	private final ChangeObservable changeObservable;
+    private final IParameterized original;
+    private final ChangeObservable changeObservable;
 
-	@SuppressWarnings("rawtypes")
-	private IObservableValueListener observableValueListener;
+    @SuppressWarnings("rawtypes")
+    private IObservableValueListener observableValueListener;
 
-	public ParameterizedWrapper(final IParameterized original) {
-		Assert.paramNotNull(original, "original");
-		this.original = original;
-		this.changeObservable = new ChangeObservable();
-	}
+    public ParameterizedWrapper(final IParameterized original) {
+        Assert.paramNotNull(original, "original");
+        this.original = original;
+        this.changeObservable = new ChangeObservable();
+    }
 
-	protected IParameterized getOriginal() {
-		return original;
-	}
+    protected IParameterized getOriginal() {
+        return original;
+    }
 
-	@Override
-	public void addChangeListener(final IChangeListener listener) {
-		initChangeObservable();
-		changeObservable.addChangeListener(listener);
-	}
+    @Override
+    public void addChangeListener(final IChangeListener listener) {
+        initChangeObservable();
+        changeObservable.addChangeListener(listener);
+    }
 
-	@Override
-	public void removeChangeListener(final IChangeListener listener) {
-		changeObservable.removeChangeListener(listener);
-	}
+    @Override
+    public void removeChangeListener(final IChangeListener listener) {
+        changeObservable.removeChangeListener(listener);
+    }
 
-	@Override
-	public final List<ITypedKey<?>> getAvailableParameters() {
-		return original.getAvailableParameters();
-	}
+    @Override
+    public final List<ITypedKey<?>> getAvailableParameters() {
+        return original.getAvailableParameters();
+    }
 
-	@Override
-	public final <VALUE_TYPE> IParameter<VALUE_TYPE> getParameter(final ITypedKey<VALUE_TYPE> key) {
-		return original.getParameter(key);
-	}
+    @Override
+    public final <VALUE_TYPE> IParameter<VALUE_TYPE> getParameter(final ITypedKey<VALUE_TYPE> key) {
+        return original.getParameter(key);
+    }
 
-	public float getFloatValue(final ITypedKey<Float> key, final float defaultValue) {
-		final Float value = getParameterMandatory(key).getValue();
-		if (value != null) {
-			return value.floatValue();
-		}
-		else {
-			return defaultValue;
-		}
-	}
+    public float getFloatValue(final ITypedKey<Float> key, final float defaultValue) {
+        final Float value = getParameterMandatory(key).getValue();
+        if (value != null) {
+            return value.floatValue();
+        }
+        else {
+            return defaultValue;
+        }
+    }
 
-	public void setFloatValue(final ITypedKey<Float> key, final float value) {
-		getParameterMandatory(key).setValue(Float.valueOf(value));
-	}
+    public void setFloatValue(final ITypedKey<Float> key, final float value) {
+        getParameterMandatory(key).setValue(Float.valueOf(value));
+    }
 
-	public int getIntValue(final ITypedKey<Integer> key, final int defaultValue) {
-		final Integer value = getParameterMandatory(key).getValue();
-		if (value != null) {
-			return value.intValue();
-		}
-		else {
-			return defaultValue;
-		}
-	}
+    public int getIntValue(final ITypedKey<Integer> key, final int defaultValue) {
+        final Integer value = getParameterMandatory(key).getValue();
+        if (value != null) {
+            return value.intValue();
+        }
+        else {
+            return defaultValue;
+        }
+    }
 
-	public void setIntValue(final ITypedKey<Integer> key, final int value) {
-		getParameterMandatory(key).setValue(Integer.valueOf(value));
-	}
+    public void setIntValue(final ITypedKey<Integer> key, final int value) {
+        getParameterMandatory(key).setValue(Integer.valueOf(value));
+    }
 
-	public boolean getBooleanValue(final ITypedKey<Boolean> key, final boolean defaultValue) {
-		final Boolean value = getParameterMandatory(key).getValue();
-		if (value != null) {
-			return value.booleanValue();
-		}
-		else {
-			return defaultValue;
-		}
-	}
+    public boolean getBooleanValue(final ITypedKey<Boolean> key, final boolean defaultValue) {
+        final Boolean value = getParameterMandatory(key).getValue();
+        if (value != null) {
+            return value.booleanValue();
+        }
+        else {
+            return defaultValue;
+        }
+    }
 
-	public void setBooleanValue(final ITypedKey<Boolean> key, final boolean value) {
-		getParameterMandatory(key).setValue(Boolean.valueOf(value));
-	}
+    public void setBooleanValue(final ITypedKey<Boolean> key, final boolean value) {
+        getParameterMandatory(key).setValue(Boolean.valueOf(value));
+    }
 
-	public final <VALUE_TYPE> IParameter<VALUE_TYPE> getParameterMandatory(final ITypedKey<VALUE_TYPE> key) {
-		Assert.paramNotNull(key, "key");
-		final IParameter<VALUE_TYPE> result = getParameter(key);
-		if (result == null) {
-			throw new IllegalArgumentException("No parameter for the key '" + key + "' defined");
-		}
-		return result;
-	}
+    public final <VALUE_TYPE> IParameter<VALUE_TYPE> getParameterMandatory(final ITypedKey<VALUE_TYPE> key) {
+        Assert.paramNotNull(key, "key");
+        final IParameter<VALUE_TYPE> result = getParameter(key);
+        if (result == null) {
+            throw new IllegalArgumentException("No parameter for the key '" + key + "' defined");
+        }
+        return result;
+    }
 
-	@SuppressWarnings({"rawtypes"})
-	private void initChangeObservable() {
-		if (observableValueListener == null) {
-			observableValueListener = new IObservableValueListener() {
-				@Override
-				public void changed(final IObservableValue observableValue, final Object value) {
-					changeObservable.fireChangedEvent();
-				}
-			};
-			for (final ITypedKey<?> key : original.getAvailableParameters()) {
-				original.getParameter(key).addValueListener(observableValueListener);
-			}
-		}
-	}
+    @SuppressWarnings({"rawtypes"})
+    private void initChangeObservable() {
+        if (observableValueListener == null) {
+            observableValueListener = new IObservableValueListener() {
+                @Override
+                public void changed(final IObservableValue observableValue, final Object value) {
+                    changeObservable.fireChangedEvent();
+                }
+            };
+            for (final ITypedKey<?> key : original.getAvailableParameters()) {
+                original.getParameter(key).addValueListener(observableValueListener);
+            }
+        }
+    }
 }

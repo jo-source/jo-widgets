@@ -33,57 +33,57 @@ import java.util.Collection;
 
 public final class StringUtils {
 
-	private StringUtils() {}
+    private StringUtils() {}
 
-	public static String concatElementsSeparatedBy(final Object[] strings, final char separator) {
-		Assert.paramNotNull(strings, "strings");
-		return concatElementsSeparatedBy(Arrays.asList(strings), separator);
-	}
+    public static String concatElementsSeparatedBy(final Object[] strings, final char separator) {
+        Assert.paramNotNull(strings, "strings");
+        return concatElementsSeparatedBy(Arrays.asList(strings), separator);
+    }
 
-	public static String concatElementsSeparatedBy(final Collection<?> strings, final char separator) {
-		final StringBuilder result = new StringBuilder();
-		for (final Object label : strings) {
-			if (label != null) {
-				result.append(label.toString() + separator + " ");
-			}
-		}
-		if (strings.size() > 0) {
-			result.replace(result.length() - 2, result.length(), "");
-		}
-		return result.toString();
-	}
+    public static String concatElementsSeparatedBy(final Collection<?> strings, final char separator) {
+        final StringBuilder result = new StringBuilder();
+        for (final Object label : strings) {
+            if (label != null) {
+                result.append(label.toString() + separator + " ");
+            }
+        }
+        if (strings.size() > 0) {
+            result.replace(result.length() - 2, result.length(), "");
+        }
+        return result.toString();
+    }
 
-	public static String concatElementsSeparatedByComma(final Collection<?> strings) {
-		return concatElementsSeparatedBy(strings, ',');
-	}
+    public static String concatElementsSeparatedByComma(final Collection<?> strings) {
+        return concatElementsSeparatedBy(strings, ',');
+    }
 
-	public static String truncateToLength(final String string, final int length) {
-		Assert.paramInBounds(Integer.MAX_VALUE, length, "length");
-		if (EmptyCheck.isEmpty(string)) {
-			return string;
-		}
-		if (string.length() <= length) {
-			return string;
-		}
-		else {
-			return string.substring(0, length - 4) + " ...";
-		}
-	}
+    public static String truncateToLength(final String string, final int length) {
+        Assert.paramInBounds(Integer.MAX_VALUE, length, "length");
+        if (EmptyCheck.isEmpty(string)) {
+            return string;
+        }
+        if (string.length() <= length) {
+            return string;
+        }
+        else {
+            return string.substring(0, length - 4) + " ...";
+        }
+    }
 
-	public static String loop(final String tanga, final int count) {
-		if (tanga == null) {
-			return null;
-		}
-		else if (tanga.isEmpty()) {
-			return tanga;
-		}
-		else {
-			final StringBuilder result = new StringBuilder();
-			for (int i = 0; i < count; i++) {
-				result.append(tanga);
-			}
-			return result.toString();
-		}
+    public static String loop(final String tanga, final int count) {
+        if (tanga == null) {
+            return null;
+        }
+        else if (tanga.isEmpty()) {
+            return tanga;
+        }
+        else {
+            final StringBuilder result = new StringBuilder();
+            for (int i = 0; i < count; i++) {
+                result.append(tanga);
+            }
+            return result.toString();
+        }
 
-	}
+    }
 }

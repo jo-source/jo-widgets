@@ -37,65 +37,65 @@ import org.jowidgets.test.spi.widgets.IButtonUiSpi;
 
 public class ButtonImpl extends AbstractActionControl implements IButtonUiSpi {
 
-	private final DummyImageRegistry imageRegistry;
+    private final DummyImageRegistry imageRegistry;
 
-	public ButtonImpl(final DummyImageRegistry imageRegistry, final IButtonSetupSpi setup) {
-		super(new UIDButton());
-		this.imageRegistry = imageRegistry;
+    public ButtonImpl(final DummyImageRegistry imageRegistry, final IButtonSetupSpi setup) {
+        super(new UIDButton());
+        this.imageRegistry = imageRegistry;
 
-		setText(setup.getText());
-		setToolTipText(setup.getToolTipText());
-		setIcon(setup.getIcon());
-		setMarkup(setup.getMarkup());
+        setText(setup.getText());
+        setToolTipText(setup.getToolTipText());
+        setIcon(setup.getIcon());
+        setMarkup(setup.getMarkup());
 
-		getUiReference().setHorizontalAlignment(setup.getAlignment());
+        getUiReference().setHorizontalAlignment(setup.getAlignment());
 
-		getUiReference().addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				fireActionPerformed();
-			}
-		});
-	}
+        getUiReference().addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                fireActionPerformed();
+            }
+        });
+    }
 
-	@Override
-	public UIDButton getUiReference() {
-		return (UIDButton) super.getUiReference();
-	}
+    @Override
+    public UIDButton getUiReference() {
+        return (UIDButton) super.getUiReference();
+    }
 
-	@Override
-	public void setText(final String text) {
-		getUiReference().setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        getUiReference().setText(text);
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		getUiReference().setIcon(imageRegistry.getImageIcon(icon));
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        getUiReference().setIcon(imageRegistry.getImageIcon(icon));
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		getUiReference().setMarkup(markup);
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        getUiReference().setMarkup(markup);
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		getUiReference().setFontSize(size);
-	}
+    @Override
+    public void setFontSize(final int size) {
+        getUiReference().setFontSize(size);
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		getUiReference().setFontName(fontName);
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        getUiReference().setFontName(fontName);
+    }
 
-	@Override
-	public boolean isTestable() {
-		return true;
-	}
+    @Override
+    public boolean isTestable() {
+        return true;
+    }
 
-	@Override
-	public void push() {
-		fireActionPerformed();
-	}
+    @Override
+    public void push() {
+        fireActionPerformed();
+    }
 
 }

@@ -40,20 +40,20 @@ import org.jowidgets.spi.widgets.IToolBarSpi;
 
 public class ToolBarFactory extends AbstractWidgetFactory implements IWidgetFactory<IToolBar, IToolBarDescriptor> {
 
-	public ToolBarFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+    public ToolBarFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider,
+        final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
-	}
+        super(genericWidgetFactory, widgetsServiceProvider, bpF);
+    }
 
-	@Override
-	public IToolBar create(final Object parentUiReference, final IToolBarDescriptor descriptor) {
-		final IToolBarBluePrintSpi bp = getSpiBluePrintFactory().toolBar();
-		bp.setSetup(descriptor);
-		final IToolBarSpi toolBarSpi = getSpiWidgetFactory().createToolBar(getGenericWidgetFactory(), parentUiReference, bp);
-		return new ToolBarImpl(toolBarSpi, descriptor);
-	}
+    @Override
+    public IToolBar create(final Object parentUiReference, final IToolBarDescriptor descriptor) {
+        final IToolBarBluePrintSpi bp = getSpiBluePrintFactory().toolBar();
+        bp.setSetup(descriptor);
+        final IToolBarSpi toolBarSpi = getSpiWidgetFactory().createToolBar(getGenericWidgetFactory(), parentUiReference, bp);
+        return new ToolBarImpl(toolBarSpi, descriptor);
+    }
 
 }

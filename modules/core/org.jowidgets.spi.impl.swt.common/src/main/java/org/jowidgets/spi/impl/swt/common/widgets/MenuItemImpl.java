@@ -37,87 +37,87 @@ import org.jowidgets.spi.widgets.IMenuItemSpi;
 
 public class MenuItemImpl extends ActionObservable implements IMenuItemSpi, IToolTipTextProvider {
 
-	private final MenuItem menuItem;
-	private String text;
-	private String tooltipText;
-	private String acceleratorText;
-	private Character mnemonic;
+    private final MenuItem menuItem;
+    private String text;
+    private String tooltipText;
+    private String acceleratorText;
+    private Character mnemonic;
 
-	public MenuItemImpl(final MenuItem menuItem) {
-		this.menuItem = menuItem;
-	}
+    public MenuItemImpl(final MenuItem menuItem) {
+        this.menuItem = menuItem;
+    }
 
-	@Override
-	public MenuItem getUiReference() {
-		return menuItem;
-	}
+    @Override
+    public MenuItem getUiReference() {
+        return menuItem;
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		menuItem.setImage(SwtImageRegistry.getInstance().getImage(icon));
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        menuItem.setImage(SwtImageRegistry.getInstance().getImage(icon));
+    }
 
-	@Override
-	public void setText(final String text) {
-		this.text = text;
-		setCombinedText();
-	}
+    @Override
+    public void setText(final String text) {
+        this.text = text;
+        setCombinedText();
+    }
 
-	@Override
-	public void setToolTipText(final String tooltipText) {
-		this.tooltipText = tooltipText;
-	}
+    @Override
+    public void setToolTipText(final String tooltipText) {
+        this.tooltipText = tooltipText;
+    }
 
-	@Override
-	public String getToolTipText() {
-		return tooltipText;
-	}
+    @Override
+    public String getToolTipText() {
+        return tooltipText;
+    }
 
-	public void setAccelerator(final Accelerator accelerator) {
-		try {
-			getUiReference().setAccelerator(AcceleratorConvert.convert(accelerator));
-		}
-		catch (final NoSuchMethodError error) {
-			//RWT does not support accelerators
-			return;
-		}
-		this.acceleratorText = AcceleratorConvert.acceleratorText(accelerator);
-		setCombinedText();
+    public void setAccelerator(final Accelerator accelerator) {
+        try {
+            getUiReference().setAccelerator(AcceleratorConvert.convert(accelerator));
+        }
+        catch (final NoSuchMethodError error) {
+            //RWT does not support accelerators
+            return;
+        }
+        this.acceleratorText = AcceleratorConvert.acceleratorText(accelerator);
+        setCombinedText();
 
-	}
+    }
 
-	@Override
-	public void setMnemonic(final char mnemonic) {
-		this.mnemonic = Character.valueOf(mnemonic);
-		setCombinedText();
-	}
+    @Override
+    public void setMnemonic(final char mnemonic) {
+        this.mnemonic = Character.valueOf(mnemonic);
+        setCombinedText();
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		menuItem.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        menuItem.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return menuItem.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return menuItem.isEnabled();
+    }
 
-	private void setCombinedText() {
-		final StringBuilder combiened = new StringBuilder();
-		if (text != null) {
-			combiened.append(text.replace("&", "&&"));
-		}
-		if (mnemonic != null) {
-			final int index = combiened.indexOf(mnemonic.toString());
-			if (index != -1) {
-				combiened.insert(index, '&');
-			}
-		}
-		if (acceleratorText != null) {
-			combiened.append('\t');
-			combiened.append(acceleratorText);
-		}
-		menuItem.setText(combiened.toString());
-	}
+    private void setCombinedText() {
+        final StringBuilder combiened = new StringBuilder();
+        if (text != null) {
+            combiened.append(text.replace("&", "&&"));
+        }
+        if (mnemonic != null) {
+            final int index = combiened.indexOf(mnemonic.toString());
+            if (index != -1) {
+                combiened.insert(index, '&');
+            }
+        }
+        if (acceleratorText != null) {
+            combiened.append('\t');
+            combiened.append(acceleratorText);
+        }
+        menuItem.setText(combiened.toString());
+    }
 
 }

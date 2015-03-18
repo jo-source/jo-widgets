@@ -30,9 +30,9 @@ package org.jowidgets.validation;
 
 public interface IValidationConditionListener {
 
-	/**
-	 * This method will be invoked, if the conditions of the validation has been changed
-	 */
-	void validationConditionsChanged();
+    /**
+     * This method will be invoked, if the conditions of the validation has been changed
+     */
+    void validationConditionsChanged();
 
 }

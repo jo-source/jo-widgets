@@ -27,11 +27,10 @@
  */
 package org.jowidgets.workbench.api;
 
-
 public interface ILifecycleCallback extends ICloseCallback {
 
-	void onActiveStateChanged(boolean active);
+    void onActiveStateChanged(boolean active);
 
-	void onVisibleStateChanged(boolean visible);
+    void onVisibleStateChanged(boolean visible);
 
 }

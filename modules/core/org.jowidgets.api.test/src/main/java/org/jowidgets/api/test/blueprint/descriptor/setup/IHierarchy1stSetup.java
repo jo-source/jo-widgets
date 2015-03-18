@@ -30,6 +30,6 @@ package org.jowidgets.api.test.blueprint.descriptor.setup;
 
 public interface IHierarchy1stSetup {
 
-	String getIntro();
+    String getIntro();
 
 }

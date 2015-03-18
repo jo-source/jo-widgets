@@ -36,23 +36,23 @@ import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 
 public interface IRecursiveContainerObservable {
 
-	void addComponentListenerRecursive(IListenerFactory<IComponentListener> listenerFactory);
+    void addComponentListenerRecursive(IListenerFactory<IComponentListener> listenerFactory);
 
-	void removeComponentListenerRecursive(IListenerFactory<IComponentListener> listenerFactory);
+    void removeComponentListenerRecursive(IListenerFactory<IComponentListener> listenerFactory);
 
-	void addFocusListenerRecursive(IListenerFactory<IFocusListener> listenerFactory);
+    void addFocusListenerRecursive(IListenerFactory<IFocusListener> listenerFactory);
 
-	void removeFocusListenerRecursive(IListenerFactory<IFocusListener> listenerFactory);
+    void removeFocusListenerRecursive(IListenerFactory<IFocusListener> listenerFactory);
 
-	void addKeyListenerRecursive(IListenerFactory<IKeyListener> listenerFactory);
+    void addKeyListenerRecursive(IListenerFactory<IKeyListener> listenerFactory);
 
-	void removeKeyListenerRecursive(IListenerFactory<IKeyListener> listenerFactory);
+    void removeKeyListenerRecursive(IListenerFactory<IKeyListener> listenerFactory);
 
-	void addMouseListenerRecursive(IListenerFactory<IMouseListener> listenerFactory);
+    void addMouseListenerRecursive(IListenerFactory<IMouseListener> listenerFactory);
 
-	void removeMouseListenerRecursive(IListenerFactory<IMouseListener> listenerFactory);
+    void removeMouseListenerRecursive(IListenerFactory<IMouseListener> listenerFactory);
 
-	void addPopupDetectionListenerRecursive(IListenerFactory<IPopupDetectionListener> listenerFactory);
+    void addPopupDetectionListenerRecursive(IListenerFactory<IPopupDetectionListener> listenerFactory);
 
-	void removePopupDetectionListenerRecursive(IListenerFactory<IPopupDetectionListener> listenerFactory);
+    void removePopupDetectionListenerRecursive(IListenerFactory<IPopupDetectionListener> listenerFactory);
 }

@@ -31,10 +31,10 @@ import org.jowidgets.common.image.IImageConstant;
 
 public interface IWorkbenchPart {
 
-	String getLabel();
+    String getLabel();
 
-	String getTooltip();
+    String getTooltip();
 
-	IImageConstant getIcon();
+    IImageConstant getIcon();
 
 }

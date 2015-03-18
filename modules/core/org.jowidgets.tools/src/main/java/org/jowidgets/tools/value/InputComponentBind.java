@@ -39,115 +39,115 @@ import org.jowidgets.util.ObservableValue;
 
 public final class InputComponentBind {
 
-	private InputComponentBind() {}
+    private InputComponentBind() {}
 
-	/**
-	 * Binds an input component to a newly created observable value and returns the observable value.
-	 * If the input component will be disposed, the binding will be disposed too.
-	 * 
-	 * @param inputComponent The input component to bind
-	 * 
-	 * @return The created observable value
-	 */
-	public static <VALUE_TYPE> IObservableValue<VALUE_TYPE> bind(final IInputComponent<VALUE_TYPE> inputComponent) {
-		Assert.paramNotNull(inputComponent, "inputComponent");
-		final IObservableValue<VALUE_TYPE> result = new ObservableValue<VALUE_TYPE>();
-		bind(result, inputComponent);
-		return result;
-	}
+    /**
+     * Binds an input component to a newly created observable value and returns the observable value.
+     * If the input component will be disposed, the binding will be disposed too.
+     * 
+     * @param inputComponent The input component to bind
+     * 
+     * @return The created observable value
+     */
+    public static <VALUE_TYPE> IObservableValue<VALUE_TYPE> bind(final IInputComponent<VALUE_TYPE> inputComponent) {
+        Assert.paramNotNull(inputComponent, "inputComponent");
+        final IObservableValue<VALUE_TYPE> result = new ObservableValue<VALUE_TYPE>();
+        bind(result, inputComponent);
+        return result;
+    }
 
-	/**
-	 * Binds an input component to an observable value. If the input component will be disposed, the binding will be disposed too.
-	 * 
-	 * @param source The source observable value to bind to
-	 * @param inputComponent The input component to bind
-	 */
-	public static <VALUE_TYPE> void bind(
-		final IObservableValue<VALUE_TYPE> source,
-		final IInputComponent<VALUE_TYPE> inputComponent) {
+    /**
+     * Binds an input component to an observable value. If the input component will be disposed, the binding will be disposed too.
+     * 
+     * @param source The source observable value to bind to
+     * @param inputComponent The input component to bind
+     */
+    public static <VALUE_TYPE> void bind(
+        final IObservableValue<VALUE_TYPE> source,
+        final IInputComponent<VALUE_TYPE> inputComponent) {
 
-		Assert.paramNotNull(source, "source");
-		Assert.paramNotNull(inputComponent, "inputComponent");
+        Assert.paramNotNull(source, "source");
+        Assert.paramNotNull(inputComponent, "inputComponent");
 
-		final InputComponentBinding<VALUE_TYPE> binding = new InputComponentBinding<VALUE_TYPE>(source, inputComponent);
-		binding.bind();
+        final InputComponentBinding<VALUE_TYPE> binding = new InputComponentBinding<VALUE_TYPE>(source, inputComponent);
+        binding.bind();
 
-		inputComponent.addDisposeListener(new IDisposeListener() {
-			@Override
-			public void onDispose() {
-				binding.dispose();
-			}
-		});
+        inputComponent.addDisposeListener(new IDisposeListener() {
+            @Override
+            public void onDispose() {
+                binding.dispose();
+            }
+        });
 
-	}
+    }
 
-	private static final class InputComponentBinding<VALUE_TYPE> {
+    private static final class InputComponentBinding<VALUE_TYPE> {
 
-		private final IObservableValue<VALUE_TYPE> source;
-		private final IInputComponent<VALUE_TYPE> inputComponent;
+        private final IObservableValue<VALUE_TYPE> source;
+        private final IInputComponent<VALUE_TYPE> inputComponent;
 
-		private final IInputListener inputListener;
-		private final IObservableValueListener<VALUE_TYPE> observableValueListener;
+        private final IInputListener inputListener;
+        private final IObservableValueListener<VALUE_TYPE> observableValueListener;
 
-		private boolean onSourceSet;
-		private boolean onDestinationSet;
+        private boolean onSourceSet;
+        private boolean onDestinationSet;
 
-		private InputComponentBinding(final IObservableValue<VALUE_TYPE> source, final IInputComponent<VALUE_TYPE> inputComponent) {
-			super();
+        private InputComponentBinding(final IObservableValue<VALUE_TYPE> source, final IInputComponent<VALUE_TYPE> inputComponent) {
+            super();
 
-			this.source = source;
-			this.inputComponent = inputComponent;
+            this.source = source;
+            this.inputComponent = inputComponent;
 
-			if (source.getValue() != null) {
-				inputComponent.setValue(source.getValue());
-			}
-			else if (inputComponent.getValue() != null) {
-				source.setValue(inputComponent.getValue());
-			}
+            if (source.getValue() != null) {
+                inputComponent.setValue(source.getValue());
+            }
+            else if (inputComponent.getValue() != null) {
+                source.setValue(inputComponent.getValue());
+            }
 
-			this.inputListener = new IInputListener() {
-				@Override
-				public void inputChanged() {
-					if (!onSourceSet
-						&& !onDestinationSet
-						&& !NullCompatibleEquivalence.equals(inputComponent.getValue(), source.getValue())) {
-						onSourceSet = true;
-						try {
-							source.setValue(inputComponent.getValue());
-						}
-						finally {
-							onSourceSet = false;
-						}
-					}
-				}
-			};
+            this.inputListener = new IInputListener() {
+                @Override
+                public void inputChanged() {
+                    if (!onSourceSet
+                        && !onDestinationSet
+                        && !NullCompatibleEquivalence.equals(inputComponent.getValue(), source.getValue())) {
+                        onSourceSet = true;
+                        try {
+                            source.setValue(inputComponent.getValue());
+                        }
+                        finally {
+                            onSourceSet = false;
+                        }
+                    }
+                }
+            };
 
-			this.observableValueListener = new IObservableValueListener<VALUE_TYPE>() {
-				@Override
-				public void changed(final IObservableValue<VALUE_TYPE> observableValue, final VALUE_TYPE value) {
-					if (!onSourceSet && !onDestinationSet && !NullCompatibleEquivalence.equals(inputComponent.getValue(), value)) {
-						onDestinationSet = true;
-						try {
-							inputComponent.setValue(value);
-						}
-						finally {
-							onDestinationSet = false;
-						}
-					}
-				}
-			};
+            this.observableValueListener = new IObservableValueListener<VALUE_TYPE>() {
+                @Override
+                public void changed(final IObservableValue<VALUE_TYPE> observableValue, final VALUE_TYPE value) {
+                    if (!onSourceSet && !onDestinationSet && !NullCompatibleEquivalence.equals(inputComponent.getValue(), value)) {
+                        onDestinationSet = true;
+                        try {
+                            inputComponent.setValue(value);
+                        }
+                        finally {
+                            onDestinationSet = false;
+                        }
+                    }
+                }
+            };
 
-		}
+        }
 
-		private void bind() {
-			inputComponent.addInputListener(inputListener);
-			source.addValueListener(observableValueListener);
-		}
+        private void bind() {
+            inputComponent.addInputListener(inputListener);
+            source.addValueListener(observableValueListener);
+        }
 
-		private void dispose() {
-			inputComponent.removeInputListener(inputListener);
-			source.removeValueListener(observableValueListener);
-		}
+        private void dispose() {
+            inputComponent.removeInputListener(inputListener);
+            source.removeValueListener(observableValueListener);
+        }
 
-	}
+    }
 }

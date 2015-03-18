@@ -31,11 +31,11 @@ import org.jowidgets.api.model.tree.ITreeNodeModel;
 import org.jowidgets.api.types.TreeViewerCreationPolicy;
 
 public interface ITreeViewerSetupBuilder<INSTANCE_TYPE extends ITreeViewerSetupBuilder<?, ?>, ROOT_NODE_VALUE_TYPE> extends
-		ITreeSetupBuilder<INSTANCE_TYPE> {
+        ITreeSetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setRootNodeModel(ITreeNodeModel<ROOT_NODE_VALUE_TYPE> model);
+    INSTANCE_TYPE setRootNodeModel(ITreeNodeModel<ROOT_NODE_VALUE_TYPE> model);
 
-	INSTANCE_TYPE setCreationPolicy(TreeViewerCreationPolicy policy);
+    INSTANCE_TYPE setCreationPolicy(TreeViewerCreationPolicy policy);
 
-	INSTANCE_TYPE setPageSize(Integer pageSize);
+    INSTANCE_TYPE setPageSize(Integer pageSize);
 }

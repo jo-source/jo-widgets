@@ -29,16 +29,16 @@ package org.jowidgets.api.widgets.blueprint.builder.convenience;
 
 public interface ITreeSetupConvenience<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE multiSelection();
+    INSTANCE_TYPE multiSelection();
 
-	INSTANCE_TYPE singleSelection();
+    INSTANCE_TYPE singleSelection();
 
-	INSTANCE_TYPE setAutoCheckMode(boolean autoCheckMode);
+    INSTANCE_TYPE setAutoCheckMode(boolean autoCheckMode);
 
-	INSTANCE_TYPE setDefaultIcons();
+    INSTANCE_TYPE setDefaultIcons();
 
-	INSTANCE_TYPE setClassicSelectionColors();
+    INSTANCE_TYPE setClassicSelectionColors();
 
-	INSTANCE_TYPE setWinSelectionColors();
+    INSTANCE_TYPE setWinSelectionColors();
 
 }

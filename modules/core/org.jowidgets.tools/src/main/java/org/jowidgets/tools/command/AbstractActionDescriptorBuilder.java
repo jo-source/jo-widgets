@@ -37,75 +37,75 @@ import org.jowidgets.common.types.Modifier;
 import org.jowidgets.common.types.VirtualKey;
 
 public abstract class AbstractActionDescriptorBuilder<INSTANCE_TYPE extends IActionDescriptorBuilder<?>> implements
-		IActionDescriptorBuilder<INSTANCE_TYPE> {
+        IActionDescriptorBuilder<INSTANCE_TYPE> {
 
-	private final IActionBuilder original;
+    private final IActionBuilder original;
 
-	protected AbstractActionDescriptorBuilder() {
-		this.original = ActionBuilder.builder();
-	}
+    protected AbstractActionDescriptorBuilder() {
+        this.original = ActionBuilder.builder();
+    }
 
-	protected abstract IAction build(IActionBuilder actionBuilder);
+    protected abstract IAction build(IActionBuilder actionBuilder);
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public final INSTANCE_TYPE setText(final String text) {
-		original.setText(text);
-		return (INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public final INSTANCE_TYPE setText(final String text) {
+        original.setText(text);
+        return (INSTANCE_TYPE) this;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public final INSTANCE_TYPE setToolTipText(final String toolTipText) {
-		original.setToolTipText(toolTipText);
-		return (INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public final INSTANCE_TYPE setToolTipText(final String toolTipText) {
+        original.setToolTipText(toolTipText);
+        return (INSTANCE_TYPE) this;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public final INSTANCE_TYPE setIcon(final IImageConstant icon) {
-		original.setIcon(icon);
-		return (INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public final INSTANCE_TYPE setIcon(final IImageConstant icon) {
+        original.setIcon(icon);
+        return (INSTANCE_TYPE) this;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public final INSTANCE_TYPE setMnemonic(final Character mnemonic) {
-		original.setMnemonic(mnemonic);
-		return (INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public final INSTANCE_TYPE setMnemonic(final Character mnemonic) {
+        original.setMnemonic(mnemonic);
+        return (INSTANCE_TYPE) this;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public final INSTANCE_TYPE setMnemonic(final char mnemonic) {
-		original.setMnemonic(mnemonic);
-		return (INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public final INSTANCE_TYPE setMnemonic(final char mnemonic) {
+        original.setMnemonic(mnemonic);
+        return (INSTANCE_TYPE) this;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public final INSTANCE_TYPE setAccelerator(final Accelerator accelerator) {
-		original.setAccelerator(accelerator);
-		return (INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public final INSTANCE_TYPE setAccelerator(final Accelerator accelerator) {
+        original.setAccelerator(accelerator);
+        return (INSTANCE_TYPE) this;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public final INSTANCE_TYPE setAccelerator(final char key, final Modifier... modifier) {
-		original.setAccelerator(key, modifier);
-		return (INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public final INSTANCE_TYPE setAccelerator(final char key, final Modifier... modifier) {
+        original.setAccelerator(key, modifier);
+        return (INSTANCE_TYPE) this;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public final INSTANCE_TYPE setAccelerator(final VirtualKey virtualKey, final Modifier... modifier) {
-		original.setAccelerator(virtualKey, modifier);
-		return (INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public final INSTANCE_TYPE setAccelerator(final VirtualKey virtualKey, final Modifier... modifier) {
+        original.setAccelerator(virtualKey, modifier);
+        return (INSTANCE_TYPE) this;
+    }
 
-	@Override
-	public final IAction build() {
-		return build(original);
-	}
+    @Override
+    public final IAction build() {
+        return build(original);
+    }
 
 }

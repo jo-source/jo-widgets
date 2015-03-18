@@ -30,18 +30,18 @@ package org.jowidgets.api.controller;
 
 public interface IDisposeObservable {
 
-	/**
-	 * Adds a dispose listener
-	 * 
-	 * @param listener The listener to add
-	 */
-	void addDisposeListener(IDisposeListener listener);
+    /**
+     * Adds a dispose listener
+     * 
+     * @param listener The listener to add
+     */
+    void addDisposeListener(IDisposeListener listener);
 
-	/**
-	 * Removes a dispose listener
-	 * 
-	 * @param listener The listener to remove
-	 */
-	void removeDisposeListener(IDisposeListener listener);
+    /**
+     * Removes a dispose listener
+     * 
+     * @param listener The listener to remove
+     */
+    void removeDisposeListener(IDisposeListener listener);
 
 }

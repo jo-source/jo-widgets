@@ -40,113 +40,113 @@ import org.jowidgets.util.CollectionUtils;
 
 public final class UnmodifiableArray {
 
-	private static final IUnmodifiableArray<?> EMPTY_ARRAY = builder().build();
+    private static final IUnmodifiableArray<?> EMPTY_ARRAY = builder().build();
 
-	private UnmodifiableArray() {}
+    private UnmodifiableArray() {}
 
-	@SuppressWarnings("unchecked")
-	public static <VALUE_TYPE> IUnmodifiableArray<VALUE_TYPE> emptyArray() {
-		return (IUnmodifiableArray<VALUE_TYPE>) EMPTY_ARRAY;
-	}
+    @SuppressWarnings("unchecked")
+    public static <VALUE_TYPE> IUnmodifiableArray<VALUE_TYPE> emptyArray() {
+        return (IUnmodifiableArray<VALUE_TYPE>) EMPTY_ARRAY;
+    }
 
-	public static <VALUE_TYPE> IUnmodifiableArray<VALUE_TYPE> singleton(final VALUE_TYPE value) {
-		return new UnmodifiableArrayBuilderImpl<VALUE_TYPE>().add(value).build();
-	}
+    public static <VALUE_TYPE> IUnmodifiableArray<VALUE_TYPE> singleton(final VALUE_TYPE value) {
+        return new UnmodifiableArrayBuilderImpl<VALUE_TYPE>().add(value).build();
+    }
 
-	public static <VALUE_TYPE> IUnmodifiableArray<VALUE_TYPE> create(final Iterable<? extends VALUE_TYPE> values) {
-		Assert.paramNotNull(values, "values");
-		return new UnmodifiableArrayBuilderImpl<VALUE_TYPE>().addAll(values).build();
-	}
+    public static <VALUE_TYPE> IUnmodifiableArray<VALUE_TYPE> create(final Iterable<? extends VALUE_TYPE> values) {
+        Assert.paramNotNull(values, "values");
+        return new UnmodifiableArrayBuilderImpl<VALUE_TYPE>().addAll(values).build();
+    }
 
-	public static <VALUE_TYPE> IUnmodifiableArray<VALUE_TYPE> create(final Enumeration<? extends VALUE_TYPE> values) {
-		Assert.paramNotNull(values, "values");
-		return new UnmodifiableArrayBuilderImpl<VALUE_TYPE>().addAll(values).build();
-	}
+    public static <VALUE_TYPE> IUnmodifiableArray<VALUE_TYPE> create(final Enumeration<? extends VALUE_TYPE> values) {
+        Assert.paramNotNull(values, "values");
+        return new UnmodifiableArrayBuilderImpl<VALUE_TYPE>().addAll(values).build();
+    }
 
-	public static <VALUE_TYPE> IUnmodifiableArray<VALUE_TYPE> create(final VALUE_TYPE... values) {
-		Assert.paramNotNull(values, "values");
-		return new UnmodifiableArrayBuilderImpl<VALUE_TYPE>().addAll(values).build();
-	}
+    public static <VALUE_TYPE> IUnmodifiableArray<VALUE_TYPE> create(final VALUE_TYPE... values) {
+        Assert.paramNotNull(values, "values");
+        return new UnmodifiableArrayBuilderImpl<VALUE_TYPE>().addAll(values).build();
+    }
 
-	public static <VALUE_TYPE> IUnmodifiableArrayBuilder<VALUE_TYPE> builder() {
-		return new UnmodifiableArrayBuilderImpl<VALUE_TYPE>();
-	}
+    public static <VALUE_TYPE> IUnmodifiableArrayBuilder<VALUE_TYPE> builder() {
+        return new UnmodifiableArrayBuilderImpl<VALUE_TYPE>();
+    }
 
-	public static <VALUE_TYPE> Collection<VALUE_TYPE> asCollection(final IUnmodifiableArray<VALUE_TYPE> array) {
-		Assert.paramNotNull(array, "array");
-		return new UnmodifieableArrayToCollectionWrapper<VALUE_TYPE>(array);
-	}
+    public static <VALUE_TYPE> Collection<VALUE_TYPE> asCollection(final IUnmodifiableArray<VALUE_TYPE> array) {
+        Assert.paramNotNull(array, "array");
+        return new UnmodifieableArrayToCollectionWrapper<VALUE_TYPE>(array);
+    }
 
-	private static final class UnmodifiableArrayBuilderImpl<VALUE_TYPE> implements IUnmodifiableArrayBuilder<VALUE_TYPE> {
+    private static final class UnmodifiableArrayBuilderImpl<VALUE_TYPE> implements IUnmodifiableArrayBuilder<VALUE_TYPE> {
 
-		private final List<VALUE_TYPE> elements;
+        private final List<VALUE_TYPE> elements;
 
-		private UnmodifiableArrayBuilderImpl() {
-			this.elements = new LinkedList<VALUE_TYPE>();
-		}
+        private UnmodifiableArrayBuilderImpl() {
+            this.elements = new LinkedList<VALUE_TYPE>();
+        }
 
-		@Override
-		public IUnmodifiableArrayBuilder<VALUE_TYPE> addAll(final Enumeration<? extends VALUE_TYPE> values) {
-			Assert.paramNotNull(values, "values");
-			while (values.hasMoreElements()) {
-				add(values.nextElement());
-			}
-			return this;
-		}
+        @Override
+        public IUnmodifiableArrayBuilder<VALUE_TYPE> addAll(final Enumeration<? extends VALUE_TYPE> values) {
+            Assert.paramNotNull(values, "values");
+            while (values.hasMoreElements()) {
+                add(values.nextElement());
+            }
+            return this;
+        }
 
-		@Override
-		public IUnmodifiableArrayBuilder<VALUE_TYPE> addAll(final Iterable<? extends VALUE_TYPE> values) {
-			Assert.paramNotNull(values, "values");
-			for (final VALUE_TYPE value : values) {
-				add(value);
-			}
-			return this;
-		}
+        @Override
+        public IUnmodifiableArrayBuilder<VALUE_TYPE> addAll(final Iterable<? extends VALUE_TYPE> values) {
+            Assert.paramNotNull(values, "values");
+            for (final VALUE_TYPE value : values) {
+                add(value);
+            }
+            return this;
+        }
 
-		@Override
-		public IUnmodifiableArrayBuilder<VALUE_TYPE> addAll(final VALUE_TYPE... values) {
-			Assert.paramNotNull(values, "values");
-			for (final VALUE_TYPE value : values) {
-				add(value);
-			}
-			return this;
-		}
+        @Override
+        public IUnmodifiableArrayBuilder<VALUE_TYPE> addAll(final VALUE_TYPE... values) {
+            Assert.paramNotNull(values, "values");
+            for (final VALUE_TYPE value : values) {
+                add(value);
+            }
+            return this;
+        }
 
-		@Override
-		public IUnmodifiableArrayBuilder<VALUE_TYPE> add(final VALUE_TYPE value) {
-			elements.add(value);
-			return this;
-		}
+        @Override
+        public IUnmodifiableArrayBuilder<VALUE_TYPE> add(final VALUE_TYPE value) {
+            elements.add(value);
+            return this;
+        }
 
-		@Override
-		public IUnmodifiableArray<VALUE_TYPE> build() {
-			return new UnmodifiableArrayImpl<VALUE_TYPE>(elements);
-		}
+        @Override
+        public IUnmodifiableArray<VALUE_TYPE> build() {
+            return new UnmodifiableArrayImpl<VALUE_TYPE>(elements);
+        }
 
-	}
+    }
 
-	private static final class UnmodifiableArrayImpl<VALUE_TYPE> implements IUnmodifiableArray<VALUE_TYPE> {
+    private static final class UnmodifiableArrayImpl<VALUE_TYPE> implements IUnmodifiableArray<VALUE_TYPE> {
 
-		private final ArrayList<VALUE_TYPE> elements;
+        private final ArrayList<VALUE_TYPE> elements;
 
-		private UnmodifiableArrayImpl(final Collection<VALUE_TYPE> collection) {
-			elements = new ArrayList<VALUE_TYPE>(collection);
-		}
+        private UnmodifiableArrayImpl(final Collection<VALUE_TYPE> collection) {
+            elements = new ArrayList<VALUE_TYPE>(collection);
+        }
 
-		@Override
-		public Iterator<VALUE_TYPE> iterator() {
-			return CollectionUtils.unmodifiableIterator(elements.iterator());
-		}
+        @Override
+        public Iterator<VALUE_TYPE> iterator() {
+            return CollectionUtils.unmodifiableIterator(elements.iterator());
+        }
 
-		@Override
-		public int size() {
-			return elements.size();
-		}
+        @Override
+        public int size() {
+            return elements.size();
+        }
 
-		@Override
-		public VALUE_TYPE get(final int index) {
-			return elements.get(index);
-		}
+        @Override
+        public VALUE_TYPE get(final int index) {
+            return elements.get(index);
+        }
 
-	}
+    }
 }

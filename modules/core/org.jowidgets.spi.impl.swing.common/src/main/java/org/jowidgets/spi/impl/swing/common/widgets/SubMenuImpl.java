@@ -34,45 +34,45 @@ import org.jowidgets.spi.widgets.ISubMenuSpi;
 
 public class SubMenuImpl extends AbstractSwingMenu implements ISubMenuSpi {
 
-	private final MenuItemImpl menuItemDelegate;
+    private final MenuItemImpl menuItemDelegate;
 
-	public SubMenuImpl() {
-		super(new JoMenu());
-		this.menuItemDelegate = new MenuItemImpl(getUiReference());
-	}
+    public SubMenuImpl() {
+        super(new JoMenu());
+        this.menuItemDelegate = new MenuItemImpl(getUiReference());
+    }
 
-	@Override
-	public JoMenu getUiReference() {
-		return (JoMenu) super.getUiReference();
-	}
+    @Override
+    public JoMenu getUiReference() {
+        return (JoMenu) super.getUiReference();
+    }
 
-	@Override
-	public void setText(final String text) {
-		menuItemDelegate.setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        menuItemDelegate.setText(text);
+    }
 
-	@Override
-	public void setToolTipText(final String text) {
-		menuItemDelegate.setToolTipText(text);
-	}
+    @Override
+    public void setToolTipText(final String text) {
+        menuItemDelegate.setToolTipText(text);
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		menuItemDelegate.setIcon(icon);
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        menuItemDelegate.setIcon(icon);
+    }
 
-	@Override
-	public void setMnemonic(final char mnemonic) {
-		menuItemDelegate.setMnemonic(mnemonic);
-	}
+    @Override
+    public void setMnemonic(final char mnemonic) {
+        menuItemDelegate.setMnemonic(mnemonic);
+    }
 
-	@Override
-	public void addMenuListener(final IMenuListener listener) {
-		getUiReference().addMenuListener(listener);
-	}
+    @Override
+    public void addMenuListener(final IMenuListener listener) {
+        getUiReference().addMenuListener(listener);
+    }
 
-	@Override
-	public void removeMenuListener(final IMenuListener listener) {
-		getUiReference().removeMenuListener(listener);
-	}
+    @Override
+    public void removeMenuListener(final IMenuListener listener) {
+        getUiReference().removeMenuListener(listener);
+    }
 }

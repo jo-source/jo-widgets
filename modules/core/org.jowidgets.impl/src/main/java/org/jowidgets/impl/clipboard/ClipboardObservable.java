@@ -39,39 +39,39 @@ import org.jowidgets.util.event.IObservableCallback;
 
 class ClipboardObservable implements IClipboardObservable {
 
-	private final Set<IClipboardListener> listeners;
-	private final IObservableCallback observableCallback;
+    private final Set<IClipboardListener> listeners;
+    private final IObservableCallback observableCallback;
 
-	public ClipboardObservable(final IObservableCallback observableCallback) {
-		Assert.paramNotNull(observableCallback, "observableCallback");
-		this.observableCallback = observableCallback;
-		this.listeners = new LinkedHashSet<IClipboardListener>();
-	}
+    public ClipboardObservable(final IObservableCallback observableCallback) {
+        Assert.paramNotNull(observableCallback, "observableCallback");
+        this.observableCallback = observableCallback;
+        this.listeners = new LinkedHashSet<IClipboardListener>();
+    }
 
-	@Override
-	public final void addClipboardListener(final IClipboardListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		final int lastSize = listeners.size();
-		listeners.add(listener);
-		if (lastSize == 0) {
-			observableCallback.onFirstRegistered();
-		}
-	}
+    @Override
+    public final void addClipboardListener(final IClipboardListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        final int lastSize = listeners.size();
+        listeners.add(listener);
+        if (lastSize == 0) {
+            observableCallback.onFirstRegistered();
+        }
+    }
 
-	@Override
-	public final void removeClipboardListener(final IClipboardListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		final int lastSize = listeners.size();
-		listeners.remove(listener);
-		if (lastSize > 0 && listeners.size() == 0) {
-			observableCallback.onLastUnregistered();
-		}
-	}
+    @Override
+    public final void removeClipboardListener(final IClipboardListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        final int lastSize = listeners.size();
+        listeners.remove(listener);
+        if (lastSize > 0 && listeners.size() == 0) {
+            observableCallback.onLastUnregistered();
+        }
+    }
 
-	public final void fireClipboardChanged() {
-		for (final IClipboardListener listener : new LinkedList<IClipboardListener>(listeners)) {
-			listener.clipboardChanged();
-		}
-	}
+    public final void fireClipboardChanged() {
+        for (final IClipboardListener listener : new LinkedList<IClipboardListener>(listeners)) {
+            listener.clipboardChanged();
+        }
+    }
 
 }

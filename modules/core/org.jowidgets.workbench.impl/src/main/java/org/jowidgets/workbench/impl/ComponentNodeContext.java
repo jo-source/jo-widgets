@@ -43,170 +43,170 @@ import org.jowidgets.workbench.api.IComponentNodeContext;
 
 public class ComponentNodeContext extends ComponentNodeContainerContext implements IComponentNodeContext {
 
-	private final ComponentNodeContext parentNodeContext;
-	private final TreeNodeObservable treeNodeObservable;
+    private final ComponentNodeContext parentNodeContext;
+    private final TreeNodeObservable treeNodeObservable;
 
-	private final IComponentNode componentNode;
-	private final ITreeNode treeNode;
-	private final IListModelListener popupMenuListener;
-	private final ITreeNodeListener treeNodeListener;
-	private final IMenuModel popupMenuModel;
+    private final IComponentNode componentNode;
+    private final ITreeNode treeNode;
+    private final IListModelListener popupMenuListener;
+    private final ITreeNodeListener treeNodeListener;
+    private final IMenuModel popupMenuModel;
 
-	private ComponentContext componentContext;
-	private boolean active;
+    private ComponentContext componentContext;
+    private boolean active;
 
-	public ComponentNodeContext(
-		final IComponentNode componentNode,
-		final ITreeNode treeNode,
-		final ComponentNodeContext parentNodeContext,
-		final WorkbenchApplicationContext applicationContext,
-		final WorkbenchContext workbenchContext) {
+    public ComponentNodeContext(
+        final IComponentNode componentNode,
+        final ITreeNode treeNode,
+        final ComponentNodeContext parentNodeContext,
+        final WorkbenchApplicationContext applicationContext,
+        final WorkbenchContext workbenchContext) {
 
-		super(treeNode, applicationContext, workbenchContext);
+        super(treeNode, applicationContext, workbenchContext);
 
-		this.active = false;
+        this.active = false;
 
-		this.treeNodeObservable = new TreeNodeObservable();
-		this.parentNodeContext = parentNodeContext;
-		this.componentNode = componentNode;
+        this.treeNodeObservable = new TreeNodeObservable();
+        this.parentNodeContext = parentNodeContext;
+        this.componentNode = componentNode;
 
-		this.treeNode = treeNode;
-		this.treeNode.setText(componentNode.getLabel());
-		this.treeNode.setToolTipText(componentNode.getTooltip());
-		if (componentNode.getIcon() != null) {
-			this.treeNode.setIcon(componentNode.getIcon());
-		}
+        this.treeNode = treeNode;
+        this.treeNode.setText(componentNode.getLabel());
+        this.treeNode.setToolTipText(componentNode.getTooltip());
+        if (componentNode.getIcon() != null) {
+            this.treeNode.setIcon(componentNode.getIcon());
+        }
 
-		this.treeNodeListener = createTreeNodeListener();
-		treeNode.addTreeNodeListener(treeNodeListener);
+        this.treeNodeListener = createTreeNodeListener();
+        treeNode.addTreeNodeListener(treeNodeListener);
 
-		this.popupMenuModel = new MenuModel();
-		this.popupMenuListener = createPopupMenuListener();
-		popupMenuModel.addListModelListener(popupMenuListener);
-	}
+        this.popupMenuModel = new MenuModel();
+        this.popupMenuListener = createPopupMenuListener();
+        popupMenuModel.addListModelListener(popupMenuListener);
+    }
 
-	public void activate() {
-		this.active = true;
-		getComponentContextLazy().activate();
-	}
+    public void activate() {
+        this.active = true;
+        getComponentContextLazy().activate();
+    }
 
-	public boolean isActive() {
-		return active;
-	}
+    public boolean isActive() {
+        return active;
+    }
 
-	public VetoHolder tryDeactivate() {
-		final VetoHolder vetoHolder = getComponentContextLazy().deactivate();
-		if (!vetoHolder.hasVeto()) {
-			this.active = false;
-		}
-		return vetoHolder;
-	}
+    public VetoHolder tryDeactivate() {
+        final VetoHolder vetoHolder = getComponentContextLazy().deactivate();
+        if (!vetoHolder.hasVeto()) {
+            this.active = false;
+        }
+        return vetoHolder;
+    }
 
-	@Override
-	public void setSelected(final boolean selected) {
-		treeNode.setSelected(selected);
-	}
+    @Override
+    public void setSelected(final boolean selected) {
+        treeNode.setSelected(selected);
+    }
 
-	@Override
-	public void setLabel(final String label) {
-		treeNode.setText(label);
-	}
+    @Override
+    public void setLabel(final String label) {
+        treeNode.setText(label);
+    }
 
-	@Override
-	public void setTooltip(final String tooltip) {
-		treeNode.setToolTipText(tooltip);
-	}
+    @Override
+    public void setTooltip(final String tooltip) {
+        treeNode.setToolTipText(tooltip);
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		treeNode.setIcon(icon);
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        treeNode.setIcon(icon);
+    }
 
-	@Override
-	public void setExpanded(final boolean expanded) {
-		treeNode.setExpanded(expanded);
-	}
+    @Override
+    public void setExpanded(final boolean expanded) {
+        treeNode.setExpanded(expanded);
+    }
 
-	@Override
-	public ComponentNodeContext getParent() {
-		return parentNodeContext;
-	}
+    @Override
+    public ComponentNodeContext getParent() {
+        return parentNodeContext;
+    }
 
-	@Override
-	public IMenuModel getPopupMenu() {
-		return popupMenuModel;
-	}
+    @Override
+    public IMenuModel getPopupMenu() {
+        return popupMenuModel;
+    }
 
-	@Override
-	public void addTreeNodeListener(final ITreeNodeListener listener) {
-		treeNodeObservable.addTreeNodeListener(listener);
-	}
+    @Override
+    public void addTreeNodeListener(final ITreeNodeListener listener) {
+        treeNodeObservable.addTreeNodeListener(listener);
+    }
 
-	@Override
-	public void removeTreeNodeListener(final ITreeNodeListener listener) {
-		treeNodeObservable.removeTreeNodeListener(listener);
-	}
+    @Override
+    public void removeTreeNodeListener(final ITreeNodeListener listener) {
+        treeNodeObservable.removeTreeNodeListener(listener);
+    }
 
-	protected String getGlobalId() {
-		if (getParent() != null) {
-			return getParent().getGlobalId() + "#" + componentNode.getId();
-		}
-		else {
-			return componentNode.getId();
-		}
-	}
+    protected String getGlobalId() {
+        if (getParent() != null) {
+            return getParent().getGlobalId() + "#" + componentNode.getId();
+        }
+        else {
+            return componentNode.getId();
+        }
+    }
 
-	protected ITreeNode getTreeNode() {
-		return treeNode;
-	}
+    protected ITreeNode getTreeNode() {
+        return treeNode;
+    }
 
-	protected void dispose() {
-		componentNode.onDispose();
-		if (componentContext != null) {
-			componentContext.onDispose();
-		}
-		popupMenuModel.removeListModelListener(popupMenuListener);
-		treeNode.removeTreeNodeListener(treeNodeListener);
-	}
+    protected void dispose() {
+        componentNode.onDispose();
+        if (componentContext != null) {
+            componentContext.onDispose();
+        }
+        popupMenuModel.removeListModelListener(popupMenuListener);
+        treeNode.removeTreeNodeListener(treeNodeListener);
+    }
 
-	private IListModelListener createPopupMenuListener() {
-		return new ListModelAdapter() {
+    private IListModelListener createPopupMenuListener() {
+        return new ListModelAdapter() {
 
-			@Override
-			public void afterChildRemoved(final int index) {
-				if (popupMenuModel.getChildren().size() == 0) {
-					treeNode.setPopupMenu(null);
-				}
-			}
+            @Override
+            public void afterChildRemoved(final int index) {
+                if (popupMenuModel.getChildren().size() == 0) {
+                    treeNode.setPopupMenu(null);
+                }
+            }
 
-			@Override
-			public void afterChildAdded(final int index) {
-				if (popupMenuModel.getChildren().size() == 1) {
-					treeNode.setPopupMenu(popupMenuModel);
-				}
-			}
-		};
-	}
+            @Override
+            public void afterChildAdded(final int index) {
+                if (popupMenuModel.getChildren().size() == 1) {
+                    treeNode.setPopupMenu(popupMenuModel);
+                }
+            }
+        };
+    }
 
-	private ITreeNodeListener createTreeNodeListener() {
-		return new TreeNodeAdapter() {
-			@Override
-			public void selectionChanged(final boolean selected) {
-				treeNodeObservable.fireSelectionChanged(selected);
-			}
+    private ITreeNodeListener createTreeNodeListener() {
+        return new TreeNodeAdapter() {
+            @Override
+            public void selectionChanged(final boolean selected) {
+                treeNodeObservable.fireSelectionChanged(selected);
+            }
 
-			@Override
-			public void expandedChanged(final boolean expanded) {
-				treeNodeObservable.fireExpandedChanged(expanded);
-			}
-		};
-	}
+            @Override
+            public void expandedChanged(final boolean expanded) {
+                treeNodeObservable.fireExpandedChanged(expanded);
+            }
+        };
+    }
 
-	private ComponentContext getComponentContextLazy() {
-		if (componentContext == null) {
-			componentContext = new ComponentContext(componentNode, this);
-		}
-		return componentContext;
-	}
+    private ComponentContext getComponentContextLazy() {
+        if (componentContext == null) {
+            componentContext = new ComponentContext(componentNode, this);
+        }
+        return componentContext;
+    }
 
 }

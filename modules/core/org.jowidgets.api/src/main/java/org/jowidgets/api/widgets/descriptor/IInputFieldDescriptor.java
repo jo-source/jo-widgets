@@ -32,7 +32,7 @@ import org.jowidgets.api.widgets.descriptor.setup.IInputFieldSetup;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface IInputFieldDescriptor<INPUT_TYPE> extends
-		IInputFieldSetup<INPUT_TYPE>,
-		IWidgetDescriptor<IInputField<INPUT_TYPE>> {
+        IInputFieldSetup<INPUT_TYPE>,
+        IWidgetDescriptor<IInputField<INPUT_TYPE>> {
 
 }

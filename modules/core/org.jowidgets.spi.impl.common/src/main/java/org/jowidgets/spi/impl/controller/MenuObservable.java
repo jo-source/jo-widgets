@@ -38,34 +38,34 @@ import org.jowidgets.util.Assert;
 
 public class MenuObservable implements IMenuObservable {
 
-	private final Set<IMenuListener> listeners;
+    private final Set<IMenuListener> listeners;
 
-	public MenuObservable() {
-		this.listeners = new LinkedHashSet<IMenuListener>();
-	}
+    public MenuObservable() {
+        this.listeners = new LinkedHashSet<IMenuListener>();
+    }
 
-	@Override
-	public void addMenuListener(final IMenuListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public void addMenuListener(final IMenuListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removeMenuListener(final IMenuListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeMenuListener(final IMenuListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public void fireMenuActivated() {
-		for (final IMenuListener menuListener : new LinkedList<IMenuListener>(listeners)) {
-			menuListener.menuActivated();
-		}
-	}
+    public void fireMenuActivated() {
+        for (final IMenuListener menuListener : new LinkedList<IMenuListener>(listeners)) {
+            menuListener.menuActivated();
+        }
+    }
 
-	public void fireMenuDeactivated() {
-		for (final IMenuListener menuListener : new LinkedList<IMenuListener>(listeners)) {
-			menuListener.menuDeactivated();
-		}
-	}
+    public void fireMenuDeactivated() {
+        for (final IMenuListener menuListener : new LinkedList<IMenuListener>(listeners)) {
+            menuListener.menuDeactivated();
+        }
+    }
 
 }

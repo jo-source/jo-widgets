@@ -33,34 +33,34 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ILevelMeterSetup extends IComponentSetup {
 
-	@Mandatory
-	ILevelMeterModel getModel();
+    @Mandatory
+    ILevelMeterModel getModel();
 
-	@Mandatory
-	boolean isLetteringVisible();
+    @Mandatory
+    boolean isLetteringVisible();
 
-	@Mandatory
-	int getBoxHeight();
+    @Mandatory
+    int getBoxHeight();
 
-	@Mandatory
-	int getGapSize();
+    @Mandatory
+    int getGapSize();
 
-	@Mandatory
-	IColorConstant getLowPeakColor();
+    @Mandatory
+    IColorConstant getLowPeakColor();
 
-	@Mandatory
-	IColorConstant getHighPeakColor();
+    @Mandatory
+    IColorConstant getHighPeakColor();
 
-	@Mandatory
-	IColorConstant getClipPeakColor();
+    @Mandatory
+    IColorConstant getClipPeakColor();
 
-	@Mandatory
-	IColorConstant getNoPeakColor();
+    @Mandatory
+    IColorConstant getNoPeakColor();
 
-	@Mandatory
-	double getHighPeakThreshold();
+    @Mandatory
+    double getHighPeakThreshold();
 
-	@Mandatory
-	double getClipPeakThreshold();
+    @Mandatory
+    double getClipPeakThreshold();
 
 }

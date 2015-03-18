@@ -33,17 +33,17 @@ import org.jowidgets.api.widgets.descriptor.setup.IComponentSetup;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IOfficeControlSetupBuilder<INSTANCE_TYPE extends IOfficeControlSetupBuilder<?>> extends
-		IComponentSetup,
-		IComponentSetupBuilder<INSTANCE_TYPE> {
+        IComponentSetup,
+        IComponentSetupBuilder<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setToolbarVisible(boolean visible);
+    INSTANCE_TYPE setToolbarVisible(boolean visible);
 
-	INSTANCE_TYPE setDirtyCheckIntervalMs(int interval);
+    INSTANCE_TYPE setDirtyCheckIntervalMs(int interval);
 
-	@Mandatory
-	boolean getToolbarVisible();
+    @Mandatory
+    boolean getToolbarVisible();
 
-	@Mandatory
-	int getDirtyCheckIntervalMs();
+    @Mandatory
+    int getDirtyCheckIntervalMs();
 
 }

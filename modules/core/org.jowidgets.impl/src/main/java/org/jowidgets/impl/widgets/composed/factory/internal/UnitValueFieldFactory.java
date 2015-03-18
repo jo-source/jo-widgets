@@ -36,15 +36,15 @@ import org.jowidgets.impl.widgets.composed.UnitValueFieldImpl;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class UnitValueFieldFactory<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> implements
-		IWidgetFactory<IUnitValueField<BASE_VALUE_TYPE, UNIT_VALUE_TYPE>, IUnitValueFieldDescriptor<BASE_VALUE_TYPE, UNIT_VALUE_TYPE>> {
+        IWidgetFactory<IUnitValueField<BASE_VALUE_TYPE, UNIT_VALUE_TYPE>, IUnitValueFieldDescriptor<BASE_VALUE_TYPE, UNIT_VALUE_TYPE>> {
 
-	@Override
-	public IUnitValueField<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> create(
-		final Object parentUiReference,
-		final IUnitValueFieldDescriptor<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> descriptor) {
+    @Override
+    public IUnitValueField<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> create(
+        final Object parentUiReference,
+        final IUnitValueFieldDescriptor<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> descriptor) {
 
-		final IComposite composite = Toolkit.getWidgetFactory().create(parentUiReference, BPF.composite());
-		return new UnitValueFieldImpl<BASE_VALUE_TYPE, UNIT_VALUE_TYPE>(composite, descriptor);
-	}
+        final IComposite composite = Toolkit.getWidgetFactory().create(parentUiReference, BPF.composite());
+        return new UnitValueFieldImpl<BASE_VALUE_TYPE, UNIT_VALUE_TYPE>(composite, descriptor);
+    }
 
 }

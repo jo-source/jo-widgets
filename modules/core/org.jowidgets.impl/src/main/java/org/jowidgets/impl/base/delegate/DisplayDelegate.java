@@ -33,33 +33,33 @@ import org.jowidgets.api.widgets.IWindow;
 
 public class DisplayDelegate extends DisposableDelegate {
 
-	private IWindow parent;
+    private IWindow parent;
 
-	public DisplayDelegate() {
-		super();
-	}
+    public DisplayDelegate() {
+        super();
+    }
 
-	public IWindow getParent() {
-		return parent;
-	}
+    public IWindow getParent() {
+        return parent;
+    }
 
-	public void setParent(final IWidget parent) {
-		if (this.parent == null) {
-			if (parent instanceof IWindow) {
-				this.parent = (IWindow) parent;
-			}
-			else {
-				throw new IllegalArgumentException("Parent must be instance of '" + IWindow.class.getName() + "'");
-			}
-		}
-		else if (!isReparentable()) {
-			throw new IllegalStateException("Widget is not reparentable");
-		}
-	}
+    public void setParent(final IWidget parent) {
+        if (this.parent == null) {
+            if (parent instanceof IWindow) {
+                this.parent = (IWindow) parent;
+            }
+            else {
+                throw new IllegalArgumentException("Parent must be instance of '" + IWindow.class.getName() + "'");
+            }
+        }
+        else if (!isReparentable()) {
+            throw new IllegalStateException("Widget is not reparentable");
+        }
+    }
 
-	public boolean isReparentable() {
-		//TODO MG will be implemented later
-		return false;
-	}
+    public boolean isReparentable() {
+        //TODO MG will be implemented later
+        return false;
+    }
 
 }

@@ -37,74 +37,74 @@ import org.jowidgets.common.types.Markup;
 
 public class TableCellBuilder implements ITableCellBuilder {
 
-	private final ITableCellBuilder builder;
+    private final ITableCellBuilder builder;
 
-	public TableCellBuilder() {
-		this(Toolkit.getModelFactoryProvider().getTableModelFactory().cellBuilder());
-	}
+    public TableCellBuilder() {
+        this(Toolkit.getModelFactoryProvider().getTableModelFactory().cellBuilder());
+    }
 
-	public TableCellBuilder(final ITableCellBuilder builder) {
-		super();
-		this.builder = builder;
-	}
+    public TableCellBuilder(final ITableCellBuilder builder) {
+        super();
+        this.builder = builder;
+    }
 
-	@Override
-	public final ITableCellBuilder setText(final String text) {
-		builder.setText(text);
-		return this;
-	}
+    @Override
+    public final ITableCellBuilder setText(final String text) {
+        builder.setText(text);
+        return this;
+    }
 
-	@Override
-	public final ITableCellBuilder setToolTipText(final String toolTipText) {
-		builder.setToolTipText(toolTipText);
-		return this;
-	}
+    @Override
+    public final ITableCellBuilder setToolTipText(final String toolTipText) {
+        builder.setToolTipText(toolTipText);
+        return this;
+    }
 
-	@Override
-	public final ITableCellBuilder setIcon(final IImageConstant icon) {
-		builder.setIcon(icon);
-		return this;
-	}
+    @Override
+    public final ITableCellBuilder setIcon(final IImageConstant icon) {
+        builder.setIcon(icon);
+        return this;
+    }
 
-	@Override
-	public final ITableCellBuilder setForegroundColor(final IColorConstant foregroundColor) {
-		builder.setForegroundColor(foregroundColor);
-		return this;
-	}
+    @Override
+    public final ITableCellBuilder setForegroundColor(final IColorConstant foregroundColor) {
+        builder.setForegroundColor(foregroundColor);
+        return this;
+    }
 
-	@Override
-	public final ITableCellBuilder setBackgroundColor(final IColorConstant backgroundColor) {
-		builder.setBackgroundColor(backgroundColor);
-		return this;
-	}
+    @Override
+    public final ITableCellBuilder setBackgroundColor(final IColorConstant backgroundColor) {
+        builder.setBackgroundColor(backgroundColor);
+        return this;
+    }
 
-	@Override
-	public ITableCellBuilder setSelectedForegroundColor(final IColorConstant foregroundColor) {
-		builder.setSelectedForegroundColor(foregroundColor);
-		return this;
-	}
+    @Override
+    public ITableCellBuilder setSelectedForegroundColor(final IColorConstant foregroundColor) {
+        builder.setSelectedForegroundColor(foregroundColor);
+        return this;
+    }
 
-	@Override
-	public ITableCellBuilder setSelectedBackgroundColor(final IColorConstant backgroundColor) {
-		builder.setSelectedBackgroundColor(backgroundColor);
-		return this;
-	}
+    @Override
+    public ITableCellBuilder setSelectedBackgroundColor(final IColorConstant backgroundColor) {
+        builder.setSelectedBackgroundColor(backgroundColor);
+        return this;
+    }
 
-	@Override
-	public final ITableCellBuilder setMarkup(final Markup markup) {
-		builder.setMarkup(markup);
-		return this;
-	}
+    @Override
+    public final ITableCellBuilder setMarkup(final Markup markup) {
+        builder.setMarkup(markup);
+        return this;
+    }
 
-	@Override
-	public final ITableCellBuilder setEditable(final boolean editable) {
-		builder.setEditable(editable);
-		return this;
-	}
+    @Override
+    public final ITableCellBuilder setEditable(final boolean editable) {
+        builder.setEditable(editable);
+        return this;
+    }
 
-	@Override
-	public final ITableCell build() {
-		return builder.build();
-	}
+    @Override
+    public final ITableCell build() {
+        return builder.build();
+    }
 
 }

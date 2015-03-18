@@ -41,67 +41,67 @@ import org.jowidgets.util.event.IChangeListener;
 
 public final class EnabledCheckerCompositeBuilder {
 
-	private final List<IEnabledChecker> checkers;
+    private final List<IEnabledChecker> checkers;
 
-	public EnabledCheckerCompositeBuilder() {
-		this.checkers = new LinkedList<IEnabledChecker>();
-	}
+    public EnabledCheckerCompositeBuilder() {
+        this.checkers = new LinkedList<IEnabledChecker>();
+    }
 
-	public EnabledCheckerCompositeBuilder add(final IEnabledChecker checker) {
-		Assert.paramNotNull(checker, "checker");
-		checkers.add(checker);
-		return this;
-	}
+    public EnabledCheckerCompositeBuilder add(final IEnabledChecker checker) {
+        Assert.paramNotNull(checker, "checker");
+        checkers.add(checker);
+        return this;
+    }
 
-	public IEnabledChecker build() {
-		return new EnabledCheckerComposite(checkers);
-	}
+    public IEnabledChecker build() {
+        return new EnabledCheckerComposite(checkers);
+    }
 
-	private class EnabledCheckerComposite implements IEnabledChecker {
+    private class EnabledCheckerComposite implements IEnabledChecker {
 
-		private final List<IEnabledChecker> checkers;
-		private final Set<IChangeListener> changeListeners;
+        private final List<IEnabledChecker> checkers;
+        private final Set<IChangeListener> changeListeners;
 
-		EnabledCheckerComposite(final List<IEnabledChecker> checkers) {
-			this.checkers = checkers;
-			this.changeListeners = new LinkedHashSet<IChangeListener>();
+        EnabledCheckerComposite(final List<IEnabledChecker> checkers) {
+            this.checkers = checkers;
+            this.changeListeners = new LinkedHashSet<IChangeListener>();
 
-			final IChangeListener changeListener = new IChangeListener() {
-				@Override
-				public void changed() {
-					for (final IChangeListener listener : changeListeners) {
-						listener.changed();
-					}
-				}
-			};
+            final IChangeListener changeListener = new IChangeListener() {
+                @Override
+                public void changed() {
+                    for (final IChangeListener listener : changeListeners) {
+                        listener.changed();
+                    }
+                }
+            };
 
-			for (final IEnabledChecker checker : checkers) {
-				checker.addChangeListener(changeListener);
-			}
-		}
+            for (final IEnabledChecker checker : checkers) {
+                checker.addChangeListener(changeListener);
+            }
+        }
 
-		@Override
-		public IEnabledState getEnabledState() {
-			for (final IEnabledChecker checker : checkers) {
-				final IEnabledState enabledState = checker.getEnabledState();
-				if (!enabledState.isEnabled()) {
-					return enabledState;
-				}
-			}
-			return EnabledState.ENABLED;
-		}
+        @Override
+        public IEnabledState getEnabledState() {
+            for (final IEnabledChecker checker : checkers) {
+                final IEnabledState enabledState = checker.getEnabledState();
+                if (!enabledState.isEnabled()) {
+                    return enabledState;
+                }
+            }
+            return EnabledState.ENABLED;
+        }
 
-		@Override
-		public void addChangeListener(final IChangeListener listener) {
-			Assert.paramNotNull(listener, "listener");
-			changeListeners.add(listener);
-		}
+        @Override
+        public void addChangeListener(final IChangeListener listener) {
+            Assert.paramNotNull(listener, "listener");
+            changeListeners.add(listener);
+        }
 
-		@Override
-		public void removeChangeListener(final IChangeListener listener) {
-			Assert.paramNotNull(listener, "listener");
-			changeListeners.remove(listener);
-		}
+        @Override
+        public void removeChangeListener(final IChangeListener listener) {
+            Assert.paramNotNull(listener, "listener");
+            changeListeners.remove(listener);
+        }
 
-	}
+    }
 }

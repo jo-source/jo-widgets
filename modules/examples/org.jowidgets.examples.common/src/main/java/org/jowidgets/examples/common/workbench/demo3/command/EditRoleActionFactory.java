@@ -45,42 +45,42 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class EditRoleActionFactory {
 
-	private EditRoleActionFactory() {}
+    private EditRoleActionFactory() {}
 
-	public static IAction create(final BeanTableModel<Role> model) {
-		final IActionBuilder builder = CommandAction.builder();
-		builder.setText("Edit role ...");
-		builder.setIcon(SilkIcons.GROUP_EDIT);
-		builder.setCommand(new EditRoleCommand(model), new SingleSelectionEnabledChecker(model));
-		return builder.build();
-	}
+    public static IAction create(final BeanTableModel<Role> model) {
+        final IActionBuilder builder = CommandAction.builder();
+        builder.setText("Edit role ...");
+        builder.setIcon(SilkIcons.GROUP_EDIT);
+        builder.setCommand(new EditRoleCommand(model), new SingleSelectionEnabledChecker(model));
+        return builder.build();
+    }
 
-	private static final class EditRoleCommand implements ICommandExecutor {
+    private static final class EditRoleCommand implements ICommandExecutor {
 
-		private final BeanTableModel<Role> model;
+        private final BeanTableModel<Role> model;
 
-		private EditRoleCommand(final BeanTableModel<Role> model) {
-			this.model = model;
-		}
+        private EditRoleCommand(final BeanTableModel<Role> model) {
+            this.model = model;
+        }
 
-		@Override
-		public void execute(final IExecutionContext executionContext) throws Exception {
-			final Role role = model.getSelectedBean();
-			if (role != null) {
-				final Role roleCopy = role.createCopy();
-				final IInputDialogBluePrint<Role> dialogBp = BPF.inputDialog(new RoleContentCreator(false));
-				dialogBp.setMinPackSize(new Dimension(640, 480));
-				dialogBp.setExecutionContext(executionContext);
-				dialogBp.setValue(roleCopy);
-				final IInputDialog<Role> dialog = Toolkit.getActiveWindow().createChildWindow(dialogBp);
-				dialog.setVisible(true);
-				if (dialog.isOkPressed()) {
-					role.setRole(dialog.getValue());
-					model.fireDataChanged();
-				}
-			}
-		}
+        @Override
+        public void execute(final IExecutionContext executionContext) throws Exception {
+            final Role role = model.getSelectedBean();
+            if (role != null) {
+                final Role roleCopy = role.createCopy();
+                final IInputDialogBluePrint<Role> dialogBp = BPF.inputDialog(new RoleContentCreator(false));
+                dialogBp.setMinPackSize(new Dimension(640, 480));
+                dialogBp.setExecutionContext(executionContext);
+                dialogBp.setValue(roleCopy);
+                final IInputDialog<Role> dialog = Toolkit.getActiveWindow().createChildWindow(dialogBp);
+                dialog.setVisible(true);
+                if (dialog.isOkPressed()) {
+                    role.setRole(dialog.getValue());
+                    model.fireDataChanged();
+                }
+            }
+        }
 
-	}
+    }
 
 }

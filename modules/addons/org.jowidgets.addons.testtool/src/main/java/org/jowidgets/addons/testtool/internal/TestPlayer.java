@@ -42,126 +42,126 @@ import org.jowidgets.test.api.widgets.IButtonUi;
 //CHECKSTYLE:OFF
 public class TestPlayer {
 
-	private final WidgetFinder finder;
+    private final WidgetFinder finder;
 
-	public TestPlayer() {
-		this.finder = new WidgetFinder();
-	}
+    public TestPlayer() {
+        this.finder = new WidgetFinder();
+    }
 
-	public void replayTest(final List<TestDataObject> list, final int delay) {
-		for (final TestDataObject obj : list) {
-			final Thread thread = new Thread() {
-				@Override
-				public void run() {
-					final IWidgetCommon widget = finder.findWidgetByID(WidgetRegistry.getInstance().getWidgets(), obj.getId());
-					if (widget != null) {
-						executeAction(widget, obj.getAction(), obj.getValue());
-						try {
-							Thread.sleep(delay);
-						}
-						catch (final InterruptedException e) {
-						}
-					}
-					else {
-						System.out.println("couldn't find widget with id: " + obj.getId());
-					}
-				}
-			};
-			Toolkit.getUiThreadAccess().invokeLater(thread);
-		}
-	}
+    public void replayTest(final List<TestDataObject> list, final int delay) {
+        for (final TestDataObject obj : list) {
+            final Thread thread = new Thread() {
+                @Override
+                public void run() {
+                    final IWidgetCommon widget = finder.findWidgetByID(WidgetRegistry.getInstance().getWidgets(), obj.getId());
+                    if (widget != null) {
+                        executeAction(widget, obj.getAction(), obj.getValue());
+                        try {
+                            Thread.sleep(delay);
+                        }
+                        catch (final InterruptedException e) {
+                        }
+                    }
+                    else {
+                        System.out.println("couldn't find widget with id: " + obj.getId());
+                    }
+                }
+            };
+            Toolkit.getUiThreadAccess().invokeLater(thread);
+        }
+    }
 
-	private synchronized void executeAction(final IWidgetCommon widget, final UserAction action, final String value) {
-		moveMouseToWidget(widget);
-		if (widget instanceof IButtonUi) {
-			final IButtonUi button = (IButtonUi) widget;
-			switch (action) {
-				case CLICK:
-					button.push();
-					break;
-				default:
-					throw new IllegalStateException("the given user action is not supported for this widget.");
-			}
-		}
-		else if (widget instanceof ITreeNode) {
-			final ITreeNode node = (ITreeNode) widget;
-			switch (action) {
-				case EXPAND:
-					node.setSelected(true);
-					node.setExpanded(true);
-					break;
-				case COLLAPSE:
-					node.setSelected(true);
-					node.setExpanded(false);
-					break;
-				case SELECT:
-					node.setSelected(true);
-					break;
-				default:
-					throw new IllegalStateException("the given user action is not supported for this widget.");
-			}
-		}
-		else if (widget instanceof IFrame) {
-			final IFrame frame = (IFrame) widget;
-			switch (action) {
-				case CLOSE:
-					WidgetRegistry.getInstance().removeWidget(frame);
-					frame.setVisible(false);
-					frame.dispose();
-					System.out.println("frame closed");
-					break;
-				default:
-					throw new IllegalStateException("the given user action is not supported for this widget.");
-			}
-		}
-		else if (widget instanceof IToolBarItem) {
-			switch (action) {
-				case CLICK:
-					// TODO LG push button
-					System.out.println("ToolBarButton pushed.");
-					break;
-				default:
-					throw new IllegalStateException("the given user action is not supported for this widget.");
-			}
-		}
-		else if (widget instanceof ITabItem) {
-			switch (action) {
-				case CLICK:
-					// TODO LG set selection
-					System.out.println("changing tab item selection");
-					break;
-				default:
-					throw new IllegalStateException("the given user action is not supported for this widget.");
-			}
-		}
-		else if (widget instanceof IInputField<?>) {
-			@SuppressWarnings("unchecked")
-			final IInputField<Object> inputField = (IInputField<Object>) widget;
-			final Object valueObject = inputField.getValue();
-			switch (action) {
-				case CLICK:
-					// TODO LG set selection
-					System.out.println("input field selected");
-					break;
-				case INPUT:
-					if (valueObject instanceof String) {
-						inputField.setValue(value);
-					}
-					else if (valueObject instanceof Integer) {
-						inputField.setValue(Integer.valueOf(value));
-					}
-					break;
-				default:
-					throw new IllegalStateException("the given user action is not supported for this widget.");
-			}
-		}
-		else {
-			System.out.println("the given widget is not supported.");
-		}
-	}
+    private synchronized void executeAction(final IWidgetCommon widget, final UserAction action, final String value) {
+        moveMouseToWidget(widget);
+        if (widget instanceof IButtonUi) {
+            final IButtonUi button = (IButtonUi) widget;
+            switch (action) {
+                case CLICK:
+                    button.push();
+                    break;
+                default:
+                    throw new IllegalStateException("the given user action is not supported for this widget.");
+            }
+        }
+        else if (widget instanceof ITreeNode) {
+            final ITreeNode node = (ITreeNode) widget;
+            switch (action) {
+                case EXPAND:
+                    node.setSelected(true);
+                    node.setExpanded(true);
+                    break;
+                case COLLAPSE:
+                    node.setSelected(true);
+                    node.setExpanded(false);
+                    break;
+                case SELECT:
+                    node.setSelected(true);
+                    break;
+                default:
+                    throw new IllegalStateException("the given user action is not supported for this widget.");
+            }
+        }
+        else if (widget instanceof IFrame) {
+            final IFrame frame = (IFrame) widget;
+            switch (action) {
+                case CLOSE:
+                    WidgetRegistry.getInstance().removeWidget(frame);
+                    frame.setVisible(false);
+                    frame.dispose();
+                    System.out.println("frame closed");
+                    break;
+                default:
+                    throw new IllegalStateException("the given user action is not supported for this widget.");
+            }
+        }
+        else if (widget instanceof IToolBarItem) {
+            switch (action) {
+                case CLICK:
+                    // TODO LG push button
+                    System.out.println("ToolBarButton pushed.");
+                    break;
+                default:
+                    throw new IllegalStateException("the given user action is not supported for this widget.");
+            }
+        }
+        else if (widget instanceof ITabItem) {
+            switch (action) {
+                case CLICK:
+                    // TODO LG set selection
+                    System.out.println("changing tab item selection");
+                    break;
+                default:
+                    throw new IllegalStateException("the given user action is not supported for this widget.");
+            }
+        }
+        else if (widget instanceof IInputField<?>) {
+            @SuppressWarnings("unchecked")
+            final IInputField<Object> inputField = (IInputField<Object>) widget;
+            final Object valueObject = inputField.getValue();
+            switch (action) {
+                case CLICK:
+                    // TODO LG set selection
+                    System.out.println("input field selected");
+                    break;
+                case INPUT:
+                    if (valueObject instanceof String) {
+                        inputField.setValue(value);
+                    }
+                    else if (valueObject instanceof Integer) {
+                        inputField.setValue(Integer.valueOf(value));
+                    }
+                    break;
+                default:
+                    throw new IllegalStateException("the given user action is not supported for this widget.");
+            }
+        }
+        else {
+            System.out.println("the given widget is not supported.");
+        }
+    }
 
-	private void moveMouseToWidget(final IWidgetCommon targetWidget) {
-		// TODO LG calculate target position and move mouse
-		System.out.println("moving mouse to target widget");
-	}
+    private void moveMouseToWidget(final IWidgetCommon targetWidget) {
+        // TODO LG calculate target position and move mouse
+        System.out.println("moving mouse to target widget");
+    }
 }

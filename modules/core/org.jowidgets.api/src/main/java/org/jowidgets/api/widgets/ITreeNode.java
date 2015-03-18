@@ -38,61 +38,61 @@ import org.jowidgets.common.widgets.controller.IKeyObservable;
 
 public interface ITreeNode extends IItem, ITreeContainer, ITreeNodeCheckableObservable, IKeyObservable, ITreeNodeCommon {
 
-	/**
-	 * @return The tree this node belongs to
-	 */
-	ITree getTree();
+    /**
+     * @return The tree this node belongs to
+     */
+    ITree getTree();
 
-	/**
-	 * @return True if this node is a leaf (has no children), false otherwise.
-	 */
-	boolean isLeaf();
+    /**
+     * @return True if this node is a leaf (has no children), false otherwise.
+     */
+    boolean isLeaf();
 
-	/**
-	 * @return True if this node is a top level node (has no parent), false otherwise
-	 */
-	boolean isTopLevel();
+    /**
+     * @return True if this node is a top level node (has no parent), false otherwise
+     */
+    boolean isTopLevel();
 
-	/**
-	 * @return Gets the path from the top level parent of this node to this node
-	 *         (this node is included into the path)
-	 */
-	List<ITreeNode> getPath();
+    /**
+     * @return Gets the path from the top level parent of this node to this node
+     *         (this node is included into the path)
+     */
+    List<ITreeNode> getPath();
 
-	/**
-	 * @return A IPopupMenu for this node
-	 */
-	IPopupMenu createPopupMenu();
+    /**
+     * @return A IPopupMenu for this node
+     */
+    IPopupMenu createPopupMenu();
 
-	/**
-	 * Sets a popup menu for this node.
-	 * The popup menu will be shown, when an popup event occurs on this node.
-	 * 
-	 * @param menuModel
-	 *            The model of the popup menu or null, if no popup should be shown on popup events
-	 */
-	void setPopupMenu(IMenuModel popupMenu);
+    /**
+     * Sets a popup menu for this node.
+     * The popup menu will be shown, when an popup event occurs on this node.
+     * 
+     * @param menuModel
+     *            The model of the popup menu or null, if no popup should be shown on popup events
+     */
+    void setPopupMenu(IMenuModel popupMenu);
 
-	@Override
-	ITreeNode getParent();
+    @Override
+    ITreeNode getParent();
 
-	CheckedState getCheckedState();
+    CheckedState getCheckedState();
 
-	void setCheckedState(CheckedState state);
+    void setCheckedState(CheckedState state);
 
-	/**
-	 * Sets the node to the greyed state.
-	 * If set, the isChecked() and isUnchecked() methods will return false both,
-	 * and the isGreyed() method will return true
-	 */
-	void setGreyed();
+    /**
+     * Sets the node to the greyed state.
+     * If set, the isChecked() and isUnchecked() methods will return false both,
+     * and the isGreyed() method will return true
+     */
+    void setGreyed();
 
-	/**
-	 * Checks if node is unchecked. If true it is not checked and not greyed, if false it my be greyed or checked
-	 * 
-	 * @return The unchecked state
-	 */
-	boolean isUnchecked();
+    /**
+     * Checks if node is unchecked. If true it is not checked and not greyed, if false it my be greyed or checked
+     * 
+     * @return The unchecked state
+     */
+    boolean isUnchecked();
 
-	boolean isCheckable();
+    boolean isCheckable();
 }

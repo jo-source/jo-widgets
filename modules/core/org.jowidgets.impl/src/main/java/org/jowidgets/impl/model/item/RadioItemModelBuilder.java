@@ -32,19 +32,19 @@ import org.jowidgets.api.model.item.IRadioItemModel;
 import org.jowidgets.api.model.item.IRadioItemModelBuilder;
 
 public class RadioItemModelBuilder extends AbstractSelectableItemModelBuilder<IRadioItemModelBuilder, IRadioItemModel> implements
-		IRadioItemModelBuilder {
+        IRadioItemModelBuilder {
 
-	@Override
-	public IRadioItemModel build() {
-		return new RadioItemModelImpl(
-			getId(),
-			getText(),
-			getToolTipText(),
-			getIcon(),
-			getAccelerator(),
-			getMnemonic(),
-			isEnabled(),
-			isSelected());
-	}
+    @Override
+    public IRadioItemModel build() {
+        return new RadioItemModelImpl(
+            getId(),
+            getText(),
+            getToolTipText(),
+            getIcon(),
+            getAccelerator(),
+            getMnemonic(),
+            isEnabled(),
+            isSelected());
+    }
 
 }

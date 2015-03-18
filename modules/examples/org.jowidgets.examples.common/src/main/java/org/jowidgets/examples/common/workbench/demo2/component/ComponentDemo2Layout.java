@@ -45,72 +45,72 @@ import org.jowidgets.workbench.tools.SplitLayoutBuilder;
 
 public class ComponentDemo2Layout {
 
-	public static final String DEFAULT_LAYOUT_ID = "DEFAULT_LAYOUT_ID";
-	public static final String MASTER_FOLDER_ID = "MASTER_FOLDER_ID";
-	public static final String MEDIA_FOLDER_ID = "MEDIA_FOLDER_ID";
-	public static final String DETAIL_FOLDER_ID = "DETAIL_FOLDER_ID";
-	public static final String REPORTS_FOLDER_ID = "REPORTS_FOLDER_ID";
+    public static final String DEFAULT_LAYOUT_ID = "DEFAULT_LAYOUT_ID";
+    public static final String MASTER_FOLDER_ID = "MASTER_FOLDER_ID";
+    public static final String MEDIA_FOLDER_ID = "MEDIA_FOLDER_ID";
+    public static final String DETAIL_FOLDER_ID = "DETAIL_FOLDER_ID";
+    public static final String REPORTS_FOLDER_ID = "REPORTS_FOLDER_ID";
 
-	private final ILayout layout;
+    private final ILayout layout;
 
-	public ComponentDemo2Layout(final LayoutScope scope) {
-		final ILayoutBuilder builder = new LayoutBuilder();
-		builder.setId(DEFAULT_LAYOUT_ID).setScope(scope).setLayoutContainer(createMainSplit());
-		this.layout = builder.build();
-	}
+    public ComponentDemo2Layout(final LayoutScope scope) {
+        final ILayoutBuilder builder = new LayoutBuilder();
+        builder.setId(DEFAULT_LAYOUT_ID).setScope(scope).setLayoutContainer(createMainSplit());
+        this.layout = builder.build();
+    }
 
-	public ILayout getLayout() {
-		return layout;
-	}
+    public ILayout getLayout() {
+        return layout;
+    }
 
-	private ISplitLayoutBuilder createMainSplit() {
-		final ISplitLayoutBuilder result = new SplitLayoutBuilder();
-		result.setHorizontal().setWeight(0.78).setResizeFirst();
-		result.setFirstContainer(createMasterDetailSplit());
-		result.setSecondContainer(createReportsFolder());
-		return result;
-	}
+    private ISplitLayoutBuilder createMainSplit() {
+        final ISplitLayoutBuilder result = new SplitLayoutBuilder();
+        result.setHorizontal().setWeight(0.78).setResizeFirst();
+        result.setFirstContainer(createMasterDetailSplit());
+        result.setSecondContainer(createReportsFolder());
+        return result;
+    }
 
-	private ISplitLayoutBuilder createMasterDetailSplit() {
-		final ISplitLayoutBuilder result = new SplitLayoutBuilder();
-		result.setVertical().setWeight(0.55).setResizeFirst();
-		result.setFirstContainer(createMasterFolder());
-		result.setSecondContainer(createDetailSplit());
-		return result;
-	}
+    private ISplitLayoutBuilder createMasterDetailSplit() {
+        final ISplitLayoutBuilder result = new SplitLayoutBuilder();
+        result.setVertical().setWeight(0.55).setResizeFirst();
+        result.setFirstContainer(createMasterFolder());
+        result.setSecondContainer(createDetailSplit());
+        return result;
+    }
 
-	private IFolderLayoutBuilder createMasterFolder() {
-		final IFolderLayoutBuilder result = new FolderLayoutBuilder(MASTER_FOLDER_ID);
-		result.addView(BigTableView.ID, BigTableView.DEFAULT_LABEL, BigTableView.DEFAULT_TOOLTIP, BigTableView.DEFAULT_ICON);
-		return result;
-	}
+    private IFolderLayoutBuilder createMasterFolder() {
+        final IFolderLayoutBuilder result = new FolderLayoutBuilder(MASTER_FOLDER_ID);
+        result.addView(BigTableView.ID, BigTableView.DEFAULT_LABEL, BigTableView.DEFAULT_TOOLTIP, BigTableView.DEFAULT_ICON);
+        return result;
+    }
 
-	private ISplitLayoutBuilder createDetailSplit() {
-		final ISplitLayoutBuilder result = new SplitLayoutBuilder();
-		result.setHorizontal().setWeight(0.28).setResizeSecond();
-		result.setFirstContainer(createMediaFolder());
-		result.setSecondContainer(createDetailFolder());
-		return result;
-	}
+    private ISplitLayoutBuilder createDetailSplit() {
+        final ISplitLayoutBuilder result = new SplitLayoutBuilder();
+        result.setHorizontal().setWeight(0.28).setResizeSecond();
+        result.setFirstContainer(createMediaFolder());
+        result.setSecondContainer(createDetailFolder());
+        return result;
+    }
 
-	private IFolderLayoutBuilder createMediaFolder() {
-		final IFolderLayoutBuilder result = new FolderLayoutBuilder(MEDIA_FOLDER_ID);
-		result.addView(MediaView.ID, MediaView.DEFAULT_LABEL, MediaView.DEFAULT_TOOLTIP, MediaView.DEFAULT_ICON);
-		return result;
-	}
+    private IFolderLayoutBuilder createMediaFolder() {
+        final IFolderLayoutBuilder result = new FolderLayoutBuilder(MEDIA_FOLDER_ID);
+        result.addView(MediaView.ID, MediaView.DEFAULT_LABEL, MediaView.DEFAULT_TOOLTIP, MediaView.DEFAULT_ICON);
+        return result;
+    }
 
-	private IFolderLayoutBuilder createDetailFolder() {
-		final IFolderLayoutBuilder result = new FolderLayoutBuilder(DETAIL_FOLDER_ID);
-		result.addView(UserTableView.ID, UserTableView.DEFAULT_LABEL, UserTableView.DEFAULT_TOOLTIP, UserTableView.DEFAULT_ICON);
-		result.addView(EmptyView.ID, EmptyView.DEFAULT_LABEL, EmptyView.DEFAULT_TOOLTIP, EmptyView.DEFAULT_ICON);
-		return result;
-	}
+    private IFolderLayoutBuilder createDetailFolder() {
+        final IFolderLayoutBuilder result = new FolderLayoutBuilder(DETAIL_FOLDER_ID);
+        result.addView(UserTableView.ID, UserTableView.DEFAULT_LABEL, UserTableView.DEFAULT_TOOLTIP, UserTableView.DEFAULT_ICON);
+        result.addView(EmptyView.ID, EmptyView.DEFAULT_LABEL, EmptyView.DEFAULT_TOOLTIP, EmptyView.DEFAULT_ICON);
+        return result;
+    }
 
-	private IFolderLayoutBuilder createReportsFolder() {
-		final IFolderLayoutBuilder result = new FolderLayoutBuilder(REPORTS_FOLDER_ID);
-		result.addView(ReportsView.ID, ReportsView.DEFAULT_LABEL, ReportsView.DEFAULT_TOOLTIP, ReportsView.DEFAULT_ICON);
-		result.addView(CalendarView.ID, CalendarView.DEFAULT_LABEL, CalendarView.DEFAULT_TOOLTIP, CalendarView.DEFAULT_ICON);
-		return result;
-	}
+    private IFolderLayoutBuilder createReportsFolder() {
+        final IFolderLayoutBuilder result = new FolderLayoutBuilder(REPORTS_FOLDER_ID);
+        result.addView(ReportsView.ID, ReportsView.DEFAULT_LABEL, ReportsView.DEFAULT_TOOLTIP, ReportsView.DEFAULT_ICON);
+        result.addView(CalendarView.ID, CalendarView.DEFAULT_LABEL, CalendarView.DEFAULT_TOOLTIP, CalendarView.DEFAULT_ICON);
+        return result;
+    }
 
 }

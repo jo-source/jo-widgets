@@ -44,52 +44,52 @@ import org.jowidgets.util.Assert;
 
 final class DragDropDelegate {
 
-	private final IDragDropSpiSupport dragDropSpiSupport;
+    private final IDragDropSpiSupport dragDropSpiSupport;
 
-	private Map<TransferTypeSpi, TransferType<?>> supportedTypes;
+    private Map<TransferTypeSpi, TransferType<?>> supportedTypes;
 
-	DragDropDelegate(final IDragDropSpiSupport dragDropSpiSupport) {
-		this.dragDropSpiSupport = dragDropSpiSupport;
-	}
+    DragDropDelegate(final IDragDropSpiSupport dragDropSpiSupport) {
+        this.dragDropSpiSupport = dragDropSpiSupport;
+    }
 
-	void setTransferTypes(final Collection<TransferType<?>> types) {
-		Assert.paramNotNull(types, "types");
-		this.supportedTypes = new LinkedHashMap<TransferTypeSpi, TransferType<?>>();
-		final List<TransferTypeSpi> transferTypesSpi = new LinkedList<TransferTypeSpi>();
-		for (final TransferType<?> transferType : types) {
-			final TransferTypeSpi transferTypeSpi = new TransferTypeSpi(transferType.getJavaType());
-			transferTypesSpi.add(transferTypeSpi);
-			supportedTypes.put(transferTypeSpi, transferType);
-		}
-		dragDropSpiSupport.setTransferTypesSpi(transferTypesSpi);
-	}
+    void setTransferTypes(final Collection<TransferType<?>> types) {
+        Assert.paramNotNull(types, "types");
+        this.supportedTypes = new LinkedHashMap<TransferTypeSpi, TransferType<?>>();
+        final List<TransferTypeSpi> transferTypesSpi = new LinkedList<TransferTypeSpi>();
+        for (final TransferType<?> transferType : types) {
+            final TransferTypeSpi transferTypeSpi = new TransferTypeSpi(transferType.getJavaType());
+            transferTypesSpi.add(transferTypeSpi);
+            supportedTypes.put(transferTypeSpi, transferType);
+        }
+        dragDropSpiSupport.setTransferTypesSpi(transferTypesSpi);
+    }
 
-	void setTransferTypes(final TransferType<?>... supportedTypes) {
-		Assert.paramNotNull(supportedTypes, "supportedTypes");
-		setTransferTypes(Arrays.asList(supportedTypes));
-	}
+    void setTransferTypes(final TransferType<?>... supportedTypes) {
+        Assert.paramNotNull(supportedTypes, "supportedTypes");
+        setTransferTypes(Arrays.asList(supportedTypes));
+    }
 
-	void setActions(final Set<DropAction> actions) {
-		Assert.paramNotNull(actions, "actions");
-		dragDropSpiSupport.setActionsSpi(actions);
-	}
+    void setActions(final Set<DropAction> actions) {
+        Assert.paramNotNull(actions, "actions");
+        dragDropSpiSupport.setActionsSpi(actions);
+    }
 
-	void setActions(final DropAction... actions) {
-		Assert.paramNotNull(actions, "actions");
-		final Set<DropAction> actionsSet = new HashSet<DropAction>();
-		for (int i = 0; i < actions.length; i++) {
-			actionsSet.add(actions[i]);
-		}
-		setActions(actionsSet);
-	}
+    void setActions(final DropAction... actions) {
+        Assert.paramNotNull(actions, "actions");
+        final Set<DropAction> actionsSet = new HashSet<DropAction>();
+        for (int i = 0; i < actions.length; i++) {
+            actionsSet.add(actions[i]);
+        }
+        setActions(actionsSet);
+    }
 
-	TransferType<?> getTransferType(final TransferTypeSpi transferTypeSpi) {
-		if (TransferTypeSpi.UNKNOWN_TYPE.equals(transferTypeSpi)) {
-			return TransferType.UNKOWN_TYPE;
-		}
-		else {
-			return supportedTypes.get(transferTypeSpi);
-		}
-	}
+    TransferType<?> getTransferType(final TransferTypeSpi transferTypeSpi) {
+        if (TransferTypeSpi.UNKNOWN_TYPE.equals(transferTypeSpi)) {
+            return TransferType.UNKOWN_TYPE;
+        }
+        else {
+            return supportedTypes.get(transferTypeSpi);
+        }
+    }
 
 }

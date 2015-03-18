@@ -36,29 +36,29 @@ import org.jowidgets.common.image.IUrlImageDescriptor;
 @SuppressWarnings("deprecation")
 public class UIDImage {
 
-	private final String description;
+    private final String description;
 
-	public UIDImage(final String description) {
-		this.description = description;
-	}
+    public UIDImage(final String description) {
+        this.description = description;
+    }
 
-	public UIDImage(final IImageDescriptor imageDescriptor) {
-		if (imageDescriptor instanceof IUrlImageDescriptor) {
-			this.description = "URL: " + ((IUrlImageDescriptor) imageDescriptor).getImageUrl();
-		}
-		else if (imageDescriptor instanceof IStreamFactoryImageDescriptor) {
-			this.description = "INPUT STREAM: " + ((IStreamFactoryImageDescriptor) imageDescriptor).createInputStream();
-		}
-		else if (imageDescriptor instanceof IStreamImageDescriptor) {
-			this.description = "INPUT STREAM: " + ((IStreamImageDescriptor) imageDescriptor).getInputStream();
-		}
-		else {
-			throw new IllegalArgumentException("Image decriptor type '" + imageDescriptor + "' is not known");
-		}
-	}
+    public UIDImage(final IImageDescriptor imageDescriptor) {
+        if (imageDescriptor instanceof IUrlImageDescriptor) {
+            this.description = "URL: " + ((IUrlImageDescriptor) imageDescriptor).getImageUrl();
+        }
+        else if (imageDescriptor instanceof IStreamFactoryImageDescriptor) {
+            this.description = "INPUT STREAM: " + ((IStreamFactoryImageDescriptor) imageDescriptor).createInputStream();
+        }
+        else if (imageDescriptor instanceof IStreamImageDescriptor) {
+            this.description = "INPUT STREAM: " + ((IStreamImageDescriptor) imageDescriptor).getInputStream();
+        }
+        else {
+            throw new IllegalArgumentException("Image decriptor type '" + imageDescriptor + "' is not known");
+        }
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
 }

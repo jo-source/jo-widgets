@@ -36,12 +36,12 @@ import org.jowidgets.common.dnd.DropAction;
 
 public interface IDragSource extends IDragSourceObservable {
 
-	void setTransferTypes(Collection<TransferType<?>> supportedTypes);
+    void setTransferTypes(Collection<TransferType<?>> supportedTypes);
 
-	void setTransferTypes(TransferType<?>... supportedTypes);
+    void setTransferTypes(TransferType<?>... supportedTypes);
 
-	void setActions(Set<DropAction> actions);
+    void setActions(Set<DropAction> actions);
 
-	void setActions(DropAction... actions);
+    void setActions(DropAction... actions);
 
 }

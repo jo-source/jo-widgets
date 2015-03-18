@@ -32,25 +32,25 @@ import org.jowidgets.api.model.item.IToolBarModel;
 
 public interface IWorkbenchApplicationContext extends IComponentNodeContainerContext {
 
-	/**
-	 * Gets the toolBar model.
-	 * 
-	 * @return the toolBar model
-	 */
-	IToolBarModel getToolBar();
+    /**
+     * Gets the toolBar model.
+     * 
+     * @return the toolBar model
+     */
+    IToolBarModel getToolBar();
 
-	/**
-	 * Gets the toolBar menu model.
-	 * 
-	 * @return the toolBar menu model
-	 */
-	IMenuModel getToolBarMenu();
+    /**
+     * Gets the toolBar menu model.
+     * 
+     * @return the toolBar menu model
+     */
+    IMenuModel getToolBarMenu();
 
-	/**
-	 * Gets the popup menu.
-	 * 
-	 * @return the popup menu model
-	 */
-	IMenuModel getPopupMenu();
+    /**
+     * Gets the popup menu.
+     * 
+     * @return the popup menu model
+     */
+    IMenuModel getPopupMenu();
 
 }

@@ -30,53 +30,53 @@ package org.jowidgets.validation;
 
 public final class ValidationMessage {
 
-	private static final IValidationMessage OK = create(MessageType.OK, null, "");
+    private static final IValidationMessage OK = create(MessageType.OK, null, "");
 
-	private ValidationMessage() {}
+    private ValidationMessage() {}
 
-	public static IValidationMessage ok() {
-		return OK;
-	}
+    public static IValidationMessage ok() {
+        return OK;
+    }
 
-	public static IValidationMessage create(final MessageType type, final String context, final String text) {
-		Assert.paramNotNull(type, "type");
-		return new ValidationMessageImpl(type, context, text);
-	}
+    public static IValidationMessage create(final MessageType type, final String context, final String text) {
+        Assert.paramNotNull(type, "type");
+        return new ValidationMessageImpl(type, context, text);
+    }
 
-	public static IValidationMessage create(final MessageType type, final String text) {
-		return create(type, null, text);
-	}
+    public static IValidationMessage create(final MessageType type, final String text) {
+        return create(type, null, text);
+    }
 
-	public static IValidationMessage error(final String context, final String text) {
-		return create(MessageType.ERROR, context, text);
-	}
+    public static IValidationMessage error(final String context, final String text) {
+        return create(MessageType.ERROR, context, text);
+    }
 
-	public static IValidationMessage error(final String message) {
-		return error(null, message);
-	}
+    public static IValidationMessage error(final String message) {
+        return error(null, message);
+    }
 
-	public static IValidationMessage infoError(final String context, final String text) {
-		return create(MessageType.INFO_ERROR, context, text);
-	}
+    public static IValidationMessage infoError(final String context, final String text) {
+        return create(MessageType.INFO_ERROR, context, text);
+    }
 
-	public static IValidationMessage infoError(final String text) {
-		return infoError(null, text);
-	}
+    public static IValidationMessage infoError(final String text) {
+        return infoError(null, text);
+    }
 
-	public static IValidationMessage warning(final String context, final String text) {
-		return create(MessageType.WARNING, context, text);
-	}
+    public static IValidationMessage warning(final String context, final String text) {
+        return create(MessageType.WARNING, context, text);
+    }
 
-	public static IValidationMessage warning(final String text) {
-		return warning(null, text);
-	}
+    public static IValidationMessage warning(final String text) {
+        return warning(null, text);
+    }
 
-	public static IValidationMessage info(final String context, final String text) {
-		return create(MessageType.INFO, context, text);
-	}
+    public static IValidationMessage info(final String context, final String text) {
+        return create(MessageType.INFO, context, text);
+    }
 
-	public static IValidationMessage info(final String text) {
-		return info(null, text);
-	}
+    public static IValidationMessage info(final String text) {
+        return info(null, text);
+    }
 
 }

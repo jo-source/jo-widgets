@@ -36,143 +36,143 @@ import org.junit.Test;
 
 public class ValidationResultTest {
 
-	@Test
-	public void testOkResult() {
-		final IValidationResult ok = ValidationResult.ok();
-		Assert.assertEquals(ok.getWorstFirst().getType(), MessageType.OK);
-	}
+    @Test
+    public void testOkResult() {
+        final IValidationResult ok = ValidationResult.ok();
+        Assert.assertEquals(ok.getWorstFirst().getType(), MessageType.OK);
+    }
 
-	@Test
-	public void testResult() {
-		final IValidationResult result = ValidationResult.create();
-		Assert.assertEquals(result.getWorstFirst().getType(), MessageType.OK);
-		Assert.assertTrue(result.isValid());
+    @Test
+    public void testResult() {
+        final IValidationResult result = ValidationResult.create();
+        Assert.assertEquals(result.getWorstFirst().getType(), MessageType.OK);
+        Assert.assertTrue(result.isValid());
 
-		testEmptyResultList(result.getAll());
-		testEmptyResultList(result.getErrors());
-		testEmptyResultList(result.getInfoErrors());
-		testEmptyResultList(result.getWarnings());
+        testEmptyResultList(result.getAll());
+        testEmptyResultList(result.getErrors());
+        testEmptyResultList(result.getInfoErrors());
+        testEmptyResultList(result.getWarnings());
 
-		IValidationResult withAdded = result.withWarning("TEXT");
-		Assert.assertTrue(withAdded.getWorstFirst().getType() == MessageType.WARNING);
-		Assert.assertTrue(withAdded.getAll().size() == 1);
-		Assert.assertTrue(withAdded.getErrors().size() == 0);
-		Assert.assertTrue(withAdded.getInfoErrors().size() == 0);
-		Assert.assertTrue(withAdded.getWarnings().size() == 1);
+        IValidationResult withAdded = result.withWarning("TEXT");
+        Assert.assertTrue(withAdded.getWorstFirst().getType() == MessageType.WARNING);
+        Assert.assertTrue(withAdded.getAll().size() == 1);
+        Assert.assertTrue(withAdded.getErrors().size() == 0);
+        Assert.assertTrue(withAdded.getInfoErrors().size() == 0);
+        Assert.assertTrue(withAdded.getWarnings().size() == 1);
 
-		withAdded = withAdded.withWarning("TEXT2");
-		Assert.assertTrue(withAdded.isValid());
-		Assert.assertTrue(withAdded.getWorstFirst().getType() == MessageType.WARNING);
-		Assert.assertTrue("TEXT".equals(withAdded.getWorstFirst().getText()));
-		Assert.assertTrue(withAdded.getAll().size() == 2);
-		Assert.assertTrue(withAdded.getErrors().size() == 0);
-		Assert.assertTrue(withAdded.getInfoErrors().size() == 0);
-		Assert.assertTrue(withAdded.getWarnings().size() == 2);
+        withAdded = withAdded.withWarning("TEXT2");
+        Assert.assertTrue(withAdded.isValid());
+        Assert.assertTrue(withAdded.getWorstFirst().getType() == MessageType.WARNING);
+        Assert.assertTrue("TEXT".equals(withAdded.getWorstFirst().getText()));
+        Assert.assertTrue(withAdded.getAll().size() == 2);
+        Assert.assertTrue(withAdded.getErrors().size() == 0);
+        Assert.assertTrue(withAdded.getInfoErrors().size() == 0);
+        Assert.assertTrue(withAdded.getWarnings().size() == 2);
 
-		withAdded = withAdded.withInfoError("TEXT3");
-		Assert.assertFalse(withAdded.isValid());
-		Assert.assertTrue(withAdded.getWorstFirst().getType() == MessageType.INFO_ERROR);
-		Assert.assertTrue(withAdded.getAll().size() == 3);
-		Assert.assertTrue(withAdded.getErrors().size() == 0);
-		Assert.assertTrue(withAdded.getInfoErrors().size() == 1);
-		Assert.assertTrue(withAdded.getWarnings().size() == 2);
+        withAdded = withAdded.withInfoError("TEXT3");
+        Assert.assertFalse(withAdded.isValid());
+        Assert.assertTrue(withAdded.getWorstFirst().getType() == MessageType.INFO_ERROR);
+        Assert.assertTrue(withAdded.getAll().size() == 3);
+        Assert.assertTrue(withAdded.getErrors().size() == 0);
+        Assert.assertTrue(withAdded.getInfoErrors().size() == 1);
+        Assert.assertTrue(withAdded.getWarnings().size() == 2);
 
-		withAdded = withAdded.withWarning("TEXT4");
-		Assert.assertFalse(withAdded.isValid());
-		Assert.assertTrue(withAdded.getWorstFirst().getType() == MessageType.INFO_ERROR);
-		Assert.assertTrue(withAdded.getAll().size() == 4);
-		Assert.assertTrue(withAdded.getErrors().size() == 0);
-		Assert.assertTrue(withAdded.getInfoErrors().size() == 1);
-		Assert.assertTrue(withAdded.getWarnings().size() == 3);
+        withAdded = withAdded.withWarning("TEXT4");
+        Assert.assertFalse(withAdded.isValid());
+        Assert.assertTrue(withAdded.getWorstFirst().getType() == MessageType.INFO_ERROR);
+        Assert.assertTrue(withAdded.getAll().size() == 4);
+        Assert.assertTrue(withAdded.getErrors().size() == 0);
+        Assert.assertTrue(withAdded.getInfoErrors().size() == 1);
+        Assert.assertTrue(withAdded.getWarnings().size() == 3);
 
-		withAdded = withAdded.withError("TEXT5");
-		Assert.assertFalse(withAdded.isValid());
-		Assert.assertTrue(withAdded.getWorstFirst().getType() == MessageType.ERROR);
-		Assert.assertTrue("TEXT5".equals(withAdded.getWorstFirst().getText()));
-		Assert.assertTrue(withAdded.getAll().size() == 5);
-		Assert.assertTrue(withAdded.getErrors().size() == 1);
-		Assert.assertTrue(withAdded.getInfoErrors().size() == 1);
-		Assert.assertTrue(withAdded.getWarnings().size() == 3);
+        withAdded = withAdded.withError("TEXT5");
+        Assert.assertFalse(withAdded.isValid());
+        Assert.assertTrue(withAdded.getWorstFirst().getType() == MessageType.ERROR);
+        Assert.assertTrue("TEXT5".equals(withAdded.getWorstFirst().getText()));
+        Assert.assertTrue(withAdded.getAll().size() == 5);
+        Assert.assertTrue(withAdded.getErrors().size() == 1);
+        Assert.assertTrue(withAdded.getInfoErrors().size() == 1);
+        Assert.assertTrue(withAdded.getWarnings().size() == 3);
 
-		testContextNull(withAdded.getAll());
+        testContextNull(withAdded.getAll());
 
-		IValidationResult result2 = ValidationResult.create();
-		result2 = result2.withError("TEXT6");
-		result2 = result2.withInfoError("TEXT7");
-		result2 = result2.withWarning("TEXT8");
+        IValidationResult result2 = ValidationResult.create();
+        result2 = result2.withError("TEXT6");
+        result2 = result2.withInfoError("TEXT7");
+        result2 = result2.withWarning("TEXT8");
 
-		IValidationResult withResult = withAdded.withResult(result2);
-		Assert.assertFalse(withResult.isValid());
-		Assert.assertTrue(withResult.getWorstFirst().getType() == MessageType.ERROR);
-		Assert.assertTrue("TEXT5".equals(withResult.getWorstFirst().getText()));
-		Assert.assertTrue(withResult.getAll().size() == 8);
-		Assert.assertTrue(withResult.getErrors().size() == 2);
-		Assert.assertTrue(withResult.getInfoErrors().size() == 2);
-		Assert.assertTrue(withResult.getWarnings().size() == 4);
+        IValidationResult withResult = withAdded.withResult(result2);
+        Assert.assertFalse(withResult.isValid());
+        Assert.assertTrue(withResult.getWorstFirst().getType() == MessageType.ERROR);
+        Assert.assertTrue("TEXT5".equals(withResult.getWorstFirst().getText()));
+        Assert.assertTrue(withResult.getAll().size() == 8);
+        Assert.assertTrue(withResult.getErrors().size() == 2);
+        Assert.assertTrue(withResult.getInfoErrors().size() == 2);
+        Assert.assertTrue(withResult.getWarnings().size() == 4);
 
-		withResult = withAdded.withResult(result2);
-		Assert.assertFalse(withResult.isValid());
-		Assert.assertTrue(withResult.getWorstFirst().getType() == MessageType.ERROR);
-		Assert.assertTrue("TEXT5".equals(withResult.getWorstFirst().getText()));
-		Assert.assertTrue(withResult.getAll().size() == 8);
-		Assert.assertTrue(withResult.getErrors().size() == 2);
-		Assert.assertTrue(withResult.getInfoErrors().size() == 2);
-		Assert.assertTrue(withResult.getWarnings().size() == 4);
+        withResult = withAdded.withResult(result2);
+        Assert.assertFalse(withResult.isValid());
+        Assert.assertTrue(withResult.getWorstFirst().getType() == MessageType.ERROR);
+        Assert.assertTrue("TEXT5".equals(withResult.getWorstFirst().getText()));
+        Assert.assertTrue(withResult.getAll().size() == 8);
+        Assert.assertTrue(withResult.getErrors().size() == 2);
+        Assert.assertTrue(withResult.getInfoErrors().size() == 2);
+        Assert.assertTrue(withResult.getWarnings().size() == 4);
 
-		final IValidationResult withContext = withAdded.withContext("NEW_CONTEXT");
-		assertContext(withContext.getAll(), "NEW_CONTEXT");
+        final IValidationResult withContext = withAdded.withContext("NEW_CONTEXT");
+        assertContext(withContext.getAll(), "NEW_CONTEXT");
 
-		final IValidationResult newWithContext = withContext.withContext("NEW_CONTEXT");
-		Assert.assertTrue(withContext == newWithContext);
+        final IValidationResult newWithContext = withContext.withContext("NEW_CONTEXT");
+        Assert.assertTrue(withContext == newWithContext);
 
-	}
+    }
 
-	@Test
-	public void testContextRemainsUnchanged() {
-		final String context0 = "CONTEXT0";
-		final String context1 = "CONTEXT1";
-		final String context2 = "CONTEXT2";
+    @Test
+    public void testContextRemainsUnchanged() {
+        final String context0 = "CONTEXT0";
+        final String context1 = "CONTEXT1";
+        final String context2 = "CONTEXT2";
 
-		final String newContext = "NEW_CONTEXT";
+        final String newContext = "NEW_CONTEXT";
 
-		IValidationResult result = ValidationResult.create();
+        IValidationResult result = ValidationResult.create();
 
-		result = result.withError(context0, null);
-		result = result.withError(context1, null);
-		result = result.withError(context2, null);
+        result = result.withError(context0, null);
+        result = result.withError(context1, null);
+        result = result.withError(context2, null);
 
-		final List<IValidationMessage> errors = result.getErrors();
+        final List<IValidationMessage> errors = result.getErrors();
 
-		Assert.assertTrue(errors.get(0).getContext().equals(context0));
-		Assert.assertTrue(errors.get(1).getContext().equals(context1));
-		Assert.assertTrue(errors.get(2).getContext().equals(context2));
+        Assert.assertTrue(errors.get(0).getContext().equals(context0));
+        Assert.assertTrue(errors.get(1).getContext().equals(context1));
+        Assert.assertTrue(errors.get(2).getContext().equals(context2));
 
-		result = result.withContext(newContext);
+        result = result.withContext(newContext);
 
-		assertContext(result.getAll(), newContext);
-	}
+        assertContext(result.getAll(), newContext);
+    }
 
-	private void testContextNull(final List<IValidationMessage> messages) {
-		for (final IValidationMessage message : messages) {
-			Assert.assertNull(message.getContext());
-		}
-	}
+    private void testContextNull(final List<IValidationMessage> messages) {
+        for (final IValidationMessage message : messages) {
+            Assert.assertNull(message.getContext());
+        }
+    }
 
-	private void assertContext(final List<IValidationMessage> messages, final String context) {
-		for (final IValidationMessage message : messages) {
-			Assert.assertEquals(message.getContext(), context);
-		}
-	}
+    private void assertContext(final List<IValidationMessage> messages, final String context) {
+        for (final IValidationMessage message : messages) {
+            Assert.assertEquals(message.getContext(), context);
+        }
+    }
 
-	private void testEmptyResultList(final List<IValidationMessage> messages) {
-		Assert.assertNotNull(messages);
-		Assert.assertTrue(messages.size() == 0);
-	}
+    private void testEmptyResultList(final List<IValidationMessage> messages) {
+        Assert.assertNotNull(messages);
+        Assert.assertTrue(messages.size() == 0);
+    }
 
-	@Test(expected = RuntimeException.class)
-	public void testReadonlyLists() {
-		final IValidationResult result = ValidationResult.create();
-		result.getAll().add(ValidationMessage.error("text"));
-	}
+    @Test(expected = RuntimeException.class)
+    public void testReadonlyLists() {
+        final IValidationResult result = ValidationResult.create();
+        result.getAll().add(ValidationMessage.error("text"));
+    }
 
 }

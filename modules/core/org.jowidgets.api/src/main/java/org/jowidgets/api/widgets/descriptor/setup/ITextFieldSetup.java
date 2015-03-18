@@ -34,17 +34,17 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ITextFieldSetup extends IComponentSetup, ITextFieldSetupCommon {
 
-	@Mandatory
-	boolean isEditable();
+    @Mandatory
+    boolean isEditable();
 
-	String getText();
+    String getText();
 
-	ITextMask getMask();
+    ITextMask getMask();
 
-	Markup getMarkup();
+    Markup getMarkup();
 
-	Integer getFontSize();
+    Integer getFontSize();
 
-	String getFontName();
+    String getFontName();
 
 }

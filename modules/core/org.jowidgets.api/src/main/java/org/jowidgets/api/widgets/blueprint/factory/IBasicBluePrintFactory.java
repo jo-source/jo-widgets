@@ -51,94 +51,94 @@ import org.jowidgets.unit.api.IUnitSet;
 
 public interface IBasicBluePrintFactory extends IBasicSimpleBluePrintFactory {
 
-	/////////////////////////////////////////////////////////////////////////////////////////////////
-	////////////////////////some convenience methods starting here///////////////////////////////////
-	/////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////some convenience methods starting here///////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////
 
-	IFrameBluePrint frame(final String title);
+    IFrameBluePrint frame(final String title);
 
-	IFrameBluePrint frame(final String title, final IImageConstant icon);
+    IFrameBluePrint frame(final String title, final IImageConstant icon);
 
-	IDialogBluePrint dialog(final String title);
+    IDialogBluePrint dialog(final String title);
 
-	IDialogBluePrint dialog(final String title, final IImageConstant icon);
+    IDialogBluePrint dialog(final String title, final IImageConstant icon);
 
-	ICompositeBluePrint compositeWithBorder();
+    ICompositeBluePrint compositeWithBorder();
 
-	ICompositeBluePrint composite(final String borderTitle);
+    ICompositeBluePrint composite(final String borderTitle);
 
-	IScrollCompositeBluePrint scrollCompositeWithBorder();
+    IScrollCompositeBluePrint scrollCompositeWithBorder();
 
-	IScrollCompositeBluePrint scrollComposite(final String borderTitle);
+    IScrollCompositeBluePrint scrollComposite(final String borderTitle);
 
-	ISplitCompositeBluePrint splitHorizontal();
+    ISplitCompositeBluePrint splitHorizontal();
 
-	ISplitCompositeBluePrint splitVertical();
+    ISplitCompositeBluePrint splitVertical();
 
-	IButtonBluePrint button(final String text);
+    IButtonBluePrint button(final String text);
 
-	IButtonBluePrint button(final String text, final String toolTipText);
+    IButtonBluePrint button(final String text, final String toolTipText);
 
-	IButtonBluePrint buttonOk();
+    IButtonBluePrint buttonOk();
 
-	IButtonBluePrint buttonCancel();
+    IButtonBluePrint buttonCancel();
 
-	IButtonBluePrint buttonSave();
+    IButtonBluePrint buttonSave();
 
-	IButtonBluePrint buttonClose();
+    IButtonBluePrint buttonClose();
 
-	IButtonBluePrint buttonDetails();
+    IButtonBluePrint buttonDetails();
 
-	IIconBluePrint icon(final IImageConstant icon);
+    IIconBluePrint icon(final IImageConstant icon);
 
-	ITextLabelBluePrint textLabel(final String text);
+    ITextLabelBluePrint textLabel(final String text);
 
-	ITextLabelBluePrint textLabel(final String text, final String tooltipText);
+    ITextLabelBluePrint textLabel(final String text, final String tooltipText);
 
-	IComboBoxBluePrint<String> comboBox();
+    IComboBoxBluePrint<String> comboBox();
 
-	IComboBoxBluePrint<String> comboBox(String... elements);
+    IComboBoxBluePrint<String> comboBox(String... elements);
 
-	IComboBoxBluePrint<String> comboBox(List<String> elements);
+    IComboBoxBluePrint<String> comboBox(List<String> elements);
 
-	IComboBoxBluePrint<String> comboBoxString();
+    IComboBoxBluePrint<String> comboBoxString();
 
-	IComboBoxBluePrint<Long> comboBoxLongNumber();
+    IComboBoxBluePrint<Long> comboBoxLongNumber();
 
-	IComboBoxBluePrint<Integer> comboBoxIntegerNumber();
+    IComboBoxBluePrint<Integer> comboBoxIntegerNumber();
 
-	IComboBoxBluePrint<Short> comboBoxShortNumber();
+    IComboBoxBluePrint<Short> comboBoxShortNumber();
 
-	IComboBoxSelectionBluePrint<String> comboBoxSelection();
+    IComboBoxSelectionBluePrint<String> comboBoxSelection();
 
-	IComboBoxSelectionBluePrint<String> comboBoxSelection(String... elements);
+    IComboBoxSelectionBluePrint<String> comboBoxSelection(String... elements);
 
-	<VALUE_TYPE> IComboBoxSelectionBluePrint<VALUE_TYPE> comboBoxSelection(Collection<VALUE_TYPE> elements);
+    <VALUE_TYPE> IComboBoxSelectionBluePrint<VALUE_TYPE> comboBoxSelection(Collection<VALUE_TYPE> elements);
 
-	IComboBoxSelectionBluePrint<String> comboBoxSelection(List<String> elements);
+    IComboBoxSelectionBluePrint<String> comboBoxSelection(List<String> elements);
 
-	<ENUM_TYPE extends Enum<?>> IComboBoxSelectionBluePrint<ENUM_TYPE> comboBoxSelection(ENUM_TYPE... enumValues);
+    <ENUM_TYPE extends Enum<?>> IComboBoxSelectionBluePrint<ENUM_TYPE> comboBoxSelection(ENUM_TYPE... enumValues);
 
-	IComboBoxSelectionBluePrint<IUnit> comboBoxSelection(IUnitSet unitSet);
+    IComboBoxSelectionBluePrint<IUnit> comboBoxSelection(IUnitSet unitSet);
 
-	IComboBoxSelectionBluePrint<String> comboBoxSelectionString();
+    IComboBoxSelectionBluePrint<String> comboBoxSelectionString();
 
-	IComboBoxSelectionBluePrint<Long> comboBoxSelectionLongNumber();
+    IComboBoxSelectionBluePrint<Long> comboBoxSelectionLongNumber();
 
-	IComboBoxSelectionBluePrint<Integer> comboBoxSelectionIntegerNumber();
+    IComboBoxSelectionBluePrint<Integer> comboBoxSelectionIntegerNumber();
 
-	IComboBoxSelectionBluePrint<Short> comboBoxSelectionShortNumber();
+    IComboBoxSelectionBluePrint<Short> comboBoxSelectionShortNumber();
 
-	IComboBoxSelectionBluePrint<Boolean> comboBoxSelectionBoolean();
+    IComboBoxSelectionBluePrint<Boolean> comboBoxSelectionBoolean();
 
-	IActionMenuItemBluePrint menuItem(String text);
+    IActionMenuItemBluePrint menuItem(String text);
 
-	IRadioMenuItemBluePrint radioMenuItem(String text);
+    IRadioMenuItemBluePrint radioMenuItem(String text);
 
-	ICheckedMenuItemBluePrint checkedMenuItem(String text);
+    ICheckedMenuItemBluePrint checkedMenuItem(String text);
 
-	ISubMenuBluePrint subMenu(String text);
+    ISubMenuBluePrint subMenu(String text);
 
-	IMainMenuBluePrint mainMenu(String text);
+    IMainMenuBluePrint mainMenu(String text);
 
 }

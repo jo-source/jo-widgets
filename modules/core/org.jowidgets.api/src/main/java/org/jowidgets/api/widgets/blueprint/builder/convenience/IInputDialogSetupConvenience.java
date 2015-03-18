@@ -31,20 +31,20 @@ import org.jowidgets.common.image.IImageConstant;
 
 public interface IInputDialogSetupConvenience<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setOkButtonText(final String text);
+    INSTANCE_TYPE setOkButtonText(final String text);
 
-	INSTANCE_TYPE setOkButtonToolTipText(final String toolTipText);
+    INSTANCE_TYPE setOkButtonToolTipText(final String toolTipText);
 
-	INSTANCE_TYPE setOkButton(final String text, final String toolTipText);
+    INSTANCE_TYPE setOkButton(final String text, final String toolTipText);
 
-	INSTANCE_TYPE setOkButtonIcon(final IImageConstant icon);
+    INSTANCE_TYPE setOkButtonIcon(final IImageConstant icon);
 
-	INSTANCE_TYPE setCancelButtonText(final String text);
+    INSTANCE_TYPE setCancelButtonText(final String text);
 
-	INSTANCE_TYPE setCancelButtonToolTipText(final String toolTipText);
+    INSTANCE_TYPE setCancelButtonToolTipText(final String toolTipText);
 
-	INSTANCE_TYPE setCancelButton(final String text, final String toolTipText);
+    INSTANCE_TYPE setCancelButton(final String text, final String toolTipText);
 
-	INSTANCE_TYPE setCancelButtonIcon(final IImageConstant icon);
+    INSTANCE_TYPE setCancelButtonIcon(final IImageConstant icon);
 
 }

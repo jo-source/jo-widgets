@@ -49,129 +49,129 @@ import org.jowidgets.tools.controller.TreeAdapter;
 
 public final class DemoTreeComposite {
 
-	public DemoTreeComposite(final IContainer parentContainer) {
+    public DemoTreeComposite(final IContainer parentContainer) {
 
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+        final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
 
-		final ILayoutDescriptor fillLayoutDescriptor = new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0");
-		parentContainer.setLayout(fillLayoutDescriptor);
+        final ILayoutDescriptor fillLayoutDescriptor = new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0");
+        parentContainer.setLayout(fillLayoutDescriptor);
 
-		final ITree tree = parentContainer.add(bpF.tree().multiSelection().setChecked(true), "growx, growy, w 0::, h 0::");
-		final IPopupMenu popupMenu = tree.createPopupMenu();
-		fillMenu("", popupMenu);
+        final ITree tree = parentContainer.add(bpF.tree().multiSelection().setChecked(true), "growx, growy, w 0::, h 0::");
+        final IPopupMenu popupMenu = tree.createPopupMenu();
+        fillMenu("", popupMenu);
 
-		tree.addTreeSelectionListener(new ITreeSelectionListener() {
+        tree.addTreeSelectionListener(new ITreeSelectionListener() {
 
-			@Override
-			public void selectionChanged(final ITreeSelectionEvent event) {
-				// CHECKSTYLE:OFF
-				System.out.println(event);
-				// CHECKSTYLE:ON
-			}
-		});
+            @Override
+            public void selectionChanged(final ITreeSelectionEvent event) {
+                // CHECKSTYLE:OFF
+                System.out.println(event);
+                // CHECKSTYLE:ON
+            }
+        });
 
-		tree.addTreeListener(new TreeAdapter() {
+        tree.addTreeListener(new TreeAdapter() {
 
-			@Override
-			public void nodeExpanded(final ITreeNode node) {
-				// CHECKSTYLE:OFF
-				System.out.println("Tree node expanded: " + node);
-				// CHECKSTYLE:ON
-			}
+            @Override
+            public void nodeExpanded(final ITreeNode node) {
+                // CHECKSTYLE:OFF
+                System.out.println("Tree node expanded: " + node);
+                // CHECKSTYLE:ON
+            }
 
-			@Override
-			public void nodeCollapsed(final ITreeNode node) {
-				// CHECKSTYLE:OFF
-				System.out.println("Tree node collpased: " + node);
-				// CHECKSTYLE:ON
-			}
-		});
+            @Override
+            public void nodeCollapsed(final ITreeNode node) {
+                // CHECKSTYLE:OFF
+                System.out.println("Tree node collpased: " + node);
+                // CHECKSTYLE:ON
+            }
+        });
 
-		tree.addPopupDetectionListener(new IPopupDetectionListener() {
-			@Override
-			public void popupDetected(final Position position) {
-				popupMenu.show(position);
-			}
-		});
+        tree.addPopupDetectionListener(new IPopupDetectionListener() {
+            @Override
+            public void popupDetected(final Position position) {
+                popupMenu.show(position);
+            }
+        });
 
-		tree.addTreePopupDetectionListener(new ITreePopupDetectionListener() {
-			@Override
-			public void popupDetected(final ITreePopupEvent event) {
-				// CHECKSTYLE:OFF
-				System.out.println(event);
-				// CHECKSTYLE:ON
-			}
-		});
+        tree.addTreePopupDetectionListener(new ITreePopupDetectionListener() {
+            @Override
+            public void popupDetected(final ITreePopupEvent event) {
+                // CHECKSTYLE:OFF
+                System.out.println(event);
+                // CHECKSTYLE:ON
+            }
+        });
 
-		for (int i = 0; i < 5; i++) {
-			ITreeNodeBluePrint treeNodeBp = bpF.treeNode();
-			treeNodeBp.setText("Node " + i).setToolTipText("tooltip of node " + i);
-			final ITreeNode node = tree.addNode(treeNodeBp);
+        for (int i = 0; i < 5; i++) {
+            ITreeNodeBluePrint treeNodeBp = bpF.treeNode();
+            treeNodeBp.setText("Node " + i).setToolTipText("tooltip of node " + i);
+            final ITreeNode node = tree.addNode(treeNodeBp);
 
-			registerListners(node);
+            registerListners(node);
 
-			for (int j = 0; j < 10; j++) {
-				treeNodeBp = bpF.treeNode();
-				treeNodeBp.setText("SubNode " + j).setToolTipText("tooltip of subNode " + j);
-				final ITreeNode subNode = node.addNode(treeNodeBp);
-				registerListners(subNode);
+            for (int j = 0; j < 10; j++) {
+                treeNodeBp = bpF.treeNode();
+                treeNodeBp.setText("SubNode " + j).setToolTipText("tooltip of subNode " + j);
+                final ITreeNode subNode = node.addNode(treeNodeBp);
+                registerListners(subNode);
 
-				for (int k = 0; k < 10; k++) {
-					treeNodeBp = bpF.treeNode();
-					treeNodeBp.setText("SubSubNode " + k).setToolTipText("tooltip of subSubNode " + k);
-					final ITreeNode subSubNode = subNode.addNode(treeNodeBp);
-					registerListners(subSubNode);
-				}
-			}
+                for (int k = 0; k < 10; k++) {
+                    treeNodeBp = bpF.treeNode();
+                    treeNodeBp.setText("SubSubNode " + k).setToolTipText("tooltip of subSubNode " + k);
+                    final ITreeNode subSubNode = subNode.addNode(treeNodeBp);
+                    registerListners(subSubNode);
+                }
+            }
 
-		}
-	}
+        }
+    }
 
-	private void registerListners(final ITreeNode node) {
-		node.addTreeNodeListener(new ITreeNodeListener() {
+    private void registerListners(final ITreeNode node) {
+        node.addTreeNodeListener(new ITreeNodeListener() {
 
-			@Override
-			public void selectionChanged(final boolean selected) {
-				// CHECKSTYLE:OFF
-				System.out.println(node.getText() + " selected = " + selected);
-				// CHECKSTYLE:ON
-			}
+            @Override
+            public void selectionChanged(final boolean selected) {
+                // CHECKSTYLE:OFF
+                System.out.println(node.getText() + " selected = " + selected);
+                // CHECKSTYLE:ON
+            }
 
-			@Override
-			public void expandedChanged(final boolean expanded) {
-				// CHECKSTYLE:OFF
-				System.out.println(node.getText() + " expanded = " + expanded);
-				// CHECKSTYLE:ON
-			}
+            @Override
+            public void expandedChanged(final boolean expanded) {
+                // CHECKSTYLE:OFF
+                System.out.println(node.getText() + " expanded = " + expanded);
+                // CHECKSTYLE:ON
+            }
 
-			@Override
-			public void checkedChanged(final boolean checked) {
-				// CHECKSTYLE:OFF
-				System.out.println(node.getText() + " checked = " + checked);
-				// CHECKSTYLE:ON
-			}
-		});
+            @Override
+            public void checkedChanged(final boolean checked) {
+                // CHECKSTYLE:OFF
+                System.out.println(node.getText() + " checked = " + checked);
+                // CHECKSTYLE:ON
+            }
+        });
 
-		final IPopupMenu popupMenu = node.createPopupMenu();
-		fillMenu(node.getText() + " -> ", popupMenu);
+        final IPopupMenu popupMenu = node.createPopupMenu();
+        fillMenu(node.getText() + " -> ", popupMenu);
 
-		node.addPopupDetectionListener(new IPopupDetectionListener() {
-			@Override
-			public void popupDetected(final Position position) {
-				popupMenu.show(position);
-			}
-		});
-	}
+        node.addPopupDetectionListener(new IPopupDetectionListener() {
+            @Override
+            public void popupDetected(final Position position) {
+                popupMenu.show(position);
+            }
+        });
+    }
 
-	private void fillMenu(final String prefix, final IMenu menu) {
-		final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
-		menu.addItem(bpF.menuItem(prefix + "menu item 1"));
-		menu.addItem(bpF.menuItem(prefix + "menu item 2"));
-		menu.addItem(bpF.menuItem(prefix + "menu item 3"));
-		menu.addItem(bpF.menuItem(prefix + "menu item 4"));
-	}
+    private void fillMenu(final String prefix, final IMenu menu) {
+        final IBluePrintFactory bpF = Toolkit.getBluePrintFactory();
+        menu.addItem(bpF.menuItem(prefix + "menu item 1"));
+        menu.addItem(bpF.menuItem(prefix + "menu item 2"));
+        menu.addItem(bpF.menuItem(prefix + "menu item 3"));
+        menu.addItem(bpF.menuItem(prefix + "menu item 4"));
+    }
 
-	public void foo() {
+    public void foo() {
 
-	}
+    }
 }

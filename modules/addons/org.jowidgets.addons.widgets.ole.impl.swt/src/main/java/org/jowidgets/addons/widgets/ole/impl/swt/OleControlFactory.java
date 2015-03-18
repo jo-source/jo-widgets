@@ -39,16 +39,16 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 
 final class OleControlFactory implements IWidgetFactory<IOleControl, IOleControlBluePrint> {
 
-	@Override
-	public IOleControl create(final Object parentUiReference, final IOleControlBluePrint bluePrint) {
-		final IComposite composite = Toolkit.getWidgetFactory().create(parentUiReference, BPF.composite());
-		if (composite.getUiReference() instanceof Composite) {
-			return SwtOleControlFactory.createOleControl(composite, (Composite) composite.getUiReference(), bluePrint);
-		}
-		else {
-			throw new IllegalArgumentException("The given composite must be an swt composite");
-		}
+    @Override
+    public IOleControl create(final Object parentUiReference, final IOleControlBluePrint bluePrint) {
+        final IComposite composite = Toolkit.getWidgetFactory().create(parentUiReference, BPF.composite());
+        if (composite.getUiReference() instanceof Composite) {
+            return SwtOleControlFactory.createOleControl(composite, (Composite) composite.getUiReference(), bluePrint);
+        }
+        else {
+            throw new IllegalArgumentException("The given composite must be an swt composite");
+        }
 
-	}
+    }
 
 }

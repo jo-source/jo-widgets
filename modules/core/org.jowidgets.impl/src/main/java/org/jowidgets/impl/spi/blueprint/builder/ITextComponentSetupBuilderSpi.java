@@ -30,6 +30,6 @@ package org.jowidgets.impl.spi.blueprint.builder;
 import org.jowidgets.common.widgets.builder.ITextComponentSetupBuilderCommon;
 
 public interface ITextComponentSetupBuilderSpi<INSTANCE_TYPE extends ITextComponentSetupBuilderSpi<?>> extends
-		ITextComponentSetupBuilderCommon<INSTANCE_TYPE> {
+        ITextComponentSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

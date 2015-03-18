@@ -33,8 +33,8 @@ import org.jowidgets.spi.widgets.IFrameSpi;
 
 public class FrameWrapper extends SwtWindow implements IFrameSpi {
 
-	public FrameWrapper(final IGenericWidgetFactory factory, final Shell shell) {
-		super(factory, shell);
-	}
+    public FrameWrapper(final IGenericWidgetFactory factory, final Shell shell) {
+        super(factory, shell);
+    }
 
 }

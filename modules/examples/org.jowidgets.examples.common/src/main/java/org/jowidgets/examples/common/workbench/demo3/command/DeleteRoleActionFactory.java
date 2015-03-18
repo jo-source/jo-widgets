@@ -39,32 +39,32 @@ import org.jowidgets.examples.common.workbench.demo3.model.Role;
 
 public final class DeleteRoleActionFactory {
 
-	private DeleteRoleActionFactory() {}
+    private DeleteRoleActionFactory() {}
 
-	public static IAction create(final BeanTableModel<Role> model) {
-		final IActionBuilder builder = CommandAction.builder();
-		builder.setText("Delete role");
-		builder.setIcon(SilkIcons.GROUP_DELETE);
-		builder.setCommand(new DeleteRoleCommand(model), new SingleSelectionEnabledChecker(model));
-		return builder.build();
-	}
+    public static IAction create(final BeanTableModel<Role> model) {
+        final IActionBuilder builder = CommandAction.builder();
+        builder.setText("Delete role");
+        builder.setIcon(SilkIcons.GROUP_DELETE);
+        builder.setCommand(new DeleteRoleCommand(model), new SingleSelectionEnabledChecker(model));
+        return builder.build();
+    }
 
-	private static final class DeleteRoleCommand implements ICommandExecutor {
+    private static final class DeleteRoleCommand implements ICommandExecutor {
 
-		private final BeanTableModel<Role> model;
+        private final BeanTableModel<Role> model;
 
-		private DeleteRoleCommand(final BeanTableModel<Role> model) {
-			this.model = model;
-		}
+        private DeleteRoleCommand(final BeanTableModel<Role> model) {
+            this.model = model;
+        }
 
-		@Override
-		public void execute(final IExecutionContext executionContext) throws Exception {
-			final Role bean = model.getSelectedBean();
-			if (bean != null) {
-				model.removeBean(bean);
-			}
-		}
+        @Override
+        public void execute(final IExecutionContext executionContext) throws Exception {
+            final Role bean = model.getSelectedBean();
+            if (bean != null) {
+                model.removeBean(bean);
+            }
+        }
 
-	}
+    }
 
 }

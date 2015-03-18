@@ -38,52 +38,52 @@ import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.common.widgets.IWidgetCommon;
 
 public final class WidgetRegistry {
-	private static final WidgetRegistry INSTANCE = new WidgetRegistry();
-	private final Set<IWidgetCommon> widgetRegistry;
+    private static final WidgetRegistry INSTANCE = new WidgetRegistry();
+    private final Set<IWidgetCommon> widgetRegistry;
 
-	private WidgetRegistry() {
-		this.widgetRegistry = new HashSet<IWidgetCommon>();
-	}
+    private WidgetRegistry() {
+        this.widgetRegistry = new HashSet<IWidgetCommon>();
+    }
 
-	public static WidgetRegistry getInstance() {
-		return INSTANCE;
-	}
+    public static WidgetRegistry getInstance() {
+        return INSTANCE;
+    }
 
-	public synchronized Set<IWidgetCommon> getWidgets() {
-		return widgetRegistry;
-	}
+    public synchronized Set<IWidgetCommon> getWidgets() {
+        return widgetRegistry;
+    }
 
-	public synchronized void addWidget(final IWidgetCommon widget) {
-		widgetRegistry.add(widget);
-	}
+    public synchronized void addWidget(final IWidgetCommon widget) {
+        widgetRegistry.add(widget);
+    }
 
-	public synchronized void removeWidget(final IWidgetCommon widget) {
-		removeChildWidgets(widget);
-		widgetRegistry.remove(widget);
-	}
+    public synchronized void removeWidget(final IWidgetCommon widget) {
+        removeChildWidgets(widget);
+        widgetRegistry.remove(widget);
+    }
 
-	private void removeChildWidgets(final IWidgetCommon widget) {
-		final List<IWidgetCommon> childs = getChildWidgets(widget);
-		if (!childs.isEmpty()) {
-			for (final IWidgetCommon child : childs) {
-				widgetRegistry.remove(child);
-			}
-		}
-	}
+    private void removeChildWidgets(final IWidgetCommon widget) {
+        final List<IWidgetCommon> childs = getChildWidgets(widget);
+        if (!childs.isEmpty()) {
+            for (final IWidgetCommon child : childs) {
+                widgetRegistry.remove(child);
+            }
+        }
+    }
 
-	private List<IWidgetCommon> getChildWidgets(final IWidgetCommon widget) {
-		final List<IWidgetCommon> childs = new LinkedList<IWidgetCommon>();
-		if (widget instanceof IContainer) {
-			final IContainer con = (IContainer) widget;
-			for (final IWidget tmp : con.getChildren()) {
-				if (tmp instanceof IContainer) {
-					childs.addAll(getChildWidgets(tmp));
-				}
-				else {
-					childs.add(tmp);
-				}
-			}
-		}
-		return childs;
-	}
+    private List<IWidgetCommon> getChildWidgets(final IWidgetCommon widget) {
+        final List<IWidgetCommon> childs = new LinkedList<IWidgetCommon>();
+        if (widget instanceof IContainer) {
+            final IContainer con = (IContainer) widget;
+            for (final IWidget tmp : con.getChildren()) {
+                if (tmp instanceof IContainer) {
+                    childs.addAll(getChildWidgets(tmp));
+                }
+                else {
+                    childs.add(tmp);
+                }
+            }
+        }
+        return childs;
+    }
 }

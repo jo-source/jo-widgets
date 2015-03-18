@@ -39,61 +39,61 @@ import org.jowidgets.util.event.IChangeListener;
 
 public class OleDocumentWrapper extends ControlWrapper implements IOleDocument {
 
-	private final IOleDocument oleDocument;
+    private final IOleDocument oleDocument;
 
-	public OleDocumentWrapper(final IOleDocument oleDocument) {
-		super(oleDocument);
-		this.oleDocument = oleDocument;
-	}
+    public OleDocumentWrapper(final IOleDocument oleDocument) {
+        super(oleDocument);
+        this.oleDocument = oleDocument;
+    }
 
-	@Override
-	protected IOleDocument getWidget() {
-		return (IOleDocument) super.getWidget();
-	}
+    @Override
+    protected IOleDocument getWidget() {
+        return (IOleDocument) super.getWidget();
+    }
 
-	@Override
-	public void openNewDocument() {
-		oleDocument.openNewDocument();
-	}
+    @Override
+    public void openNewDocument() {
+        oleDocument.openNewDocument();
+    }
 
-	@Override
-	public void openDocument(final File file) {
-		oleDocument.openDocument(file);
-	}
+    @Override
+    public void openDocument(final File file) {
+        oleDocument.openDocument(file);
+    }
 
-	@Override
-	public boolean saveDocument(final File file, final boolean includeOleInfo) {
-		return oleDocument.saveDocument(file, includeOleInfo);
-	}
+    @Override
+    public boolean saveDocument(final File file, final boolean includeOleInfo) {
+        return oleDocument.saveDocument(file, includeOleInfo);
+    }
 
-	@Override
-	public void openDocument(final InputStream inputStream) {
-		oleDocument.openDocument(inputStream);
-	}
+    @Override
+    public void openDocument(final InputStream inputStream) {
+        oleDocument.openDocument(inputStream);
+    }
 
-	@Override
-	public boolean saveDocument(final OutputStream outputStream) {
-		return oleDocument.saveDocument(outputStream);
-	}
+    @Override
+    public boolean saveDocument(final OutputStream outputStream) {
+        return oleDocument.saveDocument(outputStream);
+    }
 
-	@Override
-	public boolean isDirty() {
-		return oleDocument.isDirty();
-	}
+    @Override
+    public boolean isDirty() {
+        return oleDocument.isDirty();
+    }
 
-	@Override
-	public IOleControl getOleControl() {
-		return oleDocument.getOleControl();
-	}
+    @Override
+    public IOleControl getOleControl() {
+        return oleDocument.getOleControl();
+    }
 
-	@Override
-	public void addDocumentChangeListener(final IChangeListener changeListener) {
-		oleDocument.addDocumentChangeListener(changeListener);
-	}
+    @Override
+    public void addDocumentChangeListener(final IChangeListener changeListener) {
+        oleDocument.addDocumentChangeListener(changeListener);
+    }
 
-	@Override
-	public void removeDocumentChangeListener(final IChangeListener changeListener) {
-		oleDocument.removeDocumentChangeListener(changeListener);
-	}
+    @Override
+    public void removeDocumentChangeListener(final IChangeListener changeListener) {
+        oleDocument.removeDocumentChangeListener(changeListener);
+    }
 
 }

@@ -49,71 +49,71 @@ import org.jowidgets.util.Assert;
 
 final class TransferableAdapter implements Transferable, Serializable {
 
-	private static final long serialVersionUID = -5633005828108967675L;
+    private static final long serialVersionUID = -5633005828108967675L;
 
-	private static final DataFlavor TRANSFER_CONTAINER_FLAVOR = SwingClipboard.TRANSFER_CONTAINER_FLAVOR;
+    private static final DataFlavor TRANSFER_CONTAINER_FLAVOR = SwingClipboard.TRANSFER_CONTAINER_FLAVOR;
 
-	private final DataFlavor[] flavors;
-	private final Map<DataFlavor, Object> dataMap;
+    private final DataFlavor[] flavors;
+    private final Map<DataFlavor, Object> dataMap;
 
-	TransferableAdapter(final ITransferableSpi transferableSpi) {
-		Assert.paramNotNull(transferableSpi, "transferableSpi");
+    TransferableAdapter(final ITransferableSpi transferableSpi) {
+        Assert.paramNotNull(transferableSpi, "transferableSpi");
 
-		final Collection<TransferTypeSpi> transferTypes = transferableSpi.getSupportedTypes();
+        final Collection<TransferTypeSpi> transferTypes = transferableSpi.getSupportedTypes();
 
-		this.dataMap = new LinkedHashMap<DataFlavor, Object>();
+        this.dataMap = new LinkedHashMap<DataFlavor, Object>();
 
-		final List<TransferObject> transferObjects = new LinkedList<TransferObject>();
+        final List<TransferObject> transferObjects = new LinkedList<TransferObject>();
 
-		for (final TransferTypeSpi transferType : transferTypes) {
-			if (String.class.equals(transferType.getJavaType())) {
-				final DataFlavor flavor = DataFlavor.stringFlavor;
-				dataMap.put(flavor, transferableSpi.getData(transferType));
-			}
-			else {
-				final Object data = transferableSpi.getData(transferType);
-				transferObjects.add(new TransferObject(transferType, data));
-			}
-		}
+        for (final TransferTypeSpi transferType : transferTypes) {
+            if (String.class.equals(transferType.getJavaType())) {
+                final DataFlavor flavor = DataFlavor.stringFlavor;
+                dataMap.put(flavor, transferableSpi.getData(transferType));
+            }
+            else {
+                final Object data = transferableSpi.getData(transferType);
+                transferObjects.add(new TransferObject(transferType, data));
+            }
+        }
 
-		if (!transferObjects.isEmpty()) {
-			final byte[] serializied = Serializer.serialize(new TransferContainer(transferObjects));
-			if (serializied != null) {
-				dataMap.put(TRANSFER_CONTAINER_FLAVOR, new ByteArrayInputStream(serializied));
-			}
-		}
+        if (!transferObjects.isEmpty()) {
+            final byte[] serializied = Serializer.serialize(new TransferContainer(transferObjects));
+            if (serializied != null) {
+                dataMap.put(TRANSFER_CONTAINER_FLAVOR, new ByteArrayInputStream(serializied));
+            }
+        }
 
-		this.flavors = new DataFlavor[dataMap.size()];
-		int index = 0;
-		for (final DataFlavor flavor : dataMap.keySet()) {
-			flavors[index] = flavor;
-			index++;
-		}
-	}
+        this.flavors = new DataFlavor[dataMap.size()];
+        int index = 0;
+        for (final DataFlavor flavor : dataMap.keySet()) {
+            flavors[index] = flavor;
+            index++;
+        }
+    }
 
-	@Override
-	public DataFlavor[] getTransferDataFlavors() {
-		return flavors;
-	}
+    @Override
+    public DataFlavor[] getTransferDataFlavors() {
+        return flavors;
+    }
 
-	@Override
-	public boolean isDataFlavorSupported(final DataFlavor flavor) {
-		for (final DataFlavor supportedFlavor : flavors) {
-			if (supportedFlavor.equals(flavor)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    @Override
+    public boolean isDataFlavorSupported(final DataFlavor flavor) {
+        for (final DataFlavor supportedFlavor : flavors) {
+            if (supportedFlavor.equals(flavor)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	@Override
-	public Object getTransferData(final DataFlavor flavor) throws UnsupportedFlavorException, IOException {
-		if (isDataFlavorSupported(flavor)) {
-			return dataMap.get(flavor);
-		}
-		else {
-			throw new UnsupportedFlavorException(flavor);
-		}
-	}
+    @Override
+    public Object getTransferData(final DataFlavor flavor) throws UnsupportedFlavorException, IOException {
+        if (isDataFlavorSupported(flavor)) {
+            return dataMap.get(flavor);
+        }
+        else {
+            throw new UnsupportedFlavorException(flavor);
+        }
+    }
 
 }

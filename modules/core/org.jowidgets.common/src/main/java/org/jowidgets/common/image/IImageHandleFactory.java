@@ -27,7 +27,6 @@
  */
 package org.jowidgets.common.image;
 
-
 public interface IImageHandleFactory {
-	IImageHandle createImageHandle(IImageDescriptor imageDescriptor);
+    IImageHandle createImageHandle(IImageDescriptor imageDescriptor);
 }

@@ -34,47 +34,47 @@ import org.jowidgets.spi.widgets.IItemSpi;
 
 public class ItemSpiWrapper extends WidgetSpiWrapper implements IItemCommon {
 
-	private String text;
-	private String toolTipText;
-	private IImageConstant icon;
+    private String text;
+    private String toolTipText;
+    private IImageConstant icon;
 
-	public ItemSpiWrapper(final IItemSpi component) {
-		super(component);
-	}
+    public ItemSpiWrapper(final IItemSpi component) {
+        super(component);
+    }
 
-	@Override
-	public IItemSpi getWidget() {
-		return (IItemSpi) super.getWidget();
-	}
+    @Override
+    public IItemSpi getWidget() {
+        return (IItemSpi) super.getWidget();
+    }
 
-	@Override
-	public void setText(final String text) {
-		this.text = text;
-		getWidget().setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        this.text = text;
+        getWidget().setText(text);
+    }
 
-	@Override
-	public void setToolTipText(final String toolTipText) {
-		this.toolTipText = toolTipText;
-		getWidget().setToolTipText(toolTipText);
-	}
+    @Override
+    public void setToolTipText(final String toolTipText) {
+        this.toolTipText = toolTipText;
+        getWidget().setToolTipText(toolTipText);
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		this.icon = icon;
-		getWidget().setIcon(icon);
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        this.icon = icon;
+        getWidget().setIcon(icon);
+    }
 
-	public String getText() {
-		return text;
-	}
+    public String getText() {
+        return text;
+    }
 
-	public String getToolTipText() {
-		return toolTipText;
-	}
+    public String getToolTipText() {
+        return toolTipText;
+    }
 
-	public IImageConstant getIcon() {
-		return icon;
-	}
+    public IImageConstant getIcon() {
+        return icon;
+    }
 
 }

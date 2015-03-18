@@ -63,90 +63,90 @@ import org.jowidgets.common.application.IApplicationRunner;
  */
 final class BridgedSwtAwtApplicationRunner implements IApplicationRunner {
 
-	private BridgedSwtEventLoop swtEventLoop;
-	private Thread eventDispatcherThread;
-	private Thread eventPumpThread;
+    private BridgedSwtEventLoop swtEventLoop;
+    private Thread eventDispatcherThread;
+    private Thread eventPumpThread;
 
-	@Override
-	public void run(final IApplication application) {
+    @Override
+    public void run(final IApplication application) {
 
-		if (eventPumpThread != null && Thread.currentThread() != eventPumpThread) {
-			throw new IllegalStateException("The application runner is already running with another event pump thread");
-		}
+        if (eventPumpThread != null && Thread.currentThread() != eventPumpThread) {
+            throw new IllegalStateException("The application runner is already running with another event pump thread");
+        }
 
-		if (SwingUtilities.isEventDispatchThread()) {
-			throw new IllegalStateException(
-				"The current thread is the EventDispatcherThread. A ApplicationRunner must not be used from the EventDispatcherThread");
-		}
+        if (SwingUtilities.isEventDispatchThread()) {
+            throw new IllegalStateException(
+                "The current thread is the EventDispatcherThread. A ApplicationRunner must not be used from the EventDispatcherThread");
+        }
 
-		swtEventLoop = new BridgedSwtEventLoop();
-		eventPumpThread = Thread.currentThread();
-		eventDispatcherThread = swtEventLoop.getEventDispatchingThread();
+        swtEventLoop = new BridgedSwtEventLoop();
+        eventPumpThread = Thread.currentThread();
+        eventDispatcherThread = swtEventLoop.getEventDispatchingThread();
 
-		final AtomicBoolean finished = new AtomicBoolean(false);
+        final AtomicBoolean finished = new AtomicBoolean(false);
 
-		//Create a lifecycle that disposes all windows and shells when finished
-		final IApplicationLifecycle lifecycle = new IApplicationLifecycle() {
+        //Create a lifecycle that disposes all windows and shells when finished
+        final IApplicationLifecycle lifecycle = new IApplicationLifecycle() {
 
-			@Override
-			public synchronized void finish() {
-				finished.set(true);
-				if (eventPumpThread != null) {
-					eventPumpThread = null;
+            @Override
+            public synchronized void finish() {
+                finished.set(true);
+                if (eventPumpThread != null) {
+                    eventPumpThread = null;
 
-					//dispose all windows
-					for (final Window window : Window.getWindows()) {
-						window.dispose();
-					}
+                    //dispose all windows
+                    for (final Window window : Window.getWindows()) {
+                        window.dispose();
+                    }
 
-					//dispose all shells
-					final Display currentDisplay = Display.getCurrent();
-					if (currentDisplay != null && !currentDisplay.isDisposed()) {
-						for (final Shell shell : currentDisplay.getShells()) {
-							shell.dispose();
-						}
-						if (!currentDisplay.isDisposed()) {
-							currentDisplay.dispose();
-						}
-					}
+                    //dispose all shells
+                    final Display currentDisplay = Display.getCurrent();
+                    if (currentDisplay != null && !currentDisplay.isDisposed()) {
+                        for (final Shell shell : currentDisplay.getShells()) {
+                            shell.dispose();
+                        }
+                        if (!currentDisplay.isDisposed()) {
+                            currentDisplay.dispose();
+                        }
+                    }
 
-					//stop the swt event dispatching
-					swtEventLoop.stop(new Runnable() {
-						@Override
-						public void run() {
-							//stop the awt event dispatching
-							try {
-								if (eventDispatcherThread != null) {
-									final Class<?> edtClass = Class.forName("java.awt.EventDispatchThread");
-									final Method method = edtClass.getDeclaredMethod("stopDispatching");
-									method.setAccessible(true);
-									method.invoke(eventDispatcherThread);
-								}
-							}
-							catch (final Exception e) {
-								throw new RuntimeException(e);
-							}
-						}
-					});
-				}
-			}
-		};
+                    //stop the swt event dispatching
+                    swtEventLoop.stop(new Runnable() {
+                        @Override
+                        public void run() {
+                            //stop the awt event dispatching
+                            try {
+                                if (eventDispatcherThread != null) {
+                                    final Class<?> edtClass = Class.forName("java.awt.EventDispatchThread");
+                                    final Method method = edtClass.getDeclaredMethod("stopDispatching");
+                                    method.setAccessible(true);
+                                    method.invoke(eventDispatcherThread);
+                                }
+                            }
+                            catch (final Exception e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    });
+                }
+            }
+        };
 
-		try {
-			SwingUtilities.invokeAndWait(new Runnable() {
-				@Override
-				public void run() {
-					application.start(lifecycle);
-				}
-			});
-		}
-		catch (final Exception e) {
-			throw new RuntimeException(e);
-		}
+        try {
+            SwingUtilities.invokeAndWait(new Runnable() {
+                @Override
+                public void run() {
+                    application.start(lifecycle);
+                }
+            });
+        }
+        catch (final Exception e) {
+            throw new RuntimeException(e);
+        }
 
-		//this will block until the lifecycle was finished
-		if (!finished.get()) {
-			swtEventLoop.start();
-		}
-	}
+        //this will block until the lifecycle was finished
+        if (!finished.get()) {
+            swtEventLoop.start();
+        }
+    }
 }

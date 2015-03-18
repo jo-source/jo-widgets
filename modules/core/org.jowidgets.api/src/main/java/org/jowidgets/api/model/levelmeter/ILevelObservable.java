@@ -30,8 +30,8 @@ package org.jowidgets.api.model.levelmeter;
 
 public interface ILevelObservable {
 
-	void addLevelListener(ILevelListener listener);
+    void addLevelListener(ILevelListener listener);
 
-	void removesLevelListener(ILevelListener listener);
+    void removesLevelListener(ILevelListener listener);
 
 }

@@ -36,50 +36,50 @@ import org.jowidgets.spi.impl.clipboard.Serializer;
 
 public final class ObjectTransfer extends ByteArrayTransfer {
 
-	private static final String MIME_TYPE = TransferContainer.MIME_TYPE;
-	private static final int MIME_TYPE_ID = registerType(MIME_TYPE);
+    private static final String MIME_TYPE = TransferContainer.MIME_TYPE;
+    private static final int MIME_TYPE_ID = registerType(MIME_TYPE);
 
-	private static final ObjectTransfer INSTANCE = new ObjectTransfer();
+    private static final ObjectTransfer INSTANCE = new ObjectTransfer();
 
-	public static ObjectTransfer getInstance() {
-		return INSTANCE;
-	}
+    public static ObjectTransfer getInstance() {
+        return INSTANCE;
+    }
 
-	@Override
-	protected int[] getTypeIds() {
-		return new int[] {MIME_TYPE_ID};
-	}
+    @Override
+    protected int[] getTypeIds() {
+        return new int[] {MIME_TYPE_ID};
+    }
 
-	@Override
-	protected String[] getTypeNames() {
-		return new String[] {MIME_TYPE};
-	}
+    @Override
+    protected String[] getTypeNames() {
+        return new String[] {MIME_TYPE};
+    }
 
-	@Override
-	public void javaToNative(final Object object, final TransferData transferData) {
-		if (!validate(object) || !isSupportedType(transferData)) {
-			DND.error(DND.ERROR_INVALID_DATA);
-		}
-		super.javaToNative(Serializer.serialize(object), transferData);
-	}
+    @Override
+    public void javaToNative(final Object object, final TransferData transferData) {
+        if (!validate(object) || !isSupportedType(transferData)) {
+            DND.error(DND.ERROR_INVALID_DATA);
+        }
+        super.javaToNative(Serializer.serialize(object), transferData);
+    }
 
-	@Override
-	public Object nativeToJava(final TransferData transferData) {
-		if (!isSupportedType(transferData)) {
-			return null;
-		}
-		final byte[] bytes = (byte[]) super.nativeToJava(transferData);
-		return bytes == null ? null : Serializer.deserialize(bytes);
-	}
+    @Override
+    public Object nativeToJava(final TransferData transferData) {
+        if (!isSupportedType(transferData)) {
+            return null;
+        }
+        final byte[] bytes = (byte[]) super.nativeToJava(transferData);
+        return bytes == null ? null : Serializer.deserialize(bytes);
+    }
 
-	@Override
-	protected boolean validate(final Object object) {
-		if (object == null) {
-			return false;
-		}
-		else {
-			return true;
-		}
-	}
+    @Override
+    protected boolean validate(final Object object) {
+        if (object == null) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
 
 }

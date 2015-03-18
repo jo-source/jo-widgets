@@ -30,6 +30,6 @@ package org.jowidgets.impl.spi.blueprint.builder;
 import org.jowidgets.common.widgets.builder.ITabItemSetupBuilderCommon;
 
 public interface ITabItemSetupBuilderSpi<INSTANCE_TYPE extends ITabItemSetupBuilderSpi<?>> extends
-		ITabItemSetupBuilderCommon<INSTANCE_TYPE> {
+        ITabItemSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

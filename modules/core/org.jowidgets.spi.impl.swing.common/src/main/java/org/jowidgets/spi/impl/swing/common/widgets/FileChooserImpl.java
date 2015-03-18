@@ -49,139 +49,139 @@ import org.jowidgets.util.Assert;
 
 public class FileChooserImpl implements IFileChooserSpi {
 
-	private final JFileChooser fileChooser;
-	private final Component parent;
-	private final FileChooserType fileChooserType;
-	private final Map<FileFilter, IFileChooserFilter> filterMap;
+    private final JFileChooser fileChooser;
+    private final Component parent;
+    private final FileChooserType fileChooserType;
+    private final Map<FileFilter, IFileChooserFilter> filterMap;
 
-	public FileChooserImpl(final Object parentUiReference, final IFileChooserSetupSpi setup) {
-		this.parent = (Component) parentUiReference;
-		this.fileChooserType = setup.getType();
-		this.filterMap = new HashMap<FileFilter, IFileChooserFilter>();
-		this.fileChooser = new JFileChooser();
+    public FileChooserImpl(final Object parentUiReference, final IFileChooserSetupSpi setup) {
+        this.parent = (Component) parentUiReference;
+        this.fileChooserType = setup.getType();
+        this.filterMap = new HashMap<FileFilter, IFileChooserFilter>();
+        this.fileChooser = new JFileChooser();
 
-		if (setup.getTitle() != null) {
-			fileChooser.setDialogTitle(setup.getTitle());
-		}
+        if (setup.getTitle() != null) {
+            fileChooser.setDialogTitle(setup.getTitle());
+        }
 
-		if (setup.getType() == FileChooserType.OPEN_FILE_LIST) {
-			fileChooser.setMultiSelectionEnabled(true);
-		}
-		else {
-			fileChooser.setMultiSelectionEnabled(false);
-		}
+        if (setup.getType() == FileChooserType.OPEN_FILE_LIST) {
+            fileChooser.setMultiSelectionEnabled(true);
+        }
+        else {
+            fileChooser.setMultiSelectionEnabled(false);
+        }
 
-		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        fileChooser.setAcceptAllFileFilterUsed(false);
 
-		final List<IFileChooserFilter> filterList = setup.getFilterList();
-		if (filterList != null && filterList.size() > 0) {
-			FileFilter firstFileFilter = null;
-			for (final IFileChooserFilter filter : filterList) {
+        final List<IFileChooserFilter> filterList = setup.getFilterList();
+        if (filterList != null && filterList.size() > 0) {
+            FileFilter firstFileFilter = null;
+            for (final IFileChooserFilter filter : filterList) {
 
-				final String[] extensions = new String[filter.getExtensions().size()];
-				int index = 0;
-				boolean acceptAllFilter = false;
-				for (final String extension : filter.getExtensions()) {
-					extensions[index] = extension;
-					if ("*".equals(extension)) {
-						acceptAllFilter = true;
-					}
-					index++;
-				}
-				final FileFilter fileFilter;
-				if (acceptAllFilter) {
-					fileFilter = new FileFilter() {
+                final String[] extensions = new String[filter.getExtensions().size()];
+                int index = 0;
+                boolean acceptAllFilter = false;
+                for (final String extension : filter.getExtensions()) {
+                    extensions[index] = extension;
+                    if ("*".equals(extension)) {
+                        acceptAllFilter = true;
+                    }
+                    index++;
+                }
+                final FileFilter fileFilter;
+                if (acceptAllFilter) {
+                    fileFilter = new FileFilter() {
 
-						@Override
-						public String getDescription() {
-							return filter.getFilterName();
-						}
+                        @Override
+                        public String getDescription() {
+                            return filter.getFilterName();
+                        }
 
-						@Override
-						public boolean accept(final File f) {
-							return true;
-						}
-					};
-				}
-				else {
-					fileFilter = new FileNameExtensionFilter(filter.getFilterName(), extensions);
-				}
+                        @Override
+                        public boolean accept(final File f) {
+                            return true;
+                        }
+                    };
+                }
+                else {
+                    fileFilter = new FileNameExtensionFilter(filter.getFilterName(), extensions);
+                }
 
-				fileChooser.addChoosableFileFilter(fileFilter);
-				if (firstFileFilter == null) {
-					firstFileFilter = fileFilter;
-				}
-				filterMap.put(fileFilter, filter);
-			}
+                fileChooser.addChoosableFileFilter(fileFilter);
+                if (firstFileFilter == null) {
+                    firstFileFilter = fileFilter;
+                }
+                filterMap.put(fileFilter, filter);
+            }
 
-			fileChooser.setFileFilter(firstFileFilter);
-		}
-	}
+            fileChooser.setFileFilter(firstFileFilter);
+        }
+    }
 
-	@Override
-	public Object getUiReference() {
-		return fileChooser;
-	}
+    @Override
+    public Object getUiReference() {
+        return fileChooser;
+    }
 
-	@Override
-	public void setSelectedFile(final File file) {
-		Assert.paramNotNull(file, "file");
-		fileChooser.setSelectedFile(file);
-	}
+    @Override
+    public void setSelectedFile(final File file) {
+        Assert.paramNotNull(file, "file");
+        fileChooser.setSelectedFile(file);
+    }
 
-	@Override
-	public DialogResult open() {
-		int result = JFileChooser.CANCEL_OPTION;
-		if (fileChooserType == FileChooserType.OPEN_FILE || fileChooserType == FileChooserType.OPEN_FILE_LIST) {
-			result = fileChooser.showOpenDialog(parent);
-		}
-		else if (fileChooserType == FileChooserType.SAVE) {
-			result = fileChooser.showSaveDialog(parent);
-		}
-		else {
-			throw new IllegalStateException("The file chooser type '" + fileChooserType + "' is not supported");
-		}
+    @Override
+    public DialogResult open() {
+        int result = JFileChooser.CANCEL_OPTION;
+        if (fileChooserType == FileChooserType.OPEN_FILE || fileChooserType == FileChooserType.OPEN_FILE_LIST) {
+            result = fileChooser.showOpenDialog(parent);
+        }
+        else if (fileChooserType == FileChooserType.SAVE) {
+            result = fileChooser.showSaveDialog(parent);
+        }
+        else {
+            throw new IllegalStateException("The file chooser type '" + fileChooserType + "' is not supported");
+        }
 
-		if (result == JFileChooser.APPROVE_OPTION) {
-			return DialogResult.OK;
-		}
-		else {
-			return DialogResult.CANCEL;
-		}
-	}
+        if (result == JFileChooser.APPROVE_OPTION) {
+            return DialogResult.OK;
+        }
+        else {
+            return DialogResult.CANCEL;
+        }
+    }
 
-	@Override
-	public List<File> getSelectedFiles() {
-		if (fileChooserType == FileChooserType.OPEN_FILE_LIST) {
-			return Arrays.asList(fileChooser.getSelectedFiles());
-		}
-		else {
-			return Collections.singletonList(fileChooser.getSelectedFile());
-		}
-	}
+    @Override
+    public List<File> getSelectedFiles() {
+        if (fileChooserType == FileChooserType.OPEN_FILE_LIST) {
+            return Arrays.asList(fileChooser.getSelectedFiles());
+        }
+        else {
+            return Collections.singletonList(fileChooser.getSelectedFile());
+        }
+    }
 
-	@Override
-	public IFileChooserFilter getSelectedFilter() {
-		final FileFilter fileFilter = fileChooser.getFileFilter();
-		if (fileFilter != null) {
-			return filterMap.get(fileFilter);
-		}
-		else {
-			return null;
-		}
-	}
+    @Override
+    public IFileChooserFilter getSelectedFilter() {
+        final FileFilter fileFilter = fileChooser.getFileFilter();
+        if (fileFilter != null) {
+            return filterMap.get(fileFilter);
+        }
+        else {
+            return null;
+        }
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		if (!enabled) {
-			throw new IllegalArgumentException("Can not disable a file chooser");
-		}
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        if (!enabled) {
+            throw new IllegalArgumentException("Can not disable a file chooser");
+        }
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
 }

@@ -31,10 +31,10 @@ import org.jowidgets.examples.common.demo.DemoApplication;
 
 public final class SwtDemoApplication {
 
-	private SwtDemoApplication() {}
+    private SwtDemoApplication() {}
 
-	public static void main(final String[] args) throws Exception {
-		new DemoApplication("Swt widgets demo application").start();
-	}
+    public static void main(final String[] args) throws Exception {
+        new DemoApplication("Swt widgets demo application").start();
+    }
 
 }

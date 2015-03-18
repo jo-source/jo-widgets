@@ -31,5 +31,5 @@ import org.jowidgets.impl.spi.blueprint.builder.IDirectoryChooserSetupBuilderSpi
 import org.jowidgets.impl.spi.descriptor.IDirectoryChooserDescriptorSpi;
 
 public interface IDirectoryChooserBluePrintSpi extends
-		IDirectoryChooserSetupBuilderSpi<IDirectoryChooserBluePrintSpi>,
-		IDirectoryChooserDescriptorSpi {}
+        IDirectoryChooserSetupBuilderSpi<IDirectoryChooserBluePrintSpi>,
+        IDirectoryChooserDescriptorSpi {}

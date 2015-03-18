@@ -36,74 +36,74 @@ import org.jowidgets.util.Assert;
 
 final class UiWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> implements IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> {
 
-	private final IUiThreadAccess uiThreadAccess;
-	private final IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> original;
+    private final IUiThreadAccess uiThreadAccess;
+    private final IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> original;
 
-	private final AtomicBoolean disposed;
+    private final AtomicBoolean disposed;
 
-	UiWorkerCallback(final IUiThreadAccess uiThreadAccess, final IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> original) {
-		Assert.paramNotNull(uiThreadAccess, "uiThreadAccess");
-		Assert.paramNotNull(original, "original");
+    UiWorkerCallback(final IUiThreadAccess uiThreadAccess, final IWorkerCallback<RESULT_TYPE, PROGRESS_TYPE> original) {
+        Assert.paramNotNull(uiThreadAccess, "uiThreadAccess");
+        Assert.paramNotNull(original, "original");
 
-		this.uiThreadAccess = uiThreadAccess;
-		this.original = original;
-		this.disposed = new AtomicBoolean(false);
-	}
+        this.uiThreadAccess = uiThreadAccess;
+        this.original = original;
+        this.disposed = new AtomicBoolean(false);
+    }
 
-	@Override
-	public void progress(final PROGRESS_TYPE progress) {
-		if (!disposed.get()) {
-			uiThreadAccess.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					if (!disposed.get()) {
-						original.progress(progress);
-					}
-				}
-			});
-		}
-	}
+    @Override
+    public void progress(final PROGRESS_TYPE progress) {
+        if (!disposed.get()) {
+            uiThreadAccess.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    if (!disposed.get()) {
+                        original.progress(progress);
+                    }
+                }
+            });
+        }
+    }
 
-	@Override
-	public void finished(final RESULT_TYPE result) {
-		if (!disposed.get()) {
-			uiThreadAccess.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					if (!disposed.getAndSet(true)) {
-						original.finished(result);
-					}
-				}
-			});
-		}
-	}
+    @Override
+    public void finished(final RESULT_TYPE result) {
+        if (!disposed.get()) {
+            uiThreadAccess.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    if (!disposed.getAndSet(true)) {
+                        original.finished(result);
+                    }
+                }
+            });
+        }
+    }
 
-	@Override
-	public void canceled() {
-		if (!disposed.get()) {
-			uiThreadAccess.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					if (!disposed.getAndSet(true)) {
-						original.canceled();
-					}
-				}
-			});
-		}
-	}
+    @Override
+    public void canceled() {
+        if (!disposed.get()) {
+            uiThreadAccess.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    if (!disposed.getAndSet(true)) {
+                        original.canceled();
+                    }
+                }
+            });
+        }
+    }
 
-	@Override
-	public void exception(final Throwable exception) {
-		if (!disposed.get()) {
-			uiThreadAccess.invokeLater(new Runnable() {
-				@Override
-				public void run() {
-					if (!disposed.getAndSet(true)) {
-						original.exception(exception);
-					}
-				}
-			});
-		}
-	}
+    @Override
+    public void exception(final Throwable exception) {
+        if (!disposed.get()) {
+            uiThreadAccess.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    if (!disposed.getAndSet(true)) {
+                        original.exception(exception);
+                    }
+                }
+            });
+        }
+    }
 
 }

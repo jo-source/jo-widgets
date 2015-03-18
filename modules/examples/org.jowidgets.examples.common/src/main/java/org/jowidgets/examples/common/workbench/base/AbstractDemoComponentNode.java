@@ -35,53 +35,53 @@ import org.jowidgets.workbench.api.IComponentNodeContext;
 
 public abstract class AbstractDemoComponentNode implements IComponentNode {
 
-	private final String id;
-	private final String label;
-	private final String tooltip;
-	private final IImageConstant icon;
+    private final String id;
+    private final String label;
+    private final String tooltip;
+    private final IImageConstant icon;
 
-	public AbstractDemoComponentNode(final String id, final String label) {
-		this(id, label, null, null);
-	}
+    public AbstractDemoComponentNode(final String id, final String label) {
+        this(id, label, null, null);
+    }
 
-	public AbstractDemoComponentNode(final String id, final String label, final String tooltip, final IImageConstant icon) {
-		Assert.paramNotEmpty(id, "id");
-		Assert.paramNotEmpty(label, "label");
+    public AbstractDemoComponentNode(final String id, final String label, final String tooltip, final IImageConstant icon) {
+        Assert.paramNotEmpty(id, "id");
+        Assert.paramNotEmpty(label, "label");
 
-		this.id = id;
-		this.label = label;
-		this.tooltip = tooltip;
-		this.icon = icon;
-	}
+        this.id = id;
+        this.label = label;
+        this.tooltip = tooltip;
+        this.icon = icon;
+    }
 
-	@Override
-	public void onContextInitialize(final IComponentNodeContext context) {}
+    @Override
+    public void onContextInitialize(final IComponentNodeContext context) {}
 
-	@Override
-	public void onDispose() {
-		// CHECKSTYLE:OFF
-		System.out.println("ComponentNode: onDispose() " + getId());
-		// CHECKSTYLE:ON
-	}
+    @Override
+    public void onDispose() {
+        // CHECKSTYLE:OFF
+        System.out.println("ComponentNode: onDispose() " + getId());
+        // CHECKSTYLE:ON
+    }
 
-	@Override
-	public final String getId() {
-		return id;
-	}
+    @Override
+    public final String getId() {
+        return id;
+    }
 
-	@Override
-	public String getLabel() {
-		return label;
-	}
+    @Override
+    public String getLabel() {
+        return label;
+    }
 
-	@Override
-	public String getTooltip() {
-		return tooltip;
-	}
+    @Override
+    public String getTooltip() {
+        return tooltip;
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return icon;
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return icon;
+    }
 
 }

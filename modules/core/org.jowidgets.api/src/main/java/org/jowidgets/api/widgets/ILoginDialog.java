@@ -31,6 +31,6 @@ import org.jowidgets.api.login.ILoginResult;
 
 public interface ILoginDialog extends IDisplay {
 
-	ILoginResult doLogin();
+    ILoginResult doLogin();
 
 }

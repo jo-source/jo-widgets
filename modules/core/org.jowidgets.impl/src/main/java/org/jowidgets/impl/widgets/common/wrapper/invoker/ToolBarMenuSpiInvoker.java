@@ -36,66 +36,66 @@ import org.jowidgets.util.EmptyCheck;
 
 public class ToolBarMenuSpiInvoker implements IItemSpiInvoker {
 
-	private final IToolBarItemSpi item;
-	private final IImageConstant defaultIcon;
+    private final IToolBarItemSpi item;
+    private final IImageConstant defaultIcon;
 
-	private String text;
-	private String toolTipText;
+    private String text;
+    private String toolTipText;
 
-	public ToolBarMenuSpiInvoker(final IToolBarItemSpi item, final IImageConstant defaultIcon) {
-		Assert.paramNotNull(item, "item");
-		this.item = item;
-		this.defaultIcon = defaultIcon;
-	}
+    public ToolBarMenuSpiInvoker(final IToolBarItemSpi item, final IImageConstant defaultIcon) {
+        Assert.paramNotNull(item, "item");
+        this.item = item;
+        this.defaultIcon = defaultIcon;
+    }
 
-	public IToolBarItemSpi getItem() {
-		return item;
-	}
+    public IToolBarItemSpi getItem() {
+        return item;
+    }
 
-	@Override
-	public void setText(final String text) {
-		this.text = text;
-		setToolTip();
-	}
+    @Override
+    public void setText(final String text) {
+        this.text = text;
+        setToolTip();
+    }
 
-	@Override
-	public void setToolTipText(final String toolTipText) {
-		this.toolTipText = toolTipText;
-		setToolTip();
-	}
+    @Override
+    public void setToolTipText(final String toolTipText) {
+        this.toolTipText = toolTipText;
+        setToolTip();
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		if (icon == null && defaultIcon != null) {
-			item.setIcon(defaultIcon);
-		}
-		else {
-			item.setIcon(icon);
-		}
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        if (icon == null && defaultIcon != null) {
+            item.setIcon(defaultIcon);
+        }
+        else {
+            item.setIcon(icon);
+        }
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		item.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        item.setEnabled(enabled);
+    }
 
-	@Override
-	public void setAccelerator(final Accelerator accelerator) {}
+    @Override
+    public void setAccelerator(final Accelerator accelerator) {}
 
-	@Override
-	public void setMnemonic(final Character mnemonic) {}
+    @Override
+    public void setMnemonic(final Character mnemonic) {}
 
-	private void setToolTip() {
-		final String prefix = EmptyCheck.isEmpty(text) ? "" : text;
-		String delimiter;
-		final String suffix = EmptyCheck.isEmpty(toolTipText) ? "" : toolTipText;
-		if (!EmptyCheck.isEmpty(text) && !EmptyCheck.isEmpty(toolTipText)) {
-			delimiter = ": ";
-		}
-		else {
-			delimiter = "";
-		}
-		item.setToolTipText(prefix + delimiter + suffix);
-	}
+    private void setToolTip() {
+        final String prefix = EmptyCheck.isEmpty(text) ? "" : text;
+        String delimiter;
+        final String suffix = EmptyCheck.isEmpty(toolTipText) ? "" : toolTipText;
+        if (!EmptyCheck.isEmpty(text) && !EmptyCheck.isEmpty(toolTipText)) {
+            delimiter = ": ";
+        }
+        else {
+            delimiter = "";
+        }
+        item.setToolTipText(prefix + delimiter + suffix);
+    }
 
 }

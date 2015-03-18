@@ -29,8 +29,8 @@ package org.jowidgets.common.types;
 
 public enum FontType {
 
-	PROPORTIONAL,
+    PROPORTIONAL,
 
-	MONOSPACED;
+    MONOSPACED;
 
 }

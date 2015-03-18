@@ -36,68 +36,68 @@ import org.jowidgets.util.collection.ObserverSetFactory;
 
 public class TreeNodeModelObservable implements ITreeNodeModelObservable {
 
-	private final IObserverSet<ITreeNodeModelListener> listeners;
+    private final IObserverSet<ITreeNodeModelListener> listeners;
 
-	public TreeNodeModelObservable() {
-		this.listeners = ObserverSetFactory.create(Strategy.HIGH_PERFORMANCE);
-	}
+    public TreeNodeModelObservable() {
+        this.listeners = ObserverSetFactory.create(Strategy.HIGH_PERFORMANCE);
+    }
 
-	@Override
-	public final void addTreeNodeModelListener(final ITreeNodeModelListener listener) {
-		listeners.add(listener);
-	}
+    @Override
+    public final void addTreeNodeModelListener(final ITreeNodeModelListener listener) {
+        listeners.add(listener);
+    }
 
-	@Override
-	public final void removeTreeNodeModelListener(final ITreeNodeModelListener listener) {
-		listeners.remove(listener);
-	}
+    @Override
+    public final void removeTreeNodeModelListener(final ITreeNodeModelListener listener) {
+        listeners.remove(listener);
+    }
 
-	public final void fireDataChanged() {
-		for (final ITreeNodeModelListener listener : listeners) {
-			listener.dataChanged();
-		}
-	}
+    public final void fireDataChanged() {
+        for (final ITreeNodeModelListener listener : listeners) {
+            listener.dataChanged();
+        }
+    }
 
-	public final void fireChildrenChanged() {
-		for (final ITreeNodeModelListener listener : listeners) {
-			listener.childrenChanged();
-		}
-	}
+    public final void fireChildrenChanged() {
+        for (final ITreeNodeModelListener listener : listeners) {
+            listener.childrenChanged();
+        }
+    }
 
-	public final void fireSelectionChanged() {
-		for (final ITreeNodeModelListener listener : listeners) {
-			listener.selectionChanged();
-		}
-	}
+    public final void fireSelectionChanged() {
+        for (final ITreeNodeModelListener listener : listeners) {
+            listener.selectionChanged();
+        }
+    }
 
-	public final void fireCheckedChanged() {
-		for (final ITreeNodeModelListener listener : listeners) {
-			listener.checkedChanged();
-		}
-	}
+    public final void fireCheckedChanged() {
+        for (final ITreeNodeModelListener listener : listeners) {
+            listener.checkedChanged();
+        }
+    }
 
-	public final void fireCheckableChanged() {
-		for (final ITreeNodeModelListener listener : listeners) {
-			listener.checkableChanged();
-		}
-	}
+    public final void fireCheckableChanged() {
+        for (final ITreeNodeModelListener listener : listeners) {
+            listener.checkableChanged();
+        }
+    }
 
-	public final void fireExpansionChanged() {
-		for (final ITreeNodeModelListener listener : listeners) {
-			listener.expansionChanged();
-		}
-	}
+    public final void fireExpansionChanged() {
+        for (final ITreeNodeModelListener listener : listeners) {
+            listener.expansionChanged();
+        }
+    }
 
-	public final void fireVisibilityChanged() {
-		for (final ITreeNodeModelListener listener : listeners) {
-			listener.visibilityChanged();
-		}
-	}
+    public final void fireVisibilityChanged() {
+        for (final ITreeNodeModelListener listener : listeners) {
+            listener.visibilityChanged();
+        }
+    }
 
-	public final void fireDisposed() {
-		for (final ITreeNodeModelListener listener : listeners) {
-			listener.dataChanged();
-		}
-	}
+    public final void fireDisposed() {
+        for (final ITreeNodeModelListener listener : listeners) {
+            listener.dataChanged();
+        }
+    }
 
 }

@@ -35,19 +35,19 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public class InputContentCreatorFactory implements IInputContentCreatorFactory {
 
-	@Override
-	public <INPUT_TYPE> IInputContentCreator<INPUT_TYPE> singleControlContent(
-		final String label,
-		final IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor,
-		final int fieldMinWidth) {
-		return new SingleControlContent<INPUT_TYPE>(label, descriptor, "w " + fieldMinWidth + ", grow");
-	}
+    @Override
+    public <INPUT_TYPE> IInputContentCreator<INPUT_TYPE> singleControlContent(
+        final String label,
+        final IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor,
+        final int fieldMinWidth) {
+        return new SingleControlContent<INPUT_TYPE>(label, descriptor, "w " + fieldMinWidth + ", grow");
+    }
 
-	@Override
-	public <INPUT_TYPE> IInputContentCreator<INPUT_TYPE> singleControlContent(
-		final String label,
-		final IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor) {
-		return new SingleControlContent<INPUT_TYPE>(label, descriptor, null);
-	}
+    @Override
+    public <INPUT_TYPE> IInputContentCreator<INPUT_TYPE> singleControlContent(
+        final String label,
+        final IWidgetDescriptor<? extends IInputControl<INPUT_TYPE>> descriptor) {
+        return new SingleControlContent<INPUT_TYPE>(label, descriptor, null);
+    }
 
 }

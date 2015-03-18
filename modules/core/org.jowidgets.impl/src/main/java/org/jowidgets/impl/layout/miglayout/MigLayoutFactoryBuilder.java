@@ -39,81 +39,81 @@ import org.jowidgets.util.Assert;
 
 public final class MigLayoutFactoryBuilder implements IMigLayoutFactoryBuilder {
 
-	private Object constraints;
-	private Object columnConstraints;
-	private Object rowConstraints;
+    private Object constraints;
+    private Object columnConstraints;
+    private Object rowConstraints;
 
-	public MigLayoutFactoryBuilder() {
-		this.constraints = null;
-		this.columnConstraints = null;
-		this.rowConstraints = null;
-	}
+    public MigLayoutFactoryBuilder() {
+        this.constraints = null;
+        this.columnConstraints = null;
+        this.rowConstraints = null;
+    }
 
-	@Override
-	public IMigLayoutFactoryBuilder descriptor(final MigLayoutDescriptor descriptor) {
-		Assert.paramNotNull(descriptor, "descriptor");
-		if (descriptor.getLayoutConstraints() != null) {
-			constraints(descriptor.getLayoutConstraints());
-		}
-		if (descriptor.getRowConstraints() != null) {
-			rowConstraints(descriptor.getRowConstraints());
-		}
-		if (descriptor.getColumnConstraints() != null) {
-			columnConstraints(descriptor.getColumnConstraints());
-		}
-		return this;
-	}
+    @Override
+    public IMigLayoutFactoryBuilder descriptor(final MigLayoutDescriptor descriptor) {
+        Assert.paramNotNull(descriptor, "descriptor");
+        if (descriptor.getLayoutConstraints() != null) {
+            constraints(descriptor.getLayoutConstraints());
+        }
+        if (descriptor.getRowConstraints() != null) {
+            rowConstraints(descriptor.getRowConstraints());
+        }
+        if (descriptor.getColumnConstraints() != null) {
+            columnConstraints(descriptor.getColumnConstraints());
+        }
+        return this;
+    }
 
-	@Override
-	public IMigLayoutFactoryBuilder rowConstraints(final String constraints) {
-		Assert.paramNotNull(constraints, "constraints");
-		this.rowConstraints = constraints;
-		return this;
-	}
+    @Override
+    public IMigLayoutFactoryBuilder rowConstraints(final String constraints) {
+        Assert.paramNotNull(constraints, "constraints");
+        this.rowConstraints = constraints;
+        return this;
+    }
 
-	@Override
-	public IMigLayoutFactoryBuilder columnConstraints(final String constraints) {
-		Assert.paramNotNull(constraints, "constraints");
-		this.columnConstraints = constraints;
-		return this;
-	}
+    @Override
+    public IMigLayoutFactoryBuilder columnConstraints(final String constraints) {
+        Assert.paramNotNull(constraints, "constraints");
+        this.columnConstraints = constraints;
+        return this;
+    }
 
-	@Override
-	public IMigLayoutFactoryBuilder constraints(final String constraints) {
-		Assert.paramNotNull(constraints, "constraints");
-		this.constraints = constraints;
-		return this;
-	}
+    @Override
+    public IMigLayoutFactoryBuilder constraints(final String constraints) {
+        Assert.paramNotNull(constraints, "constraints");
+        this.constraints = constraints;
+        return this;
+    }
 
-	@Override
-	public IMigLayoutFactoryBuilder rowConstraints(final IAC constraints) {
-		Assert.paramNotNull(constraints, "constraints");
-		this.rowConstraints = constraints;
-		return this;
-	}
+    @Override
+    public IMigLayoutFactoryBuilder rowConstraints(final IAC constraints) {
+        Assert.paramNotNull(constraints, "constraints");
+        this.rowConstraints = constraints;
+        return this;
+    }
 
-	@Override
-	public IMigLayoutFactoryBuilder columnConstraints(final IAC constraints) {
-		Assert.paramNotNull(constraints, "constraints");
-		this.columnConstraints = constraints;
-		return this;
-	}
+    @Override
+    public IMigLayoutFactoryBuilder columnConstraints(final IAC constraints) {
+        Assert.paramNotNull(constraints, "constraints");
+        this.columnConstraints = constraints;
+        return this;
+    }
 
-	@Override
-	public IMigLayoutFactoryBuilder constraints(final ILC constraints) {
-		Assert.paramNotNull(constraints, "constraints");
-		this.constraints = constraints;
-		return this;
-	}
+    @Override
+    public IMigLayoutFactoryBuilder constraints(final ILC constraints) {
+        Assert.paramNotNull(constraints, "constraints");
+        this.constraints = constraints;
+        return this;
+    }
 
-	@Override
-	public ILayoutFactory<IMigLayout> build() {
-		return new ILayoutFactory<IMigLayout>() {
-			@Override
-			public IMigLayout create(final IContainer container) {
-				return new MigLayout(container, constraints, columnConstraints, rowConstraints);
-			}
-		};
-	}
+    @Override
+    public ILayoutFactory<IMigLayout> build() {
+        return new ILayoutFactory<IMigLayout>() {
+            @Override
+            public IMigLayout create(final IContainer container) {
+                return new MigLayout(container, constraints, columnConstraints, rowConstraints);
+            }
+        };
+    }
 
 }

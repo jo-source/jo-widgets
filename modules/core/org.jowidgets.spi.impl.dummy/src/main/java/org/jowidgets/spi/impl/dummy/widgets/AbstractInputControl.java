@@ -46,201 +46,201 @@ import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public abstract class AbstractInputControl extends InputObservable implements IInputControlSpi {
 
-	private final DummyControl dummyControlDelegate;
+    private final DummyControl dummyControlDelegate;
 
-	public AbstractInputControl(final UIDComponent component) {
-		super();
-		this.dummyControlDelegate = new DummyControl(component);
-	}
+    public AbstractInputControl(final UIDComponent component) {
+        super();
+        this.dummyControlDelegate = new DummyControl(component);
+    }
 
-	@Override
-	public UIDComponent getUiReference() {
-		return dummyControlDelegate.getUiReference();
-	}
+    @Override
+    public UIDComponent getUiReference() {
+        return dummyControlDelegate.getUiReference();
+    }
 
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		dummyControlDelegate.setLayoutConstraints(layoutConstraints);
-	}
+    @Override
+    public void setLayoutConstraints(final Object layoutConstraints) {
+        dummyControlDelegate.setLayoutConstraints(layoutConstraints);
+    }
 
-	@Override
-	public Object getLayoutConstraints() {
-		return dummyControlDelegate.getLayoutConstraints();
-	}
+    @Override
+    public Object getLayoutConstraints() {
+        return dummyControlDelegate.getLayoutConstraints();
+    }
 
-	@Override
-	public void redraw() {
-		dummyControlDelegate.redraw();
-	}
+    @Override
+    public void redraw() {
+        dummyControlDelegate.redraw();
+    }
 
-	@Override
-	public void setRedrawEnabled(final boolean enabled) {
-		dummyControlDelegate.setRedrawEnabled(enabled);
-	}
+    @Override
+    public void setRedrawEnabled(final boolean enabled) {
+        dummyControlDelegate.setRedrawEnabled(enabled);
+    }
 
-	@Override
-	public void setForegroundColor(final IColorConstant colorValue) {
-		dummyControlDelegate.setForegroundColor(colorValue);
-	}
+    @Override
+    public void setForegroundColor(final IColorConstant colorValue) {
+        dummyControlDelegate.setForegroundColor(colorValue);
+    }
 
-	@Override
-	public void setBackgroundColor(final IColorConstant colorValue) {
-		dummyControlDelegate.setBackgroundColor(colorValue);
-	}
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        dummyControlDelegate.setBackgroundColor(colorValue);
+    }
 
-	@Override
-	public IColorConstant getForegroundColor() {
-		return dummyControlDelegate.getForegroundColor();
-	}
+    @Override
+    public IColorConstant getForegroundColor() {
+        return dummyControlDelegate.getForegroundColor();
+    }
 
-	@Override
-	public IColorConstant getBackgroundColor() {
-		return dummyControlDelegate.getBackgroundColor();
-	}
+    @Override
+    public IColorConstant getBackgroundColor() {
+        return dummyControlDelegate.getBackgroundColor();
+    }
 
-	@Override
-	public void setCursor(final Cursor cursor) {
-		dummyControlDelegate.setCursor(cursor);
-	}
+    @Override
+    public void setCursor(final Cursor cursor) {
+        dummyControlDelegate.setCursor(cursor);
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		dummyControlDelegate.setVisible(visible);
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        dummyControlDelegate.setVisible(visible);
+    }
 
-	@Override
-	public boolean isVisible() {
-		return dummyControlDelegate.isVisible();
-	}
+    @Override
+    public boolean isVisible() {
+        return dummyControlDelegate.isVisible();
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		dummyControlDelegate.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        dummyControlDelegate.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return dummyControlDelegate.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return dummyControlDelegate.isEnabled();
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		return dummyControlDelegate.getMinSize();
-	}
+    @Override
+    public Dimension getMinSize() {
+        return dummyControlDelegate.getMinSize();
+    }
 
-	@Override
-	public Dimension getPreferredSize() {
-		return dummyControlDelegate.getPreferredSize();
-	}
+    @Override
+    public Dimension getPreferredSize() {
+        return dummyControlDelegate.getPreferredSize();
+    }
 
-	@Override
-	public Dimension getMaxSize() {
-		return dummyControlDelegate.getMaxSize();
-	}
+    @Override
+    public Dimension getMaxSize() {
+        return dummyControlDelegate.getMaxSize();
+    }
 
-	@Override
-	public Dimension getSize() {
-		return dummyControlDelegate.getSize();
-	}
+    @Override
+    public Dimension getSize() {
+        return dummyControlDelegate.getSize();
+    }
 
-	@Override
-	public void setSize(final Dimension size) {
-		dummyControlDelegate.setSize(size);
-	}
+    @Override
+    public void setSize(final Dimension size) {
+        dummyControlDelegate.setSize(size);
+    }
 
-	@Override
-	public Position getPosition() {
-		return dummyControlDelegate.getPosition();
-	}
+    @Override
+    public Position getPosition() {
+        return dummyControlDelegate.getPosition();
+    }
 
-	@Override
-	public void setPosition(final Position position) {
-		dummyControlDelegate.setPosition(position);
-	}
+    @Override
+    public void setPosition(final Position position) {
+        dummyControlDelegate.setPosition(position);
+    }
 
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return dummyControlDelegate.createPopupMenu();
-	}
+    @Override
+    public IPopupMenuSpi createPopupMenu() {
+        return dummyControlDelegate.createPopupMenu();
+    }
 
-	@Override
-	public boolean requestFocus() {
-		return dummyControlDelegate.requestFocus();
-	}
+    @Override
+    public boolean requestFocus() {
+        return dummyControlDelegate.requestFocus();
+    }
 
-	@Override
-	public void addFocusListener(final IFocusListener listener) {
-		dummyControlDelegate.addFocusListener(listener);
-	}
+    @Override
+    public void addFocusListener(final IFocusListener listener) {
+        dummyControlDelegate.addFocusListener(listener);
+    }
 
-	@Override
-	public void removeFocusListener(final IFocusListener listener) {
-		dummyControlDelegate.removeFocusListener(listener);
-	}
+    @Override
+    public void removeFocusListener(final IFocusListener listener) {
+        dummyControlDelegate.removeFocusListener(listener);
+    }
 
-	@Override
-	public void addKeyListener(final IKeyListener listener) {
-		dummyControlDelegate.addKeyListener(listener);
-	}
+    @Override
+    public void addKeyListener(final IKeyListener listener) {
+        dummyControlDelegate.addKeyListener(listener);
+    }
 
-	@Override
-	public void removeKeyListener(final IKeyListener listener) {
-		dummyControlDelegate.removeKeyListener(listener);
-	}
+    @Override
+    public void removeKeyListener(final IKeyListener listener) {
+        dummyControlDelegate.removeKeyListener(listener);
+    }
 
-	@Override
-	public void addMouseListener(final IMouseListener mouseListener) {
-		dummyControlDelegate.addMouseListener(mouseListener);
-	}
+    @Override
+    public void addMouseListener(final IMouseListener mouseListener) {
+        dummyControlDelegate.addMouseListener(mouseListener);
+    }
 
-	@Override
-	public void removeMouseListener(final IMouseListener mouseListener) {
-		dummyControlDelegate.removeMouseListener(mouseListener);
-	}
+    @Override
+    public void removeMouseListener(final IMouseListener mouseListener) {
+        dummyControlDelegate.removeMouseListener(mouseListener);
+    }
 
-	@Override
-	public void addMouseMotionListener(final IMouseMotionListener listener) {
-		dummyControlDelegate.addMouseMotionListener(listener);
-	}
+    @Override
+    public void addMouseMotionListener(final IMouseMotionListener listener) {
+        dummyControlDelegate.addMouseMotionListener(listener);
+    }
 
-	@Override
-	public void removeMouseMotionListener(final IMouseMotionListener listener) {
-		dummyControlDelegate.removeMouseMotionListener(listener);
-	}
+    @Override
+    public void removeMouseMotionListener(final IMouseMotionListener listener) {
+        dummyControlDelegate.removeMouseMotionListener(listener);
+    }
 
-	@Override
-	public void addComponentListener(final IComponentListener componentListener) {
-		dummyControlDelegate.addComponentListener(componentListener);
-	}
+    @Override
+    public void addComponentListener(final IComponentListener componentListener) {
+        dummyControlDelegate.addComponentListener(componentListener);
+    }
 
-	@Override
-	public void removeComponentListener(final IComponentListener componentListener) {
-		dummyControlDelegate.removeComponentListener(componentListener);
-	}
+    @Override
+    public void removeComponentListener(final IComponentListener componentListener) {
+        dummyControlDelegate.removeComponentListener(componentListener);
+    }
 
-	@Override
-	public void addPopupDetectionListener(final IPopupDetectionListener listener) {
-		dummyControlDelegate.addPopupDetectionListener(listener);
-	}
+    @Override
+    public void addPopupDetectionListener(final IPopupDetectionListener listener) {
+        dummyControlDelegate.addPopupDetectionListener(listener);
+    }
 
-	@Override
-	public void removePopupDetectionListener(final IPopupDetectionListener listener) {
-		dummyControlDelegate.removePopupDetectionListener(listener);
-	}
+    @Override
+    public void removePopupDetectionListener(final IPopupDetectionListener listener) {
+        dummyControlDelegate.removePopupDetectionListener(listener);
+    }
 
-	@Override
-	public void setToolTipText(final String toolTip) {
-		dummyControlDelegate.setToolTipText(toolTip);
-	}
+    @Override
+    public void setToolTipText(final String toolTip) {
+        dummyControlDelegate.setToolTipText(toolTip);
+    }
 
-	@Override
-	public IDragSourceSpi getDragSource() {
-		return dummyControlDelegate.getDragSource();
-	}
+    @Override
+    public IDragSourceSpi getDragSource() {
+        return dummyControlDelegate.getDragSource();
+    }
 
-	@Override
-	public IDropTargetSpi getDropTarget() {
-		return dummyControlDelegate.getDropTarget();
-	}
+    @Override
+    public IDropTargetSpi getDropTarget() {
+        return dummyControlDelegate.getDropTarget();
+    }
 
 }

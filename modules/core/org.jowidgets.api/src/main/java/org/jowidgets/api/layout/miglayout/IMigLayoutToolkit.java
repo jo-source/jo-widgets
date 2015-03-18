@@ -30,66 +30,66 @@ package org.jowidgets.api.layout.miglayout;
 
 public interface IMigLayoutToolkit {
 
-	/**
-	 * Creates column constraints
-	 * 
-	 * @return New column constraints
-	 */
-	IAC columnConstraints();
+    /**
+     * Creates column constraints
+     * 
+     * @return New column constraints
+     */
+    IAC columnConstraints();
 
-	/**
-	 * Creates row constraints
-	 * 
-	 * @return New row constraints
-	 */
-	IAC rowConstraints();
+    /**
+     * Creates row constraints
+     * 
+     * @return New row constraints
+     */
+    IAC rowConstraints();
 
-	/**
-	 * Creates layout constraints
-	 * 
-	 * @return New layout constraints
-	 */
-	ILC layoutConstraints();
+    /**
+     * Creates layout constraints
+     * 
+     * @return New layout constraints
+     */
+    ILC layoutConstraints();
 
-	/**
-	 * Creates component constraints
-	 * 
-	 * @return New component constraints
-	 */
-	ICC componentConstraints();
+    /**
+     * Creates component constraints
+     * 
+     * @return New component constraints
+     */
+    ICC componentConstraints();
 
-	/**
-	 * Creates component constraints
-	 * 
-	 * @return New component constraints
-	 */
-	ICC cc();
+    /**
+     * Creates component constraints
+     * 
+     * @return New component constraints
+     */
+    ICC cc();
 
-	/**
-	 * Creates row / column constraints
-	 * 
-	 * @return New row / column constraints
-	 */
-	IAC ac();
+    /**
+     * Creates row / column constraints
+     * 
+     * @return New row / column constraints
+     */
+    IAC ac();
 
-	/**
-	 * Creates layout constraints
-	 * 
-	 * @return New layout constraints
-	 */
-	ILC lc();
+    /**
+     * Creates layout constraints
+     * 
+     * @return New layout constraints
+     */
+    ILC lc();
 
-	/**
-	 * Gets the platform defaults
-	 * 
-	 * @return The platform defaults, never null
-	 */
-	IPlatformDefaults getPlatformDefaults();
+    /**
+     * Gets the platform defaults
+     * 
+     * @return The platform defaults, never null
+     */
+    IPlatformDefaults getPlatformDefaults();
 
-	/**
-	 * Gets the mig layout version
-	 * 
-	 * @return The mig layout version
-	 */
-	String getMigLayoutVersion();
+    /**
+     * Gets the mig layout version
+     * 
+     * @return The mig layout version
+     */
+    String getMigLayoutVersion();
 }

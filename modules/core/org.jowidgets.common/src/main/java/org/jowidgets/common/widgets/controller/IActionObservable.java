@@ -29,18 +29,18 @@ package org.jowidgets.common.widgets.controller;
 
 public interface IActionObservable {
 
-	/**
-	 * Adds an action listener
-	 * 
-	 * @param actionListener The listener to add
-	 */
-	void addActionListener(final IActionListener actionListener);
+    /**
+     * Adds an action listener
+     * 
+     * @param actionListener The listener to add
+     */
+    void addActionListener(final IActionListener actionListener);
 
-	/**
-	 * Removes an action listener
-	 * 
-	 * @param actionListener The listener to remove
-	 */
-	void removeActionListener(final IActionListener actionListener);
+    /**
+     * Removes an action listener
+     * 
+     * @param actionListener The listener to remove
+     */
+    void removeActionListener(final IActionListener actionListener);
 
 }

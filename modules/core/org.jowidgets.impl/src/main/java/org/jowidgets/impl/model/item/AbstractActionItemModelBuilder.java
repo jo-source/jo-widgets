@@ -36,35 +36,35 @@ import org.jowidgets.api.model.item.IActionItemVisibilityAspect;
 import org.jowidgets.util.Assert;
 
 public abstract class AbstractActionItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> extends
-		AbstractItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> {
+        AbstractItemModelBuilder<INSTANCE_TYPE, ITEM_TYPE> {
 
-	private final List<IActionItemVisibilityAspect> visibilityAspects;
+    private final List<IActionItemVisibilityAspect> visibilityAspects;
 
-	private IAction action;
+    private IAction action;
 
-	AbstractActionItemModelBuilder() {
-		this.visibilityAspects = new LinkedList<IActionItemVisibilityAspect>();
-	}
+    AbstractActionItemModelBuilder() {
+        this.visibilityAspects = new LinkedList<IActionItemVisibilityAspect>();
+    }
 
-	@SuppressWarnings("unchecked")
-	public INSTANCE_TYPE setAction(final IAction action) {
-		this.action = action;
-		return (INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    public INSTANCE_TYPE setAction(final IAction action) {
+        this.action = action;
+        return (INSTANCE_TYPE) this;
+    }
 
-	@SuppressWarnings("unchecked")
-	public INSTANCE_TYPE addVisibilityAspect(final IActionItemVisibilityAspect visibilityAspect) {
-		Assert.paramNotNull(visibilityAspect, "visibilityAspect");
-		visibilityAspects.add(visibilityAspect);
-		return (INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    public INSTANCE_TYPE addVisibilityAspect(final IActionItemVisibilityAspect visibilityAspect) {
+        Assert.paramNotNull(visibilityAspect, "visibilityAspect");
+        visibilityAspects.add(visibilityAspect);
+        return (INSTANCE_TYPE) this;
+    }
 
-	protected IAction getAction() {
-		return action;
-	}
+    protected IAction getAction() {
+        return action;
+    }
 
-	protected ActionItemVisibilityAspectComposite getVisibilityAspect() {
-		return new ActionItemVisibilityAspectComposite(visibilityAspects);
-	}
+    protected ActionItemVisibilityAspectComposite getVisibilityAspect() {
+        return new ActionItemVisibilityAspectComposite(visibilityAspects);
+    }
 
 }

@@ -38,52 +38,52 @@ import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public class PopupMenuImpl extends AbstractSwingMenu implements IPopupMenuSpi {
 
-	private Component parent;
+    private Component parent;
 
-	public PopupMenuImpl(final Component parent) {
-		super(new JoPopupMenu() {
+    public PopupMenuImpl(final Component parent) {
+        super(new JoPopupMenu() {
 
-			private static final long serialVersionUID = -3625772723915271319L;
+            private static final long serialVersionUID = -3625772723915271319L;
 
-			private final MenuObservable menuObservable = new MenuObservable();
+            private final MenuObservable menuObservable = new MenuObservable();
 
-			@Override
-			public void setVisible(final boolean visible) {
-				super.setVisible(visible);
-				if (visible) {
-					menuObservable.fireMenuActivated();
-				}
-				else {
-					menuObservable.fireMenuDeactivated();
-				}
-			}
+            @Override
+            public void setVisible(final boolean visible) {
+                super.setVisible(visible);
+                if (visible) {
+                    menuObservable.fireMenuActivated();
+                }
+                else {
+                    menuObservable.fireMenuDeactivated();
+                }
+            }
 
-		});
-		this.parent = parent;
-	}
+        });
+        this.parent = parent;
+    }
 
-	public void setParent(final Component parent) {
-		this.parent = parent;
-	}
+    public void setParent(final Component parent) {
+        this.parent = parent;
+    }
 
-	@Override
-	public JoPopupMenu getUiReference() {
-		return (JoPopupMenu) super.getUiReference();
-	}
+    @Override
+    public JoPopupMenu getUiReference() {
+        return (JoPopupMenu) super.getUiReference();
+    }
 
-	@Override
-	public void show(final Position position) {
-		getUiReference().show(parent, position.getX(), position.getY());
-	}
+    @Override
+    public void show(final Position position) {
+        getUiReference().show(parent, position.getX(), position.getY());
+    }
 
-	@Override
-	public void addMenuListener(final IMenuListener listener) {
-		getUiReference().addMenuListener(listener);
-	}
+    @Override
+    public void addMenuListener(final IMenuListener listener) {
+        getUiReference().addMenuListener(listener);
+    }
 
-	@Override
-	public void removeMenuListener(final IMenuListener listener) {
-		getUiReference().removeMenuListener(listener);
-	}
+    @Override
+    public void removeMenuListener(final IMenuListener listener) {
+        getUiReference().removeMenuListener(listener);
+    }
 
 }

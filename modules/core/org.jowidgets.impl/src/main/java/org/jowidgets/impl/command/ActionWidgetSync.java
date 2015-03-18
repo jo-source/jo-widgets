@@ -36,186 +36,186 @@ import org.jowidgets.util.EmptyCheck;
 
 public class ActionWidgetSync {
 
-	private final IAction action;
-	private final IActionWidget actionWidget;
-	private final IActionChangeListener actionChangeListener;
-	private final ActionStyle style;
+    private final IAction action;
+    private final IActionWidget actionWidget;
+    private final IActionChangeListener actionChangeListener;
+    private final ActionStyle style;
 
-	private boolean active;
+    private boolean active;
 
-	private boolean textDirty;
-	private boolean toolTipTextDirty;
-	private boolean iconDirty;
-	private boolean enabledDirty;
+    private boolean textDirty;
+    private boolean toolTipTextDirty;
+    private boolean iconDirty;
+    private boolean enabledDirty;
 
-	private boolean currentEnabled;
+    private boolean currentEnabled;
 
-	private boolean disposed;
+    private boolean disposed;
 
-	public ActionWidgetSync(final IAction action, final IActionWidget actionWidget) {
-		this(action, ActionStyle.COMPLETE, actionWidget);
-	}
+    public ActionWidgetSync(final IAction action, final IActionWidget actionWidget) {
+        this(action, ActionStyle.COMPLETE, actionWidget);
+    }
 
-	public ActionWidgetSync(final IAction action, final ActionStyle style, final IActionWidget actionWidget) {
-		super();
-		this.active = false;
-		this.disposed = false;
+    public ActionWidgetSync(final IAction action, final ActionStyle style, final IActionWidget actionWidget) {
+        super();
+        this.active = false;
+        this.disposed = false;
 
-		this.textDirty = true;
-		this.toolTipTextDirty = true;
-		this.iconDirty = true;
-		this.enabledDirty = true;
+        this.textDirty = true;
+        this.toolTipTextDirty = true;
+        this.iconDirty = true;
+        this.enabledDirty = true;
 
-		this.action = action;
-		this.style = style;
-		this.actionWidget = actionWidget;
+        this.action = action;
+        this.style = style;
+        this.actionWidget = actionWidget;
 
-		this.actionChangeListener = new ActionChangeListener();
+        this.actionChangeListener = new ActionChangeListener();
 
-		//set text immediately to avoid that menu has wrong size when opened
-		//set text should not be expensive normally
-		setText(action.getText());
+        //set text immediately to avoid that menu has wrong size when opened
+        //set text should not be expensive normally
+        setText(action.getText());
 
-		if (action.getActionChangeObservable() != null) {
-			action.getActionChangeObservable().addActionChangeListener(actionChangeListener);
-		}
+        if (action.getActionChangeObservable() != null) {
+            action.getActionChangeObservable().addActionChangeListener(actionChangeListener);
+        }
 
-		//enable the item to ensure that accelerators works. Item maybe enabled.
-		actionWidget.setEnabled(true);
-		currentEnabled = true;
-	}
+        //enable the item to ensure that accelerators works. Item maybe enabled.
+        actionWidget.setEnabled(true);
+        currentEnabled = true;
+    }
 
-	public void setActive(final boolean active) {
-		if (active) {
-			this.active = true;
-			if (enabledDirty) {
-				setEnabled(action.isEnabled());
-			}
-			if (iconDirty) {
-				setIcon(action.getIcon());
-			}
-			if (textDirty) {
-				setText(action.getText());
-			}
-			if (toolTipTextDirty) {
-				setTooltipText(action.getToolTipText());
-			}
-		}
-		else {
-			this.active = false;
-		}
-	}
+    public void setActive(final boolean active) {
+        if (active) {
+            this.active = true;
+            if (enabledDirty) {
+                setEnabled(action.isEnabled());
+            }
+            if (iconDirty) {
+                setIcon(action.getIcon());
+            }
+            if (textDirty) {
+                setText(action.getText());
+            }
+            if (toolTipTextDirty) {
+                setTooltipText(action.getToolTipText());
+            }
+        }
+        else {
+            this.active = false;
+        }
+    }
 
-	public void dispose() {
-		this.disposed = true;
-		if (action.getActionChangeObservable() != null) {
-			action.getActionChangeObservable().removeActionChangeListener(actionChangeListener);
-		}
-	}
+    public void dispose() {
+        this.disposed = true;
+        if (action.getActionChangeObservable() != null) {
+            action.getActionChangeObservable().removeActionChangeListener(actionChangeListener);
+        }
+    }
 
-	private void setText(final String text) {
-		if (style == ActionStyle.COMPLETE || action.getIcon() == null) {
-			actionWidget.setText(text);
-		}
-		else {
-			actionWidget.setToolTipText(text);
-		}
-		textDirty = false;
-	}
+    private void setText(final String text) {
+        if (style == ActionStyle.COMPLETE || action.getIcon() == null) {
+            actionWidget.setText(text);
+        }
+        else {
+            actionWidget.setToolTipText(text);
+        }
+        textDirty = false;
+    }
 
-	private void setIcon(final IImageConstant icon) {
-		actionWidget.setIcon(icon);
-		iconDirty = false;
-	}
+    private void setIcon(final IImageConstant icon) {
+        actionWidget.setIcon(icon);
+        iconDirty = false;
+    }
 
-	private void setEnabled(final boolean enabled) {
-		actionWidget.setEnabled(enabled);
-		enabledDirty = false;
-		currentEnabled = enabled;
-	}
+    private void setEnabled(final boolean enabled) {
+        actionWidget.setEnabled(enabled);
+        enabledDirty = false;
+        currentEnabled = enabled;
+    }
 
-	private void setTooltipText(final String tooltipText) {
-		if (style == ActionStyle.OMIT_TEXT && action.getIcon() != null) {
-			if (!EmptyCheck.isEmpty(tooltipText) && !EmptyCheck.isEmpty(action.getText())) {
-				actionWidget.setToolTipText(action.getText() + ": " + tooltipText);
-			}
-			else if (!EmptyCheck.isEmpty(tooltipText)) {
-				actionWidget.setToolTipText(tooltipText);
-			}
-			else if (!EmptyCheck.isEmpty(action.getText())) {
-				actionWidget.setToolTipText(action.getText());
-			}
-			else {
-				actionWidget.setToolTipText(null);
-			}
-		}
-		else {
-			actionWidget.setToolTipText(tooltipText);
-		}
-		toolTipTextDirty = false;
-	}
+    private void setTooltipText(final String tooltipText) {
+        if (style == ActionStyle.OMIT_TEXT && action.getIcon() != null) {
+            if (!EmptyCheck.isEmpty(tooltipText) && !EmptyCheck.isEmpty(action.getText())) {
+                actionWidget.setToolTipText(action.getText() + ": " + tooltipText);
+            }
+            else if (!EmptyCheck.isEmpty(tooltipText)) {
+                actionWidget.setToolTipText(tooltipText);
+            }
+            else if (!EmptyCheck.isEmpty(action.getText())) {
+                actionWidget.setToolTipText(action.getText());
+            }
+            else {
+                actionWidget.setToolTipText(null);
+            }
+        }
+        else {
+            actionWidget.setToolTipText(tooltipText);
+        }
+        toolTipTextDirty = false;
+    }
 
-	private class ActionChangeListener implements IActionChangeListener {
+    private class ActionChangeListener implements IActionChangeListener {
 
-		@Override
-		public void textChanged() {
-			if (disposed) {
-				return;
-			}
+        @Override
+        public void textChanged() {
+            if (disposed) {
+                return;
+            }
 
-			if (active) {
-				setText(action.getText());
-			}
-			else {
-				textDirty = true;
-			}
-		}
+            if (active) {
+                setText(action.getText());
+            }
+            else {
+                textDirty = true;
+            }
+        }
 
-		@Override
-		public void toolTipTextChanged() {
-			if (disposed) {
-				return;
-			}
+        @Override
+        public void toolTipTextChanged() {
+            if (disposed) {
+                return;
+            }
 
-			if (active) {
-				setTooltipText(action.getToolTipText());
-			}
-			else {
-				toolTipTextDirty = true;
-			}
-		}
+            if (active) {
+                setTooltipText(action.getToolTipText());
+            }
+            else {
+                toolTipTextDirty = true;
+            }
+        }
 
-		@Override
-		public void iconChanged() {
-			if (disposed) {
-				return;
-			}
+        @Override
+        public void iconChanged() {
+            if (disposed) {
+                return;
+            }
 
-			if (active) {
-				setIcon(action.getIcon());
-			}
-			else {
-				iconDirty = true;
-			}
-		}
+            if (active) {
+                setIcon(action.getIcon());
+            }
+            else {
+                iconDirty = true;
+            }
+        }
 
-		@Override
-		public void enabledChanged() {
-			if (disposed) {
-				return;
-			}
+        @Override
+        public void enabledChanged() {
+            if (disposed) {
+                return;
+            }
 
-			if (active) {
-				setEnabled(action.isEnabled());
-			}
-			else {
-				if (!currentEnabled) {
-					//enable the item to ensure that accelerators works. Item maybe enabled.
-					actionWidget.setEnabled(true);
-					currentEnabled = true;
-				}
-				enabledDirty = true;
-			}
-		}
-	}
+            if (active) {
+                setEnabled(action.isEnabled());
+            }
+            else {
+                if (!currentEnabled) {
+                    //enable the item to ensure that accelerators works. Item maybe enabled.
+                    actionWidget.setEnabled(true);
+                    currentEnabled = true;
+                }
+                enabledDirty = true;
+            }
+        }
+    }
 }

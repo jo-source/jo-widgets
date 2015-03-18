@@ -36,18 +36,18 @@ import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
 
 public class SeparatorImpl extends SwtControl implements IControlSpi {
 
-	public SeparatorImpl(final Object parentUiReference, final ISeparatorSetupSpi setup) {
-		super(createSeparator(parentUiReference, setup));
-	}
+    public SeparatorImpl(final Object parentUiReference, final ISeparatorSetupSpi setup) {
+        super(createSeparator(parentUiReference, setup));
+    }
 
-	@Override
-	public Label getUiReference() {
-		return (Label) super.getUiReference();
-	}
+    @Override
+    public Label getUiReference() {
+        return (Label) super.getUiReference();
+    }
 
-	private static Label createSeparator(final Object parentUiReference, final ISeparatorSetupSpi setup) {
-		final int orientation = OrientationConvert.convert(setup.getOrientation());
-		return new Label((Composite) parentUiReference, SWT.SEPARATOR | orientation);
-	}
+    private static Label createSeparator(final Object parentUiReference, final ISeparatorSetupSpi setup) {
+        final int orientation = OrientationConvert.convert(setup.getOrientation());
+        return new Label((Composite) parentUiReference, SWT.SEPARATOR | orientation);
+    }
 
 }

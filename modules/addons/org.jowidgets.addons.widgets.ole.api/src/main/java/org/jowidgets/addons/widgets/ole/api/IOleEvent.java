@@ -30,10 +30,10 @@ package org.jowidgets.addons.widgets.ole.api;
 
 public interface IOleEvent {
 
-	int getArgumentCount();
+    int getArgumentCount();
 
-	<RESULT_TYPE> RESULT_TYPE getArgument(int nr);
+    <RESULT_TYPE> RESULT_TYPE getArgument(int nr);
 
-	Object[] getArguments();
+    Object[] getArguments();
 
 }

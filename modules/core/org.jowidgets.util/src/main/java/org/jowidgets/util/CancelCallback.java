@@ -34,20 +34,20 @@ import org.jowidgets.util.event.CancelObservable;
 
 public final class CancelCallback extends CancelObservable implements ICancelCallback {
 
-	private final AtomicBoolean canceled;
+    private final AtomicBoolean canceled;
 
-	public CancelCallback() {
-		this.canceled = new AtomicBoolean(false);
-	}
+    public CancelCallback() {
+        this.canceled = new AtomicBoolean(false);
+    }
 
-	public void cancel() {
-		canceled.set(true);
-		fireCanceledEvent();
-	}
+    public void cancel() {
+        canceled.set(true);
+        fireCanceledEvent();
+    }
 
-	@Override
-	public boolean isCanceled() {
-		return canceled.get();
-	}
+    @Override
+    public boolean isCanceled() {
+        return canceled.get();
+    }
 
 }

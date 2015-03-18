@@ -40,51 +40,51 @@ import org.jowidgets.spi.impl.swt.common.util.VirtualKeyConvert;
 
 public class LazyKeyEventContentFactory implements ILazyKeyEventContentFactory {
 
-	private final KeyEvent keyEvent;
+    private final KeyEvent keyEvent;
 
-	public LazyKeyEventContentFactory(final KeyEvent keyEvent) {
-		super();
-		this.keyEvent = keyEvent;
-	}
+    public LazyKeyEventContentFactory(final KeyEvent keyEvent) {
+        super();
+        this.keyEvent = keyEvent;
+    }
 
-	@Override
-	public VirtualKey createVirtualKey() {
-		return VirtualKeyConvert.convert(keyEvent.keyCode);
-	}
+    @Override
+    public VirtualKey createVirtualKey() {
+        return VirtualKeyConvert.convert(keyEvent.keyCode);
+    }
 
-	@Override
-	public Character createCharacter() {
-		if (keyEvent.character != 0) {
-			return Character.valueOf((char) keyEvent.keyCode);
-		}
-		else {
-			return null;
-		}
-	}
+    @Override
+    public Character createCharacter() {
+        if (keyEvent.character != 0) {
+            return Character.valueOf((char) keyEvent.keyCode);
+        }
+        else {
+            return null;
+        }
+    }
 
-	@Override
-	public Character createResultingCharacter() {
-		if (keyEvent.character != 0) {
-			return Character.valueOf(keyEvent.character);
-		}
-		else {
-			return null;
-		}
-	}
+    @Override
+    public Character createResultingCharacter() {
+        if (keyEvent.character != 0) {
+            return Character.valueOf(keyEvent.character);
+        }
+        else {
+            return null;
+        }
+    }
 
-	@Override
-	public Set<Modifier> createModifier() {
-		final Set<Modifier> result = new HashSet<Modifier>();
-		if ((keyEvent.stateMask & SWT.SHIFT) > 0) {
-			result.add(Modifier.SHIFT);
-		}
-		if ((keyEvent.stateMask & SWT.CTRL) > 0) {
-			result.add(Modifier.CTRL);
-		}
-		if ((keyEvent.stateMask & SWT.ALT) > 0) {
-			result.add(Modifier.ALT);
-		}
-		return result;
-	}
+    @Override
+    public Set<Modifier> createModifier() {
+        final Set<Modifier> result = new HashSet<Modifier>();
+        if ((keyEvent.stateMask & SWT.SHIFT) > 0) {
+            result.add(Modifier.SHIFT);
+        }
+        if ((keyEvent.stateMask & SWT.CTRL) > 0) {
+            result.add(Modifier.CTRL);
+        }
+        if ((keyEvent.stateMask & SWT.ALT) > 0) {
+            result.add(Modifier.ALT);
+        }
+        return result;
+    }
 
 }

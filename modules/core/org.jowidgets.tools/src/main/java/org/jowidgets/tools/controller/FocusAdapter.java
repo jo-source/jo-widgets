@@ -32,10 +32,10 @@ import org.jowidgets.common.widgets.controller.IFocusListener;
 
 public class FocusAdapter implements IFocusListener {
 
-	@Override
-	public void focusGained() {}
+    @Override
+    public void focusGained() {}
 
-	@Override
-	public void focusLost() {}
+    @Override
+    public void focusLost() {}
 
 }

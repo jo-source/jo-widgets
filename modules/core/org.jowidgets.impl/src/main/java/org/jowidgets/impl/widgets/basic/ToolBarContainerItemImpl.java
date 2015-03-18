@@ -48,124 +48,124 @@ import org.jowidgets.util.Assert;
 
 public class ToolBarContainerItemImpl extends ContainerImpl implements IToolBarContainerItem {
 
-	private final IToolBar parent;
-	private final IItemModelListener modelListener;
+    private final IToolBar parent;
+    private final IItemModelListener modelListener;
 
-	private String text;
-	private String toolTipText;
-	private IImageConstant icon;
-	private IContainerContentCreator contentCreator;
-	private IContainerItemModel model;
+    private String text;
+    private String toolTipText;
+    private IImageConstant icon;
+    private IContainerContentCreator contentCreator;
+    private IContainerItemModel model;
 
-	public ToolBarContainerItemImpl(
-		final IToolBar parent,
-		final IToolBarContainerItemSpi toolBarContainerItemSpi,
-		final IContainerSetup setup) {
-		super(toolBarContainerItemSpi, setup);
+    public ToolBarContainerItemImpl(
+        final IToolBar parent,
+        final IToolBarContainerItemSpi toolBarContainerItemSpi,
+        final IContainerSetup setup) {
+        super(toolBarContainerItemSpi, setup);
 
-		this.parent = parent;
+        this.parent = parent;
 
-		ColorSettingsInvoker.setColors(setup, this);
-		VisibiliySettingsInvoker.setVisibility(setup, this);
-		LayoutSettingsInvoker.setLayout(setup, this);
+        ColorSettingsInvoker.setColors(setup, this);
+        VisibiliySettingsInvoker.setVisibility(setup, this);
+        LayoutSettingsInvoker.setLayout(setup, this);
 
-		this.modelListener = new IItemModelListener() {
-			@Override
-			public void itemChanged(final IItemModel item) {
-				if (getModel().getContentCreator() != contentCreator) {
-					setContentCreator(getModel().getContentCreator());
-				}
-			}
-		};
+        this.modelListener = new IItemModelListener() {
+            @Override
+            public void itemChanged(final IItemModel item) {
+                if (getModel().getContentCreator() != contentCreator) {
+                    setContentCreator(getModel().getContentCreator());
+                }
+            }
+        };
 
-		setModel(new ContainerItemModelBuilder().build());
-	}
+        setModel(new ContainerItemModelBuilder().build());
+    }
 
-	@Override
-	public IToolBarContainerItemSpi getWidget() {
-		return (IToolBarContainerItemSpi) super.getWidget();
-	}
+    @Override
+    public IToolBarContainerItemSpi getWidget() {
+        return (IToolBarContainerItemSpi) super.getWidget();
+    }
 
-	@Override
-	public IToolBar getParent() {
-		return parent;
-	}
+    @Override
+    public IToolBar getParent() {
+        return parent;
+    }
 
-	@Override
-	public void setText(final String text) {
-		this.text = text;
-	}
+    @Override
+    public void setText(final String text) {
+        this.text = text;
+    }
 
-	@Override
-	public void setToolTipText(final String toolTipText) {
-		this.toolTipText = toolTipText;
-	}
+    @Override
+    public void setToolTipText(final String toolTipText) {
+        this.toolTipText = toolTipText;
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		this.icon = icon;
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        this.icon = icon;
+    }
 
-	@Override
-	public String getText() {
-		return text;
-	}
+    @Override
+    public String getText() {
+        return text;
+    }
 
-	@Override
-	public String getToolTipText() {
-		return toolTipText;
-	}
+    @Override
+    public String getToolTipText() {
+        return toolTipText;
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return icon;
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return icon;
+    }
 
-	@Override
-	public IContainerItemModel getModel() {
-		return model;
-	}
+    @Override
+    public IContainerItemModel getModel() {
+        return model;
+    }
 
-	@Override
-	public void setModel(final IContainerItemModel model) {
-		Assert.paramNotNull(model, "model");
-		if (this.model != null) {
-			this.model.removeItemModelListener(modelListener);
-		}
-		setContentCreator(model.getContentCreator());
-		model.addItemModelListener(modelListener);
-		this.model = model;
-		getParent().pack();
-	}
+    @Override
+    public void setModel(final IContainerItemModel model) {
+        Assert.paramNotNull(model, "model");
+        if (this.model != null) {
+            this.model.removeItemModelListener(modelListener);
+        }
+        setContentCreator(model.getContentCreator());
+        model.addItemModelListener(modelListener);
+        this.model = model;
+        getParent().pack();
+    }
 
-	@Override
-	public void setModel(final IToolBarItemModel model) {
-		if (model instanceof IContainerItemModel) {
-			setModel((IContainerItemModel) model);
-		}
-		else {
-			throw new IllegalArgumentException("Model type '" + IContainerItemModel.class.getName() + "' expected");
-		}
-	}
+    @Override
+    public void setModel(final IToolBarItemModel model) {
+        if (model instanceof IContainerItemModel) {
+            setModel((IContainerItemModel) model);
+        }
+        else {
+            throw new IllegalArgumentException("Model type '" + IContainerItemModel.class.getName() + "' expected");
+        }
+    }
 
-	private void setContentCreator(final IContainerContentCreator contentCreator) {
-		if (this.contentCreator != contentCreator) {
-			if (this.contentCreator != null) {
-				this.contentCreator.containerDisposed(this);
-			}
-			contentCreator.createContent(this);
-			this.contentCreator = contentCreator;
-		}
-	}
+    private void setContentCreator(final IContainerContentCreator contentCreator) {
+        if (this.contentCreator != contentCreator) {
+            if (this.contentCreator != null) {
+                this.contentCreator.containerDisposed(this);
+            }
+            contentCreator.createContent(this);
+            this.contentCreator = contentCreator;
+        }
+    }
 
-	@Override
-	public Position getPosition() {
-		return getWidget().getPosition();
-	}
+    @Override
+    public Position getPosition() {
+        return getWidget().getPosition();
+    }
 
-	@Override
-	public Dimension getSize() {
-		return getWidget().getSize();
-	}
+    @Override
+    public Dimension getSize() {
+        return getWidget().getSize();
+    }
 
 }

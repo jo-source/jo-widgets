@@ -37,110 +37,110 @@ import org.jowidgets.common.types.Markup;
 
 public class JoLabel extends Control<ILabel, ILabelBluePrint> implements ILabel {
 
-	public JoLabel(final IImageConstant icon) {
-		this(Toolkit.getBluePrintFactory().label().setIcon(icon));
-	}
+    public JoLabel(final IImageConstant icon) {
+        this(Toolkit.getBluePrintFactory().label().setIcon(icon));
+    }
 
-	public JoLabel(final IImageConstant icon, final String text) {
-		this(Toolkit.getBluePrintFactory().label().setText(text).setIcon(icon));
-	}
+    public JoLabel(final IImageConstant icon, final String text) {
+        this(Toolkit.getBluePrintFactory().label().setText(text).setIcon(icon));
+    }
 
-	public JoLabel(final IImageConstant icon, final String text, final String tooltipText) {
-		this(Toolkit.getBluePrintFactory().label().setText(text).setIcon(icon).setToolTipText(tooltipText));
-	}
+    public JoLabel(final IImageConstant icon, final String text, final String tooltipText) {
+        this(Toolkit.getBluePrintFactory().label().setText(text).setIcon(icon).setToolTipText(tooltipText));
+    }
 
-	public JoLabel(final String text) {
-		this(Toolkit.getBluePrintFactory().label().setText(text));
-	}
+    public JoLabel(final String text) {
+        this(Toolkit.getBluePrintFactory().label().setText(text));
+    }
 
-	public JoLabel(final String text, final String toolTipText) {
-		this(Toolkit.getBluePrintFactory().label().setText(text).setToolTipText(toolTipText));
-	}
+    public JoLabel(final String text, final String toolTipText) {
+        this(Toolkit.getBluePrintFactory().label().setText(text).setToolTipText(toolTipText));
+    }
 
-	public JoLabel(final ILabelDescriptor descriptor) {
-		super(Toolkit.getBluePrintFactory().label().setSetup(descriptor));
-	}
+    public JoLabel(final ILabelDescriptor descriptor) {
+        super(Toolkit.getBluePrintFactory().label().setSetup(descriptor));
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		if (isInitialized()) {
-			getWidget().setMarkup(markup);
-		}
-		else {
-			getBluePrint().setMarkup(markup);
-		}
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        if (isInitialized()) {
+            getWidget().setMarkup(markup);
+        }
+        else {
+            getBluePrint().setMarkup(markup);
+        }
+    }
 
-	@Override
-	public void setFontSize(final int size) {
-		if (isInitialized()) {
-			getWidget().setFontSize(size);
-		}
-		else {
-			getBluePrint().setFontSize(size);
-		}
-	}
+    @Override
+    public void setFontSize(final int size) {
+        if (isInitialized()) {
+            getWidget().setFontSize(size);
+        }
+        else {
+            getBluePrint().setFontSize(size);
+        }
+    }
 
-	@Override
-	public void setFontName(final String fontName) {
-		if (isInitialized()) {
-			getWidget().setFontName(fontName);
-		}
-		else {
-			getBluePrint().setFontName(fontName);
-		}
-	}
+    @Override
+    public void setFontName(final String fontName) {
+        if (isInitialized()) {
+            getWidget().setFontName(fontName);
+        }
+        else {
+            getBluePrint().setFontName(fontName);
+        }
+    }
 
-	@Override
-	public void setText(final String text) {
-		if (isInitialized()) {
-			getWidget().setText(text);
-		}
-		else {
-			getBluePrint().setText(text);
-		}
-	}
+    @Override
+    public void setText(final String text) {
+        if (isInitialized()) {
+            getWidget().setText(text);
+        }
+        else {
+            getBluePrint().setText(text);
+        }
+    }
 
-	@Override
-	public String getText() {
-		if (isInitialized()) {
-			return getWidget().getText();
-		}
-		else {
-			return getBluePrint().getText();
-		}
-	}
+    @Override
+    public String getText() {
+        if (isInitialized()) {
+            return getWidget().getText();
+        }
+        else {
+            return getBluePrint().getText();
+        }
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		if (isInitialized()) {
-			getWidget().setIcon(icon);
-		}
-		else {
-			getBluePrint().setIcon(icon);
-		}
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        if (isInitialized()) {
+            getWidget().setIcon(icon);
+        }
+        else {
+            getBluePrint().setIcon(icon);
+        }
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		if (isInitialized()) {
-			return getWidget().getIcon();
-		}
-		else {
-			return getBluePrint().getIcon();
-		}
-	}
+    @Override
+    public IImageConstant getIcon() {
+        if (isInitialized()) {
+            return getWidget().getIcon();
+        }
+        else {
+            return getBluePrint().getIcon();
+        }
+    }
 
-	public static ILabelBluePrint bluePrint() {
-		return Toolkit.getBluePrintFactory().label();
-	}
+    public static ILabelBluePrint bluePrint() {
+        return Toolkit.getBluePrintFactory().label();
+    }
 
-	public static ILabelBluePrint bluePrint(final String text) {
-		return Toolkit.getBluePrintFactory().label().setText(text);
-	}
+    public static ILabelBluePrint bluePrint(final String text) {
+        return Toolkit.getBluePrintFactory().label().setText(text);
+    }
 
-	public static ILabelBluePrint bluePrint(final String text, final IImageConstant icon) {
-		return Toolkit.getBluePrintFactory().label().setText(text).setIcon(icon);
-	}
+    public static ILabelBluePrint bluePrint(final String text, final IImageConstant icon) {
+        return Toolkit.getBluePrintFactory().label().setText(text).setIcon(icon);
+    }
 
 }

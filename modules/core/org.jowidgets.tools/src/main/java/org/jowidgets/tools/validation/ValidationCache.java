@@ -38,56 +38,56 @@ import org.jowidgets.validation.IValidationResult;
 
 public class ValidationCache implements IValidateable {
 
-	private final IValidationResultCreator validationResultCreator;
-	private final IObserverSet<IValidationConditionListener> validationConditionListener;
+    private final IValidationResultCreator validationResultCreator;
+    private final IObserverSet<IValidationConditionListener> validationConditionListener;
 
-	private boolean chacheDirty;
-	private IValidationResult validationResult;
+    private boolean chacheDirty;
+    private IValidationResult validationResult;
 
-	public ValidationCache(final IValidationResultCreator validationResultCreator) {
-		Assert.paramNotNull(validationResultCreator, "validationResultCreator");
-		this.validationConditionListener = ObserverSetFactory.create(Strategy.LOW_MEMORY);
-		this.validationResultCreator = validationResultCreator;
-		this.chacheDirty = true;
-	}
+    public ValidationCache(final IValidationResultCreator validationResultCreator) {
+        Assert.paramNotNull(validationResultCreator, "validationResultCreator");
+        this.validationConditionListener = ObserverSetFactory.create(Strategy.LOW_MEMORY);
+        this.validationResultCreator = validationResultCreator;
+        this.chacheDirty = true;
+    }
 
-	/**
-	 * Marks the cache to be dirty. The currently cached value will be rejected.
-	 */
-	public final void setDirty() {
-		this.chacheDirty = true;
-		for (final IValidationConditionListener listener : validationConditionListener) {
-			listener.validationConditionsChanged();
-		}
-	}
+    /**
+     * Marks the cache to be dirty. The currently cached value will be rejected.
+     */
+    public final void setDirty() {
+        this.chacheDirty = true;
+        for (final IValidationConditionListener listener : validationConditionListener) {
+            listener.validationConditionsChanged();
+        }
+    }
 
-	@Override
-	public final IValidationResult validate() {
-		if (chacheDirty) {
-			this.validationResult = validationResultCreator.createValidationResult();
-			this.chacheDirty = false;
-		}
-		return validationResult;
-	}
+    @Override
+    public final IValidationResult validate() {
+        if (chacheDirty) {
+            this.validationResult = validationResultCreator.createValidationResult();
+            this.chacheDirty = false;
+        }
+        return validationResult;
+    }
 
-	@Override
-	public final void addValidationConditionListener(final IValidationConditionListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		validationConditionListener.add(listener);
-	}
+    @Override
+    public final void addValidationConditionListener(final IValidationConditionListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        validationConditionListener.add(listener);
+    }
 
-	@Override
-	public final void removeValidationConditionListener(final IValidationConditionListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		validationConditionListener.remove(listener);
-	}
+    @Override
+    public final void removeValidationConditionListener(final IValidationConditionListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        validationConditionListener.remove(listener);
+    }
 
-	public final void dispose() {
-		validationConditionListener.clear();
-	}
+    public final void dispose() {
+        validationConditionListener.clear();
+    }
 
-	public interface IValidationResultCreator {
-		IValidationResult createValidationResult();
-	}
+    public interface IValidationResultCreator {
+        IValidationResult createValidationResult();
+    }
 
 }

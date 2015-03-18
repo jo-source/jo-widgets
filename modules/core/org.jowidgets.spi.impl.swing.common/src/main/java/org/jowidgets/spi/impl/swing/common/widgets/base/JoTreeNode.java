@@ -36,66 +36,66 @@ import org.jowidgets.common.types.Markup;
 
 public class JoTreeNode extends DefaultMutableTreeNode {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String text;
-	private String toolTipText;
-	private IImageConstant icon;
-	private Markup markup;
-	private IColorConstant backgroundColor;
-	private IColorConstant foregroundColor;
+    private String text;
+    private String toolTipText;
+    private IImageConstant icon;
+    private Markup markup;
+    private IColorConstant backgroundColor;
+    private IColorConstant foregroundColor;
 
-	public void setText(final String text) {
-		this.text = text;
-	}
+    public void setText(final String text) {
+        this.text = text;
+    }
 
-	public String getText() {
-		return text;
-	}
+    public String getText() {
+        return text;
+    }
 
-	public void setToolTipText(final String toolTipText) {
-		this.toolTipText = toolTipText;
-	}
+    public void setToolTipText(final String toolTipText) {
+        this.toolTipText = toolTipText;
+    }
 
-	public String getToolTipText() {
-		return toolTipText;
-	}
+    public String getToolTipText() {
+        return toolTipText;
+    }
 
-	public void setIcon(final IImageConstant icon) {
-		this.icon = icon;
-	}
+    public void setIcon(final IImageConstant icon) {
+        this.icon = icon;
+    }
 
-	public IImageConstant getIcon() {
-		return icon;
-	}
+    public IImageConstant getIcon() {
+        return icon;
+    }
 
-	public void setMarkup(final Markup markup) {
-		this.markup = markup;
-	}
+    public void setMarkup(final Markup markup) {
+        this.markup = markup;
+    }
 
-	public Markup getMarkup() {
-		return markup;
-	}
+    public Markup getMarkup() {
+        return markup;
+    }
 
-	public void setBackgroundColor(final IColorConstant backgroundColor) {
-		this.backgroundColor = backgroundColor;
-	}
+    public void setBackgroundColor(final IColorConstant backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
 
-	public IColorConstant getBackgroundColor() {
-		return backgroundColor;
-	}
+    public IColorConstant getBackgroundColor() {
+        return backgroundColor;
+    }
 
-	public void setForegroundColor(final IColorConstant foregroundColor) {
-		this.foregroundColor = foregroundColor;
-	}
+    public void setForegroundColor(final IColorConstant foregroundColor) {
+        this.foregroundColor = foregroundColor;
+    }
 
-	public IColorConstant getForegroundColor() {
-		return foregroundColor;
-	}
+    public IColorConstant getForegroundColor() {
+        return foregroundColor;
+    }
 
-	@Override
-	public String toString() {
-		return text;
-	}
+    @Override
+    public String toString() {
+        return text;
+    }
 
 }

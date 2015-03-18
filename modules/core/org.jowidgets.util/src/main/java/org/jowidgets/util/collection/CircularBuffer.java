@@ -30,10 +30,10 @@ package org.jowidgets.util.collection;
 
 public final class CircularBuffer {
 
-	private CircularBuffer() {}
+    private CircularBuffer() {}
 
-	public static <ELEMENT_TYPE> ICircularBuffer<ELEMENT_TYPE> create(final int capacity) {
-		return new CircularBufferImpl<ELEMENT_TYPE>(capacity);
-	}
+    public static <ELEMENT_TYPE> ICircularBuffer<ELEMENT_TYPE> create(final int capacity) {
+        return new CircularBufferImpl<ELEMENT_TYPE>(capacity);
+    }
 
 }

@@ -39,99 +39,99 @@ import org.jowidgets.workbench.toolkit.api.IComponentNodeModel;
 import org.jowidgets.workbench.toolkit.api.IComponentNodeModelBuilder;
 
 class ComponentNodeModelBuilder extends ComponentNodeContainerModelBuilder<IComponentNodeModelBuilder> implements
-		IComponentNodeModelBuilder {
+        IComponentNodeModelBuilder {
 
-	private String label;
-	private String tooltip;
-	private IImageConstant icon;
-	private boolean selected;
-	private boolean expanded;
-	private IMenuModel popupMenu;
-	private IComponentFactory componentFactory;
-	private IComponentNodeInitializeCallback initializeCallback;
-	private IDisposeCallback disposeCallback;
+    private String label;
+    private String tooltip;
+    private IImageConstant icon;
+    private boolean selected;
+    private boolean expanded;
+    private IMenuModel popupMenu;
+    private IComponentFactory componentFactory;
+    private IComponentNodeInitializeCallback initializeCallback;
+    private IDisposeCallback disposeCallback;
 
-	ComponentNodeModelBuilder() {
-		super();
-		this.selected = false;
-		this.expanded = false;
-		this.popupMenu = Toolkit.getModelFactoryProvider().getItemModelFactory().menu();
-	}
+    ComponentNodeModelBuilder() {
+        super();
+        this.selected = false;
+        this.expanded = false;
+        this.popupMenu = Toolkit.getModelFactoryProvider().getItemModelFactory().menu();
+    }
 
-	@Override
-	public IComponentNodeModelBuilder setLabel(final String label) {
-		this.label = label;
-		return this;
-	}
+    @Override
+    public IComponentNodeModelBuilder setLabel(final String label) {
+        this.label = label;
+        return this;
+    }
 
-	@Override
-	public IComponentNodeModelBuilder setTooltip(final String tooltip) {
-		this.tooltip = tooltip;
-		return this;
-	}
+    @Override
+    public IComponentNodeModelBuilder setTooltip(final String tooltip) {
+        this.tooltip = tooltip;
+        return this;
+    }
 
-	@Override
-	public IComponentNodeModelBuilder setIcon(final IImageConstant icon) {
-		this.icon = icon;
-		return this;
-	}
+    @Override
+    public IComponentNodeModelBuilder setIcon(final IImageConstant icon) {
+        this.icon = icon;
+        return this;
+    }
 
-	@Override
-	public IComponentNodeModelBuilder setSelected(final boolean selected) {
-		this.selected = selected;
-		return this;
-	}
+    @Override
+    public IComponentNodeModelBuilder setSelected(final boolean selected) {
+        this.selected = selected;
+        return this;
+    }
 
-	@Override
-	public IComponentNodeModelBuilder setExpanded(final boolean expanded) {
-		this.expanded = expanded;
-		return this;
-	}
+    @Override
+    public IComponentNodeModelBuilder setExpanded(final boolean expanded) {
+        this.expanded = expanded;
+        return this;
+    }
 
-	@Override
-	public IComponentNodeModelBuilder setPopupMenu(final IMenuModel popupMenu) {
-		this.popupMenu = popupMenu;
-		return this;
-	}
+    @Override
+    public IComponentNodeModelBuilder setPopupMenu(final IMenuModel popupMenu) {
+        this.popupMenu = popupMenu;
+        return this;
+    }
 
-	@Override
-	public IComponentNodeModelBuilder setComponentFactory(final IComponentFactory componentFactory) {
-		this.componentFactory = componentFactory;
-		return this;
-	}
+    @Override
+    public IComponentNodeModelBuilder setComponentFactory(final IComponentFactory componentFactory) {
+        this.componentFactory = componentFactory;
+        return this;
+    }
 
-	@Override
-	public IComponentNodeModelBuilder setComponentFactory(final Class<? extends IComponent> componentType) {
-		this.componentFactory = new TypeBasedComponentFactory(componentType);
-		return this;
-	}
+    @Override
+    public IComponentNodeModelBuilder setComponentFactory(final Class<? extends IComponent> componentType) {
+        this.componentFactory = new TypeBasedComponentFactory(componentType);
+        return this;
+    }
 
-	@Override
-	public IComponentNodeModelBuilder setInitializeCallback(final IComponentNodeInitializeCallback initializeCallback) {
-		this.initializeCallback = initializeCallback;
-		return this;
-	}
+    @Override
+    public IComponentNodeModelBuilder setInitializeCallback(final IComponentNodeInitializeCallback initializeCallback) {
+        this.initializeCallback = initializeCallback;
+        return this;
+    }
 
-	@Override
-	public IComponentNodeModelBuilder setDisposeCallback(final IDisposeCallback disposeCallback) {
-		this.disposeCallback = disposeCallback;
-		return this;
-	}
+    @Override
+    public IComponentNodeModelBuilder setDisposeCallback(final IDisposeCallback disposeCallback) {
+        this.disposeCallback = disposeCallback;
+        return this;
+    }
 
-	@Override
-	public IComponentNodeModel build() {
-		return new ComponentNodeModel(
-			getId(),
-			label,
-			tooltip,
-			icon,
-			selected,
-			expanded,
-			popupMenu,
-			componentFactory,
-			initializeCallback,
-			disposeCallback,
-			getChildren());
-	}
+    @Override
+    public IComponentNodeModel build() {
+        return new ComponentNodeModel(
+            getId(),
+            label,
+            tooltip,
+            icon,
+            selected,
+            expanded,
+            popupMenu,
+            componentFactory,
+            initializeCallback,
+            disposeCallback,
+            getChildren());
+    }
 
 }

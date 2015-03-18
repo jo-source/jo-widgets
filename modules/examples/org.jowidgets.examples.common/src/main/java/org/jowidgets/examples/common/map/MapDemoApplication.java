@@ -36,18 +36,18 @@ import org.jowidgets.examples.common.icons.DemoIconsInitializer;
 
 public final class MapDemoApplication implements IApplication {
 
-	public static final String API_KEY = "ABQIAAAAwbkbZLyhsmTCWXbTcjbgbRSzHs7K5SvaUdm8ua-Xxy_-2dYwMxQMhnagaawTo7L1FE1-amhuQxIlXw";
+    public static final String API_KEY = "ABQIAAAAwbkbZLyhsmTCWXbTcjbgbRSzHs7K5SvaUdm8ua-Xxy_-2dYwMxQMhnagaawTo7L1FE1-amhuQxIlXw";
 
-	@Override
-	public void start(final IApplicationLifecycle lifecycle) {
-		final IFrame frame = new MapDemoFrame(lifecycle);
-		frame.setSize(800, 600);
-		frame.setVisible(true);
-	}
+    @Override
+    public void start(final IApplicationLifecycle lifecycle) {
+        final IFrame frame = new MapDemoFrame(lifecycle);
+        frame.setSize(800, 600);
+        frame.setVisible(true);
+    }
 
-	public void start() {
-		DemoIconsInitializer.initialize();
-		Toolkit.getInstance().getApplicationRunner().run(this);
-	}
+    public void start() {
+        DemoIconsInitializer.initialize();
+        Toolkit.getInstance().getApplicationRunner().run(this);
+    }
 
 }

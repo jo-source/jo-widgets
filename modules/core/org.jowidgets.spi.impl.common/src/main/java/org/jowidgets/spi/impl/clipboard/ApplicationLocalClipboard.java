@@ -34,22 +34,22 @@ import org.jowidgets.spi.impl.clipboard.ClipboardObservableSpi;
 
 public final class ApplicationLocalClipboard extends ClipboardObservableSpi implements IClipboardSpi {
 
-	private ITransferableSpi contents;
+    private ITransferableSpi contents;
 
-	@Override
-	public void setContents(final ITransferableSpi contents) {
-		this.contents = contents;
-		fireClipboardChanged();
-	}
+    @Override
+    public void setContents(final ITransferableSpi contents) {
+        this.contents = contents;
+        fireClipboardChanged();
+    }
 
-	@Override
-	public ITransferableSpi getContents() {
-		return contents;
-	}
+    @Override
+    public ITransferableSpi getContents() {
+        return contents;
+    }
 
-	@Override
-	public void dispose() {
-		contents = null;
-	}
+    @Override
+    public void dispose() {
+        contents = null;
+    }
 
 }

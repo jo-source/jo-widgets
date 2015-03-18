@@ -30,19 +30,19 @@ package org.jowidgets.api.types;
 
 public enum TreeAutoCheckPolicy {
 
-	/**
-	 * Auto check mode is not active
-	 */
-	OFF,
+    /**
+     * Auto check mode is not active
+     */
+    OFF,
 
-	/**
-	 * Only a single path can be checked at the same time
-	 */
-	SINGLE_PATH,
+    /**
+     * Only a single path can be checked at the same time
+     */
+    SINGLE_PATH,
 
-	/**
-	 * Multiple path's can be checked at the same time
-	 */
-	MULTI_PATH;
+    /**
+     * Multiple path's can be checked at the same time
+     */
+    MULTI_PATH;
 
 }

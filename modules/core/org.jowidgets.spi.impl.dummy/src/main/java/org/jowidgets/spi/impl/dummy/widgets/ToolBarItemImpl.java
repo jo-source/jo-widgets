@@ -37,51 +37,51 @@ import org.jowidgets.spi.widgets.IToolBarItemSpi;
 
 public class ToolBarItemImpl implements IToolBarItemSpi {
 
-	private final AbstractUIDButton button;
+    private final AbstractUIDButton button;
 
-	public ToolBarItemImpl(final AbstractUIDButton button) {
-		super();
-		this.button = button;
-	}
+    public ToolBarItemImpl(final AbstractUIDButton button) {
+        super();
+        this.button = button;
+    }
 
-	@Override
-	public AbstractUIDButton getUiReference() {
-		return button;
-	}
+    @Override
+    public AbstractUIDButton getUiReference() {
+        return button;
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		button.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        button.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return button.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return button.isEnabled();
+    }
 
-	@Override
-	public void setText(final String text) {
-		button.setText(text);
-	}
+    @Override
+    public void setText(final String text) {
+        button.setText(text);
+    }
 
-	@Override
-	public void setToolTipText(final String text) {
-		button.setToolTipText(text);
-	}
+    @Override
+    public void setToolTipText(final String text) {
+        button.setToolTipText(text);
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		button.setIcon(DummyImageRegistry.getInstance().getImage(icon));
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        button.setIcon(DummyImageRegistry.getInstance().getImage(icon));
+    }
 
-	@Override
-	public Position getPosition() {
-		return getUiReference().getPosition();
-	}
+    @Override
+    public Position getPosition() {
+        return getUiReference().getPosition();
+    }
 
-	@Override
-	public Dimension getSize() {
-		return getUiReference().getSize();
-	}
+    @Override
+    public Dimension getSize() {
+        return getUiReference().getSize();
+    }
 
 }

@@ -34,11 +34,11 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ITreeViewerSetup<ROOT_NODE_VALUE_TYPE> extends ITreeSetup {
 
-	ITreeNodeModel<ROOT_NODE_VALUE_TYPE> getRootNodeModel();
+    ITreeNodeModel<ROOT_NODE_VALUE_TYPE> getRootNodeModel();
 
-	Integer getPageSize();
+    Integer getPageSize();
 
-	@Mandatory
-	TreeViewerCreationPolicy getCreationPolicy();
+    @Mandatory
+    TreeViewerCreationPolicy getCreationPolicy();
 
 }

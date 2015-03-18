@@ -31,13 +31,13 @@ import java.text.DecimalFormat;
 
 class DefaultDoubleConverter extends AbstractFloatingPointNumberConverter<Double> {
 
-	DefaultDoubleConverter(final DecimalFormat decimalFormat, final String formatHint) {
-		super(decimalFormat, formatHint);
-	}
+    DefaultDoubleConverter(final DecimalFormat decimalFormat, final String formatHint) {
+        super(decimalFormat, formatHint);
+    }
 
-	@Override
-	Double convert(final Number number) {
-		return number.doubleValue();
-	}
+    @Override
+    Double convert(final Number number) {
+        return number.doubleValue();
+    }
 
 }

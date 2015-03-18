@@ -39,29 +39,29 @@ import org.jowidgets.util.Assert;
 
 public class TableCellPopupDetectionObservable implements ITableCellPopupDetectionObservable {
 
-	private final Set<ITableCellPopupDetectionListener> listeners;
+    private final Set<ITableCellPopupDetectionListener> listeners;
 
-	public TableCellPopupDetectionObservable() {
-		super();
-		this.listeners = new LinkedHashSet<ITableCellPopupDetectionListener>();
-	}
+    public TableCellPopupDetectionObservable() {
+        super();
+        this.listeners = new LinkedHashSet<ITableCellPopupDetectionListener>();
+    }
 
-	@Override
-	public void addTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public void addTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removeTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeTableCellPopupDetectionListener(final ITableCellPopupDetectionListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public void firePopupDetected(final ITableCellPopupEvent event) {
-		for (final ITableCellPopupDetectionListener listener : new LinkedList<ITableCellPopupDetectionListener>(listeners)) {
-			listener.popupDetected(event);
-		}
-	}
+    public void firePopupDetected(final ITableCellPopupEvent event) {
+        for (final ITableCellPopupDetectionListener listener : new LinkedList<ITableCellPopupDetectionListener>(listeners)) {
+            listener.popupDetected(event);
+        }
+    }
 
 }

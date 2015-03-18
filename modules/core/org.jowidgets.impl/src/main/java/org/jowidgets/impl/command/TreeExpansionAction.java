@@ -44,82 +44,82 @@ import org.jowidgets.util.NullCompatibleEquivalence;
 
 final class TreeExpansionAction extends ActionWrapper implements ITreeExpansionAction {
 
-	private final String unboundPivotlevelLabel;
-	private final String boundPivotlevelLabel;
-	private final TreeExpansionExecutor executor;
-	private final TreeExpansionEnabledChecker enabledChecker;
-	private final ICommandAction action;
+    private final String unboundPivotlevelLabel;
+    private final String boundPivotlevelLabel;
+    private final TreeExpansionExecutor executor;
+    private final TreeExpansionEnabledChecker enabledChecker;
+    private final ICommandAction action;
 
-	TreeExpansionAction(
-		final IActionBuilder builder,
-		final ITreeContainer tree,
-		final ExpansionMode expansionMode,
-		final IFilter<ITreeNode> filter,
-		final boolean enabledChecking,
-		final Integer pivotLevel,
-		final String unboundPivotlevelLabel,
-		final String boundPivotlevelLabel) {
+    TreeExpansionAction(
+        final IActionBuilder builder,
+        final ITreeContainer tree,
+        final ExpansionMode expansionMode,
+        final IFilter<ITreeNode> filter,
+        final boolean enabledChecking,
+        final Integer pivotLevel,
+        final String unboundPivotlevelLabel,
+        final String boundPivotlevelLabel) {
 
-		super(createAction(builder, tree, expansionMode, filter, enabledChecking, pivotLevel));
+        super(createAction(builder, tree, expansionMode, filter, enabledChecking, pivotLevel));
 
-		this.unboundPivotlevelLabel = unboundPivotlevelLabel;
-		this.boundPivotlevelLabel = boundPivotlevelLabel;
+        this.unboundPivotlevelLabel = unboundPivotlevelLabel;
+        this.boundPivotlevelLabel = boundPivotlevelLabel;
 
-		this.action = ((ICommandAction) unwrap());
+        this.action = ((ICommandAction) unwrap());
 
-		final ICommand command = action.getCommand();
-		this.executor = (TreeExpansionExecutor) command.getCommandExecutor();
-		this.enabledChecker = (TreeExpansionEnabledChecker) command.getEnabledChecker();
-	}
+        final ICommand command = action.getCommand();
+        this.executor = (TreeExpansionExecutor) command.getCommandExecutor();
+        this.enabledChecker = (TreeExpansionEnabledChecker) command.getEnabledChecker();
+    }
 
-	private static ICommandAction createAction(
-		final IActionBuilder builder,
-		final ITreeContainer tree,
-		final ExpansionMode expansionMode,
-		final IFilter<ITreeNode> filter,
-		final boolean enabledChecking,
-		final Integer level) {
+    private static ICommandAction createAction(
+        final IActionBuilder builder,
+        final ITreeContainer tree,
+        final ExpansionMode expansionMode,
+        final IFilter<ITreeNode> filter,
+        final boolean enabledChecking,
+        final Integer level) {
 
-		final ICommandExecutor executor = new TreeExpansionExecutor(tree, expansionMode, filter, level);
+        final ICommandExecutor executor = new TreeExpansionExecutor(tree, expansionMode, filter, level);
 
-		if (enabledChecking) {
-			final IEnabledChecker enabledChecker = new TreeExpansionEnabledChecker(tree, expansionMode, filter, level);
-			return builder.setCommand(executor, enabledChecker).build();
-		}
-		else {
-			return builder.setCommand(executor).build();
-		}
-	}
+        if (enabledChecking) {
+            final IEnabledChecker enabledChecker = new TreeExpansionEnabledChecker(tree, expansionMode, filter, level);
+            return builder.setCommand(executor, enabledChecker).build();
+        }
+        else {
+            return builder.setCommand(executor).build();
+        }
+    }
 
-	@Override
-	public void setPivotLevel(final Integer pivotLevel) {
-		setPivotLevel(pivotLevel, unboundPivotlevelLabel);
-	}
+    @Override
+    public void setPivotLevel(final Integer pivotLevel) {
+        setPivotLevel(pivotLevel, unboundPivotlevelLabel);
+    }
 
-	@Override
-	public void setPivotLevel(final Integer level, final String levelName) {
-		if (level == null || levelName == null || EmptyCheck.isEmpty(boundPivotlevelLabel)) {
-			if (!NullCompatibleEquivalence.equals(action.getText(), unboundPivotlevelLabel)) {
-				action.setText(unboundPivotlevelLabel);
-			}
-		}
-		else {
-			action.setText(MessageReplacer.replace(boundPivotlevelLabel, levelName));
-		}
-		executor.setPivotLevel(level);
-		if (enabledChecker != null) {
-			enabledChecker.setPivotLevel(level);
-		}
-	}
+    @Override
+    public void setPivotLevel(final Integer level, final String levelName) {
+        if (level == null || levelName == null || EmptyCheck.isEmpty(boundPivotlevelLabel)) {
+            if (!NullCompatibleEquivalence.equals(action.getText(), unboundPivotlevelLabel)) {
+                action.setText(unboundPivotlevelLabel);
+            }
+        }
+        else {
+            action.setText(MessageReplacer.replace(boundPivotlevelLabel, levelName));
+        }
+        executor.setPivotLevel(level);
+        if (enabledChecker != null) {
+            enabledChecker.setPivotLevel(level);
+        }
+    }
 
-	@Override
-	public void setPivotLevel(final int level) {
-		setPivotLevel(Integer.valueOf(level));
-	}
+    @Override
+    public void setPivotLevel(final int level) {
+        setPivotLevel(Integer.valueOf(level));
+    }
 
-	@Override
-	public void setPivotLevel(final int level, final String levelName) {
-		setPivotLevel(Integer.valueOf(level), levelName);
-	}
+    @Override
+    public void setPivotLevel(final int level, final String levelName) {
+        setPivotLevel(Integer.valueOf(level), levelName);
+    }
 
 }

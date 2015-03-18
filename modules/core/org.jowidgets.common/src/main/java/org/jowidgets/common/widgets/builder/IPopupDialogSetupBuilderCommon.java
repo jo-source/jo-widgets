@@ -28,8 +28,8 @@
 package org.jowidgets.common.widgets.builder;
 
 public interface IPopupDialogSetupBuilderCommon<INSTANCE_TYPE extends IPopupDialogSetupBuilderCommon<?>> extends
-		IContainerSetupBuilderCommon<INSTANCE_TYPE> {
+        IContainerSetupBuilderCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setBorder(boolean border);
+    INSTANCE_TYPE setBorder(boolean border);
 
 }

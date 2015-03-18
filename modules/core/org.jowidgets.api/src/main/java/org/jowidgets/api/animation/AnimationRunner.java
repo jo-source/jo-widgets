@@ -32,14 +32,14 @@ import org.jowidgets.api.toolkit.Toolkit;
 
 public final class AnimationRunner {
 
-	private AnimationRunner() {}
+    private AnimationRunner() {}
 
-	public static IAnimationRunner create() {
-		return builder().build();
-	}
+    public static IAnimationRunner create() {
+        return builder().build();
+    }
 
-	public static IAnimationRunnerBuilder builder() {
-		return Toolkit.getAnimationRunnerBuilder();
-	}
+    public static IAnimationRunnerBuilder builder() {
+        return Toolkit.getAnimationRunnerBuilder();
+    }
 
 }

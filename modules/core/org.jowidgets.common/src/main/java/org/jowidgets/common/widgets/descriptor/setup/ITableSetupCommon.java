@@ -36,24 +36,24 @@ import org.jowidgets.common.widgets.editor.ITableCellEditorFactory;
 
 public interface ITableSetupCommon extends IComponentSetupCommon {
 
-	@Mandatory
-	TableSelectionPolicy getSelectionPolicy();
+    @Mandatory
+    TableSelectionPolicy getSelectionPolicy();
 
-	@Mandatory
-	boolean getColumnsMoveable();
+    @Mandatory
+    boolean getColumnsMoveable();
 
-	@Mandatory
-	boolean getColumnsResizeable();
+    @Mandatory
+    boolean getColumnsResizeable();
 
-	@Mandatory
-	boolean isHeaderVisible();
+    @Mandatory
+    boolean isHeaderVisible();
 
-	@Mandatory
-	boolean hasBorder();
+    @Mandatory
+    boolean hasBorder();
 
-	ITableCellEditorFactory<? extends ITableCellEditor> getEditor();
+    ITableCellEditorFactory<? extends ITableCellEditor> getEditor();
 
-	@Mandatory
-	ITableDataModel getDataModel();
+    @Mandatory
+    ITableDataModel getDataModel();
 
 }

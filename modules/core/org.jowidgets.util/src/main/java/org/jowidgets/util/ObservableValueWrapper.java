@@ -32,40 +32,40 @@ import org.jowidgets.util.wrapper.IWrapper;
 
 public class ObservableValueWrapper<VALUE_TYPE> implements IObservableValue<VALUE_TYPE>, IWrapper<IObservableValue<VALUE_TYPE>> {
 
-	private final IObservableValue<VALUE_TYPE> original;
+    private final IObservableValue<VALUE_TYPE> original;
 
-	public ObservableValueWrapper(final IObservableValue<VALUE_TYPE> original) {
-		Assert.paramNotNull(original, "original");
-		this.original = original;
-	}
+    public ObservableValueWrapper(final IObservableValue<VALUE_TYPE> original) {
+        Assert.paramNotNull(original, "original");
+        this.original = original;
+    }
 
-	protected IObservableValue<VALUE_TYPE> getOriginal() {
-		return original;
-	}
+    protected IObservableValue<VALUE_TYPE> getOriginal() {
+        return original;
+    }
 
-	@Override
-	public void setValue(final VALUE_TYPE value) {
-		original.setValue(value);
-	}
+    @Override
+    public void setValue(final VALUE_TYPE value) {
+        original.setValue(value);
+    }
 
-	@Override
-	public VALUE_TYPE getValue() {
-		return original.getValue();
-	}
+    @Override
+    public VALUE_TYPE getValue() {
+        return original.getValue();
+    }
 
-	@Override
-	public void addValueListener(final IObservableValueListener<?> listener) {
-		original.addValueListener(listener);
-	}
+    @Override
+    public void addValueListener(final IObservableValueListener<?> listener) {
+        original.addValueListener(listener);
+    }
 
-	@Override
-	public void removeValueListener(final IObservableValueListener<?> listener) {
-		original.removeValueListener(listener);
-	}
+    @Override
+    public void removeValueListener(final IObservableValueListener<?> listener) {
+        original.removeValueListener(listener);
+    }
 
-	@Override
-	public IObservableValue<VALUE_TYPE> unwrap() {
-		return original;
-	}
+    @Override
+    public IObservableValue<VALUE_TYPE> unwrap() {
+        return original;
+    }
 
 }

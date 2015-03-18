@@ -54,116 +54,116 @@ import org.jowidgets.util.EmptyCheck;
 
 public final class SwtDragSource extends AbstractDragSourceObservableSpi implements IDragSourceSpi {
 
-	private static final Transfer TEXT_TRANSFER = TextTransfer.getInstance();
-	private static final Transfer OBJECT_TRANSFER = ObjectTransfer.getInstance();
+    private static final Transfer TEXT_TRANSFER = TextTransfer.getInstance();
+    private static final Transfer OBJECT_TRANSFER = ObjectTransfer.getInstance();
 
-	private final Control control;
+    private final Control control;
 
-	private Collection<TransferTypeSpi> supportedTypes;
-	private Set<DropAction> actions;
-	private DragSource dragSource;
+    private Collection<TransferTypeSpi> supportedTypes;
+    private Set<DropAction> actions;
+    private DragSource dragSource;
 
-	public SwtDragSource(final Control control) {
-		Assert.paramNotNull(control, "control");
-		this.control = control;
-	}
+    public SwtDragSource(final Control control) {
+        Assert.paramNotNull(control, "control");
+        this.control = control;
+    }
 
-	@Override
-	public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {
-		this.supportedTypes = new LinkedList<TransferTypeSpi>(supportedTypes);
-		if (dragSource != null) {
-			dragSource.setTransfer(DragDropUtil.createTransfers(supportedTypes));
-		}
-		createDragSourceIfNecessary();
-	}
+    @Override
+    public void setTransferTypes(final Collection<TransferTypeSpi> supportedTypes) {
+        this.supportedTypes = new LinkedList<TransferTypeSpi>(supportedTypes);
+        if (dragSource != null) {
+            dragSource.setTransfer(DragDropUtil.createTransfers(supportedTypes));
+        }
+        createDragSourceIfNecessary();
+    }
 
-	@Override
-	public void setActions(final Set<DropAction> actions) {
-		if (dragSource != null) {
-			dragSource.dispose();
-			dragSource = null;
-		}
-		this.actions = new HashSet<DropAction>(actions);
-		createDragSourceIfNecessary();
-	}
+    @Override
+    public void setActions(final Set<DropAction> actions) {
+        if (dragSource != null) {
+            dragSource.dispose();
+            dragSource = null;
+        }
+        this.actions = new HashSet<DropAction>(actions);
+        createDragSourceIfNecessary();
+    }
 
-	@Override
-	protected void setActive(final boolean active) {
-		if (active) {
-			createDragSourceIfNecessary();
-		}
-		else {
-			if (dragSource != null) {
-				dragSource.dispose();
-				dragSource = null;
-			}
-		}
-	}
+    @Override
+    protected void setActive(final boolean active) {
+        if (active) {
+            createDragSourceIfNecessary();
+        }
+        else {
+            if (dragSource != null) {
+                dragSource.dispose();
+                dragSource = null;
+            }
+        }
+    }
 
-	private void createDragSourceIfNecessary() {
-		if (dragSource == null && isActive() && !EmptyCheck.isEmpty(actions) && !EmptyCheck.isEmpty(supportedTypes)) {
-			this.dragSource = new DragSource(control, DragDropUtil.createOperations(actions));
-			dragSource.setTransfer(DragDropUtil.createTransfers(supportedTypes));
-			dragSource.addDragListener(new DragSourceListenerImpl());
-		}
-	}
+    private void createDragSourceIfNecessary() {
+        if (dragSource == null && isActive() && !EmptyCheck.isEmpty(actions) && !EmptyCheck.isEmpty(supportedTypes)) {
+            this.dragSource = new DragSource(control, DragDropUtil.createOperations(actions));
+            dragSource.setTransfer(DragDropUtil.createTransfers(supportedTypes));
+            dragSource.addDragListener(new DragSourceListenerImpl());
+        }
+    }
 
-	private final class DragSourceListenerImpl implements DragSourceListener {
+    private final class DragSourceListenerImpl implements DragSourceListener {
 
-		@Override
-		public void dragStart(final DragSourceEvent event) {
-			final VetoHolder veto = new VetoHolder();
-			fireDragStart(event.x, event.y, veto);
-			if (veto.hasVeto()) {
-				event.doit = false;
-			}
-		}
+        @Override
+        public void dragStart(final DragSourceEvent event) {
+            final VetoHolder veto = new VetoHolder();
+            fireDragStart(event.x, event.y, veto);
+            if (veto.hasVeto()) {
+                event.doit = false;
+            }
+        }
 
-		@Override
-		public void dragSetData(final DragSourceEvent event) {
-			if (TEXT_TRANSFER.isSupportedType(event.dataType)) {
-				final TransferTypeSpi transferType = DragDropUtil.getStringTransferType(supportedTypes);
-				if (transferType != null) {
-					final DragDataResponseSpiImpl dragData = new DragDataResponseSpiImpl();
-					final VetoHolder veto = new VetoHolder();
-					fireDragSetData(event.x, event.y, veto, transferType, dragData);
-					if (veto.hasVeto()) {
-						event.doit = false;
-					}
-					else {
-						event.data = dragData.getData();
-					}
-				}
-				else {
-					event.doit = false;
-				}
-			}
-			else if (OBJECT_TRANSFER.isSupportedType(event.dataType)) {
-				final List<TransferObject> transferObjectsList = new LinkedList<TransferObject>();
-				for (final TransferTypeSpi transferType : DragDropUtil.getTransferObjectTypes(supportedTypes)) {
-					final DragDataResponseSpiImpl dragData = new DragDataResponseSpiImpl();
-					final VetoHolder veto = new VetoHolder();
-					fireDragSetData(event.x, event.y, veto, transferType, dragData);
-					if (!veto.hasVeto()) {
-						transferObjectsList.add(new TransferObject(transferType, dragData.getData()));
-					}
-				}
-				if (!transferObjectsList.isEmpty()) {
-					event.data = new TransferContainer(transferObjectsList);
-				}
-				else {
-					event.doit = false;
-				}
-			}
-			else {
-				event.doit = false;
-			}
-		}
+        @Override
+        public void dragSetData(final DragSourceEvent event) {
+            if (TEXT_TRANSFER.isSupportedType(event.dataType)) {
+                final TransferTypeSpi transferType = DragDropUtil.getStringTransferType(supportedTypes);
+                if (transferType != null) {
+                    final DragDataResponseSpiImpl dragData = new DragDataResponseSpiImpl();
+                    final VetoHolder veto = new VetoHolder();
+                    fireDragSetData(event.x, event.y, veto, transferType, dragData);
+                    if (veto.hasVeto()) {
+                        event.doit = false;
+                    }
+                    else {
+                        event.data = dragData.getData();
+                    }
+                }
+                else {
+                    event.doit = false;
+                }
+            }
+            else if (OBJECT_TRANSFER.isSupportedType(event.dataType)) {
+                final List<TransferObject> transferObjectsList = new LinkedList<TransferObject>();
+                for (final TransferTypeSpi transferType : DragDropUtil.getTransferObjectTypes(supportedTypes)) {
+                    final DragDataResponseSpiImpl dragData = new DragDataResponseSpiImpl();
+                    final VetoHolder veto = new VetoHolder();
+                    fireDragSetData(event.x, event.y, veto, transferType, dragData);
+                    if (!veto.hasVeto()) {
+                        transferObjectsList.add(new TransferObject(transferType, dragData.getData()));
+                    }
+                }
+                if (!transferObjectsList.isEmpty()) {
+                    event.data = new TransferContainer(transferObjectsList);
+                }
+                else {
+                    event.doit = false;
+                }
+            }
+            else {
+                event.doit = false;
+            }
+        }
 
-		@Override
-		public void dragFinished(final DragSourceEvent event) {
-			fireDragFinished(event.x, event.y, DragDropUtil.getDropAction(event.detail));
-		}
-	}
+        @Override
+        public void dragFinished(final DragSourceEvent event) {
+            fireDragFinished(event.x, event.y, DragDropUtil.getDropAction(event.detail));
+        }
+    }
 
 }

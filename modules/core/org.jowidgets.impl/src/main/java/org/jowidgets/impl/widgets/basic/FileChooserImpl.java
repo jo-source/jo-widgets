@@ -43,69 +43,69 @@ import org.jowidgets.spi.widgets.IFileChooserSpi;
 
 public class FileChooserImpl extends WidgetSpiWrapper implements IFileChooser {
 
-	private final DisplayDelegate displayDelegate;
+    private final DisplayDelegate displayDelegate;
 
-	public FileChooserImpl(final IFileChooserSpi widget) {
-		super(widget);
-		this.displayDelegate = new DisplayDelegate();
-	}
+    public FileChooserImpl(final IFileChooserSpi widget) {
+        super(widget);
+        this.displayDelegate = new DisplayDelegate();
+    }
 
-	@Override
-	public IFileChooserSpi getWidget() {
-		return (IFileChooserSpi) super.getWidget();
-	}
+    @Override
+    public IFileChooserSpi getWidget() {
+        return (IFileChooserSpi) super.getWidget();
+    }
 
-	@Override
-	public void setParent(final IWindow parent) {
-		displayDelegate.setParent(parent);
-	}
+    @Override
+    public void setParent(final IWindow parent) {
+        displayDelegate.setParent(parent);
+    }
 
-	@Override
-	public IWindow getParent() {
-		return displayDelegate.getParent();
-	}
+    @Override
+    public IWindow getParent() {
+        return displayDelegate.getParent();
+    }
 
-	@Override
-	public void setSelectedFile(final File file) {
-		getWidget().setSelectedFile(file);
-	}
+    @Override
+    public void setSelectedFile(final File file) {
+        getWidget().setSelectedFile(file);
+    }
 
-	@Override
-	public DialogResult open() {
-		WidgetCheck.check(this);
-		final DialogResult result = getWidget().open();
-		dispose();
-		return result;
-	}
+    @Override
+    public DialogResult open() {
+        WidgetCheck.check(this);
+        final DialogResult result = getWidget().open();
+        dispose();
+        return result;
+    }
 
-	@Override
-	public void dispose() {
-		displayDelegate.dispose();
-	}
+    @Override
+    public void dispose() {
+        displayDelegate.dispose();
+    }
 
-	@Override
-	public boolean isDisposed() {
-		return displayDelegate.isDisposed();
-	}
+    @Override
+    public boolean isDisposed() {
+        return displayDelegate.isDisposed();
+    }
 
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		displayDelegate.addDisposeListener(listener);
-	}
+    @Override
+    public void addDisposeListener(final IDisposeListener listener) {
+        displayDelegate.addDisposeListener(listener);
+    }
 
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		displayDelegate.removeDisposeListener(listener);
-	}
+    @Override
+    public void removeDisposeListener(final IDisposeListener listener) {
+        displayDelegate.removeDisposeListener(listener);
+    }
 
-	@Override
-	public List<File> getSelectedFiles() {
-		return getWidget().getSelectedFiles();
-	}
+    @Override
+    public List<File> getSelectedFiles() {
+        return getWidget().getSelectedFiles();
+    }
 
-	@Override
-	public IFileChooserFilter getSelectedFilter() {
-		return getWidget().getSelectedFilter();
-	}
+    @Override
+    public IFileChooserFilter getSelectedFilter() {
+        return getWidget().getSelectedFilter();
+    }
 
 }

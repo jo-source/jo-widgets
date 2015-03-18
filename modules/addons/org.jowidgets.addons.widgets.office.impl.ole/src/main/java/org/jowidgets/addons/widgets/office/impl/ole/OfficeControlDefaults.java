@@ -33,9 +33,9 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
 final class OfficeControlDefaults implements IDefaultInitializer<IOfficeControlSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final IOfficeControlSetupBuilder<?> setup) {
-		setup.setToolbarVisible(true);
-		setup.setDirtyCheckIntervalMs(500);
-	}
+    @Override
+    public void initialize(final IOfficeControlSetupBuilder<?> setup) {
+        setup.setToolbarVisible(true);
+        setup.setDirtyCheckIntervalMs(500);
+    }
 }

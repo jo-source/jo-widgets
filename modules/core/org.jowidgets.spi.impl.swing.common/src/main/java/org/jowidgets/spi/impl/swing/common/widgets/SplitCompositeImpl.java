@@ -45,96 +45,96 @@ import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;
 
 public class SplitCompositeImpl extends SwingControl implements ISplitCompositeSpi {
 
-	private final ICompositeSpi first;
-	private final ICompositeSpi second;
+    private final ICompositeSpi first;
+    private final ICompositeSpi second;
 
-	private final JPanel firstPanel;
-	private final JPanel secondPanel;
+    private final JPanel firstPanel;
+    private final JPanel secondPanel;
 
-	private final int dividerSize;
-	private final Orientation orientation;
+    private final int dividerSize;
+    private final Orientation orientation;
 
-	public SplitCompositeImpl(final IGenericWidgetFactory factory, final ISplitCompositeSetupSpi setup) {
-		super(new JoSplitPane(SplitOrientationConvert.convert(setup.getOrientation()), setup.getWeight(), getResizeWeight(setup)));
+    public SplitCompositeImpl(final IGenericWidgetFactory factory, final ISplitCompositeSetupSpi setup) {
+        super(new JoSplitPane(SplitOrientationConvert.convert(setup.getOrientation()), setup.getWeight(), getResizeWeight(setup)));
 
-		this.dividerSize = setup.getDividerSize();
-		this.orientation = setup.getOrientation();
+        this.dividerSize = setup.getDividerSize();
+        this.orientation = setup.getOrientation();
 
-		this.firstPanel = new JPanel();
-		this.secondPanel = new JPanel();
+        this.firstPanel = new JPanel();
+        this.secondPanel = new JPanel();
 
-		firstPanel.setBorder(BorderConvert.convert(setup.getFirstBorder()));
-		secondPanel.setBorder(BorderConvert.convert(setup.getSecondBorder()));
+        firstPanel.setBorder(BorderConvert.convert(setup.getFirstBorder()));
+        secondPanel.setBorder(BorderConvert.convert(setup.getSecondBorder()));
 
-		first = new SwingComposite(factory, firstPanel);
-		second = new SwingComposite(factory, secondPanel);
+        first = new SwingComposite(factory, firstPanel);
+        second = new SwingComposite(factory, secondPanel);
 
-		first.setLayout(setup.getFirstLayout());
-		second.setLayout(setup.getSecondLayout());
+        first.setLayout(setup.getFirstLayout());
+        second.setLayout(setup.getSecondLayout());
 
-		final JSplitPane splitPane = getUiReference();
+        final JSplitPane splitPane = getUiReference();
 
-		splitPane.setLeftComponent(firstPanel);
-		splitPane.setRightComponent(secondPanel);
+        splitPane.setLeftComponent(firstPanel);
+        splitPane.setRightComponent(secondPanel);
 
-		splitPane.setBorder(BorderFactory.createEmptyBorder());
-		splitPane.setDividerSize(dividerSize);
-	}
+        splitPane.setBorder(BorderFactory.createEmptyBorder());
+        splitPane.setDividerSize(dividerSize);
+    }
 
-	@Override
-	public ICompositeSpi getFirst() {
-		return first;
-	}
+    @Override
+    public ICompositeSpi getFirst() {
+        return first;
+    }
 
-	@Override
-	public ICompositeSpi getSecond() {
-		return second;
-	}
+    @Override
+    public ICompositeSpi getSecond() {
+        return second;
+    }
 
-	@Override
-	public void setMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
-		setMinSize(firstPanel, firstMinSize, false);
-		setMinSize(secondPanel, secondMinSize, true);
-	}
+    @Override
+    public void setMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
+        setMinSize(firstPanel, firstMinSize, false);
+        setMinSize(secondPanel, secondMinSize, true);
+    }
 
-	private void setMinSize(final JPanel panel, final Dimension minSize, final boolean second) {
-		if (minSize != null) {
-			int width = minSize.getWidth();
-			int height = minSize.getHeight();
-			if (second) {
-				if (Orientation.VERTICAL == orientation) {
-					height = height + dividerSize;
-				}
-				else {
-					width = width + dividerSize;
-				}
-			}
-			panel.setMinimumSize(new java.awt.Dimension(width, height));
-		}
-		else {
-			panel.setMinimumSize(null);
-		}
-	}
+    private void setMinSize(final JPanel panel, final Dimension minSize, final boolean second) {
+        if (minSize != null) {
+            int width = minSize.getWidth();
+            int height = minSize.getHeight();
+            if (second) {
+                if (Orientation.VERTICAL == orientation) {
+                    height = height + dividerSize;
+                }
+                else {
+                    width = width + dividerSize;
+                }
+            }
+            panel.setMinimumSize(new java.awt.Dimension(width, height));
+        }
+        else {
+            panel.setMinimumSize(null);
+        }
+    }
 
-	@Override
-	public JSplitPane getUiReference() {
-		return (JSplitPane) super.getUiReference();
-	}
+    @Override
+    public JSplitPane getUiReference() {
+        return (JSplitPane) super.getUiReference();
+    }
 
-	private static double getResizeWeight(final ISplitCompositeSetupSpi setup) {
-		final SplitResizePolicy resizePolicy = setup.getResizePolicy();
-		if (resizePolicy == SplitResizePolicy.RESIZE_FIRST) {
-			return 1.0;
-		}
-		else if (resizePolicy == SplitResizePolicy.RESIZE_SECOND) {
-			return 0.0;
-		}
-		else if (resizePolicy == SplitResizePolicy.RESIZE_BOTH) {
-			return setup.getWeight();
-		}
-		else {
-			throw new IllegalArgumentException(SplitResizePolicy.class.getSimpleName() + "'" + resizePolicy + "' is not known.");
-		}
-	}
+    private static double getResizeWeight(final ISplitCompositeSetupSpi setup) {
+        final SplitResizePolicy resizePolicy = setup.getResizePolicy();
+        if (resizePolicy == SplitResizePolicy.RESIZE_FIRST) {
+            return 1.0;
+        }
+        else if (resizePolicy == SplitResizePolicy.RESIZE_SECOND) {
+            return 0.0;
+        }
+        else if (resizePolicy == SplitResizePolicy.RESIZE_BOTH) {
+            return setup.getWeight();
+        }
+        else {
+            throw new IllegalArgumentException(SplitResizePolicy.class.getSimpleName() + "'" + resizePolicy + "' is not known.");
+        }
+    }
 
 }

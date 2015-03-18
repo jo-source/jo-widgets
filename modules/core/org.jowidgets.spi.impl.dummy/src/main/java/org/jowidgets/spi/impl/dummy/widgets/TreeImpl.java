@@ -47,176 +47,176 @@ import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
 
 public class TreeImpl extends DummyControl implements ITreeSpi, ITreeNodeSpi {
 
-	private final UIDObservable popupObs;
-	private final List<TreeNodeImpl> items;
-	private Position position;
-	private Dimension size;
+    private final UIDObservable popupObs;
+    private final List<TreeNodeImpl> items;
+    private Position position;
+    private Dimension size;
 
-	public TreeImpl(final ITreeSetupSpi setup) {
-		super(new UIDTree());
-		this.popupObs = new UIDObservable();
-		this.items = new LinkedList<TreeNodeImpl>();
-	}
+    public TreeImpl(final ITreeSetupSpi setup) {
+        super(new UIDTree());
+        this.popupObs = new UIDObservable();
+        this.items = new LinkedList<TreeNodeImpl>();
+    }
 
-	@Override
-	public IPopupMenuSpi createPopupMenu() {
-		return new PopupMenuImpl(getUiReference());
-	}
+    @Override
+    public IPopupMenuSpi createPopupMenu() {
+        return new PopupMenuImpl(getUiReference());
+    }
 
-	@Override
-	public UIDTree getUiReference() {
-		return new UIDTree();
-	}
+    @Override
+    public UIDTree getUiReference() {
+        return new UIDTree();
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		getUiReference().setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        getUiReference().setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return getUiReference().isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return getUiReference().isEnabled();
+    }
 
-	@Override
-	public Dimension getSize() {
-		return size;
-	}
+    @Override
+    public Dimension getSize() {
+        return size;
+    }
 
-	@Override
-	public void addTreeSelectionListener(final ITreeSelectionListenerSpi listener) {
-		popupObs.addTreeSelectionListener(listener);
-	}
+    @Override
+    public void addTreeSelectionListener(final ITreeSelectionListenerSpi listener) {
+        popupObs.addTreeSelectionListener(listener);
+    }
 
-	@Override
-	public void removeTreeSelectionListener(final ITreeSelectionListenerSpi listener) {
-		popupObs.removeTreeSelectionListener(listener);
-	}
+    @Override
+    public void removeTreeSelectionListener(final ITreeSelectionListenerSpi listener) {
+        popupObs.removeTreeSelectionListener(listener);
+    }
 
-	@Override
-	public ITreeNodeSpi addNode(final Integer index) {
-		final TreeNodeImpl result = new TreeNodeImpl(this, new UIDTreeItem(), index);
-		items.add(result);
-		return result;
-	}
+    @Override
+    public ITreeNodeSpi addNode(final Integer index) {
+        final TreeNodeImpl result = new TreeNodeImpl(this, new UIDTreeItem(), index);
+        items.add(result);
+        return result;
+    }
 
-	@Override
-	public void removeNode(final int index) {
-		items.remove(index);
-	}
+    @Override
+    public void removeNode(final int index) {
+        items.remove(index);
+    }
 
-	@Override
-	public ITreeNodeSpi getRootNode() {
-		return this;
-	}
+    @Override
+    public ITreeNodeSpi getRootNode() {
+        return this;
+    }
 
-	@Override
-	public List<ITreeNodeSpi> getSelectedNodes() {
-		final List<ITreeNodeSpi> results = new LinkedList<ITreeNodeSpi>();
-		for (final TreeNodeImpl item : items) {
-			if (item.isSelected()) {
-				results.add(item);
-			}
-		}
-		return results;
-	}
+    @Override
+    public List<ITreeNodeSpi> getSelectedNodes() {
+        final List<ITreeNodeSpi> results = new LinkedList<ITreeNodeSpi>();
+        for (final TreeNodeImpl item : items) {
+            if (item.isSelected()) {
+                results.add(item);
+            }
+        }
+        return results;
+    }
 
-	public void registerNode(final TreeNodeImpl result) {
-		items.add(result);
-	}
+    public void registerNode(final TreeNodeImpl result) {
+        items.add(result);
+    }
 
-	@Override
-	public ITreeNodeSpi getNodeAt(final Position position) {
-		return null;
-	}
+    @Override
+    public ITreeNodeSpi getNodeAt(final Position position) {
+        return null;
+    }
 
-	@Override
-	public void setMarkup(final Markup markup) {
-		throw new UnsupportedOperationException("setMarkup is not possible on the root node");
-	}
+    @Override
+    public void setMarkup(final Markup markup) {
+        throw new UnsupportedOperationException("setMarkup is not possible on the root node");
+    }
 
-	@Override
-	public void setExpanded(final boolean expanded) {
-		throw new UnsupportedOperationException("setExpanded is not possible on the root node");
-	}
+    @Override
+    public void setExpanded(final boolean expanded) {
+        throw new UnsupportedOperationException("setExpanded is not possible on the root node");
+    }
 
-	@Override
-	public boolean isExpanded() {
-		throw new UnsupportedOperationException("isExpanded is not possible on the root node");
-	}
+    @Override
+    public boolean isExpanded() {
+        throw new UnsupportedOperationException("isExpanded is not possible on the root node");
+    }
 
-	@Override
-	public void setSelected(final boolean selected) {
-		throw new UnsupportedOperationException("setSelected is not possible on the root node");
-	}
+    @Override
+    public void setSelected(final boolean selected) {
+        throw new UnsupportedOperationException("setSelected is not possible on the root node");
+    }
 
-	@Override
-	public boolean isSelected() {
-		throw new UnsupportedOperationException("isSelected is not possible on the root node");
-	}
+    @Override
+    public boolean isSelected() {
+        throw new UnsupportedOperationException("isSelected is not possible on the root node");
+    }
 
-	@Override
-	public void setText(final String text) {
-		throw new UnsupportedOperationException("setText is not possible on the root node");
-	}
+    @Override
+    public void setText(final String text) {
+        throw new UnsupportedOperationException("setText is not possible on the root node");
+    }
 
-	@Override
-	public void setToolTipText(final String text) {
-		throw new UnsupportedOperationException("setToolTipText is not possible on the root node");
-	}
+    @Override
+    public void setToolTipText(final String text) {
+        throw new UnsupportedOperationException("setToolTipText is not possible on the root node");
+    }
 
-	@Override
-	public void setIcon(final IImageConstant icon) {
-		throw new UnsupportedOperationException("setIcon is not possible on the root node");
-	}
+    @Override
+    public void setIcon(final IImageConstant icon) {
+        throw new UnsupportedOperationException("setIcon is not possible on the root node");
+    }
 
-	@Override
-	public void addTreeNodeListener(final ITreeNodeListener listener) {
-		throw new UnsupportedOperationException("addTreeNodeListener is not possible on the root node");
-	}
+    @Override
+    public void addTreeNodeListener(final ITreeNodeListener listener) {
+        throw new UnsupportedOperationException("addTreeNodeListener is not possible on the root node");
+    }
 
-	@Override
-	public void removeTreeNodeListener(final ITreeNodeListener listener) {
-		throw new UnsupportedOperationException("removeTreeNodeListener is not possible on the root node");
-	}
+    @Override
+    public void removeTreeNodeListener(final ITreeNodeListener listener) {
+        throw new UnsupportedOperationException("removeTreeNodeListener is not possible on the root node");
+    }
 
-	@Override
-	public void setChecked(final boolean checked) {
-		throw new UnsupportedOperationException("setChecked is not possible on the root node");
-	}
+    @Override
+    public void setChecked(final boolean checked) {
+        throw new UnsupportedOperationException("setChecked is not possible on the root node");
+    }
 
-	@Override
-	public boolean isChecked() {
-		throw new UnsupportedOperationException("isChecked is not possible on the root node");
-	}
+    @Override
+    public boolean isChecked() {
+        throw new UnsupportedOperationException("isChecked is not possible on the root node");
+    }
 
-	@Override
-	public void setCheckable(final boolean checkable) {
-		throw new UnsupportedOperationException("setCheckable is not possible on the root node");
-	}
+    @Override
+    public void setCheckable(final boolean checkable) {
+        throw new UnsupportedOperationException("setCheckable is not possible on the root node");
+    }
 
-	@Override
-	public void setGreyed(final boolean greyed) {
-		throw new UnsupportedOperationException("setGreyed is not possible on the root node");
-	}
+    @Override
+    public void setGreyed(final boolean greyed) {
+        throw new UnsupportedOperationException("setGreyed is not possible on the root node");
+    }
 
-	@Override
-	public boolean isGreyed() {
-		throw new UnsupportedOperationException("isGreyed is not possible on the root node");
-	}
+    @Override
+    public boolean isGreyed() {
+        throw new UnsupportedOperationException("isGreyed is not possible on the root node");
+    }
 
-	@Override
-	public void setSize(final Dimension size) {
-		this.size = size;
-	}
+    @Override
+    public void setSize(final Dimension size) {
+        this.size = size;
+    }
 
-	@Override
-	public Position getPosition() {
-		return position;
-	}
+    @Override
+    public Position getPosition() {
+        return position;
+    }
 
-	@Override
-	public void setPosition(final Position position) {
-		this.position = position;
-	}
+    @Override
+    public void setPosition(final Position position) {
+        this.position = position;
+    }
 }

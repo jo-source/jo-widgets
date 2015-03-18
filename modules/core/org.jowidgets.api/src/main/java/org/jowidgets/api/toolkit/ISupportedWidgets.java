@@ -30,8 +30,8 @@ package org.jowidgets.api.toolkit;
 
 public interface ISupportedWidgets {
 
-	boolean hasFileChooser();
+    boolean hasFileChooser();
 
-	boolean hasDirectoryChooser();
+    boolean hasDirectoryChooser();
 
 }

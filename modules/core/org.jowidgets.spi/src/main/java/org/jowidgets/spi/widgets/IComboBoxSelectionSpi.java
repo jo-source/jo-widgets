@@ -31,16 +31,16 @@ import org.jowidgets.common.widgets.ISelectable;
 
 public interface IComboBoxSelectionSpi extends IControlSpi, IInputControlSpi, ISelectable {
 
-	int getSelectedIndex();
+    int getSelectedIndex();
 
-	void setSelectedIndex(int index);
+    void setSelectedIndex(int index);
 
-	String[] getElements();
+    String[] getElements();
 
-	void setElements(String[] elements);
+    void setElements(String[] elements);
 
-	void setPopupVisible(boolean visible);
+    void setPopupVisible(boolean visible);
 
-	boolean isPopupVisible();
+    boolean isPopupVisible();
 
 }

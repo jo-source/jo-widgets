@@ -31,5 +31,5 @@ import org.eclipse.swt.graphics.Color;
 import org.jowidgets.common.color.IColorConstant;
 
 public interface IColorCache {
-	Color getColor(IColorConstant color);
+    Color getColor(IColorConstant color);
 }

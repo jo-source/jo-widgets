@@ -35,14 +35,14 @@ import org.jowidgets.spi.widgets.setup.ICompositeSetupSpi;
 
 public class CompositeImpl extends SwtComposite {
 
-	public CompositeImpl(final IGenericWidgetFactory factory, final Object parentUiReference, final ICompositeSetupSpi setup) {
+    public CompositeImpl(final IGenericWidgetFactory factory, final Object parentUiReference, final ICompositeSetupSpi setup) {
 
-		super(factory, createComposite(parentUiReference, setup));
+        super(factory, createComposite(parentUiReference, setup));
 
-		getUiReference().setBackgroundMode(SWT.INHERIT_DEFAULT);
-	}
+        getUiReference().setBackgroundMode(SWT.INHERIT_DEFAULT);
+    }
 
-	private static Composite createComposite(final Object parentUiReference, final ICompositeSetupSpi setup) {
-		return BorderToComposite.convert((Composite) parentUiReference, setup.getBorder());
-	}
+    private static Composite createComposite(final Object parentUiReference, final ICompositeSetupSpi setup) {
+        return BorderToComposite.convert((Composite) parentUiReference, setup.getBorder());
+    }
 }

@@ -34,153 +34,153 @@ import java.util.Set;
 
 public final class ModelViewIndexConverter<MODEL_TYPE> {
 
-	private final ArrayList<MODEL_TYPE> allModels;
-	private final Set<MODEL_TYPE> invisibleModels;
-	private final ArrayList<Integer> modelToView;
+    private final ArrayList<MODEL_TYPE> allModels;
+    private final Set<MODEL_TYPE> invisibleModels;
+    private final ArrayList<Integer> modelToView;
 
-	public ModelViewIndexConverter() {
-		this.allModels = new ArrayList<MODEL_TYPE>();
-		this.invisibleModels = new HashSet<MODEL_TYPE>();
-		this.modelToView = new ArrayList<Integer>();
-	}
+    public ModelViewIndexConverter() {
+        this.allModels = new ArrayList<MODEL_TYPE>();
+        this.invisibleModels = new HashSet<MODEL_TYPE>();
+        this.modelToView = new ArrayList<Integer>();
+    }
 
-	/**
-	 * Adds a model
-	 * 
-	 * @param model
-	 * @param visibility
-	 * @param modelIndex
-	 * @return The view index where object must be added , -1 if model is not visible
-	 */
-	public int addModel(final MODEL_TYPE model, final boolean visibility, final int modelIndex) {
-		if (modelIndex >= 0 && modelIndex <= modelToView.size()) {
-			allModels.add(Integer.valueOf(modelIndex), model);
-			if (visibility) {
-				final int previousVisibleIndex = findPreviousVisibleIndex(modelIndex - 1);
-				modelToView.add(modelIndex, previousVisibleIndex + 1);
-				increaseFollowingIndices(modelIndex + 1);
-				return modelToView.get(modelIndex).intValue();
-			}
-			else {
-				invisibleModels.add(model);
-				modelToView.add(modelIndex, Integer.valueOf(-1));
-				return -1;
-			}
-		}
-		else {
-			throw new IndexOutOfBoundsException("Index must be between '0' and '" + modelToView.size() + "'");
-		}
-	}
+    /**
+     * Adds a model
+     * 
+     * @param model
+     * @param visibility
+     * @param modelIndex
+     * @return The view index where object must be added , -1 if model is not visible
+     */
+    public int addModel(final MODEL_TYPE model, final boolean visibility, final int modelIndex) {
+        if (modelIndex >= 0 && modelIndex <= modelToView.size()) {
+            allModels.add(Integer.valueOf(modelIndex), model);
+            if (visibility) {
+                final int previousVisibleIndex = findPreviousVisibleIndex(modelIndex - 1);
+                modelToView.add(modelIndex, previousVisibleIndex + 1);
+                increaseFollowingIndices(modelIndex + 1);
+                return modelToView.get(modelIndex).intValue();
+            }
+            else {
+                invisibleModels.add(model);
+                modelToView.add(modelIndex, Integer.valueOf(-1));
+                return -1;
+            }
+        }
+        else {
+            throw new IndexOutOfBoundsException("Index must be between '0' and '" + modelToView.size() + "'");
+        }
+    }
 
-	private int findPreviousVisibleIndex(final int startIndex) {
-		if (startIndex != -1) {
-			final int fixedStartIndex = Math.min(startIndex, Math.max(0, modelToView.size() - 1));
-			for (int index = fixedStartIndex; index >= 0; index--) {
-				final int viewIndex = modelToView.get(index).intValue();
-				if (viewIndex != -1) {
-					return viewIndex;
-				}
-			}
-		}
-		return -1;
-	}
+    private int findPreviousVisibleIndex(final int startIndex) {
+        if (startIndex != -1) {
+            final int fixedStartIndex = Math.min(startIndex, Math.max(0, modelToView.size() - 1));
+            for (int index = fixedStartIndex; index >= 0; index--) {
+                final int viewIndex = modelToView.get(index).intValue();
+                if (viewIndex != -1) {
+                    return viewIndex;
+                }
+            }
+        }
+        return -1;
+    }
 
-	private void increaseFollowingIndices(final int startIndex) {
-		for (int index = startIndex; index < modelToView.size(); index++) {
-			final int viewIndex = modelToView.get(index).intValue();
-			if (viewIndex != -1) {
-				modelToView.set(index, viewIndex + 1);
-			}
-		}
-	}
+    private void increaseFollowingIndices(final int startIndex) {
+        for (int index = startIndex; index < modelToView.size(); index++) {
+            final int viewIndex = modelToView.get(index).intValue();
+            if (viewIndex != -1) {
+                modelToView.set(index, viewIndex + 1);
+            }
+        }
+    }
 
-	/**
-	 * Removes a model
-	 * 
-	 * @param model
-	 * @param visibility
-	 * @param modelIndex
-	 * @return The view index where object must be removed , -1 if model is not visible
-	 */
-	public int removeModel(final MODEL_TYPE model, final int modelIndex) {
-		if (modelIndex >= 0 && modelIndex < modelToView.size()) {
-			final boolean removed = allModels.remove(model);
-			if (removed) {
-				final int viewIndex = modelToView.get(modelIndex).intValue();
-				modelToView.remove(modelIndex);
-				if (viewIndex != -1) {
-					decreaseFollowingIndices(modelIndex);
-				}
-				invisibleModels.remove(model);
-				return viewIndex;
-			}
-			else {
-				return -1;
-			}
-		}
-		else {
-			throw new IndexOutOfBoundsException("Index must be between '0' and '" + (modelToView.size() - 1) + "'");
-		}
-	}
+    /**
+     * Removes a model
+     * 
+     * @param model
+     * @param visibility
+     * @param modelIndex
+     * @return The view index where object must be removed , -1 if model is not visible
+     */
+    public int removeModel(final MODEL_TYPE model, final int modelIndex) {
+        if (modelIndex >= 0 && modelIndex < modelToView.size()) {
+            final boolean removed = allModels.remove(model);
+            if (removed) {
+                final int viewIndex = modelToView.get(modelIndex).intValue();
+                modelToView.remove(modelIndex);
+                if (viewIndex != -1) {
+                    decreaseFollowingIndices(modelIndex);
+                }
+                invisibleModels.remove(model);
+                return viewIndex;
+            }
+            else {
+                return -1;
+            }
+        }
+        else {
+            throw new IndexOutOfBoundsException("Index must be between '0' and '" + (modelToView.size() - 1) + "'");
+        }
+    }
 
-	private void decreaseFollowingIndices(final int startIndex) {
-		for (int index = startIndex; index < modelToView.size(); index++) {
-			final int viewIndex = modelToView.get(index).intValue();
-			if (viewIndex != -1) {
-				modelToView.set(index, viewIndex - 1);
-			}
-		}
-	}
+    private void decreaseFollowingIndices(final int startIndex) {
+        for (int index = startIndex; index < modelToView.size(); index++) {
+            final int viewIndex = modelToView.get(index).intValue();
+            if (viewIndex != -1) {
+                modelToView.set(index, viewIndex - 1);
+            }
+        }
+    }
 
-	boolean isMarkedVisible(final MODEL_TYPE model) {
-		return !invisibleModels.contains(model);
-	}
+    boolean isMarkedVisible(final MODEL_TYPE model) {
+        return !invisibleModels.contains(model);
+    }
 
-	/**
-	 * Changes the visibility of the model
-	 * 
-	 * @param model
-	 * @param visibility
-	 * @return The view index where object must be added / removed from the view, -1 if nothing changed
-	 */
-	public int markVisibility(final MODEL_TYPE model, final boolean visibility) {
-		if (isMarkedVisible(model) != visibility) {
-			final int modelIndex = allModels.indexOf(model);
-			if (modelIndex != -1) {
-				final Integer viewIndex = modelToView.get(modelIndex);
-				if (viewIndex == -1 && visibility) {
-					invisibleModels.remove(model);
-					final int previousVisibleIndex = findPreviousVisibleIndex(modelIndex - 1);
-					final int newViewIndex = previousVisibleIndex + 1;
-					modelToView.set(modelIndex, newViewIndex);
-					increaseFollowingIndices(modelIndex + 1);
-					return newViewIndex;
-				}
-				else if (viewIndex != -1 && !visibility) {
-					invisibleModels.add(model);
-					modelToView.set(modelIndex, -1);
-					decreaseFollowingIndices(modelIndex + 1);
-					return viewIndex.intValue();
-				}
-				else {
-					//CHECKSTYLE:OFF
-					System.out.println("ModelViewIndexConverter seems to be inconsistent");
-					//CHECKSTYLE:ON
-				}
-			}
-		}
-		return -1;
+    /**
+     * Changes the visibility of the model
+     * 
+     * @param model
+     * @param visibility
+     * @return The view index where object must be added / removed from the view, -1 if nothing changed
+     */
+    public int markVisibility(final MODEL_TYPE model, final boolean visibility) {
+        if (isMarkedVisible(model) != visibility) {
+            final int modelIndex = allModels.indexOf(model);
+            if (modelIndex != -1) {
+                final Integer viewIndex = modelToView.get(modelIndex);
+                if (viewIndex == -1 && visibility) {
+                    invisibleModels.remove(model);
+                    final int previousVisibleIndex = findPreviousVisibleIndex(modelIndex - 1);
+                    final int newViewIndex = previousVisibleIndex + 1;
+                    modelToView.set(modelIndex, newViewIndex);
+                    increaseFollowingIndices(modelIndex + 1);
+                    return newViewIndex;
+                }
+                else if (viewIndex != -1 && !visibility) {
+                    invisibleModels.add(model);
+                    modelToView.set(modelIndex, -1);
+                    decreaseFollowingIndices(modelIndex + 1);
+                    return viewIndex.intValue();
+                }
+                else {
+                    //CHECKSTYLE:OFF
+                    System.out.println("ModelViewIndexConverter seems to be inconsistent");
+                    //CHECKSTYLE:ON
+                }
+            }
+        }
+        return -1;
 
-	}
+    }
 
-	public void clear() {
-		allModels.clear();
-		invisibleModels.clear();
-		modelToView.clear();
-	}
+    public void clear() {
+        allModels.clear();
+        invisibleModels.clear();
+        modelToView.clear();
+    }
 
-	public void dispose() {
-		clear();
-	}
+    public void dispose() {
+        clear();
+    }
 
 }

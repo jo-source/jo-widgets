@@ -30,8 +30,8 @@ package org.jowidgets.util.cache;
 
 public interface ICacheableObservable {
 
-	void addCacheableListener(ICacheableListener listener);
+    void addCacheableListener(ICacheableListener listener);
 
-	void removeCacheableListener(ICacheableListener listener);
+    void removeCacheableListener(ICacheableListener listener);
 
 }

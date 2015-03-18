@@ -32,10 +32,10 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
 public class Hierarchy3rdDefaultsOverriden implements IDefaultInitializer<IHierarchy3rdSetupBuilder<?>> {
 
-	@Override
-	public void initialize(final IHierarchy3rdSetupBuilder<?> builder) {
-		builder.setIntro("3rd Part overriden");
-		builder.setIntroPartThree("Overriden Intro Part Three");
-	}
+    @Override
+    public void initialize(final IHierarchy3rdSetupBuilder<?> builder) {
+        builder.setIntro("3rd Part overriden");
+        builder.setIntroPartThree("Overriden Intro Part Three");
+    }
 
 }

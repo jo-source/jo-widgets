@@ -76,67 +76,67 @@ import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
 
 public interface IWidgetFactorySpi {
 
-	boolean hasMigLayoutSupport();
+    boolean hasMigLayoutSupport();
 
-	//create widgets from ui-reference
+    //create widgets from ui-reference
 
-	boolean isConvertibleToFrame(Object uiReference);
+    boolean isConvertibleToFrame(Object uiReference);
 
-	IFrameSpi createFrame(IGenericWidgetFactory factory, Object uiReference);
+    IFrameSpi createFrame(IGenericWidgetFactory factory, Object uiReference);
 
-	boolean isConvertibleToComposite(Object uiReference);
+    boolean isConvertibleToComposite(Object uiReference);
 
-	ICompositeSpi createComposite(IGenericWidgetFactory factory, Object uiReference);
+    ICompositeSpi createComposite(IGenericWidgetFactory factory, Object uiReference);
 
-	//create widgets from setup
+    //create widgets from setup
 
-	IFrameSpi createFrame(IGenericWidgetFactory factory, IFrameSetupSpi setup);
+    IFrameSpi createFrame(IGenericWidgetFactory factory, IFrameSetupSpi setup);
 
-	IFrameSpi createDialog(IGenericWidgetFactory factory, Object parentUiReference, IDialogSetupSpi setup);
+    IFrameSpi createDialog(IGenericWidgetFactory factory, Object parentUiReference, IDialogSetupSpi setup);
 
-	IPopupDialogSpi createPopupDialog(IGenericWidgetFactory factory, Object parentUiReference, IPopupDialogSetupSpi setup);
+    IPopupDialogSpi createPopupDialog(IGenericWidgetFactory factory, Object parentUiReference, IPopupDialogSetupSpi setup);
 
-	ICompositeSpi createComposite(IGenericWidgetFactory factory, Object parentUiReference, ICompositeSetupSpi setup);
+    ICompositeSpi createComposite(IGenericWidgetFactory factory, Object parentUiReference, ICompositeSetupSpi setup);
 
-	ISplitCompositeSpi createSplitComposite(IGenericWidgetFactory factory, Object parentUiReference, ISplitCompositeSetupSpi setup);
+    ISplitCompositeSpi createSplitComposite(IGenericWidgetFactory factory, Object parentUiReference, ISplitCompositeSetupSpi setup);
 
-	IScrollCompositeSpi createScrollComposite(
-		IGenericWidgetFactory factory,
-		Object parentUiReference,
-		IScrollCompositeSetupSpi setup);
+    IScrollCompositeSpi createScrollComposite(
+        IGenericWidgetFactory factory,
+        Object parentUiReference,
+        IScrollCompositeSetupSpi setup);
 
-	ITextControlSpi createTextField(Object parentUiReference, ITextFieldSetupSpi setup);
+    ITextControlSpi createTextField(Object parentUiReference, ITextFieldSetupSpi setup);
 
-	ITextAreaSpi createTextArea(Object parentUiReference, ITextAreaSetupSpi setup);
+    ITextAreaSpi createTextArea(Object parentUiReference, ITextAreaSetupSpi setup);
 
-	ITextLabelSpi createTextLabel(Object parentUiReference, ITextLabelSetupSpi setup);
+    ITextLabelSpi createTextLabel(Object parentUiReference, ITextLabelSetupSpi setup);
 
-	IIconSpi createIcon(Object parentUiReference, IIconSetupSpi setup);
+    IIconSpi createIcon(Object parentUiReference, IIconSetupSpi setup);
 
-	IButtonSpi createButton(Object parentUiReference, IButtonSetupSpi setup);
+    IButtonSpi createButton(Object parentUiReference, IButtonSetupSpi setup);
 
-	IControlSpi createSeparator(Object parentUiReference, ISeparatorSetupSpi setup);
+    IControlSpi createSeparator(Object parentUiReference, ISeparatorSetupSpi setup);
 
-	ICheckBoxSpi createCheckBox(Object parentUiReference, ICheckBoxSetupSpi setup);
+    ICheckBoxSpi createCheckBox(Object parentUiReference, ICheckBoxSetupSpi setup);
 
-	IToggleButtonSpi createToggleButton(Object parentUiReference, IToggleButtonSetupSpi setup);
+    IToggleButtonSpi createToggleButton(Object parentUiReference, IToggleButtonSetupSpi setup);
 
-	IComboBoxSelectionSpi createComboBoxSelection(Object parentUiReference, IComboBoxSelectionSetupSpi setup);
+    IComboBoxSelectionSpi createComboBoxSelection(Object parentUiReference, IComboBoxSelectionSetupSpi setup);
 
-	IComboBoxSpi createComboBox(Object parentUiReference, IComboBoxSetupSpi setup);
+    IComboBoxSpi createComboBox(Object parentUiReference, IComboBoxSetupSpi setup);
 
-	IProgressBarSpi createProgressBar(Object parentUiReference, IProgressBarSetupSpi setup);
+    IProgressBarSpi createProgressBar(Object parentUiReference, IProgressBarSetupSpi setup);
 
-	IToolBarSpi createToolBar(IGenericWidgetFactory factory, Object parentUiReference, IToolBarSetupSpi setup);
+    IToolBarSpi createToolBar(IGenericWidgetFactory factory, Object parentUiReference, IToolBarSetupSpi setup);
 
-	ITabFolderSpi createTabFolder(IGenericWidgetFactory factory, Object parentUiReference, ITabFolderSetupSpi setup);
+    ITabFolderSpi createTabFolder(IGenericWidgetFactory factory, Object parentUiReference, ITabFolderSetupSpi setup);
 
-	ITreeSpi createTree(Object parentUiReference, ITreeSetupSpi setup);
+    ITreeSpi createTree(Object parentUiReference, ITreeSetupSpi setup);
 
-	ITableSpi createTable(IGenericWidgetFactory factory, Object parentUiReference, ITableSetupSpi setup);
+    ITableSpi createTable(IGenericWidgetFactory factory, Object parentUiReference, ITableSetupSpi setup);
 
-	ISliderSpi createSlider(Object parentUiReference, ISliderSetupSpi setup);
+    ISliderSpi createSlider(Object parentUiReference, ISliderSetupSpi setup);
 
-	ICanvasSpi createCanvas(IGenericWidgetFactory factory, Object parentUiReference, ICanvasSetupSpi setup);
+    ICanvasSpi createCanvas(IGenericWidgetFactory factory, Object parentUiReference, ICanvasSetupSpi setup);
 
 }

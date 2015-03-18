@@ -46,24 +46,24 @@ import org.jowidgets.common.widgets.layout.ILayouter;
  */
 public final class FlowLayout {
 
-	private FlowLayout() {}
+    private FlowLayout() {}
 
-	/**
-	 * Gets a layout factory for an 'FlowLayout'
-	 * 
-	 * @return A layout factory that produces 'FlowLayout'
-	 */
-	public static ILayoutFactory<ILayouter> get() {
-		return Toolkit.getLayoutFactoryProvider().flowLayout();
-	}
+    /**
+     * Gets a layout factory for an 'FlowLayout'
+     * 
+     * @return A layout factory that produces 'FlowLayout'
+     */
+    public static ILayoutFactory<ILayouter> get() {
+        return Toolkit.getLayoutFactoryProvider().flowLayout();
+    }
 
-	/**
-	 * Gets a builder for an layout factory of an 'FlowLayout'
-	 * 
-	 * @return A builder for an layout factory of an 'FlowLayout'
-	 */
-	public static IFlowLayoutFactoryBuilder builder() {
-		return Toolkit.getLayoutFactoryProvider().flowLayoutBuilder();
-	}
+    /**
+     * Gets a builder for an layout factory of an 'FlowLayout'
+     * 
+     * @return A builder for an layout factory of an 'FlowLayout'
+     */
+    public static IFlowLayoutFactoryBuilder builder() {
+        return Toolkit.getLayoutFactoryProvider().flowLayoutBuilder();
+    }
 
 }

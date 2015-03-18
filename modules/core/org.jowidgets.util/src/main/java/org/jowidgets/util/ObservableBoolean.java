@@ -30,26 +30,26 @@ package org.jowidgets.util;
 
 public final class ObservableBoolean extends ObservableValue<Boolean> {
 
-	public ObservableBoolean() {
-		setValue(false);
-	}
+    public ObservableBoolean() {
+        setValue(false);
+    }
 
-	public ObservableBoolean(final boolean value) {
-		set(value);
-	}
+    public ObservableBoolean(final boolean value) {
+        set(value);
+    }
 
-	public boolean get() {
-		return getValue().booleanValue();
-	}
+    public boolean get() {
+        return getValue().booleanValue();
+    }
 
-	public void set(final boolean value) {
-		super.setValue(Boolean.valueOf(value));
-	}
+    public void set(final boolean value) {
+        super.setValue(Boolean.valueOf(value));
+    }
 
-	@Override
-	public void setValue(final Boolean value) {
-		Assert.paramNotNull(value, "value");
-		super.setValue(value);
-	}
+    @Override
+    public void setValue(final Boolean value) {
+        Assert.paramNotNull(value, "value");
+        super.setValue(value);
+    }
 
 }

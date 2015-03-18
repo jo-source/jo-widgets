@@ -37,10 +37,10 @@ import org.jowidgets.common.widgets.factory.IWidgetFactory;
 
 final class MainBrowserFactory implements IWidgetFactory<IMainBrowser, IMainBrowserBluePrint> {
 
-	@Override
-	public IMainBrowser create(final Object parentUiReference, final IMainBrowserBluePrint bluePrint) {
-		final IAwtSwtControl awtSwtControl = AwtSwtControlFactory.getInstance().createAwtSwtControl(parentUiReference);
-		return SwtBrowserFactory.createMainBrowser(awtSwtControl, awtSwtControl.getSwtComposite(), bluePrint);
-	}
+    @Override
+    public IMainBrowser create(final Object parentUiReference, final IMainBrowserBluePrint bluePrint) {
+        final IAwtSwtControl awtSwtControl = AwtSwtControlFactory.getInstance().createAwtSwtControl(parentUiReference);
+        return SwtBrowserFactory.createMainBrowser(awtSwtControl, awtSwtControl.getSwtComposite(), bluePrint);
+    }
 
 }

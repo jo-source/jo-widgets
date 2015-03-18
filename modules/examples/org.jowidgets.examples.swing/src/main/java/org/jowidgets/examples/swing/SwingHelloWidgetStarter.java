@@ -33,12 +33,12 @@ import org.jowidgets.examples.common.HelloWidgetApplication;
 
 public final class SwingHelloWidgetStarter {
 
-	private SwingHelloWidgetStarter() {}
+    private SwingHelloWidgetStarter() {}
 
-	public static void main(final String[] args) throws Exception {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
-		new HelloWidgetApplication("Hello Widgets Swing").start();
-	}
+    public static void main(final String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
+        new HelloWidgetApplication("Hello Widgets Swing").start();
+    }
 
 }

@@ -30,34 +30,34 @@ package org.jowidgets.addons.widgets.browser.api;
 
 public interface IMainBrowser extends IBrowser {
 
-	String getUrl();
+    String getUrl();
 
-	String getHtml();
+    String getHtml();
 
-	void setJavascriptEnabled(boolean enabled);
+    void setJavascriptEnabled(boolean enabled);
 
-	boolean isJavascriptEnabled();
+    boolean isJavascriptEnabled();
 
-	boolean setCookie(String url, String cookieValue);
+    boolean setCookie(String url, String cookieValue);
 
-	String getCookie(String url, String cookieName);
+    String getCookie(String url, String cookieName);
 
-	void clearAllCookies();
+    void clearAllCookies();
 
-	void reload();
+    void reload();
 
-	void cancel();
+    void cancel();
 
-	void back();
+    void back();
 
-	boolean isBackEnabled();
+    boolean isBackEnabled();
 
-	void forward();
+    void forward();
 
-	boolean isForwardEnabled();
+    boolean isForwardEnabled();
 
-	void addDocumentListener(IBrowserDocumentListener listener);
+    void addDocumentListener(IBrowserDocumentListener listener);
 
-	void removeDocumentListener(IBrowserDocumentListener listener);
+    void removeDocumentListener(IBrowserDocumentListener listener);
 
 }

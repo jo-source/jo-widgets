@@ -44,23 +44,23 @@ import java.util.Locale;
  */
 public interface ILocaleHolder {
 
-	/**
-	 * Gets the current user locale.
-	 * 
-	 * @return The user locale to get, never null
-	 */
-	Locale getUserLocale();
+    /**
+     * Gets the current user locale.
+     * 
+     * @return The user locale to get, never null
+     */
+    Locale getUserLocale();
 
-	/**
-	 * Sets the current user locale.
-	 * 
-	 * @param userLocale The user locale to set, may be null. If set to null, the default locale will be used
-	 */
-	void setUserLocale(Locale userLocale);
+    /**
+     * Sets the current user locale.
+     * 
+     * @param userLocale The user locale to set, may be null. If set to null, the default locale will be used
+     */
+    void setUserLocale(Locale userLocale);
 
-	/**
-	 * Clears the current user locale
-	 */
-	void clearUserLocale();
+    /**
+     * Clears the current user locale
+     */
+    void clearUserLocale();
 
 }

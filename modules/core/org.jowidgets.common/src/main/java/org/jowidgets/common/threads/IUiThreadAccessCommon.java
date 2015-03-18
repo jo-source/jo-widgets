@@ -30,30 +30,30 @@ package org.jowidgets.common.threads;
 
 public interface IUiThreadAccessCommon {
 
-	/**
-	 * Checks if the invoking thread is the ui thread
-	 * 
-	 * @return True if the invoking thread is the ui thread, false otherwise
-	 */
-	boolean isUiThread();
+    /**
+     * Checks if the invoking thread is the ui thread
+     * 
+     * @return True if the invoking thread is the ui thread, false otherwise
+     */
+    boolean isUiThread();
 
-	/**
-	 * Invokes the given runnable later in the ui thread
-	 * 
-	 * @param runnable The runnable to invoke
-	 */
-	void invokeLater(Runnable runnable);
+    /**
+     * Invokes the given runnable later in the ui thread
+     * 
+     * @param runnable The runnable to invoke
+     */
+    void invokeLater(Runnable runnable);
 
-	/**
-	 * Invokes the given runnable in the ui thread and block until
-	 * the operation is finished.
-	 * 
-	 * Remark: Be careful using this method because it can lead to
-	 * heavy to find deadlocks, when invokeAndWait() will be invoked by
-	 * other code invoked directly or indirectly from the given runnable.
-	 * 
-	 * @param runnable The runnable to invoke
-	 */
-	void invokeAndWait(Runnable runnable) throws InterruptedException;
+    /**
+     * Invokes the given runnable in the ui thread and block until
+     * the operation is finished.
+     * 
+     * Remark: Be careful using this method because it can lead to
+     * heavy to find deadlocks, when invokeAndWait() will be invoked by
+     * other code invoked directly or indirectly from the given runnable.
+     * 
+     * @param runnable The runnable to invoke
+     */
+    void invokeAndWait(Runnable runnable) throws InterruptedException;
 
 }

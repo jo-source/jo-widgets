@@ -31,10 +31,10 @@ import org.jowidgets.examples.common.browser.BrowserDemoApplication;
 
 public final class SwtBrowserDemoStarter {
 
-	private SwtBrowserDemoStarter() {}
+    private SwtBrowserDemoStarter() {}
 
-	public static void main(final String[] args) throws Exception {
-		new BrowserDemoApplication("Swt Browser Demo").start();
-	}
+    public static void main(final String[] args) throws Exception {
+        new BrowserDemoApplication("Swt Browser Demo").start();
+    }
 
 }

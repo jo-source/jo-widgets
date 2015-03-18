@@ -33,21 +33,21 @@ import org.jowidgets.util.Assert;
 
 public final class ScrollBarSettingsConvert {
 
-	private ScrollBarSettingsConvert() {};
+    private ScrollBarSettingsConvert() {};
 
-	public static int convert(final IScrollCompositeSetupCommon setup) {
-		Assert.paramNotNull(setup, "setup");
+    public static int convert(final IScrollCompositeSetupCommon setup) {
+        Assert.paramNotNull(setup, "setup");
 
-		int result = SWT.NONE;
+        int result = SWT.NONE;
 
-		if (setup.hasVerticalBar()) {
-			result = result | SWT.V_SCROLL;
-		}
-		if (setup.hasHorizontalBar()) {
-			result = result | SWT.H_SCROLL;
-		}
+        if (setup.hasVerticalBar()) {
+            result = result | SWT.V_SCROLL;
+        }
+        if (setup.hasHorizontalBar()) {
+            result = result | SWT.H_SCROLL;
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

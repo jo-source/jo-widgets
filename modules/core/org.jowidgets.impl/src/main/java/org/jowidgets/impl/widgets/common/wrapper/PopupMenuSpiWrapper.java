@@ -36,45 +36,45 @@ import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public class PopupMenuSpiWrapper extends WidgetSpiWrapper implements IPopupMenuCommon {
 
-	private final ItemModelBindingDelegate itemModelBindingDelegate;
+    private final ItemModelBindingDelegate itemModelBindingDelegate;
 
-	public PopupMenuSpiWrapper(final IPopupMenuSpi component, final ItemModelBindingDelegate itemDelegate) {
-		super(component);
-		this.itemModelBindingDelegate = itemDelegate;
-	}
+    public PopupMenuSpiWrapper(final IPopupMenuSpi component, final ItemModelBindingDelegate itemDelegate) {
+        super(component);
+        this.itemModelBindingDelegate = itemDelegate;
+    }
 
-	@Override
-	public IPopupMenuSpi getWidget() {
-		return (IPopupMenuSpi) super.getWidget();
-	}
+    @Override
+    public IPopupMenuSpi getWidget() {
+        return (IPopupMenuSpi) super.getWidget();
+    }
 
-	protected ItemModelBindingDelegate getItemModelBindingDelegate() {
-		return itemModelBindingDelegate;
-	}
+    protected ItemModelBindingDelegate getItemModelBindingDelegate() {
+        return itemModelBindingDelegate;
+    }
 
-	@Override
-	public void setEnabled(final boolean enabled) {
-		itemModelBindingDelegate.setEnabled(enabled);
-	}
+    @Override
+    public void setEnabled(final boolean enabled) {
+        itemModelBindingDelegate.setEnabled(enabled);
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return itemModelBindingDelegate.isEnabled();
-	}
+    @Override
+    public boolean isEnabled() {
+        return itemModelBindingDelegate.isEnabled();
+    }
 
-	@Override
-	public void show(final Position position) {
-		getWidget().show(position);
-	}
+    @Override
+    public void show(final Position position) {
+        getWidget().show(position);
+    }
 
-	@Override
-	public void addMenuListener(final IMenuListener listener) {
-		getWidget().addMenuListener(listener);
-	}
+    @Override
+    public void addMenuListener(final IMenuListener listener) {
+        getWidget().addMenuListener(listener);
+    }
 
-	@Override
-	public void removeMenuListener(final IMenuListener listener) {
-		getWidget().removeMenuListener(listener);
-	}
+    @Override
+    public void removeMenuListener(final IMenuListener listener) {
+        getWidget().removeMenuListener(listener);
+    }
 
 }

@@ -27,7 +27,6 @@
  */
 package org.jowidgets.common.widgets;
 
-
 public interface ICompositeCommon extends IControlCommon, IContainerCommon {
 
 }

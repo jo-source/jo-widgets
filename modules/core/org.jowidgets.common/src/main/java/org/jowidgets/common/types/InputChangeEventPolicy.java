@@ -30,15 +30,15 @@ package org.jowidgets.common.types;
 
 public enum InputChangeEventPolicy {
 
-	/**
-	 * Input changed events will be thrown on every value change (e.g. for every typed key)
-	 */
-	ANY_CHANGE,
+    /**
+     * Input changed events will be thrown on every value change (e.g. for every typed key)
+     */
+    ANY_CHANGE,
 
-	/**
-	 * Input changed events will only be thrown, when the control loses its focus or on programmatic
-	 * value changes.
-	 */
-	EDIT_FINISHED;
+    /**
+     * Input changed events will only be thrown, when the control loses its focus or on programmatic
+     * value changes.
+     */
+    EDIT_FINISHED;
 
 }

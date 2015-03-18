@@ -30,41 +30,41 @@ package org.jowidgets.common.types;
 
 public enum TablePackPolicy {
 
-	/** Consider only the table header */
-	HEADER(true, false, false),
+    /** Consider only the table header */
+    HEADER(true, false, false),
 
-	/** Consider all data, can be very expensive for virtual tables */
-	DATA_ALL(false, true, true),
+    /** Consider all data, can be very expensive for virtual tables */
+    DATA_ALL(false, true, true),
 
-	/** Consider only the visible data (inside the visible viewport) */
-	DATA_VISIBLE(false, true, false),
+    /** Consider only the visible data (inside the visible viewport) */
+    DATA_VISIBLE(false, true, false),
 
-	/** Consider all data and the header, can be very expensive for virtual tables */
-	HEADER_AND_DATA_ALL(true, true, true),
+    /** Consider all data and the header, can be very expensive for virtual tables */
+    HEADER_AND_DATA_ALL(true, true, true),
 
-	/** Consider the header and the visible data (inside the visible viewport) */
-	HEADER_AND_DATA_VISIBLE(true, true, false);
+    /** Consider the header and the visible data (inside the visible viewport) */
+    HEADER_AND_DATA_VISIBLE(true, true, false);
 
-	private final boolean considerHeader;
-	private final boolean considerData;
-	private final boolean considerAllData;
+    private final boolean considerHeader;
+    private final boolean considerData;
+    private final boolean considerAllData;
 
-	private TablePackPolicy(final boolean considerHeader, final boolean considerData, final boolean considerAllData) {
-		this.considerHeader = considerHeader;
-		this.considerData = considerData;
-		this.considerAllData = considerAllData;
-	}
+    private TablePackPolicy(final boolean considerHeader, final boolean considerData, final boolean considerAllData) {
+        this.considerHeader = considerHeader;
+        this.considerData = considerData;
+        this.considerAllData = considerAllData;
+    }
 
-	public boolean considerData() {
-		return considerData;
-	}
+    public boolean considerData() {
+        return considerData;
+    }
 
-	public boolean considerHeader() {
-		return considerHeader;
-	}
+    public boolean considerHeader() {
+        return considerHeader;
+    }
 
-	public boolean considerAllData() {
-		return considerAllData;
-	}
+    public boolean considerAllData() {
+        return considerAllData;
+    }
 
 }

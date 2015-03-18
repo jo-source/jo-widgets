@@ -32,22 +32,22 @@ import org.jowidgets.api.command.IAction;
 
 public interface IActionItemModelBuilder extends IItemModelBuilder<IActionItemModelBuilder, IActionItemModel> {
 
-	/**
-	 * Sets the action to bind
-	 * 
-	 * @param action The action bind
-	 * 
-	 * @return This builder
-	 */
-	IActionItemModelBuilder setAction(IAction action);
+    /**
+     * Sets the action to bind
+     * 
+     * @param action The action bind
+     * 
+     * @return This builder
+     */
+    IActionItemModelBuilder setAction(IAction action);
 
-	/**
-	 * Sets and visibility aspect
-	 * 
-	 * @param visibilityAspect The aspect to set
-	 * 
-	 * @return This builder
-	 */
-	IActionItemModelBuilder addVisibilityAspect(IActionItemVisibilityAspect visibilityAspect);
+    /**
+     * Sets and visibility aspect
+     * 
+     * @param visibilityAspect The aspect to set
+     * 
+     * @return This builder
+     */
+    IActionItemModelBuilder addVisibilityAspect(IActionItemVisibilityAspect visibilityAspect);
 
 }

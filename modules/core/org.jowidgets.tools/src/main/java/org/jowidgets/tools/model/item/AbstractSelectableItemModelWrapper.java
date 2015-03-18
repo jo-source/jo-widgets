@@ -33,33 +33,33 @@ import org.jowidgets.common.widgets.controller.IItemStateListener;
 
 abstract class AbstractSelectableItemModelWrapper extends AbstractItemModelWrapper implements ISelectableItemModel {
 
-	public AbstractSelectableItemModelWrapper(final ISelectableItemModel itemModel) {
-		super(itemModel);
-	}
+    public AbstractSelectableItemModelWrapper(final ISelectableItemModel itemModel) {
+        super(itemModel);
+    }
 
-	@Override
-	protected ISelectableItemModel getItemModel() {
-		return (ISelectableItemModel) super.getItemModel();
-	}
+    @Override
+    protected ISelectableItemModel getItemModel() {
+        return (ISelectableItemModel) super.getItemModel();
+    }
 
-	@Override
-	public final void addItemListener(final IItemStateListener listener) {
-		getItemModel().addItemListener(listener);
-	}
+    @Override
+    public final void addItemListener(final IItemStateListener listener) {
+        getItemModel().addItemListener(listener);
+    }
 
-	@Override
-	public final void removeItemListener(final IItemStateListener listener) {
-		getItemModel().removeItemListener(listener);
-	}
+    @Override
+    public final void removeItemListener(final IItemStateListener listener) {
+        getItemModel().removeItemListener(listener);
+    }
 
-	@Override
-	public final boolean isSelected() {
-		return getItemModel().isSelected();
-	}
+    @Override
+    public final boolean isSelected() {
+        return getItemModel().isSelected();
+    }
 
-	@Override
-	public final void setSelected(final boolean selected) {
-		getItemModel().setSelected(selected);
-	}
+    @Override
+    public final void setSelected(final boolean selected) {
+        getItemModel().setSelected(selected);
+    }
 
 }

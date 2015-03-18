@@ -30,6 +30,6 @@ package org.jowidgets.util;
 
 public interface IExceptionLogger {
 
-	void log(Throwable exception);
+    void log(Throwable exception);
 
 }

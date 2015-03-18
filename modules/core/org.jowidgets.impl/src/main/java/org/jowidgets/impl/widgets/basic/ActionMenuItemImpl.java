@@ -51,179 +51,179 @@ import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 
 public class ActionMenuItemImpl extends ActionMenuItemSpiWrapper implements IActionMenuItem, IActionWidget {
 
-	private final IMenu parent;
-	private final IItemModelListener modelListener;
-	private final IMenuListener parentMenuListener;
-	private final MenuItemDisposableDelegate disposableDelegate;
+    private final IMenu parent;
+    private final IItemModelListener modelListener;
+    private final IMenuListener parentMenuListener;
+    private final MenuItemDisposableDelegate disposableDelegate;
 
-	private ActionWidgetSync actionWidgetSync;
-	private ActionExecuter actionExecuter;
-	private IAction action;
+    private ActionWidgetSync actionWidgetSync;
+    private ActionExecuter actionExecuter;
+    private IAction action;
 
-	private boolean onItemChange;
+    private boolean onItemChange;
 
-	public ActionMenuItemImpl(
-		final IMenu parent,
-		final IActionMenuItemSpi actionMenuItemSpi,
-		final IAccelerateableMenuItemSetup setup) {
-		super(actionMenuItemSpi, new ItemModelBindingDelegate(
-			new ActionMenuItemSpiInvoker(actionMenuItemSpi),
-			new ActionItemModelBuilder().build()));
+    public ActionMenuItemImpl(
+        final IMenu parent,
+        final IActionMenuItemSpi actionMenuItemSpi,
+        final IAccelerateableMenuItemSetup setup) {
+        super(actionMenuItemSpi, new ItemModelBindingDelegate(
+            new ActionMenuItemSpiInvoker(actionMenuItemSpi),
+            new ActionItemModelBuilder().build()));
 
-		this.parent = parent;
-		this.disposableDelegate = new MenuItemDisposableDelegate(this, getItemModelBindingDelegate());
+        this.parent = parent;
+        this.disposableDelegate = new MenuItemDisposableDelegate(this, getItemModelBindingDelegate());
 
-		setText(setup.getText());
-		setToolTipText(setup.getToolTipText());
-		setIcon(setup.getIcon());
+        setText(setup.getText());
+        setToolTipText(setup.getToolTipText());
+        setIcon(setup.getIcon());
 
-		if (setup.getAccelerator() != null) {
-			setAccelerator(setup.getAccelerator());
-		}
+        if (setup.getAccelerator() != null) {
+            setAccelerator(setup.getAccelerator());
+        }
 
-		if (setup.getMnemonic() != null) {
-			setMnemonic(setup.getMnemonic().charValue());
-		}
+        if (setup.getMnemonic() != null) {
+            setMnemonic(setup.getMnemonic().charValue());
+        }
 
-		this.modelListener = new IItemModelListener() {
-			@Override
-			public void itemChanged(final IItemModel item) {
-				final IAction newAction = getModel().getAction();
-				if (!onItemChange && newAction != action) {
-					onItemChange = true;
-					setActionValue(newAction);
-					onItemChange = false;
-				}
-			}
-		};
+        this.modelListener = new IItemModelListener() {
+            @Override
+            public void itemChanged(final IItemModel item) {
+                final IAction newAction = getModel().getAction();
+                if (!onItemChange && newAction != action) {
+                    onItemChange = true;
+                    setActionValue(newAction);
+                    onItemChange = false;
+                }
+            }
+        };
 
-		getModel().addItemModelListener(modelListener);
+        getModel().addItemModelListener(modelListener);
 
-		this.parentMenuListener = new IMenuListener() {
+        this.parentMenuListener = new IMenuListener() {
 
-			@Override
-			public void menuActivated() {
-				if (actionWidgetSync != null) {
-					actionWidgetSync.setActive(true);
-				}
-			}
+            @Override
+            public void menuActivated() {
+                if (actionWidgetSync != null) {
+                    actionWidgetSync.setActive(true);
+                }
+            }
 
-			@Override
-			public void menuDeactivated() {
-				if (actionWidgetSync != null) {
-					actionWidgetSync.setActive(false);
-				}
-			}
+            @Override
+            public void menuDeactivated() {
+                if (actionWidgetSync != null) {
+                    actionWidgetSync.setActive(false);
+                }
+            }
 
-		};
+        };
 
-		parent.addMenuListener(parentMenuListener);
+        parent.addMenuListener(parentMenuListener);
 
-		addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				if (actionExecuter != null) {
-					actionExecuter.execute();
-				}
-			}
-		});
+        addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                if (actionExecuter != null) {
+                    actionExecuter.execute();
+                }
+            }
+        });
 
-	}
+    }
 
-	@Override
-	public IMenu getParent() {
-		return parent;
-	}
+    @Override
+    public IMenu getParent() {
+        return parent;
+    }
 
-	@Override
-	public void setAction(final IAction action) {
-		setActionValue(action);
-		getModel().removeItemModelListener(modelListener);
-		getModel().setAction(action);
-		getModel().addItemModelListener(modelListener);
-	}
+    @Override
+    public void setAction(final IAction action) {
+        setActionValue(action);
+        getModel().removeItemModelListener(modelListener);
+        getModel().setAction(action);
+        getModel().addItemModelListener(modelListener);
+    }
 
-	private void setActionValue(final IAction action) {
-		if (this.action != action) {
+    private void setActionValue(final IAction action) {
+        if (this.action != action) {
 
-			if (action != null) {
+            if (action != null) {
 
-				if (action.getAccelerator() != null) {
-					setAccelerator(action.getAccelerator());
-				}
+                if (action.getAccelerator() != null) {
+                    setAccelerator(action.getAccelerator());
+                }
 
-				if (action.getMnemonic() != null) {
-					setMnemonic(action.getMnemonic().charValue());
-				}
-			}
+                if (action.getMnemonic() != null) {
+                    setMnemonic(action.getMnemonic().charValue());
+                }
+            }
 
-			//dispose the old sync if exists
-			disposeActionWidgetSync();
+            //dispose the old sync if exists
+            disposeActionWidgetSync();
 
-			if (action != null) {
-				actionWidgetSync = new ActionWidgetSync(action, this);
-				actionExecuter = new ActionExecuter(action, this);
-			}
+            if (action != null) {
+                actionWidgetSync = new ActionWidgetSync(action, this);
+                actionExecuter = new ActionExecuter(action, this);
+            }
 
-			this.action = action;
-		}
-	}
+            this.action = action;
+        }
+    }
 
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		disposableDelegate.addDisposeListener(listener);
-	}
+    @Override
+    public void addDisposeListener(final IDisposeListener listener) {
+        disposableDelegate.addDisposeListener(listener);
+    }
 
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		disposableDelegate.removeDisposeListener(listener);
-	}
+    @Override
+    public void removeDisposeListener(final IDisposeListener listener) {
+        disposableDelegate.removeDisposeListener(listener);
+    }
 
-	@Override
-	public boolean isDisposed() {
-		return disposableDelegate.isDisposed();
-	}
+    @Override
+    public boolean isDisposed() {
+        return disposableDelegate.isDisposed();
+    }
 
-	@Override
-	public void dispose() {
-		if (!isDisposed()) {
-			parent.removeMenuListener(parentMenuListener);
-			getModel().removeItemModelListener(modelListener);
-			disposeActionWidgetSync();
-			disposableDelegate.dispose();
-		}
-	}
+    @Override
+    public void dispose() {
+        if (!isDisposed()) {
+            parent.removeMenuListener(parentMenuListener);
+            getModel().removeItemModelListener(modelListener);
+            disposeActionWidgetSync();
+            disposableDelegate.dispose();
+        }
+    }
 
-	private void disposeActionWidgetSync() {
-		if (actionWidgetSync != null) {
-			actionWidgetSync.dispose();
-			actionWidgetSync = null;
-		}
-	}
+    private void disposeActionWidgetSync() {
+        if (actionWidgetSync != null) {
+            actionWidgetSync.dispose();
+            actionWidgetSync = null;
+        }
+    }
 
-	@Override
-	public void setModel(final IActionItemModel model) {
-		if (getModel() != null) {
-			getModel().removeItemModelListener(modelListener);
-		}
-		getItemModelBindingDelegate().setModel(model);
-		setActionValue(model.getAction());
-		model.addItemModelListener(modelListener);
-	}
+    @Override
+    public void setModel(final IActionItemModel model) {
+        if (getModel() != null) {
+            getModel().removeItemModelListener(modelListener);
+        }
+        getItemModelBindingDelegate().setModel(model);
+        setActionValue(model.getAction());
+        model.addItemModelListener(modelListener);
+    }
 
-	@Override
-	public void setModel(final IMenuItemModel model) {
-		if (model instanceof IActionItemModel) {
-			setModel((IActionItemModel) model);
-		}
-		else {
-			throw new IllegalArgumentException("Model type '" + IActionItemModel.class.getName() + "' expected");
-		}
-	}
+    @Override
+    public void setModel(final IMenuItemModel model) {
+        if (model instanceof IActionItemModel) {
+            setModel((IActionItemModel) model);
+        }
+        else {
+            throw new IllegalArgumentException("Model type '" + IActionItemModel.class.getName() + "' expected");
+        }
+    }
 
-	@Override
-	public String toString() {
-		return "ActionMenuItemImpl [action=" + action + ", getText()=" + getText() + "]";
-	}
+    @Override
+    public String toString() {
+        return "ActionMenuItemImpl [action=" + action + ", getText()=" + getText() + "]";
+    }
 
 }

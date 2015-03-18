@@ -30,15 +30,15 @@ package org.jowidgets.api.toolkit;
 
 public interface IToolkitInterceptor {
 
-	/**
-	 * This interceptor method could be used e.g to register widgets, icons, defaults or something else to
-	 * each created toolkit-
-	 * 
-	 * Remark: Will be invoked after a Toolkit was created, but before the Toolkit class was set up. So
-	 * invocation of Toolkit.getInstance() inside the onToolkitCreate() method will lead to an infinity loop.
-	 * 
-	 * @param toolkit The created toolkit
-	 */
-	void onToolkitCreate(IToolkit toolkit);
+    /**
+     * This interceptor method could be used e.g to register widgets, icons, defaults or something else to
+     * each created toolkit-
+     * 
+     * Remark: Will be invoked after a Toolkit was created, but before the Toolkit class was set up. So
+     * invocation of Toolkit.getInstance() inside the onToolkitCreate() method will lead to an infinity loop.
+     * 
+     * @param toolkit The created toolkit
+     */
+    void onToolkitCreate(IToolkit toolkit);
 
 }

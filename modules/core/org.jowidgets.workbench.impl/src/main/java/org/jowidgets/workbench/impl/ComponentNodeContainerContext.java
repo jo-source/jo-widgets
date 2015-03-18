@@ -39,64 +39,64 @@ import org.jowidgets.workbench.api.IComponentNodeContainerContext;
 
 public class ComponentNodeContainerContext implements IComponentNodeContainerContext {
 
-	private final ITreeContainer treeContainer;
-	private final WorkbenchContext workbenchContext;
-	private final WorkbenchApplicationContext applicationContext;
+    private final ITreeContainer treeContainer;
+    private final WorkbenchContext workbenchContext;
+    private final WorkbenchApplicationContext applicationContext;
 
-	private final Map<IComponentNode, ITreeNode> createdNodes;
+    private final Map<IComponentNode, ITreeNode> createdNodes;
 
-	public ComponentNodeContainerContext(
-		final ITreeContainer treeContainer,
-		final WorkbenchApplicationContext applicationContext,
-		final WorkbenchContext workbenchContext) {
+    public ComponentNodeContainerContext(
+        final ITreeContainer treeContainer,
+        final WorkbenchApplicationContext applicationContext,
+        final WorkbenchContext workbenchContext) {
 
-		this.treeContainer = treeContainer;
-		this.workbenchContext = workbenchContext;
-		this.applicationContext = applicationContext;
-		this.createdNodes = new HashMap<IComponentNode, ITreeNode>();
-	}
+        this.treeContainer = treeContainer;
+        this.workbenchContext = workbenchContext;
+        this.applicationContext = applicationContext;
+        this.createdNodes = new HashMap<IComponentNode, ITreeNode>();
+    }
 
-	@Override
-	public void add(final IComponentNode componentNode) {
-		add(treeContainer.getChildren().size(), componentNode);
-	}
+    @Override
+    public void add(final IComponentNode componentNode) {
+        add(treeContainer.getChildren().size(), componentNode);
+    }
 
-	@Override
-	public void add(final int index, final IComponentNode componentNode) {
-		Assert.paramNotNull(componentNode, "componentNode");
-		final ITreeNode node = treeContainer.addNode(index);
-		createdNodes.put(componentNode, node);
-		final ComponentNodeContext nodeContext = new ComponentNodeContext(
-			componentNode,
-			node,
-			(this instanceof ComponentNodeContext) ? (ComponentNodeContext) this : null,
-			applicationContext,
-			workbenchContext);
-		applicationContext.registerNodeContext(nodeContext);
-		componentNode.onContextInitialize(nodeContext);
-	}
+    @Override
+    public void add(final int index, final IComponentNode componentNode) {
+        Assert.paramNotNull(componentNode, "componentNode");
+        final ITreeNode node = treeContainer.addNode(index);
+        createdNodes.put(componentNode, node);
+        final ComponentNodeContext nodeContext = new ComponentNodeContext(
+            componentNode,
+            node,
+            (this instanceof ComponentNodeContext) ? (ComponentNodeContext) this : null,
+            applicationContext,
+            workbenchContext);
+        applicationContext.registerNodeContext(nodeContext);
+        componentNode.onContextInitialize(nodeContext);
+    }
 
-	@Override
-	public void remove(final IComponentNode componentNode) {
-		Assert.paramNotNull(componentNode, "componentNode");
-		final ITreeNode node = createdNodes.remove(componentNode);
-		if (node != null) {
-			final boolean selected = node.isSelected();
-			treeContainer.removeNode(node);
-			applicationContext.unRegisterNodeContext(node);
-			if (selected) {
-				workbenchContext.selectComponentNode(null);
-			}
-		}
-	}
+    @Override
+    public void remove(final IComponentNode componentNode) {
+        Assert.paramNotNull(componentNode, "componentNode");
+        final ITreeNode node = createdNodes.remove(componentNode);
+        if (node != null) {
+            final boolean selected = node.isSelected();
+            treeContainer.removeNode(node);
+            applicationContext.unRegisterNodeContext(node);
+            if (selected) {
+                workbenchContext.selectComponentNode(null);
+            }
+        }
+    }
 
-	@Override
-	public WorkbenchContext getWorkbenchContext() {
-		return applicationContext.getWorkbenchContext();
-	}
+    @Override
+    public WorkbenchContext getWorkbenchContext() {
+        return applicationContext.getWorkbenchContext();
+    }
 
-	public WorkbenchApplicationContext getWorkbenchApplicationContext() {
-		return applicationContext;
-	}
+    public WorkbenchApplicationContext getWorkbenchApplicationContext() {
+        return applicationContext;
+    }
 
 }

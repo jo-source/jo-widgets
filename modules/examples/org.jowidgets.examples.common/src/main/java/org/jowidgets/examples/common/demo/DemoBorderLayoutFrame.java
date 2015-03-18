@@ -42,54 +42,54 @@ import org.jowidgets.tools.powo.JoFrame;
 
 public class DemoBorderLayoutFrame extends JoFrame {
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+    private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
-	public DemoBorderLayoutFrame() {
-		super("Border layout demo");
+    public DemoBorderLayoutFrame() {
+        super("Border layout demo");
 
-		final ILayouter layouter = setLayout(BorderLayout.get());
+        final ILayouter layouter = setLayout(BorderLayout.get());
 
-		final IToolBar toolBar = add(BPF.toolBar(), BorderLayoutConstraints.TOP);
-		final IToolBarModel toolBarModel = toolBar.getModel();
-		toolBarModel.addActionItem(SilkIcons.CUT, "Cut");
-		toolBarModel.addActionItem(SilkIcons.PAGE_COPY, "Copy");
-		toolBarModel.addActionItem(SilkIcons.PAGE_PASTE, "Paste");
+        final IToolBar toolBar = add(BPF.toolBar(), BorderLayoutConstraints.TOP);
+        final IToolBarModel toolBarModel = toolBar.getModel();
+        toolBarModel.addActionItem(SilkIcons.CUT, "Cut");
+        toolBarModel.addActionItem(SilkIcons.PAGE_COPY, "Copy");
+        toolBarModel.addActionItem(SilkIcons.PAGE_PASTE, "Paste");
 
-		final IToolBarModel toolBarModelLeft = add(BPF.toolBar().setVertical(), BorderLayoutConstraints.LEFT).getModel();
-		toolBarModelLeft.addActionItem("A");
-		toolBarModelLeft.addActionItem("B");
-		toolBarModelLeft.addActionItem("C");
-		toolBarModelLeft.addActionItem("D");
-		toolBarModelLeft.addActionItem("E");
-		toolBarModelLeft.addActionItem("F");
-		toolBarModelLeft.addActionItem("G");
-		toolBarModelLeft.addActionItem("H");
-		toolBarModelLeft.addActionItem("I");
+        final IToolBarModel toolBarModelLeft = add(BPF.toolBar().setVertical(), BorderLayoutConstraints.LEFT).getModel();
+        toolBarModelLeft.addActionItem("A");
+        toolBarModelLeft.addActionItem("B");
+        toolBarModelLeft.addActionItem("C");
+        toolBarModelLeft.addActionItem("D");
+        toolBarModelLeft.addActionItem("E");
+        toolBarModelLeft.addActionItem("F");
+        toolBarModelLeft.addActionItem("G");
+        toolBarModelLeft.addActionItem("H");
+        toolBarModelLeft.addActionItem("I");
 
-		final ITextArea textArea = add(BPF.textArea(), BorderLayoutConstraints.CENTER);
-		final StringBuilder stringBuilder = new StringBuilder();
-		for (int i = 0; i < 50; i++) {
-			stringBuilder.append("Text area in a border layout. ");
-		}
-		textArea.setText(stringBuilder.toString());
+        final ITextArea textArea = add(BPF.textArea(), BorderLayoutConstraints.CENTER);
+        final StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < 50; i++) {
+            stringBuilder.append("Text area in a border layout. ");
+        }
+        textArea.setText(stringBuilder.toString());
 
-		final IToolBarModel toolBarModelRight = add(BPF.toolBar().setVertical(), BorderLayoutConstraints.RIGHT).getModel();
-		toolBarModelRight.addActionItem("0");
-		toolBarModelRight.addActionItem("1");
-		toolBarModelRight.addActionItem("2");
-		toolBarModelRight.addActionItem("3");
-		toolBarModelRight.addActionItem("4");
-		toolBarModelRight.addActionItem("5");
-		toolBarModelRight.addActionItem("6");
-		toolBarModelRight.addActionItem("7");
-		toolBarModelRight.addActionItem("8");
-		toolBarModelRight.addActionItem("9");
+        final IToolBarModel toolBarModelRight = add(BPF.toolBar().setVertical(), BorderLayoutConstraints.RIGHT).getModel();
+        toolBarModelRight.addActionItem("0");
+        toolBarModelRight.addActionItem("1");
+        toolBarModelRight.addActionItem("2");
+        toolBarModelRight.addActionItem("3");
+        toolBarModelRight.addActionItem("4");
+        toolBarModelRight.addActionItem("5");
+        toolBarModelRight.addActionItem("6");
+        toolBarModelRight.addActionItem("7");
+        toolBarModelRight.addActionItem("8");
+        toolBarModelRight.addActionItem("9");
 
-		final ITextControl textField = add(BPF.textField(), BorderLayoutConstraints.BOTTOM);
-		textField.setText("Bottom");
+        final ITextControl textField = add(BPF.textField(), BorderLayoutConstraints.BOTTOM);
+        textField.setText("Bottom");
 
-		setSize(500, 400);
-		setMinSize(layouter.getMinSize());
+        setSize(500, 400);
+        setMinSize(layouter.getMinSize());
 
-	}
+    }
 }

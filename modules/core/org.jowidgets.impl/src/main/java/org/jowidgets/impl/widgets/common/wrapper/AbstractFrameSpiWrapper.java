@@ -42,99 +42,99 @@ import org.jowidgets.util.Assert;
 
 public abstract class AbstractFrameSpiWrapper extends AbstractWindowSpiWrapper implements IFrameCommon {
 
-	private ILayouter layouter;
+    private ILayouter layouter;
 
-	public AbstractFrameSpiWrapper(final IFrameSpi widget) {
-		super(widget);
-	}
+    public AbstractFrameSpiWrapper(final IFrameSpi widget) {
+        super(widget);
+    }
 
-	@Override
-	public IFrameSpi getWidget() {
-		return (IFrameSpi) super.getWidget();
-	}
+    @Override
+    public IFrameSpi getWidget() {
+        return (IFrameSpi) super.getWidget();
+    }
 
-	@Override
-	public void setLayout(final ILayoutDescriptor layoutDescriptor) {
-		Assert.paramNotNull(layoutDescriptor, "layoutDescriptor");
-		if (!Toolkit.hasSpiMigLayoutSupport() && layoutDescriptor instanceof MigLayoutDescriptor && this instanceof IContainer) {
-			final IMigLayoutFactoryBuilder migLayoutBuilder = Toolkit.getLayoutFactoryProvider().migLayoutBuilder();
-			migLayoutBuilder.descriptor((MigLayoutDescriptor) layoutDescriptor);
-			setLayoutImpl(migLayoutBuilder.build().create((IContainer) this));
-		}
-		else {
-			setLayoutImpl(layoutDescriptor);
-		}
-	}
+    @Override
+    public void setLayout(final ILayoutDescriptor layoutDescriptor) {
+        Assert.paramNotNull(layoutDescriptor, "layoutDescriptor");
+        if (!Toolkit.hasSpiMigLayoutSupport() && layoutDescriptor instanceof MigLayoutDescriptor && this instanceof IContainer) {
+            final IMigLayoutFactoryBuilder migLayoutBuilder = Toolkit.getLayoutFactoryProvider().migLayoutBuilder();
+            migLayoutBuilder.descriptor((MigLayoutDescriptor) layoutDescriptor);
+            setLayoutImpl(migLayoutBuilder.build().create((IContainer) this));
+        }
+        else {
+            setLayoutImpl(layoutDescriptor);
+        }
+    }
 
-	private void setLayoutImpl(final ILayoutDescriptor layoutDescriptor) {
-		Assert.paramNotNull(layoutDescriptor, "layoutDescriptor");
-		if (layoutDescriptor instanceof ILayouter) {
-			this.layouter = (ILayouter) layoutDescriptor;
-		}
-		else {
-			this.layouter = null;
-		}
-		getWidget().setLayout(layoutDescriptor);
-	}
+    private void setLayoutImpl(final ILayoutDescriptor layoutDescriptor) {
+        Assert.paramNotNull(layoutDescriptor, "layoutDescriptor");
+        if (layoutDescriptor instanceof ILayouter) {
+            this.layouter = (ILayouter) layoutDescriptor;
+        }
+        else {
+            this.layouter = null;
+        }
+        getWidget().setLayout(layoutDescriptor);
+    }
 
-	@Override
-	public void pack() {
-		if (layouter != null) {
-			setSize(layouter.getPreferredSize());
-		}
-		else {
-			super.pack();
-		}
-	}
+    @Override
+    public void pack() {
+        if (layouter != null) {
+            setSize(layouter.getPreferredSize());
+        }
+        else {
+            super.pack();
+        }
+    }
 
-	public void layout() {
-		layoutBegin();
-		layoutEnd();
-	}
+    public void layout() {
+        layoutBegin();
+        layoutEnd();
+    }
 
-	@Override
-	public void layoutBegin() {
-		getWidget().layoutBegin();
-	}
+    @Override
+    public void layoutBegin() {
+        getWidget().layoutBegin();
+    }
 
-	@Override
-	public void layoutEnd() {
-		getWidget().layoutEnd();
-	}
+    @Override
+    public void layoutEnd() {
+        getWidget().layoutEnd();
+    }
 
-	@Override
-	public Rectangle getClientArea() {
-		return getWidget().getClientArea();
-	}
+    @Override
+    public Rectangle getClientArea() {
+        return getWidget().getClientArea();
+    }
 
-	@Override
-	public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
-		return getWidget().computeDecoratedSize(clientAreaSize);
-	}
+    @Override
+    public Dimension computeDecoratedSize(final Dimension clientAreaSize) {
+        return getWidget().computeDecoratedSize(clientAreaSize);
+    }
 
-	@Override
-	public void setTitle(final String title) {
-		getWidget().setTitle(title);
-	}
+    @Override
+    public void setTitle(final String title) {
+        getWidget().setTitle(title);
+    }
 
-	@Override
-	public void setMaximized(final boolean maximized) {
-		getWidget().setMaximized(maximized);
-	}
+    @Override
+    public void setMaximized(final boolean maximized) {
+        getWidget().setMaximized(maximized);
+    }
 
-	@Override
-	public boolean isMaximized() {
-		return getWidget().isMaximized();
-	}
+    @Override
+    public boolean isMaximized() {
+        return getWidget().isMaximized();
+    }
 
-	@Override
-	public void setIconfied(final boolean iconfied) {
-		getWidget().setIconfied(iconfied);
-	}
+    @Override
+    public void setIconfied(final boolean iconfied) {
+        getWidget().setIconfied(iconfied);
+    }
 
-	@Override
-	public boolean isIconfied() {
-		return getWidget().isIconfied();
-	}
+    @Override
+    public boolean isIconfied() {
+        return getWidget().isIconfied();
+    }
 
 }

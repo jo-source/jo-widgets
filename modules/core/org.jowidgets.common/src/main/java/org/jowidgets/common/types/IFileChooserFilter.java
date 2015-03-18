@@ -32,8 +32,8 @@ import java.util.List;
 
 public interface IFileChooserFilter {
 
-	String getFilterName();
+    String getFilterName();
 
-	List<String> getExtensions();
+    List<String> getExtensions();
 
 }

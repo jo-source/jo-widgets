@@ -34,12 +34,12 @@ import org.jowidgets.validation.Validator;
 
 public class InputWidgetDefaults implements IDefaultInitializer<IInputComponentSetupBuilder<?, ?>> {
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
-	@Override
-	public void initialize(final IInputComponentSetupBuilder<?, ?> builder) {
-		final IValidator okValidator = Validator.okValidator();
-		builder.setValidator(okValidator);
-		builder.setEditable(true);
-	}
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @Override
+    public void initialize(final IInputComponentSetupBuilder<?, ?> builder) {
+        final IValidator okValidator = Validator.okValidator();
+        builder.setValidator(okValidator);
+        builder.setEditable(true);
+    }
 
 }

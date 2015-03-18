@@ -41,166 +41,166 @@ import org.jowidgets.workbench.toolkit.api.IWorkbenchPartModelListener;
 
 class WorkbenchApplication extends ComponentNodeContainer implements IWorkbenchApplication {
 
-	private final IWorkbenchApplicationModel model;
+    private final IWorkbenchApplicationModel model;
 
-	private IToolBarModel toolBar;
-	private IMenuModel popupMenu;
-	private IMenuModel toolBarMenu;
+    private IToolBarModel toolBar;
+    private IMenuModel popupMenu;
+    private IMenuModel toolBarMenu;
 
-	private IWorkbenchApplicationContext context;
-	private IWorkbenchPartModelListener workbenchPartModelListener;
+    private IWorkbenchApplicationContext context;
+    private IWorkbenchPartModelListener workbenchPartModelListener;
 
-	WorkbenchApplication(final IWorkbenchApplicationModel model) {
-		super(model);
-		this.model = model;
-	}
+    WorkbenchApplication(final IWorkbenchApplicationModel model) {
+        super(model);
+        this.model = model;
+    }
 
-	@Override
-	public void onContextInitialize(final IWorkbenchApplicationContext context) {
-		super.initialize(context);
+    @Override
+    public void onContextInitialize(final IWorkbenchApplicationContext context) {
+        super.initialize(context);
 
-		this.context = context;
+        this.context = context;
 
-		this.workbenchPartModelListener = new IWorkbenchPartModelListener() {
-			@Override
-			public void modelChanged() {
-				onModelChanged(context);
-			}
-		};
+        this.workbenchPartModelListener = new IWorkbenchPartModelListener() {
+            @Override
+            public void modelChanged() {
+                onModelChanged(context);
+            }
+        };
 
-		model.addWorkbenchPartModelListener(workbenchPartModelListener);
+        model.addWorkbenchPartModelListener(workbenchPartModelListener);
 
-		onModelChanged(context);
+        onModelChanged(context);
 
-		if (model.getInitializeCallback() != null) {
-			model.getInitializeCallback().onContextInitialize(new ModelBasedWorkbenchApplicationContext(context, model));
-		}
-	}
+        if (model.getInitializeCallback() != null) {
+            model.getInitializeCallback().onContextInitialize(new ModelBasedWorkbenchApplicationContext(context, model));
+        }
+    }
 
-	@Override
-	public IView createView(final String viewId, final IViewContext viewContext) {
-		if (model.getViewFactory() != null) {
-			return model.getViewFactory().createView(viewId, viewContext);
-		}
-		return null;
-	}
+    @Override
+    public IView createView(final String viewId, final IViewContext viewContext) {
+        if (model.getViewFactory() != null) {
+            return model.getViewFactory().createView(viewId, viewContext);
+        }
+        return null;
+    }
 
-	@Override
-	public String getId() {
-		return model.getId();
-	}
+    @Override
+    public String getId() {
+        return model.getId();
+    }
 
-	@Override
-	public String getLabel() {
-		return model.getLabel();
-	}
+    @Override
+    public String getLabel() {
+        return model.getLabel();
+    }
 
-	@Override
-	public String getTooltip() {
-		return model.getTooltip();
-	}
+    @Override
+    public String getTooltip() {
+        return model.getTooltip();
+    }
 
-	@Override
-	public IImageConstant getIcon() {
-		return model.getIcon();
-	}
+    @Override
+    public IImageConstant getIcon() {
+        return model.getIcon();
+    }
 
-	@Override
-	public void onActiveStateChanged(final boolean active) {
-		if (model.getLifecycleCallback() != null) {
-			model.getLifecycleCallback().onActiveStateChanged(active);
-		}
-	}
+    @Override
+    public void onActiveStateChanged(final boolean active) {
+        if (model.getLifecycleCallback() != null) {
+            model.getLifecycleCallback().onActiveStateChanged(active);
+        }
+    }
 
-	@Override
-	public void onVisibleStateChanged(final boolean visible) {
-		if (model.getLifecycleCallback() != null) {
-			model.getLifecycleCallback().onVisibleStateChanged(visible);
-		}
-	}
+    @Override
+    public void onVisibleStateChanged(final boolean visible) {
+        if (model.getLifecycleCallback() != null) {
+            model.getLifecycleCallback().onVisibleStateChanged(visible);
+        }
+    }
 
-	@Override
-	public void onClose(final IVetoable vetoable) {
-		if (model.getLifecycleCallback() != null) {
-			model.getLifecycleCallback().onClose(vetoable);
-		}
-	}
+    @Override
+    public void onClose(final IVetoable vetoable) {
+        if (model.getLifecycleCallback() != null) {
+            model.getLifecycleCallback().onClose(vetoable);
+        }
+    }
 
-	@Override
-	public void onDispose() {
-		if (model.getLifecycleCallback() != null) {
-			model.getLifecycleCallback().onDispose();
-		}
-	}
+    @Override
+    public void onDispose() {
+        if (model.getLifecycleCallback() != null) {
+            model.getLifecycleCallback().onDispose();
+        }
+    }
 
-	private void onModelChanged(final IWorkbenchApplicationContext context) {
-		if (toolBar != model.getToolBar()) {
-			onToolBarChanged(context);
-		}
-		if (popupMenu != model.getPopupMenu()) {
-			onPopupMenuChanged(context);
-		}
-		if (toolBarMenu != model.getToolBarMenu()) {
-			onToolBarMenuChanged(context);
-		}
-	}
+    private void onModelChanged(final IWorkbenchApplicationContext context) {
+        if (toolBar != model.getToolBar()) {
+            onToolBarChanged(context);
+        }
+        if (popupMenu != model.getPopupMenu()) {
+            onPopupMenuChanged(context);
+        }
+        if (toolBarMenu != model.getToolBarMenu()) {
+            onToolBarMenuChanged(context);
+        }
+    }
 
-	private void onToolBarChanged(final IWorkbenchApplicationContext context) {
-		if (toolBar != null) {
-			toolBar.unbind(context.getToolBar());
-		}
-		if (model.getToolBar() != null) {
-			model.getToolBar().bind(context.getToolBar());
-		}
-		else {
-			context.getToolBar().removeAllItems();
-		}
-		toolBar = model.getToolBar();
-	}
+    private void onToolBarChanged(final IWorkbenchApplicationContext context) {
+        if (toolBar != null) {
+            toolBar.unbind(context.getToolBar());
+        }
+        if (model.getToolBar() != null) {
+            model.getToolBar().bind(context.getToolBar());
+        }
+        else {
+            context.getToolBar().removeAllItems();
+        }
+        toolBar = model.getToolBar();
+    }
 
-	private void onPopupMenuChanged(final IWorkbenchApplicationContext context) {
-		if (popupMenu != null) {
-			popupMenu.unbind(context.getPopupMenu());
-		}
-		if (model.getPopupMenu() != null) {
-			model.getPopupMenu().bind(context.getPopupMenu());
-		}
-		else {
-			context.getPopupMenu().removeAllItems();
-		}
-		popupMenu = model.getPopupMenu();
-	}
+    private void onPopupMenuChanged(final IWorkbenchApplicationContext context) {
+        if (popupMenu != null) {
+            popupMenu.unbind(context.getPopupMenu());
+        }
+        if (model.getPopupMenu() != null) {
+            model.getPopupMenu().bind(context.getPopupMenu());
+        }
+        else {
+            context.getPopupMenu().removeAllItems();
+        }
+        popupMenu = model.getPopupMenu();
+    }
 
-	private void onToolBarMenuChanged(final IWorkbenchApplicationContext context) {
-		if (toolBarMenu != null) {
-			toolBarMenu.unbind(context.getToolBarMenu());
-		}
-		if (model.getToolBarMenu() != null) {
-			model.getToolBarMenu().bind(context.getToolBarMenu());
-		}
-		else {
-			context.getToolBarMenu().removeAllItems();
-		}
-		toolBarMenu = model.getToolBarMenu();
-	}
+    private void onToolBarMenuChanged(final IWorkbenchApplicationContext context) {
+        if (toolBarMenu != null) {
+            toolBarMenu.unbind(context.getToolBarMenu());
+        }
+        if (model.getToolBarMenu() != null) {
+            model.getToolBarMenu().bind(context.getToolBarMenu());
+        }
+        else {
+            context.getToolBarMenu().removeAllItems();
+        }
+        toolBarMenu = model.getToolBarMenu();
+    }
 
-	@Override
-	void dispose() {
-		super.dispose();
-		if (context != null) {
-			if (toolBar != null) {
-				toolBar.unbind(context.getToolBar());
-			}
-			if (popupMenu != null) {
-				popupMenu.unbind(context.getPopupMenu());
-			}
-			if (toolBarMenu != null) {
-				toolBarMenu.unbind(context.getToolBarMenu());
-			}
-			if (workbenchPartModelListener != null) {
-				model.removeWorkbenchPartModelListener(workbenchPartModelListener);
-			}
-		}
-	}
+    @Override
+    void dispose() {
+        super.dispose();
+        if (context != null) {
+            if (toolBar != null) {
+                toolBar.unbind(context.getToolBar());
+            }
+            if (popupMenu != null) {
+                popupMenu.unbind(context.getPopupMenu());
+            }
+            if (toolBarMenu != null) {
+                toolBarMenu.unbind(context.getToolBarMenu());
+            }
+            if (workbenchPartModelListener != null) {
+                model.removeWorkbenchPartModelListener(workbenchPartModelListener);
+            }
+        }
+    }
 
 }

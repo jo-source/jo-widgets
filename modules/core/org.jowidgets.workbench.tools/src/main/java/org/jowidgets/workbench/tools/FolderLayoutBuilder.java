@@ -39,134 +39,134 @@ import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 
 public class FolderLayoutBuilder implements IFolderLayoutBuilder {
 
-	private final IFolderLayoutBuilder builder;
+    private final IFolderLayoutBuilder builder;
 
-	public FolderLayoutBuilder() {
-		this(builder());
-	}
+    public FolderLayoutBuilder() {
+        this(builder());
+    }
 
-	public FolderLayoutBuilder(final String id) {
-		this(builder(id));
-	}
+    public FolderLayoutBuilder(final String id) {
+        this(builder(id));
+    }
 
-	public FolderLayoutBuilder(final IFolderLayoutBuilder builder) {
-		super();
-		this.builder = builder;
-	}
+    public FolderLayoutBuilder(final IFolderLayoutBuilder builder) {
+        super();
+        this.builder = builder;
+    }
 
-	@Override
-	public final IFolderLayoutBuilder setId(final String id) {
-		builder.setId(id);
-		return this;
-	}
+    @Override
+    public final IFolderLayoutBuilder setId(final String id) {
+        builder.setId(id);
+        return this;
+    }
 
-	@Override
-	public final IFolderLayoutBuilder setLabel(final String label) {
-		builder.setLabel(label);
-		return this;
-	}
+    @Override
+    public final IFolderLayoutBuilder setLabel(final String label) {
+        builder.setLabel(label);
+        return this;
+    }
 
-	@Override
-	public final IFolderLayoutBuilder setTooltip(final String toolTiptext) {
-		builder.setTooltip(toolTiptext);
-		return this;
-	}
+    @Override
+    public final IFolderLayoutBuilder setTooltip(final String toolTiptext) {
+        builder.setTooltip(toolTiptext);
+        return this;
+    }
 
-	@Override
-	public final IFolderLayoutBuilder setIcon(final IImageConstant icon) {
-		builder.setIcon(icon);
-		return this;
-	}
+    @Override
+    public final IFolderLayoutBuilder setIcon(final IImageConstant icon) {
+        builder.setIcon(icon);
+        return this;
+    }
 
-	@Override
-	public final IFolderLayoutBuilder setGroupId(final String groupId) {
-		builder.setGroupId(groupId);
-		return this;
-	}
+    @Override
+    public final IFolderLayoutBuilder setGroupId(final String groupId) {
+        builder.setGroupId(groupId);
+        return this;
+    }
 
-	@Override
-	public final IFolderLayoutBuilder setDetachable(final boolean detachable) {
-		builder.setDetachable(detachable);
-		return this;
-	}
+    @Override
+    public final IFolderLayoutBuilder setDetachable(final boolean detachable) {
+        builder.setDetachable(detachable);
+        return this;
+    }
 
-	@Override
-	public final IFolderLayoutBuilder setViewsCloseable(final boolean viewsCloseable) {
-		builder.setViewsCloseable(viewsCloseable);
-		return this;
-	}
+    @Override
+    public final IFolderLayoutBuilder setViewsCloseable(final boolean viewsCloseable) {
+        builder.setViewsCloseable(viewsCloseable);
+        return this;
+    }
 
-	@Override
-	public final IFolderLayoutBuilder setViews(final List<? extends IViewLayout> views) {
-		builder.setViews(views);
-		return this;
-	}
+    @Override
+    public final IFolderLayoutBuilder setViews(final List<? extends IViewLayout> views) {
+        builder.setViews(views);
+        return this;
+    }
 
-	@Override
-	public final IFolderLayoutBuilder setViews(final IViewLayout... views) {
-		builder.setViews(views);
-		return this;
-	}
+    @Override
+    public final IFolderLayoutBuilder setViews(final IViewLayout... views) {
+        builder.setViews(views);
+        return this;
+    }
 
-	@Override
-	public final IFolderLayoutBuilder addView(final IViewLayout view) {
-		builder.addView(view);
-		return this;
-	}
+    @Override
+    public final IFolderLayoutBuilder addView(final IViewLayout view) {
+        builder.addView(view);
+        return this;
+    }
 
-	@Override
-	public final IFolderLayoutBuilder setViews(final IViewLayoutBuilder... viewsBuilder) {
-		builder.setViews(viewsBuilder);
-		return this;
-	}
+    @Override
+    public final IFolderLayoutBuilder setViews(final IViewLayoutBuilder... viewsBuilder) {
+        builder.setViews(viewsBuilder);
+        return this;
+    }
 
-	@Override
-	public final IFolderLayoutBuilder addView(final IViewLayoutBuilder viewBuilder) {
-		builder.addView(viewBuilder);
-		return this;
-	}
+    @Override
+    public final IFolderLayoutBuilder addView(final IViewLayoutBuilder viewBuilder) {
+        builder.addView(viewBuilder);
+        return this;
+    }
 
-	@Override
-	public final IFolderLayoutBuilder addView(final String id, final String label, final String tooltip, final IImageConstant icon) {
-		builder.addView(id, label, tooltip, icon);
-		return this;
-	}
+    @Override
+    public final IFolderLayoutBuilder addView(final String id, final String label, final String tooltip, final IImageConstant icon) {
+        builder.addView(id, label, tooltip, icon);
+        return this;
+    }
 
-	@Override
-	public final IFolderLayoutBuilder addView(final String id, final String label, final IImageConstant icon) {
-		builder.addView(id, label, icon);
-		return this;
-	}
+    @Override
+    public final IFolderLayoutBuilder addView(final String id, final String label, final IImageConstant icon) {
+        builder.addView(id, label, icon);
+        return this;
+    }
 
-	@Override
-	public final IFolderLayoutBuilder addView(final String id, final String label, final String tooltip) {
-		builder.addView(id, label, tooltip);
-		return this;
-	}
+    @Override
+    public final IFolderLayoutBuilder addView(final String id, final String label, final String tooltip) {
+        builder.addView(id, label, tooltip);
+        return this;
+    }
 
-	@Override
-	public final IFolderLayoutBuilder addView(final String id, final String label) {
-		builder.addView(id, label);
-		return this;
-	}
+    @Override
+    public final IFolderLayoutBuilder addView(final String id, final String label) {
+        builder.addView(id, label);
+        return this;
+    }
 
-	@Override
-	public final IFolderLayoutBuilder addView(final String id, final IImageConstant icon) {
-		builder.addView(id, icon);
-		return this;
-	}
+    @Override
+    public final IFolderLayoutBuilder addView(final String id, final IImageConstant icon) {
+        builder.addView(id, icon);
+        return this;
+    }
 
-	@Override
-	public final IFolderLayout build() {
-		return builder.build();
-	}
+    @Override
+    public final IFolderLayout build() {
+        return builder.build();
+    }
 
-	public static IFolderLayoutBuilder builder() {
-		return WorkbenchToolkit.getLayoutBuilderFactory().folder();
-	}
+    public static IFolderLayoutBuilder builder() {
+        return WorkbenchToolkit.getLayoutBuilderFactory().folder();
+    }
 
-	public static IFolderLayoutBuilder builder(final String id) {
-		return builder().setId(id);
-	}
+    public static IFolderLayoutBuilder builder(final String id) {
+        return builder().setId(id);
+    }
 
 }

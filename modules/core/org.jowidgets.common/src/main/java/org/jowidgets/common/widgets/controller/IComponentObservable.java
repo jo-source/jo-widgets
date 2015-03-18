@@ -30,18 +30,18 @@ package org.jowidgets.common.widgets.controller;
 
 public interface IComponentObservable {
 
-	/**
-	 * Adds a component listener
-	 * 
-	 * @param componentListener The listener to add
-	 */
-	void addComponentListener(IComponentListener componentListener);
+    /**
+     * Adds a component listener
+     * 
+     * @param componentListener The listener to add
+     */
+    void addComponentListener(IComponentListener componentListener);
 
-	/**
-	 * Removes a component listener
-	 * 
-	 * @param componentListener The listener to remove
-	 */
-	void removeComponentListener(IComponentListener componentListener);
+    /**
+     * Removes a component listener
+     * 
+     * @param componentListener The listener to remove
+     */
+    void removeComponentListener(IComponentListener componentListener);
 
 }

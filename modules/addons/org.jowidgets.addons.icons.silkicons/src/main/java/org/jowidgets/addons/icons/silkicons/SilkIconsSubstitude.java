@@ -36,33 +36,33 @@ import org.jowidgets.util.Assert;
 
 public final class SilkIconsSubstitude {
 
-	private SilkIconsSubstitude() {}
+    private SilkIconsSubstitude() {}
 
-	/**
-	 * Substitudes some jowidgets default icons by silk icons for the default toolkit
-	 * 
-	 * @param tookit The toolkit to initialize the silk icons for, must not be null
-	 */
-	public static void substitude() {
-		substitude(Toolkit.getInstance());
-	}
+    /**
+     * Substitudes some jowidgets default icons by silk icons for the default toolkit
+     * 
+     * @param tookit The toolkit to initialize the silk icons for, must not be null
+     */
+    public static void substitude() {
+        substitude(Toolkit.getInstance());
+    }
 
-	/**
-	 * Substitudes some jowidgets default icons by silk icons for a given toolkit
-	 * 
-	 * @param tookit The toolkit to use , must not be null
-	 */
-	public static void substitude(final IToolkit toolkit) {
-		Assert.paramNotNull(toolkit, "toolkit");
+    /**
+     * Substitudes some jowidgets default icons by silk icons for a given toolkit
+     * 
+     * @param tookit The toolkit to use , must not be null
+     */
+    public static void substitude(final IToolkit toolkit) {
+        Assert.paramNotNull(toolkit, "toolkit");
 
-		final IImageRegistry imageRegistry = toolkit.getImageRegistry();
-		imageRegistry.registerImageConstant(IconsSmall.OK, SilkIcons.TICK);
-		imageRegistry.registerImageConstant(IconsSmall.OK_GREYED, SilkIcons.TICK_GREYED);
-		imageRegistry.registerImageConstant(IconsSmall.DISK, SilkIcons.DISK);
-		imageRegistry.registerImageConstant(IconsSmall.FOLDER, SilkIcons.FOLDER);
-		imageRegistry.registerImageConstant(IconsSmall.PAGE_WHITE, SilkIcons.PAGE_WHITE);
-		imageRegistry.registerImageConstant(IconsSmall.REFRESH, SilkIcons.ARROW_REFRESH);
-		imageRegistry.registerImageConstant(IconsSmall.UNDO, SilkIcons.ARROW_UNDO);
-		imageRegistry.registerImageConstant(IconsSmall.CANCEL, SilkIcons.CANCEL);
-	}
+        final IImageRegistry imageRegistry = toolkit.getImageRegistry();
+        imageRegistry.registerImageConstant(IconsSmall.OK, SilkIcons.TICK);
+        imageRegistry.registerImageConstant(IconsSmall.OK_GREYED, SilkIcons.TICK_GREYED);
+        imageRegistry.registerImageConstant(IconsSmall.DISK, SilkIcons.DISK);
+        imageRegistry.registerImageConstant(IconsSmall.FOLDER, SilkIcons.FOLDER);
+        imageRegistry.registerImageConstant(IconsSmall.PAGE_WHITE, SilkIcons.PAGE_WHITE);
+        imageRegistry.registerImageConstant(IconsSmall.REFRESH, SilkIcons.ARROW_REFRESH);
+        imageRegistry.registerImageConstant(IconsSmall.UNDO, SilkIcons.ARROW_UNDO);
+        imageRegistry.registerImageConstant(IconsSmall.CANCEL, SilkIcons.CANCEL);
+    }
 }

@@ -36,59 +36,59 @@ import org.jowidgets.common.types.Markup;
 
 public final class BorderToComposite {
 
-	private static final Point MIN_SIZE = new Point(0, 0);
+    private static final Point MIN_SIZE = new Point(0, 0);
 
-	private BorderToComposite() {};
+    private BorderToComposite() {};
 
-	public static Composite convert(final Composite parent, final Border border) {
+    public static Composite convert(final Composite parent, final Border border) {
 
-		final String title = border != null ? border.getTitle() : null;
+        final String title = border != null ? border.getTitle() : null;
 
-		if (title != null) {
-			final Group group = new Group(parent, SWT.SHADOW_IN);
-			group.setText(title);
-			group.setFont(FontProvider.deriveFont(group.getFont(), Markup.STRONG));
-			return group;
-		}
-		else if (border != null) {
-			return new Composite(parent, SWT.BORDER);
-		}
-		else {
-			return new Composite(parent, SWT.NONE);
-		}
-	}
+        if (title != null) {
+            final Group group = new Group(parent, SWT.SHADOW_IN);
+            group.setText(title);
+            group.setFont(FontProvider.deriveFont(group.getFont(), Markup.STRONG));
+            return group;
+        }
+        else if (border != null) {
+            return new Composite(parent, SWT.BORDER);
+        }
+        else {
+            return new Composite(parent, SWT.NONE);
+        }
+    }
 
-	public static Composite convertZeroMinSize(final Composite parent, final Border border) {
+    public static Composite convertZeroMinSize(final Composite parent, final Border border) {
 
-		final String title = border != null ? border.getTitle() : null;
+        final String title = border != null ? border.getTitle() : null;
 
-		if (title != null) {
-			final Group group = new Group(parent, SWT.SHADOW_IN) {
-				@Override
-				public Point computeSize(final int wHint, final int hHint, final boolean changed) {
-					return MIN_SIZE;
-				}
-			};
-			group.setText(title);
-			group.setFont(FontProvider.deriveFont(group.getFont(), Markup.STRONG));
-			return group;
-		}
-		else if (border != null) {
-			return new Composite(parent, SWT.BORDER) {
-				@Override
-				public Point computeSize(final int wHint, final int hHint, final boolean changed) {
-					return MIN_SIZE;
-				}
-			};
-		}
-		else {
-			return new Composite(parent, SWT.NONE) {
-				@Override
-				public Point computeSize(final int wHint, final int hHint, final boolean changed) {
-					return MIN_SIZE;
-				}
-			};
-		}
-	}
+        if (title != null) {
+            final Group group = new Group(parent, SWT.SHADOW_IN) {
+                @Override
+                public Point computeSize(final int wHint, final int hHint, final boolean changed) {
+                    return MIN_SIZE;
+                }
+            };
+            group.setText(title);
+            group.setFont(FontProvider.deriveFont(group.getFont(), Markup.STRONG));
+            return group;
+        }
+        else if (border != null) {
+            return new Composite(parent, SWT.BORDER) {
+                @Override
+                public Point computeSize(final int wHint, final int hHint, final boolean changed) {
+                    return MIN_SIZE;
+                }
+            };
+        }
+        else {
+            return new Composite(parent, SWT.NONE) {
+                @Override
+                public Point computeSize(final int wHint, final int hHint, final boolean changed) {
+                    return MIN_SIZE;
+                }
+            };
+        }
+    }
 
 }

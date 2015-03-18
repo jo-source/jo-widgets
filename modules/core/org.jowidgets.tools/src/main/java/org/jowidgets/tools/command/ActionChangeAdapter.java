@@ -32,16 +32,16 @@ import org.jowidgets.api.command.IActionChangeListener;
 
 public class ActionChangeAdapter implements IActionChangeListener {
 
-	@Override
-	public void textChanged() {}
+    @Override
+    public void textChanged() {}
 
-	@Override
-	public void toolTipTextChanged() {}
+    @Override
+    public void toolTipTextChanged() {}
 
-	@Override
-	public void iconChanged() {}
+    @Override
+    public void iconChanged() {}
 
-	@Override
-	public void enabledChanged() {}
+    @Override
+    public void enabledChanged() {}
 
 }

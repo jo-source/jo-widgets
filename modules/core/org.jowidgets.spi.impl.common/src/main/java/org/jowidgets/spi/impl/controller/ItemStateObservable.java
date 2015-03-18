@@ -39,33 +39,33 @@ import org.jowidgets.util.NullCompatibleEquivalence;
 
 public class ItemStateObservable implements IItemStateObservable {
 
-	private final Set<IItemStateListener> itemListeners;
+    private final Set<IItemStateListener> itemListeners;
 
-	private Boolean lastState;
+    private Boolean lastState;
 
-	public ItemStateObservable() {
-		this.itemListeners = new LinkedHashSet<IItemStateListener>();
-	}
+    public ItemStateObservable() {
+        this.itemListeners = new LinkedHashSet<IItemStateListener>();
+    }
 
-	@Override
-	public final void addItemListener(final IItemStateListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		this.itemListeners.add(listener);
-	}
+    @Override
+    public final void addItemListener(final IItemStateListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        this.itemListeners.add(listener);
+    }
 
-	@Override
-	public final void removeItemListener(final IItemStateListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		this.itemListeners.remove(listener);
-	}
+    @Override
+    public final void removeItemListener(final IItemStateListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        this.itemListeners.remove(listener);
+    }
 
-	public final void fireItemStateChanged(final boolean state) {
-		if (!NullCompatibleEquivalence.equals(Boolean.valueOf(state), lastState)) {
-			for (final IItemStateListener listener : new LinkedList<IItemStateListener>(itemListeners)) {
-				listener.itemStateChanged();
-			}
-			lastState = state;
-		}
-	}
+    public final void fireItemStateChanged(final boolean state) {
+        if (!NullCompatibleEquivalence.equals(Boolean.valueOf(state), lastState)) {
+            for (final IItemStateListener listener : new LinkedList<IItemStateListener>(itemListeners)) {
+                listener.itemStateChanged();
+            }
+            lastState = state;
+        }
+    }
 
 }

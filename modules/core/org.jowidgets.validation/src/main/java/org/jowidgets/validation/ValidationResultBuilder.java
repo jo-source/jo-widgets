@@ -30,75 +30,75 @@ package org.jowidgets.validation;
 
 final class ValidationResultBuilder implements IValidationResultBuilder {
 
-	private IValidationResult current;
+    private IValidationResult current;
 
-	ValidationResultBuilder() {
-		this.current = ValidationResult.create();
-	}
+    ValidationResultBuilder() {
+        this.current = ValidationResult.create();
+    }
 
-	@Override
-	public IValidationResultBuilder addMessage(final IValidationMessage text) {
-		current = current.withMessage(text);
-		return this;
-	}
+    @Override
+    public IValidationResultBuilder addMessage(final IValidationMessage text) {
+        current = current.withMessage(text);
+        return this;
+    }
 
-	@Override
-	public IValidationResultBuilder addError(final String text) {
-		current = current.withError(text);
-		return this;
-	}
+    @Override
+    public IValidationResultBuilder addError(final String text) {
+        current = current.withError(text);
+        return this;
+    }
 
-	@Override
-	public IValidationResultBuilder addInfoError(final String text) {
-		current = current.withInfoError(text);
-		return this;
-	}
+    @Override
+    public IValidationResultBuilder addInfoError(final String text) {
+        current = current.withInfoError(text);
+        return this;
+    }
 
-	@Override
-	public IValidationResultBuilder addWarning(final String text) {
-		current = current.withWarning(text);
-		return this;
-	}
+    @Override
+    public IValidationResultBuilder addWarning(final String text) {
+        current = current.withWarning(text);
+        return this;
+    }
 
-	@Override
-	public IValidationResultBuilder addInfo(final String text) {
-		current = current.withInfo(text);
-		return this;
-	}
+    @Override
+    public IValidationResultBuilder addInfo(final String text) {
+        current = current.withInfo(text);
+        return this;
+    }
 
-	@Override
-	public IValidationResultBuilder addError(final String context, final String text) {
-		current = current.withError(context, text);
-		return this;
-	}
+    @Override
+    public IValidationResultBuilder addError(final String context, final String text) {
+        current = current.withError(context, text);
+        return this;
+    }
 
-	@Override
-	public IValidationResultBuilder addInfoError(final String context, final String text) {
-		current = current.withInfoError(context, text);
-		return this;
-	}
+    @Override
+    public IValidationResultBuilder addInfoError(final String context, final String text) {
+        current = current.withInfoError(context, text);
+        return this;
+    }
 
-	@Override
-	public IValidationResultBuilder addWarning(final String context, final String text) {
-		current = current.withWarning(context, text);
-		return this;
-	}
+    @Override
+    public IValidationResultBuilder addWarning(final String context, final String text) {
+        current = current.withWarning(context, text);
+        return this;
+    }
 
-	@Override
-	public IValidationResultBuilder addInfo(final String context, final String text) {
-		current = current.withInfo(context, text);
-		return this;
-	}
+    @Override
+    public IValidationResultBuilder addInfo(final String context, final String text) {
+        current = current.withInfo(context, text);
+        return this;
+    }
 
-	@Override
-	public IValidationResultBuilder addResult(final IValidationResult result) {
-		current = current.withResult(result);
-		return this;
-	}
+    @Override
+    public IValidationResultBuilder addResult(final IValidationResult result) {
+        current = current.withResult(result);
+        return this;
+    }
 
-	@Override
-	public IValidationResult build() {
-		return current;
-	}
+    @Override
+    public IValidationResult build() {
+        return current;
+    }
 
 }

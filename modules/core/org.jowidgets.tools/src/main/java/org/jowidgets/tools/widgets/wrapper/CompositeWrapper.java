@@ -38,93 +38,93 @@ import org.jowidgets.common.types.Dimension;
 
 public class CompositeWrapper extends ContainerWrapper implements IComposite {
 
-	public CompositeWrapper(final IComposite widget) {
-		super(widget);
-	}
+    public CompositeWrapper(final IComposite widget) {
+        super(widget);
+    }
 
-	@Override
-	protected IComposite getWidget() {
-		return (IComposite) super.getWidget();
-	}
+    @Override
+    protected IComposite getWidget() {
+        return (IComposite) super.getWidget();
+    }
 
-	@Override
-	public void setParent(final IContainer parent) {
-		getWidget().setParent(parent);
-	}
+    @Override
+    public void setParent(final IContainer parent) {
+        getWidget().setParent(parent);
+    }
 
-	@Override
-	public IContainer getParent() {
-		return getWidget().getParent();
-	}
+    @Override
+    public IContainer getParent() {
+        return getWidget().getParent();
+    }
 
-	@Override
-	public void addParentListener(final IParentListener<IContainer> listener) {
-		getWidget().addParentListener(listener);
-	}
+    @Override
+    public void addParentListener(final IParentListener<IContainer> listener) {
+        getWidget().addParentListener(listener);
+    }
 
-	@Override
-	public void removeParentListener(final IParentListener<IContainer> listener) {
-		getWidget().removeParentListener(listener);
-	}
+    @Override
+    public void removeParentListener(final IParentListener<IContainer> listener) {
+        getWidget().removeParentListener(listener);
+    }
 
-	@Override
-	public IControl getRoot() {
-		return getWidget().getRoot();
-	}
+    @Override
+    public IControl getRoot() {
+        return getWidget().getRoot();
+    }
 
-	@Override
-	public void setMinSize(final Dimension minSize) {
-		getWidget().setMinSize(minSize);
-	}
+    @Override
+    public void setMinSize(final Dimension minSize) {
+        getWidget().setMinSize(minSize);
+    }
 
-	@Override
-	public void setPreferredSize(final Dimension preferredSize) {
-		getWidget().setPreferredSize(preferredSize);
-	}
+    @Override
+    public void setPreferredSize(final Dimension preferredSize) {
+        getWidget().setPreferredSize(preferredSize);
+    }
 
-	@Override
-	public void setMaxSize(final Dimension maxSize) {
-		getWidget().setMaxSize(maxSize);
-	}
+    @Override
+    public void setMaxSize(final Dimension maxSize) {
+        getWidget().setMaxSize(maxSize);
+    }
 
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		getWidget().setLayoutConstraints(layoutConstraints);
-	}
+    @Override
+    public void setLayoutConstraints(final Object layoutConstraints) {
+        getWidget().setLayoutConstraints(layoutConstraints);
+    }
 
-	@Override
-	public Object getLayoutConstraints() {
-		return getWidget().getLayoutConstraints();
-	}
+    @Override
+    public Object getLayoutConstraints() {
+        return getWidget().getLayoutConstraints();
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		return getWidget().getMinSize();
-	}
+    @Override
+    public Dimension getMinSize() {
+        return getWidget().getMinSize();
+    }
 
-	@Override
-	public Dimension getPreferredSize() {
-		return getWidget().getPreferredSize();
-	}
+    @Override
+    public Dimension getPreferredSize() {
+        return getWidget().getPreferredSize();
+    }
 
-	@Override
-	public Dimension getMaxSize() {
-		return getWidget().getMaxSize();
-	}
+    @Override
+    public Dimension getMaxSize() {
+        return getWidget().getMaxSize();
+    }
 
-	@Override
-	public void setToolTipText(final String toolTip) {
-		getWidget().setToolTipText(toolTip);
-	}
+    @Override
+    public void setToolTipText(final String toolTip) {
+        getWidget().setToolTipText(toolTip);
+    }
 
-	@Override
-	public IDragSource getDragSource() {
-		return getWidget().getDragSource();
-	}
+    @Override
+    public IDragSource getDragSource() {
+        return getWidget().getDragSource();
+    }
 
-	@Override
-	public IDropTarget getDropTarget() {
-		return getWidget().getDropTarget();
-	}
+    @Override
+    public IDropTarget getDropTarget() {
+        return getWidget().getDropTarget();
+    }
 
 }

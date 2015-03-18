@@ -32,6 +32,6 @@ import org.jowidgets.common.widgets.descriptor.setup.IComboBoxSetupCommon;
 
 public interface IComboBoxSetupSpi extends ITextComponentSetupSpi, IComboBoxSelectionSetupSpi, IComboBoxSetupCommon {
 
-	ITextMask getMask();
+    ITextMask getMask();
 
 }

@@ -30,9 +30,9 @@ package org.jowidgets.util.wrapper;
 
 public interface IWrapper<TYPE> {
 
-	/**
-	 * @return The unwrapped (original) instance
-	 */
-	TYPE unwrap();
+    /**
+     * @return The unwrapped (original) instance
+     */
+    TYPE unwrap();
 
 }

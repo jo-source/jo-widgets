@@ -34,21 +34,21 @@ import org.jowidgets.common.widgets.IActionMenuItemCommon;
 
 public interface IActionMenuItem extends IMenuItem, IActionWidget, IActionMenuItemCommon {
 
-	/**
-	 * Sets the action of the menu
-	 * 
-	 * @param action The action to set
-	 */
-	void setAction(IAction action);
+    /**
+     * Sets the action of the menu
+     * 
+     * @param action The action to set
+     */
+    void setAction(IAction action);
 
-	@Override
-	IActionItemModel getModel();
+    @Override
+    IActionItemModel getModel();
 
-	/**
-	 * Sets the action with help of an action model
-	 * 
-	 * @param model The action model to set, never null
-	 */
-	void setModel(IActionItemModel model);
+    /**
+     * Sets the action with help of an action model
+     * 
+     * @param model The action model to set, never null
+     */
+    void setModel(IActionItemModel model);
 
 }

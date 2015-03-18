@@ -44,136 +44,136 @@ import org.jowidgets.tools.widgets.wrapper.ComponentWrapper;
 
 public class QuestionDialogImpl extends ComponentWrapper implements IQuestionDialog {
 
-	private final IFrame dialog;
-	private IButtonCommon defaultButton;
-	private boolean wasVisible;
-	private QuestionResult result;
+    private final IFrame dialog;
+    private IButtonCommon defaultButton;
+    private boolean wasVisible;
+    private QuestionResult result;
 
-	public QuestionDialogImpl(final IFrame dialog, final IQuestionDialogSetup setup) {
-		super(dialog);
+    public QuestionDialogImpl(final IFrame dialog, final IQuestionDialogSetup setup) {
+        super(dialog);
 
-		this.wasVisible = false;
-		this.dialog = dialog;
+        this.wasVisible = false;
+        this.dialog = dialog;
 
-		final IBluePrintFactory bpF = new BluePrintFactory();
+        final IBluePrintFactory bpF = new BluePrintFactory();
 
-		if (setup.getIcon() != null) {
-			this.dialog.setLayout(new MigLayoutDescriptor("[]20[grow]", "15[][]"));
-			this.dialog.add(bpF.icon(setup.getIcon()), "");
-		}
-		else {
-			this.dialog.setLayout(new MigLayoutDescriptor("[grow]", "15[][]"));
-		}
+        if (setup.getIcon() != null) {
+            this.dialog.setLayout(new MigLayoutDescriptor("[]20[grow]", "15[][]"));
+            this.dialog.add(bpF.icon(setup.getIcon()), "");
+        }
+        else {
+            this.dialog.setLayout(new MigLayoutDescriptor("[grow]", "15[][]"));
+        }
 
-		this.dialog.add(bpF.textLabel(setup.getText(), setup.getToolTipText()), "wrap");
+        this.dialog.add(bpF.textLabel(setup.getText(), setup.getToolTipText()), "wrap");
 
-		// buttons
-		final IComposite buttonBar = dialog.add(bpF.composite(), "span, align center");
-		buttonBar.setLayout(new MigLayoutDescriptor("[][][]", "[]"));
+        // buttons
+        final IComposite buttonBar = dialog.add(bpF.composite(), "span, align center");
+        buttonBar.setLayout(new MigLayoutDescriptor("[][][]", "[]"));
 
-		final String buttonCellConstraints = "w 80::, sg bg";
+        final String buttonCellConstraints = "w 80::, sg bg";
 
-		result = setup.getDefaultResult();
+        result = setup.getDefaultResult();
 
-		final IButtonCommon yesButton = buttonBar.add(setup.getYesButton(), buttonCellConstraints);
-		yesButton.addActionListener(new IActionListener() {
+        final IButtonCommon yesButton = buttonBar.add(setup.getYesButton(), buttonCellConstraints);
+        yesButton.addActionListener(new IActionListener() {
 
-			@Override
-			public void actionPerformed() {
-				result = QuestionResult.YES;
-				dialog.setVisible(false);
-			}
-		});
-		if (setup.getDefaultResult() == null) {
-			result = QuestionResult.YES;
-		}
-		if (QuestionResult.YES == result) {
-			defaultButton = yesButton;
-		}
+            @Override
+            public void actionPerformed() {
+                result = QuestionResult.YES;
+                dialog.setVisible(false);
+            }
+        });
+        if (setup.getDefaultResult() == null) {
+            result = QuestionResult.YES;
+        }
+        if (QuestionResult.YES == result) {
+            defaultButton = yesButton;
+        }
 
-		if (setup.getNoButton() != null) {
-			final IButtonCommon noButton = buttonBar.add(setup.getNoButton(), buttonCellConstraints);
-			noButton.addActionListener(new IActionListener() {
+        if (setup.getNoButton() != null) {
+            final IButtonCommon noButton = buttonBar.add(setup.getNoButton(), buttonCellConstraints);
+            noButton.addActionListener(new IActionListener() {
 
-				@Override
-				public void actionPerformed() {
-					result = QuestionResult.NO;
-					dialog.setVisible(false);
-				}
-			});
+                @Override
+                public void actionPerformed() {
+                    result = QuestionResult.NO;
+                    dialog.setVisible(false);
+                }
+            });
 
-			if (setup.getDefaultResult() == null) {
-				result = QuestionResult.NO;
-			}
-			if (QuestionResult.NO == result) {
-				defaultButton = noButton;
-			}
-		}
+            if (setup.getDefaultResult() == null) {
+                result = QuestionResult.NO;
+            }
+            if (QuestionResult.NO == result) {
+                defaultButton = noButton;
+            }
+        }
 
-		if (setup.getCancelButton() != null) {
-			final IButtonCommon cancelButton = buttonBar.add(setup.getCancelButton(), buttonCellConstraints);
-			cancelButton.addActionListener(new IActionListener() {
+        if (setup.getCancelButton() != null) {
+            final IButtonCommon cancelButton = buttonBar.add(setup.getCancelButton(), buttonCellConstraints);
+            cancelButton.addActionListener(new IActionListener() {
 
-				@Override
-				public void actionPerformed() {
-					result = QuestionResult.CANCEL;
-					dialog.setVisible(false);
-				}
-			});
+                @Override
+                public void actionPerformed() {
+                    result = QuestionResult.CANCEL;
+                    dialog.setVisible(false);
+                }
+            });
 
-			if (setup.getDefaultResult() == null) {
-				result = QuestionResult.CANCEL;
-			}
-			if (QuestionResult.CANCEL == result) {
-				defaultButton = cancelButton;
-			}
+            if (setup.getDefaultResult() == null) {
+                result = QuestionResult.CANCEL;
+            }
+            if (QuestionResult.CANCEL == result) {
+                defaultButton = cancelButton;
+            }
 
-		}
+        }
 
-		dialog.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowActivated() {
-				defaultButton.requestFocus();
-			}
-		});
+        dialog.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowActivated() {
+                defaultButton.requestFocus();
+            }
+        });
 
-		ColorSettingsInvoker.setColors(setup, this);
-	}
+        ColorSettingsInvoker.setColors(setup, this);
+    }
 
-	@Override
-	public IWindow getParent() {
-		return dialog.getParent();
-	}
+    @Override
+    public IWindow getParent() {
+        return dialog.getParent();
+    }
 
-	@Override
-	public void setParent(final IWindow parent) {
-		dialog.setParent(parent);
-	}
+    @Override
+    public void setParent(final IWindow parent) {
+        dialog.setParent(parent);
+    }
 
-	@Override
-	public QuestionResult question() {
-		if (!wasVisible) {
-			wasVisible = true;
-			dialog.setVisible(true);
-			//ui block until user closes the dialog
+    @Override
+    public QuestionResult question() {
+        if (!wasVisible) {
+            wasVisible = true;
+            dialog.setVisible(true);
+            //ui block until user closes the dialog
 
-			//after that dispose the message dialog
-			dialog.dispose();
-		}
-		else {
-			throw new IllegalStateException("A message dialog can only be shown once!");
-		}
-		return result;
-	}
+            //after that dispose the message dialog
+            dialog.dispose();
+        }
+        else {
+            throw new IllegalStateException("A message dialog can only be shown once!");
+        }
+        return result;
+    }
 
-	@Override
-	public void setVisible(final boolean visible) {
-		if (visible) {
-			question();
-		}
-		else {
-			dialog.dispose();
-		}
-	}
+    @Override
+    public void setVisible(final boolean visible) {
+        if (visible) {
+            question();
+        }
+        else {
+            dialog.dispose();
+        }
+    }
 
 }

@@ -29,6 +29,6 @@ package org.jowidgets.api.widgets;
 
 public interface IInputComponentValidationLabel extends IControl {
 
-	void resetValidation();
+    void resetValidation();
 
 }

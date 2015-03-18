@@ -30,6 +30,6 @@ package org.jowidgets.common.widgets.controller;
 
 public interface ITableSelectionListener {
 
-	void selectionChanged();
+    void selectionChanged();
 
 }

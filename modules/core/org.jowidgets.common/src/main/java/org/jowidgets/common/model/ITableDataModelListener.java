@@ -30,14 +30,14 @@ package org.jowidgets.common.model;
 
 public interface ITableDataModelListener {
 
-	void rowsAdded(int[] rowIndices);
+    void rowsAdded(int[] rowIndices);
 
-	void rowsRemoved(int[] rowIndices);
+    void rowsRemoved(int[] rowIndices);
 
-	void rowsChanged(int[] rowIndices);
+    void rowsChanged(int[] rowIndices);
 
-	void dataChanged();
+    void dataChanged();
 
-	void selectionChanged();
+    void selectionChanged();
 
 }

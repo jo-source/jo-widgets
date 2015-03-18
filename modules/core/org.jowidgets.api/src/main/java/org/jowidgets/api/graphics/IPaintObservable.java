@@ -30,8 +30,8 @@ package org.jowidgets.api.graphics;
 
 public interface IPaintObservable {
 
-	void addPaintListener(IPaintListener paintListener);
+    void addPaintListener(IPaintListener paintListener);
 
-	void removePaintListener(IPaintListener paintListener);
+    void removePaintListener(IPaintListener paintListener);
 
 }

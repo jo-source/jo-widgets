@@ -35,10 +35,10 @@ import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 
 public interface ICombinedCollectionInputFieldSetup<ELEMENT_TYPE> extends IInputComponentSetup<Collection<ELEMENT_TYPE>> {
 
-	@Mandatory
-	ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> getElementTypeControlCreator();
+    @Mandatory
+    ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> getElementTypeControlCreator();
 
-	@Mandatory
-	ICustomWidgetCreator<IInputControl<? extends Collection<ELEMENT_TYPE>>> getCollectionTypeControlCreator();
+    @Mandatory
+    ICustomWidgetCreator<IInputControl<? extends Collection<ELEMENT_TYPE>>> getCollectionTypeControlCreator();
 
 }

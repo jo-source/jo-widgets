@@ -35,10 +35,10 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 
 final class PdfToolkitInterceptor implements IToolkitInterceptor {
 
-	@Override
-	public void onToolkitCreate(final IToolkit toolkit) {
-		final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
-		widgetFactory.register(IPdfReaderBluePrint.class, new PdfReaderFactory());
-	}
+    @Override
+    public void onToolkitCreate(final IToolkit toolkit) {
+        final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
+        widgetFactory.register(IPdfReaderBluePrint.class, new PdfReaderFactory());
+    }
 
 }

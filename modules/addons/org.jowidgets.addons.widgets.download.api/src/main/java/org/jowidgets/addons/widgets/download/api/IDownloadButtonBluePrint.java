@@ -34,13 +34,13 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IDownloadButtonBluePrint extends
-		IButtonSetupBuilder<IDownloadButtonBluePrint>,
-		IButtonSetup,
-		IWidgetDescriptor<IDownloadButton> {
+        IButtonSetupBuilder<IDownloadButtonBluePrint>,
+        IButtonSetup,
+        IWidgetDescriptor<IDownloadButton> {
 
-	IDownloadButtonBluePrint setUrl(String url);
+    IDownloadButtonBluePrint setUrl(String url);
 
-	@Mandatory
-	String getUrl();
+    @Mandatory
+    String getUrl();
 
 }

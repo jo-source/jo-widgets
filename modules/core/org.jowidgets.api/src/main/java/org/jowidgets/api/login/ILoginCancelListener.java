@@ -30,6 +30,6 @@ package org.jowidgets.api.login;
 
 public interface ILoginCancelListener {
 
-	void canceled();
+    void canceled();
 
 }

@@ -36,167 +36,167 @@ import org.jowidgets.i18n.api.LocaleLocal.IValueFactory;
 
 public final class MessageProvider {
 
-	private MessageProvider() {}
+    private MessageProvider() {}
 
-	public interface IClassLoaderProvider {
-		ClassLoader get();
-	}
+    public interface IClassLoaderProvider {
+        ClassLoader get();
+    }
 
-	/**
-	 * Creates a new message provider for a given resource bundle name.
-	 * 
-	 * @param resourceBundleName The resource bundle name to get the message provider for, never empty
-	 * 
-	 * @return The new created message provider
-	 */
-	public static IMessageProvider create(final String resourceBundleName) {
-		return create(resourceBundleName, (IClassLoaderProvider) null);
-	}
+    /**
+     * Creates a new message provider for a given resource bundle name.
+     * 
+     * @param resourceBundleName The resource bundle name to get the message provider for, never empty
+     * 
+     * @return The new created message provider
+     */
+    public static IMessageProvider create(final String resourceBundleName) {
+        return create(resourceBundleName, (IClassLoaderProvider) null);
+    }
 
-	/**
-	 * Creates a new message provider for a given resource bundle name and a class that provides the class loader
-	 * 
-	 * @param resourceBundleName The resource bundle name to get the message provider for, never empty
-	 * @param classLoaderProvider The class that provides the class loader that should be used to load the resource bundle with
-	 * 
-	 * @return The new created message provider
-	 */
-	public static IMessageProvider create(final String resourceBundleName, final Class<?> classLoaderProviderClass) {
-		return create(resourceBundleName, new ClassLoaderFromClassProvider(classLoaderProviderClass));
-	}
+    /**
+     * Creates a new message provider for a given resource bundle name and a class that provides the class loader
+     * 
+     * @param resourceBundleName The resource bundle name to get the message provider for, never empty
+     * @param classLoaderProvider The class that provides the class loader that should be used to load the resource bundle with
+     * 
+     * @return The new created message provider
+     */
+    public static IMessageProvider create(final String resourceBundleName, final Class<?> classLoaderProviderClass) {
+        return create(resourceBundleName, new ClassLoaderFromClassProvider(classLoaderProviderClass));
+    }
 
-	/**
-	 * Creates a new message provider for a given resource bundle name and a class loader provider
-	 * 
-	 * @param resourceBundleName The resource bundle name to get the message provider for, never empty
-	 * @param classLoaderProvider A provider that provides the class loader that should be used to load the resource bundle
-	 *            The class loader will be resolved when the resource bundle will be created
-	 * 
-	 * @return The new created message provider
-	 */
-	public static IMessageProvider create(final String resourceBundleName, final IClassLoaderProvider classLoaderProvider) {
-		return new MessageProviderImpl(resourceBundleName, classLoaderProvider);
-	}
+    /**
+     * Creates a new message provider for a given resource bundle name and a class loader provider
+     * 
+     * @param resourceBundleName The resource bundle name to get the message provider for, never empty
+     * @param classLoaderProvider A provider that provides the class loader that should be used to load the resource bundle
+     *            The class loader will be resolved when the resource bundle will be created
+     * 
+     * @return The new created message provider
+     */
+    public static IMessageProvider create(final String resourceBundleName, final IClassLoaderProvider classLoaderProvider) {
+        return new MessageProviderImpl(resourceBundleName, classLoaderProvider);
+    }
 
-	private static final class MessageProviderImpl implements IMessageProvider, Serializable {
+    private static final class MessageProviderImpl implements IMessageProvider, Serializable {
 
-		private static final long serialVersionUID = -6035175048306441676L;
+        private static final long serialVersionUID = -6035175048306441676L;
 
-		private final String resourceBundleName;
-		private final IClassLoaderProvider classLoaderProvider;
-		private final ILocaleLocal<LocalizedMessageProvider> messageProviders;
+        private final String resourceBundleName;
+        private final IClassLoaderProvider classLoaderProvider;
+        private final ILocaleLocal<LocalizedMessageProvider> messageProviders;
 
-		private MessageProviderImpl(final String resourceBundleName, final IClassLoaderProvider classLoaderProvider) {
-			Assert.paramNotNull(resourceBundleName, "resourceBundleName");
-			this.resourceBundleName = resourceBundleName;
-			this.classLoaderProvider = classLoaderProvider;
-			this.messageProviders = LocaleLocal.create(new MessageProviderFactory());
-		}
+        private MessageProviderImpl(final String resourceBundleName, final IClassLoaderProvider classLoaderProvider) {
+            Assert.paramNotNull(resourceBundleName, "resourceBundleName");
+            this.resourceBundleName = resourceBundleName;
+            this.classLoaderProvider = classLoaderProvider;
+            this.messageProviders = LocaleLocal.create(new MessageProviderFactory());
+        }
 
-		@Override
-		public String getString(final String key) {
-			return messageProviders.get().getString(key);
-		}
+        @Override
+        public String getString(final String key) {
+            return messageProviders.get().getString(key);
+        }
 
-		@Override
-		public IMessage getMessage(final String key) {
-			return new MessageImpl(this, key);
-		}
+        @Override
+        public IMessage getMessage(final String key) {
+            return new MessageImpl(this, key);
+        }
 
-		private final class MessageProviderFactory implements IValueFactory<LocalizedMessageProvider>, Serializable {
+        private final class MessageProviderFactory implements IValueFactory<LocalizedMessageProvider>, Serializable {
 
-			private static final long serialVersionUID = -1926402720150772928L;
+            private static final long serialVersionUID = -1926402720150772928L;
 
-			@Override
-			public LocalizedMessageProvider create() {
-				return new LocalizedMessageProvider(resourceBundleName, classLoaderProvider);
-			}
+            @Override
+            public LocalizedMessageProvider create() {
+                return new LocalizedMessageProvider(resourceBundleName, classLoaderProvider);
+            }
 
-		}
-	}
+        }
+    }
 
-	private static final class LocalizedMessageProvider implements Serializable {
+    private static final class LocalizedMessageProvider implements Serializable {
 
-		private static final long serialVersionUID = 7013591522278151364L;
+        private static final long serialVersionUID = 7013591522278151364L;
 
-		private final String resourceBundleName;
-		private final IClassLoaderProvider classLoaderProvider;
-		private transient ResourceBundle resourceBundle;
+        private final String resourceBundleName;
+        private final IClassLoaderProvider classLoaderProvider;
+        private transient ResourceBundle resourceBundle;
 
-		private LocalizedMessageProvider(final String resourceBundleName, final IClassLoaderProvider classLoaderProvider) {
-			this.resourceBundleName = resourceBundleName;
-			this.classLoaderProvider = classLoaderProvider;
-		}
+        private LocalizedMessageProvider(final String resourceBundleName, final IClassLoaderProvider classLoaderProvider) {
+            this.resourceBundleName = resourceBundleName;
+            this.classLoaderProvider = classLoaderProvider;
+        }
 
-		private String getString(final String key) {
-			try {
-				return getResourceBundle().getString(key);
-			}
-			catch (final MissingResourceException e) {
-				return '!' + key + '!';
-			}
-		}
+        private String getString(final String key) {
+            try {
+                return getResourceBundle().getString(key);
+            }
+            catch (final MissingResourceException e) {
+                return '!' + key + '!';
+            }
+        }
 
-		private ResourceBundle getResourceBundle() {
-			if (resourceBundle == null) {
-				resourceBundle = createResourceBundle();
-			}
-			return resourceBundle;
-		}
+        private ResourceBundle getResourceBundle() {
+            if (resourceBundle == null) {
+                resourceBundle = createResourceBundle();
+            }
+            return resourceBundle;
+        }
 
-		private ResourceBundle createResourceBundle() {
-			if (classLoaderProvider != null) {
-				final ClassLoader classLoader = classLoaderProvider.get();
-				if (classLoader != null) {
-					return ResourceBundle.getBundle(resourceBundleName, LocaleHolder.getUserLocale(), classLoader);
-				}
-			}
-			return ResourceBundle.getBundle(resourceBundleName, LocaleHolder.getUserLocale());
-		}
+        private ResourceBundle createResourceBundle() {
+            if (classLoaderProvider != null) {
+                final ClassLoader classLoader = classLoaderProvider.get();
+                if (classLoader != null) {
+                    return ResourceBundle.getBundle(resourceBundleName, LocaleHolder.getUserLocale(), classLoader);
+                }
+            }
+            return ResourceBundle.getBundle(resourceBundleName, LocaleHolder.getUserLocale());
+        }
 
-	}
+    }
 
-	private static final class MessageImpl implements IMessage, Serializable {
+    private static final class MessageImpl implements IMessage, Serializable {
 
-		private static final long serialVersionUID = -8081080214256066849L;
+        private static final long serialVersionUID = -8081080214256066849L;
 
-		private final IMessageProvider messageProvider;
-		private final String key;
+        private final IMessageProvider messageProvider;
+        private final String key;
 
-		private MessageImpl(final IMessageProvider messageProvider, final String key) {
-			Assert.paramNotNull(messageProvider, "messageProvider");
-			Assert.paramNotEmpty(key, "key");
+        private MessageImpl(final IMessageProvider messageProvider, final String key) {
+            Assert.paramNotNull(messageProvider, "messageProvider");
+            Assert.paramNotEmpty(key, "key");
 
-			this.messageProvider = messageProvider;
-			this.key = key;
-		}
+            this.messageProvider = messageProvider;
+            this.key = key;
+        }
 
-		@Override
-		public String get() {
-			return messageProvider.getString(key);
-		}
+        @Override
+        public String get() {
+            return messageProvider.getString(key);
+        }
 
-		@Override
-		public String toString() {
-			return "MessageImpl [key=" + key + "]";
-		}
-	}
+        @Override
+        public String toString() {
+            return "MessageImpl [key=" + key + "]";
+        }
+    }
 
-	private static final class ClassLoaderFromClassProvider implements IClassLoaderProvider, Serializable {
+    private static final class ClassLoaderFromClassProvider implements IClassLoaderProvider, Serializable {
 
-		private static final long serialVersionUID = 235793306640902023L;
+        private static final long serialVersionUID = 235793306640902023L;
 
-		private final Class<?> clazz;
+        private final Class<?> clazz;
 
-		private ClassLoaderFromClassProvider(final Class<?> clazz) {
-			Assert.paramNotNull(clazz, "clazz");
-			this.clazz = clazz;
-		}
+        private ClassLoaderFromClassProvider(final Class<?> clazz) {
+            Assert.paramNotNull(clazz, "clazz");
+            this.clazz = clazz;
+        }
 
-		@Override
-		public ClassLoader get() {
-			return clazz.getClassLoader();
-		}
+        @Override
+        public ClassLoader get() {
+            return clazz.getClassLoader();
+        }
 
-	}
+    }
 }

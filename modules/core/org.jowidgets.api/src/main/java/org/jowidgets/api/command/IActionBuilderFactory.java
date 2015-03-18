@@ -30,11 +30,11 @@ package org.jowidgets.api.command;
 
 public interface IActionBuilderFactory {
 
-	/**
-	 * Creates a new action builder
-	 * 
-	 * @return A new action builder, never null
-	 */
-	IActionBuilder create();
+    /**
+     * Creates a new action builder
+     * 
+     * @return A new action builder, never null
+     */
+    IActionBuilder create();
 
 }

@@ -32,75 +32,75 @@ import org.jowidgets.util.Assert;
 import org.jowidgets.util.NullCompatibleComparison;
 
 public final class PrioritizedResultCreator<VALUE_TYPE, PRIORITY_TYPE extends Comparable<PRIORITY_TYPE>> implements
-		IPriorityValue<VALUE_TYPE, PRIORITY_TYPE> {
+        IPriorityValue<VALUE_TYPE, PRIORITY_TYPE> {
 
-	private final PRIORITY_TYPE maxPriority;
+    private final PRIORITY_TYPE maxPriority;
 
-	private IPriorityValue<VALUE_TYPE, PRIORITY_TYPE> currentResult;
+    private IPriorityValue<VALUE_TYPE, PRIORITY_TYPE> currentResult;
 
-	/**
-	 * Creates a new instance.
-	 * 
-	 * @param maxPriority The maximal priority of the priority type
-	 */
-	public PrioritizedResultCreator(final PRIORITY_TYPE maxPriority) {
-		Assert.paramNotNull(maxPriority, "maxPriority");
-		this.maxPriority = maxPriority;
-	}
+    /**
+     * Creates a new instance.
+     * 
+     * @param maxPriority The maximal priority of the priority type
+     */
+    public PrioritizedResultCreator(final PRIORITY_TYPE maxPriority) {
+        Assert.paramNotNull(maxPriority, "maxPriority");
+        this.maxPriority = maxPriority;
+    }
 
-	/**
-	 * Adds a new (partial) result.
-	 * 
-	 * @param result The result to add, may be null (null will be ignored)
-	 * @return true is result creator has max prio, false otherwise
-	 */
-	public boolean addResult(final IPriorityValue<VALUE_TYPE, PRIORITY_TYPE> result) {
-		if (result != null) {
-			final PRIORITY_TYPE currentPrio = currentResult != null ? currentResult.getPriority() : null;
-			if (NullCompatibleComparison.compareTo(result.getPriority(), currentPrio) >= 0) {
-				currentResult = result;
-			}
-		}
-		return hasMaxPrio();
-	}
+    /**
+     * Adds a new (partial) result.
+     * 
+     * @param result The result to add, may be null (null will be ignored)
+     * @return true is result creator has max prio, false otherwise
+     */
+    public boolean addResult(final IPriorityValue<VALUE_TYPE, PRIORITY_TYPE> result) {
+        if (result != null) {
+            final PRIORITY_TYPE currentPrio = currentResult != null ? currentResult.getPriority() : null;
+            if (NullCompatibleComparison.compareTo(result.getPriority(), currentPrio) >= 0) {
+                currentResult = result;
+            }
+        }
+        return hasMaxPrio();
+    }
 
-	/**
-	 * @return True, if the max priority is reached
-	 */
-	public boolean hasMaxPrio() {
-		if (currentResult != null) {
-			return NullCompatibleComparison.compareTo(currentResult.getPriority(), maxPriority) >= 0;
-		}
-		else {
-			return false;
-		}
-	}
+    /**
+     * @return True, if the max priority is reached
+     */
+    public boolean hasMaxPrio() {
+        if (currentResult != null) {
+            return NullCompatibleComparison.compareTo(currentResult.getPriority(), maxPriority) >= 0;
+        }
+        else {
+            return false;
+        }
+    }
 
-	/**
-	 * @return The current result, may be null if no results was added
-	 */
-	public IPriorityValue<VALUE_TYPE, PRIORITY_TYPE> getResult() {
-		return currentResult;
-	}
+    /**
+     * @return The current result, may be null if no results was added
+     */
+    public IPriorityValue<VALUE_TYPE, PRIORITY_TYPE> getResult() {
+        return currentResult;
+    }
 
-	@Override
-	public VALUE_TYPE getValue() {
-		if (currentResult != null) {
-			return currentResult.getValue();
-		}
-		else {
-			return null;
-		}
-	}
+    @Override
+    public VALUE_TYPE getValue() {
+        if (currentResult != null) {
+            return currentResult.getValue();
+        }
+        else {
+            return null;
+        }
+    }
 
-	@Override
-	public PRIORITY_TYPE getPriority() {
-		if (currentResult != null) {
-			return currentResult.getPriority();
-		}
-		else {
-			return null;
-		}
-	}
+    @Override
+    public PRIORITY_TYPE getPriority() {
+        if (currentResult != null) {
+            return currentResult.getPriority();
+        }
+        else {
+            return null;
+        }
+    }
 
 }

@@ -50,109 +50,109 @@ import org.jowidgets.tools.powo.JoFrame;
 
 public class DemoChooserFrame extends JoFrame {
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+    private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
-	private IPopupDialog popupDialog;
+    private IPopupDialog popupDialog;
 
-	private Date date;
+    private Date date;
 
-	public DemoChooserFrame() {
-		super("Chooser demo");
+    public DemoChooserFrame() {
+        super("Chooser demo");
 
-		addComponentListener(new IComponentListener() {
+        addComponentListener(new IComponentListener() {
 
-			@Override
-			public void sizeChanged() {
-				//CHECKSTYLE:OFF
-				System.out.println(getSize());
-				//CHECKSTYLE:ON
-			}
+            @Override
+            public void sizeChanged() {
+                //CHECKSTYLE:OFF
+                System.out.println(getSize());
+                //CHECKSTYLE:ON
+            }
 
-			@Override
-			public void positionChanged() {
-				//CHECKSTYLE:OFF
-				System.out.println(getPosition());
-				//CHECKSTYLE:ON
-			}
-		});
+            @Override
+            public void positionChanged() {
+                //CHECKSTYLE:OFF
+                System.out.println(getPosition());
+                //CHECKSTYLE:ON
+            }
+        });
 
-		setLayout(new MigLayoutDescriptor("[grow]", "[][][]"));
+        setLayout(new MigLayoutDescriptor("[grow]", "[][][]"));
 
-		final IButton button1 = add(BPF.button("Open calendar popup..."), "wrap, sg bg");
-		button1.addMouseListener(new MouseAdapter() {
+        final IButton button1 = add(BPF.button("Open calendar popup..."), "wrap, sg bg");
+        button1.addMouseListener(new MouseAdapter() {
 
-			@Override
-			public void mousePressed(final IMouseButtonEvent event) {
-				popupDialog = createChildWindow(BPF.popupDialog().setBorder(false));
-				final Position buttonPos = button1.getPosition();
-				popupDialog.setPosition(Toolkit.toScreen(buttonPos, DemoChooserFrame.this));
-				setContent(popupDialog);
-				popupDialog.pack();
-				popupDialog.setVisible(true);
-			}
+            @Override
+            public void mousePressed(final IMouseButtonEvent event) {
+                popupDialog = createChildWindow(BPF.popupDialog().setBorder(false));
+                final Position buttonPos = button1.getPosition();
+                popupDialog.setPosition(Toolkit.toScreen(buttonPos, DemoChooserFrame.this));
+                setContent(popupDialog);
+                popupDialog.pack();
+                popupDialog.setVisible(true);
+            }
 
-		});
+        });
 
-		final IButton button2 = add(BPF.button("Open / Close caledar popup"), "wrap, sg bg");
-		button2.addMouseListener(new MouseAdapter() {
+        final IButton button2 = add(BPF.button("Open / Close caledar popup"), "wrap, sg bg");
+        button2.addMouseListener(new MouseAdapter() {
 
-			@Override
-			public void mousePressed(final IMouseButtonEvent event) {
-				popupDialog = createChildWindow(BPF.popupDialog().setAutoDispose(false).setBorder(false));
-				final Dimension buttonSize = button2.getSize();
-				final Position buttonPos = button2.getPosition();
-				popupDialog.setBackgroundColor(Colors.WHITE);
-				setContent(popupDialog);
-				popupDialog.setPosition(Toolkit.toScreen(
-						new Position(buttonPos.getX(), buttonPos.getY() + buttonSize.getHeight()),
-						DemoChooserFrame.this));
-				popupDialog.pack();
-				popupDialog.setVisible(true);
-			}
+            @Override
+            public void mousePressed(final IMouseButtonEvent event) {
+                popupDialog = createChildWindow(BPF.popupDialog().setAutoDispose(false).setBorder(false));
+                final Dimension buttonSize = button2.getSize();
+                final Position buttonPos = button2.getPosition();
+                popupDialog.setBackgroundColor(Colors.WHITE);
+                setContent(popupDialog);
+                popupDialog.setPosition(Toolkit.toScreen(
+                        new Position(buttonPos.getX(), buttonPos.getY() + buttonSize.getHeight()),
+                        DemoChooserFrame.this));
+                popupDialog.pack();
+                popupDialog.setVisible(true);
+            }
 
-			@Override
-			public void mouseReleased(final IMouseButtonEvent mouseEvent) {
-				if (popupDialog != null) {
-					popupDialog.dispose();
-				}
-			}
+            @Override
+            public void mouseReleased(final IMouseButtonEvent mouseEvent) {
+                if (popupDialog != null) {
+                    popupDialog.dispose();
+                }
+            }
 
-		});
+        });
 
-		final IButton button3 = add(BPF.button("Open calendar dialog..."), "wrap, sg bg");
-		button3.addMouseListener(new MouseAdapter() {
+        final IButton button3 = add(BPF.button("Open calendar dialog..."), "wrap, sg bg");
+        button3.addMouseListener(new MouseAdapter() {
 
-			@Override
-			public void mousePressed(final IMouseButtonEvent event) {
-				final IFrame dialog = createChildWindow(BPF.dialog("Calendar dialog"));
-				final Position buttonPos = button3.getPosition();
-				dialog.setPosition(Toolkit.toScreen(buttonPos, DemoChooserFrame.this));
-				final ICalendar calendar = setContent(dialog);
-				dialog.pack();
-				dialog.setMinSize(dialog.computeDecoratedSize(calendar.getMinSize()));
-				dialog.setVisible(true);
-			}
+            @Override
+            public void mousePressed(final IMouseButtonEvent event) {
+                final IFrame dialog = createChildWindow(BPF.dialog("Calendar dialog"));
+                final Position buttonPos = button3.getPosition();
+                dialog.setPosition(Toolkit.toScreen(buttonPos, DemoChooserFrame.this));
+                final ICalendar calendar = setContent(dialog);
+                dialog.pack();
+                dialog.setMinSize(dialog.computeDecoratedSize(calendar.getMinSize()));
+                dialog.setVisible(true);
+            }
 
-		});
+        });
 
-	}
+    }
 
-	private ICalendar setContent(final IContainer container) {
+    private ICalendar setContent(final IContainer container) {
 
-		container.setLayout(MigLayoutFactory.growingInnerCellLayout());
-		final ICalendar calendar = container.add(BPF.calendar().setDate(this.date), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        container.setLayout(MigLayoutFactory.growingInnerCellLayout());
+        final ICalendar calendar = container.add(BPF.calendar().setDate(this.date), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
-		calendar.addInputListener(new IInputListener() {
-			@Override
-			public void inputChanged() {
-				//CHECKSTYLE:OFF
-				System.out.println(calendar.getDate());
-				date = calendar.getDate();
-				//CHECKSTYLE:ON
-			}
-		});
+        calendar.addInputListener(new IInputListener() {
+            @Override
+            public void inputChanged() {
+                //CHECKSTYLE:OFF
+                System.out.println(calendar.getDate());
+                date = calendar.getDate();
+                //CHECKSTYLE:ON
+            }
+        });
 
-		return calendar;
-	}
+        return calendar;
+    }
 
 }

@@ -56,113 +56,113 @@ import org.jowidgets.tools.controller.WindowAdapter;
 
 public final class TestToolkit implements ITestToolkit {
 
-	private final IBasicSimpleTestBluePrintFactory bpf;
+    private final IBasicSimpleTestBluePrintFactory bpf;
 
-	public TestToolkit() {
-		bpf = new BasicSimpleTestBluePrintFactory();
-	}
+    public TestToolkit() {
+        bpf = new BasicSimpleTestBluePrintFactory();
+    }
 
-	@Override
-	public IBasicSimpleTestBluePrintFactory getBluePrintFactory() {
-		return bpf;
-	}
+    @Override
+    public IBasicSimpleTestBluePrintFactory getBluePrintFactory() {
+        return bpf;
+    }
 
-	@Override
-	public IGenericWidgetFactory getWidgetFactory() {
-		return Toolkit.getWidgetFactory();
-	}
+    @Override
+    public IGenericWidgetFactory getWidgetFactory() {
+        return Toolkit.getWidgetFactory();
+    }
 
-	@Override
-	public IImageRegistry getImageRegistry() {
-		return Toolkit.getImageRegistry();
-	}
+    @Override
+    public IImageRegistry getImageRegistry() {
+        return Toolkit.getImageRegistry();
+    }
 
-	@Override
-	public IMessagePane getMessagePane() {
-		return Toolkit.getMessagePane();
-	}
+    @Override
+    public IMessagePane getMessagePane() {
+        return Toolkit.getMessagePane();
+    }
 
-	@Override
-	public IQuestionPane getQuestionPane() {
-		return Toolkit.getQuestionPane();
-	}
+    @Override
+    public IQuestionPane getQuestionPane() {
+        return Toolkit.getQuestionPane();
+    }
 
-	@Override
-	public IWidgetWrapperFactory getWidgetWrapperFactory() {
-		return Toolkit.getWidgetWrapperFactory();
-	}
+    @Override
+    public IWidgetWrapperFactory getWidgetWrapperFactory() {
+        return Toolkit.getWidgetWrapperFactory();
+    }
 
-	@Override
-	public IInputContentCreatorFactory getInputContentCreatorFactory() {
-		return Toolkit.getInputContentCreatorFactory();
-	}
+    @Override
+    public IInputContentCreatorFactory getInputContentCreatorFactory() {
+        return Toolkit.getInputContentCreatorFactory();
+    }
 
-	@Override
-	public IConverterProvider getConverterProvider() {
-		return Toolkit.getConverterProvider();
-	}
+    @Override
+    public IConverterProvider getConverterProvider() {
+        return Toolkit.getConverterProvider();
+    }
 
-	@Override
-	public IActionBuilderFactory getActionBuilderFactory() {
-		return Toolkit.getActionBuilderFactory();
-	}
+    @Override
+    public IActionBuilderFactory getActionBuilderFactory() {
+        return Toolkit.getActionBuilderFactory();
+    }
 
-	@Override
-	public IModelFactoryProvider getModelFactoryProvider() {
-		return Toolkit.getModelFactoryProvider();
-	}
+    @Override
+    public IModelFactoryProvider getModelFactoryProvider() {
+        return Toolkit.getModelFactoryProvider();
+    }
 
-	@Override
-	public IApplicationRunner getApplicationRunner() {
-		return Toolkit.getApplicationRunner();
-	}
+    @Override
+    public IApplicationRunner getApplicationRunner() {
+        return Toolkit.getApplicationRunner();
+    }
 
-	@Override
-	public IUiThreadAccess getUiThreadAccess() {
-		return Toolkit.getUiThreadAccess();
-	}
+    @Override
+    public IUiThreadAccess getUiThreadAccess() {
+        return Toolkit.getUiThreadAccess();
+    }
 
-	@Override
-	public IWidgetUtils getWidgetUtils() {
-		return Toolkit.getWidgetUtils();
-	}
+    @Override
+    public IWidgetUtils getWidgetUtils() {
+        return Toolkit.getWidgetUtils();
+    }
 
-	@Override
-	public IWindow getActiveWindow() {
-		return Toolkit.getActiveWindow();
-	}
+    @Override
+    public IWindow getActiveWindow() {
+        return Toolkit.getActiveWindow();
+    }
 
-	@Override
-	public List<IWindow> getAllWindows() {
-		return Toolkit.getAllWindows();
-	}
+    @Override
+    public List<IWindow> getAllWindows() {
+        return Toolkit.getAllWindows();
+    }
 
-	@Override
-	public Position toScreen(final Position localPosition, final IComponent component) {
-		return Toolkit.toScreen(localPosition, component);
-	}
+    @Override
+    public Position toScreen(final Position localPosition, final IComponent component) {
+        return Toolkit.toScreen(localPosition, component);
+    }
 
-	@Override
-	public Position toLocal(final Position screenPosition, final IComponent component) {
-		return Toolkit.toLocal(screenPosition, component);
-	}
+    @Override
+    public Position toLocal(final Position screenPosition, final IComponent component) {
+        return Toolkit.toLocal(screenPosition, component);
+    }
 
-	@Override
-	public IFrameUi createRootFrame(final IFrameDescriptorUi descriptor) {
-		return Toolkit.getWidgetFactory().create(descriptor);
-	}
+    @Override
+    public IFrameUi createRootFrame(final IFrameDescriptorUi descriptor) {
+        return Toolkit.getWidgetFactory().create(descriptor);
+    }
 
-	@Override
-	public IFrameUi createRootFrame(final IFrameDescriptorUi descriptor, final IApplicationLifecycle lifecycle) {
-		final IFrameUi result = Toolkit.getWidgetFactory().create(descriptor);
-		result.addWindowListener(new WindowAdapter() {
+    @Override
+    public IFrameUi createRootFrame(final IFrameDescriptorUi descriptor, final IApplicationLifecycle lifecycle) {
+        final IFrameUi result = Toolkit.getWidgetFactory().create(descriptor);
+        result.addWindowListener(new WindowAdapter() {
 
-			@Override
-			public void windowClosed() {
-				lifecycle.finish();
-			}
+            @Override
+            public void windowClosed() {
+                lifecycle.finish();
+            }
 
-		});
-		return result;
-	}
+        });
+        return result;
+    }
 }

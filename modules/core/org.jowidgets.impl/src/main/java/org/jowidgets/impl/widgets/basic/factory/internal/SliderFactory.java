@@ -40,19 +40,19 @@ import org.jowidgets.spi.widgets.ISliderSpi;
 
 public class SliderFactory extends AbstractWidgetFactory implements IWidgetFactory<ISlider, ISliderDescriptor> {
 
-	public SliderFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+    public SliderFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider,
+        final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
-	}
+        super(genericWidgetFactory, widgetsServiceProvider, bpF);
+    }
 
-	@Override
-	public ISlider create(final Object parentUiReference, final ISliderDescriptor descriptor) {
-		final ISliderBluePrintSpi bp = getSpiBluePrintFactory().slider().setSetup(descriptor);
-		final ISliderSpi sliderSpi = getSpiWidgetFactory().createSlider(parentUiReference, bp);
-		return new SliderImpl(sliderSpi, descriptor);
-	}
+    @Override
+    public ISlider create(final Object parentUiReference, final ISliderDescriptor descriptor) {
+        final ISliderBluePrintSpi bp = getSpiBluePrintFactory().slider().setSetup(descriptor);
+        final ISliderSpi sliderSpi = getSpiWidgetFactory().createSlider(parentUiReference, bp);
+        return new SliderImpl(sliderSpi, descriptor);
+    }
 
 }

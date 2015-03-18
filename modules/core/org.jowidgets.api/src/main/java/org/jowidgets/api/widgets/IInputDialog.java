@@ -31,8 +31,8 @@ import org.jowidgets.common.types.Dimension;
 
 public interface IInputDialog<INPUT_TYPE> extends IWindow, IInputComponent<INPUT_TYPE> {
 
-	void setMinSize(Dimension minSize);
+    void setMinSize(Dimension minSize);
 
-	boolean isOkPressed();
+    boolean isOkPressed();
 
 }

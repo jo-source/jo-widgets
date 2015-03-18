@@ -33,9 +33,9 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 
 public class TreeViewerDefaults implements IDefaultInitializer<ITreeViewerSetupBuilder<?, ?>> {
 
-	@Override
-	public void initialize(final ITreeViewerSetupBuilder<?, ?> builder) {
-		builder.setCreationPolicy(TreeViewerCreationPolicy.CREATE_COMPLETE);
-	}
+    @Override
+    public void initialize(final ITreeViewerSetupBuilder<?, ?> builder) {
+        builder.setCreationPolicy(TreeViewerCreationPolicy.CREATE_COMPLETE);
+    }
 
 }

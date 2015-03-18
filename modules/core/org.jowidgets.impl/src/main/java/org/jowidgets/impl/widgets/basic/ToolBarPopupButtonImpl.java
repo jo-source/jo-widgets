@@ -55,186 +55,186 @@ import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 
 public class ToolBarPopupButtonImpl extends ToolBarPopupButtonSpiWrapper implements IToolBarPopupButton, IActionWidget {
 
-	private final IToolBar parent;
-	private final IPopupDetectionListener popupListener;
-	private final IItemModelListener modelListener;
-	private final ToolBarItemDiposableDelegate disposableDelegate;
+    private final IToolBar parent;
+    private final IPopupDetectionListener popupListener;
+    private final IItemModelListener modelListener;
+    private final ToolBarItemDiposableDelegate disposableDelegate;
 
-	private IMenuModel popupMenuModel;
-	private IPopupMenu popupMenu;
+    private IMenuModel popupMenuModel;
+    private IPopupMenu popupMenu;
 
-	private ActionWidgetSync actionWidgetSync;
-	private ActionExecuter actionExecuter;
-	private IAction action;
+    private ActionWidgetSync actionWidgetSync;
+    private ActionExecuter actionExecuter;
+    private IAction action;
 
-	public ToolBarPopupButtonImpl(
-		final IToolBar parent,
-		final IToolBarPopupButtonSpi toolBarPopupButtonSpi,
-		final IItemSetup setup) {
-		super(toolBarPopupButtonSpi, new ItemModelBindingDelegate(
-			new ToolBarItemSpiInvoker(toolBarPopupButtonSpi),
-			new PopupActionItemModelBuilder().build()));
+    public ToolBarPopupButtonImpl(
+        final IToolBar parent,
+        final IToolBarPopupButtonSpi toolBarPopupButtonSpi,
+        final IItemSetup setup) {
+        super(toolBarPopupButtonSpi, new ItemModelBindingDelegate(
+            new ToolBarItemSpiInvoker(toolBarPopupButtonSpi),
+            new PopupActionItemModelBuilder().build()));
 
-		this.parent = parent;
-		this.disposableDelegate = new ToolBarItemDiposableDelegate(this, getItemModelBindingDelegate());
+        this.parent = parent;
+        this.disposableDelegate = new ToolBarItemDiposableDelegate(this, getItemModelBindingDelegate());
 
-		setText(setup.getText());
-		setToolTipText(setup.getToolTipText());
-		setIcon(setup.getIcon());
+        setText(setup.getText());
+        setToolTipText(setup.getToolTipText());
+        setIcon(setup.getIcon());
 
-		this.modelListener = new IItemModelListener() {
-			@Override
-			public void itemChanged(final IItemModel item) {
-				getModel().removeItemModelListener(modelListener);
-				if (getModel().getAction() != action) {
-					setActionValue(getModel().getAction(), ActionStyle.OMIT_TEXT);
-				}
-				if (getModel().getPopupMenu() != popupMenuModel) {
-					setPopupMenuValue(getModel().getPopupMenu());
-				}
-				getModel().addItemModelListener(modelListener);
-			}
-		};
+        this.modelListener = new IItemModelListener() {
+            @Override
+            public void itemChanged(final IItemModel item) {
+                getModel().removeItemModelListener(modelListener);
+                if (getModel().getAction() != action) {
+                    setActionValue(getModel().getAction(), ActionStyle.OMIT_TEXT);
+                }
+                if (getModel().getPopupMenu() != popupMenuModel) {
+                    setPopupMenuValue(getModel().getPopupMenu());
+                }
+                getModel().addItemModelListener(modelListener);
+            }
+        };
 
-		getModel().addItemModelListener(modelListener);
+        getModel().addItemModelListener(modelListener);
 
-		addActionListener(new IActionListener() {
-			@Override
-			public void actionPerformed() {
-				if (actionExecuter != null) {
-					actionExecuter.execute();
-				}
-			}
-		});
+        addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                if (actionExecuter != null) {
+                    actionExecuter.execute();
+                }
+            }
+        });
 
-		this.popupListener = new IPopupDetectionListener() {
+        this.popupListener = new IPopupDetectionListener() {
 
-			@Override
-			public void popupDetected(final Position position) {
-				if (popupMenuModel != null) {
-					if (popupMenu == null) {
-						popupMenu = parent.createPopupMenu();
-					}
-					if (popupMenu.getModel() != popupMenuModel) {
-						popupMenu.setModel(popupMenuModel);
-					}
-					popupMenu.show(position);
-				}
-			}
-		};
+            @Override
+            public void popupDetected(final Position position) {
+                if (popupMenuModel != null) {
+                    if (popupMenu == null) {
+                        popupMenu = parent.createPopupMenu();
+                    }
+                    if (popupMenu.getModel() != popupMenuModel) {
+                        popupMenu.setModel(popupMenuModel);
+                    }
+                    popupMenu.show(position);
+                }
+            }
+        };
 
-	}
+    }
 
-	@Override
-	public IToolBar getParent() {
-		return parent;
-	}
+    @Override
+    public IToolBar getParent() {
+        return parent;
+    }
 
-	@Override
-	public void setAction(final IAction action) {
-		setAction(action, ActionStyle.OMIT_TEXT);
-	}
+    @Override
+    public void setAction(final IAction action) {
+        setAction(action, ActionStyle.OMIT_TEXT);
+    }
 
-	@Override
-	public void setAction(final IAction action, final ActionStyle style) {
-		setActionValue(action, style);
-		getModel().removeItemModelListener(modelListener);
-		getModel().setAction(action);
-		getModel().addItemModelListener(modelListener);
-	}
+    @Override
+    public void setAction(final IAction action, final ActionStyle style) {
+        setActionValue(action, style);
+        getModel().removeItemModelListener(modelListener);
+        getModel().setAction(action);
+        getModel().addItemModelListener(modelListener);
+    }
 
-	@Override
-	public void dispose() {
-		if (!isDisposed()) {
-			if (popupMenu != null) {
-				popupMenu.dispose();
-			}
-			getModel().removeItemModelListener(modelListener);
-			disposeActionWidgetSync();
-			disposableDelegate.dispose();
-		}
-	}
+    @Override
+    public void dispose() {
+        if (!isDisposed()) {
+            if (popupMenu != null) {
+                popupMenu.dispose();
+            }
+            getModel().removeItemModelListener(modelListener);
+            disposeActionWidgetSync();
+            disposableDelegate.dispose();
+        }
+    }
 
-	@Override
-	public boolean isDisposed() {
-		return disposableDelegate.isDisposed();
-	}
+    @Override
+    public boolean isDisposed() {
+        return disposableDelegate.isDisposed();
+    }
 
-	@Override
-	public void addDisposeListener(final IDisposeListener listener) {
-		disposableDelegate.addDisposeListener(listener);
-	}
+    @Override
+    public void addDisposeListener(final IDisposeListener listener) {
+        disposableDelegate.addDisposeListener(listener);
+    }
 
-	@Override
-	public void removeDisposeListener(final IDisposeListener listener) {
-		disposableDelegate.removeDisposeListener(listener);
-	}
+    @Override
+    public void removeDisposeListener(final IDisposeListener listener) {
+        disposableDelegate.removeDisposeListener(listener);
+    }
 
-	@Override
-	public void setPopupMenu(final IMenuModel popupMenuModel) {
-		setPopupMenuValue(popupMenuModel);
-		getModel().removeItemModelListener(modelListener);
-		getModel().setPopupMenu(popupMenuModel);
-		getModel().addItemModelListener(modelListener);
-	}
+    @Override
+    public void setPopupMenu(final IMenuModel popupMenuModel) {
+        setPopupMenuValue(popupMenuModel);
+        getModel().removeItemModelListener(modelListener);
+        getModel().setPopupMenu(popupMenuModel);
+        getModel().addItemModelListener(modelListener);
+    }
 
-	private void setActionValue(final IAction action, final ActionStyle style) {
-		if (this.action != action) {
-			//dispose the old sync if exists
-			disposeActionWidgetSync();
+    private void setActionValue(final IAction action, final ActionStyle style) {
+        if (this.action != action) {
+            //dispose the old sync if exists
+            disposeActionWidgetSync();
 
-			actionWidgetSync = new ActionWidgetSync(action, style, this);
-			actionWidgetSync.setActive(true);
+            actionWidgetSync = new ActionWidgetSync(action, style, this);
+            actionWidgetSync.setActive(true);
 
-			actionExecuter = new ActionExecuter(action, this);
+            actionExecuter = new ActionExecuter(action, this);
 
-			this.action = action;
-		}
-	}
+            this.action = action;
+        }
+    }
 
-	private void setPopupMenuValue(final IMenuModel popupMenuModel) {
-		if (this.popupMenuModel != popupMenuModel) {
-			if (popupMenuModel == null && this.popupMenuModel != null) {
-				removePopupDetectionListener(popupListener);
-			}
-			else if (popupMenuModel != null && this.popupMenuModel == null) {
-				addPopupDetectionListener(popupListener);
-			}
-			this.popupMenuModel = popupMenuModel;
-		}
-	}
+    private void setPopupMenuValue(final IMenuModel popupMenuModel) {
+        if (this.popupMenuModel != popupMenuModel) {
+            if (popupMenuModel == null && this.popupMenuModel != null) {
+                removePopupDetectionListener(popupListener);
+            }
+            else if (popupMenuModel != null && this.popupMenuModel == null) {
+                addPopupDetectionListener(popupListener);
+            }
+            this.popupMenuModel = popupMenuModel;
+        }
+    }
 
-	private void disposeActionWidgetSync() {
-		if (actionWidgetSync != null) {
-			actionWidgetSync.dispose();
-			actionWidgetSync = null;
-		}
-	}
+    private void disposeActionWidgetSync() {
+        if (actionWidgetSync != null) {
+            actionWidgetSync.dispose();
+            actionWidgetSync = null;
+        }
+    }
 
-	@Override
-	public IPopupActionItemModel getModel() {
-		return (IPopupActionItemModel) getItemModelBindingDelegate().getModel();
-	}
+    @Override
+    public IPopupActionItemModel getModel() {
+        return (IPopupActionItemModel) getItemModelBindingDelegate().getModel();
+    }
 
-	@Override
-	public void setModel(final IPopupActionItemModel model) {
-		if (getModel() != null) {
-			getModel().removeItemModelListener(modelListener);
-		}
-		getItemModelBindingDelegate().setModel(model);
-		setActionValue(model.getAction(), ActionStyle.OMIT_TEXT);
-		setPopupMenuValue(model.getPopupMenu());
-		model.addItemModelListener(modelListener);
-	}
+    @Override
+    public void setModel(final IPopupActionItemModel model) {
+        if (getModel() != null) {
+            getModel().removeItemModelListener(modelListener);
+        }
+        getItemModelBindingDelegate().setModel(model);
+        setActionValue(model.getAction(), ActionStyle.OMIT_TEXT);
+        setPopupMenuValue(model.getPopupMenu());
+        model.addItemModelListener(modelListener);
+    }
 
-	@Override
-	public void setModel(final IToolBarItemModel model) {
-		if (model instanceof IPopupActionItemModel) {
-			setModel((IPopupActionItemModel) model);
-		}
-		else {
-			throw new IllegalArgumentException("Model type '" + IPopupActionItemModel.class.getName() + "' expected");
-		}
-	}
+    @Override
+    public void setModel(final IToolBarItemModel model) {
+        if (model instanceof IPopupActionItemModel) {
+            setModel((IPopupActionItemModel) model);
+        }
+        else {
+            throw new IllegalArgumentException("Model type '" + IPopupActionItemModel.class.getName() + "' expected");
+        }
+    }
 
 }

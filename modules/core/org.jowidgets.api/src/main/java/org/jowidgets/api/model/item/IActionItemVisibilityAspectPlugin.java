@@ -30,15 +30,15 @@ package org.jowidgets.api.model.item;
 
 public interface IActionItemVisibilityAspectPlugin {
 
-	/**
-	 * Gets the visibility aspect of the plugin
-	 * 
-	 * @return The visibility aspect, never null
-	 */
-	IActionItemVisibilityAspect getVisibilityAspect();
+    /**
+     * Gets the visibility aspect of the plugin
+     * 
+     * @return The visibility aspect, never null
+     */
+    IActionItemVisibilityAspect getVisibilityAspect();
 
-	/**
-	 * @return The order the plugin should be invoked, lower values implies an earlier invocation
-	 */
-	int getOrder();
+    /**
+     * @return The order the plugin should be invoked, lower values implies an earlier invocation
+     */
+    int getOrder();
 }

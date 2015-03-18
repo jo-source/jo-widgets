@@ -37,52 +37,52 @@ import org.junit.Test;
 
 public class AcceptingRegExpTest {
 
-	@Test
-	public void createFloatTest() {
+    @Test
+    public void createFloatTest() {
 
-		// Get the regex of the doubleNumber converter
-		final Locale defaultLocale = Locale.getDefault();
-		Locale.setDefault(Locale.GERMAN);
-		final String regex = Toolkit.getConverterProvider().doubleNumber().getAcceptingRegExp();
-		Locale.setDefault(defaultLocale);
+        // Get the regex of the doubleNumber converter
+        final Locale defaultLocale = Locale.getDefault();
+        Locale.setDefault(Locale.GERMAN);
+        final String regex = Toolkit.getConverterProvider().doubleNumber().getAcceptingRegExp();
+        Locale.setDefault(defaultLocale);
 
-		// All cases which have to be true
-		final String[] caseTrue = {"123165466554,55", "132.123.123.123,123", "1,234", "-1234567,55", "-12.345.674,54", "-12,345"};
+        // All cases which have to be true
+        final String[] caseTrue = {"123165466554,55", "132.123.123.123,123", "1,234", "-1234567,55", "-12.345.674,54", "-12,345"};
 
-		// All cases wich have to be false
-		final String[] caseFalse = {"abcdefg", "-abd", "1.33.23,455", "1,434,343", "1.535.22,565", ",00", "-,88"};
+        // All cases wich have to be false
+        final String[] caseFalse = {"abcdefg", "-abd", "1.33.23,455", "1,434,343", "1.535.22,565", ",00", "-,88"};
 
-		// Test all true cases
-		for (int i = 0; i <= caseTrue.length - 1; i++) {
-			Assert.assertTrue(matchString(regex, caseTrue[i]));
-			Assert.assertTrue(entryStringPossible(regex, caseTrue[i]));
-		}
+        // Test all true cases
+        for (int i = 0; i <= caseTrue.length - 1; i++) {
+            Assert.assertTrue(matchString(regex, caseTrue[i]));
+            Assert.assertTrue(entryStringPossible(regex, caseTrue[i]));
+        }
 
-		// Test all false cases
-		for (int i = 0; i <= caseFalse.length - 1; i++) {
-			Assert.assertFalse(matchString(regex, caseFalse[i]));
-			Assert.assertFalse(entryStringPossible(regex, caseFalse[i]));
-		}
+        // Test all false cases
+        for (int i = 0; i <= caseFalse.length - 1; i++) {
+            Assert.assertFalse(matchString(regex, caseFalse[i]));
+            Assert.assertFalse(entryStringPossible(regex, caseFalse[i]));
+        }
 
-	}
+    }
 
-	public boolean matchString(final String regex, final String str) {
-		final boolean matches = Pattern.matches(regex, str);
-		return matches;
-	}
+    public boolean matchString(final String regex, final String str) {
+        final boolean matches = Pattern.matches(regex, str);
+        return matches;
+    }
 
-	public boolean entryStringPossible(final String regex, final String str) {
-		boolean test = true;
+    public boolean entryStringPossible(final String regex, final String str) {
+        boolean test = true;
 
-		String x = "";
+        String x = "";
 
-		for (int i = 0; i <= str.length() - 1; i++) {
-			x += str.subSequence(i, i + 1);
-			if (!matchString(regex, x)) {
-				test = false;
-			}
-		}
-		return test;
-	}
+        for (int i = 0; i <= str.length() - 1; i++) {
+            x += str.subSequence(i, i + 1);
+            if (!matchString(regex, x)) {
+                test = false;
+            }
+        }
+        return test;
+    }
 
 }

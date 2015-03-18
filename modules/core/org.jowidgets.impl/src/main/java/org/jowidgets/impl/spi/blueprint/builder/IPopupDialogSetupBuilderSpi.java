@@ -30,6 +30,6 @@ package org.jowidgets.impl.spi.blueprint.builder;
 import org.jowidgets.common.widgets.builder.IPopupDialogSetupBuilderCommon;
 
 public interface IPopupDialogSetupBuilderSpi<INSTANCE_TYPE extends IPopupDialogSetupBuilderSpi<?>> extends
-		IPopupDialogSetupBuilderCommon<INSTANCE_TYPE> {
+        IPopupDialogSetupBuilderCommon<INSTANCE_TYPE> {
 
 }

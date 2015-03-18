@@ -36,16 +36,16 @@ import org.jowidgets.spi.clipboard.TransferTypeSpi;
 
 public interface IDropEventSpi {
 
-	Position getPosition();
+    Position getPosition();
 
-	Set<DropAction> getSupportedActions();
+    Set<DropAction> getSupportedActions();
 
-	DropAction getDropAction();
+    DropAction getDropAction();
 
-	Object getDropSelection();
+    Object getDropSelection();
 
-	Object getData();
+    Object getData();
 
-	TransferTypeSpi getTransferType();
+    TransferTypeSpi getTransferType();
 
 }

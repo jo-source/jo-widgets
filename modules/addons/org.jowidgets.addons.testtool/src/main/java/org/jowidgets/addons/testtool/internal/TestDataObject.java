@@ -33,40 +33,40 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(propOrder = {"type", "id", "action", "value"})
 public class TestDataObject {
 
-	private String id;
-	private UserAction action;
-	private String type;
-	private String value;
+    private String id;
+    private UserAction action;
+    private String type;
+    private String value;
 
-	public String getType() {
-		return type;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public void setType(final String type) {
-		this.type = type;
-	}
+    public void setType(final String type) {
+        this.type = type;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setId(final String id) {
-		this.id = id;
-	}
+    public void setId(final String id) {
+        this.id = id;
+    }
 
-	public UserAction getAction() {
-		return action;
-	}
+    public UserAction getAction() {
+        return action;
+    }
 
-	public void setAction(final UserAction action) {
-		this.action = action;
-	}
+    public void setAction(final UserAction action) {
+        this.action = action;
+    }
 
-	public void setValue(final String value) {
-		this.value = value;
-	}
+    public void setValue(final String value) {
+        this.value = value;
+    }
 
-	public String getValue() {
-		return value;
-	}
+    public String getValue() {
+        return value;
+    }
 }

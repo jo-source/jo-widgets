@@ -39,61 +39,61 @@ import org.jowidgets.spi.widgets.ICompositeSpi;
 
 public class SwingComposite extends SwingContainer implements ICompositeSpi {
 
-	private final SwingControl swingControlDelegate;
+    private final SwingControl swingControlDelegate;
 
-	public SwingComposite(final IGenericWidgetFactory factory, final Container container) {
-		this(factory, container, null);
-	}
+    public SwingComposite(final IGenericWidgetFactory factory, final Container container) {
+        this(factory, container, null);
+    }
 
-	public SwingComposite(
-		final IGenericWidgetFactory factory,
-		final Container container,
-		IDropSelectionProvider dropSelectionProvider) {
-		super(factory, container);
-		if (dropSelectionProvider == null) {
-			if (this instanceof IDropSelectionProvider) {
-				dropSelectionProvider = (IDropSelectionProvider) this;
-			}
-			else {
-				dropSelectionProvider = new ImmutableDropSelection(this);
-			}
-		}
-		this.swingControlDelegate = new SwingControl(container, dropSelectionProvider);
-	}
+    public SwingComposite(
+        final IGenericWidgetFactory factory,
+        final Container container,
+        IDropSelectionProvider dropSelectionProvider) {
+        super(factory, container);
+        if (dropSelectionProvider == null) {
+            if (this instanceof IDropSelectionProvider) {
+                dropSelectionProvider = (IDropSelectionProvider) this;
+            }
+            else {
+                dropSelectionProvider = new ImmutableDropSelection(this);
+            }
+        }
+        this.swingControlDelegate = new SwingControl(container, dropSelectionProvider);
+    }
 
-	@Override
-	public void setLayoutConstraints(final Object layoutConstraints) {
-		swingControlDelegate.setLayoutConstraints(layoutConstraints);
-	}
+    @Override
+    public void setLayoutConstraints(final Object layoutConstraints) {
+        swingControlDelegate.setLayoutConstraints(layoutConstraints);
+    }
 
-	@Override
-	public Object getLayoutConstraints() {
-		return swingControlDelegate.getLayoutConstraints();
-	}
+    @Override
+    public Object getLayoutConstraints() {
+        return swingControlDelegate.getLayoutConstraints();
+    }
 
-	@Override
-	public Dimension getMinSize() {
-		return swingControlDelegate.getMinSize();
-	}
+    @Override
+    public Dimension getMinSize() {
+        return swingControlDelegate.getMinSize();
+    }
 
-	@Override
-	public Dimension getPreferredSize() {
-		return swingControlDelegate.getPreferredSize();
-	}
+    @Override
+    public Dimension getPreferredSize() {
+        return swingControlDelegate.getPreferredSize();
+    }
 
-	@Override
-	public Dimension getMaxSize() {
-		return swingControlDelegate.getMaxSize();
-	}
+    @Override
+    public Dimension getMaxSize() {
+        return swingControlDelegate.getMaxSize();
+    }
 
-	@Override
-	public IDragSourceSpi getDragSource() {
-		return swingControlDelegate.getDragSource();
-	}
+    @Override
+    public IDragSourceSpi getDragSource() {
+        return swingControlDelegate.getDragSource();
+    }
 
-	@Override
-	public IDropTargetSpi getDropTarget() {
-		return swingControlDelegate.getDropTarget();
-	}
+    @Override
+    public IDropTargetSpi getDropTarget() {
+        return swingControlDelegate.getDropTarget();
+    }
 
 }

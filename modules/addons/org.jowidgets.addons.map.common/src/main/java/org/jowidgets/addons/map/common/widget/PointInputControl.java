@@ -52,148 +52,148 @@ import de.micromata.opengis.kml.v_2_2_0.Point;
 
 final class PointInputControl extends ControlWrapper implements IPointInputControl {
 
-	private static final String PLACEMARK_ID = PointInputControl.class.getSimpleName();
+    private static final String PLACEMARK_ID = PointInputControl.class.getSimpleName();
 
-	private final InputObservable inputObservable = new InputObservable();;
-	private final CompoundValidator<Point> compoundValidator = new CompoundValidator<Point>();
-	private final ValidationCache validationCache;
+    private final InputObservable inputObservable = new InputObservable();;
+    private final CompoundValidator<Point> compoundValidator = new CompoundValidator<Point>();
+    private final ValidationCache validationCache;
 
-	private IMapContext mapContext;
-	private Point value;
-	private Point lastUnmodifiedValue;
-	private boolean editable;
+    private IMapContext mapContext;
+    private Point value;
+    private Point lastUnmodifiedValue;
+    private boolean editable;
 
-	PointInputControl(final Object parentUiReference, final IPointInputControlBlueprint descriptor) {
-		super(Toolkit.getWidgetFactory().create(
-				parentUiReference,
-				Toolkit.getBluePrintFactory().bluePrint(IMapWidgetBlueprint.class)));
+    PointInputControl(final Object parentUiReference, final IPointInputControlBlueprint descriptor) {
+        super(Toolkit.getWidgetFactory().create(
+                parentUiReference,
+                Toolkit.getBluePrintFactory().bluePrint(IMapWidgetBlueprint.class)));
 
-		VisibiliySettingsInvoker.setVisibility(descriptor, this);
-		ColorSettingsInvoker.setColors(descriptor, this);
+        VisibiliySettingsInvoker.setVisibility(descriptor, this);
+        ColorSettingsInvoker.setColors(descriptor, this);
 
-		setValue(descriptor.getValue());
-		setEditable(descriptor.isEditable());
+        setValue(descriptor.getValue());
+        setEditable(descriptor.isEditable());
 
-		final IValidator<Point> validator = descriptor.getValidator();
-		if (validator != null) {
-			addValidator(validator);
-		}
+        final IValidator<Point> validator = descriptor.getValidator();
+        if (validator != null) {
+            addValidator(validator);
+        }
 
-		validationCache = new ValidationCache(new IValidationResultCreator() {
-			@Override
-			public IValidationResult createValidationResult() {
-				return compoundValidator.validate(getValue());
-			}
-		});
+        validationCache = new ValidationCache(new IValidationResultCreator() {
+            @Override
+            public IValidationResult createValidationResult() {
+                return compoundValidator.validate(getValue());
+            }
+        });
 
-		resetModificationState();
-		validationCache.setDirty();
+        resetModificationState();
+        validationCache.setDirty();
 
-		((IMap) getWidget()).initialize(new IAvailableCallback() {
-			@Override
-			public void onAvailable(final IMapContext mapContext) {
-				PointInputControl.this.mapContext = mapContext;
-				updateValue(true);
-				setEditable(editable);
-			}
-		});
-	}
+        ((IMap) getWidget()).initialize(new IAvailableCallback() {
+            @Override
+            public void onAvailable(final IMapContext mapContext) {
+                PointInputControl.this.mapContext = mapContext;
+                updateValue(true);
+                setEditable(editable);
+            }
+        });
+    }
 
-	@Override
-	public void setValue(final Point value) {
-		setValue(value, true);
-	}
+    @Override
+    public void setValue(final Point value) {
+        setValue(value, true);
+    }
 
-	private void setValue(final Point value, final boolean flyTo) {
-		if (!NullCompatibleEquivalence.equals(this.value, value)) {
-			this.value = value;
-			inputObservable.fireInputChanged();
-			validationCache.setDirty();
-			updateValue(flyTo);
-		}
-	}
+    private void setValue(final Point value, final boolean flyTo) {
+        if (!NullCompatibleEquivalence.equals(this.value, value)) {
+            this.value = value;
+            inputObservable.fireInputChanged();
+            validationCache.setDirty();
+            updateValue(flyTo);
+        }
+    }
 
-	private void updateValue(final boolean flyTo) {
-		if (mapContext != null) {
-			mapContext.removeFeature(PLACEMARK_ID);
-			if (value != null) {
-				final Placemark placemark = KmlFactory.createPlacemark();
-				placemark.setId(PLACEMARK_ID);
-				placemark.setGeometry(value);
-				mapContext.addFeature(placemark);
-				if (flyTo) {
-					mapContext.flyTo(PLACEMARK_ID, 250000);
-				}
-			}
-		}
-	}
+    private void updateValue(final boolean flyTo) {
+        if (mapContext != null) {
+            mapContext.removeFeature(PLACEMARK_ID);
+            if (value != null) {
+                final Placemark placemark = KmlFactory.createPlacemark();
+                placemark.setId(PLACEMARK_ID);
+                placemark.setGeometry(value);
+                mapContext.addFeature(placemark);
+                if (flyTo) {
+                    mapContext.flyTo(PLACEMARK_ID, 250000);
+                }
+            }
+        }
+    }
 
-	@Override
-	public Point getValue() {
-		return value;
-	}
+    @Override
+    public Point getValue() {
+        return value;
+    }
 
-	@Override
-	public void setEditable(final boolean editable) {
-		if (mapContext != null) {
-			if (editable && !mapContext.isDesignationRunning()) {
-				mapContext.startDesignation(Point.class, new IDesignationListener<Point>() {
-					@Override
-					public void onDesignation(final Point object) {
-						setValue(object, false);
-					}
-				});
-			}
-			else if (!editable && mapContext.isDesignationRunning()) {
-				mapContext.endDesignation();
-			}
-		}
-		this.editable = editable;
-	}
+    @Override
+    public void setEditable(final boolean editable) {
+        if (mapContext != null) {
+            if (editable && !mapContext.isDesignationRunning()) {
+                mapContext.startDesignation(Point.class, new IDesignationListener<Point>() {
+                    @Override
+                    public void onDesignation(final Point object) {
+                        setValue(object, false);
+                    }
+                });
+            }
+            else if (!editable && mapContext.isDesignationRunning()) {
+                mapContext.endDesignation();
+            }
+        }
+        this.editable = editable;
+    }
 
-	@Override
-	public boolean isEditable() {
-		return editable;
-	}
+    @Override
+    public boolean isEditable() {
+        return editable;
+    }
 
-	@Override
-	public IValidationResult validate() {
-		return validationCache.validate();
-	}
+    @Override
+    public IValidationResult validate() {
+        return validationCache.validate();
+    }
 
-	@Override
-	public void addValidationConditionListener(final IValidationConditionListener listener) {
-		validationCache.addValidationConditionListener(listener);
-	}
+    @Override
+    public void addValidationConditionListener(final IValidationConditionListener listener) {
+        validationCache.addValidationConditionListener(listener);
+    }
 
-	@Override
-	public void removeValidationConditionListener(final IValidationConditionListener listener) {
-		validationCache.removeValidationConditionListener(listener);
-	}
+    @Override
+    public void removeValidationConditionListener(final IValidationConditionListener listener) {
+        validationCache.removeValidationConditionListener(listener);
+    }
 
-	@Override
-	public void addValidator(final IValidator<Point> validator) {
-		compoundValidator.addValidator(validator);
-	}
+    @Override
+    public void addValidator(final IValidator<Point> validator) {
+        compoundValidator.addValidator(validator);
+    }
 
-	@Override
-	public boolean hasModifications() {
-		return !NullCompatibleEquivalence.equals(lastUnmodifiedValue, getValue());
-	}
+    @Override
+    public boolean hasModifications() {
+        return !NullCompatibleEquivalence.equals(lastUnmodifiedValue, getValue());
+    }
 
-	@Override
-	public void resetModificationState() {
-		lastUnmodifiedValue = value;
-	}
+    @Override
+    public void resetModificationState() {
+        lastUnmodifiedValue = value;
+    }
 
-	@Override
-	public void addInputListener(final IInputListener listener) {
-		inputObservable.addInputListener(listener);
-	}
+    @Override
+    public void addInputListener(final IInputListener listener) {
+        inputObservable.addInputListener(listener);
+    }
 
-	@Override
-	public void removeInputListener(final IInputListener listener) {
-		inputObservable.removeInputListener(listener);
-	}
+    @Override
+    public void removeInputListener(final IInputListener listener) {
+        inputObservable.removeInputListener(listener);
+    }
 
 }

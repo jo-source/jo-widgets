@@ -35,124 +35,124 @@ import org.jowidgets.common.types.VirtualKey;
 
 public final class VirtualKeyConvert {
 
-	private static Map<VirtualKey, Integer> virtualKeyToKeyCode;
-	private static Map<Integer, VirtualKey> keyCodeToVirtualKey;
+    private static Map<VirtualKey, Integer> virtualKeyToKeyCode;
+    private static Map<Integer, VirtualKey> keyCodeToVirtualKey;
 
-	private VirtualKeyConvert() {};
+    private VirtualKeyConvert() {};
 
-	public static int convert(final VirtualKey virtualKey) {
-		int result;
+    public static int convert(final VirtualKey virtualKey) {
+        int result;
 
-		if (virtualKey.isCharacter()) {
-			result = virtualKey.getCharacter().charValue();
-		}
-		else {
-			result = convertVirtualKeyToKeyCode(virtualKey);
-		}
+        if (virtualKey.isCharacter()) {
+            result = virtualKey.getCharacter().charValue();
+        }
+        else {
+            result = convertVirtualKeyToKeyCode(virtualKey);
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	public static VirtualKey convert(final int keyCode) {
-		VirtualKey result = getKeyCodeToVirtualKey().get(Integer.valueOf(keyCode));
-		if (result == null) {
-			result = VirtualKey.toVirtualKey((char) keyCode);
-		}
-		if (result == null) {
-			result = VirtualKey.UNDEFINED;
-		}
-		return result;
-	}
+    public static VirtualKey convert(final int keyCode) {
+        VirtualKey result = getKeyCodeToVirtualKey().get(Integer.valueOf(keyCode));
+        if (result == null) {
+            result = VirtualKey.toVirtualKey((char) keyCode);
+        }
+        if (result == null) {
+            result = VirtualKey.UNDEFINED;
+        }
+        return result;
+    }
 
-	private static int convertVirtualKeyToKeyCode(final VirtualKey virtualKey) {
-		final Integer result = getVirtualKeyToKeyCode().get(virtualKey);
-		if (result == null) {
-			throw new IllegalArgumentException("The virtual key '" + virtualKey + "' is unkown.");
-		}
-		else {
-			return result.intValue();
-		}
-	}
+    private static int convertVirtualKeyToKeyCode(final VirtualKey virtualKey) {
+        final Integer result = getVirtualKeyToKeyCode().get(virtualKey);
+        if (result == null) {
+            throw new IllegalArgumentException("The virtual key '" + virtualKey + "' is unkown.");
+        }
+        else {
+            return result.intValue();
+        }
+    }
 
-	private static Map<VirtualKey, Integer> getVirtualKeyToKeyCode() {
-		if (virtualKeyToKeyCode == null) {
-			virtualKeyToKeyCode = new HashMap<VirtualKey, Integer>();
-			virtualKeyToKeyCode.put(VirtualKey.F1, KeyEvent.VK_F1);
-			virtualKeyToKeyCode.put(VirtualKey.F2, KeyEvent.VK_F2);
-			virtualKeyToKeyCode.put(VirtualKey.F3, KeyEvent.VK_F3);
-			virtualKeyToKeyCode.put(VirtualKey.F4, KeyEvent.VK_F4);
-			virtualKeyToKeyCode.put(VirtualKey.F5, KeyEvent.VK_F5);
-			virtualKeyToKeyCode.put(VirtualKey.F6, KeyEvent.VK_F6);
-			virtualKeyToKeyCode.put(VirtualKey.F7, KeyEvent.VK_F7);
-			virtualKeyToKeyCode.put(VirtualKey.F8, KeyEvent.VK_F8);
-			virtualKeyToKeyCode.put(VirtualKey.F9, KeyEvent.VK_F9);
-			virtualKeyToKeyCode.put(VirtualKey.F10, KeyEvent.VK_F10);
-			virtualKeyToKeyCode.put(VirtualKey.F11, KeyEvent.VK_F11);
-			virtualKeyToKeyCode.put(VirtualKey.F12, KeyEvent.VK_F12);
+    private static Map<VirtualKey, Integer> getVirtualKeyToKeyCode() {
+        if (virtualKeyToKeyCode == null) {
+            virtualKeyToKeyCode = new HashMap<VirtualKey, Integer>();
+            virtualKeyToKeyCode.put(VirtualKey.F1, KeyEvent.VK_F1);
+            virtualKeyToKeyCode.put(VirtualKey.F2, KeyEvent.VK_F2);
+            virtualKeyToKeyCode.put(VirtualKey.F3, KeyEvent.VK_F3);
+            virtualKeyToKeyCode.put(VirtualKey.F4, KeyEvent.VK_F4);
+            virtualKeyToKeyCode.put(VirtualKey.F5, KeyEvent.VK_F5);
+            virtualKeyToKeyCode.put(VirtualKey.F6, KeyEvent.VK_F6);
+            virtualKeyToKeyCode.put(VirtualKey.F7, KeyEvent.VK_F7);
+            virtualKeyToKeyCode.put(VirtualKey.F8, KeyEvent.VK_F8);
+            virtualKeyToKeyCode.put(VirtualKey.F9, KeyEvent.VK_F9);
+            virtualKeyToKeyCode.put(VirtualKey.F10, KeyEvent.VK_F10);
+            virtualKeyToKeyCode.put(VirtualKey.F11, KeyEvent.VK_F11);
+            virtualKeyToKeyCode.put(VirtualKey.F12, KeyEvent.VK_F12);
 
-			virtualKeyToKeyCode.put(VirtualKey.ENTER, KeyEvent.VK_ENTER);
-			virtualKeyToKeyCode.put(VirtualKey.BACK_SPACE, KeyEvent.VK_BACK_SPACE);
-			virtualKeyToKeyCode.put(VirtualKey.TAB, KeyEvent.VK_TAB);
-			virtualKeyToKeyCode.put(VirtualKey.SHIFT, KeyEvent.VK_SHIFT);
-			virtualKeyToKeyCode.put(VirtualKey.CONTROL, KeyEvent.VK_CONTROL);
-			virtualKeyToKeyCode.put(VirtualKey.ALT, KeyEvent.VK_ALT);
-			virtualKeyToKeyCode.put(VirtualKey.PAUSE, KeyEvent.VK_PAUSE);
-			virtualKeyToKeyCode.put(VirtualKey.CAPS_LOCK, KeyEvent.VK_CAPS_LOCK);
-			virtualKeyToKeyCode.put(VirtualKey.ESC, KeyEvent.VK_ESCAPE);
-			virtualKeyToKeyCode.put(VirtualKey.SPACE, KeyEvent.VK_SPACE);
-			virtualKeyToKeyCode.put(VirtualKey.PAGE_UP, KeyEvent.VK_PAGE_UP);
-			virtualKeyToKeyCode.put(VirtualKey.PAGE_DOWN, KeyEvent.VK_PAGE_DOWN);
-			virtualKeyToKeyCode.put(VirtualKey.END, KeyEvent.VK_END);
-			virtualKeyToKeyCode.put(VirtualKey.HOME, KeyEvent.VK_HOME);
-			virtualKeyToKeyCode.put(VirtualKey.DELETE, KeyEvent.VK_DELETE);
-			virtualKeyToKeyCode.put(VirtualKey.INSERT, KeyEvent.VK_INSERT);
+            virtualKeyToKeyCode.put(VirtualKey.ENTER, KeyEvent.VK_ENTER);
+            virtualKeyToKeyCode.put(VirtualKey.BACK_SPACE, KeyEvent.VK_BACK_SPACE);
+            virtualKeyToKeyCode.put(VirtualKey.TAB, KeyEvent.VK_TAB);
+            virtualKeyToKeyCode.put(VirtualKey.SHIFT, KeyEvent.VK_SHIFT);
+            virtualKeyToKeyCode.put(VirtualKey.CONTROL, KeyEvent.VK_CONTROL);
+            virtualKeyToKeyCode.put(VirtualKey.ALT, KeyEvent.VK_ALT);
+            virtualKeyToKeyCode.put(VirtualKey.PAUSE, KeyEvent.VK_PAUSE);
+            virtualKeyToKeyCode.put(VirtualKey.CAPS_LOCK, KeyEvent.VK_CAPS_LOCK);
+            virtualKeyToKeyCode.put(VirtualKey.ESC, KeyEvent.VK_ESCAPE);
+            virtualKeyToKeyCode.put(VirtualKey.SPACE, KeyEvent.VK_SPACE);
+            virtualKeyToKeyCode.put(VirtualKey.PAGE_UP, KeyEvent.VK_PAGE_UP);
+            virtualKeyToKeyCode.put(VirtualKey.PAGE_DOWN, KeyEvent.VK_PAGE_DOWN);
+            virtualKeyToKeyCode.put(VirtualKey.END, KeyEvent.VK_END);
+            virtualKeyToKeyCode.put(VirtualKey.HOME, KeyEvent.VK_HOME);
+            virtualKeyToKeyCode.put(VirtualKey.DELETE, KeyEvent.VK_DELETE);
+            virtualKeyToKeyCode.put(VirtualKey.INSERT, KeyEvent.VK_INSERT);
 
-			virtualKeyToKeyCode.put(VirtualKey.ARROW_LEFT, KeyEvent.VK_LEFT);
-			virtualKeyToKeyCode.put(VirtualKey.ARROW_UP, KeyEvent.VK_UP);
-			virtualKeyToKeyCode.put(VirtualKey.ARROW_RIGHT, KeyEvent.VK_RIGHT);
-			virtualKeyToKeyCode.put(VirtualKey.ARROW_DOWN, KeyEvent.VK_DOWN);
-		}
-		return virtualKeyToKeyCode;
-	}
+            virtualKeyToKeyCode.put(VirtualKey.ARROW_LEFT, KeyEvent.VK_LEFT);
+            virtualKeyToKeyCode.put(VirtualKey.ARROW_UP, KeyEvent.VK_UP);
+            virtualKeyToKeyCode.put(VirtualKey.ARROW_RIGHT, KeyEvent.VK_RIGHT);
+            virtualKeyToKeyCode.put(VirtualKey.ARROW_DOWN, KeyEvent.VK_DOWN);
+        }
+        return virtualKeyToKeyCode;
+    }
 
-	private static Map<Integer, VirtualKey> getKeyCodeToVirtualKey() {
-		if (keyCodeToVirtualKey == null) {
-			keyCodeToVirtualKey = new HashMap<Integer, VirtualKey>();
-			keyCodeToVirtualKey.put(KeyEvent.VK_F1, VirtualKey.F1);
-			keyCodeToVirtualKey.put(KeyEvent.VK_F2, VirtualKey.F2);
-			keyCodeToVirtualKey.put(KeyEvent.VK_F3, VirtualKey.F3);
-			keyCodeToVirtualKey.put(KeyEvent.VK_F4, VirtualKey.F4);
-			keyCodeToVirtualKey.put(KeyEvent.VK_F5, VirtualKey.F5);
-			keyCodeToVirtualKey.put(KeyEvent.VK_F6, VirtualKey.F6);
-			keyCodeToVirtualKey.put(KeyEvent.VK_F7, VirtualKey.F7);
-			keyCodeToVirtualKey.put(KeyEvent.VK_F8, VirtualKey.F8);
-			keyCodeToVirtualKey.put(KeyEvent.VK_F9, VirtualKey.F9);
-			keyCodeToVirtualKey.put(KeyEvent.VK_F10, VirtualKey.F10);
-			keyCodeToVirtualKey.put(KeyEvent.VK_F11, VirtualKey.F11);
-			keyCodeToVirtualKey.put(KeyEvent.VK_F12, VirtualKey.F12);
+    private static Map<Integer, VirtualKey> getKeyCodeToVirtualKey() {
+        if (keyCodeToVirtualKey == null) {
+            keyCodeToVirtualKey = new HashMap<Integer, VirtualKey>();
+            keyCodeToVirtualKey.put(KeyEvent.VK_F1, VirtualKey.F1);
+            keyCodeToVirtualKey.put(KeyEvent.VK_F2, VirtualKey.F2);
+            keyCodeToVirtualKey.put(KeyEvent.VK_F3, VirtualKey.F3);
+            keyCodeToVirtualKey.put(KeyEvent.VK_F4, VirtualKey.F4);
+            keyCodeToVirtualKey.put(KeyEvent.VK_F5, VirtualKey.F5);
+            keyCodeToVirtualKey.put(KeyEvent.VK_F6, VirtualKey.F6);
+            keyCodeToVirtualKey.put(KeyEvent.VK_F7, VirtualKey.F7);
+            keyCodeToVirtualKey.put(KeyEvent.VK_F8, VirtualKey.F8);
+            keyCodeToVirtualKey.put(KeyEvent.VK_F9, VirtualKey.F9);
+            keyCodeToVirtualKey.put(KeyEvent.VK_F10, VirtualKey.F10);
+            keyCodeToVirtualKey.put(KeyEvent.VK_F11, VirtualKey.F11);
+            keyCodeToVirtualKey.put(KeyEvent.VK_F12, VirtualKey.F12);
 
-			keyCodeToVirtualKey.put(KeyEvent.VK_ENTER, VirtualKey.ENTER);
-			keyCodeToVirtualKey.put(KeyEvent.VK_BACK_SPACE, VirtualKey.BACK_SPACE);
-			keyCodeToVirtualKey.put(KeyEvent.VK_TAB, VirtualKey.TAB);
-			keyCodeToVirtualKey.put(KeyEvent.VK_SHIFT, VirtualKey.SHIFT);
-			keyCodeToVirtualKey.put(KeyEvent.VK_CONTROL, VirtualKey.CONTROL);
-			keyCodeToVirtualKey.put(KeyEvent.VK_ALT, VirtualKey.ALT);
-			keyCodeToVirtualKey.put(KeyEvent.VK_PAUSE, VirtualKey.PAUSE);
-			keyCodeToVirtualKey.put(KeyEvent.VK_CAPS_LOCK, VirtualKey.CAPS_LOCK);
-			keyCodeToVirtualKey.put(KeyEvent.VK_ESCAPE, VirtualKey.ESC);
-			keyCodeToVirtualKey.put(KeyEvent.VK_SPACE, VirtualKey.SPACE);
-			keyCodeToVirtualKey.put(KeyEvent.VK_PAGE_UP, VirtualKey.PAGE_UP);
-			keyCodeToVirtualKey.put(KeyEvent.VK_PAGE_DOWN, VirtualKey.PAGE_DOWN);
-			keyCodeToVirtualKey.put(KeyEvent.VK_END, VirtualKey.END);
-			keyCodeToVirtualKey.put(KeyEvent.VK_HOME, VirtualKey.HOME);
-			keyCodeToVirtualKey.put(KeyEvent.VK_DELETE, VirtualKey.DELETE);
-			keyCodeToVirtualKey.put(KeyEvent.VK_INSERT, VirtualKey.INSERT);
+            keyCodeToVirtualKey.put(KeyEvent.VK_ENTER, VirtualKey.ENTER);
+            keyCodeToVirtualKey.put(KeyEvent.VK_BACK_SPACE, VirtualKey.BACK_SPACE);
+            keyCodeToVirtualKey.put(KeyEvent.VK_TAB, VirtualKey.TAB);
+            keyCodeToVirtualKey.put(KeyEvent.VK_SHIFT, VirtualKey.SHIFT);
+            keyCodeToVirtualKey.put(KeyEvent.VK_CONTROL, VirtualKey.CONTROL);
+            keyCodeToVirtualKey.put(KeyEvent.VK_ALT, VirtualKey.ALT);
+            keyCodeToVirtualKey.put(KeyEvent.VK_PAUSE, VirtualKey.PAUSE);
+            keyCodeToVirtualKey.put(KeyEvent.VK_CAPS_LOCK, VirtualKey.CAPS_LOCK);
+            keyCodeToVirtualKey.put(KeyEvent.VK_ESCAPE, VirtualKey.ESC);
+            keyCodeToVirtualKey.put(KeyEvent.VK_SPACE, VirtualKey.SPACE);
+            keyCodeToVirtualKey.put(KeyEvent.VK_PAGE_UP, VirtualKey.PAGE_UP);
+            keyCodeToVirtualKey.put(KeyEvent.VK_PAGE_DOWN, VirtualKey.PAGE_DOWN);
+            keyCodeToVirtualKey.put(KeyEvent.VK_END, VirtualKey.END);
+            keyCodeToVirtualKey.put(KeyEvent.VK_HOME, VirtualKey.HOME);
+            keyCodeToVirtualKey.put(KeyEvent.VK_DELETE, VirtualKey.DELETE);
+            keyCodeToVirtualKey.put(KeyEvent.VK_INSERT, VirtualKey.INSERT);
 
-			keyCodeToVirtualKey.put(KeyEvent.VK_LEFT, VirtualKey.ARROW_LEFT);
-			keyCodeToVirtualKey.put(KeyEvent.VK_UP, VirtualKey.ARROW_UP);
-			keyCodeToVirtualKey.put(KeyEvent.VK_RIGHT, VirtualKey.ARROW_RIGHT);
-			keyCodeToVirtualKey.put(KeyEvent.VK_DOWN, VirtualKey.ARROW_DOWN);
-		}
-		return keyCodeToVirtualKey;
-	}
+            keyCodeToVirtualKey.put(KeyEvent.VK_LEFT, VirtualKey.ARROW_LEFT);
+            keyCodeToVirtualKey.put(KeyEvent.VK_UP, VirtualKey.ARROW_UP);
+            keyCodeToVirtualKey.put(KeyEvent.VK_RIGHT, VirtualKey.ARROW_RIGHT);
+            keyCodeToVirtualKey.put(KeyEvent.VK_DOWN, VirtualKey.ARROW_DOWN);
+        }
+        return keyCodeToVirtualKey;
+    }
 }

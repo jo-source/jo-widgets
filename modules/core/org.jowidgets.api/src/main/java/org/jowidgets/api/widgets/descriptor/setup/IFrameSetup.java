@@ -32,6 +32,6 @@ import org.jowidgets.common.widgets.descriptor.setup.IFrameSetupCommon;
 
 public interface IFrameSetup extends ITitledWindowSetup, IContainerSetup, IFrameSetupCommon {
 
-	Dimension getMinSize();
+    Dimension getMinSize();
 
 }

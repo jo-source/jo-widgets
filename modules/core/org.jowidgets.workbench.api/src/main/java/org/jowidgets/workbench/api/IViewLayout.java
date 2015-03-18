@@ -32,39 +32,39 @@ import java.util.List;
 
 public interface IViewLayout extends IWorkbenchPart {
 
-	/**
-	 * @return The id of the referenced view
-	 */
-	String getId();
+    /**
+     * @return The id of the referenced view
+     */
+    String getId();
 
-	/**
-	 * Gets the scope of the view.
-	 * If the scope is COMPONENT, the view will be created by its component.
-	 * If the scope is WORKBENCH_APPLICATION, the view will be created by its workbench application.
-	 * If the scope is WORKBENCH, the view will be created by the workbench.
-	 * 
-	 * @return The scope of the view.
-	 */
-	ViewScope getScope();
+    /**
+     * Gets the scope of the view.
+     * If the scope is COMPONENT, the view will be created by its component.
+     * If the scope is WORKBENCH_APPLICATION, the view will be created by its workbench application.
+     * If the scope is WORKBENCH, the view will be created by the workbench.
+     * 
+     * @return The scope of the view.
+     */
+    ViewScope getScope();
 
-	/**
-	 * Gets the close policy for the view.
-	 * 
-	 * If the policy is HIDE, the view will be hidden if the views close button was pressed.
-	 * If the policy is DISPOSE, the view will be disposed if the views close button was pressed.
-	 * 
-	 * Remark: In both cases, the onClose(IVetoable vetoable) method will be invoked!
-	 * 
-	 * @return The close policy
-	 */
-	ClosePolicy getClosePolicy();
+    /**
+     * Gets the close policy for the view.
+     * 
+     * If the policy is HIDE, the view will be hidden if the views close button was pressed.
+     * If the policy is DISPOSE, the view will be disposed if the views close button was pressed.
+     * 
+     * Remark: In both cases, the onClose(IVetoable vetoable) method will be invoked!
+     * 
+     * @return The close policy
+     */
+    ClosePolicy getClosePolicy();
 
-	boolean isHidden();
+    boolean isHidden();
 
-	boolean isDetachable();
+    boolean isDetachable();
 
-	List<String> getFolderWhitelist();
+    List<String> getFolderWhitelist();
 
-	List<String> getFolderBlacklist();
+    List<String> getFolderBlacklist();
 
 }

@@ -32,30 +32,30 @@ import org.jowidgets.api.widgets.IMenuItem;
 
 public class MenuItemDisposableDelegate extends DisposableDelegate {
 
-	private final IMenuItem menuItem;
-	private final ItemModelBindingDelegate itemDelegate;
+    private final IMenuItem menuItem;
+    private final ItemModelBindingDelegate itemDelegate;
 
-	private boolean onRemoveByDispose = false;
+    private boolean onRemoveByDispose = false;
 
-	public MenuItemDisposableDelegate(final IMenuItem menuItem, final ItemModelBindingDelegate itemDelegate) {
-		super();
-		this.menuItem = menuItem;
-		this.itemDelegate = itemDelegate;
-	}
+    public MenuItemDisposableDelegate(final IMenuItem menuItem, final ItemModelBindingDelegate itemDelegate) {
+        super();
+        this.menuItem = menuItem;
+        this.itemDelegate = itemDelegate;
+    }
 
-	@Override
-	public void dispose() {
-		if (!isDisposed()) {
-			if (menuItem.getParent() != null && menuItem.getParent().getChildren().contains(menuItem) && !onRemoveByDispose) {
-				onRemoveByDispose = true;
-				menuItem.getParent().remove(menuItem); //this will invoke dispose by the parent menu
-				onRemoveByDispose = false;
-			}
-			else {
-				itemDelegate.dispose();
-				super.dispose();
-			}
-		}
-	}
+    @Override
+    public void dispose() {
+        if (!isDisposed()) {
+            if (menuItem.getParent() != null && menuItem.getParent().getChildren().contains(menuItem) && !onRemoveByDispose) {
+                onRemoveByDispose = true;
+                menuItem.getParent().remove(menuItem); //this will invoke dispose by the parent menu
+                onRemoveByDispose = false;
+            }
+            else {
+                itemDelegate.dispose();
+                super.dispose();
+            }
+        }
+    }
 
 }

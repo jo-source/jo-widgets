@@ -37,40 +37,40 @@ import org.jowidgets.common.widgets.controller.ITableCellMouseEvent;
 
 public class TableCellMouseEvent extends TableCellEvent implements ITableCellMouseEvent {
 
-	private final MouseButton mouseButton;
-	private final Set<Modifier> modifier;
+    private final MouseButton mouseButton;
+    private final Set<Modifier> modifier;
 
-	public TableCellMouseEvent(
-		final int rowIndex,
-		final int columnIndex,
-		final MouseButton mouseButton,
-		final Set<Modifier> modifier) {
-		super(rowIndex, columnIndex);
-		this.mouseButton = mouseButton;
-		this.modifier = Collections.unmodifiableSet(modifier);
-	}
+    public TableCellMouseEvent(
+        final int rowIndex,
+        final int columnIndex,
+        final MouseButton mouseButton,
+        final Set<Modifier> modifier) {
+        super(rowIndex, columnIndex);
+        this.mouseButton = mouseButton;
+        this.modifier = Collections.unmodifiableSet(modifier);
+    }
 
-	@Override
-	public MouseButton getMouseButton() {
-		return mouseButton;
-	}
+    @Override
+    public MouseButton getMouseButton() {
+        return mouseButton;
+    }
 
-	@Override
-	public Set<Modifier> getModifiers() {
-		return modifier;
-	}
+    @Override
+    public Set<Modifier> getModifiers() {
+        return modifier;
+    }
 
-	@Override
-	public String toString() {
-		return "TableCellMouseEvent [mouseButton="
-			+ mouseButton
-			+ ", modifier="
-			+ modifier
-			+ ", rowIndex="
-			+ getRowIndex()
-			+ ", columnIndex="
-			+ getColumnIndex()
-			+ "]";
-	}
+    @Override
+    public String toString() {
+        return "TableCellMouseEvent [mouseButton="
+            + mouseButton
+            + ", modifier="
+            + modifier
+            + ", rowIndex="
+            + getRowIndex()
+            + ", columnIndex="
+            + getColumnIndex()
+            + "]";
+    }
 
 }

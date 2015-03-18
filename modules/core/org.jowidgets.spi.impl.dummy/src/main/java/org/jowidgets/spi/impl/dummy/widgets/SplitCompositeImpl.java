@@ -38,50 +38,50 @@ import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;
 
 public class SplitCompositeImpl extends DummyControl implements ISplitCompositeSpi {
 
-	private final ICompositeSpi first;
-	private final ICompositeSpi second;
+    private final ICompositeSpi first;
+    private final ICompositeSpi second;
 
-	public SplitCompositeImpl(final IGenericWidgetFactory factory, final ISplitCompositeSetupSpi setup) {
-		super(new UIDSplitPane(setup.getOrientation(), setup.getWeight(), setup.getResizePolicy()));
+    public SplitCompositeImpl(final IGenericWidgetFactory factory, final ISplitCompositeSetupSpi setup) {
+        super(new UIDSplitPane(setup.getOrientation(), setup.getWeight(), setup.getResizePolicy()));
 
-		final UIDContainer content1 = new UIDContainer();
-		final UIDContainer content2 = new UIDContainer();
+        final UIDContainer content1 = new UIDContainer();
+        final UIDContainer content2 = new UIDContainer();
 
-		content1.setBorder(setup.getFirstBorder());
-		content2.setBorder(setup.getSecondBorder());
+        content1.setBorder(setup.getFirstBorder());
+        content2.setBorder(setup.getSecondBorder());
 
-		first = new DummyComposite(factory, content1);
-		second = new DummyComposite(factory, content2);
+        first = new DummyComposite(factory, content1);
+        second = new DummyComposite(factory, content2);
 
-		first.setLayout(setup.getFirstLayout());
-		second.setLayout(setup.getSecondLayout());
+        first.setLayout(setup.getFirstLayout());
+        second.setLayout(setup.getSecondLayout());
 
-		final UIDSplitPane splitPane = getUiReference();
+        final UIDSplitPane splitPane = getUiReference();
 
-		splitPane.setFirst(content1);
-		splitPane.setSecond(content2);
+        splitPane.setFirst(content1);
+        splitPane.setSecond(content2);
 
-		splitPane.setDividerSize(setup.getDividerSize());
-	}
+        splitPane.setDividerSize(setup.getDividerSize());
+    }
 
-	@Override
-	public ICompositeSpi getFirst() {
-		return first;
-	}
+    @Override
+    public ICompositeSpi getFirst() {
+        return first;
+    }
 
-	@Override
-	public ICompositeSpi getSecond() {
-		return second;
-	}
+    @Override
+    public ICompositeSpi getSecond() {
+        return second;
+    }
 
-	@Override
-	public void setMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
-		// TODO LG implement setMinSizes
-	}
+    @Override
+    public void setMinSizes(final Dimension firstMinSize, final Dimension secondMinSize) {
+        // TODO LG implement setMinSizes
+    }
 
-	@Override
-	public UIDSplitPane getUiReference() {
-		return (UIDSplitPane) super.getUiReference();
-	}
+    @Override
+    public UIDSplitPane getUiReference() {
+        return (UIDSplitPane) super.getUiReference();
+    }
 
 }

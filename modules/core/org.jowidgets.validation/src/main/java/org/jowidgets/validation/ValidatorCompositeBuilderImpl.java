@@ -33,31 +33,31 @@ import java.util.Set;
 
 final class ValidatorCompositeBuilderImpl<VALUE_TYPE> implements IValidatorCompositeBuilder<VALUE_TYPE> {
 
-	private final Set<IValidator<VALUE_TYPE>> validators;
+    private final Set<IValidator<VALUE_TYPE>> validators;
 
-	ValidatorCompositeBuilderImpl() {
-		this.validators = new LinkedHashSet<IValidator<VALUE_TYPE>>();
-	}
+    ValidatorCompositeBuilderImpl() {
+        this.validators = new LinkedHashSet<IValidator<VALUE_TYPE>>();
+    }
 
-	@Override
-	public IValidatorCompositeBuilder<VALUE_TYPE> add(final IValidator<VALUE_TYPE> validator) {
-		Assert.paramNotNull(validator, "validator");
-		validators.add(validator);
-		return this;
-	}
+    @Override
+    public IValidatorCompositeBuilder<VALUE_TYPE> add(final IValidator<VALUE_TYPE> validator) {
+        Assert.paramNotNull(validator, "validator");
+        validators.add(validator);
+        return this;
+    }
 
-	@Override
-	public IValidatorCompositeBuilder<VALUE_TYPE> addAll(final Iterable<? extends IValidator<VALUE_TYPE>> validators) {
-		Assert.paramNotNull(validators, "validators");
-		for (final IValidator<VALUE_TYPE> validator : validators) {
-			add(validator);
-		}
-		return this;
-	}
+    @Override
+    public IValidatorCompositeBuilder<VALUE_TYPE> addAll(final Iterable<? extends IValidator<VALUE_TYPE>> validators) {
+        Assert.paramNotNull(validators, "validators");
+        for (final IValidator<VALUE_TYPE> validator : validators) {
+            add(validator);
+        }
+        return this;
+    }
 
-	@Override
-	public IValidator<VALUE_TYPE> build() {
-		return new ValidatorCompositeImpl<VALUE_TYPE>(validators);
-	}
+    @Override
+    public IValidator<VALUE_TYPE> build() {
+        return new ValidatorCompositeImpl<VALUE_TYPE>(validators);
+    }
 
 }

@@ -35,54 +35,54 @@ import org.jowidgets.util.wrapper.IWrapper;
 import org.jowidgets.util.wrapper.WrapperUtil;
 
 public class UnmodifieableArrayWrapper<VALUE_TYPE> implements
-		IUnmodifiableArray<VALUE_TYPE>,
-		IWrapper<IUnmodifiableArray<VALUE_TYPE>> {
+        IUnmodifiableArray<VALUE_TYPE>,
+        IWrapper<IUnmodifiableArray<VALUE_TYPE>> {
 
-	private final IUnmodifiableArray<VALUE_TYPE> original;
+    private final IUnmodifiableArray<VALUE_TYPE> original;
 
-	public UnmodifieableArrayWrapper(final IUnmodifiableArray<VALUE_TYPE> original) {
-		Assert.paramNotNull(original, "original");
-		this.original = original;
-	}
+    public UnmodifieableArrayWrapper(final IUnmodifiableArray<VALUE_TYPE> original) {
+        Assert.paramNotNull(original, "original");
+        this.original = original;
+    }
 
-	@Override
-	public final Iterator<VALUE_TYPE> iterator() {
-		return original.iterator();
-	}
+    @Override
+    public final Iterator<VALUE_TYPE> iterator() {
+        return original.iterator();
+    }
 
-	@Override
-	public final int size() {
-		return original.size();
-	}
+    @Override
+    public final int size() {
+        return original.size();
+    }
 
-	@Override
-	public final VALUE_TYPE get(final int index) {
-		return original.get(index);
-	}
+    @Override
+    public final VALUE_TYPE get(final int index) {
+        return original.get(index);
+    }
 
-	@Override
-	public String toString() {
-		return "UnmodifieableArrayWrapper [original=" + original + "]";
-	}
+    @Override
+    public String toString() {
+        return "UnmodifieableArrayWrapper [original=" + original + "]";
+    }
 
-	@Override
-	public IUnmodifiableArray<VALUE_TYPE> unwrap() {
-		return WrapperUtil.unwrap(this);
-	}
+    @Override
+    public IUnmodifiableArray<VALUE_TYPE> unwrap() {
+        return WrapperUtil.unwrap(this);
+    }
 
-	@Override
-	public int hashCode() {
-		final IUnmodifiableArray<VALUE_TYPE> unwrappedThis = unwrap();
+    @Override
+    public int hashCode() {
+        final IUnmodifiableArray<VALUE_TYPE> unwrappedThis = unwrap();
 
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((unwrappedThis == null) ? 0 : unwrappedThis.hashCode());
-		return result;
-	}
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((unwrappedThis == null) ? 0 : unwrappedThis.hashCode());
+        return result;
+    }
 
-	@Override
-	public boolean equals(final Object obj) {
-		return WrapperUtil.nullCompatibleEquivalence(this, obj);
-	}
+    @Override
+    public boolean equals(final Object obj) {
+        return WrapperUtil.nullCompatibleEquivalence(this, obj);
+    }
 
 }

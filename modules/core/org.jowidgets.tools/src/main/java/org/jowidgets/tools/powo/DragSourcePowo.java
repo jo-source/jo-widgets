@@ -43,91 +43,91 @@ import org.jowidgets.util.Assert;
 
 final class DragSourcePowo implements IDragSource {
 
-	private final Set<IDragSourceListener> listeners;
+    private final Set<IDragSourceListener> listeners;
 
-	private IDragSource original;
+    private IDragSource original;
 
-	private Collection<TransferType<?>> supportedTypes;
-	private Set<DropAction> actions;
+    private Collection<TransferType<?>> supportedTypes;
+    private Set<DropAction> actions;
 
-	DragSourcePowo() {
-		this.listeners = new LinkedHashSet<IDragSourceListener>();
-	}
+    DragSourcePowo() {
+        this.listeners = new LinkedHashSet<IDragSourceListener>();
+    }
 
-	void setOriginal(final IDragSource original) {
-		this.original = original;
-		for (final IDragSourceListener listener : listeners) {
-			original.addDragSourceListener(listener);
-		}
-		if (supportedTypes != null) {
-			original.setTransferTypes(supportedTypes);
-		}
-		if (actions != null) {
-			original.setActions(actions);
-		}
-		listeners.clear();
-		supportedTypes = null;
-		actions = null;
-	}
+    void setOriginal(final IDragSource original) {
+        this.original = original;
+        for (final IDragSourceListener listener : listeners) {
+            original.addDragSourceListener(listener);
+        }
+        if (supportedTypes != null) {
+            original.setTransferTypes(supportedTypes);
+        }
+        if (actions != null) {
+            original.setActions(actions);
+        }
+        listeners.clear();
+        supportedTypes = null;
+        actions = null;
+    }
 
-	@Override
-	public void addDragSourceListener(final IDragSourceListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		if (original != null) {
-			original.addDragSourceListener(listener);
-		}
-		else {
-			listeners.add(listener);
-		}
-	}
+    @Override
+    public void addDragSourceListener(final IDragSourceListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        if (original != null) {
+            original.addDragSourceListener(listener);
+        }
+        else {
+            listeners.add(listener);
+        }
+    }
 
-	@Override
-	public void removeDragSourceListener(final IDragSourceListener listener) {
-		Assert.paramNotNull(listener, "listener");
-		if (original != null) {
-			original.removeDragSourceListener(listener);
-		}
-		else {
-			listeners.remove(listener);
-		}
-	}
+    @Override
+    public void removeDragSourceListener(final IDragSourceListener listener) {
+        Assert.paramNotNull(listener, "listener");
+        if (original != null) {
+            original.removeDragSourceListener(listener);
+        }
+        else {
+            listeners.remove(listener);
+        }
+    }
 
-	@Override
-	public void setTransferTypes(final Collection<TransferType<?>> supportedTypes) {
-		Assert.paramNotNull(supportedTypes, "supportedTypes");
-		if (original != null) {
-			original.setTransferTypes(supportedTypes);
-		}
-		else {
-			this.supportedTypes = new LinkedList<TransferType<?>>(supportedTypes);
-		}
-	}
+    @Override
+    public void setTransferTypes(final Collection<TransferType<?>> supportedTypes) {
+        Assert.paramNotNull(supportedTypes, "supportedTypes");
+        if (original != null) {
+            original.setTransferTypes(supportedTypes);
+        }
+        else {
+            this.supportedTypes = new LinkedList<TransferType<?>>(supportedTypes);
+        }
+    }
 
-	@Override
-	public void setTransferTypes(final TransferType<?>... supportedTypes) {
-		Assert.paramNotNull(supportedTypes, "supportedTypes");
-		setTransferTypes(Arrays.asList(supportedTypes));
-	}
+    @Override
+    public void setTransferTypes(final TransferType<?>... supportedTypes) {
+        Assert.paramNotNull(supportedTypes, "supportedTypes");
+        setTransferTypes(Arrays.asList(supportedTypes));
+    }
 
-	@Override
-	public void setActions(final Set<DropAction> actions) {
-		Assert.paramNotNull(actions, "actions");
-		if (original != null) {
-			original.setActions(actions);
-		}
-		else {
-			this.actions = new HashSet<DropAction>(actions);
-		}
-	}
+    @Override
+    public void setActions(final Set<DropAction> actions) {
+        Assert.paramNotNull(actions, "actions");
+        if (original != null) {
+            original.setActions(actions);
+        }
+        else {
+            this.actions = new HashSet<DropAction>(actions);
+        }
+    }
 
-	@Override
-	public void setActions(final DropAction... actions) {
-		Assert.paramNotNull(actions, "actions");
-		final Set<DropAction> actionsSet = new HashSet<DropAction>();
-		for (int i = 0; i < actions.length; i++) {
-			actionsSet.add(actions[i]);
-		}
-		setActions(actionsSet);
-	}
+    @Override
+    public void setActions(final DropAction... actions) {
+        Assert.paramNotNull(actions, "actions");
+        final Set<DropAction> actionsSet = new HashSet<DropAction>();
+        for (int i = 0; i < actions.length; i++) {
+            actionsSet.add(actions[i]);
+        }
+        setActions(actionsSet);
+    }
 
 }

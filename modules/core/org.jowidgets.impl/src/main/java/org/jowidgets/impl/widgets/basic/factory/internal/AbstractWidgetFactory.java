@@ -36,34 +36,34 @@ import org.jowidgets.spi.IWidgetsServiceProvider;
 
 public abstract class AbstractWidgetFactory {
 
-	private final IGenericWidgetFactory genericWidgetFactory;
-	private final IWidgetsServiceProvider widgetsServiceProvider;
-	private final ISpiBluePrintFactory bpF;
+    private final IGenericWidgetFactory genericWidgetFactory;
+    private final IWidgetsServiceProvider widgetsServiceProvider;
+    private final ISpiBluePrintFactory bpF;
 
-	public AbstractWidgetFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
-		super();
-		this.genericWidgetFactory = genericWidgetFactory;
-		this.widgetsServiceProvider = widgetsServiceProvider;
-		this.bpF = bpF;
-	}
+    public AbstractWidgetFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider,
+        final ISpiBluePrintFactory bpF) {
+        super();
+        this.genericWidgetFactory = genericWidgetFactory;
+        this.widgetsServiceProvider = widgetsServiceProvider;
+        this.bpF = bpF;
+    }
 
-	public IGenericWidgetFactory getGenericWidgetFactory() {
-		return genericWidgetFactory;
-	}
+    public IGenericWidgetFactory getGenericWidgetFactory() {
+        return genericWidgetFactory;
+    }
 
-	protected IWidgetFactorySpi getSpiWidgetFactory() {
-		return widgetsServiceProvider.getWidgetFactory();
-	}
+    protected IWidgetFactorySpi getSpiWidgetFactory() {
+        return widgetsServiceProvider.getWidgetFactory();
+    }
 
-	protected IOptionalWidgetsFactorySpi getOptionalSpiWidgetsFactory() {
-		return widgetsServiceProvider.getOptionalWidgetFactory();
-	}
+    protected IOptionalWidgetsFactorySpi getOptionalSpiWidgetsFactory() {
+        return widgetsServiceProvider.getOptionalWidgetFactory();
+    }
 
-	protected ISpiBluePrintFactory getSpiBluePrintFactory() {
-		return bpF;
-	}
+    protected ISpiBluePrintFactory getSpiBluePrintFactory() {
+        return bpF;
+    }
 
 }

@@ -32,22 +32,22 @@ import org.jowidgets.api.widgets.IButton;
 
 public interface IDownloadButton extends IButton {
 
-	/**
-	 * Sets the url that should be downloaded when the button will be pressed.
-	 * If set to null or a malformed url, the button will be disabled.
-	 * 
-	 * @param url The url to set, may be null
-	 */
-	void setUrl(String url);
+    /**
+     * Sets the url that should be downloaded when the button will be pressed.
+     * If set to null or a malformed url, the button will be disabled.
+     * 
+     * @param url The url to set, may be null
+     */
+    void setUrl(String url);
 
-	/**
-	 * @return The currently set url or null, if no url is set
-	 */
-	String getUrl();
+    /**
+     * @return The currently set url or null, if no url is set
+     */
+    String getUrl();
 
-	/**
-	 * Initiates the download (pressing the button) programmatically
-	 */
-	void download();
+    /**
+     * Initiates the download (pressing the button) programmatically
+     */
+    void download();
 
 }

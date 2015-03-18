@@ -30,8 +30,8 @@ package org.jowidgets.addons.widgets.browser.api;
 
 public interface IBrowserLocationEvent {
 
-	String getLocation();
+    String getLocation();
 
-	boolean isTopFrameLocation();
+    boolean isTopFrameLocation();
 
 }

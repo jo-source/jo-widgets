@@ -33,13 +33,13 @@ import org.jowidgets.common.widgets.controller.ITableCellMouseEvent;
 
 public class TableCellAdapter implements ITableCellListener {
 
-	@Override
-	public void mousePressed(final ITableCellMouseEvent event) {}
+    @Override
+    public void mousePressed(final ITableCellMouseEvent event) {}
 
-	@Override
-	public void mouseReleased(final ITableCellMouseEvent event) {}
+    @Override
+    public void mouseReleased(final ITableCellMouseEvent event) {}
 
-	@Override
-	public void mouseDoubleClicked(final ITableCellMouseEvent event) {}
+    @Override
+    public void mouseDoubleClicked(final ITableCellMouseEvent event) {}
 
 }

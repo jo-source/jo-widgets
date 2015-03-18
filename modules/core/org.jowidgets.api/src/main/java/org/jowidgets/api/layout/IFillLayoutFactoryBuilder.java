@@ -32,66 +32,66 @@ import org.jowidgets.common.widgets.layout.ILayouter;
 
 public interface IFillLayoutFactoryBuilder {
 
-	/**
-	 * Sets the top, left, right and bottom margin to the given value.
-	 * 
-	 * The default margin is 0
-	 * 
-	 * @param margin The margin to set
-	 * 
-	 * @return This builder
-	 */
-	IFillLayoutFactoryBuilder margin(int margin);
+    /**
+     * Sets the top, left, right and bottom margin to the given value.
+     * 
+     * The default margin is 0
+     * 
+     * @param margin The margin to set
+     * 
+     * @return This builder
+     */
+    IFillLayoutFactoryBuilder margin(int margin);
 
-	/**
-	 * Sets the left margin to the given value.
-	 * 
-	 * The default margin is 0
-	 * 
-	 * @param margin The margin to set
-	 * 
-	 * @return This builder
-	 */
-	IFillLayoutFactoryBuilder marginLeft(int marginLeft);
+    /**
+     * Sets the left margin to the given value.
+     * 
+     * The default margin is 0
+     * 
+     * @param margin The margin to set
+     * 
+     * @return This builder
+     */
+    IFillLayoutFactoryBuilder marginLeft(int marginLeft);
 
-	/**
-	 * Sets the right margin to the given value.
-	 * 
-	 * The default margin is 0
-	 * 
-	 * @param margin The margin to set
-	 * 
-	 * @return This builder
-	 */
-	IFillLayoutFactoryBuilder marginRight(int marginRight);
+    /**
+     * Sets the right margin to the given value.
+     * 
+     * The default margin is 0
+     * 
+     * @param margin The margin to set
+     * 
+     * @return This builder
+     */
+    IFillLayoutFactoryBuilder marginRight(int marginRight);
 
-	/**
-	 * Sets the top margin to the given value.
-	 * 
-	 * The default margin is 0
-	 * 
-	 * @param margin The margin to set
-	 * 
-	 * @return This builder
-	 */
-	IFillLayoutFactoryBuilder marginTop(int marginTop);
+    /**
+     * Sets the top margin to the given value.
+     * 
+     * The default margin is 0
+     * 
+     * @param margin The margin to set
+     * 
+     * @return This builder
+     */
+    IFillLayoutFactoryBuilder marginTop(int marginTop);
 
-	/**
-	 * Sets the bottom margin to the given value.
-	 * 
-	 * The default margin is 0
-	 * 
-	 * @param margin The margin to set
-	 * 
-	 * @return This builder
-	 */
-	IFillLayoutFactoryBuilder marginBottom(int marginBottom);
+    /**
+     * Sets the bottom margin to the given value.
+     * 
+     * The default margin is 0
+     * 
+     * @param margin The margin to set
+     * 
+     * @return This builder
+     */
+    IFillLayoutFactoryBuilder marginBottom(int marginBottom);
 
-	/**
-	 * Creates a new layout factory for 'FillLayouts'
-	 * 
-	 * @return A new layout factory for 'FillLayouts', never null
-	 */
-	ILayoutFactory<ILayouter> build();
+    /**
+     * Creates a new layout factory for 'FillLayouts'
+     * 
+     * @return A new layout factory for 'FillLayouts', never null
+     */
+    ILayoutFactory<ILayouter> build();
 
 }

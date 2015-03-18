@@ -32,14 +32,14 @@ import org.jowidgets.common.widgets.IFrameCommon;
 
 public interface IFrameSpi extends IWindowSpi, IContainerSpi, IFrameCommon {
 
-	/**
-	 * Creates a new menu bar. If the frame already has a menu bar, the old menu bar will
-	 * be removed and exchanged by the new one.
-	 * 
-	 * @return The created menu bar.
-	 */
-	IMenuBarSpi createMenuBar();
+    /**
+     * Creates a new menu bar. If the frame already has a menu bar, the old menu bar will
+     * be removed and exchanged by the new one.
+     * 
+     * @return The created menu bar.
+     */
+    IMenuBarSpi createMenuBar();
 
-	void setDefaultButton(IButtonCommon button);
+    void setDefaultButton(IButtonCommon button);
 
 }

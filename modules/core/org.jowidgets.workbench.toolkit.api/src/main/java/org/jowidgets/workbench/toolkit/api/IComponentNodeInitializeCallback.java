@@ -31,5 +31,5 @@ package org.jowidgets.workbench.toolkit.api;
 import org.jowidgets.workbench.api.IComponentNodeContext;
 
 public interface IComponentNodeInitializeCallback {
-	void onContextInitialize(IComponentNodeContext context);
+    void onContextInitialize(IComponentNodeContext context);
 }

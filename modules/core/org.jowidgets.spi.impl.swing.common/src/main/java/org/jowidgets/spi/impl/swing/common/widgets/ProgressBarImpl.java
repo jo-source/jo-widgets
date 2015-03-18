@@ -35,32 +35,32 @@ import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 
 public class ProgressBarImpl extends SwingControl implements IProgressBarSpi {
 
-	public ProgressBarImpl(final IProgressBarSetupSpi setup) {
-		super(new JProgressBar(OrientationConvert.convert(setup.getOrientation())));
+    public ProgressBarImpl(final IProgressBarSetupSpi setup) {
+        super(new JProgressBar(OrientationConvert.convert(setup.getOrientation())));
 
-		setMinimum(setup.getMinimum());
-		setMaximum(setup.getMaximum());
-		getUiReference().setIndeterminate(setup.isIndeterminate());
-	}
+        setMinimum(setup.getMinimum());
+        setMaximum(setup.getMaximum());
+        getUiReference().setIndeterminate(setup.isIndeterminate());
+    }
 
-	@Override
-	public JProgressBar getUiReference() {
-		return (JProgressBar) super.getUiReference();
-	}
+    @Override
+    public JProgressBar getUiReference() {
+        return (JProgressBar) super.getUiReference();
+    }
 
-	@Override
-	public void setMinimum(final int min) {
-		getUiReference().setMinimum(min);
-	}
+    @Override
+    public void setMinimum(final int min) {
+        getUiReference().setMinimum(min);
+    }
 
-	@Override
-	public void setMaximum(final int max) {
-		getUiReference().setMaximum(max);
-	}
+    @Override
+    public void setMaximum(final int max) {
+        getUiReference().setMaximum(max);
+    }
 
-	@Override
-	public void setProgress(final int progress) {
-		getUiReference().setValue(progress);
-	}
+    @Override
+    public void setProgress(final int progress) {
+        getUiReference().setValue(progress);
+    }
 
 }

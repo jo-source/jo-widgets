@@ -39,31 +39,31 @@ import org.jowidgets.common.types.MouseButton;
 
 public final class MouseUtil {
 
-	private MouseUtil() {}
+    private MouseUtil() {}
 
-	public static MouseButton getMouseButton(final MouseEvent event) {
-		if (SwingUtilities.isLeftMouseButton(event)) {
-			return MouseButton.LEFT;
-		}
-		else if (SwingUtilities.isRightMouseButton(event)) {
-			return MouseButton.RIGHT;
-		}
-		else {
-			return null;
-		}
-	}
+    public static MouseButton getMouseButton(final MouseEvent event) {
+        if (SwingUtilities.isLeftMouseButton(event)) {
+            return MouseButton.LEFT;
+        }
+        else if (SwingUtilities.isRightMouseButton(event)) {
+            return MouseButton.RIGHT;
+        }
+        else {
+            return null;
+        }
+    }
 
-	public static Set<Modifier> getModifier(final MouseEvent event) {
-		final Set<Modifier> modifier = new HashSet<Modifier>();
-		if (event.isShiftDown()) {
-			modifier.add(Modifier.SHIFT);
-		}
-		if (event.isControlDown()) {
-			modifier.add(Modifier.CTRL);
-		}
-		if (event.isAltDown()) {
-			modifier.add(Modifier.ALT);
-		}
-		return modifier;
-	}
+    public static Set<Modifier> getModifier(final MouseEvent event) {
+        final Set<Modifier> modifier = new HashSet<Modifier>();
+        if (event.isShiftDown()) {
+            modifier.add(Modifier.SHIFT);
+        }
+        if (event.isControlDown()) {
+            modifier.add(Modifier.CTRL);
+        }
+        if (event.isAltDown()) {
+            modifier.add(Modifier.ALT);
+        }
+        return modifier;
+    }
 }

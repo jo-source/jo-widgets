@@ -28,11 +28,10 @@
 
 package org.jowidgets.spi.dnd;
 
-
 public interface IDragSourceObservableSpi {
 
-	void addDragSourceListenerSpi(IDragSourceListenerSpi listener);
+    void addDragSourceListenerSpi(IDragSourceListenerSpi listener);
 
-	void removeDragSourceListenerSpi(IDragSourceListenerSpi listener);
+    void removeDragSourceListenerSpi(IDragSourceListenerSpi listener);
 
 }

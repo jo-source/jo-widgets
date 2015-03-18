@@ -38,11 +38,11 @@ import org.jowidgets.util.event.ChangeObservable;
  */
 public abstract class AbstractEnabledChecker extends ChangeObservable implements IEnabledChecker {
 
-	/**
-	 * Fires a changed event to all registered `IChangeListener` objects
-	 */
-	protected final void fireEnabledStateChanged() {
-		fireChangedEvent();
-	}
+    /**
+     * Fires a changed event to all registered `IChangeListener` objects
+     */
+    protected final void fireEnabledStateChanged() {
+        fireChangedEvent();
+    }
 
 }

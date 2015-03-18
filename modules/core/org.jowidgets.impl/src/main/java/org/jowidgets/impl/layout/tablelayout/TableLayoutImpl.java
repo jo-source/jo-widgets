@@ -40,258 +40,258 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Rectangle;
 
 public final class TableLayoutImpl implements ITableLayout {
-	private final int columnCount;
-	private final int layoutMinRows;
-	private final int[] widths;
-	private final int[] gaps;
-	private final Alignment[] alignments;
-	private final int verticalGap;
-	private final ColumnMode[] modes;
-	private int layoutHashCode;
-	private int availableWidth;
-	private final LinkedList<ITableRowLayout> layouters;
-	private Dimension preferredSize;
-	private boolean layouting;
-	private boolean internalLayouting;
-	private final List<Integer> growingColumns;
-	private int usedIndex;
+    private final int columnCount;
+    private final int layoutMinRows;
+    private final int[] widths;
+    private final int[] gaps;
+    private final Alignment[] alignments;
+    private final int verticalGap;
+    private final ColumnMode[] modes;
+    private int layoutHashCode;
+    private int availableWidth;
+    private final LinkedList<ITableRowLayout> layouters;
+    private Dimension preferredSize;
+    private boolean layouting;
+    private boolean internalLayouting;
+    private final List<Integer> growingColumns;
+    private int usedIndex;
 
-	public TableLayoutImpl(
-		final int[] widths,
-		final int[] gaps,
-		final ColumnMode[] modes,
-		final Alignment[] alignments,
-		final int verticalGap,
-		final int layoutMinRows) {
-		this.columnCount = widths.length;
-		this.modes = modes;
-		this.widths = widths;
-		this.gaps = gaps;
-		this.verticalGap = verticalGap;
-		this.layoutMinRows = layoutMinRows;
-		this.alignments = alignments;
-		layouters = new LinkedList<ITableRowLayout>();
-		layouting = true;
+    public TableLayoutImpl(
+        final int[] widths,
+        final int[] gaps,
+        final ColumnMode[] modes,
+        final Alignment[] alignments,
+        final int verticalGap,
+        final int layoutMinRows) {
+        this.columnCount = widths.length;
+        this.modes = modes;
+        this.widths = widths;
+        this.gaps = gaps;
+        this.verticalGap = verticalGap;
+        this.layoutMinRows = layoutMinRows;
+        this.alignments = alignments;
+        layouters = new LinkedList<ITableRowLayout>();
+        layouting = true;
 
-		growingColumns = new LinkedList<Integer>();
-		for (int i = 0; i < widths.length; i++) {
-			if (modes[i] == ColumnMode.GROWING) {
-				growingColumns.add(Integer.valueOf(i));
-			}
-		}
+        growingColumns = new LinkedList<Integer>();
+        for (int i = 0; i < widths.length; i++) {
+            if (modes[i] == ColumnMode.GROWING) {
+                growingColumns.add(Integer.valueOf(i));
+            }
+        }
 
-		usedIndex = -1;
-		internalLayouting = false;
-		invalidate();
-	}
+        usedIndex = -1;
+        internalLayouting = false;
+        invalidate();
+    }
 
-	@Override
-	public void addRowLayout(final ITableRowLayout rowLayout) {
-		layouters.add(rowLayout);
-		if (usedIndex < 0) {
-			getUsedIndex();
-		}
-	}
+    @Override
+    public void addRowLayout(final ITableRowLayout rowLayout) {
+        layouters.add(rowLayout);
+        if (usedIndex < 0) {
+            getUsedIndex();
+        }
+    }
 
-	private void getUsedIndex() {
-		for (int i = 0; i < layouters.size(); i++) {
-			if (!layouters.get(i).isIgnoredInCalculations()) {
-				usedIndex = i;
-				return;
-			}
-		}
-		usedIndex = -1;
-	}
+    private void getUsedIndex() {
+        for (int i = 0; i < layouters.size(); i++) {
+            if (!layouters.get(i).isIgnoredInCalculations()) {
+                usedIndex = i;
+                return;
+            }
+        }
+        usedIndex = -1;
+    }
 
-	@Override
-	public void removeRowLayout(final ITableRowLayout rowLayout) {
-		layouters.remove(rowLayout);
-		getUsedIndex();
-	}
+    @Override
+    public void removeRowLayout(final ITableRowLayout rowLayout) {
+        layouters.remove(rowLayout);
+        getUsedIndex();
+    }
 
-	@Override
-	public int[] getWidths() {
-		return widths;
-	}
+    @Override
+    public int[] getWidths() {
+        return widths;
+    }
 
-	@Override
-	public int[] getGaps() {
-		return gaps;
-	}
+    @Override
+    public int[] getGaps() {
+        return gaps;
+    }
 
-	ColumnMode[] getModes() {
-		return modes;
-	}
+    ColumnMode[] getModes() {
+        return modes;
+    }
 
-	@Override
-	public Alignment[] getAlignments() {
-		return alignments;
-	}
+    @Override
+    public Alignment[] getAlignments() {
+        return alignments;
+    }
 
-	@Override
-	public void invalidate() {
-		if (!layouting) {
-			return;
-		}
+    @Override
+    public void invalidate() {
+        if (!layouting) {
+            return;
+        }
 
-		calculateLayout();
-	}
+        calculateLayout();
+    }
 
-	public int getAvailableWidth() {
-		return availableWidth;
-	}
+    public int getAvailableWidth() {
+        return availableWidth;
+    }
 
-	@Override
-	public int getLayoutHashCode() {
-		return layoutHashCode;
-	}
+    @Override
+    public int getLayoutHashCode() {
+        return layoutHashCode;
+    }
 
-	private int calculateHashCode() {
-		int result = 17;
-		result = 31 * result + layouters.size();
-		result = 31 * result + availableWidth;
-		for (int i = 0; i < widths.length; i++) {
-			result = 31 * result + widths[i];
-		}
-		for (int i = 0; i < gaps.length; i++) {
-			result = 31 * result + gaps[i];
-		}
-		return result;
-	}
+    private int calculateHashCode() {
+        int result = 17;
+        result = 31 * result + layouters.size();
+        result = 31 * result + availableWidth;
+        for (int i = 0; i < widths.length; i++) {
+            result = 31 * result + widths[i];
+        }
+        for (int i = 0; i < gaps.length; i++) {
+            result = 31 * result + gaps[i];
+        }
+        return result;
+    }
 
-	public void calculateLayout() {
-		if (internalLayouting) {
-			return;
-		}
+    public void calculateLayout() {
+        if (internalLayouting) {
+            return;
+        }
 
-		if (layouters.size() < layoutMinRows) {
-			preferredSize = new Dimension(0, 0);
-			return;
-		}
+        if (layouters.size() < layoutMinRows) {
+            preferredSize = new Dimension(0, 0);
+            return;
+        }
 
-		int currentIndex = usedIndex;
-		if (currentIndex < 0) {
-			currentIndex = layouters.size() - 1;
-		}
+        int currentIndex = usedIndex;
+        if (currentIndex < 0) {
+            currentIndex = layouters.size() - 1;
+        }
 
-		final ITableRowLayout rowLayout = layouters.get(currentIndex);
-		final Rectangle clientArea = rowLayout.getContainer().getClientArea();
-		availableWidth = clientArea.getWidth();
+        final ITableRowLayout rowLayout = layouters.get(currentIndex);
+        final Rectangle clientArea = rowLayout.getContainer().getClientArea();
+        availableWidth = clientArea.getWidth();
 
-		for (int i = 0; i < widths.length; i++) {
-			if (modes[i] != ColumnMode.FIXED) {
-				widths[i] = 0;
-			}
-		}
+        for (int i = 0; i < widths.length; i++) {
+            if (modes[i] != ColumnMode.FIXED) {
+                widths[i] = 0;
+            }
+        }
 
-		int minHeight = 0;
-		for (final ITableRowLayout layouter : layouters) {
-			if (layouter.isIgnoredInCalculations()) {
-				continue;
-			}
+        int minHeight = 0;
+        for (final ITableRowLayout layouter : layouters) {
+            if (layouter.isIgnoredInCalculations()) {
+                continue;
+            }
 
-			for (int i = 0; i < columnCount; i++) {
-				if (modes[i] == ColumnMode.HIDDEN) {
-					continue;
-				}
+            for (int i = 0; i < columnCount; i++) {
+                if (modes[i] == ColumnMode.HIDDEN) {
+                    continue;
+                }
 
-				final Dimension size = layouter.getPreferredSize(i);
-				if (size == null) {
-					continue;
-				}
+                final Dimension size = layouter.getPreferredSize(i);
+                if (size == null) {
+                    continue;
+                }
 
-				widths[i] = Math.max(widths[i], size.getWidth());
-				minHeight = Math.max(minHeight, size.getHeight());
-			}
-		}
+                widths[i] = Math.max(widths[i], size.getWidth());
+                minHeight = Math.max(minHeight, size.getHeight());
+            }
+        }
 
-		int currentWidth = 0;
-		for (final int width : widths) {
-			currentWidth = currentWidth + width;
-		}
-		for (final int gap : gaps) {
-			currentWidth = currentWidth + gap;
-		}
+        int currentWidth = 0;
+        for (final int width : widths) {
+            currentWidth = currentWidth + width;
+        }
+        for (final int gap : gaps) {
+            currentWidth = currentWidth + gap;
+        }
 
-		final int usedWidth = currentWidth;
-		if (availableWidth > currentWidth) {
-			final int additionalWidth = availableWidth - currentWidth;
-			if (growingColumns.size() > 0) {
-				int columnAdditional = additionalWidth / growingColumns.size();
-				for (final Integer index : growingColumns) {
-					widths[index] = widths[index] + columnAdditional;
-					currentWidth = currentWidth + columnAdditional;
-					columnAdditional = Math.min(columnAdditional, availableWidth - currentWidth);
-				}
-			}
-		}
+        final int usedWidth = currentWidth;
+        if (availableWidth > currentWidth) {
+            final int additionalWidth = availableWidth - currentWidth;
+            if (growingColumns.size() > 0) {
+                int columnAdditional = additionalWidth / growingColumns.size();
+                for (final Integer index : growingColumns) {
+                    widths[index] = widths[index] + columnAdditional;
+                    currentWidth = currentWidth + columnAdditional;
+                    columnAdditional = Math.min(columnAdditional, availableWidth - currentWidth);
+                }
+            }
+        }
 
-		preferredSize = new Dimension(usedWidth, minHeight + 2 * verticalGap);
-		final int newLayoutHashCode = calculateHashCode();
-		if (newLayoutHashCode != layoutHashCode) {
-			layoutHashCode = newLayoutHashCode;
-			internalLayouting = true;
-			for (final ITableRowLayout layouter : layouters) {
-				layouter.layout();
-			}
-			internalLayouting = false;
-		}
-	}
+        preferredSize = new Dimension(usedWidth, minHeight + 2 * verticalGap);
+        final int newLayoutHashCode = calculateHashCode();
+        if (newLayoutHashCode != layoutHashCode) {
+            layoutHashCode = newLayoutHashCode;
+            internalLayouting = true;
+            for (final ITableRowLayout layouter : layouters) {
+                layouter.layout();
+            }
+            internalLayouting = false;
+        }
+    }
 
-	@Override
-	public Dimension getPreferredSize() {
-		if (preferredSize == null) {
-			calculateLayout();
-		}
-		return preferredSize;
-	}
+    @Override
+    public Dimension getPreferredSize() {
+        if (preferredSize == null) {
+            calculateLayout();
+        }
+        return preferredSize;
+    }
 
-	public int getColumnCount() {
-		return columnCount;
-	}
+    public int getColumnCount() {
+        return columnCount;
+    }
 
-	@Override
-	public void beginLayout() {
-		layouting = false;
-	}
+    @Override
+    public void beginLayout() {
+        layouting = false;
+    }
 
-	@Override
-	public void endLayout() {
-		if (!layouting) {
-			layoutHashCode = 0;
-			layouting = true;
-			calculateLayout();
-		}
-	}
+    @Override
+    public void endLayout() {
+        if (!layouting) {
+            layoutHashCode = 0;
+            layouting = true;
+            calculateLayout();
+        }
+    }
 
-	@Override
-	public void validate() {
-		if (availableWidth > 0) {
-			if (growingColumns.isEmpty() || layouters.size() < layoutMinRows) {
-				return;
-			}
-		}
+    @Override
+    public void validate() {
+        if (availableWidth > 0) {
+            if (growingColumns.isEmpty() || layouters.size() < layoutMinRows) {
+                return;
+            }
+        }
 
-		if (layoutHashCode != calculateHashCode()) {
-			invalidate();
-			return;
-		}
+        if (layoutHashCode != calculateHashCode()) {
+            invalidate();
+            return;
+        }
 
-		if (usedIndex >= 0 && layouters.size() > usedIndex) {
-			final ITableRowLayout rowLayout = layouters.get(usedIndex);
-			final Rectangle clientArea = rowLayout.getContainer().getClientArea();
-			if (availableWidth != clientArea.getWidth()) {
-				invalidate();
-			}
-		}
-		else {
-			invalidate();
-		}
-	}
+        if (usedIndex >= 0 && layouters.size() > usedIndex) {
+            final ITableRowLayout rowLayout = layouters.get(usedIndex);
+            final Rectangle clientArea = rowLayout.getContainer().getClientArea();
+            if (availableWidth != clientArea.getWidth()) {
+                invalidate();
+            }
+        }
+        else {
+            invalidate();
+        }
+    }
 
-	@Override
-	public ITableRowLayoutFactoryBuilder rowBuilder() {
-		return new TableRowLayoutFactoryBuilder(this);
-	}
+    @Override
+    public ITableRowLayoutFactoryBuilder rowBuilder() {
+        return new TableRowLayoutFactoryBuilder(this);
+    }
 
 }

@@ -32,12 +32,12 @@ import org.jowidgets.validation.IValidator;
 
 public interface IInputComponentSetup<INPUT_TYPE> extends IComponentSetup {
 
-	@Mandatory
-	boolean isEditable();
+    @Mandatory
+    boolean isEditable();
 
-	@Mandatory
-	IValidator<INPUT_TYPE> getValidator();
+    @Mandatory
+    IValidator<INPUT_TYPE> getValidator();
 
-	INPUT_TYPE getValue();
+    INPUT_TYPE getValue();
 
 }

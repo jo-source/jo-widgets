@@ -38,49 +38,49 @@ import org.jowidgets.api.model.table.ITableModelFactory;
 
 public class TableModelFactory implements ITableModelFactory {
 
-	@Override
-	public IDefaultTableColumnModel columnModel() {
-		return new DefaultTableColumnModel(0);
-	}
+    @Override
+    public IDefaultTableColumnModel columnModel() {
+        return new DefaultTableColumnModel(0);
+    }
 
-	@Override
-	public IDefaultTableColumnModel columnModel(final int columnCount) {
-		return new DefaultTableColumnModel(columnCount);
-	}
+    @Override
+    public IDefaultTableColumnModel columnModel(final int columnCount) {
+        return new DefaultTableColumnModel(columnCount);
+    }
 
-	@Override
-	public IDefaultTableColumnBuilder columnBuilder() {
-		return new DefaultTableColumnBuilder();
-	}
+    @Override
+    public IDefaultTableColumnBuilder columnBuilder() {
+        return new DefaultTableColumnBuilder();
+    }
 
-	@Override
-	public IDefaultTableColumn column() {
-		return new DefaultTableColumnBuilder().build();
-	}
+    @Override
+    public IDefaultTableColumn column() {
+        return new DefaultTableColumnBuilder().build();
+    }
 
-	@Override
-	public ISimpleTableModel simpleTableModel() {
-		return new SimpleTableModelBuilder().build();
-	}
+    @Override
+    public ISimpleTableModel simpleTableModel() {
+        return new SimpleTableModelBuilder().build();
+    }
 
-	@Override
-	public ISimpleTableModel simpleTableModel(final int columnCount) {
-		return new SimpleTableModelBuilder().setColumnCount(columnCount).build();
-	}
+    @Override
+    public ISimpleTableModel simpleTableModel(final int columnCount) {
+        return new SimpleTableModelBuilder().setColumnCount(columnCount).build();
+    }
 
-	@Override
-	public ISimpleTableModel simpleTableModel(final int rowCount, final int columnCount) {
-		return new SimpleTableModelBuilder().setColumnCount(columnCount).setRowCount(rowCount).build();
-	}
+    @Override
+    public ISimpleTableModel simpleTableModel(final int rowCount, final int columnCount) {
+        return new SimpleTableModelBuilder().setColumnCount(columnCount).setRowCount(rowCount).build();
+    }
 
-	@Override
-	public ISimpleTableModelBuilder simpleTableModelBuilder() {
-		return new SimpleTableModelBuilder();
-	}
+    @Override
+    public ISimpleTableModelBuilder simpleTableModelBuilder() {
+        return new SimpleTableModelBuilder();
+    }
 
-	@Override
-	public ITableCellBuilder cellBuilder() {
-		return new TableCellBuilder();
-	}
+    @Override
+    public ITableCellBuilder cellBuilder() {
+        return new TableCellBuilder();
+    }
 
 }

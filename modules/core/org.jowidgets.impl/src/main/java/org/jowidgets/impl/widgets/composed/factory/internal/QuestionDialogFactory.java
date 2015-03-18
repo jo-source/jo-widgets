@@ -38,26 +38,26 @@ import org.jowidgets.impl.widgets.composed.QuestionDialogImpl;
 
 public class QuestionDialogFactory implements IWidgetFactory<IQuestionDialog, IQuestionDialogDescriptor> {
 
-	private final IGenericWidgetFactory genericWidgetFactory;
+    private final IGenericWidgetFactory genericWidgetFactory;
 
-	public QuestionDialogFactory(final IGenericWidgetFactory genericWidgetFactory) {
-		this.genericWidgetFactory = genericWidgetFactory;
-	}
+    public QuestionDialogFactory(final IGenericWidgetFactory genericWidgetFactory) {
+        this.genericWidgetFactory = genericWidgetFactory;
+    }
 
-	@Override
-	public IQuestionDialog create(final Object parentUiReference, final IQuestionDialogDescriptor descriptor) {
-		final IDialogBluePrint dialogBp = Toolkit.getBluePrintFactory().dialog().setTitle(descriptor.getTitle());
-		dialogBp.setIcon(descriptor.getTitleIcon()).setResizable(false).setCloseable(false);
-		final IFrame dialogWidget = genericWidgetFactory.create(parentUiReference, dialogBp);
+    @Override
+    public IQuestionDialog create(final Object parentUiReference, final IQuestionDialogDescriptor descriptor) {
+        final IDialogBluePrint dialogBp = Toolkit.getBluePrintFactory().dialog().setTitle(descriptor.getTitle());
+        dialogBp.setIcon(descriptor.getTitleIcon()).setResizable(false).setCloseable(false);
+        final IFrame dialogWidget = genericWidgetFactory.create(parentUiReference, dialogBp);
 
-		if (dialogWidget == null) {
-			throw new IllegalStateException("Could not create widget with descriptor interface class '"
-				+ IQuestionDialogDescriptor.class
-				+ "' from '"
-				+ IGenericWidgetFactory.class.getName()
-				+ "'");
-		}
+        if (dialogWidget == null) {
+            throw new IllegalStateException("Could not create widget with descriptor interface class '"
+                + IQuestionDialogDescriptor.class
+                + "' from '"
+                + IGenericWidgetFactory.class.getName()
+                + "'");
+        }
 
-		return new QuestionDialogImpl(dialogWidget, descriptor);
-	}
+        return new QuestionDialogImpl(dialogWidget, descriptor);
+    }
 }

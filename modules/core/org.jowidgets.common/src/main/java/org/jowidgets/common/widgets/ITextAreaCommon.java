@@ -30,8 +30,8 @@ package org.jowidgets.common.widgets;
 
 public interface ITextAreaCommon extends ITextControlCommon {
 
-	void scrollToCaretPosition();
+    void scrollToCaretPosition();
 
-	void append(String text);
+    void append(String text);
 
 }

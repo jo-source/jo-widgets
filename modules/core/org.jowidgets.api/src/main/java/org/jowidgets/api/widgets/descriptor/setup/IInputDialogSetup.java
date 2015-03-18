@@ -33,19 +33,19 @@ import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface IInputDialogSetup<INPUT_TYPE> extends ITitledWindowSetup, IInputCompositeSetup<INPUT_TYPE> {
 
-	@Mandatory
-	IButtonDescriptor getOkButton();
+    @Mandatory
+    IButtonDescriptor getOkButton();
 
-	@Mandatory
-	IButtonDescriptor getCancelButton();
+    @Mandatory
+    IButtonDescriptor getCancelButton();
 
-	@Mandatory
-	InputDialogDefaultButtonPolicy getDefaultButtonPolicy();
+    @Mandatory
+    InputDialogDefaultButtonPolicy getDefaultButtonPolicy();
 
-	@Mandatory
-	boolean isCloseable();
+    @Mandatory
+    boolean isCloseable();
 
-	@Mandatory
-	boolean isCloseOnEscape();
+    @Mandatory
+    boolean isCloseOnEscape();
 
 }

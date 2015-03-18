@@ -34,16 +34,16 @@ import org.jowidgets.workbench.api.IWorkbenchApplication;
 
 public interface IWorkbenchPartFactory {
 
-	IWorkbench workbench(IWorkbenchModel model);
+    IWorkbench workbench(IWorkbenchModel model);
 
-	IWorkbenchApplication application(IWorkbenchApplicationModel model);
+    IWorkbenchApplication application(IWorkbenchApplicationModel model);
 
-	IComponentNode componentNode(IComponentNodeModel model);
+    IComponentNode componentNode(IComponentNodeModel model);
 
-	IWorkbench workbench(IWorkbenchModelBuilder modelBuilder);
+    IWorkbench workbench(IWorkbenchModelBuilder modelBuilder);
 
-	IWorkbenchApplication application(IWorkbenchApplicationModelBuilder modelBuilder);
+    IWorkbenchApplication application(IWorkbenchApplicationModelBuilder modelBuilder);
 
-	IComponentNode componentNode(IComponentNodeModelBuilder modelBuilder);
+    IComponentNode componentNode(IComponentNodeModelBuilder modelBuilder);
 
 }

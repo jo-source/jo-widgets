@@ -39,26 +39,26 @@ import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 
 public class SplitCompositeFactory extends AbstractWidgetFactory implements
-		IWidgetFactory<ISplitComposite, ISplitCompositeDescriptor> {
+        IWidgetFactory<ISplitComposite, ISplitCompositeDescriptor> {
 
-	public SplitCompositeFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+    public SplitCompositeFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider,
+        final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
-	}
+        super(genericWidgetFactory, widgetsServiceProvider, bpF);
+    }
 
-	@Override
-	public ISplitComposite create(final Object parentUiReference, final ISplitCompositeDescriptor descriptor) {
-		final ISplitCompositeBluePrintSpi bp = getSpiBluePrintFactory().splitComposite().setSetup(descriptor);
+    @Override
+    public ISplitComposite create(final Object parentUiReference, final ISplitCompositeDescriptor descriptor) {
+        final ISplitCompositeBluePrintSpi bp = getSpiBluePrintFactory().splitComposite().setSetup(descriptor);
 
-		final ISplitCompositeSpi splitConatinerSpi = getSpiWidgetFactory().createSplitComposite(
-				getGenericWidgetFactory(),
-				parentUiReference,
-				bp);
+        final ISplitCompositeSpi splitConatinerSpi = getSpiWidgetFactory().createSplitComposite(
+                getGenericWidgetFactory(),
+                parentUiReference,
+                bp);
 
-		return new SplitCompositeImpl(splitConatinerSpi, descriptor);
-	}
+        return new SplitCompositeImpl(splitConatinerSpi, descriptor);
+    }
 
 }

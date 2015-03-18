@@ -31,6 +31,6 @@ import org.jowidgets.common.types.Accelerator;
 
 public interface IAccelerateableMenuItemSetup extends IMenuItemSetup {
 
-	Accelerator getAccelerator();
+    Accelerator getAccelerator();
 
 }

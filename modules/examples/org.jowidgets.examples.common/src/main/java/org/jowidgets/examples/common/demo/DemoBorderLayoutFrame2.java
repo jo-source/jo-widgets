@@ -44,36 +44,36 @@ import org.jowidgets.tools.powo.JoFrame;
 
 public class DemoBorderLayoutFrame2 extends JoFrame {
 
-	private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
+    private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
-	public DemoBorderLayoutFrame2() {
-		super("Border layout demo 2");
+    public DemoBorderLayoutFrame2() {
+        super("Border layout demo 2");
 
-		final IMenuBarModel menuBarModel = new MenuBarModel();
-		menuBarModel.addMenu("File");
-		menuBarModel.addMenu("Edit");
-		setMenuBar(menuBarModel);
+        final IMenuBarModel menuBarModel = new MenuBarModel();
+        menuBarModel.addMenu("File");
+        menuBarModel.addMenu("Edit");
+        setMenuBar(menuBarModel);
 
-		final ILayouter layouter = setLayout(BorderLayout.get());
+        final ILayouter layouter = setLayout(BorderLayout.get());
 
-		final IToolBar toolBar = add(BPF.toolBar(), BorderLayoutConstraints.TOP);
-		final IToolBarModel toolBarModel = toolBar.getModel();
-		toolBarModel.addActionItem(SilkIcons.CUT, "Cut");
-		toolBarModel.addActionItem(SilkIcons.PAGE_COPY, "Copy");
-		toolBarModel.addActionItem(SilkIcons.PAGE_PASTE, "Paste");
+        final IToolBar toolBar = add(BPF.toolBar(), BorderLayoutConstraints.TOP);
+        final IToolBarModel toolBarModel = toolBar.getModel();
+        toolBarModel.addActionItem(SilkIcons.CUT, "Cut");
+        toolBarModel.addActionItem(SilkIcons.PAGE_COPY, "Copy");
+        toolBarModel.addActionItem(SilkIcons.PAGE_PASTE, "Paste");
 
-		final ITextArea textArea = add(BPF.textArea(), BorderLayoutConstraints.CENTER);
-		final StringBuilder stringBuilder = new StringBuilder();
-		for (int i = 0; i < 50; i++) {
-			stringBuilder.append("Text area in a border layout. ");
-		}
-		textArea.setText(stringBuilder.toString());
+        final ITextArea textArea = add(BPF.textArea(), BorderLayoutConstraints.CENTER);
+        final StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < 50; i++) {
+            stringBuilder.append("Text area in a border layout. ");
+        }
+        textArea.setText(stringBuilder.toString());
 
-		final ITextControl textField = add(BPF.textField(), BorderLayoutConstraints.BOTTOM);
-		textField.setText("Bottom");
+        final ITextControl textField = add(BPF.textField(), BorderLayoutConstraints.BOTTOM);
+        textField.setText("Bottom");
 
-		setSize(500, 400);
-		setMinSize(layouter.getMinSize());
+        setSize(500, 400);
+        setMinSize(layouter.getMinSize());
 
-	}
+    }
 }

@@ -34,27 +34,27 @@ import org.jowidgets.util.Assert;
 
 public class RwtEntryPoint implements EntryPoint {
 
-	private final Runnable runnable;
+    private final Runnable runnable;
 
-	public RwtEntryPoint(final Runnable runnable) {
-		Assert.paramNotNull(runnable, "runnable");
-		this.runnable = runnable;
-	}
+    public RwtEntryPoint(final Runnable runnable) {
+        Assert.paramNotNull(runnable, "runnable");
+        this.runnable = runnable;
+    }
 
-	@Override
-	public final int createUI() {
-		if (!Toolkit.isInitialized()) {
-			Toolkit.initialize(new RwtToolkitProvider());
-			RwtUiDefaultsInitializer.initialize();
-		}
-		final ServerPushSession pushSession = new ServerPushSession();
-		pushSession.start();
-		try {
-			runnable.run();
-		}
-		finally {
-			pushSession.stop();
-		}
-		return 0;
-	}
+    @Override
+    public final int createUI() {
+        if (!Toolkit.isInitialized()) {
+            Toolkit.initialize(new RwtToolkitProvider());
+            RwtUiDefaultsInitializer.initialize();
+        }
+        final ServerPushSession pushSession = new ServerPushSession();
+        pushSession.start();
+        try {
+            runnable.run();
+        }
+        finally {
+            pushSession.stop();
+        }
+        return 0;
+    }
 }

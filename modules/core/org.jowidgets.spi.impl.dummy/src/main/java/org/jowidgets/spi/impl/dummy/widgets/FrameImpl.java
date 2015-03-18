@@ -37,28 +37,28 @@ import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
 
 public class FrameImpl extends DummyWindow implements IFrameSpi {
 
-	public FrameImpl(final IGenericWidgetFactory factory, final DummyImageRegistry imageRegistry, final IFrameSetupSpi setup) {
-		super(factory, new UIDFrame());
+    public FrameImpl(final IGenericWidgetFactory factory, final DummyImageRegistry imageRegistry, final IFrameSetupSpi setup) {
+        super(factory, new UIDFrame());
 
-		getUiReference().setTitle(setup.getTitle());
-		getUiReference().setResizable(setup.isResizable());
+        getUiReference().setTitle(setup.getTitle());
+        getUiReference().setResizable(setup.isResizable());
 
-		setIcon(setup.getIcon(), imageRegistry);
-	}
+        setIcon(setup.getIcon(), imageRegistry);
+    }
 
-	@Override
-	public UIDFrame getUiReference() {
-		return (UIDFrame) super.getUiReference();
-	}
+    @Override
+    public UIDFrame getUiReference() {
+        return (UIDFrame) super.getUiReference();
+    }
 
-	@Override
-	public IMenuBarSpi createMenuBar() {
-		return new MenuBarImpl(new UIDMenuItem());
-	}
+    @Override
+    public IMenuBarSpi createMenuBar() {
+        return new MenuBarImpl(new UIDMenuItem());
+    }
 
-	@Override
-	public void setTitle(final String title) {
-		getUiReference().setTitle(title);
-	}
+    @Override
+    public void setTitle(final String title) {
+        getUiReference().setTitle(title);
+    }
 
 }

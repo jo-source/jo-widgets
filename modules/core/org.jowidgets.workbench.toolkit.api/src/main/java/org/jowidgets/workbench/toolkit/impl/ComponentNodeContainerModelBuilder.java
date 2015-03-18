@@ -39,81 +39,81 @@ import org.jowidgets.workbench.toolkit.api.IComponentNodeModelBuilder;
 import org.jowidgets.workbench.toolkit.api.WorkbenchToolkit;
 
 class ComponentNodeContainerModelBuilder<BUILDER_INSTANCE_TYPE> implements
-		IComponentNodeContainerModelBuilder<BUILDER_INSTANCE_TYPE> {
+        IComponentNodeContainerModelBuilder<BUILDER_INSTANCE_TYPE> {
 
-	private final List<IComponentNodeModel> children;
-	private String id;
+    private final List<IComponentNodeModel> children;
+    private String id;
 
-	ComponentNodeContainerModelBuilder() {
-		this.children = new LinkedList<IComponentNodeModel>();
-	}
+    ComponentNodeContainerModelBuilder() {
+        this.children = new LinkedList<IComponentNodeModel>();
+    }
 
-	String getId() {
-		return id;
-	}
+    String getId() {
+        return id;
+    }
 
-	List<IComponentNodeModel> getChildren() {
-		return children;
-	}
+    List<IComponentNodeModel> getChildren() {
+        return children;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public BUILDER_INSTANCE_TYPE setId(final String id) {
-		this.id = id;
-		return (BUILDER_INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public BUILDER_INSTANCE_TYPE setId(final String id) {
+        this.id = id;
+        return (BUILDER_INSTANCE_TYPE) this;
+    }
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public BUILDER_INSTANCE_TYPE addChild(final int index, final IComponentNodeModel childModel) {
-		Assert.paramNotNull(childModel, "childModel");
-		children.add(index, childModel);
-		return (BUILDER_INSTANCE_TYPE) this;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public BUILDER_INSTANCE_TYPE addChild(final int index, final IComponentNodeModel childModel) {
+        Assert.paramNotNull(childModel, "childModel");
+        children.add(index, childModel);
+        return (BUILDER_INSTANCE_TYPE) this;
+    }
 
-	@Override
-	public BUILDER_INSTANCE_TYPE addChild(final IComponentNodeModel childModel) {
-		return addChild(children.size(), childModel);
-	}
+    @Override
+    public BUILDER_INSTANCE_TYPE addChild(final IComponentNodeModel childModel) {
+        return addChild(children.size(), childModel);
+    }
 
-	@Override
-	public BUILDER_INSTANCE_TYPE addChild(final IComponentNodeModelBuilder childModelBuilder) {
-		return addChild(children.size(), childModelBuilder);
-	}
+    @Override
+    public BUILDER_INSTANCE_TYPE addChild(final IComponentNodeModelBuilder childModelBuilder) {
+        return addChild(children.size(), childModelBuilder);
+    }
 
-	@Override
-	public BUILDER_INSTANCE_TYPE addChild(final int index, final IComponentNodeModelBuilder childModelBuilder) {
-		Assert.paramNotNull(childModelBuilder, "childModelBuilder");
-		return addChild(index, childModelBuilder.build());
-	}
+    @Override
+    public BUILDER_INSTANCE_TYPE addChild(final int index, final IComponentNodeModelBuilder childModelBuilder) {
+        Assert.paramNotNull(childModelBuilder, "childModelBuilder");
+        return addChild(index, childModelBuilder.build());
+    }
 
-	@Override
-	public BUILDER_INSTANCE_TYPE addChild(final String id, final String label, final String tooltip, final IImageConstant icon) {
-		return addChild(componentNodeBuilder().setId(id).setLabel(label).setTooltip(tooltip).setIcon(icon));
-	}
+    @Override
+    public BUILDER_INSTANCE_TYPE addChild(final String id, final String label, final String tooltip, final IImageConstant icon) {
+        return addChild(componentNodeBuilder().setId(id).setLabel(label).setTooltip(tooltip).setIcon(icon));
+    }
 
-	@Override
-	public BUILDER_INSTANCE_TYPE addChild(final String id, final String label, final IImageConstant icon) {
-		return addChild(componentNodeBuilder().setId(id).setLabel(label).setIcon(icon));
-	}
+    @Override
+    public BUILDER_INSTANCE_TYPE addChild(final String id, final String label, final IImageConstant icon) {
+        return addChild(componentNodeBuilder().setId(id).setLabel(label).setIcon(icon));
+    }
 
-	@Override
-	public BUILDER_INSTANCE_TYPE addChild(final String id, final String label, final String tooltip) {
-		return addChild(componentNodeBuilder().setId(id).setLabel(label).setTooltip(tooltip));
-	}
+    @Override
+    public BUILDER_INSTANCE_TYPE addChild(final String id, final String label, final String tooltip) {
+        return addChild(componentNodeBuilder().setId(id).setLabel(label).setTooltip(tooltip));
+    }
 
-	@Override
-	public BUILDER_INSTANCE_TYPE addChild(final String id, final String label) {
-		return addChild(componentNodeBuilder().setId(id).setLabel(label));
-	}
+    @Override
+    public BUILDER_INSTANCE_TYPE addChild(final String id, final String label) {
+        return addChild(componentNodeBuilder().setId(id).setLabel(label));
+    }
 
-	@Override
-	public BUILDER_INSTANCE_TYPE addChild(final String id) {
-		return addChild(componentNodeBuilder().setId(id));
-	}
+    @Override
+    public BUILDER_INSTANCE_TYPE addChild(final String id) {
+        return addChild(componentNodeBuilder().setId(id));
+    }
 
-	private IComponentNodeModelBuilder componentNodeBuilder() {
-		return WorkbenchToolkit.getWorkbenchPartBuilderFactory().componentNode();
-	}
+    private IComponentNodeModelBuilder componentNodeBuilder() {
+        return WorkbenchToolkit.getWorkbenchPartBuilderFactory().componentNode();
+    }
 
 }

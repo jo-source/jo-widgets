@@ -33,21 +33,21 @@ import org.jowidgets.util.Assert;
 
 public class DummyUiThreadAccess implements IUiThreadAccessCommon {
 
-	@Override
-	public void invokeLater(final Runnable runnable) {
-		Assert.paramNotNull(runnable, "runnable");
-		DummyApplicationRunner.invokeLater(runnable);
-	}
+    @Override
+    public void invokeLater(final Runnable runnable) {
+        Assert.paramNotNull(runnable, "runnable");
+        DummyApplicationRunner.invokeLater(runnable);
+    }
 
-	@Override
-	public void invokeAndWait(final Runnable runnable) throws InterruptedException {
-		Assert.paramNotNull(runnable, "runnable");
-		DummyApplicationRunner.invokeAndWait(runnable);
-	}
+    @Override
+    public void invokeAndWait(final Runnable runnable) throws InterruptedException {
+        Assert.paramNotNull(runnable, "runnable");
+        DummyApplicationRunner.invokeAndWait(runnable);
+    }
 
-	@Override
-	public boolean isUiThread() {
-		return DummyApplicationRunner.isEventDispatcherThread(Thread.currentThread());
-	}
+    @Override
+    public boolean isUiThread() {
+        return DummyApplicationRunner.isEventDispatcherThread(Thread.currentThread());
+    }
 
 }

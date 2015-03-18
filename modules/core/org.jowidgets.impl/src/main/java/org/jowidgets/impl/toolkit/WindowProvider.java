@@ -46,80 +46,80 @@ import org.jowidgets.spi.widgets.IFrameSpi;
 
 public class WindowProvider {
 
-	private final IGenericWidgetFactory genericWidgetFactory;
-	private final IWidgetsServiceProvider widgetsServiceProvider;
-	private final Map<Object, IWindow> uiReferenceToWindow;
+    private final IGenericWidgetFactory genericWidgetFactory;
+    private final IWidgetsServiceProvider widgetsServiceProvider;
+    private final Map<Object, IWindow> uiReferenceToWindow;
 
-	public WindowProvider(final IGenericWidgetFactory genericWidgetFactory, final IWidgetsServiceProvider widgetsServiceProvider) {
+    public WindowProvider(final IGenericWidgetFactory genericWidgetFactory, final IWidgetsServiceProvider widgetsServiceProvider) {
 
-		this.genericWidgetFactory = genericWidgetFactory;
-		this.uiReferenceToWindow = new HashMap<Object, IWindow>();
-		this.widgetsServiceProvider = widgetsServiceProvider;
+        this.genericWidgetFactory = genericWidgetFactory;
+        this.uiReferenceToWindow = new HashMap<Object, IWindow>();
+        this.widgetsServiceProvider = widgetsServiceProvider;
 
-		genericWidgetFactory.addWidgetFactoryListener(new IWidgetFactoryListener() {
+        genericWidgetFactory.addWidgetFactoryListener(new IWidgetFactoryListener() {
 
-			@Override
-			public void widgetCreated(final IWidgetCommon widget) {
-				if (widget instanceof IWindow) {
-					final IWindow windowWidget = (IWindow) widget;
-					//If a WindowWidget wraps another WindowWidget it will be assumed, 
-					//that the newer window wraps the previous window with the same ui reference.
-					//From now, the wrapping window will returned for the active window
-					final Object uiReference = windowWidget.getUiReference();
-					uiReferenceToWindow.put(uiReference, windowWidget);
+            @Override
+            public void widgetCreated(final IWidgetCommon widget) {
+                if (widget instanceof IWindow) {
+                    final IWindow windowWidget = (IWindow) widget;
+                    //If a WindowWidget wraps another WindowWidget it will be assumed, 
+                    //that the newer window wraps the previous window with the same ui reference.
+                    //From now, the wrapping window will returned for the active window
+                    final Object uiReference = windowWidget.getUiReference();
+                    uiReferenceToWindow.put(uiReference, windowWidget);
 
-					windowWidget.addDisposeListener(new IDisposeListener() {
-						@Override
-						public void onDispose() {
-							uiReferenceToWindow.remove(uiReference);
-						}
-					});
-				}
+                    windowWidget.addDisposeListener(new IDisposeListener() {
+                        @Override
+                        public void onDispose() {
+                            uiReferenceToWindow.remove(uiReference);
+                        }
+                    });
+                }
 
-			}
-		});
-	}
+            }
+        });
+    }
 
-	public IWindow getActiveWindow() {
-		final Object activeWindowUiReference = widgetsServiceProvider.getActiveWindowUiReference();
-		IWindow activeWindow = uiReferenceToWindow.get(widgetsServiceProvider.getActiveWindowUiReference());
+    public IWindow getActiveWindow() {
+        final Object activeWindowUiReference = widgetsServiceProvider.getActiveWindowUiReference();
+        IWindow activeWindow = uiReferenceToWindow.get(widgetsServiceProvider.getActiveWindowUiReference());
 
-		//maybe window would be created without jo-widgets, so create a wrapper, if possible
-		if (activeWindowUiReference != null && activeWindow == null) {
-			activeWindow = createWrapper(activeWindowUiReference);
+        //maybe window would be created without jo-widgets, so create a wrapper, if possible
+        if (activeWindowUiReference != null && activeWindow == null) {
+            activeWindow = createWrapper(activeWindowUiReference);
 
-		}
-		return activeWindow;
-	}
+        }
+        return activeWindow;
+    }
 
-	public List<IWindow> getAllWindows() {
-		final List<IWindow> result = new LinkedList<IWindow>();
-		for (final Object uiRef : widgetsServiceProvider.getAllWindowsUiReference()) {
-			IWindow window = uiReferenceToWindow.get(uiRef);
-			if (window == null) {
-				window = createWrapper(uiRef);
-			}
-			if (window != null) {
-				result.add(window);
-			}
-		}
-		return result;
-	}
+    public List<IWindow> getAllWindows() {
+        final List<IWindow> result = new LinkedList<IWindow>();
+        for (final Object uiRef : widgetsServiceProvider.getAllWindowsUiReference()) {
+            IWindow window = uiReferenceToWindow.get(uiRef);
+            if (window == null) {
+                window = createWrapper(uiRef);
+            }
+            if (window != null) {
+                result.add(window);
+            }
+        }
+        return result;
+    }
 
-	private IWindow createWrapper(final Object uiRef) {
-		if (widgetsServiceProvider.getWidgetFactory().isConvertibleToFrame(uiRef)) {
+    private IWindow createWrapper(final Object uiRef) {
+        if (widgetsServiceProvider.getWidgetFactory().isConvertibleToFrame(uiRef)) {
 
-			final IFrameBluePrint bp = Toolkit.getBluePrintFactory().frame().autoCenterOff();
+            final IFrameBluePrint bp = Toolkit.getBluePrintFactory().frame().autoCenterOff();
 
-			final IFrameSpi frameSpi = widgetsServiceProvider.getWidgetFactory().createFrame(genericWidgetFactory, uiRef);
+            final IFrameSpi frameSpi = widgetsServiceProvider.getWidgetFactory().createFrame(genericWidgetFactory, uiRef);
 
-			final IWindow result = new FrameImpl(frameSpi, bp, true);
+            final IWindow result = new FrameImpl(frameSpi, bp, true);
 
-			//register the created frame to avoid a new creation for every call of this method
-			uiReferenceToWindow.put(uiRef, result);
+            //register the created frame to avoid a new creation for every call of this method
+            uiReferenceToWindow.put(uiRef, result);
 
-			return result;
-		}
-		return null;
-	}
+            return result;
+        }
+        return null;
+    }
 }

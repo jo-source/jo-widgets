@@ -28,8 +28,8 @@
 package org.jowidgets.common.widgets.builder;
 
 public interface ICheckBoxSetupBuilderCommon<INSTANCE_TYPE extends ICheckBoxSetupBuilderCommon<?>> extends
-		ITextLabelSetupBuilderCommon<INSTANCE_TYPE> {
+        ITextLabelSetupBuilderCommon<INSTANCE_TYPE> {
 
-	INSTANCE_TYPE setInitialState(boolean state);
+    INSTANCE_TYPE setInitialState(boolean state);
 
 }

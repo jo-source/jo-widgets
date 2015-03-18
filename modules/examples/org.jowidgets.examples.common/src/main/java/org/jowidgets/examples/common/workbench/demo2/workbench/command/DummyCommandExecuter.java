@@ -35,10 +35,10 @@ import org.jowidgets.api.toolkit.Toolkit;
 
 public class DummyCommandExecuter implements ICommandExecutor {
 
-	@Override
-	public void execute(final IExecutionContext executionContext) throws Exception {
-		final IAction action = executionContext.getAction();
-		Toolkit.getMessagePane().showInfo(action.getText(), action.getIcon(), "Invoked the command: " + action.getText());
+    @Override
+    public void execute(final IExecutionContext executionContext) throws Exception {
+        final IAction action = executionContext.getAction();
+        Toolkit.getMessagePane().showInfo(action.getText(), action.getIcon(), "Invoked the command: " + action.getText());
 
-	}
+    }
 }

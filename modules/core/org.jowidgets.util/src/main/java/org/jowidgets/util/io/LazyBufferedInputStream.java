@@ -40,79 +40,79 @@ import java.io.InputStream;
  */
 public class LazyBufferedInputStream extends InputStream {
 
-	private final InputStream original;
-	private final int bufferSize;
+    private final InputStream original;
+    private final int bufferSize;
 
-	private BufferedInputStream bufferedInputStream;
-	private boolean closed;
+    private BufferedInputStream bufferedInputStream;
+    private boolean closed;
 
-	public LazyBufferedInputStream(final InputStream original, final int bufferSize) {
-		this.original = original;
-		this.bufferSize = bufferSize;
-	}
+    public LazyBufferedInputStream(final InputStream original, final int bufferSize) {
+        this.original = original;
+        this.bufferSize = bufferSize;
+    }
 
-	@Override
-	public int read() throws IOException {
-		return getInputStream().read();
-	}
+    @Override
+    public int read() throws IOException {
+        return getInputStream().read();
+    }
 
-	@Override
-	public int read(final byte[] b) throws IOException {
-		return getInputStream().read(b);
-	}
+    @Override
+    public int read(final byte[] b) throws IOException {
+        return getInputStream().read(b);
+    }
 
-	@Override
-	public int read(final byte[] b, final int off, final int len) throws IOException {
-		return getInputStream().read(b, off, len);
-	}
+    @Override
+    public int read(final byte[] b, final int off, final int len) throws IOException {
+        return getInputStream().read(b, off, len);
+    }
 
-	@Override
-	public long skip(final long n) throws IOException {
-		return getInputStream().skip(n);
-	}
+    @Override
+    public long skip(final long n) throws IOException {
+        return getInputStream().skip(n);
+    }
 
-	@Override
-	public int available() throws IOException {
-		return getInputStream().available();
-	}
+    @Override
+    public int available() throws IOException {
+        return getInputStream().available();
+    }
 
-	@Override
-	public void close() throws IOException {
-		closed = true;
-		if (bufferedInputStream != null) {
-			bufferedInputStream.close();
-			bufferedInputStream = null;
-		}
-	}
+    @Override
+    public void close() throws IOException {
+        closed = true;
+        if (bufferedInputStream != null) {
+            bufferedInputStream.close();
+            bufferedInputStream = null;
+        }
+    }
 
-	@Override
-	public synchronized void mark(final int readlimit) {
-		try {
-			getInputStream().mark(readlimit);
-		}
-		catch (final IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    @Override
+    public synchronized void mark(final int readlimit) {
+        try {
+            getInputStream().mark(readlimit);
+        }
+        catch (final IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	@Override
-	public synchronized void reset() throws IOException {
-		getInputStream().reset();
-	}
+    @Override
+    public synchronized void reset() throws IOException {
+        getInputStream().reset();
+    }
 
-	@Override
-	public boolean markSupported() {
-		return original.markSupported();
-	}
+    @Override
+    public boolean markSupported() {
+        return original.markSupported();
+    }
 
-	private InputStream getInputStream() throws IOException {
-		if (closed) {
-			throw new IOException("Stream was closed");
-		}
-		if (bufferedInputStream == null) {
-			bufferedInputStream = new BufferedInputStream(original, bufferSize);
-		}
-		return bufferedInputStream;
-	}
+    private InputStream getInputStream() throws IOException {
+        if (closed) {
+            throw new IOException("Stream was closed");
+        }
+        if (bufferedInputStream == null) {
+            bufferedInputStream = new BufferedInputStream(original, bufferSize);
+        }
+        return bufferedInputStream;
+    }
 
 }

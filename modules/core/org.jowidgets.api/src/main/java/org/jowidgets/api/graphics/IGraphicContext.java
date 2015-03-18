@@ -34,14 +34,14 @@ import org.jowidgets.common.types.Rectangle;
 
 public interface IGraphicContext extends IGraphicContextCommon {
 
-	void clearRectangle(Rectangle bounds);
+    void clearRectangle(Rectangle bounds);
 
-	void clear();
+    void clear();
 
-	void setSolidLine();
+    void setSolidLine();
 
-	void drawImage(IImageConstant image, final int x, final int y, final int width, final int height);
+    void drawImage(IImageConstant image, final int x, final int y, final int width, final int height);
 
-	void drawImage(IImageConstant image);
+    void drawImage(IImageConstant image);
 
 }

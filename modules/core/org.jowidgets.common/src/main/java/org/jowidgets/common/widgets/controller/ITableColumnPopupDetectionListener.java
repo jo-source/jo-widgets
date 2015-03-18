@@ -30,6 +30,6 @@ package org.jowidgets.common.widgets.controller;
 
 public interface ITableColumnPopupDetectionListener {
 
-	void popupDetected(ITableColumnPopupEvent event);
+    void popupDetected(ITableColumnPopupEvent event);
 
 }

@@ -34,17 +34,17 @@ import org.jowidgets.unit.tools.validator.NumberUnitValidator;
 import org.jowidgets.validation.IValidator;
 
 public abstract class AbstractNumberUnitConverter<BASE_VALUE_TYPE extends Number, UNIT_VALUE_TYPE extends Number> implements
-		IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> {
+        IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> {
 
-	private final IValidator<IUnitValue<UNIT_VALUE_TYPE>> validator;
+    private final IValidator<IUnitValue<UNIT_VALUE_TYPE>> validator;
 
-	public AbstractNumberUnitConverter() {
-		this.validator = new NumberUnitValidator<BASE_VALUE_TYPE, UNIT_VALUE_TYPE>(this);
-	}
+    public AbstractNumberUnitConverter() {
+        this.validator = new NumberUnitValidator<BASE_VALUE_TYPE, UNIT_VALUE_TYPE>(this);
+    }
 
-	@Override
-	public IValidator<IUnitValue<UNIT_VALUE_TYPE>> getValidator() {
-		return validator;
-	}
+    @Override
+    public IValidator<IUnitValue<UNIT_VALUE_TYPE>> getValidator() {
+        return validator;
+    }
 
 }

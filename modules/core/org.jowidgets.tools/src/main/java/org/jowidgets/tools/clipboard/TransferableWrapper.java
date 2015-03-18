@@ -36,21 +36,21 @@ import org.jowidgets.util.Assert;
 
 public class TransferableWrapper implements ITransferable {
 
-	private final ITransferable original;
+    private final ITransferable original;
 
-	public TransferableWrapper(final ITransferable original) {
-		Assert.paramNotNull(original, "original");
-		this.original = original;
-	}
+    public TransferableWrapper(final ITransferable original) {
+        Assert.paramNotNull(original, "original");
+        this.original = original;
+    }
 
-	@Override
-	public final Collection<TransferType<?>> getSupportedTypes() {
-		return original.getSupportedTypes();
-	}
+    @Override
+    public final Collection<TransferType<?>> getSupportedTypes() {
+        return original.getSupportedTypes();
+    }
 
-	@Override
-	public final <JAVA_TYPE> JAVA_TYPE getData(final TransferType<JAVA_TYPE> type) {
-		return original.getData(type);
-	}
+    @Override
+    public final <JAVA_TYPE> JAVA_TYPE getData(final TransferType<JAVA_TYPE> type) {
+        return original.getData(type);
+    }
 
 }

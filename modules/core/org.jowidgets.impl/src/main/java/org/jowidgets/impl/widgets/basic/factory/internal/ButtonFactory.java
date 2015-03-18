@@ -40,19 +40,19 @@ import org.jowidgets.spi.widgets.IButtonSpi;
 
 public class ButtonFactory extends AbstractWidgetFactory implements IWidgetFactory<IButton, IButtonDescriptor> {
 
-	public ButtonFactory(
-		final IGenericWidgetFactory genericWidgetFactory,
-		final IWidgetsServiceProvider widgetsServiceProvider,
-		final ISpiBluePrintFactory bpF) {
+    public ButtonFactory(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final IWidgetsServiceProvider widgetsServiceProvider,
+        final ISpiBluePrintFactory bpF) {
 
-		super(genericWidgetFactory, widgetsServiceProvider, bpF);
-	}
+        super(genericWidgetFactory, widgetsServiceProvider, bpF);
+    }
 
-	@Override
-	public IButton create(final Object parentUiReference, final IButtonDescriptor descriptor) {
-		final IButtonBluePrintSpi bp = getSpiBluePrintFactory().button().setSetup(descriptor);
-		final IButtonSpi buttonWidgetSpi = getSpiWidgetFactory().createButton(parentUiReference, bp);
-		return new ButtonImpl(buttonWidgetSpi, descriptor);
-	}
+    @Override
+    public IButton create(final Object parentUiReference, final IButtonDescriptor descriptor) {
+        final IButtonBluePrintSpi bp = getSpiBluePrintFactory().button().setSetup(descriptor);
+        final IButtonSpi buttonWidgetSpi = getSpiWidgetFactory().createButton(parentUiReference, bp);
+        return new ButtonImpl(buttonWidgetSpi, descriptor);
+    }
 
 }

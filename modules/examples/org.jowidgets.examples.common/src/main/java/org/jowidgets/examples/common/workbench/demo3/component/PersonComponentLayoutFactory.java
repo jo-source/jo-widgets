@@ -38,46 +38,46 @@ import org.jowidgets.workbench.tools.SplitLayoutBuilder;
 
 public final class PersonComponentLayoutFactory {
 
-	private static final String DEFAULT_LAYOUT_ID = "DEFAULT_LAYOUT_ID";
-	private static final String MASTER_FOLDER_ID = "MASTER_FOLDER_ID";
-	private static final String DETAIL_FOLDER_ID = "DETAIL_FOLDER_ID";
+    private static final String DEFAULT_LAYOUT_ID = "DEFAULT_LAYOUT_ID";
+    private static final String MASTER_FOLDER_ID = "MASTER_FOLDER_ID";
+    private static final String DETAIL_FOLDER_ID = "DETAIL_FOLDER_ID";
 
-	private PersonComponentLayoutFactory() {}
+    private PersonComponentLayoutFactory() {}
 
-	public static ILayout create() {
-		final ILayoutBuilder builder = new LayoutBuilder();
-		builder.setId(DEFAULT_LAYOUT_ID).setLayoutContainer(createMasterDetailSplit());
-		return builder.build();
-	}
+    public static ILayout create() {
+        final ILayoutBuilder builder = new LayoutBuilder();
+        builder.setId(DEFAULT_LAYOUT_ID).setLayoutContainer(createMasterDetailSplit());
+        return builder.build();
+    }
 
-	private static ISplitLayoutBuilder createMasterDetailSplit() {
-		final ISplitLayoutBuilder result = new SplitLayoutBuilder();
-		result.setVertical().setWeight(0.5).setResizeSecond();
-		result.setFirstContainer(createMasterFolder());
-		result.setSecondContainer(createDetailFolder());
-		return result;
-	}
+    private static ISplitLayoutBuilder createMasterDetailSplit() {
+        final ISplitLayoutBuilder result = new SplitLayoutBuilder();
+        result.setVertical().setWeight(0.5).setResizeSecond();
+        result.setFirstContainer(createMasterFolder());
+        result.setSecondContainer(createDetailFolder());
+        return result;
+    }
 
-	private static IFolderLayoutBuilder createMasterFolder() {
-		final IFolderLayoutBuilder result = new FolderLayoutBuilder(MASTER_FOLDER_ID);
-		result.setViewsCloseable(false);
-		result.addView(
-				PersonTableView.ID,
-				PersonTableView.DEFAULT_LABEL,
-				PersonTableView.DEFAULT_TOOLTIP,
-				PersonTableView.DEFAULT_ICON);
-		return result;
-	}
+    private static IFolderLayoutBuilder createMasterFolder() {
+        final IFolderLayoutBuilder result = new FolderLayoutBuilder(MASTER_FOLDER_ID);
+        result.setViewsCloseable(false);
+        result.addView(
+                PersonTableView.ID,
+                PersonTableView.DEFAULT_LABEL,
+                PersonTableView.DEFAULT_TOOLTIP,
+                PersonTableView.DEFAULT_ICON);
+        return result;
+    }
 
-	private static IFolderLayoutBuilder createDetailFolder() {
-		final IFolderLayoutBuilder result = new FolderLayoutBuilder(DETAIL_FOLDER_ID);
-		result.setViewsCloseable(false);
-		result.addView(
-				PersonDetailView.ID,
-				PersonDetailView.DEFAULT_LABEL,
-				PersonDetailView.DEFAULT_TOOLTIP,
-				PersonDetailView.DEFAULT_ICON);
-		return result;
-	}
+    private static IFolderLayoutBuilder createDetailFolder() {
+        final IFolderLayoutBuilder result = new FolderLayoutBuilder(DETAIL_FOLDER_ID);
+        result.setViewsCloseable(false);
+        result.addView(
+                PersonDetailView.ID,
+                PersonDetailView.DEFAULT_LABEL,
+                PersonDetailView.DEFAULT_TOOLTIP,
+                PersonDetailView.DEFAULT_ICON);
+        return result;
+    }
 
 }

@@ -30,16 +30,16 @@ package org.jowidgets.api.command;
 
 public enum ActionStyle {
 
-	/**
-	 * This style shows every information of the action that can be
-	 * rendered for the widget.
-	 */
-	COMPLETE,
+    /**
+     * This style shows every information of the action that can be
+     * rendered for the widget.
+     */
+    COMPLETE,
 
-	/**
-	 * If an icon exists, the text will be prepended to the tooltip text.
-	 * This style is useful for the toolbar.
-	 */
-	OMIT_TEXT;
+    /**
+     * If an icon exists, the text will be prepended to the tooltip text.
+     * This style is useful for the toolbar.
+     */
+    OMIT_TEXT;
 
 }

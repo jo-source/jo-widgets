@@ -34,10 +34,10 @@ import org.jowidgets.common.widgets.controller.IMouseMotionListener;
 
 public class MouseMotionAdapter implements IMouseMotionListener {
 
-	@Override
-	public void mouseMoved(final IMouseEvent event) {}
+    @Override
+    public void mouseMoved(final IMouseEvent event) {}
 
-	@Override
-	public void mouseDragged(final IMouseButtonEvent event) {}
+    @Override
+    public void mouseDragged(final IMouseButtonEvent event) {}
 
 }

@@ -29,16 +29,16 @@ package org.jowidgets.util;
 
 public final class NullCompatibleEquivalence {
 
-	private NullCompatibleEquivalence() {}
+    private NullCompatibleEquivalence() {}
 
-	public static boolean equals(final Object object1, final Object object2) {
-		if (object1 == null && object2 == null) {
-			return true;
-		}
-		else if (object1 == null || object2 == null) {// only one of them is null
-			return false;
-		}
-		return object1.equals(object2);
-	}
+    public static boolean equals(final Object object1, final Object object2) {
+        if (object1 == null && object2 == null) {
+            return true;
+        }
+        else if (object1 == null || object2 == null) {// only one of them is null
+            return false;
+        }
+        return object1.equals(object2);
+    }
 
 }

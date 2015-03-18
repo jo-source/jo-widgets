@@ -38,41 +38,41 @@ import org.jowidgets.spi.impl.controller.MenuObservable;
 
 public class JoMenu extends JMenu implements IMenuObservable {
 
-	private static final long serialVersionUID = -8739364795296901533L;
+    private static final long serialVersionUID = -8739364795296901533L;
 
-	private final MenuObservable menuObservable;
+    private final MenuObservable menuObservable;
 
-	public JoMenu() {
-		super();
-		this.menuObservable = new MenuObservable();
+    public JoMenu() {
+        super();
+        this.menuObservable = new MenuObservable();
 
-		addMenuListener(new MenuListener() {
+        addMenuListener(new MenuListener() {
 
-			@Override
-			public void menuSelected(final MenuEvent e) {
-				menuObservable.fireMenuActivated();
-			}
+            @Override
+            public void menuSelected(final MenuEvent e) {
+                menuObservable.fireMenuActivated();
+            }
 
-			@Override
-			public void menuDeselected(final MenuEvent e) {
-				menuObservable.fireMenuDeactivated();
-			}
+            @Override
+            public void menuDeselected(final MenuEvent e) {
+                menuObservable.fireMenuDeactivated();
+            }
 
-			@Override
-			public void menuCanceled(final MenuEvent e) {
-				menuObservable.fireMenuDeactivated();
-			}
-		});
-	}
+            @Override
+            public void menuCanceled(final MenuEvent e) {
+                menuObservable.fireMenuDeactivated();
+            }
+        });
+    }
 
-	@Override
-	public void addMenuListener(final IMenuListener listener) {
-		menuObservable.addMenuListener(listener);
-	}
+    @Override
+    public void addMenuListener(final IMenuListener listener) {
+        menuObservable.addMenuListener(listener);
+    }
 
-	@Override
-	public void removeMenuListener(final IMenuListener listener) {
-		menuObservable.removeMenuListener(listener);
-	}
+    @Override
+    public void removeMenuListener(final IMenuListener listener) {
+        menuObservable.removeMenuListener(listener);
+    }
 
 }

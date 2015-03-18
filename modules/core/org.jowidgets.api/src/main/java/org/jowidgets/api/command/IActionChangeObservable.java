@@ -30,8 +30,8 @@ package org.jowidgets.api.command;
 
 public interface IActionChangeObservable {
 
-	void addActionChangeListener(IActionChangeListener listener);
+    void addActionChangeListener(IActionChangeListener listener);
 
-	void removeActionChangeListener(IActionChangeListener listener);
+    void removeActionChangeListener(IActionChangeListener listener);
 
 }

@@ -34,21 +34,21 @@ import org.jowidgets.util.Assert;
 
 public class MouseEvent implements IMouseEvent {
 
-	private final Position position;
+    private final Position position;
 
-	public MouseEvent(final Position position) {
-		Assert.paramNotNull(position, "position");
-		this.position = position;
-	}
+    public MouseEvent(final Position position) {
+        Assert.paramNotNull(position, "position");
+        this.position = position;
+    }
 
-	@Override
-	public Position getPosition() {
-		return position;
-	}
+    @Override
+    public Position getPosition() {
+        return position;
+    }
 
-	@Override
-	public String toString() {
-		return "MouseEvent [position=" + position + "]";
-	}
+    @Override
+    public String toString() {
+        return "MouseEvent [position=" + position + "]";
+    }
 
 }

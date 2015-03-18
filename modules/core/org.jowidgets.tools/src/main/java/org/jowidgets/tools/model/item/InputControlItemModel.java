@@ -55,126 +55,126 @@ import org.jowidgets.util.Tuple;
  */
 public class InputControlItemModel<VALUE_TYPE> extends AbstractItemModelWrapper implements IContainerItemModel, IInputObservable {
 
-	private final IContainerContentCreator contentCreator;
-	private final Map<IContainer, Tuple<IInputControl<VALUE_TYPE>, IInputListener>> controls;
-	private final InputObservable inputObservable;
+    private final IContainerContentCreator contentCreator;
+    private final Map<IContainer, Tuple<IInputControl<VALUE_TYPE>, IInputListener>> controls;
+    private final InputObservable inputObservable;
 
-	private VALUE_TYPE value;
+    private VALUE_TYPE value;
 
-	public InputControlItemModel(final IWidgetDescriptor<? extends IInputControl<VALUE_TYPE>> descriptor, final int width) {
-		this(descriptor, "w " + width + "!");
-	}
+    public InputControlItemModel(final IWidgetDescriptor<? extends IInputControl<VALUE_TYPE>> descriptor, final int width) {
+        this(descriptor, "w " + width + "!");
+    }
 
-	@SuppressWarnings("unchecked")
-	public InputControlItemModel(
-		final IWidgetDescriptor<? extends IInputControl<VALUE_TYPE>> descriptor,
-		final String layoutConstraints) {
-		super(Toolkit.getModelFactoryProvider().getItemModelFactory().containerItem());
-		Assert.paramNotNull(descriptor, "descriptor");
+    @SuppressWarnings("unchecked")
+    public InputControlItemModel(
+        final IWidgetDescriptor<? extends IInputControl<VALUE_TYPE>> descriptor,
+        final String layoutConstraints) {
+        super(Toolkit.getModelFactoryProvider().getItemModelFactory().containerItem());
+        Assert.paramNotNull(descriptor, "descriptor");
 
-		this.inputObservable = new InputObservable();
-		this.controls = new HashMap<IContainer, Tuple<IInputControl<VALUE_TYPE>, IInputListener>>();
+        this.inputObservable = new InputObservable();
+        this.controls = new HashMap<IContainer, Tuple<IInputControl<VALUE_TYPE>, IInputListener>>();
 
-		if (descriptor instanceof IInputComponentSetup) {
-			this.value = ((IInputComponentSetup<VALUE_TYPE>) descriptor).getValue();
-		}
+        if (descriptor instanceof IInputComponentSetup) {
+            this.value = ((IInputComponentSetup<VALUE_TYPE>) descriptor).getValue();
+        }
 
-		this.contentCreator = new IContainerContentCreator() {
+        this.contentCreator = new IContainerContentCreator() {
 
-			@Override
-			public void createContent(final IContainer container) {
-				container.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
-				final IInputControl<VALUE_TYPE> control = container.add(descriptor, layoutConstraints);
-				control.setValue(value);
+            @Override
+            public void createContent(final IContainer container) {
+                container.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
+                final IInputControl<VALUE_TYPE> control = container.add(descriptor, layoutConstraints);
+                control.setValue(value);
 
-				final IInputListener syncListener = new InputListener(control);
-				control.addInputListener(syncListener);
-				controls.put(container, new Tuple<IInputControl<VALUE_TYPE>, IInputListener>(control, syncListener));
-			}
+                final IInputListener syncListener = new InputListener(control);
+                control.addInputListener(syncListener);
+                controls.put(container, new Tuple<IInputControl<VALUE_TYPE>, IInputListener>(control, syncListener));
+            }
 
-			@Override
-			public void containerDisposed(final IContainer container) {
-				final Tuple<IInputControl<VALUE_TYPE>, IInputListener> controlTuple = controls.remove(container);
-				if (controlTuple != null) {
-					controlTuple.getFirst().removeInputListener(controlTuple.getSecond());
-				}
-			}
-		};
-	}
+            @Override
+            public void containerDisposed(final IContainer container) {
+                final Tuple<IInputControl<VALUE_TYPE>, IInputListener> controlTuple = controls.remove(container);
+                if (controlTuple != null) {
+                    controlTuple.getFirst().removeInputListener(controlTuple.getSecond());
+                }
+            }
+        };
+    }
 
-	@Override
-	public final IContainerContentCreator getContentCreator() {
-		return contentCreator;
-	}
+    @Override
+    public final IContainerContentCreator getContentCreator() {
+        return contentCreator;
+    }
 
-	@Override
-	public final void setContentCreator(final IContainerContentCreator contentCreator) {
-		throw new UnsupportedOperationException("The content creator of this model is imutable");
-	}
+    @Override
+    public final void setContentCreator(final IContainerContentCreator contentCreator) {
+        throw new UnsupportedOperationException("The content creator of this model is imutable");
+    }
 
-	public final VALUE_TYPE getValue() {
-		return value;
-	}
+    public final VALUE_TYPE getValue() {
+        return value;
+    }
 
-	public final void setValue(final VALUE_TYPE value) {
-		this.value = value;
-		changeValues(value, null);
-	}
+    public final void setValue(final VALUE_TYPE value) {
+        this.value = value;
+        changeValues(value, null);
+    }
 
-	@Override
-	public IContainerItemModel createCopy() {
-		final IContainerItemModelBuilder result = Toolkit.getModelFactoryProvider().getItemModelFactory().containerItemBuilder();
-		result.setId(getId());
-		result.setText(getText());
-		result.setToolTipText(getToolTipText());
-		result.setIcon(getIcon());
-		result.setAccelerator(getAccelerator());
-		result.setMnemonic(getMnemonic());
-		result.setEnabled(isEnabled());
-		return result.build();
-	}
+    @Override
+    public IContainerItemModel createCopy() {
+        final IContainerItemModelBuilder result = Toolkit.getModelFactoryProvider().getItemModelFactory().containerItemBuilder();
+        result.setId(getId());
+        result.setText(getText());
+        result.setToolTipText(getToolTipText());
+        result.setIcon(getIcon());
+        result.setAccelerator(getAccelerator());
+        result.setMnemonic(getMnemonic());
+        result.setEnabled(isEnabled());
+        return result.build();
+    }
 
-	private void changeValues(final VALUE_TYPE value, final IInputControl<VALUE_TYPE> sourceControl) {
-		for (final Tuple<IInputControl<VALUE_TYPE>, IInputListener> controlTuple : controls.values()) {
-			final IInputListener listener = controlTuple.getSecond();
-			final IInputControl<VALUE_TYPE> childControl = controlTuple.getFirst();
-			if (sourceControl != childControl) {
-				childControl.removeInputListener(listener);
-				childControl.setValue(value);
-				childControl.addInputListener(listener);
-			}
-		}
-		inputObservable.fireInputChanged();
-	}
+    private void changeValues(final VALUE_TYPE value, final IInputControl<VALUE_TYPE> sourceControl) {
+        for (final Tuple<IInputControl<VALUE_TYPE>, IInputListener> controlTuple : controls.values()) {
+            final IInputListener listener = controlTuple.getSecond();
+            final IInputControl<VALUE_TYPE> childControl = controlTuple.getFirst();
+            if (sourceControl != childControl) {
+                childControl.removeInputListener(listener);
+                childControl.setValue(value);
+                childControl.addInputListener(listener);
+            }
+        }
+        inputObservable.fireInputChanged();
+    }
 
-	private class InputListener implements IInputListener {
+    private class InputListener implements IInputListener {
 
-		private final IInputControl<VALUE_TYPE> control;
+        private final IInputControl<VALUE_TYPE> control;
 
-		public InputListener(final IInputControl<VALUE_TYPE> control) {
-			this.control = control;
-		}
+        public InputListener(final IInputControl<VALUE_TYPE> control) {
+            this.control = control;
+        }
 
-		@Override
-		public void inputChanged() {
-			value = control.getValue();
-			changeValues(value, control);
-		}
-	}
+        @Override
+        public void inputChanged() {
+            value = control.getValue();
+            changeValues(value, control);
+        }
+    }
 
-	@Override
-	public final void addInputListener(final IInputListener listener) {
-		inputObservable.addInputListener(listener);
-	}
+    @Override
+    public final void addInputListener(final IInputListener listener) {
+        inputObservable.addInputListener(listener);
+    }
 
-	@Override
-	public final void removeInputListener(final IInputListener listener) {
-		inputObservable.removeInputListener(listener);
-	}
+    @Override
+    public final void removeInputListener(final IInputListener listener) {
+        inputObservable.removeInputListener(listener);
+    }
 
-	@Override
-	public IItemModel unwrap() {
-		return this;
-	}
+    @Override
+    public IItemModel unwrap() {
+        return this;
+    }
 
 }

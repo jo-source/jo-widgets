@@ -39,28 +39,28 @@ import org.jowidgets.util.Assert;
 
 public class ParentObservable<PARENT_TYPE extends IWidget> implements IParentObservable<PARENT_TYPE> {
 
-	private final Set<IParentListener<PARENT_TYPE>> listeners;
+    private final Set<IParentListener<PARENT_TYPE>> listeners;
 
-	public ParentObservable() {
-		this.listeners = new LinkedHashSet<IParentListener<PARENT_TYPE>>();
-	}
+    public ParentObservable() {
+        this.listeners = new LinkedHashSet<IParentListener<PARENT_TYPE>>();
+    }
 
-	@Override
-	public void addParentListener(final IParentListener<PARENT_TYPE> listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.add(listener);
-	}
+    @Override
+    public void addParentListener(final IParentListener<PARENT_TYPE> listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.add(listener);
+    }
 
-	@Override
-	public void removeParentListener(final IParentListener<PARENT_TYPE> listener) {
-		Assert.paramNotNull(listener, "listener");
-		listeners.remove(listener);
-	}
+    @Override
+    public void removeParentListener(final IParentListener<PARENT_TYPE> listener) {
+        Assert.paramNotNull(listener, "listener");
+        listeners.remove(listener);
+    }
 
-	public final void fireParentChanged(final PARENT_TYPE oldParent, final PARENT_TYPE newParent) {
-		for (final IParentListener<PARENT_TYPE> listener : new LinkedList<IParentListener<PARENT_TYPE>>(listeners)) {
-			listener.parentChanged(oldParent, newParent);
-		}
-	}
+    public final void fireParentChanged(final PARENT_TYPE oldParent, final PARENT_TYPE newParent) {
+        for (final IParentListener<PARENT_TYPE> listener : new LinkedList<IParentListener<PARENT_TYPE>>(listeners)) {
+            listener.parentChanged(oldParent, newParent);
+        }
+    }
 
 }

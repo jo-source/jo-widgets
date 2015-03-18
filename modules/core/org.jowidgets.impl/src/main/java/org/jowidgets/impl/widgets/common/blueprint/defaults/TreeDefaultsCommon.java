@@ -33,11 +33,11 @@ import org.jowidgets.common.widgets.builder.ITreeSetupBuilderCommon;
 
 public class TreeDefaultsCommon implements IDefaultInitializer<ITreeSetupBuilderCommon<?>> {
 
-	@Override
-	public void initialize(final ITreeSetupBuilderCommon<?> builder) {
-		builder.setContentScrolled(Boolean.TRUE);
-		builder.setChecked(false);
-		builder.setSelectionPolicy(SelectionPolicy.SINGLE_SELECTION);
-	}
+    @Override
+    public void initialize(final ITreeSetupBuilderCommon<?> builder) {
+        builder.setContentScrolled(Boolean.TRUE);
+        builder.setChecked(false);
+        builder.setSelectionPolicy(SelectionPolicy.SINGLE_SELECTION);
+    }
 
 }

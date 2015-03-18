@@ -36,103 +36,103 @@ import org.jowidgets.util.cache.Cacheable;
  */
 public final class ColorValue extends Cacheable implements IColorConstant, Serializable {
 
-	private static final long serialVersionUID = 6862989508930470810L;
+    private static final long serialVersionUID = 6862989508930470810L;
 
-	private final short red;
-	private final short green;
-	private final short blue;
+    private final short red;
+    private final short green;
+    private final short blue;
 
-	/**
-	 * Creates a new ColorValue object
-	 * 
-	 * @param red The red component
-	 * @param green The green component
-	 * @param blue The blue component
-	 */
-	public ColorValue(final int red, final int green, final int blue) {
-		this.red = shorten(red);
-		this.green = shorten(green);
-		this.blue = shorten(blue);
-	}
+    /**
+     * Creates a new ColorValue object
+     * 
+     * @param red The red component
+     * @param green The green component
+     * @param blue The blue component
+     */
+    public ColorValue(final int red, final int green, final int blue) {
+        this.red = shorten(red);
+        this.green = shorten(green);
+        this.blue = shorten(blue);
+    }
 
-	private static short shorten(final int value) {
-		if (value > 255) {
-			throw new IllegalArgumentException("Value " + value + "outside of range [0,255]");
-		}
-		if (value < 0) {
-			throw new IllegalArgumentException("Value " + value + "outside of range [0,255]");
-		}
-		return (short) value;
-	}
+    private static short shorten(final int value) {
+        if (value > 255) {
+            throw new IllegalArgumentException("Value " + value + "outside of range [0,255]");
+        }
+        if (value < 0) {
+            throw new IllegalArgumentException("Value " + value + "outside of range [0,255]");
+        }
+        return (short) value;
+    }
 
-	/**
-	 * Gets the red component
-	 * 
-	 * @return The red component
-	 */
-	public int getRed() {
-		return red;
-	}
+    /**
+     * Gets the red component
+     * 
+     * @return The red component
+     */
+    public int getRed() {
+        return red;
+    }
 
-	/**
-	 * Gets the green component
-	 * 
-	 * @return The green component
-	 */
-	public int getGreen() {
-		return green;
-	}
+    /**
+     * Gets the green component
+     * 
+     * @return The green component
+     */
+    public int getGreen() {
+        return green;
+    }
 
-	/**
-	 * Gets the blue component
-	 * 
-	 * @return The blue component
-	 */
-	public int getBlue() {
-		return blue;
-	}
+    /**
+     * Gets the blue component
+     * 
+     * @return The blue component
+     */
+    public int getBlue() {
+        return blue;
+    }
 
-	@Override
-	public ColorValue getDefaultValue() {
-		return this;
-	}
+    @Override
+    public ColorValue getDefaultValue() {
+        return this;
+    }
 
-	@Override
-	public int hashCode() {
-		int result = 0;
-		result += red;
-		result += green << 8;
-		result += blue << 16;
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        int result = 0;
+        result += red;
+        result += green << 8;
+        result += blue << 16;
+        return result;
+    }
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final ColorValue other = (ColorValue) obj;
-		if (blue != other.blue) {
-			return false;
-		}
-		if (green != other.green) {
-			return false;
-		}
-		if (red != other.red) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ColorValue other = (ColorValue) obj;
+        if (blue != other.blue) {
+            return false;
+        }
+        if (green != other.green) {
+            return false;
+        }
+        if (red != other.red) {
+            return false;
+        }
+        return true;
+    }
 
-	@Override
-	public String toString() {
-		return "ColorValue [red=" + red + ", green=" + green + ", blue=" + blue + "]";
-	}
+    @Override
+    public String toString() {
+        return "ColorValue [red=" + red + ", green=" + green + ", blue=" + blue + "]";
+    }
 
 }

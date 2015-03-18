@@ -29,22 +29,22 @@ package org.jowidgets.common.types;
 
 public class Border {
 
-	private String title;
+    private String title;
 
-	public Border() {}
+    public Border() {}
 
-	public Border(final String title) {
-		super();
-		this.title = title;
-	}
+    public Border(final String title) {
+        super();
+        this.title = title;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	@Override
-	public String toString() {
-		return "Border [title=" + title + "]";
-	}
+    @Override
+    public String toString() {
+        return "Border [title=" + title + "]";
+    }
 
 }

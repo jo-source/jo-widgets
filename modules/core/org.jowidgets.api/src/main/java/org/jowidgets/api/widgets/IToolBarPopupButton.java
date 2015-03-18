@@ -36,22 +36,22 @@ import org.jowidgets.common.widgets.IToolBarPopupButtonCommon;
 
 public interface IToolBarPopupButton extends IToolBarItem, IToolBarPopupButtonCommon {
 
-	void setAction(IAction action);
+    void setAction(IAction action);
 
-	void setAction(IAction action, ActionStyle style);
+    void setAction(IAction action, ActionStyle style);
 
-	/**
-	 * Sets a popup menu for this component.
-	 * The popup menu will be shown, when the menu button will be pressed this component.
-	 * 
-	 * @param menuModel
-	 *            The model of the popup menu or null, if no popup should be shown on popup events
-	 */
-	void setPopupMenu(IMenuModel popupMenu);
+    /**
+     * Sets a popup menu for this component.
+     * The popup menu will be shown, when the menu button will be pressed this component.
+     * 
+     * @param menuModel
+     *            The model of the popup menu or null, if no popup should be shown on popup events
+     */
+    void setPopupMenu(IMenuModel popupMenu);
 
-	void setModel(IPopupActionItemModel model);
+    void setModel(IPopupActionItemModel model);
 
-	@Override
-	IPopupActionItemModel getModel();
+    @Override
+    IPopupActionItemModel getModel();
 
 }

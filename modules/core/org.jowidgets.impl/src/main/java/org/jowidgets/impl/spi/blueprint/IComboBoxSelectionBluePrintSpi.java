@@ -31,5 +31,5 @@ import org.jowidgets.impl.spi.blueprint.builder.IComboBoxSelectionSetupBuilderSp
 import org.jowidgets.impl.spi.descriptor.IComboBoxSelectionDescriptorSpi;
 
 public interface IComboBoxSelectionBluePrintSpi extends
-		IComboBoxSelectionSetupBuilderSpi<IComboBoxSelectionBluePrintSpi>,
-		IComboBoxSelectionDescriptorSpi {}
+        IComboBoxSelectionSetupBuilderSpi<IComboBoxSelectionBluePrintSpi>,
+        IComboBoxSelectionDescriptorSpi {}

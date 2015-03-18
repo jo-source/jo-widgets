@@ -32,51 +32,51 @@ import java.util.Date;
 
 public final class Person {
 
-	private String name;
-	private Date dayOfBirth;
-	private Gender gender;
+    private String name;
+    private Date dayOfBirth;
+    private Gender gender;
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(final String name) {
-		this.name = name;
-	}
+    public void setName(final String name) {
+        this.name = name;
+    }
 
-	public Date getDayOfBirth() {
-		return dayOfBirth;
-	}
+    public Date getDayOfBirth() {
+        return dayOfBirth;
+    }
 
-	public void setDayOfBirth(final Date dayOfBirth) {
-		this.dayOfBirth = dayOfBirth;
-	}
+    public void setDayOfBirth(final Date dayOfBirth) {
+        this.dayOfBirth = dayOfBirth;
+    }
 
-	public Gender getGender() {
-		return gender;
-	}
+    public Gender getGender() {
+        return gender;
+    }
 
-	public void setGender(final Gender gender) {
-		this.gender = gender;
-	}
+    public void setGender(final Gender gender) {
+        this.gender = gender;
+    }
 
-	public Person createCopy() {
-		final Person result = new Person();
-		result.setName(name);
-		result.setDayOfBirth(dayOfBirth);
-		result.setGender(gender);
-		return result;
-	}
+    public Person createCopy() {
+        final Person result = new Person();
+        result.setName(name);
+        result.setDayOfBirth(dayOfBirth);
+        result.setGender(gender);
+        return result;
+    }
 
-	public void setPerson(final Person person) {
-		name = person.getName();
-		dayOfBirth = person.getDayOfBirth();
-		gender = person.getGender();
-	}
+    public void setPerson(final Person person) {
+        name = person.getName();
+        dayOfBirth = person.getDayOfBirth();
+        gender = person.getGender();
+    }
 
-	@Override
-	public String toString() {
-		return "Person [name=" + name + ", dayOfBirth=" + dayOfBirth + ", gender=" + gender + "]";
-	}
+    @Override
+    public String toString() {
+        return "Person [name=" + name + ", dayOfBirth=" + dayOfBirth + ", gender=" + gender + "]";
+    }
 
 }

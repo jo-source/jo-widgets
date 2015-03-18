@@ -27,11 +27,10 @@
  */
 package org.jowidgets.spi.widgets;
 
-
 public interface ICheckBoxSpi extends ITextLabelSpi, IInputControlSpi {
 
-	boolean isSelected();
+    boolean isSelected();
 
-	void setSelected(boolean selected);
+    void setSelected(boolean selected);
 
 }

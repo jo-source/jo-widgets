@@ -30,6 +30,6 @@ package org.jowidgets.api.dnd;
 
 public interface IDragDataResponse {
 
-	void setData(Object data);
+    void setData(Object data);
 
 }

@@ -29,6 +29,6 @@ package org.jowidgets.workbench.api;
 
 public interface IComponentNodeDescriptor extends IWorkbenchPart {
 
-	String getId();
+    String getId();
 
 }

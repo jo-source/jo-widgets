@@ -39,15 +39,15 @@ import org.jowidgets.tools.powo.JoFrame;
 @Deprecated
 public final class SwtToJo {
 
-	private SwtToJo() {}
+    private SwtToJo() {}
 
-	public static JoComposite create(final Composite composite) {
-		return JoComposite.toJoComposite(SwtToJoWrapper.create(composite));
-	}
+    public static JoComposite create(final Composite composite) {
+        return JoComposite.toJoComposite(SwtToJoWrapper.create(composite));
+    }
 
-	public static JoFrame create(final Shell shell) {
-		return JoFrame.toJoFrame(SwtToJoWrapper.create(shell));
-	}
+    public static JoFrame create(final Shell shell) {
+        return JoFrame.toJoFrame(SwtToJoWrapper.create(shell));
+    }
 
-	//TODO ANYBODY may feel free to add more create methods
+    //TODO ANYBODY may feel free to add more create methods
 }

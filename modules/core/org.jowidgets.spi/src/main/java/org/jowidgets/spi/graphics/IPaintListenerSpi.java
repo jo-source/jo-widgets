@@ -32,6 +32,6 @@ import org.jowidgets.spi.controller.IPaintEventSpi;
 
 public interface IPaintListenerSpi {
 
-	void paint(IPaintEventSpi paintEvent);
+    void paint(IPaintEventSpi paintEvent);
 
 }
