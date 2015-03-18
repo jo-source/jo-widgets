@@ -40,7 +40,6 @@ import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 import org.jowidgets.util.IObservableValue;
-import org.jowidgets.util.ObservableBoolean;
 import org.jowidgets.util.ObservableValue;
 import org.jowidgets.util.StringUtils;
 import org.jowidgets.util.binding.Bind;
@@ -90,8 +89,7 @@ public final class BindingSnipped implements IApplication {
 		}
 
 		//add binding checkbox
-		final ObservableBoolean booleanValue = new ObservableBoolean(true);
-		final ICheckBox bindingCb = frame.add(BPF.checkBox().setText("Bind").setObservableValue(booleanValue));
+		final ICheckBox bindingCb = frame.add(BPF.checkBox().setText("Bind").setValue(true));
 		bindingCb.addInputListener(new IInputListener() {
 			@Override
 			public void inputChanged() {
