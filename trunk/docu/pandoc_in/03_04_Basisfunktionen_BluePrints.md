@@ -10,6 +10,8 @@ Die Frage, ob eine Eigenschaft imutable ist oder nicht ist eine Design (oder auc
 
 Für die Erstellung eigener Widget Bibliotheken kann der Blueprint Mechanismus verwendet werden. Dabei müssen die BluePrint Schnittstellen nicht selbst implementiert werden da die Implementierung mit Hilfe von [Java Proxies](http://docs.oracle.com/javase/7/docs/api/java/lang/reflect/Proxy.html) umgesetzt wird. Das Definieren der BluePrint Schnittstelle reicht also aus. Siehe dazu auch [Erstellung eigener Widget Bibliotheken](#custom_widget_libraries).
 
+__Hinweis:__ Für jedes Widget existiert genau eine eigene BluePrint Schnittstelle, während unterschiedliche Widgets sich die gleiche Widget Schnittstelle Teilen können (z.B. `IFrame` für das Frame Widget (`IFrameBluePrint`) und das Dialog Widget (`IDialogBluePrint`).
+
 ### Beispiele für die Verwendung von BluePrints {#blue_prints_examples}
 
 BluePrints erhält man von der BluePrintFactory. Dazu kann entweder die _Abreviation Accessor Klasse_ `org.jowidgets.tools.widgets.blueprint.BPF` verwendet werden, oder man holt sich die Instanz der `IBluePrintFactory` Schnittstelle vom Toolkit mittels `Toolkit.getBluePrintFactory()`. Die Setup Methoden eines BluePrint haben, wie beim Builder Pattern üblich, immer die Instanz als Rückgabewert. Dadurch lassen sich die Methodenaufrufe einfach _verketten_.

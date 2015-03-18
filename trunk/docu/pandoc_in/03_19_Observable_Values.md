@@ -268,7 +268,7 @@ Dies würde dem Verhalten des [MandatoryObservableValue](#mandatory_observable_v
 
 
 
-### ObservableValue Binding{#observable_value_binding}
+### Observable Value Binding{#observable_value_binding}
 
 Die Klasse `org.jowidgets.util.binding.Bind` kann verwendet werden, um zwei Observable Values aneinander zu binden binden. Sie hat die folgenden statischen Methoden:
 
@@ -621,10 +621,8 @@ public final class BindingSnipped implements IApplication {
 		}
 
 		//add binding checkbox
-		final ObservableBoolean booleanValue = new ObservableBoolean(true);
-		final ICheckBox bindingCb = frame.add(
-			BPF.checkBox().setText("Bind").setObservableValue(booleanValue));
-		
+		final ICheckBox bindingCb = frame.add(BPF.checkBox().setText("Bind"));
+		bindingCb.setSelected(true);
 		bindingCb.addInputListener(new IInputListener() {
 			@Override
 			public void inputChanged() {

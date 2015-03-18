@@ -1,4 +1,4 @@
-## Der Application Runner {#application_runner}
+## Der Application Runner{#application_runner}
 
 Der Application Runner dienst zum Starten einer jowidgets standalone Applikation. Standalone bedeutet, dass die initialen Widgets sowie der Event Dispatcher Thread über die Jowidget API erzeugt werden. 
 
