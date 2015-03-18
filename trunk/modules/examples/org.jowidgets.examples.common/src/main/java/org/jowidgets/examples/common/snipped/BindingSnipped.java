@@ -74,10 +74,10 @@ public final class BindingSnipped implements IApplication {
 
         //add sliders
         for (int i = 0; i < COLUMNS; i++) {
-            final ISliderViewerBluePrint<Double> sliderBp = BPF.sliderViewerDouble(MIN_VALUE, MAX_VALUE);
-            sliderBp.setVertical();
-            sliderBp.setDefaultValue(DEFAULT_VALUE);
-            sliderBp.setObservableValue(observableValues.get(i));
+            final ISliderViewerBluePrint<Double> sliderBp = BPF.sliderViewerDouble(MIN_VALUE, MAX_VALUE)
+                    .setVertical()
+                    .setDefaultValue(DEFAULT_VALUE)
+                    .setObservableValue(observableValues.get(i));
             frame.add(sliderBp, "w 50::");
         }
 
