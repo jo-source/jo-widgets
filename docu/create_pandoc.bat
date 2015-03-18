@@ -13,7 +13,7 @@ for /f %%f in ('dir /b pandoc_in\*.md') do (
 )
 
 pandoc -s -S -t docbook %inputPath% -V lang=german --toc --number-sections --epub-chapter-level=1  -o pandoc_out/Dokumentation.db
-rem pandoc %inputPath% -V lang=german --toc --number-sections --epub-chapter-level=1 --chapters -o pandoc_out/Dokumentation.pdf
+pandoc %inputPath% -V lang=german --toc --number-sections --epub-chapter-level=1 --chapters -o pandoc_out/Dokumentation.pdf
 rem pandoc %inputPath% -V lang=german -c style.css --toc --number-sections --epub-chapter-level=1 --chapters -o pandoc_out/Dokumentation.html
 
 
