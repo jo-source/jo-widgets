@@ -89,7 +89,8 @@ public final class BindingSnipped implements IApplication {
 		}
 
 		//add binding checkbox
-		final ICheckBox bindingCb = frame.add(BPF.checkBox().setText("Bind").setValue(true));
+		final ICheckBox bindingCb = frame.add(BPF.checkBox().setText("Bind"));
+		bindingCb.setSelected(true);
 		bindingCb.addInputListener(new IInputListener() {
 			@Override
 			public void inputChanged() {
