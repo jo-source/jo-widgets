@@ -1,2 +1,2 @@
-## Die GenericWidgetFactory{#generic_widget_factory}
+## Die Generic Widget Factory{#generic_widget_factory}
 
