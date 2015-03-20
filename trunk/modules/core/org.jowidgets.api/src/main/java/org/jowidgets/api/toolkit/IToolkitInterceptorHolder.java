@@ -28,6 +28,14 @@
 
 package org.jowidgets.api.toolkit;
 
+/**
+ * A toolkit interceptor holder allows to plugin a Toolkit interceptor into any {@link IToolkit} that will be created.
+ * 
+ * The interceptor can be registered explicitly with help of
+ * the method {@link ToolkitInterceptor#registerToolkitInterceptorHolder(IToolkitInterceptorHolder)} (not recommended)
+ * or with help of the Java Service Loader Mechanism:
+ * (http://docs.oracle.com/javase/6/docs/api/java/util/ServiceLoader.html)
+ */
 public interface IToolkitInterceptorHolder {
 
     /**
@@ -39,7 +47,19 @@ public interface IToolkitInterceptorHolder {
      */
     int DEFAULT_ORDER = 2;
 
+    /**
+     * Gets the toolkit interceptor for this toolkit
+     * 
+     * @return The toolkit interceptor, never null
+     */
     IToolkitInterceptor getToolkitInterceptor();
 
+    /**
+     * Gets the order of the holder.
+     * 
+     * Interceptors with lower order will be invoked before interceptors with higher order.
+     * 
+     * @return The order
+     */
     int getOrder();
 }

@@ -80,14 +80,14 @@ public class GenericWidgetFactoryWrapper implements IGenericWidgetFactory {
     @Override
     public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> void addWidgetDecorator(
         final Class<? extends DESCRIPTOR_TYPE> descriptorClass,
-        final IDecorator<WIDGET_TYPE> decorator) {
+        final IDecorator<? extends WIDGET_TYPE> decorator) {
         genericFactory.addWidgetDecorator(descriptorClass, decorator);
     }
 
     @Override
     public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> void addWidgetFactoryDecorator(
         final Class<? extends DESCRIPTOR_TYPE> descriptorClass,
-        final IDecorator<IWidgetFactory<WIDGET_TYPE, ? extends DESCRIPTOR_TYPE>> decorator) {
+        final IDecorator<? extends IWidgetFactory<WIDGET_TYPE, ? extends DESCRIPTOR_TYPE>> decorator) {
         genericFactory.addWidgetFactoryDecorator(descriptorClass, decorator);
     }
 

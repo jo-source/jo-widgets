@@ -32,6 +32,11 @@ import org.jowidgets.common.widgets.IWidgetCommon;
 
 public interface IWidgetFactoryListener {
 
+    /**
+     * Will be invoked, if a widget was created
+     * 
+     * @param widget The created widget
+     */
     void widgetCreated(IWidgetCommon widget);
 
 }

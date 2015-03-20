@@ -153,7 +153,7 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
     @Override
     public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> void addWidgetDecorator(
         final Class<? extends DESCRIPTOR_TYPE> descriptorClass,
-        final IDecorator<WIDGET_TYPE> decorator) {
+        final IDecorator<? extends WIDGET_TYPE> decorator) {
         Assert.paramNotNull(descriptorClass, "descriptorClass");
         Assert.paramNotNull(decorator, "decorator");
 
@@ -169,7 +169,7 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
     @Override
     public <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> void addWidgetFactoryDecorator(
         final Class<? extends DESCRIPTOR_TYPE> descriptorClass,
-        final IDecorator<IWidgetFactory<WIDGET_TYPE, ? extends DESCRIPTOR_TYPE>> decorator) {
+        final IDecorator<? extends IWidgetFactory<WIDGET_TYPE, ? extends DESCRIPTOR_TYPE>> decorator) {
         Assert.paramNotNull(descriptorClass, "descriptorClass");
         Assert.paramNotNull(decorator, "decorator");
         List factoryDecoratorsList = (List) factoryDecorators.get(descriptorClass);
