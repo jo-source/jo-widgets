@@ -42,11 +42,11 @@ Das gleiche kann man aber auch wie folgt schreiben:
 ~~~
     <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> 
 		void register(
-			final Class<? extends DESCRIPTOR_TYPE> descriptorClass,
-			final IWidgetFactory<WIDGET_TYPE, ? extends DESCRIPTOR_TYPE> widgetFactory);
+			Class<? extends DESCRIPTOR_TYPE> descriptorClass,
+			IWidgetFactory<WIDGET_TYPE, ? extends DESCRIPTOR_TYPE> widgetFactory);
 
     <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> 
-		void unRegister( final Class<? extends DESCRIPTOR_TYPE> descriptorClass);
+		void unRegister(Class<? extends DESCRIPTOR_TYPE> descriptorClass);
 ~~~
 
 Die erste Methode registriert eine `IWidgetFactory` für einen definierten BluePrint Typ. Dabei darf für diesen Typ noch kein Widget registriert sein. Möchte man explizit eine Widget Factory ersetzen, um zum Beispiel eine Vorhandene Widget Implementierung auszutauschen, muss man den BluePrint Typ vorab per `unRegister()` deregistrieren.
@@ -84,3 +84,32 @@ final class BeanFormFactory<BEAN_TYPE> implements
 
 In Zeile 9 wird mit Hilfe der Generic Widget Factory ein Composite erzeugt. Dieses wird in Zeile 13 der `BeanFormImpl` übergeben. Diese verwendet das `IComposite` um das Formular darin darzustellen.
 
+
+#### Abfragen einer Widget Factory
+
+Die folgende Methode liefert eine `IWidgetFactory` für einen BluePrint Typ:
+
+~~~
+  <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> 
+	IWidgetFactory<WIDGET_TYPE, DESCRIPTOR_TYPE> getFactory(
+		Class<? extends DESCRIPTOR_TYPE> descriptorClass);
+~~~
+
+Falls für den BluePrint Typ keine Factory registriert ist, wird `null` zurückgegeben.
+
+
+#### Dekorieren von Widgets
+
+Die folgenden Methoden können verwendet werden, um alle Widgets oder Widget Factories für einen bestimmten Typ zu dekorieren:
+
+~~~
+	<WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> 
+		void addWidgetDecorator(
+			Class<? extends DESCRIPTOR_TYPE> descriptorClass,
+			IDecorator<WIDGET_TYPE> decorator);
+
+    <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> 
+		void addWidgetFactoryDecorator(
+			Class<? extends DESCRIPTOR_TYPE> descriptorClass,
+			IDecorator<IWidgetFactory<WIDGET_TYPE, ? extends DESCRIPTOR_TYPE>> decorator);
+~~~

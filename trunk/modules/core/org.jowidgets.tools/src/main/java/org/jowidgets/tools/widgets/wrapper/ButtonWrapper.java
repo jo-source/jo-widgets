@@ -95,4 +95,9 @@ public class ButtonWrapper extends ControlWrapper implements IButton {
         getWidget().setAction(action);
     }
 
+    @Override
+    public void push() {
+        getWidget().push();
+    }
+
 }

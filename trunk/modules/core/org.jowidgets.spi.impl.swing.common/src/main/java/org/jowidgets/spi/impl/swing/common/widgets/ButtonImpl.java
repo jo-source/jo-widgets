@@ -41,10 +41,10 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.spi.impl.swing.common.image.SwingImageRegistry;
 import org.jowidgets.spi.impl.swing.common.util.AlignmentConvert;
 import org.jowidgets.spi.impl.swing.common.util.FontProvider;
+import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
-import org.jowidgets.test.spi.widgets.IButtonUiSpi;
 
-public class ButtonImpl extends AbstractActionControl implements IButtonUiSpi {
+public class ButtonImpl extends AbstractActionControl implements IButtonSpi {
 
     public ButtonImpl(final IButtonSetupSpi setup) {
         super(new JButton());
@@ -99,11 +99,6 @@ public class ButtonImpl extends AbstractActionControl implements IButtonUiSpi {
     @Override
     public void setFontName(final String fontName) {
         getUiReference().setFont(FontProvider.deriveFont(getUiReference().getFont(), fontName));
-    }
-
-    @Override
-    public boolean isTestable() {
-        return true;
     }
 
     @Override

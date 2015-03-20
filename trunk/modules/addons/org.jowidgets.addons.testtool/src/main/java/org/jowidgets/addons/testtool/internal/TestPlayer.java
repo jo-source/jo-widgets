@@ -31,13 +31,13 @@ package org.jowidgets.addons.testtool.internal;
 import java.util.List;
 
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.ITabItem;
 import org.jowidgets.api.widgets.IToolBarItem;
 import org.jowidgets.api.widgets.ITreeNode;
 import org.jowidgets.common.widgets.IWidgetCommon;
-import org.jowidgets.test.api.widgets.IButtonUi;
 
 //CHECKSTYLE:OFF
 public class TestPlayer {
@@ -73,8 +73,8 @@ public class TestPlayer {
 
     private synchronized void executeAction(final IWidgetCommon widget, final UserAction action, final String value) {
         moveMouseToWidget(widget);
-        if (widget instanceof IButtonUi) {
-            final IButtonUi button = (IButtonUi) widget;
+        if (widget instanceof IButton) {
+            final IButton button = (IButton) widget;
             switch (action) {
                 case CLICK:
                     button.push();

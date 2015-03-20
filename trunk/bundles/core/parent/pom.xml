@@ -39,9 +39,6 @@
 		<module>../org.jowidgets.spi.impl.bridge.swt.awt.common.bundle</module>
 		<module>../org.jowidgets.spi.impl.bridge.swt.awt.bundle</module>
 		<module>../org.jowidgets.spi.impl.bridge.awt.swt.bundle</module>			
-		<module>../org.jowidgets.test.common.bundle</module>
-		<module>../org.jowidgets.test.api.bundle</module>
-		<module>../org.jowidgets.test.spi.bundle</module>
 		<module>../org.jowidgets.classloading.api.bundle</module>
 		<module>../org.jowidgets.beanvalidation.bootstrap.api.bundle</module>		
 	</modules>
