@@ -30,8 +30,22 @@ package org.jowidgets.common.widgets.factory;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
+/**
+ * A widget factory creates a instance for a defined widget type and descriptor type
+ * 
+ * @param <WIDGET_TYPE> The type of the widget, this factory creates
+ * @param <DESCRIPTOR_TYPE> The type of the descriptor this factory is for
+ */
 public interface IWidgetFactory<WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> {
 
+    /**
+     * Creates a new widget instance
+     * 
+     * @param parentUiReference The native parent ui reference of the widget
+     * @param descriptor The widget descriptor
+     * 
+     * @return A new widget instance, never null
+     */
     WIDGET_TYPE create(Object parentUiReference, DESCRIPTOR_TYPE descriptor);
 
 }

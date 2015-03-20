@@ -38,19 +38,33 @@ import java.util.ServiceLoader;
 import org.jowidgets.classloading.api.SharedClassLoader;
 import org.jowidgets.util.Assert;
 
+/**
+ * The toolkit interceptor accessor class
+ */
 public final class ToolkitInterceptor {
 
     private static CompositeToolkitInterceptorHolder compositeHolder;
 
     private ToolkitInterceptor() {}
 
+    /**
+     * Register a toolkit interceptor explicitly.
+     * 
+     * Only use this way of registration, if you are sure, that the toolkit that you are using was not already
+     * created.
+     * 
+     * The recommended way is to use the Service Loader Mechanism for the {@link IToolkitInterceptorHolder} interface:
+     * (http://docs.oracle.com/javase/6/docs/api/java/util/ServiceLoader.html)
+     * 
+     * @param holder The holder to register
+     */
     public static synchronized void registerToolkitInterceptorHolder(final IToolkitInterceptorHolder holder) {
         Assert.paramNotNull(holder, "holder");
         getCompositeHolder().add(holder);
     }
 
     /**
-     * @deprecated Use registerToolkitInterceptorHolder instead, because this method has a type
+     * @deprecated Use registerToolkitInterceptorHolder instead, because this method has a typo
      */
     @Deprecated
     public static synchronized void registerTollkitInterceptorHolder(final IToolkitInterceptorHolder holder) {
@@ -71,10 +85,21 @@ public final class ToolkitInterceptor {
         return compositeHolder;
     }
 
+    /**
+     * Gets the instance of the toolkit interceptor composite, that holds
+     * all registered holders
+     * 
+     * @return The toolkit interceptor, never null
+     */
     public static synchronized IToolkitInterceptor getInstance() {
         return getCompositeHolder().getToolkitInterceptor();
     }
 
+    /**
+     * This method should only be invoked by implementors of {@link IToolkit} after toolkit was created.
+     * 
+     * @param toolkit The toolkit that was created
+     */
     public static void onToolkitCreate(final IToolkit toolkit) {
         getInstance().onToolkitCreate(toolkit);
     }

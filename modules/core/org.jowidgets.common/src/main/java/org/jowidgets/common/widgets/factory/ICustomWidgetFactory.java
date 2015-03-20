@@ -33,6 +33,13 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
 public interface ICustomWidgetFactory {
 
+    /**
+     * Creates a widget for a given descriptor
+     * 
+     * @param descriptor The descriptor to create the widget for
+     * 
+     * @return A new widget, never null
+     */
     <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE create(IWidgetDescriptor<? extends WIDGET_TYPE> descriptor);
 
 }
