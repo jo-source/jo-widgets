@@ -41,6 +41,12 @@ import org.jowidgets.api.dnd.IDragSourceListener;
 import org.jowidgets.common.dnd.DropAction;
 import org.jowidgets.util.Assert;
 
+/**
+ * @deprecated The idea of POWO's (Plain Old Widget Object's) has not been established.
+ *             For that, POWO's will no longer be supported and may removed completely in middle term.
+ *             Feel free to move them to your own open source project.
+ */
+@Deprecated
 final class DragSourcePowo implements IDragSource {
 
     private final Set<IDragSourceListener> listeners;

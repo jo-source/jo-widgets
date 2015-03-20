@@ -32,12 +32,13 @@ import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.powo.JoFrame;
+import org.jowidgets.tools.widgets.blueprint.BPF;
+import org.jowidgets.tools.widgets.wrapper.FrameWrapper;
 
-public class DemoMenuFrame extends JoFrame {
+public class DemoMenuFrame extends FrameWrapper {
 
     public DemoMenuFrame() {
-        super(bluePrint("Menu demo").autoPackOff());
+        super(BPF.frame("Menu demo").autoPackOff());
 
         final DemoMenuProvider menuProvider = new DemoMenuProvider(false);
 

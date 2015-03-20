@@ -32,6 +32,12 @@ import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.MandatoryCheckResult;
 
+/**
+ * @deprecated The idea of POWO's (Plain Old Widget Object's) has not been established.
+ *             For that, POWO's will no longer be supported and may removed completely in middle term.
+ *             Feel free to move them to your own open source project.
+ */
+@Deprecated
 class DummyBluePrint<WIDGET_TYPE extends IWidget> extends DummySetupBuilder implements IWidgetDescriptor<WIDGET_TYPE> {
 
     @SuppressWarnings({"unchecked", "rawtypes"})

@@ -49,9 +49,7 @@ import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.impl.widgets.composed.MonthComposite.IMouseoverListener;
 import org.jowidgets.tools.controller.InputObservable;
 import org.jowidgets.tools.controller.MouseAdapter;
-import org.jowidgets.tools.powo.JoButton;
-import org.jowidgets.tools.powo.JoComposite;
-import org.jowidgets.tools.powo.JoTextLabel;
+import org.jowidgets.tools.widgets.blueprint.BPF;
 import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
 import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
@@ -69,8 +67,8 @@ public class CustomCalendarImpl extends ControlWrapper implements ICalendar {
     private static final Dimension MAX_SIZE = new Dimension(Short.MAX_VALUE, Short.MAX_VALUE);
 
     private final InputObservable inputObservable;
-    private final JoComposite outerComposite;
-    private final JoComposite innerComposite;
+    private final IComposite outerComposite;
+    private final IComposite innerComposite;
     private final MonthComposite[] monthComposites;
     private final ITextLabel[] monthLabels;
     private final CalendarLayouter layouter;
@@ -94,11 +92,10 @@ public class CustomCalendarImpl extends ControlWrapper implements ICalendar {
         this.monthComposites = new MonthComposite[MAX_MONTH];
         this.monthLabels = new ITextLabel[MAX_MONTH];
 
-        this.outerComposite = JoComposite.toJoComposite(composite);
+        this.outerComposite = composite;
 
-        this.innerComposite = new JoComposite(JoComposite.bluePrint().setBorder());
+        this.innerComposite = outerComposite.add(BPF.composite().setBorder());
         this.innerComposite.setLayout(Toolkit.getLayoutFactoryProvider().nullLayout());
-        this.outerComposite.add(innerComposite);
 
         composite.setBackgroundColor(Colors.WHITE);
 
@@ -115,10 +112,10 @@ public class CustomCalendarImpl extends ControlWrapper implements ICalendar {
             this.date = new Date();
         }
 
-        navBackwardButton = this.innerComposite.add(new JoButton(IconsSmall.NAVIGATION_BACKWARD_TINY));
-        navNextButton = this.innerComposite.add(new JoButton(IconsSmall.NAVIGATION_NEXT_TINY));
-        navPrevButton = this.innerComposite.add(new JoButton(IconsSmall.NAVIGATION_PREVIOUS_TINY));
-        navForwardButton = this.innerComposite.add(new JoButton(IconsSmall.NAVIGATION_FORWARD_TINY));
+        navBackwardButton = this.innerComposite.add(BPF.button().setIcon(IconsSmall.NAVIGATION_BACKWARD_TINY));
+        navNextButton = this.innerComposite.add(BPF.button().setIcon(IconsSmall.NAVIGATION_NEXT_TINY));
+        navPrevButton = this.innerComposite.add(BPF.button().setIcon(IconsSmall.NAVIGATION_PREVIOUS_TINY));
+        navForwardButton = this.innerComposite.add(BPF.button().setIcon(IconsSmall.NAVIGATION_FORWARD_TINY));
 
         getMonthComposite(0);
 
@@ -249,8 +246,9 @@ public class CustomCalendarImpl extends ControlWrapper implements ICalendar {
 
     private MonthComposite getMonthComposite(final int index) {
         if (monthComposites[index] == null) {
+            final IComposite monthCompositeParent = innerComposite.add(BPF.composite());
             if (index == 0) {
-                monthComposites[index] = new MonthComposite(this.date, date, layoutCache);
+                monthComposites[index] = new MonthComposite(monthCompositeParent, this.date, date, layoutCache);
             }
             else {
                 final Date prevDate = getMonthComposite(index - 1).getDate();
@@ -258,9 +256,8 @@ public class CustomCalendarImpl extends ControlWrapper implements ICalendar {
                 calendar.setTime(prevDate);
                 calendar.set(Calendar.DAY_OF_MONTH, 1);
                 calendar.add(Calendar.MONTH, 1);
-                monthComposites[index] = new MonthComposite(calendar.getTime(), date, layoutCache);
+                monthComposites[index] = new MonthComposite(monthCompositeParent, calendar.getTime(), date, layoutCache);
             }
-            this.innerComposite.add(monthComposites[index]);
 
             monthComposites[index].addInputListener(new IInputListener() {
                 @Override
@@ -298,7 +295,7 @@ public class CustomCalendarImpl extends ControlWrapper implements ICalendar {
             final Calendar calendar = new GregorianCalendar();
             calendar.setTime(monthDate);
             final String labelString = getMonthDisplayName(calendar);
-            final JoTextLabel label = this.innerComposite.add(new JoTextLabel(labelString));
+            final ITextLabel label = this.innerComposite.add(BPF.textLabel(labelString));
             monthLabels[index] = label;
         }
         return monthLabels[index];

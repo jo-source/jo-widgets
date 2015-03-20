@@ -36,6 +36,12 @@ import org.jowidgets.api.widgets.descriptor.IActionMenuItemDescriptor;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.util.Assert;
 
+/**
+ * @deprecated The idea of POWO's (Plain Old Widget Object's) has not been established.
+ *             For that, POWO's will no longer be supported and may removed completely in middle term.
+ *             Feel free to move them to your own open source project.
+ */
+@Deprecated
 public class JoActionMenuItem extends ActionMenuItem<IActionMenuItem, IActionMenuItemBluePrint> implements IActionMenuItem {
 
     public JoActionMenuItem(final String text, final IImageConstant icon) {

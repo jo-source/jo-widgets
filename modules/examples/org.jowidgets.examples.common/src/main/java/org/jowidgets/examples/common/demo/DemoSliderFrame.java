@@ -31,10 +31,10 @@ package org.jowidgets.examples.common.demo;
 import org.jowidgets.api.widgets.ISlider;
 import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.powo.JoFrame;
 import org.jowidgets.tools.widgets.blueprint.BPF;
+import org.jowidgets.tools.widgets.wrapper.FrameWrapper;
 
-public class DemoSliderFrame extends JoFrame {
+public class DemoSliderFrame extends FrameWrapper {
 
     public DemoSliderFrame() {
         super("Slider demo");

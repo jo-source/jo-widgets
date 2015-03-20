@@ -30,6 +30,12 @@ package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.widgets.IMenuBar;
 
+/**
+ * @deprecated The idea of POWO's (Plain Old Widget Object's) has not been established.
+ *             For that, POWO's will no longer be supported and may removed completely in middle term.
+ *             Feel free to move them to your own open source project.
+ */
+@Deprecated
 public class JoMenuBar extends MenuBar implements IMenuBar {
 
     public JoMenuBar() {

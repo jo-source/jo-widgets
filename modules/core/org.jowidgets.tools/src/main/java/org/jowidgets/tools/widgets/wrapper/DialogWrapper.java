@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2015, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,33 +26,28 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common;
+package org.jowidgets.tools.widgets.wrapper;
 
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.common.application.IApplication;
-import org.jowidgets.common.application.IApplicationLifecycle;
-import org.jowidgets.examples.common.powo.PowoDemoApplication;
-import org.junit.Assert;
-import org.junit.Test;
+import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.IWindow;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.tools.widgets.blueprint.BPF;
+import org.jowidgets.util.Assert;
 
-public class PowoDemoApplicationTest {
+public class DialogWrapper extends FrameWrapper implements IFrame {
 
-    @Test
-    public void testApplication() {
-        Toolkit.getApplicationRunner().run(new IApplication() {
+    public DialogWrapper(final IWindow parent, final String title, final IImageConstant icon) {
+        this(parent, BPF.dialog(title).setIcon(icon));
+    }
 
-            @Override
-            public void start(final IApplicationLifecycle lifecycle) {
+    public DialogWrapper(final IWindow parent, final String title) {
+        this(parent, BPF.dialog(title));
+    }
 
-                final PowoDemoApplication testApplication = new PowoDemoApplication("Powo demo application test");
-                testApplication.start(lifecycle);
-                Assert.assertTrue(testApplication.getRootFrame().isVisible());
-
-                testApplication.getRootFrame().dispose();
-
-            }
-        });
-
+    public DialogWrapper(final IWindow parent, final IWidgetDescriptor<? extends IFrame> descriptor) {
+        super(Toolkit.getWidgetFactory().create(Assert.getParamNotNull(parent, "parent").getUiReference(), descriptor));
     }
 
 }

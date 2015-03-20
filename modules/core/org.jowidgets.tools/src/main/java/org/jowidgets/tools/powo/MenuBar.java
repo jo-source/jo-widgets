@@ -39,6 +39,12 @@ import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.descriptor.IMainMenuDescriptor;
 import org.jowidgets.util.Assert;
 
+/**
+ * @deprecated The idea of POWO's (Plain Old Widget Object's) has not been established.
+ *             For that, POWO's will no longer be supported and may removed completely in middle term.
+ *             Feel free to move them to your own open source project.
+ */
+@Deprecated
 class MenuBar extends Widget<IMenuBar, DummyBluePrint<IMenuBar>> implements IMenuBar {
 
     private final List<JoMainMenu> menus;

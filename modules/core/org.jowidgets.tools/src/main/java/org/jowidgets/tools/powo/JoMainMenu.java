@@ -33,6 +33,12 @@ import org.jowidgets.api.widgets.IMainMenu;
 import org.jowidgets.api.widgets.blueprint.IMainMenuBluePrint;
 import org.jowidgets.api.widgets.descriptor.IMainMenuDescriptor;
 
+/**
+ * @deprecated The idea of POWO's (Plain Old Widget Object's) has not been established.
+ *             For that, POWO's will no longer be supported and may removed completely in middle term.
+ *             Feel free to move them to your own open source project.
+ */
+@Deprecated
 public class JoMainMenu extends Menu<IMainMenu, IMainMenuBluePrint> implements IMainMenu {
 
     public JoMainMenu(final String text) {

@@ -39,6 +39,12 @@ import org.jowidgets.common.types.Accelerator;
 import org.jowidgets.common.widgets.controller.IItemStateListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
+/**
+ * @deprecated The idea of POWO's (Plain Old Widget Object's) has not been established.
+ *             For that, POWO's will no longer be supported and may removed completely in middle term.
+ *             Feel free to move them to your own open source project.
+ */
+@Deprecated
 class SelectableMenuItem<WIDGET_TYPE extends ISelectableMenuItem, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & ISelectableItemSetupBuilder<?> & ISelectableItemSetup> extends
         MenuItem<WIDGET_TYPE, BLUE_PRINT_TYPE> implements ISelectableMenuItem {
 

@@ -33,9 +33,9 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Rectangle;
-import org.jowidgets.tools.powo.JoFrame;
+import org.jowidgets.tools.widgets.wrapper.FrameWrapper;
 
-public class DemoNullLayoutFrame extends JoFrame {
+public class DemoNullLayoutFrame extends FrameWrapper {
 
     private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 

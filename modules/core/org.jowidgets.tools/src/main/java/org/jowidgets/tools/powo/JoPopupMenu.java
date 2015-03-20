@@ -32,6 +32,12 @@ import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.common.types.Position;
 
+/**
+ * @deprecated The idea of POWO's (Plain Old Widget Object's) has not been established.
+ *             For that, POWO's will no longer be supported and may removed completely in middle term.
+ *             Feel free to move them to your own open source project.
+ */
+@Deprecated
 public class JoPopupMenu extends Menu<IPopupMenu, DummyBluePrint<IPopupMenu>> implements IPopupMenu {
 
     public JoPopupMenu() {

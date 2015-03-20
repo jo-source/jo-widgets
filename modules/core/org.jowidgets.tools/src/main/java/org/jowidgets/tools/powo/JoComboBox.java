@@ -40,6 +40,12 @@ import org.jowidgets.api.widgets.descriptor.IComboBoxDescriptor;
 import org.jowidgets.tools.converter.Converter;
 import org.jowidgets.util.IObservableValue;
 
+/**
+ * @deprecated The idea of POWO's (Plain Old Widget Object's) has not been established.
+ *             For that, POWO's will no longer be supported and may removed completely in middle term.
+ *             Feel free to move them to your own open source project.
+ */
+@Deprecated
 public class JoComboBox<VALUE_TYPE> extends InputControl<IComboBox<VALUE_TYPE>, IComboBoxBluePrint<VALUE_TYPE>, VALUE_TYPE> implements
         IComboBox<VALUE_TYPE> {
 

@@ -44,9 +44,9 @@ import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
 import org.jowidgets.util.TypeCast;
 
-public class FrameWrapper extends SwingWindow implements IFrameSpi {
+public class NativeSwingFrameWrapper extends SwingWindow implements IFrameSpi {
 
-    public FrameWrapper(final IGenericWidgetFactory factory, final Window uiReference) {
+    public NativeSwingFrameWrapper(final IGenericWidgetFactory factory, final Window uiReference) {
         super(factory, uiReference, true);
     }
 

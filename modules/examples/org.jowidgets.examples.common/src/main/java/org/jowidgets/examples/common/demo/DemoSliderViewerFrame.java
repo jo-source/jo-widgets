@@ -34,12 +34,12 @@ import org.jowidgets.api.convert.LinearSliderConverter;
 import org.jowidgets.api.widgets.ISliderViewer;
 import org.jowidgets.api.widgets.blueprint.ISliderViewerBluePrint;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.powo.JoFrame;
 import org.jowidgets.tools.widgets.blueprint.BPF;
+import org.jowidgets.tools.widgets.wrapper.FrameWrapper;
 import org.jowidgets.util.IObservableValue;
 import org.jowidgets.util.IObservableValueListener;
 
-final class DemoSliderViewerFrame extends JoFrame {
+final class DemoSliderViewerFrame extends FrameWrapper {
 
     DemoSliderViewerFrame() {
         super("Slider viewer demo");

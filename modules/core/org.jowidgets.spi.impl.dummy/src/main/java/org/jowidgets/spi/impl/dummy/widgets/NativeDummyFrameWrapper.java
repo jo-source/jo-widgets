@@ -25,20 +25,33 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.examples.swing;
+package org.jowidgets.spi.impl.dummy.widgets;
 
-import javax.swing.UIManager;
+import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.dummy.dummyui.UIDMenuItem;
+import org.jowidgets.spi.impl.dummy.dummyui.UIDWindow;
+import org.jowidgets.spi.widgets.IFrameSpi;
+import org.jowidgets.spi.widgets.IMenuBarSpi;
 
-import org.jowidgets.examples.common.powo.PowoDemoApplication;
+public class NativeDummyFrameWrapper extends DummyWindow implements IFrameSpi {
 
-public final class SwingPowoDemoApplication {
+    public NativeDummyFrameWrapper(final IGenericWidgetFactory factory, final UIDWindow uiReference) {
+        super(factory, uiReference);
+    }
 
-    private SwingPowoDemoApplication() {}
+    @Override
+    public UIDWindow getUiReference() {
+        return super.getUiReference();
+    }
 
-    public static void main(final String[] args) throws Exception {
-        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        System.setProperty("apple.laf.useScreenMenuBar", "true");
-        new PowoDemoApplication("Swing widgets demo application").start();
+    @Override
+    public IMenuBarSpi createMenuBar() {
+        return new MenuBarImpl(new UIDMenuItem());
+    }
+
+    @Override
+    public void setTitle(final String title) {
+        getUiReference().setTitle(title);
     }
 
 }

@@ -37,11 +37,11 @@ import org.jowidgets.api.model.levelmeter.MutableLevelMeterModel;
 import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.powo.JoFrame;
 import org.jowidgets.tools.widgets.blueprint.BPF;
+import org.jowidgets.tools.widgets.wrapper.FrameWrapper;
 import org.jowidgets.util.concurrent.DaemonThreadFactory;
 
-public class DemoLevelMeterFrame extends JoFrame {
+public class DemoLevelMeterFrame extends FrameWrapper {
 
     private static final int NUMBER_OF_BARS = 10;
 

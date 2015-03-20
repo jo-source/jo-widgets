@@ -41,6 +41,12 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.tools.controller.WindowAdapter;
 import org.jowidgets.util.Assert;
 
+/**
+ * @deprecated The idea of POWO's (Plain Old Widget Object's) has not been established.
+ *             For that, POWO's will no longer be supported and may removed completely in middle term.
+ *             Feel free to move them to your own open source project.
+ */
+@Deprecated
 public class JoFrame extends Window<IFrame, IFrameBluePrint> implements IFrame {
 
     private JoMenuBar menuBar;
