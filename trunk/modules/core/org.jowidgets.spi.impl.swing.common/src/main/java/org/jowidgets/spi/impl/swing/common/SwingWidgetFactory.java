@@ -44,7 +44,7 @@ import org.jowidgets.spi.impl.swing.common.widgets.CompositeImpl;
 import org.jowidgets.spi.impl.swing.common.widgets.CompositeWrapper;
 import org.jowidgets.spi.impl.swing.common.widgets.DialogImpl;
 import org.jowidgets.spi.impl.swing.common.widgets.FrameImpl;
-import org.jowidgets.spi.impl.swing.common.widgets.FrameWrapper;
+import org.jowidgets.spi.impl.swing.common.widgets.NativeSwingFrameWrapper;
 import org.jowidgets.spi.impl.swing.common.widgets.IconImpl;
 import org.jowidgets.spi.impl.swing.common.widgets.PopupDialogImpl;
 import org.jowidgets.spi.impl.swing.common.widgets.ProgressBarImpl;
@@ -131,7 +131,7 @@ public final class SwingWidgetFactory implements IWidgetFactorySpi {
     public IFrameSpi createFrame(final IGenericWidgetFactory factory, final Object uiReference) {
         Assert.paramNotNull(uiReference, "uiReference");
         if (uiReference instanceof Window) {
-            return new FrameWrapper(factory, (Window) uiReference);
+            return new NativeSwingFrameWrapper(factory, (Window) uiReference);
         }
         throw new IllegalArgumentException("UiReference must be instanceof of '" + Window.class.getName() + "'");
     }

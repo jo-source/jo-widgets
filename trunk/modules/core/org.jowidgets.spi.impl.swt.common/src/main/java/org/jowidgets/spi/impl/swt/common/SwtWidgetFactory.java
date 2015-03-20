@@ -40,7 +40,7 @@ import org.jowidgets.spi.impl.swt.common.widgets.CompositeImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.CompositeWrapper;
 import org.jowidgets.spi.impl.swt.common.widgets.DialogImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.FrameImpl;
-import org.jowidgets.spi.impl.swt.common.widgets.FrameWrapper;
+import org.jowidgets.spi.impl.swt.common.widgets.NativeSwtFrameWrapper;
 import org.jowidgets.spi.impl.swt.common.widgets.IconImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.PopupDialogImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.ProgressBarImpl;
@@ -124,7 +124,7 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
     public IFrameSpi createFrame(final IGenericWidgetFactory factory, final Object uiReference) {
         Assert.paramNotNull(uiReference, "uiReference");
         if (uiReference instanceof Shell) {
-            return new FrameWrapper(factory, (Shell) uiReference);
+            return new NativeSwtFrameWrapper(factory, (Shell) uiReference);
         }
         throw new IllegalArgumentException("UiReference must be instanceof of '" + Shell.class.getName() + "'");
     }

@@ -40,7 +40,7 @@ import org.jowidgets.spi.impl.dummy.widgets.CompositeImpl;
 import org.jowidgets.spi.impl.dummy.widgets.CompositeWrapper;
 import org.jowidgets.spi.impl.dummy.widgets.DialogImpl;
 import org.jowidgets.spi.impl.dummy.widgets.FrameImpl;
-import org.jowidgets.spi.impl.dummy.widgets.FrameWrapper;
+import org.jowidgets.spi.impl.dummy.widgets.NativeDummyFrameWrapper;
 import org.jowidgets.spi.impl.dummy.widgets.IconImpl;
 import org.jowidgets.spi.impl.dummy.widgets.ProgressBarImpl;
 import org.jowidgets.spi.impl.dummy.widgets.ScrollCompositeImpl;
@@ -122,7 +122,7 @@ public final class DummyWidgetFactory implements IWidgetFactorySpi {
     public IFrameSpi createFrame(final IGenericWidgetFactory factory, final Object uiReference) {
         Assert.paramNotNull(uiReference, "uiReference");
         if (uiReference instanceof UIDWindow) {
-            return new FrameWrapper(factory, (UIDWindow) uiReference);
+            return new NativeDummyFrameWrapper(factory, (UIDWindow) uiReference);
         }
         throw new IllegalArgumentException("UiReference must be instanceof of '" + UIDWindow.class.getName() + "'");
     }

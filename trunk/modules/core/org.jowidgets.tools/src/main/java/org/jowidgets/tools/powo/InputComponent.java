@@ -42,6 +42,12 @@ import org.jowidgets.validation.IValidationConditionListener;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
 
+/**
+ * @deprecated The idea of POWO's (Plain Old Widget Object's) has not been established.
+ *             For that, POWO's will no longer be supported and may removed completely in middle term.
+ *             Feel free to move them to your own open source project.
+ */
+@Deprecated
 class InputComponent<WIDGET_TYPE extends IInputComponent<VALUE_TYPE>, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IInputComponentSetup<VALUE_TYPE> & IInputComponentSetupBuilder<?, VALUE_TYPE>, VALUE_TYPE> extends
         Component<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IInputComponent<VALUE_TYPE> {
 

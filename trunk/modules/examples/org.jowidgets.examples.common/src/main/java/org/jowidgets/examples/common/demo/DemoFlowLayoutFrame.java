@@ -35,9 +35,9 @@ import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.layout.ILayouter;
-import org.jowidgets.tools.powo.JoFrame;
+import org.jowidgets.tools.widgets.wrapper.FrameWrapper;
 
-public class DemoFlowLayoutFrame extends JoFrame {
+public class DemoFlowLayoutFrame extends FrameWrapper {
 
     private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 

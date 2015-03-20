@@ -40,6 +40,12 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.controller.IActionListener;
 
+/**
+ * @deprecated The idea of POWO's (Plain Old Widget Object's) has not been established.
+ *             For that, POWO's will no longer be supported and may removed completely in middle term.
+ *             Feel free to move them to your own open source project.
+ */
+@Deprecated
 public class JoButton extends Control<IButton, IButtonBluePrint> implements IButton {
 
     private final Set<IActionListener> actionListeners;

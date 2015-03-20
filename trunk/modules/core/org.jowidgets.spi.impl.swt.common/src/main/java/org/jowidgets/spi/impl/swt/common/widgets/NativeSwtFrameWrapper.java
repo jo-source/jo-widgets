@@ -25,33 +25,16 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.spi.impl.dummy.widgets;
+package org.jowidgets.spi.impl.swt.common.widgets;
 
+import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDMenuItem;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDWindow;
 import org.jowidgets.spi.widgets.IFrameSpi;
-import org.jowidgets.spi.widgets.IMenuBarSpi;
 
-public class FrameWrapper extends DummyWindow implements IFrameSpi {
+public class NativeSwtFrameWrapper extends SwtWindow implements IFrameSpi {
 
-    public FrameWrapper(final IGenericWidgetFactory factory, final UIDWindow uiReference) {
-        super(factory, uiReference);
-    }
-
-    @Override
-    public UIDWindow getUiReference() {
-        return super.getUiReference();
-    }
-
-    @Override
-    public IMenuBarSpi createMenuBar() {
-        return new MenuBarImpl(new UIDMenuItem());
-    }
-
-    @Override
-    public void setTitle(final String title) {
-        getUiReference().setTitle(title);
+    public NativeSwtFrameWrapper(final IGenericWidgetFactory factory, final Shell shell) {
+        super(factory, shell);
     }
 
 }

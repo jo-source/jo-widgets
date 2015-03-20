@@ -54,9 +54,9 @@ import org.jowidgets.common.widgets.controller.IMouseListener;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.tools.controller.InputObservable;
 import org.jowidgets.tools.controller.MouseAdapter;
-import org.jowidgets.tools.powo.JoComposite;
+import org.jowidgets.tools.widgets.wrapper.CompositeWrapper;
 
-public class MonthComposite extends JoComposite implements IInputObservable {
+final class MonthComposite extends CompositeWrapper implements IInputObservable {
 
     private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
@@ -89,8 +89,8 @@ public class MonthComposite extends JoComposite implements IInputObservable {
     private CalendarButton selectedButton;
     private CalendarButton todayButton;
 
-    public MonthComposite(final Date date, final Date selectedDate, final MonthLayoutCache layoutCache) {
-
+    public MonthComposite(final IComposite parent, final Date date, final Date selectedDate, final MonthLayoutCache layoutCache) {
+        super(parent);
         this.layoutCache = layoutCache;
 
         this.inputObservable = new InputObservable();
@@ -100,14 +100,14 @@ public class MonthComposite extends JoComposite implements IInputObservable {
         this.dayButtons = new CalendarButton[6][7];
 
         this.layouter = new CalendarPanelLayouter(this);
-        setLayout(layouter);
+        parent.setLayout(layouter);
 
         createHeader();
         this.separator = add(BPF.separator());
         createDays();
         setDate(date, selectedDate);
 
-        addMouseListener(new MouseAdapter() {
+        parent.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseExit(final IMouseEvent event) {
                 if (mouseoverButton != null) {
@@ -123,7 +123,7 @@ public class MonthComposite extends JoComposite implements IInputObservable {
             }
         });
 
-        setBackgroundColor(Colors.WHITE);
+        parent.setBackgroundColor(Colors.WHITE);
 
     }
 

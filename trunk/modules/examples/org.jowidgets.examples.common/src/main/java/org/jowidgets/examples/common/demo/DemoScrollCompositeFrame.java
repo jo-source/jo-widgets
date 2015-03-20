@@ -34,10 +34,10 @@ import org.jowidgets.api.widgets.IScrollComposite;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.controller.WindowAdapter;
-import org.jowidgets.tools.powo.JoFrame;
+import org.jowidgets.tools.widgets.wrapper.FrameWrapper;
 import org.jowidgets.util.ValueHolder;
 
-public class DemoScrollCompositeFrame extends JoFrame {
+public class DemoScrollCompositeFrame extends FrameWrapper {
 
     private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 
@@ -90,5 +90,4 @@ public class DemoScrollCompositeFrame extends JoFrame {
 
         new Thread(updater).start();
     }
-
 }

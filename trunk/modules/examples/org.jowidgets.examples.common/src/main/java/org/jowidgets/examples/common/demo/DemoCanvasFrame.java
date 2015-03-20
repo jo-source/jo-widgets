@@ -40,10 +40,10 @@ import org.jowidgets.common.widgets.controller.IMouseButtonEvent;
 import org.jowidgets.common.widgets.controller.IMouseEvent;
 import org.jowidgets.common.widgets.controller.IMouseMotionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.powo.JoFrame;
 import org.jowidgets.tools.widgets.blueprint.BPF;
+import org.jowidgets.tools.widgets.wrapper.FrameWrapper;
 
-public class DemoCanvasFrame extends JoFrame {
+public class DemoCanvasFrame extends FrameWrapper {
 
     public DemoCanvasFrame() {
         super("Canvas demo");

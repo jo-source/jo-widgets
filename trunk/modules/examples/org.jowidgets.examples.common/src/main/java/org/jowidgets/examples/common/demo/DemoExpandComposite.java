@@ -36,10 +36,10 @@ import org.jowidgets.common.color.ColorValue;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.powo.JoFrame;
 import org.jowidgets.tools.widgets.blueprint.BPF;
+import org.jowidgets.tools.widgets.wrapper.FrameWrapper;
 
-public class DemoExpandComposite extends JoFrame {
+public class DemoExpandComposite extends FrameWrapper {
 
     private static final ColorValue BLUE = new ColorValue(0, 0, 170);
 

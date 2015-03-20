@@ -44,6 +44,12 @@ import org.jowidgets.common.widgets.controller.IMenuListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
 
+/**
+ * @deprecated The idea of POWO's (Plain Old Widget Object's) has not been established.
+ *             For that, POWO's will no longer be supported and may removed completely in middle term.
+ *             Feel free to move them to your own open source project.
+ */
+@Deprecated
 class Menu<WIDGET_TYPE extends IMenu, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & ISetupBuilder<?>> extends
         Widget<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IMenu, IJoMenu {
 

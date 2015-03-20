@@ -28,6 +28,12 @@
 
 package org.jowidgets.tools.powo;
 
+/**
+ * @deprecated The idea of POWO's (Plain Old Widget Object's) has not been established.
+ *             For that, POWO's will no longer be supported and may removed completely in middle term.
+ *             Feel free to move them to your own open source project.
+ */
+@Deprecated
 public class WidgetAlreadyInitializedException extends RuntimeException {
 
     private static final long serialVersionUID = -5468949490208929505L;

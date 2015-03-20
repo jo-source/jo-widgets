@@ -34,6 +34,12 @@ import org.jowidgets.api.widgets.descriptor.setup.IItemSetup;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
+/**
+ * @deprecated The idea of POWO's (Plain Old Widget Object's) has not been established.
+ *             For that, POWO's will no longer be supported and may removed completely in middle term.
+ *             Feel free to move them to your own open source project.
+ */
+@Deprecated
 class Item<WIDGET_TYPE extends IItem, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & IItemSetupBuilder<?> & IItemSetup> extends
         Widget<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IItem {
 

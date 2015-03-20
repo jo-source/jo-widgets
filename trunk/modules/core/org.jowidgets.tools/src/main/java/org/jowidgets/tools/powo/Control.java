@@ -41,6 +41,12 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.util.Assert;
 
+/**
+ * @deprecated The idea of POWO's (Plain Old Widget Object's) has not been established.
+ *             For that, POWO's will no longer be supported and may removed completely in middle term.
+ *             Feel free to move them to your own open source project.
+ */
+@Deprecated
 class Control<WIDGET_TYPE extends IControl, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IComponentSetupBuilder<?>> extends
         Component<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IControl {
 

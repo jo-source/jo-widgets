@@ -59,6 +59,12 @@ import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.Tuple;
 
+/**
+ * @deprecated The idea of POWO's (Plain Old Widget Object's) has not been established.
+ *             For that, POWO's will no longer be supported and may removed completely in middle term.
+ *             Feel free to move them to your own open source project.
+ */
+@Deprecated
 class Container<WIDGET_TYPE extends IContainer, BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends WIDGET_TYPE> & IContainerSetupBuilder<?>> extends
         Component<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IContainer {
 
