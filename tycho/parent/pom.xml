@@ -263,21 +263,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.test.api.bundle</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.test.common.bundle</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.test.spi.bundle</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jowidgets</groupId>
 			<artifactId>org.jowidgets.tools.bundle</artifactId>
 			<version>${project.version}</version>
 		</dependency>

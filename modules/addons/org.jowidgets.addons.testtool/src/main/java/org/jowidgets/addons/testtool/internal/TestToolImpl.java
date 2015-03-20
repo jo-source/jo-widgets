@@ -44,6 +44,7 @@ import org.jowidgets.api.model.item.IItemModelListener;
 import org.jowidgets.api.model.item.IMenuBarModel;
 import org.jowidgets.api.model.item.IMenuItemModel;
 import org.jowidgets.api.model.item.IMenuModel;
+import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IInputField;
 import org.jowidgets.api.widgets.IPopupMenu;
@@ -64,7 +65,6 @@ import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.common.widgets.controller.IItemStateListener;
 import org.jowidgets.common.widgets.controller.IMenuListener;
 import org.jowidgets.common.widgets.controller.IMouseButtonEvent;
-import org.jowidgets.test.api.widgets.IButtonUi;
 import org.jowidgets.tools.controller.MouseAdapter;
 import org.jowidgets.tools.controller.TabItemAdapter;
 import org.jowidgets.tools.controller.TreeAdapter;
@@ -143,8 +143,8 @@ public final class TestToolImpl implements ITestTool {
                 }
             });
         }
-        if (widget instanceof IButtonUi) {
-            final IButtonUi button = (IButtonUi) widget;
+        if (widget instanceof IButton) {
+            final IButton button = (IButton) widget;
             button.addMouseListener(new MouseAdapter() {
 
                 @Override

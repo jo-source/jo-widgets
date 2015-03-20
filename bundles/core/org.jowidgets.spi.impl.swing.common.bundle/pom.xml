@@ -35,7 +35,7 @@
 				<configuration>
 					<instructions>
 						<Embed-Dependency>org.jowidgets.spi.impl.swing.common;inline=true</Embed-Dependency>
-						<Require-Bundle>org.jowidgets.spi.bundle,org.jowidgets.spi.impl.common.bundle,org.jowidgets.test.spi.bundle</Require-Bundle>
+						<Require-Bundle>org.jowidgets.spi.bundle,org.jowidgets.spi.impl.common.bundle</Require-Bundle>
 					</instructions>
 				</configuration>
 			</plugin>

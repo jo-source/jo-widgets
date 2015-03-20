@@ -29,4 +29,9 @@ package org.jowidgets.common.widgets;
 
 public interface IButtonCommon extends ITextLabelCommon, IIconCommon, IControlCommon, IActionWidgetCommon {
 
+    /**
+     * Pushes the button, e.g. for unit tests
+     */
+    void push();
+
 }

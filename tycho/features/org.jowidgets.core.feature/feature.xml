@@ -137,27 +137,6 @@
          unpack="false"/>
 		 
 	<plugin
-         id="org.jowidgets.test.api.bundle"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-		 
-	<plugin
-         id="org.jowidgets.test.common.bundle"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-		 
-	<plugin
-         id="org.jowidgets.test.spi.bundle"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-		 
-	<plugin
          id="org.jowidgets.tools.bundle"
          download-size="0"
          install-size="0"

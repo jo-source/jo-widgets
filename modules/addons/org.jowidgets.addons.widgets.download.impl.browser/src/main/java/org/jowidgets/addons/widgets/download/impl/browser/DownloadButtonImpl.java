@@ -159,6 +159,11 @@ class DownloadButtonImpl extends CompositeWrapper implements IDownloadButton {
         button.removeActionListener(actionListener);
     }
 
+    @Override
+    public void push() {
+        button.push();
+    }
+
     private class DownloadActionListener implements IActionListener {
         @Override
         public void actionPerformed() {

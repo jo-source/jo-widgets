@@ -31,6 +31,7 @@ package org.jowidgets.impl.widgets.basic;
 import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.controller.IParentListener;
+import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
@@ -42,12 +43,10 @@ import org.jowidgets.impl.command.ActionWidgetSync;
 import org.jowidgets.impl.command.IActionWidget;
 import org.jowidgets.impl.widgets.common.wrapper.AbstractButtonSpiWrapper;
 import org.jowidgets.spi.widgets.IButtonSpi;
-import org.jowidgets.test.api.widgets.IButtonUi;
-import org.jowidgets.test.spi.widgets.IButtonUiSpi;
 import org.jowidgets.tools.widgets.invoker.ColorSettingsInvoker;
 import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 
-public class ButtonImpl extends AbstractButtonSpiWrapper implements IButtonUi, IActionWidget {
+public class ButtonImpl extends AbstractButtonSpiWrapper implements IButton, IActionWidget {
 
     private final ControlDelegate controlDelegate;
 
@@ -166,15 +165,11 @@ public class ButtonImpl extends AbstractButtonSpiWrapper implements IButtonUi, I
 
     @Override
     public void push() {
-        if (getWidget() instanceof IButtonUiSpi) {
-            final IButtonUiSpi widget = (IButtonUiSpi) getWidget();
+        if (getWidget() instanceof IButtonSpi) {
+            final IButtonSpi widget = getWidget();
             widget.push();
         }
-    }
-
-    @Override
-    public boolean isTestable() {
-        return true;
+        getWidget().push();
     }
 
 }

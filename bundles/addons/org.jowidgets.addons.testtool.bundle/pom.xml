@@ -37,7 +37,7 @@
 				<configuration>
 					<instructions>
 						<Embed-Dependency>org.jowidgets.addons.testtool;inline=true</Embed-Dependency>
-						<Require-Bundle>org.jowidgets.test.api.bundle,org.jowidgets.workbench.api.bundle, org.jowidgets.workbench.impl.bundle</Require-Bundle>
+						<Require-Bundle>org.jowidgets.api.bundle,org.jowidgets.workbench.api.bundle, org.jowidgets.workbench.impl.bundle</Require-Bundle>
 					</instructions>
 				</configuration>
 			</plugin>

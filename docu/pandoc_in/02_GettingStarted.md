@@ -314,10 +314,6 @@ Ab Zeile 20 wird das common Modul der HelloWorld Applikation hinzugefügt. Ab Ze
 
 Dadurch ergeben sich die folgenden (jowidgets internen) transienten Modulabhängigkeiten: 
 
-__org.jowidgets.test.common, org.jowidgets.test.spi, org.jowidgets.test.api__
-
-:   Fügt den Widgets spezielle Testmethoden hinzu, wie zum Beispiel die Methode `push()` für einen Button. Dadurch können etwa in automatisierten JUnit GUI Tests Nutzereingaben simuliert werden. Siehe auch [Automatisierte GUI Tests](#automated_ui_tests). 
-
 __org.jowidgets.spi.impl.common__
 
 :   Gemeinsamer Code der von allen SPI Implementierungen genutzt wird.
@@ -425,9 +421,9 @@ Ab Zeile 20 wird das common Modul der HelloWorld Applikation hinzugefügt. Ab Ze
 
 Dadurch ergeben sich die folgenden (jowidgets internen) transienten Modulabhängigkeiten: 
 
-__org.jowidgets.test.common, org.jowidgets.test.spi, org.jowidgets.test.api__, __org.jowidgets.spi.impl.swing.common__
+__org.jowidgets.spi.impl.common__
 
-:   Analog zum [Hello World Swing Starter](#hello_world_swing)
+:   Gemeinsamer Code der von allen SPI Implementierungen genutzt wird.
 
 __org.jowidgets.spi.impl.swt.common__
 
@@ -546,9 +542,9 @@ Ab Zeile 20 wird das common Modul der HelloWorld Applikation hinzugefügt. Ab Ze
 
 Dadurch ergeben sich die folgenden (jowidgets internen) transienten Modulabhängigkeiten: 
 
-__org.jowidgets.test.common, org.jowidgets.test.spi, org.jowidgets.test.api__, __org.jowidgets.spi.impl.swing.common__
+__org.jowidgets.spi.impl.common__
 
-:   Analog zum [Hello World Swing Starter](#hello_world_swing)
+:   Gemeinsamer Code der von allen SPI Implementierungen genutzt wird.
 
 __org.jowidgets.spi.impl.swt.common__
 

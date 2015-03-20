@@ -30,10 +30,10 @@ package org.jowidgets.spi.impl.swt.common.widgets;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
-import org.jowidgets.test.spi.widgets.IFrameUiSpi;
 
-public class FrameImpl extends WindowImpl implements IFrameUiSpi {
+public class FrameImpl extends WindowImpl implements IFrameSpi {
 
     public FrameImpl(final IGenericWidgetFactory factory, final IFrameSetupSpi setup) {
         super(factory, new Shell(getStyle(setup)), setup.isCloseable());
@@ -59,11 +59,6 @@ public class FrameImpl extends WindowImpl implements IFrameUiSpi {
             result = result | SWT.CLOSE;
         }
         return result;
-    }
-
-    @Override
-    public boolean isTestable() {
-        return true;
     }
 
 }

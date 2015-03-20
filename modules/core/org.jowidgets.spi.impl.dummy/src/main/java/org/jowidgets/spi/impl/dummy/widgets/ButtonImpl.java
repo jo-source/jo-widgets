@@ -32,10 +32,10 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDButton;
 import org.jowidgets.spi.impl.dummy.image.DummyImageRegistry;
+import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
-import org.jowidgets.test.spi.widgets.IButtonUiSpi;
 
-public class ButtonImpl extends AbstractActionControl implements IButtonUiSpi {
+public class ButtonImpl extends AbstractActionControl implements IButtonSpi {
 
     private final DummyImageRegistry imageRegistry;
 
@@ -86,11 +86,6 @@ public class ButtonImpl extends AbstractActionControl implements IButtonUiSpi {
     @Override
     public void setFontName(final String fontName) {
         getUiReference().setFontName(fontName);
-    }
-
-    @Override
-    public boolean isTestable() {
-        return true;
     }
 
     @Override

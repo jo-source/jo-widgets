@@ -47,12 +47,12 @@ import org.jowidgets.spi.impl.swing.common.util.ColorConvert;
 import org.jowidgets.spi.impl.swing.common.util.DecorationCalc;
 import org.jowidgets.spi.impl.swing.common.util.FrameUtil;
 import org.jowidgets.spi.impl.swing.common.widgets.util.ChildRemover;
+import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
 import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
-import org.jowidgets.test.spi.widgets.IFrameUiSpi;
 import org.jowidgets.util.TypeCast;
 
-public class FrameImpl extends SwingWindow implements IFrameUiSpi {
+public class FrameImpl extends SwingWindow implements IFrameSpi {
 
     private static final Border BORDER = new JTextField().getBorder();
 
@@ -137,11 +137,6 @@ public class FrameImpl extends SwingWindow implements IFrameUiSpi {
         final JMenuBar menuBar = new JMenuBar();
         getUiReference().setJMenuBar(menuBar);
         return new MenuBarImpl(menuBar);
-    }
-
-    @Override
-    public boolean isTestable() {
-        return true;
     }
 
 }
