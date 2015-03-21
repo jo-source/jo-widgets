@@ -38,4 +38,6 @@ public interface ITextFieldSetupBuilderCommon<INSTANCE_TYPE extends ITextFieldSe
 
     INSTANCE_TYPE setAlignment(AlignmentHorizontal alignment);
 
+    INSTANCE_TYPE setInheritBackground(boolean inherit);
+
 }

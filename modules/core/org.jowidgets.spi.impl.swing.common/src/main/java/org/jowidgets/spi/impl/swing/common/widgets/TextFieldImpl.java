@@ -33,6 +33,7 @@ import java.awt.event.FocusEvent;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.common.types.InputChangeEventPolicy;
 import org.jowidgets.common.types.Markup;
@@ -51,6 +52,8 @@ public class TextFieldImpl extends AbstractInputControl implements ITextControlS
 
     private final InputModifierDocument modifierDocument;
 
+    private final boolean inheritBackground;
+
     public TextFieldImpl(final ITextFieldSetupSpi setup) {
         super(setup.isPasswordPresentation() ? new JPasswordField() : new JoTextField());
 
@@ -59,6 +62,11 @@ public class TextFieldImpl extends AbstractInputControl implements ITextControlS
         }
 
         getUiReference().setHorizontalAlignment(AlignmentConvert.convert(setup.getAlignment()));
+
+        this.inheritBackground = setup.isInheritBackground();
+        if (inheritBackground) {
+            getUiReference().setOpaque(false);
+        }
 
         final IInputVerifier maskVerifier = TextMaskVerifierFactory.create(this, setup.getMask());
 
@@ -157,6 +165,20 @@ public class TextFieldImpl extends AbstractInputControl implements ITextControlS
     @Override
     public void setEditable(final boolean editable) {
         getUiReference().setEditable(editable);
+    }
+
+    @Override
+    public void setBackgroundColor(final IColorConstant colorValue) {
+        if (inheritBackground) {
+            if (colorValue != null) {
+                getUiReference().setOpaque(true);
+            }
+            else {
+                getUiReference().setOpaque(false);
+            }
+        }
+
+        super.setBackgroundColor(colorValue);
     }
 
 }
