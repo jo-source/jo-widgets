@@ -34,20 +34,6 @@ import org.jowidgets.util.IDecorator;
 public interface IGenericWidgetFactory {
 
     /**
-     * Adds a widget factory listener
-     * 
-     * @param listener The listener to add
-     */
-    void addWidgetFactoryListener(IWidgetFactoryListener listener);
-
-    /**
-     * Removes a widget factory listener
-     * 
-     * @param listener The listener to remove
-     */
-    void removeWidgetFactoryListener(IWidgetFactoryListener listener);
-
-    /**
      * Creates a root widget (with no parent) for a given descriptor
      * 
      * @param descriptor The descriptor of the widget
@@ -127,5 +113,19 @@ public interface IGenericWidgetFactory {
     <WIDGET_TYPE extends IWidgetCommon, DESCRIPTOR_TYPE extends IWidgetDescriptor<WIDGET_TYPE>> void addWidgetFactoryDecorator(
         Class<? extends DESCRIPTOR_TYPE> descriptorClass,
         IDecorator<? extends IWidgetFactory<WIDGET_TYPE, ? extends DESCRIPTOR_TYPE>> decorator);
+
+    /**
+     * Adds a widget factory listener
+     * 
+     * @param listener The listener to add
+     */
+    void addWidgetFactoryListener(IWidgetFactoryListener listener);
+
+    /**
+     * Removes a widget factory listener
+     * 
+     * @param listener The listener to remove
+     */
+    void removeWidgetFactoryListener(IWidgetFactoryListener listener);
 
 }
