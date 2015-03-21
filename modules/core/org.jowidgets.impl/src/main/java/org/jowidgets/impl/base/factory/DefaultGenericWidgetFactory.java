@@ -27,6 +27,10 @@
  */
 package org.jowidgets.impl.base.factory;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -40,6 +44,7 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactoryListener;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.EmptyCheck;
 import org.jowidgets.util.IDecorator;
 
 public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory {
@@ -53,6 +58,8 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
     @SuppressWarnings("rawtypes")
     private final Map factoryDecorators;
 
+    private int createdWidgets;
+
     private final Set<IWidgetFactoryListener> widgetFactoryListeners;
 
     @SuppressWarnings("rawtypes")
@@ -60,6 +67,7 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
         this.factories = new HashMap();
         this.decorators = new HashMap();
         this.factoryDecorators = new HashMap();
+        this.createdWidgets = 0;
         this.widgetFactoryListeners = new HashSet<IWidgetFactoryListener>();
     }
 
@@ -190,6 +198,7 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
             if (result instanceof IWidgetCommon) {
                 result = decorateWidget((IWidgetCommon) result, descriptor);
                 fireWidgetCreated((IWidgetCommon) result);
+                createdWidgets++;
             }
             else {
                 throw new IllegalStateException("Created widget must be assignable from '" + IWidgetCommon.class.getName() + "'");
@@ -230,6 +239,63 @@ public final class DefaultGenericWidgetFactory implements IGenericWidgetFactory 
         for (final IWidgetFactoryListener listener : widgetFactoryListeners) {
             listener.widgetCreated(widget);
         }
+    }
+
+    @Override
+    @SuppressWarnings({"rawtypes"})
+    public String toString() {
+        final StringBuilder result = new StringBuilder();
+
+        result.append("--> Generic Widget Factory State <--\n");
+
+        result.append("Registered Widgets: " + factories.keySet().size() + "\n");
+        for (final Object key : getSortedKeys(factories)) {
+            result.append(key.toString() + " -> " + factories.get(key).getClass().getName() + "\n");
+        }
+
+        result.append("Registered Widget Decorators: " + decorators.keySet().size() + "\n");
+        for (final Object key : getSortedKeys(decorators)) {
+            final Collection decoratorsList = (Collection) decorators.get(key);
+            if (!EmptyCheck.isEmpty(decoratorsList)) {
+                result.append(key.toString() + " -> " + getDecoratorsString(decoratorsList) + "\n");
+            }
+        }
+
+        result.append("Registered Widget Factory Decorators: " + factoryDecorators.keySet().size() + "\n");
+        for (final Object key : getSortedKeys(factoryDecorators)) {
+            final Collection decoratorsList = (Collection) factoryDecorators.get(key);
+            if (!EmptyCheck.isEmpty(decoratorsList)) {
+                result.append(key.toString() + " -> " + getDecoratorsString(decoratorsList) + "\n");
+            }
+        }
+
+        result.append("Created Widgets: " + createdWidgets + "\n");
+
+        return result.toString();
+    }
+
+    @SuppressWarnings({"rawtypes"})
+    private String getDecoratorsString(final Collection decoratorsList) {
+        final StringBuilder result = new StringBuilder();
+        if (!EmptyCheck.isEmpty(decoratorsList)) {
+            for (final Object decorator : decoratorsList) {
+                result.append(decorator.getClass().getName() + ",");
+            }
+            result.replace(result.length() - 1, result.length(), "");
+        }
+        return result.toString();
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    private static ArrayList getSortedKeys(final Map map) {
+        final ArrayList keys = new ArrayList(map.keySet());
+        Collections.sort(keys, new Comparator() {
+            @Override
+            public int compare(final Object o1, final Object o2) {
+                return o1.toString().compareTo(o2.toString());
+            }
+        });
+        return keys;
     }
 
 }

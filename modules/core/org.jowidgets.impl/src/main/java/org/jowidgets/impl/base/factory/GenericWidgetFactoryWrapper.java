@@ -101,4 +101,9 @@ public class GenericWidgetFactoryWrapper implements IGenericWidgetFactory {
         genericFactory.removeWidgetFactoryListener(widgetFactoryListener);
     }
 
+    @Override
+    public String toString() {
+        return genericFactory.toString();
+    }
+
 }
