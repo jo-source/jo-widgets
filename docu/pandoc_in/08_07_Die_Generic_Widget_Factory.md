@@ -49,7 +49,7 @@ Das gleiche kann man aber auch wie folgt schreiben:
 		void unRegister(Class<? extends DESCRIPTOR_TYPE> descriptorClass);
 ~~~
 
-Die erste Methode registriert eine `IWidgetFactory` für einen definierten BluePrint Typ. Dabei darf für diesen Typ noch kein Widget registriert sein. Möchte man explizit eine Widget Factory ersetzen, um zum Beispiel eine Vorhandene Widget Implementierung auszutauschen, muss man den BluePrint Typ vorab per `unRegister()` deregistrieren.
+Die erste Methode registriert eine `IWidgetFactory` für einen definierten BluePrint Typ. Dabei darf für diesen Typ noch kein Widget registriert sein. Möchte man explizit eine Widget Factory ersetzen, um zum Beispiel eine [vorhandene Widget Implementierung auszutauschen](#substitude_and_decorate_widgets), muss man den BluePrint Typ vorab per `unRegister()` deregistrieren.
 
 Die Schnittstelle `IWidgetFactory` ist wie folgt definiert:
 
@@ -113,3 +113,5 @@ Die folgenden Methoden können verwendet werden, um alle Widgets oder Widget Fac
 			Class<? extends DESCRIPTOR_TYPE> descriptorClass,
 			IDecorator<IWidgetFactory<WIDGET_TYPE, ? extends DESCRIPTOR_TYPE>> decorator);
 ~~~
+
+Weitere Information finden sich im Abschnitt [Austauschen und Dekorieren von Widgets](#substitude_and_decorate_widgets).
