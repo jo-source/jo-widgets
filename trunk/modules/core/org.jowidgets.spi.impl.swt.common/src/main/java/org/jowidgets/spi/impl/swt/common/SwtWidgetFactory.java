@@ -40,8 +40,8 @@ import org.jowidgets.spi.impl.swt.common.widgets.CompositeImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.CompositeWrapper;
 import org.jowidgets.spi.impl.swt.common.widgets.DialogImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.FrameImpl;
-import org.jowidgets.spi.impl.swt.common.widgets.NativeSwtFrameWrapper;
 import org.jowidgets.spi.impl.swt.common.widgets.IconImpl;
+import org.jowidgets.spi.impl.swt.common.widgets.NativeSwtFrameWrapper;
 import org.jowidgets.spi.impl.swt.common.widgets.PopupDialogImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.ProgressBarImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.ScrollCompositeImpl;
@@ -56,6 +56,7 @@ import org.jowidgets.spi.impl.swt.common.widgets.TextFieldImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.TextLabelImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.ToggleButtonImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.ToolBarImpl;
+import org.jowidgets.spi.impl.swt.common.widgets.TransparentTextFieldImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.TreeImpl;
 import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.ICanvasSpi;
@@ -187,7 +188,12 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 
     @Override
     public ITextControlSpi createTextField(final Object parentUiReference, final ITextFieldSetupSpi setup) {
-        return new TextFieldImpl(parentUiReference, setup);
+        if (setup.isInheritBackground()) {
+            return new TransparentTextFieldImpl(parentUiReference, setup);
+        }
+        else {
+            return new TextFieldImpl(parentUiReference, setup);
+        }
     }
 
     @Override

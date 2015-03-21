@@ -38,6 +38,6 @@ public class TextFieldDefaultsCommon implements IDefaultInitializer<ITextFieldSe
         builder.setPasswordPresentation(false);
         builder.setBorder(true);
         builder.setAlignment(AlignmentHorizontal.LEFT);
+        builder.setInheritBackground(false);
     }
-
 }

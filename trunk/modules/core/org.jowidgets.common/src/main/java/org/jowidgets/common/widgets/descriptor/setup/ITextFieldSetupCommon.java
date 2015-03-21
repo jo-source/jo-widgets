@@ -38,6 +38,10 @@ public interface ITextFieldSetupCommon extends ITextComponentSetupCommon {
     @Mandatory
     AlignmentHorizontal getAlignment();
 
+    @Mandatory
     boolean hasBorder();
+
+    @Mandatory
+    boolean isInheritBackground();
 
 }
