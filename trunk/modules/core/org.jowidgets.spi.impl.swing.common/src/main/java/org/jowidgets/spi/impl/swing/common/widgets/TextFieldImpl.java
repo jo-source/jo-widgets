@@ -39,7 +39,9 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.impl.controller.InputObservable;
 import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
+import org.jowidgets.spi.impl.swing.common.util.AlignmentConvert;
 import org.jowidgets.spi.impl.swing.common.util.FontProvider;
+import org.jowidgets.spi.impl.swing.common.widgets.base.JoTextField;
 import org.jowidgets.spi.impl.swing.common.widgets.util.InputModifierDocument;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.ITextControlSpi;
@@ -50,11 +52,13 @@ public class TextFieldImpl extends AbstractInputControl implements ITextControlS
     private final InputModifierDocument modifierDocument;
 
     public TextFieldImpl(final ITextFieldSetupSpi setup) {
-        super(setup.isPasswordPresentation() ? new JPasswordField() : new JTextField());
+        super(setup.isPasswordPresentation() ? new JPasswordField() : new JoTextField());
 
         if (!setup.hasBorder()) {
-            getUiReference().setBorder(javax.swing.BorderFactory.createEmptyBorder());
+            getUiReference().setBorder(null);
         }
+
+        getUiReference().setHorizontalAlignment(AlignmentConvert.convert(setup.getAlignment()));
 
         final IInputVerifier maskVerifier = TextMaskVerifierFactory.create(this, setup.getMask());
 

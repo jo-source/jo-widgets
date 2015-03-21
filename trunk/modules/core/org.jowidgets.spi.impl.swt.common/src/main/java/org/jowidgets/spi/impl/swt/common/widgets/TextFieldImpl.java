@@ -42,6 +42,7 @@ import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
+import org.jowidgets.spi.impl.swt.common.util.AlignmentConvert;
 import org.jowidgets.spi.impl.swt.common.util.FontProvider;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
@@ -184,7 +185,7 @@ public class TextFieldImpl extends AbstractTextInputControl {
     }
 
     private static int getStyle(final ITextFieldSetupSpi setup) {
-        int result = 0;
+        int result = AlignmentConvert.convert(setup.getAlignment());
         if (setup.hasBorder()) {
             result = result | SWT.BORDER;
         }
