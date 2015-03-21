@@ -27,12 +27,16 @@
  */
 package org.jowidgets.common.widgets.descriptor.setup;
 
+import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.widgets.descriptor.setup.mandatory.Mandatory;
 
 public interface ITextFieldSetupCommon extends ITextComponentSetupCommon {
 
     @Mandatory
     boolean isPasswordPresentation();
+
+    @Mandatory
+    AlignmentHorizontal getAlignment();
 
     boolean hasBorder();
 

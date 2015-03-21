@@ -28,6 +28,7 @@
 package org.jowidgets.impl.widgets.common.blueprint.defaults;
 
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.common.types.AlignmentHorizontal;
 import org.jowidgets.common.widgets.builder.ITextFieldSetupBuilderCommon;
 
 public class TextFieldDefaultsCommon implements IDefaultInitializer<ITextFieldSetupBuilderCommon<?>> {
@@ -36,6 +37,7 @@ public class TextFieldDefaultsCommon implements IDefaultInitializer<ITextFieldSe
     public void initialize(final ITextFieldSetupBuilderCommon<?> builder) {
         builder.setPasswordPresentation(false);
         builder.setBorder(true);
+        builder.setAlignment(AlignmentHorizontal.LEFT);
     }
 
 }
