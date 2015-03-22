@@ -31,7 +31,7 @@
  */
 package org.jowidgets.impl.test.blueprint.mock.defaults.registry;
 
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintProxyFactory;
 import org.jowidgets.impl.test.blueprint.mock.builder.IHierarchy1stSetupBuilder;
 import org.jowidgets.impl.test.blueprint.mock.builder.IHierarchy2nd1SetupBuilder;
 import org.jowidgets.impl.test.blueprint.mock.builder.IHierarchy2nd2SetupBuilder;
@@ -44,12 +44,11 @@ import org.jowidgets.impl.test.blueprint.mock.defaults.Hierarchy2nd2Defaults;
 import org.jowidgets.impl.test.blueprint.mock.defaults.Hierarchy2nd3Defaults;
 import org.jowidgets.impl.test.blueprint.mock.defaults.Hierarchy3rdDefaults;
 import org.jowidgets.impl.test.blueprint.mock.defaults.Hierarchy4thDefaults;
-import org.jowidgets.tools.widgets.blueprint.defaults.DefaultsInitializerRegistry;
 
-public class DummyDefaultsInitializerRegistry extends DefaultsInitializerRegistry {
+public class DummyDefaultsInitializerRegistry {
 
     public DummyDefaultsInitializerRegistry(
-        final IBluePrintFactory bluePrintFactory,
+        final IBluePrintProxyFactory bppf,
         final Hierarchy1stDefaults hierarchyOneDefaultInitializer,
         final Hierarchy2nd1Defaults hierarchyTwoOneDefaultInitializer,
         final Hierarchy2nd2Defaults hierarchyTwoTwoDefaultInitializer,
@@ -57,12 +56,12 @@ public class DummyDefaultsInitializerRegistry extends DefaultsInitializerRegistr
         final Hierarchy3rdDefaults hierarchyThreeDefaultInitializer,
         final Hierarchy4thDefaults hierarchyFourDefaultInitializer) {
         super();
-        bluePrintFactory.addDefaultsInitializer(IHierarchy1stSetupBuilder.class, hierarchyOneDefaultInitializer);
-        bluePrintFactory.addDefaultsInitializer(IHierarchy2nd1SetupBuilder.class, hierarchyTwoOneDefaultInitializer);
-        bluePrintFactory.addDefaultsInitializer(IHierarchy2nd2SetupBuilder.class, hierarchyTwoTwoDefaultInitializer);
-        bluePrintFactory.addDefaultsInitializer(IHierarchy2nd3SetupBuilder.class, hierarchyTwoThreeDefaultInitializer);
-        bluePrintFactory.addDefaultsInitializer(IHierarchy3rdSetupBuilder.class, hierarchyThreeDefaultInitializer);
-        bluePrintFactory.addDefaultsInitializer(IHierarchy4thSetupBuilder.class, hierarchyFourDefaultInitializer);
+        bppf.addDefaultsInitializer(IHierarchy1stSetupBuilder.class, hierarchyOneDefaultInitializer);
+        bppf.addDefaultsInitializer(IHierarchy2nd1SetupBuilder.class, hierarchyTwoOneDefaultInitializer);
+        bppf.addDefaultsInitializer(IHierarchy2nd2SetupBuilder.class, hierarchyTwoTwoDefaultInitializer);
+        bppf.addDefaultsInitializer(IHierarchy2nd3SetupBuilder.class, hierarchyTwoThreeDefaultInitializer);
+        bppf.addDefaultsInitializer(IHierarchy3rdSetupBuilder.class, hierarchyThreeDefaultInitializer);
+        bppf.addDefaultsInitializer(IHierarchy4thSetupBuilder.class, hierarchyFourDefaultInitializer);
     }
 
 }

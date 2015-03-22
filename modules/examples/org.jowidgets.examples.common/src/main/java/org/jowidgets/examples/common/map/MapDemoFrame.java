@@ -55,7 +55,7 @@ final class MapDemoFrame extends FrameWrapper {
                 lifecycle.finish();
             }
         });
-        final IMapWidget map = add(Toolkit.getBluePrintFactory().bluePrint(IMapWidgetBlueprint.class));
+        final IMapWidget map = add(Toolkit.getBluePrintProxyFactory().bluePrint(IMapWidgetBlueprint.class));
         map.setLanguage("en");
         map.initialize(new IAvailableCallback() {
             @Override

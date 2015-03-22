@@ -40,7 +40,7 @@ final class MediaplayerToolkitInterceptor implements IToolkitInterceptor {
     public void onToolkitCreate(final IToolkit toolkit) {
         final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
         widgetFactory.register(IMediaPlayerBluePrint.class, new MediaPlayerFactory());
-        toolkit.getBluePrintFactory().addDefaultsInitializer(IMediaPlayerSetupBuilder.class, new MediaPlayerDefaults());
+        toolkit.getBluePrintProxyFactory().addDefaultsInitializer(IMediaPlayerSetupBuilder.class, new MediaPlayerDefaults());
     }
 
 }

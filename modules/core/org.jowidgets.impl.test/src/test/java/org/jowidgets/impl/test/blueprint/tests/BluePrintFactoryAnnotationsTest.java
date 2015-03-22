@@ -28,6 +28,8 @@
 
 package org.jowidgets.impl.test.blueprint.tests;
 
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintProxyFactory;
+import org.jowidgets.impl.base.blueprint.factory.BluePrintProxyFactoryImpl;
 import org.jowidgets.impl.test.blueprint.mock.DummyBluePrintFactory;
 import org.jowidgets.impl.test.blueprint.mock.IHierarchy2nd3BluePrint;
 import org.jowidgets.impl.test.blueprint.mock.defaults.Hierarchy1stDefaults;
@@ -62,9 +64,10 @@ public final class BluePrintFactoryAnnotationsTest {
         hierarchy2nd2Default = new Hierarchy2nd2Defaults();
         hierarchy2nd3Default = new Hierarchy2nd3Defaults();
 
-        dummyBluePrintFactory = new DummyBluePrintFactory();
+        final IBluePrintProxyFactory bluePrintProxyFactory = new BluePrintProxyFactoryImpl();
+        dummyBluePrintFactory = new DummyBluePrintFactory(bluePrintProxyFactory);
         new DummyDefaultsInitializerRegistry(
-            dummyBluePrintFactory,
+            bluePrintProxyFactory,
             hierarchy1stDefault,
             hierarchy2nd1Default,
             hierarchy2nd2Default,

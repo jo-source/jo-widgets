@@ -121,10 +121,22 @@ import org.jowidgets.unit.api.IUnit;
 import org.jowidgets.unit.api.IUnitConverter;
 import org.jowidgets.unit.api.IUnitSet;
 
+/**
+ * This class is a abbreviation accessor class to all blueprints of the jowidget core widgets
+ * 
+ * It can be used to write e.g. BPF.frame() instead of Toolkit.getBluePrintFactory().frame()
+ */
 public final class BPF {
 
     private BPF() {}
 
+    /**
+     * @deprecated Using this method is not possible inside a IToolkitInterceptor. Because the adding of defaults should be done
+     *             inside a IToolkitInterceptor normally, this method is deprecated to avoid pitfall.
+     *             Inside inside a IToolkitInterceptor use toolkit.getBluePrintProxyFactory().addDefaultsInitializer() instead, if
+     *             not inside a IToolkitInterceptoruse Toolkit.getBluePrintProxyFactory().addDefaultsInitializer()
+     */
+    @Deprecated
     public static void addDefaultsInitializer(
         @SuppressWarnings("rawtypes") final Class<? extends ISetupBuilder> setupBuilder,
         final IDefaultInitializer<?> defaultInitializer) {
@@ -133,7 +145,7 @@ public final class BPF {
 
     public static <WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends ISetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
         final Class<BLUE_PRINT_TYPE> bluePrintType) {
-        return Toolkit.getBluePrintFactory().bluePrint(bluePrintType);
+        return BluePrintProxy.create(bluePrintType);
     }
 
     public static IFrameBluePrint frame() {

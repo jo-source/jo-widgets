@@ -35,11 +35,11 @@ public final class BrowserBPF {
     private BrowserBPF() {}
 
     public static IBrowserBluePrint browser() {
-        return Toolkit.getBluePrintFactory().bluePrint(IBrowserBluePrint.class);
+        return Toolkit.getBluePrintProxyFactory().bluePrint(IBrowserBluePrint.class);
     }
 
     public static IMainBrowserBluePrint mainBrowser() {
-        return Toolkit.getBluePrintFactory().bluePrint(IMainBrowserBluePrint.class);
+        return Toolkit.getBluePrintProxyFactory().bluePrint(IMainBrowserBluePrint.class);
     }
 
 }

@@ -27,7 +27,8 @@
  */
 package org.jowidgets.impl.spi;
 
-import org.jowidgets.impl.base.blueprint.factory.AbstractBluePrintFactory;
+import org.jowidgets.impl.base.blueprint.factory.BaseBluePrintFactory;
+import org.jowidgets.impl.base.blueprint.factory.BluePrintProxyFactoryImpl;
 import org.jowidgets.impl.spi.blueprint.IButtonBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ICalendarBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.ICanvasBluePrintSpi;
@@ -58,10 +59,10 @@ import org.jowidgets.impl.spi.blueprint.ITreeBluePrintSpi;
 import org.jowidgets.impl.spi.blueprint.defaults.registry.SpiDefaultsInitializerRegistry;
 import org.jowidgets.impl.widgets.common.blueprint.convenience.registry.CommonSetupConvenienceRegistry;
 
-public class SpiBluePrintFactory extends AbstractBluePrintFactory implements ISpiBluePrintFactory {
+public class SpiBluePrintFactory extends BaseBluePrintFactory implements ISpiBluePrintFactory {
 
     public SpiBluePrintFactory() {
-        super(new CommonSetupConvenienceRegistry(), new SpiDefaultsInitializerRegistry());
+        super(new BluePrintProxyFactoryImpl(new CommonSetupConvenienceRegistry(), new SpiDefaultsInitializerRegistry()));
     }
 
     @Override

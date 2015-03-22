@@ -42,7 +42,7 @@ public final class DemoIconsInitializer {
     public static void initialize() {
         Toolkit.getImageRegistry().registerImageConstant(IconsSmall.OK, SilkIcons.TICK);
 
-        Toolkit.getBluePrintFactory().addDefaultsInitializer(
+        Toolkit.getBluePrintProxyFactory().addDefaultsInitializer(
                 ITreeBluePrint.class,
                 new IDefaultInitializer<ITreeSetupBuilder<?>>() {
                     @Override

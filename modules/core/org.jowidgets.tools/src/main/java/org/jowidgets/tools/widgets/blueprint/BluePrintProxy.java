@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, grossmann
+ * Copyright (c) 2011, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,16 +26,31 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.widgets.ole.api;
+package org.jowidgets.tools.widgets.blueprint;
 
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IWidget;
+import org.jowidgets.common.widgets.builder.ISetupBuilder;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
-public final class OleBPF {
+/**
+ * This class is a abbreviation accessor class to all blueprints of the jowidget core widgets
+ * 
+ * It can be used to write e.g. BPF.frame() instead of Toolkit.getBluePrintFactory().frame()
+ */
+public final class BluePrintProxy {
 
-    private OleBPF() {}
+    private BluePrintProxy() {}
 
-    public static IOleControlBluePrint oleControl() {
-        return Toolkit.getBluePrintProxyFactory().bluePrint(IOleControlBluePrint.class);
+    /**
+     * Creates a blue print proxy for a given descriptor
+     * 
+     * @param bluePrintType The type of the descriptor
+     * @return The blue print, never null
+     */
+    public static <WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends ISetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE create(
+        final Class<BLUE_PRINT_TYPE> bluePrintType) {
+        return Toolkit.getBluePrintProxyFactory().bluePrint(bluePrintType);
     }
 
 }

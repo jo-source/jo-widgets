@@ -49,6 +49,7 @@ import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintProxyFactory;
 import org.jowidgets.api.widgets.content.IInputContentCreatorFactory;
 import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.common.application.IApplicationLifecycle;
@@ -85,6 +86,13 @@ public interface IToolkit {
      * @return The blue print factory
      */
     IBluePrintFactory getBluePrintFactory();
+
+    /**
+     * Gets the blue print proxy factory
+     * 
+     * @return The blue print proxy factory, never null
+     */
+    IBluePrintProxyFactory getBluePrintProxyFactory();
 
     /**
      * Gets the toolkits converter provider

@@ -66,7 +66,7 @@ final class PointInputControl extends ControlWrapper implements IPointInputContr
     PointInputControl(final Object parentUiReference, final IPointInputControlBlueprint descriptor) {
         super(Toolkit.getWidgetFactory().create(
                 parentUiReference,
-                Toolkit.getBluePrintFactory().bluePrint(IMapWidgetBlueprint.class)));
+                Toolkit.getBluePrintProxyFactory().bluePrint(IMapWidgetBlueprint.class)));
 
         VisibiliySettingsInvoker.setVisibility(descriptor, this);
         ColorSettingsInvoker.setColors(descriptor, this);

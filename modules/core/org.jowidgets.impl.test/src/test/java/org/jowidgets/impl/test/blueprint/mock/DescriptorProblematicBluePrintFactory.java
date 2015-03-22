@@ -31,14 +31,9 @@
  */
 package org.jowidgets.impl.test.blueprint.mock;
 
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.tools.widgets.blueprint.BluePrintFactoryWrapper;
+import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
-public class DescriptorProblematicBluePrintFactory extends BluePrintFactoryWrapper {
-
-    public DescriptorProblematicBluePrintFactory(final IBluePrintFactory bluePrintFactory) {
-        super(bluePrintFactory);
-    }
+public class DescriptorProblematicBluePrintFactory extends BluePrintFactory {
 
     public final IProblematicDescriptorBluePrint problematicDescriptor() {
         return bluePrint(IProblematicDescriptorBluePrint.class);

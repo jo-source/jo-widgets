@@ -35,11 +35,11 @@ public final class OfficeBPF {
     private OfficeBPF() {}
 
     public static IOfficeTextBluePrint text() {
-        return Toolkit.getBluePrintFactory().bluePrint(IOfficeTextBluePrint.class);
+        return Toolkit.getBluePrintProxyFactory().bluePrint(IOfficeTextBluePrint.class);
     }
 
     public static IOfficeTableCalculationBluePrint tableCalculation() {
-        return Toolkit.getBluePrintFactory().bluePrint(IOfficeTableCalculationBluePrint.class);
+        return Toolkit.getBluePrintProxyFactory().bluePrint(IOfficeTableCalculationBluePrint.class);
     }
 
 }

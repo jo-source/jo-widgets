@@ -31,7 +31,7 @@ package org.jowidgets.spi.impl.rwt;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.blueprint.builder.IComboBoxSelectionSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintProxyFactory;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 
 public final class RwtUiDefaultsInitializer {
@@ -44,10 +44,10 @@ public final class RwtUiDefaultsInitializer {
         SwtOptions.setInputVerification(false);
         SwtOptions.setNativeTextAreaScrollBars(true);
 
-        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
+        final IBluePrintProxyFactory bppf = Toolkit.getBluePrintProxyFactory();
 
         //ComboBox auto-completion don't work correctly for rwt
-        bpf.addDefaultsInitializer(
+        bppf.addDefaultsInitializer(
                 IComboBoxSelectionSetupBuilder.class,
                 new IDefaultInitializer<IComboBoxSelectionSetupBuilder<?, ?>>() {
                     @Override

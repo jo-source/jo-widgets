@@ -31,9 +31,14 @@
  */
 package org.jowidgets.impl.test.blueprint.mock;
 
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintProxyFactory;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
 
 public class DummyBluePrintFactory extends BluePrintFactory {
+
+    public DummyBluePrintFactory(final IBluePrintProxyFactory bluePrintProxyFactory) {
+        super(bluePrintProxyFactory);
+    }
 
     public final IHierarchy1stBluePrint hierarchy1st() {
         return bluePrint(IHierarchy1stBluePrint.class);
