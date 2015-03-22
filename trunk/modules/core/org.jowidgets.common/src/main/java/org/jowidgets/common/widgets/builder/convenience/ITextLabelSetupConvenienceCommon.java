@@ -37,4 +37,5 @@ public interface ITextLabelSetupConvenienceCommon<INSTANCE_TYPE> {
 
     INSTANCE_TYPE setStrong();
 
+    INSTANCE_TYPE setEmphasized();
 }
