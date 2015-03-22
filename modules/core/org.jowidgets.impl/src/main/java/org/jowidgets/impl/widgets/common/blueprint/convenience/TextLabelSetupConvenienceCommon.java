@@ -56,4 +56,9 @@ public class TextLabelSetupConvenienceCommon extends AbstractSetupBuilderConveni
         return getBuilder().setMarkup(Markup.STRONG);
     }
 
+    @Override
+    public ITextLabelSetupBuilderCommon<?> setEmphasized() {
+        return getBuilder().setMarkup(Markup.EMPHASIZED);
+    }
+
 }
