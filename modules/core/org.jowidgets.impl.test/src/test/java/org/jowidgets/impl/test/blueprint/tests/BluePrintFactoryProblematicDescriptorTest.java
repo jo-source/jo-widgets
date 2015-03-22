@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, grossmann
+ * Copyright (c) 2011, Benjamin Marstaller
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,28 +26,39 @@
  * DAMAGE.
  */
 
-package org.jowidgets.api.widgets.blueprint.factory;
+package org.jowidgets.impl.test.blueprint.tests;
 
-import org.jowidgets.api.widgets.IWidget;
-import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenience;
-import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.common.widgets.builder.ISetupBuilder;
-import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.impl.test.blueprint.mock.DescriptorProblematicBluePrintFactory;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public interface IBaseBluePrintFactory {
+public class BluePrintFactoryProblematicDescriptorTest {
 
-    <WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends ISetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
-        final Class<BLUE_PRINT_TYPE> bluePrintType);
+    private static final IBluePrintFactory BLUE_PRINT_FACTORY = Toolkit.getBluePrintFactory();
+    private DescriptorProblematicBluePrintFactory problematicDescriptorBluePrintFactory;
 
-    @SuppressWarnings("rawtypes")
-    void setSetupBuilderConvenience(
-        Class<? extends ISetupBuilder> setupBuilder,
-        ISetupBuilderConvenience<?> setupBuilderConvenience);
+    @Before
+    public void setUp() {
+        problematicDescriptorBluePrintFactory = new DescriptorProblematicBluePrintFactory(BLUE_PRINT_FACTORY);
+    }
 
-    @SuppressWarnings("rawtypes")
-    void addDefaultsInitializer(Class<? extends ISetupBuilder> setupBuilder, IDefaultInitializer<?> defaultInitializer);
+    @After
+    public void tearDown() {}
 
-    @SuppressWarnings("rawtypes")
-    void setDefaultsInitializer(Class<? extends ISetupBuilder> setupBuilder, IDefaultInitializer<?> defaultInitializer);
+    @Test
+    public void testProblematicBluePrint() {
+        try {
+            problematicDescriptorBluePrintFactory.problematicDescriptor();
+        }
+        catch (final IllegalArgumentException ex) {
+            // Correct behavior, there should be an exception with this problematic blueprint-type
+            return;
+        }
+        Assert.fail("There is a problematic blueprint, this should throw an exception. But it did not!");
+    }
 
 }

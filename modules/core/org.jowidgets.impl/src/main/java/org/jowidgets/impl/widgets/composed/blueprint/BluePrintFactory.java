@@ -28,37 +28,293 @@
 package org.jowidgets.impl.widgets.composed.blueprint;
 
 import java.text.DateFormat;
+import java.util.Collection;
 import java.util.Date;
 
+import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.api.convert.IObjectStringConverter;
+import org.jowidgets.api.convert.ISliderViewerConverter;
 import org.jowidgets.api.convert.LinearSliderConverter;
 import org.jowidgets.api.image.Icons;
+import org.jowidgets.api.login.ILoginInterceptor;
+import org.jowidgets.api.password.IPasswordChangeExecutor;
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputControlBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.ICollectionInputFieldBluePrint;
+import org.jowidgets.api.widgets.blueprint.ICombinedCollectionInputFieldBluePrint;
+import org.jowidgets.api.widgets.blueprint.IExpandCompositeBluePrint;
+import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
+import org.jowidgets.api.widgets.blueprint.IInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ILabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.ILoginDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IMessageDialogBluePrint;
+import org.jowidgets.api.widgets.blueprint.IPasswordChangeDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IProgressBarBluePrint;
 import org.jowidgets.api.widgets.blueprint.IQuestionDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISliderViewerBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITextSeparatorBluePrint;
+import org.jowidgets.api.widgets.blueprint.IUnitValueFieldBluePrint;
+import org.jowidgets.api.widgets.blueprint.IValidationResultLabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.api.widgets.content.IInputContentCreator;
+import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ICollectionInputControlSetup;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.impl.widgets.basic.blueprint.AbstractBasicBluePrintFactory;
 import org.jowidgets.impl.widgets.composed.blueprint.convenience.registry.ComposedSetupConvenienceRegistry;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.registry.ComposedDefaultsInitializerRegistry;
 import org.jowidgets.tools.widgets.blueprint.BPF;
+import org.jowidgets.unit.api.IUnitConverter;
+import org.jowidgets.unit.api.IUnitSet;
 import org.jowidgets.util.Assert;
 
-public final class BluePrintFactory extends SimpleBluePrintFactory implements IBluePrintFactory {
+public class BluePrintFactory extends AbstractBasicBluePrintFactory implements IBluePrintFactory {
 
     public BluePrintFactory() {
-        super(new ComposedSetupConvenienceRegistry(), new ComposedDefaultsInitializerRegistry());
+        this(new ComposedSetupConvenienceRegistry(), new ComposedDefaultsInitializerRegistry());
+    }
+
+    public BluePrintFactory(final IDefaultsInitializerRegistry defaultInitializerRegistry) {
+        this(new ComposedSetupConvenienceRegistry(), defaultInitializerRegistry);
+    }
+
+    public BluePrintFactory(final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry) {
+        this(setupBuilderConvenienceRegistry, new ComposedDefaultsInitializerRegistry());
+    }
+
+    public BluePrintFactory(
+        final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry,
+        final IDefaultsInitializerRegistry defaultInitializerRegistry) {
+        super(setupBuilderConvenienceRegistry, defaultInitializerRegistry);
+    }
+
+    @Override
+    public ILabelBluePrint label() {
+        return createProxy(ILabelBluePrint.class);
+    }
+
+    @Override
+    public ITextSeparatorBluePrint textSeparator() {
+        return createProxy(ITextSeparatorBluePrint.class);
+    }
+
+    @Override
+    public IValidationResultLabelBluePrint validationResultLabel() {
+        return createProxy(IValidationResultLabelBluePrint.class);
+    }
+
+    @Override
+    public IInputComponentValidationLabelBluePrint inputComponentValidationLabel(final IInputComponent<?> inputComponent) {
+        Assert.paramNotNull(inputComponent, "inputComponent");
+        final IInputComponentValidationLabelBluePrint result = createProxy(IInputComponentValidationLabelBluePrint.class);
+        result.setInputComponent(inputComponent);
+        return result;
+    }
+
+    @Override
+    public IInputComponentValidationLabelBluePrint inputComponentValidationLabel() {
+        return createProxy(IInputComponentValidationLabelBluePrint.class);
+    }
+
+    @Override
+    public IMessageDialogBluePrint messageDialog() {
+        return createProxy(IMessageDialogBluePrint.class);
+    }
+
+    @Override
+    public IQuestionDialogBluePrint questionDialog() {
+        return createProxy(IQuestionDialogBluePrint.class);
+    }
+
+    @Override
+    public IProgressBarBluePrint progressBar() {
+        return createProxy(IProgressBarBluePrint.class);
+    }
+
+    @Override
+    public <INPUT_TYPE> IInputDialogBluePrint<INPUT_TYPE> inputDialog(final IInputContentCreator<INPUT_TYPE> contentCreator) {
+        Assert.paramNotNull(contentCreator, "contentCreator");
+
+        final IInputDialogBluePrint<INPUT_TYPE> inputDialogBluePrint;
+        inputDialogBluePrint = createProxy(IInputDialogBluePrint.class);
+
+        inputDialogBluePrint.setContentCreator(contentCreator);
+        return inputDialogBluePrint;
+    }
+
+    @Override
+    public <INPUT_TYPE> IInputCompositeBluePrint<INPUT_TYPE> inputComposite(final IInputContentCreator<INPUT_TYPE> contentCreator) {
+        Assert.paramNotNull(contentCreator, "contentCreator");
+
+        final IInputCompositeBluePrint<INPUT_TYPE> inputCompositeBluePrint = createProxy(IInputCompositeBluePrint.class);
+
+        inputCompositeBluePrint.setContentCreator(contentCreator);
+        return inputCompositeBluePrint;
+    }
+
+    @Override
+    public <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IConverter<INPUT_TYPE> converter) {
+        Assert.paramNotNull(converter, "converter");
+        final IInputFieldBluePrint<INPUT_TYPE> result = createProxy(IInputFieldBluePrint.class);
+        return result.setConverter(converter);
+    }
+
+    @Override
+    public <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField(final IObjectStringConverter<INPUT_TYPE> converter) {
+        Assert.paramNotNull(converter, "converter");
+        final IInputFieldBluePrint<INPUT_TYPE> result = createProxy(IInputFieldBluePrint.class);
+        return result.setConverter(converter);
+    }
+
+    @Override
+    public <INPUT_TYPE> IInputFieldBluePrint<INPUT_TYPE> inputField() {
+        final IInputFieldBluePrint<INPUT_TYPE> result = createProxy(IInputFieldBluePrint.class);
+        final IObjectStringConverter<INPUT_TYPE> converter = Toolkit.getConverterProvider().toStringConverter();
+        return result.setConverter(converter);
+    }
+
+    @Override
+    public <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField() {
+        final IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> result = createProxy(IUnitValueFieldBluePrint.class);
+        return result;
+    }
+
+    @Override
+    public <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
+        final Class<? extends UNIT_VALUE_TYPE> inputFieldType) {
+        Assert.paramNotNull(inputFieldType, "inputFieldType");
+
+        final IConverter<UNIT_VALUE_TYPE> converter = Toolkit.getConverterProvider().getConverter(inputFieldType);
+        if (converter == null) {
+            throw new IllegalArgumentException("No converter found for type '" + inputFieldType.getName() + "'.");
+        }
+
+        final IInputFieldBluePrint<UNIT_VALUE_TYPE> inputField = inputField();
+        inputField.setConverter(converter);
+
+        final IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> result = unitValueField();
+        result.setUnitValueInputField(inputField);
+        return result;
+    }
+
+    @Override
+    public <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
+        final IUnitSet unitSet,
+        final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter,
+        final IInputFieldDescriptor<UNIT_VALUE_TYPE> inputField) {
+        final IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> result = unitValueField();
+        result.setUnitSet(unitSet).setUnitConverter(converter).setUnitValueInputField(inputField);
+        return result;
+    }
+
+    @Override
+    public <BASE_VALUE_TYPE, UNIT_VALUE_TYPE> IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitValueField(
+        final IUnitSet unitSet,
+        final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> converter,
+        final Class<? extends UNIT_VALUE_TYPE> inputFieldType) {
+        final IUnitValueFieldBluePrint<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> result = unitValueField(inputFieldType);
+        result.setUnitSet(unitSet).setUnitConverter(converter);
+        return result;
+    }
+
+    @Override
+    public ILoginDialogBluePrint loginDialog(final ILoginInterceptor loginInterceptor) {
+        Assert.paramNotNull(loginInterceptor, "loginInterceptor");
+        final ILoginDialogBluePrint result = createProxy(ILoginDialogBluePrint.class);
+        result.setInterceptor(loginInterceptor);
+        return result;
+    }
+
+    @Override
+    public IPasswordChangeDialogBluePrint passwordChangeDialog(final IPasswordChangeExecutor executor) {
+        Assert.paramNotNull(executor, "executor");
+        final IPasswordChangeDialogBluePrint result = createProxy(IPasswordChangeDialogBluePrint.class);
+        result.setExecutor(executor);
+        return result;
+    }
+
+    @Override
+    public <ELEMENT_TYPE> ICollectionInputControlBluePrint<ELEMENT_TYPE> collectionInputControl(
+        final ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> widgetCreator) {
+        Assert.paramNotNull(widgetCreator, "widgetCreator");
+        final ICollectionInputControlBluePrint<ELEMENT_TYPE> result = createProxy(ICollectionInputControlBluePrint.class);
+        result.setElementWidgetCreator(widgetCreator);
+        return result;
+    }
+
+    @Override
+    public <ELEMENT_TYPE> ICollectionInputDialogBluePrint<ELEMENT_TYPE> collectionInputDialog(
+        final ICollectionInputControlSetup<ELEMENT_TYPE> setup) {
+        Assert.paramNotNull(setup, "setup");
+        final ICollectionInputDialogBluePrint<ELEMENT_TYPE> result = createProxy(ICollectionInputDialogBluePrint.class);
+        result.setCollectionInputControlSetup(setup);
+        return result;
+    }
+
+    @Override
+    public <ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField(
+        final IConverter<ELEMENT_TYPE> converter) {
+        Assert.paramNotNull(converter, "converter");
+        final ICollectionInputFieldBluePrint<ELEMENT_TYPE> result = createProxy(ICollectionInputFieldBluePrint.class);
+        result.setConverter(converter);
+        return result;
+    }
+
+    @Override
+    public <ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField(
+        final IObjectStringConverter<ELEMENT_TYPE> converter) {
+        Assert.paramNotNull(converter, "converter");
+        final ICollectionInputFieldBluePrint<ELEMENT_TYPE> result = createProxy(ICollectionInputFieldBluePrint.class);
+        result.setConverter(converter);
+        return result;
+    }
+
+    @Override
+    public <ELEMENT_TYPE> ICollectionInputFieldBluePrint<ELEMENT_TYPE> collectionInputField() {
+        final ICollectionInputFieldBluePrint<ELEMENT_TYPE> result = createProxy(ICollectionInputFieldBluePrint.class);
+        final IObjectStringConverter<ELEMENT_TYPE> converter = Toolkit.getConverterProvider().toStringConverter();
+        result.setConverter(converter);
+        return result;
+    }
+
+    @Override
+    public <ELEMENT_TYPE> ICombinedCollectionInputFieldBluePrint<ELEMENT_TYPE> combinedCollectionInputField(
+        final ICustomWidgetCreator<IInputControl<ELEMENT_TYPE>> elementTypeCreator,
+        final ICustomWidgetCreator<IInputControl<? extends Collection<ELEMENT_TYPE>>> collectionTypeCreator) {
+        Assert.paramNotNull(elementTypeCreator, "elementTypeCreator");
+        Assert.paramNotNull(collectionTypeCreator, "collectionTypeCreator");
+        final ICombinedCollectionInputFieldBluePrint<ELEMENT_TYPE> result = createProxy(ICombinedCollectionInputFieldBluePrint.class);
+        result.setElementTypeControlCreator(elementTypeCreator);
+        result.setCollectionTypeControlCreator(collectionTypeCreator);
+        return result;
+    }
+
+    @Override
+    public IExpandCompositeBluePrint expandComposite() {
+        return createProxy(IExpandCompositeBluePrint.class);
+    }
+
+    @Override
+    public <VALUE_TYPE> ISliderViewerBluePrint<VALUE_TYPE> sliderViewer() {
+        return createProxy(ISliderViewerBluePrint.class);
+    }
+
+    @Override
+    public <VALUE_TYPE> ISliderViewerBluePrint<VALUE_TYPE> sliderViewer(final ISliderViewerConverter<VALUE_TYPE> converter) {
+        final ISliderViewerBluePrint<VALUE_TYPE> result = sliderViewer();
+        result.setConverter(converter);
+        return result;
     }
 
     ////////////////////////////////////////////////////////////////////////////

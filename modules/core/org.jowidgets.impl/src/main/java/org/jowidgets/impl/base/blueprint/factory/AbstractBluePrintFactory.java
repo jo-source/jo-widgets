@@ -38,17 +38,16 @@ import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.impl.base.blueprint.proxy.BluePrintProxyProvider;
 import org.jowidgets.impl.spi.blueprint.IFrameBluePrintSpi;
-import org.jowidgets.tools.widgets.blueprint.defaults.DefaultsInitializerRegistry;
 
 public abstract class AbstractBluePrintFactory implements IBaseBluePrintFactory {
 
     private final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry;
-    private IDefaultsInitializerRegistry defaultInitializerRegistry;
+    private final IDefaultsInitializerRegistry defaultInitializerRegistry;
 
     public AbstractBluePrintFactory(
         final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry,
         final IDefaultsInitializerRegistry defaultInitializerRegistry) {
-        super();
+
         this.setupBuilderConvenienceRegistry = setupBuilderConvenienceRegistry;
         this.defaultInitializerRegistry = defaultInitializerRegistry;
     }
@@ -78,17 +77,7 @@ public abstract class AbstractBluePrintFactory implements IBaseBluePrintFactory 
     public void setSetupBuilderConvenience(
         final Class<? extends ISetupBuilder> setupBuilder,
         final ISetupBuilderConvenience<?> setupBuilderConvenience) {
-        getSetupBuilderConvenienceRegistry().register(setupBuilder, setupBuilderConvenience);
-    }
-
-    @Override
-    public void setDefaultsInitializerRegistry(final IDefaultsInitializerRegistry defaultInitializerRegistry) {
-        if (defaultInitializerRegistry == null) {
-            this.defaultInitializerRegistry = new DefaultsInitializerRegistry();
-        }
-        else {
-            this.defaultInitializerRegistry = defaultInitializerRegistry;
-        }
+        setupBuilderConvenienceRegistry.register(setupBuilder, setupBuilderConvenience);
     }
 
     @SuppressWarnings("rawtypes")
@@ -107,13 +96,4 @@ public abstract class AbstractBluePrintFactory implements IBaseBluePrintFactory 
         defaultInitializerRegistry.setDefaultsInitializer(setupBuilder, defaultsImpl);
     }
 
-    @Override
-    public ISetupBuilderConvenienceRegistry getSetupBuilderConvenienceRegistry() {
-        return setupBuilderConvenienceRegistry;
-    }
-
-    @Override
-    public IDefaultsInitializerRegistry getDefaultsInitializerRegistry() {
-        return defaultInitializerRegistry;
-    }
 }

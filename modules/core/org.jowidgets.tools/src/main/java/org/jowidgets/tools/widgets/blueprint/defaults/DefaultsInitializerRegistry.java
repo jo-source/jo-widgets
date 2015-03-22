@@ -28,6 +28,7 @@
 
 package org.jowidgets.tools.widgets.blueprint.defaults;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -73,7 +74,7 @@ public class DefaultsInitializerRegistry implements IDefaultsInitializerRegistry
         Assert.paramNotNull(setupBuilder, "setupBuilder");
         List<IDefaultInitializer<ISetupBuilder<?>>> list = (List<IDefaultInitializer<ISetupBuilder<?>>>) map.get(setupBuilder);
         if (list == null) {
-            list = new LinkedList<IDefaultInitializer<ISetupBuilder<?>>>();
+            list = Collections.emptyList();
         }
         return list;
     }
