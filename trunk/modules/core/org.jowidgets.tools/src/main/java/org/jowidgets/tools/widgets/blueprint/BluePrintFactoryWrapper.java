@@ -106,9 +106,7 @@ import org.jowidgets.api.widgets.blueprint.ITreeViewerBluePrint;
 import org.jowidgets.api.widgets.blueprint.IUnitValueFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationResultLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenience;
-import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
@@ -134,16 +132,6 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
         this.bluePrintFactory = bluePrintFactory;
     }
 
-    @Override
-    public ISetupBuilderConvenienceRegistry getSetupBuilderConvenienceRegistry() {
-        return bluePrintFactory.getSetupBuilderConvenienceRegistry();
-    }
-
-    @Override
-    public IDefaultsInitializerRegistry getDefaultsInitializerRegistry() {
-        return bluePrintFactory.getDefaultsInitializerRegistry();
-    }
-
     @SuppressWarnings("rawtypes")
     @Override
     public void addDefaultsInitializer(
@@ -166,11 +154,6 @@ public class BluePrintFactoryWrapper implements IBluePrintFactory {
         final Class<? extends ISetupBuilder> setupBuilder,
         final ISetupBuilderConvenience<?> setupBuilderConvenience) {
         bluePrintFactory.setSetupBuilderConvenience(setupBuilder, setupBuilderConvenience);
-    }
-
-    @Override
-    public void setDefaultsInitializerRegistry(final IDefaultsInitializerRegistry defaultInitializerRegistry) {
-        bluePrintFactory.setDefaultsInitializerRegistry(defaultInitializerRegistry);
     }
 
     @Override
