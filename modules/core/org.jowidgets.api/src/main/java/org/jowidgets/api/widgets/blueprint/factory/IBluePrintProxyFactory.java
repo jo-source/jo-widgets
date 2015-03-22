@@ -34,19 +34,55 @@ import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 
+/**
+ * Creates implementations of blue print with help of Java proxies
+ */
 public interface IBluePrintProxyFactory {
 
+    /**
+     * Creates a blue print for a bluePrint type.
+     * 
+     * The created blue print was set up by all registered default initializers and implements
+     * all convenience methods that was added with the {@link #setSetupBuilderConvenience(Class, ISetupBuilderConvenience)} method
+     * before.
+     * 
+     * @param bluePrintType The type to get the blue print for
+     * 
+     * @return The blue print
+     */
     <WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends ISetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
         final Class<BLUE_PRINT_TYPE> bluePrintType);
 
+    /**
+     * Sets an implementation for a convenience setter method
+     * 
+     * @param setupBuilder The type of the setup builder to add the implementation for
+     * @param setupBuilderConvenience The convenience method implementation
+     */
     @SuppressWarnings("rawtypes")
     void setSetupBuilderConvenience(
         Class<? extends ISetupBuilder> setupBuilder,
         ISetupBuilderConvenience<?> setupBuilderConvenience);
 
+    /**
+     * Adds a default initializer that will be invoked when a blue print for the given builder type will be created
+     * 
+     * The default initializers will be invoked in the same order they was added
+     * 
+     * @param setupBuilder The type of the setup builder to add the defaults for
+     * @param defaultInitializer The defaults initializer
+     */
     @SuppressWarnings("rawtypes")
     void addDefaultsInitializer(Class<? extends ISetupBuilder> setupBuilder, IDefaultInitializer<?> defaultInitializer);
 
+    /**
+     * Sets a new default initializer that will be invoked when a blue print for the given builder type will be created.
+     * 
+     * Remark: All other previously set defaults initializer will be removed. Use this method with care!!!
+     * 
+     * @param setupBuilder The type of the setup builder to set the defaults for
+     * @param defaultInitializer The defaults initializer
+     */
     @SuppressWarnings("rawtypes")
     void setDefaultsInitializer(Class<? extends ISetupBuilder> setupBuilder, IDefaultInitializer<?> defaultInitializer);
 
