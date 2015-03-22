@@ -242,7 +242,7 @@ final class BrowserToolkitInterceptor implements IToolkitInterceptor {
     public void onToolkitCreate(final IToolkit toolkit) {
         final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
         widgetFactory.register(IBrowserBluePrint.class, new BrowserFactory());
-        toolkit.getBluePrintFactory().addDefaultsInitializer(
+        toolkit.getBluePrintProxyFactory().addDefaultsInitializer(
 			IBrowserSetupBuilder.class, 
 			new BrowserDefaults());
     }
