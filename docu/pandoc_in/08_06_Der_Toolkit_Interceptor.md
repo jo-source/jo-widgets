@@ -89,29 +89,29 @@ final class CapToolkitInterceptor implements IToolkitInterceptor {
 	}
 
 	private void addDefaultsInitializer(final IToolkit toolkit) {
-		final IBluePrintFactory bpf = toolkit.getBluePrintFactory();
+		final IBluePrintProxyFactory bppf = toolkit.getBluePrintProxyFactory();
 		
-		bpf.addDefaultsInitializer(
+		bppf.addDefaultsInitializer(
 			IBeanTableSetupBuilder.class, 
 			new BeanTableDefaults());
 			
 		//... removed some defaults in this example
 			
-		bpf.addDefaultsInitializer(
+		bppf.addDefaultsInitializer(
 			ILookUpComboBoxSelectionBluePrint.class, 
 			new LookUpComboBoxSelectionDefaults());
 	}
 
 	private void setBuilderConvenience(final IToolkit toolkit) {
-		final IBluePrintFactory bpf = toolkit.getBluePrintFactory();
+		final IBluePrintProxyFactory bppf = toolkit.getBluePrintProxyFactory();
 		
-		bpf.setSetupBuilderConvenience(
+		bppf.setSetupBuilderConvenience(
 			IBeanTableSetupBuilder.class, 
 			new BeanTableSetupConvenience());
 		
 		//... removed some convenience methods in this example
 		
-		bpf.setSetupBuilderConvenience(
+		bppf.setSetupBuilderConvenience(
 			IBeanRelationTreeDetailSetupBuilder.class, 
 			new BeanRelationTreeDetailSetupConvenience());
 	}

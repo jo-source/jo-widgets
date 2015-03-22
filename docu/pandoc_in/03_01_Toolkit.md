@@ -79,7 +79,15 @@ Liefert den Zugriff auf den UI Thread. Der Zugriff muss im UI Thread erfolgen. S
 	IBluePrintFactory getBluePrintFactory();
 ~~~
 
-Liefert den Zugriff auf die BluePrintFactory. Sie auch [BluePrints](#blue_prints)
+Liefert den Zugriff auf die [BluePrintFactory](#blue_print_factory)
+
+#### BluePrintProxyFactory
+
+~~~
+	IBluePrintProxyFactory getBluePrintProxyFactory();
+~~~
+
+Liefert den Zugriff auf die [BluePrintProxyFactory](#blue_print_proxy_factory)
 
 #### ConverterProvider
 
