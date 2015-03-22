@@ -115,3 +115,75 @@ Die folgenden Methoden können verwendet werden, um alle Widgets oder Widget Fac
 ~~~
 
 Weitere Information finden sich im Abschnitt [Austauschen und Dekorieren von Widgets](#substitude_and_decorate_widgets).
+
+
+#### Widget Factory Listener
+
+Die folgenden Methoden können verwendet werden, um einen Widget Factory Listener hinzuzufügen und zu entfernen:
+
+~~~
+    void addWidgetFactoryListener(IWidgetFactoryListener listener);
+
+    void removeWidgetFactoryListener(IWidgetFactoryListener listener);
+~~~
+
+Ein `IWidgetFactoryListener` hat die folgende Methode:
+
+~~~
+	void widgetCreated(IWidgetCommon widget);
+~~~
+
+Diese Methode wird immer aufgerufen, wenn ein Widget erzeugt wird. Dies kann zum Beispiel für Debugging Zwecke oder für JUnit Tests interessant sein. Der folgende Listener wurde einer Applikation vor dem Start hinzugefügt:
+
+~~~{.java .numberLines startFrom="1"}
+public final class WidgetFactoryListener implements IWidgetFactoryListener {
+
+	private final Set<IWidget> allWidgets;
+	private final Set<IWidget> undisposedWidgets;
+
+	public WidgetFactoryListener() {
+		this.allWidgets = new HashSet<IWidget>();
+		this.undisposedWidgets = new HashSet<IWidget>();
+	}
+
+	@Override
+	public void widgetCreated(final IWidgetCommon widgetCommon) {
+		if (widgetCommon instanceof IWidget) {
+			final IWidget widget = (IWidget) widgetCommon;
+			allWidgets.add(widget);
+			undisposedWidgets.add(widget);
+			widget.addDisposeListener(new IDisposeListener() {
+				@Override
+				public void onDispose() {
+					undisposedWidgets.remove(widget);
+				}
+			});
+		}
+	}
+
+	@Override
+	public String toString() {
+		return "allWidgetsCount="
+				+ allWidgets.size() 
+				+ ", undisposedWidgetsCount=" 
+				+ undisposedWidgets.size();
+	}
+
+}
+~~~ 
+
+
+Nach dem Beenden wurde die `toString()` Methode aufgerufen. Das führte zu folgender Ausgabe:
+
+~~~
+	allWidgetsCount=48, undisposedWidgetsCount=0
+~~~
+ 
+Anschließend wurde in der Implementierung von `IContainer` ein Fehler eingebaut, so dass die Kinder eines Containers nicht mehr disposed wurden. Nach erneutem Start und Beenden ergab sich die folgende Ausgabe:
+
+~~~
+	allWidgetsCount=48, undisposedWidgetsCount=45
+~~~
+
+
+ 
