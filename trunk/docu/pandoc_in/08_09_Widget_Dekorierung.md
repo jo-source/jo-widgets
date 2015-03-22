@@ -1,6 +1,6 @@
 ## Austauschen und Dekorieren von Widgets - Übersicht {#substitude_and_decorate_widgets}
 
-Neben dem globalen Anpassen der Widget Defaults ist es auch möglich, Widget Implementierungen komplett auszutauschen oder zu dekorieren. Das globale Ändern eines Widgets kann viele Aspekte motiviert sein: 
+Neben dem globalen [Anpassen der Widget Defaults](#widget_defaults_override) ist es auch möglich, Widget Implementierungen komplett auszutauschen oder zu dekorieren. Das globale Ändern eines Widgets kann durch viele Aspekte motiviert sein: 
 
 __Beispiel 1:__
 
@@ -20,9 +20,9 @@ Im nächsten Abschnitt folgt ein weiteres, zusammenhängendes Beispiel.
 
 Die [Generic Widget Factory](#generic_widget_factory) bietet die folgenden Möglichkeiten zum Austauschen und Dekorieren von Widgets:
 
-* Eine registrierte Widget Implementierung durch eine andere ersetzen
-* Eine registrierte Widget Implementierung dekorieren
-* Eine registrierte Widget Factory dekorieren
+* Eine registrierte [Widget Implementierung durch eine andere ersetzen](#substitude_widgets)
+* Eine registrierte [Widget Implementierung dekorieren](#dekorate_widgets)
+* Eine registrierte [Widget Factory dekorieren](#decorate_widget_factory)
 
 #### Beispiel
 
@@ -47,7 +47,214 @@ Es wird angeboten, das man in den Einstellungen einen Parameter hinzufügt, der 
 
 #### Widget Implementierungen austauschen{#substitude_widgets}
 
+Die folgende Klasse implementiert die Schnittstelle `ITextLabel` mit Hilfe eines Textfeldes:
+
+~~~{.java .numberLines startFrom="1"}
+public final class TextFieldLabel extends ControlWrapper implements ITextLabel {
+
+	private final ITextControl textField;
+
+	public TextFieldLabel(final ITextControl textField) {
+		super(textField);
+		this.textField = textField;
+	}
+
+	@Override
+	public void setFontSize(final int size) {
+		textField.setFontSize(size);
+	}
+
+	@Override
+	public void setFontName(final String fontName) {
+		textField.setFontName(fontName);
+	}
+
+	@Override
+	public void setMarkup(final Markup markup) {
+		textField.setMarkup(markup);
+	}
+
+	@Override
+	public void setText(final String text) {
+		textField.setText(text);
+	}
+
+	@Override
+	public String getText() {
+		return textField.getText();
+	}
+
+}
+~~~
+
+Die meisten Methoden werden vom [Control Wrapper] geerbt, die anderen werden an das `textField` delegiert.
+
+Die folgende Factory erzeugt Instanzen dieser TextFieldLabel's:
+
+~~~{.java .numberLines startFrom="1"}
+public final class TextFieldLabelFactory 
+	implements IWidgetFactory<ITextLabel, ITextLabelBluePrint> {
+
+	@Override
+	public ITextLabel create(
+		final Object parentUiReference, 
+		final ITextLabelBluePrint textLabelBp) {
+		
+		final ITextFieldBluePrint textFieldBp = BPF.textField();
+		
+		textFieldBp.setSetup(textLabelBp);
+		textFieldBp.setBorder(false).setEditable(false).setInheritBackground(true);
+
+		final ITextControl textField = Toolkit.getWidgetFactory().create(
+			parentUiReference, 
+			textFieldBp);
+
+		return new TextFieldLabel(textField);
+	}
+
+}
+~~~
+
+In Zeile 9 wird ein neues BluePrint für ein Text Field erzeugt. In Zeile 11 wird das Setup des Textlabels auf dem BluePrint des Texfeldes gesetzt. Dabei werden alle Properties, welche das Textfeld und das Textlabel gemeinsam haben (wie zum Beispiel die Vordergrundfarbe, die Schriftart, etc,) auch für das Textfeld übernommen. In Zeile 14 wird dann ein Texfeld mit Hilfe des `textFieldBp` erzeugt. Dieses wird der Klasse `TextFieldLabel` übergeben, welche die Schnittstelle `ITextLabel` implementiert (sie weiter oben).
+
+Der folgende Code tauscht in der [Generic Widget Factory](#generic_widget_factory) die aktuelle Implementierung für Text Labels durch die `TextFieldLabelFactory` aus. Dies passiert mit Hilfe eines [Toolkit Interceptors](#toolkit_interceptor):
+
+~~~{.java .numberLines startFrom="1"}
+@Override
+public void onToolkitCreate(final IToolkit toolkit) {
+	toolkit.getWidgetFactory().unRegister(ITextLabelDescriptor.class);
+	
+	toolkit.getWidgetFactory().register(
+		ITextLabelDescriptor.class, 
+		new TextFieldLabelFactory());
+}
+~~~
+
+Die folgende Abbildung zeigt den Effekt:
+
+![TextFieldLabel](images/widget_decorate_example_2.gif  "TextFieldLabel")
+
+Durch dass globale Austauschen der Label Implementierung wird nun für alle Labels ein Textfeld für die Darstellung verwendet. Insbesondere lassen sich die Attribute nun markieren und zum Beispiel per STRG-C in die Zwischenablage kopieren.
+
 #### Widget Implementierungen dekorieren{#dekorate_widgets}
 
+Bei der zweiten Variante soll allen Labels ein Kontextmenü hinzufügen, welche eine Copy Action enthält, die den Text des Labels in die Zwischenablage kopiert. Um dies umzusetzen wird zuerst ein `IDecorator<ITextLabel>` wie folgt implementiert:
+
+~~~{.java .numberLines startFrom="1"}
+public final class LabelPopupDecorator implements IDecorator<ITextLabel> {
+
+	@Override
+	public ITextLabel decorate(final ITextLabel original) {
+		final IMenuModel copyMenu = new MenuModel();
+
+		final IActionItemModelBuilder copyActionBuilder = ActionItemModel.builder();
+		copyActionBuilder
+			.setText("Copy to Clipboard")
+			.setToolTipText("Copies the label text to the system clipboard")
+			.setIcon(IconsSmall.COPY);
+		
+		final IActionItemModel copyAction = copyMenu.addItem(copyActionBuilder);
+		copyAction.addActionListener(new IActionListener() {
+			@Override
+			public void actionPerformed() {
+				Clipboard.setContents(new StringTransfer(original.getText()));
+			}
+		});
+		
+		original.setPopupMenu(copyMenu);
+		return original;
+	}
+}
+~~~  
+
+Der Dekorierer wird dann mit Hilfe eines [Toolkit Interceptors](#toolkit_interceptor) wie folgt hinzugefügt:
+
+~~~{.java .numberLines startFrom="1"}
+@Override
+public void onToolkitCreate(final IToolkit toolkit) {
+	toolkit.getWidgetFactory().addWidgetDecorator(
+		ITextLabelDescriptor.class, 
+		new LabelPopupDecorator());
+}
+~~~
+
+Die folgende Abbildung zeigt den Effekt:
+
+![LabelPopupDecorator](images/widget_decorate_example_3.gif  "LabelPopupDecorator")
+
+Alle Labels haben jetzt ein Kontextmenü zum Kopieren des Labelinhalts.
+
+
 #### Widget Factories dekorieren{#decorate_widget_factory}
+
+Nun soll noch gezeigt werden, wie man mit Hilfe eines Widget Factory Decorator je nach Konfiguration die eine oder andere Variante wählen kann.
+
+~~~{.java .numberLines startFrom="1"}
+public final class LabelFactoryDecorator 
+	implements IDecorator<IWidgetFactory<ITextLabel, ITextLabelBluePrint>> {
+
+	private final LabelPopupDecorator labelPopupDecorator;
+	private final TextFieldLabelFactory textFieldLabelFactory;
+
+	//will be injected
+	private ILabelConfig labelConfig;
+
+	public LabelFactoryDecorator() {
+		this.textFieldLabelFactory = new TextFieldLabelFactory();
+		this.labelPopupDecorator = new LabelPopupDecorator();
+	}
+
+	@Override
+	public IWidgetFactory<ITextLabel, ITextLabelBluePrint> decorate(
+		final IWidgetFactory<ITextLabel, ITextLabelBluePrint> originalFactory) {
+
+		//no config or default type so use original
+		if (labelConfig == null || LabelType.DEFAULT == labelConfig.getLabelType()) {
+			return originalFactory;
+		}
+		//use TextFieldLabel
+		else if (LabelType.TEXT_FIELD == labelConfig.getLabelType()) {
+			return textFieldLabelFactory;
+		}
+		//use copy action
+		else if (LabelType.COPY_ACTION == labelConfig.getLabelType()) {
+			return new IWidgetFactory<ITextLabel, ITextLabelBluePrint>() {
+				@Override
+				public ITextLabel create(
+					final Object parentUiReference,
+					final ITextLabelBluePrint descriptor) {
+					
+					//create the original widget with the original factory
+					final ITextLabel originalWidget = originalFactory.create(
+						parentUiReference, 
+						descriptor);
+					
+					//decorate the popup menus
+					return labelPopupDecorator.decorate(originalWidget);
+				}
+			};
+		}
+		else {
+			throw new IllegalStateException(
+				"Lable type '" + labelConfig.getLabelType() + "' is not supported.");
+		}
+	}
+
+}
+~~~
+
+Dieser Dekorierer kann wie folgt registriert werden:
+
+~~~{.java .numberLines startFrom="1"}
+@Override
+public void onToolkitCreate(final IToolkit toolkit) {
+	toolkit.getWidgetFactory().addWidgetFactoryDecorator(
+		ITextLabelDescriptor.class, 
+		new LabelFactoryDecorator());
+}	
+~~~
+
+Das Überschreiben und Dekorieren aus den beiden vorigen Abschnitten wird dadurch obsolet.
+
+
 
