@@ -43,6 +43,7 @@ import org.jowidgets.api.model.tree.ITreeNodeModel;
 import org.jowidgets.api.password.IPasswordChangeExecutor;
 import org.jowidgets.api.widgets.IInputComponent;
 import org.jowidgets.api.widgets.IInputControl;
+import org.jowidgets.api.widgets.IWidget;
 import org.jowidgets.api.widgets.blueprint.IActionMenuItemBluePrint;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICalendarBluePrint;
@@ -103,6 +104,8 @@ import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeViewerBluePrint;
 import org.jowidgets.api.widgets.blueprint.IUnitValueFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.IValidationResultLabelBluePrint;
+import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenience;
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ICollectionInputControlSetup;
@@ -110,13 +113,44 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.FileChooserType;
+import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.unit.api.IUnit;
 import org.jowidgets.unit.api.IUnitConverter;
 import org.jowidgets.unit.api.IUnitSet;
 
-public interface IBluePrintFactory extends IBaseBluePrintFactory {
+public interface IBluePrintFactory {
+
+    /**
+     * @deprecated Use {@link IBluePrintProxyFactory#bluePrint(Class)} instead
+     */
+    @Deprecated
+    <WIDGET_TYPE extends IWidget, BLUE_PRINT_TYPE extends ISetupBuilder<BLUE_PRINT_TYPE> & IWidgetDescriptor<WIDGET_TYPE>> BLUE_PRINT_TYPE bluePrint(
+        final Class<BLUE_PRINT_TYPE> bluePrintType);
+
+    /**
+     * @deprecated Use {@link IBluePrintProxyFactory#setSetupBuilderConvenience(Class, ISetupBuilderConvenience)} instead
+     */
+    @Deprecated
+    @SuppressWarnings("rawtypes")
+    void setSetupBuilderConvenience(
+        Class<? extends ISetupBuilder> setupBuilder,
+        ISetupBuilderConvenience<?> setupBuilderConvenience);
+
+    /**
+     * @deprecated Use {@link IBluePrintProxyFactory#addDefaultsInitializer(Class, IDefaultInitializer)} instead
+     */
+    @Deprecated
+    @SuppressWarnings("rawtypes")
+    void addDefaultsInitializer(Class<? extends ISetupBuilder> setupBuilder, IDefaultInitializer<?> defaultInitializer);
+
+    /**
+     * @deprecated Use {@link IBluePrintProxyFactory#setDefaultsInitializer(Class, IDefaultInitializer)} instead
+     */
+    @Deprecated
+    @SuppressWarnings("rawtypes")
+    void setDefaultsInitializer(Class<? extends ISetupBuilder> setupBuilder, IDefaultInitializer<?> defaultInitializer);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////// basic widgets//////////////////////////////////////////////////////////

@@ -32,22 +32,38 @@ import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenience;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
-import org.jowidgets.api.widgets.blueprint.factory.IBaseBluePrintFactory;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintProxyFactory;
 import org.jowidgets.common.widgets.IWidgetCommon;
 import org.jowidgets.common.widgets.builder.ISetupBuilder;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.impl.base.blueprint.proxy.BluePrintProxyProvider;
 import org.jowidgets.impl.spi.blueprint.IFrameBluePrintSpi;
+import org.jowidgets.impl.widgets.composed.blueprint.convenience.registry.ComposedSetupConvenienceRegistry;
+import org.jowidgets.impl.widgets.composed.blueprint.defaults.registry.ComposedDefaultsInitializerRegistry;
+import org.jowidgets.util.Assert;
 
-public abstract class AbstractBluePrintFactory implements IBaseBluePrintFactory {
+public final class BluePrintProxyFactoryImpl implements IBluePrintProxyFactory {
 
     private final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry;
     private final IDefaultsInitializerRegistry defaultInitializerRegistry;
 
-    public AbstractBluePrintFactory(
+    public BluePrintProxyFactoryImpl() {
+        this(new ComposedSetupConvenienceRegistry(), new ComposedDefaultsInitializerRegistry());
+    }
+
+    public BluePrintProxyFactoryImpl(final IDefaultsInitializerRegistry defaultInitializerRegistry) {
+        this(new ComposedSetupConvenienceRegistry(), defaultInitializerRegistry);
+    }
+
+    public BluePrintProxyFactoryImpl(final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry) {
+        this(setupBuilderConvenienceRegistry, new ComposedDefaultsInitializerRegistry());
+    }
+
+    public BluePrintProxyFactoryImpl(
         final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry,
         final IDefaultsInitializerRegistry defaultInitializerRegistry) {
-
+        Assert.paramNotNull(setupBuilderConvenienceRegistry, "setupBuilderConvenienceRegistry");
+        Assert.paramNotNull(defaultInitializerRegistry, "defaultInitializerRegistry");
         this.setupBuilderConvenienceRegistry = setupBuilderConvenienceRegistry;
         this.defaultInitializerRegistry = defaultInitializerRegistry;
     }

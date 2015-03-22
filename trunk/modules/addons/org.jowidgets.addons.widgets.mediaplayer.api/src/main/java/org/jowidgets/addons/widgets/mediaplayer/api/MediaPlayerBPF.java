@@ -35,7 +35,7 @@ public final class MediaPlayerBPF {
     private MediaPlayerBPF() {}
 
     public static IMediaPlayerBluePrint player() {
-        return Toolkit.getBluePrintFactory().bluePrint(IMediaPlayerBluePrint.class);
+        return Toolkit.getBluePrintProxyFactory().bluePrint(IMediaPlayerBluePrint.class);
     }
 
 }

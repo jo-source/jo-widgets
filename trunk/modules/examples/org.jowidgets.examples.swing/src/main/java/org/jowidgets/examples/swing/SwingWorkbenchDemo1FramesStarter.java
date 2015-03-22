@@ -37,7 +37,7 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITabFolderBluePrint;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintProxyFactory;
 import org.jowidgets.common.types.TabPlacement;
 import org.jowidgets.examples.common.map.MapDemoApplication;
 import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1Factory;
@@ -62,9 +62,9 @@ public final class SwingWorkbenchDemo1FramesStarter {
         SwingOptions.setInternalFramesForTabFolders(true);
         SwingOptions.setOneTouchExpandableSplits(true);
 
-        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-        bpf.addDefaultsInitializer(ITabFolderBluePrint.class, createTabDefaults());
-        bpf.addDefaultsInitializer(ISplitCompositeBluePrint.class, createSplitDefaults());
+        final IBluePrintProxyFactory bppf = Toolkit.getBluePrintProxyFactory();
+        bppf.addDefaultsInitializer(ITabFolderBluePrint.class, createTabDefaults());
+        bppf.addDefaultsInitializer(ISplitCompositeBluePrint.class, createSplitDefaults());
 
         new WorkbenchRunner().run(new WorkbenchDemo1Factory());
     }

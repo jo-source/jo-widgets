@@ -60,7 +60,7 @@ public class MapView extends AbstractHowToView implements IView {
         container.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
 
         final IMapWidget map = container.add(
-                Toolkit.getBluePrintFactory().bluePrint(IMapWidgetBlueprint.class),
+                Toolkit.getBluePrintProxyFactory().bluePrint(IMapWidgetBlueprint.class),
                 "growx, growy, w 0::, h 0::");
         map.setLanguage("en");
         map.initialize(new IAvailableCallback() {

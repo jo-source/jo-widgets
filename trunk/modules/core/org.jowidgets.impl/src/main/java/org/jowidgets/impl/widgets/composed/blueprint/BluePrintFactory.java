@@ -63,6 +63,7 @@ import org.jowidgets.api.widgets.blueprint.IValidationResultLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintProxyFactory;
 import org.jowidgets.api.widgets.content.IInputContentCreator;
 import org.jowidgets.api.widgets.descriptor.IInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.setup.ICollectionInputControlSetup;
@@ -71,6 +72,7 @@ import org.jowidgets.common.mask.ITextMask;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.impl.base.blueprint.factory.BluePrintProxyFactoryImpl;
 import org.jowidgets.impl.widgets.basic.blueprint.AbstractBasicBluePrintFactory;
 import org.jowidgets.impl.widgets.composed.blueprint.convenience.registry.ComposedSetupConvenienceRegistry;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.registry.ComposedDefaultsInitializerRegistry;
@@ -96,7 +98,11 @@ public class BluePrintFactory extends AbstractBasicBluePrintFactory implements I
     public BluePrintFactory(
         final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry,
         final IDefaultsInitializerRegistry defaultInitializerRegistry) {
-        super(setupBuilderConvenienceRegistry, defaultInitializerRegistry);
+        this(new BluePrintProxyFactoryImpl(setupBuilderConvenienceRegistry, defaultInitializerRegistry));
+    }
+
+    public BluePrintFactory(final IBluePrintProxyFactory bluePrintProxyFactory) {
+        super(bluePrintProxyFactory);
     }
 
     @Override

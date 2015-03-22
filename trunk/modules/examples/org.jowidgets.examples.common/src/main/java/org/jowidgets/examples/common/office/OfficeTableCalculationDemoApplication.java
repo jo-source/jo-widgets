@@ -186,7 +186,7 @@ public class OfficeTableCalculationDemoApplication implements IApplication {
     private static void initializeSilkIcons() {
         Toolkit.getImageRegistry().registerImageConstant(IconsSmall.OK, SilkIcons.TICK);
 
-        Toolkit.getBluePrintFactory().addDefaultsInitializer(
+        Toolkit.getBluePrintProxyFactory().addDefaultsInitializer(
                 ITreeBluePrint.class,
                 new IDefaultInitializer<ITreeSetupBuilder<?>>() {
                     @Override

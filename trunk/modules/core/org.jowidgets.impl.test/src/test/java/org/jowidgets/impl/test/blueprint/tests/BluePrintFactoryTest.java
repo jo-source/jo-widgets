@@ -30,6 +30,8 @@ package org.jowidgets.impl.test.blueprint.tests;
 
 import org.easymock.EasyMock;
 import org.easymock.IMocksControl;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintProxyFactory;
+import org.jowidgets.impl.base.blueprint.factory.BluePrintProxyFactoryImpl;
 import org.jowidgets.impl.test.blueprint.mock.DummyBluePrintFactory;
 import org.jowidgets.impl.test.blueprint.mock.IHierarchy2nd2BluePrint;
 import org.jowidgets.impl.test.blueprint.mock.IHierarchy3rdBluePrint;
@@ -84,11 +86,14 @@ public class BluePrintFactoryTest {
         setupBuilderConvenience2nd2Mock = easyMock.createMock(Hierarchy2nd2Convenience.class);
         setupBuilderConvenience3rdMock = easyMock.createMock(Hierarchy3rdConvenience.class);
 
-        dummyBluePrintFactory = new DummyBluePrintFactory();
-        dummyBluePrintFactory.setSetupBuilderConvenience(IHierarchy2nd2SetupBuilder.class, setupBuilderConvenience2nd2Mock);
-        dummyBluePrintFactory.setSetupBuilderConvenience(IHierarchy3rdSetupBuilder.class, setupBuilderConvenience3rdMock);
+        final IBluePrintProxyFactory bluePrintProxyFactory = new BluePrintProxyFactoryImpl();
+        bluePrintProxyFactory.setSetupBuilderConvenience(IHierarchy2nd2SetupBuilder.class, setupBuilderConvenience2nd2Mock);
+        bluePrintProxyFactory.setSetupBuilderConvenience(IHierarchy3rdSetupBuilder.class, setupBuilderConvenience3rdMock);
+
+        dummyBluePrintFactory = new DummyBluePrintFactory(bluePrintProxyFactory);
+
         new DummyDefaultsInitializerRegistry(
-            dummyBluePrintFactory,
+            bluePrintProxyFactory,
             hierarchy1stDefaultMock,
             hierarchy2nd1DefaultMock,
             hierarchy2nd2DefaultMock,

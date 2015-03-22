@@ -51,6 +51,7 @@ import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintProxyFactory;
 import org.jowidgets.api.widgets.content.IInputContentCreatorFactory;
 import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.classloading.api.SharedClassLoader;
@@ -68,6 +69,11 @@ public final class Toolkit {
 
     private Toolkit() {}
 
+    /**
+     * Initializes the toolkit
+     * 
+     * @param toolkitProvider The toolkit provider to use for initialization
+     */
     public static void initialize(final IToolkitProvider toolkitProvider) {
         Assert.paramNotNull(toolkitProvider, "toolkitProvider");
         if (Toolkit.toolkitProvider != null) {
@@ -80,6 +86,13 @@ public final class Toolkit {
         return toolkitProvider != null;
     }
 
+    /**
+     * Gets the instance of the toolkit.
+     * 
+     * @return The toolkit instance, never null
+     * @throws IllegalStateException If no toolkit implementation was registered or more than one toolkit is registered by Java
+     *             Service Loader
+     */
     public static synchronized IToolkit getInstance() {
         if (toolkitProvider == null) {
             final ServiceLoader<IToolkitProvider> toolkitProviderLoader = ServiceLoader.load(
@@ -133,6 +146,15 @@ public final class Toolkit {
      */
     public static IBluePrintFactory getBluePrintFactory() {
         return getInstance().getBluePrintFactory();
+    }
+
+    /**
+     * Gets the blue print proxy factory
+     * 
+     * @return The blue print proxy factory, never null
+     */
+    public static IBluePrintProxyFactory getBluePrintProxyFactory() {
+        return getInstance().getBluePrintProxyFactory();
     }
 
     /**

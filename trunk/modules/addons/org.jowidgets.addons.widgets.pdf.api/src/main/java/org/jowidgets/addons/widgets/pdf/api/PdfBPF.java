@@ -35,7 +35,7 @@ public final class PdfBPF {
     private PdfBPF() {}
 
     public static IPdfReaderBluePrint reader() {
-        return Toolkit.getBluePrintFactory().bluePrint(IPdfReaderBluePrint.class);
+        return Toolkit.getBluePrintProxyFactory().bluePrint(IPdfReaderBluePrint.class);
     }
 
 }

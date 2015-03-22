@@ -60,6 +60,7 @@ import org.jowidgets.api.widgets.IComponent;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IWindow;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintProxyFactory;
 import org.jowidgets.api.widgets.content.IInputContentCreatorFactory;
 import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
 import org.jowidgets.common.application.IApplicationLifecycle;
@@ -68,6 +69,7 @@ import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.impl.application.ApplicationRunner;
+import org.jowidgets.impl.base.blueprint.factory.BluePrintProxyFactoryImpl;
 import org.jowidgets.impl.clipboard.ClipbaordImpl;
 import org.jowidgets.impl.clipboard.TransferableBuilderImpl;
 import org.jowidgets.impl.command.ActionBuilderFactory;
@@ -83,6 +85,8 @@ import org.jowidgets.impl.model.ModelFactoryProvider;
 import org.jowidgets.impl.threads.UiThreadAccess;
 import org.jowidgets.impl.utils.WidgetUtils;
 import org.jowidgets.impl.widgets.composed.blueprint.BluePrintFactory;
+import org.jowidgets.impl.widgets.composed.blueprint.convenience.registry.ComposedSetupConvenienceRegistry;
+import org.jowidgets.impl.widgets.composed.blueprint.defaults.registry.ComposedDefaultsInitializerRegistry;
 import org.jowidgets.impl.widgets.composed.factory.GenericWidgetFactory;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
@@ -98,7 +102,8 @@ public class DefaultToolkit implements IToolkit {
     private final IImageFactory imageFactory;
     private final ILayoutFactoryProvider layoutFactoryProvider;
     private final IWidgetWrapperFactory widgetWrapperFactory;
-    private final IBluePrintFactory bluePrintFactory;
+    private final BluePrintFactory bluePrintFactory;
+    private final IBluePrintProxyFactory bluePrintProxyFactory;
     private ISupportedWidgets supportedWidgets;
     private final IActionBuilderFactory actionBuilderFactory;
     private final IDefaultActionFactory defaultActionFactory;
@@ -126,7 +131,10 @@ public class DefaultToolkit implements IToolkit {
         this.imageFactory = new DefaultImageFactoryImpl(toolkitSpi.getImageFactory(), toolkitSpi.getImageRegistry());
         this.widgetWrapperFactory = new DefaultWidgetWrapperFactory(genericWidgetFactory, toolkitSpi.getWidgetFactory());
         this.layoutFactoryProvider = new LayoutFactoryProvider();
-        this.bluePrintFactory = new BluePrintFactory();
+        this.bluePrintProxyFactory = new BluePrintProxyFactoryImpl(
+            new ComposedSetupConvenienceRegistry(),
+            new ComposedDefaultsInitializerRegistry());
+        this.bluePrintFactory = new BluePrintFactory(bluePrintProxyFactory);
         this.actionBuilderFactory = new ActionBuilderFactory();
         this.defaultActionFactory = new DefaultActionFactoryImpl();
         this.sliderConverterFactory = SliderConverterFactoryImpl.getInstance();
@@ -204,6 +212,11 @@ public class DefaultToolkit implements IToolkit {
     @Override
     public IBluePrintFactory getBluePrintFactory() {
         return bluePrintFactory;
+    }
+
+    @Override
+    public IBluePrintProxyFactory getBluePrintProxyFactory() {
+        return bluePrintProxyFactory;
     }
 
     @Override

@@ -40,7 +40,7 @@ final class OleDocumentToolkitInterceptor implements IToolkitInterceptor {
     public void onToolkitCreate(final IToolkit toolkit) {
         final IGenericWidgetFactory widgetFactory = toolkit.getWidgetFactory();
         widgetFactory.register(IOleDocumentBluePrint.class, new OleDocumentFactory());
-        toolkit.getBluePrintFactory().addDefaultsInitializer(IOleDocumentSetupBuilder.class, new OleDocumentDefaults());
+        toolkit.getBluePrintProxyFactory().addDefaultsInitializer(IOleDocumentSetupBuilder.class, new OleDocumentDefaults());
     }
 
 }

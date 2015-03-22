@@ -35,7 +35,7 @@ public final class OleDocumentBPF {
     private OleDocumentBPF() {}
 
     public static IOleDocumentBluePrint document() {
-        return Toolkit.getBluePrintFactory().bluePrint(IOleDocumentBluePrint.class);
+        return Toolkit.getBluePrintProxyFactory().bluePrint(IOleDocumentBluePrint.class);
     }
 
     public static IOleDocumentBluePrint document(final String progId) {

@@ -28,8 +28,6 @@
 
 package org.jowidgets.impl.test.blueprint.tests;
 
-import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.impl.test.blueprint.mock.DescriptorProblematicBluePrintFactory;
 import org.junit.After;
 import org.junit.Assert;
@@ -38,12 +36,11 @@ import org.junit.Test;
 
 public class BluePrintFactoryProblematicDescriptorTest {
 
-    private static final IBluePrintFactory BLUE_PRINT_FACTORY = Toolkit.getBluePrintFactory();
     private DescriptorProblematicBluePrintFactory problematicDescriptorBluePrintFactory;
 
     @Before
     public void setUp() {
-        problematicDescriptorBluePrintFactory = new DescriptorProblematicBluePrintFactory(BLUE_PRINT_FACTORY);
+        problematicDescriptorBluePrintFactory = new DescriptorProblematicBluePrintFactory();
     }
 
     @After

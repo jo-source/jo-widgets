@@ -78,26 +78,23 @@ import org.jowidgets.api.widgets.blueprint.IToolBarToggleButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeNodeBluePrint;
 import org.jowidgets.api.widgets.blueprint.ITreeViewerBluePrint;
-import org.jowidgets.api.widgets.blueprint.convenience.ISetupBuilderConvenienceRegistry;
-import org.jowidgets.api.widgets.blueprint.defaults.IDefaultsInitializerRegistry;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.api.widgets.blueprint.factory.IBluePrintProxyFactory;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.model.ITableDataModel;
 import org.jowidgets.common.types.FileChooserType;
 import org.jowidgets.common.types.Orientation;
-import org.jowidgets.impl.base.blueprint.factory.AbstractBluePrintFactory;
+import org.jowidgets.impl.base.blueprint.factory.BaseBluePrintFactory;
 import org.jowidgets.impl.convert.DefaultObjectStringConverter;
 import org.jowidgets.unit.api.IUnit;
 import org.jowidgets.unit.api.IUnitSet;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.CollectionUtils;
 
-public abstract class AbstractBasicBluePrintFactory extends AbstractBluePrintFactory implements IBluePrintFactory {
+public abstract class AbstractBasicBluePrintFactory extends BaseBluePrintFactory implements IBluePrintFactory {
 
-    public AbstractBasicBluePrintFactory(
-        final ISetupBuilderConvenienceRegistry setupBuilderConvenienceRegistry,
-        final IDefaultsInitializerRegistry defaultInitializerRegistry) {
-        super(setupBuilderConvenienceRegistry, defaultInitializerRegistry);
+    public AbstractBasicBluePrintFactory(final IBluePrintProxyFactory bluePrintProxyFactor) {
+        super(bluePrintProxyFactor);
     }
 
     @Override

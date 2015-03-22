@@ -44,6 +44,6 @@ final class OfficeToolkitInterceptor implements IToolkitInterceptor {
         widgetFactory.register(IOfficeTextBluePrint.class, new OfficeTextControlFactory());
         widgetFactory.register(IOfficeTableCalculationBluePrint.class, new OfficeTableCalculationControlFactory());
 
-        toolkit.getBluePrintFactory().addDefaultsInitializer(IOfficeControlSetupBuilder.class, new OfficeControlDefaults());
+        toolkit.getBluePrintProxyFactory().addDefaultsInitializer(IOfficeControlSetupBuilder.class, new OfficeControlDefaults());
     }
 }

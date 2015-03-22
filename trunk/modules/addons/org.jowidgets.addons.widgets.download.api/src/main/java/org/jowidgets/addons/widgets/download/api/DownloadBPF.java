@@ -36,7 +36,7 @@ public final class DownloadBPF {
     private DownloadBPF() {}
 
     public static IDownloadButtonBluePrint button() {
-        return Toolkit.getBluePrintFactory().bluePrint(IDownloadButtonBluePrint.class);
+        return Toolkit.getBluePrintProxyFactory().bluePrint(IDownloadButtonBluePrint.class);
     }
 
     public static IDownloadButtonBluePrint button(final String url) {
