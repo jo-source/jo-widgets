@@ -1,6 +1,6 @@
 ## BluePrints - Übersicht{#blue_prints}
 
-BluePrints werden benötigt, um Widgets zu erzeugen. Siehe auch [HelloWorldApplication - Der common Ui Code](#hello_world_common_code)
+BluePrints werden benötigt, um Widgets zu erzeugen.
 
 Mit Hilfe eines BluePrint wird das (Default) Setup eines Widgets festgelegt. Wenn ein Widget erzeugt wird, werden alle Eigenschaften, welche auf dem Setup definiert sind, für das Widget übernommen. Einige Parameter eines Setups sind Pflichtparameter. Diese sind sind mit der `@Mandatory` Annotation gekennzeichnet. Für Pflichtparameter existieren, wenn dies _sinnvoll_ möglich ist, Defaultwerte, welche beliebig überschrieben werden können. Siehe dazu auch [Widget Defaults](#widget_defaults). Die Setter Methoden eines BluePrint haben, wie beim Builder Pattern üblich, immer die Instanz als Rückgabewert. Dadurch lassen sich die Methodenaufrufe einfach verketten. 
 
@@ -317,7 +317,7 @@ Die Schnittstelle `ILabelDescriptor` ist zum Beispiel wie folgt definiert:
 	public interface ILabelDescriptor extends ILabelSetup, IWidgetDescriptor<ILabel> {}
 ~~~
 
-Für die Schnittstelle ILabelDescriptor kann genau eine Implementierung (zur selben Zeit) in der [Generic Widget factory](#generic_widget_factory) registriert sein. Der Widget Descriptor ist gleichzeitig auch ein Widget Setup (im konkreten Fall ein `ILabelSetup`). Ein Widget Descriptor liefert somit alles, was von der [Generic Widget Factory](#generic_widget_factory) für die Erzeugung eines Widget benötigt wird. 
+Für die Schnittstelle ILabelDescriptor kann genau eine Implementierung (zur selben Zeit) in der [Generic Widget Factory](#generic_widget_factory) registriert sein. Der Widget Descriptor ist gleichzeitig auch ein Widget Setup (im konkreten Fall ein `ILabelSetup`). Ein Widget Descriptor liefert somit alles, was von der [Generic Widget Factory](#generic_widget_factory) für die Erzeugung eines Widget benötigt wird. 
 
 
 #### BluePrint Schnittstelle{#blue_print_interface}
@@ -338,7 +338,7 @@ __Hinweis:__ Der Begriff BluePrint wird oft stellvertretend für den Begriff Wid
 
 #### Zusammenfassen des Builder und Setup Aspekts
 
-Die ursprüngliche Idee, den Builder und Setup Aspekt zu trennen, hat sich in der Praxis nicht bewährt. Es wird daher empfohlen, bei der [Erstellung eigener Widget Bibliotheken](#custom_widget_libraries) die Builder und Setup Methoden in einer Schnittstelle unterzubringen. Für das Label würde man dann zum Beipiel die `ILabelSetupBuilder` Schnittstelle wie folgt definieren:
+Die ursprüngliche Idee, den Builder und Setup Aspekt zu trennen, hat sich in der Praxis nicht bewährt. Es wird daher empfohlen, bei der [Erstellung eigener Widget Bibliotheken](#custom_widget_libraries) die Builder und Setup Methoden in einer Schnittstelle unterzubringen. Für das Label würde man dann zum Beispiel die `ILabelSetupBuilder` Schnittstelle wie folgt definieren:
 
 ~~~
 	IImageConstant getIcon();
@@ -358,7 +358,7 @@ Die ursprüngliche Idee, den Builder und Setup Aspekt zu trennen, hat sich in de
 	
     BLUE_PRINT_TYPE setMarkup(Markup markup);
 
-	 AlignmentHorizontal getAlignment();
+	AlignmentHorizontal getAlignment();
 	
     BLUE_PRINT_TYPE setAlignment(AlignmentHorizontal alignmentHorizontal);
 	

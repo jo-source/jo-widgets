@@ -3,11 +3,11 @@
 Ein Toolkit Interceptor wird meist für die folgenden Aufgaben verwendet:
 
 * [Registrierung oder Substitution von Images](#register_or_substitude_images) in der [Image Registry](#image_registry)
-* Überschreiben der [Widget Defaults](#widget_defaults) in der BluePrintFactory
+* Überschreiben der [Widget Defaults](#widget_defaults) in der [BluePrint Proxy Factory](#blue_print_proxy_factory)
 * Registrierung von Widgets in der [Generic Widget Factory](#generic_widget_factory)
 * Registrierung von Convertern im [IConverterProvider](#jowidget_converter)
 * Zum Setzen von [Toolkit Properties](#toolkit_properties)
-* Registrierung von [Convenience Methoden Implementierungen](#custom_widget_libraries) für Setup Builder (BluePrints)
+* Registrierung von [Convenience Methoden Implementierungen](#custom_widget_libraries) für [Setup Builder](#widget_setup_builder) in der [BluePrint Proxy Factory](#blue_print_proxy_factory)
 * Registrierung von Widget Decorators zum Dekorieren von Widgets in der [Generic Widget Factory](#generic_widget_factory)
 * Registrierung von WidgetFactory Decorators zum Dekorieren der Factories von Widgets in der [Generic Widget Factory](#generic_widget_factory)
 
@@ -27,7 +27,7 @@ Diese Methode wird aufgerufen, nachdem das Toolkit erzeugt wurde, jedoch bevor d
 
 __Achtung:__
 
-Der Aufruf von `Toolkit.getInstance()` sowie allen anderen indirekten Aufrufen davon, wie zum Beispiel `Toolkit.getBluePrintFactory()` führen zu einem Fehler. Stattdessen muss man zum Beispiel `toolkit.getBluePrintFactory()` schreiben. Zudem sollten in einem Toolkit Interceptor __keine Widgets erzeugt werden!!!__
+Der Aufruf von `Toolkit.getInstance()` sowie allen anderen indirekten Aufrufen davon, wie zum Beispiel `Toolkit.getBluePrintProxyFactory()` führen zu einem Fehler. Stattdessen muss man zum Beispiel `toolkit.getBluePrintProxyFactory()` schreiben. Zudem sollten in einem Toolkit Interceptor __keine Widgets erzeugt werden!!!__
 
 #### Toolkit Interceptor Beispiel
 
@@ -135,7 +135,7 @@ public interface IToolkitInterceptorHolder {
 }
 ~~~
 
-Mit Hilfe der Order kann die Reihenfolge beeinflusst werden, in der Toolkit Interceptoren aufgerufen werden. Ein Interceptor mit einer kleineren Order wird vor einem Interceptor mit einer größeren Order ausgeführt. Die Methode getToolkitInterceptor() wird erst aufgerufen, bevor der Interceptor tatsächlich aufgerufen wird, und nicht bereits bei der Registrierung des Holders.
+Mit Hilfe der Order kann die Reihenfolge beeinflusst werden, in der Toolkit Interceptoren aufgerufen werden. Ein Interceptor mit einer kleineren Order wird vor einem Interceptor mit einer größeren Order ausgeführt. Die Methode `getToolkitInterceptor()` wird erst aufgerufen, bevor der Interceptor tatsächlich aufgerufen wird, und nicht bereits bei der Registrierung des Holders.
 
 
 #### Die Klasse AbstractToolkitInterceptorHolder
@@ -185,4 +185,4 @@ Die Klasse `ToolkitInterceptor` liefert die folgende statische Methode zur Regis
 	public static void registerToolkitInterceptorHolder(final IToolkitInterceptorHolder holder) {...}
 ~~~
 
-__Achtung:__ Die explizite Registrierung muss __immer__ vor der ersten Verwendung des Toolkit erfolgen, ansonsten hat sie keinen Effekt. Das explizite Registrieren sollte also nur verwendet werden, wenn man diese Bedingung garantieren kann. Man könnte zum Beispiel vermuten, dass in einem RCP Projekt ein IStartup (earlyStartup()) ein guter Zeitpunkt für die Registrierung ist. Allerdings ist unklar, ob der UI Thread erst gestartet wird, nachdem alle `earlyStartup()` Aufrufe stattgefunden haben (Die [API Spezifikation](http://help.eclipse.org/luna/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Freference%2Fapi%2Forg%2Feclipse%2Fui%2FIStartup.html) macht dazu jedenfalls keine Aussage.) Falls dies nicht der Fall ist, könnte ein anderes Plugin, welches ebenfalls `IStartup` verwendet mittels Display.asynExcec() auf das Toolkit zugreifen, bevor der Inteceptor aufgerufen wurde. Aus diesem Grund wird davon dringend abgeraten.
+__Achtung:__ Die explizite Registrierung muss __immer__ vor der ersten Verwendung des Toolkit erfolgen, ansonsten hat sie keinen Effekt. Das explizite Registrieren sollte also nur verwendet werden, wenn man diese Bedingung garantieren kann. Man könnte zum Beispiel vermuten, dass in einem RCP Projekt ein IStartup (earlyStartup()) ein guter Zeitpunkt für die Registrierung ist. Allerdings ist unklar, ob der UI Thread erst gestartet wird, nachdem alle `earlyStartup()` Aufrufe stattgefunden haben (Die [API Spezifikation](http://help.eclipse.org/luna/index.jsp?topic=%2Forg.eclipse.platform.doc.isv%2Freference%2Fapi%2Forg%2Feclipse%2Fui%2FIStartup.html) macht dazu jedenfalls keine Aussage.) Falls dies nicht der Fall ist, könnte ein anderes Plugin, welches ebenfalls `IStartup` verwendet mittels `Display.asynExcec()` auf das Toolkit zugreifen, bevor der Inteceptor aufgerufen wurde. Aus diesem Grund wird davon dringend abgeraten.
