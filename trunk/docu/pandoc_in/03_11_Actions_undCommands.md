@@ -9,7 +9,7 @@ Eine `IAction` dient dazu, eine Nutzeraktion zu kapseln. Dabei soll sowohl der A
 
 ### Die Schnittstelle IAction{#action_interface}
 
-Die Schnittstelle [`IAction`](#action_interface) liefert die Methoden, welche jowidgets benötigt, um Aktionen anzuzeigen, zu binden und auszuführen. Sie stellt somit in gewisser Weise die SPI^[Service Provider Interface] für Aktionen dar. Wenn man [Command Actions](#command_action_interface) verwendet, muss man diese Schnittstelle nicht selbst implementieren. Dennoch sollen die Methoden zum besseren Verständnis kurz beschrieben werden:
+Die Schnittstelle `IAction` liefert die Methoden, welche jowidgets benötigt, um Aktionen anzuzeigen, zu binden und auszuführen. Sie stellt somit in gewisser Weise die SPI^[Service Provider Interface] für Aktionen dar. Wenn man [Command Actions](#command_action_interface) verwendet, muss man diese Schnittstelle nicht selbst implementieren. Dennoch sollen die Methoden zum besseren Verständnis kurz beschrieben werden:
 
 #### Action Description
 

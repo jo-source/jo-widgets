@@ -105,7 +105,7 @@ Liefert den jowidgets Converter Provider. Siehe auch [Jowidgets Converter](#jowi
 	
 Liefert eine Factory für Slider Converter. Sie auch [Das Slider Viewer Widget](#slider_viewer)	
 
-#### RootFrame Erzeugung
+#### RootFrame Erzeugung{#toolkit_create_root_frame}
 
 ~~~
 	IFrame createRootFrame(IFrameDescriptor descriptor);
@@ -119,13 +119,13 @@ Erzeugt ein root Frame für ein Frame Descriptor (BluePrint).
 	
 Erzeugt ein root Frame für ein Frame Descriptor (BluePrint). Zusätzlich wird ein Window Listener auf dem erzeugten Frame hinzugefügt, welches auf dem lifecycle die Methode `finish()` aufruft, sobald das Frame geschlossen wird.
 	
-#### WidgetFactory
+#### Generic Widget Factory
 	
 ~~~
 	IGenericWidgetFactory getWidgetFactory();
 ~~~
 
-Liefert die Widget Factory von jowidgets. Siehe auch [Die GenericWidgetFactory](#generic_widget_factory)
+Liefert die Widget Factory von jowidgets. Siehe auch [Die Generic Widget Factory](#generic_widget_factory)
 
 #### WidgetWrapperFactory
 
