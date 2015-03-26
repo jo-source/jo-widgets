@@ -75,6 +75,13 @@ public final class DocBookPostProcessor {
 				writer.write(line);
 				lineBreakNext = false;
 			}
+			else if (line.contains("<programlisting language=\"cpp\">")) {
+				line = line.replace(
+						"<programlisting language=\"cpp\">",
+						"<programlisting language=\"java\">");
+				writer.write(line);
+				lineBreakNext = false;
+			}
 			else{
 				lineBreakNext = true;
 				writer.write(line);
