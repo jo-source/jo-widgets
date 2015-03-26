@@ -37,6 +37,7 @@ import org.jowidgets.api.dnd.IDropEvent;
 import org.jowidgets.api.dnd.IDropResponse;
 import org.jowidgets.api.dnd.IDropTarget;
 import org.jowidgets.api.dnd.IDropTargetListener;
+import org.jowidgets.api.dnd.ITreeDropLocation;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IFrame;
@@ -140,7 +141,7 @@ public class TreeDragAndDropExample implements IApplication {
                 if (TransferType.STRING_TYPE.equals(event.getTransferType())) {
                     final String text = (String) event.getData();
 
-                    final ITreeNode treeNode = (ITreeNode) event.getDropSelection();
+                    final ITreeNode treeNode = ((ITreeDropLocation) event.getDropSelection()).getTreeNode();
                     if (treeNode != null) {
                         final ITreeNode parentNode = treeNode.getParent();
                         if (parentNode != null) {
