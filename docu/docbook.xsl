@@ -6,8 +6,8 @@
     exclude-result-prefixes="xslthl"
 	version='1.0'> 
 
-<xsl:import href="file:///c:/docbook-xsl-1.78.1/html/chunk.xsl"/> 
-<xsl:import href="file:///c:/docbook-xsl-1.78.1/html/highlight.xsl"/> 
+<xsl:import href="file:libs/docbook-xsl-1.78.1/html/chunk.xsl"/> 
+<xsl:import href="file:libs/docbook-xsl-1.78.1/html/highlight.xsl"/> 
 
 <xsl:param name="l10n.gentext.language" select="'de'"/>
 
