@@ -247,9 +247,9 @@ Auch wenn sich das vielleicht erst mal ungewohnt anhört, ist das auch schon all
 
 Man wird zudem schnell feststellen, dass man dadurch sehr kompakten und zudem gut lesbaren UI Code erzeugen kann. Den im Vergleich zu langen Konstruktoraufrufen ist beim Builder Pattern immer klar, welchen Parameter man konfiguriert. Außerdem kann die Erzeugung von BluePrints meist auch implizit passieren. So könnte man den Code von Zeile 32 bis 36 auch so aufschreiben:
 
-```{.java} 
+~~~
 	final IButton button = frame.add(BPF.button().setText("Hello World"));
-```
+~~~
 
 Zudem können BluePrints für die Erzeugung mehrerer Instanzen wiederverwendet werden, was sich oft als sehr hilfreich erweißt.
 
