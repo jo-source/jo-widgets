@@ -67,6 +67,10 @@ public final class PandocPreProcessor {
         Arrays.sort(filenames);
 
         for (final String filename : filenames) {
+			if (filename.endsWith("todo")){
+				continue;
+			}
+		
             final BufferedReader reader = new BufferedReader(new FileReader(new File(args[0] + File.separatorChar + filename)));
 
             boolean codeStarted = false;
