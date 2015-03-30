@@ -34,24 +34,9 @@ import org.jowidgets.api.dnd.IDropTarget;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
-import org.jowidgets.api.widgets.descriptor.ICompositeDescriptor;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.tools.widgets.blueprint.BPF;
-import org.jowidgets.util.Assert;
 
 public class CompositeWrapper extends ContainerWrapper implements IComposite {
-
-    public CompositeWrapper(final IContainer parent) {
-        this(parent, BPF.composite(), null);
-    }
-
-    public CompositeWrapper(final IContainer parent, final ICompositeDescriptor descriptor) {
-        this(parent, descriptor, null);
-    }
-
-    public CompositeWrapper(final IContainer parent, final ICompositeDescriptor descriptor, final Object layoutConstraints) {
-        super(Assert.getParamNotNull(parent, "parent").add(descriptor, layoutConstraints));
-    }
 
     public CompositeWrapper(final IComposite widget) {
         super(widget);

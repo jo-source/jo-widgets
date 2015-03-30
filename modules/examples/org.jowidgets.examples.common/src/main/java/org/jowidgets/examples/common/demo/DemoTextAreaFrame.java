@@ -33,9 +33,9 @@ import org.jowidgets.api.widgets.ITextArea;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.tools.layout.MigLayoutFactory;
-import org.jowidgets.tools.widgets.wrapper.FrameWrapper;
+import org.jowidgets.tools.widgets.base.Frame;
 
-public class DemoTextAreaFrame extends FrameWrapper {
+public class DemoTextAreaFrame extends Frame {
 
     private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 

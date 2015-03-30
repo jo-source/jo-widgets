@@ -31,35 +31,19 @@ package org.jowidgets.tools.widgets.wrapper;
 import java.util.List;
 
 import org.jowidgets.api.model.item.IMenuBarModel;
-import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
 import org.jowidgets.api.widgets.IDisplay;
 import org.jowidgets.api.widgets.IFrame;
 import org.jowidgets.api.widgets.IMenuBar;
 import org.jowidgets.api.widgets.IWindow;
-import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
-import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.controller.IWindowListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
-import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public class FrameWrapper extends ContainerWrapper implements IFrame {
 
     private final IFrame original;
-
-    public FrameWrapper(final String title, final IImageConstant icon) {
-        this(BPF.frame(title).setIcon(icon));
-    }
-
-    public FrameWrapper(final String title) {
-        this(BPF.frame(title));
-    }
-
-    public FrameWrapper(final IFrameDescriptor descriptor) {
-        this(Toolkit.createRootFrame(descriptor));
-    }
 
     public FrameWrapper(final IFrame original) {
         super(original);

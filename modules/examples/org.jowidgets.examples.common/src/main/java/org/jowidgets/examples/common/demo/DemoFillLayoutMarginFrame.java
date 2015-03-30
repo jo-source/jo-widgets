@@ -40,9 +40,9 @@ import org.jowidgets.api.widgets.blueprint.ISplitCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.tools.model.table.SimpleTableModel;
-import org.jowidgets.tools.widgets.wrapper.FrameWrapper;
+import org.jowidgets.tools.widgets.base.Frame;
 
-public class DemoFillLayoutMarginFrame extends FrameWrapper {
+public class DemoFillLayoutMarginFrame extends Frame {
 
     private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 

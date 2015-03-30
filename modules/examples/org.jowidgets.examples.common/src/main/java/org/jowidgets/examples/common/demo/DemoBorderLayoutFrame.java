@@ -38,9 +38,9 @@ import org.jowidgets.api.widgets.ITextControl;
 import org.jowidgets.api.widgets.IToolBar;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.widgets.layout.ILayouter;
-import org.jowidgets.tools.widgets.wrapper.FrameWrapper;
+import org.jowidgets.tools.widgets.base.Frame;
 
-public class DemoBorderLayoutFrame extends FrameWrapper {
+public class DemoBorderLayoutFrame extends Frame {
 
     private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 

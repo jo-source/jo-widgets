@@ -46,9 +46,9 @@ import org.jowidgets.common.widgets.controller.IMouseButtonEvent;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.controller.MouseAdapter;
 import org.jowidgets.tools.layout.MigLayoutFactory;
-import org.jowidgets.tools.widgets.wrapper.FrameWrapper;
+import org.jowidgets.tools.widgets.base.Frame;
 
-public class DemoChooserFrame extends FrameWrapper {
+public class DemoChooserFrame extends Frame {
 
     private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
 

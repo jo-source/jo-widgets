@@ -35,8 +35,8 @@ import org.jowidgets.api.widgets.blueprint.IInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ISliderViewerBluePrint;
 import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.tools.widgets.base.Frame;
 import org.jowidgets.tools.widgets.blueprint.BPF;
-import org.jowidgets.tools.widgets.wrapper.FrameWrapper;
 import org.jowidgets.util.IObservableValue;
 import org.jowidgets.util.ObservableBoolean;
 import org.jowidgets.util.ObservableValue;
@@ -44,7 +44,7 @@ import org.jowidgets.util.StringUtils;
 import org.jowidgets.util.binding.Bind;
 import org.jowidgets.util.binding.IBinding;
 
-final class DemoBindingFrame extends FrameWrapper {
+final class DemoBindingFrame extends Frame {
 
     private static final int COLUMNS = 10;
     private static final double MIN_VALUE = -1.0d;
