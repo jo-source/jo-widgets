@@ -56,9 +56,9 @@ Will man selbst Controls erstellen, hat man folgende Möglichkeiten:
 
    *  Man erstellt eine eigene Widget Bibliothek, siehe [Erstellung eigener Widget Bibliotheken](#custom_widget_libraries). Dabei wird auch ein BluePrint für das Control definiert welches man wie weiter oben beschrieben verwenden kann. Dies ist das empfohlene Vorgehen, wenn das Control wiederverwendet werden soll, da ein solch erstelltes Widget alle Vorzüge von jowidgets bietet.
 
-   *  Man entwickelt das Control mit Hilfe eines [IComposite](#composite) welches man dem eigenen Control (zum Beispiel im Konstruktor) übergibt. Um das eigene Control einem Container hinzuzufügen, fügt man ein Composite hinzu, welches man dann dem eigenen Control übergibt. Dieses Vorgehen wird explizit nicht empfohlen.
+   *  Man leitet von einem [Basis Widget](#base_widgets) ab, um ein Widget zu kapseln.
 
-   * Will man trotz der Vorzüge keine eigene Widget Bibliothek erstellen, kann man die Schnittstelle `ICustomWidgetCreator` verwenden, um das Control zu kapseln. Bevor man sich für Variante 2 entscheidet, sollte man eher diese Variante in Betracht ziehen.
+   *  Man kapselt ein Widgets mit Hilfe eines `ICustomWidgetCreator`. 
 
 Folgende Methoden können verwendet werden, um Controls mit Hilfe eines `ICustomWidgetCreator` zu einem Container hinzuzufügen:
 
