@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2015, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,31 +26,55 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.demo;
+package org.jowidgets.tools.widgets.base;
 
-import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.widgets.base.Frame;
+import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.descriptor.IFrameDescriptor;
+import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.tools.widgets.blueprint.BPF;
+import org.jowidgets.tools.widgets.wrapper.FrameWrapper;
 
-public class DemoMenuFrame extends Frame {
+/**
+ * A Frame can be used to encapsulate a IFrame implementation
+ */
+public class Frame extends FrameWrapper implements IFrame {
 
-    public DemoMenuFrame() {
-        super(BPF.frame("Menu demo").autoPackOff());
+    /**
+     * Creates a new instance
+     * 
+     * @param title The frames title
+     * @param icon The frame icon
+     */
+    public Frame(final String title, final IImageConstant icon) {
+        this(BPF.frame(title).setIcon(icon));
+    }
 
-        final DemoMenuProvider menuProvider = new DemoMenuProvider(false);
+    /**
+     * Creates a new instance
+     * 
+     * @param title The frames title
+     */
+    public Frame(final String title) {
+        this(BPF.frame(title));
+    }
 
-        getMenuBarModel().addMenu(menuProvider.getMenuModel());
-        setPopupMenu(menuProvider.getMenuModel());
+    /**
+     * Creates a new instance
+     * 
+     * @param descriptor The frame descriptor to use
+     */
+    public Frame(final IFrameDescriptor descriptor) {
+        super(Toolkit.createRootFrame(descriptor));
+    }
 
-        setLayout(new MigLayoutDescriptor("0[grow, 0 ::]0", "0[]0[0]0[grow]0"));
-
-        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-        add(bpf.toolBar(), "w 0::, wrap").setModel(menuProvider.getToolBarModel());
-        add(bpf.separator(), "growx, wrap");
-        add(bpf.composite().setBackgroundColor(Colors.WHITE), "growx, growy").setPopupMenu(menuProvider.getMenuModel());
+    /**
+     * Gets the wrapped frame
+     * 
+     * @return The wrapped frame
+     */
+    protected IFrame getFrame() {
+        return (IFrame) super.getWidget();
     }
 
 }

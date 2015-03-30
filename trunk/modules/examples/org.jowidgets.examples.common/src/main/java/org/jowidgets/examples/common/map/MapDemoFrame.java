@@ -37,14 +37,14 @@ import org.jowidgets.addons.map.common.widget.IMapWidgetBlueprint;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.tools.controller.WindowAdapter;
-import org.jowidgets.tools.widgets.wrapper.FrameWrapper;
+import org.jowidgets.tools.widgets.base.Frame;
 
 import de.micromata.opengis.kml.v_2_2_0.AltitudeMode;
 import de.micromata.opengis.kml.v_2_2_0.KmlFactory;
 import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import de.micromata.opengis.kml.v_2_2_0.Point;
 
-final class MapDemoFrame extends FrameWrapper {
+final class MapDemoFrame extends Frame {
 
     MapDemoFrame(final IApplicationLifecycle lifecycle) {
         super("Map Demo", SilkIcons.WORLD);

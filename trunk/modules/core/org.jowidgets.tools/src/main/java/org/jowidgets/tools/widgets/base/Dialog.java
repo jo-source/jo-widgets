@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2015, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,31 +26,59 @@
  * DAMAGE.
  */
 
-package org.jowidgets.examples.common.demo;
+package org.jowidgets.tools.widgets.base;
 
-import org.jowidgets.api.color.Colors;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
-import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.tools.widgets.base.Frame;
+import org.jowidgets.api.widgets.IFrame;
+import org.jowidgets.api.widgets.IWindow;
+import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.tools.widgets.blueprint.BPF;
+import org.jowidgets.tools.widgets.wrapper.FrameWrapper;
+import org.jowidgets.util.Assert;
 
-public class DemoMenuFrame extends Frame {
+/**
+ * A Dialog can be used to encapsulate a IFrame implementation that represents a dialog
+ */
+public class Dialog extends FrameWrapper implements IFrame {
 
-    public DemoMenuFrame() {
-        super(BPF.frame("Menu demo").autoPackOff());
-
-        final DemoMenuProvider menuProvider = new DemoMenuProvider(false);
-
-        getMenuBarModel().addMenu(menuProvider.getMenuModel());
-        setPopupMenu(menuProvider.getMenuModel());
-
-        setLayout(new MigLayoutDescriptor("0[grow, 0 ::]0", "0[]0[0]0[grow]0"));
-
-        final IBluePrintFactory bpf = Toolkit.getBluePrintFactory();
-        add(bpf.toolBar(), "w 0::, wrap").setModel(menuProvider.getToolBarModel());
-        add(bpf.separator(), "growx, wrap");
-        add(bpf.composite().setBackgroundColor(Colors.WHITE), "growx, growy").setPopupMenu(menuProvider.getMenuModel());
+    /**
+     * Creates a new dialog
+     * 
+     * @param parent The parent window
+     * @param title The dialog title
+     * @param icon The dialog icon
+     */
+    public Dialog(final IWindow parent, final String title, final IImageConstant icon) {
+        this(parent, BPF.dialog(title).setIcon(icon));
     }
 
+    /**
+     * Creates a new dialog
+     * 
+     * @param parent The parent window
+     * @param title The dialog title
+     */
+    public Dialog(final IWindow parent, final String title) {
+        this(parent, BPF.dialog(title));
+    }
+
+    /**
+     * Creates a new dialog
+     * 
+     * @param parent The parent window
+     * @param descriptor The dialog descriptor
+     */
+    public Dialog(final IWindow parent, final IWidgetDescriptor<? extends IFrame> descriptor) {
+        super(Toolkit.getWidgetFactory().create(Assert.getParamNotNull(parent, "parent").getUiReference(), descriptor));
+    }
+
+    /**
+     * Gets the wrapped frame
+     * 
+     * @return The wrapped frame
+     */
+    protected IFrame getFrame() {
+        return (IFrame) super.getWidget();
+    }
 }

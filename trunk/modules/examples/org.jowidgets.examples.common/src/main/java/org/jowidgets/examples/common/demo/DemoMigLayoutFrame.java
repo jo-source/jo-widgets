@@ -79,9 +79,9 @@ import org.jowidgets.tools.controller.ComponentAdapter;
 import org.jowidgets.tools.controller.TableColumnModelObservable;
 import org.jowidgets.tools.controller.TableDataModelObservable;
 import org.jowidgets.tools.model.table.TableCell;
-import org.jowidgets.tools.widgets.wrapper.FrameWrapper;
+import org.jowidgets.tools.widgets.base.Frame;
 
-public final class DemoMigLayoutFrame extends FrameWrapper {
+public final class DemoMigLayoutFrame extends Frame {
 
     private static final IBluePrintFactory BPF = Toolkit.getBluePrintFactory();
     //private static final ILayoutFactoryProvider LFP = Toolkit.getLayoutFactoryProvider();
