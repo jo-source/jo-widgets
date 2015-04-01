@@ -42,6 +42,13 @@ public class Frame extends FrameWrapper implements IFrame {
 
     /**
      * Creates a new instance
+     */
+    public Frame() {
+        this(BPF.frame());
+    }
+
+    /**
+     * Creates a new instance
      * 
      * @param title The frames title
      * @param icon The frame icon
