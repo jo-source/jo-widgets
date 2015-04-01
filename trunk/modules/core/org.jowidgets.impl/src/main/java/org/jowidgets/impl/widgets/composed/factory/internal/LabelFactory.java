@@ -27,17 +27,24 @@
  */
 package org.jowidgets.impl.widgets.composed.factory.internal;
 
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.ILabel;
+import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.descriptor.ILabelDescriptor;
+import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.widgets.composed.LabelImpl;
-import org.jowidgets.tools.widgets.factory.AbstractCompositeWidgetFactory;
+import org.jowidgets.tools.widgets.blueprint.BPF;
 
-public class LabelFactory extends AbstractCompositeWidgetFactory<ILabel, ILabelDescriptor> {
+public final class LabelFactory implements IWidgetFactory<ILabel, ILabelDescriptor> {
 
     @Override
-    protected ILabel createWidget(final IComposite compositeWidget, final ILabelDescriptor descriptor) {
-        return new LabelImpl(compositeWidget, descriptor);
+    public ILabel create(final Object parentUiReference, final ILabelDescriptor descriptor) {
+        final ICompositeBluePrint compositeBp = BPF.composite();
+        compositeBp.setSetup(descriptor);
+
+        final IComposite composite = Toolkit.getWidgetFactory().create(parentUiReference, compositeBp);
+        return new LabelImpl(composite, descriptor);
     }
 
 }
