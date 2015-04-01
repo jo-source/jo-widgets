@@ -74,7 +74,7 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
         final MigLayout growingMigLayout = new MigLayout("", "0[grow, 0::]0", "0[grow, 0::]0");
         final String growingCellConstraints = "grow, w 0::,h 0::";
 
-        final Composite outerComposite = BorderToComposite.convertZeroMinSize((Composite) parentUiReference, setup.getBorder());
+        final Composite outerComposite = BorderToComposite.convertScrollCompositeRoot((Composite) parentUiReference, setup.getBorder());
 
         outerComposite.setBackgroundMode(SWT.INHERIT_FORCE);
         this.outerContainer = new SwtComposite(factory, outerComposite, new ImmutableDropSelection(this));

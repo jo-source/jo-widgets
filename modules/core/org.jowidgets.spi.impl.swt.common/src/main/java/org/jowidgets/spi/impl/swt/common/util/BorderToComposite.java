@@ -28,15 +28,14 @@
 package org.jowidgets.spi.impl.swt.common.util;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.jowidgets.common.types.Border;
 import org.jowidgets.common.types.Markup;
+import org.jowidgets.spi.impl.swt.common.widgets.base.ScrollRootComposite;
+import org.jowidgets.spi.impl.swt.common.widgets.base.ScrollRootGroup;
 
 public final class BorderToComposite {
-
-    private static final Point MIN_SIZE = new Point(0, 0);
 
     private BorderToComposite() {};
 
@@ -58,37 +57,21 @@ public final class BorderToComposite {
         }
     }
 
-    public static Composite convertZeroMinSize(final Composite parent, final Border border) {
+    public static Composite convertScrollCompositeRoot(final Composite parent, final Border border) {
 
         final String title = border != null ? border.getTitle() : null;
 
         if (title != null) {
-            final Group group = new Group(parent, SWT.SHADOW_IN) {
-                @Override
-                public Point computeSize(final int wHint, final int hHint, final boolean changed) {
-                    return MIN_SIZE;
-                }
-            };
+            final Group group = new ScrollRootGroup(parent, SWT.SHADOW_IN);
             group.setText(title);
             group.setFont(FontProvider.deriveFont(group.getFont(), Markup.STRONG));
             return group;
         }
         else if (border != null) {
-            return new Composite(parent, SWT.BORDER) {
-                @Override
-                public Point computeSize(final int wHint, final int hHint, final boolean changed) {
-                    return MIN_SIZE;
-                }
-            };
+            return new ScrollRootComposite(parent, SWT.BORDER);
         }
         else {
-            return new Composite(parent, SWT.NONE) {
-                @Override
-                public Point computeSize(final int wHint, final int hHint, final boolean changed) {
-                    return MIN_SIZE;
-                }
-            };
+            return new ScrollRootComposite(parent, SWT.NONE);
         }
     }
-
 }
