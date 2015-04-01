@@ -31,6 +31,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
@@ -47,6 +48,8 @@ import org.jowidgets.spi.impl.controller.WindowObservable;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.util.DimensionConvert;
 import org.jowidgets.spi.impl.swt.common.util.PositionConvert;
+import org.jowidgets.spi.impl.swt.common.widgets.base.IEnhancedLayoutable;
+import org.jowidgets.spi.impl.swt.common.widgets.base.IEnhancedLayoutable.LayoutMode;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
 import org.jowidgets.spi.widgets.IWindowSpi;
 import org.jowidgets.util.TypeCast;
@@ -77,7 +80,28 @@ public class SwtWindow extends SwtContainer implements IWindowSpi {
 
     @Override
     public void pack() {
-        getUiReference().pack();
+
+        final Shell shell = getUiReference();
+
+        setLayoutMode(shell, LayoutMode.PREFFERED_SIZE);
+        try {
+            shell.pack();
+        }
+        finally {
+            setLayoutMode(shell, LayoutMode.MIN_SIZE);
+        }
+
+    }
+
+    private void setLayoutMode(final Composite composite, final LayoutMode layoutMode) {
+        if (composite instanceof IEnhancedLayoutable) {
+            ((IEnhancedLayoutable) composite).setLayoutMode(layoutMode);
+        }
+        for (final Control control : composite.getChildren()) {
+            if (control instanceof Composite) {
+                setLayoutMode((Composite) control, layoutMode);
+            }
+        }
     }
 
     @Override

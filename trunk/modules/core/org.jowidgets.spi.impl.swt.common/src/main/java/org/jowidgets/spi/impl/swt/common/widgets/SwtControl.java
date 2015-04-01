@@ -28,6 +28,7 @@
 package org.jowidgets.spi.impl.swt.common.widgets;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
@@ -37,6 +38,8 @@ import org.jowidgets.spi.impl.swt.common.dnd.ImmutableDropSelection;
 import org.jowidgets.spi.impl.swt.common.dnd.SwtDragSource;
 import org.jowidgets.spi.impl.swt.common.dnd.SwtDropTarget;
 import org.jowidgets.spi.impl.swt.common.util.DimensionConvert;
+import org.jowidgets.spi.impl.swt.common.widgets.base.IEnhancedLayoutable;
+import org.jowidgets.spi.impl.swt.common.widgets.base.IEnhancedLayoutable.LayoutMode;
 import org.jowidgets.spi.widgets.IControlSpi;
 
 public class SwtControl extends SwtComponent implements IControlSpi {
@@ -79,12 +82,28 @@ public class SwtControl extends SwtComponent implements IControlSpi {
 
     @Override
     public Dimension getMinSize() {
-        return getPreferredSize();
+        final Control uiReference = getUiReference();
+        if (uiReference instanceof IEnhancedLayoutable) {
+            return DimensionConvert.convert(uiReference.computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        }
+        else {
+            return getPreferredSize();
+        }
     }
 
     @Override
     public Dimension getPreferredSize() {
-        return DimensionConvert.convert(getUiReference().computeSize(SWT.DEFAULT, SWT.DEFAULT));
+        final Point result;
+        final Control uiReference = getUiReference();
+        if (uiReference instanceof IEnhancedLayoutable) {
+            ((IEnhancedLayoutable) uiReference).setLayoutMode(LayoutMode.PREFFERED_SIZE);
+            result = uiReference.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+            ((IEnhancedLayoutable) uiReference).setLayoutMode(LayoutMode.MIN_SIZE);
+        }
+        else {
+            result = uiReference.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+        }
+        return DimensionConvert.convert(result);
     }
 
     @Override
