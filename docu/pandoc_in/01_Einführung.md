@@ -64,7 +64,7 @@ Durch die Aufteilung in API und SPI kann die API _mächtige_ Funktionen enthalte
 
 Im diesem Kontext liegt vielleicht der Vergleich nahe, die jowidgets SPI mit SWT zu vergleichen, und die jowidgets API mit [JFace](https://wiki.eclipse.org/JFace). Dieser Vergleich ist jedoch nicht ganz korrekt, denn:
 
-* Die jowidgets SPI muss man nicht direkt verwenden, sondern man verwendet die _high level_ Schnittstellen der API. Es gibt jedoch nicht für alle SWT Wigdets ein JFace _Pondon_. 
+* Die jowidgets SPI muss man nicht direkt verwenden, sondern man verwendet die _high level_ Schnittstellen der API. Es gibt jedoch nicht für alle SWT Wigdets ein JFace _Pendant_. 
 
 * Die jowidgets API bietet Funktionen, welche JFace nicht bietet.^[JFace bietet allerdings auch Funktionen, welche jowidgets _noch_ nicht bietet.]
 

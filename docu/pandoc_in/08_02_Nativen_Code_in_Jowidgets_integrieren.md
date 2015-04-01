@@ -5,7 +5,7 @@ Unter gewissen Umständen kann es wünschenswert sein, nativen UI Code innerhalb
 
 Mögliche Gründe für die Einbettung von nativem Code könnten sein:
 
-* Es existieren komplexe native Widgets, welche man verwenden möchte und für die in jowidgets kein Pondon existiert.
+* Es existieren komplexe native Widgets, welche man verwenden möchte und für die in jowidgets kein Pendant existiert.
 * Ein Jo Widget bietet eine bestimmte Funktion nicht an, obwohl es das native Widget tut.
 
 __Hinweis:__ 
@@ -39,7 +39,7 @@ Jedes Jo Widget liefert mit Hilfe der folgenden Methode die native UI Referenz:
 	Object getUiReference();
 ~~~
 
-Der Typ hängt dabei von der verwendeten SPI Implementierung ab. Für [Basis Widgets](#core_widgets) ist dies in der Regel das direkte native Pondon, also zum Beispiel unter Swing ein `JPanel ` für ein `IComposite`, ein `JButton` für ein `IButton` und so weiter. Es gibt jedoch Ausnahmen, so liefert eine `ITable` unter Swing ein `JScrollPane` welches eine `JTable` enthält und unter Swt eine `org.eclipse.swt.widget.Table`. Im Zweifelsfall sollte man einfach in der aktuellen SPI Implementierung nachschauen, oder es mittels `getClass().getName()` ausprobieren. [Composite Widgets](#core_widgets) liefern meist ein `JPanel` für Swing und ein `org.eclipse.swt.widget.Composite` für Swt, aber auch hier gibt es Ausnahmen. 
+Der Typ hängt dabei von der verwendeten SPI Implementierung ab. Für [Basis Widgets](#core_widgets) ist dies in der Regel das direkte native Pendant, also zum Beispiel unter Swing ein `JPanel ` für ein `IComposite`, ein `JButton` für ein `IButton` und so weiter. Es gibt jedoch Ausnahmen, so liefert eine `ITable` unter Swing ein `JScrollPane` welches eine `JTable` enthält und unter Swt eine `org.eclipse.swt.widget.Table`. Im Zweifelsfall sollte man einfach in der aktuellen SPI Implementierung nachschauen, oder es mittels `getClass().getName()` ausprobieren. [Composite Widgets](#core_widgets) liefern meist ein `JPanel` für Swing und ein `org.eclipse.swt.widget.Composite` für Swt, aber auch hier gibt es Ausnahmen. 
 
 Man erhält als UI Referenz immer das native Root Widget, welches von der Spi für die Erzeugung des Widget angelegt wurde. Dadurch ist immer eindeutig, wo die native Widget Hierarchie für das Jo Widget beginnt. Für die Swing SPI Implementierung wäre es also nicht zulässig, die `JTable` als UI Referenz zurückzugeben. Will man eine Referenz auf die zugehörige `JTable` haben, kann man diese aus dem `JScrollPane` herausholen. 
 
