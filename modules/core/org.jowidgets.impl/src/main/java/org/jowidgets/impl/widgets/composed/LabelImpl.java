@@ -31,6 +31,7 @@ import org.jowidgets.api.dnd.IDragSource;
 import org.jowidgets.api.dnd.IDropTarget;
 import org.jowidgets.api.model.item.IMenuModel;
 import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.IIcon;
 import org.jowidgets.api.widgets.ILabel;
 import org.jowidgets.api.widgets.ITextLabel;
 import org.jowidgets.api.widgets.descriptor.IIconDescriptor;
@@ -40,7 +41,6 @@ import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.common.widgets.IIconCommon;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.widgets.blueprint.BPF;
@@ -49,16 +49,16 @@ import org.jowidgets.tools.widgets.invoker.VisibiliySettingsInvoker;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.NullCompatibleEquivalence;
 
-public class LabelImpl extends ControlWrapper implements ILabel {
+public final class LabelImpl extends ControlWrapper implements ILabel {
 
-    private final IIconCommon iconWidget;
+    private final IIcon iconWidget;
     private final ITextLabel textLabelWidget;
     private final IComposite composite;
+
     private String text;
     private IImageConstant icon;
 
     public LabelImpl(final IComposite composite, final ILabelSetup setup) {
-
         super(composite);
 
         this.composite = composite;
@@ -130,9 +130,9 @@ public class LabelImpl extends ControlWrapper implements ILabel {
 
     @Override
     public void setPopupMenu(final IMenuModel popupMenu) {
-        //TODO MG this might not work, popup must be set on label an text also. 
-        //For that, label and texfield must be api widgets 
         composite.setPopupMenu(popupMenu);
+        iconWidget.setPopupMenu(popupMenu);
+        textLabelWidget.setPopupMenu(popupMenu);
     }
 
     @Override
