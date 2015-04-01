@@ -54,7 +54,7 @@ public class BaseBluePrintFactory implements IBluePrintProxyFactory {
     @SuppressWarnings({"rawtypes", "unchecked"})
     protected <BLUE_PRINT_TYPE extends IWidgetDescriptor<? extends IWidgetCommon>> BLUE_PRINT_TYPE createProxy(
         final Class bluePrintType) {
-        final IWidgetDescriptor bluePrint = bluePrint(bluePrintType);
+        final IWidgetDescriptor bluePrint = (IWidgetDescriptor) bluePrint(bluePrintType);
         return (BLUE_PRINT_TYPE) bluePrint;
     }
 
