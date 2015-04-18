@@ -52,10 +52,12 @@ import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
 import org.jowidgets.spi.dnd.IDropTargetSpi;
 import org.jowidgets.spi.impl.swing.common.dnd.ImmutableDropSelection;
+import org.jowidgets.spi.impl.swing.common.util.PositionConvert;
 import org.jowidgets.spi.impl.swing.common.util.ScrollBarSettingsConvert;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
+import org.jowidgets.util.Assert;
 
 public class ScrollCompositeImpl implements IScrollCompositeSpi {
 
@@ -332,6 +334,12 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
     @Override
     public void setToolTipText(final String toolTip) {
         innerContainer.setToolTipText(toolTip);
+    }
+
+    @Override
+    public void setViewPosition(final Position position) {
+        Assert.paramNotNull(position, "position");
+        getUiReference().getViewport().setViewPosition(PositionConvert.convert(position));
     }
 
 }

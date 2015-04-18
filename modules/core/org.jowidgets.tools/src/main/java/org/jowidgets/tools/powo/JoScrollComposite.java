@@ -33,6 +33,7 @@ import org.jowidgets.api.widgets.IScrollComposite;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.descriptor.IScrollCompositeDescriptor;
 import org.jowidgets.common.types.Border;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.util.Assert;
 
@@ -43,6 +44,8 @@ import org.jowidgets.util.Assert;
  */
 @Deprecated
 public class JoScrollComposite extends Composite<IScrollComposite, IScrollCompositeBluePrint> implements IScrollComposite {
+
+    private Position viewPosition;
 
     JoScrollComposite(final IScrollComposite widget) {
         this(bluePrint());
@@ -62,6 +65,14 @@ public class JoScrollComposite extends Composite<IScrollComposite, IScrollCompos
         super(bluePrint().setSetup(descriptor));
     }
 
+    @Override
+    void initialize(final IScrollComposite widget) {
+        super.initialize(widget);
+        if (viewPosition != null) {
+            widget.setViewPosition(viewPosition);
+        }
+    }
+
     public static JoScrollComposite toJoScrollComposite(final IScrollComposite widget) {
         Assert.paramNotNull(widget, "widget");
         if (widget instanceof JoScrollComposite) {
@@ -69,6 +80,30 @@ public class JoScrollComposite extends Composite<IScrollComposite, IScrollCompos
         }
         else {
             return new JoScrollComposite(widget);
+        }
+    }
+
+    @Override
+    public void setViewPosition(final Position position) {
+        if (isInitialized()) {
+            getWidget().setViewPosition(position);
+        }
+        else {
+            this.viewPosition = position;
+        }
+    }
+
+    @Override
+    public void scrollToTop() {
+        if (isInitialized()) {
+            getWidget().scrollToTop();
+        }
+    }
+
+    @Override
+    public void scrollToBottom() {
+        if (isInitialized()) {
+            getWidget().scrollToBottom();
         }
     }
 

@@ -31,4 +31,8 @@ import org.jowidgets.common.widgets.IScrollCompositeCommon;
 
 public interface IScrollComposite extends IComposite, IScrollCompositeCommon {
 
+    void scrollToTop();
+
+    void scrollToBottom();
+
 }
