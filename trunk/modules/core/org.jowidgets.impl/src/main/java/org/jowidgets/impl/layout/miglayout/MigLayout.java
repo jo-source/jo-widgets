@@ -369,17 +369,17 @@ final class MigLayout implements IMigLayout {
 
     @Override
     public Dimension getMinSize() {
-        return getSize(LayoutUtilCommon.MIN);
+        return container.computeDecoratedSize(getSize(LayoutUtilCommon.MIN));
     }
 
     @Override
     public Dimension getPreferredSize() {
-        return getSize(LayoutUtilCommon.PREF);
+        return container.computeDecoratedSize(getSize(LayoutUtilCommon.PREF));
     }
 
     @Override
     public Dimension getMaxSize() {
-        return getSize(LayoutUtilCommon.MAX);
+        return container.computeDecoratedSize(getSize(LayoutUtilCommon.MAX));
     }
 
     @Override
