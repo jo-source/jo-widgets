@@ -37,12 +37,9 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Group;
 import org.jowidgets.common.color.IColorConstant;
-import org.jowidgets.common.types.Border;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
-import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IControlCommon;
@@ -59,18 +56,17 @@ import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
 import org.jowidgets.spi.dnd.IDropTargetSpi;
 import org.jowidgets.spi.impl.swt.common.dnd.ImmutableDropSelection;
-import org.jowidgets.spi.impl.swt.common.util.FontProvider;
 import org.jowidgets.spi.impl.swt.common.util.ScrollBarSettingsConvert;
 import org.jowidgets.spi.impl.swt.common.widgets.base.ScrollRootComposite;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
-import org.jowidgets.util.EmptyCheck;
 
 public class ScrollCompositeImpl implements IScrollCompositeSpi {
 
     private final SwtComposite outerContainer;
     private final SwtContainer innerContainer;
+    private final Composite scrolledRoot;
 
     public ScrollCompositeImpl(
         final IGenericWidgetFactory factory,
@@ -80,67 +76,44 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
         final MigLayout growingMigLayout = new MigLayout("", "0[grow, 0::]0", "0[grow, 0::]0");
         final String growingCellConstraints = "grow, w 0::,h 0::";
 
-        final Composite outerComposite = new ScrollRootComposite((Composite) parentUiReference, SWT.NONE);
-        outerComposite.setBackgroundMode(SWT.INHERIT_FORCE);
+        this.scrolledRoot = new ScrollRootComposite((Composite) parentUiReference, SWT.NONE);
+        scrolledRoot.setBackgroundMode(SWT.INHERIT_FORCE);
 
-        this.outerContainer = new SwtComposite(factory, outerComposite, new ImmutableDropSelection(this));
-        outerComposite.setLayout(growingMigLayout);
-
-        final Border border = setup.getBorder();
-
-        final Composite scrolledRoot;
-
-        if (border != null && !EmptyCheck.isEmpty(border.getTitle())) {
-            final Group group = new Group(outerComposite, SWT.SHADOW_IN);
-            group.setText(border.getTitle());
-            group.setFont(FontProvider.deriveFont(group.getFont(), Markup.STRONG));
-            group.setLayoutData(growingCellConstraints);
-            group.setLayout(new MigLayout("", "0[grow, 0::]0", "0[grow, 0::]0"));
-            group.setBackgroundMode(SWT.INHERIT_DEFAULT);
-            scrolledRoot = group;
-        }
-        else {
-            scrolledRoot = outerComposite;
-        }
+        this.outerContainer = new SwtComposite(factory, scrolledRoot, new ImmutableDropSelection(this));
+        scrolledRoot.setLayout(growingMigLayout);
 
         final ScrolledComposite scrolledComposite = new ScrolledComposite(scrolledRoot, ScrollBarSettingsConvert.convert(setup)) {
             @Override
             public Point computeSize(final int wHint, final int hHint, final boolean changed) {
-                if (border == null || EmptyCheck.isEmpty(border.getTitle())) {
-                    return innerContainer.getUiReference().computeSize(wHint, hHint, changed);
-                }
-                else {
-                    return super.computeSize(wHint, hHint, changed);
-                }
+                return innerContainer.getUiReference().computeSize(wHint, hHint, changed);
             }
         };
-        final SwtContainer scrolledWidget = new SwtContainer(factory, scrolledComposite);
         scrolledComposite.setLayoutData(growingCellConstraints);
         scrolledComposite.setExpandHorizontal(true);
         scrolledComposite.setExpandVertical(true);
         scrolledComposite.setAlwaysShowScrollBars(setup.isAlwaysShowBars());
         scrolledComposite.setBackgroundMode(SWT.INHERIT_FORCE);
 
-        final Composite innerComposite;
+        final Composite contentComposite = new Composite(scrolledComposite, SWT.NONE);
+        contentComposite.setBackgroundMode(SWT.INHERIT_DEFAULT);
+        contentComposite.setLayoutData(growingCellConstraints);
 
-        if (border != null && EmptyCheck.isEmpty(border.getTitle())) {
-            innerComposite = new Composite(scrolledWidget.getUiReference(), SWT.BORDER);
-        }
-        else {
-            innerComposite = new Composite(scrolledWidget.getUiReference(), SWT.NONE);
-        }
+        final MigLayout contentLayout = new MigLayout("", "0[grow, 0::]0", "0[grow, 0::]0");
+        contentComposite.setLayout(contentLayout);
 
+        scrolledComposite.setContent(contentComposite);
+
+        final Composite innerComposite = new Composite(contentComposite, SWT.NONE);
         innerComposite.setBackgroundMode(SWT.INHERIT_DEFAULT);
-
-        this.innerContainer = new SwtContainer(factory, innerComposite);
-        scrolledComposite.setContent(innerComposite);
         innerComposite.setLayoutData(growingCellConstraints);
 
-        growingMigLayout.addLayoutCallback(new LayoutCallback() {
+        this.innerContainer = new SwtContainer(factory, innerComposite);
+
+        contentLayout.addLayoutCallback(new LayoutCallback() {
             @Override
             public void correctBounds(final ComponentWrapper comp) {
-                scrolledComposite.setMinSize(innerComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT, false));
-                super.correctBounds(comp);
+                final Point size = contentComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT, false);
+                scrolledComposite.setMinSize(size.x, size.y);
             }
         });
     }

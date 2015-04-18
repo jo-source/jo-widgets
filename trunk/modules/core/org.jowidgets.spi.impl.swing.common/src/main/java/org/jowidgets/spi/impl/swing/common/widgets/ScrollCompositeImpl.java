@@ -52,7 +52,6 @@ import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
 import org.jowidgets.spi.dnd.IDropTargetSpi;
 import org.jowidgets.spi.impl.swing.common.dnd.ImmutableDropSelection;
-import org.jowidgets.spi.impl.swing.common.util.BorderConvert;
 import org.jowidgets.spi.impl.swing.common.util.ScrollBarSettingsConvert;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
@@ -67,7 +66,6 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 
         final JScrollPane scrollPane = new JScrollPane();
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
-        scrollPane.setViewportBorder(BorderConvert.convert(setup.getBorder()));
         scrollPane.getViewport().setBackground(null);
 
         final int horizontalPolicy = ScrollBarSettingsConvert.convertHorizontal(setup);
@@ -85,7 +83,6 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
         innerContainer.setBackgroundColor(null);
 
         scrollPane.setViewportView(innerContainer.getUiReference());
-
     }
 
     @Override
