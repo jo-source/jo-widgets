@@ -42,6 +42,7 @@ import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IInputComponentValidationLabel;
 import org.jowidgets.api.widgets.IInputControl;
 import org.jowidgets.api.widgets.IInputField;
+import org.jowidgets.api.widgets.IScrollComposite;
 import org.jowidgets.api.widgets.ITextLabel;
 import org.jowidgets.api.widgets.blueprint.IButtonBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
@@ -61,8 +62,10 @@ import org.jowidgets.impl.layout.ListLayout;
 import org.jowidgets.impl.layout.tablelayout.TableRowLayout;
 import org.jowidgets.tools.controller.InputObservable;
 import org.jowidgets.tools.controller.KeyAdapter;
+import org.jowidgets.tools.layout.MigLayoutFactory;
 import org.jowidgets.tools.validation.ValidationCache;
 import org.jowidgets.tools.validation.ValidationCache.IValidationResultCreator;
+import org.jowidgets.tools.widgets.blueprint.BPF;
 import org.jowidgets.tools.widgets.wrapper.CompositeWrapper;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.validation.IValidationConditionListener;
@@ -79,6 +82,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 
     private final IBluePrintFactory bpf;
     private final ITableLayout tableCommon;
+    private final IScrollComposite composite;
     private final IInputComponentValidationLabelBluePrint validationLabelBp;
     private final IButtonBluePrint removeButtonBp;
     private final Dimension removeButtonSize;
@@ -95,8 +99,12 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
     private boolean programmaticUpdate;
     private boolean editable;
 
-    public CollectionInputControlImpl(final IComposite composite, final ICollectionInputControlDescriptor<INPUT_TYPE> setup) {
-        super(composite);
+    public CollectionInputControlImpl(final IComposite rootComposite, final ICollectionInputControlDescriptor<INPUT_TYPE> setup) {
+        super(rootComposite);
+
+        rootComposite.setLayout(MigLayoutFactory.growingInnerCellLayout());
+        this.composite = rootComposite.add(BPF.scrollComposite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+
         this.bpf = Toolkit.getBluePrintFactory();
         this.inputObservable = new InputObservable();
         this.compoundValidator = new CompoundValidator<Collection<INPUT_TYPE>>();
@@ -519,7 +527,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
             final Row row = new Row(add(bpf.composite()));
             rows.add(row);
             updateLayout();
-
+            composite.scrollToBottom();
             fireInputChanged();
             return row;
         }
@@ -536,7 +544,12 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 
             layoutEnd();
             updateLayout();
-
+            if (index == rows.size() - 1) {
+                composite.scrollToBottom();
+            }
+            //else {
+            //TODO scroll to element
+            //}
             fireInputChanged();
             return result;
         }

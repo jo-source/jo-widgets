@@ -62,6 +62,7 @@ public class CollectionInputDialogFactory<ELEMENT_TYPE> implements
 
         final IInputDialogBluePrint<Collection<ELEMENT_TYPE>> dialogBp = bpf.inputDialog(inputCreatorBp);
         dialogBp.setSetup(descriptor).setContentCreator(inputCreatorBp);
+        dialogBp.setContentScrolled(false);
 
         final IInputDialog<Collection<ELEMENT_TYPE>> dialogWidget = widgetFactory.create(parentUiReference, dialogBp);
 
