@@ -56,17 +56,20 @@ import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
 import org.jowidgets.spi.dnd.IDropTargetSpi;
 import org.jowidgets.spi.impl.swt.common.dnd.ImmutableDropSelection;
+import org.jowidgets.spi.impl.swt.common.util.PositionConvert;
 import org.jowidgets.spi.impl.swt.common.util.ScrollBarSettingsConvert;
 import org.jowidgets.spi.impl.swt.common.widgets.base.ScrollRootComposite;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
+import org.jowidgets.util.Assert;
 
 public class ScrollCompositeImpl implements IScrollCompositeSpi {
 
     private final SwtComposite outerContainer;
     private final SwtContainer innerContainer;
     private final Composite scrolledRoot;
+    private final ScrolledComposite scrolledComposite;
 
     public ScrollCompositeImpl(
         final IGenericWidgetFactory factory,
@@ -82,7 +85,7 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
         this.outerContainer = new SwtComposite(factory, scrolledRoot, new ImmutableDropSelection(this));
         scrolledRoot.setLayout(growingMigLayout);
 
-        final ScrolledComposite scrolledComposite = new ScrolledComposite(scrolledRoot, ScrollBarSettingsConvert.convert(setup)) {
+        this.scrolledComposite = new ScrolledComposite(scrolledRoot, ScrollBarSettingsConvert.convert(setup)) {
             @Override
             public Point computeSize(final int wHint, final int hHint, final boolean changed) {
                 return innerContainer.getUiReference().computeSize(wHint, hHint, changed);
@@ -366,6 +369,12 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
     @Override
     public IDropTargetSpi getDropTarget() {
         return outerContainer.getDropTarget();
+    }
+
+    @Override
+    public void setViewPosition(final Position position) {
+        Assert.paramNotNull(position, "position");
+        scrolledComposite.setOrigin(PositionConvert.convert(position));
     }
 
 }

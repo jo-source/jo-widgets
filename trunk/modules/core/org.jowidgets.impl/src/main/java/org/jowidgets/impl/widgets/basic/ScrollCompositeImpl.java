@@ -45,6 +45,7 @@ import org.jowidgets.api.widgets.IPopupMenu;
 import org.jowidgets.api.widgets.IScrollComposite;
 import org.jowidgets.api.widgets.descriptor.setup.IScrollCompositeSetup;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IComponentListener;
 import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.common.widgets.controller.IKeyListener;
@@ -323,6 +324,21 @@ public class ScrollCompositeImpl extends AbstractScrollCompositeSpiWrapper imple
     @Override
     public IDropTarget getDropTarget() {
         return dropTarget;
+    }
+
+    @Override
+    public void setViewPosition(final Position position) {
+        getWidget().setViewPosition(position);
+    }
+
+    @Override
+    public void scrollToTop() {
+        setViewPosition(new Position(0, 0));
+    }
+
+    @Override
+    public void scrollToBottom() {
+        setViewPosition(new Position(0, Integer.MAX_VALUE));
     }
 
 }

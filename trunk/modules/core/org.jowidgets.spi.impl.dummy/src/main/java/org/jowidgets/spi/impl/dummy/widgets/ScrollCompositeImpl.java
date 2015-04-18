@@ -27,6 +27,7 @@
  */
 package org.jowidgets.spi.impl.dummy.widgets;
 
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDScrollPane;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
@@ -43,5 +44,8 @@ public class ScrollCompositeImpl extends DummyComposite implements IScrollCompos
         scrollPane.setAlwaysShowBars(setup.isAlwaysShowBars());
 
     }
+
+    @Override
+    public void setViewPosition(final Position position) {}
 
 }

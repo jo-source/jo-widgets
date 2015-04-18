@@ -38,6 +38,7 @@ import org.jowidgets.api.widgets.IScrollComposite;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.descriptor.IScrollCompositeDescriptor;
 import org.jowidgets.common.types.Border;
+import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
@@ -151,6 +152,21 @@ public final class BorderedScrollCompositeImpl extends CompositeWrapper implemen
     @Override
     public void setTabOrder(final IControl... controls) {
         scrollComposite.setTabOrder(controls);
+    }
+
+    @Override
+    public void setViewPosition(final Position position) {
+        scrollComposite.setViewPosition(position);
+    }
+
+    @Override
+    public void scrollToTop() {
+        scrollComposite.scrollToTop();
+    }
+
+    @Override
+    public void scrollToBottom() {
+        scrollComposite.scrollToBottom();
     }
 
 }

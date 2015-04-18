@@ -27,8 +27,15 @@
  */
 package org.jowidgets.common.widgets;
 
+import org.jowidgets.common.types.Position;
+
 public interface IScrollCompositeCommon extends ICompositeCommon {
 
-    //TODO MG add viewport stuff here
+    /**
+     * Sets the coordinates that should become the upper left corner of the vieport
+     * 
+     * @param position The position to set
+     */
+    void setViewPosition(Position position);
 
 }
