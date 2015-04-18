@@ -29,6 +29,7 @@ package org.jowidgets.spi.impl.swt.common.widgets;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
@@ -83,27 +84,33 @@ public class SwtControl extends SwtComponent implements IControlSpi {
     @Override
     public Dimension getMinSize() {
         final Control uiReference = getUiReference();
-        if (uiReference instanceof IEnhancedLayoutable) {
-            return DimensionConvert.convert(uiReference.computeSize(SWT.DEFAULT, SWT.DEFAULT));
-        }
-        else {
-            return getPreferredSize();
-        }
+        return DimensionConvert.convert(uiReference.computeSize(SWT.DEFAULT, SWT.DEFAULT));
     }
 
     @Override
     public Dimension getPreferredSize() {
         final Point result;
         final Control uiReference = getUiReference();
-        if (uiReference instanceof IEnhancedLayoutable) {
-            ((IEnhancedLayoutable) uiReference).setLayoutMode(LayoutMode.PREFFERED_SIZE);
+        if (uiReference instanceof Composite) {
+            setLayoutMode((Composite) uiReference, LayoutMode.PREFFERED_SIZE);
             result = uiReference.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-            ((IEnhancedLayoutable) uiReference).setLayoutMode(LayoutMode.MIN_SIZE);
+            setLayoutMode((Composite) uiReference, LayoutMode.MIN_SIZE);
         }
         else {
             result = uiReference.computeSize(SWT.DEFAULT, SWT.DEFAULT);
         }
         return DimensionConvert.convert(result);
+    }
+
+    private void setLayoutMode(final Composite composite, final LayoutMode layoutMode) {
+        if (composite instanceof IEnhancedLayoutable) {
+            ((IEnhancedLayoutable) composite).setLayoutMode(layoutMode);
+        }
+        for (final Control control : composite.getChildren()) {
+            if (control instanceof Composite) {
+                setLayoutMode((Composite) control, layoutMode);
+            }
+        }
     }
 
     @Override

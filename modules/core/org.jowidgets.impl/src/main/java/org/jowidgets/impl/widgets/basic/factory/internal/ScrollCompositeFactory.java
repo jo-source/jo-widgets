@@ -28,15 +28,19 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
+import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IScrollComposite;
+import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.descriptor.IScrollCompositeDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.IScrollCompositeBluePrintSpi;
+import org.jowidgets.impl.widgets.basic.BorderedScrollCompositeImpl;
 import org.jowidgets.impl.widgets.basic.ScrollCompositeImpl;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
+import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public class ScrollCompositeFactory extends AbstractWidgetFactory implements
         IWidgetFactory<IScrollComposite, IScrollCompositeDescriptor> {
@@ -51,12 +55,34 @@ public class ScrollCompositeFactory extends AbstractWidgetFactory implements
 
     @Override
     public IScrollComposite create(final Object parentUiReference, final IScrollCompositeDescriptor descriptor) {
+        if (descriptor.getBorder() != null) {
+            return createBorderScrollComposite(parentUiReference, descriptor);
+        }
+        else {
+            return createNoBorderScrollComposite(parentUiReference, descriptor);
+        }
+    }
+
+    private IScrollComposite createBorderScrollComposite(
+        final Object parentUiReference,
+        final IScrollCompositeDescriptor descriptor) {
+
+        //create a composite with the desired border
+        final ICompositeBluePrint compositeBp = BPF.composite();
+        compositeBp.setSetup(descriptor);
+        final IComposite composite = getGenericWidgetFactory().create(parentUiReference, compositeBp);
+
+        return new BorderedScrollCompositeImpl(composite, descriptor);
+    }
+
+    private IScrollComposite createNoBorderScrollComposite(
+        final Object parentUiReference,
+        final IScrollCompositeDescriptor descriptor) {
         final IScrollCompositeBluePrintSpi bp = getSpiBluePrintFactory().scrollComposite().setSetup(descriptor);
         final IScrollCompositeSpi scrollContainerSpi = getSpiWidgetFactory().createScrollComposite(
                 getGenericWidgetFactory(),
                 parentUiReference,
                 bp);
-
         return new ScrollCompositeImpl(scrollContainerSpi, descriptor);
     }
 
