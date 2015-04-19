@@ -46,6 +46,7 @@ import org.jowidgets.api.widgets.IScrollComposite;
 import org.jowidgets.api.widgets.descriptor.setup.IScrollCompositeSetup;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.controller.IComponentListener;
 import org.jowidgets.common.widgets.controller.IFocusListener;
 import org.jowidgets.common.widgets.controller.IKeyListener;
@@ -327,18 +328,117 @@ public class ScrollCompositeImpl extends AbstractScrollCompositeSpiWrapper imple
     }
 
     @Override
-    public void setViewPosition(final Position position) {
-        getWidget().setViewPosition(position);
+    public void setViewportPosition(final Position position) {
+        getWidget().setViewportPosition(position);
+    }
+
+    @Override
+    public void setViewportPosition(final int x, final int y) {
+        getWidget().setViewportPosition(new Position(x, y));
+    }
+
+    @Override
+    public Position getViewportPosition() {
+        return getWidget().getViewportPosition();
+    }
+
+    @Override
+    public Dimension getViewportSize() {
+        return getWidget().getViewportSize();
     }
 
     @Override
     public void scrollToTop() {
-        setViewPosition(new Position(0, 0));
+        setViewportPosition(new Position(0, 0));
     }
 
     @Override
     public void scrollToBottom() {
-        setViewPosition(new Position(0, Integer.MAX_VALUE));
+        final Rectangle clientArea = getClientArea();
+        setViewportPosition(new Position(0, clientArea.getHeight()));
+    }
+
+    @Override
+    public void showControl(final IControl control) {
+        Assert.paramNotNull(control, "control");
+        if (control.isDisposed()) {
+            throw new IllegalArgumentException("Control is disposed");
+        }
+        else if (!getChildren().contains(control)) {
+            throw new IllegalArgumentException("The given control is not a child of this container");
+        }
+        scrollRectToVisible(control.getBounds());
+    }
+
+    @Override
+    public void scrollRectToVisible(final Rectangle rectangle) {
+
+        int shiftX = 0;
+        int shiftY = 0;
+
+        final Dimension size = getSize();
+
+        shiftX = calculateShift(size.getWidth(), rectangle.getX(), rectangle.getWidth());
+        shiftY = calculateShift(size.getHeight(), rectangle.getY(), rectangle.getHeight());
+
+        if (shiftX != 0 || shiftY != 0) {
+
+            final Position viewportPos = getViewportPosition();
+            final Dimension viewportSize = getViewportSize();
+            final Dimension viewSize = getClientArea().getSize();
+
+            int viewportX = viewportPos.getX();
+            int viewportY = viewportPos.getY();
+
+            viewportX -= shiftX;
+            viewportY -= shiftY;
+
+            //fix viewportX
+            if (viewportX + viewportSize.getWidth() > viewSize.getWidth()) {
+                viewportX = Math.max(0, viewSize.getWidth() - viewportSize.getWidth());
+            }
+            else if (viewportX < 0) {
+                viewportX = 0;
+            }
+
+            //fix viewportY
+            if (viewportY + viewportSize.getHeight() > viewSize.getHeight()) {
+                viewportY = Math.max(0, viewSize.getHeight() - viewportSize.getHeight());
+            }
+            else if (viewportY < 0) {
+                viewportY = 0;
+            }
+
+            //change viewportPosiition if necessary
+            if (viewportX != viewportPos.getX() || viewportY != viewportPos.getY()) {
+                setViewportPosition(viewportX, viewportY);
+            }
+        }
+
+    }
+
+    private int calculateShift(final int parentSize, final int childPos, final int childSize) {
+        if (childPos >= 0 && childSize + childPos <= parentSize) {
+            return 0;
+        }
+        else if (childPos <= 0 && childSize + childPos >= parentSize) {
+            return 0;
+        }
+        else if (childPos > 0 && childSize <= parentSize) {
+            return -childPos + parentSize - childSize;
+        }
+        else if (childPos >= 0 && childSize >= parentSize) {
+            return -childPos;
+        }
+        else if (childPos <= 0 && childSize <= parentSize) {
+            return -childPos;
+        }
+        else if (childPos < 0 && childSize >= parentSize) {
+            return -childPos + parentSize - childSize;
+        }
+        else {
+            return 0;
+        }
     }
 
 }

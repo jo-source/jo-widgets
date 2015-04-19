@@ -28,11 +28,22 @@
 
 package org.jowidgets.spi.impl.dummy.dummyui;
 
+import org.jowidgets.common.types.Dimension;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.util.Assert;
+
 public class UIDScrollPane extends UIDContainer {
 
     private boolean verticalBar;
     private boolean horizontalBar;
     private boolean alwaysShowBars;
+    private Position viewPosition;
+    private Dimension viewSize;
+
+    public UIDScrollPane() {
+        this.viewPosition = new Position(0, 0);
+        this.viewSize = new Dimension(0, 0);
+    }
 
     public boolean isVerticalBar() {
         return verticalBar;
@@ -56,6 +67,24 @@ public class UIDScrollPane extends UIDContainer {
 
     public void setAlwaysShowBars(final boolean alwaysShowBars) {
         this.alwaysShowBars = alwaysShowBars;
+    }
+
+    public void setViewPosition(final Position position) {
+        Assert.paramNotNull(position, "position");
+        this.viewPosition = position;
+    }
+
+    public Position getViewPosition() {
+        return viewPosition;
+    }
+
+    public Dimension getViewSize() {
+        return viewSize;
+    }
+
+    public void setViewSize(final Dimension size) {
+        Assert.paramNotNull(size, "size");
+        this.viewSize = size;
     }
 
 }

@@ -27,12 +27,19 @@
  */
 package org.jowidgets.api.widgets;
 
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.IScrollCompositeCommon;
 
 public interface IScrollComposite extends IComposite, IScrollCompositeCommon {
 
+    void setViewportPosition(int x, int y);
+
     void scrollToTop();
 
     void scrollToBottom();
+
+    void scrollRectToVisible(Rectangle rectangle);
+
+    void showControl(IControl control);
 
 }

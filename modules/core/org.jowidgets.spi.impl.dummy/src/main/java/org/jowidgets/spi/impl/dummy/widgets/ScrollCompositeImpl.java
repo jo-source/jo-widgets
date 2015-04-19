@@ -27,6 +27,7 @@
  */
 package org.jowidgets.spi.impl.dummy.widgets;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.impl.dummy.dummyui.UIDScrollPane;
@@ -37,8 +38,7 @@ public class ScrollCompositeImpl extends DummyComposite implements IScrollCompos
 
     public ScrollCompositeImpl(final IGenericWidgetFactory factory, final IScrollCompositeSetupSpi setup) {
         super(factory, new UIDScrollPane());
-        final UIDScrollPane scrollPane = new UIDScrollPane();
-
+        final UIDScrollPane scrollPane = getUiReference();
         scrollPane.setVerticalBar(setup.hasVerticalBar());
         scrollPane.setHorizontalBar(setup.hasHorizontalBar());
         scrollPane.setAlwaysShowBars(setup.isAlwaysShowBars());
@@ -46,6 +46,23 @@ public class ScrollCompositeImpl extends DummyComposite implements IScrollCompos
     }
 
     @Override
-    public void setViewPosition(final Position position) {}
+    public UIDScrollPane getUiReference() {
+        return (UIDScrollPane) super.getUiReference();
+    }
+
+    @Override
+    public void setViewportPosition(final Position position) {
+        getUiReference().setViewPosition(position);
+    }
+
+    @Override
+    public Position getViewportPosition() {
+        return getUiReference().getViewPosition();
+    }
+
+    @Override
+    public Dimension getViewportSize() {
+        return getUiReference().getViewSize();
+    }
 
 }

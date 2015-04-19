@@ -27,15 +27,30 @@
  */
 package org.jowidgets.common.widgets;
 
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 
 public interface IScrollCompositeCommon extends ICompositeCommon {
 
     /**
-     * Sets the coordinates that should become the upper left corner of the vieport
+     * Sets the coordinates that should become the upper left corner of the viewport
      * 
      * @param position The position to set
      */
-    void setViewPosition(Position position);
+    void setViewportPosition(Position position);
+
+    /**
+     * Gets the upper left corner of the current viewport
+     * 
+     * @return The view position
+     */
+    Position getViewportPosition();
+
+    /**
+     * Gets the current size of the viewport
+     * 
+     * @return the view size, never null
+     */
+    Dimension getViewportSize();
 
 }

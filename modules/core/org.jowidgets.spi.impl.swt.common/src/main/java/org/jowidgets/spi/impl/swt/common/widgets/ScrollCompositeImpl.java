@@ -372,9 +372,20 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
     }
 
     @Override
-    public void setViewPosition(final Position position) {
+    public void setViewportPosition(final Position position) {
         Assert.paramNotNull(position, "position");
         scrolledComposite.setOrigin(PositionConvert.convert(position));
+    }
+
+    @Override
+    public Position getViewportPosition() {
+        return PositionConvert.convert(scrolledComposite.getOrigin());
+    }
+
+    @Override
+    public Dimension getViewportSize() {
+        final org.eclipse.swt.graphics.Rectangle clientArea = scrolledComposite.getClientArea();
+        return new Dimension(clientArea.width, clientArea.height);
     }
 
 }
