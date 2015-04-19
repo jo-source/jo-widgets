@@ -51,6 +51,8 @@ import org.jowidgets.api.widgets.descriptor.ICollectionInputControlDescriptor;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Modifier;
+import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.types.VirtualKey;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IInputListener;
@@ -82,7 +84,8 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 
     private final IBluePrintFactory bpf;
     private final ITableLayout tableCommon;
-    private final IScrollComposite composite;
+    private final IScrollComposite scrollComposite;
+    private final IComposite composite;
     private final IInputComponentValidationLabelBluePrint validationLabelBp;
     private final IButtonBluePrint removeButtonBp;
     private final Dimension removeButtonSize;
@@ -103,7 +106,9 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
         super(rootComposite);
 
         rootComposite.setLayout(MigLayoutFactory.growingInnerCellLayout());
-        this.composite = rootComposite.add(BPF.scrollComposite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        this.scrollComposite = rootComposite.add(BPF.scrollComposite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
+        scrollComposite.setLayout(MigLayoutFactory.growingCellLayout());
+        this.composite = scrollComposite.add(BPF.composite(), MigLayoutFactory.GROWING_CELL_CONSTRAINTS);
 
         this.bpf = Toolkit.getBluePrintFactory();
         this.inputObservable = new InputObservable();
@@ -387,6 +392,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
                                         valuesContainer.getValueCount() - 1));
                                 if (row != null) {
                                     row.inputControl.requestFocus();
+                                    row.scrollRectToRow();
                                 }
                                 else {
                                     addButton.requestFocus();
@@ -397,6 +403,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
                             if (index > 0) {
                                 final Row row = valuesContainer.getRow(index - 1);
                                 row.inputControl.requestFocus();
+                                row.scrollRectToRow();
                             }
                         }
                         else if (VirtualKey.ARROW_DOWN.equals(event.getVirtualKey())) {
@@ -404,6 +411,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
                             if (index < valuesContainer.rows.size() - 1) {
                                 final Row row = valuesContainer.getRow(index + 1);
                                 row.inputControl.requestFocus();
+                                row.scrollRectToRow();
                             }
                         }
                     }
@@ -474,6 +482,11 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
         private IControl getControl() {
             return getWidget();
         }
+
+        private void scrollRectToRow() {
+            final Position shiftedPos = scrollComposite.fromComponent(composite, getPosition());
+            scrollComposite.scrollRectToVisible(new Rectangle(shiftedPos, getSize()));
+        }
     }
 
     private class ValuesContainer extends CompositeWrapper {
@@ -527,7 +540,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
             final Row row = new Row(add(bpf.composite()));
             rows.add(row);
             updateLayout();
-            composite.scrollToBottom();
+            scrollComposite.scrollToBottom();
             fireInputChanged();
             return row;
         }
@@ -545,11 +558,11 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
             layoutEnd();
             updateLayout();
             if (index == rows.size() - 1) {
-                composite.scrollToBottom();
+                scrollComposite.scrollToBottom();
             }
-            //else {
-            //TODO scroll to element
-            //}
+            else {
+                result.scrollRectToRow();
+            }
             fireInputChanged();
             return result;
         }
