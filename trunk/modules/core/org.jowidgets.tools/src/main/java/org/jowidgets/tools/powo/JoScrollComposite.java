@@ -29,11 +29,14 @@
 package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IScrollComposite;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.descriptor.IScrollCompositeDescriptor;
 import org.jowidgets.common.types.Border;
+import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.common.types.Rectangle;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.util.Assert;
 
@@ -46,6 +49,7 @@ import org.jowidgets.util.Assert;
 public class JoScrollComposite extends Composite<IScrollComposite, IScrollCompositeBluePrint> implements IScrollComposite {
 
     private Position viewPosition;
+    private Rectangle rectangleToShow;
 
     JoScrollComposite(final IScrollComposite widget) {
         this(bluePrint());
@@ -69,7 +73,10 @@ public class JoScrollComposite extends Composite<IScrollComposite, IScrollCompos
     void initialize(final IScrollComposite widget) {
         super.initialize(widget);
         if (viewPosition != null) {
-            widget.setViewPosition(viewPosition);
+            widget.setViewportPosition(viewPosition);
+        }
+        if (rectangleToShow != null) {
+            widget.scrollRectToVisible(rectangleToShow);
         }
     }
 
@@ -84,12 +91,37 @@ public class JoScrollComposite extends Composite<IScrollComposite, IScrollCompos
     }
 
     @Override
-    public void setViewPosition(final Position position) {
+    public void setViewportPosition(final Position position) {
         if (isInitialized()) {
-            getWidget().setViewPosition(position);
+            getWidget().setViewportPosition(position);
         }
         else {
             this.viewPosition = position;
+        }
+    }
+
+    @Override
+    public void setViewportPosition(final int x, final int y) {
+        setViewportPosition(new Position(x, y));
+    }
+
+    @Override
+    public Position getViewportPosition() {
+        if (isInitialized()) {
+            return getWidget().getViewportPosition();
+        }
+        else {
+            return new Position(0, 0);
+        }
+    }
+
+    @Override
+    public Dimension getViewportSize() {
+        if (isInitialized()) {
+            return getWidget().getViewportSize();
+        }
+        else {
+            return new Dimension(0, 0);
         }
     }
 
@@ -105,6 +137,23 @@ public class JoScrollComposite extends Composite<IScrollComposite, IScrollCompos
         if (isInitialized()) {
             getWidget().scrollToBottom();
         }
+    }
+
+    @Override
+    public void scrollRectToVisible(final Rectangle rectangle) {
+        Assert.paramNotNull(rectangle, "rectangle");
+        if (isInitialized()) {
+            getWidget().scrollRectToVisible(rectangle);
+        }
+        else {
+            this.rectangleToShow = rectangle;
+        }
+    }
+
+    @Override
+    public void showControl(final IControl control) {
+        Assert.paramNotNull(control, "control");
+        scrollRectToVisible(control.getBounds());
     }
 
     public static IScrollCompositeBluePrint bluePrint() {

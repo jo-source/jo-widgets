@@ -52,6 +52,7 @@ import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
 import org.jowidgets.spi.dnd.IDropTargetSpi;
 import org.jowidgets.spi.impl.swing.common.dnd.ImmutableDropSelection;
+import org.jowidgets.spi.impl.swing.common.util.DimensionConvert;
 import org.jowidgets.spi.impl.swing.common.util.PositionConvert;
 import org.jowidgets.spi.impl.swing.common.util.ScrollBarSettingsConvert;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
@@ -337,9 +338,19 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
     }
 
     @Override
-    public void setViewPosition(final Position position) {
+    public void setViewportPosition(final Position position) {
         Assert.paramNotNull(position, "position");
         getUiReference().getViewport().setViewPosition(PositionConvert.convert(position));
+    }
+
+    @Override
+    public Position getViewportPosition() {
+        return PositionConvert.convert(getUiReference().getViewport().getViewPosition());
+    }
+
+    @Override
+    public Dimension getViewportSize() {
+        return DimensionConvert.convert(getUiReference().getViewport().getSize());
     }
 
 }
