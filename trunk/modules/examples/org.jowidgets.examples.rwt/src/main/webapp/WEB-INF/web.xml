@@ -3,8 +3,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	version="2.4">
 
-	<display-name>RwtWorkbenchDemo</display-name>
-	<description>RwtWorkbenchDemo</description>
+	<display-name>Rwt Demo Application</display-name>
 
 	<context-param>
 		<param-name>org.eclipse.rap.applicationConfiguration</param-name>
@@ -16,13 +15,13 @@
 	</listener>
 
 	<servlet>
-		<servlet-name>RwtWorkbenchDemo</servlet-name>
+		<servlet-name>RwtDemoApplication</servlet-name>
 		<servlet-class>org.eclipse.rap.rwt.engine.RWTServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>RwtWorkbenchDemo</servlet-name>
-		<url-pattern>/RwtWorkbenchDemo</url-pattern>
+		<servlet-name>RwtDemoApplication</servlet-name>
+		<url-pattern>/RwtDemoApplication</url-pattern>
 	</servlet-mapping>
 
 </web-app>

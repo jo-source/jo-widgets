@@ -27,25 +27,17 @@
  */
 package org.jowidgets.examples.rwt;
 
-import org.jowidgets.addons.map.common.widget.IMapWidgetBlueprint;
-import org.jowidgets.addons.map.swt.SwtGoogleEarthWidgetFactory;
 import org.jowidgets.api.toolkit.Toolkit;
-import org.jowidgets.common.types.Dimension;
-import org.jowidgets.examples.common.map.MapDemoApplication;
-import org.jowidgets.examples.common.workbench.demo1.WorkbenchDemo1Factory;
+import org.jowidgets.examples.common.demo.DemoApplication;
 import org.jowidgets.spi.impl.rwt.RwtEntryPoint;
-import org.jowidgets.workbench.impl.WorkbenchRunner;
 
-public final class RwtWorkbenchDemo extends RwtEntryPoint {
+public final class RwtDemoApplicationEntryPoint extends RwtEntryPoint {
 
-    public RwtWorkbenchDemo() {
+    public RwtDemoApplicationEntryPoint() {
         super(new Runnable() {
             @Override
             public void run() {
-                Toolkit.getWidgetFactory().register(
-                        IMapWidgetBlueprint.class,
-                        new SwtGoogleEarthWidgetFactory(MapDemoApplication.API_KEY));
-                new WorkbenchRunner().run(new WorkbenchDemo1Factory(new Dimension(1024, 650)));
+                Toolkit.getApplicationRunner().run(new DemoApplication("RWT Demo Apllication"));
             }
         });
     }

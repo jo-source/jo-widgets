@@ -46,7 +46,7 @@ public final class RwtConfiguration implements ApplicationConfiguration {
                 "org/jowidgets/spi/impl/rwt/themes/business/business_less_insets.css");
         final Map<String, String> properties = new HashMap<String, String>();
         properties.put(WebClient.THEME_ID, "org.jowidgets.spi.impl.rwt.themes.business");
-        properties.put(WebClient.PAGE_TITLE, "RWT Workbench Demo");
-        application.addEntryPoint("/RwtWorkbenchDemo", RwtWorkbenchDemo.class, properties);
+        properties.put(WebClient.PAGE_TITLE, "RWT Demo Aplikation");
+        application.addEntryPoint("/RwtDemoApplication", RwtDemoApplicationEntryPoint.class, properties);
     }
 }
