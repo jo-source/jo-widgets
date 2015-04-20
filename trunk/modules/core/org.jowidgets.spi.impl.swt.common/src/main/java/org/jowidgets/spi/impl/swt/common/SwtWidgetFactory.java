@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.common.widgets.ButtonImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.CanvasImpl;
@@ -107,8 +108,11 @@ import org.jowidgets.util.Assert;
 
 public final class SwtWidgetFactory implements IWidgetFactorySpi {
 
-    public SwtWidgetFactory() {
-        super();
+    private final SwtImageRegistry imageRegistry;
+
+    public SwtWidgetFactory(final SwtImageRegistry imageRegistry) {
+        Assert.paramNotNull(imageRegistry, "imageRegistry");
+        this.imageRegistry = imageRegistry;
     }
 
     @Override
@@ -125,7 +129,7 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
     public IFrameSpi createFrame(final IGenericWidgetFactory factory, final Object uiReference) {
         Assert.paramNotNull(uiReference, "uiReference");
         if (uiReference instanceof Shell) {
-            return new NativeSwtFrameWrapper(factory, (Shell) uiReference);
+            return new NativeSwtFrameWrapper(factory, (Shell) uiReference, imageRegistry);
         }
         throw new IllegalArgumentException("UiReference must be instanceof of '" + Shell.class.getName() + "'");
     }
@@ -139,19 +143,19 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
     public ICompositeSpi createComposite(final IGenericWidgetFactory factory, final Object uiReference) {
         Assert.paramNotNull(uiReference, "uiReference");
         if (uiReference instanceof Composite) {
-            return new CompositeWrapper(factory, (Composite) uiReference);
+            return new CompositeWrapper(factory, (Composite) uiReference, imageRegistry);
         }
         throw new IllegalArgumentException("UiReference must be instanceof of '" + Composite.class.getName() + "'");
     }
 
     @Override
     public IFrameSpi createFrame(final IGenericWidgetFactory factory, final IFrameSetupSpi setup) {
-        return new FrameImpl(factory, setup);
+        return new FrameImpl(factory, setup, imageRegistry);
     }
 
     @Override
     public IFrameSpi createDialog(final IGenericWidgetFactory factory, final Object parentUiReference, final IDialogSetupSpi setup) {
-        return new DialogImpl(factory, parentUiReference, setup);
+        return new DialogImpl(factory, parentUiReference, setup, imageRegistry);
     }
 
     @Override
@@ -159,7 +163,7 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
         final IGenericWidgetFactory factory,
         final Object parentUiReference,
         final IPopupDialogSetupSpi setup) {
-        return new PopupDialogImpl(factory, parentUiReference, setup);
+        return new PopupDialogImpl(factory, parentUiReference, setup, imageRegistry);
     }
 
     @Override
@@ -167,7 +171,7 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
         final IGenericWidgetFactory factory,
         final Object parentUiReference,
         final ICompositeSetupSpi setup) {
-        return new CompositeImpl(factory, parentUiReference, setup);
+        return new CompositeImpl(factory, parentUiReference, setup, imageRegistry);
     }
 
     @Override
@@ -175,7 +179,7 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
         final IGenericWidgetFactory factory,
         final Object parentUiReference,
         final IScrollCompositeSetupSpi setup) {
-        return new ScrollCompositeImpl(factory, parentUiReference, setup);
+        return new ScrollCompositeImpl(factory, parentUiReference, setup, imageRegistry);
     }
 
     @Override
@@ -183,72 +187,72 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
         final IGenericWidgetFactory factory,
         final Object parentUiReference,
         final ISplitCompositeSetupSpi setup) {
-        return new SplitCompositeImpl(factory, parentUiReference, setup);
+        return new SplitCompositeImpl(factory, parentUiReference, setup, imageRegistry);
     }
 
     @Override
     public ITextControlSpi createTextField(final Object parentUiReference, final ITextFieldSetupSpi setup) {
         if (setup.isInheritBackground()) {
-            return new TransparentTextFieldImpl(parentUiReference, setup);
+            return new TransparentTextFieldImpl(parentUiReference, setup, imageRegistry);
         }
         else {
-            return new TextFieldImpl(parentUiReference, setup);
+            return new TextFieldImpl(parentUiReference, setup, imageRegistry);
         }
     }
 
     @Override
     public ITextAreaSpi createTextArea(final Object parentUiReference, final ITextAreaSetupSpi setup) {
         if (SwtOptions.hasNativeTextAreaScrollBars() || setup.isAlwaysShowBars()) {
-            return new TextAreaNativeScrollBarImpl(parentUiReference, setup);
+            return new TextAreaNativeScrollBarImpl(parentUiReference, setup, imageRegistry);
         }
         else {
-            return new TextAreaImpl(parentUiReference, setup);
+            return new TextAreaImpl(parentUiReference, setup, imageRegistry);
         }
     }
 
     @Override
     public ITextLabelSpi createTextLabel(final Object parentUiReference, final ITextLabelSetupSpi setup) {
-        return new TextLabelImpl(parentUiReference, setup);
+        return new TextLabelImpl(parentUiReference, setup, imageRegistry);
     }
 
     @Override
     public IIconSpi createIcon(final Object parentUiReference, final IIconSetupSpi setup) {
-        return new IconImpl(parentUiReference, setup);
+        return new IconImpl(parentUiReference, setup, imageRegistry);
     }
 
     @Override
     public IButtonSpi createButton(final Object parentUiReference, final IButtonSetupSpi setup) {
-        return new ButtonImpl(parentUiReference, setup);
+        return new ButtonImpl(parentUiReference, setup, imageRegistry);
     }
 
     @Override
     public IControlSpi createSeparator(final Object parentUiReference, final ISeparatorSetupSpi setup) {
-        return new SeparatorImpl(parentUiReference, setup);
+        return new SeparatorImpl(parentUiReference, setup, imageRegistry);
     }
 
     @Override
     public ICheckBoxSpi createCheckBox(final Object parentUiReference, final ICheckBoxSetupSpi setup) {
-        return new CheckBoxImpl(parentUiReference, setup);
+        return new CheckBoxImpl(parentUiReference, setup, imageRegistry);
     }
 
     @Override
     public IToggleButtonSpi createToggleButton(final Object parentUiReference, final IToggleButtonSetupSpi setup) {
-        return new ToggleButtonImpl(parentUiReference, setup);
+        return new ToggleButtonImpl(parentUiReference, setup, imageRegistry);
     }
 
     @Override
     public IComboBoxSelectionSpi createComboBoxSelection(final Object parentUiReference, final IComboBoxSelectionSetupSpi setup) {
-        return new ComboBoxImpl(parentUiReference, setup);
+        return new ComboBoxImpl(parentUiReference, setup, imageRegistry);
     }
 
     @Override
     public IComboBoxSpi createComboBox(final Object parentUiReference, final IComboBoxSetupSpi setup) {
-        return new ComboBoxImpl(parentUiReference, setup);
+        return new ComboBoxImpl(parentUiReference, setup, imageRegistry);
     }
 
     @Override
     public IProgressBarSpi createProgressBar(final Object parentUiReference, final IProgressBarSetupSpi setup) {
-        return new ProgressBarImpl(parentUiReference, setup);
+        return new ProgressBarImpl(parentUiReference, setup, imageRegistry);
     }
 
     @Override
@@ -256,7 +260,7 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
         final IGenericWidgetFactory factory,
         final Object parentUiReference,
         final IToolBarSetupSpi setup) {
-        return new ToolBarImpl(factory, parentUiReference, setup);
+        return new ToolBarImpl(factory, parentUiReference, setup, imageRegistry);
     }
 
     @Override
@@ -264,22 +268,22 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
         final IGenericWidgetFactory factory,
         final Object parentUiReference,
         final ITabFolderSetupSpi setup) {
-        return new TabFolderImpl(factory, parentUiReference, setup);
+        return new TabFolderImpl(factory, parentUiReference, setup, imageRegistry);
     }
 
     @Override
     public ITreeSpi createTree(final Object parentUiReference, final ITreeSetupSpi setup) {
-        return new TreeImpl(parentUiReference, setup);
+        return new TreeImpl(parentUiReference, setup, imageRegistry);
     }
 
     @Override
     public ITableSpi createTable(final IGenericWidgetFactory factory, final Object parentUiReference, final ITableSetupSpi setup) {
-        return new TableImpl(factory, parentUiReference, setup);
+        return new TableImpl(factory, parentUiReference, setup, imageRegistry);
     }
 
     @Override
     public ISliderSpi createSlider(final Object parentUiReference, final ISliderSetupSpi setup) {
-        return new SliderImpl(parentUiReference, setup);
+        return new SliderImpl(parentUiReference, setup, imageRegistry);
     }
 
     @Override
@@ -287,7 +291,7 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
         final IGenericWidgetFactory factory,
         final Object parentUiReference,
         final ICanvasSetupSpi setup) {
-        return new CanvasImpl(factory, parentUiReference, setup);
+        return new CanvasImpl(factory, parentUiReference, setup, imageRegistry);
     }
 
 }

@@ -37,6 +37,7 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IToolBarButtonSpi;
 import org.jowidgets.spi.widgets.IToolBarContainerItemSpi;
 import org.jowidgets.spi.widgets.IToolBarItemSpi;
@@ -48,12 +49,18 @@ import org.jowidgets.spi.widgets.setup.IToolBarSetupSpi;
 public class ToolBarImpl extends SwtControl implements IToolBarSpi {
 
     private final IGenericWidgetFactory factory;
+    private final SwtImageRegistry imageRegistry;
 
     private final Map<ToolItem, ToolBarContainerItemImpl> containerMap;
 
-    public ToolBarImpl(final IGenericWidgetFactory factory, final Object parentUiReference, final IToolBarSetupSpi setup) {
-        super(new ToolBar((Composite) parentUiReference, getStyle(setup)));
+    public ToolBarImpl(
+        final IGenericWidgetFactory factory,
+        final Object parentUiReference,
+        final IToolBarSetupSpi setup,
+        final SwtImageRegistry imageRegistry) {
+        super(new ToolBar((Composite) parentUiReference, getStyle(setup)), imageRegistry);
         this.factory = factory;
+        this.imageRegistry = imageRegistry;
         this.containerMap = new HashMap<ToolItem, ToolBarContainerItemImpl>();
     }
 
@@ -80,7 +87,7 @@ public class ToolBarImpl extends SwtControl implements IToolBarSpi {
         else {
             toolItem = new ToolItem(getUiReference(), SWT.PUSH);
         }
-        return new ToolBarButtonImpl(toolItem);
+        return new ToolBarButtonImpl(toolItem, imageRegistry);
     }
 
     @Override
@@ -92,7 +99,7 @@ public class ToolBarImpl extends SwtControl implements IToolBarSpi {
         else {
             toolItem = new ToolItem(getUiReference(), SWT.CHECK);
         }
-        return new ToolBarToggleButtonImpl(toolItem);
+        return new ToolBarToggleButtonImpl(toolItem, imageRegistry);
     }
 
     @Override
@@ -104,7 +111,7 @@ public class ToolBarImpl extends SwtControl implements IToolBarSpi {
         else {
             toolItem = new ToolItem(getUiReference(), SWT.DROP_DOWN);
         }
-        return new ToolBarPopupButtonImpl(toolItem);
+        return new ToolBarPopupButtonImpl(toolItem, imageRegistry);
     }
 
     @Override
@@ -116,7 +123,7 @@ public class ToolBarImpl extends SwtControl implements IToolBarSpi {
         else {
             toolItem = new ToolItem(getUiReference(), SWT.SEPARATOR);
         }
-        final ToolBarContainerItemImpl result = new ToolBarContainerItemImpl(toolItem, getUiReference(), factory);
+        final ToolBarContainerItemImpl result = new ToolBarContainerItemImpl(toolItem, getUiReference(), factory, imageRegistry);
         containerMap.put(toolItem, result);
         return result;
     }
@@ -130,7 +137,7 @@ public class ToolBarImpl extends SwtControl implements IToolBarSpi {
         else {
             toolItem = new ToolItem(getUiReference(), SWT.SEPARATOR);
         }
-        return new ToolBarItemImpl(toolItem);
+        return new ToolBarItemImpl(toolItem, imageRegistry);
     }
 
     @Override

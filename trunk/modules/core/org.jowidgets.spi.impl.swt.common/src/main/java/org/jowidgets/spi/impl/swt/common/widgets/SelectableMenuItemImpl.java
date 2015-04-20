@@ -35,14 +35,15 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.jowidgets.common.widgets.controller.IItemStateListener;
 import org.jowidgets.spi.impl.controller.ItemStateObservable;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
 public class SelectableMenuItemImpl extends MenuItemImpl implements ISelectableMenuItemSpi {
 
     private final ItemStateObservable itemStateObservable;
 
-    public SelectableMenuItemImpl(final MenuItem menuItem) {
-        super(menuItem);
+    public SelectableMenuItemImpl(final MenuItem menuItem, final SwtImageRegistry imageRegistry) {
+        super(menuItem, imageRegistry);
 
         this.itemStateObservable = new ItemStateObservable();
         menuItem.addSelectionListener(new SelectionAdapter() {

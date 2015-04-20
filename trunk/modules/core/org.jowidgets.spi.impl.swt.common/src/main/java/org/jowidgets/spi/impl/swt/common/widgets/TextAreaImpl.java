@@ -44,6 +44,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.impl.swt.common.color.ColorCache;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.common.util.FontProvider;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
@@ -59,8 +60,8 @@ public class TextAreaImpl extends AbstractTextInputControl implements ITextAreaS
 
     private int lastLineCount;
 
-    public TextAreaImpl(final Object parentUiReference, final ITextAreaSetupSpi setup) {
-        super(new ScrolledComposite((Composite) parentUiReference, getScrollCompositeStyle(setup)));
+    public TextAreaImpl(final Object parentUiReference, final ITextAreaSetupSpi setup, final SwtImageRegistry imageRegistry) {
+        super(new ScrolledComposite((Composite) parentUiReference, getScrollCompositeStyle(setup)), imageRegistry);
 
         lastLineCount = 0;
         isLineWrap = setup.isLineWrap();

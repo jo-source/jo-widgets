@@ -29,15 +29,16 @@ package org.jowidgets.spi.impl.swt.common.widgets;
 
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IMainMenuSpi;
 
 public class MainMenuImpl extends SwtMenu implements IMainMenuSpi {
 
     private final MenuItemImpl menuItemDelegate;
 
-    public MainMenuImpl(final MenuItem menuItem, final Menu menu) {
-        super(menu);
-        this.menuItemDelegate = new MenuItemImpl(menuItem);
+    public MainMenuImpl(final MenuItem menuItem, final Menu menu, final SwtImageRegistry imageRegistry) {
+        super(menu, imageRegistry);
+        this.menuItemDelegate = new MenuItemImpl(menuItem, imageRegistry);
     }
 
     @Override

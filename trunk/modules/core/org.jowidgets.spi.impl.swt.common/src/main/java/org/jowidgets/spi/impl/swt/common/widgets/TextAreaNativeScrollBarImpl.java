@@ -39,6 +39,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.impl.swt.common.color.ColorCache;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.common.util.FontProvider;
 import org.jowidgets.spi.impl.verify.InputVerifierHelper;
@@ -53,8 +54,11 @@ public class TextAreaNativeScrollBarImpl extends AbstractTextInputControl implem
 
     private int lastLineCount;
 
-    public TextAreaNativeScrollBarImpl(final Object parentUiReference, final ITextAreaSetupSpi setup) {
-        super(new Text((Composite) parentUiReference, getTextStyle(setup)));
+    public TextAreaNativeScrollBarImpl(
+        final Object parentUiReference,
+        final ITextAreaSetupSpi setup,
+        final SwtImageRegistry imageRegistry) {
+        super(new Text((Composite) parentUiReference, getTextStyle(setup)), imageRegistry);
 
         lastLineCount = 0;
         isLineWrap = setup.isLineWrap();

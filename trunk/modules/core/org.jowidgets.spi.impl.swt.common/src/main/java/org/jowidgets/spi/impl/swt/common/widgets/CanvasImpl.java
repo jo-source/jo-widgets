@@ -39,6 +39,7 @@ import org.jowidgets.spi.graphics.IPaintListenerSpi;
 import org.jowidgets.spi.impl.controller.PaintEventSpiImpl;
 import org.jowidgets.spi.impl.controller.PaintObservable;
 import org.jowidgets.spi.impl.swt.common.graphics.GraphicContextSpiImpl;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.ICanvasSpi;
 import org.jowidgets.spi.widgets.setup.ICanvasSetupSpi;
 
@@ -46,8 +47,12 @@ public class CanvasImpl extends SwtComposite implements ICanvasSpi {
 
     private final PaintObservable paintObservable;
 
-    public CanvasImpl(final IGenericWidgetFactory factory, final Object parentUiReference, final ICanvasSetupSpi setup) {
-        super(factory, new Canvas((Composite) parentUiReference, SWT.DOUBLE_BUFFERED));
+    public CanvasImpl(
+        final IGenericWidgetFactory factory,
+        final Object parentUiReference,
+        final ICanvasSetupSpi setup,
+        final SwtImageRegistry imageRegistry) {
+        super(factory, new Canvas((Composite) parentUiReference, SWT.DOUBLE_BUFFERED), imageRegistry);
         getUiReference().setBackgroundMode(SWT.INHERIT_DEFAULT);
         this.paintObservable = new PaintObservable();
 
@@ -57,7 +62,7 @@ public class CanvasImpl extends SwtComposite implements ICanvasSpi {
                 final Dimension size = getSize();
                 final Rectangle bounds = new Rectangle(0, 0, size.getWidth(), size.getHeight());
                 final Rectangle clipBounds = new Rectangle(e.x, e.y, e.width, e.height);
-                final GraphicContextSpiImpl graphicContext = new GraphicContextSpiImpl(e.gc, bounds);
+                final GraphicContextSpiImpl graphicContext = new GraphicContextSpiImpl(e.gc, bounds, imageRegistry);
                 paintObservable.firePaint(new PaintEventSpiImpl(graphicContext, clipBounds));
             }
         });

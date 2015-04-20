@@ -31,6 +31,7 @@ package org.jowidgets.spi.impl.swt.common.widgets;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.util.BorderToComposite;
 import org.jowidgets.spi.impl.swt.common.util.DimensionConvert;
 import org.jowidgets.spi.impl.swt.common.widgets.base.JoSashForm;
@@ -47,15 +48,16 @@ public class SplitCompositeImpl extends SwtControl implements ISplitCompositeSpi
     public SplitCompositeImpl(
         final IGenericWidgetFactory factory,
         final Object parentUiReference,
-        final ISplitCompositeSetupSpi setup) {
-        super(new JoSashForm((Composite) parentUiReference, setup));
+        final ISplitCompositeSetupSpi setup,
+        final SwtImageRegistry imageRegistry) {
+        super(new JoSashForm((Composite) parentUiReference, setup), imageRegistry);
 
         final JoSashForm sashForm = getUiReference();
 
         final Composite content1 = BorderToComposite.convert(sashForm, setup.getFirstBorder());
         final Composite content2 = BorderToComposite.convert(sashForm, setup.getSecondBorder());
-        first = new SwtComposite(factory, content1);
-        second = new SwtComposite(factory, content2);
+        first = new SwtComposite(factory, content1, imageRegistry);
+        second = new SwtComposite(factory, content2, imageRegistry);
 
         first.setLayout(setup.getFirstLayout());
         second.setLayout(setup.getSecondLayout());

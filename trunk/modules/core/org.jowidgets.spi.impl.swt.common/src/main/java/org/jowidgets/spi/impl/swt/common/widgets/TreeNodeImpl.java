@@ -57,6 +57,8 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 
     private final TreeImpl parentTree;
     private final TreeItem item;
+    private final SwtImageRegistry imageRegistry;
+
     private String toolTipText;
 
     private Boolean expanded;
@@ -66,8 +68,14 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 
     private IColorConstant lastCheckableColor;
 
-    public TreeNodeImpl(final TreeImpl parentTree, final TreeItem parentItem, final Integer index) {
+    public TreeNodeImpl(
+        final TreeImpl parentTree,
+        final TreeItem parentItem,
+        final Integer index,
+        final SwtImageRegistry imageRegistry) {
         Assert.paramNotNull(parentTree, "parentTree");
+
+        this.imageRegistry = imageRegistry;
 
         this.popupDetectionListeners = new HashSet<IPopupDetectionListener>();
 
@@ -141,7 +149,7 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
     @Override
     public void setIcon(final IImageConstant icon) {
         final Image oldImage = getUiReference().getImage();
-        final Image newImage = SwtImageRegistry.getInstance().getImage(icon);
+        final Image newImage = imageRegistry.getImage(icon);
         if (oldImage != newImage) {
             getUiReference().setImage(newImage);
         }
@@ -260,7 +268,7 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 
     @Override
     public ITreeNodeSpi addNode(final Integer index) {
-        final TreeNodeImpl result = new TreeNodeImpl(parentTree, item, index);
+        final TreeNodeImpl result = new TreeNodeImpl(parentTree, item, index, imageRegistry);
         parentTree.registerItem(result.getUiReference(), result);
         return result;
     }
@@ -282,7 +290,7 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 
     @Override
     public IPopupMenuSpi createPopupMenu() {
-        return new PopupMenuImpl(parentTree.getUiReference());
+        return new PopupMenuImpl(parentTree.getUiReference(), imageRegistry);
     }
 
 }

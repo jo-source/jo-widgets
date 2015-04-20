@@ -30,15 +30,16 @@ package org.jowidgets.spi.impl.swt.common.widgets;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.ISubMenuSpi;
 
 public class SubMenuImpl extends SwtMenu implements ISubMenuSpi, IToolTipTextProvider {
 
     private final MenuItemImpl menuItemDelegate;
 
-    public SubMenuImpl(final MenuItem menuItem, final Menu menu) {
-        super(menu);
-        this.menuItemDelegate = new MenuItemImpl(menuItem);
+    public SubMenuImpl(final MenuItem menuItem, final Menu menu, final SwtImageRegistry imageRegistry) {
+        super(menu, imageRegistry);
+        this.menuItemDelegate = new MenuItemImpl(menuItem, imageRegistry);
     }
 
     @Override

@@ -55,6 +55,7 @@ import org.jowidgets.common.widgets.controller.IKeyListener;
 import org.jowidgets.spi.impl.controller.FocusObservable;
 import org.jowidgets.spi.impl.controller.KeyObservable;
 import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.common.util.FontProvider;
 import org.jowidgets.spi.impl.swt.common.widgets.event.LazyKeyEventContentFactory;
@@ -81,8 +82,11 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 
     private boolean programmaticTextChange;
 
-    public ComboBoxImpl(final Object parentUiReference, final IComboBoxSelectionSetupSpi setup) {
-        super(createCombo((Composite) parentUiReference, setup));
+    public ComboBoxImpl(
+        final Object parentUiReference,
+        final IComboBoxSelectionSetupSpi setup,
+        final SwtImageRegistry imageRegistry) {
+        super(createCombo((Composite) parentUiReference, setup), imageRegistry);
         this.programmaticTextChange = true;
         this.isAutoCompletionMode = setup.isAutoCompletion();
         this.isSelectionMode = !(setup instanceof IComboBoxSetupSpi);

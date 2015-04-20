@@ -54,6 +54,7 @@ import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.common.widgets.layout.ILayouter;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.layout.LayoutImpl;
 import org.jowidgets.spi.impl.swt.common.util.RectangleConvert;
 import org.jowidgets.spi.widgets.IContainerSpi;
@@ -67,14 +68,14 @@ public class SwtContainer implements IContainerSpi {
 
     private Composite composite;
 
-    public SwtContainer(final IGenericWidgetFactory factory, final Composite composite) {
+    public SwtContainer(final IGenericWidgetFactory factory, final Composite composite, final SwtImageRegistry imageRegistry) {
 
         Assert.paramNotNull(factory, "factory");
         Assert.paramNotNull(composite, "composite");
 
         this.factory = factory;
         this.composite = composite;
-        this.swtComponentDelegate = new SwtComponent(composite);
+        this.swtComponentDelegate = new SwtComponent(composite, imageRegistry);
 
     }
 

@@ -38,6 +38,7 @@ import org.jowidgets.spi.impl.swt.common.dnd.IDropSelectionProvider;
 import org.jowidgets.spi.impl.swt.common.dnd.ImmutableDropSelection;
 import org.jowidgets.spi.impl.swt.common.dnd.SwtDragSource;
 import org.jowidgets.spi.impl.swt.common.dnd.SwtDropTarget;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.util.DimensionConvert;
 import org.jowidgets.spi.impl.swt.common.widgets.base.IEnhancedLayoutable;
 import org.jowidgets.spi.impl.swt.common.widgets.base.IEnhancedLayoutable.LayoutMode;
@@ -52,12 +53,12 @@ public class SwtControl extends SwtComponent implements IControlSpi {
 
     private boolean visible;
 
-    public SwtControl(final Control control) {
-        this(control, null);
+    public SwtControl(final Control control, final SwtImageRegistry imageRegistry) {
+        this(control, null, imageRegistry);
     }
 
-    public SwtControl(final Control control, IDropSelectionProvider dropSelectionProvider) {
-        super(control);
+    public SwtControl(final Control control, IDropSelectionProvider dropSelectionProvider, final SwtImageRegistry imageRegistry) {
+        super(control, imageRegistry);
         this.visible = true;
         this.dragSource = new SwtDragSource(control);
         if (dropSelectionProvider == null) {

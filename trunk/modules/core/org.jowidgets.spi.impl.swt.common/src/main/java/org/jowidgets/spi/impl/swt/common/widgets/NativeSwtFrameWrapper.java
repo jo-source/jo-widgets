@@ -29,12 +29,13 @@ package org.jowidgets.spi.impl.swt.common.widgets;
 
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IFrameSpi;
 
 public class NativeSwtFrameWrapper extends SwtWindow implements IFrameSpi {
 
-    public NativeSwtFrameWrapper(final IGenericWidgetFactory factory, final Shell shell) {
-        super(factory, shell);
+    public NativeSwtFrameWrapper(final IGenericWidgetFactory factory, final Shell shell, final SwtImageRegistry imageRegistry) {
+        super(factory, shell, imageRegistry);
     }
 
 }

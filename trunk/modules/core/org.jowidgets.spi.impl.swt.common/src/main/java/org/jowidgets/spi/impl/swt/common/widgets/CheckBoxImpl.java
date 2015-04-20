@@ -34,6 +34,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.jowidgets.common.types.Markup;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.util.AlignmentConvert;
 import org.jowidgets.spi.impl.swt.common.util.FontProvider;
 import org.jowidgets.spi.widgets.ICheckBoxSpi;
@@ -41,12 +42,12 @@ import org.jowidgets.spi.widgets.setup.ICheckBoxSetupSpi;
 
 public class CheckBoxImpl extends AbstractInputControl implements ICheckBoxSpi {
 
-    public CheckBoxImpl(final Object parentUiReference, final ICheckBoxSetupSpi setup) {
-        this(new Button((Composite) parentUiReference, SWT.NONE | SWT.CHECK), setup);
+    public CheckBoxImpl(final Object parentUiReference, final ICheckBoxSetupSpi setup, final SwtImageRegistry imageRegistry) {
+        this(new Button((Composite) parentUiReference, SWT.NONE | SWT.CHECK), setup, imageRegistry);
     }
 
-    public CheckBoxImpl(final Button button, final ICheckBoxSetupSpi setup) {
-        super(button);
+    public CheckBoxImpl(final Button button, final ICheckBoxSetupSpi setup, final SwtImageRegistry imageRegistry) {
+        super(button, imageRegistry);
 
         setText(setup.getText());
         setToolTipText(setup.getToolTipText());

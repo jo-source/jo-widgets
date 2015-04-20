@@ -28,11 +28,18 @@
 
 package org.jowidgets.spi.impl.bridge.swt.awt.common.swt;
 
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
+
 final class SwtAwtControlFactorySpiImpl implements ISwtAwtControlFactorySpi {
+
+    private final SwtImageRegistry imageRegistry;
+
+    SwtAwtControlFactorySpiImpl(final SwtImageRegistry imageRegistry) {
+        this.imageRegistry = imageRegistry;
+    }
 
     @Override
     public ISwtAwtControlSpi createSwtAwtControl(final Object parentUiReference) {
-        return new SwtAwtControlImpl(parentUiReference);
+        return new SwtAwtControlImpl(parentUiReference, imageRegistry);
     }
-
 }

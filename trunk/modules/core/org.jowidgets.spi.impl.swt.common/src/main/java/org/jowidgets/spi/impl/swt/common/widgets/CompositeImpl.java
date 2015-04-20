@@ -30,14 +30,19 @@ package org.jowidgets.spi.impl.swt.common.widgets;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.util.BorderToComposite;
 import org.jowidgets.spi.widgets.setup.ICompositeSetupSpi;
 
 public class CompositeImpl extends SwtComposite {
 
-    public CompositeImpl(final IGenericWidgetFactory factory, final Object parentUiReference, final ICompositeSetupSpi setup) {
+    public CompositeImpl(
+        final IGenericWidgetFactory factory,
+        final Object parentUiReference,
+        final ICompositeSetupSpi setup,
+        final SwtImageRegistry imageRegistry) {
 
-        super(factory, createComposite(parentUiReference, setup));
+        super(factory, createComposite(parentUiReference, setup), imageRegistry);
 
         getUiReference().setBackgroundMode(SWT.INHERIT_DEFAULT);
     }

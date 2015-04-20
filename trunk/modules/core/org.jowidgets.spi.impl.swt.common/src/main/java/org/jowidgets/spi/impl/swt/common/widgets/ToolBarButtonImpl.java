@@ -34,14 +34,15 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.ToolItem;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.spi.impl.controller.ActionObservable;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IToolBarButtonSpi;
 
 public class ToolBarButtonImpl extends ToolBarItemImpl implements IToolBarButtonSpi {
 
     private final ActionObservable actionObservable;
 
-    public ToolBarButtonImpl(final ToolItem item) {
-        super(item);
+    public ToolBarButtonImpl(final ToolItem item, final SwtImageRegistry imageRegistry) {
+        super(item, imageRegistry);
         this.actionObservable = new ActionObservable();
 
         item.addSelectionListener(new SelectionAdapter() {

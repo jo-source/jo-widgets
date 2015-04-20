@@ -32,6 +32,7 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.jowidgets.common.types.Markup;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.util.AlignmentConvert;
 import org.jowidgets.spi.impl.swt.common.util.FontProvider;
 import org.jowidgets.spi.widgets.ITextLabelSpi;
@@ -39,9 +40,8 @@ import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 
 public class TextLabelImpl extends SwtControl implements ITextLabelSpi {
 
-    public TextLabelImpl(final Object parentUiReference, final ITextLabelSetupSpi setup) {
-
-        super(new Label((Composite) parentUiReference, SWT.NONE));
+    public TextLabelImpl(final Object parentUiReference, final ITextLabelSetupSpi setup, final SwtImageRegistry imageRegistry) {
+        super(new Label((Composite) parentUiReference, SWT.NONE), imageRegistry);
 
         setText(setup.getText());
         setToolTipText(setup.getToolTipText());

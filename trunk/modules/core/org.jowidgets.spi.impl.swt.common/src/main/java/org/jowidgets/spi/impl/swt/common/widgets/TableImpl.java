@@ -124,6 +124,8 @@ import org.jowidgets.util.Interval;
 
 public class TableImpl extends SwtControl implements ITableSpi {
 
+    private final SwtImageRegistry imageRegistry;
+
     private final Table table;
     private final ITableDataModel dataModel;
     private final ITableColumnModelSpi columnModel;
@@ -165,8 +167,14 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
     private Integer rowHeight;
 
-    public TableImpl(final IGenericWidgetFactory factory, final Object parentUiReference, final ITableSetupSpi setup) {
-        super(new Table((Composite) parentUiReference, getStyle(setup)));
+    public TableImpl(
+        final IGenericWidgetFactory factory,
+        final Object parentUiReference,
+        final ITableSetupSpi setup,
+        final SwtImageRegistry imageRegistry) {
+        super(new Table((Composite) parentUiReference, getStyle(setup)), imageRegistry);
+
+        this.imageRegistry = imageRegistry;
 
         this.factory = factory;
         this.editorCustomWidgetFactory = new EditorCustomWidgetFactory();
@@ -449,7 +457,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
             swtColumn.setText("");
         }
         if (icon != null) {
-            swtColumn.setImage(SwtImageRegistry.getInstance().getImage(icon));
+            swtColumn.setImage(imageRegistry.getImage(icon));
         }
         else {
             swtColumn.setImage(null);
@@ -1180,7 +1188,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
                         item.setText(internalIndex, "");
                     }
                     if (icon != null) {
-                        item.setImage(internalIndex, SwtImageRegistry.getInstance().getImage(icon));
+                        item.setImage(internalIndex, imageRegistry.getImage(icon));
                     }
                     if (markup != null) {
                         final Font newFont = FontProvider.deriveFont(item.getFont(), markup);

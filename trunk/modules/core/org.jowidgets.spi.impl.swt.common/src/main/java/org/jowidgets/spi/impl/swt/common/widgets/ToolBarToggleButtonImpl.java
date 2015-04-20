@@ -33,14 +33,15 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.ToolItem;
 import org.jowidgets.common.widgets.controller.IItemStateListener;
 import org.jowidgets.spi.impl.controller.ItemStateObservable;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
 
 public class ToolBarToggleButtonImpl extends ToolBarButtonImpl implements IToolBarToggleButtonSpi {
 
     private final ItemStateObservable itemStateObservable;
 
-    public ToolBarToggleButtonImpl(final ToolItem item) {
-        super(item);
+    public ToolBarToggleButtonImpl(final ToolItem item, final SwtImageRegistry imageRegistry) {
+        super(item, imageRegistry);
         this.itemStateObservable = new ItemStateObservable();
 
         item.addSelectionListener(new SelectionAdapter() {

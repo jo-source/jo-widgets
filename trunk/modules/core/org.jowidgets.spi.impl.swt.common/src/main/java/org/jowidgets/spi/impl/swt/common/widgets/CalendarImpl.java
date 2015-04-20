@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DateTime;
 import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.spi.impl.controller.InputObservable;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.ICalendarSpi;
 import org.jowidgets.spi.widgets.setup.ICalendarSetupSpi;
 import org.jowidgets.util.Assert;
@@ -48,8 +49,8 @@ public class CalendarImpl extends SwtControl implements ICalendarSpi {
 
     private Date date;
 
-    public CalendarImpl(final Object parentUiReference, final ICalendarSetupSpi setup) {
-        super(new DateTime((Composite) parentUiReference, SWT.CALENDAR));
+    public CalendarImpl(final Object parentUiReference, final ICalendarSetupSpi setup, final SwtImageRegistry imageRegistry) {
+        super(new DateTime((Composite) parentUiReference, SWT.CALENDAR), imageRegistry);
 
         this.inputObservable = new InputObservable();
 

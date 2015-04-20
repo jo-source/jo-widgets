@@ -31,13 +31,17 @@ package org.jowidgets.spi.impl.swt.common.widgets;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IMainMenuSpi;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
 
 public class MenuBarImpl extends SwtMenu implements IMenuBarSpi {
 
-    public MenuBarImpl(final Menu menu) {
-        super(menu);
+    private final SwtImageRegistry imageRegistry;
+
+    public MenuBarImpl(final Menu menu, final SwtImageRegistry imageRegistry) {
+        super(menu, imageRegistry);
+        this.imageRegistry = imageRegistry;
     }
 
     @Override
@@ -52,7 +56,7 @@ public class MenuBarImpl extends SwtMenu implements IMenuBarSpi {
 
         final Menu menu = new Menu(getUiReference().getShell(), SWT.DROP_DOWN);
         menuItem.setMenu(menu);
-        return new MainMenuImpl(menuItem, menu);
+        return new MainMenuImpl(menuItem, menu, imageRegistry);
     }
 
 }

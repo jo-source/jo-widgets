@@ -35,14 +35,15 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 import org.jowidgets.common.types.Position;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public class PopupMenuImpl extends SwtMenu implements IPopupMenuSpi {
 
     private Control parent;
 
-    public PopupMenuImpl(final Control parent) {
-        super(new Menu(parent.getShell(), SWT.POP_UP));
+    public PopupMenuImpl(final Control parent, final SwtImageRegistry imageRegistry) {
+        super(new Menu(parent.getShell(), SWT.POP_UP), imageRegistry);
         this.parent = parent;
 
         parent.addDisposeListener(new DisposeListener() {

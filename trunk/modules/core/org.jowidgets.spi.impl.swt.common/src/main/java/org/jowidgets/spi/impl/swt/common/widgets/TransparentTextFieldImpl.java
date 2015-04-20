@@ -41,6 +41,7 @@ import org.jowidgets.common.widgets.controller.IMouseMotionListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
 import org.jowidgets.spi.dnd.IDropTargetSpi;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.ITextControlSpi;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 
@@ -48,15 +49,18 @@ public class TransparentTextFieldImpl extends SwtControl implements ITextControl
 
     private final TextFieldImpl textField;
 
-    public TransparentTextFieldImpl(final Object parentUiReference, final ITextFieldSetupSpi setup) {
-        super(new Composite((Composite) parentUiReference, SWT.NONE));
+    public TransparentTextFieldImpl(
+        final Object parentUiReference,
+        final ITextFieldSetupSpi setup,
+        final SwtImageRegistry imageRegistry) {
+        super(new Composite((Composite) parentUiReference, SWT.NONE), imageRegistry);
 
         final Composite composite = getUiReference();
 
         composite.setBackgroundMode(SWT.INHERIT_FORCE);
         composite.setLayout(new FillLayout());
 
-        this.textField = new TextFieldImpl(composite, setup);
+        this.textField = new TextFieldImpl(composite, setup, imageRegistry);
     }
 
     @Override

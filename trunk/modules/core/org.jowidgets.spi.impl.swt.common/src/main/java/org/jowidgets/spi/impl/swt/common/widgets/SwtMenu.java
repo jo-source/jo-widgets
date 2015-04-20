@@ -40,6 +40,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.ToolTip;
 import org.jowidgets.common.widgets.controller.IMenuListener;
 import org.jowidgets.spi.impl.controller.MenuObservable;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuSpi;
@@ -49,16 +50,19 @@ import org.jowidgets.spi.widgets.ISubMenuSpi;
 public class SwtMenu implements IMenuSpi {
 
     private final Menu menu;
+    private final SwtImageRegistry imageRegistry;
+
     private ToolTip toolTip;
 
     private ArmListener lastArmListener;
 
     private final MenuObservable menuObservable;
 
-    public SwtMenu(final Menu menu) {
+    public SwtMenu(final Menu menu, final SwtImageRegistry imageRegistry) {
         this.menuObservable = new MenuObservable();
 
         this.menu = menu;
+        this.imageRegistry = imageRegistry;
 
         try {
             this.toolTip = new ToolTip(menu.getShell(), SWT.NONE);
@@ -170,23 +174,23 @@ public class SwtMenu implements IMenuSpi {
         else {
             menuItem = new MenuItem(menu, SWT.SEPARATOR);
         }
-        return new MenuItemImpl(menuItem);
+        return new MenuItemImpl(menuItem, imageRegistry);
     }
 
     private ActionMenuItemImpl createActionItem(final MenuItem menuItem) {
-        final ActionMenuItemImpl result = new ActionMenuItemImpl(menuItem);
+        final ActionMenuItemImpl result = new ActionMenuItemImpl(menuItem, imageRegistry);
         installTooltip(menuItem, result);
         return result;
     }
 
     private SelectableMenuItemImpl createSelectableItem(final MenuItem menuItem) {
-        final SelectableMenuItemImpl result = new SelectableMenuItemImpl(menuItem);
+        final SelectableMenuItemImpl result = new SelectableMenuItemImpl(menuItem, imageRegistry);
         installTooltip(menuItem, result);
         return result;
     }
 
     private SubMenuImpl createSubMenu(final MenuItem subMenuItem, final Menu subMenu) {
-        final SubMenuImpl result = new SubMenuImpl(subMenuItem, subMenu);
+        final SubMenuImpl result = new SubMenuImpl(subMenuItem, subMenu, imageRegistry);
         installTooltip(subMenuItem, result);
         return result;
     }

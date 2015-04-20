@@ -47,6 +47,7 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.TabPlacement;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.spi.widgets.ITabFolderSpi;
 import org.jowidgets.spi.widgets.ITabItemSpi;
@@ -58,14 +59,20 @@ import org.jowidgets.util.TypeCast;
 public class TabFolderImpl extends SwtControl implements ITabFolderSpi {
 
     private final IGenericWidgetFactory widgetFactory;
+    private final SwtImageRegistry imageRegistry;
     private final boolean tabsCloseable;
     private final Map<CTabItem, TabItemImpl> items;
 
-    public TabFolderImpl(final IGenericWidgetFactory widgetFactory, final Object parentUiReference, final ITabFolderSetupSpi setup) {
-        super(new CTabFolder((Composite) parentUiReference, getStyle(setup)));
+    public TabFolderImpl(
+        final IGenericWidgetFactory widgetFactory,
+        final Object parentUiReference,
+        final ITabFolderSetupSpi setup,
+        final SwtImageRegistry imageRegistry) {
+        super(new CTabFolder((Composite) parentUiReference, getStyle(setup)), imageRegistry);
 
         this.tabsCloseable = setup.isTabsCloseable();
         this.widgetFactory = widgetFactory;
+        this.imageRegistry = imageRegistry;
 
         this.items = new HashMap<CTabItem, TabItemImpl>();
 
@@ -154,14 +161,19 @@ public class TabFolderImpl extends SwtControl implements ITabFolderSpi {
 
     @Override
     public ITabItemSpi addItem(final ITabItemSetupSpi setup) {
-        final TabItemImpl result = new TabItemImpl(widgetFactory, getUiReference(), tabsCloseable);
+        final TabItemImpl result = new TabItemImpl(widgetFactory, getUiReference(), tabsCloseable, imageRegistry);
         items.put(result.getUiReference(), result);
         return result;
     }
 
     @Override
     public ITabItemSpi addItem(final int index, final ITabItemSetupSpi setup) {
-        final TabItemImpl result = new TabItemImpl(widgetFactory, getUiReference(), tabsCloseable, Integer.valueOf(index));
+        final TabItemImpl result = new TabItemImpl(
+            widgetFactory,
+            getUiReference(),
+            tabsCloseable,
+            Integer.valueOf(index),
+            imageRegistry);
         items.put(result.getUiReference(), result);
         return result;
     }

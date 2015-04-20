@@ -57,10 +57,11 @@ import org.jowidgets.util.TypeCast;
 public class SwtWindow extends SwtContainer implements IWindowSpi {
 
     private final WindowObservable windowObservableDelegate;
+    private final SwtImageRegistry imageRegistry;
 
-    public SwtWindow(final IGenericWidgetFactory factory, final Shell window) {
-        super(factory, window);
-
+    public SwtWindow(final IGenericWidgetFactory factory, final Shell window, final SwtImageRegistry imageRegistry) {
+        super(factory, window, imageRegistry);
+        this.imageRegistry = imageRegistry;
         this.windowObservableDelegate = new WindowObservable();
     }
 
@@ -167,7 +168,7 @@ public class SwtWindow extends SwtContainer implements IWindowSpi {
     }
 
     public void setIcon(final IImageConstant icon) {
-        getUiReference().setImage(SwtImageRegistry.getInstance().getImage(icon));
+        getUiReference().setImage(imageRegistry.getImage(icon));
     }
 
     @Override
@@ -205,7 +206,7 @@ public class SwtWindow extends SwtContainer implements IWindowSpi {
     public IMenuBarSpi createMenuBar() {
         final Menu menuBar = new Menu(getUiReference(), SWT.BAR);
         getUiReference().setMenuBar(menuBar);
-        return new MenuBarImpl(menuBar);
+        return new MenuBarImpl(menuBar, imageRegistry);
     }
 
     protected WindowObservable getWindowObservableDelegate() {

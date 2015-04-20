@@ -36,14 +36,15 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.jowidgets.common.types.InputChangeEventPolicy;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.ITextControlSpi;
 
 public abstract class AbstractTextInputControl extends AbstractInputControl implements ITextControlSpi {
 
     private ModifyListener modifyListener;
 
-    public AbstractTextInputControl(final Control control) {
-        super(control);
+    public AbstractTextInputControl(final Control control, final SwtImageRegistry imageRegistry) {
+        super(control, imageRegistry);
     }
 
     protected void registerTextControl(final Text textControl, final InputChangeEventPolicy policy) {

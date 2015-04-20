@@ -34,10 +34,8 @@ import org.jowidgets.spi.impl.image.ImageRegistry;
 
 public final class SwtImageRegistry extends ImageRegistry {
 
-    private static final SwtImageRegistry INSTANCE = new SwtImageRegistry(new SwtImageHandleFactory());
-
-    private SwtImageRegistry(final SwtImageHandleFactory imageHandleFactory) {
-        super(imageHandleFactory);
+    public SwtImageRegistry() {
+        super(new SwtImageHandleFactory());
     }
 
     @SuppressWarnings("unchecked")
@@ -57,10 +55,6 @@ public final class SwtImageRegistry extends ImageRegistry {
         else {
             throw new IllegalArgumentException("No image found for the image constant '" + key + "'");
         }
-    }
-
-    public static SwtImageRegistry getInstance() {
-        return INSTANCE;
     }
 
 }

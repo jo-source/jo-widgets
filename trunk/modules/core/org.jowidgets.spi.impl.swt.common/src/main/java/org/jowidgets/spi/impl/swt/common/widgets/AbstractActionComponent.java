@@ -38,6 +38,7 @@ import org.jowidgets.common.widgets.controller.IKeyListener;
 import org.jowidgets.common.widgets.controller.IMouseListener;
 import org.jowidgets.common.widgets.controller.IMouseMotionListener;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IActionWidgetSpi;
 import org.jowidgets.spi.widgets.IComponentSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
@@ -46,9 +47,9 @@ public abstract class AbstractActionComponent extends AbstractActionWidget imple
 
     private final SwtComponent swtComponentDelegate;
 
-    public AbstractActionComponent(final Control control) {
+    public AbstractActionComponent(final Control control, final SwtImageRegistry imageRegistry) {
         super(control);
-        this.swtComponentDelegate = new SwtComponent(control);
+        this.swtComponentDelegate = new SwtComponent(control, imageRegistry);
     }
 
     @Override

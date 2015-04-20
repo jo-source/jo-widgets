@@ -29,11 +29,12 @@ package org.jowidgets.spi.impl.swt.common.widgets;
 
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 
 public class CompositeWrapper extends SwtComposite {
 
-    public CompositeWrapper(final IGenericWidgetFactory factory, final Composite composite) {
-        super(factory, composite);
+    public CompositeWrapper(final IGenericWidgetFactory factory, final Composite composite, final SwtImageRegistry imageRegistry) {
+        super(factory, composite, imageRegistry);
     }
 
 }

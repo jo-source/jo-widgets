@@ -56,6 +56,7 @@ import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
 import org.jowidgets.spi.dnd.IDropTargetSpi;
 import org.jowidgets.spi.impl.swt.common.dnd.ImmutableDropSelection;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.util.PositionConvert;
 import org.jowidgets.spi.impl.swt.common.util.ScrollBarSettingsConvert;
 import org.jowidgets.spi.impl.swt.common.widgets.base.ScrollRootComposite;
@@ -74,7 +75,8 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
     public ScrollCompositeImpl(
         final IGenericWidgetFactory factory,
         final Object parentUiReference,
-        final IScrollCompositeSetupSpi setup) {
+        final IScrollCompositeSetupSpi setup,
+        final SwtImageRegistry imageRegistry) {
 
         final MigLayout growingMigLayout = new MigLayout("", "0[grow, 0::]0", "0[grow, 0::]0");
         final String growingCellConstraints = "grow, w 0::,h 0::";
@@ -82,7 +84,7 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
         this.scrolledRoot = new ScrollRootComposite((Composite) parentUiReference, SWT.NONE);
         scrolledRoot.setBackgroundMode(SWT.INHERIT_FORCE);
 
-        this.outerContainer = new SwtComposite(factory, scrolledRoot, new ImmutableDropSelection(this));
+        this.outerContainer = new SwtComposite(factory, scrolledRoot, new ImmutableDropSelection(this), imageRegistry);
         scrolledRoot.setLayout(growingMigLayout);
 
         this.scrolledComposite = new ScrolledComposite(scrolledRoot, ScrollBarSettingsConvert.convert(setup)) {
@@ -110,7 +112,7 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
         innerComposite.setBackgroundMode(SWT.INHERIT_DEFAULT);
         innerComposite.setLayoutData(growingCellConstraints);
 
-        this.innerContainer = new SwtContainer(factory, innerComposite);
+        this.innerContainer = new SwtContainer(factory, innerComposite, imageRegistry);
 
         contentLayout.addLayoutCallback(new LayoutCallback() {
             @Override
