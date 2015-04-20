@@ -45,8 +45,12 @@ import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
 
 public class ButtonImpl extends AbstractActionControl implements IButtonSpi {
 
-    public ButtonImpl(final Object parentUiReference, final IButtonSetupSpi setup) {
-        super(new Button((Composite) parentUiReference, SWT.NONE));
+    private final SwtImageRegistry imageRegistry;
+
+    public ButtonImpl(final Object parentUiReference, final IButtonSetupSpi setup, final SwtImageRegistry imageRegistry) {
+        super(new Button((Composite) parentUiReference, SWT.NONE), imageRegistry);
+
+        this.imageRegistry = imageRegistry;
 
         setText(setup.getText());
         setToolTipText(setup.getToolTipText());
@@ -81,7 +85,7 @@ public class ButtonImpl extends AbstractActionControl implements IButtonSpi {
 
     @Override
     public void setIcon(final IImageConstant icon) {
-        getUiReference().setImage(SwtImageRegistry.getInstance().getImage(icon));
+        getUiReference().setImage(imageRegistry.getImage(icon));
     }
 
     @Override

@@ -30,13 +30,14 @@ package org.jowidgets.spi.impl.swt.common.widgets;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;
 
 public class FrameImpl extends WindowImpl implements IFrameSpi {
 
-    public FrameImpl(final IGenericWidgetFactory factory, final IFrameSetupSpi setup) {
-        super(factory, new Shell(getStyle(setup)), setup.isCloseable());
+    public FrameImpl(final IGenericWidgetFactory factory, final IFrameSetupSpi setup, final SwtImageRegistry imageRegistry) {
+        super(factory, new Shell(getStyle(setup)), setup.isCloseable(), imageRegistry);
 
         if (setup.getTitle() != null) {
             getUiReference().setText(setup.getTitle());

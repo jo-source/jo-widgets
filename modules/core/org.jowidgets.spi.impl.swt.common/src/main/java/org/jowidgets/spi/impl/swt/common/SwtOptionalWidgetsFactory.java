@@ -31,6 +31,7 @@ package org.jowidgets.spi.impl.swt.common;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.FileDialog;
 import org.jowidgets.spi.IOptionalWidgetsFactorySpi;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.widgets.CalendarImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.DirectoryChooserImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.FileChooserImpl;
@@ -42,6 +43,12 @@ import org.jowidgets.spi.widgets.setup.IDirectoryChooserSetupSpi;
 import org.jowidgets.spi.widgets.setup.IFileChooserSetupSpi;
 
 public class SwtOptionalWidgetsFactory implements IOptionalWidgetsFactorySpi {
+
+    private final SwtImageRegistry imageRegistry;
+
+    public SwtOptionalWidgetsFactory(final SwtImageRegistry imageRegistry) {
+        this.imageRegistry = imageRegistry;
+    }
 
     @Override
     public boolean hasFileChooser() {
@@ -82,7 +89,7 @@ public class SwtOptionalWidgetsFactory implements IOptionalWidgetsFactorySpi {
 
     @Override
     public ICalendarSpi createCalendar(final Object parentUiReference, final ICalendarSetupSpi setup) {
-        return new CalendarImpl(parentUiReference, setup);
+        return new CalendarImpl(parentUiReference, setup, imageRegistry);
     }
 
 }

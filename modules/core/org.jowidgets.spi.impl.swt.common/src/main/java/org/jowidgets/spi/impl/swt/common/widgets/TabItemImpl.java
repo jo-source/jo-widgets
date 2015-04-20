@@ -71,20 +71,28 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
     private String toolTipText;
     private IImageConstant icon;
 
+    private final SwtImageRegistry imageRegistry;
     private final CTabFolder parentFolder;
     private final SwtContainer swtContainer;
     private final Set<IPopupDetectionListener> tabPopupDetectionListeners;
     private final Set<PopupMenuImpl> tabPopupMenus;
 
-    public TabItemImpl(final IGenericWidgetFactory genericWidgetFactory, final CTabFolder parentFolder, final boolean closeable) {
-        this(genericWidgetFactory, parentFolder, closeable, null);
+    public TabItemImpl(
+        final IGenericWidgetFactory genericWidgetFactory,
+        final CTabFolder parentFolder,
+        final boolean closeable,
+        final SwtImageRegistry imageRegistry) {
+        this(genericWidgetFactory, parentFolder, closeable, null, imageRegistry);
     }
 
     public TabItemImpl(
         final IGenericWidgetFactory genericWidgetFactory,
         final CTabFolder parentFolder,
         final boolean closeable,
-        final Integer index) {
+        final Integer index,
+        final SwtImageRegistry imageRegistry) {
+
+        this.imageRegistry = imageRegistry;
 
         this.detached = false;
         this.parentFolder = parentFolder;
@@ -97,7 +105,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
         final Composite composite = new Composite(parentFolder, SWT.NONE);
         composite.setLayout(new MigLayout("", "[]", "[]"));
 
-        swtContainer = new SwtComposite(genericWidgetFactory, composite);
+        swtContainer = new SwtComposite(genericWidgetFactory, composite, imageRegistry);
 
         cTabItem.setControl(swtContainer.getUiReference());
     }
@@ -188,7 +196,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
     public void setIcon(final IImageConstant icon) {
         this.icon = icon;
         final Image oldImage = getUiReference().getImage();
-        final Image newImage = SwtImageRegistry.getInstance().getImage(icon);
+        final Image newImage = imageRegistry.getImage(icon);
         if (oldImage != newImage) {
             getUiReference().setImage(newImage);
         }
@@ -247,7 +255,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
     @Override
     public IPopupMenuSpi createTabPopupMenu() {
-        final PopupMenuImpl result = new PopupMenuImpl(parentFolder);
+        final PopupMenuImpl result = new PopupMenuImpl(parentFolder, imageRegistry);
         tabPopupMenus.add(result);
         return result;
     }

@@ -31,14 +31,15 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.jowidgets.common.types.Dimension;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.util.OrientationConvert;
 import org.jowidgets.spi.widgets.IProgressBarSpi;
 import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 
 public class ProgressBarImpl extends SwtControl implements IProgressBarSpi {
 
-    public ProgressBarImpl(final Object parentUiReference, final IProgressBarSetupSpi setup) {
-        super(createProgressBar(parentUiReference, setup));
+    public ProgressBarImpl(final Object parentUiReference, final IProgressBarSetupSpi setup, final SwtImageRegistry imageRegistry) {
+        super(createProgressBar(parentUiReference, setup), imageRegistry);
 
         setMinimum(setup.getMinimum());
         setMaximum(setup.getMaximum());

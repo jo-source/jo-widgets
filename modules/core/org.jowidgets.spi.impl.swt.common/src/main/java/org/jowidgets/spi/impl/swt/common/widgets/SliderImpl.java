@@ -33,6 +33,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Scale;
 import org.jowidgets.common.types.Orientation;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.ISliderSpi;
 import org.jowidgets.spi.widgets.setup.ISliderSetupSpi;
 import org.jowidgets.util.Assert;
@@ -41,8 +42,8 @@ public final class SliderImpl extends AbstractInputControl implements ISliderSpi
 
     private final Orientation orientation;
 
-    public SliderImpl(final Object parentUiReference, final ISliderSetupSpi setup) {
-        super(new Scale((Composite) parentUiReference, getStyle(setup)));
+    public SliderImpl(final Object parentUiReference, final ISliderSetupSpi setup, final SwtImageRegistry imageRegistry) {
+        super(new Scale((Composite) parentUiReference, getStyle(setup)), imageRegistry);
 
         this.orientation = setup.getOrientation();
 

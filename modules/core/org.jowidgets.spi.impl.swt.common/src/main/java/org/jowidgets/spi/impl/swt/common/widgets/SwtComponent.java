@@ -64,6 +64,7 @@ import org.jowidgets.spi.impl.controller.MouseObservable;
 import org.jowidgets.spi.impl.controller.PopupDetectionObservable;
 import org.jowidgets.spi.impl.swt.common.color.ColorCache;
 import org.jowidgets.spi.impl.swt.common.cursor.CursorCache;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.util.DimensionConvert;
 import org.jowidgets.spi.impl.swt.common.util.MouseUtil;
 import org.jowidgets.spi.impl.swt.common.util.PositionConvert;
@@ -74,6 +75,7 @@ import org.jowidgets.util.event.IObservableCallback;
 
 public class SwtComponent extends SwtWidget implements IComponentSpi {
 
+    private final SwtImageRegistry imageRegistry;
     private final PopupDetectionObservable popupDetectionObservable;
     private final FocusObservable focusObservable;
     private final KeyObservable keyObservable;
@@ -83,8 +85,9 @@ public class SwtComponent extends SwtWidget implements IComponentSpi {
     private final KeyListener keyListener;
     private MenuDetectListener menuDetectListener;
 
-    public SwtComponent(final Control control) {
+    public SwtComponent(final Control control, final SwtImageRegistry imageRegistry) {
         super(control);
+        this.imageRegistry = imageRegistry;
         this.popupDetectionObservable = new PopupDetectionObservable();
         this.focusObservable = new FocusObservable();
         this.mouseObservable = new MouseObservable();
@@ -365,7 +368,7 @@ public class SwtComponent extends SwtWidget implements IComponentSpi {
 
     @Override
     public IPopupMenuSpi createPopupMenu() {
-        return new PopupMenuImpl(getUiReference());
+        return new PopupMenuImpl(getUiReference(), imageRegistry);
     }
 
     @Override

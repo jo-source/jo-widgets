@@ -28,15 +28,29 @@
 
 package org.jowidgets.addons.bridge.swt.awt;
 
+import org.jowidgets.api.toolkit.Toolkit;
+import org.jowidgets.common.image.IImageRegistry;
 import org.jowidgets.spi.impl.bridge.swt.awt.common.swt.ISwtAwtControlSpi;
 import org.jowidgets.spi.impl.bridge.swt.awt.common.swt.SwtAwtControlFactorySpi;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 
 final class SwtAwtControlFactoryImpl implements ISwtAwtControlFactory {
 
     @Override
     public ISwtAwtControl createSwtAwtControl(final Object parentUiReference) {
-        final ISwtAwtControlSpi controlSpi = SwtAwtControlFactorySpi.getInstance().createSwtAwtControl(parentUiReference);
-        return new SwtAwtControlImpl(controlSpi);
+        final IImageRegistry imageRegistry = Toolkit.getImageRegistry();
+        if (imageRegistry instanceof SwtImageRegistry) {
+            final SwtImageRegistry swtImageRegistry = (SwtImageRegistry) imageRegistry;
+            final ISwtAwtControlSpi controlSpi = SwtAwtControlFactorySpi.getInstance(swtImageRegistry).createSwtAwtControl(
+                    parentUiReference);
+            return new SwtAwtControlImpl(controlSpi);
+        }
+        else {
+            throw new IllegalStateException("SwtImageRegistry expected when using SwtAwt bridge but '"
+                + imageRegistry.getClass().getName()
+                + "`found.");
+        }
+
     }
 
 }

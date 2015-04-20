@@ -41,6 +41,7 @@ import org.jowidgets.common.mask.TextMaskMode;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.verify.IInputVerifier;
 import org.jowidgets.spi.impl.mask.TextMaskVerifierFactory;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.common.util.AlignmentConvert;
 import org.jowidgets.spi.impl.swt.common.util.FontProvider;
@@ -53,8 +54,8 @@ public class TextFieldImpl extends AbstractTextInputControl {
     private VerifyListener inputVerificationListener;
     private Listener showListener;
 
-    public TextFieldImpl(final Object parentUiReference, final ITextFieldSetupSpi setup) {
-        super(new Text((Composite) parentUiReference, getStyle(setup)));
+    public TextFieldImpl(final Object parentUiReference, final ITextFieldSetupSpi setup, final SwtImageRegistry imageRegistry) {
+        super(new Text((Composite) parentUiReference, getStyle(setup)), imageRegistry);
 
         if (SwtOptions.hasInputVerification()) {
             final IInputVerifier maskVerifier = TextMaskVerifierFactory.create(this, setup.getMask());

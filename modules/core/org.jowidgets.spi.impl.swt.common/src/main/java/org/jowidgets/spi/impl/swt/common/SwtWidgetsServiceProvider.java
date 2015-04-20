@@ -97,11 +97,11 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider, IProv
         Assert.paramNotNull(applicationRunnerFactory, "applicationRunnerFactory");
         this.display = display;
         this.applicationRunnerFactory = applicationRunnerFactory;
-        this.imageRegistry = SwtImageRegistry.getInstance();
+        this.imageRegistry = new SwtImageRegistry();
         this.imageHandleFactorySpi = new SwtImageHandleFactorySpi(imageRegistry);
         this.imageFactory = new SwtImageFactory(imageRegistry, imageHandleFactorySpi, this);
-        this.widgetFactory = new SwtWidgetFactory();
-        this.optionalWidgetsFactory = new SwtOptionalWidgetsFactory();
+        this.widgetFactory = new SwtWidgetFactory(imageRegistry);
+        this.optionalWidgetsFactory = new SwtOptionalWidgetsFactory(imageRegistry);
 
         if (clipboard != null) {
             this.clipboard = clipboard;

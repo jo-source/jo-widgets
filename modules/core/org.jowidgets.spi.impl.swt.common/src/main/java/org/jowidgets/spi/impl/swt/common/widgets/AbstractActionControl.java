@@ -32,15 +32,16 @@ import org.jowidgets.common.types.Dimension;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
 import org.jowidgets.spi.dnd.IDropTargetSpi;
 import org.jowidgets.spi.impl.swt.common.dnd.ImmutableDropSelection;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IControlSpi;
 
 public abstract class AbstractActionControl extends AbstractActionComponent implements IControlSpi {
 
     private final SwtControl swtControlDelegate;
 
-    public AbstractActionControl(final Control control) {
-        super(control);
-        this.swtControlDelegate = new SwtControl(control, new ImmutableDropSelection(this));
+    public AbstractActionControl(final Control control, final SwtImageRegistry imageRegistry) {
+        super(control, imageRegistry);
+        this.swtControlDelegate = new SwtControl(control, new ImmutableDropSelection(this), imageRegistry);
     }
 
     @Override

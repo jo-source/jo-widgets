@@ -32,14 +32,19 @@ import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.events.ShellListener;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IWindowSpi;
 
 public class WindowImpl extends SwtWindow implements IWindowSpi {
 
     private boolean programaticDispose;
 
-    public WindowImpl(final IGenericWidgetFactory factory, final Shell window, final boolean isCloseable) {
-        super(factory, window);
+    public WindowImpl(
+        final IGenericWidgetFactory factory,
+        final Shell window,
+        final boolean isCloseable,
+        final SwtImageRegistry imageRegistry) {
+        super(factory, window, imageRegistry);
 
         this.programaticDispose = false;
 

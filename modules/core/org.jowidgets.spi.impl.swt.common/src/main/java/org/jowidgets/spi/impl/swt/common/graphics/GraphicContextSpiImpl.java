@@ -53,6 +53,7 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
 
     private final GC gc;
     private final Rectangle bounds;
+    private final SwtImageRegistry imageRegistry;
 
     private int lineWidth;
     private int lineCap;
@@ -61,10 +62,11 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
     private int[] dashPatternInt;
     private float dashPatternOffset;
 
-    public GraphicContextSpiImpl(final GC gc, final Rectangle bounds) {
+    public GraphicContextSpiImpl(final GC gc, final Rectangle bounds, final SwtImageRegistry imageRegistry) {
         super();
         this.gc = gc;
         this.bounds = bounds;
+        this.imageRegistry = imageRegistry;
 
         this.lineWidth = 1;
         this.lineCap = SWT.CAP_SQUARE;
@@ -290,7 +292,7 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
         final int destinationHeight) {
 
         gc.drawImage(
-                SwtImageRegistry.getInstance().getImage(imageKey),
+                imageRegistry.getImage(imageKey),
                 sourceX,
                 sourceY,
                 sourceWidth,
@@ -303,7 +305,7 @@ public final class GraphicContextSpiImpl implements IGraphicContextSpi {
 
     @Override
     public void drawImage(final IImageConstant imageKey, final int x, final int y) {
-        gc.drawImage(SwtImageRegistry.getInstance().getImage(imageKey), x, y);
+        gc.drawImage(imageRegistry.getImage(imageKey), x, y);
     }
 
     @Override

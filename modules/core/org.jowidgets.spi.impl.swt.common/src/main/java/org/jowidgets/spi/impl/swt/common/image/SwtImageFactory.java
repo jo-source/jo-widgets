@@ -52,6 +52,7 @@ import org.jowidgets.util.IProvider;
 
 public final class SwtImageFactory implements IImageFactorySpi {
 
+    private final SwtImageRegistry imageRegistry;
     private final SwtImageHandleFactory imageHandleFactory;
     private final IProvider<Display> displayProvider;
 
@@ -60,9 +61,11 @@ public final class SwtImageFactory implements IImageFactorySpi {
         final SwtImageHandleFactory imageHandleFactory,
         final IProvider<Display> displayProvider) {
 
+        Assert.paramNotNull(imageRegistry, "imageRegistry");
         Assert.paramNotNull(imageHandleFactory, "imageHandleFactory");
         Assert.paramNotNull(displayProvider, "displayProvider");
 
+        this.imageRegistry = imageRegistry;
         this.imageHandleFactory = imageHandleFactory;
         this.displayProvider = displayProvider;
     }
@@ -118,7 +121,10 @@ public final class SwtImageFactory implements IImageFactorySpi {
         }
 
         private GraphicContextSpiImpl createGraphicContext() {
-            return new GraphicContextSpiImpl(new GC(getImageHandle().getImage()), new Rectangle(new Position(0, 0), getSize()));
+            return new GraphicContextSpiImpl(
+                new GC(getImageHandle().getImage()),
+                new Rectangle(new Position(0, 0), getSize()),
+                imageRegistry);
         }
 
     }

@@ -34,21 +34,23 @@ import org.jowidgets.spi.dnd.IDragSourceSpi;
 import org.jowidgets.spi.dnd.IDropTargetSpi;
 import org.jowidgets.spi.impl.swt.common.dnd.IDropSelectionProvider;
 import org.jowidgets.spi.impl.swt.common.dnd.ImmutableDropSelection;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 
 public class SwtComposite extends SwtContainer implements ICompositeSpi {
 
     private final SwtControl swtControlDelegate;
 
-    public SwtComposite(final IGenericWidgetFactory factory, final Composite composite) {
-        this(factory, composite, null);
+    public SwtComposite(final IGenericWidgetFactory factory, final Composite composite, final SwtImageRegistry imageRegistry) {
+        this(factory, composite, null, imageRegistry);
     }
 
     public SwtComposite(
         final IGenericWidgetFactory factory,
         final Composite composite,
-        IDropSelectionProvider dropSelectionProvider) {
-        super(factory, composite);
+        IDropSelectionProvider dropSelectionProvider,
+        final SwtImageRegistry imageRegistry) {
+        super(factory, composite, imageRegistry);
         if (dropSelectionProvider == null) {
             if (this instanceof IDropSelectionProvider) {
                 dropSelectionProvider = (IDropSelectionProvider) this;
@@ -57,7 +59,7 @@ public class SwtComposite extends SwtContainer implements ICompositeSpi {
                 dropSelectionProvider = new ImmutableDropSelection(this);
             }
         }
-        this.swtControlDelegate = new SwtControl(composite, dropSelectionProvider);
+        this.swtControlDelegate = new SwtControl(composite, dropSelectionProvider, imageRegistry);
     }
 
     @Override

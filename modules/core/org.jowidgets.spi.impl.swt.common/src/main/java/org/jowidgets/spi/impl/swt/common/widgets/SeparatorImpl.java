@@ -30,14 +30,15 @@ package org.jowidgets.spi.impl.swt.common.widgets;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.util.OrientationConvert;
 import org.jowidgets.spi.widgets.IControlSpi;
 import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
 
 public class SeparatorImpl extends SwtControl implements IControlSpi {
 
-    public SeparatorImpl(final Object parentUiReference, final ISeparatorSetupSpi setup) {
-        super(createSeparator(parentUiReference, setup));
+    public SeparatorImpl(final Object parentUiReference, final ISeparatorSetupSpi setup, final SwtImageRegistry imageRegistry) {
+        super(createSeparator(parentUiReference, setup), imageRegistry);
     }
 
     @Override

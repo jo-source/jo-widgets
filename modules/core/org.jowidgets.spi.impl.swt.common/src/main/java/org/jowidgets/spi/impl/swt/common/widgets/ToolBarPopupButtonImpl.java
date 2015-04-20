@@ -37,14 +37,15 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.spi.impl.controller.PopupDetectionObservable;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 
 public class ToolBarPopupButtonImpl extends ToolBarButtonImpl implements IToolBarPopupButtonSpi {
 
     private final PopupDetectionObservable popupDetectionObservable;
 
-    public ToolBarPopupButtonImpl(final ToolItem item) {
-        super(item);
+    public ToolBarPopupButtonImpl(final ToolItem item, final SwtImageRegistry imageRegistry) {
+        super(item, imageRegistry);
         this.popupDetectionObservable = new PopupDetectionObservable();
 
         item.addListener(SWT.Selection, new Listener() {

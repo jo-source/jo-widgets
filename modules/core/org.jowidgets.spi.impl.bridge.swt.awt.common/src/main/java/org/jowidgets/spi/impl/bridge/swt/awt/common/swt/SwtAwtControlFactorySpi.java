@@ -28,12 +28,14 @@
 
 package org.jowidgets.spi.impl.bridge.swt.awt.common.swt;
 
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
+
 public final class SwtAwtControlFactorySpi {
 
     private SwtAwtControlFactorySpi() {}
 
-    public static ISwtAwtControlFactorySpi getInstance() {
-        return new SwtAwtControlFactorySpiImpl();
+    public static ISwtAwtControlFactorySpi getInstance(final SwtImageRegistry imageRegistry) {
+        return new SwtAwtControlFactorySpiImpl(imageRegistry);
     }
 
 }

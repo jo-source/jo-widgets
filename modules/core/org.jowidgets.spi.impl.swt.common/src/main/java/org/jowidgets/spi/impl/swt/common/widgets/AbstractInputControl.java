@@ -42,6 +42,7 @@ import org.jowidgets.spi.dnd.IDragSourceSpi;
 import org.jowidgets.spi.dnd.IDropTargetSpi;
 import org.jowidgets.spi.impl.controller.InputObservable;
 import org.jowidgets.spi.impl.swt.common.dnd.ImmutableDropSelection;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IInputControlSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
@@ -50,10 +51,10 @@ public abstract class AbstractInputControl extends InputObservable implements II
     private final Control control;
     private final SwtControl swtControlDelegate;
 
-    public AbstractInputControl(final Control control) {
+    public AbstractInputControl(final Control control, final SwtImageRegistry imageRegistry) {
         super();
         this.control = control;
-        this.swtControlDelegate = new SwtControl(control, new ImmutableDropSelection(this));
+        this.swtControlDelegate = new SwtControl(control, new ImmutableDropSelection(this), imageRegistry);
     }
 
     @Override

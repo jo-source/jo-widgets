@@ -70,6 +70,7 @@ import org.jowidgets.spi.impl.controller.TreeSelectionObservableSpi;
 import org.jowidgets.spi.impl.dnd.TreeDropLocationSpiImpl;
 import org.jowidgets.spi.impl.swt.common.color.ColorCache;
 import org.jowidgets.spi.impl.swt.common.dnd.IDropSelectionProvider;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 import org.jowidgets.spi.impl.swt.common.util.PositionConvert;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
@@ -81,6 +82,8 @@ import org.jowidgets.util.Assert;
 public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi, IDropSelectionProvider {
 
     static final ColorValue DISABLED_COLOR = new ColorValue(130, 130, 130);
+
+    private final SwtImageRegistry imageRegistry;
 
     private final boolean multiSelection;
     private final Map<TreeItem, TreeNodeImpl> items;
@@ -98,9 +101,10 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi, IDro
 
     private List<TreeItem> lastSelection;
 
-    public TreeImpl(final Object parentUiReference, final ITreeSetupSpi setup) {
-        super(new Tree((Composite) parentUiReference, getStyle(setup)));
+    public TreeImpl(final Object parentUiReference, final ITreeSetupSpi setup, final SwtImageRegistry imageRegistry) {
+        super(new Tree((Composite) parentUiReference, getStyle(setup)), imageRegistry);
 
+        this.imageRegistry = imageRegistry;
         this.lastSelection = new LinkedList<TreeItem>();
         this.treeObservable = new TreeSelectionObservableSpi();
         this.items = new HashMap<TreeItem, TreeNodeImpl>();
@@ -325,7 +329,7 @@ public class TreeImpl extends SwtControl implements ITreeSpi, ITreeNodeSpi, IDro
 
     @Override
     public ITreeNodeSpi addNode(final Integer index) {
-        final TreeNodeImpl result = new TreeNodeImpl(this, null, index);
+        final TreeNodeImpl result = new TreeNodeImpl(this, null, index, imageRegistry);
         registerItem(result.getUiReference(), result);
         return result;
     }

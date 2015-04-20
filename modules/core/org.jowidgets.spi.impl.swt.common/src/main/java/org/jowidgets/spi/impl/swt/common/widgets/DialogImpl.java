@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.setup.IDialogSetupSpi;
 
@@ -40,9 +41,13 @@ public class DialogImpl extends WindowImpl implements IFrameSpi {
 
     private final boolean isModal;
 
-    public DialogImpl(final IGenericWidgetFactory factory, final Object parentUiReference, final IDialogSetupSpi setup) {
+    public DialogImpl(
+        final IGenericWidgetFactory factory,
+        final Object parentUiReference,
+        final IDialogSetupSpi setup,
+        final SwtImageRegistry imageRegistry) {
 
-        super(factory, new Shell((Shell) parentUiReference, getStyle(setup)), setup.isCloseable());
+        super(factory, new Shell((Shell) parentUiReference, getStyle(setup)), setup.isCloseable(), imageRegistry);
 
         this.isModal = setup.isModal();
 

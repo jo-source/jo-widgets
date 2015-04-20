@@ -38,13 +38,16 @@ import org.jowidgets.spi.widgets.IMenuItemSpi;
 public class MenuItemImpl extends ActionObservable implements IMenuItemSpi, IToolTipTextProvider {
 
     private final MenuItem menuItem;
+    private final SwtImageRegistry imageRegistry;
+
     private String text;
     private String tooltipText;
     private String acceleratorText;
     private Character mnemonic;
 
-    public MenuItemImpl(final MenuItem menuItem) {
+    public MenuItemImpl(final MenuItem menuItem, final SwtImageRegistry imageRegistry) {
         this.menuItem = menuItem;
+        this.imageRegistry = imageRegistry;
     }
 
     @Override
@@ -54,7 +57,7 @@ public class MenuItemImpl extends ActionObservable implements IMenuItemSpi, IToo
 
     @Override
     public void setIcon(final IImageConstant icon) {
-        menuItem.setImage(SwtImageRegistry.getInstance().getImage(icon));
+        menuItem.setImage(imageRegistry.getImage(icon));
     }
 
     @Override

@@ -30,13 +30,18 @@ package org.jowidgets.spi.impl.swt.common.widgets;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Shell;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IPopupDialogSpi;
 import org.jowidgets.spi.widgets.setup.IPopupDialogSetupSpi;
 
 public class PopupDialogImpl extends WindowImpl implements IPopupDialogSpi {
 
-    public PopupDialogImpl(final IGenericWidgetFactory factory, final Object parentUiReference, final IPopupDialogSetupSpi setup) {
-        super(factory, new Shell((Shell) parentUiReference, getStyle(setup)), false);
+    public PopupDialogImpl(
+        final IGenericWidgetFactory factory,
+        final Object parentUiReference,
+        final IPopupDialogSetupSpi setup,
+        final SwtImageRegistry imageRegistry) {
+        super(factory, new Shell((Shell) parentUiReference, getStyle(setup)), false, imageRegistry);
     }
 
     private static int getStyle(final IPopupDialogSetupSpi setup) {

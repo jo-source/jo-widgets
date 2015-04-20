@@ -39,10 +39,12 @@ import org.jowidgets.spi.widgets.IToolBarItemSpi;
 public class ToolBarItemImpl implements IToolBarItemSpi {
 
     private final ToolItem toolItem;
+    private final SwtImageRegistry imageRegistry;
 
-    public ToolBarItemImpl(final ToolItem item) {
+    public ToolBarItemImpl(final ToolItem item, final SwtImageRegistry imageRegistry) {
         super();
         this.toolItem = item;
+        this.imageRegistry = imageRegistry;
     }
 
     @Override
@@ -77,7 +79,7 @@ public class ToolBarItemImpl implements IToolBarItemSpi {
 
     @Override
     public void setIcon(final IImageConstant icon) {
-        toolItem.setImage(SwtImageRegistry.getInstance().getImage(icon));
+        toolItem.setImage(imageRegistry.getImage(icon));
     }
 
     @Override

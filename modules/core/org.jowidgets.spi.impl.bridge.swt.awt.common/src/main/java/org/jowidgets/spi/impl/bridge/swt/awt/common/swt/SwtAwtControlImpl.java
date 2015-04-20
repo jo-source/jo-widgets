@@ -41,14 +41,15 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.widgets.SwtControl;
 
 class SwtAwtControlImpl extends SwtControl implements ISwtAwtControlSpi {
 
     private final JApplet applet;
 
-    public SwtAwtControlImpl(final Object parentUiReference) {
-        super(createComposite(parentUiReference));
+    public SwtAwtControlImpl(final Object parentUiReference, final SwtImageRegistry imageRegistry) {
+        super(createComposite(parentUiReference), imageRegistry);
 
         final Composite innerComposite = new Composite(getUiReference(), SWT.EMBEDDED | SWT.NO_BACKGROUND);
         innerComposite.setLayout(new FillLayout());

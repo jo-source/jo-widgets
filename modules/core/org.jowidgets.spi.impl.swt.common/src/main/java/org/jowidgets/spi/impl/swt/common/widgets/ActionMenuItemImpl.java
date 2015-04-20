@@ -30,12 +30,13 @@ package org.jowidgets.spi.impl.swt.common.widgets;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.MenuItem;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 
 public class ActionMenuItemImpl extends MenuItemImpl implements IActionMenuItemSpi {
 
-    public ActionMenuItemImpl(final MenuItem menuItem) {
-        super(menuItem);
+    public ActionMenuItemImpl(final MenuItem menuItem, final SwtImageRegistry imageRegistry) {
+        super(menuItem, imageRegistry);
 
         menuItem.addSelectionListener(new SelectionAdapter() {
             @Override

@@ -35,20 +35,23 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IIconSpi;
 import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
+import org.jowidgets.util.Assert;
 
 public class IconImpl extends SwtControl implements IIconSpi {
 
-    public IconImpl(final Object parentUiReference, final IIconSetupSpi setup) {
+    private final SwtImageRegistry imageRegistry;
 
-        super(new Label((Composite) parentUiReference, SWT.NONE));
-
+    public IconImpl(final Object parentUiReference, final IIconSetupSpi setup, final SwtImageRegistry imageRegistry) {
+        super(new Label((Composite) parentUiReference, SWT.NONE), imageRegistry);
+        Assert.paramNotNull(imageRegistry, "imageRegistry");
+        this.imageRegistry = imageRegistry;
         setIcon(setup.getIcon());
     }
 
     @Override
     public void setIcon(final IImageConstant icon) {
         final Image oldImage = getUiReference().getImage();
-        final Image newImage = SwtImageRegistry.getInstance().getImage(icon);
+        final Image newImage = imageRegistry.getImage(icon);
 
         if (oldImage != newImage) {
             getUiReference().setImage(newImage);

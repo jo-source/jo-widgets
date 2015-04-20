@@ -52,6 +52,7 @@ import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.layout.ILayoutDescriptor;
+import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.IToolBarContainerItemSpi;
 
@@ -60,15 +61,19 @@ public class ToolBarContainerItemImpl extends ToolBarItemImpl implements IToolBa
     private final SwtComposite swtComposite;
     private final Composite composite;
 
-    public ToolBarContainerItemImpl(final ToolItem item, final ToolBar toolBar, final IGenericWidgetFactory factory) {
-        super(item);
+    public ToolBarContainerItemImpl(
+        final ToolItem item,
+        final ToolBar toolBar,
+        final IGenericWidgetFactory factory,
+        final SwtImageRegistry imageRegistry) {
+        super(item, imageRegistry);
 
         this.composite = new Composite(toolBar, SWT.NONE);
         composite.setLayout(new MigLayout("", "0[grow]0", "0[grow]0"));
 
         item.setControl(composite);
 
-        this.swtComposite = new SwtComposite(factory, composite);
+        this.swtComposite = new SwtComposite(factory, composite, imageRegistry);
     }
 
     @Override
