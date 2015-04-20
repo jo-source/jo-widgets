@@ -28,6 +28,8 @@
 
 package org.jowidgets.api.login;
 
+import org.jowidgets.api.threads.IUiThreadAccess;
+
 public interface ILoginInterceptor {
 
     /**
@@ -40,7 +42,8 @@ public interface ILoginInterceptor {
      * 
      * @param username The username set in the login dialog
      * @param password The password set in the login dialog
+     * @param uiThreadAccess The access to the ui thread
      */
-    void login(ILoginResultCallback resultCallback, String username, String password);
+    void login(ILoginResultCallback resultCallback, String username, String password, IUiThreadAccess uiThreadAccess);
 
 }

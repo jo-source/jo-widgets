@@ -218,9 +218,10 @@ public class LoginDialogImpl extends WindowWrapper implements ILoginDialog {
                 final Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        loginInterceptor.login(new LoginResultCallback(), username, password);
+                        loginInterceptor.login(new LoginResultCallback(), username, password, uiThreadAccess);
                     }
                 });
+                thread.setName("LoginDialogLoginThread");
                 thread.setDaemon(true);
                 thread.start();
             }
