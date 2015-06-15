@@ -29,6 +29,7 @@ package org.jowidgets.spi.impl.swt.common;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
+import org.jowidgets.common.types.EllipsisMode;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
@@ -53,6 +54,7 @@ import org.jowidgets.spi.impl.swt.common.widgets.TabFolderImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.TableImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.TextAreaImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.TextAreaNativeScrollBarImpl;
+import org.jowidgets.spi.impl.swt.common.widgets.TextCLabelImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.TextFieldImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.TextLabelImpl;
 import org.jowidgets.spi.impl.swt.common.widgets.ToggleButtonImpl;
@@ -212,7 +214,13 @@ public final class SwtWidgetFactory implements IWidgetFactorySpi {
 
     @Override
     public ITextLabelSpi createTextLabel(final Object parentUiReference, final ITextLabelSetupSpi setup) {
-        return new TextLabelImpl(parentUiReference, setup, imageRegistry);
+        final EllipsisMode ellipsisMode = setup.getEllipsisMode();
+        if (EllipsisMode.DEFAULT.equals(ellipsisMode) || EllipsisMode.DISABLED.equals(ellipsisMode)) {
+            return new TextLabelImpl(parentUiReference, setup, imageRegistry);
+        }
+        else {
+            return new TextCLabelImpl(parentUiReference, setup, imageRegistry);
+        }
     }
 
     @Override

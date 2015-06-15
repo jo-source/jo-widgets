@@ -27,9 +27,15 @@
  */
 package org.jowidgets.spi.impl.swing.common.widgets;
 
+import java.awt.FontMetrics;
+import java.awt.Rectangle;
+
+import javax.swing.Icon;
 import javax.swing.JLabel;
+import javax.swing.plaf.metal.MetalLabelUI;
 
 import org.jowidgets.common.color.IColorConstant;
+import org.jowidgets.common.types.EllipsisMode;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.spi.impl.swing.common.util.AlignmentConvert;
 import org.jowidgets.spi.impl.swing.common.util.FontProvider;
@@ -39,7 +45,7 @@ import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 public class TextLabelImpl extends SwingControl implements ITextLabelSpi {
 
     public TextLabelImpl(final ITextLabelSetupSpi setup) {
-        super(new JLabel());
+        super(new JLabel(setup.getText()));
 
         setText(setup.getText());
         setToolTipText(setup.getToolTipText());
@@ -47,6 +53,58 @@ public class TextLabelImpl extends SwingControl implements ITextLabelSpi {
         setMarkup(setup.getMarkup());
 
         getUiReference().setHorizontalAlignment(AlignmentConvert.convert(setup.getAlignment()));
+
+        if (EllipsisMode.DISABLED.equals(setup.getEllipsisMode())) {
+            getUiReference().setUI(new MetalLabelUI() {
+                @Override
+                protected String layoutCL(
+                    final JLabel label,
+                    final FontMetrics fontMetrics,
+                    final String text,
+                    final Icon icon,
+                    final Rectangle viewR,
+                    final Rectangle iconR,
+                    final Rectangle textR) {
+                    super.layoutCL(label, fontMetrics, text, icon, viewR, iconR, textR);
+                    return text;
+                }
+            });
+        }
+        else if (EllipsisMode.LEFT.equals(setup.getEllipsisMode())) {
+            getUiReference().setUI(new MetalLabelUI() {
+                @Override
+                protected String layoutCL(
+                    final JLabel label,
+                    final FontMetrics fontMetrics,
+                    final String text,
+                    final Icon icon,
+                    final Rectangle viewR,
+                    final Rectangle iconR,
+                    final Rectangle textR) {
+                    super.layoutCL(label, fontMetrics, text, icon, viewR, iconR, textR);
+                    //TODO render left ellipse mode correctly
+                    return text;
+                }
+            });
+        }
+        else if (EllipsisMode.CENTER.equals(setup.getEllipsisMode())) {
+            getUiReference().setUI(new MetalLabelUI() {
+                @Override
+                protected String layoutCL(
+                    final JLabel label,
+                    final FontMetrics fontMetrics,
+                    final String text,
+                    final Icon icon,
+                    final Rectangle viewR,
+                    final Rectangle iconR,
+                    final Rectangle textR) {
+                    super.layoutCL(label, fontMetrics, text, icon, viewR, iconR, textR);
+                    //TODO render center ellipse mode correctly
+                    return text;
+                }
+            });
+        }
+
     }
 
     @Override

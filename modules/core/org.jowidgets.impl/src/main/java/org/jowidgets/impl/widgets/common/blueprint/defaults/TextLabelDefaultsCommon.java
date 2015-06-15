@@ -29,6 +29,7 @@ package org.jowidgets.impl.widgets.common.blueprint.defaults;
 
 import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
 import org.jowidgets.common.types.AlignmentHorizontal;
+import org.jowidgets.common.types.EllipsisMode;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.builder.ITextLabelSetupBuilderCommon;
 
@@ -37,6 +38,7 @@ public class TextLabelDefaultsCommon implements IDefaultInitializer<ITextLabelSe
     @Override
     public void initialize(final ITextLabelSetupBuilderCommon<?> builder) {
         builder.setAlignment(AlignmentHorizontal.LEFT);
+        builder.setEllipsisMode(EllipsisMode.DEFAULT);
         builder.setMarkup(Markup.DEFAULT);
     }
 
