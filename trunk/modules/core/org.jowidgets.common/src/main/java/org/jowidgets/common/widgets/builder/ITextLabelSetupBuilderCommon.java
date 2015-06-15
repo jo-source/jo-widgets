@@ -28,6 +28,7 @@
 package org.jowidgets.common.widgets.builder;
 
 import org.jowidgets.common.types.AlignmentHorizontal;
+import org.jowidgets.common.types.EllipsisMode;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.builder.convenience.ITextLabelSetupConvenienceCommon;
 
@@ -43,4 +44,5 @@ public interface ITextLabelSetupBuilderCommon<INSTANCE_TYPE extends ITextLabelSe
 
     INSTANCE_TYPE setAlignment(AlignmentHorizontal alignmentHorizontal);
 
+    INSTANCE_TYPE setEllipsisMode(EllipsisMode ellipsisMode);
 }
