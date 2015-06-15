@@ -75,8 +75,25 @@ final class FillLayoutImpl implements ILayouter {
             final Dimension clientSize = clientArea.getSize();
             final Dimension ctrlMinSize = getControlMinSize();
 
-            final int width = Math.max(ctrlMinSize.getWidth(), clientSize.getWidth() - marginRight - marginLeft);
-            final int height = Math.max(ctrlMinSize.getHeight(), clientSize.getHeight() - marginBottom - marginTop);
+            final int marginH = marginLeft + marginRight;
+            final int marginV = marginBottom + marginTop;
+
+            final int width;
+            final int height;
+
+            if (marginH < 0) {
+                width = clientSize.getWidth() - marginH;
+            }
+            else {
+                width = Math.max(ctrlMinSize.getWidth(), clientSize.getWidth() - marginH);
+            }
+
+            if (marginV < 0) {
+                height = clientSize.getHeight() - marginV;
+            }
+            else {
+                height = Math.max(ctrlMinSize.getHeight(), clientSize.getHeight() - marginV);
+            }
 
             control.setSize(width, height);
         }
