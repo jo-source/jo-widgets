@@ -35,6 +35,15 @@ public interface IButtonSetupBuilder<INSTANCE_TYPE extends IButtonSetupBuilder<?
 
     INSTANCE_TYPE setEnabled(boolean enabled);
 
+    /**
+     * If set true, the empty default border of 1 pixel will be removed from the button
+     * 
+     * @param removeBorder The remove border parameter
+     * 
+     * @return This instance
+     */
+    INSTANCE_TYPE setRemoveEmptyBorder(boolean removeBorder);
+
     INSTANCE_TYPE setFontSize(Integer size);
 
     INSTANCE_TYPE setFontName(String fontName);
