@@ -35,6 +35,7 @@ public class ButtonDefaults implements IDefaultInitializer<IButtonSetupBuilder<?
     @Override
     public void initialize(final IButtonSetupBuilder<?> builder) {
         builder.setEnabled(true);
+        builder.setRemoveEmptyBorder(false);
     }
 
 }

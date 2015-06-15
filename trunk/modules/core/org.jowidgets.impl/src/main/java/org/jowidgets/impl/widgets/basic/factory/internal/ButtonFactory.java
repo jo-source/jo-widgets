@@ -28,15 +28,20 @@
 
 package org.jowidgets.impl.widgets.basic.factory.internal;
 
+import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IButton;
+import org.jowidgets.api.widgets.IComposite;
+import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.descriptor.IButtonDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.common.widgets.factory.IWidgetFactory;
 import org.jowidgets.impl.spi.ISpiBluePrintFactory;
 import org.jowidgets.impl.spi.blueprint.IButtonBluePrintSpi;
 import org.jowidgets.impl.widgets.basic.ButtonImpl;
+import org.jowidgets.impl.widgets.composed.NoBorderButtonImpl;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.widgets.IButtonSpi;
+import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public class ButtonFactory extends AbstractWidgetFactory implements IWidgetFactory<IButton, IButtonDescriptor> {
 
@@ -50,9 +55,17 @@ public class ButtonFactory extends AbstractWidgetFactory implements IWidgetFacto
 
     @Override
     public IButton create(final Object parentUiReference, final IButtonDescriptor descriptor) {
-        final IButtonBluePrintSpi bp = getSpiBluePrintFactory().button().setSetup(descriptor);
-        final IButtonSpi buttonWidgetSpi = getSpiWidgetFactory().createButton(parentUiReference, bp);
-        return new ButtonImpl(buttonWidgetSpi, descriptor);
+        if (descriptor.isRemoveEmptyBorder()) {
+            final ICompositeBluePrint compositeBp = BPF.composite();
+            compositeBp.setSetup(descriptor);
+            final IComposite composite = Toolkit.getWidgetFactory().create(parentUiReference, compositeBp);
+            return new NoBorderButtonImpl(composite, descriptor);
+        }
+        else {
+            final IButtonBluePrintSpi bp = getSpiBluePrintFactory().button().setSetup(descriptor);
+            final IButtonSpi buttonWidgetSpi = getSpiWidgetFactory().createButton(parentUiReference, bp);
+            return new ButtonImpl(buttonWidgetSpi, descriptor);
+        }
     }
 
 }

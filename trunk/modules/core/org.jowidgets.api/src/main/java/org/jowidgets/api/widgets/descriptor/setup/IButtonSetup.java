@@ -35,6 +35,9 @@ public interface IButtonSetup extends IButtonSetupCommon, IComponentSetup {
     @Mandatory
     boolean isEnabled();
 
+    @Mandatory
+    boolean isRemoveEmptyBorder();
+
     Integer getFontSize();
 
     String getFontName();
