@@ -121,6 +121,7 @@ import org.jowidgets.util.ArrayUtils;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.EmptyCheck;
 import org.jowidgets.util.Interval;
+import org.jowidgets.util.NullCompatibleEquivalence;
 
 public class TableImpl extends SwtControl implements ITableSpi {
 
@@ -166,6 +167,8 @@ public class TableImpl extends SwtControl implements ITableSpi {
     private long stopEditTimestamp;
 
     private Integer rowHeight;
+
+    private int[] lastSelection;
 
     public TableImpl(
         final IGenericWidgetFactory factory,
@@ -641,7 +644,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
             else {
                 setSelectionWithoutShowSelection(new int[0]);
             }
-            onSelectionChanged();
+            fireSelectionChangedIfNeccessary();
         }
     }
 
@@ -792,8 +795,11 @@ public class TableImpl extends SwtControl implements ITableSpi {
         toolTip.setVisible(true);
     }
 
-    private void onSelectionChanged() {
-        tableSelectionObservable.fireSelectionChanged();
+    private void fireSelectionChangedIfNeccessary() {
+        if (!NullCompatibleEquivalence.equals(lastSelection, table.getSelectionIndices())) {
+            lastSelection = table.getSelectionIndices();
+            tableSelectionObservable.fireSelectionChanged();
+        }
     }
 
     @Override
@@ -1324,6 +1330,11 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
         @Override
         public void menuDetected(final MenuDetectEvent e) {
+
+            //if a drag source is installed, selection event fires after menu detect but selection
+            //should always change before menu detection
+            fireSelectionChangedIfNeccessary();
+
             //stop editing before popup opens
             stopEditing();
 
@@ -1445,7 +1456,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
     private final class TableSelectionListener extends SelectionAdapter {
         @Override
         public void widgetSelected(final SelectionEvent e) {
-            onSelectionChanged();
+            fireSelectionChangedIfNeccessary();
         }
     }
 
