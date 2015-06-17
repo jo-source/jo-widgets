@@ -32,6 +32,7 @@ import org.jowidgets.api.widgets.descriptor.ICollectionInputControlDescriptor;
 import org.jowidgets.api.widgets.descriptor.ICollectionInputDialogDescriptor;
 import org.jowidgets.api.widgets.descriptor.ICollectionInputFieldDescriptor;
 import org.jowidgets.api.widgets.descriptor.ICombinedCollectionInputFieldDescriptor;
+import org.jowidgets.api.widgets.descriptor.IDynamicFlowLayoutCompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.IExpandCompositeDescriptor;
 import org.jowidgets.api.widgets.descriptor.IInputComponentValidationLabelDescriptor;
 import org.jowidgets.api.widgets.descriptor.IInputCompositeDescriptor;
@@ -55,6 +56,7 @@ import org.jowidgets.impl.widgets.composed.factory.internal.CollectionInputDialo
 import org.jowidgets.impl.widgets.composed.factory.internal.CollectionInputFieldFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.CombinedCollectionInputFieldFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.CustomCalendarFactory;
+import org.jowidgets.impl.widgets.composed.factory.internal.DynamicFlowLayoutCompositeFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.ExpandCompositeFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.InputCompositeFactory;
 import org.jowidgets.impl.widgets.composed.factory.internal.InputDialogFactory;
@@ -105,6 +107,7 @@ public class GenericWidgetFactory extends BasicGenericWidgetFactory {
         register(ILevelMeterDescriptor.class, new LevelMeterFactory());
         register(ITreeViewerDescriptor.class, new TreeViewerFactory<Object>());
         register(ISliderViewerDescriptor.class, new SliderViewerFactory<Object>(this));
+        register(IDynamicFlowLayoutCompositeDescriptor.class, new DynamicFlowLayoutCompositeFactory());
     }
 
     private void registerFallbackWidgets() {

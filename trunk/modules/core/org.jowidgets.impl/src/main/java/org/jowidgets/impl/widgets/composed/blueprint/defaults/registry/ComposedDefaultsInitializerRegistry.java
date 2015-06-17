@@ -33,6 +33,7 @@ import org.jowidgets.api.widgets.blueprint.ILevelMeterBluePrint;
 import org.jowidgets.api.widgets.blueprint.builder.ICollectionInputControlSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ICollectionInputDialogSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.ICollectionInputFieldSetupBuilder;
+import org.jowidgets.api.widgets.blueprint.builder.IDynamicFlowLayoutCompositeSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IInputComponentValidationLabelSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IInputCompositeSetupBuilder;
 import org.jowidgets.api.widgets.blueprint.builder.IInputDialogSetupBuilder;
@@ -51,6 +52,7 @@ import org.jowidgets.impl.widgets.basic.blueprint.defaults.registry.BasicDefault
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.CollectionInputControlDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.CollectionInputDialogDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.CollectionInputFieldDefaults;
+import org.jowidgets.impl.widgets.composed.blueprint.defaults.DynamicFlowLayoutCompositeDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.ExpandCompositeDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.InputComponentValidationLabelDefaults;
 import org.jowidgets.impl.widgets.composed.blueprint.defaults.InputCompositeDefaults;
@@ -91,5 +93,6 @@ public class ComposedDefaultsInitializerRegistry extends BasicDefaultsInitialize
         register(ITreeSetupBuilder.class, new TreeDefaults());
         register(ISliderViewerSetupBuilder.class, new SliderViewerDefaults());
         register(ITreeViewerSetupBuilder.class, new TreeViewerDefaults());
+        register(IDynamicFlowLayoutCompositeSetupBuilder.class, new DynamicFlowLayoutCompositeDefaults());
     }
 }

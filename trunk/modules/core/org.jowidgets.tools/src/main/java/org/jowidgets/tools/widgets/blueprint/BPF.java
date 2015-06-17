@@ -61,6 +61,7 @@ import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IDirectoryChooserBluePrint;
+import org.jowidgets.api.widgets.blueprint.IDynamicFlowLayoutCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IExpandCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFileChooserBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
@@ -787,4 +788,7 @@ public final class BPF {
         return Toolkit.getBluePrintFactory().sliderViewerLong(min, max);
     }
 
+    public static IDynamicFlowLayoutCompositeBluePrint dynamicFlowLayoutComposite() {
+        return Toolkit.getBluePrintFactory().dynamicFlowLayoutComposite();
+    }
 }

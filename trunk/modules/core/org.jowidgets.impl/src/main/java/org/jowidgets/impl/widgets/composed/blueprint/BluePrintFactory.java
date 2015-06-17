@@ -45,6 +45,7 @@ import org.jowidgets.api.widgets.blueprint.ICollectionInputControlBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICollectionInputFieldBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICombinedCollectionInputFieldBluePrint;
+import org.jowidgets.api.widgets.blueprint.IDynamicFlowLayoutCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IExpandCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputComponentValidationLabelBluePrint;
 import org.jowidgets.api.widgets.blueprint.IInputCompositeBluePrint;
@@ -326,6 +327,11 @@ public class BluePrintFactory extends AbstractBasicBluePrintFactory implements I
     ////////////////////////////////////////////////////////////////////////////
     ////////////////////////input fields here///////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public IDynamicFlowLayoutCompositeBluePrint dynamicFlowLayoutComposite() {
+        return createProxy(IDynamicFlowLayoutCompositeBluePrint.class);
+    }
 
     @Override
     public IInputFieldBluePrint<String> inputFieldString() {

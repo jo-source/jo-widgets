@@ -44,6 +44,7 @@ import org.jowidgets.api.event.IDelayedEventRunnerBuilder;
 import org.jowidgets.api.image.IImageFactory;
 import org.jowidgets.api.image.Icons;
 import org.jowidgets.api.image.IconsSmall;
+import org.jowidgets.api.layout.ILayoutConstraintsToolkit;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.mask.ITextMaskBuilder;
 import org.jowidgets.api.model.IModelFactoryProvider;
@@ -79,6 +80,7 @@ import org.jowidgets.impl.convert.DefaultConverterProvider;
 import org.jowidgets.impl.convert.slider.SliderConverterFactoryImpl;
 import org.jowidgets.impl.image.DefaultIconsRegisterService;
 import org.jowidgets.impl.image.DefaultImageFactoryImpl;
+import org.jowidgets.impl.layout.LayoutConstraintsToolkitImpl;
 import org.jowidgets.impl.layout.LayoutFactoryProvider;
 import org.jowidgets.impl.mask.TextMaskBuilderImpl;
 import org.jowidgets.impl.model.ModelFactoryProvider;
@@ -101,6 +103,7 @@ public class DefaultToolkit implements IToolkit {
     private final IGenericWidgetFactory genericWidgetFactory;
     private final IImageFactory imageFactory;
     private final ILayoutFactoryProvider layoutFactoryProvider;
+    private final ILayoutConstraintsToolkit layoutConstraintsToolkit;
     private final IWidgetWrapperFactory widgetWrapperFactory;
     private final BluePrintFactory bluePrintFactory;
     private final IBluePrintProxyFactory bluePrintProxyFactory;
@@ -131,6 +134,7 @@ public class DefaultToolkit implements IToolkit {
         this.imageFactory = new DefaultImageFactoryImpl(toolkitSpi.getImageFactory(), toolkitSpi.getImageRegistry());
         this.widgetWrapperFactory = new DefaultWidgetWrapperFactory(genericWidgetFactory, toolkitSpi.getWidgetFactory());
         this.layoutFactoryProvider = new LayoutFactoryProvider();
+        this.layoutConstraintsToolkit = new LayoutConstraintsToolkitImpl();
         this.bluePrintProxyFactory = new BluePrintProxyFactoryImpl(
             new ComposedSetupConvenienceRegistry(),
             new ComposedDefaultsInitializerRegistry());
@@ -207,6 +211,11 @@ public class DefaultToolkit implements IToolkit {
     @Override
     public ILayoutFactoryProvider getLayoutFactoryProvider() {
         return layoutFactoryProvider;
+    }
+
+    @Override
+    public ILayoutConstraintsToolkit getLayoutConstraintsToolkit() {
+        return layoutConstraintsToolkit;
     }
 
     @Override
