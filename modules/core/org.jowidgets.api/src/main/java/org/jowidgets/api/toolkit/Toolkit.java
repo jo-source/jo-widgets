@@ -42,6 +42,7 @@ import org.jowidgets.api.convert.IConverterProvider;
 import org.jowidgets.api.convert.ISliderConverterFactory;
 import org.jowidgets.api.event.IDelayedEventRunnerBuilder;
 import org.jowidgets.api.image.IImageFactory;
+import org.jowidgets.api.layout.ILayoutConstraintsToolkit;
 import org.jowidgets.api.layout.ILayoutFactoryProvider;
 import org.jowidgets.api.mask.ITextMaskBuilder;
 import org.jowidgets.api.model.IModelFactoryProvider;
@@ -271,6 +272,15 @@ public final class Toolkit {
      */
     public static ILayoutFactoryProvider getLayoutFactoryProvider() {
         return getInstance().getLayoutFactoryProvider();
+    }
+
+    /**
+     * Gets the layout constraints toolkit
+     * 
+     * @return The layout constraints toolkit
+     */
+    public static ILayoutConstraintsToolkit getLayoutConstraintsToolkit() {
+        return getInstance().getLayoutConstraintsToolkit();
     }
 
     /**

@@ -59,6 +59,7 @@ import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.ICompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IDialogBluePrint;
 import org.jowidgets.api.widgets.blueprint.IDirectoryChooserBluePrint;
+import org.jowidgets.api.widgets.blueprint.IDynamicFlowLayoutCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IExpandCompositeBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFileChooserBluePrint;
 import org.jowidgets.api.widgets.blueprint.IFrameBluePrint;
@@ -400,6 +401,8 @@ public interface IBluePrintFactory {
     <VALUE_TYPE> ISliderViewerBluePrint<VALUE_TYPE> sliderViewer();
 
     <VALUE_TYPE> ISliderViewerBluePrint<VALUE_TYPE> sliderViewer(ISliderViewerConverter<VALUE_TYPE> converter);
+
+    IDynamicFlowLayoutCompositeBluePrint dynamicFlowLayoutComposite();
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////// some input fields here/////////////////////////////////////////////////
