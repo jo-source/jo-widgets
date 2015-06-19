@@ -32,9 +32,9 @@ import javax.swing.UIManager;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.examples.common.snipped.DynamicFlowLayoutCompositeSnipped;
 
-public final class DynamicFlowLayoutCompositeStarterSwing {
+public final class DynamicFlowLayoutCompositeSnippedStarterSwing {
 
-    private DynamicFlowLayoutCompositeStarterSwing() {}
+    private DynamicFlowLayoutCompositeSnippedStarterSwing() {}
 
     public static void main(final String[] args) throws Exception {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
