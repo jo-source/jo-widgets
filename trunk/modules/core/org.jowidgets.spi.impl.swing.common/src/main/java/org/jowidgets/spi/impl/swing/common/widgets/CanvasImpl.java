@@ -50,6 +50,7 @@ public class CanvasImpl extends SwingComposite implements ICanvasSpi {
 
     public CanvasImpl(final IGenericWidgetFactory factory, final ICanvasSetupCommon setup) {
         super(factory, new CanvasPanel());
+        getUiReference().setDoubleBuffered(setup.isDoubleBuffering());
         getUiReference().setBackground(null);
     }
 
