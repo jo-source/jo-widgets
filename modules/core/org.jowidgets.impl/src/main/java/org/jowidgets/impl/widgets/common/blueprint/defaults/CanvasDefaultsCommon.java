@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, Michael Grossmann
+ * Copyright (c) 2012, Michael Grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -25,11 +25,16 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
  * DAMAGE.
  */
-package org.jowidgets.common.widgets.builder;
+package org.jowidgets.impl.widgets.common.blueprint.defaults;
 
-public interface ICanvasSetupBuilderCommon<INSTANCE_TYPE extends ICanvasSetupBuilderCommon<?>> extends
-        IComponentSetupBuilderCommon<INSTANCE_TYPE> {
+import org.jowidgets.api.widgets.blueprint.defaults.IDefaultInitializer;
+import org.jowidgets.common.widgets.builder.ICanvasSetupBuilderCommon;
 
-    INSTANCE_TYPE setDoubleBuffering(boolean doubleBuffering);
+public class CanvasDefaultsCommon implements IDefaultInitializer<ICanvasSetupBuilderCommon<?>> {
+
+    @Override
+    public void initialize(final ICanvasSetupBuilderCommon<?> builder) {
+        builder.setDoubleBuffering(true);
+    }
 
 }

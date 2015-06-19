@@ -52,7 +52,7 @@ public class CanvasImpl extends SwtComposite implements ICanvasSpi {
         final Object parentUiReference,
         final ICanvasSetupSpi setup,
         final SwtImageRegistry imageRegistry) {
-        super(factory, new Canvas((Composite) parentUiReference, SWT.DOUBLE_BUFFERED), imageRegistry);
+        super(factory, new Canvas((Composite) parentUiReference, getStyle(setup)), imageRegistry);
         getUiReference().setBackgroundMode(SWT.INHERIT_DEFAULT);
         this.paintObservable = new PaintObservable();
 
@@ -66,6 +66,15 @@ public class CanvasImpl extends SwtComposite implements ICanvasSpi {
                 paintObservable.firePaint(new PaintEventSpiImpl(graphicContext, clipBounds));
             }
         });
+    }
+
+    private static int getStyle(final ICanvasSetupSpi setup) {
+        if (setup.isDoubleBuffering()) {
+            return SWT.DOUBLE_BUFFERED;
+        }
+        else {
+            return SWT.NONE;
+        }
     }
 
     @Override

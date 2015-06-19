@@ -29,6 +29,7 @@
 package org.jowidgets.impl.widgets.common.blueprint.defaults.registry;
 
 import org.jowidgets.common.widgets.builder.IButtonSetupBuilderCommon;
+import org.jowidgets.common.widgets.builder.ICanvasSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ICheckBoxSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IDialogSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IFrameSetupBuilderCommon;
@@ -48,6 +49,7 @@ import org.jowidgets.common.widgets.builder.IToolBarSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.ITreeSetupBuilderCommon;
 import org.jowidgets.common.widgets.builder.IWindowSetupBuilderCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.ButtonDefaultsCommon;
+import org.jowidgets.impl.widgets.common.blueprint.defaults.CanvasDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.CheckBoxDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.DialogDefaultsCommon;
 import org.jowidgets.impl.widgets.common.blueprint.defaults.FrameDefaultsCommon;
@@ -91,5 +93,6 @@ public class CommonDefaultsInitializerRegistry extends DefaultsInitializerRegist
         register(IInputObservableSetupBuilderCommon.class, new InputObservableDefaultsCommon());
         register(ITitledWindowSetupBuilderCommon.class, new TitledWindowDefaultsCommon());
         register(ISliderSetupBuilderCommon.class, new SliderDefaultsCommon());
+        register(ICanvasSetupBuilderCommon.class, new CanvasDefaultsCommon());
     }
 }
