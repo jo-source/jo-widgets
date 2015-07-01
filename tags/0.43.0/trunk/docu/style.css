@@ -1,0 +1,116 @@
+body {
+    margin: auto;
+    padding-right: 1em;
+    padding-left: 1em;
+    max-width: 64em; 
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    color: black;
+    font-family: Verdana, sans-serif;
+    font-size: 95%;
+    line-height: 140%;
+    color: #333; 
+}
+
+div.informaltable table{
+	  border-collapse:collapse;  
+	  font-family: Verdana, sans-serif;
+	  font-size: 95%;
+}
+
+div.informaltable td {
+	  padding: 10px;
+	  border:1px solid;
+}
+
+div.informaltable th {
+	  padding: 10px;
+	  border:1px solid;
+	  font-weight: bold;
+	  background-color: #ececec;
+}
+
+
+
+pre {
+    border: 1px dotted gray;
+    background-color: #ececec;
+    color: #1111111;
+    padding: 0.5em;
+}
+code {
+    font-family: monospace;
+	font-size: 105%;
+}
+h1 a, h2 a, h3 a, h4 a, h5 a { 
+    text-decoration: none;
+    color: #18449F; 
+}
+h1, h2, h3, h4, h5 { font-family: verdana;
+                     font-weight: bold;
+                     border-bottom: 1px dotted black;
+                     color: #18449F; }
+h1 {
+        font-size: 130%;
+}
+
+h2 {
+        font-size: 110%;
+}
+
+h3 {
+        font-size: 95%;
+}
+
+h4 {
+        font-size: 90%;
+        font-style: italic;
+}
+
+h5 {
+        font-size: 90%;
+        font-style: italic;
+}
+
+h1.title {
+        font-size: 200%;
+        font-weight: bold;
+        padding-top: 0.2em;
+        padding-bottom: 0.2em;
+        text-align: left;
+        border: none;
+}
+
+dt code {
+        font-weight: bold;
+}
+dd p {
+        margin-top: 0;
+}
+
+span.lineannotation { 
+    font-family: serif;
+    font-style:  italic;
+}
+
+img { 
+   border:1px solid #021a40;
+}
+
+div.figure { 
+   font-size: 80%;
+   text-align:left;
+}
+
+div.footnotes{
+	font-size: 80%;
+}
+
+#footer {
+        padding-top: 1em;
+        font-size: 70%;
+        color: gray;
+        text-align: center;
+        }
+
+

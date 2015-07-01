@@ -1,0 +1,99 @@
+/*
+ * Copyright (c) 2014, grossmann
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * * Redistributions of source code must retain the above copyright
+ *   notice, this list of conditions and the following disclaimer.
+ * * Redistributions in binary form must reproduce the above copyright
+ *   notice, this list of conditions and the following disclaimer in the
+ *   documentation and/or other materials provided with the distribution.
+ * * Neither the name of the jo-widgets.org nor the
+ *   names of its contributors may be used to endorse or promote products
+ *   derived from this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL jo-widgets.org BE LIABLE FOR ANY
+ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+ * DAMAGE.
+ */
+
+package org.jowidgets.api.command;
+
+import org.jowidgets.api.widgets.ITreeNode;
+import org.jowidgets.util.IFilter;
+
+public interface ITreeExpansionActionBuilder extends IDefaultActionBuilder {
+
+    /**
+     * Sets the label that is used, if a bound pivot level is used
+     * 
+     * @param the bound pivot level text to set
+     * 
+     * @return This builder
+     */
+    ITreeExpansionActionBuilder setBoundPivotLevelText(String text);
+
+    /**
+     * Sets the pivot level for the expand or collapse
+     * 
+     * @param level The level to set
+     * 
+     * @return This builder
+     * 
+     * @see setAllChildrenExpanded(Integer, boolean) for ITreeContainer
+     */
+    ITreeExpansionActionBuilder setPivotLevel(Integer level);
+
+    /**
+     * Sets the pivot level for the expand or collapse
+     * 
+     * @param level The level to set
+     * 
+     * @return This builder
+     * 
+     * @see setAllChildrenExpanded(Integer, boolean) for ITreeContainer
+     */
+    ITreeExpansionActionBuilder setPivotLevel(int level);
+
+    /**
+     * Adds a filter. Only nodes that was accepted by the filter will be affected
+     * 
+     * @param filter The filter to set
+     * 
+     * @return This builder
+     */
+    ITreeExpansionActionBuilder addFilter(IFilter<ITreeNode> filter);
+
+    /**
+     * Sets a filter. Only nodes that was accepted by the filter will be affected.
+     * Remark: Setting a filter will remove all currently added filters
+     * 
+     * @param filter The filter to set
+     * 
+     * @return This builder
+     */
+    ITreeExpansionActionBuilder setFilter(IFilter<ITreeNode> filter);
+
+    /**
+     * Enable or disable enable checking.
+     * By default enabled checking is enabled
+     * 
+     * @param enabledChecker If set true, enable checking is enabled, otherwise enabled checking is disabled
+     * 
+     * @return This builder
+     */
+    ITreeExpansionActionBuilder setEnabledChecking(boolean enabledChecking);
+
+    @Override
+    ITreeExpansionAction build();
+
+}
