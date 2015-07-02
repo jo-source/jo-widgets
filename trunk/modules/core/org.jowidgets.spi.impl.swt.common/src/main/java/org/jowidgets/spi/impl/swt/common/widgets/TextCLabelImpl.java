@@ -43,6 +43,8 @@ public class TextCLabelImpl extends SwtControl implements ITextLabelSpi {
     public TextCLabelImpl(final Object parentUiReference, final ITextLabelSetupSpi setup, final SwtImageRegistry imageRegistry) {
         super(new JoCLabel((Composite) parentUiReference, SWT.NONE, setup.getEllipsisMode()), imageRegistry);
 
+        getUiReference().setMargins(0, 0, 0, 0);
+
         setText(setup.getText());
         setToolTipText(setup.getToolTipText());
 
