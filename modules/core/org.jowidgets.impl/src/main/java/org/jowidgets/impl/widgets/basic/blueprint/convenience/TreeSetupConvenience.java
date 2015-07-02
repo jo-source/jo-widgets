@@ -64,7 +64,7 @@ public class TreeSetupConvenience extends AbstractSetupBuilderConvenience<ITreeS
         final ITreeSetupBuilder<?> builder = getBuilder();
         builder.setDefaultInnerIcon(IconsSmall.FOLDER);
         builder.setDefaultLeafIcon(IconsSmall.PAGE_WHITE);
-        return null;
+        return builder;
     }
 
     @Override
