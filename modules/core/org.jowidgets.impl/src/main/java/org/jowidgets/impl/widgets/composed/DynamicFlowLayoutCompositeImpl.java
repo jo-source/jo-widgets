@@ -27,22 +27,69 @@
  */
 package org.jowidgets.impl.widgets.composed;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.jowidgets.api.controller.IDisposeListener;
 import org.jowidgets.api.layout.IDynamicFlowLayoutConstraints;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IDynamicFlowLayoutComposite;
 import org.jowidgets.api.widgets.descriptor.setup.IDynamicFlowLayoutCompositeSetup;
+import org.jowidgets.common.types.AlignmentHorizontal;
+import org.jowidgets.common.types.AlignmentVertical;
+import org.jowidgets.common.types.Orientation;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.ICustomWidgetCreator;
 import org.jowidgets.common.widgets.factory.ICustomWidgetFactory;
+import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.EmptyCheck;
+import org.jowidgets.util.StringUtils;
 
 public final class DynamicFlowLayoutCompositeImpl extends ControlWrapper implements IDynamicFlowLayoutComposite {
+
+    private final Orientation orientation;
+    private final String oppositeLayoutConstraints;
+    private final Integer gap;
+
+    private final ArrayList<String> widthGroups;
+    private final ArrayList<String> heightGroups;
+    private final ArrayList<String> layoutConstraints;
+
+    private long sizeGroupNr;
 
     public DynamicFlowLayoutCompositeImpl(final IComposite composite, final IDynamicFlowLayoutCompositeSetup setup) {
         super(composite);
         Assert.paramNotNull(setup.getOrientation(), "setup.getOrientation()");
+        this.orientation = setup.getOrientation();
+        this.gap = setup.getGap();
+        this.oppositeLayoutConstraints = createOppositeLayoutConstraints(setup);
+        this.widthGroups = new ArrayList<String>();
+        this.heightGroups = new ArrayList<String>();
+        this.layoutConstraints = new ArrayList<String>();
+
+        this.sizeGroupNr = 0;
+    }
+
+    private static String createOppositeLayoutConstraints(final IDynamicFlowLayoutCompositeSetup setup) {
+        final List<String> result = new LinkedList<String>();
+
+        if (setup.isLayoutGrowing()) {
+            result.add("grow");
+        }
+
+        final String sizeConstraints = createMigSizeConstraints(
+                setup.getLayoutMinSize(),
+                setup.getLayoutPreferredSize(),
+                setup.getLayoutMaxSize());
+        if (sizeConstraints != null) {
+            result.add(sizeConstraints);
+        }
+
+        return "0[" + StringUtils.concatElementsSeparatedBy(result, ',') + "]0";
     }
 
     @Override
@@ -128,18 +175,243 @@ public final class DynamicFlowLayoutCompositeImpl extends ControlWrapper impleme
         final int index,
         final ICustomWidgetCreator<WIDGET_TYPE> creator,
         final IDynamicFlowLayoutConstraints constraints) {
-        final WIDGET_TYPE result = getWidget().add(index, creator, getMigCellConstraints(constraints));
+        final String cellConstraints = createMigCellConstraintsForIndex(index, constraints);
+        final WIDGET_TYPE result = getWidget().add(index, creator, cellConstraints);
+
+        result.addDisposeListener(new IDisposeListener() {
+            @Override
+            public void onDispose() {
+                removeControlConstraints(result);
+                updateLayout();
+            }
+        });
+
+        layoutConstraints.add(index, createMigLayoutConstraints(constraints));
+        updateLayout();
         return result;
     }
 
-    private String getMigCellConstraints(final IDynamicFlowLayoutConstraints constraints) {
-        //TODO 
-        return "";
+    private void removeControlConstraints(final IControl control) {
+        final int indexOfControl = getWidget().getChildren().indexOf(control);
+        if (indexOfControl != -1) {
+            layoutConstraints.remove(indexOfControl);
+            widthGroups.remove(indexOfControl);
+            heightGroups.remove(indexOfControl);
+        }
     }
 
-    @SuppressWarnings("unused")
-    private String getMigLayoutConstraints(final IDynamicFlowLayoutConstraints constraints) {
-        //TODO 
-        return "";
+    private String createMigCellConstraintsForIndex(final int index, final IDynamicFlowLayoutConstraints constraints) {
+
+        final String widthGroup = getWidthGroup(index, constraints);
+        final String heightGroup = getHeightGroup(index, constraints);
+
+        widthGroups.add(index, widthGroup);
+        heightGroups.add(index, heightGroup);
+
+        final StringBuilder result = new StringBuilder();
+        result.append("sgx ");
+        result.append(widthGroup);
+        result.append(", sgy ");
+        result.append(heightGroup);
+
+        final String cellConstraints = createMigCellConstraints(constraints);
+        if (!EmptyCheck.isEmpty(cellConstraints)) {
+            result.append(", ");
+            result.append(cellConstraints);
+        }
+
+        return result.toString();
+    }
+
+    private String getWidthGroup(final int index, final IDynamicFlowLayoutConstraints constraints) {
+        if (constraints == null || constraints.useWidthOfElementAt() == null) {
+            return nextSizeGroup();
+        }
+        else {
+            return widthGroups.get(constraints.useWidthOfElementAt().intValue());
+        }
+    }
+
+    private String getHeightGroup(final int index, final IDynamicFlowLayoutConstraints constraints) {
+        if (constraints == null || constraints.useHeightOfElementAt() == null) {
+            return nextSizeGroup();
+        }
+        else {
+            return heightGroups.get(constraints.useHeightOfElementAt().intValue());
+        }
+    }
+
+    private String createMigCellConstraints(final IDynamicFlowLayoutConstraints constraints) {
+        if (constraints == null) {
+            return null;
+        }
+
+        final List<String> result = new LinkedList<String>();
+
+        if (constraints.isGrowWidth()) {
+            result.add("growx");
+        }
+
+        if (constraints.isGrowHeight()) {
+            result.add("growy");
+        }
+
+        final AlignmentHorizontal alignmentHorizontal = constraints.getAlignmentHorizontal();
+        if (AlignmentHorizontal.LEFT.equals(alignmentHorizontal)) {
+            result.add("alignx l");
+        }
+        else if (AlignmentHorizontal.RIGHT.equals(alignmentHorizontal)) {
+            result.add("alignx r");
+        }
+        else if (AlignmentHorizontal.CENTER.equals(alignmentHorizontal)) {
+            result.add("alignx c");
+        }
+
+        final AlignmentVertical alignmentVertical = constraints.getAlignmentVertical();
+        if (AlignmentVertical.TOP.equals(alignmentVertical)) {
+            result.add("aligny t");
+        }
+        else if (AlignmentVertical.BOTTOM.equals(alignmentVertical)) {
+            result.add("aligny b");
+        }
+        else if (AlignmentVertical.CENTER.equals(alignmentVertical)) {
+            result.add("aligny c");
+        }
+
+        final String widthConstraints = createMigWidthCellConstraints(constraints);
+        if (!EmptyCheck.isEmpty(widthConstraints)) {
+            result.add(widthConstraints);
+        }
+
+        final String heightConstraints = createMigHeightCellConstraints(constraints);
+        if (!EmptyCheck.isEmpty(heightConstraints)) {
+            result.add(heightConstraints);
+        }
+
+        return StringUtils.concatElementsSeparatedBy(result, ',');
+    }
+
+    private String createMigWidthCellConstraints(final IDynamicFlowLayoutConstraints constraints) {
+        final String migSizeConstraints = createMigWidthConstraints(constraints);
+        if (migSizeConstraints != null) {
+            return "w " + migSizeConstraints;
+        }
+        else {
+            return "";
+        }
+    }
+
+    private String createMigHeightCellConstraints(final IDynamicFlowLayoutConstraints constraints) {
+        final String migSizeConstraints = createMigHeightConstraints(constraints);
+        if (migSizeConstraints != null) {
+            return "h " + migSizeConstraints;
+        }
+        else {
+            return "";
+        }
+    }
+
+    private static String createMigWidthConstraints(final IDynamicFlowLayoutConstraints constraints) {
+        return createMigSizeConstraints(constraints.getMinWidth(), constraints.getPreferredWidth(), constraints.getMaxWidth());
+    }
+
+    private static String createMigHeightConstraints(final IDynamicFlowLayoutConstraints constraints) {
+        return createMigSizeConstraints(constraints.getMinHeight(), constraints.getPreferredHeight(), constraints.getMaxHeight());
+    }
+
+    private static String createMigSizeConstraints(final Integer min, final Integer pref, final Integer max) {
+        if (min == null && pref == null && max == null) {
+            return null;
+        }
+        final StringBuilder builder = new StringBuilder();
+        if (min != null) {
+            builder.append(min);
+        }
+        builder.append(":");
+        if (pref != null) {
+            builder.append(pref);
+        }
+        builder.append(":");
+        if (max != null) {
+            builder.append(max);
+        }
+        return builder.toString();
+    }
+
+    private String createMigLayoutConstraints(final IDynamicFlowLayoutConstraints constraints) {
+        if (constraints == null) {
+            return "";
+        }
+        final List<String> result = new LinkedList<String>();
+
+        if (Orientation.HORIZONTAL.equals(orientation) && constraints.isGrowWidth()) {
+            result.addAll(createMigHorizontalLayoutConstraints(constraints));
+        }
+        else if (Orientation.VERTICAL.equals(orientation) && constraints.isGrowHeight()) {
+            result.addAll(createMigVerticalLayoutConstraints(constraints));
+        }
+
+        return StringUtils.concatElementsSeparatedBy(result, ',');
+    }
+
+    private List<String> createMigHorizontalLayoutConstraints(final IDynamicFlowLayoutConstraints constraints) {
+        final List<String> result = new LinkedList<String>();
+        if (constraints.isGrowWidth()) {
+            result.add("grow");
+        }
+        final String widthConstraints = createMigWidthConstraints(constraints);
+        if (widthConstraints != null) {
+            result.add(widthConstraints);
+        }
+        return result;
+    }
+
+    private List<String> createMigVerticalLayoutConstraints(final IDynamicFlowLayoutConstraints constraints) {
+        final List<String> result = new LinkedList<String>();
+        if (constraints.isGrowHeight()) {
+            result.add("grow");
+        }
+        final String widthConstraints = createMigHeightConstraints(constraints);
+        if (widthConstraints != null) {
+            result.add(widthConstraints);
+        }
+        return result;
+    }
+
+    private void updateLayout() {
+        final String layoutConstraintsString = createMigLayoutConstraintsString();
+        if (Orientation.HORIZONTAL.equals(orientation)) {
+            getWidget().setLayout(new MigLayoutDescriptor(layoutConstraintsString, oppositeLayoutConstraints));
+        }
+        else if (Orientation.VERTICAL.equals(orientation)) {
+            getWidget().setLayout(new MigLayoutDescriptor("wrap", oppositeLayoutConstraints, layoutConstraintsString));
+        }
+        else {
+            throw new IllegalStateException("Orientation '" + orientation + "' is not supported");
+        }
+    }
+
+    private String createMigLayoutConstraintsString() {
+        if (layoutConstraints.size() == 0) {
+            return null;
+        }
+
+        final StringBuilder builder = new StringBuilder();
+        builder.append("0");
+        for (int i = 0; i < layoutConstraints.size(); i++) {
+            builder.append("[");
+            builder.append(layoutConstraints.get(i));
+            builder.append("]");
+            if (gap != null && i < layoutConstraints.size() - 1) {
+                builder.append(gap.toString());
+            }
+        }
+        builder.append("0");
+
+        return builder.toString();
+    }
+
+    private String nextSizeGroup() {
+        return "grp" + sizeGroupNr++;
     }
 }

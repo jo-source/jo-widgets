@@ -29,6 +29,8 @@
 package org.jowidgets.impl.layout;
 
 import org.jowidgets.api.layout.IDynamicFlowLayoutConstraints;
+import org.jowidgets.common.types.AlignmentHorizontal;
+import org.jowidgets.common.types.AlignmentVertical;
 
 final class DynamicFlowLayoutConstraintsImpl implements IDynamicFlowLayoutConstraints {
 
@@ -40,6 +42,9 @@ final class DynamicFlowLayoutConstraintsImpl implements IDynamicFlowLayoutConstr
 
     private final Integer maxWidth;
     private final Integer maxHeight;
+
+    private final AlignmentHorizontal alignmentHorizontal;
+    private final AlignmentVertical alignmentVertical;
 
     private final boolean growWidth;
     private final boolean growHeight;
@@ -56,6 +61,8 @@ final class DynamicFlowLayoutConstraintsImpl implements IDynamicFlowLayoutConstr
         this.maxHeight = builder.getMaxHeight();
         this.growWidth = builder.isGrowWidth();
         this.growHeight = builder.isGrowHeight();
+        this.alignmentVertical = builder.getAlignmentVertical();
+        this.alignmentHorizontal = builder.getAlignmentHorizontal();
         this.useWidthOfElementAt = builder.getUseWidthOfElementAt();
         this.useHeightOfElementAt = builder.getUseHeightOfElementAt();
     }
@@ -98,6 +105,16 @@ final class DynamicFlowLayoutConstraintsImpl implements IDynamicFlowLayoutConstr
     @Override
     public boolean isGrowHeight() {
         return growHeight;
+    }
+
+    @Override
+    public AlignmentHorizontal getAlignmentHorizontal() {
+        return alignmentHorizontal;
+    }
+
+    @Override
+    public AlignmentVertical getAlignmentVertical() {
+        return alignmentVertical;
     }
 
     @Override

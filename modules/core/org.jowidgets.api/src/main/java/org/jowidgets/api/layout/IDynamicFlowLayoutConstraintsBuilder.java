@@ -27,7 +27,14 @@
  */
 package org.jowidgets.api.layout;
 
+import org.jowidgets.common.types.AlignmentHorizontal;
+import org.jowidgets.common.types.AlignmentVertical;
+
 public interface IDynamicFlowLayoutConstraintsBuilder {
+
+    IDynamicFlowLayoutConstraintsBuilder width(Integer width);
+
+    IDynamicFlowLayoutConstraintsBuilder height(Integer height);
 
     IDynamicFlowLayoutConstraintsBuilder minWidth(Integer width);
 
@@ -48,6 +55,22 @@ public interface IDynamicFlowLayoutConstraintsBuilder {
     IDynamicFlowLayoutConstraintsBuilder growHeight(boolean grow);
 
     IDynamicFlowLayoutConstraintsBuilder growHeight();
+
+    IDynamicFlowLayoutConstraintsBuilder alignmentHorizontal(AlignmentHorizontal alignment);
+
+    IDynamicFlowLayoutConstraintsBuilder alignLeft();
+
+    IDynamicFlowLayoutConstraintsBuilder alignRight();
+
+    IDynamicFlowLayoutConstraintsBuilder alignHorizontalCenter();
+
+    IDynamicFlowLayoutConstraintsBuilder alignmentVertical(AlignmentVertical alignment);
+
+    IDynamicFlowLayoutConstraintsBuilder alignTop();
+
+    IDynamicFlowLayoutConstraintsBuilder alignBottom();
+
+    IDynamicFlowLayoutConstraintsBuilder alignVerticalCenter();
 
     IDynamicFlowLayoutConstraintsBuilder useWidthOfElementAt(Integer index);
 

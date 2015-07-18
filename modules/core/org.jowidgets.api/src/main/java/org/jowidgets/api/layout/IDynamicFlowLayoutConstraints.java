@@ -27,6 +27,9 @@
  */
 package org.jowidgets.api.layout;
 
+import org.jowidgets.common.types.AlignmentHorizontal;
+import org.jowidgets.common.types.AlignmentVertical;
+
 public interface IDynamicFlowLayoutConstraints {
 
     Integer getMinWidth();
@@ -44,6 +47,10 @@ public interface IDynamicFlowLayoutConstraints {
     boolean isGrowWidth();
 
     boolean isGrowHeight();
+
+    AlignmentHorizontal getAlignmentHorizontal();
+
+    AlignmentVertical getAlignmentVertical();
 
     Integer useWidthOfElementAt();
 
