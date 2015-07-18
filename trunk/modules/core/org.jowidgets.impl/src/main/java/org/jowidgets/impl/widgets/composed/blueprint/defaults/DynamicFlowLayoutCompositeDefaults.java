@@ -36,6 +36,7 @@ public class DynamicFlowLayoutCompositeDefaults implements IDefaultInitializer<I
     @Override
     public void initialize(final IDynamicFlowLayoutCompositeSetupBuilder<?> builder) {
         builder.setOrientation(Orientation.HORIZONTAL);
+        builder.setLayoutGrowing(false);
     }
 
 }

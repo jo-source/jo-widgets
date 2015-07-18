@@ -32,8 +32,79 @@ import org.jowidgets.common.types.Orientation;
 public interface IDynamicFlowLayoutCompositeSetupBuilder<INSTANCE_TYPE extends IDynamicFlowLayoutCompositeSetupBuilder<?>> extends
         IComponentSetupBuilder<INSTANCE_TYPE> {
 
+    /**
+     * Sets the orientation of the controls flow layout
+     * 
+     * @param orientation The orientation
+     * 
+     * @return This builder
+     */
     INSTANCE_TYPE setOrientation(Orientation orientation);
 
+    /**
+     * Sets the layout growing attribute
+     * 
+     * If set to true, the composite grows in the opposite direction than the composite is oriented
+     * 
+     * If orientation is horizontal, the composite grows vertical
+     * If orientation is vertical, the composite grows horizontal
+     * 
+     * @param growing The growing attribute
+     * 
+     * @return This builder
+     */
+    INSTANCE_TYPE setLayoutGrowing(boolean growing);
+
+    /**
+     * Sets the layout min size.
+     * 
+     * This defines the minWidth or the minHeight depending on the orientation.
+     * 
+     * If orientation is horizontal, the the parameter has effect to the composites height
+     * If orientation is vertical, the the parameter has effect to the composites width
+     * 
+     * @param size The size to use
+     * 
+     * @return This builder
+     */
+    INSTANCE_TYPE setLayoutMinSize(Integer size);
+
+    /**
+     * Sets the layout preferred size.
+     * 
+     * This defines the preferredWidth or the preferredHeight depending on the orientation.
+     * 
+     * If orientation is horizontal, the the parameter has effect to the composites height
+     * If orientation is vertical, the the parameter has effect to the composites width
+     * 
+     * @param size The size to use
+     * 
+     * @return This builder
+     */
+    INSTANCE_TYPE setLayoutPreferredSize(Integer size);
+
+    /**
+     * Sets the layout max size.
+     * 
+     * This defines the maxWidth or the maxHeight depending on the orientation.
+     * 
+     * If orientation is horizontal, the the parameter has effect to the composites height
+     * If orientation is vertical, the the parameter has effect to the composites width
+     * 
+     * @param size The size to use
+     * 
+     * @return This builder
+     */
+    INSTANCE_TYPE setLayoutMaxSize(Integer size);
+
+    /**
+     * Sets the gap between the components cells.
+     * If no gap is defined, a default gap will be used.
+     * 
+     * @param gap The gap in pixel to set or null to use the default gap
+     * 
+     * @return This builder
+     */
     INSTANCE_TYPE setGap(Integer gap);
 
 }

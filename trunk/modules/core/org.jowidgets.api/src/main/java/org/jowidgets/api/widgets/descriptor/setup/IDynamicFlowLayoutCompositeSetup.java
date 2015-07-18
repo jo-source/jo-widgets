@@ -35,6 +35,15 @@ public interface IDynamicFlowLayoutCompositeSetup extends IComponentSetup {
     @Mandatory
     Orientation getOrientation();
 
+    @Mandatory
+    boolean isLayoutGrowing();
+
+    Integer getLayoutMinSize();
+
+    Integer getLayoutPreferredSize();
+
+    Integer getLayoutMaxSize();
+
     Integer getGap();
 
 }

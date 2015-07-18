@@ -52,14 +52,21 @@ public final class DynamicFlowLayoutCompositeSnipped implements IApplication {
 
         //create a dynamic flow layout composite
         final IDynamicFlowLayoutComposite composite = frame.add(BPF.dynamicFlowLayoutComposite().setOrientation(
-                Orientation.HORIZONTAL));
+                Orientation.VERTICAL));
 
         //add a combobox
-        final IDynamicFlowLayoutConstraints const1 = DynamicFlowLayoutConstraints.builder().growWidth().build();
-        composite.addLast(BPF.comboBoxSelection("Dog", "Cat", "Mouse").autoCompletionOff(), const1);
+        final IDynamicFlowLayoutConstraints const1 = DynamicFlowLayoutConstraints.builder().build();
+        composite.addLast(BPF.comboBoxSelection("Hans Martin Schleier", "Dog", "Cat", "Mouse").autoCompletionOff(), const1);
 
         //add a growing space
-        final IDynamicFlowLayoutConstraints const2 = DynamicFlowLayoutConstraints.builder().growHeight().build();
+        final IDynamicFlowLayoutConstraints const2 = DynamicFlowLayoutConstraints.builder()
+                .growHeight()
+                .minHeight(0)
+                .preferredHeight(0)
+                .growWidth()
+                .minWidth(0)
+                .preferredWidth(0)
+                .build();
         composite.addLast(BPF.textLabel(), const2);
 
         //add checkboxes
@@ -77,7 +84,7 @@ public final class DynamicFlowLayoutCompositeSnipped implements IApplication {
                 .useWidthOfElementAt(0)
                 .useHeightOfElementAt(0)
                 .build();
-        composite.addLast(BPF.button().setIcon(IconsSmall.DISK), const4);
+        composite.addLast(BPF.button().setIcon(IconsSmall.DISK).setRemoveEmptyBorder(true), const4);
 
         //set the root frame visible
         frame.setVisible(true);

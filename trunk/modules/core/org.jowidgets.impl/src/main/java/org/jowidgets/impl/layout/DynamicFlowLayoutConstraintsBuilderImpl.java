@@ -30,6 +30,8 @@ package org.jowidgets.impl.layout;
 
 import org.jowidgets.api.layout.IDynamicFlowLayoutConstraints;
 import org.jowidgets.api.layout.IDynamicFlowLayoutConstraintsBuilder;
+import org.jowidgets.common.types.AlignmentHorizontal;
+import org.jowidgets.common.types.AlignmentVertical;
 
 final class DynamicFlowLayoutConstraintsBuilderImpl implements IDynamicFlowLayoutConstraintsBuilder {
 
@@ -45,8 +47,23 @@ final class DynamicFlowLayoutConstraintsBuilderImpl implements IDynamicFlowLayou
     private boolean growWidth;
     private boolean growHeight;
 
+    private AlignmentHorizontal alignmentHorizontal;
+    private AlignmentVertical alignmentVertical;
+
     private Integer useWidthOfElementAt;
     private Integer useHeightOfElementAt;
+
+    @Override
+    public IDynamicFlowLayoutConstraintsBuilder width(final Integer width) {
+        minWidth(width).preferredWidth(width).maxWidth(width);
+        return this;
+    }
+
+    @Override
+    public IDynamicFlowLayoutConstraintsBuilder height(final Integer height) {
+        minHeight(height).preferredHeight(height).maxHeight(height);
+        return this;
+    }
 
     @Override
     public IDynamicFlowLayoutConstraintsBuilder minWidth(final Integer width) {
@@ -107,6 +124,48 @@ final class DynamicFlowLayoutConstraintsBuilderImpl implements IDynamicFlowLayou
     }
 
     @Override
+    public IDynamicFlowLayoutConstraintsBuilder alignmentHorizontal(final AlignmentHorizontal alignment) {
+        this.alignmentHorizontal = alignment;
+        return this;
+    }
+
+    @Override
+    public IDynamicFlowLayoutConstraintsBuilder alignLeft() {
+        return alignmentHorizontal(AlignmentHorizontal.LEFT);
+    }
+
+    @Override
+    public IDynamicFlowLayoutConstraintsBuilder alignRight() {
+        return alignmentHorizontal(AlignmentHorizontal.RIGHT);
+    }
+
+    @Override
+    public IDynamicFlowLayoutConstraintsBuilder alignHorizontalCenter() {
+        return alignmentHorizontal(AlignmentHorizontal.CENTER);
+    }
+
+    @Override
+    public IDynamicFlowLayoutConstraintsBuilder alignmentVertical(final AlignmentVertical alignment) {
+        this.alignmentVertical = alignment;
+        return this;
+    }
+
+    @Override
+    public IDynamicFlowLayoutConstraintsBuilder alignTop() {
+        return alignmentVertical(AlignmentVertical.TOP);
+    }
+
+    @Override
+    public IDynamicFlowLayoutConstraintsBuilder alignBottom() {
+        return alignmentVertical(AlignmentVertical.BOTTOM);
+    }
+
+    @Override
+    public IDynamicFlowLayoutConstraintsBuilder alignVerticalCenter() {
+        return alignmentVertical(AlignmentVertical.CENTER);
+    }
+
+    @Override
     public IDynamicFlowLayoutConstraintsBuilder useWidthOfElementAt(final Integer index) {
         this.useWidthOfElementAt = index;
         return this;
@@ -148,6 +207,14 @@ final class DynamicFlowLayoutConstraintsBuilderImpl implements IDynamicFlowLayou
 
     boolean isGrowHeight() {
         return growHeight;
+    }
+
+    AlignmentHorizontal getAlignmentHorizontal() {
+        return alignmentHorizontal;
+    }
+
+    AlignmentVertical getAlignmentVertical() {
+        return alignmentVertical;
     }
 
     Integer getUseWidthOfElementAt() {
