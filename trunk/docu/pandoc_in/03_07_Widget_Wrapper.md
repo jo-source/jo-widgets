@@ -19,7 +19,7 @@ Für die meisten Widget Schnittstellen existieren Wrapper Klassen, welche es erm
 * WidgetWrapper
 * WindowWrapper
 
-Die Implementierung eines Wrappers ist immer nach dem gleichen Schechma aufgebaut. Das folgende beispiel zeigt den `ComboBoxWrapper`:
+Die Implementierung eines Wrappers ist immer nach dem gleichen Schema aufgebaut. Das folgende Beispiel zeigt den `ComboBoxWrapper`:
 
 ~~~{.java .numberLines startFrom="1"}
 package org.jowidgets.tools.widgets.wrapper;
