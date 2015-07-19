@@ -38,6 +38,18 @@ public interface IDynamicFlowLayoutCompositeSetup extends IComponentSetup {
     @Mandatory
     boolean isLayoutGrowing();
 
+    @Mandatory
+    int getLeftMargin();
+
+    @Mandatory
+    int getRightMargin();
+
+    @Mandatory
+    int getTopMargin();
+
+    @Mandatory
+    int getBottomMargin();
+
     Integer getLayoutMinSize();
 
     Integer getLayoutPreferredSize();

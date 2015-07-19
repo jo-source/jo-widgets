@@ -37,6 +37,10 @@ public class DynamicFlowLayoutCompositeDefaults implements IDefaultInitializer<I
     public void initialize(final IDynamicFlowLayoutCompositeSetupBuilder<?> builder) {
         builder.setOrientation(Orientation.HORIZONTAL);
         builder.setLayoutGrowing(false);
+        builder.setLeftMargin(0);
+        builder.setRightMargin(0);
+        builder.setTopMargin(0);
+        builder.setBottomMargin(0);
     }
 
 }
