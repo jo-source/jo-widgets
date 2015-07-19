@@ -91,13 +91,13 @@ final class DynamicFlowLayoutConstraintsBuilderImpl implements IDynamicFlowLayou
 
     @Override
     public IDynamicFlowLayoutConstraintsBuilder maxWidth(final Integer width) {
-        this.minWidth = width;
+        this.maxWidth = width;
         return this;
     }
 
     @Override
     public IDynamicFlowLayoutConstraintsBuilder maxHeight(final Integer height) {
-        this.minHeight = height;
+        this.maxHeight = height;
         return this;
     }
 
