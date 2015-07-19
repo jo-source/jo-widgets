@@ -54,6 +54,10 @@ public final class DynamicFlowLayoutCompositeImpl extends ControlWrapper impleme
     private final Orientation orientation;
     private final String oppositeLayoutConstraints;
     private final Integer gap;
+    private final int leftMargin;
+    private final int rightMargin;
+    private final int topMargin;
+    private final int bottomMargin;
 
     private final ArrayList<String> widthGroups;
     private final ArrayList<String> heightGroups;
@@ -66,6 +70,11 @@ public final class DynamicFlowLayoutCompositeImpl extends ControlWrapper impleme
         Assert.paramNotNull(setup.getOrientation(), "setup.getOrientation()");
         this.orientation = setup.getOrientation();
         this.gap = setup.getGap();
+        this.leftMargin = setup.getLeftMargin();
+        this.rightMargin = setup.getRightMargin();
+        this.topMargin = setup.getTopMargin();
+        this.bottomMargin = setup.getBottomMargin();
+
         this.oppositeLayoutConstraints = createOppositeLayoutConstraints(setup);
         this.widthGroups = new ArrayList<String>();
         this.heightGroups = new ArrayList<String>();
@@ -89,7 +98,17 @@ public final class DynamicFlowLayoutCompositeImpl extends ControlWrapper impleme
             result.add(sizeConstraints);
         }
 
-        return "0[" + StringUtils.concatElementsSeparatedBy(result, ',') + "]0";
+        final String innerResultString = StringUtils.concatElementsSeparatedBy(result, ',');
+
+        if (Orientation.VERTICAL == setup.getOrientation()) {
+            return "" + setup.getLeftMargin() + "[" + innerResultString + "]" + setup.getRightMargin();
+        }
+        else if (Orientation.HORIZONTAL == setup.getOrientation()) {
+            return "" + setup.getTopMargin() + "[" + innerResultString + "]" + setup.getBottomMargin();
+        }
+        else {
+            throw new IllegalArgumentException("The orientation '" + setup.getOrientation() + "' is not supported");
+        }
     }
 
     @Override
@@ -397,7 +416,17 @@ public final class DynamicFlowLayoutCompositeImpl extends ControlWrapper impleme
         }
 
         final StringBuilder builder = new StringBuilder();
-        builder.append("0");
+
+        if (Orientation.VERTICAL == orientation) {
+            builder.append(topMargin);
+        }
+        else if (Orientation.HORIZONTAL == orientation) {
+            builder.append(leftMargin);
+        }
+        else {
+            throw new IllegalArgumentException("The orientation '" + orientation + "' is not supported");
+        }
+
         for (int i = 0; i < layoutConstraints.size(); i++) {
             builder.append("[");
             builder.append(layoutConstraints.get(i));
@@ -406,7 +435,16 @@ public final class DynamicFlowLayoutCompositeImpl extends ControlWrapper impleme
                 builder.append(gap.toString());
             }
         }
-        builder.append("0");
+
+        if (Orientation.VERTICAL == orientation) {
+            builder.append(bottomMargin);
+        }
+        else if (Orientation.HORIZONTAL == orientation) {
+            builder.append(rightMargin);
+        }
+        else {
+            throw new IllegalArgumentException("The orientation '" + orientation + "' is not supported");
+        }
 
         return builder.toString();
     }

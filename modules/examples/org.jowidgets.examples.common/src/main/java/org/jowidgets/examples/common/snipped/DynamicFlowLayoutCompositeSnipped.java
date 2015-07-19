@@ -51,8 +51,12 @@ public final class DynamicFlowLayoutCompositeSnipped implements IApplication {
         frame.setLayout(FillLayout.get());
 
         //create a dynamic flow layout composite
-        final IDynamicFlowLayoutComposite composite = frame.add(BPF.dynamicFlowLayoutComposite().setOrientation(
-                Orientation.VERTICAL));
+        final IDynamicFlowLayoutComposite composite = frame.add(BPF.dynamicFlowLayoutComposite()
+                .setOrientation(Orientation.VERTICAL)
+                .setLeftMargin(4)
+                .setRightMargin(4)
+                .setTopMargin(4)
+                .setBottomMargin(4));
 
         //add a combobox
         final IDynamicFlowLayoutConstraints const1 = DynamicFlowLayoutConstraints.builder().build();
@@ -84,7 +88,7 @@ public final class DynamicFlowLayoutCompositeSnipped implements IApplication {
                 .useWidthOfElementAt(0)
                 .useHeightOfElementAt(0)
                 .build();
-        composite.addLast(BPF.button().setIcon(IconsSmall.DISK).setRemoveEmptyBorder(true), const4);
+        composite.addFirst(BPF.button().setIcon(IconsSmall.DISK).setRemoveEmptyBorder(true), const4);
 
         //set the root frame visible
         frame.setVisible(true);

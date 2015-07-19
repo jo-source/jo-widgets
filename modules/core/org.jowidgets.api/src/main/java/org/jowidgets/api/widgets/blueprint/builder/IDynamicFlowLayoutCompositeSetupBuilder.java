@@ -107,4 +107,40 @@ public interface IDynamicFlowLayoutCompositeSetupBuilder<INSTANCE_TYPE extends I
      */
     INSTANCE_TYPE setGap(Integer gap);
 
+    /**
+     * Sets the left margin, the default value is 0
+     * 
+     * @param margin The margin to set
+     * 
+     * @return This builder
+     */
+    INSTANCE_TYPE setLeftMargin(int margin);
+
+    /**
+     * Sets the right margin, the default value is 0
+     * 
+     * @param margin The margin to set
+     * 
+     * @return This builder
+     */
+    INSTANCE_TYPE setRightMargin(int margin);
+
+    /**
+     * Sets the top margin, the default value is 0
+     * 
+     * @param margin The margin to set
+     * 
+     * @return This builder
+     */
+    INSTANCE_TYPE setTopMargin(int margin);
+
+    /**
+     * Sets the bottom margin, the default value is 0
+     * 
+     * @param margin The margin to set
+     * 
+     * @return This builder
+     */
+    INSTANCE_TYPE setBottomMargin(int margin);
+
 }
