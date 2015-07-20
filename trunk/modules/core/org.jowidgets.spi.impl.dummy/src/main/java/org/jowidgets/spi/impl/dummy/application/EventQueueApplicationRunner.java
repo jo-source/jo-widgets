@@ -36,16 +36,17 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.common.application.IApplicationRunner;
+import org.jowidgets.common.threads.IUiThreadAccessCommon;
 
-public class DummyApplicationRunner implements IApplicationRunner {
+public class EventQueueApplicationRunner implements IApplicationRunner, IUiThreadAccessCommon {
 
     private static final long SLEEP_TIME = 200;
 
-    private static final BlockingQueue<AbstractDummyEvent> EVENTS = new LinkedBlockingQueue<AbstractDummyEvent>();
-    private static final AtomicBoolean IS_RUNNING = new AtomicBoolean(false);
-    private static final AtomicBoolean IS_INVOKE_AND_WAIT = new AtomicBoolean(false);
+    private final BlockingQueue<AbstractDummyEvent> events = new LinkedBlockingQueue<AbstractDummyEvent>();
+    private final AtomicBoolean running = new AtomicBoolean(false);
+    private final AtomicBoolean onInvokeAndWait = new AtomicBoolean(false);
 
-    private static Thread eventDispatcherThread;
+    private Thread eventDispatcherThread;
 
     @Override
     public void run(final IApplication application) {
@@ -55,25 +56,25 @@ public class DummyApplicationRunner implements IApplicationRunner {
 
             @Override
             public synchronized void finish() {
-                IS_RUNNING.set(false);
+                running.set(false);
             }
         };
 
         //start the application
-        IS_RUNNING.set(true);
+        running.set(true);
 
         eventDispatcherThread = Thread.currentThread();
 
         application.start(lifecycle);
-        while (IS_RUNNING.get()) {
+        while (running.get()) {
             try {
-                final Runnable event = EVENTS.poll(SLEEP_TIME, TimeUnit.MILLISECONDS);
+                final Runnable event = events.poll(SLEEP_TIME, TimeUnit.MILLISECONDS);
                 if (event != null) {
                     if (event instanceof InvokeAndWaitDummyEvent) {
                         final Object lock = ((InvokeAndWaitDummyEvent) event).getLock();
                         event.run();
                         synchronized (lock) {
-                            IS_INVOKE_AND_WAIT.set(false);
+                            onInvokeAndWait.set(false);
                             lock.notify();
                         }
                     }
@@ -91,18 +92,31 @@ public class DummyApplicationRunner implements IApplicationRunner {
 
     }
 
-    public static boolean isEventDispatcherThread(final Thread thread) {
-        return thread == eventDispatcherThread;
+    @Override
+    public boolean isUiThread() {
+        return isEventDispatcherThread(Thread.currentThread());
     }
 
-    public static void invokeAndWait(final Runnable runnable) {
+    @Override
+    public void invokeLater(final Runnable runnable) {
         checkEventDispatcherRunning();
         if (isEventDispatcherThread(Thread.currentThread())) {
             runnable.run();
         }
         else {
-            if (!IS_INVOKE_AND_WAIT.getAndSet(true)) {
-                EVENTS.add(new InvokeAndWaitDummyEvent(runnable));
+            events.add(new DummyEvent(runnable));
+        }
+    }
+
+    @Override
+    public void invokeAndWait(final Runnable runnable) throws InterruptedException {
+        checkEventDispatcherRunning();
+        if (isEventDispatcherThread(Thread.currentThread())) {
+            runnable.run();
+        }
+        else {
+            if (!onInvokeAndWait.getAndSet(true)) {
+                events.add(new InvokeAndWaitDummyEvent(runnable));
             }
             else {
                 throw new RuntimeException("Concurrent invocation of invoke and wait");
@@ -110,19 +124,60 @@ public class DummyApplicationRunner implements IApplicationRunner {
         }
     }
 
-    public static void invokeLater(final Runnable runnable) {
-        checkEventDispatcherRunning();
-        if (isEventDispatcherThread(Thread.currentThread())) {
-            runnable.run();
-        }
-        else {
-            EVENTS.add(new DummyEvent(runnable));
+    private boolean isEventDispatcherThread(final Thread thread) {
+        return thread == eventDispatcherThread;
+    }
+
+    private void checkEventDispatcherRunning() {
+        if (eventDispatcherThread == null) {
+            throw new RuntimeException("No EventDispatcherThread is running");
         }
     }
 
-    private static void checkEventDispatcherRunning() {
-        if (eventDispatcherThread == null) {
-            throw new RuntimeException("No EventDispatcherThread is running");
+    private abstract class AbstractDummyEvent implements Runnable {
+
+    }
+
+    private final class DummyEvent extends AbstractDummyEvent {
+
+        private final Runnable runnable;
+
+        private DummyEvent(final Runnable runnable) {
+            this.runnable = runnable;
+        }
+
+        @Override
+        public void run() {
+            runnable.run();
+        }
+
+    }
+
+    private final class InvokeAndWaitDummyEvent extends AbstractDummyEvent {
+
+        private final Object lock;
+        private final Runnable runnable;
+
+        private InvokeAndWaitDummyEvent(final Runnable runnable) {
+            this.lock = new Object();
+            this.runnable = runnable;
+        }
+
+        private Object getLock() {
+            return lock;
+        }
+
+        @Override
+        public void run() {
+            runnable.run();
+            synchronized (lock) {
+                try {
+                    lock.wait();
+                }
+                catch (final InterruptedException e) {
+                    throw new RuntimeException("Invoke and wait was interrupted.", e);
+                }
+            }
         }
     }
 

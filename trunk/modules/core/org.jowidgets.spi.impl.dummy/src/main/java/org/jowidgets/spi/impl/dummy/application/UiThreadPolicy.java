@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2015, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,18 +28,31 @@
 
 package org.jowidgets.spi.impl.dummy.application;
 
-public class DummyEvent extends AbstractDummyEvent {
+public enum UiThreadPolicy {
 
-    private final Runnable runnable;
+    /**
+     * All invocations on the ui thread access must be
+     * done within the same thread and will be invoked
+     * immediately. This fits for must unit test cases.
+     */
+    SINGLE_THREAD,
 
-    public DummyEvent(final Runnable runnable) {
-        super();
-        this.runnable = runnable;
-    }
+    /**
+     * Invocations on the ui thread access from another thread
+     * (invokeLater() and invokeAndWait() are possible and will be
+     * queue with help of an event loop. The event loop must
+     * be started with help of an application runner so testcode
+     * will be executed with help of an IApplicationRunner.
+     */
+    EVENT_QUEUE,
 
-    @Override
-    public void run() {
-        runnable.run();
-    }
+    /**
+     * All invocation on the ui thread including getUiThreadAccess() get can be made
+     * from any thread. Invocations of invokeLater() and invokeAndWait() will both
+     * be invoked immediately.
+     * Remark: this mode is very unsafe and should only be used if the other policies
+     * leads to problems
+     */
+    DUMMY;
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010, grossmann
+ * Copyright (c) 2015, grossmann
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -28,30 +28,53 @@
 
 package org.jowidgets.spi.impl.dummy.application;
 
-public class InvokeAndWaitDummyEvent extends AbstractDummyEvent {
+import org.jowidgets.common.threads.IUiThreadAccessCommon;
+import org.jowidgets.util.Assert;
 
-    private final Object lock;
-    private final Runnable runnable;
+/**
+ * This implementation of ui thread access assumes that all
+ * invocations will be done in the same thread this object was
+ * created in. This fits for the most use cases in unit tests.
+ * If more than one thread neccessary for your testcases use the
+ * EventQueueUiThreadAccess instead
+ * 
+ * @author grossmann
+ */
+public class SingleThreadUiThreadAccess implements IUiThreadAccessCommon {
 
-    public InvokeAndWaitDummyEvent(final Runnable runnable) {
-        this.lock = new Object();
-        this.runnable = runnable;
-    }
+    private final Thread uiThread;
 
-    public Object getLock() {
-        return lock;
+    public SingleThreadUiThreadAccess() {
+        this.uiThread = Thread.currentThread();
     }
 
     @Override
-    public void run() {
+    public boolean isUiThread() {
+        return Thread.currentThread() == uiThread;
+    }
+
+    @Override
+    public void invokeLater(final Runnable runnable) {
+        checkThread();
+        Assert.paramNotNull(runnable, "runnable");
         runnable.run();
-        synchronized (lock) {
-            try {
-                lock.wait();
-            }
-            catch (final InterruptedException e) {
-                throw new RuntimeException("Invoke and wait was interrupted.", e);
-            }
+    }
+
+    @Override
+    public void invokeAndWait(final Runnable runnable) throws InterruptedException {
+        checkThread();
+        Assert.paramNotNull(runnable, "runnable");
+        runnable.run();
+    }
+
+    private void checkThread() {
+        if (!isUiThread()) {
+            throw new IllegalStateException("This implementation of the ui thread access assumes that all "
+                + "invocations will be done in the same thread this object was "
+                + "created in. This fits for the most use cases in unit tests. "
+                + "If more than one thread neccessary for your testcases use the "
+                + "EventQueueUiThreadAccess instead");
         }
     }
+
 }
