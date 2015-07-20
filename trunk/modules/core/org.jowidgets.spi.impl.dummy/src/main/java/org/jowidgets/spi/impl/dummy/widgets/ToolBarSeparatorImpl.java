@@ -31,7 +31,7 @@ package org.jowidgets.spi.impl.dummy.widgets;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDToolBarSeparator;
+import org.jowidgets.spi.impl.dummy.ui.UIDToolBarSeparator;
 import org.jowidgets.spi.widgets.IToolBarItemSpi;
 
 public class ToolBarSeparatorImpl extends DummyWidget implements IToolBarItemSpi {

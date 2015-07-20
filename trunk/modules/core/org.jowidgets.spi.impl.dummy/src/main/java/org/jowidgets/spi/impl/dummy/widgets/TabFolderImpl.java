@@ -32,9 +32,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDTabFolder;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDTabItem;
+import org.jowidgets.spi.impl.dummy.ui.UIDComponent;
+import org.jowidgets.spi.impl.dummy.ui.UIDTabFolder;
+import org.jowidgets.spi.impl.dummy.ui.UIDTabItem;
 import org.jowidgets.spi.widgets.ITabFolderSpi;
 import org.jowidgets.spi.widgets.ITabItemSpi;
 import org.jowidgets.spi.widgets.setup.ITabFolderSetupSpi;

@@ -31,7 +31,7 @@ package org.jowidgets.spi.impl.dummy.image;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.image.IImageHandle;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDImage;
+import org.jowidgets.spi.impl.dummy.ui.UIDImage;
 import org.jowidgets.spi.impl.image.IImageFactory;
 import org.jowidgets.spi.impl.image.ImageHandle;
 

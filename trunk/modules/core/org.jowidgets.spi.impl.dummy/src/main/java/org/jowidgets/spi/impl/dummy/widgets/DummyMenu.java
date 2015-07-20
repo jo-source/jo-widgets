@@ -29,9 +29,9 @@
 package org.jowidgets.spi.impl.dummy.widgets;
 
 import org.jowidgets.common.widgets.controller.IMenuListener;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDCheckedMenuItem;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDMenuItem;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDRadioMenuItem;
+import org.jowidgets.spi.impl.dummy.ui.UIDCheckedMenuItem;
+import org.jowidgets.spi.impl.dummy.ui.UIDMenuItem;
+import org.jowidgets.spi.impl.dummy.ui.UIDRadioMenuItem;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuItemSpi;
 import org.jowidgets.spi.widgets.IMenuSpi;

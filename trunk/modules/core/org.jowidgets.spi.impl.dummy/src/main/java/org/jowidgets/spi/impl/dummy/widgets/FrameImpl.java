@@ -28,9 +28,9 @@
 package org.jowidgets.spi.impl.dummy.widgets;
 
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDFrame;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDMenuItem;
 import org.jowidgets.spi.impl.dummy.image.DummyImageRegistry;
+import org.jowidgets.spi.impl.dummy.ui.UIDFrame;
+import org.jowidgets.spi.impl.dummy.ui.UIDMenuItem;
 import org.jowidgets.spi.widgets.IFrameSpi;
 import org.jowidgets.spi.widgets.IMenuBarSpi;
 import org.jowidgets.spi.widgets.setup.IFrameSetupSpi;

@@ -29,7 +29,7 @@ package org.jowidgets.spi.impl.dummy.widgets;
 
 import org.jowidgets.common.widgets.controller.IItemStateListener;
 import org.jowidgets.spi.impl.controller.ItemStateObservable;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDMenuItem;
+import org.jowidgets.spi.impl.dummy.ui.UIDMenuItem;
 import org.jowidgets.spi.widgets.ISelectableMenuItemSpi;
 
 public class SelectableMenuItemImpl extends MenuItemImpl implements ISelectableMenuItemSpi {

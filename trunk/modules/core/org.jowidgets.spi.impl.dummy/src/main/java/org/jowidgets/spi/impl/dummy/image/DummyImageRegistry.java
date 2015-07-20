@@ -29,7 +29,7 @@ package org.jowidgets.spi.impl.dummy.image;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.image.IImageHandleFactory;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDImage;
+import org.jowidgets.spi.impl.dummy.ui.UIDImage;
 import org.jowidgets.spi.impl.image.ImageHandle;
 import org.jowidgets.spi.impl.image.ImageRegistry;
 

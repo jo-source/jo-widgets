@@ -27,7 +27,7 @@
  */
 package org.jowidgets.spi.impl.dummy.widgets;
 
-import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
+import org.jowidgets.spi.impl.dummy.ui.UIDComponent;
 import org.jowidgets.spi.widgets.IWidgetSpi;
 
 public class DummyWidget implements IWidgetSpi {

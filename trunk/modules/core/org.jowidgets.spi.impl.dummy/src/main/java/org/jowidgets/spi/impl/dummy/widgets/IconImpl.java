@@ -28,8 +28,8 @@
 package org.jowidgets.spi.impl.dummy.widgets;
 
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDIcon;
 import org.jowidgets.spi.impl.dummy.image.DummyImageRegistry;
+import org.jowidgets.spi.impl.dummy.ui.UIDIcon;
 import org.jowidgets.spi.widgets.IIconSpi;
 import org.jowidgets.spi.widgets.setup.IIconSetupSpi;
 

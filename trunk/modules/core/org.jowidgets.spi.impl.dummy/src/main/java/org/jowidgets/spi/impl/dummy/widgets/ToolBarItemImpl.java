@@ -31,8 +31,8 @@ package org.jowidgets.spi.impl.dummy.widgets;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
-import org.jowidgets.spi.impl.dummy.dummyui.AbstractUIDButton;
 import org.jowidgets.spi.impl.dummy.image.DummyImageRegistry;
+import org.jowidgets.spi.impl.dummy.ui.AbstractUIDButton;
 import org.jowidgets.spi.widgets.IToolBarItemSpi;
 
 public class ToolBarItemImpl implements IToolBarItemSpi {

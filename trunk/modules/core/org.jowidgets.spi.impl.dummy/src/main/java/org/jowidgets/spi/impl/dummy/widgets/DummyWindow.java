@@ -36,8 +36,8 @@ import org.jowidgets.common.widgets.IDisplayCommon;
 import org.jowidgets.common.widgets.controller.IWindowListener;
 import org.jowidgets.common.widgets.descriptor.IWidgetDescriptor;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDWindow;
 import org.jowidgets.spi.impl.dummy.image.DummyImageRegistry;
+import org.jowidgets.spi.impl.dummy.ui.UIDWindow;
 import org.jowidgets.spi.widgets.IWindowSpi;
 
 public class DummyWindow extends DummyContainer implements IWindowSpi {

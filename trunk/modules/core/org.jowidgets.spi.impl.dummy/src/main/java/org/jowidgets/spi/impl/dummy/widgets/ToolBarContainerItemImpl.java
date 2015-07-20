@@ -31,8 +31,8 @@ package org.jowidgets.spi.impl.dummy.widgets;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDContainer;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDToolBarContainerItem;
+import org.jowidgets.spi.impl.dummy.ui.UIDContainer;
+import org.jowidgets.spi.impl.dummy.ui.UIDToolBarContainerItem;
 import org.jowidgets.spi.widgets.IToolBarContainerItemSpi;
 
 public class ToolBarContainerItemImpl extends DummyContainer implements IToolBarContainerItemSpi {

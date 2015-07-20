@@ -28,7 +28,7 @@
 package org.jowidgets.spi.impl.dummy.widgets;
 
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDTextField;
+import org.jowidgets.spi.impl.dummy.ui.UIDTextField;
 import org.jowidgets.spi.widgets.setup.ITextFieldSetupSpi;
 
 public class TextFieldImpl extends AbstractTextInputControl {
