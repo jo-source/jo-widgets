@@ -29,7 +29,12 @@
 package org.jowidgets.examples.swing.test;
 
 import org.jowidgets.examples.common.DemoApplicationTest;
+import org.jowidgets.impl.toolkit.DefaultToolkitProvider;
 
 public class SwingDemoApplicationTest extends DemoApplicationTest {
+
+    public SwingDemoApplicationTest() {
+        super(new DefaultToolkitProvider());
+    }
 
 }
