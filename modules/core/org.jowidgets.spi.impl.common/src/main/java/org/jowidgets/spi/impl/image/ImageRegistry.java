@@ -247,6 +247,10 @@ public class ImageRegistry implements IImageRegistry {
         }
     }
 
+    public void clear() {
+        imageMap.clear();
+    }
+
     private final class CacheableListener implements ICacheableListener {
 
         private final IImageConstant key;

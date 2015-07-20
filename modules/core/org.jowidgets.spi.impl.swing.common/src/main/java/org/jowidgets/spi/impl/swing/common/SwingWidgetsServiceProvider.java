@@ -78,6 +78,9 @@ public class SwingWidgetsServiceProvider implements IWidgetsServiceProvider {
         Assert.paramNotNull(applicationRunnerFactory, "applicationRunnerFactory");
         this.applicationRunnerFactory = applicationRunnerFactory;
         this.imageRegistry = SwingImageRegistry.getInstance();
+        //workaround to avoid double image registration of toolkit is created more than once
+        //TODO remove image registry singleton
+        this.imageRegistry.clear();
         this.imageHandleFactorySpi = new SwingImageHandleFactorySpi(imageRegistry);
         this.imageFactory = new SwingImageFactory(imageHandleFactorySpi);
         this.widgetFactory = new SwingWidgetFactory(imageRegistry);
