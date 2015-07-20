@@ -28,31 +28,51 @@
 
 package org.jowidgets.examples.common;
 
+import org.jowidgets.api.toolkit.IToolkitProvider;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
 import org.jowidgets.examples.common.demo.DemoApplication;
+import org.jowidgets.impl.toolkit.DefaultToolkitProvider;
+import org.jowidgets.spi.impl.dummy.DummyWidgetsServiceProvider;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class DemoApplicationTest {
 
+    private final IToolkitProvider toolkitProvider;
+
+    public DemoApplicationTest() {
+        this(new DefaultToolkitProvider(new DummyWidgetsServiceProvider()));
+    }
+
+    protected DemoApplicationTest(final IToolkitProvider toolkitProvider) {
+        this.toolkitProvider = toolkitProvider;
+    }
+
+    @Before
+    public void setUp() {
+        Toolkit.initializeForTests(toolkitProvider);
+    }
+
+    @After
+    public void tearDown() {
+        Toolkit.resetForTests();
+    }
+
     @Test
     public void testApplication() {
         Toolkit.getApplicationRunner().run(new IApplication() {
-
             @Override
             public void start(final IApplicationLifecycle lifecycle) {
-
                 final DemoApplication testApplication = new DemoApplication("Demo application test");
                 testApplication.start(lifecycle);
                 Assert.assertTrue(testApplication.getRootFrame().isVisible());
-
                 testApplication.getRootFrame().dispose();
-
             }
         });
-
     }
 
 }

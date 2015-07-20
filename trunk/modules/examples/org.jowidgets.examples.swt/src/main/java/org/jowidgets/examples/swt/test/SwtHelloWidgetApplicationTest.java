@@ -29,7 +29,12 @@
 package org.jowidgets.examples.swt.test;
 
 import org.jowidgets.examples.common.HelloWidgetApplicationTest;
+import org.jowidgets.impl.toolkit.DefaultToolkitProvider;
 
 public class SwtHelloWidgetApplicationTest extends HelloWidgetApplicationTest {
+
+    public SwtHelloWidgetApplicationTest() {
+        super(new DefaultToolkitProvider());
+    }
 
 }

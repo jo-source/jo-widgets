@@ -29,7 +29,12 @@
 package org.jowidgets.examples.swt.test;
 
 import org.jowidgets.examples.common.DemoApplicationTest;
+import org.jowidgets.impl.toolkit.DefaultToolkitProvider;
 
 public class SwtDemoApplicationTest extends DemoApplicationTest {
+
+    public SwtDemoApplicationTest() {
+        super(new DefaultToolkitProvider());
+    }
 
 }

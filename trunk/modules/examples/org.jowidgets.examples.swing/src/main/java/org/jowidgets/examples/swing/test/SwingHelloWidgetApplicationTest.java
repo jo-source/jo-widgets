@@ -29,7 +29,11 @@
 package org.jowidgets.examples.swing.test;
 
 import org.jowidgets.examples.common.HelloWidgetApplicationTest;
+import org.jowidgets.impl.toolkit.DefaultToolkitProvider;
 
 public class SwingHelloWidgetApplicationTest extends HelloWidgetApplicationTest {
 
+    public SwingHelloWidgetApplicationTest() {
+        super(new DefaultToolkitProvider());
+    }
 }
