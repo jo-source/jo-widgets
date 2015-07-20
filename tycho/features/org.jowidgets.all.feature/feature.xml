@@ -52,4 +52,8 @@
          id="org.jowidgets.impl.swing.feature"
          version="0.0.0"/>
 		 
+	<includes
+         id="org.jowidgets.test.tools.feature"
+         version="0.0.0"/> 
+		 
 </feature>
