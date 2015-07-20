@@ -84,13 +84,24 @@ public final class Toolkit {
     }
 
     /**
-     * Resets the initialization.
+     * Sets the toolkit provider for test purpose, e.g. in the setUp() method of
+     * an JUnit test.
      * 
-     * After that, the toolkit has it's initial state an can be initialized again.
+     * Remark: Do only use this method in test code
      * 
-     * This may be useful for unit tests
+     * @param toolkitProvider The toolkit provider to use for initialization
      */
-    public static void resetInitialization() {
+    public static void initializeForTests(final IToolkitProvider toolkitProvider) {
+        Toolkit.toolkitProvider = toolkitProvider;
+    }
+
+    /**
+     * Resets the toolkit to its initial state, e.g. in the tearDown() method of
+     * an JUnit test.
+     * 
+     * Remark: Do only use this method in test code
+     */
+    public static void resetForTests() {
         Toolkit.toolkitProvider = null;
     }
 
