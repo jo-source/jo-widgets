@@ -83,6 +83,17 @@ public final class Toolkit {
         Toolkit.toolkitProvider = toolkitProvider;
     }
 
+    /**
+     * Resets the initialization.
+     * 
+     * After that, the toolkit has it's initial state an can be initialized again.
+     * 
+     * This may be useful for unit tests
+     */
+    public static void resetInitialization() {
+        Toolkit.toolkitProvider = null;
+    }
+
     public static boolean isInitialized() {
         return toolkitProvider != null;
     }
