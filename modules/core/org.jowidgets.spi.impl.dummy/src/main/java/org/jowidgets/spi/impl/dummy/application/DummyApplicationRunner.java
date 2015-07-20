@@ -28,8 +28,9 @@
 
 package org.jowidgets.spi.impl.dummy.application;
 
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.jowidgets.common.application.IApplication;
@@ -38,7 +39,9 @@ import org.jowidgets.common.application.IApplicationRunner;
 
 public class DummyApplicationRunner implements IApplicationRunner {
 
-    private static final Queue<AbstractDummyEvent> EVENTS = new ConcurrentLinkedQueue<AbstractDummyEvent>();
+    private static final long SLEEP_TIME = 200;
+
+    private static final BlockingQueue<AbstractDummyEvent> EVENTS = new LinkedBlockingQueue<AbstractDummyEvent>();
     private static final AtomicBoolean IS_RUNNING = new AtomicBoolean(false);
     private static final AtomicBoolean IS_INVOKE_AND_WAIT = new AtomicBoolean(false);
 
@@ -64,7 +67,7 @@ public class DummyApplicationRunner implements IApplicationRunner {
         application.start(lifecycle);
         while (IS_RUNNING.get()) {
             try {
-                final Runnable event = EVENTS.poll();
+                final Runnable event = EVENTS.poll(SLEEP_TIME, TimeUnit.MILLISECONDS);
                 if (event != null) {
                     if (event instanceof InvokeAndWaitDummyEvent) {
                         final Object lock = ((InvokeAndWaitDummyEvent) event).getLock();
@@ -77,9 +80,6 @@ public class DummyApplicationRunner implements IApplicationRunner {
                     else {
                         event.run();
                     }
-                }
-                else {
-                    Thread.sleep(100);
                 }
             }
             catch (final InterruptedException e) {
