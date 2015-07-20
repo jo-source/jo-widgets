@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.jowidgets.tools.starter.workbench.osgi.plugin
+Bundle-SymbolicName: org.jowidgets.tools.starter.workbench.osgi.plugin;singleton:=true
+Bundle-Version: 0.47.0.qualifier
+Bundle-Vendor: jowidgets.org
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Require-Bundle: 
+ org.eclipse.osgi;bundle-version="3.6.2",
+ org.jowidgets.util.bundle,
+ org.jowidgets.tools.starter.classloading.plugin,
+ org.jowidgets.workbench.api.bundle,
+ org.jowidgets.workbench.impl.bundle
+Export-Package: org.jowidgets.tools.starter.workbench.osgi.plugin

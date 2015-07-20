@@ -1,0 +1,58 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>org.jowidgets.core.parent</artifactId>
+	<packaging>pom</packaging>
+
+	<parent>
+		<groupId>org.jowidgets</groupId>
+		<artifactId>org.jowidgets.modules.parent</artifactId>
+		<version>0.47.0</version>
+		<relativePath>../../parent/pom.xml</relativePath>
+	</parent>
+
+	<modules>
+	    <module>../org.jowidgets.util</module>
+		<module>../org.jowidgets.classloading.api</module>
+		<module>../org.jowidgets.beanvalidation.bootstrap.api</module>	
+		<module>../org.jowidgets.i18n</module>
+		<module>../org.jowidgets.validation</module>
+		<module>../org.jowidgets.validation.tools</module>
+		<module>../org.jowidgets.unit</module>
+		<module>../org.jowidgets.common</module>
+		<module>../org.jowidgets.api</module>
+		<module>../org.jowidgets.api.test</module>
+		<module>../org.jowidgets.tools</module>
+		<module>../org.jowidgets.workbench.api</module>
+		<module>../org.jowidgets.workbench.impl</module>
+		<module>../org.jowidgets.workbench.toolkit.api</module>
+		<module>../org.jowidgets.workbench.tools</module>
+		<module>../org.jowidgets.impl</module>
+		<module>../org.jowidgets.impl.test</module>
+		<module>../org.jowidgets.spi</module>
+		<module>../org.jowidgets.spi.impl.common</module>
+		<module>../org.jowidgets.spi.impl.dummy</module>	
+		<module>../org.jowidgets.spi.impl.swing.common</module>
+		<module>../org.jowidgets.spi.impl.swing</module>
+		<module>../org.jowidgets.spi.impl.swing.addons</module>
+		<module>../org.jowidgets.spi.impl.swt.common</module>	
+		<module>../org.jowidgets.spi.impl.swt</module>
+		<module>../org.jowidgets.spi.impl.swt.addons</module>
+		<module>../org.jowidgets.spi.impl.bridge.swt.awt.common</module>
+		<module>../org.jowidgets.spi.impl.bridge.swt.awt</module>
+		<module>../org.jowidgets.spi.impl.bridge.awt.swt</module>			
+		<module>../org.jowidgets.spi.impl.rwt</module>
+		<module>../org.jowidgets.spi.impl.rwt.legacy</module>
+		<module>../org.jowidgets.test.tools</module>
+	</modules>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
