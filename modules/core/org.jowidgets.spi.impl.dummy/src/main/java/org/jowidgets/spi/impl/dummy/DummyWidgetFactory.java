@@ -40,8 +40,8 @@ import org.jowidgets.spi.impl.dummy.widgets.CompositeImpl;
 import org.jowidgets.spi.impl.dummy.widgets.CompositeWrapper;
 import org.jowidgets.spi.impl.dummy.widgets.DialogImpl;
 import org.jowidgets.spi.impl.dummy.widgets.FrameImpl;
-import org.jowidgets.spi.impl.dummy.widgets.NativeDummyFrameWrapper;
 import org.jowidgets.spi.impl.dummy.widgets.IconImpl;
+import org.jowidgets.spi.impl.dummy.widgets.NativeDummyFrameWrapper;
 import org.jowidgets.spi.impl.dummy.widgets.ProgressBarImpl;
 import org.jowidgets.spi.impl.dummy.widgets.ScrollCompositeImpl;
 import org.jowidgets.spi.impl.dummy.widgets.SeparatorImpl;
@@ -99,7 +99,7 @@ import org.jowidgets.spi.widgets.setup.IToolBarSetupSpi;
 import org.jowidgets.spi.widgets.setup.ITreeSetupSpi;
 import org.jowidgets.util.Assert;
 
-public final class DummyWidgetFactory implements IWidgetFactorySpi {
+public class DummyWidgetFactory implements IWidgetFactorySpi {
 
     private final DummyImageRegistry imageRegistry;
 
@@ -156,7 +156,7 @@ public final class DummyWidgetFactory implements IWidgetFactorySpi {
         final IGenericWidgetFactory factory,
         final Object parentUiReference,
         final IPopupDialogSetupSpi setup) {
-        //TODO LG implement createPopupDialog
+        // TODO must be implemented
         return null;
     }
 
@@ -191,7 +191,7 @@ public final class DummyWidgetFactory implements IWidgetFactorySpi {
 
     @Override
     public ITextAreaSpi createTextArea(final Object parentUiReference, final ITextAreaSetupSpi setup) {
-        // TODO LG implement createTextArea()
+        // TODO must be implemented
         return null;
     }
 
@@ -269,7 +269,7 @@ public final class DummyWidgetFactory implements IWidgetFactorySpi {
 
     @Override
     public ISliderSpi createSlider(final Object parentUiReference, final ISliderSetupSpi setup) {
-        // TODO LG Dummy slider must be implemented
+        // TODO must be implemented
         return null;
     }
 
@@ -278,7 +278,7 @@ public final class DummyWidgetFactory implements IWidgetFactorySpi {
         final IGenericWidgetFactory factory,
         final Object parentUiReference,
         final ICanvasSetupSpi setup) {
-        // TODO MG Dummy canvas must be implemented
+        // TODO must be implemented
         return null;
     }
 
