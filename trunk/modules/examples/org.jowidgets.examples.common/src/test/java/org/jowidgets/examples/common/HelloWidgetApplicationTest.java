@@ -32,8 +32,7 @@ import org.jowidgets.api.toolkit.IToolkitProvider;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.common.application.IApplication;
 import org.jowidgets.common.application.IApplicationLifecycle;
-import org.jowidgets.impl.toolkit.DefaultToolkitProvider;
-import org.jowidgets.spi.impl.dummy.DummyWidgetsServiceProvider;
+import org.jowidgets.test.tools.TestToolkitProvider;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -44,7 +43,7 @@ public class HelloWidgetApplicationTest {
     private final IToolkitProvider toolkitProvider;
 
     public HelloWidgetApplicationTest() {
-        this(new DefaultToolkitProvider(new DummyWidgetsServiceProvider()));
+        this(new TestToolkitProvider());
     }
 
     protected HelloWidgetApplicationTest(final IToolkitProvider toolkitProvider) {
@@ -58,7 +57,7 @@ public class HelloWidgetApplicationTest {
 
     @After
     public void tearDown() {
-        Toolkit.resetForTests();
+        Toolkit.resetAfterTests();
     }
 
     @Test
