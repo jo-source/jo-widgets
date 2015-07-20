@@ -127,6 +127,17 @@ public class DefaultToolkit implements IToolkit {
     private IApplicationRunner applicationRunner;
 
     public DefaultToolkit(final IWidgetsServiceProvider toolkitSpi) {
+        this(toolkitSpi, true);
+    }
+
+    /**
+     * Creates a new default toolkit
+     * 
+     * @param toolkitSpi The IWidgetsServiceProvider (SPI) to use
+     * @param doToolkitInterception If true, the injected toolkit interceptors (IToolkitIterceptor)
+     *            will be invoked for the created toolkit
+     */
+    public DefaultToolkit(final IWidgetsServiceProvider toolkitSpi, final boolean doToolkitInterception) {
         Assert.paramNotNull(toolkitSpi, "toolkitSpi");
         this.values = new HashMap<ITypedKey<? extends Object>, Object>();
         this.widgetsServiceProvider = toolkitSpi;
@@ -168,7 +179,9 @@ public class DefaultToolkit implements IToolkit {
         imageRegistry.registerImageConstant(IconsSmall.WARNING, imageHandleFactory.createImageHandle(Icons.WARNING, 16, 16));
         imageRegistry.registerImageConstant(IconsSmall.ERROR, imageHandleFactory.createImageHandle(Icons.ERROR, 16, 16));
 
-        ToolkitInterceptor.onToolkitCreate(this);
+        if (doToolkitInterception) {
+            ToolkitInterceptor.onToolkitCreate(this);
+        }
     }
 
     @Override

@@ -36,18 +36,31 @@ import org.jowidgets.api.toolkit.IToolkitProvider;
 import org.jowidgets.classloading.api.SharedClassLoader;
 import org.jowidgets.spi.IWidgetsServiceProvider;
 
-public class DefaultToolkitProvider implements IToolkitProvider {
+public final class DefaultToolkitProvider implements IToolkitProvider {
 
     private final IToolkit toolkit;
 
+    /**
+     * Creates a new Instance that uses the injected IWidgetsServiceProvider
+     */
     public DefaultToolkitProvider() {
+        this(true);
+    }
+
+    /**
+     * Creates a new Instance that uses the injected IWidgetsServiceProvider
+     * 
+     * @param doToolkitInterception If true, the injected toolkit interceptors (IToolkitIterceptor)
+     *            will be invoked for the created toolkit
+     */
+    public DefaultToolkitProvider(final boolean doToolkitInterception) {
         final ServiceLoader<IWidgetsServiceProvider> widgetServiceLoader = ServiceLoader.load(
                 IWidgetsServiceProvider.class,
                 SharedClassLoader.getCompositeClassLoader());
         final Iterator<IWidgetsServiceProvider> iterator = widgetServiceLoader.iterator();
 
         if (iterator.hasNext()) {
-            this.toolkit = new DefaultToolkit(iterator.next());
+            this.toolkit = new DefaultToolkit(iterator.next(), doToolkitInterception);
 
             if (iterator.hasNext()) {
                 throw new IllegalStateException("More than one implementation found for '"
@@ -60,8 +73,24 @@ public class DefaultToolkitProvider implements IToolkitProvider {
         }
     }
 
+    /**
+     * Creates a new DefaultToolkitProvider
+     * 
+     * @param toolkitSpi The IWidgetsServiceProvider (SPI) to use
+     */
     public DefaultToolkitProvider(final IWidgetsServiceProvider toolkitSpi) {
-        this.toolkit = new DefaultToolkit(toolkitSpi);
+        this.toolkit = new DefaultToolkit(toolkitSpi, true);
+    }
+
+    /**
+     * Creates a new DefaultToolkitProvider
+     * 
+     * @param toolkitSpi The IWidgetsServiceProvider (SPI) to use
+     * @param doToolkitInterception If true, the injected toolkit interceptors (IToolkitIterceptor)
+     *            will be invoked for the created toolkit
+     */
+    public DefaultToolkitProvider(final IWidgetsServiceProvider toolkitSpi, final boolean doToolkitInterception) {
+        this.toolkit = new DefaultToolkit(toolkitSpi, doToolkitInterception);
     }
 
     @Override
