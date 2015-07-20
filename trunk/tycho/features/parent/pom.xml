@@ -22,6 +22,7 @@
 		<module>../org.jowidgets.impl.feature</module>
 		<module>../org.jowidgets.impl.swt.feature</module>
 		<module>../org.jowidgets.impl.swing.feature</module>
+		<module>../org.jowidgets.test.tools.feature</module>
 	</modules>
 
 </project>
