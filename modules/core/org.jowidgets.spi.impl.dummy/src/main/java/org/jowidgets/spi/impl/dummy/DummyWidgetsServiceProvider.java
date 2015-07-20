@@ -42,12 +42,16 @@ import org.jowidgets.spi.IWidgetsServiceProvider;
 import org.jowidgets.spi.clipboard.IClipboardSpi;
 import org.jowidgets.spi.image.IImageHandleFactorySpi;
 import org.jowidgets.spi.impl.clipboard.ApplicationLocalClipboard;
-import org.jowidgets.spi.impl.dummy.application.DummyApplicationRunner;
+import org.jowidgets.spi.impl.dummy.application.DummyUiThreadAccess;
+import org.jowidgets.spi.impl.dummy.application.EventQueueApplicationRunner;
+import org.jowidgets.spi.impl.dummy.application.SingleThreadApplicationRunner;
+import org.jowidgets.spi.impl.dummy.application.SingleThreadUiThreadAccess;
+import org.jowidgets.spi.impl.dummy.application.UiThreadPolicy;
 import org.jowidgets.spi.impl.dummy.image.DummyImageFactory;
 import org.jowidgets.spi.impl.dummy.image.DummyImageHandleFactory;
 import org.jowidgets.spi.impl.dummy.image.DummyImageHandleFactorySpi;
 import org.jowidgets.spi.impl.dummy.image.DummyImageRegistry;
-import org.jowidgets.spi.impl.dummy.threads.DummyUiThreadAccess;
+import org.jowidgets.util.Assert;
 
 public class DummyWidgetsServiceProvider implements IWidgetsServiceProvider {
 
@@ -57,15 +61,39 @@ public class DummyWidgetsServiceProvider implements IWidgetsServiceProvider {
     private final DummyWidgetFactory widgetFactory;
     private final DummyOptionalWidgetsFactory optionalWidgetsFactory;
     private final IClipboardSpi clipboard;
+    private final IUiThreadAccessCommon uiThreadAccess;
+    private final IApplicationRunner applicationRunner;
 
     public DummyWidgetsServiceProvider() {
-        super();
+        this(UiThreadPolicy.SINGLE_THREAD);
+    }
+
+    public DummyWidgetsServiceProvider(final UiThreadPolicy uiThreadPolicy) {
+        Assert.paramNotNull(uiThreadPolicy, "uiThreadPolicy");
+
         this.imageRegistry = new DummyImageRegistry(new DummyImageHandleFactory());
         this.imageHandleFactorySpi = new DummyImageHandleFactorySpi(imageRegistry);
         this.widgetFactory = new DummyWidgetFactory(imageRegistry);
         this.imageFactory = new DummyImageFactory(imageHandleFactorySpi);
         this.optionalWidgetsFactory = new DummyOptionalWidgetsFactory();
         this.clipboard = new ApplicationLocalClipboard();
+
+        if (UiThreadPolicy.SINGLE_THREAD == uiThreadPolicy) {
+            this.uiThreadAccess = new SingleThreadUiThreadAccess();
+            this.applicationRunner = new SingleThreadApplicationRunner(uiThreadAccess);
+        }
+        else if (UiThreadPolicy.EVENT_QUEUE == uiThreadPolicy) {
+            final EventQueueApplicationRunner eventQueueApplicationRunner = new EventQueueApplicationRunner();
+            this.uiThreadAccess = eventQueueApplicationRunner;
+            this.applicationRunner = eventQueueApplicationRunner;
+        }
+        else if (UiThreadPolicy.DUMMY == uiThreadPolicy) {
+            this.uiThreadAccess = new DummyUiThreadAccess();
+            this.applicationRunner = new SingleThreadApplicationRunner(uiThreadAccess);
+        }
+        else {
+            throw new IllegalArgumentException("The thread policy '" + uiThreadPolicy + "' is not supported");
+        }
     }
 
     @Override
@@ -95,17 +123,17 @@ public class DummyWidgetsServiceProvider implements IWidgetsServiceProvider {
 
     @Override
     public IUiThreadAccessCommon createUiThreadAccess() {
-        return new DummyUiThreadAccess();
+        return uiThreadAccess;
     }
 
     @Override
     public IApplicationRunner createApplicationRunner() {
-        return new DummyApplicationRunner();
+        return applicationRunner;
     }
 
     @Override
     public Object getActiveWindowUiReference() {
-        //TODO LG active window must be simulated
+        //TODO must be implemented
         return null;
     }
 
@@ -116,13 +144,13 @@ public class DummyWidgetsServiceProvider implements IWidgetsServiceProvider {
 
     @Override
     public Position toScreen(final Position localPosition, final IComponentCommon component) {
-        // TODO LG implement
+        //TODO must be implemented
         return null;
     }
 
     @Override
     public Position toLocal(final Position screenPosition, final IComponentCommon component) {
-        // TODO LG implement
+        //TODO must be implemented
         return null;
     }
 
