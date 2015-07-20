@@ -43,6 +43,7 @@
 		<module>../org.jowidgets.spi.impl.bridge.awt.swt</module>			
 		<module>../org.jowidgets.spi.impl.rwt</module>
 		<module>../org.jowidgets.spi.impl.rwt.legacy</module>
+		<module>../org.jowidgets.test.tools</module>
 	</modules>
 
 	<build>

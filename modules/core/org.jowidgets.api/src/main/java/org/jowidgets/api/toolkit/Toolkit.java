@@ -101,7 +101,7 @@ public final class Toolkit {
      * 
      * Remark: Do only use this method in test code
      */
-    public static void resetForTests() {
+    public static void resetAfterTests() {
         Toolkit.toolkitProvider = null;
     }
 
