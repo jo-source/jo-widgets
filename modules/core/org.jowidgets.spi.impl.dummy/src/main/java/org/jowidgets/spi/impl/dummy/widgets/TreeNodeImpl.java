@@ -33,8 +33,8 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.common.widgets.controller.ITreeNodeListener;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDObservable;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDTreeItem;
+import org.jowidgets.spi.impl.dummy.ui.UIDObservable;
+import org.jowidgets.spi.impl.dummy.ui.UIDTreeItem;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.ITreeNodeSpi;
 

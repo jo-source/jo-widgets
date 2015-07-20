@@ -28,7 +28,7 @@
 package org.jowidgets.spi.impl.dummy.widgets;
 
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDMenuItem;
+import org.jowidgets.spi.impl.dummy.ui.UIDMenuItem;
 import org.jowidgets.spi.widgets.ISubMenuSpi;
 
 public class SubMenuImpl extends DummyMenu implements ISubMenuSpi {

@@ -38,7 +38,7 @@ import org.jowidgets.spi.graphics.IGraphicContextSpi;
 import org.jowidgets.spi.image.IBufferedImageSpi;
 import org.jowidgets.spi.image.IImageFactorySpi;
 import org.jowidgets.spi.image.IImageSpi;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDImage;
+import org.jowidgets.spi.impl.dummy.ui.UIDImage;
 import org.jowidgets.spi.impl.image.AbstractImageSpiImpl;
 import org.jowidgets.spi.impl.image.ImageHandle;
 import org.jowidgets.spi.impl.image.StreamFactoryImageDecriptorImpl;

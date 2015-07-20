@@ -27,7 +27,7 @@
  */
 package org.jowidgets.spi.impl.dummy.widgets;
 
-import org.jowidgets.spi.impl.dummy.dummyui.UIDSeparator;
+import org.jowidgets.spi.impl.dummy.ui.UIDSeparator;
 import org.jowidgets.spi.widgets.IControlSpi;
 import org.jowidgets.spi.widgets.setup.ISeparatorSetupSpi;
 

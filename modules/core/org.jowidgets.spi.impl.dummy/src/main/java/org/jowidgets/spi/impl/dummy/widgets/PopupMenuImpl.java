@@ -29,8 +29,8 @@
 package org.jowidgets.spi.impl.dummy.widgets;
 
 import org.jowidgets.common.types.Position;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDPopupMenu;
+import org.jowidgets.spi.impl.dummy.ui.UIDComponent;
+import org.jowidgets.spi.impl.dummy.ui.UIDPopupMenu;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 
 public class PopupMenuImpl extends DummyMenu implements IPopupMenuSpi {

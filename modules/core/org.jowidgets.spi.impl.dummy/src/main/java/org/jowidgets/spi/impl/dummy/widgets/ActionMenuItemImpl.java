@@ -29,7 +29,7 @@ package org.jowidgets.spi.impl.dummy.widgets;
 
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.spi.impl.controller.ActionObservable;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDMenuItem;
+import org.jowidgets.spi.impl.dummy.ui.UIDMenuItem;
 import org.jowidgets.spi.widgets.IActionMenuItemSpi;
 
 public class ActionMenuItemImpl extends MenuItemImpl implements IActionMenuItemSpi {

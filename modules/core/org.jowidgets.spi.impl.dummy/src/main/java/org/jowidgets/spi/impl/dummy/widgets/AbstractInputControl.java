@@ -40,7 +40,7 @@ import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
 import org.jowidgets.spi.dnd.IDragSourceSpi;
 import org.jowidgets.spi.dnd.IDropTargetSpi;
 import org.jowidgets.spi.impl.controller.InputObservable;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDComponent;
+import org.jowidgets.spi.impl.dummy.ui.UIDComponent;
 import org.jowidgets.spi.widgets.IInputControlSpi;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 

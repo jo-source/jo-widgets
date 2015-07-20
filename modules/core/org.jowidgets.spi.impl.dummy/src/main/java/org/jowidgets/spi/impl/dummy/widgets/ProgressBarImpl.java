@@ -27,8 +27,8 @@
  */
 package org.jowidgets.spi.impl.dummy.widgets;
 
-import org.jowidgets.spi.impl.dummy.dummyui.UIDProgressBar;
 import org.jowidgets.spi.impl.dummy.image.DummyImageRegistry;
+import org.jowidgets.spi.impl.dummy.ui.UIDProgressBar;
 import org.jowidgets.spi.widgets.IProgressBarSpi;
 import org.jowidgets.spi.widgets.setup.IProgressBarSetupSpi;
 

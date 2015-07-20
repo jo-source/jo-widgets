@@ -30,8 +30,8 @@ package org.jowidgets.spi.impl.dummy.widgets;
 
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
-import org.jowidgets.spi.impl.dummy.dummyui.AbstractUIDButton;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDObservable;
+import org.jowidgets.spi.impl.dummy.ui.AbstractUIDButton;
+import org.jowidgets.spi.impl.dummy.ui.UIDObservable;
 import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
 
 public class ToolBarPopupButtonImpl extends ToolBarButtonImpl implements IToolBarPopupButtonSpi {

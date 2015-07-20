@@ -29,9 +29,9 @@ package org.jowidgets.spi.impl.dummy;
 
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
 import org.jowidgets.spi.IWidgetFactorySpi;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDContainer;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDWindow;
 import org.jowidgets.spi.impl.dummy.image.DummyImageRegistry;
+import org.jowidgets.spi.impl.dummy.ui.UIDContainer;
+import org.jowidgets.spi.impl.dummy.ui.UIDWindow;
 import org.jowidgets.spi.impl.dummy.widgets.ButtonImpl;
 import org.jowidgets.spi.impl.dummy.widgets.CheckBoxImpl;
 import org.jowidgets.spi.impl.dummy.widgets.ComboBoxImpl;

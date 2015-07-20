@@ -28,8 +28,8 @@
 package org.jowidgets.spi.impl.dummy.widgets;
 
 import org.jowidgets.common.image.IImageConstant;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDToggleButton;
 import org.jowidgets.spi.impl.dummy.image.DummyImageRegistry;
+import org.jowidgets.spi.impl.dummy.ui.UIDToggleButton;
 import org.jowidgets.spi.widgets.IToggleButtonSpi;
 import org.jowidgets.spi.widgets.setup.IToggleButtonSetupSpi;
 

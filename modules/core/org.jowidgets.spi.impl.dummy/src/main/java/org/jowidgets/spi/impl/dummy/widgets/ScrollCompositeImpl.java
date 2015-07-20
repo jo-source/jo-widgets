@@ -30,7 +30,7 @@ package org.jowidgets.spi.impl.dummy.widgets;
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDScrollPane;
+import org.jowidgets.spi.impl.dummy.ui.UIDScrollPane;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 

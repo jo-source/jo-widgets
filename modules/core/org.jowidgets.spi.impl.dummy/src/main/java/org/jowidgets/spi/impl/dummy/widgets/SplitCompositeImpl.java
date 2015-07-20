@@ -30,8 +30,8 @@ package org.jowidgets.spi.impl.dummy.widgets;
 
 import org.jowidgets.common.types.Dimension;
 import org.jowidgets.common.widgets.factory.IGenericWidgetFactory;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDContainer;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDSplitPane;
+import org.jowidgets.spi.impl.dummy.ui.UIDContainer;
+import org.jowidgets.spi.impl.dummy.ui.UIDSplitPane;
 import org.jowidgets.spi.widgets.ICompositeSpi;
 import org.jowidgets.spi.widgets.ISplitCompositeSpi;
 import org.jowidgets.spi.widgets.setup.ISplitCompositeSetupSpi;

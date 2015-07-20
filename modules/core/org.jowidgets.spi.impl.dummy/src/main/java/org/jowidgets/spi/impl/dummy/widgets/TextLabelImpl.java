@@ -28,7 +28,7 @@
 package org.jowidgets.spi.impl.dummy.widgets;
 
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDTextLabel;
+import org.jowidgets.spi.impl.dummy.ui.UIDTextLabel;
 import org.jowidgets.spi.widgets.ITextLabelSpi;
 import org.jowidgets.spi.widgets.setup.ITextLabelSetupSpi;
 

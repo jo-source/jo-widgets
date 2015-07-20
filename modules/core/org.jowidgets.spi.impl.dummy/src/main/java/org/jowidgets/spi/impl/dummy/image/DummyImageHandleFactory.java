@@ -30,7 +30,7 @@ package org.jowidgets.spi.impl.dummy.image;
 
 import org.jowidgets.common.image.IImageDescriptor;
 import org.jowidgets.common.image.IImageHandleFactory;
-import org.jowidgets.spi.impl.dummy.dummyui.UIDImage;
+import org.jowidgets.spi.impl.dummy.ui.UIDImage;
 import org.jowidgets.spi.impl.image.ImageHandle;
 
 public class DummyImageHandleFactory implements IImageHandleFactory {
