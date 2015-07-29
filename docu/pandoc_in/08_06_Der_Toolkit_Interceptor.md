@@ -31,7 +31,7 @@ Der Aufruf von `Toolkit.getInstance()` sowie allen anderen indirekten Aufrufen d
 
 #### Toolkit Interceptor Beispiel
 
-Das folgende Beispiel zeigt eine gekürzte Version des Toolkit Interceptor für die [jo-client-platform](http://code.google.com/p/jo-client-platform/). Der vollständige Code findet sich [hier](http://code.google.com/p/jo-client-platform/source/browse/trunk/modules/core/org.jowidgets.cap.ui/src/main/java/org/jowidgets/cap/ui/impl/widgets/CapToolkitInterceptor.java).
+Das folgende Beispiel zeigt eine gekürzte Version des Toolkit Interceptor für die [jo-client-platform](http://jo-source.github.io/jo-client-platform/). Der vollständige Code findet sich [hier](https://github.com/jo-source/jo-client-platform/tree/master/modules/core/org.jowidgets.cap.ui/src/main/java/org/jowidgets/cap/ui/impl/widgets/CapToolkitInterceptor.java).
 
 ~~~{.java .numberLines startFrom="1"}
 final class CapToolkitInterceptor implements IToolkitInterceptor {
@@ -140,7 +140,7 @@ Mit Hilfe der Order kann die Reihenfolge beeinflusst werden, in der Toolkit Inte
 
 #### Die Klasse AbstractToolkitInterceptorHolder
 
-Die Klasse `AbstractToolkitInterceptorHolder` liefert eine Basisimplementierung der Schnittstelle `IToolkitInterceptorHolder`. Das folgende Beispiel zeigt die Verwendung anhand des Toolkit Interceptor Holder's des UI Security Plugin der [jo-client-platform](http://code.google.com/p/jo-client-platform/). ^[Das UI Plugin liefert keine echten Security Aspekte, denn die liefert das Service Security Plugin. Das Plugin verhindert aber zum Beispiel die Ausführung von Diensten für die keine Rechte vorhanden sind, um die Usability zu erhöhen, oder dekoriert Widgets, so dass zum Beispiel eine BeanTable, falls man keine Leserechte hat, durch ein Composite mit Informationen darüber an den Nutzer, ersetzt wird.]:
+Die Klasse `AbstractToolkitInterceptorHolder` liefert eine Basisimplementierung der Schnittstelle `IToolkitInterceptorHolder`. Das folgende Beispiel zeigt die Verwendung anhand des Toolkit Interceptor Holder's des UI Security Plugin der [jo-client-platform](http://jo-source.github.io/jo-client-platform/). ^[Das UI Plugin liefert keine echten Security Aspekte, denn die liefert das Service Security Plugin. Das Plugin verhindert aber zum Beispiel die Ausführung von Diensten für die keine Rechte vorhanden sind, um die Usability zu erhöhen, oder dekoriert Widgets, so dass zum Beispiel eine BeanTable, falls man keine Leserechte hat, durch ein Composite mit Informationen darüber an den Nutzer, ersetzt wird.]:
 
 ~~~{.java .numberLines startFrom="1"}
 public final class CapSecurityUiToolkitInterceptorHolder 

@@ -2,7 +2,7 @@
 
 Möchte man jowidgets in einem bereits existierenden Projekt verwenden, in welchem die Applikation nicht durch einen [Application Runner](#application_runner) erzeugt wird, bzw. das Root Fenster kein `IFrame` ist, benötigt man entweder an der Stelle, wo jowidgets eingebunden werden soll, einen [nativen Wrapper](#jowidgets_wrapper_factory), oder man erzeugt ein komplettes jowidgets [Root-](#create_root_window_in_native_app), oder [Kind Fenster](#create_child_window_in_native_app) innerhalb der nativen Applikation. 
 
-In beiden Fällen wird vorausgesetzt, dass für die UI Technologie, welche im nativen Projekt verwendet wird, eine SPI Implementierung von jowidgets existiert, was derzeit für Swing, Swt und Rwt der Fall ist. ^[Für JavaFx existiert eine [prototypische Implementierung](http://code.google.com/p/jo-fx/).] Eine Abhängigkeit auf die SPI Implementierung muss spätestens zur Laufzeit vorhanden sein. Verwendet man die Addon Module `org.jowidgets.spi.impl.swt.addons` oder `org.jowidgets.spi.impl.swing.addons` hat man diese Abhängigkeit bereits transitiv zur Compilezeit. 
+In beiden Fällen wird vorausgesetzt, dass für die UI Technologie, welche im nativen Projekt verwendet wird, eine SPI Implementierung von jowidgets existiert, was derzeit für Swing, Swt und Rwt der Fall ist. ^[Für JavaFx existiert eine [prototypische Implementierung](https://github.com/jo-source/jo-fx).] Eine Abhängigkeit auf die SPI Implementierung muss spätestens zur Laufzeit vorhanden sein. Verwendet man die Addon Module `org.jowidgets.spi.impl.swt.addons` oder `org.jowidgets.spi.impl.swing.addons` hat man diese Abhängigkeit bereits transitiv zur Compilezeit. 
 
 Der Aspekt des _Mischens_ von unterschiedlichen nativen UI Technologien, wie zum Beispiel Swing Widgets in einer Swt Applikation, wird nicht hier, sondern wird in [Swt-Awt Bridge Widgets](#swt_awt_bridge_widgets) behandelt.
 
@@ -98,7 +98,7 @@ Es folgen spezielle Informationen und Beispiele für die Integration von jowidge
 
 #### SwtToJoFramesSnipped
 
-Das [SwtToJoFramesSnipped](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.swt/src/main/java/org/jowidgets/examples/swt/snipped/SwtToJoFramesSnipped.java) demonstriert die Erzeugung von Fenstern innerhalb einer nativen SWT Applikation: 
+Das [SwtToJoFramesSnipped](https://github.com/jo-source/jo-widgets/tree/master/modules/examples/org.jowidgets.examples.swt/src/main/java/org/jowidgets/examples/swt/snipped/SwtToJoFramesSnipped.java) demonstriert die Erzeugung von Fenstern innerhalb einer nativen SWT Applikation: 
 
 ~~~{.java .numberLines startFrom="1"} 
 package org.jowidgets.examples.swt.snipped;
@@ -213,7 +213,7 @@ Das folgende Beispiel demonstriert die Verwendung:
 
 #### SwtToJoCompositeSnipped
 
-Das [SwtToJoCompositeSnipped](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.swt/src/main/java/org/jowidgets/examples/swt/snipped/SwtToJoCompositeSnipped.java) demonstriert die Erzeugung eines `IComposite` Wrapper innerhalb einer nativen SWT Applikation: 
+Das [SwtToJoCompositeSnipped](https://github.com/jo-source/jo-widgets/tree/master/modules/examples/org.jowidgets.examples.swt/src/main/java/org/jowidgets/examples/swt/snipped/SwtToJoCompositeSnipped.java) demonstriert die Erzeugung eines `IComposite` Wrapper innerhalb einer nativen SWT Applikation: 
 
 ~~~{.java .numberLines startFrom="1"} 
 import org.eclipse.swt.SWT;
@@ -286,7 +286,7 @@ Die Integration in Swing funktioniert analog zu SWT. Es folgen die gleichen Beis
 
 #### SwingToJoFramesSnipped
 
-Das [SwingToJoFramesSnipped](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.swing/src/main/java/org/jowidgets/examples/swing/snipped/SwingToJoFramesSnipped.java) demonstriert die Erzeugung von Fenstern innerhalb einer nativen Swing Applikation: 
+Das [SwingToJoFramesSnipped](https://github.com/jo-source/jo-widgets/tree/master/modules/examples/org.jowidgets.examples.swing/src/main/java/org/jowidgets/examples/swing/snipped/SwingToJoFramesSnipped.java) demonstriert die Erzeugung von Fenstern innerhalb einer nativen Swing Applikation: 
 
 ~~~{.java .numberLines startFrom="1"} 
 package org.jowidgets.examples.swing.snipped;
@@ -367,7 +367,7 @@ public final class SwingToJoFramesSnipped {
 
 #### SwingToJoCompositeSnipped
 
-Das [SwingToJoCompositeSnipped](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.swing/src/main/java/org/jowidgets/examples/swing/snipped/SwingToJoCompositeSnipped.java) demonstriert die Erzeugung eines `IComposite` Wrapper innerhalb einer nativen Swing Applikation: 
+Das [SwingToJoCompositeSnipped](https://github.com/jo-source/jo-widgets/tree/master/modules/examples/org.jowidgets.examples.swing/src/main/java/org/jowidgets/examples/swing/snipped/SwingToJoCompositeSnipped.java) demonstriert die Erzeugung eines `IComposite` Wrapper innerhalb einer nativen Swing Applikation: 
 
 ~~~{.java .numberLines startFrom="1"} 
 package org.jowidgets.examples.swing.snipped;

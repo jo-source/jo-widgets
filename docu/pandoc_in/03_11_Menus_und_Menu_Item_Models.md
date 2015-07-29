@@ -15,7 +15,7 @@ Item Models beschränken sich nicht ausschließlich auf Menüs. So ist es für b
 
 ### Einführendes Beispiel
 
-Die Verwendung von Item Models soll vorab anhand eines Beispiels verdeutlicht werden (das komplette `ItemModelSnipped` findet sich [hier](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/ItemModelSnipped.java)). 
+Die Verwendung von Item Models soll vorab anhand eines Beispiels verdeutlicht werden (das komplette `ItemModelSnipped` findet sich [hier](https://github.com/jo-source/jo-widgets/tree/master/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/ItemModelSnipped.java)). 
 
 Das Rahmenprogramm sieht wie folgt aus:
 
@@ -1093,7 +1093,7 @@ Die folgende statische Methode führt ein Binding eines Menu Model mit einem Com
 
 Tritt auf dem `component` (oder auf einem seiner Kinder, falls es ein IContainer ist) ein Key Event auf, wird geprüft, ob dafür eine Aktion existiert, und wenn ja, wird diese ausgeführt. Wird das übergebene `component` disposed, wird automatisch auch das Binding disposed. Es werden auch die Aktionen gebunden, welche erst nach dem Aufruf von `bind()` hinzugefügt wurden.
 
-Das folgende Snipped zeigt die Verwendung (das vollständige Snipped findet sich [hier](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/MenuModelKeyBindingSnipped.java)). 
+Das folgende Snipped zeigt die Verwendung (das vollständige Snipped findet sich [hier](https://github.com/jo-source/jo-widgets/tree/master/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/MenuModelKeyBindingSnipped.java)). 
 
 ~~~{.java .numberLines startFrom="1"}
 	//create a root frame

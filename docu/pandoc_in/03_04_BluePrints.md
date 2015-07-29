@@ -20,7 +20,7 @@ Für die [Core Widgets](#core_widgets) kann man sich die Instanzen der BluePrint
 	IBluePrintFactory bluePrintFactory = Toolkit.getBluePrintFactory();
 ~~~
 
-Andere [Widget Bibliotheken](#custom_widget_libraries) oder auch die [Addon Widgets](#addon_widgets) stellen jeweils ihre eigene BluePrint Factory zur Verfügung. Die Klasse [BrowserBPF](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/addons/org.jowidgets.addons.widgets.browser.api/src/main/java/org/jowidgets/addons/widgets/browser/api/BrowserBPF.java) liefert zum Beispiel die BluePrints für die Browser Widgets.
+Andere [Widget Bibliotheken](#custom_widget_libraries) oder auch die [Addon Widgets](#addon_widgets) stellen jeweils ihre eigene BluePrint Factory zur Verfügung. Die Klasse [BrowserBPF](https://github.com/jo-source/jo-widgets/tree/master/modules/addons/org.jowidgets.addons.widgets.browser.api/src/main/java/org/jowidgets/addons/widgets/browser/api/BrowserBPF.java) liefert zum Beispiel die BluePrints für die Browser Widgets.
 
 #### Die Abbreviation Accessor Klasse BPF{#bpf_accessor_class}
 
@@ -134,7 +134,7 @@ Die [BluePrint Schnittstelle](#blue_print_interface) vereint die folgenden Aspek
 * [Widget Setup Builder](#widget_setup_builder)
 
 
-Für die [Core Widgets](#core_widgets) sind diese Aspekte in unterschiedliche Schnittstellen aufgeteilt.^[Dies muss bei der [Erstellung eigener Widget Bibliotheken](#custom_widget_libraries) nicht zwingend so gemacht werden. Das Zusammenfassung von Setup und Setup Builder in eine Schnittstelle hat sich durchaus als praktikabel erwiesen und wird zum Beispiel auch bei den Widgets der [jo-client-platform](http://code.google.com/p/jo-client-platform/) so umgesetzt.] 
+Für die [Core Widgets](#core_widgets) sind diese Aspekte in unterschiedliche Schnittstellen aufgeteilt.^[Dies muss bei der [Erstellung eigener Widget Bibliotheken](#custom_widget_libraries) nicht zwingend so gemacht werden. Das Zusammenfassung von Setup und Setup Builder in eine Schnittstelle hat sich durchaus als praktikabel erwiesen und wird zum Beispiel auch bei den Widgets der [jo-client-platform](http://jo-source.github.io/jo-client-platform/) so umgesetzt.] 
 
 
 

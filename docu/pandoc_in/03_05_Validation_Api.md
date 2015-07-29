@@ -4,13 +4,13 @@ Die Validation API bietet Schnittstellen und Funktionen für die Validierung von
 
 Die Validation API befindet sich im Modul `org.jowidgets.validation`. Dieses hat weder jowidgets interne noch externe transitive Abhängigkeiten. Insbesondere hat die API dadurch auch keine Abhängigkeiten auf UI Aspekte und kann somit auch für die serverseitige Validierung herangezogen werden. 
 
-Sie bildet die Basis für die [jo-client-platform](http://code.google.com/p/jo-client-platform/) Bean Validation, welche Adapter für die [Javax Bean Validation (JSR 303)](http://beanvalidation.org/) bereitstellt. 
+Sie bildet die Basis für die [jo-client-platform](http://jo-source.github.io/jo-client-platform/) Bean Validation, welche Adapter für die [Javax Bean Validation (JSR 303)](http://beanvalidation.org/) bereitstellt. 
 
 Im Vergleich zu einer Bean Validation API liefert die Validation API keine besonderen Aspekte bezüglich der Validierung von Properties eines Beans, sondern ausschließlich Aspekte für die Validierung von Objekten. Diese können natürlich sowohl Beans als Bean Properties sein. Die Validation API ist damit allgemeiner als eine Bean Validation API.
 
 Die jowidgets Validation API unterstützt im Vergleich zur Javax Bean Validation API eine differenzierte Unterscheidung von Fehlertypen. Neben `ok` und `error` gibt es weitere Typen wie `warning`, `info`, etc. (siehe auch [Message Types](#validation_message_type)).
 
-Die Validation API wurde nicht entworfen um Javax Bean Validation zu ersetzen, sondern um damit zu _koexistieren_. Javax Bean Validatoren lassen sich zum Beispiel einfach auf [jo-client-platform](http://code.google.com/p/jo-client-platform/) Bean Validatoren adaptieren. Siehe zum Beispiel [BeanPropertyValidatorAdapter](https://code.google.com/p/jo-client-platform/source/browse/trunk/modules/core/org.jowidgets.cap.common/src/main/java/org/jowidgets/cap/common/impl/BeanPropertyValidatorAdapter.java) 
+Die Validation API wurde nicht entworfen um Javax Bean Validation zu ersetzen, sondern um damit zu _koexistieren_. Javax Bean Validatoren lassen sich zum Beispiel einfach auf [jo-client-platform](http://jo-source.github.io/jo-client-platform/) Bean Validatoren adaptieren. Siehe zum Beispiel [BeanPropertyValidatorAdapter](https://github.com/jo-source/jo-client-platform/tree/master/modules/core/org.jowidgets.cap.common/src/main/java/org/jowidgets/cap/common/impl/BeanPropertyValidatorAdapter.java) 
 
 ### Die Schnittstelle IValidator{#validator_interface}
 

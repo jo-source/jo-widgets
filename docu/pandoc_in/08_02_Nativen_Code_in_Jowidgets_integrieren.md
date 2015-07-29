@@ -53,7 +53,7 @@ Man erh√§lt als UI Referenz immer das native Root Widget, welches von der Spi f√
 
 ### Verwendung der nativen UI Referenz unter Swt
 
-Das [JoToSwtSnipped](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.swt/src/main/java/org/jowidgets/examples/swt/snipped/JoToSwtSnipped.java) demonstriert die Verwendung der nativen Swt UI Referenz in einer jowidgets Applikation: 
+Das [JoToSwtSnipped](https://github.com/jo-source/jo-widgets/tree/master/modules/examples/org.jowidgets.examples.swt/src/main/java/org/jowidgets/examples/swt/snipped/JoToSwtSnipped.java) demonstriert die Verwendung der nativen Swt UI Referenz in einer jowidgets Applikation: 
 
 ~~~{.java .numberLines startFrom="1"} 
 package org.jowidgets.examples.swt.snipped;
@@ -106,7 +106,7 @@ public final class JoToSwtSnipped implements IApplication {
 
 ### Verwendung der nativen UI Referenz unter Swing
 
-Das [JoToSwingSnipped](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.swing/src/main/java/org/jowidgets/examples/swing/snipped/JoToSwingSnipped.java) demonstriert die Verwendung der nativen Swing UI Referenz in einer jowidgets Applikation: 
+Das [JoToSwingSnipped](https://github.com/jo-source/jo-widgets/tree/master/modules/examples/org.jowidgets.examples.swing/src/main/java/org/jowidgets/examples/swing/snipped/JoToSwingSnipped.java) demonstriert die Verwendung der nativen Swing UI Referenz in einer jowidgets Applikation: 
 
 ~~~{.java .numberLines startFrom="1"} 
 package org.jowidgets.examples.swing.snipped;

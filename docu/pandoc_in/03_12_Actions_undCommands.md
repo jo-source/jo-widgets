@@ -441,7 +441,7 @@ Ein Dialog erscheint, dass die Aktion ausgeführt wurde. Wird dieser geschlossen
 
 Der Tooltip zu der Save Action im File Menü zeigt den Grund für die Deaktivierung im Tooltip. Die Save Action soll genau dann `enabled` sein, wenn der Text im Textfeld sich seit dem letzten Speichern geändert hat. 
 
-Der folgende Code zeigt die Implementierung (das vollständige Snipped inklusive Imports befindet sich [hier](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/CommandActionSnipped.java)):
+Der folgende Code zeigt die Implementierung (das vollständige Snipped inklusive Imports befindet sich [hier](https://github.com/jo-source/jo-widgets/tree/master/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/CommandActionSnipped.java)):
 
 ~~~{.java .numberLines startFrom="1"}
 public final class CommandActionSnipped implements IApplication {
@@ -637,7 +637,7 @@ public final class EnabledStateVisibilityAspect implements IActionItemVisibility
 
 #### Secure Action Item Visiblity Aspect
 
-Der folgende Sichtbarkeitsaspekt stammt aus der [jo-client-platform](http://code.google.com/p/jo-client-platform/), und versteckt alle Actions, für welche der angemeldete Nutzer kein Ausführungsrecht besitzt^[Dabei handelt es sich um einen reinen Convenience Aspekt. In der Service Schicht wird eine solche Aktion zusätzlich abgelehnt.]. 
+Der folgende Sichtbarkeitsaspekt stammt aus der [jo-client-platform](http://jo-source.github.io/jo-client-platform/), und versteckt alle Actions, für welche der angemeldete Nutzer kein Ausführungsrecht besitzt^[Dabei handelt es sich um einen reinen Convenience Aspekt. In der Service Schicht wird eine solche Aktion zusätzlich abgelehnt.]. 
 
 ~~~{.java .numberLines startFrom="1"}
 private final class SecureActionItemVisibilityAspect implements IActionItemVisibilityAspect {
@@ -656,7 +656,7 @@ private final class SecureActionItemVisibilityAspect implements IActionItemVisib
 }
 ~~~
 
-Das zugehörige Plugin findet sich [hier](http://code.google.com/p/jo-client-platform/source/browse/trunk/modules/addons/org.jowidgets.cap.security.ui/src/main/java/org/jowidgets/cap/security/ui/impl/SecureActionItemVisibilityAspectPluginImpl.java)
+Das zugehörige Plugin findet sich [hier](https://github.com/jo-source/jo-client-platform/tree/master/modules/addons/org.jowidgets.cap.security.ui/src/main/java/org/jowidgets/cap/security/ui/impl/SecureActionItemVisibilityAspectPluginImpl.java)
 
 #### Die Schnittstelle IActionItemVisibilityAspectPlugin{#action_item_visibility_aspect_plugin}
 

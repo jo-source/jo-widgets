@@ -352,7 +352,7 @@ Dieser könnte wie folgt verwendet werden können:
 
 #### Binding Test Beispiel
 
-Der folgende JUnitTest demonstriert die Verwendung der Klasse `Bind`. Der Test wurde etwas verkürzt, der vollständige Test findet sich [hier](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/core/org.jowidgets.util/src/test/java/org/jowidgets/util/binding/BindingTest.java):
+Der folgende JUnitTest demonstriert die Verwendung der Klasse `Bind`. Der Test wurde etwas verkürzt, der vollständige Test findet sich [hier](https://github.com/jo-source/jo-widgets/tree/master/modules/core/org.jowidgets.util/src/test/java/org/jowidgets/util/binding/BindingTest.java):
 
 ~~~{.java .numberLines startFrom="1"}
 public class BindingTest {
@@ -521,7 +521,7 @@ einfach das folgende Schreiben:
 
 #### Observable Value Viewer Snipped
 
-Das [ObservableValueSnipped](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/ObservableValueViewerSnipped.java) verwendet einen Observable Value, um ein [SliderViewer]((#slider_viewer)) und ein [InputField](#input_field) aneinander zu binden:
+Das [ObservableValueSnipped](https://github.com/jo-source/jo-widgets/tree/master/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/ObservableValueViewerSnipped.java) verwendet einen Observable Value, um ein [SliderViewer]((#slider_viewer)) und ein [InputField](#input_field) aneinander zu binden:
 
 ~~~{.java .numberLines startFrom="1"}
 public final class ObservableValueViewerSnipped implements IApplication {
@@ -566,7 +566,7 @@ public final class ObservableValueViewerSnipped implements IApplication {
 
 #### Binding Snipped
 
-Das [BindingSnipped](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/BindingSnipped.java) verwendet mehrere Observable Values, um jeweils ein [SliderViewer]((#slider_viewer)) und ein [InputField](#input_field) aneinander zu binden. Zudem kann man über eine Checkbox das Binding aller Observable Values untereinander aktivieren oder deaktivieren, wodurch sich die Slider und Eingabefelder synchron oder unabhängig voneinander sind:
+Das [BindingSnipped](https://github.com/jo-source/jo-widgets/tree/master/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/BindingSnipped.java) verwendet mehrere Observable Values, um jeweils ein [SliderViewer]((#slider_viewer)) und ein [InputField](#input_field) aneinander zu binden. Zudem kann man über eine Checkbox das Binding aller Observable Values untereinander aktivieren oder deaktivieren, wodurch sich die Slider und Eingabefelder synchron oder unabhängig voneinander sind:
 
 ~~~{.java .numberLines startFrom="1"}
 public final class BindingSnipped implements IApplication {

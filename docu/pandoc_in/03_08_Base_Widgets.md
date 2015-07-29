@@ -36,7 +36,7 @@ public class Frame extends FrameWrapper implements IFrame {
 }
 ~~~
 
-Das [BaseFrameSnipped](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/BaseFrameSnipped.java) demonstriert die Verwendung der Klasse `Frame`:
+Das [BaseFrameSnipped](https://github.com/jo-source/jo-widgets/tree/master/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/BaseFrameSnipped.java) demonstriert die Verwendung der Klasse `Frame`:
 
 ~~~{.java .numberLines startFrom="1"}
 public final class BaseFrameSnipped implements IApplication {
@@ -103,7 +103,7 @@ public class Dialog extends FrameWrapper implements IFrame {
 }
 ~~~
 
-Das [BaseDialogSnipped](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/BaseDialogSnipped.java) demonstriert die Verwendung der Klasse `Dialog`:
+Das [BaseDialogSnipped](https://github.com/jo-source/jo-widgets/tree/master/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/BaseDialogSnipped.java) demonstriert die Verwendung der Klasse `Dialog`:
 
 ~~~{.java .numberLines startFrom="1"}
 public final class BaseDialogSnipped implements IApplication {
@@ -233,7 +233,7 @@ public class CompositeControl extends ControlWrapper implements IControl {
 ~~~
 
 
-Das [BaseCompositeControlSnipped](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/BaseCompositeControlSnipped.java) demonstriert die Verwendung der Klasse `Dialog`:
+Das [BaseCompositeControlSnipped](https://github.com/jo-source/jo-widgets/tree/master/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/BaseCompositeControlSnipped.java) demonstriert die Verwendung der Klasse `Dialog`:
 
 ~~~{.java .numberLines startFrom="1"}
 public final class BaseCompositeControlSnipped implements IApplication {

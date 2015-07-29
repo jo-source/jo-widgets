@@ -4,7 +4,7 @@ Neben dem globalen [Anpassen der Widget Defaults](#widget_defaults_override) ist
 
 __Beispiel 1:__
 
-Man möchte in einer Applikation Widgets, für welche man keine Leserecht besitzt, durch _Fake_ Widgets ersetzen, welche die gleiche Schnittstelle implementieren, jedoch anstatt dem original Widget ein Label anzeigen, das Nutzter darauf hinweist, dass ein Recht fehlt. Zudem sollen keine Daten von dem zugehörigen Dienst eingelesen werden, weil dies sowieso zu einer Security Exception führen würde. Die [jo-client-platform](http://code.google.com/p/jo-client-platform/) nutzt diese Möglichkeit zur Dekoration der BeanTable, des BeanRelationTree und weiteren Widgets. Der zugehörige `IToolkitInterceptor` findet sich [hier](http://code.google.com/p/jo-client-platform/source/browse/trunk/modules/addons/org.jowidgets.cap.security.ui/src/main/java/org/jowidgets/cap/security/ui/tools/CapSecurityUiToolkitInterceptor.java)
+Man möchte in einer Applikation Widgets, für welche man keine Leserecht besitzt, durch _Fake_ Widgets ersetzen, welche die gleiche Schnittstelle implementieren, jedoch anstatt dem original Widget ein Label anzeigen, das Nutzter darauf hinweist, dass ein Recht fehlt. Zudem sollen keine Daten von dem zugehörigen Dienst eingelesen werden, weil dies sowieso zu einer Security Exception führen würde. Die [jo-client-platform](http://jo-source.github.io/jo-client-platform/) nutzt diese Möglichkeit zur Dekoration der BeanTable, des BeanRelationTree und weiteren Widgets. Der zugehörige `IToolkitInterceptor` findet sich [hier](https://github.com/jo-source/jo-client-platform/tree/master/modules/addons/org.jowidgets.cap.security.ui/src/main/java/org/jowidgets/cap/security/ui/tools/CapSecurityUiToolkitInterceptor.java)
 
 __Beispiel 2:__
 

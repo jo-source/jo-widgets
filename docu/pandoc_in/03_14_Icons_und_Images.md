@@ -6,7 +6,7 @@ Es gibt zum einen die Möglichkeit, Images von der [`IImageFactory`](#image_fact
 
 Zudem bietet jowidgets auch die Möglichkeit, [Image Konstanten](#image_constant) zu definieren, welche über eine [Image Registry](#image_registry) registriert werden. Dadurch wird sicher gestellt, dass ein Image für eine Konstante nur ein Mal erzeugt wird, unabhängig davon, wie oft man die Konstante verwendet.  Die Definition der Konstanten und die Registrierung konkreter Images kann dabei in unterschiedlichen Modulen erfolgen, so dass zum Beispiel für unterschiedliche Implementierungen einer API auch unterschiedliche Icons verwendet werden können. 
 
-Zudem ist es möglich, Images zu einer Image Konstante beliebig [auszutauschen](#substitude_icons). In Software Unternehmen werden oft kommerzielle Icon Bibliotheken eingesetzt, welche von professionellen Grafik Designern erstellt wurden. Jowidgets verwendet für einige Widgets bereits [Icon Konstanten](#icons_small) als Default Icon. ^[Die konkreten Default Icons dafür wurden jedoch nicht von einem professionellen Grafik Designer, sondern von einem Informatiker entworfen, zumindest hat der Ersteller der Default Icons, welcher auch gleichzeitig Autor dieses Textes ist, kein Grafikdesign studiert :-)] Das [Validation Label](#validation_label) verwendet z.B. das Icon `OK` als Default Icon für den MessageType OK. Hat man nun in einer firmeninternen Icon Bibliothek ein _besseres_ Ok Icon, oder will man aus Gründen der Konsistenz, dass überall das gleiche Ok Icon verwendet wird, kann man das Icon einfach _umregistrieren_. ^[Man könnte im konkreten Fall das gleiche auch erreichen, indem man die Widget Defaults des Validation Label global [überschreibt](#widget_defaults_override), allerdings könnte es sein, dass ein Icon von mehreren Widgets (und vielleicht sogar innerhalb der firmeneigenen Widgets) verwendet wird. Das Edit Icon wird zum Beispiel von mehreren Actions der [jo-client-platform](http://code.google.com/p/jo-client-platform/) sowie vom [CollectionInputField](#collection_input_field) verwendet.]
+Zudem ist es möglich, Images zu einer Image Konstante beliebig [auszutauschen](#substitude_icons). In Software Unternehmen werden oft kommerzielle Icon Bibliotheken eingesetzt, welche von professionellen Grafik Designern erstellt wurden. Jowidgets verwendet für einige Widgets bereits [Icon Konstanten](#icons_small) als Default Icon. ^[Die konkreten Default Icons dafür wurden jedoch nicht von einem professionellen Grafik Designer, sondern von einem Informatiker entworfen, zumindest hat der Ersteller der Default Icons, welcher auch gleichzeitig Autor dieses Textes ist, kein Grafikdesign studiert :-)] Das [Validation Label](#validation_label) verwendet z.B. das Icon `OK` als Default Icon für den MessageType OK. Hat man nun in einer firmeninternen Icon Bibliothek ein _besseres_ Ok Icon, oder will man aus Gründen der Konsistenz, dass überall das gleiche Ok Icon verwendet wird, kann man das Icon einfach _umregistrieren_. ^[Man könnte im konkreten Fall das gleiche auch erreichen, indem man die Widget Defaults des Validation Label global [überschreibt](#widget_defaults_override), allerdings könnte es sein, dass ein Icon von mehreren Widgets (und vielleicht sogar innerhalb der firmeneigenen Widgets) verwendet wird. Das Edit Icon wird zum Beispiel von mehreren Actions der [jo-client-platform](http://jo-source.github.io/jo-client-platform/) sowie vom [CollectionInputField](#collection_input_field) verwendet.]
 
 Mit Hilfe von [Image Providern](#image_provider) ist auch eine implizite Registrierung von Images möglich. Im Abschnitt: [Eigene Icon Bibliotheken mit Hilfe von Image Provider Enums](#icon_library_with_image_providers) wird gezeigt, wie dadurch sehr einfach eigene Icon Bibliotheken erstellt werden können.
 
@@ -533,7 +533,7 @@ Die Icon Konstanten können dann für das Default Setup der Widgets und / oder i
 
 #### Registrierung der konkreten Icons
 
-Die folgende Klasse verwendet die Klasse [`AbstractResourceImageInitializer`](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/core/org.jowidgets.tools/src/main/java/org/jowidgets/tools/image/AbstractResourceImageInitializer.java) für die Registrierung der konkreten Icons:
+Die folgende Klasse verwendet die Klasse [`AbstractResourceImageInitializer`](https://github.com/jo-source/jo-widgets/tree/master/modules/core/org.jowidgets.tools/src/main/java/org/jowidgets/tools/image/AbstractResourceImageInitializer.java) für die Registrierung der konkreten Icons:
 
 ~~~{.java .numberLines startFrom="1"}
 package org.mycompany.audio.impl;
@@ -582,7 +582,7 @@ Die folgende Abbildung zeigt die zugehörigen Icon Dateien innerhalb der Resourc
 
 #### Registrierung mittels Toolkit Interceptor
 
-Um sicher zu Stellen, dass die Icons vor der ersten Verwendung registriert sind, wird empfohlen, die Registrierung innerhalb eines [Toolkit Interceptors](#toolkit_interceptor) durchzuführen. Das folgende Beispiel nutzt dazu die abstrakte Klasse [`AbstractToolkitInterceptorHolder`](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/core/org.jowidgets.tools/src/main/java/org/jowidgets/tools/toolkit/AbstractToolkitInterceptorHolder.java):
+Um sicher zu Stellen, dass die Icons vor der ersten Verwendung registriert sind, wird empfohlen, die Registrierung innerhalb eines [Toolkit Interceptors](#toolkit_interceptor) durchzuführen. Das folgende Beispiel nutzt dazu die abstrakte Klasse [`AbstractToolkitInterceptorHolder`](https://github.com/jo-source/jo-widgets/tree/master/modules/core/org.jowidgets.tools/src/main/java/org/jowidgets/tools/toolkit/AbstractToolkitInterceptorHolder.java):
 
 ~~~{.java .numberLines startFrom="1"}
 package org.mycompany.audio.impl;
@@ -629,7 +629,7 @@ Dadurch werden die Icons automatisch registriert, wenn man das Modul `org.mycomp
 
 Jowidgets liefert bereits vorgefertigte Icon Bibliotheken. 
 
-Die Enums [`Icons`](#system_message_icons) und [`IconsSmall`](#icons_small) liefern Konstanten, welche von jowidgets und der [jo-client-platform](http://code.google.com/p/jo-client-platform/) verwendet werden. Das Modul `org.jowidget.impl` liefert konkrete Icons für diese, welcher unter der [BSD Lizenz](https://www.freebsd.org/copyright/freebsd-license.html) stehen, und somit frei verwendbar sind.
+Die Enums [`Icons`](#system_message_icons) und [`IconsSmall`](#icons_small) liefern Konstanten, welche von jowidgets und der [jo-client-platform](http://jo-source.github.io/jo-client-platform/) verwendet werden. Das Modul `org.jowidget.impl` liefert konkrete Icons für diese, welcher unter der [BSD Lizenz](https://www.freebsd.org/copyright/freebsd-license.html) stehen, und somit frei verwendbar sind.
 
 Das Addon Modul [`org.jowidgets.addons.icons.silkicons`](#silk_icons) liefert eine [IImageUrlProvider Enum](#icon_library_with_image_providers) für die [Silk Icons](http://www.famfamfam.com/lab/icons/silk/) von FamFamFam. 
 
@@ -657,7 +657,7 @@ Das Aussehen dieser Icons hängt vom jeweiligen Betriebssystem ab. Die obere Tab
 
 ### Icons Small{#icons_small}
 
-Die Enum `org.jowidgets.api.image.IconsSmall` enthält Icons, welche von jowidgets und der [jo-client-platform](http://code.google.com/p/jo-client-platform/) verwendet werden. In der API finden sich nur die Konstanten ohne Default Icons, das Modul `org.jowidgets.impl` registriert für die Konstanten konkrete Icons in einer Auflösung von 16x16 Pixeln. Diese können wie in [Austauschen von Icons](#substitude_icons) beschrieben durch beliebige andere ersetzt (substituiert) werden. Die `IconsSmall` werden dort verwendet, wo in aktuellen (nicht Web) UI Frameworks eine 16x16 Auflösung üblich ist. Dazu zählen insbesondere Menüs, Labels, die Header von Fenstern, Tabellen, TabFoldern, etc..
+Die Enum `org.jowidgets.api.image.IconsSmall` enthält Icons, welche von jowidgets und der [jo-client-platform](http://jo-source.github.io/jo-client-platform/) verwendet werden. In der API finden sich nur die Konstanten ohne Default Icons, das Modul `org.jowidgets.impl` registriert für die Konstanten konkrete Icons in einer Auflösung von 16x16 Pixeln. Diese können wie in [Austauschen von Icons](#substitude_icons) beschrieben durch beliebige andere ersetzt (substituiert) werden. Die `IconsSmall` werden dort verwendet, wo in aktuellen (nicht Web) UI Frameworks eine 16x16 Auflösung üblich ist. Dazu zählen insbesondere Menüs, Labels, die Header von Fenstern, Tabellen, TabFoldern, etc..
 
 Die folgende Tabelle zeigt die Default Icons der Enum `IconsSmall` mit dem zugehörigen Namen der Konstanten:
 
@@ -687,7 +687,7 @@ Um die SilkIcons zu verwenden, muss das folgende Modul hinzugefügt werden:
 	</dependency>
 ~~~
 
-Mit Hilfe des [IconTableSnipped](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/IconTableSnipped.java) werden alle SilkIcons in einer Tabelle angezeigt:
+Mit Hilfe des [IconTableSnipped](https://github.com/jo-source/jo-widgets/tree/master/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/IconTableSnipped.java) werden alle SilkIcons in einer Tabelle angezeigt:
 
 ![IconTableSnipped mit SilkIcons](images/silk_icons_table.gif "IconTableSnipped mit SilkIcons")
 
@@ -791,7 +791,7 @@ Ein Buffered Image liefert einen [Graphic Context](#graphic_context) zum Zeichne
 
 #### Das ImageIconSnipped
 
-Das [`ImageIconSnipped`](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/ImageIconSnipped.java) zeigt die Verwendung eines Images in Verbindung mit einem [Icon Widget](#icon_widget):
+Das [`ImageIconSnipped`](https://github.com/jo-source/jo-widgets/tree/master/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/ImageIconSnipped.java) zeigt die Verwendung eines Images in Verbindung mit einem [Icon Widget](#icon_widget):
 
 ~~~{.java .numberLines startFrom="1"}
 public final class ImageIconSnipped implements IApplication {
@@ -854,7 +854,7 @@ In Zeile 16 bis 18 könnte man zum Beispiel auch das Folgende schreiben, um das 
 
 #### Das ImageCanvasSnipped
 
-Das [`ImageCanvasSnipped`](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/ImageCanvasSnipped.java) zeigt die Verwendung eines Images in Verbindung mit einem [Canvas](#canvas_widget):
+Das [`ImageCanvasSnipped`](https://github.com/jo-source/jo-widgets/tree/master/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/ImageCanvasSnipped.java) zeigt die Verwendung eines Images in Verbindung mit einem [Canvas](#canvas_widget):
 
 ~~~{.java .numberLines startFrom="1"}
 public final class ImageCanvasSnipped implements IApplication {
@@ -919,7 +919,7 @@ Das Image wird mit Hilfe eine Canvas gezeichnet (Zeile 31). Anschließend wird a
 
 #### Das BufferedImageSnipped
 
-Das [`BufferedImageSnipped`](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/BufferedImageSnipped.java) zeigt die Verwendung eines [Buffered Image](#buffered_images):
+Das [`BufferedImageSnipped`](https://github.com/jo-source/jo-widgets/tree/master/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/BufferedImageSnipped.java) zeigt die Verwendung eines [Buffered Image](#buffered_images):
 
 ~~~{.java .numberLines startFrom="1"}
 public final class BufferedImageSnipped implements IApplication {

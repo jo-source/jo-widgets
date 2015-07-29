@@ -90,7 +90,7 @@ public enum Colors implements IColorConstant {
 }
 ~~~
 
-Diese werden hauptsächlich von jowidgets Widgets und von [jo-client-platform](http://code.google.com/p/jo-client-platform/) Widgets verwendet. Nach dem gleichen Schema könnte man sich eigene Color Enums erstellen, zum Beispiel für die Verwendung in einer applikations- oder firmeninternen Bibliothek. 
+Diese werden hauptsächlich von jowidgets Widgets und von [jo-client-platform](http://jo-source.github.io/jo-client-platform/) Widgets verwendet. Nach dem gleichen Schema könnte man sich eigene Color Enums erstellen, zum Beispiel für die Verwendung in einer applikations- oder firmeninternen Bibliothek. 
 
 Mit Hilfe der `Colors` Klasse könnte man die Hintergrundfarbe der Frames auch wie folgt setzen:
 
@@ -98,7 +98,7 @@ Mit Hilfe der `Colors` Klasse könnte man die Hintergrundfarbe der Frames auch w
 	frame.setBackgroundColor(Colors.GREEN);
 ~~~
 
-Mit Hilfe des [ColorTableSnipped](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/ColorTableSnipped.java) werden alle Colors in einer Tabelle angezeigt:
+Mit Hilfe des [ColorTableSnipped](https://github.com/jo-source/jo-widgets/tree/master/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/snipped/ColorTableSnipped.java) werden alle Colors in einer Tabelle angezeigt:
 
 ![ColorTableSnipped](images/colors_table.gif "ColorTableSnipped")
 

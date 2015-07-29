@@ -199,7 +199,7 @@ Folgendes ist dabei zu beachten:
 
 * Die Methoden `calcMinSize()` und `calcPreferredSize()` verwenden die Methode `computeDecoratedSize()` des Containers um aus der für die `ClientArea` gültigen Große die `DecoratedSize` zu berechnen (Zeile 52, 55, 62, 65). Wird dies nicht berücksichtigt, funktioniert das Layout nur für die Container korrekt, wo die `ClientArea` Größe mit der `DecoratedSize` übereinstimmt.
 
-Um einen eigenen (custom) Layouter zu implementieren, ist es eventuell hilfreich, den Source Code der vordefinierten Layout Manager zu studieren. Dieser findet sich unter anderem [hier](http://code.google.com/p/jo-widgets/source/browse/#svn%2Ftrunk%2Fmodules%2Fcore%2Forg.jowidgets.impl%2Fsrc%2Fmain%2Fjava%2Forg%2Fjowidgets%2Fimpl%2Flayout).
+Um einen eigenen (custom) Layouter zu implementieren, ist es eventuell hilfreich, den Source Code der vordefinierten Layout Manager zu studieren. Dieser findet sich unter anderem [hier](https://github.com/jo-source/jo-widgets/tree/master/modules/core/org.jowidgets.impl/src/main/java/org/jowidgets/impl/layout).
 
 ### Flow Layout
 
@@ -369,7 +369,7 @@ Um den Cache explizit zu löschen, kann auf dem `ICachedFillLayout` die folgende
 
 ### Mib Layout{#mib_layout}
 
-Im Rahmen einer [Bacheloarbeit](ba_nm.pdf) wurde [Mig Layout (http://www.miglayout.com/)](http://www.miglayout.com/) für jowidgets portiert. Die Portierung implementiert die `ILayouter` Schnittstelle. Es wurden die meisten Funktionen portiert. Zudem wurde auch die original MigLayout Demo Applikation auf Basis der Portierung umgesetzt, der Source Code findet sich [hier](http://code.google.com/p/jo-widgets/source/browse/trunk/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/demo/DemoMigLayoutFrame.java). Die folgende Abbildung zeigt die Demo Applikation:
+Im Rahmen einer [Bacheloarbeit](ba_nm.pdf) wurde [Mig Layout (http://www.miglayout.com/)](http://www.miglayout.com/) für jowidgets portiert. Die Portierung implementiert die `ILayouter` Schnittstelle. Es wurden die meisten Funktionen portiert. Zudem wurde auch die original MigLayout Demo Applikation auf Basis der Portierung umgesetzt, der Source Code findet sich [hier](https://github.com/jo-source/jo-widgets/tree/master/modules/examples/org.jowidgets.examples.common/src/main/java/org/jowidgets/examples/common/demo/DemoMigLayoutFrame.java). Die folgende Abbildung zeigt die Demo Applikation:
 
 ![Mib Layout Demo Applikation](images/mib_layout_demo_application.gif "Mib Layout Demo Applikation")
 
