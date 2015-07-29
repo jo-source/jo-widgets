@@ -22,13 +22,13 @@ Um das Hello World Beispiel zu compilieren und zu starten sollten folgende Tools
 
 * Java (mindestens 1.6)
 * Maven
-* SVN
+* GIT
 * Eclipse (inklusive M2e Maven Integration)
 * Tomcat (für das Starten im Browser)
 
-Das Hello World Beispiel kann hier [http://jo-widgets.googlecode.com/svn/trunk/modules/helloworld](http://jo-widgets.googlecode.com/svn/trunk/modules/helloworld) per SVN ausgecheckt werden. 
+Jowidgets kann hier [https://github.com/jo-source/jo-widgets.git](https://github.com/jo-source/jo-widgets.git) per GIT ausgecheckt werden. 
 
-Es findet sich dann die folgende Verzeichnisstruktur:
+Das Hello World Beispiel befindet sich hier [https://github.com/jo-source/jo-widgets/tree/master/modules/helloworld](https://github.com/jo-source/jo-widgets/tree/master/modules/helloworld) und hat die folgende Verzeichnisstruktur:
 
 ![Hello World Module](images/hello_world_exlorer.gif "Hello World Module")
 
