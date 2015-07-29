@@ -13,9 +13,9 @@
 	</properties>
 
 	<scm>
-		<connection>scm:git:https://github.com/jo-source/jo-widgets/tree/master/parent</connection>
-		<developerConnection>scm:git:https://github.com/jo-source/jo-widgets/tree/master/parent</developerConnection>
-		<url>https://github.com/jo-source/jo-widgets/tree/master/parent</url>
+		<connection>scm:git:https://github.com/jo-source/jo-widgets</connection>
+		<developerConnection>scm:git:https://github.com/jo-source/jo-widgets</developerConnection>
+		<url>https://github.com/jo-source/jo-widgets</url>
 	</scm>
 
 
