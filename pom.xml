@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jowidgets</groupId>
 	<artifactId>org.jowidgets.parent</artifactId>
-	<version>0.48.0-SNAPSHOT</version>
+	<version>0.48.0</version>
 	<packaging>pom</packaging>
 	<name>org.jowidgets.parent</name>
 
@@ -16,7 +16,8 @@
 		<connection>scm:git:https://github.com/jo-source/jo-widgets</connection>
 		<developerConnection>scm:git:https://github.com/jo-source/jo-widgets</developerConnection>
 		<url>https://github.com/jo-source/jo-widgets</url>
-	</scm>
+	  <tag>0.48.0</tag>
+  </scm>
 
 
 	<modules>
