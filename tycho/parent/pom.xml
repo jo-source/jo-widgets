@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.parent</artifactId>
-		<version>0.48.0</version>
+		<version>0.49.0-SNAPSHOT</version>
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
 	
@@ -403,5 +403,5 @@
 		</plugins>
 	</build>
 
-<version>0.48.0</version>
+<version>0.49.0-SNAPSHOT</version>
 </project>
