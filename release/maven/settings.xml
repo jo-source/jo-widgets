@@ -1,0 +1,9 @@
+<settings>
+	<servers>
+		<server>
+			<id>jowidgets-ftp-repository</id>
+			<username>u60392418-mvn</username>
+			<password>XXXXXX</password>
+		</server>
+	</servers>
+</settings>
