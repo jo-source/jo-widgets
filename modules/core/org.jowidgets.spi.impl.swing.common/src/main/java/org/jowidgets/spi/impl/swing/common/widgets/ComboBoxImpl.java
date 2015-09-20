@@ -497,8 +497,11 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
                 @Override
                 public void keyPressed(final KeyEvent e) {
                     if (e.getKeyChar() != KeyEvent.CHAR_UNDEFINED && getUiReference().isDisplayable()) {
-                        if (!getUiReference().isPopupVisible()) {
+                        if (isAutoCompletionMode && !getUiReference().isPopupVisible()) {
                             getUiReference().setPopupVisible(true);
+                        }
+                        if (!isAutoCompletionMode && getSelectedIndex() != -1) {
+                            setSelectedIndex(-1);
                         }
                     }
 
@@ -507,6 +510,9 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 
                     if (keyPressedBackspace || keyPressedDelete) {
                         deleteOnSelection = textField.getSelectionStart() != textField.getSelectionEnd();
+                        if (!isAutoCompletionMode && getSelectedIndex() != -1) {
+                            setSelectedIndex(-1);
+                        }
                     }
                 }
             });
