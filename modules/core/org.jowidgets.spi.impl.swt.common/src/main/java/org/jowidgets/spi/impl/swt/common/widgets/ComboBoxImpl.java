@@ -133,7 +133,7 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
                             if (selectedIndex != -1) {
                                 final String[] elements = getElements();
                                 if (elements != null && selectedIndex < elements.length) {
-                                    fireInputChanged(elements[selectedIndex]);
+                                    fireInputChanged(elements[selectedIndex], selectedIndex);
                                 }
                             }
                         }
@@ -149,14 +149,14 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
             @Override
             public void widgetSelected(final SelectionEvent e) {
                 if (!programmaticTextChange) {
-                    fireInputChanged(getUiReference().getText());
+                    fireInputChanged(getUiReference().getText(), getSelectedIndex());
                 }
             }
 
             @Override
             public void widgetDefaultSelected(final SelectionEvent e) {
                 if (!programmaticTextChange) {
-                    fireInputChanged(getUiReference().getText());
+                    fireInputChanged(getUiReference().getText(), getSelectedIndex());
                 }
             }
         });
@@ -167,7 +167,7 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
                     @Override
                     public void modifyText(final ModifyEvent e) {
                         if (!programmaticTextChange) {
-                            fireInputChanged(getUiReference().getText());
+                            fireInputChanged(getUiReference().getText(), getSelectedIndex());
                         }
                     }
                 });
@@ -177,7 +177,7 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
             getUiReference().addFocusListener(new FocusAdapter() {
                 @Override
                 public void focusLost(final FocusEvent e) {
-                    fireInputChanged(getUiReference().getText());
+                    fireInputChanged(getUiReference().getText(), getSelectedIndex());
                 }
             });
         }
@@ -381,7 +381,7 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
         }
         programmaticTextChange = false;
         if (!getUiReference().isFocusControl()) {
-            fireInputChanged(getUiReference().getText());
+            fireInputChanged(getUiReference().getText(), index);
         }
     }
 
@@ -396,7 +396,7 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
         getUiReference().setText(text);
         programmaticTextChange = false;
         if (!getUiReference().isFocusControl()) {
-            fireInputChanged(text);
+            fireInputChanged(text, getSelectedIndex());
         }
     }
 
@@ -447,6 +447,10 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
         //do not use is popup visible because it will be false if closing key events arrive,
         //so key observer can not determine if key event will open or closed the popup
         //return getUiReference().getListVisible();
+    }
+
+    private void fireInputChanged(final String text, final int index) {
+        fireInputChanged(new Selection(index, text));
     }
 
     private boolean doAutoCompletion(final String text, final int keyCode, final int pos) {
@@ -538,5 +542,53 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
             getUiReference().setSelection(new Point(0, 0));
         }
     };
+
+    private final class Selection {
+
+        private final int index;
+        private final String text;
+
+        private Selection(final int index, final String text) {
+            this.index = index;
+            this.text = text;
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + index;
+            result = prime * result + ((text == null) ? 0 : text.hashCode());
+            return result;
+        }
+
+        @Override
+        public boolean equals(final Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            final Selection other = (Selection) obj;
+
+            if (index != other.index) {
+                return false;
+            }
+            if (text == null) {
+                if (other.text != null) {
+                    return false;
+                }
+            }
+            else if (!text.equals(other.text)) {
+                return false;
+            }
+            return true;
+        }
+
+    }
 
 }
