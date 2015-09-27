@@ -7,11 +7,14 @@ SET MAINTENANCE_BRANCH_NAME=MAINTENANCE_0.50
 SET "WORK_PATH=workspace\"
 SET "MVN_SETTINGS_PATH=../../maven/settings.xml"
 SET "MVN_REPO_PATH=../../.m2"
+SET "LOG_PATH=logs\"
 SET "LOG_FILE=../../logs/release.log"
 
 REM clearing workspace, if any
 for /f "delims=" %%i in ('dir /b "%WORK_PATH%*.*"') do rd /s /q "%WORK_PATH%%%i" 2>nul
 del "%WORK_PATH%*.*" /f /q
+
+mkdir %LOG_PATH%
 
 mkdir %WORK_PATH%
 cd %WORK_PATH%
@@ -37,14 +40,11 @@ call mvn -gs %MVN_SETTINGS_PATH% clean install -Dmaven.repo.local=%MVN_REPO_PATH
 cd tycho/parent
 cd >> %LOG_FILE% 2>&1
 
-echo call mvn -gs ../../%MVN_SETTINGS_PATH% clean install -Dmaven.repo.local=../../%MVN_REPO_PATH% >> ../../%LOG_FILE%
-call mvn -gs ../../%MVN_SETTINGS_PATH% clean install -Dmaven.repo.local=../../%MVN_REPO_PATH% >> ../../%LOG_FILE% 2>&1
+echo call mvn -gs ../../%MVN_SETTINGS_PATH% org.eclipse.tycho:tycho-versions-plugin:0.19.0:set-version -DnewVersion=%RELEASE_VERSION% -Dtycho.mode=maven -Dmaven.repo.local=../../%MVN_REPO_PATH% >> ../../%LOG_FILE%
+call mvn -gs ../../%MVN_SETTINGS_PATH% org.eclipse.tycho:tycho-versions-plugin:0.19.0:set-version -DnewVersion=%RELEASE_VERSION% -Dtycho.mode=maven -Dmaven.repo.local=../../%MVN_REPO_PATH% >> ../../%LOG_FILE% 2>&1
 
 echo call mvn -gs ../../%MVN_SETTINGS_PATH% versions:update-parent -DallowSnapshots=true -DgenerateBackupPoms=false -Dmaven.repo.local=../../%MVN_REPO_PATH% >> ../../%LOG_FILE%
 call mvn -gs ../../%MVN_SETTINGS_PATH% versions:update-parent -DallowSnapshots=true -DgenerateBackupPoms=false -Dmaven.repo.local=../../%MVN_REPO_PATH% >> ../../%LOG_FILE% 2>&1
-
-echo call mvn -gs ../../%MVN_SETTINGS_PATH% org.eclipse.tycho:tycho-versions-plugin:0.19.0:set-version -DnewVersion=%RELEASE_VERSION% -Dtycho.mode=maven -Dmaven.repo.local=../../%MVN_REPO_PATH% >> ../../%LOG_FILE%
-call mvn -gs ../../%MVN_SETTINGS_PATH% org.eclipse.tycho:tycho-versions-plugin:0.19.0:set-version -DnewVersion=%RELEASE_VERSION% -Dtycho.mode=maven -Dmaven.repo.local=../../%MVN_REPO_PATH% >> ../../%LOG_FILE% 2>&1
 
 echo call mvn -gs ../../%MVN_SETTINGS_PATH% clean install -Dmaven.repo.local=../../%MVN_REPO_PATH% >> ../../%LOG_FILE%
 call mvn -gs ../../%MVN_SETTINGS_PATH% clean install -Dmaven.repo.local=../../%MVN_REPO_PATH% >> ../../%LOG_FILE% 2>&1
