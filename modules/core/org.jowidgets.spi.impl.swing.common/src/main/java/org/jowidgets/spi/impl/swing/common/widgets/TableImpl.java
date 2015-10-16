@@ -409,6 +409,12 @@ public class TableImpl extends SwingControl implements ITableSpi {
     }
 
     @Override
+    public void setEnabled(final boolean enabled) {
+        super.setEnabled(enabled);
+        table.setEnabled(enabled);
+    }
+
+    @Override
     public Dimension getPreferredSize() {
         final java.awt.Dimension preferredSize = table.getPreferredSize();
         final java.awt.Dimension headerSize = table.getTableHeader().getPreferredSize();
