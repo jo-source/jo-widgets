@@ -1,10 +1,9 @@
 SET SOURCE_URL=https://github.com/jo-source/jo-widgets.git
 
-SET RELEASE_VERSION=0.50.0
-SET TAG_NAME=0.50.0
-SET MAINTENANCE_VERSION=0.50.1-SNAPSHOT
-SET MAINTENANCE_BRANCH_NAME=MAINTENANCE_0.50
-SET NEXT_DEVELOPMENT_VERSION=0.51.0-SNAPSHOT
+SET RELEASE_VERSION=0.49.1
+SET TAG_NAME=0.49.1
+SET MAINTENANCE_VERSION=0.49.2-SNAPSHOT
+SET MAINTENANCE_BRANCH_NAME=MAINTENANCE_0.49
 
 SET "WORK_PATH=workspace\"
 SET "MVN_SETTINGS_PATH=../../maven/settings.xml"
@@ -21,7 +20,7 @@ REM creating branch
 mkdir %TAG_NAME%
 cd %TAG_NAME%
 git clone %SOURCE_URL% .
-git checkout -b %MAINTENANCE_BRANCH_NAME%
+git checkout %MAINTENANCE_BRANCH_NAME%
 
 REM setting release version and creating a tag
 call :setversion %RELEASE_VERSION%
@@ -42,18 +41,6 @@ git commit --all -m "maintenance version %MAINTENANCE_VERSION%"
 git push 
 cd ..
 
-mkdir development
-cd development
-git clone %SOURCE_URL% .
-git checkout master
-
-REM setting new development version
-call :setversion %NEXT_DEVELOPMENT_VERSION% 
-
-git commit --all -m "next development version %NEXT_DEVELOPMENT_VERSION%"
-
-git push
-
 cd ../../
 goto end
 
@@ -69,4 +56,3 @@ cd ../..
 goto :eof
 
 :end
-
