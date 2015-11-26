@@ -28,6 +28,8 @@
 
 package org.jowidgets.tools.starter.classloading;
 
+import java.util.Arrays;
+
 import org.jowidgets.util.Assert;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
@@ -45,11 +47,7 @@ public class ClassLoadingActivator implements BundleActivator {
 
 	public ClassLoadingActivator(final String[] includePath) {
 		Assert.paramNotNull(includePath, "packageNames");
-		this.includePath = new String[includePath.length + 1];
-		this.includePath[0] = "org.jowidgets";
-		for (int i = 0; i < includePath.length; i++) {
-			this.includePath[i + 1] = includePath[i];
-		}
+		this.includePath = Arrays.copyOf(includePath, includePath.length);
 	}
 
 	@Override

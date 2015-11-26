@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.jowidgets.classloading.weaving.plugin
+Bundle-SymbolicName: org.jowidgets.classloading.weaving.plugin;singleton:=true
+Bundle-Version: 0.53.0.qualifier
+Bundle-Vendor: jowidgets.org
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Require-Bundle: 
+ org.eclipse.core.runtime,
+ org.eclipse.osgi,
+ org.eclipse.ui.workbench,
+ org.jowidgets.util.bundle,
+ org.jowidgets.classloading.api.bundle,
+ org.jowidgets.tools.starter.classloading.plugin
+Bundle-Activator: org.jowidgets.classloading.weaving.plugin.internal.Activator

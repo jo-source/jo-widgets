@@ -11,7 +11,8 @@
 		<relativePath>../../parent/pom.xml</relativePath>
 	</parent>
 
-	<modules>
+	<modules>		
+		<module>../org.jowidgets.classloading.weaving.plugin</module>
 	    <module>../org.jowidgets.workbench.impl.rcp.plugin</module>
 		<module>../org.jowidgets.tools.starter.classloading.plugin</module>
 		<module>../org.jowidgets.tools.starter.application.osgi.plugin</module>
