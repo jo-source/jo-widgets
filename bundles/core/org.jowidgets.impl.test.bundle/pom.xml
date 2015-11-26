@@ -35,6 +35,9 @@
 					<instructions>
 						<Embed-Dependency>org.jowidgets.impl;inline=true</Embed-Dependency>
 						<Require-Bundle>org.jowidgets.impl.bundle,org.jowidgets.api.test.bundle,org.jowidgets.spi.impl.dummy.bundle</Require-Bundle>
+						<SPI-Provider>*</SPI-Provider>
+						<SPI-Consumer>*</SPI-Consumer>
+						<Shared-Classloader-Contribution>true</Shared-Classloader-Contribution>
 					</instructions>
 				</configuration>
 			</plugin>

@@ -39,6 +39,7 @@
 						<Embed-Dependency>org.jowidgets.addons.widgets.browser.impl.swing;inline=true</Embed-Dependency>
 						<Require-Bundle>org.jowidgets.tools.bundle,org.jowidgets.addons.bridge.awt.swt.bundle,org.jowidgets.addons.widgets.browser.impl.swt.common.bundle</Require-Bundle>
 						<SPI-Provider>*</SPI-Provider>
+						<Shared-Classloader-Contribution>true</Shared-Classloader-Contribution>
 					</instructions>
 				</configuration>
 			</plugin>

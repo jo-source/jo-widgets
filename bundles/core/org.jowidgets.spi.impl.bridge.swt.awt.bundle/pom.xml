@@ -35,6 +35,8 @@
 					<instructions>
 						<Embed-Dependency>org.jowidgets.spi.impl.bridge.swt.awt;inline=true</Embed-Dependency>
 						<Require-Bundle>org.jowidgets.spi.impl.bridge.swt.awt.common.bundle</Require-Bundle>
+						<SPI-Provider>*</SPI-Provider>
+						<Shared-Classloader-Contribution>true</Shared-Classloader-Contribution>
 					</instructions>
 				</configuration>
 			</plugin>

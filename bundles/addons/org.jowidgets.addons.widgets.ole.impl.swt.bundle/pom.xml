@@ -39,6 +39,7 @@
 						<Embed-Dependency>org.jowidgets.addons.widgets.ole.impl.swt;inline=true</Embed-Dependency>
 						<Require-Bundle>org.jowidgets.addons.widgets.ole.impl.swt.common.bundle</Require-Bundle>
 						<SPI-Provider>*</SPI-Provider>
+						<Shared-Classloader-Contribution>true</Shared-Classloader-Contribution>
 					</instructions>
 				</configuration>
 			</plugin>
