@@ -43,6 +43,7 @@ public final class Activator extends AbstractUIPlugin {
 
 	@Override
 	public void start(final BundleContext context) throws Exception {
+		super.start(context);
 		for (final Bundle bundle : context.getBundles()) {
 			if (hasSharedClassloaderContribution(bundle)) {
 				SharedClassLoader.addClassLoader(new BundleClassLoader(bundle));
