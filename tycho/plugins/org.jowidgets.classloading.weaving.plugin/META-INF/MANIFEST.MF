@@ -7,10 +7,8 @@ Bundle-Vendor: jowidgets.org
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Require-Bundle: 
- org.eclipse.core.runtime,
- org.eclipse.osgi,
- org.eclipse.ui.workbench,
  org.jowidgets.util.bundle,
  org.jowidgets.classloading.api.bundle,
  org.jowidgets.tools.starter.classloading.plugin
 Bundle-Activator: org.jowidgets.classloading.weaving.plugin.internal.Activator
+Import-Package: org.osgi.framework

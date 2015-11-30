@@ -30,26 +30,28 @@ package org.jowidgets.classloading.weaving.plugin.internal;
 
 import java.util.Dictionary;
 
-import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.jowidgets.classloading.api.SharedClassLoader;
 import org.jowidgets.tools.starter.classloading.BundleClassLoader;
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
-public final class Activator extends AbstractUIPlugin {
+public final class Activator implements BundleActivator {
 
 	private static final String SHARED_CLASSLOADER_CONTRIBUTION = "Shared-Classloader-Contribution";
 	private static final String TRUE_STRING = "true";
 
 	@Override
 	public void start(final BundleContext context) throws Exception {
-		super.start(context);
 		for (final Bundle bundle : context.getBundles()) {
 			if (hasSharedClassloaderContribution(bundle)) {
 				SharedClassLoader.addClassLoader(new BundleClassLoader(bundle));
 			}
 		}
 	}
+
+	@Override
+	public void stop(final BundleContext context) throws Exception {}
 
 	private static boolean hasSharedClassloaderContribution(final Bundle bundle) {
 		@SuppressWarnings("unchecked")
