@@ -130,6 +130,65 @@ public final class Rectangle {
             && (point.getY() <= position.getY() + size.getHeight());
     }
 
+    /**
+     * Intersects this rectangle with another rectangle. If the rectangles are disjunct, null will be returned
+     * 
+     * @param rectangle The rectangle to check
+     * @return The intersection or null if the rectangles are disjunct
+     */
+
+    public Rectangle intersect(final Rectangle rectangle) {
+        return intersect(this, rectangle);
+    }
+
+    /**
+     * Intersects to rectangles. If the rectangles are disjunct, null will be returned
+     * 
+     * @param r1 The first rectangle
+     * @param r2 The second rectangle
+     * @return The intersection or null if the rectangles are disjunct
+     */
+    public static Rectangle intersect(final Rectangle r1, final Rectangle r2) {
+        Assert.paramNotNull(r1, "r1");
+        Assert.paramNotNull(r2, "r2");
+
+        final int r1X1 = r1.getX();
+        final int r1X2 = r1X1 + r1.getWidth();
+        final int r2X1 = r2.getX();
+        final int r2X2 = r2X1 + r2.getWidth();
+
+        final int minX = Math.max(r1X1, r2X1);
+        final int maxX = Math.min(r1X2, r2X2);
+
+        if (minX >= maxX) {
+            return null;
+        }
+
+        final int r1Y1 = r1.getY();
+        final int r1Y2 = r1Y1 + r1.getHeight();
+        final int r2Y1 = r2.getY();
+        final int r2Y2 = r2Y1 + r2.getHeight();
+
+        final int minY = Math.max(r1Y1, r2Y1);
+        final int maxY = Math.min(r1Y2, r2Y2);
+
+        if (minY >= maxY) {
+            return null;
+        }
+
+        return new Rectangle(minX, minY, maxX - minX, maxY - minY);
+    }
+
+    /**
+     * Checks is the given rectangle and this rectangle are disjunct
+     * 
+     * @param rectangle The rectangle to check
+     * @return True if the given rectangle is disjunct with this rectangle, false otherwise
+     */
+    public boolean isDisjunctWith(final Rectangle rectangle) {
+        return intersect(rectangle) == null;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
