@@ -28,7 +28,7 @@
 	<distributionManagement>
 		<repository>
 			<id>jowidgets-ftp-repository</id>
-			<url>ftp://jowidgets.org/</url>
+			<url>ftp://ftp.strato.com/</url>
 		</repository>
 	</distributionManagement>
 
