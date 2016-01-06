@@ -2,6 +2,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>org.jowidgets.tycho.parent</artifactId>
+	<version>0.55.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<parent>
@@ -402,6 +403,4 @@
 			
 		</plugins>
 	</build>
-
-<version>0.55.0-SNAPSHOT</version>
 </project>
