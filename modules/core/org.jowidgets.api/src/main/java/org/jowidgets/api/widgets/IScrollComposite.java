@@ -42,4 +42,9 @@ public interface IScrollComposite extends IComposite, IScrollCompositeCommon {
 
     void showControl(IControl control);
 
+    @Override
+    IScrollBar getHorizontalScrollBar();
+
+    @Override
+    IScrollBar getVerticalScrollBar();
 }

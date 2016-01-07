@@ -30,6 +30,7 @@ package org.jowidgets.tools.powo;
 
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IControl;
+import org.jowidgets.api.widgets.IScrollBar;
 import org.jowidgets.api.widgets.IScrollComposite;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.descriptor.IScrollCompositeDescriptor;
@@ -122,6 +123,26 @@ public class JoScrollComposite extends Composite<IScrollComposite, IScrollCompos
         }
         else {
             return new Dimension(0, 0);
+        }
+    }
+
+    @Override
+    public IScrollBar getHorizontalScrollBar() {
+        if (isInitialized()) {
+            return getWidget().getHorizontalScrollBar();
+        }
+        else {
+            throw new IllegalStateException("This function is not supported for an uninitialized powo. Feel free to implement it");
+        }
+    }
+
+    @Override
+    public IScrollBar getVerticalScrollBar() {
+        if (isInitialized()) {
+            return getWidget().getHorizontalScrollBar();
+        }
+        else {
+            throw new IllegalStateException("This function is not supported for an uninitialized powo. Feel free to implement it");
         }
     }
 

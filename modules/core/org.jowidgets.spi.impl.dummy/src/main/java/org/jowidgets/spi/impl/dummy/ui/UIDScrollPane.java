@@ -34,8 +34,11 @@ import org.jowidgets.util.Assert;
 
 public class UIDScrollPane extends UIDContainer {
 
-    private boolean verticalBar;
-    private boolean horizontalBar;
+    private final UIDScrollBar horizontalScrollBar;
+    private final UIDScrollBar verticalScrollBar;
+
+    private boolean verticalBarVisible;
+    private boolean horizontalBarVisible;
     private boolean alwaysShowBars;
     private Position viewPosition;
     private Dimension viewSize;
@@ -43,22 +46,32 @@ public class UIDScrollPane extends UIDContainer {
     public UIDScrollPane() {
         this.viewPosition = new Position(0, 0);
         this.viewSize = new Dimension(0, 0);
+        this.horizontalScrollBar = new UIDScrollBar();
+        this.verticalScrollBar = new UIDScrollBar();
     }
 
     public boolean isVerticalBar() {
-        return verticalBar;
+        return verticalBarVisible;
     }
 
     public void setVerticalBar(final boolean verticalBar) {
-        this.verticalBar = verticalBar;
+        this.verticalBarVisible = verticalBar;
     }
 
     public boolean isHorizontalBar() {
-        return horizontalBar;
+        return horizontalBarVisible;
     }
 
     public void setHorizontalBar(final boolean horizontalBar) {
-        this.horizontalBar = horizontalBar;
+        this.horizontalBarVisible = horizontalBar;
+    }
+
+    public UIDScrollBar getHorizontalScrollBar() {
+        return horizontalScrollBar;
+    }
+
+    public UIDScrollBar getVerticalScrollBar() {
+        return verticalScrollBar;
     }
 
     public boolean isAlwaysShowBars() {

@@ -53,4 +53,18 @@ public interface IScrollCompositeCommon extends ICompositeCommon {
      */
     Dimension getViewportSize();
 
+    /**
+     * Gets the horizontal scrollbar
+     * 
+     * @return The horizontal scrollbar, never null
+     */
+    IScrollBarCommon getHorizontalScrollBar();
+
+    /**
+     * Gets the vertical scrollbar
+     * 
+     * @return The vertical scrollbar, never null
+     */
+    IScrollBarCommon getVerticalScrollBar();
+
 }

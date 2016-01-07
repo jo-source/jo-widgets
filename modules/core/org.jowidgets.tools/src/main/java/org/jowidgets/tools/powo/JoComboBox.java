@@ -111,7 +111,7 @@ public class JoComboBox<VALUE_TYPE> extends InputControl<IComboBox<VALUE_TYPE>, 
             return getWidget().getSelectedIndex();
         }
         else {
-            throw new IllegalStateException("This function is not supported for an uninitialized powo. Feel free to implent it");
+            throw new IllegalStateException("This function is not supported for an uninitialized powo. Feel free to implement it");
         }
     }
 
@@ -121,7 +121,7 @@ public class JoComboBox<VALUE_TYPE> extends InputControl<IComboBox<VALUE_TYPE>, 
             getWidget().setSelectedIndex(index);
         }
         else {
-            throw new IllegalStateException("This function is not supported for an uninitialized powo. Feel free to implent it");
+            throw new IllegalStateException("This function is not supported for an uninitialized powo. Feel free to implement it");
         }
     }
 

@@ -31,4 +31,10 @@ import org.jowidgets.common.widgets.IScrollCompositeCommon;
 
 public interface IScrollCompositeSpi extends ICompositeSpi, IScrollCompositeCommon {
 
+    @Override
+    IScrollBarSpi getHorizontalScrollBar();
+
+    @Override
+    IScrollBarSpi getVerticalScrollBar();
+
 }

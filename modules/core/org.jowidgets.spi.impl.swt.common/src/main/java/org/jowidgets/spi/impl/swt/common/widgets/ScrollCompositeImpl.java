@@ -61,6 +61,7 @@ import org.jowidgets.spi.impl.swt.common.util.PositionConvert;
 import org.jowidgets.spi.impl.swt.common.util.ScrollBarSettingsConvert;
 import org.jowidgets.spi.impl.swt.common.widgets.base.ScrollRootComposite;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
+import org.jowidgets.spi.widgets.IScrollBarSpi;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 import org.jowidgets.util.Assert;
@@ -71,6 +72,8 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
     private final SwtContainer innerContainer;
     private final Composite scrolledRoot;
     private final ScrolledComposite scrolledComposite;
+    private final ScrollBarImpl verticalScrollBar;
+    private final ScrollBarImpl horizontalScrollBar;
 
     public ScrollCompositeImpl(
         final IGenericWidgetFactory factory,
@@ -98,6 +101,9 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
         scrolledComposite.setExpandVertical(true);
         scrolledComposite.setAlwaysShowScrollBars(setup.isAlwaysShowBars());
         scrolledComposite.setBackgroundMode(SWT.INHERIT_FORCE);
+
+        this.verticalScrollBar = new ScrollBarImpl(scrolledComposite.getVerticalBar());
+        this.horizontalScrollBar = new ScrollBarImpl(scrolledComposite.getHorizontalBar());
 
         final Composite contentComposite = new Composite(scrolledComposite, SWT.NONE);
         contentComposite.setBackgroundMode(SWT.INHERIT_DEFAULT);
@@ -131,6 +137,16 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
     @Override
     public Composite getUiReference() {
         return outerContainer.getUiReference();
+    }
+
+    @Override
+    public IScrollBarSpi getHorizontalScrollBar() {
+        return horizontalScrollBar;
+    }
+
+    @Override
+    public IScrollBarSpi getVerticalScrollBar() {
+        return verticalScrollBar;
     }
 
     @Override

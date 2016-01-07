@@ -42,6 +42,7 @@ import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IContainer;
 import org.jowidgets.api.widgets.IControl;
 import org.jowidgets.api.widgets.IPopupMenu;
+import org.jowidgets.api.widgets.IScrollBar;
 import org.jowidgets.api.widgets.IScrollComposite;
 import org.jowidgets.api.widgets.descriptor.setup.IScrollCompositeSetup;
 import org.jowidgets.common.types.Dimension;
@@ -73,11 +74,15 @@ public class ScrollCompositeImpl extends AbstractScrollCompositeSpiWrapper imple
     private final ContainerDelegate containerDelegate;
     private final IDragSource dragSource;
     private final IDropTarget dropTarget;
+    private final IScrollBar horizonalScrollBar;
+    private final IScrollBar verticalScrollBar;
 
     private Dimension minSize;
 
     public ScrollCompositeImpl(final IScrollCompositeSpi containerWidgetSpi, final IScrollCompositeSetup setup) {
         super(containerWidgetSpi);
+        this.verticalScrollBar = new ScrollBarImpl(containerWidgetSpi.getVerticalScrollBar());
+        this.horizonalScrollBar = new ScrollBarImpl(containerWidgetSpi.getHorizontalScrollBar());
         this.controlDelegate = new ControlDelegate(containerWidgetSpi, this);
         this.containerDelegate = new ContainerDelegate(containerWidgetSpi, this);
         this.dragSource = new DragSourceImpl(containerWidgetSpi.getDragSource());
@@ -113,6 +118,16 @@ public class ScrollCompositeImpl extends AbstractScrollCompositeSpiWrapper imple
         else {
             return Dimension.MIN;
         }
+    }
+
+    @Override
+    public IScrollBar getHorizontalScrollBar() {
+        return horizonalScrollBar;
+    }
+
+    @Override
+    public IScrollBar getVerticalScrollBar() {
+        return verticalScrollBar;
     }
 
     @Override

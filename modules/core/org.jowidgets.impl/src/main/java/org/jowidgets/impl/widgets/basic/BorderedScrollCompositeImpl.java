@@ -34,6 +34,7 @@ import java.util.List;
 import org.jowidgets.api.layout.ILayoutFactory;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.IControl;
+import org.jowidgets.api.widgets.IScrollBar;
 import org.jowidgets.api.widgets.IScrollComposite;
 import org.jowidgets.api.widgets.blueprint.IScrollCompositeBluePrint;
 import org.jowidgets.api.widgets.descriptor.IScrollCompositeDescriptor;
@@ -61,6 +62,16 @@ public final class BorderedScrollCompositeImpl extends CompositeWrapper implemen
 
         composite.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
         this.scrollComposite = composite.add(scrollCompositeBp, "growx, growy, w 0::, h 0::");
+    }
+
+    @Override
+    public IScrollBar getHorizontalScrollBar() {
+        return scrollComposite.getHorizontalScrollBar();
+    }
+
+    @Override
+    public IScrollBar getVerticalScrollBar() {
+        return scrollComposite.getVerticalScrollBar();
     }
 
     @Override

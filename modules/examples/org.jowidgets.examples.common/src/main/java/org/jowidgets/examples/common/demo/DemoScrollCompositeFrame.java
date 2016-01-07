@@ -32,6 +32,7 @@ import org.jowidgets.api.threads.IUiThreadAccess;
 import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.IScrollComposite;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
+import org.jowidgets.common.widgets.controller.IVisibilityStateListener;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
 import org.jowidgets.tools.controller.WindowAdapter;
 import org.jowidgets.tools.widgets.base.Frame;
@@ -57,6 +58,24 @@ public class DemoScrollCompositeFrame extends Frame {
         final IScrollComposite scrollComposite = add(BPF.scrollComposite(), "growx, growy, w 0::, h 0::");
         scrollComposite.setLayout(new MigLayoutDescriptor("[grow]", ""));
 
+        scrollComposite.getVerticalScrollBar().addVisibilityStateListener(new IVisibilityStateListener() {
+            @Override
+            public void visibilityStateChanged(final boolean visible) {
+                //CHECKSTYLE:OFF
+                System.out.println("Vertical scroll bar visible: " + visible);
+                //CHECKSTYLE:ON
+            }
+        });
+
+        scrollComposite.getHorizontalScrollBar().addVisibilityStateListener(new IVisibilityStateListener() {
+            @Override
+            public void visibilityStateChanged(final boolean visible) {
+                //CHECKSTYLE:OFF
+                System.out.println("Horizontal scroll bar visible: " + visible);
+                //CHECKSTYLE:ON
+            }
+        });
+
         final IUiThreadAccess uiThreadAccess = Toolkit.getUiThreadAccess();
 
         final Runnable updater = new Runnable() {
@@ -71,7 +90,7 @@ public class DemoScrollCompositeFrame extends Frame {
                         @Override
                         public void run() {
                             scrollComposite.layoutBegin();
-                            scrollComposite.add(BPF.textLabel("Label: " + index.get().intValue()), "wrap");
+                            scrollComposite.add(BPF.textLabel("Dynamically created Text Nr.: " + index.get().intValue()), "wrap");
                             scrollComposite.layoutEnd();
                         }
                     });

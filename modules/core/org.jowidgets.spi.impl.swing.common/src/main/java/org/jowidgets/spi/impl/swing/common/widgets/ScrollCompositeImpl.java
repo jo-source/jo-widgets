@@ -56,6 +56,7 @@ import org.jowidgets.spi.impl.swing.common.util.DimensionConvert;
 import org.jowidgets.spi.impl.swing.common.util.PositionConvert;
 import org.jowidgets.spi.impl.swing.common.util.ScrollBarSettingsConvert;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
+import org.jowidgets.spi.widgets.IScrollBarSpi;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 import org.jowidgets.util.Assert;
@@ -64,6 +65,8 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 
     private final SwingComposite outerContainer;
     private final SwingContainer innerContainer;
+    private final ScrollBarImpl verticalScrollBar;
+    private final ScrollBarImpl horizontalScrollBar;
 
     public ScrollCompositeImpl(final IGenericWidgetFactory factory, final IScrollCompositeSetupSpi setup) {
 
@@ -86,6 +89,9 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
         innerContainer.setBackgroundColor(null);
 
         scrollPane.setViewportView(innerContainer.getUiReference());
+
+        this.verticalScrollBar = new ScrollBarImpl(scrollPane.getVerticalScrollBar());
+        this.horizontalScrollBar = new ScrollBarImpl(scrollPane.getHorizontalScrollBar());
     }
 
     @Override
@@ -96,6 +102,16 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
     @Override
     public JScrollPane getUiReference() {
         return (JScrollPane) outerContainer.getUiReference();
+    }
+
+    @Override
+    public IScrollBarSpi getHorizontalScrollBar() {
+        return horizontalScrollBar;
+    }
+
+    @Override
+    public IScrollBarSpi getVerticalScrollBar() {
+        return verticalScrollBar;
     }
 
     @Override
