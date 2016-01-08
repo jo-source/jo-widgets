@@ -37,6 +37,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.ScrollBar;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
 import org.jowidgets.common.types.Dimension;
@@ -60,6 +61,7 @@ import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.util.PositionConvert;
 import org.jowidgets.spi.impl.swt.common.util.ScrollBarSettingsConvert;
 import org.jowidgets.spi.impl.swt.common.widgets.base.ScrollRootComposite;
+import org.jowidgets.spi.impl.widgets.DummyScrollBar;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.IScrollBarSpi;
 import org.jowidgets.spi.widgets.IScrollCompositeSpi;
@@ -72,8 +74,8 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
     private final SwtContainer innerContainer;
     private final Composite scrolledRoot;
     private final ScrolledComposite scrolledComposite;
-    private final ScrollBarImpl verticalScrollBar;
-    private final ScrollBarImpl horizontalScrollBar;
+    private final IScrollBarSpi verticalScrollBar;
+    private final IScrollBarSpi horizontalScrollBar;
 
     public ScrollCompositeImpl(
         final IGenericWidgetFactory factory,
@@ -102,8 +104,21 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
         scrolledComposite.setAlwaysShowScrollBars(setup.isAlwaysShowBars());
         scrolledComposite.setBackgroundMode(SWT.INHERIT_FORCE);
 
-        this.verticalScrollBar = new ScrollBarImpl(scrolledComposite.getVerticalBar());
-        this.horizontalScrollBar = new ScrollBarImpl(scrolledComposite.getHorizontalBar());
+        final ScrollBar verticalBar = scrolledComposite.getVerticalBar();
+        if (verticalBar != null) {
+            this.verticalScrollBar = new ScrollBarImpl(verticalBar);
+        }
+        else {
+            this.verticalScrollBar = new DummyScrollBar();
+        }
+
+        final ScrollBar horizontalBar = scrolledComposite.getHorizontalBar();
+        if (horizontalBar != null) {
+            this.horizontalScrollBar = new ScrollBarImpl(horizontalBar);
+        }
+        else {
+            this.horizontalScrollBar = new DummyScrollBar();
+        }
 
         final Composite contentComposite = new Composite(scrolledComposite, SWT.NONE);
         contentComposite.setBackgroundMode(SWT.INHERIT_DEFAULT);
