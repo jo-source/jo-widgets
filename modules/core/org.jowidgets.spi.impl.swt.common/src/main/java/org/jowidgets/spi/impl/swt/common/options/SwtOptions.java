@@ -46,6 +46,10 @@ public final class SwtOptions {
     //not fixed in swt 4.3 (tested with win)
     private static boolean comboTruncateWorkaround = true;
 
+    //Fixes https://bugs.eclipse.org/bugs/show_bug.cgi?id=118659
+    //fixed since swt 3.7 M4 (tested with win)
+    private static boolean compositeMinSizeWorkaround = false;
+
     private static IColorConstant tableSelectedForegroundColor;
     private static IColorConstant tableSelectedBackgroundColor;
 
@@ -176,6 +180,21 @@ public final class SwtOptions {
 
     public static void setComboTruncateWorkaround(final boolean comboTruncateWorkaround) {
         SwtOptions.comboTruncateWorkaround = comboTruncateWorkaround;
+    }
+
+    public static boolean hasCompositeMinSizeWorkaround() {
+        return compositeMinSizeWorkaround;
+    }
+
+    /**
+     * Fixes https://bugs.eclipse.org/bugs/show_bug.cgi?id=118659
+     * 
+     * The default is false, the bug was fixed since 3.7 M4
+     * 
+     * @param compositeMinSizeWorkaround true to enable the workaround
+     */
+    public static void setCompositeMinSizeWorkaround(final boolean compositeMinSizeWorkaround) {
+        SwtOptions.compositeMinSizeWorkaround = compositeMinSizeWorkaround;
     }
 
     /**

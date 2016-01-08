@@ -32,6 +32,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.jowidgets.common.types.Border;
 import org.jowidgets.common.types.Markup;
+import org.jowidgets.spi.impl.swt.common.widgets.base.SwtCompositeFactory;
 
 public final class BorderToComposite {
 
@@ -48,10 +49,10 @@ public final class BorderToComposite {
             return group;
         }
         else if (border != null) {
-            return new Composite(parent, SWT.BORDER);
+            return SwtCompositeFactory.create(parent, SWT.BORDER);
         }
         else {
-            return new Composite(parent, SWT.NONE);
+            return SwtCompositeFactory.create(parent, SWT.NONE);
         }
     }
 

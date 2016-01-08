@@ -61,6 +61,7 @@ import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.impl.swt.common.util.PositionConvert;
 import org.jowidgets.spi.impl.swt.common.util.ScrollBarSettingsConvert;
 import org.jowidgets.spi.impl.swt.common.widgets.base.ScrollRootComposite;
+import org.jowidgets.spi.impl.swt.common.widgets.base.SwtCompositeFactory;
 import org.jowidgets.spi.impl.widgets.DummyScrollBar;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.IScrollBarSpi;
@@ -120,7 +121,7 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
             this.horizontalScrollBar = new DummyScrollBar();
         }
 
-        final Composite contentComposite = new Composite(scrolledComposite, SWT.NONE);
+        final Composite contentComposite = SwtCompositeFactory.create(scrolledComposite, SWT.NONE);
         contentComposite.setBackgroundMode(SWT.INHERIT_DEFAULT);
         contentComposite.setLayoutData(growingCellConstraints);
 
@@ -129,7 +130,7 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
 
         scrolledComposite.setContent(contentComposite);
 
-        final Composite innerComposite = new Composite(contentComposite, SWT.NONE);
+        final Composite innerComposite = SwtCompositeFactory.create(contentComposite, SWT.NONE);
         innerComposite.setBackgroundMode(SWT.INHERIT_DEFAULT);
         innerComposite.setLayoutData(growingCellConstraints);
 
@@ -139,6 +140,12 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
             @Override
             public void correctBounds(final ComponentWrapper comp) {
                 final Point size = contentComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT, false);
+                System.out.println("Content Size: "
+                    + size
+                    + " / "
+                    + innerComposite.getChildren().length
+                    + " / "
+                    + innerComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
                 scrolledComposite.setMinSize(size.x, size.y);
             }
         });
