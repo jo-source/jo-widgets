@@ -140,12 +140,6 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
             @Override
             public void correctBounds(final ComponentWrapper comp) {
                 final Point size = contentComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT, false);
-                System.out.println("Content Size: "
-                    + size
-                    + " / "
-                    + innerComposite.getChildren().length
-                    + " / "
-                    + innerComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
                 scrolledComposite.setMinSize(size.x, size.y);
             }
         });
