@@ -2,13 +2,15 @@ REM to be called after part1
 REM does push but not deploy
 REM release_part1.bat and release_part2.bat combined do the same as release.bat
  
+SET USER_NAME="herr.grossmann@gmx.de"
+ 
 SET SOURCE_URL=https://github.com/jo-source/jo-widgets.git
 
-SET RELEASE_VERSION=0.53.0
-SET TAG_NAME=0.53.0
-SET MAINTENANCE_VERSION=0.53.1-SNAPSHOT
-SET MAINTENANCE_BRANCH_NAME=MAINTENANCE_0.53
-SET NEXT_DEVELOPMENT_VERSION=0.54.0-SNAPSHOT
+SET RELEASE_VERSION=0.55.0
+SET TAG_NAME=0.55.0
+SET MAINTENANCE_VERSION=0.55.1-SNAPSHOT
+SET MAINTENANCE_BRANCH_NAME=MAINTENANCE_0.55
+SET NEXT_DEVELOPMENT_VERSION=0.56.0-SNAPSHOT
 
 SET "WORK_PATH=workspace\"
 SET "MVN_SETTINGS_PATH=../../maven/settings.xml"
@@ -28,6 +30,9 @@ IF NOT EXIST %TAG_NAME% (
 )
 cd %TAG_NAME%
 
+git config --local credential.helper wincred
+git config --local user.name %USER_NAME%
+
 git commit --all -m "new version %RELEASE_VERSION%"
 git push origin %MAINTENANCE_BRANCH_NAME%
 git tag -a -m "release %RELEASE_VERSION%" %TAG_NAME%
@@ -43,6 +48,10 @@ git clone %SOURCE_URL% .
 git checkout %MAINTENANCE_BRANCH_NAME%
 REM setting release version
 call :setversion %MAINTENANCE_VERSION%
+
+git config --local credential.helper wincred
+git config --local user.name %USER_NAME%
+
 git commit --all -m "maintenance version %MAINTENANCE_VERSION%"
 git push 
 cd ..
@@ -55,6 +64,9 @@ git checkout master
 
 REM setting new development version
 call :setversion %NEXT_DEVELOPMENT_VERSION% 
+
+git config --local credential.helper wincred
+git config --local user.name %USER_NAME%
 
 git commit --all -m "next development version %NEXT_DEVELOPMENT_VERSION%"
 git push
@@ -74,4 +86,5 @@ cd ../..
 goto :eof
 
 :end
+
 
