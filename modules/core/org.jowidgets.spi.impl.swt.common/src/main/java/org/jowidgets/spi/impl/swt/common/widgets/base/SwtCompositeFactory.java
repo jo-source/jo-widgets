@@ -29,20 +29,49 @@
 package org.jowidgets.spi.impl.swt.common.widgets.base;
 
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.PatchedComposite;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 
 public final class SwtCompositeFactory {
 
+    private static PatchedCompositeReflectionAccessor accessor;
+    private static boolean patchFailed = false;
+
     private SwtCompositeFactory() {}
 
     public static Composite create(final Composite parent, final int style) {
-        if (SwtOptions.hasCompositeMinSizeWorkaround()) {
-            return new PatchedComposite(parent, style);
+        if (!patchFailed && SwtOptions.hasCompositeMinSizeWorkaround()) {
+            final PatchedCompositeReflectionAccessor currentAccssor = getPatchedCompositeReflectionAccessor();
+            if (currentAccssor != null) {
+                return new PatchedComposite(parent, style, currentAccssor);
+            }
+            else {
+                return new Composite(parent, style);
+            }
         }
         else {
             return new Composite(parent, style);
         }
     }
 
+    private static PatchedCompositeReflectionAccessor getPatchedCompositeReflectionAccessor() {
+        if (accessor == null) {
+            try {
+                accessor = createPatchedCompositeReflectionAccessor();
+            }
+            catch (final Exception e) {
+                patchFailed = true;
+                //CHECKSTYLE:OFF
+                System.out.println("Composite min size patch can not be applied");
+                e.printStackTrace();
+                //CHECKSTYLE:ON
+                return null;
+            }
+        }
+        return accessor;
+    }
+
+    private static synchronized PatchedCompositeReflectionAccessor createPatchedCompositeReflectionAccessor() throws NoSuchMethodException,
+            NoSuchFieldException {
+        return new PatchedCompositeReflectionAccessor();
+    }
 }
