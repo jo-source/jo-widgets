@@ -17,7 +17,7 @@ IF NOT EXIST %TAG_NAME% (
 )
 cd %TAG_NAME%
 
-rem call mvn -s %MVN_SETTINGS_PATH% clean deploy -Dmaven.repo.local=%MVN_REPO_PATH% >> %LOG_FILE% 2>&1
+call mvn -s %MVN_SETTINGS_PATH% clean deploy -Dmaven.repo.local=%MVN_REPO_PATH% >> %LOG_FILE% 2>&1
 cd tycho/parent
 call mvn -s ../../%MVN_SETTINGS_PATH% clean deploy -Dmaven.repo.local=../../%MVN_REPO_PATH% >> ..\..\%LOG_FILE% 2>&1
 
