@@ -38,6 +38,7 @@ public class UIDTextComponent extends UIDComponent {
 
     public void setText(final String text) {
         this.text = text;
+        fireInputChanged();
     }
 
 }
