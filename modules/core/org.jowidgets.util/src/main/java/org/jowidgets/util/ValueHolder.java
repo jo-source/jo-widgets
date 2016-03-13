@@ -48,4 +48,9 @@ public final class ValueHolder<VALUE_TYPE> {
         this.value = value;
     }
 
+    @Override
+    public String toString() {
+        return "ValueHolder [value=" + value + "]";
+    }
+
 }
