@@ -30,6 +30,7 @@ package org.jowidgets.spi.impl.dummy.widgets;
 
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
+import org.jowidgets.spi.impl.dummy.image.DummyImageRegistry;
 import org.jowidgets.spi.impl.dummy.ui.AbstractUIDButton;
 import org.jowidgets.spi.impl.dummy.ui.UIDObservable;
 import org.jowidgets.spi.widgets.IToolBarPopupButtonSpi;
@@ -38,8 +39,8 @@ public class ToolBarPopupButtonImpl extends ToolBarButtonImpl implements IToolBa
 
     private final UIDObservable popupObservable;
 
-    public ToolBarPopupButtonImpl(final AbstractUIDButton button) {
-        super(button);
+    public ToolBarPopupButtonImpl(final DummyImageRegistry imageRegistry, final AbstractUIDButton button) {
+        super(imageRegistry, button);
         getUiReference().addPopupDetectionListener(new IPopupDetectionListener() {
 
             @Override

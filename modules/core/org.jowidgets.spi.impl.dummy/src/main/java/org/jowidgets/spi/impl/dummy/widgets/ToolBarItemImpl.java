@@ -37,10 +37,11 @@ import org.jowidgets.spi.widgets.IToolBarItemSpi;
 
 public class ToolBarItemImpl implements IToolBarItemSpi {
 
+    private final DummyImageRegistry imageRegistry;
     private final AbstractUIDButton button;
 
-    public ToolBarItemImpl(final AbstractUIDButton button) {
-        super();
+    public ToolBarItemImpl(final DummyImageRegistry imageRegistry, final AbstractUIDButton button) {
+        this.imageRegistry = imageRegistry;
         this.button = button;
     }
 
@@ -71,7 +72,7 @@ public class ToolBarItemImpl implements IToolBarItemSpi {
 
     @Override
     public void setIcon(final IImageConstant icon) {
-        button.setIcon(DummyImageRegistry.getInstance().getImage(icon));
+        button.setIcon(imageRegistry.getImage(icon));
     }
 
     @Override

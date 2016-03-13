@@ -29,6 +29,7 @@
 package org.jowidgets.spi.impl.dummy.widgets;
 
 import org.jowidgets.common.widgets.controller.IItemStateListener;
+import org.jowidgets.spi.impl.dummy.image.DummyImageRegistry;
 import org.jowidgets.spi.impl.dummy.ui.UIDObservable;
 import org.jowidgets.spi.impl.dummy.ui.UIDToolBarToggleButton;
 import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
@@ -37,8 +38,8 @@ public class ToolBarToggleButtonImpl extends ToolBarItemImpl implements IToolBar
 
     private final UIDObservable itemStateObersvable;
 
-    public ToolBarToggleButtonImpl(final UIDToolBarToggleButton button) {
-        super(button);
+    public ToolBarToggleButtonImpl(final DummyImageRegistry imageRegistry, final UIDToolBarToggleButton button) {
+        super(imageRegistry, button);
 
         super.getUiReference().addItemListener(new IItemStateListener() {
 

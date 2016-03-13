@@ -29,6 +29,7 @@
 package org.jowidgets.spi.impl.dummy.widgets;
 
 import org.jowidgets.common.widgets.controller.IActionListener;
+import org.jowidgets.spi.impl.dummy.image.DummyImageRegistry;
 import org.jowidgets.spi.impl.dummy.ui.AbstractUIDButton;
 import org.jowidgets.spi.impl.dummy.ui.UIDObservable;
 import org.jowidgets.spi.widgets.IToolBarButtonSpi;
@@ -37,8 +38,8 @@ public class ToolBarButtonImpl extends ToolBarItemImpl implements IToolBarButton
 
     private final UIDObservable actionObservable;
 
-    public ToolBarButtonImpl(final AbstractUIDButton button) {
-        super(button);
+    public ToolBarButtonImpl(final DummyImageRegistry imageRegistry, final AbstractUIDButton button) {
+        super(imageRegistry, button);
         getUiReference().addActionListener(new IActionListener() {
 
             @Override

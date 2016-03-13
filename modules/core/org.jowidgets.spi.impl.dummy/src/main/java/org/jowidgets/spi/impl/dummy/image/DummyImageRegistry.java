@@ -28,14 +28,13 @@
 package org.jowidgets.spi.impl.dummy.image;
 
 import org.jowidgets.common.image.IImageConstant;
+import org.jowidgets.common.image.IImageDescriptor;
 import org.jowidgets.common.image.IImageHandleFactory;
 import org.jowidgets.spi.impl.dummy.ui.UIDImage;
 import org.jowidgets.spi.impl.image.ImageHandle;
 import org.jowidgets.spi.impl.image.ImageRegistry;
 
 public class DummyImageRegistry extends ImageRegistry {
-
-    private static final DummyImageRegistry INSTANCE = new DummyImageRegistry(new DummyImageHandleFactory());
 
     public DummyImageRegistry(final IImageHandleFactory imageHandleFactory) {
         super(imageHandleFactory);
@@ -60,6 +59,12 @@ public class DummyImageRegistry extends ImageRegistry {
         }
     }
 
+    @Override
+    public void registerImageConstant(final IImageConstant key, final IImageDescriptor descriptor) {
+        // TODO Auto-generated method stub
+        super.registerImageConstant(key, descriptor);
+    }
+
     public synchronized UIDImage getImageIcon(final IImageConstant key) {
         if (key == null) {
             return null;
@@ -67,10 +72,6 @@ public class DummyImageRegistry extends ImageRegistry {
         else {
             return getImage(key);
         }
-    }
-
-    public static DummyImageRegistry getInstance() {
-        return INSTANCE;
     }
 
 }

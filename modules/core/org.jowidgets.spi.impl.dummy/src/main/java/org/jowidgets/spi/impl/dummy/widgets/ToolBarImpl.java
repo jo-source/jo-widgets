@@ -49,10 +49,12 @@ import org.jowidgets.spi.widgets.IToolBarToggleButtonSpi;
 
 public class ToolBarImpl extends DummyControl implements IToolBarSpi {
 
+    private final DummyImageRegistry imageRegistry;
     private final IGenericWidgetFactory factory;
 
-    public ToolBarImpl(final DummyImageRegistry registry, final IGenericWidgetFactory factory) {
+    public ToolBarImpl(final DummyImageRegistry imageRegistry, final IGenericWidgetFactory factory) {
         super(new UIDToolBar());
+        this.imageRegistry = imageRegistry;
         this.factory = factory;
     }
 
@@ -74,19 +76,19 @@ public class ToolBarImpl extends DummyControl implements IToolBarSpi {
     @Override
     public IToolBarButtonSpi addToolBarButton(final Integer index) {
         final UIDComponent button = addItem(new UIDToolBarButton(), index);
-        return new ToolBarButtonImpl((AbstractUIDButton) button);
+        return new ToolBarButtonImpl(imageRegistry, (AbstractUIDButton) button);
     }
 
     @Override
     public IToolBarToggleButtonSpi addToolBarToggleButton(final Integer index) {
         final UIDComponent button = addItem(new UIDToolBarToggleButton(), index);
-        return new ToolBarToggleButtonImpl((UIDToolBarToggleButton) button);
+        return new ToolBarToggleButtonImpl(imageRegistry, (UIDToolBarToggleButton) button);
     }
 
     @Override
     public IToolBarPopupButtonSpi addToolBarPopupButton(final Integer index) {
         final UIDComponent button = addItem(new UIDToolBarPopupButton(), index);
-        return new ToolBarPopupButtonImpl((AbstractUIDButton) button);
+        return new ToolBarPopupButtonImpl(imageRegistry, (AbstractUIDButton) button);
     }
 
     @Override
