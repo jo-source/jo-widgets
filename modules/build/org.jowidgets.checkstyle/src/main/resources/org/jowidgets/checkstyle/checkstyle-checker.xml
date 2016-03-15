@@ -62,7 +62,6 @@
 			<metadata name="com.atlassw.tools.eclipse.checkstyle.customMessage"
 				value="Interfaces have to start with I" />
 		</module>
-		<module name="JUnitTestCase" />
 		<module name="MissingSwitchDefault" />
 		<module name="MultipleVariableDeclarations" />
 		<module name="NestedIfDepth">
@@ -74,9 +73,6 @@
 			<property name="max" value="2" />
 		</module>
 		<module name="PackageDeclaration" />
-		<module name="RedundantThrows">
-			<property name="suppressLoadErrors" value="true" />
-		</module>
 		<module name="StringLiteralEquality">
 			<property name="severity" value="error" />
 		</module>
