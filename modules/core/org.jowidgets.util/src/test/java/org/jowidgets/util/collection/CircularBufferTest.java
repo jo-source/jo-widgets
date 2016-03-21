@@ -60,8 +60,8 @@ public class CircularBufferTest {
         //now the buffer is full, so the size is equal with the capacity
         Assert.assertEquals(capacity, buffer.size());
 
-        //now add the same amount to the buffer with shifting
-        for (int i = 0; i < 5 * capacity; i++) {
+        //now add the some integers to the buffer with shifting
+        for (int i = 0; i < 2 * capacity; i++) {
             final Integer previousElement = Integer.valueOf(capacity + (i - 1));
             final Integer element = Integer.valueOf(capacity + i);
 
@@ -324,7 +324,9 @@ public class CircularBufferTest {
 
     private void assertBufferHasStringValues(final ICircularBuffer<?> buffer, final String... values) {
         for (int i = 0; i < values.length; i++) {
-            Assert.assertTrue(NullCompatibleEquivalence.equals(values[i], buffer.get(i)));
+            Assert.assertTrue(
+                    "The value '" + values[i] + "' is expected but '" + buffer.get(i) + "' is set!",
+                    NullCompatibleEquivalence.equals(values[i], buffer.get(i)));
         }
     }
 
