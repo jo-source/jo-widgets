@@ -76,17 +76,50 @@ final class CircularBufferImpl<ELEMENT_TYPE> implements ICircularBuffer<ELEMENT_
     }
 
     @Override
+    public void set(final int index, final ELEMENT_TYPE element) {
+        Assert.paramInBounds(size() - 1, index, "index");
+        buffer[getTransferedIndex(index)] = element;
+    }
+
+    @Override
+    public void fill(final ELEMENT_TYPE element) {
+        final int elementsToFill = capacity - size();
+
+        if (elementsToFill <= 0) {
+            return;
+        }
+        else if (element == null) {
+            shiftMode = true;
+            insertIndex = 0;
+        }
+        else {
+            for (int i = 0; i < elementsToFill; i++) {
+                add(element);
+            }
+        }
+    }
+
+    @Override
+    public void fill() {
+        fill(null);
+    }
+
+    @Override
     public ELEMENT_TYPE get(final int index) {
+        return buffer[getTransferedIndex(index)];
+    }
+
+    private int getTransferedIndex(final int index) {
         Assert.paramInBounds(capacity - 1, index, "index");
         if (!shiftMode) {
-            return buffer[index];
+            return index;
         }
         else {
             int shiftedIndex = insertIndex + index;
             if (shiftedIndex >= capacity) {
                 shiftedIndex = shiftedIndex - capacity;
             }
-            return buffer[shiftedIndex];
+            return shiftedIndex;
         }
     }
 

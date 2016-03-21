@@ -37,8 +37,9 @@ public interface ICircularBuffer<ELEMENT_TYPE> {
 
     /**
      * The current size of the buffer.
-     * If the buffer is not full, the number of added elements,
-     * other the capacity will be returned.
+     * 
+     * If the buffer is not full, the size is the number of added elements,
+     * otherwise the capacity and the size is equal.
      * 
      * @return The current size of the buffer
      */
@@ -46,6 +47,7 @@ public interface ICircularBuffer<ELEMENT_TYPE> {
 
     /**
      * Adds an element to the end of buffer.
+     * 
      * If the buffer is full, all elements are shifted to the left and the first element will be removed.
      * This operation will be done in O(1).
      * 
@@ -54,7 +56,45 @@ public interface ICircularBuffer<ELEMENT_TYPE> {
     void add(ELEMENT_TYPE element);
 
     /**
-     * Gets the element at the specific index or null, if no element was added to the index before
+     * Fills the buffer with the given element for the indices from size to capacity - 1.
+     * 
+     * After that, size() == capacity() is true
+     * 
+     * This operation will be done in O(1) if element == null and in O(capacity - size) if element != null.
+     * 
+     * @param element The element to fill the buffer with, may be null
+     */
+    void fill(ELEMENT_TYPE element);
+
+    /**
+     * Fills the buffer with null elements.
+     * 
+     * This operation will be done in O(1)
+     * 
+     * @see {@link ICircularBuffer#fill(Object)}
+     */
+    void fill();
+
+    /**
+     * Sets an element a a specific index.
+     * 
+     * The given index must be less than size and greater or equal zero (0 >= index < size),
+     * so set can only be done for previously added elements.
+     * 
+     * If all elements should be writable, uses fill after creation to fill the buffer with null elements.
+     * This ensures that the size of the buffer is equal with its capacity.
+     * 
+     * @param index The index to set the element at ((0 >= index < size)
+     * @param element The element to set
+     * 
+     * @throws IndexOutOfBoundsException if index is not less than size and greater or equal zero
+     */
+    void set(int index, ELEMENT_TYPE element);
+
+    /**
+     * Gets the element at the specific index or null, if no element was added to the index before.
+     * 
+     * This operation will be done in O(1)
      * 
      * @param index The index (0 <= index < capacity)
      * 
@@ -63,7 +103,9 @@ public interface ICircularBuffer<ELEMENT_TYPE> {
     ELEMENT_TYPE get(int index);
 
     /**
-     * Clears the current buffer
+     * Clears the current buffer.
+     * 
+     * This operation will be done in O(1).
      */
     void clear();
 }
