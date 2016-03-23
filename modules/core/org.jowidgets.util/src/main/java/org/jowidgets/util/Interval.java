@@ -259,6 +259,20 @@ public final class Interval<NUMBER_TYPE extends Number> {
         return NumberUtils.compareTo(number, leftBoundary) >= 0 && NumberUtils.compareTo(number, rightBoundary) <= 0;
     }
 
+    /**
+     * Checks if the given interval is completely contained in this interval.
+     * 
+     * This is true if the left and the right boundary is conatined in this interval.
+     * 
+     * @param other The interval to check if contained
+     * 
+     * @return True if contained, false otherwise
+     */
+    public boolean contains(final Interval<NUMBER_TYPE> other) {
+        Assert.paramNotNull(other, "other");
+        return contains(other.getLeftBoundary()) && contains(other.getRightBoundary());
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
