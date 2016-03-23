@@ -13,6 +13,7 @@
 
 	<modules>
 	    <module>../org.jowidgets.util.bundle</module>
+		<module>../org.jowidgets.logging.api.bundle</module>
 		<module>../org.jowidgets.i18n.bundle</module>
 		<module>../org.jowidgets.validation.bundle</module>
 		<module>../org.jowidgets.validation.tools.bundle</module>

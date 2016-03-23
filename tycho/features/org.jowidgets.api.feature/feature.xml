@@ -29,7 +29,14 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-		 
+	
+	<plugin
+         id="org.jowidgets.logging.api.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+	
 	<plugin
          id="org.jowidgets.i18n.bundle"
          download-size="0"
