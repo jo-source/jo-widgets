@@ -179,6 +179,11 @@
 			<artifactId>org.jowidgets.addons.logging.slf4j.bundle</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jowidgets</groupId>
+			<artifactId>org.jowidgets.addons.logging.jul.bundle</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	
 		<!-- core dependencies -->
 		<dependency>

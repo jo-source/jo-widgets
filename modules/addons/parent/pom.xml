@@ -60,7 +60,8 @@
 		
 		<!-- Logging -->
 		<module>../org.jowidgets.addons.logging.slf4j</module>
-			
+		<module>../org.jowidgets.addons.logging.jul</module>
+				
 	</modules>
 	
 	<build>

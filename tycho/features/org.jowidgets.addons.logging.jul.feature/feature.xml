@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+    id="org.jowidgets.addons.logging.jul.feature"
+    label="Java util logging implementation for jowidgets logging api"
+    version="0.58.0.qualifier">
+
+	<description url="http://www.example.com/description">
+		Feature that holds the Java util logging implementation for jowidgets logging api
+	</description>
+
+	<copyright url="http://www.example.com/copyright">
+		org.jowidgets Michael Grossmann 2016
+	</copyright>
+
+	<license url="http://www.example.com/license">
+		BSD Licence
+	</license>
+	
+	<plugin
+         id="org.jowidgets.addons.logging.jul.bundle"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+		 
+</feature>
