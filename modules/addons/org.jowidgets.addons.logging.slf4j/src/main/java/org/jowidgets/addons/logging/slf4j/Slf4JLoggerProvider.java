@@ -30,13 +30,21 @@ package org.jowidgets.addons.logging.slf4j;
 
 import org.jowidgets.logging.api.api.ILogger;
 import org.jowidgets.logging.api.api.ILoggerProvider;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.spi.LocationAwareLogger;
 
 public final class Slf4JLoggerProvider implements ILoggerProvider {
 
     @Override
     public ILogger get(final String name) {
-        return new Slf4JLogger(LoggerFactory.getLogger(name));
+        final Logger original = LoggerFactory.getLogger(name);
+        if (original instanceof LocationAwareLogger) {
+            return new Slf4JLocationAwareLoggerAdapter((LocationAwareLogger) original);
+        }
+        else {
+            return new Slf4JLoggerAdapter(original);
+        }
     }
 
 }
