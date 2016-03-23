@@ -159,8 +159,8 @@ public final class LoggerProvider {
         }
 
         @Override
-        public void warning(final String message) {
-            logMessage(LogLevel.WARNING, message);
+        public void warn(final String message) {
+            logMessage(LogLevel.WARN, message);
         }
 
         @Override
@@ -185,7 +185,7 @@ public final class LoggerProvider {
 
         @Override
         public void warning(final Throwable throwable) {
-            logMessage(LogLevel.WARNING, throwable);
+            logMessage(LogLevel.WARN, throwable);
         }
 
         @Override
@@ -210,7 +210,7 @@ public final class LoggerProvider {
 
         @Override
         public void warning(final String message, final Throwable throwable) {
-            logMessage(LogLevel.WARNING, message, throwable);
+            logMessage(LogLevel.WARN, message, throwable);
         }
 
         @Override
@@ -239,6 +239,7 @@ public final class LoggerProvider {
         private void logMessage(final LogLevel level, final String message, final Throwable throwable) {
             final StringBuilder builder = new StringBuilder(prefix);
             builder.append(level.toString());
+            builder.append(" - ");
             if (message != null) {
                 builder.append(message);
             }
@@ -254,7 +255,7 @@ public final class LoggerProvider {
 
     private static enum LogLevel {
         ERROR,
-        WARNING,
+        WARN,
         INFO,
         DEBUG,
         TRACE;
