@@ -57,7 +57,7 @@ final class Slf4JLoggerAdapter implements ILogger {
     }
 
     @Override
-    public boolean isWarningEnabled() {
+    public boolean isWarnEnabled() {
         return original.isWarnEnabled();
     }
 
@@ -97,7 +97,7 @@ final class Slf4JLoggerAdapter implements ILogger {
     }
 
     @Override
-    public void warning(final Throwable throwable) {
+    public void warn(final Throwable throwable) {
         original.warn("", throwable);
     }
 
@@ -122,7 +122,7 @@ final class Slf4JLoggerAdapter implements ILogger {
     }
 
     @Override
-    public void warning(final String message, final Throwable throwable) {
+    public void warn(final String message, final Throwable throwable) {
         original.warn(message, throwable);
     }
 

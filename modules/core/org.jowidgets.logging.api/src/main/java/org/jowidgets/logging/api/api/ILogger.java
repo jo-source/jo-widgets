@@ -36,7 +36,7 @@ public interface ILogger {
 
     boolean isInfoEnabled();
 
-    boolean isWarningEnabled();
+    boolean isWarnEnabled();
 
     boolean isErrorEnabled();
 
@@ -52,7 +52,7 @@ public interface ILogger {
 
     void error(Throwable throwable);
 
-    void warning(Throwable throwable);
+    void warn(Throwable throwable);
 
     void info(Throwable throwable);
 
@@ -62,7 +62,7 @@ public interface ILogger {
 
     void error(String message, Throwable throwable);
 
-    void warning(String message, Throwable throwable);
+    void warn(String message, Throwable throwable);
 
     void info(String message, Throwable throwable);
 

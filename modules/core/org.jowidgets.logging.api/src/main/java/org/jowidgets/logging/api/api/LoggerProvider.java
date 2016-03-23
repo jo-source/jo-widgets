@@ -144,7 +144,7 @@ public final class LoggerProvider {
         }
 
         @Override
-        public boolean isWarningEnabled() {
+        public boolean isWarnEnabled() {
             return true;
         }
 
@@ -184,7 +184,7 @@ public final class LoggerProvider {
         }
 
         @Override
-        public void warning(final Throwable throwable) {
+        public void warn(final Throwable throwable) {
             logMessage(LogLevel.WARN, throwable);
         }
 
@@ -209,7 +209,7 @@ public final class LoggerProvider {
         }
 
         @Override
-        public void warning(final String message, final Throwable throwable) {
+        public void warn(final String message, final Throwable throwable) {
             logMessage(LogLevel.WARN, message, throwable);
         }
 

@@ -62,7 +62,7 @@ final class JulLoggerAdapter implements ILogger {
     }
 
     @Override
-    public boolean isWarningEnabled() {
+    public boolean isWarnEnabled() {
         return original.isLoggable(Level.WARNING);
     }
 
@@ -102,7 +102,7 @@ final class JulLoggerAdapter implements ILogger {
     }
 
     @Override
-    public void warning(final Throwable throwable) {
+    public void warn(final Throwable throwable) {
         log(Level.WARNING, throwable);
     }
 
@@ -127,7 +127,7 @@ final class JulLoggerAdapter implements ILogger {
     }
 
     @Override
-    public void warning(final String message, final Throwable throwable) {
+    public void warn(final String message, final Throwable throwable) {
         log(Level.WARNING, message, throwable);
     }
 

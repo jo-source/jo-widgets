@@ -59,7 +59,7 @@ final class Slf4JLocationAwareLoggerAdapter implements ILogger {
     }
 
     @Override
-    public boolean isWarningEnabled() {
+    public boolean isWarnEnabled() {
         return original.isWarnEnabled();
     }
 
@@ -99,7 +99,7 @@ final class Slf4JLocationAwareLoggerAdapter implements ILogger {
     }
 
     @Override
-    public void warning(final Throwable throwable) {
+    public void warn(final Throwable throwable) {
         original.log(null, FQCN, LocationAwareLogger.WARN_INT, null, null, throwable);
     }
 
@@ -124,7 +124,7 @@ final class Slf4JLocationAwareLoggerAdapter implements ILogger {
     }
 
     @Override
-    public void warning(final String message, final Throwable throwable) {
+    public void warn(final String message, final Throwable throwable) {
         original.log(null, FQCN, LocationAwareLogger.WARN_INT, message, null, throwable);
     }
 
