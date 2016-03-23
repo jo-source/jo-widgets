@@ -58,6 +58,9 @@
 		<module>../org.jowidgets.addons.widgets.pdf.api</module>	
 		<module>../org.jowidgets.addons.widgets.pdf.impl.browser</module>
 		
+		<!-- Logging -->
+		<module>../org.jowidgets.addons.logging.slf4j</module>
+			
 	</modules>
 	
 	<build>
