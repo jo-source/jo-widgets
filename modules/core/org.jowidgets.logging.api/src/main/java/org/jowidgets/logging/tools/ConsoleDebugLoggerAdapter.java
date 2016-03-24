@@ -28,46 +28,30 @@
 
 package org.jowidgets.logging.tools;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+public class ConsoleDebugLoggerAdapter extends ConsoleInfoLoggerAdapter {
 
-import org.jowidgets.logging.api.ILogger;
-import org.jowidgets.logging.api.ILoggerProvider;
-import org.jowidgets.util.Assert;
-
-/**
- * Default implementation for an logger provider that creates a logger only one time for each name.
- * 
- * Uses a concurrent hash map to maintain the loggers
- */
-public final class DefaultLoggerProvider implements ILoggerProvider {
-
-    private final ILoggerFactory factory;
-    private final ConcurrentMap<String, ILogger> loggers;
-
-    /**
-     * Creates a new default logger provider for a given logger factory
-     * 
-     * @param factory The factory to use to create loggers, must not be null
-     */
-    public DefaultLoggerProvider(final ILoggerFactory factory) {
-        Assert.paramNotNull(factory, "factory");
-        this.factory = factory;
-        this.loggers = new ConcurrentHashMap<String, ILogger>();
+    public ConsoleDebugLoggerAdapter(final String name) {
+        super(name);
     }
 
     @Override
-    public ILogger get(final String name) {
-        Assert.paramNotNull(name, "name");
-        final ILogger result = loggers.get(name);
-        if (result != null) {
-            return result;
-        }
-        else {
-            final ILogger newLogger = factory.create(name);
-            final ILogger oldLogger = loggers.putIfAbsent(name, newLogger);
-            return oldLogger == null ? newLogger : oldLogger;
-        }
+    public boolean isDebugEnabled() {
+        return true;
+    }
+
+    @Override
+    public void debug(final String message) {
+        logMessage(LogLevel.DEBUG, message);
+    }
+
+    @Override
+    public void debug(final Throwable throwable) {
+        logMessage(LogLevel.DEBUG, throwable);
+    }
+
+    @Override
+    public void debug(final String message, final Throwable throwable) {
+        logMessage(LogLevel.DEBUG, message, throwable);
     }
 
 }

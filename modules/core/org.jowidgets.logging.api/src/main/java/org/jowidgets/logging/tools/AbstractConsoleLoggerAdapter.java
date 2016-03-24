@@ -28,46 +28,47 @@
 
 package org.jowidgets.logging.tools;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
 import org.jowidgets.logging.api.ILogger;
-import org.jowidgets.logging.api.ILoggerProvider;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.EmptyCheck;
 
-/**
- * Default implementation for an logger provider that creates a logger only one time for each name.
- * 
- * Uses a concurrent hash map to maintain the loggers
- */
-public final class DefaultLoggerProvider implements ILoggerProvider {
+public abstract class AbstractConsoleLoggerAdapter extends AbstractLoggerAdapter implements ILogger {
 
-    private final ILoggerFactory factory;
-    private final ConcurrentMap<String, ILogger> loggers;
+    private final String prefix;
 
-    /**
-     * Creates a new default logger provider for a given logger factory
-     * 
-     * @param factory The factory to use to create loggers, must not be null
-     */
-    public DefaultLoggerProvider(final ILoggerFactory factory) {
-        Assert.paramNotNull(factory, "factory");
-        this.factory = factory;
-        this.loggers = new ConcurrentHashMap<String, ILogger>();
-    }
-
-    @Override
-    public ILogger get(final String name) {
+    public AbstractConsoleLoggerAdapter(final String name) {
         Assert.paramNotNull(name, "name");
-        final ILogger result = loggers.get(name);
-        if (result != null) {
-            return result;
-        }
-        else {
-            final ILogger newLogger = factory.create(name);
-            final ILogger oldLogger = loggers.putIfAbsent(name, newLogger);
-            return oldLogger == null ? newLogger : oldLogger;
-        }
+        this.prefix = name + ": ";
     }
 
+    protected final void logMessage(final LogLevel level, final Throwable throwable) {
+        logMessage(level, null, throwable);
+    }
+
+    protected final void logMessage(final LogLevel level, final String message) {
+        logMessage(level, message, null);
+    }
+
+    protected final void logMessage(final LogLevel level, final String message, final Throwable throwable) {
+        final StringBuilder builder = new StringBuilder(prefix);
+        builder.append(level.toString());
+        if (!EmptyCheck.isEmpty(message)) {
+            builder.append(" - ");
+            builder.append(message);
+        }
+        //CHECKSTYLE:OFF
+        System.out.println(builder.toString());
+        if (throwable != null) {
+            throwable.printStackTrace();
+        }
+        //CHECKSTYLE:ON
+    }
+
+    protected static enum LogLevel {
+        ERROR,
+        WARN,
+        INFO,
+        DEBUG,
+        TRACE;
+    }
 }

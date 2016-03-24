@@ -30,6 +30,7 @@ package org.jowidgets.addons.logging.nop;
 
 import org.jowidgets.logging.api.ILogger;
 import org.jowidgets.logging.api.ILoggerProvider;
+import org.jowidgets.logging.tools.NopLoggerAdapter;
 
 public final class NopLoggerProvider implements ILoggerProvider {
 

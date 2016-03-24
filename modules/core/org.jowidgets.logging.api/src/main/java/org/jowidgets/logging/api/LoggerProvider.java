@@ -32,11 +32,13 @@ import java.util.Iterator;
 import java.util.ServiceLoader;
 
 import org.jowidgets.classloading.api.SharedClassLoader;
-import org.jowidgets.logging.tools.DefaultLoggerProvider;
-import org.jowidgets.logging.tools.ILoggerFactory;
+import org.jowidgets.logging.tools.ConsoleLoggerProvider;
 import org.jowidgets.util.Assert;
-import org.jowidgets.util.EmptyCheck;
 
+/**
+ * This class gets the access to the currently set logger provider
+ * and can be used to set a new logger provider.
+ */
 public final class LoggerProvider {
 
     private static ILoggerProvider provider;
@@ -44,7 +46,7 @@ public final class LoggerProvider {
     private LoggerProvider() {}
 
     /**
-     * Sets a new logger provider implementation
+     * Sets a new logger provider implementation.
      * 
      * @param factory The logger provider to set, may be null if default should be used
      */
@@ -53,7 +55,7 @@ public final class LoggerProvider {
     }
 
     /**
-     * Gets the logger with the given name or crates one if not exists
+     * Gets the logger with the given name or creates one if not exists
      * 
      * @param name The name to get the logger for
      * 
@@ -76,7 +78,7 @@ public final class LoggerProvider {
     }
 
     /**
-     * Gets the logger provider instance.
+     * Gets the currently set logger provider instance or creates one
      * 
      * @return The logger provider instance, never null
      */
@@ -96,157 +98,40 @@ public final class LoggerProvider {
         final Iterator<ILoggerProvider> iterator = loader.iterator();
 
         if (!iterator.hasNext()) {
-            //CHECKSTYLE:OFF
-            System.err.println("No logging adapter found for "
-                + ILoggerProvider.class.getName()
-                + ". Using default logging adapter.");
-            //CHECKSTYLE:ON
-            result = new DefaultLoggerProvider(new DefaultLoggerFactory());
+            printNoLoggingAdapterFound();
+            result = ConsoleLoggerProvider.warnLoggerProvider();
         }
         else {
             result = iterator.next();
             while (iterator.hasNext()) {
-                final String msg = "Another logging adapter '"
-                    + iterator.next().getClass().getName()
-                    + "' found for '"
-                    + ILoggerProvider.class.getName()
-                    + "'. The adapter will be ignored and the adapter '"
-                    + result.getClass()
-                    + "' will be used.";
-                //CHECKSTYLE:OFF
-                System.err.println(msg);
-                //CHECKSTYLE:ON
-                result.get(LoggerProvider.class.getName()).error(msg);
+                printAndLogThatAnotherLoggingAdapterFound(iterator.next(), result);
             }
         }
         return result;
     }
 
-    private static final class DefaultLoggerFactory implements ILoggerFactory {
-        @Override
-        public ILogger create(final String name) {
-            return new DefaultLoggerAdapter(name);
-        }
+    private static void printNoLoggingAdapterFound() {
+        //CHECKSTYLE:OFF
+        System.err.println("No logging adapter found for "
+            + ILoggerProvider.class.getName()
+            + ". Using default logging adapter logging errors and warnings to the console.");
+        //CHECKSTYLE:ON
     }
 
-    private static final class DefaultLoggerAdapter implements ILogger {
-
-        private final String prefix;
-
-        DefaultLoggerAdapter(final String name) {
-            Assert.paramNotNull(name, "name");
-            this.prefix = name + ": ";
-        }
-
-        @Override
-        public boolean isTraceEnabled() {
-            return false;
-        }
-
-        @Override
-        public boolean isDebugEnabled() {
-            return false;
-        }
-
-        @Override
-        public boolean isInfoEnabled() {
-            return false;
-        }
-
-        @Override
-        public boolean isWarnEnabled() {
-            return true;
-        }
-
-        @Override
-        public boolean isErrorEnabled() {
-            return true;
-        }
-
-        @Override
-        public void error(final String message) {
-            logMessage(LogLevel.ERROR, message);
-        }
-
-        @Override
-        public void warn(final String message) {
-            logMessage(LogLevel.WARN, message);
-        }
-
-        @Override
-        public void error(final Throwable throwable) {
-            logMessage(LogLevel.ERROR, throwable);
-        }
-
-        @Override
-        public void warn(final Throwable throwable) {
-            logMessage(LogLevel.WARN, throwable);
-        }
-
-        @Override
-        public void error(final String message, final Throwable throwable) {
-            logMessage(LogLevel.ERROR, message, throwable);
-        }
-
-        @Override
-        public void warn(final String message, final Throwable throwable) {
-            logMessage(LogLevel.WARN, message, throwable);
-        }
-
-        @Override
-        public void info(final String message) {}
-
-        @Override
-        public void debug(final String message) {}
-
-        @Override
-        public void trace(final String message) {}
-
-        @Override
-        public void info(final Throwable throwable) {}
-
-        @Override
-        public void debug(final Throwable throwable) {}
-
-        @Override
-        public void trace(final Throwable throwable) {}
-
-        @Override
-        public void info(final String message, final Throwable throwable) {}
-
-        @Override
-        public void debug(final String message, final Throwable throwable) {}
-
-        @Override
-        public void trace(final String message, final Throwable throwable) {}
-
-        private void logMessage(final LogLevel level, final Throwable throwable) {
-            logMessage(level, null, throwable);
-        }
-
-        private void logMessage(final LogLevel level, final String message) {
-            logMessage(level, message, null);
-        }
-
-        private void logMessage(final LogLevel level, final String message, final Throwable throwable) {
-            final StringBuilder builder = new StringBuilder(prefix);
-            builder.append(level.toString());
-            if (!EmptyCheck.isEmpty(message)) {
-                builder.append(" - ");
-                builder.append(message);
-            }
-            //CHECKSTYLE:OFF
-            System.out.println(builder.toString());
-            if (throwable != null) {
-                throwable.printStackTrace();
-            }
-            //CHECKSTYLE:ON
-        }
-
-        private static enum LogLevel {
-            ERROR,
-            WARN;
-        }
+    private static void printAndLogThatAnotherLoggingAdapterFound(
+        final ILoggerProvider otherProvider,
+        final ILoggerProvider usedProvider) {
+        final String msg = "Another logging adapter '"
+            + otherProvider.getClass().getName()
+            + "' found for '"
+            + ILoggerProvider.class.getName()
+            + "'. The adapter will be ignored and the adapter '"
+            + usedProvider.getClass()
+            + "' will be used.";
+        //CHECKSTYLE:OFF
+        System.err.println(msg);
+        //CHECKSTYLE:ON
+        usedProvider.get(LoggerProvider.class.getName()).error(msg);
     }
 
 }

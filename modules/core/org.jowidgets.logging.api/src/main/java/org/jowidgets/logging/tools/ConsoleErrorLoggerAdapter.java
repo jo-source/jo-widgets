@@ -28,46 +28,31 @@
 
 package org.jowidgets.logging.tools;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
-import org.jowidgets.logging.api.ILogger;
-import org.jowidgets.logging.api.ILoggerProvider;
-import org.jowidgets.util.Assert;
+public class ConsoleErrorLoggerAdapter extends AbstractConsoleLoggerAdapter {
 
-/**
- * Default implementation for an logger provider that creates a logger only one time for each name.
- * 
- * Uses a concurrent hash map to maintain the loggers
- */
-public final class DefaultLoggerProvider implements ILoggerProvider {
-
-    private final ILoggerFactory factory;
-    private final ConcurrentMap<String, ILogger> loggers;
-
-    /**
-     * Creates a new default logger provider for a given logger factory
-     * 
-     * @param factory The factory to use to create loggers, must not be null
-     */
-    public DefaultLoggerProvider(final ILoggerFactory factory) {
-        Assert.paramNotNull(factory, "factory");
-        this.factory = factory;
-        this.loggers = new ConcurrentHashMap<String, ILogger>();
+    public ConsoleErrorLoggerAdapter(final String name) {
+        super(name);
     }
 
     @Override
-    public ILogger get(final String name) {
-        Assert.paramNotNull(name, "name");
-        final ILogger result = loggers.get(name);
-        if (result != null) {
-            return result;
-        }
-        else {
-            final ILogger newLogger = factory.create(name);
-            final ILogger oldLogger = loggers.putIfAbsent(name, newLogger);
-            return oldLogger == null ? newLogger : oldLogger;
-        }
+    public boolean isErrorEnabled() {
+        return true;
+    }
+
+    @Override
+    public void error(final String message) {
+        logMessage(LogLevel.ERROR, message);
+    }
+
+    @Override
+    public void error(final Throwable throwable) {
+        logMessage(LogLevel.ERROR, throwable);
+    }
+
+    @Override
+    public void error(final String message, final Throwable throwable) {
+        logMessage(LogLevel.ERROR, message, throwable);
     }
 
 }

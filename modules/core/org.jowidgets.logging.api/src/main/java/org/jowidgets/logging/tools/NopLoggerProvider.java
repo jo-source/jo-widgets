@@ -28,46 +28,27 @@
 
 package org.jowidgets.logging.tools;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-
 import org.jowidgets.logging.api.ILogger;
 import org.jowidgets.logging.api.ILoggerProvider;
-import org.jowidgets.util.Assert;
 
-/**
- * Default implementation for an logger provider that creates a logger only one time for each name.
- * 
- * Uses a concurrent hash map to maintain the loggers
- */
-public final class DefaultLoggerProvider implements ILoggerProvider {
+public final class NopLoggerProvider implements ILoggerProvider {
 
-    private final ILoggerFactory factory;
-    private final ConcurrentMap<String, ILogger> loggers;
+    private static final ILoggerProvider INSTANCE = new NopLoggerProvider();
+
+    private NopLoggerProvider() {}
 
     /**
-     * Creates a new default logger provider for a given logger factory
+     * Gets the singleton instance of the nop logger provider
      * 
-     * @param factory The factory to use to create loggers, must not be null
+     * @return the nop logger provider, never null
      */
-    public DefaultLoggerProvider(final ILoggerFactory factory) {
-        Assert.paramNotNull(factory, "factory");
-        this.factory = factory;
-        this.loggers = new ConcurrentHashMap<String, ILogger>();
+    public static ILoggerProvider instance() {
+        return INSTANCE;
     }
 
     @Override
     public ILogger get(final String name) {
-        Assert.paramNotNull(name, "name");
-        final ILogger result = loggers.get(name);
-        if (result != null) {
-            return result;
-        }
-        else {
-            final ILogger newLogger = factory.create(name);
-            final ILogger oldLogger = loggers.putIfAbsent(name, newLogger);
-            return oldLogger == null ? newLogger : oldLogger;
-        }
+        return NopLoggerAdapter.getInstance();
     }
 
 }

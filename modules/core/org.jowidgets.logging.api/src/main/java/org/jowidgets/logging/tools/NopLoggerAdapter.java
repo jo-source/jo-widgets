@@ -26,88 +26,19 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.logging.nop;
+package org.jowidgets.logging.tools;
 
 import org.jowidgets.logging.api.ILogger;
+import org.jowidgets.logging.tools.AbstractLoggerAdapter;
 
-final class NopLoggerAdapter implements ILogger {
+public final class NopLoggerAdapter extends AbstractLoggerAdapter implements ILogger {
 
     private static final ILogger INSTANCE = new NopLoggerAdapter();
 
     private NopLoggerAdapter() {}
 
-    static ILogger getInstance() {
+    public static ILogger getInstance() {
         return INSTANCE;
     }
-
-    @Override
-    public boolean isTraceEnabled() {
-        return false;
-    }
-
-    @Override
-    public boolean isDebugEnabled() {
-        return false;
-    }
-
-    @Override
-    public boolean isInfoEnabled() {
-        return false;
-    }
-
-    @Override
-    public boolean isWarnEnabled() {
-        return false;
-    }
-
-    @Override
-    public boolean isErrorEnabled() {
-        return false;
-    }
-
-    @Override
-    public void error(final String message) {}
-
-    @Override
-    public void warn(final String message) {}
-
-    @Override
-    public void info(final String message) {}
-
-    @Override
-    public void debug(final String message) {}
-
-    @Override
-    public void trace(final String message) {}
-
-    @Override
-    public void error(final Throwable throwable) {}
-
-    @Override
-    public void warn(final Throwable throwable) {}
-
-    @Override
-    public void info(final Throwable throwable) {}
-
-    @Override
-    public void debug(final Throwable throwable) {}
-
-    @Override
-    public void trace(final Throwable throwable) {}
-
-    @Override
-    public void error(final String message, final Throwable throwable) {}
-
-    @Override
-    public void warn(final String message, final Throwable throwable) {}
-
-    @Override
-    public void info(final String message, final Throwable throwable) {}
-
-    @Override
-    public void debug(final String message, final Throwable throwable) {}
-
-    @Override
-    public void trace(final String message, final Throwable throwable) {}
 
 }
