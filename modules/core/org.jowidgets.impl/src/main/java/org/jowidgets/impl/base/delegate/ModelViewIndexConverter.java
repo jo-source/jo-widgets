@@ -32,8 +32,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.jowidgets.logging.api.api.ILogger;
-import org.jowidgets.logging.api.api.LoggerProvider;
+import org.jowidgets.logging.api.ILogger;
+import org.jowidgets.logging.api.LoggerProvider;
 
 public final class ModelViewIndexConverter<MODEL_TYPE> {
 

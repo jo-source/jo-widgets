@@ -37,8 +37,8 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Layout;
-import org.jowidgets.logging.api.api.ILogger;
-import org.jowidgets.logging.api.api.LoggerProvider;
+import org.jowidgets.logging.api.ILogger;
+import org.jowidgets.logging.api.LoggerProvider;
 import org.jowidgets.util.Assert;
 
 /**

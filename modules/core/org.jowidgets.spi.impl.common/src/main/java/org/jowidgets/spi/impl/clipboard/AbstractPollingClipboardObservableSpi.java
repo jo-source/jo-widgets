@@ -33,8 +33,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import org.jowidgets.logging.api.api.ILogger;
-import org.jowidgets.logging.api.api.LoggerProvider;
+import org.jowidgets.logging.api.ILogger;
+import org.jowidgets.logging.api.LoggerProvider;
 import org.jowidgets.spi.clipboard.IClipboardListenerSpi;
 import org.jowidgets.util.concurrent.DaemonThreadFactory;
 

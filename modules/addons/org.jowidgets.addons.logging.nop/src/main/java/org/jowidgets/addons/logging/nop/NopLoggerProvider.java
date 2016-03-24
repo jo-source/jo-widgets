@@ -28,8 +28,8 @@
 
 package org.jowidgets.addons.logging.nop;
 
-import org.jowidgets.logging.api.api.ILogger;
-import org.jowidgets.logging.api.api.ILoggerProvider;
+import org.jowidgets.logging.api.ILogger;
+import org.jowidgets.logging.api.ILoggerProvider;
 
 public final class NopLoggerProvider implements ILoggerProvider {
 

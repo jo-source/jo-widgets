@@ -26,17 +26,30 @@
  * DAMAGE.
  */
 
-package org.jowidgets.logging.api.api;
+package org.jowidgets.logging.api;
 
-public interface ILoggerProvider {
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
-    /**
-     * Gets the logger for the given name
-     * 
-     * @param name The name to get the logger for
-     * 
-     * @return The logger for the given name, never null
-     */
-    ILogger get(String name);
+final class DefaultLoggerProvider implements ILoggerProvider {
+
+    private final ConcurrentMap<String, ILogger> loggers;
+
+    DefaultLoggerProvider() {
+        this.loggers = new ConcurrentHashMap<String, ILogger>();
+    }
+
+    @Override
+    public ILogger get(final String name) {
+        final ILogger result = loggers.get(name);
+        if (result != null) {
+            return result;
+        }
+        else {
+            final ILogger newLogger = new DefaultLoggerAdapter(name);
+            final ILogger oldLogger = loggers.putIfAbsent(name, newLogger);
+            return oldLogger == null ? newLogger : oldLogger;
+        }
+    }
 
 }

@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.logging.api.api;
+package org.jowidgets.logging.api;
 
 public interface ILogger {
 

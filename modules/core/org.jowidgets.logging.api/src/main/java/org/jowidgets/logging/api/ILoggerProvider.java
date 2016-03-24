@@ -26,25 +26,17 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.logging.slf4j;
+package org.jowidgets.logging.api;
 
-import org.jowidgets.logging.api.ILogger;
-import org.jowidgets.logging.api.ILoggerProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.spi.LocationAwareLogger;
+public interface ILoggerProvider {
 
-public final class Slf4JLoggerProvider implements ILoggerProvider {
-
-    @Override
-    public ILogger get(final String name) {
-        final Logger original = LoggerFactory.getLogger(name);
-        if (original instanceof LocationAwareLogger) {
-            return new Slf4JLocationAwareLoggerAdapter((LocationAwareLogger) original);
-        }
-        else {
-            return new Slf4JLoggerAdapter(original);
-        }
-    }
+    /**
+     * Gets the logger for the given name
+     * 
+     * @param name The name to get the logger for
+     * 
+     * @return The logger for the given name, never null
+     */
+    ILogger get(String name);
 
 }

@@ -30,8 +30,8 @@ package org.jowidgets.addons.logging.jul;
 
 import java.util.logging.Logger;
 
-import org.jowidgets.logging.api.api.ILogger;
-import org.jowidgets.logging.api.api.ILoggerProvider;
+import org.jowidgets.logging.api.ILogger;
+import org.jowidgets.logging.api.ILoggerProvider;
 
 public final class JulLoggerProvider implements ILoggerProvider {
 

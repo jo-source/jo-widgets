@@ -26,18 +26,18 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.logging.nop;
+package org.jowidgets.logging.api;
 
-import org.jowidgets.logging.api.ILogger;
+import org.jowidgets.util.Assert;
+import org.jowidgets.util.EmptyCheck;
 
-final class NopLoggerAdapter implements ILogger {
+final class DefaultLoggerAdapter implements ILogger {
 
-    private static final ILogger INSTANCE = new NopLoggerAdapter();
+    private final String prefix;
 
-    private NopLoggerAdapter() {}
-
-    static ILogger getInstance() {
-        return INSTANCE;
+    DefaultLoggerAdapter(final String name) {
+        Assert.paramNotNull(name, "name");
+        this.prefix = name + ": ";
     }
 
     @Override
@@ -57,19 +57,43 @@ final class NopLoggerAdapter implements ILogger {
 
     @Override
     public boolean isWarnEnabled() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isErrorEnabled() {
-        return false;
+        return true;
     }
 
     @Override
-    public void error(final String message) {}
+    public void error(final String message) {
+        logMessage(LogLevel.ERROR, message);
+    }
 
     @Override
-    public void warn(final String message) {}
+    public void warn(final String message) {
+        logMessage(LogLevel.WARN, message);
+    }
+
+    @Override
+    public void error(final Throwable throwable) {
+        logMessage(LogLevel.ERROR, throwable);
+    }
+
+    @Override
+    public void warn(final Throwable throwable) {
+        logMessage(LogLevel.WARN, throwable);
+    }
+
+    @Override
+    public void error(final String message, final Throwable throwable) {
+        logMessage(LogLevel.ERROR, message, throwable);
+    }
+
+    @Override
+    public void warn(final String message, final Throwable throwable) {
+        logMessage(LogLevel.WARN, message, throwable);
+    }
 
     @Override
     public void info(final String message) {}
@@ -81,12 +105,6 @@ final class NopLoggerAdapter implements ILogger {
     public void trace(final String message) {}
 
     @Override
-    public void error(final Throwable throwable) {}
-
-    @Override
-    public void warn(final Throwable throwable) {}
-
-    @Override
     public void info(final Throwable throwable) {}
 
     @Override
@@ -96,12 +114,6 @@ final class NopLoggerAdapter implements ILogger {
     public void trace(final Throwable throwable) {}
 
     @Override
-    public void error(final String message, final Throwable throwable) {}
-
-    @Override
-    public void warn(final String message, final Throwable throwable) {}
-
-    @Override
     public void info(final String message, final Throwable throwable) {}
 
     @Override
@@ -109,5 +121,33 @@ final class NopLoggerAdapter implements ILogger {
 
     @Override
     public void trace(final String message, final Throwable throwable) {}
+
+    private void logMessage(final LogLevel level, final Throwable throwable) {
+        logMessage(level, null, throwable);
+    }
+
+    private void logMessage(final LogLevel level, final String message) {
+        logMessage(level, message, null);
+    }
+
+    private void logMessage(final LogLevel level, final String message, final Throwable throwable) {
+        final StringBuilder builder = new StringBuilder(prefix);
+        builder.append(level.toString());
+        if (!EmptyCheck.isEmpty(message)) {
+            builder.append(" - ");
+            builder.append(message);
+        }
+        //CHECKSTYLE:OFF
+        System.out.println(builder.toString());
+        if (throwable != null) {
+            throwable.printStackTrace();
+        }
+        //CHECKSTYLE:ON
+    }
+
+    private static enum LogLevel {
+        ERROR,
+        WARN;
+    }
 
 }

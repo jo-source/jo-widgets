@@ -38,8 +38,8 @@ import javax.swing.JButton;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
-import org.jowidgets.logging.api.api.ILogger;
-import org.jowidgets.logging.api.api.LoggerProvider;
+import org.jowidgets.logging.api.ILogger;
+import org.jowidgets.logging.api.LoggerProvider;
 import org.jowidgets.spi.impl.swing.common.image.SwingImageRegistry;
 import org.jowidgets.spi.impl.swing.common.util.AlignmentConvert;
 import org.jowidgets.spi.impl.swing.common.util.FontProvider;

@@ -28,8 +28,8 @@
 
 package org.jowidgets.logging.api;
 
-import org.jowidgets.logging.api.api.ILoggerProvider;
-import org.jowidgets.logging.api.api.LoggerProvider;
+import org.jowidgets.logging.api.ILoggerProvider;
+import org.jowidgets.logging.api.LoggerProvider;
 import org.junit.Test;
 import org.mockito.Mockito;
 

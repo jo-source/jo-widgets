@@ -32,7 +32,7 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
-import org.jowidgets.logging.api.api.ILogger;
+import org.jowidgets.logging.api.ILogger;
 import org.jowidgets.util.Assert;
 
 final class JulLoggerAdapter implements ILogger {

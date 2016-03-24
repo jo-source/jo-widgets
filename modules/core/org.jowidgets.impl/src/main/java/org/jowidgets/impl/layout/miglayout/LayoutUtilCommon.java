@@ -45,8 +45,8 @@ import java.util.IdentityHashMap;
 import java.util.TreeSet;
 import java.util.WeakHashMap;
 
-import org.jowidgets.logging.api.api.ILogger;
-import org.jowidgets.logging.api.api.LoggerProvider;
+import org.jowidgets.logging.api.ILogger;
+import org.jowidgets.logging.api.LoggerProvider;
 
 /**
  * A utility class that has only static helper methods.

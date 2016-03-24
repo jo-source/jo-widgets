@@ -36,8 +36,8 @@ import javax.validation.ValidationException;
 import javax.validation.Validator;
 
 import org.jowidgets.classloading.api.SharedClassLoader;
-import org.jowidgets.logging.api.api.ILogger;
-import org.jowidgets.logging.api.api.LoggerProvider;
+import org.jowidgets.logging.api.ILogger;
+import org.jowidgets.logging.api.LoggerProvider;
 import org.jowidgets.util.Assert;
 
 public final class BeanValidatorFactory {

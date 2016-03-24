@@ -28,7 +28,7 @@
 
 package org.jowidgets.addons.logging.slf4j;
 
-import org.jowidgets.logging.api.api.ILogger;
+import org.jowidgets.logging.api.ILogger;
 import org.jowidgets.util.Assert;
 import org.slf4j.spi.LocationAwareLogger;
 

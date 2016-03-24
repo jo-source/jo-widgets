@@ -29,8 +29,8 @@
 package org.jowidgets.spi.impl.swt.common.widgets.base;
 
 import org.eclipse.swt.widgets.Composite;
-import org.jowidgets.logging.api.api.ILogger;
-import org.jowidgets.logging.api.api.LoggerProvider;
+import org.jowidgets.logging.api.ILogger;
+import org.jowidgets.logging.api.LoggerProvider;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 
 public final class SwtCompositeFactory {
