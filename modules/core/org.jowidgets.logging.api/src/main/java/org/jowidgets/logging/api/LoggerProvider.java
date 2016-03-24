@@ -46,10 +46,9 @@ public final class LoggerProvider {
     /**
      * Sets a new logger provider implementation
      * 
-     * @param factory The logger provider to set, must not be null
+     * @param factory The logger provider to set, may be null if default should be used
      */
     public static synchronized void setLoggerProvider(final ILoggerProvider provider) {
-        Assert.paramNotNull(provider, "provider");
         LoggerProvider.provider = provider;
     }
 
@@ -97,9 +96,11 @@ public final class LoggerProvider {
         final Iterator<ILoggerProvider> iterator = loader.iterator();
 
         if (!iterator.hasNext()) {
+            //CHECKSTYLE:OFF
             System.err.println("No logging adapter found for "
                 + ILoggerProvider.class.getName()
                 + ". Using default logging adapter.");
+            //CHECKSTYLE:ON
             result = new DefaultLoggerProvider(new DefaultLoggerFactory());
         }
         else {

@@ -28,19 +28,22 @@
 
 package org.jowidgets.logging.api;
 
+import org.jowidgets.logging.tools.DefaultLoggerProvider;
+import org.jowidgets.logging.tools.ILoggerFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-public class LoggerProviderTest {
+public class DefaultLoggerProviderTest {
 
-    private ILoggerProvider loggerProvider;
+    private ILoggerFactory loggerFactory;
 
     @Before
     public void setUp() {
-        loggerProvider = Mockito.mock(ILoggerProvider.class);
-        LoggerProvider.setLoggerProvider(loggerProvider);
+        loggerFactory = Mockito.mock(ILoggerFactory.class);
+        Mockito.when(loggerFactory.create(Mockito.anyString())).thenReturn(Mockito.mock(ILogger.class));
+        LoggerProvider.setLoggerProvider(new DefaultLoggerProvider(loggerFactory));
     }
 
     @After
@@ -49,20 +52,26 @@ public class LoggerProviderTest {
     }
 
     @Test
-    public void testLoggerCreation() {
-
+    public void testLazyLoggerCreation() {
         final String loggerName1 = "LOGGER_1";
         final String loggerName2 = "LOGGER_2";
-
-        LoggerProvider.get(loggerName2);
+        final String loggerName3 = "LOGGER_3";
 
         LoggerProvider.get(loggerName1);
         LoggerProvider.get(loggerName1);
+        LoggerProvider.get(loggerName1);
 
         LoggerProvider.get(loggerName2);
         LoggerProvider.get(loggerName2);
+        LoggerProvider.get(loggerName2);
 
-        Mockito.verify(loggerProvider, Mockito.times(2)).get(loggerName1);
-        Mockito.verify(loggerProvider, Mockito.times(3)).get(loggerName2);
+        LoggerProvider.get(loggerName3);
+        LoggerProvider.get(loggerName3);
+        LoggerProvider.get(loggerName3);
+
+        Mockito.verify(loggerFactory, Mockito.times(1)).create(loggerName1);
+        Mockito.verify(loggerFactory, Mockito.times(1)).create(loggerName2);
+        Mockito.verify(loggerFactory, Mockito.times(1)).create(loggerName3);
     }
+
 }
