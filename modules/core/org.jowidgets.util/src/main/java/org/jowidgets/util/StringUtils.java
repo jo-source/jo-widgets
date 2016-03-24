@@ -41,20 +41,37 @@ public final class StringUtils {
     }
 
     public static String concatElementsSeparatedBy(final Collection<?> strings, final char separator) {
-        final StringBuilder result = new StringBuilder();
-        for (final Object label : strings) {
-            if (label != null) {
-                result.append(label.toString() + separator + " ");
-            }
-        }
-        if (strings.size() > 0) {
-            result.replace(result.length() - 2, result.length(), "");
-        }
-        return result.toString();
+        return concatElementsSeparatedBy(strings, separator + " ");
     }
 
     public static String concatElementsSeparatedByComma(final Collection<?> strings) {
         return concatElementsSeparatedBy(strings, ',');
+    }
+
+    public static String concatElementsSeparatedBy(final Collection<?> strings, final String separator) {
+        return concatElementsSeparatedBy(strings, separator, true);
+    }
+
+    public static String concatElementsSeparatedBy(
+        final Collection<?> strings,
+        final String separator,
+        final boolean excludeNullValues) {
+        Assert.paramNotNull(strings, "separator");
+        final StringBuilder result = new StringBuilder();
+        int added = 0;
+        for (final Object label : strings) {
+            if (label != null) {
+                result.append(label.toString() + separator);
+                added++;
+            }
+            else if (!excludeNullValues) {
+                result.append("" + separator);
+            }
+        }
+        if (added > 0) {
+            result.replace(result.length() - separator.length(), result.length(), "");
+        }
+        return result.toString();
     }
 
     public static String truncateToLength(final String string, final int length) {
