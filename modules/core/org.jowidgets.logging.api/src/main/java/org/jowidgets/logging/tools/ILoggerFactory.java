@@ -26,17 +26,24 @@
  * DAMAGE.
  */
 
-package org.jowidgets.logging.api;
+package org.jowidgets.logging.tools;
 
-public interface ILoggerProvider {
+import org.jowidgets.logging.api.ILogger;
+
+/**
+ * Factory for loggers.
+ * 
+ * @author grossmann
+ */
+public interface ILoggerFactory {
 
     /**
-     * Gets the logger for the given name or creates a new one if not already exists
+     * Creates a new logger for the given name.
      * 
-     * @param name The name to get the logger for
+     * @param name The name to get the logger for, must not be null
      * 
      * @return The logger for the given name, never null
      */
-    ILogger get(String name);
+    ILogger create(String name);
 
 }
