@@ -32,6 +32,7 @@ import java.util.Iterator;
 import java.util.ServiceLoader;
 
 import org.jowidgets.classloading.api.SharedClassLoader;
+import org.jowidgets.util.Assert;
 
 public final class LoggerProvider {
 
@@ -45,7 +46,7 @@ public final class LoggerProvider {
      * @param factory The logger provider to set, must not be null
      */
     public static synchronized void setLoggerProvider(final ILoggerProvider provider) {
-        assertParamNotNull(provider, "provider");
+        Assert.paramNotNull(provider, "provider");
         LoggerProvider.provider = provider;
     }
 
@@ -68,7 +69,7 @@ public final class LoggerProvider {
      * @return The logger for the given class, never null
      */
     public static ILogger get(final Class<?> clazz) {
-        assertParamNotNull(clazz, "clazz");
+        Assert.paramNotNull(clazz, "clazz");
         return instance().get(clazz.getName());
     }
 
@@ -106,12 +107,6 @@ public final class LoggerProvider {
         return result;
     }
 
-    private static void assertParamNotNull(final Object object, final String name) {
-        if (object == null) {
-            throw new IllegalArgumentException("The parameter '" + name + "' must not be null!");
-        }
-    }
-
     private static final class DefaultLoggerProvider implements ILoggerProvider {
         @Override
         public ILogger get(final String name) {
@@ -124,7 +119,7 @@ public final class LoggerProvider {
         private final String prefix;
 
         DefaultLogger(final String name) {
-            assertParamNotNull(name, "name");
+            Assert.paramNotNull(name, "name");
             this.prefix = name + ": ";
         }
 
@@ -239,8 +234,8 @@ public final class LoggerProvider {
         private void logMessage(final LogLevel level, final String message, final Throwable throwable) {
             final StringBuilder builder = new StringBuilder(prefix);
             builder.append(level.toString());
-            builder.append(" - ");
             if (message != null) {
+                builder.append(" - ");
                 builder.append(message);
             }
             //CHECKSTYLE:OFF

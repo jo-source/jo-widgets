@@ -319,9 +319,6 @@ final class MigLayout implements IMigLayout {
         //		}
 
         if (grid == null) {
-            //CHECKSTYLE:OFF
-            //System.out.println("new Grid for " + this + " [" + reason + "]");
-            //CHECKSTYLE:ON
             grid = new GridCommon(cacheParentW, lc, rowSpecs, colSpecs, ccMap, callbackList);
             reason.setLength(0);
         }
@@ -337,9 +334,6 @@ final class MigLayout implements IMigLayout {
         //				cacheTime = currentTime;
         //				//cacheTimeSetMs = System.currentTimeMillis();
         //				cacheTimeSetNano = end;
-        //				//CHECKSTYLE:OFF
-        //				System.out.println("nano time: " + (cacheTime) + " [" + this + "]");
-        //				//CHECKSTYLE:ON
         //			}
         //		}
     }

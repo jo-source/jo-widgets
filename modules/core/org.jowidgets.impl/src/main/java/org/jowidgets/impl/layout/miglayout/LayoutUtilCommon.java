@@ -45,10 +45,14 @@ import java.util.IdentityHashMap;
 import java.util.TreeSet;
 import java.util.WeakHashMap;
 
+import org.jowidgets.logging.api.api.ILogger;
+import org.jowidgets.logging.api.api.LoggerProvider;
+
 /**
  * A utility class that has only static helper methods.
  */
 final class LayoutUtilCommon {
+
     public static final int MIN = 0;
     public static final int PREF = 1;
     public static final int MAX = 2;
@@ -64,6 +68,8 @@ final class LayoutUtilCommon {
      * Tag int for a value that in considered "not set". Used as "null" element in int arrays.
      */
     public static final int NOT_SET = Integer.MIN_VALUE + 12346; // Magic value...
+
+    private static final ILogger LOGGER = LoggerProvider.get(LayoutUtilCommon.class);
 
     // Index for the different sizes
 
@@ -533,9 +539,7 @@ final class LayoutUtilCommon {
         writeXMLObject(writeOutputStream, o, new ExceptionListener() {
             @Override
             public void exceptionThrown(final Exception e) {
-                //CHECKSTYLE:OFF
-                e.printStackTrace();
-                //CHECKSTYLE:ON
+                LOGGER.error(e);
             }
         });
 

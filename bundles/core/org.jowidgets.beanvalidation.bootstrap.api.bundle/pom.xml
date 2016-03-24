@@ -34,7 +34,7 @@
 				<configuration>
 					<instructions>
 						<Embed-Dependency>org.jowidgets.beanvalidation.bootstrap.api;inline=true</Embed-Dependency>
-						<Require-Bundle>org.jowidgets.util.bundle,org.jowidgets.classloading.api.bundle</Require-Bundle>
+						<Require-Bundle>org.jowidgets.util.bundle,org.jowidgets.classloading.api.bundle,org.jowidgets.logging.api.bundle</Require-Bundle>
 					</instructions>
 				</configuration>
 			</plugin>

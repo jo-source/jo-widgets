@@ -29,9 +29,13 @@
 package org.jowidgets.spi.impl.swt.common.widgets.base;
 
 import org.eclipse.swt.widgets.Composite;
+import org.jowidgets.logging.api.api.ILogger;
+import org.jowidgets.logging.api.api.LoggerProvider;
 import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
 
 public final class SwtCompositeFactory {
+
+    private static final ILogger LOGGER = LoggerProvider.get(SwtCompositeFactory.class);
 
     private static PatchedCompositeReflectionAccessor accessor;
     private static boolean patchFailed = false;
@@ -60,10 +64,7 @@ public final class SwtCompositeFactory {
             }
             catch (final Exception e) {
                 patchFailed = true;
-                //CHECKSTYLE:OFF
-                System.out.println("Composite min size patch can not be applied");
-                e.printStackTrace();
-                //CHECKSTYLE:ON
+                LOGGER.error("Composite min size patch can not be applied", e);
                 return null;
             }
         }

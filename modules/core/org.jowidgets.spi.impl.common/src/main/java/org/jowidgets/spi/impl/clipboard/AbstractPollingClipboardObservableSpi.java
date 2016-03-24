@@ -33,10 +33,14 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import org.jowidgets.logging.api.api.ILogger;
+import org.jowidgets.logging.api.api.LoggerProvider;
 import org.jowidgets.spi.clipboard.IClipboardListenerSpi;
 import org.jowidgets.util.concurrent.DaemonThreadFactory;
 
 public abstract class AbstractPollingClipboardObservableSpi extends ClipboardObservableSpi {
+
+    private static final ILogger LOGGER = LoggerProvider.get(AbstractPollingClipboardObservableSpi.class);
 
     private final ScheduledExecutorService scheduledExecutor;
     private final Runnable pollingExecutor;
@@ -100,10 +104,7 @@ public abstract class AbstractPollingClipboardObservableSpi extends ClipboardObs
                 checkContentChanged();
             }
             catch (final Exception e) {
-                //CHECKSTYLE:OFF
-                //TODO Use uncaught exception handler
-                e.printStackTrace();
-                //CHECKSTYLE:ON
+                LOGGER.error(e);
             }
         }
     }

@@ -39,6 +39,8 @@ import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.widgets.controller.IPopupDetectionListener;
+import org.jowidgets.logging.api.api.ILogger;
+import org.jowidgets.logging.api.api.LoggerProvider;
 import org.jowidgets.spi.impl.controller.TreeNodeObservable;
 import org.jowidgets.spi.impl.swing.common.widgets.base.JoTreeNode;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
@@ -46,6 +48,8 @@ import org.jowidgets.spi.widgets.ITreeNodeSpi;
 import org.jowidgets.util.Assert;
 
 public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
+
+    private static final ILogger LOGGER = LoggerProvider.get(TreeNodeImpl.class);
 
     private final Set<IPopupDetectionListener> popupDetectionListeners;
 
@@ -166,40 +170,29 @@ public class TreeNodeImpl extends TreeNodeObservable implements ITreeNodeSpi {
 
     @Override
     public void setChecked(final boolean checked) {
-        //CHECKSTYLE:OFF
-        System.out.println("Checked Tree is not jet implemented for swing");
-        //CHECKSTYLE:ON
+        LOGGER.warn("Checked Tree is not jet implemented for swing");
     }
 
     @Override
     public boolean isChecked() {
-        //CHECKSTYLE:OFF
-        System.out.println("Checked Tree is not jet implemented for swing");
-        //CHECKSTYLE:ON
+        LOGGER.warn("Checked Tree is not jet implemented for swing");
         return false;
     }
 
     @Override
     public void setGreyed(final boolean greyed) {
-        //CHECKSTYLE:OFF
-        System.out.println("Checked Tree is not jet implemented for swing");
-        //CHECKSTYLE:ON
-
+        LOGGER.warn("Checked Tree is not jet implemented for swing");
     }
 
     @Override
     public boolean isGreyed() {
-        //CHECKSTYLE:OFF
-        System.out.println("Checked Tree is not jet implemented for swing");
-        //CHECKSTYLE:ON
+        LOGGER.warn("Checked Tree is not jet implemented for swing");
         return false;
     }
 
     @Override
     public void setCheckable(final boolean checkable) {
-        //CHECKSTYLE:OFF
-        System.out.println("Checked Tree is not jet implemented for swing");
-        //CHECKSTYLE:ON
+        LOGGER.warn("Checked Tree is not jet implemented for swing");
     }
 
     @Override

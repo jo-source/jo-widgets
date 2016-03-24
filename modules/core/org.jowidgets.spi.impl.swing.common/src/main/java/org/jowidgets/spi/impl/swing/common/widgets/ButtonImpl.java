@@ -38,6 +38,8 @@ import javax.swing.JButton;
 
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.types.Markup;
+import org.jowidgets.logging.api.api.ILogger;
+import org.jowidgets.logging.api.api.LoggerProvider;
 import org.jowidgets.spi.impl.swing.common.image.SwingImageRegistry;
 import org.jowidgets.spi.impl.swing.common.util.AlignmentConvert;
 import org.jowidgets.spi.impl.swing.common.util.FontProvider;
@@ -45,6 +47,8 @@ import org.jowidgets.spi.widgets.IButtonSpi;
 import org.jowidgets.spi.widgets.setup.IButtonSetupSpi;
 
 public class ButtonImpl extends AbstractActionControl implements IButtonSpi {
+
+    private static final ILogger LOGGER = LoggerProvider.get(ButtonImpl.class);
 
     public ButtonImpl(final IButtonSetupSpi setup) {
         super(new JButton());
@@ -108,9 +112,7 @@ public class ButtonImpl extends AbstractActionControl implements IButtonSpi {
             robo = new Robot();
         }
         catch (final AWTException e) {
-            // CHECKSTYLE:OFF
-            e.printStackTrace();
-            // CHECKSTYLE:ON
+            LOGGER.error(e);
             return;
         }
         final JButton button = getUiReference();

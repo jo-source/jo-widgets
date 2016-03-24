@@ -32,7 +32,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.jowidgets.logging.api.api.ILogger;
+import org.jowidgets.logging.api.api.LoggerProvider;
+
 public final class ModelViewIndexConverter<MODEL_TYPE> {
+
+    private static final ILogger LOGGER = LoggerProvider.get(ModelViewIndexConverter.class);
 
     private final ArrayList<MODEL_TYPE> allModels;
     private final Set<MODEL_TYPE> invisibleModels;
@@ -164,7 +169,7 @@ public final class ModelViewIndexConverter<MODEL_TYPE> {
                 }
                 else {
                     //CHECKSTYLE:OFF
-                    System.out.println("ModelViewIndexConverter seems to be inconsistent");
+                    LOGGER.warn("ModelViewIndexConverter seems to be inconsistent");
                     //CHECKSTYLE:ON
                 }
             }

@@ -54,6 +54,8 @@ import javax.swing.tree.TreeSelectionModel;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Position;
 import org.jowidgets.common.types.SelectionPolicy;
+import org.jowidgets.logging.api.api.ILogger;
+import org.jowidgets.logging.api.api.LoggerProvider;
 import org.jowidgets.spi.impl.controller.TreeSelectionObservableSpi;
 import org.jowidgets.spi.impl.swing.common.dnd.IDropSelectionProvider;
 import org.jowidgets.spi.impl.swing.common.options.SwingOptions;
@@ -70,6 +72,8 @@ import org.jowidgets.util.Tuple;
 
 public class TreeImpl extends SwingControl implements ITreeSpi, IDropSelectionProvider {
 
+    private static final ILogger LOGGER = LoggerProvider.get(TreeImpl.class);
+
     private final Map<JoTreeNode, TreeNodeImpl> nodes;
     private final TreeSelectionObservableSpi treeObservable;
 
@@ -84,9 +88,7 @@ public class TreeImpl extends SwingControl implements ITreeSpi, IDropSelectionPr
         super(createComponent(setup));
 
         if (setup.isChecked()) {
-            //CHECKSTYLE:OFF
-            System.out.println("Checked Tree is not jet implemented for swing");
-            //CHECKSTYLE:ON
+            LOGGER.warn("Checked Tree is not jet implemented for swing");
         }
 
         this.nodes = new HashMap<JoTreeNode, TreeNodeImpl>();

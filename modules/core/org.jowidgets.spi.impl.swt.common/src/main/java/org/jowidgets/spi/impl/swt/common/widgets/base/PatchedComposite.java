@@ -37,6 +37,8 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Layout;
+import org.jowidgets.logging.api.api.ILogger;
+import org.jowidgets.logging.api.api.LoggerProvider;
 import org.jowidgets.util.Assert;
 
 /**
@@ -46,6 +48,8 @@ import org.jowidgets.util.Assert;
  * @author MGrossmann
  */
 final class PatchedComposite extends Composite {
+
+    private static final ILogger LOGGER = LoggerProvider.get(PatchedComposite.class);
 
     /* The preferred size of a child has changed */
     private static final int LAYOUT_CHANGED = 1 << 6;
@@ -79,10 +83,7 @@ final class PatchedComposite extends Composite {
         }
         catch (final Exception e) {
             failed = true;
-            //CHECKSTYLE:OFF
-            System.out.println("Composite min size patch can not be applied");
-            e.printStackTrace();
-            //CHECKSTYLE:ON
+            LOGGER.error("Composite min size patch can not be applied", e);
         }
         return super.computeSize(wHint, hHint, changed);
     }

@@ -36,9 +36,13 @@ import javax.validation.ValidationException;
 import javax.validation.Validator;
 
 import org.jowidgets.classloading.api.SharedClassLoader;
+import org.jowidgets.logging.api.api.ILogger;
+import org.jowidgets.logging.api.api.LoggerProvider;
 import org.jowidgets.util.Assert;
 
 public final class BeanValidatorFactory {
+
+    private static final ILogger LOGGER = LoggerProvider.get(BeanValidatorFactory.class);
 
     private static IBeanValidatorFactory instance = createDefaultFactory();
 
@@ -81,10 +85,7 @@ public final class BeanValidatorFactory {
                 return Validation.buildDefaultValidatorFactory().getValidator();
             }
             catch (final ValidationException e) {
-                //TODO MG change error handling (maybe ignore)
-                //CHECKSTYLE:OFF
-                e.printStackTrace();
-                //CHECKSTYLE:ON
+                LOGGER.warn("Error when try to create bean validator", e);
                 return null;
             }
         }
