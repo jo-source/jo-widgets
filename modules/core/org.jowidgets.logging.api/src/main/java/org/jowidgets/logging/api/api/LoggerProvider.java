@@ -33,6 +33,7 @@ import java.util.ServiceLoader;
 
 import org.jowidgets.classloading.api.SharedClassLoader;
 import org.jowidgets.util.Assert;
+import org.jowidgets.util.EmptyCheck;
 
 public final class LoggerProvider {
 
@@ -94,6 +95,9 @@ public final class LoggerProvider {
         final Iterator<ILoggerProvider> iterator = loader.iterator();
 
         if (!iterator.hasNext()) {
+            System.err.println("No logging adapter found for "
+                + ILoggerProvider.class.getName()
+                + ". Using default logging adapter.");
             result = new DefaultLoggerProvider();
         }
         else {
@@ -134,17 +138,17 @@ public final class LoggerProvider {
 
         @Override
         public boolean isTraceEnabled() {
-            return true;
+            return false;
         }
 
         @Override
         public boolean isDebugEnabled() {
-            return true;
+            return false;
         }
 
         @Override
         public boolean isInfoEnabled() {
-            return true;
+            return false;
         }
 
         @Override
@@ -168,21 +172,6 @@ public final class LoggerProvider {
         }
 
         @Override
-        public void info(final String message) {
-            logMessage(LogLevel.INFO, message);
-        }
-
-        @Override
-        public void debug(final String message) {
-            logMessage(LogLevel.DEBUG, message);
-        }
-
-        @Override
-        public void trace(final String message) {
-            logMessage(LogLevel.TRACE, message);
-        }
-
-        @Override
         public void error(final Throwable throwable) {
             logMessage(LogLevel.ERROR, throwable);
         }
@@ -190,21 +179,6 @@ public final class LoggerProvider {
         @Override
         public void warn(final Throwable throwable) {
             logMessage(LogLevel.WARN, throwable);
-        }
-
-        @Override
-        public void info(final Throwable throwable) {
-            logMessage(LogLevel.INFO, throwable);
-        }
-
-        @Override
-        public void debug(final Throwable throwable) {
-            logMessage(LogLevel.DEBUG, throwable);
-        }
-
-        @Override
-        public void trace(final Throwable throwable) {
-            logMessage(LogLevel.TRACE, throwable);
         }
 
         @Override
@@ -218,19 +192,31 @@ public final class LoggerProvider {
         }
 
         @Override
-        public void info(final String message, final Throwable throwable) {
-            logMessage(LogLevel.INFO, message, throwable);
-        }
+        public void info(final String message) {}
 
         @Override
-        public void debug(final String message, final Throwable throwable) {
-            logMessage(LogLevel.DEBUG, message, throwable);
-        }
+        public void debug(final String message) {}
 
         @Override
-        public void trace(final String message, final Throwable throwable) {
-            logMessage(LogLevel.TRACE, message, throwable);
-        }
+        public void trace(final String message) {}
+
+        @Override
+        public void info(final Throwable throwable) {}
+
+        @Override
+        public void debug(final Throwable throwable) {}
+
+        @Override
+        public void trace(final Throwable throwable) {}
+
+        @Override
+        public void info(final String message, final Throwable throwable) {}
+
+        @Override
+        public void debug(final String message, final Throwable throwable) {}
+
+        @Override
+        public void trace(final String message, final Throwable throwable) {}
 
         private void logMessage(final LogLevel level, final Throwable throwable) {
             logMessage(level, null, throwable);
@@ -243,7 +229,7 @@ public final class LoggerProvider {
         private void logMessage(final LogLevel level, final String message, final Throwable throwable) {
             final StringBuilder builder = new StringBuilder(prefix);
             builder.append(level.toString());
-            if (message != null) {
+            if (!EmptyCheck.isEmpty(message)) {
                 builder.append(" - ");
                 builder.append(message);
             }
@@ -259,10 +245,7 @@ public final class LoggerProvider {
 
     private static enum LogLevel {
         ERROR,
-        WARN,
-        INFO,
-        DEBUG,
-        TRACE;
+        WARN;
     }
 
 }
