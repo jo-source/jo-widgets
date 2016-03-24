@@ -98,15 +98,24 @@ public final class LoggerProvider {
         }
         else {
             result = iterator.next();
-            if (iterator.hasNext()) {
-                throw new IllegalStateException("More than one implementation found for '"
+            while (iterator.hasNext()) {
+                final String msg = "Another logging adapter '"
+                    + iterator.next().getClass().getName()
+                    + "' found for '"
                     + ILoggerProvider.class.getName()
-                    + "'");
+                    + "'. The adapter will be ignored and the adapter '"
+                    + result.getClass()
+                    + "' will be used.";
+                //CHECKSTYLE:OFF
+                System.err.println(msg);
+                //CHECKSTYLE:ON
+                result.get(LoggerProvider.class.getName()).error(msg);
             }
         }
         return result;
     }
 
+    //TODO cache logger by logger name
     private static final class DefaultLoggerProvider implements ILoggerProvider {
         @Override
         public ILogger get(final String name) {
