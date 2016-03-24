@@ -79,17 +79,26 @@ public final class BeanValidatorFactory {
 
     private static class DefaultBeanValidatorFactory implements IBeanValidatorFactory {
 
+        private boolean failed;
+
         @Override
         public Validator create() {
-            try {
-                return Validation.buildDefaultValidatorFactory().getValidator();
-            }
-            catch (final ValidationException e) {
-                LOGGER.warn("Error when try to create bean validator", e);
+            if (failed) {
                 return null;
             }
+            else {
+                try {
+                    return Validation.buildDefaultValidatorFactory().getValidator();
+                }
+                catch (final ValidationException e) {
+                    LOGGER.info("No implementaion for javax.validation (bean balidation) found "
+                        + Validator.class.getName()
+                        + ". Bean validation anotations will have no effect!", e);
+                    failed = true;
+                    return null;
+                }
+            }
         }
-
     }
 
 }
