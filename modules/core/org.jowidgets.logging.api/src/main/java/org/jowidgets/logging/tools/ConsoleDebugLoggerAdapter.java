@@ -40,17 +40,7 @@ public class ConsoleDebugLoggerAdapter extends ConsoleInfoLoggerAdapter {
     }
 
     @Override
-    public void debug(final String message) {
-        logMessage(LogLevel.DEBUG, message);
-    }
-
-    @Override
-    public void debug(final Throwable throwable) {
-        logMessage(LogLevel.DEBUG, throwable);
-    }
-
-    @Override
-    public void debug(final String message, final Throwable throwable) {
+    public void debug(final String wrapperFQCN, final String message, final Throwable throwable) {
         logMessage(LogLevel.DEBUG, message, throwable);
     }
 

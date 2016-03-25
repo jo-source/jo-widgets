@@ -32,116 +32,38 @@ import org.jowidgets.logging.api.ILogger;
 import org.jowidgets.util.Assert;
 import org.slf4j.spi.LocationAwareLogger;
 
-final class Slf4JLocationAwareLoggerAdapter implements ILogger {
+final class Slf4JLocationAwareLoggerAdapter extends AbstractSlf4JLoggerAdapter implements ILogger {
 
-    private static final String THIS_WRAPPER_FQCN = Slf4JLocationAwareLoggerAdapter.class.getName();
-
-    private final String wrapperFQCN;
     private final LocationAwareLogger original;
 
     public Slf4JLocationAwareLoggerAdapter(final LocationAwareLogger original, final String wrapperFQCN) {
+        super(original, wrapperFQCN);
         Assert.paramNotNull(original, "original");
         this.original = original;
-        this.wrapperFQCN = wrapperFQCN != null ? wrapperFQCN : THIS_WRAPPER_FQCN;
     }
 
     @Override
-    public boolean isTraceEnabled() {
-        return original.isTraceEnabled();
-    }
-
-    @Override
-    public boolean isDebugEnabled() {
-        return original.isDebugEnabled();
-    }
-
-    @Override
-    public boolean isInfoEnabled() {
-        return original.isInfoEnabled();
-    }
-
-    @Override
-    public boolean isWarnEnabled() {
-        return original.isWarnEnabled();
-    }
-
-    @Override
-    public boolean isErrorEnabled() {
-        return original.isErrorEnabled();
-    }
-
-    @Override
-    public void error(final String message) {
-        original.log(null, wrapperFQCN, LocationAwareLogger.ERROR_INT, message, null, null);
-    }
-
-    @Override
-    public void warn(final String message) {
-        original.log(null, wrapperFQCN, LocationAwareLogger.WARN_INT, message, null, null);
-    }
-
-    @Override
-    public void info(final String message) {
-        original.log(null, wrapperFQCN, LocationAwareLogger.INFO_INT, message, null, null);
-    }
-
-    @Override
-    public void debug(final String message) {
-        original.log(null, wrapperFQCN, LocationAwareLogger.DEBUG_INT, message, null, null);
-    }
-
-    @Override
-    public void trace(final String message) {
-        original.log(null, wrapperFQCN, LocationAwareLogger.TRACE_INT, message, null, null);
-    }
-
-    @Override
-    public void error(final Throwable throwable) {
-        original.log(null, wrapperFQCN, LocationAwareLogger.ERROR_INT, null, null, throwable);
-    }
-
-    @Override
-    public void warn(final Throwable throwable) {
-        original.log(null, wrapperFQCN, LocationAwareLogger.WARN_INT, null, null, throwable);
-    }
-
-    @Override
-    public void info(final Throwable throwable) {
-        original.log(null, wrapperFQCN, LocationAwareLogger.INFO_INT, null, null, throwable);
-    }
-
-    @Override
-    public void debug(final Throwable throwable) {
-        original.log(null, wrapperFQCN, LocationAwareLogger.DEBUG_INT, null, null, throwable);
-    }
-
-    @Override
-    public void trace(final Throwable throwable) {
-        original.log(null, wrapperFQCN, LocationAwareLogger.TRACE_INT, null, null, throwable);
-    }
-
-    @Override
-    public void error(final String message, final Throwable throwable) {
+    public void error(final String wrapperFQCN, final String message, final Throwable throwable) {
         original.log(null, wrapperFQCN, LocationAwareLogger.ERROR_INT, message, null, throwable);
     }
 
     @Override
-    public void warn(final String message, final Throwable throwable) {
+    public void warn(final String wrapperFQCN, final String message, final Throwable throwable) {
         original.log(null, wrapperFQCN, LocationAwareLogger.WARN_INT, message, null, throwable);
     }
 
     @Override
-    public void info(final String message, final Throwable throwable) {
+    public void info(final String wrapperFQCN, final String message, final Throwable throwable) {
         original.log(null, wrapperFQCN, LocationAwareLogger.INFO_INT, message, null, throwable);
     }
 
     @Override
-    public void debug(final String message, final Throwable throwable) {
+    public void debug(final String wrapperFQCN, final String message, final Throwable throwable) {
         original.log(null, wrapperFQCN, LocationAwareLogger.DEBUG_INT, message, null, throwable);
     }
 
     @Override
-    public void trace(final String message, final Throwable throwable) {
+    public void trace(final String wrapperFQCN, final String message, final Throwable throwable) {
         original.log(null, wrapperFQCN, LocationAwareLogger.TRACE_INT, message, null, throwable);
     }
 

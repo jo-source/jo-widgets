@@ -78,16 +78,22 @@ public final class LoggingDemo implements IApplication {
                 LOGGER.error("The message to log in error level");
             }
         });
+        frame.add(BPF.button("Log warning with message"), cc).addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                logWarningWithException("The message to log with the exception");
+            }
+        });
         frame.add(BPF.button("Log exception with message"), cc).addActionListener(new IActionListener() {
             @Override
             public void actionPerformed() {
-                logException("The message to log with the exception");
+                logErrorWithException("The message to log with the exception");
             }
         });
         frame.add(BPF.button("Log exception without message"), cc).addActionListener(new IActionListener() {
             @Override
             public void actionPerformed() {
-                logException(null);
+                logErrorWithException(null);
             }
         });
         frame.add(BPF.button("Log error with using wrapped logger"), cc).addActionListener(new IActionListener() {
@@ -101,13 +107,22 @@ public final class LoggingDemo implements IApplication {
         frame.setVisible(true);
     }
 
-    private void logException(final String message) {
+    private void logErrorWithException(final String message) {
         try {
             final byte[] buffer = new byte[1];
             buffer[1] = 0;
         }
         catch (final Exception e) {
             LOGGER.error(message, e);
+        }
+    }
+
+    private void logWarningWithException(final String message) {
+        try {
+            throw new UnsupportedOperationException("This operation is not supported");
+        }
+        catch (final Exception e) {
+            LOGGER.warn(message, e);
         }
     }
 

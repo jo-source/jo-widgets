@@ -29,8 +29,6 @@
 package org.jowidgets.logging.api;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,6 +39,7 @@ import org.jowidgets.logging.tools.ConsoleLoggerProvider;
 import org.jowidgets.logging.tools.DefaultLoggerProvider;
 import org.jowidgets.logging.tools.ILoggerFactory;
 import org.jowidgets.logging.tools.LoggerFactoryComposite;
+import org.jowidgets.logging.tools.LoggerProviderToFactoryAdapter;
 import org.jowidgets.util.Assert;
 
 /**
@@ -51,13 +50,12 @@ public final class LoggerProvider {
 
     static final String DEFAULT_LOGGER_WARNING = "No logging adapter found for "
         + ILoggerProvider.class.getName()
-        + ". Using default logging adapter that is logging errors and warnings to the console.";
+        + ". Using default logging adapter that will log errors and warnings to the console and ignore all other log levels.";
 
-    private static final List<ILoggerProviderDecorator> LOGGER_PROVIDER_DECORATORS = createRegisteredLoggerProviderDecorators();
-    private static final List<LoggerProviderImpl> REGISTERED_PROVIDERS = createRegisteredLoggerProviders();
-    private static final List<LoggerProviderImpl> MANUALLY_ADDED_PROVIDERS = new LinkedList<LoggerProviderImpl>();
+    private static final List<ILoggerProvider> REGISTERED_PROVIDERS = createRegisteredLoggerProviders();
+    private static final List<ILoggerProvider> MANUALLY_ADDED_PROVIDERS = new LinkedList<ILoggerProvider>();
 
-    private static ILoggerProvider provider;
+    private static ILoggerProvider loggerProvider;
 
     private LoggerProvider() {}
 
@@ -70,11 +68,11 @@ public final class LoggerProvider {
      * @param factory The logger provider to set, may be null if default should be used
      */
     public static synchronized void setLoggerProvider(final ILoggerProvider provider) {
-        LoggerProvider.provider = null;
+        LoggerProvider.loggerProvider = null;
         REGISTERED_PROVIDERS.clear();
         MANUALLY_ADDED_PROVIDERS.clear();
         if (provider != null) {
-            MANUALLY_ADDED_PROVIDERS.add(new LoggerProviderImpl(provider));
+            MANUALLY_ADDED_PROVIDERS.add(provider);
         }
     }
 
@@ -87,8 +85,8 @@ public final class LoggerProvider {
      */
     public static synchronized void addLoggerProvider(final ILoggerProvider provider) {
         Assert.paramNotNull(provider, "provider");
-        LoggerProvider.provider = null;
-        MANUALLY_ADDED_PROVIDERS.add(new LoggerProviderImpl(provider));
+        LoggerProvider.loggerProvider = null;
+        MANUALLY_ADDED_PROVIDERS.add(provider);
     }
 
     /**
@@ -102,14 +100,8 @@ public final class LoggerProvider {
      */
     public static synchronized boolean removeLoggerProvider(final ILoggerProvider provider) {
         Assert.paramNotNull(provider, "provider");
-        LoggerProvider.provider = null;
-        for (final LoggerProviderImpl currentProvider : new ArrayList<LoggerProviderImpl>(MANUALLY_ADDED_PROVIDERS)) {
-            if (currentProvider.getOriginal().equals(provider)) {
-                MANUALLY_ADDED_PROVIDERS.remove(currentProvider);
-                return true;
-            }
-        }
-        return false;
+        LoggerProvider.loggerProvider = null;
+        return MANUALLY_ADDED_PROVIDERS.remove(provider);
     }
 
     /**
@@ -169,45 +161,37 @@ public final class LoggerProvider {
      * @return The logger provider instance, never null
      */
     private static ILoggerProvider instance() {
-        if (provider == null) {
-            provider = createLoggerProvider();
+        if (loggerProvider == null) {
+            loggerProvider = createLoggerProvider();
         }
-        return provider;
-    }
-
-    public static synchronized void addLoggerDecoratorProvider(final ILoggerProviderDecorator decorator) {
-        Assert.paramNotNull(decorator, "decorator");
-        LOGGER_PROVIDER_DECORATORS.add(decorator);
-        sortDecorators(LOGGER_PROVIDER_DECORATORS);
-        redecorateCurrentProviders();
-    }
-
-    public static synchronized void removeLoggerDecoratorProvider(final ILoggerProviderDecorator decorator) {
-        Assert.paramNotNull(decorator, "decorator");
-        final boolean removed = LOGGER_PROVIDER_DECORATORS.remove(decorator);
-        if (removed) {
-            sortDecorators(LOGGER_PROVIDER_DECORATORS);
-            redecorateCurrentProviders();
-        }
+        return loggerProvider;
     }
 
     private static synchronized ILoggerProvider createLoggerProvider() {
-        final List<LoggerProviderImpl> loggerProviders = getAllLoggerProviders();
+        final List<ILoggerProvider> loggerProviders = getAllLoggerProviders();
         if (loggerProviders.size() > 1) {
-            return new DefaultLoggerProvider(new LoggerFactoryComposite(loggerProviders));
+            return new DefaultLoggerProvider(new LoggerFactoryComposite(createLoggerFactoriesForProviders(loggerProviders)));
         }
         else {
             return loggerProviders.iterator().next();
         }
     }
 
-    private static synchronized List<LoggerProviderImpl> getAllLoggerProviders() {
-        final List<LoggerProviderImpl> result = new LinkedList<LoggerProviderImpl>(REGISTERED_PROVIDERS);
+    private static List<ILoggerFactory> createLoggerFactoriesForProviders(final List<ILoggerProvider> providers) {
+        final List<ILoggerFactory> result = new ArrayList<ILoggerFactory>();
+        for (final ILoggerProvider provider : providers) {
+            result.add(new LoggerProviderToFactoryAdapter(provider));
+        }
+        return result;
+    }
+
+    private static synchronized List<ILoggerProvider> getAllLoggerProviders() {
+        final List<ILoggerProvider> result = new LinkedList<ILoggerProvider>(REGISTERED_PROVIDERS);
         result.addAll(MANUALLY_ADDED_PROVIDERS);
 
         if (result.isEmpty()) {
             printNoLoggingAdapterFound();
-            result.add(new LoggerProviderImpl(ConsoleLoggerProvider.warnLoggerProvider()));
+            result.add(ConsoleLoggerProvider.warnLoggerProvider());
         }
 
         return result;
@@ -219,8 +203,8 @@ public final class LoggerProvider {
         //CHECKSTYLE:ON
     }
 
-    private static synchronized List<LoggerProviderImpl> createRegisteredLoggerProviders() {
-        final List<LoggerProviderImpl> result = new LinkedList<LoggerProviderImpl>();
+    private static synchronized List<ILoggerProvider> createRegisteredLoggerProviders() {
+        final List<ILoggerProvider> result = new LinkedList<ILoggerProvider>();
 
         final ServiceLoader<ILoggerProvider> loader = ServiceLoader.load(
                 ILoggerProvider.class,
@@ -228,82 +212,10 @@ public final class LoggerProvider {
         final Iterator<ILoggerProvider> iterator = loader.iterator();
 
         while (iterator.hasNext()) {
-            result.add(new LoggerProviderImpl(iterator.next()));
+            result.add(iterator.next());
         }
 
         return result;
-    }
-
-    private static List<ILoggerProviderDecorator> createRegisteredLoggerProviderDecorators() {
-        final List<ILoggerProviderDecorator> result = new LinkedList<ILoggerProviderDecorator>();
-        final ServiceLoader<ILoggerProviderDecorator> widgetServiceLoader = ServiceLoader.load(
-                ILoggerProviderDecorator.class,
-                SharedClassLoader.getCompositeClassLoader());
-        if (widgetServiceLoader != null) {
-            final Iterator<ILoggerProviderDecorator> iterator = widgetServiceLoader.iterator();
-            while (iterator.hasNext()) {
-                result.add(iterator.next());
-            }
-        }
-        sortDecorators(result);
-        return result;
-    }
-
-    private static void sortDecorators(final List<ILoggerProviderDecorator> decorators) {
-        Collections.sort(decorators, new Comparator<ILoggerProviderDecorator>() {
-            @Override
-            public int compare(final ILoggerProviderDecorator decorator1, final ILoggerProviderDecorator decorator2) {
-                if (decorator1 != null && decorator2 != null) {
-                    return decorator2.getOrder() - decorator1.getOrder();
-                }
-                return 0;
-            }
-        });
-    }
-
-    private static ILoggerProvider decorateLoggerProvider(final ILoggerProvider original) {
-        ILoggerProvider result = original;
-        for (final ILoggerProviderDecorator decorator : LOGGER_PROVIDER_DECORATORS) {
-            result = decorator.decorate(original);
-        }
-        return result;
-    }
-
-    private static synchronized void redecorateCurrentProviders() {
-        for (final LoggerProviderImpl providerToDecorate : MANUALLY_ADDED_PROVIDERS) {
-            providerToDecorate.redecorate();
-        }
-    }
-
-    private static final class LoggerProviderImpl implements ILoggerProvider, ILoggerFactory {
-
-        private final ILoggerProvider original;
-        private ILoggerProvider decorated;
-
-        LoggerProviderImpl(final ILoggerProvider original) {
-            Assert.paramNotNull(original, "original");
-            this.original = original;
-            this.decorated = decorateLoggerProvider(original);
-        }
-
-        @Override
-        public ILogger get(final String name, final String wrapperFQCN) {
-            return decorated.get(name, wrapperFQCN);
-        }
-
-        @Override
-        public ILogger create(final String name, final String wrapperFQCN) {
-            return get(name, wrapperFQCN);
-        }
-
-        ILoggerProvider getOriginal() {
-            return original;
-        }
-
-        void redecorate() {
-            this.decorated = decorateLoggerProvider(original);
-        }
-
     }
 
 }

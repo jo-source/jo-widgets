@@ -32,74 +32,101 @@ import org.jowidgets.logging.api.ILogger;
 
 public abstract class AbstractLoggerAdapter implements ILogger {
 
+    private static final String THIS_WRAPPER_FQCN = AbstractLoggerAdapter.class.getName();
+
+    private final String wrapperFQCN;
+
+    protected AbstractLoggerAdapter() {
+        this(null);
+    }
+
+    protected AbstractLoggerAdapter(final String wrapperFQCN) {
+        this.wrapperFQCN = wrapperFQCN != null ? wrapperFQCN : THIS_WRAPPER_FQCN;
+    }
+
+    protected abstract void error(String wrapperFQCN, final String message, final Throwable throwable);
+
+    protected abstract void warn(String wrapperFQCN, final String message, final Throwable throwable);
+
+    protected abstract void info(String wrapperFQCN, final String message, final Throwable throwable);
+
+    protected abstract void debug(String wrapperFQCN, final String message, final Throwable throwable);
+
+    protected abstract void trace(String wrapperFQCN, final String message, final Throwable throwable);
+
     @Override
-    public boolean isTraceEnabled() {
-        return false;
+    public final void error(final String message) {
+        error(wrapperFQCN, message, null);
     }
 
     @Override
-    public boolean isDebugEnabled() {
-        return false;
+    public final void error(final Throwable throwable) {
+        error(wrapperFQCN, null, throwable);
     }
 
     @Override
-    public boolean isInfoEnabled() {
-        return false;
+    public final void error(final String message, final Throwable throwable) {
+        error(wrapperFQCN, message, throwable);
     }
 
     @Override
-    public boolean isWarnEnabled() {
-        return false;
+    public final void warn(final String message) {
+        warn(wrapperFQCN, message, null);
     }
 
     @Override
-    public boolean isErrorEnabled() {
-        return false;
+    public final void warn(final Throwable throwable) {
+        warn(wrapperFQCN, null, throwable);
     }
 
     @Override
-    public void error(final String message) {}
+    public final void warn(final String message, final Throwable throwable) {
+        warn(wrapperFQCN, message, throwable);
+    }
 
     @Override
-    public void warn(final String message) {}
+    public final void info(final String message) {
+        info(wrapperFQCN, message, null);
+    }
 
     @Override
-    public void info(final String message) {}
+    public final void info(final Throwable throwable) {
+        info(wrapperFQCN, null, throwable);
+    }
 
     @Override
-    public void debug(final String message) {}
+    public final void info(final String message, final Throwable throwable) {
+        info(wrapperFQCN, message, throwable);
+    }
 
     @Override
-    public void trace(final String message) {}
+    public final void debug(final String message) {
+        debug(wrapperFQCN, message, null);
+    }
 
     @Override
-    public void error(final Throwable throwable) {}
+    public final void debug(final Throwable throwable) {
+        debug(wrapperFQCN, null, throwable);
+    }
 
     @Override
-    public void warn(final Throwable throwable) {}
+    public final void debug(final String message, final Throwable throwable) {
+        debug(wrapperFQCN, message, throwable);
+    }
 
     @Override
-    public void info(final Throwable throwable) {}
+    public final void trace(final String message) {
+        trace(wrapperFQCN, message, null);
+    }
 
     @Override
-    public void debug(final Throwable throwable) {}
+    public final void trace(final Throwable throwable) {
+        trace(wrapperFQCN, null, throwable);
+    }
 
     @Override
-    public void trace(final Throwable throwable) {}
-
-    @Override
-    public void error(final String message, final Throwable throwable) {}
-
-    @Override
-    public void warn(final String message, final Throwable throwable) {}
-
-    @Override
-    public void info(final String message, final Throwable throwable) {}
-
-    @Override
-    public void debug(final String message, final Throwable throwable) {}
-
-    @Override
-    public void trace(final String message, final Throwable throwable) {}
+    public final void trace(final String message, final Throwable throwable) {
+        trace(wrapperFQCN, message, throwable);
+    }
 
 }

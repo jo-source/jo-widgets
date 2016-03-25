@@ -33,20 +33,17 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import org.jowidgets.logging.api.ILogger;
+import org.jowidgets.logging.tools.AbstractLoggerAdapter;
 import org.jowidgets.util.Assert;
 
-final class JulLoggerAdapter implements ILogger {
-
-    private static final String THIS_WRAPPER_FQCN = JulLoggerAdapter.class.getName();
-
-    private final String wrapperFQCN;
+final class JulLoggerAdapter extends AbstractLoggerAdapter implements ILogger {
 
     private final Logger original;
 
     public JulLoggerAdapter(final Logger original, final String wrapperFQCN) {
+        super(wrapperFQCN);
         Assert.paramNotNull(original, "original");
         this.original = original;
-        this.wrapperFQCN = wrapperFQCN != null ? wrapperFQCN : THIS_WRAPPER_FQCN;
     }
 
     @Override
@@ -75,98 +72,40 @@ final class JulLoggerAdapter implements ILogger {
     }
 
     @Override
-    public void error(final String message) {
-        log(Level.SEVERE, message);
+    public void error(final String wrapperFQCN, final String message, final Throwable throwable) {
+        log(wrapperFQCN, Level.SEVERE, message, throwable);
     }
 
     @Override
-    public void warn(final String message) {
-        log(Level.WARNING, message);
+    public void warn(final String wrapperFQCN, final String message, final Throwable throwable) {
+        log(wrapperFQCN, Level.WARNING, message, throwable);
     }
 
     @Override
-    public void info(final String message) {
-        log(Level.INFO, message);
+    public void info(final String wrapperFQCN, final String message, final Throwable throwable) {
+        log(wrapperFQCN, Level.INFO, message, throwable);
     }
 
     @Override
-    public void debug(final String message) {
-        log(Level.FINE, message);
+    public void debug(final String wrapperFQCN, final String message, final Throwable throwable) {
+        log(wrapperFQCN, Level.FINE, message, throwable);
     }
 
     @Override
-    public void trace(final String message) {
-        log(Level.FINEST, message);
+    public void trace(final String wrapperFQCN, final String message, final Throwable throwable) {
+        log(wrapperFQCN, Level.FINEST, message, throwable);
     }
 
-    @Override
-    public void error(final Throwable throwable) {
-        log(Level.SEVERE, throwable);
-    }
-
-    @Override
-    public void warn(final Throwable throwable) {
-        log(Level.WARNING, throwable);
-    }
-
-    @Override
-    public void info(final Throwable throwable) {
-        log(Level.INFO, throwable);
-    }
-
-    @Override
-    public void debug(final Throwable throwable) {
-        log(Level.FINE, throwable);
-    }
-
-    @Override
-    public void trace(final Throwable throwable) {
-        log(Level.FINEST, throwable);
-    }
-
-    @Override
-    public void error(final String message, final Throwable throwable) {
-        log(Level.SEVERE, message, throwable);
-    }
-
-    @Override
-    public void warn(final String message, final Throwable throwable) {
-        log(Level.WARNING, message, throwable);
-    }
-
-    @Override
-    public void info(final String message, final Throwable throwable) {
-        log(Level.INFO, message, throwable);
-    }
-
-    @Override
-    public void debug(final String message, final Throwable throwable) {
-        log(Level.FINE, message, throwable);
-    }
-
-    @Override
-    public void trace(final String message, final Throwable throwable) {
-        log(Level.FINEST, message, throwable);
-    }
-
-    private void log(final Level level, final Throwable throwable) {
-        log(level, null, throwable);
-    }
-
-    private void log(final Level level, final String message) {
-        log(level, message, null);
-    }
-
-    private void log(final Level level, final String message, final Throwable throwable) {
+    private void log(final String wrapperFQCN, final Level level, final String message, final Throwable throwable) {
         final LogRecord record = new LogRecord(level, message);
         record.setLoggerName(original.getName());
         record.setThrown(throwable);
-        fillCallerDataToRecord(record);
+        fillCallerDataToRecord(wrapperFQCN, record);
         original.log(record);
 
     }
 
-    private void fillCallerDataToRecord(final LogRecord record) {
+    private void fillCallerDataToRecord(final String wrapperFQCN, final LogRecord record) {
         final StackTraceElement[] steArray = new Throwable().getStackTrace();
 
         int selfIndex = -1;

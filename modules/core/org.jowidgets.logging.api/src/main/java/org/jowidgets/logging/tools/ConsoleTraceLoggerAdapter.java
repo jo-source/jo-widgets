@@ -40,17 +40,7 @@ public class ConsoleTraceLoggerAdapter extends ConsoleDebugLoggerAdapter {
     }
 
     @Override
-    public void trace(final String message) {
-        logMessage(LogLevel.TRACE, message);
-    }
-
-    @Override
-    public void trace(final Throwable throwable) {
-        logMessage(LogLevel.TRACE, throwable);
-    }
-
-    @Override
-    public void trace(final String message, final Throwable throwable) {
+    public void trace(final String wrapperFQCN, final String message, final Throwable throwable) {
         logMessage(LogLevel.TRACE, message, throwable);
     }
 

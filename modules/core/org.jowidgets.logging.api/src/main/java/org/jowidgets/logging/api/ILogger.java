@@ -28,45 +28,107 @@
 
 package org.jowidgets.logging.api;
 
+/**
+ * The logger facade interface for logging issues.
+ * 
+ * 
+ * General method information:
+ * ---------------------------
+ * 
+ * There are two groups of methods:
+ * 
+ * I. Retrieve the enablement for each log level (is...Enabled()).
+ * 
+ * If a log level is not enabled, the invocation of a log method must not have any effect.
+ * 
+ * 
+ * 
+ * II. Do some logging (e.g. warn(String message), error(String message, Throwable t), ...)
+ * 
+ * Invocation of a logging method will route the information to the underlying logging system.
+ * 
+ * It is not obligatory that after the method returns the logging was completed, but it is allowed
+ * to do it synchronously.
+ * 
+ * Depending on the logging subsystem and the performance claim it may be possible e.g. that the log
+ * messages will be queued and processed later to allow to return from the log method immediately.
+ * 
+ * 
+ * LogLevels
+ * ---------
+ * 
+ * There is no general contract when to use which log level, and this often will be discussed religious.
+ * 
+ * If you have no idea how to use levels, here is my philosophy about this issue.
+ * 
+ * If you have your own opinion about that, ignore this chapter :-)
+ * 
+ * I only want to see error messages
+ * if anything seriously goes wrong and anybody has to fix it.
+ * 
+ * I only want to see warn messages
+ * if there may be a problem AND i have a chance to fix the problem to avoid the message in future.
+ * 
+ * I only want to see info messages
+ * for things they do not happen to often and that are important enough to spam the log.
+ * 
+ * If i run the application with warn log level and the application runs stable
+ * i want to see nothing in the log
+ * 
+ * If i run the application with info log level and the application runs stable,
+ * i want to see in the log that it runs and what it is doing if anything happens.
+ * 
+ * If i try to find a bug,
+ * i want to get necessary information in debug level (what ever this is:-)
+ * 
+ * I think, trace log messages should only be inserted with help of aspects to avoid code pollution.
+ * 
+ * 
+ * javadoc
+ * -------
+ * 
+ * Documentation of each single methods was omitted with purpose to enhance the readability of the interface:-)
+ * If it is not clear what the contract of a single method is, please let me know (mail@herr-grossmann.de)
+ */
 public interface ILogger {
-
-    boolean isTraceEnabled();
-
-    boolean isDebugEnabled();
-
-    boolean isInfoEnabled();
-
-    boolean isWarnEnabled();
 
     boolean isErrorEnabled();
 
     void error(String message);
 
-    void warn(String message);
-
-    void info(String message);
-
-    void debug(String message);
-
-    void trace(String message);
-
     void error(Throwable throwable);
-
-    void warn(Throwable throwable);
-
-    void info(Throwable throwable);
-
-    void debug(Throwable throwable);
-
-    void trace(Throwable throwable);
 
     void error(String message, Throwable throwable);
 
+    boolean isWarnEnabled();
+
+    void warn(String message);
+
+    void warn(Throwable throwable);
+
     void warn(String message, Throwable throwable);
+
+    boolean isInfoEnabled();
+
+    void info(String message);
+
+    void info(Throwable throwable);
 
     void info(String message, Throwable throwable);
 
+    boolean isDebugEnabled();
+
+    void debug(String message);
+
+    void debug(Throwable throwable);
+
     void debug(String message, Throwable throwable);
+
+    boolean isTraceEnabled();
+
+    void trace(String message);
+
+    void trace(Throwable throwable);
 
     void trace(String message, Throwable throwable);
 

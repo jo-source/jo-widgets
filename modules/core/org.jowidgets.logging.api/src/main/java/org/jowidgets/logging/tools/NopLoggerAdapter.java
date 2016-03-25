@@ -29,7 +29,6 @@
 package org.jowidgets.logging.tools;
 
 import org.jowidgets.logging.api.ILogger;
-import org.jowidgets.logging.tools.AbstractLoggerAdapter;
 
 public final class NopLoggerAdapter extends AbstractLoggerAdapter implements ILogger {
 
@@ -40,5 +39,45 @@ public final class NopLoggerAdapter extends AbstractLoggerAdapter implements ILo
     public static ILogger getInstance() {
         return INSTANCE;
     }
+
+    @Override
+    public boolean isErrorEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean isWarnEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean isInfoEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean isDebugEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean isTraceEnabled() {
+        return false;
+    }
+
+    @Override
+    public void error(final String wrapperFQCN, final String message, final Throwable throwable) {}
+
+    @Override
+    public void warn(final String wrapperFQCN, final String message, final Throwable throwable) {}
+
+    @Override
+    public void info(final String wrapperFQCN, final String message, final Throwable throwable) {}
+
+    @Override
+    public void debug(final String wrapperFQCN, final String message, final Throwable throwable) {}
+
+    @Override
+    public void trace(final String wrapperFQCN, final String message, final Throwable throwable) {}
 
 }

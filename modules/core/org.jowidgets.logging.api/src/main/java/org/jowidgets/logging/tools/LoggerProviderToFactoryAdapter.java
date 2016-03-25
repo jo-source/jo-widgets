@@ -26,14 +26,33 @@
  * DAMAGE.
  */
 
-package org.jowidgets.logging.api;
+package org.jowidgets.logging.tools;
 
-import org.jowidgets.util.IDecorator;
+import org.jowidgets.logging.api.ILogger;
+import org.jowidgets.logging.api.ILoggerProvider;
+import org.jowidgets.util.Assert;
 
-public interface ILoggerProviderDecorator extends IDecorator<ILoggerProvider> {
+/**
+ * Implements the logger factory interface with the logger provider interface
+ * 
+ */
+public final class LoggerProviderToFactoryAdapter implements ILoggerFactory {
 
-    int DEFAULT_ORDER = 2;
+    private final ILoggerProvider provider;
 
-    int getOrder();
+    /**
+     * Creates a new instance
+     * 
+     * @param provider The provider to use, must not be null
+     */
+    public LoggerProviderToFactoryAdapter(final ILoggerProvider provider) {
+        Assert.paramNotNull(provider, "provider");
+        this.provider = provider;
+    }
+
+    @Override
+    public ILogger create(final String name, final String wrapperFQCN) {
+        return provider.get(name, wrapperFQCN);
+    }
 
 }

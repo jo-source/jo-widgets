@@ -40,17 +40,7 @@ public class ConsoleInfoLoggerAdapter extends ConsoleWarnLoggerAdapter {
     }
 
     @Override
-    public void info(final String message) {
-        logMessage(LogLevel.INFO, message);
-    }
-
-    @Override
-    public void info(final Throwable throwable) {
-        logMessage(LogLevel.INFO, throwable);
-    }
-
-    @Override
-    public void info(final String message, final Throwable throwable) {
+    public void info(final String wrapperFQCN, final String message, final Throwable throwable) {
         logMessage(LogLevel.INFO, message, throwable);
     }
 

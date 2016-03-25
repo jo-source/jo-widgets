@@ -26,27 +26,46 @@
  * DAMAGE.
  */
 
-package org.jowidgets.logging.tools;
+package org.jowidgets.addons.logging.slf4j;
 
-import org.jowidgets.logging.api.ILoggerProvider;
-import org.jowidgets.logging.api.ILoggerProviderDecorator;
-import org.jowidgets.util.IDecorator;
+import org.jowidgets.logging.api.ILogger;
+import org.jowidgets.logging.tools.AbstractLoggerAdapter;
+import org.jowidgets.util.Assert;
+import org.slf4j.Logger;
 
-public abstract class AbstractLoggerProviderDecorator implements ILoggerProviderDecorator, IDecorator<ILoggerProvider> {
+abstract class AbstractSlf4JLoggerAdapter extends AbstractLoggerAdapter implements ILogger {
 
-    private final int order;
+    private final Logger original;
 
-    public AbstractLoggerProviderDecorator() {
-        this(ILoggerProviderDecorator.DEFAULT_ORDER);
-    }
-
-    public AbstractLoggerProviderDecorator(final int order) {
-        this.order = order;
+    public AbstractSlf4JLoggerAdapter(final Logger original, final String wrapperFQCN) {
+        super(wrapperFQCN);
+        Assert.paramNotNull(original, "original");
+        this.original = original;
     }
 
     @Override
-    public int getOrder() {
-        return order;
+    public final boolean isTraceEnabled() {
+        return original.isTraceEnabled();
+    }
+
+    @Override
+    public final boolean isDebugEnabled() {
+        return original.isDebugEnabled();
+    }
+
+    @Override
+    public final boolean isInfoEnabled() {
+        return original.isInfoEnabled();
+    }
+
+    @Override
+    public final boolean isWarnEnabled() {
+        return original.isWarnEnabled();
+    }
+
+    @Override
+    public final boolean isErrorEnabled() {
+        return original.isErrorEnabled();
     }
 
 }

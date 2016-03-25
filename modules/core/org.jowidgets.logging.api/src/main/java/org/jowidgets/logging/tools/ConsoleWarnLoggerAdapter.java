@@ -40,17 +40,7 @@ public class ConsoleWarnLoggerAdapter extends ConsoleErrorLoggerAdapter {
     }
 
     @Override
-    public void warn(final String message) {
-        logMessage(LogLevel.WARN, message);
-    }
-
-    @Override
-    public void warn(final Throwable throwable) {
-        logMessage(LogLevel.WARN, throwable);
-    }
-
-    @Override
-    public void warn(final String message, final Throwable throwable) {
+    public void warn(final String wrapperFQCN, final String message, final Throwable throwable) {
         logMessage(LogLevel.WARN, message, throwable);
     }
 

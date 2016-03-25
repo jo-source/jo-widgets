@@ -32,112 +32,38 @@ import org.jowidgets.logging.api.ILogger;
 import org.jowidgets.util.Assert;
 import org.slf4j.Logger;
 
-final class Slf4JLoggerAdapter implements ILogger {
+final class Slf4JLoggerAdapter extends AbstractSlf4JLoggerAdapter implements ILogger {
 
     private final Logger original;
 
     public Slf4JLoggerAdapter(final Logger original) {
+        super(original, null);
         Assert.paramNotNull(original, "original");
         this.original = original;
     }
 
     @Override
-    public boolean isTraceEnabled() {
-        return original.isTraceEnabled();
-    }
-
-    @Override
-    public boolean isDebugEnabled() {
-        return original.isDebugEnabled();
-    }
-
-    @Override
-    public boolean isInfoEnabled() {
-        return original.isInfoEnabled();
-    }
-
-    @Override
-    public boolean isWarnEnabled() {
-        return original.isWarnEnabled();
-    }
-
-    @Override
-    public boolean isErrorEnabled() {
-        return original.isErrorEnabled();
-    }
-
-    @Override
-    public void error(final String message) {
-        original.error(message);
-    }
-
-    @Override
-    public void warn(final String message) {
-        original.warn(message);
-    }
-
-    @Override
-    public void info(final String message) {
-        original.info(message);
-    }
-
-    @Override
-    public void debug(final String message) {
-        original.debug(message);
-    }
-
-    @Override
-    public void trace(final String message) {
-        original.trace(message);
-    }
-
-    @Override
-    public void error(final Throwable throwable) {
-        original.error("", throwable);
-    }
-
-    @Override
-    public void warn(final Throwable throwable) {
-        original.warn("", throwable);
-    }
-
-    @Override
-    public void info(final Throwable throwable) {
-        original.info("", throwable);
-    }
-
-    @Override
-    public void debug(final Throwable throwable) {
-        original.debug("", throwable);
-    }
-
-    @Override
-    public void trace(final Throwable throwable) {
-        original.trace("", throwable);
-    }
-
-    @Override
-    public void error(final String message, final Throwable throwable) {
+    public void error(final String wrapperFQCN, final String message, final Throwable throwable) {
         original.error(message, throwable);
     }
 
     @Override
-    public void warn(final String message, final Throwable throwable) {
+    public void warn(final String wrapperFQCN, final String message, final Throwable throwable) {
         original.warn(message, throwable);
     }
 
     @Override
-    public void info(final String message, final Throwable throwable) {
+    public void info(final String wrapperFQCN, final String message, final Throwable throwable) {
         original.info(message, throwable);
     }
 
     @Override
-    public void debug(final String message, final Throwable throwable) {
+    public void debug(final String wrapperFQCN, final String message, final Throwable throwable) {
         original.debug(message, throwable);
     }
 
     @Override
-    public void trace(final String message, final Throwable throwable) {
+    public void trace(final String wrapperFQCN, final String message, final Throwable throwable) {
         original.trace(message, throwable);
     }
 

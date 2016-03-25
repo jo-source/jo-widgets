@@ -28,7 +28,6 @@
 
 package org.jowidgets.logging.tools;
 
-
 public class ConsoleErrorLoggerAdapter extends AbstractConsoleLoggerAdapter {
 
     public ConsoleErrorLoggerAdapter(final String name) {
@@ -41,17 +40,7 @@ public class ConsoleErrorLoggerAdapter extends AbstractConsoleLoggerAdapter {
     }
 
     @Override
-    public void error(final String message) {
-        logMessage(LogLevel.ERROR, message);
-    }
-
-    @Override
-    public void error(final Throwable throwable) {
-        logMessage(LogLevel.ERROR, throwable);
-    }
-
-    @Override
-    public void error(final String message, final Throwable throwable) {
+    public void error(final String wrapperFQCN, final String message, final Throwable throwable) {
         logMessage(LogLevel.ERROR, message, throwable);
     }
 

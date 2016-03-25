@@ -28,6 +28,8 @@
 
 package org.jowidgets.logging.tools;
 
+import java.io.PrintStream;
+
 import org.jowidgets.logging.api.ILogger;
 import org.jowidgets.util.Assert;
 import org.jowidgets.util.EmptyCheck;
@@ -40,6 +42,46 @@ public abstract class AbstractConsoleLoggerAdapter extends AbstractLoggerAdapter
         Assert.paramNotNull(name, "name");
         this.prefix = name + ": ";
     }
+
+    @Override
+    public boolean isErrorEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean isWarnEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean isInfoEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean isDebugEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean isTraceEnabled() {
+        return false;
+    }
+
+    @Override
+    protected void error(final String wrapperFQCN, final String message, final Throwable throwable) {}
+
+    @Override
+    protected void warn(final String wrapperFQCN, final String message, final Throwable throwable) {}
+
+    @Override
+    protected void info(final String wrapperFQCN, final String message, final Throwable throwable) {}
+
+    @Override
+    protected void debug(final String wrapperFQCN, final String message, final Throwable throwable) {}
+
+    @Override
+    protected void trace(final String wrapperFQCN, final String message, final Throwable throwable) {}
 
     protected final void logMessage(final LogLevel level, final Throwable throwable) {
         logMessage(level, null, throwable);
@@ -56,12 +98,21 @@ public abstract class AbstractConsoleLoggerAdapter extends AbstractLoggerAdapter
             builder.append(" - ");
             builder.append(message);
         }
-        //CHECKSTYLE:OFF
-        System.out.println(builder.toString());
+
+        final PrintStream printStream = getPrintStream(level);
+        printStream.println(builder.toString());
         if (throwable != null) {
-            throwable.printStackTrace();
+            throwable.printStackTrace(printStream);
         }
-        //CHECKSTYLE:ON
+    }
+
+    private PrintStream getPrintStream(final LogLevel level) {
+        if (LogLevel.ERROR.equals(level)) {
+            return System.err;
+        }
+        else {
+            return System.out;
+        }
     }
 
 }
