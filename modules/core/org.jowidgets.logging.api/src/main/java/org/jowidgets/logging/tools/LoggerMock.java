@@ -33,7 +33,7 @@ import org.jowidgets.logging.api.ILogger;
 /**
  * Logger mock that can be used for JUnit tests
  */
-public class LoggerMock implements ILogger {
+public class LoggerMock extends AbstractLoggerAdapter implements ILogger {
 
     private boolean traceEnabled;
     private boolean debugEnabled;
@@ -133,86 +133,28 @@ public class LoggerMock implements ILogger {
     }
 
     @Override
-    public void error(final String message) {
-        logMessage(LogLevel.ERROR, message);
-    }
-
-    @Override
-    public void error(final Throwable throwable) {
-        logMessage(LogLevel.ERROR, throwable);
-    }
-
-    @Override
-    public void error(final String message, final Throwable throwable) {
+    public void error(final String wrapperFQCN, final String message, final Throwable throwable) {
         logMessage(LogLevel.ERROR, message, throwable);
     }
 
     @Override
-    public void warn(final String message) {
-        logMessage(LogLevel.WARN, message);
-    }
-
-    @Override
-    public void warn(final Throwable throwable) {
-        logMessage(LogLevel.WARN, throwable);
-    }
-
-    @Override
-    public void warn(final String message, final Throwable throwable) {
+    public void warn(final String wrapperFQCN, final String message, final Throwable throwable) {
         logMessage(LogLevel.WARN, message, throwable);
     }
 
     @Override
-    public void info(final String message) {
-        logMessage(LogLevel.INFO, message);
-    }
-
-    @Override
-    public void info(final Throwable throwable) {
-        logMessage(LogLevel.INFO, throwable);
-    }
-
-    @Override
-    public void info(final String message, final Throwable throwable) {
+    public void info(final String wrapperFQCN, final String message, final Throwable throwable) {
         logMessage(LogLevel.INFO, message, throwable);
     }
 
     @Override
-    public void debug(final String message) {
-        logMessage(LogLevel.DEBUG, message);
-    }
-
-    @Override
-    public void debug(final Throwable throwable) {
-        logMessage(LogLevel.DEBUG, throwable);
-    }
-
-    @Override
-    public void debug(final String message, final Throwable throwable) {
+    public void debug(final String wrapperFQCN, final String message, final Throwable throwable) {
         logMessage(LogLevel.DEBUG, message, throwable);
     }
 
     @Override
-    public void trace(final String message) {
-        logMessage(LogLevel.TRACE, message);
-    }
-
-    @Override
-    public void trace(final Throwable throwable) {
-        logMessage(LogLevel.TRACE, throwable);
-    }
-
-    @Override
-    public void trace(final String message, final Throwable throwable) {
+    public void trace(final String wrapperFQCN, final String message, final Throwable throwable) {
         logMessage(LogLevel.TRACE, message, throwable);
-    }
-
-    private void logMessage(final LogLevel level, final Throwable throwable) {
-        logMessage(level, null, throwable);
-    }
-
-    private void logMessage(final LogLevel level, final String message) {
-        logMessage(level, message, null);
     }
 
     private void logMessage(final LogLevel level, final String message, final Throwable throwable) {
