@@ -41,9 +41,12 @@ public interface ILoggerFactory {
      * Creates a new logger for the given name.
      * 
      * @param name The name to get the logger for, must not be null
+     * @param wrapperFQCN The full qualified class name of the wrapper if the created logger will be
+     *            used by a logger wrapper. May be null. The wrapper class name will be used to correctly
+     *            determine the calling method of the logger log method omitting the wrapper class
      * 
      * @return The logger for the given name, never null
      */
-    ILogger create(String name);
+    ILogger create(String name, String wrapperFQCN);
 
 }

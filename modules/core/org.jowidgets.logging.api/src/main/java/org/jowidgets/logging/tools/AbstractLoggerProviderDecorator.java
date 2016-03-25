@@ -28,40 +28,25 @@
 
 package org.jowidgets.logging.tools;
 
-import org.jowidgets.logging.api.ILogger;
-import org.jowidgets.util.Assert;
-import org.jowidgets.util.EmptyCheck;
+import org.jowidgets.logging.api.ILoggerProvider;
+import org.jowidgets.logging.api.ILoggerProviderDecorator;
+import org.jowidgets.util.IDecorator;
 
-public abstract class AbstractConsoleLoggerAdapter extends AbstractLoggerAdapter implements ILogger {
+public abstract class AbstractLoggerProviderDecorator implements ILoggerProviderDecorator, IDecorator<ILoggerProvider> {
 
-    private final String prefix;
+    private final int order;
 
-    public AbstractConsoleLoggerAdapter(final String name) {
-        Assert.paramNotNull(name, "name");
-        this.prefix = name + ": ";
+    public AbstractLoggerProviderDecorator() {
+        this(ILoggerProviderDecorator.DEFAULT_ORDER);
     }
 
-    protected final void logMessage(final LogLevel level, final Throwable throwable) {
-        logMessage(level, null, throwable);
+    public AbstractLoggerProviderDecorator(final int order) {
+        this.order = order;
     }
 
-    protected final void logMessage(final LogLevel level, final String message) {
-        logMessage(level, message, null);
-    }
-
-    protected final void logMessage(final LogLevel level, final String message, final Throwable throwable) {
-        final StringBuilder builder = new StringBuilder(prefix);
-        builder.append(level.toString());
-        if (!EmptyCheck.isEmpty(message)) {
-            builder.append(" - ");
-            builder.append(message);
-        }
-        //CHECKSTYLE:OFF
-        System.out.println(builder.toString());
-        if (throwable != null) {
-            throwable.printStackTrace();
-        }
-        //CHECKSTYLE:ON
+    @Override
+    public int getOrder() {
+        return order;
     }
 
 }

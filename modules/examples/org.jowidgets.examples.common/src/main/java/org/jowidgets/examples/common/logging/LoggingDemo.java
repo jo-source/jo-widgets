@@ -40,6 +40,7 @@ import org.jowidgets.tools.widgets.blueprint.BPF;
 public final class LoggingDemo implements IApplication {
 
     private static final ILogger LOGGER = LoggerProvider.get(LoggingDemo.class);
+    private static final ILogger WRAPPED_LOGGER = new LoggingDemoWrapper(LoggingDemo.class + "(wrapped)");
 
     @Override
     public void start(final IApplicationLifecycle lifecycle) {
@@ -89,24 +90,25 @@ public final class LoggingDemo implements IApplication {
                 logException(null);
             }
         });
+        frame.add(BPF.button("Log error with using wrapped logger"), cc).addActionListener(new IActionListener() {
+            @Override
+            public void actionPerformed() {
+                WRAPPED_LOGGER.error("The message to log in error level on wrapped logger");
+            }
+        });
 
         //set the frame visible
         frame.setVisible(true);
     }
 
     private void logException(final String message) {
-
         try {
             final byte[] buffer = new byte[1];
             buffer[1] = 0;
         }
         catch (final Exception e) {
-            if (message != null) {
-                LOGGER.error(message, e);
-            }
-            else {
-                LOGGER.error(e);
-            }
+            LOGGER.error(message, e);
         }
     }
+
 }

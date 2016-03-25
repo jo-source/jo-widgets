@@ -26,173 +26,118 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.logging.jul;
-
-import java.util.logging.Level;
-import java.util.logging.LogRecord;
-import java.util.logging.Logger;
+package org.jowidgets.logging.tools;
 
 import org.jowidgets.logging.api.ILogger;
 import org.jowidgets.util.Assert;
 
-final class JulLoggerAdapter implements ILogger {
+public class LoggerWrapper implements ILogger {
 
-    private static final String THIS_WRAPPER_FQCN = JulLoggerAdapter.class.getName();
+    private final ILogger original;
 
-    private final String wrapperFQCN;
-
-    private final Logger original;
-
-    public JulLoggerAdapter(final Logger original, final String wrapperFQCN) {
+    public LoggerWrapper(final ILogger original) {
         Assert.paramNotNull(original, "original");
         this.original = original;
-        this.wrapperFQCN = wrapperFQCN != null ? wrapperFQCN : THIS_WRAPPER_FQCN;
     }
 
     @Override
     public boolean isTraceEnabled() {
-        return original.isLoggable(Level.FINEST);
+        return original.isTraceEnabled();
     }
 
     @Override
     public boolean isDebugEnabled() {
-        return original.isLoggable(Level.FINE);
+        return original.isDebugEnabled();
     }
 
     @Override
     public boolean isInfoEnabled() {
-        return original.isLoggable(Level.INFO);
+        return original.isInfoEnabled();
     }
 
     @Override
     public boolean isWarnEnabled() {
-        return original.isLoggable(Level.WARNING);
+        return original.isWarnEnabled();
     }
 
     @Override
     public boolean isErrorEnabled() {
-        return original.isLoggable(Level.SEVERE);
+        return original.isErrorEnabled();
     }
 
     @Override
     public void error(final String message) {
-        log(Level.SEVERE, message);
+        original.error(message);
     }
 
     @Override
     public void warn(final String message) {
-        log(Level.WARNING, message);
+        original.warn(message);
     }
 
     @Override
     public void info(final String message) {
-        log(Level.INFO, message);
+        original.info(message);
     }
 
     @Override
     public void debug(final String message) {
-        log(Level.FINE, message);
+        original.debug(message);
     }
 
     @Override
     public void trace(final String message) {
-        log(Level.FINEST, message);
+        original.trace(message);
     }
 
     @Override
     public void error(final Throwable throwable) {
-        log(Level.SEVERE, throwable);
+        original.error(throwable);
     }
 
     @Override
     public void warn(final Throwable throwable) {
-        log(Level.WARNING, throwable);
+        original.warn(throwable);
     }
 
     @Override
     public void info(final Throwable throwable) {
-        log(Level.INFO, throwable);
+        original.info(throwable);
     }
 
     @Override
     public void debug(final Throwable throwable) {
-        log(Level.FINE, throwable);
+        original.debug(throwable);
     }
 
     @Override
     public void trace(final Throwable throwable) {
-        log(Level.FINEST, throwable);
+        original.trace(throwable);
     }
 
     @Override
     public void error(final String message, final Throwable throwable) {
-        log(Level.SEVERE, message, throwable);
+        original.error(message, throwable);
     }
 
     @Override
     public void warn(final String message, final Throwable throwable) {
-        log(Level.WARNING, message, throwable);
+        original.warn(message, throwable);
     }
 
     @Override
     public void info(final String message, final Throwable throwable) {
-        log(Level.INFO, message, throwable);
+        original.info(message, throwable);
     }
 
     @Override
     public void debug(final String message, final Throwable throwable) {
-        log(Level.FINE, message, throwable);
+        original.debug(message, throwable);
     }
 
     @Override
     public void trace(final String message, final Throwable throwable) {
-        log(Level.FINEST, message, throwable);
+        original.trace(message, throwable);
     }
 
-    private void log(final Level level, final Throwable throwable) {
-        log(level, null, throwable);
-    }
-
-    private void log(final Level level, final String message) {
-        log(level, message, null);
-    }
-
-    private void log(final Level level, final String message, final Throwable throwable) {
-        final LogRecord record = new LogRecord(level, message);
-        record.setLoggerName(original.getName());
-        record.setThrown(throwable);
-        fillCallerDataToRecord(record);
-        original.log(record);
-
-    }
-
-    private void fillCallerDataToRecord(final LogRecord record) {
-        final StackTraceElement[] steArray = new Throwable().getStackTrace();
-
-        int selfIndex = -1;
-        for (int i = 0; i < steArray.length; i++) {
-            final String className = steArray[i].getClassName();
-            if (className.equals(wrapperFQCN)) {
-                selfIndex = i;
-                break;
-            }
-        }
-
-        int found = -1;
-        for (int i = selfIndex + 1; i < steArray.length; i++) {
-            final String className = steArray[i].getClassName();
-            if (!(className.equals(wrapperFQCN))) {
-                found = i;
-                break;
-            }
-        }
-
-        if (found != -1) {
-            final StackTraceElement ste = steArray[found];
-            // setting the class name has the side effect of setting
-            // the needToInferCaller variable to false.
-            record.setSourceClassName(ste.getClassName());
-            record.setSourceMethodName(ste.getMethodName());
-        }
-    }
 }

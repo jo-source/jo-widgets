@@ -43,7 +43,7 @@ import org.jowidgets.util.Assert;
 public final class DefaultLoggerProvider implements ILoggerProvider {
 
     private final ILoggerFactory factory;
-    private final ConcurrentMap<String, ILogger> loggers;
+    private final ConcurrentMap<LoggerKey, ILogger> loggers;
 
     /**
      * Creates a new default logger provider for a given logger factory
@@ -53,21 +53,75 @@ public final class DefaultLoggerProvider implements ILoggerProvider {
     public DefaultLoggerProvider(final ILoggerFactory factory) {
         Assert.paramNotNull(factory, "factory");
         this.factory = factory;
-        this.loggers = new ConcurrentHashMap<String, ILogger>();
+        this.loggers = new ConcurrentHashMap<LoggerKey, ILogger>();
     }
 
     @Override
-    public ILogger get(final String name) {
+    public ILogger get(final String name, final String callerFQCN) {
         Assert.paramNotNull(name, "name");
-        final ILogger result = loggers.get(name);
+        final LoggerKey key = new LoggerKey(name, callerFQCN);
+        final ILogger result = loggers.get(key);
         if (result != null) {
             return result;
         }
         else {
-            final ILogger newLogger = factory.create(name);
-            final ILogger oldLogger = loggers.putIfAbsent(name, newLogger);
+            final ILogger newLogger = factory.create(name, callerFQCN);
+            final ILogger oldLogger = loggers.putIfAbsent(key, newLogger);
             return oldLogger == null ? newLogger : oldLogger;
         }
     }
 
+    private static final class LoggerKey {
+
+        private final String name;
+        private final String callerFQCN;
+
+        LoggerKey(final String name, final String callerFQCN) {
+            this.name = name;
+            this.callerFQCN = callerFQCN;
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ((callerFQCN == null) ? 0 : callerFQCN.hashCode());
+            result = prime * result + name.hashCode();
+            return result;
+        }
+
+        @Override
+        public boolean equals(final Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            //Assumption: never use null keys and all comparisons will be done with same type
+            //if (obj == null) {
+            //    return false;
+            //}
+            //if (!(obj instanceof LoggerKey)) {
+            //    return false;
+            //}
+            final LoggerKey other = (LoggerKey) obj;
+            if (name == null) {
+                if (other.name != null) {
+                    return false;
+                }
+            }
+            else if (!name.equals(other.name)) {
+                return false;
+            }
+            if (callerFQCN == null) {
+                if (other.callerFQCN != null) {
+                    return false;
+                }
+            }
+            else if (!callerFQCN.equals(other.callerFQCN)) {
+                return false;
+            }
+
+            return true;
+        }
+
+    }
 }

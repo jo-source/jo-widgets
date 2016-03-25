@@ -36,8 +36,8 @@ import org.jowidgets.logging.api.ILoggerProvider;
 public final class JulLoggerProvider implements ILoggerProvider {
 
     @Override
-    public ILogger get(final String name) {
-        return new JulLoggerAdapter(Logger.getLogger(name));
+    public ILogger get(final String name, final String wrapperFQCN) {
+        return new JulLoggerAdapter(Logger.getLogger(name), wrapperFQCN);
     }
 
 }

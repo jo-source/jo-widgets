@@ -37,12 +37,13 @@ import org.slf4j.spi.LocationAwareLogger;
 public final class Slf4JLoggerProvider implements ILoggerProvider {
 
     @Override
-    public ILogger get(final String name) {
+    public ILogger get(final String name, final String wrapperFQCN) {
         final Logger original = LoggerFactory.getLogger(name);
         if (original instanceof LocationAwareLogger) {
-            return new Slf4JLocationAwareLoggerAdapter((LocationAwareLogger) original);
+            return new Slf4JLocationAwareLoggerAdapter((LocationAwareLogger) original, wrapperFQCN);
         }
         else {
+            original.warn("The logger created from slf4j is not location aware. Invoking location can not correctly determined for logging");
             return new Slf4JLoggerAdapter(original);
         }
     }

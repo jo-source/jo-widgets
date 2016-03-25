@@ -28,40 +28,10 @@
 
 package org.jowidgets.logging.tools;
 
-import org.jowidgets.logging.api.ILogger;
-import org.jowidgets.util.Assert;
-import org.jowidgets.util.EmptyCheck;
-
-public abstract class AbstractConsoleLoggerAdapter extends AbstractLoggerAdapter implements ILogger {
-
-    private final String prefix;
-
-    public AbstractConsoleLoggerAdapter(final String name) {
-        Assert.paramNotNull(name, "name");
-        this.prefix = name + ": ";
-    }
-
-    protected final void logMessage(final LogLevel level, final Throwable throwable) {
-        logMessage(level, null, throwable);
-    }
-
-    protected final void logMessage(final LogLevel level, final String message) {
-        logMessage(level, message, null);
-    }
-
-    protected final void logMessage(final LogLevel level, final String message, final Throwable throwable) {
-        final StringBuilder builder = new StringBuilder(prefix);
-        builder.append(level.toString());
-        if (!EmptyCheck.isEmpty(message)) {
-            builder.append(" - ");
-            builder.append(message);
-        }
-        //CHECKSTYLE:OFF
-        System.out.println(builder.toString());
-        if (throwable != null) {
-            throwable.printStackTrace();
-        }
-        //CHECKSTYLE:ON
-    }
-
+public enum LogLevel {
+    ERROR,
+    WARN,
+    INFO,
+    DEBUG,
+    TRACE;
 }

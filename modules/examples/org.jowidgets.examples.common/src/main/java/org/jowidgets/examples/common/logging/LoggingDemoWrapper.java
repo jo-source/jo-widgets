@@ -26,42 +26,23 @@
  * DAMAGE.
  */
 
-package org.jowidgets.logging.tools;
+package org.jowidgets.examples.common.logging;
 
-import org.jowidgets.logging.api.ILogger;
-import org.jowidgets.util.Assert;
-import org.jowidgets.util.EmptyCheck;
+import org.jowidgets.logging.api.LoggerProvider;
+import org.jowidgets.logging.tools.LoggerWrapper;
 
-public abstract class AbstractConsoleLoggerAdapter extends AbstractLoggerAdapter implements ILogger {
+public class LoggingDemoWrapper extends LoggerWrapper {
 
-    private final String prefix;
-
-    public AbstractConsoleLoggerAdapter(final String name) {
-        Assert.paramNotNull(name, "name");
-        this.prefix = name + ": ";
+    public LoggingDemoWrapper(final String loggerName) {
+        super(LoggerProvider.get(loggerName, LoggingDemoWrapper.class.getName()));
     }
 
-    protected final void logMessage(final LogLevel level, final Throwable throwable) {
-        logMessage(level, null, throwable);
-    }
-
-    protected final void logMessage(final LogLevel level, final String message) {
-        logMessage(level, message, null);
-    }
-
-    protected final void logMessage(final LogLevel level, final String message, final Throwable throwable) {
-        final StringBuilder builder = new StringBuilder(prefix);
-        builder.append(level.toString());
-        if (!EmptyCheck.isEmpty(message)) {
-            builder.append(" - ");
-            builder.append(message);
-        }
+    @Override
+    public void error(final String message) {
         //CHECKSTYLE:OFF
-        System.out.println(builder.toString());
-        if (throwable != null) {
-            throwable.printStackTrace();
-        }
+        System.out.println("Wrapper make log on sysout before super logging: " + message);
         //CHECKSTYLE:ON
+        super.error(message);
     }
 
 }

@@ -47,7 +47,7 @@ public final class NopLoggerProvider implements ILoggerProvider {
     }
 
     @Override
-    public ILogger get(final String name) {
+    public ILogger get(final String name, final String wrapperFQCN) {
         return NopLoggerAdapter.getInstance();
     }
 

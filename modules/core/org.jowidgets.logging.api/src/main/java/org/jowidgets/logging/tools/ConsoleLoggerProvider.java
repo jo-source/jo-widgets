@@ -43,7 +43,7 @@ public final class ConsoleLoggerProvider {
     public static ILoggerProvider errorLoggerProvider() {
         return new DefaultLoggerProvider(new ILoggerFactory() {
             @Override
-            public ILogger create(final String name) {
+            public ILogger create(final String name, final String wrapperFQCN) {
                 return new ConsoleErrorLoggerAdapter(name);
             }
         });
@@ -57,7 +57,7 @@ public final class ConsoleLoggerProvider {
     public static ILoggerProvider warnLoggerProvider() {
         return new DefaultLoggerProvider(new ILoggerFactory() {
             @Override
-            public ILogger create(final String name) {
+            public ILogger create(final String name, final String wrapperFQCN) {
                 return new ConsoleWarnLoggerAdapter(name);
             }
         });
@@ -71,7 +71,7 @@ public final class ConsoleLoggerProvider {
     public static ILoggerProvider infoLoggerProvider() {
         return new DefaultLoggerProvider(new ILoggerFactory() {
             @Override
-            public ILogger create(final String name) {
+            public ILogger create(final String name, final String wrapperFQCN) {
                 return new ConsoleInfoLoggerAdapter(name);
             }
         });
@@ -85,7 +85,7 @@ public final class ConsoleLoggerProvider {
     public static ILoggerProvider debugLoggerProvider() {
         return new DefaultLoggerProvider(new ILoggerFactory() {
             @Override
-            public ILogger create(final String name) {
+            public ILogger create(final String name, final String wrapperFQCN) {
                 return new ConsoleDebugLoggerAdapter(name);
             }
         });
@@ -99,7 +99,7 @@ public final class ConsoleLoggerProvider {
     public static ILoggerProvider traceLoggerProvider() {
         return new DefaultLoggerProvider(new ILoggerFactory() {
             @Override
-            public ILogger create(final String name) {
+            public ILogger create(final String name, final String wrapperFQCN) {
                 return new ConsoleTraceLoggerAdapter(name);
             }
         });

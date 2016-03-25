@@ -26,42 +26,14 @@
  * DAMAGE.
  */
 
-package org.jowidgets.logging.tools;
+package org.jowidgets.logging.api;
 
-import org.jowidgets.logging.api.ILogger;
-import org.jowidgets.util.Assert;
-import org.jowidgets.util.EmptyCheck;
+import org.jowidgets.util.IDecorator;
 
-public abstract class AbstractConsoleLoggerAdapter extends AbstractLoggerAdapter implements ILogger {
+public interface ILoggerProviderDecorator extends IDecorator<ILoggerProvider> {
 
-    private final String prefix;
+    int DEFAULT_ORDER = 2;
 
-    public AbstractConsoleLoggerAdapter(final String name) {
-        Assert.paramNotNull(name, "name");
-        this.prefix = name + ": ";
-    }
-
-    protected final void logMessage(final LogLevel level, final Throwable throwable) {
-        logMessage(level, null, throwable);
-    }
-
-    protected final void logMessage(final LogLevel level, final String message) {
-        logMessage(level, message, null);
-    }
-
-    protected final void logMessage(final LogLevel level, final String message, final Throwable throwable) {
-        final StringBuilder builder = new StringBuilder(prefix);
-        builder.append(level.toString());
-        if (!EmptyCheck.isEmpty(message)) {
-            builder.append(" - ");
-            builder.append(message);
-        }
-        //CHECKSTYLE:OFF
-        System.out.println(builder.toString());
-        if (throwable != null) {
-            throwable.printStackTrace();
-        }
-        //CHECKSTYLE:ON
-    }
+    int getOrder();
 
 }

@@ -26,52 +26,43 @@
  * DAMAGE.
  */
 
-package org.jowidgets.logging.api;
+package org.jowidgets.logging.tools;
 
-import org.jowidgets.logging.tools.DefaultLoggerProvider;
-import org.jowidgets.logging.tools.ILoggerFactory;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
+import java.util.ArrayList;
+import java.util.Collection;
 
-public class DefaultLoggerProviderTest {
+import org.jowidgets.logging.api.ILogger;
+import org.jowidgets.util.Assert;
 
-    private ILoggerFactory loggerFactory;
+/**
+ * Implements composite pattern for ILoggerFactory
+ * 
+ * Creates a LoggerComposite with the loggers created from each given factory
+ */
+public final class LoggerFactoryComposite implements ILoggerFactory {
 
-    @Before
-    public void setUp() {
-        loggerFactory = Mockito.mock(ILoggerFactory.class);
-        Mockito.when(loggerFactory.create(Mockito.anyString())).thenReturn(Mockito.mock(ILogger.class));
-        LoggerProvider.setLoggerProvider(new DefaultLoggerProvider(loggerFactory));
+    private static final String WRAPPER_FQCN = LoggerComposite.class.getName();
+
+    private final Collection<ILoggerFactory> factories;
+
+    /**
+     * Creates a new instance
+     * 
+     * @param factories The factories to create the loggers from, must not be null
+     */
+    public LoggerFactoryComposite(final Collection<? extends ILoggerFactory> factories) {
+        Assert.paramNotNull(factories, "factories");
+        this.factories = new ArrayList<ILoggerFactory>(factories);
     }
 
-    @After
-    public void tearDown() {
-        LoggerProvider.setLoggerProvider(null);
-    }
-
-    @Test
-    public void testLazyLoggerCreation() {
-        final String loggerName1 = "LOGGER_1";
-        final String loggerName2 = "LOGGER_2";
-        final String loggerName3 = "LOGGER_3";
-
-        LoggerProvider.get(loggerName1);
-        LoggerProvider.get(loggerName1);
-        LoggerProvider.get(loggerName1);
-
-        LoggerProvider.get(loggerName2);
-        LoggerProvider.get(loggerName2);
-        LoggerProvider.get(loggerName2);
-
-        LoggerProvider.get(loggerName3);
-        LoggerProvider.get(loggerName3);
-        LoggerProvider.get(loggerName3);
-
-        Mockito.verify(loggerFactory, Mockito.times(1)).create(loggerName1);
-        Mockito.verify(loggerFactory, Mockito.times(1)).create(loggerName2);
-        Mockito.verify(loggerFactory, Mockito.times(1)).create(loggerName3);
+    @Override
+    public ILogger create(final String name, final String wrapperFQCN) {
+        final Collection<ILogger> loggers = new ArrayList<ILogger>(factories.size());
+        final String usedWrapperFQCn = wrapperFQCN != null ? wrapperFQCN : WRAPPER_FQCN;
+        for (final ILoggerFactory factory : factories) {
+            loggers.add(factory.create(name, usedWrapperFQCn));
+        }
+        return new LoggerComposite(loggers);
     }
 
 }
