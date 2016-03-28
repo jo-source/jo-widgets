@@ -38,7 +38,7 @@ import org.junit.Test;
 public class IntervalTest {
 
     @Test
-    public void testClosure() {
+    public void testStaticClosure() {
         final Interval<Integer> interval1 = new Interval<Integer>(2, 4);
         final Interval<Integer> interval2 = new Interval<Integer>(-3, -2);
         final Interval<Integer> interval3 = new Interval<Integer>(5, 7);
@@ -48,6 +48,31 @@ public class IntervalTest {
         @SuppressWarnings("unchecked")
         final List<Interval<Integer>> intervals = Arrays.asList(interval1, interval2, interval3, interval4, interval5);
         Assert.assertEquals(new Interval<Integer>(-7, 8), Interval.closureOf(intervals));
+    }
+
+    @Test
+    public void testClosure() {
+        final Interval<Integer> interval1 = new Interval<Integer>(3, 4);
+        final Interval<Integer> interval2 = new Interval<Integer>(6, 6);
+        @SuppressWarnings("unchecked")
+        final List<Interval<Integer>> intervals = Arrays.asList(interval2);
+        Assert.assertEquals(new Interval<Integer>(3, 6), interval1.closure(intervals));
+    }
+
+    @Test
+    public void testIntersect() {
+        final Interval<Integer> interval1 = new Interval<Integer>(3, 4);
+        final Interval<Integer> interval2 = new Interval<Integer>(4, 6);
+        Assert.assertEquals(new Interval<Integer>(4, 4), interval1.intersect(interval2));
+    }
+
+    @Test
+    public void testIntersectWithCollection() {
+        final Interval<Integer> interval1 = new Interval<Integer>(3, 4);
+        final Interval<Integer> interval2 = new Interval<Integer>(4, 6);
+        @SuppressWarnings("unchecked")
+        final List<Interval<Integer>> intervals = Arrays.asList(interval2);
+        Assert.assertEquals(new Interval<Integer>(4, 4), interval1.intersect(intervals));
     }
 
 }

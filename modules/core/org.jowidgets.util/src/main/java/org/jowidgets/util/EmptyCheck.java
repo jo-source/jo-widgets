@@ -45,6 +45,9 @@ public final class EmptyCheck {
         else if (object instanceof Collection<?>) {
             return (isEmpty((Collection<?>) object));
         }
+        else if (object instanceof Iterable<?>) {
+            return (isEmpty((Iterable<?>) object));
+        }
         return false;
     }
 
@@ -54,6 +57,10 @@ public final class EmptyCheck {
 
     public static boolean isEmpty(final Collection<?> collection) {
         return collection == null || collection.isEmpty();
+    }
+
+    public static boolean isEmpty(final Iterable<?> iterable) {
+        return iterable == null || !iterable.iterator().hasNext();
     }
 
     public static boolean isEmpty(final Object[] array) {

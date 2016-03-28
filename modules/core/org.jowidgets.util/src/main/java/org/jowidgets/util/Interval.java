@@ -99,7 +99,7 @@ public final class Interval<NUMBER_TYPE extends Number> {
         final NUMBER_TYPE min = NumberUtils.max(leftBoundary, interval.getLeftBoundary());
         final NUMBER_TYPE max = NumberUtils.min(rightBoundary, interval.getRightBoundary());
 
-        if (min != null && max != null && NumberUtils.compareTo(min, max) < 0) {
+        if (min != null && max != null && NumberUtils.compareTo(min, max) <= 0) {
             return new Interval<NUMBER_TYPE>(min, max);
         }
         else {
@@ -120,12 +120,8 @@ public final class Interval<NUMBER_TYPE extends Number> {
         if (EmptyCheck.isEmpty(intervals)) {
             return this;
         }
-        Interval<NUMBER_TYPE> result;
+        Interval<NUMBER_TYPE> result = this;
         final Iterator<Interval<NUMBER_TYPE>> iterator = intervals.iterator();
-        result = iterator.next();
-        if (result == null) {
-            return null;
-        }
         while (iterator.hasNext()) {
             result = result.intersect(iterator.next());
             if (result == null) {
@@ -166,7 +162,7 @@ public final class Interval<NUMBER_TYPE extends Number> {
         }
         Interval<NUMBER_TYPE> result;
         final Iterator<Interval<NUMBER_TYPE>> iterator = intervals.iterator();
-        result = iterator.next();
+        result = this;
         while (iterator.hasNext()) {
             result = result.closure(iterator.next());
         }
@@ -211,7 +207,7 @@ public final class Interval<NUMBER_TYPE extends Number> {
         final Iterator<Interval<T>> iterator = intervals.iterator();
         final Interval<T> first = iterator.next();
 
-        //this iterable only works until the implemenation of cluseWith will now be changed
+        //this iterable only works until the implemenation of closure() will now be changed
         final Iterable<Interval<T>> iterable = new Iterable<Interval<T>>() {
             @Override
             public Iterator<Interval<T>> iterator() {
