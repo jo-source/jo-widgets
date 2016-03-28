@@ -2,7 +2,7 @@
 <feature
     id="org.jowidgets.addons.logging.slf4j.feature"
     label="SLF4J logging implementation for jowidgets logging api"
-    version="0.58.0">
+    version="0.58.1.qualifier">
 
 	<description url="http://www.example.com/description">
 		Feature that holds the SLF4J logging implementation for jowidgets logging api

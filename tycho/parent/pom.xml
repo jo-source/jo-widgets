@@ -2,13 +2,13 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>org.jowidgets.tycho.parent</artifactId>
-	<version>0.58.0</version>
+	<version>0.58.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.parent</artifactId>
-		<version>0.58.0</version>
+		<version>0.58.1-SNAPSHOT</version>
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
 	
