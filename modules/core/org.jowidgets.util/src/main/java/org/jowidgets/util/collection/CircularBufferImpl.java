@@ -36,7 +36,7 @@ final class CircularBufferImpl<ELEMENT_TYPE> implements ICircularBuffer<ELEMENT_
 
     private ELEMENT_TYPE[] buffer;
     private int insertIndex;
-    private boolean shiftMode;
+    private int size;
 
     CircularBufferImpl(final int capacity) {
         if (capacity < 1) {
@@ -53,44 +53,65 @@ final class CircularBufferImpl<ELEMENT_TYPE> implements ICircularBuffer<ELEMENT_
 
     @Override
     public int size() {
-        if (!shiftMode) {
-            return insertIndex;
+        return size;
+    }
+
+    @Override
+    public void setSize(final int size) {
+        Assert.paramInBounds(capacity, size, "size");
+        if (this.size < size) {
+            while (this.size < size) {
+                add(null);
+            }
         }
         else {
-            return capacity;
+            while (this.size > size) {
+                removeLast();
+            }
         }
     }
 
     @Override
     public void add(final ELEMENT_TYPE element) {
-        if (insertIndex < capacity) {
-            buffer[insertIndex] = element;
-            insertIndex++;
-        }
-        else {
-            shiftMode = true;
+        buffer[insertIndex] = element;
+        insertIndex++;
+        if (insertIndex >= capacity) {
             insertIndex = 0;
-            buffer[insertIndex] = element;
-            insertIndex++;
+        }
+        if (size < capacity) {
+            size++;
         }
     }
 
     @Override
+    public boolean removeLast() {
+        if (size <= 0) {
+            return false;
+        }
+        insertIndex--;
+        size--;
+        if (insertIndex < 0) {
+            insertIndex = capacity - 1;
+        }
+        buffer[insertIndex] = null;
+        return true;
+    }
+
+    @Override
     public void set(final int index, final ELEMENT_TYPE element) {
-        Assert.paramInBounds(size() - 1, index, "index");
+        Assert.paramInBounds(size - 1, index, "index");
         buffer[getTransferedIndex(index)] = element;
     }
 
     @Override
     public void fill(final ELEMENT_TYPE element) {
         final int elementsToFill = capacity - size();
-
         if (elementsToFill <= 0) {
             return;
         }
         else if (element == null) {
-            shiftMode = true;
-            insertIndex = 0;
+            insertIndex = getTransferedIndex(0);
+            size = capacity;
         }
         else {
             for (int i = 0; i < elementsToFill; i++) {
@@ -106,21 +127,25 @@ final class CircularBufferImpl<ELEMENT_TYPE> implements ICircularBuffer<ELEMENT_
 
     @Override
     public ELEMENT_TYPE get(final int index) {
-        return buffer[getTransferedIndex(index)];
+        Assert.paramInBounds(capacity - 1, index, "index");
+        if (index >= size) {
+            return null;
+        }
+        else {
+            return buffer[getTransferedIndex(index)];
+        }
     }
 
     private int getTransferedIndex(final int index) {
-        Assert.paramInBounds(capacity - 1, index, "index");
-        if (!shiftMode) {
-            return index;
+        final int residualCapacity = capacity - size;
+        int shiftedIndex = insertIndex + residualCapacity + index;
+        if (shiftedIndex >= capacity) {
+            shiftedIndex = shiftedIndex - capacity;
         }
-        else {
-            int shiftedIndex = insertIndex + index;
-            if (shiftedIndex >= capacity) {
-                shiftedIndex = shiftedIndex - capacity;
-            }
-            return shiftedIndex;
+        else if (shiftedIndex < 0) {
+            shiftedIndex = shiftedIndex + capacity - 1;
         }
+        return shiftedIndex;
     }
 
     @SuppressWarnings("unchecked")
@@ -128,7 +153,12 @@ final class CircularBufferImpl<ELEMENT_TYPE> implements ICircularBuffer<ELEMENT_
     public void clear() {
         this.buffer = (ELEMENT_TYPE[]) new Object[capacity];
         insertIndex = 0;
-        shiftMode = false;
+        size = 0;
+    }
+
+    @Override
+    public String toString() {
+        return "CircularBufferImpl [capacity=" + capacity + ", insertIndex=" + insertIndex + ", size" + size + "]";
     }
 
 }

@@ -46,6 +46,18 @@ public interface ICircularBuffer<ELEMENT_TYPE> {
     int size();
 
     /**
+     * Sets the size to a new value.
+     * 
+     * After that, {@link #size()} returns the new size
+     * and all invocations of get(i) for all i with size <= i < capacity will return null
+     * 
+     * This operation will be done in O(ABS(oldSize-newSize)).
+     * 
+     * @param size The size to set, must be between 0 and the capacity of the buffer
+     */
+    void setSize(int size);
+
+    /**
      * Adds an element to the end of buffer.
      * 
      * If the buffer is full, all elements are shifted to the left and the first element will be removed.
@@ -56,11 +68,19 @@ public interface ICircularBuffer<ELEMENT_TYPE> {
     void add(ELEMENT_TYPE element);
 
     /**
+     * Removes the last element of the buffer if size > 0, otherwise nothing happens
+     * 
+     * @return True if the last element was removed, false otherwise
+     */
+    boolean removeLast();
+
+    /**
      * Fills the buffer with the given element for the indices from size to capacity - 1.
      * 
      * After that, size() == capacity() is true
      * 
-     * This operation will be done in O(1) if element == null and in O(capacity - size) if element != null.
+     * This operation will be done in O(1) if element == null and
+     * otherwise in O(capacity - size)
      * 
      * @param element The element to fill the buffer with, may be null
      */
