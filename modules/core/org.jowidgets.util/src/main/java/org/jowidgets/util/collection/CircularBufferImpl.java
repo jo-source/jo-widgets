@@ -58,16 +58,57 @@ final class CircularBufferImpl<ELEMENT_TYPE> implements ICircularBuffer<ELEMENT_
 
     @Override
     public void setSize(final int size) {
+        setSize(size, true);
+    }
+
+    @Override
+    public void setSize(final int size, final boolean clear) {
         Assert.paramInBounds(capacity, size, "size");
         if (this.size < size) {
-            while (this.size < size) {
-                add(null);
-            }
+            setIcreasedSize(size);
+        }
+        else if (this.size > size) {
+            setDecreasedSize(size, clear);
+        }
+        //else this.size == size, nothing to do
+    }
+
+    private void setIcreasedSize(final int size) {
+        final int increasment = size - this.size;
+        if (increasment <= 0) {
+            throw new IllegalArgumentException("The new size must be creater than the current size");
+        }
+        insertIndex = insertIndex + increasment;
+        if (insertIndex >= capacity) {
+            insertIndex = insertIndex - capacity;
+        }
+        this.size = size;
+    }
+
+    private void setDecreasedSize(final int size, final boolean clear) {
+        if (clear) {
+            setDecreasedSizeWithClear(size);
         }
         else {
-            while (this.size > size) {
-                removeLast();
-            }
+            setDecreasedSizeNoClear(size);
+        }
+    }
+
+    private void setDecreasedSizeNoClear(final int size) {
+        final int decreasement = this.size - size;
+        if (decreasement <= 0) {
+            throw new IllegalArgumentException("The new size must be less than the current size");
+        }
+        insertIndex = insertIndex - decreasement;
+        if (insertIndex < 0) {
+            insertIndex = insertIndex + capacity;
+        }
+        this.size = size;
+    }
+
+    private void setDecreasedSizeWithClear(final int size) {
+        while (this.size > size) {
+            removeLast();
         }
     }
 

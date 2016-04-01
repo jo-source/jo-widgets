@@ -416,7 +416,7 @@ public class CircularBufferTest {
     }
 
     @Test
-    public void testSetBufferSize() {
+    public void testSetSize() {
         final int capacity = 6;
         final ICircularBuffer<String> buffer = CircularBuffer.create(capacity);
         Assert.assertEquals(0, buffer.size());
@@ -512,6 +512,166 @@ public class CircularBufferTest {
     }
 
     @Test
+    public void testSetSizeWithManualClear() {
+        final ICircularBuffer<String> buffer = CircularBuffer.create(6);
+        Assert.assertEquals(0, buffer.size());
+
+        buffer.add("A");
+        buffer.add("B");
+        buffer.add("C");
+        buffer.add("D");
+        buffer.add("E");
+        Assert.assertEquals(5, buffer.size());
+        assertBufferHasStringValues(buffer, "A", "B", "C", "D", "E", null);
+
+        buffer.set(3, null);
+        buffer.set(4, null);
+        buffer.setSize(3, false);
+        Assert.assertEquals(3, buffer.size());
+        assertBufferHasStringValues(buffer, "A", "B", "C", null, null, null);
+
+        buffer.setSize(5, false);
+        Assert.assertEquals(5, buffer.size());
+        assertBufferHasStringValues(buffer, "A", "B", "C", null, null, null);
+
+        buffer.set(0, null);
+        buffer.set(1, null);
+        buffer.set(2, null);
+        buffer.setSize(0, false);
+        Assert.assertEquals(0, buffer.size());
+        assertBufferHasStringValues(buffer, null, null, null, null, null, null);
+
+        buffer.add("F");
+        buffer.add("G");
+        buffer.add("H");
+        buffer.add("I");
+        buffer.add("J");
+        buffer.add("K");
+        Assert.assertEquals(6, buffer.size());
+        assertBufferHasStringValues(buffer, "F", "G", "H", "I", "J", "K");
+
+        buffer.set(5, null);
+        buffer.setSize(5, false);
+        Assert.assertEquals(5, buffer.size());
+        assertBufferHasStringValues(buffer, "F", "G", "H", "I", "J", null);
+
+        buffer.add("K2");
+        Assert.assertEquals(6, buffer.size());
+        assertBufferHasStringValues(buffer, "F", "G", "H", "I", "J", "K2");
+
+        buffer.add("L");
+        Assert.assertEquals(6, buffer.size());
+        assertBufferHasStringValues(buffer, "G", "H", "I", "J", "K2", "L");
+
+        buffer.set(5, null);
+        buffer.setSize(5, false);
+        Assert.assertEquals(5, buffer.size());
+        assertBufferHasStringValues(buffer, "G", "H", "I", "J", "K2", null);
+
+        buffer.add("L2");
+        Assert.assertEquals(6, buffer.size());
+        assertBufferHasStringValues(buffer, "G", "H", "I", "J", "K2", "L2");
+
+        buffer.set(5, null);
+        buffer.setSize(5, false);
+        Assert.assertEquals(5, buffer.size());
+        assertBufferHasStringValues(buffer, "G", "H", "I", "J", "K2", null);
+
+        buffer.set(4, null);
+        buffer.set(3, null);
+        buffer.setSize(3, false);
+        Assert.assertEquals(3, buffer.size());
+        assertBufferHasStringValues(buffer, "G", "H", "I", null, null, null);
+
+        buffer.set(2, null);
+        buffer.set(1, null);
+        buffer.setSize(1, false);
+        Assert.assertEquals(1, buffer.size());
+        assertBufferHasStringValues(buffer, "G", null, null, null, null, null);
+
+        buffer.set(0, null);
+        buffer.setSize(0, false);
+        Assert.assertEquals(0, buffer.size());
+        assertBufferHasStringValues(buffer, null, null, null, null, null, null);
+
+        buffer.setSize(3, false);
+        Assert.assertEquals(3, buffer.size());
+        assertBufferHasStringValues(buffer, null, null, null, null, null, null);
+
+        buffer.add("A");
+        Assert.assertEquals(4, buffer.size());
+        assertBufferHasStringValues(buffer, null, null, null, "A", null, null);
+
+        buffer.setSize(6, false);
+        Assert.assertEquals(6, buffer.size());
+        assertBufferHasStringValues(buffer, null, null, null, "A", null, null);
+
+        buffer.add("B");
+        Assert.assertEquals(6, buffer.size());
+        assertBufferHasStringValues(buffer, null, null, "A", null, null, "B");
+
+        buffer.set(5, null);
+        buffer.set(4, null);
+        buffer.set(3, null);
+        buffer.set(2, null);
+        buffer.setSize(2, false);
+        Assert.assertEquals(2, buffer.size());
+        assertBufferHasStringValues(buffer, null, null, null, null, null, null);
+
+        buffer.add("C");
+        Assert.assertEquals(3, buffer.size());
+        assertBufferHasStringValues(buffer, null, null, "C", null, null, null);
+    }
+
+    public void testSetSizeWithNoClear() {
+        //this tests demonstrates the behavior if set size will not make a clear
+        //on decreasement. This will have side effects on future calls of set size and
+        //fill(null). Because this is a strange behavior, only use the clear=false option
+        //if u are know what u are doing
+
+        final ICircularBuffer<String> buffer = CircularBuffer.create(5);
+        Assert.assertEquals(0, buffer.size());
+
+        buffer.add("A");
+        buffer.add("B");
+        buffer.add("C");
+        buffer.add("D");
+        Assert.assertEquals(4, buffer.size());
+        assertBufferHasStringValues(buffer, "A", "B", "C", "D", null);
+
+        buffer.setSize(2, false);
+        Assert.assertEquals(2, buffer.size());
+        assertBufferHasStringValues(buffer, "A", "B", null, null, null);
+
+        buffer.setSize(4, false);
+        Assert.assertEquals(4, buffer.size());
+        assertBufferHasStringValues(buffer, "A", "B", "C", "D", null);
+
+        buffer.setSize(1, false);
+        Assert.assertEquals(1, buffer.size());
+        assertBufferHasStringValues(buffer, "A", null, null, null, null);
+
+        buffer.setSize(4, false);
+        assertBufferHasStringValues(buffer, "A", "B", "C", "D", null);
+
+        buffer.setSize(1, false);
+        Assert.assertEquals(1, buffer.size());
+        assertBufferHasStringValues(buffer, "A", null, null, null, null);
+
+        buffer.fill();
+        Assert.assertEquals(5, buffer.size());
+        assertBufferHasStringValues(buffer, "A", "B", "C", "D", null);
+
+        buffer.setSize(1, false);
+        Assert.assertEquals(1, buffer.size());
+        assertBufferHasStringValues(buffer, "A", null, null, null, null);
+
+        buffer.fill("X");
+        Assert.assertEquals(5, buffer.size());
+        assertBufferHasStringValues(buffer, "A", "X", "X", "X", "X");
+    }
+
+    @Test
     public void testClear() {
         final int capacity = 100;
         final ICircularBuffer<Integer> buffer = CircularBuffer.create(capacity);
@@ -577,7 +737,7 @@ public class CircularBufferTest {
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void testSetSizeWithGreaterThatCapacity() {
+    public void testSetSizeWithGreaterThanCapacity() {
         CircularBuffer.create(5).setSize(6);
     }
 

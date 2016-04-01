@@ -36,7 +36,7 @@ public interface ICircularBuffer<ELEMENT_TYPE> {
     int capacity();
 
     /**
-     * The current size of the buffer.
+     * Gets the current size of the buffer.
      * 
      * If the buffer is not full, the size is the number of added elements,
      * otherwise the capacity and the size is equal.
@@ -51,11 +51,31 @@ public interface ICircularBuffer<ELEMENT_TYPE> {
      * After that, {@link #size()} returns the new size
      * and all invocations of get(i) for all i with size <= i < capacity will return null
      * 
-     * This operation will be done in O(ABS(oldSize-newSize)).
+     * This operation will be done in O(ABS(oldSize-newSize)) if size will be decreased and in O(1) of size will be increased.
      * 
      * @param size The size to set, must be between 0 and the capacity of the buffer
      */
     void setSize(int size);
+
+    /**
+     * Sets the size to a new value.
+     * 
+     * After that, {@link #size()} returns the new size
+     * 
+     * If clear is set to true, all invocations of get(i) for all i with size <= i < capacity will return null.
+     * 
+     * Remark: If clear is set to false and buffer size will be decreased, the invoker is responsible to clear the elements
+     * from i=(newSize-1) to (oldSize-1). Otherwise, the get method for this elements will return the old values. Also the
+     * fill(null) method may become inconsistent for future invocations. The benefit may be, if the invoker may implement
+     * size reduction with better complexity than (O(ABS(oldSize-newSize))), e.g because intervals with data not null was
+     * tracked before. Sorry for the WTF, if not clear, use the {@link #setSize(int)} method.
+     * 
+     * This operation will be done in O(1) if clear is set to false and in O(ABS(oldSize-newSize)) if clear is set to true and
+     * size will be decreased.
+     * 
+     * @param size The size to set, must be between 0 and the capacity of the buffer
+     */
+    void setSize(int size, boolean clear);
 
     /**
      * Adds an element to the end of buffer.
