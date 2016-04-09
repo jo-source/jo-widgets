@@ -40,6 +40,7 @@ import org.jowidgets.logging.tools.DefaultLoggerProvider;
 import org.jowidgets.logging.tools.ILoggerFactory;
 import org.jowidgets.logging.tools.LoggerFactoryComposite;
 import org.jowidgets.logging.tools.LoggerProviderToFactoryAdapter;
+import org.jowidgets.logging.tools.LoggerWrapper;
 import org.jowidgets.util.Assert;
 
 /**
@@ -156,6 +157,59 @@ public final class LoggerProvider {
     }
 
     /**
+     * Gets the logger for the given name or creates a new one if not already exists
+     * 
+     * @param name The name to get the logger for
+     * 
+     * @return The logger for the given name, never null
+     */
+    public static IDecoratingLogger getDecoratingLogger(final String name) {
+        return getDecoratingLogger(name, null);
+    }
+
+    /**
+     * Gets the logger with the given class or crates one if not exists
+     * 
+     * @param clazz The class to get the logger for
+     * 
+     * @return The logger for the given class, never null
+     */
+    public static IDecoratingLogger getDecoratingLogger(final Class<?> clazz) {
+        Assert.paramNotNull(clazz, "clazz");
+        return getDecoratingLogger(clazz.getName(), null);
+    }
+
+    /**
+     * Gets the logger for the given name and callerFQCN or creates a new one if not already exists
+     * 
+     * @param name The name to get the logger for
+     * @param wrapperFQCN The full qualified class name of the wrapper if the created logger will be
+     *            used by a logger wrapper. May be null. The wrapper class name will be used to correctly
+     *            determine the calling method of the logger log method omitting the wrapper class
+     * 
+     * @return The logger for the given name, never null
+     */
+    public static IDecoratingLogger getDecoratingLogger(final String name, final String wrapperFQCN) {
+        return new DecoratingLoggerImpl(name, wrapperFQCN);
+    }
+
+    /**
+     * Gets the logger for the given name and callerFQCN or creates a new one if not already exists
+     * 
+     * @param clazz The class to get the logger for
+     * @param wrapperClazz The class of the wrapper if the created logger will be
+     *            used by a logger wrapper. The wrapper class name will be used to correctly determine the calling
+     *            method of the log methods omitting the wrapper class
+     * 
+     * @return The logger for the given name, never null
+     */
+    public static IDecoratingLogger getDecoratingLogger(final Class<?> clazz, final Class<?> wrapperClazz) {
+        Assert.paramNotNull(clazz, "clazz");
+        Assert.paramNotNull(wrapperClazz, "wrapperClazz");
+        return getDecoratingLogger(clazz.getName(), wrapperClazz.getName());
+    }
+
+    /**
      * Gets the currently set logger provider instance or creates one
      * 
      * @return The logger provider instance, never null
@@ -216,6 +270,92 @@ public final class LoggerProvider {
         }
 
         return result;
+    }
+
+    private static final class DecoratingLoggerImpl extends LoggerWrapper implements IDecoratingLogger {
+
+        private final ILogger original;
+
+        DecoratingLoggerImpl(final String name, final String wrapperFQCN) {
+            super(get(name, wrapperFQCN != null ? wrapperFQCN : DecoratingLoggerImpl.class.getName()));
+            this.original = getOriginal();
+        }
+
+        @Override
+        public void error(final ILogMessageDecorator decorator, final String message) {
+            decorator.error(message, original);
+        }
+
+        @Override
+        public void error(final ILogMessageDecorator decorator, final Throwable throwable) {
+            decorator.error(throwable, original);
+        }
+
+        @Override
+        public void error(final ILogMessageDecorator decorator, final String message, final Throwable throwable) {
+            decorator.error(message, throwable, original);
+        }
+
+        @Override
+        public void warn(final ILogMessageDecorator decorator, final String message) {
+            decorator.warn(message, original);
+        }
+
+        @Override
+        public void warn(final ILogMessageDecorator decorator, final Throwable throwable) {
+            decorator.warn(throwable, original);
+        }
+
+        @Override
+        public void warn(final ILogMessageDecorator decorator, final String message, final Throwable throwable) {
+            decorator.warn(message, throwable, original);
+        }
+
+        @Override
+        public void info(final ILogMessageDecorator decorator, final String message) {
+            decorator.info(message, original);
+        }
+
+        @Override
+        public void info(final ILogMessageDecorator decorator, final Throwable throwable) {
+            decorator.info(throwable, original);
+        }
+
+        @Override
+        public void info(final ILogMessageDecorator decorator, final String message, final Throwable throwable) {
+            decorator.info(message, throwable, original);
+        }
+
+        @Override
+        public void debug(final ILogMessageDecorator decorator, final String message) {
+            decorator.debug(message, original);
+        }
+
+        @Override
+        public void debug(final ILogMessageDecorator decorator, final Throwable throwable) {
+            decorator.debug(throwable, original);
+        }
+
+        @Override
+        public void debug(final ILogMessageDecorator decorator, final String message, final Throwable throwable) {
+            decorator.debug(message, throwable, original);
+        }
+
+        @Override
+        public void trace(final ILogMessageDecorator decorator, final String message) {
+            decorator.trace(message, original);
+        }
+
+        @Override
+        public void trace(final ILogMessageDecorator decorator, final Throwable throwable) {
+            decorator.trace(throwable, original);
+        }
+
+        @Override
+        public void trace(final ILogMessageDecorator decorator, final String message, final Throwable throwable) {
+            decorator.trace(message, throwable, original);
+        }
+
     }
 
 }

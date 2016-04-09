@@ -75,6 +75,13 @@ public class LoggerMock extends AbstractLoggerAdapter implements ILogger {
     }
 
     /**
+     * @return True if a message is available
+     */
+    public boolean hasMessage() {
+        return lastMessage != null;
+    }
+
+    /**
      * Sets the enabled state for all log levels
      * 
      * @param enabled The enabled state to set

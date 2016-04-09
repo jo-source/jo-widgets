@@ -40,6 +40,10 @@ public class LoggerWrapper implements ILogger {
         this.original = original;
     }
 
+    public ILogger getOriginal() {
+        return original;
+    }
+
     @Override
     public boolean isTraceEnabled() {
         return original.isTraceEnabled();
