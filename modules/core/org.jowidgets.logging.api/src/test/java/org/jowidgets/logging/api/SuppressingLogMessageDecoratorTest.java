@@ -28,6 +28,9 @@
 
 package org.jowidgets.logging.api;
 
+import java.text.MessageFormat;
+import java.util.concurrent.TimeUnit;
+
 import junit.framework.Assert;
 
 import org.jowidgets.logging.tools.LoggerMock;
@@ -73,10 +76,17 @@ public class SuppressingLogMessageDecoratorTest {
 
         final IDecoratingLogger logger = LoggerProvider.getDecoratingLogger("Foo");
 
+        final String expextedSupressMessage = MessageFormat.format(
+                SuppressingLogMessageDecorators.DEFAULT_SUPPRESS_MESSAGE_TEXT,
+                maxPeriod,
+                TimeUnit.MILLISECONDS);
+
         //first message will be unsupressed
         logger.error(suppressDecorator, DEFAULT_MESSAGE);
         Assert.assertTrue(loggerMock.hasMessage());
-        Assert.assertTrue(loggerMock.popLastMessage().getMessage().startsWith(DEFAULT_MESSAGE));
+        String message = loggerMock.popLastMessage().getMessage();
+        Assert.assertTrue(message.startsWith(DEFAULT_MESSAGE));
+        Assert.assertTrue(message.contains(expextedSupressMessage));
 
         //next 9 messages will be supressed
         for (int i = 0; i < 9; i++) {
@@ -87,7 +97,10 @@ public class SuppressingLogMessageDecoratorTest {
         //first message will be unsupressed
         logger.warn(suppressDecorator, DEFAULT_MESSAGE);
         Assert.assertTrue(loggerMock.hasMessage());
-        Assert.assertTrue(loggerMock.popLastMessage().getMessage().startsWith(DEFAULT_MESSAGE));
+        message = loggerMock.popLastMessage().getMessage();
+        Assert.assertTrue(message.startsWith(DEFAULT_MESSAGE));
+        Assert.assertTrue(message.contains(expextedSupressMessage));
+        assertSuppressedMessageContained(message, 9);
 
         //next 9 messages will be supressed
         for (int i = 0; i < 9; i++) {
@@ -98,7 +111,10 @@ public class SuppressingLogMessageDecoratorTest {
         //first message will be unsupressed
         logger.info(suppressDecorator, DEFAULT_MESSAGE);
         Assert.assertTrue(loggerMock.hasMessage());
-        Assert.assertTrue(loggerMock.popLastMessage().getMessage().startsWith(DEFAULT_MESSAGE));
+        message = loggerMock.popLastMessage().getMessage();
+        Assert.assertTrue(message.startsWith(DEFAULT_MESSAGE));
+        Assert.assertTrue(message.contains(expextedSupressMessage));
+        assertSuppressedMessageContained(message, 9);
 
         //next 9 messages will be supressed
         for (int i = 0; i < 9; i++) {
@@ -109,7 +125,10 @@ public class SuppressingLogMessageDecoratorTest {
         //first message will be unsupressed
         logger.debug(suppressDecorator, DEFAULT_MESSAGE);
         Assert.assertTrue(loggerMock.hasMessage());
-        Assert.assertTrue(loggerMock.popLastMessage().getMessage().startsWith(DEFAULT_MESSAGE));
+        message = loggerMock.popLastMessage().getMessage();
+        Assert.assertTrue(message.startsWith(DEFAULT_MESSAGE));
+        Assert.assertTrue(message.contains(expextedSupressMessage));
+        assertSuppressedMessageContained(message, 9);
 
         //next 9 messages will be supressed
         for (int i = 0; i < 9; i++) {
@@ -119,8 +138,10 @@ public class SuppressingLogMessageDecoratorTest {
 
         //first message will be unsupressed
         logger.trace(suppressDecorator, DEFAULT_MESSAGE);
-        Assert.assertTrue(loggerMock.hasMessage());
-        Assert.assertTrue(loggerMock.popLastMessage().getMessage().startsWith(DEFAULT_MESSAGE));
+        message = loggerMock.popLastMessage().getMessage();
+        Assert.assertTrue(message.startsWith(DEFAULT_MESSAGE));
+        Assert.assertTrue(message.contains(expextedSupressMessage));
+        assertSuppressedMessageContained(message, 9);
 
         //next 9 messages will be supressed
         for (int i = 0; i < 9; i++) {
@@ -130,8 +151,18 @@ public class SuppressingLogMessageDecoratorTest {
 
         //Message 10 will be unsupressed
         logger.trace(suppressDecorator, DEFAULT_MESSAGE);
-        Assert.assertTrue(loggerMock.hasMessage());
-        Assert.assertTrue(loggerMock.popLastMessage().getMessage().startsWith(DEFAULT_MESSAGE));
+        message = loggerMock.popLastMessage().getMessage();
+        Assert.assertTrue(message.startsWith(DEFAULT_MESSAGE));
+        Assert.assertTrue(message.contains(expextedSupressMessage));
+        assertSuppressedMessageContained(message, 9);
+    }
+
+    private void assertSuppressedMessageContained(final String message, final int expectedSupressedMessages) {
+        final String expextedSupressedMessage = MessageFormat.format(
+                SuppressingLogMessageDecorators.DEFAULT_SUPPRESSED_MESSAGE_TEXT,
+                expectedSupressedMessages);
+
+        Assert.assertTrue(message.contains(expextedSupressedMessage));
     }
 
     @Test
