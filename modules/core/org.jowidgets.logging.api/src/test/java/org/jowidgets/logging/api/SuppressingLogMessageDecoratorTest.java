@@ -60,7 +60,7 @@ public class SuppressingLogMessageDecoratorTest {
     }
 
     private ILogMessageDecorator createLogMessageDecorator(final long maxPeriod) {
-        final ISuppressingLogMessageDecoratorBuilder builder = SuppressingLogMessageDecorators.builder();
+        final ISupressingLogMessageDecoratorBuilder builder = SupressingLogMessageDecorators.builder();
         builder.setMaxPeriod(maxPeriod);
         builder.setSystemTimeProvider(systemTimeProvider);
         return builder.build();
