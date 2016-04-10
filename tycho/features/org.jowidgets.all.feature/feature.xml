@@ -55,5 +55,17 @@
 	<includes
          id="org.jowidgets.test.tools.feature"
          version="0.0.0"/> 
+	
+	<includes
+         id="org.jowidgets.addons.logging.nop.feature"
+         version="0.0.0"/>
+
+	<includes
+         id="org.jowidgets.addons.logging.jul.feature"
+         version="0.0.0"/>
+		 
+	<includes
+         id="org.jowidgets.addons.logging.slf4j161.feature"
+         version="0.0.0"/>
 		 
 </feature>
