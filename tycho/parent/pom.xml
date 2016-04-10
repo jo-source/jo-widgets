@@ -176,7 +176,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.addons.logging.slf4j.bundle</artifactId>
+			<artifactId>org.jowidgets.addons.logging.slf4j161.bundle</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

@@ -59,7 +59,7 @@
 		<module>../org.jowidgets.addons.widgets.pdf.impl.browser</module>
 		
 		<!-- Logging -->
-		<module>../org.jowidgets.addons.logging.slf4j</module>
+		<module>../org.jowidgets.addons.logging.slf4j161</module>
 		<module>../org.jowidgets.addons.logging.jul</module>
 		<module>../org.jowidgets.addons.logging.nop</module>
 				

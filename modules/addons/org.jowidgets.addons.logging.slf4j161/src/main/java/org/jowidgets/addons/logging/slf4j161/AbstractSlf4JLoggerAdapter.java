@@ -26,26 +26,46 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.logging.slf4j;
+package org.jowidgets.addons.logging.slf4j161;
 
 import org.jowidgets.logging.api.ILogger;
-import org.jowidgets.logging.api.ILoggerProvider;
+import org.jowidgets.logging.tools.AbstractLoggerAdapter;
+import org.jowidgets.util.Assert;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.spi.LocationAwareLogger;
 
-public final class Slf4JLoggerProvider implements ILoggerProvider {
+abstract class AbstractSlf4JLoggerAdapter extends AbstractLoggerAdapter implements ILogger {
+
+    private final Logger original;
+
+    public AbstractSlf4JLoggerAdapter(final Logger original, final String wrapperFQCN) {
+        super(wrapperFQCN);
+        Assert.paramNotNull(original, "original");
+        this.original = original;
+    }
 
     @Override
-    public ILogger get(final String name, final String wrapperFQCN) {
-        final Logger original = LoggerFactory.getLogger(name);
-        if (original instanceof LocationAwareLogger) {
-            return new Slf4JLocationAwareLoggerAdapter((LocationAwareLogger) original, wrapperFQCN);
-        }
-        else {
-            original.warn("The logger created from slf4j is not location aware. Invoking location can not correctly determined for logging");
-            return new Slf4JLoggerAdapter(original);
-        }
+    public final boolean isTraceEnabled() {
+        return original.isTraceEnabled();
+    }
+
+    @Override
+    public final boolean isDebugEnabled() {
+        return original.isDebugEnabled();
+    }
+
+    @Override
+    public final boolean isInfoEnabled() {
+        return original.isInfoEnabled();
+    }
+
+    @Override
+    public final boolean isWarnEnabled() {
+        return original.isWarnEnabled();
+    }
+
+    @Override
+    public final boolean isErrorEnabled() {
+        return original.isErrorEnabled();
     }
 
 }

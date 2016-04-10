@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>org.jowidgets.addons.logging.slf4j.bundle</artifactId>
+	<artifactId>org.jowidgets.addons.logging.slf4j161.bundle</artifactId>
 	<packaging>bundle</packaging>
 
 	<parent>
@@ -15,13 +15,13 @@
 	
 		<dependency>
 			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.addons.logging.slf4j</artifactId>
+			<artifactId>org.jowidgets.addons.logging.slf4j161</artifactId>
 			<version>0.59.0-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.jowidgets</groupId>
-			<artifactId>org.jowidgets.addons.logging.slf4j</artifactId>
+			<artifactId>org.jowidgets.addons.logging.slf4j161</artifactId>
 			<version>0.59.0-SNAPSHOT</version>
 			<type>jar</type>
 			<classifier>sources</classifier>
@@ -36,7 +36,7 @@
 				<artifactId>maven-bundle-plugin</artifactId>
 				<configuration>
 					<instructions>
-						<Embed-Dependency>org.jowidgets.addons.logging.slf4j;inline=true</Embed-Dependency>
+						<Embed-Dependency>org.jowidgets.addons.logging.slf4j161;inline=true</Embed-Dependency>
 						<Require-Bundle>org.jowidgets.logging.api.bundle</Require-Bundle>
 						<SPI-Provider>*</SPI-Provider>
 						<Shared-Classloader-Contribution>true</Shared-Classloader-Contribution>

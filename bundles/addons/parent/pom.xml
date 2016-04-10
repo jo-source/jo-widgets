@@ -37,7 +37,7 @@
 		<module>../org.jowidgets.addons.widgets.mediaplayer.impl.ole.bundle</module>
 		<module>../org.jowidgets.addons.widgets.pdf.api.bundle</module>	
 		<module>../org.jowidgets.addons.widgets.pdf.impl.browser.bundle</module>
-		<module>../org.jowidgets.addons.logging.slf4j.bundle</module>
+		<module>../org.jowidgets.addons.logging.slf4j161.bundle</module>
 		<module>../org.jowidgets.addons.logging.jul.bundle</module>
 		<module>../org.jowidgets.addons.logging.nop.bundle</module>
 	</modules>

@@ -194,7 +194,7 @@
          unpack="false"/>
 		 
 	<plugin
-         id="org.jowidgets.addons.logging.slf4j.bundle"
+         id="org.jowidgets.addons.logging.slf4j161.bundle"
          download-size="0"
          install-size="0"
          version="0.0.0"

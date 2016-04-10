@@ -26,45 +26,26 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.logging.slf4j;
+package org.jowidgets.addons.logging.slf4j161;
 
 import org.jowidgets.logging.api.ILogger;
-import org.jowidgets.util.Assert;
+import org.jowidgets.logging.api.ILoggerProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.spi.LocationAwareLogger;
 
-final class Slf4JLocationAwareLoggerAdapter extends AbstractSlf4JLoggerAdapter implements ILogger {
-
-    private final LocationAwareLogger original;
-
-    public Slf4JLocationAwareLoggerAdapter(final LocationAwareLogger original, final String wrapperFQCN) {
-        super(original, wrapperFQCN);
-        Assert.paramNotNull(original, "original");
-        this.original = original;
-    }
+public final class Slf4JLoggerProvider implements ILoggerProvider {
 
     @Override
-    public void error(final String wrapperFQCN, final String message, final Throwable throwable) {
-        original.log(null, wrapperFQCN, LocationAwareLogger.ERROR_INT, message, null, throwable);
-    }
-
-    @Override
-    public void warn(final String wrapperFQCN, final String message, final Throwable throwable) {
-        original.log(null, wrapperFQCN, LocationAwareLogger.WARN_INT, message, null, throwable);
-    }
-
-    @Override
-    public void info(final String wrapperFQCN, final String message, final Throwable throwable) {
-        original.log(null, wrapperFQCN, LocationAwareLogger.INFO_INT, message, null, throwable);
-    }
-
-    @Override
-    public void debug(final String wrapperFQCN, final String message, final Throwable throwable) {
-        original.log(null, wrapperFQCN, LocationAwareLogger.DEBUG_INT, message, null, throwable);
-    }
-
-    @Override
-    public void trace(final String wrapperFQCN, final String message, final Throwable throwable) {
-        original.log(null, wrapperFQCN, LocationAwareLogger.TRACE_INT, message, null, throwable);
+    public ILogger get(final String name, final String wrapperFQCN) {
+        final Logger original = LoggerFactory.getLogger(name);
+        if (original instanceof LocationAwareLogger) {
+            return new Slf4JLocationAwareLoggerAdapter((LocationAwareLogger) original, wrapperFQCN);
+        }
+        else {
+            original.warn("The logger created from slf4j is not location aware. Invoking location can not correctly determined for logging");
+            return new Slf4JLoggerAdapter(original);
+        }
     }
 
 }

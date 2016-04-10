@@ -26,46 +26,45 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.logging.slf4j;
+package org.jowidgets.addons.logging.slf4j161;
 
 import org.jowidgets.logging.api.ILogger;
-import org.jowidgets.logging.tools.AbstractLoggerAdapter;
 import org.jowidgets.util.Assert;
-import org.slf4j.Logger;
+import org.slf4j.spi.LocationAwareLogger;
 
-abstract class AbstractSlf4JLoggerAdapter extends AbstractLoggerAdapter implements ILogger {
+final class Slf4JLocationAwareLoggerAdapter extends AbstractSlf4JLoggerAdapter implements ILogger {
 
-    private final Logger original;
+    private final LocationAwareLogger original;
 
-    public AbstractSlf4JLoggerAdapter(final Logger original, final String wrapperFQCN) {
-        super(wrapperFQCN);
+    public Slf4JLocationAwareLoggerAdapter(final LocationAwareLogger original, final String wrapperFQCN) {
+        super(original, wrapperFQCN);
         Assert.paramNotNull(original, "original");
         this.original = original;
     }
 
     @Override
-    public final boolean isTraceEnabled() {
-        return original.isTraceEnabled();
+    public void error(final String wrapperFQCN, final String message, final Throwable throwable) {
+        original.log(null, wrapperFQCN, LocationAwareLogger.ERROR_INT, message, null, throwable);
     }
 
     @Override
-    public final boolean isDebugEnabled() {
-        return original.isDebugEnabled();
+    public void warn(final String wrapperFQCN, final String message, final Throwable throwable) {
+        original.log(null, wrapperFQCN, LocationAwareLogger.WARN_INT, message, null, throwable);
     }
 
     @Override
-    public final boolean isInfoEnabled() {
-        return original.isInfoEnabled();
+    public void info(final String wrapperFQCN, final String message, final Throwable throwable) {
+        original.log(null, wrapperFQCN, LocationAwareLogger.INFO_INT, message, null, throwable);
     }
 
     @Override
-    public final boolean isWarnEnabled() {
-        return original.isWarnEnabled();
+    public void debug(final String wrapperFQCN, final String message, final Throwable throwable) {
+        original.log(null, wrapperFQCN, LocationAwareLogger.DEBUG_INT, message, null, throwable);
     }
 
     @Override
-    public final boolean isErrorEnabled() {
-        return original.isErrorEnabled();
+    public void trace(final String wrapperFQCN, final String message, final Throwable throwable) {
+        original.log(null, wrapperFQCN, LocationAwareLogger.TRACE_INT, message, null, throwable);
     }
 
 }

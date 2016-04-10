@@ -14,7 +14,7 @@
 	<modules>
 	    <module>../org.jowidgets.core.feature</module>
 		<module>../org.jowidgets.addons.feature</module>
-		<module>../org.jowidgets.addons.logging.slf4j.feature</module>	
+		<module>../org.jowidgets.addons.logging.slf4j161.feature</module>	
 		<module>../org.jowidgets.addons.logging.jul.feature</module>
 		<module>../org.jowidgets.addons.logging.nop.feature</module>		
 		<module>../org.jowidgets.addons.silkicons.feature</module>

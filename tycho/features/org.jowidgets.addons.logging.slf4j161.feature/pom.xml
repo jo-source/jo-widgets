@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>org.jowidgets.addons.logging.slf4j.feature</artifactId>
+	<artifactId>org.jowidgets.addons.logging.slf4j161.feature</artifactId>
 	<packaging>eclipse-feature</packaging>
 
 	<parent>

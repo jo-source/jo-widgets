@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.addons.logging.slf4j;
+package org.jowidgets.addons.logging.slf4j161;
 
 import org.jowidgets.logging.api.ILogger;
 import org.jowidgets.util.Assert;
