@@ -13,7 +13,7 @@
 	<parent>
 		<groupId>org.jowidgets</groupId>
 		<artifactId>org.jowidgets.parent</artifactId>
-		<version>0.60.0</version>
+		<version>0.60.1-SNAPSHOT</version>
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
 
