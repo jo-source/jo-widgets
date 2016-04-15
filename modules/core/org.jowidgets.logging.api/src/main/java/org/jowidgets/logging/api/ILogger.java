@@ -77,7 +77,7 @@ package org.jowidgets.logging.api;
  * i want to see nothing in the log
  * 
  * If i run the application with info log level and the application runs stable,
- * i want to see in the log that it runs and what it is doing if anything happens one a rough information level
+ * i want to see in the log that it runs and what it is doing if anything happens on a rough information level
  * 
  * If i try to find a bug,
  * i want to get necessary information in debug level (what ever this is:-)
