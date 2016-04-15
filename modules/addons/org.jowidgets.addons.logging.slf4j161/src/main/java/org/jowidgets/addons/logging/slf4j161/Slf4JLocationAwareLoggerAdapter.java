@@ -36,7 +36,7 @@ final class Slf4JLocationAwareLoggerAdapter extends AbstractSlf4JLoggerAdapter i
 
     private final LocationAwareLogger original;
 
-    public Slf4JLocationAwareLoggerAdapter(final LocationAwareLogger original, final String wrapperFQCN) {
+    Slf4JLocationAwareLoggerAdapter(final LocationAwareLogger original, final String wrapperFQCN) {
         super(original, wrapperFQCN);
         Assert.paramNotNull(original, "original");
         this.original = original;

@@ -28,6 +28,14 @@
 
 package org.jowidgets.logging.api;
 
+/**
+ * Decorates log messages to an original logger.
+ * 
+ * For each logging method of a {@link ILogger} there is log method that has
+ * the original logger as parameter to allow to decorate and filter log messages.
+ * 
+ * @see {@linkplain ISuppressingLogMessageDecoratorBuilder} as an example of an log message decorator
+ */
 public interface ILogMessageDecorator {
 
     void error(String message, ILogger original);

@@ -36,7 +36,7 @@ final class Slf4JLoggerAdapter extends AbstractSlf4JLoggerAdapter implements ILo
 
     private final Logger original;
 
-    public Slf4JLoggerAdapter(final Logger original) {
+    Slf4JLoggerAdapter(final Logger original) {
         super(original, null);
         Assert.paramNotNull(original, "original");
         this.original = original;

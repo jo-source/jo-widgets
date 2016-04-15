@@ -37,7 +37,7 @@ abstract class AbstractSlf4JLoggerAdapter extends AbstractLoggerAdapter implemen
 
     private final Logger original;
 
-    public AbstractSlf4JLoggerAdapter(final Logger original, final String wrapperFQCN) {
+    AbstractSlf4JLoggerAdapter(final Logger original, final String wrapperFQCN) {
         super(wrapperFQCN);
         Assert.paramNotNull(original, "original");
         this.original = original;

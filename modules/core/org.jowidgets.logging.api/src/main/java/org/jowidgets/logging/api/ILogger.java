@@ -64,10 +64,11 @@ package org.jowidgets.logging.api;
  * If you have your own opinion about that, ignore this chapter :-)
  * 
  * I only want to see error messages
- * if anything seriously goes wrong and anybody has to fix it.
+ * if anything seriously goes wrong that must be fixed.
  * 
  * I only want to see warn messages
- * if there may be a problem AND i have a chance to fix the problem to avoid the message in future.
+ * if there may be a problem AND there is a chance to fix the problem to avoid the message in future
+ * or the system is in an unusual (not normal) state
  * 
  * I only want to see info messages
  * for things they do not happen to often and that are important enough to spam the log.
@@ -76,12 +77,10 @@ package org.jowidgets.logging.api;
  * i want to see nothing in the log
  * 
  * If i run the application with info log level and the application runs stable,
- * i want to see in the log that it runs and what it is doing if anything happens.
+ * i want to see in the log that it runs and what it is doing if anything happens one a rough information level
  * 
  * If i try to find a bug,
  * i want to get necessary information in debug level (what ever this is:-)
- * 
- * I think, trace log messages should only be inserted with help of aspects to avoid code pollution.
  * 
  * 
  * javadoc

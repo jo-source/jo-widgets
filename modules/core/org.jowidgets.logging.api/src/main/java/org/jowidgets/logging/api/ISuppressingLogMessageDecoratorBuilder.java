@@ -35,13 +35,12 @@ import org.jowidgets.util.ISystemTimeProvider;
 /**
  * This decorator removes log messages if they occur more often than defined max period.
  * 
- * Create a instance for each message type you want to deduce log message amount for
- * 
+ * Create a own instance for each message type you want to reduce log message amount for.
  */
 public interface ISuppressingLogMessageDecoratorBuilder {
 
     /**
-     * If set to true, a message will be appended that some messages will be suppressed
+     * If set to true, a message will be appended with info that some messages will be suppressed
      * 
      * @param appendMessage The flag to set
      * 
@@ -51,7 +50,7 @@ public interface ISuppressingLogMessageDecoratorBuilder {
 
     /**
      * Sets the message text to inform that messages will be suppressed the next period duration.
-     * The text can contain the {0} and {1} parameter for the maxPeriod and TimeUnit.
+     * The text may contain the {0} and {1} parameter for the maxPeriod and TimeUnit.
      * 
      * The default text is: "More log messages will be suppressed the next {0} {1}."
      * 

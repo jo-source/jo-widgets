@@ -28,6 +28,14 @@
 
 package org.jowidgets.logging.api;
 
+/**
+ * Logger that can be used to log with using an ILogMessageDecorator.
+ * 
+ * For each logging method of a {@link ILogger} there is log method that has {@link ILogMessageDecorator} as parameter to allow to
+ * decorate and filter the log messages.
+ * 
+ * A decorating logger can be obtained from the LoggerProvider, e.g. {@link LoggerProvider#getDecoratingLogger(String, String)}
+ */
 public interface IDecoratingLogger extends ILogger {
 
     void error(ILogMessageDecorator decorator, String message);

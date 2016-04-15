@@ -40,7 +40,7 @@ final class JulLoggerAdapter extends AbstractLoggerAdapter implements ILogger {
 
     private final Logger original;
 
-    public JulLoggerAdapter(final Logger original, final String wrapperFQCN) {
+    JulLoggerAdapter(final Logger original, final String wrapperFQCN) {
         super(wrapperFQCN);
         Assert.paramNotNull(original, "original");
         this.original = original;
