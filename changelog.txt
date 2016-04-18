@@ -1,0 +1,63 @@
+0.57.0 
+
+Features:
+
+* Set the vendor in bundles to org.jowidgets
+* Added toString() method to Utility class ValueHolder 
+* removed outdated checkstyle rules no longer supoorted by checkstyle
+* New Methods for the Interval utility class from org.jowidgets.util
+
+
+Bugfixes:
+
+* Fixed bug in dummy spi impl that leads to unregsitered images in JUnit tests
+* DummyInputFields (for JUnit tests) must fire change events
+
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+0.58.0 
+
+Features:
+
+* New Functions and tests for ICircularBuffer from org.jowidgets.util, added JUnit tests
+* New Methods for the Interval utility class from org.jowidgets.util
+* Added jowidgets logging API and implementations for slf4j161 and JUL
+
+
+Bugfixes:
+
+* Fixed IndexOutOfBounds exception in StringUtils.concatElementsBy(...) when collection has null values, added JUnit Tests
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+0.59.0 
+
+Features:
+
+* New Function setSize() and removeLast() for ICircularBuffer from org.jowidgets.util, added JUnit Tests
+* Added utility interacaes ISystemTimeProvider (for JUnitTests) and IFinishedCallback to org.jowidgets.util
+* Added SuppressingLogMessageDecorator to jowidgets logging api
+* Renamed org.jowidgets.addons.logging.slf4j to org.jowidgets.addons.logging.slf4j161
+
+
+Bugfixes:
+
+* Bugfix for the Interval utility class on closure() and intersect() from org.jowidgets.util, added JUnit Tests
+
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+0.60.0 
+
+Features:
+
+* added org.jowidgets.addons.logging.slf4j161.feature
+
+
+
+
+
