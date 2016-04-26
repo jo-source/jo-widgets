@@ -214,11 +214,20 @@ public final class LoggerProvider {
      * 
      * @return The logger provider instance, never null
      */
-    private static ILoggerProvider instance() {
+    static ILoggerProvider instance() {
         if (loggerProvider == null) {
             loggerProvider = createLoggerProvider();
         }
         return loggerProvider;
+    }
+
+    /**
+     * Checks if the logger provider is initialized
+     * 
+     * @return true if initialized, false otherwise
+     */
+    static boolean isInitialized() {
+        return loggerProvider != null;
     }
 
     private static synchronized ILoggerProvider createLoggerProvider() {

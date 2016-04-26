@@ -75,6 +75,14 @@ public class LoggerMock extends AbstractLoggerAdapter implements ILogger {
     }
 
     /**
+     * Resets the logger mock
+     */
+    public void reset() {
+        popLastMessage();
+        setEnabled(true);
+    }
+
+    /**
      * @return True if a message is available
      */
     public boolean hasMessage() {
