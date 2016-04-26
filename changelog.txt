@@ -58,6 +58,15 @@ Features:
 * added org.jowidgets.addons.logging.slf4j161.feature
 
 
+----------------------------------------------------------------------------------------------------------------------------
+
+0.61.0 
+
+Features:
+
+* added TestLoggerProvider that allows to set different logger providers for different threads
+
+
 
 
 
