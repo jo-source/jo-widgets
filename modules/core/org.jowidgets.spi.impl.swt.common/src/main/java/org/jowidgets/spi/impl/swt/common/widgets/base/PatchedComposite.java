@@ -88,11 +88,11 @@ final class PatchedComposite extends Composite {
         return super.computeSize(wHint, hHint, changed);
     }
 
-    private Point patchedComputeSizeImpl(final int wHint, final int hHint, boolean changed) throws IllegalAccessException,
-            InvocationTargetException {
+    private Point patchedComputeSizeImpl(final int wHint, final int hHint, boolean changed)
+            throws IllegalAccessException, InvocationTargetException {
         checkWidget();
         runSkinMethod.invoke(getDisplay());
-        Point size;
+        final Point size;
         final Layout layout = getLayout();
         if (layout != null) {
             int state = stateField.getInt(this);

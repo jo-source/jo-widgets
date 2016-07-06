@@ -288,7 +288,7 @@ public class WorkbenchContext implements IWorkbenchContext {
     }
 
     private IContainer createWorkbenchContentContainer(final IWorkbench workbench) {
-        IContainer result;
+        final IContainer result;
 
         final IComposite contentComposite = rootContainer.add(bpf.composite(), "growx, growy, w 0::, h 0::, wrap");
         contentComposite.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
@@ -302,9 +302,8 @@ public class WorkbenchContext implements IWorkbenchContext {
             final IContainer applicationsContainer = splitComposite.getFirst();
             applicationsContainer.setLayout(new MigLayoutDescriptor("0[grow, 0::]0", "0[grow, 0::]0"));
             applicationsContainer.setVisible(workbench.hasApplicationNavigator());
-            applicationTabFolder = applicationsContainer.add(
-                    bpf.tabFolder().setTabsCloseable(workbench.getApplicationsCloseable()),
-                    "growx, growy, h 0::, w 0::");
+            applicationTabFolder = applicationsContainer
+                    .add(bpf.tabFolder().setTabsCloseable(workbench.getApplicationsCloseable()), "growx, growy, h 0::, w 0::");
 
             result = splitComposite.getSecond();
         }

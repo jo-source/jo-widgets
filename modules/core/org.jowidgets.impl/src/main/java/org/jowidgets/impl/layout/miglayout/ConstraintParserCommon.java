@@ -591,7 +591,8 @@ final class ConstraintParserCommon {
                     if (ix > -1) {
                         final String sp = part.substring(ix).trim();
                         if (sp.startsWith("x") || sp.startsWith("y")) { // To gandle "gpx", "gpy", "shrinkpriorityx", shrinkpriorityy"
-                            (sp.startsWith("x") ? cc.getHorizontal() : cc.getVertical()).setShrinkPriority(Integer.parseInt(sp.substring(2)));
+                            (sp.startsWith("x") ? cc.getHorizontal() : cc.getVertical())
+                                    .setShrinkPriority(Integer.parseInt(sp.substring(2)));
                         }
                         else {
                             final String[] shrinks = toTrimmedTokens(sp, ' ');
@@ -647,7 +648,8 @@ final class ConstraintParserCommon {
                         final String gp = part.substring(ix).trim();
                         final char c0 = gp.length() > 0 ? gp.charAt(0) : ' ';
                         if (c0 == 'x' || c0 == 'y') { // To gandle "gpx", "gpy", "growpriorityx", growpriorityy"
-                            (c0 == 'x' ? cc.getHorizontal() : cc.getVertical()).setGrowPriority(Integer.parseInt(gp.substring(2)));
+                            (c0 == 'x' ? cc.getHorizontal() : cc.getVertical())
+                                    .setGrowPriority(Integer.parseInt(gp.substring(2)));
                         }
                         else {
                             final String[] grows = toTrimmedTokens(gp, ' ');
@@ -764,8 +766,10 @@ final class ConstraintParserCommon {
                     ix = startsWithLenient(part, "pad", 3, true);
                     if (ix > -1) {
                         final UnitValueCommon[] p = parseInsets(part.substring(ix).trim(), false);
-                        cc.setPadding(new UnitValueCommon[] {
-                                p[0], p.length > 1 ? p[1] : null, p.length > 2 ? p[2] : null, p.length > 3 ? p[3] : null});
+                        cc.setPadding(
+                                new UnitValueCommon[] {
+                                        p[0], p.length > 1 ? p[1] : null, p.length > 2 ? p[2] : null,
+                                        p.length > 3 ? p[3] : null});
                         continue;
                     }
 
@@ -832,8 +836,12 @@ final class ConstraintParserCommon {
                             final UnitValueCommon uv = parseUnitValue(uvStr, null, isHor);
                             final boolean isMin = part.charAt(3) == 'n';
                             final DimConstraintCommon dc = isHor ? cc.getHorizontal() : cc.getVertical();
-                            dc.setSize(new BoundSizeCommon(isMin ? uv : dc.getSize().getMin(), dc.getSize().getPreferred(), isMin
-                                    ? (dc.getSize().getMax()) : uv, uvStr));
+                            dc.setSize(
+                                    new BoundSizeCommon(
+                                        isMin ? uv : dc.getSize().getMin(),
+                                        dc.getSize().getPreferred(),
+                                        isMin ? (dc.getSize().getMax()) : uv,
+                                        uvStr));
                             continue;
                         }
                     }
@@ -1105,10 +1113,12 @@ final class ConstraintParserCommon {
             return new BoundSizeCommon(parseUnitValue(s0, null, isHor), parseUnitValue(sizes[1], null, isHor), null, push, cs);
         }
         else if (sizes.length == 3) {
-            return new BoundSizeCommon(parseUnitValue(s0, null, isHor), parseUnitValue(sizes[1], null, isHor), parseUnitValue(
-                    sizes[2],
-                    null,
-                    isHor), push, cs);
+            return new BoundSizeCommon(
+                parseUnitValue(s0, null, isHor),
+                parseUnitValue(sizes[1], null, isHor),
+                parseUnitValue(sizes[2], null, isHor),
+                push,
+                cs);
         }
         else {
             throw new IllegalArgumentException("Min:Preferred:Max size section must contain 0, 1 or 2 colons. '" + cs + "'");
@@ -1196,7 +1206,7 @@ final class ConstraintParserCommon {
                 }
             }
             else {
-                char delim;
+                final char delim;
                 if (oper == UnitValueToolkitCommon.ADD) {
                     delim = '+';
                 }

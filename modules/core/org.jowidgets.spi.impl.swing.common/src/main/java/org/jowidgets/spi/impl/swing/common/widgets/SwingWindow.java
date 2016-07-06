@@ -157,7 +157,7 @@ public class SwingWindow extends SwingContainer implements IWindowSpi {
 
     @Override
     public Rectangle getParentBounds() {
-        Dimension parentSize;
+        final Dimension parentSize;
         Position parentPosition = new Position(0, 0);
         if (getUiReference().getParent() != null) {
             parentPosition = PositionConvert.convert(getUiReference().getParent().getLocation());

@@ -41,7 +41,7 @@ public final class VirtualKeyConvert {
     private VirtualKeyConvert() {};
 
     public static int convert(final VirtualKey virtualKey) {
-        int result;
+        final int result;
 
         if (virtualKey.isCharacter()) {
             result = virtualKey.getCharacter().charValue();

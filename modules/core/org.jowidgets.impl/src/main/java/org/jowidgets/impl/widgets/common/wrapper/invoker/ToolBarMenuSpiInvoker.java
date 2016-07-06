@@ -87,7 +87,7 @@ public class ToolBarMenuSpiInvoker implements IItemSpiInvoker {
 
     private void setToolTip() {
         final String prefix = EmptyCheck.isEmpty(text) ? "" : text;
-        String delimiter;
+        final String delimiter;
         final String suffix = EmptyCheck.isEmpty(toolTipText) ? "" : toolTipText;
         if (!EmptyCheck.isEmpty(text) && !EmptyCheck.isEmpty(toolTipText)) {
             delimiter = ": ";

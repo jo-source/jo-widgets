@@ -32,8 +32,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.miginfocom.swt.MigLayout;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -61,6 +59,8 @@ import org.jowidgets.spi.impl.controller.TabItemObservableSpi;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.ITabItemSpi;
+
+import net.miginfocom.swt.MigLayout;
 
 public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
@@ -427,7 +427,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
     }
 
     private static CTabItem createItem(final CTabFolder parentFolder, final boolean closeable, final Integer index) {
-        CTabItem result;
+        final CTabItem result;
         if (index != null) {
             result = new CTabItem(parentFolder, closeable ? SWT.CLOSE : SWT.NONE, index.intValue());
         }

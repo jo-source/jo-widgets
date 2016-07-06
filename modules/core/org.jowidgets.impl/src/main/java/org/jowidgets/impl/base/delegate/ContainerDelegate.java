@@ -458,7 +458,7 @@ public class ContainerDelegate extends DisposableDelegate {
         final IListenerRegistrationDelegate<LISTENER_TYPE> registrationDelegate) {
         Assert.paramNotNull(listenerFactory, "listenerFactory");
         if (!listenenerManagers.containsKey(listenerFactory)) {
-            RecursiveListenenerManager<LISTENER_TYPE> listenenerManager;
+            final RecursiveListenenerManager<LISTENER_TYPE> listenenerManager;
             listenenerManager = new RecursiveListenenerManager<LISTENER_TYPE>(container, listenerFactory, registrationDelegate);
             listenenerManagers.put(listenerFactory, listenenerManager);
         }

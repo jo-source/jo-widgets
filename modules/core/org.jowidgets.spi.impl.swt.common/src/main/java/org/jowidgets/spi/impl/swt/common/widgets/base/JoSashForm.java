@@ -136,8 +136,8 @@ public class JoSashForm extends Composite {
         final int firstSize = Math.max(targetPos, sashUtil.getSize(firstMinSize));
         final int secondSize = totalSize - sashSize - firstSize;
 
-        event.doit = ((targetPos >= sashUtil.getSize(firstMinSize)) && (targetPos + sashSize <= totalSize
-            - sashUtil.getSize(secondMinSize)));
+        event.doit = ((targetPos >= sashUtil.getSize(firstMinSize))
+            && (targetPos + sashSize <= totalSize - sashUtil.getSize(secondMinSize)));
 
         if ((firstSize != sashUtil.getSize(first.getBounds())) && (event.doit) && (event.detail != SWT.DRAG)) {
             weight = (double) firstSize / (totalSize - sashSize);
@@ -248,7 +248,7 @@ public class JoSashForm extends Composite {
 
     private static int getSashStyle(final ISplitCompositeSetupSpi setup) {
         final Orientation orientation = setup.getOrientation();
-        int style;
+        final int style;
         if (Orientation.HORIZONTAL == orientation) {
             style = SWT.VERTICAL;
         }
@@ -260,9 +260,12 @@ public class JoSashForm extends Composite {
         }
 
         if (SwtOptions.getSplitLayoutMode().equals(SplitlayoutMode.ON_MOUSE_MOVE)) {
-            style |= SWT.SMOOTH;
+            return style | SWT.SMOOTH;
         }
-        return style;
+        else {
+            return style;
+        }
+
     }
 
     private static ISashOrientationUtil getSashUtil(final ISplitCompositeSetupSpi setup) {

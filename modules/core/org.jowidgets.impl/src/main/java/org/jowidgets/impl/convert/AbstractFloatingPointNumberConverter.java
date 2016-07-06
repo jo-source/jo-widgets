@@ -36,8 +36,8 @@ import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
 
-abstract class AbstractFloatingPointNumberConverter<NUMBER_TYPE extends Number> extends AbstractConverter<NUMBER_TYPE> implements
-        IConverter<NUMBER_TYPE> {
+abstract class AbstractFloatingPointNumberConverter<NUMBER_TYPE extends Number> extends AbstractConverter<NUMBER_TYPE>
+        implements IConverter<NUMBER_TYPE> {
 
     private final DecimalFormat decimalFormat;
     private final String formatHint;
@@ -99,7 +99,7 @@ abstract class AbstractFloatingPointNumberConverter<NUMBER_TYPE extends Number> 
     public String getAcceptingRegExp() {
         final String decimalSeparatorRegEx;
         final String groupingSeparatorRegEx;
-        int groupingSizeRegEx;
+        final int groupingSizeRegEx;
         final int groupingSizeRegExMinusOne;
 
         // Check, if the decimal separator is a special Char, add \\ to the char
