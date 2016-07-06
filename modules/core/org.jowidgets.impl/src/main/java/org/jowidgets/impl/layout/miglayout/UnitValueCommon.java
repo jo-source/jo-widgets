@@ -174,14 +174,10 @@ final class UnitValueCommon implements Serializable {
                         * 0.01f;
 
                 case UnitValueToolkitCommon.ALIGN:
-                    final Integer st = MigLayoutToolkitImpl.getMigLinkHandler().getValue(
-                            parent.getLayout(),
-                            "visual",
-                            isHor ? LinkHandlerCommon.X : LinkHandlerCommon.Y);
-                    final Integer sz = MigLayoutToolkitImpl.getMigLinkHandler().getValue(
-                            parent.getLayout(),
-                            "visual",
-                            isHor ? LinkHandlerCommon.WIDTH : LinkHandlerCommon.HEIGHT);
+                    final Integer st = MigLayoutToolkitImpl.getMigLinkHandler()
+                            .getValue(parent.getLayout(), "visual", isHor ? LinkHandlerCommon.X : LinkHandlerCommon.Y);
+                    final Integer sz = MigLayoutToolkitImpl.getMigLinkHandler()
+                            .getValue(parent.getLayout(), "visual", isHor ? LinkHandlerCommon.WIDTH : LinkHandlerCommon.HEIGHT);
                     if (st == null || sz == null) {
                         return 0;
                     }
@@ -218,10 +214,8 @@ final class UnitValueCommon implements Serializable {
                 case UnitValueToolkitCommon.LINK_Y2:
                 case UnitValueToolkitCommon.LINK_XPOS:
                 case UnitValueToolkitCommon.LINK_YPOS:
-                    final Integer v = MigLayoutToolkitImpl.getMigLinkHandler().getValue(
-                            parent.getLayout(),
-                            getLinkTargetId(),
-                            unit
+                    final Integer v = MigLayoutToolkitImpl.getMigLinkHandler()
+                            .getValue(parent.getLayout(), getLinkTargetId(), unit
                                 - (unit >= UnitValueToolkitCommon.LINK_XPOS
                                         ? UnitValueToolkitCommon.LINK_XPOS : UnitValueToolkitCommon.LINK_X));
                     if (v == null) {
@@ -243,8 +237,11 @@ final class UnitValueCommon implements Serializable {
                         return res;
                     }
 
+                    //CHECKSTYLE:OFF
+                    //Fall through is not possible because unit may not be LOOKUP and LABEL_ALIGN at the same time
                 case UnitValueToolkitCommon.LABEL_ALIGN:
                     return MigLayoutToolkitImpl.getMigPlatformDefaults().getLabelAlignPercentage() * refValue;
+                //CHECKSTYLE:ON
 
                 case UnitValueToolkitCommon.IDENTITY:
                 default:
@@ -450,8 +447,11 @@ final class UnitValueCommon implements Serializable {
                         throw new IllegalStateException("Design time must be on to use XML persistence. See LayoutUtil.");
                     }
 
-                    return new Expression(oldInstance, ConstraintParserCommon.class, "parseUnitValueOrAlign", new Object[] {
-                            uv.getConstraintString(), (uv.isHorizontal() ? Boolean.TRUE : Boolean.FALSE), null});
+                    return new Expression(
+                        oldInstance,
+                        ConstraintParserCommon.class,
+                        "parseUnitValueOrAlign",
+                        new Object[] {uv.getConstraintString(), (uv.isHorizontal() ? Boolean.TRUE : Boolean.FALSE), null});
                 }
             });
         }
