@@ -94,6 +94,7 @@ public final class FileUtils {
         }
     }
 
+    @SuppressWarnings("resource") //Closing the channels closes the stream
     public static void copyFile(final File source, final File target) {
         Assert.paramNotNull(source, "source");
         Assert.paramNotNull(target, "target");
