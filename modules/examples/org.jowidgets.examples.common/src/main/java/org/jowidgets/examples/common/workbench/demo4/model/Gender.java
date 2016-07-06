@@ -35,7 +35,7 @@ public enum Gender {
 
     private final String string;
 
-    private Gender(final String string) {
+    Gender(final String string) {
         this.string = string;
     }
 

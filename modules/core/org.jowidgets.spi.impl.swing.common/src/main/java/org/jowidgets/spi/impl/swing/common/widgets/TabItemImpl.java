@@ -48,8 +48,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.basic.BasicButtonUI;
 
-import net.miginfocom.swing.MigLayout;
-
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.image.IImageConstant;
 import org.jowidgets.common.image.IconsSmallCommon;
@@ -74,6 +72,8 @@ import org.jowidgets.spi.impl.controller.TabItemObservableSpi;
 import org.jowidgets.spi.impl.swing.common.image.SwingImageRegistry;
 import org.jowidgets.spi.widgets.IPopupMenuSpi;
 import org.jowidgets.spi.widgets.ITabItemSpi;
+
+import net.miginfocom.swing.MigLayout;
 
 public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
@@ -535,7 +535,7 @@ public class TabItemImpl extends TabItemObservableSpi implements ITabItemSpi {
 
         private static final long serialVersionUID = 1171212461380220004L;
 
-        public TabButton() {
+        TabButton() {
 
             setPreferredSize(new java.awt.Dimension(16, 16));
             setMargin(new Insets(0, 0, 0, 0));

@@ -36,7 +36,7 @@ public enum Colors implements IColorConstant {
 
     private ColorValue colorValue;
 
-    private Colors(final ColorValue colorValue) {
+    Colors(final ColorValue colorValue) {
         this.colorValue = colorValue;
     }
 

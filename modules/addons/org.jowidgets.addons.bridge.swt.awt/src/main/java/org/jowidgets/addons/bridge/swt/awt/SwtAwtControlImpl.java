@@ -34,7 +34,7 @@ import org.jowidgets.spi.impl.bridge.swt.awt.common.swt.ISwtAwtControlSpi;
 
 class SwtAwtControlImpl extends ControlImpl implements ISwtAwtControl {
 
-    public SwtAwtControlImpl(final ISwtAwtControlSpi compositeSpi) {
+    SwtAwtControlImpl(final ISwtAwtControlSpi compositeSpi) {
         super(compositeSpi);
     }
 

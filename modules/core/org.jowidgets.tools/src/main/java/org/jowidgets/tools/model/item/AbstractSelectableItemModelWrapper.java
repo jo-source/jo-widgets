@@ -33,7 +33,7 @@ import org.jowidgets.common.widgets.controller.IItemStateListener;
 
 abstract class AbstractSelectableItemModelWrapper extends AbstractItemModelWrapper implements ISelectableItemModel {
 
-    public AbstractSelectableItemModelWrapper(final ISelectableItemModel itemModel) {
+    AbstractSelectableItemModelWrapper(final ISelectableItemModel itemModel) {
         super(itemModel);
     }
 

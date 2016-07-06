@@ -160,7 +160,7 @@ public abstract class AbstractSwingMenu extends SwingWidget implements IMenuSpi 
          * @param separator
          * @param buttonGroup
          */
-        public JoSwingButtonGroup(final SeparatorMenuItemImpl separator, final ButtonGroup buttonGroup) {
+        JoSwingButtonGroup(final SeparatorMenuItemImpl separator, final ButtonGroup buttonGroup) {
             this.separator = separator;
             this.buttonGroup = buttonGroup;
         }

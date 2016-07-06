@@ -1115,7 +1115,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
         private static final long serialVersionUID = 6096723765272552285L;
 
-        public SwingTableModel() {
+        SwingTableModel() {
             super();
         }
 
@@ -1187,13 +1187,8 @@ public class TableImpl extends SwingControl implements ITableSpi {
             final boolean hasFocus,
             final int row,
             final int columnIndex) {
-            final JLabel defaultComponent = (JLabel) headerRenderer.getTableCellRendererComponent(
-                    table,
-                    value,
-                    isSelected,
-                    hasFocus,
-                    row,
-                    columnIndex);
+            final JLabel defaultComponent = (JLabel) headerRenderer
+                    .getTableCellRendererComponent(table, value, isSelected, hasFocus, row, columnIndex);
 
             final ITableColumnSpi column = (ITableColumnSpi) value;
 
@@ -1289,7 +1284,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
         private int row;
         private long stopEditTimestamp;
 
-        public EditorFactoryBasedCellEditor(final ITableCellEditorFactory<? extends ITableCellEditor> editorFactory) {
+        EditorFactoryBasedCellEditor(final ITableCellEditorFactory<? extends ITableCellEditor> editorFactory) {
             this.editorFactory = editorFactory;
         }
 
@@ -1614,7 +1609,8 @@ public class TableImpl extends SwingControl implements ITableSpi {
 
     private final class EditorCustomWidgetFactory implements ICustomWidgetFactory {
         @Override
-        public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE create(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+        public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE create(
+            final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
             return factory.create(table, descriptor);
         }
     }
@@ -1647,7 +1643,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
         private final int rowIndex;
         private final int columnIndex;
 
-        public CellIndices(final int rowIndex, final int columnIndex) {
+        CellIndices(final int rowIndex, final int columnIndex) {
             super();
             this.rowIndex = rowIndex;
             this.columnIndex = columnIndex;
@@ -1667,7 +1663,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
         private final int startIndex;
         private final int endIndex;
 
-        public RowRange(final int startIndex, final int endIndex) {
+        RowRange(final int startIndex, final int endIndex) {
             super();
             this.startIndex = startIndex;
             this.endIndex = endIndex;

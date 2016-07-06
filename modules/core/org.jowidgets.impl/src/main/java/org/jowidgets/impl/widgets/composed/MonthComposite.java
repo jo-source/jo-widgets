@@ -89,7 +89,7 @@ final class MonthComposite extends CompositeWrapper implements IInputObservable 
     private CalendarButton selectedButton;
     private CalendarButton todayButton;
 
-    public MonthComposite(final IComposite parent, final Date date, final Date selectedDate, final MonthLayoutCache layoutCache) {
+    MonthComposite(final IComposite parent, final Date date, final Date selectedDate, final MonthLayoutCache layoutCache) {
         super(parent);
         this.layoutCache = layoutCache;
 

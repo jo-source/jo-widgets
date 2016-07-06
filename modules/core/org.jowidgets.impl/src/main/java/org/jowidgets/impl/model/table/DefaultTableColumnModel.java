@@ -376,13 +376,8 @@ class DefaultTableColumnModel implements IDefaultTableColumnModel, ITableColumnM
 
     private void checkIndex(final int columnIndex, final int maxIndex) {
         if (columnIndex < 0 || columnIndex > maxIndex) {
-            throw new IllegalArgumentException("Column index must be between '"
-                + 0
-                + "' and '"
-                + maxIndex
-                + "', but is '"
-                + columnIndex
-                + "'.");
+            throw new IllegalArgumentException(
+                "Column index must be between '" + 0 + "' and '" + maxIndex + "', but is '" + columnIndex + "'.");
         }
     }
 
@@ -390,7 +385,7 @@ class DefaultTableColumnModel implements IDefaultTableColumnModel, ITableColumnM
 
         private final int columnIndex;
 
-        public ColumnChangeListener(final int columnIndex) {
+        ColumnChangeListener(final int columnIndex) {
             super();
             this.columnIndex = columnIndex;
         }

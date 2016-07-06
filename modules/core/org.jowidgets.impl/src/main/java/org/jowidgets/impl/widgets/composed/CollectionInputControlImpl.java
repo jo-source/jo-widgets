@@ -136,15 +136,15 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
                 int index = 1;
                 for (final Row row : valuesContainer.rows) {
                     final IInputControl<INPUT_TYPE> inputControl = row.inputControl;
-                    final IValidationResult controlResult = inputControl.validate().withContext(
-                            MessageReplacer.replace(ELEMENT.get(), String.valueOf(index)));
+                    final IValidationResult controlResult = inputControl.validate()
+                            .withContext(MessageReplacer.replace(ELEMENT.get(), String.valueOf(index)));
                     if (inputControl.hasModifications() && !controlResult.isValid()) {
                         builder.addResult(controlResult);
                     }
                     else if (!controlResult.isValid()) {
-                        builder.addResult(ValidationResult.infoError(MessageReplacer.replace(
-                                PLEASE_EDIT_ELEMENT.get(),
-                                String.valueOf(index))));
+                        builder.addResult(
+                                ValidationResult
+                                        .infoError(MessageReplacer.replace(PLEASE_EDIT_ELEMENT.get(), String.valueOf(index))));
                     }
                     index++;
                 }
@@ -387,9 +387,8 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
                                     delta = -1;
                                 }
                                 valuesContainer.removeRow(index);
-                                final Row row = valuesContainer.getRow(Math.min(
-                                        Math.max(0, index + delta),
-                                        valuesContainer.getValueCount() - 1));
+                                final Row row = valuesContainer
+                                        .getRow(Math.min(Math.max(0, index + delta), valuesContainer.getValueCount() - 1));
                                 if (row != null) {
                                     row.inputControl.requestFocus();
                                     row.scrollRectToRow();
@@ -493,7 +492,7 @@ public class CollectionInputControlImpl<INPUT_TYPE> extends ControlWrapper imple
 
         private final List<Row> rows;
 
-        public ValuesContainer(final IComposite widget) {
+        ValuesContainer(final IComposite widget) {
             super(widget);
             this.rows = new LinkedList<Row>();
             setLayout(new ListLayout(this, new IColorConstant[0]));

@@ -33,11 +33,11 @@ class DefaultYesNoConverterShort extends DefaultBooleanConverter {
             Messages.getString("DefaultYesNoConverterShort.yes_short_uppercase"), //$NON-NLS-1$ 
             Messages.getString("DefaultYesNoConverterShort.yes_short_lowercase")}; //$NON-NLS-1$
     private static final String[] FALSE_STRINGS = new String[] {
-            Messages.getString("DefaultYesNoConverterShort.no_short_uppercase"),//$NON-NLS-1$ 
+            Messages.getString("DefaultYesNoConverterShort.no_short_uppercase"), //$NON-NLS-1$ 
             Messages.getString("DefaultYesNoConverterShort.no_short_lowercase")}; //$NON-NLS-1$
     private static final String MATCHING_REG_EXP = buildRegExp();
 
-    public DefaultYesNoConverterShort() {
+    DefaultYesNoConverterShort() {
         super(TRUE_STRINGS, FALSE_STRINGS, MATCHING_REG_EXP);
     }
 

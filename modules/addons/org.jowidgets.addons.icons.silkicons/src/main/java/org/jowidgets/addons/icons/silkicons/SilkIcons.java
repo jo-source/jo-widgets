@@ -1056,7 +1056,7 @@ public enum SilkIcons implements IImageUrlProvider, ICacheable {
     private final URL url;
     private final Cacheable cacheable;
 
-    private SilkIcons(final String defaultPath) {
+    SilkIcons(final String defaultPath) {
         this.url = getClass().getClassLoader().getResource(defaultPath);
         this.cacheable = new Cacheable();
     }

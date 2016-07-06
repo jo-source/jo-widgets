@@ -40,7 +40,7 @@ class ImageImpl extends DisposableDelegate implements IImage {
     private final IImageSpi imageSpi;
     private final IImageRegistry imageRegistry;
 
-    public ImageImpl(final IImageSpi imageSpi, final IImageRegistry imageRegistry) {
+    ImageImpl(final IImageSpi imageSpi, final IImageRegistry imageRegistry) {
         Assert.paramNotNull(imageSpi, "imageSpi");
         Assert.paramNotNull(imageRegistry, "imageRegistry");
 

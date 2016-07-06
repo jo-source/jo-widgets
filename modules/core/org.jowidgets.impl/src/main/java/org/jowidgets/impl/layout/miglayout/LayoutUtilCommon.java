@@ -83,7 +83,7 @@ final class LayoutUtilCommon {
     private byte[] readBuf = null;
     private final IdentityHashMap<Object, Object> serMap = new IdentityHashMap<Object, Object>(2);
 
-    public LayoutUtilCommon() {
+    LayoutUtilCommon() {
         hasBeans = initializeHasBeans();
     }
 
@@ -296,8 +296,8 @@ final class LayoutUtilCommon {
                             if (curPrio == prio) {
                                 if (isGrow) {
                                     resizeWeight[i] = (force == 0 || resC.grow != null)
-                                            ? resC.grow : (defPushWeights[i < defPushWeights.length
-                                                    ? i : defPushWeights.length - 1]);
+                                            ? resC.grow
+                                            : (defPushWeights[i < defPushWeights.length ? i : defPushWeights.length - 1]);
                                 }
                                 else {
                                     resizeWeight[i] = resC.shrink;
@@ -410,8 +410,12 @@ final class LayoutUtilCommon {
             return new BoundSizeCommon(min, pref, max, null);
         }
 
-        return new BoundSizeCommon(min != null ? min : bs.getMin(), pref != null ? pref : bs.getPreferred(), max != null
-                ? max : bs.getMax(), bs.getGapPush(), null);
+        return new BoundSizeCommon(
+            min != null ? min : bs.getMin(),
+            pref != null ? pref : bs.getPreferred(),
+            max != null ? max : bs.getMax(),
+            bs.getGapPush(),
+            null);
     }
 
     /**
@@ -496,8 +500,11 @@ final class LayoutUtilCommon {
      */
     UnitValueCommon getInsets(final LCCommon lc, final int side, final boolean getDefault) {
         final UnitValueCommon[] i = lc.getInsets();
-        return (i != null && i[side] != null) ? i[side] : (getDefault ? MigLayoutToolkitImpl.getMigPlatformDefaults()
-                .getPanelInsets(side) : MigLayoutToolkitImpl.getMigUnitValueToolkit().ZERO);
+        return (i != null && i[side] != null)
+                ? i[side]
+                : (getDefault
+                        ? MigLayoutToolkitImpl.getMigPlatformDefaults().getPanelInsets(side)
+                        : MigLayoutToolkitImpl.getMigUnitValueToolkit().ZERO);
     }
 
     /**

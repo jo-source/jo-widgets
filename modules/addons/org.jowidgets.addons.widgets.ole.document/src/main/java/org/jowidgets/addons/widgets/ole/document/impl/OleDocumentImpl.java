@@ -48,7 +48,7 @@ class OleDocumentImpl extends ControlWrapper implements IOleDocument {
     private final ChangeObservable documentChangeObservable;
     private final ITempFileFactory tempFileFactory;
 
-    public OleDocumentImpl(final IOleControl oleControl, final IOleDocumentSetupBuilder<?> setup) {
+    OleDocumentImpl(final IOleControl oleControl, final IOleDocumentSetupBuilder<?> setup) {
         super(oleControl);
         Assert.paramNotNull(setup.getTempFileFactory(), "setup.getTempFileFactory()");
         Assert.paramNotNull(setup.getProgId(), "setup.getProgId()");

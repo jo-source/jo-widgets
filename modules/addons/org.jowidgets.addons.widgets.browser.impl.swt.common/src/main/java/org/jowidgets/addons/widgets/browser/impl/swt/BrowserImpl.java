@@ -32,8 +32,6 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-import net.miginfocom.swt.MigLayout;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.BrowserFunction;
@@ -59,6 +57,8 @@ import org.jowidgets.spi.impl.swt.common.color.ColorCache;
 import org.jowidgets.tools.types.VetoHolder;
 import org.jowidgets.tools.widgets.wrapper.ControlWrapper;
 import org.jowidgets.util.Assert;
+
+import net.miginfocom.swt.MigLayout;
 
 class BrowserImpl extends ControlWrapper implements IBrowser {
 
@@ -243,7 +243,7 @@ class BrowserImpl extends ControlWrapper implements IBrowser {
 
         private final IBrowserFunction function;
 
-        public BrowserFunctionAdapter(final Browser browser, final String functionName, final IBrowserFunction function) {
+        BrowserFunctionAdapter(final Browser browser, final String functionName, final IBrowserFunction function) {
             super(browser, functionName);
             this.function = function;
         }

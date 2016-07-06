@@ -43,7 +43,7 @@ final class JoSashFormLayout extends Layout {
     private boolean initialized;
     private int fixedChildRegularSize = 0;
 
-    public JoSashFormLayout(final JoSashForm parent, final ISashOrientationUtil calculator) {
+    JoSashFormLayout(final JoSashForm parent, final ISashOrientationUtil calculator) {
         this.parent = parent;
         this.sashUtil = calculator;
         initialized = false;

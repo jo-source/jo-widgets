@@ -37,7 +37,7 @@ class DefaultYesNoConverterLong extends DefaultBooleanConverter {
             Messages.getString("DefaultYesNoConverterLong.no_lowercase")}; //$NON-NLS-1$
     private static final String MATCHING_REG_EXP = buildRegExp();
 
-    public DefaultYesNoConverterLong() {
+    DefaultYesNoConverterLong() {
         super(TRUE_STRINGS, FALSE_STRINGS, MATCHING_REG_EXP);
     }
 

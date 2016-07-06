@@ -117,7 +117,7 @@ public enum VirtualKey {
     private final Character character;
     private final String label;
 
-    private VirtualKey(final Character character, final String label) {
+    VirtualKey(final Character character, final String label) {
         this.character = character;
         this.label = label;
     }

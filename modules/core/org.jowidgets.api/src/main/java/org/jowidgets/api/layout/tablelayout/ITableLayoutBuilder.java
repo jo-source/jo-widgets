@@ -30,14 +30,14 @@ package org.jowidgets.api.layout.tablelayout;
 
 public interface ITableLayoutBuilder {
 
-    public enum ColumnMode {
+    enum ColumnMode {
         PREFERRED,
         GROWING,
         HIDDEN,
         FIXED
     };
 
-    public enum Alignment {
+    enum Alignment {
         LEFT,
         CENTER,
     }

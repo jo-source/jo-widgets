@@ -38,7 +38,7 @@ class TypeBasedComponentFactory implements IComponentFactory {
 
     private final Class<? extends IComponent> componentType;
 
-    public TypeBasedComponentFactory(final Class<? extends IComponent> componentType) {
+    TypeBasedComponentFactory(final Class<? extends IComponent> componentType) {
         Assert.paramNotNull(componentType, "componentType");
         this.componentType = componentType;
     }
@@ -46,9 +46,8 @@ class TypeBasedComponentFactory implements IComponentFactory {
     @Override
     public IComponent createComponent(final IComponentNodeModel nodeModel, final IComponentContext context) {
         try {
-            return componentType.getConstructor(IComponentNodeModel.class, IComponentContext.class).newInstance(
-                    nodeModel,
-                    context);
+            return componentType.getConstructor(IComponentNodeModel.class, IComponentContext.class)
+                    .newInstance(nodeModel, context);
         }
         catch (final NoSuchMethodException exception) {
             try {

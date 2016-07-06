@@ -37,7 +37,7 @@ public enum AlignmentHorizontal {
 
     private IMessage label;
 
-    private AlignmentHorizontal(final IMessage label) {
+    AlignmentHorizontal(final IMessage label) {
         this.label = label;
     }
 

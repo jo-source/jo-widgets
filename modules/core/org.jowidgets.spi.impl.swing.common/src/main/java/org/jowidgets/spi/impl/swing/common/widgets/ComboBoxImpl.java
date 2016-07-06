@@ -249,7 +249,8 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
             });
         }
         else {
-            throw new IllegalArgumentException("InputChangeEventPolicy '" + setup.getInputChangeEventPolicy() + "' is not known.");
+            throw new IllegalArgumentException(
+                "InputChangeEventPolicy '" + setup.getInputChangeEventPolicy() + "' is not known.");
         }
     }
 
@@ -447,7 +448,7 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
         private boolean keyPressedDelete;
         private boolean deleteOnSelection;
 
-        public ComboBoxEditorImpl(final IInputVerifier inputVerifier, final InputChangeEventPolicy inputChangeEventPolicy) {
+        ComboBoxEditorImpl(final IInputVerifier inputVerifier, final InputChangeEventPolicy inputChangeEventPolicy) {
             super();
             this.textField = new JTextField();
 
@@ -607,7 +608,7 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 
         private final String[] elements;
 
-        public AutoCompletionModel(final String[] elements) {
+        AutoCompletionModel(final String[] elements) {
             // TODO MG,NM review: copy instead?
             this.elements = elements;
         }
@@ -629,7 +630,7 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
         //private final DocumentListener[] listenerList;
         private int disableCount;
 
-        public AbstractAutoCompletionDocument(
+        AbstractAutoCompletionDocument(
             final JTextComponent textComponent,
             final IInputVerifier inputVerifier,
             final InputObservable inputObservable,
@@ -671,7 +672,8 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
             }
         }
 
-        protected String getStringAfterReplacing(final int offset, final int length, final String text) throws BadLocationException {
+        protected String getStringAfterReplacing(final int offset, final int length, final String text)
+                throws BadLocationException {
             String result = getText(0, offset) + text;
             if (offset + length < getLength()) {
                 result = result + getText(offset + length + 1, getLength() - offset - length);
@@ -711,7 +713,7 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 
         private static final long serialVersionUID = -745323548478120663L;
 
-        public AutoCompletionDocument(
+        AutoCompletionDocument(
             final JTextComponent textComponent,
             final IInputVerifier inputVerifier,
             final InputObservable inputObservable,
@@ -753,7 +755,8 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
         }
 
         @Override
-        public void replace(final int offset, final int length, final String text, final AttributeSet attrs) throws BadLocationException {
+        public void replace(final int offset, final int length, final String text, final AttributeSet attrs)
+                throws BadLocationException {
             disableEvents();
             super.replace(offset, length, text, attrs);
             enableEvents();
@@ -765,7 +768,7 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
 
         private static final long serialVersionUID = -745323548478120664L;
 
-        public AutoCompletionSelectionDocument(
+        AutoCompletionSelectionDocument(
             final JTextComponent textComponent,
             final IInputVerifier inputVerifier,
             final InputObservable inputObservable,
@@ -832,7 +835,8 @@ public class ComboBoxImpl extends AbstractInputControl implements IComboBoxSelec
                     len = getLength() - offs;
                 }
 
-                if (comboBoxEditor.keyPressedBackspace || (comboBoxEditor.keyPressedDelete && !comboBoxEditor.deleteOnSelection)) {
+                if (comboBoxEditor.keyPressedBackspace
+                    || (comboBoxEditor.keyPressedDelete && !comboBoxEditor.deleteOnSelection)) {
                     comboBoxEditor.setCaretPosition(getLength());
                     comboBoxEditor.moveCaretPosition(offs);
                 }

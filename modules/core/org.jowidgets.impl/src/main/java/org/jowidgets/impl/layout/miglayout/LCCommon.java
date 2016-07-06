@@ -81,7 +81,7 @@ final class LCCommon implements Externalizable {
     /**
      * Empty constructor.
      */
-    public LCCommon() {}
+    LCCommon() {}
 
     // ************************************************************************
     // * JavaBean get/set methods.

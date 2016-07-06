@@ -424,7 +424,7 @@ public final class MenuModelKeyBinding {
 
         private final IActionItemModel item;
 
-        public ActionItemAction(final IActionItemModel item) {
+        ActionItemAction(final IActionItemModel item) {
             Assert.paramNotNull(item, "item");
             this.item = item;
         }

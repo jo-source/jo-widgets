@@ -55,7 +55,7 @@ class DownloadButtonImpl extends CompositeWrapper implements IDownloadButton {
     private IBrowser browser;
     private String url;
 
-    public DownloadButtonImpl(final IComposite composite, final IDownloadButtonBluePrint bluePrint) {
+    DownloadButtonImpl(final IComposite composite, final IDownloadButtonBluePrint bluePrint) {
         super(composite);
         composite.setLayout(new MigLayoutDescriptor("hidemode 3", "0[grow, 0::]0", "0[grow, 0::]0"));
         this.url = bluePrint.getUrl();

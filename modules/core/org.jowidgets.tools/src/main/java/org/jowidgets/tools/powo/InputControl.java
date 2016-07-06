@@ -49,8 +49,8 @@ import org.jowidgets.util.Assert;
  *             Feel free to move them to your own open source project.
  */
 @Deprecated
-class InputControl<WIDGET_TYPE extends IInputControl<VALUE_TYPE>, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IInputComponentSetup<VALUE_TYPE> & IInputComponentSetupBuilder<?, VALUE_TYPE>, VALUE_TYPE> extends
-        InputComponent<WIDGET_TYPE, BLUE_PRINT_TYPE, VALUE_TYPE> implements IInputControl<VALUE_TYPE> {
+class InputControl<WIDGET_TYPE extends IInputControl<VALUE_TYPE>, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IInputComponentSetup<VALUE_TYPE> & IInputComponentSetupBuilder<?, VALUE_TYPE>, VALUE_TYPE>
+        extends InputComponent<WIDGET_TYPE, BLUE_PRINT_TYPE, VALUE_TYPE> implements IInputControl<VALUE_TYPE> {
 
     private final Set<IParentListener<IContainer>> parentListeners;
 
@@ -63,7 +63,7 @@ class InputControl<WIDGET_TYPE extends IInputControl<VALUE_TYPE>, BLUE_PRINT_TYP
     private DragSourcePowo dragSource;
     private DropTargetPowo dropTarget;
 
-    public InputControl(final BLUE_PRINT_TYPE bluePrint) {
+    InputControl(final BLUE_PRINT_TYPE bluePrint) {
         super(bluePrint);
         this.parentListeners = new LinkedHashSet<IParentListener<IContainer>>();
     }

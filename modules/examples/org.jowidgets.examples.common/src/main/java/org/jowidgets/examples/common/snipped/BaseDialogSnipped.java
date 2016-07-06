@@ -69,7 +69,7 @@ public final class BaseDialogSnipped implements IApplication {
 
     private final class MyDialog extends Dialog {
 
-        public MyDialog(final IWindow parent) {
+        MyDialog(final IWindow parent) {
             super(parent, "My Dialog");
 
             setMinPackSize(new Dimension(300, 0));

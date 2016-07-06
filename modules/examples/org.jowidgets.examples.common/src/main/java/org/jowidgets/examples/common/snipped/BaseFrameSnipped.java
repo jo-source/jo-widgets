@@ -55,7 +55,7 @@ public final class BaseFrameSnipped implements IApplication {
 
     private final class MyFrame extends Frame {
 
-        public MyFrame() {
+        MyFrame() {
             super("Base frame Snipped");
 
             setMinPackSize(new Dimension(300, 0));

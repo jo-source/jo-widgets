@@ -34,7 +34,7 @@ class LCWrapper implements ILC {
 
     private final LCCommon lc;
 
-    public LCWrapper() {
+    LCWrapper() {
         this.lc = new LCCommon();
     }
 

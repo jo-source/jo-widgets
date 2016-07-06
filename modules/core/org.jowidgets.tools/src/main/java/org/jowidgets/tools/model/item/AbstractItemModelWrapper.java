@@ -40,7 +40,7 @@ abstract class AbstractItemModelWrapper implements IItemModel, IWrapper<IItemMod
 
     private final IItemModel itemModel;
 
-    public AbstractItemModelWrapper(final IItemModel itemModel) {
+    AbstractItemModelWrapper(final IItemModel itemModel) {
         super();
         this.itemModel = itemModel;
     }

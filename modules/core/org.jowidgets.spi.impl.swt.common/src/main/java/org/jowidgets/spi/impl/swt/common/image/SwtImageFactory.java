@@ -108,7 +108,7 @@ public final class SwtImageFactory implements IImageFactorySpi {
 
         private GraphicContextSpiImpl graphicContext;
 
-        public BufferedImageSpi(final Image image) {
+        BufferedImageSpi(final Image image) {
             super(new SwtImageHandle(image));
         }
 

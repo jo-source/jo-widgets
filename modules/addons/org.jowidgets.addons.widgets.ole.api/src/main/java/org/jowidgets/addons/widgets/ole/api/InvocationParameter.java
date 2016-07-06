@@ -41,7 +41,7 @@ public final class InvocationParameter {
         private final String parameterName;
         private final Object parameter;
 
-        public InvocationParameterImpl(final String parameterName, final Object parameter) {
+        InvocationParameterImpl(final String parameterName, final Object parameter) {
             this.parameterName = parameterName;
             this.parameter = parameter;
         }

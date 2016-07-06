@@ -47,8 +47,8 @@ import org.jowidgets.util.Assert;
  *             Feel free to move them to your own open source project.
  */
 @Deprecated
-class Control<WIDGET_TYPE extends IControl, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IComponentSetupBuilder<?>> extends
-        Component<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IControl {
+class Control<WIDGET_TYPE extends IControl, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IComponentSetupBuilder<?>>
+        extends Component<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IControl {
 
     private final Set<IParentListener<IContainer>> parentListeners;
 
@@ -60,7 +60,7 @@ class Control<WIDGET_TYPE extends IControl, BLUE_PRINT_TYPE extends IWidgetDescr
     private DragSourcePowo dragSource;
     private DropTargetPowo dropTarget;
 
-    public Control(final BLUE_PRINT_TYPE bluePrint) {
+    Control(final BLUE_PRINT_TYPE bluePrint) {
         super(bluePrint);
         this.parentListeners = new LinkedHashSet<IParentListener<IContainer>>();
     }

@@ -38,7 +38,7 @@ public enum Role {
 
     private final String string;
 
-    private Role(final String string) {
+    Role(final String string) {
         this.string = string;
     }
 

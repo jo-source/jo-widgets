@@ -97,7 +97,7 @@ public final class SwingImageFactory implements IImageFactorySpi {
         private BufferedImage image;
         private GraphicContextSpiImpl graphicContext;
 
-        public BufferedImageSpi(final BufferedImage image) {
+        BufferedImageSpi(final BufferedImage image) {
             super(new ImageHandle<BufferedImage>(image));
             this.image = image;
         }

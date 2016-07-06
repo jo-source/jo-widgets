@@ -120,7 +120,7 @@ public final class Unit {
         private final IMessage name;
         private final double conversionFactor;
 
-        public UnitImpl(final IMessage abbreviation, final IMessage name, final double conversionFactor) {
+        UnitImpl(final IMessage abbreviation, final IMessage name, final double conversionFactor) {
             Assert.paramNotNull(abbreviation, "abbreviation");
             Assert.paramNotNull(name, "name");
 

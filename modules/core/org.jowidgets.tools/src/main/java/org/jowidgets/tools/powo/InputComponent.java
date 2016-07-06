@@ -48,8 +48,8 @@ import org.jowidgets.validation.IValidator;
  *             Feel free to move them to your own open source project.
  */
 @Deprecated
-class InputComponent<WIDGET_TYPE extends IInputComponent<VALUE_TYPE>, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IInputComponentSetup<VALUE_TYPE> & IInputComponentSetupBuilder<?, VALUE_TYPE>, VALUE_TYPE> extends
-        Component<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IInputComponent<VALUE_TYPE> {
+class InputComponent<WIDGET_TYPE extends IInputComponent<VALUE_TYPE>, BLUE_PRINT_TYPE extends IWidgetDescriptor<WIDGET_TYPE> & IInputComponentSetup<VALUE_TYPE> & IInputComponentSetupBuilder<?, VALUE_TYPE>, VALUE_TYPE>
+        extends Component<WIDGET_TYPE, BLUE_PRINT_TYPE> implements IInputComponent<VALUE_TYPE> {
 
     private final List<IValidator<VALUE_TYPE>> validators;
     private final List<IInputListener> inputListeners;
@@ -57,7 +57,7 @@ class InputComponent<WIDGET_TYPE extends IInputComponent<VALUE_TYPE>, BLUE_PRINT
 
     private VALUE_TYPE lastUnmodifiedValue;
 
-    public InputComponent(final BLUE_PRINT_TYPE bluePrint) {
+    InputComponent(final BLUE_PRINT_TYPE bluePrint) {
         super(bluePrint);
         this.validators = new LinkedList<IValidator<VALUE_TYPE>>();
         this.inputListeners = new LinkedList<IInputListener>();

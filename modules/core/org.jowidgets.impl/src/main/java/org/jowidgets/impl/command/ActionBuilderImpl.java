@@ -52,7 +52,7 @@ final class ActionBuilderImpl implements IActionBuilder {
 
     private IExceptionHandler exceptionHandler;
 
-    public ActionBuilderImpl() {
+    ActionBuilderImpl() {
         this.enabled = true;
     }
 

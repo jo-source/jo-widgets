@@ -156,17 +156,17 @@ class HighResolutionPixel {
     private final double green;
     private final double blue;
 
-    public HighResolutionPixel(final int originalPixel, final PaletteData paletteData) {
+    HighResolutionPixel(final int originalPixel, final PaletteData paletteData) {
         this.red = paletteData.getRGB(originalPixel).red;
         this.green = paletteData.getRGB(originalPixel).green;
         this.blue = paletteData.getRGB(originalPixel).blue;
     }
 
-    public HighResolutionPixel() {
+    HighResolutionPixel() {
         this(0.0, 0.0, 0.0);
     }
 
-    public HighResolutionPixel(final double red, final double green, final double blue) {
+    HighResolutionPixel(final double red, final double green, final double blue) {
         this.red = red;
         this.green = green;
         this.blue = blue;

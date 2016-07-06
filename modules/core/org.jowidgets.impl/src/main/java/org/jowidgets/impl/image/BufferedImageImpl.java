@@ -40,7 +40,7 @@ final class BufferedImageImpl extends ImageImpl implements IBufferedImage {
 
     private IGraphicContext graphicContext;
 
-    public BufferedImageImpl(final IBufferedImageSpi imageSpi, final IImageRegistry imageRegistry) {
+    BufferedImageImpl(final IBufferedImageSpi imageSpi, final IImageRegistry imageRegistry) {
         super(imageSpi, imageRegistry);
         this.imageSpi = imageSpi;
     }

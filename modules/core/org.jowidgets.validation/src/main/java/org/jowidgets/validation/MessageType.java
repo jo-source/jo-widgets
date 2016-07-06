@@ -57,7 +57,7 @@ public enum MessageType {
 
     private final boolean valid;
 
-    private MessageType(final boolean valid) {
+    MessageType(final boolean valid) {
         this.valid = valid;
     }
 

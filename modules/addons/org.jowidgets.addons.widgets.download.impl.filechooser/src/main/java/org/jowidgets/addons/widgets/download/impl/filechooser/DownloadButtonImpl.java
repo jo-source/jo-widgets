@@ -65,7 +65,7 @@ class DownloadButtonImpl extends ButtonWrapper implements IDownloadButton {
     private String urlString;
     private File lastFolder;
 
-    public DownloadButtonImpl(final IButton button, final IDownloadButtonBluePrint bluePrint) {
+    DownloadButtonImpl(final IButton button, final IDownloadButtonBluePrint bluePrint) {
         super(button);
         this.button = getWidget();
 

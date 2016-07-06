@@ -79,7 +79,7 @@ final class DelayedEventRunnerImpl implements IDelayedEventRunner {
 
         private final Runnable original;
 
-        public DelayedRunnable(final Runnable original) {
+        DelayedRunnable(final Runnable original) {
             this.original = original;
         }
 

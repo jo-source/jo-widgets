@@ -98,7 +98,7 @@ public final class UnitSet {
 
     private static final class UnitSetImpl extends UnmodifieableArrayWrapper<IUnit> implements IUnitSet {
 
-        public UnitSetImpl(final IUnmodifiableArray<IUnit> original) {
+        UnitSetImpl(final IUnmodifiableArray<IUnit> original) {
             super(original);
         }
 

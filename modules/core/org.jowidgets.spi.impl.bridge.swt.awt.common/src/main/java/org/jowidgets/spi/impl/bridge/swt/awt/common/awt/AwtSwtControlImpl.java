@@ -51,7 +51,7 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
     private boolean initialized;
     private Shell bridgeShell;
 
-    public AwtSwtControlImpl(final Object parentUiReference) {
+    AwtSwtControlImpl(final Object parentUiReference) {
         super(new PeerObservablePanel());
 
         if (!SwingUtilities.isEventDispatchThread()) {
@@ -96,12 +96,13 @@ class AwtSwtControlImpl extends SwingControl implements IAwtSwtControlSpi {
             return currentDisplay;
         }
         else {
-            throw new IllegalStateException("This thread has no swt display. "
-                + "To ensure that the awt event dispatching thread has a display, e.g. the class "
-                + "'"
-                + "BridgedSwtAwtApplicationRunner"
-                + "' could be used, or, if no application "
-                + "runner should be used, use the single ui thread pattern implemented there.");
+            throw new IllegalStateException(
+                "This thread has no swt display. "
+                    + "To ensure that the awt event dispatching thread has a display, e.g. the class "
+                    + "'"
+                    + "BridgedSwtAwtApplicationRunner"
+                    + "' could be used, or, if no application "
+                    + "runner should be used, use the single ui thread pattern implemented there.");
         }
     }
 

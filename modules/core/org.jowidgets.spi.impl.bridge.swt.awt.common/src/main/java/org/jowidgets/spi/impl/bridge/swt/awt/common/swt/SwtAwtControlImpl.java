@@ -48,7 +48,7 @@ class SwtAwtControlImpl extends SwtControl implements ISwtAwtControlSpi {
 
     private final JApplet applet;
 
-    public SwtAwtControlImpl(final Object parentUiReference, final SwtImageRegistry imageRegistry) {
+    SwtAwtControlImpl(final Object parentUiReference, final SwtImageRegistry imageRegistry) {
         super(createComposite(parentUiReference), imageRegistry);
 
         final Composite innerComposite = new Composite(getUiReference(), SWT.EMBEDDED | SWT.NO_BACKGROUND);

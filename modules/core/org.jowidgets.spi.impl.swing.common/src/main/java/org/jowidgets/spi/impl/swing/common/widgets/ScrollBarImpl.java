@@ -43,7 +43,7 @@ final class ScrollBarImpl extends VisibilityStateObservable implements IScrollBa
 
     private final JScrollBar scrollBar;
 
-    public ScrollBarImpl(final JScrollBar scrollBar) {
+    ScrollBarImpl(final JScrollBar scrollBar) {
         super(scrollBar.isVisible());
         Assert.paramNotNull(scrollBar, "scrollBar");
 

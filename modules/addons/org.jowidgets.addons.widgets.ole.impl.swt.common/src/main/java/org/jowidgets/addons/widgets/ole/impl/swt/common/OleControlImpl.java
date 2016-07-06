@@ -412,7 +412,7 @@ class OleControlImpl extends ControlWrapper implements IOleControl {
         private final OleAutomation oleAutomation;
         private final OleEventObservable oleEventObservable;
 
-        public OleAutomationImpl(final OleAutomation oleAutomation) {
+        OleAutomationImpl(final OleAutomation oleAutomation) {
             Assert.paramNotNull(oleAutomation, "oleAutomation");
             this.oleAutomation = oleAutomation;
             this.oleEventObservable = new OleEventObservable(oleAutomation);
@@ -478,9 +478,8 @@ class OleControlImpl extends ControlWrapper implements IOleControl {
 
                 }
                 else {
-                    return (RESULT_TYPE) getVariantResult(oleAutomation.getProperty(
-                            propertyNameIds[0],
-                            new Variant[] {createVariant(parameters[0])}));
+                    return (RESULT_TYPE) getVariantResult(
+                            oleAutomation.getProperty(propertyNameIds[0], new Variant[] {createVariant(parameters[0])}));
                 }
             }
             else {

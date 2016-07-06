@@ -38,7 +38,7 @@ final class ScrollBarImpl implements IScrollBarSpi {
 
     private final UIDScrollBar scrollBar;
 
-    public ScrollBarImpl(final UIDScrollBar scrollBar) {
+    ScrollBarImpl(final UIDScrollBar scrollBar) {
         Assert.paramNotNull(scrollBar, "scrollBar");
         this.scrollBar = scrollBar;
     }

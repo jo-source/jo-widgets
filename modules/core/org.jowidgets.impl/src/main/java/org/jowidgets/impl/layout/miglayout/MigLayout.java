@@ -74,11 +74,7 @@ final class MigLayout implements IMigLayout {
 
     private final LayoutUtilCommon layoutUtil;
 
-    public MigLayout(
-        final IContainer container,
-        final Object constraints,
-        final Object columnConstraints,
-        final Object rowConstraints) {
+    MigLayout(final IContainer container, final Object constraints, final Object columnConstraints, final Object rowConstraints) {
         this.container = container;
         this.cacheParentW = new JoMigContainerWrapper(container);
         layoutUtil = MigLayoutToolkitImpl.getMigLayoutUtil();
@@ -209,8 +205,8 @@ final class MigLayout implements IMigLayout {
             ccMap.put(cw, (CCCommon) constr);
         }
         else {
-            throw new IllegalArgumentException("Constraint must be String or ComponentConstraint: "
-                + constr.getClass().toString());
+            throw new IllegalArgumentException(
+                "Constraint must be String or ComponentConstraint: " + constr.getClass().toString());
         }
 
         grid = null;

@@ -46,7 +46,7 @@ final class LinkHandlerCommon {
     private final ArrayList<HashMap<String, int[]>> valuesMap = new ArrayList<HashMap<String, int[]>>(4);
     private final ArrayList<HashMap<String, int[]>> valuesTemp = new ArrayList<HashMap<String, int[]>>(4);
 
-    public LinkHandlerCommon() {}
+    LinkHandlerCommon() {}
 
     public synchronized Integer getValue(final Object layout, final String key, final int type) {
         Integer ret = null;

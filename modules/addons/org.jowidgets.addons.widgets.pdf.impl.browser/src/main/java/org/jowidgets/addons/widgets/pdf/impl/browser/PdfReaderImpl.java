@@ -40,7 +40,7 @@ import org.jowidgets.util.Assert;
 
 class PdfReaderImpl extends ControlWrapper implements IPdfReader {
 
-    public PdfReaderImpl(final IBrowser browser, final IPdfReaderSetupBuilder<?> setup) {
+    PdfReaderImpl(final IBrowser browser, final IPdfReaderSetupBuilder<?> setup) {
         super(browser);
     }
 

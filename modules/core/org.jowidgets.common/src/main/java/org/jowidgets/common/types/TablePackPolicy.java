@@ -49,7 +49,7 @@ public enum TablePackPolicy {
     private final boolean considerData;
     private final boolean considerAllData;
 
-    private TablePackPolicy(final boolean considerHeader, final boolean considerData, final boolean considerAllData) {
+    TablePackPolicy(final boolean considerHeader, final boolean considerData, final boolean considerAllData) {
         this.considerHeader = considerHeader;
         this.considerData = considerData;
         this.considerAllData = considerAllData;

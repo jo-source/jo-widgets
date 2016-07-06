@@ -68,7 +68,7 @@ final class ResizeConstraintCommon implements Externalizable {
 
     //CHECKSTYLE:ON
 
-    public ResizeConstraintCommon() // For Externalizable
+    ResizeConstraintCommon() // For Externalizable
     {}
 
     ResizeConstraintCommon(final int shrinkPrio, final Float shrinkWeight, final int growPrio, final Float growWeight) {

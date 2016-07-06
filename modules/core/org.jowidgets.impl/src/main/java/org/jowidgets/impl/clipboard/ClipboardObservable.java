@@ -42,7 +42,7 @@ class ClipboardObservable implements IClipboardObservable {
     private final Set<IClipboardListener> listeners;
     private final IObservableCallback observableCallback;
 
-    public ClipboardObservable(final IObservableCallback observableCallback) {
+    ClipboardObservable(final IObservableCallback observableCallback) {
         Assert.paramNotNull(observableCallback, "observableCallback");
         this.observableCallback = observableCallback;
         this.listeners = new LinkedHashSet<IClipboardListener>();

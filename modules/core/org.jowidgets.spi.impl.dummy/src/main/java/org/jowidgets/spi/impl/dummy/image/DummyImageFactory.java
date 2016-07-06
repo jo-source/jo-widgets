@@ -90,7 +90,7 @@ public final class DummyImageFactory implements IImageFactorySpi {
 
     private final class BufferedImageSpi extends ImageSpiImpl<UIDImage> implements IBufferedImageSpi {
 
-        public BufferedImageSpi(final UIDImage image) {
+        BufferedImageSpi(final UIDImage image) {
             super(new ImageHandle<UIDImage>(image));
         }
 

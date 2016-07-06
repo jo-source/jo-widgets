@@ -87,7 +87,7 @@ public class TableFactory extends AbstractWidgetFactory implements IWidgetFactor
         private final TableModelSpiAdapter modelSpiAdapter;
         private final ITableCellEditorFactory<? extends ITableCellEditor> original;
 
-        public TableCellEditorFactoryDecorator(
+        TableCellEditorFactoryDecorator(
             final ITableCellEditorFactory<? extends ITableCellEditor> original,
             final TableModelSpiAdapter modelSpiAdapter) {
             this.modelSpiAdapter = modelSpiAdapter;

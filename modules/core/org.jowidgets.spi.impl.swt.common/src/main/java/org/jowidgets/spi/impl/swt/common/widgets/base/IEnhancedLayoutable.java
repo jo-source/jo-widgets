@@ -30,7 +30,7 @@ package org.jowidgets.spi.impl.swt.common.widgets.base;
 
 public interface IEnhancedLayoutable {
 
-    public enum LayoutMode {
+    enum LayoutMode {
 
         /**
          * Use the min size when excecuting computeSize()

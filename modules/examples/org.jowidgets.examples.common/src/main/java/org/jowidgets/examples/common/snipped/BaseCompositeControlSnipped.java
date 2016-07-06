@@ -60,7 +60,7 @@ public final class BaseCompositeControlSnipped implements IApplication {
 
     private final class MyFrame extends Frame {
 
-        public MyFrame() {
+        MyFrame() {
             super("Base composite control snipped");
 
             setMinPackSize(new Dimension(300, 0));
@@ -79,7 +79,7 @@ public final class BaseCompositeControlSnipped implements IApplication {
         private final IInputField<String> field1;
         private final IInputField<String> field2;
 
-        public MyControl(final IContainer parent, final Object layoutConstraints) {
+        MyControl(final IContainer parent, final Object layoutConstraints) {
             super(parent, layoutConstraints);
 
             final IComposite composite = getComposite();

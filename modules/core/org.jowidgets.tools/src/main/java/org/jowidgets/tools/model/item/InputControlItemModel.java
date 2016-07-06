@@ -151,7 +151,7 @@ public class InputControlItemModel<VALUE_TYPE> extends AbstractItemModelWrapper 
 
         private final IInputControl<VALUE_TYPE> control;
 
-        public InputListener(final IInputControl<VALUE_TYPE> control) {
+        InputListener(final IInputControl<VALUE_TYPE> control) {
             this.control = control;
         }
 

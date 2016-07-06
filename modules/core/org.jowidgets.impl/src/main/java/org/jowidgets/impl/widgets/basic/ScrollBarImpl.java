@@ -36,7 +36,7 @@ import org.jowidgets.spi.widgets.IScrollBarSpi;
 
 final class ScrollBarImpl extends WidgetSpiWrapper implements IScrollBar {
 
-    public ScrollBarImpl(final IScrollBarSpi widget) {
+    ScrollBarImpl(final IScrollBarSpi widget) {
         super(widget);
     }
 

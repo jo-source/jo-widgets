@@ -45,7 +45,7 @@ abstract class AbstractDragSourceObservable implements IDragSourceObservable {
 
     private final Set<IDragSourceListener> listeners;
 
-    public AbstractDragSourceObservable() {
+    AbstractDragSourceObservable() {
         this.listeners = new LinkedHashSet<IDragSourceListener>();
     }
 

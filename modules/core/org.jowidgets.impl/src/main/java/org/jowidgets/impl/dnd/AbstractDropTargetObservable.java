@@ -42,7 +42,7 @@ abstract class AbstractDropTargetObservable implements IDropTargetObservable {
 
     private final Set<IDropTargetListener> listeners;
 
-    public AbstractDropTargetObservable() {
+    AbstractDropTargetObservable() {
         this.listeners = new LinkedHashSet<IDropTargetListener>();
     }
 
