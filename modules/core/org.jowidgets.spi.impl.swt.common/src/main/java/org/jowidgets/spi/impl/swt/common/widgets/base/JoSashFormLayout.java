@@ -58,8 +58,11 @@ final class JoSashFormLayout extends Layout {
     protected void layout(final Composite composite, final boolean flushCache) {
         final Rectangle area = parent.getClientArea();
 
+        //CHECKSTYLE:OFF
+        //seems to be a bug in LocalVariableFinal because variable is not final
         int firstSize;
         int secondSize;
+        //CHECKSTYLE:ON
         final int firstMinSize = sashUtil.getSize(parent.getFirstMinSize());
         final int secondMinSize = sashUtil.getSize(parent.getSecondMinSize());
 
