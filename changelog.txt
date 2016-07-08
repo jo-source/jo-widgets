@@ -67,6 +67,14 @@ Features:
 * added TestLoggerProvider that allows to set different logger providers for different threads
 
 
+----------------------------------------------------------------------------------------------------------------------------
+
+0.62.0 
+
+Features:
+
+* Implemented issue #41 https://github.com/jo-source/jo-widgets/issues/41 integrate HertzUnitProvider
+
 
 
 
