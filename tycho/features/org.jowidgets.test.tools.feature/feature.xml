@@ -2,7 +2,7 @@
 <feature
     id="org.jowidgets.test.tools.feature"
     label="jowidgets test tools feature"
-    version="0.62.0.qualifier">
+    version="0.62.0">
 
 	<description url="http://www.example.com/description">
 		Holds the test tools bundle bundles 
