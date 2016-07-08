@@ -2,7 +2,7 @@
 <feature
     id="org.jowidgets.addons.logging.nop.feature"
     label="No operation logging implementation for jowidgets logging api"
-    version="0.62.0">
+    version="0.62.1.qualifier">
 
 	<description url="http://www.example.com/description">
 		Feature that holds the no operation logging implementation for jowidgets logging api
