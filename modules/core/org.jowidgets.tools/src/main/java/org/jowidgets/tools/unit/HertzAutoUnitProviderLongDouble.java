@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016, bentele, grossmann
+ * Copyright (c) 2016, grossmann, bentele
  * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
@@ -26,20 +26,40 @@
  * DAMAGE.
  */
 
-package org.jowidgets.unit.tools;
+package org.jowidgets.tools.unit;
 
+import org.jowidgets.api.convert.IConverter;
 import org.jowidgets.unit.api.IUnit;
 import org.jowidgets.unit.tools.units.HertzUnitSet;
 
 public final class HertzAutoUnitProviderLongDouble extends AutoUnitProviderLongDouble {
 
     /**
-     * Creates a new instance with given default unit
+     * Creates a new instance
      * 
-     * @param defaultUnit The default unit to use
+     * @param defaultUnit The default unit
+     * @param doubleConverter The converter that will be used for double converting. If set, the converted double value will be
+     *            checked with this converter for loss by rounding. If so, the next lower unit will be used. If set to null, no
+     *            rounding check will be made.
      */
-    public HertzAutoUnitProviderLongDouble(final IUnit defaultUnit) {
-        super(HertzUnitSet.instance(), defaultUnit);
+    public HertzAutoUnitProviderLongDouble(final IUnit defaultUnit, final IConverter<Double> doubleConverter) {
+        this(defaultUnit, 1.0d, doubleConverter);
+    }
+
+    /**
+     * Creates a new instance
+     * 
+     * @param defaultUnit The default unit
+     * @param minValueForUnit The minimal value to accept for a unit
+     * @param doubleConverter The converter that will be used for double converting. If set, the converted double value will be
+     *            checked with this converter for loss by rounding. If so, the next lower unit will be used. If set to null, no
+     *            rounding check will be made.
+     */
+    public HertzAutoUnitProviderLongDouble(
+        final IUnit defaultUnit,
+        final double minValueForUnit,
+        final IConverter<Double> doubleConverter) {
+        super(HertzUnitSet.instance(), defaultUnit, minValueForUnit, doubleConverter);
     }
 
 }
