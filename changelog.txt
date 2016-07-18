@@ -75,6 +75,12 @@ Features:
 
 * Implemented issue #41 https://github.com/jo-source/jo-widgets/issues/41 integrate HertzUnitProvider
 
+------------------------------------------------------------------------------------------------------------------------------
 
+0.63.0
+
+Bugfixes:
+
+* Fixed issue #42 https://github.com/jo-source/jo-widgets/issues/42 Rounding erros in unit converter
 
 

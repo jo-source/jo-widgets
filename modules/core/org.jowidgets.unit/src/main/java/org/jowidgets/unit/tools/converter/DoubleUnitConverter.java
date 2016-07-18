@@ -28,6 +28,8 @@
 
 package org.jowidgets.unit.tools.converter;
 
+import java.math.BigDecimal;
+
 import org.jowidgets.unit.api.IUnit;
 import org.jowidgets.unit.api.IUnitConverter;
 import org.jowidgets.unit.api.IUnitProvider;
@@ -36,8 +38,8 @@ import org.jowidgets.unit.tools.StaticUnitProvider;
 import org.jowidgets.unit.tools.UnitValue;
 import org.jowidgets.util.Assert;
 
-public final class DoubleUnitConverter extends AbstractNumberUnitConverter<Double, Double> implements
-        IUnitConverter<Double, Double> {
+public final class DoubleUnitConverter extends AbstractNumberUnitConverter<Double, Double>
+        implements IUnitConverter<Double, Double> {
 
     private final IUnitProvider<Double> unitProvider;
 
@@ -50,10 +52,30 @@ public final class DoubleUnitConverter extends AbstractNumberUnitConverter<Doubl
         this.unitProvider = unitProvider;
     }
 
+    //    @Override
+    //    public Double toBaseValue(final IUnitValue<Double> unitValue) {
+    //        if (unitValue != null) {
+    //            return Double.valueOf(unitValue.getValue() * unitValue.getUnit().getConversionFactor());
+    //        }
+    //        return null;
+    //    }
+    //
+    //    @Override
+    //    public IUnitValue<Double> toUnitValue(final Double baseValue) {
+    //        if (baseValue != null) {
+    //            final IUnit unit = unitProvider.getUnit(baseValue);
+    //            final Double unitValue = baseValue.doubleValue() / unit.getConversionFactor();
+    //            return new UnitValue<Double>(unitValue, unit);
+    //        }
+    //        return null;
+    //    }
+
     @Override
     public Double toBaseValue(final IUnitValue<Double> unitValue) {
         if (unitValue != null) {
-            return Double.valueOf(unitValue.getValue() * unitValue.getUnit().getConversionFactor());
+            final BigDecimal value = BigDecimal.valueOf(unitValue.getValue());
+            final BigDecimal baseValue = value.multiply(BigDecimal.valueOf(unitValue.getUnit().getConversionFactor()));
+            return Double.valueOf(baseValue.doubleValue());
         }
         return null;
     }
@@ -62,7 +84,9 @@ public final class DoubleUnitConverter extends AbstractNumberUnitConverter<Doubl
     public IUnitValue<Double> toUnitValue(final Double baseValue) {
         if (baseValue != null) {
             final IUnit unit = unitProvider.getUnit(baseValue);
-            final Double unitValue = baseValue.doubleValue() / unit.getConversionFactor();
+            final BigDecimal baseValueDecimal = BigDecimal.valueOf(baseValue);
+            final BigDecimal unitValueDecimal = baseValueDecimal.divide(BigDecimal.valueOf(unit.getConversionFactor()));
+            final Double unitValue = unitValueDecimal.doubleValue();
             return new UnitValue<Double>(unitValue, unit);
         }
         return null;

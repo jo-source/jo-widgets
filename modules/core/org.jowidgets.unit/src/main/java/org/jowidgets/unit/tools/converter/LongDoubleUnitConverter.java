@@ -28,6 +28,8 @@
 
 package org.jowidgets.unit.tools.converter;
 
+import java.math.BigDecimal;
+
 import org.jowidgets.unit.api.IUnit;
 import org.jowidgets.unit.api.IUnitConverter;
 import org.jowidgets.unit.api.IUnitProvider;
@@ -36,8 +38,8 @@ import org.jowidgets.unit.tools.StaticUnitProvider;
 import org.jowidgets.unit.tools.UnitValue;
 import org.jowidgets.util.Assert;
 
-public final class LongDoubleUnitConverter extends AbstractNumberUnitConverter<Long, Double> implements
-        IUnitConverter<Long, Double> {
+public final class LongDoubleUnitConverter extends AbstractNumberUnitConverter<Long, Double>
+        implements IUnitConverter<Long, Double> {
 
     private final IUnitProvider<Long> unitProvider;
 
@@ -53,7 +55,9 @@ public final class LongDoubleUnitConverter extends AbstractNumberUnitConverter<L
     @Override
     public Long toBaseValue(final IUnitValue<Double> unitValue) {
         if (unitValue != null) {
-            return Long.valueOf((long) (unitValue.getValue() * unitValue.getUnit().getConversionFactor()));
+            final BigDecimal value = BigDecimal.valueOf(unitValue.getValue());
+            final BigDecimal baseValue = value.multiply(BigDecimal.valueOf(unitValue.getUnit().getConversionFactor()));
+            return baseValue.longValue();
         }
         return null;
     }
@@ -62,7 +66,9 @@ public final class LongDoubleUnitConverter extends AbstractNumberUnitConverter<L
     public IUnitValue<Double> toUnitValue(final Long baseValue) {
         if (baseValue != null) {
             final IUnit unit = unitProvider.getUnit(baseValue);
-            final Double unitValue = baseValue.doubleValue() / unit.getConversionFactor();
+            final BigDecimal baseValueDecimal = BigDecimal.valueOf(baseValue);
+            final BigDecimal unitValueDecimal = baseValueDecimal.divide(BigDecimal.valueOf(unit.getConversionFactor()));
+            final Double unitValue = unitValueDecimal.doubleValue();
             return new UnitValue<Double>(unitValue, unit);
         }
         return null;
