@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.jowidgets.workbench.impl.rcp.plugin
 Bundle-SymbolicName: org.jowidgets.workbench.impl.rcp.plugin;singleton:=true
-Bundle-Version: 0.63.0
+Bundle-Version: 0.63.1.qualifier
 Bundle-Vendor: jowidgets.org
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.jowidgets.workbench.impl.rcp
