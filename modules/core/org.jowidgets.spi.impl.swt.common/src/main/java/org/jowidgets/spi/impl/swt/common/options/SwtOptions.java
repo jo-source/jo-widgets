@@ -50,6 +50,10 @@ public final class SwtOptions {
     //fixed since swt 3.7 M4 (tested with win)
     private static boolean compositeMinSizeWorkaround = false;
 
+    //Fixes https://bugs.eclipse.org/bugs/show_bug.cgi?id=39934
+    //fixed since swt 4.3 (tested with win 10)
+    private static boolean scrollCompositeIncrementWorkaround = false;
+
     private static IColorConstant tableSelectedForegroundColor;
     private static IColorConstant tableSelectedBackgroundColor;
 
@@ -195,6 +199,20 @@ public final class SwtOptions {
      */
     public static void setCompositeMinSizeWorkaround(final boolean compositeMinSizeWorkaround) {
         SwtOptions.compositeMinSizeWorkaround = compositeMinSizeWorkaround;
+    }
+
+    public static boolean hasScrollCompositeIncrementWorkaround() {
+        return scrollCompositeIncrementWorkaround;
+    }
+
+    /**
+     * Fixes https://bugs.eclipse.org/bugs/show_bug.cgi?id=39934
+     * The default is false fixed in swt 4.3 (tested with win 10)
+     * 
+     * @param scrollCompositeIncrementWorkaround True to enable the workaround
+     */
+    public static void setScrollCompositeIncrementWorkaround(final boolean scrollCompositeIncrementWorkaround) {
+        SwtOptions.scrollCompositeIncrementWorkaround = scrollCompositeIncrementWorkaround;
     }
 
     /**
