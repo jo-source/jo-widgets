@@ -66,8 +66,8 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider, IProv
     private final SwtWidgetFactory widgetFactory;
     private final SwtOptionalWidgetsFactory optionalWidgetsFactory;
     private final IFactory<IApplicationRunner> applicationRunnerFactory;
-    private final IClipboardSpi clipboard;
 
+    private IClipboardSpi clipboard;
     private SwtUiThreadAccess uiThreadAccess;
 
     public SwtWidgetsServiceProvider() {
@@ -102,17 +102,17 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider, IProv
         this.imageFactory = new SwtImageFactory(imageRegistry, imageHandleFactorySpi, this);
         this.widgetFactory = new SwtWidgetFactory(imageRegistry);
         this.optionalWidgetsFactory = new SwtOptionalWidgetsFactory(imageRegistry);
-
-        if (clipboard != null) {
-            this.clipboard = clipboard;
-        }
-        else {
-            this.clipboard = new SwtClipboard(this);
-        }
+        this.clipboard = clipboard;
     }
 
     @Override
     public IClipboardSpi getClipboard() {
+        if (uiThreadAccess == null || !uiThreadAccess.isUiThread()) {
+            throw new IllegalStateException("Must be invoked in the ui thread");
+        }
+        if (clipboard == null) {
+            clipboard = new SwtClipboard(this);
+        }
         return clipboard;
     }
 
@@ -177,11 +177,12 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider, IProv
             control = ((CTabItem) component.getUiReference()).getControl();
         }
         else {
-            throw new IllegalArgumentException("UiReference of component must be instance of '"
-                + Control.class.getName()
-                + "' or '"
-                + CTabItem.class.getName()
-                + "'");
+            throw new IllegalArgumentException(
+                "UiReference of component must be instance of '"
+                    + Control.class.getName()
+                    + "' or '"
+                    + CTabItem.class.getName()
+                    + "'");
         }
 
         return PositionConvert.convert(control.toDisplay(PositionConvert.convert(localPosition)));
@@ -197,11 +198,12 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider, IProv
             control = ((CTabItem) component.getUiReference()).getControl();
         }
         else {
-            throw new IllegalArgumentException("UiReference of component must be instance of '"
-                + Control.class.getName()
-                + "' or '"
-                + CTabItem.class.getName()
-                + "'");
+            throw new IllegalArgumentException(
+                "UiReference of component must be instance of '"
+                    + Control.class.getName()
+                    + "' or '"
+                    + CTabItem.class.getName()
+                    + "'");
         }
 
         return PositionConvert.convert(control.toControl(PositionConvert.convert(screenPosition)));

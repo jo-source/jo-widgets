@@ -83,4 +83,12 @@ Bugfixes:
 
 * Fixed issue #42 https://github.com/jo-source/jo-widgets/issues/42 Rounding erros in unit converter
 
+------------------------------------------------------------------------------------------------------------------------------
+
+0.64.0
+
+Bugfixes:
+
+* Initialize SWT Clipboard lazy when needed and not on SwtWidgetsServiceProvider creation
+
 
