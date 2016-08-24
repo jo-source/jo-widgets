@@ -29,14 +29,12 @@ package org.jowidgets.spi.impl.swt.common.widgets;
 
 import java.util.Collection;
 
-import net.miginfocom.layout.ComponentWrapper;
-import net.miginfocom.layout.LayoutCallback;
-import net.miginfocom.swt.MigLayout;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ScrollBar;
 import org.jowidgets.common.color.IColorConstant;
 import org.jowidgets.common.types.Cursor;
@@ -69,7 +67,13 @@ import org.jowidgets.spi.widgets.IScrollCompositeSpi;
 import org.jowidgets.spi.widgets.setup.IScrollCompositeSetupSpi;
 import org.jowidgets.util.Assert;
 
+import net.miginfocom.layout.ComponentWrapper;
+import net.miginfocom.layout.LayoutCallback;
+import net.miginfocom.swt.MigLayout;
+
 public class ScrollCompositeImpl implements IScrollCompositeSpi {
+
+    private static final int SCROLL_SPEED_FACTOR = 6;
 
     private final SwtComposite outerContainer;
     private final SwtContainer innerContainer;
@@ -93,12 +97,7 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
         this.outerContainer = new SwtComposite(factory, scrolledRoot, new ImmutableDropSelection(this), imageRegistry);
         scrolledRoot.setLayout(growingMigLayout);
 
-        this.scrolledComposite = new ScrolledComposite(scrolledRoot, ScrollBarSettingsConvert.convert(setup)) {
-            @Override
-            public Point computeSize(final int wHint, final int hHint, final boolean changed) {
-                return innerContainer.getUiReference().computeSize(wHint, hHint, changed);
-            }
-        };
+        this.scrolledComposite = createSwtScrolledComposite(setup);
         scrolledComposite.setLayoutData(growingCellConstraints);
         scrolledComposite.setExpandHorizontal(true);
         scrolledComposite.setExpandVertical(true);
@@ -143,6 +142,47 @@ public class ScrollCompositeImpl implements IScrollCompositeSpi {
                 scrolledComposite.setMinSize(size.x, size.y);
             }
         });
+    }
+
+    private ScrolledComposite createSwtScrolledComposite(final IScrollCompositeSetupSpi setup) {
+        final ScrolledComposite result = new ScrolledComposite(scrolledRoot, ScrollBarSettingsConvert.convert(setup)) {
+            @Override
+            public Point computeSize(final int wHint, final int hHint, final boolean changed) {
+                return innerContainer.getUiReference().computeSize(wHint, hHint, changed);
+            }
+        };
+
+        // workaround for SWT bug
+        // <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=367208">367208</a>.
+        result.addListener(SWT.Resize, new Listener() {
+            @Override
+            public void handleEvent(final Event event) {
+                result.layout(true, true);
+                adaptIncrements(result.getVerticalBar(), SCROLL_SPEED_FACTOR);
+                adaptIncrements(result.getHorizontalBar(), SCROLL_SPEED_FACTOR);
+            }
+        });
+
+        // workaround for SWT bug
+        // <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=93472">93472</a> 
+        result.addListener(SWT.MouseWheel, new Listener() {
+            @Override
+            public void handleEvent(final Event event) {
+                final Point origin = result.getOrigin();
+                origin.y -= event.count * result.getVerticalBar().getIncrement();
+                result.setOrigin(origin);
+            }
+        });
+
+        return result;
+    }
+
+    private void adaptIncrements(final ScrollBar scrollBar, final int scrollSpeedFactor) {
+        if (scrollBar != null) {
+            final int thumbSize = scrollBar.getThumb();
+            scrollBar.setIncrement(Math.max(1, thumbSize / scrollSpeedFactor));
+            scrollBar.setPageIncrement(thumbSize);
+        }
     }
 
     @Override
