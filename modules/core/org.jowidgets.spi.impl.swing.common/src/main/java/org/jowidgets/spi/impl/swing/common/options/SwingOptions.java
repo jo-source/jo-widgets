@@ -37,6 +37,7 @@ public final class SwingOptions {
     private static boolean nativeMigLayout = true;
     private static boolean defaultTableTransferHandler = true;
     private static boolean defaultTreeTransferHandler = true;
+    private static boolean tableAutoFocusOnMouseInteraction = true;
     private static Long clipbaordPollingMillis = Long.valueOf(1000L);
 
     private SwingOptions() {}
@@ -95,6 +96,19 @@ public final class SwingOptions {
 
     public static void setDefaultTreeTransferHandler(final boolean defaultTreeTransferHandler) {
         SwingOptions.defaultTreeTransferHandler = defaultTreeTransferHandler;
+    }
+
+    public static boolean isTableAutoFocusOnMouseInteraction() {
+        return tableAutoFocusOnMouseInteraction;
+    }
+
+    /**
+     * This option can be used to auto focus a table when mouse interaction has been occurred
+     * 
+     * @param tableAutoFocusOnMouseInteraction The option to set, true to activate, false to deactivate
+     */
+    public static void setTableAutoFocusOnMouseInteraction(final boolean tableAutoFocusOnMouseInteraction) {
+        SwingOptions.tableAutoFocusOnMouseInteraction = tableAutoFocusOnMouseInteraction;
     }
 
     public static Long getClipbaordPollingMillis() {

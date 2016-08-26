@@ -31,6 +31,7 @@ package org.jowidgets.spi.impl.swing.common.widgets;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Insets;
+import java.awt.KeyboardFocusManager;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -171,6 +172,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
     private final TableCellMenuDetectListener tableCellMenuDetectListener;
     private final TableColumnListener tableColumnListener;
     private final TableColumnMoveListener tableColumnMoveListener;
+    private final AutoFocusMouseListener autoFocusMouseListener;
 
     private final boolean columnsResizeable;
     private final boolean hasBorder;
@@ -213,6 +215,7 @@ public class TableImpl extends SwingControl implements ITableSpi {
         this.tableCellMenuDetectListener = new TableCellMenuDetectListener();
         this.tableColumnListener = new TableColumnListener();
         this.tableColumnMoveListener = new TableColumnMoveListener();
+        this.autoFocusMouseListener = new AutoFocusMouseListener();
 
         this.columnMoveOccured = false;
         this.setWidthInvokedOnModel = false;
@@ -354,6 +357,13 @@ public class TableImpl extends SwingControl implements ITableSpi {
                 editCell(selectedRow, table.convertColumnIndexToModel(selectedColumn));
             }
         });
+
+        if (SwingOptions.isTableAutoFocusOnMouseInteraction()) {
+            table.getTableHeader().addMouseListener(autoFocusMouseListener);
+            getUiReference().addMouseListener(autoFocusMouseListener);
+            getUiReference().getHorizontalScrollBar().addMouseListener(autoFocusMouseListener);
+            getUiReference().getVerticalScrollBar().addMouseListener(autoFocusMouseListener);
+        }
 
     }
 
@@ -887,6 +897,31 @@ public class TableImpl extends SwingControl implements ITableSpi {
                 columnIndex = table.convertColumnIndexToModel(columnIndex);
                 final ITableColumnMouseEvent mouseEvent = new TableColumnMouseEvent(columnIndex, MouseUtil.getModifier(e));
                 tableColumnObservable.fireMouseClicked(mouseEvent);
+            }
+        }
+
+    }
+
+    final class AutoFocusMouseListener extends MouseAdapter {
+
+        @Override
+        public void mousePressed(final MouseEvent e) {
+            ensureTableFocus();
+        }
+
+        private void ensureTableFocus() {
+            if (!hasTableOrDescendandFocus()) {
+                table.requestFocus();
+            }
+        }
+
+        private boolean hasTableOrDescendandFocus() {
+            final Component focusOwner = KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner();
+            if (focusOwner == null || !SwingUtilities.isDescendingFrom(focusOwner, getUiReference())) {
+                return false;
+            }
+            else {
+                return true;
             }
         }
     }

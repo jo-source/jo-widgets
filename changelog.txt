@@ -87,9 +87,15 @@ Bugfixes:
 
 0.64.0
 
+Features:
+
+* Implemented issue #46 https://github.com/jo-source/jo-widgets/issues/46 Allow to set the focus to a swing table automatically when mouse interaction will be done
+
 Bugfixes:
 
 * Initialize SWT Clipboard lazy when needed and not on SwtWidgetsServiceProvider creation
 * Fixed issue #43 https://github.com/jo-source/jo-widgets/issues/43 Default increment of SWT ScrollBar is 1px, must be activated if swt < 4.3 is used
+* Fixes issue #45 https://github.com/jo-source/jo-widgets/issues/45 Klicking on Swing TableHeaders empty area leads to ArrayIndexOutOfBoundException  #45
+
 
 
