@@ -250,11 +250,21 @@ public class TableModelSpiAdapter implements ITableColumnModelSpi, ITableDataMod
     }
 
     public int convertViewToModel(final int columnIndex) {
-        return viewToModel[columnIndex];
+        if (columnIndex != -1) {
+            return viewToModel[columnIndex];
+        }
+        else {
+            return columnIndex;
+        }
     }
 
     public int convertModelToView(final int columnIndex) {
-        return modelToView[columnIndex];
+        if (columnIndex != -1) {
+            return modelToView[columnIndex];
+        }
+        else {
+            return columnIndex;
+        }
     }
 
     private ArrayList<Integer> createTableColumnPermutation() {
