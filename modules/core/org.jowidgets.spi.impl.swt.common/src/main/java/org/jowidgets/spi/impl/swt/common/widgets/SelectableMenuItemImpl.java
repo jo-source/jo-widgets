@@ -72,7 +72,6 @@ public class SelectableMenuItemImpl extends MenuItemImpl implements ISelectableM
 
     @Override
     public void setSelected(final boolean selected) {
-        // TODO MG please check if code is ok
         if (selected && isRadio(getUiReference())) {
             final Menu menu = getUiReference().getParent();
             final MenuItem[] items = menu.getItems();
@@ -91,6 +90,7 @@ public class SelectableMenuItemImpl extends MenuItemImpl implements ISelectableM
             }
         }
         getUiReference().setSelection(selected);
+        itemStateObservable.fireItemStateChanged(isSelected());
     }
 
     @Override

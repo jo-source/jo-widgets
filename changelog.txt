@@ -96,6 +96,6 @@ Bugfixes:
 * Initialize SWT Clipboard lazy when needed and not on SwtWidgetsServiceProvider creation
 * Fixed issue #43 https://github.com/jo-source/jo-widgets/issues/43 Default increment of SWT ScrollBar is 1px, must be activated if swt < 4.3 is used
 * Fixes issue #45 https://github.com/jo-source/jo-widgets/issues/45 Klicking on Swing TableHeaders empty area leads to ArrayIndexOutOfBoundException  #45
-
+* Fixes issue #48 https://github.com/jo-source/jo-widgets/issues/48 SelectableMenuItem in swt does not fire events when change programmatically
 
 
