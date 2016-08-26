@@ -46,6 +46,7 @@ import org.jowidgets.api.toolkit.Toolkit;
 import org.jowidgets.api.widgets.blueprint.IComboBoxSelectionBluePrint;
 import org.jowidgets.api.widgets.blueprint.factory.IBluePrintFactory;
 import org.jowidgets.common.types.Modifier;
+import org.jowidgets.common.types.VirtualKey;
 import org.jowidgets.common.widgets.controller.IActionListener;
 import org.jowidgets.common.widgets.controller.IInputListener;
 import org.jowidgets.common.widgets.controller.IItemStateListener;
@@ -78,7 +79,7 @@ public class DemoMenuProvider {
 
         final IActionBuilder action1Builder = actionBF.create();
         action1Builder.setText("Step First").setToolTipText("Step to the first").setIcon(SilkIcons.RESULTSET_FIRST);
-        action1Builder.setMnemonic('f').setAccelerator('F', Modifier.CTRL);
+        action1Builder.setMnemonic('f').setAccelerator(VirtualKey.F, Modifier.CTRL);
         action1 = action1Builder.build();
 
         final EnabledChecker enabledChecker1 = new EnabledChecker();
@@ -99,7 +100,7 @@ public class DemoMenuProvider {
 
         final IActionBuilder action2Builder = actionBF.create();
         action2Builder.setText("Step Last").setToolTipText("Step to the last").setIcon(SilkIcons.RESULTSET_LAST);
-        action2Builder.setMnemonic('l').setAccelerator('L', Modifier.CTRL);
+        action2Builder.setMnemonic('l').setAccelerator(VirtualKey.L, Modifier.CTRL);
         action2 = action2Builder.build();
 
         final ICommandExecutor command2 = new ICommandExecutor() {
@@ -130,7 +131,7 @@ public class DemoMenuProvider {
         final IActionBuilder imageEditActionBuilder = actionBF.create();
         imageEditActionBuilder.setText("Edit Image...");
         imageEditActionBuilder.setIcon(SilkIcons.IMAGE_EDIT);
-        imageEditActionBuilder.setAccelerator('I', Modifier.SHIFT).setMnemonic('i');
+        imageEditActionBuilder.setAccelerator(VirtualKey.I, Modifier.SHIFT).setMnemonic('i');
         imageEditActionBuilder.setCommand(new ICommandExecutor() {
             @Override
             public void execute(final IExecutionContext executionContext) throws Exception {

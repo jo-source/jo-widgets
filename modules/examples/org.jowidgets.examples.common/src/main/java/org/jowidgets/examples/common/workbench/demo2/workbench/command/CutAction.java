@@ -30,6 +30,7 @@ package org.jowidgets.examples.common.workbench.demo2.workbench.command;
 
 import org.jowidgets.addons.icons.silkicons.SilkIcons;
 import org.jowidgets.common.types.Modifier;
+import org.jowidgets.common.types.VirtualKey;
 import org.jowidgets.tools.command.ActionBuilder;
 import org.jowidgets.tools.command.CommandAction;
 
@@ -41,7 +42,7 @@ public class CutAction extends CommandAction {
                 setText("Cut");
                 setToolTipText("Cut");
                 setIcon(SilkIcons.CUT);
-                setAccelerator('X', Modifier.CTRL);
+                setAccelerator(VirtualKey.X, Modifier.CTRL);
             }
         });
 

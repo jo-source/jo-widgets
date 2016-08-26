@@ -29,6 +29,7 @@
 package org.jowidgets.examples.common.workbench.demo2.workbench.command;
 
 import org.jowidgets.common.types.Modifier;
+import org.jowidgets.common.types.VirtualKey;
 import org.jowidgets.tools.command.ActionBuilder;
 import org.jowidgets.tools.command.CommandAction;
 
@@ -39,7 +40,7 @@ public class NewDocumentAction extends CommandAction {
             {
                 setText("New");
                 setToolTipText("Creates a new document");
-                setAccelerator('N', Modifier.CTRL);
+                setAccelerator(VirtualKey.N, Modifier.CTRL);
             }
         });
 
