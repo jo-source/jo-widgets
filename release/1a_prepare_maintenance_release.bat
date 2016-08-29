@@ -45,13 +45,13 @@ cd ../../
 goto end
 
 :setversion
-call mvn -gs %MVN_SETTINGS_PATH% clean install -Dmaven.repo.local=%MVN_REPO_PATH%
-call mvn -gs %MVN_SETTINGS_PATH% versions:set -DnewVersion=%1 -DgenerateBackupPoms=false -Dmaven.repo.local=%MVN_REPO_PATH%
-call mvn -gs %MVN_SETTINGS_PATH% clean install -Dmaven.repo.local=%MVN_REPO_PATH%
+call mvn -s %MVN_SETTINGS_PATH% -gs %MVN_SETTINGS_PATH% clean install -Dmaven.repo.local=%MVN_REPO_PATH%
+call mvn -s %MVN_SETTINGS_PATH% -gs %MVN_SETTINGS_PATH% versions:set -DnewVersion=%1 -DgenerateBackupPoms=false -Dmaven.repo.local=%MVN_REPO_PATH%
+call mvn -s %MVN_SETTINGS_PATH% -gs %MVN_SETTINGS_PATH% clean install -Dmaven.repo.local=%MVN_REPO_PATH%
 cd tycho/parent
-call mvn -gs ../../%MVN_SETTINGS_PATH% org.eclipse.tycho:tycho-versions-plugin:0.19.0:set-version -DnewVersion=%1 -Dtycho.mode=maven -Dmaven.repo.local=../../%MVN_REPO_PATH%
-call mvn -gs ../../%MVN_SETTINGS_PATH% versions:update-parent -DallowSnapshots=true -DgenerateBackupPoms=false -Dmaven.repo.local=../../%MVN_REPO_PATH%
-call mvn -gs ../../%MVN_SETTINGS_PATH% clean install -Dmaven.repo.local=../../%MVN_REPO_PATH%
+call mvn -s ../../%MVN_SETTINGS_PATH% -gs ../../%MVN_SETTINGS_PATH% org.eclipse.tycho:tycho-versions-plugin:0.19.0:set-version -DnewVersion=%1 -Dtycho.mode=maven -Dmaven.repo.local=../../%MVN_REPO_PATH%
+call mvn -s ../../%MVN_SETTINGS_PATH% -gs ../../%MVN_SETTINGS_PATH% versions:update-parent -DallowSnapshots=true -DgenerateBackupPoms=false -Dmaven.repo.local=../../%MVN_REPO_PATH%
+call mvn -s ../../%MVN_SETTINGS_PATH% -gs ../../%MVN_SETTINGS_PATH% clean install -Dmaven.repo.local=../../%MVN_REPO_PATH%
 cd ../..
 goto :eof
 
