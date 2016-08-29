@@ -6,11 +6,11 @@ SET USER_NAME="herr.grossmann@gmx.de"
  
 SET SOURCE_URL=https://github.com/jo-source/jo-widgets.git
 
-SET RELEASE_VERSION=0.55.0
-SET TAG_NAME=0.55.0
-SET MAINTENANCE_VERSION=0.55.1-SNAPSHOT
-SET MAINTENANCE_BRANCH_NAME=MAINTENANCE_0.55
-SET NEXT_DEVELOPMENT_VERSION=0.56.0-SNAPSHOT
+SET RELEASE_VERSION=0.64.0
+SET TAG_NAME=0.64.0
+SET MAINTENANCE_VERSION=0.64.1-SNAPSHOT
+SET MAINTENANCE_BRANCH_NAME=MAINTENANCE_0.64
+SET NEXT_DEVELOPMENT_VERSION=0.65.0-SNAPSHOT
 
 SET "WORK_PATH=workspace\"
 SET "MVN_SETTINGS_PATH=../../maven/settings.xml"
@@ -75,13 +75,13 @@ cd ../../
 goto end
 
 :setversion
-call mvn -gs %MVN_SETTINGS_PATH% clean install -Dmaven.repo.local=%MVN_REPO_PATH% >> %LOG_FILE% 2>&1
-call mvn -gs %MVN_SETTINGS_PATH% versions:set -DnewVersion=%1 -DgenerateBackupPoms=false -Dmaven.repo.local=%MVN_REPO_PATH% >> %LOG_FILE% 2>&1
-call mvn -gs %MVN_SETTINGS_PATH% clean install -Dmaven.repo.local=%MVN_REPO_PATH% >> %LOG_FILE% 2>&1
+call mvn -s %MVN_SETTINGS_PATH% -gs %MVN_SETTINGS_PATH% clean install -Dmaven.repo.local=%MVN_REPO_PATH% >> %LOG_FILE% 2>&1
+call mvn -s %MVN_SETTINGS_PATH% -gs %MVN_SETTINGS_PATH% versions:set -DnewVersion=%1 -DgenerateBackupPoms=false -Dmaven.repo.local=%MVN_REPO_PATH% >> %LOG_FILE% 2>&1
+call mvn -s %MVN_SETTINGS_PATH% -gs %MVN_SETTINGS_PATH% clean install -Dmaven.repo.local=%MVN_REPO_PATH% >> %LOG_FILE% 2>&1
 cd tycho/parent
-call mvn -gs ../../%MVN_SETTINGS_PATH% org.eclipse.tycho:tycho-versions-plugin:0.19.0:set-version -DnewVersion=%1 -Dtycho.mode=maven -Dmaven.repo.local=../../%MVN_REPO_PATH% >> ../../%LOG_FILE% 2>&1
-call mvn -gs ../../%MVN_SETTINGS_PATH% versions:update-parent -DallowSnapshots=true -DgenerateBackupPoms=false -Dmaven.repo.local=../../%MVN_REPO_PATH% >> ../../%LOG_FILE% 2>&1
-call mvn -gs ../../%MVN_SETTINGS_PATH% clean install -Dmaven.repo.local=../../%MVN_REPO_PATH% >> ../../%LOG_FILE% 2>&1
+call mvn -s ../../%MVN_SETTINGS_PATH% -gs ../../%MVN_SETTINGS_PATH% org.eclipse.tycho:tycho-versions-plugin:0.19.0:set-version -DnewVersion=%1 -Dtycho.mode=maven -Dmaven.repo.local=../../%MVN_REPO_PATH% >> ../../%LOG_FILE% 2>&1
+call mvn -s ../../%MVN_SETTINGS_PATH% -gs ../../%MVN_SETTINGS_PATH% versions:update-parent -DallowSnapshots=true -DgenerateBackupPoms=false -Dmaven.repo.local=../../%MVN_REPO_PATH% >> ../../%LOG_FILE% 2>&1
+call mvn -s ../../%MVN_SETTINGS_PATH% -gs ../../%MVN_SETTINGS_PATH% clean install -Dmaven.repo.local=../../%MVN_REPO_PATH% >> ../../%LOG_FILE% 2>&1
 cd ../..
 goto :eof
 

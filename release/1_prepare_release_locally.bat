@@ -2,9 +2,9 @@ REM local build only, no push or deployment
 
 SET SOURCE_URL=https://github.com/jo-source/jo-widgets.git
 
-SET RELEASE_VERSION=0.55.0
-SET TAG_NAME=0.55.0
-SET MAINTENANCE_BRANCH_NAME=MAINTENANCE_0.55
+SET RELEASE_VERSION=0.64.0
+SET TAG_NAME=0.64.0
+SET MAINTENANCE_BRANCH_NAME=MAINTENANCE_0.64
 
 SET "WORK_PATH=workspace"
 SET "MVN_SETTINGS_PATH=../../maven/settings.xml"
