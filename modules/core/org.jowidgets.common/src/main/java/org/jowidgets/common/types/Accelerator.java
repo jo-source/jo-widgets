@@ -89,10 +89,8 @@ public final class Accelerator {
     private Accelerator(final Character character, final VirtualKey virtualKey, final Collection<Modifier> modifier) {
         Assert.paramNotNull(modifier, "modifier");
         if (virtualKey == VirtualKey.UNDEFINED) {
-            throw new IllegalArgumentException("The virtual key '"
-                + VirtualKey.UNDEFINED
-                + "' must not be used "
-                + "for accelerators.");
+            throw new IllegalArgumentException(
+                "The virtual key '" + VirtualKey.UNDEFINED + "' must not be used " + "for accelerators.");
         }
         this.character = character;
         this.virtualKey = virtualKey;
@@ -172,6 +170,11 @@ public final class Accelerator {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Accelerator [character=" + character + ", virtualKey=" + virtualKey + ", modifier=" + modifier + "]";
     }
 
 }

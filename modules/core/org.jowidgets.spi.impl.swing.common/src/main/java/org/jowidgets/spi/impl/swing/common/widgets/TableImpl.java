@@ -297,11 +297,19 @@ public class TableImpl extends SwingControl implements ITableSpi {
             @Override
             public void onLastUnregistered() {
                 table.removeKeyListener(keyListener);
+                table.getTableHeader().removeKeyListener(keyListener);
+                getUiReference().getViewport().removeKeyListener(keyListener);
+                getUiReference().getHorizontalScrollBar().removeKeyListener(keyListener);
+                getUiReference().getVerticalScrollBar().removeKeyListener(keyListener);
             }
 
             @Override
             public void onFirstRegistered() {
                 table.addKeyListener(keyListener);
+                table.getTableHeader().addKeyListener(keyListener);
+                getUiReference().getViewport().addKeyListener(keyListener);
+                getUiReference().getHorizontalScrollBar().addKeyListener(keyListener);
+                getUiReference().getVerticalScrollBar().addKeyListener(keyListener);
             }
         };
 
