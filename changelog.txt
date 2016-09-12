@@ -98,4 +98,15 @@ Bugfixes:
 * Fixes issue #45 https://github.com/jo-source/jo-widgets/issues/45 Klicking on Swing TableHeaders empty area leads to ArrayIndexOutOfBoundException  #45
 * Fixes issue #48 https://github.com/jo-source/jo-widgets/issues/48 SelectableMenuItem in swt does not fire events when change programmatically
 
+------------------------------------------------------------------------------------------------------------------------------
+
+0.65.0
+
+Features:
+
+
+Bugfixes:
+
+* Fixes issue #49 https://github.com/jo-source/jo-widgets/issues/49 Missing KeyEvents on SwingTable
+
 
