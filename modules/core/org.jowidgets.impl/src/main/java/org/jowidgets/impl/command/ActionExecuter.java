@@ -32,6 +32,7 @@ import org.jowidgets.api.command.IAction;
 import org.jowidgets.api.command.IExceptionHandler;
 import org.jowidgets.api.command.IExecutionContext;
 import org.jowidgets.tools.command.DefaultExceptionHandler;
+import org.jowidgets.tools.command.ExecutionContext;
 
 public class ActionExecuter {
 
