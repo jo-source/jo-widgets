@@ -104,6 +104,8 @@ Bugfixes:
 
 Features:
 
+* Fixes issue #50 https://github.com/jo-source/jo-widgets/issues/50 Provide workaround for swt bug 345411 - Table.pack() makes column to small by one pixel 
+
 
 Bugfixes:
 

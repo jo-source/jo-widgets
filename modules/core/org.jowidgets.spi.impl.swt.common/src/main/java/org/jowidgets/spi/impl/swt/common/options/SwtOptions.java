@@ -54,6 +54,10 @@ public final class SwtOptions {
     //fixed since swt 4.3 (tested with win 10)
     private static boolean scrollCompositeIncrementWorkaround = false;
 
+    //Fixes https://bugs.eclipse.org/bugs/show_bug.cgi?id=345411
+    //Fixed since 3.7.1
+    private static boolean tablePackWorkaround = false;
+
     private static IColorConstant tableSelectedForegroundColor;
     private static IColorConstant tableSelectedBackgroundColor;
 
@@ -203,6 +207,22 @@ public final class SwtOptions {
 
     public static boolean hasScrollCompositeIncrementWorkaround() {
         return scrollCompositeIncrementWorkaround;
+    }
+
+    public static boolean isTablePackWorkaround() {
+        return tablePackWorkaround;
+    }
+
+    /**
+     * Fixes https://bugs.eclipse.org/bugs/show_bug.cgi?id=345411
+     * Table.pack() makes column width too small by one pixel
+     * 
+     * The default is false, the bug was fixed since swt 3.7.1
+     * 
+     * @param tablePackWorkaround true to enable the workaround
+     */
+    public static void setTablePackWorkaround(final boolean tablePackWorkaround) {
+        SwtOptions.tablePackWorkaround = tablePackWorkaround;
     }
 
     /**

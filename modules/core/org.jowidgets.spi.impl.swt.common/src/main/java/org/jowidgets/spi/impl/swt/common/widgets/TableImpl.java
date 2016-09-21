@@ -339,6 +339,9 @@ public class TableImpl extends SwtControl implements ITableSpi {
         if (rowHeight != null) {
             event.height = rowHeight.intValue();
         }
+        if (SwtOptions.isTablePackWorkaround()) {
+            event.width = event.width + 1;
+        }
         final TableItem item = (TableItem) event.item;
         final int row = table.indexOf(item);
         final int column = event.index - 1;
@@ -581,7 +584,7 @@ public class TableImpl extends SwtControl implements ITableSpi {
         }
 
         if (packed) {
-            column.setWidth(Math.max(max + 15, column.getWidth() + 2));
+            column.setWidth(Math.max(max + 15, column.getWidth()));
         }
         else {
             column.setWidth(max + 15);
@@ -1100,7 +1103,8 @@ public class TableImpl extends SwtControl implements ITableSpi {
 
     private final class EditorCustomWidgetFactory implements ICustomWidgetFactory {
         @Override
-        public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE create(final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
+        public <WIDGET_TYPE extends IControlCommon> WIDGET_TYPE create(
+            final IWidgetDescriptor<? extends WIDGET_TYPE> descriptor) {
             return factory.create(table, descriptor);
         }
     }
@@ -1357,10 +1361,8 @@ public class TableImpl extends SwtControl implements ITableSpi {
                         final int rowIndex = table.indexOf(item);
 
                         if (rowIndex != -1) {
-                            tableCellPopupDetectionObservable.firePopupDetected(new TableCellPopupEvent(
-                                rowIndex,
-                                colIndex,
-                                position));
+                            tableCellPopupDetectionObservable
+                                    .firePopupDetected(new TableCellPopupEvent(rowIndex, colIndex, position));
                         }
                     }
                 }
