@@ -51,6 +51,9 @@ import org.jowidgets.spi.impl.swt.common.clipboard.SwtClipboard;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageFactory;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageHandleFactorySpi;
 import org.jowidgets.spi.impl.swt.common.image.SwtImageRegistry;
+import org.jowidgets.spi.impl.swt.common.options.SwtOptions;
+import org.jowidgets.spi.impl.swt.common.threads.DecopledSwtUiThreadAccess;
+import org.jowidgets.spi.impl.swt.common.threads.ISwtUiThreadAccess;
 import org.jowidgets.spi.impl.swt.common.threads.SwtUiThreadAccess;
 import org.jowidgets.spi.impl.swt.common.util.PositionConvert;
 import org.jowidgets.util.Assert;
@@ -68,7 +71,7 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider, IProv
     private final IFactory<IApplicationRunner> applicationRunnerFactory;
 
     private IClipboardSpi clipboard;
-    private SwtUiThreadAccess uiThreadAccess;
+    private ISwtUiThreadAccess uiThreadAccess;
 
     public SwtWidgetsServiceProvider() {
         this((Display) null);
@@ -143,7 +146,12 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider, IProv
 
     @Override
     public IUiThreadAccessCommon createUiThreadAccess() {
-        uiThreadAccess = new SwtUiThreadAccess(display);
+        if (SwtOptions.isUseDecoupledUiThreadAccess()) {
+            uiThreadAccess = new DecopledSwtUiThreadAccess(display);
+        }
+        else {
+            uiThreadAccess = new SwtUiThreadAccess(display);
+        }
         return uiThreadAccess;
     }
 
@@ -177,12 +185,11 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider, IProv
             control = ((CTabItem) component.getUiReference()).getControl();
         }
         else {
-            throw new IllegalArgumentException(
-                "UiReference of component must be instance of '"
-                    + Control.class.getName()
-                    + "' or '"
-                    + CTabItem.class.getName()
-                    + "'");
+            throw new IllegalArgumentException("UiReference of component must be instance of '"
+                + Control.class.getName()
+                + "' or '"
+                + CTabItem.class.getName()
+                + "'");
         }
 
         return PositionConvert.convert(control.toDisplay(PositionConvert.convert(localPosition)));
@@ -198,12 +205,11 @@ public class SwtWidgetsServiceProvider implements IWidgetsServiceProvider, IProv
             control = ((CTabItem) component.getUiReference()).getControl();
         }
         else {
-            throw new IllegalArgumentException(
-                "UiReference of component must be instance of '"
-                    + Control.class.getName()
-                    + "' or '"
-                    + CTabItem.class.getName()
-                    + "'");
+            throw new IllegalArgumentException("UiReference of component must be instance of '"
+                + Control.class.getName()
+                + "' or '"
+                + CTabItem.class.getName()
+                + "'");
         }
 
         return PositionConvert.convert(control.toControl(PositionConvert.convert(screenPosition)));

@@ -58,6 +58,8 @@ public final class SwtOptions {
     //Fixed since 3.7.1
     private static boolean tablePackWorkaround = false;
 
+    private static boolean useDecoupledUiThreadAccess = false;
+
     private static IColorConstant tableSelectedForegroundColor;
     private static IColorConstant tableSelectedBackgroundColor;
 
@@ -281,6 +283,31 @@ public final class SwtOptions {
      */
     public static void setClipbaordPollingMillis(final Long clipbaordPolling) {
         SwtOptions.clipbaordPollingMillis = clipbaordPolling;
+    }
+
+    public static boolean isUseDecoupledUiThreadAccess() {
+        return useDecoupledUiThreadAccess;
+    }
+
+    /**
+     * This option can be used to use a decouples swt ui thread access.
+     * 
+     * The default is false due to backward compatibility
+     * 
+     * In the currect version 4.3 of swt there is a bug that leads to long blocking (> 200 ms)
+     * when invoking Display.asyncExec().
+     * The example org.jowidgets.examples.swt.UiThreadAccessRuntimeExamplePlainSwt reproduces this bug.
+     * 
+     * When this option is activated, all invocations of uiThreadAccess.invokeLater() will be enqueued
+     * to a SingleThreadAccess instead of beeing invoked directly on the display.
+     * 
+     * This will not solve the problem that the ui event will be invoked a litle later but that the non
+     * ui thread will not block.
+     * 
+     * @param useDecoupledUiThreadAccess enable or siables this option
+     */
+    public static void setUseDecoupledUiThreadAccess(final boolean useDecoupledUiThreadAccess) {
+        SwtOptions.useDecoupledUiThreadAccess = useDecoupledUiThreadAccess;
     }
 
 }

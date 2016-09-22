@@ -28,10 +28,9 @@
 package org.jowidgets.spi.impl.swt.common.threads;
 
 import org.eclipse.swt.widgets.Display;
-import org.jowidgets.common.threads.IUiThreadAccessCommon;
 import org.jowidgets.util.Assert;
 
-public class SwtUiThreadAccess implements IUiThreadAccessCommon {
+public class SwtUiThreadAccess implements ISwtUiThreadAccess {
 
     private Display display;
 
@@ -62,6 +61,7 @@ public class SwtUiThreadAccess implements IUiThreadAccessCommon {
         return currentDisplay != null && currentDisplay == getDisplay();
     }
 
+    @Override
     public Display getDisplay() {
         if (display == null) {
             display = Display.getDefault();
