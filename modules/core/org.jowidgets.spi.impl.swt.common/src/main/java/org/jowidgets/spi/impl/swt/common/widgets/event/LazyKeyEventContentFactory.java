@@ -28,6 +28,7 @@
 
 package org.jowidgets.spi.impl.swt.common.widgets.event;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -84,7 +85,7 @@ public class LazyKeyEventContentFactory implements ILazyKeyEventContentFactory {
         if ((keyEvent.stateMask & SWT.ALT) > 0) {
             result.add(Modifier.ALT);
         }
-        return result;
+        return Collections.unmodifiableSet(result);
     }
 
 }
