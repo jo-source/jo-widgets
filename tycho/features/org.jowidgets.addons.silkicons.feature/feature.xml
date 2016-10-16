@@ -2,7 +2,7 @@
 <feature
     id="org.jowidgets.addons.silkicons.feature"
     label="Silk Icons addons"
-    version="0.65.0">
+    version="0.65.1.qualifier">
 
 	<description url="http://www.example.com/description">
 		Feature that holds the silk icons bundles
