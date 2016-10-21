@@ -64,8 +64,8 @@ import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
 
-public final class UnitValueFieldImpl<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> extends AbstractInputControl<BASE_VALUE_TYPE> implements
-        IUnitValueField<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> {
+public final class UnitValueFieldImpl<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> extends AbstractInputControl<BASE_VALUE_TYPE>
+        implements IUnitValueField<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> {
 
     private final IUnitConverter<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> unitConverter;
     private final IUnitSet unitSet;
@@ -261,6 +261,11 @@ public final class UnitValueFieldImpl<BASE_VALUE_TYPE, UNIT_VALUE_TYPE> extends 
 
     @Override
     protected IValidationResult createValidationResult() {
+        final IValidationResult fieldResult = valueField.validate();
+        //if the converter could not parse the input, do not make more validation
+        if (!fieldResult.isValid()) {
+            return fieldResult;
+        }
         final IValidator<IUnitValue<UNIT_VALUE_TYPE>> unitValidator = unitConverter.getValidator();
         if (unitValidator != null) {
             final IValidationResult validationResult = unitValidator.validate(getUnitValue());

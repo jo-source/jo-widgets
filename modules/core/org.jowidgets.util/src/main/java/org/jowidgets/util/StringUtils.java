@@ -87,6 +87,40 @@ public final class StringUtils {
         }
     }
 
+    /**
+     * Counts how often the char 'toFind' is contained in the string 'toSearchIn'
+     * 
+     * @param toSearchIn The string to search in
+     * @param toFind The string to find
+     * 
+     * @return The number of matches between 0 and toSearchIn.length
+     */
+    public static int countMatches(final String toSearchIn, final char toFind) {
+        return countMatches(toSearchIn, String.valueOf(toFind));
+    }
+
+    /**
+     * Counts how often the string 'toFind' is contained in the string 'toSearchIn'
+     * 
+     * @param toSearchIn The string to search in
+     * @param toFind The string to find
+     * 
+     * @return The number of matches between 0 and toSearchIn.length
+     */
+    public static int countMatches(final String toSearchIn, final String toFind) {
+        if (EmptyCheck.isEmpty(toSearchIn) || EmptyCheck.isEmpty(toFind)) {
+            return 0;
+        }
+        final int stringToFindLength = toFind.length();
+        int result = 0;
+        int index = 0;
+        while ((index = toSearchIn.indexOf(toFind, index)) != -1) {
+            result++;
+            index = index + stringToFindLength;
+        }
+        return result;
+    }
+
     public static String loop(final String tanga, final int count) {
         if (tanga == null) {
             return null;

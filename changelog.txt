@@ -114,3 +114,18 @@ Bugfixes:
 * Fixes issue #49 https://github.com/jo-source/jo-widgets/issues/49 Missing KeyEvents on SwingTable
 
 
+------------------------------------------------------------------------------------------------------------------------------
+
+0.66.0
+
+Features:
+
+
+
+Bugfixes:
+
+* Fixes issue #52 https://github.com/jo-source/jo-widgets/issues/49 Verify of double values is to strict
+
+
+
+

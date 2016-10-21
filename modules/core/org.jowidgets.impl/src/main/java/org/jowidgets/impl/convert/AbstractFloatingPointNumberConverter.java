@@ -31,7 +31,11 @@ import java.text.DecimalFormat;
 import java.text.ParsePosition;
 
 import org.jowidgets.api.convert.IConverter;
+import org.jowidgets.i18n.api.IMessage;
 import org.jowidgets.tools.converter.AbstractConverter;
+import org.jowidgets.util.Assert;
+import org.jowidgets.util.EmptyCheck;
+import org.jowidgets.util.StringUtils;
 import org.jowidgets.validation.IValidationResult;
 import org.jowidgets.validation.IValidator;
 import org.jowidgets.validation.ValidationResult;
@@ -39,22 +43,78 @@ import org.jowidgets.validation.ValidationResult;
 abstract class AbstractFloatingPointNumberConverter<NUMBER_TYPE extends Number> extends AbstractConverter<NUMBER_TYPE>
         implements IConverter<NUMBER_TYPE> {
 
+    private static final IMessage MUST_NOT_CONTAIN_MULTIPLE_SEPARATORS = Messages
+            .getMessage("AbstractFloatingPointNumberConverter.must_not_contain_multiple_separators");
+
+    private static final IMessage MUST_BE_A_VALID_DECIMAL_NUMBER = Messages
+            .getMessage("AbstractFloatingPointNumberConverter.must_be_a_valid_decimal_number");
+
     private final DecimalFormat decimalFormat;
     private final String formatHint;
+    private final String acceptingRegExp;
+    private final String decimalSeparatorRegEx;
+    private final String groupingSeparatorRegEx;
+    private final IValidator<String> stringValidator;
 
     AbstractFloatingPointNumberConverter(final DecimalFormat decimalFormat, final String formatHint) {
+        Assert.paramNotNull(decimalFormat, "decimalFormat");
         this.decimalFormat = decimalFormat;
         this.formatHint = formatHint;
+        this.decimalSeparatorRegEx = getDecimalSeparatorRegEx(decimalFormat);
+        this.groupingSeparatorRegEx = getGroupingSeparatorRegEx(decimalFormat);
+        this.acceptingRegExp = createAcceptionRegEx(decimalFormat, decimalSeparatorRegEx, groupingSeparatorRegEx);
+        this.stringValidator = new StringValidator();
+    }
+
+    private static String createAcceptionRegEx(
+        final DecimalFormat decimalFormat,
+        final String decimalSeparatorRegEx,
+        final String groupingSeparatorRegEx) {
+        return "-?([0-9]?" + groupingSeparatorRegEx + "?" + decimalSeparatorRegEx + "?E?)*";
+    }
+
+    private static String getDecimalSeparatorRegEx(final DecimalFormat decimalFormat) {
+        // Check, if the decimal separator is a special Char, add \\ to the char
+        final char decimalSeparator = decimalFormat.getDecimalFormatSymbols().getDecimalSeparator();
+        if (isSpecialChar(decimalSeparator)) {
+            return "\\" + decimalSeparator;
+        }
+        else {
+            return String.valueOf(decimalSeparator);
+        }
+    }
+
+    private static String getGroupingSeparatorRegEx(final DecimalFormat decimalFormat) {
+        // Check, if the grouping separator is a special Char, add \\ to the char
+        final char groupingSeparator = decimalFormat.getDecimalFormatSymbols().getGroupingSeparator();
+        if (isSpecialChar(groupingSeparator)) {
+            return "\\" + groupingSeparator;
+        }
+        else {
+            return String.valueOf(groupingSeparator);
+        }
+    }
+
+    private static boolean isSpecialChar(final char c) {
+        // 160 = ' ' (france) ( alt 255) , 46 = '.' 
+        if (c == 160 | c == 46) {
+            return true;
+        }
+        return false;
     }
 
     abstract NUMBER_TYPE convert(Number number);
 
     @Override
     public NUMBER_TYPE convertToObject(final String string) {
+        return convertToObjectWithoutGroupingSeparators(removeGroupingSeparators(string));
+    }
+
+    private NUMBER_TYPE convertToObjectWithoutGroupingSeparators(final String string) {
         try {
             final ParsePosition pos = new ParsePosition(0);
             final Number result = decimalFormat.parse(string, pos);
-            if (result == null || pos.getIndex() < string.length()) {
+            if (result == null || pos.getIndex() < string.length() || pos.getErrorIndex() != -1) {
                 return null;
             }
             return convert(result);
@@ -73,87 +133,53 @@ abstract class AbstractFloatingPointNumberConverter<NUMBER_TYPE extends Number> 
     }
 
     @Override
-    public IValidator<String> getStringValidator() {
-        return new IValidator<String>() {
-            @Override
-            public IValidationResult validate(final String input) {
-                if (input != null && !input.trim().isEmpty()) {
-                    final ParsePosition pos = new ParsePosition(0);
-                    decimalFormat.parse(input, pos);
-                    if (pos.getIndex() < input.length()) {
-                        if (formatHint != null) {
-                            return ValidationResult.error(formatHint);
-                        }
-                        else {
-                            //TODO i18n
-                            return ValidationResult.error("Is not a valid decimal");
-                        }
-                    }
-                }
-                return ValidationResult.ok();
-            }
-        };
+    public final IValidator<String> getStringValidator() {
+        return stringValidator;
+    }
+
+    private String removeGroupingSeparators(final String tanga) {
+        if (EmptyCheck.isEmpty(tanga)) {
+            return tanga;
+        }
+        else {
+            return tanga.replaceAll(groupingSeparatorRegEx, "");
+        }
     }
 
     @Override
     public String getAcceptingRegExp() {
-        final String decimalSeparatorRegEx;
-        final String groupingSeparatorRegEx;
-        final int groupingSizeRegEx;
-        final int groupingSizeRegExMinusOne;
+        return acceptingRegExp;
+    }
 
-        // Check, if the decimal separator is a special Char, add \\ to the char
-        if (isSpecialChar(decimalFormat.getDecimalFormatSymbols().getDecimalSeparator())) {
-            decimalSeparatorRegEx = "\\" + decimalFormat.getDecimalFormatSymbols().getDecimalSeparator();
-        }
-        else {
-            decimalSeparatorRegEx = String.valueOf(decimalFormat.getDecimalFormatSymbols().getDecimalSeparator());
+    private final class StringValidator implements IValidator<String> {
+        @Override
+        public IValidationResult validate(final String input) {
+            return validateWithoutGroupingSeparators(removeGroupingSeparators(input));
         }
 
-        // Check, if the grouping separator is a special Char, add \\ to the char
-        if (isSpecialChar(decimalFormat.getDecimalFormatSymbols().getGroupingSeparator())) {
-            groupingSeparatorRegEx = "\\" + decimalFormat.getDecimalFormatSymbols().getGroupingSeparator();
-        }
-        else {
-            groupingSeparatorRegEx = String.valueOf(decimalFormat.getDecimalFormatSymbols().getGroupingSeparator());
+        private IValidationResult validateWithoutGroupingSeparators(final String input) {
+            if (input != null && !input.trim().isEmpty()) {
+                if (StringUtils.countMatches(input, decimalSeparatorRegEx) > 1) {
+                    return ValidationResult.error(MUST_NOT_CONTAIN_MULTIPLE_SEPARATORS.get());
+                }
+                else if (hasParseError(input)) {
+                    if (formatHint != null) {
+                        return ValidationResult.error(formatHint);
+                    }
+                    else {
+                        return ValidationResult.error(MUST_BE_A_VALID_DECIMAL_NUMBER.get());
+                    }
+                }
+            }
+            return ValidationResult.ok();
         }
 
-        // Set the grouping size for the regular expression, if it is set in the decimal Format
-        if (decimalFormat.isGroupingUsed()) {
-            groupingSizeRegEx = decimalFormat.getGroupingSize();
+        private boolean hasParseError(final String tanga) {
+            final ParsePosition pos = new ParsePosition(0);
+            final Number number = decimalFormat.parse(tanga, pos);
+            return number == null || pos.getIndex() < tanga.length() || pos.getErrorIndex() != -1;
         }
-        else {
-            groupingSizeRegEx = 3;
-        }
-
-        // Set the grouping size minus one. Is needed for the regular expression
-        groupingSizeRegExMinusOne = groupingSizeRegEx - 1;
-
-        // Accept double numbers and a grouping separator if it is set
-        return "-?(([0-9]?[0-9]"
-            + groupingSeparatorRegEx
-            + "?)?"
-            + "([0-9]{"
-            + groupingSizeRegEx
-            + "}"
-            + groupingSeparatorRegEx
-            + "?)*"
-            + "((([0-9]{0,"
-            + groupingSizeRegExMinusOne
-            + "})?)|"
-            + "([0-9]{"
-            + groupingSizeRegEx
-            + "})?((?<=[0-9])"
-            + decimalSeparatorRegEx
-            + "[0-9]*)))";
 
     }
 
-    private boolean isSpecialChar(final char c) {
-        // 160 = ' ' (france) ( alt 255) , 46 = '.' 
-        if (c == 160 | c == 46) {
-            return true;
-        }
-        return false;
-    }
 }

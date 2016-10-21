@@ -53,7 +53,8 @@ public final class DefaultConverterProvider implements IConverterProvider {
 
     private static final Locale DEFAULT_LOCALE = Locale.US;
 
-    private static final IMessage MUST_BE_A_FLOATING_POINT_NUMBER = Messages.getMessage("DefaultConverterProvider.MustBeFloatingPointNumber");
+    private static final IMessage MUST_BE_A_FLOATING_POINT_NUMBER = Messages
+            .getMessage("DefaultConverterProvider.MustBeFloatingPointNumber");
 
     private final IObjectStringConverter<Object> toStringConverter;
     private final IObjectStringConverter<String> passwordPresentationConverter;
@@ -91,23 +92,27 @@ public final class DefaultConverterProvider implements IConverterProvider {
 
         final DecimalFormat decimalFormatUS = (DecimalFormat) DecimalFormat.getInstance(Locale.US);
 
-        final IConverter<Double> doubleNumberUS = new DefaultDoubleConverter(decimalFormatUS, "Must be a floating point number");
+        final IConverter<Double> doubleNumberUS = new DefaultDoubleConverter(
+            decimalFormatUS,
+            "Must be a valid floating point number");
         register(Double.class, doubleNumberUS);
         register(double.class, doubleNumberUS);
 
-        final IConverter<Float> floatNumberUS = new DefaultFloatConverter(decimalFormatUS, "Must be a floating point number");
+        final IConverter<Float> floatNumberUS = new DefaultFloatConverter(
+            decimalFormatUS,
+            "Must be a valid floating point number");
         register(Float.class, floatNumberUS);
         register(float.class, floatNumberUS);
 
         final DecimalFormat decimalFormatDE = (DecimalFormat) DecimalFormat.getInstance(Locale.GERMAN);
 
-        final IConverter<Double> doubleNumberDE = new DefaultDoubleConverter(decimalFormatDE, "Muss eine Kommazahl sein");
+        final IConverter<Double> doubleNumberDE = new DefaultDoubleConverter(decimalFormatDE, "Muss eine gültige Kommazahl sein");
         register(Locale.GERMANY, Double.class, doubleNumberDE);
         register(Locale.GERMANY, double.class, doubleNumberDE);
         register(Locale.GERMAN, Double.class, doubleNumberDE);
         register(Locale.GERMAN, double.class, doubleNumberDE);
 
-        final IConverter<Float> floatNumberDE = new DefaultFloatConverter(decimalFormatDE, "Muss eine Kommazahl sein");
+        final IConverter<Float> floatNumberDE = new DefaultFloatConverter(decimalFormatDE, "Muss eine gültige Kommazahl sein");
         register(Locale.GERMANY, Float.class, floatNumberDE);
         register(Locale.GERMANY, float.class, floatNumberDE);
         register(Locale.GERMAN, Float.class, floatNumberDE);
@@ -490,9 +495,8 @@ public final class DefaultConverterProvider implements IConverterProvider {
 
             final DateFormat dateFormatUS = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
             dateFormatUS.setLenient(false);
-            defaultDateTimeConverter.put(
-                    DEFAULT_LOCALE,
-                    date(dateFormatUS, "MM/DD/YYYY HH:MM:SS", TextMaskProvider.dateTimeMaskUS()));
+            defaultDateTimeConverter
+                    .put(DEFAULT_LOCALE, date(dateFormatUS, "MM/DD/YYYY HH:MM:SS", TextMaskProvider.dateTimeMaskUS()));
 
             final DateFormat dateFormatDE = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             dateFormatDE.setLenient(false);

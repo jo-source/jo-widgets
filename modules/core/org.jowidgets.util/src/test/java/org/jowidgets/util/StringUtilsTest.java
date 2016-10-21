@@ -30,9 +30,9 @@ package org.jowidgets.util;
 
 import java.util.Arrays;
 
-import junit.framework.Assert;
-
 import org.junit.Test;
+
+import junit.framework.Assert;
 
 public class StringUtilsTest {
 
@@ -52,5 +52,20 @@ public class StringUtilsTest {
         Assert.assertEquals("A,  C", StringUtils.concatElementsSeparatedBy(Arrays.asList("A", null, "C"), ",  "));
         Assert.assertEquals("A", StringUtils.concatElementsSeparatedBy(Arrays.asList("A", null, null), ",  "));
         Assert.assertEquals("", StringUtils.concatElementsSeparatedBy(Arrays.asList(null, null, null), ",  "));
+    }
+
+    @Test
+    public void testCountMatches() {
+        Assert.assertEquals(0, StringUtils.countMatches(null, null));
+        Assert.assertEquals(0, StringUtils.countMatches("foo", null));
+        Assert.assertEquals(0, StringUtils.countMatches(null, "foo"));
+
+        Assert.assertEquals(1, StringUtils.countMatches("abcdefghijkl", "e"));
+        Assert.assertEquals(4, StringUtils.countMatches("abcdeeefgheijkl", "e"));
+        Assert.assertEquals(7, StringUtils.countMatches("eabcdeeefgheijkele", "e"));
+        Assert.assertEquals(11, StringUtils.countMatches("eeeabcdeeefgheijkeleee", "e"));
+
+        Assert.assertEquals(3, StringUtils.countMatches("abbabaabbaa", "ab"));
+        Assert.assertEquals(1, StringUtils.countMatches("abbabaabbaa", "aab"));
     }
 }
