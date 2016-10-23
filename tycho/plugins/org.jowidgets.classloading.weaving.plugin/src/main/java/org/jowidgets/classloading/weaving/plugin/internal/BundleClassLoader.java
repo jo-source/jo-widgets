@@ -26,7 +26,7 @@
  * DAMAGE.
  */
 
-package org.jowidgets.tools.starter.classloading;
+package org.jowidgets.classloading.weaving.plugin.internal;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,19 +36,12 @@ import org.jowidgets.classloading.api.IClassLoader;
 import org.jowidgets.util.Assert;
 import org.osgi.framework.Bundle;
 
-/**
- * @deprecated Do no longer use the BundleClassLoader directly, instead use the
- *             org.jowidgets.classloading.weaving.plugin and autostart this before any
- *             "Shared-Classloader-Contribution" consuming bundle has been started, e.g.
- *             start level 2.
- */
-@Deprecated
-public final class BundleClassLoader implements IClassLoader {
+final class BundleClassLoader implements IClassLoader {
 
 	private final Bundle bundle;
 	private final long bundleId;
 
-	public BundleClassLoader(final Bundle bundle) {
+	BundleClassLoader(final Bundle bundle) {
 		Assert.paramNotNull(bundle, "bundle");
 		this.bundle = bundle;
 		this.bundleId = bundle.getBundleId();

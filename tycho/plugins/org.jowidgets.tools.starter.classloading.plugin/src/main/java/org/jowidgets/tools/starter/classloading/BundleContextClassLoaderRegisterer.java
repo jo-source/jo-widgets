@@ -35,6 +35,13 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleListener;
 
+/**
+ * @deprecated Do no longer use the BundleContextClassLoaderRegisterer, instead use the
+ *             org.jowidgets.classloading.weaving.plugin and autostart this before any
+ *             "Shared-Classloader-Contribution" consuming bundle has been started, e.g.
+ *             start level 2.
+ */
+@Deprecated
 public final class BundleContextClassLoaderRegisterer {
 
 	private BundleContextClassLoaderRegisterer() {}

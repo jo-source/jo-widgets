@@ -31,7 +31,6 @@ package org.jowidgets.classloading.weaving.plugin.internal;
 import java.util.Dictionary;
 
 import org.jowidgets.classloading.api.SharedClassLoader;
-import org.jowidgets.tools.starter.classloading.BundleClassLoader;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -53,6 +52,7 @@ public final class Activator implements BundleActivator {
 	@Override
 	public void stop(final BundleContext context) throws Exception {}
 
+	@SuppressWarnings("unchecked")
 	private static boolean hasSharedClassloaderContribution(final Bundle bundle) {
 		final Dictionary<String, String> headers = bundle.getHeaders();
 		final String shared = headers.get(SHARED_CLASSLOADER_CONTRIBUTION);

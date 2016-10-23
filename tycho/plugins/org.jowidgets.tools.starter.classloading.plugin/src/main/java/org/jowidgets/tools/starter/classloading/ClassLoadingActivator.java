@@ -37,6 +37,13 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleListener;
 
+/**
+ * @deprecated Do no longer use the ClassLoadingActivator, instead use the
+ *             org.jowidgets.classloading.weaving.plugin and autostart this before any
+ *             "Shared-Classloader-Contribution" consuming bundle has been started, e.g.
+ *             start level 2.
+ */
+@Deprecated
 public class ClassLoadingActivator implements BundleActivator {
 
 	private final String[] includePath;

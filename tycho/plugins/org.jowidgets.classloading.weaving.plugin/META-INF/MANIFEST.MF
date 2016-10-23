@@ -8,7 +8,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Require-Bundle: 
  org.jowidgets.util.bundle,
- org.jowidgets.classloading.api.bundle,
- org.jowidgets.tools.starter.classloading.plugin
+ org.jowidgets.classloading.api.bundle
 Bundle-Activator: org.jowidgets.classloading.weaving.plugin.internal.Activator
 Import-Package: org.osgi.framework
