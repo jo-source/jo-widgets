@@ -54,9 +54,8 @@ public final class Activator implements BundleActivator {
 	public void stop(final BundleContext context) throws Exception {}
 
 	private static boolean hasSharedClassloaderContribution(final Bundle bundle) {
-		@SuppressWarnings("unchecked")
-		final Dictionary<Object, Object> headers = bundle.getHeaders();
-		final Object shared = headers.get(SHARED_CLASSLOADER_CONTRIBUTION);
+		final Dictionary<String, String> headers = bundle.getHeaders();
+		final String shared = headers.get(SHARED_CLASSLOADER_CONTRIBUTION);
 		if (shared != null && shared.equals(TRUE_STRING)) {
 			return true;
 		}
