@@ -22,6 +22,13 @@
 <repository location="http://www.jowidgets.org/p2/jowidgets/releases/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.jowidgets.cap.remoting.client.starter.feature.feature.group" version="0.59.0"/>
+<unit id="org.jowidgets.cap.security.ui.feature.feature.group" version="0.59.0"/>
+<unit id="org.jowidgets.cap.core.ui.feature.feature.group" version="0.59.0"/>
+<unit id="org.jowidgets.cap.service.repository.feature.feature.group" version="0.59.0"/>
+<repository location="http://www.jowidgets.org/p2/jo-client-platform/releases/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.jowidgets.thirdparty.feature.feature.group" version="0.0.1"/>
 <repository location="http://www.jowidgets.org/p2/thirdparty/releases/0.0.1/"/>
 </location>
