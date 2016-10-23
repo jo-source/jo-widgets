@@ -100,6 +100,7 @@ import org.jowidgets.util.EmptyCheck;
 import org.jowidgets.util.Interval;
 import org.jowidgets.util.NullCompatibleEquivalence;
 
+@SuppressWarnings(value = {"all"})
 public class NatTableImplSpi extends SwtControl implements ITableSpi {
 
 	private final SwtImageRegistry imageRegistry;
