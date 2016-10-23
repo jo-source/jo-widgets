@@ -57,7 +57,6 @@ public final class BundleClassLoader implements IClassLoader {
 		return bundle.getResource(name);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public Enumeration<URL> findResources(final String name) throws IOException {
 		return bundle.getResources(name);
