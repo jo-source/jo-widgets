@@ -35,8 +35,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
         ToolkitTest.class, WidgetFactoryTest.class, ContainerRegistryTest.class, MenuTest.class, MenuModelTest.class,
-        ToolBarTest.class, TabFolderTest.class, TreeTest.class, WidgetDisposeTest.class, AcceptingRegExpTest.class,
-        VisibilityTest.class})
+        ToolBarTest.class, TabFolderTest.class, TreeTest.class, WidgetDisposeTest.class, VisibilityTest.class})
 public class ApiBlackBoxTestSuite {
 
 }
