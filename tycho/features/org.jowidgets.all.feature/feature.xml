@@ -68,4 +68,8 @@
          id="org.jowidgets.addons.logging.slf4j161.feature"
          version="0.0.0"/>
 		 
+	<includes
+         id="org.jowidgets.nattable.feature"
+         version="0.0.0"/>
+		 
 </feature>

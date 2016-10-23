@@ -36,6 +36,13 @@
 			<name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
 			<url>http://repository.springsource.com/maven/bundles/external</url>
 		</repository>
+		
+		<repository>
+			<id>org.eclipse.nebula.widgets.nattable.core</id>
+			<name>org.eclipse.nebula.widgets.nattable.core</name>
+			<url>http://download.eclipse.org/nattable/releases/1.4.0/repository/</url>
+			<layout>p2</layout>
+		</repository>
 	
 		<repository>
 			<id>helios</id>

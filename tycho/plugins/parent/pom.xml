@@ -18,6 +18,7 @@
 		<module>../org.jowidgets.tools.starter.application.osgi.plugin</module>
 		<module>../org.jowidgets.tools.starter.workbench.osgi.plugin</module>
 		<module>../org.jowidgets.tools.starter.workbench.rcp.plugin</module>
+		<module>../org.jowidgets.nattable.plugin</module>
 	</modules>
 
 </project>
