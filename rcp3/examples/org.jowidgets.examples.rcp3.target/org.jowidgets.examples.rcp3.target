@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?><target name="Restored Target" sequenceNumber="31">
+<locations>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.equinox.executable.feature.group" version="3.4.2.R36x_v20110125-7N7K7bF8zk1BAKMh0iz0t94miBLY"/>
+<unit id="org.eclipse.platform.sdk" version="3.6.2.M20110210-1200"/>
+<unit id="org.eclipse.pde.feature.group" version="3.6.2.r362_v20110203-7b7mFL2FET3dhHalh1iNZtL"/>
+<unit id="org.eclipse.rcp.sdk.id" version="3.6.0.M20110210-1200"/>
+<unit id="org.eclipse.emf.sdk.feature.group" version="2.6.1.v20100914-1218"/>
+<unit id="org.eclipse.xsd.sdk.feature.group" version="2.6.0.v20100914-1218"/>
+<unit id="org.eclipse.xsd.ecore.converter.feature.group" version="2.6.0.v20100914-1218"/>
+<unit id="org.eclipse.xsd.edit.feature.group" version="2.6.0.v20100914-1218"/>
+<unit id="org.eclipse.xsd.mapping.feature.group" version="2.6.0.v20100914-1218"/>
+<unit id="org.eclipse.xsd.mapping.editor.feature.group" version="2.6.0.v20100914-1218"/>
+<unit id="org.eclipse.equinox.transforms.hook" version="0.0.0"/>
+<unit id="org.eclipse.equinox.transforms.xslt" version="0.0.0"/>
+<repository location="http://download.eclipse.org/releases/helios"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.jowidgets.impl.swt.feature.feature.group" version="0.65.0"/>
+<unit id="org.jowidgets.workbench.feature.feature.group" version="0.65.0"/>
+<repository location="http://www.jowidgets.org/p2/jowidgets/releases/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.jowidgets.thirdparty.feature.feature.group" version="0.0.1"/>
+<repository location="http://www.jowidgets.org/p2/thirdparty/releases/0.0.1/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.nebula.widgets.nattable.core.feature.feature.group" version="1.4.0.201606011907"/>
+<unit id="org.eclipse.nebula.widgets.nattable.core.source.feature.feature.group" version="1.4.0.201606011907"/>
+<repository location="http://download.eclipse.org/nattable/releases/1.4.0/repository/"/>
+</location>
+</locations>
+<environment>
+<os>win32</os>
+<ws>win32</ws>
+<arch>x86_64</arch>
+<nl>de_DE</nl>
+</environment>
+</target>
