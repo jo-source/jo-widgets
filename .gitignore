@@ -2,3 +2,4 @@
 .project
 .checkstyle
 target
+/tycho/plugins/org.jowidgets.nattable.plugin/.settings
