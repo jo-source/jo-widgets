@@ -17,8 +17,10 @@
 <repository location="http://download.eclipse.org/releases/helios"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.jowidgets.addons.silkicons.feature.feature.group" version="0.65.0"/>
 <unit id="org.jowidgets.impl.swt.feature.feature.group" version="0.65.0"/>
 <unit id="org.jowidgets.workbench.feature.feature.group" version="0.65.0"/>
+<unit id="org.jowidgets.addons.logging.slf4j161.feature.feature.group" version="0.65.0"/>
 <repository location="http://www.jowidgets.org/p2/jowidgets/releases/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
