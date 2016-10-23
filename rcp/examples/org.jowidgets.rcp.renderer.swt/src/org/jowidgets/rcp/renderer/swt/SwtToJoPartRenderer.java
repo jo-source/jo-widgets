@@ -37,7 +37,7 @@ import org.eclipse.e4.ui.workbench.renderers.swt.ContributedPartRenderer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.api.widgets.IComposite;
-import org.jowidgets.spi.impl.swt.addons.SwtToJo;
+import org.jowidgets.spi.impl.swt.addons.SwtToJoWrapper;
 import org.jowidgets.util.IProvider;
 
 @SuppressWarnings("restriction")
@@ -57,7 +57,7 @@ public class SwtToJoPartRenderer extends ContributedPartRenderer {
 		//Unfortunately an IComposite can not be returned because some the super renderer and the StackPartRenderer assumes that
 		//SWT Controls will be created
 		final ContributedPartComposite result = new ContributedPartComposite(part, parentComposite, SWT.NONE);
-		final IComposite joComposite = SwtToJo.create(result);
+		final IComposite joComposite = SwtToJoWrapper.create(result);
 		result.setJoComposite(joComposite);
 
 		//bind the widget

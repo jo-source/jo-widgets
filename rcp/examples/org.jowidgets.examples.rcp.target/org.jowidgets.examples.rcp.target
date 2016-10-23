@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="Restored Target" sequenceNumber="22">
+<?pde version="3.8"?><target name="Restored Target" sequenceNumber="34">
 <locations>
-<location path="${eclipse_home}" type="Profile"/>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+<unit id="org.jowidgets.impl.swt.feature.feature.group" version="0.65.0"/>
+<unit id="org.jowidgets.workbench.feature.feature.group" version="0.65.0"/>
+<repository location="http://www.jowidgets.org/p2/jowidgets/releases/"/>
+</location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
 <unit id="org.jowidgets.thirdparty.feature.feature.group" version="0.0.1"/>
 <repository location="http://www.jowidgets.org/p2/thirdparty/releases/0.0.1/"/>
 </location>
-<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
-<unit id="org.jowidgets.impl.swt.feature.feature.group" version="0.28.0"/>
-<repository location="http://www.jowidgets.org/p2/jowidgets/releases/"/>
-</location>
+<location path="${eclipse_home}" type="Profile"/>
 </locations>
 <environment>
 <os>win32</os>

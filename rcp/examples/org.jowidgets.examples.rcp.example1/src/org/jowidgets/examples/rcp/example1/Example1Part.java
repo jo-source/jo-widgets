@@ -34,14 +34,14 @@ import org.eclipse.swt.widgets.Composite;
 import org.jowidgets.api.widgets.IComposite;
 import org.jowidgets.api.widgets.blueprint.ITextLabelBluePrint;
 import org.jowidgets.common.widgets.layout.MigLayoutDescriptor;
-import org.jowidgets.spi.impl.swt.addons.SwtToJo;
+import org.jowidgets.spi.impl.swt.addons.SwtToJoWrapper;
 import org.jowidgets.tools.widgets.blueprint.BPF;
 
 public final class Example1Part {
 
 	@PostConstruct
 	public void createComposite(final Composite parent) {
-		final IComposite composite = SwtToJo.create(parent);
+		final IComposite composite = SwtToJoWrapper.create(parent);
 
 		composite.setLayout(new MigLayoutDescriptor("wrap", "[][grow]", "[]"));
 
