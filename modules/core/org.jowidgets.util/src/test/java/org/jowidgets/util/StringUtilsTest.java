@@ -30,9 +30,9 @@ package org.jowidgets.util;
 
 import java.util.Arrays;
 
-import org.junit.Test;
-
 import junit.framework.Assert;
+
+import org.junit.Test;
 
 public class StringUtilsTest {
 
@@ -64,6 +64,11 @@ public class StringUtilsTest {
         Assert.assertEquals(4, StringUtils.countMatches("abcdeeefgheijkl", "e"));
         Assert.assertEquals(7, StringUtils.countMatches("eabcdeeefgheijkele", "e"));
         Assert.assertEquals(11, StringUtils.countMatches("eeeabcdeeefgheijkeleee", "e"));
+
+        Assert.assertEquals(1, StringUtils.countMatches("abcdefghijkl", 'e'));
+        Assert.assertEquals(4, StringUtils.countMatches("abcdeeefgheijkl", 'e'));
+        Assert.assertEquals(7, StringUtils.countMatches("eabcdeeefgheijkele", 'e'));
+        Assert.assertEquals(11, StringUtils.countMatches("eeeabcdeeefgheijkeleee", 'e'));
 
         Assert.assertEquals(3, StringUtils.countMatches("abbabaabbaa", "ab"));
         Assert.assertEquals(1, StringUtils.countMatches("abbabaabbaa", "aab"));
