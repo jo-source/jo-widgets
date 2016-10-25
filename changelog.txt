@@ -124,7 +124,7 @@ Features:
 
 Bugfixes:
 
-* Fixes issue #52 https://github.com/jo-source/jo-widgets/issues/49 Verify of double values is to strict
+* Fixes issue #52 https://github.com/jo-source/jo-widgets/issues/52 Verify of double values is to strict
 
 
 
