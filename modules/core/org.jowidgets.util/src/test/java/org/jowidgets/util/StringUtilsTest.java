@@ -30,14 +30,14 @@ package org.jowidgets.util;
 
 import java.util.Arrays;
 
-import org.junit.Test;
-
 import junit.framework.Assert;
+
+import org.junit.Test;
 
 public class StringUtilsTest {
 
     @Test
-    public void testConcatElementsByComma() {
+    public void testConcatElementsBy() {
         Assert.assertEquals("A, B, C", StringUtils.concatElementsSeparatedByComma(Arrays.asList("A", "B", "C")));
         Assert.assertEquals("A, C", StringUtils.concatElementsSeparatedByComma(Arrays.asList("A", null, "C")));
         Assert.assertEquals("A", StringUtils.concatElementsSeparatedByComma(Arrays.asList("A", null, null)));
@@ -52,6 +52,41 @@ public class StringUtilsTest {
         Assert.assertEquals("A,  C", StringUtils.concatElementsSeparatedBy(Arrays.asList("A", null, "C"), ",  "));
         Assert.assertEquals("A", StringUtils.concatElementsSeparatedBy(Arrays.asList("A", null, null), ",  "));
         Assert.assertEquals("", StringUtils.concatElementsSeparatedBy(Arrays.asList(null, null, null), ",  "));
+
+        Assert.assertEquals("A, B, C", StringUtils.concatElementsSeparatedByComma(Arrays.asList("A", "B", "C")));
+        Assert.assertEquals("A, C", StringUtils.concatElementsSeparatedByComma(Arrays.asList("A", "", "C")));
+        Assert.assertEquals("A", StringUtils.concatElementsSeparatedByComma(Arrays.asList("A", "", null)));
+        Assert.assertEquals("", StringUtils.concatElementsSeparatedByComma(Arrays.asList(null, "", null)));
+
+        Assert.assertEquals("A,B,C", StringUtils.concatElementsSeparatedBy(Arrays.asList("A", "B", "C"), ","));
+        Assert.assertEquals("A,C", StringUtils.concatElementsSeparatedBy(Arrays.asList("A", "", "C"), ","));
+        Assert.assertEquals("A", StringUtils.concatElementsSeparatedBy(Arrays.asList("A", null, null), ","));
+        Assert.assertEquals("", StringUtils.concatElementsSeparatedBy(Arrays.asList("", null, ""), ","));
+
+        Assert.assertEquals("A,  B,  C", StringUtils.concatElementsSeparatedBy(Arrays.asList("A", "B", "C"), ",  "));
+        Assert.assertEquals("A,  C", StringUtils.concatElementsSeparatedBy(Arrays.asList("A", "", "C"), ",  "));
+        Assert.assertEquals("A", StringUtils.concatElementsSeparatedBy(Arrays.asList("A", "", ""), ",  "));
+        Assert.assertEquals("", StringUtils.concatElementsSeparatedBy(Arrays.asList("", "", ""), ",  "));
+    }
+
+    @Test
+    public void testConcat() {
+
+        Assert.assertEquals("A,B,C", StringUtils.concat(",", "A", "B", "C"));
+        Assert.assertEquals("A,C", StringUtils.concat(",", "A", null, "C"));
+        Assert.assertEquals("A", StringUtils.concat(",", "A", null, null));
+        Assert.assertEquals("", StringUtils.concat(",", null, null, null));
+
+        Assert.assertEquals("A,  B,  C", StringUtils.concat(",  ", "A", "B", "C"));
+        Assert.assertEquals("A,  C", StringUtils.concat(",  ", "A", null, "C"));
+        Assert.assertEquals("A", StringUtils.concat(",  ", "A", null, null));
+        Assert.assertEquals("", StringUtils.concat(",  ", null, null, null));
+
+        Assert.assertEquals("A, B, C", StringUtils.concat(", ", "A", "B", "C"));
+        Assert.assertEquals("A, C", StringUtils.concat(", ", "A", "", "C"));
+        Assert.assertEquals("A", StringUtils.concat(", ", "A", "", null));
+        Assert.assertEquals("", StringUtils.concat(", ", null, "", null));
+
     }
 
     @Test
@@ -64,6 +99,11 @@ public class StringUtilsTest {
         Assert.assertEquals(4, StringUtils.countMatches("abcdeeefgheijkl", "e"));
         Assert.assertEquals(7, StringUtils.countMatches("eabcdeeefgheijkele", "e"));
         Assert.assertEquals(11, StringUtils.countMatches("eeeabcdeeefgheijkeleee", "e"));
+
+        Assert.assertEquals(1, StringUtils.countMatches("abcdefghijkl", 'e'));
+        Assert.assertEquals(4, StringUtils.countMatches("abcdeeefgheijkl", 'e'));
+        Assert.assertEquals(7, StringUtils.countMatches("eabcdeeefgheijkele", 'e'));
+        Assert.assertEquals(11, StringUtils.countMatches("eeeabcdeeefgheijkeleee", 'e'));
 
         Assert.assertEquals(3, StringUtils.countMatches("abbabaabbaa", "ab"));
         Assert.assertEquals(1, StringUtils.countMatches("abbabaabbaa", "aab"));

@@ -122,8 +122,10 @@ Features:
 
 
 
+
 Bugfixes:
 
+* StringUtils concat() handles empty values like null values now
 * Fixes issue #52 https://github.com/jo-source/jo-widgets/issues/49 Verify of double values is to strict
 
 

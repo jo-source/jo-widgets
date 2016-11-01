@@ -55,16 +55,53 @@ public final class StringUtils {
     public static String concatElementsSeparatedBy(
         final Collection<?> strings,
         final String separator,
-        final boolean excludeNullValues) {
-        Assert.paramNotNull(strings, "separator");
+        final boolean excludeEmptyValues) {
+        Assert.paramNotNull(strings, "strings");
+        return concat(separator, excludeEmptyValues, strings.toArray());
+    }
+
+    /**
+     * Concats the given objects with the separator to a new string.
+     * 
+     * Empty values will be excluded.
+     * 
+     * @param separator The separator to use
+     * @param objects The objects to concat, the toString() method will be used to get the string for the objects
+     * 
+     * @return A new String with the concated elements
+     */
+    public static String concat(final String separator, final Object... objects) {
+        return concat(separator, true, objects);
+    }
+
+    public static String concat(final String separator, final Iterable<?> objects) {
+        return concat(separator, true, objects);
+    }
+
+    public static String concat(final String separator, final boolean excludeEmptyValues, final Object... objects) {
+        return concat(separator, excludeEmptyValues, Arrays.asList(objects));
+    }
+
+    /**
+     * Concats the given objects with the separator to a new string
+     * 
+     * @param separator The separator to use
+     * @param excludeEmptyValues If true, empty values will be excluded, otherwise empty values will be replaced by EmptyString
+     * @param objects The objects to concat, the toString() method will be used to get the string for the objects
+     * 
+     * @return A new String with the concated elements
+     */
+    public static String concat(final String separator, final boolean excludeEmptyValues, final Iterable<?> objects) {
+        Assert.paramNotNull(separator, "separator");
+        Assert.paramNotNull(objects, "objects");
         final StringBuilder result = new StringBuilder();
         int added = 0;
-        for (final Object label : strings) {
-            if (label != null) {
+        for (final Object label : objects) {
+            if (!EmptyCheck.isEmpty(label)) {
                 result.append(label.toString() + separator);
                 added++;
             }
-            else if (!excludeNullValues) {
+            else if (!excludeEmptyValues) {
                 result.append("" + separator);
             }
         }
