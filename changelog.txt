@@ -121,6 +121,7 @@ Bugfixes:
 Features:
 
 * Added FilteredIterable to utils
+* Added IdentityHashKey to utils
 
 
 
