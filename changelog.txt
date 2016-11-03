@@ -122,6 +122,7 @@ Features:
 
 * Added FilteredIterable to utils
 * Added IdentityHashKey to utils
+* Added two new icons MOVE_UP and MOVE_DOWN
 
 
 

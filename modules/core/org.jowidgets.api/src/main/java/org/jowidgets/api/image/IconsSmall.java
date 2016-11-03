@@ -53,6 +53,9 @@ public enum IconsSmall implements IImageConstant {
     NAVIGATION_FORWARD_TINY,
     NAVIGATION_BACKWARD_TINY,
 
+    MOVE_UP,
+    MOVE_DOWN,
+
     TABLE_SORT_DESC,
     TABLE_SORT_ASC,
     TABLE_SORT_FILTER_DESC,
