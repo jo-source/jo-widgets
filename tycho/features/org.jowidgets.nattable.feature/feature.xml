@@ -2,7 +2,7 @@
 <feature
       id="org.jowidgets.nattable.feature"
       label="org.jowidgets.nattable.feature"
-      version="0.66.0.qualifier">
+      version="0.67.0.qualifier">
 
    <description url="http://www.example.com/description">
       Feature that holds the jowidgets nattable implementation
